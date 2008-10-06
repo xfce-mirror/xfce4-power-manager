@@ -1,0 +1,99 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+AC_PREREQ(2.61)
+AC_INIT([XfcePowerManager],[0.6.0])
+
+AM_INIT_AUTOMAKE([1.8 dist-bzip2 tar-ustar])
+AM_CONFIG_HEADER([config.h])
+AM_MAINTAINER_MODE
+
+# ============== basic compiler settings ============= #
+AC_PROG_CC
+AC_PROG_LD
+AC_PROG_INSTALL
+AC_PROG_INTLTOOL
+
+# ========== export compiler / linker options ======== #
+AC_SUBST(CFLAGS)
+AC_SUBST(LDFLAGS)
+
+# ============== look for dependencies =============== #
+# check for headers needed for standard interfaces     #
+AC_HEADER_STDC
+AC_CHECK_HEADERS([errno.h signal.h stddef.h \
+                  string.h sys/stat.h sys/types.h sys/wait.h time.h \
+                  unistd.h])
+
+#==================================================== #
+#          Check for required packages 		      #
+#=====================================================#
+m4_define([gtk_minimum_version], [2.9.2]) # GtkStatus icon appears from this version
+m4_define([glib_minimum_version], [2.14.0]) 
+m4_define([dbus_minimum_version], [0.7])
+m4_define([hal_minimum_version], [0.4])
+m4_define([xfconf_minimum_version], [4.5.90])
+m4_define([libxfcegui4_minimum_version],[4.4.1])
+m4_define([dbus_glib_minimum_version], [0.4])
+m4_define([libnotify_minimum_version], [0.4.0])
+
+XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [gtk_minimum_version])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
+XDT_CHECK_PACKAGE([DBUS], [dbus-1], [dbus_minimum_version])
+XDT_CHECK_PACKAGE([HAL], [hal], [hal_minimum_version])
+XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [dbus_glib_minimum_version])
+XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0],[xfconf_minimum_version])
+XDT_CHECK_PACKAGE([LIBXFCEGUI], [libxfcegui4-1.0],[libxfcegui4_minimum_version])
+
+
+#=======================================================#
+#           Check for DPMS support                      #
+#=======================================================#
+DPMS_LIBS=
+AC_ARG_ENABLE([dpms],
+AC_HELP_STRING([--enable-dpms], [use dpms extension])
+AC_HELP_STRING([--disable-dpms], [don't use dpms extension]),
+  [], [enable_dpms=yes])
+have_dpms="no"
+if test x"$enable_dpms" = x"yes"; then
+     AC_CHECK_LIB([Xext], [DPMSQueryExtension],
+        [ have_dpms="yes"
+          DPMS_LIBS=" -lXext -lX11"
+          AC_DEFINE([HAVE_DPMS], [1], [Define to enable dpms])
+        ],[])
+fi
+AC_SUBST([DPMS_LIBS])
+
+#=======================================================#
+#           Check for availability of libnotify         #
+#=======================================================#
+LIBNOTIFY_FOUND="no"
+XDT_CHECK_OPTIONAL_PACKAGE([LIBNOTIFY],
+                       [libnotify], [libnotify_minimum_version],
+                       [libnotify], 
+                       [libnotify library], [yes])
+
+#=======================================================#
+#              Check for debugging support              #
+#=======================================================#
+XDT_FEATURE_DEBUG
+
+
+AC_OUTPUT([
+Makefile
+src/Makefile
+data/Makefile
+data/icons/Makefile
+data/icons/scalable/Makefile
+po/Makefile.in
+])
+
+echo "----------------------------------------"
+echo 	 "   Build Configuration"
+echo 
+echo "   Debug        $enable_debug   "
+echo "   DPMS         $have_dpms      "
+echo "   LibNotiy     $LIBNOTIFY_FOUND"
+echo
+echo "----------------------------------------"  
+echo
+echo "Configuration finished, type make to compile"
