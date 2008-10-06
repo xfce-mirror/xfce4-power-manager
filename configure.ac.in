@@ -29,12 +29,12 @@ AC_CHECK_HEADERS([errno.h signal.h stddef.h \
 #=====================================================#
 m4_define([gtk_minimum_version], [2.9.2]) # GtkStatus icon appears from this version
 m4_define([glib_minimum_version], [2.14.0]) 
-m4_define([dbus_minimum_version], [0.7])
-m4_define([hal_minimum_version], [0.4])
+m4_define([dbus_minimum_version], [0.60])
+m4_define([hal_minimum_version], [0.5.6])
 m4_define([xfconf_minimum_version], [4.5.90])
 m4_define([libxfcegui4_minimum_version],[4.4.1])
-m4_define([dbus_glib_minimum_version], [0.4])
-m4_define([libnotify_minimum_version], [0.4.0])
+m4_define([dbus_glib_minimum_version], [0.70])
+m4_define([libnotify_minimum_version], [0.4.1])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
