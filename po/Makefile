@@ -67,30 +67,6 @@ DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(POFILES)
 EXTRA_DISTFILES = POTFILES.skip Makevars LINGUAS
 
 POTFILES = \
-	tmpdir=`pwd`; \
-	linguas="$(USE_LINGUAS)"; \
-	for lang in $$linguas; do \
-	  echo "$$lang:"; \
-	  result="`$(MSGMERGE) -o $$tmpdir/$$lang.new.po $$lang`"; \
-	  if $$result; then \
-	    if cmp $(srcdir)/$$lang.po $$tmpdir/$$lang.new.po >/dev/null 2>&1; then \
-	      rm -f $$tmpdir/$$lang.new.po; \
-            else \
-	      if mv -f $$tmpdir/$$lang.new.po $$lang.po; then \
-	        :; \
-	      else \
-	        echo "msgmerge for $$lang.po failed: cannot move $$tmpdir/$$lang.new.po to $$lang.po" 1>&2; \
-	        rm -f $$tmpdir/$$lang.new.po; \
-	        exit 1; \
-	      fi; \
-	    fi; \
-	  else \
-	    echo "msgmerge for $$lang.gmo failed!"; \
-	    rm -f $$tmpdir/$$lang.new.po; \
-	  fi; \
-	done
-
-Makefile POTFILES: stamp-it
 	@if test ! -f $@; then \
 	  rm -f stamp-it; \
 	  $(MAKE) stamp-it; \

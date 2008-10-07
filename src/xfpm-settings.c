@@ -830,7 +830,7 @@ xfpm_settings_tree_view()
 
     gtk_tree_view_append_column(GTK_TREE_VIEW(view),col);
 
-    pix = xfpm_load_icon("gpm-suspend",42);      
+    pix = xfpm_load_icon("gnome-cpu-frequency-applet",42);      
     gtk_list_store_append(list_store,&iter);
     gtk_list_store_set(list_store,&iter,0,pix,1,0,-1);
     g_object_unref(pix);
