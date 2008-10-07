@@ -72,15 +72,15 @@ GType          xfpm_battery_icon_get_type   (void);
 GtkStatusIcon *xfpm_battery_icon_new        (guint last_full,
                                             guint battery_type,
                                             guint critical_charge,        
-                                            gboolean visible,
-                                            gboolean ac_adapter_present);
+                                            gboolean visible);
                                             
 void           xfpm_battery_icon_set_state  (XfpmBatteryIcon *battery_icon,
                                             guint charge,
                                             guint remaining_per,
                                             gboolean present,
                                             gboolean is_charging,
-                                            gboolean is_discharging);
+                                            gboolean is_discharging,
+                                            gboolean ac_adapter_present);
 G_END_DECLS
 
 #endif /* __XFPM_BATTERY_ICON_H */

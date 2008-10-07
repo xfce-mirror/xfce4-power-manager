@@ -105,7 +105,14 @@ static XfpmBatteryType xfpm_battery_get_battery_type(const gchar *battery_type);
 
 static gboolean xfpm_battery_check(XfpmBattery *batt,
                                     const gchar *udi);
-                                    
+
+static gboolean xfpm_battery_do_hibernate(XfpmBattery *batt);
+static void xfpm_battery_hibernate_callback(GtkWidget *widget,
+                                            XfpmBattery *batt);
+static gboolean xfpm_battery_do_suspend(XfpmBattery *batt);
+
+static void xfpm_battery_suspend_callback(GtkWidget *widget,
+                                          XfpmBattery *batt);
 static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
                                              guint button,
                                              guint activate_time,
@@ -352,6 +359,15 @@ xfpm_battery_finalize(GObject *object)
     G_OBJECT_CLASS(xfpm_battery_parent_class)->finalize(object);
 }
 
+#ifdef HAVE_LIBNOTIFY
+static gboolean
+_set_tray_visible_timeout(XfpmBatteryIcon *icon)
+{
+    g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
+    return FALSE;
+}
+#endif
+
 static void
 xfpm_battery_refresh_tray_icon(XfpmBattery *batt)
 {
@@ -418,7 +434,11 @@ xfpm_battery_refresh_tray_icon(XfpmBattery *batt)
                 }
                 else
                 {
+#ifdef HAVE_LIBNOTIFY                    
+                    g_timeout_add(6000,(GSourceFunc)_set_tray_visible_timeout,icon);
+#else                    
                     g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
+#endif                    
                 }
             }
         }
@@ -577,7 +597,6 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
                                            const gchar *key,gboolean is_removed,
                                            gboolean is_added,XfpmBattery *batt)
 {
-    XFPM_DEBUG("start\n");
     XfpmBatteryPrivate *priv;
     priv = XFPM_BATTERY_GET_PRIVATE(batt);
     
@@ -681,7 +700,7 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
         }                                               
                                                
         xfpm_battery_icon_set_state(XFPM_BATTERY_ICON(icon),current,percentage,
-                                    is_present,is_charging,is_discharging);
+                                    is_present,is_charging,is_discharging,batt->ac_adapter_present);
     }
 }
 
@@ -690,9 +709,13 @@ xfpm_battery_state_change_cb(GObject *object,GParamSpec *arg1,gpointer data)
 {
     if ( !strcmp(arg1->name,"battery-state") ) 
     {
-        XfpmBattery *batt = XFPM_BATTERY(data);
         XfpmBatteryState state;
+        XfpmBattery *batt = XFPM_BATTERY(data);
         g_object_get(object,"battery-state",&state,NULL);
+        
+        /* refresh here for the tray icon hiding if option
+         * show icon is charging or discharging and battery is fully charged
+         */
         xfpm_battery_refresh(batt);
 #ifdef DEBUG
         gchar *content;
@@ -703,50 +726,34 @@ xfpm_battery_state_change_cb(GObject *object,GParamSpec *arg1,gpointer data)
         XFPM_DEBUG("param:%s value:%s\n",arg1->name,content);
         g_free(content);
 #endif  
-    }
-}
-
-static void
-lock_screen()
-{
-    XFPM_DEBUG("locking the screen \n");
-    GError *error = NULL;
-    gboolean ret = g_spawn_command_line_async("gnome-screensaver-command -l",&error);
-    
-    if ( error ) 
-    {
-        XFPM_DEBUG("error %s\n",error->message);
-        g_error_free(error);
-    }
-    
-    if ( !ret )
-    {
-        /* this should be the default*/
-        ret = g_spawn_command_line_async("xdg-screensaver lock",&error);
-        if ( error ) 
+        if ( batt->critical_action == NOTHING )
         {
-            XFPM_DEBUG("error %s\n",error->message);
-            g_error_free(error);
+            return;
         }
-         
-    }
-    
-    if ( !ret )
-    {
-        ret = g_spawn_command_line_async("xscreensaver-command -lock",&error);
-        if ( error ) 
+        
+        if ( state == CRITICAL )
         {
-            XFPM_DEBUG("error %s\n",error->message);
-            g_error_free(error);
+            XfpmBatteryType battery_type;
+            g_object_get(object,"battery-type",&battery_type,NULL);
+            if ( battery_type != PRIMARY ) 
+            {
+                return;
+            }
+            if ( batt->critical_action == HIBERNATE )
+            {
+                XFPM_DEBUG("Hibernating the system\n");
+                g_timeout_add_seconds(4,(GSourceFunc)xfpm_battery_do_hibernate,batt);
+                return;
+            }
+            if ( batt->critical_action == SHUTDOWN )
+            {
+                XfpmBatteryPrivate *priv;
+                priv = XFPM_BATTERY_GET_PRIVATE(batt);
+                g_timeout_add_seconds(4,(GSourceFunc)xfpm_hal_shutdown,priv->hal);
+            }
         }
     }
-    
-    if ( !ret )
-    {
-        g_critical("Connot lock screen\n");
-    }
 }
-
 
 #ifdef HAVE_LIBNOTIFY
 static void
@@ -781,7 +788,6 @@ set_sleep_errors(NotifyNotification *n,gchar *action,XfpmBattery *batt)
 }
 #endif
 
-/* FIXME: we should also notify the user if libnotify is missing*/
 static void
 xfpm_battery_report_sleep_errors(XfpmBattery *batt,const gchar *error,
                                 const gchar *icon_name, gboolean simple)
@@ -858,7 +864,7 @@ xfpm_battery_hibernate_callback(GtkWidget *widget,XfpmBattery *batt)
     
     if ( ret ) 
     {
-        lock_screen();
+        xfpm_lock_screen();
         g_timeout_add_seconds(4,(GSourceFunc)xfpm_battery_do_hibernate,batt);
 	}
 }
@@ -893,15 +899,9 @@ xfpm_battery_suspend_callback(GtkWidget *widget,XfpmBattery *batt)
     
     if ( ret ) 
     {
-        lock_screen();
+        xfpm_lock_screen();
         g_timeout_add_seconds(3,(GSourceFunc)xfpm_battery_do_suspend,batt);
     }
-}
-
-static void
-xfpm_battery_tray_preferences(GtkWidget *widget,gpointer data)
-{
-    g_spawn_command_line_async("xfce4-power-manager -c",NULL);
 }
 
 static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
@@ -909,7 +909,7 @@ static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
                                              guint activate_time,
                                              XfpmBattery *batt)
 {
-     GtkWidget *menu,*mi,*img;
+    GtkWidget *menu,*mi,*img;
 	
 	menu = gtk_menu_new();
 	// Hibernate menu option
@@ -949,7 +949,7 @@ static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
 	mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES,NULL);
 	gtk_widget_set_sensitive(mi,TRUE);
 	gtk_widget_show(mi);
-	g_signal_connect(mi,"activate",G_CALLBACK(xfpm_battery_tray_preferences),NULL);
+	g_signal_connect(mi,"activate",G_CALLBACK(xfpm_preferences),NULL);
 	
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
 	
@@ -1091,8 +1091,7 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
     batt_icon = xfpm_battery_icon_new(last_full,
                                       type,
                                       batt->critical_level,
-                                      TRUE,
-                                      batt->ac_adapter_present);
+                                      TRUE);
 #ifdef HAVE_LIBNOTIFY    
     g_object_set(batt_icon,"systray-notify",batt->notify_enabled,NULL);
 #endif    
@@ -1101,7 +1100,8 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
                                 percentage,
                                 is_present,
                                 is_charging,
-                                is_discharging);
+                                is_discharging,
+                                batt->ac_adapter_present);
     g_signal_connect(batt_icon,"notify",G_CALLBACK(xfpm_battery_state_change_cb),batt);                            
     g_signal_connect(batt_icon,"popup-menu",G_CALLBACK(xfpm_battery_popup_tray_icon_menu),batt);
     

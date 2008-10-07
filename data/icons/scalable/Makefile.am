@@ -42,4 +42,4 @@ Data_DATA =				\
 	gpm-mouse-000.svg		\
 	gpm-mouse-030.svg		\
 	gpm-mouse-060.svg		\
-	gpm-mouse-100.svg
+	gpm-mouse-100.svg		

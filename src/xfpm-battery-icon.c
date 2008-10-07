@@ -66,7 +66,6 @@ enum
     PROP_BATTERY_STATE,
     PROP_LAST_FULL,
     PROP_BATT_CRITICAL,
-    PROP_AC_ADAPTER_PRESENT,
 #ifdef HAVE_LIBNOTIFY
     PROP_NOTIFY
 #endif        
@@ -118,14 +117,6 @@ xfpm_battery_icon_class_init(XfpmBatteryIconClass *klass)
                                                       8,
                                                       G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
     
-    g_object_class_install_property(object_class,
-                                    PROP_AC_ADAPTER_PRESENT,
-                                    g_param_spec_boolean("ac-adapter-present",
-                                                         "Ac adapter present",
-                                                         "Presence of AC adapter",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE|G_PARAM_CONSTRUCT)); 
-                                                      
 #ifdef HAVE_LIBNOTIFY
     g_object_class_install_property(object_class,
                                     PROP_NOTIFY,
@@ -152,6 +143,7 @@ xfpm_battery_icon_init(XfpmBatteryIcon *battery_icon)
 #endif
     battery_icon->icon    = -1;
     battery_icon->icon_loaded = FALSE;
+    battery_icon->ac_adapter_present = FALSE;
 }
 
 static void xfpm_battery_icon_set_property(GObject *object,
@@ -181,9 +173,6 @@ static void xfpm_battery_icon_set_property(GObject *object,
         case PROP_BATT_CRITICAL:
             icon->critical_level = g_value_get_uint(value);
             break;      
-        case PROP_AC_ADAPTER_PRESENT:
-            icon->ac_adapter_present = g_value_get_boolean(value);         
-            break;
 #ifdef HAVE_LIBNOTIFY              
         case PROP_NOTIFY:
             icon->notify = g_value_get_boolean(value);
@@ -217,9 +206,6 @@ static void xfpm_battery_icon_get_property(GObject *object,
         case PROP_BATT_CRITICAL:
             g_value_set_uint(value,icon->critical_level);
             break; 
-        case PROP_AC_ADAPTER_PRESENT:          
-            g_value_set_boolean(value,icon->ac_adapter_present);
-            break;
 #ifdef HAVE_LIBNOTIFY              
         case PROP_NOTIFY:
             g_value_set_boolean(value,icon->notify);
@@ -313,8 +299,8 @@ xfpm_battery_icon_get_icon_prefix(XfpmBatteryType type)
     {
         return g_strdup("gpm-mouse");
     }
-    
-    return g_strdup("gpm-ac-adapter");    
+    /* we are going to show a primary icon */
+    return g_strdup("gpm-primary");    
 }
 
 static void
@@ -352,7 +338,10 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,gu
             icon_name = g_strdup_printf("%s-%s",icon_prefix,
                             xfpm_battery_icon_get_index(battery_icon->type,level));
 #ifdef HAVE_LIBNOTIFY 
-            message = _("You are running on Battery");
+            if ( !battery_icon->ac_adapter_present )
+            {
+                message = battery_icon->type == PRIMARY ? _("You are running on Battery"):_("Battery is discharging");
+            }
 #endif      
             break;
         case CHARGING:
@@ -393,13 +382,12 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,gu
 #endif     
     g_object_set(G_OBJECT(battery_icon),"battery-state",state,NULL);
     }
-    /* no need to load the icon we have it already */
+
     if ( icon_prefix && icon_name )
     {
         if ( battery_icon->icon == g_quark_from_string(icon_name ) && 
              battery_icon->icon_loaded )
         {
-            XFPM_DEBUG("No need to load icon %s\n",icon_name);
             g_free(icon_prefix);
             g_free(icon_name);
             return;
@@ -427,8 +415,7 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,gu
 
 GtkStatusIcon *
 xfpm_battery_icon_new(guint last_full,guint battery_type,
-                      guint critical_level,gboolean visible,
-                      gboolean ac_adapter_present)
+                      guint critical_level,gboolean visible)
 {
     XfpmBatteryIcon *battery_icon = NULL;
     battery_icon = g_object_new(XFPM_TYPE_BATTERY_ICON,
@@ -440,8 +427,6 @@ xfpm_battery_icon_new(guint last_full,guint battery_type,
                             critical_level,
                             "visible",
                             visible,
-                            "ac-adapter-present",
-                            ac_adapter_present,
                             NULL);
                             
     return GTK_STATUS_ICON(battery_icon);
@@ -449,12 +434,13 @@ xfpm_battery_icon_new(guint last_full,guint battery_type,
 
 void
 xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint charge,guint remaining_per,
-                         gboolean present,gboolean is_charging,gboolean is_discharging)
+                         gboolean present,gboolean is_charging,gboolean is_discharging,
+                         gboolean ac_adapter_present)
 {
     g_return_if_fail(XFPM_IS_BATTERY_ICON(battery_icon));
-
-    battery_icon->battery_present = present;
-        
+    battery_icon->ac_adapter_present = ac_adapter_present;
+    battery_icon->battery_present    = present;
+    
     gchar tip[128];
     
     if ( present == FALSE )
@@ -489,7 +475,7 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint charge,guint rem
     //battery is charging
     if ( is_charging == TRUE && is_discharging == FALSE )
     {
-        strcat(tip,_(" Charging "));
+        strcat(tip,_(" Battery is charging "));
         gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
         xfpm_battery_icon_update(battery_icon,CHARGING,remaining_per);
     }
@@ -499,7 +485,11 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint charge,guint rem
     {
         if ( remaining_per > battery_icon->critical_level + 18 )
         {
-            strcat(tip,_(" Running on battery"));
+            if ( !battery_icon->ac_adapter_present )
+            {
+                strcat(tip,
+                battery_icon->type == PRIMARY ? _(" Running on battery"): _(" Battery is discharging"));
+            }
             gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
             xfpm_battery_icon_update(battery_icon,DISCHARGING,remaining_per);
         } 

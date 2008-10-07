@@ -67,20 +67,6 @@ DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(POFILES)
 EXTRA_DISTFILES = POTFILES.skip Makevars LINGUAS
 
 POTFILES = \
-dist distdir: $(DISTFILES)
-	dists="$(DISTFILES)"; \
-	extra_dists="$(EXTRA_DISTFILES)"; \
-	for file in $$extra_dists; do \
-	  test -f $(srcdir)/$$file && dists="$$dists $(srcdir)/$$file"; \
-	done; \
-	for file in $$dists; do \
-	  test -f $$file || file="$(srcdir)/$$file"; \
-	  ln $$file $(distdir) 2> /dev/null \
-	    || cp -p $$file $(distdir); \
-	done
-
-update-po: Makefile
-	$(MAKE) $(GETTEXT_PACKAGE).pot
 	tmpdir=`pwd`; \
 	linguas="$(USE_LINGUAS)"; \
 	for lang in $$linguas; do \

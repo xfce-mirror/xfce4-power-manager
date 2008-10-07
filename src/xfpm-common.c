@@ -40,3 +40,32 @@ xfpm_load_icon(const char *icon_name,gint size)
     }
     return icon;                               
 }
+
+void       
+xfpm_lock_screen(void)
+{
+    gboolean ret = g_spawn_command_line_async("gnome-screensaver-command -l",NULL);
+    
+    if ( !ret )
+    {
+        /* this should be the default*/
+        ret = g_spawn_command_line_async("xdg-screensaver lock",NULL);
+    }
+    
+    if ( !ret )
+    {
+        ret = g_spawn_command_line_async("xscreensaver-command -lock",NULL);
+    }
+    
+    if ( !ret )
+    {
+        g_critical("Connot lock screen\n");
+    }
+    
+}
+
+void       
+xfpm_preferences(void) 
+{
+    g_spawn_command_line_async("xfce4-power-manager -c",NULL);
+}
