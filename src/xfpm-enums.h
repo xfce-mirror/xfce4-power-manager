@@ -33,6 +33,7 @@ typedef enum
     FULL
 } XfpmBatteryState;
 
+/* Battery type */
 typedef enum
 {
     UNKNOWN,
@@ -43,6 +44,7 @@ typedef enum
     
 } XfpmBatteryType;
 
+/* CPU Freq Linux governors */
 typedef enum
 {
     POWERSAVE,
@@ -52,5 +54,15 @@ typedef enum
     USERSPACE
     
 } XfpmCpuGovernor;
+
+
+/* Lid switch control */
+typedef enum
+{
+    LID_SWITCH_DO_NOTHING,
+    LID_SWITCH_DO_SUSPEND,
+    LID_SWITCH_DO_HIBERNATE
+
+} XfpmLidSwitchAction;
 
 #endif

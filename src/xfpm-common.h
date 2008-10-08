@@ -52,7 +52,7 @@
 #define ON_AC_DPMS_TIMEOUTS_CFG     "/xfce4-power-manager/on-ac-monitor-dpms-timeouts"
 #endif
 
-GdkPixbuf* xfpm_load_icon(const char *icon_name,gint size);
+GdkPixbuf* xfpm_load_icon(const gchar *icon_name,gint size);
 void       xfpm_lock_screen(void);
 void       xfpm_preferences(void);
 

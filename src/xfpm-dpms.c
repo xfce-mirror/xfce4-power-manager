@@ -95,7 +95,6 @@ enum
     PROP_DPMS
 };
 
-
 static void xfpm_dpms_class_init(XfpmDpmsClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);

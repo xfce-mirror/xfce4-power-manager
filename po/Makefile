@@ -67,15 +67,6 @@ DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(POFILES)
 EXTRA_DISTFILES = POTFILES.skip Makevars LINGUAS
 
 POTFILES = \
-	@if test ! -f $@; then \
-	  rm -f stamp-it; \
-	  $(MAKE) stamp-it; \
-	fi
-
-stamp-it: Makefile.in.in $(top_builddir)/config.status POTFILES.in
-	cd $(top_builddir) \
-	  && CONFIG_FILES=$(subdir)/Makefile.in CONFIG_HEADERS= CONFIG_LINKS= \
-	       $(SHELL) ./config.status
 
 # Tell versions [3.59,3.63) of GNU make not to export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

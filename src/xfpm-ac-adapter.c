@@ -20,12 +20,39 @@
  */
 
 
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <stdio.h>
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <gtk/gtkstatusicon.h>
+
+#include <libxfcegui4/libxfcegui4.h>
+
+#include <glib/gi18n.h>
 
 #include "xfpm-hal.h"
 #include "xfpm-ac-adapter.h"
 #include "xfpm-common.h"
-
+#include "xfpm-notify.h"
 #include "xfpm-debug.h"
 
 #define XFPM_AC_ADAPTER_GET_PRIVATE(o) \
@@ -42,11 +69,18 @@ static void xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter);
 static void xfpm_ac_adapter_property_changed_cb(XfpmHal *hal,const gchar *udi,
                                                 const gchar *key,gboolean is_removed,
                                                 gboolean is_added,XfpmAcAdapter *adapter);
+static void xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
+                                       guint button,
+                                       guint activate_time,
+                                       XfpmAcAdapter *adapter);
 
 struct XfpmAcAdapterPrivate
 {
     XfpmHal *hal;
     gboolean present;
+    gboolean can_suspend;
+    gboolean can_hibernate;
+    
 };
 
 enum 
@@ -86,11 +120,36 @@ xfpm_ac_adapter_init(XfpmAcAdapter *adapter)
     
     priv->hal = xfpm_hal_new();
     
+    GError *error = NULL;
+    
+    priv->can_hibernate = xfpm_hal_get_bool_info(priv->hal,
+                                                 HAL_ROOT_COMPUTER,
+                                                 "power_management.can_hibernate",
+                                                 &error);
+    if ( error )
+    {
+        XFPM_DEBUG("%s: \n",error->message);
+        g_error_free(error);
+    }                                          
+
+    priv->can_suspend = xfpm_hal_get_bool_info(priv->hal,
+                                               HAL_ROOT_COMPUTER,
+                                               "power_management.can_suspend",
+                                               &error);
+    if ( error )
+    {
+        XFPM_DEBUG("%s: \n",error->message);
+        g_error_free(error);
+    }            
+    
+    
     g_signal_connect(priv->hal,"xfpm-device-property-changed",
                      G_CALLBACK(xfpm_ac_adapter_property_changed_cb),adapter);
     
     g_signal_connect(adapter,"size-changed",
                     G_CALLBACK(xfpm_ac_adapter_size_changed_cb),NULL);
+    g_signal_connect(adapter,"popup-menu",
+                    G_CALLBACK(xfpm_ac_adapter_popup_menu),adapter);
 }
 
 static void
@@ -166,6 +225,8 @@ xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter)
         }
     }
     libhal_free_string_array(udi);
+    gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
+                priv->present ? _("Adapter is online") : _("Adapter is offline"));    
     g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
 }
 
@@ -192,10 +253,159 @@ xfpm_ac_adapter_property_changed_cb(XfpmHal *hal,const gchar *udi,
         {
             XFPM_DEBUG("Ac adapter changed %d\n",ac_adapter);
             priv->present = ac_adapter;
+            gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
+                        priv->present ? _("Adapter is online") : _("Adapter is offline"));   
             g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
         }
     }
 }
+
+static void
+xfpm_ac_adapter_report_sleep_errors(XfpmAcAdapter *adapter,const gchar *error,
+                                    const gchar *icon_name)
+{
+#ifdef HAVE_LIBNOTIFY
+    xfpm_notify_simple("Xfce power manager",
+                       error,
+                       14000,
+                       NOTIFY_URGENCY_CRITICAL,
+                       GTK_STATUS_ICON(adapter),
+                       icon_name,
+                       0);
+
+}
+#endif
+
+static gboolean
+xfpm_ac_adapter_do_hibernate(XfpmAcAdapter *adapter)
+{
+    XfpmAcAdapterPrivate *priv;
+    priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+    
+    GError *error = NULL;
+    guint8 critical;
+    gboolean ret =
+    xfpm_hal_hibernate(priv->hal,&error,&critical);
+     
+    if ( !ret && critical == 1) {
+        xfpm_ac_adapter_report_sleep_errors(adapter,error->message,"gpm-hibernate");
+        g_error_free(error);
+    }
+    
+    return FALSE;
+    
+}
+
+static void
+xfpm_ac_adapter_hibernate_callback(GtkWidget *widget,XfpmAcAdapter *adapter)
+{
+    gboolean ret = 
+    xfce_confirm(_("Are you sure you want to hibernate the system"),
+                GTK_STOCK_YES,
+                _("Hibernate"));
+    
+    if ( ret ) 
+    {
+        xfpm_lock_screen();
+        g_timeout_add_seconds(4,(GSourceFunc)xfpm_ac_adapter_do_hibernate,adapter);
+	}
+}
+
+static gboolean
+xfpm_ac_adapter_do_suspend(XfpmAcAdapter *adapter)
+{
+    XfpmAcAdapterPrivate *priv;
+    priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+    
+    GError *error = NULL;
+    guint8 critical = 0;
+    gboolean ret =
+    xfpm_hal_suspend(priv->hal,&error,&critical);
+    
+    if ( !ret && critical == 1 ) 
+    {
+        xfpm_ac_adapter_report_sleep_errors(adapter,error->message,"gpm-suspend");
+        g_error_free(error);
+    }
+    
+    return FALSE;
+}
+
+static void
+xfpm_ac_adapter_suspend_callback(GtkWidget *widget,XfpmAcAdapter *adapter)
+{
+    gboolean ret = 
+    xfce_confirm(_("Are you sure you want to suspend the system"),
+                GTK_STOCK_YES,
+                _("Suspend"));
+    
+    if ( ret ) 
+    {
+        xfpm_lock_screen();
+        g_timeout_add_seconds(3,(GSourceFunc)xfpm_ac_adapter_do_suspend,adapter);
+    }
+}
+
+static void 
+xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
+                           guint button,
+                           guint activate_time,
+                           XfpmAcAdapter *adapter)
+{
+    XfpmAcAdapterPrivate *priv;
+    priv = XFPM_AC_ADAPTER_GET_PRIVATE(XFPM_AC_ADAPTER(tray_icon));
+    
+    GtkWidget *menu,*mi,*img;
+	
+	menu = gtk_menu_new();
+
+	// Hibernate menu option
+	mi = gtk_image_menu_item_new_with_label(_("Hibernate"));
+	img = gtk_image_new_from_icon_name("gpm-hibernate",GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
+	gtk_widget_set_sensitive(mi,FALSE);
+	
+	
+	if ( priv->can_hibernate )
+	{
+		gtk_widget_set_sensitive(mi,TRUE);
+		g_signal_connect(mi,"activate",
+					 	 G_CALLBACK(xfpm_ac_adapter_hibernate_callback),
+					 	 adapter);
+	}
+	gtk_widget_show(mi);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+	
+	// Suspend menu option
+	mi = gtk_image_menu_item_new_with_label(_("Suspend"));
+	img = gtk_image_new_from_icon_name("gpm-suspend",GTK_ICON_SIZE_MENU);
+	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
+	
+	gtk_widget_set_sensitive(mi,FALSE);
+	if ( priv->can_suspend )
+    {	
+		gtk_widget_set_sensitive(mi,TRUE);
+		g_signal_connect(mi,"activate",
+					     G_CALLBACK(xfpm_ac_adapter_suspend_callback),
+					     adapter);
+	}
+	gtk_widget_show(mi);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+	// Separotor
+	mi = gtk_separator_menu_item_new();
+	gtk_widget_show(mi);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+	mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES,NULL);
+	gtk_widget_set_sensitive(mi,TRUE);
+	gtk_widget_show(mi);
+	g_signal_connect(mi,"activate",G_CALLBACK(xfpm_preferences),NULL);
+	
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+	
+	// Popup the menu
+	gtk_menu_popup(GTK_MENU(menu),NULL,NULL,
+		       NULL,NULL,button,activate_time);
+}                                             
 
 GtkStatusIcon *
 xfpm_ac_adapter_new(gboolean visible)
