@@ -380,7 +380,7 @@ xfpm_settings_battery(XfconfChannel *channel, gboolean can_hibernate)
     
     label = gtk_label_new(_("Consider battery charge critical"));
     gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
+    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,0,1);
     
     critical_spin = gtk_spin_button_new_with_range(1,15,1);
     gtk_widget_show(critical_spin);
@@ -392,7 +392,7 @@ xfpm_settings_battery(XfconfChannel *channel, gboolean can_hibernate)
     
     label = gtk_label_new(_("When battery charge level is critical do"));
     gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
+    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,1,2);
     
     action = gtk_combo_box_new_text();
     gtk_combo_box_append_text(GTK_COMBO_BOX(action),_("Nothing"));
@@ -413,7 +413,7 @@ xfpm_settings_battery(XfconfChannel *channel, gboolean can_hibernate)
     GtkWidget *notify_bt;        
     label = gtk_label_new(_("Enable battery state notification"));
     gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,2,3,GTK_SHRINK,GTK_SHRINK,0,0);
+    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
     notify_bt = gtk_check_button_new();
     gtk_widget_show(notify_bt);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(notify_bt),
