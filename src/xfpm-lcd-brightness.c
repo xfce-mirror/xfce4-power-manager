@@ -45,6 +45,8 @@
 
 #include "xfpm-lcd-brightness.h"
 #include "xfpm-hal.h"
+#include "xfpm-debug.h"
+#include "xfpm-common.h"
 
 #define XFPM_LCD_BRIGHTNESS_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_LCD_BRIGHTNESS,XfpmLcdBrightnessPrivate))
@@ -98,7 +100,24 @@ static void xfpm_lcd_brightness_finalize(GObject *object)
 
 static void xfpm_lcd_brightness_load_config(XfpmLcdBrightness *lcd)
 {
+    XFPM_DEBUG("Loading configuration\n");
+    GError *g_error = NULL;
+    if ( !xfconf_init(&g_error) )
+    {
+        g_critical("xfconf init failed: %s\n",g_error->message);
+        XFPM_DEBUG("Using default values\n");
+        g_error_free(g_error);
+        lcd->brightness_control_enabled = FALSE;
+        return;
+    }
     
+    XfconfChannel *channel;
+    channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
+
+    lcd->brightness_control_enabled = xfconf_channel_get_bool(channel,LCD_BRIGHTNESS_CFG,FALSE);
+    
+    g_object_unref(channel);
+    xfconf_shutdown();    
 }
 
 XfpmLcdBrightness *

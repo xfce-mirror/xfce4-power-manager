@@ -78,6 +78,8 @@ static void xfpm_dpms_get_property(GObject *object,
 static void xfpm_dpms_load_config (XfpmDpms *dpms);                                   
 static gboolean xfpm_dpms_set_dpms_mode(XfpmDpms *dpms);
 
+static void xfpm_dpms_set_timeouts(XfpmDpms *dpms);
+
 static void xfpm_dpms_notify_cb        (GObject *object,
                                         GParamSpec *arg1,
                                         gpointer data);  
@@ -304,37 +306,11 @@ xfpm_dpms_set_dpms_mode(XfpmDpms *dpms)
     }
     
     return TRUE;
-    
 }
 
 static void
-xfpm_dpms_notify_cb(GObject *object,GParamSpec *arg1,gpointer data)
+xfpm_dpms_set_timeouts(XfpmDpms *dpms)
 {
-    XfpmDpms *dpms;
-    XfpmDpmsPrivate *priv;
-    
-    if ( strcmp(arg1->name,"dpms") )
-    {
-        return;
-    }
-
-    dpms = XFPM_DPMS(object);
-    priv = XFPM_DPMS_GET_PRIVATE(dpms);
-    XFPM_DEBUG("dpms callback\n");
-    
-    if ( !priv->dpms_capable ) 
-    {
-        XFPM_DEBUG("dpms incapable\n");
-        return;
-    }
-    
-    xfpm_dpms_set_dpms_mode(dpms);
-    if ( !dpms->dpms_enabled )
-    {
-        XFPM_DEBUG("dpms disabled\n");
-        return;
-    }
-    
     CARD16 x_standby = 0 ,x_suspend = 0,x_off = 0;
     DPMSGetTimeouts(GDK_DISPLAY(),&x_standby,&x_suspend,&x_off);
     
@@ -363,12 +339,47 @@ xfpm_dpms_notify_cb(GObject *object,GParamSpec *arg1,gpointer data)
     }
 }
 
+static void
+xfpm_dpms_notify_cb(GObject *object,GParamSpec *arg1,gpointer data)
+{
+    XfpmDpms *dpms;
+    XfpmDpmsPrivate *priv;
+    
+    dpms = XFPM_DPMS(object);
+    priv = XFPM_DPMS_GET_PRIVATE(dpms);
+    XFPM_DEBUG("dpms callback\n");
+    
+    if ( !priv->dpms_capable ) 
+    {
+        XFPM_DEBUG("dpms incapable\n");
+        return;
+    }
+    
+    if ( !strcmp(arg1->name,"dpms") )
+    {
+        xfpm_dpms_set_dpms_mode(dpms);
+    }
+    
+    if ( dpms->dpms_enabled )
+    {
+            xfpm_dpms_set_timeouts(dpms);
+    }
+}
+
 XfpmDpms *
 xfpm_dpms_new(void)
 {
     XfpmDpms *dpms = NULL;
     dpms = g_object_new(XFPM_TYPE_DPMS,NULL);
     return dpms;
+}
+
+gboolean   
+xfpm_dpms_capable (XfpmDpms *dpms)
+{
+    XfpmDpmsPrivate *priv;
+    priv = XFPM_DPMS_GET_PRIVATE(dpms);
+    return priv->dpms_capable;
 }
 
 #endif

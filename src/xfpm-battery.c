@@ -385,7 +385,7 @@ xfpm_battery_refresh_tray_icon(XfpmBattery *batt)
     else if ( batt->show_tray == CHARGING_OR_DISCHARGING && g_hash_table_size(priv->batteries) == 0 )
     {
         XFPM_DEBUG("batt->show_tray == CHARGING_OR_DISCHARGING && g_hash_table_size(priv->batteries) == 0 \n");
-        g_signal_emit(G_OBJECT(batt),signals[XFPM_SHOW_ADAPTER_ICON],0,TRUE);
+        g_signal_emit(G_OBJECT(batt),signals[XFPM_SHOW_ADAPTER_ICON],0,FALSE);
         
     }
     else if ( batt->show_tray == ALWAYS && g_hash_table_size(priv->batteries) != 0 )

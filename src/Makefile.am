@@ -41,8 +41,8 @@ xfce4_power_manager_SOURCES = 	$(generated_files)		\
 				xfpm-cpu.h			\
 				xfpm-lcd-brightness.c		\
 				xfpm-lcd-brightness.h		\
-				xfpm-lid.c			\
-				xfpm-lid.h			\
+				xfpm-button.c			\
+				xfpm-button.h			\
 				xfpm-dbus-messages.c		\
 				xfpm-dbus-messages.h		\
 				xfpm-battery.c			\

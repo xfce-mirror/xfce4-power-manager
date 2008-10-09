@@ -22,8 +22,9 @@
 #ifndef __XFPM_SETTINGS_H
 #define __XFPM_SETTINGS_H
 
-GtkWidget *xfpm_settings_new(XfconfChannel *channel,gboolean battery_settings,
-                             gboolean can_hibernate,guint8 *govs);
+GtkWidget *xfpm_settings_new(XfconfChannel *channel,gboolean is_laptop,
+                             gboolean can_hibernate,gboolean can_suspend,
+                             gboolean dpms_capable,guint8 *govs);
 
 
 #endif /* __XFPM_SETTINGS_H */

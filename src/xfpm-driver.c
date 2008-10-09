@@ -23,6 +23,24 @@
 #include <config.h>
 #endif
 
+#include <stdio.h>
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <gtk/gtk.h>
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -40,6 +58,8 @@
 #include "xfpm-battery.h"
 #include "xfpm-cpu.h"
 #include "xfpm-ac-adapter.h"
+#include "xfpm-button.h"
+#include "xfpm-lcd-brightness.h"
 #include "xfpm-notify.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-common.h"
@@ -78,6 +98,15 @@ static DBusHandlerResult xfpm_driver_signal_filter
 #define XFPM_DRIVER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o),XFPM_TYPE_DRIVER,XfpmDriverPrivate))
 
+typedef enum 
+{
+    SYSTEM_LAPTOP,
+    SYSTEM_DESKTOP,
+    SYSTEM_SERVER,
+    SYSTEM_UNKNOWN
+    
+} SystemFormFactor;
+
 struct XfpmDriverPrivate 
 {
     DBusConnection *conn;
@@ -85,9 +114,16 @@ struct XfpmDriverPrivate
     
     gboolean dialog_opened;
     
+    SystemFormFactor formfactor;
+    gboolean can_suspend;
+    gboolean can_hibernate;
+    
     XfpmHal     *hal;
     XfpmCpu     *cpu;
     XfpmBattery *batt;
+    XfpmButton  *bt;
+    XfpmLcdBrightness *lcd;
+    
 #ifdef HAVE_DPMS    
     XfpmDpms *dpms;
 #endif    
@@ -117,6 +153,8 @@ xfpm_driver_init(XfpmDriver *drv)
     priv->cpu     = NULL;
     priv->adapter = NULL;
     priv->batt    = NULL;
+    priv->bt      = NULL;
+    priv->lcd     = NULL;
     priv->hal     = NULL;
 #ifdef HAVE_DPMS
     priv->dpms    = NULL;
@@ -152,6 +190,14 @@ xfpm_driver_finalize(GObject *object)
     {
         g_object_unref(drv->priv->cpu);
     }
+    if ( drv->priv->bt )
+    {
+        g_object_unref(drv->priv->bt);
+    }
+    if ( drv->priv->lcd )
+    {
+        g_object_unref(drv->priv->lcd);
+    }
     if ( drv->priv->conn )
     {
         dbus_connection_unref(drv->priv->conn);
@@ -176,10 +222,8 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
 #ifdef HAVE_DPMS    
     XFPM_DEBUG("Setting DPMS ac-adapter property\n");
     g_object_set(G_OBJECT(priv->dpms),"on-ac-adapter",priv->ac_adapter_present,NULL);
-    g_object_notify(G_OBJECT(priv->dpms),"dpms");
 #endif    
     g_object_set(G_OBJECT(priv->cpu),"on-ac-adapter",priv->ac_adapter_present,NULL);
-    g_object_notify(G_OBJECT(priv->cpu),"cpu-freq");
 
     g_object_set(G_OBJECT(priv->batt),"on-ac-adapter",priv->ac_adapter_present,NULL);
 }                                                    
@@ -250,27 +294,26 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
         return;
     }
     
-    /*
     if ( !strcmp(property,CPU_FREQ_SCALING_CFG) ) 
     {
         gboolean val = g_value_get_boolean(value);
-        g_object_set(G_OBJECT(priv->drv),"cpu-freq-scaling-enabled",val,NULL);
+        g_object_set(G_OBJECT(priv->cpu),"cpu-freq-scaling-enabled",val,NULL);
         return;
     }
     
     if ( !strcmp(property,ON_AC_CPU_GOV_CFG) ) 
     {
         guint val = g_value_get_uint(value);
-        g_object_set(G_OBJECT(priv->drv),"on-ac-cpu-gov",val,NULL);
+        g_object_set(G_OBJECT(priv->cpu),"on-ac-cpu-gov",val,NULL);
         return;
     }
     if ( !strcmp(property,ON_BATT_CPU_GOV_CFG) ) 
     {
         guint val = g_value_get_uint(value);
-        g_object_set(G_OBJECT(priv->drv),"on-batt-cpu-gov",val,NULL);
+        g_object_set(G_OBJECT(priv->cpu),"on-batt-cpu-gov",val,NULL);
         return;
     }
-*/    
+    
 #ifdef HAVE_LIBNOTIFY    
     if ( !strcmp(property,BATT_STATE_NOTIFICATION_CFG) ) 
     {
@@ -339,6 +382,28 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
         return;
     }
 #endif
+
+    if ( !strcmp(property,LID_SWITCH_CFG) ) 
+    {
+        guint val = g_value_get_uint(value);
+        g_object_set(G_OBJECT(priv->bt),"lid-switch-action",val,NULL);
+        return;
+    }
+    
+    if ( !strcmp(property,SLEEP_SWITCH_CFG) ) 
+    {
+        guint val = g_value_get_uint(value);
+        g_object_set(G_OBJECT(priv->bt),"sleep-switch-action",val,NULL);
+        return;
+    }
+    
+    if ( !strcmp(property,POWER_SWITCH_CFG) ) 
+    {
+        guint val = g_value_get_uint(value);
+        g_object_set(G_OBJECT(priv->bt),"power-switch-action",val,NULL);
+        return;
+    }
+    
 } 
 
 static gboolean
@@ -379,8 +444,19 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
         }   
         libhal_free_string_array(govs);
     }
-    
-    dialog = xfpm_settings_new(channel,TRUE,TRUE,gov);
+    gboolean with_dpms;
+#ifdef HAVE_DPMS
+    with_dpms = xfpm_dpms_capable(priv->dpms);
+#else
+    with_dpms = FALSE;
+#endif
+            
+    dialog = xfpm_settings_new(channel,
+                               priv->formfactor == SYSTEM_LAPTOP ? TRUE : FALSE,
+                               priv->can_hibernate,
+                               priv->can_suspend,
+                               with_dpms,
+                               gov);
     
     xfce_gtk_window_center_on_monitor_with_pointer(GTK_WINDOW(dialog));
     gtk_window_set_modal(GTK_WINDOW(dialog), FALSE);
@@ -459,6 +535,36 @@ _show_adapter_icon(XfpmBattery *batt,gboolean show,XfpmDriver *drv)
     
 }
 
+static void
+_get_system_form_factor(XfpmDriverPrivate *priv)
+{
+    priv->formfactor = SYSTEM_UNKNOWN;
+    
+    gchar *factor = xfpm_hal_get_string_info(priv->hal,
+                                            HAL_ROOT_COMPUTER,
+                                            "system.formfactor",
+                                            NULL);
+    if (!factor ) return;
+    
+    if ( !strcmp(factor,"laptop") )
+    {
+        priv->formfactor = SYSTEM_LAPTOP;
+    }
+    else if ( !strcmp(factor,"desktop") )
+    {
+        priv->formfactor = SYSTEM_DESKTOP;
+    }
+    else if ( !strcmp(factor,"server") )
+    {
+        priv->formfactor = SYSTEM_SERVER;
+    }
+    else if ( !strcmp(factor,"unknown") )
+    {
+        priv->formfactor = SYSTEM_UNKNOWN;
+    }
+    
+}
+
 gboolean
 xfpm_driver_monitor (XfpmDriver *drv)
 {
@@ -485,18 +591,42 @@ xfpm_driver_monitor (XfpmDriver *drv)
     dbus_connection_add_filter(priv->conn,xfpm_driver_signal_filter,drv,NULL);
     
     priv->hal = xfpm_hal_new();
+    _get_system_form_factor(priv);
+    
+    GError *g_error = NULL;
+    priv->can_suspend = xfpm_hal_get_bool_info(priv->hal,
+                                               HAL_ROOT_COMPUTER,
+                                               "power_management.can_suspend",
+                                               &g_error);
+                                               
+    if ( g_error )
+    {
+        XFPM_DEBUG("%s: \n",g_error->message);
+        g_error_free(g_error);
+    }            
+    
+    priv->can_hibernate = xfpm_hal_get_bool_info(priv->hal,
+                                               HAL_ROOT_COMPUTER,
+                                               "power_management.can_hibernate",
+                                               &g_error);
+                                               
+    if ( g_error )
+    {
+        XFPM_DEBUG("%s: \n",g_error->message);
+        g_error_free(g_error);
+    }            
+    
 #ifdef HAVE_DPMS    
-    XFPM_DEBUG("DPMS Monitoring\n");
     priv->dpms = xfpm_dpms_new();
 #endif  
-    XFPM_DEBUG("Cpu freq monitoring\n");
     priv->cpu = xfpm_cpu_new();
-
-    XFPM_DEBUG("Battery monitoring\n"); 
+    
+    priv->bt  = xfpm_button_new();
+    priv->lcd = xfpm_lcd_brightness_new();
+    
     priv->batt = xfpm_battery_new();
     g_signal_connect(priv->batt,"xfpm-show-adapter-icon",G_CALLBACK(_show_adapter_icon),drv);
-      
-    XFPM_DEBUG("AC adapter monitoring\n");
+    
     priv->adapter = xfpm_ac_adapter_new(FALSE);
     g_signal_connect(priv->adapter,"xfpm-ac-adapter-changed",
                     G_CALLBACK(xfpm_driver_ac_adapter_state_changed_cb),drv);

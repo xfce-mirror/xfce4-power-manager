@@ -68,6 +68,7 @@ static GtkWidget *conservative_on_batt;
 static GtkWidget *userspace_on_batt;
 
 #ifdef HAVE_DPMS
+static GtkWidget *dpms_op;
 static GtkWidget *on_batt_dpms;
 static GtkWidget *on_ac_dpms;
 #endif
@@ -103,6 +104,39 @@ set_critical_action_cb(GtkWidget *widget,XfconfChannel *channel)
     if(!xfconf_channel_set_uint(channel,CRITICAL_BATT_ACTION_CFG,value))
     {
         g_critical("Cannot set value %s\n",CRITICAL_BATT_ACTION_CFG);
+    }
+}
+
+static void
+set_power_button_action_cb(GtkWidget *widget,XfconfChannel *channel)
+{
+    guint value = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+    
+    if(!xfconf_channel_set_uint(channel,POWER_SWITCH_CFG,value))
+    {
+        g_critical("Cannot set value %s\n",POWER_SWITCH_CFG);
+    }
+}
+
+static void
+set_sleep_button_action_cb(GtkWidget *widget,XfconfChannel *channel)
+{
+    guint value = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+    
+    if(!xfconf_channel_set_uint(channel,SLEEP_SWITCH_CFG,value))
+    {
+        g_critical("Cannot set value %s\n",SLEEP_SWITCH_CFG);
+    }
+}
+
+static void
+set_lid_button_action_cb(GtkWidget *widget,XfconfChannel *channel)
+{
+    guint value = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
+    
+    if(!xfconf_channel_set_uint(channel,LID_SWITCH_CFG,value))
+    {
+        g_critical("Cannot set value %s\n",LID_SWITCH_CFG);
     }
 }
 
@@ -483,7 +517,6 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 *govs,const gchar 
         }
     }
     
-    
     return frame;
 }
 
@@ -681,7 +714,7 @@ xfpm_settings_dpms_on_ac_adapter(XfconfChannel *channel,const gchar *label)
 }
 
 static GtkWidget *
-xfpm_settings_dpms(XfconfChannel *channel,gboolean laptop)
+xfpm_settings_dpms(XfconfChannel *channel,gboolean laptop,gboolean dpms_capable)
 {
     GtkWidget *hbox;
     hbox = gtk_hbox_new(FALSE,2);
@@ -698,9 +731,103 @@ xfpm_settings_dpms(XfconfChannel *channel,gboolean laptop)
         gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
     }
     
+    if (! dpms_capable ) 
+    {
+        GtkWidget *label;
+        label = gtk_label_new(_("Your monitor doesn't support DPMS settings"));
+        gtk_widget_show(label);
+        GtkWidget *vbox;
+        vbox = gtk_vbox_new(FALSE,2);
+        gtk_widget_show(vbox);
+        gtk_box_pack_start(GTK_BOX(vbox),hbox,FALSE,FALSE,0);
+        gtk_box_pack_start(GTK_BOX(vbox),label,FALSE,FALSE,0);
+        gtk_widget_set_sensitive(dpms_op,FALSE);
+        xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_ac_dpms),FALSE); 
+    
+        if ( GTK_IS_WIDGET(on_batt_dpms) )
+        {
+            xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_batt_dpms),FALSE); 
+        }
+        return vbox;
+    }
     return hbox;
 }
 #endif
+
+static GtkWidget *
+xfpm_settings_keys(XfconfChannel *channel,gboolean can_hibernate,
+                   gboolean can_suspend,gboolean laptop)
+{
+    GtkWidget *table;
+    GtkWidget *label;
+    GtkWidget *frame,*align;
+    
+    frame = xfce_create_framebox(_("Keyboard shortcuts"), &align);
+    gtk_widget_show(frame);
+    table = gtk_table_new(3,2,TRUE);
+    gtk_widget_show(table);
+    gtk_container_add(GTK_CONTAINER(align),table);
+    
+    guint default_config;
+    /// Power Button
+    label = gtk_label_new(_("When power button is pressed do"));
+    gtk_widget_show(label);
+    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,0,1);
+    
+    GtkWidget *power_button;
+    default_config = xfconf_channel_get_uint(channel,POWER_SWITCH_CFG,0);
+    power_button = gtk_combo_box_new_text();
+    gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Nothing"));
+    if ( can_hibernate )
+        gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Hibernate"));
+    if ( can_suspend ) 
+        gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Suspend"));
+    gtk_combo_box_set_active(GTK_COMBO_BOX(power_button),default_config);
+    gtk_widget_show(power_button);
+    gtk_table_attach(GTK_TABLE(table),power_button,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
+    g_signal_connect(power_button,"changed",G_CALLBACK(set_power_button_action_cb),channel);
+    
+    /// Sleep Button
+    label = gtk_label_new(_("When sleep button is pressed do"));
+    gtk_widget_show(label);
+    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,1,2);
+    
+    GtkWidget *sleep_button;
+    default_config = xfconf_channel_get_uint(channel,SLEEP_SWITCH_CFG,0);
+    sleep_button = gtk_combo_box_new_text();
+    gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Nothing"));
+    if ( can_hibernate )
+        gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Hibernate"));
+    if ( can_suspend ) 
+        gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Suspend"));
+    gtk_combo_box_set_active(GTK_COMBO_BOX(sleep_button),default_config);
+    gtk_widget_show(sleep_button);
+    gtk_table_attach(GTK_TABLE(table),sleep_button,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
+    g_signal_connect(sleep_button,"changed",G_CALLBACK(set_sleep_button_action_cb),channel);
+    
+    /// Lid Button
+    if ( laptop )
+    {
+        label = gtk_label_new(_("When lid button is pressed do"));
+        gtk_widget_show(label);
+        gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
+        GtkWidget *lid_button;
+        default_config = xfconf_channel_get_uint(channel,LID_SWITCH_CFG,0);
+        lid_button = gtk_combo_box_new_text();
+        gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Nothing"));
+        if ( can_hibernate )
+            gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Hibernate"));
+        if ( can_suspend ) 
+            gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Suspend"));
+        gtk_combo_box_set_active(GTK_COMBO_BOX(lid_button),default_config);
+        gtk_widget_show(lid_button);
+        gtk_table_attach(GTK_TABLE(table),lid_button,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);
+        g_signal_connect(lid_button,"changed",G_CALLBACK(set_lid_button_action_cb),channel);
+    }
+    
+    return frame;
+    
+}
 
 static GtkWidget *
 xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings)
@@ -756,7 +883,6 @@ xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings)
     gtk_table_attach(GTK_TABLE(table),cpu_gov,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0); 
     
 #ifdef HAVE_DPMS
-    GtkWidget *dpms_op;
     gboolean dpms_enabled;
     label = gtk_label_new(_("Enable DPMS control"));
     gtk_widget_show(label);
@@ -790,25 +916,19 @@ _cursor_changed_cb(GtkTreeView *view,gpointer data)
                        &int_data,
                        -1);
 
-    switch ( int_data )
+    if ( int_data >= 0 && int_data <= 3 )
     {
-        case 0:
-            gtk_notebook_set_current_page(GTK_NOTEBOOK(nt),0);
-            break; 
-        case 1:
-            gtk_notebook_set_current_page(GTK_NOTEBOOK(nt),1);
-            break;
-        case 2:
-            gtk_notebook_set_current_page(GTK_NOTEBOOK(nt),2);
-            break;
-        default:
-            break;
-    }        
- 
+        gtk_notebook_set_current_page(GTK_NOTEBOOK(nt),int_data);
+    }
+    else
+    {
+        gtk_notebook_set_current_page(GTK_NOTEBOOK(nt),0);
+    }
+        
 }
 
 static GtkWidget *
-xfpm_settings_tree_view()
+xfpm_settings_tree_view(gboolean is_laptop)
 {
     GdkPixbuf *pix;
     GtkWidget *view;
@@ -830,20 +950,28 @@ xfpm_settings_tree_view()
 
     gtk_tree_view_append_column(GTK_TREE_VIEW(view),col);
 
-    pix = xfpm_load_icon("gnome-cpu-frequency-applet",42);      
+    pix = xfpm_load_icon("gnome-cpu-frequency-applet",38);      
     gtk_list_store_append(list_store,&iter);
     gtk_list_store_set(list_store,&iter,0,pix,1,0,-1);
     g_object_unref(pix);
 
-    pix = xfpm_load_icon("gpm-primary-100",42);
+    if ( is_laptop )
+    {
+        pix = xfpm_load_icon("gpm-primary-100",38);
+        gtk_list_store_append(list_store,&iter);
+        gtk_list_store_set(list_store,&iter,0,pix,1,1,-1);
+        g_object_unref(pix);
+    }
+   
+    pix = xfpm_load_icon("keyboard",38);
     gtk_list_store_append(list_store,&iter);
-    gtk_list_store_set(list_store,&iter,0,pix,1,1,-1);
+    gtk_list_store_set(list_store,&iter,0,pix,1,2,-1);
     g_object_unref(pix);
     
 #ifdef HAVE_DPMS    
-    pix = xfpm_load_icon("display",42);      
+    pix = xfpm_load_icon("display",38);      
     gtk_list_store_append(list_store,&iter);
-    gtk_list_store_set(list_store,&iter,0,pix,1,2,-1);
+    gtk_list_store_set(list_store,&iter,0,pix,1,3,-1);
     g_object_unref(pix);
 #endif  
     
@@ -853,8 +981,9 @@ xfpm_settings_tree_view()
 }
 
 GtkWidget *
-xfpm_settings_new(XfconfChannel *channel,gboolean laptop,
-                  gboolean can_hibernate,guint8 *govs)
+xfpm_settings_new(XfconfChannel *channel,gboolean is_laptop,
+                  gboolean can_hibernate,gboolean can_suspend,
+                  gboolean dpms_capable,guint8 *govs)
 {
     GtkWidget *Dialog;  /* Main dialog window */
     GtkWidget *mainbox; /* Box to get (Dialog)->vbox */
@@ -877,7 +1006,7 @@ xfpm_settings_new(XfconfChannel *channel,gboolean laptop,
     mainbox = GTK_DIALOG(Dialog)->vbox;
     
     /// General Options Frame
-    box = xfpm_settings_general(channel,laptop);
+    box = xfpm_settings_general(channel,is_laptop);
     gtk_box_pack_start (GTK_BOX (mainbox), box, FALSE, FALSE, 0);
     
     /// Notebook container
@@ -887,24 +1016,26 @@ xfpm_settings_new(XfconfChannel *channel,gboolean laptop,
     table = gtk_table_new(1,2,FALSE);
     gtk_widget_show(table);
     gtk_box_pack_start (GTK_BOX (mainbox), table, FALSE, FALSE, 0);
-    view = xfpm_settings_tree_view();
+    view = xfpm_settings_tree_view(is_laptop);
     gtk_table_attach_defaults(GTK_TABLE(table),view,0,1,0,1);  
     gtk_widget_show(view);  
     gtk_table_attach_defaults(GTK_TABLE(table),nt,1,2,0,1); 
     
     /// Cpu freq settings
-    box = xfpm_settings_cpu_freq(channel,govs,laptop);
+    box = xfpm_settings_cpu_freq(channel,govs,is_laptop);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
 
     /// Battery settings
-    if ( laptop )
-    {
-        box = xfpm_settings_battery(channel,can_hibernate);
-        gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
-    } 
+    box = xfpm_settings_battery(channel,can_hibernate);
+    gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
+
+    /// Keyboard buttons settings
+    box = xfpm_settings_keys(channel,can_hibernate,can_suspend,is_laptop);
+    gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL); 
+    
     /// Dpms settings
 #ifdef HAVE_DPMS 
-    box = xfpm_settings_dpms(channel,laptop);
+    box = xfpm_settings_dpms(channel,is_laptop,dpms_capable);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
 #endif 
     

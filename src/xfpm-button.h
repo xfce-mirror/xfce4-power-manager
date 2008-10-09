@@ -19,35 +19,39 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __XFPM_LCD_BRIGHTNESS_H
-#define __XFPM_LCD_BRIGHTNESS_H
+#ifndef __XFPM_BUTTON_H
+#define __XFPM_BUTTON_H
 
 #include <glib-object.h>
 
+#include "xfpm-enums.h"
+
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_LCD_BRIGHTNESS  (xfpm_lcd_brightness_get_type())
-#define XFPM_LCD_BRIGHTNESS(o)    (G_TYPE_CHECK_INSTANCE_CAST(o,XFPM_TYPE_LCD_BRIGHTNESS,XfpmLcdBrightness))
+#define XFPM_TYPE_BUTTON  (xfpm_button_get_type())
+#define XFPM_BUTTON(o)    (G_TYPE_CHECK_INSTANCE_CAST(o,XFPM_TYPE_BUTTON,XfpmButton)) 
 
-typedef struct XfpmLcdBrightnessPrivate XfpmLcdBrightnessPrivate;
+typedef struct XfpmButtonPrivate XfpmButtonPrivate;
 
 typedef struct
 {
     GObject parent;
-    XfpmLcdBrightnessPrivate *priv;
+    XfpmButtonPrivate *priv;
     
-    gboolean brightness_control_enabled;
+    XfpmButtonAction lid_action;
+    XfpmButtonAction power_action;
+    XfpmButtonAction sleep_action;
     
-} XfpmLcdBrightness;
+} XfpmButton;
+
 
 typedef struct
 {
     GObjectClass parent_class;
-    
-} XfpmLcdBrightnessClass;
+} XfpmButtonClass;
 
-GType              xfpm_lcd_brightness_get_type(void) G_GNUC_CONST;
-XfpmLcdBrightness *xfpm_lcd_brightness_new(void);
+GType          xfpm_button_get_type(void) G_GNUC_CONST;
+XfpmButton *xfpm_button_new(void);
 
 G_END_DECLS
 

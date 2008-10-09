@@ -125,7 +125,7 @@ int main(int argc,char **argv)
         int reply;
         if (!xfpm_dbus_send_message_with_reply("Running",&reply))
         {
-            return -1;
+            return 1;
         }
         if ( reply != 1 )
         {
@@ -141,7 +141,7 @@ int main(int argc,char **argv)
         int reply;
         if (!xfpm_dbus_send_message_with_reply("Quit",&reply))
         {
-            return -1;
+            return 1;
         }
         
         if ( reply == 0 )
@@ -158,7 +158,7 @@ int main(int argc,char **argv)
         int reply;
         if (!xfpm_dbus_send_message_with_reply("Running",&reply))
         {
-            return -1;
+            return 1;
         }
         
         if ( reply == 1 )
@@ -172,7 +172,7 @@ int main(int argc,char **argv)
              /* g_disaster */
             g_error("Unable to load xfce4 power manager driver\n");
             g_object_unref(driver);
-            return -1;
+            return 1;
         }    
     }
         

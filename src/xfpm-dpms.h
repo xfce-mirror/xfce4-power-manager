@@ -63,6 +63,7 @@ typedef struct
 
 GType      xfpm_dpms_get_type    ();
 XfpmDpms  *xfpm_dpms_new         (void);
+gboolean   xfpm_dpms_capable     (XfpmDpms *dpms);
 
 G_END_DECLS
 
