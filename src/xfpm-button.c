@@ -588,7 +588,7 @@ xfpm_button_get_switches(XfpmButton *bt)
     g_value_set_boolean(&value,priv->lid_button_has_state);    
     content2 = g_strdup_value_contents(&value);
     
-    XFPM_DEBUG("LID Switch found = %s has_state = %s\n",content1,content2);
+    XFPM_DEBUG("LID Switch found  = %s has_state = %s\n",content1,content2);
     g_free(content1);
     g_free(content2);
     

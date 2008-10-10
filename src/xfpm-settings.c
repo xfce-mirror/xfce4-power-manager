@@ -822,7 +822,8 @@ xfpm_settings_keys(XfconfChannel *channel,gboolean can_hibernate,
     if ( can_suspend ) 
         gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Suspend"));
      if ( can_hibernate )
-        gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Hibernate"));    
+        gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Hibernate"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Shutdown"));        
     gtk_combo_box_set_active(GTK_COMBO_BOX(power_button),default_config);
     gtk_widget_show(power_button);
     gtk_table_attach(GTK_TABLE(table),power_button,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
@@ -841,6 +842,7 @@ xfpm_settings_keys(XfconfChannel *channel,gboolean can_hibernate,
         gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Suspend"));
     if ( can_hibernate )
         gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Hibernate"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Shutdown"));    
     gtk_combo_box_set_active(GTK_COMBO_BOX(sleep_button),default_config);
     gtk_widget_show(sleep_button);
     gtk_table_attach(GTK_TABLE(table),sleep_button,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
@@ -860,6 +862,7 @@ xfpm_settings_keys(XfconfChannel *channel,gboolean can_hibernate,
             gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Suspend"));
         if ( can_hibernate )
             gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Hibernate"));
+        gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Shutdown"));    
         gtk_combo_box_set_active(GTK_COMBO_BOX(lid_button),default_config);
         gtk_widget_show(lid_button);
         gtk_table_attach(GTK_TABLE(table),lid_button,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);
