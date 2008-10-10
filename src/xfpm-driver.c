@@ -226,6 +226,7 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
     g_object_set(G_OBJECT(priv->cpu),"on-ac-adapter",priv->ac_adapter_present,NULL);
 
     g_object_set(G_OBJECT(priv->batt),"on-ac-adapter",priv->ac_adapter_present,NULL);
+    g_object_set(G_OBJECT(priv->lcd),"on-ac-adapter",priv->ac_adapter_present,NULL);
 }                                                    
 
 static void
@@ -323,6 +324,12 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
     }
 #endif    
 
+    if ( !strcmp(property,LCD_BRIGHTNESS_CFG) )
+    {
+        gboolean val = g_value_get_boolean(value);
+        g_object_set(G_OBJECT(priv->lcd),"brightness-enabled",val,NULL);
+        return;
+    }
 #ifdef HAVE_DPMS
     if ( !strcmp(property,DPMS_ENABLE_CFG) ) 
     {
@@ -455,7 +462,7 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
 #else
     with_dpms = FALSE;
 #endif
-            
+
     dialog = xfpm_settings_new(channel,
                                priv->formfactor == SYSTEM_LAPTOP ? TRUE : FALSE,
                                priv->can_hibernate,

@@ -153,6 +153,17 @@ set_battery_state_notification_cb(GtkWidget *widget,XfconfChannel *channel)
 } 
 #endif
 
+static void
+set_lcd_brightness_cb(GtkWidget *widget,XfconfChannel *channel)
+{
+    gboolean value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+    
+    if(!xfconf_channel_set_bool(channel,LCD_BRIGHTNESS_CFG,value))
+    {
+        g_critical("Cannot set value %s\n",LCD_BRIGHTNESS_CFG);
+    }
+}
+
 #ifdef HAVE_DPMS
 static void
 set_dpms_cb(GtkWidget *widget,XfconfChannel *channel)
@@ -417,7 +428,7 @@ xfpm_settings_battery(XfconfChannel *channel, gboolean can_hibernate)
     notify_bt = gtk_check_button_new();
     gtk_widget_show(notify_bt);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(notify_bt),
-                                 xfconf_channel_get_bool(channel,BATT_STATE_NOTIFICATION_CFG,TRUE));                    
+                                 xfconf_channel_get_bool(channel,BATT_STATE_NOTIFICATION_CFG,TRUE)); 
     g_signal_connect(notify_bt,"toggled",G_CALLBACK(set_battery_state_notification_cb),channel); 
     gtk_table_attach(GTK_TABLE(table),notify_bt,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);                             
 #endif        
@@ -636,6 +647,32 @@ xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 *govs,gboolean laptop)
     return hbox;
 }
 
+static GtkWidget *
+xfpm_settings_lcd_brightness(XfconfChannel *channel,gboolean laptop)
+{
+    GtkWidget *hbox;
+    hbox = gtk_hbox_new(FALSE,2);
+
+    if ( laptop ) 
+    {
+        GtkWidget *label;
+        label = gtk_label_new(_("Enable lcd brigthness control"));
+        gtk_widget_show(label);
+        gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE,0);
+        
+        GtkWidget *brg;
+        brg = gtk_check_button_new();
+        gtk_widget_show(brg);
+        gtk_box_pack_start(GTK_BOX(hbox),brg,FALSE,FALSE,0);
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(brg),
+                                    xfconf_channel_get_bool(channel,LCD_BRIGHTNESS_CFG,TRUE));
+        g_signal_connect(brg,"toggled",G_CALLBACK(set_lcd_brightness_cb),channel);
+        gtk_widget_show(hbox);
+    }
+    
+    return hbox;
+}
+
 #ifdef HAVE_DPMS
 static GtkWidget *
 xfpm_settings_dpms_on_battery(XfconfChannel *channel)
@@ -674,6 +711,7 @@ xfpm_settings_dpms_on_battery(XfconfChannel *channel)
     return frame;
     
 }
+#endif
 
 static GtkWidget *
 xfpm_settings_dpms_on_ac_adapter(XfconfChannel *channel,const gchar *label)
@@ -719,28 +757,29 @@ xfpm_settings_dpms(XfconfChannel *channel,gboolean laptop,gboolean dpms_capable)
     GtkWidget *hbox;
     hbox = gtk_hbox_new(FALSE,2);
     gtk_widget_show(hbox);
+    GtkWidget *vbox;
+    vbox = gtk_vbox_new(FALSE,0);
     
+    gtk_widget_show(vbox);
+#ifdef HAVE_DPMS
     GtkWidget *frame;
     frame = xfpm_settings_dpms_on_ac_adapter(channel,
                                             laptop ? _("Monitor settings on AC power") : _("Monitor settings"));
     gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
-    
+    gtk_box_pack_start(GTK_BOX(vbox),hbox,TRUE,TRUE,0);
+
     if ( laptop )
     {
         frame = xfpm_settings_dpms_on_battery(channel);
         gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
     }
-    
+
     if (! dpms_capable ) 
     {
         GtkWidget *label;
         label = gtk_label_new(_("Your monitor doesn't support DPMS settings"));
         gtk_widget_show(label);
-        GtkWidget *vbox;
-        vbox = gtk_vbox_new(FALSE,2);
-        gtk_widget_show(vbox);
-        gtk_box_pack_start(GTK_BOX(vbox),hbox,FALSE,FALSE,0);
-        gtk_box_pack_start(GTK_BOX(vbox),label,FALSE,FALSE,0);
+        gtk_box_pack_start(GTK_BOX(vbox),label,TRUE,TRUE,0);
         gtk_widget_set_sensitive(dpms_op,FALSE);
         xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_ac_dpms),FALSE); 
     
@@ -748,11 +787,13 @@ xfpm_settings_dpms(XfconfChannel *channel,gboolean laptop,gboolean dpms_capable)
         {
             xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_batt_dpms),FALSE); 
         }
-        return vbox;
     }
-    return hbox;
+#endif    
+    GtkWidget *lcd_box = xfpm_settings_lcd_brightness(channel,laptop);
+    gtk_box_pack_start(GTK_BOX(vbox),lcd_box,TRUE,TRUE,0);
+    return vbox;
 }
-#endif
+
 
 static GtkWidget *
 xfpm_settings_keys(XfconfChannel *channel,gboolean can_hibernate,
@@ -1033,11 +1074,9 @@ xfpm_settings_new(XfconfChannel *channel,gboolean is_laptop,
     box = xfpm_settings_keys(channel,can_hibernate,can_suspend,is_laptop);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL); 
     
-    /// Dpms settings
-#ifdef HAVE_DPMS 
+    /// Dpms settings && LCD brightness settings
     box = xfpm_settings_dpms(channel,is_laptop,dpms_capable);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
-#endif 
     
     return Dialog;
 }

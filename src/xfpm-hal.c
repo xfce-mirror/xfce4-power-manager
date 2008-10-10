@@ -658,14 +658,14 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     return TRUE;
 }	
 
-gboolean
+void
 xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
                          const gchar *interface,
                          gint32 level,
                          GError **gerror)
                                                             
 {
-    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
+    g_return_if_fail(XFPM_IS_HAL(xfpm_hal));
     
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
@@ -680,7 +680,7 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
 	if (!mess) 
 	{
 	    g_set_error(gerror,0,0,_("Out of memmory"));
-		return FALSE;
+		return;
 	}	
     
     dbus_message_append_args(mess,DBUS_TYPE_INT32,&level,DBUS_TYPE_INVALID);
@@ -694,18 +694,18 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
          dbus_set_g_error(gerror,&error);
          dbus_error_free(&error);
          dbus_message_unref(mess);
-         return FALSE;
+         return;
     }
         
     if ( !reply ) 
     {
         g_set_error(gerror,0,0,_("No reply from HAL daemon"));
         dbus_message_unref(mess);
-        return FALSE;
+        return;
     }
     
     dbus_message_unref(reply);
-    return TRUE;
+    return;
 }
 
 gint32

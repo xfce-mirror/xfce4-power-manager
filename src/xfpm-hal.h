@@ -116,7 +116,7 @@ gboolean             xfpm_hal_hibernate                    (XfpmHal *xfpm_hal,
 gboolean             xfpm_hal_suspend                      (XfpmHal *xfpm_hal,
                                                             GError **gerror,
                                                             guint8 *critical);
-gboolean             xfpm_hal_set_brightness               (XfpmHal *xfpm_hal,
+void                 xfpm_hal_set_brightness               (XfpmHal *xfpm_hal,
                                                             const gchar *interface,
                                                             gint level32,
                                                             GError **gerror);

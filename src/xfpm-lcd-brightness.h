@@ -37,6 +37,7 @@ typedef struct
     XfpmLcdBrightnessPrivate *priv;
     
     gboolean brightness_control_enabled;
+    gboolean ac_adapter_present;
     
 } XfpmLcdBrightness;
 
