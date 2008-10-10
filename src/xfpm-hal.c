@@ -660,21 +660,100 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 
 gboolean
 xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
-                         gint level)
+                         const gchar *interface,
+                         gint32 level,
+                         GError **gerror)
                                                             
 {
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
     
+    XfpmHalPrivate *priv;
+    priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    DBusMessage *mess,*reply;
+	DBusError error;
+
+	mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
+                                 interface,
+                                 HAL_DBUS_INTERFACE_LCD,
+                                 "SetBrightness");
+	if (!mess) 
+	{
+	    g_set_error(gerror,0,0,_("Out of memmory"));
+		return FALSE;
+	}	
+    
+    dbus_message_append_args(mess,DBUS_TYPE_INT32,&level,DBUS_TYPE_INVALID);
+        
+    dbus_error_init(&error);
+    
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+         dbus_set_g_error(gerror,&error);
+         dbus_error_free(&error);
+         dbus_message_unref(mess);
+         return FALSE;
+    }
+        
+    if ( !reply ) 
+    {
+        g_set_error(gerror,0,0,_("No reply from HAL daemon"));
+        dbus_message_unref(mess);
+        return FALSE;
+    }
+    
+    dbus_message_unref(reply);
     return TRUE;
 }
 
-gint
-xfpm_hal_get_brightness (XfpmHal *xfpm_hal)
+gint32
+xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
+                        const gchar *interface,
+                        GError **gerror)
 {
-    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),0);
+    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),-1);
+    XfpmHalPrivate *priv;
+    priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
     
+    DBusMessage *mess,*reply;
+	DBusError error;
+	gint32 brightness_level;
+
+	mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
+                                 interface,
+                                 HAL_DBUS_INTERFACE_LCD,
+                                 "GetBrightness");
+	if (!mess) 
+	{
+	    g_set_error(gerror,0,0,_("Out of memmory"));
+		return -1;
+	}	
     
-    return 1;
+    dbus_error_init(&error);
+    
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+         dbus_set_g_error(gerror,&error);
+         dbus_error_free(&error);
+         dbus_message_unref(mess);
+         return -1;
+    }
+        
+    if ( !reply ) 
+    {
+        g_set_error(gerror,0,0,_("No reply from HAL daemon"));
+        dbus_message_unref(mess);
+        return -1;
+    }
+    
+    dbus_message_get_args(reply,NULL,DBUS_TYPE_INT32,&brightness_level);
+    dbus_message_unref(reply);
+    
+    return brightness_level;
 }
 
 gchar               
@@ -709,6 +788,7 @@ gchar
                               DBUS_TYPE_ARRAY,DBUS_TYPE_STRING,
                               &govs,&dummy,
                               DBUS_TYPE_INVALID,DBUS_TYPE_INVALID);
+        dbus_message_unref(reply);                      
         return govs;
     }
     
@@ -744,6 +824,7 @@ gchar
     {
         dbus_message_get_args(reply,NULL,DBUS_TYPE_STRING,&gov,DBUS_TYPE_INVALID);
         XFPM_DEBUG("Got governor %s\n",gov);
+        dbus_message_unref(reply);
         return gov;
     }
     return NULL;

@@ -30,6 +30,7 @@
 #define HAL_ROOT_COMPUTER	         "/org/freedesktop/Hal/devices/computer"
 #define	HAL_DBUS_INTERFACE_POWER	 "org.freedesktop.Hal.Device.SystemPowerManagement"
 #define HAL_DBUS_INTERFACE_CPU       "org.freedesktop.Hal.Device.CPUFreq"
+#define HAL_DBUS_INTERFACE_LCD       "org.freedesktop.Hal.Device.LaptopPanel"
 
 #define SLEEP_TIMEOUT -1
 
@@ -116,8 +117,12 @@ gboolean             xfpm_hal_suspend                      (XfpmHal *xfpm_hal,
                                                             GError **gerror,
                                                             guint8 *critical);
 gboolean             xfpm_hal_set_brightness               (XfpmHal *xfpm_hal,
-                                                            gint level);
-gint                 xfpm_hal_get_brightness               (XfpmHal *xfpm_hal);                                                            
+                                                            const gchar *interface,
+                                                            gint level32,
+                                                            GError **gerror);
+gint32               xfpm_hal_get_brightness               (XfpmHal *xfpm_hal,
+                                                            const gchar *interface,
+                                                            GError **gerror);                                                            
 
 gchar              **xfpm_hal_get_available_cpu_governors  (XfpmHal *xfpm_hal);
 gchar               *xfpm_hal_get_current_cpu_governor     (XfpmHal *xfpm_hal);
