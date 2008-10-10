@@ -71,6 +71,7 @@ static gboolean xfpm_button_hibernate(XfpmButton *bt);
 static gboolean xfpm_button_suspend(XfpmButton *bt);
 
 static void xfpm_button_handle_condition_detail(XfpmButton *bt,
+                                                const gchar *udi,
                                                 const gchar *condition_detail);
                                            
 static void xfpm_button_handle_device_condition_cb(XfpmHal *hal,
@@ -298,22 +299,36 @@ xfpm_button_do_suspend(XfpmButton *bt)
 }
 
 static void
-xfpm_button_handle_condition_detail(XfpmButton *bt,const gchar *condition_detail)
+xfpm_button_handle_condition_detail(XfpmButton *bt,const gchar *udi,const gchar *condition_detail)
 {
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
+    
     if ( !strcmp(condition_detail,"lid") && bt->lid_action != BUTTON_DO_NOTHING )
     {
-        if ( bt->lid_action == BUTTON_DO_SUSPEND )
+        GError *error = NULL;
+        gboolean pressed = 
+        xfpm_hal_get_bool_info(priv->hal,udi,"button.state.value",&error);
+        if ( error ) 
         {
-            xfpm_lock_screen();
-            xfpm_button_do_suspend(bt);
+            XFPM_DEBUG("Error getting lid switch state: %s\n",error->message);
+            g_error_free(error);
+            return;
         }
-        else if ( bt->lid_action == BUTTON_DO_HIBERNATE )
+        else if ( pressed == TRUE )
         {
-            xfpm_lock_screen();
-            xfpm_button_do_hibernate(bt);
+            if ( bt->lid_action == BUTTON_DO_SUSPEND )
+            {
+                xfpm_lock_screen();
+                xfpm_button_do_suspend(bt);
+            }
+            else if ( bt->lid_action == BUTTON_DO_HIBERNATE )
+            {
+                xfpm_lock_screen();
+                xfpm_button_do_hibernate(bt);
+            }
         }
     }
-    
     else if ( !strcmp(condition_detail,"sleep") && bt->sleep_action != BUTTON_DO_NOTHING )
     {
         if ( bt->sleep_action == BUTTON_DO_SUSPEND )
@@ -361,7 +376,7 @@ xfpm_button_handle_device_condition_cb(XfpmHal *hal,
             return;
         }
         XFPM_DEBUG("proccessing event: %s %s\n",condition_name,condition_detail);
-        xfpm_button_handle_condition_detail(bt,condition_detail);
+        xfpm_button_handle_condition_detail(bt,udi,condition_detail);
     }
 }                                       
 

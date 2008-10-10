@@ -560,7 +560,11 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
                               DBUS_TYPE_INVALID);
         XFPM_DEBUG("MESSAGE_TYPE_RETURN exit_code=%d\n",exit_code);
         dbus_message_unref(reply);
-        if ( exit_code == 0 ) return TRUE;
+        if ( exit_code == 0 )
+        {
+            *critical = 0;
+            return TRUE;
+        }
         if ( exit_code > 1 ) 
         {
             g_set_error(gerror,0,0,_("Failed to hibernate"));
@@ -639,7 +643,11 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
                               DBUS_TYPE_INVALID);
         XFPM_DEBUG("MESSAGE_TYPE_RETURN exit_code=%d\n",exit_code);
         dbus_message_unref(reply);
-        if ( exit_code == 0 ) return TRUE;
+        if ( exit_code == 0 ) 
+        {
+            *critical = 0;
+            return TRUE;
+        }
         if ( exit_code > 1 ) 
         {
             g_set_error(gerror,0,0,_("Failed to suspend"));
