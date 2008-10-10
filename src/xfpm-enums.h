@@ -61,7 +61,8 @@ typedef enum
 {
     BUTTON_DO_NOTHING,
     BUTTON_DO_SUSPEND,
-    BUTTON_DO_HIBERNATE
+    BUTTON_DO_HIBERNATE,
+    BUTTON_DO_SHUTDOWN
 
 } XfpmButtonAction;
 

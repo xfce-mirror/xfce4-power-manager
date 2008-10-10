@@ -70,10 +70,10 @@ static void xfpm_button_do_hibernate(XfpmButton *bt);
 static gboolean xfpm_button_hibernate(XfpmButton *bt);
 static gboolean xfpm_button_suspend(XfpmButton *bt);
 
-static void xfpm_button_handle_condition_detail(XfpmButton *bt,
-                                                const gchar *udi,
-                                                const gchar *condition_detail);
-                                           
+static void xfpm_button_lid_pressed(XfpmButton *bt,const gchar *udi);
+static void xfpm_button_power_pressed(XfpmButton *bt,const gchar *udi);
+static void xfpm_button_sleep_pressed(XfpmButton *bt,const gchar *udi);
+
 static void xfpm_button_handle_device_condition_cb(XfpmHal *hal,
                                                    const gchar *udi,
                                                    const gchar *condition_name,
@@ -86,8 +86,16 @@ static void xfpm_button_get_switches(XfpmButton *bt);
 struct XfpmButtonPrivate
 {
     XfpmHal *hal;
-    GHashTable *buttons;
     gulong handler_id;
+    
+    gboolean have_lid_bt;
+    gboolean lid_button_has_state;
+    
+    gboolean have_power_bt;
+    gboolean power_button_has_state;
+    
+    gboolean have_sleep_bt;
+    gboolean sleep_button_has_state;
 
 };
 
@@ -152,7 +160,15 @@ static void xfpm_button_init(XfpmButton *bt)
     XfpmButtonPrivate *priv;
     priv = XFPM_BUTTON_GET_PRIVATE(bt);
     
-    priv->buttons = g_hash_table_new(g_str_hash,g_str_equal);
+    priv->have_lid_bt           = FALSE;
+    priv->lid_button_has_state  = FALSE;
+    
+    priv->have_power_bt         = FALSE;
+    priv->power_button_has_state= FALSE;
+    
+    priv->have_sleep_bt         = FALSE;
+    priv->sleep_button_has_state= FALSE;
+    
     
     priv->hal = xfpm_hal_new();
     
@@ -285,7 +301,6 @@ xfpm_button_do_hibernate(XfpmButton *bt)
     
     g_signal_handler_block(priv->hal,priv->handler_id);
     g_timeout_add_seconds(2,(GSourceFunc)xfpm_button_hibernate,bt);
-    
 }
 
 static void
@@ -299,61 +314,133 @@ xfpm_button_do_suspend(XfpmButton *bt)
 }
 
 static void
-xfpm_button_handle_condition_detail(XfpmButton *bt,const gchar *udi,const gchar *condition_detail)
+_proccess_action(XfpmButton *bt,XfpmButtonAction action)
+{
+    if ( action == BUTTON_DO_SUSPEND )
+    {
+         xfpm_lock_screen();
+         xfpm_button_do_suspend(bt);
+    }
+    else if ( action == BUTTON_DO_HIBERNATE )
+    {
+         xfpm_lock_screen();
+         xfpm_button_do_hibernate(bt);
+    }
+    else if ( action == BUTTON_DO_SHUTDOWN )
+    {
+        XfpmButtonPrivate *priv;
+        priv = XFPM_BUTTON_GET_PRIVATE(bt);
+        
+        g_signal_handler_block(priv->hal,priv->handler_id);
+        xfpm_hal_shutdown(priv->hal);
+    }
+        
+}
+
+static void
+xfpm_button_lid_pressed(XfpmButton *bt,const gchar *udi)
+{
+    if ( bt->lid_action == BUTTON_DO_NOTHING )
+    {
+        return;
+    }
+    
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
+    
+    if ( priv->have_lid_bt )
+    {
+        if ( priv->lid_button_has_state )
+        {
+            GError *error = NULL;
+            gboolean pressed = 
+            xfpm_hal_get_bool_info(priv->hal,udi,"button.state.value",&error);
+            if ( error ) 
+            {
+                XFPM_DEBUG("Error getting lid switch state: %s\n",error->message);
+                g_error_free(error);
+                return;
+            }
+            else if ( pressed == TRUE )
+            {
+                _proccess_action(bt,bt->lid_action);
+            }
+        }
+        else 
+        {
+            _proccess_action(bt,bt->lid_action);
+        }
+    }
+}
+
+static void
+xfpm_button_power_pressed(XfpmButton *bt,const gchar *udi)
+{
+    if ( bt->power_action == BUTTON_DO_NOTHING )
+    {
+        return;
+    }
+    
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
+    
+    if ( priv->have_power_bt )
+    {
+        if ( priv->power_button_has_state )
+        {
+            GError *error = NULL;
+            gboolean pressed = 
+            xfpm_hal_get_bool_info(priv->hal,udi,"button.state.value",&error);
+            if ( error ) 
+            {
+                XFPM_DEBUG("Error getting lid switch state: %s\n",error->message);
+                g_error_free(error);
+                return;
+            }
+            else if ( pressed == TRUE )
+            {
+                _proccess_action(bt,bt->power_action);
+            }
+        }
+        else 
+        {
+            _proccess_action(bt,bt->power_action);
+        }
+    }
+}
+
+static void
+xfpm_button_sleep_pressed(XfpmButton *bt,const gchar *udi)
 {
     XfpmButtonPrivate *priv;
     priv = XFPM_BUTTON_GET_PRIVATE(bt);
     
-    if ( !strcmp(condition_detail,"lid") && bt->lid_action != BUTTON_DO_NOTHING )
+    if ( bt->sleep_action == BUTTON_DO_NOTHING )
     {
-        GError *error = NULL;
-        gboolean pressed = 
-        xfpm_hal_get_bool_info(priv->hal,udi,"button.state.value",&error);
-        if ( error ) 
-        {
-            XFPM_DEBUG("Error getting lid switch state: %s\n",error->message);
-            g_error_free(error);
-            return;
-        }
-        else if ( pressed == TRUE )
-        {
-            if ( bt->lid_action == BUTTON_DO_SUSPEND )
-            {
-                xfpm_lock_screen();
-                xfpm_button_do_suspend(bt);
-            }
-            else if ( bt->lid_action == BUTTON_DO_HIBERNATE )
-            {
-                xfpm_lock_screen();
-                xfpm_button_do_hibernate(bt);
-            }
-        }
+        return;
     }
-    else if ( !strcmp(condition_detail,"sleep") && bt->sleep_action != BUTTON_DO_NOTHING )
+    
+    if ( priv->have_sleep_bt )
     {
-        if ( bt->sleep_action == BUTTON_DO_SUSPEND )
+        if ( priv->sleep_button_has_state )
         {
-            xfpm_lock_screen();
-            xfpm_button_do_suspend(bt);
+            GError *error = NULL;
+            gboolean pressed = 
+            xfpm_hal_get_bool_info(priv->hal,udi,"button.state.value",&error);
+            if ( error ) 
+            {
+                XFPM_DEBUG("Error getting lid switch state: %s\n",error->message);
+                g_error_free(error);
+                return;
+            }
+            else if ( pressed == TRUE )
+            {
+                _proccess_action(bt,bt->sleep_action);
+            }
         }
-        else if ( bt->sleep_action == BUTTON_DO_HIBERNATE )
+        else 
         {
-            xfpm_lock_screen();
-            xfpm_button_do_hibernate(bt);
-        }
-    }
-        
-    else if ( !strcmp(condition_detail,"power") && bt->lid_action != BUTTON_DO_NOTHING )
-    {
-        if ( bt->power_action == BUTTON_DO_SUSPEND )
-        {
-            xfpm_lock_screen();
-            xfpm_button_do_suspend(bt);
-        }
-        else if ( bt->power_action == BUTTON_DO_HIBERNATE )
-        {
-            xfpm_lock_screen();
-            xfpm_button_do_hibernate(bt);
+            _proccess_action(bt,bt->sleep_action);
         }
     }
 }
@@ -376,7 +463,18 @@ xfpm_button_handle_device_condition_cb(XfpmHal *hal,
             return;
         }
         XFPM_DEBUG("proccessing event: %s %s\n",condition_name,condition_detail);
-        xfpm_button_handle_condition_detail(bt,udi,condition_detail);
+        if ( !strcmp(condition_detail,"lid") )
+        {
+            xfpm_button_lid_pressed(bt,udi);
+        }
+        else if ( !strcmp(condition_detail,"power") )
+        {
+            xfpm_button_power_pressed(bt,udi);
+        }
+        else if ( !strcmp(condition_detail,"sleep") )
+        {
+            xfpm_button_sleep_pressed(bt,udi);
+        }
     }
 }                                       
 
@@ -409,6 +507,33 @@ xfpm_button_load_config(XfpmButton *bt)
 }
 
 static void
+_check_button(XfpmButtonPrivate *priv,const gchar *button_type,const gchar *udi)
+{
+    if ( !strcmp(button_type,"lid"))
+    {
+        priv->have_lid_bt = TRUE;
+        priv->lid_button_has_state = xfpm_hal_get_bool_info(priv->hal,udi,
+                                                            "button.has_state",
+                                                            NULL);
+                                                            
+    }
+    else if ( !strcmp(button_type,"power") )
+    {
+        priv->have_power_bt = TRUE;
+        priv->power_button_has_state = xfpm_hal_get_bool_info(priv->hal,udi,
+                                                            "button.has_state",
+                                                            NULL);
+    }
+    else if ( !strcmp(button_type,"sleep"))
+    {
+        priv->have_sleep_bt = TRUE;
+        priv->sleep_button_has_state = xfpm_hal_get_bool_info(priv->hal,udi,
+                                                            "button.has_state",
+                                                            NULL);
+    }
+}
+
+static void
 xfpm_button_get_switches(XfpmButton *bt)
 {
     XfpmButtonPrivate *priv;
@@ -420,6 +545,13 @@ xfpm_button_get_switches(XfpmButton *bt)
     
     udi = xfpm_hal_get_device_udi_by_capability(priv->hal,"button",&dummy,&error);
     
+    if ( error )
+    {
+        XFPM_DEBUG("Unable to get button switches: %s\n",error->message);
+        g_error_free(error);
+        return;
+    }
+    
     if ( !udi )
     {
         XFPM_DEBUG("No buttons found\n");
@@ -427,9 +559,59 @@ xfpm_button_get_switches(XfpmButton *bt)
     int i = 0 ;
     for ( i = 0 ; udi[i] ; i++)
     {
-        
+        if ( xfpm_hal_device_have_key(priv->hal,udi[i],"button.type") && 
+            xfpm_hal_device_have_key(priv->hal,udi[i],"button.has_state") )
+        {
+            GError *error = NULL;
+            const gchar *button_type = 
+            xfpm_hal_get_string_info(priv->hal,udi[i],"button.type",&error);
+            if ( error )
+            {
+                XFPM_DEBUG(":%s\n",error->message);
+                g_error_free(error);
+                continue;
+            }
+            
+            _check_button(priv,button_type,udi[i]);
+        }
     }
+#ifdef DEBUG
+    gchar *content1;
+    gchar *content2;
     
+    GValue value = { 0, };
+    g_value_init(&value,G_TYPE_BOOLEAN);
+    
+    g_value_set_boolean(&value,priv->have_lid_bt);
+    content1 = g_strdup_value_contents(&value);
+    
+    g_value_set_boolean(&value,priv->lid_button_has_state);    
+    content2 = g_strdup_value_contents(&value);
+    
+    XFPM_DEBUG("LID Switch found = %s has_state = %s\n",content1,content2);
+    g_free(content1);
+    g_free(content2);
+    
+    g_value_set_boolean(&value,priv->have_power_bt);
+    content1 = g_strdup_value_contents(&value);
+    
+    g_value_set_boolean(&value,priv->power_button_has_state);    
+    content2 = g_strdup_value_contents(&value);
+    
+    XFPM_DEBUG("Power Switch found = %s has_state = %s\n",content1,content2);
+    g_free(content1);
+    g_free(content2);
+    
+    g_value_set_boolean(&value,priv->have_sleep_bt);
+    content1 = g_strdup_value_contents(&value);
+    
+    g_value_set_boolean(&value,priv->sleep_button_has_state);    
+    content2 = g_strdup_value_contents(&value);
+    
+    XFPM_DEBUG("Sleep Switch found = %s has_state = %s\n",content1,content2);
+    g_free(content1);
+    g_free(content2);
+#endif    
     libhal_free_string_array(udi);
 }
 
