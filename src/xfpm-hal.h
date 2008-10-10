@@ -101,10 +101,12 @@ gboolean             xfpm_hal_get_bool_info                (XfpmHal *xfpm_hal,
                                                             const gchar *udi,
                                                             const gchar *property,
                                                             GError **gerror); 
-gboolean             xfpm_hal_device_has_key               (XfpmHal *xfpm_hal,
+gboolean             xfpm_hal_device_have_key              (XfpmHal *xfpm_hal,
                                                             const gchar *udi,
                                                             const gchar *key);
-
+gboolean             xfpm_hal_device_have_capability       (XfpmHal *xfpm_hal,
+                                                            const gchar *udi,
+                                                            const gchar *capability);
                                                             
 gboolean             xfpm_hal_shutdown                     (XfpmHal *xfpm_hal);
 gboolean             xfpm_hal_hibernate                    (XfpmHal *xfpm_hal,
@@ -113,7 +115,9 @@ gboolean             xfpm_hal_hibernate                    (XfpmHal *xfpm_hal,
 gboolean             xfpm_hal_suspend                      (XfpmHal *xfpm_hal,
                                                             GError **gerror,
                                                             guint8 *critical);
-
+gboolean             xfpm_hal_set_brightness               (XfpmHal *xfpm_hal,
+                                                            gint level);
+gint                 xfpm_hal_get_brightness               (XfpmHal *xfpm_hal);                                                            
 
 gchar              **xfpm_hal_get_available_cpu_governors  (XfpmHal *xfpm_hal);
 gchar               *xfpm_hal_get_current_cpu_governor     (XfpmHal *xfpm_hal);

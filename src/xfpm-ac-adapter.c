@@ -208,7 +208,7 @@ xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter)
     int i;
     for ( i = 0 ; udi[i]; i++)
     {
-        if ( xfpm_hal_device_has_key(priv->hal,udi[i],"ac_adapter.present"))
+        if ( xfpm_hal_device_have_key(priv->hal,udi[i],"ac_adapter.present"))
         {
             priv->present = xfpm_hal_get_bool_info(priv->hal,
                                                   udi[i],
@@ -235,7 +235,7 @@ xfpm_ac_adapter_property_changed_cb(XfpmHal *hal,const gchar *udi,
                                     const gchar *key,gboolean is_removed,
                                     gboolean is_added,XfpmAcAdapter *adapter)
 {   
-    if ( xfpm_hal_device_has_key(hal,udi,"ac_adapter.present"))
+    if ( xfpm_hal_device_have_key(hal,udi,"ac_adapter.present"))
     {
         XfpmAcAdapterPrivate *priv;
         priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);

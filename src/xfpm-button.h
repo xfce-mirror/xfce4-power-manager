@@ -48,6 +48,7 @@ typedef struct
 typedef struct
 {
     GObjectClass parent_class;
+    
 } XfpmButtonClass;
 
 GType          xfpm_button_get_type(void) G_GNUC_CONST;

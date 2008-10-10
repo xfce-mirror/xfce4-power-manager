@@ -566,7 +566,7 @@ xfpm_battery_handle_device_added(XfpmHal *hal,const gchar *udi,XfpmBattery *batt
     XfpmBatteryPrivate *priv;
     priv = XFPM_BATTERY_GET_PRIVATE(batt);
     
-    if ( xfpm_hal_device_has_key(priv->hal,udi,"battery.is_rechargeable") ) 
+    if ( xfpm_hal_device_have_key(priv->hal,udi,"battery.is_rechargeable") ) 
     {
         xfpm_battery_new_device(batt,udi);
         xfpm_battery_refresh(batt);
@@ -607,7 +607,7 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
     }
     
     /* A device can have a battery key but is useless to monitor unless it's rechargeable*/
-    if ( xfpm_hal_device_has_key(priv->hal,udi,"battery.is_rechargeable") ) 
+    if ( xfpm_hal_device_have_key(priv->hal,udi,"battery.is_rechargeable") ) 
     {
         GtkStatusIcon *icon;
         icon = g_hash_table_lookup(priv->batteries,udi);
@@ -989,12 +989,12 @@ xfpm_battery_check(XfpmBattery *batt,const gchar *udi)
     priv = XFPM_BATTERY_GET_PRIVATE(batt);
     
     // Sanity check
-    if ( !xfpm_hal_device_has_key(priv->hal,udi,"battery.reporting.last_full") ||
-         !xfpm_hal_device_has_key(priv->hal,udi,"battery.reporting.current")   ||
-         !xfpm_hal_device_has_key(priv->hal,udi,"battery.charge_level.percentage") ||
-         !xfpm_hal_device_has_key(priv->hal,udi,"battery.present")  ||
-         !xfpm_hal_device_has_key(priv->hal,udi,"battery.rechargeable.is_charging") ||
-         !xfpm_hal_device_has_key(priv->hal,udi,"battery.type") )
+    if ( !xfpm_hal_device_have_key(priv->hal,udi,"battery.reporting.last_full") ||
+         !xfpm_hal_device_have_key(priv->hal,udi,"battery.reporting.current")   ||
+         !xfpm_hal_device_have_key(priv->hal,udi,"battery.charge_level.percentage") ||
+         !xfpm_hal_device_have_key(priv->hal,udi,"battery.present")  ||
+         !xfpm_hal_device_have_key(priv->hal,udi,"battery.rechargeable.is_charging") ||
+         !xfpm_hal_device_have_key(priv->hal,udi,"battery.type") )
     {
         return FALSE;
     }
@@ -1133,7 +1133,7 @@ xfpm_battery_get_devices(XfpmBattery *batt)
     }
     for ( i = 0 ; udi[i]; i++)
     {
-        if ( xfpm_hal_device_has_key(priv->hal,udi[i],"battery.is_rechargeable"))
+        if ( xfpm_hal_device_have_key(priv->hal,udi[i],"battery.is_rechargeable"))
         {
             XFPM_DEBUG("found battery %s\n",udi[i]);
             xfpm_battery_new_device(batt,udi[i]);

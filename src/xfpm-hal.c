@@ -429,7 +429,7 @@ xfpm_hal_get_bool_info(XfpmHal *xfpm_hal,const gchar *udi,
 }    
 
 gboolean
-xfpm_hal_device_has_key (XfpmHal *xfpm_hal,const gchar *udi,
+xfpm_hal_device_have_key (XfpmHal *xfpm_hal,const gchar *udi,
                          const gchar *key)
 {
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
@@ -446,6 +446,32 @@ xfpm_hal_device_has_key (XfpmHal *xfpm_hal,const gchar *udi,
     if ( dbus_error_is_set(&error) )
     {
         g_printerr("Error getting device property %s\n",error.message);
+        dbus_error_free(&error);    
+        return FALSE;
+    }
+    
+    return ret;
+}
+
+gboolean             
+xfpm_hal_device_have_capability(XfpmHal *xfpm_hal,
+                               const gchar *udi,
+                               const gchar *capability)
+{
+    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
+    XfpmHalPrivate *priv;
+    priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    DBusError error;
+    dbus_error_init(&error);
+    
+    gboolean ret = libhal_device_query_capability(priv->ctx,
+                                                  udi,
+                                                  capability,
+                                                  &error);
+                                                  
+     if ( dbus_error_is_set(&error) )
+    {
+        g_printerr("Error query device capability %s\n",error.message);
         dbus_error_free(&error);    
         return FALSE;
     }
@@ -631,6 +657,25 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     }
     return TRUE;
 }	
+
+gboolean
+xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
+                         gint level)
+                                                            
+{
+    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
+    
+    return TRUE;
+}
+
+gint
+xfpm_hal_get_brightness (XfpmHal *xfpm_hal)
+{
+    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),0);
+    
+    
+    return 1;
+}
 
 gchar               
 **xfpm_hal_get_available_cpu_governors(XfpmHal *xfpm_hal)

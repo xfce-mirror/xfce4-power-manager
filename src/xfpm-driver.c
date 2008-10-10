@@ -412,6 +412,11 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     XfpmDriverPrivate *priv;
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
     
+    if ( priv->dialog_opened )
+    {
+        return FALSE;
+    }
+    
     XfconfChannel *channel;
     GtkWidget *dialog;
 

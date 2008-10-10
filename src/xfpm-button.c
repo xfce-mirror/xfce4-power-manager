@@ -47,6 +47,7 @@
 #include "xfpm-hal.h"
 #include "xfpm-debug.h"
 #include "xfpm-common.h"
+#include "xfpm-notify.h"
 #include "xfpm-enum-types.h"
 
 #define XFPM_BUTTON_GET_PRIVATE(o) \
@@ -64,6 +65,13 @@ static void xfpm_button_get_property (GObject *object,
                                            guint prop_id,
                                            GValue *value,
                                            GParamSpec *pspec);
+static void xfpm_button_do_suspend(XfpmButton *bt);
+static void xfpm_button_do_hibernate(XfpmButton *bt);
+static gboolean xfpm_button_hibernate(XfpmButton *bt);
+static gboolean xfpm_button_suspend(XfpmButton *bt);
+
+static void xfpm_button_handle_condition_detail(XfpmButton *bt,
+                                                const gchar *condition_detail);
                                            
 static void xfpm_button_handle_device_condition_cb(XfpmHal *hal,
                                                    const gchar *udi,
@@ -72,12 +80,23 @@ static void xfpm_button_handle_device_condition_cb(XfpmHal *hal,
                                                    XfpmButton *bt);
 
 static void xfpm_button_load_config(XfpmButton *bt);
+static void xfpm_button_get_switches(XfpmButton *bt);
 
 struct XfpmButtonPrivate
 {
     XfpmHal *hal;
+    GHashTable *buttons;
+    gulong handler_id;
 
 };
+
+typedef enum
+{
+    LID,
+    SLEEP,
+    POWER
+    
+} XfpmSwitchButton;
 
 G_DEFINE_TYPE(XfpmButton,xfpm_button,G_TYPE_OBJECT)
 
@@ -132,15 +151,17 @@ static void xfpm_button_init(XfpmButton *bt)
     XfpmButtonPrivate *priv;
     priv = XFPM_BUTTON_GET_PRIVATE(bt);
     
+    priv->buttons = g_hash_table_new(g_str_hash,g_str_equal);
+    
     priv->hal = xfpm_hal_new();
     
     xfpm_button_load_config(bt);
+    xfpm_button_get_switches(bt);
     
+    priv->handler_id =
     g_signal_connect(priv->hal,"xfpm-device-condition",
                     G_CALLBACK(xfpm_button_handle_device_condition_cb),bt);
-    
 }
-
 
 static void xfpm_button_set_property (GObject *object,
                                       guint prop_id,
@@ -221,6 +242,107 @@ static void xfpm_button_finalize(GObject *object)
     G_OBJECT_CLASS(xfpm_button_parent_class)->finalize(object);
 }
 
+static gboolean
+_unblock_handler(XfpmButtonPrivate *priv)
+{
+    g_signal_handler_unblock(priv->hal,priv->handler_id);
+    return FALSE;
+}
+
+static gboolean
+xfpm_button_suspend(XfpmButton *bt)
+{
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
+    
+    guint8 critical;
+
+    xfpm_hal_suspend(priv->hal,NULL,&critical);
+    g_timeout_add(10,(GSourceFunc)_unblock_handler,priv);
+    
+    return FALSE;
+}
+
+static gboolean
+xfpm_button_hibernate(XfpmButton *bt)
+{
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
+    guint8 critical;
+    
+    xfpm_hal_hibernate(priv->hal,NULL,&critical);
+    g_timeout_add(10,(GSourceFunc)_unblock_handler,priv);
+    
+    return FALSE;
+}
+
+static void
+xfpm_button_do_hibernate(XfpmButton *bt)
+{
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
+    
+    g_signal_handler_block(priv->hal,priv->handler_id);
+    g_timeout_add_seconds(2,(GSourceFunc)xfpm_button_hibernate,bt);
+    
+}
+
+static void
+xfpm_button_do_suspend(XfpmButton *bt)
+{
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
+    
+    g_signal_handler_block(priv->hal,priv->handler_id);
+    g_timeout_add_seconds(2,(GSourceFunc)xfpm_button_suspend,bt);
+}
+
+static void
+xfpm_button_handle_condition_detail(XfpmButton *bt,const gchar *condition_detail)
+{
+    if ( !strcmp(condition_detail,"lid") && bt->lid_action != BUTTON_DO_NOTHING )
+    {
+        if ( bt->lid_action == BUTTON_DO_SUSPEND )
+        {
+            xfpm_lock_screen();
+            xfpm_button_do_suspend(bt);
+        }
+        else if ( bt->lid_action == BUTTON_DO_HIBERNATE )
+        {
+            xfpm_lock_screen();
+            xfpm_button_do_hibernate(bt);
+        }
+    }
+    
+    else if ( !strcmp(condition_detail,"sleep") && bt->sleep_action != BUTTON_DO_NOTHING )
+    {
+        if ( bt->sleep_action == BUTTON_DO_SUSPEND )
+        {
+            xfpm_lock_screen();
+            xfpm_button_do_suspend(bt);
+        }
+        else if ( bt->sleep_action == BUTTON_DO_HIBERNATE )
+        {
+            xfpm_lock_screen();
+            xfpm_button_do_hibernate(bt);
+        }
+    }
+        
+    else if ( !strcmp(condition_detail,"power") && bt->lid_action != BUTTON_DO_NOTHING )
+    {
+        if ( bt->power_action == BUTTON_DO_SUSPEND )
+        {
+            xfpm_lock_screen();
+            xfpm_button_do_suspend(bt);
+        }
+        else if ( bt->power_action == BUTTON_DO_HIBERNATE )
+        {
+            xfpm_lock_screen();
+            xfpm_button_do_hibernate(bt);
+        }
+    }
+}
+
 static void
 xfpm_button_handle_device_condition_cb(XfpmHal *hal,
                                        const gchar *udi,
@@ -228,10 +350,20 @@ xfpm_button_handle_device_condition_cb(XfpmHal *hal,
                                        const gchar *condition_detail,
                                        XfpmButton *bt)
 {
-    XFPM_DEBUG("condition name=%s detail=%s\n",condition_name,condition_detail);
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
     
+    if ( xfpm_hal_device_have_capability(priv->hal,udi,"button") )
+    {
+        if ( strcmp(condition_name,"ButtonPressed") )
+        {
+            XFPM_DEBUG("Not processing event with condition_name=%s\n",condition_name);
+            return;
+        }
+        XFPM_DEBUG("proccessing event: %s %s\n",condition_name,condition_detail);
+        xfpm_button_handle_condition_detail(bt,condition_detail);
+    }
 }                                       
-
 
 static void 
 xfpm_button_load_config(XfpmButton *bt)
@@ -253,12 +385,37 @@ xfpm_button_load_config(XfpmButton *bt)
     
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
 
-    bt->lid_action   = xfconf_channel_get_bool(channel,LID_SWITCH_CFG,BUTTON_DO_NOTHING);
-    bt->sleep_action   = xfconf_channel_get_bool(channel,SLEEP_SWITCH_CFG,BUTTON_DO_NOTHING);
-    bt->power_action = xfconf_channel_get_bool(channel,POWER_SWITCH_CFG,BUTTON_DO_NOTHING);
+    bt->lid_action   = xfconf_channel_get_uint(channel,LID_SWITCH_CFG,BUTTON_DO_NOTHING);
+    bt->sleep_action   = xfconf_channel_get_uint(channel,SLEEP_SWITCH_CFG,BUTTON_DO_NOTHING);
+    bt->power_action = xfconf_channel_get_uint(channel,POWER_SWITCH_CFG,BUTTON_DO_NOTHING);
     
     g_object_unref(channel);
     xfconf_shutdown();    
+}
+
+static void
+xfpm_button_get_switches(XfpmButton *bt)
+{
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
+    
+    gchar **udi;
+    gint dummy;
+    GError *error = NULL;
+    
+    udi = xfpm_hal_get_device_udi_by_capability(priv->hal,"button",&dummy,&error);
+    
+    if ( !udi )
+    {
+        XFPM_DEBUG("No buttons found\n");
+    }
+    int i = 0 ;
+    for ( i = 0 ; udi[i] ; i++)
+    {
+        
+    }
+    
+    libhal_free_string_array(udi);
 }
 
 XfpmButton *
