@@ -50,6 +50,7 @@
 #include <glib/gi18n.h>
 
 #include "xfpm-hal.h"
+#include "xfpm-driver.h"
 #include "xfpm-ac-adapter.h"
 #include "xfpm-common.h"
 #include "xfpm-notify.h"
@@ -65,7 +66,8 @@ static void xfpm_ac_adapter_finalize(GObject *object);
 static gboolean xfpm_ac_adapter_size_changed_cb(GtkStatusIcon *adapter,
                                                 gint size,
                                                 gpointer data);
-static void xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter);
+static void xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter,
+                                        SystemFormFactor factor);
 static void xfpm_ac_adapter_property_changed_cb(XfpmHal *hal,const gchar *udi,
                                                 const gchar *key,gboolean is_removed,
                                                 gboolean is_added,XfpmAcAdapter *adapter);
@@ -142,10 +144,6 @@ xfpm_ac_adapter_init(XfpmAcAdapter *adapter)
         g_error_free(error);
     }            
     
-    
-    g_signal_connect(priv->hal,"xfpm-device-property-changed",
-                     G_CALLBACK(xfpm_ac_adapter_property_changed_cb),adapter);
-    
     g_signal_connect(adapter,"size-changed",
                     G_CALLBACK(xfpm_ac_adapter_size_changed_cb),NULL);
     g_signal_connect(adapter,"popup-menu",
@@ -182,10 +180,16 @@ xfpm_ac_adapter_size_changed_cb(GtkStatusIcon *adapter,gint size,gpointer data)
 }
 
 static void
-xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter)
+xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter,SystemFormFactor factor)
 {
     XfpmAcAdapterPrivate *priv;
     priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+    
+    if ( factor != SYSTEM_LAPTOP )
+    {
+        priv->present = TRUE;
+        goto l1;
+    }
     
     gchar **udi = NULL;
     gint num;
@@ -225,6 +229,9 @@ xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter)
         }
     }
     libhal_free_string_array(udi);
+    g_signal_connect(priv->hal,"xfpm-device-property-changed",
+                     G_CALLBACK(xfpm_ac_adapter_property_changed_cb),adapter);
+    l1:
     gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
                 priv->present ? _("Adapter is online") : _("Adapter is offline"));    
     g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
@@ -272,9 +279,8 @@ xfpm_ac_adapter_report_sleep_errors(XfpmAcAdapter *adapter,const gchar *error,
                        GTK_STATUS_ICON(adapter),
                        icon_name,
                        0);
-
-}
 #endif
+}
 
 static gboolean
 xfpm_ac_adapter_do_hibernate(XfpmAcAdapter *adapter)
@@ -416,7 +422,7 @@ xfpm_ac_adapter_new(gboolean visible)
 }
 
 void
-xfpm_ac_adapter_monitor(XfpmAcAdapter *adapter)
+xfpm_ac_adapter_monitor(XfpmAcAdapter *adapter,SystemFormFactor factor)
 {
-    xfpm_ac_adapter_get_adapter(adapter);
+    xfpm_ac_adapter_get_adapter(adapter,factor);
 }    

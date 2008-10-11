@@ -773,7 +773,7 @@ gchar
     DBusMessage *mess;
     DBusPendingCall *pend;
     DBusMessage *reply;
-    gchar **govs;
+    gchar **govs = NULL;
     int dummy;
     
     mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,

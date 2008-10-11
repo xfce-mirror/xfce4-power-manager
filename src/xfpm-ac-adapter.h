@@ -48,6 +48,7 @@ typedef struct
 
 GType          xfpm_ac_adapter_get_type(void) G_GNUC_CONST;
 GtkStatusIcon *xfpm_ac_adapter_new     (gboolean visible);
-void           xfpm_ac_adapter_monitor (XfpmAcAdapter *adapter);
+void           xfpm_ac_adapter_monitor (XfpmAcAdapter *adapter,
+                                        SystemFormFactor factor);
 
 #endif

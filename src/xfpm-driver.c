@@ -98,15 +98,6 @@ static DBusHandlerResult xfpm_driver_signal_filter
 #define XFPM_DRIVER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o),XFPM_TYPE_DRIVER,XfpmDriverPrivate))
 
-typedef enum 
-{
-    SYSTEM_LAPTOP,
-    SYSTEM_DESKTOP,
-    SYSTEM_SERVER,
-    SYSTEM_UNKNOWN
-    
-} SystemFormFactor;
-
 struct XfpmDriverPrivate 
 {
     DBusConnection *conn;
@@ -647,7 +638,7 @@ xfpm_driver_monitor (XfpmDriver *drv)
      * so we get the callback and then we set up the ac adapter
      * status for dpms and cpu lcd,...
      */                    
-    xfpm_ac_adapter_monitor(XFPM_AC_ADAPTER(priv->adapter));
+    xfpm_ac_adapter_monitor(XFPM_AC_ADAPTER(priv->adapter),priv->formfactor);
     
     xfpm_battery_monitor(priv->batt);
     g_main_loop_run(priv->loop);

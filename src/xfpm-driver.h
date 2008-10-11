@@ -35,6 +35,15 @@
 #include "xfpm-dpms.h"
 #endif
 
+typedef enum 
+{
+    SYSTEM_LAPTOP,
+    SYSTEM_DESKTOP,
+    SYSTEM_SERVER,
+    SYSTEM_UNKNOWN
+    
+} SystemFormFactor;
+
 G_BEGIN_DECLS
 
 #define XFPM_TYPE_DRIVER   (xfpm_driver_get_type())
