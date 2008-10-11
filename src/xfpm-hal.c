@@ -51,7 +51,7 @@ static void xfpm_hal_device_property_modified     (LibHalContext *ctx,
                                                  const gchar *key,
                                                  dbus_bool_t is_removed,
                                                  dbus_bool_t is_added);
-                                                 
+/*                                                 
 static void xfpm_hal_device_new_capability        (LibHalContext *ctx,
                                                  const gchar *udi,
                                                  const gchar *capability);
@@ -59,7 +59,7 @@ static void xfpm_hal_device_new_capability        (LibHalContext *ctx,
 static void xfpm_hal_device_lost_capability       (LibHalContext *ctx,
                                                  const gchar *udi,
                                                  const gchar *capability);                                                 
-
+*/
 static void xfpm_hal_device_condition             (LibHalContext *ctx,
                                                  const gchar *udi,
                                                  const gchar *condition_name,
@@ -231,6 +231,7 @@ xfpm_hal_device_removed(LibHalContext *ctx,const gchar *udi) {
     
 }
 
+
 static void
 xfpm_hal_device_property_modified(LibHalContext *ctx,const gchar *udi,
                                  const gchar *key,dbus_bool_t is_removed,
@@ -241,7 +242,8 @@ xfpm_hal_device_property_modified(LibHalContext *ctx,const gchar *udi,
     g_signal_emit(G_OBJECT(xfpm_hal),signals[XFPM_DEVICE_PROPERTY_CHANGED],0,udi,key,is_removed,is_added);
     
 }
-    
+
+/*    
 static void
 xfpm_hal_device_new_capability(LibHalContext *ctx,const gchar *udi,const gchar *capability) {
     
@@ -259,7 +261,7 @@ xfpm_hal_device_lost_capability(LibHalContext *ctx,const gchar *udi,const gchar 
      g_signal_emit(G_OBJECT(xfpm_hal),signals[XFPM_DEVICE_LOST_CAPABILITY],0,udi,capability);
     
 }    
-
+*/
 static void xfpm_hal_device_condition            (LibHalContext *ctx,
                                                  const gchar *udi,
                                                  const gchar *condition_name,
@@ -298,23 +300,52 @@ xfpm_hal_monitor(XfpmHal *xfpm_hal) {
         return FALSE;
     }    
     
-    libhal_ctx_set_device_added(priv->ctx,xfpm_hal_device_added);
-    libhal_ctx_set_device_removed(priv->ctx,xfpm_hal_device_removed);
-    libhal_ctx_set_device_property_modified(priv->ctx,xfpm_hal_device_property_modified);
-    libhal_ctx_set_device_new_capability(priv->ctx,xfpm_hal_device_new_capability);
-    libhal_ctx_set_device_lost_capability(priv->ctx,xfpm_hal_device_lost_capability);
-    libhal_ctx_set_device_condition(priv->ctx,xfpm_hal_device_condition);
+    libhal_ctx_set_user_data(priv->ctx,xfpm_hal);    
+    return TRUE;
+}    
+
+gboolean xfpm_hal_connect_to_signals(XfpmHal *hal,
+                                    gboolean device_removed,
+                                    gboolean device_added,
+                                    gboolean device_property_changed,
+                                    gboolean device_condition)
+{
+    g_return_val_if_fail(XFPM_IS_HAL(hal),FALSE);
+    XfpmHalPrivate *priv;
+    DBusError error;
+    priv = XFPM_HAL_GET_PRIVATE(hal);
     
+    dbus_error_init(&error);
     
-    libhal_device_property_watch_all(priv->ctx,&error);
+    if (device_added ) 
+    {
+        libhal_ctx_set_device_added(priv->ctx,xfpm_hal_device_added);
+    }
+    if ( device_removed )
+    {
+         libhal_ctx_set_device_removed(priv->ctx,xfpm_hal_device_removed);
+    }
+    if ( device_property_changed )
+    {
+        libhal_ctx_set_device_property_modified(priv->ctx,xfpm_hal_device_property_modified);
+    }
+    if ( device_condition )
+    {
+        libhal_ctx_set_device_condition(priv->ctx,xfpm_hal_device_condition);
+    }
+
+    //libhal_ctx_set_device_new_capability(priv->ctx,xfpm_hal_device_new_capability);
+    //libhal_ctx_set_device_lost_capability(priv->ctx,xfpm_hal_device_lost_capability);
+    
+    libhal_device_property_watch_all(priv->ctx,&error);        
+
     if ( dbus_error_is_set(&error) ) {
         g_printerr("Unable to watch device using HAL %s\n",error.message);
         return FALSE;
     }
     
-    libhal_ctx_set_user_data(priv->ctx,xfpm_hal);    
     return TRUE;
-}    
+}
 
 gchar **
 xfpm_hal_get_device_udi_by_capability(XfpmHal *xfpm_hal,const gchar *capability,

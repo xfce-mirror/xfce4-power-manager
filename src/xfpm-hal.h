@@ -86,6 +86,12 @@ typedef struct {
 
 GType                xfpm_hal_get_type                     (void);
 XfpmHal             *xfpm_hal_new                          (void);
+gboolean             xfpm_hal_connect_to_signals           (XfpmHal *hal,
+                                                            gboolean device_removed,
+                                                            gboolean device_added,
+                                                            gboolean device_property_changed,
+                                                            gboolean device_condition);
+                                                            
 gchar              **xfpm_hal_get_device_udi_by_capability (XfpmHal *xfpm_hal,
                                                              const gchar *capability,
                                                              gint *num,

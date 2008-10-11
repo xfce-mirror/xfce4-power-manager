@@ -66,11 +66,23 @@ static void xfpm_ac_adapter_finalize(GObject *object);
 static gboolean xfpm_ac_adapter_size_changed_cb(GtkStatusIcon *adapter,
                                                 gint size,
                                                 gpointer data);
-static void xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter,
-                                        SystemFormFactor factor);
-static void xfpm_ac_adapter_property_changed_cb(XfpmHal *hal,const gchar *udi,
-                                                const gchar *key,gboolean is_removed,
-                                                gboolean is_added,XfpmAcAdapter *adapter);
+static void xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter);
+                                        
+static void xfpm_ac_adapter_device_added_cb(XfpmHal *hal,
+                                            const gchar *udi,
+                                            XfpmAcAdapter *adapter);
+
+static void xfpm_ac_adapter_device_removed_cb(XfpmHal *hal,
+                                              const gchar *udi,
+                                              XfpmAcAdapter *adapter);
+                                              
+static void xfpm_ac_adapter_property_changed_cb(XfpmHal *hal,
+                                                const gchar *udi,
+                                                const gchar *key,
+                                                gboolean is_removed,
+                                                gboolean is_added,
+                                                XfpmAcAdapter *adapter);
+                                                
 static void xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
                                        guint button,
                                        guint activate_time,
@@ -79,6 +91,11 @@ static void xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
 struct XfpmAcAdapterPrivate
 {
     XfpmHal *hal;
+    SystemFormFactor factor;
+    
+    GQuark adapter_udi;
+    
+    gboolean adapter_found;
     gboolean present;
     gboolean can_suspend;
     gboolean can_hibernate;
@@ -121,6 +138,7 @@ xfpm_ac_adapter_init(XfpmAcAdapter *adapter)
     priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
     
     priv->hal = xfpm_hal_new();
+    priv->adapter_udi = 0 ;
     
     GError *error = NULL;
     
@@ -180,16 +198,46 @@ xfpm_ac_adapter_size_changed_cb(GtkStatusIcon *adapter,gint size,gpointer data)
 }
 
 static void
-xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter,SystemFormFactor factor)
+_ac_adapter_not_found(XfpmAcAdapter *adapter)
 {
     XfpmAcAdapterPrivate *priv;
     priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
     
-    if ( factor != SYSTEM_LAPTOP )
+    /* then the ac kernel module is not loaded */
+    if ( priv->factor == SYSTEM_LAPTOP )
     {
-        priv->present = TRUE;
-        goto l1;
+        priv->present = TRUE; /* assuming present */
+        priv->adapter_found = FALSE;
+        gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
+                                   _("Unkown adapter status, the power manager will not work properly"));
+#ifdef HAVE_LIBNOTIFY
+        xfpm_notify_simple(_("Xfce power manager"),
+                           _("Unkown adapter status, the power manager will not work properly,"\
+                            "make sure ac adapter driver is loaded into the kernel"),
+                           10000,
+                           NOTIFY_URGENCY_CRITICAL,
+                           NULL,
+                           "gpm-ac-adapter",
+                           2);
+        
+#endif                                       
+    }     
+    else  
+    {
+        priv->present = TRUE; /* just for eveything to function correctly */
+        priv->adapter_found = FALSE;
     }
+    g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
+    
+}
+
+static void
+xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter)
+{
+    XfpmAcAdapterPrivate *priv;
+    priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+    
+    priv->adapter_udi = 0 ;
     
     gchar **udi = NULL;
     gint num;
@@ -202,13 +250,21 @@ xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter,SystemFormFactor factor)
         g_error_free(error);
         return;
     }
-    if ( !udi ) 
+    
+    if ( num == 0 )
     {
-        /* I think we should have something like g_strange()! */
-        XFPM_DEBUG("No AC Adapter found, assuming running on Solar power\n");
         priv->present = TRUE;
+        XFPM_DEBUG("No ac adapter device found\n");
+        _ac_adapter_not_found(adapter);
         return;
     }
+    
+    if ( !udi ) 
+    {
+        _ac_adapter_not_found(adapter);
+        return;
+    }
+    
     int i;
     for ( i = 0 ; udi[i]; i++)
     {
@@ -225,16 +281,64 @@ xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter,SystemFormFactor factor)
                 return;
             }                                                 
             XFPM_DEBUG("Getting udi %s\n",udi[i]);
+            priv->adapter_udi = g_quark_from_string(udi[i]);
+            priv->adapter_found = TRUE;
             break;
         }
     }
-    libhal_free_string_array(udi);
-    g_signal_connect(priv->hal,"xfpm-device-property-changed",
-                     G_CALLBACK(xfpm_ac_adapter_property_changed_cb),adapter);
-    l1:
+    
     gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
-                priv->present ? _("Adapter is online") : _("Adapter is offline"));    
+                priv->present ? _("Adapter is online") : _("Adapter is offline"));   
     g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
+    libhal_free_string_array(udi);
+}
+
+static void
+_get_adapter_status(XfpmAcAdapter *adapter,const gchar *udi)
+{
+    XfpmAcAdapterPrivate *priv;
+    priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+    GError *error = NULL;
+    gboolean ac_adapter = 
+    xfpm_hal_get_bool_info(priv->hal,udi,"ac_adapter.present",&error);
+    if ( error )                                        
+    {
+        XFPM_DEBUG("%s\n",error->message);
+        g_error_free(error);
+        return;
+    }       
+    XFPM_DEBUG("Ac adapter changed %d\n",ac_adapter);
+    priv->present = ac_adapter;
+    gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
+                priv->present ? _("Adapter is online") : _("Adapter is offline"));   
+    g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
+}
+
+static void
+xfpm_ac_adapter_device_added_cb(XfpmHal *hal,const gchar *udi,XfpmAcAdapter *adapter)
+{
+    if ( xfpm_hal_device_have_key(hal,udi,"ac_adapter.present"))
+    {
+        XfpmAcAdapterPrivate *priv;
+        priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+        priv->adapter_found = TRUE;
+        priv->adapter_udi = g_quark_from_string(udi);
+    
+        _get_adapter_status(adapter,udi);
+    }
+}
+
+static void
+xfpm_ac_adapter_device_removed_cb(XfpmHal *hal,const gchar *udi,XfpmAcAdapter *adapter)
+{
+    XfpmAcAdapterPrivate *priv;
+    priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+    
+    if ( priv->adapter_udi == g_quark_from_string(udi) ) 
+    {
+        XFPM_DEBUG("Adapter removed\n");
+        xfpm_ac_adapter_get_adapter(adapter);
+    }
 }
 
 static void
@@ -246,24 +350,8 @@ xfpm_ac_adapter_property_changed_cb(XfpmHal *hal,const gchar *udi,
     {
         XfpmAcAdapterPrivate *priv;
         priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+        _get_adapter_status(adapter,udi);
         
-        GError *error = NULL;
-        gboolean ac_adapter = 
-        xfpm_hal_get_bool_info(hal,udi,"ac_adapter.present",&error);
-        if ( error )                                        
-        {
-            XFPM_DEBUG("%s\n",error->message);
-            g_error_free(error);
-            return;
-        }       
-        if ( priv->present != ac_adapter )
-        {
-            XFPM_DEBUG("Ac adapter changed %d\n",ac_adapter);
-            priv->present = ac_adapter;
-            gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
-                        priv->present ? _("Adapter is online") : _("Adapter is offline"));   
-            g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
-        }
     }
 }
 
@@ -424,5 +512,19 @@ xfpm_ac_adapter_new(gboolean visible)
 void
 xfpm_ac_adapter_monitor(XfpmAcAdapter *adapter,SystemFormFactor factor)
 {
-    xfpm_ac_adapter_get_adapter(adapter,factor);
-}    
+    XfpmAcAdapterPrivate *priv;
+    priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+    priv->factor = factor;
+    xfpm_ac_adapter_get_adapter(adapter);
+    
+    if ( factor == SYSTEM_LAPTOP )
+    {
+        xfpm_hal_connect_to_signals(priv->hal,TRUE,TRUE,TRUE,FALSE);
+        g_signal_connect(priv->hal,"xfpm-device-added",
+                    G_CALLBACK(xfpm_ac_adapter_device_added_cb),adapter);
+        g_signal_connect(priv->hal,"xfpm-device-removed",
+                    G_CALLBACK(xfpm_ac_adapter_device_removed_cb),adapter); 
+        g_signal_connect(priv->hal,"xfpm-device-property-changed",
+                     G_CALLBACK(xfpm_ac_adapter_property_changed_cb),adapter);            
+    }
+}   
