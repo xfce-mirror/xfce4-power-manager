@@ -40,6 +40,7 @@
 #include <glib/gi18n.h>
 
 #include "xfpm-dpms-spins.h"
+#include "xfpm-spin-button.h"
 #include "xfpm-marshal.h"
 
 #ifdef HAVE_DPMS
@@ -116,21 +117,24 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
     label = gtk_label_new(_("Standby after"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,0,1);
-    priv->spin_1 = gtk_spin_button_new_with_range(1,238,1);
+    priv->spin_1 = xfpm_spin_button_new_with_range(1,238,1);
+    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),_(" min"));
     gtk_widget_show(priv->spin_1);
     gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_1,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
     
     label = gtk_label_new(_("Suspend after"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,1,2);
-    priv->spin_2 = gtk_spin_button_new_with_range(1,239,1);
+    priv->spin_2 = xfpm_spin_button_new_with_range(1,239,1);
+    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),_(" min"));
     gtk_widget_show(priv->spin_2);
     gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_2,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
     
     label = gtk_label_new(_("Turn off after"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,2,3);
-    priv->spin_3 = gtk_spin_button_new_with_range(1,300,1);
+    priv->spin_3 = xfpm_spin_button_new_with_range(1,300,1);
+    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),_(" min"));
     gtk_widget_show(priv->spin_3);
     gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_3,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);
     

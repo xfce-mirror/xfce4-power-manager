@@ -49,6 +49,8 @@ xfce4_power_manager_SOURCES = 	$(generated_files)		\
 				xfpm-battery.h			\
 				xfpm-battery-icon.c		\
 				xfpm-battery-icon.h		\
+				xfpm-spin-button.c		\
+				xfpm-spin-button.h		\
 				xfpm-dpms.c			\
 				xfpm-dpms.h			\
 				xfpm-dpms-spins.c		\
