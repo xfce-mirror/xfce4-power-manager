@@ -175,11 +175,12 @@ static void xfpm_button_init(XfpmButton *bt)
     xfpm_button_load_config(bt);
     xfpm_button_get_switches(bt);
     
-    xfpm_hal_connect_to_signals(priv->hal,FALSE,FALSE,FALSE,TRUE);
-    
-    priv->handler_id =
-    g_signal_connect(priv->hal,"xfpm-device-condition",
-                    G_CALLBACK(xfpm_button_handle_device_condition_cb),bt);
+    if (xfpm_hal_connect_to_signals(priv->hal,FALSE,FALSE,FALSE,TRUE) )
+    {
+        priv->handler_id =
+        g_signal_connect(priv->hal,"xfpm-device-condition",
+                        G_CALLBACK(xfpm_button_handle_device_condition_cb),bt);
+    }
 }
 
 static void xfpm_button_set_property (GObject *object,

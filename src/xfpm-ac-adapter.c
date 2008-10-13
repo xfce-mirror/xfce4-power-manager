@@ -520,12 +520,14 @@ xfpm_ac_adapter_monitor(XfpmAcAdapter *adapter,SystemFormFactor factor)
     
     if ( factor == SYSTEM_LAPTOP )
     {
-        xfpm_hal_connect_to_signals(priv->hal,TRUE,TRUE,TRUE,FALSE);
-        g_signal_connect(priv->hal,"xfpm-device-added",
-                    G_CALLBACK(xfpm_ac_adapter_device_added_cb),adapter);
-        g_signal_connect(priv->hal,"xfpm-device-removed",
-                    G_CALLBACK(xfpm_ac_adapter_device_removed_cb),adapter); 
-        g_signal_connect(priv->hal,"xfpm-device-property-changed",
-                     G_CALLBACK(xfpm_ac_adapter_property_changed_cb),adapter);            
+        if (xfpm_hal_connect_to_signals(priv->hal,TRUE,TRUE,TRUE,FALSE) )
+        {
+            g_signal_connect(priv->hal,"xfpm-device-added",
+                        G_CALLBACK(xfpm_ac_adapter_device_added_cb),adapter);
+            g_signal_connect(priv->hal,"xfpm-device-removed",
+                        G_CALLBACK(xfpm_ac_adapter_device_removed_cb),adapter); 
+            g_signal_connect(priv->hal,"xfpm-device-property-changed",
+                         G_CALLBACK(xfpm_ac_adapter_property_changed_cb),adapter);            
+        }             
     }
 }   

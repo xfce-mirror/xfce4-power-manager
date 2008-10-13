@@ -251,22 +251,24 @@ xfpm_battery_init(XfpmBattery *battery)
         g_error_free(error);
     }            
     
-    xfpm_hal_connect_to_signals(priv->hal,TRUE,TRUE,TRUE,FALSE);
-    
-    g_signal_connect(G_OBJECT(priv->hal),"xfpm-device-added",
-                     G_CALLBACK(xfpm_battery_handle_device_added),
-                     battery);
-     
-    g_signal_connect(G_OBJECT(priv->hal),"xfpm-device-removed",
-                     G_CALLBACK(xfpm_battery_handle_device_removed),
-                     battery);
-                                      
-    g_signal_connect(G_OBJECT(priv->hal),"xfpm-device-property-changed",
-                     G_CALLBACK(xfpm_battery_handle_device_property_changed),
-                     battery);                 
+    if (xfpm_hal_connect_to_signals(priv->hal,TRUE,TRUE,TRUE,FALSE) )
+    {
+        g_signal_connect(G_OBJECT(priv->hal),"xfpm-device-added",
+                         G_CALLBACK(xfpm_battery_handle_device_added),
+                         battery);
+         
+        g_signal_connect(G_OBJECT(priv->hal),"xfpm-device-removed",
+                         G_CALLBACK(xfpm_battery_handle_device_removed),
+                         battery);
+                                          
+        g_signal_connect(G_OBJECT(priv->hal),"xfpm-device-property-changed",
+                         G_CALLBACK(xfpm_battery_handle_device_property_changed),
+                         battery);                 
+        
+    }
     
     g_signal_connect(G_OBJECT(battery),"notify",
-                    G_CALLBACK(xfpm_battery_notify_cb),NULL);
+                        G_CALLBACK(xfpm_battery_notify_cb),NULL);
 }
 
 static void xfpm_battery_set_property(GObject *object,

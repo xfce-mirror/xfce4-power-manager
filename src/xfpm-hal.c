@@ -312,9 +312,11 @@ gboolean xfpm_hal_connect_to_signals(XfpmHal *hal,
 {
     g_return_val_if_fail(XFPM_IS_HAL(hal),FALSE);
     XfpmHalPrivate *priv;
-    DBusError error;
     priv = XFPM_HAL_GET_PRIVATE(hal);
     
+    g_return_val_if_fail(priv->connected == TRUE,FALSE);
+
+    DBusError error;    
     dbus_error_init(&error);
     
     if (device_added ) 
@@ -354,6 +356,8 @@ xfpm_hal_get_device_udi_by_capability(XfpmHal *xfpm_hal,const gchar *capability,
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),NULL);
     XfpmHalPrivate *priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
     
+    g_return_val_if_fail(priv->connected == TRUE,NULL);
+    
     gchar **udi_info = NULL;
     DBusError error;
         
@@ -378,6 +382,8 @@ xfpm_hal_get_int_info(XfpmHal *xfpm_hal,const gchar *udi,
  
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),-1);
     XfpmHalPrivate *priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,-1);
     
     DBusError error;
     gint ret;
@@ -408,6 +414,8 @@ xfpm_hal_get_string_info(XfpmHal *xfpm_hal,const gchar *udi,
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),NULL);
     XfpmHalPrivate *priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
     
+    g_return_val_if_fail(priv->connected == TRUE,NULL);
+    
     DBusError error;
     gchar *ret;
     
@@ -436,6 +444,8 @@ xfpm_hal_get_bool_info(XfpmHal *xfpm_hal,const gchar *udi,
  
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
     XfpmHalPrivate *priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,FALSE);
     
     DBusError error;
     gboolean ret;
@@ -466,6 +476,9 @@ xfpm_hal_device_have_key (XfpmHal *xfpm_hal,const gchar *udi,
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,FALSE);
+    
     DBusError error;
     
     dbus_error_init(&error);
@@ -492,6 +505,9 @@ xfpm_hal_device_have_capability(XfpmHal *xfpm_hal,
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,FALSE);
+    
     DBusError error;
     dbus_error_init(&error);
     
@@ -512,8 +528,12 @@ xfpm_hal_device_have_capability(XfpmHal *xfpm_hal,
 
 gboolean xfpm_hal_shutdown(XfpmHal *xfpm_hal)
 {
+    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
+     
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,FALSE);
     
     DBusMessage *mess;
 	
@@ -538,8 +558,12 @@ gboolean xfpm_hal_shutdown(XfpmHal *xfpm_hal)
 gboolean   
 xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical) 
 {
+    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
+     
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,FALSE);
     
 	DBusMessage *mess,*reply;
 	DBusError error;
@@ -616,8 +640,12 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 gboolean            
 xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical) 
 {
+    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
+     
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,FALSE);
     
 	DBusMessage *mess,*reply;
 	DBusError error;
@@ -706,6 +734,8 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
     
+    g_return_if_fail(priv->connected == TRUE);
+    
     DBusMessage *mess,*reply;
 	DBusError error;
 
@@ -752,6 +782,8 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
     
+    g_return_val_if_fail(priv->connected == TRUE,-1);
+    
     DBusMessage *mess,*reply;
 	DBusError error;
 	gint32 brightness_level;
@@ -793,8 +825,12 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
 gchar               
 **xfpm_hal_get_available_cpu_governors(XfpmHal *xfpm_hal,GError **gerror)
 {
+    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),NULL);
+     
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,NULL);
     
     DBusMessage *mess;
     DBusMessage *reply;
@@ -841,8 +877,12 @@ gchar
 gchar                
 *xfpm_hal_get_current_cpu_governor(XfpmHal *xfpm_hal,GError **gerror)
 {
+    g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),NULL);
+     
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,NULL);
     
     DBusMessage *mess;
     DBusMessage *reply;
@@ -890,8 +930,12 @@ xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
                            const gchar *governor,
                            GError **gerror)
 {
+    g_return_if_fail(XFPM_IS_HAL(xfpm_hal));
+     
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_if_fail(priv->connected == TRUE);
     
     XFPM_DEBUG("Setting CPU gov %s\n",governor);
     
@@ -931,6 +975,8 @@ xfpm_hal_set_power_save (XfpmHal *xfpm_hal,
     
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    g_return_if_fail(priv->connected == TRUE);
     
     DBusMessage *mess;
     DBusMessage *reply;
