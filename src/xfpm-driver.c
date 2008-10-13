@@ -433,7 +433,7 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     gchar **govs;
     govs = xfpm_hal_get_available_cpu_governors(priv->hal);
     int i = 0;
-    gint8 gov[4] = { 0, };
+    gint8 gov[5] = { 0, };
     
     if ( govs ) 
     {
