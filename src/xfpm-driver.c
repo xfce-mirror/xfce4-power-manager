@@ -435,11 +435,6 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     int i = 0;
     gint8 gov[4] = { 0, };
     
-    for ( i = 0 ; i <= 4 ; i++ )
-    {
-        g_print("gov[%d]=%d\n",i,gov[i]);
-    }
-    
     if ( govs ) 
     {
         for ( i = 0 ; govs[i] ; i++ )
