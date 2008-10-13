@@ -439,7 +439,7 @@ xfpm_settings_battery(XfconfChannel *channel, gboolean can_hibernate)
 }
 
 static GtkWidget *
-xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 *govs,const gchar *label)
+xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,gint8 *govs,const gchar *label)
 {
     GtkWidget *frame;
     GtkWidget *align;
@@ -532,7 +532,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 *govs,const gchar 
 }
 
 static GtkWidget *
-xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 *govs)
+xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,gint8 *govs)
 {
     GtkWidget *frame;
     GtkWidget *align;
@@ -626,7 +626,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 *govs)
 }
 
 static GtkWidget *
-xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 *govs,gboolean laptop)
+xfpm_settings_cpu_freq(XfconfChannel *channel,gint8 *govs,gboolean laptop)
 {
     GtkWidget *hbox;
     hbox = gtk_hbox_new(FALSE,2);
@@ -1027,7 +1027,7 @@ xfpm_settings_tree_view(gboolean is_laptop)
 GtkWidget *
 xfpm_settings_new(XfconfChannel *channel,gboolean is_laptop,
                   gboolean can_hibernate,gboolean can_suspend,
-                  gboolean dpms_capable,guint8 *govs)
+                  gboolean dpms_capable,gint8 *govs)
 {
     GtkWidget *Dialog;  /* Main dialog window */
     GtkWidget *mainbox; /* Box to get (Dialog)->vbox */

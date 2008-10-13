@@ -289,7 +289,7 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
     if ( !strcmp(property,CPU_FREQ_SCALING_CFG) ) 
     {
         gboolean val = g_value_get_boolean(value);
-        g_object_set(G_OBJECT(priv->cpu),"cpu-freq-scaling-enabled",val,NULL);
+        g_object_set(G_OBJECT(priv->cpu),"cpu-freq",val,NULL);
         return;
     }
     
@@ -433,7 +433,12 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     gchar **govs;
     govs = xfpm_hal_get_available_cpu_governors(priv->hal);
     int i = 0;
-    guint8 gov[4] = { -1, };
+    gint8 gov[4] = { 0, };
+    
+    for ( i = 0 ; i <= 4 ; i++ )
+    {
+        g_print("gov[%d]=%d\n",i,gov[i]);
+    }
     
     if ( govs ) 
     {
