@@ -69,6 +69,7 @@ xfpm_spin_button_size_request(GtkWidget *widget,GtkRequisition *req)
     gint char_pixels = (char_width + PANGO_SCALE - 1) / PANGO_SCALE;
     
     req->width += char_pixels * xfpm_spin_button->suffix_length;
+    pango_font_metrics_unref(metrics);
 }
 
 static void

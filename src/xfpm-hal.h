@@ -130,11 +130,16 @@ gint32               xfpm_hal_get_brightness               (XfpmHal *xfpm_hal,
                                                             const gchar *interface,
                                                             GError **gerror);                                                            
 
-gchar              **xfpm_hal_get_available_cpu_governors  (XfpmHal *xfpm_hal);
-gchar               *xfpm_hal_get_current_cpu_governor     (XfpmHal *xfpm_hal);
+gchar              **xfpm_hal_get_available_cpu_governors  (XfpmHal *xfpm_hal,
+                                                            GError **gerror);
+gchar               *xfpm_hal_get_current_cpu_governor     (XfpmHal *xfpm_hal,
+                                                            GError **gerror);
 void                 xfpm_hal_set_cpu_governor             (XfpmHal *xfpm_hal,
-                                                            const gchar *governor);
-
+                                                            const gchar *governor,
+                                                            GError **gerror);
+void                 xfpm_hal_set_power_save               (XfpmHal *xfpm_hal,
+                                                            gboolean power_save,
+                                                            GError **gerror);
 G_END_DECLS
 
 #endif /* __XFPM_HAL_H */

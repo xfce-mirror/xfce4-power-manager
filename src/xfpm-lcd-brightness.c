@@ -246,6 +246,7 @@ xfpm_lcd_brightness_set_level(XfpmLcdBrightness *lcd)
             if ( error )
             {
                 XFPM_DEBUG("Error setting brigthness level: %s\n",error->message);
+                g_error_free(error);
                 return;
             }
         }
@@ -256,6 +257,7 @@ xfpm_lcd_brightness_set_level(XfpmLcdBrightness *lcd)
         if ( error )
         {
             XFPM_DEBUG("Error setting brigthness level: %s\n",error->message);
+            g_error_free(error);
             return;
         }
     }
@@ -301,7 +303,7 @@ xfpm_lcd_brightness_get_device(XfpmLcdBrightness *lcd)
         return;
     }
     
-    if ( !udi )
+    if ( !udi || num == 0 )
     {
         XFPM_DEBUG("No device with laptop_panel capability\n");
         return;

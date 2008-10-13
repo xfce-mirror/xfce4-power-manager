@@ -561,18 +561,17 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
                                                     mess,
                                                     SLEEP_TIMEOUT,
                                                     &error);
-    	
+
+    dbus_message_unref(mess);
+             	
     if ( dbus_error_is_set(&error) )
     {
         XFPM_DEBUG("error=%s\n",error.message);
         dbus_set_g_error(gerror,&error);
         dbus_error_free(&error);
-        dbus_message_unref(mess);
         *critical = 0;
         return FALSE;
     }
-    
-    dbus_message_unref(mess);
     
     if ( !reply ) 
 	{						  		       
@@ -644,18 +643,16 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
                                                     mess,
                                                     SLEEP_TIMEOUT,
                                                     &error);
-    	
+    dbus_message_unref(mess);
+         	
     if ( dbus_error_is_set(&error) )
     {
         XFPM_DEBUG("error=%s\n",error.message);
         dbus_set_g_error(gerror,&error);
         dbus_error_free(&error);
-        dbus_message_unref(mess);
         *critical = 0;
         return FALSE;
     }
-    
-    dbus_message_unref(mess);
     
     if ( !reply ) 
 	{						  		       
@@ -727,19 +724,18 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
     dbus_error_init(&error);
     
     reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    dbus_message_unref(mess);
     
     if ( dbus_error_is_set(&error) )
     {
          dbus_set_g_error(gerror,&error);
          dbus_error_free(&error);
-         dbus_message_unref(mess);
          return;
     }
         
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon"));
-        dbus_message_unref(mess);
+        g_set_error(gerror,0,0,_("No reply from HAL daemon set brightness message"));
         return;
     }
     
@@ -773,19 +769,18 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
     dbus_error_init(&error);
     
     reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
-    
+    dbus_message_unref(mess);
+        
     if ( dbus_error_is_set(&error) )
     {
          dbus_set_g_error(gerror,&error);
          dbus_error_free(&error);
-         dbus_message_unref(mess);
          return -1;
     }
         
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon"));
-        dbus_message_unref(mess);
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to get brightness message"));
         return -1;
     }
     
@@ -796,14 +791,14 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
 }
 
 gchar               
-**xfpm_hal_get_available_cpu_governors(XfpmHal *xfpm_hal)
+**xfpm_hal_get_available_cpu_governors(XfpmHal *xfpm_hal,GError **gerror)
 {
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
     
     DBusMessage *mess;
-    DBusPendingCall *pend;
     DBusMessage *reply;
+    DBusError error;
     gchar **govs = NULL;
     int dummy;
     
@@ -811,68 +806,89 @@ gchar
                                  HAL_ROOT_COMPUTER,
                                  HAL_DBUS_INTERFACE_CPU,
                                  "GetCPUFreqAvailableGovernors");
-    
-    dbus_connection_send_with_reply(priv->connection,mess,&pend,-1);
-    dbus_message_unref(mess);
+    if (!mess) 
+	{
+	    g_set_error(gerror,0,0,_("Out of memmory"));
+		return NULL;
+	}	
+	
+    dbus_error_init(&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
 
-    g_return_val_if_fail(pend != NULL,NULL);
-    
-    dbus_pending_call_block(pend);
-    reply = dbus_pending_call_steal_reply(pend);
-    dbus_pending_call_unref(pend);
-    
-    if ( reply !=NULL )
+    dbus_message_unref(mess);
+         
+    if ( dbus_error_is_set(&error) )
     {
-        dbus_message_get_args(reply,NULL,
-                              DBUS_TYPE_ARRAY,DBUS_TYPE_STRING,
-                              &govs,&dummy,
-                              DBUS_TYPE_INVALID,DBUS_TYPE_INVALID);
-        dbus_message_unref(reply);                      
-        return govs;
+         dbus_set_g_error(gerror,&error);
+         dbus_error_free(&error);
+         return NULL;
+    }
+        
+    if ( !reply ) 
+    {
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to get available cpu governors message"));
+        return NULL;
     }
     
-    return NULL;
+    dbus_message_get_args(reply,NULL,
+                          DBUS_TYPE_ARRAY,DBUS_TYPE_STRING,
+                          &govs,&dummy,
+                          DBUS_TYPE_INVALID,DBUS_TYPE_INVALID);
+    dbus_message_unref(reply);                      
+    return govs;
 }
 
 gchar                
-*xfpm_hal_get_current_cpu_governor(XfpmHal *xfpm_hal)
+*xfpm_hal_get_current_cpu_governor(XfpmHal *xfpm_hal,GError **gerror)
 {
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
     
     DBusMessage *mess;
-    DBusPendingCall *pend;
     DBusMessage *reply;
-    char *gov;
+    DBusError error;
+    gchar *gov = NULL;
     
     mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
                                  HAL_ROOT_COMPUTER,
                                  HAL_DBUS_INTERFACE_CPU,
                                  "GetCPUFreqGovernor");
     
-    dbus_connection_send_with_reply(priv->connection,mess,&pend,-1);
+    if (!mess) 
+	{
+	    g_set_error(gerror,0,0,_("Out of memmory"));
+		return NULL;
+	}	
+	
+    dbus_error_init(&error);
+    
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
     dbus_message_unref(mess);
     
-    g_return_val_if_fail(pend != NULL,NULL);
-    
-    dbus_pending_call_block(pend);
-    reply = dbus_pending_call_steal_reply(pend);
-    dbus_pending_call_unref(pend);
-    
-    if ( reply !=NULL )
+    if ( dbus_error_is_set(&error) )
     {
-        dbus_message_get_args(reply,NULL,DBUS_TYPE_STRING,&gov,DBUS_TYPE_INVALID);
-        XFPM_DEBUG("Got governor %s\n",gov);
-        dbus_message_unref(reply);
-        return gov;
+         dbus_set_g_error(gerror,&error);
+         dbus_error_free(&error);
+         return NULL;
     }
-    return NULL;
+    
+    if ( !reply ) 
+    {
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to get current cpu governor message"));
+        return NULL;
+    }
+
+    dbus_message_get_args(reply,NULL,DBUS_TYPE_STRING,&gov,DBUS_TYPE_INVALID);
+    XFPM_DEBUG("Got governor %s\n",gov);
+    dbus_message_unref(reply);
+    return gov;
 }
 
 
 void 
 xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
-                          const gchar *governor)
+                           const gchar *governor,
+                           GError **gerror)
 {
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
@@ -880,14 +896,65 @@ xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
     XFPM_DEBUG("Setting CPU gov %s\n",governor);
     
     DBusMessage *mess;
+    DBusMessage *reply;
+    DBusError error;
     mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
                                  HAL_ROOT_COMPUTER,
                                  HAL_DBUS_INTERFACE_CPU,
                                  "SetCPUFreqGovernor");
-                                                                
+    if (!mess) 
+	{
+	    g_set_error(gerror,0,0,_("Out of memmory"));
+		return;
+	}	
+	                                                            
     dbus_message_append_args(mess,DBUS_TYPE_STRING,&governor,DBUS_TYPE_INVALID);
     
-    dbus_connection_send(priv->connection,mess,NULL);
-    
+    dbus_error_init(&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
     dbus_message_unref(mess);
+
+    if ( !reply ) 
+    {
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to set cpu governor message"));
+        return;
+    }
+    dbus_message_unref(reply);
 }
+
+void                 
+xfpm_hal_set_power_save (XfpmHal *xfpm_hal,
+                         gboolean power_save,
+                         GError **gerror)
+{
+    g_return_if_fail(XFPM_IS_HAL(xfpm_hal));
+    
+    XfpmHalPrivate *priv;
+    priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
+    
+    DBusMessage *mess;
+    DBusMessage *reply;
+    DBusError error;
+    mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
+                                 HAL_ROOT_COMPUTER,
+                                 HAL_DBUS_INTERFACE_POWER,
+                                 "SetPowerSave");
+    if (!mess) 
+	{
+	    g_set_error(gerror,0,0,_("Out of memmory"));
+		return;
+	}	
+	                                                            
+    dbus_message_append_args(mess,DBUS_TYPE_BOOLEAN,&power_save,DBUS_TYPE_INVALID);
+    
+    dbus_error_init(&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    dbus_message_unref(mess);
+
+    if ( !reply ) 
+    {
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to set cpu governor message"));
+        return;
+    }
+    dbus_message_unref(reply);
+}                                                            

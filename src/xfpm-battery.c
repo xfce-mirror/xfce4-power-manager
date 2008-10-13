@@ -238,6 +238,7 @@ xfpm_battery_init(XfpmBattery *battery)
     {
         XFPM_DEBUG("%s: \n",error->message);
         g_error_free(error);
+        error = NULL;
     }                                          
 
     battery->can_suspend = xfpm_hal_get_bool_info(priv->hal,
@@ -603,7 +604,6 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
     
     if ( g_hash_table_size(priv->batteries) == 0 )
     {
-        XFPM_DEBUG("No battery device in the hash table\n");
         return;
     }
     
@@ -1086,7 +1086,8 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
    
     XfpmBatteryType type = 
     xfpm_battery_get_battery_type(battery_type);
-    libhal_free_string(battery_type);
+    if ( battery_type )
+        libhal_free_string(battery_type);
     
     GtkStatusIcon *batt_icon;
     batt_icon = xfpm_battery_icon_new(last_full,

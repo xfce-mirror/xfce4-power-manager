@@ -419,10 +419,12 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     GtkWidget *dialog;
 
     GError *g_error = NULL;
+    gboolean with_dpms;
     if ( !xfconf_init(&g_error) )
     {
         g_critical("Unable to xfconf init failed: %s\n",g_error->message);
         g_error_free(g_error);
+        g_error = NULL;
     }
     
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
@@ -431,10 +433,17 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
                      G_CALLBACK(xfpm_driver_property_changed_cb),drv);
     
     gchar **govs;
-    govs = xfpm_hal_get_available_cpu_governors(priv->hal);
     int i = 0;
     gint8 gov[5] = { 0, };
     
+    govs = xfpm_hal_get_available_cpu_governors(priv->hal,&g_error);
+    if ( g_error )
+    {
+        XFPM_DEBUG("%s :\n",g_error->message);
+        g_error_free(g_error);
+        goto no_gov;
+    }
+        
     if ( govs ) 
     {
         for ( i = 0 ; govs[i] ; i++ )
@@ -447,7 +456,9 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
         }   
         libhal_free_string_array(govs);
     }
-    gboolean with_dpms;
+    
+    no_gov:
+    
 #ifdef HAVE_DPMS
     with_dpms = xfpm_dpms_capable(priv->dpms);
 #else
@@ -565,6 +576,7 @@ _get_system_form_factor(XfpmDriverPrivate *priv)
     {
         priv->formfactor = SYSTEM_UNKNOWN;
     }
+    libhal_free_string(factor);
     
 }
 
@@ -606,6 +618,7 @@ xfpm_driver_monitor (XfpmDriver *drv)
     {
         XFPM_DEBUG("%s: \n",g_error->message);
         g_error_free(g_error);
+        g_error = NULL;
     }            
     
     priv->can_hibernate = xfpm_hal_get_bool_info(priv->hal,

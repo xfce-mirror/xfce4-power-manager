@@ -150,6 +150,7 @@ xfpm_ac_adapter_init(XfpmAcAdapter *adapter)
     {
         XFPM_DEBUG("%s: \n",error->message);
         g_error_free(error);
+        error = NULL;
     }                                          
 
     priv->can_suspend = xfpm_hal_get_bool_info(priv->hal,

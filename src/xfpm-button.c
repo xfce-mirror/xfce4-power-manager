@@ -565,7 +565,7 @@ xfpm_button_get_switches(XfpmButton *bt)
             xfpm_hal_device_have_key(priv->hal,udi[i],"button.has_state") )
         {
             GError *error = NULL;
-            const gchar *button_type = 
+            gchar *button_type = 
             xfpm_hal_get_string_info(priv->hal,udi[i],"button.type",&error);
             if ( error )
             {
@@ -573,8 +573,11 @@ xfpm_button_get_switches(XfpmButton *bt)
                 g_error_free(error);
                 continue;
             }
-            
-            _check_button(priv,button_type,udi[i]);
+            if ( button_type)
+            {
+                _check_button(priv,button_type,udi[i]);
+                libhal_free_string(button_type);
+            }
         }
     }
 #ifdef DEBUG

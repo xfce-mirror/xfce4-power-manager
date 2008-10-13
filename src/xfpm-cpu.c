@@ -295,8 +295,15 @@ xfpm_cpu_set_governor(XfpmCpu *cpu,gboolean ac_adapter_present)
     priv = XFPM_CPU_GET_PRIVATE(cpu);
 
     gchar *current_governor;
-    current_governor = xfpm_hal_get_current_cpu_governor(priv->hal);
+    GError *error = NULL;
+    current_governor = xfpm_hal_get_current_cpu_governor(priv->hal,&error);
     
+    if ( error )
+    {
+        XFPM_DEBUG("%s:\n",error->message);
+        g_error_free(error);
+        return;
+    }
     if ( !current_governor ) return;
     
     gchar *config_gov = 
@@ -313,7 +320,13 @@ xfpm_cpu_set_governor(XfpmCpu *cpu,gboolean ac_adapter_present)
     if ( strcmp(current_governor,config_gov) ) 
     {
         XFPM_DEBUG("CPU actuel governor %s, setting=%s\n",current_governor,config_gov);
-        xfpm_hal_set_cpu_governor(priv->hal,config_gov);
+        xfpm_hal_set_cpu_governor(priv->hal,config_gov,&error);
+        if ( error )
+        {
+            XFPM_DEBUG("%s:\n",error->message);
+            g_error_free(error);
+            return;
+        }
     }    
     else
     {
