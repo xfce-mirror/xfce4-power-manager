@@ -78,6 +78,8 @@ static void xfpm_battery_refresh_notification(XfpmBattery *batt);
 #endif
 static void xfpm_battery_refresh_critical_charge(XfpmBattery *batt);
 static void xfpm_battery_refresh(XfpmBattery *batt);
+
+static void xfpm_battery_set_power_save(XfpmBattery *batt);
     
 static void xfpm_battery_notify_cb (GObject *object,
                                     GParamSpec *arg1,
@@ -144,6 +146,7 @@ enum
     PROP_AC_ADAPTER,
     PROP_CRITICAL_CHARGE,
     PROP_CRITICAL_ACTION,
+    PROP_POWER_SAVE,
 #ifdef HAVE_LIBNOTIFY
     PROP_ENABLE_NOTIFICATION,
 #endif
@@ -213,7 +216,14 @@ xfpm_battery_class_init(XfpmBatteryClass *klass)
                                                       XFPM_TYPE_SHOW_ICON,
                                                       0,
                                                       G_PARAM_READWRITE));
-                                                                                                       
+     g_object_class_install_property(gobject_class,
+                                    PROP_POWER_SAVE,
+                                    g_param_spec_boolean("enable-powersave",
+                                                         "Enable power save",
+                                                         "power save",
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
+                                                         
     g_type_class_add_private(klass,sizeof(XfpmBatteryPrivate));                                                     
 }
 
@@ -299,6 +309,9 @@ static void xfpm_battery_set_property(GObject *object,
     case PROP_SHOW_TRAY_ICON:
         battery->show_tray = g_value_get_enum(value);
         break;    
+    case PROP_POWER_SAVE:
+        battery->power_save = g_value_get_boolean(value);
+        break;    
 #ifdef HAVE_LIBNOTIFY
     case PROP_ENABLE_NOTIFICATION:
         battery->notify_enabled = g_value_get_boolean(value);
@@ -331,7 +344,10 @@ static void xfpm_battery_get_property(GObject *object,
         break;
     case PROP_SHOW_TRAY_ICON:
         g_value_set_enum(value, battery->show_tray);
-        break;    
+        break;
+    case PROP_POWER_SAVE:
+        g_value_set_boolean(value,battery->power_save);
+        break;        
 #ifdef HAVE_LIBNOTIFY
     case PROP_ENABLE_NOTIFICATION:
         g_value_set_boolean(value, battery->notify_enabled);
@@ -507,6 +523,23 @@ xfpm_battery_refresh(XfpmBattery *batt)
     xfpm_battery_refresh_tray_icon(batt);
 }
 
+static void
+xfpm_battery_set_power_save(XfpmBattery *batt)
+{
+    XfpmBatteryPrivate *priv;
+    priv = XFPM_BATTERY_GET_PRIVATE(batt);
+    GError *error = NULL;
+    
+    xfpm_hal_set_power_save(priv->hal,batt->power_save,&error);
+    
+    if ( error )
+    {
+        XFPM_DEBUG("%s : \n",error->message);
+        g_error_free(error);
+    }
+    
+}
+
 static void 
 xfpm_battery_notify_cb (GObject *object,
                         GParamSpec *arg1,
@@ -528,7 +561,15 @@ xfpm_battery_notify_cb (GObject *object,
         xfpm_battery_refresh_notification(XFPM_BATTERY(object));
     }    
 #endif 
-    
+    else if ( !strcmp(arg1->name,"enable-powersave") )
+    {
+        xfpm_battery_set_power_save(XFPM_BATTERY(object));
+    }
+    else if ( !strcmp(arg1->name,"on-ac-adapter") )
+    {
+        if ( XFPM_BATTERY(object)->power_save )
+        xfpm_battery_set_power_save(XFPM_BATTERY(object));
+    }
 }
 
 static void
@@ -546,6 +587,7 @@ xfpm_battery_load_config(XfpmBattery *batt)
 #ifdef HAVE_LIBNOTIFY
         batt->notify_enabled = TRUE;
 #endif
+        batt->power_save = TRUE;
         batt->show_tray = ALWAYS;
         return;
     }
@@ -556,6 +598,7 @@ xfpm_battery_load_config(XfpmBattery *batt)
     batt->critical_level  =  xfconf_channel_get_uint(channel,CRITICAL_BATT_CFG,10);
     batt->critical_action = xfconf_channel_get_uint(channel,CRITICAL_BATT_ACTION_CFG,NOTHING);
     batt->show_tray = xfconf_channel_get_uint(channel,SHOW_TRAY_ICON_CFG,ALWAYS);
+    batt->power_save = xfconf_channel_get_bool(channel,POWER_SAVE_CFG,TRUE);
 #ifdef HAVE_LIBNOTIFY
      batt->notify_enabled = xfconf_channel_get_bool(channel,BATT_STATE_NOTIFICATION_CFG,TRUE);
 #endif 

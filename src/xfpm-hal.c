@@ -999,7 +999,7 @@ xfpm_hal_set_power_save (XfpmHal *xfpm_hal,
 
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to set cpu governor message"));
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to set power save profile"));
         return;
     }
     dbus_message_unref(reply);

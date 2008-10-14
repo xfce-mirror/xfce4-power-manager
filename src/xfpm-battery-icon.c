@@ -483,7 +483,7 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint charge,guint rem
     // battery is discharging
     if ( is_charging == FALSE && is_discharging == TRUE )
     {
-        if ( remaining_per > battery_icon->critical_level + 18 )
+        if ( remaining_per > ( battery_icon->critical_level + 10 ) )
         {
             if ( !battery_icon->ac_adapter_present )
             {
@@ -493,7 +493,7 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint charge,guint rem
             gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
             xfpm_battery_icon_update(battery_icon,DISCHARGING,remaining_per);
         } 
-        else if ( remaining_per <= battery_icon->critical_level+18 && remaining_per > battery_icon->critical_level + 18 )
+        else if ( remaining_per <= ( battery_icon->critical_level+10 ) && remaining_per > battery_icon->critical_level )
         {
             strcat(tip,_(" Battery charge level is low"));
             gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);

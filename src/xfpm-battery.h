@@ -50,6 +50,7 @@ typedef struct
     gboolean can_hibernate;
     gboolean can_suspend;
     gboolean show_sleep_errors;
+    gboolean power_save;
     
 #ifdef HAVE_LIBNOTIFY
     gboolean notify_enabled;

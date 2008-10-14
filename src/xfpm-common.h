@@ -39,10 +39,11 @@
 #define ON_AC_CPU_GOV_CFG           "/xfce4-power-manager/on-ac-cpu-gov"
 #define ON_BATT_CPU_GOV_CFG         "/xfce4-power-manager/on-batt-cpu-gov"
 
+#define POWER_SAVE_CFG              "/xfce4-power-manager/power-save"
 #define LCD_BRIGHTNESS_CFG          "/xfce4-power-manager/lcd-brightness"
 #define LID_SWITCH_CFG              "/xfce4-power-manager/lid-switch-action"
-#define SLEEP_SWITCH_CFG              "/xfce4-power-manager/sleep-switch-action"
-#define POWER_SWITCH_CFG              "/xfce4-power-manager/power-switch-action"
+#define SLEEP_SWITCH_CFG            "/xfce4-power-manager/sleep-switch-action"
+#define POWER_SWITCH_CFG            "/xfce4-power-manager/power-switch-action"
 
 #ifdef HAVE_LIBNOTIFY
 #define BATT_STATE_NOTIFICATION_CFG "/xfce4-power-manager/battery-state-notification"  /* default TRUE */

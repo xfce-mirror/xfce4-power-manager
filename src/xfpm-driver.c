@@ -402,6 +402,12 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
         return;
     }
     
+    if ( !strcmp(property,POWER_SAVE_CFG) )
+    {
+        gboolean val = g_value_get_boolean(value);
+        g_object_set(G_OBJECT(priv->batt),"enable-powersave",val,NULL);
+        return;
+    }
 } 
 
 static gboolean
