@@ -1002,7 +1002,7 @@ _cursor_changed_cb(GtkIconView *view,gpointer data)
 		
     gtk_tree_model_get(model,
                        &selected_row,
-                       1, 
+                       2, 
                        &int_data,
                        -1);
 
@@ -1025,45 +1025,88 @@ xfpm_settings_tree_view(gboolean is_laptop)
     GtkTreeIter iter;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
-    //GtkCellRenderer *text_renderer;
-        
-    list_store = gtk_list_store_new(2,GDK_TYPE_PIXBUF,G_TYPE_INT);
-    view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_store));
-    col = gtk_tree_view_column_new();
-    renderer = gtk_cell_renderer_pixbuf_new();
     
-    gtk_tree_view_column_pack_start(col,renderer,TRUE);
-    gtk_tree_view_column_add_attribute(col,renderer,"pixbuf",0);
+    list_store = gtk_list_store_new(3,GDK_TYPE_PIXBUF,G_TYPE_STRING,G_TYPE_INT);
+    view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_store));
+    gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(view),TRUE);
+    col = gtk_tree_view_column_new();
+    gtk_tree_view_column_set_title(col,_("Advanced settings"));
+    
+    renderer = gtk_cell_renderer_pixbuf_new();
+    gtk_tree_view_column_pack_start(col,renderer,FALSE);
+    gtk_tree_view_column_set_attributes(col,renderer,"pixbuf",0,NULL);
 
-    gtk_tree_view_column_set_title(col,_(" Advanced settings"));
-
+    renderer = gtk_cell_renderer_text_new();
+    gtk_tree_view_column_pack_start(col,renderer,FALSE);
+    gtk_tree_view_column_set_attributes(col,renderer,"text",1,NULL);
+    
     gtk_tree_view_append_column(GTK_TREE_VIEW(view),col);
 
+    /// CPU Settings
     pix = xfpm_load_icon("gnome-cpu-frequency-applet",38);      
     gtk_list_store_append(list_store,&iter);
-    gtk_list_store_set(list_store,&iter,0,pix,1,0,-1);
-    g_object_unref(pix);
-
+    if ( pix )
+    {
+        gtk_list_store_set(list_store,&iter,0,pix,1,_("Cpu settings"),2,0,-1);
+        g_object_unref(pix);
+    }
+    else
+    {
+        gtk_list_store_set(list_store,&iter,1,_("Cpu settings"),2,0,-1);
+    }
+    
+    /// Battery Settings
     if ( is_laptop )
     {
         pix = xfpm_load_icon("gpm-primary-100",38);
         gtk_list_store_append(list_store,&iter);
-        gtk_list_store_set(list_store,&iter,0,pix,1,1,-1);
-        g_object_unref(pix);
-    }
+        if ( pix )
+        {
+            gtk_list_store_set(list_store,&iter,0,pix,1,_("Battery settings"),2,1,-1);
+            g_object_unref(pix);
+        }
+        else
+        {
+            gtk_list_store_set(list_store,&iter,1,_("Battery settings"),2,1,-1);
+        }
+   }
    
+    /// Keyboard Settings
     pix = xfpm_load_icon("keyboard",38);
     gtk_list_store_append(list_store,&iter);
-    gtk_list_store_set(list_store,&iter,0,pix,1,2,-1);
-    g_object_unref(pix);
+    if ( pix )
+    {
+        gtk_list_store_set(list_store,&iter,0,pix,1,_("Shortcuts"),2,2,-1);
+        g_object_unref(pix);
+    }
+    else
+    {
+        gtk_list_store_set(list_store,&iter,1,_("Shortcuts"),2,2,-1);
+    } 
     
+    
+    /// Dpms settings
 #ifdef HAVE_DPMS    
     pix = xfpm_load_icon("display",38);      
     gtk_list_store_append(list_store,&iter);
-    gtk_list_store_set(list_store,&iter,0,pix,1,3,-1);
-    g_object_unref(pix);
-#endif  
+    if ( pix ) 
+    {
+        gtk_list_store_set(list_store,&iter,0,pix,1,_("Monitor Settings"),2,3,-1);
+        g_object_unref(pix);
+    }
+    else
+    {
+        gtk_list_store_set(list_store,&iter,1,_("Monitor Settings"),2,3,-1);
+    }
+#endif
     
+    GtkTreeSelection *sel;
+    GtkTreePath *path;
+
+    sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
+    path = gtk_tree_path_new_from_string("0");
+    gtk_tree_selection_select_path(sel, path);
+    gtk_tree_path_free(path);
     g_signal_connect(view,"cursor-changed",G_CALLBACK(_cursor_changed_cb),NULL);
     
     return view;
