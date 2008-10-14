@@ -119,7 +119,7 @@ xfpm_cpu_class_init(XfpmCpuClass *klass)
     
     g_object_class_install_property(gobject_class,
                                     PROP_ON_AC_CPU_GOV,
-                                    g_param_spec_enum("on-ac-cpu-gov",
+                                    g_param_spec_flags("on-ac-cpu-gov",
                                                       "On ac cpu gov",
                                                       "Cpu governor on AC power",
                                                       XFPM_TYPE_CPU_GOVERNOR,
@@ -127,7 +127,7 @@ xfpm_cpu_class_init(XfpmCpuClass *klass)
                                                       G_PARAM_READWRITE));
     g_object_class_install_property(gobject_class,
                                     PROP_ON_BATT_CPU_GOV,
-                                    g_param_spec_enum("on-batt-cpu-gov",
+                                    g_param_spec_flags("on-batt-cpu-gov",
                                                       "On battery cpu gov",
                                                       "Cpu governor on battery power",
                                                       XFPM_TYPE_CPU_GOVERNOR,
@@ -173,10 +173,10 @@ static void xfpm_cpu_set_property(GObject *object,
         cpu->cpu_freq_enabled = g_value_get_boolean(value);
         break;    
     case PROP_ON_AC_CPU_GOV:
-        cpu->on_ac_cpu_gov = g_value_get_enum(value);
+        cpu->on_ac_cpu_gov = g_value_get_flags(value);
         break;
     case PROP_ON_BATT_CPU_GOV:
-        cpu->on_batt_cpu_gov = g_value_get_enum(value);
+        cpu->on_batt_cpu_gov = g_value_get_flags(value);
         break;    
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object,prop_id,pspec);
@@ -201,10 +201,10 @@ static void xfpm_cpu_get_property(GObject *object,
         g_value_set_boolean(value,cpu->cpu_freq_enabled);
         break;
     case PROP_ON_AC_CPU_GOV:
-        g_value_set_enum(value,cpu->on_ac_cpu_gov);
+        g_value_set_flags(value,cpu->on_ac_cpu_gov);
         break;
     case PROP_ON_BATT_CPU_GOV:
-        g_value_set_enum(value,cpu->on_batt_cpu_gov);
+        g_value_set_flags(value,cpu->on_batt_cpu_gov);
         break;            
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object,prop_id,pspec);

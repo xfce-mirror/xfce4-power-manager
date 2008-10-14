@@ -439,8 +439,7 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
                      G_CALLBACK(xfpm_driver_property_changed_cb),drv);
     
     gchar **govs;
-    int i = 0;
-    gint8 gov[5] = { 0, };
+    guint8 gov = 0;
     
     govs = xfpm_hal_get_available_cpu_governors(priv->hal,&g_error);
     if ( g_error )
@@ -449,16 +448,16 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
         g_error_free(g_error);
         goto no_gov;
     }
-        
+    int i = 0;    
     if ( govs ) 
     {
         for ( i = 0 ; govs[i] ; i++ )
         {
-            if ( !strcmp(govs[i],"powersave") )    gov[0] = 1;
-            if ( !strcmp(govs[i],"ondemand") )     gov[1] = 1;
-            if ( !strcmp(govs[i],"performance") )  gov[2] = 1;
-            if ( !strcmp(govs[i],"conservative") ) gov[3] = 1;
-            if ( !strcmp(govs[i],"userspace") )    gov[4] = 1;
+            if ( !strcmp(govs[i],"powersave") )    gov |= POWERSAVE;
+            if ( !strcmp(govs[i],"ondemand") )     gov |= ONDEMAND;
+            if ( !strcmp(govs[i],"performance") )  gov |= PERFORMANCE;
+            if ( !strcmp(govs[i],"conservative") ) gov |= CONSERVATIVE;
+            if ( !strcmp(govs[i],"userspace") )    gov |= USERSPACE;
         }   
         libhal_free_string_array(govs);
     }

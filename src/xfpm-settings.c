@@ -466,7 +466,7 @@ xfpm_settings_battery(XfconfChannel *channel, gboolean can_hibernate)
 }
 
 static GtkWidget *
-xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,gint8 *govs,const gchar *label)
+xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 govs,const gchar *label)
 {
     GtkWidget *frame;
     GtkWidget *align;
@@ -504,7 +504,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,gint8 *govs,const gchar *
     conservative_on_ac = gtk_radio_button_new_with_label(list,_("Conservative"));
     gtk_box_pack_start (GTK_BOX (vbox), conservative_on_ac, FALSE, FALSE, 0); 
     
-    if ( govs[0]  == 1 ) 
+    if ( govs & POWERSAVE ) 
     {
         gtk_widget_set_sensitive(powersave_on_ac,enable);
         g_signal_connect(powersave_on_ac,"pressed",G_CALLBACK(set_powersave_on_ac_cb),channel);
@@ -514,7 +514,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,gint8 *govs,const gchar *
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(powersave_on_ac),TRUE);
         }
     }
-    if ( govs[1]  == 1 ) 
+    if ( govs & ONDEMAND ) 
     {
         gtk_widget_set_sensitive(ondemand_on_ac,enable);
         g_signal_connect(ondemand_on_ac,"pressed",G_CALLBACK(set_ondemand_on_ac_cb),channel);
@@ -524,7 +524,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,gint8 *govs,const gchar *
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ondemand_on_ac),TRUE);
         }
     }
-    if ( govs[2]  == 1 ) 
+    if ( govs & PERFORMANCE ) 
     {
         gtk_widget_set_sensitive(performance_on_ac,enable);
         g_signal_connect(performance_on_ac,"pressed",G_CALLBACK(set_performance_on_ac_cb),channel);
@@ -534,7 +534,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,gint8 *govs,const gchar *
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(performance_on_ac),TRUE);
         }
     }
-    if ( govs[3]  == 1 ) 
+    if ( govs & CONSERVATIVE ) 
     {
         gtk_widget_set_sensitive(conservative_on_ac,enable);
         g_signal_connect(conservative_on_ac,"pressed",G_CALLBACK(set_conservative_on_ac_cb),channel);
@@ -544,7 +544,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,gint8 *govs,const gchar *
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(conservative_on_ac),TRUE);
         }
     }
-    if ( govs[4]  == 1 ) 
+    if ( govs & USERSPACE ) 
     {
         gtk_widget_set_sensitive(userspace_on_ac,enable);
         g_signal_connect(userspace_on_ac,"pressed",G_CALLBACK(set_userspace_on_ac_cb),channel);
@@ -559,7 +559,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,gint8 *govs,const gchar *
 }
 
 static GtkWidget *
-xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,gint8 *govs)
+xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs)
 {
     GtkWidget *frame;
     GtkWidget *align;
@@ -597,7 +597,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,gint8 *govs)
     conservative_on_batt = gtk_radio_button_new_with_label(list,_("Conservative"));
     gtk_box_pack_start (GTK_BOX (vbox), conservative_on_batt, FALSE, FALSE, 0); 
     
-    if ( govs[0]  == 1 ) 
+    if ( govs & POWERSAVE ) 
     {
         gtk_widget_set_sensitive(powersave_on_batt,enable);
         g_signal_connect(powersave_on_batt,"pressed",G_CALLBACK(set_powersave_on_batt_cb),channel);
@@ -607,7 +607,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,gint8 *govs)
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(powersave_on_batt),TRUE);
         }
     }
-    if ( govs[1]  == 1 ) 
+    if ( govs & ONDEMAND ) 
     {
         gtk_widget_set_sensitive(ondemand_on_batt,enable);
         g_signal_connect(ondemand_on_batt,"pressed",G_CALLBACK(set_ondemand_on_batt_cb),channel);
@@ -617,7 +617,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,gint8 *govs)
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ondemand_on_batt),TRUE);
         }
     }
-    if ( govs[2]  == 1 ) 
+    if ( govs & PERFORMANCE ) 
     {
         gtk_widget_set_sensitive(performance_on_batt,enable);
         g_signal_connect(performance_on_batt,"pressed",G_CALLBACK(set_performance_on_batt_cb),channel);
@@ -627,7 +627,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,gint8 *govs)
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(performance_on_batt),TRUE);
         }
     }
-    if ( govs[3]  == 1 ) 
+    if ( govs & CONSERVATIVE ) 
     {
         gtk_widget_set_sensitive(conservative_on_batt,enable);
         g_signal_connect(conservative_on_batt,"pressed",G_CALLBACK(set_conservative_on_batt_cb),channel);
@@ -637,7 +637,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,gint8 *govs)
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(conservative_on_batt),TRUE);
         }
     }
-    if ( govs[4]  == 1 ) 
+    if ( govs & USERSPACE ) 
     {
         gtk_widget_set_sensitive(userspace_on_batt,enable);
         g_signal_connect(userspace_on_batt,"pressed",G_CALLBACK(set_userspace_on_batt_cb),channel);
@@ -653,7 +653,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,gint8 *govs)
 }
 
 static GtkWidget *
-xfpm_settings_cpu_freq(XfconfChannel *channel,gint8 *govs,gboolean laptop)
+xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop)
 {
     GtkWidget *hbox;
     hbox = gtk_hbox_new(FALSE,2);
@@ -665,8 +665,7 @@ xfpm_settings_cpu_freq(XfconfChannel *channel,gint8 *govs,gboolean laptop)
 
     gtk_box_pack_start(GTK_BOX(vbox),hbox,TRUE,TRUE,0);
     
-    gboolean found_governor = govs[0] || govs[1] || govs[2] || govs[3] || govs[4];
-    if (!found_governor) 
+    if ( !govs ) 
     {
         GtkWidget *label;
         label = gtk_label_new(_("No CPU governor found"));
@@ -1115,7 +1114,7 @@ xfpm_settings_tree_view(gboolean is_laptop)
 GtkWidget *
 xfpm_settings_new(XfconfChannel *channel,gboolean is_laptop,
                   gboolean can_hibernate,gboolean can_suspend,
-                  gboolean dpms_capable,gint8 *govs)
+                  gboolean dpms_capable,guint8 govs)
 {
     GtkWidget *Dialog;  /* Main dialog window */
     GtkWidget *mainbox; /* Box to get (Dialog)->vbox */

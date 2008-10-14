@@ -47,11 +47,11 @@ typedef enum
 /* CPU Freq Linux governors */
 typedef enum
 {
-    POWERSAVE,
-    ONDEMAND,
-    PERFORMANCE,
-    CONSERVATIVE,
-    USERSPACE
+    POWERSAVE     = (1<<0),
+    ONDEMAND      = (1<<1),
+    PERFORMANCE   = (1<<2),
+    CONSERVATIVE  = (1<<3),
+    USERSPACE     = (1<<4)
     
 } XfpmCpuGovernor;
 
