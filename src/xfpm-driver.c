@@ -53,6 +53,8 @@
 #include <libxfcegui4/libxfcegui4.h>
 #include <xfconf/xfconf.h>
 
+#include "xfpm-common.h"
+
 #include "xfpm-driver.h"
 #include "xfpm-debug.h"
 #include "xfpm-battery.h"
@@ -62,7 +64,6 @@
 #include "xfpm-lcd-brightness.h"
 #include "xfpm-notify.h"
 #include "xfpm-enum-types.h"
-#include "xfpm-common.h"
 #include "xfpm-settings.h"
 
 #ifdef HAVE_LIBNOTIFY

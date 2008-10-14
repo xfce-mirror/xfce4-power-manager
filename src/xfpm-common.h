@@ -58,6 +58,23 @@
 #define ON_AC_DPMS_TIMEOUTS_CFG     "/xfce4-power-manager/on-ac-monitor-dpms-timeouts"
 #endif
 
+typedef enum 
+{
+    SYSTEM_LAPTOP,
+    SYSTEM_DESKTOP,
+    SYSTEM_SERVER,
+    SYSTEM_UNKNOWN
+    
+} SystemFormFactor;
+
+typedef enum
+{
+    LID,
+    SLEEP,
+    POWER
+    
+} XfpmSwitchButton;
+
 GdkPixbuf* xfpm_load_icon(const gchar *icon_name,gint size);
 void       xfpm_lock_screen(void);
 void       xfpm_preferences(void);

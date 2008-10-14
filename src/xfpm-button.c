@@ -99,13 +99,6 @@ struct XfpmButtonPrivate
 
 };
 
-typedef enum
-{
-    LID,
-    SLEEP,
-    POWER
-    
-} XfpmSwitchButton;
 
 G_DEFINE_TYPE(XfpmButton,xfpm_button,G_TYPE_OBJECT)
 

@@ -49,10 +49,11 @@
 
 #include <glib/gi18n.h>
 
+#include "xfpm-common.h"
+
 #include "xfpm-hal.h"
 #include "xfpm-driver.h"
 #include "xfpm-ac-adapter.h"
-#include "xfpm-common.h"
 #include "xfpm-notify.h"
 #include "xfpm-debug.h"
 
