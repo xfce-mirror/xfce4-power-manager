@@ -38,7 +38,6 @@
 #endif
 
 #include <math.h>
-#include <locale.h>
 
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
