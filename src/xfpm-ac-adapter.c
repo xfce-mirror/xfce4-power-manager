@@ -214,9 +214,10 @@ _ac_adapter_not_found(XfpmAcAdapter *adapter)
                                    _("Unkown adapter status, the power manager will not work properly"));
 #ifdef HAVE_LIBNOTIFY
         xfpm_notify_simple(_("Xfce power manager"),
-                           _("Unkown adapter status, the power manager will not work properly,"\
-                            "make sure ac adapter driver is loaded into the kernel"),
-                           10000,
+                           _("Unable to get adapter status, the power manager will not work properly."\
+                             "Possible reasons: ac adapter driver is not loaded into the kernel "\
+                             "Broken connection with the hardware abstract layer or the message bus daemon is not running"),
+                           12000,
                            NOTIFY_URGENCY_CRITICAL,
                            NULL,
                            "gpm-ac-adapter",
@@ -491,6 +492,13 @@ xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
 	mi = gtk_separator_menu_item_new();
 	gtk_widget_show(mi);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+	
+	mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_ABOUT,NULL);
+	gtk_widget_set_sensitive(mi,TRUE);
+	gtk_widget_show(mi);
+	g_signal_connect(mi,"activate",G_CALLBACK(xfpm_about),NULL);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+	
 	mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES,NULL);
 	gtk_widget_set_sensitive(mi,TRUE);
 	gtk_widget_show(mi);

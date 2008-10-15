@@ -69,14 +69,15 @@ typedef enum
 
 typedef enum
 {
-    LID,
-    SLEEP,
-    POWER
+    LID_SWITCH   = (1<<0),
+    SLEEP_SWITCH = (1<<1),
+    POWER_SWITCH = (1<<2)
     
 } XfpmSwitchButton;
 
 GdkPixbuf* xfpm_load_icon(const gchar *icon_name,gint size);
 void       xfpm_lock_screen(void);
 void       xfpm_preferences(void);
+void       xfpm_about(GtkWidget *widget,gpointer data);
 
 #endif /* XFPM_COMMON_H */

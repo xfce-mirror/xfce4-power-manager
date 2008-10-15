@@ -379,15 +379,6 @@ xfpm_battery_finalize(GObject *object)
     G_OBJECT_CLASS(xfpm_battery_parent_class)->finalize(object);
 }
 
-#ifdef HAVE_LIBNOTIFY
-static gboolean
-_set_tray_visible_timeout(XfpmBatteryIcon *icon)
-{
-    g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
-    return FALSE;
-}
-#endif
-
 static void
 xfpm_battery_refresh_tray_icon(XfpmBattery *batt)
 {
@@ -454,11 +445,7 @@ xfpm_battery_refresh_tray_icon(XfpmBattery *batt)
                 }
                 else
                 {
-#ifdef HAVE_LIBNOTIFY                    
-                    g_timeout_add(6000,(GSourceFunc)_set_tray_visible_timeout,icon);
-#else                    
                     g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
-#endif                    
                 }
             }
         }
@@ -587,7 +574,7 @@ xfpm_battery_load_config(XfpmBattery *batt)
 #ifdef HAVE_LIBNOTIFY
         batt->notify_enabled = TRUE;
 #endif
-        batt->power_save = TRUE;
+        batt->power_save = FALSE;
         batt->show_tray = ALWAYS;
         return;
     }
@@ -598,7 +585,7 @@ xfpm_battery_load_config(XfpmBattery *batt)
     batt->critical_level  =  xfconf_channel_get_uint(channel,CRITICAL_BATT_CFG,10);
     batt->critical_action = xfconf_channel_get_uint(channel,CRITICAL_BATT_ACTION_CFG,NOTHING);
     batt->show_tray = xfconf_channel_get_uint(channel,SHOW_TRAY_ICON_CFG,ALWAYS);
-    batt->power_save = xfconf_channel_get_bool(channel,POWER_SAVE_CFG,TRUE);
+    batt->power_save = xfconf_channel_get_bool(channel,POWER_SAVE_CFG,FALSE);
 #ifdef HAVE_LIBNOTIFY
      batt->notify_enabled = xfconf_channel_get_bool(channel,BATT_STATE_NOTIFICATION_CFG,TRUE);
 #endif 
@@ -988,10 +975,19 @@ static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
 	}
 	gtk_widget_show(mi);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+	
 	// Separotor
 	mi = gtk_separator_menu_item_new();
 	gtk_widget_show(mi);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+	
+	mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_ABOUT,NULL);
+	gtk_widget_set_sensitive(mi,TRUE);
+	gtk_widget_show(mi);
+	g_signal_connect(mi,"activate",G_CALLBACK(xfpm_about),NULL);
+	
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+	
 	mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_PREFERENCES,NULL);
 	gtk_widget_set_sensitive(mi,TRUE);
 	gtk_widget_show(mi);

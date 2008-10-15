@@ -28,6 +28,7 @@ G_BEGIN_DECLS
 
 #define XFPM_TYPE_LCD_BRIGHTNESS  (xfpm_lcd_brightness_get_type())
 #define XFPM_LCD_BRIGHTNESS(o)    (G_TYPE_CHECK_INSTANCE_CAST(o,XFPM_TYPE_LCD_BRIGHTNESS,XfpmLcdBrightness))
+#define XFPM_IS_LCD_BRIGHTNESS(o) (G_TYPE_CHECK_INSTANCE_TYPE(o,XFPM_TYPE_LCD_BRIGHTNESS))
 
 typedef struct XfpmLcdBrightnessPrivate XfpmLcdBrightnessPrivate;
 
@@ -49,7 +50,7 @@ typedef struct
 
 GType              xfpm_lcd_brightness_get_type(void) G_GNUC_CONST;
 XfpmLcdBrightness *xfpm_lcd_brightness_new(void);
-
+gboolean           xfpm_lcd_brightness_device_exists(XfpmLcdBrightness *lcd);
 G_END_DECLS
 
 #endif

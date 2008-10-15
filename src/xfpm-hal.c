@@ -81,12 +81,9 @@ struct XfpmHalPrivate
 
 enum 
 {
-    
     XFPM_DEVICE_ADDED,
     XFPM_DEVICE_REMOVED,
     XFPM_DEVICE_PROPERTY_CHANGED,
-    XFPM_DEVICE_NEW_CAPABILITY,
-    XFPM_DEVICE_LOST_CAPABILITY,
     XFPM_DEVICE_CONDITION,
     LAST_SIGNAL
 };
@@ -130,24 +127,6 @@ xfpm_hal_class_init(XfpmHalClass *klass) {
                                                           G_TYPE_STRING,G_TYPE_STRING,
                                                           G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
                                                           
-    signals[XFPM_DEVICE_NEW_CAPABILITY] = g_signal_new("xfpm-device-new-capability",
-                                                      XFPM_TYPE_HAL,
-                                                      G_SIGNAL_RUN_LAST,
-                                                      G_STRUCT_OFFSET(XfpmHalClass,device_new_capability),
-                                                      NULL,NULL,
-                                                      _xfpm_marshal_VOID__STRING_STRING,
-                                                      G_TYPE_NONE,2,
-                                                      G_TYPE_STRING,G_TYPE_STRING);
-                                                          
-    signals[XFPM_DEVICE_LOST_CAPABILITY] = g_signal_new("xfpm-device-lost-capability",
-                                                      XFPM_TYPE_HAL,
-                                                      G_SIGNAL_RUN_LAST,
-                                                      G_STRUCT_OFFSET(XfpmHalClass,device_lost_capability),
-                                                      NULL,NULL,
-                                                      _xfpm_marshal_VOID__STRING_STRING,
-                                                      G_TYPE_NONE,2,
-                                                      G_TYPE_STRING,G_TYPE_STRING);
-    
     signals[XFPM_DEVICE_CONDITION] = g_signal_new("xfpm-device-condition",
                                                   XFPM_TYPE_HAL,
                                                   G_SIGNAL_RUN_LAST,
@@ -179,8 +158,6 @@ xfpm_hal_init(XfpmHal *xfpm_hal) {
     {
         priv->connected = TRUE;
     }
-        
-    
 }
     
 static void
@@ -217,7 +194,6 @@ static void
 xfpm_hal_device_added(LibHalContext *ctx,const gchar *udi) {
     
     XfpmHal *xfpm_hal = libhal_ctx_get_user_data(ctx);
-    XFPM_DEBUG("device added %s\n",udi);   
     g_signal_emit(G_OBJECT(xfpm_hal),signals[XFPM_DEVICE_ADDED],0,udi);
     
 }
@@ -226,11 +202,9 @@ static void
 xfpm_hal_device_removed(LibHalContext *ctx,const gchar *udi) {
     
     XfpmHal *xfpm_hal = libhal_ctx_get_user_data(ctx);
-    XFPM_DEBUG("device removed %s\n",udi); 
     g_signal_emit(G_OBJECT(xfpm_hal),signals[XFPM_DEVICE_REMOVED],0,udi);
     
 }
-
 
 static void
 xfpm_hal_device_property_modified(LibHalContext *ctx,const gchar *udi,
@@ -238,37 +212,16 @@ xfpm_hal_device_property_modified(LibHalContext *ctx,const gchar *udi,
                                  dbus_bool_t is_added) {
     
     XfpmHal *xfpm_hal = libhal_ctx_get_user_data(ctx);
-    //XFPM_DEBUG("device property modified udi=%s key=%s\n",udi,key);     
     g_signal_emit(G_OBJECT(xfpm_hal),signals[XFPM_DEVICE_PROPERTY_CHANGED],0,udi,key,is_removed,is_added);
     
 }
 
-/*    
-static void
-xfpm_hal_device_new_capability(LibHalContext *ctx,const gchar *udi,const gchar *capability) {
-    
-    XfpmHal *xfpm_hal = libhal_ctx_get_user_data(ctx);
-    XFPM_DEBUG("device new capability udi=%s capability=%s\n",udi,capability);     
-    g_signal_emit(G_OBJECT(xfpm_hal),signals[XFPM_DEVICE_NEW_CAPABILITY],0,udi,capability);
-    
-}    
-
-static void
-xfpm_hal_device_lost_capability(LibHalContext *ctx,const gchar *udi,const gchar *capability) {
-    
-     XfpmHal *xfpm_hal = libhal_ctx_get_user_data(ctx);
-     XFPM_DEBUG("device lost capability udi=%s capability=%s\n",udi,capability);     
-     g_signal_emit(G_OBJECT(xfpm_hal),signals[XFPM_DEVICE_LOST_CAPABILITY],0,udi,capability);
-    
-}    
-*/
 static void xfpm_hal_device_condition            (LibHalContext *ctx,
                                                  const gchar *udi,
                                                  const gchar *condition_name,
                                                  const gchar *condition_detail) {
                                                      
     XfpmHal *xfpm_hal = libhal_ctx_get_user_data(ctx);
-    XFPM_DEBUG("device condition udi=%s condition_name=%s condition_detail=%s\n",udi,condition_name,condition_detail);     
     g_signal_emit(G_OBJECT(xfpm_hal),signals[XFPM_DEVICE_CONDITION],0,udi,condition_name,condition_detail);                                                     
                                                      
 }
@@ -336,9 +289,6 @@ gboolean xfpm_hal_connect_to_signals(XfpmHal *hal,
         libhal_ctx_set_device_condition(priv->ctx,xfpm_hal_device_condition);
     }
 
-    //libhal_ctx_set_device_new_capability(priv->ctx,xfpm_hal_device_new_capability);
-    //libhal_ctx_set_device_lost_capability(priv->ctx,xfpm_hal_device_lost_capability);
-    
     libhal_device_property_watch_all(priv->ctx,&error);        
 
     if ( dbus_error_is_set(&error) ) {

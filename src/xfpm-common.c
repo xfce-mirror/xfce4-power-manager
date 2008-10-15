@@ -19,6 +19,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include <glib.h>
+#include <glib/gi18n.h>
+
 #include "xfpm-common.h"
 #include "xfpm-debug.h"
 
@@ -61,11 +64,25 @@ xfpm_lock_screen(void)
     {
         g_critical("Connot lock screen\n");
     }
-    
 }
 
 void       
 xfpm_preferences(void) 
 {
     g_spawn_command_line_async("xfce4-power-manager -c",NULL);
+}
+
+void       
+xfpm_about(GtkWidget *widget,gpointer data)
+{
+    GtkWidget *about;
+	const gchar* authors[3] = {"Ali MA <ali.slackware@gmail.com>", 
+                             _("Part of the Xfce goodies project"),NULL};
+	about = gtk_about_dialog_new();
+	gtk_about_dialog_set_name(GTK_ABOUT_DIALOG(about), _("Xfce4 Power Manager"));
+	gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(about), NULL);
+	gtk_about_dialog_set_authors(GTK_ABOUT_DIALOG(about), (const gchar**) authors);
+	gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(about), "");
+	gtk_dialog_run(GTK_DIALOG(about));
+	gtk_widget_destroy (about);
 }

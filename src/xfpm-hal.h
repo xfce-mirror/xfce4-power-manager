@@ -69,14 +69,6 @@ typedef struct {
                                               gboolean is_removed,
                                               gboolean is_added);
                                               
-    void         (*device_new_capability)     (XfpmHal *xfpm_hal,
-                                              const gchar *udi,
-                                              const gchar *capability);
-                                              
-    void         (*device_lost_capability)    (XfpmHal *xfpm_hal,
-                                              const gchar *udi,
-                                              const gchar *capability);
-                                              
     void         (*device_condition)          (XfpmHal *xfpm_hal,
                                               const gchar *udi,
                                               const gchar *condition_name,

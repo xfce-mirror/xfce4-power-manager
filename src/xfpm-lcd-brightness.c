@@ -353,3 +353,12 @@ xfpm_lcd_brightness_new(void)
     lcd = g_object_new(XFPM_TYPE_LCD_BRIGHTNESS,NULL);
     return lcd;
 }
+
+gboolean
+xfpm_lcd_brightness_device_exists(XfpmLcdBrightness *lcd)
+{
+    g_return_val_if_fail(XFPM_IS_LCD_BRIGHTNESS(lcd),FALSE);
+    XfpmLcdBrightnessPrivate *priv;
+    priv = XFPM_LCD_BRIGHTNESS_GET_PRIVATE(lcd);
+    return priv->device_exists;
+}

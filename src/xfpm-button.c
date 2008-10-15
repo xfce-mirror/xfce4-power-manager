@@ -96,9 +96,9 @@ struct XfpmButtonPrivate
     
     gboolean have_sleep_bt;
     gboolean sleep_button_has_state;
-
+    
+    gboolean device_found;
 };
-
 
 G_DEFINE_TYPE(XfpmButton,xfpm_button,G_TYPE_OBJECT)
 
@@ -162,17 +162,19 @@ static void xfpm_button_init(XfpmButton *bt)
     priv->have_sleep_bt         = FALSE;
     priv->sleep_button_has_state= FALSE;
     
-    
     priv->hal = xfpm_hal_new();
     
     xfpm_button_load_config(bt);
     xfpm_button_get_switches(bt);
     
-    if (xfpm_hal_connect_to_signals(priv->hal,FALSE,FALSE,FALSE,TRUE) )
+    if ( priv->have_lid_bt || priv->have_power_bt || priv->have_sleep_bt )
     {
-        priv->handler_id =
-        g_signal_connect(priv->hal,"xfpm-device-condition",
-                        G_CALLBACK(xfpm_button_handle_device_condition_cb),bt);
+        if (xfpm_hal_connect_to_signals(priv->hal,FALSE,FALSE,FALSE,TRUE) )
+        {
+            priv->handler_id =
+            g_signal_connect(priv->hal,"xfpm-device-condition",
+                            G_CALLBACK(xfpm_button_handle_device_condition_cb),bt);
+        }
     }
 }
 
@@ -620,4 +622,30 @@ xfpm_button_new(void)
     XfpmButton *bt;
     bt = g_object_new(XFPM_TYPE_BUTTON,NULL);
     return bt;
+}
+
+guint8
+xfpm_button_get_available_buttons(XfpmButton *button)
+{
+    g_return_val_if_fail(XFPM_IS_BUTTON(button),0);
+    
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(button);
+    
+    guint8 buttons = 0;
+    
+    if ( priv->have_lid_bt )
+    {
+        buttons |= LID_SWITCH;
+    }
+    if ( priv->have_power_bt )
+    {
+        buttons |= POWER_SWITCH;
+    }
+    if ( priv->have_sleep_bt )
+    {
+        buttons |= SLEEP_SWITCH;
+    }
+    
+    return buttons;
 }
