@@ -101,6 +101,12 @@ static void xfpm_driver_report_sleep_errors(XfpmDriver *driver,
 #endif
 static gboolean xfpm_driver_do_suspend(gpointer data);
 static gboolean xfpm_driver_do_hibernate(gpointer data);
+static gboolean xfpm_driver_do_shutdown(gpointer data);
+
+static void xfpm_driver_suspend(XfpmDriver *drv,gboolean critical);
+static void xfpm_driver_hibernate(XfpmDriver *drv,gboolean critical);
+static void xfpm_driver_shutdown(XfpmDriver *drv,gboolean critical);
+
 static void xfpm_driver_handle_action_request(GObject *object,
                                               guint action,
                                               gboolean critical,
@@ -439,13 +445,6 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
             g_object_set(G_OBJECT(priv->bt),"power-switch-action",val,NULL);
             return;
         }
-        
-        if ( !strcmp(property,POWER_SAVE_CFG) )
-        {
-            gboolean val = g_value_get_boolean(value);
-            g_object_set(G_OBJECT(priv->batt),"enable-powersave",val,NULL);
-            return;
-        }
     }
 } 
 
@@ -562,7 +561,7 @@ xfpm_driver_report_sleep_errors(XfpmDriver *driver,const gchar *icon_name,const 
     {
         xfpm_battery_show_error(priv->batt,icon_name,error);
     }
-        
+    
 }
 #endif
 
@@ -580,8 +579,10 @@ xfpm_driver_do_suspend(gpointer data)
     if ( error )
     {
         XFPM_DEBUG("error suspend: %s\n",error->message);
+#ifdef HAVE_LIBNOTIFY        
         if ( critical == 1)
         xfpm_driver_report_sleep_errors(drv,"gpm-suspend",error->message);
+#endif        
         g_error_free(error);
     }
     
@@ -606,8 +607,10 @@ xfpm_driver_do_hibernate(gpointer data)
     if ( error )
     {
         XFPM_DEBUG("error hibernate: %s\n",error->message);
+#ifdef HAVE_LIBNOTIFY        
         if ( critical == 1)
         xfpm_driver_report_sleep_errors(drv,"gpm-hibernate",error->message);
+#endif        
         g_error_free(error);
     }
         
@@ -615,6 +618,47 @@ xfpm_driver_do_hibernate(gpointer data)
     return FALSE;
     
 }
+
+static gboolean
+xfpm_driver_do_shutdown(gpointer data)
+{
+    XfpmDriver *drv = XFPM_DRIVER(data);
+    XfpmDriverPrivate *priv;
+    
+    priv = XFPM_DRIVER_GET_PRIVATE(drv);
+    
+    if (!xfpm_hal_shutdown(priv->hal))
+    {
+#ifdef HAVE_LIBNOTIFY        
+         xfpm_driver_report_sleep_errors(drv,"gpm-hibernate",_("System failed to shutdown"));
+#endif         
+    }
+    
+    priv->accept_sleep_request = TRUE;
+    return FALSE;
+}
+
+static void
+xfpm_driver_hibernate(XfpmDriver *drv,gboolean critical)
+{
+    xfpm_lock_screen();
+    g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_hibernate,drv);
+}
+
+static void
+xfpm_driver_suspend(XfpmDriver *drv,gboolean critical)
+{
+    xfpm_lock_screen();
+    g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_suspend,drv);
+}
+
+static void
+xfpm_driver_shutdown(XfpmDriver *drv,gboolean critical)
+{
+    g_timeout_add(100,(GSourceFunc)xfpm_driver_do_shutdown,drv); 
+}
+
+/* Currently the critical variable is ignored */
 
 static void
 xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
@@ -650,14 +694,13 @@ xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
     switch ( action )
     {
         case XFPM_DO_SUSPEND:
-            //xfpm_lock_screen();
-            g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_suspend,drv);
+            xfpm_driver_suspend(drv,critical);
             break;
         case XFPM_DO_HIBERNATE:
-            //xfpm_lock_screen();
-            g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_hibernate,drv);
+            xfpm_driver_hibernate(drv,critical);
             break;
         case XFPM_DO_SHUTDOWN:
+            xfpm_driver_shutdown(drv,critical);
             break;    
         default:
             break;

@@ -500,6 +500,10 @@ static void
 xfpm_battery_refresh(XfpmBattery *batt)
 {
     xfpm_battery_refresh_tray_icon(batt);
+    xfpm_battery_refresh_critical_charge(batt);
+#ifdef HAVE_LIBNOTIFY
+    xfpm_battery_refresh_notification(batt);
+#endif        
 }
 
 static void 
