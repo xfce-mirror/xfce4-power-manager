@@ -82,7 +82,7 @@ xfpm_about(GtkWidget *widget,gpointer data)
 	gtk_about_dialog_set_name(GTK_ABOUT_DIALOG(about), _("Xfce4 Power Manager"));
 	gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(about), NULL);
 	gtk_about_dialog_set_authors(GTK_ABOUT_DIALOG(about), (const gchar**) authors);
-	gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(about), "");
+	gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(about), "http://goodies.xfce.org/");
 	gtk_dialog_run(GTK_DIALOG(about));
 	gtk_widget_destroy (about);
 }
