@@ -51,15 +51,6 @@ static void xfpm_hal_device_property_modified     (LibHalContext *ctx,
                                                  const gchar *key,
                                                  dbus_bool_t is_removed,
                                                  dbus_bool_t is_added);
-/*                                                 
-static void xfpm_hal_device_new_capability        (LibHalContext *ctx,
-                                                 const gchar *udi,
-                                                 const gchar *capability);
-                                                 
-static void xfpm_hal_device_lost_capability       (LibHalContext *ctx,
-                                                 const gchar *udi,
-                                                 const gchar *capability);                                                 
-*/
 static void xfpm_hal_device_condition             (LibHalContext *ctx,
                                                  const gchar *udi,
                                                  const gchar *condition_name,
@@ -302,7 +293,7 @@ gboolean xfpm_hal_connect_to_signals(XfpmHal *hal,
 gchar **
 xfpm_hal_get_device_udi_by_capability(XfpmHal *xfpm_hal,const gchar *capability,
                                       gint *num,GError **gerror) {
-    
+
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),NULL);
     XfpmHalPrivate *priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
     

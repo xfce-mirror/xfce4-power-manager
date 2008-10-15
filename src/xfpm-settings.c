@@ -165,17 +165,6 @@ set_lcd_brightness_cb(GtkWidget *widget,XfconfChannel *channel)
     }
 }
 
-static void
-set_power_save_cb(GtkWidget *widget,XfconfChannel *channel)
-{
-    gboolean value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
-    
-    if(!xfconf_channel_set_bool(channel,POWER_SAVE_CFG,value))
-    {
-        g_critical("Cannot set value %s\n",POWER_SAVE_CFG);
-    }
-}
-
 #ifdef HAVE_DPMS
 static void
 set_dpms_cb(GtkWidget *widget,XfconfChannel *channel)
@@ -394,7 +383,6 @@ xfpm_settings_battery(XfconfChannel *channel, gboolean can_hibernate)
     GtkWidget *label;
     GtkWidget *critical_spin;
     GtkWidget *action;
-    GtkWidget *check_powersave;
     
     table = gtk_table_new(4,2,TRUE);
     gtk_widget_show(table);
@@ -434,29 +422,17 @@ xfpm_settings_battery(XfconfChannel *channel, gboolean can_hibernate)
     g_signal_connect(action,"changed",G_CALLBACK(set_critical_action_cb),channel);
     gtk_table_attach(GTK_TABLE(table),action,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
 
-    /// Enable power save
-    label = gtk_label_new(_("Enable power save on battery power"));
-    gtk_widget_show(label);
-    check_powersave = gtk_check_button_new();
-    gtk_widget_show(check_powersave);
-    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
-    gtk_table_attach(GTK_TABLE(table),check_powersave,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);
-    g_signal_connect(check_powersave,"toggled",G_CALLBACK(set_power_save_cb),channel);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(check_powersave),
-                                 xfconf_channel_get_bool(channel,POWER_SAVE_CFG,FALSE)); 
-                                 
-    
 #ifdef HAVE_LIBNOTIFY
     GtkWidget *notify_bt;        
     label = gtk_label_new(_("Enable battery state notification"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,3,4);
+    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
     notify_bt = gtk_check_button_new();
     gtk_widget_show(notify_bt);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(notify_bt),
                                  xfconf_channel_get_bool(channel,BATT_STATE_NOTIFICATION_CFG,TRUE)); 
     g_signal_connect(notify_bt,"toggled",G_CALLBACK(set_battery_state_notification_cb),channel); 
-    gtk_table_attach(GTK_TABLE(table),notify_bt,1,2,3,4,GTK_SHRINK,GTK_SHRINK,0,0);                             
+    gtk_table_attach(GTK_TABLE(table),notify_bt,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);                             
 #endif        
     
     gtk_container_add(GTK_CONTAINER(align),table);
