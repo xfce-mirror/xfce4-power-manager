@@ -55,6 +55,7 @@
 #include "xfpm-common.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-notify.h"
+#include "xfpm-marshal.h"
 
 #define XFPM_BATTERY_GET_PRIVATE(o)  (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_BATTERY,XfpmBatteryPrivate))
 
@@ -108,11 +109,8 @@ static XfpmBatteryType xfpm_battery_get_battery_type(const gchar *battery_type);
 static gboolean xfpm_battery_check(XfpmBattery *batt,
                                     const gchar *udi);
 
-static gboolean xfpm_battery_do_hibernate(XfpmBattery *batt);
 static void xfpm_battery_hibernate_callback(GtkWidget *widget,
                                             XfpmBattery *batt);
-static gboolean xfpm_battery_do_suspend(XfpmBattery *batt);
-
 static void xfpm_battery_suspend_callback(GtkWidget *widget,
                                           XfpmBattery *batt);
 static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
@@ -135,6 +133,7 @@ G_DEFINE_TYPE(XfpmBattery,xfpm_battery,G_TYPE_OBJECT)
 enum 
 {
     XFPM_SHOW_ADAPTER_ICON,
+    XFPM_ACTION_REQUEST,
     LAST_SIGNAL
 };
 
@@ -170,7 +169,16 @@ xfpm_battery_class_init(XfpmBatteryClass *klass)
                                                    NULL,NULL,
                                                    g_cclosure_marshal_VOID__BOOLEAN,
                                                    G_TYPE_NONE,1,G_TYPE_BOOLEAN);
-    
+                                                   
+    signals[XFPM_ACTION_REQUEST] = g_signal_new("xfpm-action-request",
+                                               XFPM_TYPE_BATTERY,
+                                               G_SIGNAL_RUN_LAST,
+                                               G_STRUCT_OFFSET(XfpmBatteryClass,battery_action_request),
+                                               NULL,NULL,
+                                               _xfpm_marshal_VOID__ENUM_BOOLEAN ,
+                                               G_TYPE_NONE,2,
+                                               XFPM_TYPE_ACTION_REQUEST,G_TYPE_BOOLEAN);
+                                                   
     g_object_class_install_property(gobject_class,
                                     PROP_AC_ADAPTER,
                                     g_param_spec_boolean("on-ac-adapter",
@@ -194,8 +202,8 @@ xfpm_battery_class_init(XfpmBatteryClass *klass)
                                     g_param_spec_enum("critical-action",
                                                       "Critical action",
                                                       "Battery critical charge action",
-                                                      XFPM_TYPE_CRITICAL_ACTION,
-                                                      0,
+                                                      XFPM_TYPE_ACTION_REQUEST,
+                                                      XFPM_DO_NOTHING,
                                                       G_PARAM_READWRITE));
     
 #ifdef HAVE_LIBNOTIFY    
@@ -570,7 +578,7 @@ xfpm_battery_load_config(XfpmBattery *batt)
         XFPM_DEBUG("Using default values\n");
         g_error_free(g_error);
         batt->critical_level  = 10;
-        batt->critical_action = NOTHING;
+        batt->critical_action = XFPM_DO_NOTHING;
 #ifdef HAVE_LIBNOTIFY
         batt->notify_enabled = TRUE;
 #endif
@@ -583,7 +591,7 @@ xfpm_battery_load_config(XfpmBattery *batt)
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
     
     batt->critical_level  =  xfconf_channel_get_uint(channel,CRITICAL_BATT_CFG,10);
-    batt->critical_action = xfconf_channel_get_uint(channel,CRITICAL_BATT_ACTION_CFG,NOTHING);
+    batt->critical_action = xfconf_channel_get_uint(channel,CRITICAL_BATT_ACTION_CFG,XFPM_DO_NOTHING);
     batt->show_tray = xfconf_channel_get_uint(channel,SHOW_TRAY_ICON_CFG,ALWAYS);
     batt->power_save = xfconf_channel_get_bool(channel,POWER_SAVE_CFG,FALSE);
 #ifdef HAVE_LIBNOTIFY
@@ -759,7 +767,7 @@ xfpm_battery_state_change_cb(GObject *object,GParamSpec *arg1,gpointer data)
         XFPM_DEBUG("param:%s value:%s\n",arg1->name,content);
         g_free(content);
 #endif  
-        if ( batt->critical_action == NOTHING )
+        if ( batt->critical_action == XFPM_DO_NOTHING )
         {
             return;
         }
@@ -772,119 +780,18 @@ xfpm_battery_state_change_cb(GObject *object,GParamSpec *arg1,gpointer data)
             {
                 return;
             }
-            if ( batt->critical_action == HIBERNATE )
+            if ( batt->critical_action == XFPM_DO_HIBERNATE )
             {
-                XFPM_DEBUG("Hibernating the system\n");
-                g_timeout_add_seconds(4,(GSourceFunc)xfpm_battery_do_hibernate,batt);
+                XFPM_DEBUG("Sending Hibernate\n");
+                g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,TRUE);
                 return;
             }
-            if ( batt->critical_action == SHUTDOWN )
+            if ( batt->critical_action == XFPM_DO_SHUTDOWN )
             {
-                XfpmBatteryPrivate *priv;
-                priv = XFPM_BATTERY_GET_PRIVATE(batt);
-                g_timeout_add_seconds(4,(GSourceFunc)xfpm_hal_shutdown,priv->hal);
+                g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SHUTDOWN,TRUE);
             }
         }
     }
-}
-
-#ifdef HAVE_LIBNOTIFY
-static void
-set_sleep_errors(NotifyNotification *n,gchar *action,XfpmBattery *batt)
-{
-    if ( strcmp(action,"ok") )
-    {
-        g_object_unref(n);
-        return;
-    }
-    
-    g_object_unref(n);
-    
-    XfconfChannel *channel;
-    GError *g_error = NULL;
-    if ( !xfconf_init(&g_error) )
-    {
-        g_critical("xfconf init failed: %s\n",g_error->message);
-        g_error_free(g_error);
-        return;
-    }
-
-    channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
-    
-    if ( !xfconf_channel_set_bool(channel,SHOW_SLEEP_ERRORS_CFG,FALSE) )
-    {
-        g_critical("Cannot set property %s\n",SHOW_SLEEP_ERRORS_CFG);
-    }
-    batt->show_sleep_errors = FALSE;
-    g_object_unref(channel);
-    xfconf_shutdown();
-}
-#endif
-
-static void
-xfpm_battery_report_sleep_errors(XfpmBattery *batt,const gchar *error,
-                                const gchar *icon_name, gboolean simple)
-{
-#ifdef HAVE_LIBNOTIFY
-    XfpmBatteryPrivate *priv;
-    priv = XFPM_BATTERY_GET_PRIVATE(batt);
-    
-    GtkStatusIcon *icon = NULL;
-    
-    GList *icons_list;
-    int i=0;
-    icons_list = g_hash_table_get_values(priv->batteries);
-    for ( i = 0 ; i < g_list_length(icons_list) ; i++ )
-    {
-        icon = g_list_nth_data(icons_list,i);
-        if ( icon ) break;
-    }
-    if ( simple ) 
-    {
-        xfpm_notify_simple("Xfce power manager",
-                           error,
-                           14000,
-                           NOTIFY_URGENCY_CRITICAL,
-                           icon != NULL ? GTK_STATUS_ICON(icon) : NULL,
-                           icon_name,
-                           0);
-    }
-    /* we don't show message than have been disabled from the user*/
-    else if ( batt->show_sleep_errors ) 
-    {
-        XFPM_DEBUG("Notify with action\n");
-        xfpm_notify_with_action("Xfce power manager",
-                               error,
-                               14000,
-                               NOTIFY_URGENCY_CRITICAL,
-                               icon != NULL ? GTK_STATUS_ICON(icon) : NULL,
-                               icon_name,
-                               _("don't show this message again"),
-                               0,
-                               (NotifyActionCallback)set_sleep_errors,
-                               batt);
-    }
-#endif
-}
-
-static gboolean
-xfpm_battery_do_hibernate(XfpmBattery *batt)
-{
-    XfpmBatteryPrivate *priv;
-    priv = XFPM_BATTERY_GET_PRIVATE(batt);
-    
-    GError *error = NULL;
-    guint8 critical;
-    gboolean ret =
-    xfpm_hal_hibernate(priv->hal,&error,&critical);
-     
-    if ( !ret ) {
-        xfpm_battery_report_sleep_errors(batt,error->message,"gpm-hibernate",critical == 1 ? TRUE : FALSE);
-        g_error_free(error);
-    }
-    
-    return FALSE;
-    
 }
 
 static void
@@ -897,30 +804,10 @@ xfpm_battery_hibernate_callback(GtkWidget *widget,XfpmBattery *batt)
     
     if ( ret ) 
     {
-        xfpm_lock_screen();
-        g_timeout_add_seconds(4,(GSourceFunc)xfpm_battery_do_hibernate,batt);
+        g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,FALSE);
 	}
 }
 
-static gboolean
-xfpm_battery_do_suspend(XfpmBattery *batt)
-{
-    XfpmBatteryPrivate *priv;
-    priv = XFPM_BATTERY_GET_PRIVATE(batt);
-    
-    GError *error = NULL;
-    guint8 critical = 0;
-    gboolean ret =
-    xfpm_hal_suspend(priv->hal,&error,&critical);
-    
-    if ( !ret ) 
-    {
-        xfpm_battery_report_sleep_errors(batt,error->message,"gpm-suspend",critical == 1 ? TRUE : FALSE );
-        g_error_free(error);
-    }
-    
-    return FALSE;
-}
 
 static void
 xfpm_battery_suspend_callback(GtkWidget *widget,XfpmBattery *batt)
@@ -932,8 +819,7 @@ xfpm_battery_suspend_callback(GtkWidget *widget,XfpmBattery *batt)
     
     if ( ret ) 
     {
-        xfpm_lock_screen();
-        g_timeout_add_seconds(3,(GSourceFunc)xfpm_battery_do_suspend,batt);
+        g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SUSPEND,FALSE);
     }
 }
 
@@ -1201,3 +1087,34 @@ xfpm_battery_monitor(XfpmBattery *batt)
     xfpm_battery_get_devices(batt);
     xfpm_battery_refresh(batt);
 }
+
+
+#ifdef HAVE_LIBNOTIFY
+void           xfpm_battery_show_error(XfpmBattery *batt,
+                                       const gchar *icon_name,
+                                       const gchar *error)
+{
+    g_return_if_fail(XFPM_IS_BATTERY(batt));
+    
+    XfpmBatteryPrivate *priv;
+    priv = XFPM_BATTERY_GET_PRIVATE(batt);
+    
+    GtkStatusIcon *icon = NULL;
+    
+    GList *icons_list;
+    int i=0;
+    icons_list = g_hash_table_get_values(priv->batteries);
+    for ( i = 0 ; i < g_list_length(icons_list) ; i++ )
+    {
+        icon = g_list_nth_data(icons_list,i);
+        if ( icon ) break;
+    }
+    xfpm_notify_simple("Xfce power manager",
+                       error,
+                       14000,
+                       NOTIFY_URGENCY_CRITICAL,
+                       icon != NULL ? GTK_STATUS_ICON(icon) : NULL,
+                       icon_name,
+                       0);
+}                                       
+#endif

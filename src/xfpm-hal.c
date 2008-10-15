@@ -504,12 +504,33 @@ gboolean xfpm_hal_shutdown(XfpmHal *xfpm_hal)
     return TRUE;
 }
 
+static gboolean
+_filter_error_message(const gchar *error)
+{
+    if(!strcmp("No back-end for your operating system",error))
+    {
+        return TRUE;
+    }
+    else if (!strcmp("No hibernate script found",error) )
+    {
+        return TRUE;
+    }
+    else if (!strcmp("No suspend method found",error) )
+    {
+        return TRUE;
+    }
+    else if (!strcmp("No hibernate method found",error))
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
 
 gboolean   
 xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical) 
 {
     g_return_val_if_fail(XFPM_IS_HAL(xfpm_hal),FALSE);
-     
+
     XfpmHalPrivate *priv;
     priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
     
@@ -518,7 +539,7 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 	DBusMessage *mess,*reply;
 	DBusError error;
 	gint exit_code;
-
+    
 	mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
                                  HAL_ROOT_COMPUTER,
                                  HAL_DBUS_INTERFACE_POWER,
@@ -531,19 +552,26 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 	}	
 	
 	dbus_error_init(&error);
+
 	reply = dbus_connection_send_with_reply_and_block(priv->connection,
                                                     mess,
                                                     SLEEP_TIMEOUT,
                                                     &error);
-
     dbus_message_unref(mess);
              	
     if ( dbus_error_is_set(&error) )
     {
         XFPM_DEBUG("error=%s\n",error.message);
         dbus_set_g_error(gerror,&error);
+        if ( _filter_error_message(error.message) )
+        {
+            *critical = 1;
+        }
+        else 
+        {
+            *critical = 0;
+        }
         dbus_error_free(&error);
-        *critical = 0;
         return FALSE;
     }
     
@@ -571,7 +599,7 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
         }
         if ( exit_code > 1 ) 
         {
-            g_set_error(gerror,0,0,_("Failed to hibernate"));
+            g_set_error(gerror,0,0,_("System failed to hibernate"));
             return FALSE;
         }                 
         break;
@@ -616,7 +644,6 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 	dbus_message_append_args(mess,DBUS_TYPE_INT32,&seconds,DBUS_TYPE_INVALID);
 
     dbus_error_init(&error);
-    	
 	reply = dbus_connection_send_with_reply_and_block(priv->connection,
                                                     mess,
                                                     SLEEP_TIMEOUT,
@@ -627,8 +654,15 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     {
         XFPM_DEBUG("error=%s\n",error.message);
         dbus_set_g_error(gerror,&error);
+        if ( _filter_error_message(error.message) )
+        {
+            *critical = 1;
+        }
+        else 
+        {
+            *critical = 0;
+        }
         dbus_error_free(&error);
-        *critical = 0;
         return FALSE;
     }
     
@@ -656,7 +690,7 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
         }
         if ( exit_code > 1 ) 
         {
-            g_set_error(gerror,0,0,_("Failed to suspend"));
+            g_set_error(gerror,0,0,_("System failed to suspend"));
             return FALSE;
         }                 
         break;

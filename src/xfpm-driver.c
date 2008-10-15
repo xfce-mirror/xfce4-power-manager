@@ -91,6 +91,21 @@ static void xfpm_driver_property_changed_cb(XfconfChannel *channel,
                                             
 static gboolean xfpm_driver_show_options_dialog(XfpmDriver *drv);
 
+/* Function that receives events suspend/hibernate,shutdown for all
+ * Xfce power manager componenents and syncronize them
+ */
+#ifdef HAVE_LIBNOTIFY
+static void xfpm_driver_report_sleep_errors(XfpmDriver *driver,
+                                            const gchar *icon_name,
+                                            const gchar *error);
+#endif
+static gboolean xfpm_driver_do_suspend(gpointer data);
+static gboolean xfpm_driver_do_hibernate(gpointer data);
+static void xfpm_driver_handle_action_request(GObject *object,
+                                              guint action,
+                                              gboolean critical,
+                                              XfpmDriver *drv);
+
 /* DBus message Filter and replies */
 static void xfpm_driver_send_reply(DBusConnection *conn,DBusMessage *mess);
 static DBusHandlerResult xfpm_driver_signal_filter
@@ -109,6 +124,8 @@ struct XfpmDriverPrivate
     SystemFormFactor formfactor;
     gboolean can_suspend;
     gboolean can_hibernate;
+    
+    gboolean accept_sleep_request;
     
     gboolean cpufreq_control;
     gboolean buttons_control;
@@ -148,6 +165,7 @@ xfpm_driver_init(XfpmDriver *drv)
     priv->cpufreq_control = FALSE;
     priv->buttons_control = FALSE;
     priv->lcd_brightness_control = FALSE;
+    priv->accept_sleep_request = TRUE;
     priv->loop    = NULL;
     priv->cpu     = NULL;
     priv->adapter = NULL;
@@ -519,6 +537,134 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     return FALSE;
 }
 
+#ifdef HAVE_LIBNOTIFY
+static void
+xfpm_driver_report_sleep_errors(XfpmDriver *driver,const gchar *icon_name,const gchar *error)
+{
+    XfpmDriverPrivate *priv;
+    priv = XFPM_DRIVER_GET_PRIVATE(driver);
+    
+    gboolean adapter_visible;
+    g_object_get(G_OBJECT(priv->adapter),"visible",&adapter_visible,NULL);
+    
+    if ( adapter_visible )
+    {
+         xfpm_notify_simple("Xfce power manager",
+                           error,
+                           14000,
+                           NOTIFY_URGENCY_CRITICAL,
+                           GTK_STATUS_ICON(priv->adapter),
+                           icon_name,
+                           0);
+        
+    }
+    else  /* the battery object will take care */
+    {
+        xfpm_battery_show_error(priv->batt,icon_name,error);
+    }
+        
+}
+#endif
+
+static gboolean
+xfpm_driver_do_suspend(gpointer data)
+{
+    XfpmDriver *drv = XFPM_DRIVER(data);
+    XfpmDriverPrivate *priv;
+    GError *error = NULL;
+    guint8 critical;
+    
+    priv = XFPM_DRIVER_GET_PRIVATE(drv);
+    
+    xfpm_hal_suspend(priv->hal,&error,&critical);
+    if ( error )
+    {
+        XFPM_DEBUG("error suspend: %s\n",error->message);
+        if ( critical == 1)
+        xfpm_driver_report_sleep_errors(drv,"gpm-suspend",error->message);
+        g_error_free(error);
+    }
+    
+    priv->accept_sleep_request = TRUE;
+    
+    return FALSE;
+    
+}
+
+static gboolean
+xfpm_driver_do_hibernate(gpointer data)
+{
+    XfpmDriver *drv = XFPM_DRIVER(data);
+    XfpmDriverPrivate *priv;
+    GError *error = NULL;
+    guint8 critical;
+    
+    priv = XFPM_DRIVER_GET_PRIVATE(drv);
+    
+    xfpm_hal_hibernate(priv->hal,&error,&critical);
+    
+    if ( error )
+    {
+        XFPM_DEBUG("error hibernate: %s\n",error->message);
+        if ( critical == 1)
+        xfpm_driver_report_sleep_errors(drv,"gpm-hibernate",error->message);
+        g_error_free(error);
+    }
+        
+    priv->accept_sleep_request = TRUE;
+    return FALSE;
+    
+}
+
+static void
+xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
+                                  gboolean critical,XfpmDriver *drv)
+{
+    g_return_if_fail(XFPM_IS_DRIVER(drv));
+    
+    XfpmDriverPrivate *priv;
+    priv = XFPM_DRIVER_GET_PRIVATE(drv);
+#ifdef DEBUG
+    gchar *content;
+    GValue value = { 0, };
+    g_value_init(&value,XFPM_TYPE_ACTION_REQUEST);
+    g_value_set_enum(&value,action);
+    content = g_strdup_value_contents(&value);
+        
+    if ( XFPM_IS_BATTERY(object) ) XFPM_DEBUG("Action %s request from the Battery object\n",content);
+    if ( XFPM_IS_AC_ADAPTER(object) ) XFPM_DEBUG("Action %s request from the adapter object\n",content);
+    if ( XFPM_IS_BUTTON(object) ) XFPM_DEBUG("Action %s request from the Button object\n",content);
+    
+    g_free(content);
+    
+#endif    
+    if ( !priv->accept_sleep_request )
+    {
+        XFPM_DEBUG("Ignoring sleep request\n");
+        return;
+    }
+
+    /* Block any other event here */    
+    priv->accept_sleep_request = FALSE;    
+    
+    switch ( action )
+    {
+        case XFPM_DO_SUSPEND:
+            //xfpm_lock_screen();
+            g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_suspend,drv);
+            break;
+        case XFPM_DO_HIBERNATE:
+            //xfpm_lock_screen();
+            g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_hibernate,drv);
+            break;
+        case XFPM_DO_SHUTDOWN:
+            break;    
+        default:
+            break;
+    }        
+    
+}
+
 static void
 xfpm_driver_send_reply(DBusConnection *conn,DBusMessage *mess)
 {
@@ -708,6 +854,8 @@ xfpm_driver_monitor (XfpmDriver *drv)
     else
     {
         priv->buttons_control = TRUE;
+        g_signal_connect(priv->bt,"xfpm-action-request",
+                        G_CALLBACK(xfpm_driver_handle_action_request),drv);
     }
     
     priv->lcd = xfpm_lcd_brightness_new();
@@ -720,11 +868,15 @@ xfpm_driver_monitor (XfpmDriver *drv)
     
     priv->batt = xfpm_battery_new();
     g_signal_connect(priv->batt,"xfpm-show-adapter-icon",G_CALLBACK(_show_adapter_icon),drv);
-    
+    g_signal_connect(priv->batt,"xfpm-action-request",
+                        G_CALLBACK(xfpm_driver_handle_action_request),drv);
+                        
     priv->adapter = xfpm_ac_adapter_new(FALSE);
     g_signal_connect(priv->adapter,"xfpm-ac-adapter-changed",
                     G_CALLBACK(xfpm_driver_ac_adapter_state_changed_cb),drv);
-
+    g_signal_connect(priv->adapter,"xfpm-action-request",
+                        G_CALLBACK(xfpm_driver_handle_action_request),drv);
+                        
     /* This will give a signal concerning the AC adapter presence,
      * so we get the callback and then we set up the ac adapter
      * status for dpms and cpu lcd,...

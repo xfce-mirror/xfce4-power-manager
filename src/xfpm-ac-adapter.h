@@ -27,6 +27,7 @@
 
 #define XFPM_TYPE_AC_ADAPTER    (xfpm_ac_adapter_get_type())
 #define XFPM_AC_ADAPTER(o)      (G_TYPE_CHECK_INSTANCE_CAST(o,XFPM_TYPE_AC_ADAPTER,XfpmAcAdapter))
+#define XFPM_IS_AC_ADAPTER(o)   (G_TYPE_CHECK_INSTANCE_TYPE(o,XFPM_TYPE_AC_ADAPTER))
 
 typedef struct XfpmAcAdapterPrivate XfpmAcAdapterPrivate;
 
@@ -44,6 +45,9 @@ typedef struct
     /* signals */
     void   (*ac_adapter_changed)  (XfpmAcAdapter *xfpm_adapter,
                                    gboolean  present);
+    void  (*adapter_action_request) (XfpmAcAdapter *adapter,
+                                     XfpmActionRequest action,
+                                     gboolean critical);                               
 } XfpmAcAdapterClass;
 
 GType          xfpm_ac_adapter_get_type(void) G_GNUC_CONST;

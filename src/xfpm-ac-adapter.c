@@ -54,6 +54,9 @@
 #include "xfpm-hal.h"
 #include "xfpm-driver.h"
 #include "xfpm-ac-adapter.h"
+#include "xfpm-marshal.h"
+#include "xfpm-enums.h"
+#include "xfpm-enum-types.h"
 #include "xfpm-notify.h"
 #include "xfpm-debug.h"
 
@@ -83,7 +86,10 @@ static void xfpm_ac_adapter_property_changed_cb(XfpmHal *hal,
                                                 gboolean is_removed,
                                                 gboolean is_added,
                                                 XfpmAcAdapter *adapter);
-                                                
+static void xfpm_ac_adapter_hibernate_callback(GtkWidget *widget,
+                                               XfpmAcAdapter *adapter);
+static void xfpm_ac_adapter_suspend_callback(GtkWidget *widget,
+                                             XfpmAcAdapter *adapter);  
 static void xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
                                        guint button,
                                        guint activate_time,
@@ -106,6 +112,7 @@ struct XfpmAcAdapterPrivate
 enum 
 {
     XFPM_AC_ADAPTER_CHANGED,
+    XFPM_ACTION_REQUEST,
     LAST_SIGNAL
 };
 
@@ -128,6 +135,15 @@ xfpm_ac_adapter_class_init(XfpmAcAdapterClass *klass)
                                                    g_cclosure_marshal_VOID__BOOLEAN,
                                                    G_TYPE_NONE,1,G_TYPE_BOOLEAN);
     
+    signals[XFPM_ACTION_REQUEST] = g_signal_new("xfpm-action-request",
+                                               XFPM_TYPE_AC_ADAPTER,
+                                               G_SIGNAL_RUN_LAST,
+                                               G_STRUCT_OFFSET(XfpmAcAdapterClass,adapter_action_request),
+                                               NULL,NULL,
+                                               _xfpm_marshal_VOID__ENUM_BOOLEAN ,
+                                               G_TYPE_NONE,2,
+                                               XFPM_TYPE_ACTION_REQUEST,G_TYPE_BOOLEAN);
+                                               
     g_type_class_add_private(klass,sizeof(XfpmAcAdapterPrivate));
     
 }
@@ -187,6 +203,11 @@ xfpm_ac_adapter_finalize(GObject *object)
 static gboolean
 xfpm_ac_adapter_size_changed_cb(GtkStatusIcon *adapter,gint size,gpointer data)
 {
+    if ( size > 128 )
+    {
+        size = 48;
+    }
+
     GdkPixbuf *icon;
     icon = xfpm_load_icon("gpm-ac-adapter",size);
     
@@ -205,7 +226,7 @@ _ac_adapter_not_found(XfpmAcAdapter *adapter)
     XfpmAcAdapterPrivate *priv;
     priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
     
-    /* then the ac kernel module is not loaded */
+    /* then most probably the ac kernel module is not loaded */
     if ( priv->factor == SYSTEM_LAPTOP )
     {
         priv->present = TRUE; /* assuming present */
@@ -359,41 +380,6 @@ xfpm_ac_adapter_property_changed_cb(XfpmHal *hal,const gchar *udi,
 }
 
 static void
-xfpm_ac_adapter_report_sleep_errors(XfpmAcAdapter *adapter,const gchar *error,
-                                    const gchar *icon_name)
-{
-#ifdef HAVE_LIBNOTIFY
-    xfpm_notify_simple("Xfce power manager",
-                       error,
-                       14000,
-                       NOTIFY_URGENCY_CRITICAL,
-                       GTK_STATUS_ICON(adapter),
-                       icon_name,
-                       0);
-#endif
-}
-
-static gboolean
-xfpm_ac_adapter_do_hibernate(XfpmAcAdapter *adapter)
-{
-    XfpmAcAdapterPrivate *priv;
-    priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
-    
-    GError *error = NULL;
-    guint8 critical;
-    gboolean ret =
-    xfpm_hal_hibernate(priv->hal,&error,&critical);
-     
-    if ( !ret && critical == 1) {
-        xfpm_ac_adapter_report_sleep_errors(adapter,error->message,"gpm-hibernate");
-        g_error_free(error);
-    }
-    
-    return FALSE;
-    
-}
-
-static void
 xfpm_ac_adapter_hibernate_callback(GtkWidget *widget,XfpmAcAdapter *adapter)
 {
     gboolean ret = 
@@ -403,29 +389,8 @@ xfpm_ac_adapter_hibernate_callback(GtkWidget *widget,XfpmAcAdapter *adapter)
     
     if ( ret ) 
     {
-        xfpm_lock_screen();
-        g_timeout_add_seconds(4,(GSourceFunc)xfpm_ac_adapter_do_hibernate,adapter);
+        g_signal_emit(G_OBJECT(adapter),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,FALSE);
 	}
-}
-
-static gboolean
-xfpm_ac_adapter_do_suspend(XfpmAcAdapter *adapter)
-{
-    XfpmAcAdapterPrivate *priv;
-    priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
-    
-    GError *error = NULL;
-    guint8 critical = 0;
-    gboolean ret =
-    xfpm_hal_suspend(priv->hal,&error,&critical);
-    
-    if ( !ret && critical == 1 ) 
-    {
-        xfpm_ac_adapter_report_sleep_errors(adapter,error->message,"gpm-suspend");
-        g_error_free(error);
-    }
-    
-    return FALSE;
 }
 
 static void
@@ -438,8 +403,7 @@ xfpm_ac_adapter_suspend_callback(GtkWidget *widget,XfpmAcAdapter *adapter)
     
     if ( ret ) 
     {
-        xfpm_lock_screen();
-        g_timeout_add_seconds(3,(GSourceFunc)xfpm_ac_adapter_do_suspend,adapter);
+        g_signal_emit(G_OBJECT(adapter),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SUSPEND,FALSE);
     }
 }
 

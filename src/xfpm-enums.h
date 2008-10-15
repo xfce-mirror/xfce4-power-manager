@@ -5,13 +5,14 @@
 #include <config.h>
 #endif
 
-/* Action to taken when battery charge level is critical */
 typedef enum
 {
-    NOTHING,
-    SHUTDOWN,
-    HIBERNATE
-} XfpmCriticalAction;
+    XFPM_DO_NOTHING,
+    XFPM_DO_SUSPEND,
+    XFPM_DO_HIBERNATE,
+    XFPM_DO_SHUTDOWN
+    
+} XfpmActionRequest;
 
 /* Icon tray */
 typedef enum
@@ -54,16 +55,5 @@ typedef enum
     USERSPACE     = (1<<4)
     
 } XfpmCpuGovernor;
-
-
-/* button switch control */
-typedef enum
-{
-    BUTTON_DO_NOTHING,
-    BUTTON_DO_SUSPEND,
-    BUTTON_DO_HIBERNATE,
-    BUTTON_DO_SHUTDOWN
-
-} XfpmButtonAction;
 
 #endif

@@ -39,9 +39,9 @@ typedef struct
     GObject parent;
     XfpmButtonPrivate *priv;
     
-    XfpmButtonAction lid_action;
-    XfpmButtonAction power_action;
-    XfpmButtonAction sleep_action;
+    XfpmActionRequest lid_action;
+    XfpmActionRequest power_action;
+    XfpmActionRequest sleep_action;
     
 } XfpmButton;
 
@@ -49,6 +49,10 @@ typedef struct
 typedef struct
 {
     GObjectClass parent_class;
+    
+    void  (*button_action_request) (XfpmButton *bt,
+                                    XfpmActionRequest action,
+                                    gboolean critical);
     
 } XfpmButtonClass;
 

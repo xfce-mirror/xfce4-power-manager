@@ -48,7 +48,9 @@
 #include "xfpm-debug.h"
 #include "xfpm-common.h"
 #include "xfpm-notify.h"
+#include "xfpm-enums.h"
 #include "xfpm-enum-types.h"
+#include "xfpm-marshal.h"
 
 #define XFPM_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_BUTTON,XfpmButtonPrivate))
@@ -65,10 +67,9 @@ static void xfpm_button_get_property (GObject *object,
                                            guint prop_id,
                                            GValue *value,
                                            GParamSpec *pspec);
+
 static void xfpm_button_do_suspend(XfpmButton *bt);
 static void xfpm_button_do_hibernate(XfpmButton *bt);
-static gboolean xfpm_button_hibernate(XfpmButton *bt);
-static gboolean xfpm_button_suspend(XfpmButton *bt);
 
 static void xfpm_button_lid_pressed(XfpmButton *bt,const gchar *udi);
 static void xfpm_button_power_pressed(XfpmButton *bt,const gchar *udi);
@@ -102,6 +103,14 @@ struct XfpmButtonPrivate
 
 G_DEFINE_TYPE(XfpmButton,xfpm_button,G_TYPE_OBJECT)
 
+enum 
+{
+    XFPM_ACTION_REQUEST,
+    LAST_SIGNAL
+};
+
+static guint signals[LAST_SIGNAL] = { 0,}; 
+
 enum
 {
     PROP_0,
@@ -118,13 +127,22 @@ static void xfpm_button_class_init(XfpmButtonClass *klass)
     gobject_class->set_property = xfpm_button_set_property;
     gobject_class->get_property = xfpm_button_get_property;
 
+    signals[XFPM_ACTION_REQUEST] = g_signal_new("xfpm-action-request",
+                                               XFPM_TYPE_BUTTON,
+                                               G_SIGNAL_RUN_LAST,
+                                               G_STRUCT_OFFSET(XfpmButtonClass,button_action_request),
+                                               NULL,NULL,
+                                               _xfpm_marshal_VOID__ENUM_BOOLEAN ,
+                                               G_TYPE_NONE,2,
+                                               XFPM_TYPE_ACTION_REQUEST,G_TYPE_BOOLEAN);
+                                                   
     g_object_class_install_property(gobject_class,
                                     PROP_LID_ACTION,
                                     g_param_spec_enum("lid-switch-action",
                                                       "lid switch action",
                                                       "lid switch action",
-                                                      XFPM_TYPE_BUTTON_ACTION,
-                                                      BUTTON_DO_NOTHING,
+                                                      XFPM_TYPE_ACTION_REQUEST,
+                                                      XFPM_DO_NOTHING,
                                                       G_PARAM_READWRITE));    
     
     g_object_class_install_property(gobject_class,
@@ -132,16 +150,16 @@ static void xfpm_button_class_init(XfpmButtonClass *klass)
                                     g_param_spec_enum("sleep-switch-action",
                                                       "sleep switch action",
                                                       "sleep switch action",
-                                                      XFPM_TYPE_BUTTON_ACTION,
-                                                      BUTTON_DO_NOTHING,
+                                                      XFPM_TYPE_ACTION_REQUEST,
+                                                      XFPM_DO_NOTHING,
                                                       G_PARAM_READWRITE));    
     g_object_class_install_property(gobject_class,
                                     PROP_LID_ACTION,
                                     g_param_spec_enum("power-switch-action",
                                                       "power switch action",
                                                       "power switch action",
-                                                      XFPM_TYPE_BUTTON_ACTION,
-                                                      BUTTON_DO_NOTHING,
+                                                      XFPM_TYPE_ACTION_REQUEST,
+                                                      XFPM_DO_NOTHING,
                                                       G_PARAM_READWRITE));                                                      
     
     g_type_class_add_private(klass,sizeof(XfpmButtonPrivate));
@@ -264,33 +282,6 @@ _unblock_handler(XfpmButtonPrivate *priv)
     return FALSE;
 }
 
-static gboolean
-xfpm_button_suspend(XfpmButton *bt)
-{
-    XfpmButtonPrivate *priv;
-    priv = XFPM_BUTTON_GET_PRIVATE(bt);
-    
-    guint8 critical;
-
-    xfpm_hal_suspend(priv->hal,NULL,&critical);
-    g_timeout_add(10,(GSourceFunc)_unblock_handler,priv);
-    
-    return FALSE;
-}
-
-static gboolean
-xfpm_button_hibernate(XfpmButton *bt)
-{
-    XfpmButtonPrivate *priv;
-    priv = XFPM_BUTTON_GET_PRIVATE(bt);
-    guint8 critical;
-    
-    xfpm_hal_hibernate(priv->hal,NULL,&critical);
-    g_timeout_add(10,(GSourceFunc)_unblock_handler,priv);
-    
-    return FALSE;
-}
-
 static void
 xfpm_button_do_hibernate(XfpmButton *bt)
 {
@@ -298,7 +289,11 @@ xfpm_button_do_hibernate(XfpmButton *bt)
     priv = XFPM_BUTTON_GET_PRIVATE(bt);
     
     g_signal_handler_block(priv->hal,priv->handler_id);
-    g_timeout_add_seconds(2,(GSourceFunc)xfpm_button_hibernate,bt);
+    
+    g_signal_emit(G_OBJECT(bt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,FALSE);
+    
+    g_timeout_add(10,(GSourceFunc)_unblock_handler,priv);
+    
 }
 
 static void
@@ -308,23 +303,24 @@ xfpm_button_do_suspend(XfpmButton *bt)
     priv = XFPM_BUTTON_GET_PRIVATE(bt);
     
     g_signal_handler_block(priv->hal,priv->handler_id);
-    g_timeout_add_seconds(2,(GSourceFunc)xfpm_button_suspend,bt);
+    
+    g_signal_emit(G_OBJECT(bt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SUSPEND,FALSE);
+    
+    g_timeout_add(10,(GSourceFunc)_unblock_handler,priv);
 }
 
 static void
-_proccess_action(XfpmButton *bt,XfpmButtonAction action)
+_proccess_action(XfpmButton *bt,XfpmActionRequest action)
 {
-    if ( action == BUTTON_DO_SUSPEND )
+    if ( action == XFPM_DO_SUSPEND )
     {
-         xfpm_lock_screen();
          xfpm_button_do_suspend(bt);
     }
-    else if ( action == BUTTON_DO_HIBERNATE )
+    else if ( action == XFPM_DO_HIBERNATE )
     {
-         xfpm_lock_screen();
          xfpm_button_do_hibernate(bt);
     }
-    else if ( action == BUTTON_DO_SHUTDOWN )
+    else if ( action == XFPM_DO_SHUTDOWN )
     {
         XfpmButtonPrivate *priv;
         priv = XFPM_BUTTON_GET_PRIVATE(bt);
@@ -338,7 +334,7 @@ _proccess_action(XfpmButton *bt,XfpmButtonAction action)
 static void
 xfpm_button_lid_pressed(XfpmButton *bt,const gchar *udi)
 {
-    if ( bt->lid_action == BUTTON_DO_NOTHING )
+    if ( bt->lid_action == XFPM_DO_NOTHING )
     {
         return;
     }
@@ -374,7 +370,7 @@ xfpm_button_lid_pressed(XfpmButton *bt,const gchar *udi)
 static void
 xfpm_button_power_pressed(XfpmButton *bt,const gchar *udi)
 {
-    if ( bt->power_action == BUTTON_DO_NOTHING )
+    if ( bt->power_action == XFPM_DO_NOTHING )
     {
         return;
     }
@@ -413,7 +409,7 @@ xfpm_button_sleep_pressed(XfpmButton *bt,const gchar *udi)
     XfpmButtonPrivate *priv;
     priv = XFPM_BUTTON_GET_PRIVATE(bt);
     
-    if ( bt->sleep_action == BUTTON_DO_NOTHING )
+    if ( bt->sleep_action == XFPM_DO_NOTHING )
     {
         return;
     }
@@ -487,18 +483,18 @@ xfpm_button_load_config(XfpmButton *bt)
         g_critical("xfconf init failed: %s\n",g_error->message);
         XFPM_DEBUG("Using default values\n");
         g_error_free(g_error);
-        bt->lid_action = BUTTON_DO_NOTHING;
-        bt->sleep_action = BUTTON_DO_NOTHING;
-        bt->power_action = BUTTON_DO_NOTHING;
+        bt->lid_action = XFPM_DO_NOTHING;
+        bt->sleep_action = XFPM_DO_NOTHING;
+        bt->power_action = XFPM_DO_NOTHING;
         return;
     }
     XfconfChannel *channel;
     
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
 
-    bt->lid_action   = xfconf_channel_get_uint(channel,LID_SWITCH_CFG,BUTTON_DO_NOTHING);
-    bt->sleep_action   = xfconf_channel_get_uint(channel,SLEEP_SWITCH_CFG,BUTTON_DO_NOTHING);
-    bt->power_action = xfconf_channel_get_uint(channel,POWER_SWITCH_CFG,BUTTON_DO_NOTHING);
+    bt->lid_action   = xfconf_channel_get_uint(channel,LID_SWITCH_CFG,XFPM_DO_NOTHING);
+    bt->sleep_action   = xfconf_channel_get_uint(channel,SLEEP_SWITCH_CFG,XFPM_DO_NOTHING);
+    bt->power_action = xfconf_channel_get_uint(channel,POWER_SWITCH_CFG,XFPM_DO_NOTHING);
     
     g_object_unref(channel);
     xfconf_shutdown();    

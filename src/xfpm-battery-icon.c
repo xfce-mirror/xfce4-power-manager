@@ -237,6 +237,11 @@ static gboolean
 xfpm_battery_icon_size_change_cb(XfpmBatteryIcon *battery_icon,gint size,gpointer data)
 {
     XFPM_DEBUG("size change event %d\n",size);
+    if ( size > 128 )
+    {
+        /* Reduce the size until we get the correct size of the system tray */
+        size = 48;
+    }
     
     gchar *icon_name;
     g_object_get(G_OBJECT(battery_icon),"icon-name",&icon_name,NULL);

@@ -34,6 +34,7 @@ G_BEGIN_DECLS
 
 #define XFPM_TYPE_BATTERY    (xfpm_battery_get_type())
 #define XFPM_BATTERY(o)      (G_TYPE_CHECK_INSTANCE_CAST(o,XFPM_TYPE_BATTERY,XfpmBattery))
+#define XFPM_IS_BATTERY(o)   (G_TYPE_CHECK_INSTANCE_TYPE(o,XFPM_TYPE_BATTERY))
 
 typedef struct XfpmBatteryPrivate XfpmBatteryPrivate;
 
@@ -44,12 +45,11 @@ typedef struct
     
     gboolean ac_adapter_present;
     guint critical_level;
-    XfpmCriticalAction critical_action;
+    XfpmActionRequest critical_action;
     XfpmShowIcon show_tray;
     
     gboolean can_hibernate;
     gboolean can_suspend;
-    gboolean show_sleep_errors;
     gboolean power_save;
     
 #ifdef HAVE_LIBNOTIFY
@@ -62,9 +62,12 @@ typedef struct
 {
     GObjectClass parent_class;
     
-    /* signal */
-    void  (*show_adapter_icon)    (XfpmBattery *batt,
-                                   gboolean show);
+    /* signals */
+    void  (*show_adapter_icon)      (XfpmBattery *batt,
+                                     gboolean show);
+    void  (*battery_action_request) (XfpmBattery *batt,
+                                     XfpmActionRequest action,
+                                     gboolean critical);
                                    
 } XfpmBatteryClass;
 
@@ -72,6 +75,11 @@ GType          xfpm_battery_get_type(void) G_GNUC_CONST;
 XfpmBattery   *xfpm_battery_new     (void);
 void           xfpm_battery_monitor (XfpmBattery *batt);
 
+#ifdef HAVE_LIBNOTIFY
+void           xfpm_battery_show_error(XfpmBattery *batt,
+                                       const gchar *icon_name,
+                                       const gchar *error);     
+#endif
 G_END_DECLS
 
 #endif
