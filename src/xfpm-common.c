@@ -47,7 +47,12 @@ xfpm_load_icon(const char *icon_name,gint size)
 void       
 xfpm_lock_screen(void)
 {
-    gboolean ret = g_spawn_command_line_async("gnome-screensaver-command -l",NULL);
+    gboolean ret = g_spawn_command_line_async("xflock4");
+    
+    if ( !ret )
+    {
+        g_spawn_command_line_async("gnome-screensaver-command -l",NULL);
+    }
     
     if ( !ret )
     {
