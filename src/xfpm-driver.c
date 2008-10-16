@@ -722,7 +722,7 @@ xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
     }
 
     /* Block any other event here */    
-    /*
+    
     priv->accept_sleep_request = FALSE;    
     
     switch ( action )
@@ -738,7 +738,7 @@ xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
             break;    
         default:
             break;
-    } */       
+    } 
     
 }
 
