@@ -618,7 +618,7 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     
 	DBusMessage *mess,*reply;
 	DBusError error;
-	int seconds= 2;
+	int seconds = 0;
 	gint exit_code;
 
 	mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
