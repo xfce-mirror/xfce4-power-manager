@@ -43,4 +43,7 @@ Data_DATA =				\
 	gpm-mouse-030.svg		\
 	gpm-mouse-060.svg		\
 	gpm-mouse-100.svg		\
-	gnome-cpu-frequency-applet.svg
+	xfpm-display.svg		\
+	xfpm-keyboard.svg		\
+	xfpm-cpu.svg
+	

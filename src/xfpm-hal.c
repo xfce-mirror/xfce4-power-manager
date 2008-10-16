@@ -740,7 +740,7 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
         
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon set brightness message"));
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to set monitor brightness level"));
         return;
     }
     
@@ -787,7 +787,7 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
         
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to get brightness message"));
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to get monitor brightness level"));
         return -1;
     }
     
@@ -837,7 +837,7 @@ gchar
         
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to get available cpu governors message"));
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to get available cpu governors"));
         return NULL;
     }
     
@@ -889,7 +889,7 @@ gchar
     
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to get current cpu governor message"));
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to get current cpu governor"));
         return NULL;
     }
 
@@ -935,7 +935,7 @@ xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
 
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to set cpu governor message"));
+        g_set_error(gerror,0,0,_("No reply from HAL daemon to set cpu governor"));
         return;
     }
     dbus_message_unref(reply);

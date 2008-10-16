@@ -44,7 +44,9 @@ typedef struct
     
     /* signals */
     void   (*ac_adapter_changed)  (XfpmAcAdapter *xfpm_adapter,
-                                   gboolean  present);
+                                   gboolean present,
+                                   gboolean state_ok);
+                                   
     void  (*adapter_action_request) (XfpmAcAdapter *adapter,
                                      XfpmActionRequest action,
                                      gboolean critical);                               

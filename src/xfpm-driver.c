@@ -82,6 +82,7 @@ static void xfpm_driver_finalize    (GObject *object);
 
 static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
                                                     gboolean present,
+                                                    gboolean state_ok,
                                                     XfpmDriver *drv);
                                                     
 static void xfpm_driver_property_changed_cb(XfconfChannel *channel,
@@ -92,7 +93,7 @@ static void xfpm_driver_property_changed_cb(XfconfChannel *channel,
 static gboolean xfpm_driver_show_options_dialog(XfpmDriver *drv);
 
 /* Function that receives events suspend/hibernate,shutdown for all
- * Xfce power manager componenents and syncronize them
+ * Xfce power manager components and syncronize them
  */
 #ifdef HAVE_LIBNOTIFY
 static void xfpm_driver_report_sleep_errors(XfpmDriver *driver,
@@ -234,11 +235,38 @@ xfpm_driver_finalize(GObject *object)
 
 static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
                                                     gboolean present,
+                                                    gboolean state_ok,
                                                     XfpmDriver *drv)
 {
     XfpmDriverPrivate *priv;
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
-    
+
+#ifdef HAVE_LIBNOTIFY  
+    if ( !state_ok && priv->formfactor == SYSTEM_LAPTOP )  
+    {
+        gboolean visible;
+        g_object_get(G_OBJECT(priv->adapter),"visible",&visible,NULL);
+        const gchar *error;
+        error =  _("Unable to get adapter status, the power manager will not work properly. "\
+                  "Possible reasons: ac adapter driver is not loaded into the kernel "\
+                  "broken connection with the hardware abstract layer or the message bus daemon is not running");
+                             
+        if ( visible ) 
+        {
+            xfpm_notify_simple(_("Xfce power manager"),
+                               error,
+                               12000,
+                               NOTIFY_URGENCY_CRITICAL,
+                               GTK_STATUS_ICON(adapter),
+                               "gpm-ac-adapter",
+                               0);    
+        }  
+        else
+        {
+            xfpm_battery_show_error(priv->batt,"gpm-ac-adapter",error);
+        }
+    }
+#endif    
     XFPM_DEBUG("start \n");
     priv->ac_adapter_present = present;
     

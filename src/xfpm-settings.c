@@ -799,7 +799,7 @@ xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
     if (! dpms_capable ) 
     {
         GtkWidget *label;
-        label = gtk_label_new(_("Your monitor doesn't support DPMS settings"));
+        label = gtk_label_new(_("Your monitor doesn't support DPMS control"));
         gtk_widget_show(label);
         gtk_box_pack_start(GTK_BOX(vbox),label,TRUE,TRUE,0);
         gtk_widget_set_sensitive(dpms_op,FALSE);
@@ -904,7 +904,7 @@ xfpm_settings_keys(XfconfChannel *channel,gboolean can_hibernate,
     gtk_box_pack_start(GTK_BOX(vbox),table,TRUE,TRUE,0);
     if ( !switch_buttons )
     {
-        label = gtk_label_new(_("No available shortcuts found"));
+        label = gtk_label_new(_("No available keyboard shortcuts found"));
         gtk_widget_show(label);
         gtk_box_pack_start(GTK_BOX(vbox),label,TRUE,TRUE,0);
     }
@@ -1036,7 +1036,7 @@ xfpm_settings_tree_view(gboolean is_laptop)
     gtk_tree_view_append_column(GTK_TREE_VIEW(view),col);
 
     /// CPU Settings
-    pix = xfpm_load_icon("gnome-cpu-frequency-applet",38);      
+    pix = xfpm_load_icon("xfpm-cpu",38);      
     gtk_list_store_append(list_store,&iter);
     if ( pix )
     {
@@ -1067,7 +1067,7 @@ xfpm_settings_tree_view(gboolean is_laptop)
     /// Keyboard Settings
     if ( is_laptop )
     {
-        pix = xfpm_load_icon("keyboard",38);
+        pix = xfpm_load_icon("xfpm-keyboard",38);
         gtk_list_store_append(list_store,&iter);
         if ( pix )
         {
@@ -1082,7 +1082,7 @@ xfpm_settings_tree_view(gboolean is_laptop)
     
     /// Dpms settings
 #ifdef HAVE_DPMS    
-    pix = xfpm_load_icon("display",38);      
+    pix = xfpm_load_icon("xfpm-display",38);      
     gtk_list_store_append(list_store,&iter);
     if ( pix ) 
     {

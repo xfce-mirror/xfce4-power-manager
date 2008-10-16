@@ -132,8 +132,9 @@ xfpm_ac_adapter_class_init(XfpmAcAdapterClass *klass)
                                                    G_SIGNAL_RUN_LAST,
                                                    G_STRUCT_OFFSET(XfpmAcAdapterClass,ac_adapter_changed),
                                                    NULL,NULL,
-                                                   g_cclosure_marshal_VOID__BOOLEAN,
-                                                   G_TYPE_NONE,1,G_TYPE_BOOLEAN);
+                                                   _xfpm_marshal_VOID__BOOLEAN_BOOLEAN,
+                                                   G_TYPE_NONE,2,
+                                                   G_TYPE_BOOLEAN,G_TYPE_BOOLEAN);
     
     signals[XFPM_ACTION_REQUEST] = g_signal_new("xfpm-action-request",
                                                XFPM_TYPE_AC_ADAPTER,
@@ -233,25 +234,14 @@ _ac_adapter_not_found(XfpmAcAdapter *adapter)
         priv->adapter_found = FALSE;
         gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
                                    _("Unkown adapter status, the power manager will not work properly"));
-#ifdef HAVE_LIBNOTIFY
-        xfpm_notify_simple(_("Xfce power manager"),
-                           _("Unable to get adapter status, the power manager will not work properly."\
-                             "Possible reasons: ac adapter driver is not loaded into the kernel "\
-                             "Broken connection with the hardware abstract layer or the message bus daemon is not running"),
-                           12000,
-                           NOTIFY_URGENCY_CRITICAL,
-                           NULL,
-                           "gpm-ac-adapter",
-                           2);
-        
-#endif                                       
     }     
     else  
     {
         priv->present = TRUE; /* just for eveything to function correctly */
-        priv->adapter_found = FALSE;
+        priv->adapter_found = TRUE;
     }
-    g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
+    g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,
+                  priv->present,priv->adapter_found);
     
 }
 
@@ -313,7 +303,7 @@ xfpm_ac_adapter_get_adapter(XfpmAcAdapter *adapter)
     
     gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
                 priv->present ? _("Adapter is online") : _("Adapter is offline"));   
-    g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
+    g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present,priv->adapter_found);
     libhal_free_string_array(udi);
 }
 
@@ -335,7 +325,8 @@ _get_adapter_status(XfpmAcAdapter *adapter,const gchar *udi)
     priv->present = ac_adapter;
     gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
                 priv->present ? _("Adapter is online") : _("Adapter is offline"));   
-    g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,priv->present);
+    g_signal_emit(G_OBJECT(adapter),signals[XFPM_AC_ADAPTER_CHANGED],0,
+                  priv->present,priv->adapter_found);
 }
 
 static void

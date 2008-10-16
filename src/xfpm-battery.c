@@ -1016,7 +1016,7 @@ xfpm_battery_get_devices(XfpmBattery *batt)
         g_error_free(error);
         return;
     }
-    if ( !udi ) 
+    if ( !udi || num == 0 ) 
     {
         return;
     }
@@ -1067,7 +1067,17 @@ void           xfpm_battery_show_error(XfpmBattery *batt,
     for ( i = 0 ; i < g_list_length(icons_list) ; i++ )
     {
         icon = g_list_nth_data(icons_list,i);
-        if ( icon ) break;
+        if ( icon ) 
+        {
+            gboolean visible;
+            XfpmBatteryType type;
+            g_object_get(G_OBJECT(icon),"visible",&visible,"battery-type",&type,NULL);
+            if ( visible && type == PRIMARY )
+            {
+                break;
+            }
+        }
+        icon = NULL;
     }
     xfpm_notify_simple("Xfce power manager",
                        error,
