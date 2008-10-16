@@ -340,6 +340,7 @@ xfpm_lcd_brightness_notify_cb(GObject *object,GParamSpec *arg1,gpointer data)
     
     if ( !lcd->brightness_control_enabled )
     {
+        XFPM_DEBUG("Lcd brightness is disabled\n");
         return;
     }
     

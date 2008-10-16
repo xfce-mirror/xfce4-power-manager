@@ -19,17 +19,46 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "xfpm-dbus-messages.h"
+#include "xfpm-debug.h"
+
+
+static gboolean
+xfpm_dbus_name_has_owner(DBusConnection *connection,const gchar *service)
+{
+    DBusError error;
+    dbus_error_init(&error);
+    
+    gboolean ret = dbus_bus_name_has_owner(connection,service,&error);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+        XFPM_DEBUG("Failed to get name owner: %s\n",error.message);
+        dbus_error_free(&error);
+        return FALSE;
+    }
+    
+    if ( ret == FALSE )
+    {
+        XFPM_DEBUG("Network manager is not installed \n");
+    }
+    
+    return ret;
+}
 
 static
-DBusConnection *xfpm_dbus_get_connection() 
+DBusConnection *xfpm_dbus_get_connection(DBusBusType type) 
 {
     DBusError error;
     DBusConnection *connection;
 
     dbus_error_init(&error);
     
-    connection = dbus_bus_get(DBUS_BUS_SESSION,&error);
+    connection = dbus_bus_get(type,&error);
     
     if ( !connection ) 
     {
@@ -83,7 +112,7 @@ gboolean xfpm_dbus_send_message(const char *signal)
     DBusConnection *connection;
     DBusMessage *message;
     
-    connection = xfpm_dbus_get_connection();
+    connection = xfpm_dbus_get_connection(DBUS_BUS_SESSION);
     if ( !connection )
     {
         return FALSE;
@@ -111,7 +140,6 @@ gboolean xfpm_dbus_send_message(const char *signal)
     {
         return TRUE;
     }         
-                     
 }  
 
 gboolean xfpm_dbus_send_message_with_reply (const char *signal,gint *get_reply) {
@@ -120,7 +148,7 @@ gboolean xfpm_dbus_send_message_with_reply (const char *signal,gint *get_reply) 
     DBusMessage *message;
     DBusPendingCall *pend;
 
-    connection = xfpm_dbus_get_connection();
+    connection = xfpm_dbus_get_connection(DBUS_BUS_SESSION);
     if ( !connection )
     {
         return FALSE;
@@ -177,3 +205,44 @@ gboolean xfpm_dbus_send_message_with_reply (const char *signal,gint *get_reply) 
     dbus_connection_unref(connection);
     return TRUE;
 }  
+
+void     xfpm_dbus_send_nm_message   (const gchar *signal)
+{
+    DBusConnection *connection;
+    DBusMessage *message;
+    
+    connection = xfpm_dbus_get_connection(DBUS_BUS_SYSTEM);
+    if ( !connection )
+    {
+        return;
+    }
+    
+    if ( !xfpm_dbus_name_has_owner(connection,NM_SERVICE) )
+    {
+        dbus_connection_unref(connection);
+        return;
+    }
+    
+    message = xfpm_dbus_new_message(NM_SERVICE,NM_PATH,NM_INTERFACE,signal);
+    
+    if (!message)
+    {
+        return;
+    }
+        
+    gboolean ret =
+    dbus_connection_send(connection,
+                         message,
+                         NULL);
+        
+    dbus_message_unref(message);
+    dbus_connection_unref(connection);
+    if ( ret == FALSE )
+    {
+        XFPM_DEBUG("Failed to send message \n");
+        return;
+    } else
+    {
+        return;
+    }         
+}

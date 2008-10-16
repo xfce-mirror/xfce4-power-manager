@@ -25,6 +25,10 @@
 #define XFPM_PM_ROOT  "/xfpm/power/manager"
 #define XFPM_PM_IFACE "xfpm.power.manager"
 
+#define NM_SERVICE	    "org.freedesktop.NetworkManager"
+#define NM_PATH	        "/org/freedesktop/NetworkManager"
+#define NM_INTERFACE	"org.freedesktop.NetworkManager"
+
 #include <glib.h>
 #include <dbus/dbus.h>
 
@@ -33,6 +37,6 @@ DBusMessage *xfpm_dbus_new_message(const gchar *service  ,const gchar *remote_ob
                                    
 gboolean xfpm_dbus_send_message            (const gchar *signal);
 gboolean xfpm_dbus_send_message_with_reply (const gchar *signal,gint *get_reply);
-
+void     xfpm_dbus_send_nm_message         (const gchar *signal);
 
 #endif /* __XFPM_DBUS_MESSAGES */

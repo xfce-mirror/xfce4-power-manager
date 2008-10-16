@@ -65,6 +65,7 @@
 #include "xfpm-notify.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-settings.h"
+#include "xfpm-dbus-messages.h"
 
 #ifdef HAVE_LIBNOTIFY
 #include "xfpm-notify.h"
@@ -615,6 +616,7 @@ xfpm_driver_do_suspend(gpointer data)
     }
     
     priv->accept_sleep_request = TRUE;
+    xfpm_dbus_send_nm_message("wakeup");
     
     return FALSE;
     
@@ -643,6 +645,7 @@ xfpm_driver_do_hibernate(gpointer data)
     }
         
     priv->accept_sleep_request = TRUE;
+    xfpm_dbus_send_nm_message("wakeup");
     return FALSE;
     
 }
@@ -670,6 +673,7 @@ static void
 xfpm_driver_hibernate(XfpmDriver *drv,gboolean critical)
 {
     xfpm_lock_screen();
+    xfpm_dbus_send_nm_message("sleep");
     g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_hibernate,drv);
 }
 
@@ -677,6 +681,7 @@ static void
 xfpm_driver_suspend(XfpmDriver *drv,gboolean critical)
 {
     xfpm_lock_screen();
+    xfpm_dbus_send_nm_message("sleep");
     g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_suspend,drv);
 }
 

@@ -154,7 +154,7 @@ static void xfpm_button_class_init(XfpmButtonClass *klass)
                                                       XFPM_DO_NOTHING,
                                                       G_PARAM_READWRITE));    
     g_object_class_install_property(gobject_class,
-                                    PROP_LID_ACTION,
+                                    PROP_POWER_ACTION,
                                     g_param_spec_enum("power-switch-action",
                                                       "power switch action",
                                                       "power switch action",
@@ -322,11 +322,15 @@ _proccess_action(XfpmButton *bt,XfpmActionRequest action)
     }
     else if ( action == XFPM_DO_SHUTDOWN )
     {
+        XFPM_DEBUG("Processing\n");
         XfpmButtonPrivate *priv;
         priv = XFPM_BUTTON_GET_PRIVATE(bt);
-        
         g_signal_handler_block(priv->hal,priv->handler_id);
-        xfpm_hal_shutdown(priv->hal);
+    
+        g_signal_emit(G_OBJECT(bt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,FALSE);
+        
+        g_timeout_add(10,(GSourceFunc)_unblock_handler,priv);
+        
     }
         
 }
@@ -372,6 +376,7 @@ xfpm_button_power_pressed(XfpmButton *bt,const gchar *udi)
 {
     if ( bt->power_action == XFPM_DO_NOTHING )
     {
+        XFPM_DEBUG("Power action is do nothing\n");
         return;
     }
     
