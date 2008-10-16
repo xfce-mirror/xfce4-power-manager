@@ -661,7 +661,7 @@ xfpm_driver_do_shutdown(gpointer data)
     if (!xfpm_hal_shutdown(priv->hal))
     {
 #ifdef HAVE_LIBNOTIFY        
-         xfpm_driver_report_sleep_errors(drv,"gpm-hibernate",_("System failed to shutdown"));
+         xfpm_driver_report_sleep_errors(drv,"gpm-ac-adapter",_("System failed to shutdown"));
 #endif         
     }
     
@@ -722,6 +722,7 @@ xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
     }
 
     /* Block any other event here */    
+    /*
     priv->accept_sleep_request = FALSE;    
     
     switch ( action )
@@ -737,7 +738,7 @@ xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
             break;    
         default:
             break;
-    }        
+    } */       
     
 }
 

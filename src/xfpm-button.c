@@ -322,12 +322,11 @@ _proccess_action(XfpmButton *bt,XfpmActionRequest action)
     }
     else if ( action == XFPM_DO_SHUTDOWN )
     {
-        XFPM_DEBUG("Processing\n");
         XfpmButtonPrivate *priv;
         priv = XFPM_BUTTON_GET_PRIVATE(bt);
         g_signal_handler_block(priv->hal,priv->handler_id);
     
-        g_signal_emit(G_OBJECT(bt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,FALSE);
+        g_signal_emit(G_OBJECT(bt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SHUTDOWN,FALSE);
         
         g_timeout_add(10,(GSourceFunc)_unblock_handler,priv);
         
