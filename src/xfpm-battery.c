@@ -124,6 +124,8 @@ struct XfpmBatteryPrivate
 {
     XfpmHal *hal;
     GHashTable *batteries;
+    gboolean can_hibernate;
+    gboolean can_suspend;
 };
                                 
 G_DEFINE_TYPE(XfpmBattery,xfpm_battery,G_TYPE_OBJECT)
@@ -232,32 +234,12 @@ xfpm_battery_init(XfpmBattery *battery)
     priv = XFPM_BATTERY_GET_PRIVATE(battery);
     
     priv->batteries = g_hash_table_new(g_str_hash,g_str_equal);
+    priv->can_hibernate = FALSE;
+    priv->can_suspend   = FALSE;
+    
     xfpm_battery_load_config(battery);
     
     priv->hal = xfpm_hal_new();
-    
-    GError *error = NULL;
-    
-    battery->can_hibernate = xfpm_hal_get_bool_info(priv->hal,
-                                                    HAL_ROOT_COMPUTER,
-                                                    "power_management.can_hibernate",
-                                                    &error);
-    if ( error )
-    {
-        XFPM_DEBUG("%s: \n",error->message);
-        g_error_free(error);
-        error = NULL;
-    }                                          
-
-    battery->can_suspend = xfpm_hal_get_bool_info(priv->hal,
-                                                  HAL_ROOT_COMPUTER,
-                                                  "power_management.can_suspend",
-                                                  &error);
-    if ( error )
-    {
-        XFPM_DEBUG("%s: \n",error->message);
-        g_error_free(error);
-    }            
     
     if (xfpm_hal_connect_to_signals(priv->hal,TRUE,TRUE,TRUE,FALSE) )
     {
@@ -274,7 +256,6 @@ xfpm_battery_init(XfpmBattery *battery)
                          battery);                 
         
     }
-    
     g_signal_connect(G_OBJECT(battery),"notify",
                         G_CALLBACK(xfpm_battery_notify_cb),NULL);
 }
@@ -788,6 +769,9 @@ static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
                                              guint activate_time,
                                              XfpmBattery *batt)
 {
+    XfpmBatteryPrivate *priv;
+    priv = XFPM_BATTERY_GET_PRIVATE(batt);
+    
     GtkWidget *menu,*mi,*img;
 	
 	menu = gtk_menu_new();
@@ -796,7 +780,7 @@ static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
 	img = gtk_image_new_from_icon_name("gpm-hibernate",GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
 	gtk_widget_set_sensitive(mi,FALSE);
-	if ( batt->can_hibernate )
+	if ( priv->can_hibernate )
 	{
 		gtk_widget_set_sensitive(mi,TRUE);
 		g_signal_connect(mi,"activate",
@@ -812,7 +796,7 @@ static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
 	
 	gtk_widget_set_sensitive(mi,FALSE);
-	if ( batt->can_suspend )
+	if ( priv->can_suspend )
     {	
 		gtk_widget_set_sensitive(mi,TRUE);
 		g_signal_connect(mi,"activate",
@@ -1057,7 +1041,7 @@ void           xfpm_battery_show_error(XfpmBattery *batt,
     g_return_if_fail(XFPM_IS_BATTERY(batt));
     
     XfpmBatteryPrivate *priv;
-    priv = XFPM_BATTERY_GET_PRIVATE(batt);
+    priv = XFPM_BATTERY_GET_PRIVATE(batt);     
     
     GtkStatusIcon *icon = NULL;
     
@@ -1088,3 +1072,17 @@ void           xfpm_battery_show_error(XfpmBattery *batt,
                        0);
 }                                       
 #endif
+
+void           
+xfpm_battery_set_sleep_info(XfpmBattery *batt,
+                            gboolean can_suspend,
+                            gboolean can_hibernate)
+{
+    g_return_if_fail(XFPM_IS_BATTERY(batt));
+    
+    XfpmBatteryPrivate *priv;
+    priv = XFPM_BATTERY_GET_PRIVATE(batt);                            
+    priv->can_hibernate = can_hibernate;
+    priv->can_suspend   = can_suspend;
+}                                        
+                                            

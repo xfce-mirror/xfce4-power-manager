@@ -158,29 +158,6 @@ xfpm_ac_adapter_init(XfpmAcAdapter *adapter)
     priv->hal = xfpm_hal_new();
     priv->adapter_udi = 0 ;
     
-    GError *error = NULL;
-    
-    priv->can_hibernate = xfpm_hal_get_bool_info(priv->hal,
-                                                 HAL_ROOT_COMPUTER,
-                                                 "power_management.can_hibernate",
-                                                 &error);
-    if ( error )
-    {
-        XFPM_DEBUG("%s: \n",error->message);
-        g_error_free(error);
-        error = NULL;
-    }                                          
-
-    priv->can_suspend = xfpm_hal_get_bool_info(priv->hal,
-                                               HAL_ROOT_COMPUTER,
-                                               "power_management.can_suspend",
-                                               &error);
-    if ( error )
-    {
-        XFPM_DEBUG("%s: \n",error->message);
-        g_error_free(error);
-    }            
-    
     g_signal_connect(adapter,"size-changed",
                     G_CALLBACK(xfpm_ac_adapter_size_changed_cb),NULL);
     g_signal_connect(adapter,"popup-menu",
@@ -495,3 +472,17 @@ xfpm_ac_adapter_monitor(XfpmAcAdapter *adapter,SystemFormFactor factor)
         }             
     }
 }   
+
+
+void           
+xfpm_ac_adapter_set_sleep_info (XfpmAcAdapter *adapter,
+                                gboolean can_hibernate,
+                                gboolean can_suspend)
+{
+    g_return_if_fail(XFPM_IS_AC_ADAPTER(adapter));
+    XfpmAcAdapterPrivate *priv;
+    priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
+    
+    priv->can_suspend = can_suspend;
+    priv->can_hibernate = can_hibernate;
+}

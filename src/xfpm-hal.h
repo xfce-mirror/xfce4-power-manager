@@ -78,6 +78,8 @@ typedef struct {
 
 GType                xfpm_hal_get_type                     (void);
 XfpmHal             *xfpm_hal_new                          (void);
+gboolean             xfpm_hal_is_connected                 (XfpmHal *hal);
+gboolean             xfpm_hal_power_management_can_be_used (XfpmHal *hal);
 gboolean             xfpm_hal_connect_to_signals           (XfpmHal *hal,
                                                             gboolean device_removed,
                                                             gboolean device_added,

@@ -48,9 +48,6 @@ typedef struct
     XfpmActionRequest critical_action;
     XfpmShowIcon show_tray;
     
-    gboolean can_hibernate;
-    gboolean can_suspend;
-
 #ifdef HAVE_LIBNOTIFY
     gboolean notify_enabled;
 #endif        
@@ -79,6 +76,9 @@ void           xfpm_battery_show_error(XfpmBattery *batt,
                                        const gchar *icon_name,
                                        const gchar *error);     
 #endif
+void           xfpm_battery_set_sleep_info(XfpmBattery *batt,
+                                            gboolean can_suspend,
+                                            gboolean can_hibernate);
 G_END_DECLS
 
 #endif

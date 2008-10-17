@@ -52,9 +52,11 @@ typedef struct
                                      gboolean critical);                               
 } XfpmAcAdapterClass;
 
-GType          xfpm_ac_adapter_get_type(void) G_GNUC_CONST;
-GtkStatusIcon *xfpm_ac_adapter_new     (gboolean visible);
-void           xfpm_ac_adapter_monitor (XfpmAcAdapter *adapter,
-                                        SystemFormFactor factor);
-
+GType          xfpm_ac_adapter_get_type       (void) G_GNUC_CONST;
+GtkStatusIcon *xfpm_ac_adapter_new            (gboolean visible);
+void           xfpm_ac_adapter_monitor        (XfpmAcAdapter *adapter,
+                                               SystemFormFactor factor);
+void           xfpm_ac_adapter_set_sleep_info (XfpmAcAdapter *adapter,
+                                               gboolean can_hibernate,
+                                               gboolean can_suspend);
 #endif

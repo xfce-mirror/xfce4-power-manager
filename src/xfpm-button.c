@@ -99,6 +99,9 @@ struct XfpmButtonPrivate
     gboolean sleep_button_has_state;
     
     gboolean device_found;
+    
+    gboolean can_suspend;
+    gboolean can_hibernate;
 };
 
 G_DEFINE_TYPE(XfpmButton,xfpm_button,G_TYPE_OBJECT)
@@ -179,6 +182,9 @@ static void xfpm_button_init(XfpmButton *bt)
     
     priv->have_sleep_bt         = FALSE;
     priv->sleep_button_has_state= FALSE;
+    
+    priv->can_suspend = FALSE;
+    priv->can_hibernate = FALSE;
     
     priv->hal = xfpm_hal_new();
     
@@ -312,13 +318,20 @@ xfpm_button_do_suspend(XfpmButton *bt)
 static void
 _proccess_action(XfpmButton *bt,XfpmActionRequest action)
 {
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(bt);
+    
     if ( action == XFPM_DO_SUSPEND )
     {
-         xfpm_button_do_suspend(bt);
+        if (!priv->can_suspend ) return;
+        
+        xfpm_button_do_suspend(bt);
     }
     else if ( action == XFPM_DO_HIBERNATE )
     {
-         xfpm_button_do_hibernate(bt);
+        if (!priv->can_hibernate ) return;
+        
+        xfpm_button_do_hibernate(bt);
     }
     else if ( action == XFPM_DO_SHUTDOWN )
     {
@@ -648,4 +661,16 @@ xfpm_button_get_available_buttons(XfpmButton *button)
     }
     
     return buttons;
+}
+
+void            
+xfpm_button_set_sleep_info (XfpmButton *button,gboolean can_hibernate,
+                            gboolean can_suspend)
+{
+    g_return_if_fail(XFPM_IS_BUTTON(button));
+    XfpmButtonPrivate *priv;
+    priv = XFPM_BUTTON_GET_PRIVATE(button);
+    
+    priv->can_suspend = can_suspend;
+    priv->can_hibernate = can_hibernate;
 }

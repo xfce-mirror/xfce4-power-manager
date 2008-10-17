@@ -34,7 +34,8 @@
 
 DBusMessage *xfpm_dbus_new_message(const gchar *service  ,const gchar *remote_object,
                                    const gchar *interface,const gchar *method);
-                                   
+gboolean xfpm_dbus_name_has_owner(DBusConnection *connection,
+                                  const gchar *service);
 gboolean xfpm_dbus_send_message            (const gchar *signal);
 gboolean xfpm_dbus_send_message_with_reply (const gchar *signal,gint *get_reply);
 void     xfpm_dbus_send_nm_message         (const gchar *signal);

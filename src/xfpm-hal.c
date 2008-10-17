@@ -143,7 +143,6 @@ xfpm_hal_init(XfpmHal *xfpm_hal) {
     {
         g_printerr("Error monitoring HAL events\n");
         priv->connected = FALSE;
-        
     } 
     else
     {
@@ -217,22 +216,29 @@ static void xfpm_hal_device_condition            (LibHalContext *ctx,
                                                      
 }
 
+
 static gboolean 
 xfpm_hal_monitor(XfpmHal *xfpm_hal) {
     
     XfpmHalPrivate *priv = XFPM_HAL_GET_PRIVATE(xfpm_hal);
-    
+
     DBusError error;
-    
     dbus_error_init(&error);
     
-    priv->ctx = libhal_ctx_new();
-    
     priv->connection = dbus_bus_get(DBUS_BUS_SYSTEM,&error);
-    if ( dbus_error_is_set(&error) ) {
+    
+    if ( !priv->connection || dbus_error_is_set(&error) )
+    {
         g_printerr("Unable to connect to DBus %s\n",error.message);
         return FALSE;
-    }    
+    }
+    
+    if ( !xfpm_dbus_name_has_owner(priv->connection,HAL_DBUS_SERVICE) )
+    {
+        g_printerr("HAL is not running or not responding\n");
+        return FALSE;
+    }
+    priv->ctx = libhal_ctx_new();
     
     dbus_connection_setup_with_g_main(priv->connection,NULL);
     
@@ -247,6 +253,57 @@ xfpm_hal_monitor(XfpmHal *xfpm_hal) {
     libhal_ctx_set_user_data(priv->ctx,xfpm_hal);    
     return TRUE;
 }    
+
+gboolean xfpm_hal_is_connected(XfpmHal *hal)
+{
+    g_return_val_if_fail(XFPM_IS_HAL(hal),FALSE);
+    XfpmHalPrivate *priv;
+    priv = XFPM_HAL_GET_PRIVATE(hal);
+    
+    return (priv->connected);
+}
+    
+gboolean xfpm_hal_power_management_can_be_used(XfpmHal *hal)
+{
+    g_return_val_if_fail(XFPM_IS_HAL(hal),FALSE);
+    XfpmHalPrivate *priv;
+    priv = XFPM_HAL_GET_PRIVATE(hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,FALSE);
+    
+    DBusMessage *message;
+    DBusMessage *reply;
+    DBusError error;
+    
+    message = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                           HAL_ROOT_COMPUTER,
+                                           HAL_DBUS_INTERFACE_POWER,
+                                           "JustToCheck");
+
+    if (!message)
+    {
+        return FALSE;
+    }
+                                           
+    dbus_error_init(&error);                                       
+                                           
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,message,-1,&error);
+    dbus_message_unref(message);
+    
+    if ( reply ) dbus_message_unref(reply);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+        /* This is the only one place in the program we will 
+         * be happy when we seeDBusError is set */
+        if (!strcmp(error.name,"org.freedesktop.DBus.Error.UnknownMethod"))
+        {
+            dbus_error_free(&error);
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
 
 gboolean xfpm_hal_connect_to_signals(XfpmHal *hal,
                                     gboolean device_removed,

@@ -27,7 +27,7 @@
 #include "xfpm-debug.h"
 
 
-static gboolean
+gboolean
 xfpm_dbus_name_has_owner(DBusConnection *connection,const gchar *service)
 {
     DBusError error;

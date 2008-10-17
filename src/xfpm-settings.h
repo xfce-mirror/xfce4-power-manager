@@ -24,6 +24,7 @@
 
 GtkWidget *xfpm_settings_new(XfconfChannel *channel,gboolean is_laptop,
                              gboolean can_hibernate,gboolean can_suspend,
+                             gboolean can_power,
                              gboolean dpms_capable,guint8 govs,
                              guint8 switch_buttons,gboolean lcd);
 
