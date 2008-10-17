@@ -40,6 +40,7 @@ typedef struct
     gchar *suffix;
     gint suffix_length;
     gint suffix_position;
+    gint digits_num;
     
 } XfpmSpinButton;
 

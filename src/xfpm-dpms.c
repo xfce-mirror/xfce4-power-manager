@@ -362,7 +362,7 @@ xfpm_dpms_notify_cb(GObject *object,GParamSpec *arg1,gpointer data)
     
     if ( dpms->dpms_enabled )
     {
-            xfpm_dpms_set_timeouts(dpms);
+        xfpm_dpms_set_timeouts(dpms);
     }
 }
 

@@ -132,7 +132,6 @@ xfpm_spin_button_editable_init(GtkEditableClass *iface)
 	iface->delete_text = xfpm_spin_button_delete_text;
 }
 
-
 static void
 _spin_button_update(XfpmSpinButton *spin)
 {
@@ -144,8 +143,24 @@ _spin_button_update(XfpmSpinButton *spin)
     {
         gtk_widget_queue_resize_no_redraw(widget);
     }
+}
+
+
+static void
+xfpm_spin_button_delete_all_text(GtkEditable *editable)
+{
+    GtkEditableClass *spin_iface = g_type_interface_peek (xfpm_spin_button_parent_class,
+	                                                      GTK_TYPE_EDITABLE);
+    GtkEditableClass *entry_iface = g_type_interface_peek_parent(spin_iface);
     
+    gint start,end;
     
+    const gchar *text = gtk_entry_get_text(GTK_ENTRY(editable));
+	start = 0;
+	end = strlen(text);
+	
+    entry_iface->delete_text(editable,start,end);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(editable),gtk_spin_button_get_value(GTK_SPIN_BUTTON(editable)));
 }
 
 static void
@@ -164,6 +179,7 @@ xfpm_spin_button_delete_text (GtkEditable *editable,
     gint text_length = strlen(text);
 
     gint length;
+    
     if ( spin->suffix )
     {
         length = text_length - spin->suffix_length ;
@@ -232,7 +248,7 @@ static void xfpm_spin_button_insert_text (GtkEditable *editable,
 }										  
 
 /* Constructor for the xfpm-spin button is the same as 
- * gtk_spin_button_new_with_range.
+ * gtk_spin_button_new_with_range but slightly modified
  * 
  * GTK - The GIMP Toolkit
  * Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
@@ -268,7 +284,7 @@ xfpm_spin_button_new_with_range(gdouble min,gdouble max,gdouble step)
     gtk_spin_button_configure (GTK_SPIN_BUTTON(spin), GTK_ADJUSTMENT (adj), step, digits);
 
     gtk_spin_button_set_numeric (GTK_SPIN_BUTTON(spin), TRUE);
-
+    
 	return GTK_WIDGET(spin);
 }
 
@@ -278,9 +294,18 @@ xfpm_spin_button_set_suffix (XfpmSpinButton *spin,
 {
 	g_return_if_fail(XFPM_IS_SPIN_BUTTON(spin));
 	g_return_if_fail(suffix != NULL);
-	
+
+    xfpm_spin_button_delete_all_text(GTK_EDITABLE(spin));	
+    
+    if ( spin->suffix ) g_free(spin->suffix);
+    
     spin->suffix = g_strdup(suffix);
 	spin->suffix_length = strlen(spin->suffix);
-
-	gtk_entry_append_text(GTK_ENTRY(spin),spin->suffix);
+	
+	gint spin_value = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
+	gint digits_num = 1 ;
+	if ( spin_value != 0 )
+	digits_num = abs ((gint) floor (log10 (fabs (spin_value)))) + 1;
+	
+	xfpm_spin_button_insert_text(GTK_EDITABLE(spin),spin->suffix,spin->suffix_length,&(digits_num));
 }

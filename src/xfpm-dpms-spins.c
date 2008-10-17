@@ -62,8 +62,13 @@ static void xfpm_dpms_spins_get_spin3_value_cb(GtkSpinButton *spin_3,
 struct XfpmDpmsSpinsPrivate 
 {
     GtkWidget *spin_1;
+    gint spin_value_1;
+    
     GtkWidget *spin_2;
+    gint spin_value_2;
+    
     GtkWidget *spin_3;
+    gint spin_value_3;
     
 };
 
@@ -117,7 +122,7 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
     label = gtk_label_new(_("Standby after"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,0,1);
-    priv->spin_1 = xfpm_spin_button_new_with_range(1,238,1);
+    priv->spin_1 = xfpm_spin_button_new_with_range(0,298,1);
     xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),_(" min"));
     gtk_widget_show(priv->spin_1);
     gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_1,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
@@ -125,7 +130,7 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
     label = gtk_label_new(_("Suspend after"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,1,2);
-    priv->spin_2 = xfpm_spin_button_new_with_range(1,239,1);
+    priv->spin_2 = xfpm_spin_button_new_with_range(0,299,1);
     xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),_(" min"));
     gtk_widget_show(priv->spin_2);
     gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_2,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
@@ -133,7 +138,7 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
     label = gtk_label_new(_("Turn off after"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,2,3);
-    priv->spin_3 = xfpm_spin_button_new_with_range(1,300,1);
+    priv->spin_3 = xfpm_spin_button_new_with_range(0,300,1);
     xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),_(" min"));
     gtk_widget_show(priv->spin_3);
     gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_3,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);
@@ -162,11 +167,24 @@ xfpm_dpms_spins_get_spin1_value_cb(GtkSpinButton *spin_1,XfpmDpmsSpins *spins)
     
     gint value1,value2,value3;
     value1 = gtk_spin_button_get_value(spin_1);
-    
     value2 = gtk_spin_button_get_value(GTK_SPIN_BUTTON(priv->spin_2));
-    
     value3 = gtk_spin_button_get_value(GTK_SPIN_BUTTON(priv->spin_3));
-       
+    
+    if ( value1 == 0 )
+    {
+        priv->spin_value_1 = 0;
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_1),_(" disabled"));
+        g_signal_emit(G_OBJECT(spins),signals[DPMS_VALUE_CHANGED],0,
+                  value1,value2,value3);
+        return;
+    }
+    if ( priv->spin_value_1 == 0 )
+    {
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_1),_(" min"));
+        if ( priv->spin_value_2 == 0 )
+            gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_2),value1+1);   
+    }
+        
     if ( value2 <= value1 )
     {
         value2 = value1 + 1;
@@ -203,6 +221,21 @@ xfpm_dpms_spins_get_spin2_value_cb(GtkSpinButton *spin_2,XfpmDpmsSpins *spins)
     
     value3 = gtk_spin_button_get_value(GTK_SPIN_BUTTON(priv->spin_3));
 
+    if ( value2 == 0 )
+    {
+        priv->spin_value_2 = 0;
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_2),_(" disabled"));
+        g_signal_emit(G_OBJECT(spins),signals[DPMS_VALUE_CHANGED],0,value1,value2,value3);
+         
+        return;
+    }
+    if ( priv->spin_value_2 == 0 )
+    {
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_2),_(" min"));
+        if ( priv->spin_value_3 == 0 )
+            gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_3),value2+1); 
+    }
+
     if ( value2 <= value1 )
     {
         value2 = value1 + 1;
@@ -236,6 +269,20 @@ xfpm_dpms_spins_get_spin3_value_cb(GtkSpinButton *spin_3,XfpmDpmsSpins *spins)
     
     value2 = gtk_spin_button_get_value(GTK_SPIN_BUTTON(priv->spin_2));
 
+    if ( value3 == 0 )
+    {
+        priv->spin_value_3 = 0;
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_3),_(" disabled"));
+        g_signal_emit(G_OBJECT(spins),signals[DPMS_VALUE_CHANGED],0,value1,value2,value3);
+         
+        return;
+    }
+    
+    if ( priv->spin_value_3 == 0 )
+    {
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_3),_(" min"));
+    }
+
     if ( value3 <= value2 )
     {
         value3 = value2 + 1;
@@ -261,9 +308,13 @@ void  xfpm_dpms_spins_set_default_values(XfpmDpmsSpins *spins,
 {
     XfpmDpmsSpinsPrivate *priv;
     priv = XFPM_DPMS_SPINS_GET_PRIVATE(spins);
-    
+    if ( spin_1 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),_(" disabled"));
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_1),spin_1);
+    
+    if ( spin_2 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),_(" disabled"));
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_2),spin_2);
+    
+    if ( spin_3 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),_(" disabled"));
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_3),spin_3);
     
 }   
