@@ -70,6 +70,14 @@ static void xfpm_lcd_brightness_load_config(XfpmLcdBrightness *lcd);
 
 static void xfpm_lcd_brightness_get_device(XfpmLcdBrightness *lcd);
 
+static void xfpm_lcd_brightness_increase(XfpmLcdBrightness *lcd);
+static void xfpm_lcd_brightness_decrease(XfpmLcdBrightness *lcd);
+
+static void xfpm_lcd_brightness_handle_device_condition_cb(XfpmHal *hal,
+                                                           const gchar *udi,
+                                                           const gchar *condition_name,
+                                                           const gchar *condition_detail,
+                                                           XfpmLcdBrightness *lcd);
 static void xfpm_lcd_brightness_notify_cb(GObject *object,
                                           GParamSpec *arg1,
                                           gpointer data);
@@ -79,8 +87,10 @@ struct XfpmLcdBrightnessPrivate
     
     XfpmHal *hal;
     gboolean device_exists;
+    gboolean brightness_in_hardware;
     gchar *udi;
     gint max_brightness;
+    gint step;
 
 };
 
@@ -128,8 +138,10 @@ static void xfpm_lcd_brightness_init(XfpmLcdBrightness *lcd)
     
     priv->hal = xfpm_hal_new();
     priv->device_exists = FALSE;
+    priv->brightness_in_hardware = TRUE; 
     priv->udi = NULL;
     priv->max_brightness = -1;
+    priv->step = 0;
     
     xfpm_lcd_brightness_load_config(lcd);
     xfpm_lcd_brightness_get_device(lcd);
@@ -138,6 +150,14 @@ static void xfpm_lcd_brightness_init(XfpmLcdBrightness *lcd)
     {
         g_signal_connect(G_OBJECT(lcd),"notify",
                          G_CALLBACK(xfpm_lcd_brightness_notify_cb),NULL);
+        if (!priv->brightness_in_hardware )
+        {
+            if (xfpm_hal_connect_to_signals(priv->hal,FALSE,FALSE,FALSE,TRUE) )
+            {
+                g_signal_connect(priv->hal,"xfpm-device-condition",
+                            G_CALLBACK(xfpm_lcd_brightness_handle_device_condition_cb),lcd);
+            }
+        }                 
     }
     
 }
@@ -286,12 +306,28 @@ static void xfpm_lcd_brightness_load_config(XfpmLcdBrightness *lcd)
 }
 
 static void
-xfpm_lcd_brightness_get_device(XfpmLcdBrightness *lcd)
+_get_steps(XfpmLcdBrightness *lcd)
 {
     XfpmLcdBrightnessPrivate *priv;
     priv = XFPM_LCD_BRIGHTNESS_GET_PRIVATE(lcd);
     
-    gchar **udi;
+    if ( priv->max_brightness <= 9 )
+    {
+        priv->step = 1;
+        return;
+    }
+    
+    priv->step = priv->max_brightness/10; /* 77 for example will give 7 step, so that's okay */
+    XFPM_DEBUG("Found approximate lcd brightness steps = %d\n",priv->step);
+}
+
+static void
+xfpm_lcd_brightness_get_device(XfpmLcdBrightness *lcd)
+{
+    XfpmLcdBrightnessPrivate *priv;
+    priv = XFPM_LCD_BRIGHTNESS_GET_PRIVATE(lcd);
+
+    gchar **udi = NULL;
     gint num;
     GError *error = NULL;
     udi = xfpm_hal_get_device_udi_by_capability(priv->hal,"laptop_panel",&num,&error);
@@ -325,9 +361,120 @@ xfpm_lcd_brightness_get_device(XfpmLcdBrightness *lcd)
             g_error_free(error);
             return;
         }
+        XFPM_DEBUG("Max screen luminosity = %d\n",priv->max_brightness);
         priv->device_exists = TRUE;
     }
+    
+    if ( xfpm_hal_device_have_key(priv->hal,priv->udi,"laptop_panel.brightness_in_hardware") )
+    {
+        priv->brightness_in_hardware = xfpm_hal_get_bool_info(priv->hal,priv->udi,
+                                            "laptop_panel.brightness_in_hardware",&error);
+        if ( error )
+        {
+            XFPM_DEBUG("error getting max brigthness level: %s\n",error->message);
+            g_error_free(error);
+            priv->brightness_in_hardware = TRUE; /* we always assume that control is in hardware */
+            _get_steps(lcd);
+            return;
+        }                                    
+    }
+    
 }
+
+static void
+xfpm_lcd_brightness_increase(XfpmLcdBrightness *lcd)
+{
+    XfpmLcdBrightnessPrivate *priv;
+    priv = XFPM_LCD_BRIGHTNESS_GET_PRIVATE(lcd);
+    GError *error = NULL;
+    gint32 level =
+        xfpm_hal_get_brightness(priv->hal,priv->udi,&error);
+        
+    if ( error )
+    {
+        XFPM_DEBUG("Get brightness failed: %s\n",error->message);
+        g_error_free(error);
+        return;
+    }
+    
+    if ( level != priv->max_brightness -1 )
+    {
+        gint32 set = priv->step + level;
+        if ( set > priv->max_brightness -1 )
+        {
+            set = priv->max_brightness -1;
+        }
+        XFPM_DEBUG("Setting brightness=%d\n",set);
+        xfpm_hal_set_brightness(priv->hal,priv->udi,set,&error);
+        if ( error )
+        {
+            XFPM_DEBUG("Error setting brigthness level: %s\n",error->message);
+            g_error_free(error);
+            return;
+        }
+    }
+}
+
+static void
+xfpm_lcd_brightness_decrease(XfpmLcdBrightness *lcd)
+{
+    XfpmLcdBrightnessPrivate *priv;
+    priv = XFPM_LCD_BRIGHTNESS_GET_PRIVATE(lcd);
+    GError *error = NULL;
+    gint32 level =
+        xfpm_hal_get_brightness(priv->hal,priv->udi,&error);
+        
+    if ( error )
+    {
+        XFPM_DEBUG("Get brightness failed: %s\n",error->message);
+        g_error_free(error);
+        return;
+    }
+    
+    if ( level != 1 )
+    {
+        gint32 set =  level - priv->step;
+        
+        if ( set < 0 )
+        {
+            set = 1;
+        }
+        XFPM_DEBUG("Setting brightness=%d\n",set);
+        xfpm_hal_set_brightness(priv->hal,priv->udi,set,&error);
+        if ( error )
+        {
+            XFPM_DEBUG("Error setting brigthness level: %s\n",error->message);
+            g_error_free(error);
+            return;
+        }
+    }
+}
+
+static void 
+xfpm_lcd_brightness_handle_device_condition_cb(XfpmHal *hal,
+                                               const gchar *udi,
+                                               const gchar *condition_name,
+                                               const gchar *condition_detail,
+                                               XfpmLcdBrightness *lcd)
+{
+    if ( !lcd->brightness_control_enabled ) return;
+        
+    if ( xfpm_hal_device_have_capability(hal,udi,"button") )
+    {
+        if ( !strcmp(condition_name,"ButtonPressed") )
+        {
+            if ( !strcmp(condition_detail,"brightness-down") )
+            {
+                xfpm_lcd_brightness_decrease(lcd);
+            }
+            else if ( !strcmp(condition_name,"brightness-up") )
+            {
+                xfpm_lcd_brightness_increase(lcd);
+            }
+        }
+    }
+}                                                           
+                                                           
 
 static void
 xfpm_lcd_brightness_notify_cb(GObject *object,GParamSpec *arg1,gpointer data)
