@@ -374,9 +374,12 @@ xfpm_lcd_brightness_get_device(XfpmLcdBrightness *lcd)
             XFPM_DEBUG("error getting max brigthness level: %s\n",error->message);
             g_error_free(error);
             priv->brightness_in_hardware = TRUE; /* we always assume that control is in hardware */
-            _get_steps(lcd);
             return;
-        }                                    
+        }          
+        if ( !priv->brightness_in_hardware )
+        {
+            _get_steps(lcd);
+        }
     }
     
 }
