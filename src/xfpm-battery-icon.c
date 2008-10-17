@@ -347,6 +347,10 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,gu
             {
                 message = battery_icon->type == PRIMARY ? _("You are running on Battery"):_("Battery is discharging");
             }
+            else
+            {
+                message = _("Your battery is discharging");
+            }
 #endif      
             break;
         case CHARGING:
