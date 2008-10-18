@@ -768,7 +768,7 @@ xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
     g_free(content);
     
 #endif    
-    if ( priv->power_management != 0 )
+    if ( priv->power_management == 0 )
     {
         XFPM_DEBUG("We cannot use power management interface\n");
         return;
