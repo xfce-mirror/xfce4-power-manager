@@ -22,11 +22,13 @@
 #ifndef __XFPM_SETTINGS_H
 #define __XFPM_SETTINGS_H
 
-GtkWidget *xfpm_settings_new(XfconfChannel *channel,gboolean is_laptop,
-                             gboolean can_hibernate,gboolean can_suspend,
-                             gboolean can_power,
-                             gboolean dpms_capable,guint8 govs,
-                             guint8 switch_buttons,gboolean lcd);
+GtkWidget *xfpm_settings_new(XfconfChannel *channel,
+                             gboolean is_laptop,
+                             guint8 power_management,
+                             gboolean dpms_capable,
+                             guint8 govs,
+                             guint8 switch_buttons,
+                             gboolean lcd);
 
 
 #endif /* __XFPM_SETTINGS_H */

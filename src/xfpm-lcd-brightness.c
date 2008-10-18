@@ -260,6 +260,7 @@ xfpm_lcd_brightness_set_level(XfpmLcdBrightness *lcd)
     
     if ( lcd->ac_adapter_present )
     {
+        XFPM_DEBUG("Setting level on ac adapter\n");
         if ( level != priv->max_brightness -1 )
         {
             xfpm_hal_set_brightness(priv->hal,priv->udi,priv->max_brightness -1,&error);
@@ -273,6 +274,7 @@ xfpm_lcd_brightness_set_level(XfpmLcdBrightness *lcd)
     }
     else 
     {
+        XFPM_DEBUG("Setting level battery power\n");
         xfpm_hal_set_brightness(priv->hal,priv->udi, 1,&error);
         if ( error )
         {

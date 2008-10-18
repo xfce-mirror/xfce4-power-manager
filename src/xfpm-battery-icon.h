@@ -69,14 +69,15 @@ typedef struct
 } XfpmBatteryIconClass;
 
 GType          xfpm_battery_icon_get_type   (void);
-GtkStatusIcon *xfpm_battery_icon_new        (guint last_full,
-                                            guint battery_type,
+GtkStatusIcon *xfpm_battery_icon_new        (guint32 last_full,
+                                            XfpmBatteryType battery_type,
                                             guint critical_charge,        
                                             gboolean visible);
                                             
 void           xfpm_battery_icon_set_state  (XfpmBatteryIcon *battery_icon,
-                                            guint charge,
+                                            guint32 charge,
                                             guint remaining_per,
+                                            guint32 remaining_time,
                                             gboolean present,
                                             gboolean is_charging,
                                             gboolean is_discharging,

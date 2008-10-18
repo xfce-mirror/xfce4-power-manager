@@ -374,7 +374,7 @@ xfpm_hal_get_device_udi_by_capability(XfpmHal *xfpm_hal,const gchar *capability,
     }    
 }    
 
-gint
+gint32
 xfpm_hal_get_int_info(XfpmHal *xfpm_hal,const gchar *udi,
                       const gchar *property,GError **gerror)  {
  
@@ -989,6 +989,13 @@ xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
     dbus_error_init(&error);
     reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
     dbus_message_unref(mess);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+        dbus_set_g_error(gerror,&error);
+        dbus_error_free(&error);
+        return;
+    }
 
     if ( !reply ) 
     {
@@ -1028,6 +1035,13 @@ xfpm_hal_set_power_save (XfpmHal *xfpm_hal,
     dbus_error_init(&error);
     reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
     dbus_message_unref(mess);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+        dbus_set_g_error(gerror,&error);
+        dbus_error_free(&error);
+        return;
+    }
 
     if ( !reply ) 
     {

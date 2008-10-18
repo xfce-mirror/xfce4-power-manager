@@ -90,7 +90,7 @@ gchar              **xfpm_hal_get_device_udi_by_capability (XfpmHal *xfpm_hal,
                                                              const gchar *capability,
                                                              gint *num,
                                                              GError **gerror);
-gint                 xfpm_hal_get_int_info                 (XfpmHal *xfpm_hal,
+gint32               xfpm_hal_get_int_info                 (XfpmHal *xfpm_hal,
                                                              const gchar *udi,
                                                              const gchar *property,
                                                              GError **gerror);    

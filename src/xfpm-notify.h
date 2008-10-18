@@ -30,26 +30,22 @@
 #include <libnotify/notify.h>
 #include <gtk/gtk.h>
 
-void xfpm_notify_simple(const gchar *title,
-			  	        const gchar *message,
-						guint  timeout,
-						NotifyUrgency urgency,
-						GtkStatusIcon *icon,
-						const gchar *icon_name,
-						guint8 timeout_to_show);
-
-void xfpm_notify_with_action(const gchar *title,
-			   			     const gchar *message,
-							 guint timeout,
-							 NotifyUrgency urgency,
-							 GtkStatusIcon *icon,
-							 const gchar *icon_name,
-							 const gchar *action_label,
-							 guint8 timeout_to_show,
-							 NotifyActionCallback notify_callback,
-							 gpointer user_data);
-
-
+NotifyNotification *  xfpm_notify_new(const gchar *title,
+                                      const gchar *message,
+                                      guint timeout,
+                                      NotifyUrgency urgency,
+                                      GtkStatusIcon *icon,
+                                      const gchar *icon_name);
+                                      
+void xfpm_notify_add_action(NotifyNotification *n,
+                            const gchar *action_id,
+                            const gchar *action_label,
+                            NotifyActionCallback notify_callback,
+                            gpointer user_data) ;
+                            
+void xfpm_notify_show_notification(NotifyNotification *n,
+                                   guint timeout_to_show);
+                            
 #endif /* HAVE_LIBNOTIFY */
 
 #endif /*__XFPM_NOTIFY_H */

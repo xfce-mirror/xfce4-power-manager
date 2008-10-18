@@ -76,9 +76,8 @@ void           xfpm_battery_show_error(XfpmBattery *batt,
                                        const gchar *icon_name,
                                        const gchar *error);     
 #endif
-void           xfpm_battery_set_sleep_info(XfpmBattery *batt,
-                                            gboolean can_suspend,
-                                            gboolean can_hibernate);
+void           xfpm_battery_set_power_info(XfpmBattery *batt,
+                                           guint8 power_management);
 G_END_DECLS
 
 #endif

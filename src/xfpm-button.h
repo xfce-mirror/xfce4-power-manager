@@ -60,8 +60,7 @@ GType           xfpm_button_get_type              (void) G_GNUC_CONST;
 XfpmButton     *xfpm_button_new                   (void);
 guint8          xfpm_button_get_available_buttons (XfpmButton *button);
 void            xfpm_button_set_sleep_info        (XfpmButton *button,
-                                                   gboolean can_hibernate,
-                                                   gboolean can_suspend);
+                                                    guint8 sleep_info);
 G_END_DECLS
 
 #endif

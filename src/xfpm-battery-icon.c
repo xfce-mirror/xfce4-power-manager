@@ -103,7 +103,7 @@ xfpm_battery_icon_class_init(XfpmBatteryIconClass *klass)
                                                       "Last full",
                                                       "Last battery full charge",
                                                       0,
-                                                      G_MAXINT16, /*shouldn't be longer */
+                                                      G_MAXUINT32,
                                                       4000,
                                                       G_PARAM_READWRITE|G_PARAM_CONSTRUCT ));
     
@@ -112,7 +112,7 @@ xfpm_battery_icon_class_init(XfpmBatteryIconClass *klass)
                                     g_param_spec_uint("batt-critical-level",
                                                       "Battery critical level",
                                                       "Low battery level",
-                                                      0,
+                                                      1,
                                                       15,
                                                       8,
                                                       G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
@@ -284,7 +284,6 @@ xfpm_battery_icon_get_index(XfpmBatteryType type,guint percent)
 	return "100";
 }
 
-
 static gchar *
 xfpm_battery_icon_get_icon_prefix(XfpmBatteryType type)
 {
@@ -384,8 +383,10 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,gu
             }
             else
             {
-            xfpm_notify_simple(_("Xfce power manager"),message,5000,NOTIFY_URGENCY_LOW,
-                           GTK_STATUS_ICON(battery_icon),icon_name,0);
+                NotifyNotification *n =
+                xfpm_notify_new(_("Xfce power manager"),message,5000,NOTIFY_URGENCY_LOW,
+                               GTK_STATUS_ICON(battery_icon),icon_name);
+                xfpm_notify_show_notification(n,0);               
             }
         }
 #endif     
@@ -423,7 +424,7 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,gu
 }
 
 GtkStatusIcon *
-xfpm_battery_icon_new(guint last_full,guint battery_type,
+xfpm_battery_icon_new(guint32 last_full,XfpmBatteryType battery_type,
                       guint critical_level,gboolean visible)
 {
     XfpmBatteryIcon *battery_icon = NULL;
@@ -442,15 +443,47 @@ xfpm_battery_icon_new(guint last_full,guint battery_type,
 }
 
 void
-xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint charge,guint remaining_per,
-                         gboolean present,gboolean is_charging,gboolean is_discharging,
-                         gboolean ac_adapter_present)
+xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint per,
+                            guint32 remaining_time,gboolean present,
+                            gboolean is_charging,gboolean is_discharging,
+                            gboolean ac_adapter_present)
 {
     g_return_if_fail(XFPM_IS_BATTERY_ICON(battery_icon));
     battery_icon->ac_adapter_present = ac_adapter_present;
     battery_icon->battery_present    = present;
+#ifdef DEBUG
+    gchar *content_is_charging;
+    gchar *content_is_discharging;
+    gchar *content_present;
     
-    gchar tip[128];
+    GValue value = { 0, };
+    g_value_init(&value,G_TYPE_BOOLEAN);
+    g_value_set_boolean(&value,is_charging);
+    content_is_charging = g_strdup_value_contents(&value);
+    
+    g_value_set_boolean(&value,is_discharging);
+    content_is_discharging = g_strdup_value_contents(&value);
+    
+    g_value_set_boolean(&value,present);
+    content_present = g_strdup_value_contents(&value);
+        
+    XFPM_DEBUG("Setting battery state charge=%d is_charging:%s is_discharging:%s present:%s \n",charge,
+    content_is_charging,content_is_discharging,content_present);
+    g_free(content_is_charging);
+    g_free(content_is_discharging);
+    g_free(content_present);
+#endif    
+    guint remaining_per;
+    if ( per > 0 )
+    {
+        remaining_per =  per;
+    }
+    else
+    {
+        remaining_per = 1;
+    }
+    
+    gchar tip[256];
     
     if ( present == FALSE )
     {
@@ -461,23 +494,19 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint charge,guint rem
     }
     
     sprintf(tip,"%i",remaining_per);
-    strcat(tip,"%");
-    
-    XFPM_DEBUG("Setting battery state charge=%d is_charging=%d is_discharging=%d \n",charge,
-    is_charging,is_discharging);
+    strcat(tip,_("%"));
     
     // battery is full
     if ( is_charging == FALSE && is_discharging == FALSE && battery_icon->last_full == charge )
     {
         strcat(tip,_(" Battery fully charged"));
-        gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
         xfpm_battery_icon_update(battery_icon,FULL,remaining_per);
     }
     
     // battery is not dis/charging but is not full also
     if ( is_charging == FALSE && is_discharging == FALSE && battery_icon->last_full != charge )
     {
-        gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
+        strcat(tip,_(" Battery charge"));
         xfpm_battery_icon_update(battery_icon,NOT_FULL,remaining_per);
     }
     
@@ -485,7 +514,6 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint charge,guint rem
     if ( is_charging == TRUE && is_discharging == FALSE )
     {
         strcat(tip,_(" Battery is charging "));
-        gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
         xfpm_battery_icon_update(battery_icon,CHARGING,remaining_per);
     }
     
@@ -499,20 +527,35 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint charge,guint rem
                 strcat(tip,
                 battery_icon->type == PRIMARY ? _(" Running on battery"): _(" Battery is discharging"));
             }
-            gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
             xfpm_battery_icon_update(battery_icon,DISCHARGING,remaining_per);
         } 
         else if ( remaining_per <= ( battery_icon->critical_level+10 ) && remaining_per > battery_icon->critical_level )
         {
             strcat(tip,_(" Battery charge level is low"));
-            gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
             xfpm_battery_icon_update(battery_icon,LOW,remaining_per);
         }
         else if ( remaining_per <= battery_icon->critical_level )
         {
             strcat(tip,_(" Battery charge level is critical"));
-            gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
             xfpm_battery_icon_update(battery_icon,CRITICAL,remaining_per);
         }
     }
+    
+    if ( remaining_time != 0 )
+    {
+        gchar time_str[80] = "";
+        gchar hours_str[20] = "";
+        gchar minutes_str[20] = "";
+        gint minutes,hours,minutes_left;
+       	hours = remaining_time / 3600;
+		minutes = remaining_time / 60;
+		minutes_left = minutes % 60;
+		
+		strcat(hours_str,hours > 1 ? _("hours") : _("hour") );
+		strcat(minutes_str,minutes > 1 ? _("minutes") : _("minute"));
+		
+		sprintf(time_str,_("\nEstimated Time Left: %d %s %d %s"),hours,hours_str,minutes_left,minutes_str);
+		strcat(tip,time_str);
+    }
+    gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
 }

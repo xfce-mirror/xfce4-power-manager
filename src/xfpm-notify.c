@@ -24,26 +24,26 @@
 
 #ifdef HAVE_LIBNOTIFY
 static NotifyNotification *
-xfpm_notify_new(const char *title,const char *message,
-                const gchar *icon_name,GtkStatusIcon *icon)
+xfpm_notify_create_notification(const char *title,const char *message,
+                                const gchar *icon_name,GtkStatusIcon *icon)
 {
     NotifyNotification *n;
     if ( icon != NULL ) 
 	{
-	    n = notify_notification_new_with_status_icon(title,message,icon_name,icon);
+	    n = notify_notification_new_with_status_icon(title,message,NULL,icon);
 	}
 	else
 	{
 	    n = notify_notification_new(title,message,NULL,NULL);
-    
-	    if ( icon_name != NULL ) {
-		    GdkPixbuf *pixbuf = xfpm_load_icon(icon_name,60);	
-		    if (pixbuf) {
-			    notify_notification_set_icon_from_pixbuf(n,pixbuf);
-			    g_object_unref(G_OBJECT(pixbuf));
-		    }    
-	    }		
 	}
+    if ( icon_name != NULL ) {
+        GdkPixbuf *pixbuf = xfpm_load_icon(icon_name,48);	
+        if (pixbuf) 
+        {
+            notify_notification_set_icon_from_pixbuf(n,pixbuf);
+            g_object_unref(G_OBJECT(pixbuf));
+        }    
+    }		
 	return n;
 }
 
@@ -52,69 +52,46 @@ xfpm_notify_send_notification(gpointer data)
 {
     NotifyNotification *n = data;
     notify_notification_show(n,NULL);	
-	g_object_unref(n);				
 	return FALSE;
 }
 
-static gboolean
-xfpm_notify_send_notification_with_action(gpointer data)
-{
-    NotifyNotification *n = data;
-    notify_notification_show(n,NULL);	
-    /* The action callback should call g_object_unref on NotifyNotification object */
-	return FALSE;
-}
-
-void 
-xfpm_notify_simple(const gchar *title,const gchar *message,guint timeout,
-                   NotifyUrgency urgency,GtkStatusIcon *icon,
-                   const gchar *icon_name,guint8 timeout_to_show) 
+NotifyNotification * 
+xfpm_notify_new(const gchar *title,const gchar *message,
+                guint timeout,NotifyUrgency urgency,
+                GtkStatusIcon *icon,const gchar *icon_name) 
 {
 	
 	NotifyNotification *n;
-	n = xfpm_notify_new(title,message,icon_name,icon);
+	n = xfpm_notify_create_notification(title,message,icon_name,icon);
 	    
 	notify_notification_set_urgency(n,urgency);
 	notify_notification_set_timeout(n,timeout);
-	if ( timeout_to_show != 0 )
+	return n;
+	
+}	
+
+void xfpm_notify_add_action(NotifyNotification *n,
+                            const gchar *action_id,
+                            const gchar *action_label,
+                            NotifyActionCallback notify_callback,
+                            gpointer user_data) 
+{
+    notify_notification_add_action(n,action_id,action_label,
+								  (NotifyActionCallback)notify_callback,
+								  user_data,NULL);
+}
+							     
+void xfpm_notify_show_notification(NotifyNotification *n,guint timeout_to_show)
+{
+    if ( timeout_to_show != 0 )
 	{
-	    g_timeout_add_seconds(timeout_to_show,xfpm_notify_send_notification,n);
+	    g_timeout_add_seconds(timeout_to_show,
+                              xfpm_notify_send_notification,
+                              n);
     }
     else
     {
         xfpm_notify_send_notification(n);
-    }
-}	
-
-void xfpm_notify_with_action(const gchar *title,
-							 const gchar *message,
-							 guint timeout,
-							 NotifyUrgency urgency,
-							 GtkStatusIcon *icon,
-							 const gchar *icon_name,
-							 const gchar *action_label,
-							 guint8 timeout_to_show,
-							 NotifyActionCallback notify_callback,
-							 gpointer user_data) {
-										  	
-	NotifyNotification *n;
-	n = xfpm_notify_new(title,message,icon_name,icon);
-	
-	notify_notification_set_urgency(n,urgency);
-	notify_notification_set_timeout(n,timeout);
-	
-	notify_notification_add_action(n,"ok",action_label,
-								  (NotifyActionCallback)notify_callback,
-								  user_data,NULL);
-								  
-	if ( timeout_to_show != 0 )
-	{
-	    g_timeout_add_seconds(timeout_to_show,xfpm_notify_send_notification_with_action,n);
-    }
-    else
-    {
-        xfpm_notify_send_notification_with_action(n);
-    }							  
-}										  	
-
+    }			
+}
 #endif

@@ -57,6 +57,5 @@ GtkStatusIcon *xfpm_ac_adapter_new            (gboolean visible);
 void           xfpm_ac_adapter_monitor        (XfpmAcAdapter *adapter,
                                                SystemFormFactor factor);
 void           xfpm_ac_adapter_set_sleep_info (XfpmAcAdapter *adapter,
-                                               gboolean can_hibernate,
-                                               gboolean can_suspend);
+                                               guint8 sleep_info);
 #endif

@@ -98,6 +98,14 @@ static void xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar
                                                         const gchar *key,gboolean is_removed,
                                                         gboolean is_added,XfpmBattery *batt);
                                                         
+static void xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon);
+static void xfpm_battery_handle_primary_critical(XfpmBattery *batt,
+                                                XfpmBatteryIcon *icon);
+static void xfpm_battery_handle_ups_critical(XfpmBattery *batt,
+                                             XfpmBatteryIcon *icon);                                                
+static void xfpm_battery_handle_critical_charge(XfpmBattery *batt,
+                                                XfpmBatteryIcon *icon);
+                                                
 static void xfpm_battery_state_change_cb(GObject *object,
                                          GParamSpec *arg1,
                                          gpointer data);
@@ -124,8 +132,9 @@ struct XfpmBatteryPrivate
 {
     XfpmHal *hal;
     GHashTable *batteries;
-    gboolean can_hibernate;
-    gboolean can_suspend;
+
+    guint8 power_management;
+        
 };
                                 
 G_DEFINE_TYPE(XfpmBattery,xfpm_battery,G_TYPE_OBJECT)
@@ -191,7 +200,7 @@ xfpm_battery_class_init(XfpmBatteryClass *klass)
                                     g_param_spec_uint("critical-charge",
                                                       "Critical charge",
                                                       "Critical battery charge",
-                                                      0,
+                                                      1,
                                                       15,
                                                       8,
                                                       G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
@@ -234,8 +243,6 @@ xfpm_battery_init(XfpmBattery *battery)
     priv = XFPM_BATTERY_GET_PRIVATE(battery);
     
     priv->batteries = g_hash_table_new(g_str_hash,g_str_equal);
-    priv->can_hibernate = FALSE;
-    priv->can_suspend   = FALSE;
     
     xfpm_battery_load_config(battery);
     
@@ -575,6 +582,20 @@ xfpm_battery_handle_device_removed(XfpmHal *hal,const gchar *udi,XfpmBattery *ba
     xfpm_battery_refresh(batt);
 }
 
+
+static guint 
+_get_battery_percentage(gint32 last_full,gint32 current)
+{
+    guint val = 100;
+    
+    if ( last_full <= current ) return val;
+    
+    float f = (float)current/last_full *100;
+	
+	val = (guint)f;
+    return val;   
+}
+    
 static void
 xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
                                            const gchar *key,gboolean is_removed,
@@ -597,12 +618,12 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
         {
             return;
         }
-        if ( !strcmp(key,"battery.reporting.last_full") )
+        if ( !strcmp(key,"battery.charge_level.last_full") )
         {
             GError *error = NULL;
             guint last_full = xfpm_hal_get_int_info(priv->hal,
                                                     udi,
-                                                    "battery.reporting.last_full",
+                                                    "battery.charge_level.last_full",
                                                     &error);
             if ( error )                                        
             {
@@ -613,16 +634,15 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
             return;
         }
 
-        if ( strcmp(key,"battery.reporting.current")           &&
-             strcmp(key,"battery.charge_level.percentage")     &&
-             strcmp(key,"battery.rechargeable.is_charging")    &&
+        if ( strcmp(key,"battery.charge_level.current")           &&
+             strcmp(key,"battery.rechargeable.is_charging")       &&
              strcmp(key,"battery.rechargeable.is_discharging") )
         {
             return;
         }
         XFPM_DEBUG("Drive status change udi=%s key=%s\n",udi,key);
 
-        guint current;
+        gint32 current;
         guint percentage;
         gboolean is_charging;
         gboolean is_discharging;
@@ -630,7 +650,7 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
         GError *error = NULL;
         current = xfpm_hal_get_int_info(priv->hal,
                                         udi,
-                                        "battery.reporting.current",
+                                        "battery.charge_level.current",
                                         &error);
         if ( error )                                        
         {
@@ -638,16 +658,35 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
             g_error_free(error);
             return;
         }                                    
-        percentage = xfpm_hal_get_int_info(priv->hal,
-                                           udi,
-                                          "battery.charge_level.percentage",
-                                          &error);
-        if ( error )                                        
+
+        if (xfpm_hal_device_have_key(priv->hal,udi,"battery.charge_level.persentage"))
         {
-            XFPM_DEBUG("%s\n",error->message);
-            g_error_free(error);
-            return;
-        }                                         
+            if ( error ) 
+            {
+                XFPM_DEBUG("%s:\n",error->message);
+                g_error_free(error);
+                return;
+            }                                      
+            percentage = xfpm_hal_get_int_info(priv->hal,
+                                              udi,
+                                              "battery.charge_level.percentage",
+                                              &error);
+        }
+        else
+        {
+            GError *error = NULL;
+            guint last_full = xfpm_hal_get_int_info(priv->hal,
+                                                    udi,
+                                                    "battery.charge_level.last_full",
+                                                    &error);
+            if ( error )                                        
+            {
+                XFPM_DEBUG("%s\n",error->message);
+                g_error_free(error);
+                return;
+            }                                        
+            percentage = _get_battery_percentage(last_full,current);
+        }
                                       
         is_present = xfpm_hal_get_bool_info(priv->hal,
                                              udi,
@@ -680,9 +719,126 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
             g_error_free(error);
             return;
         }                                               
-                                               
-        xfpm_battery_icon_set_state(XFPM_BATTERY_ICON(icon),current,percentage,
+        
+        gint32 remaining_time  = 0 ;
+        if (xfpm_hal_device_have_key(priv->hal,udi,"battery.remaining_time"))
+        {
+            if ( error ) 
+            {
+                XFPM_DEBUG("%s:\n",error->message);
+                g_error_free(error);
+                return;
+            }                                      
+            remaining_time = xfpm_hal_get_int_info(priv->hal,
+                                                   udi,
+                                                   "battery.remaining_time",
+                                                   &error);
+        }                                       
+        xfpm_battery_icon_set_state(XFPM_BATTERY_ICON(icon),current,percentage,remaining_time,
                                     is_present,is_charging,is_discharging,batt->ac_adapter_present);
+    }
+}
+
+#ifdef HAVE_LIBNOTIFY
+static void
+_do_critical_action(NotifyNotification *n,gchar *action,XfpmBattery *batt)
+{
+    if (!strcmp(action,"shutdown"))
+    {
+        XFPM_DEBUG("Sending shutdown request\n");
+        g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SHUTDOWN,TRUE);
+    }
+    else if ( !strcmp(action,"hibernate"))
+    {
+        XFPM_DEBUG("Sending hibernate request\n");
+        g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,TRUE);
+    }
+}
+#endif
+
+static void
+xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon)
+{
+    XfpmBatteryPrivate *priv;
+    priv = XFPM_BATTERY_GET_PRIVATE(batt);
+    
+    const gchar *message;
+    message = _("Your battery charge level is critical "\
+              "save your work to avoid data loss");
+              
+#ifdef HAVE_LIBNOTIFY            
+                                    
+    NotifyNotification *n = xfpm_notify_new(_("Xfce power manager"),
+                                             message,
+                                             20000,
+                                             NOTIFY_URGENCY_CRITICAL,
+                                             GTK_STATUS_ICON(icon),
+                                             "gpm-ac-adapter");
+    if (priv->power_management & SYSTEM_CAN_SHUTDOWN )
+    {
+        xfpm_notify_add_action(n,
+                               "shutdown",
+                               _("Shutdown the system"),
+                               (NotifyActionCallback)_do_critical_action,
+                               batt);   
+    }                          
+    if ( priv->power_management & SYSTEM_CAN_HIBERNATE )
+    {
+        xfpm_notify_add_action(n,
+                               "hibernate",
+                               _("Hibernate the system"),
+                               (NotifyActionCallback)_do_critical_action,
+                               batt);      
+    }
+    xfpm_notify_show_notification(n,6);      
+#else
+    /*FIXME Show the options in  GtkDialog   */
+    
+#endif
+}
+
+static void
+xfpm_battery_handle_primary_critical(XfpmBattery *batt,XfpmBatteryIcon *icon)
+{
+    if ( batt->critical_action == XFPM_DO_HIBERNATE )
+    {
+        XFPM_DEBUG("Sending Hibernate request\n");
+        g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,TRUE);
+        return;
+    }
+    
+    if ( batt->critical_action == XFPM_DO_SHUTDOWN )
+    {
+        XFPM_DEBUG("Sending shutdown request\n");
+        g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SHUTDOWN,TRUE);
+        return;
+    }
+    
+    if ( batt->critical_action == XFPM_DO_NOTHING )
+    {
+        xfpm_battery_show_critical_options(batt,icon);
+    }
+}
+
+static void
+xfpm_battery_handle_ups_critical(XfpmBattery *batt,XfpmBatteryIcon *icon)
+{
+    xfpm_battery_show_critical_options(batt,icon);
+}
+
+static void
+xfpm_battery_handle_critical_charge(XfpmBattery *batt,XfpmBatteryIcon *icon)
+{
+    XfpmBatteryType battery_type;
+    g_object_get(G_OBJECT(icon),"battery-type",&battery_type,NULL);
+    
+    if ( battery_type == PRIMARY )
+    {
+        xfpm_battery_handle_primary_critical(batt,icon);
+    }
+    else if ( battery_type == UPS )
+    {
+        xfpm_battery_handle_ups_critical(batt,icon);
     }
 }
 
@@ -708,29 +864,9 @@ xfpm_battery_state_change_cb(GObject *object,GParamSpec *arg1,gpointer data)
         XFPM_DEBUG("param:%s value:%s\n",arg1->name,content);
         g_free(content);
 #endif  
-        if ( batt->critical_action == XFPM_DO_NOTHING )
-        {
-            return;
-        }
-        
         if ( state == CRITICAL )
         {
-            XfpmBatteryType battery_type;
-            g_object_get(object,"battery-type",&battery_type,NULL);
-            if ( battery_type != PRIMARY ) 
-            {
-                return;
-            }
-            if ( batt->critical_action == XFPM_DO_HIBERNATE )
-            {
-                XFPM_DEBUG("Sending Hibernate\n");
-                g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,TRUE);
-                return;
-            }
-            if ( batt->critical_action == XFPM_DO_SHUTDOWN )
-            {
-                g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SHUTDOWN,TRUE);
-            }
+            xfpm_battery_handle_critical_charge(batt,XFPM_BATTERY_ICON(object));
         }
     }
 }
@@ -780,7 +916,7 @@ static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
 	img = gtk_image_new_from_icon_name("gpm-hibernate",GTK_ICON_SIZE_MENU);
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
 	gtk_widget_set_sensitive(mi,FALSE);
-	if ( priv->can_hibernate )
+	if ( priv->power_management & SYSTEM_CAN_HIBERNATE )
 	{
 		gtk_widget_set_sensitive(mi,TRUE);
 		g_signal_connect(mi,"activate",
@@ -796,7 +932,7 @@ static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
 	
 	gtk_widget_set_sensitive(mi,FALSE);
-	if ( priv->can_suspend )
+	if ( priv->power_management & SYSTEM_CAN_SUSPEND )
     {	
 		gtk_widget_set_sensitive(mi,TRUE);
 		g_signal_connect(mi,"activate",
@@ -861,15 +997,18 @@ xfpm_battery_check(XfpmBattery *batt,const gchar *udi)
     priv = XFPM_BATTERY_GET_PRIVATE(batt);
     
     // Sanity check
-    if ( !xfpm_hal_device_have_key(priv->hal,udi,"battery.reporting.last_full") ||
-         !xfpm_hal_device_have_key(priv->hal,udi,"battery.reporting.current")   ||
-         !xfpm_hal_device_have_key(priv->hal,udi,"battery.charge_level.percentage") ||
+    // All those keys are flagged as always exist on device battery, except for battery.is_rechargeable
+    if ( !xfpm_hal_device_have_key(priv->hal,udi,"battery.is_rechargeable") ||
+         !xfpm_hal_device_have_key(priv->hal,udi,"battery.charge_level.last_full") ||
+         !xfpm_hal_device_have_key(priv->hal,udi,"battery.charge_level.current")   ||
          !xfpm_hal_device_have_key(priv->hal,udi,"battery.present")  ||
          !xfpm_hal_device_have_key(priv->hal,udi,"battery.rechargeable.is_charging") ||
+         !xfpm_hal_device_have_key(priv->hal,udi,"battery.rechargeable.is_discharging") ||
          !xfpm_hal_device_have_key(priv->hal,udi,"battery.type") )
     {
         return FALSE;
     }
+    
     return TRUE;
 }
 
@@ -886,7 +1025,7 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
     GError *error = NULL;      
     guint last_full = xfpm_hal_get_int_info(priv->hal,
                                           udi,
-                                          "battery.reporting.last_full",
+                                          "battery.charge_level.last_full",
                                           &error);
     if ( error ) 
     {
@@ -894,19 +1033,9 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
         g_error_free(error);
         return;
     }
-    guint current   = xfpm_hal_get_int_info(priv->hal,
+    gint32 current   = xfpm_hal_get_int_info(priv->hal,
                                           udi,
-                                          "battery.reporting.current",
-                                          &error);
-    if ( error ) 
-    {
-        XFPM_DEBUG("%s:\n",error->message);
-        g_error_free(error);
-        return;
-    }                                      
-    guint percentage = xfpm_hal_get_int_info(priv->hal,
-                                          udi,
-                                          "battery.charge_level.percentage",
+                                          "battery.charge_level.current",
                                           &error);
     if ( error ) 
     {
@@ -953,8 +1082,42 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
         XFPM_DEBUG("%s:\n",error->message);
         g_error_free(error);
         return;
-    }             
+    } 
+    
+    guint percentage;            
+    if (xfpm_hal_device_have_key(priv->hal,udi,"battery.charge_level.persentage"))
+    {
+        if ( error ) 
+        {
+            XFPM_DEBUG("%s:\n",error->message);
+            g_error_free(error);
+            return;
+        }                                      
+        percentage = xfpm_hal_get_int_info(priv->hal,
+                                          udi,
+                                          "battery.charge_level.percentage",
+                                          &error);
+    }
+    else
+    {
+        percentage = _get_battery_percentage(last_full,current);
+    }
    
+    gint32 remaining_time  = 0 ;
+    if (xfpm_hal_device_have_key(priv->hal,udi,"battery.remaining_time"))
+    {
+        if ( error ) 
+        {
+            XFPM_DEBUG("%s:\n",error->message);
+            g_error_free(error);
+            return;
+        }                                      
+        remaining_time = xfpm_hal_get_int_info(priv->hal,
+                                               udi,
+                                               "battery.remaining_time",
+                                               &error);
+    }
+    
     XfpmBatteryType type = 
     xfpm_battery_get_battery_type(battery_type);
     if ( battery_type )
@@ -965,16 +1128,20 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
                                       type,
                                       batt->critical_level,
                                       TRUE);
+                                      
 #ifdef HAVE_LIBNOTIFY    
     g_object_set(batt_icon,"systray-notify",batt->notify_enabled,NULL);
 #endif    
+                                                  
     xfpm_battery_icon_set_state(XFPM_BATTERY_ICON(batt_icon),
                                 current,
                                 percentage,
+                                remaining_time,
                                 is_present,
                                 is_charging,
                                 is_discharging,
                                 batt->ac_adapter_present);
+                                
     g_signal_connect(batt_icon,"notify",G_CALLBACK(xfpm_battery_state_change_cb),batt);                            
     g_signal_connect(batt_icon,"popup-menu",G_CALLBACK(xfpm_battery_popup_tray_icon_menu),batt);
     
@@ -1063,26 +1230,25 @@ void           xfpm_battery_show_error(XfpmBattery *batt,
         }
         icon = NULL;
     }
-    xfpm_notify_simple("Xfce power manager",
-                       error,
-                       14000,
-                       NOTIFY_URGENCY_CRITICAL,
-                       icon != NULL ? GTK_STATUS_ICON(icon) : NULL,
-                       icon_name,
-                       0);
+    NotifyNotification *n =
+    xfpm_notify_new("Xfce power manager",
+                    error,
+                    14000,
+                    NOTIFY_URGENCY_CRITICAL,
+                    icon != NULL ? GTK_STATUS_ICON(icon) : NULL,
+                    icon_name);
+    xfpm_notify_show_notification(n,0);                 
 }                                       
 #endif
 
 void           
-xfpm_battery_set_sleep_info(XfpmBattery *batt,
-                            gboolean can_suspend,
-                            gboolean can_hibernate)
+xfpm_battery_set_power_info(XfpmBattery *batt,guint8 power_management)
 {
     g_return_if_fail(XFPM_IS_BATTERY(batt));
     
     XfpmBatteryPrivate *priv;
     priv = XFPM_BATTERY_GET_PRIVATE(batt);                            
-    priv->can_hibernate = can_hibernate;
-    priv->can_suspend   = can_suspend;
+
+    priv->power_management = power_management;  
 }                                        
                                             

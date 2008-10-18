@@ -101,12 +101,11 @@ struct XfpmAcAdapterPrivate
     SystemFormFactor factor;
     
     GQuark adapter_udi;
-    
-    gboolean adapter_found;
     gboolean present;
-    gboolean can_suspend;
-    gboolean can_hibernate;
+    gboolean adapter_found;
     
+    guint8 power_management;
+        
 };
 
 enum 
@@ -157,7 +156,9 @@ xfpm_ac_adapter_init(XfpmAcAdapter *adapter)
     
     priv->hal = xfpm_hal_new();
     priv->adapter_udi = 0 ;
-    
+
+    priv->power_management = 0 ;
+        
     g_signal_connect(adapter,"size-changed",
                     G_CALLBACK(xfpm_ac_adapter_size_changed_cb),NULL);
     g_signal_connect(adapter,"popup-menu",
@@ -395,7 +396,7 @@ xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
 	gtk_widget_set_sensitive(mi,FALSE);
 	
 	
-	if ( priv->can_hibernate )
+	if ( priv->power_management & SYSTEM_CAN_HIBERNATE )
 	{
 		gtk_widget_set_sensitive(mi,TRUE);
 		g_signal_connect(mi,"activate",
@@ -411,7 +412,7 @@ xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
 	gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
 	
 	gtk_widget_set_sensitive(mi,FALSE);
-	if ( priv->can_suspend )
+	if ( priv->power_management & SYSTEM_CAN_SUSPEND )
     {	
 		gtk_widget_set_sensitive(mi,TRUE);
 		g_signal_connect(mi,"activate",
@@ -476,13 +477,11 @@ xfpm_ac_adapter_monitor(XfpmAcAdapter *adapter,SystemFormFactor factor)
 
 void           
 xfpm_ac_adapter_set_sleep_info (XfpmAcAdapter *adapter,
-                                gboolean can_hibernate,
-                                gboolean can_suspend)
+                                guint8 sleep_info)
 {
     g_return_if_fail(XFPM_IS_AC_ADAPTER(adapter));
     XfpmAcAdapterPrivate *priv;
     priv = XFPM_AC_ADAPTER_GET_PRIVATE(adapter);
-    
-    priv->can_suspend = can_suspend;
-    priv->can_hibernate = can_hibernate;
+
+    priv->power_management = sleep_info;    
 }

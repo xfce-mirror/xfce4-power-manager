@@ -86,6 +86,8 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
                                                     gboolean state_ok,
                                                     XfpmDriver *drv);
                                                     
+static void xfpm_driver_set_power_save(XfpmDriver *drv);
+
 static void xfpm_driver_property_changed_cb(XfconfChannel *channel,
                                             gchar *property,
                                             GValue *value,
@@ -114,7 +116,11 @@ static void xfpm_driver_handle_action_request(GObject *object,
                                               gboolean critical,
                                               XfpmDriver *drv);
 static void xfpm_driver_load_config(XfpmDriver *drv);
+
+static void xfpm_driver_check_power_management(XfpmDriver *drv);
+static void xfpm_driver_check_power_save(XfpmDriver *drv);
 static void xfpm_driver_check(XfpmDriver *drv);
+
 static void xfpm_driver_load_all(XfpmDriver *drv);
 
 /* DBus message Filter and replies */
@@ -133,12 +139,13 @@ struct XfpmDriverPrivate
     gboolean dialog_opened;
     
     SystemFormFactor formfactor;
-    gboolean can_use_power_management;
-    gboolean can_suspend;
-    gboolean can_hibernate;
+    
+    guint8 power_management;
+    
 #ifdef HAVE_LIBNOTIFY    
     gboolean show_power_management_error;
 #endif
+    gboolean enable_power_save;
     
     gboolean accept_sleep_request;
     
@@ -176,14 +183,14 @@ xfpm_driver_init(XfpmDriver *drv)
 {
     XfpmDriverPrivate *priv;
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
-    
+
+    priv->power_management = 0;
+        
     priv->dialog_opened = FALSE;
     priv->cpufreq_control = FALSE;
     priv->buttons_control = FALSE;
+    priv->enable_power_save = FALSE;
     priv->lcd_brightness_control = FALSE;
-    priv->can_use_power_management = FALSE;
-    priv->can_hibernate = FALSE;
-    priv->can_suspend = FALSE;
     priv->accept_sleep_request = TRUE;
     priv->loop    = NULL;
     priv->cpu     = NULL;
@@ -245,6 +252,22 @@ xfpm_driver_finalize(GObject *object)
     G_OBJECT_CLASS(xfpm_driver_parent_class)->finalize(object);
 }
 
+static void
+xfpm_driver_set_power_save(XfpmDriver *drv)
+{
+    XfpmDriverPrivate *priv;
+    priv = XFPM_DRIVER_GET_PRIVATE(drv);
+    
+    GError *error = NULL;
+    xfpm_hal_set_power_save(priv->hal,priv->ac_adapter_present,&error);
+    
+    if ( error )
+    {
+        XFPM_DEBUG("Set power save failed: %s\n",error->message);
+        g_error_free(error);
+    }
+}
+
 static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
                                                     gboolean present,
                                                     gboolean state_ok,
@@ -265,13 +288,14 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
                              
         if ( visible ) 
         {
-            xfpm_notify_simple(_("Xfce power manager"),
-                               error,
-                               12000,
-                               NOTIFY_URGENCY_CRITICAL,
-                               GTK_STATUS_ICON(adapter),
-                               "gpm-ac-adapter",
-                               0);    
+            NotifyNotification *n =
+            xfpm_notify_new(_("Xfce power manager"),
+                            error,
+                            12000,
+                            NOTIFY_URGENCY_CRITICAL,
+                            GTK_STATUS_ICON(adapter),
+                            "gpm-ac-adapter");
+            xfpm_notify_show_notification(n,0);                
         }  
         else
         {
@@ -295,6 +319,11 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
     {
         g_object_set(G_OBJECT(priv->lcd),"on-ac-adapter",priv->ac_adapter_present,NULL);
     }
+    
+    if ( priv->power_management & SYSTEM_CAN_POWER_SAVE ) 
+    {
+        xfpm_driver_set_power_save(drv);
+    }
 }                                                    
 
 static void
@@ -304,16 +333,6 @@ _dialog_response_cb(GtkDialog *dialog, gint response, XfpmDriver *drv)
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
     
     priv->dialog_opened = FALSE;
-    
-    gpointer data = 
-    g_object_get_data(G_OBJECT(drv),"conf-channel");
-    
-    if ( data )
-    {
-        XfconfChannel *channel = (XfconfChannel *)data;
-        g_object_unref(channel);
-        xfconf_shutdown();
-    }
     
     switch(response) 
     {
@@ -325,7 +344,22 @@ _dialog_response_cb(GtkDialog *dialog, gint response, XfpmDriver *drv)
                 gtk_widget_destroy(GTK_WIDGET(dialog));
                 break;
     }
+    
 }              
+
+static void
+_close_dialog_cb(GtkDialog *dialog,XfpmDriver *drv)
+{
+    gpointer data = 
+    g_object_get_data(G_OBJECT(drv),"conf-channel");
+    if ( data )
+    {
+        XfconfChannel *channel = (XfconfChannel *)data;
+        g_object_unref(channel);
+    }
+    xfconf_shutdown();     
+    
+}
 
 static void
 xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
@@ -486,6 +520,14 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
             return;
         }
     }
+    
+    if ( !strcmp(property,POWER_SAVE_CFG) )
+    {
+        gboolean val = g_value_get_boolean(value);
+        priv->enable_power_save = val;
+        xfpm_driver_set_power_save(drv);
+    }
+    
 } 
 
 static gboolean
@@ -557,9 +599,7 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     
     dialog = xfpm_settings_new(channel,
                                priv->formfactor == SYSTEM_LAPTOP ? TRUE : FALSE,
-                               priv->can_hibernate,
-                               priv->can_suspend,
-                               priv->can_use_power_management,
+                               priv->power_management,
                                with_dpms,
                                gov,
                                switch_buttons,
@@ -571,6 +611,8 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     gdk_x11_window_set_user_time(dialog->window,gdk_x11_get_server_time (dialog->window));
     
     g_signal_connect(dialog,"response",G_CALLBACK(_dialog_response_cb),drv);        
+    g_signal_connect(dialog,"close",G_CALLBACK(_close_dialog_cb),drv);
+    
     gtk_widget_show(dialog);
     priv->dialog_opened = TRUE;
     
@@ -589,14 +631,14 @@ xfpm_driver_report_sleep_errors(XfpmDriver *driver,const gchar *icon_name,const 
     
     if ( adapter_visible )
     {
-         xfpm_notify_simple("Xfce power manager",
-                           error,
-                           14000,
-                           NOTIFY_URGENCY_CRITICAL,
-                           GTK_STATUS_ICON(priv->adapter),
-                           icon_name,
-                           0);
-        
+        NotifyNotification *n =
+        xfpm_notify_new("Xfce power manager",
+                         error,
+                         14000,
+                         NOTIFY_URGENCY_CRITICAL,
+                         GTK_STATUS_ICON(priv->adapter),
+                         icon_name);
+        xfpm_notify_show_notification(n,0);
     }
     else  /* the battery object will take care */
     {
@@ -726,7 +768,7 @@ xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
     g_free(content);
     
 #endif    
-    if ( !priv->can_use_power_management )
+    if ( priv->power_management != 0 )
     {
         XFPM_DEBUG("We cannot use power management interface\n");
         return;
@@ -743,15 +785,16 @@ xfpm_driver_handle_action_request(GObject *object,XfpmActionRequest action,
     switch ( action )
     {
         case XFPM_DO_SUSPEND:
-            if (!priv->can_suspend) return;
-            xfpm_driver_suspend(drv,critical);
+            if (priv->power_management & SYSTEM_CAN_SUSPEND )
+                xfpm_driver_suspend(drv,critical);
             break;
         case XFPM_DO_HIBERNATE:
-            if (!priv->can_hibernate) return;
-            xfpm_driver_hibernate(drv,critical);
+            if (priv->power_management & SYSTEM_CAN_HIBERNATE )
+                xfpm_driver_hibernate(drv,critical);
             break;
         case XFPM_DO_SHUTDOWN:
-            xfpm_driver_shutdown(drv,critical);
+            if ( priv->power_management & SYSTEM_CAN_SHUTDOWN ) 
+                xfpm_driver_shutdown(drv,critical);
             break;    
         default:
             break;
@@ -816,6 +859,7 @@ xfpm_driver_load_config(XfpmDriver *drv)
 #ifdef HAVE_LIBNOTIFY        
         priv->show_power_management_error = TRUE;
 #endif        
+        priv->enable_power_save = FALSE;
         return;
     }
     XfconfChannel *channel;
@@ -825,6 +869,7 @@ xfpm_driver_load_config(XfpmDriver *drv)
     priv->show_power_management_error
      = xfconf_channel_get_bool(channel,SHOW_POWER_MANAGEMENT_ERROR,TRUE);
 #endif
+    priv->enable_power_save = xfconf_channel_get_bool(channel,POWER_SAVE_CFG,FALSE);
     
     g_object_unref(channel);
     xfconf_shutdown();    
@@ -835,7 +880,7 @@ xfpm_driver_load_config(XfpmDriver *drv)
 static void
 _disable_error(NotifyNotification *n,gchar *action,XfpmDriver *drv)
 {
-    if (strcmp(action,"ok")) return;
+    if (strcmp(action,"confirmed")) return;
     
     GError *g_error = NULL;
     if ( !xfconf_init(&g_error) )
@@ -851,7 +896,7 @@ _disable_error(NotifyNotification *n,gchar *action,XfpmDriver *drv)
     
     g_object_unref(channel);
     xfconf_shutdown();    
-    
+    g_object_unref(n);
 }
 #endif
 
@@ -863,41 +908,45 @@ _show_power_management_error_message(XfpmDriver *drv)
                  _("Unable to use power management service, functionalities like hibernate and shutdown will not work "\
                   "Possible reasons: you don't have permission or  "\
                   "broken connection with the hardware abstract layer or the message bus daemon is not running");
-                             
-     xfpm_notify_with_action(_("Xfce power manager"),
-                            error,
-                            14000,
-                            NOTIFY_URGENCY_CRITICAL,
-                            NULL,
-                            "gpm-ac-adapter",
+     NotifyNotification *n = xfpm_notify_new(_("Xfce power manager"),
+                                             error,
+                                             14000,
+                                             NOTIFY_URGENCY_CRITICAL,
+                                             NULL,
+                                             "gpm-ac-adapter");
+     xfpm_notify_add_action(n,
+                            "confirmed",
                             _("Don't show this message again"),
-                            0,
                             (NotifyActionCallback)_disable_error,
-                            drv);    
+                            drv);   
+     xfpm_notify_show_notification(n,10);                        
      return FALSE;                       
 }
 #endif
 
+
 static void
-xfpm_driver_check(XfpmDriver *drv)
+xfpm_driver_check_power_management(XfpmDriver *drv)
 {
+    XFPM_DEBUG("Checking power management\n");
+    
     XfpmDriverPrivate *priv;
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
     
     GError *g_error = NULL;
     
-    priv->can_use_power_management = xfpm_hal_power_management_can_be_used(priv->hal);
-    if ( !priv->can_use_power_management )
+    gboolean can_use_power_management = xfpm_hal_power_management_can_be_used(priv->hal);
+    if ( !can_use_power_management )
     {
 #ifdef HAVE_LIBNOTIFY
     g_timeout_add_seconds(8,(GSourceFunc)_show_power_management_error_message,drv);
 #endif                                       
         XFPM_DEBUG("Unable to use HAL power management services\n");
-        /*We do return here, so can_suspend and can_hibernate stay FALSE*/
         return;
     }
-        
-    priv->can_suspend = xfpm_hal_get_bool_info(priv->hal,
+    priv->power_management |= SYSTEM_CAN_SHUTDOWN;
+    
+    gboolean can_suspend = xfpm_hal_get_bool_info(priv->hal,
                                                HAL_ROOT_COMPUTER,
                                                "power_management.can_suspend",
                                                &g_error);
@@ -908,16 +957,65 @@ xfpm_driver_check(XfpmDriver *drv)
         g_error = NULL;
     }            
     
-    priv->can_hibernate = xfpm_hal_get_bool_info(priv->hal,
-                                                 HAL_ROOT_COMPUTER,
-                                                 "power_management.can_hibernate",
-                                                 &g_error);
+    if ( can_suspend )  priv->power_management |= SYSTEM_CAN_SUSPEND;
+    
+    gboolean can_hibernate = xfpm_hal_get_bool_info(priv->hal,
+                                                    HAL_ROOT_COMPUTER,
+                                                    "power_management.can_hibernate",
+                                                    &g_error);
     if ( g_error )
     {
         XFPM_DEBUG("%s: \n",g_error->message);
         g_error_free(g_error);
-        g_error = NULL;
-    }            
+    }       
+    
+    if ( can_hibernate )  priv->power_management |= SYSTEM_CAN_HIBERNATE;
+}
+
+static void
+xfpm_driver_check_power_save(XfpmDriver *drv)
+{
+    XFPM_DEBUG("Checking power save availability\n");
+    XfpmDriverPrivate *priv;
+    priv = XFPM_DRIVER_GET_PRIVATE(drv);
+    
+    GError *error = NULL;
+    gboolean ret = xfpm_hal_get_bool_info(priv->hal,
+                                          HAL_ROOT_COMPUTER,
+                                          "power_management.is_powersave_set",
+                                          &error);
+    if ( error )
+    {
+        XFPM_DEBUG("error getting powersave_set %s\n",error->message);
+        g_error_free(error);
+        return;
+    }
+    
+    xfpm_hal_set_power_save(priv->hal,ret,&error);
+    
+    if ( error )
+    {
+        XFPM_DEBUG("System doesn't support power save: %s\n",error->message);
+        g_error_free(error);
+        return;
+    }
+    
+    if ( ret ) priv->power_management |= SYSTEM_CAN_POWER_SAVE;
+    
+}
+
+static void
+xfpm_driver_check(XfpmDriver *drv)
+{
+    XfpmDriverPrivate *priv;
+    priv = XFPM_DRIVER_GET_PRIVATE(drv);
+    
+    xfpm_driver_check_power_management(drv);
+    
+    if ( priv->power_management != 0 )
+    {
+        xfpm_driver_check_power_save(drv);
+    }
 }
 
 static void
@@ -968,7 +1066,7 @@ xfpm_driver_load_all(XfpmDriver *drv)
     else
     {
         priv->buttons_control = TRUE;
-        xfpm_button_set_sleep_info(priv->bt,priv->can_hibernate,priv->can_suspend);
+        xfpm_button_set_sleep_info(priv->bt,priv->power_management);
         g_signal_connect(priv->bt,"xfpm-action-request",
                         G_CALLBACK(xfpm_driver_handle_action_request),drv);
     }
@@ -983,14 +1081,14 @@ xfpm_driver_load_all(XfpmDriver *drv)
     
     /*We call the battery object to start monitoring after loading the Ac adapter*/
     priv->batt = xfpm_battery_new(); 
-    xfpm_battery_set_sleep_info(priv->batt,priv->can_hibernate,priv->can_suspend); 
+    xfpm_battery_set_power_info(priv->batt,priv->power_management);
+    
     g_signal_connect(priv->batt,"xfpm-action-request",
                         G_CALLBACK(xfpm_driver_handle_action_request),drv);
     g_signal_connect(priv->batt,"xfpm-show-adapter-icon",G_CALLBACK(_show_adapter_icon),drv);
                         
     priv->adapter = xfpm_ac_adapter_new(FALSE);
-    xfpm_ac_adapter_set_sleep_info(XFPM_AC_ADAPTER(priv->adapter),
-                                    priv->can_hibernate,priv->can_suspend);
+    xfpm_ac_adapter_set_sleep_info(XFPM_AC_ADAPTER(priv->adapter),priv->power_management);
     
     g_signal_connect(priv->adapter,"xfpm-ac-adapter-changed",
                     G_CALLBACK(xfpm_driver_ac_adapter_state_changed_cb),drv);
@@ -1092,7 +1190,7 @@ xfpm_driver_monitor (XfpmDriver *drv)
     {
         return FALSE;
     }
-
+    
     xfpm_driver_load_config(drv);    
     _get_system_form_factor(priv);
     
@@ -1103,6 +1201,6 @@ xfpm_driver_monitor (XfpmDriver *drv)
     g_main_loop_run(priv->loop);
     
     dbus_connection_remove_filter(priv->conn,xfpm_driver_signal_filter,NULL);
-    xfconf_shutdown();
+    
     return TRUE;
 }

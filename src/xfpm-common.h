@@ -40,6 +40,7 @@
 #define ON_BATT_CPU_GOV_CFG         "/xfce4-power-manager/on-batt-cpu-gov"
 
 #define POWER_SAVE_CFG              "/xfce4-power-manager/power-save"
+#define CAN_POWER_SAVE              "/xfce4-power-manager/can-power-save"
 #define LCD_BRIGHTNESS_CFG          "/xfce4-power-manager/lcd-brightness"
 #define LID_SWITCH_CFG              "/xfce4-power-manager/lid-switch-action"
 #define SLEEP_SWITCH_CFG            "/xfce4-power-manager/sleep-switch-action"
@@ -58,6 +59,15 @@
 #define ON_BATT_DPMS_TIMEOUTS_CFG   "/xfce4-power-manager/on-battery-monitor-dpms-timeouts"
 #define ON_AC_DPMS_TIMEOUTS_CFG     "/xfce4-power-manager/on-ac-monitor-dpms-timeouts"
 #endif
+
+typedef enum
+{
+    SYSTEM_CAN_SHUTDOWN          =  (1<<0),
+    SYSTEM_CAN_HIBERNATE         =  (1<<2),
+    SYSTEM_CAN_SUSPEND           =  (1<<3),
+    SYSTEM_CAN_POWER_SAVE        =  (1<<4)
+    
+} SystemPowerManagement;
 
 typedef enum 
 {
