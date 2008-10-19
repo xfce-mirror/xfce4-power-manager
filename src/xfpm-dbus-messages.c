@@ -166,7 +166,7 @@ gboolean xfpm_dbus_send_message_with_reply (const char *signal,gint *get_reply) 
     if(!dbus_connection_send_with_reply(connection,
                                         message,
                                         &pend,
-                                        100))
+                                        -1))
     {
         dbus_message_unref(message);
         dbus_connection_unref(connection);
