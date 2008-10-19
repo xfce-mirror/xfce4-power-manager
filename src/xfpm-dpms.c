@@ -48,8 +48,6 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
-#include <glib/gi18n.h>
-
 #include <X11/Xproto.h>
 #include <X11/extensions/dpms.h>
 #include <X11/extensions/dpmsstr.h>
@@ -58,6 +56,10 @@
 
 #include "xfpm-common.h"
 #include "xfpm-debug.h"
+
+#ifndef _
+#define _(x) x
+#endif
 
 #define DPMS_TIMEOUT 120
 

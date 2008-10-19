@@ -22,8 +22,6 @@
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
-#include <glib/gi18n.h>
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -33,6 +31,10 @@
 #include "xfpm-dbus-messages.h"
 
 #include "xfpm-marshal.h"
+
+#ifndef _
+#define _(x) x
+#endif
 
 /* Init */
 static void xfpm_hal_class_init(XfpmHalClass *klass);

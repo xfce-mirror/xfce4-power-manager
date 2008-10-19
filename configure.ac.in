@@ -17,6 +17,13 @@ AC_PROG_INTLTOOL
 AC_SUBST(CFLAGS)
 AC_SUBST(LDFLAGS)
 
+# ===================================================== #
+# 		Check for i18n support 			#
+# ===================================================== #
+
+XDT_I18N([])
+
+
 # ============== look for dependencies =============== #
 # check for headers needed for standard interfaces     #
 AC_HEADER_STDC

@@ -7,7 +7,9 @@ INCLUDES =							\
 			$(LIBXFCEGUI_CFLAGS)			\
 			$(XFCONF_CFLAGS)			\
 			$(LIBNOTIFY_CFLAGS)			\
-			$(DPMS_CFLAGS)
+			$(DPMS_CFLAGS)              \
+			-DLOCALEDIR=\"$(localedir)\"
+
 
 LIBS     =		$(GTK_LIBS)				\
 			$(GLIB_LIBS)				\

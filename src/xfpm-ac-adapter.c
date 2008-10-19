@@ -47,8 +47,6 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
-#include <glib/gi18n.h>
-
 #include "xfpm-common.h"
 
 #include "xfpm-hal.h"
@@ -59,6 +57,10 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-notify.h"
 #include "xfpm-debug.h"
+
+#ifndef _
+#define _(x) x
+#endif
 
 #define XFPM_AC_ADAPTER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_AC_ADAPTER,XfpmAcAdapterPrivate))

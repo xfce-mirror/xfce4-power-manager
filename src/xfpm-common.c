@@ -20,10 +20,13 @@
  */
 
 #include <glib.h>
-#include <glib/gi18n.h>
 
 #include "xfpm-common.h"
 #include "xfpm-debug.h"
+
+#ifndef _
+#define _(x) x
+#endif
 
 GdkPixbuf *
 xfpm_load_icon(const char *icon_name,gint size)

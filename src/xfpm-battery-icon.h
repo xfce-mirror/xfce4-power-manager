@@ -48,11 +48,11 @@ typedef struct
     
     GQuark icon;
     gboolean icon_loaded;
-    
+
+    gboolean battery_present;
+        
     guint last_full;
     guint critical_level;
-    gboolean ac_adapter_present;
-    gboolean battery_present;
 
 #ifdef HAVE_LIBNOTIFY
     gboolean notify;

@@ -38,10 +38,17 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <glib.h>
+
+#include <libxfcegui4/libxfcegui4.h>
 
 #include "xfpm-driver.h"
 #include "xfpm-hal.h"
 #include "xfpm-dbus-messages.h"
+
+#ifndef _
+#define _(x) x
+#endif
 
 enum 
 {
@@ -66,6 +73,76 @@ show_usage()
 		"\n");
 		    
 }    
+
+static void
+autostart()
+{
+    const gchar *home;
+    
+    if ( ( home = getenv("HOME")) == NULL )
+    {
+        g_error("Unable to read HOME evironment variable, autostart will not work\n");
+        return;
+    }
+    
+    gchar *file;
+    file = g_strdup_printf("%s/.config/autostart",home);
+    
+    if ( !g_file_test(file,G_FILE_TEST_IS_DIR) )
+    {
+        g_error("Home directory doesn't contains .config/autostart subdirs\n");
+        g_free(file);
+        return;
+    }
+    
+    file = g_strdup_printf("%s/xfce4-power-manager.desktop",file);
+    
+    if ( g_file_test(file,G_FILE_TEST_EXISTS) )
+    {
+        g_print("xfce4 power manager autostart.desktop file already exists\n");
+        g_free(file);
+        return;
+    }
+    
+    GKeyFile *key;
+    GError *error = NULL;
+    
+    key = g_key_file_new();
+    
+    g_key_file_set_value(key,"Desktop Entry","Version","1.0");
+    g_key_file_set_string(key,"Desktop Entry","Type","Application");    
+    g_key_file_set_string(key,"Desktop Entry","Name","Xfce4 Power Manager"); 
+    g_key_file_set_string(key,"Desktop Entry","Icon","gpm-ac-adapter"); 
+    g_key_file_set_string(key,"Desktop Entry","Exec","xfce4-power-manager -r"); 
+    g_key_file_set_boolean(key,"Desktop Entry","StartupNotify",FALSE); 
+    g_key_file_set_boolean(key,"Desktop Entry","Terminal",FALSE); 
+    g_key_file_set_boolean(key,"Desktop Entry","Hidden",FALSE); 
+    
+    gchar *content = g_key_file_to_data(key,NULL,&error);
+    
+    if ( error )
+    {
+        g_critical("%s\n",error->message);
+        g_error_free(error);
+        g_free(file);
+        g_key_file_free(key);
+        return;
+    }
+    
+    g_file_set_contents(file,content,-1,&error);
+    
+    if ( error )
+    {
+        g_critical("Unable to set content for the autostart desktop file%s\n",error->message);
+        g_error_free(error);
+        g_free(file);
+        g_key_file_free(key);
+        return;
+    }
+    
+    g_free(file);
+    g_key_file_free(key);
+}
 
 static int
 handle_arguments(int argc,char **argv) 
@@ -116,6 +193,10 @@ handle_arguments(int argc,char **argv)
 
 int main(int argc,char **argv) 
 {
+    xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
+    
+    gtk_init(&argc,&argv);
+    
     int msg = handle_arguments(argc,argv);
     
     if ( msg == PM_HELP ) return 0;
@@ -130,6 +211,14 @@ int main(int argc,char **argv)
         if ( reply != 1 )
         {
             g_print("Xfce power manager is not running\n");
+            gboolean ret = 
+            xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now"),
+                        GTK_STOCK_YES,
+                        _("Run"));
+            if ( ret ) 
+            {
+                g_spawn_command_line_async("xfce4-power-manager -r",NULL);
+            }
             return 0;
         }
         xfpm_dbus_send_message("Customize");
@@ -154,7 +243,6 @@ int main(int argc,char **argv)
     
     if ( msg == PM_RUN ) 
     {
-        gtk_init(&argc,&argv);
         int reply;
         if (!xfpm_dbus_send_message_with_reply("Running",&reply))
         {
@@ -167,6 +255,7 @@ int main(int argc,char **argv)
             return 0;
         }
         XfpmDriver *driver = xfpm_driver_new();
+        autostart();
         if (!xfpm_driver_monitor(driver)) 
         {
              /* g_disaster */

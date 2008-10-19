@@ -417,7 +417,7 @@ _combo_helper_function(XfconfChannel *channel,const gchar *config,
 
 /// Settings frames ///
 static GtkWidget *
-xfpm_settings_battery(XfconfChannel *channel, guint8 power_management)
+xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean ups_found)
 {
     GtkWidget *table;
     GtkWidget *frame,*align;
@@ -427,27 +427,28 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management)
     
     table = gtk_table_new(4,2,TRUE);
     gtk_widget_show(table);
-    frame = xfce_create_framebox(_("Battery configuration"), &align);
+    frame = xfce_create_framebox(ups_found ? _("Ups configuration") :_("Battery configuration"), &align);
     gtk_widget_show(frame);
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
     
-    label = gtk_label_new(_("Consider battery charge critical"));
+    label = gtk_label_new(ups_found ? ("Consider ups charge critical"):_("Consider battery charge critical"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,0,1);
     
-    critical_spin = xfpm_spin_button_new_with_range(1,15,1);
+    critical_spin = xfpm_spin_button_new_with_range(1,20,1);
     xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(critical_spin),_(" percent"));
     gtk_widget_show(critical_spin);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(critical_spin),
-                              xfconf_channel_get_uint(channel,CRITICAL_BATT_CFG,8));
+                              xfconf_channel_get_uint(channel,CRITICAL_BATT_CFG,10));
     g_signal_connect(critical_spin,"value-changed",
                     G_CALLBACK(set_battery_critical_charge_cb),channel);
     gtk_table_attach(GTK_TABLE(table),critical_spin,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
     
     label = gtk_label_new(_("When battery charge level is critical do"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,1,2);
-    
+    if ( !ups_found )
+        gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,1,2);
+        
     action = gtk_combo_box_new_text();
     gtk_combo_box_append_text(GTK_COMBO_BOX(action),_("Nothing"));
     if ( power_management != 0 )
@@ -465,11 +466,12 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management)
     
     gtk_widget_show(action);
     g_signal_connect(action,"changed",G_CALLBACK(set_critical_action_cb),channel);
-    gtk_table_attach(GTK_TABLE(table),action,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
+    
+    !ups_found ? gtk_table_attach(GTK_TABLE(table),action,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0) : gtk_widget_hide(action);
 
     // Power Save Profile
     GtkWidget *power_save;        
-    label = gtk_label_new(_("Enable power save on battery power"));
+    label = gtk_label_new(ups_found ? _("Enable power save on ups power") : _("Enable power save on battery power"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
     power_save = gtk_check_button_new();
@@ -491,7 +493,7 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management)
 
 #ifdef HAVE_LIBNOTIFY
     GtkWidget *notify_bt;        
-    label = gtk_label_new(_("Enable battery state notification"));
+    label = gtk_label_new(ups_found ? _("Enable ups charge notification") :_("Enable battery state notification"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,3,4);
     notify_bt = gtk_check_button_new();
@@ -601,7 +603,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 govs,const gchar *
 }
 
 static GtkWidget *
-xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs)
+xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean ups)
 {
     GtkWidget *frame;
     GtkWidget *align;
@@ -611,7 +613,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs)
     guint current_governor = xfconf_channel_get_uint(channel,ON_BATT_CPU_GOV_CFG,ONDEMAND);
     gboolean enable = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
     
-    frame = xfce_create_framebox(_("CPU governor settings on battery power"), &align);
+    frame = xfce_create_framebox(ups ? _("CPU governor settings on ups power") : _("CPU governor settings on battery power"), &align);
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
     gtk_widget_show(frame);
     
@@ -695,7 +697,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs)
 }
 
 static GtkWidget *
-xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop)
+xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop,gboolean ups)
 {
     GtkWidget *hbox;
     hbox = gtk_hbox_new(FALSE,2);
@@ -721,12 +723,12 @@ xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop)
         GtkWidget *frame;
         frame = xfpm_settings_cpu_on_ac_adapter(channel,
                                                 govs,
-                                                laptop ? _("Cpu freq settings on AC power") : _("Cpu freq settings"));
+                                                laptop || ups ? _("Cpu freq settings on electric power") : _("Cpu freq settings"));
         gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
         
-        if ( laptop )
+        if ( laptop || ups )
         {
-            frame = xfpm_settings_cpu_on_battery_power(channel,govs);
+            frame = xfpm_settings_cpu_on_battery_power(channel,govs,ups);
             gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
         }
     }    
@@ -762,10 +764,10 @@ xfpm_settings_lcd_brightness(XfconfChannel *channel,gboolean laptop,gboolean lcd
 
 #ifdef HAVE_DPMS
 static GtkWidget *
-xfpm_settings_dpms_on_battery(XfconfChannel *channel)
+xfpm_settings_dpms_on_battery(XfconfChannel *channel,gboolean ups)
 {
     GtkWidget *frame,*align;  
-    frame = xfce_create_framebox(_("Monitor DPMS settings on battery power"), &align);
+    frame = xfce_create_framebox(ups ? _("Monitor DPMS settings on ups power") : _("Monitor DPMS settings on battery power"), &align);
     gtk_widget_show(frame);
     
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
@@ -841,7 +843,7 @@ xfpm_settings_dpms_on_ac_adapter(XfconfChannel *channel,const gchar *label)
 
 static GtkWidget *
 xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
-                      gboolean dpms_capable,gboolean lcd)
+                      gboolean dpms_capable,gboolean lcd,gboolean ups)
 {
     GtkWidget *hbox;
     hbox = gtk_hbox_new(FALSE,2);
@@ -853,13 +855,13 @@ xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
 #ifdef HAVE_DPMS
     GtkWidget *frame;
     frame = xfpm_settings_dpms_on_ac_adapter(channel,
-                                            laptop ? _("Monitor settings on AC power") : _("Monitor settings"));
+                                            laptop || ups ? _("Monitor settings on electric power") : _("Monitor settings"));
     gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
     gtk_box_pack_start(GTK_BOX(vbox),hbox,TRUE,TRUE,0);
 
-    if ( laptop )
+    if ( laptop || ups )
     {
-        frame = xfpm_settings_dpms_on_battery(channel);
+        frame = xfpm_settings_dpms_on_battery(channel,ups);
         gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
     }
 
@@ -990,7 +992,7 @@ xfpm_settings_keys(XfconfChannel *channel,
 }
 
 static GtkWidget *
-xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings)
+xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean ups)
 {
     GtkWidget *table;
     GtkWidget *show_icon;
@@ -1012,7 +1014,7 @@ xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings)
     show_icon = gtk_combo_box_new_text();
     gtk_combo_box_append_text(GTK_COMBO_BOX(show_icon),_("Always Display an icon"));
     gtk_combo_box_append_text(GTK_COMBO_BOX(show_icon),_("When battery is present"));
-    if ( battery_settings )
+    if ( battery_settings || ups )
     {
         gtk_combo_box_append_text(GTK_COMBO_BOX(show_icon),_("When battery is charging or discharging"));
                             
@@ -1087,7 +1089,7 @@ _cursor_changed_cb(GtkIconView *view,gpointer data)
 }
 
 static GtkWidget *
-xfpm_settings_tree_view(gboolean is_laptop)
+xfpm_settings_tree_view(gboolean is_laptop,gboolean ups)
 {
     GdkPixbuf *pix;
     GtkWidget *view;
@@ -1126,9 +1128,9 @@ xfpm_settings_tree_view(gboolean is_laptop)
     }
     
     /// Battery Settings
-    if ( is_laptop )
+    if ( is_laptop || ups )
     {
-        pix = xfpm_load_icon("gpm-primary-100",38);
+        pix = xfpm_load_icon(ups ? "gpm-ups-100" : "gpm-primary-100",38);
         gtk_list_store_append(list_store,&iter);
         if ( pix )
         {
@@ -1191,7 +1193,8 @@ xfpm_settings_new(XfconfChannel *channel,
                   gboolean dpms_capable,
                   guint8 govs,
                   guint8 switch_buttons,
-                  gboolean lcd)
+                  gboolean lcd,
+                  gboolean ups_found)
 {
     GtkWidget *Dialog;  /* Main dialog window */
     GtkWidget *mainbox; /* Box to get (Dialog)->vbox */
@@ -1212,9 +1215,12 @@ xfpm_settings_new(XfconfChannel *channel,
     gtk_dialog_set_default_response(GTK_DIALOG(Dialog),GTK_RESPONSE_CLOSE);
     
     mainbox = GTK_DIALOG(Dialog)->vbox;
-    
+
+    gboolean ups;
+    ups = is_laptop ? FALSE : ups_found;
+        
     /// General Options Frame
-    box = xfpm_settings_general(channel,is_laptop);
+    box = xfpm_settings_general(channel,is_laptop,ups);
     gtk_box_pack_start (GTK_BOX (mainbox), box, FALSE, FALSE, 0);
     
     /// Notebook container
@@ -1224,17 +1230,18 @@ xfpm_settings_new(XfconfChannel *channel,
     table = gtk_table_new(1,2,FALSE);
     gtk_widget_show(table);
     gtk_box_pack_start (GTK_BOX (mainbox), table, FALSE, FALSE, 0);
-    view = xfpm_settings_tree_view(is_laptop);
+    view = xfpm_settings_tree_view(is_laptop,ups_found);
     gtk_table_attach_defaults(GTK_TABLE(table),view,0,1,0,1);  
     gtk_widget_show(view);  
     gtk_table_attach_defaults(GTK_TABLE(table),nt,1,2,0,1); 
     
     /// Cpu freq settings
-    box = xfpm_settings_cpu_freq(channel,govs,is_laptop);
+    box = xfpm_settings_cpu_freq(channel,govs,is_laptop,ups);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
 
+  
     /// Battery settings
-    box = xfpm_settings_battery(channel,power_management);
+    box = xfpm_settings_battery(channel,power_management,ups);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
 
     /// Keyboard buttons settings
@@ -1242,7 +1249,7 @@ xfpm_settings_new(XfconfChannel *channel,
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL); 
     
     /// Dpms settings && LCD brightness settings DPMS existence is checked above
-    box = xfpm_settings_monitor(channel,is_laptop,dpms_capable,lcd);
+    box = xfpm_settings_monitor(channel,is_laptop,dpms_capable,lcd,ups);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
     
     return Dialog;

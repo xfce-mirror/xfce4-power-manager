@@ -32,7 +32,7 @@
 
 /* Configuration */
 #define XFPM_CHANNEL_CFG            "xfce4-power-manager"
-#define CRITICAL_BATT_CFG           "/xfce4-power-manager/critical-battery-charge"     /* default 12%  */
+#define CRITICAL_BATT_CFG           "/xfce4-power-manager/critical-battery-charge"     /* default 10%  */
 #define CRITICAL_BATT_ACTION_CFG    "/xfce4-power-manager/critical-battery-action"     /* default 0 nothing, 1 = shutdown, 2 = hibernate if supported) */
 
 #define CPU_FREQ_SCALING_CFG        "/xfce4-power-manager/cpu-scaling-gov"

@@ -43,7 +43,6 @@
 
 #include <gtk/gtk.h>
 #include <glib.h>
-#include <glib/gi18n.h>
 
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
@@ -74,6 +73,10 @@
 #ifdef HAVE_DPMS
 #include "xfpm-dpms.h"
 #include "xfpm-dpms-spins.h"
+#endif
+
+#ifndef _
+#define _(x) x
 #endif
 
 /*init*/
@@ -596,6 +599,7 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     {
         switch_buttons = xfpm_button_get_available_buttons(priv->bt);
     }
+    gboolean ups_found = xfpm_battery_ups_found(priv->batt);
     
     dialog = xfpm_settings_new(channel,
                                priv->formfactor == SYSTEM_LAPTOP ? TRUE : FALSE,
@@ -603,7 +607,8 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
                                with_dpms,
                                gov,
                                switch_buttons,
-                               priv->lcd_brightness_control);
+                               priv->lcd_brightness_control,
+                               ups_found);
     
     xfce_gtk_window_center_on_monitor_with_pointer(GTK_WINDOW(dialog));
     gtk_window_set_modal(GTK_WINDOW(dialog), FALSE);

@@ -28,7 +28,8 @@ GtkWidget *xfpm_settings_new(XfconfChannel *channel,
                              gboolean dpms_capable,
                              guint8 govs,
                              guint8 switch_buttons,
-                             gboolean lcd);
+                             gboolean lcd,
+                             gboolean ups_found);
 
 
 #endif /* __XFPM_SETTINGS_H */

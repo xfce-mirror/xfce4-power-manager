@@ -43,7 +43,6 @@
 
 #include <gtk/gtk.h>
 #include <glib.h>
-#include <glib/gi18n.h>
 
 #include <libxfcegui4/libxfcegui4.h>
 #include <xfconf/xfconf.h>
@@ -56,6 +55,10 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-notify.h"
 #include "xfpm-marshal.h"
+
+#ifndef _
+#define _(x) x
+#endif
 
 #define XFPM_BATTERY_GET_PRIVATE(o)  (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_BATTERY,XfpmBatteryPrivate))
 
@@ -134,6 +137,8 @@ struct XfpmBatteryPrivate
     GHashTable *batteries;
 
     guint8 power_management;
+    
+    gboolean ups_found;
         
 };
                                 
@@ -201,9 +206,9 @@ xfpm_battery_class_init(XfpmBatteryClass *klass)
                                                       "Critical charge",
                                                       "Critical battery charge",
                                                       1,
-                                                      15,
-                                                      8,
-                                                      G_PARAM_READWRITE|G_PARAM_CONSTRUCT));
+                                                      20,
+                                                      10,
+                                                      G_PARAM_READWRITE));
     
     g_object_class_install_property(gobject_class,
                                     PROP_CRITICAL_ACTION,
@@ -359,6 +364,16 @@ xfpm_battery_finalize(GObject *object)
     G_OBJECT_CLASS(xfpm_battery_parent_class)->finalize(object);
 }
 
+#ifdef HAVE_LIBNOTIFY
+static gboolean
+_hide_battery(gpointer data)
+{
+    XfpmBatteryIcon *icon = (XfpmBatteryIcon*) data;
+    g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
+    return FALSE;
+}
+#endif
+
 static void
 xfpm_battery_refresh_tray_icon(XfpmBattery *batt)
 {
@@ -419,13 +434,20 @@ xfpm_battery_refresh_tray_icon(XfpmBattery *batt)
             {
                 if (  XFPM_BATTERY_ICON(icon)->state == CHARGING || 
                       XFPM_BATTERY_ICON(icon)->state == DISCHARGING ||
-                      XFPM_BATTERY_ICON(icon)->state == NOT_FULL  ) 
+                      XFPM_BATTERY_ICON(icon)->state == NOT_FULL   ||
+                      XFPM_BATTERY_ICON(icon)->state == LOW        ||
+                      XFPM_BATTERY_ICON(icon)->state == CRITICAL) 
                 {
                     g_object_set(G_OBJECT(icon),"visible",TRUE,NULL);
                 }
                 else
                 {
+#ifdef HAVE_LIBNOTIFY
+                    if ( batt->notify_enabled ) g_timeout_add_seconds(6,(GSourceFunc)_hide_battery,icon);
+                    else g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
+#else                    
                     g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
+#endif                    
                 }
             }
         }
@@ -549,7 +571,6 @@ xfpm_battery_load_config(XfpmBattery *batt)
     xfconf_shutdown();    
 }
 
-
 static void
 xfpm_battery_handle_device_added(XfpmHal *hal,const gchar *udi,XfpmBattery *batt)
 {
@@ -577,6 +598,11 @@ xfpm_battery_handle_device_removed(XfpmHal *hal,const gchar *udi,XfpmBattery *ba
     }
 
     XFPM_DEBUG("Removing battery device %s\n",udi);    
+    XfpmBatteryType battery_type;
+    g_object_get(G_OBJECT(icon),"battery-type",&battery_type,NULL);
+    
+    if ( battery_type == UPS ) priv->ups_found = FALSE;
+
     g_hash_table_remove(priv->batteries,udi);
     g_object_unref(icon);
     xfpm_battery_refresh(batt);
@@ -854,7 +880,7 @@ xfpm_battery_state_change_cb(GObject *object,GParamSpec *arg1,gpointer data)
         /* refresh here for the tray icon hiding if option
          * show icon is charging or discharging and battery is fully charged
          */
-        xfpm_battery_refresh(batt);
+        xfpm_battery_refresh_tray_icon(batt);
 #ifdef DEBUG
         gchar *content;
         GValue value = { 0, };
@@ -1122,6 +1148,7 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
     xfpm_battery_get_battery_type(battery_type);
     if ( battery_type )
         libhal_free_string(battery_type);
+    if ( type == UPS ) priv->ups_found = TRUE;    
     
     GtkStatusIcon *batt_icon;
     batt_icon = xfpm_battery_icon_new(last_full,
@@ -1252,3 +1279,12 @@ xfpm_battery_set_power_info(XfpmBattery *batt,guint8 power_management)
     priv->power_management = power_management;  
 }                                        
                                             
+gboolean       
+xfpm_battery_ups_found     (XfpmBattery *batt)
+{
+    g_return_val_if_fail(XFPM_IS_BATTERY(batt),FALSE);
+    XfpmBatteryPrivate *priv;
+    priv = XFPM_BATTERY_GET_PRIVATE(batt); 
+    
+    return priv->ups_found;
+}

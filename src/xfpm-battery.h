@@ -67,17 +67,18 @@ typedef struct
                                    
 } XfpmBatteryClass;
 
-GType          xfpm_battery_get_type(void) G_GNUC_CONST;
-XfpmBattery   *xfpm_battery_new     (void);
-void           xfpm_battery_monitor (XfpmBattery *batt);
+GType          xfpm_battery_get_type      (void) G_GNUC_CONST;
+XfpmBattery   *xfpm_battery_new           (void);
+void           xfpm_battery_monitor       (XfpmBattery *batt);
 
 #ifdef HAVE_LIBNOTIFY
-void           xfpm_battery_show_error(XfpmBattery *batt,
-                                       const gchar *icon_name,
-                                       const gchar *error);     
+void           xfpm_battery_show_error    (XfpmBattery *batt,
+                                           const gchar *icon_name,
+                                           const gchar *error);     
 #endif
 void           xfpm_battery_set_power_info(XfpmBattery *batt,
                                            guint8 power_management);
+gboolean       xfpm_battery_ups_found     (XfpmBattery *batt);                                        
 G_END_DECLS
 
 #endif
