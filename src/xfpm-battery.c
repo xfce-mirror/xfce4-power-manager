@@ -1194,10 +1194,9 @@ xfpm_battery_get_devices(XfpmBattery *batt)
         g_error_free(error);
         return;
     }
-    if ( !udi || num == 0 ) 
-    {
-        return;
-    }
+    if ( num == 0 ) return;
+    if ( !udi )     return; 
+
     for ( i = 0 ; udi[i]; i++)
     {
         if ( xfpm_hal_device_have_key(priv->hal,udi[i],"battery.is_rechargeable"))

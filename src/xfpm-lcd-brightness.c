@@ -340,8 +340,10 @@ xfpm_lcd_brightness_get_device(XfpmLcdBrightness *lcd)
         g_error_free(error);
         return;
     }
-    
-    if ( !udi || num == 0 )
+
+    if ( num == 0 ) return;
+        
+    if ( !udi )
     {
         XFPM_DEBUG("No device with laptop_panel capability\n");
         return;
