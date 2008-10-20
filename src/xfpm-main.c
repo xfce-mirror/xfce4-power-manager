@@ -38,7 +38,9 @@
 #endif
 
 #include <gtk/gtk.h>
+
 #include <glib.h>
+#include <glib/gstdio.h>
 
 #include <libxfcegui4/libxfcegui4.h>
 
@@ -94,12 +96,7 @@ autostart()
     
     if ( !g_file_test(file,G_FILE_TEST_IS_DIR) )
     {
-        xfpm_popup_message(_("Xfce4 Power Manager"),
-                           _("Unable to read .config/autostart in your home directory, autostart option may not work"),
-                           GTK_MESSAGE_INFO);
-        g_warning("Home directory doesn't contains .config/autostart subdirs\n");
-        g_free(file);
-        return;
+        g_mkdir_with_parents(file,0700);
     }
     
     file = g_strdup_printf("%s/xfce4-power-manager.desktop",file);
