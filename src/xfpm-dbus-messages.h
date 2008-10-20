@@ -32,8 +32,6 @@
 #include <glib.h>
 #include <dbus/dbus.h>
 
-DBusMessage *xfpm_dbus_new_message(const gchar *service  ,const gchar *remote_object,
-                                   const gchar *interface,const gchar *method);
 gboolean xfpm_dbus_name_has_owner(DBusConnection *connection,
                                   const gchar *service);
 gboolean xfpm_dbus_send_message            (const gchar *signal);

@@ -91,22 +91,6 @@ static DBusMessage *xfpm_dbus_new_signal(const gchar *signal)
     }    
 }    
 
-DBusMessage *xfpm_dbus_new_message(const gchar *service  ,const gchar *remote_object,
-                                   const gchar *interface,const gchar *method)
-{       
-    DBusMessage *message;
-    message = dbus_message_new_method_call(service,
-                                           remote_object,
-                                           interface,
-                                           method);
-	if (!message) {
-	    g_printerr("Cannot create DBus message out of memmory\n");
-		return NULL;
-	}	
-
-    return message;
-}
-
 gboolean xfpm_dbus_send_message(const char *signal)
 {
     DBusConnection *connection;
@@ -223,7 +207,7 @@ void     xfpm_dbus_send_nm_message   (const gchar *signal)
         return;
     }
     
-    message = xfpm_dbus_new_message(NM_SERVICE,NM_PATH,NM_INTERFACE,signal);
+    message = dbus_message_new_method_call(NM_SERVICE,NM_PATH,NM_INTERFACE,signal);
     
     if (!message)
     {

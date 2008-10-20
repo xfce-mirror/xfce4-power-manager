@@ -537,10 +537,10 @@ gboolean xfpm_hal_shutdown(XfpmHal *xfpm_hal)
     
     DBusMessage *mess;
 	
-	mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
-					             HAL_ROOT_COMPUTER,
-					             HAL_DBUS_INTERFACE_POWER,
-					             "Shutdown");
+	mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+					                    HAL_ROOT_COMPUTER,
+					                    HAL_DBUS_INTERFACE_POWER,
+					                    "Shutdown");
 	
 	if (!mess) {
 		return FALSE;
@@ -590,10 +590,10 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 	DBusError error;
 	gint exit_code;
     
-	mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
-                                 HAL_ROOT_COMPUTER,
-                                 HAL_DBUS_INTERFACE_POWER,
-                                 "Hibernate");
+	mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                        HAL_ROOT_COMPUTER,
+                                        HAL_DBUS_INTERFACE_POWER,
+                                        "Hibernate");
 	if (!mess) 
 	{
 	    *critical = 1;
@@ -680,10 +680,10 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 	int seconds = 0;
 	gint exit_code;
 
-	mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
-                                 HAL_ROOT_COMPUTER,
-                                 HAL_DBUS_INTERFACE_POWER,
-                                 "Suspend");
+	mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                        HAL_ROOT_COMPUTER,
+                                        HAL_DBUS_INTERFACE_POWER,
+                                        "Suspend");
 	if (!mess) 
 	{
 	    g_set_error(gerror,0,0,_("Out of memmory"));
@@ -773,10 +773,10 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
     DBusMessage *mess,*reply;
 	DBusError error;
 
-	mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
-                                 interface,
-                                 HAL_DBUS_INTERFACE_LCD,
-                                 "SetBrightness");
+	mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                        interface,
+                                        HAL_DBUS_INTERFACE_LCD,
+                                        "SetBrightness");
 	if (!mess) 
 	{
 	    g_set_error(gerror,0,0,_("Out of memmory"));
@@ -822,10 +822,10 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
 	DBusError error;
 	gint32 brightness_level;
 
-	mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
-                                 interface,
-                                 HAL_DBUS_INTERFACE_LCD,
-                                 "GetBrightness");
+	mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                        interface,
+                                        HAL_DBUS_INTERFACE_LCD,
+                                        "GetBrightness");
 	if (!mess) 
 	{
 	    g_set_error(gerror,0,0,_("Out of memmory"));
@@ -872,10 +872,10 @@ gchar
     gchar **govs = NULL;
     int dummy;
     
-    mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
-                                 HAL_ROOT_COMPUTER,
-                                 HAL_DBUS_INTERFACE_CPU,
-                                 "GetCPUFreqAvailableGovernors");
+    mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                        HAL_ROOT_COMPUTER,
+                                        HAL_DBUS_INTERFACE_CPU,
+                                        "GetCPUFreqAvailableGovernors");
     if (!mess) 
 	{
 	    g_set_error(gerror,0,0,_("Out of memmory"));
@@ -923,10 +923,10 @@ gchar
     DBusError error;
     gchar *gov = NULL;
     
-    mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
-                                 HAL_ROOT_COMPUTER,
-                                 HAL_DBUS_INTERFACE_CPU,
-                                 "GetCPUFreqGovernor");
+    mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                        HAL_ROOT_COMPUTER,
+                                        HAL_DBUS_INTERFACE_CPU,
+                                        "GetCPUFreqGovernor");
     
     if (!mess) 
 	{
@@ -976,10 +976,10 @@ xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
     DBusMessage *mess;
     DBusMessage *reply;
     DBusError error;
-    mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
-                                 HAL_ROOT_COMPUTER,
-                                 HAL_DBUS_INTERFACE_CPU,
-                                 "SetCPUFreqGovernor");
+    mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                        HAL_ROOT_COMPUTER,
+                                        HAL_DBUS_INTERFACE_CPU,
+                                        "SetCPUFreqGovernor");
     if (!mess) 
 	{
 	    g_set_error(gerror,0,0,_("Out of memmory"));
@@ -1022,10 +1022,10 @@ xfpm_hal_set_power_save (XfpmHal *xfpm_hal,
     DBusMessage *mess;
     DBusMessage *reply;
     DBusError error;
-    mess = xfpm_dbus_new_message(HAL_DBUS_SERVICE,
-                                 HAL_ROOT_COMPUTER,
-                                 HAL_DBUS_INTERFACE_POWER,
-                                 "SetPowerSave");
+    mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                        HAL_ROOT_COMPUTER,
+                                        HAL_DBUS_INTERFACE_POWER,
+                                        "SetPowerSave");
     if (!mess) 
 	{
 	    g_set_error(gerror,0,0,_("Out of memmory"));
