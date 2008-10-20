@@ -33,7 +33,7 @@ generated_files =						\
 xfce4_power_manager_SOURCES = 	$(generated_files)		\
 				xfpm-main.c			\
 				xfpm-debug.h			\
-		      		xfpm-hal.c          		\
+                xfpm-hal.c          		\
 				xfpm-hal.h	     		\
 				xfpm-driver.c			\
 				xfpm-driver.h			\
@@ -57,6 +57,8 @@ xfce4_power_manager_SOURCES = 	$(generated_files)		\
 				xfpm-dpms.h			\
 				xfpm-dpms-spins.c		\
 				xfpm-dpms-spins.h		\
+				xfpm-popups.c           \
+				xfpm-popups.h           \
 				xfpm-notify.c			\
 				xfpm-notify.h			\
 				xfpm-enums.h			\

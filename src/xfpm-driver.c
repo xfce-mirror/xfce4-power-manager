@@ -61,7 +61,7 @@
 #include "xfpm-ac-adapter.h"
 #include "xfpm-button.h"
 #include "xfpm-lcd-brightness.h"
-#include "xfpm-notify.h"
+#include "xfpm-popups.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-settings.h"
 #include "xfpm-dbus-messages.h"
@@ -279,15 +279,15 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
     XfpmDriverPrivate *priv;
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
 
-#ifdef HAVE_LIBNOTIFY  
-    if ( !state_ok && priv->formfactor == SYSTEM_LAPTOP )  
-    {
-        gboolean visible;
-        g_object_get(G_OBJECT(priv->adapter),"visible",&visible,NULL);
-        const gchar *error;
+    const gchar *error;
         error =  _("Unable to get adapter status, the power manager will not work properly. "\
                   "Possible reasons: ac adapter driver is not loaded into the kernel "\
                   "broken connection with the hardware abstract layer or the message bus daemon is not running");
+    if ( !state_ok && priv->formfactor == SYSTEM_LAPTOP )  
+    {
+#ifdef HAVE_LIBNOTIFY         
+        gboolean visible;
+        g_object_get(G_OBJECT(priv->adapter),"visible",&visible,NULL);
                              
         if ( visible ) 
         {
@@ -304,8 +304,11 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
         {
             xfpm_battery_show_error(priv->batt,"gpm-ac-adapter",error);
         }
-    }
+#else
+    xfpm_popup_message(_("Xfce4 power manager"),error,GTK_MESSAGE_ERROR);
 #endif    
+    }
+   
     XFPM_DEBUG("start \n");
     priv->ac_adapter_present = present;
     
