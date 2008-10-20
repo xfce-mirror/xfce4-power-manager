@@ -48,6 +48,7 @@
 #include "xfpm-hal.h"
 #include "xfpm-dbus-messages.h"
 #include "xfpm-popups.h"
+#include "xfpm-debug.h"
 
 #ifndef _
 #define _(x) x
