@@ -45,6 +45,7 @@
 #include "xfpm-driver.h"
 #include "xfpm-hal.h"
 #include "xfpm-dbus-messages.h"
+#include "xfpm-popups.h"
 
 #ifndef _
 #define _(x) x
@@ -81,7 +82,9 @@ autostart()
     
     if ( ( home = getenv("HOME")) == NULL )
     {
-        xfce_warn(_("Unable to read HOME environment variable, autostart option may not work"));
+        xfpm_popup_message(_("Xfce4 Power Manager"),
+                           _("Unable to read HOME environment variable, autostart option may not work"),
+                           GTK_MESSAGE_INFO);
         g_warning("Unable to read HOME environment variable, autostart will not work\n");
         return;
     }
@@ -91,7 +94,9 @@ autostart()
     
     if ( !g_file_test(file,G_FILE_TEST_IS_DIR) )
     {
-        xfce_warn(_("Unable to read .config/autostart in your home directory, autostart option may not work"));
+        xfpm_popup_message(_("Xfce4 Power Manager"),
+                           _("Unable to read .config/autostart in your home directory, autostart option may not work"),
+                           GTK_MESSAGE_INFO);
         g_warning("Home directory doesn't contains .config/autostart subdirs\n");
         g_free(file);
         return;
@@ -261,9 +266,11 @@ int main(int argc,char **argv)
         if (!xfpm_driver_monitor(driver)) 
         {
              /* g_disaster */
-            xfce_err(_("Impossible to run Xfce4 power manager, " \
-                    "Please make sure that the hardware abstract layer (HAL) is running "\
-                    "and then message bus daemon (DBus) is running."));
+            xfpm_popup_message(_("Xfce4 power manager"),
+                              _("Impossible to run Xfce4 power manager, " \
+                              "Please make sure that the hardware abstract layer (HAL) is running "\
+                              "and then message bus daemon (DBus) is running."),
+                              GTK_MESSAGE_ERROR);
             g_error("Unable to load xfce4 power manager driver\n");        
             g_object_unref(driver);
             return 1;
