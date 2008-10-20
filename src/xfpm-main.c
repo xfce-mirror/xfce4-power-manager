@@ -81,7 +81,8 @@ autostart()
     
     if ( ( home = getenv("HOME")) == NULL )
     {
-        g_error("Unable to read HOME evironment variable, autostart will not work\n");
+        xfce_warn(_("Unable to read HOME environment variable, autostart option may not work"));
+        g_warning("Unable to read HOME environment variable, autostart will not work\n");
         return;
     }
     
@@ -90,7 +91,8 @@ autostart()
     
     if ( !g_file_test(file,G_FILE_TEST_IS_DIR) )
     {
-        g_error("Home directory doesn't contains .config/autostart subdirs\n");
+        xfce_warn(_("Unable to read .config/autostart in your home directory, autostart option may not work"));
+        g_warning("Home directory doesn't contains .config/autostart subdirs\n");
         g_free(file);
         return;
     }
@@ -259,10 +261,13 @@ int main(int argc,char **argv)
         if (!xfpm_driver_monitor(driver)) 
         {
              /* g_disaster */
-            g_error("Unable to load xfce4 power manager driver\n");
+            xfce_err(_("Impossible to run Xfce4 power manager, " \
+                    "Please make sure that the hardware abstract layer (HAL) is running "\
+                    "and then message bus daemon (DBus) is running."));
+            g_error("Unable to load xfce4 power manager driver\n");        
             g_object_unref(driver);
             return 1;
-        }    
+        }
     }
         
     return 0;

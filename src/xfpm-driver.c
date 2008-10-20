@@ -1082,6 +1082,7 @@ xfpm_driver_load_all(XfpmDriver *drv)
     if ( !priv->lcd_brightness_control )
     {
         g_object_unref(priv->lcd);
+        
     }
     
     /*We call the battery object to start monitoring after loading the Ac adapter*/
@@ -1179,7 +1180,7 @@ xfpm_driver_monitor (XfpmDriver *drv)
    
     priv->conn = dbus_bus_get(DBUS_BUS_SESSION,&error);
    
-    if (!priv->conn) 
+    if (!priv->conn ) 
     {
        g_critical("Failed to connect to the DBus daemon: %s\n",error.message);
        dbus_error_free(&error);

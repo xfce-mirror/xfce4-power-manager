@@ -231,13 +231,13 @@ xfpm_hal_monitor(XfpmHal *xfpm_hal) {
     
     if ( !priv->connection || dbus_error_is_set(&error) )
     {
-        g_printerr("Unable to connect to DBus %s\n",error.message);
+        g_critical("Unable to connect to DBus %s\n",error.message);
         return FALSE;
     }
     
     if ( !xfpm_dbus_name_has_owner(priv->connection,HAL_DBUS_SERVICE) )
     {
-        g_printerr("HAL is not running or not responding\n");
+        g_critical("HAL is not running or not responding\n");
         return FALSE;
     }
     priv->ctx = libhal_ctx_new();

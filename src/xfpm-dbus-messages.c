@@ -44,7 +44,7 @@ xfpm_dbus_name_has_owner(DBusConnection *connection,const gchar *service)
     
     if ( ret == FALSE )
     {
-        XFPM_DEBUG("Network manager is not installed \n");
+        XFPM_DEBUG("%s is not running \n",service);
     }
     
     return ret;
