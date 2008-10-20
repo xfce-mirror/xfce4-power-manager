@@ -232,15 +232,15 @@ xfpm_driver_finalize(GObject *object)
     {
         g_object_unref(drv->priv->batt);
     }
-    if ( drv->priv->cpu )
+    if ( drv->priv->cpufreq_control )
     {
         g_object_unref(drv->priv->cpu);
     }
-    if ( drv->priv->bt )
+    if ( drv->priv->buttons_control )
     {
         g_object_unref(drv->priv->bt);
     }
-    if ( drv->priv->lcd )
+    if ( drv->priv->lcd_brightness_control )
     {
         g_object_unref(drv->priv->lcd);
     }
