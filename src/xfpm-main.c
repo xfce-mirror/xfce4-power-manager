@@ -103,7 +103,7 @@ autostart()
     
     if ( g_file_test(file,G_FILE_TEST_EXISTS) )
     {
-        g_print("xfce4 power manager autostart.desktop file already exists\n");
+        XFPM_DEBUG("xfce4 power manager autostart.desktop file already exists\n");
         g_free(file);
         return;
     }
