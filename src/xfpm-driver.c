@@ -120,6 +120,7 @@ static void xfpm_driver_handle_action_request(GObject *object,
                                               XfpmDriver *drv);
 static void xfpm_driver_load_config(XfpmDriver *drv);
 
+static void xfpm_driver_check_nm(XfpmDriver *drv);
 static void xfpm_driver_check_power_management(XfpmDriver *drv);
 static void xfpm_driver_check_power_save(XfpmDriver *drv);
 static void xfpm_driver_check(XfpmDriver *drv);
@@ -139,12 +140,11 @@ struct XfpmDriverPrivate
     DBusConnection *conn;
     GMainLoop *loop;
     
-    gboolean dialog_opened;
-    
     SystemFormFactor formfactor;
     
     guint8 power_management;
-    
+
+	gboolean dialog_opened;
 #ifdef HAVE_LIBNOTIFY    
     gboolean show_power_management_error;
 #endif
@@ -155,6 +155,7 @@ struct XfpmDriverPrivate
     gboolean cpufreq_control;
     gboolean buttons_control;
     gboolean lcd_brightness_control;
+	gboolean nm_responding;
     
     XfpmHal     *hal;
     XfpmCpu     *cpu;
@@ -187,6 +188,7 @@ xfpm_driver_init(XfpmDriver *drv)
     XfpmDriverPrivate *priv;
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
 
+	priv->conn = NULL;
     priv->power_management = 0;
         
     priv->dialog_opened = FALSE;
@@ -195,6 +197,8 @@ xfpm_driver_init(XfpmDriver *drv)
     priv->enable_power_save = FALSE;
     priv->lcd_brightness_control = FALSE;
     priv->accept_sleep_request = TRUE;
+	priv->nm_responding = FALSE;
+ 
     priv->loop    = NULL;
     priv->cpu     = NULL;
     priv->adapter = NULL;
@@ -649,7 +653,8 @@ xfpm_driver_do_suspend(gpointer data)
     }
     
     priv->accept_sleep_request = TRUE;
-    xfpm_dbus_send_nm_message("wakeup");
+	if ( priv->nm_responding )
+		xfpm_dbus_send_nm_message("wakeup");
     
     return FALSE;
     
@@ -678,7 +683,9 @@ xfpm_driver_do_hibernate(gpointer data)
     }
         
     priv->accept_sleep_request = TRUE;
-    xfpm_dbus_send_nm_message("wakeup");
+	if ( priv->nm_responding )
+		xfpm_dbus_send_nm_message("wakeup");
+		
     return FALSE;
     
 }
@@ -705,16 +712,27 @@ xfpm_driver_do_shutdown(gpointer data)
 static void
 xfpm_driver_hibernate(XfpmDriver *drv,gboolean critical)
 {
+	XfpmDriverPrivate *priv;
+	priv = XFPM_DRIVER_GET_PRIVATE(drv);
+	
     xfpm_lock_screen();
-    xfpm_dbus_send_nm_message("sleep");
+	if ( priv->nm_responding )
+		xfpm_dbus_send_nm_message("sleep");
+		
     g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_hibernate,drv);
 }
 
 static void
 xfpm_driver_suspend(XfpmDriver *drv,gboolean critical)
 {
+	XfpmDriverPrivate *priv;
+	priv = XFPM_DRIVER_GET_PRIVATE(drv);
+	
     xfpm_lock_screen();
-    xfpm_dbus_send_nm_message("sleep");
+	
+	if ( priv->nm_responding )
+		xfpm_dbus_send_nm_message("sleep");
+
     g_timeout_add_seconds(2,(GSourceFunc)xfpm_driver_do_suspend,drv);
 }
 
@@ -881,6 +899,16 @@ _show_power_management_error_message(XfpmDriver *drv)
 }
 #endif
 
+static void xfpm_driver_check_nm(XfpmDriver *drv)
+{
+	XFPM_DEBUG("Checking Network Manager interface\n");
+	
+	XfpmDriverPrivate *priv;
+	priv = XFPM_DRIVER_GET_PRIVATE(drv);
+	
+	priv->nm_responding = xfpm_dbus_name_has_owner(priv->conn,NM_SERVICE);
+	
+}
 
 static void
 xfpm_driver_check_power_management(XfpmDriver *drv)
@@ -972,6 +1000,8 @@ xfpm_driver_check(XfpmDriver *drv)
     if ( priv->power_management != 0 )
     {
         xfpm_driver_check_power_save(drv);
+		/* We only check nm if we can use power management*/
+		xfpm_driver_check_nm(drv);
     }
 }
 
