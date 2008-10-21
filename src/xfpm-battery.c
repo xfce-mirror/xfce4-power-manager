@@ -775,7 +775,7 @@ xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon)
     
     const gchar *message;
     message = _("Your battery charge level is critical "\
-              "save your work to avoid data loss");
+              "save your work to avoid losing data");
               
 #ifdef HAVE_LIBNOTIFY            
                                     
@@ -803,8 +803,39 @@ xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon)
     }
     xfpm_notify_show_notification(n,6);      
 #else
-    /*FIXME Show the options in  GtkDialog   */
-    
+	GtkWidget *dialog;
+	dialog = gtk_message_dialog_new (NULL,
+                                     GTK_DIALOG_MODAL,
+                                     GTK_MESSAGE_WARNING,
+                                     GTK_BUTTONS_CANCEL,
+                                     message,
+                                     NULL);
+     if ( priv->power_management & SYSTEM_CAN_HIBERNATE )
+	 {                                     
+		GtkWidget *hibernate = gtk_button_new_with_label(_("Hibernate"));
+		gtk_widget_show(hibernate);                                     
+		gtk_dialog_add_action_widget(GTK_DIALOG(dialog),hibernate,GTK_RESPONSE_OK); 
+	 }
+	 
+	 if ( priv->power_management & SYSTEM_CAN_SHUTDOWN )
+	 {                                     
+		GtkWidget *shutdown = gtk_button_new_with_label(_("Shutdown"));
+		gtk_widget_show(shutdown);                                     
+		gtk_dialog_add_action_widget(GTK_DIALOG(dialog),shutdown,GTK_RESPONSE_ACCEPT); 
+	 }
+     
+     switch(gtk_dialog_run(GTK_DIALOG(dialog)))
+     {
+     	case GTK_RESPONSE_OK:
+			g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,TRUE);
+     		break;
+		case GTK_RESPONSE_ACCEPT:
+			g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SHUTDOWN,TRUE);
+			break;
+     	default:
+     		break;
+     }
+	 gtk_widget_destroy(dialog);
 #endif
 }
 
