@@ -489,17 +489,6 @@ xfpm_button_load_config(XfpmButton *bt)
 {
     XFPM_DEBUG("Loading configuration\n");
     
-    GError *g_error = NULL;
-    if ( !xfconf_init(&g_error) )
-    {
-        g_critical("xfconf init failed: %s\n",g_error->message);
-        XFPM_DEBUG("Using default values\n");
-        g_error_free(g_error);
-        bt->lid_action = XFPM_DO_NOTHING;
-        bt->sleep_action = XFPM_DO_NOTHING;
-        bt->power_action = XFPM_DO_NOTHING;
-        return;
-    }
     XfconfChannel *channel;
     
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
@@ -509,7 +498,6 @@ xfpm_button_load_config(XfpmButton *bt)
     bt->power_action = xfconf_channel_get_uint(channel,POWER_SWITCH_CFG,XFPM_DO_NOTHING);
     
     g_object_unref(channel);
-    xfconf_shutdown();    
 }
 
 static void

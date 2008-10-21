@@ -288,15 +288,6 @@ xfpm_lcd_brightness_set_level(XfpmLcdBrightness *lcd)
 static void xfpm_lcd_brightness_load_config(XfpmLcdBrightness *lcd)
 {
     XFPM_DEBUG("Loading configuration\n");
-    GError *g_error = NULL;
-    if ( !xfconf_init(&g_error) )
-    {
-        g_critical("xfconf init failed: %s\n",g_error->message);
-        XFPM_DEBUG("Using default values\n");
-        g_error_free(g_error);
-        lcd->brightness_control_enabled = TRUE;
-        return;
-    }
     
     XfconfChannel *channel;
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
@@ -304,7 +295,6 @@ static void xfpm_lcd_brightness_load_config(XfpmLcdBrightness *lcd)
     lcd->brightness_control_enabled = xfconf_channel_get_bool(channel,LCD_BRIGHTNESS_CFG,TRUE);
     
     g_object_unref(channel);
-    xfconf_shutdown();    
 }
 
 static void

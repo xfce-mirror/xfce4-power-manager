@@ -363,7 +363,6 @@ _close_dialog_cb(GtkDialog *dialog,XfpmDriver *drv)
         XfconfChannel *channel = (XfconfChannel *)data;
         g_object_unref(channel);
     }
-    xfconf_shutdown();     
     
 }
 
@@ -552,12 +551,6 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
 
     GError *g_error = NULL;
     gboolean with_dpms;
-    if ( !xfconf_init(&g_error) )
-    {
-        g_critical("Unable to xfconf init failed: %s\n",g_error->message);
-        g_error_free(g_error);
-        g_error = NULL;
-    }
     
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
     g_object_set_data(G_OBJECT(drv),"conf-channel",channel);
@@ -858,18 +851,6 @@ xfpm_driver_load_config(XfpmDriver *drv)
     
     XFPM_DEBUG("Loading configuration\n");
     
-    GError *g_error = NULL;
-    if ( !xfconf_init(&g_error) )
-    {
-        g_critical("xfconf init failed: %s\n",g_error->message);
-        XFPM_DEBUG("Using default values\n");
-        g_error_free(g_error);
-#ifdef HAVE_LIBNOTIFY        
-        priv->show_power_management_error = TRUE;
-#endif        
-        priv->enable_power_save = FALSE;
-        return;
-    }
     XfconfChannel *channel;
     
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
@@ -880,8 +861,6 @@ xfpm_driver_load_config(XfpmDriver *drv)
     priv->enable_power_save = xfconf_channel_get_bool(channel,POWER_SAVE_CFG,FALSE);
     
     g_object_unref(channel);
-    xfconf_shutdown();    
-    
 }
 
 #ifdef HAVE_LIBNOTIFY
@@ -890,20 +869,12 @@ _disable_error(NotifyNotification *n,gchar *action,XfpmDriver *drv)
 {
     if (strcmp(action,"confirmed")) return;
     
-    GError *g_error = NULL;
-    if ( !xfconf_init(&g_error) )
-    {
-        g_critical("xfconf init failed: %s\n",g_error->message);
-        g_error_free(g_error);
-        return;
-    }
     XfconfChannel *channel;
     
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
     xfconf_channel_set_bool(channel,SHOW_POWER_MANAGEMENT_ERROR,FALSE);
     
     g_object_unref(channel);
-    xfconf_shutdown();    
     g_object_unref(n);
 }
 #endif
@@ -1200,6 +1171,16 @@ xfpm_driver_monitor (XfpmDriver *drv)
         return FALSE;
     }
     
+    GError *g_error = NULL;
+    if ( !xfconf_init(&g_error) )
+    {
+        g_critical("xfconf init failed: %s using default settings\n",g_error->message);
+        xfpm_popup_message(_("Xfce4 Power Manager"),_("Failed to load power manager configuration "\
+                            "using defaults"),GTK_MESSAGE_WARNING);
+        g_error_free(g_error);
+        
+    }
+    
     xfpm_driver_load_config(drv);    
     _get_system_form_factor(priv);
     
@@ -1210,6 +1191,7 @@ xfpm_driver_monitor (XfpmDriver *drv)
     g_main_loop_run(priv->loop);
     
     dbus_connection_remove_filter(priv->conn,xfpm_driver_signal_filter,NULL);
+    xfconf_shutdown();
     
     return TRUE;
 }

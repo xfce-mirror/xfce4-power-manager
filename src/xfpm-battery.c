@@ -543,20 +543,6 @@ static void
 xfpm_battery_load_config(XfpmBattery *batt)
 {
     XFPM_DEBUG("loading configuration\n");
-    GError *g_error = NULL;
-    if ( !xfconf_init(&g_error) )
-    {
-        g_critical("xfconf init failed: %s\n",g_error->message);
-        XFPM_DEBUG("Using default values\n");
-        g_error_free(g_error);
-        batt->critical_level  = 10;
-        batt->critical_action = XFPM_DO_NOTHING;
-#ifdef HAVE_LIBNOTIFY
-        batt->notify_enabled = TRUE;
-#endif
-        batt->show_tray = ALWAYS;
-        return;
-    }
     
     XfconfChannel *channel;
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
@@ -568,7 +554,6 @@ xfpm_battery_load_config(XfpmBattery *batt)
      batt->notify_enabled = xfconf_channel_get_bool(channel,BATT_STATE_NOTIFICATION_CFG,TRUE);
 #endif 
     g_object_unref(channel);
-    xfconf_shutdown();    
 }
 
 static void

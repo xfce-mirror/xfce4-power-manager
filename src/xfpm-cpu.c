@@ -239,18 +239,6 @@ xfpm_cpu_load_config(XfpmCpu *cpu)
     XFPM_DEBUG("loading configuration\n");
     XfconfChannel *channel;
     
-    GError *g_error = NULL;
-    if ( !xfconf_init(&g_error) )
-    {
-        g_critical("xfconf init failed: %s\n",g_error->message);
-        XFPM_DEBUG("Using default values\n");
-        g_error_free(g_error);
-        cpu->on_ac_cpu_gov = ONDEMAND;
-        cpu->on_batt_cpu_gov = POWERSAVE;
-        cpu->cpu_freq_enabled = TRUE;
-        return;
-    }
-    
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
     
     cpu->on_ac_cpu_gov = xfconf_channel_get_uint(channel,ON_AC_CPU_GOV_CFG,ONDEMAND);
@@ -258,7 +246,6 @@ xfpm_cpu_load_config(XfpmCpu *cpu)
     cpu->cpu_freq_enabled = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
     
     g_object_unref(channel);
-    xfconf_shutdown();    
 }
 
 

@@ -214,22 +214,6 @@ static void xfpm_dpms_load_config (XfpmDpms *dpms)
     XFPM_DEBUG("loading configuration\n");
     XfconfChannel *channel;
     
-    GError *g_error = NULL;
-    if ( !xfconf_init(&g_error) )
-    {
-        g_critical("xfconf init failed: %s\n",g_error->message);
-        XFPM_DEBUG("Using default values\n");
-        g_error_free(g_error);
-        dpms->on_ac_standby_timeout = 1800;
-        dpms->on_ac_suspend_timeout = 2700;
-        dpms->on_ac_off_timeout = 3600;
-        dpms->on_batt_standby_timeout = 180;
-        dpms->on_batt_suspend_timeout = 240;
-        dpms->on_batt_off_timeout = 300;
-        dpms->dpms_enabled = TRUE;
-        return;
-    }
-    
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
     
     GPtrArray *arr;
@@ -276,7 +260,6 @@ static void xfpm_dpms_load_config (XfpmDpms *dpms)
     dpms->dpms_enabled  = xfconf_channel_get_bool(channel,DPMS_ENABLE_CFG,TRUE);
     
     g_object_unref(channel);
-    xfconf_shutdown();
 }
 
 static gboolean
