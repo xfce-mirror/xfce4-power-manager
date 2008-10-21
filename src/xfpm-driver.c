@@ -549,7 +549,6 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     XfconfChannel *channel;
     GtkWidget *dialog;
 
-    GError *g_error = NULL;
     gboolean with_dpms;
     
     channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
@@ -557,33 +556,12 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     g_signal_connect(channel,"property-changed",
                      G_CALLBACK(xfpm_driver_property_changed_cb),drv);
 
-    guint8 gov = 0;
+    guint8 governors = 0;
     if ( priv->cpufreq_control )
     {    
-        gchar **govs;
-        
-        govs = xfpm_hal_get_available_cpu_governors(priv->hal,&g_error);
-        if ( g_error )
-        {
-            XFPM_DEBUG("%s :\n",g_error->message);
-            g_error_free(g_error);
-            goto no_gov_found;
-        }
-        int i = 0;    
-        if ( govs ) 
-        {
-            for ( i = 0 ; govs[i] ; i++ )
-            {
-                if ( !strcmp(govs[i],"powersave") )    gov |= POWERSAVE;
-                if ( !strcmp(govs[i],"ondemand") )     gov |= ONDEMAND;
-                if ( !strcmp(govs[i],"performance") )  gov |= PERFORMANCE;
-                if ( !strcmp(govs[i],"conservative") ) gov |= CONSERVATIVE;
-                if ( !strcmp(govs[i],"userspace") )    gov |= USERSPACE;
-            }   
-            libhal_free_string_array(govs);
-        }
+       governors = xfpm_cpu_get_available_governors(priv->cpu);
     }
-    no_gov_found:
+
 #ifdef HAVE_DPMS
     with_dpms = xfpm_dpms_capable(priv->dpms);
 #else
@@ -601,7 +579,7 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
                                priv->formfactor == SYSTEM_LAPTOP ? TRUE : FALSE,
                                priv->power_management,
                                with_dpms,
-                               gov,
+                               governors,
                                switch_buttons,
                                priv->lcd_brightness_control,
                                ups_found);

@@ -721,6 +721,17 @@ xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop,gboole
         gtk_widget_set_sensitive(GTK_WIDGET(cpu_gov),FALSE);
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cpu_gov),FALSE);
     }
+	
+	if ( govs & CPU_FREQ_CANNOT_BE_USED )
+	{
+		GtkWidget *label;
+        label = gtk_label_new(_("CPU frequency control cannot be used"));
+        gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
+        gtk_widget_show(label);
+        gtk_widget_set_sensitive(GTK_WIDGET(cpu_gov),FALSE);
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cpu_gov),FALSE);
+	}
+	
     else
     {
         GtkWidget *frame;

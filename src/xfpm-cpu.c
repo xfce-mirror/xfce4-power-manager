@@ -66,7 +66,8 @@ static void xfpm_cpu_get_property (GObject *object,
                                    GParamSpec *pspec);
 
 static void xfpm_cpu_load_config(XfpmCpu *cpu);
-static void xfpm_cpu_check(XfpmCpu *cpu);                                   
+static void xfpm_cpu_check(XfpmCpu *cpu);
+static void xfpm_cpu_get_governors(XfpmCpu *cpu);
 static void xfpm_cpu_set_governor(XfpmCpu *cpu,
                                   gboolean ac_adapter_present);
 
@@ -79,8 +80,7 @@ G_DEFINE_TYPE(XfpmCpu,xfpm_cpu,G_TYPE_OBJECT)
 struct XfpmCpuPrivate
 {
     XfpmHal *hal;
-	gboolean cpu_freq_can_be_used;
-	
+	guint8 governors;
 };
 
 enum
@@ -145,9 +145,12 @@ xfpm_cpu_init(XfpmCpu *cpu)
     priv = XFPM_CPU_GET_PRIVATE(cpu);
     
     priv->hal = xfpm_hal_new();
+	priv->governors = 0;
     
     xfpm_cpu_load_config(cpu);
+	
 	xfpm_cpu_check(cpu);
+	xfpm_cpu_get_governors(cpu);
     
     g_signal_connect(G_OBJECT(cpu),"notify",G_CALLBACK(xfpm_cpu_notify_cb),NULL);
     
@@ -283,8 +286,47 @@ static void xfpm_cpu_check(XfpmCpu *cpu)
 	XfpmCpuPrivate *priv;
 	priv = XFPM_CPU_GET_PRIVATE(cpu);
 	
-	priv->cpu_freq_can_be_used =
-	xfpm_hal_cpu_freq_interface_can_be_used(priv->hal);
+	if (!xfpm_hal_cpu_freq_interface_can_be_used(priv->hal))
+		priv->governors |= CPU_FREQ_CANNOT_BE_USED;
+
+	XFPM_DEBUG("Cpu freq control cannot be used\n");	
+}
+
+static void xfpm_cpu_get_governors(XfpmCpu *cpu)
+{
+	XfpmCpuPrivate *priv;
+	priv = XFPM_CPU_GET_PRIVATE(cpu);
+	
+	if ( priv->governors & CPU_FREQ_CANNOT_BE_USED )
+	{
+		return;
+	}
+	
+	GError *g_error = NULL;
+	gchar **govs = NULL;
+        
+	govs = xfpm_hal_get_available_cpu_governors(priv->hal,&g_error);
+	
+	if ( g_error )
+	{
+		XFPM_DEBUG("%s :\n",g_error->message);
+		g_error_free(g_error);
+		return;
+	}
+
+	int i = 0;    
+	if ( govs ) 
+	{
+		for ( i = 0 ; govs[i] ; i++ )
+		{
+			if ( !strcmp(govs[i],"powersave") )    priv->governors |= POWERSAVE;
+			if ( !strcmp(govs[i],"ondemand") )     priv->governors |= ONDEMAND;
+			if ( !strcmp(govs[i],"performance") )  priv->governors |= PERFORMANCE;
+			if ( !strcmp(govs[i],"conservative") ) priv->governors |= CONSERVATIVE;
+			if ( !strcmp(govs[i],"userspace") )    priv->governors |= USERSPACE;
+		}   
+		libhal_free_string_array(govs);
+	}
 	
 }
 
@@ -343,10 +385,10 @@ xfpm_cpu_notify_cb (GObject *object,
 	XfpmCpuPrivate *priv;
 	priv = XFPM_CPU_GET_PRIVATE(cpu);
 	
-	if ( !priv->cpu_freq_can_be_used )
+	if ( priv->governors & CPU_FREQ_CANNOT_BE_USED )
 	{
-		XFPM_DEBGU("Xfpm cannot use cpu freq control\n");
-		return
+		XFPM_DEBUG("Xfpm cannot use cpu freq control\n");
+		return;
 	}
     
     if ( !cpu->cpu_freq_enabled )
@@ -369,4 +411,15 @@ xfpm_cpu_new(void)
     XfpmCpu *cpu = NULL;
     cpu = g_object_new(XFPM_TYPE_CPU,NULL);
     return cpu;
+}
+
+guint8
+xfpm_cpu_get_available_governors(XfpmCpu *cpu)
+{
+	g_return_val_if_fail(XFPM_IS_CPU(cpu),0);
+	
+	XfpmCpuPrivate *priv;
+	priv = XFPM_CPU_GET_PRIVATE(cpu);
+	
+	return priv->governors;
 }

@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 
 #define XFPM_TYPE_CPU    (xfpm_cpu_get_type())
 #define XFPM_CPU(o)      (G_TYPE_CHECK_INSTANCE_CAST(o,XFPM_TYPE_CPU,XfpmCpu))
+#define XFPM_IS_CPU(o)   (G_TYPE_CHECK_INSTANCE_TYPE(o,XFPM_TYPE_CPU))
 
 typedef struct XfpmCpuPrivate XfpmCpuPrivate;
 
@@ -52,8 +53,9 @@ typedef struct
 
 } XfpmCpuClass;
 
-GType          xfpm_cpu_get_type(void) G_GNUC_CONST;
-XfpmCpu       *xfpm_cpu_new     (void);
+GType          xfpm_cpu_get_type				(void) G_GNUC_CONST;
+XfpmCpu       *xfpm_cpu_new     				(void);
+guint8         xfpm_cpu_get_available_governors (XfpmCpu *cpu);
 
 G_END_DECLS
 
