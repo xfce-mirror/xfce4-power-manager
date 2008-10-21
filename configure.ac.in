@@ -1,7 +1,7 @@
-#                                               -*- Autoconf -*-
-# Process this file with autoconf to produce a configure script.
-AC_PREREQ(2.61)
-AC_INIT([XfcePowerManager],[0.6.0])
+m4_define([powermanager_version], [0.6.0svn])
+
+AC_INIT([xfce4-power-manager],[powermanager_version],[ali.slackware@gmail.com])
+AC_PREREQ(2.50)
 
 AM_INIT_AUTOMAKE([1.8 dist-bzip2 tar-ustar])
 AM_CONFIG_HEADER([config.h])
@@ -21,7 +21,7 @@ AC_SUBST(LDFLAGS)
 # 		Check for i18n support 			#
 # ===================================================== #
 
-XDT_I18N([])
+XDT_I18N([@LINGUAS@])
 
 
 # ============== look for dependencies =============== #
