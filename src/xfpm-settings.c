@@ -613,7 +613,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean u
     GtkWidget *vbox;
     
     GSList *list;
-    guint current_governor = xfconf_channel_get_uint(channel,ON_BATT_CPU_GOV_CFG,ONDEMAND);
+    guint current_governor = xfconf_channel_get_uint(channel,ON_BATT_CPU_GOV_CFG,POWERSAVE);
     gboolean enable = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
     
     frame = xfce_create_framebox(ups ? _("CPU governor settings on ups power") : _("CPU governor settings on battery power"), &align);
