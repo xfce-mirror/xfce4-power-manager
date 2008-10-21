@@ -885,7 +885,7 @@ _show_power_management_error_message(XfpmDriver *drv)
 {
      const gchar *error =
                  _("Unable to use power management service, functionalities like hibernate and shutdown will not work "\
-                  "Possible reasons: you don't have permission or  "\
+                  "Possible reasons: you don't have enough permission or a"\
                   "broken connection with the hardware abstract layer or the message bus daemon is not running");
      NotifyNotification *n = xfpm_notify_new(_("Xfce power manager"),
                                              error,

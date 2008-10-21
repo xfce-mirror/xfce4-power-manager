@@ -292,12 +292,52 @@ gboolean xfpm_hal_power_management_can_be_used(XfpmHal *hal)
     reply = dbus_connection_send_with_reply_and_block(priv->connection,message,-1,&error);
     dbus_message_unref(message);
     
-    if ( reply ) dbus_message_unref(reply);
-    
+	if ( reply ) dbus_message_unref(reply);
+	
     if ( dbus_error_is_set(&error) )
     {
         /* This is the only one place in the program we will 
          * be happy when we seeDBusError is set */
+        if (!strcmp(error.name,"org.freedesktop.DBus.Error.UnknownMethod"))
+        {
+            dbus_error_free(&error);
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+gboolean xfpm_hal_cpu_freq_interface_can_be_used(XfpmHal *hal)
+{
+	g_return_val_if_fail(XFPM_IS_HAL(hal),FALSE);
+    XfpmHalPrivate *priv;
+    priv = XFPM_HAL_GET_PRIVATE(hal);
+    
+    g_return_val_if_fail(priv->connected == TRUE,FALSE);
+    
+    DBusMessage *message;
+    DBusMessage *reply;
+    DBusError error;
+    
+    message = dbus_message_new_method_call(HAL_DBUS_SERVICE,
+                                        HAL_ROOT_COMPUTER,
+                                        HAL_DBUS_INTERFACE_CPU,
+                                        "CpuFreqJustToCheck");
+
+    if (!message)
+    {
+        return FALSE;
+    }
+                                           
+    dbus_error_init(&error);                                       
+                                           
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,message,-1,&error);
+    dbus_message_unref(message);
+    
+    if ( reply ) dbus_message_unref(reply);
+    
+    if ( dbus_error_is_set(&error) )
+    {
         if (!strcmp(error.name,"org.freedesktop.DBus.Error.UnknownMethod"))
         {
             dbus_error_free(&error);

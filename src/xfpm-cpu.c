@@ -66,7 +66,7 @@ static void xfpm_cpu_get_property (GObject *object,
                                    GParamSpec *pspec);
 
 static void xfpm_cpu_load_config(XfpmCpu *cpu);
-                                   
+static void xfpm_cpu_check(XfpmCpu *cpu);                                   
 static void xfpm_cpu_set_governor(XfpmCpu *cpu,
                                   gboolean ac_adapter_present);
 
@@ -79,6 +79,8 @@ G_DEFINE_TYPE(XfpmCpu,xfpm_cpu,G_TYPE_OBJECT)
 struct XfpmCpuPrivate
 {
     XfpmHal *hal;
+	gboolean cpu_freq_can_be_used;
+	
 };
 
 enum
@@ -145,6 +147,7 @@ xfpm_cpu_init(XfpmCpu *cpu)
     priv->hal = xfpm_hal_new();
     
     xfpm_cpu_load_config(cpu);
+	xfpm_cpu_check(cpu);
     
     g_signal_connect(G_OBJECT(cpu),"notify",G_CALLBACK(xfpm_cpu_notify_cb),NULL);
     
@@ -275,6 +278,16 @@ gchar *_get_governor_from_enum(XfpmCpuGovernor governor)
     return NULL;
 }
 
+static void xfpm_cpu_check(XfpmCpu *cpu)
+{
+	XfpmCpuPrivate *priv;
+	priv = XFPM_CPU_GET_PRIVATE(cpu);
+	
+	priv->cpu_freq_can_be_used =
+	xfpm_hal_cpu_freq_interface_can_be_used(priv->hal);
+	
+}
+
 static void
 xfpm_cpu_set_governor(XfpmCpu *cpu,gboolean ac_adapter_present)
 {
@@ -327,10 +340,19 @@ xfpm_cpu_notify_cb (GObject *object,
                     gpointer data)
 {                                
     XfpmCpu *cpu = XFPM_CPU(object);
+	XfpmCpuPrivate *priv;
+	priv = XFPM_CPU_GET_PRIVATE(cpu);
+	
+	if ( !priv->cpu_freq_can_be_used )
+	{
+		XFPM_DEBGU("Xfpm cannot use cpu freq control\n");
+		return
+	}
     
     if ( !cpu->cpu_freq_enabled )
     {
         XFPM_DEBUG("Cpu freq control is disabled\n");
+		return;
     }
     
     if ( !strcmp(arg1->name,"on-ac-adapter") ||
