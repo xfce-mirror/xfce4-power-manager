@@ -271,11 +271,14 @@ set_cpu_freq_scaling_cb(GtkWidget *widget,XfconfChannel *channel)
     {
         g_critical("Cannot set value %s\n",CPU_FREQ_SCALING_CFG);
     }
-    gtk_widget_set_sensitive(ondemand_on_ac,value);
-    gtk_widget_set_sensitive(performance_on_ac,value);
-    gtk_widget_set_sensitive(powersave_on_ac,value);
-    gtk_widget_set_sensitive(conservative_on_ac,value);
-    gtk_widget_set_sensitive(userspace_on_ac,value);
+    if ( GTK_IS_WIDGET(ondemand_on_ac) )
+    {
+        gtk_widget_set_sensitive(ondemand_on_ac,value);
+        gtk_widget_set_sensitive(performance_on_ac,value);
+        gtk_widget_set_sensitive(powersave_on_ac,value);
+        gtk_widget_set_sensitive(conservative_on_ac,value);
+        gtk_widget_set_sensitive(userspace_on_ac,value);
+    }
     
     if ( GTK_IS_WIDGET(ondemand_on_batt) )  /* enough to check only one widget */ 
     {
