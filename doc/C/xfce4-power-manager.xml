@@ -50,51 +50,312 @@ maintainers, etc. Commented out by default.
     
 <sect1 id="xfpm-intro">
   <title>Introduction</title>
+  The Xfce4 power manager is a part of the Xfce goodies project and features cpu frequency control,
+  battery monitoring, monitor DPMS control, LCD brightness control, lid sleep and power buttons control.
+  All those features can be controlled from the user interface settings dialog.
+  <sect2 id="xfpm-started">
+  <title>Getting Started</title>
+  <para>To launch the Power Manager you need to run the following command &app; -r you can do from the xfce run
+  command by pressing ALT-F2, or you go to the Xfce settings manager and you click on the Power Manager item
+  , a popup should be displayed only if the power manager isn't already running to ask you if you want to. 
+  Once the power manager is launched for the first time, it'll place a autostart desktop file in you .config/autostart
+  so like that it gets launched automatically second time you log into your Xfce desktop.
+  </para> 
+  </sect2> 
 </sect1>
 
  <!-- extra space -->
   <para>&nbsp;</para>
-  
-<sect1 id="xfpm-using">
-  <title>Using &app;</title>
-</sect1>
-
-<!-- extra space -->
-  <para>&nbsp;</para>
-  
+ 
 <sect1 id="xfpm-configuration">
   <title>Power Manager Configuration</title>
+  <para>
+  Almost all the &app; items are configurable from the configuration window, laptop users can set up 
+  a power profile for two different modes “on battery power” and “on ac power”, desktop users still can change 
+  DPMS settings and CPU frequency.
+  </para>
+  <para>
+  The settings dialog differs from one system to another depends on the computer (PC,laptop,...) and on
+  the available manageabale interfaces.  
+  </para>
+  <para>
+  In this section we will describe the possible configuration for the power manager.
+  </para>
+  <sect2 id="xfpm-general">
+  <title>General Settings</title>
+  <para><figure float="0">
+	<title>General settings</title>
+	<screenshot><mediaobject>
+	<imageobject>
+	<imagedata fileref="images/general-settings.png" format="png"/>
+	</imageobject>
+	<textobject>
+	<phrase></phrase>
+	</textobject>
+	</mediaobject></screenshot>
+	</figure></para>
+	<para>
+	Here you can select the configuration of the system tray icon, enable/disable cpu frequency and DPMS controls, 
+	typical reason to disable DPMS control for example if you are watching a movie.	
+	</para>
+  </sect2>
+	  
   
   <sect2 id="xfpm-cpu">
-    <title>CPU settings</title>
-  </sect2>  
+   <title>CPU Settings</title>
+   <para><figure float="0">
+	<title>CPU Linux governors</title>
+	<screenshot><mediaobject>
+	<imageobject>
+	<imagedata fileref="images/cpu-settings.png" format="PNG"/>
+	</imageobject>
+	<textobject>
+	<phrase></phrase>
+	</textobject>
+	</mediaobject></screenshot>
+	</figure></para>
+	<para>
+	The linux governors found in the system are listed for choice as a radio buttons,
+	if the acpi_cpufreq module is not loaded in the kernel or the cpu itself doesn't support
+	changes in it's frequency these options might not be shown.
+	</para>
+	<para>Here's a brief descritption on linux cpu governors</para>
+		
+<variablelist>
+
+   <varlistentry>
+	<term>Performance:</term>
+	<listitem>
+	<para> Set the CPU to it's maximum frequency. will consume more power, 
+	and it's not ideal when running on battery.
+	</para>
+	</listitem>
+	</varlistentry>
+	
+	<varlistentry>
+	<term>Powersave:</term>
+	<listitem>
+	<para> 
+	Set the CPU to it's minimum frequency, ideal when running on battery power.	
+	</para>
+	</listitem>
+	</varlistentry>
+	
+	<varlistentry>
+	<term>Userspace:</term>
+	<listitem>
+	<para> In this governor, allows the user, or any userspace
+	program running with UID "root", to set the CPU to a specific frequency.
+	</para>
+	</listitem>
+	</varlistentry>		
+	
+	<varlistentry>
+	<term>Ondemand:</term>
+	<listitem>
+	<para> What you want is what you get. sets the CPU depending on the
+	current usage.
+	</para>
+	</listitem>
+	</varlistentry>	
+	
+	<varlistentry>
+	<term>Conservative:</term>
+	<listitem>
+	<para> 
+	 Same as Ondemand but differs in behaviour in that it gracefully increases and decreases 
+	 the CPU speed rather than jumping to max speed the moment there is any load on the CPU.
+	</para>
+	</listitem>
+	</varlistentry>	
+	
+</variablelist>
+<para>
+NOTE:In &app; version &appversion; only Linux is supported for changing the cpu frequency.
+</para>
+
+</sect2>  
   
   <sect2 id="xfpm-battery">
     <title>Battery settings</title>
+	<para><figure float="0">
+	<title>Battery settings</title>
+	<screenshot><mediaobject>
+	<imageobject>
+	<imagedata fileref="images/battery-settings.png" format="PNG"/>
+	</imageobject>
+	<textobject>
+	<phrase></phrase>
+	</textobject>
+	</mediaobject></screenshot>
+</figure></para>
+	<para>
+	The user can select the percentage of the battery to be considered as critical, usually this is for a laptop
+	battery or UPS, this option is important as for a broken battery for example, the battery when it is 10% charged 
+	can last	5 minutes, so the user can increase the level at wish the battery charge will be considered critical.    
+   </para>
+   <para>
+   The user can define an action to be taken by the power manager in case the battery wish is giving the main power
+   for the computer reaches a critical charge level is.
+   </para> 
+   The battery notification is a way to notify the user when the battery state changes ( ex: battery charge is full )
+   <para>
+   
+   </para>
   </sect2>  
   
   <sect2 id="xfpm-button">
     <title>Keyboard shortcuts</title>
+	<para><figure float="0">
+	<title>button control</title>
+	<screenshot><mediaobject>
+	<imageobject>
+	<imagedata fileref="images/button-settings.png" format="PNG"/>
+	</imageobject>
+	<textobject>
+	<phrase></phrase>
+	</textobject>
+	</mediaobject></screenshot>
+</figure></para>
+   For those buttons you can define an action to be taken by the power manager when happen to press one of them, 
+   for example when you close the laptop screen. 
+    
   </sect2>  
   
   <sect2 id="xfpm-monitor">
-    <title>Monitor settings</title>
+   <title>Monitor settings</title>
+   <para><figure float="0">
+	<title>Monitor DPMS and lcd brightness</title>
+	<screenshot><mediaobject>
+	<imageobject>
+	<imagedata fileref="images/monitor-settings.png" format="PNG"/>
+	</imageobject>
+	<textobject>
+	<phrase></phrase>
+	</textobject>
+	</mediaobject></screenshot>
+</figure></para>
+	<para>
+	DPMS is an old X extension that allows standby/suspend/turn off options of the monitor, usually the timeouts 
+	have to be succesitive, so stansby timeout less than suspend timeout and so on, but one always can disable any option.
+	</para>
+	<para>
+	For a laptop users by clicking on the checkbox allows the power manager to reduce the screen luminosity when
+	it detects that system in running on battery power and set it again to the maximum value when system is running
+	on AC power.
+	</para>
+		
   </sect2>  
-</sect1>
+  
+   <sect2 id="xfpm-systray">
+   <title>System Tray Icon</title>
+   
+   
+   </sect2>
+   
+   <sect2 id="xfpm-notify">
+   <title>Notification</title>
+   
+   
+   </sect2>
 
+</sect1>
  <!-- extra space -->
   <para>&nbsp;</para>
   
 <sect1 id="xfpm-faq">
   <title>FAQ</title>
-</sect1>  
+  <variablelist>
 
-<sect1 id="xfpm-about">
-  <title>About &app;</title>
+   <varlistentry>
+	<term>Q: Why the icons look very similar to the icon of gnome power manager</term>
+	<listitem>
+	<para>A: No, they are not similar, they are the same, just there is no point of re-drawing icons,
+	gnome power manager icons are good enough. not all of them are used.  
+	</para>
+	</listitem>
+	</varlistentry>
+
+	 <varlistentry>
+	<term>Q: What is the difference between suspend and hibernate</term>
+	<listitem>
+	<para>A: Suspend if a power save feature, when suspending the computer is still using power,
+	since the running applications are kept in the memory, but is the lowest power level the computer
+	can use. 
+	Hibernate saves the system state on the hard drive and turns off the power, when you start up your computer
+	again those data will be loaded and the system comes up. 
+	</para>
+	</listitem>
+	</varlistentry>
+	
+	 <varlistentry>
+	<term>Q: Why the options of suspend/hibernate are not there or i can't select them</term>
+	<listitem>
+	<para>A: Many possible reasons, for example your kernel doesn't or it's not compiled with suspend/hibernate options.
+	Another possible reason is the fact that you are not allowed to use them.
+	</para>
+	</listitem>
+	</varlistentry>
+	
+	 <varlistentry>
+	<term>Q: How the power manager actually suspend or hibernate my system</term>
+	<listitem>
+	<para>A: The power manager checks if the user is allowed to, then send a DBus message to HAL asking to suspend
+	/hibernate, usually the methods used to suspend or hibernate it's located in /usr/lib/hal/scripts/YourOs.
+	</para>
+	</listitem>
+	</varlistentry>
+	
+	 <varlistentry>
+	<term>Q: If the power manager puts the computer in hibernate because my battery charge is critical what will happen
+	if i turn it on again without plugging my adapter</term>
+	<listitem>
+	<para>A: Nothing actually, the power manager had take the action defined by the user already and understands
+	that the user insist of using the laptop so in the best cases it'll display a popup with options that you can do.
+	</para>
+	</listitem>
+	</varlistentry>
+	
+	 <varlistentry>
+	<term>Q: I select the option of the lcd brightness control but i don't see the brightness changing when i switch 
+	from AC adapter to battery power</term>
+	<listitem>
+	<para>A: You kernel doesn't have the right driver, or the driver isn't loaded.
+	</para>
+	</listitem>
+	</varlistentry>
+		
+</variablelist>
 </sect1>  
 
  <!-- extra space -->
   <para>&nbsp;</para>
+<sect1 id="xfpm-about">
+  <title>About &app;</title>
+  <para>
+	This power manager was written following the philosophy of Xfce, having leight weight application that does
+	what the user expect for it.
+	</para>
+
+  <para>To report a bug or make a suggestion regarding this application or
+    this manual, use the bug tracking system at <ulink 
+      url="http://bugzilla.xfce.org/" 
+      type="http">http://bugzilla.xfce.org/</ulink>. 
+  </para>
+
+  <para>If you have questions about the use or installation of this package,
+    please ask on the <ulink 
+      url="http://lunar-linux.org/mailman/listinfo/xfce"
+      type="http">xfce</ulink> mailing list. Development discussion takes
+    place on the <ulink 
+      url="http://lunar-linux.org/mailman/listinfo/xfce4-dev"
+      type="http">xfce4-dev</ulink> mailing list
+    or on  <ulink 
+      url="http://lunar-linux.org/mailman/listinfo/xfce4-goodies-dev"
+      type="http">xfce4-goodies-dev</ulink> mailing list.
+  </para>
+  
+</sect1>  
 
  <!-- extra space -->
   <para>&nbsp;</para>
