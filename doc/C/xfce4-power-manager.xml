@@ -51,7 +51,7 @@ maintainers, etc. Commented out by default.
 <sect1 id="xfpm-intro">
   <title>Introduction</title>
   The Xfce4 power manager is a part of the Xfce goodies project and features cpu frequency control,
-  battery monitoring, monitor DPMS control, LCD brightness control, lid sleep and power buttons control.
+  battery monitoring, monitor DPMS control, LCD brightness control, lid sleep and power buttons controls.
   All those features can be controlled from the user interface settings dialog.
   <sect2 id="xfpm-started">
   <title>Getting Started</title>
@@ -171,7 +171,7 @@ maintainers, etc. Commented out by default.
 	
 </variablelist>
 <para>
-NOTE:In &app; version &appversion; only Linux is supported for changing the cpu frequency.
+NOTE:In &app; version &appversion; only Linux is supported for changing the CPU frequency.
 </para>
 
 </sect2>  
@@ -190,13 +190,13 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the cpu 
 	</mediaobject></screenshot>
 </figure></para>
 	<para>
-	The user can select the percentage of the battery to be considered as critical, usually this is for a laptop
-	battery or UPS, this option is important as for a broken battery for example, the battery when it is 10% charged 
+	The user can select the percentage of the battery to be considered as critical, usually this is for a laptop or
+	UPS battery, this option is important as for a broken battery for example, the battery when it is 10% charged 
 	can last	5 minutes, so the user can increase the level at wish the battery charge will be considered critical.    
    </para>
    <para>
    The user can define an action to be taken by the power manager in case the battery wish is giving the main power
-   for the computer reaches a critical charge level is.
+   for the computer reaches a critical charge level.
    </para> 
    The battery notification is a way to notify the user when the battery state changes ( ex: battery charge is full )
    <para>
@@ -237,29 +237,31 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the cpu 
 </figure></para>
 	<para>
 	DPMS is an old X extension that allows standby/suspend/turn off options of the monitor, usually the timeouts 
-	have to be succesitive, so stansby timeout less than suspend timeout and so on, but one always can disable any option.
+	have to be succesitive, so standby timeout less than suspend timeout and so on, but one always can disable any option.
 	</para>
 	<para>
 	For a laptop users by clicking on the checkbox allows the power manager to reduce the screen luminosity when
 	it detects that system in running on battery power and set it again to the maximum value when system is running
 	on AC power.
 	</para>
-		
-  </sect2>  
-  
-   <sect2 id="xfpm-systray">
-   <title>System Tray Icon</title>
-   
-   
-   </sect2>
-   
-   <sect2 id="xfpm-notify">
-   <title>Notification</title>
-   
-   
-   </sect2>
-
+	</sect2>  
 </sect1>
+
+<!-- extra space -->
+  <para>&nbsp;</para>
+  
+<sect1 id="xfpm-systray">
+<title>System Tray Icon</title>
+</sect1>
+
+
+<!-- extra space -->
+  <para>&nbsp;</para>
+     
+<sect1 id="xfpm-notify">
+<title>Notification</title>
+</sect1>
+
  <!-- extra space -->
   <para>&nbsp;</para>
   
@@ -279,7 +281,7 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the cpu 
 	 <varlistentry>
 	<term>Q: What is the difference between suspend and hibernate</term>
 	<listitem>
-	<para>A: Suspend if a power save feature, when suspending the computer is still using power,
+	<para>A: Suspend if a power save feature, when suspending, the computer is still using power,
 	since the running applications are kept in the memory, but is the lowest power level the computer
 	can use. 
 	Hibernate saves the system state on the hard drive and turns off the power, when you start up your computer
@@ -301,7 +303,7 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the cpu 
 	<term>Q: How the power manager actually suspend or hibernate my system</term>
 	<listitem>
 	<para>A: The power manager checks if the user is allowed to, then send a DBus message to HAL asking to suspend
-	/hibernate, usually the methods used to suspend or hibernate it's located in /usr/lib/hal/scripts/YourOs.
+	/hibernate, usually the methods used to suspend or hibernate used by HAL is a script located in /usr/lib/hal/scripts/YourOs.
 	</para>
 	</listitem>
 	</varlistentry>
@@ -311,7 +313,7 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the cpu 
 	if i turn it on again without plugging my adapter</term>
 	<listitem>
 	<para>A: Nothing actually, the power manager had take the action defined by the user already and understands
-	that the user insist of using the laptop so in the best cases it'll display a popup with options that you can do.
+	that the user insist of using the laptop so in the best cases it'll display a popup with options that user can do.
 	</para>
 	</listitem>
 	</varlistentry>
