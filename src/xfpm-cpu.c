@@ -67,6 +67,7 @@ static void xfpm_cpu_get_property (GObject *object,
 
 static void xfpm_cpu_load_config(XfpmCpu *cpu);
 static void xfpm_cpu_check(XfpmCpu *cpu);
+static guint8 xfpm_cpu_get_all_governors(XfpmCpu *cpu);
 static void xfpm_cpu_get_governors(XfpmCpu *cpu);
 static void xfpm_cpu_set_governor(XfpmCpu *cpu,
                                   gboolean ac_adapter_present);
@@ -292,6 +293,44 @@ static void xfpm_cpu_check(XfpmCpu *cpu)
 	XFPM_DEBUG("Cpu freq control cannot be used\n");	
 }
 
+
+static guint8
+xfpm_cpu_get_all_governors(XfpmCpu *cpu)
+{
+	XfpmCpuPrivate *priv;
+	priv = XFPM_CPU_GET_PRIVATE(cpu);
+		
+	GError *g_error = NULL;
+	gchar **govs = NULL;
+    guint8 governors = 0;
+	    
+	govs = xfpm_hal_get_available_cpu_governors(priv->hal,&g_error);
+	
+	if ( g_error )
+	{
+		XFPM_DEBUG("%s :\n",g_error->message);
+		g_error_free(g_error);
+		return 0;
+	}
+
+	int i = 0;    
+	if ( govs ) 
+	{
+		for ( i = 0 ; govs[i] ; i++ )
+		{
+			if ( !strcmp(govs[i],"powersave") )    governors |= POWERSAVE;
+			if ( !strcmp(govs[i],"ondemand") )     governors |= ONDEMAND;
+			if ( !strcmp(govs[i],"performance") )  governors |= PERFORMANCE;
+			if ( !strcmp(govs[i],"conservative") ) governors |= CONSERVATIVE;
+			if ( !strcmp(govs[i],"userspace") )    governors |= USERSPACE;
+		}   
+		libhal_free_string_array(govs);
+	}	
+	
+	return governors;
+	
+}
+
 static void xfpm_cpu_get_governors(XfpmCpu *cpu)
 {
 	XfpmCpuPrivate *priv;
@@ -302,32 +341,7 @@ static void xfpm_cpu_get_governors(XfpmCpu *cpu)
 		return;
 	}
 	
-	GError *g_error = NULL;
-	gchar **govs = NULL;
-        
-	govs = xfpm_hal_get_available_cpu_governors(priv->hal,&g_error);
-	
-	if ( g_error )
-	{
-		XFPM_DEBUG("%s :\n",g_error->message);
-		g_error_free(g_error);
-		return;
-	}
-
-	int i = 0;    
-	if ( govs ) 
-	{
-		for ( i = 0 ; govs[i] ; i++ )
-		{
-			if ( !strcmp(govs[i],"powersave") )    priv->governors |= POWERSAVE;
-			if ( !strcmp(govs[i],"ondemand") )     priv->governors |= ONDEMAND;
-			if ( !strcmp(govs[i],"performance") )  priv->governors |= PERFORMANCE;
-			if ( !strcmp(govs[i],"conservative") ) priv->governors |= CONSERVATIVE;
-			if ( !strcmp(govs[i],"userspace") )    priv->governors |= USERSPACE;
-		}   
-		libhal_free_string_array(govs);
-	}
-	
+	priv->governors = xfpm_cpu_get_all_governors(cpu);
 }
 
 static void
@@ -420,6 +434,12 @@ xfpm_cpu_get_available_governors(XfpmCpu *cpu)
 	
 	XfpmCpuPrivate *priv;
 	priv = XFPM_CPU_GET_PRIVATE(cpu);
+
+	if ( priv->governors & CPU_FREQ_CANNOT_BE_USED )
+	{
+		return 0;
+	}
 	
-	return priv->governors;
+	
+	return xfpm_cpu_get_all_governors(cpu);
 }
