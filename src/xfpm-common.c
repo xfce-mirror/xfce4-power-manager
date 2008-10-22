@@ -20,6 +20,7 @@
  */
 
 #include <glib.h>
+#include <libxfcegui4/libxfcegui4.h>
 
 #include "xfpm-common.h"
 #include "xfpm-debug.h"
@@ -78,6 +79,11 @@ void
 xfpm_preferences(void) 
 {
     g_spawn_command_line_async("xfce4-power-manager -c",NULL);
+}
+
+void       xfpm_help(void)
+{
+	xfce_exec("xfhelp4 xfce4-power-manager.html", FALSE, FALSE, NULL);
 }
 
 void       

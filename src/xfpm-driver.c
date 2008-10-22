@@ -347,7 +347,7 @@ _dialog_response_cb(GtkDialog *dialog, gint response, XfpmDriver *drv)
     switch(response) 
     {
             case GTK_RESPONSE_HELP:
-				xfce_exec("xfhelp4 xfce4-power-manager.html", FALSE, FALSE, NULL);
+				xfpm_help();
                 break;
             default:
                 gtk_widget_destroy(GTK_WIDGET(dialog));

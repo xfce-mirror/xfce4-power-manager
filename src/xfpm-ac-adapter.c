@@ -427,6 +427,12 @@ xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
 	mi = gtk_separator_menu_item_new();
 	gtk_widget_show(mi);
 	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+
+	mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_HELP,NULL);
+	gtk_widget_set_sensitive(mi,TRUE);
+	gtk_widget_show(mi);
+	g_signal_connect(mi,"activate",G_CALLBACK(xfpm_help),NULL);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
 	
 	mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_ABOUT,NULL);
 	gtk_widget_set_sensitive(mi,TRUE);
