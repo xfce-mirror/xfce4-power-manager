@@ -456,7 +456,7 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
 {
     g_return_if_fail(XFPM_IS_BATTERY_ICON(battery_icon));
     battery_icon->battery_present = ac_adapter_present;
-    
+    guint critical_level = battery_icon->type == PRIMARY || UPS ? battery_icon->critical_level : 5;
 #ifdef DEBUG
     gchar *content_is_charging;
     gchar *content_is_discharging;
@@ -526,7 +526,7 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
     // battery is discharging
     if ( is_charging == FALSE && is_discharging == TRUE )
     {
-        if ( remaining_per > ( battery_icon->critical_level + 10 ) )
+        if ( remaining_per > ( critical_level + 10 ) )
         {
             if ( !ac_adapter_present )
             {
@@ -539,12 +539,12 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
             }
             xfpm_battery_icon_update(battery_icon,DISCHARGING,remaining_per,ac_adapter_present);
         } 
-        else if ( remaining_per <= ( battery_icon->critical_level+10 ) && remaining_per > battery_icon->critical_level )
+        else if ( remaining_per <= ( critical_level+10 ) && remaining_per > critical_level )
         {
             strcat(tip,_(" Battery charge level is low"));
             xfpm_battery_icon_update(battery_icon,LOW,remaining_per,ac_adapter_present);
         }
-        else if ( remaining_per <= battery_icon->critical_level )
+        else if ( remaining_per <= critical_level )
         {
             strcat(tip,_(" Battery charge level is critical"));
             xfpm_battery_icon_update(battery_icon,CRITICAL,remaining_per,ac_adapter_present);
