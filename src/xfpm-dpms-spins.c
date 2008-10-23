@@ -175,7 +175,7 @@ xfpm_dpms_spins_get_spin1_value_cb(GtkSpinButton *spin_1,XfpmDpmsSpins *spins)
     if ( value1 == 0 )
     {
         priv->spin_value_1 = 0;
-        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_1),_(" disabled"));
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_1),_(" never"));
         g_signal_emit(G_OBJECT(spins),signals[DPMS_VALUE_CHANGED],0,
                   value1,value2,value3);
         return;
@@ -228,7 +228,7 @@ xfpm_dpms_spins_get_spin2_value_cb(GtkSpinButton *spin_2,XfpmDpmsSpins *spins)
     if ( value2 == 0 )
     {
         priv->spin_value_2 = 0;
-        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_2),_(" disabled"));
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_2),_(" never"));
         g_signal_emit(G_OBJECT(spins),signals[DPMS_VALUE_CHANGED],0,value1,value2,value3);
          
         return;
@@ -278,7 +278,7 @@ xfpm_dpms_spins_get_spin3_value_cb(GtkSpinButton *spin_3,XfpmDpmsSpins *spins)
     if ( value3 == 0 )
     {
         priv->spin_value_3 = 0;
-        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_3),_(" disabled"));
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_3),_(" never"));
         g_signal_emit(G_OBJECT(spins),signals[DPMS_VALUE_CHANGED],0,value1,value2,value3);
          
         return;
@@ -315,13 +315,13 @@ void  xfpm_dpms_spins_set_default_values(XfpmDpmsSpins *spins,
 {
     XfpmDpmsSpinsPrivate *priv;
     priv = XFPM_DPMS_SPINS_GET_PRIVATE(spins);
-    if ( spin_1 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),_(" disabled"));
+    if ( spin_1 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),_(" never"));
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_1),spin_1);
     
-    if ( spin_2 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),_(" disabled"));
+    if ( spin_2 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),_(" never"));
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_2),spin_2);
     
-    if ( spin_3 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),_(" disabled"));
+    if ( spin_3 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),_(" never"));
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_3),spin_3);
     
 }   
