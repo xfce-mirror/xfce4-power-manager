@@ -86,7 +86,8 @@ autostart()
     if ( ( home = getenv("HOME")) == NULL )
     {
         xfpm_popup_message(_("Xfce4 Power Manager"),
-                           _("Unable to read HOME environment variable, autostart option may not work"),
+                           _("Unable to read your home directory environment variable,"\
+						    " autostart option may not work"),
                            GTK_MESSAGE_INFO);
         g_warning("Unable to read HOME environment variable, autostart will not work\n");
         return;
@@ -265,9 +266,9 @@ int main(int argc,char **argv)
         {
              /* g_disaster */
             xfpm_popup_message(_("Xfce4 power manager"),
-                              _("Impossible to run Xfce4 power manager, " \
-                              "Please make sure that the hardware abstract layer (HAL) is running "\
-                              "and then message bus daemon (DBus) is running."),
+                              _("Unable to run Xfce4 power manager, " \
+                              "make sure the hardware abstract layer and the message bus daemon "\
+							  "are running "),
                               GTK_MESSAGE_ERROR);
             g_error("Unable to load xfce4 power manager driver\n");        
             g_object_unref(driver);

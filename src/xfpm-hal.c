@@ -637,7 +637,7 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 	if (!mess) 
 	{
 	    *critical = 1;
-	    g_set_error(gerror,0,0,_("Out of memmory"));
+	    g_set_error(gerror,0,0,_("Out of memory"));
 		return FALSE;
 	}	
 	
@@ -726,7 +726,7 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
                                         "Suspend");
 	if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memmory"));
+	    g_set_error(gerror,0,0,_("Out of memory"));
 	    *critical = 1;
 		return FALSE;
 	}	
@@ -819,7 +819,7 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
                                         "SetBrightness");
 	if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memmory"));
+	    g_set_error(gerror,0,0,_("Out of memory"));
 		return;
 	}	
     
@@ -868,7 +868,7 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
                                         "GetBrightness");
 	if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memmory"));
+	    g_set_error(gerror,0,0,_("Out of memory"));
 		return -1;
 	}	
     
@@ -918,7 +918,7 @@ gchar
                                         "GetCPUFreqAvailableGovernors");
     if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memmory"));
+	    g_set_error(gerror,0,0,_("Out of memory"));
 		return NULL;
 	}	
 	
@@ -970,7 +970,7 @@ gchar
     
     if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memmory"));
+	    g_set_error(gerror,0,0,_("Out of memory"));
 		return NULL;
 	}	
 	
@@ -1022,7 +1022,7 @@ xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
                                         "SetCPUFreqGovernor");
     if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memmory"));
+	    g_set_error(gerror,0,0,_("Out of memory"));
 		return;
 	}	
 	                                                            
@@ -1068,7 +1068,7 @@ xfpm_hal_set_power_save (XfpmHal *xfpm_hal,
                                         "SetPowerSave");
     if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memmory"));
+	    g_set_error(gerror,0,0,_("Out of memory"));
 		return;
 	}	
 	                                                            

@@ -512,7 +512,7 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
     // battery is not dis/charging but is not full also
     if ( is_charging == FALSE && is_discharging == FALSE && battery_icon->last_full != charge )
     {
-        strcat(tip,_(" Battery charge"));
+        strcat(tip,_(" Battery charged"));
         xfpm_battery_icon_update(battery_icon,NOT_FULL,remaining_per,ac_adapter_present);
     }
     

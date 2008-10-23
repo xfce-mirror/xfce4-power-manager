@@ -284,9 +284,10 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
 
     const gchar *error;
-        error =  _("Unable to get adapter status, the power manager will not work properly. "\
-                  "Possible reasons: ac adapter driver is not loaded into the kernel "\
-                  "broken connection with the hardware abstract layer or the message bus daemon is not running");
+        error =  _("Unable to read AC adapter status, the power manager will not work properly. "\
+                  "Possible reasons: The AC adapter driver is not loaded, "\
+                  "broken connection with the hardware abstract layer or "\
+				  "the message bus daemon is not running");
     if ( !state_ok && priv->formfactor == SYSTEM_LAPTOP )  
     {
 #ifdef HAVE_LIBNOTIFY         
@@ -879,9 +880,11 @@ static gboolean
 _show_power_management_error_message(XfpmDriver *drv)
 {
      const gchar *error =
-                 _("Unable to use power management service, functionalities like hibernate and shutdown will not work "\
-                  "Possible reasons: you don't have enough permission or a"\
-                  "broken connection with the hardware abstract layer or the message bus daemon is not running");
+                 _("Unable to use power management service, functionalities "\
+				  "like hibernate and suspend will not work "\
+                  "Possible reasons: you don't have enough permission, "\
+                  "broken connection with the hardware abstract layer "\
+				  "or the message bus daemon is not running");
      NotifyNotification *n = xfpm_notify_new(_("Xfce power manager"),
                                              error,
                                              14000,
