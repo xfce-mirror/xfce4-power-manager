@@ -101,7 +101,9 @@ static void xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar
                                                         const gchar *key,gboolean is_removed,
                                                         gboolean is_added,XfpmBattery *batt);
                                                         
-static void xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon);
+static void xfpm_battery_show_critical_options(XfpmBattery *batt,
+											   XfpmBatteryIcon *icon,
+											   XfpmBatteryType battery_type);
 static void xfpm_battery_handle_primary_critical(XfpmBattery *batt,
                                                 XfpmBatteryIcon *icon);
 static void xfpm_battery_handle_ups_critical(XfpmBattery *batt,
@@ -768,7 +770,7 @@ _do_critical_action(NotifyNotification *n,gchar *action,XfpmBattery *batt)
 #endif
 
 static void
-xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon)
+xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon,XfpmBatteryType battery_type)
 {
     XfpmBatteryPrivate *priv;
     priv = XFPM_BATTERY_GET_PRIVATE(batt);
@@ -784,7 +786,7 @@ xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon)
                                              20000,
                                              NOTIFY_URGENCY_CRITICAL,
                                              GTK_STATUS_ICON(icon),
-                                             "gpm-ac-adapter");
+                                             battery_type == PRIMARY ? "gpm-primary-000" : "gpm-ups-000");
     if (priv->power_management & SYSTEM_CAN_SHUTDOWN )
     {
         xfpm_notify_add_action(n,
@@ -858,14 +860,14 @@ xfpm_battery_handle_primary_critical(XfpmBattery *batt,XfpmBatteryIcon *icon)
     
     if ( batt->critical_action == XFPM_DO_NOTHING )
     {
-        xfpm_battery_show_critical_options(batt,icon);
+        xfpm_battery_show_critical_options(batt,icon,PRIMARY);
     }
 }
 
 static void
 xfpm_battery_handle_ups_critical(XfpmBattery *batt,XfpmBatteryIcon *icon)
 {
-    xfpm_battery_show_critical_options(batt,icon);
+    xfpm_battery_show_critical_options(batt,icon,UPS);
 }
 
 static void
