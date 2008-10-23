@@ -6,7 +6,8 @@ images_DATA = cpu-settings.png	\
 	      monitor-settings.png	\
 	      button-settings.png	\
 	      battery.png		\
-	      battery-discharging.png
+	      battery-discharging.png	\
+	      settings.png
 
 EXTRA_DIST = $(images_DATA)
 
