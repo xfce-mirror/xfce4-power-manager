@@ -310,7 +310,7 @@ to display such messages.
   <variablelist>
 
    <varlistentry>
-	<term>Q: Why the icons look very similar to the icon of gnome power manager</term>
+	<term>Q: Why the icons look very similar to the icon of gnome power manager.</term>
 	<listitem>
 	<para>A: No, they are not similar, they are the same, just there is no point of re-drawing icons,
 	gnome power manager icons are good enough. not all of them are used.  
@@ -319,9 +319,9 @@ to display such messages.
 	</varlistentry>
 
 	 <varlistentry>
-	<term>Q: What is the difference between suspend and hibernate</term>
+	<term>Q: What is the difference between suspend and hibernate.</term>
 	<listitem>
-	<para>A: Suspend if a power save feature, when suspending, the computer is still using power,
+	<para>A: Suspend is a power save feature, when suspending, the computer is still using power,
 	since the running applications are kept in the memory, but is the lowest power level the computer
 	can use. 
 	Hibernate saves the system state on the hard drive and turns off the power, when you start up your computer
@@ -331,7 +331,7 @@ to display such messages.
 	</varlistentry>
 	
 	 <varlistentry>
-	<term>Q: Why the options of suspend/hibernate are not there or i can't select them</term>
+	<term>Q: Why the options of suspend/hibernate are not there or i can't select them.</term>
 	<listitem>
 	<para>A: Many possible reasons, for example your kernel doesn't or it's not compiled with suspend/hibernate options.
 	Another possible reason is the fact that you are not allowed to use them.
@@ -340,27 +340,28 @@ to display such messages.
 	</varlistentry>
 	
 	 <varlistentry>
-	<term>Q: How the power manager actually suspend or hibernate my system</term>
+	<term>Q: How the power manager actually suspend or hibernate my system.</term>
 	<listitem>
 	<para>A: The power manager checks if the user is allowed to, then send a DBus message to HAL asking to suspend
-	/hibernate, usually the methods used to suspend or hibernate used by HAL is a script located in /usr/lib/hal/scripts/YourOs.
+	/hibernate, usually the methods to suspend or hibernate used by HAL are scripts located in /usr/lib/hal/scripts/YourOs.
 	</para>
 	</listitem>
 	</varlistentry>
 	
 	 <varlistentry>
 	<term>Q: If the power manager puts the computer in hibernate because my battery charge is critical what will happen
-	if i turn it on again without plugging my adapter</term>
+	if i turn it on again without plugging my adapter.</term>
 	<listitem>
 	<para>A: Nothing actually, the power manager had take the action defined by the user already and understands
-	that the user insist of using the laptop so in the best cases it'll display a popup with options that user can do.
+	that the user insist of using the laptop so in the best cases it'll display a warning popup with options 
+	the user can do.
 	</para>
 	</listitem>
 	</varlistentry>
 	
 	 <varlistentry>
 	<term>Q: I select the option of the lcd brightness control but i don't see the brightness changing when i switch 
-	from AC adapter to battery power</term>
+	from AC adapter to battery power.</term>
 	<listitem>
 	<para>A: You kernel doesn't have the right driver, or the driver isn't loaded.
 	</para>
@@ -376,7 +377,7 @@ to display such messages.
   <title>About &app;</title>
   <para>
 	This power manager was written following the philosophy of Xfce, having leight weight application that does
-	what the user expect for it.
+	what the user expect from it.
 	</para>
 
   <para>To report a bug or make a suggestion regarding this application or
