@@ -440,6 +440,9 @@ xfpm_cpu_get_available_governors(XfpmCpu *cpu)
 		return 0;
 	}
 	
+	guint8 govs = xfpm_cpu_get_all_governors(cpu);
 	
-	return xfpm_cpu_get_all_governors(cpu);
+	if ( govs != priv->governors ) priv->governors = govs;
+	
+	return govs;
 }
