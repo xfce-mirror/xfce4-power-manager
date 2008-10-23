@@ -185,11 +185,9 @@ xfpm_dpms_spins_get_spin1_value_cb(GtkSpinButton *spin_1,XfpmDpmsSpins *spins)
     {
         xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_1),_(" min"));
         priv->spin_value_1 = value1;
-        if ( priv->spin_value_2 == 0 )
-            gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_2),value1+1);   
     }
-        
-    if ( value2 <= value1 )
+    
+    if ( value2 <= value1 && value2 != 0 )
     {
         value2 = value1 + 1;
         /* gtk_spin_button_set_value generate a value-change signal, to avoid receiving
@@ -199,9 +197,17 @@ xfpm_dpms_spins_get_spin1_value_cb(GtkSpinButton *spin_1,XfpmDpmsSpins *spins)
         g_signal_handlers_unblock_by_func(priv->spin_2,xfpm_dpms_spins_get_spin2_value_cb,spins);
     }
     
-    if ( value3 <= value2 )
+    if ( value3 <= value2 && value3 != 0)
     {
         value3 = value2 + 1;
+        g_signal_handlers_block_by_func(priv->spin_3,xfpm_dpms_spins_get_spin3_value_cb,spins);
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_3),value3);
+        g_signal_handlers_unblock_by_func(priv->spin_3,xfpm_dpms_spins_get_spin3_value_cb,spins);
+    }
+	
+	if ( value3 <= value1 && value3 != 0)
+    {
+        value3 = value1 + 1;
         g_signal_handlers_block_by_func(priv->spin_3,xfpm_dpms_spins_get_spin3_value_cb,spins);
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_3),value3);
         g_signal_handlers_unblock_by_func(priv->spin_3,xfpm_dpms_spins_get_spin3_value_cb,spins);
@@ -238,11 +244,9 @@ xfpm_dpms_spins_get_spin2_value_cb(GtkSpinButton *spin_2,XfpmDpmsSpins *spins)
     {
         xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_2),_(" min"));
         priv->spin_value_2 = value2;
-        if ( priv->spin_value_3 == 0 )
-            gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_3),value2+1); 
     }
 
-    if ( value2 <= value1 )
+    if ( value2 <= value1 && value2 != 0)
     {
         value2 = value1 + 1;
         g_signal_handlers_block_by_func(priv->spin_2,xfpm_dpms_spins_get_spin2_value_cb,spins);
@@ -250,7 +254,7 @@ xfpm_dpms_spins_get_spin2_value_cb(GtkSpinButton *spin_2,XfpmDpmsSpins *spins)
         g_signal_handlers_unblock_by_func(priv->spin_2,xfpm_dpms_spins_get_spin2_value_cb,spins);
     } 
         
-    if ( value3 <= value2 )
+    if ( value3 <= value2 && value3 != 0)
     {
         value3 = value2 + 1;
         g_signal_handlers_block_by_func(priv->spin_3,xfpm_dpms_spins_get_spin3_value_cb,spins);
@@ -290,9 +294,17 @@ xfpm_dpms_spins_get_spin3_value_cb(GtkSpinButton *spin_3,XfpmDpmsSpins *spins)
         priv->spin_value_3 = value3;
     }
 
-    if ( value3 <= value2 )
+    if ( value3 <= value2 && value3 != 0 )
     {
         value3 = value2 + 1;
+        g_signal_handlers_block_by_func(priv->spin_3,xfpm_dpms_spins_get_spin3_value_cb,spins);
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_3),value3);
+        g_signal_handlers_unblock_by_func(priv->spin_3,xfpm_dpms_spins_get_spin3_value_cb,spins);
+    }
+	
+	if ( value3 <= value1 && value3 != 0 )
+    {
+        value3 = value1 + 1;
         g_signal_handlers_block_by_func(priv->spin_3,xfpm_dpms_spins_get_spin3_value_cb,spins);
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_3),value3);
         g_signal_handlers_unblock_by_func(priv->spin_3,xfpm_dpms_spins_get_spin3_value_cb,spins);
