@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-24 08:37+0200\n"
+"POT-Creation-Date: 2008-10-24 12:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,8 +33,8 @@ msgid "Are you sure you want to hibernate the system"
 msgstr ""
 
 #: xfpm-ac-adapter.c:359 xfpm-ac-adapter.c:395 xfpm-battery.c:817
-#: xfpm-battery.c:924 xfpm-battery.c:959 xfpm-settings.c:463
-#: xfpm-settings.c:930 xfpm-settings.c:959 xfpm-settings.c:982
+#: xfpm-battery.c:924 xfpm-battery.c:959 xfpm-settings.c:465
+#: xfpm-settings.c:932 xfpm-settings.c:961 xfpm-settings.c:984
 msgid "Hibernate"
 msgstr ""
 
@@ -43,8 +43,8 @@ msgid "Are you sure you want to suspend the system"
 msgstr ""
 
 #: xfpm-ac-adapter.c:373 xfpm-ac-adapter.c:412 xfpm-battery.c:939
-#: xfpm-battery.c:974 xfpm-settings.c:928 xfpm-settings.c:957
-#: xfpm-settings.c:980
+#: xfpm-battery.c:974 xfpm-settings.c:930 xfpm-settings.c:959
+#: xfpm-settings.c:982
 msgid "Suspend"
 msgstr ""
 
@@ -154,8 +154,8 @@ msgstr ""
 msgid "Hibernate the system"
 msgstr ""
 
-#: xfpm-battery.c:824 xfpm-settings.c:459 xfpm-settings.c:932
-#: xfpm-settings.c:961 xfpm-settings.c:984
+#: xfpm-battery.c:824 xfpm-settings.c:461 xfpm-settings.c:934
+#: xfpm-settings.c:963 xfpm-settings.c:986
 msgid "Shutdown"
 msgstr ""
 
@@ -167,26 +167,24 @@ msgstr ""
 msgid "Xfce4 Power Manager"
 msgstr ""
 
-#: xfpm-dpms-spins.c:124
+#: xfpm-dpms-spins.c:48
+msgid "never"
+msgstr ""
+
+#: xfpm-dpms-spins.c:49
+msgid "min"
+msgstr ""
+
+#: xfpm-dpms-spins.c:127
 msgid "Standby after"
 msgstr ""
 
-#: xfpm-dpms-spins.c:128 xfpm-dpms-spins.c:136 xfpm-dpms-spins.c:144
-#: xfpm-dpms-spins.c:186 xfpm-dpms-spins.c:245 xfpm-dpms-spins.c:293
-msgid " min"
-msgstr ""
-
-#: xfpm-dpms-spins.c:132
+#: xfpm-dpms-spins.c:135
 msgid "Suspend after"
 msgstr ""
 
-#: xfpm-dpms-spins.c:140
+#: xfpm-dpms-spins.c:143
 msgid "Turn off after"
-msgstr ""
-
-#: xfpm-dpms-spins.c:178 xfpm-dpms-spins.c:237 xfpm-dpms-spins.c:285
-#: xfpm-dpms-spins.c:330 xfpm-dpms-spins.c:333 xfpm-dpms-spins.c:336
-msgid " never"
 msgstr ""
 
 #: xfpm-driver.c:287
@@ -306,170 +304,170 @@ msgid "Consider battery charge critical"
 msgstr ""
 
 #: xfpm-settings.c:442
-msgid " percent"
+msgid "percent"
 msgstr ""
 
-#: xfpm-settings.c:450
+#: xfpm-settings.c:452
 msgid "When battery charge level is critical do"
 msgstr ""
 
-#: xfpm-settings.c:456 xfpm-settings.c:926 xfpm-settings.c:955
-#: xfpm-settings.c:978
+#: xfpm-settings.c:458 xfpm-settings.c:928 xfpm-settings.c:957
+#: xfpm-settings.c:980
 msgid "Nothing"
 msgstr ""
 
-#: xfpm-settings.c:477
+#: xfpm-settings.c:479
 msgid "Enable ups charge notification"
 msgstr ""
 
-#: xfpm-settings.c:477
+#: xfpm-settings.c:479
 msgid "Enable battery state notification"
 msgstr ""
 
-#: xfpm-settings.c:491
+#: xfpm-settings.c:493
 msgid "Enable power save on ups power"
 msgstr ""
 
-#: xfpm-settings.c:491
+#: xfpm-settings.c:493
 msgid "Enable power save on battery power"
 msgstr ""
 
-#: xfpm-settings.c:530 xfpm-settings.c:623
+#: xfpm-settings.c:532 xfpm-settings.c:625
 msgid "Performance"
 msgstr ""
 
-#: xfpm-settings.c:535 xfpm-settings.c:628
+#: xfpm-settings.c:537 xfpm-settings.c:630
 msgid "Ondemand"
 msgstr ""
 
-#: xfpm-settings.c:539 xfpm-settings.c:632
+#: xfpm-settings.c:541 xfpm-settings.c:634
 msgid "Userspace"
 msgstr ""
 
-#: xfpm-settings.c:543 xfpm-settings.c:636
+#: xfpm-settings.c:545 xfpm-settings.c:638
 msgid "Powersave"
 msgstr ""
 
-#: xfpm-settings.c:547 xfpm-settings.c:640
+#: xfpm-settings.c:549 xfpm-settings.c:642
 msgid "Conservative"
 msgstr ""
 
-#: xfpm-settings.c:615
+#: xfpm-settings.c:617
 msgid "CPU governor settings on ups power"
 msgstr ""
 
-#: xfpm-settings.c:615
+#: xfpm-settings.c:617
 msgid "CPU governor settings on battery power"
 msgstr ""
 
-#: xfpm-settings.c:714
+#: xfpm-settings.c:716
 msgid "No CPU governor found"
 msgstr ""
 
-#: xfpm-settings.c:724
+#: xfpm-settings.c:726
 msgid "CPU frequency control cannot be used"
 msgstr ""
 
-#: xfpm-settings.c:736
+#: xfpm-settings.c:738
 msgid "Cpu freq settings on electric power"
 msgstr ""
 
-#: xfpm-settings.c:736
+#: xfpm-settings.c:738
 msgid "Cpu freq settings"
 msgstr ""
 
-#: xfpm-settings.c:758
+#: xfpm-settings.c:760
 msgid "Enable lcd brigthness control"
 msgstr ""
 
-#: xfpm-settings.c:780
+#: xfpm-settings.c:782
 msgid "Monitor DPMS settings on ups power"
 msgstr ""
 
-#: xfpm-settings.c:780
+#: xfpm-settings.c:782
 msgid "Monitor DPMS settings on battery power"
 msgstr ""
 
-#: xfpm-settings.c:868
+#: xfpm-settings.c:870
 msgid "Monitor settings on electric power"
 msgstr ""
 
-#: xfpm-settings.c:868
+#: xfpm-settings.c:870
 msgid "Monitor settings"
 msgstr ""
 
-#: xfpm-settings.c:881
+#: xfpm-settings.c:883
 msgid "Your monitor doesn't support DPMS control"
 msgstr ""
 
-#: xfpm-settings.c:912
+#: xfpm-settings.c:914
 msgid "Keyboard shortcuts"
 msgstr ""
 
-#: xfpm-settings.c:921
+#: xfpm-settings.c:923
 msgid "When power button is pressed do"
 msgstr ""
 
-#: xfpm-settings.c:947
+#: xfpm-settings.c:949
 msgid "When sleep button is pressed do"
 msgstr ""
 
-#: xfpm-settings.c:972
+#: xfpm-settings.c:974
 msgid "When lid button is pressed do"
 msgstr ""
 
-#: xfpm-settings.c:996
+#: xfpm-settings.c:998
 msgid "No available keyboard shortcuts found"
 msgstr ""
 
-#: xfpm-settings.c:1012
+#: xfpm-settings.c:1014
 msgid "General Options"
 msgstr ""
 
-#: xfpm-settings.c:1019
+#: xfpm-settings.c:1021
 msgid "System tray icon"
 msgstr ""
 
-#: xfpm-settings.c:1025
+#: xfpm-settings.c:1027
 msgid "Always Display an icon"
 msgstr ""
 
-#: xfpm-settings.c:1026
+#: xfpm-settings.c:1028
 msgid "When battery is present"
 msgstr ""
 
-#: xfpm-settings.c:1029
+#: xfpm-settings.c:1031
 msgid "When battery is charging or discharging"
 msgstr ""
 
-#: xfpm-settings.c:1045
+#: xfpm-settings.c:1047
 msgid "Enable CPU freq scaling control"
 msgstr ""
 
-#: xfpm-settings.c:1058
+#: xfpm-settings.c:1060
 msgid "Enable DPMS control"
 msgstr ""
 
-#: xfpm-settings.c:1115
+#: xfpm-settings.c:1117
 msgid "Advanced settings"
 msgstr ""
 
-#: xfpm-settings.c:1132 xfpm-settings.c:1137
+#: xfpm-settings.c:1134 xfpm-settings.c:1139
 msgid "Cpu settings"
 msgstr ""
 
-#: xfpm-settings.c:1147 xfpm-settings.c:1152
+#: xfpm-settings.c:1149 xfpm-settings.c:1154
 msgid "Battery settings"
 msgstr ""
 
-#: xfpm-settings.c:1163 xfpm-settings.c:1168
+#: xfpm-settings.c:1165 xfpm-settings.c:1170
 msgid "Shortcuts"
 msgstr ""
 
-#: xfpm-settings.c:1178 xfpm-settings.c:1183
+#: xfpm-settings.c:1180 xfpm-settings.c:1185
 msgid "Monitor Settings"
 msgstr ""
 
-#: xfpm-settings.c:1215
+#: xfpm-settings.c:1217
 msgid "Power Manager Preferences"
 msgstr ""

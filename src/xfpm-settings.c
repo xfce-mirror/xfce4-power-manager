@@ -439,7 +439,9 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
     gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,0,1);
     
     critical_spin = xfpm_spin_button_new_with_range(1,20,1);
-    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(critical_spin),_(" percent"));
+	gchar *suffix = g_strdup_printf(" %s",_("percent"));
+    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(critical_spin),suffix);
+	g_free(suffix);
     gtk_widget_show(critical_spin);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(critical_spin),
                               xfconf_channel_get_uint(channel,CRITICAL_BATT_CFG,10));

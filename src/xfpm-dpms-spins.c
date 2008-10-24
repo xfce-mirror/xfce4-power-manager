@@ -45,6 +45,9 @@
 #define _(x) x
 #endif
 
+#define SUFFIX_NEVER _("never")
+#define SUFFIX_MIN   _("min")
+
 #ifdef HAVE_DPMS
 
 /* init */
@@ -120,12 +123,12 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
                  NULL);
                  
     GtkWidget *label;
-    
+	gchar *suffix = g_strdup_printf(" %s",SUFFIX_MIN);
     label = gtk_label_new(_("Standby after"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,0,1);
     priv->spin_1 = xfpm_spin_button_new_with_range(0,298,1);
-    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),_(" min"));
+    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),suffix);
     gtk_widget_show(priv->spin_1);
     gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_1,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
     
@@ -133,7 +136,7 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,1,2);
     priv->spin_2 = xfpm_spin_button_new_with_range(0,299,1);
-    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),_(" min"));
+    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),suffix);
     gtk_widget_show(priv->spin_2);
     gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_2,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
     
@@ -141,7 +144,7 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,2,3);
     priv->spin_3 = xfpm_spin_button_new_with_range(0,300,1);
-    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),_(" min"));
+    xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),suffix);
     gtk_widget_show(priv->spin_3);
     gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_3,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);
     
@@ -150,6 +153,7 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
     g_signal_connect(priv->spin_1,"value-changed",G_CALLBACK(xfpm_dpms_spins_get_spin1_value_cb),dpms_spins);
     g_signal_connect(priv->spin_2,"value-changed",G_CALLBACK(xfpm_dpms_spins_get_spin2_value_cb),dpms_spins);
     g_signal_connect(priv->spin_3,"value-changed",G_CALLBACK(xfpm_dpms_spins_get_spin3_value_cb),dpms_spins);
+	g_free(suffix);
 }
 
 static void
@@ -171,20 +175,24 @@ xfpm_dpms_spins_get_spin1_value_cb(GtkSpinButton *spin_1,XfpmDpmsSpins *spins)
     value1 = gtk_spin_button_get_value(spin_1);
     value2 = gtk_spin_button_get_value(GTK_SPIN_BUTTON(priv->spin_2));
     value3 = gtk_spin_button_get_value(GTK_SPIN_BUTTON(priv->spin_3));
-    
+	
     if ( value1 == 0 )
     {
         priv->spin_value_1 = 0;
-        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_1),_(" never"));
+		gchar *suffix = g_strdup_printf(" %s",SUFFIX_NEVER);
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_1),suffix);
         g_signal_emit(G_OBJECT(spins),signals[DPMS_VALUE_CHANGED],0,
                   value1,value2,value3);
+		g_free(suffix);
         return;
     }
 
     if ( priv->spin_value_1 == 0 )
     {
-        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_1),_(" min"));
+		gchar *suffix = g_strdup_printf(" %s",SUFFIX_MIN);
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_1),suffix);
         priv->spin_value_1 = value1;
+		g_free(suffix);
     }
     
     if ( value2 <= value1 && value2 != 0 )
@@ -234,16 +242,20 @@ xfpm_dpms_spins_get_spin2_value_cb(GtkSpinButton *spin_2,XfpmDpmsSpins *spins)
     if ( value2 == 0 )
     {
         priv->spin_value_2 = 0;
-        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_2),_(" never"));
+		gchar *suffix = g_strdup_printf(" %s",SUFFIX_NEVER);
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_2),suffix);
         g_signal_emit(G_OBJECT(spins),signals[DPMS_VALUE_CHANGED],0,value1,value2,value3);
+		g_free(suffix);
          
         return;
     }
     
     if ( priv->spin_value_2 == 0 )
     {
-        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_2),_(" min"));
+		gchar *suffix = g_strdup_printf(" %s",SUFFIX_MIN);
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_2),suffix);
         priv->spin_value_2 = value2;
+		g_free(suffix);
     }
 
     if ( value2 <= value1 && value2 != 0)
@@ -282,16 +294,19 @@ xfpm_dpms_spins_get_spin3_value_cb(GtkSpinButton *spin_3,XfpmDpmsSpins *spins)
     if ( value3 == 0 )
     {
         priv->spin_value_3 = 0;
-        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_3),_(" never"));
+		gchar *suffix = g_strdup_printf(" %s",SUFFIX_NEVER);
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_3),suffix);
         g_signal_emit(G_OBJECT(spins),signals[DPMS_VALUE_CHANGED],0,value1,value2,value3);
-         
+         g_free(suffix);
         return;
     }
     
     if ( priv->spin_value_3 == 0 )
     {
-        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_3),_(" min"));
+		gchar *suffix = g_strdup_printf(" %s",SUFFIX_NEVER);
+        xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_3),suffix);
         priv->spin_value_3 = value3;
+		g_free(suffix);
     }
 
     if ( value3 <= value2 && value3 != 0 )
@@ -327,15 +342,18 @@ void  xfpm_dpms_spins_set_default_values(XfpmDpmsSpins *spins,
 {
     XfpmDpmsSpinsPrivate *priv;
     priv = XFPM_DPMS_SPINS_GET_PRIVATE(spins);
-    if ( spin_1 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),_(" never"));
+	gchar *suffix = g_strdup_printf(" %s",SUFFIX_NEVER);
+	
+    if ( spin_1 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),suffix);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_1),spin_1);
     
-    if ( spin_2 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),_(" never"));
+    if ( spin_2 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),suffix);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_2),spin_2);
     
-    if ( spin_3 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),_(" never"));
+    if ( spin_3 == 0) xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),suffix);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(priv->spin_3),spin_3);
     
+	g_free(suffix);
 }   
 
 void   
