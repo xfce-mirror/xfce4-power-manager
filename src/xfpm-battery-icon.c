@@ -520,7 +520,7 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
     //battery is charging
     if ( is_charging == TRUE && is_discharging == FALSE )
     {
-        strcat(tip,_("Battery is charging "));
+        strcat(tip,_("Battery is charging"));
         xfpm_battery_icon_update(battery_icon,CHARGING,remaining_per,ac_adapter_present);
     }
     
