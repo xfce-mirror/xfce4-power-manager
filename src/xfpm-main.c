@@ -268,7 +268,7 @@ int main(int argc,char **argv)
             xfpm_popup_message(_("Xfce4 power manager"),
                               _("Unable to run Xfce4 power manager, " \
                               "make sure the hardware abstract layer and the message bus daemon "\
-							  "are running "),
+							  "are running"),
                               GTK_MESSAGE_ERROR);
             g_error("Unable to load xfce4 power manager driver\n");        
             g_object_unref(driver);

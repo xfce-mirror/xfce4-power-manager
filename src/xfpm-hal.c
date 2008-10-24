@@ -698,7 +698,7 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
         g_set_error(gerror,0,0,_("Error occured while trying to suspend"));
         return FALSE;	
     default:
-        g_set_error(gerror,0,0,_("Unknow reply from the message daemon"));
+        g_set_error(gerror,0,0,_("Unknown reply from the message daemon"));
         dbus_message_unref(reply);
         return FALSE;	
     }
@@ -789,7 +789,7 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
         g_set_error(gerror,0,0,_("Error occured while trying to suspend"));
         return FALSE;	
     default:
-        g_set_error(gerror,0,0,_("Unknow reply from the message daemon"));
+        g_set_error(gerror,0,0,_("Unknown reply from the message daemon"));
         dbus_message_unref(reply);
         return FALSE;	
     }

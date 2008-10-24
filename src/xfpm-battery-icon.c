@@ -501,25 +501,26 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
     
     sprintf(tip,"%i",remaining_per);
     strcat(tip,_("%"));
+	strcat(tip," ");
     
     // battery is full
     if ( is_charging == FALSE && is_discharging == FALSE && battery_icon->last_full == charge )
     {
-        strcat(tip,_(" Battery fully charged"));
+        strcat(tip,_("Battery fully charged"));
         xfpm_battery_icon_update(battery_icon,FULL,remaining_per,ac_adapter_present);
     }
     
     // battery is not dis/charging but is not full also
     if ( is_charging == FALSE && is_discharging == FALSE && battery_icon->last_full != charge )
     {
-        strcat(tip,_(" Battery charge level"));
+        strcat(tip,_("Battery charge level"));
         xfpm_battery_icon_update(battery_icon,NOT_FULL,remaining_per,ac_adapter_present);
     }
     
     //battery is charging
     if ( is_charging == TRUE && is_discharging == FALSE )
     {
-        strcat(tip,_(" Battery is charging "));
+        strcat(tip,_("Battery is charging "));
         xfpm_battery_icon_update(battery_icon,CHARGING,remaining_per,ac_adapter_present);
     }
     
@@ -531,22 +532,22 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
             if ( !ac_adapter_present )
             {
                 strcat(tip,
-                battery_icon->type == PRIMARY ? _(" Running on battery"): _(" Battery is discharging"));
+                battery_icon->type == PRIMARY ? _("Running on battery"): _("Battery is discharging"));
             }
             else
             {
-                strcat(tip,_(" Battery is discharging"));
+                strcat(tip,_("Battery is discharging"));
             }
             xfpm_battery_icon_update(battery_icon,DISCHARGING,remaining_per,ac_adapter_present);
         } 
         else if ( remaining_per <= ( critical_level+10 ) && remaining_per > critical_level )
         {
-            strcat(tip,_(" Battery charge level is low"));
+            strcat(tip,_("Battery charge level is low"));
             xfpm_battery_icon_update(battery_icon,LOW,20,ac_adapter_present);
         }
         else if ( remaining_per <= critical_level )
         {
-            strcat(tip,_(" Battery charge level is critical"));
+            strcat(tip,_("Battery charge level is critical"));
             xfpm_battery_icon_update(battery_icon,CRITICAL,0,ac_adapter_present);
         }
     }

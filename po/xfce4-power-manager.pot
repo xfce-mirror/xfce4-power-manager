@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-23 14:49+0200\n"
+"POT-Creation-Date: 2008-10-24 08:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,22 +28,22 @@ msgstr ""
 msgid "Adapter is offline"
 msgstr ""
 
-#: xfpm-ac-adapter.c:357 xfpm-battery.c:920
+#: xfpm-ac-adapter.c:357 xfpm-battery.c:922
 msgid "Are you sure you want to hibernate the system"
 msgstr ""
 
-#: xfpm-ac-adapter.c:359 xfpm-ac-adapter.c:395 xfpm-battery.c:815
-#: xfpm-battery.c:922 xfpm-battery.c:957 xfpm-settings.c:463
+#: xfpm-ac-adapter.c:359 xfpm-ac-adapter.c:395 xfpm-battery.c:817
+#: xfpm-battery.c:924 xfpm-battery.c:959 xfpm-settings.c:463
 #: xfpm-settings.c:930 xfpm-settings.c:959 xfpm-settings.c:982
 msgid "Hibernate"
 msgstr ""
 
-#: xfpm-ac-adapter.c:371 xfpm-battery.c:935
+#: xfpm-ac-adapter.c:371 xfpm-battery.c:937
 msgid "Are you sure you want to suspend the system"
 msgstr ""
 
-#: xfpm-ac-adapter.c:373 xfpm-ac-adapter.c:412 xfpm-battery.c:937
-#: xfpm-battery.c:972 xfpm-settings.c:928 xfpm-settings.c:957
+#: xfpm-ac-adapter.c:373 xfpm-ac-adapter.c:412 xfpm-battery.c:939
+#: xfpm-battery.c:974 xfpm-settings.c:928 xfpm-settings.c:957
 #: xfpm-settings.c:980
 msgid "Suspend"
 msgstr ""
@@ -60,7 +60,7 @@ msgstr ""
 msgid "You are running on Battery"
 msgstr ""
 
-#: xfpm-battery-icon.c:353
+#: xfpm-battery-icon.c:353 xfpm-battery-icon.c:535 xfpm-battery-icon.c:539
 msgid "Battery is discharging"
 msgstr ""
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "Your battery is fully charged"
 msgstr ""
 
-#: xfpm-battery-icon.c:393 xfpm-battery.c:782 xfpm-driver.c:300
+#: xfpm-battery-icon.c:393 xfpm-battery.c:784 xfpm-driver.c:300
 #: xfpm-driver.c:888
 msgid "Xfce power manager"
 msgstr ""
@@ -89,76 +89,72 @@ msgstr ""
 msgid "%"
 msgstr ""
 
-#: xfpm-battery-icon.c:508
-msgid " Battery fully charged"
+#: xfpm-battery-icon.c:509
+msgid "Battery fully charged"
 msgstr ""
 
-#: xfpm-battery-icon.c:515
-msgid " Battery charge level"
+#: xfpm-battery-icon.c:516
+msgid "Battery charge level"
 msgstr ""
 
-#: xfpm-battery-icon.c:522
-msgid " Battery is charging "
+#: xfpm-battery-icon.c:523
+msgid "Battery is charging "
 msgstr ""
 
-#: xfpm-battery-icon.c:534
-msgid " Running on battery"
+#: xfpm-battery-icon.c:535
+msgid "Running on battery"
 msgstr ""
 
-#: xfpm-battery-icon.c:534 xfpm-battery-icon.c:538
-msgid " Battery is discharging"
+#: xfpm-battery-icon.c:545
+msgid "Battery charge level is low"
 msgstr ""
 
-#: xfpm-battery-icon.c:544
-msgid " Battery charge level is low"
+#: xfpm-battery-icon.c:550
+msgid "Battery charge level is critical"
 msgstr ""
 
-#: xfpm-battery-icon.c:549
-msgid " Battery charge level is critical"
-msgstr ""
-
-#: xfpm-battery-icon.c:568
+#: xfpm-battery-icon.c:569
 msgid ""
 "\n"
 "Estimated time left"
 msgstr ""
 
-#: xfpm-battery-icon.c:573
+#: xfpm-battery-icon.c:574
 msgid ""
 "\n"
 "Estimated time to charge"
 msgstr ""
 
-#: xfpm-battery-icon.c:577
+#: xfpm-battery-icon.c:578
 msgid "hours"
 msgstr ""
 
-#: xfpm-battery-icon.c:577
+#: xfpm-battery-icon.c:578
 msgid "hour"
 msgstr ""
 
-#: xfpm-battery-icon.c:578
+#: xfpm-battery-icon.c:579
 msgid "minutes"
 msgstr ""
 
-#: xfpm-battery-icon.c:578
+#: xfpm-battery-icon.c:579
 msgid "minute"
 msgstr ""
 
-#: xfpm-battery.c:777
+#: xfpm-battery.c:779
 msgid ""
 "Your battery charge level is critical save your work to avoid losing data"
 msgstr ""
 
-#: xfpm-battery.c:792
+#: xfpm-battery.c:794
 msgid "Shutdown the system"
 msgstr ""
 
-#: xfpm-battery.c:800
+#: xfpm-battery.c:802
 msgid "Hibernate the system"
 msgstr ""
 
-#: xfpm-battery.c:822 xfpm-settings.c:459 xfpm-settings.c:932
+#: xfpm-battery.c:824 xfpm-settings.c:459 xfpm-settings.c:932
 #: xfpm-settings.c:961 xfpm-settings.c:984
 msgid "Shutdown"
 msgstr ""
@@ -242,7 +238,7 @@ msgid "Error occured while trying to suspend"
 msgstr ""
 
 #: xfpm-hal.c:701 xfpm-hal.c:792
-msgid "Unknow reply from the message daemon"
+msgid "Unknown reply from the message daemon"
 msgstr ""
 
 #: xfpm-hal.c:761
@@ -294,7 +290,7 @@ msgstr ""
 #: xfpm-main.c:269
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
-"the message bus daemon are running "
+"the message bus daemon are running"
 msgstr ""
 
 #: xfpm-settings.c:433
