@@ -735,7 +735,7 @@ xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop,gboole
         GtkWidget *frame;
         frame = xfpm_settings_cpu_on_ac_adapter(channel,
                                                 govs,
-                                                laptop || ups ? _("Cpu freq settings on electric power") : _("Cpu freq settings"));
+                                                laptop || ups ? _("CPU freq settings on electric power") : _("CPU freq settings"));
         gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
         
         if ( laptop || ups )
@@ -757,7 +757,7 @@ xfpm_settings_lcd_brightness(XfconfChannel *channel,gboolean laptop,gboolean lcd
     if ( laptop && lcd) 
     {
         GtkWidget *label;
-        label = gtk_label_new(_("Enable lcd brigthness control"));
+        label = gtk_label_new(_("Enable LCD brightness control"));
         gtk_widget_show(label);
         gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE,0);
         
@@ -779,7 +779,7 @@ static GtkWidget *
 xfpm_settings_dpms_on_battery(XfconfChannel *channel,gboolean ups)
 {
     GtkWidget *frame,*align;  
-    frame = xfce_create_framebox(ups ? _("Monitor DPMS settings on ups power") : _("Monitor DPMS settings on battery power"), &align);
+    frame = xfce_create_framebox(ups ? _("Monitor settings on UPS power") : _("Monitor settings on battery power"), &align);
     gtk_widget_show(frame);
     
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
@@ -971,7 +971,7 @@ xfpm_settings_keys(XfconfChannel *channel,
     /// Lid Button
     if ( laptop && ( switch_buttons & LID_SWITCH ) )
     {
-        label = gtk_label_new(_("When lid button is pressed do"));
+        label = gtk_label_new(_("When laptop lid is closed"));
         gtk_widget_show(label);
         gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
         GtkWidget *lid_button;
@@ -1131,12 +1131,12 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups)
     gtk_list_store_append(list_store,&iter);
     if ( pix )
     {
-        gtk_list_store_set(list_store,&iter,0,pix,1,_("Cpu settings"),2,0,-1);
+        gtk_list_store_set(list_store,&iter,0,pix,1,_("CPU settings"),2,0,-1);
         g_object_unref(pix);
     }
     else
     {
-        gtk_list_store_set(list_store,&iter,1,_("Cpu settings"),2,0,-1);
+        gtk_list_store_set(list_store,&iter,1,_("CPU settings"),2,0,-1);
     }
     
     /// Battery Settings

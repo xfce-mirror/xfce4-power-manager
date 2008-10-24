@@ -334,14 +334,14 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,
             icon_name = g_strdup_printf("%s-%s",icon_prefix,
                             xfpm_battery_icon_get_index(battery_icon->type,level));
 #ifdef HAVE_LIBNOTIFY 
-            message = _("Your battery charge level is low");
+            message = _("Your battery charge is low");
 #endif
             break;
         case CRITICAL:
             icon_name = g_strdup_printf("%s-%s",icon_prefix,
                             xfpm_battery_icon_get_index(battery_icon->type,level));
 #ifdef HAVE_LIBNOTIFY 
-            message = _("Your battery charge level is critical");
+            message = _("Your battery is almost empty");
 #endif
             break;    
         case DISCHARGING:
@@ -542,12 +542,12 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
         } 
         else if ( remaining_per <= ( critical_level+10 ) && remaining_per > critical_level )
         {
-            strcat(tip,_("Battery charge level is low"));
+            strcat(tip,_("Battery charge is low"));
             xfpm_battery_icon_update(battery_icon,LOW,20,ac_adapter_present);
         }
         else if ( remaining_per <= critical_level )
         {
-            strcat(tip,_("Battery charge level is critical"));
+            strcat(tip,_("Battery is almost empty"));
             xfpm_battery_icon_update(battery_icon,CRITICAL,0,ac_adapter_present);
         }
     }

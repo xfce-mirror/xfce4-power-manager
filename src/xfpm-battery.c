@@ -776,7 +776,7 @@ xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon,XfpmB
     priv = XFPM_BATTERY_GET_PRIVATE(batt);
     
     const gchar *message;
-    message = _("Your battery charge level is critical "\
+    message = _("Your battery is almost empty. "\
               "save your work to avoid losing data");
               
 #ifdef HAVE_LIBNOTIFY            
@@ -919,7 +919,7 @@ static void
 xfpm_battery_hibernate_callback(GtkWidget *widget,XfpmBattery *batt)
 {
     gboolean ret = 
-    xfce_confirm(_("Are you sure you want to hibernate the system"),
+    xfce_confirm(_("Are you sure you want to hibernate the system ?"),
                 GTK_STOCK_YES,
                 _("Hibernate"));
     
@@ -934,7 +934,7 @@ static void
 xfpm_battery_suspend_callback(GtkWidget *widget,XfpmBattery *batt)
 {
     gboolean ret = 
-    xfce_confirm(_("Are you sure you want to suspend the system"),
+    xfce_confirm(_("Are you sure you want to suspend the system ?"),
                 GTK_STOCK_YES,
                 _("Suspend"));
     
