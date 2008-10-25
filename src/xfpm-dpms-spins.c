@@ -303,7 +303,7 @@ xfpm_dpms_spins_get_spin3_value_cb(GtkSpinButton *spin_3,XfpmDpmsSpins *spins)
     
     if ( priv->spin_value_3 == 0 )
     {
-		gchar *suffix = g_strdup_printf(" %s",SUFFIX_NEVER);
+		gchar *suffix = g_strdup_printf(" %s",SUFFIX_MIN);
         xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(spin_3),suffix);
         priv->spin_value_3 = value3;
 		g_free(suffix);
