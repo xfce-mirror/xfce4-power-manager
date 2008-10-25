@@ -1057,7 +1057,7 @@ xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean 
     
 #ifdef HAVE_DPMS
     gboolean dpms_enabled;
-    label = gtk_label_new(_("Enable DPMS control"));
+    label = gtk_label_new(_("Enable monitor power management control"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
     dpms_op = gtk_check_button_new();
