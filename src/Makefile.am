@@ -1,26 +1,3 @@
-INCLUDES =							\
-			$(GTK_CFLAGS)				\
-			$(GLIB_CFLAGS)				\
-			$(DBUS_CFLAGS)				\
-			$(DBUS_GLIB_CFLAGS)			\
-			$(HAL_CFLAGS)				\
-			$(LIBXFCEGUI_CFLAGS)			\
-			$(XFCONF_CFLAGS)			\
-			$(LIBNOTIFY_CFLAGS)			\
-			$(DPMS_CFLAGS)              \
-			-DLOCALEDIR=\"$(localedir)\"
-
-
-LIBS     =		$(GTK_LIBS)				\
-			$(GLIB_LIBS)				\
-			$(DBUS_LIBS)				\
-			$(DBUS_GLIB_LIBS)			\
-			$(LIBXFCEGUI_LIBS)			\
-			$(HAL_LIBS)				\
-			$(XFCONF_LIBS)				\
-			$(LIBNOTIFY_LIBS)			\
-			$(DPMS_LIBS)		
-
 bin_PROGRAMS = xfce4-power-manager
 
 generated_files =						\
@@ -33,7 +10,7 @@ generated_files =						\
 xfce4_power_manager_SOURCES = 	$(generated_files)		\
 				xfpm-main.c			\
 				xfpm-debug.h			\
-                xfpm-hal.c          		\
+		                xfpm-hal.c          		\
 				xfpm-hal.h	     		\
 				xfpm-driver.c			\
 				xfpm-driver.h			\
@@ -57,8 +34,8 @@ xfce4_power_manager_SOURCES = 	$(generated_files)		\
 				xfpm-dpms.h			\
 				xfpm-dpms-spins.c		\
 				xfpm-dpms-spins.h		\
-				xfpm-popups.c           \
-				xfpm-popups.h           \
+				xfpm-popups.c           	\
+				xfpm-popups.h           	\
 				xfpm-notify.c			\
 				xfpm-notify.h			\
 				xfpm-enums.h			\
@@ -66,6 +43,32 @@ xfce4_power_manager_SOURCES = 	$(generated_files)		\
 				xfpm-settings.h			\
 				xfpm-common.c			\
 				xfpm-common.h
+
+xfce4_power_manager_CFLAGS =					\
+			-DLOCALEDIR=\"$(localedir)\"		\
+			$(GTK_CFLAGS)				\
+			$(GLIB_CFLAGS)				\
+			$(DBUS_CFLAGS)				\
+			$(DBUS_GLIB_CFLAGS)			\
+			$(HAL_CFLAGS)				\
+			$(LIBXFCEGUI_CFLAGS)			\
+			$(LIBXFCEUTIL_CFLAGS)			\
+			$(XFCONF_CFLAGS)			\
+			$(LIBNOTIFY_CFLAGS)			\
+			$(DPMS_CFLAGS)              	
+
+xfce4_power_manager_LDADD   =					\
+			$(GTK_LIBS)				\
+			$(GLIB_LIBS)				\
+			$(DBUS_LIBS)				\
+			$(DBUS_GLIB_LIBS)			\
+			$(LIBXFCEGUI_LIBS)			\
+			$(LIBXFCEUTIL_LIBS)			\
+			$(HAL_LIBS)				\
+			$(XFCONF_LIBS)				\
+			$(LIBNOTIFY_LIBS)			\
+			$(DPMS_LIBS)		
+
 
 EXTRA_DIST = 						\
 	xfpm-marshal.list				\

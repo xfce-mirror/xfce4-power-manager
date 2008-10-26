@@ -42,6 +42,7 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
+#include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 
 #include "xfpm-driver.h"
@@ -49,10 +50,6 @@
 #include "xfpm-dbus-messages.h"
 #include "xfpm-popups.h"
 #include "xfpm-debug.h"
-
-#ifndef _
-#define _(x) x
-#endif
 
 enum 
 {

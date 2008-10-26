@@ -19,21 +19,35 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <stdio.h>
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
 #include <gtk/gtk.h>
 
 #include <glib.h>
 
-#include <string.h>
+#include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-battery-icon.h"
 #include "xfpm-notify.h"
 #include "xfpm-debug.h"
 #include "xfpm-common.h"
 #include "xfpm-enum-types.h"
-
-#ifndef _
-#define _(x) x
-#endif
 
 /* init */
 static void xfpm_battery_icon_init(XfpmBatteryIcon *battery_icon);

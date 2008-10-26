@@ -19,6 +19,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <stdio.h>
 
 #ifdef HAVE_STDLIB_H
@@ -37,13 +41,11 @@
 #include <unistd.h>
 #endif
 
+#include <libxfce4util/libxfce4util.h>
+
 #include "xfpm-dpms-spins.h"
 #include "xfpm-spin-button.h"
 #include "xfpm-marshal.h"
-
-#ifndef _
-#define _(x) x
-#endif
 
 #define SUFFIX_NEVER _("never")
 #define SUFFIX_MIN   _("min")
