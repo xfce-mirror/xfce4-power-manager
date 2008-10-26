@@ -430,11 +430,11 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
     
     table = gtk_table_new(4,2,TRUE);
     gtk_widget_show(table);
-    frame = xfce_create_framebox(ups_found ? _("Ups configuration") :_("Battery configuration"), &align);
+    frame = xfce_create_framebox(ups_found ? _("UPS configuration") :_("Battery configuration"), &align);
     gtk_widget_show(frame);
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
     
-    label = gtk_label_new(ups_found ? ("Consider ups charge critical"):_("Consider battery charge critical"));
+    label = gtk_label_new(ups_found ? _("Consider UPS charge critical"):_("Consider battery charge critical"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,0,1);
     
@@ -476,7 +476,7 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
 
 #ifdef HAVE_LIBNOTIFY
     GtkWidget *notify_bt;        
-    label = gtk_label_new(ups_found ? _("Enable ups charge notification") :_("Enable battery state notification"));
+    label = gtk_label_new(ups_found ? _("Enable UPS charge notification") :_("Enable battery state notification"));
     gtk_widget_show(label);
     gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
     notify_bt = gtk_check_button_new();
@@ -490,7 +490,7 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
 	{
 		// Power Save Profile
 		GtkWidget *power_save;        
-		label = gtk_label_new(ups_found ? _("Enable power save on ups power") : _("Enable power save on battery power"));
+		label = gtk_label_new(ups_found ? _("Enable power save on UPS power") : _("Enable power save on battery power"));
 		gtk_widget_show(label);
 		gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
 		power_save = gtk_check_button_new();
@@ -614,7 +614,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean u
     guint current_governor = xfconf_channel_get_uint(channel,ON_BATT_CPU_GOV_CFG,POWERSAVE);
     gboolean enable = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
     
-    frame = xfce_create_framebox(ups ? _("CPU governor settings on ups power") : _("CPU governor settings on battery power"), &align);
+    frame = xfce_create_framebox(ups ? _("CPU governor settings on UPS power") : _("CPU governor settings on battery power"), &align);
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
     gtk_widget_show(frame);
     
