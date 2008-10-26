@@ -366,16 +366,6 @@ xfpm_battery_finalize(GObject *object)
     G_OBJECT_CLASS(xfpm_battery_parent_class)->finalize(object);
 }
 
-#ifdef HAVE_LIBNOTIFY
-static gboolean
-_hide_battery(gpointer data)
-{
-    XfpmBatteryIcon *icon = (XfpmBatteryIcon*) data;
-    g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
-    return FALSE;
-}
-#endif
-
 static void
 xfpm_battery_refresh_tray_icon(XfpmBattery *batt)
 {
@@ -444,12 +434,7 @@ xfpm_battery_refresh_tray_icon(XfpmBattery *batt)
                 }
                 else
                 {
-#ifdef HAVE_LIBNOTIFY
-                    if ( batt->notify_enabled ) g_timeout_add_seconds(6,(GSourceFunc)_hide_battery,icon);
-                    else g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
-#else                    
                     g_object_set(G_OBJECT(icon),"visible",FALSE,NULL);
-#endif                    
                 }
             }
         }
