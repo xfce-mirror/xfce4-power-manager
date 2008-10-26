@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-26 23:36+0100\n"
+"POT-Creation-Date: 2008-10-27 00:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,188 +16,402 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: xfpm-ac-adapter.c:216
+#: ../src/xfpm-ac-adapter.c:216
 msgid "Unkown adapter status, the power manager will not work properly"
 msgstr ""
 
-#: xfpm-ac-adapter.c:285 xfpm-ac-adapter.c:307
+#: ../src/xfpm-ac-adapter.c:285 ../src/xfpm-ac-adapter.c:307
 msgid "Adapter is online"
 msgstr ""
 
-#: xfpm-ac-adapter.c:285 xfpm-ac-adapter.c:307
+#: ../src/xfpm-ac-adapter.c:285 ../src/xfpm-ac-adapter.c:307
 msgid "Adapter is offline"
 msgstr ""
 
-#: xfpm-ac-adapter.c:357 xfpm-battery.c:907
+#: ../src/xfpm-ac-adapter.c:357 ../src/xfpm-battery.c:907
 msgid "Are you sure you want to hibernate the system ?"
 msgstr ""
 
-#: xfpm-ac-adapter.c:359 xfpm-ac-adapter.c:395 xfpm-battery.c:802
-#: xfpm-battery.c:909 xfpm-battery.c:944 xfpm-settings.c:465
-#: xfpm-settings.c:932 xfpm-settings.c:961 xfpm-settings.c:984
+#. Hibernate menu option
+#: ../src/xfpm-ac-adapter.c:359 ../src/xfpm-ac-adapter.c:395
+#: ../src/xfpm-battery.c:802 ../src/xfpm-battery.c:909
+#: ../src/xfpm-battery.c:944 ../src/xfpm-settings.c:465
+#: ../src/xfpm-settings.c:932 ../src/xfpm-settings.c:961
+#: ../src/xfpm-settings.c:984
 msgid "Hibernate"
 msgstr ""
 
-#: xfpm-ac-adapter.c:371 xfpm-battery.c:922
+#: ../src/xfpm-ac-adapter.c:371 ../src/xfpm-battery.c:922
 msgid "Are you sure you want to suspend the system ?"
 msgstr ""
 
-#: xfpm-ac-adapter.c:373 xfpm-ac-adapter.c:412 xfpm-battery.c:924
-#: xfpm-battery.c:959 xfpm-settings.c:930 xfpm-settings.c:959
-#: xfpm-settings.c:982
+#. Suspend menu option
+#: ../src/xfpm-ac-adapter.c:373 ../src/xfpm-ac-adapter.c:412
+#: ../src/xfpm-battery.c:924 ../src/xfpm-battery.c:959
+#: ../src/xfpm-settings.c:930 ../src/xfpm-settings.c:959
+#: ../src/xfpm-settings.c:982
 msgid "Suspend"
 msgstr ""
 
-#: xfpm-battery-icon.c:351
-msgid "Your battery charge is low"
+#: ../src/xfpm-battery.c:764
+msgid "Your battery is almost empty. save your work to avoid losing data"
 msgstr ""
 
-#: xfpm-battery-icon.c:358
-msgid "Your battery is almost empty"
-msgstr ""
-
-#: xfpm-battery-icon.c:367
-msgid "You are running on Battery"
-msgstr ""
-
-#: xfpm-battery-icon.c:367 xfpm-battery-icon.c:549 xfpm-battery-icon.c:553
-msgid "Battery is discharging"
-msgstr ""
-
-#: xfpm-battery-icon.c:371
-msgid "Your battery is discharging"
-msgstr ""
-
-#: xfpm-battery-icon.c:379 xfpm-battery-icon.c:537
-msgid "Battery is charging"
-msgstr ""
-
-#: xfpm-battery-icon.c:388
-msgid "Your battery is fully charged"
-msgstr ""
-
-#: xfpm-battery-icon.c:407 xfpm-battery.c:769 xfpm-driver.c:300
-#: xfpm-driver.c:888
+#: ../src/xfpm-battery.c:769 ../src/xfpm-battery-icon.c:407
+#: ../src/xfpm-driver.c:300 ../src/xfpm-driver.c:888
 msgid "Xfce power manager"
 msgstr ""
 
-#: xfpm-battery-icon.c:511
+#: ../src/xfpm-battery.c:779
+msgid "Shutdown the system"
+msgstr ""
+
+#: ../src/xfpm-battery.c:787
+msgid "Hibernate the system"
+msgstr ""
+
+#: ../src/xfpm-battery.c:809 ../src/xfpm-settings.c:461
+#: ../src/xfpm-settings.c:934 ../src/xfpm-settings.c:963
+#: ../src/xfpm-settings.c:986
+msgid "Shutdown"
+msgstr ""
+
+#: ../src/xfpm-settings.c:433
+msgid "UPS configuration"
+msgstr ""
+
+#: ../src/xfpm-settings.c:433
+msgid "Battery configuration"
+msgstr ""
+
+#: ../src/xfpm-settings.c:437
+msgid "Consider UPS charge critical"
+msgstr ""
+
+#: ../src/xfpm-settings.c:437
+msgid "Consider battery charge critical"
+msgstr ""
+
+#: ../src/xfpm-settings.c:442
+msgid "percent"
+msgstr ""
+
+#: ../src/xfpm-settings.c:452
+msgid "When battery charge level is critical do"
+msgstr ""
+
+#: ../src/xfpm-settings.c:458 ../src/xfpm-settings.c:928
+#: ../src/xfpm-settings.c:957 ../src/xfpm-settings.c:980
+msgid "Nothing"
+msgstr ""
+
+#: ../src/xfpm-settings.c:479
+msgid "Enable UPS charge notification"
+msgstr ""
+
+#: ../src/xfpm-settings.c:479
+msgid "Enable battery state notification"
+msgstr ""
+
+#: ../src/xfpm-settings.c:493
+msgid "Enable power save on UPS power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:493
+msgid "Enable power save on battery power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:532 ../src/xfpm-settings.c:625
+msgid "Performance"
+msgstr ""
+
+#: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:630
+msgid "Ondemand"
+msgstr ""
+
+#: ../src/xfpm-settings.c:541 ../src/xfpm-settings.c:634
+msgid "Userspace"
+msgstr ""
+
+#: ../src/xfpm-settings.c:545 ../src/xfpm-settings.c:638
+msgid "Powersave"
+msgstr ""
+
+#: ../src/xfpm-settings.c:549 ../src/xfpm-settings.c:642
+msgid "Conservative"
+msgstr ""
+
+#: ../src/xfpm-settings.c:617
+msgid "CPU governor settings on UPS power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:617
+msgid "CPU governor settings on battery power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:716
+msgid "No CPU governor found"
+msgstr ""
+
+#: ../src/xfpm-settings.c:726
+msgid "CPU frequency control cannot be used"
+msgstr ""
+
+#: ../src/xfpm-settings.c:738
+msgid "CPU freq settings on electric power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:738
+msgid "CPU freq settings"
+msgstr ""
+
+#: ../src/xfpm-settings.c:760
+msgid "Enable LCD brightness control"
+msgstr ""
+
+#: ../src/xfpm-settings.c:782
+msgid "Monitor settings on UPS power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:782
+msgid "Monitor settings on battery power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:870
+msgid "Monitor settings on electric power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:870
+msgid "Monitor settings"
+msgstr ""
+
+#: ../src/xfpm-settings.c:883
+msgid "Your monitor doesn't support DPMS control"
+msgstr ""
+
+#: ../src/xfpm-settings.c:914
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#: ../src/xfpm-settings.c:923
+msgid "When power button is pressed do"
+msgstr ""
+
+#: ../src/xfpm-settings.c:949
+msgid "When sleep button is pressed do"
+msgstr ""
+
+#: ../src/xfpm-settings.c:974
+msgid "When laptop lid is closed"
+msgstr ""
+
+#: ../src/xfpm-settings.c:998
+msgid "No available keyboard shortcuts found"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1014
+msgid "General Options"
+msgstr ""
+
+#. Systray icon
+#: ../src/xfpm-settings.c:1021
+msgid "System tray icon"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1027
+msgid "Always Display an icon"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1028
+msgid "When battery is present"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1031
+msgid "When battery is charging or discharging"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1047
+msgid "Enable CPU freq scaling control"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1060
+msgid "Enable monitor power management control"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1117
+msgid "Advanced settings"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1134 ../src/xfpm-settings.c:1139
+msgid "CPU settings"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1149 ../src/xfpm-settings.c:1154
+msgid "Battery settings"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1165 ../src/xfpm-settings.c:1170
+msgid "Shortcuts"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1180 ../src/xfpm-settings.c:1185
+msgid "Monitor Settings"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1217
+msgid "Power Manager Preferences"
+msgstr ""
+
+#: ../src/xfpm-battery-icon.c:351
+msgid "Your battery charge is low"
+msgstr ""
+
+#: ../src/xfpm-battery-icon.c:358
+msgid "Your battery is almost empty"
+msgstr ""
+
+#: ../src/xfpm-battery-icon.c:367
+msgid "You are running on Battery"
+msgstr ""
+
+#: ../src/xfpm-battery-icon.c:367 ../src/xfpm-battery-icon.c:549
+#: ../src/xfpm-battery-icon.c:553
+msgid "Battery is discharging"
+msgstr ""
+
+#: ../src/xfpm-battery-icon.c:371
+msgid "Your battery is discharging"
+msgstr ""
+
+#: ../src/xfpm-battery-icon.c:379 ../src/xfpm-battery-icon.c:537
+msgid "Battery is charging"
+msgstr ""
+
+#: ../src/xfpm-battery-icon.c:388
+msgid "Your battery is fully charged"
+msgstr ""
+
+#: ../src/xfpm-battery-icon.c:511
 msgid "Not present"
 msgstr ""
 
-#: xfpm-battery-icon.c:517
+#: ../src/xfpm-battery-icon.c:517
 msgid "%"
 msgstr ""
 
-#: xfpm-battery-icon.c:523
+#: ../src/xfpm-battery-icon.c:523
 msgid "Battery fully charged"
 msgstr ""
 
-#: xfpm-battery-icon.c:530
+#: ../src/xfpm-battery-icon.c:530
 msgid "Battery charge level"
 msgstr ""
 
-#: xfpm-battery-icon.c:549
+#: ../src/xfpm-battery-icon.c:549
 msgid "Running on battery"
 msgstr ""
 
-#: xfpm-battery-icon.c:559
+#: ../src/xfpm-battery-icon.c:559
 msgid "Battery charge is low"
 msgstr ""
 
-#: xfpm-battery-icon.c:564
+#: ../src/xfpm-battery-icon.c:564
 msgid "Battery is almost empty"
 msgstr ""
 
-#: xfpm-battery-icon.c:583
+#: ../src/xfpm-battery-icon.c:583
 msgid ""
 "\n"
 "Estimated time left"
 msgstr ""
 
-#: xfpm-battery-icon.c:588
+#: ../src/xfpm-battery-icon.c:588
 msgid ""
 "\n"
 "Estimated time to charge"
 msgstr ""
 
-#: xfpm-battery-icon.c:592
+#: ../src/xfpm-battery-icon.c:592
 msgid "hours"
 msgstr ""
 
-#: xfpm-battery-icon.c:592
+#: ../src/xfpm-battery-icon.c:592
 msgid "hour"
 msgstr ""
 
-#: xfpm-battery-icon.c:593
+#: ../src/xfpm-battery-icon.c:593
 msgid "minutes"
 msgstr ""
 
-#: xfpm-battery-icon.c:593
+#: ../src/xfpm-battery-icon.c:593
 msgid "minute"
 msgstr ""
 
-#: xfpm-battery.c:764
-msgid "Your battery is almost empty. save your work to avoid losing data"
-msgstr ""
-
-#: xfpm-battery.c:779
-msgid "Shutdown the system"
-msgstr ""
-
-#: xfpm-battery.c:787
-msgid "Hibernate the system"
-msgstr ""
-
-#: xfpm-battery.c:809 xfpm-settings.c:461 xfpm-settings.c:934
-#: xfpm-settings.c:963 xfpm-settings.c:986
-msgid "Shutdown"
-msgstr ""
-
-#: xfpm-common.c:94
-msgid "Part of the Xfce goodies project"
-msgstr ""
-
-#: xfpm-common.c:96 xfpm-driver.c:1188 xfpm-main.c:85
-msgid "Xfce4 Power Manager"
-msgstr ""
-
-#: xfpm-dpms-spins.c:50
+#: ../src/xfpm-dpms-spins.c:50
 msgid "never"
 msgstr ""
 
-#: xfpm-dpms-spins.c:51
+#: ../src/xfpm-dpms-spins.c:51
 msgid "min"
 msgstr ""
 
-#: xfpm-dpms-spins.c:129
+#: ../src/xfpm-dpms-spins.c:129
 msgid "Standby after"
 msgstr ""
 
-#: xfpm-dpms-spins.c:137
+#: ../src/xfpm-dpms-spins.c:137
 msgid "Suspend after"
 msgstr ""
 
-#: xfpm-dpms-spins.c:145
+#: ../src/xfpm-dpms-spins.c:145
 msgid "Turn off after"
 msgstr ""
 
-#: xfpm-driver.c:287
+#: ../src/xfpm-common.c:94
+msgid "Part of the Xfce goodies project"
+msgstr ""
+
+#: ../src/xfpm-common.c:96 ../src/xfpm-main.c:85 ../src/xfpm-driver.c:1188
+msgid "Xfce4 Power Manager"
+msgstr ""
+
+#: ../src/xfpm-main.c:86
+msgid ""
+"Unable to read your home directory environment variable, autostart option "
+"may not work"
+msgstr ""
+
+#: ../src/xfpm-main.c:218
+msgid "Xfce4 Power Manager is not running, do you want to launch it now ?"
+msgstr ""
+
+#: ../src/xfpm-main.c:220
+msgid "Run"
+msgstr ""
+
+#. g_disaster
+#: ../src/xfpm-main.c:265 ../src/xfpm-driver.c:313
+msgid "Xfce4 power manager"
+msgstr ""
+
+#: ../src/xfpm-main.c:266
+msgid ""
+"Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
+"the message bus daemon are running"
+msgstr ""
+
+#: ../src/xfpm-driver.c:287
 msgid ""
 "Unable to read AC adapter status, the power manager will not work properly. "
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
 "with the hardware abstract layer or the message bus daemon is not running"
 msgstr ""
 
-#: xfpm-driver.c:313 xfpm-main.c:265
-msgid "Xfce4 power manager"
-msgstr ""
-
-#: xfpm-driver.c:704
+#: ../src/xfpm-driver.c:704
 msgid "System failed to shutdown"
 msgstr ""
 
-#: xfpm-driver.c:883
+#: ../src/xfpm-driver.c:883
 msgid ""
 "Unable to use power management service, functionalities like hibernate and "
 "suspend will not work Possible reasons: you don't have enough permission, "
@@ -205,268 +419,93 @@ msgid ""
 "is not running"
 msgstr ""
 
-#: xfpm-driver.c:896
+#: ../src/xfpm-driver.c:896
 msgid "Don't show this message again"
 msgstr ""
 
-#: xfpm-driver.c:1188
+#: ../src/xfpm-driver.c:1188
 msgid "Failed to load power manager configuration using defaults"
 msgstr ""
 
-#: xfpm-hal.c:654 xfpm-hal.c:743 xfpm-hal.c:836 xfpm-hal.c:885 xfpm-hal.c:935
-#: xfpm-hal.c:987 xfpm-hal.c:1039 xfpm-hal.c:1085
+#: ../src/xfpm-hal.c:654 ../src/xfpm-hal.c:743 ../src/xfpm-hal.c:836
+#: ../src/xfpm-hal.c:885 ../src/xfpm-hal.c:935 ../src/xfpm-hal.c:987
+#: ../src/xfpm-hal.c:1039 ../src/xfpm-hal.c:1085
+#, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: xfpm-hal.c:685
+#: ../src/xfpm-hal.c:685
+#, c-format
 msgid "Message Hibernate didn't get a reply"
 msgstr ""
 
-#: xfpm-hal.c:706
+#: ../src/xfpm-hal.c:706
+#, c-format
 msgid "System failed to hibernate"
 msgstr ""
 
-#: xfpm-hal.c:712 xfpm-hal.c:803
+#: ../src/xfpm-hal.c:712 ../src/xfpm-hal.c:803
+#, c-format
 msgid "Error occured while trying to suspend"
 msgstr ""
 
-#: xfpm-hal.c:715 xfpm-hal.c:806
+#: ../src/xfpm-hal.c:715 ../src/xfpm-hal.c:806
+#, c-format
 msgid "Unknown reply from the message daemon"
 msgstr ""
 
-#: xfpm-hal.c:775
+#: ../src/xfpm-hal.c:775
+#, c-format
 msgid "Message suspend didn't get a reply"
 msgstr ""
 
-#: xfpm-hal.c:797
+#: ../src/xfpm-hal.c:797
+#, c-format
 msgid "System failed to suspend"
 msgstr ""
 
-#: xfpm-hal.c:856
+#: ../src/xfpm-hal.c:856
+#, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
 msgstr ""
 
-#: xfpm-hal.c:903
+#: ../src/xfpm-hal.c:903
+#, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
 msgstr ""
 
-#: xfpm-hal.c:953
+#: ../src/xfpm-hal.c:953
+#, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
 msgstr ""
 
-#: xfpm-hal.c:1005
+#: ../src/xfpm-hal.c:1005
+#, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
 msgstr ""
 
-#: xfpm-hal.c:1058
+#: ../src/xfpm-hal.c:1058
+#, c-format
 msgid "No reply from HAL daemon to set cpu governor"
 msgstr ""
 
-#: xfpm-hal.c:1104
+#: ../src/xfpm-hal.c:1104
+#, c-format
 msgid "No reply from HAL daemon to set power save profile"
 msgstr ""
 
-#: xfpm-main.c:86
-msgid ""
-"Unable to read your home directory environment variable, autostart option "
-"may not work"
+#: ../src/xfce4-power-manager.desktop.in.h:1
+msgid "Power"
 msgstr ""
 
-#: xfpm-main.c:218
-msgid "Xfce4 Power Manager is not running, do you want to launch it now ?"
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Power Manager"
 msgstr ""
 
-#: xfpm-main.c:220
-msgid "Run"
+#: ../src/xfce4-power-manager.desktop.in.h:3
+msgid "Settings for the Xfce 4 Power Manager"
 msgstr ""
 
-#: xfpm-main.c:266
-msgid ""
-"Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
-"the message bus daemon are running"
-msgstr ""
-
-#: xfpm-settings.c:433
-msgid "UPS configuration"
-msgstr ""
-
-#: xfpm-settings.c:433
-msgid "Battery configuration"
-msgstr ""
-
-#: xfpm-settings.c:437
-msgid "Consider UPS charge critical"
-msgstr ""
-
-#: xfpm-settings.c:437
-msgid "Consider battery charge critical"
-msgstr ""
-
-#: xfpm-settings.c:442
-msgid "percent"
-msgstr ""
-
-#: xfpm-settings.c:452
-msgid "When battery charge level is critical do"
-msgstr ""
-
-#: xfpm-settings.c:458 xfpm-settings.c:928 xfpm-settings.c:957
-#: xfpm-settings.c:980
-msgid "Nothing"
-msgstr ""
-
-#: xfpm-settings.c:479
-msgid "Enable UPS charge notification"
-msgstr ""
-
-#: xfpm-settings.c:479
-msgid "Enable battery state notification"
-msgstr ""
-
-#: xfpm-settings.c:493
-msgid "Enable power save on UPS power"
-msgstr ""
-
-#: xfpm-settings.c:493
-msgid "Enable power save on battery power"
-msgstr ""
-
-#: xfpm-settings.c:532 xfpm-settings.c:625
-msgid "Performance"
-msgstr ""
-
-#: xfpm-settings.c:537 xfpm-settings.c:630
-msgid "Ondemand"
-msgstr ""
-
-#: xfpm-settings.c:541 xfpm-settings.c:634
-msgid "Userspace"
-msgstr ""
-
-#: xfpm-settings.c:545 xfpm-settings.c:638
-msgid "Powersave"
-msgstr ""
-
-#: xfpm-settings.c:549 xfpm-settings.c:642
-msgid "Conservative"
-msgstr ""
-
-#: xfpm-settings.c:617
-msgid "CPU governor settings on UPS power"
-msgstr ""
-
-#: xfpm-settings.c:617
-msgid "CPU governor settings on battery power"
-msgstr ""
-
-#: xfpm-settings.c:716
-msgid "No CPU governor found"
-msgstr ""
-
-#: xfpm-settings.c:726
-msgid "CPU frequency control cannot be used"
-msgstr ""
-
-#: xfpm-settings.c:738
-msgid "CPU freq settings on electric power"
-msgstr ""
-
-#: xfpm-settings.c:738
-msgid "CPU freq settings"
-msgstr ""
-
-#: xfpm-settings.c:760
-msgid "Enable LCD brightness control"
-msgstr ""
-
-#: xfpm-settings.c:782
-msgid "Monitor settings on UPS power"
-msgstr ""
-
-#: xfpm-settings.c:782
-msgid "Monitor settings on battery power"
-msgstr ""
-
-#: xfpm-settings.c:870
-msgid "Monitor settings on electric power"
-msgstr ""
-
-#: xfpm-settings.c:870
-msgid "Monitor settings"
-msgstr ""
-
-#: xfpm-settings.c:883
-msgid "Your monitor doesn't support DPMS control"
-msgstr ""
-
-#: xfpm-settings.c:914
-msgid "Keyboard shortcuts"
-msgstr ""
-
-#: xfpm-settings.c:923
-msgid "When power button is pressed do"
-msgstr ""
-
-#: xfpm-settings.c:949
-msgid "When sleep button is pressed do"
-msgstr ""
-
-#: xfpm-settings.c:974
-msgid "When laptop lid is closed"
-msgstr ""
-
-#: xfpm-settings.c:998
-msgid "No available keyboard shortcuts found"
-msgstr ""
-
-#: xfpm-settings.c:1014
-msgid "General Options"
-msgstr ""
-
-#: xfpm-settings.c:1021
-msgid "System tray icon"
-msgstr ""
-
-#: xfpm-settings.c:1027
-msgid "Always Display an icon"
-msgstr ""
-
-#: xfpm-settings.c:1028
-msgid "When battery is present"
-msgstr ""
-
-#: xfpm-settings.c:1031
-msgid "When battery is charging or discharging"
-msgstr ""
-
-#: xfpm-settings.c:1047
-msgid "Enable CPU freq scaling control"
-msgstr ""
-
-#: xfpm-settings.c:1060
-msgid "Enable monitor power management control"
-msgstr ""
-
-#: xfpm-settings.c:1117
-msgid "Advanced settings"
-msgstr ""
-
-#: xfpm-settings.c:1134 xfpm-settings.c:1139
-msgid "CPU settings"
-msgstr ""
-
-#: xfpm-settings.c:1149 xfpm-settings.c:1154
-msgid "Battery settings"
-msgstr ""
-
-#: xfpm-settings.c:1165 xfpm-settings.c:1170
-msgid "Shortcuts"
-msgstr ""
-
-#: xfpm-settings.c:1180 xfpm-settings.c:1185
-msgid "Monitor Settings"
-msgstr ""
-
-#: xfpm-settings.c:1217
-msgid "Power Manager Preferences"
+#: ../src/xfce4-power-manager.desktop.in.h:4
+msgid "Xfce 4 Power Manager"
 msgstr ""
