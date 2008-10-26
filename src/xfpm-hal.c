@@ -289,7 +289,7 @@ gboolean xfpm_hal_power_management_can_be_used(XfpmHal *hal)
                                            
     dbus_error_init(&error);                                       
                                            
-    reply = dbus_connection_send_with_reply_and_block(priv->connection,message,-1,&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,message,2000,&error);
     dbus_message_unref(message);
     
 	if ( reply ) dbus_message_unref(reply);
@@ -331,7 +331,7 @@ gboolean xfpm_hal_cpu_freq_interface_can_be_used(XfpmHal *hal)
                                            
     dbus_error_init(&error);                                       
                                            
-    reply = dbus_connection_send_with_reply_and_block(priv->connection,message,-1,&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,message,2000,&error);
     dbus_message_unref(message);
     
     if ( reply ) dbus_message_unref(reply);
@@ -645,7 +645,7 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 
 	reply = dbus_connection_send_with_reply_and_block(priv->connection,
                                                     mess,
-                                                    SLEEP_TIMEOUT,
+                                                    2000,
                                                     &error);
     dbus_message_unref(mess);
              	
@@ -736,7 +736,7 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     dbus_error_init(&error);
 	reply = dbus_connection_send_with_reply_and_block(priv->connection,
                                                     mess,
-                                                    SLEEP_TIMEOUT,
+                                                    2000,
                                                     &error);
     dbus_message_unref(mess);
          	
@@ -827,7 +827,7 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
         
     dbus_error_init(&error);
     
-    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,2000,&error);
     dbus_message_unref(mess);
     
     if ( dbus_error_is_set(&error) )
@@ -874,7 +874,7 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
     
     dbus_error_init(&error);
     
-    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,2000,&error);
     dbus_message_unref(mess);
         
     if ( dbus_error_is_set(&error) )
@@ -923,7 +923,7 @@ gchar
 	}	
 	
     dbus_error_init(&error);
-    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,2000,&error);
 
     dbus_message_unref(mess);
          
@@ -976,7 +976,7 @@ gchar
 	
     dbus_error_init(&error);
     
-    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,2000,&error);
     dbus_message_unref(mess);
     
     if ( dbus_error_is_set(&error) )
@@ -1029,7 +1029,7 @@ xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
     dbus_message_append_args(mess,DBUS_TYPE_STRING,&governor,DBUS_TYPE_INVALID);
     
     dbus_error_init(&error);
-    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,2000,&error);
     dbus_message_unref(mess);
     
     if ( dbus_error_is_set(&error) )
@@ -1075,7 +1075,7 @@ xfpm_hal_set_power_save (XfpmHal *xfpm_hal,
     dbus_message_append_args(mess,DBUS_TYPE_BOOLEAN,&power_save,DBUS_TYPE_INVALID);
     
     dbus_error_init(&error);
-    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,-1,&error);
+    reply = dbus_connection_send_with_reply_and_block(priv->connection,mess,2000,&error);
     dbus_message_unref(mess);
     
     if ( dbus_error_is_set(&error) )

@@ -32,8 +32,6 @@
 #define HAL_DBUS_INTERFACE_CPU       "org.freedesktop.Hal.Device.CPUFreq"
 #define HAL_DBUS_INTERFACE_LCD       "org.freedesktop.Hal.Device.LaptopPanel"
 
-#define SLEEP_TIMEOUT -1
-
 G_BEGIN_DECLS
 
 #define XFPM_TYPE_HAL                  (xfpm_hal_get_type ())
