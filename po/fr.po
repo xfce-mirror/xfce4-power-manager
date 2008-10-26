@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../src/xfpm-ac-adapter.c:216
 msgid "Unkown adapter status, the power manager will not work properly"
-msgstr "État de l'alimentation inconnu, le gestionnaire "
+msgstr "État de l'alimentation inconnu, le gestionnaire d'alimentation ne fonctionnera pas correctement"
 
 #: ../src/xfpm-ac-adapter.c:285
 #: ../src/xfpm-ac-adapter.c:307
@@ -33,7 +33,7 @@ msgstr "L'alimentation est sur batterie"
 #: ../src/xfpm-ac-adapter.c:357
 #: ../src/xfpm-battery.c:922
 msgid "Are you sure you want to hibernate the system"
-msgstr "Êtes vous sur de vouloir mettre le système en hibernation ?"
+msgstr "Êtes-vous sûr de vouloir mettre le système en hibernation ?"
 
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:359
@@ -51,7 +51,7 @@ msgstr "Mettre en hibernation"
 #: ../src/xfpm-ac-adapter.c:371
 #: ../src/xfpm-battery.c:937
 msgid "Are you sure you want to suspend the system"
-msgstr "Êtes vous sur de vouloir mettre le système en veille ?"
+msgstr "Êtes-vous sûr de vouloir mettre le système en veille ?"
 
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:373
@@ -101,7 +101,7 @@ msgstr "Configuration de la batterie"
 
 #: ../src/xfpm-settings.c:437
 msgid "Consider battery charge critical"
-msgstr "Considerez le niveau de la batterie critique"
+msgstr "Niveau de la batterie critique"
 
 #: ../src/xfpm-settings.c:442
 msgid "percent"
@@ -109,7 +109,7 @@ msgstr "pour cent"
 
 #: ../src/xfpm-settings.c:452
 msgid "When battery charge level is critical do"
-msgstr "Que faire quand le niveau de la batterie devient critique,"
+msgstr "Action pour le niveau de la batterie critique"
 
 #: ../src/xfpm-settings.c:458
 #: ../src/xfpm-settings.c:928
@@ -124,7 +124,7 @@ msgstr "Activer la notification du niveau de l'onduleur"
 
 #: ../src/xfpm-settings.c:479
 msgid "Enable battery state notification"
-msgstr "Activer la notification du niveau de la batterieg"
+msgstr "Activer la notification du niveau de la batterie"
 
 #: ../src/xfpm-settings.c:493
 msgid "Enable power save on ups power"
@@ -165,7 +165,7 @@ msgstr "Mode du processeur quand le système fonctionne sur onduleur"
 
 #: ../src/xfpm-settings.c:617
 msgid "CPU governor settings on battery power"
-msgstr "Mode du processeur quand le système fonctionne sur onduleur"
+msgstr "Mode du processeur quand le système fonctionne sur batterie"
 
 #: ../src/xfpm-settings.c:716
 msgid "No CPU governor found"
@@ -173,7 +173,7 @@ msgstr "Aucun mode du processeur disponible"
 
 #: ../src/xfpm-settings.c:726
 msgid "CPU frequency control cannot be used"
-msgstr "Contrôle de fréquence du processeur inutilisable"
+msgstr "Le contrôle de fréquence du processeur est inutilisable"
 
 #: ../src/xfpm-settings.c:738
 msgid "Cpu freq settings on electric power"
@@ -213,15 +213,15 @@ msgstr "Raccourcis claviers"
 
 #: ../src/xfpm-settings.c:923
 msgid "When power button is pressed do"
-msgstr "Que faire quand le bouton d'alimentation est pressé ?"
+msgstr "Action pour le bouton d'alimentation"
 
 #: ../src/xfpm-settings.c:949
 msgid "When sleep button is pressed do"
-msgstr "Que faire quand le bouton de mise en veille est pressé ?"
+msgstr "Action pour le bouton de mise en veille"
 
 #: ../src/xfpm-settings.c:974
 msgid "When lid button is pressed do"
-msgstr "Que faire quand l'écran est fermé ?"
+msgstr "Action lors de la fermeture de l'écran"
 
 #: ../src/xfpm-settings.c:998
 msgid "No available keyboard shortcuts found"
@@ -250,7 +250,7 @@ msgstr "Quand la batterie se charge ou se décharge"
 
 #: ../src/xfpm-settings.c:1047
 msgid "Enable CPU freq scaling control"
-msgstr "Activer le contrôle de fréquence du processeur "
+msgstr "Activer le contrôle de fréquence du processeur"
 
 #: ../src/xfpm-settings.c:1060
 msgid "Enable DPMS control"
@@ -313,7 +313,7 @@ msgstr "Batterie en charge"
 
 #: ../src/xfpm-battery-icon.c:374
 msgid "Your battery is fully charged"
-msgstr "Charge complète"
+msgstr "Votre batterie est entièrement chargée"
 
 #: ../src/xfpm-battery-icon.c:497
 msgid "Not present"
@@ -325,7 +325,7 @@ msgstr "%"
 
 #: ../src/xfpm-battery-icon.c:509
 msgid "Battery fully charged"
-msgstr "Charge batterie complète"
+msgstr "Batterie entièrement chargée"
 
 #: ../src/xfpm-battery-icon.c:516
 msgid "Battery charge level"
@@ -403,15 +403,15 @@ msgstr "Membre du projet Xfce Goodies"
 #: ../src/xfpm-main.c:88
 #: ../src/xfpm-driver.c:1188
 msgid "Xfce4 Power Manager"
-msgstr "Xfce4 Power Manager"
+msgstr "Gestionnaire d'alimentation Xfce4"
 
 #: ../src/xfpm-main.c:89
 msgid "Unable to read your home directory environment variable, autostart option may not work"
-msgstr "Impossible de lire la variable d'environnement contenant votre répertoire utilisateur, l'option de démarrage automatique peut ne pas fonctionner"
+msgstr "Impossible de lire la variable d'environnement de votre répertoire utilisateur, l'option de démarrage automatique peut ne pas fonctionner"
 
 #: ../src/xfpm-main.c:221
 msgid "Xfce4 Power Manager is not running, do you want to launch it now"
-msgstr "Xfce4 Power Manager ne tourne pas, voulez vous le lancer maintenant ?"
+msgstr "Le gestionnaire d'alimentation n'est pas lancé, voulez-vous le lancer maintenant ?"
 
 #: ../src/xfpm-main.c:223
 msgid "Run"
@@ -421,15 +421,15 @@ msgstr "Éxecuter"
 #: ../src/xfpm-main.c:268
 #: ../src/xfpm-driver.c:313
 msgid "Xfce4 power manager"
-msgstr "Xfce4 power manager"
+msgstr "Gestionnaire d'alimentation Xfce4"
 
 #: ../src/xfpm-main.c:269
 msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
-msgstr "Impossible de lancer Xfce4 power manager, vérifiez que la couche d'abstraction matérielle (hal) et le bus de messagerie (dbus) fonctionnent"
+msgstr "Impossible de lancer le gestionnaire d'alimentation, vérifiez que la couche d'abstraction matérielle (hal) et le bus de messagerie (dbus) fonctionnent"
 
 #: ../src/xfpm-driver.c:287
 msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
-msgstr "Impossible de lire l'état de l'alimentation, le gestionnaire ne fonctionnera pas correctement. Raisons possibles : le driver d'alimentation n'est pas chargé, connexion impossible avec la couche d'abstraction matérielle (hal) ou le démon du bus de messagerie n'est pas lancé"
+msgstr "Impossible de lire l'état de l'alimentation, le gestionnaire ne fonctionnera pas correctement. Raisons possibles : le pilote d'alimentation n'est pas chargé, connexion impossible avec la couche d'abstraction matérielle (hal) ou le démon du bus de messagerie n'est pas lancé"
 
 #: ../src/xfpm-driver.c:704
 msgid "System failed to shutdown"
@@ -437,7 +437,7 @@ msgstr "Le système n'a pu s'arrêter"
 
 #: ../src/xfpm-driver.c:883
 msgid "Unable to use power management service, functionalities like hibernate and suspend will not work Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
-msgstr "Impossible d'utiliser le service de gestion d'alimentation, certaines fonctionnalités comme l'hibernation la mise en veille ne fonctionneront pas. Raisons possibles : permissions insufisantes, connexion impossible avec la couche d'abstraction (hal), ou le démon du bus de messagerie n'est pas lancé"
+msgstr "Impossible d'utiliser le service de gestion d'alimentation, certaines fonctionnalités comme l'hibernation et la mise en veille ne fonctionneront pas. Raisons possibles : permissions insufisantes, connexion impossible avec la couche d'abstraction (hal), ou le démon du bus de messagerie n'est pas lancé"
 
 #: ../src/xfpm-driver.c:896
 msgid "Don't show this message again"
@@ -445,7 +445,7 @@ msgstr "Ne plus afficher ce message"
 
 #: ../src/xfpm-driver.c:1188
 msgid "Failed to load power manager configuration using defaults"
-msgstr "Impossible de charger la configuration du gestionnaire d'alimentation, utilisation de la configuration par défaut"
+msgstr "Impossible de charger la configuration, les paramètres par défauts seront utilisés"
 
 #: ../src/xfpm-hal.c:640
 #: ../src/xfpm-hal.c:729
@@ -473,7 +473,7 @@ msgstr "L'hibernation du système a échoué"
 #: ../src/xfpm-hal.c:789
 #, c-format
 msgid "Error occured while trying to suspend"
-msgstr "Une erreur s'est produite pendant la mise en veille"
+msgstr "Une erreur s'est produite lors de la tentative de mise en veille"
 
 #: ../src/xfpm-hal.c:701
 #: ../src/xfpm-hal.c:792
