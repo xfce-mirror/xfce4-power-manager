@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
  *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+ * * Copyright (C) 2008 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -39,6 +39,8 @@
 
 #include <dbus/dbus.h>
 #include <dbus/dbus-glib-lowlevel.h>
+
+#include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-hal.h"
 #include "xfpm-debug.h"
