@@ -312,7 +312,7 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
             xfpm_battery_show_error(priv->batt,"gpm-ac-adapter",error);
         }
 #else
-    xfpm_popup_message(_("Xfce4 power manager"),error,GTK_MESSAGE_ERROR);
+    xfpm_popup_message(_("Xfce power manager"),error,GTK_MESSAGE_ERROR);
 #endif    
     }
    

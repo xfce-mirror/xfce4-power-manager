@@ -82,7 +82,7 @@ autostart()
     
     if ( ( home = getenv("HOME")) == NULL )
     {
-        xfpm_popup_message(_("Xfce4 Power Manager"),
+        xfpm_popup_message(_("Xfce Power Manager"),
                            _("Unable to read your home directory environment variable,"\
 						    " autostart option may not work"),
                            GTK_MESSAGE_INFO);
@@ -262,7 +262,7 @@ int main(int argc,char **argv)
         if (!xfpm_driver_monitor(driver)) 
         {
              /* g_disaster */
-            xfpm_popup_message(_("Xfce4 power manager"),
+            xfpm_popup_message(_("Xfce power manager"),
                               _("Unable to run Xfce4 power manager, " \
                               "make sure the hardware abstract layer and the message bus daemon "\
 							  "are running"),

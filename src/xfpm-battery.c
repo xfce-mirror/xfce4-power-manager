@@ -1268,7 +1268,7 @@ void           xfpm_battery_show_error(XfpmBattery *batt,
         icon = NULL;
     }
     NotifyNotification *n =
-    xfpm_notify_new("Xfce power manager",
+    xfpm_notify_new(_("Xfce power manager"),
                     error,
                     14000,
                     NOTIFY_URGENCY_CRITICAL,
