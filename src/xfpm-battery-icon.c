@@ -392,6 +392,7 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,
     XFPM_DEBUG("icon %s\n",icon_name);
     
     if ( battery_icon->state != state && state != NOT_FULL ) {
+	g_object_set(G_OBJECT(battery_icon),"battery-state",state,NULL);
 #ifdef HAVE_LIBNOTIFY
     gboolean visible;
     g_object_get(G_OBJECT(battery_icon),"visible",&visible,NULL);
@@ -410,7 +411,6 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,
             }
         }
 #endif     
-    g_object_set(G_OBJECT(battery_icon),"battery-state",state,NULL);
     }
 
     if ( icon_prefix && icon_name )
