@@ -62,16 +62,23 @@ enum
 static void
 show_usage() 
 {
-    
-    printf( "\n"
-		"Usage: xfce_power_manager [options] \n"
+    setlocale(LC_ALL,"");
+	g_print (_("\n"
+             "Xfce Power Manager %s\n\n"
+             "Part of the Xfce Goodies Project\n"
+             "http://goodies.xfce.org\n\n"
+             "Licensed under the GNU GPL.\n\n"), VERSION);
+	
+	/* Only the description is translatable */
+    g_print(_( "\n"
+		"Usage: xfce-power-manager [options] \n"
 		"\n"
 		"Options:\n"
 		"-h, --help       Print this help message\n"
 		"-r, --run        Start xfce power manager\n"
 		"-c, --customize  Show Configuration dialog\n"
 		"-q, --quit       Quit any running xfce power manager\n"
-		"\n");
+		"\n"));
 		    
 }    
 
@@ -155,7 +162,9 @@ handle_arguments(int argc,char **argv)
     
     if ( argc > 1 && argv[1][0] == '-' ) 
     {    
-        if (!strcmp(argv[1],"-h")     ||
+        if (!strcmp(argv[1], "-v")      ||
+			!strcmp(argv[1], "-version")||
+			!strcmp(argv[1],"-h")      ||
             !strcmp(argv[1],"--help"))
         {
             show_usage();
@@ -213,7 +222,7 @@ int main(int argc,char **argv)
         }
         if ( reply != 1 )
         {
-            g_print("Xfce power manager is not running\n");
+            g_print(_("Xfce power manager is not running\n"));
             gboolean ret = 
             xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now ?"),
                         GTK_STOCK_YES,
@@ -238,7 +247,7 @@ int main(int argc,char **argv)
         
         if ( reply == 0 )
         {
-            g_print("Xfce power manager is not running\n");
+            g_print(_("Xfce power manager is not running\n"));
             return 0;
         }
         return 0;
@@ -254,7 +263,7 @@ int main(int argc,char **argv)
         
         if ( reply == 1 )
         {
-            g_print("Xfce power manager is already running\n");
+            g_print(_("Xfce power manager is already running\n"));
             return 0;
         }
         XfpmDriver *driver = xfpm_driver_new();
@@ -267,7 +276,7 @@ int main(int argc,char **argv)
                               "make sure the hardware abstract layer and the message bus daemon "\
 							  "are running"),
                               GTK_MESSAGE_ERROR);
-            g_error("Unable to load xfce4 power manager driver\n");        
+            g_error(_("Unable to load xfce4 power manager\n"));        
             g_object_unref(driver);
             return 1;
         }

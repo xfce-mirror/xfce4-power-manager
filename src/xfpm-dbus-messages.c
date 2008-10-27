@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
  *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+ * * Copyright (C) 2008 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -22,6 +22,8 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+
+#include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-dbus-messages.h"
 #include "xfpm-debug.h"
@@ -62,7 +64,7 @@ DBusConnection *xfpm_dbus_get_connection(DBusBusType type)
     
     if ( !connection ) 
     {
-        g_printerr("Dbus connection error: %s\n",error.message);
+        XFPM_DEBUG("Dbus connection error: %s\n",error.message);
         dbus_error_free(&error);
         return NULL; 
     }
@@ -70,7 +72,6 @@ DBusConnection *xfpm_dbus_get_connection(DBusBusType type)
     {
         return connection;
     }               
- 
     
 }    
 
@@ -82,7 +83,7 @@ static DBusMessage *xfpm_dbus_new_signal(const gchar *signal)
                                       signal);
     if ( !message )
     {
-        g_critical("Failed to create dbus message\n");
+        g_critical(_("Failed to create dbus message\n"));
         return NULL;
     }    
     else
@@ -118,7 +119,7 @@ gboolean xfpm_dbus_send_message(const char *signal)
     dbus_connection_unref(connection);
     if ( ret == FALSE )
     {
-        g_critical("Failed to send message \n");
+        g_critical(_("Failed to send message\n"));
         return FALSE;
     } else
     {
