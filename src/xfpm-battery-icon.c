@@ -326,6 +326,15 @@ xfpm_battery_icon_get_icon_prefix(XfpmBatteryType type)
     return g_strdup("gpm-primary");    
 }
 
+#ifdef HAVE_LIBNOTIFY
+static gboolean
+_battery_icon_send_notification(gpointer data)
+{
+	NotifyNotification *n = (NotifyNotification *) data;
+	xfpm_notify_show_notification(n,0); 
+	return FALSE;
+}
+#endif	
 static void
 xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,
                         guint level,gboolean adapter_present)
@@ -396,7 +405,7 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,
 #ifdef HAVE_LIBNOTIFY
     gboolean visible;
     g_object_get(G_OBJECT(battery_icon),"visible",&visible,NULL);
-        if ( battery_icon->notify && visible ) 
+        if ( battery_icon->notify ) 
         {
             if ( battery_icon->discard_notification )
             {
@@ -406,8 +415,8 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,
             {
                 NotifyNotification *n =
                 xfpm_notify_new(_("Xfce power manager"),message,5000,NOTIFY_URGENCY_LOW,
-                               GTK_STATUS_ICON(battery_icon),icon_name);
-                xfpm_notify_show_notification(n,0);               
+                               visible ? GTK_STATUS_ICON(battery_icon):NULL,icon_name);
+                g_idle_add((GSourceFunc)_battery_icon_send_notification,n);             
             }
         }
 #endif     
@@ -565,7 +574,13 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
             xfpm_battery_icon_update(battery_icon,CRITICAL,0,ac_adapter_present);
         }
     }
-    
+
+	if ( remaining_time > 28800 && battery_icon->type == PRIMARY ) 
+	{
+		/* 8 hours is the threshold that we accept*/
+		goto end;
+	}
+	
     if ( remaining_time != 0 )
     {
         gchar *time_str;
@@ -589,14 +604,14 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
            
         }
         time_str = g_strdup_printf("%s: %d %s %d %s",est_time,
-                                        hours,hours > 1 ? _("hours") : _("hour") ,
-                                        minutes_left, minutes_left > 1 ? _("minutes") : _("minute"));
+                                   hours,hours > 1 ? _("hours") : _("hour") ,
+                                   minutes_left, minutes_left > 1 ? _("minutes") : _("minute"));
                                         
 		strcat(tip,time_str);
 		g_free(time_str);
 		g_free(est_time);
     }
-    
+    end:
     gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
     
 }
