@@ -428,8 +428,12 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
     GtkWidget *label;
     GtkWidget *critical_spin;
     GtkWidget *action;
+	GtkWidget *vbox;
     
-    table = gtk_table_new(4,2,TRUE);
+	vbox = gtk_vbox_new(FALSE,0);
+	gtk_widget_show(vbox);
+	
+    table = gtk_table_new(4,2,FALSE);
     gtk_widget_show(table);
     frame = xfce_create_framebox(ups_found ? _("UPS configuration") :_("Battery configuration"), &align);
     gtk_widget_show(frame);
@@ -437,7 +441,7 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
     
     label = gtk_label_new(ups_found ? _("Consider UPS charge critical"):_("Consider battery charge critical"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,0,1);
+    gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
     
     critical_spin = xfpm_spin_button_new_with_range(1,20,1);
 	gchar *suffix = g_strdup_printf(" %s",_("percent"));
@@ -448,12 +452,12 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
                               xfconf_channel_get_uint(channel,CRITICAL_BATT_CFG,10));
     g_signal_connect(critical_spin,"value-changed",
                     G_CALLBACK(set_battery_critical_charge_cb),channel);
-    gtk_table_attach(GTK_TABLE(table),critical_spin,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
+    gtk_table_attach(GTK_TABLE(table),critical_spin,1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
     
     label = gtk_label_new(_("When battery charge level is critical do"));
     gtk_widget_show(label);
     if ( !ups_found )
-        gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,1,2);
+        gtk_table_attach(GTK_TABLE(table),label,0,1,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
         
     action = gtk_combo_box_new_text();
     gtk_combo_box_append_text(GTK_COMBO_BOX(action),_("Nothing"));
@@ -473,19 +477,19 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
     gtk_widget_show(action);
     g_signal_connect(action,"changed",G_CALLBACK(set_critical_action_cb),channel);
     
-    !ups_found ? gtk_table_attach(GTK_TABLE(table),action,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0) : gtk_widget_hide(action);
+    !ups_found ? gtk_table_attach(GTK_TABLE(table),action,1,2,1,2,GTK_EXPAND,GTK_EXPAND,0,0) : gtk_widget_hide(action);
 
 #ifdef HAVE_LIBNOTIFY
     GtkWidget *notify_bt;        
     label = gtk_label_new(ups_found ? _("Enable UPS charge notification") :_("Enable battery state notification"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
+    gtk_table_attach(GTK_TABLE(table),label,0,1,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
     notify_bt = gtk_check_button_new();
     gtk_widget_show(notify_bt);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(notify_bt),
                                  xfconf_channel_get_bool(channel,BATT_STATE_NOTIFICATION_CFG,TRUE)); 
     g_signal_connect(notify_bt,"toggled",G_CALLBACK(set_battery_state_notification_cb),channel); 
-    gtk_table_attach(GTK_TABLE(table),notify_bt,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);                             
+    gtk_table_attach(GTK_TABLE(table),notify_bt,1,2,2,3,GTK_EXPAND,GTK_EXPAND,0,0);                             
 #endif        
 	if ( power_management & SYSTEM_CAN_POWER_SAVE )
 	{
@@ -493,7 +497,7 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
 		GtkWidget *power_save;        
 		label = gtk_label_new(ups_found ? _("Enable power save on UPS power") : _("Enable power save on battery power"));
 		gtk_widget_show(label);
-		gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
+		gtk_table_attach(GTK_TABLE(table),label,0,1,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
 		power_save = gtk_check_button_new();
 		gtk_widget_show(power_save);
 		
@@ -503,10 +507,11 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
 									 : FALSE);
 									  
 		g_signal_connect(power_save,"toggled",G_CALLBACK(set_power_save_cb),channel); 
-		gtk_table_attach(GTK_TABLE(table),power_save,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0); 
+		gtk_table_attach(GTK_TABLE(table),power_save,1,2,2,3,GTK_EXPAND,GTK_EXPAND,0,0); 
 	}
 	
-    gtk_container_add(GTK_CONTAINER(align),table);
+    gtk_container_add(GTK_CONTAINER(align),vbox);
+	gtk_box_pack_start(GTK_BOX(vbox),table,TRUE,TRUE,0);
     return frame;
     
 }
@@ -701,15 +706,16 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean u
 static GtkWidget *
 xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop,gboolean ups)
 {
-    GtkWidget *hbox;
-    hbox = gtk_hbox_new(FALSE,2);
-    gtk_widget_show(hbox);
+    GtkWidget *ntbox;
+	ntbox = gtk_notebook_new();
+	
+    gtk_widget_show(ntbox);
     
     GtkWidget *vbox;
     vbox = gtk_vbox_new(FALSE,0);
     gtk_widget_show(vbox);
 
-    gtk_box_pack_start(GTK_BOX(vbox),hbox,TRUE,TRUE,0);
+    gtk_box_pack_start(GTK_BOX(vbox),ntbox,TRUE,TRUE,0);
     
     if ( !govs ) 
     {
@@ -733,16 +739,21 @@ xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop,gboole
 	
     else
     {
+		GtkWidget *label;
+		label = gtk_label_new(_("On electric power"));
+		gtk_widget_show(label);
         GtkWidget *frame;
         frame = xfpm_settings_cpu_on_ac_adapter(channel,
                                                 govs,
                                                 laptop || ups ? _("CPU freq settings on electric power") : _("CPU freq settings"));
-        gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
+        gtk_notebook_append_page(GTK_NOTEBOOK(ntbox),frame,label);
         
         if ( laptop || ups )
         {
+			label = gtk_label_new(_("On battery power"));
+			gtk_widget_show(label);
             frame = xfpm_settings_cpu_on_battery_power(channel,govs,ups);
-            gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
+			gtk_notebook_append_page(GTK_NOTEBOOK(ntbox),frame,label);
         }
     }    
     
@@ -820,14 +831,17 @@ xfpm_settings_dpms_on_ac_adapter(XfconfChannel *channel,const gchar *label)
 {
     GtkWidget *frame;
     GtkWidget *align;
-
+	GtkWidget *vbox;
+	
     frame = xfce_create_framebox(label, &align);
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
     gtk_widget_show(frame);
     
+	vbox = gtk_vbox_new(FALSE,10);
+	gtk_widget_show(vbox);
+	
     on_ac_dpms = xfpm_dpms_spins_new();
     gtk_widget_show(on_ac_dpms);
-    gtk_container_add(GTK_CONTAINER(align),on_ac_dpms);
     GPtrArray *arr;
     GValue *value;
     guint value1 = 30 ,value2 = 45 ,value3 = 60;
@@ -849,7 +863,8 @@ xfpm_settings_dpms_on_ac_adapter(XfconfChannel *channel,const gchar *label)
     xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_ac_dpms),dpms_enabled);             
     g_signal_connect(on_ac_dpms,"dpms-value-changed",
                      G_CALLBACK(set_dpms_on_ac_cb),channel);
-    
+	gtk_container_add(GTK_CONTAINER(align),vbox);
+	gtk_box_pack_start(GTK_BOX(vbox),on_ac_dpms,TRUE,TRUE,0);	
     return frame;   
 }
 #endif
@@ -858,9 +873,10 @@ static GtkWidget *
 xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
                       gboolean dpms_capable,gboolean lcd,gboolean ups)
 {
-    GtkWidget *hbox;
-    hbox = gtk_hbox_new(FALSE,2);
-    gtk_widget_show(hbox);
+	GtkWidget *label;
+    GtkWidget *ntbox;
+	ntbox = gtk_notebook_new();
+    gtk_widget_show(ntbox);
     GtkWidget *vbox;
     vbox = gtk_vbox_new(FALSE,0);
     
@@ -869,13 +885,17 @@ xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
     GtkWidget *frame;
     frame = xfpm_settings_dpms_on_ac_adapter(channel,
                                             laptop || ups ? _("Monitor settings on electric power") : _("Monitor settings"));
-    gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
-    gtk_box_pack_start(GTK_BOX(vbox),hbox,TRUE,TRUE,0);
+	label = gtk_label_new(_("On electric power"));
+	gtk_widget_show(label);
+	gtk_notebook_append_page(GTK_NOTEBOOK(ntbox),frame,label);										
+    gtk_box_pack_start(GTK_BOX(vbox),ntbox,TRUE,TRUE,0);
 
     if ( laptop || ups )
     {
         frame = xfpm_settings_dpms_on_battery(channel,ups);
-        gtk_box_pack_start(GTK_BOX(hbox),frame,FALSE,FALSE,0);
+		label = gtk_label_new(_("On battery power"));
+		gtk_widget_show(label);
+		gtk_notebook_append_page(GTK_NOTEBOOK(ntbox),frame,label);	
     }
 
     if (! dpms_capable ) 
@@ -914,7 +934,8 @@ xfpm_settings_keys(XfconfChannel *channel,
     
     frame = xfce_create_framebox(_("Keyboard shortcuts"), &align);
     gtk_widget_show(frame);
-    table = gtk_table_new(3,2,TRUE);
+	gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
+    table = gtk_table_new(3,2,FALSE);
     gtk_widget_show(table);
     
     guint active;
@@ -923,7 +944,7 @@ xfpm_settings_keys(XfconfChannel *channel,
     {
         label = gtk_label_new(_("When power button is pressed do"));
         gtk_widget_show(label);
-        gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,0,1);
+        gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
         GtkWidget *power_button;
         power_button = gtk_combo_box_new_text();
         gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Nothing"));
@@ -938,7 +959,7 @@ xfpm_settings_keys(XfconfChannel *channel,
         active = _combo_helper_function(channel,POWER_SWITCH_CFG,power_management,active);    
                                     
         gtk_combo_box_set_active(GTK_COMBO_BOX(power_button),active);
-        gtk_table_attach(GTK_TABLE(table),power_button,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
+        gtk_table_attach(GTK_TABLE(table),power_button,1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
         g_signal_connect(power_button,"changed",G_CALLBACK(set_power_button_action_cb),channel);
        
         gtk_widget_show(power_button);
@@ -949,7 +970,7 @@ xfpm_settings_keys(XfconfChannel *channel,
     {    
         label = gtk_label_new(_("When sleep button is pressed do"));
         gtk_widget_show(label);
-        gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,1,2);
+        gtk_table_attach(GTK_TABLE(table),label,0,1,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
         
         GtkWidget *sleep_button;
         active = xfconf_channel_get_uint(channel,SLEEP_SWITCH_CFG,0);
@@ -965,7 +986,7 @@ xfpm_settings_keys(XfconfChannel *channel,
         active = _combo_helper_function(channel,POWER_SWITCH_CFG,power_management,active);   
         gtk_combo_box_set_active(GTK_COMBO_BOX(sleep_button),active);
         gtk_widget_show(sleep_button);
-        gtk_table_attach(GTK_TABLE(table),sleep_button,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
+        gtk_table_attach(GTK_TABLE(table),sleep_button,1,2,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
         g_signal_connect(sleep_button,"changed",G_CALLBACK(set_sleep_button_action_cb),channel);
     }
     
@@ -974,7 +995,7 @@ xfpm_settings_keys(XfconfChannel *channel,
     {
         label = gtk_label_new(_("When laptop lid is closed"));
         gtk_widget_show(label);
-        gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
+        gtk_table_attach(GTK_TABLE(table),label,0,1,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
         GtkWidget *lid_button;
         active = xfconf_channel_get_uint(channel,LID_SWITCH_CFG,0);
         lid_button = gtk_combo_box_new_text();
@@ -988,7 +1009,7 @@ xfpm_settings_keys(XfconfChannel *channel,
         active = _combo_helper_function(channel,POWER_SWITCH_CFG,power_management,active);       
         gtk_combo_box_set_active(GTK_COMBO_BOX(lid_button),active);
         gtk_widget_show(lid_button);
-        gtk_table_attach(GTK_TABLE(table),lid_button,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);
+        gtk_table_attach(GTK_TABLE(table),lid_button,1,2,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
         g_signal_connect(lid_button,"changed",G_CALLBACK(set_lid_button_action_cb),channel);
     }
     
@@ -1021,7 +1042,7 @@ xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean 
     /* Systray icon */
     label = gtk_label_new(_("System tray icon"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,0,1);
+    gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
     
     guint icon_cfg = xfconf_channel_get_uint(channel,SHOW_TRAY_ICON_CFG,0);
     show_icon = gtk_combo_box_new_text();
@@ -1043,31 +1064,31 @@ xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean 
     gtk_combo_box_set_active(GTK_COMBO_BOX(show_icon),icon_cfg);
     g_signal_connect(show_icon,"changed",G_CALLBACK(set_show_tray_icon_cb),channel);
     gtk_widget_show(show_icon);
-    gtk_table_attach(GTK_TABLE(table),show_icon,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
+    gtk_table_attach(GTK_TABLE(table),show_icon,1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
     gboolean cpu_gov_enabled;
     label = gtk_label_new(_("Enable CPU freq scaling control"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,1,2);
+    gtk_table_attach(GTK_TABLE(table),label,0,1,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
     cpu_gov = gtk_check_button_new();
     gtk_widget_show(cpu_gov);
     cpu_gov_enabled = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cpu_gov),
                                  cpu_gov_enabled);                    
     g_signal_connect(cpu_gov,"toggled",G_CALLBACK(set_cpu_freq_scaling_cb),channel);      
-    gtk_table_attach(GTK_TABLE(table),cpu_gov,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0); 
+    gtk_table_attach(GTK_TABLE(table),cpu_gov,1,2,1,2,GTK_EXPAND,GTK_EXPAND,0,0); 
     
 #ifdef HAVE_DPMS
     gboolean dpms_enabled;
     label = gtk_label_new(_("Enable monitor power management control"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(table),label,0,1,2,3);
+    gtk_table_attach(GTK_TABLE(table),label,0,1,2,3,GTK_EXPAND,GTK_EXPAND,0,0);	
     dpms_op = gtk_check_button_new();
     gtk_widget_show(dpms_op);
     dpms_enabled = xfconf_channel_get_bool(channel,DPMS_ENABLE_CFG,TRUE);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dpms_op),
                                  dpms_enabled);                    
     g_signal_connect(dpms_op,"toggled",G_CALLBACK(set_dpms_cb),channel);      
-    gtk_table_attach(GTK_TABLE(table),dpms_op,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0); 
+    gtk_table_attach(GTK_TABLE(table),dpms_op,1,2,2,3,GTK_EXPAND,GTK_EXPAND,0,0); 
 #endif    
     return frame;
 }

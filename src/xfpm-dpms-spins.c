@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
  *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+ * * Copyright (C) 2008 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -119,7 +119,7 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
     priv = XFPM_DPMS_SPINS_GET_PRIVATE(dpms_spins);
     
     g_object_set(G_OBJECT(dpms_spins),
-                 "homogeneous",TRUE,
+                 "homogeneous",FALSE,
                  "n-columns",2,
                  "n-rows",3,
                  NULL);
@@ -128,27 +128,27 @@ xfpm_dpms_spins_init(XfpmDpmsSpins *dpms_spins)
 	gchar *suffix = g_strdup_printf(" %s",SUFFIX_MIN);
     label = gtk_label_new(_("Standby after"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,0,1);
+    gtk_table_attach(GTK_TABLE(dpms_spins),label,0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
     priv->spin_1 = xfpm_spin_button_new_with_range(0,298,1);
     xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_1),suffix);
     gtk_widget_show(priv->spin_1);
-    gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_1,1,2,0,1,GTK_SHRINK,GTK_SHRINK,0,0);
+    gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_1,1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
     
     label = gtk_label_new(_("Suspend after"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,1,2);
+    gtk_table_attach(GTK_TABLE(dpms_spins),label,0,1,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
     priv->spin_2 = xfpm_spin_button_new_with_range(0,299,1);
     xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_2),suffix);
     gtk_widget_show(priv->spin_2);
-    gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_2,1,2,1,2,GTK_SHRINK,GTK_SHRINK,0,0);
+    gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_2,1,2,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
     
     label = gtk_label_new(_("Turn off after"));
     gtk_widget_show(label);
-    gtk_table_attach_defaults(GTK_TABLE(dpms_spins),label,0,1,2,3);
+    gtk_table_attach(GTK_TABLE(dpms_spins),label,0,1,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
     priv->spin_3 = xfpm_spin_button_new_with_range(0,300,1);
     xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(priv->spin_3),suffix);
     gtk_widget_show(priv->spin_3);
-    gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_3,1,2,2,3,GTK_SHRINK,GTK_SHRINK,0,0);
+    gtk_table_attach(GTK_TABLE(dpms_spins),priv->spin_3,1,2,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
     
     gtk_widget_show(GTK_WIDGET(dpms_spins));
     
