@@ -3,6 +3,7 @@
 # Copyright (C) 2008 Ali Abdallah <ali.slackware@gmail.com>
 # This file is distributed under the same license as the xfce package.
 # Fabian Nowak <timystery@arcor.de>, 2008.
+# Mark Trompell <mark@foresightlinux.org>, 2008.
 #
 msgid ""
 msgstr ""
@@ -10,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-27 22:38+0100\n"
 "PO-Revision-Date: 2008-10-27 22:38+0100\n"
-"Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
+"Last-Translator: Mark Trompell <mark@foresightlinux.org>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 #: ../src/xfpm-ac-adapter.c:217
 msgid "Unkown adapter status, the power manager will not work properly"
 msgstr ""
-"Unbekannter Zustand der Stromversorgung, die Stromverwaltung wird nicht "
+"Unbekannter Zustand der Stromversorgung, die Energieverwaltung wird nicht "
 "ordnungsgemäß funktionieren"
 
 #: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
@@ -59,7 +60,7 @@ msgstr "Ruhezustand"
 #: ../src/xfpm-battery.c:765
 msgid "Your battery is almost empty. save your work to avoid losing data"
 msgstr ""
-"Ihre Batter ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten "
+"Ihre Batterie ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten "
 "verloren gehen"
 
 #. g_disaster
@@ -67,7 +68,7 @@ msgstr ""
 #: ../src/xfpm-battery-icon.c:417 ../src/xfpm-main.c:275
 #: ../src/xfpm-driver.c:302 ../src/xfpm-driver.c:315 ../src/xfpm-driver.c:890
 msgid "Xfce power manager"
-msgstr "Stromverwaltung für Xfce4"
+msgstr "Energieverwaltung für Xfce4"
 
 #: ../src/xfpm-battery.c:780
 msgid "Shutdown the system"
@@ -85,7 +86,7 @@ msgstr "Herunterfahren"
 
 #: ../src/xfpm-settings.c:434
 msgid "UPS configuration"
-msgstr "Konfiguration der UPS"
+msgstr "Konfiguration der USV"
 
 #: ../src/xfpm-settings.c:434
 msgid "Battery configuration"
@@ -93,7 +94,7 @@ msgstr "Batteriekonfiguration"
 
 #: ../src/xfpm-settings.c:438
 msgid "Consider UPS charge critical"
-msgstr "Ladezustand der UPS als kritisch betrachten bei"
+msgstr "Ladezustand der USV als kritisch betrachten bei"
 
 #: ../src/xfpm-settings.c:438
 msgid "Consider battery charge critical"
@@ -105,7 +106,7 @@ msgstr "Prozent"
 
 #: ../src/xfpm-settings.c:453
 msgid "When battery charge level is critical do"
-msgstr "Wenn der Ladezustand der Batterie kritisch ist, dann tue"
+msgstr "Bei kritischem Ladezustand der Batterie:"
 
 #: ../src/xfpm-settings.c:459 ../src/xfpm-settings.c:929
 #: ../src/xfpm-settings.c:958 ../src/xfpm-settings.c:981
@@ -114,7 +115,7 @@ msgstr "Nichts"
 
 #: ../src/xfpm-settings.c:480
 msgid "Enable UPS charge notification"
-msgstr "Benachrichtigung über Ladezustand der UPS aktivieren"
+msgstr "Benachrichtigung über Ladezustand der USV aktivieren"
 
 #: ../src/xfpm-settings.c:480
 msgid "Enable battery state notification"
@@ -122,7 +123,7 @@ msgstr "Benachrichtigung über Batteriezustand aktivieren"
 
 #: ../src/xfpm-settings.c:494
 msgid "Enable power save on UPS power"
-msgstr "Stromsparen bei Strom über UPS aktivieren"
+msgstr "Stromsparen bei Strom über USV aktivieren"
 
 #: ../src/xfpm-settings.c:494
 msgid "Enable power save on battery power"
@@ -150,7 +151,7 @@ msgstr "Gemächliche Bedarfsorientierung"
 
 #: ../src/xfpm-settings.c:618
 msgid "CPU governor settings on UPS power"
-msgstr "Einstellungen des CPU-Multiplikators bei Strom über UPS"
+msgstr "Einstellungen des CPU-Multiplikators bei Strom über USV"
 
 #: ../src/xfpm-settings.c:618
 msgid "CPU governor settings on battery power"
@@ -178,7 +179,7 @@ msgstr "Helligkeitssteuerung erlauben"
 
 #: ../src/xfpm-settings.c:783
 msgid "Monitor settings on UPS power"
-msgstr "Monitoreinstellungen bei Strom über UPS"
+msgstr "Monitoreinstellungen bei Strom über USV"
 
 #: ../src/xfpm-settings.c:783
 msgid "Monitor settings on battery power"
@@ -202,15 +203,15 @@ msgstr "Tastenkürzel"
 
 #: ../src/xfpm-settings.c:924
 msgid "When power button is pressed do"
-msgstr "Wenn der Ein-/Aus-Schalter gedrückt wird, dann tue"
+msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
 
 #: ../src/xfpm-settings.c:950
 msgid "When sleep button is pressed do"
-msgstr "Wenn die Taste für den Schlafmodus gedrückt wird, dann tue"
+msgstr "Bei Betätigung der Taste für den Schlafmodus:"
 
 #: ../src/xfpm-settings.c:975
 msgid "When laptop lid is closed"
-msgstr "Wenn die Bildschirmklappe geschlossen wird, dann tue"
+msgstr "Beim Schließen der Bildschirmklappe:"
 
 #: ../src/xfpm-settings.c:999
 msgid "No available keyboard shortcuts found"
@@ -235,7 +236,7 @@ msgstr "Wenn die Batterie verfügbar ist"
 
 #: ../src/xfpm-settings.c:1032
 msgid "When battery is charging or discharging"
-msgstr "Wenn die Batterie lädt oder sich entlädt"
+msgstr "Wenn sich die Batterie lädt oder entlädt"
 
 #: ../src/xfpm-settings.c:1048
 msgid "Enable CPU freq scaling control"
@@ -243,7 +244,7 @@ msgstr "Skalierung der CPU-Frequenz aktivieren"
 
 #: ../src/xfpm-settings.c:1061
 msgid "Enable monitor power management control"
-msgstr "Stromverwaltung für Monitor aktivieren"
+msgstr "Energieverwaltung für Monitor aktivieren"
 
 #: ../src/xfpm-settings.c:1118
 msgid "Advanced settings"
@@ -267,7 +268,7 @@ msgstr "Monitoreinstellungen"
 
 #: ../src/xfpm-settings.c:1218
 msgid "Power Manager Preferences"
-msgstr "Einstellungen für die Stromverwaltung"
+msgstr "Einstellungen für die Energieverwaltung"
 
 #: ../src/xfpm-battery-icon.c:360
 msgid "Your battery charge is low"
@@ -279,12 +280,12 @@ msgstr "Ihre Batterie ist nahezu leer"
 
 #: ../src/xfpm-battery-icon.c:376
 msgid "You are running on Battery"
-msgstr "Sie laufen gerade im Batterierbetrieb"
+msgstr "Sie sind gerade im Batterierbetrieb"
 
 #: ../src/xfpm-battery-icon.c:376 ../src/xfpm-battery-icon.c:558
 #: ../src/xfpm-battery-icon.c:562
 msgid "Battery is discharging"
-msgstr "Die Batterie wird entladen"
+msgstr "Batterie wird entladen"
 
 #: ../src/xfpm-battery-icon.c:380
 msgid "Your battery is discharging"
@@ -292,7 +293,7 @@ msgstr "Ihre Batterie wird entladen"
 
 #: ../src/xfpm-battery-icon.c:388 ../src/xfpm-battery-icon.c:546
 msgid "Battery is charging"
-msgstr "Die Batterie wird geladen"
+msgstr "Batterie wird geladen"
 
 #: ../src/xfpm-battery-icon.c:397
 msgid "Your battery is fully charged"
@@ -384,7 +385,7 @@ msgstr "Teil der Xfce Goodies"
 
 #: ../src/xfpm-common.c:93 ../src/xfpm-driver.c:1190
 msgid "Xfce4 Power Manager"
-msgstr "Stromverwaltung für Xfce4"
+msgstr "Energieverwaltung für Xfce4"
 
 #: ../src/xfpm-main.c:66
 #, c-format
@@ -399,7 +400,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Xfce4-Stromverwaltung %s\n"
+"Xfce4-Energieverwaltung %s\n"
 "\n"
 "Teil der Xfce Goodies\n"
 "http://goodies.xfce.org\n"
@@ -428,14 +429,14 @@ msgstr ""
 "Optionen:\n"
 "-h, --help       Diese Hilfe ausgeben und beenden\n"
 "-v, --version    Diese Hilfe ausgeben und beenden\n"
-"-r, --run        Stromverwaltung für Xfce starten\n"
+"-r, --run        Energieverwaltung für Xfce starten\n"
 "-c, --customize  Einstellungen öffnen\n"
-"-q, --quit       Alle laufenden Xfce4-Stromverwaltungen beenden\n"
+"-q, --quit       Alle laufenden Xfce4-Energieverwaltungen beenden\n"
 "\n"
 
 #: ../src/xfpm-main.c:93
 msgid "Xfce Power Manager"
-msgstr "Stromverwaltung für Xfce"
+msgstr "Energieverwaltung für Xfce"
 
 #: ../src/xfpm-main.c:94
 msgid ""
@@ -448,12 +449,12 @@ msgstr ""
 #: ../src/xfpm-main.c:226 ../src/xfpm-main.c:251
 #, c-format
 msgid "Xfce power manager is not running\n"
-msgstr "Stromverwaltung für Xfce4 läuft nicht\n"
+msgstr "Energieverwaltung für Xfce4 läuft nicht\n"
 
 #: ../src/xfpm-main.c:228
 msgid "Xfce4 Power Manager is not running, do you want to launch it now ?"
 msgstr ""
-"Die Stromverwaltung für Xfce4 läuft nicht. Möchten Sie sie jetzt starten?"
+"Die Energieverwaltung für Xfce4 läuft nicht. Möchten Sie sie jetzt starten?"
 
 #: ../src/xfpm-main.c:230
 msgid "Run"
@@ -462,19 +463,19 @@ msgstr "Starten"
 #: ../src/xfpm-main.c:267
 #, c-format
 msgid "Xfce power manager is already running\n"
-msgstr "Stromverwaltung für Xfce4 läuft bereits\n"
+msgstr "Energieverwaltung für Xfce4 läuft bereits\n"
 
 #: ../src/xfpm-main.c:276
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
 msgstr ""
-"Kann die Stromverwaltung für Xfce4 nicht starten. Stellen Sie sicher, dass "
+"Kann die Energieverwaltung für Xfce4 nicht starten. Stellen Sie sicher, dass "
 "die Hardwareabstraktionsschicht und der Nachrichtendienst laufen."
 
 #: ../src/xfpm-main.c:280
 msgid "Unable to load xfce4 power manager\n"
-msgstr "Kann die Stromverwaltung für Xfce4 nicht laden\n"
+msgstr "Kann die Energieverwaltung für Xfce4 nicht laden\n"
 
 #: ../src/xfpm-driver.c:289
 msgid ""
@@ -482,7 +483,7 @@ msgid ""
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
 "with the hardware abstract layer or the message bus daemon is not running"
 msgstr ""
-"Kann den Zustand der Stromversorgung nicht lesen, die Stromverwaltung wird "
+"Kann den Zustand der Stromversorgung nicht lesen, die Energieverwaltung wird "
 "nicht ordnungsgemäß funktionieren. Mögliche Grunde: Der Treiber für das "
 "Netzteil ist nicht geladen, die Verbindung mit der "
 "Hardwareabstraktionsschicht ist unterbrochen oder der Nachrichtendienst "
@@ -499,7 +500,7 @@ msgid ""
 "broken connection with the hardware abstract layer or the message bus daemon "
 "is not running"
 msgstr ""
-"Kann die Dienste für die Stromverwaltung nicht nutzen; Tiefschlaf und "
+"Kann die Dienste für die Energieverwaltung nicht nutzen; Tiefschlaf und "
 "Ruhezustand werden nicht funktionieren. Mögliche Gründe: Sie haben nicht die "
 "nötigen Berechtigungen, die Verbindung mit der Hardwareabstraktionsschicht "
 "ist unterbrochen oder der Nachrichtendienst läuft nicht."
@@ -511,7 +512,7 @@ msgstr "Diese Nachricht nicht mehr anzeigen"
 #: ../src/xfpm-driver.c:1190
 msgid "Failed to load power manager configuration using defaults"
 msgstr ""
-"Konnte Konfiguration der Stromverwaltung nicht laden; nehme Standardwerte"
+"Konnte Konfiguration der Energieverwaltung nicht laden; nehme Standardwerte"
 
 #: ../src/xfpm-hal.c:162
 #, c-format
@@ -610,12 +611,12 @@ msgstr "Strom"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power Manager"
-msgstr "Stromverwaltung"
+msgstr "Energieverwaltung"
 
 #: ../src/xfce4-power-manager.desktop.in.h:3
 msgid "Settings for the Xfce 4 Power Manager"
-msgstr "Einstellungen für die Xfce4-Stromverwaltung"
+msgstr "Einstellungen für die Xfce4-Energieverwaltung"
 
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
-msgstr "Stromverwaltung für Xfce4"
+msgstr "Energieverwaltung für Xfce4"
