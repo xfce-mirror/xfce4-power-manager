@@ -1,4 +1,5 @@
 m4_define([powermanager_version], [0.6.0svn])
+m4_define([intltool_minimum_version], [0.31])
 
 AC_INIT([xfce4-power-manager],[powermanager_version],[aliov@xfce.org])
 AC_PREREQ(2.50)
@@ -9,13 +10,9 @@ AM_MAINTAINER_MODE
 
 # ============== basic compiler settings ============= #
 AC_PROG_CC
-AC_PROG_LD
+AM_PROG_CC_C_O
 AC_PROG_INSTALL
-AC_PROG_INTLTOOL
-
-# ========== export compiler / linker options ======== #
-AC_SUBST(CFLAGS)
-AC_SUBST(LDFLAGS)
+AC_PROG_INTLTOOL([intltool_minimum_version], [no-xml])
 
 # ===================================================== #
 # 		Check for i18n support 			#
