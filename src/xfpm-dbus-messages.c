@@ -183,7 +183,6 @@ gboolean xfpm_dbus_send_message_with_reply (const char *signal,gint *get_reply) 
     } else     
     {
         *get_reply = 0;
-        
     }    
   
     dbus_message_unref(message);
@@ -191,7 +190,47 @@ gboolean xfpm_dbus_send_message_with_reply (const char *signal,gint *get_reply) 
     return TRUE;
 }  
 
-void     xfpm_dbus_send_nm_message   (const gchar *signal)
+gboolean
+xfpm_dbus_send_customize_message(guint32 socket_id)
+{
+	DBusConnection *connection;
+    DBusMessage *message;
+    
+    connection = xfpm_dbus_get_connection(DBUS_BUS_SESSION);
+    if ( !connection )
+    {
+        return FALSE;
+    }
+    
+    message = xfpm_dbus_new_signal("Customize");
+    
+    if (!message)
+    {
+        return FALSE;
+    }
+        
+    dbus_message_append_args(message,DBUS_TYPE_UINT32,&socket_id,DBUS_TYPE_INVALID);
+        
+    gboolean ret =
+    dbus_connection_send(connection,
+                         message,
+                         NULL);
+        
+    dbus_message_unref(message);
+    dbus_connection_unref(connection);
+    if ( ret == FALSE )
+    {
+        g_critical(_("Failed to send message\n"));
+        return FALSE;
+    } else
+    {
+        return TRUE;
+    }         
+	
+}
+
+void
+xfpm_dbus_send_nm_message   (const gchar *signal)
 {
     DBusConnection *connection;
     DBusMessage *message;

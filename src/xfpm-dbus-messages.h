@@ -36,6 +36,7 @@ gboolean xfpm_dbus_name_has_owner(DBusConnection *connection,
                                   const gchar *service);
 gboolean xfpm_dbus_send_message            (const gchar *signal);
 gboolean xfpm_dbus_send_message_with_reply (const gchar *signal,gint *get_reply);
+gboolean xfpm_dbus_send_customize_message  (guint32 socket_id);
 void     xfpm_dbus_send_nm_message         (const gchar *signal);
 
 #endif /* __XFPM_DBUS_MESSAGES */

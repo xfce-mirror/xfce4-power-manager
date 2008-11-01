@@ -1228,17 +1228,19 @@ xfpm_settings_new(XfconfChannel *channel,
                   guint8 govs,
                   guint8 switch_buttons,
                   gboolean lcd,
-                  gboolean ups_found)
+                  gboolean ups_found,
+                  guint32 socket_id)
 {
     GtkWidget *Dialog;  /* Main dialog window */
     GtkWidget *mainbox; /* Box to get (Dialog)->vbox */
     GtkWidget *box;
     GtkWidget *table;   
     GtkWidget *view;
-        
+    GtkWidget *allbox;
+  
     Dialog = xfce_titled_dialog_new_with_buttons(_("Power Manager Preferences"),
                                                     NULL,
-                                                    GTK_DIALOG_NO_SEPARATOR,
+                                                    GTK_DIALOG_DESTROY_WITH_PARENT,
                                                     GTK_STOCK_CLOSE,
                                                     GTK_RESPONSE_CANCEL,
                                                     GTK_STOCK_HELP,
@@ -1247,15 +1249,18 @@ xfpm_settings_new(XfconfChannel *channel,
     
     gtk_window_set_icon_name(GTK_WINDOW(Dialog),"gpm-ac-adapter");
     gtk_dialog_set_default_response(GTK_DIALOG(Dialog),GTK_RESPONSE_CLOSE);
-    
     mainbox = GTK_DIALOG(Dialog)->vbox;
 
+	allbox = gtk_vbox_new(FALSE,0);
+	gtk_widget_show(allbox);
+	gtk_box_pack_start(GTK_BOX(mainbox),allbox,FALSE,FALSE,0);
+	
     gboolean ups;
     ups = is_laptop ? FALSE : ups_found;
         
     /// General Options Frame
     box = xfpm_settings_general(channel,is_laptop,ups);
-    gtk_box_pack_start (GTK_BOX (mainbox), box, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (allbox), box, FALSE, FALSE, 0);
     
     /// Notebook container
     nt = gtk_notebook_new();
@@ -1263,7 +1268,7 @@ xfpm_settings_new(XfconfChannel *channel,
     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(nt),FALSE);
     table = gtk_table_new(1,2,FALSE);
     gtk_widget_show(table);
-    gtk_box_pack_start (GTK_BOX (mainbox), table, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (allbox), table, FALSE, FALSE, 0);
     view = xfpm_settings_tree_view(is_laptop,ups_found);
     gtk_table_attach_defaults(GTK_TABLE(table),view,0,1,0,1);  
     gtk_widget_show(view);  
@@ -1285,6 +1290,13 @@ xfpm_settings_new(XfconfChannel *channel,
     /// Dpms settings && LCD brightness settings DPMS existence is checked above
     box = xfpm_settings_monitor(channel,is_laptop,dpms_capable,lcd,ups);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
-    
-    return Dialog;
+
+	GtkWidget *plug;    
+    if ( socket_id != 0 )
+    {
+		plug = gtk_plug_new(socket_id);
+    	gtk_widget_show (plug);
+    	gtk_widget_reparent(allbox,plug);
+	}
+    return socket_id == 0 ? Dialog : plug ;
 }

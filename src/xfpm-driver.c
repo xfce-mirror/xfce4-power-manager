@@ -134,6 +134,8 @@ static void xfpm_driver_send_reply(DBusConnection *conn,DBusMessage *mess);
 static DBusHandlerResult xfpm_driver_signal_filter
     (DBusConnection *connection,DBusMessage *message,void *user_data);
 
+static guint32 socket_id = 0;
+
 #define XFPM_DRIVER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o),XFPM_TYPE_DRIVER,XfpmDriverPrivate))
 
@@ -373,6 +375,17 @@ _close_dialog_cb(GtkDialog *dialog,XfpmDriver *drv)
 }
 
 static void
+_close_plug_cb(GtkWidget *plug,GdkEvent *ev,XfpmDriver *drv)
+{
+	XfpmDriverPrivate *priv;
+	priv = XFPM_DRIVER_GET_PRIVATE(drv);
+	priv->dialog_opened = FALSE;
+	_close_dialog_cb(NULL,drv);
+	gtk_widget_destroy(plug);
+	
+}
+
+static void
 xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
                                 GValue *value,XfpmDriver *drv)
 {
@@ -551,7 +564,7 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     {
         return FALSE;
     }
-    
+
     XfconfChannel *channel;
     GtkWidget *dialog;
 
@@ -588,18 +601,27 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
                                governors,
                                switch_buttons,
                                priv->lcd_brightness_control,
-                               ups_found);
+                               ups_found,
+                               socket_id);
+    if ( socket_id == 0 )
+    {
+    	xfce_gtk_window_center_on_monitor_with_pointer(GTK_WINDOW(dialog));
+    	gtk_window_set_modal(GTK_WINDOW(dialog), FALSE);
     
-    xfce_gtk_window_center_on_monitor_with_pointer(GTK_WINDOW(dialog));
-    gtk_window_set_modal(GTK_WINDOW(dialog), FALSE);
+    	gdk_x11_window_set_user_time(dialog->window,gdk_x11_get_server_time (dialog->window));
     
-    gdk_x11_window_set_user_time(dialog->window,gdk_x11_get_server_time (dialog->window));
+    	g_signal_connect(dialog,"response",G_CALLBACK(_dialog_response_cb),drv);        
+    	g_signal_connect(dialog,"close",G_CALLBACK(_close_dialog_cb),drv);
+    	gtk_widget_show(dialog);
+    }	
+    else
+    {
+    	g_signal_connect(dialog,"delete-event",G_CALLBACK(_close_plug_cb),drv);
+		gdk_notify_startup_complete();
+	}
     
-    g_signal_connect(dialog,"response",G_CALLBACK(_dialog_response_cb),drv);        
-    g_signal_connect(dialog,"close",G_CALLBACK(_close_dialog_cb),drv);
-    
-    gtk_widget_show(dialog);
     priv->dialog_opened = TRUE;
+    socket_id = 0 ;
     
     return FALSE;
 }
@@ -1115,9 +1137,17 @@ static DBusHandlerResult xfpm_driver_signal_filter
     
     if ( dbus_message_is_signal(message,"xfpm.power.manager","Customize" ) )
     {
-        XFPM_DEBUG("message customize received\n");
         /* don't block the signal filter so show the configuration dialog in a
          * timeout function otherwise xfce4-power-manager -q will have no effect*/
+        DBusError error;
+        dbus_error_init(&error);
+        dbus_message_get_args(message,&error,DBUS_TYPE_UINT32,&socket_id,DBUS_TYPE_INVALID);
+        if ( dbus_error_is_set(&error) )
+        {
+        	XFPM_DEBUG("Failed to get socket id: %s\n",error.message);
+        	dbus_error_free(&error);
+		}
+		XFPM_DEBUG("message customize received with socket_id=%d\n",socket_id);
         g_timeout_add(100,(GSourceFunc)xfpm_driver_show_options_dialog,drv);
         return DBUS_HANDLER_RESULT_HANDLED;
     }    
