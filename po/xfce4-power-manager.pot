@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-01 23:02+0100\n"
+"POT-Creation-Date: 2008-11-02 10:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -496,88 +496,108 @@ msgstr ""
 msgid "Failed to load power manager configuration using defaults"
 msgstr ""
 
-#: ../src/xfpm-hal.c:162
+#: ../src/xfpm-hal.c:172
 #, c-format
 msgid "Error monitoring HAL events\n"
 msgstr ""
 
-#: ../src/xfpm-hal.c:250 ../src/xfpm-hal.c:267
+#: ../src/xfpm-hal.c:260 ../src/xfpm-hal.c:277
 #, c-format
 msgid "Unable to connect to DBus %s\n"
 msgstr ""
 
-#: ../src/xfpm-hal.c:256
+#: ../src/xfpm-hal.c:266
 msgid "HAL is not running or not responding\n"
 msgstr ""
 
-#: ../src/xfpm-hal.c:401
+#: ../src/xfpm-hal.c:411
 #, c-format
 msgid "Unable to watch device using HAL %s\n"
 msgstr ""
 
-#: ../src/xfpm-hal.c:656 ../src/xfpm-hal.c:745 ../src/xfpm-hal.c:838
-#: ../src/xfpm-hal.c:887 ../src/xfpm-hal.c:937 ../src/xfpm-hal.c:989
-#: ../src/xfpm-hal.c:1041 ../src/xfpm-hal.c:1087
+#: ../src/xfpm-hal.c:628
+msgid "No back-end for your operating system"
+msgstr ""
+
+#: ../src/xfpm-hal.c:632
+msgid "No hibernate script found"
+msgstr ""
+
+#: ../src/xfpm-hal.c:636
+msgid "No suspend script found"
+msgstr ""
+
+#: ../src/xfpm-hal.c:640
+msgid "No suspend method found"
+msgstr ""
+
+#: ../src/xfpm-hal.c:644
+msgid "No hibernate method found"
+msgstr ""
+
+#: ../src/xfpm-hal.c:670 ../src/xfpm-hal.c:760 ../src/xfpm-hal.c:854
+#: ../src/xfpm-hal.c:903 ../src/xfpm-hal.c:953 ../src/xfpm-hal.c:1005
+#: ../src/xfpm-hal.c:1057 ../src/xfpm-hal.c:1103
 #, c-format
 msgid "Out of memory"
 msgstr ""
 
-#: ../src/xfpm-hal.c:687
+#: ../src/xfpm-hal.c:702
 #, c-format
 msgid "Message Hibernate didn't get a reply"
 msgstr ""
 
-#: ../src/xfpm-hal.c:708
+#: ../src/xfpm-hal.c:723
 #, c-format
 msgid "System failed to hibernate"
 msgstr ""
 
-#: ../src/xfpm-hal.c:714 ../src/xfpm-hal.c:805
+#: ../src/xfpm-hal.c:729 ../src/xfpm-hal.c:821
 #, c-format
 msgid "Error occured while trying to suspend"
 msgstr ""
 
-#: ../src/xfpm-hal.c:717 ../src/xfpm-hal.c:808
+#: ../src/xfpm-hal.c:732 ../src/xfpm-hal.c:824
 #, c-format
 msgid "Unknown reply from the message daemon"
 msgstr ""
 
-#: ../src/xfpm-hal.c:777
+#: ../src/xfpm-hal.c:793
 #, c-format
 msgid "Message suspend didn't get a reply"
 msgstr ""
 
-#: ../src/xfpm-hal.c:799
+#: ../src/xfpm-hal.c:815
 #, c-format
 msgid "System failed to suspend"
 msgstr ""
 
-#: ../src/xfpm-hal.c:858
+#: ../src/xfpm-hal.c:874
 #, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
 msgstr ""
 
-#: ../src/xfpm-hal.c:905
+#: ../src/xfpm-hal.c:921
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
 msgstr ""
 
-#: ../src/xfpm-hal.c:955
+#: ../src/xfpm-hal.c:971
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
 msgstr ""
 
-#: ../src/xfpm-hal.c:1007
+#: ../src/xfpm-hal.c:1023
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
 msgstr ""
 
-#: ../src/xfpm-hal.c:1060
+#: ../src/xfpm-hal.c:1076
 #, c-format
 msgid "No reply from HAL daemon to set cpu governor"
 msgstr ""
 
-#: ../src/xfpm-hal.c:1106
+#: ../src/xfpm-hal.c:1122
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
 msgstr ""
