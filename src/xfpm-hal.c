@@ -79,6 +79,16 @@ static gboolean   xfpm_hal_monitor               (XfpmHal *xfpm_hal);
 #define XFPM_HAL_GET_PRIVATE(o)   \
 (G_TYPE_INSTANCE_GET_PRIVATE((o),XFPM_TYPE_HAL,XfpmHalPrivate))
 
+GQuark
+xfpm_hal_error_quark (void)
+{
+	static GQuark quark = 0;
+	if (!quark)
+		quark = g_quark_from_static_string ("xfpm_hal_error");
+
+	return quark;
+}
+
 struct XfpmHalPrivate 
 {
     
@@ -610,26 +620,30 @@ gboolean xfpm_hal_shutdown(XfpmHal *xfpm_hal)
     return TRUE;
 }
 
-static gboolean
+static const gchar *
 _filter_error_message(const gchar *error)
 {
     if(!strcmp("No back-end for your operating system",error))
     {
-        return TRUE;
+        return _("No back-end for your operating system");
     }
     else if (!strcmp("No hibernate script found",error) )
     {
-        return TRUE;
+        return _("No hibernate script found");
     }
+	else if (!strcmp("No suspend script found",error) )
+	{
+		return _("No suspend script found");
+	}
     else if (!strcmp("No suspend method found",error) )
     {
-        return TRUE;
+        return _("No suspend method found");
     }
     else if (!strcmp("No hibernate method found",error))
     {
-        return TRUE;
+        return _("No hibernate method found");
     }
-    return FALSE;
+    return NULL;
 }
 
 gboolean   
@@ -653,7 +667,7 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 	if (!mess) 
 	{
 	    *critical = 1;
-	    g_set_error(gerror,0,0,_("Out of memory"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Out of memory"));
 		return FALSE;
 	}	
 	
@@ -668,9 +682,10 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     if ( dbus_error_is_set(&error) )
     {
         XFPM_DEBUG("error=%s\n",error.message);
-        dbus_set_g_error(gerror,&error);
-        if ( _filter_error_message(error.message) )
+		const gchar *error_ret =  _filter_error_message(error.message);
+		if ( error_ret )
         {
+			g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,error_ret);
             *critical = 1;
         }
         else 
@@ -684,7 +699,7 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     if ( !reply ) 
 	{						  		       
 	    critical = 0;
-	    g_set_error(gerror,0,0,_("Message Hibernate didn't get a reply"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Message Hibernate didn't get a reply"));
 	    return FALSE;
     }
 
@@ -705,16 +720,16 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
         }
         if ( exit_code > 1 ) 
         {
-            g_set_error(gerror,0,0,_("System failed to hibernate"));
+            g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("System failed to hibernate"));
             return FALSE;
         }                 
         break;
     case DBUS_MESSAGE_TYPE_ERROR:
         dbus_message_unref(reply);
-        g_set_error(gerror,0,0,_("Error occured while trying to suspend"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Error occured while trying to suspend"));
         return FALSE;	
     default:
-        g_set_error(gerror,0,0,_("Unknown reply from the message daemon"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Unknown reply from the message daemon"));
         dbus_message_unref(reply);
         return FALSE;	
     }
@@ -742,7 +757,7 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
                                         "Suspend");
 	if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memory"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Out of memory"));
 	    *critical = 1;
 		return FALSE;
 	}	
@@ -759,9 +774,10 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     if ( dbus_error_is_set(&error) )
     {
         XFPM_DEBUG("error=%s\n",error.message);
-        dbus_set_g_error(gerror,&error);
-        if ( _filter_error_message(error.message) )
+		const gchar *error_ret =  _filter_error_message(error.message);
+		if ( error_ret )
         {
+			g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,error_ret);
             *critical = 1;
         }
         else 
@@ -774,7 +790,7 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     
     if ( !reply ) 
 	{						  		       
-	    g_set_error(gerror,0,0,_("Message suspend didn't get a reply"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Message suspend didn't get a reply"));
 	    *critical = 0;
 	    return FALSE;
     }
@@ -796,16 +812,16 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
         }
         if ( exit_code > 1 ) 
         {
-            g_set_error(gerror,0,0,_("System failed to suspend"));
+            g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("System failed to suspend"));
             return FALSE;
         }                 
         break;
     case DBUS_MESSAGE_TYPE_ERROR:
         dbus_message_unref(reply);
-        g_set_error(gerror,0,0,_("Error occured while trying to suspend"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Error occured while trying to suspend"));
         return FALSE;	
     default:
-        g_set_error(gerror,0,0,_("Unknown reply from the message daemon"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Unknown reply from the message daemon"));
         dbus_message_unref(reply);
         return FALSE;	
     }
@@ -835,7 +851,7 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
                                         "SetBrightness");
 	if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memory"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Out of memory"));
 		return;
 	}	
     
@@ -855,7 +871,7 @@ xfpm_hal_set_brightness (XfpmHal *xfpm_hal,
         
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to set monitor brightness level"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("No reply from HAL daemon to set monitor brightness level"));
         return;
     }
     
@@ -884,7 +900,7 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
                                         "GetBrightness");
 	if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memory"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Out of memory"));
 		return -1;
 	}	
     
@@ -902,7 +918,7 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
         
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to get monitor brightness level"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("No reply from HAL daemon to get monitor brightness level"));
         return -1;
     }
     
@@ -934,7 +950,7 @@ gchar
                                         "GetCPUFreqAvailableGovernors");
     if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memory"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Out of memory"));
 		return NULL;
 	}	
 	
@@ -952,7 +968,7 @@ gchar
         
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to get available cpu governors"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("No reply from HAL daemon to get available cpu governors"));
         return NULL;
     }
     
@@ -986,7 +1002,7 @@ gchar
     
     if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memory"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Out of memory"));
 		return NULL;
 	}	
 	
@@ -1004,7 +1020,7 @@ gchar
     
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to get current cpu governor"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("No reply from HAL daemon to get current cpu governor"));
         return NULL;
     }
 
@@ -1038,7 +1054,7 @@ xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
                                         "SetCPUFreqGovernor");
     if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memory"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Out of memory"));
 		return;
 	}	
 	                                                            
@@ -1057,7 +1073,7 @@ xfpm_hal_set_cpu_governor (XfpmHal *xfpm_hal,
 
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to set cpu governor"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("No reply from HAL daemon to set cpu governor"));
         return;
     }
     dbus_message_unref(reply);
@@ -1084,7 +1100,7 @@ xfpm_hal_set_power_save (XfpmHal *xfpm_hal,
                                         "SetPowerSave");
     if (!mess) 
 	{
-	    g_set_error(gerror,0,0,_("Out of memory"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Out of memory"));
 		return;
 	}	
 	                                                            
@@ -1103,7 +1119,7 @@ xfpm_hal_set_power_save (XfpmHal *xfpm_hal,
 
     if ( !reply ) 
     {
-        g_set_error(gerror,0,0,_("No reply from HAL daemon to set power save profile"));
+        g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("No reply from HAL daemon to set power save profile"));
         return;
     }
     dbus_message_unref(reply);
