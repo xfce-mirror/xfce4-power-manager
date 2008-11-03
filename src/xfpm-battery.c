@@ -763,7 +763,7 @@ xfpm_battery_show_critical_options(XfpmBattery *batt,XfpmBatteryIcon *icon,XfpmB
     
     const gchar *message;
     message = _("Your battery is almost empty. "\
-              "save your work to avoid losing data");
+              "Save your work to avoid losing data");
               
 #ifdef HAVE_LIBNOTIFY            
                                     
