@@ -47,6 +47,7 @@ typedef struct
     XfpmBatteryType  type;
     
     GQuark icon;
+	gint icon_size;
     gboolean icon_loaded;
 
     gboolean battery_present;

@@ -163,6 +163,7 @@ xfpm_battery_icon_init(XfpmBatteryIcon *battery_icon)
 #endif
     battery_icon->icon    = -1;
     battery_icon->icon_loaded = FALSE;
+	battery_icon->icon_size   = 1;
 }
 
 static void xfpm_battery_icon_set_property(GObject *object,
@@ -256,34 +257,42 @@ static gboolean
 xfpm_battery_icon_size_change_cb(XfpmBatteryIcon *battery_icon,gint size,gpointer data)
 {
     XFPM_DEBUG("size change event %d\n",size);
+	
+	if ( size == 1 )
+	{
+		/*Panel is in hidden mode*/
+		battery_icon->icon_size = 1;
+		return TRUE;
+	}
     if ( size > 128 )
     {
         /* Reduce the size until we get the correct size of the system tray */
-        size = 48;
+        battery_icon->icon_size = 48;
     }
+	else
+	{
+		battery_icon->icon_size = size;
+	}
     
-    gchar *icon_name;
-    g_object_get(G_OBJECT(battery_icon),"icon-name",&icon_name,NULL);
-    
-    if ( !icon_name )
-    {
-        return FALSE;
-    }
-    
-    GdkPixbuf *icon;
-    icon = xfpm_load_icon(icon_name,size);
-    
-    if ( icon )
-    {
-        XFPM_DEBUG("Setting icon for resize request\n");
-        gtk_status_icon_set_from_pixbuf(GTK_STATUS_ICON(battery_icon),icon);
-        g_object_unref(G_OBJECT(icon));
-        return TRUE;
-    } else
-    {
-        XFPM_DEBUG("Unable to load icon %s\n",icon_name);
-    }
-    return FALSE;
+	if ( battery_icon->icon == -1 )
+	{
+		return FALSE;
+	}
+	else
+	{
+		GdkPixbuf *icon;
+		icon = xfpm_load_icon(g_quark_to_string(battery_icon->icon),battery_icon->icon_size);
+        
+        if ( icon )
+        {
+            battery_icon->icon_loaded = TRUE;
+            gtk_status_icon_set_from_pixbuf(GTK_STATUS_ICON(battery_icon),icon);
+            g_object_unref(G_OBJECT(icon));
+			return TRUE;
+        }
+		return FALSE;
+	}
+	return FALSE;
 }
 
 static const gchar *
