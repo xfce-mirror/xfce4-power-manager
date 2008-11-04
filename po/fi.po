@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-27 12:23+0200\n"
-"PO-Revision-Date: 2008-10-27 12:35+0200\n"
+"POT-Creation-Date: 2008-11-04 17:25+0200\n"
+"PO-Revision-Date: 2008-11-04 17:47+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -16,310 +16,319 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/xfpm-ac-adapter.c:216
-msgid "Unkown adapter status, the power manager will not work properly"
-msgstr "Virtalähteen tila tuntematon, virranhallinta ei toimi oikein"
+#: ../src/xfpm-ac-adapter.c:217
+msgid "Unable to read adapter status, the power manager will not work properly"
+msgstr "Virtalähteen tilaa ei voi lukea, joten virranhallinta ei toimi oikein"
 
-#: ../src/xfpm-ac-adapter.c:285 ../src/xfpm-ac-adapter.c:307
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is online"
 msgstr "Verkkovirta kytketty"
 
-#: ../src/xfpm-ac-adapter.c:285 ../src/xfpm-ac-adapter.c:307
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is offline"
 msgstr "Käytetään akkuvirtaa"
 
-#: ../src/xfpm-ac-adapter.c:357 ../src/xfpm-battery.c:907
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:908
 msgid "Are you sure you want to hibernate the system ?"
 msgstr "Haluatko varmasti asettaa järjestelmän lepotilaan?"
 
 #. Hibernate menu option
-#: ../src/xfpm-ac-adapter.c:359 ../src/xfpm-ac-adapter.c:395
-#: ../src/xfpm-battery.c:802 ../src/xfpm-battery.c:909
-#: ../src/xfpm-battery.c:944 ../src/xfpm-settings.c:465
-#: ../src/xfpm-settings.c:932 ../src/xfpm-settings.c:961
-#: ../src/xfpm-settings.c:984
+#: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
+#: ../src/xfpm-battery.c:803 ../src/xfpm-battery.c:910
+#: ../src/xfpm-battery.c:945 ../src/xfpm-settings.c:470
+#: ../src/xfpm-settings.c:954 ../src/xfpm-settings.c:983
+#: ../src/xfpm-settings.c:1006
 msgid "Hibernate"
 msgstr "Lepotila"
 
-#: ../src/xfpm-ac-adapter.c:371 ../src/xfpm-battery.c:922
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:923
 msgid "Are you sure you want to suspend the system ?"
 msgstr "Haluatko varmasti asettaa järjestelmän keskeytystilaan?"
 
 #. Suspend menu option
-#: ../src/xfpm-ac-adapter.c:373 ../src/xfpm-ac-adapter.c:412
-#: ../src/xfpm-battery.c:924 ../src/xfpm-battery.c:959
-#: ../src/xfpm-settings.c:930 ../src/xfpm-settings.c:959
-#: ../src/xfpm-settings.c:982
+#: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
+#: ../src/xfpm-battery.c:925 ../src/xfpm-battery.c:960
+#: ../src/xfpm-settings.c:952 ../src/xfpm-settings.c:981
+#: ../src/xfpm-settings.c:1004
 msgid "Suspend"
 msgstr "Keskeytystila"
 
-#: ../src/xfpm-battery.c:764
-msgid "Your battery is almost empty. save your work to avoid losing data"
+#: ../src/xfpm-battery.c:765
+msgid "Your battery is almost empty. Save your work to avoid losing data"
 msgstr "Akku on lähes tyhjä. Varmista, että olet tallentanut tärkeät tiedot."
 
-#: ../src/xfpm-battery.c:769 ../src/xfpm-battery-icon.c:407
-#: ../src/xfpm-driver.c:300 ../src/xfpm-driver.c:888
+#: ../src/xfpm-battery.c:770 ../src/xfpm-battery.c:1271
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:229
+#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Xfce:n virranhallinta"
 
-#: ../src/xfpm-battery.c:779
+#: ../src/xfpm-battery.c:780
 msgid "Shutdown the system"
 msgstr "Sammuta järjestelmä"
 
-#: ../src/xfpm-battery.c:787
+#: ../src/xfpm-battery.c:788
 msgid "Hibernate the system"
 msgstr "Aseta järjestelmä lepotilaan"
 
-#: ../src/xfpm-battery.c:809 ../src/xfpm-settings.c:461
-#: ../src/xfpm-settings.c:934 ../src/xfpm-settings.c:963
-#: ../src/xfpm-settings.c:986
+#: ../src/xfpm-battery.c:810 ../src/xfpm-settings.c:466
+#: ../src/xfpm-settings.c:956 ../src/xfpm-settings.c:985
+#: ../src/xfpm-settings.c:1008
 msgid "Shutdown"
 msgstr "Sammuta"
 
-#: ../src/xfpm-settings.c:433
+#: ../src/xfpm-settings.c:438
 msgid "UPS configuration"
 msgstr "UPS-laite"
 
-#: ../src/xfpm-settings.c:433
+#: ../src/xfpm-settings.c:438
 msgid "Battery configuration"
 msgstr "Akkuvirta"
 
-#: ../src/xfpm-settings.c:437
+#: ../src/xfpm-settings.c:442
 msgid "Consider UPS charge critical"
 msgstr "UPS on lähes tyhjä, kun virtaa on:"
 
-#: ../src/xfpm-settings.c:437
+#: ../src/xfpm-settings.c:442
 msgid "Consider battery charge critical"
 msgstr "Akku on lähes tyhjä, kun virtaa on:"
 
-#: ../src/xfpm-settings.c:442
+#: ../src/xfpm-settings.c:447
 msgid "percent"
 msgstr "prosenttia"
 
-#: ../src/xfpm-settings.c:452
+#: ../src/xfpm-settings.c:457
 msgid "When battery charge level is critical do"
 msgstr "Kun akku on lähes tyhjä:"
 
-#: ../src/xfpm-settings.c:458 ../src/xfpm-settings.c:928
-#: ../src/xfpm-settings.c:957 ../src/xfpm-settings.c:980
+#: ../src/xfpm-settings.c:463 ../src/xfpm-settings.c:950
+#: ../src/xfpm-settings.c:979 ../src/xfpm-settings.c:1002
 msgid "Nothing"
 msgstr "Älä tee mitään"
 
-#: ../src/xfpm-settings.c:479
+#: ../src/xfpm-settings.c:484
 msgid "Enable UPS charge notification"
 msgstr "Ilmoita UPS-laitteen lataus"
 
-#: ../src/xfpm-settings.c:479
+#: ../src/xfpm-settings.c:484
 msgid "Enable battery state notification"
 msgstr "Ilmoita akun tila"
 
-#: ../src/xfpm-settings.c:493
+#: ../src/xfpm-settings.c:498
 msgid "Enable power save on UPS power"
 msgstr "Virransäästö UPS-laitteen varassa"
 
-#: ../src/xfpm-settings.c:493
+#: ../src/xfpm-settings.c:498
 msgid "Enable power save on battery power"
 msgstr "Virransäästö käytettäessä akkuvirtaa"
 
-#: ../src/xfpm-settings.c:532 ../src/xfpm-settings.c:625
+#: ../src/xfpm-settings.c:538 ../src/xfpm-settings.c:631
 msgid "Performance"
 msgstr "Täysi teho"
 
-#: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:630
+#: ../src/xfpm-settings.c:543 ../src/xfpm-settings.c:636
 msgid "Ondemand"
 msgstr "Tarpeen mukaan"
 
-#: ../src/xfpm-settings.c:541 ../src/xfpm-settings.c:634
+#: ../src/xfpm-settings.c:547 ../src/xfpm-settings.c:640
 msgid "Userspace"
 msgstr "Käyttäjätaso"
 
-#: ../src/xfpm-settings.c:545 ../src/xfpm-settings.c:638
+#: ../src/xfpm-settings.c:551 ../src/xfpm-settings.c:644
 msgid "Powersave"
 msgstr "Pienin teho"
 
-#: ../src/xfpm-settings.c:549 ../src/xfpm-settings.c:642
+#: ../src/xfpm-settings.c:555 ../src/xfpm-settings.c:648
 msgid "Conservative"
 msgstr "Konservatiivinen"
 
-#: ../src/xfpm-settings.c:617
+#: ../src/xfpm-settings.c:623
 msgid "CPU governor settings on UPS power"
 msgstr "Suorittimen tehoprofiili UPS:n varassa"
 
-#: ../src/xfpm-settings.c:617
+#: ../src/xfpm-settings.c:623
 msgid "CPU governor settings on battery power"
 msgstr "Suorittimen tehoprofiili akkuvirralla"
 
-#: ../src/xfpm-settings.c:716
+#: ../src/xfpm-settings.c:723
 msgid "No CPU governor found"
 msgstr "Ei tehoprofiileja käytettävissä"
 
-#: ../src/xfpm-settings.c:726
+#: ../src/xfpm-settings.c:733
 msgid "CPU frequency control cannot be used"
 msgstr "Suorittimen taajuutta ei voi hallita"
 
-#: ../src/xfpm-settings.c:738
+#: ../src/xfpm-settings.c:743 ../src/xfpm-settings.c:888
+msgid "On electric power"
+msgstr "Verkkovirta"
+
+#: ../src/xfpm-settings.c:748
 msgid "CPU freq settings on electric power"
 msgstr "Suorittimen tehoprofiili verkkovirralla"
 
-#: ../src/xfpm-settings.c:738
+#: ../src/xfpm-settings.c:748
 msgid "CPU freq settings"
 msgstr "Suorittimen teho"
 
-#: ../src/xfpm-settings.c:760
+#: ../src/xfpm-settings.c:753 ../src/xfpm-settings.c:896
+msgid "On battery power"
+msgstr "Akkukäyttö"
+
+#: ../src/xfpm-settings.c:772
 msgid "Enable LCD brightness control"
 msgstr "Säädä LCD:n kirkkautta"
 
-#: ../src/xfpm-settings.c:782
+#: ../src/xfpm-settings.c:794
 msgid "Monitor settings on UPS power"
 msgstr "Näytön virransäästö UPS:n varassa"
 
-#: ../src/xfpm-settings.c:782
+#: ../src/xfpm-settings.c:794
 msgid "Monitor settings on battery power"
 msgstr "Näytön virransäästö akkuvirralla"
 
-#: ../src/xfpm-settings.c:870
+#: ../src/xfpm-settings.c:887
 msgid "Monitor settings on electric power"
 msgstr "Näytön virransäästö verkkovirralla"
 
-#: ../src/xfpm-settings.c:870
+#: ../src/xfpm-settings.c:887
 msgid "Monitor settings"
 msgstr "Näyttö"
 
-#: ../src/xfpm-settings.c:883
+#: ../src/xfpm-settings.c:904
 msgid "Your monitor doesn't support DPMS control"
 msgstr "Näyttösi ei tue DPMS-virransäästöä"
 
-#: ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:935
 msgid "Keyboard shortcuts"
 msgstr "Pikanäppäimet"
 
-#: ../src/xfpm-settings.c:923
+#: ../src/xfpm-settings.c:945
 msgid "When power button is pressed do"
 msgstr "Painettaessa virtanäppäintä"
 
-#: ../src/xfpm-settings.c:949
+#: ../src/xfpm-settings.c:971
 msgid "When sleep button is pressed do"
 msgstr "Painettaessa lepotilanäppäintä"
 
-#: ../src/xfpm-settings.c:974
+#: ../src/xfpm-settings.c:996
 msgid "When laptop lid is closed"
 msgstr "Kun kansi on suljettu"
 
-#: ../src/xfpm-settings.c:998
+#: ../src/xfpm-settings.c:1020
 msgid "No available keyboard shortcuts found"
 msgstr "Pikanäppäimiä ei käytettävissä"
 
-#: ../src/xfpm-settings.c:1014
+#: ../src/xfpm-settings.c:1036
 msgid "General Options"
 msgstr "Yleiset asetukset"
 
 #. Systray icon
-#: ../src/xfpm-settings.c:1021
+#: ../src/xfpm-settings.c:1043
 msgid "System tray icon"
 msgstr "Järjestelmälokeron kuvake"
 
-#: ../src/xfpm-settings.c:1027
+#: ../src/xfpm-settings.c:1049
 msgid "Always Display an icon"
 msgstr "Näytä kuvake aina"
 
-#: ../src/xfpm-settings.c:1028
+#: ../src/xfpm-settings.c:1050
 msgid "When battery is present"
 msgstr "Näytä, kun akku on liitetty"
 
-#: ../src/xfpm-settings.c:1031
+#: ../src/xfpm-settings.c:1053
 msgid "When battery is charging or discharging"
 msgstr "Näytä, kun akku latautuu tai purkautuu"
 
-#: ../src/xfpm-settings.c:1047
+#: ../src/xfpm-settings.c:1069
 msgid "Enable CPU freq scaling control"
 msgstr "Hallitse suorittimen taajuutta"
 
-#: ../src/xfpm-settings.c:1060
+#: ../src/xfpm-settings.c:1082
 msgid "Enable monitor power management control"
 msgstr "Hallitse näytön virransäästöä"
 
-#: ../src/xfpm-settings.c:1117
+#: ../src/xfpm-settings.c:1139
 msgid "Advanced settings"
 msgstr "Lisäasetukset"
 
-#: ../src/xfpm-settings.c:1134 ../src/xfpm-settings.c:1139
+#: ../src/xfpm-settings.c:1156 ../src/xfpm-settings.c:1161
 msgid "CPU settings"
 msgstr "Suoritinasetukset"
 
-#: ../src/xfpm-settings.c:1149 ../src/xfpm-settings.c:1154
+#: ../src/xfpm-settings.c:1171 ../src/xfpm-settings.c:1176
 msgid "Battery settings"
 msgstr "Akkukäyttö"
 
-#: ../src/xfpm-settings.c:1165 ../src/xfpm-settings.c:1170
+#: ../src/xfpm-settings.c:1187 ../src/xfpm-settings.c:1192
 msgid "Shortcuts"
 msgstr "Pikanäppäimet"
 
-#: ../src/xfpm-settings.c:1180 ../src/xfpm-settings.c:1185
+#: ../src/xfpm-settings.c:1202 ../src/xfpm-settings.c:1207
 msgid "Monitor Settings"
 msgstr "Näytön asetukset"
 
-#: ../src/xfpm-settings.c:1217
+#: ../src/xfpm-settings.c:1241
 msgid "Power Manager Preferences"
 msgstr "Virranhallinnan asetukset"
 
-#: ../src/xfpm-battery-icon.c:351
+#: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
 msgstr "Akussa on enää vähän virtaa"
 
-#: ../src/xfpm-battery-icon.c:358
+#: ../src/xfpm-battery-icon.c:376
 msgid "Your battery is almost empty"
 msgstr "Akku on lähes tyhjä"
 
-#: ../src/xfpm-battery-icon.c:367
+#: ../src/xfpm-battery-icon.c:385
 msgid "You are running on Battery"
 msgstr "Käytetään akkuvirtaa"
 
-#: ../src/xfpm-battery-icon.c:367 ../src/xfpm-battery-icon.c:549
-#: ../src/xfpm-battery-icon.c:553
+#: ../src/xfpm-battery-icon.c:385 ../src/xfpm-battery-icon.c:567
+#: ../src/xfpm-battery-icon.c:571
 msgid "Battery is discharging"
 msgstr "Akku purkautuu"
 
-#: ../src/xfpm-battery-icon.c:371
+#: ../src/xfpm-battery-icon.c:389
 msgid "Your battery is discharging"
 msgstr "Akku purkautuu"
 
-#: ../src/xfpm-battery-icon.c:379 ../src/xfpm-battery-icon.c:537
+#: ../src/xfpm-battery-icon.c:397 ../src/xfpm-battery-icon.c:555
 msgid "Battery is charging"
 msgstr "Akku latautuu"
 
-#: ../src/xfpm-battery-icon.c:388
+#: ../src/xfpm-battery-icon.c:406
 msgid "Your battery is fully charged"
 msgstr "Akku on täysin latautunut"
 
-#: ../src/xfpm-battery-icon.c:511
+#: ../src/xfpm-battery-icon.c:529
 msgid "Not present"
 msgstr "Ei liitetty"
 
-#: ../src/xfpm-battery-icon.c:517
+#: ../src/xfpm-battery-icon.c:535
 msgid "%"
 msgstr "%"
 
-#: ../src/xfpm-battery-icon.c:523
+#: ../src/xfpm-battery-icon.c:541
 msgid "Battery fully charged"
 msgstr "Akku täysin latautunut"
 
-#: ../src/xfpm-battery-icon.c:530
+#: ../src/xfpm-battery-icon.c:548
 msgid "Battery charge level"
 msgstr "Akun lataustaso"
 
-#: ../src/xfpm-battery-icon.c:549
+#: ../src/xfpm-battery-icon.c:567
 msgid "Running on battery"
 msgstr "Käytetään akkuvirtaa"
 
-#: ../src/xfpm-battery-icon.c:559
+#: ../src/xfpm-battery-icon.c:577
 msgid "Battery charge is low"
 msgstr "Akussa on enää vähän virtaa"
 
-#: ../src/xfpm-battery-icon.c:564
+#: ../src/xfpm-battery-icon.c:582
 msgid "Battery is almost empty"
 msgstr "Akku on lähes tyhjä"
 
-#: ../src/xfpm-battery-icon.c:583
+#: ../src/xfpm-battery-icon.c:607
 msgid ""
 "\n"
 "Estimated time left"
@@ -327,7 +336,7 @@ msgstr ""
 "\n"
 "Arvioitu akkukesto"
 
-#: ../src/xfpm-battery-icon.c:588
+#: ../src/xfpm-battery-icon.c:612
 msgid ""
 "\n"
 "Estimated time to charge"
@@ -335,19 +344,19 @@ msgstr ""
 "\n"
 "Arvioitu latausaika"
 
-#: ../src/xfpm-battery-icon.c:592
+#: ../src/xfpm-battery-icon.c:616
 msgid "hours"
 msgstr "tuntia"
 
-#: ../src/xfpm-battery-icon.c:592
+#: ../src/xfpm-battery-icon.c:616
 msgid "hour"
 msgstr "tunti"
 
-#: ../src/xfpm-battery-icon.c:593
+#: ../src/xfpm-battery-icon.c:617
 msgid "minutes"
 msgstr "minuuttia"
 
-#: ../src/xfpm-battery-icon.c:593
+#: ../src/xfpm-battery-icon.c:617
 msgid "minute"
 msgstr "minuutti"
 
@@ -371,15 +380,63 @@ msgstr "Keskeytystilaan viiveellä"
 msgid "Turn off after"
 msgstr "Sammuta viiveellä"
 
-#: ../src/xfpm-common.c:94
+#: ../src/xfpm-common.c:91
 msgid "Part of the Xfce goodies project"
 msgstr "Osa Xfce:n goodies-projektia"
 
-#: ../src/xfpm-common.c:96 ../src/xfpm-main.c:85 ../src/xfpm-driver.c:1188
+#: ../src/xfpm-common.c:93 ../src/xfpm-driver.c:1220
 msgid "Xfce4 Power Manager"
 msgstr "Xfce4 virranhallinta"
 
-#: ../src/xfpm-main.c:86
+#: ../src/xfpm-main.c:61
+msgid "Start xfce power manager"
+msgstr "Käynnistä Xfce:n virranhallinta"
+
+#: ../src/xfpm-main.c:62
+msgid "Show the configuration dialog"
+msgstr "Näytä asetusdialogi"
+
+#: ../src/xfpm-main.c:63
+msgid "Quit any running xfce power manager"
+msgstr "Sammuta Xfce:n virranhallinta, jos se on käynnissä"
+
+#: ../src/xfpm-main.c:64
+msgid "Settings manager socket"
+msgstr "Asetustenhallinnan pistoke"
+
+#: ../src/xfpm-main.c:64
+msgid "SOCKET ID"
+msgstr "PISTOKE"
+
+#: ../src/xfpm-main.c:65
+msgid "Version information"
+msgstr "Versiotiedot"
+
+#: ../src/xfpm-main.c:73
+#, c-format
+msgid ""
+"\n"
+"Xfce Power Manager %s\n"
+"\n"
+"Part of the Xfce Goodies Project\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Licensed under the GNU GPL.\n"
+"\n"
+msgstr ""
+"\n"
+"Xfce:n virranhallinta %s\n"
+"\n"
+"Osa Xfce:n Goodies-projektia\n"
+"\n"
+"Lisensoitu GNU GPL:n mukaisesti\n"
+"\n"
+
+#: ../src/xfpm-main.c:87
+msgid "Xfce Power Manager"
+msgstr "Xfce:n virranhallinta"
+
+#: ../src/xfpm-main.c:88
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -387,20 +444,35 @@ msgstr ""
 "Kotikansiosi sijaintia ei voi lukea ympäristömuuttujasta HOME, "
 "automaattikäynnistys ei ehkä toimi"
 
-#: ../src/xfpm-main.c:218
+#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:183
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr "Saat ohjeita komennolla \"%s --help\"."
+
+#: ../src/xfpm-main.c:182
+#, c-format
+msgid "Too much arguments\n"
+msgstr "Liikaa valitsimia\n"
+
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:250
+#, c-format
+msgid "Xfce power manager is not running\n"
+msgstr "Xfce:n virranhallinta ei ole käynnissä\n"
+
+#: ../src/xfpm-main.c:199
 msgid "Xfce4 Power Manager is not running, do you want to launch it now ?"
 msgstr "Xfce4 virranhallinta ei ole käynnissä. Haluatko käynnistää sen?"
 
-#: ../src/xfpm-main.c:220
+#: ../src/xfpm-main.c:201
 msgid "Run"
 msgstr "Suorita"
 
-#. g_disaster
-#: ../src/xfpm-main.c:265 ../src/xfpm-driver.c:313
-msgid "Xfce4 power manager"
-msgstr "Xfce4 virranhallinta"
+#: ../src/xfpm-main.c:222
+#, c-format
+msgid "Xfce power manager is already running\n"
+msgstr "Xfce:n virranhallinta on jo käynnissä\n"
 
-#: ../src/xfpm-main.c:266
+#: ../src/xfpm-main.c:230
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -408,7 +480,11 @@ msgstr ""
 "Xfce4 virranhallintaa ei voi suorittaa. Varmista, että HAL ja DBUS ovat "
 "käynnissä."
 
-#: ../src/xfpm-driver.c:287
+#: ../src/xfpm-main.c:234
+msgid "Unable to load xfce4 power manager\n"
+msgstr "Xfce4 virranhallintaa ei voi käynnistää\n"
+
+#: ../src/xfpm-driver.c:291
 msgid ""
 "Unable to read AC adapter status, the power manager will not work properly. "
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
@@ -418,92 +494,131 @@ msgstr ""
 "Mahdollisia syitä ovat virtalähteen ajurin puuttuminen, katkennut HAL-yhteys "
 "tai DBUS-taustaprosessin puuttuminen."
 
-#: ../src/xfpm-driver.c:704
+#: ../src/xfpm-driver.c:728
 msgid "System failed to shutdown"
 msgstr "Järjestelmän sammutus epäonnistui"
 
-#: ../src/xfpm-driver.c:883
+#: ../src/xfpm-driver.c:907
 msgid ""
 "Unable to use power management service, functionalities like hibernate and "
-"suspend will not work Possible reasons: you don't have enough permission, "
+"suspend will not work. Possible reasons: you don't have enough permission, "
 "broken connection with the hardware abstract layer or the message bus daemon "
 "is not running"
 msgstr ""
-"Virranhallintapalvelua ei voi käyttää, joten esimerkiksi lepo- ja "
+"Virranhallintapalvelu ei käytettävissä, joten esimerkiksi lepo- ja "
 "keskeytystilaa ei voi käyttää. Mahdollisia syitä ovat riittämättömät "
 "käyttöoikeudet, katkennut HAL-yhteys tai DBUS-taustaprosessin puuttuminen."
 
-#: ../src/xfpm-driver.c:896
+#: ../src/xfpm-driver.c:920
 msgid "Don't show this message again"
 msgstr "Älä näytä tätä viestiä uudelleen"
 
-#: ../src/xfpm-driver.c:1188
+#: ../src/xfpm-driver.c:1220
 msgid "Failed to load power manager configuration using defaults"
 msgstr "Virranhallinnan oletusasetuksia ei voi ladata"
 
-#: ../src/xfpm-hal.c:654 ../src/xfpm-hal.c:743 ../src/xfpm-hal.c:836
-#: ../src/xfpm-hal.c:885 ../src/xfpm-hal.c:935 ../src/xfpm-hal.c:987
-#: ../src/xfpm-hal.c:1039 ../src/xfpm-hal.c:1085
+#: ../src/xfpm-hal.c:172
+#, c-format
+msgid "Error monitoring HAL events\n"
+msgstr "HAL-tapahtumien valvontavirhe\n"
+
+#: ../src/xfpm-hal.c:260 ../src/xfpm-hal.c:277
+#, c-format
+msgid "Unable to connect to DBus %s\n"
+msgstr "Ei voi yhdistää DBus-palveluun: %s\n"
+
+#: ../src/xfpm-hal.c:266
+msgid "HAL is not running or not responding\n"
+msgstr "HAL ei ole käynnissä tai se ei vastaa\n"
+
+#: ../src/xfpm-hal.c:411
+#, c-format
+msgid "Unable to watch device using HAL %s\n"
+msgstr "Ei voi valvoa laitetta HAL-palvelun avulla: %s\n"
+
+#: ../src/xfpm-hal.c:628
+msgid "No back-end for your operating system"
+msgstr "Käyttöjärjestelmällesi ei ole tukea"
+
+#: ../src/xfpm-hal.c:632
+msgid "No hibernate script found"
+msgstr "Lepotila-komentotiedostoa ei löydy"
+
+#: ../src/xfpm-hal.c:636
+msgid "No suspend script found"
+msgstr "Keskeytystila-komentotiedostoa ei löydy"
+
+#: ../src/xfpm-hal.c:640
+msgid "No suspend method found"
+msgstr "Keskeytystilametodia ei löydy"
+
+#: ../src/xfpm-hal.c:644
+msgid "No hibernate method found"
+msgstr "Lepotilametodia ei löydy"
+
+#: ../src/xfpm-hal.c:670 ../src/xfpm-hal.c:760 ../src/xfpm-hal.c:854
+#: ../src/xfpm-hal.c:903 ../src/xfpm-hal.c:953 ../src/xfpm-hal.c:1005
+#: ../src/xfpm-hal.c:1057 ../src/xfpm-hal.c:1103
 #, c-format
 msgid "Out of memory"
 msgstr "Muisti ei riitä"
 
-#: ../src/xfpm-hal.c:685
+#: ../src/xfpm-hal.c:702
 #, c-format
-msgid "Message Hibernate didn't get a reply"
+msgid "Message hibernate didn't get a reply"
 msgstr "Lepotilaviestiin ei vastattu"
 
-#: ../src/xfpm-hal.c:706
+#: ../src/xfpm-hal.c:723
 #, c-format
 msgid "System failed to hibernate"
 msgstr "Lepotila epäonnistui"
 
-#: ../src/xfpm-hal.c:712 ../src/xfpm-hal.c:803
+#: ../src/xfpm-hal.c:729 ../src/xfpm-hal.c:821
 #, c-format
 msgid "Error occured while trying to suspend"
 msgstr "Virhe siirryttäessä keskeytystilaan"
 
-#: ../src/xfpm-hal.c:715 ../src/xfpm-hal.c:806
+#: ../src/xfpm-hal.c:732 ../src/xfpm-hal.c:824
 #, c-format
 msgid "Unknown reply from the message daemon"
 msgstr "Tuntematon vastaus viestipalvelulta"
 
-#: ../src/xfpm-hal.c:775
+#: ../src/xfpm-hal.c:793
 #, c-format
 msgid "Message suspend didn't get a reply"
 msgstr "Keskeytystilaviestiin ei vastattu"
 
-#: ../src/xfpm-hal.c:797
+#: ../src/xfpm-hal.c:815
 #, c-format
 msgid "System failed to suspend"
 msgstr "Keskeytystila epäonnistui"
 
-#: ../src/xfpm-hal.c:856
+#: ../src/xfpm-hal.c:874
 #, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
 msgstr "HAL-palvelu ei vastannut näytön kirkkauden asettamiseen"
 
-#: ../src/xfpm-hal.c:903
+#: ../src/xfpm-hal.c:921
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
 msgstr "HAL-palvelu ei vastannut näytön kirkkauden kyselyyn"
 
-#: ../src/xfpm-hal.c:953
+#: ../src/xfpm-hal.c:971
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
 msgstr "HAL-palvelu ei vastannut suoritinmäärän kyselyyn"
 
-#: ../src/xfpm-hal.c:1005
+#: ../src/xfpm-hal.c:1023
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
 msgstr "HAL-palvelu ei vastannut suorittimen profiilin kyselyyn"
 
-#: ../src/xfpm-hal.c:1058
+#: ../src/xfpm-hal.c:1076
 #, c-format
 msgid "No reply from HAL daemon to set cpu governor"
 msgstr "HAL-palvelu ei vastannut suorittimen profiilin asettamiseen"
 
-#: ../src/xfpm-hal.c:1104
+#: ../src/xfpm-hal.c:1122
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
 msgstr "HAL-palvelu ei vastannut virransäästöprofiilin asettamiseen"
