@@ -905,7 +905,7 @@ static void
 xfpm_battery_hibernate_callback(GtkWidget *widget,XfpmBattery *batt)
 {
     gboolean ret = 
-    xfce_confirm(_("Are you sure you want to hibernate the system ?"),
+    xfce_confirm(_("Are you sure you want to hibernate the system?"),
                 GTK_STOCK_YES,
                 _("Hibernate"));
     
@@ -920,7 +920,7 @@ static void
 xfpm_battery_suspend_callback(GtkWidget *widget,XfpmBattery *batt)
 {
     gboolean ret = 
-    xfce_confirm(_("Are you sure you want to suspend the system ?"),
+    xfce_confirm(_("Are you sure you want to suspend the system?"),
                 GTK_STOCK_YES,
                 _("Suspend"));
     

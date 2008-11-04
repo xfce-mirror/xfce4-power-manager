@@ -169,7 +169,8 @@ xfpm_hal_init(XfpmHal *xfpm_hal) {
     // If this happens then nobody cares
     if ( !xfpm_hal_monitor(xfpm_hal) ) 
     {
-        g_printerr(_("Error monitoring HAL events\n"));
+        g_printerr(_("Error monitoring HAL events"));
+		g_print("\n");
         priv->connected = FALSE;
     } 
     else
@@ -257,13 +258,15 @@ xfpm_hal_monitor(XfpmHal *xfpm_hal) {
     
     if ( !priv->connection || dbus_error_is_set(&error) )
     {
-        g_critical(_("Unable to connect to DBus %s\n"),error.message);
+        g_critical(_("Unable to connect to DBus: %s"),error.message);
+		g_print("\n");
         return FALSE;
     }
     
     if ( !xfpm_dbus_name_has_owner(priv->connection,HAL_DBUS_SERVICE) )
     {
-        g_critical(_("HAL is not running or not responding\n"));
+        g_critical(_("HAL is not running or not responding"));
+		g_print("\n");
         return FALSE;
     }
     priv->ctx = libhal_ctx_new();
@@ -274,7 +277,8 @@ xfpm_hal_monitor(XfpmHal *xfpm_hal) {
     libhal_ctx_init(priv->ctx,&error);
     
     if ( dbus_error_is_set(&error) ) {
-        g_printerr(_("Unable to connect to DBus %s\n"),error.message);
+        g_printerr(_("Unable to connect to DBus: %s"),error.message);
+		g_print("\n");
         return FALSE;
     }    
     
@@ -408,7 +412,8 @@ gboolean xfpm_hal_connect_to_signals(XfpmHal *hal,
     libhal_device_property_watch_all(priv->ctx,&error);        
 
     if ( dbus_error_is_set(&error) ) {
-        g_printerr(_("Unable to watch device using HAL %s\n"),error.message);
+        g_printerr(_("Unable to watch device using HAL: %s"),error.message);
+		g_print("\n");
         return FALSE;
     }
     

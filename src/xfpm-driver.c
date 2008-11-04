@@ -1217,7 +1217,7 @@ xfpm_driver_monitor (XfpmDriver *drv)
     if ( !xfconf_init(&g_error) )
     {
         g_critical("xfconf init failed: %s using default settings\n",g_error->message);
-        xfpm_popup_message(_("Xfce4 Power Manager"),_("Failed to load power manager configuration "\
+        xfpm_popup_message(_("Xfce4 Power Manager"),_("Failed to load power manager configuration, "\
                             "using defaults"),GTK_MESSAGE_WARNING);
         g_error_free(g_error);
         

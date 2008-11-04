@@ -179,7 +179,8 @@ int main(int argc,char **argv)
 
 	if ( run + quit + config + version > 1 )
 	{
-		g_printerr(_("Too much arguments\n"));
+		g_printerr(_("Too many arguments"));
+		g_printerr("\n");
 		g_printerr(_("Type '%s --help' for usage."), G_LOG_DOMAIN);
 		g_printerr("\n");
 		return EXIT_FAILURE;
@@ -194,9 +195,10 @@ int main(int argc,char **argv)
         }
         if ( reply != 1 )
         {
-            g_print(_("Xfce power manager is not running\n"));
+            g_print(_("Xfce power manager is not running"));
+			g_print("\n");
             gboolean ret = 
-            xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now ?"),
+            xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now "),
                         GTK_STOCK_YES,
                         _("Run"));
             if ( ret ) 
@@ -219,7 +221,8 @@ int main(int argc,char **argv)
         
         if ( reply == 1 )
         {
-            g_print(_("Xfce power manager is already running\n"));
+            g_print(_("Xfce power manager is already running"));
+			g_print("\n")
             return EXIT_SUCCESS;
         }
         XfpmDriver *driver = xfpm_driver_new();
@@ -231,7 +234,8 @@ int main(int argc,char **argv)
                               "make sure the hardware abstract layer and the message bus daemon "\
 							  "are running"),
                               GTK_MESSAGE_ERROR);
-            g_error(_("Unable to load xfce4 power manager\n"));        
+            g_error(_("Unable to load xfce4 power manager"));
+			g_print("\n");
             g_object_unref(driver);
             return EXIT_FAILURE;
         }
@@ -247,7 +251,8 @@ int main(int argc,char **argv)
         
         if ( reply == 0 )
         {
-            g_print(_("Xfce power manager is not running\n"));
+            g_print(_("Xfce power manager is not running"));
+			g_print("\n");
             return EXIT_SUCCESS;
         }
         return EXIT_SUCCESS;

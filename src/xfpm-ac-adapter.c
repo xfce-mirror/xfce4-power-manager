@@ -355,7 +355,7 @@ static void
 xfpm_ac_adapter_hibernate_callback(GtkWidget *widget,XfpmAcAdapter *adapter)
 {
     gboolean ret = 
-    xfce_confirm(_("Are you sure you want to hibernate the system ?"),
+    xfce_confirm(_("Are you sure you want to hibernate the system?"),
                 GTK_STOCK_YES,
                 _("Hibernate"));
     
@@ -369,7 +369,7 @@ static void
 xfpm_ac_adapter_suspend_callback(GtkWidget *widget,XfpmAcAdapter *adapter)
 {
     gboolean ret = 
-    xfce_confirm(_("Are you sure you want to suspend the system ?"),
+    xfce_confirm(_("Are you sure you want to suspend the system?"),
                 GTK_STOCK_YES,
                 _("Suspend"));
     
