@@ -198,7 +198,7 @@ int main(int argc,char **argv)
             g_print(_("Xfce power manager is not running"));
 			g_print("\n");
             gboolean ret = 
-            xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now "),
+            xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now?"),
                         GTK_STOCK_YES,
                         _("Run"));
             if ( ret ) 
