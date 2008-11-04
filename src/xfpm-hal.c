@@ -699,7 +699,7 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
     if ( !reply ) 
 	{						  		       
 	    critical = 0;
-	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Message Hibernate didn't get a reply"));
+	    g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,_("Message hibernate didn't get a reply"));
 	    return FALSE;
     }
 
