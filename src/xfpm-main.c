@@ -222,7 +222,7 @@ int main(int argc,char **argv)
         if ( reply == 1 )
         {
             g_print(_("Xfce power manager is already running"));
-			g_print("\n")
+			g_print("\n");
             return EXIT_SUCCESS;
         }
         XfpmDriver *driver = xfpm_driver_new();
