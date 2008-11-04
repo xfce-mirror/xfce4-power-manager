@@ -214,7 +214,7 @@ _ac_adapter_not_found(XfpmAcAdapter *adapter)
         priv->present = TRUE; /* assuming present */
         priv->adapter_found = FALSE;
         gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
-                                   _("Unkown adapter status, the power manager will not work properly"));
+                                   _("Unable to read adapter status, the power manager will not work properly"));
     }     
     else  
     {
