@@ -22,7 +22,7 @@
     <author>
       <firstname>Ali</firstname> <surname>Abdallah</surname>
       <affiliation>
-	<address><email>ali.slackware@gmail.com</email></address>
+	<address><email>aliov@xfce.org</email></address>
       </affiliation>
     </author>
     
@@ -236,7 +236,7 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the CPU 
   <sect2 id="xfpm-monitor">
    <title>Monitor settings</title>
    <para><figure float="0">
-	<title>Monitor DPMS and lcd brightness</title>
+	<title>Monitor DPMS and LCD brightness</title>
 	<screenshot><mediaobject>
 	<imageobject>
 	<imagedata fileref="images/monitor-settings.png" format="PNG"/>
@@ -352,15 +352,14 @@ to display such messages.
 	<term>Q: If the power manager puts the computer in hibernate because my battery charge is critical what will happen
 	if i turn it on again without plugging my adapter.</term>
 	<listitem>
-	<para>A: Nothing actually, the power manager had take the action defined by the user already and understands
-	that the user insist of using the laptop so in the best cases it'll display a warning popup with options 
-	the user can do.
+	<para>A: Nothing actually, the power manager had take the action defined by the user already
+	in the best cases it'll display a warning popup with options the user can choose.
 	</para>
 	</listitem>
 	</varlistentry>
 	
 	 <varlistentry>
-	<term>Q: I select the option of the lcd brightness control but i don't see the brightness changing when i switch 
+	<term>Q: I select the option of the LCD brightness control but i don't see the brightness changing when i switch 
 	from AC adapter to battery power.</term>
 	<listitem>
 	<para>A: You kernel doesn't have the right driver, or the driver isn't loaded.
