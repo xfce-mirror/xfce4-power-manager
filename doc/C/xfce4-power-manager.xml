@@ -55,11 +55,11 @@ maintainers, etc. Commented out by default.
   All those features can be controlled from the user interface settings dialog.
   <sect2 id="xfpm-started">
   <title>Getting Started</title>
-  <para>To launch the Power Manager you need to run the following command &app; -r you can do from the xfce run
-  command by pressing ALT-F2, or you go to the Xfce settings manager and you click on the Power Manager item
-  , a popup should be displayed only if the power manager isn't already running to ask you if you want to. 
-  Once the power manager is launched for the first time, it'll place a autostart desktop file in your .config/autostart
-  so like that it gets launched automatically second time you log into your Xfce desktop.
+  <para>To launch the Power Manager you need to run the following command &app; -r which you can do from the xfce run
+  command by pressing on ALT-F2, or by going to the Xfce settings manager and clicking on the Power Manager item -
+  a popup will be displayed to run the power manger if it is not already running. 
+  Once the power manager is launched for the first time, it will place an autostart desktop file in your .config/autostart
+  in order to be able to be launched automatically each time you log into your Xfce desktop.
   </para> 
   </sect2> 
 </sect1>
@@ -86,7 +86,7 @@ maintainers, etc. Commented out by default.
   DPMS settings and CPU frequency.
   </para>
   <para>
-  The settings dialog differs from one system to another depends on the computer (PC,laptop,...) and on
+  The settings dialog differs from one system to another depending on the computer (PC,laptop,...) and on
   the available manageabale interfaces.  
   </para>
   <para>
@@ -106,10 +106,10 @@ maintainers, etc. Commented out by default.
 	</mediaobject></screenshot>
 	</figure></para>
 	<para>
-	Here you can select the configuration of the system tray icon, enable/disable cpu frequency and DPMS controls, 
-	typical reason to disable DPMS control for example if you are watching a movie.	
+	Here you can select the configuration of the system tray icon, enable/disable cpu frequency and DPMS controls. 
+	For example, you would need to disable DPMS control when watching a movie.	
 	</para>
-  </sect2>
+  </sect2> 
 	  
   
   <sect2 id="xfpm-cpu">
@@ -126,19 +126,19 @@ maintainers, etc. Commented out by default.
 	</mediaobject></screenshot>
 	</figure></para>
 	<para>
-	The linux governors found in the system are listed for choice as a radio buttons,
-	if the acpi_cpufreq module is not loaded in the kernel or the cpu itself doesn't support
-	changes in it's frequency these options might not be shown.
+	The linux governors found in the system are listed as radio buttons.
+	If the acpi_cpufreq module is not loaded in the kernel or the cpu itself does not support frequency
+	changes these options might not show.
 	</para>
-	<para>Here's a brief descritption on linux cpu governors</para>
+	<para>Here is a brief descritption on linux cpu governors</para>
 		
 <variablelist>
 
    <varlistentry>
 	<term>Performance:</term>
 	<listitem>
-	<para> Set the CPU to it's maximum frequency. will consume more power, 
-	and it's not ideal when running on battery.
+	<para> Set CPU to its maximum frequency: consume more power, 
+	and it is not ideal when running on battery.
 	</para>
 	</listitem>
 	</varlistentry>
@@ -147,7 +147,7 @@ maintainers, etc. Commented out by default.
 	<term>Powersave:</term>
 	<listitem>
 	<para> 
-	Set the CPU to it's minimum frequency, ideal when running on battery power.	
+	Set the CPU to its minimum frequency: ideal when running on battery power.	
 	</para>
 	</listitem>
 	</varlistentry>
@@ -155,8 +155,8 @@ maintainers, etc. Commented out by default.
 	<varlistentry>
 	<term>Userspace:</term>
 	<listitem>
-	<para> In this governor, allows the user, or any userspace
-	program running with UID "root", to set the CPU to a specific frequency.
+	<para> This governor allows the use or any userspace
+	program running with UID "root" to set the CPU to a specific frequency.
 	</para>
 	</listitem>
 	</varlistentry>		
@@ -164,7 +164,7 @@ maintainers, etc. Commented out by default.
 	<varlistentry>
 	<term>Ondemand:</term>
 	<listitem>
-	<para> What you want is what you get. sets the CPU depending on the
+	<para> What you want is what you get: set the CPU depending on the
 	current usage.
 	</para>
 	</listitem>
@@ -201,12 +201,12 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the CPU 
 	</mediaobject></screenshot>
 </figure></para>
 	<para>
-	The user can select the percentage of the battery to be considered as critical, usually this is for a laptop or
-	UPS battery, this option is important as for a broken battery for example, the battery when it is 10% charged 
-	can last	5 minutes, so the user can increase the level at wish the battery charge will be considered critical.    
+	The user can select the his critical battery percentage, usually this is for a laptop or
+	UPS battery, this option is important for a broken battery for example, which lasts only 5 minutes when it
+	is 10% charged.    
    </para>
    <para>
-   The user can define an action to be taken by the power manager in case the battery wish is giving the main power
+   The user can define an action to be taken by the power manager in case the battery that is giving the main power
    for the computer reaches a critical charge level.
    </para> 
    The battery notification is a way to notify the user when the battery state changes ( ex: battery charge is full )
@@ -228,8 +228,8 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the CPU 
 	</textobject>
 	</mediaobject></screenshot>
 </figure></para>
-   For those buttons you can define an action to be taken by the power manager when happen to press one of them, 
-   for example when you close the laptop screen. 
+   For those buttons you can define an action to be taken by the power manager when pressing to one of them 
+   - for example when you close the laptop screen. 
     
   </sect2>  
   
@@ -248,11 +248,12 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the CPU 
 </figure></para>
 	<para>
 	DPMS is an old X extension that allows standby/suspend/turn off options of the monitor, usually the timeouts 
-	have to be succesitive, so standby timeout less than suspend timeout and so on, but one always can disable any option.
+	have to be consecutive, so standby timeout is less than suspend timeout and so on, but any option can always
+	be disabled.
 	</para>
 	<para>
-	For a laptop users by clicking on the checkbox allows the power manager to reduce the screen luminosity when
-	it detects that system in running on battery power and set it again to the maximum value when system is running
+	For laptop users, clicking on the checkbox allows the power manager to reduce the screen luminosity when
+	it detects that system in running on battery power and increase it again when the system is running
 	on AC power.
 	</para>
 	</sect2>  
@@ -277,12 +278,12 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the CPU 
 </figure></para>
 
 The "system tray" is an application running on a given X screen that can display small icons 
-provided by running applications. In Xfce it's a panel plugin that catch the icon and resize it
+provided by running applications. In Xfce, it is a panel plugin that catches the icon and resizes it
 to the size of the panel, if you don't have this plugin added to the panel you will not see any 
 tray icon, for example pidgin places an icon in the system tray as well as many other applications.
 </para>
 <para>
-&app; uses GtkStatusIcon to display the different kinds of  batteries found in the system.
+&app; uses GtkStatusIcon to display the different kinds of batteries found in the system.
 </para>
 <para>
 <para><figure float="0">
@@ -310,59 +311,59 @@ to display such messages.
   <variablelist>
 
    <varlistentry>
-	<term>Q: Why the icons look very similar to the icon of gnome power manager.</term>
+	<term>Q: Why the icons look very similar to the icon of gnome power manager?</term>
 	<listitem>
 	<para>A: No, they are not similar, they are the same, just there is no point of re-drawing icons,
-	gnome power manager icons are good enough. not all of them are used.  
+	gnome power manager icons are good enough. Not all of them are used.  
 	</para>
 	</listitem>
 	</varlistentry>
 
 	 <varlistentry>
-	<term>Q: What is the difference between suspend and hibernate.</term>
+	<term>Q: What is the difference between suspend and hibernate?</term>
 	<listitem>
-	<para>A: Suspend is a power save feature, when suspending, the computer is still using power,
-	since the running applications are kept in the memory, but is the lowest power level the computer
-	can use. 
-	Hibernate saves the system state on the hard drive and turns off the power, when you start up your computer
-	again those data will be loaded and the system comes up. 
+	<para>A: Suspend is a power save feature. When suspending, the computer is still using power,
+	since the running applications are kept in the memory, but it is the lowest power level that the computer
+	can use. While Hibernate saves the system state on the hard drive and turns off the power, when you start up your 
+	computer	again those data will be loaded and the system back up. 
 	</para>
 	</listitem>
 	</varlistentry>
 	
 	 <varlistentry>
-	<term>Q: Why the options of suspend/hibernate are not there or i can't select them.</term>
+	<term>Q: Why the options of suspend/hibernate are not there or I can not select them?</term>
 	<listitem>
-	<para>A: Many possible reasons, for example your kernel doesn't or it's not compiled with suspend/hibernate options.
+	<para>A: Many possible reasons, for example your kernel is not compiled with suspend/hibernate options.
 	Another possible reason is the fact that you are not allowed to use them.
 	</para>
 	</listitem>
 	</varlistentry>
 	
 	 <varlistentry>
-	<term>Q: How the power manager actually suspend or hibernate my system.</term>
+	<term>Q: How the power manager actually suspend or hibernate my system?</term>
 	<listitem>
-	<para>A: The power manager checks if the user is allowed to, then send a DBus message to HAL asking to suspend
-	/hibernate, usually the methods to suspend or hibernate used by HAL are scripts located in /usr/lib/hal/scripts/YourOs.
+	<para>A: The power manager checks if the user is allowed to use power management service, then send a D-Bus message 
+	to HAL asking to suspend/hibernate, usually the methods to suspend or hibernate used by HAL are scripts located in 
+	/usr/lib/hal/scripts/YourOs.
 	</para>
 	</listitem>
 	</varlistentry>
 	
 	 <varlistentry>
 	<term>Q: If the power manager puts the computer in hibernate because my battery charge is critical what will happen
-	if i turn it on again without plugging my adapter.</term>
+	if I turn it on again without plugging my adapter?</term>
 	<listitem>
-	<para>A: Nothing actually, the power manager had take the action defined by the user already
-	in the best cases it'll display a warning popup with options the user can choose.
+	<para>A: Nothing actually, the power manager had taken the action defined by the user already.
+	In the best cases, it will display a warning popup with different options.
 	</para>
 	</listitem>
 	</varlistentry>
 	
 	 <varlistentry>
-	<term>Q: I select the option of the LCD brightness control but i don't see the brightness changing when i switch 
-	from AC adapter to battery power.</term>
+	<term>Q: I select the option of the LCD brightness control but I do not see the brightness changing when I switch 
+	from AC adapter to battery power?</term>
 	<listitem>
-	<para>A: You kernel doesn't have the right driver, or the driver isn't loaded.
+	<para>A: Your kernel does not have the right driver, or the driver is not loaded.
 	</para>
 	</listitem>
 	</varlistentry>
@@ -375,8 +376,8 @@ to display such messages.
 <sect1 id="xfpm-about">
   <title>About &app;</title>
   <para>
-	This power manager was written following the philosophy of Xfce, having leight weight application that does
-	what the user expect from it.
+	This power manager was written following the philosophy of Xfce, having light weight application that does
+	what the user is expecting from it.
 	</para>
 
   <para>To report a bug or make a suggestion regarding this application or
@@ -408,8 +409,7 @@ to display such messages.
 
   <para>You should have received a copy of the GNU General Public License 
     along with this program; if not, write to the Free Software 
-    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
-    USA.
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA.
   </para>
 
 </article>
