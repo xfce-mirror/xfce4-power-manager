@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-04 13:53-0500\n"
+"POT-Creation-Date: 2008-11-06 19:19+0100\n"
 "PO-Revision-Date: 2008-11-03 20:07+0100\n"
 "Last-Translator: Vladimir Melo <vmelo@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
@@ -384,13 +384,13 @@ msgstr "Suspender após"
 msgid "Turn off after"
 msgstr "Desligar após"
 
-#: ../src/xfpm-common.c:91
-msgid "Part of the Xfce goodies project"
-msgstr "Parte do projecto Xfce goodies"
-
-#: ../src/xfpm-common.c:93 ../src/xfpm-driver.c:1220
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1220
 msgid "Xfce4 Power Manager"
 msgstr "Gerenciador de energia do Xfce4"
+
+#: ../src/xfpm-common.c:147
+msgid "translator-credits"
+msgstr ""
 
 #: ../src/xfpm-main.c:61
 msgid "Start xfce power manager"
@@ -465,9 +465,11 @@ msgid "Xfce power manager is not running"
 msgstr "O gerenciador de energia do Xfce não está em execução"
 
 #: ../src/xfpm-main.c:201
-msgid "Xfce4 Power Manager is not running, do you want to launch it now "
+#, fuzzy
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr ""
-"O gerenciador de energia do Xfce4 não está em execução, você deseja lançá-lo agora?"
+"O gerenciador de energia do Xfce4 não está em execução, você deseja lançá-lo "
+"agora?"
 
 #: ../src/xfpm-main.c:203
 msgid "Run"
@@ -483,8 +485,8 @@ msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
 msgstr ""
-"Não foi possível executar o gerenciador de energia do Xfce4, certifique-se que "
-"o hardware abstract layer e o daemon message bus estão em execução"
+"Não foi possível executar o gerenciador de energia do Xfce4, certifique-se "
+"que o hardware abstract layer e o daemon message bus estão em execução"
 
 #: ../src/xfpm-main.c:237
 msgid "Unable to load xfce4 power manager"
@@ -616,7 +618,8 @@ msgstr "Nenhuma resposta do daemon HAL para obter o nível de brilho do monitor"
 #: ../src/xfpm-hal.c:976
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
-msgstr "Nenhuma resposta do daemon HAL para obter os governadores de cpu disponíveis"
+msgstr ""
+"Nenhuma resposta do daemon HAL para obter os governadores de cpu disponíveis"
 
 #: ../src/xfpm-hal.c:1028
 #, c-format
@@ -649,6 +652,9 @@ msgstr "Configurações para o Gerenciador de energia do Xfce 4"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Gerenciador de energia do Xfce 4"
+
+#~ msgid "Part of the Xfce goodies project"
+#~ msgstr "Parte do projecto Xfce goodies"
 
 #~ msgid ""
 #~ "\n"

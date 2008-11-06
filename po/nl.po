@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-24 12:40+0200\n"
+"POT-Creation-Date: 2008-11-06 19:19+0100\n"
 "PO-Revision-Date: 2008-10-29 20:27+0100\n"
 "Last-Translator: Vincent Tunru <projects@vinnl.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
@@ -12,124 +12,345 @@ msgstr ""
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
 
-#: xfpm-ac-adapter.c:216
+#: ../src/xfpm-ac-adapter.c:217
 #, fuzzy
-msgid "Unkown adapter status, the power manager will not work properly"
-msgstr "Onbekende status van adapter, energiebeheer werkt mogelijk niet correct"
+msgid "Unable to read adapter status, the power manager will not work properly"
+msgstr ""
+"Onbekende status van adapter, energiebeheer werkt mogelijk niet correct"
 
-#: xfpm-ac-adapter.c:285
-#: xfpm-ac-adapter.c:307
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 #, fuzzy
 msgid "Adapter is online"
 msgstr "De adapter is online"
 
-#: xfpm-ac-adapter.c:285
-#: xfpm-ac-adapter.c:307
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 #, fuzzy
 msgid "Adapter is offline"
 msgstr "De adapter is offline"
 
-#: xfpm-ac-adapter.c:357
-#: xfpm-battery.c:922
-msgid "Are you sure you want to hibernate the system"
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:908
+#, fuzzy
+msgid "Are you sure you want to hibernate the system?"
 msgstr "Weet u zeker dat u het systeem in de slaapstand wilt brengen"
 
-#: xfpm-ac-adapter.c:359
-#: xfpm-ac-adapter.c:395
-#: xfpm-battery.c:817
-#: xfpm-battery.c:924
-#: xfpm-battery.c:959
-#: xfpm-settings.c:465
-#: xfpm-settings.c:932
-#: xfpm-settings.c:961
-#: xfpm-settings.c:984
+#. Hibernate menu option
+#: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
+#: ../src/xfpm-battery.c:803 ../src/xfpm-battery.c:910
+#: ../src/xfpm-battery.c:945 ../src/xfpm-settings.c:470
+#: ../src/xfpm-settings.c:954 ../src/xfpm-settings.c:983
+#: ../src/xfpm-settings.c:1006
 msgid "Hibernate"
 msgstr "Slaapstand"
 
-#: xfpm-ac-adapter.c:371
-#: xfpm-battery.c:937
-msgid "Are you sure you want to suspend the system"
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:923
+#, fuzzy
+msgid "Are you sure you want to suspend the system?"
 msgstr "Weet u zeker dat u het systeem in de pauzestand wilt brengen"
 
-#: xfpm-ac-adapter.c:373
-#: xfpm-ac-adapter.c:412
-#: xfpm-battery.c:939
-#: xfpm-battery.c:974
-#: xfpm-settings.c:930
-#: xfpm-settings.c:959
-#: xfpm-settings.c:982
+#. Suspend menu option
+#: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
+#: ../src/xfpm-battery.c:925 ../src/xfpm-battery.c:960
+#: ../src/xfpm-settings.c:952 ../src/xfpm-settings.c:981
+#: ../src/xfpm-settings.c:1004
 msgid "Suspend"
 msgstr "Pauzestand"
 
-#: xfpm-battery-icon.c:337
-msgid "Your battery charge level is low"
+#: ../src/xfpm-battery.c:765
+#, fuzzy
+msgid "Your battery is almost empty. Save your work to avoid losing data"
+msgstr ""
+"Het energie-niveau van de batterij is kritiek - sla uw werk op om "
+"dataverlies te voorkomen"
+
+#: ../src/xfpm-battery.c:770 ../src/xfpm-battery.c:1271
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
+#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
+msgid "Xfce power manager"
+msgstr "Xfce energiebeheer"
+
+#: ../src/xfpm-battery.c:780
+msgid "Shutdown the system"
+msgstr "Afsluiten"
+
+#: ../src/xfpm-battery.c:788
+msgid "Hibernate the system"
+msgstr "Slaapstand"
+
+#: ../src/xfpm-battery.c:810 ../src/xfpm-settings.c:466
+#: ../src/xfpm-settings.c:956 ../src/xfpm-settings.c:985
+#: ../src/xfpm-settings.c:1008
+msgid "Shutdown"
+msgstr "Afsluiten"
+
+#: ../src/xfpm-settings.c:438
+#, fuzzy
+msgid "UPS configuration"
+msgstr "Ups-configuratie"
+
+#: ../src/xfpm-settings.c:438
+msgid "Battery configuration"
+msgstr "Batterij-configuratie"
+
+#: ../src/xfpm-settings.c:442
+#, fuzzy
+msgid "Consider UPS charge critical"
+msgstr "Beschouw de batterijlading als kritiek"
+
+#: ../src/xfpm-settings.c:442
+msgid "Consider battery charge critical"
+msgstr "Beschouw de batterijlading als kritiek"
+
+#: ../src/xfpm-settings.c:447
+msgid "percent"
+msgstr "procent"
+
+#: ../src/xfpm-settings.c:457
+msgid "When battery charge level is critical do"
+msgstr "Als het energieniveau van de batterij kritiek is"
+
+#: ../src/xfpm-settings.c:463 ../src/xfpm-settings.c:950
+#: ../src/xfpm-settings.c:979 ../src/xfpm-settings.c:1002
+msgid "Nothing"
+msgstr "Niets doen"
+
+#: ../src/xfpm-settings.c:484
+#, fuzzy
+msgid "Enable UPS charge notification"
+msgstr "Ups-opladen notificatie inschakelen"
+
+#: ../src/xfpm-settings.c:484
+msgid "Enable battery state notification"
+msgstr "Batterij-status-notificatie inschakelen"
+
+#: ../src/xfpm-settings.c:498
+#, fuzzy
+msgid "Enable power save on UPS power"
+msgstr "Energiebesparende modus op ups-energie inschakelen"
+
+#: ../src/xfpm-settings.c:498
+#, fuzzy
+msgid "Enable power save on battery power"
+msgstr "Energiebesparende modus op batterij inschakelen"
+
+#: ../src/xfpm-settings.c:538 ../src/xfpm-settings.c:631
+msgid "Performance"
+msgstr "Prestaties"
+
+#: ../src/xfpm-settings.c:543 ../src/xfpm-settings.c:636
+msgid "Ondemand"
+msgstr "Op verzoek"
+
+#: ../src/xfpm-settings.c:547 ../src/xfpm-settings.c:640
+msgid "Userspace"
+msgstr ""
+
+#: ../src/xfpm-settings.c:551 ../src/xfpm-settings.c:644
+#, fuzzy
+msgid "Powersave"
+msgstr "Energiebesparend"
+
+#: ../src/xfpm-settings.c:555 ../src/xfpm-settings.c:648
+msgid "Conservative"
+msgstr "Conservatief"
+
+#: ../src/xfpm-settings.c:623
+msgid "CPU governor settings on UPS power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:623
+msgid "CPU governor settings on battery power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:723
+msgid "No CPU governor found"
+msgstr ""
+
+#: ../src/xfpm-settings.c:733
+msgid "CPU frequency control cannot be used"
+msgstr ""
+
+#: ../src/xfpm-settings.c:743 ../src/xfpm-settings.c:888
+msgid "On electric power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:748
+msgid "CPU freq settings on electric power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:748
+#, fuzzy
+msgid "CPU freq settings"
+msgstr "CPU-instellingen"
+
+#: ../src/xfpm-settings.c:753 ../src/xfpm-settings.c:896
+#, fuzzy
+msgid "On battery power"
+msgstr "Als er een batterij is"
+
+#: ../src/xfpm-settings.c:772
+#, fuzzy
+msgid "Enable LCD brightness control"
+msgstr "LCD-helderheid-beheer inschakelen"
+
+#: ../src/xfpm-settings.c:794
+msgid "Monitor settings on UPS power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:794
+#, fuzzy
+msgid "Monitor settings on battery power"
+msgstr "Energiebesparende modus op batterij inschakelen"
+
+#: ../src/xfpm-settings.c:887
+msgid "Monitor settings on electric power"
+msgstr ""
+
+#: ../src/xfpm-settings.c:887
+msgid "Monitor settings"
+msgstr ""
+
+#: ../src/xfpm-settings.c:904
+msgid "Your monitor doesn't support DPMS control"
+msgstr ""
+
+#: ../src/xfpm-settings.c:935
+msgid "Keyboard shortcuts"
+msgstr "Sneltoetsen"
+
+#: ../src/xfpm-settings.c:945
+msgid "When power button is pressed do"
+msgstr "Als de aan/uit-knop wordt ingedrukt"
+
+#: ../src/xfpm-settings.c:971
+#, fuzzy
+msgid "When sleep button is pressed do"
+msgstr "Als de slaapknop wordt ingedrukt"
+
+#: ../src/xfpm-settings.c:996
+msgid "When laptop lid is closed"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1020
+msgid "No available keyboard shortcuts found"
+msgstr "Geen beschikbare sneltoetsen gevonden"
+
+#: ../src/xfpm-settings.c:1036
+msgid "General Options"
+msgstr "Algemene opties"
+
+#. Systray icon
+#: ../src/xfpm-settings.c:1043
+msgid "System tray icon"
+msgstr "Pictogram in systeemvak"
+
+#: ../src/xfpm-settings.c:1049
+msgid "Always Display an icon"
+msgstr "Altijd een pictogram weergeven"
+
+#: ../src/xfpm-settings.c:1050
+msgid "When battery is present"
+msgstr "Als er een batterij is"
+
+#: ../src/xfpm-settings.c:1053
+msgid "When battery is charging or discharging"
+msgstr "Als de batterij aan het opladen of ontladen is"
+
+#: ../src/xfpm-settings.c:1069
+msgid "Enable CPU freq scaling control"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1082
+msgid "Enable monitor power management control"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1139
+msgid "Advanced settings"
+msgstr "Geavanceerde instellingen"
+
+#: ../src/xfpm-settings.c:1156 ../src/xfpm-settings.c:1161
+#, fuzzy
+msgid "CPU settings"
+msgstr "CPU-instellingen"
+
+#: ../src/xfpm-settings.c:1171 ../src/xfpm-settings.c:1176
+msgid "Battery settings"
+msgstr "Batterij-instellingen"
+
+#: ../src/xfpm-settings.c:1187 ../src/xfpm-settings.c:1192
+msgid "Shortcuts"
+msgstr "Sneltoetsen"
+
+#: ../src/xfpm-settings.c:1202 ../src/xfpm-settings.c:1207
+msgid "Monitor Settings"
+msgstr ""
+
+#: ../src/xfpm-settings.c:1241
+msgid "Power Manager Preferences"
+msgstr "Voorkeuren energiebeheer"
+
+#: ../src/xfpm-battery-icon.c:369
+#, fuzzy
+msgid "Your battery charge is low"
 msgstr "Het energie-niveau van de batterij is laag"
 
-#: xfpm-battery-icon.c:344
-msgid "Your battery charge level is critical"
-msgstr "Het energie-niveau van de batterij is kritiek"
+#: ../src/xfpm-battery-icon.c:376
+#, fuzzy
+msgid "Your battery is almost empty"
+msgstr "De batterij is volledig opgeladen"
 
-#: xfpm-battery-icon.c:353
+#: ../src/xfpm-battery-icon.c:385
 #, fuzzy
 msgid "You are running on Battery"
 msgstr "U werkt op de batterij"
 
-#: xfpm-battery-icon.c:353
-#: xfpm-battery-icon.c:535
-#: xfpm-battery-icon.c:539
+#: ../src/xfpm-battery-icon.c:385 ../src/xfpm-battery-icon.c:567
+#: ../src/xfpm-battery-icon.c:571
 msgid "Battery is discharging"
 msgstr "De batterij is aan het ontladen"
 
-#: xfpm-battery-icon.c:357
+#: ../src/xfpm-battery-icon.c:389
 msgid "Your battery is discharging"
 msgstr "De batterij is aan het ontladen"
 
-#: xfpm-battery-icon.c:365
-#: xfpm-battery-icon.c:523
+#: ../src/xfpm-battery-icon.c:397 ../src/xfpm-battery-icon.c:555
 msgid "Battery is charging"
 msgstr "De batterij is aan het opladen"
 
-#: xfpm-battery-icon.c:374
+#: ../src/xfpm-battery-icon.c:406
 msgid "Your battery is fully charged"
 msgstr "De batterij is volledig opgeladen"
 
-#: xfpm-battery-icon.c:393
-#: xfpm-battery.c:784
-#: xfpm-driver.c:300
-#: xfpm-driver.c:888
-msgid "Xfce power manager"
-msgstr "Xfce energiebeheer"
-
-#: xfpm-battery-icon.c:497
+#: ../src/xfpm-battery-icon.c:529
 msgid "Not present"
 msgstr "Niet aanwezig"
 
-#: xfpm-battery-icon.c:503
+#: ../src/xfpm-battery-icon.c:535
 msgid "%"
 msgstr "%"
 
-#: xfpm-battery-icon.c:509
+#: ../src/xfpm-battery-icon.c:541
 msgid "Battery fully charged"
 msgstr "Batterij volledig opgeladen"
 
-#: xfpm-battery-icon.c:516
+#: ../src/xfpm-battery-icon.c:548
 msgid "Battery charge level"
 msgstr "Energie-niveau"
 
-#: xfpm-battery-icon.c:535
+#: ../src/xfpm-battery-icon.c:567
 #, fuzzy
 msgid "Running on battery"
 msgstr "Aan het werken op de batterij"
 
-#: xfpm-battery-icon.c:545
-msgid "Battery charge level is low"
+#: ../src/xfpm-battery-icon.c:577
+#, fuzzy
+msgid "Battery charge is low"
 msgstr "Het energie-niveau van de batterij is laag"
 
-#: xfpm-battery-icon.c:550
-msgid "Battery charge level is critical"
-msgstr "Het energie-niveau van de batterij is kritiek"
+#: ../src/xfpm-battery-icon.c:582
+msgid "Battery is almost empty"
+msgstr ""
 
-#: xfpm-battery-icon.c:569
+#: ../src/xfpm-battery-icon.c:607
 msgid ""
 "\n"
 "Estimated time left"
@@ -137,7 +358,7 @@ msgstr ""
 "\n"
 "Geschatte resterende tijd"
 
-#: xfpm-battery-icon.c:574
+#: ../src/xfpm-battery-icon.c:612
 msgid ""
 "\n"
 "Estimated time to charge"
@@ -145,381 +366,319 @@ msgstr ""
 "\n"
 "Geschatte tijd om op te laden"
 
-#: xfpm-battery-icon.c:578
+#: ../src/xfpm-battery-icon.c:616
 msgid "hours"
 msgstr "uren"
 
-#: xfpm-battery-icon.c:578
+#: ../src/xfpm-battery-icon.c:616
 msgid "hour"
 msgstr "uur"
 
-#: xfpm-battery-icon.c:579
+#: ../src/xfpm-battery-icon.c:617
 msgid "minutes"
 msgstr "minuten"
 
-#: xfpm-battery-icon.c:579
+#: ../src/xfpm-battery-icon.c:617
 msgid "minute"
 msgstr "minuut"
 
-#: xfpm-battery.c:779
-msgid "Your battery charge level is critical save your work to avoid losing data"
-msgstr "Het energie-niveau van de batterij is kritiek - sla uw werk op om dataverlies te voorkomen"
-
-#: xfpm-battery.c:794
-msgid "Shutdown the system"
-msgstr "Afsluiten"
-
-#: xfpm-battery.c:802
-msgid "Hibernate the system"
-msgstr "Slaapstand"
-
-#: xfpm-battery.c:824
-#: xfpm-settings.c:461
-#: xfpm-settings.c:934
-#: xfpm-settings.c:963
-#: xfpm-settings.c:986
-msgid "Shutdown"
-msgstr "Afsluiten"
-
-#: xfpm-common.c:94
-#, fuzzy
-msgid "Part of the Xfce goodies project"
-msgstr "Onderdeel van het Goodies project van Xfce"
-
-#: xfpm-common.c:96
-#: xfpm-driver.c:1188
-#: xfpm-main.c:88
-msgid "Xfce4 Power Manager"
-msgstr "Energiebeheer"
-
-#: xfpm-dpms-spins.c:48
+#: ../src/xfpm-dpms-spins.c:50
 msgid "never"
 msgstr "nooit"
 
-#: xfpm-dpms-spins.c:49
+#: ../src/xfpm-dpms-spins.c:51
 msgid "min"
 msgstr "min"
 
-#: xfpm-dpms-spins.c:127
+#: ../src/xfpm-dpms-spins.c:129
 msgid "Standby after"
 msgstr "Standbij na"
 
-#: xfpm-dpms-spins.c:135
+#: ../src/xfpm-dpms-spins.c:137
 msgid "Suspend after"
 msgstr "Slaapstand na"
 
-#: xfpm-dpms-spins.c:143
+#: ../src/xfpm-dpms-spins.c:145
 msgid "Turn off after"
 msgstr "Afsluiten na"
 
-#: xfpm-driver.c:287
-msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
-msgstr ""
-
-#: xfpm-driver.c:313
-#: xfpm-main.c:268
-msgid "Xfce4 power manager"
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1220
+msgid "Xfce4 Power Manager"
 msgstr "Energiebeheer"
 
-#: xfpm-driver.c:704
+#: ../src/xfpm-common.c:147
+msgid "translator-credits"
+msgstr ""
+
+#: ../src/xfpm-main.c:61
+#, fuzzy
+msgid "Start xfce power manager"
+msgstr "Xfce energiebeheer"
+
+#: ../src/xfpm-main.c:62
+#, fuzzy
+msgid "Show the configuration dialog"
+msgstr "Batterij-configuratie"
+
+#: ../src/xfpm-main.c:63
+#, fuzzy
+msgid "Quit any running xfce power manager"
+msgstr "Xfce energiebeheer"
+
+#: ../src/xfpm-main.c:64
+msgid "Settings manager socket"
+msgstr ""
+
+#: ../src/xfpm-main.c:64
+msgid "SOCKET ID"
+msgstr ""
+
+#: ../src/xfpm-main.c:65
+msgid "Version information"
+msgstr ""
+
+#: ../src/xfpm-main.c:73
+#, c-format
+msgid ""
+"\n"
+"Xfce Power Manager %s\n"
+"\n"
+"Part of the Xfce Goodies Project\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Licensed under the GNU GPL.\n"
+"\n"
+msgstr ""
+
+#: ../src/xfpm-main.c:87
+#, fuzzy
+msgid "Xfce Power Manager"
+msgstr "Energiebeheer"
+
+#: ../src/xfpm-main.c:88
+msgid ""
+"Unable to read your home directory environment variable, autostart option "
+"may not work"
+msgstr ""
+"Kan de locatie van uw persoonlijke map niet uitlezen, wellicht werkt "
+"autostarten niet"
+
+#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr ""
+
+#: ../src/xfpm-main.c:182
+#, c-format
+msgid "Too many arguments"
+msgstr ""
+
+#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
+#, fuzzy, c-format
+msgid "Xfce power manager is not running"
+msgstr "Xfce energiebeheer"
+
+#: ../src/xfpm-main.c:201
+#, fuzzy
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Energiebeheer is niet actief, wilt u het activeren"
+
+#: ../src/xfpm-main.c:203
+msgid "Run"
+msgstr "Uitvoeren"
+
+#: ../src/xfpm-main.c:224
+#, fuzzy, c-format
+msgid "Xfce power manager is already running"
+msgstr "Xfce energiebeheer"
+
+#: ../src/xfpm-main.c:233
+#, fuzzy
+msgid ""
+"Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
+"the message bus daemon are running"
+msgstr ""
+"Kan het energiebeheer niet uitvoeren, controlleer of HAL en de "
+"berichtenserver draaien"
+
+#: ../src/xfpm-main.c:237
+#, fuzzy
+msgid "Unable to load xfce4 power manager"
+msgstr "Energiebeheer"
+
+#: ../src/xfpm-driver.c:291
+msgid ""
+"Unable to read AC adapter status, the power manager will not work properly. "
+"Possible reasons: The AC adapter driver is not loaded, broken connection "
+"with the hardware abstract layer or the message bus daemon is not running"
+msgstr ""
+
+#: ../src/xfpm-driver.c:728
 msgid "System failed to shutdown"
 msgstr "Kon niet afsluiten"
 
-#: xfpm-driver.c:883
+#: ../src/xfpm-driver.c:907
 #, fuzzy
-msgid "Unable to use power management service, functionalities like hibernate and suspend will not work Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
-msgstr "Kan energiebeheer niet gebruiken, functies zoals de slaap- en pauzestand zullen niet werken. Mogelijke redenen: onvoldoende rechten, foutieve verbinding met de hardware, of de berichtenserver is niet actief."
+msgid ""
+"Unable to use power management service, functionalities like hibernate and "
+"suspend will not work. Possible reasons: you don't have enough permission, "
+"broken connection with the hardware abstract layer or the message bus daemon "
+"is not running"
+msgstr ""
+"Kan energiebeheer niet gebruiken, functies zoals de slaap- en pauzestand "
+"zullen niet werken. Mogelijke redenen: onvoldoende rechten, foutieve "
+"verbinding met de hardware, of de berichtenserver is niet actief."
 
-#: xfpm-driver.c:896
+#: ../src/xfpm-driver.c:920
 msgid "Don't show this message again"
 msgstr "Niet meer weergeven"
 
-#: xfpm-driver.c:1188
-msgid "Failed to load power manager configuration using defaults"
+#: ../src/xfpm-driver.c:1220
+#, fuzzy
+msgid "Failed to load power manager configuration, using defaults"
 msgstr "Kan de voorkeuren niet laden; standaardwaarden worden gebruikt"
 
-#: xfpm-hal.c:640
-#: xfpm-hal.c:729
-#: xfpm-hal.c:822
-#: xfpm-hal.c:871
-#: xfpm-hal.c:921
-#: xfpm-hal.c:973
-#: xfpm-hal.c:1025
-#: xfpm-hal.c:1071
+#: ../src/xfpm-hal.c:172
+#, c-format
+msgid "Error monitoring HAL events"
+msgstr ""
+
+#: ../src/xfpm-hal.c:261 ../src/xfpm-hal.c:280
+#, c-format
+msgid "Unable to connect to DBus: %s"
+msgstr ""
+
+#: ../src/xfpm-hal.c:268
+msgid "HAL is not running or not responding"
+msgstr ""
+
+#: ../src/xfpm-hal.c:415
+#, c-format
+msgid "Unable to watch device using HAL: %s"
+msgstr ""
+
+#: ../src/xfpm-hal.c:633
+msgid "No back-end for your operating system"
+msgstr ""
+
+#: ../src/xfpm-hal.c:637
+msgid "No hibernate script found"
+msgstr ""
+
+#: ../src/xfpm-hal.c:641
+msgid "No suspend script found"
+msgstr ""
+
+#: ../src/xfpm-hal.c:645
+msgid "No suspend method found"
+msgstr ""
+
+#: ../src/xfpm-hal.c:649
+msgid "No hibernate method found"
+msgstr ""
+
+#: ../src/xfpm-hal.c:675 ../src/xfpm-hal.c:765 ../src/xfpm-hal.c:859
+#: ../src/xfpm-hal.c:908 ../src/xfpm-hal.c:958 ../src/xfpm-hal.c:1010
+#: ../src/xfpm-hal.c:1062 ../src/xfpm-hal.c:1108
+#, c-format
 msgid "Out of memory"
 msgstr "Onvoldoende geheugen"
 
 # Message Hibernate?
-#: xfpm-hal.c:671
-#, fuzzy
-msgid "Message Hibernate didn't get a reply"
+#: ../src/xfpm-hal.c:707
+#, fuzzy, c-format
+msgid "Message hibernate didn't get a reply"
 msgstr "Slaapstand kreeg geen antwoord"
 
-#: xfpm-hal.c:692
+#: ../src/xfpm-hal.c:728
+#, c-format
 msgid "System failed to hibernate"
 msgstr "Kon de slaapstand niet aanvangen"
 
-#: xfpm-hal.c:698
-#: xfpm-hal.c:789
+#: ../src/xfpm-hal.c:734 ../src/xfpm-hal.c:826
+#, c-format
 msgid "Error occured while trying to suspend"
 msgstr "Fout bij aanvangen van pauzestand"
 
-#: xfpm-hal.c:701
-#: xfpm-hal.c:792
-#, fuzzy
+#: ../src/xfpm-hal.c:737 ../src/xfpm-hal.c:829
+#, fuzzy, c-format
 msgid "Unknown reply from the message daemon"
 msgstr "Onbekend antwoord van de berichtenserver"
 
 # Message suspend?
-#: xfpm-hal.c:761
-#, fuzzy
+#: ../src/xfpm-hal.c:798
+#, fuzzy, c-format
 msgid "Message suspend didn't get a reply"
 msgstr "Pauzestand kreeg geen antwoord"
 
-#: xfpm-hal.c:783
+#: ../src/xfpm-hal.c:820
+#, c-format
 msgid "System failed to suspend"
 msgstr "Kon de pauzestand niet aanvangen"
 
-#: xfpm-hal.c:842
+#: ../src/xfpm-hal.c:879
+#, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
 msgstr "Geen antwoord van HAL-daemon om de helderheid in te stellen"
 
-#: xfpm-hal.c:889
+#: ../src/xfpm-hal.c:926
+#, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
 msgstr "Geen antwoord van HAL-daemon om de helderheid te achterhalen"
 
-#: xfpm-hal.c:939
-#, fuzzy
+#: ../src/xfpm-hal.c:976
+#, fuzzy, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
-msgstr "Geen antwoord van HAL-daemon om de beschikbare CPU-beheerders te achterhalen"
+msgstr ""
+"Geen antwoord van HAL-daemon om de beschikbare CPU-beheerders te achterhalen"
 
-#: xfpm-hal.c:991
-#, fuzzy
+#: ../src/xfpm-hal.c:1028
+#, fuzzy, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
-msgstr "Geen antwoord van HAL-daemon om de huidige CPU-beheerder te achterhalen"
+msgstr ""
+"Geen antwoord van HAL-daemon om de huidige CPU-beheerder te achterhalen"
 
-#: xfpm-hal.c:1044
+#: ../src/xfpm-hal.c:1081
+#, c-format
 msgid "No reply from HAL daemon to set cpu governor"
 msgstr "Geen antwoord van HAL-daemon om de CPU-beheerder in te stellen"
 
-#: xfpm-hal.c:1090
+#: ../src/xfpm-hal.c:1127
+#, c-format
 msgid "No reply from HAL daemon to set power save profile"
-msgstr "Geen antwoord van HAL-daemon om een energiebesparend profiel op te slaan"
-
-#: xfpm-main.c:89
-msgid "Unable to read your home directory environment variable, autostart option may not work"
-msgstr "Kan de locatie van uw persoonlijke map niet uitlezen, wellicht werkt autostarten niet"
-
-#: xfpm-main.c:221
-msgid "Xfce4 Power Manager is not running, do you want to launch it now"
-msgstr "Energiebeheer is niet actief, wilt u het activeren"
-
-#: xfpm-main.c:223
-msgid "Run"
-msgstr "Uitvoeren"
-
-#: xfpm-main.c:269
-#, fuzzy
-msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
-msgstr "Kan het energiebeheer niet uitvoeren, controlleer of HAL en de berichtenserver draaien"
-
-#: xfpm-settings.c:433
-#, fuzzy
-msgid "Ups configuration"
-msgstr "Ups-configuratie"
-
-#: xfpm-settings.c:433
-msgid "Battery configuration"
-msgstr "Batterij-configuratie"
-
-#: xfpm-settings.c:437
-msgid "Consider battery charge critical"
-msgstr "Beschouw de batterijlading als kritiek"
-
-#: xfpm-settings.c:442
-msgid "percent"
-msgstr "procent"
-
-#: xfpm-settings.c:452
-msgid "When battery charge level is critical do"
-msgstr "Als het energieniveau van de batterij kritiek is"
-
-#: xfpm-settings.c:458
-#: xfpm-settings.c:928
-#: xfpm-settings.c:957
-#: xfpm-settings.c:980
-msgid "Nothing"
-msgstr "Niets doen"
-
-#: xfpm-settings.c:479
-#, fuzzy
-msgid "Enable ups charge notification"
-msgstr "Ups-opladen notificatie inschakelen"
-
-#: xfpm-settings.c:479
-msgid "Enable battery state notification"
-msgstr "Batterij-status-notificatie inschakelen"
-
-#: xfpm-settings.c:493
-#, fuzzy
-msgid "Enable power save on ups power"
-msgstr "Energiebesparende modus op ups-energie inschakelen"
-
-#: xfpm-settings.c:493
-#, fuzzy
-msgid "Enable power save on battery power"
-msgstr "Energiebesparende modus op batterij inschakelen"
-
-#: xfpm-settings.c:532
-#: xfpm-settings.c:625
-msgid "Performance"
-msgstr "Prestaties"
-
-#: xfpm-settings.c:537
-#: xfpm-settings.c:630
-msgid "Ondemand"
-msgstr "Op verzoek"
-
-#: xfpm-settings.c:541
-#: xfpm-settings.c:634
-msgid "Userspace"
 msgstr ""
+"Geen antwoord van HAL-daemon om een energiebesparend profiel op te slaan"
 
-#: xfpm-settings.c:545
-#: xfpm-settings.c:638
+#: ../src/xfce4-power-manager.desktop.in.h:1
 #, fuzzy
-msgid "Powersave"
+msgid "Power"
 msgstr "Energiebesparend"
 
-#: xfpm-settings.c:549
-#: xfpm-settings.c:642
-msgid "Conservative"
-msgstr "Conservatief"
-
-#: xfpm-settings.c:617
-msgid "CPU governor settings on ups power"
-msgstr ""
-
-#: xfpm-settings.c:617
-msgid "CPU governor settings on battery power"
-msgstr ""
-
-#: xfpm-settings.c:716
-msgid "No CPU governor found"
-msgstr ""
-
-#: xfpm-settings.c:726
-msgid "CPU frequency control cannot be used"
-msgstr ""
-
-#: xfpm-settings.c:738
-msgid "Cpu freq settings on electric power"
-msgstr ""
-
-#: xfpm-settings.c:738
-msgid "Cpu freq settings"
-msgstr ""
-
-#: xfpm-settings.c:760
+#: ../src/xfce4-power-manager.desktop.in.h:2
 #, fuzzy
-msgid "Enable lcd brigthness control"
-msgstr "LCD-helderheid-beheer inschakelen"
+msgid "Power Manager"
+msgstr "Energiebeheer"
 
-#: xfpm-settings.c:782
-msgid "Monitor DPMS settings on ups power"
-msgstr ""
-
-#: xfpm-settings.c:782
-msgid "Monitor DPMS settings on battery power"
-msgstr ""
-
-#: xfpm-settings.c:870
-msgid "Monitor settings on electric power"
-msgstr ""
-
-#: xfpm-settings.c:870
-msgid "Monitor settings"
-msgstr ""
-
-#: xfpm-settings.c:883
-msgid "Your monitor doesn't support DPMS control"
-msgstr ""
-
-#: xfpm-settings.c:914
-msgid "Keyboard shortcuts"
-msgstr "Sneltoetsen"
-
-#: xfpm-settings.c:923
-msgid "When power button is pressed do"
-msgstr "Als de aan/uit-knop wordt ingedrukt"
-
-#: xfpm-settings.c:949
+#: ../src/xfce4-power-manager.desktop.in.h:3
 #, fuzzy
-msgid "When sleep button is pressed do"
-msgstr "Als de slaapknop wordt ingedrukt"
+msgid "Settings for the Xfce 4 Power Manager"
+msgstr "Energiebeheer"
 
-#: xfpm-settings.c:974
+#: ../src/xfce4-power-manager.desktop.in.h:4
 #, fuzzy
-msgid "When lid button is pressed do"
-msgstr "Als de deksel-knop wordt omgezet"
+msgid "Xfce 4 Power Manager"
+msgstr "Energiebeheer"
 
-#: xfpm-settings.c:998
-msgid "No available keyboard shortcuts found"
-msgstr "Geen beschikbare sneltoetsen gevonden"
+#~ msgid "Your battery charge level is critical"
+#~ msgstr "Het energie-niveau van de batterij is kritiek"
 
-#: xfpm-settings.c:1014
-msgid "General Options"
-msgstr "Algemene opties"
+#~ msgid "Battery charge level is critical"
+#~ msgstr "Het energie-niveau van de batterij is kritiek"
 
-#: xfpm-settings.c:1021
-msgid "System tray icon"
-msgstr "Pictogram in systeemvak"
+#, fuzzy
+#~ msgid "Part of the Xfce goodies project"
+#~ msgstr "Onderdeel van het Goodies project van Xfce"
 
-#: xfpm-settings.c:1027
-msgid "Always Display an icon"
-msgstr "Altijd een pictogram weergeven"
-
-#: xfpm-settings.c:1028
-msgid "When battery is present"
-msgstr "Als er een batterij is"
-
-#: xfpm-settings.c:1031
-msgid "When battery is charging or discharging"
-msgstr "Als de batterij aan het opladen of ontladen is"
-
-#: xfpm-settings.c:1047
-msgid "Enable CPU freq scaling control"
-msgstr ""
-
-#: xfpm-settings.c:1060
-msgid "Enable DPMS control"
-msgstr ""
-
-#: xfpm-settings.c:1117
-msgid "Advanced settings"
-msgstr "Geavanceerde instellingen"
-
-#: xfpm-settings.c:1134
-#: xfpm-settings.c:1139
-msgid "Cpu settings"
-msgstr "CPU-instellingen"
-
-#: xfpm-settings.c:1149
-#: xfpm-settings.c:1154
-msgid "Battery settings"
-msgstr "Batterij-instellingen"
-
-#: xfpm-settings.c:1165
-#: xfpm-settings.c:1170
-msgid "Shortcuts"
-msgstr "Sneltoetsen"
-
-#: xfpm-settings.c:1180
-#: xfpm-settings.c:1185
-msgid "Monitor Settings"
-msgstr ""
-
-#: xfpm-settings.c:1217
-msgid "Power Manager Preferences"
-msgstr "Voorkeuren energiebeheer"
-
+#, fuzzy
+#~ msgid "When lid button is pressed do"
+#~ msgstr "Als de deksel-knop wordt omgezet"

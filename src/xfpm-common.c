@@ -19,12 +19,48 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <stdio.h>
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
 #include <glib.h>
 #include <libxfcegui4/libxfcegui4.h>
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-common.h"
 #include "xfpm-debug.h"
+
+static void
+xfpm_link_browser(GtkAboutDialog *about,const gchar *link,gpointer data)
+{
+	gchar *cmd = g_strdup_printf("%s %s","xfbrowser4",link);
+	xfce_exec(cmd,FALSE,FALSE,NULL);
+	g_free(cmd);
+	
+}
+
+static void
+xfpm_link_mailto(GtkAboutDialog *about,const gchar *link,gpointer data)
+{
+	gchar *cmd = g_strdup_printf("%s %s","xdg-email",link);
+	xfce_exec(cmd,FALSE,FALSE,NULL);
+	g_free(cmd);
+}
+	
 
 GdkPixbuf *
 xfpm_load_icon(const char *icon_name,gint size)
@@ -78,7 +114,8 @@ xfpm_preferences(void)
     g_spawn_command_line_async("xfce4-power-manager -c",NULL);
 }
 
-void       xfpm_help(void)
+void       
+xfpm_help(void)
 {
 	xfce_exec("xfhelp4 xfce4-power-manager.html", FALSE, FALSE, NULL);
 }
@@ -86,14 +123,30 @@ void       xfpm_help(void)
 void       
 xfpm_about(GtkWidget *widget,gpointer data)
 {
-    GtkWidget *about;
-	const gchar* authors[3] = {"Ali MA <ali.slackware@gmail.com>", 
-                             _("Part of the Xfce goodies project"),NULL};
-	about = gtk_about_dialog_new();
-	gtk_about_dialog_set_name(GTK_ABOUT_DIALOG(about), _("Xfce4 Power Manager"));
-	gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(about), NULL);
-	gtk_about_dialog_set_authors(GTK_ABOUT_DIALOG(about), (const gchar**) authors);
-	gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(about), "http://goodies.xfce.org/");
-	gtk_dialog_run(GTK_DIALOG(about));
-	gtk_widget_destroy (about);
+	const gchar* authors[3] = 
+	{
+		"Ali Abdallah <aliov@xfce.org>", 
+		NULL
+	};
+								
+	static const gchar *documenters[] =
+	{
+		"Ali Abdallah <aliov@xfce.org>",
+		NULL,
+	};
+
+	gtk_about_dialog_set_url_hook (xfpm_link_browser, NULL, NULL);
+	gtk_about_dialog_set_email_hook(xfpm_link_mailto,NULL,NULL);
+	gtk_show_about_dialog (NULL,
+                         "authors", authors,
+                         "copyright", "Copyright \302\251 2008 Ali Abdallah",
+                         "destroy-with-parent", TRUE,
+                         "documenters", documenters,
+                         "license", XFCE_LICENSE_GPL,
+                         "name", _("Xfce4 Power Manager"),
+                         "translator-credits", _("translator-credits"),
+                         "version", PACKAGE_VERSION,
+                         "website", "http://goodies.xfce.org",
+                         NULL);
+						 
 }
