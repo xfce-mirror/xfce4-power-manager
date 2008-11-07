@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-06 19:19+0100\n"
-"PO-Revision-Date: 2008-11-07 01:09+0100\n"
+"PO-Revision-Date: 2008-11-07 15:03+0100\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech\n"
 "MIME-Version: 1.0\n"
@@ -96,7 +96,7 @@ msgstr "Vypnout"
 
 #: ../src/xfpm-settings.c:438
 msgid "UPS configuration"
-msgstr "Konfigurace záložního zdroje UPS"
+msgstr "Konfigurace záložního zdroje"
 
 #: ../src/xfpm-settings.c:438
 msgid "Battery configuration"
@@ -104,7 +104,7 @@ msgstr "Konfigurace baterie"
 
 #: ../src/xfpm-settings.c:442
 msgid "Consider UPS charge critical"
-msgstr "Kritický stav nabití záložního zdroje UPS"
+msgstr "Kritický stav nabití záložního zdroje"
 
 #: ../src/xfpm-settings.c:442
 msgid "Consider battery charge critical"
@@ -127,7 +127,7 @@ msgstr "Nic"
 
 #: ../src/xfpm-settings.c:484
 msgid "Enable UPS charge notification"
-msgstr "Povolit oznámení o nabíjení záložního zdroje UPS"
+msgstr "Povolit oznámení o nabíjení záložního zdroje"
 
 #: ../src/xfpm-settings.c:484
 msgid "Enable battery state notification"
@@ -135,7 +135,7 @@ msgstr "Povolit oznámení o nabíjení baterie"
 
 #: ../src/xfpm-settings.c:498
 msgid "Enable power save on UPS power"
-msgstr "Povolit úsporný režim při napájení ze záložního zdroje UPS"
+msgstr "Povolit úsporný režim při napájení ze záložního zdroje"
 
 #: ../src/xfpm-settings.c:498
 msgid "Enable power save on battery power"
@@ -168,15 +168,15 @@ msgstr "Konzervativní"
 
 #: ../src/xfpm-settings.c:623
 msgid "CPU governor settings on UPS power"
-msgstr ""
+msgstr "Nastavení regulátoru procesoru při napájení ze záložního zdroje"
 
 #: ../src/xfpm-settings.c:623
 msgid "CPU governor settings on battery power"
-msgstr ""
+msgstr "Nastavení regulátoru procesoru při napájení ze baterie"
 
 #: ../src/xfpm-settings.c:723
 msgid "No CPU governor found"
-msgstr ""
+msgstr "Regulátor procesoru nebyl nalezen"
 
 #: ../src/xfpm-settings.c:733
 msgid "CPU frequency control cannot be used"
@@ -206,7 +206,7 @@ msgstr "Povolit ovládání jasu displeje LCD"
 
 #: ../src/xfpm-settings.c:794
 msgid "Monitor settings on UPS power"
-msgstr "Nastavení monitoru při napájení ze záložního zdroje UPS"
+msgstr "Nastavení monitoru při napájení ze záložního zdroje"
 
 #: ../src/xfpm-settings.c:794
 msgid "Monitor settings on battery power"
@@ -522,7 +522,7 @@ msgstr "Vypnutí systému se nezdařilo"
 
 #: ../src/xfpm-driver.c:907
 msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
-msgstr ""
+msgstr "Nelze použít službu správy napájení, funkce jako hibernace a režim spánku nebudou pracovat. Možné důvody: nemáte dostatečná oprávnění, přerušené spojení s abstraktní hardwarovou vrstvou nebo démon sběrnice zpráv neběží"
 
 #: ../src/xfpm-driver.c:920
 msgid "Don't show this message again"
@@ -629,17 +629,17 @@ msgstr "Žádná odpověď od démona vrstvy HAL pro získání úrovně jasu mo
 #: ../src/xfpm-hal.c:976
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
-msgstr ""
+msgstr "Žádná odpověď od démona vrstvy HAL pro získání dostupných regulátorů procesoru"
 
 #: ../src/xfpm-hal.c:1028
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
-msgstr ""
+msgstr "Žádná odpověď od démona vrstvy HAL pro získání stávajícího regulátoru procesoru"
 
 #: ../src/xfpm-hal.c:1081
 #, c-format
 msgid "No reply from HAL daemon to set cpu governor"
-msgstr ""
+msgstr "Žádná odpověď od démona vrstvy HAL pro nastavení regulátoru procesoru"
 
 #: ../src/xfpm-hal.c:1127
 #, c-format
