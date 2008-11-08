@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-06 19:19+0100\n"
+"POT-Creation-Date: 2008-11-08 12:26+0100\n"
 "PO-Revision-Date: 2008-10-31 21:05+0100\n"
 "Last-Translator: Maximilian Schleiss <maximilian@xfce.org>\n"
 "Language-Team: French <xfce-i18n@xfce.org>\n"
@@ -39,9 +39,9 @@ msgstr "Êtes-vous sûr de vouloir mettre le système en hibernation ?"
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
 #: ../src/xfpm-battery.c:803 ../src/xfpm-battery.c:910
-#: ../src/xfpm-battery.c:945 ../src/xfpm-settings.c:470
-#: ../src/xfpm-settings.c:954 ../src/xfpm-settings.c:983
-#: ../src/xfpm-settings.c:1006
+#: ../src/xfpm-battery.c:945 ../src/xfpm-settings.c:450
+#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:945
+#: ../src/xfpm-settings.c:968
 msgid "Hibernate"
 msgstr "Mettre en hibernation"
 
@@ -53,8 +53,8 @@ msgstr "Êtes-vous sûr de vouloir mettre en veille le système ?"
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
 #: ../src/xfpm-battery.c:925 ../src/xfpm-battery.c:960
-#: ../src/xfpm-settings.c:952 ../src/xfpm-settings.c:981
-#: ../src/xfpm-settings.c:1004
+#: ../src/xfpm-settings.c:914 ../src/xfpm-settings.c:943
+#: ../src/xfpm-settings.c:966
 msgid "Suspend"
 msgstr "Mettre en veille"
 
@@ -79,208 +79,231 @@ msgstr "Éteindre le système"
 msgid "Hibernate the system"
 msgstr "Mettre le système en hibernation"
 
-#: ../src/xfpm-battery.c:810 ../src/xfpm-settings.c:466
-#: ../src/xfpm-settings.c:956 ../src/xfpm-settings.c:985
-#: ../src/xfpm-settings.c:1008
+#: ../src/xfpm-battery.c:810 ../src/xfpm-settings.c:446
+#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:947
+#: ../src/xfpm-settings.c:970
 msgid "Shutdown"
 msgstr "Éteindre"
 
-#: ../src/xfpm-settings.c:438
+#: ../src/xfpm-settings.c:418
 msgid "UPS configuration"
 msgstr "Configuration de l'onduleur"
 
-#: ../src/xfpm-settings.c:438
+#: ../src/xfpm-settings.c:418
 msgid "Battery configuration"
 msgstr "Configuration de la batterie"
 
-#: ../src/xfpm-settings.c:442
+#: ../src/xfpm-settings.c:422
 #, fuzzy
 msgid "Consider UPS charge critical"
 msgstr "Niveau de la batterie critique"
 
-#: ../src/xfpm-settings.c:442
+#: ../src/xfpm-settings.c:422
 msgid "Consider battery charge critical"
 msgstr "Niveau de la batterie critique"
 
-#: ../src/xfpm-settings.c:447
+#: ../src/xfpm-settings.c:427
 msgid "percent"
 msgstr "pour cent"
 
-#: ../src/xfpm-settings.c:457
+#: ../src/xfpm-settings.c:437
 msgid "When battery charge level is critical do"
 msgstr "Action pour le niveau de la batterie critique"
 
-#: ../src/xfpm-settings.c:463 ../src/xfpm-settings.c:950
-#: ../src/xfpm-settings.c:979 ../src/xfpm-settings.c:1002
+#: ../src/xfpm-settings.c:443 ../src/xfpm-settings.c:912
+#: ../src/xfpm-settings.c:941 ../src/xfpm-settings.c:964
 msgid "Nothing"
 msgstr "Rien"
 
-#: ../src/xfpm-settings.c:484
+#: ../src/xfpm-settings.c:464
 msgid "Enable UPS charge notification"
 msgstr "Activer la notification du niveau de charge l'onduleur"
 
-#: ../src/xfpm-settings.c:484
+#: ../src/xfpm-settings.c:464
 msgid "Enable battery state notification"
 msgstr "Activer la notification du niveau de la batterie"
 
-#: ../src/xfpm-settings.c:498
+#: ../src/xfpm-settings.c:478
 msgid "Enable power save on UPS power"
 msgstr ""
 "Activer le mode d'économie d'énergie quand le système fonctionne sur onduleur"
 
-#: ../src/xfpm-settings.c:498
+#: ../src/xfpm-settings.c:478
 msgid "Enable power save on battery power"
 msgstr ""
 "Activer le mode d'économie d'énergie quand le système fonctionne sur batterie"
 
-#: ../src/xfpm-settings.c:538 ../src/xfpm-settings.c:631
-msgid "Performance"
+#: ../src/xfpm-settings.c:518 ../src/xfpm-settings.c:603
+#, fuzzy
+msgid "Best performance"
 msgstr "Performance"
 
-#: ../src/xfpm-settings.c:543 ../src/xfpm-settings.c:636
-msgid "Ondemand"
-msgstr "Ondemand (à la demande du processeur)"
+#: ../src/xfpm-settings.c:519 ../src/xfpm-settings.c:604
+msgid "Set the CPU to its maximum frequency"
+msgstr ""
 
-#: ../src/xfpm-settings.c:547 ../src/xfpm-settings.c:640
-msgid "Userspace"
-msgstr "Userspace (géré par un programme)"
+#: ../src/xfpm-settings.c:524 ../src/xfpm-settings.c:609
+#, fuzzy
+msgid "Ondemand performance"
+msgstr "Performance"
 
-#: ../src/xfpm-settings.c:551 ../src/xfpm-settings.c:644
-msgid "Powersave"
-msgstr "Powersave (économie)"
+#: ../src/xfpm-settings.c:525 ../src/xfpm-settings.c:610
+msgid ""
+"Set the CPU to its maximum speed when there is any load on it and to its "
+"minimum speed when the system is idle"
+msgstr ""
 
-#: ../src/xfpm-settings.c:555 ../src/xfpm-settings.c:648
-msgid "Conservative"
-msgstr "Conservative"
+#: ../src/xfpm-settings.c:530 ../src/xfpm-settings.c:615
+#, fuzzy
+msgid "Best power savings"
+msgstr "Gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-settings.c:623
-msgid "CPU governor settings on UPS power"
+#: ../src/xfpm-settings.c:531 ../src/xfpm-settings.c:616
+msgid "Set the CPU to its minimum frequency"
+msgstr ""
+
+#: ../src/xfpm-settings.c:535 ../src/xfpm-settings.c:620
+msgid "Good power savings"
+msgstr ""
+
+#: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:622
+msgid ""
+"gracefully increases and decreases the CPU speed depending on the current "
+"usage"
+msgstr ""
+
+#: ../src/xfpm-settings.c:595
+#, fuzzy
+msgid "CPU frequency settings on UPS power"
 msgstr "Mode du processeur quand le système fonctionne sur onduleur"
 
-#: ../src/xfpm-settings.c:623
-msgid "CPU governor settings on battery power"
+#: ../src/xfpm-settings.c:595
+#, fuzzy
+msgid "CPU frequency settings on battery power"
 msgstr "Mode du processeur quand le système fonctionne sur batterie"
 
-#: ../src/xfpm-settings.c:723
+#: ../src/xfpm-settings.c:685
 msgid "No CPU governor found"
 msgstr "Aucun mode du processeur disponible"
 
-#: ../src/xfpm-settings.c:733
+#: ../src/xfpm-settings.c:695
 msgid "CPU frequency control cannot be used"
 msgstr "Le contrôle de fréquence du processeur est inutilisable"
 
-#: ../src/xfpm-settings.c:743 ../src/xfpm-settings.c:888
+#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:850
 msgid "On electric power"
 msgstr "Sur secteur"
 
-#: ../src/xfpm-settings.c:748
-msgid "CPU freq settings on electric power"
+#: ../src/xfpm-settings.c:710
+#, fuzzy
+msgid "CPU frequency settings on electric power"
 msgstr "Fréquence du processeur quand le système fonctionne sur secteur"
 
-#: ../src/xfpm-settings.c:748
+#: ../src/xfpm-settings.c:710
 #, fuzzy
-msgid "CPU freq settings"
+msgid "CPU frequency settings"
 msgstr "Contrôle de fréquence"
 
-#: ../src/xfpm-settings.c:753 ../src/xfpm-settings.c:896
+#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:858
 msgid "On battery power"
 msgstr "Sur batterie"
 
-#: ../src/xfpm-settings.c:772
+#: ../src/xfpm-settings.c:734
 msgid "Enable LCD brightness control"
 msgstr "Activer le contrôle de la luminosité de l'écran"
 
-#: ../src/xfpm-settings.c:794
+#: ../src/xfpm-settings.c:756
 msgid "Monitor settings on UPS power"
 msgstr "Réglages de l'écran quand le système fonctionne sur onduleur"
 
-#: ../src/xfpm-settings.c:794
+#: ../src/xfpm-settings.c:756
 msgid "Monitor settings on battery power"
 msgstr "Réglages de l'écran quand le système fonctionne sur batterie"
 
-#: ../src/xfpm-settings.c:887
+#: ../src/xfpm-settings.c:849
 msgid "Monitor settings on electric power"
 msgstr "Réglages DPMS de l'écran quand le système fonctionne sur secteur"
 
-#: ../src/xfpm-settings.c:887
+#: ../src/xfpm-settings.c:849
 msgid "Monitor settings"
 msgstr "Réglages DPMS de l'écran"
 
-#: ../src/xfpm-settings.c:904
+#: ../src/xfpm-settings.c:866
 msgid "Your monitor doesn't support DPMS control"
 msgstr "L'écran ne supporte pas les réglages DPMS"
 
-#: ../src/xfpm-settings.c:935
+#: ../src/xfpm-settings.c:897
 msgid "Keyboard shortcuts"
 msgstr "Raccourcis claviers"
 
-#: ../src/xfpm-settings.c:945
+#: ../src/xfpm-settings.c:907
 msgid "When power button is pressed do"
 msgstr "Action pour le bouton d'alimentation"
 
-#: ../src/xfpm-settings.c:971
+#: ../src/xfpm-settings.c:933
 msgid "When sleep button is pressed do"
 msgstr "Action pour le bouton de mise en veille"
 
-#: ../src/xfpm-settings.c:996
+#: ../src/xfpm-settings.c:958
 msgid "When laptop lid is closed"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1020
+#: ../src/xfpm-settings.c:982
 msgid "No available keyboard shortcuts found"
 msgstr "Aucun raccourci clavier disponible"
 
-#: ../src/xfpm-settings.c:1036
+#: ../src/xfpm-settings.c:999
 msgid "General Options"
 msgstr "Options générales"
 
 #. Systray icon
-#: ../src/xfpm-settings.c:1043
+#: ../src/xfpm-settings.c:1006
 msgid "System tray icon"
 msgstr "Icône dans la zone de notification"
 
-#: ../src/xfpm-settings.c:1049
+#: ../src/xfpm-settings.c:1012
 msgid "Always Display an icon"
 msgstr "Toujours afficher une icône"
 
-#: ../src/xfpm-settings.c:1050
+#: ../src/xfpm-settings.c:1013
 msgid "When battery is present"
 msgstr "Quand la batterie est présente"
 
-#: ../src/xfpm-settings.c:1053
+#: ../src/xfpm-settings.c:1016
 msgid "When battery is charging or discharging"
 msgstr "Quand la batterie se charge ou se décharge"
 
-#: ../src/xfpm-settings.c:1069
-msgid "Enable CPU freq scaling control"
+#: ../src/xfpm-settings.c:1037
+#, fuzzy
+msgid "Enable CPU frequency scaling control"
 msgstr "Activer le contrôle de fréquence du processeur"
 
-#: ../src/xfpm-settings.c:1082
+#: ../src/xfpm-settings.c:1051
 #, fuzzy
 msgid "Enable monitor power management control"
 msgstr "Activer le contrôle de fréquence du processeur"
 
-#: ../src/xfpm-settings.c:1139
+#: ../src/xfpm-settings.c:1104
 msgid "Advanced settings"
 msgstr "Réglages avancés"
 
-#: ../src/xfpm-settings.c:1156 ../src/xfpm-settings.c:1161
+#: ../src/xfpm-settings.c:1123 ../src/xfpm-settings.c:1128
 msgid "CPU settings"
 msgstr "Processeur"
 
-#: ../src/xfpm-settings.c:1171 ../src/xfpm-settings.c:1176
+#: ../src/xfpm-settings.c:1139 ../src/xfpm-settings.c:1144
 msgid "Battery settings"
 msgstr "Batterie"
 
-#: ../src/xfpm-settings.c:1187 ../src/xfpm-settings.c:1192
+#: ../src/xfpm-settings.c:1155 ../src/xfpm-settings.c:1160
 msgid "Shortcuts"
 msgstr "Raccourcis"
 
-#: ../src/xfpm-settings.c:1202 ../src/xfpm-settings.c:1207
+#: ../src/xfpm-settings.c:1170 ../src/xfpm-settings.c:1175
 msgid "Monitor Settings"
 msgstr "Écran"
 
-#: ../src/xfpm-settings.c:1241
+#: ../src/xfpm-settings.c:1209
 msgid "Power Manager Preferences"
 msgstr "Préférences du gestionnaire d'alimentation"
 
@@ -653,6 +676,14 @@ msgstr "Pas de réponse du démon HAL pour régler le mode du processeur"
 msgid "No reply from HAL daemon to set power save profile"
 msgstr "Pas de réponse du démon HAL pour régler le profil d'économie d'énergie"
 
+#: ../src/xfpm-dbus-messages.c:86
+msgid "Failed to create dbus message\n"
+msgstr ""
+
+#: ../src/xfpm-dbus-messages.c:122 ../src/xfpm-dbus-messages.c:223
+msgid "Failed to send message\n"
+msgstr ""
+
 #: ../src/xfce4-power-manager.desktop.in.h:1
 #, fuzzy
 msgid "Power"
@@ -672,6 +703,18 @@ msgstr "Gestionnaire d'alimentation Xfce4"
 #, fuzzy
 msgid "Xfce 4 Power Manager"
 msgstr "Gestionnaire d'alimentation Xfce4"
+
+#~ msgid "Ondemand"
+#~ msgstr "Ondemand (à la demande du processeur)"
+
+#~ msgid "Userspace"
+#~ msgstr "Userspace (géré par un programme)"
+
+#~ msgid "Powersave"
+#~ msgstr "Powersave (économie)"
+
+#~ msgid "Conservative"
+#~ msgstr "Conservative"
 
 #~ msgid "Part of the Xfce goodies project"
 #~ msgstr "Membre du projet Xfce Goodies"

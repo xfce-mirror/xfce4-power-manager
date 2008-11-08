@@ -8,7 +8,7 @@
   a popup will be displayed to run the power manger if it is not already running. 
   Once the power manager is launched for the first time, it will place an autostart desktop file in your .config/autostart
   in order to be able to be launched automatically each time you log into your Xfce desktop.
-  </p></div></div><p>&#160;</p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-configuration"></a>Power Manager Configuration</h2></div></div></div><div class="figure"><a name="id2791167"></a><p class="title"><b>Figure&#160;1.&#160;Power Manager settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/settings.png" alt="Power Manager settings"></div></div></div></div><p><br class="figure-break"></p><p>
+  </p></div></div><p>&#160;</p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-configuration"></a>Power Manager Configuration</h2></div></div></div><div class="figure"><a name="id2763457"></a><p class="title"><b>Figure&#160;1.&#160;Power Manager settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/settings.png" alt="Power Manager settings"></div></div></div></div><p><br class="figure-break"></p><p>
   Almost all the <strong class="application"><code>xfce4-power-manager</code></strong> items are configurable from the configuration window, laptop users can set up 
   a power profile for two different modes &#8220;on battery power&#8221; and &#8220;on ac power&#8221;, desktop users still can change 
   DPMS settings and CPU frequency.
@@ -17,27 +17,25 @@
   the available manageabale interfaces.  
   </p><p>
   In this section we will describe the possible configuration for the power manager.
-  </p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-general"></a>General Settings</h3></div></div></div><div class="figure"><a name="id2782496"></a><p class="title"><b>Figure&#160;2.&#160;General settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/general-settings.png" alt="General settings"></div></div></div></div><p><br class="figure-break"></p><p>
+  </p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-general"></a>General Settings</h3></div></div></div><div class="figure"><a name="id2782441"></a><p class="title"><b>Figure&#160;2.&#160;General settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/general-settings.png" alt="General settings"></div></div></div></div><p><br class="figure-break"></p><p>
 	Here you can select the configuration of the system tray icon, enable/disable cpu frequency and DPMS controls. 
 	For example, you would need to disable DPMS control when watching a movie.	
-	</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-cpu"></a>CPU Settings</h3></div></div></div><div class="figure"><a name="id2788251"></a><p class="title"><b>Figure&#160;3.&#160;CPU Linux governors</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/cpu-settings.png" alt="CPU Linux governors"></div></div></div></div><p><br class="figure-break"></p><p>
+	</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-cpu"></a>CPU Settings</h3></div></div></div><div class="figure"><a name="id2793311"></a><p class="title"><b>Figure&#160;3.&#160;CPU Linux governors</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/cpu-settings.png" alt="CPU Linux governors"></div></div></div></div><p><br class="figure-break"></p><p>
 	The linux governors found in the system are listed as radio buttons.
 	If the acpi_cpufreq module is not loaded in the kernel or the cpu itself does not support frequency
 	changes these options might not show.
-	</p><p>Here is a brief descritption on linux cpu governors</p><div class="variablelist"><dl><dt><span class="term">Performance:</span></dt><dd><p> Set CPU to its maximum frequency: consume more power, 
+	</p><p>Here is a brief descritption on linux cpu governors</p><div class="variablelist"><dl><dt><span class="term">Best performance:</span></dt><dd><p> Set CPU to its maximum frequency: consume more power, 
 	and it is not ideal when running on battery.
-	</p></dd><dt><span class="term">Powersave:</span></dt><dd><p> 
+	</p></dd><dt><span class="term">Best power savings:</span></dt><dd><p> 
 	Set the CPU to its minimum frequency: ideal when running on battery power.	
-	</p></dd><dt><span class="term">Userspace:</span></dt><dd><p> This governor allows the use or any userspace
-	program running with UID "root" to set the CPU to a specific frequency.
-	</p></dd><dt><span class="term">Ondemand:</span></dt><dd><p> What you want is what you get: set the CPU depending on the
+	</p></dd><dt><span class="term">Ondemand performance:</span></dt><dd><p> What you want is what you get: set the CPU depending on the
 	current usage.
-	</p></dd><dt><span class="term">Conservative:</span></dt><dd><p> 
+	</p></dd><dt><span class="term">Good power savings:</span></dt><dd><p> 
 	 Same as Ondemand but differs in behaviour in that it gracefully increases and decreases 
 	 the CPU speed rather than jumping to max speed the moment there is any load on the CPU.
 	</p></dd></dl></div><p>
 NOTE:In <strong class="application"><code>xfce4-power-manager</code></strong> version 0.6.0 only Linux is supported for changing the CPU frequency.
-</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-battery"></a>Battery settings</h3></div></div></div><div class="figure"><a name="id2766178"></a><p class="title"><b>Figure&#160;4.&#160;Battery settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/battery-settings.png" alt="Battery settings"></div></div></div></div><p><br class="figure-break"></p><p>
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-battery"></a>Battery settings</h3></div></div></div><div class="figure"><a name="id2799687"></a><p class="title"><b>Figure&#160;4.&#160;Battery settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/battery-settings.png" alt="Battery settings"></div></div></div></div><p><br class="figure-break"></p><p>
 	The user can select the his critical battery percentage, usually this is for a laptop or
 	UPS battery, this option is important for a broken battery for example, which lasts only 5 minutes when it
 	is 10% charged.    
@@ -48,11 +46,11 @@ NOTE:In <strong class="application"><code>xfce4-power-manager</code></strong> ve
    The battery notification is a way to notify the user when the battery state changes ( ex: battery charge is full )
    <p>
    
-   </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-button"></a>Keyboard shortcuts</h3></div></div></div><div class="figure"><a name="id2773802"></a><p class="title"><b>Figure&#160;5.&#160;button control</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/button-settings.png" alt="button control"></div></div></div></div><p><br class="figure-break"></p>
+   </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-button"></a>Keyboard shortcuts</h3></div></div></div><div class="figure"><a name="id2781617"></a><p class="title"><b>Figure&#160;5.&#160;button control</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/button-settings.png" alt="button control"></div></div></div></div><p><br class="figure-break"></p>
    For those buttons you can define an action to be taken by the power manager when pressing to one of them 
    - for example when you close the laptop screen. 
     
-  </div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-monitor"></a>Monitor settings</h3></div></div></div><div class="figure"><a name="id2795557"></a><p class="title"><b>Figure&#160;6.&#160;Monitor DPMS and LCD brightness</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/monitor-settings.png" alt="Monitor DPMS and LCD brightness"></div></div></div></div><p><br class="figure-break"></p><p>
+  </div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-monitor"></a>Monitor settings</h3></div></div></div><div class="figure"><a name="id2800782"></a><p class="title"><b>Figure&#160;6.&#160;Monitor DPMS and LCD brightness</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/monitor-settings.png" alt="Monitor DPMS and LCD brightness"></div></div></div></div><p><br class="figure-break"></p><p>
 	DPMS is an old X extension that allows standby/suspend/turn off options of the monitor, usually the timeouts 
 	have to be consecutive, so standby timeout is less than suspend timeout and so on, but any option can always
 	be disabled.
@@ -61,7 +59,7 @@ NOTE:In <strong class="application"><code>xfce4-power-manager</code></strong> ve
 	it detects that system in running on battery power and increase it again when the system is running
 	on AC power.
 	</p></div></div><p>&#160;</p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-systray-notify"></a>System Tray Icon and Notification</h2></div></div></div><p>
-</p><div class="figure"><a name="id2784131"></a><p class="title"><b>Figure&#160;7.&#160;Battery icon in the system tray</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/battery.png" alt="Battery icon in the system tray"></div></div></div></div><p><br class="figure-break"></p><p>
+</p><div class="figure"><a name="id2788178"></a><p class="title"><b>Figure&#160;7.&#160;Battery icon in the system tray</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/battery.png" alt="Battery icon in the system tray"></div></div></div></div><p><br class="figure-break"></p><p>
 
 The "system tray" is an application running on a given X screen that can display small icons 
 provided by running applications. In Xfce, it is a panel plugin that catches the icon and resizes it
@@ -70,7 +68,7 @@ tray icon, for example pidgin places an icon in the system tray as well as many 
 </p><p>
 <strong class="application"><code>xfce4-power-manager</code></strong> uses GtkStatusIcon to display the different kinds of batteries found in the system.
 </p><p>
-</p><div class="figure"><a name="id2798136"></a><p class="title"><b>Figure&#160;8.&#160;Battery Notification</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/battery-discharging.png" alt="Battery Notification"></div></div></div></div><p><br class="figure-break"></p><p>
+</p><div class="figure"><a name="id2802112"></a><p class="title"><b>Figure&#160;8.&#160;Battery Notification</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/battery-discharging.png" alt="Battery Notification"></div></div></div></div><p><br class="figure-break"></p><p>
 
 To notify the user about the status of the battery, serious errors occured, the notification daemon is used
 to display such messages.

@@ -61,13 +61,11 @@ static GtkWidget *performance_on_ac;
 static GtkWidget *ondemand_on_ac;
 static GtkWidget *powersave_on_ac;
 static GtkWidget *conservative_on_ac;
-static GtkWidget *userspace_on_ac;
 
 static GtkWidget *performance_on_batt;
 static GtkWidget *ondemand_on_batt;
 static GtkWidget *powersave_on_batt;
 static GtkWidget *conservative_on_batt;
-static GtkWidget *userspace_on_batt;
 
 #ifdef HAVE_DPMS
 static GtkWidget *dpms_op;
@@ -278,7 +276,6 @@ set_cpu_freq_scaling_cb(GtkWidget *widget,XfconfChannel *channel)
         gtk_widget_set_sensitive(performance_on_ac,value);
         gtk_widget_set_sensitive(powersave_on_ac,value);
         gtk_widget_set_sensitive(conservative_on_ac,value);
-        gtk_widget_set_sensitive(userspace_on_ac,value);
     }
     
     if ( GTK_IS_WIDGET(ondemand_on_batt) )  /* enough to check only one widget */ 
@@ -287,7 +284,6 @@ set_cpu_freq_scaling_cb(GtkWidget *widget,XfconfChannel *channel)
         gtk_widget_set_sensitive(performance_on_batt,value);
         gtk_widget_set_sensitive(powersave_on_batt,value);
         gtk_widget_set_sensitive(conservative_on_batt,value);
-        gtk_widget_set_sensitive(userspace_on_batt,value);
     }
 }
 
@@ -332,15 +328,6 @@ set_conservative_on_ac_cb(GtkWidget *widget,XfconfChannel *channel)
 }
 
 static void
-set_userspace_on_ac_cb(GtkWidget *widget,XfconfChannel *channel)
-{
-    if(!xfconf_channel_set_uint(channel,ON_AC_CPU_GOV_CFG,USERSPACE))
-    {
-        g_critical("Cannot set value %s\n",ON_AC_CPU_GOV_CFG);
-    }
-}
-
-static void
 set_powersave_on_batt_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     if(!xfconf_channel_set_uint(channel,ON_BATT_CPU_GOV_CFG,POWERSAVE))
@@ -379,14 +366,7 @@ set_conservative_on_batt_cb(GtkWidget *widget,XfconfChannel *channel)
     }
 
 }
-static void
-set_userspace_on_batt_cb(GtkWidget *widget,XfconfChannel *channel)
-{
-    if(!xfconf_channel_set_uint(channel,ON_BATT_CPU_GOV_CFG,USERSPACE))
-    {
-        g_critical("Cannot set value %s\n",ON_BATT_CPU_GOV_CFG);
-    }
-}
+
 /// End of Callback Setting Functions ///
 
 static XfpmActionRequest
@@ -535,24 +515,26 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 govs,const gchar *
     gtk_widget_show(vbox);
     gtk_container_add(GTK_CONTAINER(align),vbox);
     
-    performance_on_ac = gtk_radio_button_new_with_label(NULL,_("Performance"));
+    performance_on_ac = gtk_radio_button_new_with_label(NULL,_("Best performance"));
+	gtk_widget_set_tooltip_text(performance_on_ac,_("Set the CPU to its maximum frequency"));
     gtk_box_pack_start (GTK_BOX (vbox), performance_on_ac, FALSE, FALSE, 0);
     
     list = gtk_radio_button_get_group(GTK_RADIO_BUTTON(performance_on_ac));
     
-    ondemand_on_ac = gtk_radio_button_new_with_label(list,_("Ondemand"));
+    ondemand_on_ac = gtk_radio_button_new_with_label(list,_("Ondemand performance"));
+	gtk_widget_set_tooltip_text(ondemand_on_ac,_("Set the CPU to its maximum speed when there is any load on it "\
+												"and to its minimum speed when the system is idle"));
     gtk_box_pack_start (GTK_BOX (vbox), ondemand_on_ac, FALSE, FALSE, 0);
     list = gtk_radio_button_get_group(GTK_RADIO_BUTTON(ondemand_on_ac));
     
-    userspace_on_ac = gtk_radio_button_new_with_label(list,_("Userspace"));
-    gtk_box_pack_start (GTK_BOX (vbox), userspace_on_ac, FALSE, FALSE, 0);
-    list = gtk_radio_button_get_group(GTK_RADIO_BUTTON(userspace_on_ac));
-    
-    powersave_on_ac = gtk_radio_button_new_with_label(list,_("Powersave"));
+    powersave_on_ac = gtk_radio_button_new_with_label(list,_("Best power savings"));
+	gtk_widget_set_tooltip_text(powersave_on_ac,_("Set the CPU to its minimum frequency"));
     gtk_box_pack_start (GTK_BOX (vbox), powersave_on_ac, FALSE, FALSE, 0); 
     list = gtk_radio_button_get_group(GTK_RADIO_BUTTON(powersave_on_ac));
     
-    conservative_on_ac = gtk_radio_button_new_with_label(list,_("Conservative"));
+    conservative_on_ac = gtk_radio_button_new_with_label(list,_("Good power savings"));
+	gtk_widget_set_tooltip_text(conservative_on_ac,
+								_("gracefully increases and decreases the CPU speed depending on the current usage"));
     gtk_box_pack_start (GTK_BOX (vbox), conservative_on_ac, FALSE, FALSE, 0); 
     
     if ( govs & POWERSAVE ) 
@@ -595,16 +577,6 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 govs,const gchar *
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(conservative_on_ac),TRUE);
         }
     }
-    if ( govs & USERSPACE ) 
-    {
-        gtk_widget_set_sensitive(userspace_on_ac,enable);
-        g_signal_connect(userspace_on_ac,"pressed",G_CALLBACK(set_userspace_on_ac_cb),channel);
-        gtk_widget_show(userspace_on_ac);
-        if ( current_governor == USERSPACE )
-        {
-            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(userspace_on_ac),TRUE);
-        }
-    }
     
     return frame;
 }
@@ -620,7 +592,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean u
     guint current_governor = xfconf_channel_get_uint(channel,ON_BATT_CPU_GOV_CFG,POWERSAVE);
     gboolean enable = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
     
-    frame = xfce_create_framebox(ups ? _("CPU governor settings on UPS power") : _("CPU governor settings on battery power"), &align);
+    frame = xfce_create_framebox(ups ? _("CPU frequency settings on UPS power") : _("CPU frequency settings on battery power"), &align);
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
     gtk_widget_show(frame);
     
@@ -628,24 +600,26 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean u
     gtk_widget_show(vbox);
     gtk_container_add(GTK_CONTAINER(align),vbox);
     
-    performance_on_batt = gtk_radio_button_new_with_label(NULL,_("Performance"));
+    performance_on_batt = gtk_radio_button_new_with_label(NULL,_("Best performance"));
+	gtk_widget_set_tooltip_text(performance_on_batt,_("Set the CPU to its maximum frequency"));
     gtk_box_pack_start (GTK_BOX (vbox), performance_on_batt, FALSE, FALSE, 0);
     
     list = gtk_radio_button_get_group(GTK_RADIO_BUTTON(performance_on_batt));
     
-    ondemand_on_batt = gtk_radio_button_new_with_label(list,_("Ondemand"));
+    ondemand_on_batt = gtk_radio_button_new_with_label(list,_("Ondemand performance"));
+	gtk_widget_set_tooltip_text(ondemand_on_batt,_("Set the CPU to its maximum speed when there is any load on it "\
+												"and to its minimum speed when the system is idle"));
     gtk_box_pack_start (GTK_BOX (vbox), ondemand_on_batt, FALSE, FALSE, 0);
     list = gtk_radio_button_get_group(GTK_RADIO_BUTTON(ondemand_on_batt));
     
-    userspace_on_batt = gtk_radio_button_new_with_label(list,_("Userspace"));
-    gtk_box_pack_start (GTK_BOX (vbox), userspace_on_batt, FALSE, FALSE, 0);
-    list = gtk_radio_button_get_group(GTK_RADIO_BUTTON(userspace_on_batt));
-    
-    powersave_on_batt = gtk_radio_button_new_with_label(list,_("Powersave"));
+    powersave_on_batt = gtk_radio_button_new_with_label(list,_("Best power savings"));
+	gtk_widget_set_tooltip_text(powersave_on_batt,_("Set the CPU to its minimum frequency"));
     gtk_box_pack_start (GTK_BOX (vbox), powersave_on_batt, FALSE, FALSE, 0); 
     list = gtk_radio_button_get_group(GTK_RADIO_BUTTON(powersave_on_batt));
     
-    conservative_on_batt = gtk_radio_button_new_with_label(list,_("Conservative"));
+    conservative_on_batt = gtk_radio_button_new_with_label(list,_("Good power savings"));
+	gtk_widget_set_tooltip_text(conservative_on_batt,
+								_("gracefully increases and decreases the CPU speed depending on the current usage"));
     gtk_box_pack_start (GTK_BOX (vbox), conservative_on_batt, FALSE, FALSE, 0); 
     
     if ( govs & POWERSAVE ) 
@@ -688,19 +662,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean u
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(conservative_on_batt),TRUE);
         }
     }
-    if ( govs & USERSPACE ) 
-    {
-        gtk_widget_set_sensitive(userspace_on_batt,enable);
-        g_signal_connect(userspace_on_batt,"pressed",G_CALLBACK(set_userspace_on_batt_cb),channel);
-        gtk_widget_show(userspace_on_batt);
-        if ( current_governor == USERSPACE )
-        {
-            gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(userspace_on_batt),TRUE);
-        }
-    }
-    
     return frame;
-    
 }
 
 static GtkWidget *
@@ -745,7 +707,7 @@ xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop,gboole
         GtkWidget *frame;
         frame = xfpm_settings_cpu_on_ac_adapter(channel,
                                                 govs,
-                                                laptop || ups ? _("CPU freq settings on electric power") : _("CPU freq settings"));
+                                                laptop || ups ? _("CPU frequency settings on electric power") : _("CPU frequency settings"));
         gtk_notebook_append_page(GTK_NOTEBOOK(ntbox),frame,label);
         
         if ( laptop || ups )
@@ -873,7 +835,6 @@ static GtkWidget *
 xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
                       gboolean dpms_capable,gboolean lcd,gboolean ups)
 {
-	GtkWidget *label;
     GtkWidget *ntbox;
 	ntbox = gtk_notebook_new();
     gtk_widget_show(ntbox);
@@ -882,6 +843,7 @@ xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
     
     gtk_widget_show(vbox);
 #ifdef HAVE_DPMS
+	GtkWidget *label;
     GtkWidget *frame;
     frame = xfpm_settings_dpms_on_ac_adapter(channel,
                                             laptop || ups ? _("Monitor settings on electric power") : _("Monitor settings"));
@@ -1026,12 +988,13 @@ xfpm_settings_keys(XfconfChannel *channel,
 }
 
 static GtkWidget *
-xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean ups)
+xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean ups,guint8 govs)
 {
     GtkWidget *table;
     GtkWidget *show_icon;
     GtkWidget *label;
     GtkWidget *frame,*align;
+	gint i = 0;
     
     frame = xfce_create_framebox(_("General Options"), &align);
     gtk_widget_show(frame);
@@ -1042,7 +1005,7 @@ xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean 
     /* Systray icon */
     label = gtk_label_new(_("System tray icon"));
     gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
+    gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0);
     
     guint icon_cfg = xfconf_channel_get_uint(channel,SHOW_TRAY_ICON_CFG,0);
     show_icon = gtk_combo_box_new_text();
@@ -1064,31 +1027,37 @@ xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean 
     gtk_combo_box_set_active(GTK_COMBO_BOX(show_icon),icon_cfg);
     g_signal_connect(show_icon,"changed",G_CALLBACK(set_show_tray_icon_cb),channel);
     gtk_widget_show(show_icon);
-    gtk_table_attach(GTK_TABLE(table),show_icon,1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
-    gboolean cpu_gov_enabled;
-    label = gtk_label_new(_("Enable CPU freq scaling control"));
-    gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
-    cpu_gov = gtk_check_button_new();
-    gtk_widget_show(cpu_gov);
-    cpu_gov_enabled = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cpu_gov),
-                                 cpu_gov_enabled);                    
-    g_signal_connect(cpu_gov,"toggled",G_CALLBACK(set_cpu_freq_scaling_cb),channel);      
-    gtk_table_attach(GTK_TABLE(table),cpu_gov,1,2,1,2,GTK_EXPAND,GTK_EXPAND,0,0); 
+    gtk_table_attach(GTK_TABLE(table),show_icon,1,2,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0);
+	i++;
+	
+	cpu_gov = gtk_check_button_new();
+	if ( govs )
+	{
+		gboolean cpu_gov_enabled;
+		label = gtk_label_new(_("Enable CPU frequency scaling control"));
+		gtk_widget_show(label);
+		gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0);
+		gtk_widget_show(cpu_gov);
+		cpu_gov_enabled = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cpu_gov),
+									cpu_gov_enabled);                    
+		g_signal_connect(cpu_gov,"toggled",G_CALLBACK(set_cpu_freq_scaling_cb),channel);      
+		gtk_table_attach(GTK_TABLE(table),cpu_gov,1,2,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0); 
+		i++;
+	}
     
 #ifdef HAVE_DPMS
     gboolean dpms_enabled;
     label = gtk_label_new(_("Enable monitor power management control"));
     gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,2,3,GTK_EXPAND,GTK_EXPAND,0,0);	
+    gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0);	
     dpms_op = gtk_check_button_new();
     gtk_widget_show(dpms_op);
     dpms_enabled = xfconf_channel_get_bool(channel,DPMS_ENABLE_CFG,TRUE);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dpms_op),
                                  dpms_enabled);                    
     g_signal_connect(dpms_op,"toggled",G_CALLBACK(set_dpms_cb),channel);      
-    gtk_table_attach(GTK_TABLE(table),dpms_op,1,2,2,3,GTK_EXPAND,GTK_EXPAND,0,0); 
+    gtk_table_attach(GTK_TABLE(table),dpms_op,1,2,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0); 
 #endif    
     return frame;
 }
@@ -1116,14 +1085,10 @@ _cursor_changed_cb(GtkIconView *view,gpointer data)
     {
         gtk_notebook_set_current_page(GTK_NOTEBOOK(nt),int_data);
     }
-    else
-    {
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(nt),0);
-    }
 }
 
 static GtkWidget *
-xfpm_settings_tree_view(gboolean is_laptop,gboolean ups)
+xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
 {
     GdkPixbuf *pix;
     GtkWidget *view;
@@ -1149,17 +1114,20 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups)
     gtk_tree_view_append_column(GTK_TREE_VIEW(view),col);
 
     /// CPU Settings
-    pix = xfpm_load_icon("xfpm-cpu",38);      
-    gtk_list_store_append(list_store,&iter);
-    if ( pix )
-    {
-        gtk_list_store_set(list_store,&iter,0,pix,1,_("CPU settings"),2,0,-1);
-        g_object_unref(pix);
-    }
-    else
-    {
-        gtk_list_store_set(list_store,&iter,1,_("CPU settings"),2,0,-1);
-    }
+	if ( govs )
+	{
+		pix = xfpm_load_icon("xfpm-cpu",38);      
+		gtk_list_store_append(list_store,&iter);
+		if ( pix )
+		{
+			gtk_list_store_set(list_store,&iter,0,pix,1,_("CPU settings"),2,0,-1);
+			g_object_unref(pix);
+		}
+		else
+		{
+			gtk_list_store_set(list_store,&iter,1,_("CPU settings"),2,0,-1);
+		}
+	}
     
     /// Battery Settings
     if ( is_laptop || ups )
@@ -1259,37 +1227,66 @@ xfpm_settings_new(XfconfChannel *channel,
     ups = is_laptop ? FALSE : ups_found;
         
     /// General Options Frame
-    box = xfpm_settings_general(channel,is_laptop,ups);
+    box = xfpm_settings_general(channel,is_laptop,ups,govs);
     gtk_box_pack_start (GTK_BOX (allbox), box, FALSE, FALSE, 0);
     
     /// Notebook container
     nt = gtk_notebook_new();
-    gtk_widget_show(nt);
+    
     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(nt),FALSE);
     table = gtk_table_new(1,2,FALSE);
     gtk_widget_show(table);
     gtk_box_pack_start (GTK_BOX (allbox), table, FALSE, FALSE, 0);
-    view = xfpm_settings_tree_view(is_laptop,ups_found);
-    gtk_table_attach_defaults(GTK_TABLE(table),view,0,1,0,1);  
-    gtk_widget_show(view);  
-    gtk_table_attach_defaults(GTK_TABLE(table),nt,1,2,0,1); 
+	
+    view = xfpm_settings_tree_view(is_laptop,ups_found,govs);
+
+#ifndef HAVE_DPMS	
+	if ( is_laptop || ups_found || govs )
+	{
+		gtk_table_attach_defaults(GTK_TABLE(table),view,0,1,0,1);  
+		gtk_widget_show(view);  
+		gtk_table_attach_defaults(GTK_TABLE(table),nt,1,2,0,1); 
+		gtk_widget_show(nt);
+	}
+#else
+	gtk_table_attach_defaults(GTK_TABLE(table),view,0,1,0,1);  
+	gtk_widget_show(view);  
+	gtk_table_attach_defaults(GTK_TABLE(table),nt,1,2,0,1); 
+	gtk_widget_show(nt);
+#endif
     
     /// Cpu freq settings
-    box = xfpm_settings_cpu_freq(channel,govs,is_laptop,ups);
-    gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
+	if ( govs )
+	{
+		box = xfpm_settings_cpu_freq(channel,govs,is_laptop,ups);
+		gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
+	}
 
-  
     /// Battery settings
-    box = xfpm_settings_battery(channel,power_management,ups);
-    gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
+	if ( is_laptop || ups )
+	{
+		box = xfpm_settings_battery(channel,power_management,ups);
+		gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
+	}
 
     /// Keyboard buttons settings
-    box = xfpm_settings_keys(channel,is_laptop,power_management,switch_buttons);
-    gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL); 
+	if ( switch_buttons)
+	{
+		box = xfpm_settings_keys(channel,is_laptop,power_management,switch_buttons);
+		gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL); 
+	}
     
     /// Dpms settings && LCD brightness settings DPMS existence is checked above
+#ifdef HAVE_DPMS	
     box = xfpm_settings_monitor(channel,is_laptop,dpms_capable,lcd,ups);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
+#else
+	if ( lcd )
+	{
+		box = xfpm_settings_monitor(channel,is_laptop,dpms_capable,lcd,ups);
+		gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
+	}
+#endif	
 
 	GtkWidget *plug;    
     if ( socket_id != 0 )

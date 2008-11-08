@@ -135,7 +135,7 @@ maintainers, etc. Commented out by default.
 <variablelist>
 
    <varlistentry>
-	<term>Performance:</term>
+	<term>Best performance:</term>
 	<listitem>
 	<para> Set CPU to its maximum frequency: consume more power, 
 	and it is not ideal when running on battery.
@@ -144,7 +144,7 @@ maintainers, etc. Commented out by default.
 	</varlistentry>
 	
 	<varlistentry>
-	<term>Powersave:</term>
+	<term>Best power savings:</term>
 	<listitem>
 	<para> 
 	Set the CPU to its minimum frequency: ideal when running on battery power.	
@@ -153,16 +153,7 @@ maintainers, etc. Commented out by default.
 	</varlistentry>
 	
 	<varlistentry>
-	<term>Userspace:</term>
-	<listitem>
-	<para> This governor allows the use or any userspace
-	program running with UID "root" to set the CPU to a specific frequency.
-	</para>
-	</listitem>
-	</varlistentry>		
-	
-	<varlistentry>
-	<term>Ondemand:</term>
+	<term>Ondemand performance:</term>
 	<listitem>
 	<para> What you want is what you get: set the CPU depending on the
 	current usage.
@@ -171,7 +162,7 @@ maintainers, etc. Commented out by default.
 	</varlistentry>	
 	
 	<varlistentry>
-	<term>Conservative:</term>
+	<term>Good power savings:</term>
 	<listitem>
 	<para> 
 	 Same as Ondemand but differs in behaviour in that it gracefully increases and decreases 
