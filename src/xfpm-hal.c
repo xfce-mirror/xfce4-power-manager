@@ -690,7 +690,7 @@ xfpm_hal_hibernate(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 		const gchar *error_ret =  _filter_error_message(error.message);
 		if ( error_ret )
         {
-			g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,error_ret);
+			g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,"%s",error_ret);
             *critical = 1;
         }
         else 
@@ -782,7 +782,7 @@ xfpm_hal_suspend(XfpmHal *xfpm_hal,GError **gerror,guint8 *critical)
 		const gchar *error_ret =  _filter_error_message(error.message);
 		if ( error_ret )
         {
-			g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,error_ret);
+			g_set_error(gerror,XFPM_HAL_ERROR,XFPM_HAL_ERROR_GENERAL,"%s",error_ret);
             *critical = 1;
         }
         else 
