@@ -1132,7 +1132,7 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
     /// Battery Settings
     if ( is_laptop || ups )
     {
-        pix = xfpm_load_icon(ups ? "gpm-ups-100" : "gpm-primary-100",38);
+        pix = xfpm_load_icon(ups ? "gpm-ups-100" : "battery",38);
         gtk_list_store_append(list_store,&iter);
         if ( pix )
         {
@@ -1148,7 +1148,7 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
     /// Keyboard Settings
     if ( is_laptop )
     {
-        pix = xfpm_load_icon("xfpm-keyboard",38);
+        pix = xfpm_load_icon("keyboard",38);
         gtk_list_store_append(list_store,&iter);
         if ( pix )
         {
@@ -1163,7 +1163,7 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
     
     /// Dpms settings
 #ifdef HAVE_DPMS    
-    pix = xfpm_load_icon("xfpm-display",38);      
+    pix = xfpm_load_icon("display",38);      
     gtk_list_store_append(list_store,&iter);
     if ( pix ) 
     {

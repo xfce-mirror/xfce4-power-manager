@@ -1,12 +1,17 @@
-m4_define([powermanager_version], [0.6.0svn])
 m4_define([intltool_minimum_version], [0.31])
+m4_define([xfpm_version_major],  [0])
+m4_define([xfpm_version_minor],  [6])
+m4_define([xfpm_version_micro],  [0])
+m4_define([xfpm_version_build],  [])
+m4_define([xfpm_version_tag],[])
+m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_version_micro()ifelse(xfpm_version_tag(), [svn], [xfpm_version_tag()-xfpm_version_build()], [xfpm_version_tag()])])
 
-AC_INIT([xfce4-power-manager],[powermanager_version],[aliov@xfce.org])
+AC_INIT([xfce4-power-manager], [xfpm_version], [http://bugzilla.xfce.org/])
 AC_PREREQ(2.50)
 
-AM_INIT_AUTOMAKE([1.8 dist-bzip2 tar-ustar])
+AM_INIT_AUTOMAKE([AC_PACKAGE_TARNAME()], [AC_PACKAGE_VERSION()])
 AM_CONFIG_HEADER([config.h])
-AM_MAINTAINER_MODE
+AM_MAINTAINER_MODE()
 
 # ============== basic compiler settings ============= #
 AC_PROG_CC
