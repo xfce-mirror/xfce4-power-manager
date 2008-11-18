@@ -955,6 +955,7 @@ static void xfpm_driver_check_nm(XfpmDriver *drv)
     }
     
 	priv->nm_responding = xfpm_dbus_name_has_owner(connection,NM_SERVICE);
+	dbus_connection_unref(connection);
 	
 }
 
