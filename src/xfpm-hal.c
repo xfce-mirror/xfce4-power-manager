@@ -897,7 +897,7 @@ xfpm_hal_get_brightness (XfpmHal *xfpm_hal,
     
     DBusMessage *mess,*reply;
 	DBusError error;
-	gint32 brightness_level;
+	gint32 brightness_level = 0;
 
 	mess = dbus_message_new_method_call(HAL_DBUS_SERVICE,
                                         interface,

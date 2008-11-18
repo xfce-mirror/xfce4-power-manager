@@ -284,11 +284,11 @@ static void xfpm_cpu_check(XfpmCpu *cpu)
 	priv = XFPM_CPU_GET_PRIVATE(cpu);
 	
 	if (!xfpm_hal_cpu_freq_interface_can_be_used(priv->hal))
+    {	
 		priv->governors |= CPU_FREQ_CANNOT_BE_USED;
-
-	XFPM_DEBUG("Cpu freq control cannot be used\n");	
+	    XFPM_DEBUG("Cpu freq control cannot be used\n");	
+    }
 }
-
 
 static guint8
 xfpm_cpu_get_all_governors(XfpmCpu *cpu)
