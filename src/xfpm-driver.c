@@ -678,7 +678,7 @@ xfpm_driver_do_suspend(gpointer data)
     
     priv->accept_sleep_request = TRUE;
 	if ( priv->nm_responding )
-		xfpm_dbus_send_nm_message("wakeup");
+		xfpm_dbus_send_nm_message("wake");
     
     return FALSE;
     
@@ -708,7 +708,7 @@ xfpm_driver_do_hibernate(gpointer data)
         
     priv->accept_sleep_request = TRUE;
 	if ( priv->nm_responding )
-		xfpm_dbus_send_nm_message("wakeup");
+		xfpm_dbus_send_nm_message("wake");
 		
     return FALSE;
     
