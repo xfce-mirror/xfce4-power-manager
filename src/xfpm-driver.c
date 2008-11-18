@@ -932,7 +932,29 @@ static void xfpm_driver_check_nm(XfpmDriver *drv)
 	XfpmDriverPrivate *priv;
 	priv = XFPM_DRIVER_GET_PRIVATE(drv);
 	
-	priv->nm_responding = xfpm_dbus_name_has_owner(priv->conn,NM_SERVICE);
+	DBusError error;
+    DBusConnection *connection;
+
+    dbus_error_init(&error);
+    
+    connection = dbus_bus_get(DBUS_BUS_SYSTEM,&error);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+        XFPM_DEBUG("Error getting D-Bus connection: %s\n",error.message);
+        dbus_error_free(&error);
+        priv->nm_responding = FALSE;
+        return;
+    }    
+    
+    if ( !connection )
+    {
+        XFPM_DEBUG("Error, D-Bus connection NULL\n");
+        priv->nm_responding = FALSE;
+        return;
+    }
+    
+	priv->nm_responding = xfpm_dbus_name_has_owner(connection,NM_SERVICE);
 	
 }
 
