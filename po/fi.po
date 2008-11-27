@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-18 11:00+0100\n"
-"PO-Revision-Date: 2008-11-04 17:47+0200\n"
+"POT-Creation-Date: 2008-11-27 14:12+0200\n"
+"PO-Revision-Date: 2008-11-27 14:44+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,6 @@ msgid "Adapter is offline"
 msgstr "Käytetään akkuvirtaa"
 
 #: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:908
-#, fuzzy
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Haluatko varmasti asettaa järjestelmän lepotilaan?"
 
@@ -43,7 +42,6 @@ msgid "Hibernate"
 msgstr "Lepotila"
 
 #: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:923
-#, fuzzy
 msgid "Are you sure you want to suspend the system?"
 msgstr "Haluatko varmasti asettaa järjestelmän keskeytystilaan?"
 
@@ -125,53 +123,52 @@ msgid "Enable power save on battery power"
 msgstr "Virransäästö käytettäessä akkuvirtaa"
 
 #: ../src/xfpm-settings.c:518 ../src/xfpm-settings.c:603
-#, fuzzy
 msgid "Best performance"
-msgstr "Täysi teho"
+msgstr "Aina täysi teho"
 
 #: ../src/xfpm-settings.c:519 ../src/xfpm-settings.c:604
 msgid "Set the CPU to its maximum frequency"
-msgstr ""
+msgstr "Käytä aina suorittimen suurinta kellotaajuutta"
 
 #: ../src/xfpm-settings.c:524 ../src/xfpm-settings.c:609
-#, fuzzy
 msgid "Ondemand performance"
-msgstr "Täysi teho"
+msgstr "Tehoa tarpeen mukaan"
 
 #: ../src/xfpm-settings.c:525 ../src/xfpm-settings.c:610
 msgid ""
 "Set the CPU to its maximum speed when there is any load on it and to its "
 "minimum speed when the system is idle"
 msgstr ""
+"Nosta suorittimen nopeutta tarpeen mukaan, ja pudota nopeus minimiin kun "
+"suoritinta ei käytetä. Paras vaihtoehto uudemmille x86-suorittimille."
 
 #: ../src/xfpm-settings.c:530 ../src/xfpm-settings.c:615
-#, fuzzy
 msgid "Best power savings"
 msgstr "Xfce:n virranhallinta"
 
 #: ../src/xfpm-settings.c:531 ../src/xfpm-settings.c:616
 msgid "Set the CPU to its minimum frequency"
-msgstr ""
+msgstr "Käytä aina suorittimen pienintä kellotaajuutta"
 
 #: ../src/xfpm-settings.c:535 ../src/xfpm-settings.c:620
 msgid "Good power savings"
-msgstr ""
+msgstr "Virransäästö"
 
 #: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:622
 msgid ""
 "gracefully increases and decreases the CPU speed depending on the current "
 "usage"
 msgstr ""
+"Nosta ja laske suorittimen kellotaajuutta tarpeen mukaan, varoen tiheää "
+"vaihtelua"
 
 #: ../src/xfpm-settings.c:595
-#, fuzzy
 msgid "CPU frequency settings on UPS power"
-msgstr "Suorittimen tehoprofiili UPS:n varassa"
+msgstr "Suorittimen kellotaajuus UPS:n varassa"
 
 #: ../src/xfpm-settings.c:595
-#, fuzzy
 msgid "CPU frequency settings on battery power"
-msgstr "Suorittimen tehoprofiili akkuvirralla"
+msgstr "Suorittimen kellotaajuus akkuvirralla"
 
 #: ../src/xfpm-settings.c:685
 msgid "No CPU governor found"
@@ -179,21 +176,19 @@ msgstr "Ei tehoprofiileja käytettävissä"
 
 #: ../src/xfpm-settings.c:695
 msgid "CPU frequency control cannot be used"
-msgstr "Suorittimen taajuutta ei voi hallita"
+msgstr "Suorittimen kellotaajuutta ei voi hallita"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:850
 msgid "On electric power"
 msgstr "Verkkovirta"
 
 #: ../src/xfpm-settings.c:710
-#, fuzzy
 msgid "CPU frequency settings on electric power"
-msgstr "Suorittimen tehoprofiili verkkovirralla"
+msgstr "Suorittimen kellotaajuus verkkovirralla"
 
 #: ../src/xfpm-settings.c:710
-#, fuzzy
 msgid "CPU frequency settings"
-msgstr "Suorittimen teho"
+msgstr "Suorittimen kellotaajuus"
 
 #: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:858
 msgid "On battery power"
@@ -265,9 +260,8 @@ msgid "When battery is charging or discharging"
 msgstr "Näytä, kun akku latautuu tai purkautuu"
 
 #: ../src/xfpm-settings.c:1037
-#, fuzzy
 msgid "Enable CPU frequency scaling control"
-msgstr "Hallitse suorittimen taajuutta"
+msgstr "Hallitse suorittimen kellotaajuutta"
 
 #: ../src/xfpm-settings.c:1051
 msgid "Enable monitor power management control"
@@ -406,13 +400,13 @@ msgstr "Keskeytystilaan viiveellä"
 msgid "Turn off after"
 msgstr "Sammuta viiveellä"
 
-#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1242
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1243
 msgid "Xfce4 Power Manager"
 msgstr "Xfce4 virranhallinta"
 
 #: ../src/xfpm-common.c:147
 msgid "translator-credits"
-msgstr ""
+msgstr "Jari Rahkonen <jari.rahkonen@pp1.inet.fi>"
 
 #: ../src/xfpm-main.c:61
 msgid "Start xfce power manager"
@@ -476,17 +470,16 @@ msgid "Type '%s --help' for usage."
 msgstr "Saat ohjeita komennolla \"%s --help\"."
 
 #: ../src/xfpm-main.c:182
-#, fuzzy, c-format
+#, c-format
 msgid "Too many arguments"
-msgstr "Liikaa valitsimia\n"
+msgstr "Liikaa valitsimia"
 
 #: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
-#, fuzzy, c-format
+#, c-format
 msgid "Xfce power manager is not running"
-msgstr "Xfce:n virranhallinta ei ole käynnissä\n"
+msgstr "Xfce:n virranhallinta ei ole käynnissä"
 
 #: ../src/xfpm-main.c:201
-#, fuzzy
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 virranhallinta ei ole käynnissä. Haluatko käynnistää sen?"
 
@@ -495,9 +488,9 @@ msgid "Run"
 msgstr "Suorita"
 
 #: ../src/xfpm-main.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "Xfce power manager is already running"
-msgstr "Xfce:n virranhallinta on jo käynnissä\n"
+msgstr "Xfce:n virranhallinta on jo käynnissä"
 
 #: ../src/xfpm-main.c:233
 msgid ""
@@ -508,9 +501,8 @@ msgstr ""
 "käynnissä."
 
 #: ../src/xfpm-main.c:237
-#, fuzzy
 msgid "Unable to load xfce4 power manager"
-msgstr "Xfce4 virranhallintaa ei voi käynnistää\n"
+msgstr "Xfce4 virranhallintaa ei voi käynnistää"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -541,30 +533,28 @@ msgstr ""
 msgid "Don't show this message again"
 msgstr "Älä näytä tätä viestiä uudelleen"
 
-#: ../src/xfpm-driver.c:1242
-#, fuzzy
+#: ../src/xfpm-driver.c:1243
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Virranhallinnan oletusasetuksia ei voi ladata"
+msgstr "Virranhallinnan asetusten lataaminen epäonnistui, käytetään oletuksia"
 
 #: ../src/xfpm-hal.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "Error monitoring HAL events"
-msgstr "HAL-tapahtumien valvontavirhe\n"
+msgstr "HAL-tapahtumien valvontavirhe"
 
 #: ../src/xfpm-hal.c:261 ../src/xfpm-hal.c:280
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to connect to DBus: %s"
-msgstr "Ei voi yhdistää DBus-palveluun: %s\n"
+msgstr "Ei voi yhdistää DBus-palveluun: %s"
 
 #: ../src/xfpm-hal.c:268
-#, fuzzy
 msgid "HAL is not running or not responding"
-msgstr "HAL ei ole käynnissä tai se ei vastaa\n"
+msgstr "HAL ei ole käynnissä tai se ei vastaa"
 
 #: ../src/xfpm-hal.c:415
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to watch device using HAL: %s"
-msgstr "Ei voi valvoa laitetta HAL-palvelun avulla: %s\n"
+msgstr "Ei voi valvoa laitetta HAL-palvelun avulla: %s"
 
 #: ../src/xfpm-hal.c:633
 msgid "No back-end for your operating system"
@@ -655,11 +645,11 @@ msgstr "HAL-palvelu ei vastannut virransäästöprofiilin asettamiseen"
 
 #: ../src/xfpm-dbus-messages.c:86
 msgid "Failed to create dbus message\n"
-msgstr ""
+msgstr "DBus-viestin luominen epäonnistui\n"
 
 #: ../src/xfpm-dbus-messages.c:122 ../src/xfpm-dbus-messages.c:223
 msgid "Failed to send message\n"
-msgstr ""
+msgstr "Viestin lähetys epäonnistui\n"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power"
