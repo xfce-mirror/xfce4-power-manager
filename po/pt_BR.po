@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the xfce4-power-manager package.
 # Vladimir Melo <vmelo@gnome.org>, 2008.
 # Og Maciel <ogmaciel@gnome.org>, 2008.
+# Henrique P Machado <zehrique@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-11-18 11:00+0100\n"
-"PO-Revision-Date: 2008-11-03 20:07+0100\n"
-"Last-Translator: Vladimir Melo <vmelo@gnome.org>\n"
+"PO-Revision-Date: 2008-11-30 21:09-0300\n"
+"Last-Translator: Henrique P Machado <zehrique@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -127,53 +128,50 @@ msgid "Enable power save on battery power"
 msgstr "Habilitar economia de energia da bateria"
 
 #: ../src/xfpm-settings.c:518 ../src/xfpm-settings.c:603
-#, fuzzy
 msgid "Best performance"
-msgstr "Desempenho"
+msgstr "Melhor desempenho"
 
 #: ../src/xfpm-settings.c:519 ../src/xfpm-settings.c:604
 msgid "Set the CPU to its maximum frequency"
-msgstr ""
+msgstr "Configura a CPU para sua freqüência máxima"
 
 #: ../src/xfpm-settings.c:524 ../src/xfpm-settings.c:609
-#, fuzzy
 msgid "Ondemand performance"
-msgstr "Desempenho"
+msgstr "Desempenho em demanda"
 
 #: ../src/xfpm-settings.c:525 ../src/xfpm-settings.c:610
 msgid ""
 "Set the CPU to its maximum speed when there is any load on it and to its "
 "minimum speed when the system is idle"
-msgstr ""
+msgstr "Configura a CPU para sua velocidade máxima quando há qualquer carga e "
+"para sua velocidade mínima quando o sistema estiver ocioso."
 
 #: ../src/xfpm-settings.c:530 ../src/xfpm-settings.c:615
-#, fuzzy
 msgid "Best power savings"
-msgstr "Gerenciador de energia Xfce"
+msgstr "Melhor economia de energia"
 
 #: ../src/xfpm-settings.c:531 ../src/xfpm-settings.c:616
 msgid "Set the CPU to its minimum frequency"
-msgstr ""
+msgstr "Configura a CPU para sua freqüência mínima"
 
 #: ../src/xfpm-settings.c:535 ../src/xfpm-settings.c:620
 msgid "Good power savings"
-msgstr ""
+msgstr "Boa economia de energia"
 
 #: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:622
 msgid ""
 "gracefully increases and decreases the CPU speed depending on the current "
 "usage"
-msgstr ""
+msgstr "Aumenta e diminui gradualmente a velocidade da CPU dependendo do uso "
+"atual"
 
 #: ../src/xfpm-settings.c:595
-#, fuzzy
 msgid "CPU frequency settings on UPS power"
-msgstr "Configurações do governador de CPU quando usando UPS"
+msgstr "Configurações de freqüência de CPU ao usar UPS"
 
 #: ../src/xfpm-settings.c:595
-#, fuzzy
 msgid "CPU frequency settings on battery power"
-msgstr "Configurações do governador de CPU quando usando bateria"
+msgstr "Configurações de freqüência de CPU ao usar bateria"
 
 #: ../src/xfpm-settings.c:685
 msgid "No CPU governor found"
@@ -188,12 +186,10 @@ msgid "On electric power"
 msgstr "Em energia elétrica"
 
 #: ../src/xfpm-settings.c:710
-#, fuzzy
 msgid "CPU frequency settings on electric power"
-msgstr "Configurações de freqüência da CPU quando usando energia elétrica"
+msgstr "Configurações de freqüência da CPU ao usar energia elétrica"
 
 #: ../src/xfpm-settings.c:710
-#, fuzzy
 msgid "CPU frequency settings"
 msgstr "Configurações de freqüência da CPU"
 
@@ -231,11 +227,11 @@ msgstr "Atalhos de teclado"
 
 #: ../src/xfpm-settings.c:907
 msgid "When power button is pressed do"
-msgstr "Quando o botão desligar é pressionado fazer"
+msgstr "Quando o botão desligar é pressionado, fazer"
 
 #: ../src/xfpm-settings.c:933
 msgid "When sleep button is pressed do"
-msgstr "Quando o botão sleep é pressionado fazer"
+msgstr "Quando o botão sleep é pressionado, fazer"
 
 #: ../src/xfpm-settings.c:958
 msgid "When laptop lid is closed"
@@ -267,9 +263,8 @@ msgid "When battery is charging or discharging"
 msgstr "Quando a bateria está carregando ou descarregando"
 
 #: ../src/xfpm-settings.c:1037
-#, fuzzy
 msgid "Enable CPU frequency scaling control"
-msgstr "Habilitar controle da escala de frequência da CPU"
+msgstr "Habilitar controle da escala de freqüência da CPU"
 
 #: ../src/xfpm-settings.c:1051
 msgid "Enable monitor power management control"
@@ -416,11 +411,12 @@ msgstr "Gerenciador de energia do Xfce4"
 msgid "translator-credits"
 msgstr ""
 "Vladimir Melo <vmelo@gnome.org>\n"
-"Og Maciel <ogmaciel@gnome.org>"
+"Og Maciel <ogmaciel@gnome.org>\n"
+"Henrique P Machado <zehrique@gmail.com>"
 
 #: ../src/xfpm-main.c:61
 msgid "Start xfce power manager"
-msgstr "Inicia o gerenciador de energia do xfce"
+msgstr "Inicia o Gerenciador de energia do xfce"
 
 #: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
@@ -428,11 +424,11 @@ msgstr "Mostra o diálogo de configuração"
 
 #: ../src/xfpm-main.c:63
 msgid "Quit any running xfce power manager"
-msgstr "Sai do gerenciador de energia xfce"
+msgstr "Sai do Gerenciador de energia xfce"
 
 #: ../src/xfpm-main.c:64
 msgid "Settings manager socket"
-msgstr "Socket do gerenciador de configurações"
+msgstr "Socket do Gerenciador de configurações"
 
 #: ../src/xfpm-main.c:64
 msgid "SOCKET ID"
@@ -457,7 +453,7 @@ msgstr ""
 "\n"
 "Gerenciador de energia do Xfce %s\n"
 "\n"
-"Parte do Projecto Xfce Goodies\n"
+"Parte do Projeto Xfce Goodies\n"
 "http://goodies.xfce.org\n"
 "\n"
 "Licenciado sob a GNU GPL.\n"
@@ -488,12 +484,12 @@ msgstr "Muitos argumentos"
 #: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr "O gerenciador de energia do Xfce não está em execução"
+msgstr "O Gerenciador de energia do Xfce não está em execução"
 
 #: ../src/xfpm-main.c:201
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr ""
-"O gerenciador de energia do Xfce4 não está em execução, você deseja lançá-lo "
+"O Gerenciador de energia do Xfce4 não está em execução, você deseja lançá-lo "
 "agora?"
 
 #: ../src/xfpm-main.c:203
@@ -503,7 +499,7 @@ msgstr "Executar"
 #: ../src/xfpm-main.c:224
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "O gerenciador de energia do Xfce já está em execução"
+msgstr "O Gerenciador de energia do Xfce já está em execução"
 
 #: ../src/xfpm-main.c:233
 msgid ""
@@ -515,7 +511,7 @@ msgstr ""
 
 #: ../src/xfpm-main.c:237
 msgid "Unable to load xfce4 power manager"
-msgstr "Não foi possível carregar o gerenciador de energia do xfce4"
+msgstr "Não foi possível carregar o Gerenciador de energia do xfce4"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -551,7 +547,7 @@ msgstr "Não mostrar esta mensagem novamente"
 #: ../src/xfpm-driver.c:1242
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
-"Falha ao carregar a configuração do gerenciador de energia, usando os padrões"
+"Falha ao carregar a configuração do Gerenciador de energia, usando os padrões"
 
 #: ../src/xfpm-hal.c:172
 #, c-format
@@ -664,11 +660,11 @@ msgstr ""
 
 #: ../src/xfpm-dbus-messages.c:86
 msgid "Failed to create dbus message\n"
-msgstr ""
+msgstr "Falhou ao criar mensagem dbus\n"
 
 #: ../src/xfpm-dbus-messages.c:122 ../src/xfpm-dbus-messages.c:223
 msgid "Failed to send message\n"
-msgstr ""
+msgstr "Falhou ao enviar mensagem\n"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power"
