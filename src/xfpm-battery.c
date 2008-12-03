@@ -120,6 +120,10 @@ static XfpmBatteryType xfpm_battery_get_battery_type(const gchar *battery_type);
 
 static gboolean xfpm_battery_check(XfpmBattery *batt,
                                     const gchar *udi);
+static gboolean xfpm_battery_is_new(XfpmBattery *batt, 
+                                    const gchar *udi, 
+                                    XfpmBatteryType battery_type, 
+                                    guint last_full);
 
 static void xfpm_battery_hibernate_callback(GtkWidget *widget,
                                             XfpmBattery *batt);
@@ -1049,6 +1053,60 @@ xfpm_battery_check(XfpmBattery *batt,const gchar *udi)
     return TRUE;
 }
 
+static gboolean
+xfpm_battery_is_new(XfpmBattery *batt, const gchar *udi, 
+                    XfpmBatteryType battery_type, guint last_full)
+{
+    XfpmBatteryPrivate *priv;
+    priv = XFPM_BATTERY_GET_PRIVATE(batt);
+    
+    GList *keys;
+    
+    keys = g_hash_table_get_keys(priv->batteries);
+    
+    if ( !keys ) return TRUE;
+    
+    if ( g_list_length(keys) == 0 ) return TRUE;
+    
+    int i = 0;
+    
+    for ( i = 0; i < g_list_length(keys); i++)
+    {
+        GError *error = NULL;
+        gchar *udi_b = (gchar *) g_list_nth_data(keys,i);
+        guint last_full_b = xfpm_hal_get_int_info(priv->hal,
+                                            udi_b,
+                                            "battery.charge_level.last_full",
+                                            &error);
+        if ( error )
+        {
+            XFPM_DEBUG("%s:\n",error->message);
+            g_error_free(error);
+            return TRUE;
+        }
+        
+        gchar *batt_type_b = xfpm_hal_get_string_info(priv->hal,
+                                                      udi_b,
+                                                      "battery.type",
+                                                      &error);
+        if ( error ) 
+        {
+            XFPM_DEBUG("%s:\n",error->message);
+            g_error_free(error);
+            return TRUE;
+        } 
+        
+         XfpmBatteryType type_b = 
+            xfpm_battery_get_battery_type(batt_type_b);
+            if ( batt_type_b )
+            libhal_free_string(batt_type_b);
+        
+        if ( type_b == battery_type && last_full_b == last_full ) return FALSE;
+    }       
+    
+    return TRUE;
+}
+
 static void
 xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
 {
@@ -1056,6 +1114,7 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
     {
         return;
     }
+    
     XfpmBatteryPrivate *priv;
     priv = XFPM_BATTERY_GET_PRIVATE(batt);
     
@@ -1160,6 +1219,15 @@ xfpm_battery_new_device(XfpmBattery *batt,const gchar *udi)
     if ( battery_type )
         libhal_free_string(battery_type);
     if ( type == UPS ) priv->ups_found = TRUE;    
+    
+    /* Check if this battery is new, udevadm trigger cause hal to make a new udi
+     * for a existing battery */
+    
+    if ( !xfpm_battery_is_new(batt, udi, type, last_full) )  
+    {
+        XFPM_DEBUG("Battery with udi=%s already monitored\n",udi);
+        return;
+    } 
     
     GtkStatusIcon *batt_icon;
     batt_icon = xfpm_battery_icon_new(last_full,
