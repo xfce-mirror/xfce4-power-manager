@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 10:15+0100\n"
+"POT-Creation-Date: 2009-01-12 16:07+0100\n"
 "PO-Revision-Date: 2008-12-04 14:18+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
@@ -15,11 +15,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../src/xfpm-ac-adapter.c:217
 msgid "Unable to read adapter status, the power manager will not work properly"
-msgstr "Неможливо визначити стан адаптера, менеджер живлення не працює правильно"
+msgstr ""
+"Неможливо визначити стан адаптера, менеджер живлення не працює правильно"
 
 #: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is online"
@@ -36,9 +38,9 @@ msgstr "Ви впевнені, що бажаєте перевести систе
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
 #: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:450
-#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:945
-#: ../src/xfpm-settings.c:968
+#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
+#: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Сплячка"
 
@@ -49,14 +51,15 @@ msgstr "Ви впевнені, що бажаєте призупинити роб
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
 #: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
-#: ../src/xfpm-settings.c:914 ../src/xfpm-settings.c:943
-#: ../src/xfpm-settings.c:966
+#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
+#: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Призупинити"
 
 #: ../src/xfpm-battery.c:769
 msgid "Your battery is almost empty. Save your work to avoid losing data"
-msgstr "Ваша батарея майже розряджена. Збережіть Вашу роботу щоб не втратити дані"
+msgstr ""
+"Ваша батарея майже розряджена. Збережіть Вашу роботу щоб не втратити дані"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
 #: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
@@ -72,54 +75,54 @@ msgstr "Вимкнути систему"
 msgid "Hibernate the system"
 msgstr "Перевести систему в сплячку "
 
-#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:446
-#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:947
-#: ../src/xfpm-settings.c:970
+#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
+#: ../src/xfpm-settings.c:978
 msgid "Shutdown"
 msgstr "Вимкнути"
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "UPS configuration"
 msgstr "Налаштування при живленні від UPS"
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "Battery configuration"
 msgstr "Налаштуванні при живленні від батареї"
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider UPS charge critical"
 msgstr "Розглядати критичний заряд UPS"
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider battery charge critical"
 msgstr "Розглядати критичний розряд батареї"
 
-#: ../src/xfpm-settings.c:427
+#: ../src/xfpm-settings.c:430
 msgid "percent"
 msgstr "відсоток"
 
-#: ../src/xfpm-settings.c:437
+#: ../src/xfpm-settings.c:440
 msgid "When battery charge level is critical do"
 msgstr "Коли заряд батареї досягне критичного рівня зробити"
 
-#: ../src/xfpm-settings.c:443 ../src/xfpm-settings.c:912
-#: ../src/xfpm-settings.c:941 ../src/xfpm-settings.c:964
+#: ../src/xfpm-settings.c:450 ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:946 ../src/xfpm-settings.c:972
 msgid "Nothing"
 msgstr "Нічого"
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable UPS charge notification"
 msgstr "Дозволити повідомлення зарядки UPS"
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable battery state notification"
 msgstr "Дозволити повідомлення про стан батареї"
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on UPS power"
 msgstr "Дозволити збереження заряду при живленні від UPS"
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on battery power"
 msgstr "Дозволити збереження заряду при живленні від батареї"
 
@@ -140,8 +143,8 @@ msgid ""
 "Set the CPU to its maximum speed when there is any load on it and to its "
 "minimum speed when the system is idle"
 msgstr ""
-"Призначити процесору його максимальну швидкість коли в цьому є потреба "
-"і мінімальну коли система в режимі очікування"
+"Призначити процесору його максимальну швидкість коли в цьому є потреба і "
+"мінімальну коли система в режимі очікування"
 
 #: ../src/xfpm-settings.c:530 ../src/xfpm-settings.c:615
 msgid "Best power savings"
@@ -179,7 +182,7 @@ msgstr "Не знайдено управління процесором"
 msgid "CPU frequency control cannot be used"
 msgstr "Контроль частоти процесора не може бути використано"
 
-#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:850
+#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
 msgid "On electric power"
 msgstr "Живлення від мережі"
 
@@ -191,106 +194,114 @@ msgstr "Налаштування частоти процесора при жив
 msgid "CPU frequency settings"
 msgstr "Налаштування частоти процесора"
 
-#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:858
+#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:855
 msgid "On battery power"
 msgstr "Живлення від батареї"
 
-#: ../src/xfpm-settings.c:734
+#: ../src/xfpm-settings.c:735
 msgid "Enable LCD brightness control"
 msgstr "Увімкнути управління яскравістю рідкокристалічного дисплею"
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on UPS power"
 msgstr "Стежити за властивостями при живленні від UPS"
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on battery power"
 msgstr "Стежити за властивостями при живленні від батареї"
 
-#: ../src/xfpm-settings.c:849
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings on electric power"
 msgstr "Стежити за властивостями при живленні від мережі"
 
-#: ../src/xfpm-settings.c:849
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
 msgstr "Властивості стеження"
 
-#: ../src/xfpm-settings.c:866
+#: ../src/xfpm-settings.c:863
 msgid "Your monitor doesn't support DPMS control"
 msgstr "Ваш монітор не підтримує управління DPMS"
 
-#: ../src/xfpm-settings.c:897
+#: ../src/xfpm-settings.c:896
 msgid "Keyboard shortcuts"
 msgstr "Швидкі клавіші клавіатури"
 
-#: ../src/xfpm-settings.c:907
+#: ../src/xfpm-settings.c:908
 msgid "When power button is pressed do"
 msgstr "Коли натиснуто кнопку живлення зробити"
 
-#: ../src/xfpm-settings.c:933
+#: ../src/xfpm-settings.c:935
 msgid "When sleep button is pressed do"
 msgstr "Коли натиснуто кнопку заснути зробити"
 
-#: ../src/xfpm-settings.c:958
+#: ../src/xfpm-settings.c:963
 msgid "When laptop lid is closed"
 msgstr "Коли закрито кришку ноутбука"
 
-#: ../src/xfpm-settings.c:982
+#: ../src/xfpm-settings.c:990
 msgid "No available keyboard shortcuts found"
 msgstr "Не знайдено доступних скорочень клавіатури"
 
-#: ../src/xfpm-settings.c:999
+#: ../src/xfpm-settings.c:1008
 msgid "General Options"
 msgstr "Основні параметри"
 
 #. Systray icon
-#: ../src/xfpm-settings.c:1006
-msgid "System tray icon"
+#: ../src/xfpm-settings.c:1019
+#, fuzzy
+msgid "System tray icon:"
 msgstr "Значок в системному лотку"
 
-#: ../src/xfpm-settings.c:1012
+#: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
 msgstr "Завжди відображати значок"
 
-#: ../src/xfpm-settings.c:1013
+#: ../src/xfpm-settings.c:1027
 msgid "When battery is present"
 msgstr "Коли присутня батарея"
 
-#: ../src/xfpm-settings.c:1016
+#: ../src/xfpm-settings.c:1030
 msgid "When battery is charging or discharging"
 msgstr "Коли батарея заряджається або розряджається"
 
-#: ../src/xfpm-settings.c:1037
+#: ../src/xfpm-settings.c:1048
 msgid "Enable CPU frequency scaling control"
 msgstr "Дозволити управління частотою процесора"
 
-#: ../src/xfpm-settings.c:1051
+#. label = gtk_label_new(_("Enable monitor power management control"));
+#. gtk_widget_show(label);
+#. gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
+#: ../src/xfpm-settings.c:1070
 msgid "Enable monitor power management control"
 msgstr "Дозволити стеження за управлінням живленням"
 
-#: ../src/xfpm-settings.c:1104
+#: ../src/xfpm-settings.c:1125
 msgid "Advanced settings"
 msgstr "Додаткові налаштування"
 
-#: ../src/xfpm-settings.c:1123 ../src/xfpm-settings.c:1128
+#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
 msgid "CPU settings"
 msgstr "Налаштування процесора"
 
-#: ../src/xfpm-settings.c:1139 ../src/xfpm-settings.c:1144
+#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
 msgid "Battery settings"
 msgstr "Налаштування батареї"
 
-#: ../src/xfpm-settings.c:1155 ../src/xfpm-settings.c:1160
+#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
 msgid "Shortcuts"
 msgstr "Швидкі клавіші клавіатури"
 
-#: ../src/xfpm-settings.c:1170 ../src/xfpm-settings.c:1175
+#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
 msgid "Monitor Settings"
 msgstr "Налаштування стеження"
 
-#: ../src/xfpm-settings.c:1209
+#: ../src/xfpm-settings.c:1231
 msgid "Power Manager Preferences"
 msgstr "Налаштування менеджера живлення"
+
+#: ../src/xfpm-settings.c:1262
+msgid "Extended"
+msgstr ""
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
@@ -389,15 +400,15 @@ msgstr "ніколи"
 msgid "min"
 msgstr "мін"
 
-#: ../src/xfpm-dpms-spins.c:129
+#: ../src/xfpm-dpms-spins.c:140
 msgid "Standby after"
 msgstr "В режим очікування після"
 
-#: ../src/xfpm-dpms-spins.c:137
+#: ../src/xfpm-dpms-spins.c:148
 msgid "Suspend after"
 msgstr "Призупинити після"
 
-#: ../src/xfpm-dpms-spins.c:145
+#: ../src/xfpm-dpms-spins.c:156
 msgid "Turn off after"
 msgstr "Вимкнути після"
 
@@ -463,8 +474,8 @@ msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
 msgstr ""
-"Неможливо прочитати змінні середовища домашньої теки, опція автозапуску "
-"може не працювати"
+"Неможливо прочитати змінні середовища домашньої теки, опція автозапуску може "
+"не працювати"
 
 #: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
 #, c-format
@@ -513,8 +524,8 @@ msgid ""
 "with the hardware abstract layer or the message bus daemon is not running"
 msgstr ""
 "Неможливо визначити стан адаптера AC, менеджер живлення може працювати. "
-"неправильно. Можливі причини: драйвер адаптера AC не завантажено, "
-"відсутній зв'язок з HAL або не запущено службу повідомлень шини даних"
+"неправильно. Можливі причини: драйвер адаптера AC не завантажено, відсутній "
+"зв'язок з HAL або не запущено службу повідомлень шини даних"
 
 #: ../src/xfpm-driver.c:728
 msgid "System failed to shutdown"
@@ -537,7 +548,9 @@ msgstr "Не показувати це повідомлення знову"
 
 #: ../src/xfpm-driver.c:1243
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Не вдалось завантажити конфігурацію менеджера живлення, використовується типова"
+msgstr ""
+"Не вдалось завантажити конфігурацію менеджера живлення, використовується "
+"типова"
 
 #: ../src/xfpm-hal.c:172
 #, c-format
@@ -618,22 +631,26 @@ msgstr "Не вдалось призупинити систему"
 #: ../src/xfpm-hal.c:879
 #, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
-msgstr "Немає відповіді від служби HAL для встановлення рівня яскравості монітора"
+msgstr ""
+"Немає відповіді від служби HAL для встановлення рівня яскравості монітора"
 
 #: ../src/xfpm-hal.c:926
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
-msgstr "Немає відповіді від служби HAL для визначення рівня яскравості монітора"
+msgstr ""
+"Немає відповіді від служби HAL для визначення рівня яскравості монітора"
 
 #: ../src/xfpm-hal.c:976
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
-msgstr "Немає відповіді від служби HAL для визначення наявного управління процесорами"
+msgstr ""
+"Немає відповіді від служби HAL для визначення наявного управління процесорами"
 
 #: ../src/xfpm-hal.c:1028
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
-msgstr "Немає відповіді від служби HAL для визначення наявного управління процесором"
+msgstr ""
+"Немає відповіді від служби HAL для визначення наявного управління процесором"
 
 #: ../src/xfpm-hal.c:1081
 #, c-format
@@ -643,7 +660,8 @@ msgstr "Немає відповіді від служби HAL для встан�
 #: ../src/xfpm-hal.c:1127
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
-msgstr "Немає відповіді від служби HAL для встановлення профілю збереження енергії"
+msgstr ""
+"Немає відповіді від служби HAL для встановлення профілю збереження енергії"
 
 #: ../src/xfpm-dbus-messages.c:86
 msgid "Failed to create dbus message\n"
@@ -668,4 +686,3 @@ msgstr "Налаштування для менеджера живлення Xfce
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Менеджер живлення Xfce 4"
-

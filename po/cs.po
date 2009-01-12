@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 10:15+0100\n"
+"POT-Creation-Date: 2009-01-12 16:07+0100\n"
 "PO-Revision-Date: 2008-11-09 02:12+0100\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech\n"
@@ -35,9 +35,9 @@ msgstr "Opravdu chcete hibernovat systém?"
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
 #: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:450
-#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:945
-#: ../src/xfpm-settings.c:968
+#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
+#: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Hibernovat"
 
@@ -48,8 +48,8 @@ msgstr "Opravdu chcete přejít do režimu spánku"
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
 #: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
-#: ../src/xfpm-settings.c:914 ../src/xfpm-settings.c:943
-#: ../src/xfpm-settings.c:966
+#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
+#: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Režim spánku"
 
@@ -72,54 +72,54 @@ msgstr "Vypnout systém"
 msgid "Hibernate the system"
 msgstr "Hibernovat systém"
 
-#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:446
-#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:947
-#: ../src/xfpm-settings.c:970
+#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
+#: ../src/xfpm-settings.c:978
 msgid "Shutdown"
 msgstr "Vypnout"
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "UPS configuration"
 msgstr "Konfigurace záložního zdroje"
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "Battery configuration"
 msgstr "Konfigurace baterie"
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider UPS charge critical"
 msgstr "Kritický stav nabití záložního zdroje"
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider battery charge critical"
 msgstr "Kritický stav nabití baterie"
 
-#: ../src/xfpm-settings.c:427
+#: ../src/xfpm-settings.c:430
 msgid "percent"
 msgstr "procent"
 
-#: ../src/xfpm-settings.c:437
+#: ../src/xfpm-settings.c:440
 msgid "When battery charge level is critical do"
 msgstr "Je-li úroveň nabití baterie kritická, provést tuto akci:"
 
-#: ../src/xfpm-settings.c:443 ../src/xfpm-settings.c:912
-#: ../src/xfpm-settings.c:941 ../src/xfpm-settings.c:964
+#: ../src/xfpm-settings.c:450 ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:946 ../src/xfpm-settings.c:972
 msgid "Nothing"
 msgstr "Nic"
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable UPS charge notification"
 msgstr "Povolit oznámení o nabíjení záložního zdroje"
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable battery state notification"
 msgstr "Povolit oznámení o nabíjení baterie"
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on UPS power"
 msgstr "Povolit úsporný režim při napájení ze záložního zdroje"
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on battery power"
 msgstr "Povolit úsporný režim při napájení z baterie"
 
@@ -177,7 +177,7 @@ msgstr "Regulátor procesoru nebyl nalezen"
 msgid "CPU frequency control cannot be used"
 msgstr "Ovládání frekvence procesoru nelze použít"
 
-#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:850
+#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
 msgid "On electric power"
 msgstr "Při napájení z elektrické sítě"
 
@@ -189,106 +189,114 @@ msgstr "Nastavení frekvence procesoru při napájení z elektrické sítě"
 msgid "CPU frequency settings"
 msgstr "Nastavení frekvence procesoru"
 
-#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:858
+#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:855
 msgid "On battery power"
 msgstr "Při napájení z baterie"
 
-#: ../src/xfpm-settings.c:734
+#: ../src/xfpm-settings.c:735
 msgid "Enable LCD brightness control"
 msgstr "Povolit ovládání jasu displeje LCD"
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on UPS power"
 msgstr "Nastavení monitoru při napájení ze záložního zdroje"
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on battery power"
 msgstr "Nastavení monitoru při napájení z baterie"
 
-#: ../src/xfpm-settings.c:849
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings on electric power"
 msgstr "Nastavení monitoru při napájení z elektrické sítě"
 
-#: ../src/xfpm-settings.c:849
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
 msgstr "Nastavení monitoru"
 
-#: ../src/xfpm-settings.c:866
+#: ../src/xfpm-settings.c:863
 msgid "Your monitor doesn't support DPMS control"
 msgstr "Váš monitor nepodporuje ovládání DPMS"
 
-#: ../src/xfpm-settings.c:897
+#: ../src/xfpm-settings.c:896
 msgid "Keyboard shortcuts"
 msgstr "Klávesové zkratky"
 
-#: ../src/xfpm-settings.c:907
+#: ../src/xfpm-settings.c:908
 msgid "When power button is pressed do"
 msgstr "Stisknete-li hlavní vypínač, provést tuto akci:"
 
-#: ../src/xfpm-settings.c:933
+#: ../src/xfpm-settings.c:935
 msgid "When sleep button is pressed do"
 msgstr "Stisknete-li tlačítko režimu spánku, provést tuto akci:"
 
-#: ../src/xfpm-settings.c:958
+#: ../src/xfpm-settings.c:963
 msgid "When laptop lid is closed"
 msgstr "Při zavření laptopu"
 
-#: ../src/xfpm-settings.c:982
+#: ../src/xfpm-settings.c:990
 msgid "No available keyboard shortcuts found"
 msgstr "Nebyly nalezeny žádné dostupné klávesové zkratky"
 
-#: ../src/xfpm-settings.c:999
+#: ../src/xfpm-settings.c:1008
 msgid "General Options"
 msgstr "Obecná nastavení"
 
 #. Systray icon
-#: ../src/xfpm-settings.c:1006
-msgid "System tray icon"
+#: ../src/xfpm-settings.c:1019
+#, fuzzy
+msgid "System tray icon:"
 msgstr "Ikon v oznamovací oblasti"
 
-#: ../src/xfpm-settings.c:1012
+#: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
 msgstr "Vždy zobrazovat ikonu"
 
-#: ../src/xfpm-settings.c:1013
+#: ../src/xfpm-settings.c:1027
 msgid "When battery is present"
 msgstr "Pokud je přítomna baterie"
 
-#: ../src/xfpm-settings.c:1016
+#: ../src/xfpm-settings.c:1030
 msgid "When battery is charging or discharging"
 msgstr "Pokud se baterie nabíjí nebo vybíjí"
 
-#: ../src/xfpm-settings.c:1037
+#: ../src/xfpm-settings.c:1048
 msgid "Enable CPU frequency scaling control"
 msgstr "Povolit ovládání změny frekvence procesoru"
 
-#: ../src/xfpm-settings.c:1051
+#. label = gtk_label_new(_("Enable monitor power management control"));
+#. gtk_widget_show(label);
+#. gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
+#: ../src/xfpm-settings.c:1070
 msgid "Enable monitor power management control"
 msgstr "Povolit ovládání správy napájení monitoru"
 
-#: ../src/xfpm-settings.c:1104
+#: ../src/xfpm-settings.c:1125
 msgid "Advanced settings"
 msgstr "Pokročilá nastavení"
 
-#: ../src/xfpm-settings.c:1123 ../src/xfpm-settings.c:1128
+#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
 msgid "CPU settings"
 msgstr "Nastavení procesoru"
 
-#: ../src/xfpm-settings.c:1139 ../src/xfpm-settings.c:1144
+#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
 msgid "Battery settings"
 msgstr "Nastavení baterie"
 
-#: ../src/xfpm-settings.c:1155 ../src/xfpm-settings.c:1160
+#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
 msgid "Shortcuts"
 msgstr "Klávesové zkratky"
 
-#: ../src/xfpm-settings.c:1170 ../src/xfpm-settings.c:1175
+#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
 msgid "Monitor Settings"
 msgstr "Nastavení monitoru"
 
-#: ../src/xfpm-settings.c:1209
+#: ../src/xfpm-settings.c:1231
 msgid "Power Manager Preferences"
 msgstr "Předvolby správce napájení"
+
+#: ../src/xfpm-settings.c:1262
+msgid "Extended"
+msgstr ""
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
@@ -387,15 +395,15 @@ msgstr "nikdy"
 msgid "min"
 msgstr "min"
 
-#: ../src/xfpm-dpms-spins.c:129
+#: ../src/xfpm-dpms-spins.c:140
 msgid "Standby after"
 msgstr "Pohotovostní režim po"
 
-#: ../src/xfpm-dpms-spins.c:137
+#: ../src/xfpm-dpms-spins.c:148
 msgid "Suspend after"
 msgstr "Režim spánku po"
 
-#: ../src/xfpm-dpms-spins.c:145
+#: ../src/xfpm-dpms-spins.c:156
 msgid "Turn off after"
 msgstr "Vypnout po"
 

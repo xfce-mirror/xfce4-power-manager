@@ -52,6 +52,8 @@
 #include "xfpm-dpms-spins.h"
 #endif
 
+#define BORDER 8
+#define SPACING 2
 
 /// Global Variable ///
 static GtkWidget *nt;
@@ -78,7 +80,7 @@ static void
 set_show_tray_icon_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     gboolean value = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-    
+
     if(!xfconf_channel_set_uint(channel,SHOW_TRAY_ICON_CFG,value))
     {
         g_critical("Cannot set value %s\n",SHOW_TRAY_ICON_CFG);
@@ -89,7 +91,7 @@ static void
 set_battery_critical_charge_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     guint value = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget));
-    
+
     if(!xfconf_channel_set_uint(channel,CRITICAL_BATT_CFG,value))
     {
         g_critical("Cannot set value %s\n",CRITICAL_BATT_CFG);
@@ -100,7 +102,7 @@ static void
 set_critical_action_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     guint value = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-    
+
     if(!xfconf_channel_set_uint(channel,CRITICAL_BATT_ACTION_CFG,value))
     {
         g_critical("Cannot set value %s\n",CRITICAL_BATT_ACTION_CFG);
@@ -111,7 +113,7 @@ static void
 set_power_button_action_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     guint value = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-    
+
     if(!xfconf_channel_set_uint(channel,POWER_SWITCH_CFG,value))
     {
         g_critical("Cannot set value %s\n",POWER_SWITCH_CFG);
@@ -122,7 +124,7 @@ static void
 set_sleep_button_action_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     guint value = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-    
+
     if(!xfconf_channel_set_uint(channel,SLEEP_SWITCH_CFG,value))
     {
         g_critical("Cannot set value %s\n",SLEEP_SWITCH_CFG);
@@ -133,7 +135,7 @@ static void
 set_lid_button_action_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     guint value = gtk_combo_box_get_active(GTK_COMBO_BOX(widget));
-    
+
     if(!xfconf_channel_set_uint(channel,LID_SWITCH_CFG,value))
     {
         g_critical("Cannot set value %s\n",LID_SWITCH_CFG);
@@ -144,7 +146,7 @@ static void
 set_power_save_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     gboolean value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
-    
+
     if(!xfconf_channel_set_bool(channel,POWER_SAVE_CFG,value))
     {
         g_critical("Cannot set value %s\n",POWER_SAVE_CFG);
@@ -156,19 +158,19 @@ static void
 set_battery_state_notification_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     gboolean value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
-    
+
     if(!xfconf_channel_set_bool(channel,BATT_STATE_NOTIFICATION_CFG,value))
     {
         g_critical("Cannot set value %s\n",BATT_STATE_NOTIFICATION_CFG);
     }
-} 
+}
 #endif
 
 static void
 set_lcd_brightness_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     gboolean value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
-    
+
     if(!xfconf_channel_set_bool(channel,LCD_BRIGHTNESS_CFG,value))
     {
         g_critical("Cannot set value %s\n",LCD_BRIGHTNESS_CFG);
@@ -180,17 +182,17 @@ static void
 set_dpms_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     gboolean value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
-    
+
     if(!xfconf_channel_set_bool(channel,DPMS_ENABLE_CFG,value))
     {
         g_critical("Cannot set value %s\n",DPMS_ENABLE_CFG);
     }
-    
-    xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_ac_dpms),value); 
-    
+
+    xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_ac_dpms),value);
+
     if ( GTK_IS_WIDGET(on_batt_dpms) )
     {
-        xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_batt_dpms),value); 
+        xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_batt_dpms),value);
     }
 }
 
@@ -200,26 +202,26 @@ set_dpms_on_battery_cb(GtkWidget *spin,guint value1,guint value2,
 {
     GPtrArray *arr = g_ptr_array_sized_new(3);
     GValue *val;
-    
+
     val = g_new0(GValue, 1);
     g_value_init(val, G_TYPE_UINT);
     g_value_set_uint(val, value1);
     g_ptr_array_add(arr, val);
-    
+
     val = g_new0(GValue, 1);
     g_value_init(val, G_TYPE_UINT);
     g_value_set_uint(val, value2);
     g_ptr_array_add(arr, val);
-    
+
     val = g_new0(GValue, 1);
     g_value_init(val, G_TYPE_UINT);
     g_value_set_uint(val, value3);
     g_ptr_array_add(arr, val);
-    
+
     if (!xfconf_channel_set_arrayv(channel,
                                   ON_BATT_DPMS_TIMEOUTS_CFG,
                                   arr) )
-    {                              
+    {
         g_critical("Cannot set value for %s \n",ON_BATT_DPMS_TIMEOUTS_CFG);
         xfconf_array_free(arr);
         return;
@@ -233,26 +235,26 @@ set_dpms_on_ac_cb(GtkWidget *spin,guint value1,guint value2,
 {
     GPtrArray *arr = g_ptr_array_sized_new(3);
     GValue *val;
-    
+
     val = g_new0(GValue, 1);
     g_value_init(val, G_TYPE_UINT);
     g_value_set_uint(val, value1);
     g_ptr_array_add(arr, val);
-    
+
     val = g_new0(GValue, 1);
     g_value_init(val, G_TYPE_UINT);
     g_value_set_uint(val, value2);
     g_ptr_array_add(arr, val);
-    
+
     val = g_new0(GValue, 1);
     g_value_init(val, G_TYPE_UINT);
     g_value_set_uint(val, value3);
     g_ptr_array_add(arr, val);
-    
+
     if (!xfconf_channel_set_arrayv(channel,
                                   ON_AC_DPMS_TIMEOUTS_CFG,
                                   arr) )
-    {                              
+    {
         g_critical("Cannot set value %s \n",ON_AC_DPMS_TIMEOUTS_CFG);
         xfconf_array_free(arr);
         return;
@@ -265,7 +267,7 @@ static void
 set_cpu_freq_scaling_cb(GtkWidget *widget,XfconfChannel *channel)
 {
     gboolean value = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
-    
+
     if(!xfconf_channel_set_bool(channel,CPU_FREQ_SCALING_CFG,value))
     {
         g_critical("Cannot set value %s\n",CPU_FREQ_SCALING_CFG);
@@ -277,8 +279,8 @@ set_cpu_freq_scaling_cb(GtkWidget *widget,XfconfChannel *channel)
         gtk_widget_set_sensitive(powersave_on_ac,value);
         gtk_widget_set_sensitive(conservative_on_ac,value);
     }
-    
-    if ( GTK_IS_WIDGET(ondemand_on_batt) )  /* enough to check only one widget */ 
+
+    if ( GTK_IS_WIDGET(ondemand_on_batt) )  /* enough to check only one widget */
     {
         gtk_widget_set_sensitive(ondemand_on_batt,value);
         gtk_widget_set_sensitive(performance_on_batt,value);
@@ -373,24 +375,24 @@ static XfpmActionRequest
 _combo_helper_function(XfconfChannel *channel,const gchar *config,
                        guint8 power_management,XfpmActionRequest action)
 {
-    if( power_management == 0 && action != XFPM_DO_NOTHING ) 
+    if( power_management == 0 && action != XFPM_DO_NOTHING )
     {
         xfconf_channel_set_uint(channel,config,XFPM_DO_NOTHING);
         return XFPM_DO_NOTHING;
     }
-    
-    if( !(power_management & SYSTEM_CAN_SUSPEND)  && action == XFPM_DO_SUSPEND ) 
+
+    if( !(power_management & SYSTEM_CAN_SUSPEND)  && action == XFPM_DO_SUSPEND )
     {
         xfconf_channel_set_uint(channel,config,XFPM_DO_NOTHING);
         return XFPM_DO_NOTHING;
     }
-    
-    if( !(power_management & SYSTEM_CAN_HIBERNATE) && action == XFPM_DO_HIBERNATE )  
+
+    if( !(power_management & SYSTEM_CAN_HIBERNATE) && action == XFPM_DO_HIBERNATE )
     {
         xfconf_channel_set_uint(channel,config,XFPM_DO_NOTHING);
         return XFPM_DO_NOTHING;
     }
-    
+
     if ( action < XFPM_DO_NOTHING || action > XFPM_DO_SHUTDOWN )
     {
         xfconf_channel_set_uint(channel,config,XFPM_DO_NOTHING);
@@ -408,37 +410,42 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
     GtkWidget *label;
     GtkWidget *critical_spin;
     GtkWidget *action;
-	GtkWidget *vbox;
+    GtkWidget *w_align;
     
-	vbox = gtk_vbox_new(FALSE,0);
-	gtk_widget_show(vbox);
-	
     table = gtk_table_new(4,2,FALSE);
     gtk_widget_show(table);
     frame = xfce_create_framebox(ups_found ? _("UPS configuration") :_("Battery configuration"), &align);
     gtk_widget_show(frame);
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
+
+    w_align = gtk_alignment_new (0.0, 0.5, 0, 0);
+    gtk_widget_show(w_align);
     
     label = gtk_label_new(ups_found ? _("Consider UPS charge critical"):_("Consider battery charge critical"));
     gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
-    
+    gtk_container_add(GTK_CONTAINER(w_align), label);
+    gtk_table_attach(GTK_TABLE(table),w_align,0,1,0,1,GTK_FILL,GTK_FILL,BORDER,SPACING);
+
     critical_spin = xfpm_spin_button_new_with_range(1,20,1);
-	gchar *suffix = g_strdup_printf(" %s",_("percent"));
+    gchar *suffix = g_strdup_printf(" %s",_("percent"));
     xfpm_spin_button_set_suffix(XFPM_SPIN_BUTTON(critical_spin),suffix);
-	g_free(suffix);
+    g_free(suffix);
     gtk_widget_show(critical_spin);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(critical_spin),
                               xfconf_channel_get_uint(channel,CRITICAL_BATT_CFG,10));
     g_signal_connect(critical_spin,"value-changed",
                     G_CALLBACK(set_battery_critical_charge_cb),channel);
-    gtk_table_attach(GTK_TABLE(table),critical_spin,1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
-    
+    gtk_table_attach(GTK_TABLE(table),critical_spin,1,2,0,1,GTK_FILL,GTK_FILL,BORDER,SPACING);
+
     label = gtk_label_new(_("When battery charge level is critical do"));
     gtk_widget_show(label);
+    w_align = gtk_alignment_new (0.0, 0.5, 0, 0);
+    gtk_widget_show(w_align);
+    
+    gtk_container_add(GTK_CONTAINER(w_align), label);
     if ( !ups_found )
-        gtk_table_attach(GTK_TABLE(table),label,0,1,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
-        
+        gtk_table_attach(GTK_TABLE(table),w_align,0,1,1,2,GTK_FILL,GTK_FILL,BORDER,SPACING);
+
     action = gtk_combo_box_new_text();
     gtk_combo_box_append_text(GTK_COMBO_BOX(action),_("Nothing"));
     if ( power_management != 0 )
@@ -448,52 +455,45 @@ xfpm_settings_battery(XfconfChannel *channel, guint8 power_management,gboolean u
     if ( power_management & SYSTEM_CAN_HIBERNATE )
     {
         gtk_combo_box_append_text(GTK_COMBO_BOX(action),_("Hibernate"));
-    }                           
+    }
     guint active = xfconf_channel_get_uint(channel,CRITICAL_BATT_ACTION_CFG,XFPM_DO_NOTHING);
     active = _combo_helper_function(channel,CRITICAL_BATT_ACTION_CFG,power_management,active);
 
     gtk_combo_box_set_active(GTK_COMBO_BOX(action),active);
-    
+
     gtk_widget_show(action);
     g_signal_connect(action,"changed",G_CALLBACK(set_critical_action_cb),channel);
-    
-    !ups_found ? gtk_table_attach(GTK_TABLE(table),action,1,2,1,2,GTK_EXPAND,GTK_EXPAND,0,0) : gtk_widget_hide(action);
+
+    !ups_found ? gtk_table_attach(GTK_TABLE(table),action,1,2,1,2,GTK_FILL,GTK_FILL,BORDER,SPACING) : gtk_widget_hide(action);
 
 #ifdef HAVE_LIBNOTIFY
-    GtkWidget *notify_bt;        
-    label = gtk_label_new(ups_found ? _("Enable UPS charge notification") :_("Enable battery state notification"));
-    gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
-    notify_bt = gtk_check_button_new();
+    GtkWidget *notify_bt;
+    notify_bt = gtk_check_button_new_with_label (ups_found ? _("Enable UPS charge notification") :_("Enable battery state notification") );
     gtk_widget_show(notify_bt);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(notify_bt),
-                                 xfconf_channel_get_bool(channel,BATT_STATE_NOTIFICATION_CFG,TRUE)); 
-    g_signal_connect(notify_bt,"toggled",G_CALLBACK(set_battery_state_notification_cb),channel); 
-    gtk_table_attach(GTK_TABLE(table),notify_bt,1,2,2,3,GTK_EXPAND,GTK_EXPAND,0,0);                             
-#endif        
-	if ( power_management & SYSTEM_CAN_POWER_SAVE )
-	{
-		// Power Save Profile
-		GtkWidget *power_save;        
-		label = gtk_label_new(ups_found ? _("Enable power save on UPS power") : _("Enable power save on battery power"));
-		gtk_widget_show(label);
-		gtk_table_attach(GTK_TABLE(table),label,0,1,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
-		power_save = gtk_check_button_new();
-		gtk_widget_show(power_save);
-		
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(power_save),
-									 power_management & SYSTEM_CAN_POWER_SAVE ?
-									 xfconf_channel_get_bool(channel,POWER_SAVE_CFG,FALSE)
-									 : FALSE);
-									  
-		g_signal_connect(power_save,"toggled",G_CALLBACK(set_power_save_cb),channel); 
-		gtk_table_attach(GTK_TABLE(table),power_save,1,2,2,3,GTK_EXPAND,GTK_EXPAND,0,0); 
-	}
-	
-    gtk_container_add(GTK_CONTAINER(align),vbox);
-	gtk_box_pack_start(GTK_BOX(vbox),table,TRUE,TRUE,0);
+                                 xfconf_channel_get_bool(channel,BATT_STATE_NOTIFICATION_CFG,TRUE));
+    g_signal_connect(notify_bt,"toggled",G_CALLBACK(set_battery_state_notification_cb),channel);
+    gtk_table_attach(GTK_TABLE(table),notify_bt,0,2,2,3,GTK_FILL,GTK_FILL,BORDER,SPACING);
+#endif
+    if ( power_management & SYSTEM_CAN_POWER_SAVE )
+    {
+        // Power Save Profile
+        GtkWidget *power_save;
+        power_save = gtk_check_button_new_with_label(ups_found ? _("Enable power save on UPS power") : _("Enable power save on battery power"));
+        gtk_widget_show(power_save);
+
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(power_save),
+                                     power_management & SYSTEM_CAN_POWER_SAVE ?
+                                     xfconf_channel_get_bool(channel,POWER_SAVE_CFG,FALSE)
+                                     : FALSE);
+
+        g_signal_connect(power_save,"toggled",G_CALLBACK(set_power_save_cb),channel);
+        gtk_table_attach(GTK_TABLE(table),power_save,0,2,2,3,GTK_SHRINK,GTK_SHRINK,SPACING, SPACING);
+    }
+
+    gtk_container_add(GTK_CONTAINER(align),table); //vbox);
     return frame;
-    
+
 }
 
 static GtkWidget *
@@ -547,7 +547,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 govs,const gchar *
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(powersave_on_ac),TRUE);
         }
     }
-    if ( govs & ONDEMAND ) 
+    if ( govs & ONDEMAND )
     {
         gtk_widget_set_sensitive(ondemand_on_ac,enable);
         g_signal_connect(ondemand_on_ac,"pressed",G_CALLBACK(set_ondemand_on_ac_cb),channel);
@@ -557,7 +557,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 govs,const gchar *
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ondemand_on_ac),TRUE);
         }
     }
-    if ( govs & PERFORMANCE ) 
+    if ( govs & PERFORMANCE )
     {
         gtk_widget_set_sensitive(performance_on_ac,enable);
         g_signal_connect(performance_on_ac,"pressed",G_CALLBACK(set_performance_on_ac_cb),channel);
@@ -567,7 +567,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 govs,const gchar *
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(performance_on_ac),TRUE);
         }
     }
-    if ( govs & CONSERVATIVE ) 
+    if ( govs & CONSERVATIVE )
     {
         gtk_widget_set_sensitive(conservative_on_ac,enable);
         g_signal_connect(conservative_on_ac,"pressed",G_CALLBACK(set_conservative_on_ac_cb),channel);
@@ -577,7 +577,7 @@ xfpm_settings_cpu_on_ac_adapter(XfconfChannel *channel,guint8 govs,const gchar *
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(conservative_on_ac),TRUE);
         }
     }
-    
+
     return frame;
 }
 
@@ -632,7 +632,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean u
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(powersave_on_batt),TRUE);
         }
     }
-    if ( govs & ONDEMAND ) 
+    if ( govs & ONDEMAND )
     {
         gtk_widget_set_sensitive(ondemand_on_batt,enable);
         g_signal_connect(ondemand_on_batt,"pressed",G_CALLBACK(set_ondemand_on_batt_cb),channel);
@@ -642,7 +642,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean u
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ondemand_on_batt),TRUE);
         }
     }
-    if ( govs & PERFORMANCE ) 
+    if ( govs & PERFORMANCE )
     {
         gtk_widget_set_sensitive(performance_on_batt,enable);
         g_signal_connect(performance_on_batt,"pressed",G_CALLBACK(set_performance_on_batt_cb),channel);
@@ -652,7 +652,7 @@ xfpm_settings_cpu_on_battery_power(XfconfChannel *channel,guint8 govs,gboolean u
             gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(performance_on_batt),TRUE);
         }
     }
-    if ( govs & CONSERVATIVE ) 
+    if ( govs & CONSERVATIVE )
     {
         gtk_widget_set_sensitive(conservative_on_batt,enable);
         g_signal_connect(conservative_on_batt,"pressed",G_CALLBACK(set_conservative_on_batt_cb),channel);
@@ -726,25 +726,20 @@ static GtkWidget *
 xfpm_settings_lcd_brightness(XfconfChannel *channel,gboolean laptop,gboolean lcd)
 {
     GtkWidget *hbox;
-    hbox = gtk_hbox_new(FALSE,2);
+    GtkWidget *brg;
 
-    if ( laptop && lcd) 
+    hbox = gtk_hbox_new(FALSE,SPACING);
+
+    if ( laptop && lcd)
     {
-        GtkWidget *label;
-        label = gtk_label_new(_("Enable LCD brightness control"));
-        gtk_widget_show(label);
-        gtk_box_pack_start(GTK_BOX(hbox),label,FALSE,FALSE,0);
-        
-        GtkWidget *brg;
-        brg = gtk_check_button_new();
-        gtk_widget_show(brg);
+        brg = gtk_check_button_new_with_label(_("Enable LCD brightness control"));
         gtk_box_pack_start(GTK_BOX(hbox),brg,FALSE,FALSE,0);
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(brg),
                                     xfconf_channel_get_bool(channel,LCD_BRIGHTNESS_CFG,TRUE));
         g_signal_connect(brg,"toggled",G_CALLBACK(set_lcd_brightness_cb),channel);
-        gtk_widget_show(hbox);
     }
-    
+    gtk_widget_show_all(hbox);
+
     return hbox;
 }
 
@@ -752,12 +747,12 @@ xfpm_settings_lcd_brightness(XfconfChannel *channel,gboolean laptop,gboolean lcd
 static GtkWidget *
 xfpm_settings_dpms_on_battery(XfconfChannel *channel,gboolean ups)
 {
-    GtkWidget *frame,*align;  
+    GtkWidget *frame,*align;
     frame = xfce_create_framebox(ups ? _("Monitor settings on UPS power") : _("Monitor settings on battery power"), &align);
     gtk_widget_show(frame);
-    
+
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
-    
+
     on_batt_dpms = xfpm_dpms_spins_new();
     gtk_widget_show(on_batt_dpms);
     gtk_container_add(GTK_CONTAINER(align),on_batt_dpms);
@@ -765,26 +760,26 @@ xfpm_settings_dpms_on_battery(XfconfChannel *channel,gboolean ups)
     GValue *value;
     guint value1 = 3 ,value2 = 4 ,value3 = 5;
     arr = xfconf_channel_get_arrayv(channel,ON_BATT_DPMS_TIMEOUTS_CFG);
-    if ( arr ) 
+    if ( arr )
     {
         value = g_ptr_array_index(arr,0);
         value1 = g_value_get_uint(value);
-        
+
         value = g_ptr_array_index(arr,1);
         value2 = g_value_get_uint(value);
-        
+
         value = g_ptr_array_index(arr,2);
         value3 = g_value_get_uint(value);
         xfconf_array_free(arr);
-    } 
+    }
     xfpm_dpms_spins_set_default_values(XFPM_DPMS_SPINS(on_batt_dpms),value1,value2,value3);
     gboolean dpms_enabled = xfconf_channel_get_bool(channel,DPMS_ENABLE_CFG,TRUE);
-    xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_batt_dpms),dpms_enabled);                
+    xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_batt_dpms),dpms_enabled);
     g_signal_connect(on_batt_dpms,"dpms-value-changed",
                      G_CALLBACK(set_dpms_on_battery_cb),channel);
-    
+
     return frame;
-    
+
 }
 
 
@@ -793,41 +788,43 @@ xfpm_settings_dpms_on_ac_adapter(XfconfChannel *channel,const gchar *label)
 {
     GtkWidget *frame;
     GtkWidget *align;
-	GtkWidget *vbox;
-	
+    GtkWidget *vbox;
+
     frame = xfce_create_framebox(label, &align);
     gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
-    gtk_widget_show(frame);
-    
-	vbox = gtk_vbox_new(FALSE,10);
-	gtk_widget_show(vbox);
-	
+    //gtk_widget_show(frame);
+
+    vbox = gtk_vbox_new(FALSE, SPACING);
+    //gtk_widget_show(vbox);
+
     on_ac_dpms = xfpm_dpms_spins_new();
     gtk_widget_show(on_ac_dpms);
     GPtrArray *arr;
     GValue *value;
     guint value1 = 30 ,value2 = 45 ,value3 = 60;
     arr = xfconf_channel_get_arrayv(channel,ON_AC_DPMS_TIMEOUTS_CFG);
-    if ( arr ) 
+    if ( arr )
     {
         value = g_ptr_array_index(arr,0);
         value1 = g_value_get_uint(value);
-        
+
         value = g_ptr_array_index(arr,1);
         value2 = g_value_get_uint(value);
-        
+
         value = g_ptr_array_index(arr,2);
         value3 = g_value_get_uint(value);
         xfconf_array_free(arr);
-    } 
+    }
     xfpm_dpms_spins_set_default_values(XFPM_DPMS_SPINS(on_ac_dpms),value1,value2,value3);
     gboolean dpms_enabled = xfconf_channel_get_bool(channel,DPMS_ENABLE_CFG,TRUE);
-    xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_ac_dpms),dpms_enabled);             
+    xfpm_dpms_spins_set_active(XFPM_DPMS_SPINS(on_ac_dpms),dpms_enabled);
     g_signal_connect(on_ac_dpms,"dpms-value-changed",
                      G_CALLBACK(set_dpms_on_ac_cb),channel);
-	gtk_container_add(GTK_CONTAINER(align),vbox);
-	gtk_box_pack_start(GTK_BOX(vbox),on_ac_dpms,TRUE,TRUE,0);	
-    return frame;   
+    gtk_container_add(GTK_CONTAINER(align),vbox);
+    gtk_box_pack_start(GTK_BOX(vbox),on_ac_dpms,TRUE,TRUE,0);
+    gtk_widget_show_all(frame);
+
+    return frame;
 }
 #endif
 
@@ -850,7 +847,7 @@ xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
 	label = gtk_label_new(_("On electric power"));
 	gtk_widget_show(label);
 	gtk_notebook_append_page(GTK_NOTEBOOK(ntbox),frame,label);										
-    gtk_box_pack_start(GTK_BOX(vbox),ntbox,TRUE,TRUE,0);
+    gtk_box_pack_start(GTK_BOX(vbox),ntbox,TRUE,TRUE,0); // or FALSE, FALSE to not stretch window to bottom; would then also not move the brightness control onto the lower end
 
     if ( laptop || ups )
     {
@@ -876,7 +873,7 @@ xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
     }
 #endif    
     GtkWidget *lcd_box = xfpm_settings_lcd_brightness(channel,laptop,lcd);
-    gtk_box_pack_start(GTK_BOX(vbox),lcd_box,TRUE,TRUE,0);
+    gtk_box_pack_start(GTK_BOX(vbox),lcd_box,FALSE,FALSE,0);
     return vbox;
 }
 
@@ -891,91 +888,102 @@ xfpm_settings_keys(XfconfChannel *channel,
     GtkWidget *label;
     GtkWidget *frame,*align;
     GtkWidget *vbox;
+    GtkWidget *w_align;
+    
     vbox = gtk_vbox_new(FALSE,0);
     gtk_widget_show(vbox);
-    
+
     frame = xfce_create_framebox(_("Keyboard shortcuts"), &align);
     gtk_widget_show(frame);
-	gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
+    gtk_container_set_border_width(GTK_CONTAINER(frame),BORDER);
     table = gtk_table_new(3,2,FALSE);
     gtk_widget_show(table);
-    
+
     guint active;
     /// Power Button
     if (  switch_buttons & POWER_SWITCH )
     {
+        w_align = gtk_alignment_new (0.0, 0.5, 0, 0);
+        gtk_widget_show(w_align);
         label = gtk_label_new(_("When power button is pressed do"));
         gtk_widget_show(label);
-        gtk_table_attach(GTK_TABLE(table),label,0,1,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
+        gtk_container_add(GTK_CONTAINER(w_align), label);
+        gtk_table_attach(GTK_TABLE(table),w_align,0,1,0,1,GTK_FILL,GTK_FILL,BORDER,SPACING);
         GtkWidget *power_button;
         power_button = gtk_combo_box_new_text();
         gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Nothing"));
-        if ( power_management & SYSTEM_CAN_SUSPEND ) 
+        if ( power_management & SYSTEM_CAN_SUSPEND )
             gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Suspend"));
         if ( power_management & SYSTEM_CAN_HIBERNATE )
             gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Hibernate"));
-        if ( power_management & SYSTEM_CAN_SHUTDOWN )    
-            gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Shutdown"));        
-         
+        if ( power_management & SYSTEM_CAN_SHUTDOWN )
+            gtk_combo_box_append_text(GTK_COMBO_BOX(power_button),_("Shutdown"));
+
         active = xfconf_channel_get_uint(channel,POWER_SWITCH_CFG,0);
-        active = _combo_helper_function(channel,POWER_SWITCH_CFG,power_management,active);    
-                                    
+        active = _combo_helper_function(channel,POWER_SWITCH_CFG,power_management,active);
+
         gtk_combo_box_set_active(GTK_COMBO_BOX(power_button),active);
-        gtk_table_attach(GTK_TABLE(table),power_button,1,2,0,1,GTK_EXPAND,GTK_EXPAND,0,0);
+        gtk_table_attach(GTK_TABLE(table),power_button,1,2,0,1,GTK_FILL,GTK_FILL,BORDER,SPACING);
         g_signal_connect(power_button,"changed",G_CALLBACK(set_power_button_action_cb),channel);
-       
+
         gtk_widget_show(power_button);
     }
-    
+
     /// Sleep Button
     if ( switch_buttons & SLEEP_SWITCH )
-    {    
+    {
         label = gtk_label_new(_("When sleep button is pressed do"));
         gtk_widget_show(label);
-        gtk_table_attach(GTK_TABLE(table),label,0,1,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
-        
+        w_align = gtk_alignment_new (0.0, 0.5, 0, 0);
+        gtk_widget_show(w_align);
+        gtk_container_add(GTK_CONTAINER(w_align), label);
+        gtk_table_attach(GTK_TABLE(table),w_align,0,1,1,2,GTK_FILL,GTK_FILL,BORDER,SPACING);
+
         GtkWidget *sleep_button;
         active = xfconf_channel_get_uint(channel,SLEEP_SWITCH_CFG,0);
         sleep_button = gtk_combo_box_new_text();
-        
+
         gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Nothing"));
-        if ( power_management & SYSTEM_CAN_SUSPEND ) 
+        if ( power_management & SYSTEM_CAN_SUSPEND )
             gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Suspend"));
         if ( power_management & SYSTEM_CAN_HIBERNATE )
             gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Hibernate"));
         if ( power_management & SYSTEM_CAN_SHUTDOWN )
-            gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Shutdown"));    
-        active = _combo_helper_function(channel,POWER_SWITCH_CFG,power_management,active);   
+            gtk_combo_box_append_text(GTK_COMBO_BOX(sleep_button),_("Shutdown"));
+        active = _combo_helper_function(channel,POWER_SWITCH_CFG,power_management,active);
         gtk_combo_box_set_active(GTK_COMBO_BOX(sleep_button),active);
         gtk_widget_show(sleep_button);
-        gtk_table_attach(GTK_TABLE(table),sleep_button,1,2,1,2,GTK_EXPAND,GTK_EXPAND,0,0);
+        gtk_table_attach(GTK_TABLE(table),sleep_button,1,2,1,2,GTK_FILL,GTK_FILL,BORDER,SPACING);
         g_signal_connect(sleep_button,"changed",G_CALLBACK(set_sleep_button_action_cb),channel);
     }
-    
+
     /// Lid Button
     if ( laptop && ( switch_buttons & LID_SWITCH ) )
     {
         label = gtk_label_new(_("When laptop lid is closed"));
         gtk_widget_show(label);
-        gtk_table_attach(GTK_TABLE(table),label,0,1,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
+        w_align = gtk_alignment_new (0.0, 0.5, 0, 0);
+        gtk_widget_show(w_align);
+        gtk_container_add(GTK_CONTAINER(w_align), label);
+        gtk_table_attach(GTK_TABLE(table),w_align,0,1,2,3,GTK_FILL,GTK_FILL,BORDER,SPACING);
         GtkWidget *lid_button;
         active = xfconf_channel_get_uint(channel,LID_SWITCH_CFG,0);
         lid_button = gtk_combo_box_new_text();
         gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Nothing"));
-        if ( power_management & SYSTEM_CAN_SUSPEND ) 
+        if ( power_management & SYSTEM_CAN_SUSPEND )
             gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Suspend"));
         if ( power_management & SYSTEM_CAN_SUSPEND )
             gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Hibernate"));
-        if ( power_management & SYSTEM_CAN_SHUTDOWN )    
-            gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Shutdown"));    
-        active = _combo_helper_function(channel,POWER_SWITCH_CFG,power_management,active);       
+        if ( power_management & SYSTEM_CAN_SHUTDOWN )
+            gtk_combo_box_append_text(GTK_COMBO_BOX(lid_button),_("Shutdown"));
+        active = _combo_helper_function(channel,POWER_SWITCH_CFG,power_management,active);
         gtk_combo_box_set_active(GTK_COMBO_BOX(lid_button),active);
         gtk_widget_show(lid_button);
-        gtk_table_attach(GTK_TABLE(table),lid_button,1,2,2,3,GTK_EXPAND,GTK_EXPAND,0,0);
+        gtk_table_attach(GTK_TABLE(table),lid_button,1,2,2,3,GTK_FILL,GTK_FILL,BORDER,SPACING);
         g_signal_connect(lid_button,"changed",G_CALLBACK(set_lid_button_action_cb),channel);
     }
-    
-    gtk_container_add(GTK_CONTAINER(align),vbox);    
+
+    gtk_container_add(GTK_CONTAINER(align),vbox);
     gtk_box_pack_start(GTK_BOX(vbox),table,TRUE,TRUE,0);
     if ( !switch_buttons )
     {
@@ -994,18 +1002,24 @@ xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean 
     GtkWidget *show_icon;
     GtkWidget *label;
     GtkWidget *frame,*align;
+	GtkWidget *hbox;
 	gint i = 0;
     
     frame = xfce_create_framebox(_("General Options"), &align);
-    gtk_widget_show(frame);
-    table = gtk_table_new(4,2,FALSE);
-    gtk_widget_show(table);
+    //gtk_widget_show(frame);
+    //table = gtk_table_new(4,2,FALSE);
+	table = gtk_vbox_new (FALSE, SPACING);
+    //gtk_widget_show(table);
     gtk_container_add(GTK_CONTAINER(align),table);
     
+	hbox = gtk_hbox_new (FALSE, SPACING);
+	gtk_box_pack_start (GTK_BOX(table), hbox, FALSE, FALSE, SPACING);
+
     /* Systray icon */
-    label = gtk_label_new(_("System tray icon"));
-    gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0);
+    label = gtk_label_new(_("System tray icon:"));
+    //gtk_widget_show(label);
+    //gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,SPACING,SPACING);
+	gtk_box_pack_start (GTK_BOX(hbox), label, FALSE, FALSE, SPACING);
     
     guint icon_cfg = xfconf_channel_get_uint(channel,SHOW_TRAY_ICON_CFG,0);
     show_icon = gtk_combo_box_new_text();
@@ -1026,39 +1040,45 @@ xfpm_settings_general(XfconfChannel *channel,gboolean battery_settings,gboolean 
     }
     gtk_combo_box_set_active(GTK_COMBO_BOX(show_icon),icon_cfg);
     g_signal_connect(show_icon,"changed",G_CALLBACK(set_show_tray_icon_cb),channel);
-    gtk_widget_show(show_icon);
-    gtk_table_attach(GTK_TABLE(table),show_icon,1,2,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0);
+    //gtk_widget_show(show_icon);
+    //gtk_table_attach(GTK_TABLE(table),show_icon,1,2,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
+	gtk_box_pack_start (GTK_BOX(hbox), show_icon, FALSE, FALSE, SPACING);
 	i++;
 	
-	cpu_gov = gtk_check_button_new();
+	cpu_gov = gtk_check_button_new_with_label(_("Enable CPU frequency scaling control"));
 	if ( govs )
 	{
 		gboolean cpu_gov_enabled;
-		label = gtk_label_new(_("Enable CPU frequency scaling control"));
-		gtk_widget_show(label);
-		gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0);
-		gtk_widget_show(cpu_gov);
+		//label = gtk_label_new(_("Enable CPU frequency scaling control"));
+		//gtk_widget_show(label);
+		//gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
+		//gtk_widget_show(cpu_gov);
 		cpu_gov_enabled = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(cpu_gov),
 									cpu_gov_enabled);                    
 		g_signal_connect(cpu_gov,"toggled",G_CALLBACK(set_cpu_freq_scaling_cb),channel);      
-		gtk_table_attach(GTK_TABLE(table),cpu_gov,1,2,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0); 
+		//gtk_table_attach(GTK_TABLE(table),cpu_gov,0,2,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING); 
+		gtk_box_pack_start (GTK_BOX(table), cpu_gov, FALSE, FALSE, SPACING);
 		i++;
 	}
     
 #ifdef HAVE_DPMS
     gboolean dpms_enabled;
-    label = gtk_label_new(_("Enable monitor power management control"));
-    gtk_widget_show(label);
-    gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0);	
-    dpms_op = gtk_check_button_new();
-    gtk_widget_show(dpms_op);
+    //label = gtk_label_new(_("Enable monitor power management control"));
+    //gtk_widget_show(label);
+    //gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);	
+    dpms_op = gtk_check_button_new_with_label(_("Enable monitor power management control"));
+    //gtk_widget_show(dpms_op);
     dpms_enabled = xfconf_channel_get_bool(channel,DPMS_ENABLE_CFG,TRUE);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dpms_op),
                                  dpms_enabled);                    
     g_signal_connect(dpms_op,"toggled",G_CALLBACK(set_dpms_cb),channel);      
-    gtk_table_attach(GTK_TABLE(table),dpms_op,1,2,i,i+1,GTK_EXPAND,GTK_EXPAND,0,0); 
+    //gtk_table_attach(GTK_TABLE(table),dpms_op,0,2,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING); 
+	gtk_box_pack_start (GTK_BOX(table), dpms_op, FALSE, FALSE, SPACING);
+	
 #endif    
+
+    gtk_widget_show_all (frame);
     return frame;
 }
 
@@ -1067,17 +1087,17 @@ static void
 _cursor_changed_cb(GtkIconView *view,gpointer data)
 {
     GtkTreeSelection *sel;
-	GtkTreeModel     *model;
-	GtkTreeIter       selected_row;
-	gint int_data = 0;
-	
-	sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
-	
-	gtk_tree_selection_get_selected(sel,&model,&selected_row);
-		
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint int_data = 0;
+
+    sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
+
+    gtk_tree_selection_get_selected(sel,&model,&selected_row);
+
     gtk_tree_model_get(model,
                        &selected_row,
-                       2, 
+                       2,
                        &int_data,
                        -1);
 
@@ -1096,13 +1116,14 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
     GtkTreeIter iter;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
-    
+
     list_store = gtk_list_store_new(3,GDK_TYPE_PIXBUF,G_TYPE_STRING,G_TYPE_INT);
+
     view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_store));
     gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(view),TRUE);
     col = gtk_tree_view_column_new();
     gtk_tree_view_column_set_title(col,_("Advanced settings"));
-    
+
     renderer = gtk_cell_renderer_pixbuf_new();
     gtk_tree_view_column_pack_start(col,renderer,FALSE);
     gtk_tree_view_column_set_attributes(col,renderer,"pixbuf",0,NULL);
@@ -1144,7 +1165,7 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
             gtk_list_store_set(list_store,&iter,1,_("Battery settings"),2,1,-1);
         }
    }
-   
+
     /// Keyboard Settings
     if ( is_laptop )
     {
@@ -1175,7 +1196,7 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
         gtk_list_store_set(list_store,&iter,1,_("Monitor Settings"),2,3,-1);
     }
 #endif
-    
+
     GtkTreeSelection *sel;
     GtkTreePath *path;
 
@@ -1184,7 +1205,7 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
     gtk_tree_selection_select_path(sel, path);
     gtk_tree_path_free(path);
     g_signal_connect(view,"cursor-changed",G_CALLBACK(_cursor_changed_cb),NULL);
-    
+
     return view;
 }
 
@@ -1205,6 +1226,7 @@ xfpm_settings_new(XfconfChannel *channel,
     GtkWidget *table;   
     GtkWidget *view;
     GtkWidget *allbox;
+    GtkWidget *frame,*align;
   
     Dialog = xfce_titled_dialog_new_with_buttons(_("Power Manager Preferences"),
                                                     NULL,
@@ -1221,38 +1243,41 @@ xfpm_settings_new(XfconfChannel *channel,
 
 	allbox = gtk_vbox_new(FALSE,0);
 	gtk_widget_show(allbox);
-	gtk_box_pack_start(GTK_BOX(mainbox),allbox,FALSE,FALSE,0);
+	gtk_box_pack_start(GTK_BOX(mainbox),allbox,TRUE,TRUE,0);
 	
     gboolean ups;
     ups = is_laptop ? FALSE : ups_found;
         
     /// General Options Frame
     box = xfpm_settings_general(channel,is_laptop,ups,govs);
-    gtk_box_pack_start (GTK_BOX (allbox), box, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (allbox), box, FALSE, FALSE, SPACING);
     
-    /// Notebook container
+    /// Notebook container, comes into big table container
     nt = gtk_notebook_new();
     
     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(nt),FALSE);
-    table = gtk_table_new(1,2,FALSE);
+    table = gtk_hbox_new (FALSE, SPACING);
     gtk_widget_show(table);
-    gtk_box_pack_start (GTK_BOX (allbox), table, FALSE, FALSE, 0);
+
+    frame = xfce_create_framebox(_("Extended"), &align);
+	gtk_widget_show (frame);
+	gtk_container_add (GTK_CONTAINER(align), table);
+
+    gtk_box_pack_start (GTK_BOX (allbox), frame, TRUE, TRUE, SPACING);
 	
     view = xfpm_settings_tree_view(is_laptop,ups_found,govs);
 
 #ifndef HAVE_DPMS	
 	if ( is_laptop || ups_found || govs )
 	{
-		gtk_table_attach_defaults(GTK_TABLE(table),view,0,1,0,1);  
+#endif
+		gtk_box_pack_start (GTK_BOX(table), view, FALSE, FALSE, SPACING);
 		gtk_widget_show(view);  
-		gtk_table_attach_defaults(GTK_TABLE(table),nt,1,2,0,1); 
+		gtk_box_pack_start (GTK_BOX(table), nt, TRUE, TRUE, 0); // spacing ain't nice here // SPACING);
 		gtk_widget_show(nt);
-	}
-#else
-	gtk_table_attach_defaults(GTK_TABLE(table),view,0,1,0,1);  
-	gtk_widget_show(view);  
-	gtk_table_attach_defaults(GTK_TABLE(table),nt,1,2,0,1); 
-	gtk_widget_show(nt);
+	
+#ifndef HAVE_DPMS	
+}
 #endif
     
     /// Cpu freq settings

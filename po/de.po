@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 10:15+0100\n"
+"POT-Creation-Date: 2009-01-12 16:07+0100\n"
 "PO-Revision-Date: 2008-10-27 22:38+0100\n"
 "Last-Translator: Mark Trompell <mark@foresightlinux.org>\n"
 "Language-Team: German\n"
@@ -41,9 +41,9 @@ msgstr "Möchten Sie das System wirklich in Tiefschlaf setzen?"
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
 #: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:450
-#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:945
-#: ../src/xfpm-settings.c:968
+#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
+#: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Tiefschlaf"
 
@@ -55,8 +55,8 @@ msgstr "Möchten Sie das System wirklich in den Ruhezustand versetzen?"
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
 #: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
-#: ../src/xfpm-settings.c:914 ../src/xfpm-settings.c:943
-#: ../src/xfpm-settings.c:966
+#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
+#: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Ruhezustand"
 
@@ -81,54 +81,54 @@ msgstr "Das System herunterfahren"
 msgid "Hibernate the system"
 msgstr "Das System in den Tiefschlaf versetzen"
 
-#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:446
-#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:947
-#: ../src/xfpm-settings.c:970
+#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
+#: ../src/xfpm-settings.c:978
 msgid "Shutdown"
 msgstr "Herunterfahren"
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "UPS configuration"
 msgstr "Konfiguration der USV"
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "Battery configuration"
 msgstr "Batteriekonfiguration"
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider UPS charge critical"
 msgstr "Ladezustand der USV als kritisch betrachten bei"
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider battery charge critical"
 msgstr "Ladezustand der Batterie als kritisch betrachten bei"
 
-#: ../src/xfpm-settings.c:427
+#: ../src/xfpm-settings.c:430
 msgid "percent"
 msgstr "Prozent"
 
-#: ../src/xfpm-settings.c:437
+#: ../src/xfpm-settings.c:440
 msgid "When battery charge level is critical do"
 msgstr "Bei kritischem Ladezustand der Batterie:"
 
-#: ../src/xfpm-settings.c:443 ../src/xfpm-settings.c:912
-#: ../src/xfpm-settings.c:941 ../src/xfpm-settings.c:964
+#: ../src/xfpm-settings.c:450 ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:946 ../src/xfpm-settings.c:972
 msgid "Nothing"
 msgstr "Nichts"
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable UPS charge notification"
 msgstr "Benachrichtigung über Ladezustand der USV aktivieren"
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable battery state notification"
 msgstr "Benachrichtigung über Batteriezustand aktivieren"
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on UPS power"
 msgstr "Stromsparen bei Strom über USV aktivieren"
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on battery power"
 msgstr "Stromsparen bei Batteristrom aktivieren"
 
@@ -189,7 +189,7 @@ msgstr "Kein CPU-Multiplikator gefunden"
 msgid "CPU frequency control cannot be used"
 msgstr "Steuerung der CPU-Frequenz nicht möglich"
 
-#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:850
+#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
 #, fuzzy
 msgid "On electric power"
 msgstr "Monitoreinstellungen bei Netzversorgung"
@@ -204,108 +204,116 @@ msgstr "Einstellungen der CPU-Frequenz bei Netzstrom"
 msgid "CPU frequency settings"
 msgstr "Einstellungen der CPU-Frequenz"
 
-#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:858
+#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:855
 #, fuzzy
 msgid "On battery power"
 msgstr "Wenn die Batterie verfügbar ist"
 
-#: ../src/xfpm-settings.c:734
+#: ../src/xfpm-settings.c:735
 msgid "Enable LCD brightness control"
 msgstr "Helligkeitssteuerung erlauben"
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on UPS power"
 msgstr "Monitoreinstellungen bei Strom über USV"
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on battery power"
 msgstr "Monitoreinstellungen bei Batteriestrom"
 
-#: ../src/xfpm-settings.c:849
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings on electric power"
 msgstr "Monitoreinstellungen bei Netzversorgung"
 
-#: ../src/xfpm-settings.c:849
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
 msgstr "Monitoreinstellungen"
 
-#: ../src/xfpm-settings.c:866
+#: ../src/xfpm-settings.c:863
 msgid "Your monitor doesn't support DPMS control"
 msgstr "Ihr Monitor unterstützt kein DPMS"
 
-#: ../src/xfpm-settings.c:897
+#: ../src/xfpm-settings.c:896
 msgid "Keyboard shortcuts"
 msgstr "Tastenkürzel"
 
-#: ../src/xfpm-settings.c:907
+#: ../src/xfpm-settings.c:908
 msgid "When power button is pressed do"
 msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
 
-#: ../src/xfpm-settings.c:933
+#: ../src/xfpm-settings.c:935
 msgid "When sleep button is pressed do"
 msgstr "Bei Betätigung der Taste für den Schlafmodus:"
 
-#: ../src/xfpm-settings.c:958
+#: ../src/xfpm-settings.c:963
 msgid "When laptop lid is closed"
 msgstr "Beim Schließen der Bildschirmklappe:"
 
-#: ../src/xfpm-settings.c:982
+#: ../src/xfpm-settings.c:990
 msgid "No available keyboard shortcuts found"
 msgstr "Keine verfügbaren Tastenkürzel gefunden"
 
-#: ../src/xfpm-settings.c:999
+#: ../src/xfpm-settings.c:1008
 msgid "General Options"
 msgstr "Allgemeine Einstellungen"
 
 #. Systray icon
-#: ../src/xfpm-settings.c:1006
-msgid "System tray icon"
+#: ../src/xfpm-settings.c:1019
+#, fuzzy
+msgid "System tray icon:"
 msgstr "Symbol in der Systemleiste"
 
-#: ../src/xfpm-settings.c:1012
+#: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
 msgstr "Immer ein Symbol zeigen"
 
-#: ../src/xfpm-settings.c:1013
+#: ../src/xfpm-settings.c:1027
 msgid "When battery is present"
 msgstr "Wenn die Batterie verfügbar ist"
 
-#: ../src/xfpm-settings.c:1016
+#: ../src/xfpm-settings.c:1030
 msgid "When battery is charging or discharging"
 msgstr "Wenn sich die Batterie lädt oder entlädt"
 
-#: ../src/xfpm-settings.c:1037
+#: ../src/xfpm-settings.c:1048
 #, fuzzy
 msgid "Enable CPU frequency scaling control"
 msgstr "Skalierung der CPU-Frequenz aktivieren"
 
-#: ../src/xfpm-settings.c:1051
+#. label = gtk_label_new(_("Enable monitor power management control"));
+#. gtk_widget_show(label);
+#. gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
+#: ../src/xfpm-settings.c:1070
 msgid "Enable monitor power management control"
 msgstr "Energieverwaltung für Monitor aktivieren"
 
-#: ../src/xfpm-settings.c:1104
+#: ../src/xfpm-settings.c:1125
 msgid "Advanced settings"
 msgstr "Erweitert"
 
-#: ../src/xfpm-settings.c:1123 ../src/xfpm-settings.c:1128
+#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
 msgid "CPU settings"
 msgstr "CPU-Einstellungen"
 
-#: ../src/xfpm-settings.c:1139 ../src/xfpm-settings.c:1144
+#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
 msgid "Battery settings"
 msgstr "Batterieeinstellungen"
 
-#: ../src/xfpm-settings.c:1155 ../src/xfpm-settings.c:1160
+#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
 msgid "Shortcuts"
 msgstr "Tastenkürzel"
 
-#: ../src/xfpm-settings.c:1170 ../src/xfpm-settings.c:1175
+#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
 msgid "Monitor Settings"
 msgstr "Monitoreinstellungen"
 
-#: ../src/xfpm-settings.c:1209
+#: ../src/xfpm-settings.c:1231
 msgid "Power Manager Preferences"
 msgstr "Einstellungen für die Energieverwaltung"
+
+#: ../src/xfpm-settings.c:1262
+msgid "Extended"
+msgstr ""
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
@@ -404,15 +412,15 @@ msgstr "nie"
 msgid "min"
 msgstr "min"
 
-#: ../src/xfpm-dpms-spins.c:129
+#: ../src/xfpm-dpms-spins.c:140
 msgid "Standby after"
 msgstr "Standbymodus nach"
 
-#: ../src/xfpm-dpms-spins.c:137
+#: ../src/xfpm-dpms-spins.c:148
 msgid "Suspend after"
 msgstr "Ruhezustand nach"
 
-#: ../src/xfpm-dpms-spins.c:145
+#: ../src/xfpm-dpms-spins.c:156
 msgid "Turn off after"
 msgstr "Abschalten nach"
 

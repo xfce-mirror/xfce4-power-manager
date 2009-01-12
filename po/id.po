@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-03 10:15+0100\n"
+"POT-Creation-Date: 2009-01-12 16:07+0100\n"
 "PO-Revision-Date: 2008-11-10 22:46+0700\n"
 "Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
 "Language-Team: Indonesian\n"
@@ -35,9 +35,9 @@ msgstr "Apakah anda yakin ingin menghibernasi sistem?"
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
 #: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:450
-#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:945
-#: ../src/xfpm-settings.c:968
+#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
+#: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Hibernasi"
 
@@ -48,8 +48,8 @@ msgstr "Apakah anda yakin ingin menyuspensi sistem?"
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
 #: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
-#: ../src/xfpm-settings.c:914 ../src/xfpm-settings.c:943
-#: ../src/xfpm-settings.c:966
+#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
+#: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Suspensi"
 
@@ -73,54 +73,54 @@ msgstr "Matikan sistem"
 msgid "Hibernate the system"
 msgstr "Hibernasi sistem"
 
-#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:446
-#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:947
-#: ../src/xfpm-settings.c:970
+#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
+#: ../src/xfpm-settings.c:978
 msgid "Shutdown"
 msgstr "Matikan"
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "UPS configuration"
 msgstr "Konfigurasi UPS"
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "Battery configuration"
 msgstr "Konfigurasi baterai"
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider UPS charge critical"
 msgstr "Anggap muatan UPS kritis"
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider battery charge critical"
 msgstr "Anggap muatan baterai kritis"
 
-#: ../src/xfpm-settings.c:427
+#: ../src/xfpm-settings.c:430
 msgid "percent"
 msgstr "persen"
 
-#: ../src/xfpm-settings.c:437
+#: ../src/xfpm-settings.c:440
 msgid "When battery charge level is critical do"
 msgstr "Ketika level muatan baterai kritis maka lakukan"
 
-#: ../src/xfpm-settings.c:443 ../src/xfpm-settings.c:912
-#: ../src/xfpm-settings.c:941 ../src/xfpm-settings.c:964
+#: ../src/xfpm-settings.c:450 ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:946 ../src/xfpm-settings.c:972
 msgid "Nothing"
 msgstr "Tak ada"
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable UPS charge notification"
 msgstr "Aktifkan notifikasi muatan UPS"
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable battery state notification"
 msgstr "Aktifkan notifikasi kondisi baterai"
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on UPS power"
 msgstr "Aktifkan penyimpan daya di tenaga UPS"
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on battery power"
 msgstr "Aktifkan penyimpan daya di tenaga baterai"
 
@@ -180,7 +180,7 @@ msgstr "Tak ada governor CPU yang ditemukan"
 msgid "CPU frequency control cannot be used"
 msgstr "Kendali frekuensi CPU tak dapat digunakan"
 
-#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:850
+#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
 msgid "On electric power"
 msgstr "Pada daya listrik"
 
@@ -192,106 +192,114 @@ msgstr "Pengaturan frekuensi CPU pada daya listrik"
 msgid "CPU frequency settings"
 msgstr "Pengaturan frekuensi CPU"
 
-#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:858
+#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:855
 msgid "On battery power"
 msgstr "Pada daya baterai"
 
-#: ../src/xfpm-settings.c:734
+#: ../src/xfpm-settings.c:735
 msgid "Enable LCD brightness control"
 msgstr "Aktifkan kendali kecerahan LCD"
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on UPS power"
 msgstr "Pengaturan monitor pada daya UPS"
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on battery power"
 msgstr "Pengaturan monitor pada daya baterai"
 
-#: ../src/xfpm-settings.c:849
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings on electric power"
 msgstr "Pengaturan monitor pada daya listrik"
 
-#: ../src/xfpm-settings.c:849
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
 msgstr "Pengaturan monitor"
 
-#: ../src/xfpm-settings.c:866
+#: ../src/xfpm-settings.c:863
 msgid "Your monitor doesn't support DPMS control"
 msgstr "Monitor anda tak mendukung kendali DPMS"
 
-#: ../src/xfpm-settings.c:897
+#: ../src/xfpm-settings.c:896
 msgid "Keyboard shortcuts"
 msgstr "Jalan pintas papan ketik"
 
-#: ../src/xfpm-settings.c:907
+#: ../src/xfpm-settings.c:908
 msgid "When power button is pressed do"
 msgstr "Ketika tombol power ditekan maka lakukan"
 
-#: ../src/xfpm-settings.c:933
+#: ../src/xfpm-settings.c:935
 msgid "When sleep button is pressed do"
 msgstr "Ketika tombol sleep ditekan maka lakukan"
 
-#: ../src/xfpm-settings.c:958
+#: ../src/xfpm-settings.c:963
 msgid "When laptop lid is closed"
 msgstr "Ketika laptop ditutup"
 
-#: ../src/xfpm-settings.c:982
+#: ../src/xfpm-settings.c:990
 msgid "No available keyboard shortcuts found"
 msgstr "Tak ada jalan pintas papan ketik yang ditemukan"
 
-#: ../src/xfpm-settings.c:999
+#: ../src/xfpm-settings.c:1008
 msgid "General Options"
 msgstr "Opsi Umum"
 
 #. Systray icon
-#: ../src/xfpm-settings.c:1006
-msgid "System tray icon"
+#: ../src/xfpm-settings.c:1019
+#, fuzzy
+msgid "System tray icon:"
 msgstr "Ikon baki sistem"
 
-#: ../src/xfpm-settings.c:1012
+#: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
 msgstr "Selalu Tampilkan ikon"
 
-#: ../src/xfpm-settings.c:1013
+#: ../src/xfpm-settings.c:1027
 msgid "When battery is present"
 msgstr "Ketika baterai hadir"
 
-#: ../src/xfpm-settings.c:1016
+#: ../src/xfpm-settings.c:1030
 msgid "When battery is charging or discharging"
 msgstr "Ketika baterai diisi ulang atau tidak diisi"
 
-#: ../src/xfpm-settings.c:1037
+#: ../src/xfpm-settings.c:1048
 msgid "Enable CPU frequency scaling control"
 msgstr "Aktifkan kendali skala frekuensi CPU"
 
-#: ../src/xfpm-settings.c:1051
+#. label = gtk_label_new(_("Enable monitor power management control"));
+#. gtk_widget_show(label);
+#. gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
+#: ../src/xfpm-settings.c:1070
 msgid "Enable monitor power management control"
 msgstr "Aktifkan monitor kendali manajemen daya"
 
-#: ../src/xfpm-settings.c:1104
+#: ../src/xfpm-settings.c:1125
 msgid "Advanced settings"
 msgstr "Pengaturan mahir"
 
-#: ../src/xfpm-settings.c:1123 ../src/xfpm-settings.c:1128
+#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
 msgid "CPU settings"
 msgstr "Pengaturan CPU"
 
-#: ../src/xfpm-settings.c:1139 ../src/xfpm-settings.c:1144
+#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
 msgid "Battery settings"
 msgstr "Pengaturan baterai"
 
-#: ../src/xfpm-settings.c:1155 ../src/xfpm-settings.c:1160
+#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
 msgid "Shortcuts"
 msgstr "Jalan pintas"
 
-#: ../src/xfpm-settings.c:1170 ../src/xfpm-settings.c:1175
+#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
 msgid "Monitor Settings"
 msgstr "Pengaturan Monitor"
 
-#: ../src/xfpm-settings.c:1209
+#: ../src/xfpm-settings.c:1231
 msgid "Power Manager Preferences"
 msgstr "Pengaturan Manajer Daya"
+
+#: ../src/xfpm-settings.c:1262
+msgid "Extended"
+msgstr ""
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
@@ -390,15 +398,15 @@ msgstr "tak pernah"
 msgid "min"
 msgstr "min"
 
-#: ../src/xfpm-dpms-spins.c:129
+#: ../src/xfpm-dpms-spins.c:140
 msgid "Standby after"
 msgstr "Siaga setelah"
 
-#: ../src/xfpm-dpms-spins.c:137
+#: ../src/xfpm-dpms-spins.c:148
 msgid "Suspend after"
 msgstr "Suspensi setelah"
 
-#: ../src/xfpm-dpms-spins.c:145
+#: ../src/xfpm-dpms-spins.c:156
 msgid "Turn off after"
 msgstr "Matikan setelah"
 
