@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 16:07+0100\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
 "PO-Revision-Date: 2008-12-08 23:22+0100\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Euskara <debian-l10n-basque@lists.debian.org>\n"
@@ -185,13 +185,14 @@ msgid "CPU frequency control cannot be used"
 msgstr "CPU maiztasun kontrola ezin da erabili"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-msgid "On electric power"
-msgstr "Sare-elektriko indarrez"
+#, fuzzy
+msgid "On AC power"
+msgstr "Bateriaz"
 
 #: ../src/xfpm-settings.c:710
 #, fuzzy
-msgid "CPU frequency settings on electric power"
-msgstr "CPU maiztasun ezarpenak sare-elektriko indarraz"
+msgid "CPU frequency settings on AC power"
+msgstr "CPU gobernu ezarpenak UPS argi-indarraz"
 
 #: ../src/xfpm-settings.c:710
 #, fuzzy
@@ -215,8 +216,9 @@ msgid "Monitor settings on battery power"
 msgstr "Monitore ezarpenak bateria indarrez"
 
 #: ../src/xfpm-settings.c:846
-msgid "Monitor settings on electric power"
-msgstr "Monitore ezarpenak sare-elektriko indarrez"
+#, fuzzy
+msgid "Monitor settings on AC power"
+msgstr "Monitore ezarpenak UPS indarrez"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -692,6 +694,16 @@ msgstr "Xfce 4 energia kudeaketa ezarpenak"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce 4 energia kudeaketa"
+
+#~ msgid "On electric power"
+#~ msgstr "Sare-elektriko indarrez"
+
+#, fuzzy
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "CPU maiztasun ezarpenak sare-elektriko indarraz"
+
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Monitore ezarpenak sare-elektriko indarrez"
 
 #~ msgid "Ondemand"
 #~ msgstr "Eskaripean"

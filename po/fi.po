@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 16:07+0100\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
 "PO-Revision-Date: 2008-11-27 14:44+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish\n"
@@ -179,12 +179,14 @@ msgid "CPU frequency control cannot be used"
 msgstr "Suorittimen kellotaajuutta ei voi hallita"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-msgid "On electric power"
-msgstr "Verkkovirta"
+#, fuzzy
+msgid "On AC power"
+msgstr "Akkukäyttö"
 
 #: ../src/xfpm-settings.c:710
-msgid "CPU frequency settings on electric power"
-msgstr "Suorittimen kellotaajuus verkkovirralla"
+#, fuzzy
+msgid "CPU frequency settings on AC power"
+msgstr "Suorittimen kellotaajuus UPS:n varassa"
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings"
@@ -207,8 +209,9 @@ msgid "Monitor settings on battery power"
 msgstr "Näytön virransäästö akkuvirralla"
 
 #: ../src/xfpm-settings.c:846
-msgid "Monitor settings on electric power"
-msgstr "Näytön virransäästö verkkovirralla"
+#, fuzzy
+msgid "Monitor settings on AC power"
+msgstr "Näytön virransäästö UPS:n varassa"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -674,6 +677,15 @@ msgstr "Xfce4 virranhallinnan asetukset"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce4 virranhallinta"
+
+#~ msgid "On electric power"
+#~ msgstr "Verkkovirta"
+
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "Suorittimen kellotaajuus verkkovirralla"
+
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Näytön virransäästö verkkovirralla"
 
 #~ msgid "Ondemand"
 #~ msgstr "Tarpeen mukaan"

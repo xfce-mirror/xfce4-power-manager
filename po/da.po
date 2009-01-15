@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager 0.6.0svn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 16:07+0100\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
 "PO-Revision-Date: 2008-11-06 20:44+0100\n"
 "Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -187,13 +187,14 @@ msgid "CPU frequency control cannot be used"
 msgstr "Frekvenskontrol på processor kan ikke bruges"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-msgid "On electric power"
-msgstr "Indstillinger ved vekselstrøm"
+#, fuzzy
+msgid "On AC power"
+msgstr "Når batteristrøm"
 
 #: ../src/xfpm-settings.c:710
 #, fuzzy
-msgid "CPU frequency settings on electric power"
-msgstr "Indstilling af processorfrekvens ved vekselstrøm"
+msgid "CPU frequency settings on AC power"
+msgstr "Indstilling af processor-bestyrer ved nødstrøm"
 
 #: ../src/xfpm-settings.c:710
 #, fuzzy
@@ -217,8 +218,9 @@ msgid "Monitor settings on battery power"
 msgstr "Skærmindstillinger ved strøm fra batteri"
 
 #: ../src/xfpm-settings.c:846
-msgid "Monitor settings on electric power"
-msgstr "Skærmindstillinger ved netstrøm"
+#, fuzzy
+msgid "Monitor settings on AC power"
+msgstr "Skærmindstillinger ved nødstrøm"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -694,6 +696,16 @@ msgstr "Indstillinger til strømstyring til Xfce4"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Strømstyring til Xfce4"
+
+#~ msgid "On electric power"
+#~ msgstr "Indstillinger ved vekselstrøm"
+
+#, fuzzy
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "Indstilling af processorfrekvens ved vekselstrøm"
+
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Skærmindstillinger ved netstrøm"
 
 # CPU governor
 #~ msgid "Ondemand"

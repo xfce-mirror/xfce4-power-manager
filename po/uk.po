@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 16:07+0100\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
 "PO-Revision-Date: 2008-12-04 14:18+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
@@ -183,12 +183,14 @@ msgid "CPU frequency control cannot be used"
 msgstr "Контроль частоти процесора не може бути використано"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-msgid "On electric power"
-msgstr "Живлення від мережі"
+#, fuzzy
+msgid "On AC power"
+msgstr "Живлення від батареї"
 
 #: ../src/xfpm-settings.c:710
-msgid "CPU frequency settings on electric power"
-msgstr "Налаштування частоти процесора при живленні від мережі"
+#, fuzzy
+msgid "CPU frequency settings on AC power"
+msgstr "Налаштування частоти процесора при живленні від UPS"
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings"
@@ -211,8 +213,9 @@ msgid "Monitor settings on battery power"
 msgstr "Стежити за властивостями при живленні від батареї"
 
 #: ../src/xfpm-settings.c:846
-msgid "Monitor settings on electric power"
-msgstr "Стежити за властивостями при живленні від мережі"
+#, fuzzy
+msgid "Monitor settings on AC power"
+msgstr "Стежити за властивостями при живленні від UPS"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -686,3 +689,12 @@ msgstr "Налаштування для менеджера живлення Xfce
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Менеджер живлення Xfce 4"
+
+#~ msgid "On electric power"
+#~ msgstr "Живлення від мережі"
+
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "Налаштування частоти процесора при живленні від мережі"
+
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Стежити за властивостями при живленні від мережі"

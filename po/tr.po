@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 16:07+0100\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Samed Beyribey <archlinux@archlinuxtr.org>\n"
 "Language-Team: Xfce-TR <xfce-tr@googlegroups.com>\n"
@@ -178,13 +178,14 @@ msgid "CPU frequency control cannot be used"
 msgstr "İşlemci frekansı kontrolü kullanılamaz"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-msgid "On electric power"
-msgstr "Fişe takılı"
+#, fuzzy
+msgid "On AC power"
+msgstr "Pil"
 
 #: ../src/xfpm-settings.c:710
 #, fuzzy
-msgid "CPU frequency settings on electric power"
-msgstr "Fişe takılı iken kullanılacak işlemci frekansı ayarları"
+msgid "CPU frequency settings on AC power"
+msgstr "UPS kaynaklı güç için işlemci yöneticisi"
 
 #: ../src/xfpm-settings.c:710
 #, fuzzy
@@ -208,8 +209,9 @@ msgid "Monitor settings on battery power"
 msgstr "Pil kaynaklı güç için monitör ayarları"
 
 #: ../src/xfpm-settings.c:846
-msgid "Monitor settings on electric power"
-msgstr "Fişe takılı güç için monitör ayarları"
+#, fuzzy
+msgid "Monitor settings on AC power"
+msgstr "UPS kaynaklı güç için monitör ayarları"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -684,6 +686,16 @@ msgstr "Xfce 4 Güç Yöneticisi Seçenekleri "
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce4 Güç Yöneticisi"
+
+#~ msgid "On electric power"
+#~ msgstr "Fişe takılı"
+
+#, fuzzy
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "Fişe takılı iken kullanılacak işlemci frekansı ayarları"
+
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Fişe takılı güç için monitör ayarları"
 
 #~ msgid "Ondemand"
 #~ msgstr "Dinamik"

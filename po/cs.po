@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 16:07+0100\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
 "PO-Revision-Date: 2008-11-09 02:12+0100\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech\n"
@@ -178,12 +178,14 @@ msgid "CPU frequency control cannot be used"
 msgstr "Ovládání frekvence procesoru nelze použít"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-msgid "On electric power"
-msgstr "Při napájení z elektrické sítě"
+#, fuzzy
+msgid "On AC power"
+msgstr "Při napájení z baterie"
 
 #: ../src/xfpm-settings.c:710
-msgid "CPU frequency settings on electric power"
-msgstr "Nastavení frekvence procesoru při napájení z elektrické sítě"
+#, fuzzy
+msgid "CPU frequency settings on AC power"
+msgstr "Nastavení frekvence procesoru při napájení ze záložního zdroje"
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings"
@@ -206,8 +208,9 @@ msgid "Monitor settings on battery power"
 msgstr "Nastavení monitoru při napájení z baterie"
 
 #: ../src/xfpm-settings.c:846
-msgid "Monitor settings on electric power"
-msgstr "Nastavení monitoru při napájení z elektrické sítě"
+#, fuzzy
+msgid "Monitor settings on AC power"
+msgstr "Nastavení monitoru při napájení ze záložního zdroje"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -681,6 +684,15 @@ msgstr "Nastavení správce napájení pro Xfce 4"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Správce napájení pro Xfce 4"
+
+#~ msgid "On electric power"
+#~ msgstr "Při napájení z elektrické sítě"
+
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "Nastavení frekvence procesoru při napájení z elektrické sítě"
+
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Nastavení monitoru při napájení z elektrické sítě"
 
 #~ msgid "Ondemand"
 #~ msgstr "Na vyžádání"

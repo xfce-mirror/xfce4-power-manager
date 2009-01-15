@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-12 16:07+0100\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
 "PO-Revision-Date: 2008-11-01 20:07+0100\n"
 "Last-Translator: Nuno Miguel <nunis@netcabo.pt>\n"
 "Language-Team: \n"
@@ -186,13 +186,14 @@ msgid "CPU frequency control cannot be used"
 msgstr "Controlo de frequência do CPU não pode ser usado"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-msgid "On electric power"
-msgstr "A usar energia eléctrica"
+#, fuzzy
+msgid "On AC power"
+msgstr "A usar bateria"
 
 #: ../src/xfpm-settings.c:710
 #, fuzzy
-msgid "CPU frequency settings on electric power"
-msgstr "Definições de frequência do CPU em energia eléctrica"
+msgid "CPU frequency settings on AC power"
+msgstr "Definições do CPU governor em modo UPS"
 
 #: ../src/xfpm-settings.c:710
 #, fuzzy
@@ -216,8 +217,9 @@ msgid "Monitor settings on battery power"
 msgstr "Definições de monitor de bateria"
 
 #: ../src/xfpm-settings.c:846
-msgid "Monitor settings on electric power"
-msgstr "Definições do monitor em energia eléctrica"
+#, fuzzy
+msgid "Monitor settings on AC power"
+msgstr "Definições de monitor em UPS"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -697,6 +699,16 @@ msgstr "Definições para a Gestão de Energia Xfce 4"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Gestão de Energia Xfce 4"
+
+#~ msgid "On electric power"
+#~ msgstr "A usar energia eléctrica"
+
+#, fuzzy
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "Definições de frequência do CPU em energia eléctrica"
+
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Definições do monitor em energia eléctrica"
 
 #~ msgid "Ondemand"
 #~ msgstr "Ondemand"

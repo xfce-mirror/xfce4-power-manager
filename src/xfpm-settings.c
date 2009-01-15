@@ -702,12 +702,12 @@ xfpm_settings_cpu_freq(XfconfChannel *channel,guint8 govs,gboolean laptop,gboole
     else
     {
 		GtkWidget *label;
-		label = gtk_label_new(_("On electric power"));
+		label = gtk_label_new(_("On AC power"));
 		gtk_widget_show(label);
         GtkWidget *frame;
         frame = xfpm_settings_cpu_on_ac_adapter(channel,
                                                 govs,
-                                                laptop || ups ? _("CPU frequency settings on electric power") : _("CPU frequency settings"));
+                                                laptop || ups ? _("CPU frequency settings on AC power") : _("CPU frequency settings"));
         gtk_notebook_append_page(GTK_NOTEBOOK(ntbox),frame,label);
         
         if ( laptop || ups )
@@ -843,8 +843,8 @@ xfpm_settings_monitor(XfconfChannel *channel,gboolean laptop,
 	GtkWidget *label;
     GtkWidget *frame;
     frame = xfpm_settings_dpms_on_ac_adapter(channel,
-                                            laptop || ups ? _("Monitor settings on electric power") : _("Monitor settings"));
-	label = gtk_label_new(_("On electric power"));
+                                            laptop || ups ? _("Monitor settings on AC power") : _("Monitor settings"));
+	label = gtk_label_new(_("On AC power"));
 	gtk_widget_show(label);
 	gtk_notebook_append_page(GTK_NOTEBOOK(ntbox),frame,label);										
     gtk_box_pack_start(GTK_BOX(vbox),ntbox,TRUE,TRUE,0); // or FALSE, FALSE to not stretch window to bottom; would then also not move the brightness control onto the lower end
