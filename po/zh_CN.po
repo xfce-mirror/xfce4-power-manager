@@ -21,11 +21,11 @@ msgstr "无法读取电源状态，电源管理器可能无法正常工作"
 
 #: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is online"
-msgstr "电源已连接"
+msgstr "交流电源已连接"
 
 #: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is offline"
-msgstr "电源已断开"
+msgstr "交流电源已断开"
 
 #: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:912
 msgid "Are you sure you want to hibernate the system?"
@@ -78,7 +78,7 @@ msgstr "关机"
 
 #: ../src/xfpm-settings.c:417
 msgid "UPS configuration"
-msgstr "交流电源配置"
+msgstr "UPS 电源配置"
 
 #: ../src/xfpm-settings.c:417
 msgid "Battery configuration"
@@ -86,11 +86,11 @@ msgstr "电池配置"
 
 #: ../src/xfpm-settings.c:424
 msgid "Consider UPS charge critical"
-msgstr ""
+msgstr "UPS 电量不足"
 
 #: ../src/xfpm-settings.c:424
 msgid "Consider battery charge critical"
-msgstr ""
+msgstr "电池电量不足"
 
 #: ../src/xfpm-settings.c:430
 msgid "percent"
@@ -98,7 +98,7 @@ msgstr "百分比"
 
 #: ../src/xfpm-settings.c:440
 msgid "When battery charge level is critical do"
-msgstr ""
+msgstr "电池电量不足时执行"
 
 #: ../src/xfpm-settings.c:450 ../src/xfpm-settings.c:914
 #: ../src/xfpm-settings.c:946 ../src/xfpm-settings.c:972
@@ -107,7 +107,7 @@ msgstr "什么都不做"
 
 #: ../src/xfpm-settings.c:471
 msgid "Enable UPS charge notification"
-msgstr "打开交流电源充电通知"
+msgstr "打开 UPS 电源充电通知"
 
 #: ../src/xfpm-settings.c:471
 msgid "Enable battery state notification"
@@ -115,7 +115,7 @@ msgstr "打开电池状态通知"
 
 #: ../src/xfpm-settings.c:482
 msgid "Enable power save on UPS power"
-msgstr "当使用交流电源供电时打开节能功能"
+msgstr "当使用 UPS 供电时打开节能功能"
 
 #: ../src/xfpm-settings.c:482
 msgid "Enable power save on battery power"
@@ -131,13 +131,13 @@ msgstr "设置 CPU 至其最大主频"
 
 #: ../src/xfpm-settings.c:524 ../src/xfpm-settings.c:609
 msgid "Ondemand performance"
-msgstr ""
+msgstr "按需要调节"
 
 #: ../src/xfpm-settings.c:525 ../src/xfpm-settings.c:610
 msgid ""
 "Set the CPU to its maximum speed when there is any load on it and to its "
 "minimum speed when the system is idle"
-msgstr ""
+msgstr "CPU 有任何负载时将其调节到最快速度， 没有任何负载时使用最底速度"
 
 #: ../src/xfpm-settings.c:530 ../src/xfpm-settings.c:615
 msgid "Best power savings"
@@ -149,25 +149,25 @@ msgstr "设置 CPU 至其最小主频"
 
 #: ../src/xfpm-settings.c:535 ../src/xfpm-settings.c:620
 msgid "Good power savings"
-msgstr ""
+msgstr "一般节能"
 
 #: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:622
 msgid ""
 "gracefully increases and decreases the CPU speed depending on the current "
 "usage"
-msgstr ""
+msgstr "根据当前的使用情况适当增减 CPU 速度"
 
 #: ../src/xfpm-settings.c:595
 msgid "CPU frequency settings on UPS power"
-msgstr ""
+msgstr "使用 UPS 时的 CPU 主频设置"
 
 #: ../src/xfpm-settings.c:595
 msgid "CPU frequency settings on battery power"
-msgstr ""
+msgstr "使用电池时的CPU主频设置"
 
 #: ../src/xfpm-settings.c:685
 msgid "No CPU governor found"
-msgstr ""
+msgstr "找不到 CPU 管理器"
 
 #: ../src/xfpm-settings.c:695
 msgid "CPU frequency control cannot be used"
@@ -229,7 +229,7 @@ msgstr "按下睡眠按钮时执行"
 
 #: ../src/xfpm-settings.c:963
 msgid "When laptop lid is closed"
-msgstr ""
+msgstr "合上笔记本时执行"
 
 #: ../src/xfpm-settings.c:990
 msgid "No available keyboard shortcuts found"
@@ -241,9 +241,8 @@ msgstr "一般设置"
 
 #. Systray icon
 #: ../src/xfpm-settings.c:1019
-#, fuzzy
 msgid "System tray icon:"
-msgstr "系统通知区域图标"
+msgstr "系统通知区域图标："
 
 #: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
@@ -251,22 +250,22 @@ msgstr "总是显示图标"
 
 #: ../src/xfpm-settings.c:1027
 msgid "When battery is present"
-msgstr ""
+msgstr "有电池时"
 
 #: ../src/xfpm-settings.c:1030
 msgid "When battery is charging or discharging"
-msgstr ""
+msgstr "电池充放电时"
 
 #: ../src/xfpm-settings.c:1048
 msgid "Enable CPU frequency scaling control"
-msgstr ""
+msgstr "启用 CPU 主频调节控制"
 
 #. label = gtk_label_new(_("Enable monitor power management control"));
 #. gtk_widget_show(label);
 #. gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
 #: ../src/xfpm-settings.c:1070
 msgid "Enable monitor power management control"
-msgstr ""
+msgstr "启用显示器电源控制"
 
 #: ../src/xfpm-settings.c:1125
 msgid "Advanced settings"
@@ -294,11 +293,11 @@ msgstr "电源管理器首选项"
 
 #: ../src/xfpm-settings.c:1262
 msgid "Extended"
-msgstr ""
+msgstr "扩展"
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
-msgstr ""
+msgstr "您的电池电量很低"
 
 #: ../src/xfpm-battery-icon.c:376
 msgid "Your battery is almost empty"
@@ -311,11 +310,11 @@ msgstr "正在使用电池供电"
 #: ../src/xfpm-battery-icon.c:385 ../src/xfpm-battery-icon.c:567
 #: ../src/xfpm-battery-icon.c:571
 msgid "Battery is discharging"
-msgstr ""
+msgstr "电池正在使用中"
 
 #: ../src/xfpm-battery-icon.c:389
 msgid "Your battery is discharging"
-msgstr ""
+msgstr "您的电池正在使用中"
 
 #: ../src/xfpm-battery-icon.c:397 ../src/xfpm-battery-icon.c:555
 msgid "Battery is charging"
@@ -327,7 +326,7 @@ msgstr "电池充电完毕"
 
 #: ../src/xfpm-battery-icon.c:529
 msgid "Not present"
-msgstr ""
+msgstr "不存在"
 
 #: ../src/xfpm-battery-icon.c:535
 msgid "%"
@@ -339,7 +338,7 @@ msgstr "电池电量满"
 
 #: ../src/xfpm-battery-icon.c:548
 msgid "Battery charge level"
-msgstr ""
+msgstr "电池电量标度"
 
 #: ../src/xfpm-battery-icon.c:567
 msgid "Running on battery"
@@ -347,7 +346,7 @@ msgstr "正在使用电池供电"
 
 #: ../src/xfpm-battery-icon.c:577
 msgid "Battery charge is low"
-msgstr ""
+msgstr "电池电量很低"
 
 #: ../src/xfpm-battery-icon.c:582
 msgid "Battery is almost empty"
@@ -391,19 +390,19 @@ msgstr "从不"
 
 #: ../src/xfpm-dpms-spins.c:51
 msgid "min"
-msgstr ""
+msgstr "分钟"
 
 #: ../src/xfpm-dpms-spins.c:140
 msgid "Standby after"
-msgstr ""
+msgstr "多长时间后停止供电"
 
 #: ../src/xfpm-dpms-spins.c:148
 msgid "Suspend after"
-msgstr ""
+msgstr "多长时间后挂起"
 
 #: ../src/xfpm-dpms-spins.c:156
 msgid "Turn off after"
-msgstr ""
+msgstr "多长时间后关机"
 
 #: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1243
 msgid "Xfce4 Power Manager"
@@ -476,7 +475,7 @@ msgstr "输入 '%s --help' 查看使用方式"
 #: ../src/xfpm-main.c:182
 #, c-format
 msgid "Too many arguments"
-msgstr "太多擦数"
+msgstr "太多参数"
 
 #: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
 #, c-format
@@ -500,7 +499,7 @@ msgstr "Xfce 电源管理器已在运行中"
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
-msgstr ""
+msgstr "无法启动 Xfce4 电源管理器。请检查 HAL 和 D-Bus 是否都已启动"
 
 #: ../src/xfpm-main.c:237
 msgid "Unable to load xfce4 power manager"
@@ -512,6 +511,8 @@ msgid ""
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
 "with the hardware abstract layer or the message bus daemon is not running"
 msgstr ""
+"无法读取交流电源信息，电源管理器无法正常工作。可能是由于交流电源驱动没有\n"
+"加载，或者无法和 HAL 以及 D-Bus 通讯"
 
 #: ../src/xfpm-driver.c:728
 msgid "System failed to shutdown"
@@ -524,6 +525,8 @@ msgid ""
 "broken connection with the hardware abstract layer or the message bus daemon "
 "is not running"
 msgstr ""
+"无法使用电源管理器提供的服务。系统无法休眠或挂起。你可能没有这个权限，或者\n"
+"HAL 以及 D-Bus 没有启动"
 
 #: ../src/xfpm-driver.c:920
 msgid "Don't show this message again"
@@ -536,7 +539,7 @@ msgstr "读取电源管理器配置时失败，使用默认设置"
 #: ../src/xfpm-hal.c:172
 #, c-format
 msgid "Error monitoring HAL events"
-msgstr ""
+msgstr "监听 HAL 事件时出错"
 
 #: ../src/xfpm-hal.c:261 ../src/xfpm-hal.c:280
 #, c-format
@@ -550,39 +553,39 @@ msgstr "HAL未运行或没有回应"
 #: ../src/xfpm-hal.c:415
 #, c-format
 msgid "Unable to watch device using HAL: %s"
-msgstr ""
+msgstr "无法通过 HAL 来监听设备：%s"
 
 #: ../src/xfpm-hal.c:633
 msgid "No back-end for your operating system"
-msgstr ""
+msgstr "没有支持你的操作系统的后台程序"
 
 #: ../src/xfpm-hal.c:637
 msgid "No hibernate script found"
-msgstr ""
+msgstr "找不到休眠脚本"
 
 #: ../src/xfpm-hal.c:641
 msgid "No suspend script found"
-msgstr ""
+msgstr "找不到挂起脚本"
 
 #: ../src/xfpm-hal.c:645
 msgid "No suspend method found"
-msgstr ""
+msgstr "找不到挂起方式"
 
 #: ../src/xfpm-hal.c:649
 msgid "No hibernate method found"
-msgstr ""
+msgstr "找不到休眠方式"
 
 #: ../src/xfpm-hal.c:675 ../src/xfpm-hal.c:765 ../src/xfpm-hal.c:859
 #: ../src/xfpm-hal.c:908 ../src/xfpm-hal.c:958 ../src/xfpm-hal.c:1010
 #: ../src/xfpm-hal.c:1062 ../src/xfpm-hal.c:1108
 #, c-format
 msgid "Out of memory"
-msgstr ""
+msgstr "内存不足"
 
 #: ../src/xfpm-hal.c:707
 #, c-format
 msgid "Message hibernate didn't get a reply"
-msgstr ""
+msgstr "没有对休眠请求的回应"
 
 #: ../src/xfpm-hal.c:728
 #, c-format
@@ -597,7 +600,7 @@ msgstr "尝试挂起时发生错误"
 #: ../src/xfpm-hal.c:737 ../src/xfpm-hal.c:829
 #, c-format
 msgid "Unknown reply from the message daemon"
-msgstr ""
+msgstr "无法识别系统回应"
 
 #: ../src/xfpm-hal.c:798
 #, c-format
@@ -612,32 +615,32 @@ msgstr "系统挂起失败"
 #: ../src/xfpm-hal.c:879
 #, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
-msgstr ""
+msgstr "HAL 无回应，所以无法设置显示器亮度"
 
 #: ../src/xfpm-hal.c:926
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
-msgstr ""
+msgstr "HAL 无回应，所以无法读取显示器亮度"
 
 #: ../src/xfpm-hal.c:976
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
-msgstr ""
+msgstr "HAL 没有回应，所以无法读取可用的 CPU 管理器"
 
 #: ../src/xfpm-hal.c:1028
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
-msgstr ""
+msgstr "HAL 没有回应，所以无法读取当前 CPU 管理器"
 
 #: ../src/xfpm-hal.c:1081
 #, c-format
 msgid "No reply from HAL daemon to set cpu governor"
-msgstr ""
+msgstr "HAL 没有回应，所以无法设置 CPU 管理器"
 
 #: ../src/xfpm-hal.c:1127
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
-msgstr ""
+msgstr "HAL 没有回应，所以无法设置省电模式"
 
 #: ../src/xfpm-dbus-messages.c:86
 msgid "Failed to create dbus message\n"
