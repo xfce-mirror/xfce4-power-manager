@@ -8,20 +8,18 @@ msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-15 18:48+0100\n"
-"PO-Revision-Date: 2008-12-04 14:18+0200\n"
+"PO-Revision-Date: 2009-01-26 17:30+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../src/xfpm-ac-adapter.c:217
 msgid "Unable to read adapter status, the power manager will not work properly"
-msgstr ""
-"Неможливо визначити стан адаптера, менеджер живлення не працює правильно"
+msgstr "Неможливо визначити стан адаптера, менеджер живлення не працює правильно"
 
 #: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is online"
@@ -58,8 +56,7 @@ msgstr "Призупинити"
 
 #: ../src/xfpm-battery.c:769
 msgid "Your battery is almost empty. Save your work to avoid losing data"
-msgstr ""
-"Ваша батарея майже розряджена. Збережіть Вашу роботу щоб не втратити дані"
+msgstr "Ваша батарея майже розряджена. Збережіть Вашу роботу щоб не втратити дані"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
 #: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
@@ -183,14 +180,12 @@ msgid "CPU frequency control cannot be used"
 msgstr "Контроль частоти процесора не може бути використано"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-#, fuzzy
 msgid "On AC power"
-msgstr "Живлення від батареї"
+msgstr "Живлення від мережі"
 
 #: ../src/xfpm-settings.c:710
-#, fuzzy
 msgid "CPU frequency settings on AC power"
-msgstr "Налаштування частоти процесора при живленні від UPS"
+msgstr "Частота процесора при живленні від мережі"
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings"
@@ -213,9 +208,8 @@ msgid "Monitor settings on battery power"
 msgstr "Стежити за властивостями при живленні від батареї"
 
 #: ../src/xfpm-settings.c:846
-#, fuzzy
 msgid "Monitor settings on AC power"
-msgstr "Стежити за властивостями при живленні від UPS"
+msgstr "Стежити за властивостями при живленні від мережі"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -251,9 +245,8 @@ msgstr "Основні параметри"
 
 #. Systray icon
 #: ../src/xfpm-settings.c:1019
-#, fuzzy
 msgid "System tray icon:"
-msgstr "Значок в системному лотку"
+msgstr "Значок в системному лотку:"
 
 #: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
@@ -304,7 +297,7 @@ msgstr "Налаштування менеджера живлення"
 
 #: ../src/xfpm-settings.c:1262
 msgid "Extended"
-msgstr ""
+msgstr "Розширені"
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
@@ -634,26 +627,22 @@ msgstr "Не вдалось призупинити систему"
 #: ../src/xfpm-hal.c:879
 #, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
-msgstr ""
-"Немає відповіді від служби HAL для встановлення рівня яскравості монітора"
+msgstr "Немає відповіді від служби HAL для встановлення рівня яскравості монітора"
 
 #: ../src/xfpm-hal.c:926
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
-msgstr ""
-"Немає відповіді від служби HAL для визначення рівня яскравості монітора"
+msgstr "Немає відповіді від служби HAL для визначення рівня яскравості монітора"
 
 #: ../src/xfpm-hal.c:976
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
-msgstr ""
-"Немає відповіді від служби HAL для визначення наявного управління процесорами"
+msgstr "Немає відповіді від служби HAL для визначення наявного управління процесорами"
 
 #: ../src/xfpm-hal.c:1028
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
-msgstr ""
-"Немає відповіді від служби HAL для визначення наявного управління процесором"
+msgstr "Немає відповіді від служби HAL для визначення наявного управління процесором"
 
 #: ../src/xfpm-hal.c:1081
 #, c-format
@@ -663,8 +652,7 @@ msgstr "Немає відповіді від служби HAL для встан�
 #: ../src/xfpm-hal.c:1127
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
-msgstr ""
-"Немає відповіді від служби HAL для встановлення профілю збереження енергії"
+msgstr "Немає відповіді від служби HAL для встановлення профілю збереження енергії"
 
 #: ../src/xfpm-dbus-messages.c:86
 msgid "Failed to create dbus message\n"
@@ -690,11 +678,3 @@ msgstr "Налаштування для менеджера живлення Xfce
 msgid "Xfce 4 Power Manager"
 msgstr "Менеджер живлення Xfce 4"
 
-#~ msgid "On electric power"
-#~ msgstr "Живлення від мережі"
-
-#~ msgid "CPU frequency settings on electric power"
-#~ msgstr "Налаштування частоти процесора при живленні від мережі"
-
-#~ msgid "Monitor settings on electric power"
-#~ msgstr "Стежити за властивостями при живленні від мережі"
