@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
  *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+ * * Copyright (C) 2008 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -50,6 +50,8 @@
 #include <hal/libhal.h>
 
 #include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4util/libxfce4util.h>
+
 #include <xfconf/xfconf.h>
 
 #include "xfpm-common.h"
@@ -131,6 +133,8 @@ static void xfpm_driver_load_all(XfpmDriver *drv);
 static void xfpm_driver_send_reply(DBusConnection *conn,DBusMessage *mess);
 static DBusHandlerResult xfpm_driver_signal_filter
     (DBusConnection *connection,DBusMessage *message,void *user_data);
+
+static guint32 socket_id = 0;
 
 #define XFPM_DRIVER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o),XFPM_TYPE_DRIVER,XfpmDriverPrivate))
@@ -310,7 +314,7 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
             xfpm_battery_show_error(priv->batt,"gpm-ac-adapter",error);
         }
 #else
-    xfpm_popup_message(_("Xfce4 power manager"),error,GTK_MESSAGE_ERROR);
+    xfpm_popup_message(_("Xfce power manager"),error,GTK_MESSAGE_ERROR);
 #endif    
     }
    
@@ -368,6 +372,17 @@ _close_dialog_cb(GtkDialog *dialog,XfpmDriver *drv)
         g_object_unref(channel);
     }
     
+}
+
+static void
+_close_plug_cb(GtkWidget *plug,GdkEvent *ev,XfpmDriver *drv)
+{
+	XfpmDriverPrivate *priv;
+	priv = XFPM_DRIVER_GET_PRIVATE(drv);
+	priv->dialog_opened = FALSE;
+	_close_dialog_cb(NULL,drv);
+	gtk_widget_destroy(plug);
+	
 }
 
 static void
@@ -549,7 +564,7 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
     {
         return FALSE;
     }
-    
+
     XfconfChannel *channel;
     GtkWidget *dialog;
 
@@ -586,18 +601,27 @@ xfpm_driver_show_options_dialog(XfpmDriver *drv)
                                governors,
                                switch_buttons,
                                priv->lcd_brightness_control,
-                               ups_found);
+                               ups_found,
+                               socket_id);
+    if ( socket_id == 0 )
+    {
+    	xfce_gtk_window_center_on_monitor_with_pointer(GTK_WINDOW(dialog));
+    	gtk_window_set_modal(GTK_WINDOW(dialog), FALSE);
     
-    xfce_gtk_window_center_on_monitor_with_pointer(GTK_WINDOW(dialog));
-    gtk_window_set_modal(GTK_WINDOW(dialog), FALSE);
+    	gdk_x11_window_set_user_time(dialog->window,gdk_x11_get_server_time (dialog->window));
     
-    gdk_x11_window_set_user_time(dialog->window,gdk_x11_get_server_time (dialog->window));
+    	g_signal_connect(dialog,"response",G_CALLBACK(_dialog_response_cb),drv);        
+    	g_signal_connect(dialog,"close",G_CALLBACK(_close_dialog_cb),drv);
+    	gtk_widget_show(dialog);
+    }	
+    else
+    {
+    	g_signal_connect(dialog,"delete-event",G_CALLBACK(_close_plug_cb),drv);
+		gdk_notify_startup_complete();
+	}
     
-    g_signal_connect(dialog,"response",G_CALLBACK(_dialog_response_cb),drv);        
-    g_signal_connect(dialog,"close",G_CALLBACK(_close_dialog_cb),drv);
-    
-    gtk_widget_show(dialog);
     priv->dialog_opened = TRUE;
+    socket_id = 0 ;
     
     return FALSE;
 }
@@ -654,7 +678,7 @@ xfpm_driver_do_suspend(gpointer data)
     
     priv->accept_sleep_request = TRUE;
 	if ( priv->nm_responding )
-		xfpm_dbus_send_nm_message("wakeup");
+		xfpm_dbus_send_nm_message("wake");
     
     return FALSE;
     
@@ -684,7 +708,7 @@ xfpm_driver_do_hibernate(gpointer data)
         
     priv->accept_sleep_request = TRUE;
 	if ( priv->nm_responding )
-		xfpm_dbus_send_nm_message("wakeup");
+		xfpm_dbus_send_nm_message("wake");
 		
     return FALSE;
     
@@ -881,7 +905,7 @@ _show_power_management_error_message(XfpmDriver *drv)
 {
      const gchar *error =
                  _("Unable to use power management service, functionalities "\
-				  "like hibernate and suspend will not work "\
+				  "like hibernate and suspend will not work. "\
                   "Possible reasons: you don't have enough permission, "\
                   "broken connection with the hardware abstract layer "\
 				  "or the message bus daemon is not running");
@@ -908,7 +932,30 @@ static void xfpm_driver_check_nm(XfpmDriver *drv)
 	XfpmDriverPrivate *priv;
 	priv = XFPM_DRIVER_GET_PRIVATE(drv);
 	
-	priv->nm_responding = xfpm_dbus_name_has_owner(priv->conn,NM_SERVICE);
+	DBusError error;
+    DBusConnection *connection;
+
+    dbus_error_init(&error);
+    
+    connection = dbus_bus_get(DBUS_BUS_SYSTEM,&error);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+        XFPM_DEBUG("Error getting D-Bus connection: %s\n",error.message);
+        dbus_error_free(&error);
+        priv->nm_responding = FALSE;
+        return;
+    }    
+    
+    if ( !connection )
+    {
+        XFPM_DEBUG("Error, D-Bus connection NULL\n");
+        priv->nm_responding = FALSE;
+        return;
+    }
+    
+	priv->nm_responding = xfpm_dbus_name_has_owner(connection,NM_SERVICE);
+	dbus_connection_unref(connection);
 	
 }
 
@@ -1113,9 +1160,17 @@ static DBusHandlerResult xfpm_driver_signal_filter
     
     if ( dbus_message_is_signal(message,"xfpm.power.manager","Customize" ) )
     {
-        XFPM_DEBUG("message customize received\n");
         /* don't block the signal filter so show the configuration dialog in a
          * timeout function otherwise xfce4-power-manager -q will have no effect*/
+        DBusError error;
+        dbus_error_init(&error);
+        dbus_message_get_args(message,&error,DBUS_TYPE_UINT32,&socket_id,DBUS_TYPE_INVALID);
+        if ( dbus_error_is_set(&error) )
+        {
+        	XFPM_DEBUG("Failed to get socket id: %s\n",error.message);
+        	dbus_error_free(&error);
+		}
+		XFPM_DEBUG("message customize received with socket_id=%d\n",socket_id);
         g_timeout_add(100,(GSourceFunc)xfpm_driver_show_options_dialog,drv);
         return DBUS_HANDLER_RESULT_HANDLED;
     }    
@@ -1185,7 +1240,7 @@ xfpm_driver_monitor (XfpmDriver *drv)
     if ( !xfconf_init(&g_error) )
     {
         g_critical("xfconf init failed: %s using default settings\n",g_error->message);
-        xfpm_popup_message(_("Xfce4 Power Manager"),_("Failed to load power manager configuration "\
+        xfpm_popup_message(_("Xfce4 Power Manager"),_("Failed to load power manager configuration, "\
                             "using defaults"),GTK_MESSAGE_WARNING);
         g_error_free(g_error);
         

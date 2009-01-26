@@ -52,8 +52,7 @@ typedef enum
     POWERSAVE               = (1<<1),
     ONDEMAND                = (1<<2),
     PERFORMANCE             = (1<<3),
-    CONSERVATIVE            = (1<<4),
-    USERSPACE               = (1<<5)
+    CONSERVATIVE            = (1<<4)
     
 } XfpmCpuGovernor;
 

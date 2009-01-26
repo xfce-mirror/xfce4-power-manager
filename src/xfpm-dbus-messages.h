@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
  *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+ * * Copyright (C) 2008 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -36,6 +36,7 @@ gboolean xfpm_dbus_name_has_owner(DBusConnection *connection,
                                   const gchar *service);
 gboolean xfpm_dbus_send_message            (const gchar *signal);
 gboolean xfpm_dbus_send_message_with_reply (const gchar *signal,gint *get_reply);
+gboolean xfpm_dbus_send_customize_message  (guint32 socket_id);
 void     xfpm_dbus_send_nm_message         (const gchar *signal);
 
 #endif /* __XFPM_DBUS_MESSAGES */

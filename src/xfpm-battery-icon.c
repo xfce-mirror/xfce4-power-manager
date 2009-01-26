@@ -163,6 +163,7 @@ xfpm_battery_icon_init(XfpmBatteryIcon *battery_icon)
 #endif
     battery_icon->icon    = -1;
     battery_icon->icon_loaded = FALSE;
+	battery_icon->icon_size   = 1;
 }
 
 static void xfpm_battery_icon_set_property(GObject *object,
@@ -256,34 +257,42 @@ static gboolean
 xfpm_battery_icon_size_change_cb(XfpmBatteryIcon *battery_icon,gint size,gpointer data)
 {
     XFPM_DEBUG("size change event %d\n",size);
+	
+	if ( size == 1 )
+	{
+		/*Panel is in hidden mode*/
+		battery_icon->icon_size = 1;
+		return TRUE;
+	}
     if ( size > 128 )
     {
         /* Reduce the size until we get the correct size of the system tray */
-        size = 48;
+        battery_icon->icon_size = 48;
     }
+	else
+	{
+		battery_icon->icon_size = size;
+	}
     
-    gchar *icon_name;
-    g_object_get(G_OBJECT(battery_icon),"icon-name",&icon_name,NULL);
-    
-    if ( !icon_name )
-    {
-        return FALSE;
-    }
-    
-    GdkPixbuf *icon;
-    icon = xfpm_load_icon(icon_name,size);
-    
-    if ( icon )
-    {
-        XFPM_DEBUG("Setting icon for resize request\n");
-        gtk_status_icon_set_from_pixbuf(GTK_STATUS_ICON(battery_icon),icon);
-        g_object_unref(G_OBJECT(icon));
-        return TRUE;
-    } else
-    {
-        XFPM_DEBUG("Unable to load icon %s\n",icon_name);
-    }
-    return FALSE;
+	if ( battery_icon->icon == -1 )
+	{
+		return FALSE;
+	}
+	else
+	{
+		GdkPixbuf *icon;
+		icon = xfpm_load_icon(g_quark_to_string(battery_icon->icon),battery_icon->icon_size);
+        
+        if ( icon )
+        {
+            battery_icon->icon_loaded = TRUE;
+            gtk_status_icon_set_from_pixbuf(GTK_STATUS_ICON(battery_icon),icon);
+            g_object_unref(G_OBJECT(icon));
+			return TRUE;
+        }
+		return FALSE;
+	}
+	return FALSE;
 }
 
 static const gchar *
@@ -326,6 +335,15 @@ xfpm_battery_icon_get_icon_prefix(XfpmBatteryType type)
     return g_strdup("gpm-primary");    
 }
 
+#ifdef HAVE_LIBNOTIFY
+static gboolean
+_battery_icon_send_notification(gpointer data)
+{
+	NotifyNotification *n = (NotifyNotification *) data;
+	xfpm_notify_show_notification(n,0); 
+	return FALSE;
+}
+#endif	
 static void
 xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,
                         guint level,gboolean adapter_present)
@@ -392,10 +410,11 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,
     XFPM_DEBUG("icon %s\n",icon_name);
     
     if ( battery_icon->state != state && state != NOT_FULL ) {
+	g_object_set(G_OBJECT(battery_icon),"battery-state",state,NULL);
 #ifdef HAVE_LIBNOTIFY
     gboolean visible;
     g_object_get(G_OBJECT(battery_icon),"visible",&visible,NULL);
-        if ( battery_icon->notify && visible ) 
+        if ( battery_icon->notify ) 
         {
             if ( battery_icon->discard_notification )
             {
@@ -405,12 +424,11 @@ xfpm_battery_icon_update(XfpmBatteryIcon *battery_icon,XfpmBatteryState state,
             {
                 NotifyNotification *n =
                 xfpm_notify_new(_("Xfce power manager"),message,5000,NOTIFY_URGENCY_LOW,
-                               GTK_STATUS_ICON(battery_icon),icon_name);
-                xfpm_notify_show_notification(n,0);               
+                               visible ? GTK_STATUS_ICON(battery_icon):NULL,icon_name);
+                g_idle_add((GSourceFunc)_battery_icon_send_notification,n);             
             }
         }
 #endif     
-    g_object_set(G_OBJECT(battery_icon),"battery-state",state,NULL);
     }
 
     if ( icon_prefix && icon_name )
@@ -565,7 +583,13 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
             xfpm_battery_icon_update(battery_icon,CRITICAL,0,ac_adapter_present);
         }
     }
-    
+
+	if ( remaining_time > 28800 && battery_icon->type == PRIMARY ) 
+	{
+		/* 8 hours is the threshold that we accept*/
+		goto end;
+	}
+	
     if ( remaining_time != 0 )
     {
         gchar *time_str;
@@ -589,14 +613,14 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
            
         }
         time_str = g_strdup_printf("%s: %d %s %d %s",est_time,
-                                        hours,hours > 1 ? _("hours") : _("hour") ,
-                                        minutes_left, minutes_left > 1 ? _("minutes") : _("minute"));
+                                   hours,hours > 1 ? _("hours") : _("hour") ,
+                                   minutes_left, minutes_left > 1 ? _("minutes") : _("minute"));
                                         
 		strcat(tip,time_str);
 		g_free(time_str);
 		g_free(est_time);
     }
-    
+    end:
     gtk_status_icon_set_tooltip(GTK_STATUS_ICON(battery_icon),tip);
     
 }

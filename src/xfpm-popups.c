@@ -35,7 +35,7 @@ void xfpm_popup_message(const gchar *title,
                                                 "<span size='larger'><b>%s</b></span>",
                                                 title);
                                                 
-    gtk_message_dialog_format_secondary_markup(GTK_MESSAGE_DIALOG(dialog),message);
+    gtk_message_dialog_format_secondary_markup(GTK_MESSAGE_DIALOG(dialog),"%s",message);
     
     g_signal_connect(dialog,
                      "response",

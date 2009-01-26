@@ -3,13 +3,14 @@
 # Copyright (C) 2008 Ali Abdallah <ali.slackware@gmail.com>
 # This file is distributed under the same license as the xfce package.
 # Fabian Nowak <timystery@arcor.de>, 2008.
+# Mark Trompell <mark@foresightlinux.org>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-26 17:36+0100\n"
-"PO-Revision-Date: 2008-10-26 15:38+0100\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"PO-Revision-Date: 2009-01-17 21:32+0100\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -17,314 +18,350 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/xfpm-ac-adapter.c:216
-msgid "Unkown adapter status, the power manager will not work properly"
+#: ../src/xfpm-ac-adapter.c:217
+msgid "Unable to read adapter status, the power manager will not work properly"
 msgstr ""
-"Unbekannter Zustand der Stromversorgung, die Stromverwaltung wird nicht "
-"ordnungsgemäß funktionieren"
+"Kann Zustand der Stromversorgung nicht auslesen, die Energieverwaltung wird "
+"nicht ordnungsgemäß funktionieren"
 
-#: ../src/xfpm-ac-adapter.c:285 ../src/xfpm-ac-adapter.c:307
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is online"
 msgstr "Stromversorgung angeschlossen"
 
-#: ../src/xfpm-ac-adapter.c:285 ../src/xfpm-ac-adapter.c:307
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is offline"
 msgstr "Stromversorgung getrennt"
 
-#: ../src/xfpm-ac-adapter.c:357 ../src/xfpm-battery.c:907
-msgid "Are you sure you want to hibernate the system ?"
-msgstr "Möchten Sie das System wirklich in Tiefschlaf setzen?"
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:912
+msgid "Are you sure you want to hibernate the system?"
+msgstr "Möchten Sie das System wirklich in den Ruhemodus versetzen?"
 
 #. Hibernate menu option
-#: ../src/xfpm-ac-adapter.c:359 ../src/xfpm-ac-adapter.c:395
-#: ../src/xfpm-battery.c:802 ../src/xfpm-battery.c:909
-#: ../src/xfpm-battery.c:944 ../src/xfpm-settings.c:465
-#: ../src/xfpm-settings.c:932 ../src/xfpm-settings.c:961
-#: ../src/xfpm-settings.c:984
+#: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
+#: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
+#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
+#: ../src/xfpm-settings.c:976
 msgid "Hibernate"
-msgstr "Tiefschlaf"
+msgstr "Ruhemodus"
 
-#: ../src/xfpm-ac-adapter.c:371 ../src/xfpm-battery.c:922
-msgid "Are you sure you want to suspend the system ?"
-msgstr "Möchten Sie das System wirklich in den Ruhezustand versetzen?"
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:927
+msgid "Are you sure you want to suspend the system?"
+msgstr "Möchten Sie das System wirklich in Standby versetzen?"
 
 #. Suspend menu option
-#: ../src/xfpm-ac-adapter.c:373 ../src/xfpm-ac-adapter.c:412
-#: ../src/xfpm-battery.c:924 ../src/xfpm-battery.c:959
-#: ../src/xfpm-settings.c:930 ../src/xfpm-settings.c:959
-#: ../src/xfpm-settings.c:982
+#: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
+#: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
+#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
+#: ../src/xfpm-settings.c:974
 msgid "Suspend"
-msgstr "Ruhezustand"
+msgstr "Standby"
 
-#: ../src/xfpm-battery.c:764
-msgid "Your battery is almost empty. save your work to avoid losing data"
+#: ../src/xfpm-battery.c:769
+msgid "Your battery is almost empty. Save your work to avoid losing data"
 msgstr ""
-"Ihre Batter ist nahezu leer. Sicher Sie Ihre Arbeit, damit keine Daten "
+"Ihre Batterie ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten "
 "verloren gehen"
 
-#: ../src/xfpm-battery.c:769 ../src/xfpm-battery-icon.c:393
-#: ../src/xfpm-driver.c:300 ../src/xfpm-driver.c:888
+#: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
+#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
-msgstr "Stromverwaltung für Xfce"
+msgstr "Energieverwaltung für Xfce4"
 
-#: ../src/xfpm-battery.c:779
+#: ../src/xfpm-battery.c:784
 msgid "Shutdown the system"
 msgstr "Das System herunterfahren"
 
-#: ../src/xfpm-battery.c:787
+#: ../src/xfpm-battery.c:792
 msgid "Hibernate the system"
-msgstr "Das System in den Tiefschlaf versetzen"
+msgstr "Das System in den Ruhemodus versetzen"
 
-#: ../src/xfpm-battery.c:809 ../src/xfpm-settings.c:461
-#: ../src/xfpm-settings.c:934 ../src/xfpm-settings.c:963
-#: ../src/xfpm-settings.c:986
+#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
+#: ../src/xfpm-settings.c:978
 msgid "Shutdown"
 msgstr "Herunterfahren"
 
-#: ../src/xfpm-settings.c:433
+#: ../src/xfpm-settings.c:417
 msgid "UPS configuration"
-msgstr "Konfiguration der UPS"
+msgstr "Konfiguration der USV"
 
-#: ../src/xfpm-settings.c:433
+#: ../src/xfpm-settings.c:417
 msgid "Battery configuration"
 msgstr "Batteriekonfiguration"
 
-#: ../src/xfpm-settings.c:437
+#: ../src/xfpm-settings.c:424
 msgid "Consider UPS charge critical"
-msgstr "Ladezustand der UPS als kritisch betrachten"
+msgstr "Ladezustand der USV als kritisch betrachten bei"
 
-#: ../src/xfpm-settings.c:437
+#: ../src/xfpm-settings.c:424
 msgid "Consider battery charge critical"
-msgstr "Ladezustand der Batterie als kritisch betrachten"
+msgstr "Ladezustand der Batterie als kritisch betrachten bei"
 
-#: ../src/xfpm-settings.c:442
+#: ../src/xfpm-settings.c:430
 msgid "percent"
 msgstr "Prozent"
 
-#: ../src/xfpm-settings.c:452
+#: ../src/xfpm-settings.c:440
 msgid "When battery charge level is critical do"
-msgstr "Wenn der Ladezustand der Batterie kritisch ist, dann tue"
+msgstr "Bei kritischem Ladezustand der Batterie:"
 
-#: ../src/xfpm-settings.c:458 ../src/xfpm-settings.c:928
-#: ../src/xfpm-settings.c:957 ../src/xfpm-settings.c:980
+#: ../src/xfpm-settings.c:450 ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:946 ../src/xfpm-settings.c:972
 msgid "Nothing"
 msgstr "Nichts"
 
-#: ../src/xfpm-settings.c:479
+#: ../src/xfpm-settings.c:471
 msgid "Enable UPS charge notification"
-msgstr "Benachrichtigung über Ladezustand der UPS aktivieren"
+msgstr "Benachrichtigung über Ladezustand der USV aktivieren"
 
-#: ../src/xfpm-settings.c:479
+#: ../src/xfpm-settings.c:471
 msgid "Enable battery state notification"
 msgstr "Benachrichtigung über Batteriezustand aktivieren"
 
-#: ../src/xfpm-settings.c:493
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on UPS power"
-msgstr "Stromsparen bei Strom über UPS aktivieren"
+msgstr "Stromsparen bei Strom über USV aktivieren"
 
-#: ../src/xfpm-settings.c:493
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on battery power"
 msgstr "Stromsparen bei Batteristrom aktivieren"
 
-#: ../src/xfpm-settings.c:532 ../src/xfpm-settings.c:625
-msgid "Performance"
-msgstr "Leistung"
+#: ../src/xfpm-settings.c:518 ../src/xfpm-settings.c:603
+msgid "Best performance"
+msgstr "Beste Leistung"
 
-#: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:630
-msgid "Ondemand"
-msgstr "Auf Anfrage"
+#: ../src/xfpm-settings.c:519 ../src/xfpm-settings.c:604
+msgid "Set the CPU to its maximum frequency"
+msgstr "Die CPU auf maximale Leistung einstellen"
 
-#: ../src/xfpm-settings.c:541 ../src/xfpm-settings.c:634
-msgid "Userspace"
-msgstr "Benutzerdefiniert"
+#: ../src/xfpm-settings.c:524 ../src/xfpm-settings.c:609
+msgid "Ondemand performance"
+msgstr "Bedarfsabhängige Leistung"
 
-#: ../src/xfpm-settings.c:545 ../src/xfpm-settings.c:638
-msgid "Powersave"
-msgstr "Strom sparen"
+#: ../src/xfpm-settings.c:525 ../src/xfpm-settings.c:610
+msgid ""
+"Set the CPU to its maximum speed when there is any load on it and to its "
+"minimum speed when the system is idle"
+msgstr ""
+"Die CPU unter Last auf maximale Geschwindigkeit stellen und auf minimale "
+"Geschwindigkeit im Ruhebetrieb"
 
-#: ../src/xfpm-settings.c:549 ../src/xfpm-settings.c:642
-msgid "Conservative"
-msgstr "Konservativ"
+#: ../src/xfpm-settings.c:530 ../src/xfpm-settings.c:615
+msgid "Best power savings"
+msgstr "Maximaler Energiesparmodus"
 
-#: ../src/xfpm-settings.c:617
-msgid "CPU governor settings on UPS power"
-msgstr "Einstellungen des CPU-Multiplikators bei Strom über UPS"
+#: ../src/xfpm-settings.c:531 ../src/xfpm-settings.c:616
+msgid "Set the CPU to its minimum frequency"
+msgstr "Die CPU auf minimale Geschwindigkeit einstellen"
 
-#: ../src/xfpm-settings.c:617
-msgid "CPU governor settings on battery power"
-msgstr "Einstellungen des CPU-Multiplikators bei Batteriestrom"
+#: ../src/xfpm-settings.c:535 ../src/xfpm-settings.c:620
+msgid "Good power savings"
+msgstr "Guter Energiesparmodus"
 
-#: ../src/xfpm-settings.c:716
+#: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:622
+msgid ""
+"gracefully increases and decreases the CPU speed depending on the current "
+"usage"
+msgstr ""
+"Steigert und senkt die CPU-Geschwdindigkeit gemächlich in Abhängigkeit von "
+"der aktuellen Verwendung"
+
+#: ../src/xfpm-settings.c:595
+msgid "CPU frequency settings on UPS power"
+msgstr "Einstellungen der CPU-Geschwindigkeit bei Strom über USV"
+
+#: ../src/xfpm-settings.c:595
+msgid "CPU frequency settings on battery power"
+msgstr "Einstellungen des CPU-Geschwindigkeit bei Batterieversorgung"
+
+#: ../src/xfpm-settings.c:685
 msgid "No CPU governor found"
 msgstr "Kein CPU-Multiplikator gefunden"
 
-#: ../src/xfpm-settings.c:726
+#: ../src/xfpm-settings.c:695
 msgid "CPU frequency control cannot be used"
 msgstr "Steuerung der CPU-Frequenz nicht möglich"
 
-#: ../src/xfpm-settings.c:738
-msgid "CPU freq settings on electric power"
-msgstr "Einstellungen der CPU-Frequenz bei Netzstrom"
+#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
+msgid "On AC power"
+msgstr "Bei Netzversorgung"
 
-#: ../src/xfpm-settings.c:738
-msgid "CPU freq settings"
-msgstr "Einstellungen der CPU-Frequenz"
+#: ../src/xfpm-settings.c:710
+msgid "CPU frequency settings on AC power"
+msgstr "Einstellungen der CPU-Geschwindigkeit bei Netzstrom"
 
-#: ../src/xfpm-settings.c:760
+#: ../src/xfpm-settings.c:710
+msgid "CPU frequency settings"
+msgstr "Einstellungen der CPU-Geschwindigkeit"
+
+#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:855
+msgid "On battery power"
+msgstr "Wenn die Batterie verfügbar ist"
+
+#: ../src/xfpm-settings.c:735
 msgid "Enable LCD brightness control"
 msgstr "Helligkeitssteuerung erlauben"
 
-#: ../src/xfpm-settings.c:782
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on UPS power"
-msgstr "Monitoreinstellungen bei Strom über UPS"
+msgstr "Monitoreinstellungen bei Strom über USV"
 
-#: ../src/xfpm-settings.c:782
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on battery power"
 msgstr "Monitoreinstellungen bei Batteriestrom"
 
-#: ../src/xfpm-settings.c:870
-msgid "Monitor settings on electric power"
-msgstr "Monitoreinstellungen bei Netzversorgung"
+#: ../src/xfpm-settings.c:846
+msgid "Monitor settings on AC power"
+msgstr "Monitoreinstellungen bei Netzstrom"
 
-#: ../src/xfpm-settings.c:870
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
 msgstr "Monitoreinstellungen"
 
-#: ../src/xfpm-settings.c:883
+#: ../src/xfpm-settings.c:863
 msgid "Your monitor doesn't support DPMS control"
 msgstr "Ihr Monitor unterstützt kein DPMS"
 
-#: ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:896
 msgid "Keyboard shortcuts"
 msgstr "Tastenkürzel"
 
-#: ../src/xfpm-settings.c:923
+#: ../src/xfpm-settings.c:908
 msgid "When power button is pressed do"
-msgstr "Wenn der Ein-/Aus-Schalter gedrückt wird, dann"
+msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
 
-#: ../src/xfpm-settings.c:949
+#: ../src/xfpm-settings.c:935
 msgid "When sleep button is pressed do"
-msgstr "Wenn die Taste für den Schlafmodus gedrückt wird, dann"
+msgstr "Bei Betätigung der Taste für den Schlafmodus:"
 
-#: ../src/xfpm-settings.c:974
+#: ../src/xfpm-settings.c:963
 msgid "When laptop lid is closed"
-msgstr "Wenn die Laptopklappe geschlossen wird"
+msgstr "Beim Schließen der Bildschirmklappe:"
 
-#: ../src/xfpm-settings.c:998
+#: ../src/xfpm-settings.c:990
 msgid "No available keyboard shortcuts found"
 msgstr "Keine verfügbaren Tastenkürzel gefunden"
 
-#: ../src/xfpm-settings.c:1014
+#: ../src/xfpm-settings.c:1008
 msgid "General Options"
 msgstr "Allgemeine Einstellungen"
 
 #. Systray icon
-#: ../src/xfpm-settings.c:1021
-msgid "System tray icon"
-msgstr "Symbol in der Systemleiste"
+#: ../src/xfpm-settings.c:1019
+msgid "System tray icon:"
+msgstr "Symbol in der Systemleiste:"
 
-#: ../src/xfpm-settings.c:1027
+#: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
 msgstr "Immer ein Symbol zeigen"
 
-#: ../src/xfpm-settings.c:1028
+#: ../src/xfpm-settings.c:1027
 msgid "When battery is present"
 msgstr "Wenn die Batterie verfügbar ist"
 
-#: ../src/xfpm-settings.c:1031
+#: ../src/xfpm-settings.c:1030
 msgid "When battery is charging or discharging"
-msgstr "Wenn die Batterie lädt oder sich entlädt"
+msgstr "Wenn sich die Batterie lädt oder entlädt"
 
-#: ../src/xfpm-settings.c:1047
-msgid "Enable CPU freq scaling control"
-msgstr "Skalierung der CPU-Frequenz aktivieren"
+#: ../src/xfpm-settings.c:1048
+msgid "Enable CPU frequency scaling control"
+msgstr "Skalierung der CPU-Geschwindigkeit aktivieren"
 
-#: ../src/xfpm-settings.c:1060
+#. label = gtk_label_new(_("Enable monitor power management control"));
+#. gtk_widget_show(label);
+#. gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
+#: ../src/xfpm-settings.c:1070
 msgid "Enable monitor power management control"
-msgstr "Stromverwaltung für Monitor aktivieren"
+msgstr "Energieverwaltung für Monitor aktivieren"
 
-#: ../src/xfpm-settings.c:1117
+#: ../src/xfpm-settings.c:1125
 msgid "Advanced settings"
 msgstr "Erweitert"
 
-#: ../src/xfpm-settings.c:1134 ../src/xfpm-settings.c:1139
+#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
 msgid "CPU settings"
 msgstr "CPU-Einstellungen"
 
-#: ../src/xfpm-settings.c:1149 ../src/xfpm-settings.c:1154
+#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
 msgid "Battery settings"
 msgstr "Batterieeinstellungen"
 
-#: ../src/xfpm-settings.c:1165 ../src/xfpm-settings.c:1170
+#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
 msgid "Shortcuts"
 msgstr "Tastenkürzel"
 
-#: ../src/xfpm-settings.c:1180 ../src/xfpm-settings.c:1185
+#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
 msgid "Monitor Settings"
 msgstr "Monitoreinstellungen"
 
-#: ../src/xfpm-settings.c:1217
+#: ../src/xfpm-settings.c:1231
 msgid "Power Manager Preferences"
-msgstr "Einstellungen für die Stromverwaltung"
+msgstr "Einstellungen für die Energieverwaltung"
 
-#: ../src/xfpm-battery-icon.c:337
+#: ../src/xfpm-settings.c:1262
+msgid "Extended"
+msgstr "Erweitert"
+
+#: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
 msgstr "Ihr Batterieladezustand ist gering"
 
-#: ../src/xfpm-battery-icon.c:344
+#: ../src/xfpm-battery-icon.c:376
 msgid "Your battery is almost empty"
 msgstr "Ihre Batterie ist nahezu leer"
 
-#: ../src/xfpm-battery-icon.c:353
+#: ../src/xfpm-battery-icon.c:385
 msgid "You are running on Battery"
-msgstr "Sie laufen gerade im Batterierbetrieb"
+msgstr "Sie sind gerade im Batterierbetrieb"
 
-#: ../src/xfpm-battery-icon.c:353 ../src/xfpm-battery-icon.c:535
-#: ../src/xfpm-battery-icon.c:539
+#: ../src/xfpm-battery-icon.c:385 ../src/xfpm-battery-icon.c:567
+#: ../src/xfpm-battery-icon.c:571
 msgid "Battery is discharging"
-msgstr "Die Batterie wird entladen"
+msgstr "Batterie wird entladen"
 
-#: ../src/xfpm-battery-icon.c:357
+#: ../src/xfpm-battery-icon.c:389
 msgid "Your battery is discharging"
 msgstr "Ihre Batterie wird entladen"
 
-#: ../src/xfpm-battery-icon.c:365 ../src/xfpm-battery-icon.c:523
+#: ../src/xfpm-battery-icon.c:397 ../src/xfpm-battery-icon.c:555
 msgid "Battery is charging"
-msgstr "Die Batterie wird geladen"
+msgstr "Batterie wird geladen"
 
-#: ../src/xfpm-battery-icon.c:374
+#: ../src/xfpm-battery-icon.c:406
 msgid "Your battery is fully charged"
 msgstr "Ihre Batterie ist vollständig geladen"
 
-#: ../src/xfpm-battery-icon.c:497
+#: ../src/xfpm-battery-icon.c:529
 msgid "Not present"
 msgstr "Nicht vorhanden"
 
-#: ../src/xfpm-battery-icon.c:503
+#: ../src/xfpm-battery-icon.c:535
 msgid "%"
 msgstr "%"
 
-#: ../src/xfpm-battery-icon.c:509
+#: ../src/xfpm-battery-icon.c:541
 msgid "Battery fully charged"
 msgstr "Batterie vollständig geladen"
 
-#: ../src/xfpm-battery-icon.c:516
+#: ../src/xfpm-battery-icon.c:548
 msgid "Battery charge level"
 msgstr "Ladezustand der Batterie"
 
-#: ../src/xfpm-battery-icon.c:535
+#: ../src/xfpm-battery-icon.c:567
 msgid "Running on battery"
 msgstr "Batteriebetrieb"
 
-#: ../src/xfpm-battery-icon.c:545
+#: ../src/xfpm-battery-icon.c:577
 msgid "Battery charge is low"
 msgstr "Ladezustand der Batterie ist gering"
 
-#: ../src/xfpm-battery-icon.c:550
+#: ../src/xfpm-battery-icon.c:582
 msgid "Battery is almost empty"
 msgstr "Die Batterie ist nahezu leer"
 
-#: ../src/xfpm-battery-icon.c:569
+#: ../src/xfpm-battery-icon.c:607
 msgid ""
 "\n"
 "Estimated time left"
@@ -332,7 +369,7 @@ msgstr ""
 "\n"
 "Geschätzte verbleibende Zeit"
 
-#: ../src/xfpm-battery-icon.c:574
+#: ../src/xfpm-battery-icon.c:612
 msgid ""
 "\n"
 "Estimated time to charge"
@@ -340,51 +377,101 @@ msgstr ""
 "\n"
 "Geschätzte Ladedauer"
 
-#: ../src/xfpm-battery-icon.c:578
+#: ../src/xfpm-battery-icon.c:616
 msgid "hours"
 msgstr "Stunden"
 
-#: ../src/xfpm-battery-icon.c:578
+#: ../src/xfpm-battery-icon.c:616
 msgid "hour"
 msgstr "Stunde"
 
-#: ../src/xfpm-battery-icon.c:579
+#: ../src/xfpm-battery-icon.c:617
 msgid "minutes"
 msgstr "Minuten"
 
-#: ../src/xfpm-battery-icon.c:579
+#: ../src/xfpm-battery-icon.c:617
 msgid "minute"
 msgstr "Minute"
 
-#: ../src/xfpm-dpms-spins.c:48
+#: ../src/xfpm-dpms-spins.c:50
 msgid "never"
 msgstr "nie"
 
-#: ../src/xfpm-dpms-spins.c:49
+#: ../src/xfpm-dpms-spins.c:51
 msgid "min"
 msgstr "min"
 
-#: ../src/xfpm-dpms-spins.c:127
+#: ../src/xfpm-dpms-spins.c:140
 msgid "Standby after"
 msgstr "Standbymodus nach"
 
-#: ../src/xfpm-dpms-spins.c:135
+#: ../src/xfpm-dpms-spins.c:148
 msgid "Suspend after"
 msgstr "Ruhezustand nach"
 
-#: ../src/xfpm-dpms-spins.c:143
+#: ../src/xfpm-dpms-spins.c:156
 msgid "Turn off after"
 msgstr "Abschalten nach"
 
-#: ../src/xfpm-common.c:94
-msgid "Part of the Xfce goodies project"
-msgstr "Teil der Xfce Goodies"
-
-#: ../src/xfpm-common.c:96 ../src/xfpm-main.c:88 ../src/xfpm-driver.c:1188
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1243
 msgid "Xfce4 Power Manager"
-msgstr "Xfce4-Stromverwaltung"
+msgstr "Energieverwaltung für Xfce4"
 
-#: ../src/xfpm-main.c:89
+#: ../src/xfpm-common.c:147
+msgid "translator-credits"
+msgstr ""
+"Fabian Nowak <timystery@arcor.de>Mark Trompell <mark@foresightlinux.org>"
+
+#: ../src/xfpm-main.c:61
+msgid "Start xfce power manager"
+msgstr "Energieverwaltung für Xfce4 starten"
+
+#: ../src/xfpm-main.c:62
+msgid "Show the configuration dialog"
+msgstr "Einstellungsdialog anzeigen"
+
+#: ../src/xfpm-main.c:63
+msgid "Quit any running xfce power manager"
+msgstr "Energieverwaltung für Xfce4 beenden"
+
+#: ../src/xfpm-main.c:64
+msgid "Settings manager socket"
+msgstr "Socket der Sitzungsverwaltung"
+
+#: ../src/xfpm-main.c:64
+msgid "SOCKET ID"
+msgstr "SOCKET-NR"
+
+#: ../src/xfpm-main.c:65
+msgid "Version information"
+msgstr "Versionsinformation"
+
+#: ../src/xfpm-main.c:73
+#, c-format
+msgid ""
+"\n"
+"Xfce Power Manager %s\n"
+"\n"
+"Part of the Xfce Goodies Project\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Licensed under the GNU GPL.\n"
+"\n"
+msgstr ""
+"\n"
+"Xfce4-Energieverwaltung %s\n"
+"\n"
+"Teil der Xfce Goodies\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Veröffentlicht unter der GNU GPL.\n"
+"\n"
+
+#: ../src/xfpm-main.c:87
+msgid "Xfce Power Manager"
+msgstr "Energieverwaltung für Xfce"
+
+#: ../src/xfpm-main.c:88
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -392,132 +479,263 @@ msgstr ""
 "Kann die Umgebungsvariable »$HOME« nicht lesen, der Autostart funktioniert "
 "daher eventuell nicht."
 
-#: ../src/xfpm-main.c:221
-msgid "Xfce4 Power Manager is not running, do you want to launch it now ?"
-msgstr "Die Xfce4-Stromverwaltung läuft nicht, möchten Sie sie jetzt starten?"
+#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr ""
+"Geben Sie »%s --help« ein, um Informationen über die Verwendung zu erhalten"
 
-#: ../src/xfpm-main.c:223
+#: ../src/xfpm-main.c:182
+#, c-format
+msgid "Too many arguments"
+msgstr "Zu viele Argumente"
+
+#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Energieverwaltung für Xfce4 läuft nicht"
+
+#: ../src/xfpm-main.c:201
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr ""
+"Die Energieverwaltung für Xfce4 läuft nicht. Möchten Sie sie jetzt starten?"
+
+#: ../src/xfpm-main.c:203
 msgid "Run"
 msgstr "Starten"
 
-#. g_disaster
-#: ../src/xfpm-main.c:268 ../src/xfpm-driver.c:313
-msgid "Xfce4 power manager"
-msgstr "Xfce4-Stromverwaltung"
+#: ../src/xfpm-main.c:224
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr "Energieverwaltung für Xfce4 läuft bereits"
 
-#: ../src/xfpm-main.c:269
+#: ../src/xfpm-main.c:233
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
 msgstr ""
-"Kann die Xfce4-Stromverwaltung nicht starten; stellen Sie sicher, dass die "
-"Hardwareabstraktionsschicht und der Nachrichtendienst laufen."
+"Kann die Energieverwaltung für Xfce4 nicht starten. Stellen Sie sicher, dass "
+"die Hardwareabstraktionsschicht und der Nachrichtendienst laufen."
 
-#: ../src/xfpm-driver.c:287
+#: ../src/xfpm-main.c:237
+msgid "Unable to load xfce4 power manager"
+msgstr "Kann die Energieverwaltung für Xfce4 nicht laden"
+
+#: ../src/xfpm-driver.c:291
 msgid ""
 "Unable to read AC adapter status, the power manager will not work properly. "
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
 "with the hardware abstract layer or the message bus daemon is not running"
 msgstr ""
-"Kann den Zustand der Stromversorgung nicht lesen, die Stromverwaltung wird "
+"Kann den Zustand der Stromversorgung nicht lesen, die Energieverwaltung wird "
 "nicht ordnungsgemäß funktionieren. Mögliche Grunde: Der Treiber für das "
 "Netzteil ist nicht geladen, die Verbindung mit der "
 "Hardwareabstraktionsschicht ist unterbrochen oder der Nachrichtendienst "
 "läuft nicht."
 
-#: ../src/xfpm-driver.c:704
+#: ../src/xfpm-driver.c:728
 msgid "System failed to shutdown"
 msgstr "System konnte nicht heruntergefahren werden"
 
-#: ../src/xfpm-driver.c:883
+#: ../src/xfpm-driver.c:907
 msgid ""
 "Unable to use power management service, functionalities like hibernate and "
-"suspend will not work Possible reasons: you don't have enough permission, "
+"suspend will not work. Possible reasons: you don't have enough permission, "
 "broken connection with the hardware abstract layer or the message bus daemon "
 "is not running"
 msgstr ""
-"Kann die Dienste für die Stromverwaltung nicht nutzen; Tiefschlaf und "
-"Ruhezustand werden nicht funktionieren. Mögliche Gründe: Sie haben nicht die "
+"Kann die Dienste für die Energieverwaltung nicht nutzen; Ruhezustand und "
+"Standby werden nicht funktionieren. Mögliche Gründe: Sie haben nicht die "
 "nötigen Berechtigungen, die Verbindung mit der Hardwareabstraktionsschicht "
-"ist unterbrochen oder der Nachrichtendienst läuft nicht."
+"ist unterbrochen, oder der Nachrichtendienst läuft nicht."
 
-#: ../src/xfpm-driver.c:896
+#: ../src/xfpm-driver.c:920
 msgid "Don't show this message again"
 msgstr "Diese Nachricht nicht mehr anzeigen"
 
-#: ../src/xfpm-driver.c:1188
-msgid "Failed to load power manager configuration using defaults"
+#: ../src/xfpm-driver.c:1243
+msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
-"Konnte Konfiguration der Stromverwaltung nicht laden; nehme Standardwerte"
+"Konnte Konfiguration der Energieverwaltung nicht laden; nehme Standardwerte"
 
-#: ../src/xfpm-hal.c:640 ../src/xfpm-hal.c:729 ../src/xfpm-hal.c:822
-#: ../src/xfpm-hal.c:871 ../src/xfpm-hal.c:921 ../src/xfpm-hal.c:973
-#: ../src/xfpm-hal.c:1025 ../src/xfpm-hal.c:1071
+#: ../src/xfpm-hal.c:172
+#, c-format
+msgid "Error monitoring HAL events"
+msgstr "Fehler beim Überwachen der HAL-Ereignisse"
+
+#: ../src/xfpm-hal.c:261 ../src/xfpm-hal.c:280
+#, c-format
+msgid "Unable to connect to DBus: %s"
+msgstr "Kann keine Verbindung zum D-Bus aufbauen: %s"
+
+#: ../src/xfpm-hal.c:268
+msgid "HAL is not running or not responding"
+msgstr "HAL läuft nicht oder antwortet nicht"
+
+#: ../src/xfpm-hal.c:415
+#, c-format
+msgid "Unable to watch device using HAL: %s"
+msgstr "Kann Gerät nicht mittels HAL überwachen: %s"
+
+#: ../src/xfpm-hal.c:633
+msgid "No back-end for your operating system"
+msgstr "Keine Unterstützung für Ihr Betriebssystem gefunden"
+
+#: ../src/xfpm-hal.c:637
+msgid "No hibernate script found"
+msgstr "Kein Skript für den Ruhezustand gefunden"
+
+#: ../src/xfpm-hal.c:641
+msgid "No suspend script found"
+msgstr "Kein Skript für Standby gefunden"
+
+#: ../src/xfpm-hal.c:645
+msgid "No suspend method found"
+msgstr "Keine Methode für Standby gefunden"
+
+#: ../src/xfpm-hal.c:649
+msgid "No hibernate method found"
+msgstr "Keine Methode für den Ruhezustand gefunden"
+
+#: ../src/xfpm-hal.c:675 ../src/xfpm-hal.c:765 ../src/xfpm-hal.c:859
+#: ../src/xfpm-hal.c:908 ../src/xfpm-hal.c:958 ../src/xfpm-hal.c:1010
+#: ../src/xfpm-hal.c:1062 ../src/xfpm-hal.c:1108
 #, c-format
 msgid "Out of memory"
 msgstr "Kein Speicher verfügbar"
 
-#: ../src/xfpm-hal.c:671
+#: ../src/xfpm-hal.c:707
 #, c-format
-msgid "Message Hibernate didn't get a reply"
-msgstr "Aufforderung für den Tiefschlafmodus hat keine Antwort erhalten"
+msgid "Message hibernate didn't get a reply"
+msgstr "Aufforderung für den Ruhezustand hat keine Antwort erhalten"
 
-#: ../src/xfpm-hal.c:692
+#: ../src/xfpm-hal.c:728
 #, c-format
 msgid "System failed to hibernate"
-msgstr "System konnte nicht in den Tiefschlaf versetzt werden"
+msgstr "System konnte nicht in den Ruhezustand versetzt werden"
 
-#: ../src/xfpm-hal.c:698 ../src/xfpm-hal.c:789
+#: ../src/xfpm-hal.c:734 ../src/xfpm-hal.c:826
 #, c-format
 msgid "Error occured while trying to suspend"
-msgstr ""
-"Ein Fehler ist aufgetreten, während das System in den Ruhezustand gehen "
-"sollte"
+msgstr "Ein Fehler ist aufgetreten, während das System in Standby gehen sollte"
 
-#: ../src/xfpm-hal.c:701 ../src/xfpm-hal.c:792
+#: ../src/xfpm-hal.c:737 ../src/xfpm-hal.c:829
 #, c-format
 msgid "Unknown reply from the message daemon"
 msgstr "Unbekannte Antwort vom Nachrichtendienst"
 
-#: ../src/xfpm-hal.c:761
+#: ../src/xfpm-hal.c:798
 #, c-format
 msgid "Message suspend didn't get a reply"
 msgstr "Aufforderung für den Ruhezustand hat keine Antwort erhalten"
 
-#: ../src/xfpm-hal.c:783
+#: ../src/xfpm-hal.c:820
 #, c-format
 msgid "System failed to suspend"
 msgstr "System konnte nicht in den Ruhezustand versetzt werden"
 
-#: ../src/xfpm-hal.c:842
+#: ../src/xfpm-hal.c:879
 #, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
 msgstr ""
 "Keine Antwort vom HAL-Daemon, die Helligkeitsstufe des Monitors zu setzen"
 
-#: ../src/xfpm-hal.c:889
+#: ../src/xfpm-hal.c:926
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
 msgstr ""
 "Keine Antwort vom HAL-Daemon, die Helligkeitsstufe des Monitors zu bekommen"
 
-#: ../src/xfpm-hal.c:939
+#: ../src/xfpm-hal.c:976
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
 msgstr ""
 "Keine Antwort vom HAL-Daemon, die verfügbaren CPU-Multiplikatoren zu bekommen"
 
-#: ../src/xfpm-hal.c:991
+#: ../src/xfpm-hal.c:1028
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
 msgstr "Keine Antwort vom HAL-Daemon, den aktuellen CPU-Multiplikator zu lesen"
 
-#: ../src/xfpm-hal.c:1044
+#: ../src/xfpm-hal.c:1081
 #, c-format
 msgid "No reply from HAL daemon to set cpu governor"
 msgstr "Keine Antwort vom HAL-Daemon, den CPU-Multiplikator zu setzen"
 
-#: ../src/xfpm-hal.c:1090
+#: ../src/xfpm-hal.c:1127
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
-msgstr "Keine Antwort vom HAL-Daemon, das Stromsparprofil zu laden"
+msgstr "Keine Antwort vom HAL-Daemon, das Energiesparprofil zu laden"
+
+#: ../src/xfpm-dbus-messages.c:86
+msgid "Failed to create dbus message\n"
+msgstr "Konnte D-Bus-Nachricht nicht erzeugen\n"
+
+#: ../src/xfpm-dbus-messages.c:122 ../src/xfpm-dbus-messages.c:223
+msgid "Failed to send message\n"
+msgstr "Konnte Nachricht nicht senden\n"
+
+#: ../src/xfce4-power-manager.desktop.in.h:1
+msgid "Power"
+msgstr "Energie"
+
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Power Manager"
+msgstr "Energieverwaltung"
+
+#: ../src/xfce4-power-manager.desktop.in.h:3
+msgid "Settings for the Xfce 4 Power Manager"
+msgstr "Einstellungen für die Xfce4-Energieverwaltung"
+
+#: ../src/xfce4-power-manager.desktop.in.h:4
+msgid "Xfce 4 Power Manager"
+msgstr "Energieverwaltung für Xfce4"
+
+#, fuzzy
+#~ msgid "On electric power"
+#~ msgstr "Monitoreinstellungen bei Netzversorgung"
+
+#, fuzzy
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "Einstellungen der CPU-Frequenz bei Netzstrom"
+
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Monitoreinstellungen bei Netzversorgung"
+
+#~ msgid "Ondemand"
+#~ msgstr "Bedarfsorientiert"
+
+#~ msgid "Userspace"
+#~ msgstr "Benutzerdefiniert"
+
+#~ msgid "Powersave"
+#~ msgstr "Strom sparen"
+
+#~ msgid "Conservative"
+#~ msgstr "Gemächliche Bedarfsorientierung"
+
+#~ msgid "Part of the Xfce goodies project"
+#~ msgstr "Teil der Xfce Goodies"
+
+#~ msgid ""
+#~ "\n"
+#~ "Usage: xfce-power-manager [options] \n"
+#~ "\n"
+#~ "Options:\n"
+#~ "-h, --help       Print this help message and exit\n"
+#~ "-v, --version    Print this help message and exit\n"
+#~ "-r, --run        Start xfce power manager\n"
+#~ "-c, --customize  Show Configuration dialog\n"
+#~ "-q, --quit       Quit any running xfce power manager\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Verwendung: xfce-power-manager [optionen] \n"
+#~ "\n"
+#~ "Optionen:\n"
+#~ "-h, --help       Diese Hilfe ausgeben und beenden\n"
+#~ "-v, --version    Diese Hilfe ausgeben und beenden\n"
+#~ "-r, --run        Energieverwaltung für Xfce starten\n"
+#~ "-c, --customize  Einstellungen öffnen\n"
+#~ "-q, --quit       Alle laufenden Xfce4-Energieverwaltungen beenden\n"
+#~ "\n"

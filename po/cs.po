@@ -1,40 +1,39 @@
-# Japanese translations for xfce4-power-manager package
-# xfce4-power-manager パッケージに対する英訳.
-# Copyright (C) 2008 THE xfce4-power-manager'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the xfce4-power-manager package.
-# Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2008.
+# Czech translations for xfce package.
+# Copyright (C) 2008 THE xfce'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the xfce package.
+# Michal Várady <miko.vaji@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager 0.6.0svn\n"
+"Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-17 17:31+0900\n"
-"PO-Revision-Date: 2009-01-19 22:28+0900\n"
-"Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
-"Language-Team: Japanese <xfce-users-jp@ml.fdiary.net>\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"PO-Revision-Date: 2009-01-15 20:16+0100\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
+"Language-Team: Czech\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../src/xfpm-ac-adapter.c:217
 msgid "Unable to read adapter status, the power manager will not work properly"
-msgstr "アダプタステータスを読み込めません。電源管理は正しく動作しないでしょう。"
+msgstr "Nelze zjistit stav adaptéru, správce napájení nebude fungovat korektně"
 
 #: ../src/xfpm-ac-adapter.c:286
 #: ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is online"
-msgstr "アダプタはオンラインです"
+msgstr "Adaptér je připojen"
 
 #: ../src/xfpm-ac-adapter.c:286
 #: ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is offline"
-msgstr "アダプタはオフラインです"
+msgstr "Adaptér je odpojen"
 
 #: ../src/xfpm-ac-adapter.c:358
 #: ../src/xfpm-battery.c:912
 msgid "Are you sure you want to hibernate the system?"
-msgstr "システムをハイバネートします。よろしいですか?"
+msgstr "Opravdu chcete hibernovat systém?"
 
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360
@@ -47,12 +46,12 @@ msgstr "システムをハイバネートします。よろしいですか?"
 #: ../src/xfpm-settings.c:950
 #: ../src/xfpm-settings.c:976
 msgid "Hibernate"
-msgstr "ハイバネート"
+msgstr "Hibernovat"
 
 #: ../src/xfpm-ac-adapter.c:372
 #: ../src/xfpm-battery.c:927
 msgid "Are you sure you want to suspend the system?"
-msgstr "システムをサスペンドします。よろしですか?"
+msgstr "Opravdu chcete přejít do režimu spánku"
 
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374
@@ -63,11 +62,11 @@ msgstr "システムをサスペンドします。よろしですか?"
 #: ../src/xfpm-settings.c:948
 #: ../src/xfpm-settings.c:974
 msgid "Suspend"
-msgstr "サスペンド"
+msgstr "Režim spánku"
 
 #: ../src/xfpm-battery.c:769
 msgid "Your battery is almost empty. Save your work to avoid losing data"
-msgstr "バッテリはほとんど空です。作業中のデータを損失することのないよう保存してください。"
+msgstr "Baterie je téměř vybitá. Uložte si svoji práci, abyste předešli ztrátě dat"
 
 #: ../src/xfpm-battery.c:774
 #: ../src/xfpm-battery.c:1339
@@ -77,15 +76,15 @@ msgstr "バッテリはほとんど空です。作業中のデータを損失す
 #: ../src/xfpm-driver.c:317
 #: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
-msgstr "Xfce 電源管理"
+msgstr "Správce napájeni pro Xfce"
 
 #: ../src/xfpm-battery.c:784
 msgid "Shutdown the system"
-msgstr "システムをシャットダウンします"
+msgstr "Vypnout systém"
 
 #: ../src/xfpm-battery.c:792
 msgid "Hibernate the system"
-msgstr "システムをハイバネートします"
+msgstr "Hibernovat systém"
 
 #: ../src/xfpm-battery.c:814
 #: ../src/xfpm-settings.c:453
@@ -93,271 +92,271 @@ msgstr "システムをハイバネートします"
 #: ../src/xfpm-settings.c:952
 #: ../src/xfpm-settings.c:978
 msgid "Shutdown"
-msgstr "シャットダウン"
+msgstr "Vypnout"
 
 #: ../src/xfpm-settings.c:417
 msgid "UPS configuration"
-msgstr "UPS 設定"
+msgstr "Konfigurace záložního zdroje"
 
 #: ../src/xfpm-settings.c:417
 msgid "Battery configuration"
-msgstr "バッテリ設定"
+msgstr "Konfigurace baterie"
 
 #: ../src/xfpm-settings.c:424
 msgid "Consider UPS charge critical"
-msgstr "UPS 充電量が危機的とみなす割合"
+msgstr "Kritický stav nabití záložního zdroje"
 
 #: ../src/xfpm-settings.c:424
 msgid "Consider battery charge critical"
-msgstr "バッテリ充電量が危機的とみなす割合"
+msgstr "Kritický stav nabití baterie"
 
 #: ../src/xfpm-settings.c:430
 msgid "percent"
-msgstr "パーセント"
+msgstr "procent"
 
 #: ../src/xfpm-settings.c:440
 msgid "When battery charge level is critical do"
-msgstr "バッテリ充電量が危機的状態になった時"
+msgstr "Je-li úroveň nabití baterie kritická, provést tuto akci:"
 
 #: ../src/xfpm-settings.c:450
 #: ../src/xfpm-settings.c:914
 #: ../src/xfpm-settings.c:946
 #: ../src/xfpm-settings.c:972
 msgid "Nothing"
-msgstr "何もしない"
+msgstr "Nic"
 
 #: ../src/xfpm-settings.c:471
 msgid "Enable UPS charge notification"
-msgstr "UPS 充電通知を有効にする"
+msgstr "Povolit oznámení o nabíjení záložního zdroje"
 
 #: ../src/xfpm-settings.c:471
 msgid "Enable battery state notification"
-msgstr "バッテリの状態通知を有効にする"
+msgstr "Povolit oznámení o nabíjení baterie"
 
 #: ../src/xfpm-settings.c:482
 msgid "Enable power save on UPS power"
-msgstr "UPS 電源時のパワーセーブを有効にする"
+msgstr "Povolit úsporný režim při napájení ze záložního zdroje"
 
 #: ../src/xfpm-settings.c:482
 msgid "Enable power save on battery power"
-msgstr "バッテリ駆動時のパワーセーブを有効にする"
+msgstr "Povolit úsporný režim při napájení z baterie"
 
 #: ../src/xfpm-settings.c:518
 #: ../src/xfpm-settings.c:603
 msgid "Best performance"
-msgstr "最大のパフォーマンス"
+msgstr "Nejvyšší výkon"
 
 #: ../src/xfpm-settings.c:519
 #: ../src/xfpm-settings.c:604
 msgid "Set the CPU to its maximum frequency"
-msgstr "CPU の周波数を最大に設定します"
+msgstr "Nastavit procesor na nejvyšší frekvenci"
 
 #: ../src/xfpm-settings.c:524
 #: ../src/xfpm-settings.c:609
 msgid "Ondemand performance"
-msgstr "要求に応じたパフォーマンス"
+msgstr "Výkon na vyžádání"
 
 #: ../src/xfpm-settings.c:525
 #: ../src/xfpm-settings.c:610
 msgid "Set the CPU to its maximum speed when there is any load on it and to its minimum speed when the system is idle"
-msgstr "CPU の周波数を負荷がかかった時に最大に、システムがアイドル状態の時に最小に設定します"
+msgstr "Nastavit procesor na nejvyšší frekvenci pokud je vytížen a na nejnižší pokud je systém nečinný"
 
 #: ../src/xfpm-settings.c:530
 #: ../src/xfpm-settings.c:615
 msgid "Best power savings"
-msgstr "最大のパワーセーブ"
+msgstr "Nejlepší úspora napájení"
 
 #: ../src/xfpm-settings.c:531
 #: ../src/xfpm-settings.c:616
 msgid "Set the CPU to its minimum frequency"
-msgstr "CPU の周波数を最小に設定します"
+msgstr "Nastavit procesor na nejnižší frekvenci"
 
 #: ../src/xfpm-settings.c:535
 #: ../src/xfpm-settings.c:620
 msgid "Good power savings"
-msgstr "パワーセーブを重視"
+msgstr "Dobrá úspora napájení"
 
 #: ../src/xfpm-settings.c:537
 #: ../src/xfpm-settings.c:622
 msgid "gracefully increases and decreases the CPU speed depending on the current usage"
-msgstr "CPU の速度をその時の使用量に合わせて段階的に増減します"
+msgstr "zvyšuje a snižuje rychlost procesoru v závislosti na aktuálním využití"
 
 #: ../src/xfpm-settings.c:595
 msgid "CPU frequency settings on UPS power"
-msgstr "UPS 電源時の CPU 周波数設定"
+msgstr "Nastavení frekvence procesoru při napájení ze záložního zdroje"
 
 #: ../src/xfpm-settings.c:595
 msgid "CPU frequency settings on battery power"
-msgstr "バッテリ駆動時の CPU 周波数設定"
+msgstr "Nastavení frekvence procesoru při napájení ze baterie"
 
 #: ../src/xfpm-settings.c:685
 msgid "No CPU governor found"
-msgstr "CPU ガバナが見つかりません"
+msgstr "Regulátor procesoru nebyl nalezen"
 
 #: ../src/xfpm-settings.c:695
 msgid "CPU frequency control cannot be used"
-msgstr "CPU 周波数制御は使用できません"
+msgstr "Ovládání frekvence procesoru nelze použít"
 
 #: ../src/xfpm-settings.c:705
 #: ../src/xfpm-settings.c:847
 msgid "On AC power"
-msgstr "AC 電源"
+msgstr "Při napájení ze sítě"
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings on AC power"
-msgstr "AC 電源時の CPU 周波数設定"
+msgstr "Nastavení frekvence procesoru při napájení ze sítě"
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings"
-msgstr "CPU 周波数設定"
+msgstr "Nastavení frekvence procesoru"
 
 #: ../src/xfpm-settings.c:715
 #: ../src/xfpm-settings.c:855
 msgid "On battery power"
-msgstr "バッテリ電源"
+msgstr "Při napájení z baterie"
 
 #: ../src/xfpm-settings.c:735
 msgid "Enable LCD brightness control"
-msgstr "LCD 輝度制御を有効にする"
+msgstr "Povolit ovládání jasu displeje LCD"
 
 #: ../src/xfpm-settings.c:751
 msgid "Monitor settings on UPS power"
-msgstr "UPS 電源時のモニタ設定"
+msgstr "Nastavení monitoru při napájení ze záložního zdroje"
 
 #: ../src/xfpm-settings.c:751
 msgid "Monitor settings on battery power"
-msgstr "バッテリ駆動時のモニタ設定"
+msgstr "Nastavení monitoru při napájení z baterie"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings on AC power"
-msgstr "AC 電源時のモニタ設定"
+msgstr "Nastavení monitoru při napájení ze sítě"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
-msgstr "モニタ設定"
+msgstr "Nastavení monitoru"
 
 #: ../src/xfpm-settings.c:863
 msgid "Your monitor doesn't support DPMS control"
-msgstr "モニタは DPMS 制御をサポートしていません"
+msgstr "Váš monitor nepodporuje ovládání DPMS"
 
 #: ../src/xfpm-settings.c:896
 msgid "Keyboard shortcuts"
-msgstr "キーボードショートカット"
+msgstr "Klávesové zkratky"
 
 #: ../src/xfpm-settings.c:908
 msgid "When power button is pressed do"
-msgstr "電源ボタンが押されたときの動作"
+msgstr "Stisknete-li hlavní vypínač, provést tuto akci:"
 
 #: ../src/xfpm-settings.c:935
 msgid "When sleep button is pressed do"
-msgstr "スリープボタンが押されたときの動作"
+msgstr "Stisknete-li tlačítko režimu spánku, provést tuto akci:"
 
 #: ../src/xfpm-settings.c:963
 msgid "When laptop lid is closed"
-msgstr "ラップトップの蓋が閉じられたとき"
+msgstr "Při zavření laptopu"
 
 #: ../src/xfpm-settings.c:990
 msgid "No available keyboard shortcuts found"
-msgstr "有効なキーボードショートカットが見つかりません"
+msgstr "Nebyly nalezeny žádné dostupné klávesové zkratky"
 
 #: ../src/xfpm-settings.c:1008
 msgid "General Options"
-msgstr "一般設定"
+msgstr "Obecná nastavení"
 
 #. Systray icon
 #: ../src/xfpm-settings.c:1019
 msgid "System tray icon:"
-msgstr "システムトレイアイコン:"
+msgstr "Ikona v oznamovací oblasti:"
 
 #: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
-msgstr "常に表示する"
+msgstr "Vždy zobrazovat ikonu"
 
 #: ../src/xfpm-settings.c:1027
 msgid "When battery is present"
-msgstr "バッテリが存在するとき表示する"
+msgstr "Pokud je přítomna baterie"
 
 #: ../src/xfpm-settings.c:1030
 msgid "When battery is charging or discharging"
-msgstr "バッテリが充電中または放電中のとき表示する"
+msgstr "Pokud se baterie nabíjí nebo vybíjí"
 
 #: ../src/xfpm-settings.c:1048
 msgid "Enable CPU frequency scaling control"
-msgstr "CPU 周波数スケーリング制御を有効にする"
+msgstr "Povolit ovládání změny frekvence procesoru"
 
 #. label = gtk_label_new(_("Enable monitor power management control"));
 #. gtk_widget_show(label);
 #. gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
 #: ../src/xfpm-settings.c:1070
 msgid "Enable monitor power management control"
-msgstr "モニタ電源管理制御を有効にする"
+msgstr "Povolit ovládání správy napájení monitoru"
 
 #: ../src/xfpm-settings.c:1125
 msgid "Advanced settings"
-msgstr "詳細設定"
+msgstr "Pokročilá nastavení"
 
 #: ../src/xfpm-settings.c:1144
 #: ../src/xfpm-settings.c:1149
 msgid "CPU settings"
-msgstr "CPU 設定"
+msgstr "Nastavení procesoru"
 
 #: ../src/xfpm-settings.c:1160
 #: ../src/xfpm-settings.c:1165
 msgid "Battery settings"
-msgstr "バッテリ設定"
+msgstr "Nastavení baterie"
 
 #: ../src/xfpm-settings.c:1176
 #: ../src/xfpm-settings.c:1181
 msgid "Shortcuts"
-msgstr "ショートカットキー"
+msgstr "Klávesové zkratky"
 
 #: ../src/xfpm-settings.c:1191
 #: ../src/xfpm-settings.c:1196
 msgid "Monitor Settings"
-msgstr "モニタ設定"
+msgstr "Nastavení monitoru"
 
 #: ../src/xfpm-settings.c:1231
 msgid "Power Manager Preferences"
-msgstr "電源管理設定"
+msgstr "Předvolby správce napájení"
 
 #: ../src/xfpm-settings.c:1262
 msgid "Extended"
-msgstr "拡張"
+msgstr "Rozšířené"
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
-msgstr "バッテリ充電量は低いです"
+msgstr "Úroveň nabití baterie je nízká"
 
 #: ../src/xfpm-battery-icon.c:376
 msgid "Your battery is almost empty"
-msgstr "バッテリはほぼ空です"
+msgstr "Baterie je téměř vybitá"
 
 #: ../src/xfpm-battery-icon.c:385
 msgid "You are running on Battery"
-msgstr "バッテリ駆動中です"
+msgstr "Napájení z baterie"
 
 #: ../src/xfpm-battery-icon.c:385
 #: ../src/xfpm-battery-icon.c:567
 #: ../src/xfpm-battery-icon.c:571
 msgid "Battery is discharging"
-msgstr "バッテリは放電中です"
+msgstr "Baterie se vybíjí"
 
 #: ../src/xfpm-battery-icon.c:389
 msgid "Your battery is discharging"
-msgstr "バッテリは放電しています"
+msgstr "Baterie se vybíjí"
 
 #: ../src/xfpm-battery-icon.c:397
 #: ../src/xfpm-battery-icon.c:555
 msgid "Battery is charging"
-msgstr "バッテリは充電中です"
+msgstr "Baterie se nabíjí"
 
 #: ../src/xfpm-battery-icon.c:406
 msgid "Your battery is fully charged"
-msgstr "バッテリはフル充電されています"
+msgstr "Baterie je plně nabitá"
 
 #: ../src/xfpm-battery-icon.c:529
 msgid "Not present"
-msgstr "存在しません"
+msgstr "Nepřítomen"
 
 #: ../src/xfpm-battery-icon.c:535
 msgid "%"
@@ -365,23 +364,23 @@ msgstr "%"
 
 #: ../src/xfpm-battery-icon.c:541
 msgid "Battery fully charged"
-msgstr "バッテリフル充電"
+msgstr "Baterie je plně nabitá"
 
 #: ../src/xfpm-battery-icon.c:548
 msgid "Battery charge level"
-msgstr "バッテリ充電レベル"
+msgstr "Úroveň nabití baterie"
 
 #: ../src/xfpm-battery-icon.c:567
 msgid "Running on battery"
-msgstr "バッテリ駆動中"
+msgstr "Napájení z baterie"
 
 #: ../src/xfpm-battery-icon.c:577
 msgid "Battery charge is low"
-msgstr "バッテリ充電量小"
+msgstr "Úroveň nabití baterie je nízká"
 
 #: ../src/xfpm-battery-icon.c:582
 msgid "Battery is almost empty"
-msgstr "バッテリはほぼ空"
+msgstr "Baterie je téměř vybitá"
 
 #: ../src/xfpm-battery-icon.c:607
 msgid ""
@@ -389,7 +388,7 @@ msgid ""
 "Estimated time left"
 msgstr ""
 "\n"
-"残り見積り時間"
+"Odhad zbývajícího času"
 
 #: ../src/xfpm-battery-icon.c:612
 msgid ""
@@ -397,68 +396,68 @@ msgid ""
 "Estimated time to charge"
 msgstr ""
 "\n"
-"充電見積り時間"
+"Odhad času nabití"
 
 #: ../src/xfpm-battery-icon.c:616
 msgid "hours"
-msgstr "時間"
+msgstr "hodin"
 
 #: ../src/xfpm-battery-icon.c:616
 msgid "hour"
-msgstr "時間"
+msgstr "hodina"
 
 #: ../src/xfpm-battery-icon.c:617
 msgid "minutes"
-msgstr "分"
+msgstr "minut"
 
 #: ../src/xfpm-battery-icon.c:617
 msgid "minute"
-msgstr "分"
+msgstr "minuta"
 
 #: ../src/xfpm-dpms-spins.c:50
 msgid "never"
-msgstr "しない"
+msgstr "nikdy"
 
 #: ../src/xfpm-dpms-spins.c:51
 msgid "min"
-msgstr "分"
+msgstr "min"
 
 #: ../src/xfpm-dpms-spins.c:140
 msgid "Standby after"
-msgstr "待機状態にするまでの時間"
+msgstr "Pohotovostní režim po"
 
 #: ../src/xfpm-dpms-spins.c:148
 msgid "Suspend after"
-msgstr "サスペンドするまでの時間"
+msgstr "Režim spánku po"
 
 #: ../src/xfpm-dpms-spins.c:156
 msgid "Turn off after"
-msgstr "電源切断までの時間"
+msgstr "Vypnout po"
 
 #: ../src/xfpm-common.c:146
 #: ../src/xfpm-driver.c:1243
 msgid "Xfce4 Power Manager"
-msgstr "Xfce4 電源管理"
+msgstr "Správce napájení pro Xfce4"
 
 #: ../src/xfpm-common.c:147
 msgid "translator-credits"
-msgstr "Masato Hashimoto <cabezon.hashimoto@gmail.com>"
+msgstr "Michal Várady <miko.vaji@gmail.com>"
 
 #: ../src/xfpm-main.c:61
 msgid "Start xfce power manager"
-msgstr "Xfce 電源管理を起動します"
+msgstr "Spustit správce napájení pro Xfce"
 
 #: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
-msgstr "設定ダイアログを表示します"
+msgstr "Zobrazit konfigurační dialogové okno"
 
 #: ../src/xfpm-main.c:63
 msgid "Quit any running xfce power manager"
-msgstr "動作中の Xfce 電源管理を終了します"
+msgstr "Ukončit všechny běžící správce napájení"
 
 #: ../src/xfpm-main.c:64
 msgid "Settings manager socket"
-msgstr "設定マネージャソケット"
+msgstr "Soket správce nastavení"
 
 #: ../src/xfpm-main.c:64
 msgid "SOCKET ID"
@@ -466,7 +465,7 @@ msgstr "SOCKET ID"
 
 #: ../src/xfpm-main.c:65
 msgid "Version information"
-msgstr "バージョン情報"
+msgstr "Informace o verzi"
 
 #: ../src/xfpm-main.c:73
 #, c-format
@@ -481,119 +480,119 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Xfce 電源管理 %s\n"
+"Správce napájení  %s pro Xfce\n"
 "\n"
-"Part of the Xfce Goodies Project\n"
+"Součást projektu Xfce Goodies\n"
 "http://goodies.xfce.org\n"
 "\n"
-"Licensed under the GNU GPL.\n"
+"Vydáno pod licencí GNU GPL.\n"
 "\n"
 
 #: ../src/xfpm-main.c:87
 msgid "Xfce Power Manager"
-msgstr "Xfce 電源管理"
+msgstr "Správce napájení pro Xfce"
 
 #: ../src/xfpm-main.c:88
 msgid "Unable to read your home directory environment variable, autostart option may not work"
-msgstr "ホームフォルダから環境変数を読み込むことができません。自動開始オプションは動作しないかもしれません。"
+msgstr "Nelze číst proměnnou prostředí domovského adresáře, funkce automatického spuštění nemusí fungovat"
 
 #: ../src/xfpm-main.c:163
 #: ../src/xfpm-main.c:184
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "'%s --help' で使用方法を表示します。"
+msgstr "Informace o použití získáte příkazem '%s --help'."
 
 #: ../src/xfpm-main.c:182
 #, c-format
 msgid "Too many arguments"
-msgstr "引数が多すぎます"
+msgstr "Příliš mnoho argumentů"
 
 #: ../src/xfpm-main.c:198
 #: ../src/xfpm-main.c:254
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr "Xfce 電源管理は動作していません"
+msgstr "Správce napájení Xfce není spuštěn"
 
 #: ../src/xfpm-main.c:201
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce4 電源管理は動作していません。今起動しますか?"
+msgstr "Správce napájení pro Xfce neběží, chcete jej nyní spustit?"
 
 #: ../src/xfpm-main.c:203
 msgid "Run"
-msgstr "起動"
+msgstr "Spustit"
 
 #: ../src/xfpm-main.c:224
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "Xfce 電源管理はすでに動作しています"
+msgstr "Správce napájení pro Xfce je již spuštěn"
 
 #: ../src/xfpm-main.c:233
 msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
-msgstr "Xfce4 電源管理を実行できません。HAL および メッセージバスデーモンが起動されていることを確認してください。"
+msgstr "Nelze spustit správce napájení pro Xfce, ujistěte se, že abstraktní vrstva hardwaru a démon sběrnice zpráv běží"
 
 #: ../src/xfpm-main.c:237
 msgid "Unable to load xfce4 power manager"
-msgstr "Xfce4 電源管理を読み込めません"
+msgstr "Nelze zavést správce napájení pro xfce4"
 
 #: ../src/xfpm-driver.c:291
 msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
-msgstr "AC アダプタのステータスを読み込めません。電源管理は正しく動作しないでしょう。考えられる理由: AC アダプタドライバがロードされていない、HAL との接続が切断されている、あるいはメッセージバスデーモンが作動していない。"
+msgstr "Nelze číst stav adaptéru AC, správce napájení nebude pracovat správně. Možné důvody: Ovladač adaptéru AC není zaveden, přerušené spojení s abstraktní hardwarovou vrstvou nebo démon sběrnice zpráv neběží"
 
 #: ../src/xfpm-driver.c:728
 msgid "System failed to shutdown"
-msgstr "システムのシャットダウンに失敗しました"
+msgstr "Vypnutí systému se nezdařilo"
 
 #: ../src/xfpm-driver.c:907
 msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
-msgstr "電源管理サービスを使用できません。ハイバネートやサスペンドのような機能は動作しません。考えられる理由: 十分なアクセス権が与えられていない、HAL との接続が切断されている、あるいはメッセージバスデーモンが作動していない。"
+msgstr "Nelze použít službu správy napájení, funkce jako hibernace a režim spánku nebudou pracovat. Možné důvody: nemáte dostatečná oprávnění, přerušené spojení s abstraktní hardwarovou vrstvou nebo démon sběrnice zpráv neběží"
 
 #: ../src/xfpm-driver.c:920
 msgid "Don't show this message again"
-msgstr "今後このメッセージを表示しない"
+msgstr "Tuto zprávu již nezobrazovat"
 
 #: ../src/xfpm-driver.c:1243
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "電源管理設定の読み込みに失敗しました。デフォルト値を使用します。"
+msgstr "Načtení konfigurace správce napájení se nezdařilo, používá se výchozí nastavení"
 
 #: ../src/xfpm-hal.c:172
 #, c-format
 msgid "Error monitoring HAL events"
-msgstr "HAL イベントモニタリングでエラーです"
+msgstr "Chyba při monitorování událostí vrstvy HAL"
 
 #: ../src/xfpm-hal.c:261
 #: ../src/xfpm-hal.c:280
 #, c-format
 msgid "Unable to connect to DBus: %s"
-msgstr "D-Bus に接続できませんでした: %s"
+msgstr "Spojení se sběrnicí DBus se nepodařilo navázat: %s"
 
 #: ../src/xfpm-hal.c:268
 msgid "HAL is not running or not responding"
-msgstr "HAL から応答がないか、動作していません"
+msgstr "Vrstva HAL neběží nebo neodpovídá"
 
 #: ../src/xfpm-hal.c:415
 #, c-format
 msgid "Unable to watch device using HAL: %s"
-msgstr "HAL を使用するデバイスをワッチできません: %s"
+msgstr "Nelze sledovat zařízení pomocí vrstvy HAL: %s"
 
 #: ../src/xfpm-hal.c:633
 msgid "No back-end for your operating system"
-msgstr "あなたのオペレーティングシステム用のバックエンドはありません"
+msgstr "Pro váš operační systém není přítomen back-end"
 
 #: ../src/xfpm-hal.c:637
 msgid "No hibernate script found"
-msgstr "ハイバネートスクリプトが見つかりませんでした"
+msgstr "Nebyl nalezen skript pro hibernaci"
 
 #: ../src/xfpm-hal.c:641
 msgid "No suspend script found"
-msgstr "サスペンドスクリプトが見つかりませんでした"
+msgstr "Nebyl nalezen skript pro režim spánku"
 
 #: ../src/xfpm-hal.c:645
 msgid "No suspend method found"
-msgstr "サスペンドメソッドが見つかりませんでした"
+msgstr "Nebyla nalezena metoda pro režim spánku"
 
 #: ../src/xfpm-hal.c:649
 msgid "No hibernate method found"
-msgstr "ハイバネートメソッドが見つかりませんでした"
+msgstr "Nebyla nalezena metoda pro hibernaci"
 
 #: ../src/xfpm-hal.c:675
 #: ../src/xfpm-hal.c:765
@@ -605,92 +604,107 @@ msgstr "ハイバネートメソッドが見つかりませんでした"
 #: ../src/xfpm-hal.c:1108
 #, c-format
 msgid "Out of memory"
-msgstr "メモリ不足です"
+msgstr "Nedostatek paměti"
 
 #: ../src/xfpm-hal.c:707
 #, c-format
 msgid "Message hibernate didn't get a reply"
-msgstr "メッセージハイバネートは応答を得られませんでした"
+msgstr "Zpráva o hibernaci neobdržela odpověď"
 
 #: ../src/xfpm-hal.c:728
 #, c-format
 msgid "System failed to hibernate"
-msgstr "システムはハイバネートに失敗しました"
+msgstr "Hibernace systému se nezdařila"
 
 #: ../src/xfpm-hal.c:734
 #: ../src/xfpm-hal.c:826
 #, c-format
 msgid "Error occured while trying to suspend"
-msgstr "サスペンド処理中にエラーが発生しました"
+msgstr "Při pokusu o přejití do režimu spánku došlo k chybě"
 
 #: ../src/xfpm-hal.c:737
 #: ../src/xfpm-hal.c:829
 #, c-format
 msgid "Unknown reply from the message daemon"
-msgstr "メッセージデーモンからの不明な応答です"
+msgstr "Neznámá odpověď démona zpráv"
 
 #: ../src/xfpm-hal.c:798
 #, c-format
 msgid "Message suspend didn't get a reply"
-msgstr "メッセージサスペンドは応答を得られませんでした"
+msgstr "Zpráva o režimu spánku neobdržela odpověď"
 
 #: ../src/xfpm-hal.c:820
 #, c-format
 msgid "System failed to suspend"
-msgstr "システムはサスペンドに失敗しました"
+msgstr "Nepodařilo se přejít do režimu spánku"
 
 #: ../src/xfpm-hal.c:879
 #, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
-msgstr "HAL デーモンからモニタ輝度レベルを設定するための応答がありません"
+msgstr "Žádná odpověď od démona vrstvy HAL pro nastavení úrovně jasu monitoru"
 
 #: ../src/xfpm-hal.c:926
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
-msgstr "HAL デーモンからモニタ輝度レベルを取得するための応答がありません"
+msgstr "Žádná odpověď od démona vrstvy HAL pro získání úrovně jasu monitoru"
 
 #: ../src/xfpm-hal.c:976
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
-msgstr "HAL デーモンから有効な CPU ガバナを取得するための応答がありません"
+msgstr "Žádná odpověď od démona vrstvy HAL pro získání dostupných regulátorů procesoru"
 
 #: ../src/xfpm-hal.c:1028
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
-msgstr "HAL デーモンから現在の CPU ガバナを取得するための応答がありません"
+msgstr "Žádná odpověď od démona vrstvy HAL pro získání stávajícího regulátoru procesoru"
 
 #: ../src/xfpm-hal.c:1081
 #, c-format
 msgid "No reply from HAL daemon to set cpu governor"
-msgstr "HAL デーモンから CPU ガバナを設定するための応答がありません"
+msgstr "Žádná odpověď od démona vrstvy HAL pro nastavení regulátoru procesoru"
 
 #: ../src/xfpm-hal.c:1127
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
-msgstr "HAL デーモンからパワーセーブプロファイルを設定するための応答がありません"
+msgstr "Žádná odpověď od démona vrstvy HAL pro nastavení profilu úsporného režimu"
 
 #: ../src/xfpm-dbus-messages.c:86
 msgid "Failed to create dbus message\n"
-msgstr "D-Bus メッセージの生成に失敗しました\n"
+msgstr "Nepodařilo se vytvořit zprávu sběrnice dbus\n"
 
 #: ../src/xfpm-dbus-messages.c:122
 #: ../src/xfpm-dbus-messages.c:223
 msgid "Failed to send message\n"
-msgstr "メッセージの送信に失敗しました\n"
+msgstr "Nepodařilo se odeslat zprávu\n"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power"
-msgstr "電源"
+msgstr "Napájení"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power Manager"
-msgstr "電源管理"
+msgstr "Správce napájení"
 
 #: ../src/xfce4-power-manager.desktop.in.h:3
 msgid "Settings for the Xfce 4 Power Manager"
-msgstr "Xfce 4 電源管理を設定します"
+msgstr "Nastavení správce napájení pro Xfce 4"
 
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
-msgstr "Xfce 4 電源管理"
+msgstr "Správce napájení pro Xfce 4"
+
+#~ msgid "On electric power"
+#~ msgstr "Při napájení z elektrické sítě"
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "Nastavení frekvence procesoru při napájení z elektrické sítě"
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Nastavení monitoru při napájení z elektrické sítě"
+#~ msgid "Ondemand"
+#~ msgstr "Na vyžádání"
+#~ msgid "Userspace"
+#~ msgstr "Uživatelský prostor"
+#~ msgid "Powersave"
+#~ msgstr "Úsporný"
+#~ msgid "Conservative"
+#~ msgstr "Konzervativní"
 

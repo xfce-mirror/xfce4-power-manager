@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
  *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+ * * Copyright (C) 2008 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -74,6 +74,14 @@ typedef struct {
                                                                                         
 } XfpmHalClass;    
 
+typedef enum
+{
+	XFPM_HAL_ERROR_GENERAL
+} XfpmHalError;
+
+#define XFPM_HAL_ERROR xfpm_hal_error_quark()
+
+GQuark               xfpm_hal_error_quark                  (void);
 GType                xfpm_hal_get_type                     (void);
 XfpmHal             *xfpm_hal_new                          (void);
 gboolean             xfpm_hal_is_connected                 (XfpmHal *hal);

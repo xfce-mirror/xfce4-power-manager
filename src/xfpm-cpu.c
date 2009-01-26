@@ -271,10 +271,6 @@ gchar *_get_governor_from_enum(XfpmCpuGovernor governor)
     {
         return "performance";
     }
-    else if ( governor == USERSPACE )
-    {
-        return "userspace";
-    }
     else if ( governor == CONSERVATIVE )
     {
         return "conservative";
@@ -288,11 +284,11 @@ static void xfpm_cpu_check(XfpmCpu *cpu)
 	priv = XFPM_CPU_GET_PRIVATE(cpu);
 	
 	if (!xfpm_hal_cpu_freq_interface_can_be_used(priv->hal))
+    {	
 		priv->governors |= CPU_FREQ_CANNOT_BE_USED;
-
-	XFPM_DEBUG("Cpu freq control cannot be used\n");	
+	    XFPM_DEBUG("Cpu freq control cannot be used\n");	
+    }
 }
-
 
 static guint8
 xfpm_cpu_get_all_governors(XfpmCpu *cpu)
@@ -322,7 +318,6 @@ xfpm_cpu_get_all_governors(XfpmCpu *cpu)
 			if ( !strcmp(govs[i],"ondemand") )     governors |= ONDEMAND;
 			if ( !strcmp(govs[i],"performance") )  governors |= PERFORMANCE;
 			if ( !strcmp(govs[i],"conservative") ) governors |= CONSERVATIVE;
-			if ( !strcmp(govs[i],"userspace") )    governors |= USERSPACE;
 		}   
 		libhal_free_string_array(govs);
 	}	

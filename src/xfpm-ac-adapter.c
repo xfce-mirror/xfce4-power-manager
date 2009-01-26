@@ -1,6 +1,6 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
  *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+ * * Copyright (C) 2008 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -46,6 +46,7 @@
 #include <gtk/gtkstatusicon.h>
 
 #include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-common.h"
 
@@ -213,7 +214,7 @@ _ac_adapter_not_found(XfpmAcAdapter *adapter)
         priv->present = TRUE; /* assuming present */
         priv->adapter_found = FALSE;
         gtk_status_icon_set_tooltip(GTK_STATUS_ICON(adapter),
-                                   _("Unkown adapter status, the power manager will not work properly"));
+                                   _("Unable to read adapter status, the power manager will not work properly"));
     }     
     else  
     {
@@ -354,7 +355,7 @@ static void
 xfpm_ac_adapter_hibernate_callback(GtkWidget *widget,XfpmAcAdapter *adapter)
 {
     gboolean ret = 
-    xfce_confirm(_("Are you sure you want to hibernate the system ?"),
+    xfce_confirm(_("Are you sure you want to hibernate the system?"),
                 GTK_STOCK_YES,
                 _("Hibernate"));
     
@@ -368,7 +369,7 @@ static void
 xfpm_ac_adapter_suspend_callback(GtkWidget *widget,XfpmAcAdapter *adapter)
 {
     gboolean ret = 
-    xfce_confirm(_("Are you sure you want to suspend the system ?"),
+    xfce_confirm(_("Are you sure you want to suspend the system?"),
                 GTK_STOCK_YES,
                 _("Suspend"));
     

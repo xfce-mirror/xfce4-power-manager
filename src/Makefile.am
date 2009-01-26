@@ -10,7 +10,7 @@ generated_files =						\
 xfce4_power_manager_SOURCES = 	$(generated_files)		\
 				xfpm-main.c			\
 				xfpm-debug.h			\
-		                xfpm-hal.c          		\
+                xfpm-hal.c          		\
 				xfpm-hal.h	     		\
 				xfpm-driver.c			\
 				xfpm-driver.h			\
@@ -46,6 +46,7 @@ xfce4_power_manager_SOURCES = 	$(generated_files)		\
 
 xfce4_power_manager_CFLAGS =					\
 			-DLOCALEDIR=\"$(localedir)\"		\
+			-DG_LOG_DOMAIN=\"xfce4-power-manager\" \
 			$(GTK_CFLAGS)				\
 			$(GLIB_CFLAGS)				\
 			$(DBUS_CFLAGS)				\
