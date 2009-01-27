@@ -1108,7 +1108,7 @@ _cursor_changed_cb(GtkIconView *view,gpointer data)
 }
 
 static GtkWidget *
-xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
+xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs,gboolean lcd)
 {
     GdkPixbuf *pix;
     GtkWidget *view;
@@ -1183,20 +1183,28 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs)
     }
     
     /// Dpms settings
-#ifdef HAVE_DPMS    
-    pix = xfpm_load_icon("display",38);      
-    gtk_list_store_append(list_store,&iter);
-    if ( pix ) 
+    gboolean show_monitor_settings = FALSE;
+#ifdef HAVE_DPMS
+    show_monitor_settings = TRUE;
+#else
+    if ( lcd )
+    show_monitor_settings = TRUE;
+#endif    
+    
+    if ( show_monitor_settings )
     {
-        gtk_list_store_set(list_store,&iter,0,pix,1,_("Monitor Settings"),2,3,-1);
-        g_object_unref(pix);
+        pix = xfpm_load_icon("display",38);      
+        gtk_list_store_append(list_store,&iter);
+        if ( pix ) 
+        {
+            gtk_list_store_set(list_store,&iter,0,pix,1,_("Monitor Settings"),2,3,-1);
+            g_object_unref(pix);
+        }
+        else
+        {
+            gtk_list_store_set(list_store,&iter,1,_("Monitor Settings"),2,3,-1);
+        }
     }
-    else
-    {
-        gtk_list_store_set(list_store,&iter,1,_("Monitor Settings"),2,3,-1);
-    }
-#endif
-
     GtkTreeSelection *sel;
     GtkTreePath *path;
 
@@ -1265,7 +1273,7 @@ xfpm_settings_new(XfconfChannel *channel,
 
     gtk_box_pack_start (GTK_BOX (allbox), frame, TRUE, TRUE, SPACING);
 	
-    view = xfpm_settings_tree_view(is_laptop,ups_found,govs);
+    view = xfpm_settings_tree_view(is_laptop,ups_found,govs,lcd);
 
 #ifndef HAVE_DPMS	
 	if ( is_laptop || ups_found || govs )
@@ -1301,17 +1309,11 @@ xfpm_settings_new(XfconfChannel *channel,
 		gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL); 
 	}
     
-    /// Dpms settings && LCD brightness settings DPMS existence is checked above
-#ifdef HAVE_DPMS	
+    /// Dpms & LCD brightness settings
+	
     box = xfpm_settings_monitor(channel,is_laptop,dpms_capable,lcd,ups);
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
-#else
-	if ( lcd )
-	{
-		box = xfpm_settings_monitor(channel,is_laptop,dpms_capable,lcd,ups);
-		gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
-	}
-#endif	
+
 
 	GtkWidget *plug;    
     if ( socket_id != 0 )
