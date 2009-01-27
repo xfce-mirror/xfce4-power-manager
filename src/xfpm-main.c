@@ -69,7 +69,6 @@ static GOptionEntry option_entries[] = {
 static void
 show_version()
 {
-    setlocale(LC_ALL,"");
 	g_print (_("\n"
              "Xfce Power Manager %s\n\n"
              "Part of the Xfce Goodies Project\n"
