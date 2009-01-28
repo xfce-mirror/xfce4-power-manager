@@ -1108,7 +1108,7 @@ _cursor_changed_cb(GtkIconView *view,gpointer data)
 }
 
 static GtkWidget *
-xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs,gboolean lcd)
+xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs,gboolean lcd,gboolean switch_buttons)
 {
     GdkPixbuf *pix;
     GtkWidget *view;
@@ -1116,6 +1116,7 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs,gboolean lcd
     GtkTreeIter iter;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
+    gint i = 0;
 
     list_store = gtk_list_store_new(3,GDK_TYPE_PIXBUF,G_TYPE_STRING,G_TYPE_INT);
 
@@ -1141,13 +1142,14 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs,gboolean lcd
 		gtk_list_store_append(list_store,&iter);
 		if ( pix )
 		{
-			gtk_list_store_set(list_store,&iter,0,pix,1,_("CPU settings"),2,0,-1);
+			gtk_list_store_set(list_store,&iter,0,pix,1,_("CPU settings"),2,i,-1);
 			g_object_unref(pix);
 		}
 		else
 		{
-			gtk_list_store_set(list_store,&iter,1,_("CPU settings"),2,0,-1);
+			gtk_list_store_set(list_store,&iter,1,_("CPU settings"),2,i,-1);
 		}
+		i++;
 	}
     
     /// Battery Settings
@@ -1157,29 +1159,31 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs,gboolean lcd
         gtk_list_store_append(list_store,&iter);
         if ( pix )
         {
-            gtk_list_store_set(list_store,&iter,0,pix,1,_("Battery settings"),2,1,-1);
+            gtk_list_store_set(list_store,&iter,0,pix,1,_("Battery settings"),2,i,-1);
             g_object_unref(pix);
         }
         else
         {
-            gtk_list_store_set(list_store,&iter,1,_("Battery settings"),2,1,-1);
+            gtk_list_store_set(list_store,&iter,1,_("Battery settings"),2,i,-1);
         }
+        i++;
    }
 
     /// Keyboard Settings
-    if ( is_laptop )
+    if ( switch_buttons)
     {
         pix = xfpm_load_icon("keyboard",38);
         gtk_list_store_append(list_store,&iter);
         if ( pix )
         {
-            gtk_list_store_set(list_store,&iter,0,pix,1,_("Shortcuts"),2,2,-1);
+            gtk_list_store_set(list_store,&iter,0,pix,1,_("Shortcuts"),2,i,-1);
             g_object_unref(pix);
         }
         else
         {
-            gtk_list_store_set(list_store,&iter,1,_("Shortcuts"),2,2,-1);
+            gtk_list_store_set(list_store,&iter,1,_("Shortcuts"),2,i,-1);
         } 
+        i++;
     }
     
     /// Dpms settings
@@ -1197,13 +1201,14 @@ xfpm_settings_tree_view(gboolean is_laptop,gboolean ups,guint8 govs,gboolean lcd
         gtk_list_store_append(list_store,&iter);
         if ( pix ) 
         {
-            gtk_list_store_set(list_store,&iter,0,pix,1,_("Monitor Settings"),2,3,-1);
+            gtk_list_store_set(list_store,&iter,0,pix,1,_("Monitor Settings"),2,i,-1);
             g_object_unref(pix);
         }
         else
         {
-            gtk_list_store_set(list_store,&iter,1,_("Monitor Settings"),2,3,-1);
+            gtk_list_store_set(list_store,&iter,1,_("Monitor Settings"),2,i,-1);
         }
+        i++;
     }
     GtkTreeSelection *sel;
     GtkTreePath *path;
@@ -1235,7 +1240,7 @@ xfpm_settings_new(XfconfChannel *channel,
     GtkWidget *view;
     GtkWidget *allbox;
     GtkWidget *frame,*align;
-  
+    
     Dialog = xfce_titled_dialog_new_with_buttons(_("Power Manager Preferences"),
                                                     NULL,
                                                     GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -1273,10 +1278,10 @@ xfpm_settings_new(XfconfChannel *channel,
 
     gtk_box_pack_start (GTK_BOX (allbox), frame, TRUE, TRUE, SPACING);
 	
-    view = xfpm_settings_tree_view(is_laptop,ups_found,govs,lcd);
+    view = xfpm_settings_tree_view(is_laptop,ups_found,govs,lcd,switch_buttons);
 
 #ifndef HAVE_DPMS	
-	if ( is_laptop || ups_found || govs )
+	if ( is_laptop || ups_found || govs || switch_buttons )
 	{
 #endif
 		gtk_box_pack_start (GTK_BOX(table), view, FALSE, FALSE, SPACING);
@@ -1296,6 +1301,7 @@ xfpm_settings_new(XfconfChannel *channel,
 	}
 
     /// Battery settings
+    
 	if ( is_laptop || ups )
 	{
 		box = xfpm_settings_battery(channel,power_management,ups);
