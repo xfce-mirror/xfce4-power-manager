@@ -270,3 +270,48 @@ xfpm_dbus_send_nm_message   (const gchar *signal)
         return;
     }         
 }
+
+gboolean xfpm_dbus_register_name(DBusConnection *connection)
+{
+    DBusError error;
+    
+    dbus_error_init(&error);
+    
+    int ret =
+	dbus_bus_request_name(connection,XFPM_PM_IFACE,0,&error);
+	
+	if ( dbus_error_is_set(&error) )
+	{
+		printf("Error: %s\n",error.message);
+		dbus_error_free(&error);
+		return FALSE;
+	}
+	
+	if ( ret == DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER )
+	{
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+
+gboolean xfpm_dbus_release_name(DBusConnection *connection)
+{
+    DBusError error;
+    
+    dbus_error_init(&error);
+    
+    int ret =
+    dbus_bus_release_name(connection,XFPM_PM_IFACE,&error);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+        printf("Error: %s\n",error.message);
+        dbus_error_free(&error);
+        return FALSE;
+    }
+    
+    if ( ret == -1 ) return FALSE;
+    
+    return TRUE;
+}

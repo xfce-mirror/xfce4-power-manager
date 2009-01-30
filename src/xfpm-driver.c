@@ -1246,6 +1246,8 @@ xfpm_driver_monitor (XfpmDriver *drv)
         
     }
     
+    xfpm_dbus_register_name(priv->conn);
+    
     xfpm_driver_load_config(drv);    
     _get_system_form_factor(priv);
     
@@ -1254,8 +1256,12 @@ xfpm_driver_monitor (XfpmDriver *drv)
     xfpm_driver_load_all(drv);
     
     g_main_loop_run(priv->loop);
-    
+   
+    xfpm_dbus_release_name(priv->conn);
+      
     dbus_connection_remove_filter(priv->conn,xfpm_driver_signal_filter,NULL);
+    
+       
     xfconf_shutdown();
     
     return TRUE;
