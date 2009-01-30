@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"POT-Creation-Date: 2009-01-30 12:03+0100\n"
 "PO-Revision-Date: 2008-10-31 21:05+0100\n"
 "Last-Translator: Maximilian Schleiss <maximilian@xfce.org>\n"
 "Language-Team: French <xfce-i18n@xfce.org>\n"
@@ -66,8 +66,9 @@ msgstr ""
 "des pertes de données"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
-#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
+#: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Gestionnaire d'alimentation Xfce"
 
@@ -289,31 +290,31 @@ msgstr "Activer le contrôle de fréquence du processeur"
 msgid "Enable monitor power management control"
 msgstr "Activer le contrôle de fréquence du processeur"
 
-#: ../src/xfpm-settings.c:1125
+#: ../src/xfpm-settings.c:1126
 msgid "Advanced settings"
 msgstr "Réglages avancés"
 
-#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
+#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
 msgid "CPU settings"
 msgstr "Processeur"
 
-#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
+#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
 msgid "Battery settings"
 msgstr "Batterie"
 
-#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
+#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
 msgid "Shortcuts"
 msgstr "Raccourcis"
 
-#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
+#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
 msgid "Monitor Settings"
 msgstr "Écran"
 
-#: ../src/xfpm-settings.c:1231
+#: ../src/xfpm-settings.c:1244
 msgid "Power Manager Preferences"
 msgstr "Préférences du gestionnaire d'alimentation"
 
-#: ../src/xfpm-settings.c:1262
+#: ../src/xfpm-settings.c:1275
 msgid "Extended"
 msgstr ""
 
@@ -436,32 +437,27 @@ msgstr ""
 
 #: ../src/xfpm-main.c:61
 #, fuzzy
-msgid "Start xfce power manager"
-msgstr "Gestionnaire d'alimentation Xfce"
-
-#: ../src/xfpm-main.c:62
-#, fuzzy
 msgid "Show the configuration dialog"
 msgstr "Configuration de l'onduleur"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:62
 #, fuzzy
 msgid "Quit any running xfce power manager"
 msgstr "Gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "Settings manager socket"
 msgstr ""
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "SOCKET ID"
 msgstr ""
 
-#: ../src/xfpm-main.c:65
+#: ../src/xfpm-main.c:64
 msgid "Version information"
 msgstr ""
 
-#: ../src/xfpm-main.c:73
+#: ../src/xfpm-main.c:71
 #, c-format
 msgid ""
 "\n"
@@ -482,11 +478,11 @@ msgstr ""
 "Sous licence GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:87
+#: ../src/xfpm-main.c:85
 msgid "Xfce Power Manager"
 msgstr "Gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-main.c:88
+#: ../src/xfpm-main.c:86
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -494,38 +490,17 @@ msgstr ""
 "Impossible de lire la variable d'environnement de votre répertoire "
 "utilisateur, l'option de démarrage automatique peut ne pas fonctionner"
 
-#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
+#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr ""
 
-#: ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:180
 #, c-format
 msgid "Too many arguments"
 msgstr ""
 
-#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
-#, fuzzy, c-format
-msgid "Xfce power manager is not running"
-msgstr "Le gestionnaire d'alimentation Xfce n'est pas lancé\n"
-
-#: ../src/xfpm-main.c:201
-#, fuzzy
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr ""
-"Le gestionnaire d'alimentation Xfce n'est pas lancé, voulez-vous le lancer "
-"maintenant ?"
-
-#: ../src/xfpm-main.c:203
-msgid "Run"
-msgstr "Éxecuter"
-
-#: ../src/xfpm-main.c:224
-#, fuzzy, c-format
-msgid "Xfce power manager is already running"
-msgstr "Le gestionnaire d'alimentation Xfce est déjà lancé\n"
-
-#: ../src/xfpm-main.c:233
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -533,10 +508,31 @@ msgstr ""
 "Impossible de lancer le gestionnaire d'alimentation, vérifiez que la couche "
 "d'abstraction matérielle (hal) et le bus de messagerie (dbus) fonctionnent"
 
-#: ../src/xfpm-main.c:237
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
 #, fuzzy
 msgid "Unable to load xfce4 power manager"
 msgstr "Échec au chargement du gestionnaire d'alimentation Xfce\n"
+
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#, fuzzy, c-format
+msgid "Xfce power manager is not running"
+msgstr "Le gestionnaire d'alimentation Xfce n'est pas lancé\n"
+
+#: ../src/xfpm-main.c:214
+#, fuzzy
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr ""
+"Le gestionnaire d'alimentation Xfce n'est pas lancé, voulez-vous le lancer "
+"maintenant ?"
+
+#: ../src/xfpm-main.c:216
+msgid "Run"
+msgstr "Éxecuter"
+
+#: ../src/xfpm-main.c:265
+#, fuzzy, c-format
+msgid "Xfce power manager is already running"
+msgstr "Le gestionnaire d'alimentation Xfce est déjà lancé\n"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -713,6 +709,10 @@ msgstr "Gestionnaire d'alimentation Xfce4"
 #, fuzzy
 msgid "Xfce 4 Power Manager"
 msgstr "Gestionnaire d'alimentation Xfce4"
+
+#, fuzzy
+#~ msgid "Start xfce power manager"
+#~ msgstr "Gestionnaire d'alimentation Xfce"
 
 #~ msgid "On electric power"
 #~ msgstr "Sur secteur"

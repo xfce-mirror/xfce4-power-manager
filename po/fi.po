@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"POT-Creation-Date: 2009-01-30 12:03+0100\n"
 "PO-Revision-Date: 2008-11-27 14:44+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish\n"
@@ -58,8 +58,9 @@ msgid "Your battery is almost empty. Save your work to avoid losing data"
 msgstr "Akku on lähes tyhjä. Varmista, että olet tallentanut tärkeät tiedot."
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
-#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
+#: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Xfce:n virranhallinta"
 
@@ -274,31 +275,31 @@ msgstr "Hallitse suorittimen kellotaajuutta"
 msgid "Enable monitor power management control"
 msgstr "Hallitse näytön virransäästöä"
 
-#: ../src/xfpm-settings.c:1125
+#: ../src/xfpm-settings.c:1126
 msgid "Advanced settings"
 msgstr "Lisäasetukset"
 
-#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
+#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
 msgid "CPU settings"
 msgstr "Suoritinasetukset"
 
-#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
+#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
 msgid "Battery settings"
 msgstr "Akkukäyttö"
 
-#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
+#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
 msgid "Shortcuts"
 msgstr "Pikanäppäimet"
 
-#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
+#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
 msgid "Monitor Settings"
 msgstr "Näytön asetukset"
 
-#: ../src/xfpm-settings.c:1231
+#: ../src/xfpm-settings.c:1244
 msgid "Power Manager Preferences"
 msgstr "Virranhallinnan asetukset"
 
-#: ../src/xfpm-settings.c:1262
+#: ../src/xfpm-settings.c:1275
 msgid "Extended"
 msgstr ""
 
@@ -420,30 +421,26 @@ msgid "translator-credits"
 msgstr "Jari Rahkonen <jari.rahkonen@pp1.inet.fi>"
 
 #: ../src/xfpm-main.c:61
-msgid "Start xfce power manager"
-msgstr "Käynnistä Xfce:n virranhallinta"
-
-#: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
 msgstr "Näytä asetusdialogi"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:62
 msgid "Quit any running xfce power manager"
 msgstr "Sammuta Xfce:n virranhallinta, jos se on käynnissä"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "Settings manager socket"
 msgstr "Asetustenhallinnan pistoke"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "SOCKET ID"
 msgstr "PISTOKE"
 
-#: ../src/xfpm-main.c:65
+#: ../src/xfpm-main.c:64
 msgid "Version information"
 msgstr "Versiotiedot"
 
-#: ../src/xfpm-main.c:73
+#: ../src/xfpm-main.c:71
 #, c-format
 msgid ""
 "\n"
@@ -463,11 +460,11 @@ msgstr ""
 "Lisensoitu GNU GPL:n mukaisesti\n"
 "\n"
 
-#: ../src/xfpm-main.c:87
+#: ../src/xfpm-main.c:85
 msgid "Xfce Power Manager"
 msgstr "Xfce:n virranhallinta"
 
-#: ../src/xfpm-main.c:88
+#: ../src/xfpm-main.c:86
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -475,35 +472,17 @@ msgstr ""
 "Kotikansiosi sijaintia ei voi lukea ympäristömuuttujasta HOME, "
 "automaattikäynnistys ei ehkä toimi"
 
-#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
+#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Saat ohjeita komennolla \"%s --help\"."
 
-#: ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:180
 #, c-format
 msgid "Too many arguments"
 msgstr "Liikaa valitsimia"
 
-#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "Xfce:n virranhallinta ei ole käynnissä"
-
-#: ../src/xfpm-main.c:201
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce4 virranhallinta ei ole käynnissä. Haluatko käynnistää sen?"
-
-#: ../src/xfpm-main.c:203
-msgid "Run"
-msgstr "Suorita"
-
-#: ../src/xfpm-main.c:224
-#, c-format
-msgid "Xfce power manager is already running"
-msgstr "Xfce:n virranhallinta on jo käynnissä"
-
-#: ../src/xfpm-main.c:233
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -511,9 +490,27 @@ msgstr ""
 "Xfce4 virranhallintaa ei voi suorittaa. Varmista, että HAL ja DBUS ovat "
 "käynnissä."
 
-#: ../src/xfpm-main.c:237
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
 msgid "Unable to load xfce4 power manager"
 msgstr "Xfce4 virranhallintaa ei voi käynnistää"
+
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Xfce:n virranhallinta ei ole käynnissä"
+
+#: ../src/xfpm-main.c:214
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Xfce4 virranhallinta ei ole käynnissä. Haluatko käynnistää sen?"
+
+#: ../src/xfpm-main.c:216
+msgid "Run"
+msgstr "Suorita"
+
+#: ../src/xfpm-main.c:265
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr "Xfce:n virranhallinta on jo käynnissä"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -677,6 +674,9 @@ msgstr "Xfce4 virranhallinnan asetukset"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce4 virranhallinta"
+
+#~ msgid "Start xfce power manager"
+#~ msgstr "Käynnistä Xfce:n virranhallinta"
 
 #~ msgid "On electric power"
 #~ msgstr "Verkkovirta"

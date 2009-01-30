@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"POT-Creation-Date: 2009-01-30 12:03+0100\n"
 "PO-Revision-Date: 2009-01-17 21:32+0100\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German\n"
@@ -64,8 +64,9 @@ msgstr ""
 "verloren gehen"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
-#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
+#: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Energieverwaltung für Xfce4"
 
@@ -276,31 +277,31 @@ msgstr "Skalierung der CPU-Geschwindigkeit aktivieren"
 msgid "Enable monitor power management control"
 msgstr "Energieverwaltung für Monitor aktivieren"
 
-#: ../src/xfpm-settings.c:1125
+#: ../src/xfpm-settings.c:1126
 msgid "Advanced settings"
 msgstr "Erweitert"
 
-#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
+#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
 msgid "CPU settings"
 msgstr "CPU-Einstellungen"
 
-#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
+#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
 msgid "Battery settings"
 msgstr "Batterieeinstellungen"
 
-#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
+#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
 msgid "Shortcuts"
 msgstr "Tastenkürzel"
 
-#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
+#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
 msgid "Monitor Settings"
 msgstr "Monitoreinstellungen"
 
-#: ../src/xfpm-settings.c:1231
+#: ../src/xfpm-settings.c:1244
 msgid "Power Manager Preferences"
 msgstr "Einstellungen für die Energieverwaltung"
 
-#: ../src/xfpm-settings.c:1262
+#: ../src/xfpm-settings.c:1275
 msgid "Extended"
 msgstr "Erweitert"
 
@@ -423,30 +424,26 @@ msgstr ""
 "Fabian Nowak <timystery@arcor.de>Mark Trompell <mark@foresightlinux.org>"
 
 #: ../src/xfpm-main.c:61
-msgid "Start xfce power manager"
-msgstr "Energieverwaltung für Xfce4 starten"
-
-#: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
 msgstr "Einstellungsdialog anzeigen"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:62
 msgid "Quit any running xfce power manager"
 msgstr "Energieverwaltung für Xfce4 beenden"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "Settings manager socket"
 msgstr "Socket der Sitzungsverwaltung"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "SOCKET ID"
 msgstr "SOCKET-NR"
 
-#: ../src/xfpm-main.c:65
+#: ../src/xfpm-main.c:64
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: ../src/xfpm-main.c:73
+#: ../src/xfpm-main.c:71
 #, c-format
 msgid ""
 "\n"
@@ -467,11 +464,11 @@ msgstr ""
 "Veröffentlicht unter der GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:87
+#: ../src/xfpm-main.c:85
 msgid "Xfce Power Manager"
 msgstr "Energieverwaltung für Xfce"
 
-#: ../src/xfpm-main.c:88
+#: ../src/xfpm-main.c:86
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -479,37 +476,18 @@ msgstr ""
 "Kann die Umgebungsvariable »$HOME« nicht lesen, der Autostart funktioniert "
 "daher eventuell nicht."
 
-#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
+#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr ""
 "Geben Sie »%s --help« ein, um Informationen über die Verwendung zu erhalten"
 
-#: ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:180
 #, c-format
 msgid "Too many arguments"
 msgstr "Zu viele Argumente"
 
-#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "Energieverwaltung für Xfce4 läuft nicht"
-
-#: ../src/xfpm-main.c:201
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr ""
-"Die Energieverwaltung für Xfce4 läuft nicht. Möchten Sie sie jetzt starten?"
-
-#: ../src/xfpm-main.c:203
-msgid "Run"
-msgstr "Starten"
-
-#: ../src/xfpm-main.c:224
-#, c-format
-msgid "Xfce power manager is already running"
-msgstr "Energieverwaltung für Xfce4 läuft bereits"
-
-#: ../src/xfpm-main.c:233
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -517,9 +495,28 @@ msgstr ""
 "Kann die Energieverwaltung für Xfce4 nicht starten. Stellen Sie sicher, dass "
 "die Hardwareabstraktionsschicht und der Nachrichtendienst laufen."
 
-#: ../src/xfpm-main.c:237
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
 msgid "Unable to load xfce4 power manager"
 msgstr "Kann die Energieverwaltung für Xfce4 nicht laden"
+
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Energieverwaltung für Xfce4 läuft nicht"
+
+#: ../src/xfpm-main.c:214
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr ""
+"Die Energieverwaltung für Xfce4 läuft nicht. Möchten Sie sie jetzt starten?"
+
+#: ../src/xfpm-main.c:216
+msgid "Run"
+msgstr "Starten"
+
+#: ../src/xfpm-main.c:265
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr "Energieverwaltung für Xfce4 läuft bereits"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -690,6 +687,9 @@ msgstr "Einstellungen für die Xfce4-Energieverwaltung"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Energieverwaltung für Xfce4"
+
+#~ msgid "Start xfce power manager"
+#~ msgstr "Energieverwaltung für Xfce4 starten"
 
 #, fuzzy
 #~ msgid "On electric power"

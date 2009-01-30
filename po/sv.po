@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-14 16:05+0100\n"
+"POT-Creation-Date: 2009-01-30 12:03+0100\n"
 "PO-Revision-Date: 2008-12-21 19:15+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -19,47 +19,36 @@ msgstr ""
 msgid "Unable to read adapter status, the power manager will not work properly"
 msgstr ""
 
-#: ../src/xfpm-ac-adapter.c:286
-#: ../src/xfpm-ac-adapter.c:308
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is online"
 msgstr ""
 
-#: ../src/xfpm-ac-adapter.c:286
-#: ../src/xfpm-ac-adapter.c:308
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is offline"
 msgstr ""
 
-#: ../src/xfpm-ac-adapter.c:358
-#: ../src/xfpm-battery.c:912
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:912
 msgid "Are you sure you want to hibernate the system?"
 msgstr ""
 
 #. Hibernate menu option
-#: ../src/xfpm-ac-adapter.c:360
-#: ../src/xfpm-ac-adapter.c:396
-#: ../src/xfpm-battery.c:807
-#: ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949
-#: ../src/xfpm-settings.c:450
-#: ../src/xfpm-settings.c:916
-#: ../src/xfpm-settings.c:945
-#: ../src/xfpm-settings.c:968
+#: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
+#: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
+#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
+#: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Viloläge"
 
-#: ../src/xfpm-ac-adapter.c:372
-#: ../src/xfpm-battery.c:927
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:927
 msgid "Are you sure you want to suspend the system?"
 msgstr ""
 
 #. Suspend menu option
-#: ../src/xfpm-ac-adapter.c:374
-#: ../src/xfpm-ac-adapter.c:413
-#: ../src/xfpm-battery.c:929
-#: ../src/xfpm-battery.c:964
-#: ../src/xfpm-settings.c:914
-#: ../src/xfpm-settings.c:943
-#: ../src/xfpm-settings.c:966
+#: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
+#: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
+#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
+#: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Vänteläge"
 
@@ -67,12 +56,9 @@ msgstr "Vänteläge"
 msgid "Your battery is almost empty. Save your work to avoid losing data"
 msgstr ""
 
-#: ../src/xfpm-battery.c:774
-#: ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426
-#: ../src/xfpm-main.c:232
-#: ../src/xfpm-driver.c:304
-#: ../src/xfpm-driver.c:317
+#: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
 #: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr ""
@@ -85,99 +71,91 @@ msgstr ""
 msgid "Hibernate the system"
 msgstr ""
 
-#: ../src/xfpm-battery.c:814
-#: ../src/xfpm-settings.c:446
-#: ../src/xfpm-settings.c:918
-#: ../src/xfpm-settings.c:947
-#: ../src/xfpm-settings.c:970
+#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
+#: ../src/xfpm-settings.c:978
 msgid "Shutdown"
 msgstr "Stäng av"
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "UPS configuration"
 msgstr ""
 
-#: ../src/xfpm-settings.c:418
+#: ../src/xfpm-settings.c:417
 msgid "Battery configuration"
 msgstr ""
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider UPS charge critical"
 msgstr ""
 
-#: ../src/xfpm-settings.c:422
+#: ../src/xfpm-settings.c:424
 msgid "Consider battery charge critical"
 msgstr ""
 
-#: ../src/xfpm-settings.c:427
+#: ../src/xfpm-settings.c:430
 msgid "percent"
 msgstr "procent"
 
-#: ../src/xfpm-settings.c:437
+#: ../src/xfpm-settings.c:440
 msgid "When battery charge level is critical do"
 msgstr ""
 
-#: ../src/xfpm-settings.c:443
-#: ../src/xfpm-settings.c:912
-#: ../src/xfpm-settings.c:941
-#: ../src/xfpm-settings.c:964
+#: ../src/xfpm-settings.c:450 ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:946 ../src/xfpm-settings.c:972
 msgid "Nothing"
 msgstr "Ingenting"
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable UPS charge notification"
 msgstr ""
 
-#: ../src/xfpm-settings.c:464
+#: ../src/xfpm-settings.c:471
 msgid "Enable battery state notification"
 msgstr ""
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on UPS power"
 msgstr ""
 
-#: ../src/xfpm-settings.c:478
+#: ../src/xfpm-settings.c:482
 msgid "Enable power save on battery power"
 msgstr ""
 
-#: ../src/xfpm-settings.c:518
-#: ../src/xfpm-settings.c:603
+#: ../src/xfpm-settings.c:518 ../src/xfpm-settings.c:603
 msgid "Best performance"
 msgstr "Bästa prestanda"
 
-#: ../src/xfpm-settings.c:519
-#: ../src/xfpm-settings.c:604
+#: ../src/xfpm-settings.c:519 ../src/xfpm-settings.c:604
 msgid "Set the CPU to its maximum frequency"
 msgstr ""
 
-#: ../src/xfpm-settings.c:524
-#: ../src/xfpm-settings.c:609
+#: ../src/xfpm-settings.c:524 ../src/xfpm-settings.c:609
 msgid "Ondemand performance"
 msgstr ""
 
-#: ../src/xfpm-settings.c:525
-#: ../src/xfpm-settings.c:610
-msgid "Set the CPU to its maximum speed when there is any load on it and to its minimum speed when the system is idle"
+#: ../src/xfpm-settings.c:525 ../src/xfpm-settings.c:610
+msgid ""
+"Set the CPU to its maximum speed when there is any load on it and to its "
+"minimum speed when the system is idle"
 msgstr ""
 
-#: ../src/xfpm-settings.c:530
-#: ../src/xfpm-settings.c:615
+#: ../src/xfpm-settings.c:530 ../src/xfpm-settings.c:615
 msgid "Best power savings"
 msgstr ""
 
-#: ../src/xfpm-settings.c:531
-#: ../src/xfpm-settings.c:616
+#: ../src/xfpm-settings.c:531 ../src/xfpm-settings.c:616
 msgid "Set the CPU to its minimum frequency"
 msgstr ""
 
-#: ../src/xfpm-settings.c:535
-#: ../src/xfpm-settings.c:620
+#: ../src/xfpm-settings.c:535 ../src/xfpm-settings.c:620
 msgid "Good power savings"
 msgstr ""
 
-#: ../src/xfpm-settings.c:537
-#: ../src/xfpm-settings.c:622
-msgid "gracefully increases and decreases the CPU speed depending on the current usage"
+#: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:622
+msgid ""
+"gracefully increases and decreases the CPU speed depending on the current "
+"usage"
 msgstr ""
 
 #: ../src/xfpm-settings.c:595
@@ -196,124 +174,125 @@ msgstr ""
 msgid "CPU frequency control cannot be used"
 msgstr ""
 
-#: ../src/xfpm-settings.c:705
-#: ../src/xfpm-settings.c:850
-msgid "On electric power"
+#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
+msgid "On AC power"
 msgstr ""
 
 #: ../src/xfpm-settings.c:710
-msgid "CPU frequency settings on electric power"
+msgid "CPU frequency settings on AC power"
 msgstr ""
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings"
 msgstr ""
 
-#: ../src/xfpm-settings.c:715
-#: ../src/xfpm-settings.c:858
+#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:855
 msgid "On battery power"
 msgstr ""
 
-#: ../src/xfpm-settings.c:734
+#: ../src/xfpm-settings.c:735
 msgid "Enable LCD brightness control"
 msgstr ""
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on UPS power"
 msgstr ""
 
-#: ../src/xfpm-settings.c:756
+#: ../src/xfpm-settings.c:751
 msgid "Monitor settings on battery power"
 msgstr ""
 
-#: ../src/xfpm-settings.c:849
-msgid "Monitor settings on electric power"
+#: ../src/xfpm-settings.c:846
+msgid "Monitor settings on AC power"
 msgstr ""
 
-#: ../src/xfpm-settings.c:849
+#: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
 msgstr ""
 
-#: ../src/xfpm-settings.c:866
+#: ../src/xfpm-settings.c:863
 msgid "Your monitor doesn't support DPMS control"
 msgstr ""
 
-#: ../src/xfpm-settings.c:897
+#: ../src/xfpm-settings.c:896
 msgid "Keyboard shortcuts"
 msgstr ""
 
-#: ../src/xfpm-settings.c:907
+#: ../src/xfpm-settings.c:908
 msgid "When power button is pressed do"
 msgstr ""
 
-#: ../src/xfpm-settings.c:933
+#: ../src/xfpm-settings.c:935
 msgid "When sleep button is pressed do"
 msgstr ""
 
-#: ../src/xfpm-settings.c:958
+#: ../src/xfpm-settings.c:963
 msgid "When laptop lid is closed"
 msgstr ""
 
-#: ../src/xfpm-settings.c:982
+#: ../src/xfpm-settings.c:990
 msgid "No available keyboard shortcuts found"
 msgstr ""
 
-#: ../src/xfpm-settings.c:999
+#: ../src/xfpm-settings.c:1008
 msgid "General Options"
 msgstr ""
 
 #. Systray icon
-#: ../src/xfpm-settings.c:1006
-msgid "System tray icon"
+#: ../src/xfpm-settings.c:1019
+msgid "System tray icon:"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1012
+#: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1013
+#: ../src/xfpm-settings.c:1027
 msgid "When battery is present"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1016
+#: ../src/xfpm-settings.c:1030
 msgid "When battery is charging or discharging"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1037
+#: ../src/xfpm-settings.c:1048
 msgid "Enable CPU frequency scaling control"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1051
+#. label = gtk_label_new(_("Enable monitor power management control"));
+#. gtk_widget_show(label);
+#. gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
+#: ../src/xfpm-settings.c:1070
 msgid "Enable monitor power management control"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1104
+#: ../src/xfpm-settings.c:1126
 msgid "Advanced settings"
 msgstr "Avancerade inställningar"
 
-#: ../src/xfpm-settings.c:1123
-#: ../src/xfpm-settings.c:1128
+#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
 msgid "CPU settings"
 msgstr "Processorinställningar"
 
-#: ../src/xfpm-settings.c:1139
-#: ../src/xfpm-settings.c:1144
+#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
 msgid "Battery settings"
 msgstr "Batteriinställningar"
 
-#: ../src/xfpm-settings.c:1155
-#: ../src/xfpm-settings.c:1160
+#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
 msgid "Shortcuts"
 msgstr "Genvägar"
 
-#: ../src/xfpm-settings.c:1170
-#: ../src/xfpm-settings.c:1175
+#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
 msgid "Monitor Settings"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1209
+#: ../src/xfpm-settings.c:1244
 msgid "Power Manager Preferences"
 msgstr "Inställningar för strömhanterare"
+
+#: ../src/xfpm-settings.c:1275
+msgid "Extended"
+msgstr ""
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
@@ -327,8 +306,7 @@ msgstr "Ditt batteri är nästan tomt"
 msgid "You are running on Battery"
 msgstr "Du kör på batteridrift"
 
-#: ../src/xfpm-battery-icon.c:385
-#: ../src/xfpm-battery-icon.c:567
+#: ../src/xfpm-battery-icon.c:385 ../src/xfpm-battery-icon.c:567
 #: ../src/xfpm-battery-icon.c:571
 msgid "Battery is discharging"
 msgstr "Batteriet laddar ur"
@@ -337,8 +315,7 @@ msgstr "Batteriet laddar ur"
 msgid "Your battery is discharging"
 msgstr "Ditt batteri laddar ur"
 
-#: ../src/xfpm-battery-icon.c:397
-#: ../src/xfpm-battery-icon.c:555
+#: ../src/xfpm-battery-icon.c:397 ../src/xfpm-battery-icon.c:555
 msgid "Battery is charging"
 msgstr "Batteriet laddar upp"
 
@@ -410,20 +387,19 @@ msgstr "aldrig"
 msgid "min"
 msgstr "min"
 
-#: ../src/xfpm-dpms-spins.c:129
+#: ../src/xfpm-dpms-spins.c:140
 msgid "Standby after"
 msgstr ""
 
-#: ../src/xfpm-dpms-spins.c:137
+#: ../src/xfpm-dpms-spins.c:148
 msgid "Suspend after"
 msgstr ""
 
-#: ../src/xfpm-dpms-spins.c:145
+#: ../src/xfpm-dpms-spins.c:156
 msgid "Turn off after"
 msgstr ""
 
-#: ../src/xfpm-common.c:146
-#: ../src/xfpm-driver.c:1243
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1243
 msgid "Xfce4 Power Manager"
 msgstr ""
 
@@ -436,30 +412,26 @@ msgstr ""
 "<tp-sv@listor.tp-sv.se>"
 
 #: ../src/xfpm-main.c:61
-msgid "Start xfce power manager"
-msgstr ""
-
-#: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
 msgstr ""
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:62
 msgid "Quit any running xfce power manager"
 msgstr ""
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "Settings manager socket"
 msgstr ""
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "SOCKET ID"
 msgstr ""
 
-#: ../src/xfpm-main.c:65
+#: ../src/xfpm-main.c:64
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: ../src/xfpm-main.c:73
+#: ../src/xfpm-main.c:71
 #, c-format
 msgid ""
 "\n"
@@ -472,54 +444,59 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../src/xfpm-main.c:87
+#: ../src/xfpm-main.c:85
 msgid "Xfce Power Manager"
 msgstr ""
 
-#: ../src/xfpm-main.c:88
-msgid "Unable to read your home directory environment variable, autostart option may not work"
+#: ../src/xfpm-main.c:86
+msgid ""
+"Unable to read your home directory environment variable, autostart option "
+"may not work"
 msgstr ""
 
-#: ../src/xfpm-main.c:163
-#: ../src/xfpm-main.c:184
+#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Ange \"%s --help\" för användningsinformation."
 
-#: ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:180
 #, c-format
 msgid "Too many arguments"
 msgstr "För många argument"
 
-#: ../src/xfpm-main.c:198
-#: ../src/xfpm-main.c:254
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
+msgid ""
+"Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
+"the message bus daemon are running"
+msgstr ""
+
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
+msgid "Unable to load xfce4 power manager"
+msgstr ""
+
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr ""
 
-#: ../src/xfpm-main.c:201
+#: ../src/xfpm-main.c:214
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr ""
 
-#: ../src/xfpm-main.c:203
+#: ../src/xfpm-main.c:216
 msgid "Run"
 msgstr "Kör"
 
-#: ../src/xfpm-main.c:224
+#: ../src/xfpm-main.c:265
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr ""
 
-#: ../src/xfpm-main.c:233
-msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
-msgstr ""
-
-#: ../src/xfpm-main.c:237
-msgid "Unable to load xfce4 power manager"
-msgstr ""
-
 #: ../src/xfpm-driver.c:291
-msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
+msgid ""
+"Unable to read AC adapter status, the power manager will not work properly. "
+"Possible reasons: The AC adapter driver is not loaded, broken connection "
+"with the hardware abstract layer or the message bus daemon is not running"
 msgstr ""
 
 #: ../src/xfpm-driver.c:728
@@ -527,7 +504,11 @@ msgid "System failed to shutdown"
 msgstr ""
 
 #: ../src/xfpm-driver.c:907
-msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
+msgid ""
+"Unable to use power management service, functionalities like hibernate and "
+"suspend will not work. Possible reasons: you don't have enough permission, "
+"broken connection with the hardware abstract layer or the message bus daemon "
+"is not running"
 msgstr ""
 
 #: ../src/xfpm-driver.c:920
@@ -543,8 +524,7 @@ msgstr ""
 msgid "Error monitoring HAL events"
 msgstr ""
 
-#: ../src/xfpm-hal.c:261
-#: ../src/xfpm-hal.c:280
+#: ../src/xfpm-hal.c:261 ../src/xfpm-hal.c:280
 #, c-format
 msgid "Unable to connect to DBus: %s"
 msgstr ""
@@ -578,14 +558,9 @@ msgstr ""
 msgid "No hibernate method found"
 msgstr ""
 
-#: ../src/xfpm-hal.c:675
-#: ../src/xfpm-hal.c:765
-#: ../src/xfpm-hal.c:859
-#: ../src/xfpm-hal.c:908
-#: ../src/xfpm-hal.c:958
-#: ../src/xfpm-hal.c:1010
-#: ../src/xfpm-hal.c:1062
-#: ../src/xfpm-hal.c:1108
+#: ../src/xfpm-hal.c:675 ../src/xfpm-hal.c:765 ../src/xfpm-hal.c:859
+#: ../src/xfpm-hal.c:908 ../src/xfpm-hal.c:958 ../src/xfpm-hal.c:1010
+#: ../src/xfpm-hal.c:1062 ../src/xfpm-hal.c:1108
 #, c-format
 msgid "Out of memory"
 msgstr "Slut på minne"
@@ -600,14 +575,12 @@ msgstr ""
 msgid "System failed to hibernate"
 msgstr ""
 
-#: ../src/xfpm-hal.c:734
-#: ../src/xfpm-hal.c:826
+#: ../src/xfpm-hal.c:734 ../src/xfpm-hal.c:826
 #, c-format
 msgid "Error occured while trying to suspend"
 msgstr ""
 
-#: ../src/xfpm-hal.c:737
-#: ../src/xfpm-hal.c:829
+#: ../src/xfpm-hal.c:737 ../src/xfpm-hal.c:829
 #, c-format
 msgid "Unknown reply from the message daemon"
 msgstr ""
@@ -656,8 +629,7 @@ msgstr ""
 msgid "Failed to create dbus message\n"
 msgstr ""
 
-#: ../src/xfpm-dbus-messages.c:122
-#: ../src/xfpm-dbus-messages.c:223
+#: ../src/xfpm-dbus-messages.c:122 ../src/xfpm-dbus-messages.c:223
 msgid "Failed to send message\n"
 msgstr "Misslyckades med att skicka meddelande\n"
 
@@ -676,4 +648,3 @@ msgstr "Inställningar för Xfce 4 Strömhanterare"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Strömhanterare för Xfce 4"
-

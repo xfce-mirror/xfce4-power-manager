@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"POT-Creation-Date: 2009-01-30 12:03+0100\n"
 "PO-Revision-Date: 2008-11-10 22:46+0700\n"
 "Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
 "Language-Team: Indonesian\n"
@@ -60,8 +60,9 @@ msgstr ""
 "hilangnya data"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
-#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
+#: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Manajer daya Xfce"
 
@@ -276,31 +277,31 @@ msgstr "Aktifkan kendali skala frekuensi CPU"
 msgid "Enable monitor power management control"
 msgstr "Aktifkan monitor kendali manajemen daya"
 
-#: ../src/xfpm-settings.c:1125
+#: ../src/xfpm-settings.c:1126
 msgid "Advanced settings"
 msgstr "Pengaturan mahir"
 
-#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
+#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
 msgid "CPU settings"
 msgstr "Pengaturan CPU"
 
-#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
+#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
 msgid "Battery settings"
 msgstr "Pengaturan baterai"
 
-#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
+#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
 msgid "Shortcuts"
 msgstr "Jalan pintas"
 
-#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
+#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
 msgid "Monitor Settings"
 msgstr "Pengaturan Monitor"
 
-#: ../src/xfpm-settings.c:1231
+#: ../src/xfpm-settings.c:1244
 msgid "Power Manager Preferences"
 msgstr "Pengaturan Manajer Daya"
 
-#: ../src/xfpm-settings.c:1262
+#: ../src/xfpm-settings.c:1275
 msgid "Extended"
 msgstr ""
 
@@ -422,30 +423,26 @@ msgid "translator-credits"
 msgstr "Andhika Padmawan <andhika.padmawan@gmail.com>, 2008."
 
 #: ../src/xfpm-main.c:61
-msgid "Start xfce power manager"
-msgstr "Jalankan manajer daya xfce"
-
-#: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
 msgstr "Tampilkan dialog konfigurasi"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:62
 msgid "Quit any running xfce power manager"
 msgstr "Keluar manajer daya xfce yang berjalan"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "Settings manager socket"
 msgstr "Soket manajer pengaturan"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "SOCKET ID"
 msgstr "ID SOKET"
 
-#: ../src/xfpm-main.c:65
+#: ../src/xfpm-main.c:64
 msgid "Version information"
 msgstr "Informasi versi"
 
-#: ../src/xfpm-main.c:73
+#: ../src/xfpm-main.c:71
 #, c-format
 msgid ""
 "\n"
@@ -466,11 +463,11 @@ msgstr ""
 "Dilisensikan di bawah GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:87
+#: ../src/xfpm-main.c:85
 msgid "Xfce Power Manager"
 msgstr "Manajer Daya Xfce"
 
-#: ../src/xfpm-main.c:88
+#: ../src/xfpm-main.c:86
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -478,35 +475,17 @@ msgstr ""
 "Tak dapat membaca variabel lingkungan direktori rumah anda, opsi mulai "
 "otomatis mungkin tak akan bekerja"
 
-#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
+#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Ketik '%s --help' untuk penggunaan."
 
-#: ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:180
 #, c-format
 msgid "Too many arguments"
 msgstr "Terlalu banyak argumen"
 
-#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "Manajer daya Xfce tak berjalan"
-
-#: ../src/xfpm-main.c:201
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Manajer Daya Xfce4 tak berjalan, anda ingin meluncurkannya sekarang?"
-
-#: ../src/xfpm-main.c:203
-msgid "Run"
-msgstr "Jalankan"
-
-#: ../src/xfpm-main.c:224
-#, c-format
-msgid "Xfce power manager is already running"
-msgstr "Manajer daya Xfce telah berjalan"
-
-#: ../src/xfpm-main.c:233
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -514,9 +493,27 @@ msgstr ""
 "Tak dapat menjalankan manajer daya Xfce4, pastikan lapisan abstrak perangkat "
 "keras dan jurik bus pesan berjalan"
 
-#: ../src/xfpm-main.c:237
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
 msgid "Unable to load xfce4 power manager"
 msgstr "Tak dapat memuat manajer daya xfce4"
+
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Manajer daya Xfce tak berjalan"
+
+#: ../src/xfpm-main.c:214
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Manajer Daya Xfce4 tak berjalan, anda ingin meluncurkannya sekarang?"
+
+#: ../src/xfpm-main.c:216
+msgid "Run"
+msgstr "Jalankan"
+
+#: ../src/xfpm-main.c:265
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr "Manajer daya Xfce telah berjalan"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -683,6 +680,9 @@ msgstr "Pengaturan untuk Manajer Daya Xfce 4"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Manajer Daya Xfce 4"
+
+#~ msgid "Start xfce power manager"
+#~ msgstr "Jalankan manajer daya xfce"
 
 #~ msgid "On electric power"
 #~ msgstr "Pada daya listrik"

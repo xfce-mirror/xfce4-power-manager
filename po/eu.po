@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"POT-Creation-Date: 2009-01-30 12:03+0100\n"
 "PO-Revision-Date: 2008-12-08 23:22+0100\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Euskara <debian-l10n-basque@lists.debian.org>\n"
@@ -63,8 +63,9 @@ msgstr ""
 "Zure bateria nahiko hutsik dago. Gorde zure lana datu galerak saihesteko"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
-#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
+#: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Xfce argindar kudeatzailea"
 
@@ -282,31 +283,31 @@ msgstr "Gaitu CPU maiztasun eskalatze kontrola"
 msgid "Enable monitor power management control"
 msgstr "Gaitu monitore indar kudeaketa kontrola"
 
-#: ../src/xfpm-settings.c:1125
+#: ../src/xfpm-settings.c:1126
 msgid "Advanced settings"
 msgstr "Ezarpen aurreratuak"
 
-#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
+#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
 msgid "CPU settings"
 msgstr "CPU ezarpenak"
 
-#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
+#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
 msgid "Battery settings"
 msgstr "Bateria ezarpenak"
 
-#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
+#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
 msgid "Shortcuts"
 msgstr "Lasterbideak"
 
-#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
+#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
 msgid "Monitor Settings"
 msgstr "Monitore ezarpenak"
 
-#: ../src/xfpm-settings.c:1231
+#: ../src/xfpm-settings.c:1244
 msgid "Power Manager Preferences"
 msgstr "Energia kudeaketa hobespenak"
 
-#: ../src/xfpm-settings.c:1262
+#: ../src/xfpm-settings.c:1275
 msgid "Extended"
 msgstr ""
 
@@ -428,30 +429,26 @@ msgid "translator-credits"
 msgstr "Piarres Beobide <pi@beobide.net>"
 
 #: ../src/xfpm-main.c:61
-msgid "Start xfce power manager"
-msgstr "Abiarazi xfce energia kudeatzailea"
-
-#: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
 msgstr "Ikusi konfigurazio leihoa"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:62
 msgid "Quit any running xfce power manager"
 msgstr "Itxi abiarazitako edozein xfce energia kudeatzaile"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "Settings manager socket"
 msgstr "Ezarpen kudeatzaile socketa"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "SOCKET ID"
 msgstr "SOCKET IDa"
 
-#: ../src/xfpm-main.c:65
+#: ../src/xfpm-main.c:64
 msgid "Version information"
 msgstr "Bertsio argibideak"
 
-#: ../src/xfpm-main.c:73
+#: ../src/xfpm-main.c:71
 #, c-format
 msgid ""
 "\n"
@@ -472,11 +469,11 @@ msgstr ""
 "GNU GPL lizentziaz argitaratua.\n"
 "\n"
 
-#: ../src/xfpm-main.c:87
+#: ../src/xfpm-main.c:85
 msgid "Xfce Power Manager"
 msgstr "Xfce energia kudeatzailea"
 
-#: ../src/xfpm-main.c:88
+#: ../src/xfpm-main.c:86
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -484,35 +481,17 @@ msgstr ""
 "Ezin izan da zure etxe direktorioko ingurune-aldagaiak irakurri, "
 "autoabiarazte aukerak ez du funtzionatuko"
 
-#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
+#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Idatzi '%s --help' erabilera laguntzarentzat."
 
-#: ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:180
 #, c-format
 msgid "Too many arguments"
 msgstr "Argumentu gehiegi"
 
-#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "Xfce energia kudeatzaile ez dago abiarazirik"
-
-#: ../src/xfpm-main.c:201
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce energia kudeatzaile ez dago abiarazirik, abiarazi nahi al duzu?"
-
-#: ../src/xfpm-main.c:203
-msgid "Run"
-msgstr "Exekutatu"
-
-#: ../src/xfpm-main.c:224
-#, c-format
-msgid "Xfce power manager is already running"
-msgstr "Xfce energia kudeatzailea ez dago abiarazirik"
-
-#: ../src/xfpm-main.c:233
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -520,9 +499,27 @@ msgstr ""
 "Ezin da Xfce energia kudeatzailea abiarazi, ziurtatu zaitez hardware "
 "abstrakzio geruza (hal)  eta mezu bus deabrua (dbus) martxan daudela"
 
-#: ../src/xfpm-main.c:237
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
 msgid "Unable to load xfce4 power manager"
 msgstr "Ezin da xfce4 energia kudeatzailea kargatu"
+
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Xfce energia kudeatzaile ez dago abiarazirik"
+
+#: ../src/xfpm-main.c:214
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Xfce energia kudeatzaile ez dago abiarazirik, abiarazi nahi al duzu?"
+
+#: ../src/xfpm-main.c:216
+msgid "Run"
+msgstr "Exekutatu"
+
+#: ../src/xfpm-main.c:265
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr "Xfce energia kudeatzailea ez dago abiarazirik"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -694,6 +691,9 @@ msgstr "Xfce 4 energia kudeaketa ezarpenak"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce 4 energia kudeaketa"
+
+#~ msgid "Start xfce power manager"
+#~ msgstr "Abiarazi xfce energia kudeatzailea"
 
 #~ msgid "On electric power"
 #~ msgstr "Sare-elektriko indarrez"

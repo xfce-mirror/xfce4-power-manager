@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"POT-Creation-Date: 2009-01-30 12:03+0100\n"
 "PO-Revision-Date: 2009-01-26 17:30+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
@@ -15,11 +15,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../src/xfpm-ac-adapter.c:217
 msgid "Unable to read adapter status, the power manager will not work properly"
-msgstr "Неможливо визначити стан адаптера, менеджер живлення не працює правильно"
+msgstr ""
+"Неможливо визначити стан адаптера, менеджер живлення не працює правильно"
 
 #: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is online"
@@ -56,11 +58,13 @@ msgstr "Призупинити"
 
 #: ../src/xfpm-battery.c:769
 msgid "Your battery is almost empty. Save your work to avoid losing data"
-msgstr "Ваша батарея майже розряджена. Збережіть Вашу роботу щоб не втратити дані"
+msgstr ""
+"Ваша батарея майже розряджена. Збережіть Вашу роботу щоб не втратити дані"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
-#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
+#: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Менеджер живлення Xfce"
 
@@ -271,31 +275,31 @@ msgstr "Дозволити управління частотою процесо�
 msgid "Enable monitor power management control"
 msgstr "Дозволити стеження за управлінням живленням"
 
-#: ../src/xfpm-settings.c:1125
+#: ../src/xfpm-settings.c:1126
 msgid "Advanced settings"
 msgstr "Додаткові налаштування"
 
-#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
+#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
 msgid "CPU settings"
 msgstr "Налаштування процесора"
 
-#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
+#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
 msgid "Battery settings"
 msgstr "Налаштування батареї"
 
-#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
+#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
 msgid "Shortcuts"
 msgstr "Швидкі клавіші клавіатури"
 
-#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
+#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
 msgid "Monitor Settings"
 msgstr "Налаштування стеження"
 
-#: ../src/xfpm-settings.c:1231
+#: ../src/xfpm-settings.c:1244
 msgid "Power Manager Preferences"
 msgstr "Налаштування менеджера живлення"
 
-#: ../src/xfpm-settings.c:1262
+#: ../src/xfpm-settings.c:1275
 msgid "Extended"
 msgstr "Розширені"
 
@@ -417,30 +421,26 @@ msgid "translator-credits"
 msgstr "Dmitry Nikitin <luckas_fb@mail.ru>"
 
 #: ../src/xfpm-main.c:61
-msgid "Start xfce power manager"
-msgstr "Запустити менеджер живлення xfce"
-
-#: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
 msgstr "Показати діалог налаштування"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:62
 msgid "Quit any running xfce power manager"
 msgstr "Завершити будь-який запущений менеджер живлення xfce"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "Settings manager socket"
 msgstr "Сокет менеджера властивостей"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "SOCKET ID"
 msgstr "ID сокета"
 
-#: ../src/xfpm-main.c:65
+#: ../src/xfpm-main.c:64
 msgid "Version information"
 msgstr "Інформація про версію"
 
-#: ../src/xfpm-main.c:73
+#: ../src/xfpm-main.c:71
 #, c-format
 msgid ""
 "\n"
@@ -461,11 +461,11 @@ msgstr ""
 "Ліцензовано під GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:87
+#: ../src/xfpm-main.c:85
 msgid "Xfce Power Manager"
 msgstr "Менеджер живлення Xfce"
 
-#: ../src/xfpm-main.c:88
+#: ../src/xfpm-main.c:86
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -473,35 +473,17 @@ msgstr ""
 "Неможливо прочитати змінні середовища домашньої теки, опція автозапуску може "
 "не працювати"
 
-#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
+#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Наберіть '%s --help' для використання."
 
-#: ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:180
 #, c-format
 msgid "Too many arguments"
 msgstr "Забагато параметрів"
 
-#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "Менеджер живлення Xfce не працює"
-
-#: ../src/xfpm-main.c:201
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Менеджер живлення Xfce4 не працює, може хочете запустити його зараз?"
-
-#: ../src/xfpm-main.c:203
-msgid "Run"
-msgstr "Запустити"
-
-#: ../src/xfpm-main.c:224
-#, c-format
-msgid "Xfce power manager is already running"
-msgstr "Менеджер живлення Xfce вже працює"
-
-#: ../src/xfpm-main.c:233
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -509,9 +491,27 @@ msgstr ""
 "Неможливо запустити менеджер живлення Xfce4, впевніться, що працюють HAL і "
 "служба повідомлень шини даних"
 
-#: ../src/xfpm-main.c:237
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
 msgid "Unable to load xfce4 power manager"
 msgstr "Неможливо завантажити менеджер живлення xfce4"
+
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Менеджер живлення Xfce не працює"
+
+#: ../src/xfpm-main.c:214
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Менеджер живлення Xfce4 не працює, може хочете запустити його зараз?"
+
+#: ../src/xfpm-main.c:216
+msgid "Run"
+msgstr "Запустити"
+
+#: ../src/xfpm-main.c:265
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr "Менеджер живлення Xfce вже працює"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -627,22 +627,26 @@ msgstr "Не вдалось призупинити систему"
 #: ../src/xfpm-hal.c:879
 #, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
-msgstr "Немає відповіді від служби HAL для встановлення рівня яскравості монітора"
+msgstr ""
+"Немає відповіді від служби HAL для встановлення рівня яскравості монітора"
 
 #: ../src/xfpm-hal.c:926
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
-msgstr "Немає відповіді від служби HAL для визначення рівня яскравості монітора"
+msgstr ""
+"Немає відповіді від служби HAL для визначення рівня яскравості монітора"
 
 #: ../src/xfpm-hal.c:976
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
-msgstr "Немає відповіді від служби HAL для визначення наявного управління процесорами"
+msgstr ""
+"Немає відповіді від служби HAL для визначення наявного управління процесорами"
 
 #: ../src/xfpm-hal.c:1028
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
-msgstr "Немає відповіді від служби HAL для визначення наявного управління процесором"
+msgstr ""
+"Немає відповіді від служби HAL для визначення наявного управління процесором"
 
 #: ../src/xfpm-hal.c:1081
 #, c-format
@@ -652,7 +656,8 @@ msgstr "Немає відповіді від служби HAL для встан�
 #: ../src/xfpm-hal.c:1127
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
-msgstr "Немає відповіді від служби HAL для встановлення профілю збереження енергії"
+msgstr ""
+"Немає відповіді від служби HAL для встановлення профілю збереження енергії"
 
 #: ../src/xfpm-dbus-messages.c:86
 msgid "Failed to create dbus message\n"
@@ -678,3 +683,5 @@ msgstr "Налаштування для менеджера живлення Xfce
 msgid "Xfce 4 Power Manager"
 msgstr "Менеджер живлення Xfce 4"
 
+#~ msgid "Start xfce power manager"
+#~ msgstr "Запустити менеджер живлення xfce"

@@ -58,7 +58,6 @@ static gboolean config  = FALSE;
 static gboolean version = FALSE;
 
 static GOptionEntry option_entries[] = {
-	{ "run", 'r', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &run, N_("Start xfce power manager"), NULL },
 	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
 	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
     { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
@@ -199,8 +198,8 @@ int main(int argc,char **argv)
                                   "make sure the hardware abstract layer and the message bus daemon "\
                                   "are running"),
                                   GTK_MESSAGE_ERROR);
-                g_error(_("Unable to load xfce4 power manager"));
-                g_print("\n");
+        g_error(_("Unable to load xfce4 power manager"));
+        g_print("\n");
         dbus_error_free(&derror);        
         return EXIT_FAILURE;        
 	}
@@ -217,7 +216,7 @@ int main(int argc,char **argv)
                         _("Run"));
             if ( ret ) 
             {
-                g_spawn_command_line_async("xfce4-power-manager -r",NULL);
+                g_spawn_command_line_async("xfce4-power-manager",NULL);
             }
             return EXIT_SUCCESS;
 	    }
@@ -228,36 +227,7 @@ int main(int argc,char **argv)
 	    }
 	}     
 	 
-	if ( run )
-	{
-	    if (!xfpm_dbus_name_has_owner(connection,XFPM_PM_IFACE))
-	    {
-	     
-	        XfpmDriver *driver = xfpm_driver_new();
-            autostart();
-            if (!xfpm_driver_monitor(driver)) 
-            {
-                xfpm_popup_message(_("Xfce power manager"),
-                                  _("Unable to run Xfce4 power manager, " \
-                                  "make sure the hardware abstract layer and the message bus daemon "\
-                                  "are running"),
-                                  GTK_MESSAGE_ERROR);
-                g_error(_("Unable to load xfce4 power manager"));
-                g_print("\n");
-                g_object_unref(driver);
-                return EXIT_FAILURE;
-            }
-	    }
-	    else
-	    {
-            g_print(_("Xfce power manager is already running"));
-			g_print("\n");
-            return EXIT_SUCCESS;
-	    }
-	    
-	}
-	
-    if ( quit )
+	if ( quit )
     {
         if (!xfpm_dbus_name_has_owner(connection,XFPM_PM_IFACE))
         {
@@ -268,9 +238,34 @@ int main(int argc,char **argv)
         else
         {
             xfpm_dbus_send_message("Quit");
+            return EXIT_SUCCESS;
         }
-        
     }    
-    	
+    
+    if (!xfpm_dbus_name_has_owner(connection,XFPM_PM_IFACE))
+    {
+     
+        XfpmDriver *driver = xfpm_driver_new();
+        autostart();
+        if (!xfpm_driver_monitor(driver)) 
+        {
+            xfpm_popup_message(_("Xfce power manager"),
+                              _("Unable to run Xfce4 power manager, " \
+                              "make sure the hardware abstract layer and the message bus daemon "\
+                              "are running"),
+                              GTK_MESSAGE_ERROR);
+            g_error(_("Unable to load xfce4 power manager"));
+            g_print("\n");
+            g_object_unref(driver);
+            return EXIT_FAILURE;
+        }
+    }
+    else
+    {
+        g_print(_("Xfce power manager is already running"));
+        g_print("\n");
+        return EXIT_SUCCESS;
+    }
+	    
     return EXIT_SUCCESS;
 }    

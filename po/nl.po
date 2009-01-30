@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"POT-Creation-Date: 2009-01-30 12:03+0100\n"
 "PO-Revision-Date: 2008-11-07 14:21+0100\n"
 "Last-Translator: Vincent Tunru <projects@vinnl.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
@@ -63,8 +63,9 @@ msgstr ""
 "dataverlies te voorkomen"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
-#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
+#: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Xfce energiebeheer"
 
@@ -291,32 +292,32 @@ msgstr "LCD-helderheid-beheer inschakelen"
 msgid "Enable monitor power management control"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1125
+#: ../src/xfpm-settings.c:1126
 msgid "Advanced settings"
 msgstr "Geavanceerde instellingen"
 
-#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
+#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
 #, fuzzy
 msgid "CPU settings"
 msgstr "CPU-instellingen"
 
-#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
+#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
 msgid "Battery settings"
 msgstr "Batterij-instellingen"
 
-#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
+#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
 msgid "Shortcuts"
 msgstr "Sneltoetsen"
 
-#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
+#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
 msgid "Monitor Settings"
 msgstr ""
 
-#: ../src/xfpm-settings.c:1231
+#: ../src/xfpm-settings.c:1244
 msgid "Power Manager Preferences"
 msgstr "Voorkeuren energiebeheer"
 
-#: ../src/xfpm-settings.c:1262
+#: ../src/xfpm-settings.c:1275
 msgid "Extended"
 msgstr ""
 
@@ -444,32 +445,27 @@ msgstr "Vincent Tunru <projects@vinnl.nl>"
 
 #: ../src/xfpm-main.c:61
 #, fuzzy
-msgid "Start xfce power manager"
-msgstr "Xfce energiebeheer"
-
-#: ../src/xfpm-main.c:62
-#, fuzzy
 msgid "Show the configuration dialog"
 msgstr "Batterij-configuratie"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:62
 #, fuzzy
 msgid "Quit any running xfce power manager"
 msgstr "Xfce energiebeheer"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "Settings manager socket"
 msgstr ""
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:63
 msgid "SOCKET ID"
 msgstr ""
 
-#: ../src/xfpm-main.c:65
+#: ../src/xfpm-main.c:64
 msgid "Version information"
 msgstr "Versie-informatie"
 
-#: ../src/xfpm-main.c:73
+#: ../src/xfpm-main.c:71
 #, c-format
 msgid ""
 "\n"
@@ -490,12 +486,12 @@ msgstr ""
 "De GNU GPL-licentie is van toepassing.\n"
 "\n"
 
-#: ../src/xfpm-main.c:87
+#: ../src/xfpm-main.c:85
 #, fuzzy
 msgid "Xfce Power Manager"
 msgstr "Energiebeheer"
 
-#: ../src/xfpm-main.c:88
+#: ../src/xfpm-main.c:86
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -503,36 +499,17 @@ msgstr ""
 "Kan de locatie van uw persoonlijke map niet uitlezen, wellicht werkt "
 "autostarten niet"
 
-#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
+#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Type '%s --help' voor gebruiksinstructies."
 
-#: ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:180
 #, c-format
 msgid "Too many arguments"
 msgstr "Te veel argumenten"
 
-#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
-#, fuzzy, c-format
-msgid "Xfce power manager is not running"
-msgstr "Xfce energiebeheer"
-
-#: ../src/xfpm-main.c:201
-#, fuzzy
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Energiebeheer is niet actief, wilt u het activeren"
-
-#: ../src/xfpm-main.c:203
-msgid "Run"
-msgstr "Uitvoeren"
-
-#: ../src/xfpm-main.c:224
-#, fuzzy, c-format
-msgid "Xfce power manager is already running"
-msgstr "Xfce energiebeheer"
-
-#: ../src/xfpm-main.c:233
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
 #, fuzzy
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
@@ -541,10 +518,29 @@ msgstr ""
 "Kan het energiebeheer niet uitvoeren, controlleer of HAL en de "
 "berichtenserver draaien"
 
-#: ../src/xfpm-main.c:237
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
 #, fuzzy
 msgid "Unable to load xfce4 power manager"
 msgstr "Energiebeheer"
+
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#, fuzzy, c-format
+msgid "Xfce power manager is not running"
+msgstr "Xfce energiebeheer"
+
+#: ../src/xfpm-main.c:214
+#, fuzzy
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Energiebeheer is niet actief, wilt u het activeren"
+
+#: ../src/xfpm-main.c:216
+msgid "Run"
+msgstr "Uitvoeren"
+
+#: ../src/xfpm-main.c:265
+#, fuzzy, c-format
+msgid "Xfce power manager is already running"
+msgstr "Xfce energiebeheer"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -716,6 +712,10 @@ msgstr "Energiebeheer"
 #, fuzzy
 msgid "Xfce 4 Power Manager"
 msgstr "Energiebeheer"
+
+#, fuzzy
+#~ msgid "Start xfce power manager"
+#~ msgstr "Xfce energiebeheer"
 
 #, fuzzy
 #~ msgid "CPU frequency settings on electric power"
