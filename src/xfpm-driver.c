@@ -1184,13 +1184,6 @@ static DBusHandlerResult xfpm_driver_signal_filter
         return DBUS_HANDLER_RESULT_HANDLED;
     }    
     
-    if ( dbus_message_is_signal(message,"xfpm.power.manager","Running" ) )
-    {
-        XFPM_DEBUG("message running received\n");
-        xfpm_driver_send_reply(connection,message);
-        return DBUS_HANDLER_RESULT_HANDLED;
-    }    
-    
     return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
 }
 

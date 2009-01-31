@@ -58,6 +58,7 @@ static gboolean config  = FALSE;
 static gboolean version = FALSE;
 
 static GOptionEntry option_entries[] = {
+    { "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE,&run,NULL,NULL },
 	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
 	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
     { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
@@ -116,7 +117,7 @@ autostart()
     g_key_file_set_string(key,"Desktop Entry","Type","Application");    
     g_key_file_set_string(key,"Desktop Entry","Name","Xfce4 Power Manager"); 
     g_key_file_set_string(key,"Desktop Entry","Icon","gpm-ac-adapter"); 
-    g_key_file_set_string(key,"Desktop Entry","Exec","xfce4-power-manager -r"); 
+    g_key_file_set_string(key,"Desktop Entry","Exec","xfce4-power-manager"); 
     g_key_file_set_boolean(key,"Desktop Entry","StartupNotify",FALSE); 
     g_key_file_set_boolean(key,"Desktop Entry","Terminal",FALSE); 
     g_key_file_set_boolean(key,"Desktop Entry","Hidden",FALSE); 
@@ -150,7 +151,7 @@ autostart()
 int main(int argc,char **argv) 
 {
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
-    
+
    	GError *error = NULL;
 
     if(!gtk_init_with_args(&argc, &argv, "", option_entries, PACKAGE, &error)) 
@@ -242,7 +243,7 @@ int main(int argc,char **argv)
         }
     }    
     
-    if (!xfpm_dbus_name_has_owner(connection,XFPM_PM_IFACE))
+    if (!xfpm_dbus_name_has_owner(connection,XFPM_PM_IFACE) )
     {
      
         XfpmDriver *driver = xfpm_driver_new();
