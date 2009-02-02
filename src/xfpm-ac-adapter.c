@@ -450,7 +450,7 @@ xfpm_ac_adapter_popup_menu(GtkStatusIcon *tray_icon,
 	
 	// Popup the menu
 	gtk_menu_popup(GTK_MENU(menu),NULL,NULL,
-		       NULL,NULL,button,activate_time);
+		       gtk_status_icon_position_menu,tray_icon,button,activate_time);
 }                                             
 
 GtkStatusIcon *
