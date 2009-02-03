@@ -1,15 +1,16 @@
-# Catalan translations for xfce package
-# Traduccions al català del paquet «xfce».
-# Copyright (C) 2008 THE xfce'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the xfce package.
-# Carles Muñoz Gorriz <carlesmu@internautas.org>, 2008.
+# Catalan translations for xfce4-power-manager package
+# Traduccions al català del paquet «xfce4-power-manager».
+# Copyright (C) 2008 THE xfce4-power-manager'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the xfce4-power-manager 
+# package.
+# Carles Muñoz Gorriz <carlesmu@internautas.org>, 2008-2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-30 12:03+0100\n"
-"PO-Revision-Date: 2008-12-28 18:24+0100\n"
+"POT-Creation-Date: 2009-01-15 18:48+0100\n"
+"PO-Revision-Date: 2009-02-01 11:47+0100\n"
 "Last-Translator: Carles Muñoz Gorriz <carlesmu@internautas.org>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
@@ -63,9 +64,8 @@ msgstr ""
 "perdre dades"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
-#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
-#: ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:232
+#: ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317 ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Gestor d'energia de Xfce"
 
@@ -183,14 +183,12 @@ msgid "CPU frequency control cannot be used"
 msgstr "No es pot emprar el controlador de freqüència de la CPU"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-#, fuzzy
 msgid "On AC power"
-msgstr "Al emprar la bateria"
+msgstr "Al emprar la xarxa elèctrica"
 
 #: ../src/xfpm-settings.c:710
-#, fuzzy
 msgid "CPU frequency settings on AC power"
-msgstr "Ajustaments de freqüència de la CPU al emprar un SAI"
+msgstr "Ajustaments de freqüència de la CPU al emprar la xarxa elèctrica"
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings"
@@ -213,9 +211,8 @@ msgid "Monitor settings on battery power"
 msgstr "Ajustaments de la pantalla quan s'empra la bateria"
 
 #: ../src/xfpm-settings.c:846
-#, fuzzy
 msgid "Monitor settings on AC power"
-msgstr "Ajustaments de la pantalla quan s'empra un SAI"
+msgstr "Ajustaments de la pantalla quan s'empra la xarxa eleèctrica"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -251,9 +248,8 @@ msgstr "Opcions generals"
 
 #. Systray icon
 #: ../src/xfpm-settings.c:1019
-#, fuzzy
 msgid "System tray icon:"
-msgstr "Icona de la safata del sistema"
+msgstr "Icona de la safata del sistema:"
 
 #: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
@@ -278,33 +274,33 @@ msgstr "Habilita el controlador d'escalat de freqüència de la CPU"
 msgid "Enable monitor power management control"
 msgstr "Habilita el controlador de pantalla del gestor d'energia"
 
-#: ../src/xfpm-settings.c:1126
+#: ../src/xfpm-settings.c:1125
 msgid "Advanced settings"
 msgstr "Ajustaments avançats"
 
-#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
+#: ../src/xfpm-settings.c:1144 ../src/xfpm-settings.c:1149
 msgid "CPU settings"
 msgstr "Ajustaments de la CPU"
 
-#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
+#: ../src/xfpm-settings.c:1160 ../src/xfpm-settings.c:1165
 msgid "Battery settings"
 msgstr "Ajustaments de la bateria"
 
-#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
+#: ../src/xfpm-settings.c:1176 ../src/xfpm-settings.c:1181
 msgid "Shortcuts"
 msgstr "Dreceres"
 
-#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
+#: ../src/xfpm-settings.c:1191 ../src/xfpm-settings.c:1196
 msgid "Monitor Settings"
 msgstr "Ajustaments de la pantalla"
 
-#: ../src/xfpm-settings.c:1244
+#: ../src/xfpm-settings.c:1231
 msgid "Power Manager Preferences"
 msgstr "Preferències del gestor d'energia"
 
-#: ../src/xfpm-settings.c:1275
+#: ../src/xfpm-settings.c:1262
 msgid "Extended"
-msgstr ""
+msgstr "Estès"
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
@@ -424,26 +420,30 @@ msgid "translator-credits"
 msgstr "Carles Muñoz Gorriz <carlesmu@internautas.org>"
 
 #: ../src/xfpm-main.c:61
+msgid "Start xfce power manager"
+msgstr "Inicia el gestor d'energia de Xfce"
+
+#: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
 msgstr "Mostra el diàleg de configuració"
 
-#: ../src/xfpm-main.c:62
+#: ../src/xfpm-main.c:63
 msgid "Quit any running xfce power manager"
 msgstr "Surt de tots els gestors d'energia de Xfce en execució"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:64
 msgid "Settings manager socket"
 msgstr "Sòcol del gestor d'ajustaments"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:64
 msgid "SOCKET ID"
 msgstr "SÒCOL ID"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:65
 msgid "Version information"
 msgstr "Informació de la versió"
 
-#: ../src/xfpm-main.c:71
+#: ../src/xfpm-main.c:73
 #, c-format
 msgid ""
 "\n"
@@ -464,11 +464,11 @@ msgstr ""
 "Amb llicència GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:85
+#: ../src/xfpm-main.c:87
 msgid "Xfce Power Manager"
 msgstr "Gestor d'energia de Xfce"
 
-#: ../src/xfpm-main.c:86
+#: ../src/xfpm-main.c:88
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -476,17 +476,36 @@ msgstr ""
 "No s'ha pogut llegir la variable d'entorn del vostre directori d'usuari, "
 "l'opció d'inici automàtic no funcionarà"
 
-#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:163 ../src/xfpm-main.c:184
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Feu «%s --help» per veure l'ús."
 
-#: ../src/xfpm-main.c:180
+#: ../src/xfpm-main.c:182
 #, c-format
 msgid "Too many arguments"
 msgstr "Masses arguments"
 
-#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
+#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "No s'està executant el gestor d'energia de Xfce"
+
+#: ../src/xfpm-main.c:201
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr ""
+"El gestor d'energia de Xfce4 no s'està executant, veleu tornar a executar-lo?"
+
+#: ../src/xfpm-main.c:203
+msgid "Run"
+msgstr "Executa"
+
+#: ../src/xfpm-main.c:224
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr "El gestor d'energia de Xfce ja s'està executant"
+
+#: ../src/xfpm-main.c:233
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -494,28 +513,9 @@ msgstr ""
 "No es por executar el gestor d'energia de Xfce4, comproveu que la capa del "
 "maquinari i el dimoni de missatges de bus s'estan executant"
 
-#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
+#: ../src/xfpm-main.c:237
 msgid "Unable to load xfce4 power manager"
 msgstr "No es pot carregat el gestor d'energia de xfce4"
-
-#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "No s'està executant el gestor d'energia de Xfce"
-
-#: ../src/xfpm-main.c:214
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr ""
-"El gestor d'energia de Xfce4 no s'està executant, veleu tornar a executar-lo?"
-
-#: ../src/xfpm-main.c:216
-msgid "Run"
-msgstr "Executa"
-
-#: ../src/xfpm-main.c:265
-#, c-format
-msgid "Xfce power manager is already running"
-msgstr "El gestor d'energia de Xfce ja s'està executant"
 
 #: ../src/xfpm-driver.c:291
 msgid ""
@@ -523,10 +523,11 @@ msgid ""
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
 "with the hardware abstract layer or the message bus daemon is not running"
 msgstr ""
-"No es por llegit l'estat de l'adaptador d'AC, el gestor d'energia no "
-"funcionarà correctament. Els possibles motius són que el controlador de "
-"l'adaptador d'AC no està carregat, que la connexió amb la capa del maquinari "
-"no funciona o que el dimoni de missatges de bus no s'està executant"
+"No es por llegit l'estat de l'adaptador de la xarxa elèctrica, el gestor "
+"d'energia no funcionarà correctament. Els possibles motius són que el "
+"controlador de l'adaptador de la xarxa elèctrica no està carregat, que la "
+"connexió amb la capa del maquinari no funciona o que el dimoni de missatges "
+"de bus no s'està executant"
 
 #: ../src/xfpm-driver.c:728
 msgid "System failed to shutdown"
@@ -699,6 +700,3 @@ msgstr "Gestor d'energia de Xfce 4"
 
 #~ msgid "Monitor settings on electric power"
 #~ msgstr "Ajustaments de la pantalla quan s'empra la corrent elèctrica"
-
-#~ msgid "Start xfce power manager"
-#~ msgstr "Inicia el gestor d'energia de Xfce"
