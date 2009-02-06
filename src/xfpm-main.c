@@ -245,7 +245,7 @@ int main(int argc,char **argv)
     
     if (!xfpm_dbus_name_has_owner(connection,XFPM_PM_IFACE) )
     {
-     
+        dbus_connection_unref(connection);
         XfpmDriver *driver = xfpm_driver_new();
         autostart();
         if (!xfpm_driver_monitor(driver)) 
