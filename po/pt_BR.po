@@ -2,16 +2,16 @@
 # Copyright (C) 2008
 # This file is distributed under the same license as the xfce4-power-manager package.
 # Vladimir Melo <vmelo@gnome.org>, 2008.
-# Og Maciel <ogmaciel@gnome.org>, 2008.
+# Og Maciel <ogmaciel@gnome.org>, 2008-2009.
 # Henrique P Machado <zehrique@gmail.com>, 2008.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-30 12:03+0100\n"
-"PO-Revision-Date: 2008-11-30 21:09-0300\n"
-"Last-Translator: Henrique P Machado <zehrique@gmail.com>\n"
+"POT-Creation-Date: 2009-02-16 08:12-0500\n"
+"PO-Revision-Date: 2009-02-16 08:12-0500\n"
+"Last-Translator: Og Maciel <ogmaciel@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,8 +63,8 @@ msgstr ""
 "dados"
 
 #: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
-#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:197
+#: ../src/xfpm-main.c:253 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
 #: ../src/xfpm-driver.c:912
 msgid "Xfce power manager"
 msgstr "Gerenciador de energia Xfce"
@@ -184,14 +184,12 @@ msgid "CPU frequency control cannot be used"
 msgstr "Controle de freqüência da CPU não pode ser usado"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-#, fuzzy
 msgid "On AC power"
-msgstr "Em energia da bateria"
+msgstr "Usando a tomada"
 
 #: ../src/xfpm-settings.c:710
-#, fuzzy
 msgid "CPU frequency settings on AC power"
-msgstr "Configurações de freqüência de CPU ao usar UPS"
+msgstr "Configurações de freqüência de CPU ao usar a tomada"
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings"
@@ -214,9 +212,8 @@ msgid "Monitor settings on battery power"
 msgstr "Configurações do monitor quando usando energia da bateria"
 
 #: ../src/xfpm-settings.c:846
-#, fuzzy
 msgid "Monitor settings on AC power"
-msgstr "Configurações do monitor quando usando UPS"
+msgstr "Configurações do monitor quando usando a tomada"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -252,9 +249,8 @@ msgstr "Opções gerais"
 
 #. Systray icon
 #: ../src/xfpm-settings.c:1019
-#, fuzzy
 msgid "System tray icon:"
-msgstr "Ícone de notificação do sistema"
+msgstr "Ícone da bandeja do sistema"
 
 #: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
@@ -305,7 +301,7 @@ msgstr "Preferências do Gerenciador de energia"
 
 #: ../src/xfpm-settings.c:1275
 msgid "Extended"
-msgstr ""
+msgstr "Estendido"
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
@@ -416,7 +412,7 @@ msgstr "Suspender após"
 msgid "Turn off after"
 msgstr "Desligar após"
 
-#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1243
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1236
 msgid "Xfce4 Power Manager"
 msgstr "Gerenciador de energia do Xfce4"
 
@@ -427,27 +423,27 @@ msgstr ""
 "Og Maciel <ogmaciel@gnome.org>\n"
 "Henrique P Machado <zehrique@gmail.com>"
 
-#: ../src/xfpm-main.c:61
+#: ../src/xfpm-main.c:62
 msgid "Show the configuration dialog"
 msgstr "Mostra o diálogo de configuração"
 
-#: ../src/xfpm-main.c:62
+#: ../src/xfpm-main.c:63
 msgid "Quit any running xfce power manager"
 msgstr "Sai do Gerenciador de energia xfce"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:64
 msgid "Settings manager socket"
 msgstr "Socket do Gerenciador de configurações"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:64
 msgid "SOCKET ID"
 msgstr "SOCKET ID"
 
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:65
 msgid "Version information"
 msgstr "Informações da versão"
 
-#: ../src/xfpm-main.c:71
+#: ../src/xfpm-main.c:72
 #, c-format
 msgid ""
 "\n"
@@ -468,11 +464,11 @@ msgstr ""
 "Licenciado sob a GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:85
+#: ../src/xfpm-main.c:86
 msgid "Xfce Power Manager"
 msgstr "Gerenciador de energia do Xfce"
 
-#: ../src/xfpm-main.c:86
+#: ../src/xfpm-main.c:87
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -480,17 +476,17 @@ msgstr ""
 "Não foi possível ler a variável de ambiente do diretório home, a opção de "
 "início automático pode não funcionar"
 
-#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:162 ../src/xfpm-main.c:183
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Digite \"%s --help\" para informações de uso."
 
-#: ../src/xfpm-main.c:180
+#: ../src/xfpm-main.c:181
 #, c-format
 msgid "Too many arguments"
 msgstr "Muitos argumentos"
 
-#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
+#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -498,26 +494,26 @@ msgstr ""
 "Não foi possível executar o gerenciador de energia do Xfce4, certifique-se "
 "que o hardware abstract layer e o daemon message bus estão em execução"
 
-#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
+#: ../src/xfpm-main.c:202 ../src/xfpm-main.c:258
 msgid "Unable to load xfce4 power manager"
 msgstr "Não foi possível carregar o Gerenciador de energia do xfce4"
 
-#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#: ../src/xfpm-main.c:212 ../src/xfpm-main.c:235
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "O Gerenciador de energia do Xfce não está em execução"
 
-#: ../src/xfpm-main.c:214
+#: ../src/xfpm-main.c:215
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr ""
 "O Gerenciador de energia do Xfce4 não está em execução, você deseja lançá-lo "
 "agora?"
 
-#: ../src/xfpm-main.c:216
+#: ../src/xfpm-main.c:217
 msgid "Run"
 msgstr "Executar"
 
-#: ../src/xfpm-main.c:265
+#: ../src/xfpm-main.c:266
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "O Gerenciador de energia do Xfce já está em execução"
@@ -553,7 +549,7 @@ msgstr ""
 msgid "Don't show this message again"
 msgstr "Não mostrar esta mensagem novamente"
 
-#: ../src/xfpm-driver.c:1243
+#: ../src/xfpm-driver.c:1236
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
 "Falha ao carregar a configuração do Gerenciador de energia, usando os padrões"
