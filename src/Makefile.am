@@ -52,8 +52,8 @@ xfce4_power_manager_CFLAGS =					\
 			$(DBUS_CFLAGS)				\
 			$(DBUS_GLIB_CFLAGS)			\
 			$(HAL_CFLAGS)				\
-			$(LIBXFCEGUI_CFLAGS)			\
-			$(LIBXFCEUTIL_CFLAGS)			\
+			$(LIBXFCE4GUI_CFLAGS)			\
+			$(LIBXFCE4UTIL_CFLAGS)			\
 			$(XFCONF_CFLAGS)			\
 			$(LIBNOTIFY_CFLAGS)			\
 			$(DPMS_CFLAGS)              	
@@ -63,8 +63,8 @@ xfce4_power_manager_LDADD   =					\
 			$(GLIB_LIBS)				\
 			$(DBUS_LIBS)				\
 			$(DBUS_GLIB_LIBS)			\
-			$(LIBXFCEGUI_LIBS)			\
-			$(LIBXFCEUTIL_LIBS)			\
+			$(LIBXFCE4GUI_LIBS)			\
+			$(LIBXFCE4UTIL_LIBS)			\
 			$(HAL_LIBS)				\
 			$(XFCONF_LIBS)				\
 			$(LIBNOTIFY_LIBS)			\

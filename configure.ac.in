@@ -1,7 +1,7 @@
 m4_define([intltool_minimum_version], [0.31])
 m4_define([xfpm_version_major],  [0])
-m4_define([xfpm_version_minor],  [6])
-m4_define([xfpm_version_micro],  [1])
+m4_define([xfpm_version_minor],  [9])
+m4_define([xfpm_version_micro],  [0])
 m4_define([xfpm_version_build],  [r@REVISION@])
 m4_define([xfpm_version_tag],[svn])
 m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_version_micro()ifelse(xfpm_version_tag(), [svn], [xfpm_version_tag().xfpm_version_build()], [xfpm_version_tag()])])
@@ -9,29 +9,45 @@ m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_versio
 AC_INIT([xfce4-power-manager], [xfpm_version], [http://bugzilla.xfce.org/])
 AC_PREREQ(2.50)
 
-AM_INIT_AUTOMAKE([AC_PACKAGE_TARNAME()], [AC_PACKAGE_VERSION()])
+AM_INIT_AUTOMAKE([1.8 dist-bzip2 tar-ustar])
 AM_CONFIG_HEADER([config.h])
-AM_MAINTAINER_MODE()
+AM_MAINTAINER_MODE
 
-# ============== basic compiler settings ============= #
+# ===================================================== #
+#               Check for UNIX variants                 #
+# ===================================================== #
+AC_AIX
+AC_ISC_POSIX
+AC_MINIX
+
+# ===================================================== #
+#               Basic compiler settings                 #
+# ===================================================== #
 AC_PROG_CC
 AM_PROG_CC_C_O
+AC_PROG_LD
 AC_PROG_INSTALL
 AC_PROG_INTLTOOL([intltool_minimum_version], [no-xml])
+
+# ===================================================== #
+#               Initialize libtool                      #
+# ===================================================== #
+AC_DISABLE_STATIC
+AC_PROG_LIBTOOL
+
+# ==================================================== #
+#   Check for headers needed for standard interfaces   #
+# ==================================================== #
+AC_HEADER_STDC
+AC_CHECK_HEADERS([errno.h signal.h stddef.h \
+                  string.h sys/stat.h sys/types.h sys/wait.h time.h \
+                  unistd.h])
 
 # ===================================================== #
 # 		Check for i18n support 			#
 # ===================================================== #
 
 XDT_I18N([@LINGUAS@])
-
-
-# ============== look for dependencies =============== #
-# check for headers needed for standard interfaces     #
-AC_HEADER_STDC
-AC_CHECK_HEADERS([errno.h signal.h stddef.h \
-                  string.h sys/stat.h sys/types.h sys/wait.h time.h \
-                  unistd.h])
 
 #==================================================== #
 #          Check for required packages 		      #
@@ -43,8 +59,10 @@ m4_define([hal_minimum_version], [0.5.6])
 m4_define([xfconf_minimum_version], [4.5.90])
 m4_define([libxfcegui4_minimum_version],[4.4.1])
 m4_define([libxfce4util_minimum_version],[4.4.1])
+m4_define([libxfce4panel_minimum_version],[4.4.0])
 m4_define([dbus_glib_minimum_version], [0.70])
 m4_define([libnotify_minimum_version], [0.4.1])
+
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
@@ -52,8 +70,8 @@ XDT_CHECK_PACKAGE([DBUS], [dbus-1], [dbus_minimum_version])
 XDT_CHECK_PACKAGE([HAL], [hal], [hal_minimum_version])
 XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [dbus_glib_minimum_version])
 XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0],[xfconf_minimum_version])
-XDT_CHECK_PACKAGE([LIBXFCEGUI], [libxfcegui4-1.0],[libxfcegui4_minimum_version])
-XDT_CHECK_PACKAGE([LIBXFCEUTIL], [libxfce4util-1.0],[libxfce4util_minimum_version])
+XDT_CHECK_PACKAGE([LIBXFCE4GUI], [libxfcegui4-1.0],[libxfcegui4_minimum_version])
+XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_version])
 
 #=======================================================#
 #           Check for DPMS support                      #
@@ -83,6 +101,24 @@ XDT_CHECK_OPTIONAL_PACKAGE([LIBNOTIFY],
                        [libnotify library], [yes])
 
 #=======================================================#
+#                 Panel plugins ?                       #
+#=======================================================#
+AC_ARG_ENABLE([panel_plugins],
+	[AC_HELP_STRING([--disable-panel-plugins],
+		[Do not build panel plugins (default=enabled)])],
+	[ac_cv_enable_panel_plugins=$enableval],
+	[ac_cv_enable_panel_plugins=yes])
+if test "x$ac_cv_enable_panel_plugins" = "xno"; then
+	build_panel_plugins="no"
+else
+	build_panel_plugins="yes"
+	XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-1.0],
+		[libxfce4panel_minimum_version])
+fi
+AM_CONDITIONAL([BUILD_PANEL_PLUGINS], [test "x$build_panel_plugins" = "xyes"])
+
+
+#=======================================================#
 #              Check for debugging support              #
 #=======================================================#
 XDT_FEATURE_DEBUG
@@ -91,6 +127,8 @@ XDT_FEATURE_DEBUG
 AC_OUTPUT([
 Makefile
 src/Makefile
+panel-plugins/Makefile
+panel-plugins/brightness/Makefile
 data/Makefile
 data/icons/Makefile
 data/icons/scalable/Makefile
@@ -106,9 +144,10 @@ po/Makefile.in
 echo "----------------------------------------"
 echo 	 "   Build Configuration"
 echo 
-echo "   Debug  support          $enable_debug   "
-echo "   DPMS   support          $have_dpms      "
+echo "   DPMS         support    $have_dpms      "
 echo "   Notification support    $LIBNOTIFY_FOUND"
+echo "   Build panel  plugins    $build_panel_plugins"
+echo "   Debug        support    $enable_debug   "
 echo
 echo "----------------------------------------"  
 echo

@@ -1,4 +1,15 @@
-SUBDIRS = src data po doc
+@SET_MAKE@
+
+if BUILD_PANEL_PLUGINS
+plugins_dir = panel-plugins
+endif
+
+SUBDIRS =        \
+	src 	     \
+	$(plugins_dir) \
+	data         \
+	po           \
+	doc
 
 EXTRA_DIST = \
 	intltool-extract.in \
