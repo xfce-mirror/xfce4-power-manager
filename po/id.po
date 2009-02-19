@@ -1,0 +1,734 @@
+# Indonesian translations for xfce4-power-manager package.
+# Copyright (C) 2008 THE xfce'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the xfce package.
+# padmawan <andhika.padmawan@gmail.com>, 2008.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: xfce 4-power-manager\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-30 12:03+0100\n"
+"PO-Revision-Date: 2009-02-10 22:36+0700\n"
+"Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
+"Language-Team: Indonesian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/xfpm-ac-adapter.c:217
+msgid "Unable to read adapter status, the power manager will not work properly"
+msgstr "Tak dapat membaca status adapter, manajer daya tak akan bekerja dengan baik"
+
+#: ../src/xfpm-ac-adapter.c:286
+#: ../src/xfpm-ac-adapter.c:308
+msgid "Adapter is online"
+msgstr "Adapter tersambung"
+
+#: ../src/xfpm-ac-adapter.c:286
+#: ../src/xfpm-ac-adapter.c:308
+msgid "Adapter is offline"
+msgstr "Adapter terputus"
+
+#: ../src/xfpm-ac-adapter.c:358
+#: ../src/xfpm-battery.c:912
+msgid "Are you sure you want to hibernate the system?"
+msgstr "Apakah anda yakin ingin menghibernasi sistem?"
+
+#. Hibernate menu option
+#: ../src/xfpm-ac-adapter.c:360
+#: ../src/xfpm-ac-adapter.c:396
+#: ../src/xfpm-battery.c:807
+#: ../src/xfpm-battery.c:914
+#: ../src/xfpm-battery.c:949
+#: ../src/xfpm-settings.c:457
+#: ../src/xfpm-settings.c:918
+#: ../src/xfpm-settings.c:950
+#: ../src/xfpm-settings.c:976
+msgid "Hibernate"
+msgstr "Hibernasi"
+
+#: ../src/xfpm-ac-adapter.c:372
+#: ../src/xfpm-battery.c:927
+msgid "Are you sure you want to suspend the system?"
+msgstr "Apakah anda yakin ingin menyuspensi sistem?"
+
+#. Suspend menu option
+#: ../src/xfpm-ac-adapter.c:374
+#: ../src/xfpm-ac-adapter.c:413
+#: ../src/xfpm-battery.c:929
+#: ../src/xfpm-battery.c:964
+#: ../src/xfpm-settings.c:916
+#: ../src/xfpm-settings.c:948
+#: ../src/xfpm-settings.c:974
+msgid "Suspend"
+msgstr "Suspensi"
+
+#: ../src/xfpm-battery.c:769
+msgid "Your battery is almost empty. Save your work to avoid losing data"
+msgstr "Baterai anda hampir kosong. Simpan pekerjaan anda untuk menghindari hilangnya data"
+
+#: ../src/xfpm-battery.c:774
+#: ../src/xfpm-battery.c:1339
+#: ../src/xfpm-battery-icon.c:426
+#: ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:252
+#: ../src/xfpm-driver.c:304
+#: ../src/xfpm-driver.c:317
+#: ../src/xfpm-driver.c:912
+msgid "Xfce power manager"
+msgstr "Manajer daya Xfce"
+
+#: ../src/xfpm-battery.c:784
+msgid "Shutdown the system"
+msgstr "Matikan sistem"
+
+#: ../src/xfpm-battery.c:792
+msgid "Hibernate the system"
+msgstr "Hibernasi sistem"
+
+#: ../src/xfpm-battery.c:814
+#: ../src/xfpm-settings.c:453
+#: ../src/xfpm-settings.c:920
+#: ../src/xfpm-settings.c:952
+#: ../src/xfpm-settings.c:978
+msgid "Shutdown"
+msgstr "Matikan"
+
+#: ../src/xfpm-settings.c:417
+msgid "UPS configuration"
+msgstr "Konfigurasi UPS"
+
+#: ../src/xfpm-settings.c:417
+msgid "Battery configuration"
+msgstr "Konfigurasi baterai"
+
+#: ../src/xfpm-settings.c:424
+msgid "Consider UPS charge critical"
+msgstr "Anggap muatan UPS kritis"
+
+#: ../src/xfpm-settings.c:424
+msgid "Consider battery charge critical"
+msgstr "Anggap muatan baterai kritis"
+
+#: ../src/xfpm-settings.c:430
+msgid "percent"
+msgstr "persen"
+
+#: ../src/xfpm-settings.c:440
+msgid "When battery charge level is critical do"
+msgstr "Ketika level muatan baterai kritis maka lakukan"
+
+#: ../src/xfpm-settings.c:450
+#: ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:946
+#: ../src/xfpm-settings.c:972
+msgid "Nothing"
+msgstr "Tak ada"
+
+#: ../src/xfpm-settings.c:471
+msgid "Enable UPS charge notification"
+msgstr "Aktifkan notifikasi muatan UPS"
+
+#: ../src/xfpm-settings.c:471
+msgid "Enable battery state notification"
+msgstr "Aktifkan notifikasi kondisi baterai"
+
+#: ../src/xfpm-settings.c:482
+msgid "Enable power save on UPS power"
+msgstr "Aktifkan penyimpan daya di tenaga UPS"
+
+#: ../src/xfpm-settings.c:482
+msgid "Enable power save on battery power"
+msgstr "Aktifkan penyimpan daya di tenaga baterai"
+
+#: ../src/xfpm-settings.c:518
+#: ../src/xfpm-settings.c:603
+msgid "Best performance"
+msgstr "Performa terbaik"
+
+#: ../src/xfpm-settings.c:519
+#: ../src/xfpm-settings.c:604
+msgid "Set the CPU to its maximum frequency"
+msgstr "Atur CPU ke frekuensi maksimumnya"
+
+#: ../src/xfpm-settings.c:524
+#: ../src/xfpm-settings.c:609
+msgid "Ondemand performance"
+msgstr "Performa sesuai permintaan"
+
+#: ../src/xfpm-settings.c:525
+#: ../src/xfpm-settings.c:610
+msgid "Set the CPU to its maximum speed when there is any load on it and to its minimum speed when the system is idle"
+msgstr "Atur CPU ke kecepatan maksimumnya ketika ada beban di dalamnya dan ke kecepatan minimum ketika sistem menganggur"
+
+#: ../src/xfpm-settings.c:530
+#: ../src/xfpm-settings.c:615
+msgid "Best power savings"
+msgstr "Penyimpan daya terbaik"
+
+#: ../src/xfpm-settings.c:531
+#: ../src/xfpm-settings.c:616
+msgid "Set the CPU to its minimum frequency"
+msgstr "Atur CPU ke frekuensi minimumnya"
+
+#: ../src/xfpm-settings.c:535
+#: ../src/xfpm-settings.c:620
+msgid "Good power savings"
+msgstr "Penyimpan daya bagus"
+
+#: ../src/xfpm-settings.c:537
+#: ../src/xfpm-settings.c:622
+msgid "gracefully increases and decreases the CPU speed depending on the current usage"
+msgstr "dengan baik meningkatkan dan menurunkan kecepatan CPU tergantung penggunaan saat ini"
+
+#: ../src/xfpm-settings.c:595
+msgid "CPU frequency settings on UPS power"
+msgstr "Pengaturan frekuensi CPU pada daya UPS"
+
+#: ../src/xfpm-settings.c:595
+msgid "CPU frequency settings on battery power"
+msgstr "Pengaturan frekuensi CPU pada daya baterai"
+
+#: ../src/xfpm-settings.c:685
+msgid "No CPU governor found"
+msgstr "Tak ada governor CPU yang ditemukan"
+
+#: ../src/xfpm-settings.c:695
+msgid "CPU frequency control cannot be used"
+msgstr "Kendali frekuensi CPU tak dapat digunakan"
+
+#: ../src/xfpm-settings.c:705
+#: ../src/xfpm-settings.c:847
+msgid "On AC power"
+msgstr "Pada daya AC"
+
+#: ../src/xfpm-settings.c:710
+msgid "CPU frequency settings on AC power"
+msgstr "Pengaturan frekuensi CPU pada daya AC"
+
+#: ../src/xfpm-settings.c:710
+msgid "CPU frequency settings"
+msgstr "Pengaturan frekuensi CPU"
+
+#: ../src/xfpm-settings.c:715
+#: ../src/xfpm-settings.c:855
+msgid "On battery power"
+msgstr "Pada daya baterai"
+
+#: ../src/xfpm-settings.c:735
+msgid "Enable LCD brightness control"
+msgstr "Aktifkan kendali kecerahan LCD"
+
+#: ../src/xfpm-settings.c:751
+msgid "Monitor settings on UPS power"
+msgstr "Pengaturan monitor pada daya UPS"
+
+#: ../src/xfpm-settings.c:751
+msgid "Monitor settings on battery power"
+msgstr "Pengaturan monitor pada daya baterai"
+
+#: ../src/xfpm-settings.c:846
+msgid "Monitor settings on AC power"
+msgstr "Pengaturan monitor pada daya AC"
+
+#: ../src/xfpm-settings.c:846
+msgid "Monitor settings"
+msgstr "Pengaturan monitor"
+
+#: ../src/xfpm-settings.c:863
+msgid "Your monitor doesn't support DPMS control"
+msgstr "Monitor anda tak mendukung kendali DPMS"
+
+#: ../src/xfpm-settings.c:896
+msgid "Keyboard shortcuts"
+msgstr "Jalan pintas papan ketik"
+
+#: ../src/xfpm-settings.c:908
+msgid "When power button is pressed do"
+msgstr "Ketika tombol power ditekan maka lakukan"
+
+#: ../src/xfpm-settings.c:935
+msgid "When sleep button is pressed do"
+msgstr "Ketika tombol sleep ditekan maka lakukan"
+
+#: ../src/xfpm-settings.c:963
+msgid "When laptop lid is closed"
+msgstr "Ketika laptop ditutup"
+
+#: ../src/xfpm-settings.c:990
+msgid "No available keyboard shortcuts found"
+msgstr "Tak ada jalan pintas papan ketik yang ditemukan"
+
+#: ../src/xfpm-settings.c:1008
+msgid "General Options"
+msgstr "Opsi Umum"
+
+#. Systray icon
+#: ../src/xfpm-settings.c:1019
+msgid "System tray icon:"
+msgstr "Ikon baki sistem:"
+
+#: ../src/xfpm-settings.c:1026
+msgid "Always Display an icon"
+msgstr "Selalu Tampilkan ikon"
+
+#: ../src/xfpm-settings.c:1027
+msgid "When battery is present"
+msgstr "Ketika baterai hadir"
+
+#: ../src/xfpm-settings.c:1030
+msgid "When battery is charging or discharging"
+msgstr "Ketika baterai diisi ulang atau tidak diisi"
+
+#: ../src/xfpm-settings.c:1048
+msgid "Enable CPU frequency scaling control"
+msgstr "Aktifkan kendali skala frekuensi CPU"
+
+#. label = gtk_label_new(_("Enable monitor power management control"));
+#. gtk_widget_show(label);
+#. gtk_table_attach(GTK_TABLE(table),label,0,1,i,i+1,GTK_SHRINK,GTK_SHRINK,0,SPACING);
+#: ../src/xfpm-settings.c:1070
+msgid "Enable monitor power management control"
+msgstr "Aktifkan monitor kendali manajemen daya"
+
+#: ../src/xfpm-settings.c:1126
+msgid "Advanced settings"
+msgstr "Pengaturan mahir"
+
+#: ../src/xfpm-settings.c:1145
+#: ../src/xfpm-settings.c:1150
+msgid "CPU settings"
+msgstr "Pengaturan CPU"
+
+#: ../src/xfpm-settings.c:1162
+#: ../src/xfpm-settings.c:1167
+msgid "Battery settings"
+msgstr "Pengaturan baterai"
+
+#: ../src/xfpm-settings.c:1179
+#: ../src/xfpm-settings.c:1184
+msgid "Shortcuts"
+msgstr "Jalan pintas"
+
+#: ../src/xfpm-settings.c:1204
+#: ../src/xfpm-settings.c:1209
+msgid "Monitor Settings"
+msgstr "Pengaturan Monitor"
+
+#: ../src/xfpm-settings.c:1244
+msgid "Power Manager Preferences"
+msgstr "Pengaturan Manajer Daya"
+
+#: ../src/xfpm-settings.c:1275
+msgid "Extended"
+msgstr "Diperluas"
+
+#: ../src/xfpm-battery-icon.c:369
+msgid "Your battery charge is low"
+msgstr "Muatan baterai anda sedikit"
+
+#: ../src/xfpm-battery-icon.c:376
+msgid "Your battery is almost empty"
+msgstr "Baterai anda hampir kosong"
+
+#: ../src/xfpm-battery-icon.c:385
+msgid "You are running on Battery"
+msgstr "Anda berjalan menggunakan Baterai"
+
+#: ../src/xfpm-battery-icon.c:385
+#: ../src/xfpm-battery-icon.c:567
+#: ../src/xfpm-battery-icon.c:571
+msgid "Battery is discharging"
+msgstr "Baterai tidak diisi"
+
+#: ../src/xfpm-battery-icon.c:389
+msgid "Your battery is discharging"
+msgstr "Baterai anda tidak diisi"
+
+#: ../src/xfpm-battery-icon.c:397
+#: ../src/xfpm-battery-icon.c:555
+msgid "Battery is charging"
+msgstr "Baterai sedang diisi"
+
+#: ../src/xfpm-battery-icon.c:406
+msgid "Your battery is fully charged"
+msgstr "Baterai anda penuh terisi"
+
+#: ../src/xfpm-battery-icon.c:529
+msgid "Not present"
+msgstr "Tak ada"
+
+#: ../src/xfpm-battery-icon.c:535
+msgid "%"
+msgstr "%"
+
+#: ../src/xfpm-battery-icon.c:541
+msgid "Battery fully charged"
+msgstr "Baterai penuh terisi"
+
+#: ../src/xfpm-battery-icon.c:548
+msgid "Battery charge level"
+msgstr "Level muatan baterai"
+
+#: ../src/xfpm-battery-icon.c:567
+msgid "Running on battery"
+msgstr "Berjalan menggunakan baterai"
+
+#: ../src/xfpm-battery-icon.c:577
+msgid "Battery charge is low"
+msgstr "Muatan baterai rendah"
+
+#: ../src/xfpm-battery-icon.c:582
+msgid "Battery is almost empty"
+msgstr "Baterai hampir kosong"
+
+#: ../src/xfpm-battery-icon.c:607
+msgid ""
+"\n"
+"Estimated time left"
+msgstr ""
+"\n"
+"Estimasi waktu sisa"
+
+#: ../src/xfpm-battery-icon.c:612
+msgid ""
+"\n"
+"Estimated time to charge"
+msgstr ""
+"\n"
+"Estimasi waktu untuk mengisi"
+
+#: ../src/xfpm-battery-icon.c:616
+msgid "hours"
+msgstr "jam"
+
+#: ../src/xfpm-battery-icon.c:616
+msgid "hour"
+msgstr "jam"
+
+#: ../src/xfpm-battery-icon.c:617
+msgid "minutes"
+msgstr "menit"
+
+#: ../src/xfpm-battery-icon.c:617
+msgid "minute"
+msgstr "menit"
+
+#: ../src/xfpm-dpms-spins.c:50
+msgid "never"
+msgstr "tak pernah"
+
+#: ../src/xfpm-dpms-spins.c:51
+msgid "min"
+msgstr "min"
+
+#: ../src/xfpm-dpms-spins.c:140
+msgid "Standby after"
+msgstr "Siaga setelah"
+
+#: ../src/xfpm-dpms-spins.c:148
+msgid "Suspend after"
+msgstr "Suspensi setelah"
+
+#: ../src/xfpm-dpms-spins.c:156
+msgid "Turn off after"
+msgstr "Matikan setelah"
+
+#: ../src/xfpm-common.c:146
+#: ../src/xfpm-driver.c:1243
+msgid "Xfce4 Power Manager"
+msgstr "Manajer Daya Xfce4"
+
+#: ../src/xfpm-common.c:147
+msgid "translator-credits"
+msgstr "Andhika Padmawan <andhika.padmawan@gmail.com>, 2008."
+
+#: ../src/xfpm-main.c:61
+msgid "Show the configuration dialog"
+msgstr "Tampilkan dialog konfigurasi"
+
+#: ../src/xfpm-main.c:62
+msgid "Quit any running xfce power manager"
+msgstr "Keluar manajer daya xfce yang berjalan"
+
+#: ../src/xfpm-main.c:63
+msgid "Settings manager socket"
+msgstr "Soket manajer pengaturan"
+
+#: ../src/xfpm-main.c:63
+msgid "SOCKET ID"
+msgstr "ID SOKET"
+
+#: ../src/xfpm-main.c:64
+msgid "Version information"
+msgstr "Informasi versi"
+
+#: ../src/xfpm-main.c:71
+#, c-format
+msgid ""
+"\n"
+"Xfce Power Manager %s\n"
+"\n"
+"Part of the Xfce Goodies Project\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Licensed under the GNU GPL.\n"
+"\n"
+msgstr ""
+"\n"
+"Manajer Daya Xfce %s\n"
+"\n"
+"Bagian dari Proyek Goodies Xfce\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Dilisensikan di bawah GNU GPL.\n"
+"\n"
+
+#: ../src/xfpm-main.c:85
+msgid "Xfce Power Manager"
+msgstr "Manajer Daya Xfce"
+
+#: ../src/xfpm-main.c:86
+msgid "Unable to read your home directory environment variable, autostart option may not work"
+msgstr "Tak dapat membaca variabel lingkungan direktori rumah anda, opsi mulai otomatis mungkin tak akan bekerja"
+
+#: ../src/xfpm-main.c:161
+#: ../src/xfpm-main.c:182
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr "Ketik '%s --help' untuk penggunaan."
+
+#: ../src/xfpm-main.c:180
+#, c-format
+msgid "Too many arguments"
+msgstr "Terlalu banyak argumen"
+
+#: ../src/xfpm-main.c:197
+#: ../src/xfpm-main.c:253
+msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
+msgstr "Tak dapat menjalankan manajer daya Xfce4, pastikan lapisan abstrak perangkat keras dan jurik bus pesan berjalan"
+
+#: ../src/xfpm-main.c:201
+#: ../src/xfpm-main.c:257
+msgid "Unable to load xfce4 power manager"
+msgstr "Tak dapat memuat manajer daya xfce4"
+
+#: ../src/xfpm-main.c:211
+#: ../src/xfpm-main.c:234
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Manajer daya Xfce tak berjalan"
+
+#: ../src/xfpm-main.c:214
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Manajer Daya Xfce4 tak berjalan, anda ingin meluncurkannya sekarang?"
+
+#: ../src/xfpm-main.c:216
+msgid "Run"
+msgstr "Jalankan"
+
+#: ../src/xfpm-main.c:265
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr "Manajer daya Xfce telah berjalan"
+
+#: ../src/xfpm-driver.c:291
+msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
+msgstr "Tak dapat membaca status adapter AC, manajer daya tak akan bekerja dengan benar. Kemungkinan penyebab: Driver adapter AC tidak dimuat, koneksi rusak dengan lapisan abstrak perangkat keras atau jurik bus pesan tidak berjalan"
+
+#: ../src/xfpm-driver.c:728
+msgid "System failed to shutdown"
+msgstr "Sistem gagal untuk dimatikan"
+
+#: ../src/xfpm-driver.c:907
+msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
+msgstr "Tak dapat menggunakan layanan manajemen daya, fungsionalitas seperti hibernasi dan suspensi tak akan bekerja. Kemungkinan penyebab: anda tak punya cukup hak akses, koneksi rusak dengan lapisan abstrak perangkat keras atau jurik bus pesan tak berjalan"
+
+#: ../src/xfpm-driver.c:920
+msgid "Don't show this message again"
+msgstr "Jangan tampilkan pesan ini lagi"
+
+#: ../src/xfpm-driver.c:1243
+msgid "Failed to load power manager configuration, using defaults"
+msgstr "Gagal memuat konfigurasi manajer daya, menggunakan standar"
+
+#: ../src/xfpm-hal.c:172
+#, c-format
+msgid "Error monitoring HAL events"
+msgstr "Galat memonitor peristiwa HAL"
+
+#: ../src/xfpm-hal.c:261
+#: ../src/xfpm-hal.c:280
+#, c-format
+msgid "Unable to connect to DBus: %s"
+msgstr "Tak dapat menyambung ke DBus: %s"
+
+#: ../src/xfpm-hal.c:268
+msgid "HAL is not running or not responding"
+msgstr "HAL tidak berjalan atau tidak merespon"
+
+#: ../src/xfpm-hal.c:415
+#, c-format
+msgid "Unable to watch device using HAL: %s"
+msgstr "Tak dapat mengawasi divais menggunakan HAL: %s"
+
+#: ../src/xfpm-hal.c:633
+msgid "No back-end for your operating system"
+msgstr "Tak ada ujung-belakang untuk sistem operasi anda"
+
+#: ../src/xfpm-hal.c:637
+msgid "No hibernate script found"
+msgstr "Tak ada skrip hibernasi yang ditemukan"
+
+#: ../src/xfpm-hal.c:641
+msgid "No suspend script found"
+msgstr "Tak ada skrip suspensi yang ditemukan"
+
+#: ../src/xfpm-hal.c:645
+msgid "No suspend method found"
+msgstr "Tak ada metode suspensi yang ditemukan"
+
+#: ../src/xfpm-hal.c:649
+msgid "No hibernate method found"
+msgstr "Tak ada metode hibernasi yang ditemukan"
+
+#: ../src/xfpm-hal.c:675
+#: ../src/xfpm-hal.c:765
+#: ../src/xfpm-hal.c:859
+#: ../src/xfpm-hal.c:908
+#: ../src/xfpm-hal.c:958
+#: ../src/xfpm-hal.c:1010
+#: ../src/xfpm-hal.c:1062
+#: ../src/xfpm-hal.c:1108
+#, c-format
+msgid "Out of memory"
+msgstr "Kehabisan memori"
+
+#: ../src/xfpm-hal.c:707
+#, c-format
+msgid "Message hibernate didn't get a reply"
+msgstr "Pesan hibernasi tak mendapat balasan"
+
+#: ../src/xfpm-hal.c:728
+#, c-format
+msgid "System failed to hibernate"
+msgstr "Sistem gagal untuk hibernasi"
+
+#: ../src/xfpm-hal.c:734
+#: ../src/xfpm-hal.c:826
+#, c-format
+msgid "Error occured while trying to suspend"
+msgstr "Galat terjadi ketika mencoba suspensi"
+
+#: ../src/xfpm-hal.c:737
+#: ../src/xfpm-hal.c:829
+#, c-format
+msgid "Unknown reply from the message daemon"
+msgstr "Balasan tak diketahui dari jurik pesan"
+
+#: ../src/xfpm-hal.c:798
+#, c-format
+msgid "Message suspend didn't get a reply"
+msgstr "Pesan suspensi tak mendapat balasan"
+
+#: ../src/xfpm-hal.c:820
+#, c-format
+msgid "System failed to suspend"
+msgstr "Sistem gagal untuk suspensi"
+
+#: ../src/xfpm-hal.c:879
+#, c-format
+msgid "No reply from HAL daemon to set monitor brightness level"
+msgstr "Tak ada balasan dari jurik HAL untuk mengatur level kecerahan monitor"
+
+#: ../src/xfpm-hal.c:926
+#, c-format
+msgid "No reply from HAL daemon to get monitor brightness level"
+msgstr "Tak ada balasan dari jurik HAL untuk mendapatkan level kecerahan monitor"
+
+#: ../src/xfpm-hal.c:976
+#, c-format
+msgid "No reply from HAL daemon to get available cpu governors"
+msgstr "Tak ada balasan dari jurik HAL untuk mendapatkan governor cpu yang tersedia"
+
+#: ../src/xfpm-hal.c:1028
+#, c-format
+msgid "No reply from HAL daemon to get current cpu governor"
+msgstr "Tak ada balasan dari jurik HAL untuk mendapatkan governor cpu saat ini"
+
+#: ../src/xfpm-hal.c:1081
+#, c-format
+msgid "No reply from HAL daemon to set cpu governor"
+msgstr "Tak ada balasan dari jurik HAL untuk mengatur governor cpu"
+
+#: ../src/xfpm-hal.c:1127
+#, c-format
+msgid "No reply from HAL daemon to set power save profile"
+msgstr "Tak ada balasan dari jurik HAL untuk mengatur profil penyimpanan daya"
+
+#: ../src/xfpm-dbus-messages.c:86
+msgid "Failed to create dbus message\n"
+msgstr "Gagal membuat pesan dbus\n"
+
+#: ../src/xfpm-dbus-messages.c:122
+#: ../src/xfpm-dbus-messages.c:223
+msgid "Failed to send message\n"
+msgstr "Gagal mengirim pesan\n"
+
+#: ../src/xfce4-power-manager.desktop.in.h:1
+msgid "Power"
+msgstr "Daya"
+
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Power Manager"
+msgstr "Manajer Daya"
+
+#: ../src/xfce4-power-manager.desktop.in.h:3
+msgid "Settings for the Xfce 4 Power Manager"
+msgstr "Pengaturan untuk Manajer Daya Xfce 4"
+
+#: ../src/xfce4-power-manager.desktop.in.h:4
+msgid "Xfce 4 Power Manager"
+msgstr "Manajer Daya Xfce 4"
+
+#~ msgid "Start xfce power manager"
+#~ msgstr "Jalankan manajer daya xfce"
+#~ msgid "On electric power"
+#~ msgstr "Pada daya listrik"
+#~ msgid "CPU frequency settings on electric power"
+#~ msgstr "Pengaturan frekuensi CPU pada daya listrik"
+#~ msgid "Monitor settings on electric power"
+#~ msgstr "Pengaturan monitor pada daya listrik"
+#~ msgid "Ondemand"
+#~ msgstr "Sesuaipermintaan"
+#~ msgid "Userspace"
+#~ msgstr "Ruangpengguna"
+#~ msgid "Powersave"
+#~ msgstr "Penyimpandaya"
+#~ msgid "Conservative"
+#~ msgstr "Konservatif"
+#~ msgid "Part of the Xfce goodies project"
+#~ msgstr "Bagian dari proyek goodies Xfce"
+#~ msgid ""
+#~ "\n"
+#~ "Usage: xfce-power-manager [options] \n"
+#~ "\n"
+#~ "Options:\n"
+#~ "-h, --help       Print this help message and exit\n"
+#~ "-v, --version    Print this help message and exit\n"
+#~ "-r, --run        Start xfce power manager\n"
+#~ "-c, --customize  Show Configuration dialog\n"
+#~ "-q, --quit       Quit any running xfce power manager\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Penggunaan: xfce-power-manager [opsi] \n"
+#~ "\n"
+#~ "Opsi:\n"
+#~ "-h, --help       Tampilkan pesan bantuan ini lalu keluar\n"
+#~ "-v, --version    Tampilkan pesan bantuan ini lalu keluar\n"
+#~ "-r, --run        Jalankan manajer daya xfce\n"
+#~ "-c, --customize  Tampilkan dialog konfigurasi\n"
+#~ "-q, --quit       Hentikan manajer daya xfce yang sedang berjalan\n"
+#~ "\n"
+
