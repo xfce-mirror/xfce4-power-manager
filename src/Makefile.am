@@ -114,25 +114,6 @@ xfce4_power_manager_settings_LDADD = 		\
 	$(LIBXFCE4UTIL_LIBS)			\
 	$(XFCONF_LIBS)
 
-EXTRA_DIST = 					\
-	xfpm-marshal.list			\
-	xfce-power-manager-dbus-server.h	\
-	xfce-power-manager-dbus-client.h	\
-	xfpm-enum-types.c			\
-	xfpm-enum-types.h			\
-	xfpm-marshal.c				\
-	xfpm-marshal.h	
-	$(desktop_in_files)
-
-DISTCLEANFILES =				\
-	xfce-power-manager-dbus-server.h	\
-	xfce-power-manager-dbus-client.h	\
-	xfpm-enum-types.c			\
-	xfpm-enum-types.h			\
-	xfpm-marshal.c				\
-	xfpm-marshal.h	
-	$(desktop_DATA)
-
 xfpm_headers = 					\
 	$(srcdir)/xfpm-enums.h			
 
@@ -191,10 +172,16 @@ endif
 #
 # .desktop file
 #
+desktop_in_files = xfce4-power-manager.desktop.in
 desktopdir = $(datadir)/applications
-desktop_in_files =							\
-	xfce4-power-manager.desktop.in
-desktop_DATA =								\
-	$(desktop_in_files:.desktop.in=.desktop)
+desktop_DATA =	$(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
+
+EXTRA_DIST = 					\
+	xfpm-marshal.list			\
+	$(desktop_in_files)
+
+DISTCLEANFILES =				\
+	$(BUILT_SOURCES)			\
+	$(desktop_DATA)
