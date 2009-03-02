@@ -66,6 +66,7 @@
 #include "xfpm-popups.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-dbus-messages.h"
+#include "xfpm-string.h"
 
 #ifdef HAVE_LIBNOTIFY
 #include "xfpm-notify.h"
@@ -348,21 +349,21 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
     
     
-    if ( !strcmp(property,CRITICAL_BATT_CFG) ) 
+    if ( !xfpm_strcmp(property,CRITICAL_BATT_CFG) ) 
     {
         guint val = g_value_get_uint(value);
         g_object_set(G_OBJECT(priv->batt),"critical-charge",val,NULL);
         return;
     }
     
-    if ( !strcmp(property,CRITICAL_BATT_ACTION_CFG) ) 
+    if ( !xfpm_strcmp(property,CRITICAL_BATT_ACTION_CFG) ) 
     {
         guint val = g_value_get_uint(value);
         g_object_set(G_OBJECT(priv->batt),"critical-action",val,NULL);
         return;
     }
     
-    if ( !strcmp(property,SHOW_TRAY_ICON_CFG) ) 
+    if ( !xfpm_strcmp(property,SHOW_TRAY_ICON_CFG) ) 
     {
         gboolean val = g_value_get_uint(value);
         g_object_set(G_OBJECT(priv->batt),"show-tray-icon",val,NULL);
@@ -371,20 +372,20 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
     
     if ( priv->cpufreq_control )
     {
-        if ( !strcmp(property,CPU_FREQ_SCALING_CFG) ) 
+        if ( !xfpm_strcmp(property,CPU_FREQ_SCALING_CFG) ) 
         {
             gboolean val = g_value_get_boolean(value);
             g_object_set(G_OBJECT(priv->cpu),"cpu-freq",val,NULL);
             return;
         }
         
-        if ( !strcmp(property,ON_AC_CPU_GOV_CFG) ) 
+        if ( !xfpm_strcmp(property,ON_AC_CPU_GOV_CFG) ) 
         {
             guint val = g_value_get_uint(value);
             g_object_set(G_OBJECT(priv->cpu),"on-ac-cpu-gov",val,NULL);
             return;
         }
-        if ( !strcmp(property,ON_BATT_CPU_GOV_CFG) ) 
+        if ( !xfpm_strcmp(property,ON_BATT_CPU_GOV_CFG) ) 
         {
             guint val = g_value_get_uint(value);
             g_object_set(G_OBJECT(priv->cpu),"on-batt-cpu-gov",val,NULL);
@@ -392,7 +393,7 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
         }
     }
 #ifdef HAVE_LIBNOTIFY    
-    if ( !strcmp(property,BATT_STATE_NOTIFICATION_CFG) ) 
+    if ( !xfpm_strcmp(property,BATT_STATE_NOTIFICATION_CFG) ) 
     {
         gboolean val = g_value_get_boolean(value);
         g_object_set(G_OBJECT(priv->batt),"enable-notification",val,NULL);
@@ -402,7 +403,7 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
 
     if ( priv->lcd_brightness_control )
     {
-        if ( !strcmp(property,LCD_BRIGHTNESS_CFG) )
+        if ( !xfpm_strcmp(property,LCD_BRIGHTNESS_CFG) )
         {
             gboolean val = g_value_get_boolean(value);
             g_object_set(G_OBJECT(priv->lcd),"brightness-enabled",val,NULL);
@@ -410,7 +411,7 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
         }
     }
 #ifdef HAVE_DPMS
-    if ( !strcmp(property,DPMS_ENABLE_CFG) ) 
+    if ( !xfpm_strcmp(property,DPMS_ENABLE_CFG) ) 
     {
         gboolean val = g_value_get_boolean(value);
         priv->dpms->dpms_enabled = val;
@@ -418,7 +419,7 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
         return;
     }
 
-    if ( !strcmp(property,ON_BATT_DPMS_TIMEOUTS_CFG) ) 
+    if ( !xfpm_strcmp(property,ON_BATT_DPMS_TIMEOUTS_CFG) ) 
     {
         GPtrArray *arr;
         gpointer data;
@@ -442,7 +443,7 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
         return;
     }
     
-    if ( !strcmp(property,ON_AC_DPMS_TIMEOUTS_CFG) ) 
+    if ( !xfpm_strcmp(property,ON_AC_DPMS_TIMEOUTS_CFG) ) 
     {
         GPtrArray *arr;
         gpointer data;
@@ -471,21 +472,21 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
 
     if ( priv->buttons_control )
     {
-        if ( !strcmp(property,LID_SWITCH_CFG) ) 
+        if ( !xfpm_strcmp(property,LID_SWITCH_CFG) ) 
         {
             guint val = g_value_get_uint(value);
             g_object_set(G_OBJECT(priv->bt),"lid-switch-action",val,NULL);
             return;
         }
         
-        if ( !strcmp(property,SLEEP_SWITCH_CFG) ) 
+        if ( !xfpm_strcmp(property,SLEEP_SWITCH_CFG) ) 
         {
             guint val = g_value_get_uint(value);
             g_object_set(G_OBJECT(priv->bt),"sleep-switch-action",val,NULL);
             return;
         }
         
-        if ( !strcmp(property,POWER_SWITCH_CFG) ) 
+        if ( !xfpm_strcmp(property,POWER_SWITCH_CFG) ) 
         {
             guint val = g_value_get_uint(value);
             g_object_set(G_OBJECT(priv->bt),"power-switch-action",val,NULL);
@@ -493,7 +494,7 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
         }
     }
     
-    if ( !strcmp(property,POWER_SAVE_CFG) )
+    if ( !xfpm_strcmp(property,POWER_SAVE_CFG) )
     {
         gboolean val = g_value_get_boolean(value);
         priv->enable_power_save = val;
@@ -720,19 +721,19 @@ _get_system_form_factor(XfpmDriverPrivate *priv)
                                             NULL);
     if (!factor ) return;
     
-    if ( !strcmp(factor,"laptop") )
+    if ( !xfpm_strcmp(factor,"laptop") )
     {
         priv->formfactor = SYSTEM_LAPTOP;
     }
-    else if ( !strcmp(factor,"desktop") )
+    else if ( !xfpm_strcmp(factor,"desktop") )
     {
         priv->formfactor = SYSTEM_DESKTOP;
     }
-    else if ( !strcmp(factor,"server") )
+    else if ( !xfpm_strcmp(factor,"server") )
     {
         priv->formfactor = SYSTEM_SERVER;
     }
-    else if ( !strcmp(factor,"unknown") )
+    else if ( !xfpm_strcmp(factor,"unknown") )
     {
         priv->formfactor = SYSTEM_UNKNOWN;
     }
@@ -763,7 +764,7 @@ xfpm_driver_load_config(XfpmDriver *drv)
 static void
 _disable_error(NotifyNotification *n,gchar *action,XfpmDriver *drv)
 {
-    if (strcmp(action,"confirmed")) return;
+    if (xfpm_strcmp(action,"confirmed")) return;
     
     XfconfChannel *channel;
     

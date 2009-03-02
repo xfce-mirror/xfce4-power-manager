@@ -47,6 +47,7 @@
 #include "xfpm-hal.h"
 #include "xfpm-debug.h"
 #include "xfpm-common.h"
+#include "xfpm-string.h"
 
 #define XFPM_LCD_BRIGHTNESS_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_LCD_BRIGHTNESS,XfpmLcdBrightnessPrivate))
@@ -458,13 +459,13 @@ xfpm_lcd_brightness_handle_device_condition_cb(XfpmHal *hal,
         
     if ( xfpm_hal_device_have_capability(hal,udi,"button") )
     {
-        if ( !strcmp(condition_name,"ButtonPressed") )
+        if ( !xfpm_strcmp(condition_name,"ButtonPressed") )
         {
-            if ( !strcmp(condition_detail,"brightness-down") )
+            if ( !xfpm_strcmp(condition_detail,"brightness-down") )
             {
                 xfpm_lcd_brightness_decrease(lcd);
             }
-            else if ( !strcmp(condition_name,"brightness-up") )
+            else if ( !xfpm_strcmp(condition_name,"brightness-up") )
             {
                 xfpm_lcd_brightness_increase(lcd);
             }

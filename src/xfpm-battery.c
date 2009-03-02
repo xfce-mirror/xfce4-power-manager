@@ -56,10 +56,7 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-notify.h"
 #include "xfpm-marshal.h"
-
-#ifndef _
-#define _(x) x
-#endif
+#include "xfpm-string.h"
 
 #define XFPM_BATTERY_GET_PRIVATE(o)  (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_BATTERY,XfpmBatteryPrivate))
 
@@ -513,16 +510,16 @@ xfpm_battery_notify_cb (GObject *object,
 {
     XFPM_DEBUG("arg1->name=%s\n",arg1->name);
     
-    if (!strcmp(arg1->name,"show-tray-icon"))
+    if (!xfpm_strcmp(arg1->name,"show-tray-icon"))
     {
         xfpm_battery_refresh_tray_icon(XFPM_BATTERY(object));
     }
-    else if ( !strcmp(arg1->name,"critical-charge"))
+    else if ( !xfpm_strcmp(arg1->name,"critical-charge"))
     {
         xfpm_battery_refresh_critical_charge(XFPM_BATTERY(object));
     }
 #ifdef HAVE_LIBNOTIFY
-    else if ( !strcmp(arg1->name,"enable-notification"))
+    else if ( !xfpm_strcmp(arg1->name,"enable-notification"))
     {
         xfpm_battery_refresh_notification(XFPM_BATTERY(object));
     }    
@@ -619,7 +616,7 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
         {
             return;
         }
-        if ( !strcmp(key,"battery.charge_level.last_full") )
+        if ( !xfpm_strcmp(key,"battery.charge_level.last_full") )
         {
             GError *error = NULL;
             guint last_full = xfpm_hal_get_int_info(priv->hal,
@@ -635,9 +632,9 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
             return;
         }
 
-        if ( strcmp(key,"battery.charge_level.current")           &&
-             strcmp(key,"battery.rechargeable.is_charging")       &&
-             strcmp(key,"battery.rechargeable.is_discharging") )
+        if ( xfpm_strcmp(key,"battery.charge_level.current")           &&
+             xfpm_strcmp(key,"battery.rechargeable.is_charging")       &&
+             xfpm_strcmp(key,"battery.rechargeable.is_discharging") )
         {
             return;
         }
@@ -744,12 +741,12 @@ xfpm_battery_handle_device_property_changed(XfpmHal *hal,const gchar *udi,
 static void
 _do_critical_action(NotifyNotification *n,gchar *action,XfpmBattery *batt)
 {
-    if (!strcmp(action,"shutdown"))
+    if (!xfpm_strcmp(action,"shutdown"))
     {
         XFPM_DEBUG("Sending shutdown request\n");
         g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_SHUTDOWN,TRUE);
     }
-    else if ( !strcmp(action,"hibernate"))
+    else if ( !xfpm_strcmp(action,"hibernate"))
     {
         XFPM_DEBUG("Sending hibernate request\n");
         g_signal_emit(G_OBJECT(batt),signals[XFPM_ACTION_REQUEST],0,XFPM_DO_HIBERNATE,TRUE);
@@ -902,7 +899,7 @@ xfpm_battery_handle_critical_charge(XfpmBattery *batt,XfpmBatteryIcon *icon)
 static void
 xfpm_battery_state_change_cb(GObject *object,GParamSpec *arg1,gpointer data)
 {
-    if ( !strcmp(arg1->name,"battery-state") ) 
+    if ( !xfpm_strcmp(arg1->name,"battery-state") ) 
     {
         XfpmBatteryState state;
         XfpmBattery *batt = XFPM_BATTERY(data);
@@ -1033,19 +1030,19 @@ static void xfpm_battery_popup_tray_icon_menu(GtkStatusIcon *tray_icon,
 static XfpmBatteryType
 xfpm_battery_get_battery_type(const gchar *battery_type)
 {
-    if ( !strcmp("primary",battery_type) )
+    if ( !xfpm_strcmp("primary",battery_type) )
     {
         return PRIMARY;
     }
-    else if ( !strcmp("keyboard",battery_type) )
+    else if ( !xfpm_strcmp("keyboard",battery_type) )
     {
         return KEYBOARD;
     }
-    else if ( !strcmp("mouse",battery_type) ) 
+    else if ( !xfpm_strcmp("mouse",battery_type) ) 
     {
         return MOUSE;
     }
-    else if ( !strcmp("ups",battery_type) ) 
+    else if ( !xfpm_strcmp("ups",battery_type) ) 
     {
         return UPS; 
     }

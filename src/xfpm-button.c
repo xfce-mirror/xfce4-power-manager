@@ -51,6 +51,7 @@
 #include "xfpm-enums.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-marshal.h"
+#include "xfpm-string.h"
 
 #define XFPM_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_BUTTON,XfpmButtonPrivate))
@@ -463,21 +464,21 @@ xfpm_button_handle_device_condition_cb(XfpmHal *hal,
     
     if ( xfpm_hal_device_have_capability(priv->hal,udi,"button") )
     {
-        if ( strcmp(condition_name,"ButtonPressed") )
+        if ( xfpm_strcmp(condition_name,"ButtonPressed") )
         {
             XFPM_DEBUG("Not processing event with condition_name=%s\n",condition_name);
             return;
         }
         XFPM_DEBUG("proccessing event: %s %s\n",condition_name,condition_detail);
-        if ( !strcmp(condition_detail,"lid") )
+        if ( !xfpm_strcmp(condition_detail,"lid") )
         {
             xfpm_button_lid_pressed(bt,udi);
         }
-        else if ( !strcmp(condition_detail,"power") )
+        else if ( !xfpm_strcmp(condition_detail,"power") )
         {
             xfpm_button_power_pressed(bt,udi);
         }
-        else if ( !strcmp(condition_detail,"sleep") )
+        else if ( !xfpm_strcmp(condition_detail,"sleep") )
         {
             xfpm_button_sleep_pressed(bt,udi);
         }
@@ -503,7 +504,7 @@ xfpm_button_load_config(XfpmButton *bt)
 static void
 _check_button(XfpmButtonPrivate *priv,const gchar *button_type,const gchar *udi)
 {
-    if ( !strcmp(button_type,"lid"))
+    if ( !xfpm_strcmp(button_type,"lid"))
     {
         priv->have_lid_bt = TRUE;
         priv->lid_button_has_state = xfpm_hal_get_bool_info(priv->hal,udi,
@@ -511,14 +512,14 @@ _check_button(XfpmButtonPrivate *priv,const gchar *button_type,const gchar *udi)
                                                             NULL);
                                                             
     }
-    else if ( !strcmp(button_type,"power") )
+    else if ( !xfpm_strcmp(button_type,"power") )
     {
         priv->have_power_bt = TRUE;
         priv->power_button_has_state = xfpm_hal_get_bool_info(priv->hal,udi,
                                                             "button.has_state",
                                                             NULL);
     }
-    else if ( !strcmp(button_type,"sleep"))
+    else if ( !xfpm_strcmp(button_type,"sleep"))
     {
         priv->have_sleep_bt = TRUE;
         priv->sleep_button_has_state = xfpm_hal_get_bool_info(priv->hal,udi,

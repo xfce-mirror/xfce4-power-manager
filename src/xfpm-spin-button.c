@@ -43,6 +43,7 @@
 #include <glib/gi18n.h>
 
 #include "xfpm-spin-button.h"
+#include "xfpm-string.h"
 
 #define MAX_DIGITS 20
 
@@ -222,7 +223,7 @@ static void xfpm_spin_button_insert_text (GtkEditable *editable,
     
     if ( !_is_digits(new_text,new_text_length) )
     {
-        if ( spin->suffix && !strcmp(new_text,spin->suffix) )
+        if ( spin->suffix && !xfpm_strcmp(new_text,spin->suffix) )
         {
             entry_iface->insert_text(editable,spin->suffix,spin->suffix_length,position);
             _spin_button_update(spin);

@@ -47,10 +47,7 @@
 #include "xfpm-dbus-messages.h"
 
 #include "xfpm-marshal.h"
-
-#ifndef _
-#define _(x) x
-#endif
+#include "xfpm-string.h"
 
 /* Init */
 static void xfpm_hal_class_init(XfpmHalClass *klass);
@@ -328,7 +325,7 @@ gboolean xfpm_hal_power_management_can_be_used(XfpmHal *hal)
     {
         /* This is the only one place in the program we will 
          * be happy when we seeDBusError is set */
-        if (!strcmp(error.name,"org.freedesktop.DBus.Error.UnknownMethod"))
+        if (!xfpm_strcmp(error.name,"org.freedesktop.DBus.Error.UnknownMethod"))
         {
             dbus_error_free(&error);
             return TRUE;
@@ -368,7 +365,7 @@ gboolean xfpm_hal_cpu_freq_interface_can_be_used(XfpmHal *hal)
     
     if ( dbus_error_is_set(&error) )
     {
-        if (!strcmp(error.name,"org.freedesktop.DBus.Error.UnknownMethod"))
+        if (!xfpm_strcmp(error.name,"org.freedesktop.DBus.Error.UnknownMethod"))
         {
             dbus_error_free(&error);
             return TRUE;
@@ -628,23 +625,23 @@ gboolean xfpm_hal_shutdown(XfpmHal *xfpm_hal)
 static const gchar *
 _filter_error_message(const gchar *error)
 {
-    if(!strcmp("No back-end for your operating system",error))
+    if(!xfpm_strcmp("No back-end for your operating system",error))
     {
         return _("No back-end for your operating system");
     }
-    else if (!strcmp("No hibernate script found",error) )
+    else if (!xfpm_strcmp("No hibernate script found",error) )
     {
         return _("No hibernate script found");
     }
-	else if (!strcmp("No suspend script found",error) )
+	else if (!xfpm_strcmp("No suspend script found",error) )
 	{
 		return _("No suspend script found");
 	}
-    else if (!strcmp("No suspend method found",error) )
+    else if (!xfpm_strcmp("No suspend method found",error) )
     {
         return _("No suspend method found");
     }
-    else if (!strcmp("No hibernate method found",error))
+    else if (!xfpm_strcmp("No hibernate method found",error))
     {
         return _("No hibernate method found");
     }

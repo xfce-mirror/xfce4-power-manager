@@ -48,6 +48,7 @@
 #include "xfpm-debug.h"
 #include "xfpm-common.h"
 #include "xfpm-enum-types.h"
+#include "xfpm-string.h"
 
 #define XFPM_CPU_GET_PRIVATE(o)  (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_CPU,XfpmCpuPrivate))
 
@@ -314,10 +315,10 @@ xfpm_cpu_get_all_governors(XfpmCpu *cpu)
 	{
 		for ( i = 0 ; govs[i] ; i++ )
 		{
-			if ( !strcmp(govs[i],"powersave") )    governors |= POWERSAVE;
-			if ( !strcmp(govs[i],"ondemand") )     governors |= ONDEMAND;
-			if ( !strcmp(govs[i],"performance") )  governors |= PERFORMANCE;
-			if ( !strcmp(govs[i],"conservative") ) governors |= CONSERVATIVE;
+			if ( !xfpm_strcmp(govs[i],"powersave") )    governors |= POWERSAVE;
+			if ( !xfpm_strcmp(govs[i],"ondemand") )     governors |= ONDEMAND;
+			if ( !xfpm_strcmp(govs[i],"performance") )  governors |= PERFORMANCE;
+			if ( !xfpm_strcmp(govs[i],"conservative") ) governors |= CONSERVATIVE;
 		}   
 		libhal_free_string_array(govs);
 	}	
@@ -368,7 +369,7 @@ xfpm_cpu_set_governor(XfpmCpu *cpu,gboolean ac_adapter_present)
         
     XFPM_DEBUG("Configuration governor %s\n",config_gov);
     
-    if ( strcmp(current_governor,config_gov) ) 
+    if ( xfpm_strcmp(current_governor,config_gov) ) 
     {
         XFPM_DEBUG("CPU actuel governor %s, setting=%s\n",current_governor,config_gov);
         xfpm_hal_set_cpu_governor(priv->hal,config_gov,&error);
@@ -406,9 +407,9 @@ xfpm_cpu_notify_cb (GObject *object,
 		return;
     }
     
-    if ( !strcmp(arg1->name,"on-ac-adapter") ||
-         !strcmp(arg1->name,"on-ac-cpu-gov") ||
-         !strcmp(arg1->name,"on-batt-cpu-gov") )
+    if ( !xfpm_strcmp(arg1->name,"on-ac-adapter") ||
+         !xfpm_strcmp(arg1->name,"on-ac-cpu-gov") ||
+         !xfpm_strcmp(arg1->name,"on-batt-cpu-gov") )
     {
         xfpm_cpu_set_governor(cpu,cpu->ac_adapter_present);
     }

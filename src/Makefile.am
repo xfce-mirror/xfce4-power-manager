@@ -39,7 +39,9 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-notify.h				\
 	xfpm-enums.h				\
 	xfpm-common.c				\
-	xfpm-common.h
+	xfpm-common.h				\
+	xfpm-string.c				\
+	xfpm-string.h
 
 xfce4_power_manager_CFLAGS =			\
 	-DLOCALEDIR=\"$(localedir)\"		\
