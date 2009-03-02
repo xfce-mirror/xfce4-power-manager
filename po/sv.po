@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-01 19:09+0100\n"
+"POT-Creation-Date: 2009-03-02 10:58+0100\n"
 "PO-Revision-Date: 2009-01-18 22:55+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -27,53 +27,53 @@ msgstr ""
 msgid "Adapter is offline"
 msgstr ""
 
-#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:912
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:935
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Är du säker på att du vill försätta systemet i viloläge?"
 
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
-#: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-battery.c:805 ../src/xfpm-battery.c:937
+#: ../src/xfpm-battery.c:972 ../src/xfpm-settings.c:457
 #: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
 #: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Viloläge"
 
-#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:927
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:950
 msgid "Are you sure you want to suspend the system?"
 msgstr "Är du säker på att du vill försätta systemet i vänteläge?"
 
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
-#: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
+#: ../src/xfpm-battery.c:952 ../src/xfpm-battery.c:987
 #: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
 #: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Vänteläge"
 
-#: ../src/xfpm-battery.c:769
+#: ../src/xfpm-battery.c:767
 msgid "Your battery is almost empty. Save your work to avoid losing data"
 msgstr ""
 "Ditt batteri är nästan tomt. Spara ditt arbete för att förhindra att data "
 "förloras"
 
-#: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:197
-#: ../src/xfpm-main.c:253 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
-#: ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery.c:772 ../src/xfpm-battery.c:1362
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:273 ../src/xfpm-driver.c:296 ../src/xfpm-driver.c:309
+#: ../src/xfpm-driver.c:788
 msgid "Xfce power manager"
 msgstr "Strömhanterare för Xfce"
 
-#: ../src/xfpm-battery.c:784
+#: ../src/xfpm-battery.c:782
 msgid "Shutdown the system"
 msgstr "Stäng av systemet"
 
-#: ../src/xfpm-battery.c:792
+#: ../src/xfpm-battery.c:790
 msgid "Hibernate the system"
 msgstr "Försätt i viloläge"
 
-#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-battery.c:812 ../src/xfpm-settings.c:453
 #: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
 #: ../src/xfpm-settings.c:978
 msgid "Shutdown"
@@ -288,11 +288,11 @@ msgstr "Genvägar"
 msgid "Monitor Settings"
 msgstr "Skärminställningar"
 
-#: ../src/xfpm-settings.c:1244
+#: ../src/xfpm-settings.c:1243
 msgid "Power Manager Preferences"
 msgstr "Inställningar för strömhanterare"
 
-#: ../src/xfpm-settings.c:1275
+#: ../src/xfpm-settings.c:1274
 msgid "Extended"
 msgstr ""
 
@@ -405,7 +405,8 @@ msgstr "Vänteläge efter"
 msgid "Turn off after"
 msgstr "Stäng av efter"
 
-#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1236
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1067
+#: ../src/xfpm-settings-main.c:106
 msgid "Xfce4 Power Manager"
 msgstr "Strömhanterare för Xfce4"
 
@@ -417,27 +418,19 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>"
 
-#: ../src/xfpm-main.c:62
+#: ../src/xfpm-main.c:65
 msgid "Show the configuration dialog"
 msgstr "Visa konfigurationsdialogen"
 
-#: ../src/xfpm-main.c:63
+#: ../src/xfpm-main.c:66
 msgid "Quit any running xfce power manager"
 msgstr "Avsluta alla körande xfce-strömhanterare"
 
-#: ../src/xfpm-main.c:64
-msgid "Settings manager socket"
-msgstr "Uttag för inställningshanterare"
-
-#: ../src/xfpm-main.c:64
-msgid "SOCKET ID"
-msgstr "UTTAGS-ID"
-
-#: ../src/xfpm-main.c:65
+#: ../src/xfpm-main.c:67
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: ../src/xfpm-main.c:72
+#: ../src/xfpm-main.c:74
 #, c-format
 msgid ""
 "\n"
@@ -458,66 +451,67 @@ msgstr ""
 "Licensierad under GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:86
+#: ../src/xfpm-main.c:88
 msgid "Xfce Power Manager"
 msgstr "Strömhanterare för Xfce"
 
-#: ../src/xfpm-main.c:87
+#: ../src/xfpm-main.c:89
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
 msgstr ""
 
-#: ../src/xfpm-main.c:162 ../src/xfpm-main.c:183
+#: ../src/xfpm-main.c:164 ../src/xfpm-main.c:185
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Ange \"%s --help\" för användningsinformation."
 
-#: ../src/xfpm-main.c:181
+#: ../src/xfpm-main.c:183
 #, c-format
 msgid "Too many arguments"
 msgstr "För många argument"
 
-#: ../src/xfpm-main.c:198 ../src/xfpm-main.c:254
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:274
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
 msgstr ""
 
-#: ../src/xfpm-main.c:202 ../src/xfpm-main.c:258
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:278
 msgid "Unable to load xfce4 power manager"
 msgstr "Kunde inte läsa in Strömhanterare för Xfce4"
 
-#: ../src/xfpm-main.c:212 ../src/xfpm-main.c:235
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#: ../src/xfpm-settings-main.c:168
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Strömhanterare för Xfce är inte igång"
 
-#: ../src/xfpm-main.c:215
+#: ../src/xfpm-main.c:214 ../src/xfpm-settings-main.c:171
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Strömhanterare för Xfce4 är inte igång. Vill du starta den nu?"
 
-#: ../src/xfpm-main.c:217
+#: ../src/xfpm-main.c:216 ../src/xfpm-settings-main.c:173
 msgid "Run"
 msgstr "Kör"
 
-#: ../src/xfpm-main.c:266
+#: ../src/xfpm-main.c:286
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Strömhanterare för Xfce är redan igång"
 
-#: ../src/xfpm-driver.c:291
+#: ../src/xfpm-driver.c:283
 msgid ""
 "Unable to read AC adapter status, the power manager will not work properly. "
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
 "with the hardware abstract layer or the message bus daemon is not running"
 msgstr ""
 
-#: ../src/xfpm-driver.c:728
+#: ../src/xfpm-driver.c:604
 msgid "System failed to shutdown"
 msgstr "Försök att stänga av systemet misslyckades "
 
-#: ../src/xfpm-driver.c:907
+#: ../src/xfpm-driver.c:783
 msgid ""
 "Unable to use power management service, functionalities like hibernate and "
 "suspend will not work. Possible reasons: you don't have enough permission, "
@@ -525,11 +519,11 @@ msgid ""
 "is not running"
 msgstr ""
 
-#: ../src/xfpm-driver.c:920
+#: ../src/xfpm-driver.c:796
 msgid "Don't show this message again"
 msgstr "Visa inte detta meddelande igen"
 
-#: ../src/xfpm-driver.c:1236
+#: ../src/xfpm-driver.c:1067 ../src/xfpm-settings-main.c:106
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
 
@@ -639,14 +633,6 @@ msgstr ""
 msgid "No reply from HAL daemon to set power save profile"
 msgstr ""
 
-#: ../src/xfpm-dbus-messages.c:86
-msgid "Failed to create dbus message\n"
-msgstr "Misslyckades med att skapa dbus-meddelande\n"
-
-#: ../src/xfpm-dbus-messages.c:122 ../src/xfpm-dbus-messages.c:223
-msgid "Failed to send message\n"
-msgstr "Misslyckades med att skicka meddelande\n"
-
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power"
 msgstr "Ström"
@@ -662,6 +648,18 @@ msgstr "Inställningar för Strömhanterare för Xfce 4"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Strömhanterare för Xfce 4"
+
+#~ msgid "Settings manager socket"
+#~ msgstr "Uttag för inställningshanterare"
+
+#~ msgid "SOCKET ID"
+#~ msgstr "UTTAGS-ID"
+
+#~ msgid "Failed to create dbus message\n"
+#~ msgstr "Misslyckades med att skapa dbus-meddelande\n"
+
+#~ msgid "Failed to send message\n"
+#~ msgstr "Misslyckades med att skicka meddelande\n"
 
 #~ msgid "Start xfce power manager"
 #~ msgstr "Starta Strömhanterare för Xfce"

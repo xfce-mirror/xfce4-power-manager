@@ -107,8 +107,6 @@ static void xfpm_battery_show_critical_options(XfpmBattery *batt,
 											   XfpmBatteryType battery_type);
 static void xfpm_battery_handle_primary_critical(XfpmBattery *batt,
                                                 XfpmBatteryIcon *icon);
-static void xfpm_battery_handle_ups_critical(XfpmBattery *batt,
-                                             XfpmBatteryIcon *icon);                                                
 static void xfpm_battery_handle_critical_charge(XfpmBattery *batt,
                                                 XfpmBatteryIcon *icon);
                                                 
@@ -854,10 +852,38 @@ xfpm_battery_handle_primary_critical(XfpmBattery *batt,XfpmBatteryIcon *icon)
     }
 }
 
-static void
-xfpm_battery_handle_ups_critical(XfpmBattery *batt,XfpmBatteryIcon *icon)
+static gboolean
+xfpm_battery_is_critical_charge(XfpmBattery *batt)
 {
-    xfpm_battery_show_critical_options(batt,icon,UPS);
+    XfpmBatteryPrivate *priv;
+    priv = XFPM_BATTERY_GET_PRIVATE(batt);
+    
+    if ( g_hash_table_size(priv->batteries ) == 1 ) return TRUE;
+    if ( g_hash_table_size(priv->batteries)  == 0 ) return FALSE;
+        
+    GList *icons_list;
+    int i=0;
+    icons_list = g_hash_table_get_values(priv->batteries);
+        
+    gboolean critical = FALSE;
+    
+    for ( i = 0 ; i < g_list_length(icons_list) ; i++ )
+    {
+	XfpmBatteryType type;
+	XfpmBatteryState state;
+	XfpmBatteryIcon *icon;
+        icon = g_list_nth_data(icons_list,i);
+	if ( icon )
+	{
+		g_object_get(G_OBJECT(icon),"battery-type", &type, "battery-state", &state, NULL);
+		if ( type != PRIMARY || type != UPS ) continue;
+		
+		if ( state == CRITICAL ) critical = TRUE;
+		else                     critical = FALSE;
+	}
+    }
+    
+    return critical;
 }
 
 static void
@@ -866,13 +892,10 @@ xfpm_battery_handle_critical_charge(XfpmBattery *batt,XfpmBatteryIcon *icon)
     XfpmBatteryType battery_type;
     g_object_get(G_OBJECT(icon),"battery-type",&battery_type,NULL);
     
-    if ( battery_type == PRIMARY )
+    if ( battery_type == PRIMARY || battery_type == UPS )
     {
-        xfpm_battery_handle_primary_critical(batt,icon);
-    }
-    else if ( battery_type == UPS )
-    {
-        xfpm_battery_handle_ups_critical(batt,icon);
+	if ( xfpm_battery_is_critical_charge(batt) )
+        	xfpm_battery_handle_primary_critical(batt,icon);
     }
 }
 

@@ -45,13 +45,16 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 
+#include <dbus/dbus-glib-lowlevel.h>
+
 #include "xfpm-driver.h"
 #include "xfpm-hal.h"
 #include "xfpm-dbus-messages.h"
 #include "xfpm-popups.h"
 #include "xfpm-debug.h"
 
-static GdkNativeWindow socket_id = 0;
+#include "xfce-power-manager-dbus-client.h"
+
 static gboolean run     = FALSE;
 static gboolean quit    = FALSE;
 static gboolean config  = FALSE;
@@ -61,7 +64,6 @@ static GOptionEntry option_entries[] = {
     { "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE,&run,NULL,NULL },
 	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
 	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
-    { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
     { "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &version, N_("Version information"), NULL },
     { NULL, },
 };
@@ -152,7 +154,7 @@ int main(int argc,char **argv)
 {
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
-   	GError *error = NULL;
+    GError *error = NULL;
 
     if(!gtk_init_with_args(&argc, &argv, "", option_entries, PACKAGE, &error)) 
     {
@@ -185,14 +187,11 @@ int main(int argc,char **argv)
 		return EXIT_FAILURE;
 	}
 	
-	DBusConnection *connection;
-	DBusError derror;
+	DBusGConnection *bus;
 	
-	dbus_error_init(&derror);
+	bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
 	
-	connection = dbus_bus_get(DBUS_BUS_SESSION, &derror);
-	
-	if ( dbus_error_is_set(&derror) )
+	if ( error )
 	{
 	    xfpm_popup_message(_("Xfce power manager"),
                                   _("Unable to run Xfce4 power manager, " \
@@ -201,52 +200,73 @@ int main(int argc,char **argv)
                                   GTK_MESSAGE_ERROR);
         g_error(_("Unable to load xfce4 power manager"));
         g_print("\n");
-        dbus_error_free(&derror);        
+	g_error_free(error);
         return EXIT_FAILURE;        
 	}
 	
 	if ( config )
 	{
-	    if (!xfpm_dbus_name_has_owner(connection,XFPM_PM_IFACE))
+	    if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager"))
 	    {
-            g_print(_("Xfce power manager is not running"));
+            	g_print(_("Xfce power manager is not running"));
 			g_print("\n");
-            gboolean ret = 
-            xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now?"),
-                        GTK_STOCK_YES,
-                        _("Run"));
-            if ( ret ) 
-            {
-                g_spawn_command_line_async("xfce4-power-manager",NULL);
-            }
-            return EXIT_SUCCESS;
+   	         gboolean ret = 
+        	    xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now?"),
+                	        GTK_STOCK_YES,
+                        	_("Run"));
+		if ( ret ) 
+		{
+		    g_spawn_command_line_async("xfce4-power-manager",NULL);
+		}
+		return EXIT_SUCCESS;
 	    }
 	    else
 	    {
-	        xfpm_dbus_send_customize_message(socket_id);
+	        g_spawn_command_line_async("xfce4-power-manager-settings", NULL);
 	        return EXIT_SUCCESS;
 	    }
 	}     
 	 
 	if ( quit )
     {
-        if (!xfpm_dbus_name_has_owner(connection,XFPM_PM_IFACE))
+        if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus),  "org.xfce.PowerManager"))
         {
             g_print(_("Xfce power manager is not running"));
-			g_print("\n");
+	    g_print("\n");
             return EXIT_SUCCESS;
         }
         else
         {
-            xfpm_dbus_send_message("Quit");
+	    GError *error = NULL;
+	    DBusGProxy *proxy = dbus_g_proxy_new_for_name(bus, 
+							  "org.xfce.PowerManager",
+							  "/org/xfce/PowerManager",
+							  "org.xfce.Power.Manager");
+							  
+	    if ( !proxy ) 
+	    {
+		g_critical ("Failed to get proxy");
+		dbus_g_connection_unref(bus);
+            	return EXIT_SUCCESS;
+	    }
+	    
+	    xfpm_driver_dbus_client_quit(proxy , &error);
+	    
+	    if ( error )
+	    {
+		g_critical("Failed to sent quit message %s", error->message);
+		g_error_free(error);
+	    }
+	    
+	    g_object_unref(proxy);
+	    dbus_g_connection_unref(bus);
             return EXIT_SUCCESS;
         }
     }    
     
-    if (!xfpm_dbus_name_has_owner(connection,XFPM_PM_IFACE) )
+    if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus),  "org.xfce.PowerManager") )
     {
-        dbus_connection_unref(connection);
-        XfpmDriver *driver = xfpm_driver_new();
+        XfpmDriver *driver = xfpm_driver_new(bus);
         autostart();
         if (!xfpm_driver_monitor(driver)) 
         {

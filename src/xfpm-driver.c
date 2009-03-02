@@ -65,7 +65,6 @@
 #include "xfpm-lcd-brightness.h"
 #include "xfpm-popups.h"
 #include "xfpm-enum-types.h"
-#include "xfpm-settings.h"
 #include "xfpm-dbus-messages.h"
 
 #ifdef HAVE_LIBNOTIFY
@@ -86,6 +85,9 @@ static void xfpm_driver_init        (XfpmDriver *drv);
 static void xfpm_driver_class_init  (XfpmDriverClass *klass);
 static void xfpm_driver_finalize    (GObject *object);
 
+static void xfpm_driver_dbus_class_init (XfpmDriverClass *klass);
+static void xfpm_driver_dbus_init       (XfpmDriver *manager);
+
 static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
                                                     gboolean present,
                                                     gboolean state_ok,
@@ -98,8 +100,6 @@ static void xfpm_driver_property_changed_cb(XfconfChannel *channel,
                                             GValue *value,
                                             XfpmDriver *drv);
                                             
-static gboolean xfpm_driver_show_options_dialog(XfpmDriver *drv);
-
 /* Function that receives events suspend/hibernate,shutdown for all
  * Xfce power manager components and syncronize them
  */
@@ -129,26 +129,19 @@ static void xfpm_driver_check(XfpmDriver *drv);
 
 static void xfpm_driver_load_all(XfpmDriver *drv);
 
-/* DBus message Filter and replies */
-static void xfpm_driver_send_reply(DBusConnection *conn,DBusMessage *mess);
-static DBusHandlerResult xfpm_driver_signal_filter
-    (DBusConnection *connection,DBusMessage *message,void *user_data);
-
-static guint32 socket_id = 0;
-
 #define XFPM_DRIVER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o),XFPM_TYPE_DRIVER,XfpmDriverPrivate))
 
 struct XfpmDriverPrivate 
 {
-    DBusConnection *conn;
+    DBusGConnection *bus;
     GMainLoop *loop;
+    XfconfChannel *channel;
     
     SystemFormFactor formfactor;
     
     guint8 power_management;
 
-	gboolean dialog_opened;
 #ifdef HAVE_LIBNOTIFY    
     gboolean show_power_management_error;
 #endif
@@ -159,7 +152,7 @@ struct XfpmDriverPrivate
     gboolean cpufreq_control;
     gboolean buttons_control;
     gboolean lcd_brightness_control;
-	gboolean nm_responding;
+    gboolean nm_responding;
     
     XfpmHal     *hal;
     XfpmCpu     *cpu;
@@ -184,6 +177,7 @@ xfpm_driver_class_init(XfpmDriverClass *klass)
     object_class->finalize = xfpm_driver_finalize;
     
     g_type_class_add_private(klass,sizeof(XfpmDriverPrivate));
+    
 }
 
 static void
@@ -192,16 +186,14 @@ xfpm_driver_init(XfpmDriver *drv)
     XfpmDriverPrivate *priv;
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
 
-	priv->conn = NULL;
     priv->power_management = 0;
         
-    priv->dialog_opened = FALSE;
     priv->cpufreq_control = FALSE;
     priv->buttons_control = FALSE;
     priv->enable_power_save = FALSE;
     priv->lcd_brightness_control = FALSE;
     priv->accept_sleep_request = TRUE;
-	priv->nm_responding = FALSE;
+    priv->nm_responding = FALSE;
  
     priv->loop    = NULL;
     priv->cpu     = NULL;
@@ -252,9 +244,9 @@ xfpm_driver_finalize(GObject *object)
     {
         g_object_unref(drv->priv->lcd);
     }
-    if ( drv->priv->conn )
+    if ( drv->priv->bus )
     {
-        dbus_connection_unref(drv->priv->conn);
+        dbus_g_connection_unref(drv->priv->bus);
     }
     if ( drv->priv->loop )
     {
@@ -340,50 +332,6 @@ static void xfpm_driver_ac_adapter_state_changed_cb(XfpmAcAdapter *adapter,
         xfpm_driver_set_power_save(drv);
     }
 }                                                    
-
-static void
-_dialog_response_cb(GtkDialog *dialog, gint response, XfpmDriver *drv)
-{
-    XfpmDriverPrivate *priv;
-    priv = XFPM_DRIVER_GET_PRIVATE(drv);
-    
-    priv->dialog_opened = FALSE;
-    
-    switch(response) 
-    {
-            case GTK_RESPONSE_HELP:
-				xfpm_help();
-                break;
-            default:
-                gtk_widget_destroy(GTK_WIDGET(dialog));
-                break;
-    }
-    
-}              
-
-static void
-_close_dialog_cb(GtkDialog *dialog,XfpmDriver *drv)
-{
-    gpointer data = 
-    g_object_get_data(G_OBJECT(drv),"conf-channel");
-    if ( data )
-    {
-        XfconfChannel *channel = (XfconfChannel *)data;
-        g_object_unref(channel);
-    }
-    
-}
-
-static void
-_close_plug_cb(GtkWidget *plug,GdkEvent *ev,XfpmDriver *drv)
-{
-	XfpmDriverPrivate *priv;
-	priv = XFPM_DRIVER_GET_PRIVATE(drv);
-	priv->dialog_opened = FALSE;
-	_close_dialog_cb(NULL,drv);
-	gtk_widget_destroy(plug);
-	
-}
 
 static void
 xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
@@ -553,78 +501,6 @@ xfpm_driver_property_changed_cb(XfconfChannel *channel,gchar *property,
     }
     
 } 
-
-static gboolean
-xfpm_driver_show_options_dialog(XfpmDriver *drv)
-{
-    XfpmDriverPrivate *priv;
-    priv = XFPM_DRIVER_GET_PRIVATE(drv);
-    
-    if ( priv->dialog_opened )
-    {
-        return FALSE;
-    }
-
-    XfconfChannel *channel;
-    GtkWidget *dialog;
-
-    gboolean with_dpms;
-    
-    channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
-    g_object_set_data(G_OBJECT(drv),"conf-channel",channel);
-    g_signal_connect(channel,"property-changed",
-                     G_CALLBACK(xfpm_driver_property_changed_cb),drv);
-
-    guint8 governors = 0;
-    if ( priv->cpufreq_control )
-    {    
-       governors = xfpm_cpu_get_available_governors(priv->cpu);
-    }
-
-#ifdef HAVE_DPMS
-    with_dpms = xfpm_dpms_capable(priv->dpms);
-#else
-    with_dpms = FALSE;
-#endif
-
-    guint8 switch_buttons = 0;
-    if ( priv->buttons_control )
-    {
-        switch_buttons = xfpm_button_get_available_buttons(priv->bt);
-    }
-    gboolean ups_found = xfpm_battery_ups_found(priv->batt);
-    
-    dialog = xfpm_settings_new(channel,
-                               priv->formfactor == SYSTEM_LAPTOP ? TRUE : FALSE,
-                               priv->power_management,
-                               with_dpms,
-                               governors,
-                               switch_buttons,
-                               priv->lcd_brightness_control,
-                               ups_found,
-                               socket_id);
-    if ( socket_id == 0 )
-    {
-    	xfce_gtk_window_center_on_monitor_with_pointer(GTK_WINDOW(dialog));
-    	gtk_window_set_modal(GTK_WINDOW(dialog), FALSE);
-    
-    	gdk_x11_window_set_user_time(dialog->window,gdk_x11_get_server_time (dialog->window));
-    
-    	g_signal_connect(dialog,"response",G_CALLBACK(_dialog_response_cb),drv);        
-    	g_signal_connect(dialog,"close",G_CALLBACK(_close_dialog_cb),drv);
-    	gtk_widget_show(dialog);
-    }	
-    else
-    {
-    	g_signal_connect(dialog,"delete-event",G_CALLBACK(_close_plug_cb),drv);
-		gdk_notify_startup_complete();
-	}
-    
-    priv->dialog_opened = TRUE;
-    socket_id = 0 ;
-    
-    return FALSE;
-}
 
 #ifdef HAVE_LIBNOTIFY
 static void
@@ -1142,56 +1018,28 @@ xfpm_driver_load_all(XfpmDriver *drv)
 }
 
 static void
-xfpm_driver_send_reply(DBusConnection *conn,DBusMessage *mess)
+xfpm_driver_quit(XfpmDriver *drv)
 {
-    DBusMessage *reply;
-    reply = dbus_message_new_method_return(mess);
-    dbus_connection_send (conn, reply, NULL);
-    dbus_connection_flush (conn);
-    dbus_message_unref(reply);
-}
-
-static DBusHandlerResult xfpm_driver_signal_filter
-    (DBusConnection *connection,DBusMessage *message,void *user_data) 
-{
-    XfpmDriver *drv = XFPM_DRIVER(user_data);
-    XfpmDriverPrivate *priv;
-    priv = XFPM_DRIVER_GET_PRIVATE(drv);
+    XfpmDriverPrivate *priv = XFPM_DRIVER_GET_PRIVATE(drv);
     
-    if ( dbus_message_is_signal(message,"xfpm.power.manager","Customize" ) )
-    {
-        /* don't block the signal filter so show the configuration dialog in a
-         * timeout function otherwise xfce4-power-manager -q will have no effect*/
-        DBusError error;
-        dbus_error_init(&error);
-        dbus_message_get_args(message,&error,DBUS_TYPE_UINT32,&socket_id,DBUS_TYPE_INVALID);
-        if ( dbus_error_is_set(&error) )
-        {
-        	XFPM_DEBUG("Failed to get socket id: %s\n",error.message);
-        	dbus_error_free(&error);
-		}
-		XFPM_DEBUG("message customize received with socket_id=%d\n",socket_id);
-        g_timeout_add(100,(GSourceFunc)xfpm_driver_show_options_dialog,drv);
-        return DBUS_HANDLER_RESULT_HANDLED;
-    }    
+    xfpm_dbus_release_name(dbus_g_connection_get_connection(priv->bus), "org.xfce.PowerManager");
     
-    if ( dbus_message_is_signal(message,"xfpm.power.manager","Quit" ) )
-    {
-        XFPM_DEBUG("message quit received\n");
-        xfpm_driver_send_reply(connection,message);      
-        g_main_loop_quit(priv->loop);
-        g_object_unref(drv);
-        return DBUS_HANDLER_RESULT_HANDLED;
-    }    
-    
-    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+    g_main_loop_quit(priv->loop);
+    g_object_unref(drv);
 }
 
 XfpmDriver *
-xfpm_driver_new(void)
+xfpm_driver_new(DBusGConnection *bus)
 {
     XfpmDriver *driver = NULL;
     driver =  g_object_new(XFPM_TYPE_DRIVER,NULL);
+    
+    XfpmDriverPrivate *priv = XFPM_DRIVER_GET_PRIVATE(driver);
+    priv->bus = bus;
+    
+    xfpm_driver_dbus_class_init(XFPM_DRIVER_GET_CLASS(driver));
+    xfpm_driver_dbus_init(driver);
+    
     return driver;
 }
 
@@ -1205,23 +1053,6 @@ xfpm_driver_monitor (XfpmDriver *drv)
     priv = XFPM_DRIVER_GET_PRIVATE(drv);
     
     priv->loop = g_main_loop_new(NULL,FALSE);
-    
-    DBusError error;
-
-    dbus_error_init(&error);
-   
-    priv->conn = dbus_bus_get(DBUS_BUS_SESSION,&error);
-   
-    if (!priv->conn ) 
-    {
-       g_critical("Failed to connect to the DBus daemon: %s\n",error.message);
-       dbus_error_free(&error);
-       return FALSE;
-    }
-        
-    dbus_connection_setup_with_g_main(priv->conn,NULL);
-    dbus_bus_add_match(priv->conn, "type='signal',interface='xfpm.power.manager'",NULL);
-    dbus_connection_add_filter(priv->conn,xfpm_driver_signal_filter,drv,NULL);
     
     priv->hal = xfpm_hal_new();
     if ( !xfpm_hal_is_connected(priv->hal) )  
@@ -1238,8 +1069,14 @@ xfpm_driver_monitor (XfpmDriver *drv)
         g_error_free(g_error);
         
     }
+    else
+    {
+	priv->channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
+	g_signal_connect(G_OBJECT(priv->channel), "property-changed",
+			 G_CALLBACK(xfpm_driver_property_changed_cb), drv);
+    }
     
-    xfpm_dbus_register_name(priv->conn);
+    xfpm_dbus_register_name(dbus_g_connection_get_connection(priv->bus), "org.xfce.PowerManager");
     
     xfpm_driver_load_config(drv);    
     _get_system_form_factor(priv);
@@ -1249,13 +1086,122 @@ xfpm_driver_monitor (XfpmDriver *drv)
     xfpm_driver_load_all(drv);
     
     g_main_loop_run(priv->loop);
-   
-    xfpm_dbus_release_name(priv->conn);
-      
-    dbus_connection_remove_filter(priv->conn,xfpm_driver_signal_filter,NULL);
-    
-       
+
     xfconf_shutdown();
+    
+    return TRUE;
+}
+
+
+/*
+ * 
+ * DBus server implementation
+ * 
+ */
+
+static gboolean xfpm_driver_dbus_quit     (XfpmDriver *driver,
+					    GError **error);
+static gboolean xfpm_driver_dbus_get_conf(XfpmDriver *driver,
+					  gboolean   *OUT_system_laptop,
+					  gint       *OUT_power_management,
+					  gboolean   *OUT_with_dpms,
+					  gint       *OUT_governor,
+					  gint       *OUT_switch_buttons,
+					  gboolean   *OUT_brightness_control,
+					  gboolean   *OUT_ups_found,
+					  GError **error);
+static gboolean xfpm_driver_dbus_get_info (XfpmDriver *driver,
+					    gchar **OUT_name,
+					    gchar **OUT_version,
+					    gchar **OUT_vendor,
+					    GError **error);
+
+#include "xfce-power-manager-dbus-server.h"
+
+static void
+xfpm_driver_dbus_class_init(XfpmDriverClass *klass)
+{
+     dbus_g_object_type_install_info(G_TYPE_FROM_CLASS(klass),
+				    &dbus_glib_xfpm_driver_object_info);
+}
+
+static void
+xfpm_driver_dbus_init(XfpmDriver *driver)
+{
+    XfpmDriverPrivate *priv;
+    priv = XFPM_DRIVER_GET_PRIVATE(driver);
+    dbus_g_connection_register_g_object(priv->bus,
+					"/org/xfce/PowerManager",
+					G_OBJECT(driver));
+}
+
+static gboolean
+xfpm_driver_dbus_quit(XfpmDriver *driver, GError **error)
+{
+    XFPM_DEBUG("Quit message received\n");
+    
+    xfpm_driver_quit(driver);
+    
+    return TRUE;
+}
+
+static gboolean
+xfpm_driver_dbus_get_conf(XfpmDriver *driver,
+			  gboolean   *OUT_system_laptop,
+			  gint       *OUT_power_management,
+			  gboolean   *OUT_with_dpms,
+			  gint       *OUT_governor,
+			  gint       *OUT_switch_buttons,
+			  gboolean   *OUT_brightness_control,
+			  gboolean   *OUT_ups_found,
+			  GError **error)
+{
+    XFPM_DEBUG("Get info message received\n");
+    XfpmDriverPrivate *priv = XFPM_DRIVER_GET_PRIVATE(driver);
+    
+    gboolean with_dpms;
+    
+    guint8 governors = 0;
+    if ( priv->cpufreq_control )
+    {    
+       governors = xfpm_cpu_get_available_governors(priv->cpu);
+    }
+
+#ifdef HAVE_DPMS
+    with_dpms = xfpm_dpms_capable(priv->dpms);
+#else
+    with_dpms = FALSE;
+#endif
+
+    guint8 switch_buttons = 0;
+    if ( priv->buttons_control )
+    {
+        switch_buttons = xfpm_button_get_available_buttons(priv->bt);
+    }
+    gboolean ups_found = xfpm_battery_ups_found(priv->batt);
+    
+    *OUT_system_laptop      = priv->formfactor == SYSTEM_LAPTOP ? TRUE : FALSE;
+    *OUT_power_management   = priv->power_management;
+    *OUT_with_dpms          = with_dpms;
+    *OUT_governor           = governors;
+    *OUT_switch_buttons     = switch_buttons;
+    *OUT_brightness_control = priv->lcd_brightness_control;
+    *OUT_ups_found          = ups_found;
+			       
+    return TRUE;
+}
+
+static gboolean 
+xfpm_driver_dbus_get_info (XfpmDriver *driver,
+			    gchar **OUT_name,
+			    gchar **OUT_version,
+			    gchar **OUT_vendor,
+			    GError **error)
+{
+    
+    *OUT_name    = g_strdup(PACKAGE);
+    *OUT_version = g_strdup(VERSION);
+    *OUT_vendor  = g_strdup("Xfce-goodies");
     
     return TRUE;
 }

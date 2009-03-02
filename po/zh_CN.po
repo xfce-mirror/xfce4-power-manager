@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-30 12:03+0100\n"
+"POT-Creation-Date: 2009-03-02 10:58+0100\n"
 "PO-Revision-Date: 2009-01-15 10:25-0800\n"
 "Last-Translator: Chris K. Zhang <plutino@gmail.com>\n"
 "Language-Team: Chinese (simplified)\n"
@@ -28,51 +28,51 @@ msgstr "交流电源已连接"
 msgid "Adapter is offline"
 msgstr "交流电源已断开"
 
-#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:912
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:935
 msgid "Are you sure you want to hibernate the system?"
 msgstr "您确定休眠系统吗？"
 
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
-#: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-battery.c:805 ../src/xfpm-battery.c:937
+#: ../src/xfpm-battery.c:972 ../src/xfpm-settings.c:457
 #: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
 #: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "休眠"
 
-#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:927
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:950
 msgid "Are you sure you want to suspend the system?"
 msgstr "您确定挂起系统吗？"
 
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
-#: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
+#: ../src/xfpm-battery.c:952 ../src/xfpm-battery.c:987
 #: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
 #: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "挂起"
 
-#: ../src/xfpm-battery.c:769
+#: ../src/xfpm-battery.c:767
 msgid "Your battery is almost empty. Save your work to avoid losing data"
 msgstr "您的电池电量即将耗尽。保存工作以免丢失数据"
 
-#: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
+#: ../src/xfpm-battery.c:772 ../src/xfpm-battery.c:1362
 #: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
-#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
-#: ../src/xfpm-driver.c:912
+#: ../src/xfpm-main.c:273 ../src/xfpm-driver.c:296 ../src/xfpm-driver.c:309
+#: ../src/xfpm-driver.c:788
 msgid "Xfce power manager"
 msgstr "Xfce 电源管理器"
 
-#: ../src/xfpm-battery.c:784
+#: ../src/xfpm-battery.c:782
 msgid "Shutdown the system"
 msgstr "关闭系统"
 
-#: ../src/xfpm-battery.c:792
+#: ../src/xfpm-battery.c:790
 msgid "Hibernate the system"
 msgstr "休眠"
 
-#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-battery.c:812 ../src/xfpm-settings.c:453
 #: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
 #: ../src/xfpm-settings.c:978
 msgid "Shutdown"
@@ -287,11 +287,11 @@ msgstr "快捷方式"
 msgid "Monitor Settings"
 msgstr "显示器设置"
 
-#: ../src/xfpm-settings.c:1244
+#: ../src/xfpm-settings.c:1243
 msgid "Power Manager Preferences"
 msgstr "电源管理器首选项"
 
-#: ../src/xfpm-settings.c:1275
+#: ../src/xfpm-settings.c:1274
 msgid "Extended"
 msgstr "扩展"
 
@@ -404,7 +404,8 @@ msgstr "多长时间后挂起"
 msgid "Turn off after"
 msgstr "多长时间后关机"
 
-#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1243
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1067
+#: ../src/xfpm-settings-main.c:106
 msgid "Xfce4 Power Manager"
 msgstr "Xfce4 电源管理器"
 
@@ -412,27 +413,19 @@ msgstr "Xfce4 电源管理器"
 msgid "translator-credits"
 msgstr "HuntXu <huntxu@live.cn>"
 
-#: ../src/xfpm-main.c:61
+#: ../src/xfpm-main.c:65
 msgid "Show the configuration dialog"
 msgstr "显示配置对话框"
 
-#: ../src/xfpm-main.c:62
+#: ../src/xfpm-main.c:66
 msgid "Quit any running xfce power manager"
 msgstr "退出正在运行中的任何 xfce 电源管理器程序"
 
-#: ../src/xfpm-main.c:63
-msgid "Settings manager socket"
-msgstr "设置管理器套接字"
-
-#: ../src/xfpm-main.c:63
-msgid "SOCKET ID"
-msgstr "套接字 ID"
-
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:67
 msgid "Version information"
 msgstr "版本信息"
 
-#: ../src/xfpm-main.c:71
+#: ../src/xfpm-main.c:74
 #, c-format
 msgid ""
 "\n"
@@ -453,55 +446,56 @@ msgstr ""
 "Licensed under the GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:85
+#: ../src/xfpm-main.c:88
 msgid "Xfce Power Manager"
 msgstr "Xfce 电源管理器"
 
-#: ../src/xfpm-main.c:86
+#: ../src/xfpm-main.c:89
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
 msgstr "无法读取家目录环境变量，可能无法开机自动启动"
 
-#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:164 ../src/xfpm-main.c:185
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "输入 '%s --help' 查看使用方式"
 
-#: ../src/xfpm-main.c:180
+#: ../src/xfpm-main.c:183
 #, c-format
 msgid "Too many arguments"
 msgstr "太多参数"
 
-#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:274
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
 msgstr "无法启动 Xfce4 电源管理器。请检查 HAL 和 D-Bus 是否都已启动"
 
-#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:278
 msgid "Unable to load xfce4 power manager"
 msgstr "无法载入 xfce4 电源管理器"
 
 #: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#: ../src/xfpm-settings-main.c:168
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce 电源管理器未运行"
 
-#: ../src/xfpm-main.c:214
+#: ../src/xfpm-main.c:214 ../src/xfpm-settings-main.c:171
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 电源管理器未运行，您要现在启动它吗？"
 
-#: ../src/xfpm-main.c:216
+#: ../src/xfpm-main.c:216 ../src/xfpm-settings-main.c:173
 msgid "Run"
 msgstr "运行"
 
-#: ../src/xfpm-main.c:265
+#: ../src/xfpm-main.c:286
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce 电源管理器已在运行中"
 
-#: ../src/xfpm-driver.c:291
+#: ../src/xfpm-driver.c:283
 msgid ""
 "Unable to read AC adapter status, the power manager will not work properly. "
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
@@ -510,11 +504,11 @@ msgstr ""
 "无法读取交流电源信息，电源管理器无法正常工作。可能是由于交流电源驱动没有\n"
 "加载，或者无法和 HAL 以及 D-Bus 通讯"
 
-#: ../src/xfpm-driver.c:728
+#: ../src/xfpm-driver.c:604
 msgid "System failed to shutdown"
 msgstr "关机失败"
 
-#: ../src/xfpm-driver.c:907
+#: ../src/xfpm-driver.c:783
 msgid ""
 "Unable to use power management service, functionalities like hibernate and "
 "suspend will not work. Possible reasons: you don't have enough permission, "
@@ -524,11 +518,11 @@ msgstr ""
 "无法使用电源管理器提供的服务。系统无法休眠或挂起。你可能没有这个权限，或者\n"
 "HAL 以及 D-Bus 没有启动"
 
-#: ../src/xfpm-driver.c:920
+#: ../src/xfpm-driver.c:796
 msgid "Don't show this message again"
 msgstr "不再显示此信息"
 
-#: ../src/xfpm-driver.c:1243
+#: ../src/xfpm-driver.c:1067 ../src/xfpm-settings-main.c:106
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "读取电源管理器配置时失败，使用默认设置"
 
@@ -638,14 +632,6 @@ msgstr "HAL 没有回应，所以无法设置 CPU 管理器"
 msgid "No reply from HAL daemon to set power save profile"
 msgstr "HAL 没有回应，所以无法设置省电模式"
 
-#: ../src/xfpm-dbus-messages.c:86
-msgid "Failed to create dbus message\n"
-msgstr "dbus消息创建失败\n"
-
-#: ../src/xfpm-dbus-messages.c:122 ../src/xfpm-dbus-messages.c:223
-msgid "Failed to send message\n"
-msgstr "消息发送失败\n"
-
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power"
 msgstr "电源"
@@ -661,6 +647,18 @@ msgstr "Xfce 4 电源管理器设置"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce 4 电源管理器"
+
+#~ msgid "Settings manager socket"
+#~ msgstr "设置管理器套接字"
+
+#~ msgid "SOCKET ID"
+#~ msgstr "套接字 ID"
+
+#~ msgid "Failed to create dbus message\n"
+#~ msgstr "dbus消息创建失败\n"
+
+#~ msgid "Failed to send message\n"
+#~ msgstr "消息发送失败\n"
 
 #~ msgid "Start xfce power manager"
 #~ msgstr "打开 xfce 电源管理器"

@@ -22,10 +22,7 @@
 #ifndef __XFPM_DBUS_MESSAGES
 #define __XFPM_DBUS_MESSAGES
 
-#define XFPM_PM_ROOT  "/xfpm/power/manager"
-#define XFPM_PM_IFACE "xfpm.power.manager"
-
-#define NM_SERVICE	    "org.freedesktop.NetworkManager"
+#define NM_SERVICE	 "org.freedesktop.NetworkManager"
 #define NM_PATH	        "/org/freedesktop/NetworkManager"
 #define NM_INTERFACE	"org.freedesktop.NetworkManager"
 
@@ -34,11 +31,12 @@
 
 gboolean xfpm_dbus_name_has_owner(DBusConnection *connection,
                                   const gchar *service);
-gboolean xfpm_dbus_send_message            (const gchar *signal);
-gboolean xfpm_dbus_send_message_with_reply (const gchar *signal,gint *get_reply);
-gboolean xfpm_dbus_send_customize_message  (guint32 socket_id);
+				  
 void     xfpm_dbus_send_nm_message         (const gchar *signal);
-gboolean xfpm_dbus_register_name(DBusConnection *connection);
-gboolean xfpm_dbus_release_name();
+
+gboolean xfpm_dbus_register_name	   (DBusConnection *connection,
+					    const gchar *name);
+gboolean xfpm_dbus_release_name		   (DBusConnection *connection,
+					    const gchar *name);
 
 #endif /* __XFPM_DBUS_MESSAGES */

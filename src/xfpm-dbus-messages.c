@@ -72,162 +72,7 @@ DBusConnection *xfpm_dbus_get_connection(DBusBusType type)
     {
         return connection;
     }               
-    
 }    
-
-static DBusMessage *xfpm_dbus_new_signal(const gchar *signal)
-{
-    DBusMessage *message;    
-    message = dbus_message_new_signal(XFPM_PM_ROOT,
-                                      XFPM_PM_IFACE,
-                                      signal);
-    if ( !message )
-    {
-        g_critical(_("Failed to create dbus message\n"));
-        return NULL;
-    }    
-    else
-    {
-        return message;
-    }    
-}    
-
-gboolean xfpm_dbus_send_message(const char *signal)
-{
-    DBusConnection *connection;
-    DBusMessage *message;
-    
-    connection = xfpm_dbus_get_connection(DBUS_BUS_SESSION);
-    if ( !connection )
-    {
-        return FALSE;
-    }
-    
-    message = xfpm_dbus_new_signal(signal);
-    
-    if (!message)
-    {
-        return FALSE;
-    }
-        
-    gboolean ret =
-    dbus_connection_send(connection,
-                         message,
-                         NULL);
-        
-    dbus_message_unref(message);
-    dbus_connection_unref(connection);
-    if ( ret == FALSE )
-    {
-        g_critical(_("Failed to send message\n"));
-        return FALSE;
-    } else
-    {
-        return TRUE;
-    }         
-}  
-
-gboolean xfpm_dbus_send_message_with_reply (const char *signal,gint *get_reply) {
-    
-    DBusConnection *connection;
-    DBusMessage *message;
-    DBusPendingCall *pend;
-
-    connection = xfpm_dbus_get_connection(DBUS_BUS_SESSION);
-    if ( !connection )
-    {
-        return FALSE;
-    }
-    
-    message = xfpm_dbus_new_signal(signal);
-    
-    if (!message)
-    {
-        dbus_connection_unref(connection);
-        return FALSE;
-    }
-    
-                
-    if(!dbus_connection_send_with_reply(connection,
-                                        message,
-                                        &pend,
-                                        200))
-    {
-        dbus_message_unref(message);
-        dbus_connection_unref(connection);
-        return FALSE;
-    }   
-         
-    dbus_pending_call_block(pend);
-    if ( !pend )
-    {
-        dbus_message_unref(message);
-        dbus_connection_unref(connection);
-        return FALSE;
-    }
-        
-    DBusMessage *reply = dbus_pending_call_steal_reply(pend);
-    
-    dbus_pending_call_unref(pend);
-    
-    if ( reply != NULL ) 
-    {
-        if (dbus_message_get_type(reply) == DBUS_MESSAGE_TYPE_METHOD_RETURN)
-        {
-            *get_reply = 1;
-        } else 
-        {
-            *get_reply = 0;
-        }
-        dbus_message_unref(reply);
-    } else     
-    {
-        *get_reply = 0;
-    }    
-  
-    dbus_message_unref(message);
-    dbus_connection_unref(connection);
-    return TRUE;
-}  
-
-gboolean
-xfpm_dbus_send_customize_message(guint32 socket_id)
-{
-	DBusConnection *connection;
-    DBusMessage *message;
-    
-    connection = xfpm_dbus_get_connection(DBUS_BUS_SESSION);
-    if ( !connection )
-    {
-        return FALSE;
-    }
-    
-    message = xfpm_dbus_new_signal("Customize");
-    
-    if (!message)
-    {
-        return FALSE;
-    }
-        
-    dbus_message_append_args(message,DBUS_TYPE_UINT32,&socket_id,DBUS_TYPE_INVALID);
-        
-    gboolean ret =
-    dbus_connection_send(connection,
-                         message,
-                         NULL);
-        
-    dbus_message_unref(message);
-    dbus_connection_unref(connection);
-    if ( ret == FALSE )
-    {
-        g_critical(_("Failed to send message\n"));
-        return FALSE;
-    } else
-    {
-        return TRUE;
-    }         
-	
-}
 
 void
 xfpm_dbus_send_nm_message   (const gchar *signal)
@@ -271,14 +116,14 @@ xfpm_dbus_send_nm_message   (const gchar *signal)
     }         
 }
 
-gboolean xfpm_dbus_register_name(DBusConnection *connection)
+gboolean xfpm_dbus_register_name(DBusConnection *connection, const gchar *name)
 {
     DBusError error;
     
     dbus_error_init(&error);
     
     int ret =
-	dbus_bus_request_name(connection,XFPM_PM_IFACE,0,&error);
+	dbus_bus_request_name(connection, name , 0, &error);
 	
 	if ( dbus_error_is_set(&error) )
 	{
@@ -295,14 +140,14 @@ gboolean xfpm_dbus_register_name(DBusConnection *connection)
 	return FALSE;
 }
 
-gboolean xfpm_dbus_release_name(DBusConnection *connection)
+gboolean xfpm_dbus_release_name(DBusConnection *connection, const gchar *name)
 {
     DBusError error;
     
     dbus_error_init(&error);
     
     int ret =
-    dbus_bus_release_name(connection,XFPM_PM_IFACE,&error);
+    dbus_bus_release_name(connection, name, &error);
     
     if ( dbus_error_is_set(&error) )
     {

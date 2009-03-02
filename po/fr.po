@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-30 12:03+0100\n"
+"POT-Creation-Date: 2009-03-02 10:58+0100\n"
 "PO-Revision-Date: 2008-10-31 21:05+0100\n"
 "Last-Translator: Maximilian Schleiss <maximilian@xfce.org>\n"
 "Language-Team: French <xfce-i18n@xfce.org>\n"
@@ -31,56 +31,56 @@ msgstr "L'alimentation est sur secteur"
 msgid "Adapter is offline"
 msgstr "L'alimentation est sur batterie"
 
-#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:912
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:935
 #, fuzzy
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Êtes-vous sûr de vouloir mettre le système en hibernation ?"
 
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
-#: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-battery.c:805 ../src/xfpm-battery.c:937
+#: ../src/xfpm-battery.c:972 ../src/xfpm-settings.c:457
 #: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
 #: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Mettre en hibernation"
 
-#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:927
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:950
 #, fuzzy
 msgid "Are you sure you want to suspend the system?"
 msgstr "Êtes-vous sûr de vouloir mettre en veille le système ?"
 
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
-#: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
+#: ../src/xfpm-battery.c:952 ../src/xfpm-battery.c:987
 #: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
 #: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Mettre en veille"
 
-#: ../src/xfpm-battery.c:769
+#: ../src/xfpm-battery.c:767
 #, fuzzy
 msgid "Your battery is almost empty. Save your work to avoid losing data"
 msgstr ""
 "Le niveau de la batterie est critique. Enregistrez votre travail pour éviter "
 "des pertes de données"
 
-#: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
+#: ../src/xfpm-battery.c:772 ../src/xfpm-battery.c:1362
 #: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
-#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
-#: ../src/xfpm-driver.c:912
+#: ../src/xfpm-main.c:273 ../src/xfpm-driver.c:296 ../src/xfpm-driver.c:309
+#: ../src/xfpm-driver.c:788
 msgid "Xfce power manager"
 msgstr "Gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-battery.c:784
+#: ../src/xfpm-battery.c:782
 msgid "Shutdown the system"
 msgstr "Éteindre le système"
 
-#: ../src/xfpm-battery.c:792
+#: ../src/xfpm-battery.c:790
 msgid "Hibernate the system"
 msgstr "Mettre le système en hibernation"
 
-#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-battery.c:812 ../src/xfpm-settings.c:453
 #: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
 #: ../src/xfpm-settings.c:978
 msgid "Shutdown"
@@ -310,11 +310,11 @@ msgstr "Raccourcis"
 msgid "Monitor Settings"
 msgstr "Écran"
 
-#: ../src/xfpm-settings.c:1244
+#: ../src/xfpm-settings.c:1243
 msgid "Power Manager Preferences"
 msgstr "Préférences du gestionnaire d'alimentation"
 
-#: ../src/xfpm-settings.c:1275
+#: ../src/xfpm-settings.c:1274
 msgid "Extended"
 msgstr ""
 
@@ -427,7 +427,8 @@ msgstr "Mettre en veille prolongée après"
 msgid "Turn off after"
 msgstr "Éteindre after"
 
-#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1243
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1067
+#: ../src/xfpm-settings-main.c:106
 msgid "Xfce4 Power Manager"
 msgstr "Gestionnaire d'alimentation Xfce4"
 
@@ -435,29 +436,21 @@ msgstr "Gestionnaire d'alimentation Xfce4"
 msgid "translator-credits"
 msgstr ""
 
-#: ../src/xfpm-main.c:61
+#: ../src/xfpm-main.c:65
 #, fuzzy
 msgid "Show the configuration dialog"
 msgstr "Configuration de l'onduleur"
 
-#: ../src/xfpm-main.c:62
+#: ../src/xfpm-main.c:66
 #, fuzzy
 msgid "Quit any running xfce power manager"
 msgstr "Gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-main.c:63
-msgid "Settings manager socket"
-msgstr ""
-
-#: ../src/xfpm-main.c:63
-msgid "SOCKET ID"
-msgstr ""
-
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:67
 msgid "Version information"
 msgstr ""
 
-#: ../src/xfpm-main.c:71
+#: ../src/xfpm-main.c:74
 #, c-format
 msgid ""
 "\n"
@@ -478,11 +471,11 @@ msgstr ""
 "Sous licence GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:85
+#: ../src/xfpm-main.c:88
 msgid "Xfce Power Manager"
 msgstr "Gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-main.c:86
+#: ../src/xfpm-main.c:89
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -490,17 +483,17 @@ msgstr ""
 "Impossible de lire la variable d'environnement de votre répertoire "
 "utilisateur, l'option de démarrage automatique peut ne pas fonctionner"
 
-#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:164 ../src/xfpm-main.c:185
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr ""
 
-#: ../src/xfpm-main.c:180
+#: ../src/xfpm-main.c:183
 #, c-format
 msgid "Too many arguments"
 msgstr ""
 
-#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:274
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -508,33 +501,34 @@ msgstr ""
 "Impossible de lancer le gestionnaire d'alimentation, vérifiez que la couche "
 "d'abstraction matérielle (hal) et le bus de messagerie (dbus) fonctionnent"
 
-#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:278
 #, fuzzy
 msgid "Unable to load xfce4 power manager"
 msgstr "Échec au chargement du gestionnaire d'alimentation Xfce\n"
 
 #: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#: ../src/xfpm-settings-main.c:168
 #, fuzzy, c-format
 msgid "Xfce power manager is not running"
 msgstr "Le gestionnaire d'alimentation Xfce n'est pas lancé\n"
 
-#: ../src/xfpm-main.c:214
+#: ../src/xfpm-main.c:214 ../src/xfpm-settings-main.c:171
 #, fuzzy
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr ""
 "Le gestionnaire d'alimentation Xfce n'est pas lancé, voulez-vous le lancer "
 "maintenant ?"
 
-#: ../src/xfpm-main.c:216
+#: ../src/xfpm-main.c:216 ../src/xfpm-settings-main.c:173
 msgid "Run"
 msgstr "Éxecuter"
 
-#: ../src/xfpm-main.c:265
+#: ../src/xfpm-main.c:286
 #, fuzzy, c-format
 msgid "Xfce power manager is already running"
 msgstr "Le gestionnaire d'alimentation Xfce est déjà lancé\n"
 
-#: ../src/xfpm-driver.c:291
+#: ../src/xfpm-driver.c:283
 msgid ""
 "Unable to read AC adapter status, the power manager will not work properly. "
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
@@ -545,11 +539,11 @@ msgstr ""
 "chargé, connexion impossible avec la couche d'abstraction matérielle (hal) "
 "ou le démon du bus de messagerie n'est pas lancé"
 
-#: ../src/xfpm-driver.c:728
+#: ../src/xfpm-driver.c:604
 msgid "System failed to shutdown"
 msgstr "Le système n'a pu s'arrêter"
 
-#: ../src/xfpm-driver.c:907
+#: ../src/xfpm-driver.c:783
 #, fuzzy
 msgid ""
 "Unable to use power management service, functionalities like hibernate and "
@@ -563,11 +557,11 @@ msgstr ""
 "la couche d'abstraction (hal), ou le démon du bus de messagerie n'est pas "
 "lancé"
 
-#: ../src/xfpm-driver.c:920
+#: ../src/xfpm-driver.c:796
 msgid "Don't show this message again"
 msgstr "Ne plus afficher ce message"
 
-#: ../src/xfpm-driver.c:1243
+#: ../src/xfpm-driver.c:1067 ../src/xfpm-settings-main.c:106
 #, fuzzy
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
@@ -681,14 +675,6 @@ msgstr "Pas de réponse du démon HAL pour régler le mode du processeur"
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
 msgstr "Pas de réponse du démon HAL pour régler le profil d'économie d'énergie"
-
-#: ../src/xfpm-dbus-messages.c:86
-msgid "Failed to create dbus message\n"
-msgstr ""
-
-#: ../src/xfpm-dbus-messages.c:122 ../src/xfpm-dbus-messages.c:223
-msgid "Failed to send message\n"
-msgstr ""
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 #, fuzzy

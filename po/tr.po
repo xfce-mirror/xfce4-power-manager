@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-30 12:03+0100\n"
+"POT-Creation-Date: 2009-03-02 10:58+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Samed Beyribey <ras0ir@eventualis.org>\n"
 "Language-Team: Xfce-TR <xfce-tr@googlegroups.com>\n"
@@ -13,79 +13,65 @@ msgstr ""
 
 #: ../src/xfpm-ac-adapter.c:217
 msgid "Unable to read adapter status, the power manager will not work properly"
-msgstr "Güç bağdaştırıcısı durumu bilgisi okunamadı, güç yöneticisi düzgün çalışmayabilir"
+msgstr ""
+"Güç bağdaştırıcısı durumu bilgisi okunamadı, güç yöneticisi düzgün "
+"çalışmayabilir"
 
-#: ../src/xfpm-ac-adapter.c:286
-#: ../src/xfpm-ac-adapter.c:308
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is online"
 msgstr "Güç bağdaştırıcısı etkin"
 
-#: ../src/xfpm-ac-adapter.c:286
-#: ../src/xfpm-ac-adapter.c:308
+#: ../src/xfpm-ac-adapter.c:286 ../src/xfpm-ac-adapter.c:308
 msgid "Adapter is offline"
 msgstr "Güç bağdaştırıcısı etkin değil"
 
-#: ../src/xfpm-ac-adapter.c:358
-#: ../src/xfpm-battery.c:912
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:935
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Sistemi hazırda beklet moduna almak istediğinizden emin misiniz?"
 
 #. Hibernate menu option
-#: ../src/xfpm-ac-adapter.c:360
-#: ../src/xfpm-ac-adapter.c:396
-#: ../src/xfpm-battery.c:807
-#: ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949
-#: ../src/xfpm-settings.c:457
-#: ../src/xfpm-settings.c:918
-#: ../src/xfpm-settings.c:950
+#: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
+#: ../src/xfpm-battery.c:805 ../src/xfpm-battery.c:937
+#: ../src/xfpm-battery.c:972 ../src/xfpm-settings.c:457
+#: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
 #: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Hazırda beklet"
 
-#: ../src/xfpm-ac-adapter.c:372
-#: ../src/xfpm-battery.c:927
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:950
 msgid "Are you sure you want to suspend the system?"
 msgstr "Sistemi askıya almak istediğinizden emin misiniz?"
 
 #. Suspend menu option
-#: ../src/xfpm-ac-adapter.c:374
-#: ../src/xfpm-ac-adapter.c:413
-#: ../src/xfpm-battery.c:929
-#: ../src/xfpm-battery.c:964
-#: ../src/xfpm-settings.c:916
-#: ../src/xfpm-settings.c:948
+#: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
+#: ../src/xfpm-battery.c:952 ../src/xfpm-battery.c:987
+#: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
 #: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Askıya Al"
 
-#: ../src/xfpm-battery.c:769
+#: ../src/xfpm-battery.c:767
 msgid "Your battery is almost empty. Save your work to avoid losing data"
-msgstr "Pil seviyesi çok düşük. Veri kaybetmemek için lütfen işlerinizi kaydediniz"
+msgstr ""
+"Pil seviyesi çok düşük. Veri kaybetmemek için lütfen işlerinizi kaydediniz"
 
-#: ../src/xfpm-battery.c:774
-#: ../src/xfpm-battery.c:1339
-#: ../src/xfpm-battery-icon.c:426
-#: ../src/xfpm-main.c:196
-#: ../src/xfpm-main.c:252
-#: ../src/xfpm-driver.c:304
-#: ../src/xfpm-driver.c:317
-#: ../src/xfpm-driver.c:912
+#: ../src/xfpm-battery.c:772 ../src/xfpm-battery.c:1362
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
+#: ../src/xfpm-main.c:273 ../src/xfpm-driver.c:296 ../src/xfpm-driver.c:309
+#: ../src/xfpm-driver.c:788
 msgid "Xfce power manager"
 msgstr "Xfce güç yöneticisi"
 
-#: ../src/xfpm-battery.c:784
+#: ../src/xfpm-battery.c:782
 msgid "Shutdown the system"
 msgstr "Sistemi kapat"
 
-#: ../src/xfpm-battery.c:792
+#: ../src/xfpm-battery.c:790
 msgid "Hibernate the system"
 msgstr "Sistemi hazırda beklet moduna al"
 
-#: ../src/xfpm-battery.c:814
-#: ../src/xfpm-settings.c:453
-#: ../src/xfpm-settings.c:920
-#: ../src/xfpm-settings.c:952
+#: ../src/xfpm-battery.c:812 ../src/xfpm-settings.c:453
+#: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
 #: ../src/xfpm-settings.c:978
 msgid "Shutdown"
 msgstr "Kapat"
@@ -114,10 +100,8 @@ msgstr "yüzde"
 msgid "When battery charge level is critical do"
 msgstr "Pil seviyesi kritik ise şu işlemi gerçekleştir"
 
-#: ../src/xfpm-settings.c:450
-#: ../src/xfpm-settings.c:914
-#: ../src/xfpm-settings.c:946
-#: ../src/xfpm-settings.c:972
+#: ../src/xfpm-settings.c:450 ../src/xfpm-settings.c:914
+#: ../src/xfpm-settings.c:946 ../src/xfpm-settings.c:972
 msgid "Nothing"
 msgstr "Hiçbiri"
 
@@ -137,44 +121,42 @@ msgstr "UPS kaynaklı güç kullanılırken güç korumasını etkinleştir"
 msgid "Enable power save on battery power"
 msgstr "Pil kaynaklı güç kullanılırken güç korumasını etkinleştir"
 
-#: ../src/xfpm-settings.c:518
-#: ../src/xfpm-settings.c:603
+#: ../src/xfpm-settings.c:518 ../src/xfpm-settings.c:603
 msgid "Best performance"
 msgstr "En iyi performans"
 
-#: ../src/xfpm-settings.c:519
-#: ../src/xfpm-settings.c:604
+#: ../src/xfpm-settings.c:519 ../src/xfpm-settings.c:604
 msgid "Set the CPU to its maximum frequency"
 msgstr "İşlemciyi azami frekansta çalıştır"
 
-#: ../src/xfpm-settings.c:524
-#: ../src/xfpm-settings.c:609
+#: ../src/xfpm-settings.c:524 ../src/xfpm-settings.c:609
 msgid "Ondemand performance"
 msgstr "Akustik performans"
 
-#: ../src/xfpm-settings.c:525
-#: ../src/xfpm-settings.c:610
-msgid "Set the CPU to its maximum speed when there is any load on it and to its minimum speed when the system is idle"
-msgstr "İşlemciyi yüklenme durumunda azami hızda, sistem boşta iken asgari hızda çalıştır "
+#: ../src/xfpm-settings.c:525 ../src/xfpm-settings.c:610
+msgid ""
+"Set the CPU to its maximum speed when there is any load on it and to its "
+"minimum speed when the system is idle"
+msgstr ""
+"İşlemciyi yüklenme durumunda azami hızda, sistem boşta iken asgari hızda "
+"çalıştır "
 
-#: ../src/xfpm-settings.c:530
-#: ../src/xfpm-settings.c:615
+#: ../src/xfpm-settings.c:530 ../src/xfpm-settings.c:615
 msgid "Best power savings"
 msgstr "En iyi güç koruma"
 
-#: ../src/xfpm-settings.c:531
-#: ../src/xfpm-settings.c:616
+#: ../src/xfpm-settings.c:531 ../src/xfpm-settings.c:616
 msgid "Set the CPU to its minimum frequency"
 msgstr "İşlemciyi asgari frekansta çalıştır"
 
-#: ../src/xfpm-settings.c:535
-#: ../src/xfpm-settings.c:620
+#: ../src/xfpm-settings.c:535 ../src/xfpm-settings.c:620
 msgid "Good power savings"
 msgstr "Güç koruma"
 
-#: ../src/xfpm-settings.c:537
-#: ../src/xfpm-settings.c:622
-msgid "gracefully increases and decreases the CPU speed depending on the current usage"
+#: ../src/xfpm-settings.c:537 ../src/xfpm-settings.c:622
+msgid ""
+"gracefully increases and decreases the CPU speed depending on the current "
+"usage"
 msgstr "mevcut kullanıma göre işlemci hızını nazikçe artırır veya azaltır"
 
 #: ../src/xfpm-settings.c:595
@@ -193,8 +175,7 @@ msgstr "İşlemci yöneticisi bulunamadı"
 msgid "CPU frequency control cannot be used"
 msgstr "İşlemci frekansı kontrolü kullanılamaz"
 
-#: ../src/xfpm-settings.c:705
-#: ../src/xfpm-settings.c:847
+#: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
 msgid "On AC power"
 msgstr "Fişe takılı iken (AC)"
 
@@ -206,8 +187,7 @@ msgstr "AC kaynaklı güç için işlemci yöneticisi"
 msgid "CPU frequency settings"
 msgstr "İşlemci frekans ayarları"
 
-#: ../src/xfpm-settings.c:715
-#: ../src/xfpm-settings.c:855
+#: ../src/xfpm-settings.c:715 ../src/xfpm-settings.c:855
 msgid "On battery power"
 msgstr "Pil ile çalışırken"
 
@@ -291,31 +271,27 @@ msgstr "Monitör güç yönetimi kontrolünü etkinleştir"
 msgid "Advanced settings"
 msgstr "Gelişmiş ayarlar"
 
-#: ../src/xfpm-settings.c:1145
-#: ../src/xfpm-settings.c:1150
+#: ../src/xfpm-settings.c:1145 ../src/xfpm-settings.c:1150
 msgid "CPU settings"
 msgstr "İşlemci ayarları"
 
-#: ../src/xfpm-settings.c:1162
-#: ../src/xfpm-settings.c:1167
+#: ../src/xfpm-settings.c:1162 ../src/xfpm-settings.c:1167
 msgid "Battery settings"
 msgstr "Pil ayarları"
 
-#: ../src/xfpm-settings.c:1179
-#: ../src/xfpm-settings.c:1184
+#: ../src/xfpm-settings.c:1179 ../src/xfpm-settings.c:1184
 msgid "Shortcuts"
 msgstr "Kısayollar"
 
-#: ../src/xfpm-settings.c:1204
-#: ../src/xfpm-settings.c:1209
+#: ../src/xfpm-settings.c:1204 ../src/xfpm-settings.c:1209
 msgid "Monitor Settings"
 msgstr "Monitör Ayarları"
 
-#: ../src/xfpm-settings.c:1244
+#: ../src/xfpm-settings.c:1243
 msgid "Power Manager Preferences"
 msgstr "Güç Yöneticisi Tercihleri"
 
-#: ../src/xfpm-settings.c:1275
+#: ../src/xfpm-settings.c:1274
 msgid "Extended"
 msgstr "Genişletilmiş"
 
@@ -331,8 +307,7 @@ msgstr "Piliniz bitmek üzere"
 msgid "You are running on Battery"
 msgstr "Pil ile çalışıyor"
 
-#: ../src/xfpm-battery-icon.c:385
-#: ../src/xfpm-battery-icon.c:567
+#: ../src/xfpm-battery-icon.c:385 ../src/xfpm-battery-icon.c:567
 #: ../src/xfpm-battery-icon.c:571
 msgid "Battery is discharging"
 msgstr "Pil tükeniyor"
@@ -341,8 +316,7 @@ msgstr "Pil tükeniyor"
 msgid "Your battery is discharging"
 msgstr "Piliniz tükeniyor"
 
-#: ../src/xfpm-battery-icon.c:397
-#: ../src/xfpm-battery-icon.c:555
+#: ../src/xfpm-battery-icon.c:397 ../src/xfpm-battery-icon.c:555
 msgid "Battery is charging"
 msgstr "Pil şarj ediliyor"
 
@@ -430,8 +404,8 @@ msgstr "Askıya al"
 msgid "Turn off after"
 msgstr "Kapat"
 
-#: ../src/xfpm-common.c:146
-#: ../src/xfpm-driver.c:1243
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1067
+#: ../src/xfpm-settings-main.c:106
 msgid "Xfce4 Power Manager"
 msgstr "Xfce4 Güç Yöneticisi"
 
@@ -439,27 +413,19 @@ msgstr "Xfce4 Güç Yöneticisi"
 msgid "translator-credits"
 msgstr "Samed Beyribey <ras0ir@eventualis.org>, 2009"
 
-#: ../src/xfpm-main.c:61
+#: ../src/xfpm-main.c:65
 msgid "Show the configuration dialog"
 msgstr "Yapılandırma menüsünü göster"
 
-#: ../src/xfpm-main.c:62
+#: ../src/xfpm-main.c:66
 msgid "Quit any running xfce power manager"
 msgstr "Çalışan tüm xfce güç yöneticisi uygulamalarını kapat"
 
-#: ../src/xfpm-main.c:63
-msgid "Settings manager socket"
-msgstr "Ayar yöneticisi soketi "
-
-#: ../src/xfpm-main.c:63
-msgid "SOCKET ID"
-msgstr "Soket Kimliği"
-
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:67
 msgid "Version information"
 msgstr "Sürüm bilgisi"
 
-#: ../src/xfpm-main.c:71
+#: ../src/xfpm-main.c:74
 #, c-format
 msgid ""
 "\n"
@@ -480,81 +446,100 @@ msgstr ""
 "GNU GPL ile lisanslanmıştır.\n"
 "\n"
 
-#: ../src/xfpm-main.c:85
+#: ../src/xfpm-main.c:88
 msgid "Xfce Power Manager"
 msgstr "Xfce Güç Yöneticisi"
 
-#: ../src/xfpm-main.c:86
-msgid "Unable to read your home directory environment variable, autostart option may not work"
-msgstr "Ev dizini çevre değişkeni bilgileriniz okunamadı, otomatik başlangıç seçeneği çalışmayabilir"
+#: ../src/xfpm-main.c:89
+msgid ""
+"Unable to read your home directory environment variable, autostart option "
+"may not work"
+msgstr ""
+"Ev dizini çevre değişkeni bilgileriniz okunamadı, otomatik başlangıç "
+"seçeneği çalışmayabilir"
 
-#: ../src/xfpm-main.c:161
-#: ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:164 ../src/xfpm-main.c:185
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Kullanımı öğrenmek için '%s --help' yazınız."
 
-#: ../src/xfpm-main.c:180
+#: ../src/xfpm-main.c:183
 #, c-format
 msgid "Too many arguments"
 msgstr "Çok fazla değişken kullandınız"
 
-#: ../src/xfpm-main.c:197
-#: ../src/xfpm-main.c:253
-msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
-msgstr "Xfce4 güç yöneticisi çalıştırılamadı, donanım soyutlama katmanı (HAL) ve haberleşme (bus) servislerinin çalıştığından emin olunuz"
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:274
+msgid ""
+"Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
+"the message bus daemon are running"
+msgstr ""
+"Xfce4 güç yöneticisi çalıştırılamadı, donanım soyutlama katmanı (HAL) ve "
+"haberleşme (bus) servislerinin çalıştığından emin olunuz"
 
-#: ../src/xfpm-main.c:201
-#: ../src/xfpm-main.c:257
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:278
 msgid "Unable to load xfce4 power manager"
 msgstr "Xfce4 güç yöneticisi çalıştırılamadı"
 
-#: ../src/xfpm-main.c:211
-#: ../src/xfpm-main.c:234
+#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#: ../src/xfpm-settings-main.c:168
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce güç yöneticisi çalışmıyor"
 
-#: ../src/xfpm-main.c:214
+#: ../src/xfpm-main.c:214 ../src/xfpm-settings-main.c:171
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 Güç Yöneticisi çalışmıyor, çalıştırmak ister misiniz?"
 
-#: ../src/xfpm-main.c:216
+#: ../src/xfpm-main.c:216 ../src/xfpm-settings-main.c:173
 msgid "Run"
 msgstr "Çalıştır"
 
-#: ../src/xfpm-main.c:265
+#: ../src/xfpm-main.c:286
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce güç yöneticisi zaten çalışıyor"
 
-#: ../src/xfpm-driver.c:291
-msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
-msgstr "AC güç bağdaştırıcısı durumu bilgisi okunamadı, güç yöneticisi düzgün çalışmayabilir. Muhtemel nedenler: AC güç bağdaştırıcısı sürücüsü yüklenmemiş olabilir, HAL ile bağlantı kurulamıyor olabilir ve DBus servisi çalışmıyor olabilir"
+#: ../src/xfpm-driver.c:283
+msgid ""
+"Unable to read AC adapter status, the power manager will not work properly. "
+"Possible reasons: The AC adapter driver is not loaded, broken connection "
+"with the hardware abstract layer or the message bus daemon is not running"
+msgstr ""
+"AC güç bağdaştırıcısı durumu bilgisi okunamadı, güç yöneticisi düzgün "
+"çalışmayabilir. Muhtemel nedenler: AC güç bağdaştırıcısı sürücüsü "
+"yüklenmemiş olabilir, HAL ile bağlantı kurulamıyor olabilir ve DBus servisi "
+"çalışmıyor olabilir"
 
-#: ../src/xfpm-driver.c:728
+#: ../src/xfpm-driver.c:604
 msgid "System failed to shutdown"
 msgstr "Sistem kapatılamadı"
 
-#: ../src/xfpm-driver.c:907
-msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
-msgstr "Güç yönetimi servisi kullanılamıyor, hazırda beklet modu ve askıya alma gibi bazı fonksiyonlar çalışmayabilir. Muhtemel nedenler: izin problemi olabilir, HAL ile bağlantı kurulamıyor olabilir veya DBus servisi çalışmıyor olabilir"
+#: ../src/xfpm-driver.c:783
+msgid ""
+"Unable to use power management service, functionalities like hibernate and "
+"suspend will not work. Possible reasons: you don't have enough permission, "
+"broken connection with the hardware abstract layer or the message bus daemon "
+"is not running"
+msgstr ""
+"Güç yönetimi servisi kullanılamıyor, hazırda beklet modu ve askıya alma gibi "
+"bazı fonksiyonlar çalışmayabilir. Muhtemel nedenler: izin problemi olabilir, "
+"HAL ile bağlantı kurulamıyor olabilir veya DBus servisi çalışmıyor olabilir"
 
-#: ../src/xfpm-driver.c:920
+#: ../src/xfpm-driver.c:796
 msgid "Don't show this message again"
 msgstr "Bu mesajı tekrar gösterme"
 
-#: ../src/xfpm-driver.c:1243
+#: ../src/xfpm-driver.c:1067 ../src/xfpm-settings-main.c:106
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Güç yöneticisi yapılandırması yüklenemedi, öntanımlı ayarlar kullanılacak"
+msgstr ""
+"Güç yöneticisi yapılandırması yüklenemedi, öntanımlı ayarlar kullanılacak"
 
 #: ../src/xfpm-hal.c:172
 #, c-format
 msgid "Error monitoring HAL events"
 msgstr "HAL işlemleri izlenirken hata meydana geldi"
 
-#: ../src/xfpm-hal.c:261
-#: ../src/xfpm-hal.c:280
+#: ../src/xfpm-hal.c:261 ../src/xfpm-hal.c:280
 #, c-format
 msgid "Unable to connect to DBus: %s"
 msgstr "DBus servisine bağlanılamadı: %s"
@@ -588,14 +573,9 @@ msgstr "Askıya alma yöntemi bulunamadı"
 msgid "No hibernate method found"
 msgstr "Hazırda beklet modu yöntemi bulunamadı"
 
-#: ../src/xfpm-hal.c:675
-#: ../src/xfpm-hal.c:765
-#: ../src/xfpm-hal.c:859
-#: ../src/xfpm-hal.c:908
-#: ../src/xfpm-hal.c:958
-#: ../src/xfpm-hal.c:1010
-#: ../src/xfpm-hal.c:1062
-#: ../src/xfpm-hal.c:1108
+#: ../src/xfpm-hal.c:675 ../src/xfpm-hal.c:765 ../src/xfpm-hal.c:859
+#: ../src/xfpm-hal.c:908 ../src/xfpm-hal.c:958 ../src/xfpm-hal.c:1010
+#: ../src/xfpm-hal.c:1062 ../src/xfpm-hal.c:1108
 #, c-format
 msgid "Out of memory"
 msgstr "Yetersiz bellek"
@@ -610,14 +590,12 @@ msgstr "Hazırda beklet modu işlemine yanıt gelmedi"
 msgid "System failed to hibernate"
 msgstr "Sistem hazırda beklet moduna alınamadı"
 
-#: ../src/xfpm-hal.c:734
-#: ../src/xfpm-hal.c:826
+#: ../src/xfpm-hal.c:734 ../src/xfpm-hal.c:826
 #, c-format
 msgid "Error occured while trying to suspend"
 msgstr "Askıya alma işlemi gerçekleştirilirken hata oluştu"
 
-#: ../src/xfpm-hal.c:737
-#: ../src/xfpm-hal.c:829
+#: ../src/xfpm-hal.c:737 ../src/xfpm-hal.c:829
 #, c-format
 msgid "Unknown reply from the message daemon"
 msgstr "Haberleşme servisinden (Bus) bilinmeyen bir yanıt geldi "
@@ -640,17 +618,22 @@ msgstr "Monitör parlaklığı belirlemek için HAL servisinden yanıt gelmedi"
 #: ../src/xfpm-hal.c:926
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
-msgstr "Monitör parlıklığı seviyesinin alınması için HAL servisinden yanıt gelmedi"
+msgstr ""
+"Monitör parlıklığı seviyesinin alınması için HAL servisinden yanıt gelmedi"
 
 #: ../src/xfpm-hal.c:976
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
-msgstr "Kullanılabilir işlemci yönetimi bilgilerinin alınması için HAL servisinden yanıt gelmedi"
+msgstr ""
+"Kullanılabilir işlemci yönetimi bilgilerinin alınması için HAL servisinden "
+"yanıt gelmedi"
 
 #: ../src/xfpm-hal.c:1028
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
-msgstr "Mevcut işlemci yönetimi bilgilerinin alınması için HAL servisinden yanıt gelmedi"
+msgstr ""
+"Mevcut işlemci yönetimi bilgilerinin alınması için HAL servisinden yanıt "
+"gelmedi"
 
 #: ../src/xfpm-hal.c:1081
 #, c-format
@@ -661,15 +644,6 @@ msgstr "İşlemci yöneticisi belirlemek için HAL servisinden yanıt gelmedi"
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
 msgstr "Güç koruma profili belirlemek için HAL servisinden yanıt gelmedi"
-
-#: ../src/xfpm-dbus-messages.c:86
-msgid "Failed to create dbus message\n"
-msgstr "Dbus mesajı oluşturulamadı\n"
-
-#: ../src/xfpm-dbus-messages.c:122
-#: ../src/xfpm-dbus-messages.c:223
-msgid "Failed to send message\n"
-msgstr "Mesaj gönderilemedi\n"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power"
@@ -687,22 +661,39 @@ msgstr "Xfce 4 Güç Yöneticisi Seçenekleri "
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce4 Güç Yöneticisi"
 
+#~ msgid "Settings manager socket"
+#~ msgstr "Ayar yöneticisi soketi "
+
+#~ msgid "SOCKET ID"
+#~ msgstr "Soket Kimliği"
+
+#~ msgid "Failed to create dbus message\n"
+#~ msgstr "Dbus mesajı oluşturulamadı\n"
+
+#~ msgid "Failed to send message\n"
+#~ msgstr "Mesaj gönderilemedi\n"
+
 #~ msgid "Start xfce power manager"
 #~ msgstr "Xfce güç yöneticisini çalıştır"
+
 #~ msgid "On electric power"
 #~ msgstr "Fişe takılı"
 
 #, fuzzy
 #~ msgid "CPU frequency settings on electric power"
 #~ msgstr "Fişe takılı iken kullanılacak işlemci frekansı ayarları"
+
 #~ msgid "Monitor settings on electric power"
 #~ msgstr "Fişe takılı güç için monitör ayarları"
+
 #~ msgid "Ondemand"
 #~ msgstr "Dinamik"
+
 #~ msgid "Userspace"
 #~ msgstr "Kullanıcı tanımlı"
+
 #~ msgid "Powersave"
 #~ msgstr "Güç koruma"
+
 #~ msgid "Conservative"
 #~ msgstr "Sunum"
-

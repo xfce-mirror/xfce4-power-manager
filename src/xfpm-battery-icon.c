@@ -487,7 +487,7 @@ xfpm_battery_icon_set_state(XfpmBatteryIcon *battery_icon,guint32 charge,guint p
                             gboolean ac_adapter_present)
 {
     g_return_if_fail(XFPM_IS_BATTERY_ICON(battery_icon));
-    battery_icon->battery_present = ac_adapter_present;
+    battery_icon->battery_present = present;
     guint critical_level = battery_icon->type == PRIMARY || UPS ? battery_icon->critical_level : 5;
 #ifdef DEBUG
     gchar *content_is_charging;

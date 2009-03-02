@@ -111,7 +111,7 @@ xfpm_lock_screen(void)
 void       
 xfpm_preferences(void) 
 {
-    g_spawn_command_line_async("xfce4-power-manager -c",NULL);
+    g_spawn_command_line_async("xfce4-power-manager-settings",NULL);
 }
 
 void       

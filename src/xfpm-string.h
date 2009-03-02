@@ -1,6 +1,5 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
- *
- * * Copyright (C) 2008 Ali <aliov@xfce.org>
+/*
+ * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -16,22 +15,23 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_SETTINGS_H
-#define __XFPM_SETTINGS_H
+#ifndef __XFPM_STRING_H
+#define __XFPM_STRING_H
 
-#include <xfconf/xfconf.h>
+#include <glib.h>
+#include <string.h>
 
-GtkWidget *xfpm_settings_new(XfconfChannel *channel,
-                             gboolean is_laptop,
-                             guint8 power_management,
-                             gboolean dpms_capable,
-                             guint8 govs,
-                             guint8 switch_buttons,
-                             gboolean lcd,
-                             gboolean ups_found);
+gint 		xfpm_strcmp 		(const gchar *str1,
+					 const gchar *str2);
+
+gboolean        xfpm_strequal		(const gchar *str1,
+					 const gchar *str2);
+const gchar    *xfpm_bool_to_string     (gboolean value);
+
+gboolean        xfpm_string_to_bool     (const gchar *string);
 
 
-#endif /* __XFPM_SETTINGS_H */
+#endif /* XFPM_STRING_H */

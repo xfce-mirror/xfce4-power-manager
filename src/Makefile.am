@@ -1,87 +1,148 @@
-bin_PROGRAMS = xfce4-power-manager
+bin_PROGRAMS = xfce4-power-manager		\
+	       xfce4-power-manager-settings
 
-generated_files =						\
-				xfpm-enum-types.c		\
-				xfpm-enum-types.h		\
-				xfpm-marshal.c			\
-				xfpm-marshal.h
-				
-
-xfce4_power_manager_SOURCES = 	$(generated_files)		\
-				xfpm-main.c			\
-				xfpm-debug.h			\
-                xfpm-hal.c          		\
-				xfpm-hal.h	     		\
-				xfpm-driver.c			\
-				xfpm-driver.h			\
-				xfpm-ac-adapter.c		\
-				xfpm-ac-adapter.h		\
-				xfpm-cpu.c			\
-				xfpm-cpu.h			\
-				xfpm-lcd-brightness.c		\
-				xfpm-lcd-brightness.h		\
-				xfpm-button.c			\
-				xfpm-button.h			\
-				xfpm-dbus-messages.c		\
-				xfpm-dbus-messages.h		\
-				xfpm-battery.c			\
-				xfpm-battery.h			\
-				xfpm-battery-icon.c		\
-				xfpm-battery-icon.h		\
-				xfpm-spin-button.c		\
-				xfpm-spin-button.h		\
-				xfpm-dpms.c			\
-				xfpm-dpms.h			\
-				xfpm-dpms-spins.c		\
-				xfpm-dpms-spins.h		\
-				xfpm-popups.c           	\
-				xfpm-popups.h           	\
-				xfpm-notify.c			\
-				xfpm-notify.h			\
-				xfpm-enums.h			\
-				xfpm-settings.c			\
-				xfpm-settings.h			\
-				xfpm-common.c			\
-				xfpm-common.h
-
-xfce4_power_manager_CFLAGS =					\
-			-DLOCALEDIR=\"$(localedir)\"		\
-			-DG_LOG_DOMAIN=\"xfce4-power-manager\" \
-			$(GTK_CFLAGS)				\
-			$(GLIB_CFLAGS)				\
-			$(DBUS_CFLAGS)				\
-			$(DBUS_GLIB_CFLAGS)			\
-			$(HAL_CFLAGS)				\
-			$(LIBXFCE4GUI_CFLAGS)			\
-			$(LIBXFCE4UTIL_CFLAGS)			\
-			$(XFCONF_CFLAGS)			\
-			$(LIBNOTIFY_CFLAGS)			\
-			$(DPMS_CFLAGS)              	
-
-xfce4_power_manager_LDADD   =					\
-			$(GTK_LIBS)				\
-			$(GLIB_LIBS)				\
-			$(DBUS_LIBS)				\
-			$(DBUS_GLIB_LIBS)			\
-			$(LIBXFCE4GUI_LIBS)			\
-			$(LIBXFCE4UTIL_LIBS)			\
-			$(HAL_LIBS)				\
-			$(XFCONF_LIBS)				\
-			$(LIBNOTIFY_LIBS)			\
-			$(DPMS_LIBS)		
+generated_files =				\
+	xfpm-enum-types.c			\
+	xfpm-enum-types.h			\
+	xfpm-marshal.c				\
+	xfpm-marshal.h
 
 
-EXTRA_DIST = 						\
-	xfpm-marshal.list				\
-	$(generated_files)				\
+xfce4_power_manager_SOURCES = 			\
+	$(generated_files)			\
+	xfce-power-manager-dbus-server.h	\
+	xfpm-main.c				\
+	xfpm-debug.h				\
+	xfpm-hal.c  		 		\
+	xfpm-hal.h	     			\
+	xfpm-driver.c				\
+	xfpm-driver.h				\
+	xfpm-ac-adapter.c			\
+	xfpm-ac-adapter.h			\
+	xfpm-cpu.c				\
+	xfpm-cpu.h				\
+	xfpm-lcd-brightness.c			\
+	xfpm-lcd-brightness.h			\
+	xfpm-button.c				\
+	xfpm-button.h				\
+	xfpm-dbus-messages.c			\
+	xfpm-dbus-messages.h			\
+	xfpm-battery.c				\
+	xfpm-battery.h				\
+	xfpm-battery-icon.c			\
+	xfpm-battery-icon.h			\
+	xfpm-dpms.c				\
+	xfpm-dpms.h				\
+	xfpm-popups.c           		\
+	xfpm-popups.h           		\
+	xfpm-notify.c				\
+	xfpm-notify.h				\
+	xfpm-enums.h				\
+	xfpm-common.c				\
+	xfpm-common.h
+
+xfce4_power_manager_CFLAGS =			\
+	-DLOCALEDIR=\"$(localedir)\"		\
+	-DG_LOG_DOMAIN=\"xfce4-power-manager\" \
+	$(GTK_CFLAGS)				\
+	$(GLIB_CFLAGS)				\
+	$(DBUS_CFLAGS)				\
+	$(DBUS_GLIB_CFLAGS)			\
+	$(HAL_CFLAGS)				\
+	$(LIBXFCE4GUI_CFLAGS)			\
+	$(LIBXFCE4UTIL_CFLAGS)			\
+	$(XFCONF_CFLAGS)			\
+	$(LIBNOTIFY_CFLAGS)			\
+	$(DPMS_CFLAGS)              	
+
+xfce4_power_manager_LDADD   =			\
+	$(GTK_LIBS)				\
+	$(GLIB_LIBS)				\
+	$(DBUS_LIBS)				\
+	$(DBUS_GLIB_LIBS)			\
+	$(LIBXFCE4GUI_LIBS)			\
+	$(LIBXFCE4UTIL_LIBS)			\
+	$(HAL_LIBS)				\
+	$(XFCONF_LIBS)				\
+	$(LIBNOTIFY_LIBS)			\
+	$(DPMS_LIBS)		
+
+
+xfce4_power_manager_settings_SOURCES =		\
+	xfpm-marshal.c				\
+	xfpm-marshal.h				\
+	xfpm-settings-main.c			\
+	xfpm-settings.c				\
+	xfpm-settings.h				\
+	xfpm-common.c				\
+	xfpm-common.h				\
+	xfpm-enum.h				\
+	xfpm-enum-types.c			\
+	xfpm-enum-types.h			\
+	xfpm-string.c				\
+	xfpm-string.h				\
+	xfpm-spin-button.c			\
+	xfpm-spin-button.h			\
+	xfpm-dpms-spins.c			\
+	xfpm-dpms-spins.h			\
+	xfpm-dbus-messages.c			\
+	xfpm-dbus-messages.h			\
+	xfpm-popups.c				\
+	xfpm-popups.h				\
+	xfpm-debug.h
+
+
+xfce4_power_manager_settings_CFLAGS =		\
+	-DLOCALEDIR=\"$(localedir)\"		\
+	-DG_LOG_DOMAIN=\"xfce4-power-manager-settings\"  \
+	$(GTK_CFLAGS)				\
+	$(GLIB_CFLAGS)				\
+	$(DBUS_CFLAGS)				\
+	$(DBUS_GLIB_CFLAGS)			\
+	$(LIBXFCE4GUI_CFLAGS)			\
+	$(LIBXFCE4UTIL_CFLAGS)			\
+	$(XFCONF_CFLAGS)
+
+xfce4_power_manager_settings_LDADD = 		\
+	$(GTK_LIBS)				\
+	$(GLIB_LIBS)				\
+	$(DBUS_LIBS)				\
+	$(DBUS_GLIB_LIBS)			\
+	$(LIBXFCE4GUI_LIBS)			\
+	$(LIBXFCE4UTIL_LIBS)			\
+	$(XFCONF_LIBS)
+
+EXTRA_DIST = 					\
+	xfpm-marshal.list			\
+	xfce-power-manager-dbus-server.h	\
+	xfce-power-manager-dbus-client.h	\
+	xfpm-enum-types.c			\
+	xfpm-enum-types.h			\
+	xfpm-marshal.c				\
+	xfpm-marshal.h	
 	$(desktop_in_files)
 
-DISTCLEANFILES =					\
-	$(generated_files)				\
+DISTCLEANFILES =				\
+	xfce-power-manager-dbus-server.h	\
+	xfce-power-manager-dbus-client.h	\
+	xfpm-enum-types.c			\
+	xfpm-enum-types.h			\
+	xfpm-marshal.c				\
+	xfpm-marshal.h	
 	$(desktop_DATA)
 
-xfpm_headers = 						\
+xfpm_headers = 					\
 	$(srcdir)/xfpm-enums.h			
+
+if MAINTAINER_MODE
+
+BUILT_SOURCES = 				\
+	xfce-power-manager-dbus-server.h	\
+	xfce-power-manager-dbus-client.h	\
+	xfpm-marshal.c				\
+	xfpm-marshal.h				\
+	xfpm-enum-types.c			\
+	xfpm-enum-types.h
 
 xfpm-enum-types.h: $(xfpm_headers)
 	( cd $(srcdir) && glib-mkenums \
@@ -110,15 +171,21 @@ xfpm-marshal.h: $(srcdir)/xfpm-marshal.list
             $(srcdir)/xfpm-marshal.list > tmp-marshal.h && \
         cp tmp-marshal.h $(@F) && \
         rm -f tmp-marshal.h tmp-marshal.h~
-                                                                                
+
 xfpm-marshal.c: xfpm-marshal.h
 	glib-genmarshal --body --prefix="_xfpm_marshal" \
             $(srcdir)/xfpm-marshal.list > tmp-marshal.c && \
         cp tmp-marshal.c $(@F) && \
         rm -f tmp-marshal.c tmp-marshal.c~
-			
 
-			
+xfce-power-manager-dbus-server.h: $(srcdir)/org.xfce.Power.Manager.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_driver $< >$@
+
+xfce-power-manager-dbus-client.h: $(srdir)org.xfce.Power.Manager.xml
+	dbus-binding-tool --mode=glib-client --prefix=xfpm_client $< >$@
+
+endif
+
 #
 # .desktop file
 #
@@ -129,4 +196,3 @@ desktop_DATA =								\
 	$(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
-									

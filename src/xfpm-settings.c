@@ -1230,8 +1230,7 @@ xfpm_settings_new(XfconfChannel *channel,
                   guint8 govs,
                   guint8 switch_buttons,
                   gboolean lcd,
-                  gboolean ups_found,
-                  guint32 socket_id)
+                  gboolean ups_found)
 {
     GtkWidget *Dialog;  /* Main dialog window */
     GtkWidget *mainbox; /* Box to get (Dialog)->vbox */
@@ -1321,12 +1320,5 @@ xfpm_settings_new(XfconfChannel *channel,
     gtk_notebook_append_page(GTK_NOTEBOOK(nt),box,NULL);
 
 
-	GtkWidget *plug;    
-    if ( socket_id != 0 )
-    {
-		plug = gtk_plug_new(socket_id);
-    	gtk_widget_show (plug);
-    	gtk_widget_reparent(allbox,plug);
-	}
-    return socket_id == 0 ? Dialog : plug ;
+    return Dialog;
 }

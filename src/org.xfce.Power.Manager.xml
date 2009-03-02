@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<node name="/org/xfce/PowerManager">
+    <interface name="org.xfce.Power.Manager">
+        <annotation name="org.freedesktop.DBus.GLib.CSymbol"
+                    value="xfpm_driver_dbus"/>
+        <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
+                    value="xfpm_driver_dbus_client"/>   
+     
+    <method name="Quit">
+    </method>
+    
+    <method name="GetConf">
+	<arg direction="out" name="system_laptop" type="b"/>
+	<arg direction="out" name="power_management" type="i"/>
+	<arg direction="out" name="with_dpms" type="b"/>
+	<arg direction="out" name="governor" type="i"/>
+	<arg direction="out" name="switch_buttons" type="i"/>
+	<arg direction="out" name="brightness_control" type="b"/>
+	<arg direction="out" name="ups_found" type="b"/>
+    </method>
+    
+    <method name="GetInfo">
+	<arg direction="out" name="name" type="s"/>
+        <arg direction="out" name="version" type="s"/>
+        <arg direction="out" name="vendor" type="s"/>
+    </method>
+	
+    </interface>
+</node>

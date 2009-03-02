@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-30 12:03+0100\n"
+"POT-Creation-Date: 2009-03-02 10:58+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Kristjan Siimson <kristjan.siimson@gmail.com>\n"
 "Language-Team: Estonian\n"
@@ -27,51 +27,51 @@ msgstr "Ühendatud vooluvõrku"
 msgid "Adapter is offline"
 msgstr "Vooluvõrgust väljas"
 
-#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:912
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:935
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Kas soovite kindlasti arvuti puhkeseisundisse asetada?"
 
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
-#: ../src/xfpm-battery.c:807 ../src/xfpm-battery.c:914
-#: ../src/xfpm-battery.c:949 ../src/xfpm-settings.c:457
+#: ../src/xfpm-battery.c:805 ../src/xfpm-battery.c:937
+#: ../src/xfpm-battery.c:972 ../src/xfpm-settings.c:457
 #: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
 #: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Puhkeseisund"
 
-#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:927
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:950
 msgid "Are you sure you want to suspend the system?"
 msgstr "Kas soovite kindlasti arvuti seisata?"
 
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
-#: ../src/xfpm-battery.c:929 ../src/xfpm-battery.c:964
+#: ../src/xfpm-battery.c:952 ../src/xfpm-battery.c:987
 #: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
 #: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Seisata"
 
-#: ../src/xfpm-battery.c:769
+#: ../src/xfpm-battery.c:767
 msgid "Your battery is almost empty. Save your work to avoid losing data"
 msgstr "Aku on peaaegu tühi. Andmekadude vältimiseks salvestage oma töö"
 
-#: ../src/xfpm-battery.c:774 ../src/xfpm-battery.c:1339
+#: ../src/xfpm-battery.c:772 ../src/xfpm-battery.c:1362
 #: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
-#: ../src/xfpm-main.c:252 ../src/xfpm-driver.c:304 ../src/xfpm-driver.c:317
-#: ../src/xfpm-driver.c:912
+#: ../src/xfpm-main.c:273 ../src/xfpm-driver.c:296 ../src/xfpm-driver.c:309
+#: ../src/xfpm-driver.c:788
 msgid "Xfce power manager"
 msgstr "Xfce vooluhaldur"
 
-#: ../src/xfpm-battery.c:784
+#: ../src/xfpm-battery.c:782
 msgid "Shutdown the system"
 msgstr "Sulge arvuti"
 
-#: ../src/xfpm-battery.c:792
+#: ../src/xfpm-battery.c:790
 msgid "Hibernate the system"
 msgstr "Arvuti puhkeseisundisse"
 
-#: ../src/xfpm-battery.c:814 ../src/xfpm-settings.c:453
+#: ../src/xfpm-battery.c:812 ../src/xfpm-settings.c:453
 #: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
 #: ../src/xfpm-settings.c:978
 msgid "Shutdown"
@@ -287,11 +287,11 @@ msgstr "Kiirklahvi seadistused"
 msgid "Monitor Settings"
 msgstr "Kuvari seadistused"
 
-#: ../src/xfpm-settings.c:1244
+#: ../src/xfpm-settings.c:1243
 msgid "Power Manager Preferences"
 msgstr "Vooluhalduri eelistused"
 
-#: ../src/xfpm-settings.c:1275
+#: ../src/xfpm-settings.c:1274
 msgid "Extended"
 msgstr "Laiendatud"
 
@@ -404,7 +404,8 @@ msgstr "Seiska pärast"
 msgid "Turn off after"
 msgstr "Lülita välja pärast"
 
-#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1243
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1067
+#: ../src/xfpm-settings-main.c:106
 msgid "Xfce4 Power Manager"
 msgstr "Xfce4 vooluhaldur"
 
@@ -412,27 +413,19 @@ msgstr "Xfce4 vooluhaldur"
 msgid "translator-credits"
 msgstr "Kristjan Siimson <kristjan.siimson@gmail.com>"
 
-#: ../src/xfpm-main.c:61
+#: ../src/xfpm-main.c:65
 msgid "Show the configuration dialog"
 msgstr "Näita seadistusdialoogi"
 
-#: ../src/xfpm-main.c:62
+#: ../src/xfpm-main.c:66
 msgid "Quit any running xfce power manager"
 msgstr "Sulge kõik töötavad xfce vooluhaldurid"
 
-#: ../src/xfpm-main.c:63
-msgid "Settings manager socket"
-msgstr "Seadistushalduri pistik"
-
-#: ../src/xfpm-main.c:63
-msgid "SOCKET ID"
-msgstr "PISTIK"
-
-#: ../src/xfpm-main.c:64
+#: ../src/xfpm-main.c:67
 msgid "Version information"
 msgstr "Versiooniteave"
 
-#: ../src/xfpm-main.c:71
+#: ../src/xfpm-main.c:74
 #, c-format
 msgid ""
 "\n"
@@ -453,11 +446,11 @@ msgstr ""
 "GNU GPL litsentsi all.\n"
 "\n"
 
-#: ../src/xfpm-main.c:85
+#: ../src/xfpm-main.c:88
 msgid "Xfce Power Manager"
 msgstr "Xfce vooluhaldur"
 
-#: ../src/xfpm-main.c:86
+#: ../src/xfpm-main.c:89
 msgid ""
 "Unable to read your home directory environment variable, autostart option "
 "may not work"
@@ -465,17 +458,17 @@ msgstr ""
 "Kodukataloogi keskkonnamuutujat ei saa lugeda, automaatkäivituse valik ei "
 "pruugi töötada"
 
-#: ../src/xfpm-main.c:161 ../src/xfpm-main.c:182
+#: ../src/xfpm-main.c:164 ../src/xfpm-main.c:185
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Kirjuta '%s --help' kasutamise kohta teabe saamiseks"
 
-#: ../src/xfpm-main.c:180
+#: ../src/xfpm-main.c:183
 #, c-format
 msgid "Too many arguments"
 msgstr "Liiga palju argumente"
 
-#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:253
+#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:274
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -483,29 +476,30 @@ msgstr ""
 "Xfce4 vooluhalduri käivitamine ebaõnnestus, veenduge et HAL ja sõnumisiini "
 "deemon töötavad"
 
-#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:257
+#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:278
 msgid "Unable to load xfce4 power manager"
 msgstr "Xfce4 vooluhalduri laadimine ebaõnnestus"
 
 #: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#: ../src/xfpm-settings-main.c:168
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce vooluhaldur ei tööta"
 
-#: ../src/xfpm-main.c:214
+#: ../src/xfpm-main.c:214 ../src/xfpm-settings-main.c:171
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 vooluhaldur ei tööta, kas soovite selle nüüd käivitada?"
 
-#: ../src/xfpm-main.c:216
+#: ../src/xfpm-main.c:216 ../src/xfpm-settings-main.c:173
 msgid "Run"
 msgstr "Käivita"
 
-#: ../src/xfpm-main.c:265
+#: ../src/xfpm-main.c:286
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce vooluhaldur töötab juba"
 
-#: ../src/xfpm-driver.c:291
+#: ../src/xfpm-driver.c:283
 msgid ""
 "Unable to read AC adapter status, the power manager will not work properly. "
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
@@ -515,11 +509,11 @@ msgstr ""
 "õigesti töötada. Võimalikud põhjused: Vahelduvvoolu adapteri draiver ei ole "
 "laaditud, katkenud ühendus HAL-iga või sõnumisiini deemon ei tööta"
 
-#: ../src/xfpm-driver.c:728
+#: ../src/xfpm-driver.c:604
 msgid "System failed to shutdown"
 msgstr "Arvuti väljalülitamine ebaõnnestus"
 
-#: ../src/xfpm-driver.c:907
+#: ../src/xfpm-driver.c:783
 msgid ""
 "Unable to use power management service, functionalities like hibernate and "
 "suspend will not work. Possible reasons: you don't have enough permission, "
@@ -530,11 +524,11 @@ msgstr ""
 "peatamine ei tööta. Võimalikud põhjused: teil pole vajalike õiguseid, "
 "katkenud ühendus HAL-iga või sõnumisiini deemon ei tööta"
 
-#: ../src/xfpm-driver.c:920
+#: ../src/xfpm-driver.c:796
 msgid "Don't show this message again"
 msgstr "Seda sõnumit mitte enam näidata"
 
-#: ../src/xfpm-driver.c:1243
+#: ../src/xfpm-driver.c:1067 ../src/xfpm-settings-main.c:106
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
 "Vooluhaldusseadistuse laadimine ebaõnnestus, kasutatakse algupäraseid "
@@ -649,14 +643,6 @@ msgstr "Protsessori juhtseadme määramisel ei saadud HAL-deemonilt vastust"
 msgid "No reply from HAL daemon to set power save profile"
 msgstr "Voolusäästu profiili määramisel ei saadud HAL-deemonilt vastust"
 
-#: ../src/xfpm-dbus-messages.c:86
-msgid "Failed to create dbus message\n"
-msgstr "Dbus-sõnumi loomine ebaõnnestus\n"
-
-#: ../src/xfpm-dbus-messages.c:122 ../src/xfpm-dbus-messages.c:223
-msgid "Failed to send message\n"
-msgstr "Sõnumi saatmine ebaõnnestus\n"
-
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power"
 msgstr "Vool"
@@ -672,6 +658,18 @@ msgstr "Xfce 4 vooluhalduri seadistused"
 #: ../src/xfce4-power-manager.desktop.in.h:4
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce 4 vooluhaldur"
+
+#~ msgid "Settings manager socket"
+#~ msgstr "Seadistushalduri pistik"
+
+#~ msgid "SOCKET ID"
+#~ msgstr "PISTIK"
+
+#~ msgid "Failed to create dbus message\n"
+#~ msgstr "Dbus-sõnumi loomine ebaõnnestus\n"
+
+#~ msgid "Failed to send message\n"
+#~ msgstr "Sõnumi saatmine ebaõnnestus\n"
 
 #~ msgid "Start xfce power manager"
 #~ msgstr "Käivita xfce vooluhaldur"

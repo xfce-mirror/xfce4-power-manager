@@ -28,6 +28,8 @@
 #include <config.h>
 #endif
 
+#include <dbus/dbus-glib-lowlevel.h>
+
 #include "xfpm-hal.h"
 #include "xfpm-enums.h"
 
@@ -40,6 +42,7 @@ G_BEGIN_DECLS
 #define XFPM_TYPE_DRIVER   (xfpm_driver_get_type())
 #define XFPM_DRIVER(o)     (G_TYPE_CHECK_INSTANCE_CAST((o),XFPM_TYPE_DRIVER,XfpmDriver))
 #define XFPM_IS_DRIVER(o)  (G_TYPE_CHECK_INSTANCE_TYPE((o),XFPM_TYPE_DRIVER))
+#define XFPM_DRIVER_GET_CLASS(k) (G_TYPE_INSTANCE_GET_CLASS((k), XFPM_TYPE_DRIVER, XfpmDriverClass))
 
 typedef struct XfpmDriverPrivate XfpmDriverPrivate;
 
@@ -57,7 +60,7 @@ typedef struct
 } XfpmDriverClass;
 
 GType         xfpm_driver_get_type              (void);
-XfpmDriver   *xfpm_driver_new                   (void);
+XfpmDriver   *xfpm_driver_new                   (DBusGConnection *bus);
 gboolean      xfpm_driver_monitor               (XfpmDriver *drv);
 
 G_END_DECLS
