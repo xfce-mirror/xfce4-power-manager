@@ -93,15 +93,18 @@ autostart()
         return;
     }
     
-    gchar *file;
-    file = g_strdup_printf("%s/.config/autostart",home);
+    gchar *dir_file;
     
-    if ( !g_file_test(file,G_FILE_TEST_IS_DIR) )
+    dir_file = g_strdup_printf("%s/.config/autostart", home);
+    
+    if ( !g_file_test(dir_file,G_FILE_TEST_IS_DIR) )
     {
-        g_mkdir_with_parents(file,0700);
+        g_mkdir_with_parents(dir_file, 0700);
     }
     
-    file = g_strdup_printf("%s/xfce4-power-manager.desktop",file);
+    gchar *file;
+    file = g_strdup_printf("%s/xfce4-power-manager.desktop",dir_file);
+    g_free(dir_file);
     
     if ( g_file_test(file,G_FILE_TEST_EXISTS) )
     {
