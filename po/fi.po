@@ -1,14 +1,14 @@
 # Finnish translations for xfce4-power-manager package.
 # Copyright (C) 2008 Ali Abdallah <aliov@xfce.org>
 # This file is distributed under the same license as the xfce4-power-manager package.
-# Jari Rahkonen <jari.rahkonen@pp1.inet.fi>, 2008.
+# Jari Rahkonen <jari.rahkonen@pp1.inet.fi>, 2008-2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-02 10:58+0100\n"
-"PO-Revision-Date: 2008-11-27 14:44+0200\n"
+"POT-Creation-Date: 2009-03-03 22:58+0200\n"
+"PO-Revision-Date: 2009-03-03 22:59+0200\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -28,51 +28,51 @@ msgstr "Verkkovirta kytketty"
 msgid "Adapter is offline"
 msgstr "Käytetään akkuvirtaa"
 
-#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:935
+#: ../src/xfpm-ac-adapter.c:358 ../src/xfpm-battery.c:932
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Haluatko varmasti asettaa järjestelmän lepotilaan?"
 
 #. Hibernate menu option
 #: ../src/xfpm-ac-adapter.c:360 ../src/xfpm-ac-adapter.c:396
-#: ../src/xfpm-battery.c:805 ../src/xfpm-battery.c:937
-#: ../src/xfpm-battery.c:972 ../src/xfpm-settings.c:457
+#: ../src/xfpm-battery.c:802 ../src/xfpm-battery.c:934
+#: ../src/xfpm-battery.c:969 ../src/xfpm-settings.c:457
 #: ../src/xfpm-settings.c:918 ../src/xfpm-settings.c:950
 #: ../src/xfpm-settings.c:976
 msgid "Hibernate"
 msgstr "Lepotila"
 
-#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:950
+#: ../src/xfpm-ac-adapter.c:372 ../src/xfpm-battery.c:947
 msgid "Are you sure you want to suspend the system?"
 msgstr "Haluatko varmasti asettaa järjestelmän keskeytystilaan?"
 
 #. Suspend menu option
 #: ../src/xfpm-ac-adapter.c:374 ../src/xfpm-ac-adapter.c:413
-#: ../src/xfpm-battery.c:952 ../src/xfpm-battery.c:987
+#: ../src/xfpm-battery.c:949 ../src/xfpm-battery.c:984
 #: ../src/xfpm-settings.c:916 ../src/xfpm-settings.c:948
 #: ../src/xfpm-settings.c:974
 msgid "Suspend"
 msgstr "Keskeytystila"
 
-#: ../src/xfpm-battery.c:767
+#: ../src/xfpm-battery.c:764
 msgid "Your battery is almost empty. Save your work to avoid losing data"
 msgstr "Akku on lähes tyhjä. Varmista, että olet tallentanut tärkeät tiedot."
 
-#: ../src/xfpm-battery.c:772 ../src/xfpm-battery.c:1362
-#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:196
-#: ../src/xfpm-main.c:273 ../src/xfpm-driver.c:296 ../src/xfpm-driver.c:309
-#: ../src/xfpm-driver.c:788
+#: ../src/xfpm-battery.c:769 ../src/xfpm-battery.c:1359
+#: ../src/xfpm-battery-icon.c:426 ../src/xfpm-main.c:199
+#: ../src/xfpm-main.c:276 ../src/xfpm-driver.c:297 ../src/xfpm-driver.c:310
+#: ../src/xfpm-driver.c:789
 msgid "Xfce power manager"
 msgstr "Xfce:n virranhallinta"
 
-#: ../src/xfpm-battery.c:782
+#: ../src/xfpm-battery.c:779
 msgid "Shutdown the system"
 msgstr "Sammuta järjestelmä"
 
-#: ../src/xfpm-battery.c:790
+#: ../src/xfpm-battery.c:787
 msgid "Hibernate the system"
 msgstr "Aseta järjestelmä lepotilaan"
 
-#: ../src/xfpm-battery.c:812 ../src/xfpm-settings.c:453
+#: ../src/xfpm-battery.c:809 ../src/xfpm-settings.c:453
 #: ../src/xfpm-settings.c:920 ../src/xfpm-settings.c:952
 #: ../src/xfpm-settings.c:978
 msgid "Shutdown"
@@ -180,14 +180,12 @@ msgid "CPU frequency control cannot be used"
 msgstr "Suorittimen kellotaajuutta ei voi hallita"
 
 #: ../src/xfpm-settings.c:705 ../src/xfpm-settings.c:847
-#, fuzzy
 msgid "On AC power"
-msgstr "Akkukäyttö"
+msgstr "Käyttää verkkovirtaa"
 
 #: ../src/xfpm-settings.c:710
-#, fuzzy
 msgid "CPU frequency settings on AC power"
-msgstr "Suorittimen kellotaajuus UPS:n varassa"
+msgstr "Suorittimen kellotaajuus verkkovirran varassa"
 
 #: ../src/xfpm-settings.c:710
 msgid "CPU frequency settings"
@@ -210,9 +208,8 @@ msgid "Monitor settings on battery power"
 msgstr "Näytön virransäästö akkuvirralla"
 
 #: ../src/xfpm-settings.c:846
-#, fuzzy
 msgid "Monitor settings on AC power"
-msgstr "Näytön virransäästö UPS:n varassa"
+msgstr "Näytön virransäästö verkkovirran varassa"
 
 #: ../src/xfpm-settings.c:846
 msgid "Monitor settings"
@@ -248,9 +245,8 @@ msgstr "Yleiset asetukset"
 
 #. Systray icon
 #: ../src/xfpm-settings.c:1019
-#, fuzzy
 msgid "System tray icon:"
-msgstr "Järjestelmälokeron kuvake"
+msgstr "Ilmoitusalueen kuvake:"
 
 #: ../src/xfpm-settings.c:1026
 msgid "Always Display an icon"
@@ -301,7 +297,7 @@ msgstr "Virranhallinnan asetukset"
 
 #: ../src/xfpm-settings.c:1274
 msgid "Extended"
-msgstr ""
+msgstr "Muut asetukset"
 
 #: ../src/xfpm-battery-icon.c:369
 msgid "Your battery charge is low"
@@ -412,7 +408,7 @@ msgstr "Keskeytystilaan viiveellä"
 msgid "Turn off after"
 msgstr "Sammuta viiveellä"
 
-#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1067
+#: ../src/xfpm-common.c:146 ../src/xfpm-driver.c:1068
 #: ../src/xfpm-settings-main.c:106
 msgid "Xfce4 Power Manager"
 msgstr "Xfce4 virranhallinta"
@@ -465,17 +461,17 @@ msgstr ""
 "Kotikansiosi sijaintia ei voi lukea ympäristömuuttujasta HOME, "
 "automaattikäynnistys ei ehkä toimi"
 
-#: ../src/xfpm-main.c:164 ../src/xfpm-main.c:185
+#: ../src/xfpm-main.c:167 ../src/xfpm-main.c:188
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Saat ohjeita komennolla \"%s --help\"."
 
-#: ../src/xfpm-main.c:183
+#: ../src/xfpm-main.c:186
 #, c-format
 msgid "Too many arguments"
 msgstr "Liikaa valitsimia"
 
-#: ../src/xfpm-main.c:197 ../src/xfpm-main.c:274
+#: ../src/xfpm-main.c:200 ../src/xfpm-main.c:277
 msgid ""
 "Unable to run Xfce4 power manager, make sure the hardware abstract layer and "
 "the message bus daemon are running"
@@ -483,30 +479,30 @@ msgstr ""
 "Xfce4 virranhallintaa ei voi suorittaa. Varmista, että HAL ja DBUS ovat "
 "käynnissä."
 
-#: ../src/xfpm-main.c:201 ../src/xfpm-main.c:278
+#: ../src/xfpm-main.c:204 ../src/xfpm-main.c:281
 msgid "Unable to load xfce4 power manager"
 msgstr "Xfce4 virranhallintaa ei voi käynnistää"
 
-#: ../src/xfpm-main.c:211 ../src/xfpm-main.c:234
+#: ../src/xfpm-main.c:214 ../src/xfpm-main.c:237
 #: ../src/xfpm-settings-main.c:168
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce:n virranhallinta ei ole käynnissä"
 
-#: ../src/xfpm-main.c:214 ../src/xfpm-settings-main.c:171
+#: ../src/xfpm-main.c:217 ../src/xfpm-settings-main.c:171
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 virranhallinta ei ole käynnissä. Haluatko käynnistää sen?"
 
-#: ../src/xfpm-main.c:216 ../src/xfpm-settings-main.c:173
+#: ../src/xfpm-main.c:219 ../src/xfpm-settings-main.c:173
 msgid "Run"
 msgstr "Suorita"
 
-#: ../src/xfpm-main.c:286
+#: ../src/xfpm-main.c:289
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce:n virranhallinta on jo käynnissä"
 
-#: ../src/xfpm-driver.c:283
+#: ../src/xfpm-driver.c:284
 msgid ""
 "Unable to read AC adapter status, the power manager will not work properly. "
 "Possible reasons: The AC adapter driver is not loaded, broken connection "
@@ -516,11 +512,11 @@ msgstr ""
 "Mahdollisia syitä ovat virtalähteen ajurin puuttuminen, katkennut HAL-yhteys "
 "tai DBUS-taustaprosessin puuttuminen."
 
-#: ../src/xfpm-driver.c:604
+#: ../src/xfpm-driver.c:605
 msgid "System failed to shutdown"
 msgstr "Järjestelmän sammutus epäonnistui"
 
-#: ../src/xfpm-driver.c:783
+#: ../src/xfpm-driver.c:784
 msgid ""
 "Unable to use power management service, functionalities like hibernate and "
 "suspend will not work. Possible reasons: you don't have enough permission, "
@@ -531,116 +527,116 @@ msgstr ""
 "keskeytystilaa ei voi käyttää. Mahdollisia syitä ovat riittämättömät "
 "käyttöoikeudet, katkennut HAL-yhteys tai DBUS-taustaprosessin puuttuminen."
 
-#: ../src/xfpm-driver.c:796
+#: ../src/xfpm-driver.c:797
 msgid "Don't show this message again"
 msgstr "Älä näytä tätä viestiä uudelleen"
 
-#: ../src/xfpm-driver.c:1067 ../src/xfpm-settings-main.c:106
+#: ../src/xfpm-driver.c:1068 ../src/xfpm-settings-main.c:106
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "Virranhallinnan asetusten lataaminen epäonnistui, käytetään oletuksia"
 
-#: ../src/xfpm-hal.c:172
+#: ../src/xfpm-hal.c:169
 #, c-format
 msgid "Error monitoring HAL events"
 msgstr "HAL-tapahtumien valvontavirhe"
 
-#: ../src/xfpm-hal.c:261 ../src/xfpm-hal.c:280
+#: ../src/xfpm-hal.c:258 ../src/xfpm-hal.c:277
 #, c-format
 msgid "Unable to connect to DBus: %s"
 msgstr "Ei voi yhdistää DBus-palveluun: %s"
 
-#: ../src/xfpm-hal.c:268
+#: ../src/xfpm-hal.c:265
 msgid "HAL is not running or not responding"
 msgstr "HAL ei ole käynnissä tai se ei vastaa"
 
-#: ../src/xfpm-hal.c:415
+#: ../src/xfpm-hal.c:412
 #, c-format
 msgid "Unable to watch device using HAL: %s"
 msgstr "Ei voi valvoa laitetta HAL-palvelun avulla: %s"
 
-#: ../src/xfpm-hal.c:633
+#: ../src/xfpm-hal.c:630
 msgid "No back-end for your operating system"
 msgstr "Käyttöjärjestelmällesi ei ole tukea"
 
-#: ../src/xfpm-hal.c:637
+#: ../src/xfpm-hal.c:634
 msgid "No hibernate script found"
 msgstr "Lepotila-komentotiedostoa ei löydy"
 
-#: ../src/xfpm-hal.c:641
+#: ../src/xfpm-hal.c:638
 msgid "No suspend script found"
 msgstr "Keskeytystila-komentotiedostoa ei löydy"
 
-#: ../src/xfpm-hal.c:645
+#: ../src/xfpm-hal.c:642
 msgid "No suspend method found"
 msgstr "Keskeytystilametodia ei löydy"
 
-#: ../src/xfpm-hal.c:649
+#: ../src/xfpm-hal.c:646
 msgid "No hibernate method found"
 msgstr "Lepotilametodia ei löydy"
 
-#: ../src/xfpm-hal.c:675 ../src/xfpm-hal.c:765 ../src/xfpm-hal.c:859
-#: ../src/xfpm-hal.c:908 ../src/xfpm-hal.c:958 ../src/xfpm-hal.c:1010
-#: ../src/xfpm-hal.c:1062 ../src/xfpm-hal.c:1108
+#: ../src/xfpm-hal.c:672 ../src/xfpm-hal.c:762 ../src/xfpm-hal.c:856
+#: ../src/xfpm-hal.c:905 ../src/xfpm-hal.c:955 ../src/xfpm-hal.c:1007
+#: ../src/xfpm-hal.c:1059 ../src/xfpm-hal.c:1105
 #, c-format
 msgid "Out of memory"
 msgstr "Muisti ei riitä"
 
-#: ../src/xfpm-hal.c:707
+#: ../src/xfpm-hal.c:704
 #, c-format
 msgid "Message hibernate didn't get a reply"
 msgstr "Lepotilaviestiin ei vastattu"
 
-#: ../src/xfpm-hal.c:728
+#: ../src/xfpm-hal.c:725
 #, c-format
 msgid "System failed to hibernate"
 msgstr "Lepotila epäonnistui"
 
-#: ../src/xfpm-hal.c:734 ../src/xfpm-hal.c:826
+#: ../src/xfpm-hal.c:731 ../src/xfpm-hal.c:823
 #, c-format
 msgid "Error occured while trying to suspend"
 msgstr "Virhe siirryttäessä keskeytystilaan"
 
-#: ../src/xfpm-hal.c:737 ../src/xfpm-hal.c:829
+#: ../src/xfpm-hal.c:734 ../src/xfpm-hal.c:826
 #, c-format
 msgid "Unknown reply from the message daemon"
 msgstr "Tuntematon vastaus viestipalvelulta"
 
-#: ../src/xfpm-hal.c:798
+#: ../src/xfpm-hal.c:795
 #, c-format
 msgid "Message suspend didn't get a reply"
 msgstr "Keskeytystilaviestiin ei vastattu"
 
-#: ../src/xfpm-hal.c:820
+#: ../src/xfpm-hal.c:817
 #, c-format
 msgid "System failed to suspend"
 msgstr "Keskeytystila epäonnistui"
 
-#: ../src/xfpm-hal.c:879
+#: ../src/xfpm-hal.c:876
 #, c-format
 msgid "No reply from HAL daemon to set monitor brightness level"
 msgstr "HAL-palvelu ei vastannut näytön kirkkauden asettamiseen"
 
-#: ../src/xfpm-hal.c:926
+#: ../src/xfpm-hal.c:923
 #, c-format
 msgid "No reply from HAL daemon to get monitor brightness level"
 msgstr "HAL-palvelu ei vastannut näytön kirkkauden kyselyyn"
 
-#: ../src/xfpm-hal.c:976
+#: ../src/xfpm-hal.c:973
 #, c-format
 msgid "No reply from HAL daemon to get available cpu governors"
 msgstr "HAL-palvelu ei vastannut suoritinmäärän kyselyyn"
 
-#: ../src/xfpm-hal.c:1028
+#: ../src/xfpm-hal.c:1025
 #, c-format
 msgid "No reply from HAL daemon to get current cpu governor"
 msgstr "HAL-palvelu ei vastannut suorittimen profiilin kyselyyn"
 
-#: ../src/xfpm-hal.c:1081
+#: ../src/xfpm-hal.c:1078
 #, c-format
 msgid "No reply from HAL daemon to set cpu governor"
 msgstr "HAL-palvelu ei vastannut suorittimen profiilin asettamiseen"
 
-#: ../src/xfpm-hal.c:1127
+#: ../src/xfpm-hal.c:1124
 #, c-format
 msgid "No reply from HAL daemon to set power save profile"
 msgstr "HAL-palvelu ei vastannut virransäästöprofiilin asettamiseen"
@@ -661,6 +657,9 @@ msgstr "Xfce4 virranhallinnan asetukset"
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce4 virranhallinta"
 
+#~ msgid "Start xfce power manager"
+#~ msgstr "Käynnistä Xfce:n virranhallinta"
+
 #~ msgid "Settings manager socket"
 #~ msgstr "Asetustenhallinnan pistoke"
 
@@ -672,9 +671,6 @@ msgstr "Xfce4 virranhallinta"
 
 #~ msgid "Failed to send message\n"
 #~ msgstr "Viestin lähetys epäonnistui\n"
-
-#~ msgid "Start xfce power manager"
-#~ msgstr "Käynnistä Xfce:n virranhallinta"
 
 #~ msgid "On electric power"
 #~ msgstr "Verkkovirta"
