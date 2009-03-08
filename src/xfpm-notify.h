@@ -1,6 +1,5 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
- *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+/*
+ * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -16,36 +15,56 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #ifndef __XFPM_NOTIFY_H
 #define __XFPM_NOTIFY_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#ifdef HAVE_LIBNOTIFY
-#include <libnotify/notify.h>
+#include <glib-object.h>
 #include <gtk/gtk.h>
 
-NotifyNotification *  xfpm_notify_new(const gchar *title,
-                                      const gchar *message,
-                                      guint timeout,
-                                      NotifyUrgency urgency,
-                                      GtkStatusIcon *icon,
-                                      const gchar *icon_name);
-                                      
-void xfpm_notify_add_action(NotifyNotification *n,
-                            const gchar *action_id,
-                            const gchar *action_label,
-                            NotifyActionCallback notify_callback,
-                            gpointer user_data) ;
-                            
-void xfpm_notify_show_notification(NotifyNotification *n,
-                                   guint timeout_to_show);
-                            
-#endif /* HAVE_LIBNOTIFY */
+G_BEGIN_DECLS
 
-#endif /*__XFPM_NOTIFY_H */
+#define XFPM_TYPE_NOTIFY        (xfpm_notify_get_type () )
+#define XFPM_NOTIFY(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_NOTIFY, XfpmNotify))
+#define XFPM_IS_NOTIFY(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_NOTIFY))
+
+typedef enum 
+{
+    XFPM_NOTIFY_CRITICAL,
+    XFPM_NOTIFY_NORMAL,
+    XFPM_NOTIFY_LOW
+    
+} XfpmNotifyUrgency;
+
+typedef struct XfpmNotifyPrivate XfpmNotifyPrivate;
+
+typedef struct
+{
+    GObject		  parent;
+    XfpmNotifyPrivate	 *priv;
+    
+} XfpmNotify;
+
+typedef struct
+{
+    GObjectClass          parent_class;
+    
+} XfpmNotifyClass;
+
+GType        	 xfpm_notify_get_type          (void) G_GNUC_CONST;
+XfpmNotify      *xfpm_notify_new               (void);
+
+void             xfpm_notify_show_notification (XfpmNotify *notify,
+						const gchar *title,
+						const gchar *text,
+						const gchar *icon_name,
+						gint timeout,
+						XfpmNotifyUrgency urgency,
+						GtkStatusIcon *icon);
+
+
+G_END_DECLS
+
+#endif /* __XFPM_NOTIFY_H */

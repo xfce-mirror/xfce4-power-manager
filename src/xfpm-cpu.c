@@ -1,6 +1,5 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
- *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+/*
+ * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -16,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
@@ -37,408 +36,204 @@
 #include <errno.h>
 #endif
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+#include <libxfce4util/libxfce4util.h>
 
-#include <xfconf/xfconf.h>
+#include <hal/libhal.h>
+
+#include "libxfpm/dbus-hal.h"
+#include "libxfpm/xfpm-string.h"
 
 #include "xfpm-cpu.h"
-#include "xfpm-hal.h"
-#include "xfpm-debug.h"
-#include "xfpm-common.h"
-#include "xfpm-enum-types.h"
-#include "xfpm-string.h"
+#include "xfpm-config.h"
+#include "xfpm-enum.h"
 
-#define XFPM_CPU_GET_PRIVATE(o)  (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_CPU,XfpmCpuPrivate))
+/* Init */
+static void xfpm_cpu_class_init (XfpmCpuClass *klass);
+static void xfpm_cpu_init       (XfpmCpu *cpu);
+static void xfpm_cpu_finalize   (GObject *object);
 
-static void xfpm_cpu_init(XfpmCpu *cpu);
-static void xfpm_cpu_class_init(XfpmCpuClass *klass);
-static void xfpm_cpu_finalize(GObject *object);
-
-
-static void xfpm_cpu_set_property (GObject *object,
-                                   guint prop_id,
-                                   const GValue *value,
-                                   GParamSpec *pspec);
-static void xfpm_cpu_get_property (GObject *object,
-                                   guint prop_id,
-                                   GValue *value,
-                                   GParamSpec *pspec);
-
-static void xfpm_cpu_load_config(XfpmCpu *cpu);
-static void xfpm_cpu_check(XfpmCpu *cpu);
-static guint8 xfpm_cpu_get_all_governors(XfpmCpu *cpu);
-static void xfpm_cpu_get_governors(XfpmCpu *cpu);
-static void xfpm_cpu_set_governor(XfpmCpu *cpu,
-                                  gboolean ac_adapter_present);
-
-static void xfpm_cpu_notify_cb (GObject *object,
-                                GParamSpec *arg1,
-                                gpointer data);
-                                
-G_DEFINE_TYPE(XfpmCpu,xfpm_cpu,G_TYPE_OBJECT)
+#define XFPM_CPU_GET_PRIVATE(o) \
+(G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_CPU, XfpmCpuPrivate))
 
 struct XfpmCpuPrivate
 {
-    XfpmHal *hal;
-	guint8 governors;
+    XfconfChannel *channel;
+    DbusHal       *hbus;
+    
+    gboolean 	   on_battery;
+    gboolean 	   power_save;
+    
+    gboolean       interface_ok;
+    guint8         cpu_governors;
 };
 
-enum
-{
-    PROP_0,
-    PROP_AC_ADAPTER,
-    PROP_CPU_FREQ,
-    PROP_ON_AC_CPU_GOV,
-    PROP_ON_BATT_CPU_GOV
-};
+G_DEFINE_TYPE(XfpmCpu, xfpm_cpu, G_TYPE_OBJECT)
 
 static void
 xfpm_cpu_class_init(XfpmCpuClass *klass)
 {
-    GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
-    
-    gobject_class->set_property = xfpm_cpu_set_property;
-    gobject_class->get_property = xfpm_cpu_get_property;
-    
-    gobject_class->finalize = xfpm_cpu_finalize;
-    
-    g_object_class_install_property(gobject_class,
-                                    PROP_AC_ADAPTER,
-                                    g_param_spec_boolean("on-ac-adapter",
-                                                         "On ac adapter",
-                                                         "On Ac power",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-                                                         
-    g_object_class_install_property(gobject_class,
-                                    PROP_CPU_FREQ,
-                                    g_param_spec_boolean("cpu-freq",
-                                                         "cpu freq",
-                                                         "cpu freq settings",
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-    
-    
-    g_object_class_install_property(gobject_class,
-                                    PROP_ON_AC_CPU_GOV,
-                                    g_param_spec_flags("on-ac-cpu-gov",
-                                                      "On ac cpu gov",
-                                                      "Cpu governor on AC power",
-                                                      XFPM_TYPE_CPU_GOVERNOR,
-                                                      ONDEMAND,
-                                                      G_PARAM_READWRITE));
-    g_object_class_install_property(gobject_class,
-                                    PROP_ON_BATT_CPU_GOV,
-                                    g_param_spec_flags("on-batt-cpu-gov",
-                                                      "On battery cpu gov",
-                                                      "Cpu governor on battery power",
-                                                      XFPM_TYPE_CPU_GOVERNOR,
-                                                      POWERSAVE,
-                                                      G_PARAM_READWRITE));
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+
+    object_class->finalize = xfpm_cpu_finalize;
+
     g_type_class_add_private(klass,sizeof(XfpmCpuPrivate));
 }
 
 static void
 xfpm_cpu_init(XfpmCpu *cpu)
 {
-    XfpmCpuPrivate *priv;
-    priv = XFPM_CPU_GET_PRIVATE(cpu);
-    
-    priv->hal = xfpm_hal_new();
-	priv->governors = 0;
-    
-    xfpm_cpu_load_config(cpu);
-	
-	xfpm_cpu_check(cpu);
-	xfpm_cpu_get_governors(cpu);
-    
-    g_signal_connect(G_OBJECT(cpu),"notify",G_CALLBACK(xfpm_cpu_notify_cb),NULL);
-    
-}
-
-static void xfpm_cpu_set_property(GObject *object,
-                                  guint prop_id,
-                                  const GValue *value,
-                                  GParamSpec *pspec)
-{
-#ifdef DEBUG
-    gchar *content;
-    content = g_strdup_value_contents(value);
-    XFPM_DEBUG("param:%s value contents:%s\n",pspec->name,content);
-    g_free(content);
-#endif      
-    XfpmCpu *cpu;
-    cpu = XFPM_CPU(object);
-    
-    switch (prop_id)
-    {
-    case PROP_AC_ADAPTER:
-        cpu->ac_adapter_present = g_value_get_boolean(value);
-        break;   
-    case PROP_CPU_FREQ:
-        cpu->cpu_freq_enabled = g_value_get_boolean(value);
-        break;    
-    case PROP_ON_AC_CPU_GOV:
-        cpu->on_ac_cpu_gov = g_value_get_flags(value);
-        break;
-    case PROP_ON_BATT_CPU_GOV:
-        cpu->on_batt_cpu_gov = g_value_get_flags(value);
-        break;    
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object,prop_id,pspec);
-        break;
-    }
-}    
-                               
-static void xfpm_cpu_get_property(GObject *object,
-                                   guint prop_id,
-                                   GValue *value,
-                                   GParamSpec *pspec)
-{
-    XfpmCpu *cpu;
-    cpu = XFPM_CPU(object);
-        
-    switch (prop_id)
-    {
-    case PROP_AC_ADAPTER:
-        g_value_set_boolean(value,cpu->ac_adapter_present);
-        break;   
-    case PROP_CPU_FREQ:
-        g_value_set_boolean(value,cpu->cpu_freq_enabled);
-        break;
-    case PROP_ON_AC_CPU_GOV:
-        g_value_set_flags(value,cpu->on_ac_cpu_gov);
-        break;
-    case PROP_ON_BATT_CPU_GOV:
-        g_value_set_flags(value,cpu->on_batt_cpu_gov);
-        break;            
-    default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object,prop_id,pspec);
-        break;
-    }                         
-    
-#ifdef DEBUG
-    gchar *content;
-    content = g_strdup_value_contents(value);
-    XFPM_DEBUG("param:%s value contents:%s\n",pspec->name,content);
-    g_free(content);
-#endif  
+    cpu->priv = XFPM_CPU_GET_PRIVATE(cpu);
+    cpu->priv->cpu_governors = 0;
 }
 
 static void
 xfpm_cpu_finalize(GObject *object)
 {
-    XfpmCpu *cpu = XFPM_CPU(object);
-    cpu->priv = XFPM_CPU_GET_PRIVATE(cpu);
-    
-    if ( cpu->priv->hal )
-    {
-        g_object_unref(cpu->priv->hal);
-    }
-    
+    XfpmCpu *cpu;
+
+    cpu = XFPM_CPU(object);
+
     G_OBJECT_CLASS(xfpm_cpu_parent_class)->finalize(object);
 }
 
 static void
-xfpm_cpu_load_config(XfpmCpu *cpu)
+xfpm_cpu_set_governor (XfpmCpu *cpu, const gchar *governor)
 {
-    XFPM_DEBUG("loading configuration\n");
-    XfconfChannel *channel;
     
-    channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
+    if (!dbus_hal_set_cpu_governor (cpu->priv->hbus, governor, NULL))
+    	g_critical ("Unable to set CPU governor to %s\n", governor);
     
-    cpu->on_ac_cpu_gov = xfconf_channel_get_uint(channel,ON_AC_CPU_GOV_CFG,ONDEMAND);
-    cpu->on_batt_cpu_gov = xfconf_channel_get_uint(channel,ON_BATT_CPU_GOV_CFG,POWERSAVE);
-    cpu->cpu_freq_enabled = xfconf_channel_get_bool(channel,CPU_FREQ_SCALING_CFG,TRUE);
+}
+
+static XfpmCpuGovernor 
+_governor_name_to_enum (const gchar *governor)
+{
+    if ( xfpm_strequal(governor, "ondemand") )
+    	return CPU_ONDEMAND;
+    else if ( xfpm_strequal(governor, "powersave") )
+    	return CPU_POWERSAVE;
+    else if ( xfpm_strequal (governor, "performance") )
+    	return CPU_PERFORMANCE;
     
-    g_object_unref(channel);
-}
-
-
-static
-gchar *_get_governor_from_enum(XfpmCpuGovernor governor)
-{
-    if ( governor == POWERSAVE )
-    {
-        return "powersave";
-    }
-    else if ( governor == ONDEMAND )
-    {
-        return "ondemand";
-    }
-    else if ( governor == PERFORMANCE )
-    {
-        return "performance";
-    }
-    else if ( governor == CONSERVATIVE )
-    {
-        return "conservative";
-    }
-    return NULL;
-}
-
-static void xfpm_cpu_check(XfpmCpu *cpu)
-{
-	XfpmCpuPrivate *priv;
-	priv = XFPM_CPU_GET_PRIVATE(cpu);
-	
-	if (!xfpm_hal_cpu_freq_interface_can_be_used(priv->hal))
-    {	
-		priv->governors |= CPU_FREQ_CANNOT_BE_USED;
-	    XFPM_DEBUG("Cpu freq control cannot be used\n");	
-    }
-}
-
-static guint8
-xfpm_cpu_get_all_governors(XfpmCpu *cpu)
-{
-	XfpmCpuPrivate *priv;
-	priv = XFPM_CPU_GET_PRIVATE(cpu);
-		
-	GError *g_error = NULL;
-	gchar **govs = NULL;
-    guint8 governors = 0;
-	    
-	govs = xfpm_hal_get_available_cpu_governors(priv->hal,&g_error);
-	
-	if ( g_error )
-	{
-		XFPM_DEBUG("%s :\n",g_error->message);
-		g_error_free(g_error);
-		return 0;
-	}
-
-	int i = 0;    
-	if ( govs ) 
-	{
-		for ( i = 0 ; govs[i] ; i++ )
-		{
-			if ( !xfpm_strcmp(govs[i],"powersave") )    governors |= POWERSAVE;
-			if ( !xfpm_strcmp(govs[i],"ondemand") )     governors |= ONDEMAND;
-			if ( !xfpm_strcmp(govs[i],"performance") )  governors |= PERFORMANCE;
-			if ( !xfpm_strcmp(govs[i],"conservative") ) governors |= CONSERVATIVE;
-		}   
-		libhal_free_string_array(govs);
-	}	
-	
-	return governors;
-	
-}
-
-static void xfpm_cpu_get_governors(XfpmCpu *cpu)
-{
-	XfpmCpuPrivate *priv;
-	priv = XFPM_CPU_GET_PRIVATE(cpu);
-	
-	if ( priv->governors & CPU_FREQ_CANNOT_BE_USED )
-	{
-		return;
-	}
-	
-	priv->governors = xfpm_cpu_get_all_governors(cpu);
+    return CPU_UNKNOWN;
 }
 
 static void
-xfpm_cpu_set_governor(XfpmCpu *cpu,gboolean ac_adapter_present)
+xfpm_cpu_update_governor (XfpmCpu *cpu)
 {
-    XfpmCpuPrivate *priv;
-    priv = XFPM_CPU_GET_PRIVATE(cpu);
+    if ( !cpu->priv->interface_ok )
+    	return;
+	
+    gchar *current_governor = dbus_hal_get_cpu_current_governor (cpu->priv->hbus, NULL);
+    
+    if ( !current_governor )
+    	return;
 
-    gchar *current_governor;
-    GError *error = NULL;
-    current_governor = xfpm_hal_get_current_cpu_governor(priv->hal,&error);
-    
-    if ( error )
-    {
-        XFPM_DEBUG("%s:\n",error->message);
-        g_error_free(error);
-        return;
-    }
-    if ( !current_governor ) return;
-    
-    gchar *config_gov = 
-           _get_governor_from_enum(ac_adapter_present ? cpu->on_ac_cpu_gov : cpu->on_batt_cpu_gov);
+    XfpmCpuGovernor current = _governor_name_to_enum (current_governor);
 
-    if ( !config_gov )
+    if ( !cpu->priv->power_save || ( !cpu->priv->on_battery && cpu->priv->power_save) )
     {
-        XFPM_DEBUG("Unknown cpu governor\n");
-        return;
+	if ( cpu->priv->cpu_governors & CPU_ONDEMAND )
+	    xfpm_cpu_set_governor (cpu, "ondemand");
+	else if ( cpu->priv->cpu_governors & CPU_PERFORMANCE )
+	    xfpm_cpu_set_governor (cpu, "performance");
+	else
+	    g_critical ("No conveniant cpu governor found\n");
+	return;
     }
-        
-    XFPM_DEBUG("Configuration governor %s\n",config_gov);
-    
-    if ( xfpm_strcmp(current_governor,config_gov) ) 
+
+    if ( cpu->priv->on_battery && cpu->priv->power_save )
     {
-        XFPM_DEBUG("CPU actuel governor %s, setting=%s\n",current_governor,config_gov);
-        xfpm_hal_set_cpu_governor(priv->hal,config_gov,&error);
-        if ( error )
-        {
-            XFPM_DEBUG("%s:\n",error->message);
-            g_error_free(error);
-            return;
-        }
-    }    
-    else
+    	if ( current != CPU_POWERSAVE )
+	{
+	    TRACE ("Settings cpu governor to powersave");
+	    xfpm_cpu_set_governor (cpu, "powersave");
+	}
+	return;
+    }
+
+    libhal_free_string (current_governor);
+}
+
+static void
+xfpm_cpu_load_configuration (XfpmCpu *cpu)
+{
+    cpu->priv->power_save =
+    	xfconf_channel_get_bool (cpu->priv->channel, POWER_SAVE_ON_BATTERY, TRUE);
+}
+
+static void
+xfpm_cpu_property_changed_cb (XfconfChannel *channel, gchar *property, GValue *value, XfpmCpu *cpu)
+{
+    if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
+        return;
+	
+    if ( xfpm_strequal(property, POWER_SAVE_ON_BATTERY) )
     {
-        XFPM_DEBUG("No Need to change CPU Governor\n");
+	gboolean val = g_value_get_boolean (value);
+	cpu->priv->power_save = val;
+	xfpm_cpu_update_governor(cpu);
     }
 }
 
-static void 
-xfpm_cpu_notify_cb (GObject *object,
-                    GParamSpec *arg1,
-                    gpointer data)
-{                                
-    XfpmCpu *cpu = XFPM_CPU(object);
-	XfpmCpuPrivate *priv;
-	priv = XFPM_CPU_GET_PRIVATE(cpu);
+static gboolean
+xfpm_cpu_get_available_governors (XfpmCpu *cpu)
+{
+    gchar **governors =
+    	dbus_hal_get_cpu_available_governors (cpu->priv->hbus, NULL);
 	
-	if ( priv->governors & CPU_FREQ_CANNOT_BE_USED )
-	{
-		XFPM_DEBUG("Xfpm cannot use cpu freq control\n");
-		return;
-	}
-    
-    if ( !cpu->cpu_freq_enabled )
+    if ( !governors )
     {
-        XFPM_DEBUG("Cpu freq control is disabled\n");
-		return;
+    	g_critical ("Unable to get CPU governors\n");
+	return FALSE;
     }
     
-    if ( !xfpm_strcmp(arg1->name,"on-ac-adapter") ||
-         !xfpm_strcmp(arg1->name,"on-ac-cpu-gov") ||
-         !xfpm_strcmp(arg1->name,"on-batt-cpu-gov") )
+    int i =0 ;
+    for ( i = 0; governors[i]; i++)
     {
-        xfpm_cpu_set_governor(cpu,cpu->ac_adapter_present);
+    	TRACE("found CPU governor %s", governors[i]);
+	
+	if (xfpm_strequal(governors[i], "powersave") )
+	    cpu->priv->cpu_governors |= CPU_POWERSAVE;
+	else if ( xfpm_strequal(governors[i], "ondemand") )
+	    cpu->priv->cpu_governors |= CPU_ONDEMAND;
+	else if ( xfpm_strequal(governors[i], "performance") )
+	    cpu->priv->cpu_governors |= CPU_PERFORMANCE;
     }
+
+    libhal_free_string_array (governors);
+    
+    return TRUE;
+    
 }
 
 XfpmCpu *
-xfpm_cpu_new(void)
+xfpm_cpu_new (XfconfChannel *channel, DbusHal *hbus)
 {
     XfpmCpu *cpu = NULL;
-    cpu = g_object_new(XFPM_TYPE_CPU,NULL);
+    cpu = g_object_new (XFPM_TYPE_CPU, NULL);
+    
+    cpu->priv->hbus = hbus;
+    
+    if ( !xfpm_cpu_get_available_governors (cpu))
+    	goto out;
+    
+    cpu->priv->interface_ok = TRUE;
+    cpu->priv->channel = channel;
+    xfpm_cpu_load_configuration (cpu);
+    
+    g_signal_connect (cpu->priv->channel, "property-changed",
+		      G_CALLBACK(xfpm_cpu_property_changed_cb), cpu);
+		      
+out:
     return cpu;
 }
 
-guint8
-xfpm_cpu_get_available_governors(XfpmCpu *cpu)
+void xfpm_cpu_set_on_battery (XfpmCpu *cpu, gboolean on_battery)
 {
-	g_return_val_if_fail(XFPM_IS_CPU(cpu),0);
-	
-	XfpmCpuPrivate *priv;
-	priv = XFPM_CPU_GET_PRIVATE(cpu);
-
-	if ( priv->governors & CPU_FREQ_CANNOT_BE_USED )
-	{
-		return 0;
-	}
-	
-	guint8 govs = xfpm_cpu_get_all_governors(cpu);
-	
-	if ( govs != priv->governors ) priv->governors = govs;
-	
-	return govs;
+    g_return_if_fail (XFPM_IS_CPU(cpu));
+    
+    cpu->priv->on_battery = on_battery;
+    
+    xfpm_cpu_update_governor (cpu);
 }

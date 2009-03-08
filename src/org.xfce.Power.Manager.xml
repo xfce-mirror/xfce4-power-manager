@@ -3,14 +3,14 @@
 <node name="/org/xfce/PowerManager">
     <interface name="org.xfce.Power.Manager">
         <annotation name="org.freedesktop.DBus.GLib.CSymbol"
-                    value="xfpm_driver_dbus"/>
+                    value="xfpm_manager_dbus"/>
         <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
-                    value="xfpm_driver_dbus_client"/>   
+                    value="xfpm_manager_dbus_client"/>   
      
     <method name="Quit">
     </method>
     
-    <method name="GetConf">
+    <method name="GetAll">
 	<arg direction="out" name="system_laptop" type="b"/>
 	<arg direction="out" name="power_management" type="i"/>
 	<arg direction="out" name="with_dpms" type="b"/>

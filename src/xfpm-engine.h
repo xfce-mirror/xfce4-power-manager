@@ -18,50 +18,35 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_DPMS_H
-#define __XFPM_DPMS_H
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ifndef __XFPM_ENGINE_H
+#define __XFPM_ENGINE_H
 
 #include <glib-object.h>
 
-#include <xfconf/xfconf.h>
-
-#ifdef HAVE_DPMS
-
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DPMS        (xfpm_dpms_get_type () )
-#define XFPM_DPMS(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_DPMS, XfpmDpms))
-#define XFPM_IS_DPMS(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_DPMS))
+#define XFPM_TYPE_ENGINE        (xfpm_engine_get_type () )
+#define XFPM_ENGINE(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_ENGINE, XfpmEngine))
+#define XFPM_IS_ENGINE(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_ENGINE))
 
-typedef struct XfpmDpmsPrivate XfpmDpmsPrivate;
+typedef struct XfpmEnginePrivate XfpmEnginePrivate;
 
 typedef struct
 {
     GObject		  parent;
-    XfpmDpmsPrivate	 *priv;
+    XfpmEnginePrivate	 *priv;
     
-} XfpmDpms;
+} XfpmEngine;
 
 typedef struct
 {
-    GObjectClass 	  parent_class;
+    GObjectClass parent_class;
     
-} XfpmDpmsClass;
+} XfpmEngineClass;
 
-GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
-XfpmDpms       *xfpm_dpms_new             (XfconfChannel *channel);
-
-void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms,
-					   gboolean on_battery);
-gboolean        xfpm_dpms_capable         (XfpmDpms *dpms);
-
+GType        	  xfpm_engine_get_type        (void) G_GNUC_CONST;
+XfpmEngine       *xfpm_engine_new             (void);
 
 G_END_DECLS
 
-#endif /* HAVE_DPMS */
-
-#endif /* __XFPM_DPMS_H */
+#endif /* __XFPM_ENGINE_H */

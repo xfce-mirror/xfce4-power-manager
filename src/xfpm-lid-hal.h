@@ -18,50 +18,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_DPMS_H
-#define __XFPM_DPMS_H
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ifndef __XFPM_LID_HAL_H
+#define __XFPM_LID_HAL_H
 
 #include <glib-object.h>
 
-#include <xfconf/xfconf.h>
-
-#ifdef HAVE_DPMS
-
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DPMS        (xfpm_dpms_get_type () )
-#define XFPM_DPMS(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_DPMS, XfpmDpms))
-#define XFPM_IS_DPMS(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_DPMS))
+#define XFPM_TYPE_LID_HAL        (xfpm_lid_hal_get_type () )
+#define XFPM_LID_HAL(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_LID_HAL, XfpmLidHal))
+#define XFPM_IS_LID_HAL(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_LID_HAL))
 
-typedef struct XfpmDpmsPrivate XfpmDpmsPrivate;
+typedef struct XfpmLidHalPrivate XfpmLidHalPrivate;
 
 typedef struct
 {
     GObject		  parent;
-    XfpmDpmsPrivate	 *priv;
+    XfpmLidHalPrivate	 *priv;
     
-} XfpmDpms;
+} XfpmLidHal;
 
 typedef struct
 {
-    GObjectClass 	  parent_class;
+    GObjectClass          parent_class;
     
-} XfpmDpmsClass;
+    void                 (*lid_closed) 	       (XfpmLidHal *lid);
+    
+} XfpmLidHalClass;
 
-GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
-XfpmDpms       *xfpm_dpms_new             (XfconfChannel *channel);
-
-void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms,
-					   gboolean on_battery);
-gboolean        xfpm_dpms_capable         (XfpmDpms *dpms);
-
+GType        	  xfpm_lid_hal_get_type        (void) G_GNUC_CONST;
+XfpmLidHal       *xfpm_lid_hal_new             (void);
+gboolean          xfpm_lid_hw_found            (XfpmLidHal *lid);
 
 G_END_DECLS
 
-#endif /* HAVE_DPMS */
-
-#endif /* __XFPM_DPMS_H */
+#endif /* __XFPM_LID_HAL_H */

@@ -1,6 +1,5 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
- *
- * * Copyright (C) 2008 Ali <aliov@xfce.org>
+/*
+ * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -16,7 +15,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #ifdef HAVE_CONFIG_H
@@ -24,60 +23,33 @@
 #endif
 
 #include <stdio.h>
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
 
 #include <gtk/gtk.h>
-
 #include <glib.h>
-#include <glib/gstdio.h>
 
 #include <libxfce4util/libxfce4util.h>
-#include <libxfcegui4/libxfcegui4.h>
 
+#include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
-#include "xfpm-driver.h"
-#include "xfpm-hal.h"
-#include "xfpm-dbus-messages.h"
-#include "xfpm-popups.h"
-#include "xfpm-debug.h"
+#include "libxfpm/xfpm-dbus.h"
+#include "libxfpm/xfpm-popups.h"
 
 #include "xfce-power-manager-dbus-client.h"
-
-static gboolean run     = FALSE;
-static gboolean quit    = FALSE;
-static gboolean config  = FALSE;
-static gboolean version = FALSE;
-
-static GOptionEntry option_entries[] = {
-    { "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE,&run,NULL,NULL },
-	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
-	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
-    { "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &version, N_("Version information"), NULL },
-    { NULL, },
-};
+#include "xfpm-manager.h"
 
 static void
 show_version()
 {
-	g_print (_("\n"
+    g_print (_("\n"
              "Xfce Power Manager %s\n\n"
              "Part of the Xfce Goodies Project\n"
              "http://goodies.xfce.org\n\n"
              "Licensed under the GNU GPL.\n\n"), VERSION);
-}			 
-	
+}
+
 static void
 autostart()
 {
@@ -93,22 +65,18 @@ autostart()
         return;
     }
     
-    gchar *dir_file;
+    gchar *file;
+    file = g_strdup_printf("%s/.config/autostart",home);
     
-    dir_file = g_strdup_printf("%s/.config/autostart", home);
-    
-    if ( !g_file_test(dir_file,G_FILE_TEST_IS_DIR) )
+    if ( !g_file_test(file,G_FILE_TEST_IS_DIR) )
     {
-        g_mkdir_with_parents(dir_file, 0700);
+        g_mkdir_with_parents(file,0700);
     }
     
-    gchar *file;
-    file = g_strdup_printf("%s/xfce4-power-manager.desktop",dir_file);
-    g_free(dir_file);
+    file = g_strdup_printf("%s/xfce4-power-manager.desktop",file);
     
     if ( g_file_test(file,G_FILE_TEST_EXISTS) )
     {
-        XFPM_DEBUG("xfce4 power manager autostart.desktop file already exists\n");
         g_free(file);
         return;
     }
@@ -153,12 +121,26 @@ autostart()
     g_key_file_free(key);
 }
 
-int main(int argc,char **argv) 
+int main(int argc, char **argv)
 {
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
-    GError *error = NULL;
+    static gboolean run     = FALSE;
+    static gboolean quit    = FALSE;
+    static gboolean config  = FALSE;
+    static gboolean version = FALSE;
 
+    static GOptionEntry option_entries[] = 
+    {
+	{ "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE,&run,NULL,NULL },
+	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
+	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
+	{ "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &version, N_("Version information"), NULL },
+	{ NULL, },
+    };
+
+    GError *error = NULL;
+    
     if(!gtk_init_with_args(&argc, &argv, "", option_entries, PACKAGE, &error)) 
     {
         if(G_LIKELY(error)) 
@@ -171,125 +153,106 @@ int main(int argc,char **argv)
         else
         {
             g_error("Unable to open display.");
-		}
+	}
 
         return EXIT_FAILURE;
     }
     
-    if ( version )    {
-		show_version();
-    	return EXIT_SUCCESS;
-	}
-
-	if ( run + quit + config + version > 1 )
-	{
-		g_printerr(_("Too many arguments"));
-		g_printerr("\n");
-		g_printerr(_("Type '%s --help' for usage."), G_LOG_DOMAIN);
-		g_printerr("\n");
-		return EXIT_FAILURE;
-	}
-	
-	DBusGConnection *bus;
-	
-	bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
-	
-	if ( error )
-	{
-	    xfpm_popup_message(_("Xfce power manager"),
-                                  _("Unable to run Xfce4 power manager, " \
-                                  "make sure the hardware abstract layer and the message bus daemon "\
-                                  "are running"),
-                                  GTK_MESSAGE_ERROR);
-        g_error(_("Unable to load xfce4 power manager"));
-        g_print("\n");
-	g_error_free(error);
-        return EXIT_FAILURE;        
-	}
-	
-	if ( config )
-	{
-	    if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager"))
-	    {
-            	g_print(_("Xfce power manager is not running"));
-			g_print("\n");
-   	         gboolean ret = 
-        	    xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now?"),
-                	        GTK_STOCK_YES,
-                        	_("Run"));
-		if ( ret ) 
-		{
-		    g_spawn_command_line_async("xfce4-power-manager",NULL);
-		}
-		return EXIT_SUCCESS;
-	    }
-	    else
-	    {
-	        g_spawn_command_line_async("xfce4-power-manager-settings", NULL);
-	        return EXIT_SUCCESS;
-	    }
-	}     
-	 
-	if ( quit )
+    if ( version )    
     {
-        if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus),  "org.xfce.PowerManager"))
+	show_version();
+    	return EXIT_SUCCESS;
+    }
+    
+    if ( run + quit + config + version > 1 )
+    {
+	g_printerr(_("Too many arguments"));
+	g_printerr("\n");
+	g_printerr(_("Type '%s --help' for usage."), G_LOG_DOMAIN);
+	g_printerr("\n");
+	return EXIT_FAILURE;
+    }
+    
+    DBusGConnection *bus;
+    bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
+    
+    if ( error )
+    {
+	gchar *message = g_strdup(_("Unable to connection to the message bus session"));
+	message = g_strdup_printf("%s: ",error->message);
+	xfpm_popup_message(_("Xfce power manager"),
+			   message,
+			   GTK_MESSAGE_ERROR);
+	g_error("%s: \n",message);
+	g_print("\n");
+	g_error_free(error);
+	g_free(message);
+	
+	return EXIT_FAILURE;
+    }
+    
+    if ( quit )
+    {
+	if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), 
+				      "org.xfce.PowerManager") )
         {
             g_print(_("Xfce power manager is not running"));
 	    g_print("\n");
             return EXIT_SUCCESS;
         }
-        else
-        {
+	else
+	{
 	    GError *error = NULL;
 	    DBusGProxy *proxy = dbus_g_proxy_new_for_name(bus, 
 							  "org.xfce.PowerManager",
 							  "/org/xfce/PowerManager",
 							  "org.xfce.Power.Manager");
-							  
 	    if ( !proxy ) 
 	    {
 		g_critical ("Failed to get proxy");
 		dbus_g_connection_unref(bus);
-            	return EXIT_SUCCESS;
+            	return EXIT_FAILURE;
 	    }
+	    xfpm_manager_dbus_client_quit(proxy , &error);
+	    g_object_unref (proxy);
 	    
-	    xfpm_driver_dbus_client_quit(proxy , &error);
-	    
-	    if ( error )
+	    if ( error)
 	    {
-		g_critical("Failed to sent quit message %s", error->message);
-		g_error_free(error);
+		g_critical ("Failed to send quit message %s:\n", error->message);
+		g_error_free (error);
 	    }
-	    
-	    g_object_unref(proxy);
-	    dbus_g_connection_unref(bus);
-            return EXIT_SUCCESS;
-        }
-    }    
+	}
+	return EXIT_SUCCESS;
+    }
     
-    if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus),  "org.xfce.PowerManager") )
+    if ( config )
     {
-        XfpmDriver *driver = xfpm_driver_new(bus);
-        autostart();
-        if (!xfpm_driver_monitor(driver)) 
-        {
-            xfpm_popup_message(_("Xfce power manager"),
-                              _("Unable to run Xfce4 power manager, " \
-                              "make sure the hardware abstract layer and the message bus daemon "\
-                              "are running"),
-                              GTK_MESSAGE_ERROR);
-            g_error(_("Unable to load xfce4 power manager"));
-            g_print("\n");
-            g_object_unref(driver);
-            return EXIT_FAILURE;
-        }
+	if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), 
+				      "org.xfce.PowerManager"))
+	{
+	    g_print (_("Xfce power manager is not running"));
+	    g_print ("\n");
+	    /* FIXME: dialog to run */
+	}
+	return EXIT_SUCCESS;
+    }
+    
+    
+    if (xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), 
+				      "org.xfce.PowerManager"))
+    {
+	g_print (_("Xfce power manager is already running"));
+	g_print ("\n");
+    	return EXIT_SUCCESS;
     }
     else
-    {
-        g_print(_("Xfce power manager is already running"));
-        g_print("\n");
-        return EXIT_SUCCESS;
+    {	
+	TRACE("Starting the power manager\n");
+	autostart();
+    	XfpmManager *manager;
+    	manager = xfpm_manager_new(bus);
+    	xfpm_manager_start(manager);
     }
-	    
+    
     return EXIT_SUCCESS;
-}    
+}

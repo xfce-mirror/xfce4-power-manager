@@ -1,52 +1,50 @@
-bin_PROGRAMS = xfce4-power-manager		\
-	       xfce4-power-manager-settings
+bin_PROGRAMS = xfce4-power-manager
 
-generated_files =				\
+xfce4_power_manager_SOURCES = 			\
 	xfpm-enum-types.c			\
 	xfpm-enum-types.h			\
 	xfpm-marshal.c				\
-	xfpm-marshal.h
-
-
-xfce4_power_manager_SOURCES = 			\
-	$(generated_files)			\
+	xfpm-marshal.h				\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
 	xfpm-main.c				\
-	xfpm-debug.h				\
-	xfpm-hal.c  		 		\
-	xfpm-hal.h	     			\
-	xfpm-driver.c				\
-	xfpm-driver.h				\
-	xfpm-ac-adapter.c			\
-	xfpm-ac-adapter.h			\
-	xfpm-cpu.c				\
-	xfpm-cpu.h				\
-	xfpm-lcd-brightness.c			\
-	xfpm-lcd-brightness.h			\
-	xfpm-button.c				\
-	xfpm-button.h				\
-	xfpm-dbus-messages.c			\
-	xfpm-dbus-messages.h			\
+	xfpm-manager.c				\
+	xfpm-manager.h				\
+	xfpm-engine.c				\
+	xfpm-engine.h				\
+	xfpm-supply.c				\
+	xfpm-supply.h				\
+	xfpm-adapter.c				\
+	xfpm-adapter.h				\
 	xfpm-battery.c				\
 	xfpm-battery.h				\
-	xfpm-battery-icon.c			\
-	xfpm-battery-icon.h			\
+	xfpm-battery-info.c			\
+	xfpm-battery-info.h			\
 	xfpm-dpms.c				\
 	xfpm-dpms.h				\
-	xfpm-popups.c           		\
-	xfpm-popups.h           		\
+	xfpm-cpu.c				\
+	xfpm-cpu.h				\
+	xfpm-button-xf86.c			\
+	xfpm-button-xf86.h			\
+	xfpm-lid-hal.c				\
+	xfpm-lid-hal.h				\
+	xfpm-brightness-hal.c			\
+	xfpm-brightness-hal.h			\
+	xfpm-tray-icon.c			\
+	xfpm-tray-icon.h			\
 	xfpm-notify.c				\
 	xfpm-notify.h				\
-	xfpm-enums.h				\
-	xfpm-common.c				\
-	xfpm-common.h				\
-	xfpm-string.c				\
-	xfpm-string.h
+	xfpm-network-manager.c			\
+	xfpm-network-manager.h			\
+	xfpm-config.h				\
+	xfpm-enum.h
+
 
 xfce4_power_manager_CFLAGS =			\
+	-I$(top_srcdir)				\
+	-I$(top_srcdir)/libxfpm			\
 	-DLOCALEDIR=\"$(localedir)\"		\
-	-DG_LOG_DOMAIN=\"xfce4-power-manager\" \
+	-DG_LOG_DOMAIN=\"xfce4-power-manager\" 	\
 	$(GTK_CFLAGS)				\
 	$(GLIB_CFLAGS)				\
 	$(DBUS_CFLAGS)				\
@@ -59,6 +57,9 @@ xfce4_power_manager_CFLAGS =			\
 	$(DPMS_CFLAGS)              	
 
 xfce4_power_manager_LDADD   =			\
+	$(top_builddir)/libxfpm/libxfpmhal.la	\
+	$(top_builddir)/libxfpm/libxfpmdbus.la	\
+	$(top_builddir)/libxfpm/libxfpmcommon.la\
 	$(GTK_LIBS)				\
 	$(GLIB_LIBS)				\
 	$(DBUS_LIBS)				\
@@ -70,53 +71,8 @@ xfce4_power_manager_LDADD   =			\
 	$(LIBNOTIFY_LIBS)			\
 	$(DPMS_LIBS)		
 
-
-xfce4_power_manager_settings_SOURCES =		\
-	xfpm-marshal.c				\
-	xfpm-marshal.h				\
-	xfpm-settings-main.c			\
-	xfpm-settings.c				\
-	xfpm-settings.h				\
-	xfpm-common.c				\
-	xfpm-common.h				\
-	xfpm-enums.h				\
-	xfpm-enum-types.c			\
-	xfpm-enum-types.h			\
-	xfpm-string.c				\
-	xfpm-string.h				\
-	xfpm-spin-button.c			\
-	xfpm-spin-button.h			\
-	xfpm-dpms-spins.c			\
-	xfpm-dpms-spins.h			\
-	xfpm-dbus-messages.c			\
-	xfpm-dbus-messages.h			\
-	xfpm-popups.c				\
-	xfpm-popups.h				\
-	xfpm-debug.h
-
-
-xfce4_power_manager_settings_CFLAGS =		\
-	-DLOCALEDIR=\"$(localedir)\"		\
-	-DG_LOG_DOMAIN=\"xfce4-power-manager-settings\"  \
-	$(GTK_CFLAGS)				\
-	$(GLIB_CFLAGS)				\
-	$(DBUS_CFLAGS)				\
-	$(DBUS_GLIB_CFLAGS)			\
-	$(LIBXFCE4GUI_CFLAGS)			\
-	$(LIBXFCE4UTIL_CFLAGS)			\
-	$(XFCONF_CFLAGS)
-
-xfce4_power_manager_settings_LDADD = 		\
-	$(GTK_LIBS)				\
-	$(GLIB_LIBS)				\
-	$(DBUS_LIBS)				\
-	$(DBUS_GLIB_LIBS)			\
-	$(LIBXFCE4GUI_LIBS)			\
-	$(LIBXFCE4UTIL_LIBS)			\
-	$(XFCONF_LIBS)
-
-xfpm_headers = 					\
-	$(srcdir)/xfpm-enums.h			
+xfpm_glib_headers = 				\
+	$(srcdir)/xfpm-enum-glib.h			
 
 if MAINTAINER_MODE
 
@@ -128,25 +84,25 @@ BUILT_SOURCES = 				\
 	xfpm-enum-types.c			\
 	xfpm-enum-types.h
 
-xfpm-enum-types.h: $(xfpm_headers)
+xfpm-enum-types.h: $(xfpm_glib_headers)
 	( cd $(srcdir) && glib-mkenums \
 		--fhead "#ifndef _XFPM_ENUM_TYPES_H\n#define _XFPM_ENUM_TYPES_H\n#include <glib-object.h>\nG_BEGIN_DECLS\n" \
 		--fprod "/* enumerations from \"@filename@\" */\n" \
 		--vhead "GType @enum_name@_get_type (void);\n#define XFPM_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
 		--ftail "G_END_DECLS\n\n#endif /* _XFPM_ENUM_TYPES_H__ */" \
-		$(xfpm_headers) ) >> xgen \
+		$(xfpm_glib_headers) ) >> xgen \
 	&& (cmp -s xgen xfpm-enum-types.h || cp xgen xfpm-enum-types.h ) \
 	&& rm -f xgen xgen~
 
 xfpm-enum-types.c: xfpm-enum-types.h
 	( cd $(srcdir) && glib-mkenums \
 		--fhead "#include <xfpm-enum-types.h>\n" \
-		--fhead "#include \"xfpm-enums.h\"\n\n" \
+		--fhead "#include \"xfpm-enum-glib.h\"\n\n" \
 		--fprod "\n/* enumerations from \"@filename@\" */\n" \
 		--vhead "GType\n@enum_name@_get_type (void)\n{\n\tstatic GType type = 0;\n\tif (type == 0) {\n\tstatic const G@Type@Value values[] = {"\
 		--vprod "\t{ @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 		--vtail "\t{ 0, NULL, NULL }\n\t};\n\ttype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n\treturn type;\n}\n" \
-		$(xfpm_headers) ) > xgen \
+		$(xfpm_glib_headers) ) > xgen \
 	&& cp xgen xfpm-enum-types.c  \
 	&& rm -f xgen xgen~
 
@@ -163,26 +119,16 @@ xfpm-marshal.c: xfpm-marshal.h
         rm -f tmp-marshal.c tmp-marshal.c~
 
 xfce-power-manager-dbus-server.h: $(srcdir)/org.xfce.Power.Manager.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfpm_driver $< >$@
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_manager $< >$@
 
-xfce-power-manager-dbus-client.h: $(srcdir)/org.xfce.Power.Manager.xml
-	dbus-binding-tool --mode=glib-client --prefix=xfpm_client $< >$@
+xfce-power-manager-dbus-client.h: $(srdir)org.xfce.Power.Manager.xml
+	dbus-binding-tool --mode=glib-client --prefix=xfpm_manager $< >$@
 
 endif
 
-#
-# .desktop file
-#
-desktop_in_files = xfce4-power-manager.desktop.in
-desktopdir = $(datadir)/applications
-desktop_DATA =	$(desktop_in_files:.desktop.in=.desktop)
-
-@INTLTOOL_DESKTOP_RULE@
 
 EXTRA_DIST = 					\
-	xfpm-marshal.list			\
-	$(desktop_in_files)
+	xfpm-marshal.list
 
 DISTCLEANFILES =				\
-	$(BUILT_SOURCES)			\
-	$(desktop_DATA)
+	$(BUILT_SOURCES)

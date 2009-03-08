@@ -18,50 +18,35 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_DPMS_H
-#define __XFPM_DPMS_H
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ifndef __XFPM_BRIGHTNESS_HAL_H
+#define __XFPM_BRIGHTNESS_HAL_H
 
 #include <glib-object.h>
 
-#include <xfconf/xfconf.h>
-
-#ifdef HAVE_DPMS
-
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DPMS        (xfpm_dpms_get_type () )
-#define XFPM_DPMS(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_DPMS, XfpmDpms))
-#define XFPM_IS_DPMS(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_DPMS))
+#define XFPM_TYPE_BRIGHTNESS_HAL        (xfpm_brightness_hal_get_type () )
+#define XFPM_BRIGHTNESS_HAL(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_BRIGHTNESS_HAL, XfpmBrightnessHal))
+#define XFPM_IS_BRIGHTNESS_HAL(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_BRIGHTNESS_HAL))
 
-typedef struct XfpmDpmsPrivate XfpmDpmsPrivate;
-
-typedef struct
-{
-    GObject		  parent;
-    XfpmDpmsPrivate	 *priv;
-    
-} XfpmDpms;
+typedef struct XfpmBrightnessHalPrivate XfpmBrightnessHalPrivate;
 
 typedef struct
 {
-    GObjectClass 	  parent_class;
+    GObject		 		parent;
+    XfpmBrightnessHalPrivate	       *priv;
     
-} XfpmDpmsClass;
+} XfpmBrightnessHal;
 
-GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
-XfpmDpms       *xfpm_dpms_new             (XfconfChannel *channel);
+typedef struct
+{
+    GObjectClass 			parent_class;
+    
+} XfpmBrightnessHalClass;
 
-void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms,
-					   gboolean on_battery);
-gboolean        xfpm_dpms_capable         (XfpmDpms *dpms);
-
+GType        				xfpm_brightness_hal_get_type        (void) G_GNUC_CONST;
+XfpmBrightnessHal      		       *xfpm_brightness_hal_new             (void);
 
 G_END_DECLS
 
-#endif /* HAVE_DPMS */
-
-#endif /* __XFPM_DPMS_H */
+#endif /* __XFPM_BRIGHTNESS_HAL_H */

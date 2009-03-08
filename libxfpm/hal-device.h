@@ -18,50 +18,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_DPMS_H
-#define __XFPM_DPMS_H
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ifndef __HAL_DEVICE_H
+#define __HAL_DEVICE_H
 
 #include <glib-object.h>
 
-#include <xfconf/xfconf.h>
-
-#ifdef HAVE_DPMS
+#include "hal-enum.h"
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DPMS        (xfpm_dpms_get_type () )
-#define XFPM_DPMS(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_DPMS, XfpmDpms))
-#define XFPM_IS_DPMS(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_DPMS))
+#define HAL_TYPE_DEVICE        (hal_device_get_type () )
+#define HAL_DEVICE(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), HAL_TYPE_DEVICE, HalDevice))
+#define HAL_IS_DEVICE(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), HAL_TYPE_DEVICE))
 
-typedef struct XfpmDpmsPrivate XfpmDpmsPrivate;
+typedef struct HalDevicePrivate HalDevicePrivate;
 
 typedef struct
 {
     GObject		  parent;
-    XfpmDpmsPrivate	 *priv;
+    HalDevicePrivate	 *priv;
     
-} XfpmDpms;
+} HalDevice;
 
 typedef struct
 {
-    GObjectClass 	  parent_class;
+    GObjectClass          parent_class;
+    void                 (*device_changed) (HalDevice *device);
     
-} XfpmDpmsClass;
+} HalDeviceClass;
 
-GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
-XfpmDpms       *xfpm_dpms_new             (XfconfChannel *channel);
-
-void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms,
-					   gboolean on_battery);
-gboolean        xfpm_dpms_capable         (XfpmDpms *dpms);
-
+GType        	 hal_device_get_type        (void) G_GNUC_CONST;
+HalDevice       *hal_device_new             (const gchar *udi);
 
 G_END_DECLS
 
-#endif /* HAVE_DPMS */
-
-#endif /* __XFPM_DPMS_H */
+#endif /* __HAL_DEVICE_H */

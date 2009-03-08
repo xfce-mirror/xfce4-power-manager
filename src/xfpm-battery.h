@@ -1,5 +1,4 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
- *
+/*
  * * Copyright (C) 2008 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
@@ -16,69 +15,59 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
 #ifndef __XFPM_BATTERY_H
 #define __XFPM_BATTERY_H
 
 #include <glib-object.h>
+#include <gtk/gtk.h>
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#include "libxfpm/hal-device.h"
 
-#include "xfpm-enums.h"
+#include "xfpm-enum-glib.h"
+#include "xfpm-notify.h"
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_BATTERY    (xfpm_battery_get_type())
-#define XFPM_BATTERY(o)      (G_TYPE_CHECK_INSTANCE_CAST(o,XFPM_TYPE_BATTERY,XfpmBattery))
-#define XFPM_IS_BATTERY(o)   (G_TYPE_CHECK_INSTANCE_TYPE(o,XFPM_TYPE_BATTERY))
+#define XFPM_TYPE_BATTERY        (xfpm_battery_get_type () )
+#define XFPM_BATTERY(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_BATTERY, XfpmBattery))
+#define XFPM_IS_BATTERY(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_BATTERY))
 
 typedef struct XfpmBatteryPrivate XfpmBatteryPrivate;
 
 typedef struct
 {
-    GObject parent;
-    XfpmBatteryPrivate *priv;
-    
-    gboolean ac_adapter_present;
-    guint critical_level;
-    XfpmActionRequest critical_action;
-    XfpmShowIcon show_tray;
-    
-#ifdef HAVE_LIBNOTIFY
-    gboolean notify_enabled;
-#endif        
+    GObject		 parent;
+    XfpmBatteryPrivate	*priv;
     
 } XfpmBattery;
 
 typedef struct
 {
-    GObjectClass parent_class;
+    GObjectClass         parent_class;
     
-    /* signals */
-    void  (*show_adapter_icon)      (XfpmBattery *batt,
-                                     gboolean show);
-    void  (*battery_action_request) (XfpmBattery *batt,
-                                     XfpmActionRequest action,
-                                     gboolean critical);
-                                   
+    void	        (*battery_state_changed)	(XfpmBattery *battery,
+    					            	 XfpmBatteryState state);
+    void                (*popup_battery_menu)		(XfpmBattery *battery,
+						         GtkStatusIcon *icon);
+       
 } XfpmBatteryClass;
 
-GType          xfpm_battery_get_type      (void) G_GNUC_CONST;
-XfpmBattery   *xfpm_battery_new           (void);
-void           xfpm_battery_monitor       (XfpmBattery *batt);
+GType        		 xfpm_battery_get_type           (void) G_GNUC_CONST;
+XfpmBattery    		*xfpm_battery_new                (const HalDevice *device);
+void                     xfpm_battery_set_adapter_presence(XfpmBattery *battery,
+							  gboolean adapter_present);
+void                     xfpm_battery_set_show_icon      (XfpmBattery *battery,
+							  XfpmShowIcon show_icon);
+const HalDevice		*xfpm_battery_get_device         (XfpmBattery *battery);
+XfpmBatteryState         xfpm_battery_get_state          (XfpmBattery *battery);
+GtkStatusIcon  		*xfpm_battery_get_status_icon    (XfpmBattery *battery);
+XfpmNotify     		*xfpm_battery_get_notify_obj     (XfpmBattery *battery);
+const gchar    		*xfpm_battery_get_icon_name      (XfpmBattery *battery);
+void            	 xfpm_battery_show_info          (XfpmBattery *battery);
 
-#ifdef HAVE_LIBNOTIFY
-void           xfpm_battery_show_error    (XfpmBattery *batt,
-                                           const gchar *icon_name,
-                                           const gchar *error);     
-#endif
-void           xfpm_battery_set_power_info(XfpmBattery *batt,
-                                           guint8 power_management);
-gboolean       xfpm_battery_ups_found     (XfpmBattery *batt);                                        
 G_END_DECLS
 
-#endif
+#endif /* __XFPM_BATTERY_H */

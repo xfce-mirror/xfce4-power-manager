@@ -1,6 +1,5 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
- *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+/*
+ * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -16,82 +15,152 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "xfpm-common.h"
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <stdio.h>
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
+#include <gtk/gtk.h>
+#include <libxfce4util/libxfce4util.h>
+
+#include <libnotify/notify.h>
+
+#include "libxfpm/xfpm-common.h"
+
 #include "xfpm-notify.h"
 
-#ifdef HAVE_LIBNOTIFY
+/* Init */
+static void xfpm_notify_class_init (XfpmNotifyClass *klass);
+static void xfpm_notify_init       (XfpmNotify *notify);
+static void xfpm_notify_finalize   (GObject *object);
+
+#define XFPM_NOTIFY_GET_PRIVATE(o) \
+(G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_NOTIFY, XfpmNotifyPrivate))
+
+struct XfpmNotifyPrivate
+{
+    NotifyNotification *notification;
+};
+
+G_DEFINE_TYPE(XfpmNotify, xfpm_notify, G_TYPE_OBJECT)
+
+static void
+xfpm_notify_class_init(XfpmNotifyClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+
+    object_class->finalize = xfpm_notify_finalize;
+
+
+    g_type_class_add_private(klass,sizeof(XfpmNotifyPrivate));
+}
+
+static void
+xfpm_notify_init(XfpmNotify *notify)
+{
+    notify->priv = XFPM_NOTIFY_GET_PRIVATE(notify);
+    
+    notify->priv->notification = NULL;
+        
+    notify_init ("xfce4-power-manager");
+}
+
+static void
+xfpm_notify_finalize(GObject *object)
+{
+    XfpmNotify *notify;
+
+    notify = XFPM_NOTIFY(object);
+    
+    G_OBJECT_CLASS(xfpm_notify_parent_class)->finalize(object);
+}
+
 static NotifyNotification *
-xfpm_notify_create_notification(const char *title,const char *message,
-                                const gchar *icon_name,GtkStatusIcon *icon)
+xfpm_notify_new_notification_internal (XfpmNotify *notify, const gchar *title, const gchar *message)
 {
     NotifyNotification *n;
-    if ( icon != NULL ) 
-	{
-	    n = notify_notification_new_with_status_icon(title,message,NULL,icon);
-	}
-	else
-	{
-	    n = notify_notification_new(title,message,NULL,NULL);
-	}
-    if ( icon_name != NULL ) {
-        GdkPixbuf *pixbuf = xfpm_load_icon(icon_name,48);	
-        if (pixbuf) 
-        {
-            notify_notification_set_icon_from_pixbuf(n,pixbuf);
-            g_object_unref(G_OBJECT(pixbuf));
-        }    
-    }		
-	return n;
+    
+    n = notify_notification_new (title, message, NULL, NULL);
+    
+    return n;
 }
 
-static gboolean
-xfpm_notify_send_notification(gpointer data)
+static void
+xfpm_notify_set_icon (XfpmNotify *notify, NotifyNotification *n, const gchar *icon_name )
 {
-    NotifyNotification *n = data;
-    notify_notification_show(n,NULL);	
-	return FALSE;
-}
-
-NotifyNotification * 
-xfpm_notify_new(const gchar *title,const gchar *message,
-                guint timeout,NotifyUrgency urgency,
-                GtkStatusIcon *icon,const gchar *icon_name) 
-{
-	
-	NotifyNotification *n;
-	n = xfpm_notify_create_notification(title,message,icon_name,icon);
-	    
-	notify_notification_set_urgency(n,urgency);
-	notify_notification_set_timeout(n,timeout);
-	return n;
-	
-}	
-
-void xfpm_notify_add_action(NotifyNotification *n,
-                            const gchar *action_id,
-                            const gchar *action_label,
-                            NotifyActionCallback notify_callback,
-                            gpointer user_data) 
-{
-    notify_notification_add_action(n,action_id,action_label,
-								  (NotifyActionCallback)notify_callback,
-								  user_data,NULL);
-}
-							     
-void xfpm_notify_show_notification(NotifyNotification *n,guint timeout_to_show)
-{
-    if ( timeout_to_show != 0 )
-	{
-	    g_timeout_add_seconds(timeout_to_show,
-                              xfpm_notify_send_notification,
-                              n);
-    }
-    else
+    GdkPixbuf *pix = xfpm_load_icon (icon_name, 48);
+    
+    if ( pix )
     {
-        xfpm_notify_send_notification(n);
-    }			
+	notify_notification_set_icon_from_pixbuf (n, 
+						  pix);
+	g_object_unref ( G_OBJECT(pix));
+    }
 }
-#endif
+
+static void
+xfpm_notify_closed_cb (NotifyNotification *n, XfpmNotify *notify)
+{
+    notify->priv->notification = NULL;
+    g_object_unref (G_OBJECT(n));
+}
+
+static void
+xfpm_notify_close_notification (XfpmNotify *notify )
+{
+    if ( notify->priv->notification )
+    {
+    	if (!notify_notification_close (notify->priv->notification, NULL))
+	    g_warning ("Failed to close notification\n");
+	
+	g_object_unref (G_OBJECT(notify->priv->notification) );
+	notify->priv->notification  = NULL;
+    }
+}
+
+XfpmNotify *
+xfpm_notify_new(void)
+{
+    XfpmNotify *notify = NULL;
+    notify = g_object_new (XFPM_TYPE_NOTIFY, NULL);
+    return notify;
+}
+
+void xfpm_notify_show_notification (XfpmNotify *notify, const gchar *title,
+				    const gchar *text,  const gchar *icon_name,
+				    gint timeout, XfpmNotifyUrgency urgency, 
+				    GtkStatusIcon *icon)
+{
+    xfpm_notify_close_notification (notify);
+    
+    notify->priv->notification = 
+    	xfpm_notify_new_notification_internal (notify, title, text);
+    
+    if ( icon_name )
+    	xfpm_notify_set_icon (notify, notify->priv->notification, icon_name);
+	
+    if ( icon )
+    	notify_notification_attach_to_status_icon (notify->priv->notification, icon);
+
+    g_signal_connect (G_OBJECT(notify->priv->notification),"closed",
+		      G_CALLBACK(xfpm_notify_closed_cb), notify);
+		      
+    notify_notification_show (notify->priv->notification, NULL);
+    
+}

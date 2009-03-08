@@ -18,43 +18,18 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_CPU_H
-#define __XFPM_CPU_H
+#ifndef __XFPM_BATTERY_INFO_H
+#define __XFPM_BATTERY_INFO_H
 
-#include <glib-object.h>
+#include <gtk/gtk.h>
+#include <glib.h>
 
-#include <xfconf/xfconf.h>
-
-#include "libxfpm/dbus-hal.h"
+#include "libxfpm/hal-device.h"
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_CPU        (xfpm_cpu_get_type () )
-#define XFPM_CPU(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_CPU, XfpmCpu))
-#define XFPM_IS_CPU(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_CPU))
-
-typedef struct XfpmCpuPrivate XfpmCpuPrivate;
-
-typedef struct
-{
-    GObject		 parent;
-    XfpmCpuPrivate	 *priv;
-    
-} XfpmCpu;
-
-typedef struct
-{
-    GObjectClass parent_class;
-    
-} XfpmCpuClass;
-
-GType          xfpm_cpu_get_type        (void) G_GNUC_CONST;
-XfpmCpu       *xfpm_cpu_new             (XfconfChannel *channel,
-					 DbusHal *bus);
-
-void           xfpm_cpu_set_on_battery  (XfpmCpu *cpu,
-					 gboolean on_battery);
+GtkWidget 	*xfpm_battery_info_new 		(HalDevice *device, const gchar *icon_name);
 
 G_END_DECLS
 
-#endif /* __XFPM_CPU_H */
+#endif /*__XFPM_BATTERY_INFO_H */

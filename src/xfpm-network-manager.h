@@ -18,43 +18,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_CPU_H
-#define __XFPM_CPU_H
-
-#include <glib-object.h>
-
-#include <xfconf/xfconf.h>
-
-#include "libxfpm/dbus-hal.h"
+#ifndef __XFPM_NETWORK_MANAGER_H
+#define __XFPM_NETWORK_MANAGER_H
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_CPU        (xfpm_cpu_get_type () )
-#define XFPM_CPU(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_CPU, XfpmCpu))
-#define XFPM_IS_CPU(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_CPU))
-
-typedef struct XfpmCpuPrivate XfpmCpuPrivate;
-
-typedef struct
-{
-    GObject		 parent;
-    XfpmCpuPrivate	 *priv;
-    
-} XfpmCpu;
-
-typedef struct
-{
-    GObjectClass parent_class;
-    
-} XfpmCpuClass;
-
-GType          xfpm_cpu_get_type        (void) G_GNUC_CONST;
-XfpmCpu       *xfpm_cpu_new             (XfconfChannel *channel,
-					 DbusHal *bus);
-
-void           xfpm_cpu_set_on_battery  (XfpmCpu *cpu,
-					 gboolean on_battery);
+gboolean 	xfpm_send_message_to_network_manager 	(const gchar *message);
 
 G_END_DECLS
 
-#endif /* __XFPM_CPU_H */
+#endif /*__XFPM_NETWORK_MANAGER_H */

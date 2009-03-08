@@ -18,43 +18,21 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_CPU_H
-#define __XFPM_CPU_H
+#ifndef __HAL_ENUM_H
+#define __HAL_ENUM_H
 
-#include <glib-object.h>
-
-#include <xfconf/xfconf.h>
-
-#include "libxfpm/dbus-hal.h"
-
-G_BEGIN_DECLS
-
-#define XFPM_TYPE_CPU        (xfpm_cpu_get_type () )
-#define XFPM_CPU(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_CPU, XfpmCpu))
-#define XFPM_IS_CPU(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_CPU))
-
-typedef struct XfpmCpuPrivate XfpmCpuPrivate;
-
-typedef struct
+typedef enum
 {
-    GObject		 parent;
-    XfpmCpuPrivate	 *priv;
+    HAL_DEVICE_TYPE_ADAPTER,
+    HAL_DEVICE_TYPE_PRIMARY,
+    HAL_DEVICE_TYPE_UPS,
+    HAL_DEVICE_TYPE_MOUSE,
+    HAL_DEVICE_TYPE_KEYBOARD,
+    HAL_DEVICE_TYPE_KEYBOARD_MOUSE,
+    HAL_DEVICE_TYPE_CAMERA,
+    HAL_DEVICE_TYPE_PDA,
+    HAL_DEVICE_TYPE_UNKNOWN
     
-} XfpmCpu;
+} HalDeviceType;
 
-typedef struct
-{
-    GObjectClass parent_class;
-    
-} XfpmCpuClass;
-
-GType          xfpm_cpu_get_type        (void) G_GNUC_CONST;
-XfpmCpu       *xfpm_cpu_new             (XfconfChannel *channel,
-					 DbusHal *bus);
-
-void           xfpm_cpu_set_on_battery  (XfpmCpu *cpu,
-					 gboolean on_battery);
-
-G_END_DECLS
-
-#endif /* __XFPM_CPU_H */
+#endif /*__HAL_ENUM_H */

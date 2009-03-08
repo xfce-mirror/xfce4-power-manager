@@ -18,43 +18,46 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_CPU_H
-#define __XFPM_CPU_H
+#ifndef __XFPM_SUPPLY_H
+#define __XFPM_SUPPLY_H
 
 #include <glib-object.h>
 
 #include <xfconf/xfconf.h>
 
-#include "libxfpm/dbus-hal.h"
+#include "xfpm-enum.h"
+#include "dbus-hal.h"
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_CPU        (xfpm_cpu_get_type () )
-#define XFPM_CPU(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_CPU, XfpmCpu))
-#define XFPM_IS_CPU(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_CPU))
+#define XFPM_TYPE_SUPPLY       (xfpm_supply_get_type () )
+#define XFPM_SUPPLY(o)         (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_SUPPLY, XfpmSupply))
+#define XFPM_IS_SUPPLY(o)      (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_SUPPLY))
 
-typedef struct XfpmCpuPrivate XfpmCpuPrivate;
+typedef struct XfpmSupplyPrivate XfpmSupplyPrivate;
 
 typedef struct
 {
     GObject		 parent;
-    XfpmCpuPrivate	 *priv;
-    
-} XfpmCpu;
+    XfpmSupplyPrivate   *priv;
+	
+} XfpmSupply;
 
 typedef struct
 {
-    GObjectClass parent_class;
+    GObjectClass         parent_class;
     
-} XfpmCpuClass;
+    void	        (*block_shutdown)	    (XfpmSupply *supply,
+    						     gboolean block);
+    void                (*on_battery    )	    (XfpmSupply *supply,
+						     gboolean on_battery);
+    void                (*on_low_battery)	    (XfpmSupply *supply);
+	
+} XfpmSupplyClass;
 
-GType          xfpm_cpu_get_type        (void) G_GNUC_CONST;
-XfpmCpu       *xfpm_cpu_new             (XfconfChannel *channel,
-					 DbusHal *bus);
-
-void           xfpm_cpu_set_on_battery  (XfpmCpu *cpu,
-					 gboolean on_battery);
-
+GType   	         xfpm_supply_get_type       (void) G_GNUC_CONST;
+XfpmSupply     	        *xfpm_supply_new            (DbusHal *bus,
+						     XfconfChannel *channel);
 G_END_DECLS
 
-#endif /* __XFPM_CPU_H */
+#endif /* __XFPM_SUPPLY_H */

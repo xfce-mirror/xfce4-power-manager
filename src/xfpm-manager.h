@@ -18,50 +18,38 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_DPMS_H
-#define __XFPM_DPMS_H
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ifndef __XFPM_MANAGER_H
+#define __XFPM_MANAGER_H
 
 #include <glib-object.h>
-
-#include <xfconf/xfconf.h>
-
-#ifdef HAVE_DPMS
+#include <dbus/dbus-glib.h>
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DPMS        (xfpm_dpms_get_type () )
-#define XFPM_DPMS(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_DPMS, XfpmDpms))
-#define XFPM_IS_DPMS(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_DPMS))
+#define XFPM_TYPE_MANAGER          (xfpm_manager_get_type () )
+#define XFPM_MANAGER(o)            (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_MANAGER, XfpmManager))
+#define XFPM_IS_MANAGER(o)         (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_MANAGER))
+#define XFPM_MANAGER_GET_CLASS(k)  (G_TYPE_INSTANCE_GET_CLASS((k), XFPM_TYPE_MANAGER, XfpmManagerClass))
 
-typedef struct XfpmDpmsPrivate XfpmDpmsPrivate;
+typedef struct XfpmManagerPrivate XfpmManagerPrivate;
 
 typedef struct
 {
     GObject		  parent;
-    XfpmDpmsPrivate	 *priv;
+    XfpmManagerPrivate	 *priv;
     
-} XfpmDpms;
+} XfpmManager;
 
 typedef struct
 {
-    GObjectClass 	  parent_class;
+    GObjectClass parent_class;
     
-} XfpmDpmsClass;
+} XfpmManagerClass;
 
-GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
-XfpmDpms       *xfpm_dpms_new             (XfconfChannel *channel);
-
-void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms,
-					   gboolean on_battery);
-gboolean        xfpm_dpms_capable         (XfpmDpms *dpms);
-
+GType        	xfpm_manager_get_type        (void) G_GNUC_CONST;
+XfpmManager    *xfpm_manager_new             (DBusGConnection *bus);
+void            xfpm_manager_start           (XfpmManager *manager);
 
 G_END_DECLS
 
-#endif /* HAVE_DPMS */
-
-#endif /* __XFPM_DPMS_H */
+#endif /* __XFPM_MANAGER_H */

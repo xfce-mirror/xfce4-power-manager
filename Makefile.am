@@ -1,9 +1,16 @@
 @SET_MAKE@
 
-SUBDIRS =        \
-	src 	     \
-	data         \
-	po           \
+if BUILD_PANEL_PLUGINS
+plugins_dir = panel-plugins
+endif
+
+SUBDIRS =        	\
+	libxfpm		\
+	src		\
+	settings	\
+	$(plugins_dir)	\
+	data         	\
+	po           	\
 	doc
 
 EXTRA_DIST = \

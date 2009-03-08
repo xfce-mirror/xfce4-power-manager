@@ -18,50 +18,53 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_DPMS_H
-#define __XFPM_DPMS_H
+#ifndef __XFPM_ENUM_GLIB_H
+#define __XFPM_ENUM_GLIB_H
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
-#include <glib-object.h>
-
-#include <xfconf/xfconf.h>
-
-#ifdef HAVE_DPMS
-
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DPMS        (xfpm_dpms_get_type () )
-#define XFPM_DPMS(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_DPMS, XfpmDpms))
-#define XFPM_IS_DPMS(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_DPMS))
-
-typedef struct XfpmDpmsPrivate XfpmDpmsPrivate;
-
-typedef struct
+typedef enum
 {
-    GObject		  parent;
-    XfpmDpmsPrivate	 *priv;
+    XFPM_DO_NOTHING,
+    XFPM_DO_SUSPEND,
+    XFPM_DO_HIBERNATE,
+    XFPM_DO_SHUTDOWN
     
-} XfpmDpms;
+} XfpmShutdownRequest;
 
-typedef struct
+typedef enum
 {
-    GObjectClass 	  parent_class;
+    SHOW_ICON_ALWAYS,
+    SHOW_ICON_WHEN_BATTERY_PRESENT,
+    SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING
     
-} XfpmDpmsClass;
+} XfpmShowIcon;
 
-GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
-XfpmDpms       *xfpm_dpms_new             (XfconfChannel *channel);
+typedef enum
+{
+    BATTERY_FULLY_CHARGED,
+    BATTERY_NOT_FULLY_CHARGED,
+    BATTERY_IS_CHARGING,
+    BATTERY_IS_DISCHARGING,
+    BATTERY_CHARGE_LOW,
+    BATTERY_CRITICALLY_LOW,
+    BATTERY_NOT_PRESENT
+    
+} XfpmBatteryState;
 
-void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms,
-					   gboolean on_battery);
-gboolean        xfpm_dpms_capable         (XfpmDpms *dpms);
-
+typedef enum
+{
+    BUTTON_POWER_OFF,
+    BUTTON_SLEEP,
+    BUTTON_MON_BRIGHTNESS_UP,
+    BUTTON_MON_BRIGHTNESS_DOWN
+    
+} XfpmXF86Button;
 
 G_END_DECLS
 
-#endif /* HAVE_DPMS */
-
-#endif /* __XFPM_DPMS_H */
+#endif /* __XFPM_ENUM_GLIB_H */
