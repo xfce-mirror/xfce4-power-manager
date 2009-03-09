@@ -141,7 +141,8 @@ gboolean hal_ctx_connect (HalCtx *ctx)
 }
 
 /*
- * 
+ * Set a user data to be collected on signals 
+ * with libhal_ctx_get_user_data
  */
 void hal_ctx_set_user_data (HalCtx *ctx, void *data)
 {
@@ -184,6 +185,10 @@ void hal_ctx_set_device_property_callback (HalCtx *ctx, LibHalDevicePropertyModi
     libhal_ctx_set_device_property_modified(ctx->priv->context, callback);
 }
 
+/*
+ * Watch all the devices monitored by HAL 
+ * 
+ */
 gboolean hal_ctx_watch_all (HalCtx *ctx)
 {
     g_return_val_if_fail(HAL_IS_CTX(ctx), FALSE);
@@ -194,9 +199,15 @@ gboolean hal_ctx_watch_all (HalCtx *ctx)
     
     libhal_device_property_watch_all(ctx->priv->context, &error);
     
+    HAL_CTX_CHECK_DBUS_ERROR(error)
+    
     return TRUE;
 }
 
+
+/*
+ * Add a watch for a unique device 
+ */
 gboolean hal_ctx_watch_device (HalCtx *ctx, const gchar *udi)
 {
     g_return_val_if_fail(HAL_IS_CTX(ctx), FALSE);
