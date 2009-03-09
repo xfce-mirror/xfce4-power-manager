@@ -637,10 +637,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel)
     
     dialog = glade_xml_get_widget (xml, "xfpm-settings-dialog");
 
-    xfpm_settings_tree_view (channel);
-    xfpm_settings_general   (channel);
     xfpm_settings_on_ac     (channel);
     xfpm_settings_on_battery (channel);
+    xfpm_settings_tree_view (channel);
+    xfpm_settings_general   (channel);
 
     /*
      * Connect property-changed to the channel in case the settings changed
