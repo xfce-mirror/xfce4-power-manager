@@ -241,8 +241,9 @@ hal_power_init(HalPower *power)
     hal_ctx_set_device_added_callback (power->priv->ctx, hal_power_device_added_cb);
     hal_ctx_set_device_removed_callback (power->priv->ctx, hal_power_device_removed_cb);
    
-    hal_power_get_batteries (power);
+    
     hal_power_get_adapter (power);
+    hal_power_get_batteries (power);
     
 out:
 	;

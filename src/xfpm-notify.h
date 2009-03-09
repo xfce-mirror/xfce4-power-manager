@@ -61,6 +61,7 @@ void             xfpm_notify_show_notification (XfpmNotify *notify,
 						const gchar *text,
 						const gchar *icon_name,
 						gint timeout,
+						gboolean simple,
 						XfpmNotifyUrgency urgency,
 						GtkStatusIcon *icon);
 

@@ -246,20 +246,8 @@ xfpm_supply_get_message_from_battery_state ( XfpmBatteryState state, HalDeviceTy
     }
 }
 
-/*
-static gboolean
-xfpm_supply_get_running_on_battery (XfpmSupply *supply)
-{
-    if ( !supply->priv->adapter_found )
-    	return FALSE;
-    else if ( supply->priv->adapter_present )
-	return FALSE;
-    
-    return TRUE;
-}
-*/
 static void
-xfpm_supply_battery_state_changed_cb (XfpmBattery *battery, XfpmBatteryState state, XfpmSupply *supply)
+xfpm_supply_show_battery_notification (XfpmSupply *supply, XfpmBatteryState state, XfpmBattery *battery)
 {
     HalDeviceType type;
     const HalDevice *device = xfpm_battery_get_device (battery);
@@ -268,10 +256,9 @@ xfpm_supply_battery_state_changed_cb (XfpmBattery *battery, XfpmBatteryState sta
 	g_object_get (G_OBJECT(device), "type", &type, NULL);
     else
     {
-	g_critical ("Unable to get device object\n");
+	g_critical ("Unable to get device type\n");
 	return;
     }
-	
     
     const gchar *message 
     	= xfpm_supply_get_message_from_battery_state (state,
@@ -279,17 +266,23 @@ xfpm_supply_battery_state_changed_cb (XfpmBattery *battery, XfpmBatteryState sta
 						      supply->priv->adapter_found   ? 
 						      supply->priv->adapter_present : 
 						      TRUE);
-    
     if ( !message )
     	return;
     
-    xfpm_notify_show_notification (xfpm_battery_get_notify_obj(battery), 
+    xfpm_notify_show_notification (supply->priv->notify, 
 				   _("Xfce power manager"), 
 				   message, 
 				   xfpm_battery_get_icon_name (battery),
 				   10000,
-				   XFPM_NOTIFY_NORMAL, 
+				   FALSE, 
+				   XFPM_NOTIFY_NORMAL,
 				   xfpm_battery_get_status_icon (battery));
+}
+
+static void
+xfpm_supply_battery_state_changed_cb (XfpmBattery *battery, XfpmBatteryState state, XfpmSupply *supply)
+{
+    xfpm_supply_show_battery_notification (supply, state, battery);
 }
 
 static void
@@ -390,6 +383,31 @@ xfpm_supply_popup_battery_menu_cb (XfpmBattery *battery, GtkStatusIcon *icon,
 		   icon, button, activate_time);
 }
 
+//FIXME: Change the name of this function
+static void
+xfpm_supply_set_adapter_presence (XfpmSupply *supply)
+{
+    if ( g_hash_table_size (supply->priv->hash) == 0 ) 
+	return;
+	
+    int i;
+    GList *list = g_hash_table_get_values (supply->priv->hash );
+    
+    if (!list)
+	return;
+    
+    for ( i = 0;i <g_list_length(list); i++)
+    {
+	XfpmBattery *battery = NULL;
+	battery = (XfpmBattery *) g_list_nth_data (list, i);
+	if ( battery )
+	    xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
+    }
+    
+    g_list_free (list);
+    
+}
+
 static void
 xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupply *supply )
 {
@@ -397,7 +415,9 @@ xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupp
     	g_critical ("Callback from the adapter object but no adapter found in the system\n");
 	
     supply->priv->adapter_present = present;
+    xfpm_supply_set_adapter_presence (supply);
     g_signal_emit (G_OBJECT(supply), signals[ON_BATTERY], 0, !supply->priv->adapter_present);
+    
 }
 
 static XfpmBattery *
@@ -433,12 +453,14 @@ xfpm_supply_add_device (XfpmSupply *supply, const HalDevice *device)
 	g_object_get (G_OBJECT(device), "is-present", &adapter_present, NULL);
 	supply->priv->adapter_present = adapter_present;
 	g_signal_emit (G_OBJECT(supply), signals[ON_BATTERY], 0, supply->priv->adapter_present);
+	xfpm_supply_set_adapter_presence (supply);
     }
     else
     {
 	TRACE("New battery found %s", udi);
 	XfpmBattery *battery = xfpm_battery_new (device);
 	xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
+	xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
 	g_hash_table_insert (supply->priv->hash, g_strdup(udi), battery);
 	
 	g_signal_connect (G_OBJECT(battery), "battery-state-changed",
@@ -540,7 +562,6 @@ xfpm_supply_set_battery_show_tray_icon (XfpmSupply *supply)
     }
     
     g_list_free (list);
-    
 }
 
 static void

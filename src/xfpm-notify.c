@@ -144,23 +144,26 @@ xfpm_notify_new(void)
 
 void xfpm_notify_show_notification (XfpmNotify *notify, const gchar *title,
 				    const gchar *text,  const gchar *icon_name,
-				    gint timeout, XfpmNotifyUrgency urgency, 
-				    GtkStatusIcon *icon)
+				    gint timeout, gboolean simple,
+				    XfpmNotifyUrgency urgency, GtkStatusIcon *icon)
 {
-    xfpm_notify_close_notification (notify);
+    if ( !simple )
+        xfpm_notify_close_notification (notify);
     
-    notify->priv->notification = 
-    	xfpm_notify_new_notification_internal (notify, title, text);
+    NotifyNotification *n = xfpm_notify_new_notification_internal (notify, title, text);
     
     if ( icon_name )
-    	xfpm_notify_set_icon (notify, notify->priv->notification, icon_name);
+    	xfpm_notify_set_icon (notify, n, icon_name);
 	
     if ( icon )
-    	notify_notification_attach_to_status_icon (notify->priv->notification, icon);
+    	notify_notification_attach_to_status_icon (n, icon);
 
-    g_signal_connect (G_OBJECT(notify->priv->notification),"closed",
-		      G_CALLBACK(xfpm_notify_closed_cb), notify);
-		      
-    notify_notification_show (notify->priv->notification, NULL);
+    if ( !simple )
+    {
+	g_signal_connect (G_OBJECT(n),"closed",
+			G_CALLBACK(xfpm_notify_closed_cb), notify);
+	notify->priv->notification = n;
+    }
     
+    notify_notification_show (n, NULL);
 }

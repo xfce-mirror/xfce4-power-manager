@@ -81,7 +81,7 @@ struct HalDevicePrivate
     guint32   reporting_design;
     guint32   reporting_last_full;
     
-    gint      time;
+    guint      time;
     
 };
 
@@ -325,7 +325,7 @@ static void hal_device_get_property(GObject *object,
 		g_value_set_uint (value, device->priv->reporting_last_full);
 		break;	
 	case PROP_TIME:
-		g_value_set_int (value, device->priv->time);
+		g_value_set_uint (value, device->priv->time);
 		break;
 	default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID(object,prop_id,pspec);

@@ -64,7 +64,6 @@ void                     xfpm_battery_set_show_icon      (XfpmBattery *battery,
 const HalDevice		*xfpm_battery_get_device         (XfpmBattery *battery);
 XfpmBatteryState         xfpm_battery_get_state          (XfpmBattery *battery);
 GtkStatusIcon  		*xfpm_battery_get_status_icon    (XfpmBattery *battery);
-XfpmNotify     		*xfpm_battery_get_notify_obj     (XfpmBattery *battery);
 const gchar    		*xfpm_battery_get_icon_name      (XfpmBattery *battery);
 void            	 xfpm_battery_show_info          (XfpmBattery *battery);
 
