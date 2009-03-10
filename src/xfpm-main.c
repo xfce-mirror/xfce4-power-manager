@@ -94,6 +94,7 @@ autostart()
     g_key_file_set_boolean(key,"Desktop Entry","StartupNotify",FALSE); 
     g_key_file_set_boolean(key,"Desktop Entry","Terminal",FALSE); 
     g_key_file_set_boolean(key,"Desktop Entry","Hidden",FALSE); 
+    g_key_file_set_string (key, "Desktop Entry", "OnlyShowIn", "XFCE");
     
     gchar *content = g_key_file_to_data(key,NULL,&error);
     

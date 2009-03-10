@@ -383,8 +383,9 @@ xfpm_battery_refresh_tooltip_primary (XfpmBattery *battery, gboolean is_present,
     }
     else
     {
-	 tip = g_strdup_printf ("%i%% %s \n%s", 
+	 tip = g_strdup_printf ("%i%% %s %s\n%s", 
 			   percentage, 
+			   _("Battery"),
 			   str, 
 			   battery->priv->adapter_present ? 
 			   _("System is running on AC power") :
