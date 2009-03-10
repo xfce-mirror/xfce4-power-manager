@@ -29,13 +29,17 @@
 
 G_BEGIN_DECLS
 
-GdkPixbuf* 	xfpm_load_icon    	(const gchar *icon_name,
-					 gint size);
-void       	xfpm_lock_screen  	(void);
-void       	xfpm_preferences	(void);
-void       	xfpm_help		(void);
-void       	xfpm_about		(GtkWidget *widget, 
-					 gpointer data);
+GdkPixbuf* 	xfpm_load_icon    		(const gchar *icon_name,
+						 gint size);
+						 
+const gchar    *xfpm_int_to_shutdown_string	(gint val);
+gint            xfpm_shutdown_string_to_int     (const gchar *string);
+
+void       	xfpm_lock_screen  		(void);
+void       	xfpm_preferences		(void);
+void       	xfpm_help			(void);
+void       	xfpm_about			(GtkWidget *widget, 
+						 gpointer data);
 
 G_END_DECLS
 

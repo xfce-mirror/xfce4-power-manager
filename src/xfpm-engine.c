@@ -160,37 +160,32 @@ xfpm_engine_finalize (GObject *object)
     G_OBJECT_CLASS(xfpm_engine_parent_class)->finalize(object);
 }
 
-const gchar *
-_shutdown_string_from_enum (XfpmShutdownRequest shutdown)
+static void
+xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
 {
-    if ( shutdown == XFPM_DO_HIBERNATE )
-	return "Hibernate";
-    else if ( shutdown == XFPM_DO_SUSPEND )
-    	return "Suspend";
-    else if ( shutdown == XFPM_DO_SHUTDOWN)
-    	return "Shutdown";
+    const gchar *action = xfpm_int_to_shutdown_string (shutdown);
 	
-    return "Nothing";
+    if ( xfpm_strequal(action, "Nothing") )
+    {
+	TRACE("Sleep button disabled in configuration");
+	return;
+    }
+    else
+    {
+	TRACE("Going to do %s\n", action);
+	xfpm_send_message_to_network_manager ("sleep");
+	xfpm_lock_screen ();
+	if ( shutdown != XFPM_DO_SHUTDOWN )
+	    xfpm_lock_screen ();
+	dbus_hal_shutdown (engine->priv->hbus, action, NULL);
+	xfpm_send_message_to_network_manager ("wake");
+    }
 }
 
 static void
 xfpm_engine_shutdown_request_battery_cb (XfpmSupply *supply, XfpmShutdownRequest action, XfpmEngine *engine)
 {
-    const gchar *shutdown =
-	_shutdown_string_from_enum (action);
-	
-    if ( xfpm_strequal (shutdown, "Nothing") )
-	return;
-	
-	
-    xfpm_send_message_to_network_manager ("sleep");
-    
-    if ( action != XFPM_DO_SHUTDOWN )
-	xfpm_lock_screen ();
-    
-    dbus_hal_shutdown (engine->priv->hbus, shutdown, NULL);
-    
-    xfpm_send_message_to_network_manager ("wake");
+    xfpm_engine_shutdown_request (engine, action);
 }
 
 static void
@@ -201,24 +196,6 @@ xfpm_engine_on_battery_cb (XfpmSupply *supply, gboolean on_battery, XfpmEngine *
     xfpm_dpms_set_on_battery (engine->priv->dpms, on_battery);
 #endif
     xfpm_cpu_set_on_battery (engine->priv->cpu, on_battery);
-}
-
-static void
-xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
-{
-    const gchar *action =
-    	_shutdown_string_from_enum (shutdown);
-	
-    if ( xfpm_strequal(action, "Nothing") )
-    {
-	TRACE("Sleep button disabled in configuration");
-	return;
-    }
-    else
-    {
-	xfpm_lock_screen ();
-	dbus_hal_shutdown (engine->priv->hbus, action, NULL);
-    }
 }
 
 static void
@@ -251,7 +228,7 @@ xfpm_engine_lid_closed_cb (XfpmLidHal *lid, XfpmEngine *engine)
 {
     g_return_if_fail (engine->priv->lid_button_ac != XFPM_DO_SHUTDOWN );
     g_return_if_fail (engine->priv->lid_button_battery != XFPM_DO_SHUTDOWN );
-    
+
     if ( engine->priv->on_battery && engine->priv->lid_button_battery == XFPM_DO_NOTHING )
     {
 	TRACE("System on battery, doing nothing: user settings\n");
@@ -278,7 +255,6 @@ xfpm_engine_lid_closed_cb (XfpmLidHal *lid, XfpmEngine *engine)
     xfpm_engine_shutdown_request (engine, engine->priv->on_battery ? 
 					  engine->priv->lid_button_battery :
 					  engine->priv->lid_button_ac);
-    
     g_timer_reset (engine->priv->button_timer);
 }
 
@@ -325,32 +301,47 @@ xfpm_engine_load_all (XfpmEngine *engine)
 static void
 xfpm_engine_load_configuration (XfpmEngine *engine)
 {
-    engine->priv->sleep_button =
-    	xfconf_channel_get_uint (engine->priv->channel, SLEEP_SWITCH_CFG, 0);
-	
-    if ( engine->priv->sleep_button > 3 )
-    {
-    	g_warning ("Configuratuon value for %s is wrong\n", SLEEP_SWITCH_CFG );
-	engine->priv->sleep_button = 0;
-    }
+    gchar *str;
+    gint val;
     
-    engine->priv->lid_button_ac =
-    	xfconf_channel_get_uint (engine->priv->channel, LID_SWITCH_ON_AC_CFG, 0);
-	
-    if ( engine->priv->lid_button_ac > 2 )
-    {
-	g_warning ("Configuratuon value for %s is wrong\n", LID_SWITCH_ON_AC_CFG);
-	engine->priv->lid_button_ac = 0;
-    }
+    str = xfconf_channel_get_string (engine->priv->channel, SLEEP_SWITCH_CFG, "Nothing");
+    val = xfpm_shutdown_string_to_int (str);
     
-    engine->priv->lid_button_battery =
-    	xfconf_channel_get_uint (engine->priv->channel, LID_SWITCH_ON_BATTERY_CFG, 0);
-	
-    if ( engine->priv->lid_button_battery > 2 )
+    if ( val == -1 )
     {
-	g_warning ("Configuratuon value for %s is wrong\n", LID_SWITCH_ON_BATTERY_CFG);
-	engine->priv->lid_button_battery = 0;
+	g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
+	engine->priv->sleep_button = XFPM_DO_NOTHING;
+	xfconf_channel_set_string (engine->priv->channel, SLEEP_SWITCH_CFG, "Nothing");
     }
+    else engine->priv->sleep_button = val;
+    
+    g_free (str);
+    
+    str = xfconf_channel_get_string (engine->priv->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
+    val = xfpm_shutdown_string_to_int (str);
+
+    if ( val == -1 || val == 3)
+    {
+	g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_AC_CFG);
+	engine->priv->lid_button_ac = XFPM_DO_NOTHING;
+	xfconf_channel_set_string (engine->priv->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
+    }
+    else engine->priv->lid_button_ac = val;
+    
+    g_free (str);
+    
+    str = xfconf_channel_get_string (engine->priv->channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
+    val = xfpm_shutdown_string_to_int (str);
+    
+    if ( val == -1 || val == 3)
+    {
+	g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_BATTERY_CFG);
+	engine->priv->lid_button_battery = XFPM_DO_NOTHING;
+	xfconf_channel_set_string (engine->priv->channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
+    }
+    else engine->priv->lid_button_battery = val;
+    
+    g_free (str);
     
 }
 
@@ -362,22 +353,52 @@ xfpm_engine_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
 
     if ( xfpm_strequal (property, SLEEP_SWITCH_CFG) )
     {
-        guint val = g_value_get_uint (value);
-        engine->priv->sleep_button = val;
+        const gchar *str = g_value_get_string (value);
+	gint val = xfpm_shutdown_string_to_int (str);
+	if ( val == -1 )
+	{
+	    g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
+	    engine->priv->sleep_button = XFPM_DO_NOTHING;
+	}
+	else
+	    engine->priv->sleep_button = val;
     }
     else if ( xfpm_strequal (property, LID_SWITCH_ON_AC_CFG) )
     {
-        guint val = g_value_get_uint (value);
-        engine->priv->lid_button_ac = val;
+	const gchar *str = g_value_get_string (value);
+	gint val = xfpm_shutdown_string_to_int (str);
+	if ( val == -1 || val == 3 )
+	{
+	    g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_AC_CFG);
+	    engine->priv->lid_button_ac = XFPM_DO_NOTHING;
+	}
+	else
+	    engine->priv->lid_button_ac = val;
     }
     else if ( xfpm_strequal (property, LID_SWITCH_ON_BATTERY_CFG) )
     {
-        guint val = g_value_get_uint (value);
-        engine->priv->lid_button_battery = val;
+	const gchar *str = g_value_get_string (value);
+	gint val = xfpm_shutdown_string_to_int (str);
+	if ( val == -1 || val == 3 )
+	{
+	    g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_BATTERY_CFG);
+	    engine->priv->lid_button_battery = XFPM_DO_NOTHING;
+	}
+	else
+	    engine->priv->lid_button_battery = val;
     }
-    
 }
 
+/*
+ *
+ */
+/*
+static void
+xfpm_engine_reset_all_properties (XfpmEngine *engine)
+{
+    
+}
+*/
 XfpmEngine *
 xfpm_engine_new(void)
 {

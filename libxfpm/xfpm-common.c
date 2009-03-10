@@ -24,6 +24,7 @@
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-common.h"
+#include "xfpm-string.h"
 
 static void
 xfpm_link_browser(GtkAboutDialog *about,const gchar *link,gpointer data)
@@ -62,6 +63,39 @@ xfpm_load_icon(const char *icon_name,gint size)
         g_error_free(error);
     }
     return icon;                               
+}
+
+/*
+ * Map of int to strings shutdown values
+ */
+const gchar    *xfpm_int_to_shutdown_string	(gint val)
+{
+    if ( val == 0 )
+	return "Nothing";
+    else if ( val == 1)
+	return "Suspend";
+    else if ( val == 2)
+	return "Hibernate";
+    else if ( val == 3)
+	return "Shutdown";
+    
+    return "Invalid";
+}
+
+gint            xfpm_shutdown_string_to_int     (const gchar *string)
+{
+    if ( xfpm_strequal("Nothing", string) )
+	return 0;
+    else if ( xfpm_strequal("Suspend", string) )
+	return 1;
+    else if  (xfpm_strequal("Hibernate", string) )
+	return 2;
+    else if (xfpm_strequal("Shutdown", string) )
+	return 3;
+	
+    return -1; /* error here */
+
+    
 }
 
 void       

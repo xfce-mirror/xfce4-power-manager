@@ -713,6 +713,8 @@ xfpm_supply_set_battery_show_tray_icon (XfpmSupply *supply)
     g_list_free (list);
 }
 
+//static void
+//xfpm_supply_check_configuration (const gchar *property, 
 static void
 xfpm_supply_property_changed_cb (XfconfChannel *channel, gchar *property, GValue *value, XfpmSupply *supply)
 {
@@ -721,8 +723,15 @@ xfpm_supply_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
 	
     if ( xfpm_strequal (property, CRITICAL_BATT_ACTION_CFG) )
     {
-	guint val = g_value_get_uint (value);
-	supply->priv->critical_action = val;
+	const gchar *str = g_value_get_string (value);
+	gint val = xfpm_shutdown_string_to_int (str);
+	if ( val == -1 || val == 3 )
+	{
+	    g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
+	    supply->priv->critical_action = XFPM_DO_NOTHING;
+	}
+	else
+	    supply->priv->critical_action = val;
     }
     else if ( xfpm_strequal (property, SHOW_TRAY_ICON_CFG) )
     {
@@ -736,11 +745,30 @@ static void
 xfpm_supply_load_configuration (XfpmSupply *supply)
 {
     //FIXME: Check if the action specified we can actually do it
-    supply->priv->critical_action =
-    	xfconf_channel_get_uint (supply->priv->channel, CRITICAL_BATT_ACTION_CFG, 0);
-	
+    gchar *str;
+    gint val;
+    
+    str = xfconf_channel_get_string (supply->priv->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
+    val = xfpm_shutdown_string_to_int (str);
+    
+    if ( val == -1 || val > 3 )
+    {
+	g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
+	supply->priv->critical_action = XFPM_DO_NOTHING;
+	xfconf_channel_set_string ( supply->priv->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
+    }
+    else supply->priv->critical_action = val;
+    
+    g_free (str);
+    
     supply->priv->show_icon =
     	xfconf_channel_get_uint (supply->priv->channel, SHOW_TRAY_ICON_CFG, 0);
+	
+    if ( supply->priv->show_icon < 0 || supply->priv->show_icon > 3 )
+    {
+	g_warning ("Invalid value %d for property %s, using default\n", supply->priv->show_icon, SHOW_TRAY_ICON_CFG);
+	xfconf_channel_set_uint (supply->priv->channel, CRITICAL_BATT_ACTION_CFG, 0);
+    }
 }
 
 /*
@@ -755,11 +783,11 @@ xfpm_supply_new (DbusHal *bus, XfconfChannel *channel )
     supply->priv->hbus = bus;
     supply->priv->channel    = channel;
     
-    xfpm_supply_load_configuration (supply);
-    
     g_object_get (G_OBJECT(supply->priv->hbus) , 
 		  "power-management-info", &supply->priv->power_management, NULL);
-    
+
+    xfpm_supply_load_configuration (supply);
+      
     g_signal_connect (channel, "property-changed", 
 		      G_CALLBACK(xfpm_supply_property_changed_cb), supply);
 

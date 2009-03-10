@@ -49,15 +49,30 @@ static  GtkWidget *on_battery_dpms_off  	= NULL;
 static  GtkWidget *on_ac_dpms_sleep 		= NULL;
 static  GtkWidget *on_ac_dpms_off 		= NULL;
 #endif
+
 /*
  * Callback settings 
  */
 static void
 battery_critical_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    guint value = gtk_combo_box_get_active ( GTK_COMBO_BOX (w));
     
-    if (!xfconf_channel_set_uint (channel, CRITICAL_BATT_ACTION_CFG, value) )
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint value = 0;
+    
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+	return;
+	
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+   
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       1,
+                       &value,
+                       -1);
+		       
+    if (!xfconf_channel_set_string (channel, CRITICAL_BATT_ACTION_CFG, xfpm_int_to_shutdown_string(value)) )
     {
 	g_critical ("Cannot set value for property %s\n", CRITICAL_BATT_ACTION_CFG);
     }
@@ -66,8 +81,21 @@ battery_critical_changed_cb (GtkWidget *w, XfconfChannel *channel)
 static void
 set_show_tray_icon_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    guint value = gtk_combo_box_get_active ( GTK_COMBO_BOX (w));
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint value = 0;
     
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+	return;
+	
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+   
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       1,
+                       &value,
+                       -1);
+		       
     if (!xfconf_channel_set_uint (channel, SHOW_TRAY_ICON_CFG, value) )
     {
 	g_critical ("Cannot set value for property %s\n", SHOW_TRAY_ICON_CFG);
@@ -77,9 +105,22 @@ set_show_tray_icon_cb (GtkWidget *w, XfconfChannel *channel)
 static void
 set_sleep_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    guint value = gtk_combo_box_get_active ( GTK_COMBO_BOX (w));
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint value = 0;
     
-    if (!xfconf_channel_set_uint (channel, SLEEP_SWITCH_CFG, value) )
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+	return;
+	
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+   
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       1,
+                       &value,
+                       -1);
+    
+    if (!xfconf_channel_set_string (channel, SLEEP_SWITCH_CFG, xfpm_int_to_shutdown_string(value) ) )
     {
 	g_critical ("Cannot set value for property %s\n", SLEEP_SWITCH_CFG);
     }
@@ -236,9 +277,22 @@ format_dpms_value_cb (GtkScale *scale, gdouble value)
 static void
 on_battery_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    guint val = gtk_combo_box_get_active (GTK_COMBO_BOX(w));
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint value = 0;
     
-    if (!xfconf_channel_set_uint (channel, LID_SWITCH_ON_BATTERY_CFG, val) )
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+	return;
+	
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+   
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       1,
+                       &value,
+                       -1);
+    
+    if (!xfconf_channel_set_string (channel, LID_SWITCH_ON_BATTERY_CFG, xfpm_int_to_shutdown_string(value)) )
     {
 	g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_BATTERY_CFG);
     }
@@ -247,9 +301,22 @@ on_battery_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
 static void
 on_ac_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    guint val = gtk_combo_box_get_active (GTK_COMBO_BOX(w));
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint value = 0;
     
-    if (!xfconf_channel_set_uint (channel, LID_SWITCH_ON_AC_CFG, val) )
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+	return;
+	
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+   
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       1,
+                       &value,
+                       -1);
+		       
+    if (!xfconf_channel_set_string (channel, LID_SWITCH_ON_AC_CFG, xfpm_int_to_shutdown_string(value)) )
     {
 	g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_AC_CFG);
     }
@@ -258,23 +325,47 @@ on_ac_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
 static void
 xfpm_settings_on_battery (XfconfChannel *channel)
 {
-    guint val;
+    gint val;
     GtkWidget *battery_critical = glade_xml_get_widget (xml, "battery-critical-combox");
+    GtkListStore *list_store;
+    GtkTreeIter iter;
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     
-    gtk_combo_box_append_text (GTK_COMBO_BOX(battery_critical), _("Shutdown"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX(battery_critical), _("Hibernate"));
+    gtk_combo_box_set_model (GTK_COMBO_BOX(battery_critical), GTK_TREE_MODEL(list_store));
     
-    guint critical_action = xfconf_channel_get_uint (channel, CRITICAL_BATT_ACTION_CFG, 0);
-    gtk_combo_box_set_active (GTK_COMBO_BOX(battery_critical), critical_action);
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
     
     g_signal_connect (battery_critical, "changed", 
 		      G_CALLBACK(battery_critical_changed_cb), channel);
+		      
+    gchar *str = xfconf_channel_get_string (channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
+    
+    val = xfpm_shutdown_string_to_int (str);
+    
+    if ( val == -1 || val == 3 /*we don't do shutdown here */) 
+    {
+	g_warning ("Invalid value %s for property %s\n", str, CRITICAL_BATT_ACTION_CFG);
+	gtk_combo_box_set_active (GTK_COMBO_BOX(battery_critical), 0);
+    }
+    else
+	gtk_combo_box_set_active (GTK_COMBO_BOX(battery_critical), val);
+	
+    g_free(str);
+    
     GtkWidget *power_save = glade_xml_get_widget (xml, "power-save");
     gboolean save_power = xfconf_channel_get_bool (channel, POWER_SAVE_ON_BATTERY, TRUE);
     
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(power_save), save_power);
     g_signal_connect (power_save, "toggled",
 		      G_CALLBACK(power_save_toggled_cb), channel);
+	
     
     /*
      * DPMS settings when running on battery power
@@ -309,15 +400,37 @@ xfpm_settings_on_battery (XfconfChannel *channel)
      * Lid switch settings on battery
      */
     GtkWidget *lid = glade_xml_get_widget (xml, "on-battery-lid");
-    val = xfconf_channel_get_uint (channel, LID_SWITCH_ON_BATTERY_CFG, 0);
     
-    gtk_combo_box_append_text (GTK_COMBO_BOX(lid), _("Suspend"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX(lid), _("Hibernate"));
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     
-    gtk_combo_box_set_active (GTK_COMBO_BOX(lid), val);
+    gtk_combo_box_set_model (GTK_COMBO_BOX(lid), GTK_TREE_MODEL(list_store));
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
     
     g_signal_connect (lid, "changed", 
 		      G_CALLBACK(on_battery_lid_changed_cb), channel);
+		      
+    str = xfconf_channel_get_string (channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
+    
+    val = xfpm_shutdown_string_to_int (str);
+    
+    if ( val == -1 || val == 3 /*we don't do shutdown here */) 
+    {
+	g_warning ("Invalid value %s for property %s\n", str, LID_SWITCH_ON_BATTERY_CFG);
+	gtk_combo_box_set_active (GTK_COMBO_BOX(lid), 0);
+    }
+    else
+	gtk_combo_box_set_active (GTK_COMBO_BOX(lid), val);
+	
+    g_free (str);
+    
 }
 
 static void
@@ -354,18 +467,40 @@ xfpm_settings_on_ac (XfconfChannel *channel)
 #endif
 
     /*
-     * Lid switch settings on battery
+     * Lid switch settings on AC power
      */
-    GtkWidget *lid = glade_xml_get_widget (xml, "on-ac-lid");
-    val = xfconf_channel_get_uint (channel, LID_SWITCH_ON_AC_CFG, 0);
+    GtkListStore *list_store;
+    GtkTreeIter iter;
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     
-    gtk_combo_box_append_text (GTK_COMBO_BOX(lid), _("Suspend"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX(lid), _("Hibernate"));
-
-    gtk_combo_box_set_active (GTK_COMBO_BOX(lid), val);
+    GtkWidget *lid = glade_xml_get_widget (xml, "on-ac-lid");
+    gtk_combo_box_set_model (GTK_COMBO_BOX(lid), GTK_TREE_MODEL(list_store));
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
+    
     g_signal_connect (lid, "changed", 
 		      G_CALLBACK(on_ac_lid_changed_cb), channel);
+		      
+    gchar *str = xfconf_channel_get_string (channel, LID_SWITCH_ON_AC_CFG, "Nothing");
     
+    val = xfpm_shutdown_string_to_int (str);
+    
+    if ( val == -1 || val == 3 /*we don't do shutdown here */) 
+    {
+	g_warning ("Invalid value %s for property %s\n", str, LID_SWITCH_ON_AC_CFG);
+	gtk_combo_box_set_active (GTK_COMBO_BOX(lid), 0);
+    }
+    else
+	gtk_combo_box_set_active (GTK_COMBO_BOX(lid), val);
+	
+    g_free (str);
 }
 
 static void
@@ -374,15 +509,24 @@ xfpm_settings_general (XfconfChannel *channel)
     /*
      *  Tray icon settings
      */
-    GtkWidget *tray = glade_xml_get_widget (xml, "tray-combox");
+    GtkListStore *list_store;
+    GtkTreeIter iter;
+    list_store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
     
-    gtk_combo_box_append_text (GTK_COMBO_BOX(tray), _("When battery is present"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX(tray), _("When battery is charging or discharging"));
+    GtkWidget *tray = glade_xml_get_widget (xml, "tray-combox");
+    gtk_combo_box_set_model (GTK_COMBO_BOX(tray), GTK_TREE_MODEL(list_store));
+
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Always show icon"), 1, 0, -1);
+
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("When battery is present"), 1, 1, -1);
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("When battery is charging or discharging"), 1, 2, -1);
     
     guint show_tray = xfconf_channel_get_uint (channel, SHOW_TRAY_ICON_CFG, 0);
-    
     gtk_combo_box_set_active (GTK_COMBO_BOX(tray), show_tray);
-    
     g_signal_connect (tray, "changed",
 		      G_CALLBACK(set_show_tray_icon_cb), channel);
     gboolean val;
@@ -403,18 +547,38 @@ xfpm_settings_general (XfconfChannel *channel)
     /*
      * Sleep button 
      */
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     GtkWidget *sleep = glade_xml_get_widget (xml, "sleep-combox");
+    
+    gtk_combo_box_set_model (GTK_COMBO_BOX(sleep), GTK_TREE_MODEL(list_store));
 
-    gtk_combo_box_append_text (GTK_COMBO_BOX(sleep), _("Suspend"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX(sleep), _("Hibernate"));
-    gtk_combo_box_append_text (GTK_COMBO_BOX(sleep), _("Shutdown"));
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
     
-    guint sleep_val = xfconf_channel_get_uint (channel, SLEEP_SWITCH_CFG, 0);
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
     
-    gtk_combo_box_set_active (GTK_COMBO_BOX(sleep), sleep_val);
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
     
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, 3, -1);
+
     g_signal_connect (sleep, "changed",
 		      G_CALLBACK(set_sleep_changed_cb), channel);
+    
+    gchar *default_sleep_value = xfconf_channel_get_string (channel, SLEEP_SWITCH_CFG, "Nothing");
+    gint   sleep_val_int = xfpm_shutdown_string_to_int (default_sleep_value );
+    if ( sleep_val_int == -1) 
+    {
+	g_warning ("Invalid value %s for property %s\n", default_sleep_value, SLEEP_SWITCH_CFG);
+	gtk_combo_box_set_active (GTK_COMBO_BOX(sleep), 0);
+    }
+    else
+	gtk_combo_box_set_active (GTK_COMBO_BOX(sleep), sleep_val_int);
+    
+    g_free (default_sleep_value);
+    
     
     /*
      * Enable/Disable Notification
@@ -505,12 +669,12 @@ xfpm_settings_tree_view (XfconfChannel *channel)
     gtk_list_store_append(list_store, &iter);
     if ( pix )
     {
-	    gtk_list_store_set(list_store, &iter, 0, pix, 1, _("ON AC"), 2, i, -1);
+	    gtk_list_store_set(list_store, &iter, 0, pix, 1, _("On AC"), 2, i, -1);
 	    g_object_unref(pix);
     }
     else
     {
-	    gtk_list_store_set(list_store, &iter, 1, _("ON AC"), 2, i, -1);
+	    gtk_list_store_set(list_store, &iter, 1, _("On AC"), 2, i, -1);
     }
     i++;
     
@@ -519,12 +683,12 @@ xfpm_settings_tree_view (XfconfChannel *channel)
     gtk_list_store_append(list_store, &iter);
     if ( pix )
     {
-	    gtk_list_store_set(list_store, &iter, 0, pix, 1, _("ON Battery"), 2, i, -1);
+	    gtk_list_store_set(list_store, &iter, 0, pix, 1, _("On Battery"), 2, i, -1);
 	    g_object_unref(pix);
     }
     else
     {
-	    gtk_list_store_set(list_store, &iter, 1, _("ON Battery"), 2, i, -1);
+	    gtk_list_store_set(list_store, &iter, 1, _("On Battery"), 2, i, -1);
     }
     i++;
     
@@ -587,20 +751,54 @@ update_settings_dialog (XfconfChannel *channel, gchar *property, GValue *value, 
     else if ( xfpm_strequal (property, SLEEP_SWITCH_CFG ) )
     {
 	GtkWidget *widget = glade_xml_get_widget (xml, "sleep-combox");
-	guint val = g_value_get_uint (value);
-	gtk_combo_box_set_active (GTK_COMBO_BOX(widget), val);
+	const gchar *str = g_value_get_string (value);
+	gint val = xfpm_shutdown_string_to_int (str);
+	if ( val  == -1) 
+	{
+	    g_warning ("Invalid value %s for property, using default %s\n", str, SLEEP_SWITCH_CFG);
+	    gtk_combo_box_set_active (GTK_COMBO_BOX(widget), 0);
+	}
+	else
+	    gtk_combo_box_set_active (GTK_COMBO_BOX(widget), val);
     }
     else if ( xfpm_strequal (property, LID_SWITCH_ON_AC_CFG ) )
     {
 	GtkWidget *widget = glade_xml_get_widget (xml, "on-ac-lid");
-	guint val = g_value_get_uint (value);
-	gtk_combo_box_set_active (GTK_COMBO_BOX(widget), val);
+	const gchar *str = g_value_get_string (value);
+	gint val = xfpm_shutdown_string_to_int (str);
+	if ( val == -1 || val == 3 /*we don't do shutdown here */) 
+	{
+	    g_warning ("Invalid value %s for property %s\n", str, LID_SWITCH_ON_AC_CFG);
+	    gtk_combo_box_set_active (GTK_COMBO_BOX(widget), 0);
+	}
+	else
+	    gtk_combo_box_set_active (GTK_COMBO_BOX(widget), val);
     }
     else if ( xfpm_strequal (property, LID_SWITCH_ON_BATTERY_CFG ) )
     {
 	GtkWidget *widget = glade_xml_get_widget (xml, "on-battery-lid");
-	guint val = g_value_get_uint (value);
-	gtk_combo_box_set_active (GTK_COMBO_BOX(widget), val);
+	const gchar *str = g_value_get_string (value);
+	gint val = xfpm_shutdown_string_to_int (str);
+	if ( val == -1 || val == 3 /*we don't do shutdown here */) 
+	{
+	    g_warning ("Invalid value %s for property %s\n", str, LID_SWITCH_ON_BATTERY_CFG);
+	    gtk_combo_box_set_active (GTK_COMBO_BOX(widget), 0);
+	}
+	else
+	    gtk_combo_box_set_active (GTK_COMBO_BOX(widget), val);
+    }
+    else if ( xfpm_strequal (property, CRITICAL_BATT_ACTION_CFG ) )
+    {
+	GtkWidget *widget = glade_xml_get_widget (xml, "battery-critical-combox");
+	const gchar *str = g_value_get_string (value);
+	gint val = xfpm_shutdown_string_to_int (str);
+	if ( val == -1 || val == 3 /*we don't do shutdown here */) 
+	{
+	    g_warning ("Invalid value %s for property %s\n", str, CRITICAL_BATT_ACTION_CFG);
+	    gtk_combo_box_set_active (GTK_COMBO_BOX(widget), 0);
+	}
+	else
+	    gtk_combo_box_set_active (GTK_COMBO_BOX(widget), val);
     }
     if ( xfpm_strequal (property, GENERAL_NOTIFICATION_CFG ) )
     {
@@ -608,7 +806,6 @@ update_settings_dialog (XfconfChannel *channel, gchar *property, GValue *value, 
 	guint val = g_value_get_boolean (value);
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(widget), val);
     }
-    
 }
 
 static void dialog_response_cb (GtkDialog *dialog, gint response, gpointer data)
