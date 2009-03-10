@@ -52,6 +52,7 @@
 #include "xfpm-engine.h"
 #include "xfpm-supply.h"
 #include "xfpm-cpu.h"
+#include "xfpm-network-manager.h"
 #include "xfpm-button-xf86.h"
 #include "xfpm-lid-hal.h"
 #include "xfpm-brightness-hal.h"
@@ -159,22 +160,6 @@ xfpm_engine_finalize (GObject *object)
     G_OBJECT_CLASS(xfpm_engine_parent_class)->finalize(object);
 }
 
-static void
-xfpm_engine_block_shutdown_cb (XfpmSupply *supply, gboolean block, XfpmEngine *engine)
-{
-    engine->priv->block_shutdown = block;
-}
-
-static void
-xfpm_engine_on_battery_cb (XfpmSupply *supply, gboolean on_battery, XfpmEngine *engine)
-{
-    engine->priv->on_battery = on_battery;
-#ifdef HAVE_DPMS
-    xfpm_dpms_set_on_battery (engine->priv->dpms, on_battery);
-#endif
-    xfpm_cpu_set_on_battery (engine->priv->cpu, on_battery);
-}
-
 const gchar *
 _shutdown_string_from_enum (XfpmShutdownRequest shutdown)
 {
@@ -187,7 +172,36 @@ _shutdown_string_from_enum (XfpmShutdownRequest shutdown)
 	
     return "Nothing";
 }
+
+static void
+xfpm_engine_shutdown_request_battery_cb (XfpmSupply *supply, XfpmShutdownRequest action, XfpmEngine *engine)
+{
+    const gchar *shutdown =
+	_shutdown_string_from_enum (action);
 	
+    if ( xfpm_strequal (shutdown, "Nothing") )
+	return;
+	
+	
+    xfpm_send_message_to_network_manager ("sleep");
+    
+    if ( action != XFPM_DO_SHUTDOWN )
+	xfpm_lock_screen ();
+    
+    dbus_hal_shutdown (engine->priv->hbus, shutdown, NULL);
+    
+    xfpm_send_message_to_network_manager ("wake");
+}
+
+static void
+xfpm_engine_on_battery_cb (XfpmSupply *supply, gboolean on_battery, XfpmEngine *engine)
+{
+    engine->priv->on_battery = on_battery;
+#ifdef HAVE_DPMS
+    xfpm_dpms_set_on_battery (engine->priv->dpms, on_battery);
+#endif
+    xfpm_cpu_set_on_battery (engine->priv->cpu, on_battery);
+}
 
 static void
 xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
@@ -278,8 +292,8 @@ xfpm_engine_load_all (XfpmEngine *engine)
 
     engine->priv->supply = xfpm_supply_new (engine->priv->hbus, engine->priv->channel);
 
-    g_signal_connect (G_OBJECT(engine->priv->supply), "block-shutdown",
-		      G_CALLBACK (xfpm_engine_block_shutdown_cb), engine);
+    g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
+		      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
 
     g_signal_connect (G_OBJECT(engine->priv->supply), "on-battery",
 		      G_CALLBACK (xfpm_engine_on_battery_cb), engine);

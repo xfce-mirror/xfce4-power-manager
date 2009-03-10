@@ -26,6 +26,7 @@
 #include <xfconf/xfconf.h>
 
 #include "xfpm-enum.h"
+#include "xfpm-enum-glib.h"
 #include "dbus-hal.h"
 
 G_BEGIN_DECLS
@@ -47,6 +48,8 @@ typedef struct
 {
     GObjectClass         parent_class;
     
+    void                (*shutdown_request)	    (XfpmSupply *supply,
+						     XfpmShutdownRequest action);
     void	        (*block_shutdown)	    (XfpmSupply *supply,
     						     gboolean block);
     void                (*on_battery    )	    (XfpmSupply *supply,

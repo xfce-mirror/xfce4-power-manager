@@ -288,14 +288,19 @@ xfpm_battery_get_battery_state (XfpmBatteryState *state,
     }
     else if ( !is_charging && is_discharging )
     {
-	if ( percentage >= 10 )
+	if ( percentage > 20 )
 	{
 	    *state = BATTERY_IS_DISCHARGING;
 	    return  _("is discharging");
 	}
-	else
+	else if ( percentage >= 10 && percentage < 20)
 	{
-	    *state = BATTERY_CRITICALLY_LOW;
+	    *state = BATTERY_CHARGE_LOW;
+	    return  _("charge is low");
+	}
+	else if ( percentage < 10 )
+	{
+	    *state = BATTERY_CHARGE_CRITICAL;
 	    return _("is almost empty");
     	}
     }
@@ -359,7 +364,7 @@ xfpm_battery_refresh_tooltip_primary (XfpmBattery *battery, gboolean is_present,
 		
 	if ( state == BATTERY_IS_DISCHARGING || 
 	     state == BATTERY_CHARGE_LOW         || 
-	     state == BATTERY_CRITICALLY_LOW )
+	     state == BATTERY_CHARGE_CRITICAL )
         {
             est_time = _("Estimated time left");
         }
@@ -371,7 +376,7 @@ xfpm_battery_refresh_tooltip_primary (XfpmBattery *battery, gboolean is_present,
                                    hours,hours > 1 ? _("hours") : _("hour") ,
                                    minutes_left, minutes_left > 1 ? _("minutes") : _("minute"));
 				   
-	tip = g_strdup_printf ("%i%% %s \n%s %s\n%s", 
+	tip = g_strdup_printf ("%i%% %s %s\n%s\n%s", 
 			       percentage, 
 			       _("Battery"),
 			       str,

@@ -38,7 +38,6 @@
 #include "xfpm-battery.h"
 #include "xfpm-adapter.h"
 #include "xfpm-notify.h"
-#include "xfpm-network-manager.h"
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-config.h"
@@ -72,6 +71,7 @@ struct XfpmSupplyPrivate
 
 enum
 {
+    SHUTDOWN_REQUEST,
     BLOCK_SHUTDOWN,
     ON_BATTERY,
     ON_LOW_BATTERY,
@@ -86,6 +86,15 @@ static void
 xfpm_supply_class_init(XfpmSupplyClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
+
+    signals[SHUTDOWN_REQUEST] = 
+    	g_signal_new("shutdown-request",
+                      XFPM_TYPE_SUPPLY,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmSupplyClass, shutdown_request),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__ENUM,
+                      G_TYPE_NONE, 1, XFPM_TYPE_SHUTDOWN_REQUEST);
 
     signals[BLOCK_SHUTDOWN] = 
     	g_signal_new("block-shutdown",
@@ -144,12 +153,12 @@ xfpm_supply_finalize (GObject *object)
 	
     if ( supply->priv->hash )
     	g_hash_table_destroy (supply->priv->hash);
+	
     if ( supply->priv->notify )
     	g_object_unref (supply->priv->notify);
     
     G_OBJECT_CLASS(xfpm_supply_parent_class)->finalize(object);
 }
-
 
 static void
 xfpm_supply_hibernate_cb (GtkWidget *w, XfpmSupply *supply)
@@ -161,14 +170,7 @@ xfpm_supply_hibernate_cb (GtkWidget *w, XfpmSupply *supply)
     
     if ( ret ) 
     {
-	g_signal_emit (G_OBJECT(supply ), signals[BLOCK_SHUTDOWN], 0, TRUE);
-	
-	xfpm_send_message_to_network_manager ("sleep");
-	xfpm_lock_screen ();
-	dbus_hal_shutdown (supply->priv->hbus, "Hibernate", NULL);
-	xfpm_send_message_to_network_manager ("wake");
-	
-	g_signal_emit (G_OBJECT(supply ), signals[BLOCK_SHUTDOWN], 0, FALSE);
+	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_HIBERNATE);
     }
 }
 
@@ -182,14 +184,7 @@ xfpm_supply_suspend_cb (GtkWidget *w, XfpmSupply *supply)
     
     if ( ret ) 
     {
-	g_signal_emit (G_OBJECT(supply ), signals[BLOCK_SHUTDOWN], 0, TRUE);
-	
-	xfpm_send_message_to_network_manager ("sleep");
-	xfpm_lock_screen ();
-	dbus_hal_shutdown (supply->priv->hbus, "Suspend", NULL);
-	xfpm_send_message_to_network_manager ("wake");
-	
-	g_signal_emit (G_OBJECT(supply ), signals[BLOCK_SHUTDOWN], 0, FALSE);
+	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_SUSPEND);
     }
 }
 
@@ -220,10 +215,44 @@ _get_icon_name_from_battery_type (HalDeviceType type)
     }
 }
 
-static const gchar *
-xfpm_supply_get_message_from_battery_state ( XfpmBatteryState state, HalDeviceType type, gboolean adapter_present)
+gboolean xfpm_supply_on_low_power ( XfpmSupply *supply)
 {
-    switch ( state )
+    GList *list = NULL;
+    int i;
+    gboolean low_power = FALSE;
+    list = g_hash_table_get_values (supply->priv->hash);
+    
+    if ( !list)
+	return FALSE;
+	
+    for ( i=0; i< g_list_length(list); i++)
+    {
+	XfpmBattery *battery = NULL;
+	HalDeviceType type;
+	guint percentage;
+	battery = g_list_nth_data(list, i);
+	
+	if ( !battery )
+	    continue;
+	    
+	const HalDevice *device = xfpm_battery_get_device (battery);
+	g_object_get (G_OBJECT(device), "type", &type, "percentage", &percentage, NULL);
+	if ( type != HAL_DEVICE_TYPE_PRIMARY )
+	    continue;
+	    
+	if ( percentage < 10 ) //FIXME: make this configurable
+	    low_power = TRUE;
+	else 
+	    low_power = FALSE;
+    }
+    
+    return low_power;
+}
+
+static const gchar *
+xfpm_supply_get_message_from_battery_state (XfpmBatteryState state, gboolean adapter_present)
+{
+    switch (state)
     {
 	case BATTERY_FULLY_CHARGED:
 	    return _("Your battery is fully charged");
@@ -232,18 +261,148 @@ xfpm_supply_get_message_from_battery_state ( XfpmBatteryState state, HalDeviceTy
 	    return  _("Battery is charging");
 	    break;
 	case BATTERY_IS_DISCHARGING:
-	    if ( type == HAL_DEVICE_TYPE_PRIMARY )
-	    	return adapter_present ? _("Your battery is discharging") : _("System is running on battery");
-	    else
-	    	return _("Your battery is discharging");
+	    return  adapter_present ? _("Your battery is discharging"): _("System is running on battery power");
 	    break;
 	case BATTERY_CHARGE_LOW:
-	    return _("Your battery charge is low");
+	    return adapter_present ? _("Your battery charge is low") : _("System is running on low power"); 
 	    break;
 	default:
-	    return  NULL;
-	    break;
+	    return NULL;
     }
+}
+
+static void
+xfpm_supply_process_critical_action (XfpmSupply *supply)
+{
+    //FIXME: shouldn't happen
+    g_return_if_fail (supply->priv->critical_action != XFPM_DO_SUSPEND );
+    
+    g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, supply->priv->critical_action);
+}
+
+static void
+_notify_action_callback (NotifyNotification *n, gchar *action, XfpmSupply *supply)
+{
+    if ( xfpm_strequal(action, "shutdow") )
+	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_SHUTDOWN);
+    else if ( xfpm_strequal(action, "hibernate") )
+	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_SHUTDOWN);
+}
+
+static void
+xfpm_supply_show_critical_action (XfpmSupply *supply, XfpmBattery *battery)
+{
+    const gchar *message;
+    message = _("Your battery is almost empty. "\
+              "Save your work to avoid losing data");
+	      
+    NotifyNotification *n = 
+	xfpm_notify_new_notification (supply->priv->notify, 
+				      _("Xfce power manager"), 
+				      message, 
+				      xfpm_battery_get_icon_name (battery),
+				      10000,
+				      XFPM_NOTIFY_CRITICAL,
+				      xfpm_battery_get_status_icon (battery));
+				   
+    if (supply->priv->power_management != 0 )
+    {
+        xfpm_notify_add_action_to_notification(
+			       supply->priv->notify,
+			       n,
+                               "shutdown",
+                               _("Shutdown the system"),
+                               (NotifyActionCallback)_notify_action_callback,
+                               supply);   
+    }
+    
+    if ( supply->priv->power_management & SYSTEM_CAN_HIBERNATE )
+    {
+        xfpm_notify_add_action_to_notification(
+			       supply->priv->notify,
+			       n,
+                               "hibernate",
+                               _("Hibernate the system"),
+                               (NotifyActionCallback)_notify_action_callback,
+                               supply);      
+    }
+    
+    xfpm_notify_present_notification (supply->priv->notify, n, FALSE);
+    
+}
+
+static void
+xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
+{
+    if ( xfpm_supply_on_low_power (supply) )
+    {
+	TRACE ("System is running on low power");
+	if ( supply->priv->critical_action == XFPM_DO_NOTHING )
+	{
+	    xfpm_supply_show_critical_action (supply, battery);
+	}
+	else
+	{
+	    xfpm_supply_process_critical_action (supply);
+	}
+    }
+    else 
+    {
+	const gchar *message = _("Your battery is almost empty");
+	xfpm_notify_show_notification (supply->priv->notify, 
+				   _("Xfce power manager"), 
+				   message, 
+				   xfpm_battery_get_icon_name (battery),
+				   10000,
+				   FALSE,
+				   XFPM_NOTIFY_NORMAL,
+				   xfpm_battery_get_status_icon (battery));
+    }
+}
+
+static void
+xfpm_supply_primary_battery_changed (XfpmSupply *supply, XfpmBattery *battery, XfpmBatteryState state)
+{
+    if ( state == BATTERY_CHARGE_CRITICAL )
+    {
+	xfpm_supply_handle_primary_critical (supply, battery);
+	return;
+    }
+    
+    const gchar *message 
+    	= xfpm_supply_get_message_from_battery_state (state, supply->priv->adapter_found ? 
+							     supply->priv->adapter_present : TRUE); // FIXME, TRUE makes sense here ?
+
+    if ( !message )
+    	return;
+    
+    xfpm_notify_show_notification (supply->priv->notify, 
+				   _("Xfce power manager"), 
+				   message, 
+				   xfpm_battery_get_icon_name (battery),
+				   10000,
+				   FALSE,
+				   XFPM_NOTIFY_NORMAL,
+				   xfpm_battery_get_status_icon (battery));
+}
+
+static void
+xfpm_supply_misc_battery_changed (XfpmSupply *supply, XfpmBattery *battery, XfpmBatteryState state)
+{
+    const gchar *message 
+    	= xfpm_supply_get_message_from_battery_state (state, TRUE);
+	
+    if ( !message )
+    	return;
+    
+    xfpm_notify_show_notification (supply->priv->notify, 
+				   _("Xfce power manager"), 
+				   message, 
+				   xfpm_battery_get_icon_name (battery),
+				   10000,
+				   TRUE, 
+				   XFPM_NOTIFY_NORMAL,
+				   xfpm_battery_get_status_icon (battery));
 }
 
 static void
@@ -260,23 +419,14 @@ xfpm_supply_show_battery_notification (XfpmSupply *supply, XfpmBatteryState stat
 	return;
     }
     
-    const gchar *message 
-    	= xfpm_supply_get_message_from_battery_state (state,
-						      type,
-						      supply->priv->adapter_found   ? 
-						      supply->priv->adapter_present : 
-						      TRUE);
-    if ( !message )
-    	return;
-    
-    xfpm_notify_show_notification (supply->priv->notify, 
-				   _("Xfce power manager"), 
-				   message, 
-				   xfpm_battery_get_icon_name (battery),
-				   10000,
-				   FALSE, 
-				   XFPM_NOTIFY_NORMAL,
-				   xfpm_battery_get_status_icon (battery));
+    if ( type == HAL_DEVICE_TYPE_PRIMARY )
+    {
+	xfpm_supply_primary_battery_changed (supply, battery, state);
+    }
+    else 
+    {
+	xfpm_supply_misc_battery_changed (supply, battery, state);
+    }
 }
 
 static void
@@ -337,7 +487,7 @@ xfpm_supply_popup_battery_menu_cb (XfpmBattery *battery, GtkStatusIcon *icon,
     gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
     
     // Battery informations
-    mi = gtk_image_menu_item_new_with_label (_("Battery information"));
+    mi = gtk_image_menu_item_new_with_label (_("Information"));
     img = gtk_image_new_from_icon_name (_get_icon_name_from_battery_type(battery_type), GTK_ICON_SIZE_MENU);
     gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM(mi), img);
     
@@ -560,7 +710,6 @@ xfpm_supply_set_battery_show_tray_icon (XfpmSupply *supply)
 	    xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
 	}
     }
-    
     g_list_free (list);
 }
 
@@ -581,7 +730,6 @@ xfpm_supply_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
 	supply->priv->show_icon = val;
 	xfpm_supply_set_battery_show_tray_icon (supply);
     }
-    
 }
 
 static void

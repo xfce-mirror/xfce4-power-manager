@@ -91,16 +91,6 @@ xfpm_notify_finalize(GObject *object)
     G_OBJECT_CLASS(xfpm_notify_parent_class)->finalize(object);
 }
 
-static NotifyNotification *
-xfpm_notify_new_notification_internal (XfpmNotify *notify, const gchar *title, const gchar *message)
-{
-    NotifyNotification *n;
-    
-    n = notify_notification_new (title, message, NULL, NULL);
-    
-    return n;
-}
-
 static void
 xfpm_notify_set_icon (XfpmNotify *notify, NotifyNotification *n, const gchar *icon_name )
 {
@@ -112,6 +102,27 @@ xfpm_notify_set_icon (XfpmNotify *notify, NotifyNotification *n, const gchar *ic
 						  pix);
 	g_object_unref ( G_OBJECT(pix));
     }
+}
+
+static NotifyNotification *
+xfpm_notify_new_notification_internal (XfpmNotify *notify, const gchar *title, const gchar *message,
+				       const gchar *icon_name, guint timeout,
+				       XfpmNotifyUrgency urgency, GtkStatusIcon *icon)
+{
+    NotifyNotification *n;
+    
+    n = notify_notification_new (title, message, NULL, NULL);
+    
+    if ( icon_name )
+    	xfpm_notify_set_icon (notify, n, icon_name);
+	
+    if ( icon )
+    	notify_notification_attach_to_status_icon (n, icon);
+	
+    notify_notification_set_urgency (n, urgency);
+    notify_notification_set_timeout (n, timeout);
+    
+    return n;
 }
 
 static void
@@ -150,14 +161,44 @@ void xfpm_notify_show_notification (XfpmNotify *notify, const gchar *title,
     if ( !simple )
         xfpm_notify_close_notification (notify);
     
-    NotifyNotification *n = xfpm_notify_new_notification_internal (notify, title, text);
-    
-    if ( icon_name )
-    	xfpm_notify_set_icon (notify, n, icon_name);
-	
-    if ( icon )
-    	notify_notification_attach_to_status_icon (n, icon);
+    NotifyNotification *n = xfpm_notify_new_notification_internal (notify, title, 
+							           text, icon_name, 
+								   timeout, urgency, 
+								   icon);
+    xfpm_notify_present_notification (notify, n, simple);
+}
 
+NotifyNotification *xfpm_notify_new_notification (XfpmNotify *notify,
+						  const gchar *title,
+						  const gchar *text,
+						  const gchar *icon_name,
+						  guint timeout,
+						  XfpmNotifyUrgency urgency,
+						  GtkStatusIcon *icon)
+{
+    NotifyNotification *n = xfpm_notify_new_notification_internal (notify, title, 
+							           text, icon_name, 
+								   timeout, urgency, 
+								   icon);
+    return n;
+}
+
+void xfpm_notify_add_action_to_notification (XfpmNotify *notify, NotifyNotification *n,
+					    const gchar *id, const gchar *action_label,
+					    NotifyActionCallback callback, gpointer data)
+{
+    g_return_if_fail (XFPM_IS_NOTIFY(notify));
+    
+    notify_notification_add_action (n, id, action_label,
+				   (NotifyActionCallback)callback,
+				    data, NULL);
+    
+}
+
+void xfpm_notify_present_notification (XfpmNotify *notify, NotifyNotification *n, gboolean simple)
+{
+    g_return_if_fail (XFPM_IS_NOTIFY(notify));
+    
     if ( !simple )
     {
 	g_signal_connect (G_OBJECT(n),"closed",
