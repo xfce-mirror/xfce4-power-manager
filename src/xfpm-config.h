@@ -29,34 +29,35 @@
 G_BEGIN_DECLS
 
 /* Configuration */
-#define XFPM_CHANNEL_CFG            "xfce4-power-manager"
-#define CRITICAL_BATT_ACTION_CFG    "/xfce4-power-manager/critical-battery-action"     /* default 0 nothing, 1 = shutdown, 2 = hibernate if supported) */
+#define 	XFPM_CHANNEL_CFG            "xfce4-power-manager"
+#define 	CRITICAL_BATT_ACTION_CFG    "/xfce4-power-manager/critical-battery-action"
 
-#define POWER_SAVE_ON_BATTERY       "/xfce4-power-manager/power-save-on-battery"
+#define 	POWER_SAVE_ON_BATTERY       "/xfce4-power-manager/power-save-on-battery"
 
-#define LCD_BRIGHTNESS_CFG          "/xfce4-power-manager/lcd-brightness"
-#define LID_SWITCH_ON_AC_CFG        "/xfce4-power-manager/lid-action-on-ac"
-#define LID_SWITCH_ON_BATTERY_CFG   "/xfce4-power-manager/lid-action-on-battery"
-#define SLEEP_SWITCH_CFG            "/xfce4-power-manager/sleep-switch-action"
-#define POWER_SWITCH_CFG            "/xfce4-power-manager/power-switch-action"
+#define 	LCD_BRIGHTNESS_CFG          "/xfce4-power-manager/lcd-brightness"
+#define 	LID_SWITCH_ON_AC_CFG        "/xfce4-power-manager/lid-action-on-ac"
+#define 	LID_SWITCH_ON_BATTERY_CFG   "/xfce4-power-manager/lid-action-on-battery"
+#define 	SLEEP_SWITCH_CFG            "/xfce4-power-manager/sleep-switch-action"
+#define 	POWER_SWITCH_CFG            "/xfce4-power-manager/power-switch-action"
 
-#define GENERAL_NOTIFICATION_CFG    "/xfce4-power-manager/general-notification"
+#define 	GENERAL_NOTIFICATION_CFG    "/xfce4-power-manager/general-notification"
 
 #ifdef HAVE_LIBNOTIFY
-#define BATT_STATE_NOTIFICATION_CFG "/xfce4-power-manager/battery-state-notification"  /* default TRUE */
+#define 	BATT_STATE_NOTIFICATION_CFG "/xfce4-power-manager/battery-state-notification"  /* default TRUE */
 
-#define SHOW_SLEEP_ERRORS_CFG       "/xfce4-power-manager/show-sleep-errors"
-#define SHOW_POWER_MANAGEMENT_ERROR "/xfce4-power-manager/show-power-management-error"
+#define 	SHOW_SLEEP_ERRORS_CFG       "/xfce4-power-manager/show-sleep-errors"
+#define 	SHOW_POWER_MANAGEMENT_ERROR "/xfce4-power-manager/show-power-management-error"
 #endif
 
-#define SHOW_TRAY_ICON_CFG          "/xfce4-power-manager/show-tray-icon"              /* default 0 = always,1 = when charging or discharging, 2 = when battery is present */
+#define 	SHOW_TRAY_ICON_CFG          "/xfce4-power-manager/show-tray-icon"              /* default 0 = always,1 = when charging or discharging, 2 = when battery is present */
 
 #ifdef HAVE_DPMS
-#define DPMS_ENABLED_CFG             "/xfce4-power-manager/dpms-enabled" 
-#define ON_BATT_DPMS_SLEEP 	     "/xfce4-power-manager/on-battery-dpms-sleep"
-#define ON_BATT_DPMS_OFF	     "/xfce4-power-manager/on-battery-dpms-off"
-#define ON_AC_DPMS_SLEEP 	     "/xfce4-power-manager/on-ac-dpms-sleep"
-#define ON_AC_DPMS_OFF	     	     "/xfce4-power-manager/on-ac-dpms-off"
+#define 	DPMS_ENABLED_CFG             "/xfce4-power-manager/dpms-enabled" 
+#define 	ON_BATT_DPMS_SLEEP 	     "/xfce4-power-manager/on-battery-dpms-sleep"
+#define 	ON_BATT_DPMS_OFF	     "/xfce4-power-manager/on-battery-dpms-off"
+#define 	ON_AC_DPMS_SLEEP 	     "/xfce4-power-manager/on-ac-dpms-sleep"
+#define 	ON_AC_DPMS_OFF	     	     "/xfce4-power-manager/on-ac-dpms-off"
+#define         DPMS_SLEEP_MODE		     "/xfce4-power-manager/dpms-sleep-mode"	/* 0= sleep, 1=suspend */
 #endif
 
 G_END_DECLS
