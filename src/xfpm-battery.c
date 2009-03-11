@@ -63,6 +63,7 @@ struct XfpmBatteryPrivate
     
     XfpmShowIcon     show_icon;
     XfpmBatteryState state;
+    guint            critical_level;
 };
 
 enum
@@ -269,7 +270,8 @@ xfpm_battery_get_battery_state (XfpmBatteryState *state,
 				gboolean is_discharging,
 				guint32 last_full, 
 				guint32 current_charge, 
-				guint percentage)
+				guint percentage,
+				guint8 critical_level)
 {
     if ( !is_charging && !is_discharging && last_full == current_charge )
     {
@@ -288,17 +290,17 @@ xfpm_battery_get_battery_state (XfpmBatteryState *state,
     }
     else if ( !is_charging && is_discharging )
     {
-	if ( percentage > 20 )
+	if ( percentage >= 30 )
 	{
 	    *state = BATTERY_IS_DISCHARGING;
 	    return  _("is discharging");
 	}
-	else if ( percentage >= 10 && percentage < 20)
+	else if ( percentage >= critical_level && percentage < 30)
 	{
 	    *state = BATTERY_CHARGE_LOW;
 	    return  _("charge is low");
 	}
-	else if ( percentage < 10 )
+	else if ( percentage < critical_level )
 	{
 	    *state = BATTERY_CHARGE_CRITICAL;
 	    return _("is almost empty");
@@ -324,7 +326,8 @@ xfpm_battery_refresh_tooltip_misc (XfpmBattery *battery, gboolean is_present,
     
     XfpmBatteryState state = battery->priv->state;
     const gchar *str = xfpm_battery_get_battery_state (&state, is_charging, is_discharging,
- 						       last_full, current_charge, percentage);
+ 						       last_full, current_charge, percentage, 
+						       battery->priv->critical_level);
     tip = g_strdup_printf("%i%% %s %s", percentage, _get_battery_name(battery->priv->type), str);
     //FIXME: Time for misc batteries
     xfpm_tray_icon_set_tooltip (battery->priv->icon, tip);
@@ -349,7 +352,7 @@ xfpm_battery_refresh_tooltip_primary (XfpmBattery *battery, gboolean is_present,
     }
 
     str = xfpm_battery_get_battery_state (&state, is_charging, is_discharging,
-					  last_full, current_charge, percentage);
+					  last_full, current_charge, percentage, battery->priv->critical_level);
     
     if ( time != 0  && time <= 28800 /* 8 hours */ && 
 	 state != BATTERY_FULLY_CHARGED && state != BATTERY_NOT_FULLY_CHARGED )
@@ -567,4 +570,11 @@ void xfpm_battery_show_info (XfpmBattery *battery)
     g_free (icon);
     
     gtk_widget_show_all (info);
+}
+
+void xfpm_battery_set_critical_level (XfpmBattery *battery, guint8 critical_level)
+{
+    g_return_if_fail (XFPM_IS_BATTERY(battery));
+    
+    battery->priv->critical_level = critical_level;
 }

@@ -93,6 +93,7 @@ struct XfpmEnginePrivate
     XfpmShutdownRequest sleep_button;
     XfpmShutdownRequest lid_button_ac;
     XfpmShutdownRequest lid_button_battery;
+    gboolean            lock_screen;
     
 };
 
@@ -174,9 +175,10 @@ xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
     {
 	TRACE("Going to do %s\n", action);
 	xfpm_send_message_to_network_manager ("sleep");
-	xfpm_lock_screen ();
-	if ( shutdown != XFPM_DO_SHUTDOWN )
+	
+	if ( shutdown != XFPM_DO_SHUTDOWN && engine->priv->lock_screen )
 	    xfpm_lock_screen ();
+	    
 	dbus_hal_shutdown (engine->priv->hbus, action, NULL);
 	xfpm_send_message_to_network_manager ("wake");
     }
@@ -307,7 +309,7 @@ xfpm_engine_load_configuration (XfpmEngine *engine)
     str = xfconf_channel_get_string (engine->priv->channel, SLEEP_SWITCH_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
     
-    if ( val == -1 )
+    if ( val == -1 || val == 3)
     {
 	g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
 	engine->priv->sleep_button = XFPM_DO_NOTHING;
@@ -343,6 +345,7 @@ xfpm_engine_load_configuration (XfpmEngine *engine)
     
     g_free (str);
     
+    engine->priv->lock_screen = xfconf_channel_get_bool (engine->priv->channel, LOCK_SCREEN_ON_SLEEP, TRUE);
 }
 
 static void
@@ -355,7 +358,7 @@ xfpm_engine_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
     {
         const gchar *str = g_value_get_string (value);
 	gint val = xfpm_shutdown_string_to_int (str);
-	if ( val == -1 )
+	if ( val == -1 || val == 1 )
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
 	    engine->priv->sleep_button = XFPM_DO_NOTHING;
@@ -387,18 +390,12 @@ xfpm_engine_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
 	else
 	    engine->priv->lid_button_battery = val;
     }
+    else if ( xfpm_strequal (property, LOCK_SCREEN_ON_SLEEP ) )
+    {
+	engine->priv->lock_screen = g_value_get_boolean (value);
+    }
 }
 
-/*
- *
- */
-/*
-static void
-xfpm_engine_reset_all_properties (XfpmEngine *engine)
-{
-    
-}
-*/
 XfpmEngine *
 xfpm_engine_new(void)
 {

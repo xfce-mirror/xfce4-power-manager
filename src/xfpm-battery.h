@@ -69,6 +69,8 @@ XfpmBatteryState         xfpm_battery_get_state          (XfpmBattery *battery);
 GtkStatusIcon  		*xfpm_battery_get_status_icon    (XfpmBattery *battery);
 const gchar    		*xfpm_battery_get_icon_name      (XfpmBattery *battery);
 void            	 xfpm_battery_show_info          (XfpmBattery *battery);
+void                     xfpm_battery_set_critical_level (XfpmBattery *battery,
+							  guint8 critical_level);
 
 G_END_DECLS
 

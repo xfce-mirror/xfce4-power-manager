@@ -31,8 +31,11 @@ G_BEGIN_DECLS
 /* Configuration */
 #define 	XFPM_CHANNEL_CFG            "xfce4-power-manager"
 #define 	CRITICAL_BATT_ACTION_CFG    "/xfce4-power-manager/critical-battery-action"
+#define         CRITICAL_POWER_LEVEL        "/xfce4-power-manager/critical-power-level"
 
 #define 	POWER_SAVE_ON_BATTERY       "/xfce4-power-manager/power-save-on-battery"
+
+#define         LOCK_SCREEN_ON_SLEEP        "/xfce4-power-manager/lock-screen-suspend-hibernate"
 
 #define 	LCD_BRIGHTNESS_CFG          "/xfce4-power-manager/lcd-brightness"
 #define 	LID_SWITCH_ON_AC_CFG        "/xfce4-power-manager/lid-action-on-ac"

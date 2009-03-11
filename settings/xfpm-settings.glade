@@ -876,7 +876,7 @@
                                     <child>
                                       <widget class="GtkLabel" id="label3">
                                         <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Considre the computer on low power when the main power reaches:</property>
+                                        <property name="label" translatable="yes">Consider the computer on low power when the main power reaches:</property>
                                       </widget>
                                       <packing>
                                         <property name="expand">False</property>
@@ -884,13 +884,14 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <widget class="GtkSpinButton" id="spinbutton1">
+                                      <widget class="GtkSpinButton" id="critical-spin">
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="invisible_char">&#x25CF;</property>
+                                        <property name="caps_lock_warning">False</property>
+                                        <property name="adjustment">5 5 20 1 0 0</property>
                                       </widget>
                                       <packing>
-                                        <property name="expand">False</property>
                                         <property name="position">1</property>
                                       </packing>
                                     </child>
@@ -901,7 +902,17 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <placeholder/>
+                                  <widget class="GtkCheckButton" id="lock-screen">
+                                    <property name="label" translatable="yes">Lock screen when going for suspend/hibernate</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="draw_indicator">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="position">2</property>
+                                  </packing>
                                 </child>
                               </widget>
                             </child>

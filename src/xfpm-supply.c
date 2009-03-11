@@ -65,7 +65,7 @@ struct XfpmSupplyPrivate
     
     gboolean 	   adapter_found;
     gboolean       adapter_present;
-    
+    guint8         critical_level;
     guint8         power_management;
 };
 
@@ -611,6 +611,7 @@ xfpm_supply_add_device (XfpmSupply *supply, const HalDevice *device)
 	XfpmBattery *battery = xfpm_battery_new (device);
 	xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
 	xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
+	xfpm_battery_set_critical_level (battery, supply->priv->critical_level);
 	g_hash_table_insert (supply->priv->hash, g_strdup(udi), battery);
 	
 	g_signal_connect (G_OBJECT(battery), "battery-state-changed",
@@ -713,8 +714,30 @@ xfpm_supply_set_battery_show_tray_icon (XfpmSupply *supply)
     g_list_free (list);
 }
 
-//static void
-//xfpm_supply_check_configuration (const gchar *property, 
+static void
+xfpm_supply_set_critical_power_level (XfpmSupply *supply)
+{
+    GList *list = NULL;
+    
+    list = g_hash_table_get_values (supply->priv->hash);
+    
+    if ( !list )
+    	return;
+	
+    int i;
+    for ( i = 0; i<g_list_length(list); i++)
+    {
+	XfpmBattery *battery = NULL;
+	battery = (XfpmBattery *) g_list_nth_data(list, i);
+	
+	if ( battery )
+	{
+	    xfpm_battery_set_critical_level (battery, supply->priv->critical_level);
+	}
+    }
+    g_list_free (list);
+}
+
 static void
 xfpm_supply_property_changed_cb (XfconfChannel *channel, gchar *property, GValue *value, XfpmSupply *supply)
 {
@@ -725,7 +748,7 @@ xfpm_supply_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
     {
 	const gchar *str = g_value_get_string (value);
 	gint val = xfpm_shutdown_string_to_int (str);
-	if ( val == -1 || val == 3 )
+	if ( val == -1 || val == 3 || val == 1)
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
 	    supply->priv->critical_action = XFPM_DO_NOTHING;
@@ -739,6 +762,19 @@ xfpm_supply_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
 	supply->priv->show_icon = val;
 	xfpm_supply_set_battery_show_tray_icon (supply);
     }
+    else if ( xfpm_strequal( property, CRITICAL_POWER_LEVEL) )
+    {
+	guint val = g_value_get_uint (value);
+	if ( val > 20 )
+	{
+	    g_warning ("Value %d for property %s is out of range \n", val, CRITICAL_POWER_LEVEL);
+	    supply->priv->critical_level = 10;
+	}
+	else 
+	    supply->priv->critical_level = val;
+	    
+	xfpm_supply_set_critical_power_level (supply);
+    }
 }
 
 static void
@@ -751,7 +787,7 @@ xfpm_supply_load_configuration (XfpmSupply *supply)
     str = xfconf_channel_get_string (supply->priv->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
     
-    if ( val == -1 || val > 3 )
+    if ( val == -1 || val > 3 || val == 1)
     {
 	g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
 	supply->priv->critical_action = XFPM_DO_NOTHING;

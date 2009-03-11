@@ -286,6 +286,18 @@ format_dpms_value_cb (GtkScale *scale, gdouble value)
 }
 #endif
 
+static gboolean
+critical_spin_output_cb (GtkSpinButton *w, gpointer data)
+{
+    gint val = (gint) gtk_spin_button_get_value (w);
+    gchar *text = g_strdup_printf ("%d %%", val);
+    
+    gtk_entry_set_text (GTK_ENTRY(w), text);
+    g_free (text);
+    
+    return TRUE;
+}
+
 static void
 on_battery_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
@@ -335,6 +347,27 @@ on_ac_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
 } 
 
 static void
+critical_level_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
+{
+    guint val = (guint) gtk_spin_button_get_value (w);
+    
+    if (!xfconf_channel_get_uint (channel, CRITICAL_POWER_LEVEL, val) )
+    {
+	g_critical ("Unable to set value %d for property %s\n", val, CRITICAL_POWER_LEVEL);
+    }
+}
+
+static void
+lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
+{
+    gboolean val = (gint) gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
+    if ( !xfconf_channel_set_bool (channel, LOCK_SCREEN_ON_SLEEP, val) )
+    {
+	g_critical ("Unable to set value for property %s\n", LOCK_SCREEN_ON_SLEEP);
+    }
+}
+
+static void
 xfpm_settings_on_battery (XfconfChannel *channel)
 {
     gint val;
@@ -348,11 +381,12 @@ xfpm_settings_on_battery (XfconfChannel *channel)
     gtk_list_store_append(list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
     
-    gtk_list_store_append(list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
     
     gtk_list_store_append(list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, 3, -1);
     
     g_signal_connect (battery_critical, "changed", 
 		      G_CALLBACK(battery_critical_changed_cb), channel);
@@ -361,7 +395,7 @@ xfpm_settings_on_battery (XfconfChannel *channel)
     
     val = xfpm_shutdown_string_to_int (str);
     
-    if ( val == -1 || val == 3 /*we don't do shutdown here */) 
+    if ( val == -1 || val == 1 /* we don't do suspend */) 
     {
 	g_warning ("Invalid value %s for property %s\n", str, CRITICAL_BATT_ACTION_CFG);
 	gtk_combo_box_set_active (GTK_COMBO_BOX(battery_critical), 0);
@@ -573,15 +607,12 @@ xfpm_settings_general (XfconfChannel *channel)
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
     
-    gtk_list_store_append(list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, 3, -1);
-
     g_signal_connect (sleep, "changed",
 		      G_CALLBACK(set_sleep_changed_cb), channel);
     
     gchar *default_sleep_value = xfconf_channel_get_string (channel, SLEEP_SWITCH_CFG, "Nothing");
     gint   sleep_val_int = xfpm_shutdown_string_to_int (default_sleep_value );
-    if ( sleep_val_int == -1) 
+    if ( sleep_val_int == -1 || sleep_val_int == 3 ) 
     {
 	g_warning ("Invalid value %s for property %s\n", default_sleep_value, SLEEP_SWITCH_CFG);
 	gtk_combo_box_set_active (GTK_COMBO_BOX(sleep), 0);
@@ -631,6 +662,36 @@ xfpm_settings_advanced (XfconfChannel *channel )
     
     
 #endif
+    /*
+     * Critical battery level
+     */
+    GtkWidget *critical_level = glade_xml_get_widget (xml, "critical-spin");
+    
+    g_signal_connect (critical_level, "output", 
+		      G_CALLBACK(critical_spin_output_cb), NULL);
+    g_signal_connect (critical_level, "value-changed", 
+		      G_CALLBACK(critical_level_value_changed_cb), channel);
+		      
+    guint val = xfconf_channel_get_uint (channel, CRITICAL_POWER_LEVEL, 10 );
+    
+    if ( val > 20 )
+    {
+	g_critical ("Value %d if out of range for property %s\n", val, CRITICAL_POWER_LEVEL);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), 10);
+    }
+    else
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), 10);
+	
+    /*
+     * Lock screen for suspend/hibernate
+     */
+    GtkWidget *lock = glade_xml_get_widget (xml, "lock-screen");
+    
+    val = xfconf_channel_get_bool (channel, LOCK_SCREEN_ON_SLEEP, TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(lock), val);
+    g_signal_connect (lock, "toggled",
+		      G_CALLBACK(lock_screen_toggled_cb), channel);
+    
 }
 
 static void
