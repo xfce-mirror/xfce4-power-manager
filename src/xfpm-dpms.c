@@ -76,6 +76,7 @@ struct XfpmDpmsPrivate
     guint16        off_on_ac;
     
     gboolean       on_battery;
+    guint8         sleep_dpms_mode; /*0=sleep 1=suspend*/
 };
 
 G_DEFINE_TYPE(XfpmDpms, xfpm_dpms, G_TYPE_OBJECT)
@@ -111,39 +112,58 @@ xfpm_dpms_finalize(GObject *object)
 }
 
 static void
-xfpm_dpms_timeouts_on_battery (XfpmDpms *dpms)
+xfpm_dpms_set_timeouts (XfpmDpms *dpms, guint16 standby, guint16 suspend, guint off)
 {
     CARD16 x_standby = 0 ,x_suspend = 0,x_off = 0;
     
     DPMSGetTimeouts (GDK_DISPLAY(), &x_standby, &x_suspend, &x_off);
     
-    if ( x_suspend != dpms->priv->sleep_on_battery ||
-    	 x_off != dpms->priv->off_on_battery )	
+    if ( standby != x_standby || suspend != x_suspend || off != x_off )
     {
-	DPMSSetTimeouts (GDK_DISPLAY(), dpms->priv->sleep_on_battery ,
-					dpms->priv->sleep_on_battery ,
-					dpms->priv->off_on_battery );
-	TRACE("sleep=%d  turn_off=%d\n", dpms->priv->sleep_on_battery, dpms->priv->off_on_battery);
+	TRACE ("Settings dpms: standby=%d suspend=%d off=%d\n", standby, suspend, off);
+	DPMSSetTimeouts (GDK_DISPLAY(), standby,
+					suspend,
+					off );
+    }
+    
+}
+
+static void
+xfpm_dpms_timeouts_on_battery (XfpmDpms *dpms)
+{
+    if ( dpms->priv->sleep_dpms_mode == 0 )
+    {
+	xfpm_dpms_set_timeouts      (dpms, 
+				     dpms->priv->sleep_on_battery ,
+				     0,
+				     dpms->priv->off_on_battery );
+    }
+    else 
+    {
+	xfpm_dpms_set_timeouts 	    (dpms, 
+				     0,
+				     dpms->priv->sleep_on_battery ,
+				     dpms->priv->off_on_battery );
     }
 }
 
 static void
 xfpm_dpms_timeouts_on_adapter (XfpmDpms *dpms)
 {
-    CARD16 x_standby = 0 ,x_suspend = 0,x_off = 0;
-    
-    DPMSGetTimeouts (GDK_DISPLAY(), &x_standby, &x_suspend, &x_off);
-    
-    if ( x_suspend != dpms->priv->sleep_on_ac ||
-    	 x_off != dpms->priv->off_on_ac )	
+    if ( dpms->priv->sleep_dpms_mode == 0 )
     {
-	DPMSSetTimeouts (GDK_DISPLAY(), dpms->priv->sleep_on_ac ,
-					dpms->priv->sleep_on_ac ,
-					dpms->priv->off_on_ac );
-					
-	TRACE("sleep=%d  turn_off=%d\n", dpms->priv->sleep_on_ac, dpms->priv->off_on_ac );
+	xfpm_dpms_set_timeouts	   (dpms, 
+				    dpms->priv->sleep_on_ac ,
+				    0,
+				    dpms->priv->off_on_ac );
     }
-    
+    else
+    {
+	xfpm_dpms_set_timeouts     (dpms, 
+				    0,
+				    dpms->priv->sleep_on_ac ,
+				    dpms->priv->off_on_ac );
+    }
 }
 
 static gboolean
@@ -172,7 +192,7 @@ xfpm_dpms_enable_disable (XfpmDpms *dpms)
 }
 
 static void
-xfpm_dpms_set_timeouts (XfpmDpms *dpms)
+xfpm_dpms_check (XfpmDpms *dpms)
 {
     xfpm_dpms_enable_disable (dpms);
     
@@ -221,9 +241,27 @@ xfpm_dpms_value_changed_cb (XfconfChannel *channel, gchar *property,
 	dpms->priv->off_on_battery = MIN (3600, val * 60);
 	set = TRUE;
     }
+    else if ( xfpm_strequal (property, DPMS_SLEEP_MODE) )
+    {
+	const gchar *str = g_value_get_string (value);
+	if ( xfpm_strequal (str, "sleep" ) )
+	{
+	    dpms->priv->sleep_dpms_mode = 0;
+	}
+	else if ( xfpm_strequal (str, "suspend") )
+	{
+	    dpms->priv->sleep_dpms_mode = 1;
+	}
+	else
+	{
+	    g_critical("Invalid value %s for property %s\n", str, DPMS_SLEEP_MODE);
+	    dpms->priv->sleep_dpms_mode = 0;
+	}
+	set = TRUE;
+    }
     
     if ( set )
-    	xfpm_dpms_set_timeouts (dpms);
+    	xfpm_dpms_check (dpms);
 }
 
 static void
@@ -243,6 +281,23 @@ xfpm_dpms_load_configuration (XfpmDpms *dpms)
     
     dpms->priv->off_on_ac = 
     	MIN(xfconf_channel_get_uint( dpms->priv->channel, ON_AC_DPMS_OFF, 15) * 60, 3600);
+	
+    gchar *str = xfconf_channel_get_string (dpms->priv->channel, DPMS_SLEEP_MODE, "sleep");
+    
+    if ( xfpm_strequal (str, "sleep" ) )
+    {
+	dpms->priv->sleep_dpms_mode = 0;
+    }
+    else if ( xfpm_strequal (str, "suspend") )
+    {
+	dpms->priv->sleep_dpms_mode = 1;
+    }
+    else
+    {
+	g_critical("Invalid value %s for property %s\n", str, DPMS_SLEEP_MODE);
+	dpms->priv->sleep_dpms_mode = 0;
+    }
+    g_free (str);
 }
 
 XfpmDpms *
@@ -276,7 +331,7 @@ void xfpm_dpms_set_on_battery  (XfpmDpms *dpms, gboolean on_battery)
     
     dpms->priv->on_battery = on_battery;
     
-    xfpm_dpms_set_timeouts (dpms);
+    xfpm_dpms_check (dpms);
 }
 
 gboolean xfpm_dpms_capable (XfpmDpms *dpms)
