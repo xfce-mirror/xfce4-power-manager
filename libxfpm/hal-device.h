@@ -40,19 +40,41 @@ typedef struct
 
 typedef struct
 {
-    GObjectClass parent_class;
+    GObjectClass 	  parent_class;
     
-    void		(*device_changed)   (HalDevice *device,
-					     const gchar *udi,
-					     const gchar *key,
-					     gboolean is_added,
-					     gboolean is_removed);
+    void		  (*device_changed)               (HalDevice *device,
+							   const gchar *udi,
+							   const gchar *key,
+							   gboolean is_added,
+							   gboolean is_removed);
     
 } HalDeviceClass;
 
-GType        	 hal_device_get_type        (void) G_GNUC_CONST;
-HalDevice       *hal_device_new             (const gchar *udi);
-gboolean         hal_device_watch           (HalDevice *device);
+GType        	 	  hal_device_get_type             (void) G_GNUC_CONST;
+
+HalDevice       	 *hal_device_new                  (void);
+
+void                      hal_device_set_udi              (HalDevice *device,
+							   const gchar *udi);
+
+const gchar 		 *hal_device_get_udi 		  (HalDevice *device);
+
+gboolean         	  hal_device_watch                (HalDevice *device);
+
+gboolean		  hal_device_get_property_bool    (HalDevice *device,
+							   const gchar *property);
+									 
+gint			  hal_device_get_property_int     (HalDevice *device,
+							   const gchar *property);
+									 
+gchar			 *hal_device_get_property_string  (HalDevice *device,
+							   const gchar *property);
+
+gboolean                  hal_device_has_key		  (HalDevice *device,
+							   const gchar *key);
+									 
+gboolean                  hal_device_has_capability       (HalDevice *device, 
+							   const gchar *capability);
 
 G_END_DECLS
 

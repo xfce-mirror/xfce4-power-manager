@@ -66,13 +66,13 @@ G_DEFINE_TYPE(HalPower, hal_power, G_TYPE_OBJECT)
  * Sanity check of the keys present of a battery device
  */
 static gboolean
-hal_power_check_battery (HalPower *power, const gchar *udi)
+hal_power_check_battery (HalPower *power, HalDevice *device)
 {
-    if ( hal_manager_device_has_key(power->priv->manager, udi, "battery.present") &&
-	 hal_manager_device_has_key(power->priv->manager, udi, "battery.rechargeable.is_charging") &&
-         hal_manager_device_has_key(power->priv->manager, udi, "battery.rechargeable.is_discharging") &&
-         hal_manager_device_has_key(power->priv->manager, udi, "battery.charge_level.current") &&
-	 hal_manager_device_has_key(power->priv->manager, udi, "battery.charge_level.last_full") )
+    if ( hal_device_has_key(device, "battery.present") &&
+	 hal_device_has_key(device, "battery.rechargeable.is_charging") &&
+         hal_device_has_key(device, "battery.rechargeable.is_discharging") &&
+         hal_device_has_key(device, "battery.charge_level.current") &&
+	 hal_device_has_key(device, "battery.charge_level.last_full") )
 		 return TRUE;
     
     return FALSE;
@@ -121,19 +121,24 @@ hal_power_get_battery_from_hash (HalPower *power, const gchar *udi)
 static void
 hal_power_device_added_cb (HalManager *manager, const gchar *udi, HalPower *power)
 {
-    if ( hal_manager_device_has_capability (manager, udi, "battery") )
+    HalDevice *device = hal_device_new ();
+    hal_device_set_udi (device, udi);
+    
+    if ( hal_device_has_capability (device, "battery") )
     {
 	HalBattery *battery  = hal_power_add_battery (power, udi);
         g_signal_emit (G_OBJECT(power), signals[BATTERY_ADDED], 0, battery);
     }
-    else if ( hal_manager_device_has_capability (manager, udi, "ac_adapter") )
+    else if ( hal_device_has_capability (device, "ac_adapter") )
     {
 	if ( !power->priv->adapter_found )
 	{
-	    power->priv->adapter = hal_device_new (udi);
+	    power->priv->adapter = hal_device_new ();
+	    hal_device_set_udi (power->priv->adapter, udi);
 	    g_signal_emit (G_OBJECT(power), signals[ADAPTER_ADDED], 0, power->priv->adapter);
 	}
     }
+    g_object_unref (device);
 }
 
 static void
@@ -208,6 +213,7 @@ hal_power_class_init(HalPowerClass *klass)
 static void
 hal_power_get_batteries_internal (HalPower *power)
 {
+    HalDevice *device = hal_device_new ();
     gchar **batteries = NULL;
     gint i;
     
@@ -218,7 +224,9 @@ hal_power_get_batteries_internal (HalPower *power)
     
     for ( i = 0; batteries[i]; i++ )
     {
-	if (!hal_power_check_battery(power, batteries[i]))
+	hal_device_set_udi (device, batteries[i]);
+	
+	if (!hal_power_check_battery(power, device))
 		continue;
 		
     	hal_power_add_battery (power, batteries[i]);
@@ -227,7 +235,8 @@ hal_power_get_batteries_internal (HalPower *power)
     hal_manager_free_string_array (batteries);
     
 out:
-    	;
+
+    g_object_unref (device);
     
 }
 
@@ -242,7 +251,9 @@ hal_power_get_adapter_internal (HalPower *power)
     if ( !adapter ) 
     	goto out;
 
-    power->priv->adapter = hal_device_new (adapter[0]);
+    power->priv->adapter = hal_device_new ();
+    hal_device_set_udi (power->priv->adapter, adapter[0]);
+    hal_device_watch (power->priv->adapter);
     power->priv->adapter_found = TRUE;
     
     hal_manager_free_string_array (adapter);

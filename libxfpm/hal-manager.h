@@ -54,27 +54,7 @@ HalManager       	       *hal_manager_new            		(void);
 
 gchar 			      **hal_manager_find_device_by_capability 	(HalManager *manager,
 									 const gchar *capability);
-									 
-gboolean			hal_manager_get_device_property_bool    (HalManager *manager,
-									 const gchar *udi,
-									 const gchar *property);
-									 
-gint				hal_manager_get_device_property_int     (HalManager *manager,
-									 const gchar *udi,
-									 const gchar *property);
-									 
-gchar			       *hal_manager_get_device_property_string  (HalManager *manager,
-									 const gchar *udi,
-									 const gchar *property);
-
-gboolean                        hal_manager_device_has_key		(HalManager *manager,
-									 const gchar *udi,
-									 const gchar *key);
-									 
-gboolean                        hal_manager_device_has_capability	(HalManager *manager,
-									 const gchar *udi,
-									 const gchar *capability);
-									 
+						 
 void                            hal_manager_free_string_array           (gchar **array);
 
 G_END_DECLS

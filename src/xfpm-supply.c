@@ -565,7 +565,9 @@ xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupp
     	g_critical ("Callback from the adapter object but no adapter found in the system\n");
 	
     supply->priv->adapter_present = present;
+    
     xfpm_supply_set_adapter_presence (supply);
+    
     g_signal_emit (G_OBJECT(supply), signals[ON_BATTERY], 0, !supply->priv->adapter_present);
     
 }
@@ -581,14 +583,18 @@ xfpm_supply_get_battery (XfpmSupply *supply, const gchar *udi)
 static void
 xfpm_supply_add_battery (XfpmSupply *supply, const HalBattery *device)
 {
-    gchar *udi = NULL;
+    const gchar *udi;
     
-    g_object_get(G_OBJECT(device), "udi", &udi, NULL);
+    udi = hal_device_get_udi (HAL_DEVICE(device));
 
     TRACE("New battery found %s", udi);
 
     XfpmBattery *battery = xfpm_battery_new (device);
+    
     xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
+    
+    g_print("Adapter %d\n", supply->priv->adapter_present );
+    
     xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
     xfpm_battery_set_critical_level (battery, supply->priv->critical_level);
     g_hash_table_insert (supply->priv->hash, g_strdup(udi), battery);
@@ -599,15 +605,12 @@ xfpm_supply_add_battery (XfpmSupply *supply, const HalBattery *device)
     g_signal_connect (G_OBJECT(battery), "popup-battery-menu",
 		      G_CALLBACK(xfpm_supply_popup_battery_menu_cb), supply);
 
-    if (udi)
-    	g_free (udi);
 }
 
 static void
 xfpm_supply_remove_battery (XfpmSupply *supply,  const HalBattery *device)
 {
-    gchar *udi;
-    g_object_get(G_OBJECT(device), "udi", &udi, NULL);
+    const gchar *udi = hal_device_get_udi (HAL_DEVICE(device));
     
     XfpmBattery *battery = xfpm_supply_get_battery(supply, udi);
 	
@@ -619,8 +622,6 @@ xfpm_supply_remove_battery (XfpmSupply *supply,  const HalBattery *device)
 		g_critical ("Unable to removed battery object from hash\n");
     }
     
-    if (udi)
-    	g_free (udi);
 }
 
 static void
@@ -686,7 +687,7 @@ xfpm_supply_set_critical_power_level (XfpmSupply *supply)
 static void
 xfpm_supply_add_adapter (XfpmSupply *supply, const HalDevice *device)
 {
-    supply->priv->adapter_found = TRUE;
+    supply->priv->adapter_present = TRUE;
 
     supply->priv->adapter = xfpm_adapter_new (device);
 	g_signal_connect (supply->priv->adapter, "adapter-changed", 
@@ -704,10 +705,9 @@ xfpm_supply_get_adapter (XfpmSupply *supply)
 	if ( device )
 	{
 #ifdef DEBUG
-	    gchar *udi;
-	    g_object_get (G_OBJECT(device), "udi", &udi, NULL);
+	    const gchar *udi;
+	    udi = hal_device_get_udi (HAL_DEVICE(device));
 	    TRACE ("Adapter found in the system with udi=%s\n", udi);
-	    g_free (udi);
 #endif
 	    xfpm_supply_add_adapter (supply, device);
 	}

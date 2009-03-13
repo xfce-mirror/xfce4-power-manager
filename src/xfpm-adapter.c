@@ -57,6 +57,7 @@ struct XfpmAdapterPrivate
 {
     XfpmTrayIcon *icon;
     HalDevice    *device;
+    gboolean      present;
 };
 
 enum
@@ -118,14 +119,25 @@ xfpm_adapter_finalize(GObject *object)
 }
 
 static void
-xfpm_adapter_device_changed_cb (HalDevice *device, XfpmAdapter *adapter)
+xfpm_adapter_changed (XfpmAdapter *adapter)
 {
-    gboolean is_present =
-    	xfpm_adapter_get_presence (adapter);
-    
-    TRACE("Adapter changed is_present =%s", xfpm_bool_to_string(is_present));
-    
-    g_signal_emit (G_OBJECT(adapter), signals[ADAPTER_CHANGED], 0, is_present);
+    adapter->priv->present = hal_device_get_property_bool (adapter->priv->device, "ac_adapter.present");
+    TRACE("Adapter changed is_present =%s", xfpm_bool_to_string(adapter->priv->present));
+    g_signal_emit (G_OBJECT(adapter), signals[ADAPTER_CHANGED], 0, adapter->priv->present);
+}
+
+static void
+xfpm_adapter_device_changed_cb (HalDevice *device,
+				const gchar *udi,
+				const gchar *key, 
+				gboolean is_removed,
+				gboolean is_added,
+				XfpmAdapter *adapter)
+{
+    if ( xfpm_strequal (key, "ac_adapter.present") )
+    {
+	xfpm_adapter_changed (adapter);
+    }
 }
 
 XfpmAdapter *
@@ -140,14 +152,9 @@ xfpm_adapter_new (const HalDevice *device)
 		      G_CALLBACK (xfpm_adapter_device_changed_cb),
 		      adapter);
     
+    xfpm_adapter_changed (adapter);
+    
     return adapter;
-}
-
-gboolean xfpm_adapter_get_presence (XfpmAdapter *adapter)
-{
-    gboolean is_present;
-    g_object_get (G_OBJECT(adapter->priv->device), "is-present", &is_present, NULL);
-    return is_present;
 }
 
 void xfpm_adapter_set_visible (XfpmAdapter *adapter, gboolean visible)

@@ -116,6 +116,7 @@ xfpm_lid_hal_finalize(GObject *object)
     G_OBJECT_CLASS(xfpm_lid_hal_parent_class)->finalize(object);
 }
 
+
 static void
 xfpm_lid_hal_device_changed_cb(HalDevice *device,
 			       const gchar *udi,
@@ -129,7 +130,7 @@ xfpm_lid_hal_device_changed_cb(HalDevice *device,
 	
     TRACE("Property modified key=%s  key=%s\n", key, udi);
     
-    gboolean pressed = hal_manager_get_device_property_bool (lid->priv->manager, udi, key);
+    gboolean pressed = hal_device_get_property_bool (lid->priv->device, key);
     
     if ( pressed )
     {
@@ -139,12 +140,15 @@ xfpm_lid_hal_device_changed_cb(HalDevice *device,
     
 }
 
+//FIXME: Review
 static gboolean
 xfpm_lid_hal_setup (XfpmLidHal *lid)
 {
-    lid->priv->manager = hal_manager_new ();
-    
+    HalDevice *device;
     gchar **udi = NULL;
+    
+    lid->priv->manager = hal_manager_new ();
+    device = hal_device_new ();
     
     udi = hal_manager_find_device_by_capability (lid->priv->manager, "button");
     
@@ -155,19 +159,24 @@ xfpm_lid_hal_setup (XfpmLidHal *lid)
     
     for ( i = 0; udi[i]; i++ )
     {
-	if ( hal_manager_device_has_key (lid->priv->manager, udi[i], "button.type" ) &&
-	     hal_manager_device_has_key (lid->priv->manager, udi[i], "button.has_state" ) )
+	hal_device_set_udi (device, udi[i]);
+	if ( hal_device_has_key (device,  "button.type" ) &&
+	     hal_device_has_key (device,  "button.has_state" ) )
     	{
+	    
 	    gchar *button_type =
-	    	hal_manager_get_device_property_string (lid->priv->manager, udi[i], "button.type");
+	    	hal_device_get_property_string (device, "button.type");
 		
 	    if ( !button_type )
+	    {
 	    	continue;
+	    }
 		
 	    if ( xfpm_strequal (button_type, "lid") )
 	    {
 	    	lid->priv->hw_found = TRUE;
-		lid->priv->device = hal_device_new (udi[i]);
+		
+		lid->priv->device = device;
 		g_signal_connect (lid->priv->device, "device-changed", 
 				  G_CALLBACK(xfpm_lid_hal_device_changed_cb), lid);
 		if ( !hal_device_watch (lid->priv->device) )
@@ -179,8 +188,12 @@ xfpm_lid_hal_setup (XfpmLidHal *lid)
 	    }
 	}
     }
+
+    if ( !lid->priv->hw_found )
+	g_object_unref (device);
         
     hal_manager_free_string_array (udi);
+    
     return TRUE;
 }
 

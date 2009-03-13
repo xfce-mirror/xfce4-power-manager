@@ -381,15 +381,16 @@ hal_battery_type_enum_from_string(const gchar *string)
 static HalDeviceType
 hal_battery_get_device_type (HalBattery *battery)
 {
-    gchar *udi = NULL;
+    const gchar *udi;
     gchar *type = NULL;
+    
     HalDeviceType type_enum = HAL_DEVICE_TYPE_UNKNOWN;
     
-    g_object_get (G_OBJECT(battery), "udi", &udi, NULL);
+    udi = hal_device_get_udi (HAL_DEVICE(battery));
     
     g_return_val_if_fail (udi != NULL, HAL_DEVICE_TYPE_UNKNOWN);
     
-    type = hal_manager_get_device_property_string (battery->priv->manager, udi, "battery.type");
+    type = hal_device_get_property_string (HAL_DEVICE(battery), "battery.type");
     
     if ( type )
     {
@@ -397,49 +398,44 @@ hal_battery_get_device_type (HalBattery *battery)
 	g_free(type);
     }
  
-    g_free (udi);
+    //g_free (udi);
     return type_enum;
 }
 
 static void
 hal_battery_refresh_all (HalBattery *battery)
 {
-    gchar *udi = NULL;
-    
-    g_object_get (G_OBJECT(battery), "udi", &udi, NULL);
-    
-    g_return_if_fail (udi != NULL);
     
     battery->priv->is_present = 
-    	hal_manager_get_device_property_bool(battery->priv->manager, udi, "battery.present");
+    	hal_device_get_property_bool(HAL_DEVICE(battery), "battery.present");
 	
     battery->priv->is_charging = 
-    	hal_manager_get_device_property_bool(battery->priv->manager, udi, "battery.rechargeable.is_charging");
+    	hal_device_get_property_bool(HAL_DEVICE(battery), "battery.rechargeable.is_charging");
     
     battery->priv->is_discharging = 
-    	hal_manager_get_device_property_bool(battery->priv->manager, udi, "battery.rechargeable.is_discharging");
+    	hal_device_get_property_bool(HAL_DEVICE(battery), "battery.rechargeable.is_discharging");
     
     battery->priv->current_charge = 
-    	hal_manager_get_device_property_int(battery->priv->manager, udi, "battery.charge_level.current");
+    	hal_device_get_property_int(HAL_DEVICE(battery), "battery.charge_level.current");
 	
     battery->priv->last_full = 
-    	hal_manager_get_device_property_int(battery->priv->manager, udi, "battery.charge_level.last_full");
+    	hal_device_get_property_int(HAL_DEVICE(battery), "battery.charge_level.last_full");
     
-    if ( hal_manager_device_has_key (battery->priv->manager, udi, "battery.remaining_time") )
+    if ( hal_device_has_key (HAL_DEVICE(battery), "battery.remaining_time") )
     	battery->priv->time = 
-    		hal_manager_get_device_property_int(battery->priv->manager, udi, "battery.remaining_time");
+    		hal_device_get_property_int(HAL_DEVICE(battery), "battery.remaining_time");
     else
     	battery->priv->time = 0;
     
     //FIXME: calculate the percentage if it is not found on HAL
-    if ( hal_manager_device_has_key(battery->priv->manager, udi, "battery.charge_level.percentage") )
+    if ( hal_device_has_key(HAL_DEVICE(battery), "battery.charge_level.percentage") )
      	battery->priv->percentage = 
-    		hal_manager_get_device_property_int(battery->priv->manager, udi, "battery.charge_level.percentage");
+    		hal_device_get_property_int(HAL_DEVICE(battery), "battery.charge_level.percentage");
     else battery->priv->percentage = 0;
     
-    if ( hal_manager_device_has_key(battery->priv->manager, udi, "battery.reporting.last_full") )
+    if ( hal_device_has_key(HAL_DEVICE(battery), "battery.reporting.last_full") )
      	battery->priv->reporting_last_full = 
-    		hal_manager_get_device_property_int(battery->priv->manager, udi, "battery.reporting.last_full");
+    		hal_device_get_property_int(HAL_DEVICE(battery), "battery.reporting.last_full");
 		
 }
 
@@ -484,14 +480,9 @@ _translate_unit (const gchar *unit)
 static void
 hal_battery_get_battery_info (HalBattery *battery)
 {
-    gchar *udi = NULL;
-    g_object_get (G_OBJECT(battery), "udi", &udi, NULL);
-    
-    g_return_if_fail (udi != NULL);
-    
-    if ( hal_manager_device_has_key (battery->priv->manager, udi, "battery.technology") )
+    if ( hal_device_has_key (HAL_DEVICE(battery), "battery.technology") )
     {
-	gchar *tech = hal_manager_get_device_property_string (battery->priv->manager, udi, "battery.technology");
+	gchar *tech = hal_device_get_property_string (HAL_DEVICE(battery), "battery.technology");
 	if ( tech )
 	{
 	    battery->priv->technology = g_strdup (_translate_technology (tech));
@@ -499,9 +490,9 @@ hal_battery_get_battery_info (HalBattery *battery)
 	}
     }
     
-    if ( hal_manager_device_has_key (battery->priv->manager, udi, "battery.vendor") )
+    if ( hal_device_has_key (HAL_DEVICE(battery), "battery.vendor") )
     {
-	gchar *vendor = hal_manager_get_device_property_string (battery->priv->manager, udi, "battery.vendor");
+	gchar *vendor = hal_device_get_property_string (HAL_DEVICE(battery), "battery.vendor");
 	if ( vendor )
 	{
 	    battery->priv->vendor = g_strdup ( vendor);
@@ -509,9 +500,9 @@ hal_battery_get_battery_info (HalBattery *battery)
 	}
     }
     
-    if ( hal_manager_device_has_key (battery->priv->manager, udi, "battery.model") )
+    if ( hal_device_has_key (HAL_DEVICE(battery), "battery.model") )
     {
-	gchar *model = hal_manager_get_device_property_string (battery->priv->manager, udi, "battery.model");
+	gchar *model = hal_device_get_property_string (HAL_DEVICE(battery), "battery.model");
 	if ( model )
 	{
 	    battery->priv->model = g_strdup (model);
@@ -519,13 +510,12 @@ hal_battery_get_battery_info (HalBattery *battery)
 	}
     }
     
-    battery->priv->reporting_design = hal_manager_get_device_property_int (battery->priv->manager, 
-									   udi, 
+    battery->priv->reporting_design = hal_device_get_property_int (HAL_DEVICE(battery), 
 							                   "battery.reporting.design");
 							      
-    if ( hal_manager_device_has_key (battery->priv->manager, udi, "battery.reporting.unit") )
+    if ( hal_device_has_key (HAL_DEVICE(battery), "battery.reporting.unit") )
     {
-	gchar *unit = hal_manager_get_device_property_string (battery->priv->manager, udi, "battery.reporting.unit");
+	gchar *unit = hal_device_get_property_string (HAL_DEVICE(battery), "battery.reporting.unit");
 	
 	if ( unit )
 	{
@@ -568,14 +558,16 @@ hal_battery_new (const gchar *udi)
 {
     HalBattery *battery = NULL;
     
-    battery = g_object_new (HAL_TYPE_BATTERY, "udi", udi, NULL);
+    battery = g_object_new (HAL_TYPE_BATTERY, NULL);
+    hal_device_set_udi (HAL_DEVICE(battery), udi);
     
     battery->priv->type = hal_battery_get_device_type (battery);
    
     hal_battery_refresh_all (battery);
-    hal_battery_get_battery_info    (battery);
+    hal_battery_get_battery_info (battery);
 	
     hal_device_watch (HAL_DEVICE(battery));
+    
     g_signal_connect (G_OBJECT(battery), "device-changed",
 		      G_CALLBACK(hal_battery_property_modified_cb), battery);
     return battery;
