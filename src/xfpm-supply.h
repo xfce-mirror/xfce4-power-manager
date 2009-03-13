@@ -50,15 +50,19 @@ typedef struct
     
     void                (*shutdown_request)	    (XfpmSupply *supply,
 						     XfpmShutdownRequest action);
+						     
     void	        (*block_shutdown)	    (XfpmSupply *supply,
     						     gboolean block);
+						     
     void                (*on_battery    )	    (XfpmSupply *supply,
 						     gboolean on_battery);
+						     
     void                (*on_low_battery)	    (XfpmSupply *supply);
 	
 } XfpmSupplyClass;
 
 GType   	         xfpm_supply_get_type       (void) G_GNUC_CONST;
+
 XfpmSupply     	        *xfpm_supply_new            (DbusHal *bus,
 						     XfconfChannel *channel);
 G_END_DECLS

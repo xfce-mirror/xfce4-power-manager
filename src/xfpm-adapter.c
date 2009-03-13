@@ -163,5 +163,4 @@ void xfpm_adapter_set_tooltip (XfpmAdapter *adapter, const gchar *text)
      g_return_if_fail ( XFPM_IS_ADAPTER (adapter));
     
     xfpm_tray_icon_set_tooltip (adapter->priv->icon, text);
-    
 }

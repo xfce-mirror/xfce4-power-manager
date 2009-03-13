@@ -24,7 +24,7 @@
 #include "xfpm-battery-info.h"
 
 static GtkWidget *
-xfpm_battery_info (HalDevice *device)
+xfpm_battery_info (HalBattery *device)
 {
     PangoFontDescription *pfd;
     
@@ -188,7 +188,7 @@ xfpm_battery_info (HalDevice *device)
     return table;
 }
 
-GtkWidget *xfpm_battery_info_new (HalDevice *device, const gchar *icon_name)
+GtkWidget *xfpm_battery_info_new (HalBattery *device, const gchar *icon_name)
 {
     GtkWidget *info;
     GtkWidget *mainbox;

@@ -51,10 +51,12 @@ typedef struct
 
 GType        	  xfpm_adapter_get_type        (void) G_GNUC_CONST;
 XfpmAdapter      *xfpm_adapter_new             (const HalDevice *device);
+
 gboolean          xfpm_adapter_get_presence    (XfpmAdapter *adapter);
 
 void              xfpm_adapter_set_visible     (XfpmAdapter *adapter,
 						gboolean visible);
+						
 void              xfpm_adapter_set_tooltip     (XfpmAdapter *adapter,
 						const gchar *text);
 G_END_DECLS

@@ -9,15 +9,13 @@ xfce4_brightness_plugin_CFLAGS =		\
 	$(LIBXFCE4PANEL_CFLAGS)       		\
 	$(LIBXFCE4UTIL_CFLAGS)        		\
 	$(GTK_CFLAGS)			      	\
-	$(GLIB_CFLAGS)			      	\
-	$(HAL_CFLAGS)
+	$(GLIB_CFLAGS)
 
 xfce4_brightness_plugin_LDADD =			\
 	$(LIBXFCE4PANEL_LIBS)   		\
 	$(LIBXFCE4UTIL_LIBS)			\
 	$(GTK_LIBS)   				\
-	$(GLIB_LIBS)				\
-	$(HAL_LIBS)
+	$(GLIB_LIBS)
 
 #
 # Desktop file

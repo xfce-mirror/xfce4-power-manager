@@ -18,42 +18,40 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __HAL_DEVICE_H
-#define __HAL_DEVICE_H
+#ifndef __HAL_BATTERY_H
+#define __HAL_BATTERY_H
 
 #include <glib-object.h>
 
+#include "hal-device.h"
+#include "hal-enum.h"
+
 G_BEGIN_DECLS
 
-#define HAL_TYPE_DEVICE        (hal_device_get_type () )
-#define HAL_DEVICE(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), HAL_TYPE_DEVICE, HalDevice))
-#define HAL_IS_DEVICE(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), HAL_TYPE_DEVICE))
+#define HAL_TYPE_BATTERY        (hal_battery_get_type () )
+#define HAL_BATTERY(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), HAL_TYPE_BATTERY, HalBattery))
+#define HAL_IS_BATTERY(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), HAL_TYPE_BATTERY))
 
-typedef struct HalDevicePrivate HalDevicePrivate;
-
-typedef struct
-{
-    GObject		  parent;
-    HalDevicePrivate	 *priv;
-    
-} HalDevice;
+typedef struct HalBatteryPrivate HalBatteryPrivate;
 
 typedef struct
 {
-    GObjectClass parent_class;
+    HalDevice		   parent;
+    HalBatteryPrivate	  *priv;
     
-    void		(*device_changed)   (HalDevice *device,
-					     const gchar *udi,
-					     const gchar *key,
-					     gboolean is_added,
-					     gboolean is_removed);
-    
-} HalDeviceClass;
+} HalBattery;
 
-GType        	 hal_device_get_type        (void) G_GNUC_CONST;
-HalDevice       *hal_device_new             (const gchar *udi);
-gboolean         hal_device_watch           (HalDevice *device);
+typedef struct
+{
+    HalDeviceClass         parent_class;
+    
+    void                  (*battery_changed) (HalBattery *device);
+    
+} HalBatteryClass;
+
+GType        	  hal_battery_get_type        (void) G_GNUC_CONST;
+HalBattery       *hal_battery_new             (const gchar *udi);
 
 G_END_DECLS
 
-#endif /* __HAL_DEVICE_H */
+#endif /* __HAL_BATTERY_H */

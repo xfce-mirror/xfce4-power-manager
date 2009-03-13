@@ -201,7 +201,7 @@ xfpm_cpu_get_available_governors (XfpmCpu *cpu)
 	    cpu->priv->cpu_governors |= CPU_PERFORMANCE;
     }
 
-    libhal_free_string_array (governors);
+    //libhal_free_string_array (governors);
     
     return TRUE;
     

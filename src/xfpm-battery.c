@@ -54,7 +54,7 @@ static void xfpm_battery_finalize   (GObject *object);
 struct XfpmBatteryPrivate
 {
     XfpmTrayIcon  *icon;
-    HalDevice     *device;
+    HalBattery     *device;
 
     HalDeviceType    type;
     gchar 	    *icon_prefix;
@@ -437,7 +437,7 @@ xfpm_battery_refresh (XfpmBattery *battery)
 }
 
 static void
-xfpm_battery_device_changed_cb (HalDevice *device, XfpmBattery *battery)
+xfpm_battery_device_changed_cb (HalBattery *device, XfpmBattery *battery)
 {
     TRACE("start");
     xfpm_battery_refresh (battery);
@@ -487,20 +487,21 @@ xfpm_battery_popup_menu_cb (GtkStatusIcon *icon, guint button, guint activate_ti
 }
 
 XfpmBattery *
-xfpm_battery_new(const HalDevice *device)
+xfpm_battery_new(const HalBattery *device)
 {
     XfpmBattery *battery = NULL;
     
     battery = g_object_new(XFPM_TYPE_BATTERY, NULL);
     
-    battery->priv->device = (HalDevice *)g_object_ref(G_OBJECT(device));
+    battery->priv->device = (HalBattery *)g_object_ref(G_OBJECT(device));
     
     g_object_get(G_OBJECT(battery->priv->device), "type", &battery->priv->type, NULL);
     
     battery->priv->icon_prefix = _get_icon_prefix_from_enum_type(battery->priv->type);
     
     xfpm_battery_refresh (battery);
-    g_signal_connect (G_OBJECT(battery->priv->device), "device-changed",
+    
+    g_signal_connect (G_OBJECT(battery->priv->device), "battery-changed",
 		      G_CALLBACK(xfpm_battery_device_changed_cb), battery);
 		      
     g_signal_connect (G_OBJECT(xfpm_tray_icon_get_tray_icon(battery->priv->icon)), "popup-menu",
@@ -526,7 +527,7 @@ void xfpm_battery_set_show_icon (XfpmBattery *battery, XfpmShowIcon show_icon)
     xfpm_battery_refresh_visible_icon (battery);
 }
 
-const HalDevice	*
+const HalBattery*
 xfpm_battery_get_device (XfpmBattery *battery)
 {
     g_return_val_if_fail (XFPM_IS_BATTERY(battery), NULL);

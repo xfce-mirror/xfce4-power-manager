@@ -29,8 +29,6 @@
 #include <libxfce4panel/xfce-panel-plugin.h>
 #include <libxfce4util/libxfce4util.h>
 
-#include <hal/libhal.h>
-
 static void
 register_plugin(XfcePanelPlugin *plugin)
 {

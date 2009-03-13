@@ -4,15 +4,20 @@ noinst_LTLIBRARIES = 			\
 	libxfpmcommon.la
 
 libxfpmhal_la_SOURCES =			\
-	hal-ctx.c			\
-	hal-ctx.h			\
+	xfpm-string.c			\
+	xfpm-string.h			\
+	hal-marshal.c			\
+	hal-mardhal.h			\
+	hal-manager.c			\
+	hal-manager.h			\
 	hal-power.c			\
 	hal-power.h			\
 	hal-device.c			\
-	hal-device.h
+	hal-device.h			\
+	hal-battery.c			\
+	hal-battery.h
 
 libxfpmhal_la_CFLAGS =			\
-	$(HAL_CFLAGS)			\
 	$(GLIB_CFLAGS)			\
 	$(DBUS_GLIB_CFLAGS)
 
@@ -42,3 +47,23 @@ libxfpmcommon_la_CFLAGS =       	\
         $(GLIB_CFLAGS)          	\
         $(DBUS_CFLAGS)			\
 	$(LIBXFCE4UTIL_CFLAGS)
+
+if MAINTAINER_MODE
+
+BUILT_SOURCES =				\
+	hal-marshal.c			\
+	hal-marshal.h
+
+hal-marshal.h: hal-marshal.list
+	glib-genmarshal --header --prefix="_hal_marshal" \
+            hal-marshal.list > tmp-marshal.h && \
+        cp tmp-marshal.h $(@F) && \
+        rm -f tmp-marshal.h tmp-marshal.h~
+
+hal-marshal.c: hal-marshal.h
+	glib-genmarshal --body --prefix="_hal_marshal" \
+            hal-marshal.list > tmp-marshal.c && \
+        cp tmp-marshal.c $(@F) && \
+        rm -f tmp-marshal.c tmp-marshal.c~
+
+endif

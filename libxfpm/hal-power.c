@@ -23,23 +23,14 @@
 #endif
 
 #include <stdio.h>
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
 
 #include <glib.h>
 
-#include "hal-ctx.h"
+#include "hal-manager.h"
 #include "hal-power.h"
+#include "xfpm-string.h"
 
 /* Init */
 static void hal_power_class_init (HalPowerClass *klass);
@@ -51,14 +42,19 @@ static void hal_power_finalize   (GObject *object);
 
 struct HalPowerPrivate
 {
-    GHashTable *hash  ;
-    HalCtx     *ctx   ;
+    GHashTable *hash  	;
+    HalManager *manager ;
+    
+    HalDevice  *adapter ;
+    gboolean    adapter_found;
 };
 
 enum
 {
-    DEVICE_ADDED,
-    DEVICE_REMOVED,
+    BATTERY_ADDED,
+    BATTERY_REMOVED,
+    ADAPTER_ADDED,
+    ADAPTER_REMOVED,
     LAST_SIGNAL
 };
 
@@ -70,77 +66,96 @@ G_DEFINE_TYPE(HalPower, hal_power, G_TYPE_OBJECT)
  * Sanity check of the keys present of a battery device
  */
 static gboolean
-hal_power_chech_battery (HalPower *power, const gchar *udi)
+hal_power_check_battery (HalPower *power, const gchar *udi)
 {
-    if ( hal_ctx_device_has_key(power->priv->ctx, udi, "battery.present") &&
-	 hal_ctx_device_has_key(power->priv->ctx, udi, "battery.rechargeable.is_charging") &&
-         hal_ctx_device_has_key(power->priv->ctx, udi, "battery.rechargeable.is_discharging") &&
-         hal_ctx_device_has_key(power->priv->ctx, udi, "battery.charge_level.current") &&
-	 hal_ctx_device_has_key(power->priv->ctx, udi, "battery.charge_level.last_full") )
+    if ( hal_manager_device_has_key(power->priv->manager, udi, "battery.present") &&
+	 hal_manager_device_has_key(power->priv->manager, udi, "battery.rechargeable.is_charging") &&
+         hal_manager_device_has_key(power->priv->manager, udi, "battery.rechargeable.is_discharging") &&
+         hal_manager_device_has_key(power->priv->manager, udi, "battery.charge_level.current") &&
+	 hal_manager_device_has_key(power->priv->manager, udi, "battery.charge_level.last_full") )
 		 return TRUE;
     
     return FALSE;
 }
 
-static gboolean
-hal_power_is_power_device(HalPower *power, const gchar *udi)
+static HalBattery *
+hal_power_add_battery (HalPower *power, const gchar *udi)
 {
-    if ( hal_ctx_device_has_capability(power->priv->ctx, udi, "battery") ||
-    	 hal_ctx_device_has_capability(power->priv->ctx, udi, "ac_adapter") )
-	return TRUE;
+    HalBattery *battery;
+    battery  = hal_battery_new (udi);
     
-    return FALSE;
-}
-
-static HalDevice *
-hal_power_add_device(HalPower *power, const gchar *udi)
-{
-    HalDevice *device;
-    device = hal_device_new (udi);
+    g_hash_table_insert (power->priv->hash, g_strdup(udi), battery );
     
-    g_hash_table_insert (power->priv->hash, g_strdup(udi), device);
-    
-    return device;
+    return battery ;
 }
 
 static void
-hal_power_remove_device(HalPower *power, HalDevice *device, const gchar *udi)
+hal_power_remove_battery (HalPower *power, HalBattery *battery, const gchar *udi)
 {
-    g_object_unref(device);
+    g_signal_emit (power, signals[BATTERY_REMOVED], 0, battery);
+    
+    g_object_unref(battery );
+    
     if (!g_hash_table_remove(power->priv->hash, udi))
     	g_warning ("Unable to removed object from hash\n");
 }
 
-static HalDevice *
-hal_power_get_device(HalPower *power, const gchar *udi)
+static void
+hal_power_remove_adapter (HalPower *power )
 {
-    HalDevice *device = NULL;
-    device = g_hash_table_lookup(power->priv->hash, udi);
-    return device;
+    g_signal_emit (G_OBJECT(power), signals[ADAPTER_REMOVED], 0);
+    g_object_unref (power->priv->adapter);
+    power->priv->adapter_found = FALSE;
+}
+
+static HalBattery *
+hal_power_get_battery_from_hash (HalPower *power, const gchar *udi)
+{
+    HalBattery *battery = NULL;
+    
+    battery = g_hash_table_lookup(power->priv->hash, udi);
+    
+    return battery;
 }
 
 static void
-hal_power_device_added_cb (LibHalContext *context, const gchar *udi)
+hal_power_device_added_cb (HalManager *manager, const gchar *udi, HalPower *power)
 {
-    HalPower *power = libhal_ctx_get_user_data(context);
-    if ( !hal_power_is_power_device(power, udi) ) return;
-    
-    HalDevice *device = hal_power_add_device(power, udi);
-    
-    g_signal_emit(G_OBJECT(power), signals[DEVICE_ADDED], 0, device);
-}
-
-static void
-hal_power_device_removed_cb (LibHalContext *context, const gchar *udi)
-{
-    HalPower *power = libhal_ctx_get_user_data (context);
-    
-    HalDevice *device = hal_power_get_device (power, udi);
-    
-    if (device)
+    if ( hal_manager_device_has_capability (manager, udi, "battery") )
     {
-    	g_signal_emit(power, signals[DEVICE_REMOVED], 0, device);
-	hal_power_remove_device(power, device, udi);
+	HalBattery *battery  = hal_power_add_battery (power, udi);
+        g_signal_emit (G_OBJECT(power), signals[BATTERY_ADDED], 0, battery);
+    }
+    else if ( hal_manager_device_has_capability (manager, udi, "ac_adapter") )
+    {
+	if ( !power->priv->adapter_found )
+	{
+	    power->priv->adapter = hal_device_new (udi);
+	    g_signal_emit (G_OBJECT(power), signals[ADAPTER_ADDED], 0, power->priv->adapter);
+	}
+    }
+}
+
+static void
+hal_power_device_removed_cb (HalManager *manager, const gchar *udi, HalPower *power)
+{
+    HalBattery *battery  = hal_power_get_battery_from_hash (power, udi);
+    
+    if (battery )
+    {
+	hal_power_remove_battery (power, battery , udi);
+    }
+    else if ( power->priv->adapter_found )
+    {
+	gchar *adapter_udi = NULL;
+	g_object_get (G_OBJECT(power->priv->adapter), "udi", &adapter_udi, NULL);
+	if (adapter_udi)
+	{
+	    if ( xfpm_strequal (udi, adapter_udi ) )
+		hal_power_remove_adapter (power);
+		
+	    g_free (adapter_udi);
+	}
     }
 }
 
@@ -149,23 +164,41 @@ hal_power_class_init(HalPowerClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
-    signals[DEVICE_ADDED] =
-    	g_signal_new("device-added",
+    signals[BATTERY_ADDED] =
+    	g_signal_new("battery-added",
 		     HAL_TYPE_POWER,
 		     G_SIGNAL_RUN_LAST,
-		     G_STRUCT_OFFSET(HalPowerClass, device_added),
+		     G_STRUCT_OFFSET(HalPowerClass, battery_added),
 		     NULL, NULL,
 		     g_cclosure_marshal_VOID__POINTER,
 		     G_TYPE_NONE, 1, G_TYPE_POINTER);
 		     
-    signals[DEVICE_REMOVED] =
-    	g_signal_new("device-removed",
+    signals[BATTERY_REMOVED] =
+    	g_signal_new("battery-removed",
 		     HAL_TYPE_POWER,
 		     G_SIGNAL_RUN_LAST,
-		     G_STRUCT_OFFSET(HalPowerClass, device_removed),
+		     G_STRUCT_OFFSET(HalPowerClass, battery_removed),
 		     NULL, NULL,
 		     g_cclosure_marshal_VOID__POINTER,
 		     G_TYPE_NONE, 1, G_TYPE_POINTER);
+		     
+    signals[ADAPTER_ADDED] =
+    	g_signal_new("adapter-added",
+		     HAL_TYPE_POWER,
+		     G_SIGNAL_RUN_LAST,
+		     G_STRUCT_OFFSET(HalPowerClass, adapter_added),
+		     NULL, NULL,
+		     g_cclosure_marshal_VOID__POINTER,
+		     G_TYPE_NONE, 1, G_TYPE_POINTER);
+		     
+    signals[ADAPTER_REMOVED] =
+    	g_signal_new("adapter-removed",
+		     HAL_TYPE_POWER,
+		     G_SIGNAL_RUN_LAST,
+		     G_STRUCT_OFFSET(HalPowerClass, adapter_removed),
+		     NULL, NULL,
+		     g_cclosure_marshal_VOID__VOID,
+		     G_TYPE_NONE, 0, G_TYPE_NONE);
 		     
     object_class->finalize = hal_power_finalize;
 
@@ -173,80 +206,70 @@ hal_power_class_init(HalPowerClass *klass)
 }
 
 static void
-hal_power_get_batteries(HalPower *power)
+hal_power_get_batteries_internal (HalPower *power)
 {
-    gint number = 0;
     gchar **batteries = NULL;
     gint i;
     
-    batteries = hal_ctx_get_device_by_capability(power->priv->ctx, "battery", &number);
+    batteries = hal_manager_find_device_by_capability (power->priv->manager, "battery");
     
-    if ( !batteries || number == 0 ) 
+    if ( !batteries ) 
     	goto out;
     
     for ( i = 0; batteries[i]; i++ )
     {
-	if (!hal_power_chech_battery(power, batteries[i]))
+	if (!hal_power_check_battery(power, batteries[i]))
 		continue;
 		
-    	hal_power_add_device(power, batteries[i]);
+    	hal_power_add_battery (power, batteries[i]);
     }
-	
-    libhal_free_string_array(batteries);
+    
+    hal_manager_free_string_array (batteries);
     
 out:
     	;
     
 }
 
+
 static void
-hal_power_get_adapter(HalPower *power)
+hal_power_get_adapter_internal (HalPower *power)
 {
-    gint number = 0;
     gchar **adapter = NULL;
-    gint i = 0;
     
-    adapter = hal_ctx_get_device_by_capability(power->priv->ctx, "ac_adapter", &number);
+    adapter = hal_manager_find_device_by_capability (power->priv->manager, "ac_adapter");
     
-    if ( !adapter || number == 0 ) 
+    if ( !adapter ) 
     	goto out;
+
+    power->priv->adapter = hal_device_new (adapter[0]);
+    power->priv->adapter_found = TRUE;
     
-    if ( number > 1) 
-    	g_warning("More than one adapter were found on the system");
-    
-    hal_power_add_device (power, adapter[i]);
-    
-    libhal_free_string_array(adapter);
-    
+    hal_manager_free_string_array (adapter);
 out:
     	;
-    
 }
+
 
 static void
 hal_power_init(HalPower *power)
 {
     power->priv = HAL_POWER_GET_PRIVATE(power);
     
-    power->priv->ctx   = hal_ctx_new();
-    power->priv->hash = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
+    power->priv->manager = hal_manager_new ();
+    power->priv->hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+    power->priv->adapter_found = FALSE;
+    power->priv->adapter = NULL;
     
-    if ( !hal_ctx_connect(power->priv->ctx) )
-    {
-    	g_critical("Unable to connect to HAL");
-	goto out;
-    }
+    g_signal_connect (power->priv->manager, "device-added", 
+		      G_CALLBACK(hal_power_device_added_cb), power);
     
-    hal_ctx_set_user_data (power->priv->ctx, power);
-    hal_ctx_set_device_added_callback (power->priv->ctx, hal_power_device_added_cb);
-    hal_ctx_set_device_removed_callback (power->priv->ctx, hal_power_device_removed_cb);
+    g_signal_connect (power->priv->manager, "device-removed",
+		      G_CALLBACK(hal_power_device_removed_cb), power);
    
     
-    hal_power_get_adapter (power);
-    hal_power_get_batteries (power);
-    
-out:
-	;
+    hal_power_get_adapter_internal (power);
+    hal_power_get_batteries_internal (power);
 }
 
 static void
@@ -259,8 +282,8 @@ hal_power_finalize(GObject *object)
     if (power->priv->hash)
     	g_hash_table_unref(power->priv->hash);
     
-    if ( power->priv->ctx )
-    	g_object_unref(power->priv->ctx);
+    if ( power->priv->manager )
+    	g_object_unref(power->priv->manager);
     
     G_OBJECT_CLASS(hal_power_parent_class)->finalize(object);
 }
@@ -277,11 +300,13 @@ hal_power_new(void)
  * Return an array of power devices, the array should be freed by the caller
  */
 GPtrArray *
-hal_power_get_devices (HalPower *power)
+hal_power_get_batteries (HalPower *power)
 {
+    g_return_val_if_fail (HAL_IS_POWER (power), NULL);
+    
     guint i;
     GPtrArray *array;
-    HalDevice *device;
+    HalBattery *battery;
    
     array = g_ptr_array_new ();
    
@@ -293,14 +318,28 @@ hal_power_get_devices (HalPower *power)
 	
     for ( i=0; i < g_list_length (list); i++)
     {
-       device = g_list_nth_data (list, i);
-       g_object_ref (device);
-       g_ptr_array_add (array, device);
+       battery = g_list_nth_data (list, i);
+       g_object_ref (battery );
+       g_ptr_array_add (array, battery);
     }
    
     g_list_free (list);
-
 out:
-
    return array;
+}
+
+gboolean hal_power_adapter_found (HalPower *power)
+{
+    g_return_val_if_fail (HAL_IS_POWER (power), FALSE);
+    
+    return power->priv->adapter_found;
+}
+
+const HalDevice *hal_power_get_adapter (HalPower *power)
+{
+    g_return_val_if_fail (HAL_IS_POWER (power), NULL);
+    g_return_val_if_fail (power->priv->adapter_found == TRUE, NULL);
+    
+    return (const HalDevice *)power->priv->adapter;
+    
 }

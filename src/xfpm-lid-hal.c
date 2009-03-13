@@ -38,7 +38,8 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#include "libxfpm/hal-ctx.h"
+#include "libxfpm/hal-manager.h"
+#include "libxfpm/hal-device.h"
 #include "libxfpm/xfpm-string.h"
 
 #include "xfpm-lid-hal.h"
@@ -53,10 +54,9 @@ static void xfpm_lid_hal_finalize   (GObject *object);
 
 struct XfpmLidHalPrivate
 {
-    HalCtx   *ctx;
-    
-    //gchar    *udi;
-    gboolean  hw_found;
+    HalManager *manager;
+    HalDevice  *device;
+    gboolean    hw_found;
 };
 
 enum
@@ -95,8 +95,9 @@ xfpm_lid_hal_init (XfpmLidHal *lid)
 {
     lid->priv = XFPM_LID_HAL_GET_PRIVATE(lid);
     
-    lid->priv->ctx      = NULL;
-    lid->priv->hw_found = FALSE;
+    lid->priv->manager      = NULL;
+    lid->priv->device       = NULL;
+    lid->priv->hw_found     = FALSE;
 }
 
 static void
@@ -106,26 +107,29 @@ xfpm_lid_hal_finalize(GObject *object)
 
     lid = XFPM_LID_HAL(object);
     
-    if ( lid->priv->ctx )
-    	g_object_unref (lid->priv->ctx);
+    if ( lid->priv->manager )
+    	g_object_unref (lid->priv->manager);
+
+    if ( lid->priv->device )
+    	g_object_unref (lid->priv->device);
 
     G_OBJECT_CLASS(xfpm_lid_hal_parent_class)->finalize(object);
 }
 
 static void
-xfpm_lid_property_modified_cb (LibHalContext *ctx,
+xfpm_lid_hal_device_changed_cb(HalDevice *device,
 			       const gchar *udi,
                                const gchar *key, 
-                               dbus_bool_t is_removed,
-                               dbus_bool_t is_added)
+                               gboolean is_removed,
+                               gboolean is_added,
+			       XfpmLidHal *lid)
 {
     if ( !xfpm_strequal (key, "button.state.value") )
     	return;
 	
     TRACE("Property modified key=%s  key=%s\n", key, udi);
-    XfpmLidHal *lid = libhal_ctx_get_user_data (ctx);
     
-    gboolean pressed = hal_ctx_get_property_bool (lid->priv->ctx, udi, key);
+    gboolean pressed = hal_manager_get_device_property_bool (lid->priv->manager, udi, key);
     
     if ( pressed )
     {
@@ -138,31 +142,24 @@ xfpm_lid_property_modified_cb (LibHalContext *ctx,
 static gboolean
 xfpm_lid_hal_setup (XfpmLidHal *lid)
 {
-    lid->priv->ctx = hal_ctx_new ();
+    lid->priv->manager = hal_manager_new ();
     
-    if ( !hal_ctx_connect(lid->priv->ctx) )
-    	return FALSE;
-
     gchar **udi = NULL;
-    gint num = 0;
     
-    udi = hal_ctx_get_device_by_capability (lid->priv->ctx, "button", &num );
+    udi = hal_manager_find_device_by_capability (lid->priv->manager, "button");
     
     if ( !udi )
     	return FALSE;
 	
-    hal_ctx_set_device_property_callback (lid->priv->ctx, xfpm_lid_property_modified_cb);
-    hal_ctx_set_user_data (lid->priv->ctx, lid);
-    
     int i;
     
     for ( i = 0; udi[i]; i++ )
     {
-	if ( hal_ctx_device_has_key (lid->priv->ctx, udi[i], "button.type" ) &&
-	     hal_ctx_device_has_key (lid->priv->ctx, udi[i], "button.has_state" ) )
+	if ( hal_manager_device_has_key (lid->priv->manager, udi[i], "button.type" ) &&
+	     hal_manager_device_has_key (lid->priv->manager, udi[i], "button.has_state" ) )
     	{
 	    gchar *button_type =
-	    	hal_ctx_get_property_string (lid->priv->ctx, udi[i], "button.type");
+	    	hal_manager_get_device_property_string (lid->priv->manager, udi[i], "button.type");
 		
 	    if ( !button_type )
 	    	continue;
@@ -170,16 +167,20 @@ xfpm_lid_hal_setup (XfpmLidHal *lid)
 	    if ( xfpm_strequal (button_type, "lid") )
 	    {
 	    	lid->priv->hw_found = TRUE;
-		hal_ctx_watch_device (lid->priv->ctx, udi[i] );
+		lid->priv->device = hal_device_new (udi[i]);
+		g_signal_connect (lid->priv->device, "device-changed", 
+				  G_CALLBACK(xfpm_lid_hal_device_changed_cb), lid);
+		if ( !hal_device_watch (lid->priv->device) )
+		    g_critical ("Unable to watch lid button device: %s\n", udi[i]);
+		
 		g_free(button_type);
 		TRACE ("Found lid switch on device: %s\n", udi[i]);
-		goto out;
+		break;
 	    }
 	}
     }
         
-out:
-    libhal_free_string_array (udi);
+    hal_manager_free_string_array (udi);
     return TRUE;
 }
 
@@ -189,11 +190,8 @@ xfpm_lid_hal_new(void)
     XfpmLidHal *lid = NULL;
     lid = g_object_new (XFPM_TYPE_LID_HAL, NULL);
     
-    if ( !xfpm_lid_hal_setup (lid) )
-    	goto out;
-	
-	
-out:
+    xfpm_lid_hal_setup (lid);
+
     return lid;
 }
 

@@ -24,6 +24,7 @@
 #include <glib-object.h>
 
 #include "hal-device.h"
+#include "hal-battery.h"
 
 G_BEGIN_DECLS
 
@@ -35,25 +36,34 @@ typedef struct HalPowerPrivate HalPowerPrivate;
 
 typedef struct
 {
-    GObject		  parent;
-    HalPowerPrivate	 *priv;
+    GObject		parent;
+    HalPowerPrivate    *priv;
     
 } HalPower;
 
 typedef struct
 {
-    GObjectClass parent_class;
+    GObjectClass 	parent_class;
     
-    void 	(*device_added)	       (HalPower *power,
-					const HalDevice *device);
-    void        (*device_removed)      (HalPower *power,
-    					const HalDevice *device);
+    void 		(*battery_added)	  (HalPower *power,
+						   const HalBattery *battery);
+					   
+    void        	(*battery_removed)        (HalPower *power,
+						   const HalBattery *battery);
+					   
+    void        	(*adapter_added)	  (HalPower *power,
+						   const HalDevice *device);
+					   
+    void        	(*adapter_removed)	  (HalPower *power);
     
 } HalPowerClass;
 
-GType        hal_power_get_type        (void) G_GNUC_CONST;
-HalPower    *hal_power_new             (void);
-GPtrArray   *hal_power_get_devices     (HalPower *power);
+GType        		hal_power_get_type        (void) G_GNUC_CONST;
+HalPower       	       *hal_power_new             (void);
+
+GPtrArray      	       *hal_power_get_batteries   (HalPower *power);
+gboolean                hal_power_adapter_found   (HalPower *power);
+const HalDevice        *hal_power_get_adapter     (HalPower *power);
 
 G_END_DECLS
 

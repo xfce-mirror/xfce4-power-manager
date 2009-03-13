@@ -24,11 +24,11 @@
 #include <gtk/gtk.h>
 #include <glib.h>
 
-#include "libxfpm/hal-device.h"
+#include "libxfpm/hal-battery.h"
 
 G_BEGIN_DECLS
 
-GtkWidget 	*xfpm_battery_info_new 		(HalDevice *device, const gchar *icon_name);
+GtkWidget 	*xfpm_battery_info_new 		(HalBattery *device, const gchar *icon_name);
 
 G_END_DECLS
 

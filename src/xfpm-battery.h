@@ -24,7 +24,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#include "libxfpm/hal-device.h"
+#include "libxfpm/hal-battery.h"
 
 #include "xfpm-enum-glib.h"
 #include "xfpm-notify.h"
@@ -50,6 +50,7 @@ typedef struct
     
     void	        (*battery_state_changed)	(XfpmBattery *battery,
     					            	 XfpmBatteryState state);
+							 
     void                (*popup_battery_menu)		(XfpmBattery *battery,
 						         GtkStatusIcon *icon,
 							 guint button,
@@ -59,16 +60,24 @@ typedef struct
 } XfpmBatteryClass;
 
 GType        		 xfpm_battery_get_type           (void) G_GNUC_CONST;
-XfpmBattery    		*xfpm_battery_new                (const HalDevice *device);
+XfpmBattery    		*xfpm_battery_new                (const HalBattery *device);
+
 void                     xfpm_battery_set_adapter_presence(XfpmBattery *battery,
 							  gboolean adapter_present);
+							  
 void                     xfpm_battery_set_show_icon      (XfpmBattery *battery,
 							  XfpmShowIcon show_icon);
-const HalDevice		*xfpm_battery_get_device         (XfpmBattery *battery);
+							  
+const HalBattery	*xfpm_battery_get_device         (XfpmBattery *battery);
+
 XfpmBatteryState         xfpm_battery_get_state          (XfpmBattery *battery);
+
 GtkStatusIcon  		*xfpm_battery_get_status_icon    (XfpmBattery *battery);
+
 const gchar    		*xfpm_battery_get_icon_name      (XfpmBattery *battery);
+
 void            	 xfpm_battery_show_info          (XfpmBattery *battery);
+
 void                     xfpm_battery_set_critical_level (XfpmBattery *battery,
 							  guint8 critical_level);
 

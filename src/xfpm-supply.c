@@ -235,7 +235,7 @@ gboolean xfpm_supply_on_low_power ( XfpmSupply *supply)
 	if ( !battery )
 	    continue;
 	    
-	const HalDevice *device = xfpm_battery_get_device (battery);
+	const HalBattery *device = xfpm_battery_get_device (battery);
 	g_object_get (G_OBJECT(device), "type", &type, "percentage", &percentage, NULL);
 	if ( type != HAL_DEVICE_TYPE_PRIMARY )
 	    continue;
@@ -409,7 +409,7 @@ static void
 xfpm_supply_show_battery_notification (XfpmSupply *supply, XfpmBatteryState state, XfpmBattery *battery)
 {
     HalDeviceType type;
-    const HalDevice *device = xfpm_battery_get_device (battery);
+    const HalBattery *device = xfpm_battery_get_device (battery);
     
     if ( device )
 	g_object_get (G_OBJECT(device), "type", &type, NULL);
@@ -534,6 +534,7 @@ xfpm_supply_popup_battery_menu_cb (XfpmBattery *battery, GtkStatusIcon *icon,
 }
 
 //FIXME: Change the name of this function
+
 static void
 xfpm_supply_set_adapter_presence (XfpmSupply *supply)
 {
@@ -555,7 +556,6 @@ xfpm_supply_set_adapter_presence (XfpmSupply *supply)
     }
     
     g_list_free (list);
-    
 }
 
 static void
@@ -579,115 +579,60 @@ xfpm_supply_get_battery (XfpmSupply *supply, const gchar *udi)
 }
 
 static void
-xfpm_supply_add_device (XfpmSupply *supply, const HalDevice *device)
+xfpm_supply_add_battery (XfpmSupply *supply, const HalBattery *device)
 {
-    HalDeviceType type;
     gchar *udi = NULL;
     
-    g_object_get(G_OBJECT(device), "type", &type, "udi", &udi, NULL);
-    
-    if ( type == HAL_DEVICE_TYPE_ADAPTER )
-    {
-	TRACE("Adapter found %s", udi);
-	if ( supply->priv->adapter_found )
-	{
-	    TRACE("System with more than one AC adapter"); /* g_strange */
-	    goto out;
-	}
-	supply->priv->adapter = xfpm_adapter_new (device);
-	g_signal_connect (supply->priv->adapter, "adapter-changed", 
-			  G_CALLBACK (xfpm_supply_adapter_changed_cb), supply);
-			  
-	supply->priv->adapter_found = TRUE;
-	gboolean adapter_present; 
-	g_object_get (G_OBJECT(device), "is-present", &adapter_present, NULL);
-	supply->priv->adapter_present = adapter_present;
-	g_signal_emit (G_OBJECT(supply), signals[ON_BATTERY], 0, supply->priv->adapter_present);
-	xfpm_supply_set_adapter_presence (supply);
-    }
-    else
-    {
-	TRACE("New battery found %s", udi);
-	XfpmBattery *battery = xfpm_battery_new (device);
-	xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
-	xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
-	xfpm_battery_set_critical_level (battery, supply->priv->critical_level);
-	g_hash_table_insert (supply->priv->hash, g_strdup(udi), battery);
-	
-	g_signal_connect (G_OBJECT(battery), "battery-state-changed",
-			  G_CALLBACK(xfpm_supply_battery_state_changed_cb), supply);
+    g_object_get(G_OBJECT(device), "udi", &udi, NULL);
 
-	g_signal_connect (G_OBJECT(battery), "popup-battery-menu",
-			  G_CALLBACK(xfpm_supply_popup_battery_menu_cb), supply);
-    }
-out:
+    TRACE("New battery found %s", udi);
+
+    XfpmBattery *battery = xfpm_battery_new (device);
+    xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
+    xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
+    xfpm_battery_set_critical_level (battery, supply->priv->critical_level);
+    g_hash_table_insert (supply->priv->hash, g_strdup(udi), battery);
+    
+    g_signal_connect (G_OBJECT(battery), "battery-state-changed",
+		      G_CALLBACK(xfpm_supply_battery_state_changed_cb), supply);
+
+    g_signal_connect (G_OBJECT(battery), "popup-battery-menu",
+		      G_CALLBACK(xfpm_supply_popup_battery_menu_cb), supply);
+
     if (udi)
     	g_free (udi);
 }
 
 static void
-xfpm_supply_remove_device(XfpmSupply *supply,  const HalDevice *device)
+xfpm_supply_remove_battery (XfpmSupply *supply,  const HalBattery *device)
 {
-    HalDeviceType type;
-    gchar *udi = NULL;
+    gchar *udi;
+    g_object_get(G_OBJECT(device), "udi", &udi, NULL);
     
-    g_object_get(G_OBJECT(device), "type", &type, "udi", &udi, NULL);
-    
-    if ( type == HAL_DEVICE_TYPE_ADAPTER )
-    {
-	if ( !supply->priv->adapter_found )
-	{
-	    g_warning ("No adapter found in the system to removed from the data\n");
-	    goto out;
-	}
-	TRACE("Adapter removed %s", udi);
-	g_object_unref (supply->priv->adapter);
-	supply->priv->adapter_found = FALSE;
-    }
-    else 
-    {
-	XfpmBattery *battery = xfpm_supply_get_battery(supply, udi);
+    XfpmBattery *battery = xfpm_supply_get_battery(supply, udi);
 	
-	if ( battery )
-	{
-	    TRACE("Removing battery %s", udi);
-	    g_object_unref(battery);
-	    if (!g_hash_table_remove(supply->priv->hash, udi))
-		    g_critical ("Unable to removed battery object from hash\n");
-	}
+    if ( battery )
+    {
+	TRACE("Removing battery %s", udi);
+	g_object_unref(battery);
+	if (!g_hash_table_remove(supply->priv->hash, udi))
+		g_critical ("Unable to removed battery object from hash\n");
     }
     
-out:
     if (udi)
     	g_free (udi);
 }
 
 static void
-xfpm_supply_monitor_start (XfpmSupply *supply)
+xfpm_supply_battery_added_cb (HalPower *power, const HalBattery *device, XfpmSupply *supply)
 {
-    GPtrArray *array = hal_power_get_devices (supply->priv->power);
-    
-    int i = 0;
-    for ( i = 0; i<array->len; i++ )
-    {
-	HalDevice *device;
-	device = (HalDevice *)g_ptr_array_index(array, i);
-	xfpm_supply_add_device (supply, device);
-    }
-    
-    g_ptr_array_free(array, TRUE);
+    xfpm_supply_add_battery (supply, device);
 }
 
 static void
-xfpm_supply_device_added_cb (HalPower *power, const HalDevice *device, XfpmSupply *supply)
+xfpm_supply_battery_removed_cb (HalPower *power, const HalBattery *device, XfpmSupply *supply)
 {
-    xfpm_supply_add_device (supply, device);
-}
-
-static void
-xfpm_supply_device_removed_cb (HalPower *power, const HalDevice *device, XfpmSupply *supply)
-{
-    xfpm_supply_remove_device (supply, device);
+    xfpm_supply_remove_battery (supply, device);
 }
 
 static void
@@ -736,6 +681,83 @@ xfpm_supply_set_critical_power_level (XfpmSupply *supply)
 	}
     }
     g_list_free (list);
+}
+
+static void
+xfpm_supply_add_adapter (XfpmSupply *supply, const HalDevice *device)
+{
+    supply->priv->adapter_found = TRUE;
+
+    supply->priv->adapter = xfpm_adapter_new (device);
+	g_signal_connect (supply->priv->adapter, "adapter-changed", 
+			  G_CALLBACK(xfpm_supply_adapter_changed_cb), supply);
+}
+
+static void
+xfpm_supply_get_adapter (XfpmSupply *supply)
+{
+    const HalDevice *device;
+    
+    if ( hal_power_adapter_found (supply->priv->power) )
+    {
+	device = hal_power_get_adapter (supply->priv->power);
+	if ( device )
+	{
+#ifdef DEBUG
+	    gchar *udi;
+	    g_object_get (G_OBJECT(device), "udi", &udi, NULL);
+	    TRACE ("Adapter found in the system with udi=%s\n", udi);
+	    g_free (udi);
+#endif
+	    xfpm_supply_add_adapter (supply, device);
+	}
+    }
+    else
+    {
+	supply->priv->adapter_found = FALSE;
+    }
+}
+
+static void
+xfpm_supply_removed_adapter (XfpmSupply *supply)
+{
+    supply->priv->adapter_found = FALSE;
+    g_object_unref (supply->priv->adapter);
+}
+
+static void
+xfpm_supply_adapter_added_cb (HalPower *power, const HalDevice *device, XfpmSupply *supply)
+{
+    if ( supply->priv->adapter_found )
+	return;
+	
+    xfpm_supply_add_adapter (supply, device);
+}
+
+static void
+xfpm_supply_adapter_removed_cb (HalPower *power, XfpmSupply *supply)
+{
+    if ( supply->priv->adapter_found )
+	xfpm_supply_removed_adapter (supply);
+}
+
+static void
+xfpm_supply_monitor_start (XfpmSupply *supply)
+{
+    //FIXME: Check the system formfactor
+    xfpm_supply_get_adapter (supply );
+    
+    GPtrArray *array = hal_power_get_batteries (supply->priv->power);
+    
+    int i = 0;
+    for ( i = 0; i<array->len; i++ )
+    {
+	HalBattery *device;
+	device = (HalBattery *)g_ptr_array_index(array, i);
+	xfpm_supply_add_battery (supply, device);
+    }
+    
+    g_ptr_array_free(array, TRUE);
 }
 
 static void
@@ -829,10 +851,16 @@ xfpm_supply_new (DbusHal *bus, XfconfChannel *channel )
 
     xfpm_supply_monitor_start(supply);
     
-    g_signal_connect(supply->priv->power, "device-added",
-		     G_CALLBACK(xfpm_supply_device_added_cb), supply);
+    g_signal_connect(supply->priv->power, "battery-added",
+		     G_CALLBACK(xfpm_supply_battery_added_cb), supply);
 		     
-    g_signal_connect(supply->priv->power, "device-removed",
-		     G_CALLBACK(xfpm_supply_device_removed_cb), supply);
+    g_signal_connect(supply->priv->power, "battery-removed",
+		     G_CALLBACK(xfpm_supply_battery_removed_cb), supply);
+		     
+    g_signal_connect(supply->priv->power, "adapter-added",
+		     G_CALLBACK(xfpm_supply_adapter_added_cb), supply);
+		     
+    g_signal_connect(supply->priv->power, "adapter-removed",
+		     G_CALLBACK(xfpm_supply_adapter_removed_cb), supply);
     return supply;
 }
