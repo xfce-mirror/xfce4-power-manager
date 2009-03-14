@@ -565,8 +565,8 @@ xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupp
     if ( !supply->priv->adapter_found )
     	g_critical ("Callback from the adapter object but no adapter found in the system\n");
 	
-    supply->priv->adapter_present = present;
     
+    supply->priv->adapter_present = present;
     xfpm_supply_set_adapter_presence (supply);
     
     g_signal_emit (G_OBJECT(supply), signals[ON_BATTERY], 0, !supply->priv->adapter_present);
@@ -593,8 +593,6 @@ xfpm_supply_add_battery (XfpmSupply *supply, const HalBattery *device)
     XfpmBattery *battery = xfpm_battery_new (device);
     
     xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
-    
-    g_print("Adapter %d\n", supply->priv->adapter_present );
     
     xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
     xfpm_battery_set_critical_level (battery, supply->priv->critical_level);
@@ -691,8 +689,10 @@ xfpm_supply_add_adapter (XfpmSupply *supply, const HalDevice *device)
     supply->priv->adapter_found = TRUE;
     
     supply->priv->adapter = xfpm_adapter_new (device);
-	g_signal_connect (supply->priv->adapter, "adapter-changed", 
-			  G_CALLBACK(xfpm_supply_adapter_changed_cb), supply);
+    g_signal_connect (supply->priv->adapter, "adapter-changed", 
+		      G_CALLBACK(xfpm_supply_adapter_changed_cb), supply);
+    
+    supply->priv->adapter_present = xfpm_adapter_get_presence (supply->priv->adapter);
 }
 
 static void

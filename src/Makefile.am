@@ -126,9 +126,15 @@ xfce-power-manager-dbus-client.h: $(srdir)org.xfce.Power.Manager.xml
 
 endif
 
+@INTLTOOL_DESKTOP_RULE@
+autostartdir = $(sysconfdir)/xdg/autostart
+autostart_in_files = xfce-power-manager.desktop.in
+autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST = 					\
 	xfpm-marshal.list
 
 DISTCLEANFILES =				\
-	$(BUILT_SOURCES)
+	$(BUILT_SOURCES)			\
+	xfce-power-manager.desktop
+

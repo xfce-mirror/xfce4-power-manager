@@ -146,14 +146,17 @@ doc/C/images/Makefile
 po/Makefile.in
 ])
 
-echo "----------------------------------------"
-echo 	 "   Build Configuration"
-echo 
-echo "   DPMS         support    $have_dpms      "
-echo "   Notification support    $LIBNOTIFY_FOUND"
-echo "   Build panel  plugins    $build_panel_plugins"
-echo "   Debug        support    $enable_debug   "
-echo
-echo "----------------------------------------"  
-echo
-echo "Configuration finished, type make to compile"
+echo "
+--------------------------------------------------
+ 	    Xfce Power Manager $VERSION
+	======================================
+ 
+	prefix:			$prefix
+	xdg autostart:		$sysconfdir/xdg/autostart
+   	DPMS         support:   $have_dpms
+   	Notification support:   $LIBNOTIFY_FOUND
+  	Build panel  plugins:   $build_panel_plugins
+   	Debug        support:   $enable_debug
+--------------------------------------------------
+
+Configuration finished, type make to compile"

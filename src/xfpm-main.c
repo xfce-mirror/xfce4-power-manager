@@ -50,78 +50,6 @@ show_version()
              "Licensed under the GNU GPL.\n\n"), VERSION);
 }
 
-static void
-autostart()
-{
-    const gchar *home;
-    
-    if ( ( home = getenv("HOME")) == NULL )
-    {
-        xfpm_popup_message(_("Xfce Power Manager"),
-                           _("Unable to read your home directory environment variable,"\
-						    " autostart option may not work"),
-                           GTK_MESSAGE_INFO);
-        g_warning("Unable to read HOME environment variable, autostart will not work\n");
-        return;
-    }
-    
-    gchar *file;
-    file = g_strdup_printf("%s/.config/autostart",home);
-    
-    if ( !g_file_test(file,G_FILE_TEST_IS_DIR) )
-    {
-        g_mkdir_with_parents(file,0700);
-    }
-    
-    file = g_strdup_printf("%s/xfce4-power-manager.desktop",file);
-    
-    if ( g_file_test(file,G_FILE_TEST_EXISTS) )
-    {
-        g_free(file);
-        return;
-    }
-    
-    GKeyFile *key;
-    GError *error = NULL;
-    
-    key = g_key_file_new();
-    
-    g_key_file_set_value(key,"Desktop Entry","Version","1.0");
-    g_key_file_set_string(key,"Desktop Entry","Type","Application");    
-    g_key_file_set_string(key,"Desktop Entry","Name","Xfce4 Power Manager"); 
-    g_key_file_set_string(key,"Desktop Entry","Icon","gpm-ac-adapter"); 
-    g_key_file_set_string(key,"Desktop Entry","Exec","xfce4-power-manager"); 
-    g_key_file_set_boolean(key,"Desktop Entry","StartupNotify",FALSE); 
-    g_key_file_set_boolean(key,"Desktop Entry","Terminal",FALSE); 
-    g_key_file_set_boolean(key,"Desktop Entry","Hidden",FALSE); 
-    g_key_file_set_string (key, "Desktop Entry", "OnlyShowIn", "XFCE");
-    
-    gchar *content = g_key_file_to_data(key,NULL,&error);
-    
-    if ( error )
-    {
-        g_critical("%s\n",error->message);
-        g_error_free(error);
-        g_free(file);
-        g_key_file_free(key);
-        return;
-    }
-    
-    g_file_set_contents(file,content,-1,&error);
-    
-    if ( error )
-    {
-        g_critical("Unable to set content for the autostart desktop file%s\n",error->message);
-        g_error_free(error);
-        g_free(file);
-        g_key_file_free(key);
-        return;
-    }
-    
-    g_free(file);
-    g_key_file_free(key);
-}
-
 int main(int argc, char **argv)
 {
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
@@ -249,7 +177,6 @@ int main(int argc, char **argv)
     else
     {	
 	TRACE("Starting the power manager\n");
-	autostart();
     	XfpmManager *manager;
     	manager = xfpm_manager_new(bus);
     	xfpm_manager_start(manager);

@@ -157,6 +157,13 @@ xfpm_adapter_new (const HalDevice *device)
     return adapter;
 }
 
+gboolean          xfpm_adapter_get_presence    (XfpmAdapter *adapter)
+{
+    g_return_val_if_fail (XFPM_IS_ADAPTER (adapter), FALSE);
+    
+    return adapter->priv->present;
+}
+
 void xfpm_adapter_set_visible (XfpmAdapter *adapter, gboolean visible)
 {
     g_return_if_fail ( XFPM_IS_ADAPTER (adapter));
