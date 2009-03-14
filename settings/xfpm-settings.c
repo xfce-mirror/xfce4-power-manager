@@ -284,7 +284,41 @@ format_dpms_value_cb (GtkScale *scale, gdouble value)
         
     return g_strdup_printf ("%d %s", (int)value, _("Minutes"));
 }
-#endif
+#endif /* HAVE_DPMS */
+
+/*
+ * Format value of GtkRange used with Brightness
+ */
+static gchar *
+format_brightness_value_cb (GtkScale *scale, gdouble value)
+{
+    if ( (int)value == 9 )
+    	return g_strdup _("Never");
+        
+    return g_strdup_printf ("%d %s", (int)value, _("Seconds"));
+}
+
+static void
+brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
+{
+    gint value    = (gint)gtk_range_get_value (GTK_RANGE(w));
+    
+    if (!xfconf_channel_set_uint (channel, BRIGHTNESS_ON_BATTERY, value))
+    {
+	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_BATTERY);
+    }
+}
+
+static void
+brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
+{
+    gint value    = (gint)gtk_range_get_value (GTK_RANGE(w));
+    
+    if (!xfconf_channel_set_uint (channel, BRIGHTNESS_ON_AC, value))
+    {
+	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_AC);
+    }
+}
 
 static gboolean
 critical_spin_output_cb (GtkSpinButton *w, gpointer data)
@@ -477,6 +511,22 @@ xfpm_settings_on_battery (XfconfChannel *channel)
 	
     g_free (str);
     
+    /*
+     * 
+     * Brightness on battery power
+     */
+    GtkWidget *brg = glade_xml_get_widget (xml ,"brg-on-battery");
+    
+    val = xfconf_channel_get_uint (channel, BRIGHTNESS_ON_BATTERY, 10);
+    
+    gtk_range_set_value (GTK_RANGE(brg), val);
+    
+    g_signal_connect (brg, "value-changed",
+		      G_CALLBACK(brightness_on_battery_value_changed_cb), channel);
+		      
+    g_signal_connect (brg, "format-value", 
+		      G_CALLBACK(format_brightness_value_cb), NULL);
+    
 }
 
 static void
@@ -547,6 +597,23 @@ xfpm_settings_on_ac (XfconfChannel *channel)
 	gtk_combo_box_set_active (GTK_COMBO_BOX(lid), val);
 	
     g_free (str);
+    
+    
+    /*
+     * 
+     * Brightness on AC power
+     */
+    GtkWidget *brg = glade_xml_get_widget (xml ,"brg-on-ac");
+    
+    val = xfconf_channel_get_uint (channel, BRIGHTNESS_ON_AC, 9);
+    
+    gtk_range_set_value (GTK_RANGE(brg), val);
+    
+    g_signal_connect (brg, "value-changed",
+		      G_CALLBACK(brightness_on_ac_value_changed_cb), channel);
+		      
+    g_signal_connect (brg, "format-value", 
+		      G_CALLBACK(format_brightness_value_cb), NULL);
 }
 
 static void

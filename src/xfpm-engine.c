@@ -198,6 +198,7 @@ xfpm_engine_on_battery_cb (XfpmSupply *supply, gboolean on_battery, XfpmEngine *
     xfpm_dpms_set_on_battery (engine->priv->dpms, on_battery);
 #endif
     xfpm_cpu_set_on_battery (engine->priv->cpu, on_battery);
+    xfpm_brightness_hal_set_on_battery (engine->priv->brg_hal, on_battery);
 }
 
 static void
@@ -296,7 +297,7 @@ xfpm_engine_load_all (XfpmEngine *engine)
     /*
      * Brightness HAL
      */
-    engine->priv->brg_hal = xfpm_brightness_hal_new ();
+    engine->priv->brg_hal = xfpm_brightness_hal_new (engine->priv->channel);
     
 }
 

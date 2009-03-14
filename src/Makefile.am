@@ -30,6 +30,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-lid-hal.h				\
 	xfpm-brightness-hal.c			\
 	xfpm-brightness-hal.h			\
+	xfpm-idle.c				\
+	xfpm-idle.h				\
 	xfpm-tray-icon.c			\
 	xfpm-tray-icon.h			\
 	xfpm-notify.c				\

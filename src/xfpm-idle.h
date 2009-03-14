@@ -18,37 +18,45 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_BRIGHTNESS_HAL_H
-#define __XFPM_BRIGHTNESS_HAL_H
+#ifndef __XFPM_IDLE_H
+#define __XFPM_IDLE_H
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_BRIGHTNESS_HAL        (xfpm_brightness_hal_get_type () )
-#define XFPM_BRIGHTNESS_HAL(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_BRIGHTNESS_HAL, XfpmBrightnessHal))
-#define XFPM_IS_BRIGHTNESS_HAL(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_BRIGHTNESS_HAL))
+#define XFPM_TYPE_IDLE        (xfpm_idle_get_type () )
+#define XFPM_IDLE(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_IDLE, XfpmIdle))
+#define XFPM_IS_IDLE(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_IDLE))
 
-typedef struct XfpmBrightnessHalPrivate XfpmBrightnessHalPrivate;
-
-typedef struct
-{
-    GObject		 		parent;
-    XfpmBrightnessHalPrivate	       *priv;
-    
-} XfpmBrightnessHal;
+typedef struct XfpmIdlePrivate XfpmIdlePrivate;
 
 typedef struct
 {
-    GObjectClass 			parent_class;
+    GObject		  parent;
+    XfpmIdlePrivate	 *priv;
     
-} XfpmBrightnessHalClass;
+} XfpmIdle;
 
-GType        				xfpm_brightness_hal_get_type        (void) G_GNUC_CONST;
-XfpmBrightnessHal      		       *xfpm_brightness_hal_new             (XfconfChannel *channel);
+typedef struct
+{
+    GObjectClass 	  parent_class;
+    
+    void                 (*alarm_timeout)	    (XfpmIdle *idle,
+						     guint id);
+						     
+    void		 (*reset)		    (XfpmIdle *idle);
+    
+} XfpmIdleClass;
 
-void                                    xfpm_brightness_hal_set_on_battery  (XfpmBrightnessHal *brg,
-									     gboolean on_battery);
+GType        		  xfpm_idle_get_type        (void) G_GNUC_CONST;
+XfpmIdle       		 *xfpm_idle_new             (void);
+
+gboolean                  xfpm_idle_new_alarm       (XfpmIdle *idle,
+						     guint id,
+						     guint timeout);
+						     
+void                      xfpm_idle_alarm_reset_all (XfpmIdle *idle);
 G_END_DECLS
 
-#endif /* __XFPM_BRIGHTNESS_HAL_H */
+#endif /* __XFPM_IDLE_H */

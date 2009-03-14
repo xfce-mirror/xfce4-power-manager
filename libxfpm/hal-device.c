@@ -222,7 +222,7 @@ const gchar *hal_device_get_udi (HalDevice *device)
 gboolean
 hal_device_watch (HalDevice *device)
 {
-    g_return_val_if_fail (HAL_IS_DEVICE(device->priv->udi != NULL), FALSE);
+    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
     hal_device_add_watch(device);
 
     return device->priv->watch_added;
@@ -231,7 +231,7 @@ hal_device_watch (HalDevice *device)
 gboolean hal_device_get_property_bool (HalDevice *device, const gchar *property)
 {
     g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
-    g_return_val_if_fail (HAL_IS_DEVICE(device->priv->udi != NULL), FALSE);
+    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
     
     gboolean value = FALSE;
     GError *error = NULL;
@@ -254,7 +254,7 @@ gboolean hal_device_get_property_bool (HalDevice *device, const gchar *property)
 gint hal_device_get_property_int (HalDevice *device, const gchar *property)
 {
     g_return_val_if_fail (HAL_IS_DEVICE(device), 0);
-    g_return_val_if_fail (HAL_IS_DEVICE(device->priv->udi != NULL), 0);
+    g_return_val_if_fail (device->priv->udi != NULL, 0);
     
     gint value = 0;
     GError *error = NULL;
@@ -277,7 +277,7 @@ gint hal_device_get_property_int (HalDevice *device, const gchar *property)
 gchar *hal_device_get_property_string  (HalDevice *device, const gchar *property)
 {
     g_return_val_if_fail (HAL_IS_DEVICE(device), NULL);
-    g_return_val_if_fail (HAL_IS_DEVICE(device->priv->udi != NULL), NULL);
+    g_return_val_if_fail (device->priv->udi != NULL, NULL);
     
     gchar *value = NULL;
     GError *error = NULL;
@@ -300,7 +300,7 @@ gchar *hal_device_get_property_string  (HalDevice *device, const gchar *property
 gboolean hal_device_has_key (HalDevice *device, const gchar *key)
 {
     g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
-    g_return_val_if_fail (HAL_IS_DEVICE(device->priv->udi != NULL), FALSE);
+    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
     
     gboolean value = FALSE;
     GError *error = NULL;
@@ -324,7 +324,7 @@ gboolean hal_device_has_key (HalDevice *device, const gchar *key)
 gboolean hal_device_has_capability (HalDevice *device, const gchar *capability)
 {
     g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
-    g_return_val_if_fail (HAL_IS_DEVICE(device->priv->udi != NULL), FALSE);
+    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
     
     gboolean value = FALSE;
     GError *error = NULL;

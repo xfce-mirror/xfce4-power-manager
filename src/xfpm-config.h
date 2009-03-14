@@ -38,6 +38,9 @@ G_BEGIN_DECLS
 #define         LOCK_SCREEN_ON_SLEEP        "/xfce4-power-manager/lock-screen-suspend-hibernate"
 
 #define 	LCD_BRIGHTNESS_CFG          "/xfce4-power-manager/lcd-brightness"
+#define         BRIGHTNESS_ON_AC            "/xfce4-power-manager/brightness-on-ac"
+#define         BRIGHTNESS_ON_BATTERY       "/xfce4-power-manager/brightness-on-battery"
+
 #define 	LID_SWITCH_ON_AC_CFG        "/xfce4-power-manager/lid-action-on-ac"
 #define 	LID_SWITCH_ON_BATTERY_CFG   "/xfce4-power-manager/lid-action-on-battery"
 #define 	SLEEP_SWITCH_CFG            "/xfce4-power-manager/sleep-switch-action"

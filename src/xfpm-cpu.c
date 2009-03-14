@@ -38,8 +38,6 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#include <hal/libhal.h>
-
 #include "libxfpm/dbus-hal.h"
 #include "libxfpm/xfpm-string.h"
 
@@ -152,7 +150,6 @@ xfpm_cpu_update_governor (XfpmCpu *cpu)
 	return;
     }
 
-    libhal_free_string (current_governor);
 }
 
 static void

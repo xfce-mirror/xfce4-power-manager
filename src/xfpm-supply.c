@@ -65,6 +65,7 @@ struct XfpmSupplyPrivate
     
     gboolean 	   adapter_found;
     gboolean       adapter_present;
+
     guint8         critical_level;
     guint8         power_management;
 };
@@ -687,8 +688,8 @@ xfpm_supply_set_critical_power_level (XfpmSupply *supply)
 static void
 xfpm_supply_add_adapter (XfpmSupply *supply, const HalDevice *device)
 {
-    supply->priv->adapter_present = TRUE;
-
+    supply->priv->adapter_found = TRUE;
+    
     supply->priv->adapter = xfpm_adapter_new (device);
 	g_signal_connect (supply->priv->adapter, "adapter-changed", 
 			  G_CALLBACK(xfpm_supply_adapter_changed_cb), supply);
@@ -719,7 +720,7 @@ xfpm_supply_get_adapter (XfpmSupply *supply)
 }
 
 static void
-xfpm_supply_removed_adapter (XfpmSupply *supply)
+xfpm_supply_remove_adapter (XfpmSupply *supply)
 {
     supply->priv->adapter_found = FALSE;
     g_object_unref (supply->priv->adapter);
@@ -738,7 +739,7 @@ static void
 xfpm_supply_adapter_removed_cb (HalPower *power, XfpmSupply *supply)
 {
     if ( supply->priv->adapter_found )
-	xfpm_supply_removed_adapter (supply);
+	xfpm_supply_remove_adapter (supply);
 }
 
 static void

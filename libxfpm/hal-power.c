@@ -152,14 +152,13 @@ hal_power_device_removed_cb (HalManager *manager, const gchar *udi, HalPower *po
     }
     else if ( power->priv->adapter_found )
     {
-	gchar *adapter_udi = NULL;
-	g_object_get (G_OBJECT(power->priv->adapter), "udi", &adapter_udi, NULL);
+	const gchar *adapter_udi;
+	adapter_udi = hal_device_get_udi (power->priv->adapter );
+	
 	if (adapter_udi)
 	{
 	    if ( xfpm_strequal (udi, adapter_udi ) )
 		hal_power_remove_adapter (power);
-		
-	    g_free (adapter_udi);
 	}
     }
 }
@@ -295,6 +294,9 @@ hal_power_finalize(GObject *object)
     
     if ( power->priv->manager )
     	g_object_unref(power->priv->manager);
+	
+    if ( power->priv->adapter )
+	g_object_unref (power->priv->adapter);
     
     G_OBJECT_CLASS(hal_power_parent_class)->finalize(object);
 }

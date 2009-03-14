@@ -310,7 +310,7 @@
                                           <widget class="GtkHScale" id="sleep-dpms-on-ac">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="adjustment">0 0 100 1 10 10</property>
+                                            <property name="adjustment">10 0 60 1 0 0</property>
                                             <property name="show_fill_level">True</property>
                                             <property name="digits">0</property>
                                             <property name="value_pos">bottom</property>
@@ -341,7 +341,7 @@
                                           <widget class="GtkHScale" id="off-dpms-on-ac">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="adjustment">0 0 100 1 10 10</property>
+                                            <property name="adjustment">15 0 60 1 0 10</property>
                                             <property name="show_fill_level">True</property>
                                             <property name="digits">0</property>
                                             <property name="value_pos">bottom</property>
@@ -399,10 +399,10 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <widget class="GtkHScale" id="hscale3">
+                                      <widget class="GtkHScale" id="brg-on-ac">
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
-                                        <property name="adjustment">0 0 100 1 10 10</property>
+                                        <property name="adjustment">10 9 120 1 0 0</property>
                                         <property name="digits">0</property>
                                         <property name="value_pos">bottom</property>
                                       </widget>
@@ -628,7 +628,7 @@
                                               <widget class="GtkHScale" id="sleep-dpms-on-battery">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
-                                                <property name="adjustment">0 0 60 1 10 10</property>
+                                                <property name="adjustment">5 0 60 1 0 0</property>
                                                 <property name="show_fill_level">True</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -659,7 +659,7 @@
                                               <widget class="GtkHScale" id="off-dpms-on-battery">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
-                                                <property name="adjustment">0 0 60 1 10 10</property>
+                                                <property name="adjustment">5 0 60 1 0 0</property>
                                                 <property name="show_fill_level">True</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -717,10 +717,10 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <widget class="GtkHScale" id="hscale4">
+                                          <widget class="GtkHScale" id="brg-on-battery">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="adjustment">0 0 100 1 10 10</property>
+                                            <property name="adjustment">10 9 120 1 0 0</property>
                                             <property name="digits">0</property>
                                             <property name="value_pos">bottom</property>
                                           </widget>
