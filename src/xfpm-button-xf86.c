@@ -59,6 +59,8 @@ static void xfpm_button_xf86_class_init (XfpmButtonXf86Class *klass);
 static void xfpm_button_xf86_init       (XfpmButtonXf86 *button);
 static void xfpm_button_xf86_finalize   (GObject *object);
 
+static gpointer xfpm_button_xf86_object = NULL;
+
 #define XFPM_BUTTON_XF86_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_BUTTON_XF86, XfpmButtonXf86Private))
 
@@ -78,46 +80,6 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(XfpmButtonXf86, xfpm_button_xf86, G_TYPE_OBJECT)
-
-static void
-xfpm_button_xf86_class_init(XfpmButtonXf86Class *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-
-    signals[XF86_BUTTON_PRESSED] = 
-        g_signal_new("xf86-button-pressed",
-                      XFPM_TYPE_BUTTON_XF86,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmButtonXf86Class, xf86_button_pressed),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__ENUM,
-                      G_TYPE_NONE, 1, XFPM_TYPE_XF86_BUTTON);
-
-    object_class->finalize = xfpm_button_xf86_finalize;
-
-    g_type_class_add_private(klass,sizeof(XfpmButtonXf86Private));
-}
-
-static void
-xfpm_button_xf86_init(XfpmButtonXf86 *button)
-{
-    button->priv = XFPM_BUTTON_XF86_GET_PRIVATE(button);
-    
-    button->priv->screen = NULL;
-    button->priv->window = NULL;
-    
-    button->priv->hash = g_hash_table_new (NULL, NULL);
-}
-
-static void
-xfpm_button_xf86_finalize(GObject *object)
-{
-    XfpmButtonXf86 *button;
-
-    button = XFPM_BUTTON_XF86 (object);
-
-    G_OBJECT_CLASS(xfpm_button_xf86_parent_class)->finalize(object);
-}
 
 static GdkFilterReturn
 xfpm_button_xf86_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data)
@@ -229,13 +191,60 @@ xfpm_button_xf86_setup (XfpmButtonXf86 *button)
 			   xfpm_button_xf86_filter_x_events, button);
 }
 
+static void
+xfpm_button_xf86_class_init(XfpmButtonXf86Class *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+
+    signals[XF86_BUTTON_PRESSED] = 
+        g_signal_new("xf86-button-pressed",
+                      XFPM_TYPE_BUTTON_XF86,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmButtonXf86Class, xf86_button_pressed),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__ENUM,
+                      G_TYPE_NONE, 1, XFPM_TYPE_XF86_BUTTON);
+
+    object_class->finalize = xfpm_button_xf86_finalize;
+
+    g_type_class_add_private(klass,sizeof(XfpmButtonXf86Private));
+}
+
+static void
+xfpm_button_xf86_init(XfpmButtonXf86 *button)
+{
+    button->priv = XFPM_BUTTON_XF86_GET_PRIVATE(button);
+    
+    button->priv->screen = NULL;
+    button->priv->window = NULL;
+    
+    button->priv->hash = g_hash_table_new (NULL, NULL);
+    
+    xfpm_button_xf86_setup (button);
+}
+
+static void
+xfpm_button_xf86_finalize(GObject *object)
+{
+    XfpmButtonXf86 *button;
+
+    button = XFPM_BUTTON_XF86 (object);
+
+    G_OBJECT_CLASS(xfpm_button_xf86_parent_class)->finalize(object);
+}
+
 XfpmButtonXf86 *
 xfpm_button_xf86_new(void)
 {
-    XfpmButtonXf86 *button = NULL;
-    button = g_object_new (XFPM_TYPE_BUTTON_XF86, NULL);
+    if ( xfpm_button_xf86_object != NULL )
+    {
+	g_object_ref (xfpm_button_xf86_object);
+    }
+    else
+    {
+	xfpm_button_xf86_object = g_object_new (XFPM_TYPE_BUTTON_XF86, NULL);
+	g_object_add_weak_pointer (xfpm_button_xf86_object, &xfpm_button_xf86_object);
+    }
     
-    xfpm_button_xf86_setup (button);
-    
-    return button;
+    return XFPM_BUTTON_XF86 (xfpm_button_xf86_object);
 }

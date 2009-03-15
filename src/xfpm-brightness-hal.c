@@ -49,6 +49,8 @@
 #include "xfpm-idle.h"
 #include "xfpm-config.h"
 #include "xfpm-brightness-hal.h"
+#include "xfpm-button-xf86.h"
+#include "xfpm-enum-glib.h"
 
 /* Init */
 static void xfpm_brightness_hal_class_init (XfpmBrightnessHalClass *klass);
@@ -60,19 +62,21 @@ static void xfpm_brightness_hal_finalize   (GObject *object);
 
 struct XfpmBrightnessHalPrivate
 {
-    HalManager   *manager;
-    HalDevice    *device;
-    DBusGProxy   *proxy;
+    HalManager     *manager;
+    HalDevice      *device;
+    DBusGProxy     *proxy;
     
-    XfpmXfconf   *conf;
-    XfpmIdle     *idle;
+    XfpmXfconf     *conf;
+    XfpmIdle       *idle;
+    XfpmButtonXf86 *button;
     
-    gint          max_level;
-    guint         on_battery_timeout;
-    guint 	  on_ac_timeout;
-    gboolean      hw_found;
+    gint            max_level;
+    guint           on_battery_timeout;
+    guint 	    on_ac_timeout;
+    gboolean        hw_found;
+    gboolean        block;
     
-    gboolean      on_battery;
+    gboolean        on_battery;
 };
 
 enum
@@ -105,6 +109,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
     brg->priv->idle             = NULL;
     brg->priv->hw_found 	= FALSE;
     brg->priv->on_battery       = FALSE;
+    brg->priv->block            = FALSE;
     brg->priv->max_level        = 0;
 }
 
@@ -259,7 +264,12 @@ xfpm_brightness_hal_setup (XfpmBrightnessHal *brg)
 static void
 xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
 {
-    gint level = xfpm_brightness_hal_get_level(brg);
+    gint level;
+    
+    if (brg->priv->block )
+	return;
+    
+    level = xfpm_brightness_hal_get_level(brg);
      
     if ( level != brg->priv->max_level -1 )
 	    xfpm_brightness_hal_set_level(brg, brg->priv->max_level -1 );
@@ -268,7 +278,12 @@ xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
 static void
 xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHal *brg)
 {
-    gint level = xfpm_brightness_hal_get_level(brg);
+    gint level;
+    
+    if ( brg->priv->block )
+	brg->priv->block = FALSE;
+    
+    level = xfpm_brightness_hal_get_level(brg);
     
     if ( id == TIMEOUT_ON_AC_ID && brg->priv->on_ac_timeout != 9)
     {
@@ -361,7 +376,13 @@ xfpm_brightness_hal_property_changed_cb (XfconfChannel *channel, gchar *property
     
     if ( set )
 	xfpm_brightness_hal_set_timeouts (brg);
-    
+}
+
+static void
+xfpm_brightness_hal_button_pressed_cb (XfpmButtonXf86 *button, XfpmXF86Button type, XfpmBrightnessHal *brg)
+{
+    if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
+	brg->priv->block = TRUE;
 }
 
 XfpmBrightnessHal *
@@ -376,6 +397,10 @@ xfpm_brightness_hal_new ()
     {
 	brg->priv->idle     = xfpm_idle_new ();
 	brg->priv->conf     = xfpm_xfconf_new ();
+	brg->priv->button   = xfpm_button_xf86_new ();
+	
+	g_signal_connect (brg->priv->button, "xf86-button-pressed",	
+			  G_CALLBACK(xfpm_brightness_hal_button_pressed_cb), brg);
 	
 	g_signal_connect (brg->priv->idle, "alarm-timeout",
 			  G_CALLBACK(xfpm_brightness_hal_alarm_timeout_cb), brg);

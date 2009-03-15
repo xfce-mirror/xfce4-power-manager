@@ -19,7 +19,7 @@ Data_DATA =				\
 	gpm-primary-100-charging.svg	\
 	gpm-primary-charged.svg		\
 	gpm-primary-missing.svg		\
-    	gpm-ups-000.svg			\
+	gpm-ups-000.svg			\
 	gpm-ups-020.svg			\
 	gpm-ups-040.svg			\
 	gpm-ups-060.svg			\
@@ -40,4 +40,10 @@ Data_DATA =				\
 	gpm-mouse-000.svg		\
 	gpm-mouse-030.svg		\
 	gpm-mouse-060.svg		\
-	gpm-mouse-100.svg
+	gpm-mouse-100.svg		\
+	gpm-phone-000.svg		\
+	gpm-phone-030.svg		\
+	gpm-phone-060.svg		\
+	gpm-phone-100.svg		\
+	gpm-brightness-lcd-invalid.svg	\
+	gpm-brightness-lcd.svg
