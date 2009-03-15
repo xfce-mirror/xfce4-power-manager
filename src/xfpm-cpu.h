@@ -23,10 +23,6 @@
 
 #include <glib-object.h>
 
-#include <xfconf/xfconf.h>
-
-#include "libxfpm/dbus-hal.h"
-
 G_BEGIN_DECLS
 
 #define XFPM_TYPE_CPU        (xfpm_cpu_get_type () )
@@ -49,8 +45,7 @@ typedef struct
 } XfpmCpuClass;
 
 GType          xfpm_cpu_get_type        (void) G_GNUC_CONST;
-XfpmCpu       *xfpm_cpu_new             (XfconfChannel *channel,
-					 DbusHal *bus);
+XfpmCpu       *xfpm_cpu_new             (void);
 
 void           xfpm_cpu_set_on_battery  (XfpmCpu *cpu,
 					 gboolean on_battery);

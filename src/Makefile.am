@@ -12,6 +12,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-manager.h				\
 	xfpm-engine.c				\
 	xfpm-engine.h				\
+	xfpm-xfconf.c				\
+	xfpm-xfconf.h				\
 	xfpm-supply.c				\
 	xfpm-supply.h				\
 	xfpm-adapter.c				\
@@ -61,6 +63,7 @@ xfce4_power_manager_LDADD   =			\
 	$(top_builddir)/libxfpm/libxfpmhal.la	\
 	$(top_builddir)/libxfpm/libxfpmdbus.la	\
 	$(top_builddir)/libxfpm/libxfpmcommon.la\
+	$(top_builddir)/libxfpm/libxfpmhal_iface.la\
 	$(GTK_LIBS)				\
 	$(GLIB_LIBS)				\
 	$(DBUS_LIBS)				\
@@ -132,7 +135,9 @@ autostart_in_files = xfce-power-manager.desktop.in
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST = 					\
-	xfpm-marshal.list
+	xfpm-marshal.list		\
+	xfpm-enum-glib.h		\
+	$(autostart_in_files)
 
 DISTCLEANFILES =				\
 	$(BUILT_SOURCES)			\

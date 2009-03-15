@@ -59,7 +59,7 @@ desktop_DATA =	$(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 EXTRA_DIST = 					\
-	xfce-power-manaher-dbus-client.h	\
+	xfce-power-manager-dbus-client.h	\
 	xfpm-settings_glade.h			\
 	$(desktop_in_files)
 

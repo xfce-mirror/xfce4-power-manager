@@ -45,6 +45,7 @@
 #include "libxfpm/hal-device.h"
 #include "libxfpm/xfpm-string.h"
 
+#include "xfpm-xfconf.h"
 #include "xfpm-idle.h"
 #include "xfpm-config.h"
 #include "xfpm-brightness-hal.h"
@@ -63,6 +64,7 @@ struct XfpmBrightnessHalPrivate
     HalDevice    *device;
     DBusGProxy   *proxy;
     
+    XfpmXfconf   *conf;
     XfpmIdle     *idle;
     
     gint          max_level;
@@ -124,6 +126,9 @@ xfpm_brightness_hal_finalize(GObject *object)
 	
     if ( brg->priv->device )
 	g_object_unref (brg->priv->device);
+	
+    if ( brg->priv->conf )
+	g_object_unref (brg->priv->conf);
 	
     G_OBJECT_CLASS(xfpm_brightness_hal_parent_class)->finalize(object);
 }
@@ -290,10 +295,10 @@ xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHa
 }
 
 static void
-xfpm_brightness_hal_load_config (XfpmBrightnessHal *brg, XfconfChannel *channel)
+xfpm_brightness_hal_load_config (XfpmBrightnessHal *brg)
 {
     brg->priv->on_ac_timeout =
-	xfconf_channel_get_uint (channel, BRIGHTNESS_ON_AC, 9);
+	xfconf_channel_get_uint (brg->priv->conf->channel, BRIGHTNESS_ON_AC, 9);
 	
     if ( brg->priv->on_ac_timeout > 120 || brg->priv->on_ac_timeout < 9)
     {
@@ -302,7 +307,7 @@ xfpm_brightness_hal_load_config (XfpmBrightnessHal *brg, XfconfChannel *channel)
     }
     
     brg->priv->on_battery_timeout =
-	xfconf_channel_get_uint (channel, BRIGHTNESS_ON_BATTERY, 10);
+	xfconf_channel_get_uint (brg->priv->conf->channel, BRIGHTNESS_ON_BATTERY, 10);
 	
     if ( brg->priv->on_battery_timeout > 120 || brg->priv->on_battery_timeout < 9)
     {
@@ -360,7 +365,7 @@ xfpm_brightness_hal_property_changed_cb (XfconfChannel *channel, gchar *property
 }
 
 XfpmBrightnessHal *
-xfpm_brightness_hal_new (XfconfChannel *channel)
+xfpm_brightness_hal_new ()
 {
     XfpmBrightnessHal *brg = NULL;
     brg = g_object_new (XFPM_TYPE_BRIGHTNESS_HAL, NULL);
@@ -370,6 +375,7 @@ xfpm_brightness_hal_new (XfconfChannel *channel)
     if ( brg->priv->hw_found || brg->priv->max_level != 0 )
     {
 	brg->priv->idle     = xfpm_idle_new ();
+	brg->priv->conf     = xfpm_xfconf_new ();
 	
 	g_signal_connect (brg->priv->idle, "alarm-timeout",
 			  G_CALLBACK(xfpm_brightness_hal_alarm_timeout_cb), brg);
@@ -377,9 +383,9 @@ xfpm_brightness_hal_new (XfconfChannel *channel)
 	g_signal_connect (brg->priv->idle, "reset",
 			  G_CALLBACK(xfpm_brightness_hal_reset_cb), brg);
 			  
-	xfpm_brightness_hal_load_config (brg, channel);
+	xfpm_brightness_hal_load_config (brg);
 	
-	g_signal_connect (channel, "property-changed", 
+	g_signal_connect (brg->priv->conf->channel, "property-changed", 
 			  G_CALLBACK(xfpm_brightness_hal_property_changed_cb), brg);
 			  
 	xfpm_brightness_hal_set_timeouts (brg);

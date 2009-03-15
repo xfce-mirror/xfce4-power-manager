@@ -47,14 +47,20 @@ typedef struct
 
 GType        	    xfpm_tray_icon_get_type        (void) G_GNUC_CONST;
 XfpmTrayIcon       *xfpm_tray_icon_new             (void);
+
 void                xfpm_tray_icon_set_icon        (XfpmTrayIcon *icon,
 						    const gchar *icon_name);
+						    
 void                xfpm_tray_icon_set_tooltip     (XfpmTrayIcon *icon,
 						    const gchar *tooltip);
+						    
 void                xfpm_tray_icon_set_visible     (XfpmTrayIcon *icon,
 						    gboolean visible);
+						    
 gboolean            xfpm_tray_icon_get_visible     (XfpmTrayIcon *icon);
+
 GtkStatusIcon      *xfpm_tray_icon_get_tray_icon   (XfpmTrayIcon *icon);
+
 const gchar        *xfpm_tray_icon_get_icon_name   (XfpmTrayIcon *icon);  
 
 G_END_DECLS

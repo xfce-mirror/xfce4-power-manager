@@ -41,7 +41,7 @@
 #include <libxfce4util/libxfce4util.h>
 #include <xfconf/xfconf.h>
 
-#include "libxfpm/dbus-hal.h"
+#include "libxfpm/hal-iface.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
 
@@ -51,6 +51,7 @@
 
 #include "xfpm-engine.h"
 #include "xfpm-supply.h"
+#include "xfpm-xfconf.h"
 #include "xfpm-cpu.h"
 #include "xfpm-network-manager.h"
 #include "xfpm-button-xf86.h"
@@ -70,14 +71,13 @@ static void xfpm_engine_finalize   (GObject *object);
 
 struct XfpmEnginePrivate
 {
-    DbusHal   	      *hbus;
-    XfconfChannel     *channel;
+    XfpmXfconf        *conf;
     XfpmSupply        *supply;
     XfpmCpu           *cpu;
     XfpmButtonXf86    *xf86_button;
     XfpmLidHal        *lid;
     XfpmBrightnessHal *brg_hal;
-    
+    HalIface          *iface;
 #ifdef HAVE_DPMS
     XfpmDpms          *dpms;
 #endif
@@ -94,7 +94,6 @@ struct XfpmEnginePrivate
     XfpmShutdownRequest lid_button_ac;
     XfpmShutdownRequest lid_button_battery;
     gboolean            lock_screen;
-    
 };
 
 G_DEFINE_TYPE(XfpmEngine, xfpm_engine, G_TYPE_OBJECT)
@@ -114,11 +113,11 @@ xfpm_engine_init (XfpmEngine *engine)
 {
     engine->priv = XFPM_ENGINE_GET_PRIVATE(engine);
     
-    engine->priv->hbus = dbus_hal_new ();
+    engine->priv->iface       = hal_iface_new ();
 
     engine->priv->button_timer= g_timer_new ();
 
-    engine->priv->channel     = NULL;
+    engine->priv->conf        = NULL;
     engine->priv->supply      = NULL;
 #ifdef HAVE_DPMS
     engine->priv->dpms        = NULL;
@@ -127,6 +126,8 @@ xfpm_engine_init (XfpmEngine *engine)
     engine->priv->xf86_button = NULL;
     engine->priv->lid         = NULL;
     engine->priv->brg_hal     = NULL;
+    
+    engine->priv->power_management = 0;
 }
 
 static void
@@ -136,8 +137,8 @@ xfpm_engine_finalize (GObject *object)
 
     engine = XFPM_ENGINE(object);
     
-    if ( engine->priv->channel )
-    	g_object_unref (engine->priv->channel);
+    if ( engine->priv->conf )
+    	g_object_unref (engine->priv->conf);
 	
     if ( engine->priv->supply )
     	g_object_unref (engine->priv->supply);
@@ -152,8 +153,8 @@ xfpm_engine_finalize (GObject *object)
     if ( engine->priv->lid)
     	g_object_unref(engine->priv->lid);
     
-    if ( engine->priv->hbus)
-    	g_object_unref(engine->priv->hbus);
+    if ( engine->priv->iface)
+    	g_object_unref(engine->priv->iface);
 
     if ( engine->priv->button_timer)
     	g_timer_destroy (engine->priv->button_timer);
@@ -164,6 +165,7 @@ xfpm_engine_finalize (GObject *object)
 static void
 xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
 {
+    GError *error = NULL;
     const gchar *action = xfpm_int_to_shutdown_string (shutdown);
 	
     if ( xfpm_strequal(action, "Nothing") )
@@ -179,8 +181,13 @@ xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
 	if ( shutdown != XFPM_DO_SHUTDOWN && engine->priv->lock_screen )
 	    xfpm_lock_screen ();
 	    
-	dbus_hal_shutdown (engine->priv->hbus, action, NULL);
+	hal_iface_shutdown (engine->priv->iface, action, &error);
 	xfpm_send_message_to_network_manager ("wake");
+	if ( error )
+	{
+	    g_warning ("%s", error->message);
+	    g_error_free (error);
+	}
     }
 }
 
@@ -262,14 +269,40 @@ xfpm_engine_lid_closed_cb (XfpmLidHal *lid, XfpmEngine *engine)
 }
 
 static void
+xfpm_engine_check_hal_iface (XfpmEngine *engine)
+{
+    gboolean can_suspend, can_hibernate, caller, cpu;
+    
+    if (!hal_iface_connect (engine->priv->iface))
+	return;
+    
+    g_object_get (G_OBJECT(engine->priv->iface), 
+		  "caller-privilege", &caller,
+		  "can-suspend", &can_suspend,
+		  "can-hibernate", &can_hibernate,
+		  "cpu-freq-iface", &cpu,
+		  NULL);
+		  
+    if ( can_hibernate )
+	engine->priv->power_management |= SYSTEM_CAN_HIBERNATE;
+    if ( can_suspend )
+	engine->priv->power_management |= SYSTEM_CAN_SUSPEND;
+	
+    //FIXME: Show errors here
+   
+}
+
+static void
 xfpm_engine_load_all (XfpmEngine *engine)
 {
+    xfpm_engine_check_hal_iface (engine);
+    
 #ifdef HAVE_DPMS		      
-    engine->priv->dpms = xfpm_dpms_new (engine->priv->channel);
+    engine->priv->dpms = xfpm_dpms_new ();
 #endif
-    engine->priv->cpu = xfpm_cpu_new (engine->priv->channel, engine->priv->hbus);
+    engine->priv->cpu = xfpm_cpu_new ();
 
-    engine->priv->supply = xfpm_supply_new (engine->priv->hbus, engine->priv->channel);
+    engine->priv->supply = xfpm_supply_new (engine->priv->power_management);
 
     g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
 		      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
@@ -297,7 +330,7 @@ xfpm_engine_load_all (XfpmEngine *engine)
     /*
      * Brightness HAL
      */
-    engine->priv->brg_hal = xfpm_brightness_hal_new (engine->priv->channel);
+    engine->priv->brg_hal = xfpm_brightness_hal_new ();
     
 }
 
@@ -307,46 +340,46 @@ xfpm_engine_load_configuration (XfpmEngine *engine)
     gchar *str;
     gint val;
     
-    str = xfconf_channel_get_string (engine->priv->channel, SLEEP_SWITCH_CFG, "Nothing");
+    str = xfconf_channel_get_string (engine->priv->conf->channel, SLEEP_SWITCH_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
     
     if ( val == -1 || val == 3)
     {
 	g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
 	engine->priv->sleep_button = XFPM_DO_NOTHING;
-	xfconf_channel_set_string (engine->priv->channel, SLEEP_SWITCH_CFG, "Nothing");
+	xfconf_channel_set_string (engine->priv->conf->channel, SLEEP_SWITCH_CFG, "Nothing");
     }
     else engine->priv->sleep_button = val;
     
     g_free (str);
     
-    str = xfconf_channel_get_string (engine->priv->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
+    str = xfconf_channel_get_string (engine->priv->conf->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
 
     if ( val == -1 || val == 3)
     {
 	g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_AC_CFG);
 	engine->priv->lid_button_ac = XFPM_DO_NOTHING;
-	xfconf_channel_set_string (engine->priv->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
+	xfconf_channel_set_string (engine->priv->conf->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
     }
     else engine->priv->lid_button_ac = val;
     
     g_free (str);
     
-    str = xfconf_channel_get_string (engine->priv->channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
+    str = xfconf_channel_get_string (engine->priv->conf->channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
     
     if ( val == -1 || val == 3)
     {
 	g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_BATTERY_CFG);
 	engine->priv->lid_button_battery = XFPM_DO_NOTHING;
-	xfconf_channel_set_string (engine->priv->channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
+	xfconf_channel_set_string (engine->priv->conf->channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
     }
     else engine->priv->lid_button_battery = val;
     
     g_free (str);
     
-    engine->priv->lock_screen = xfconf_channel_get_bool (engine->priv->channel, LOCK_SCREEN_ON_SLEEP, TRUE);
+    engine->priv->lock_screen = xfconf_channel_get_bool (engine->priv->conf->channel, LOCK_SCREEN_ON_SLEEP, TRUE);
 }
 
 static void
@@ -410,9 +443,9 @@ xfpm_engine_new(void)
        	g_error_free (error);
     }	
     
-    engine->priv->channel   = xfconf_channel_new ("xfce4-power-manager");
+    engine->priv->conf   = xfpm_xfconf_new ();
     
-    g_signal_connect (engine->priv->channel, "property-changed",
+    g_signal_connect (engine->priv->conf->channel, "property-changed",
 		      G_CALLBACK(xfpm_engine_property_changed_cb), engine);
     
     xfpm_engine_load_configuration (engine);

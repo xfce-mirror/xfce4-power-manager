@@ -23,11 +23,8 @@
 
 #include <glib-object.h>
 
-#include <xfconf/xfconf.h>
-
 #include "xfpm-enum.h"
 #include "xfpm-enum-glib.h"
-#include "dbus-hal.h"
 
 G_BEGIN_DECLS
 
@@ -63,8 +60,8 @@ typedef struct
 
 GType   	         xfpm_supply_get_type       (void) G_GNUC_CONST;
 
-XfpmSupply     	        *xfpm_supply_new            (DbusHal *bus,
-						     XfconfChannel *channel);
+XfpmSupply     	        *xfpm_supply_new            (guint8 power_management_info);
+						     
 G_END_DECLS
 
 #endif /* __XFPM_SUPPLY_H */

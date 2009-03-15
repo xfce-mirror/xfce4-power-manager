@@ -45,7 +45,7 @@ typedef struct
 } XfpmBrightnessHalClass;
 
 GType        				xfpm_brightness_hal_get_type        (void) G_GNUC_CONST;
-XfpmBrightnessHal      		       *xfpm_brightness_hal_new             (XfconfChannel *channel);
+XfpmBrightnessHal      		       *xfpm_brightness_hal_new             (void);
 
 void                                    xfpm_brightness_hal_set_on_battery  (XfpmBrightnessHal *brg,
 									     gboolean on_battery);

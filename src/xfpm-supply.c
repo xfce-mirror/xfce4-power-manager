@@ -31,6 +31,7 @@
 #include <libxfcegui4/libxfcegui4.h>
 
 #include "libxfpm/hal-power.h"
+#include "libxfpm/hal-iface.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
 
@@ -40,6 +41,7 @@
 #include "xfpm-notify.h"
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
+#include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 
 /* Init */
@@ -52,10 +54,9 @@ static void xfpm_supply_finalize   (GObject *object);
 
 struct XfpmSupplyPrivate
 {
-    DbusHal       *hbus;
     XfpmNotify    *notify;
     XfpmAdapter   *adapter;
-    XfconfChannel *channel;
+    XfpmXfconf    *conf;
     
     HalPower      *power;
     GHashTable    *hash;
@@ -137,8 +138,8 @@ xfpm_supply_init (XfpmSupply *supply)
     supply->priv->power   = hal_power_new ();
     supply->priv->hash    = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
     supply->priv->notify  = xfpm_notify_new ();
+    supply->priv->conf    = xfpm_xfconf_new ();
     
-    supply->priv->channel = NULL;
     supply->priv->adapter = NULL;
     supply->priv->adapter_found = FALSE;
 }
@@ -157,6 +158,9 @@ xfpm_supply_finalize (GObject *object)
 	
     if ( supply->priv->notify )
     	g_object_unref (supply->priv->notify);
+	
+    if ( supply->priv->conf )
+    	g_object_unref (supply->priv->conf);
     
     G_OBJECT_CLASS(xfpm_supply_parent_class)->finalize(object);
 }
@@ -416,7 +420,7 @@ xfpm_supply_show_battery_notification (XfpmSupply *supply, XfpmBatteryState stat
 	g_object_get (G_OBJECT(device), "type", &type, NULL);
     else
     {
-	g_critical ("Unable to get device type\n");
+	g_critical ("Unable to get device type");
 	return;
     }
     
@@ -563,14 +567,12 @@ static void
 xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupply *supply )
 {
     if ( !supply->priv->adapter_found )
-    	g_critical ("Callback from the adapter object but no adapter found in the system\n");
+    	g_warning ("Callback from the adapter object but no adapter found in the system");
 	
-    
     supply->priv->adapter_present = present;
     xfpm_supply_set_adapter_presence (supply);
     
     g_signal_emit (G_OBJECT(supply), signals[ON_BATTERY], 0, !supply->priv->adapter_present);
-    
 }
 
 static XfpmBattery *
@@ -618,7 +620,7 @@ xfpm_supply_remove_battery (XfpmSupply *supply,  const HalBattery *device)
 	TRACE("Removing battery %s", udi);
 	g_object_unref(battery);
 	if (!g_hash_table_remove(supply->priv->hash, udi))
-		g_critical ("Unable to removed battery object from hash\n");
+		g_critical ("Unable to removed battery object from hash");
     }
     
 }
@@ -807,26 +809,26 @@ xfpm_supply_load_configuration (XfpmSupply *supply)
     gchar *str;
     gint val;
     
-    str = xfconf_channel_get_string (supply->priv->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
+    str = xfconf_channel_get_string (supply->priv->conf->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
     
     if ( val == -1 || val > 3 || val == 1)
     {
 	g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
 	supply->priv->critical_action = XFPM_DO_NOTHING;
-	xfconf_channel_set_string ( supply->priv->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
+	xfconf_channel_set_string ( supply->priv->conf->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
     }
     else supply->priv->critical_action = val;
     
     g_free (str);
     
     supply->priv->show_icon =
-    	xfconf_channel_get_uint (supply->priv->channel, SHOW_TRAY_ICON_CFG, 0);
+    	xfconf_channel_get_uint (supply->priv->conf->channel, SHOW_TRAY_ICON_CFG, 0);
 	
     if ( supply->priv->show_icon < 0 || supply->priv->show_icon > 3 )
     {
 	g_warning ("Invalid value %d for property %s, using default\n", supply->priv->show_icon, SHOW_TRAY_ICON_CFG);
-	xfconf_channel_set_uint (supply->priv->channel, CRITICAL_BATT_ACTION_CFG, 0);
+	xfconf_channel_set_uint (supply->priv->conf->channel, CRITICAL_BATT_ACTION_CFG, 0);
     }
 }
 
@@ -834,20 +836,17 @@ xfpm_supply_load_configuration (XfpmSupply *supply)
  * Public functions
  */ 
 XfpmSupply *
-xfpm_supply_new (DbusHal *bus, XfconfChannel *channel )
+xfpm_supply_new (guint8 power_management_info)
 {
     XfpmSupply *supply = NULL;
     supply = g_object_new(XFPM_TYPE_SUPPLY,NULL);
     
-    supply->priv->hbus = bus;
-    supply->priv->channel    = channel;
     
-    g_object_get (G_OBJECT(supply->priv->hbus) , 
-		  "power-management-info", &supply->priv->power_management, NULL);
-
+    supply->priv->power_management = power_management_info;
+    
     xfpm_supply_load_configuration (supply);
       
-    g_signal_connect (channel, "property-changed", 
+    g_signal_connect (supply->priv->conf->channel, "property-changed", 
 		      G_CALLBACK(xfpm_supply_property_changed_cb), supply);
 
     xfpm_supply_monitor_start(supply);

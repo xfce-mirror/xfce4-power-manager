@@ -166,7 +166,7 @@ out:
 }
 
 HalManager *
-hal_manager_new(void)
+hal_manager_new (void)
 {
     HalManager *manager = NULL;
     manager = g_object_new (HAL_TYPE_MANAGER, NULL);

@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
+ * * Copyright (C) 2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -18,50 +18,36 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_DPMS_H
-#define __XFPM_DPMS_H
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ifndef __XFPM_XFCONF_H
+#define __XFPM_XFCONF_H
 
 #include <glib-object.h>
 
 #include <xfconf/xfconf.h>
 
-#ifdef HAVE_DPMS
-
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DPMS        (xfpm_dpms_get_type () )
-#define XFPM_DPMS(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_DPMS, XfpmDpms))
-#define XFPM_IS_DPMS(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_DPMS))
+#define XFPM_TYPE_XFCONF        (xfpm_xfconf_get_type () )
+#define XFPM_XFCONF(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_XFCONF, XfpmXfconf))
+#define XFPM_IS_XFCONF(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_XFCONF))
 
-typedef struct XfpmDpmsPrivate XfpmDpmsPrivate;
 
 typedef struct
 {
     GObject		  parent;
-    XfpmDpmsPrivate	 *priv;
+    XfconfChannel        *channel;
     
-} XfpmDpms;
+} XfpmXfconf;
 
 typedef struct
 {
-    GObjectClass 	  parent_class;
+    GObjectClass	  parent_class;
     
-} XfpmDpmsClass;
+} XfpmXfconfClass;
 
-GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
-XfpmDpms       *xfpm_dpms_new             (void);
-
-void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms,
-					   gboolean on_battery);
-gboolean        xfpm_dpms_capable         (XfpmDpms *dpms);
-
+GType        		  xfpm_xfconf_get_type        (void) G_GNUC_CONST;
+XfpmXfconf       	 *xfpm_xfconf_new             (void);
 
 G_END_DECLS
 
-#endif /* HAVE_DPMS */
-
-#endif /* __XFPM_DPMS_H */
+#endif /* __XFPM_XFCONF_H */

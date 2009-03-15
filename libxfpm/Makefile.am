@@ -1,13 +1,13 @@
 noinst_LTLIBRARIES = 			\
 	libxfpmhal.la			\
-	libxfpmdbus.la			\
+	libxfpmhal_iface.la		\
 	libxfpmcommon.la
 
 libxfpmhal_la_SOURCES =			\
 	xfpm-string.c			\
 	xfpm-string.h			\
 	hal-marshal.c			\
-	hal-mardhal.h			\
+	hal-marshal.h			\
 	hal-manager.c			\
 	hal-manager.h			\
 	hal-power.c			\
@@ -15,22 +15,23 @@ libxfpmhal_la_SOURCES =			\
 	hal-device.c			\
 	hal-device.h			\
 	hal-battery.c			\
-	hal-battery.h
+	hal-battery.h			\
+	hal-enum.h
 
 libxfpmhal_la_CFLAGS =			\
 	$(GLIB_CFLAGS)			\
 	$(DBUS_GLIB_CFLAGS)
 
-libxfpmdbus_la_SOURCES =		\
-	dbus-hal.c			\
-	dbus-hal.h
+libxfpmhal_iface_la_SOURCES =		\
+	hal-iface.c			\
+	hal-iface.h			\
+	xfpm-string.c			\
+	xfpm-string.h
 
-
-libxfpmdbus_la_CFLAGS =			\
+libxfpmhal_iface_la_CFLAGS =		\
 	$(GLIB_CFLAGS)			\
 	$(DBUS_CFLAGS)			\
 	$(DBUS_GLIB_CFLAGS)
-
 
 libxfpmcommon_la_SOURCES =      	\
         xfpm-string.c           	\

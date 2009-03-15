@@ -49,6 +49,7 @@
 #include "libxfpm/xfpm-string.h"
 
 #include "xfpm-dpms.h"
+#include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 
 #ifdef HAVE_DPMS
@@ -65,7 +66,7 @@ static void xfpm_dpms_finalize   (GObject *object);
 
 struct XfpmDpmsPrivate
 {
-    XfconfChannel *channel;
+    XfpmXfconf    *conf;
     
     gboolean       dpms_capable;
     gboolean       dpms_enabled;
@@ -88,7 +89,6 @@ xfpm_dpms_class_init(XfpmDpmsClass *klass)
     
     object_class->finalize = xfpm_dpms_finalize;
 
-
     g_type_class_add_private(klass,sizeof(XfpmDpmsPrivate));
 }
 
@@ -99,6 +99,7 @@ xfpm_dpms_init(XfpmDpms *dpms)
     
     dpms->priv->dpms_capable = DPMSCapable (GDK_DISPLAY());
     
+    dpms->priv->conf = NULL;
 }
 
 static void
@@ -107,6 +108,9 @@ xfpm_dpms_finalize(GObject *object)
     XfpmDpms *dpms;
 
     dpms = XFPM_DPMS (object);
+    
+    if ( dpms->priv->conf )
+	g_object_unref (dpms->priv->conf);
 
     G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }
@@ -268,21 +272,21 @@ static void
 xfpm_dpms_load_configuration (XfpmDpms *dpms)
 {
     dpms->priv->dpms_enabled =
-    	xfconf_channel_get_bool (dpms->priv->channel, DPMS_ENABLED_CFG, TRUE);
+    	xfconf_channel_get_bool (dpms->priv->conf->channel, DPMS_ENABLED_CFG, TRUE);
     
     dpms->priv->sleep_on_battery = 
-    	MIN( xfconf_channel_get_uint( dpms->priv->channel, ON_BATT_DPMS_SLEEP, 3) * 60, 3600);
+    	MIN( xfconf_channel_get_uint( dpms->priv->conf->channel, ON_BATT_DPMS_SLEEP, 3) * 60, 3600);
 
     dpms->priv->off_on_battery = 
-    	MIN(xfconf_channel_get_uint( dpms->priv->channel, ON_BATT_DPMS_OFF, 5) * 60, 3600);
+    	MIN(xfconf_channel_get_uint( dpms->priv->conf->channel, ON_BATT_DPMS_OFF, 5) * 60, 3600);
 	
     dpms->priv->sleep_on_ac = 
-    	MIN(xfconf_channel_get_uint( dpms->priv->channel, ON_AC_DPMS_SLEEP, 10) * 60, 3600);
+    	MIN(xfconf_channel_get_uint( dpms->priv->conf->channel, ON_AC_DPMS_SLEEP, 10) * 60, 3600);
     
     dpms->priv->off_on_ac = 
-    	MIN(xfconf_channel_get_uint( dpms->priv->channel, ON_AC_DPMS_OFF, 15) * 60, 3600);
+    	MIN(xfconf_channel_get_uint( dpms->priv->conf->channel, ON_AC_DPMS_OFF, 15) * 60, 3600);
 	
-    gchar *str = xfconf_channel_get_string (dpms->priv->channel, DPMS_SLEEP_MODE, "sleep");
+    gchar *str = xfconf_channel_get_string (dpms->priv->conf->channel, DPMS_SLEEP_MODE, "sleep");
     
     if ( xfpm_strequal (str, "sleep" ) )
     {
@@ -301,11 +305,10 @@ xfpm_dpms_load_configuration (XfpmDpms *dpms)
 }
 
 XfpmDpms *
-xfpm_dpms_new (XfconfChannel *channel)
+xfpm_dpms_new (void)
 {
     XfpmDpms *dpms = NULL;
     dpms = g_object_new (XFPM_TYPE_DPMS, NULL);
-    
     
     if ( !dpms->priv->dpms_capable )
     {
@@ -313,10 +316,10 @@ xfpm_dpms_new (XfconfChannel *channel)
     	goto out;
     }
 
-    dpms->priv->channel = channel;
-    
+    dpms->priv->conf = xfpm_xfconf_new ();
     xfpm_dpms_load_configuration (dpms);
-    g_signal_connect (dpms->priv->channel, "property-changed",
+    
+    g_signal_connect (dpms->priv->conf->channel, "property-changed",
 		      G_CALLBACK(xfpm_dpms_value_changed_cb), dpms);
 		      
     g_timeout_add_seconds ( CHECK_DPMS_TIMEOUT,
