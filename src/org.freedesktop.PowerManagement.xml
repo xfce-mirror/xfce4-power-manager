@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<node name="/org/freedesktop/PowerManagement">
+    <interface name="org.freedesktop.PowerManagement">
+        <annotation name="org.freedesktop.DBus.GLib.CSymbol"
+                    value="xfpm_engine_dbus"/>
+        <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
+                    value="xfpm_engine_dbus_client"/>   
+
+    <method name="Hibernate">
+    </method>
+    
+    <method name="Suspend">
+    </method>
+    
+    <method name="CanSuspend">
+      <arg type="b" name="can_suspend" direction="out"/>
+    </method>
+    
+    <method name="CanHibernate">
+      <arg type="b" name="can_hibernate" direction="out"/>
+    </method>
+	
+    </interface>
+</node>

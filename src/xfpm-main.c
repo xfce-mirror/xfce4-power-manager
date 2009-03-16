@@ -107,11 +107,12 @@ int main(int argc, char **argv)
     
     if ( error )
     {
-	gchar *message = g_strdup(_("Unable to connection to the message bus session"));
+	gchar *message = g_strdup(_("Unable to get connection to the message bus session"));
 	message = g_strdup_printf("%s: ",error->message);
-	xfpm_popup_message(_("Xfce power manager"),
-			   message,
-			   GTK_MESSAGE_ERROR);
+	
+	xfpm_error (_("Xfce Power Manager"),
+		    message );
+			   
 	g_error("%s: \n",message);
 	g_print("\n");
 	g_error_free(error);
@@ -166,8 +167,13 @@ int main(int argc, char **argv)
 	return EXIT_SUCCESS;
     }
     
-    
-    if (xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), 
+    if (xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(bus), "org.freedesktop.PowerManagement") )
+    {
+	
+	xfpm_info(_("Xfce Power Manager"),
+		  _("Another power manager is already running"));
+    }
+    else if (xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), 
 				      "org.xfce.PowerManager"))
     {
 	g_print (_("Xfce power manager is already running"));
@@ -180,7 +186,7 @@ int main(int argc, char **argv)
     	XfpmManager *manager;
     	manager = xfpm_manager_new(bus);
     	xfpm_manager_start(manager);
+	gtk_main();
     }
-    
     return EXIT_SUCCESS;
 }

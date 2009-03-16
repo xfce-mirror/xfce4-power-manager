@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gtk/gtk.h>
 #include <glib.h>
 
 #include <libxfce4util/libxfce4util.h>
@@ -56,8 +57,6 @@ struct XfpmManagerPrivate
     XfpmEngine *engine;
     
     DBusGConnection *session_bus;
-    
-    GMainLoop *loop;
 };
 
 G_DEFINE_TYPE(XfpmManager, xfpm_manager, G_TYPE_OBJECT)
@@ -78,7 +77,6 @@ xfpm_manager_init(XfpmManager *manager)
     manager->priv = XFPM_MANAGER_GET_PRIVATE(manager);
 
     manager->priv->session_bus   = NULL;
-    manager->priv->loop          = g_main_loop_new(NULL, FALSE);
 }
 
 static void
@@ -91,9 +89,6 @@ xfpm_manager_finalize(GObject *object)
     if ( manager->priv->session_bus )
 	dbus_g_connection_unref(manager->priv->session_bus);
 	
-    if ( manager->priv->loop ) 
-	g_main_loop_unref(manager->priv->loop);
-	
     if ( manager->priv->engine )
     	g_object_unref (manager->priv->engine);
 
@@ -103,11 +98,14 @@ xfpm_manager_finalize(GObject *object)
 static gboolean
 xfpm_manager_quit (XfpmManager *manager)
 {
-    g_main_loop_quit(manager->priv->loop);
     xfpm_dbus_release_name(dbus_g_connection_get_connection(manager->priv->session_bus),
 			   "org.xfce.PowerManager");
-    
+
+    xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
+			    "org.freedesktop.PowerManagement");
+				  
     g_object_unref(G_OBJECT(manager));
+    gtk_main_quit ();
     return TRUE;
 }
 
@@ -127,15 +125,21 @@ xfpm_manager_new(DBusGConnection *bus)
 
 void xfpm_manager_start (XfpmManager *manager)
 {
-    if ( !xfpm_dbus_register_name(dbus_g_connection_get_connection(manager->priv->session_bus),
+    if ( !xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 				  "org.xfce.PowerManager") ) 
     {
 	g_critical("Unable to reserve bus name\n");
     }
     
+    if (!xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
+				  "org.freedesktop.PowerManagement") )
+    {
+    
+	g_critical ("Unable to reserve bus name\n");
+    }
+    
     manager->priv->engine = xfpm_engine_new ();
     
-    g_main_loop_run(manager->priv->loop);
 }
 
 /*

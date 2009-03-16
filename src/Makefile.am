@@ -5,6 +5,7 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-enum-types.h			\
 	xfpm-marshal.c				\
 	xfpm-marshal.h				\
+	org.freedestop.PowerManagement-server.h	\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
 	xfpm-main.c				\
@@ -81,6 +82,7 @@ if MAINTAINER_MODE
 BUILT_SOURCES = 				\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
+	org.freedesktop.PowerManagement-server.h\
 	xfpm-marshal.c				\
 	xfpm-marshal.h				\
 	xfpm-enum-types.c			\
@@ -123,8 +125,11 @@ xfpm-marshal.c: xfpm-marshal.h
 xfce-power-manager-dbus-server.h: $(srcdir)/org.xfce.Power.Manager.xml
 	dbus-binding-tool --mode=glib-server --prefix=xfpm_manager $< >$@
 
-xfce-power-manager-dbus-client.h: $(srdir)org.xfce.Power.Manager.xml
+xfce-power-manager-dbus-client.h: $(srcdir)/org.xfce.Power.Manager.xml
 	dbus-binding-tool --mode=glib-client --prefix=xfpm_manager $< >$@
+
+org.freedesktop.PowerManagement-server.h: $(srcdir)/org.freedesktop.PowerManagement.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_engine $< >$@
 
 endif
 

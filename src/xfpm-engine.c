@@ -67,29 +67,32 @@ static void xfpm_engine_class_init (XfpmEngineClass *klass);
 static void xfpm_engine_init       (XfpmEngine *engine);
 static void xfpm_engine_finalize   (GObject *object);
 
+static void xfpm_engine_dbus_class_init  (XfpmEngineClass *klass);
+static void xfpm_engine_dbus_init	 (XfpmEngine *engine);
+
 #define XFPM_ENGINE_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_ENGINE, XfpmEnginePrivate))
 
 struct XfpmEnginePrivate
 {
-    XfpmXfconf        *conf;
-    XfpmSupply        *supply;
-    XfpmCpu           *cpu;
-    XfpmButtonXf86    *xf86_button;
-    XfpmLidHal        *lid;
-    XfpmBrightnessHal *brg_hal;
-    XfpmAdapter       *adapter;
-    HalIface          *iface;
+    XfpmXfconf         *conf;
+    XfpmSupply         *supply;
+    XfpmCpu            *cpu;
+    XfpmButtonXf86     *xf86_button;
+    XfpmLidHal         *lid;
+    XfpmBrightnessHal  *brg_hal;
+    XfpmAdapter        *adapter;
+    HalIface           *iface;
 #ifdef HAVE_DPMS
-    XfpmDpms          *dpms;
+    XfpmDpms           *dpms;
 #endif
 
-    GTimer            *button_timer;
+    GTimer             *button_timer;
     
-    guint8             power_management;
-    gboolean           on_battery;
+    guint8              power_management;
+    gboolean            on_battery;
     
-    gboolean           block_shutdown;
+    gboolean            block_shutdown;
     
     /*Configuration */
     XfpmShutdownRequest sleep_button;
@@ -108,6 +111,8 @@ xfpm_engine_class_init(XfpmEngineClass *klass)
     object_class->finalize = xfpm_engine_finalize;
 
     g_type_class_add_private(klass,sizeof(XfpmEnginePrivate));
+    
+    xfpm_engine_dbus_class_init (klass);
 }
 
 static void
@@ -130,6 +135,8 @@ xfpm_engine_init (XfpmEngine *engine)
     engine->priv->brg_hal     = NULL;
     
     engine->priv->power_management = 0;
+    
+    xfpm_engine_dbus_init (engine);
 }
 
 static void
@@ -453,4 +460,97 @@ xfpm_engine_new(void)
     xfpm_engine_load_all (engine);
     
     return engine;
+}
+
+/*
+ * 
+ * DBus server implementation for org.freedesktop.PowerManagement
+ * 
+ */
+
+static gboolean xfpm_engine_dbus_hibernate 	(XfpmEngine *engine,
+						 GError **error);
+					    
+static gboolean xfpm_engine_dbus_suspend 	(XfpmEngine *engine,
+						 GError **error);
+					    
+static gboolean xfpm_engine_dbus_can_hibernate  (XfpmEngine *engine,
+						 gboolean *OUT_can_hibernate,
+						 GError **error);
+
+static gboolean xfpm_engine_dbus_can_suspend  	(XfpmEngine *engine,
+						 gboolean *OUT_can_suspend,
+						 GError **error);
+
+#include "org.freedesktop.PowerManagement-server.h"
+
+static void
+xfpm_engine_dbus_class_init(XfpmEngineClass *klass)
+{
+     dbus_g_object_type_install_info(G_TYPE_FROM_CLASS(klass),
+				    &dbus_glib_xfpm_engine_object_info);
+}
+
+static void
+xfpm_engine_dbus_init (XfpmEngine *engine)
+{
+    DBusGConnection *bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+    
+    dbus_g_connection_register_g_object (bus,
+					 "/org/freedesktop/PowerManagement",
+					 G_OBJECT(engine));
+}
+
+static gboolean xfpm_engine_dbus_hibernate 	(XfpmEngine *engine,
+						 GError **error)
+{
+    gboolean caller_privilege, can_hibernate;
+    
+    g_object_get (G_OBJECT(engine->priv->iface), 
+		  "caller-privilege", &caller_privilege,
+		  "can-hibernate", &can_hibernate,
+		  NULL);
+		  
+    if ( caller_privilege && can_hibernate )
+	xfpm_engine_shutdown_request (engine, XFPM_DO_HIBERNATE);
+
+    return TRUE;
+}
+					    
+static gboolean xfpm_engine_dbus_suspend 	(XfpmEngine *engine,
+						 GError **error)
+{
+    gboolean caller_privilege, can_suspend;
+    
+    g_object_get (G_OBJECT(engine->priv->iface), 
+		  "caller-privilege", &caller_privilege,
+		  "can-suspend", &can_suspend,
+		  NULL);
+		  
+    if ( caller_privilege && can_suspend )
+	xfpm_engine_shutdown_request (engine, XFPM_DO_SUSPEND);
+    
+    return TRUE;
+}
+					    
+static gboolean xfpm_engine_dbus_can_hibernate  (XfpmEngine *engine,
+						 gboolean *OUT_can_hibernate,
+						 GError **error)
+{
+    g_object_get (G_OBJECT(engine->priv->iface), 
+		  "can-hibernate", OUT_can_hibernate,
+		  NULL);
+		  
+    return TRUE;
+}
+
+static gboolean xfpm_engine_dbus_can_suspend  	(XfpmEngine *engine,
+						 gboolean *OUT_can_suspend,
+						 GError **error)
+{
+    g_object_get (G_OBJECT(engine->priv->iface), 
+		  "can-suspend", OUT_can_suspend,
+		  NULL);
+		  
+    return TRUE;
 }

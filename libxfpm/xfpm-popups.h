@@ -1,6 +1,5 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
- *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+/*
+ * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -22,9 +21,15 @@
 #ifndef __XFPM_POPUPS_H
 #define __XFPM_POPUPS_H
 
-void xfpm_popup_message(const gchar *title,
-                        const gchar *message,
-                        GtkMessageType message_type);
+void 	xfpm_popup_message	(const gchar *title,
+				 const gchar *message,
+				 GtkMessageType message_type);
 
+
+void 	xfpm_info 		(const gchar *title, 
+				 const gchar *message);
+				 
+void    xfpm_error              (const gchar *title,
+				 const gchar *message);
 
 #endif /* __XFPM_POPUPS_H */

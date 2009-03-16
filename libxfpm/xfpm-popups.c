@@ -1,6 +1,5 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*-
- *
- * * Copyright (C) 2008 Ali <ali.slackware@gmail.com>
+/*
+ * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -20,12 +19,11 @@
  */
 
 #include <gtk/gtk.h>
+#include <glib.h>
 
-void xfpm_popup_message(const gchar *title,
-                        const gchar *message,
-                        GtkMessageType message_type)
+static GtkWidget *
+xfpm_message_dialog (const gchar *title, const gchar *message, GtkMessageType message_type)
 {
-    
     GtkWidget *dialog;
     
     dialog = gtk_message_dialog_new_with_markup(NULL,
@@ -35,7 +33,19 @@ void xfpm_popup_message(const gchar *title,
                                                 "<span size='larger'><b>%s</b></span>",
                                                 title);
                                                 
-    gtk_message_dialog_format_secondary_markup(GTK_MESSAGE_DIALOG(dialog),"%s",message);
+    gtk_message_dialog_format_secondary_markup(GTK_MESSAGE_DIALOG(dialog), "%s", message);
+    
+    return dialog;
+}
+
+void xfpm_popup_message(const gchar *title,
+                        const gchar *message,
+                        GtkMessageType message_type)
+{
+    
+    GtkWidget *dialog;
+    
+    dialog = xfpm_message_dialog (title, message, message_type);
     
     g_signal_connect(dialog,
                      "response",
@@ -43,5 +53,25 @@ void xfpm_popup_message(const gchar *title,
                      NULL);
                      
     gtk_widget_show(dialog);                         
-    
 }                 
+
+void xfpm_info (const gchar *title, const gchar *message )
+{
+    GtkWidget *dialog;
+    
+    dialog = xfpm_message_dialog (title, message, GTK_MESSAGE_INFO);
+    
+    gtk_dialog_run (GTK_DIALOG(dialog));
+    gtk_widget_destroy (dialog);
+}
+
+void    xfpm_error              (const gchar *title,
+				 const gchar *message)
+{
+    GtkWidget *dialog;
+    
+    dialog = xfpm_message_dialog (title, message, GTK_MESSAGE_ERROR);
+    
+    gtk_dialog_run (GTK_DIALOG(dialog));
+    gtk_widget_destroy (dialog);
+}
