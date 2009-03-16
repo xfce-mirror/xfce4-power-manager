@@ -319,7 +319,7 @@ xfpm_idle_new(void)
 }
 
 gboolean 
-xfpm_idle_new_alarm (XfpmIdle *idle, guint id, guint timeout)
+xfpm_idle_set_alarm (XfpmIdle *idle, guint id, guint timeout)
 {
     IdleAlarm *alarm;
     
@@ -336,9 +336,10 @@ xfpm_idle_new_alarm (XfpmIdle *idle, guint id, guint timeout)
     if ( !alarm )
     {
 	alarm = xfpm_idle_new_alarm_internal (idle, id);
-	XSyncIntToValue (&alarm->timeout, timeout);
-	xfpm_idle_xsync_alarm_set (idle, alarm, TRUE);
     }
+    
+    XSyncIntToValue (&alarm->timeout, timeout);
+    xfpm_idle_xsync_alarm_set (idle, alarm, TRUE);
     return TRUE;
 }
 

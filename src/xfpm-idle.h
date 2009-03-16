@@ -52,7 +52,7 @@ typedef struct
 GType        		  xfpm_idle_get_type        (void) G_GNUC_CONST;
 XfpmIdle       		 *xfpm_idle_new             (void);
 
-gboolean                  xfpm_idle_new_alarm       (XfpmIdle *idle,
+gboolean                  xfpm_idle_set_alarm       (XfpmIdle *idle,
 						     guint id,
 						     guint timeout);
 						     

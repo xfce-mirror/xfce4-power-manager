@@ -309,6 +309,7 @@ xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHa
 	brg->priv->block = FALSE;
     
     level = xfpm_brightness_hal_get_level(brg);
+    TRACE("Alarm timeout id=%d\n", id);
     
     if ( id == TIMEOUT_ON_AC_ID && brg->priv->on_ac_timeout != 9)
     {
@@ -359,8 +360,8 @@ xfpm_brightness_hal_load_config (XfpmBrightnessHal *brg)
 static void
 xfpm_brightness_hal_set_timeouts (XfpmBrightnessHal *brg )
 {
-    xfpm_idle_new_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID, brg->priv->on_ac_timeout * 1000);
-    xfpm_idle_new_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID, brg->priv->on_battery_timeout * 1000);
+    xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID, brg->priv->on_ac_timeout * 1000);
+    xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID, brg->priv->on_battery_timeout * 1000);
     
     xfpm_idle_alarm_reset_all (brg->priv->idle);
 }
@@ -383,7 +384,9 @@ xfpm_brightness_hal_property_changed_cb (XfconfChannel *channel, gchar *property
 	    g_warning ("Value %d for %s is out of range", val, BRIGHTNESS_ON_AC );
 	}
 	else
+	{
 	    brg->priv->on_ac_timeout = val;
+	}
 	set = TRUE;
     }
     else if ( xfpm_strequal (property, BRIGHTNESS_ON_BATTERY ) )

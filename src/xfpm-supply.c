@@ -695,6 +695,7 @@ xfpm_supply_add_adapter (XfpmSupply *supply, const HalDevice *device)
 		      G_CALLBACK(xfpm_supply_adapter_changed_cb), supply);
     
     supply->priv->adapter_present = xfpm_adapter_get_presence (supply->priv->adapter);
+    g_signal_emit (G_OBJECT(supply), signals[ON_BATTERY], 0, !supply->priv->adapter_present);
 }
 
 static void
@@ -841,9 +842,13 @@ xfpm_supply_new (guint8 power_management_info)
     XfpmSupply *supply = NULL;
     supply = g_object_new(XFPM_TYPE_SUPPLY,NULL);
     
-    
     supply->priv->power_management = power_management_info;
     
+    return supply;
+}
+
+void xfpm_supply_monitor (XfpmSupply *supply)
+{
     xfpm_supply_load_configuration (supply);
       
     g_signal_connect (supply->priv->conf->channel, "property-changed", 
@@ -862,5 +867,4 @@ xfpm_supply_new (guint8 power_management_info)
 		     
     g_signal_connect(supply->priv->power, "adapter-removed",
 		     G_CALLBACK(xfpm_supply_adapter_removed_cb), supply);
-    return supply;
 }

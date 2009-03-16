@@ -200,6 +200,7 @@ xfpm_engine_shutdown_request_battery_cb (XfpmSupply *supply, XfpmShutdownRequest
 static void
 xfpm_engine_on_battery_cb (XfpmSupply *supply, gboolean on_battery, XfpmEngine *engine)
 {
+    TRACE("%s\n", xfpm_bool_to_string (on_battery)); 
     engine->priv->on_battery = on_battery;
 #ifdef HAVE_DPMS
     xfpm_dpms_set_on_battery (engine->priv->dpms, on_battery);
@@ -303,13 +304,7 @@ xfpm_engine_load_all (XfpmEngine *engine)
     engine->priv->cpu = xfpm_cpu_new ();
 
     engine->priv->supply = xfpm_supply_new (engine->priv->power_management);
-
-    g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
-		      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
-
-    g_signal_connect (G_OBJECT(engine->priv->supply), "on-battery",
-		      G_CALLBACK (xfpm_engine_on_battery_cb), engine);
-		      
+    
     /*
      * Keys from XF86
      */
@@ -331,6 +326,14 @@ xfpm_engine_load_all (XfpmEngine *engine)
      * Brightness HAL
      */
     engine->priv->brg_hal = xfpm_brightness_hal_new ();
+    
+    g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
+		      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
+
+    g_signal_connect (G_OBJECT(engine->priv->supply), "on-battery",
+		      G_CALLBACK (xfpm_engine_on_battery_cb), engine);
+		      
+    xfpm_supply_monitor (engine->priv->supply);
     
 }
 
