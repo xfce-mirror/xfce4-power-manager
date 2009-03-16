@@ -215,7 +215,6 @@ xfpm_idle_x_event_filter (GdkXEvent *gdkxevent, GdkEvent *event, gpointer data)
     
     if ( alarm )
     {
-	g_print("Alarm id=%d\n",alarm->id);
 	if (alarm->id != 0 )
 	{
 	    g_signal_emit (G_OBJECT(idle), signals[ALARM_TIMEOUT], 0, alarm->id );

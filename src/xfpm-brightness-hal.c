@@ -62,8 +62,6 @@ static void xfpm_brightness_hal_finalize   (GObject *object);
 
 struct XfpmBrightnessHalPrivate
 {
-    HalManager     *manager;
-    HalDevice      *device;
     DBusGProxy     *proxy;
     
     XfpmXfconf     *conf;
@@ -71,12 +69,15 @@ struct XfpmBrightnessHalPrivate
     XfpmButtonXf86 *button;
     
     gint            max_level;
-    guint           on_battery_timeout;
-    guint 	    on_ac_timeout;
+    gint            hw_level;
+    gboolean        brightness_in_hw;
     gboolean        hw_found;
     gboolean        block;
     
     gboolean        on_battery;
+    
+    guint           on_battery_timeout;
+    guint 	    on_ac_timeout;
 };
 
 enum
@@ -103,13 +104,12 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
 {
     brg->priv = XFPM_BRIGHTNESS_HAL_GET_PRIVATE(brg);
     
-    brg->priv->manager 		= NULL;
-    brg->priv->device           = NULL;
     brg->priv->proxy    	= NULL;
     brg->priv->idle             = NULL;
     brg->priv->hw_found 	= FALSE;
     brg->priv->on_battery       = FALSE;
     brg->priv->block            = FALSE;
+    brg->priv->brightness_in_hw = FALSE;
     brg->priv->max_level        = 0;
 }
 
@@ -120,17 +120,11 @@ xfpm_brightness_hal_finalize(GObject *object)
 
     brg = XFPM_BRIGHTNESS_HAL(object);
     
-    if ( brg->priv->manager )
-	g_object_unref (brg->priv->manager);
-	
     if ( brg->priv->proxy )
 	g_object_unref (brg->priv->proxy);
     
     if ( brg->priv->idle )
 	g_object_unref (brg->priv->idle);
-	
-    if ( brg->priv->device )
-	g_object_unref (brg->priv->device);
 	
     if ( brg->priv->conf )
 	g_object_unref (brg->priv->conf);
@@ -192,73 +186,104 @@ xfpm_brightness_hal_set_level (XfpmBrightnessHal *brg, gint level)
 }
 
 static void
-xfpm_brightness_hal_device_changed_cb (HalDevice *device,
-				       const gchar *udi,
-				       const gchar *key, 
-				       gboolean is_removed,
-				       gboolean is_added,
-				       XfpmBrightnessHal *brg)
+xfpm_brightness_hal_set_proxy (XfpmBrightnessHal *brg, const gchar *udi)
 {
-    g_print("YALLA key=%s\n", key);
-    if ( xfpm_strequal (key, "laptop_panel.num_levels") )
-    {
-	gint level = hal_device_get_property_int (device, "laptop_panel.num_levels");
-	TRACE("Brigthness num_levels=%d\n", level);
-    }
+    DBusGConnection *bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, NULL);
+    
+    brg->priv->hw_found = TRUE;
+    
+    brg->priv->proxy = dbus_g_proxy_new_for_name (bus,
+		   			          "org.freedesktop.Hal",
+						  udi,
+					          "org.freedesktop.Hal.Device.LaptopPanel");
+     
+    if ( !brg->priv->proxy )
+	g_warning ("Unable to get proxy for device %s\n", udi);
 }
 
 static void
 xfpm_brightness_hal_get_device (XfpmBrightnessHal *brg, const gchar *udi)
 {
-    DBusGConnection *bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, NULL);
-    
-    brg->priv->hw_found = TRUE;
-    hal_device_watch (brg->priv->device);
-    
-    g_signal_connect (brg->priv->device, "device-changed",
-		      G_CALLBACK(xfpm_brightness_hal_device_changed_cb), brg);
-		      
-    brg->priv->proxy = dbus_g_proxy_new_for_name (bus,
-		   			          "org.freedesktop.Hal",
-						  udi,
-					          "org.freedesktop.Hal.Device.LaptopPanel");
-    
-    if ( !brg->priv->proxy )
-	g_warning ("Unable to get proxy for device %s\n", udi);
-	
+    HalDevice *device = hal_device_new ();
+    hal_device_set_udi (device, udi);
+
     brg->priv->max_level = 
-	hal_device_get_property_int (brg->priv->device, "laptop_panel.num_levels");
+	hal_device_get_property_int (device, "laptop_panel.num_levels");
+    
+    if ( hal_device_has_key (device, "laptop_panel.brightness_in_hardware") )
+	brg->priv->brightness_in_hw = hal_device_get_property_bool (device ,"laptop_panel.brightness_in_hardware");
 	
     TRACE ("laptop_panel.num_levels=%d\n", brg->priv->max_level);
+    
+    g_object_unref (device);
 }
+
 
 static gboolean
 xfpm_brightness_hal_setup (XfpmBrightnessHal *brg)
 {
     gchar **udi = NULL;
 
-    brg->priv->manager = hal_manager_new ();
-    brg->priv->device = hal_device_new ();
+    HalManager *manager = hal_manager_new ();
     
-    udi = hal_manager_find_device_by_capability (brg->priv->manager, "laptop_panel");
+    udi = hal_manager_find_device_by_capability (manager, "laptop_panel");
     
     if ( !udi )
+    {
+	g_object_unref ( manager);
     	return FALSE;
-	
-    hal_device_set_udi (brg->priv->device, udi[0]);
-	
-    if ( hal_device_has_key (brg->priv->device, "laptop_panel.num_levels") )
-    {
-	TRACE ("Found laptop_panel with udi=%s\n", udi[0]);
-	xfpm_brightness_hal_get_device (brg, udi[0]);
     }
-    else
-    {
-	g_object_unref (brg->priv->device);
-    }
+	
+    TRACE ("Found laptop_panel with udi=%s\n", udi[0]);
+    xfpm_brightness_hal_get_device (brg, udi[0]);
+    xfpm_brightness_hal_set_proxy (brg, udi[0]);
 
+    brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
+    TRACE ("Current hw level =%d\n", brg->priv->hw_level);
+    
     hal_manager_free_string_array (udi);
     return TRUE;
+}
+
+static void
+xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
+{
+    if ( brg->priv->brightness_in_hw )
+	return;
+    
+    if ( brg->priv->hw_level != brg->priv->max_level -2 )
+    {
+	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level + 1 );
+	brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
+    }
+}
+
+static void
+xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
+{
+    if ( brg->priv->brightness_in_hw )
+	return;
+	
+    if ( brg->priv->hw_level != 0)
+    {
+	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level - 1 );
+	brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
+    }
+}
+
+static void
+xfpm_brightness_hal_button_pressed_cb (XfpmButtonXf86 *button, XfpmXF86Button type, XfpmBrightnessHal *brg)
+{
+    if ( type == BUTTON_MON_BRIGHTNESS_UP )
+    {
+	brg->priv->block = TRUE;
+	xfpm_brightness_hal_up (brg);
+    }
+    else if ( type == BUTTON_MON_BRIGHTNESS_DOWN )
+    {
+	brg->priv->block = TRUE;
+	xfpm_brightness_hal_down (brg);
+    }
 }
 
 static void
@@ -271,8 +296,8 @@ xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
     
     level = xfpm_brightness_hal_get_level(brg);
      
-    if ( level != brg->priv->max_level -1 )
-	    xfpm_brightness_hal_set_level(brg, brg->priv->max_level -1 );
+    if ( level != brg->priv->hw_level )
+	    xfpm_brightness_hal_set_level(brg, brg->priv->hw_level);
 }
 
 static void
@@ -376,13 +401,6 @@ xfpm_brightness_hal_property_changed_cb (XfconfChannel *channel, gchar *property
     
     if ( set )
 	xfpm_brightness_hal_set_timeouts (brg);
-}
-
-static void
-xfpm_brightness_hal_button_pressed_cb (XfpmButtonXf86 *button, XfpmXF86Button type, XfpmBrightnessHal *brg)
-{
-    if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
-	brg->priv->block = TRUE;
 }
 
 XfpmBrightnessHal *

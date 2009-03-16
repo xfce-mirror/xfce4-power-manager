@@ -420,6 +420,8 @@ gboolean hal_iface_set_cpu_governor (HalIface *iface, const gchar *governor, GEr
     g_return_val_if_fail (iface->priv->caller_privilege, FALSE);
     g_return_val_if_fail (iface->priv->cpu_freq_iface_can_be_used, FALSE);
     
+    gboolean ret = FALSE;
+    
     DBusGProxy *proxy = dbus_g_proxy_new_for_name (iface->priv->bus,
 						   "org.freedesktop.Hal",
 						   "/org/freedesktop/Hal/devices/computer",
@@ -430,16 +432,14 @@ gboolean hal_iface_set_cpu_governor (HalIface *iface, const gchar *governor, GEr
 	goto out;
     }
     
-    dbus_g_proxy_call (proxy, "SetCPUFreqGovernor", error,
-		       G_TYPE_STRING, &governor,
-		       G_TYPE_INVALID,
-		       G_TYPE_INVALID);
-    
+    ret = dbus_g_proxy_call (proxy, "SetCPUFreqGovernor", error,
+	  		     G_TYPE_STRING, governor,
+			     G_TYPE_INVALID,
+			     G_TYPE_INVALID);
+    		     
     g_object_unref (proxy);
-    
 out:
-    
-    return FALSE;
+    return ret;
 }
 
 void hal_iface_free_string_array (gchar **array)

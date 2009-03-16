@@ -76,7 +76,6 @@ xfpm_cpu_set_governor (XfpmCpu *cpu, const gchar *governor)
     if (! hal_iface_set_cpu_governor(cpu->priv->iface, governor, &error))
     {
     	g_critical ("Unable to set CPU governor to %s: %s\n", governor, error->message);
-	g_error_free (error);
     }
 }
 
@@ -138,10 +137,8 @@ xfpm_cpu_update_governor (XfpmCpu *cpu)
 	    TRACE ("Settings cpu governor to powersave");
 	    xfpm_cpu_set_governor (cpu, "powersave");
 	}
-	return;
     }
     g_free (current_governor);
-
 }
 
 static gboolean
