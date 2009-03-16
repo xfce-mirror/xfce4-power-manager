@@ -23,8 +23,6 @@
 
 #include <glib-object.h>
 
-#include "libxfpm/hal-device.h"
-
 G_BEGIN_DECLS
 
 #define XFPM_TYPE_ADAPTER        (xfpm_adapter_get_type () )
@@ -44,21 +42,15 @@ typedef struct
 {
     GObjectClass 	  parent_class;
     
-    void                 (*adapter_changed)    (XfpmAdapter *adapter,
-    						gboolean present);
+    void                 (*adapter_changed)    	      (XfpmAdapter *adapter,
+    						       gboolean present);
     
 } XfpmAdapterClass;
 
-GType        	  xfpm_adapter_get_type        (void) G_GNUC_CONST;
-XfpmAdapter      *xfpm_adapter_new             (const HalDevice *device);
+GType        	 	 xfpm_adapter_get_type        (void) G_GNUC_CONST;
+XfpmAdapter      	*xfpm_adapter_new             (void);
 
-gboolean          xfpm_adapter_get_presence    (XfpmAdapter *adapter);
-
-void              xfpm_adapter_set_visible     (XfpmAdapter *adapter,
-						gboolean visible);
-						
-void              xfpm_adapter_set_tooltip     (XfpmAdapter *adapter,
-						const gchar *text);
+gboolean 	  	 xfpm_adapter_get_present     (XfpmAdapter *adapter);
 G_END_DECLS
 
 #endif /* __XFPM_ADAPTER_H */

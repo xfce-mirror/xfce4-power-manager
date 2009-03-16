@@ -36,8 +36,8 @@
 #include "libxfpm/xfpm-common.h"
 
 #include "xfpm-supply.h"
-#include "xfpm-battery.h"
 #include "xfpm-adapter.h"
+#include "xfpm-battery.h"
 #include "xfpm-notify.h"
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
@@ -61,12 +61,11 @@ struct XfpmSupplyPrivate
     HalPower      *power;
     GHashTable    *hash;
     
+    gboolean       adapter_present;
+    
     XfpmShutdownRequest critical_action;
     XfpmShowIcon   show_icon;
     
-    gboolean 	   adapter_found;
-    gboolean       adapter_present;
-
     guint8         critical_level;
     guint8         power_management;
 };
@@ -74,9 +73,6 @@ struct XfpmSupplyPrivate
 enum
 {
     SHUTDOWN_REQUEST,
-    BLOCK_SHUTDOWN,
-    ON_BATTERY,
-    ON_LOW_BATTERY,
     LAST_SIGNAL
 };
 
@@ -98,33 +94,6 @@ xfpm_supply_class_init(XfpmSupplyClass *klass)
                       g_cclosure_marshal_VOID__ENUM,
                       G_TYPE_NONE, 1, XFPM_TYPE_SHUTDOWN_REQUEST);
 
-    signals[BLOCK_SHUTDOWN] = 
-    	g_signal_new("block-shutdown",
-                      XFPM_TYPE_SUPPLY,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmSupplyClass, block_shutdown),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__BOOLEAN,
-                      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-    
-    signals[ON_BATTERY] = 
-    	g_signal_new("on-battery",
-                      XFPM_TYPE_SUPPLY,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmSupplyClass, on_battery),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__BOOLEAN,
-                      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-		      
-    signals[ON_LOW_BATTERY] = 
-    	g_signal_new("on-low-battery",
-                      XFPM_TYPE_SUPPLY,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmSupplyClass, on_low_battery),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0, G_TYPE_NONE);
-		      
     object_class->finalize = xfpm_supply_finalize;
 
     g_type_class_add_private(klass,sizeof(XfpmSupplyPrivate));
@@ -139,9 +108,6 @@ xfpm_supply_init (XfpmSupply *supply)
     supply->priv->hash    = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
     supply->priv->notify  = xfpm_notify_new ();
     supply->priv->conf    = xfpm_xfconf_new ();
-    
-    supply->priv->adapter = NULL;
-    supply->priv->adapter_found = FALSE;
 }
 
 static void
@@ -161,6 +127,9 @@ xfpm_supply_finalize (GObject *object)
 	
     if ( supply->priv->conf )
     	g_object_unref (supply->priv->conf);
+	
+    if ( supply->priv->adapter )
+	g_object_unref (supply->priv->adapter);
     
     G_OBJECT_CLASS(xfpm_supply_parent_class)->finalize(object);
 }
@@ -375,8 +344,7 @@ xfpm_supply_primary_battery_changed (XfpmSupply *supply, XfpmBattery *battery, X
     }
     
     const gchar *message 
-    	= xfpm_supply_get_message_from_battery_state (state, supply->priv->adapter_found ? 
-							     supply->priv->adapter_present : TRUE); // FIXME, TRUE makes sense here ?
+    	= xfpm_supply_get_message_from_battery_state (state, supply->priv->adapter_present);
 
     if ( !message )
     	return;
@@ -540,6 +508,7 @@ xfpm_supply_popup_battery_menu_cb (XfpmBattery *battery, GtkStatusIcon *icon,
 
 //FIXME: Change the name of this function
 
+
 static void
 xfpm_supply_set_adapter_presence (XfpmSupply *supply)
 {
@@ -559,20 +528,7 @@ xfpm_supply_set_adapter_presence (XfpmSupply *supply)
 	if ( battery )
 	    xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
     }
-    
     g_list_free (list);
-}
-
-static void
-xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupply *supply )
-{
-    if ( !supply->priv->adapter_found )
-    	g_warning ("Callback from the adapter object but no adapter found in the system");
-	
-    supply->priv->adapter_present = present;
-    xfpm_supply_set_adapter_presence (supply);
-    
-    g_signal_emit (G_OBJECT(supply), signals[ON_BATTERY], 0, !supply->priv->adapter_present);
 }
 
 static XfpmBattery *
@@ -686,70 +642,9 @@ xfpm_supply_set_critical_power_level (XfpmSupply *supply)
 }
 
 static void
-xfpm_supply_add_adapter (XfpmSupply *supply, const HalDevice *device)
-{
-    supply->priv->adapter_found = TRUE;
-    
-    supply->priv->adapter = xfpm_adapter_new (device);
-    g_signal_connect (supply->priv->adapter, "adapter-changed", 
-		      G_CALLBACK(xfpm_supply_adapter_changed_cb), supply);
-    
-    supply->priv->adapter_present = xfpm_adapter_get_presence (supply->priv->adapter);
-    g_signal_emit (G_OBJECT(supply), signals[ON_BATTERY], 0, !supply->priv->adapter_present);
-}
-
-static void
-xfpm_supply_get_adapter (XfpmSupply *supply)
-{
-    const HalDevice *device;
-    
-    if ( hal_power_adapter_found (supply->priv->power) )
-    {
-	device = hal_power_get_adapter (supply->priv->power);
-	if ( device )
-	{
-#ifdef DEBUG
-	    const gchar *udi;
-	    udi = hal_device_get_udi (HAL_DEVICE(device));
-	    TRACE ("Adapter found in the system with udi=%s\n", udi);
-#endif
-	    xfpm_supply_add_adapter (supply, device);
-	}
-    }
-    else
-    {
-	supply->priv->adapter_found = FALSE;
-    }
-}
-
-static void
-xfpm_supply_remove_adapter (XfpmSupply *supply)
-{
-    supply->priv->adapter_found = FALSE;
-    g_object_unref (supply->priv->adapter);
-}
-
-static void
-xfpm_supply_adapter_added_cb (HalPower *power, const HalDevice *device, XfpmSupply *supply)
-{
-    if ( supply->priv->adapter_found )
-	return;
-	
-    xfpm_supply_add_adapter (supply, device);
-}
-
-static void
-xfpm_supply_adapter_removed_cb (HalPower *power, XfpmSupply *supply)
-{
-    if ( supply->priv->adapter_found )
-	xfpm_supply_remove_adapter (supply);
-}
-
-static void
 xfpm_supply_monitor_start (XfpmSupply *supply)
 {
     //FIXME: Check the system formfactor
-    xfpm_supply_get_adapter (supply );
     
     GPtrArray *array = hal_power_get_batteries (supply->priv->power);
     
@@ -833,6 +728,13 @@ xfpm_supply_load_configuration (XfpmSupply *supply)
     }
 }
 
+static void
+xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupply *supply)
+{
+    supply->priv->adapter_present = present;
+    xfpm_supply_set_adapter_presence (supply);
+}
+
 /*
  * Public functions
  */ 
@@ -849,7 +751,13 @@ xfpm_supply_new (guint8 power_management_info)
 
 void xfpm_supply_monitor (XfpmSupply *supply)
 {
+    supply->priv->adapter = xfpm_adapter_new ();
+    supply->priv->adapter_present = xfpm_adapter_get_present (supply->priv->adapter);
+    
     xfpm_supply_load_configuration (supply);
+    
+    g_signal_connect (supply->priv->adapter, "adapter-changed",
+		      G_CALLBACK(xfpm_supply_adapter_changed_cb), supply);
       
     g_signal_connect (supply->priv->conf->channel, "property-changed", 
 		      G_CALLBACK(xfpm_supply_property_changed_cb), supply);
@@ -861,10 +769,5 @@ void xfpm_supply_monitor (XfpmSupply *supply)
 		     
     g_signal_connect(supply->priv->power, "battery-removed",
 		     G_CALLBACK(xfpm_supply_battery_removed_cb), supply);
-		     
-    g_signal_connect(supply->priv->power, "adapter-added",
-		     G_CALLBACK(xfpm_supply_adapter_added_cb), supply);
-		     
-    g_signal_connect(supply->priv->power, "adapter-removed",
-		     G_CALLBACK(xfpm_supply_adapter_removed_cb), supply);
+    
 }

@@ -49,6 +49,7 @@
 #include "libxfpm/xfpm-string.h"
 
 #include "xfpm-dpms.h"
+#include "xfpm-adapter.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 
@@ -67,6 +68,7 @@ static void xfpm_dpms_finalize   (GObject *object);
 struct XfpmDpmsPrivate
 {
     XfpmXfconf    *conf;
+    XfpmAdapter   *adapter;
     
     gboolean       dpms_capable;
     gboolean       dpms_enabled;
@@ -81,39 +83,6 @@ struct XfpmDpmsPrivate
 };
 
 G_DEFINE_TYPE(XfpmDpms, xfpm_dpms, G_TYPE_OBJECT)
-
-static void
-xfpm_dpms_class_init(XfpmDpmsClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    
-    object_class->finalize = xfpm_dpms_finalize;
-
-    g_type_class_add_private(klass,sizeof(XfpmDpmsPrivate));
-}
-
-static void
-xfpm_dpms_init(XfpmDpms *dpms)
-{
-    dpms->priv = XFPM_DPMS_GET_PRIVATE(dpms);
-    
-    dpms->priv->dpms_capable = DPMSCapable (GDK_DISPLAY());
-    
-    dpms->priv->conf = NULL;
-}
-
-static void
-xfpm_dpms_finalize(GObject *object)
-{
-    XfpmDpms *dpms;
-
-    dpms = XFPM_DPMS (object);
-    
-    if ( dpms->priv->conf )
-	g_object_unref (dpms->priv->conf);
-
-    G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
-}
 
 static void
 xfpm_dpms_set_timeouts (XfpmDpms *dpms, guint16 standby, guint16 suspend, guint off)
@@ -302,6 +271,52 @@ xfpm_dpms_load_configuration (XfpmDpms *dpms)
 	dpms->priv->sleep_dpms_mode = 0;
     }
     g_free (str);
+}
+
+static void
+xfpm_dpms_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmDpms *dpms)
+{
+    dpms->priv->on_battery = !present;
+}
+
+static void
+xfpm_dpms_class_init(XfpmDpmsClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    
+    object_class->finalize = xfpm_dpms_finalize;
+
+    g_type_class_add_private(klass,sizeof(XfpmDpmsPrivate));
+}
+
+static void
+xfpm_dpms_init(XfpmDpms *dpms)
+{
+    dpms->priv = XFPM_DPMS_GET_PRIVATE(dpms);
+    
+    dpms->priv->dpms_capable = DPMSCapable (GDK_DISPLAY());
+    dpms->priv->adapter = xfpm_adapter_new ();
+    
+    g_signal_connect (dpms->priv->adapter, "adapter-changed",
+		      G_CALLBACK(xfpm_dpms_adapter_changed_cb), dpms);
+		      
+    dpms->priv->conf = NULL;
+}
+
+static void
+xfpm_dpms_finalize(GObject *object)
+{
+    XfpmDpms *dpms;
+
+    dpms = XFPM_DPMS (object);
+    
+    if ( dpms->priv->conf )
+	g_object_unref (dpms->priv->conf);
+	
+    if ( dpms->priv->adapter )
+	g_object_unref (dpms->priv->adapter);
+
+    G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }
 
 XfpmDpms *

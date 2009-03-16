@@ -51,20 +51,12 @@ typedef struct
     void        	(*battery_removed)        (HalPower *power,
 						   const HalBattery *battery);
 					   
-    void        	(*adapter_added)	  (HalPower *power,
-						   const HalDevice *device);
-					   
-    void        	(*adapter_removed)	  (HalPower *power);
-    
 } HalPowerClass;
 
 GType        		hal_power_get_type        (void) G_GNUC_CONST;
 HalPower       	       *hal_power_new             (void);
 
 GPtrArray      	       *hal_power_get_batteries   (HalPower *power);
-gboolean                hal_power_adapter_found   (HalPower *power);
-const HalDevice        *hal_power_get_adapter     (HalPower *power);
-
 G_END_DECLS
 
 #endif /* __HAL_POWER_H */

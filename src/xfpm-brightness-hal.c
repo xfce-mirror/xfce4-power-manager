@@ -45,12 +45,13 @@
 #include "libxfpm/hal-device.h"
 #include "libxfpm/xfpm-string.h"
 
-#include "xfpm-xfconf.h"
-#include "xfpm-idle.h"
-#include "xfpm-config.h"
 #include "xfpm-brightness-hal.h"
 #include "xfpm-button-xf86.h"
 #include "xfpm-enum-glib.h"
+#include "xfpm-xfconf.h"
+#include "xfpm-idle.h"
+#include "xfpm-config.h"
+#include "xfpm-adapter.h"
 
 /* Init */
 static void xfpm_brightness_hal_class_init (XfpmBrightnessHalClass *klass);
@@ -67,6 +68,7 @@ struct XfpmBrightnessHalPrivate
     XfpmXfconf     *conf;
     XfpmIdle       *idle;
     XfpmButtonXf86 *button;
+    XfpmAdapter    *adapter;
     
     gint            max_level;
     gint            hw_level;
@@ -128,6 +130,9 @@ xfpm_brightness_hal_finalize(GObject *object)
 	
     if ( brg->priv->conf )
 	g_object_unref (brg->priv->conf);
+	
+    if (brg->priv->adapter)
+	g_object_unref (brg->priv->adapter);
 	
     G_OBJECT_CLASS(xfpm_brightness_hal_parent_class)->finalize(object);
 }
@@ -336,6 +341,13 @@ xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHa
 }
 
 static void
+xfpm_brightness_hal_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmBrightnessHal *brg)
+{
+    brg->priv->on_battery = !present;
+
+}
+
+static void
 xfpm_brightness_hal_load_config (XfpmBrightnessHal *brg)
 {
     brg->priv->on_ac_timeout =
@@ -419,6 +431,11 @@ xfpm_brightness_hal_new ()
 	brg->priv->idle     = xfpm_idle_new ();
 	brg->priv->conf     = xfpm_xfconf_new ();
 	brg->priv->button   = xfpm_button_xf86_new ();
+	brg->priv->adapter  = xfpm_adapter_new ();
+	brg->priv->on_battery = !xfpm_adapter_get_present (brg->priv->adapter);
+	
+	g_signal_connect (brg->priv->adapter, "adapter-changed",
+			  G_CALLBACK(xfpm_brightness_hal_adapter_changed_cb), brg);
 	
 	g_signal_connect (brg->priv->button, "xf86-button-pressed",	
 			  G_CALLBACK(xfpm_brightness_hal_button_pressed_cb), brg);
@@ -439,12 +456,3 @@ xfpm_brightness_hal_new ()
     
     return brg;
 }
-
-void
-xfpm_brightness_hal_set_on_battery (XfpmBrightnessHal *brg, gboolean on_battery)
-{
-    g_return_if_fail (XFPM_IS_BRIGHTNESS_HAL(brg));
-    
-    brg->priv->on_battery = on_battery;
-}
-

@@ -51,6 +51,7 @@
 
 #include "xfpm-engine.h"
 #include "xfpm-supply.h"
+#include "xfpm-adapter.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-cpu.h"
 #include "xfpm-network-manager.h"
@@ -77,6 +78,7 @@ struct XfpmEnginePrivate
     XfpmButtonXf86    *xf86_button;
     XfpmLidHal        *lid;
     XfpmBrightnessHal *brg_hal;
+    XfpmAdapter       *adapter;
     HalIface          *iface;
 #ifdef HAVE_DPMS
     XfpmDpms          *dpms;
@@ -198,18 +200,6 @@ xfpm_engine_shutdown_request_battery_cb (XfpmSupply *supply, XfpmShutdownRequest
 }
 
 static void
-xfpm_engine_on_battery_cb (XfpmSupply *supply, gboolean on_battery, XfpmEngine *engine)
-{
-    TRACE("%s\n", xfpm_bool_to_string (on_battery)); 
-    engine->priv->on_battery = on_battery;
-#ifdef HAVE_DPMS
-    xfpm_dpms_set_on_battery (engine->priv->dpms, on_battery);
-#endif
-    xfpm_cpu_set_on_battery (engine->priv->cpu, on_battery);
-    xfpm_brightness_hal_set_on_battery (engine->priv->brg_hal, on_battery);
-}
-
-static void
 xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 *button, XfpmXF86Button type, XfpmEngine *engine)
 {
     TRACE("Received button press event type %d", type);
@@ -229,7 +219,6 @@ xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 *button, XfpmXF86Button type,
 	    TRACE("Accepting shutdown request");
 	    xfpm_engine_shutdown_request (engine, engine->priv->sleep_button);
 	}
-	    
     }
     g_timer_reset (engine->priv->button_timer);
 }
@@ -266,6 +255,7 @@ xfpm_engine_lid_closed_cb (XfpmLidHal *lid, XfpmEngine *engine)
     xfpm_engine_shutdown_request (engine, engine->priv->on_battery ? 
 					  engine->priv->lid_button_battery :
 					  engine->priv->lid_button_ac);
+
     g_timer_reset (engine->priv->button_timer);
 }
 
@@ -330,11 +320,7 @@ xfpm_engine_load_all (XfpmEngine *engine)
     g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
 		      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
 
-    g_signal_connect (G_OBJECT(engine->priv->supply), "on-battery",
-		      G_CALLBACK (xfpm_engine_on_battery_cb), engine);
-		      
     xfpm_supply_monitor (engine->priv->supply);
-    
 }
 
 static void
@@ -433,6 +419,12 @@ xfpm_engine_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
     }
 }
 
+static void
+xfpm_engine_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmEngine *engine)
+{
+    engine->priv->on_battery = !present;
+}
+
 XfpmEngine *
 xfpm_engine_new(void)
 {
@@ -446,7 +438,13 @@ xfpm_engine_new(void)
        	g_error_free (error);
     }	
     
-    engine->priv->conf   = xfpm_xfconf_new ();
+    engine->priv->conf    = xfpm_xfconf_new ();
+    engine->priv->adapter = xfpm_adapter_new ();
+    
+    engine->priv->on_battery = ! xfpm_adapter_get_present (engine->priv->adapter);
+    
+    g_signal_connect (engine->priv->adapter, "adapter-changed",
+		      G_CALLBACK(xfpm_engine_adapter_changed_cb), engine);
     
     g_signal_connect (engine->priv->conf->channel, "property-changed",
 		      G_CALLBACK(xfpm_engine_property_changed_cb), engine);

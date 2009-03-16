@@ -55,8 +55,6 @@ typedef struct
 GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
 XfpmDpms       *xfpm_dpms_new             (void);
 
-void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms,
-					   gboolean on_battery);
 gboolean        xfpm_dpms_capable         (XfpmDpms *dpms);
 
 

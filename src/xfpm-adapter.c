@@ -40,10 +40,11 @@
 
 #include <libxfce4util/libxfce4util.h>
 
+#include "libxfpm/hal-manager.h"
+#include "libxfpm/hal-device.h"
 #include "libxfpm/xfpm-string.h"
 
 #include "xfpm-adapter.h"
-#include "xfpm-tray-icon.h"
 
 /* Init */
 static void xfpm_adapter_class_init (XfpmAdapterClass *klass);
@@ -55,8 +56,7 @@ static void xfpm_adapter_finalize   (GObject *object);
 
 struct XfpmAdapterPrivate
 {
-    XfpmTrayIcon *icon;
-    HalDevice    *device;
+    HalDevice 	 *device;
     gboolean      present;
 };
 
@@ -68,7 +68,22 @@ enum
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
+static gpointer xfpm_adapter_object = NULL;
+
 G_DEFINE_TYPE(XfpmAdapter, xfpm_adapter, G_TYPE_OBJECT)
+
+static void
+xfpm_adapter_device_changed_cb (HalDevice *device, const gchar *udi, const gchar *key,
+			        gboolean is_added, gboolean is_removed, XfpmAdapter *adapter)
+{
+    //FIXME React correctly is device is removed
+    if ( xfpm_strequal(key, "ac_adapter.present") )
+    {
+	adapter->priv->present = hal_device_get_property_bool (adapter->priv->device, "ac_adapter.present");
+	g_signal_emit (G_OBJECT(adapter), signals[ADAPTER_CHANGED], 0, adapter->priv->present);
+    }
+    
+}
 
 static void
 xfpm_adapter_class_init(XfpmAdapterClass *klass)
@@ -86,20 +101,47 @@ xfpm_adapter_class_init(XfpmAdapterClass *klass)
 		      
     object_class->finalize = xfpm_adapter_finalize;
 
-
     g_type_class_add_private (klass, sizeof(XfpmAdapterPrivate));
 }
 
 static void
 xfpm_adapter_init(XfpmAdapter *adapter)
 {
+    HalManager *manager;
+    gchar **udi = NULL;
+    gchar *form_factor = NULL;
+    
     adapter->priv = XFPM_ADAPTER_GET_PRIVATE(adapter);
     
-    adapter->priv->device = NULL;
+    adapter->priv->device = hal_device_new ();
+    hal_device_set_udi (adapter->priv->device, "/org/freedesktop/Hal/devices/computer");
     
-    adapter->priv->icon = xfpm_tray_icon_new ();
-    xfpm_tray_icon_set_visible (adapter->priv->icon, FALSE);
-    xfpm_tray_icon_set_icon (adapter->priv->icon, "gpm-ac-adapter");
+    form_factor = hal_device_get_property_string (adapter->priv->device, "system.formfactor");
+        
+    TRACE("System formfactor=%s\n", form_factor); //FIXME Use this value
+    g_free(form_factor);
+        
+    manager = hal_manager_new ();
+    
+    udi = hal_manager_find_device_by_capability (manager, "ac_adapter");
+    
+    if (!udi )//FIXME Adapter should be present on laptops
+	goto out;
+	
+    TRACE("Found AC Adapter with udi=%s\n", udi[0]);
+    
+    hal_device_set_udi (adapter->priv->device, udi[0]);
+    
+    hal_manager_free_string_array (udi);
+    
+    adapter->priv->present = hal_device_get_property_bool (adapter->priv->device, "ac_adapter.present");
+    g_signal_connect (adapter->priv->device, "device-changed",
+		      G_CALLBACK(xfpm_adapter_device_changed_cb), adapter);
+		      
+    hal_device_watch (adapter->priv->device);
+out:
+    g_object_unref (manager);
+    
 }
 
 static void
@@ -109,72 +151,30 @@ xfpm_adapter_finalize(GObject *object)
 
     adapter = XFPM_ADAPTER(object);
     
-    if ( adapter->priv->icon )
-    	g_object_unref (adapter->priv->icon);
-	
-    if ( adapter->priv->device)
-    	g_object_unref (adapter->priv->device);
-
+    if ( adapter->priv->device )
+	g_object_unref (adapter->priv->device);
+    
     G_OBJECT_CLASS(xfpm_adapter_parent_class)->finalize(object);
 }
 
-static void
-xfpm_adapter_changed (XfpmAdapter *adapter)
-{
-    adapter->priv->present = hal_device_get_property_bool (adapter->priv->device, "ac_adapter.present");
-    TRACE("Adapter changed is_present =%s", xfpm_bool_to_string(adapter->priv->present));
-    g_signal_emit (G_OBJECT(adapter), signals[ADAPTER_CHANGED], 0, adapter->priv->present);
-}
-
-static void
-xfpm_adapter_device_changed_cb (HalDevice *device,
-				const gchar *udi,
-				const gchar *key, 
-				gboolean is_removed,
-				gboolean is_added,
-				XfpmAdapter *adapter)
-{
-    if ( xfpm_strequal (key, "ac_adapter.present") )
-    {
-	xfpm_adapter_changed (adapter);
-    }
-}
-
 XfpmAdapter *
-xfpm_adapter_new (const HalDevice *device)
+xfpm_adapter_new (void)
 {
-    XfpmAdapter *adapter = NULL;
-    adapter = g_object_new (XFPM_TYPE_ADAPTER, NULL);
-    
-    adapter->priv->device = g_object_ref (G_OBJECT(device));
-    
-    g_signal_connect (adapter->priv->device, "device-changed", 
-		      G_CALLBACK (xfpm_adapter_device_changed_cb),
-		      adapter);
-    
-    xfpm_adapter_changed (adapter);
-    
-    return adapter;
+    if ( xfpm_adapter_object != NULL )
+    {
+	g_object_ref (xfpm_adapter_object);
+    }
+    else
+    {
+	xfpm_adapter_object = g_object_new (XFPM_TYPE_ADAPTER, NULL);
+	g_object_add_weak_pointer (xfpm_adapter_object, &xfpm_adapter_object);
+    }
+    return XFPM_ADAPTER (xfpm_adapter_object);
 }
 
-gboolean          xfpm_adapter_get_presence    (XfpmAdapter *adapter)
+gboolean xfpm_adapter_get_present (XfpmAdapter *adapter)
 {
-    g_return_val_if_fail (XFPM_IS_ADAPTER (adapter), FALSE);
+    g_return_val_if_fail (XFPM_IS_ADAPTER(adapter), FALSE);
     
     return adapter->priv->present;
-}
-
-void xfpm_adapter_set_visible (XfpmAdapter *adapter, gboolean visible)
-{
-    g_return_if_fail ( XFPM_IS_ADAPTER (adapter));
-    
-    xfpm_tray_icon_set_visible(adapter->priv->icon, visible);
-    
-}
-
-void xfpm_adapter_set_tooltip (XfpmAdapter *adapter, const gchar *text)
-{
-     g_return_if_fail ( XFPM_IS_ADAPTER (adapter));
-    
-    xfpm_tray_icon_set_tooltip (adapter->priv->icon, text);
 }

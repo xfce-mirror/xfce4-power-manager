@@ -42,6 +42,7 @@
 #include "libxfpm/xfpm-string.h"
 
 #include "xfpm-cpu.h"
+#include "xfpm-adapter.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 #include "xfpm-enum.h"
@@ -56,6 +57,7 @@ static void xfpm_cpu_finalize   (GObject *object);
 
 struct XfpmCpuPrivate
 {
+    XfpmAdapter   *adapter;
     XfpmXfconf    *conf;
     HalIface      *iface;
     
@@ -63,7 +65,6 @@ struct XfpmCpuPrivate
     gboolean 	   power_save;
     
     guint8         cpu_governors;
-    
 };
 
 G_DEFINE_TYPE(XfpmCpu, xfpm_cpu, G_TYPE_OBJECT)
@@ -231,6 +232,13 @@ out:
 }
 
 static void
+xfpm_cpu_adapter_changed_cb (XfpmAdapter *adapter, gboolean is_present, XfpmCpu *cpu)
+{
+    cpu->priv->on_battery = !is_present;
+    xfpm_cpu_update_governor (cpu);
+}
+
+static void
 xfpm_cpu_class_init(XfpmCpuClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -247,6 +255,7 @@ xfpm_cpu_init(XfpmCpu *cpu)
     
     cpu->priv->cpu_governors = 0;
     cpu->priv->iface         = hal_iface_new ();
+    cpu->priv->adapter       = xfpm_adapter_new ();
     
     cpu->priv->conf = xfpm_xfconf_new ();
     xfpm_cpu_load_configuration (cpu);
@@ -254,6 +263,11 @@ xfpm_cpu_init(XfpmCpu *cpu)
     g_signal_connect (cpu->priv->conf->channel, "property-changed",
 		      G_CALLBACK(xfpm_cpu_property_changed_cb), cpu);
 		      
+    g_signal_connect (cpu->priv->adapter, "adapter-changed",
+		      G_CALLBACK(xfpm_cpu_adapter_changed_cb), cpu);
+    
+    cpu->priv->on_battery = !xfpm_adapter_get_present (cpu->priv->adapter);
+		
     xfpm_cpu_check (cpu);
 }
 
@@ -269,6 +283,9 @@ xfpm_cpu_finalize(GObject *object)
 	
     if ( cpu->priv->iface )
 	g_object_unref (cpu->priv->iface);
+	
+    if ( cpu->priv->adapter)
+	g_object_unref (cpu->priv->adapter);
 
     G_OBJECT_CLASS(xfpm_cpu_parent_class)->finalize(object);
 }
@@ -279,13 +296,4 @@ xfpm_cpu_new (void)
     XfpmCpu *cpu = NULL;
     cpu = g_object_new (XFPM_TYPE_CPU, NULL);
     return cpu;
-}
-
-void xfpm_cpu_set_on_battery (XfpmCpu *cpu, gboolean on_battery)
-{
-    g_return_if_fail (XFPM_IS_CPU(cpu));
-    
-    cpu->priv->on_battery = on_battery;
-    
-    xfpm_cpu_update_governor (cpu);
 }
