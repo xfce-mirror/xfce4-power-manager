@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <unistd.h>
+
 #include <gtk/gtk.h>
 #include <glib.h>
 
@@ -54,14 +56,16 @@ int main(int argc, char **argv)
 {
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
-    static gboolean run     = FALSE;
-    static gboolean quit    = FALSE;
-    static gboolean config  = FALSE;
-    static gboolean version = FALSE;
+    gboolean run     = FALSE;
+    gboolean quit    = FALSE;
+    gboolean config  = FALSE;
+    gboolean version = FALSE;
+    gboolean no_daemon  = FALSE;
 
-    static GOptionEntry option_entries[] = 
+    GOptionEntry option_entries[] = 
     {
-	{ "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE,&run,NULL,NULL },
+	{ "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &run, NULL, NULL },
+	{ "no-daemon",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &no_daemon, N_("Do not daemonize"), NULL },
 	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
 	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
 	{ "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &version, N_("Version information"), NULL },
@@ -102,6 +106,11 @@ int main(int argc, char **argv)
 	return EXIT_FAILURE;
     }
     
+    if ( no_daemon == FALSE && daemon(0,0) )
+    {
+	g_critical ("Could not daemonize");
+    }
+        
     DBusGConnection *bus;
     bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
     
