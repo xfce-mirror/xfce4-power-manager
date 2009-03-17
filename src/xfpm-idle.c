@@ -272,12 +272,6 @@ xfpm_idle_init (XfpmIdle *idle)
 	return;
     }
     
-    gdk_error_trap_push ();
-    XSelectInput (GDK_DISPLAY (), GDK_ROOT_WINDOW (), XSyncAlarmNotifyMask);
-    
-    if ( gdk_error_trap_pop () )
-	g_warning ("XSelect Input failed");
-
     gdk_window_add_filter (NULL, xfpm_idle_x_event_filter, idle);
     
     alarm = xfpm_idle_new_alarm_internal (idle, 0);
