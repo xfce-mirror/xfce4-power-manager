@@ -42,6 +42,7 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-battery-info.h"
 #include "xfpm-notify.h"
+#include "xfpm-adapter.h"
 
 /* Init */
 static void xfpm_battery_class_init (XfpmBatteryClass *klass);
@@ -53,8 +54,9 @@ static void xfpm_battery_finalize   (GObject *object);
 
 struct XfpmBatteryPrivate
 {
-    XfpmTrayIcon  *icon;
-    HalBattery     *device;
+    XfpmTrayIcon    *icon;
+    XfpmAdapter     *adapter;
+    HalBattery      *device;
 
     HalDeviceType    type;
     gchar 	    *icon_prefix;
@@ -77,66 +79,6 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(XfpmBattery, xfpm_battery, G_TYPE_OBJECT)
 
-static void
-xfpm_battery_class_init(XfpmBatteryClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-
-    signals[BATTERY_STATE_CHANGED] = 
-    	g_signal_new("battery-state-changed",
-		      XFPM_TYPE_BATTERY,
-		      G_SIGNAL_RUN_LAST,
-		      G_STRUCT_OFFSET(XfpmBatteryClass, battery_state_changed),
-		      NULL, NULL,
-		      g_cclosure_marshal_VOID__ENUM,
-		      G_TYPE_NONE, 1, XFPM_TYPE_BATTERY_STATE);
-
-    signals[POPUP_BATTERY_MENU] = 
-   	g_signal_new("popup-battery-menu",
-		      XFPM_TYPE_BATTERY,
-		      G_SIGNAL_RUN_LAST,
-		      G_STRUCT_OFFSET(XfpmBatteryClass, popup_battery_menu),
-		      NULL, NULL,
-		      _xfpm_marshal_VOID__POINTER_UINT_UINT_UINT,
-		      G_TYPE_NONE, 4, 
-		      GTK_TYPE_STATUS_ICON, 
-		      G_TYPE_UINT,
-		      G_TYPE_UINT,
-		      G_TYPE_UINT);
-		      
-    object_class->finalize = xfpm_battery_finalize;
-    
-
-    g_type_class_add_private(klass,sizeof(XfpmBatteryPrivate));
-}
-
-static void
-xfpm_battery_init(XfpmBattery *battery)
-{
-    battery->priv = XFPM_BATTERY_GET_PRIVATE(battery);
-    
-    battery->priv->icon      = xfpm_tray_icon_new();
-    battery->priv->show_icon = SHOW_ICON_ALWAYS;
-}
-
-static void
-xfpm_battery_finalize(GObject *object)
-{
-    XfpmBattery *battery;
-    battery = XFPM_BATTERY(object);
-    
-    if ( battery->priv->icon )
-    	g_object_unref (battery->priv->icon);
-    
-    if ( battery->priv->device )
-    	g_object_unref (battery->priv->device);
-	
-    if ( battery->priv->icon_prefix )
-    	g_free(battery->priv->icon_prefix);
-
-    G_OBJECT_CLASS(xfpm_battery_parent_class)->finalize(object);
-}
-
 static const gchar *
 xfpm_battery_get_icon_index (HalDeviceType type, guint percent)
 {
@@ -157,7 +99,7 @@ xfpm_battery_get_icon_index (HalDeviceType type, guint percent)
 static void
 xfpm_battery_refresh_visible_icon (XfpmBattery *battery)
 {
-    gboolean visible = FALSE, tray_visible = FALSE;
+    gboolean visible = FALSE;
     
     if ( battery->priv->show_icon == SHOW_ICON_ALWAYS )
     	visible = TRUE;
@@ -174,13 +116,7 @@ xfpm_battery_refresh_visible_icon (XfpmBattery *battery)
 	else visible = TRUE;
     }
 
-    tray_visible = xfpm_tray_icon_get_visible (battery->priv->icon);
-    
-    if ( tray_visible != visible )
-    {
-    	TRACE ("Settings battery visibility %s\n", xfpm_bool_to_string(visible));
-    	xfpm_tray_icon_set_visible (battery->priv->icon, visible);
-    }
+    xfpm_tray_icon_set_visible (battery->priv->icon, TRUE);
 }
     
 static void
@@ -486,6 +422,77 @@ xfpm_battery_popup_menu_cb (GtkStatusIcon *icon, guint button, guint activate_ti
     		   icon, button, activate_time, battery->priv->type);
 }
 
+static void
+xfpm_battery_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmBattery *battery)
+{
+    battery->priv->adapter_present = present;
+}
+
+static void
+xfpm_battery_class_init(XfpmBatteryClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+
+    signals[BATTERY_STATE_CHANGED] = 
+    	g_signal_new("battery-state-changed",
+		      XFPM_TYPE_BATTERY,
+		      G_SIGNAL_RUN_LAST,
+		      G_STRUCT_OFFSET(XfpmBatteryClass, battery_state_changed),
+		      NULL, NULL,
+		      g_cclosure_marshal_VOID__ENUM,
+		      G_TYPE_NONE, 1, XFPM_TYPE_BATTERY_STATE);
+
+    signals[POPUP_BATTERY_MENU] = 
+   	g_signal_new("popup-battery-menu",
+		      XFPM_TYPE_BATTERY,
+		      G_SIGNAL_RUN_LAST,
+		      G_STRUCT_OFFSET(XfpmBatteryClass, popup_battery_menu),
+		      NULL, NULL,
+		      _xfpm_marshal_VOID__POINTER_UINT_UINT_UINT,
+		      G_TYPE_NONE, 4, 
+		      GTK_TYPE_STATUS_ICON, 
+		      G_TYPE_UINT,
+		      G_TYPE_UINT,
+		      G_TYPE_UINT);
+		      
+    object_class->finalize = xfpm_battery_finalize;
+    
+    g_type_class_add_private(klass,sizeof(XfpmBatteryPrivate));
+}
+
+static void
+xfpm_battery_init(XfpmBattery *battery)
+{
+    battery->priv = XFPM_BATTERY_GET_PRIVATE(battery);
+    
+    battery->priv->icon      = xfpm_tray_icon_new ();
+    battery->priv->show_icon = SHOW_ICON_ALWAYS;
+    battery->priv->adapter   = xfpm_adapter_new ();
+    
+    battery->priv->adapter_present = xfpm_adapter_get_present (battery->priv->adapter);
+    
+    g_signal_connect (battery->priv->adapter ,"adapter-changed",
+		      G_CALLBACK(xfpm_battery_adapter_changed_cb), battery);
+}
+
+static void
+xfpm_battery_finalize(GObject *object)
+{
+    XfpmBattery *battery;
+    battery = XFPM_BATTERY(object);
+    
+    g_object_unref (battery->priv->icon);
+    
+    g_object_unref (battery->priv->device);
+	
+    if ( battery->priv->icon_prefix )
+    	g_free(battery->priv->icon_prefix);
+	
+    g_object_unref (battery->priv->adapter);
+
+    G_OBJECT_CLASS(xfpm_battery_parent_class)->finalize(object);
+}
+
 XfpmBattery *
 xfpm_battery_new(const HalBattery *device)
 {
@@ -508,14 +515,6 @@ xfpm_battery_new(const HalBattery *device)
 		      G_CALLBACK(xfpm_battery_popup_menu_cb), battery);
     
     return battery;
-}
-
-void xfpm_battery_set_adapter_presence (XfpmBattery *battery, gboolean adapter_present)
-{
-    g_return_if_fail ( XFPM_IS_BATTERY(battery));
-    
-    battery->priv->adapter_present = adapter_present;
-    xfpm_battery_refresh (battery);
 }
 
 void xfpm_battery_set_show_icon (XfpmBattery *battery, XfpmShowIcon show_icon)

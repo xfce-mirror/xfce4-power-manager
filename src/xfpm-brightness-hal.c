@@ -256,7 +256,7 @@ xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
     if ( brg->priv->brightness_in_hw )
 	return;
     
-    if ( brg->priv->hw_level != brg->priv->max_level -2 )
+    if ( brg->priv->hw_level <= brg->priv->max_level -2 )
     {
 	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level + 1 );
 	brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
@@ -324,7 +324,7 @@ xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHa
 	if ( level != 1 )
 	{
 	    TRACE ("Reducing brightness, on AC power\n");
-	    xfpm_brightness_hal_set_level(brg, 1);
+	    xfpm_brightness_hal_set_level(brg, 0);
 	}
     }
     else if ( id == TIMEOUT_ON_BATTERY_ID && brg->priv->on_battery_timeout != 9)
@@ -334,7 +334,7 @@ xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHa
 	
 	if ( level != 1 )
 	{
-	    xfpm_brightness_hal_set_level(brg, 1);
+	    xfpm_brightness_hal_set_level(brg, 0);
 	    TRACE ("Reducing brightness, on battery power\n");
 	}
     }
@@ -373,6 +373,7 @@ static void
 xfpm_brightness_hal_set_timeouts (XfpmBrightnessHal *brg )
 {
     xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID, brg->priv->on_ac_timeout * 1000);
+    
     xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID, brg->priv->on_battery_timeout * 1000);
     
     xfpm_idle_alarm_reset_all (brg->priv->idle);

@@ -78,6 +78,8 @@ enum
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
+static FILE *file = NULL;
+
 G_DEFINE_TYPE(XfpmSupply, xfpm_supply, G_TYPE_OBJECT)
 
 static void
@@ -105,10 +107,11 @@ xfpm_supply_init (XfpmSupply *supply)
     supply->priv = XFPM_SUPPLY_GET_PRIVATE (supply);
   
     supply->priv->power   = hal_power_new ();
-    supply->priv->hash    = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+    supply->priv->hash    = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
     supply->priv->notify  = xfpm_notify_new ();
     supply->priv->conf    = xfpm_xfconf_new ();
 }
+
 
 static void
 xfpm_supply_finalize (GObject *object)
@@ -119,8 +122,7 @@ xfpm_supply_finalize (GObject *object)
     if ( supply->priv->power )
     	g_object_unref(supply->priv->power);
 	
-    if ( supply->priv->hash )
-    	g_hash_table_destroy (supply->priv->hash);
+    g_hash_table_destroy (supply->priv->hash);
 	
     if ( supply->priv->notify )
     	g_object_unref (supply->priv->notify);
@@ -130,7 +132,7 @@ xfpm_supply_finalize (GObject *object)
 	
     if ( supply->priv->adapter )
 	g_object_unref (supply->priv->adapter);
-    
+	
     G_OBJECT_CLASS(xfpm_supply_parent_class)->finalize(object);
 }
 
@@ -506,31 +508,6 @@ xfpm_supply_popup_battery_menu_cb (XfpmBattery *battery, GtkStatusIcon *icon,
 		   icon, button, activate_time);
 }
 
-//FIXME: Change the name of this function
-
-
-static void
-xfpm_supply_set_adapter_presence (XfpmSupply *supply)
-{
-    if ( g_hash_table_size (supply->priv->hash) == 0 ) 
-	return;
-	
-    int i;
-    GList *list = g_hash_table_get_values (supply->priv->hash );
-    
-    if (!list)
-	return;
-    
-    for ( i = 0;i <g_list_length(list); i++)
-    {
-	XfpmBattery *battery = NULL;
-	battery = (XfpmBattery *) g_list_nth_data (list, i);
-	if ( battery )
-	    xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
-    }
-    g_list_free (list);
-}
-
 static XfpmBattery *
 xfpm_supply_get_battery (XfpmSupply *supply, const gchar *udi)
 {
@@ -547,13 +524,14 @@ xfpm_supply_add_battery (XfpmSupply *supply, const HalBattery *device)
     udi = hal_device_get_udi (HAL_DEVICE(device));
 
     TRACE("New battery found %s", udi);
+    fprintf(file, "New battery found with udi %s", udi);
 
     XfpmBattery *battery = xfpm_battery_new (device);
     
     xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
     
-    xfpm_battery_set_adapter_presence (battery, supply->priv->adapter_present);
     xfpm_battery_set_critical_level (battery, supply->priv->critical_level);
+    
     g_hash_table_insert (supply->priv->hash, g_strdup(udi), battery);
     
     g_signal_connect (G_OBJECT(battery), "battery-state-changed",
@@ -641,12 +619,14 @@ xfpm_supply_set_critical_power_level (XfpmSupply *supply)
     g_list_free (list);
 }
 
-static void
+static gboolean
 xfpm_supply_monitor_start (XfpmSupply *supply)
 {
     //FIXME: Check the system formfactor
     
     GPtrArray *array = hal_power_get_batteries (supply->priv->power);
+    file = fopen("/home/ali/tmp", "a");
+    fprintf(file, "array len=%d", array->len);
     
     int i = 0;
     for ( i = 0; i<array->len; i++ )
@@ -657,6 +637,8 @@ xfpm_supply_monitor_start (XfpmSupply *supply)
     }
     
     g_ptr_array_free(array, TRUE);
+    
+    return FALSE;
 }
 
 static void
@@ -732,7 +714,6 @@ static void
 xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupply *supply)
 {
     supply->priv->adapter_present = present;
-    xfpm_supply_set_adapter_presence (supply);
 }
 
 /*
@@ -762,7 +743,7 @@ void xfpm_supply_monitor (XfpmSupply *supply)
     g_signal_connect (supply->priv->conf->channel, "property-changed", 
 		      G_CALLBACK(xfpm_supply_property_changed_cb), supply);
 
-    xfpm_supply_monitor_start(supply);
+    xfpm_supply_monitor_start (supply);
     
     g_signal_connect(supply->priv->power, "battery-added",
 		     G_CALLBACK(xfpm_supply_battery_added_cb), supply);

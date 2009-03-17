@@ -62,9 +62,6 @@ typedef struct
 GType        		 xfpm_battery_get_type           (void) G_GNUC_CONST;
 XfpmBattery    		*xfpm_battery_new                (const HalBattery *device);
 
-void                     xfpm_battery_set_adapter_presence(XfpmBattery *battery,
-							  gboolean adapter_present);
-							  
 void                     xfpm_battery_set_show_icon      (XfpmBattery *battery,
 							  XfpmShowIcon show_icon);
 							  

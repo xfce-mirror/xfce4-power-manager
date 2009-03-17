@@ -34,15 +34,12 @@
 #include "libxfpm/xfpm-common.h"
 
 #include "xfpm-tray-icon.h"
+#include "xfpm-string.h"
 
 /* Init */
 static void xfpm_tray_icon_class_init (XfpmTrayIconClass *klass);
 static void xfpm_tray_icon_init       (XfpmTrayIcon *tray);
 static void xfpm_tray_icon_finalize   (GObject *object);
-
-static gboolean xfpm_tray_icon_size_change_cb(GtkStatusIcon *icon, 
-					      gint size,
-					      gpointer data);
 
 #define XFPM_TRAY_ICON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_TRAY_ICON, XfpmTrayIconPrivate))
@@ -50,9 +47,7 @@ static gboolean xfpm_tray_icon_size_change_cb(GtkStatusIcon *icon,
 struct XfpmTrayIconPrivate
 {
     GtkStatusIcon *icon;
-    gint icon_size;
     GQuark icon_quark;
-    
 };
 
 G_DEFINE_TYPE(XfpmTrayIcon, xfpm_tray_icon, G_TYPE_OBJECT)
@@ -71,12 +66,10 @@ static void
 xfpm_tray_icon_init(XfpmTrayIcon *tray)
 {
     tray->priv = XFPM_TRAY_ICON_GET_PRIVATE(tray);
+    
     tray->priv->icon = gtk_status_icon_new();
-    tray->priv->icon_size = 0;
+    
     tray->priv->icon_quark = 0;
-     
-    g_signal_connect(G_OBJECT(tray->priv->icon), "size-changed", 
-		     G_CALLBACK(xfpm_tray_icon_size_change_cb), tray);
 }
 
 static void
@@ -85,28 +78,11 @@ xfpm_tray_icon_finalize(GObject *object)
     XfpmTrayIcon *icon;
 
     icon = XFPM_TRAY_ICON(object);
-    
+
     if ( icon->priv->icon )
     	g_object_unref(icon->priv->icon);
 
     G_OBJECT_CLASS(xfpm_tray_icon_parent_class)->finalize(object);
-}
-
-static gboolean 
-xfpm_tray_icon_size_change_cb(GtkStatusIcon *icon, 
-			      gint size,
-			      gpointer data)
-{
-    XfpmTrayIcon *tray = (XfpmTrayIcon *) data;
-    
-    if ( size > 128 ) return TRUE;
-    if ( tray->priv->icon_quark == 0 ) return TRUE;
-    
-    tray->priv->icon_size = size;
-    
-    xfpm_tray_icon_set_icon (tray, g_quark_to_string(tray->priv->icon_quark));
-    
-    return TRUE;
 }
 
 XfpmTrayIcon *
@@ -122,16 +98,8 @@ void xfpm_tray_icon_set_icon (XfpmTrayIcon *icon, const gchar *icon_name)
     g_return_if_fail(XFPM_IS_TRAY_ICON(icon));
     
     icon->priv->icon_quark = g_quark_from_string(icon_name);
-        
-    GdkPixbuf *pix;
-    pix = xfpm_load_icon(icon_name, icon->priv->icon_size);
-    
-    if ( pix )
-    {
-	gtk_status_icon_set_from_pixbuf(GTK_STATUS_ICON(icon->priv->icon), pix);
-	g_object_unref(pix);
-    }
-    
+   
+    gtk_status_icon_set_from_icon_name (GTK_STATUS_ICON(icon->priv->icon), icon_name);
 }
 
 void xfpm_tray_icon_set_tooltip (XfpmTrayIcon *icon, const gchar *tooltip)
@@ -143,7 +111,6 @@ void xfpm_tray_icon_set_tooltip (XfpmTrayIcon *icon, const gchar *tooltip)
 #else
     gtk_status_icon_set_tooltip (GTK_STATUS_ICON(icon->priv->icon), tooltip);
 #endif
-
 }
 
 void xfpm_tray_icon_set_visible (XfpmTrayIcon *icon, gboolean visible)
@@ -151,7 +118,6 @@ void xfpm_tray_icon_set_visible (XfpmTrayIcon *icon, gboolean visible)
     g_return_if_fail(XFPM_IS_TRAY_ICON(icon));
     
     gtk_status_icon_set_visible(GTK_STATUS_ICON(icon->priv->icon), visible);
-    
 }
 
 gboolean xfpm_tray_icon_get_visible (XfpmTrayIcon *icon)

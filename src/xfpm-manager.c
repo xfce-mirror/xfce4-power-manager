@@ -36,10 +36,12 @@
 #include <dbus/dbus-glib-lowlevel.h>
 
 #include "libxfpm/xfpm-string.h"
+#include "libxfpm/hal-proxy.h"
 #include "libxfpm/xfpm-dbus.h"
 
 #include "xfpm-manager.h"
 #include "xfpm-engine.h"
+#include "xfpm-manager.h"
 
 /* Init */
 static void xfpm_manager_class_init (XfpmManagerClass *klass);
@@ -54,12 +56,20 @@ static void xfpm_manager_dbus_init	 (XfpmManager *manager);
 
 struct XfpmManagerPrivate
 {
-    XfpmEngine *engine;
+    XfpmEngine 	    *engine;
+    HalProxy        *hproxy;
     
     DBusGConnection *session_bus;
 };
 
 G_DEFINE_TYPE(XfpmManager, xfpm_manager, G_TYPE_OBJECT)
+
+static void
+xfpm_manager_hal_disconnected_cb (HalProxy *hproxy, XfpmManager *manager)
+{
+    TRACE("hald disconnected ");
+    //g_object_unref (manager->priv->engine);
+}
 
 static void
 xfpm_manager_class_init (XfpmManagerClass *klass)
@@ -77,6 +87,8 @@ xfpm_manager_init(XfpmManager *manager)
     manager->priv = XFPM_MANAGER_GET_PRIVATE(manager);
 
     manager->priv->session_bus   = NULL;
+    manager->priv->engine        = NULL;
+    manager->priv->hproxy        = NULL;
 }
 
 static void
@@ -137,6 +149,12 @@ void xfpm_manager_start (XfpmManager *manager)
     
 	g_critical ("Unable to reserve bus name\n");
     }
+    
+    manager->priv->hproxy = hal_proxy_new ();
+    
+    g_signal_connect (manager->priv->hproxy, "hal-disconnected",
+		      G_CALLBACK(xfpm_manager_hal_disconnected_cb), manager);
+    
     
     manager->priv->engine = xfpm_engine_new ();
     

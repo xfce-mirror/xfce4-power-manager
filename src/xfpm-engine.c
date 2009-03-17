@@ -151,6 +151,7 @@ xfpm_engine_finalize (GObject *object)
 	
     if ( engine->priv->supply )
     	g_object_unref (engine->priv->supply);
+	
 #ifdef HAVE_DPMS
     if ( engine->priv->dpms )
     	g_object_unref (engine->priv->dpms);
@@ -165,6 +166,9 @@ xfpm_engine_finalize (GObject *object)
     if ( engine->priv->iface)
     	g_object_unref(engine->priv->iface);
 
+    if ( engine->priv->adapter)
+	g_object_unref (engine->priv->adapter);
+	
     if ( engine->priv->button_timer)
     	g_timer_destroy (engine->priv->button_timer);
 	
@@ -287,7 +291,6 @@ xfpm_engine_check_hal_iface (XfpmEngine *engine)
 	engine->priv->power_management |= SYSTEM_CAN_SUSPEND;
 	
     //FIXME: Show errors here
-   
 }
 
 static void
@@ -301,18 +304,19 @@ xfpm_engine_load_all (XfpmEngine *engine)
     engine->priv->cpu = xfpm_cpu_new ();
 
     engine->priv->supply = xfpm_supply_new (engine->priv->power_management);
+    xfpm_supply_monitor (engine->priv->supply);
     
     /*
-     * Keys from XF86
-     */
+    * Keys from XF86
+    */
     engine->priv->xf86_button = xfpm_button_xf86_new ();
     
     g_signal_connect (engine->priv->xf86_button, "xf86-button-pressed", 
-		      G_CALLBACK(xfpm_engine_xf86_button_pressed_cb), engine);
+		       G_CALLBACK(xfpm_engine_xf86_button_pressed_cb), engine);
 		      
     /*
-     * Lid from HAL 
-     */
+    * Lid from HAL 
+    */
     engine->priv->lid = xfpm_lid_hal_new ();
     
     if ( xfpm_lid_hw_found (engine->priv->lid ))
@@ -320,14 +324,12 @@ xfpm_engine_load_all (XfpmEngine *engine)
 			  G_CALLBACK(xfpm_engine_lid_closed_cb), engine);
 			  
     /*
-     * Brightness HAL
-     */
+    * Brightness HAL
+    */
     engine->priv->brg_hal = xfpm_brightness_hal_new ();
     
     g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
 		      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
-
-    xfpm_supply_monitor (engine->priv->supply);
 }
 
 static void
