@@ -20,6 +20,14 @@
     <method name="CanHibernate">
       <arg type="b" name="can_hibernate" direction="out"/>
     </method>
+    
+    <method name="GetOnBattery">
+      <arg type="b" name="on_battery" direction="out"/>
+    </method>
 	
+    <method name="GetLowBattery">
+      <arg type="b" name="low_battery" direction="out"/>
+    </method>
+    
     </interface>
 </node>

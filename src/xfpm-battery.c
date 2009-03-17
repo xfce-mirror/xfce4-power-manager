@@ -41,6 +41,8 @@
 #include "xfpm-marshal.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-battery-info.h"
+#include "xfpm-xfconf.h"
+#include "xfpm-config.h"
 #include "xfpm-notify.h"
 #include "xfpm-adapter.h"
 
@@ -57,6 +59,7 @@ struct XfpmBatteryPrivate
     XfpmTrayIcon    *icon;
     XfpmAdapter     *adapter;
     HalBattery      *device;
+    XfpmXfconf      *conf;
 
     HalDeviceType    type;
     gchar 	    *icon_prefix;
@@ -429,6 +432,54 @@ xfpm_battery_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmBat
 }
 
 static void
+xfpm_battery_property_changed_cb (XfconfChannel *channel, gchar *property,
+				  GValue *value, XfpmBattery *battery)
+{
+    if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
+    	return;
+	
+    if ( xfpm_strequal (property, SHOW_TRAY_ICON_CFG) )
+    {
+	guint val = g_value_get_uint (value);
+	battery->priv->show_icon = val;
+	xfpm_battery_refresh_visible_icon (battery);
+    }
+    else if ( xfpm_strequal( property, CRITICAL_POWER_LEVEL) )
+    {
+	guint val = g_value_get_uint (value);
+	if ( val > 20 )
+	{
+	    g_warning ("Value %d for property %s is out of range \n", val, CRITICAL_POWER_LEVEL);
+	    battery->priv->critical_level = 10;
+	}
+	else 
+	    battery->priv->critical_level = val;
+    }
+}
+
+static void
+xfpm_battery_load_configuration (XfpmBattery *battery)
+{
+    battery->priv->show_icon =
+    	xfconf_channel_get_uint (battery->priv->conf->channel, SHOW_TRAY_ICON_CFG, 0);
+	
+    if ( battery->priv->show_icon < 0 || battery->priv->show_icon > 3 )
+    {
+	g_warning ("Invalid value %d for property %s, using default\n", battery->priv->show_icon, SHOW_TRAY_ICON_CFG);
+	xfconf_channel_set_uint (battery->priv->conf->channel, CRITICAL_BATT_ACTION_CFG, 0);
+    }
+    
+    battery->priv->critical_level =
+	xfconf_channel_get_uint (battery->priv->conf->channel, CRITICAL_POWER_LEVEL, 0);
+	
+    if ( battery->priv->critical_level <0 || battery->priv->critical_level > 20 )
+    {
+	g_warning ("Value %d for property %s is out of range \n", battery->priv->critical_level, CRITICAL_POWER_LEVEL);
+	battery->priv->critical_level = 10;
+    }
+}
+
+static void
 xfpm_battery_class_init(XfpmBatteryClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -468,11 +519,17 @@ xfpm_battery_init(XfpmBattery *battery)
     battery->priv->icon      = xfpm_tray_icon_new ();
     battery->priv->show_icon = SHOW_ICON_ALWAYS;
     battery->priv->adapter   = xfpm_adapter_new ();
+    battery->priv->conf      = xfpm_xfconf_new ();
     
     battery->priv->adapter_present = xfpm_adapter_get_present (battery->priv->adapter);
     
     g_signal_connect (battery->priv->adapter ,"adapter-changed",
 		      G_CALLBACK(xfpm_battery_adapter_changed_cb), battery);
+		      
+    g_signal_connect (battery->priv->conf->channel ,"property-changed",
+		      G_CALLBACK(xfpm_battery_property_changed_cb), battery);
+		      
+    xfpm_battery_load_configuration (battery);
 }
 
 static void
@@ -489,6 +546,8 @@ xfpm_battery_finalize(GObject *object)
     	g_free(battery->priv->icon_prefix);
 	
     g_object_unref (battery->priv->adapter);
+    
+    g_object_unref (battery->priv->conf);
 
     G_OBJECT_CLASS(xfpm_battery_parent_class)->finalize(object);
 }

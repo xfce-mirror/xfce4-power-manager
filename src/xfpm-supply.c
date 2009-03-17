@@ -64,9 +64,7 @@ struct XfpmSupplyPrivate
     gboolean       adapter_present;
     
     XfpmShutdownRequest critical_action;
-    XfpmShowIcon   show_icon;
     
-    guint8         critical_level;
     guint8         power_management;
 };
 
@@ -77,8 +75,6 @@ enum
 };
 
 static guint signals[LAST_SIGNAL] = { 0 };
-
-static FILE *file = NULL;
 
 G_DEFINE_TYPE(XfpmSupply, xfpm_supply, G_TYPE_OBJECT)
 
@@ -221,7 +217,6 @@ gboolean xfpm_supply_on_low_power ( XfpmSupply *supply)
 	else 
 	    low_power = FALSE;
     }
-    
     return low_power;
 }
 
@@ -304,7 +299,6 @@ xfpm_supply_show_critical_action (XfpmSupply *supply, XfpmBattery *battery)
     }
     
     xfpm_notify_present_notification (supply->priv->notify, n, FALSE);
-    
 }
 
 static void
@@ -524,13 +518,8 @@ xfpm_supply_add_battery (XfpmSupply *supply, const HalBattery *device)
     udi = hal_device_get_udi (HAL_DEVICE(device));
 
     TRACE("New battery found %s", udi);
-    fprintf(file, "New battery found with udi %s", udi);
 
     XfpmBattery *battery = xfpm_battery_new (device);
-    
-    xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
-    
-    xfpm_battery_set_critical_level (battery, supply->priv->critical_level);
     
     g_hash_table_insert (supply->priv->hash, g_strdup(udi), battery);
     
@@ -556,7 +545,6 @@ xfpm_supply_remove_battery (XfpmSupply *supply,  const HalBattery *device)
 	if (!g_hash_table_remove(supply->priv->hash, udi))
 		g_critical ("Unable to removed battery object from hash");
     }
-    
 }
 
 static void
@@ -571,62 +559,12 @@ xfpm_supply_battery_removed_cb (HalPower *power, const HalBattery *device, XfpmS
     xfpm_supply_remove_battery (supply, device);
 }
 
-static void
-xfpm_supply_set_battery_show_tray_icon (XfpmSupply *supply)
-{
-    GList *list = NULL;
-    
-    list = g_hash_table_get_values (supply->priv->hash);
-    
-    if ( !list )
-    	return;
-	
-    int i;
-    for ( i = 0; i<g_list_length(list); i++)
-    {
-	XfpmBattery *battery = NULL;
-	battery = (XfpmBattery *) g_list_nth_data(list, i);
-	
-	if ( battery )
-	{
-	    xfpm_battery_set_show_icon (battery, supply->priv->show_icon);
-	}
-    }
-    g_list_free (list);
-}
-
-static void
-xfpm_supply_set_critical_power_level (XfpmSupply *supply)
-{
-    GList *list = NULL;
-    
-    list = g_hash_table_get_values (supply->priv->hash);
-    
-    if ( !list )
-    	return;
-	
-    int i;
-    for ( i = 0; i<g_list_length(list); i++)
-    {
-	XfpmBattery *battery = NULL;
-	battery = (XfpmBattery *) g_list_nth_data(list, i);
-	
-	if ( battery )
-	{
-	    xfpm_battery_set_critical_level (battery, supply->priv->critical_level);
-	}
-    }
-    g_list_free (list);
-}
-
 static gboolean
 xfpm_supply_monitor_start (XfpmSupply *supply)
 {
     //FIXME: Check the system formfactor
     
     GPtrArray *array = hal_power_get_batteries (supply->priv->power);
-    file = fopen("/home/ali/tmp", "a");
-    fprintf(file, "array len=%d", array->len);
     
     int i = 0;
     for ( i = 0; i<array->len; i++ )
@@ -659,25 +597,7 @@ xfpm_supply_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
 	else
 	    supply->priv->critical_action = val;
     }
-    else if ( xfpm_strequal (property, SHOW_TRAY_ICON_CFG) )
-    {
-	guint val = g_value_get_uint (value);
-	supply->priv->show_icon = val;
-	xfpm_supply_set_battery_show_tray_icon (supply);
-    }
-    else if ( xfpm_strequal( property, CRITICAL_POWER_LEVEL) )
-    {
-	guint val = g_value_get_uint (value);
-	if ( val > 20 )
-	{
-	    g_warning ("Value %d for property %s is out of range \n", val, CRITICAL_POWER_LEVEL);
-	    supply->priv->critical_level = 10;
-	}
-	else 
-	    supply->priv->critical_level = val;
-	    
-	xfpm_supply_set_critical_power_level (supply);
-    }
+    
 }
 
 static void
@@ -700,14 +620,6 @@ xfpm_supply_load_configuration (XfpmSupply *supply)
     
     g_free (str);
     
-    supply->priv->show_icon =
-    	xfconf_channel_get_uint (supply->priv->conf->channel, SHOW_TRAY_ICON_CFG, 0);
-	
-    if ( supply->priv->show_icon < 0 || supply->priv->show_icon > 3 )
-    {
-	g_warning ("Invalid value %d for property %s, using default\n", supply->priv->show_icon, SHOW_TRAY_ICON_CFG);
-	xfconf_channel_set_uint (supply->priv->conf->channel, CRITICAL_BATT_ACTION_CFG, 0);
-    }
 }
 
 static void
@@ -751,4 +663,11 @@ void xfpm_supply_monitor (XfpmSupply *supply)
     g_signal_connect(supply->priv->power, "battery-removed",
 		     G_CALLBACK(xfpm_supply_battery_removed_cb), supply);
     
+}
+
+gboolean xfpm_supply_on_low_battery (XfpmSupply *supply)
+{
+    g_return_val_if_fail (XFPM_IS_SUPPLY(supply), FALSE);
+    
+    return xfpm_supply_on_low_power(supply);
 }

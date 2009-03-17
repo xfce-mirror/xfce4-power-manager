@@ -53,7 +53,11 @@ typedef struct
 GType   	         xfpm_supply_get_type       (void) G_GNUC_CONST;
 
 XfpmSupply     	        *xfpm_supply_new            (guint8 power_management_info);
+
 void                     xfpm_supply_monitor        (XfpmSupply *supply);
+
+gboolean                 xfpm_supply_on_low_battery (XfpmSupply *supply);
+
 G_END_DECLS
 
 #endif /* __XFPM_SUPPLY_H */

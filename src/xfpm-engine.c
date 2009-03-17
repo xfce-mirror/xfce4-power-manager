@@ -484,6 +484,14 @@ static gboolean xfpm_engine_dbus_can_suspend  	(XfpmEngine *engine,
 						 gboolean *OUT_can_suspend,
 						 GError **error);
 
+static gboolean xfpm_engine_dbus_get_on_battery	(XfpmEngine *engine,
+						 gboolean *OUT_on_battery,
+						 GError **error);
+
+static gboolean xfpm_engine_dbus_get_low_battery(XfpmEngine *engine,
+						 gboolean *OUT_low_battery,
+						 GError **error);
+
 #include "org.freedesktop.PowerManagement-server.h"
 
 static void
@@ -554,5 +562,23 @@ static gboolean xfpm_engine_dbus_can_suspend  	(XfpmEngine *engine,
 		  "can-suspend", OUT_can_suspend,
 		  NULL);
 		  
+    return TRUE;
+}
+
+static gboolean xfpm_engine_dbus_get_on_battery (XfpmEngine *engine,
+						 gboolean *OUT_on_battery,
+						 GError **error)
+{
+    *OUT_on_battery = engine->priv->on_battery;
+    
+    return TRUE;
+}
+
+static gboolean xfpm_engine_dbus_get_low_battery(XfpmEngine *engine,
+						 gboolean *OUT_low_battery,
+						 GError **error)
+{
+    *OUT_low_battery = xfpm_supply_on_low_battery (engine->priv->supply);
+    
     return TRUE;
 }
