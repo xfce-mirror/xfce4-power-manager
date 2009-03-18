@@ -240,7 +240,7 @@ xfpm_brightness_hal_setup (XfpmBrightnessHal *brg)
     
     udi = hal_manager_find_device_by_capability (manager, "laptop_panel");
     
-    if ( !udi )
+    if ( !udi || !udi[0])
     {
 	g_object_unref ( manager);
     	return FALSE;

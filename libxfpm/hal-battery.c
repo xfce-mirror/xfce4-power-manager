@@ -402,6 +402,19 @@ hal_battery_get_device_type (HalBattery *battery)
     return type_enum;
 }
 
+static guint 
+_get_battery_percentage (guint32 last_full, guint32 current)
+{
+    guint val = 100;
+    
+    if ( last_full <= current ) return val;
+    
+    float f = (float)current/last_full *100;
+	
+	val = (guint)f;
+    return val;   
+}
+
 static void
 hal_battery_refresh_all (HalBattery *battery)
 {
@@ -431,7 +444,7 @@ hal_battery_refresh_all (HalBattery *battery)
     if ( hal_device_has_key(HAL_DEVICE(battery), "battery.charge_level.percentage") )
      	battery->priv->percentage = 
     		hal_device_get_property_int(HAL_DEVICE(battery), "battery.charge_level.percentage");
-    else battery->priv->percentage = 0;
+    else battery->priv->percentage = _get_battery_percentage(battery->priv->last_full, battery->priv->current_charge);
     
     if ( hal_device_has_key(HAL_DEVICE(battery), "battery.reporting.last_full") )
      	battery->priv->reporting_last_full = 
