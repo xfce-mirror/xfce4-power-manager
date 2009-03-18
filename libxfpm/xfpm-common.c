@@ -123,8 +123,6 @@ xfpm_lock_screen(void)
     {
         g_critical ("Connot lock screen\n");
     }
-    
-    g_usleep (2000000);
 }
 
 void       

@@ -109,10 +109,58 @@ struct XfpmEnginePrivate
 
 G_DEFINE_TYPE(XfpmEngine, xfpm_engine, G_TYPE_OBJECT)
 
+static gboolean
+xfpm_engine_do_suspend (XfpmEngine *engine)
+{
+    GError *error = NULL;
+    
+    hal_iface_shutdown (engine->priv->iface, "Suspend", &error);
+    
+    if ( error )
+    {
+	g_warning ("%s", error->message);
+	g_error_free (error);
+    }
+    
+    return FALSE;
+}
+
+static gboolean
+xfpm_engine_do_hibernate (XfpmEngine *engine)
+{
+    GError *error = NULL;
+    
+    hal_iface_shutdown (engine->priv->iface, "Hibernate", &error);
+    
+    if ( error )
+    {
+	g_warning ("%s", error->message);
+	g_error_free (error);
+    }
+    
+    return FALSE;
+}
+
+static gboolean
+xfpm_engine_do_shutdown (XfpmEngine *engine)
+{
+    GError *error = NULL;
+    
+    hal_iface_shutdown (engine->priv->iface, "Shutdown", &error);
+    
+    if ( error )
+    {
+	g_warning ("%s", error->message);
+	g_error_free (error);
+    }
+    
+    return FALSE;
+}
+
 static void
 xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
 {
-    GError *error = NULL;
+    
     const gchar *action = xfpm_int_to_shutdown_string (shutdown);
 	
     if ( xfpm_strequal(action, "Nothing") )
@@ -125,16 +173,23 @@ xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
 	TRACE("Going to do %s\n", action);
 	xfpm_send_message_to_network_manager ("sleep");
 	
-	if ( shutdown != XFPM_DO_SHUTDOWN && engine->priv->lock_screen )
-	    xfpm_lock_screen ();
-	    
-	hal_iface_shutdown (engine->priv->iface, action, &error);
-	xfpm_send_message_to_network_manager ("wake");
-	if ( error )
+	if ( shutdown == XFPM_DO_SHUTDOWN)
 	{
-	    g_warning ("%s", error->message);
-	    g_error_free (error);
+	    xfpm_engine_do_shutdown (engine);
 	}
+	else if ( shutdown == XFPM_DO_HIBERNATE )
+	{
+	    g_timeout_add_seconds (3, (GSourceFunc) xfpm_engine_do_hibernate, engine);
+	}
+	else if ( shutdown == XFPM_DO_SUSPEND )
+	{
+	    g_timeout_add_seconds (3, (GSourceFunc) xfpm_engine_do_suspend, engine);
+	}
+	
+	if ( engine->priv->lock_screen )
+	    xfpm_lock_screen ();
+	
+	xfpm_send_message_to_network_manager ("wake");
     }
 }
 
