@@ -56,6 +56,8 @@ struct XfpmLidHalPrivate
 {
     HalManager *manager;
     HalDevice  *device;
+    
+    GTimer      *timer;
     gboolean    hw_found;
 };
 
@@ -64,6 +66,8 @@ enum
     LID_CLOSED,
     LAST_SIGNAL
 };
+
+#define DUPLICATE_SHUTDOWN_TIMEOUT 4.0f
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
@@ -98,6 +102,7 @@ xfpm_lid_hal_init (XfpmLidHal *lid)
     lid->priv->manager      = NULL;
     lid->priv->device       = NULL;
     lid->priv->hw_found     = FALSE;
+    lid->priv->timer        = g_timer_new ();
 }
 
 static void
@@ -112,6 +117,8 @@ xfpm_lid_hal_finalize(GObject *object)
 
     if ( lid->priv->device )
     	g_object_unref (lid->priv->device);
+
+    g_timer_destroy (lid->priv->timer);
 
     G_OBJECT_CLASS(xfpm_lid_hal_parent_class)->finalize(object);
 }
@@ -134,8 +141,17 @@ xfpm_lid_hal_device_changed_cb(HalDevice *device,
     
     if ( pressed )
     {
-	TRACE("Emitting signal lid closed");
-	g_signal_emit ( G_OBJECT(lid), signals[LID_CLOSED], 0);
+	if ( g_timer_elapsed (lid->priv->timer, NULL ) < DUPLICATE_SHUTDOWN_TIMEOUT )
+	{
+	    TRACE("Duplicated lid closed");
+	    return;
+	}
+	else
+	{
+	    TRACE("Emitting signal lid closed");
+	    g_signal_emit ( G_OBJECT(lid), signals[LID_CLOSED], 0);
+	    g_timer_reset (lid->priv->timer);
+	}
     }
     
 }

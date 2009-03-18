@@ -49,6 +49,8 @@
 #include <gdk/gdkx.h>
 #include <gtk/gtk.h>
 
+#include <glib.h>
+
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-button-xf86.h"
@@ -69,6 +71,8 @@ struct XfpmButtonXf86Private
     GdkScreen	*screen;
     GdkWindow   *window;
     GHashTable  *hash;
+    
+    GTimer      *timer;
 };
 
 enum
@@ -76,6 +80,8 @@ enum
     XF86_BUTTON_PRESSED,
     LAST_SIGNAL
 };
+
+#define DUPLICATE_SHUTDOWN_TIMEOUT 4.0f
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
@@ -95,7 +101,7 @@ xfpm_button_xf86_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data
     
     if ( !key_hash )
     {
-	g_print("Key %d not found in hash\n", xev->xkey.keycode);
+	TRACE("Key %d not found in hash\n", xev->xkey.keycode);
 	return GDK_FILTER_CONTINUE;
     }
     
@@ -103,8 +109,21 @@ xfpm_button_xf86_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data
     
     TRACE("Found key in hash %d", type);
     
+    if ( (type == BUTTON_POWER_OFF || type == BUTTON_SLEEP) )
+	  
+    {
+	if ( g_timer_elapsed (button->priv->timer, NULL ) < DUPLICATE_SHUTDOWN_TIMEOUT )
+	{
+	    TRACE("Button %d duplicated", type);
+	    goto out;
+	}
+	else
+	    g_timer_reset (button->priv->timer);
+    }
+	 
     g_signal_emit (G_OBJECT(button), signals[XF86_BUTTON_PRESSED], 0, type);
-    
+
+out:
     return GDK_FILTER_REMOVE;
 }
 
@@ -131,8 +150,8 @@ xfpm_button_xf86_grab_keystring (XfpmButtonXf86 *button, guint keycode)
     }
 	
     ret = XGrabKey (display, keycode, LockMask | modmask,
-			GDK_WINDOW_XID (button->priv->window), True,
-			GrabModeAsync, GrabModeAsync);
+		    GDK_WINDOW_XID (button->priv->window), True,
+		    GrabModeAsync, GrabModeAsync);
 			
     if (ret == BadAccess)
     {
@@ -217,6 +236,7 @@ xfpm_button_xf86_init(XfpmButtonXf86 *button)
     
     button->priv->screen = NULL;
     button->priv->window = NULL;
+    button->priv->timer  = g_timer_new ();
     
     button->priv->hash = g_hash_table_new (NULL, NULL);
     
@@ -229,6 +249,9 @@ xfpm_button_xf86_finalize(GObject *object)
     XfpmButtonXf86 *button;
 
     button = XFPM_BUTTON_XF86 (object);
+    
+    g_hash_table_destroy (button->priv->hash);
+    g_timer_destroy (button->priv->timer);
 
     G_OBJECT_CLASS(xfpm_button_xf86_parent_class)->finalize(object);
 }
@@ -245,6 +268,5 @@ xfpm_button_xf86_new(void)
 	xfpm_button_xf86_object = g_object_new (XFPM_TYPE_BUTTON_XF86, NULL);
 	g_object_add_weak_pointer (xfpm_button_xf86_object, &xfpm_button_xf86_object);
     }
-    
     return XFPM_BUTTON_XF86 (xfpm_button_xf86_object);
 }

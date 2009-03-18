@@ -57,10 +57,10 @@
 #include "xfpm-network-manager.h"
 #include "xfpm-button-xf86.h"
 #include "xfpm-lid-hal.h"
+#include "xfpm-inhibit.h"
 #include "xfpm-brightness-hal.h"
+#include "xfpm-screen-saver.h"
 #include "xfpm-config.h"
-
-#define DUPLICATE_SHUTDOWN_TIMEOUT 4.0f
 
 /* Init */
 static void xfpm_engine_class_init (XfpmEngineClass *klass);
@@ -82,13 +82,14 @@ struct XfpmEnginePrivate
     XfpmLidHal         *lid;
     XfpmBrightnessHal  *brg_hal;
     XfpmAdapter        *adapter;
+    XfpmInhibit        *inhibit;
     HalIface           *iface;
 #ifdef HAVE_DPMS
     XfpmDpms           *dpms;
 #endif
 
-    GTimer             *button_timer;
-    
+    gboolean            inhibited;
+
     guint8              power_management;
     gboolean            on_battery;
     
@@ -102,78 +103,6 @@ struct XfpmEnginePrivate
 };
 
 G_DEFINE_TYPE(XfpmEngine, xfpm_engine, G_TYPE_OBJECT)
-
-static void
-xfpm_engine_class_init(XfpmEngineClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-
-    object_class->finalize = xfpm_engine_finalize;
-
-    g_type_class_add_private(klass,sizeof(XfpmEnginePrivate));
-    
-    xfpm_engine_dbus_class_init (klass);
-}
-
-static void
-xfpm_engine_init (XfpmEngine *engine)
-{
-    engine->priv = XFPM_ENGINE_GET_PRIVATE(engine);
-    
-    engine->priv->iface       = hal_iface_new ();
-
-    engine->priv->button_timer= g_timer_new ();
-
-    engine->priv->conf        = NULL;
-    engine->priv->supply      = NULL;
-#ifdef HAVE_DPMS
-    engine->priv->dpms        = NULL;
-#endif    
-    engine->priv->cpu         = NULL;
-    engine->priv->xf86_button = NULL;
-    engine->priv->lid         = NULL;
-    engine->priv->brg_hal     = NULL;
-    
-    engine->priv->power_management = 0;
-    
-    xfpm_engine_dbus_init (engine);
-}
-
-static void
-xfpm_engine_finalize (GObject *object)
-{
-    XfpmEngine *engine;
-
-    engine = XFPM_ENGINE(object);
-    
-    if ( engine->priv->conf )
-    	g_object_unref (engine->priv->conf);
-	
-    if ( engine->priv->supply )
-    	g_object_unref (engine->priv->supply);
-	
-#ifdef HAVE_DPMS
-    if ( engine->priv->dpms )
-    	g_object_unref (engine->priv->dpms);
-#endif
-
-    if ( engine->priv->cpu )
-    	g_object_unref (engine->priv->cpu);
-
-    if ( engine->priv->lid)
-    	g_object_unref(engine->priv->lid);
-    
-    if ( engine->priv->iface)
-    	g_object_unref(engine->priv->iface);
-
-    if ( engine->priv->adapter)
-	g_object_unref (engine->priv->adapter);
-	
-    if ( engine->priv->button_timer)
-    	g_timer_destroy (engine->priv->button_timer);
-	
-    G_OBJECT_CLASS(xfpm_engine_parent_class)->finalize(object);
-}
 
 static void
 xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
@@ -220,18 +149,9 @@ xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 *button, XfpmXF86Button type,
 	if ( engine->priv->block_shutdown )
 	    return;
 	    
-	if ( g_timer_elapsed (engine->priv->button_timer, NULL ) < DUPLICATE_SHUTDOWN_TIMEOUT )
-	{
-	    TRACE ("Not accepting shutdown request");
-	    return;
-	}
-    	else
-	{
-	    TRACE("Accepting shutdown request");
-	    xfpm_engine_shutdown_request (engine, engine->priv->sleep_button);
-	}
+	TRACE("Accepting shutdown request");
+	xfpm_engine_shutdown_request (engine, engine->priv->sleep_button);
     }
-    g_timer_reset (engine->priv->button_timer);
 }
 
 static void
@@ -255,19 +175,11 @@ xfpm_engine_lid_closed_cb (XfpmLidHal *lid, XfpmEngine *engine)
     if ( engine->priv->block_shutdown )
     	return;
 	
-    if ( g_timer_elapsed (engine->priv->button_timer, NULL ) < DUPLICATE_SHUTDOWN_TIMEOUT )
-    {
-	TRACE ("Not accepting shutdown request");
-	return;
-    }
-	
     TRACE("Accepting shutdown request");
     
     xfpm_engine_shutdown_request (engine, engine->priv->on_battery ? 
 					  engine->priv->lid_button_battery :
 					  engine->priv->lid_button_ac);
-
-    g_timer_reset (engine->priv->button_timer);
 }
 
 static void
@@ -434,6 +346,85 @@ xfpm_engine_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmEngi
     engine->priv->on_battery = !present;
 }
 
+static void
+xfpm_engine_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmEngine *engine)
+{
+    engine->priv->inhibited = inhibited;
+}
+
+static void
+xfpm_engine_class_init(XfpmEngineClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+
+    object_class->finalize = xfpm_engine_finalize;
+
+    g_type_class_add_private (klass, sizeof(XfpmEnginePrivate));
+    
+    xfpm_engine_dbus_class_init (klass);
+}
+
+static void
+xfpm_engine_init (XfpmEngine *engine)
+{
+    engine->priv = XFPM_ENGINE_GET_PRIVATE(engine);
+    
+    engine->priv->iface       = hal_iface_new ();
+
+    engine->priv->inhibit     = xfpm_inhibit_new ();
+    engine->priv->inhibited   = FALSE;
+    
+    g_signal_connect (engine->priv->inhibit, "inhibit-changed",
+		      G_CALLBACK(xfpm_engine_inhibit_changed_cb), engine);
+    
+    engine->priv->conf        = NULL;
+    engine->priv->supply      = NULL;
+#ifdef HAVE_DPMS
+    engine->priv->dpms        = NULL;
+#endif    
+    engine->priv->cpu         = NULL;
+    engine->priv->xf86_button = NULL;
+    engine->priv->lid         = NULL;
+    engine->priv->brg_hal     = NULL;
+    
+    engine->priv->power_management = 0;
+    
+    xfpm_engine_dbus_init (engine);
+}
+
+static void
+xfpm_engine_finalize (GObject *object)
+{
+    XfpmEngine *engine;
+
+    engine = XFPM_ENGINE(object);
+    
+    if ( engine->priv->conf )
+    	g_object_unref (engine->priv->conf);
+	
+    if ( engine->priv->supply )
+    	g_object_unref (engine->priv->supply);
+	
+#ifdef HAVE_DPMS
+    if ( engine->priv->dpms )
+    	g_object_unref (engine->priv->dpms);
+#endif
+
+    if ( engine->priv->cpu )
+    	g_object_unref (engine->priv->cpu);
+
+    if ( engine->priv->lid)
+    	g_object_unref(engine->priv->lid);
+    
+    if ( engine->priv->iface)
+    	g_object_unref(engine->priv->iface);
+
+    if ( engine->priv->adapter)
+	g_object_unref (engine->priv->adapter);
+	
+    G_OBJECT_CLASS(xfpm_engine_parent_class)->finalize(object);
+}
+
 XfpmEngine *
 xfpm_engine_new(void)
 {
@@ -492,7 +483,7 @@ static gboolean xfpm_engine_dbus_get_low_battery(XfpmEngine *engine,
 						 gboolean *OUT_low_battery,
 						 GError **error);
 
-#include "org.freedesktop.PowerManagement-server.h"
+#include "org.freedesktop.PowerManagement.h"
 
 static void
 xfpm_engine_dbus_class_init(XfpmEngineClass *klass)

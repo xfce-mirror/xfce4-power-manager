@@ -5,7 +5,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-enum-types.h			\
 	xfpm-marshal.c				\
 	xfpm-marshal.h				\
-	org.freedestop.PowerManagement-server.h	\
+	org.freedesktop.PowerManagement.h	\
+	org.freedesktop.PowerManagement.Inhibit.h\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
 	xfpm-main.c				\
@@ -35,6 +36,10 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-brightness-hal.h			\
 	xfpm-idle.c				\
 	xfpm-idle.h				\
+	xfpm-inhibit.c				\
+	xfpm-inhibit.h				\
+	xfpm-screen-saver.c			\
+	xfpm-screen-saver.h			\
 	xfpm-tray-icon.c			\
 	xfpm-tray-icon.h			\
 	xfpm-notify.c				\
@@ -79,13 +84,14 @@ xfpm_glib_headers = 				\
 
 if MAINTAINER_MODE
 
-BUILT_SOURCES = 				\
-	xfce-power-manager-dbus-server.h	\
-	xfce-power-manager-dbus-client.h	\
-	org.freedesktop.PowerManagement-server.h\
-	xfpm-marshal.c				\
-	xfpm-marshal.h				\
-	xfpm-enum-types.c			\
+BUILT_SOURCES = 					\
+	xfce-power-manager-dbus-server.h		\
+	xfce-power-manager-dbus-client.h		\
+	org.freedesktop.PowerManagement.h		\
+	org.freedesktop.PowerManagement.Inhibit.h	\
+	xfpm-marshal.c					\
+	xfpm-marshal.h					\
+	xfpm-enum-types.c				\
 	xfpm-enum-types.h
 
 xfpm-enum-types.h: $(xfpm_glib_headers)
@@ -128,8 +134,11 @@ xfce-power-manager-dbus-server.h: $(srcdir)/org.xfce.Power.Manager.xml
 xfce-power-manager-dbus-client.h: $(srcdir)/org.xfce.Power.Manager.xml
 	dbus-binding-tool --mode=glib-client --prefix=xfpm_manager $< >$@
 
-org.freedesktop.PowerManagement-server.h: $(srcdir)/org.freedesktop.PowerManagement.xml
+org.freedesktop.PowerManagement.h: $(srcdir)/org.freedesktop.PowerManagement.xml
 	dbus-binding-tool --mode=glib-server --prefix=xfpm_engine $< >$@
+
+org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_inhibit $< >$@
 
 endif
 

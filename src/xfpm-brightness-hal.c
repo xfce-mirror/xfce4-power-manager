@@ -52,6 +52,7 @@
 #include "xfpm-idle.h"
 #include "xfpm-config.h"
 #include "xfpm-adapter.h"
+#include "xfpm-inhibit.h"
 
 /* Init */
 static void xfpm_brightness_hal_class_init (XfpmBrightnessHalClass *klass);
@@ -69,12 +70,14 @@ struct XfpmBrightnessHalPrivate
     XfpmIdle       *idle;
     XfpmButtonXf86 *button;
     XfpmAdapter    *adapter;
+    XfpmInhibit    *inhibit;
     
     gint            max_level;
     gint            hw_level;
     gboolean        brightness_in_hw;
     gboolean        hw_found;
     gboolean        block;
+    gboolean        inhibited;
     
     gboolean        on_battery;
     
@@ -113,6 +116,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
     brg->priv->block            = FALSE;
     brg->priv->brightness_in_hw = FALSE;
     brg->priv->max_level        = 0;
+    brg->priv->inhibited        = FALSE;
 }
 
 static void
@@ -133,6 +137,9 @@ xfpm_brightness_hal_finalize(GObject *object)
 	
     if (brg->priv->adapter)
 	g_object_unref (brg->priv->adapter);
+	
+    if ( brg->priv->inhibit )
+	g_object_unref (brg->priv->inhibit);
 	
     G_OBJECT_CLASS(xfpm_brightness_hal_parent_class)->finalize(object);
 }
@@ -299,6 +306,9 @@ xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
     if (brg->priv->block )
 	return;
     
+    if ( brg->priv->inhibited )
+	return;
+    
     level = xfpm_brightness_hal_get_level(brg);
      
     if ( level != brg->priv->hw_level )
@@ -315,6 +325,9 @@ xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHa
     
     level = xfpm_brightness_hal_get_level(brg);
     TRACE("Alarm timeout id=%d\n", id);
+    
+    if ( brg->priv->inhibited )
+	return;
     
     if ( id == TIMEOUT_ON_AC_ID && brg->priv->on_ac_timeout != 9)
     {
@@ -344,7 +357,6 @@ static void
 xfpm_brightness_hal_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmBrightnessHal *brg)
 {
     brg->priv->on_battery = !present;
-
 }
 
 static void
@@ -367,6 +379,12 @@ xfpm_brightness_hal_load_config (XfpmBrightnessHal *brg)
 	g_warning ("Value %d for %s is out of range", brg->priv->on_battery_timeout, BRIGHTNESS_ON_BATTERY );
 	brg->priv->on_battery_timeout = 10;
     }
+}
+
+static void
+xfpm_brightness_hal_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmBrightnessHal *brg)
+{
+    brg->priv->inhibited = inhibited;
 }
 
 static void
@@ -433,6 +451,11 @@ xfpm_brightness_hal_new ()
 	brg->priv->conf     = xfpm_xfconf_new ();
 	brg->priv->button   = xfpm_button_xf86_new ();
 	brg->priv->adapter  = xfpm_adapter_new ();
+	brg->priv->inhibit  = xfpm_inhibit_new ();
+	
+	g_signal_connect (brg->priv->inhibit, "inhibit-changed",
+			  G_CALLBACK(xfpm_brightness_hal_inhibit_changed_cb), brg);
+	
 	brg->priv->on_battery = !xfpm_adapter_get_present (brg->priv->adapter);
 	
 	g_signal_connect (brg->priv->adapter, "adapter-changed",

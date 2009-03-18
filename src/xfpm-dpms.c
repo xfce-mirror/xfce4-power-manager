@@ -51,6 +51,7 @@
 #include "xfpm-dpms.h"
 #include "xfpm-adapter.h"
 #include "xfpm-xfconf.h"
+#include "xfpm-inhibit.h"
 #include "xfpm-config.h"
 
 #ifdef HAVE_DPMS
@@ -69,9 +70,12 @@ struct XfpmDpmsPrivate
 {
     XfpmXfconf    *conf;
     XfpmAdapter   *adapter;
+    XfpmInhibit   *inhibit;
     
     gboolean       dpms_capable;
     gboolean       dpms_enabled;
+    
+    gboolean       inhibited;
     
     guint16        sleep_on_battery;
     guint16        off_on_battery;
@@ -145,6 +149,13 @@ xfpm_dpms_enable_disable (XfpmDpms *dpms)
     if ( !dpms->priv->dpms_capable )
     	return FALSE;
 	
+    if ( dpms->priv->inhibited )
+    {
+	TRACE("DPMS is inhibited");
+	DPMSDisable (GDK_DISPLAY());
+	return TRUE;
+    }
+	
     BOOL on_off;
     CARD16 state = 0;
     
@@ -160,7 +171,6 @@ xfpm_dpms_enable_disable (XfpmDpms *dpms)
         TRACE("DPMS is enabled, disabling it: user settings");
         DPMSDisable(GDK_DISPLAY());
     }
-    
     return TRUE;
 }
 
@@ -280,6 +290,13 @@ xfpm_dpms_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmDpms *
 }
 
 static void
+xfpm_dpms_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmDpms *dpms)
+{
+    dpms->priv->inhibited = inhibited;
+    xfpm_dpms_enable_disable (dpms);
+}
+
+static void
 xfpm_dpms_class_init(XfpmDpmsClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -296,6 +313,10 @@ xfpm_dpms_init(XfpmDpms *dpms)
     
     dpms->priv->dpms_capable = DPMSCapable (GDK_DISPLAY());
     dpms->priv->adapter = xfpm_adapter_new ();
+    dpms->priv->inhibit = xfpm_inhibit_new ();
+    
+    g_signal_connect (dpms->priv->inhibit, "inhibit-changed",
+		      G_CALLBACK(xfpm_dpms_inhibit_changed_cb), dpms);
     
     g_signal_connect (dpms->priv->adapter, "adapter-changed",
 		      G_CALLBACK(xfpm_dpms_adapter_changed_cb), dpms);

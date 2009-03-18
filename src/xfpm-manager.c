@@ -150,6 +150,12 @@ void xfpm_manager_start (XfpmManager *manager)
 	g_critical ("Unable to reserve bus name\n");
     }
     
+    if (!xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
+				  "org.freedesktop.PowerManagement.Inhibit") )
+    {
+    
+	g_critical ("Unable to reserve bus name\n");
+    }
     manager->priv->hproxy = hal_proxy_new ();
     
     g_signal_connect (manager->priv->hproxy, "hal-disconnected",
