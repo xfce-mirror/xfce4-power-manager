@@ -42,7 +42,7 @@ typedef struct
 {
     GObjectClass 	  parent_class;
     
-    void                  (*inhibit_changed)	       (XfpmInhibit *inhibit,
+    void                  (*has_inhibit_changed)       (XfpmInhibit *inhibit,
 							gboolean is_inhibit);
     
 } XfpmInhibitClass;

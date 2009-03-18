@@ -315,7 +315,7 @@ xfpm_dpms_init(XfpmDpms *dpms)
     dpms->priv->adapter = xfpm_adapter_new ();
     dpms->priv->inhibit = xfpm_inhibit_new ();
     
-    g_signal_connect (dpms->priv->inhibit, "inhibit-changed",
+    g_signal_connect (dpms->priv->inhibit, "has-inhibit-changed",
 		      G_CALLBACK(xfpm_dpms_inhibit_changed_cb), dpms);
     
     g_signal_connect (dpms->priv->adapter, "adapter-changed",

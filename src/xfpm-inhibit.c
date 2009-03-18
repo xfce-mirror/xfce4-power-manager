@@ -62,7 +62,7 @@ struct XfpmInhibitPrivate
 
 enum
 {
-    INHIBIT_CHANGED,
+    HAS_INHIBIT_CHANGED,
     LAST_SIGNAL
 };
 
@@ -76,7 +76,7 @@ static void
 xfpm_inhibit_screen_saver_inhibited_cb (XfpmScreenSaver *srv, gboolean is_inhibited, XfpmInhibit *inhibit)
 {
     inhibit->priv->inhibited = is_inhibited;
-    g_signal_emit (G_OBJECT(inhibit), signals[INHIBIT_CHANGED], 0, is_inhibited);
+    g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, is_inhibited);
 }
 
 static void
@@ -84,11 +84,11 @@ xfpm_inhibit_class_init(XfpmInhibitClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
-    signals[INHIBIT_CHANGED] =
-	    g_signal_new("inhibit-changed",
+    signals[HAS_INHIBIT_CHANGED] =
+	    g_signal_new("has-inhibit-changed",
 			 XFPM_TYPE_INHIBIT,
 			 G_SIGNAL_RUN_LAST,
-			 G_STRUCT_OFFSET(XfpmInhibitClass, inhibit_changed),
+			 G_STRUCT_OFFSET(XfpmInhibitClass, has_inhibit_changed),
 			 NULL, NULL,
 			 g_cclosure_marshal_VOID__BOOLEAN,
 			 G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
@@ -181,10 +181,10 @@ static gboolean xfpm_inhibit_dbus_inhibit  	(XfpmInhibit *inhibit,
 						 guint       *OUT_cookie,
 						 GError     **error)
 {
-    TRACE("application name=%s reason=%s", IN_appname, IN_reason);
+    TRACE("Inhibit send application name=%s reason=%s", IN_appname, IN_reason);
     
     inhibit->priv->inhibited = TRUE;
-    g_signal_emit (G_OBJECT(inhibit), signals[INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
+    g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
     
     *OUT_cookie = 1;//FIXME support cookies
     
@@ -195,8 +195,9 @@ static gboolean xfpm_inhibit_dbus_un_inhibit    (XfpmInhibit *inhibit,
 						 guint        IN_cookie,
 						 GError     **error)
 {
+    TRACE("UnHibit message received");
     inhibit->priv->inhibited = FALSE;
-    g_signal_emit (G_OBJECT(inhibit), signals[INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
+    g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
     
     return TRUE;
 }
@@ -205,6 +206,6 @@ static gboolean xfpm_inhibit_dbus_has_inhibit   (XfpmInhibit *inhibit,
 						 gboolean    *OUT_has_inhibit,
 						 GError     **error)
 {
-    
+    TRACE("Has Inhibit message received");
     return TRUE;
 }

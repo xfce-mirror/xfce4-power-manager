@@ -418,7 +418,7 @@ xfpm_engine_init (XfpmEngine *engine)
     engine->priv->inhibit     = xfpm_inhibit_new ();
     engine->priv->inhibited   = FALSE;
     
-    g_signal_connect (engine->priv->inhibit, "inhibit-changed",
+    g_signal_connect (engine->priv->inhibit, "has-inhibit-changed",
 		      G_CALLBACK(xfpm_engine_inhibit_changed_cb), engine);
     
     engine->priv->conf        = NULL;
@@ -568,6 +568,7 @@ xfpm_engine_dbus_init (XfpmEngine *engine)
 static gboolean xfpm_engine_dbus_hibernate 	(XfpmEngine *engine,
 						 GError **error)
 {
+    TRACE("Hibernate message received");
     gboolean caller_privilege, can_hibernate;
     
     g_object_get (G_OBJECT(engine->priv->iface), 
@@ -584,6 +585,7 @@ static gboolean xfpm_engine_dbus_hibernate 	(XfpmEngine *engine,
 static gboolean xfpm_engine_dbus_suspend 	(XfpmEngine *engine,
 						 GError **error)
 {
+    TRACE("Suspend message received");
     gboolean caller_privilege, can_suspend;
     
     g_object_get (G_OBJECT(engine->priv->iface), 
@@ -601,6 +603,7 @@ static gboolean xfpm_engine_dbus_can_hibernate  (XfpmEngine *engine,
 						 gboolean *OUT_can_hibernate,
 						 GError **error)
 {
+    TRACE("Can hibernate message received");
     g_object_get (G_OBJECT(engine->priv->iface), 
 		  "can-hibernate", OUT_can_hibernate,
 		  NULL);
@@ -612,6 +615,7 @@ static gboolean xfpm_engine_dbus_can_suspend  	(XfpmEngine *engine,
 						 gboolean *OUT_can_suspend,
 						 GError **error)
 {
+    TRACE("Can suspend message received");
     g_object_get (G_OBJECT(engine->priv->iface), 
 		  "can-suspend", OUT_can_suspend,
 		  NULL);
@@ -623,6 +627,7 @@ static gboolean xfpm_engine_dbus_get_on_battery (XfpmEngine *engine,
 						 gboolean *OUT_on_battery,
 						 GError **error)
 {
+    TRACE("On battery message received");
     *OUT_on_battery = engine->priv->on_battery;
     
     return TRUE;
@@ -632,6 +637,7 @@ static gboolean xfpm_engine_dbus_get_low_battery(XfpmEngine *engine,
 						 gboolean *OUT_low_battery,
 						 GError **error)
 {
+    TRACE("On low battery message received");
     *OUT_low_battery = xfpm_supply_on_low_battery (engine->priv->supply);
     
     return TRUE;

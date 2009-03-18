@@ -453,7 +453,7 @@ xfpm_brightness_hal_new ()
 	brg->priv->adapter  = xfpm_adapter_new ();
 	brg->priv->inhibit  = xfpm_inhibit_new ();
 	
-	g_signal_connect (brg->priv->inhibit, "inhibit-changed",
+	g_signal_connect (brg->priv->inhibit, "has-inhibit-changed",
 			  G_CALLBACK(xfpm_brightness_hal_inhibit_changed_cb), brg);
 	
 	brg->priv->on_battery = !xfpm_adapter_get_present (brg->priv->adapter);
