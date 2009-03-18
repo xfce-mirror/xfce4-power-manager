@@ -281,7 +281,10 @@ format_dpms_value_cb (GtkScale *scale, gdouble value)
 {
     if ( (int)value == 0 )
     	return g_strdup _("Never");
-        
+    
+    if ( (int)value == 1 )
+	return g_strdup _("One minute");
+	
     return g_strdup_printf ("%d %s", (int)value, _("Minutes"));
 }
 #endif /* HAVE_DPMS */
@@ -734,6 +737,9 @@ xfpm_settings_advanced (XfconfChannel *channel )
      */
     GtkWidget *critical_level = glade_xml_get_widget (xml, "critical-spin");
     
+    gtk_widget_set_tooltip_text (critical_level, 
+			        _("When the main power on the computer reaches this value of charge percentage"));
+    
     g_signal_connect (critical_level, "output", 
 		      G_CALLBACK(critical_spin_output_cb), NULL);
     g_signal_connect (critical_level, "value-changed", 
@@ -758,7 +764,7 @@ xfpm_settings_advanced (XfconfChannel *channel )
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(lock), val);
     g_signal_connect (lock, "toggled",
 		      G_CALLBACK(lock_screen_toggled_cb), channel);
-    
+ 
 }
 
 static void
