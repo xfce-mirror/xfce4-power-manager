@@ -121,7 +121,7 @@ xfpm_engine_do_suspend (XfpmEngine *engine)
 	g_warning ("%s", error->message);
 	g_error_free (error);
     }
-    
+    xfpm_send_message_to_network_manager ("wake");
     return FALSE;
 }
 
@@ -137,7 +137,7 @@ xfpm_engine_do_hibernate (XfpmEngine *engine)
 	g_warning ("%s", error->message);
 	g_error_free (error);
     }
-    
+    xfpm_send_message_to_network_manager ("wake");
     return FALSE;
 }
 
@@ -153,14 +153,12 @@ xfpm_engine_do_shutdown (XfpmEngine *engine)
 	g_warning ("%s", error->message);
 	g_error_free (error);
     }
-    
     return FALSE;
 }
 
 static void
 xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
 {
-    
     const gchar *action = xfpm_int_to_shutdown_string (shutdown);
 	
     if ( xfpm_strequal(action, "Nothing") )
@@ -189,7 +187,6 @@ xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
 	if ( engine->priv->lock_screen )
 	    xfpm_lock_screen ();
 	
-	xfpm_send_message_to_network_manager ("wake");
     }
 }
 
@@ -302,6 +299,8 @@ xfpm_engine_load_all (XfpmEngine *engine)
 	engine->priv->cpu = xfpm_cpu_new ();
 
     engine->priv->supply = xfpm_supply_new (engine->priv->power_management);
+    g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
+			      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
     xfpm_supply_monitor (engine->priv->supply);
     
     /*
@@ -333,10 +332,7 @@ xfpm_engine_load_all (XfpmEngine *engine)
     {
 	engine->priv->brg_hal = xfpm_brightness_hal_new ();
 	engine->priv->has_lcd_brightness = xfpm_brightness_hal_has_hw (engine->priv->brg_hal);
-	if ( engine->priv->has_lcd_brightness )
-	    g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
-			      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
-	else
+	if ( !engine->priv->has_lcd_brightness )
 	    g_object_unref (engine->priv->brg_hal);
     }
 }
