@@ -73,6 +73,47 @@ hal_power_check_battery (HalPower *power, HalDevice *device)
     return FALSE;
 }
 
+/*
+ * Check if the device added is actually a new non-moniotred device
+ * Hald duplicates udi when running udevadm trigger
+ */
+static gboolean
+hal_power_is_battery_new (HalPower *power, HalDevice *device)
+{
+    GList *list = NULL;
+    gboolean new_device = TRUE;
+    gint is_new = 0;
+    HalDevice *hash_device;
+    int i;
+    
+    list = g_hash_table_get_values (power->priv->hash);
+    if ( !list )
+	return new_device;
+	
+    if ( g_list_length(list) == 0 )
+	return new_device;
+	
+    for ( i = 0; i < g_list_length(list); i++ )
+    {
+	hash_device = (HalDevice *) g_list_nth_data (list, i);
+	
+	if ( hal_device_get_property_int (hash_device, "battery.charge_level.current") !=
+	     hal_device_get_property_int (device, "battery.charge_level.current") && 
+	     hal_device_get_property_int (hash_device, "battery.charge_level.last_full") !=
+	     hal_device_get_property_int (device, "battery.charge_level.last_full") )
+	    is_new++;
+    }
+
+    /* Device doesn't match to any one in the hash*/
+    if ( is_new == g_list_length (list) )
+	new_device = TRUE;
+    else
+	new_device = FALSE;
+	
+    g_list_free (list);
+    return new_device;
+}
+
 static HalBattery *
 hal_power_add_battery (HalPower *power, const gchar *udi)
 {
@@ -113,10 +154,16 @@ hal_power_device_added_cb (HalManager *manager, const gchar *udi, HalPower *powe
     
     if ( hal_device_has_capability (device, "battery") )
     {
+	if ( !hal_power_check_battery (power, device) )
+	    goto out;
+	    
+	if ( !hal_power_is_battery_new (power, device) )
+	    goto out;
+	    
 	HalBattery *battery  = hal_power_add_battery (power, udi);
         g_signal_emit (G_OBJECT(power), signals[BATTERY_ADDED], 0, battery);
     }
-
+out:
     g_object_unref (device);
 }
 
@@ -176,8 +223,11 @@ hal_power_get_batteries_internal (HalPower *power)
 	hal_device_set_udi (device, batteries[i]);
 	
 	if (!hal_power_check_battery(power, device))
-		continue;
+	    continue;
 		
+	if ( !hal_power_is_battery_new (power, device) )
+	    continue;
+	    
     	hal_power_add_battery (power, batteries[i]);
     }
     hal_manager_free_string_array (batteries);
