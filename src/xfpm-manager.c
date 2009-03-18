@@ -171,16 +171,23 @@ void xfpm_manager_start (XfpmManager *manager)
  * DBus server implementation
  * 
  */
-static gboolean xfpm_manager_dbus_quit     (XfpmManager *manager,
-					    GError **error);
-static gboolean xfpm_manager_dbus_get_all  (XfpmManager *manager,
-					    GHashTable **OUT_hash,
-					    GError **error);
-static gboolean xfpm_manager_dbus_get_info (XfpmManager *manager,
-					    gchar **OUT_name,
-					    gchar **OUT_version,
-					    gchar **OUT_vendor,
-					    GError **error);
+static gboolean xfpm_manager_dbus_quit       (XfpmManager *manager,
+					      GError **error);
+					    
+static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
+					      gboolean *OUT_system_laptop,
+					      gboolean *OUT_user_privilege,
+					      gboolean *OUT_can_suspend,
+					      gboolean *OUT_can_hibernate,
+					      gboolean *OUT_has_lcd_brightness,
+					      gboolean *OUT_has_lid,
+					      GError **error);
+					      
+static gboolean xfpm_manager_dbus_get_info   (XfpmManager *manager,
+					      gchar **OUT_name,
+					      gchar **OUT_version,
+					      gchar **OUT_vendor,
+					      GError **error);
 
 #include "xfce-power-manager-dbus-server.h"
 
@@ -209,18 +216,26 @@ xfpm_manager_dbus_quit(XfpmManager *manager, GError **error)
     return TRUE;
 }
 
-static gboolean
-xfpm_manager_dbus_get_all(XfpmManager *manager, 
-			  GHashTable **OUT_hash, 
-			  GError **error)
+static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
+					      gboolean *OUT_system_laptop,
+					      gboolean *OUT_user_privilege,
+					      gboolean *OUT_can_suspend,
+					      gboolean *OUT_can_hibernate,
+					      gboolean *OUT_has_lcd_brightness,
+					      gboolean *OUT_has_lid,
+					      GError **error)
 {
-    TRACE("Get all message received\n");
-
-   *OUT_hash = g_hash_table_new(g_str_hash, g_str_equal);
     
+    xfpm_engine_get_info (manager->priv->engine,
+			  OUT_system_laptop,
+			  OUT_user_privilege,
+			  OUT_can_suspend,
+			  OUT_can_hibernate,
+			  OUT_has_lcd_brightness,
+			  OUT_has_lid);
     return TRUE;
 }
-
+					      
 static gboolean 
 xfpm_manager_dbus_get_info (XfpmManager *manager,
 			    gchar **OUT_name,

@@ -300,6 +300,8 @@ xfpm_idle_finalize(GObject *object)
 	xfpm_idle_free_alarm (idle, alarm);
     }
     g_ptr_array_free (idle->priv->array, TRUE);
+    
+    gdk_window_remove_filter (NULL, xfpm_idle_x_event_filter, idle);
 
     G_OBJECT_CLASS(xfpm_idle_parent_class)->finalize(object);
 }

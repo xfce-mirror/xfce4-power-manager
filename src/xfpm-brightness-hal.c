@@ -480,3 +480,10 @@ xfpm_brightness_hal_new ()
     
     return brg;
 }
+
+gboolean xfpm_brightness_hal_has_hw (XfpmBrightnessHal *brg)
+{
+    g_return_val_if_fail (XFPM_IS_BRIGHTNESS_HAL (brg), FALSE);
+    
+    return brg->priv->hw_found;
+}

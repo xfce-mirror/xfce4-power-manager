@@ -10,14 +10,13 @@
     <method name="Quit">
     </method>
     
-    <method name="GetAll">
+    <method name="GetConfig">
 	<arg direction="out" name="system_laptop" type="b"/>
-	<arg direction="out" name="power_management" type="i"/>
-	<arg direction="out" name="with_dpms" type="b"/>
-	<arg direction="out" name="governor" type="i"/>
-	<arg direction="out" name="switch_buttons" type="i"/>
-	<arg direction="out" name="brightness_control" type="b"/>
-	<arg direction="out" name="ups_found" type="b"/>
+	<arg direction="out" name="user_privilege" type="b"/>
+	<arg direction="out" name="can_suspend" type="b"/>
+	<arg direction="out" name="can_hibernate" type="b"/>
+	<arg direction="out" name="has_lcd_brightness" type="b"/>
+	<arg direction="out" name="has_lid" type="b"/>
     </method>
     
     <method name="GetInfo">

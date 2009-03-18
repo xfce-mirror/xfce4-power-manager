@@ -42,6 +42,7 @@
 #include <xfconf/xfconf.h>
 
 #include "libxfpm/hal-iface.h"
+#include "libxfpm/hal-device.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
 
@@ -94,6 +95,10 @@ struct XfpmEnginePrivate
     gboolean            on_battery;
     
     gboolean            block_shutdown;
+    
+    gboolean            is_laptop;
+    gboolean            has_lcd_brightness;
+    gboolean            has_lid;
     
     /*Configuration */
     XfpmShutdownRequest sleep_button;
@@ -208,12 +213,38 @@ xfpm_engine_check_hal_iface (XfpmEngine *engine)
 static void
 xfpm_engine_load_all (XfpmEngine *engine)
 {
+    HalDevice *device;
+    gchar *form_factor = NULL;
+    
     xfpm_engine_check_hal_iface (engine);
+    
+    device = hal_device_new ();
+    
+    hal_device_set_udi (device, "/org/freedesktop/Hal/devices/computer");
+    
+    form_factor = hal_device_get_property_string (device, "system.formfactor");
+        
+    TRACE("System formfactor=%s\n", form_factor);
+    if ( xfpm_strequal (form_factor, "laptop") )
+    {
+	engine->priv->is_laptop = TRUE;
+	TRACE("System is identified as a laptop");
+    }
+    else
+    {
+	engine->priv->is_laptop = FALSE;
+	TRACE("System is not identified as a laptop");
+    }
+    if ( form_factor )
+	g_free (form_factor);
+	
+    g_object_unref (device);
     
 #ifdef HAVE_DPMS		      
     engine->priv->dpms = xfpm_dpms_new ();
 #endif
-    engine->priv->cpu = xfpm_cpu_new ();
+    if ( engine->priv->is_laptop )
+	engine->priv->cpu = xfpm_cpu_new ();
 
     engine->priv->supply = xfpm_supply_new (engine->priv->power_management);
     xfpm_supply_monitor (engine->priv->supply);
@@ -229,19 +260,30 @@ xfpm_engine_load_all (XfpmEngine *engine)
     /*
     * Lid from HAL 
     */
-    engine->priv->lid = xfpm_lid_hal_new ();
-    
-    if ( xfpm_lid_hw_found (engine->priv->lid ))
-    	g_signal_connect (engine->priv->lid, "lid-closed",
-			  G_CALLBACK(xfpm_engine_lid_closed_cb), engine);
+    if ( engine->priv->is_laptop )
+    {
+	engine->priv->lid = xfpm_lid_hal_new ();
+	engine->priv->has_lid = xfpm_lid_hw_found (engine->priv->lid );
+	if ( engine->priv->has_lid )
+	    g_signal_connect (engine->priv->lid, "lid-closed",
+			      G_CALLBACK(xfpm_engine_lid_closed_cb), engine);
+	else
+	    g_object_unref (engine->priv->lid);
+    }
 			  
     /*
     * Brightness HAL
     */
-    engine->priv->brg_hal = xfpm_brightness_hal_new ();
-    
-    g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
-		      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
+    if ( engine->priv->is_laptop )
+    {
+	engine->priv->brg_hal = xfpm_brightness_hal_new ();
+	engine->priv->has_lcd_brightness = xfpm_brightness_hal_has_hw (engine->priv->brg_hal);
+	if ( engine->priv->has_lcd_brightness )
+	    g_signal_connect (G_OBJECT(engine->priv->supply), "shutdown-request",
+			      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb), engine);
+	else
+	    g_object_unref (engine->priv->brg_hal);
+    }
 }
 
 static void
@@ -367,9 +409,11 @@ xfpm_engine_class_init(XfpmEngineClass *klass)
 static void
 xfpm_engine_init (XfpmEngine *engine)
 {
+    GError *error = NULL;
     engine->priv = XFPM_ENGINE_GET_PRIVATE(engine);
     
     engine->priv->iface       = hal_iface_new ();
+    engine->priv->adapter = xfpm_adapter_new ();
 
     engine->priv->inhibit     = xfpm_inhibit_new ();
     engine->priv->inhibited   = FALSE;
@@ -390,6 +434,25 @@ xfpm_engine_init (XfpmEngine *engine)
     engine->priv->power_management = 0;
     
     xfpm_engine_dbus_init (engine);
+    
+    if ( !xfconf_init(&error) )
+    {
+    	g_critical ("xfconf_init failed: %s\n", error->message);
+       	g_error_free (error);
+    }	
+    
+    engine->priv->conf    = xfpm_xfconf_new ();
+    
+    engine->priv->on_battery = ! xfpm_adapter_get_present (engine->priv->adapter);
+    
+    g_signal_connect (engine->priv->adapter, "adapter-changed",
+		      G_CALLBACK(xfpm_engine_adapter_changed_cb), engine);
+    
+    g_signal_connect (engine->priv->conf->channel, "property-changed",
+		      G_CALLBACK(xfpm_engine_property_changed_cb), engine);
+    
+    xfpm_engine_load_configuration (engine);
+    xfpm_engine_load_all (engine);
 }
 
 static void
@@ -431,28 +494,28 @@ xfpm_engine_new(void)
     XfpmEngine *engine = NULL;
     engine = g_object_new (XFPM_TYPE_ENGINE, NULL);
 
-    GError *error = NULL;
-    if ( !xfconf_init(&error) )
-    {
-    	g_critical ("xfconf_init failed: %s\n", error->message);
-       	g_error_free (error);
-    }	
-    
-    engine->priv->conf    = xfpm_xfconf_new ();
-    engine->priv->adapter = xfpm_adapter_new ();
-    
-    engine->priv->on_battery = ! xfpm_adapter_get_present (engine->priv->adapter);
-    
-    g_signal_connect (engine->priv->adapter, "adapter-changed",
-		      G_CALLBACK(xfpm_engine_adapter_changed_cb), engine);
-    
-    g_signal_connect (engine->priv->conf->channel, "property-changed",
-		      G_CALLBACK(xfpm_engine_property_changed_cb), engine);
-    
-    xfpm_engine_load_configuration (engine);
-    xfpm_engine_load_all (engine);
-    
     return engine;
+}
+
+void              xfpm_engine_get_info        (XfpmEngine *engine,
+					       gboolean *system_laptop,
+					       gboolean *user_privilege,
+					       gboolean *can_suspend,
+					       gboolean *can_hibernate,
+					       gboolean *has_lcd_brightness,
+					       gboolean *has_lid)
+{
+    g_return_if_fail (XFPM_IS_ENGINE(engine));
+    
+    g_object_get (G_OBJECT(engine->priv->iface), 
+		  "caller-privilege", user_privilege,
+		  "can-suspend", can_suspend,
+		  "can-hibernate",can_hibernate,
+		  NULL);
+    
+    *system_laptop = engine->priv->is_laptop;
+    *has_lcd_brightness = engine->priv->has_lcd_brightness;
+    *has_lid = engine->priv->has_lid;
 }
 
 /*

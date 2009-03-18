@@ -75,6 +75,16 @@ int main(int argc, char **argv)
     
     GError *error = NULL;
     DBusGConnection *bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
+    gboolean system_laptop;
+    gboolean user_privilege;
+    gboolean can_suspend;
+    gboolean can_hibernate;
+    gboolean has_lid;
+    gboolean has_lcd_brightness;
+	
+    XfconfChannel *channel;
+    DBusGProxy *proxy;
+    GtkWidget *dialog;
     
     if ( error )
     {
@@ -98,24 +108,39 @@ int main(int argc, char **argv)
 	
 	if ( !xfconf_init(&error) )
     	{
-	    g_critical("xfconf init failed: %s using default settings\n",error->message);
+	    g_critical("xfconf init failed: %s using default settings\n", error->message);
 	    
 	    xfpm_popup_message(_("Xfce Power Manager"),_("Failed to load power manager configuration, "\
 	    			"using defaults"), GTK_MESSAGE_WARNING);
 	    g_error_free(error);
 	    error = NULL;
+	    return EXIT_FAILURE;
     	}
 	
-	XfconfChannel *channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
-	DBusGProxy *proxy;
-    	GtkWidget *dialog;
+	channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
 	
    	proxy = dbus_g_proxy_new_for_name(bus,
 				           "org.xfce.PowerManager",
 				           "/org/xfce/PowerManager",
 				           "org.xfce.Power.Manager");
 	
-	dialog = xfpm_settings_dialog_new (channel);	
+	xfpm_manager_dbus_client_get_config (proxy, &system_laptop, &user_privilege,
+					     &can_suspend, &can_hibernate, &has_lcd_brightness,
+					     &has_lid, &error);
+					     
+	if ( error )
+	{
+	    g_critical ("Unable to get configuration information from xfce power manager: %s", error->message);
+	    xfpm_error (_("Xfce Power Manager Settings"),
+		       _("Unable to connect to Xfce Power Manager") );
+	    g_error_free (error);
+	    return EXIT_FAILURE;
+	}
+	
+	dialog = xfpm_settings_dialog_new (channel, system_laptop, user_privilege,
+					   can_suspend, can_hibernate, has_lcd_brightness,
+					   has_lid);
+					   
 	g_signal_connect(dialog, "response", G_CALLBACK(dialog_response_cb), bus);
 	
 	gtk_widget_show(dialog);

@@ -51,6 +51,9 @@ GType        	 	 xfpm_adapter_get_type        (void) G_GNUC_CONST;
 XfpmAdapter      	*xfpm_adapter_new             (void);
 
 gboolean 	  	 xfpm_adapter_get_present     (XfpmAdapter *adapter);
+
+gboolean 		 xfpm_adapter_has_hw 	      (XfpmAdapter *adapter);
+
 G_END_DECLS
 
 #endif /* __XFPM_ADAPTER_H */

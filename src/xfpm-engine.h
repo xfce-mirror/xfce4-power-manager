@@ -47,6 +47,13 @@ typedef struct
 GType        	  xfpm_engine_get_type        (void) G_GNUC_CONST;
 XfpmEngine       *xfpm_engine_new             (void);
 
+void              xfpm_engine_get_info        (XfpmEngine *engine,
+					       gboolean *system_laptop,
+					       gboolean *user_privilege,
+					       gboolean *can_suspend,
+					       gboolean *can_hibernate,
+					       gboolean *has_lcd_brightness,
+					       gboolean *has_lid);
 G_END_DECLS
 
 #endif /* __XFPM_ENGINE_H */

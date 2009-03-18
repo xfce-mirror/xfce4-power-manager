@@ -58,6 +58,7 @@ struct XfpmAdapterPrivate
 {
     HalDevice 	 *device;
     gboolean      present;
+    gboolean      hw_found;
 };
 
 enum
@@ -82,7 +83,38 @@ xfpm_adapter_device_changed_cb (HalDevice *device, const gchar *udi, const gchar
 	adapter->priv->present = hal_device_get_property_bool (adapter->priv->device, "ac_adapter.present");
 	g_signal_emit (G_OBJECT(adapter), signals[ADAPTER_CHANGED], 0, adapter->priv->present);
     }
+}
+
+static void
+xfpm_adapter_set_device (XfpmAdapter *adapter)
+{
+    HalManager *manager;
+    gchar **udi;
     
+    manager = hal_manager_new ();
+    
+    udi = hal_manager_find_device_by_capability (manager, "ac_adapter");
+    
+    if (!udi )//FIXME Adapter should be present on laptops
+	goto out;
+	
+    TRACE("Found AC Adapter with udi=%s\n", udi[0]);
+
+    adapter->priv->hw_found = TRUE;
+    
+    adapter->priv->device = hal_device_new ();
+    hal_device_set_udi (adapter->priv->device, udi[0]);
+    
+    hal_manager_free_string_array (udi);
+    
+    adapter->priv->present = hal_device_get_property_bool (adapter->priv->device, "ac_adapter.present");
+    
+    g_signal_connect (adapter->priv->device, "device-changed",
+		      G_CALLBACK(xfpm_adapter_device_changed_cb), adapter);
+		      
+    hal_device_watch (adapter->priv->device);
+out:
+    g_object_unref (manager);
 }
 
 static void
@@ -107,41 +139,34 @@ xfpm_adapter_class_init(XfpmAdapterClass *klass)
 static void
 xfpm_adapter_init(XfpmAdapter *adapter)
 {
-    HalManager *manager;
-    gchar **udi = NULL;
+    HalDevice *device;
     gchar *form_factor = NULL;
     
     adapter->priv = XFPM_ADAPTER_GET_PRIVATE(adapter);
     
-    adapter->priv->device = hal_device_new ();
-    hal_device_set_udi (adapter->priv->device, "/org/freedesktop/Hal/devices/computer");
+    adapter->priv->device   = NULL;
+    adapter->priv->present  = TRUE;
+    adapter->priv->hw_found = FALSE;
     
-    form_factor = hal_device_get_property_string (adapter->priv->device, "system.formfactor");
+    device = hal_device_new ();
+    hal_device_set_udi (device, "/org/freedesktop/Hal/devices/computer");
+    
+    form_factor = hal_device_get_property_string (device, "system.formfactor");
         
-    TRACE("System formfactor=%s\n", form_factor); //FIXME Use this value
-    g_free(form_factor);
-        
-    manager = hal_manager_new ();
+    TRACE("System formfactor=%s\n", form_factor);
+    if ( xfpm_strequal (form_factor, "laptop") )
+    {
+	xfpm_adapter_set_device (adapter);
+	TRACE("System is identified as a laptop");
+    }
+    else
+    {
+	TRACE("System is not identified as a laptop");
+    }
     
-    udi = hal_manager_find_device_by_capability (manager, "ac_adapter");
-    
-    if (!udi )//FIXME Adapter should be present on laptops
-	goto out;
-	
-    TRACE("Found AC Adapter with udi=%s\n", udi[0]);
-    
-    hal_device_set_udi (adapter->priv->device, udi[0]);
-    
-    hal_manager_free_string_array (udi);
-    
-    adapter->priv->present = hal_device_get_property_bool (adapter->priv->device, "ac_adapter.present");
-    g_signal_connect (adapter->priv->device, "device-changed",
-		      G_CALLBACK(xfpm_adapter_device_changed_cb), adapter);
-		      
-    hal_device_watch (adapter->priv->device);
-out:
-    g_object_unref (manager);
-    
+    g_object_unref (device);
+    if ( form_factor )
+	g_free(form_factor);
 }
 
 static void
@@ -177,4 +202,11 @@ gboolean xfpm_adapter_get_present (XfpmAdapter *adapter)
     g_return_val_if_fail (XFPM_IS_ADAPTER(adapter), FALSE);
     
     return adapter->priv->present;
+}
+
+gboolean xfpm_adapter_has_hw (XfpmAdapter *adapter)
+{
+    g_return_val_if_fail (XFPM_IS_ADAPTER(adapter), FALSE);
+    
+    return adapter->priv->hw_found;
 }

@@ -212,7 +212,7 @@
                         <property name="orientation">vertical</property>
                         <property name="spacing">10</property>
                         <child>
-                          <widget class="GtkFrame" id="frame7">
+                          <widget class="GtkFrame" id="on-ac-actions-frame">
                             <property name="visible">True</property>
                             <property name="label_xalign">0</property>
                             <property name="shadow_type">none</property>
@@ -230,7 +230,7 @@
                                         <property name="visible">True</property>
                                         <property name="spacing">10</property>
                                         <child>
-                                          <widget class="GtkLabel" id="label27">
+                                          <widget class="GtkLabel" id="on-ac-lid-label">
                                             <property name="visible">True</property>
                                             <property name="label" translatable="yes">When laptop lid is closed:</property>
                                           </widget>
@@ -376,7 +376,7 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkFrame" id="frame8">
+                          <widget class="GtkFrame" id="on-ac-brg-frame">
                             <property name="visible">True</property>
                             <property name="label_xalign">0</property>
                             <property name="shadow_type">none</property>
@@ -527,7 +527,7 @@
                                               <widget class="GtkHBox" id="hbox20">
                                                 <property name="visible">True</property>
                                                 <child>
-                                                  <widget class="GtkLabel" id="label33">
+                                                  <widget class="GtkLabel" id="on-battery-lid-label">
                                                     <property name="visible">True</property>
                                                     <property name="label" translatable="yes">When laptop lid is closed:</property>
                                                   </widget>
@@ -694,7 +694,7 @@
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkFrame" id="frame10">
+                              <widget class="GtkFrame" id="on-battery-brg-frame">
                                 <property name="visible">True</property>
                                 <property name="label_xalign">0</property>
                                 <property name="shadow_type">none</property>
@@ -874,9 +874,9 @@
                                     <property name="visible">True</property>
                                     <property name="spacing">10</property>
                                     <child>
-                                      <widget class="GtkLabel" id="label3">
+                                      <widget class="GtkLabel" id="critical-level-label">
                                         <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Consider the computer on low power:</property>
+                                        <property name="label" translatable="yes">Consider the computer on low power at:</property>
                                       </widget>
                                       <packing>
                                         <property name="expand">False</property>

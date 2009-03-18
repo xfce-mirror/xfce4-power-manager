@@ -53,64 +53,11 @@ enum
     LAST_SIGNAL
 };
 
+static gpointer hal_manager_object = NULL;
+
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE (HalManager, hal_manager, G_TYPE_OBJECT)
-
-static void
-hal_manager_class_init(HalManagerClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    
-    signals[DEVICE_ADDED] =
-    	g_signal_new("device-added",
-		     HAL_TYPE_MANAGER,
-		     G_SIGNAL_RUN_LAST,
-		     G_STRUCT_OFFSET(HalManagerClass, device_added),
-		     NULL, NULL,
-		     g_cclosure_marshal_VOID__STRING,
-		     G_TYPE_NONE, 1, G_TYPE_STRING);
-		     
-    signals[DEVICE_REMOVED] =
-    	g_signal_new("device-removed",
-		     HAL_TYPE_MANAGER,
-		     G_SIGNAL_RUN_LAST,
-		     G_STRUCT_OFFSET(HalManagerClass, device_removed),
-		     NULL, NULL,
-		     g_cclosure_marshal_VOID__STRING,
-		     G_TYPE_NONE, 1, G_TYPE_STRING);
-    
-    object_class->finalize = hal_manager_finalize;
-
-
-    g_type_class_add_private (klass,sizeof(HalManagerPrivate));
-}
-
-static void
-hal_manager_init (HalManager *manager)
-{
-    manager->priv = HAL_MANAGER_GET_PRIVATE (manager);
-    
-    manager->priv->bus 	     = NULL;
-    manager->priv->proxy     = NULL;
-    manager->priv->connected = FALSE;
-}
-
-static void
-hal_manager_finalize(GObject *object)
-{
-    HalManager *manager;
-
-    manager = HAL_MANAGER(object);
-    
-    if ( manager->priv->proxy )
-	g_object_unref (manager->priv->proxy);
-	
-    if ( manager->priv->bus )
-	dbus_g_connection_unref (manager->priv->bus);
-
-    G_OBJECT_CLASS(hal_manager_parent_class)->finalize(object);
-}
 
 static void
 hal_manager_device_added_cb (DBusGProxy *proxy, const gchar *udi, HalManager *manager)
@@ -165,15 +112,77 @@ out:
 	;
 }
 
+static void
+hal_manager_class_init(HalManagerClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    
+    signals[DEVICE_ADDED] =
+    	g_signal_new("device-added",
+		     HAL_TYPE_MANAGER,
+		     G_SIGNAL_RUN_LAST,
+		     G_STRUCT_OFFSET(HalManagerClass, device_added),
+		     NULL, NULL,
+		     g_cclosure_marshal_VOID__STRING,
+		     G_TYPE_NONE, 1, G_TYPE_STRING);
+		     
+    signals[DEVICE_REMOVED] =
+    	g_signal_new("device-removed",
+		     HAL_TYPE_MANAGER,
+		     G_SIGNAL_RUN_LAST,
+		     G_STRUCT_OFFSET(HalManagerClass, device_removed),
+		     NULL, NULL,
+		     g_cclosure_marshal_VOID__STRING,
+		     G_TYPE_NONE, 1, G_TYPE_STRING);
+    
+    object_class->finalize = hal_manager_finalize;
+
+
+    g_type_class_add_private (klass,sizeof(HalManagerPrivate));
+}
+
+static void
+hal_manager_init (HalManager *manager)
+{
+    manager->priv = HAL_MANAGER_GET_PRIVATE (manager);
+    
+    manager->priv->bus 	     = NULL;
+    manager->priv->proxy     = NULL;
+    manager->priv->connected = FALSE;
+    
+    hal_manager_connect (manager);
+}
+
+static void
+hal_manager_finalize(GObject *object)
+{
+    HalManager *manager;
+
+    manager = HAL_MANAGER(object);
+    
+    if ( manager->priv->proxy )
+	g_object_unref (manager->priv->proxy);
+	
+    if ( manager->priv->bus )
+	dbus_g_connection_unref (manager->priv->bus);
+
+    G_OBJECT_CLASS(hal_manager_parent_class)->finalize(object);
+}
+
 HalManager *
 hal_manager_new (void)
 {
-    HalManager *manager = NULL;
-    manager = g_object_new (HAL_TYPE_MANAGER, NULL);
+    if ( hal_manager_object != NULL )
+    {
+	g_object_ref (hal_manager_object);
+    }
+    else
+    {
+	hal_manager_object = g_object_new (HAL_TYPE_MANAGER, NULL);
+	g_object_add_weak_pointer (hal_manager_object, &hal_manager_object);
+    }
     
-    hal_manager_connect (manager);
-    
-    return manager;
+    return HAL_MANAGER (hal_manager_object);
 }
 
 gchar **hal_manager_find_device_by_capability (HalManager *manager, const gchar *capability)
