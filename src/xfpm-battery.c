@@ -102,7 +102,7 @@ xfpm_battery_get_icon_index (HalDeviceType type, guint percent)
 static void
 xfpm_battery_refresh_visible_icon (XfpmBattery *battery)
 {
-    gboolean visible = FALSE;
+    gboolean visible = TRUE;
     
     if ( battery->priv->show_icon == SHOW_ICON_ALWAYS )
     	visible = TRUE;
@@ -119,7 +119,7 @@ xfpm_battery_refresh_visible_icon (XfpmBattery *battery)
 	else visible = TRUE;
     }
 
-    xfpm_tray_icon_set_visible (battery->priv->icon, TRUE);
+    xfpm_tray_icon_set_visible (battery->priv->icon, visible);
 }
     
 static void
@@ -373,6 +373,7 @@ xfpm_battery_refresh (XfpmBattery *battery)
 								 is_charging, is_discharging, 
 								 last_full, current_charge,
 								 percentage, time);
+     xfpm_battery_refresh_visible_icon (battery);
 }
 
 static void
@@ -380,7 +381,6 @@ xfpm_battery_device_changed_cb (HalBattery *device, XfpmBattery *battery)
 {
     TRACE("start");
     xfpm_battery_refresh (battery);
-    xfpm_battery_refresh_visible_icon (battery);
 }
 
 static gchar *
@@ -437,7 +437,7 @@ xfpm_battery_property_changed_cb (XfconfChannel *channel, gchar *property,
 {
     if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
     	return;
-	
+
     if ( xfpm_strequal (property, SHOW_TRAY_ICON_CFG) )
     {
 	guint val = g_value_get_uint (value);
@@ -461,12 +461,11 @@ static void
 xfpm_battery_load_configuration (XfpmBattery *battery)
 {
     battery->priv->show_icon =
-    	xfconf_channel_get_uint (battery->priv->conf->channel, SHOW_TRAY_ICON_CFG, 0);
-	
+    	xfconf_channel_get_uint (battery->priv->conf->channel, SHOW_TRAY_ICON_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
     if ( battery->priv->show_icon < 0 || battery->priv->show_icon > 3 )
     {
 	g_warning ("Invalid value %d for property %s, using default\n", battery->priv->show_icon, SHOW_TRAY_ICON_CFG);
-	xfconf_channel_set_uint (battery->priv->conf->channel, CRITICAL_BATT_ACTION_CFG, 0);
+	xfconf_channel_set_uint (battery->priv->conf->channel, CRITICAL_BATT_ACTION_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
     }
     
     battery->priv->critical_level =
@@ -517,7 +516,7 @@ xfpm_battery_init(XfpmBattery *battery)
     battery->priv = XFPM_BATTERY_GET_PRIVATE(battery);
     
     battery->priv->icon      = xfpm_tray_icon_new ();
-    battery->priv->show_icon = SHOW_ICON_ALWAYS;
+    battery->priv->show_icon = SHOW_ICON_WHEN_BATTERY_PRESENT;
     battery->priv->adapter   = xfpm_adapter_new ();
     battery->priv->conf      = xfpm_xfconf_new ();
     

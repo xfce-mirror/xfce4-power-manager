@@ -395,7 +395,7 @@ xfpm_engine_property_changed_cb (XfconfChannel *channel, gchar *property, GValue
     {
         const gchar *str = g_value_get_string (value);
 	gint val = xfpm_shutdown_string_to_int (str);
-	if ( val == -1 || val == 1 )
+	if ( val == -1 || val == 3 )
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
 	    engine->priv->sleep_button = XFPM_DO_NOTHING;

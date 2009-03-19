@@ -705,7 +705,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     gtk_list_store_append(list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("When battery is charging or discharging"), 1, 2, -1);
     
-    guint show_tray = xfconf_channel_get_uint (channel, SHOW_TRAY_ICON_CFG, 0);
+    guint show_tray = xfconf_channel_get_uint (channel, SHOW_TRAY_ICON_CFG, 1);
     gtk_combo_box_set_active (GTK_COMBO_BOX(tray), show_tray);
     g_signal_connect (tray, "changed",
 		      G_CALLBACK(set_show_tray_icon_cb), channel);
@@ -1013,10 +1013,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
     
     dialog = glade_xml_get_widget (xml, "xfpm-settings-dialog");
 
-    xfpm_settings_on_ac (channel, user_privilege, can_suspend, can_hibernate, has_lid, has_lcd_brightness);
+    xfpm_settings_on_ac (channel, user_privilege, can_suspend, can_hibernate, has_lcd_brightness, has_lid );
     
     if ( system_laptop )
-	xfpm_settings_on_battery (channel, user_privilege, can_suspend, can_hibernate, has_lid, has_lcd_brightness);
+	xfpm_settings_on_battery (channel, user_privilege, can_suspend, can_hibernate, has_lcd_brightness, has_lid);
 	
     xfpm_settings_tree_view (channel, system_laptop);
     

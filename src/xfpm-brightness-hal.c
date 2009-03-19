@@ -477,6 +477,10 @@ xfpm_brightness_hal_new ()
 			  
 	xfpm_brightness_hal_set_timeouts (brg);
     }
+    else
+    {
+	TRACE("No lcd brightness control found in the system");
+    }
     
     return brg;
 }

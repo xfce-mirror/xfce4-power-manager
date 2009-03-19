@@ -144,7 +144,7 @@ endif
 
 @INTLTOOL_DESKTOP_RULE@
 autostartdir = $(sysconfdir)/xdg/autostart
-autostart_in_files = xfce-power-manager.desktop.in
+autostart_in_files = xfce4-power-manager.desktop.in
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST = 					\
@@ -154,5 +154,5 @@ EXTRA_DIST = 					\
 
 DISTCLEANFILES =				\
 	$(BUILT_SOURCES)			\
-	xfce-power-manager.desktop
+	xfce4-power-manager.desktop
 
