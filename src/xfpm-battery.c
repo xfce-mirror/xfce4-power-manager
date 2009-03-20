@@ -429,6 +429,7 @@ static void
 xfpm_battery_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmBattery *battery)
 {
     battery->priv->adapter_present = present;
+    xfpm_battery_refresh (battery);
 }
 
 static void

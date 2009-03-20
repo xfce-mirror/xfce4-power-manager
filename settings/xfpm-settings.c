@@ -280,10 +280,10 @@ static gchar *
 format_dpms_value_cb (GtkScale *scale, gdouble value)
 {
     if ( (int)value == 0 )
-    	return g_strdup _("Never");
+    	return g_strdup (_("Never"));
     
     if ( (int)value == 1 )
-	return g_strdup _("One minute");
+	return g_strdup (_("One minute"));
 	
     return g_strdup_printf ("%d %s", (int)value, _("Minutes"));
 }
@@ -296,7 +296,7 @@ static gchar *
 format_brightness_value_cb (GtkScale *scale, gdouble value)
 {
     if ( (int)value == 9 )
-    	return g_strdup _("Never");
+    	return g_strdup (_("Never"));
         
     return g_strdup_printf ("%d %s", (int)value, _("Seconds"));
 }
