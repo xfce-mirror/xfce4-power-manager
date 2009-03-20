@@ -173,7 +173,10 @@ void xfpm_manager_start (XfpmManager *manager)
  */
 static gboolean xfpm_manager_dbus_quit       (XfpmManager *manager,
 					      GError **error);
-					    
+					      
+static gboolean xfpm_manager_dbus_restart     (XfpmManager *manager,
+					       GError **error);
+					      
 static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
 					      gboolean *OUT_system_laptop,
 					      gboolean *OUT_user_privilege,
@@ -212,6 +215,16 @@ xfpm_manager_dbus_quit(XfpmManager *manager, GError **error)
     TRACE("Quit message received\n");
     
     xfpm_manager_quit(manager);
+    
+    return TRUE;
+}
+
+static gboolean xfpm_manager_dbus_restart     (XfpmManager *manager,
+					       GError **error)
+{
+    TRACE("Restart message received");
+    g_object_unref (manager->priv->engine);
+    manager->priv->engine = xfpm_engine_new ();
     
     return TRUE;
 }

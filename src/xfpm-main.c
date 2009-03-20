@@ -54,26 +54,30 @@ show_version()
 
 int main(int argc, char **argv)
 {
-    xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
-
-    gboolean run     = FALSE;
-    gboolean quit    = FALSE;
-    gboolean config  = FALSE;
-    gboolean version = FALSE;
+    DBusGConnection *bus;
+    GError *error = NULL;
+    DBusGProxy *proxy;
+     
+    gboolean run        = FALSE;
+    gboolean quit       = FALSE;
+    gboolean config     = FALSE;
+    gboolean version    = FALSE;
     gboolean no_daemon  = FALSE;
+    gboolean reload     = FALSE;
+    
+    xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
     GOptionEntry option_entries[] = 
     {
 	{ "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &run, NULL, NULL },
 	{ "no-daemon",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &no_daemon, N_("Do not daemonize"), NULL },
+	{ "restart", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &reload, N_("Restart the running instance of xfce power manager"), NULL},
 	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
 	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
 	{ "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &version, N_("Version information"), NULL },
 	{ NULL, },
     };
 
-    GError *error = NULL;
-    
     if(!gtk_init_with_args(&argc, &argv, "", option_entries, PACKAGE, &error)) 
     {
         if(G_LIKELY(error)) 
@@ -111,7 +115,6 @@ int main(int argc, char **argv)
 	g_critical ("Could not daemonize");
     }
         
-    DBusGConnection *bus;
     bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
     
     if ( error )
@@ -141,11 +144,10 @@ int main(int argc, char **argv)
         }
 	else
 	{
-	    GError *error = NULL;
-	    DBusGProxy *proxy = dbus_g_proxy_new_for_name(bus, 
-							  "org.xfce.PowerManager",
-							  "/org/xfce/PowerManager",
-							  "org.xfce.Power.Manager");
+	    proxy = dbus_g_proxy_new_for_name(bus, 
+			                      "org.xfce.PowerManager",
+					      "/org/xfce/PowerManager",
+					      "org.xfce.Power.Manager");
 	    if ( !proxy ) 
 	    {
 		g_critical ("Failed to get proxy");
@@ -166,12 +168,45 @@ int main(int argc, char **argv)
     
     if ( config )
     {
-	if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), 
-				      "org.xfce.PowerManager"))
+	g_spawn_command_line_async ("xfce4-power-manager-settings", &error);
+	
+	if ( error )
 	{
-	    g_print (_("Xfce power manager is not running"));
-	    g_print ("\n");
-	    /* FIXME: dialog to run */
+	    g_critical ("Failed to execute xfce4-power-manager-settings: %s", error->message);
+	    g_error_free (error);
+	    return EXIT_FAILURE;
+	}
+	return EXIT_SUCCESS;
+    }
+    
+    if ( reload )
+    {
+	if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection (bus),
+				      "org.xfce.PowerManager") )
+	{
+	    xfpm_info (_("Xfce Power Manager"),
+		       _("Xfce power manager is not running to releod it"));
+		       
+	    
+	    return EXIT_FAILURE;
+	}
+	proxy = dbus_g_proxy_new_for_name(bus, 
+			                      "org.xfce.PowerManager",
+					      "/org/xfce/PowerManager",
+					      "org.xfce.Power.Manager");
+	if ( !proxy ) 
+	{
+	    g_critical ("Failed to get proxy");
+	    dbus_g_connection_unref(bus);
+	    return EXIT_FAILURE;
+	}
+	    
+	if ( !xfpm_manager_dbus_client_restart (proxy, NULL) )
+	{
+	    g_critical ("Unable to send reload message");
+	    g_object_unref (proxy);
+	    dbus_g_connection_unref (bus);
+	    return EXIT_SUCCESS;
 	}
 	return EXIT_SUCCESS;
     }
