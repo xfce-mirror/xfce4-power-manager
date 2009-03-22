@@ -79,8 +79,8 @@ inhibit_plugin_set_button (inhibit_t *inhibit)
 {
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(inhibit->button), inhibit->inhibited);
     gtk_widget_set_tooltip_text (inhibit->button, 
-			         inhibit->inhibited ? _("Automatic power savings on") :
-						      _("Automatic power savings off"));
+			         inhibit->inhibited ? _("Automatic sleep enabled") :
+						      _("Automatic sleep inhibited"));
 }
 
 static gboolean
