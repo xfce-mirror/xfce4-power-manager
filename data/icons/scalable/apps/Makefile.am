@@ -4,5 +4,5 @@ EXTRA_DIST =				\
 Datadir = $(datadir)/icons/hicolor/scalable/apps
 
 Data_DATA =				\
-	xfpm-cpu.svg
-	
+	xfpm-cpu.svg			\
+	gnome-inhibit-applet.svg

@@ -138,8 +138,10 @@ xfpm_help(void)
 }
 
 void       
-xfpm_about(GtkWidget *widget,gpointer data)
+xfpm_about (GtkWidget *widget, gpointer data)
 {
+    gchar *package = (gchar *)data;
+    
     const gchar* authors[3] = 
     {
 	"Ali Abdallah <aliov@xfce.org>", 
@@ -151,6 +153,7 @@ xfpm_about(GtkWidget *widget,gpointer data)
 	"Ali Abdallah <aliov@xfce.org>",
 	NULL,
     };
+    
 
     gtk_about_dialog_set_url_hook (xfpm_link_browser, NULL, NULL);
     gtk_about_dialog_set_email_hook (xfpm_link_mailto, NULL, NULL);
@@ -161,7 +164,7 @@ xfpm_about(GtkWidget *widget,gpointer data)
 		     "destroy-with-parent", TRUE,
 		     "documenters", documenters,
 		     "license", XFCE_LICENSE_GPL,
-		     "name", _("Xfce4 Power Manager"),
+		     "name", package,
 		     "translator-credits", _("translator-credits"),
 		     "version", PACKAGE_VERSION,
 		     "website", "http://goodies.xfce.org",

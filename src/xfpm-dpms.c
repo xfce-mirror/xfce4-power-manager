@@ -146,27 +146,25 @@ xfpm_dpms_timeouts_on_adapter (XfpmDpms *dpms)
 static gboolean
 xfpm_dpms_enable_disable (XfpmDpms *dpms)
 {
-    if ( !dpms->priv->dpms_capable )
-    	return FALSE;
-	
-    if ( dpms->priv->inhibited )
-    {
-	TRACE("DPMS is inhibited");
-	DPMSDisable (GDK_DISPLAY());
-	return TRUE;
-    }
-	
     BOOL on_off;
     CARD16 state = 0;
     
+    if ( !dpms->priv->dpms_capable )
+    	return FALSE;
+	
     DPMSInfo (GDK_DISPLAY(), &state, &on_off);
     
-    if ( !on_off && dpms->priv->dpms_enabled )
+    if ( dpms->priv->inhibited && on_off )
+    {
+	TRACE("Power manager inhibited, disabling DPMS");
+	DPMSDisable (GDK_DISPLAY());
+    }
+    else if ( !on_off && dpms->priv->dpms_enabled && !dpms->priv->inhibited )
     {
         TRACE("DPMS is disabled, enabling it: user settings");
         DPMSEnable(GDK_DISPLAY());
     } 
-    else if ( on_off && !dpms->priv->dpms_enabled )
+    else if ( on_off && !dpms->priv->dpms_enabled && !dpms->priv->inhibited)
     {
         TRACE("DPMS is enabled, disabling it: user settings");
         DPMSDisable(GDK_DISPLAY());
@@ -178,6 +176,9 @@ static void
 xfpm_dpms_check (XfpmDpms *dpms)
 {
     xfpm_dpms_enable_disable (dpms);
+    
+    if ( dpms->priv->inhibited  == TRUE || dpms->priv->dpms_enabled == FALSE )
+	return;
     
     if ( !dpms->priv->on_battery )
     	xfpm_dpms_timeouts_on_adapter (dpms);

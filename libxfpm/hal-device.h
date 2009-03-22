@@ -63,7 +63,11 @@ gboolean         	  hal_device_watch                (HalDevice *device);
 
 gboolean		  hal_device_get_property_bool    (HalDevice *device,
 							   const gchar *property);
-									 
+
+gboolean                  hal_device_set_property_int     (HalDevice *device,
+							   const gchar *property,
+							   gint value);
+							   
 gint			  hal_device_get_property_int     (HalDevice *device,
 							   const gchar *property);
 									 

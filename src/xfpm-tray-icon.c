@@ -30,6 +30,7 @@
 #include <gtk/gtk.h>
 
 #include <libxfce4util/libxfce4util.h>
+#include <libxfcegui4/libxfcegui4.h>
 
 #include "libxfpm/xfpm-common.h"
 
@@ -52,6 +53,28 @@ struct XfpmTrayIconPrivate
 
 G_DEFINE_TYPE(XfpmTrayIcon, xfpm_tray_icon, G_TYPE_OBJECT)
 
+static gboolean
+xfpm_tray_icon_size_changed_cb (GtkStatusIcon *icon, gint size, XfpmTrayIcon *tray)
+{
+    GdkPixbuf *pix;
+    
+    g_return_val_if_fail (size > 0, FALSE);
+
+    if ( tray->priv->icon_quark == 0 )
+	return FALSE;
+    
+    pix = xfce_themed_icon_load (g_quark_to_string (tray->priv->icon_quark), size);
+    
+    if ( pix )
+    {
+	gtk_status_icon_set_from_pixbuf (GTK_STATUS_ICON(tray->priv->icon), pix);
+	g_object_unref (pix);
+	return TRUE;
+    }
+    
+    return FALSE;
+}
+
 static void
 xfpm_tray_icon_class_init(XfpmTrayIconClass *klass)
 {
@@ -70,6 +93,9 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
     tray->priv->icon = gtk_status_icon_new();
     
     tray->priv->icon_quark = 0;
+    
+    g_signal_connect (tray->priv->icon, "size-changed",
+		      G_CALLBACK (xfpm_tray_icon_size_changed_cb), tray);
 }
 
 static void
@@ -98,8 +124,10 @@ void xfpm_tray_icon_set_icon (XfpmTrayIcon *icon, const gchar *icon_name)
     g_return_if_fail(XFPM_IS_TRAY_ICON(icon));
     
     icon->priv->icon_quark = g_quark_from_string(icon_name);
-   
-    gtk_status_icon_set_from_icon_name (GTK_STATUS_ICON(icon->priv->icon), icon_name);
+    
+    xfpm_tray_icon_size_changed_cb (icon->priv->icon,
+				    gtk_status_icon_get_size(icon->priv->icon),
+				    icon);
 }
 
 void xfpm_tray_icon_set_tooltip (XfpmTrayIcon *icon, const gchar *tooltip)

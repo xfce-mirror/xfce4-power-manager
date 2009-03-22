@@ -120,7 +120,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
 }
 
 static void
-xfpm_brightness_hal_finalize(GObject *object)
+xfpm_brightness_hal_finalize (GObject *object)
 {
     XfpmBrightnessHal *brg;
 
@@ -168,10 +168,12 @@ xfpm_brightness_hal_get_level (XfpmBrightnessHal *brg)
     }
     return level;
 }
-G_GNUC_UNUSED
+
 static gboolean
 xfpm_brightness_hal_set_level (XfpmBrightnessHal *brg, gint level)
 {
+    TRACE ("Setting level %d", level);
+    
     GError *error = NULL;
     gboolean ret = FALSE;
     gint dummy;
@@ -265,6 +267,7 @@ xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
     
     if ( brg->priv->hw_level <= brg->priv->max_level -2 )
     {
+	TRACE ("Brightness key up");
 	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level + 1 );
 	brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
     }
@@ -278,6 +281,7 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
 	
     if ( brg->priv->hw_level != 0)
     {
+	TRACE("Brightness key down");
 	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level - 1 );
 	brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
     }
@@ -312,7 +316,10 @@ xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
     level = xfpm_brightness_hal_get_level(brg);
      
     if ( level != brg->priv->hw_level )
-	    xfpm_brightness_hal_set_level(brg, brg->priv->hw_level);
+    {
+	TRACE("Resetting brightness level to %d", brg->priv->hw_level);
+	xfpm_brightness_hal_set_level(brg, brg->priv->hw_level);
+    }
 }
 
 static void
@@ -334,7 +341,7 @@ xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHa
 	if ( brg->priv->on_battery )
 	    return;
 	    
-	if ( level != 1 )
+	if ( level != 0 )
 	{
 	    TRACE ("Reducing brightness, on AC power\n");
 	    xfpm_brightness_hal_set_level(brg, 0);
@@ -345,7 +352,7 @@ xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHa
 	if ( !brg->priv->on_battery )
 	    return;
 	
-	if ( level != 1 )
+	if ( level != 0 )
 	{
 	    xfpm_brightness_hal_set_level(brg, 0);
 	    TRACE ("Reducing brightness, on battery power\n");
@@ -384,6 +391,7 @@ xfpm_brightness_hal_load_config (XfpmBrightnessHal *brg)
 static void
 xfpm_brightness_hal_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmBrightnessHal *brg)
 {
+    TRACE("Inhibit changed %s", xfpm_bool_to_string (inhibited));
     brg->priv->inhibited = inhibited;
 }
 
