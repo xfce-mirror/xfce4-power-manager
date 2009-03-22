@@ -218,12 +218,14 @@ brightness_plugin_button_press_cb (GtkWidget *widget, brightness_t *plugin)
     else return;
    
     gtk_window_move (GTK_WINDOW(plugin->win), x, y);
+    TRACE("Displaying window on x=%d y=%d", x, y);
     plugin->current_level = brightness_plugin_get_level (plugin);
     
     gtk_range_set_value (GTK_RANGE(plugin->scale), plugin->current_level);
     
     plugin->open = TRUE;
 }
+
 
 static void
 plus_clicked (GtkWidget *widget, brightness_t *plugin)
@@ -350,9 +352,6 @@ brightness_plugin_construct_popup (brightness_t *plugin)
     brightness_plugin_create_popup (plugin);
     plugin->open = FALSE;
 
-    g_signal_connect (plugin->button, "clicked",
-		      G_CALLBACK (brightness_plugin_button_press_cb), plugin);
-		      
     g_signal_connect (plugin->plus, "clicked",
 		      G_CALLBACK (plus_clicked), plugin);
 		      
@@ -401,6 +400,9 @@ brightness_plugin_construct (brightness_t *plugin)
     
     xfce_panel_plugin_add_action_widget (plugin->plugin, plugin->button);
 
+    g_signal_connect (plugin->button, "clicked",
+		      G_CALLBACK (brightness_plugin_button_press_cb), plugin);
+		      
     gtk_widget_show_all (plugin->button);
 }
 
@@ -435,7 +437,9 @@ register_brightness_plugin (XfcePanelPlugin *plugin)
 		      
     g_signal_connect (plugin, "orientation-changed",
 		      G_CALLBACK(brightness_plugin_orientation_changed_cb), brightness);
+		      
     xfce_panel_plugin_menu_show_about(plugin);
+    
     g_signal_connect (plugin, "about", G_CALLBACK(xfpm_about), _("Brightness plugin"));
 
 }
