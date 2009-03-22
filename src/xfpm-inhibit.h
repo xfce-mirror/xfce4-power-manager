@@ -29,6 +29,16 @@ G_BEGIN_DECLS
 #define XFPM_INHIBIT(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_INHIBIT, XfpmInhibit))
 #define XFPM_IS_INHIBIT(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_INHIBIT))
 
+#define XFPM_TYPE_INHIBIT_ERROR  (xfpm_inhibit_error_get_type ())
+#define XFPM_INHIBIT_ERROR       (xfpm_inhibit_get_error_quark ())
+
+typedef enum
+{
+    XFPM_INHIBIT_ERROR_UNKNOWN = 0,
+    XFPM_INHIBIT_ERROR_INVALID_COOKIE
+    
+} XfpmInhibitError;
+
 typedef struct XfpmInhibitPrivate XfpmInhibitPrivate;
 
 typedef struct
@@ -48,6 +58,9 @@ typedef struct
 } XfpmInhibitClass;
 
 GType        		  xfpm_inhibit_get_type        (void) G_GNUC_CONST;
+GType                     xfpm_inhibit_error_get_type  (void) G_GNUC_CONST;
+GQuark                    xfpm_inhibit_get_error_quark ();
+
 XfpmInhibit              *xfpm_inhibit_new             (void);
 
 G_END_DECLS

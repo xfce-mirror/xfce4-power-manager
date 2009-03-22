@@ -420,6 +420,12 @@ static void brightness_plugin_free_data_cb (XfcePanelPlugin *plugin, brightness_
     if ( brightness->proxy )
 	g_object_unref (brightness->proxy);
 	
+    if ( brightness->xfpm_proxy )
+	g_object_unref (brightness->xfpm_proxy );
+	
+    if ( brightness->session )
+	dbus_g_connection_unref (brightness->session);
+	
     g_free (brightness);
 }
 

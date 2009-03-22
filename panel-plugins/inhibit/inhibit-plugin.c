@@ -52,7 +52,7 @@ typedef struct
     GtkWidget        *image;
     
     gboolean          connected;
-    guint             cookies;
+    guint             cookie;
     
     gboolean          inhibited;
 
@@ -79,8 +79,8 @@ inhibit_plugin_set_button (inhibit_t *inhibit)
 {
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(inhibit->button), inhibit->inhibited);
     gtk_widget_set_tooltip_text (inhibit->button, 
-			         inhibit->inhibited ? _("Automatic sleep enabled") :
-						      _("Automatic sleep inhibited"));
+			         inhibit->inhibited ? _("Automatic sleep inhibited") :
+						      _("Automatic sleep enabled"));
 }
 
 static gboolean
@@ -125,12 +125,12 @@ inhibit_plugin_get_inhibit (inhibit_t *plugin)
 static void
 inhibit_plugin_set_inhibit (inhibit_t *plugin)
 {
-    GError *error;
+    GError *error = NULL;
     
     const gchar *app = "Inhibit plugin";
     const gchar *reason = "User settings";
     
-    if (!xfpm_inhibit_dbus_client_inhibit (plugin->proxy, app, reason, &plugin->cookies, &error))
+    if (!xfpm_inhibit_dbus_client_inhibit (plugin->proxy, app, reason, &plugin->cookie, &error))
     {
 	g_critical ("Unable to set inhibit: %s", error->message);
 	g_error_free (error);
@@ -143,9 +143,9 @@ inhibit_plugin_set_inhibit (inhibit_t *plugin)
 static void
 inhibit_plugin_unset_inhibit (inhibit_t *plugin)
 {
-    GError *error;
+    GError *error = NULL;
     
-    if (!xfpm_inhibit_dbus_client_un_inhibit (plugin->proxy, plugin->cookies, &error))
+    if (!xfpm_inhibit_dbus_client_un_inhibit (plugin->proxy, plugin->cookie, &error))
     {
 	g_critical ("Unable to set UnInhibit: %s", error->message);
 	g_error_free (error);
@@ -228,6 +228,7 @@ reload_activated (GtkWidget *widget, inhibit_t *plugin)
 	
     inhibit_plugin_connect (plugin);
     inhibit_plugin_connect_more (plugin);
+    
 }
 
 static void
