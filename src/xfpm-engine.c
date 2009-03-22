@@ -59,7 +59,7 @@
 #include "xfpm-button-xf86.h"
 #include "xfpm-lid-hal.h"
 #include "xfpm-inhibit.h"
-#include "xfpm-brightness-hal.h"
+#include "xfpm-backlight.h"
 #include "xfpm-screen-saver.h"
 #include "xfpm-config.h"
 
@@ -81,7 +81,7 @@ struct XfpmEnginePrivate
     XfpmCpu            *cpu;
     XfpmButtonXf86     *xf86_button;
     XfpmLidHal         *lid;
-    XfpmBrightnessHal  *brg_hal;
+    XfpmBacklight      *bk;
     XfpmAdapter        *adapter;
     XfpmInhibit        *inhibit;
     HalIface           *iface;
@@ -330,10 +330,8 @@ xfpm_engine_load_all (XfpmEngine *engine)
     */
     if ( engine->priv->is_laptop )
     {
-	engine->priv->brg_hal = xfpm_brightness_hal_new ();
-	engine->priv->has_lcd_brightness = xfpm_brightness_hal_has_hw (engine->priv->brg_hal);
-	if ( !engine->priv->has_lcd_brightness )
-	    g_object_unref (engine->priv->brg_hal);
+	engine->priv->bk = xfpm_backlight_new ();
+	engine->priv->has_lcd_brightness = xfpm_backlight_has_hw (engine->priv->bk);
     }
 }
 
@@ -480,7 +478,7 @@ xfpm_engine_init (XfpmEngine *engine)
     engine->priv->cpu         = NULL;
     engine->priv->xf86_button = NULL;
     engine->priv->lid         = NULL;
-    engine->priv->brg_hal     = NULL;
+    engine->priv->bk          = NULL;
     
     engine->priv->power_management = 0;
     
@@ -535,6 +533,9 @@ xfpm_engine_finalize (GObject *object)
 
     if ( engine->priv->adapter)
 	g_object_unref (engine->priv->adapter);
+	
+    if ( engine->priv->bk )
+	g_object_unref (engine->priv->bk);
 	
     G_OBJECT_CLASS(xfpm_engine_parent_class)->finalize(object);
 }

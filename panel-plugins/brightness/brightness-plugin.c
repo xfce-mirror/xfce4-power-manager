@@ -42,14 +42,18 @@
 typedef struct
 {
     DBusGConnection  *bus;
+    DBusGConnection  *session;
     
     XfcePanelPlugin  *plugin;
     gint              max_level;
     gint              current_level;
+    
     gboolean          hw_found;
+    gboolean          xfpm_running;
     
     gboolean          open;
     DBusGProxy       *proxy;
+    DBusGProxy       *xfpm_proxy;
 
     GtkWidget        *button;
     
@@ -60,6 +64,16 @@ typedef struct
     GtkWidget        *minus;
 
 } brightness_t;
+
+
+static void
+brightness_plugin_update_xfpm_brightness_level (brightness_t *plugin, guint level)
+{
+    dbus_g_proxy_call_no_reply (plugin->xfpm_proxy, "UpdateBrightness",
+			        G_TYPE_UINT, level,
+				G_TYPE_INVALID,
+				G_TYPE_INVALID);
+}
 
 static gint 
 brightness_plugin_get_level (brightness_t *brightness)
@@ -98,6 +112,10 @@ brightness_plugin_set_level (brightness_t *brightness, gint level)
 	g_critical ("Error setting brightness level: %s\n", error->message);
 	g_error_free (error);
     }
+    
+    if ( brightness->xfpm_running )
+	brightness_plugin_update_xfpm_brightness_level (brightness, level);
+    
     return ret;
 }
 
@@ -345,7 +363,6 @@ brightness_plugin_size_changed_cb (XfcePanelPlugin *plugin, gint size, brightnes
     return brightness_plugin_set_icon (brightness, width);
 }
 
-
 static void
 brightness_plugin_construct_popup (brightness_t *plugin)
 {
@@ -370,6 +387,26 @@ brightness_plugin_orientation_changed_cb (XfcePanelPlugin *plugin,
     brightness_plugin_destroy_popup (brightness);
     brightness_plugin_construct_popup (brightness);
     
+}
+
+static void
+brightness_plugin_xfpm (brightness_t *plugin)
+{
+    plugin->session = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+    
+    plugin->xfpm_proxy = dbus_g_proxy_new_for_name (plugin->session,
+						   "org.freedesktop.PowerManagement",
+						   "/org/freedesktop/PowerManagement/Backlight",
+						   "org.freedesktop.PowerManagement.Backlight");
+					       
+    if ( !plugin->xfpm_proxy )
+    {
+	g_warning ("Failed to create proxy");
+	plugin->xfpm_running = FALSE;
+	return;
+    }
+    
+    plugin->xfpm_running = TRUE;
 }
 
 static void brightness_plugin_free_data_cb (XfcePanelPlugin *plugin, brightness_t *brightness)
@@ -422,6 +459,7 @@ register_brightness_plugin (XfcePanelPlugin *plugin)
     {
 	brightness_plugin_construct_popup (brightness);
 	brightness_plugin_set_level (brightness, 9);
+	brightness_plugin_xfpm (brightness);
 	gtk_widget_set_tooltip_text (brightness->button, _("Control your LCD brightness level"));
     }
     else

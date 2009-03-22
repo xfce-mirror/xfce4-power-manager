@@ -140,22 +140,30 @@ void xfpm_manager_start (XfpmManager *manager)
     if ( !xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 				  "org.xfce.PowerManager") ) 
     {
-	g_critical("Unable to reserve bus name\n");
+	g_critical("Unable to reserve bus name: Xfce Power Manager\n");
     }
     
     if (!xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 				  "org.freedesktop.PowerManagement") )
     {
     
-	g_critical ("Unable to reserve bus name\n");
+	g_critical ("Unable to reserve bus name: PowerManagement\n");
     }
     
     if (!xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 				  "org.freedesktop.PowerManagement.Inhibit") )
     {
     
-	g_critical ("Unable to reserve bus name\n");
+	g_critical ("Unable to reserve bus name: Inhibit\n");
     }
+    
+    if (!xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
+				  "org.freedesktop.PowerManagement.Backlight") )
+    {
+    
+	g_critical ("Unable to reserve bus name: Backlight\n");
+    }
+    
     manager->priv->hproxy = hal_proxy_new ();
     
     g_signal_connect (manager->priv->hproxy, "hal-disconnected",

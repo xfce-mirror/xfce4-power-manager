@@ -499,3 +499,10 @@ gboolean xfpm_brightness_hal_has_hw (XfpmBrightnessHal *brg)
     
     return brg->priv->hw_found;
 }
+
+void xfpm_brightness_hal_update_level (XfpmBrightnessHal *brg, guint level)
+{
+    g_return_if_fail (XFPM_IS_BRIGHTNESS_HAL (brg));
+    
+    brg->priv->hw_level = level;
+}

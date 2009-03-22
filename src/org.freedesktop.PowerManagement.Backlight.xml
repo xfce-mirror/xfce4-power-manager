@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<node name="/">
+    <interface name="org.freedesktop.PowerManagement.Backlight">
+        <annotation name="org.freedesktop.DBus.GLib.CSymbol"
+                    value="xfpm_backlight_dbus"/>
+        <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
+                    value="xfpm_backlight_dbus_client"/>
+
+    <method name="UpdateBrightness">
+      <arg type="u" name="level" direction="in"/>
+    </method>
+
+    </interface>
+</node>

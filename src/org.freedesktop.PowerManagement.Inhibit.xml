@@ -21,7 +21,9 @@
       <arg type="b" name="has_inhibit" direction="out"/>
     </method>
     
-    <signal name="HasInhibitChanged"/>
+    <signal name="HasInhibitChanged">
+      <arg type="b" name="has_inhibit_changed" direction="out"/>
+    </signal>
     
     </interface>
     

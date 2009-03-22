@@ -7,6 +7,7 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-marshal.h				\
 	org.freedesktop.PowerManagement.h	\
 	org.freedesktop.PowerManagement.Inhibit.h\
+	org.freedesktop.PowerManagement.Backlight.h\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
 	xfpm-main.c				\
@@ -32,6 +33,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-button-xf86.h			\
 	xfpm-lid-hal.c				\
 	xfpm-lid-hal.h				\
+	xfpm-backlight.c			\
+	xfpm-backlight.h			\
 	xfpm-brightness-hal.c			\
 	xfpm-brightness-hal.h			\
 	xfpm-idle.c				\
@@ -89,6 +92,7 @@ BUILT_SOURCES = 					\
 	xfce-power-manager-dbus-client.h		\
 	org.freedesktop.PowerManagement.h		\
 	org.freedesktop.PowerManagement.Inhibit.h	\
+	org.freedesktop.PowerManagement.Backlight.h	\
 	xfpm-marshal.c					\
 	xfpm-marshal.h					\
 	xfpm-enum-types.c				\
@@ -139,6 +143,9 @@ org.freedesktop.PowerManagement.h: $(srcdir)/org.freedesktop.PowerManagement.xml
 
 org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
 	dbus-binding-tool --mode=glib-server --prefix=xfpm_inhibit $< >$@
+
+org.freedesktop.PowerManagement.Backlight.h: $(srcdir)/org.freedesktop.PowerManagement.Backlight.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_backlight $< >$@
 
 endif
 

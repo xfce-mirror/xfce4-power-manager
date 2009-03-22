@@ -48,6 +48,8 @@ GType        				xfpm_brightness_hal_get_type        (void) G_GNUC_CONST;
 XfpmBrightnessHal      		       *xfpm_brightness_hal_new             (void);
 
 gboolean                                xfpm_brightness_hal_has_hw          (XfpmBrightnessHal *brg);
+void                                    xfpm_brightness_hal_update_level    (XfpmBrightnessHal *brg,
+									     guint level);
 G_END_DECLS
 
 #endif /* __XFPM_BRIGHTNESS_HAL_H */
