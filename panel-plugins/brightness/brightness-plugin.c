@@ -226,14 +226,31 @@ brightness_plugin_button_press_cb (GtkWidget *widget, brightness_t *plugin)
 	y -= plugin->win->allocation.height;
 	x -= plugin->win->allocation.width/2;
     }
-    /* floating */
-    else if ( pos == XFCE_SCREEN_POSITION_FLOATING_H ||
-	      pos == XFCE_SCREEN_POSITION_FLOATING_V )
+    else if ( pos == XFCE_SCREEN_POSITION_FLOATING_H )
     {
-	g_warning ("Floating position");
-	return;
+	x += plugin->button->allocation.x
+		+ plugin->button->allocation.width/2;
+	x -= plugin->win->allocation.width/2;
+	if ( y > plugin->win->allocation.height )
+	    y -= plugin->win->allocation.height;
+	else 
+	     y += plugin->button->allocation.height;
     }
-    else return;
+    else if ( pos == XFCE_SCREEN_POSITION_FLOATING_V )
+    {
+	y -= plugin->win->allocation.height/2;
+	y += plugin->button->allocation.y
+		+ plugin->button->allocation.height/2;
+	if ( x < plugin->win->allocation.width )
+	    x += plugin->button->allocation.width;
+	else
+	    x -= plugin->win->allocation.width;
+    }
+    else
+    {
+	gtk_widget_hide (plugin->win);
+	g_return_if_reached ();
+    }
    
     gtk_window_move (GTK_WINDOW(plugin->win), x, y);
     TRACE("Displaying window on x=%d y=%d", x, y);
