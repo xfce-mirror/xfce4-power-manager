@@ -11,6 +11,7 @@ xfce4_inhibit_plugin_CFLAGS =			\
 	-DLOCALEDIR=\"$(localedir)\"  		\
 	$(LIBXFCE4PANEL_CFLAGS)       		\
 	$(LIBXFCE4UTIL_CFLAGS)        		\
+	$(LIBNOTIFY_CFLAGS)			\
 	$(GTK_CFLAGS)			      	\
 	$(GLIB_CFLAGS)				\
 	$(DBUS_GLIB_CFLAGS)
@@ -19,6 +20,7 @@ xfce4_inhibit_plugin_LDADD =			\
 	$(top_builddir)/libxfpm/libxfpmcommon.la\
 	$(LIBXFCE4PANEL_LIBS)   		\
 	$(LIBXFCE4UTIL_LIBS)			\
+	$(LIBNOTIFY_LIBS)			\
 	$(GTK_LIBS)   				\
 	$(GLIB_LIBS)				\
 	$(DBUS_GLIB_LIBS)

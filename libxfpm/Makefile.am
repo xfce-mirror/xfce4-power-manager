@@ -43,13 +43,16 @@ libxfpmcommon_la_SOURCES =      	\
         xfpm-popups.c           	\
         xfpm-popups.h           	\
         xfpm-common.c           	\
-        xfpm-common.h
+        xfpm-common.h			\
+	xfpm-notify.c			\
+	xfpm-notify.h
 
 libxfpmcommon_la_CFLAGS =       	\
         $(GTK_CFLAGS)           	\
         $(GLIB_CFLAGS)          	\
         $(DBUS_CFLAGS)			\
-	$(LIBXFCE4UTIL_CFLAGS)
+	$(LIBXFCE4UTIL_CFLAGS)		\
+	$(LIBNOTIFY_CFLAGS)
 
 if MAINTAINER_MODE
 

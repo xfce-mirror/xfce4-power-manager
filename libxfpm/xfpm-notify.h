@@ -81,6 +81,7 @@ void 			  xfpm_notify_add_action_to_notification    (XfpmNotify *notify,
 								     const gchar *action_label,
 								     NotifyActionCallback callback, 
 								     gpointer data);
+								     
 void 			  xfpm_notify_present_notification 	    (XfpmNotify *notify, 
 								     NotifyNotification *n,
 								     gboolean simple);

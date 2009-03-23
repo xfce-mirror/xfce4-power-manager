@@ -34,11 +34,11 @@
 #include "libxfpm/hal-iface.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
+#include "libxfpm/xfpm-notify.h"
 
 #include "xfpm-supply.h"
 #include "xfpm-adapter.h"
 #include "xfpm-battery.h"
-#include "xfpm-notify.h"
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-xfconf.h"
@@ -254,7 +254,7 @@ xfpm_supply_process_critical_action (XfpmSupply *supply)
 static void
 _notify_action_callback (NotifyNotification *n, gchar *action, XfpmSupply *supply)
 {
-    if ( xfpm_strequal(action, "shutdow") )
+    if ( xfpm_strequal(action, "shutdown") )
 	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_SHUTDOWN);
     else if ( xfpm_strequal(action, "hibernate") )
 	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_SHUTDOWN);

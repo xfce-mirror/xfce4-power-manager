@@ -43,7 +43,6 @@
 #include "xfpm-battery-info.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
-#include "xfpm-notify.h"
 #include "xfpm-adapter.h"
 
 /* Init */
