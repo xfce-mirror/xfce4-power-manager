@@ -199,7 +199,6 @@ static void
 inhibit_plugin_set_tooltip (inhibit_t *inhibit)
 {
     gboolean inhibited;
-    TRACE ("inhibititon =%s", xfpm_bool_to_string (inhibit->plugin_inhibited));
     
     if ( !inhibit->connected )
 	gtk_widget_set_tooltip_text (inhibit->button, _("No power manager instance running") );
@@ -461,6 +460,10 @@ button_press_event_cb (GtkWidget *button, GdkEventButton *ev, inhibit_t *inhibit
     if ( ev->button != 1 )
 	return FALSE;
     
+    
+    if ( !inhibit->connected )
+	return TRUE;
+	
     /*User ask us to inhibit ?*/
     //FIXME: Check if we manage to inhibit
     if ( !inhibit->plugin_inhibited )
@@ -473,7 +476,6 @@ button_press_event_cb (GtkWidget *button, GdkEventButton *ev, inhibit_t *inhibit
 	inhibit_plugin_unset_inhibit (inhibit);
 	inhibit->plugin_inhibited = FALSE;
     }
-    TRACE("button press event %s", xfpm_bool_to_string (inhibit->plugin_inhibited));
     inhibit_plugin_refresh_info (inhibit);
     return TRUE;
 }
