@@ -48,6 +48,7 @@
 #include "xfpm-debug.h"
 #include "xfpm-common.h"
 #include "xfpm-string.h"
+#include "xfpm-inhibit.h"
 
 #define XFPM_LCD_BRIGHTNESS_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE(o,XFPM_TYPE_LCD_BRIGHTNESS,XfpmLcdBrightnessPrivate))
@@ -79,6 +80,7 @@ static void xfpm_lcd_brightness_handle_device_condition_cb(XfpmHal *hal,
                                                            const gchar *condition_name,
                                                            const gchar *condition_detail,
                                                            XfpmLcdBrightness *lcd);
+
 static void xfpm_lcd_brightness_notify_cb(GObject *object,
                                           GParamSpec *arg1,
                                           gpointer data);
@@ -87,8 +89,11 @@ struct XfpmLcdBrightnessPrivate
 {
     
     XfpmHal *hal;
+    XfpmInhibit *inhibit;
+    
     gboolean device_exists;
     gboolean brightness_in_hardware;
+    gboolean inhibited;
     gchar *udi;
     gint max_brightness;
     gint step;
@@ -132,6 +137,16 @@ static void xfpm_lcd_brightness_class_init(XfpmLcdBrightnessClass *klass)
 
 }
 
+static void
+xfpm_lcd_brightness_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmLcdBrightness *lcd)
+{
+    XfpmLcdBrightnessPrivate *priv;
+    priv = XFPM_LCD_BRIGHTNESS_GET_PRIVATE(lcd);
+    
+    priv->inhibited = inhibited;
+    xfpm_lcd_brightness_set_level(lcd);
+}
+
 static void xfpm_lcd_brightness_init(XfpmLcdBrightness *lcd)
 {
     XfpmLcdBrightnessPrivate *priv;
@@ -143,6 +158,9 @@ static void xfpm_lcd_brightness_init(XfpmLcdBrightness *lcd)
     priv->udi = NULL;
     priv->max_brightness = -1;
     priv->step = 0;
+    priv->inhibited = FALSE;
+    
+    priv->inhibit = xfpm_inhibit_new ();
     
     xfpm_lcd_brightness_load_config(lcd);
     xfpm_lcd_brightness_get_device(lcd);
@@ -158,7 +176,9 @@ static void xfpm_lcd_brightness_init(XfpmLcdBrightness *lcd)
                 g_signal_connect(priv->hal,"xfpm-device-condition",
                             G_CALLBACK(xfpm_lcd_brightness_handle_device_condition_cb),lcd);
             }
-        }                 
+        } 
+	g_signal_connect (priv->inhibit, "has_inhibit_changed", 
+			  G_CALLBACK (xfpm_lcd_brightness_inhibit_changed_cb), lcd);
     }
     
 }
@@ -177,6 +197,8 @@ static void xfpm_lcd_brightness_finalize(GObject *object)
     {
         g_free(lcd->priv->udi);
     }
+    
+    g_object_unref (lcd->priv->inhibit);
     
     G_OBJECT_CLASS(xfpm_lcd_brightness_parent_class)->finalize(object);
 }
@@ -247,6 +269,9 @@ xfpm_lcd_brightness_set_level(XfpmLcdBrightness *lcd)
 {
     XfpmLcdBrightnessPrivate *priv;
     priv = XFPM_LCD_BRIGHTNESS_GET_PRIVATE(lcd);
+
+    if ( priv->inhibited )
+	return;
     
     GError *error = NULL;
     gint32 level =
@@ -477,9 +502,11 @@ xfpm_lcd_brightness_handle_device_condition_cb(XfpmHal *hal,
 static void
 xfpm_lcd_brightness_notify_cb(GObject *object,GParamSpec *arg1,gpointer data)
 {
+    XfpmLcdBrightnessPrivate *priv;
     XfpmLcdBrightness *lcd;
     
     lcd = XFPM_LCD_BRIGHTNESS(object);
+    priv = XFPM_LCD_BRIGHTNESS_GET_PRIVATE (lcd);
     
     XFPM_DEBUG("brightness callback\n");
     
@@ -487,6 +514,12 @@ xfpm_lcd_brightness_notify_cb(GObject *object,GParamSpec *arg1,gpointer data)
     {
         XFPM_DEBUG("Lcd brightness is disabled\n");
         return;
+    }
+    
+    if ( priv->inhibited )
+    {
+	XFPM_DEBUG("Brightness is currenctly inhibited");
+	return;
     }
     
     xfpm_lcd_brightness_set_level(lcd);    

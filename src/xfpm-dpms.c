@@ -56,6 +56,7 @@
 
 #include "xfpm-common.h"
 #include "xfpm-debug.h"
+#include "xfpm-inhibit.h"
 
 #ifndef _
 #define _(x) x
@@ -85,9 +86,14 @@ static void xfpm_dpms_set_timeouts(XfpmDpms *dpms);
 static void xfpm_dpms_notify_cb        (GObject *object,
                                         GParamSpec *arg1,
                                         gpointer data);  
+					
+static void xfpm_dpms_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmDpms *dpms);
+
 struct XfpmDpmsPrivate
 {
+    XfpmInhibit *inhibit;
     gboolean dpms_capable;
+    gboolean inhibited;
 };
 
 G_DEFINE_TYPE(XfpmDpms,xfpm_dpms,G_TYPE_OBJECT)
@@ -134,6 +140,11 @@ static void xfpm_dpms_init(XfpmDpms *dpms)
     priv = XFPM_DPMS_GET_PRIVATE(dpms);
     
     priv->dpms_capable = DPMSCapable(GDK_DISPLAY());
+    priv->inhibit = xfpm_inhibit_new ();
+    priv->inhibited = FALSE;
+    
+    g_signal_connect (priv->inhibit, "has_inhibit_changed", 
+		      G_CALLBACK (xfpm_dpms_inhibit_changed_cb), dpms);
     
     xfpm_dpms_load_config(dpms);
     
@@ -204,6 +215,8 @@ static void xfpm_dpms_finalize(GObject *object)
     XfpmDpms *dpms;
     dpms = XFPM_DPMS(object);
     dpms->priv = XFPM_DPMS_GET_PRIVATE(dpms);
+    
+    g_object_unref (dpms->priv->inhibit);
     
     G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
     
@@ -278,7 +291,12 @@ xfpm_dpms_set_dpms_mode(XfpmDpms *dpms)
     
     DPMSInfo(GDK_DISPLAY(),&state,&on_off);
 
-    if ( !on_off && dpms->dpms_enabled )
+    if ( priv->inhibited )
+    {
+	XFPM_DEBUG("DPMS is inhibited, disabling it\n");
+	DPMSDisable (GDK_DISPLAY());
+    }
+    else if ( !on_off && dpms->dpms_enabled )
     {
         XFPM_DEBUG("DPMS is disabled, enabling it: user settings\n");
         DPMSEnable(GDK_DISPLAY());
@@ -296,7 +314,17 @@ xfpm_dpms_set_dpms_mode(XfpmDpms *dpms)
 static void
 xfpm_dpms_set_timeouts(XfpmDpms *dpms)
 {
+    XfpmDpmsPrivate *priv;
+    priv = XFPM_DPMS_GET_PRIVATE (dpms);
+    
+    if ( priv->inhibited )
+    {
+	XFPM_DEBUG("Not settings timeouts, dpms is currently inhibited\b");
+	return;
+    }
+	
     CARD16 x_standby = 0 ,x_suspend = 0,x_off = 0;
+    
     DPMSGetTimeouts(GDK_DISPLAY(),&x_standby,&x_suspend,&x_off);
     
     if ( dpms->ac_adapter_present )
@@ -322,6 +350,16 @@ xfpm_dpms_set_timeouts(XfpmDpms *dpms)
                                    dpms->on_batt_off_timeout);
         }
     }
+}
+
+static void xfpm_dpms_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmDpms *dpms)
+{
+    XfpmDpmsPrivate *priv;
+    priv = XFPM_DPMS_GET_PRIVATE (dpms);
+    
+    priv->inhibited = inhibited;
+    xfpm_dpms_set_dpms_mode (dpms);
+    xfpm_dpms_set_timeouts (dpms);
 }
 
 static void

@@ -10,6 +10,7 @@ generated_files =				\
 
 xfce4_power_manager_SOURCES = 			\
 	$(generated_files)			\
+	org.freedesktop.PowerManagement.Inhibit.h\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
 	xfpm-main.c				\
@@ -34,6 +35,10 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-battery-icon.h			\
 	xfpm-dpms.c				\
 	xfpm-dpms.h				\
+	xfpm-inhibit.c				\
+	xfpm-inhibit.h				\
+	xfpm-screen-saver.c			\
+	xfpm-screen-saver.h			\
 	xfpm-popups.c           		\
 	xfpm-popups.h           		\
 	xfpm-notify.c				\
@@ -69,7 +74,6 @@ xfce4_power_manager_LDADD   =			\
 	$(XFCONF_LIBS)				\
 	$(LIBNOTIFY_LIBS)			\
 	$(DPMS_LIBS)		
-
 
 xfce4_power_manager_settings_SOURCES =		\
 	xfpm-marshal.c				\
@@ -123,6 +127,7 @@ if MAINTAINER_MODE
 BUILT_SOURCES = 				\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
+	org.freedesktop.PowerManagement.Inhibit.h\
 	xfpm-marshal.c				\
 	xfpm-marshal.h				\
 	xfpm-enum-types.c			\
@@ -168,21 +173,31 @@ xfce-power-manager-dbus-server.h: $(srcdir)/org.xfce.Power.Manager.xml
 xfce-power-manager-dbus-client.h: $(srcdir)/org.xfce.Power.Manager.xml
 	dbus-binding-tool --mode=glib-client --prefix=xfpm_client $< >$@
 
+org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_inhibit $< >$@
+
 endif
 
 #
-# .desktop file
+# .desktop files
 #
-desktop_in_files = xfce4-power-manager.desktop.in
+@INTLTOOL_DESKTOP_RULE@
 desktopdir = $(datadir)/applications
+desktop_in_files = xfce4-power-manager-settings.desktop.in
 desktop_DATA =	$(desktop_in_files:.desktop.in=.desktop)
 
 @INTLTOOL_DESKTOP_RULE@
+autostartdir = $(sysconfdir)/xdg/autostart
+autostart_in_files = xfce4-power-manager.desktop.in
+autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
+
 
 EXTRA_DIST = 					\
 	xfpm-marshal.list			\
-	$(desktop_in_files)
+	$(desktop_in_files)			\
+	$(autostart_in_files)
 
 DISTCLEANFILES =				\
 	$(BUILT_SOURCES)			\
-	$(desktop_DATA)
+	xfce4-power-manager.desktop		\
+	xfce4-power-manager-settings.desktop

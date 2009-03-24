@@ -59,9 +59,11 @@ static gboolean run     = FALSE;
 static gboolean quit    = FALSE;
 static gboolean config  = FALSE;
 static gboolean version = FALSE;
+static gboolean reload  = FALSE;
 
 static GOptionEntry option_entries[] = {
     { "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE,&run,NULL,NULL },
+    { "reload",'\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &reload, NULL, NULL},
 	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
 	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
     { "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &version, N_("Version information"), NULL },
@@ -78,81 +80,6 @@ show_version()
              "Licensed under the GNU GPL.\n\n"), VERSION);
 }			 
 	
-static void
-autostart()
-{
-    const gchar *home;
-    
-    if ( ( home = getenv("HOME")) == NULL )
-    {
-        xfpm_popup_message(_("Xfce Power Manager"),
-                           _("Unable to read your home directory environment variable,"\
-						    " autostart option may not work"),
-                           GTK_MESSAGE_INFO);
-        g_warning("Unable to read HOME environment variable, autostart will not work\n");
-        return;
-    }
-    
-    gchar *dir_file;
-    
-    dir_file = g_strdup_printf("%s/.config/autostart", home);
-    
-    if ( !g_file_test(dir_file,G_FILE_TEST_IS_DIR) )
-    {
-        g_mkdir_with_parents(dir_file, 0700);
-    }
-    
-    gchar *file;
-    file = g_strdup_printf("%s/xfce4-power-manager.desktop",dir_file);
-    g_free(dir_file);
-    
-    if ( g_file_test(file,G_FILE_TEST_EXISTS) )
-    {
-        XFPM_DEBUG("xfce4 power manager autostart.desktop file already exists\n");
-        g_free(file);
-        return;
-    }
-    
-    GKeyFile *key;
-    GError *error = NULL;
-    
-    key = g_key_file_new();
-    
-    g_key_file_set_value(key,"Desktop Entry","Version","1.0");
-    g_key_file_set_string(key,"Desktop Entry","Type","Application");    
-    g_key_file_set_string(key,"Desktop Entry","Name","Xfce4 Power Manager"); 
-    g_key_file_set_string(key,"Desktop Entry","Icon","gpm-ac-adapter"); 
-    g_key_file_set_string(key,"Desktop Entry","Exec","xfce4-power-manager"); 
-    g_key_file_set_boolean(key,"Desktop Entry","StartupNotify",FALSE); 
-    g_key_file_set_boolean(key,"Desktop Entry","Terminal",FALSE); 
-    g_key_file_set_boolean(key,"Desktop Entry","Hidden",FALSE); 
-    
-    gchar *content = g_key_file_to_data(key,NULL,&error);
-    
-    if ( error )
-    {
-        g_critical("%s\n",error->message);
-        g_error_free(error);
-        g_free(file);
-        g_key_file_free(key);
-        return;
-    }
-    
-    g_file_set_contents(file,content,-1,&error);
-    
-    if ( error )
-    {
-        g_critical("Unable to set content for the autostart desktop file%s\n",error->message);
-        g_error_free(error);
-        g_free(file);
-        g_key_file_free(key);
-        return;
-    }
-    
-    g_free(file);
-    g_key_file_free(key);
-}
-
 int main(int argc,char **argv) 
 {
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
@@ -267,10 +194,44 @@ int main(int argc,char **argv)
         }
     }    
     
+    if ( reload )
+    {
+        if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus),  "org.xfce.PowerManager"))
+        {
+            g_print(_("Xfce power manager is not running"));
+	    g_print("\n");
+            return EXIT_SUCCESS;
+	}
+	GError *error = NULL;
+	DBusGProxy *proxy = dbus_g_proxy_new_for_name(bus, 
+						      "org.xfce.PowerManager",
+						      "/org/xfce/PowerManager",
+						      "org.xfce.Power.Manager");
+						      
+	if ( !proxy ) 
+	{
+	    g_critical ("Failed to get proxy");
+	    dbus_g_connection_unref(bus);
+	    return EXIT_SUCCESS;
+	}
+	
+	xfpm_driver_dbus_client_reload (proxy , &error);
+	
+	if ( error )
+	{
+	    g_critical("Failed to sent reload message %s", error->message);
+	    g_error_free(error);
+	}
+	
+	g_object_unref(proxy);
+	dbus_g_connection_unref(bus);
+	return EXIT_SUCCESS;
+	
+    }
+    
     if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus),  "org.xfce.PowerManager") )
     {
         XfpmDriver *driver = xfpm_driver_new(bus);
-        autostart();
         if (!xfpm_driver_monitor(driver)) 
         {
             xfpm_popup_message(_("Xfce power manager"),

@@ -1024,6 +1024,8 @@ xfpm_driver_quit(XfpmDriver *drv)
     XfpmDriverPrivate *priv = XFPM_DRIVER_GET_PRIVATE(drv);
     
     xfpm_dbus_release_name(dbus_g_connection_get_connection(priv->bus), "org.xfce.PowerManager");
+    xfpm_dbus_release_name(dbus_g_connection_get_connection(priv->bus), "org.freedesktop.PowerManagement");
+    xfpm_dbus_release_name(dbus_g_connection_get_connection(priv->bus), "org.freedesktop.PowerManagement.Inhibit");
     
     g_main_loop_quit(priv->loop);
     g_object_unref(drv);
@@ -1062,6 +1064,7 @@ xfpm_driver_monitor (XfpmDriver *drv)
     }
     
     GError *g_error = NULL;
+    
     if ( !xfconf_init(&g_error) )
     {
         g_critical("xfconf init failed: %s using default settings\n",g_error->message);
@@ -1078,6 +1081,8 @@ xfpm_driver_monitor (XfpmDriver *drv)
     }
     
     xfpm_dbus_register_name(dbus_g_connection_get_connection(priv->bus), "org.xfce.PowerManager");
+    xfpm_dbus_register_name(dbus_g_connection_get_connection(priv->bus), "org.freedesktop.PowerManagement");
+    xfpm_dbus_register_name(dbus_g_connection_get_connection(priv->bus), "org.freedesktop.PowerManagement.Inhibit");
     
     xfpm_driver_load_config(drv);    
     _get_system_form_factor(priv);
@@ -1116,6 +1121,8 @@ static gboolean xfpm_driver_dbus_get_info (XfpmDriver *driver,
 					    gchar **OUT_version,
 					    gchar **OUT_vendor,
 					    GError **error);
+
+static gboolean  xfpm_driver_dbus_reload (XfpmDriver *driver, GError **error);
 
 #include "xfce-power-manager-dbus-server.h"
 
@@ -1203,6 +1210,19 @@ xfpm_driver_dbus_get_info (XfpmDriver *driver,
     *OUT_name    = g_strdup(PACKAGE);
     *OUT_version = g_strdup(VERSION);
     *OUT_vendor  = g_strdup("Xfce-goodies");
+    
+    return TRUE;
+}
+
+static gboolean 
+xfpm_driver_dbus_reload (XfpmDriver *driver, GError **error)
+{
+    XFPM_DEBUG("Reload message received\n");
+    
+    xfpm_driver_quit (driver);
+    /*Stupid, but the way 0.6 is is hard to have a clean reload*/
+    g_spawn_command_line_async ("xfce4-power-manager", NULL);
+    
     
     return TRUE;
 }
