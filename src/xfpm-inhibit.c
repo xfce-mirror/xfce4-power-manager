@@ -180,7 +180,11 @@ xfpm_inhibit_get_cookie (XfpmInhibit *inhibit)
     if ( list )
 	g_list_free (list);
 	
-    cookie = max + 1;
+    /*
+     * Should work in all the cases as we will not have thounsands of applications inhibiting us
+     */
+    cookie = (guint) g_random_int_range ( max + 1, max + 40);
+    
     return cookie;
 }
 
@@ -265,8 +269,11 @@ static gboolean xfpm_inhibit_dbus_inhibit  	(XfpmInhibit *inhibit,
     
     TRACE("Inhibit send application name=%s reason=%s", IN_appname, IN_reason);
     
-    inhibit->priv->inhibited = TRUE;
-    g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
+    if ( !inhibit->priv->inhibited )
+    {
+	inhibit->priv->inhibited = TRUE;
+	g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
+    }
     
     *OUT_cookie = cookie;
     

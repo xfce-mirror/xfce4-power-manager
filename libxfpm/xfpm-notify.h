@@ -73,7 +73,7 @@ NotifyNotification       *xfpm_notify_new_notification  	    (XfpmNotify *notify
 								     const gchar *icon_name,
 								     guint timeout,
 								     XfpmNotifyUrgency urgency,
-								     GtkStatusIcon *icon);
+								     GtkStatusIcon *icon) G_GNUC_MALLOC;
 
 void 			  xfpm_notify_add_action_to_notification    (XfpmNotify *notify, 
 								     NotifyNotification *n,

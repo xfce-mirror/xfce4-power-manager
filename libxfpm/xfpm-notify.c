@@ -50,6 +50,14 @@ static void xfpm_notify_class_init (XfpmNotifyClass *klass);
 static void xfpm_notify_init       (XfpmNotify *notify);
 static void xfpm_notify_finalize   (GObject *object);
 
+static NotifyNotification * xfpm_notify_new_notification_internal (XfpmNotify *notify, 
+								   const gchar *title, 
+								   const gchar *message, 
+								   const gchar *icon_name, 
+								   guint timeout, 
+								   XfpmNotifyUrgency urgency, 
+								   GtkStatusIcon *icon) G_GNUC_MALLOC;
+
 #define XFPM_NOTIFY_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_NOTIFY, XfpmNotifyPrivate))
 
@@ -198,6 +206,9 @@ void xfpm_notify_add_action_to_notification (XfpmNotify *notify, NotifyNotificat
 void xfpm_notify_present_notification (XfpmNotify *notify, NotifyNotification *n, gboolean simple)
 {
     g_return_if_fail (XFPM_IS_NOTIFY(notify));
+    
+    if ( !simple )
+        xfpm_notify_close_notification (notify);
     
     if ( !simple )
     {

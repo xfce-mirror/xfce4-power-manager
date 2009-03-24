@@ -59,9 +59,9 @@ void                xfpm_tray_icon_set_visible     (XfpmTrayIcon *icon,
 						    
 gboolean            xfpm_tray_icon_get_visible     (XfpmTrayIcon *icon);
 
-GtkStatusIcon      *xfpm_tray_icon_get_tray_icon   (XfpmTrayIcon *icon);
+GtkStatusIcon      *xfpm_tray_icon_get_tray_icon   (XfpmTrayIcon *icon) G_GNUC_PURE;
 
-const gchar        *xfpm_tray_icon_get_icon_name   (XfpmTrayIcon *icon);  
+const gchar        *xfpm_tray_icon_get_icon_name   (XfpmTrayIcon *icon) G_GNUC_PURE;  
 
 G_END_DECLS
 
