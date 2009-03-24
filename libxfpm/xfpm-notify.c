@@ -41,8 +41,7 @@
 
 #include <libnotify/notify.h>
 
-#include "libxfpm/xfpm-common.h"
-
+#include "xfpm-common.h"
 #include "xfpm-notify.h"
 
 /* Init */

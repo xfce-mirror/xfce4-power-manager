@@ -52,7 +52,7 @@ endif
 #
 # .desktop file
 #
-desktop_in_files = xfce4-power-manager.desktop.in
+desktop_in_files = xfce4-power-manager-settings.desktop.in
 desktopdir = $(datadir)/applications
 desktop_DATA =	$(desktop_in_files:.desktop.in=.desktop)
 
