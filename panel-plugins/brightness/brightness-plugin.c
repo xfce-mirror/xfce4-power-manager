@@ -169,6 +169,9 @@ brightness_plugin_button_press_cb (GtkWidget *widget, brightness_t *plugin)
     GdkScreen *screen;
     XfceScreenPosition pos;
     
+    if ( !plugin->hw_found )
+	return;
+    
     if ( plugin->open )
     {
 	gtk_widget_hide (plugin->win);
