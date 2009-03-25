@@ -47,6 +47,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-tray-icon.h			\
 	xfpm-network-manager.c			\
 	xfpm-network-manager.h			\
+	xfpm-errors.c				\
+	xfpm-errors.h				\
 	xfpm-config.h				\
 	xfpm-enum.h
 

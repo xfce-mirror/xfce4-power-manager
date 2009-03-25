@@ -29,16 +29,6 @@ G_BEGIN_DECLS
 #define XFPM_INHIBIT(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_INHIBIT, XfpmInhibit))
 #define XFPM_IS_INHIBIT(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_INHIBIT))
 
-#define XFPM_TYPE_INHIBIT_ERROR  (xfpm_inhibit_error_get_type ())
-#define XFPM_INHIBIT_ERROR       (xfpm_inhibit_get_error_quark ())
-
-typedef enum
-{
-    XFPM_INHIBIT_ERROR_UNKNOWN = 0,
-    XFPM_INHIBIT_ERROR_INVALID_COOKIE
-    
-} XfpmInhibitError;
-
 typedef struct XfpmInhibitPrivate XfpmInhibitPrivate;
 
 typedef struct

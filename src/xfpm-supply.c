@@ -43,6 +43,7 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
+#include "xfpm-marshal.h"
 
 /* Init */
 static void xfpm_supply_class_init (XfpmSupplyClass *klass);
@@ -89,8 +90,10 @@ xfpm_supply_class_init(XfpmSupplyClass *klass)
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmSupplyClass, shutdown_request),
                       NULL, NULL,
-                      g_cclosure_marshal_VOID__ENUM,
-                      G_TYPE_NONE, 1, XFPM_TYPE_SHUTDOWN_REQUEST);
+                      _xfpm_marshal_VOID__BOOLEAN_ENUM,
+                      G_TYPE_NONE, 2, 
+		      G_TYPE_BOOLEAN,
+		      XFPM_TYPE_SHUTDOWN_REQUEST);
 
     object_class->finalize = xfpm_supply_finalize;
 
@@ -142,7 +145,7 @@ xfpm_supply_hibernate_cb (GtkWidget *w, XfpmSupply *supply)
     
     if ( ret ) 
     {
-	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_HIBERNATE);
+	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, FALSE, XFPM_DO_HIBERNATE);
     }
 }
 
@@ -156,7 +159,7 @@ xfpm_supply_suspend_cb (GtkWidget *w, XfpmSupply *supply)
     
     if ( ret ) 
     {
-	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_SUSPEND);
+	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, FALSE, XFPM_DO_SUSPEND);
     }
 }
 
@@ -248,16 +251,16 @@ xfpm_supply_process_critical_action (XfpmSupply *supply)
     //FIXME: shouldn't happen
     g_return_if_fail (supply->priv->critical_action != XFPM_DO_SUSPEND );
     
-    g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, supply->priv->critical_action);
+    g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, supply->priv->critical_action);
 }
 
 static void
 _notify_action_callback (NotifyNotification *n, gchar *action, XfpmSupply *supply)
 {
     if ( xfpm_strequal(action, "shutdown") )
-	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_SHUTDOWN);
+	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, XFPM_DO_SHUTDOWN);
     else if ( xfpm_strequal(action, "hibernate") )
-	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, XFPM_DO_SHUTDOWN);
+	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, XFPM_DO_SHUTDOWN);
 }
 
 static void

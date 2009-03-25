@@ -42,6 +42,7 @@
 
 #include "xfpm-inhibit.h"
 #include "xfpm-screen-saver.h"
+#include "xfpm-errors.h"
 
 /* Init */
 static void xfpm_inhibit_class_init (XfpmInhibitClass *klass);
@@ -53,35 +54,6 @@ static void xfpm_inhibit_dbus_init	  (XfpmInhibit *inhibit);
 
 #define XFPM_INHIBIT_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_INHIBIT, XfpmInhibitPrivate))
-
-GQuark
-xfpm_inhibit_get_error_quark (void)
-{
-    static GQuark quark = 0;
-    if (!quark)
-	quark = g_quark_from_static_string ("Xfce Power Manager inhibit");
-	
-    return quark;
-}
-
-GType
-xfpm_inhibit_error_get_type (void)
-{
-    static GType type = 0;
-    
-    if (!type)
-    {
-	static const GEnumValue values[] = {
-	    { XFPM_INHIBIT_ERROR_UNKNOWN, "XFPM_INHIBIT_ERROR_UNKNOWN", "Unknown" },
-	    { XFPM_INHIBIT_ERROR_INVALID_COOKIE, "XFPM_INHIBIT_ERROR_INVALID_COOKIE", "InvalidCookie" },
-	    { 0, NULL, NULL }
-	};
-	
-	type = g_enum_register_static ("XfpmInhibitError", values);
-    }
-    
-    return type;
-}
 
 struct XfpmInhibitPrivate
 {
@@ -245,9 +217,9 @@ static void xfpm_inhibit_dbus_class_init  (XfpmInhibitClass *klass)
     dbus_g_object_type_install_info(G_TYPE_FROM_CLASS(klass),
 				    &dbus_glib_xfpm_inhibit_object_info);
 				    
-    dbus_g_error_domain_register (XFPM_INHIBIT_ERROR, 
+    dbus_g_error_domain_register (XFPM_ERROR, 
 				  "org.freedesktop.PowerManagement.Inhibit",
-				  XFPM_TYPE_INHIBIT_ERROR);
+				  XFPM_TYPE_ERROR);
 }
 
 static void xfpm_inhibit_dbus_init	  (XfpmInhibit *inhibit)
@@ -288,7 +260,7 @@ static gboolean xfpm_inhibit_dbus_un_inhibit    (XfpmInhibit *inhibit,
     
     if (!xfpm_inhibit_remove_application (inhibit, IN_cookie))
     {
-	g_set_error (error, XFPM_INHIBIT_ERROR, XFPM_INHIBIT_ERROR_INVALID_COOKIE, _("Invalid cookie"));
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_INVALID_COOKIE, _("Invalid cookie"));
 	return FALSE;
     }
     

@@ -45,6 +45,7 @@
 #include "libxfpm/hal-device.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
+#include "libxfpm/xfpm-notify.h"
 
 #ifdef HAVE_DPMS
 #include "xfpm-dpms.h"
@@ -61,6 +62,7 @@
 #include "xfpm-inhibit.h"
 #include "xfpm-backlight.h"
 #include "xfpm-screen-saver.h"
+#include "xfpm-errors.h"
 #include "xfpm-config.h"
 
 /* Init */
@@ -78,6 +80,8 @@ struct XfpmEnginePrivate
 {
     XfpmXfconf         *conf;
     XfpmSupply         *supply;
+    XfpmNotify         *notify;
+    
     XfpmCpu            *cpu;
     XfpmButtonXf86     *xf86_button;
     XfpmLidHal         *lid;
@@ -157,7 +161,7 @@ xfpm_engine_do_shutdown (XfpmEngine *engine)
 }
 
 static void
-xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
+xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown, gboolean critical)
 {
     const gchar *action = xfpm_int_to_shutdown_string (shutdown);
 	
@@ -166,7 +170,7 @@ xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
 	TRACE("Sleep button disabled in configuration");
 	return;
     }
-    else
+    else if ( !engine->priv->inhibited )
     {
 	TRACE("Going to do %s\n", action);
 	xfpm_send_message_to_network_manager ("sleep");
@@ -186,14 +190,14 @@ xfpm_engine_shutdown_request (XfpmEngine *engine, XfpmShutdownRequest shutdown)
 	
 	if ( engine->priv->lock_screen )
 	    xfpm_lock_screen ();
-	
     }
 }
 
 static void
-xfpm_engine_shutdown_request_battery_cb (XfpmSupply *supply, XfpmShutdownRequest action, XfpmEngine *engine)
+xfpm_engine_shutdown_request_battery_cb (XfpmSupply *supply, gboolean critical,
+					 XfpmShutdownRequest action, XfpmEngine *engine)
 {
-    xfpm_engine_shutdown_request (engine, action);
+    xfpm_engine_shutdown_request (engine, action, critical);
 }
 
 static void
@@ -207,7 +211,7 @@ xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 *button, XfpmXF86Button type,
 	    return;
 	    
 	TRACE("Accepting shutdown request");
-	xfpm_engine_shutdown_request (engine, engine->priv->sleep_button);
+	xfpm_engine_shutdown_request (engine, engine->priv->sleep_button, FALSE);
     }
 }
 
@@ -236,7 +240,8 @@ xfpm_engine_lid_closed_cb (XfpmLidHal *lid, XfpmEngine *engine)
     
     xfpm_engine_shutdown_request (engine, engine->priv->on_battery ? 
 					  engine->priv->lid_button_battery :
-					  engine->priv->lid_button_ac);
+					  engine->priv->lid_button_ac,
+					  FALSE);
 }
 
 static void
@@ -462,7 +467,8 @@ xfpm_engine_init (XfpmEngine *engine)
     engine->priv = XFPM_ENGINE_GET_PRIVATE(engine);
     
     engine->priv->iface       = hal_iface_new ();
-    engine->priv->adapter = xfpm_adapter_new ();
+    engine->priv->adapter     = xfpm_adapter_new ();
+    engine->priv->notify      = xfpm_notify_new ();
 
     engine->priv->inhibit     = xfpm_inhibit_new ();
     engine->priv->inhibited   = FALSE;
@@ -537,6 +543,8 @@ xfpm_engine_finalize (GObject *object)
     if ( engine->priv->bk )
 	g_object_unref (engine->priv->bk);
 	
+    g_object_unref (engine->priv->notify);
+	
     G_OBJECT_CLASS(xfpm_engine_parent_class)->finalize(object);
 }
 
@@ -605,6 +613,10 @@ xfpm_engine_dbus_class_init(XfpmEngineClass *klass)
 {
      dbus_g_object_type_install_info(G_TYPE_FROM_CLASS(klass),
 				    &dbus_glib_xfpm_engine_object_info);
+				    
+     dbus_g_error_domain_register (XFPM_ERROR, 
+				   "org.freedesktop.PowerManagement",
+				   XFPM_TYPE_ERROR);
 }
 
 static void
@@ -627,9 +639,20 @@ static gboolean xfpm_engine_dbus_hibernate 	(XfpmEngine *engine,
 		  "caller-privilege", &caller_privilege,
 		  "can-hibernate", &can_hibernate,
 		  NULL);
+
+    if ( !caller_privilege)
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED, _("Permission denied"));
+	return FALSE;
+    }
+    
+    if ( !can_hibernate )
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HIBERNATE_NOT_SUPPORTED, _("Hibernate not supported"));
+	return FALSE;
+    }
 		  
-    if ( caller_privilege && can_hibernate )
-	xfpm_engine_shutdown_request (engine, XFPM_DO_HIBERNATE);
+    xfpm_engine_shutdown_request (engine, XFPM_DO_HIBERNATE, FALSE);
 
     return TRUE;
 }
@@ -644,9 +667,20 @@ static gboolean xfpm_engine_dbus_suspend 	(XfpmEngine *engine,
 		  "caller-privilege", &caller_privilege,
 		  "can-suspend", &can_suspend,
 		  NULL);
-		  
-    if ( caller_privilege && can_suspend )
-	xfpm_engine_shutdown_request (engine, XFPM_DO_SUSPEND);
+	
+     if ( !caller_privilege)
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED, _("Permission denied"));
+	return FALSE;
+    }
+    
+    if ( !can_suspend )
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_SUSPEND_NOT_SUPPORTED, _("Suspend not supported"));
+	return FALSE;
+    }
+    
+    xfpm_engine_shutdown_request (engine, XFPM_DO_SUSPEND, FALSE);
     
     return TRUE;
 }

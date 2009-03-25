@@ -46,6 +46,7 @@ typedef struct
     GObjectClass         parent_class;
     
     void                (*shutdown_request)	    (XfpmSupply *supply,
+						     gboolean critical,
 						     XfpmShutdownRequest action);
 	
 } XfpmSupplyClass;
