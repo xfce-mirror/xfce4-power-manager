@@ -81,68 +81,16 @@ struct XfpmBrightnessHalPrivate
     
     gboolean        on_battery;
     
-    guint           on_battery_timeout;
-    guint 	    on_ac_timeout;
 };
 
 enum
 {
-    TIMEOUT_INPUT,
+    TIMEOUT_INPUT = 0,
     TIMEOUT_ON_AC_ID,
     TIMEOUT_ON_BATTERY_ID
 };
 
 G_DEFINE_TYPE(XfpmBrightnessHal, xfpm_brightness_hal, G_TYPE_OBJECT)
-
-static void
-xfpm_brightness_hal_class_init(XfpmBrightnessHalClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-
-    object_class->finalize = xfpm_brightness_hal_finalize;
-
-    g_type_class_add_private(klass,sizeof(XfpmBrightnessHalPrivate));
-}
-
-static void
-xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
-{
-    brg->priv = XFPM_BRIGHTNESS_HAL_GET_PRIVATE(brg);
-    
-    brg->priv->proxy    	= NULL;
-    brg->priv->idle             = NULL;
-    brg->priv->hw_found 	= FALSE;
-    brg->priv->on_battery       = FALSE;
-    brg->priv->block            = FALSE;
-    brg->priv->brightness_in_hw = FALSE;
-    brg->priv->max_level        = 0;
-    brg->priv->inhibited        = FALSE;
-}
-
-static void
-xfpm_brightness_hal_finalize (GObject *object)
-{
-    XfpmBrightnessHal *brg;
-
-    brg = XFPM_BRIGHTNESS_HAL(object);
-    
-    if ( brg->priv->proxy )
-	g_object_unref (brg->priv->proxy);
-    
-    if ( brg->priv->idle )
-	g_object_unref (brg->priv->idle);
-	
-    if ( brg->priv->conf )
-	g_object_unref (brg->priv->conf);
-	
-    if (brg->priv->adapter)
-	g_object_unref (brg->priv->adapter);
-	
-    if ( brg->priv->inhibit )
-	g_object_unref (brg->priv->inhibit);
-	
-    G_OBJECT_CLASS(xfpm_brightness_hal_parent_class)->finalize(object);
-}
 
 static gint 
 xfpm_brightness_hal_get_level (XfpmBrightnessHal *brg)
@@ -307,7 +255,7 @@ xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
 {
     gint level;
     
-    if (brg->priv->block )
+    if (brg->priv->block)
 	return;
     
     if ( brg->priv->inhibited )
@@ -323,69 +271,56 @@ xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
 }
 
 static void
-xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHal *brg)
+xfpm_brightness_timeout_on_ac (XfpmBrightnessHal *brg)
 {
     gint level;
     
-    if ( brg->priv->block )
-	brg->priv->block = FALSE;
+    if ( brg->priv->on_battery )
+	    return;
     
     level = xfpm_brightness_hal_get_level(brg);
-    TRACE("Alarm timeout id=%d\n", id);
+    
+    if ( level != 0 )
+    {
+	TRACE ("Reducing brightness, on AC power\n");
+	xfpm_brightness_hal_set_level(brg, 0);
+    }
+}
+
+static void
+xfpm_brightness_timeout_on_battery (XfpmBrightnessHal *brg)
+{
+    gint level;
+    
+    if ( !brg->priv->on_battery )
+	    return;
+    
+    level = xfpm_brightness_hal_get_level(brg);
+    
+    if ( level != 0 )
+    {
+	xfpm_brightness_hal_set_level(brg, 0);
+	TRACE ("Reducing brightness, on battery power\n");
+    }
+}
+
+static void
+xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHal *brg)
+{
+    if ( brg->priv->block )
+	brg->priv->block = FALSE;
     
     if ( brg->priv->inhibited )
 	return;
     
-    if ( id == TIMEOUT_ON_AC_ID && brg->priv->on_ac_timeout != 9)
-    {
-	if ( brg->priv->on_battery )
-	    return;
-	    
-	if ( level != 0 )
-	{
-	    TRACE ("Reducing brightness, on AC power\n");
-	    xfpm_brightness_hal_set_level(brg, 0);
-	}
-    }
-    else if ( id == TIMEOUT_ON_BATTERY_ID && brg->priv->on_battery_timeout != 9)
-    {
-	if ( !brg->priv->on_battery )
-	    return;
-	
-	if ( level != 0 )
-	{
-	    xfpm_brightness_hal_set_level(brg, 0);
-	    TRACE ("Reducing brightness, on battery power\n");
-	}
-    }
+    id == TIMEOUT_ON_AC_ID ? xfpm_brightness_timeout_on_ac (brg) :
+			     xfpm_brightness_timeout_on_battery (brg);
 }
 
 static void
 xfpm_brightness_hal_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmBrightnessHal *brg)
 {
     brg->priv->on_battery = !present;
-}
-
-static void
-xfpm_brightness_hal_load_config (XfpmBrightnessHal *brg)
-{
-    brg->priv->on_ac_timeout =
-	xfconf_channel_get_uint (brg->priv->conf->channel, BRIGHTNESS_ON_AC, 9);
-	
-    if ( brg->priv->on_ac_timeout > 120 || brg->priv->on_ac_timeout < 9)
-    {
-	g_warning ("Value %d for %s is out of range", brg->priv->on_ac_timeout, BRIGHTNESS_ON_AC );
-	brg->priv->on_ac_timeout = 9;
-    }
-    
-    brg->priv->on_battery_timeout =
-	xfconf_channel_get_uint (brg->priv->conf->channel, BRIGHTNESS_ON_BATTERY, 10);
-	
-    if ( brg->priv->on_battery_timeout > 120 || brg->priv->on_battery_timeout < 9)
-    {
-	g_warning ("Value %d for %s is out of range", brg->priv->on_battery_timeout, BRIGHTNESS_ON_BATTERY );
-	brg->priv->on_battery_timeout = 10;
-    }
 }
 
 static void
@@ -396,60 +331,60 @@ xfpm_brightness_hal_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited
 }
 
 static void
+xfpm_brightness_get_user_timeouts (XfpmBrightnessHal *brg, guint16 *on_ac, guint16 *on_battery)
+{
+    *on_ac      = xfpm_xfconf_get_property_int (brg->priv->conf, BRIGHTNESS_ON_AC);
+    *on_battery = xfpm_xfconf_get_property_int (brg->priv->conf, BRIGHTNESS_ON_BATTERY);
+}
+
+static void
 xfpm_brightness_hal_set_timeouts (XfpmBrightnessHal *brg )
 {
-    xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID, brg->priv->on_ac_timeout * 1000);
+    guint16 on_ac, on_battery;
     
-    xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID, brg->priv->on_battery_timeout * 1000);
+    xfpm_brightness_get_user_timeouts (brg, &on_ac, &on_battery);
+    
+    if ( on_ac == 9 )
+	on_ac = 0;
+    if ( on_battery == 9 )
+	on_battery = 0;
+    
+    xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID, on_ac * 1000);
+    
+    xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID, on_battery * 1000);
     
     xfpm_idle_alarm_reset_all (brg->priv->idle);
 }
 
 static void
-xfpm_brightness_hal_property_changed_cb (XfconfChannel *channel, gchar *property, 
-				         GValue *value, XfpmBrightnessHal *brg)
+xfpm_brightness_hal_settings_changed_cb (XfpmXfconf *conf, XfpmBrightnessHal *brg)
 {
-    gboolean set = FALSE;
-    
-    if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
-        return;
-    
-    if ( xfpm_strequal (property, BRIGHTNESS_ON_AC ) )
-    {
-	guint val = g_value_get_uint (value);
-	
-	if ( val > 120 || val < 9)
-	{
-	    g_warning ("Value %d for %s is out of range", val, BRIGHTNESS_ON_AC );
-	}
-	else
-	{
-	    brg->priv->on_ac_timeout = val;
-	}
-	set = TRUE;
-    }
-    else if ( xfpm_strequal (property, BRIGHTNESS_ON_BATTERY ) )
-    {
-	guint val = g_value_get_uint (value);
-	
-	if ( val > 120 || val < 9)
-	{
-	    g_warning ("Value %d for %s is out of range", val, BRIGHTNESS_ON_BATTERY );
-	}
-	else
-	    brg->priv->on_battery_timeout = val;
-	set = TRUE;
-    }
-    
-    if ( set )
-	xfpm_brightness_hal_set_timeouts (brg);
+    xfpm_brightness_hal_set_timeouts (brg);
 }
 
-XfpmBrightnessHal *
-xfpm_brightness_hal_new ()
+static void
+xfpm_brightness_hal_class_init(XfpmBrightnessHalClass *klass)
 {
-    XfpmBrightnessHal *brg = NULL;
-    brg = g_object_new (XFPM_TYPE_BRIGHTNESS_HAL, NULL);
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+
+    object_class->finalize = xfpm_brightness_hal_finalize;
+
+    g_type_class_add_private(klass,sizeof(XfpmBrightnessHalPrivate));
+}
+
+static void
+xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
+{
+    brg->priv = XFPM_BRIGHTNESS_HAL_GET_PRIVATE(brg);
+    
+    brg->priv->proxy    	= NULL;
+    brg->priv->idle             = NULL;
+    brg->priv->hw_found 	= FALSE;
+    brg->priv->on_battery       = FALSE;
+    brg->priv->block            = FALSE;
+    brg->priv->brightness_in_hw = FALSE;
+    brg->priv->max_level        = 0;
+    brg->priv->inhibited        = FALSE;
     
     xfpm_brightness_hal_setup (brg);
 
@@ -478,10 +413,8 @@ xfpm_brightness_hal_new ()
 	g_signal_connect (brg->priv->idle, "reset",
 			  G_CALLBACK(xfpm_brightness_hal_reset_cb), brg);
 			  
-	xfpm_brightness_hal_load_config (brg);
-	
-	g_signal_connect (brg->priv->conf->channel, "property-changed", 
-			  G_CALLBACK(xfpm_brightness_hal_property_changed_cb), brg);
+	g_signal_connect (brg->priv->conf, "brightness-settings-changed", 
+			  G_CALLBACK(xfpm_brightness_hal_settings_changed_cb), brg);
 			  
 	xfpm_brightness_hal_set_timeouts (brg);
     }
@@ -489,7 +422,38 @@ xfpm_brightness_hal_new ()
     {
 	TRACE("No lcd brightness control found in the system");
     }
+}
+
+static void
+xfpm_brightness_hal_finalize (GObject *object)
+{
+    XfpmBrightnessHal *brg;
+
+    brg = XFPM_BRIGHTNESS_HAL(object);
     
+    if ( brg->priv->proxy )
+	g_object_unref (brg->priv->proxy);
+    
+    if ( brg->priv->idle )
+	g_object_unref (brg->priv->idle);
+	
+    if ( brg->priv->conf )
+	g_object_unref (brg->priv->conf);
+	
+    if (brg->priv->adapter)
+	g_object_unref (brg->priv->adapter);
+	
+    if ( brg->priv->inhibit )
+	g_object_unref (brg->priv->inhibit);
+	
+    G_OBJECT_CLASS(xfpm_brightness_hal_parent_class)->finalize(object);
+}
+
+XfpmBrightnessHal *
+xfpm_brightness_hal_new ()
+{
+    XfpmBrightnessHal *brg = NULL;
+    brg = g_object_new (XFPM_TYPE_BRIGHTNESS_HAL, NULL);
     return brg;
 }
 

@@ -31,11 +31,13 @@ G_BEGIN_DECLS
 #define XFPM_XFCONF(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_XFCONF, XfpmXfconf))
 #define XFPM_IS_XFCONF(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_XFCONF))
 
+typedef struct  XfpmXfconfPrivate XfpmXfconfPrivate;
 
 typedef struct
 {
     GObject		  parent;
     XfconfChannel        *channel;
+    XfpmXfconfPrivate    *priv;
     
 } XfpmXfconf;
 
@@ -43,11 +45,27 @@ typedef struct
 {
     GObjectClass	  parent_class;
     
+    void                 (*dpms_settings_changed)		(XfpmXfconf *conf);
+    
+    void                 (*power_save_settings_changed)         (XfpmXfconf *conf);
+    
+    void                 (*brightness_settings_changed)		(XfpmXfconf *conf);
+    
+    void                 (*tray_icon_settings_changed)          (XfpmXfconf *conf);
+    
 } XfpmXfconfClass;
 
-GType        		  xfpm_xfconf_get_type        (void) G_GNUC_CONST;
-XfpmXfconf       	 *xfpm_xfconf_new             (void);
+GType        		  xfpm_xfconf_get_type           	(void) G_GNUC_CONST;
+XfpmXfconf       	 *xfpm_xfconf_new                 	(void);
 
+gboolean                  xfpm_xfconf_get_property_bool 	(XfpmXfconf *conf,
+							         const gchar *property) G_GNUC_PURE;
+								 
+guint8                    xfpm_xfconf_get_property_enum         (XfpmXfconf *conf,
+								 const gchar *property) G_GNUC_PURE;
+								 
+gint                      xfpm_xfconf_get_property_int          (XfpmXfconf *conf,
+								 const gchar *property) G_GNUC_PURE;
 G_END_DECLS
 
 #endif /* __XFPM_XFCONF_H */

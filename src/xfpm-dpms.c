@@ -56,8 +56,6 @@
 
 #ifdef HAVE_DPMS
 
-#define CHECK_DPMS_TIMEOUT 120
-
 /* Init */
 static void xfpm_dpms_class_init (XfpmDpmsClass *klass);
 static void xfpm_dpms_init       (XfpmDpms *xfpm_dpms);
@@ -73,17 +71,8 @@ struct XfpmDpmsPrivate
     XfpmInhibit   *inhibit;
     
     gboolean       dpms_capable;
-    gboolean       dpms_enabled;
-    
     gboolean       inhibited;
-    
-    guint16        sleep_on_battery;
-    guint16        off_on_battery;
-    guint16        sleep_on_ac;
-    guint16        off_on_ac;
-    
     gboolean       on_battery;
-    guint8         sleep_dpms_mode; /*0=sleep 1=suspend*/
 };
 
 G_DEFINE_TYPE(XfpmDpms, xfpm_dpms, G_TYPE_OBJECT)
@@ -91,7 +80,7 @@ G_DEFINE_TYPE(XfpmDpms, xfpm_dpms, G_TYPE_OBJECT)
 static void
 xfpm_dpms_set_timeouts (XfpmDpms *dpms, guint16 standby, guint16 suspend, guint off)
 {
-    CARD16 x_standby = 0 ,x_suspend = 0,x_off = 0;
+    CARD16 x_standby = 0 , x_suspend = 0, x_off = 0;
     
     DPMSGetTimeouts (GDK_DISPLAY(), &x_standby, &x_suspend, &x_off);
     
@@ -102,199 +91,125 @@ xfpm_dpms_set_timeouts (XfpmDpms *dpms, guint16 standby, guint16 suspend, guint 
 					suspend,
 					off );
     }
+}
+
+/*
+ * Disable DPMS
+ */
+static void
+xfpm_dpms_disable (XfpmDpms *dpms)
+{
+    BOOL state;
+    CARD16 power_level;
     
+    if (!DPMSInfo (GDK_DISPLAY(), &power_level, &state) )
+	g_warning ("Cannot get DPMSInfo");
+	
+    if ( state )
+	DPMSDisable (GDK_DISPLAY());
+}
+
+/*
+ * Enable DPMS
+ */
+static void
+xfpm_dpms_enable (XfpmDpms *dpms)
+{
+    BOOL state;
+    CARD16 power_level;
+    
+    if (!DPMSInfo (GDK_DISPLAY(), &power_level, &state) )
+	g_warning ("Cannot get DPMSInfo");
+	
+    if ( !state )
+	DPMSEnable (GDK_DISPLAY());
 }
 
 static void
-xfpm_dpms_timeouts_on_battery (XfpmDpms *dpms)
+xfpm_dpms_get_enabled (XfpmDpms *dpms, gboolean *dpms_enabled)
 {
-    if ( dpms->priv->sleep_dpms_mode == 0 )
-    {
-	xfpm_dpms_set_timeouts      (dpms, 
-				     dpms->priv->sleep_on_battery ,
-				     0,
-				     dpms->priv->off_on_battery );
-    }
-    else 
-    {
-	xfpm_dpms_set_timeouts 	    (dpms, 
-				     0,
-				     dpms->priv->sleep_on_battery ,
-				     dpms->priv->off_on_battery );
-    }
+    *dpms_enabled = xfpm_xfconf_get_property_bool (dpms->priv->conf, DPMS_ENABLED_CFG);
 }
 
 static void
-xfpm_dpms_timeouts_on_adapter (XfpmDpms *dpms)
+xfpm_dpms_get_sleep_mode (XfpmDpms *dpms, gboolean *sleep_mode)
 {
-    if ( dpms->priv->sleep_dpms_mode == 0 )
+    *sleep_mode = xfpm_xfconf_get_property_bool (dpms->priv->conf, DPMS_SLEEP_MODE);
+}
+
+static void
+xfpm_dpms_get_configuration_timeouts (XfpmDpms *dpms, guint16 *sleep, guint16 *off )
+{
+    *sleep   = xfpm_xfconf_get_property_int  (dpms->priv->conf,
+					      dpms->priv->on_battery ? ON_BATT_DPMS_SLEEP :
+					      ON_AC_DPMS_SLEEP);
+					      
+    *off     = xfpm_xfconf_get_property_int  (dpms->priv->conf,
+					      dpms->priv->on_battery ? ON_BATT_DPMS_OFF :
+					      ON_AC_DPMS_OFF);
+}
+
+static void
+xfpm_dpms_refresh (XfpmDpms *dpms)
+{
+    gboolean enabled;
+    guint16 off_timeout;
+    guint16 sleep_timeout;
+    gboolean sleep_mode;
+    
+    if ( dpms->priv->inhibited )
+    {
+	xfpm_dpms_disable (dpms);
+	return;
+    }
+    
+    xfpm_dpms_get_enabled (dpms, &enabled);
+    
+    if ( !enabled )
+    {
+	xfpm_dpms_disable (dpms);
+	return;
+    }
+        
+    xfpm_dpms_enable (dpms);
+    xfpm_dpms_get_configuration_timeouts (dpms, &sleep_timeout, &off_timeout);
+    xfpm_dpms_get_sleep_mode (dpms, &sleep_mode);
+    
+    if (sleep_mode == TRUE )
     {
 	xfpm_dpms_set_timeouts	   (dpms, 
-				    dpms->priv->sleep_on_ac ,
+				    sleep_timeout,
 				    0,
-				    dpms->priv->off_on_ac );
+				    off_timeout);
     }
     else
     {
 	xfpm_dpms_set_timeouts     (dpms, 
 				    0,
-				    dpms->priv->sleep_on_ac ,
-				    dpms->priv->off_on_ac );
+				    sleep_timeout,
+				    off_timeout );
     }
-}
-
-static gboolean
-xfpm_dpms_enable_disable (XfpmDpms *dpms)
-{
-    BOOL on_off;
-    CARD16 state = 0;
-    
-    if ( !dpms->priv->dpms_capable )
-    	return FALSE;
-	
-    DPMSInfo (GDK_DISPLAY(), &state, &on_off);
-    
-    if ( dpms->priv->inhibited && on_off )
-    {
-	TRACE("Power manager inhibited, disabling DPMS");
-	DPMSDisable (GDK_DISPLAY());
-    }
-    else if ( !on_off && dpms->priv->dpms_enabled && !dpms->priv->inhibited )
-    {
-        TRACE("DPMS is disabled, enabling it: user settings");
-        DPMSEnable(GDK_DISPLAY());
-    } 
-    else if ( on_off && !dpms->priv->dpms_enabled && !dpms->priv->inhibited)
-    {
-        TRACE("DPMS is enabled, disabling it: user settings");
-        DPMSDisable(GDK_DISPLAY());
-    }
-    return TRUE;
 }
 
 static void
-xfpm_dpms_check (XfpmDpms *dpms)
+xfpm_dpms_settings_changed_cb (XfpmXfconf *conf, XfpmDpms *dpms)
 {
-    xfpm_dpms_enable_disable (dpms);
-    
-    if ( dpms->priv->inhibited  == TRUE || dpms->priv->dpms_enabled == FALSE )
-	return;
-    
-    if ( !dpms->priv->on_battery )
-    	xfpm_dpms_timeouts_on_adapter (dpms);
-    else 
-    	xfpm_dpms_timeouts_on_battery (dpms);
-}
-
-static void
-xfpm_dpms_value_changed_cb (XfconfChannel *channel, gchar *property,
-			    GValue *value, XfpmDpms *dpms)
-{
-    if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
-    	return;
-	
-    gboolean set = FALSE;
-    
-    if ( xfpm_strequal (property, DPMS_ENABLED_CFG) )
-    {
-	gboolean val = g_value_get_boolean (value);
-	dpms->priv->dpms_enabled = val;
-	set = TRUE;
-    }
-    else if ( xfpm_strequal (property, ON_AC_DPMS_SLEEP) )
-    {
-	guint val = g_value_get_uint (value);
-	dpms->priv->sleep_on_ac = MIN(3600, val * 60);
-	set = TRUE;
-    }
-    else if ( xfpm_strequal (property, ON_AC_DPMS_OFF) )
-    {
-	guint val = g_value_get_uint (value);
-	dpms->priv->off_on_ac = MIN(3600, val * 60);
-	set = TRUE;
-    }
-    else if ( xfpm_strequal (property, ON_BATT_DPMS_SLEEP) )
-    {
-	guint val = g_value_get_uint (value);
-	dpms->priv->sleep_on_battery = MIN(3600, val * 60);
-	set = TRUE;
-    }
-    else if ( xfpm_strequal (property, ON_BATT_DPMS_OFF) )
-    {
-	guint val = g_value_get_uint (value);
-	dpms->priv->off_on_battery = MIN (3600, val * 60);
-	set = TRUE;
-    }
-    else if ( xfpm_strequal (property, DPMS_SLEEP_MODE) )
-    {
-	const gchar *str = g_value_get_string (value);
-	if ( xfpm_strequal (str, "sleep" ) )
-	{
-	    dpms->priv->sleep_dpms_mode = 0;
-	}
-	else if ( xfpm_strequal (str, "suspend") )
-	{
-	    dpms->priv->sleep_dpms_mode = 1;
-	}
-	else
-	{
-	    g_critical("Invalid value %s for property %s\n", str, DPMS_SLEEP_MODE);
-	    dpms->priv->sleep_dpms_mode = 0;
-	}
-	set = TRUE;
-    }
-    
-    if ( set )
-    	xfpm_dpms_check (dpms);
-}
-
-static void
-xfpm_dpms_load_configuration (XfpmDpms *dpms)
-{
-    dpms->priv->dpms_enabled =
-    	xfconf_channel_get_bool (dpms->priv->conf->channel, DPMS_ENABLED_CFG, TRUE);
-    
-    dpms->priv->sleep_on_battery = 
-    	MIN( xfconf_channel_get_uint( dpms->priv->conf->channel, ON_BATT_DPMS_SLEEP, 3) * 60, 3600);
-
-    dpms->priv->off_on_battery = 
-    	MIN(xfconf_channel_get_uint( dpms->priv->conf->channel, ON_BATT_DPMS_OFF, 5) * 60, 3600);
-	
-    dpms->priv->sleep_on_ac = 
-    	MIN(xfconf_channel_get_uint( dpms->priv->conf->channel, ON_AC_DPMS_SLEEP, 10) * 60, 3600);
-    
-    dpms->priv->off_on_ac = 
-    	MIN(xfconf_channel_get_uint( dpms->priv->conf->channel, ON_AC_DPMS_OFF, 15) * 60, 3600);
-	
-    gchar *str = xfconf_channel_get_string (dpms->priv->conf->channel, DPMS_SLEEP_MODE, "sleep");
-    
-    if ( xfpm_strequal (str, "sleep" ) )
-    {
-	dpms->priv->sleep_dpms_mode = 0;
-    }
-    else if ( xfpm_strequal (str, "suspend") )
-    {
-	dpms->priv->sleep_dpms_mode = 1;
-    }
-    else
-    {
-	g_critical("Invalid value %s for property %s\n", str, DPMS_SLEEP_MODE);
-	dpms->priv->sleep_dpms_mode = 0;
-    }
-    g_free (str);
+    xfpm_dpms_refresh (dpms);
 }
 
 static void
 xfpm_dpms_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmDpms *dpms)
 {
     dpms->priv->on_battery = !present;
+    xfpm_dpms_refresh (dpms);
 }
 
 static void
 xfpm_dpms_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmDpms *dpms)
 {
     dpms->priv->inhibited = inhibited;
-    xfpm_dpms_enable_disable (dpms);
+    
+    xfpm_dpms_refresh (dpms);
 }
 
 static void
@@ -307,22 +222,31 @@ xfpm_dpms_class_init(XfpmDpmsClass *klass)
     g_type_class_add_private(klass,sizeof(XfpmDpmsPrivate));
 }
 
+/*
+ * Check if the display is DPMS capabale if not do nothing.
+ */
 static void
 xfpm_dpms_init(XfpmDpms *dpms)
 {
     dpms->priv = XFPM_DPMS_GET_PRIVATE(dpms);
     
     dpms->priv->dpms_capable = DPMSCapable (GDK_DISPLAY());
-    dpms->priv->adapter = xfpm_adapter_new ();
-    dpms->priv->inhibit = xfpm_inhibit_new ();
     
-    g_signal_connect (dpms->priv->inhibit, "has-inhibit-changed",
-		      G_CALLBACK(xfpm_dpms_inhibit_changed_cb), dpms);
+    if ( dpms->priv->dpms_capable )
+    {
+	dpms->priv->adapter = xfpm_adapter_new ();
+	dpms->priv->inhibit = xfpm_inhibit_new ();
+	dpms->priv->conf    = xfpm_xfconf_new  ();
     
-    g_signal_connect (dpms->priv->adapter, "adapter-changed",
-		      G_CALLBACK(xfpm_dpms_adapter_changed_cb), dpms);
-		      
-    dpms->priv->conf = NULL;
+	g_signal_connect (dpms->priv->inhibit, "has-inhibit-changed",
+			  G_CALLBACK(xfpm_dpms_inhibit_changed_cb), dpms);
+    
+	g_signal_connect (dpms->priv->adapter, "adapter-changed",
+			  G_CALLBACK(xfpm_dpms_adapter_changed_cb), dpms);
+			  
+	g_signal_connect (dpms->priv->conf, "dpms-settings-changed",
+			  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
+    }
 }
 
 static void
@@ -337,6 +261,9 @@ xfpm_dpms_finalize(GObject *object)
 	
     if ( dpms->priv->adapter )
 	g_object_unref (dpms->priv->adapter);
+	
+    if ( dpms->priv->inhibit )
+	g_object_unref ( dpms->priv->inhibit);
 
     G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }
@@ -346,39 +273,17 @@ xfpm_dpms_new (void)
 {
     XfpmDpms *dpms = NULL;
     dpms = g_object_new (XFPM_TYPE_DPMS, NULL);
-    
-    if ( !dpms->priv->dpms_capable )
-    {
-    	g_warning ("Display dpms incapable\n");
-    	goto out;
-    }
-
-    dpms->priv->conf = xfpm_xfconf_new ();
-    xfpm_dpms_load_configuration (dpms);
-    
-    g_signal_connect (dpms->priv->conf->channel, "property-changed",
-		      G_CALLBACK(xfpm_dpms_value_changed_cb), dpms);
-		      
-    g_timeout_add_seconds ( CHECK_DPMS_TIMEOUT,
-    			    (GSourceFunc) xfpm_dpms_enable_disable, dpms);
-out:
     return dpms;
 }
 
-void xfpm_dpms_set_on_battery  (XfpmDpms *dpms, gboolean on_battery)
-{
-    g_return_if_fail (XFPM_IS_DPMS(dpms));
-    
-    dpms->priv->on_battery = on_battery;
-    
-    xfpm_dpms_check (dpms);
-}
-
+/*
+ * Get if the display is DPMS capable. if not the dpms
+ * object is freed by xfpm-engine
+ */
 gboolean xfpm_dpms_capable (XfpmDpms *dpms)
 {
     g_return_val_if_fail (XFPM_IS_DPMS(dpms), FALSE);
     
     return dpms->priv->dpms_capable;
 }
-
 #endif /* HAVE_DPMS */

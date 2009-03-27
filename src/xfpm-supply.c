@@ -63,9 +63,6 @@ struct XfpmSupplyPrivate
     GHashTable    *hash;
     
     gboolean       adapter_present;
-    
-    XfpmShutdownRequest critical_action;
-    
     guint8         power_management;
 };
 
@@ -248,10 +245,13 @@ xfpm_supply_get_message_from_battery_state (XfpmBatteryState state, gboolean ada
 static void
 xfpm_supply_process_critical_action (XfpmSupply *supply)
 {
-    //FIXME: shouldn't happen
-    g_return_if_fail (supply->priv->critical_action != XFPM_DO_SUSPEND );
-    
-    g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, supply->priv->critical_action);
+     XfpmShutdownRequest critical_action = 
+	xfpm_xfconf_get_property_enum (supply->priv->conf, CRITICAL_BATT_ACTION_CFG);
+
+    if ( G_UNLIKELY (critical_action == XFPM_DO_SUSPEND ) )
+	return;
+	
+    g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, critical_action);
 }
 
 static void
@@ -307,10 +307,13 @@ xfpm_supply_show_critical_action (XfpmSupply *supply, XfpmBattery *battery)
 static void
 xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
 {
+    XfpmShutdownRequest critical_action = 
+	xfpm_xfconf_get_property_enum (supply->priv->conf, CRITICAL_BATT_ACTION_CFG);
+    
     if ( xfpm_supply_on_low_power (supply) )
     {
 	TRACE ("System is running on low power");
-	if ( supply->priv->critical_action == XFPM_DO_NOTHING )
+	if ( critical_action == XFPM_DO_NOTHING )
 	{
 	    xfpm_supply_show_critical_action (supply, battery);
 	}
@@ -583,49 +586,6 @@ xfpm_supply_monitor_start (XfpmSupply *supply)
 }
 
 static void
-xfpm_supply_property_changed_cb (XfconfChannel *channel, gchar *property, GValue *value, XfpmSupply *supply)
-{
-    if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
-    	return;
-	
-    if ( xfpm_strequal (property, CRITICAL_BATT_ACTION_CFG) )
-    {
-	const gchar *str = g_value_get_string (value);
-	gint val = xfpm_shutdown_string_to_int (str);
-	if ( val == -1 || val == 3 || val == 1)
-	{
-	    g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
-	    supply->priv->critical_action = XFPM_DO_NOTHING;
-	}
-	else
-	    supply->priv->critical_action = val;
-    }
-    
-}
-
-static void
-xfpm_supply_load_configuration (XfpmSupply *supply)
-{
-    //FIXME: Check if the action specified we can actually do it
-    gchar *str;
-    gint val;
-    
-    str = xfconf_channel_get_string (supply->priv->conf->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
-    val = xfpm_shutdown_string_to_int (str);
-    
-    if ( val == -1 || val > 3 || val == 1)
-    {
-	g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
-	supply->priv->critical_action = XFPM_DO_NOTHING;
-	xfconf_channel_set_string ( supply->priv->conf->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
-    }
-    else supply->priv->critical_action = val;
-    
-    g_free (str);
-    
-}
-
-static void
 xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupply *supply)
 {
     supply->priv->adapter_present = present;
@@ -650,14 +610,9 @@ void xfpm_supply_monitor (XfpmSupply *supply)
     supply->priv->adapter = xfpm_adapter_new ();
     supply->priv->adapter_present = xfpm_adapter_get_present (supply->priv->adapter);
     
-    xfpm_supply_load_configuration (supply);
-    
     g_signal_connect (supply->priv->adapter, "adapter-changed",
 		      G_CALLBACK(xfpm_supply_adapter_changed_cb), supply);
       
-    g_signal_connect (supply->priv->conf->channel, "property-changed", 
-		      G_CALLBACK(xfpm_supply_property_changed_cb), supply);
-
     xfpm_supply_monitor_start (supply);
     
     g_signal_connect(supply->priv->power, "battery-added",

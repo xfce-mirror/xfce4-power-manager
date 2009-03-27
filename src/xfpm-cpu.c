@@ -62,8 +62,6 @@ struct XfpmCpuPrivate
     HalIface      *iface;
     
     gboolean 	   on_battery;
-    gboolean 	   power_save;
-    
     guint8         cpu_governors;
 };
 
@@ -73,6 +71,7 @@ static void
 xfpm_cpu_set_governor (XfpmCpu *cpu, const gchar *governor)
 {
     GError *error = NULL;
+    TRACE("Settings cpu governor to %s", governor);
     
     if (! hal_iface_set_cpu_governor(cpu->priv->iface, governor, &error))
     {
@@ -93,79 +92,45 @@ _governor_name_to_enum (const gchar *governor)
     return CPU_UNKNOWN;
 }
 
-static void
-xfpm_cpu_update_governor (XfpmCpu *cpu)
+static XfpmCpuGovernor
+xfpm_cpu_get_current_governor (XfpmCpu *cpu)
 {
-    GError *error = NULL;
-    gboolean cpu_freq_iface;
+    gchar *current_governor = NULL;
+    XfpmCpuGovernor governor_enum;
     
-    g_object_get (G_OBJECT(cpu->priv->iface), 
-		  "cpu-freq-iface", &cpu_freq_iface,
-		  NULL);
-		  
-    if ( !cpu_freq_iface)
-	return;
-    
-    gchar *current_governor = hal_iface_get_cpu_current_governor (cpu->priv->iface, &error);
-    
-    if ( error )
-    {
-	g_warning ("Get cpu governor failed: %s.", error->message);
-	g_error_free (error);
-	return;
-    }
+    current_governor = hal_iface_get_cpu_current_governor (cpu->priv->iface, NULL);
     
     if ( !current_governor )
-    	return;
-
-    XfpmCpuGovernor current = _governor_name_to_enum (current_governor);
-
-    if ( !cpu->priv->power_save || ( !cpu->priv->on_battery && cpu->priv->power_save) )
     {
-	if ( cpu->priv->cpu_governors & CPU_ONDEMAND )
-	    xfpm_cpu_set_governor (cpu, "ondemand");
-	else if ( cpu->priv->cpu_governors & CPU_PERFORMANCE )
-	    xfpm_cpu_set_governor (cpu, "performance");
-	else
-	    g_critical ("No conveniant cpu governor found\n");
-	return;
-    }
-
-    if ( cpu->priv->on_battery && cpu->priv->power_save )
-    {
-    	if ( current != CPU_POWERSAVE )
-	{
-	    TRACE ("Settings cpu governor to powersave");
-	    xfpm_cpu_set_governor (cpu, "powersave");
-	}
-    }
-    g_free (current_governor);
-}
-
-static gboolean
-xfpm_cpu_get_available_governors (XfpmCpu *cpu)
-{
-    GError *error = NULL;
-    gchar **governors =
-    	hal_iface_get_cpu_governors (cpu->priv->iface, &error);
-	
-    if ( error )
-    {
-	g_critical ("Error getting available cpu governors");
-	return FALSE;
-    }
-	
-    if ( !governors )
-    {
-    	g_critical ("Unable to get CPU governors\n");
-	return FALSE;
+	g_warning ("Unable to get current governor");
+	return CPU_UNKNOWN;
     }
     
-    int i =0 ;
+    governor_enum = _governor_name_to_enum (current_governor);
+    
+    g_free (current_governor);
+    return governor_enum;
+}
+
+/*
+ * Get the available CPU governors on the system
+ */
+static void
+xfpm_cpu_get_available_governors (XfpmCpu *cpu)
+{
+    int i;
+    gchar **governors = NULL;
+    governors = hal_iface_get_cpu_governors (cpu->priv->iface, NULL);
+	
+    if ( !governors || !governors[0])
+    {
+    	g_critical ("Unable to get CPU governors\n");
+	return;
+    }
+    
     for ( i = 0; governors[i]; i++)
     {
     	TRACE("found CPU governor %s", governors[i]);
-	
 	if (xfpm_strequal(governors[i], "powersave") )
 	    cpu->priv->cpu_governors |= CPU_POWERSAVE;
 	else if ( xfpm_strequal(governors[i], "ondemand") )
@@ -173,38 +138,13 @@ xfpm_cpu_get_available_governors (XfpmCpu *cpu)
 	else if ( xfpm_strequal(governors[i], "performance") )
 	    cpu->priv->cpu_governors |= CPU_PERFORMANCE;
     }
-
     hal_iface_free_string_array (governors);
-    
-    return TRUE;
 }
 
-static void
-xfpm_cpu_load_configuration (XfpmCpu *cpu)
-{
-    cpu->priv->power_save =
-    	xfconf_channel_get_bool (cpu->priv->conf->channel, POWER_SAVE_ON_BATTERY, TRUE);
-}
-
-static void
-xfpm_cpu_property_changed_cb (XfconfChannel *channel, gchar *property, GValue *value, XfpmCpu *cpu)
-{
-    if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
-        return;
-	
-    if ( xfpm_strequal(property, POWER_SAVE_ON_BATTERY) )
-    {
-	gboolean val = g_value_get_boolean (value);
-	cpu->priv->power_save = val;
-	xfpm_cpu_update_governor(cpu);
-    }
-}
-
-static void
-xfpm_cpu_check (XfpmCpu *cpu)
+static gboolean
+xfpm_cpu_check_iface (XfpmCpu *cpu)
 {
     gboolean caller_privilege, cpu_freq_iface;
-    
     g_object_get (G_OBJECT(cpu->priv->iface), 
 		  "caller-privilege", &caller_privilege,
 		  "cpu-freq-iface", &cpu_freq_iface,
@@ -213,29 +153,66 @@ xfpm_cpu_check (XfpmCpu *cpu)
     if ( !caller_privilege )
     {
 	g_warning ("Using CPU FREQ interface permission denied");
-	goto out;
+	return FALSE;
     }
     
     if (!cpu_freq_iface)
     {
 	g_warning ("CPU FREQ interface cannot be used");
-	goto out;
+	return FALSE;
     }
     
-    if ( !xfpm_cpu_get_available_governors (cpu) )
+    xfpm_cpu_get_available_governors (cpu);
+    
+    if ( !cpu->priv->cpu_governors & CPU_POWERSAVE || 
+	 !cpu->priv->cpu_governors & CPU_ONDEMAND  ||
+	 !cpu->priv->cpu_governors & CPU_PERFORMANCE )
     {
-	g_critical ("Failed to handle cpu governors");
-	goto out;
+	g_warning ("No convenient cpu governors found on the system, cpu frequency control will be disabled");
+	return FALSE;
     }
-out:
-	;
+    return TRUE;
+}
+
+static void
+xfpm_cpu_set_power_save (XfpmCpu *cpu)
+{
+    if ( xfpm_cpu_get_current_governor (cpu) != CPU_POWERSAVE )
+	xfpm_cpu_set_governor (cpu, "powersave");
+}
+
+static void
+xfpm_cpu_set_performance_ondemand (XfpmCpu *cpu)
+{
+    if ( xfpm_cpu_get_current_governor (cpu) != CPU_ONDEMAND )
+	xfpm_cpu_set_governor (cpu, "ondemand");
+}
+
+static void
+xfpm_cpu_refresh (XfpmCpu *cpu)
+{
+    gboolean power_save = xfpm_xfconf_get_property_bool (cpu->priv->conf, POWER_SAVE_ON_BATTERY);
+    
+    if (!power_save)
+	return;
+	
+    if ( cpu->priv->on_battery )
+	xfpm_cpu_set_power_save (cpu);
+    else 
+	xfpm_cpu_set_performance_ondemand (cpu);
 }
 
 static void
 xfpm_cpu_adapter_changed_cb (XfpmAdapter *adapter, gboolean is_present, XfpmCpu *cpu)
 {
     cpu->priv->on_battery = !is_present;
-    xfpm_cpu_update_governor (cpu);
+    xfpm_cpu_refresh (cpu);
+}
+
+static void
+xfpm_cpu_power_save_settings_changed_cb (XfpmXfconf *conf, XfpmCpu *cpu)
+{
+    xfpm_cpu_refresh (cpu);
 }
 
 static void
@@ -252,23 +229,24 @@ static void
 xfpm_cpu_init(XfpmCpu *cpu)
 {
     cpu->priv = XFPM_CPU_GET_PRIVATE(cpu);
-    
     cpu->priv->cpu_governors = 0;
+    
     cpu->priv->iface         = hal_iface_new ();
-    cpu->priv->adapter       = xfpm_adapter_new ();
     
-    cpu->priv->conf = xfpm_xfconf_new ();
-    xfpm_cpu_load_configuration (cpu);
+    if ( xfpm_cpu_check_iface (cpu))
+    {
+	cpu->priv->adapter       = xfpm_adapter_new ();
+	cpu->priv->conf 	 = xfpm_xfconf_new ();
+	
+	g_signal_connect (cpu->priv->adapter, "adapter-changed",
+			  G_CALLBACK(xfpm_cpu_adapter_changed_cb), cpu);
+			  
+	g_signal_connect (cpu->priv->conf, "power-save-settings-changed",
+			  G_CALLBACK(xfpm_cpu_power_save_settings_changed_cb), cpu);
+	
+	cpu->priv->on_battery = !xfpm_adapter_get_present (cpu->priv->adapter);
+    }
     
-    g_signal_connect (cpu->priv->conf->channel, "property-changed",
-		      G_CALLBACK(xfpm_cpu_property_changed_cb), cpu);
-		      
-    g_signal_connect (cpu->priv->adapter, "adapter-changed",
-		      G_CALLBACK(xfpm_cpu_adapter_changed_cb), cpu);
-    
-    cpu->priv->on_battery = !xfpm_adapter_get_present (cpu->priv->adapter);
-		
-    xfpm_cpu_check (cpu);
 }
 
 static void
