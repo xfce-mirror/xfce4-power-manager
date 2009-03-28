@@ -480,9 +480,8 @@ gboolean xfpm_xfconf_get_property_bool (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->dpms_enabled;
 #endif /* HAVE_DPMS */
     
-#if GLIB_CHECK_VERSION (2, 16, 0)
     g_warn_if_reached ();
-#endif
+
     return FALSE;
 }
 
@@ -501,9 +500,8 @@ guint8 xfpm_xfconf_get_property_enum (XfpmXfconf *conf, const gchar *property)
     else if ( xfpm_strequal (property, SHOW_TRAY_ICON_CFG ) )
 	return conf->priv->show_icon;
     
-#if GLIB_CHECK_VERSION (2, 16, 0)
     g_warn_if_reached ();
-#endif
+
     return 0;
 }
 
@@ -528,8 +526,7 @@ gint xfpm_xfconf_get_property_int (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->critical_level;
 #endif /* HAVE_DPMS */
 
-#if GLIB_CHECK_VERSION (2, 16, 0)
     g_warn_if_reached ();
-#endif
+
     return 0;
 }

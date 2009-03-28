@@ -70,8 +70,8 @@ xfce4_power_manager_CFLAGS =			\
 
 xfce4_power_manager_LDADD   =			\
 	$(top_builddir)/libxfpm/libxfpmhal.la	\
+	$(top_builddir)/libxfpm/libxfpmhalpower.la\
 	$(top_builddir)/libxfpm/libxfpmcommon.la\
-	$(top_builddir)/libxfpm/libxfpmhal_iface.la\
 	$(GTK_LIBS)				\
 	$(GLIB_LIBS)				\
 	$(DBUS_LIBS)				\

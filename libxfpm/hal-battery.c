@@ -43,8 +43,6 @@
 #include "hal-manager.h"
 #include "hal-enum.h"
 
-#include "xfpm-string.h"
-
 /* Init */
 static void hal_battery_class_init (HalBatteryClass *klass);
 static void hal_battery_init       (HalBattery *device);
@@ -350,27 +348,27 @@ hal_battery_finalize(GObject *object)
 static HalDeviceType
 hal_battery_type_enum_from_string(const gchar *string)
 {
-    if ( xfpm_strequal (string, "primary") )
+    if ( !g_strcmp0 (string, "primary") )
     {
 	return HAL_DEVICE_TYPE_PRIMARY;
     }
-    else if ( xfpm_strequal (string, "ups") )
+    else if ( !g_strcmp0 (string, "ups") )
     {
 	return HAL_DEVICE_TYPE_UPS;
     }
-    else if ( xfpm_strequal (string, "mouse") )
+    else if ( !g_strcmp0 (string, "mouse") )
     {
 	return HAL_DEVICE_TYPE_MOUSE;
     }
-    else if ( xfpm_strequal (string, "keyboard") )
+    else if ( !g_strcmp0 (string, "keyboard") )
     {
 	return HAL_DEVICE_TYPE_KEYBOARD;
     }
-    else if ( xfpm_strequal (string, "camera") )
+    else if ( !g_strcmp0 (string, "camera") )
     {
 	return HAL_DEVICE_TYPE_CAMERA;
     }
-    else if ( xfpm_strequal (string, "keyboard_mouse") )
+    else if ( !g_strcmp0 (string, "keyboard_mouse") )
     {
 	return HAL_DEVICE_TYPE_KEYBOARD_MOUSE;
     }
@@ -455,19 +453,19 @@ hal_battery_refresh_all (HalBattery *battery)
 static const gchar *
 _translate_technology (const gchar *tech)
 {
-    if ( xfpm_strequal (tech, "lithium-ion") )
+    if ( !g_strcmp0 (tech, "lithium-ion") )
     {
 	return _("Lithium ion");
     }
-    else if ( xfpm_strequal (tech, "lead-acid") )
+    else if ( !g_strcmp0 (tech, "lead-acid") )
     {
 	return _("Lead acid");
     }
-    else if ( xfpm_strequal (tech, "lithium-polymer") )
+    else if ( !g_strcmp0 (tech, "lithium-polymer") )
     {
 	return _("Lithium polymer");
     }
-    else if ( xfpm_strequal (tech, "nickel-metal-hydride") )
+    else if ( !g_strcmp0 (tech, "nickel-metal-hydride") )
     {
 	return _("Nickel metal hydride");
     }
@@ -478,11 +476,11 @@ _translate_technology (const gchar *tech)
 static const gchar *
 _translate_unit (const gchar *unit)
 {
-    if ( xfpm_strequal (unit, "mWh") )
+    if ( !g_strcmp0 (unit, "mWh") )
     {
 	return _("mWh");
     }
-    else if ( xfpm_strequal (unit, "mAh") )
+    else if ( !g_strcmp0 (unit, "mAh") )
     {
 	return _("mAh");
     }
@@ -541,12 +539,12 @@ hal_battery_get_battery_info (HalBattery *battery)
 static void
 hal_battery_battery_changed_cb (HalBattery *battery, const gchar *key)
 {
-    if ( xfpm_strequal (key, "battery.present") ||
-    	 xfpm_strequal (key, "battery.rechargeable.is_charging") ||
-	 xfpm_strequal (key, "battery.rechargeable.is_discharging") ||
-	 xfpm_strequal (key, "battery.charge_level.current")    ||
-	 xfpm_strequal (key, "battery.remaining_time") ||
-	 xfpm_strequal (key, "battery.charge_level.percentage") )
+    if ( !g_strcmp0 (key, "battery.present") ||
+    	 !g_strcmp0 (key, "battery.rechargeable.is_charging") ||
+	 !g_strcmp0 (key, "battery.rechargeable.is_discharging") ||
+	 !g_strcmp0 (key, "battery.charge_level.current")    ||
+	 !g_strcmp0 (key, "battery.remaining_time") ||
+	 !g_strcmp0 (key, "battery.charge_level.percentage") )
     {
 	hal_battery_refresh_all (battery);
     	g_signal_emit (G_OBJECT (battery), signals[BATTERY_CHANGED], 0);

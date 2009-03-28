@@ -33,8 +33,6 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
-#include "xfpm-string.h"
-
 #include "hal-iface.h"
 
 /* Init */
@@ -102,7 +100,7 @@ hal_iface_check_interface (HalIface *iface, const gchar *interface)
     
     if ( dbus_error_is_set(&error) )
     {
-	if (!xfpm_strcmp(error.name,"org.freedesktop.DBus.Error.UnknownMethod"))
+	if ( !g_strcmp0 (error.name, "org.freedesktop.DBus.Error.UnknownMethod") )
         {
             dbus_error_free(&error);
 	    return TRUE;
@@ -307,7 +305,7 @@ gboolean hal_iface_shutdown (HalIface *iface, const gchar *shutdown, GError **ge
 	return FALSE;
     }
     
-    if ( xfpm_strequal("Suspend", shutdown ) )
+    if ( !g_strcmp0("Suspend", shutdown ) )
     {
 	gint seconds = 0;
     	dbus_message_append_args (message, DBUS_TYPE_INT32, &seconds, DBUS_TYPE_INVALID);

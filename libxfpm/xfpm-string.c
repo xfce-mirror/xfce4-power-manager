@@ -22,23 +22,13 @@
 #include <config.h>
 #endif
 
+#include <glib.h>
+
 #include "xfpm-string.h"
-
-gint xfpm_strcmp (const gchar *str1, const gchar *str2)
-{
-#if GLIB_CHECK_VERSION(2, 16, 0)
-    return g_strcmp0(str1, str2);
-#else
-    if (!str1) return -(str1 != str2);
-    if (!str2) return   str1 != str2;
-
-    return strcmp (str1, str2);
-#endif    
-}
 
 gboolean xfpm_strequal (const gchar *str1, const gchar *str2)
 {
-    if (xfpm_strcmp(str1, str2) == 0 ) return TRUE;
+    if ( g_strcmp0 (str1, str2) == 0 ) return TRUE;
     return FALSE;
 }
 

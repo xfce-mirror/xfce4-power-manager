@@ -96,7 +96,7 @@ hal_monitor_name_owner_changed_cb (DBusGProxy *proxy, const gchar *name,
 				   const gchar *prev, const gchar *new,
 				   HalMonitor *monitor)
 {
-    if ( !xfpm_strequal (name, "org.freedesktop.Hal") )
+    if ( g_strcmp0 (name, "org.freedesktop.Hal") != 0)
 	return;
 
     if ( strlen (prev) != 0)
