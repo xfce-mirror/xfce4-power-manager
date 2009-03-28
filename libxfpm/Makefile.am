@@ -8,8 +8,8 @@ libxfpmhal_la_SOURCES =			\
 	xfpm-string.h			\
 	hal-marshal.c			\
 	hal-marshal.h			\
-	hal-proxy.c			\
-	hal-proxy.h			\
+	hal-monitor.c			\
+	hal-monitor.h			\
 	hal-manager.c			\
 	hal-manager.h			\
 	hal-power.c			\

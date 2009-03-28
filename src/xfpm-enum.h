@@ -40,6 +40,14 @@ typedef enum
 
 typedef enum
 {
+    SHOW_ICON_ALWAYS,
+    SHOW_ICON_WHEN_BATTERY_PRESENT,
+    SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING
+    
+} XfpmShowIcon;
+
+typedef enum
+{
     LID_SWITCH   = (1<<0),
     SLEEP_SWITCH = (1<<1),
     POWER_SWITCH = (1<<2)

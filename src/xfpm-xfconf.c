@@ -35,6 +35,7 @@
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 #include "xfpm-enum-glib.h"
+#include "xfpm-enum.h"
 
 /* Init */
 static void xfpm_xfconf_class_init (XfpmXfconfClass *klass);

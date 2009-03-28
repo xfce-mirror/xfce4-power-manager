@@ -41,6 +41,7 @@
 #include "xfpm-string.h"
 #include "xfpm-marshal.h"
 #include "xfpm-enum-types.h"
+#include "xfpm-enum.h"
 #include "xfpm-battery-info.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"

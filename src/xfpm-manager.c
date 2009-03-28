@@ -35,13 +35,13 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
+#include "libxfpm/hal-monitor.h"
 #include "libxfpm/xfpm-string.h"
-#include "libxfpm/hal-proxy.h"
 #include "libxfpm/xfpm-dbus.h"
+#include "libxfpm/xfpm-popups.h"
 
 #include "xfpm-manager.h"
 #include "xfpm-engine.h"
-#include "xfpm-manager.h"
 
 /* Init */
 static void xfpm_manager_class_init (XfpmManagerClass *klass);
@@ -51,13 +51,16 @@ static void xfpm_manager_finalize   (GObject *object);
 static void xfpm_manager_dbus_class_init (XfpmManagerClass *klass);
 static void xfpm_manager_dbus_init	 (XfpmManager *manager);
 
+static gboolean xfpm_manager_quit (XfpmManager *manager);
+
 #define XFPM_MANAGER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_MANAGER, XfpmManagerPrivate))
 
 struct XfpmManagerPrivate
 {
     XfpmEngine 	    *engine;
-    HalProxy        *hproxy;
+    
+    HalMonitor      *monitor;
     
     DBusGConnection *session_bus;
 };
@@ -65,10 +68,22 @@ struct XfpmManagerPrivate
 G_DEFINE_TYPE(XfpmManager, xfpm_manager, G_TYPE_OBJECT)
 
 static void
-xfpm_manager_hal_disconnected_cb (HalProxy *hproxy, XfpmManager *manager)
+xfpm_manager_hal_connection_changed_cb (HalMonitor *monitor, gboolean connected, XfpmManager *manager)
 {
-    TRACE("hald disconnected ");
-    //g_object_unref (manager->priv->engine);
+    TRACE("connected = %s", xfpm_bool_to_string (connected));
+    
+    if ( connected )
+    {
+	if ( manager->priv->engine == NULL)
+	{
+	    manager->priv->engine = xfpm_engine_new ();
+	}
+	else
+	{
+	    xfpm_manager_quit (manager);
+	    g_spawn_command_line_async ("xfce4-power-manager", NULL);
+	}
+    }
 }
 
 static void
@@ -88,7 +103,7 @@ xfpm_manager_init(XfpmManager *manager)
 
     manager->priv->session_bus   = NULL;
     manager->priv->engine        = NULL;
-    manager->priv->hproxy        = NULL;
+    manager->priv->monitor       = NULL;
 }
 
 static void
@@ -104,11 +119,13 @@ xfpm_manager_finalize(GObject *object)
     if ( manager->priv->engine )
     	g_object_unref (manager->priv->engine);
 
+    g_object_unref (manager->priv->monitor);
+    
     G_OBJECT_CLASS(xfpm_manager_parent_class)->finalize(object);
 }
 
-static gboolean
-xfpm_manager_quit (XfpmManager *manager)
+static void
+xfpm_manager_release_names (XfpmManager *manager)
 {
     xfpm_dbus_release_name(dbus_g_connection_get_connection(manager->priv->session_bus),
 			   "org.xfce.PowerManager");
@@ -116,26 +133,27 @@ xfpm_manager_quit (XfpmManager *manager)
     xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 			    "org.freedesktop.PowerManagement");
 				  
+    xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
+			    "org.freedesktop.PowerManagement.Inhibit");
+			    
+    xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
+			    "org.freedesktop.PowerManagement.Backlight");
+    
+}
+
+static gboolean
+xfpm_manager_quit (XfpmManager *manager)
+{
+    xfpm_manager_release_names (manager);
+    
     g_object_unref(G_OBJECT(manager));
+    
     gtk_main_quit ();
     return TRUE;
 }
 
-XfpmManager *
-xfpm_manager_new(DBusGConnection *bus)
-{
-    XfpmManager *manager = NULL;
-    manager = g_object_new(XFPM_TYPE_MANAGER,NULL);
-
-    manager->priv->session_bus = bus;
-    
-    xfpm_manager_dbus_class_init(XFPM_MANAGER_GET_CLASS(manager));
-    xfpm_manager_dbus_init(manager);
-    
-    return manager;
-}
-
-void xfpm_manager_start (XfpmManager *manager)
+static void
+xfpm_manager_reserve_names (XfpmManager *manager)
 {
     if ( !xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 				  "org.xfce.PowerManager") ) 
@@ -163,15 +181,44 @@ void xfpm_manager_start (XfpmManager *manager)
     
 	g_critical ("Unable to reserve bus name: Backlight\n");
     }
+}
+
+XfpmManager *
+xfpm_manager_new (DBusGConnection *bus)
+{
+    XfpmManager *manager = NULL;
+    manager = g_object_new(XFPM_TYPE_MANAGER,NULL);
+
+    manager->priv->session_bus = bus;
     
-    manager->priv->hproxy = hal_proxy_new ();
+    xfpm_manager_dbus_class_init (XFPM_MANAGER_GET_CLASS(manager));
+    xfpm_manager_dbus_init (manager);
     
-    g_signal_connect (manager->priv->hproxy, "hal-disconnected",
-		      G_CALLBACK(xfpm_manager_hal_disconnected_cb), manager);
+    return manager;
+}
+
+void xfpm_manager_start (XfpmManager *manager)
+{
+    gboolean hal_running;
     
+    xfpm_manager_reserve_names (manager);
     
+    manager->priv->monitor = hal_monitor_new ();
+    
+    g_signal_connect (manager->priv->monitor, "connection-changed",
+		      G_CALLBACK(xfpm_manager_hal_connection_changed_cb), manager);
+		      
+    hal_running = hal_monitor_get_connected (manager->priv->monitor);
+    
+    if (!hal_running )
+    {
+	xfpm_error (_("Xfce power manager"), _("Hal daemon is not running"));
+	goto out;
+    }
     manager->priv->engine = xfpm_engine_new ();
     
+out:
+	;
 }
 
 /*
@@ -231,8 +278,10 @@ static gboolean xfpm_manager_dbus_restart     (XfpmManager *manager,
 					       GError **error)
 {
     TRACE("Restart message received");
-    g_object_unref (manager->priv->engine);
-    manager->priv->engine = xfpm_engine_new ();
+    
+    xfpm_manager_quit (manager);
+    
+    g_spawn_command_line_async ("xfce4-power-manager", NULL);
     
     return TRUE;
 }

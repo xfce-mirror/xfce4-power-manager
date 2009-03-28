@@ -70,12 +70,11 @@ G_DEFINE_TYPE(XfpmCpu, xfpm_cpu, G_TYPE_OBJECT)
 static void
 xfpm_cpu_set_governor (XfpmCpu *cpu, const gchar *governor)
 {
-    GError *error = NULL;
     TRACE("Settings cpu governor to %s", governor);
     
-    if (! hal_iface_set_cpu_governor(cpu->priv->iface, governor, &error))
+    if (! hal_iface_set_cpu_governor(cpu->priv->iface, governor, NULL))
     {
-    	g_critical ("Unable to set CPU governor to %s: %s\n", governor, error->message);
+    	g_critical ("Unable to set CPU governor to %s", governor);
     }
 }
 

@@ -42,6 +42,7 @@
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-xfconf.h"
+#include "xfpm-tray-icon.h"
 #include "xfpm-config.h"
 #include "xfpm-marshal.h"
 
@@ -58,6 +59,7 @@ struct XfpmSupplyPrivate
     XfpmNotify    *notify;
     XfpmAdapter   *adapter;
     XfpmXfconf    *conf;
+    XfpmTrayIcon  *tray;
     
     HalPower      *power;
     GHashTable    *hash;
@@ -102,12 +104,13 @@ xfpm_supply_init (XfpmSupply *supply)
 {
     supply->priv = XFPM_SUPPLY_GET_PRIVATE (supply);
   
-    supply->priv->power   = hal_power_new ();
     supply->priv->hash    = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
-    supply->priv->notify  = xfpm_notify_new ();
-    supply->priv->conf    = xfpm_xfconf_new ();
+     
+    supply->priv->power   = hal_power_new      ();
+    supply->priv->notify  = xfpm_notify_new    ();
+    supply->priv->conf    = xfpm_xfconf_new    ();
+    supply->priv->tray    = xfpm_tray_icon_new ();
 }
-
 
 static void
 xfpm_supply_finalize (GObject *object)
@@ -124,9 +127,26 @@ xfpm_supply_finalize (GObject *object)
     g_object_unref (supply->priv->conf);
 	
     g_object_unref (supply->priv->adapter);
+    
+    g_object_unref (supply->priv->tray);
 	
     G_OBJECT_CLASS(xfpm_supply_parent_class)->finalize(object);
 }
+/*
+static void
+xfpm_supply_show_tray_icon (XfpmSupply *supply)
+{
+    guint8 show_icon;
+    
+    show_icon = xfpm_xfconf_get_property_enum (supply->priv->conf, SHOW_TRAY_ICON_CFG);
+    
+    if ( show_icon == SHOW_ICON_ALWAYS && g_hash_table_size (supply->priv->hash) == 0 )
+    {
+	
+    }
+    else if ( sh
+}
+*/
 
 gboolean xfpm_supply_on_low_power (XfpmSupply *supply)
 {

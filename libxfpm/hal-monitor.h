@@ -18,37 +18,40 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __HAL_PROXY_H
-#define __HAL_PROXY_H
+#ifndef __HAL_MONITOR_H
+#define __HAL_MONITOR_H
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define HAL_TYPE_PROXY        (hal_proxy_get_type () )
-#define HAL_PROXY(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), HAL_TYPE_PROXY, HalProxy))
-#define HAL_IS_PROXY(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), HAL_TYPE_PROXY))
+#define HAL_TYPE_MONITOR        (hal_monitor_get_type () )
+#define HAL_MONITOR(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), HAL_TYPE_MONITOR, HalMonitor))
+#define HAL_IS_MONITOR(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), HAL_TYPE_MONITOR))
 
-typedef struct HalProxyPrivate HalProxyPrivate;
+typedef struct HalMonitorPrivate HalMonitorPrivate;
 
 typedef struct
 {
     GObject		  parent;
-    HalProxyPrivate	 *priv;
+    HalMonitorPrivate	 *priv;
 	
-} HalProxy;
+} HalMonitor;
 
 typedef struct
 {
     GObjectClass 	  parent_class;
     
-    void                  (*hal_disconnected)	    (HalProxy *proxy);
+    void                  (*connection_changed)	    (HalMonitor *monitor,
+						     gboolean connected);
     
-} HalProxyClass;
+} HalMonitorClass;
 
-GType        		  hal_proxy_get_type        (void) G_GNUC_CONST;
-HalProxy       		 *hal_proxy_new             (void);
+GType        		  hal_monitor_get_type        (void) G_GNUC_CONST;
+HalMonitor       	 *hal_monitor_new             (void);
+
+gboolean                  hal_monitor_get_connected   (HalMonitor *monitor) G_GNUC_PURE;
 
 G_END_DECLS
 
-#endif /* __HAL_PROXY_H */
+#endif /* __HAL_MONITOR_H */
