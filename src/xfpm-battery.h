@@ -50,12 +50,6 @@ typedef struct
     
     void	        (*battery_state_changed)	(XfpmBattery *battery,
     					            	 XfpmBatteryState state);
-							 
-    void                (*popup_battery_menu)		(XfpmBattery *battery,
-						         GtkStatusIcon *icon,
-							 guint button,
-							 guint activate_time,
-							 guint type);
        
 } XfpmBatteryClass;
 
@@ -69,8 +63,6 @@ XfpmBatteryState         xfpm_battery_get_state          (XfpmBattery *battery);
 GtkStatusIcon  		*xfpm_battery_get_status_icon    (XfpmBattery *battery);
 
 const gchar    		*xfpm_battery_get_icon_name      (XfpmBattery *battery);
-
-void            	 xfpm_battery_show_info          (XfpmBattery *battery);
 
 G_END_DECLS
 

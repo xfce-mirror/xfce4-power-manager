@@ -42,6 +42,8 @@ typedef struct
 typedef struct
 {
     GObjectClass            parent_class;
+    
+    void                    (*show_info)	   (XfpmTrayIcon *icon);
 	
 } XfpmTrayIconClass;
 

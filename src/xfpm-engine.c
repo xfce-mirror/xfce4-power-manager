@@ -134,6 +134,7 @@ xfpm_engine_do_hibernate (XfpmEngine * engine)
       g_warning ("%s", error->message);
       g_error_free (error);
     }
+    
   xfpm_send_message_to_network_manager ("wake");
   engine->priv->block_shutdown = FALSE;
   return FALSE;
@@ -181,12 +182,12 @@ xfpm_engine_shutdown_request (XfpmEngine * engine,
 	}
       else if (shutdown == XFPM_DO_HIBERNATE)
 	{
-	  g_timeout_add_seconds (3, (GSourceFunc) xfpm_engine_do_hibernate,
+	  g_timeout_add_seconds (4, (GSourceFunc) xfpm_engine_do_hibernate,
 				 engine);
 	}
       else if (shutdown == XFPM_DO_SUSPEND)
 	{
-	  g_timeout_add_seconds (3, (GSourceFunc) xfpm_engine_do_suspend,
+	  g_timeout_add_seconds (4, (GSourceFunc) xfpm_engine_do_suspend,
 				 engine);
 	}
 
@@ -412,8 +413,7 @@ xfpm_engine_finalize (GObject * object)
 
   engine = XFPM_ENGINE (object);
 
-  if (engine->priv->conf)
-    g_object_unref (engine->priv->conf);
+  g_object_unref (engine->priv->conf);
 
   if (engine->priv->supply)
     g_object_unref (engine->priv->supply);

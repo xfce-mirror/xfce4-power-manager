@@ -92,6 +92,9 @@ static void
 xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 				 GValue *value, XfpmXfconf *conf)
 {
+    const gchar *str;
+    gint val;
+    
     if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
         return;
 
@@ -99,9 +102,10 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     
     if ( xfpm_strequal (property, SLEEP_SWITCH_CFG) )
     {
-        const gchar *str = g_value_get_string (value);
-	gint val = xfpm_shutdown_string_to_int (str);
-	if ( val == -1 || val == 3 )
+	str = g_value_get_string (value);
+ 	gint val = xfpm_shutdown_string_to_int (str); 
+
+	if ( G_UNLIKELY (val == -1 || val == 3) )
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
 	    conf->priv->sleep_button = XFPM_DO_NOTHING;
@@ -111,9 +115,9 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     }
     else if ( xfpm_strequal (property, LID_SWITCH_ON_AC_CFG) )
     {
-	const gchar *str = g_value_get_string (value);
-	gint val = xfpm_shutdown_string_to_int (str);
-	if ( val == -1 || val == 3 )
+	str = g_value_get_string (value);
+ 	gint val = xfpm_shutdown_string_to_int (str);
+	if ( G_UNLIKELY (val == -1 || val == 3) )
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_AC_CFG);
 	    conf->priv->lid_button_ac = XFPM_DO_NOTHING;
@@ -123,9 +127,9 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     }
     else if ( xfpm_strequal (property, LID_SWITCH_ON_BATTERY_CFG) )
     {
-	const gchar *str = g_value_get_string (value);
-	gint val = xfpm_shutdown_string_to_int (str);
-	if ( val == -1 || val == 3 )
+	str = g_value_get_string (value);
+ 	gint val = xfpm_shutdown_string_to_int (str); 
+	if ( G_UNLIKELY (val == -1 || val == 3) )
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_BATTERY_CFG);
 	    conf->priv->lid_button_battery = XFPM_DO_NOTHING;
@@ -140,37 +144,32 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 #ifdef HAVE_DPMS
     if ( xfpm_strequal (property, DPMS_ENABLED_CFG) )
     {
-	gboolean val = g_value_get_boolean (value);
-	conf->priv->dpms_enabled = val;
+	conf->priv->dpms_enabled = g_value_get_boolean (value);
 	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
     }
     else if ( xfpm_strequal (property, ON_AC_DPMS_SLEEP) )
     {
-	guint val = g_value_get_uint (value);
-	conf->priv->dpms_sleep_on_ac = MIN(3600, val * 60);
+	conf->priv->dpms_sleep_on_ac = MIN(3600, g_value_get_uint (value) * 60);
 	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
     }
     else if ( xfpm_strequal (property, ON_AC_DPMS_OFF) )
     {
-	guint val = g_value_get_uint (value);
-	conf->priv->dpms_off_on_ac = MIN(3600, val * 60);
+	conf->priv->dpms_off_on_ac = MIN(3600, g_value_get_uint (value) * 60);
 	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
     }
     else if ( xfpm_strequal (property, ON_BATT_DPMS_SLEEP) )
     {
-	guint val = g_value_get_uint (value);
-	conf->priv->dpms_sleep_on_battery = MIN(3600, val * 60);
+	conf->priv->dpms_sleep_on_battery = MIN(3600, g_value_get_uint (value) * 60);
 	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
     }
     else if ( xfpm_strequal (property, ON_BATT_DPMS_OFF) )
     {
-	guint val = g_value_get_uint (value);
-	conf->priv->dpms_off_on_battery = MIN (3600, val * 60);
+	conf->priv->dpms_off_on_battery = MIN (3600, g_value_get_uint (value) * 60);
 	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
     }
     else if ( xfpm_strequal (property, DPMS_SLEEP_MODE) )
     {
-	const gchar *str = g_value_get_string (value);
+	str = g_value_get_string (value);
 	if ( xfpm_strequal (str, "sleep" ) )
 	{
 	    conf->priv->sleep_dpms_mode = TRUE;
@@ -189,41 +188,36 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 #endif /* HAVE_DPMS */
     else if ( xfpm_strequal(property, POWER_SAVE_ON_BATTERY) )
     {
-	gboolean val = g_value_get_boolean (value);
-	conf->priv->power_save_on_battery = val;
+	conf->priv->power_save_on_battery = g_value_get_boolean (value);
 	g_signal_emit (G_OBJECT(conf), signals[POWER_SAVE_SETTINGS_CHANGED], 0);
     }
     else if ( xfpm_strequal (property, BRIGHTNESS_ON_AC ) )
     {
-	guint val = g_value_get_uint (value);
+	conf->priv->brightness_on_ac_timeout = g_value_get_uint (value);
 	
-	if ( val > 120 || val < 9)
+	if ( G_UNLIKELY (conf->priv->brightness_on_ac_timeout > 120 || conf->priv->brightness_on_ac_timeout < 9 ))
 	{
-	    g_warning ("Value %d for %s is out of range", val, BRIGHTNESS_ON_AC );
-	}
-	else
-	{
-	    conf->priv->brightness_on_ac_timeout = val;
+	    g_warning ("Value %d for %s is out of range", conf->priv->brightness_on_ac_timeout, BRIGHTNESS_ON_AC );
+	    conf->priv->brightness_on_ac_timeout = 9;
 	}
 	g_signal_emit (G_OBJECT(conf), signals[BRIGHTNESS_SETTINGS_CHANGED], 0);
     }
     else if ( xfpm_strequal (property, BRIGHTNESS_ON_BATTERY ) )
     {
-	guint val = g_value_get_uint (value);
+	conf->priv->brightness_on_battery_timeout = g_value_get_uint (value);
 	
-	if ( val > 120 || val < 9)
+	if ( G_UNLIKELY (conf->priv->brightness_on_battery_timeout > 120 || conf->priv->brightness_on_battery_timeout < 9 ))
 	{
-	    g_warning ("Value %d for %s is out of range", val, BRIGHTNESS_ON_BATTERY );
+	    g_warning ("Value %d for %s is out of range", conf->priv->brightness_on_battery_timeout, BRIGHTNESS_ON_BATTERY );
+	    conf->priv->brightness_on_battery_timeout = 9;
 	}
-	else
-	    conf->priv->brightness_on_battery_timeout = val;
 	g_signal_emit (G_OBJECT(conf), signals[POWER_SAVE_SETTINGS_CHANGED], 0);
     }
     else if ( xfpm_strequal (property, CRITICAL_BATT_ACTION_CFG) )
     {
-	const gchar *str = g_value_get_string (value);
-	gint val = xfpm_shutdown_string_to_int (str);
-	if ( val == -1 || val == 3 || val == 1)
+	str = g_value_get_string (value);
+	val = xfpm_shutdown_string_to_int (str);
+	if ( G_UNLIKELY (val == -1 || val == 3 || val == 1 ))
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
 	    conf->priv->critical_action = XFPM_DO_NOTHING;
@@ -233,14 +227,13 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     }
     else if ( xfpm_strequal (property, SHOW_TRAY_ICON_CFG) )
     {
-	guint val = g_value_get_uint (value);
-	conf->priv->show_icon = val;
+	conf->priv->show_icon = g_value_get_uint (value);
 	g_signal_emit (G_OBJECT(conf), signals[TRAY_ICON_SETTINGS_CHANGED], 0 );
     }
     else if ( xfpm_strequal( property, CRITICAL_POWER_LEVEL) )
     {
-	guint val = g_value_get_uint (value);
-	if ( val > 20 )
+	val = g_value_get_uint (value);
+	if ( G_UNLIKELY (val > 20) )
 	{
 	    g_warning ("Value %d for property %s is out of range \n", val, CRITICAL_POWER_LEVEL);
 	    conf->priv->critical_level = 10;
@@ -259,7 +252,7 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     str = xfconf_channel_get_string (conf->priv->channel, SLEEP_SWITCH_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
     
-    if ( val == -1 || val == 3)
+    if ( G_UNLIKELY (val == -1 || val == 3) )
     {
 	g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
 	conf->priv->sleep_button = XFPM_DO_NOTHING;
@@ -272,7 +265,7 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     str = xfconf_channel_get_string (conf->priv->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
 
-    if ( val == -1 || val == 3)
+    if ( G_UNLIKELY (val == -1 || val == 3) )
     {
 	g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_AC_CFG);
 	conf->priv->lid_button_ac = XFPM_DO_NOTHING;
@@ -285,7 +278,7 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     str = xfconf_channel_get_string (conf->priv->channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
     
-    if ( val == -1 || val == 3)
+    if ( G_UNLIKELY (val == -1 || val == 3) )
     {
 	g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_BATTERY_CFG);
 	conf->priv->lid_button_battery = XFPM_DO_NOTHING;
@@ -336,7 +329,7 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     conf->priv->brightness_on_ac_timeout =
 	xfconf_channel_get_uint (conf->priv->channel, BRIGHTNESS_ON_AC, 9);
 	
-    if ( conf->priv->brightness_on_ac_timeout > 120 || conf->priv->brightness_on_ac_timeout < 9)
+    if ( G_UNLIKELY (conf->priv->brightness_on_ac_timeout > 120 || conf->priv->brightness_on_ac_timeout < 9 ))
     {
 	g_warning ("Value %d for %s is out of range", conf->priv->brightness_on_ac_timeout, BRIGHTNESS_ON_AC );
 	conf->priv->brightness_on_ac_timeout = 9;
@@ -345,7 +338,7 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     conf->priv->brightness_on_battery_timeout =
 	xfconf_channel_get_uint (conf->priv->channel, BRIGHTNESS_ON_BATTERY, 10);
 	
-    if ( conf->priv->brightness_on_battery_timeout > 120 || conf->priv->brightness_on_battery_timeout < 9)
+    if ( G_UNLIKELY (conf->priv->brightness_on_battery_timeout > 120 || conf->priv->brightness_on_battery_timeout < 9) )
     {
 	g_warning ("Value %d for %s is out of range", conf->priv->brightness_on_battery_timeout, BRIGHTNESS_ON_BATTERY );
 	conf->priv->brightness_on_battery_timeout = 10;
@@ -358,7 +351,7 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     
     conf->priv->show_icon =
     	xfconf_channel_get_uint (conf->priv->channel, SHOW_TRAY_ICON_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
-    if ( conf->priv->show_icon < 0 || conf->priv->show_icon > 3 )
+    if ( G_UNLIKELY (conf->priv->show_icon < 0 || conf->priv->show_icon > 3) )
     {
 	g_warning ("Invalid value %d for property %s, using default\n", conf->priv->show_icon, SHOW_TRAY_ICON_CFG);
 	xfconf_channel_set_uint (conf->priv->channel, CRITICAL_BATT_ACTION_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
@@ -367,7 +360,7 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     conf->priv->critical_level =
 	xfconf_channel_get_uint (conf->priv->channel, CRITICAL_POWER_LEVEL, 0);
 	
-    if ( conf->priv->critical_level <0 || conf->priv->critical_level > 20 )
+    if ( G_UNLIKELY (conf->priv->critical_level <0 || conf->priv->critical_level > 20) )
     {
 	g_warning ("Value %d for property %s is out of range \n", conf->priv->critical_level, CRITICAL_POWER_LEVEL);
 	conf->priv->critical_level = 10;

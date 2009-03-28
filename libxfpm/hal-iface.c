@@ -75,112 +75,6 @@ enum
     
 G_DEFINE_TYPE(HalIface, hal_iface, G_TYPE_OBJECT)
 
-static void
-hal_iface_class_init(HalIfaceClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    
-    object_class->get_property = hal_iface_get_property;
-
-    g_object_class_install_property(object_class,
-				    PROP_CALLER_PRIVILEGE,
-				    g_param_spec_boolean("caller-privilege",
-							 NULL, NULL,
-							 FALSE,
-							 G_PARAM_READABLE));
-							 
-    g_object_class_install_property(object_class,
-				    PROP_CAN_SUSPEND,
-				    g_param_spec_boolean("can-suspend",
-							 NULL, NULL,
-							 FALSE,
-							 G_PARAM_READABLE));
-							 
-    g_object_class_install_property(object_class,
-				    PROP_CAN_HIBERNATE,
-				    g_param_spec_boolean("can-hibernate",
-							 NULL, NULL,
-							 FALSE,
-							 G_PARAM_READABLE));
-							 
-    g_object_class_install_property(object_class,
-				    PROP_CPU_FREQ_IFACE_CAN_BE_USED,
-				    g_param_spec_boolean("cpu-freq-iface",
-							 NULL, NULL,
-							 FALSE,
-							 G_PARAM_READABLE));
-
-    object_class->finalize = hal_iface_finalize;
-
-    g_type_class_add_private(klass,sizeof(HalIfacePrivate));
-}
-
-static void
-hal_iface_init(HalIface *iface)
-{
-    iface->priv = HAL_IFACE_GET_PRIVATE(iface);
-    
-    iface->priv->bus 			= NULL;
-    iface->priv->connected		= FALSE;
-    iface->priv->can_suspend    	= FALSE;
-    iface->priv->can_hibernate  	= FALSE;
-    iface->priv->caller_privilege       = FALSE;
-    iface->priv->cpu_freq_iface_can_be_used = FALSE;
-}
-
-static void hal_iface_get_property(GObject *object,
-				   guint prop_id,
-				   GValue *value,
-				   GParamSpec *pspec)
-{
-    HalIface *iface;
-    iface = HAL_IFACE(object);
-
-    switch(prop_id)
-    {
-	case PROP_CALLER_PRIVILEGE:
-	    g_value_set_boolean (value, iface->priv->caller_privilege );
-	    break;
-	case PROP_CAN_SUSPEND:
-	    g_value_set_boolean (value, iface->priv->can_suspend );
-	    break;
-	case PROP_CAN_HIBERNATE:
-	    g_value_set_boolean (value, iface->priv->can_hibernate);
-	    break;
-	case PROP_CPU_FREQ_IFACE_CAN_BE_USED:
-	    g_value_set_boolean (value, iface->priv->cpu_freq_iface_can_be_used);
-	    break;
-	default:
-	    G_OBJECT_WARN_INVALID_PROPERTY_ID(object,prop_id,pspec);
-	    break;
-    }
-}
-
-static void
-hal_iface_finalize(GObject *object)
-{
-    HalIface *iface;
-
-    iface = HAL_IFACE(object);
-
-    G_OBJECT_CLASS(hal_iface_parent_class)->finalize(object);
-}
-
-HalIface *
-hal_iface_new(void)
-{
-    if ( hal_iface_object != NULL )
-    {
-	g_object_ref (hal_iface_object);
-    }
-    else
-    {
-	hal_iface_object = g_object_new (HAL_TYPE_IFACE, NULL);
-	g_object_add_weak_pointer (hal_iface_object, &hal_iface_object);
-    }
-    
-    return HAL_IFACE (hal_iface_object);
-}
 
 static gboolean
 hal_iface_check_interface (HalIface *iface, const gchar *interface)
@@ -261,12 +155,60 @@ hal_iface_cpu_check (HalIface *iface)
 	hal_iface_check_interface (iface, "org.freedesktop.Hal.Device.CPUFreq");
 }
 
-gboolean
-hal_iface_connect (HalIface *iface)
+
+static void
+hal_iface_class_init(HalIfaceClass *klass)
 {
-    g_return_val_if_fail (HAL_IS_IFACE (iface), FALSE);
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
     
+    object_class->get_property = hal_iface_get_property;
+
+    g_object_class_install_property(object_class,
+				    PROP_CALLER_PRIVILEGE,
+				    g_param_spec_boolean("caller-privilege",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+							 
+    g_object_class_install_property(object_class,
+				    PROP_CAN_SUSPEND,
+				    g_param_spec_boolean("can-suspend",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+							 
+    g_object_class_install_property(object_class,
+				    PROP_CAN_HIBERNATE,
+				    g_param_spec_boolean("can-hibernate",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+							 
+    g_object_class_install_property(object_class,
+				    PROP_CPU_FREQ_IFACE_CAN_BE_USED,
+				    g_param_spec_boolean("cpu-freq-iface",
+							 NULL, NULL,
+							 FALSE,
+							 G_PARAM_READABLE));
+
+    object_class->finalize = hal_iface_finalize;
+
+    g_type_class_add_private(klass,sizeof(HalIfacePrivate));
+}
+
+static void
+hal_iface_init(HalIface *iface)
+{
     GError *error = NULL;
+    
+    iface->priv = HAL_IFACE_GET_PRIVATE(iface);
+    
+    iface->priv->bus 			= NULL;
+    iface->priv->connected		= FALSE;
+    iface->priv->can_suspend    	= FALSE;
+    iface->priv->can_hibernate  	= FALSE;
+    iface->priv->caller_privilege       = FALSE;
+    iface->priv->cpu_freq_iface_can_be_used = FALSE;
     
     iface->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
     
@@ -274,13 +216,74 @@ hal_iface_connect (HalIface *iface)
     {
 	g_critical ("Unable to get system bus %s.", error->message);
 	g_error_free (error);
-	return FALSE;
+	return;
     }
     
     iface->priv->connected = TRUE;
     hal_iface_power_management_check (iface);
     hal_iface_cpu_check (iface);
+}
+
+static void hal_iface_get_property(GObject *object,
+				   guint prop_id,
+				   GValue *value,
+				   GParamSpec *pspec)
+{
+    HalIface *iface;
+    iface = HAL_IFACE(object);
+
+    switch(prop_id)
+    {
+	case PROP_CALLER_PRIVILEGE:
+	    g_value_set_boolean (value, iface->priv->caller_privilege );
+	    break;
+	case PROP_CAN_SUSPEND:
+	    g_value_set_boolean (value, iface->priv->can_suspend );
+	    break;
+	case PROP_CAN_HIBERNATE:
+	    g_value_set_boolean (value, iface->priv->can_hibernate);
+	    break;
+	case PROP_CPU_FREQ_IFACE_CAN_BE_USED:
+	    g_value_set_boolean (value, iface->priv->cpu_freq_iface_can_be_used);
+	    break;
+	default:
+	    G_OBJECT_WARN_INVALID_PROPERTY_ID(object,prop_id,pspec);
+	    break;
+    }
+}
+
+static void
+hal_iface_finalize(GObject *object)
+{
+    HalIface *iface;
+
+    iface = HAL_IFACE(object);
+
+    G_OBJECT_CLASS(hal_iface_parent_class)->finalize(object);
+}
+
+HalIface *
+hal_iface_new(void)
+{
+    if ( hal_iface_object != NULL )
+    {
+	g_object_ref (hal_iface_object);
+    }
+    else
+    {
+	hal_iface_object = g_object_new (HAL_TYPE_IFACE, NULL);
+	g_object_add_weak_pointer (hal_iface_object, &hal_iface_object);
+    }
     
+    return HAL_IFACE (hal_iface_object);
+}
+
+gboolean
+hal_iface_connect (HalIface *iface)
+{
+    g_return_val_if_fail (HAL_IS_IFACE (iface), FALSE);
+    
+       
     return TRUE;
 }
 

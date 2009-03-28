@@ -34,6 +34,7 @@
 #include <libxfce4util/libxfce4util.h>
 
 #include "libxfpm/xfpm-string.h"
+#include "libxfpm/xfpm-notify.h"
 
 #include "xfpm-battery.h"
 #include "xfpm-tray-icon.h"
@@ -59,19 +60,18 @@ struct XfpmBatteryPrivate
     XfpmAdapter     *adapter;
     HalBattery      *device;
     XfpmXfconf      *conf;
+    XfpmNotify      *notify;
 
     HalDeviceType    type;
     gchar 	    *icon_prefix;
     
     gboolean         adapter_present;
     XfpmBatteryState state;
-   
 };
 
 enum
 {
     BATTERY_STATE_CHANGED,
-    POPUP_BATTERY_MENU,
     LAST_SIGNAL
 };
 
@@ -94,6 +94,28 @@ xfpm_battery_get_icon_index (HalDeviceType type, guint percent)
 	return (type == HAL_DEVICE_TYPE_PRIMARY || type == HAL_DEVICE_TYPE_UPS ? "080" : "060");
     }
     return "100";
+}
+
+static const gchar *
+xfpm_battery_get_message_from_battery_state (XfpmBatteryState state, gboolean adapter_present)
+{
+    switch (state)
+    {
+	case BATTERY_FULLY_CHARGED:
+	    return _("Your battery is fully charged");
+	    break;
+	case BATTERY_IS_CHARGING:
+	    return  _("Battery is charging");
+	    break;
+	case BATTERY_IS_DISCHARGING:
+	    return  adapter_present ? _("Your battery is discharging"): _("System is running on battery power");
+	    break;
+	case BATTERY_CHARGE_LOW:
+	    return adapter_present ? _("Your battery charge is low") : _("System is running on low power"); 
+	    break;
+	default:
+	    return NULL;
+    }
 }
 
 static void
@@ -178,9 +200,24 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
 static void
 xfpm_battery_refresh_state (XfpmBattery *battery, XfpmBatteryState state)
 {
+    const gchar *message;
+    
     if ( battery->priv->state != state)
     {
 	battery->priv->state = state;
+	message = xfpm_battery_get_message_from_battery_state (state, battery->priv->adapter_present );
+	if ( !message )
+	    goto signal;
+	xfpm_notify_show_notification (battery->priv->notify, 
+				   _("Xfce power manager"), 
+				   message, 
+				   xfpm_tray_icon_get_icon_name (battery->priv->icon),
+				   10000,
+				   battery->priv->type == HAL_DEVICE_TYPE_PRIMARY ? FALSE : TRUE,
+				   XFPM_NOTIFY_NORMAL,
+				   xfpm_tray_icon_get_tray_icon(battery->priv->icon));
+	
+signal:
 	g_signal_emit (G_OBJECT(battery), signals[BATTERY_STATE_CHANGED], 0, state);
 	TRACE("Emitting signal battery state changed");
     }
@@ -423,13 +460,6 @@ _get_icon_prefix_from_enum_type (HalDeviceType type)
 }
 
 static void
-xfpm_battery_popup_menu_cb (GtkStatusIcon *icon, guint button, guint activate_time, XfpmBattery *battery)
-{
-    g_signal_emit (G_OBJECT(battery), signals[POPUP_BATTERY_MENU], 0,
-    		   icon, button, activate_time, battery->priv->type);
-}
-
-static void
 xfpm_battery_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmBattery *battery)
 {
     battery->priv->adapter_present = present;
@@ -440,6 +470,20 @@ static void
 xfpm_battery_tray_icon_settings_changed (XfpmXfconf *conf, XfpmBattery *battery)
 {
     xfpm_battery_refresh_visible_icon (battery);
+}
+
+static void
+xfpm_battery_show_info (XfpmTrayIcon *tray, XfpmBattery *battery)
+{
+    gchar *icon = g_strdup_printf("%s%s",
+				  battery->priv->icon_prefix, 
+	    			  xfpm_battery_get_icon_index(battery->priv->type, 100));
+				      
+    GtkWidget *info = xfpm_battery_info_new (battery->priv->device, icon);
+    
+    g_free (icon);
+    
+    gtk_widget_show_all (info);
 }
 
 static void
@@ -456,19 +500,6 @@ xfpm_battery_class_init(XfpmBatteryClass *klass)
 		      g_cclosure_marshal_VOID__ENUM,
 		      G_TYPE_NONE, 1, XFPM_TYPE_BATTERY_STATE);
 
-    signals[POPUP_BATTERY_MENU] = 
-   	g_signal_new("popup-battery-menu",
-		      XFPM_TYPE_BATTERY,
-		      G_SIGNAL_RUN_LAST,
-		      G_STRUCT_OFFSET(XfpmBatteryClass, popup_battery_menu),
-		      NULL, NULL,
-		      _xfpm_marshal_VOID__POINTER_UINT_UINT_UINT,
-		      G_TYPE_NONE, 4, 
-		      GTK_TYPE_STATUS_ICON, 
-		      G_TYPE_UINT,
-		      G_TYPE_UINT,
-		      G_TYPE_UINT);
-		      
     object_class->finalize = xfpm_battery_finalize;
     
     g_type_class_add_private(klass,sizeof(XfpmBatteryPrivate));
@@ -482,11 +513,15 @@ xfpm_battery_init(XfpmBattery *battery)
     battery->priv->icon      = xfpm_tray_icon_new ();
     battery->priv->adapter   = xfpm_adapter_new ();
     battery->priv->conf      = xfpm_xfconf_new ();
+    battery->priv->notify    = xfpm_notify_new ();
     
     battery->priv->adapter_present = xfpm_adapter_get_present (battery->priv->adapter);
     
     g_signal_connect (battery->priv->adapter ,"adapter-changed",
-		      G_CALLBACK(xfpm_battery_adapter_changed_cb), battery);
+		      G_CALLBACK (xfpm_battery_adapter_changed_cb), battery);
+		      
+    g_signal_connect (battery->priv->icon, "show-information", 
+		      G_CALLBACK (xfpm_battery_show_info), battery);
 }
 
 static void
@@ -505,6 +540,8 @@ xfpm_battery_finalize(GObject *object)
     g_object_unref (battery->priv->adapter);
     
     g_object_unref (battery->priv->conf);
+    
+    g_object_unref (battery->priv->notify);
 
     G_OBJECT_CLASS(xfpm_battery_parent_class)->finalize(object);
 }
@@ -526,9 +563,6 @@ xfpm_battery_new(const HalBattery *device)
     
     g_signal_connect (G_OBJECT(battery->priv->device), "battery-changed",
 		      G_CALLBACK(xfpm_battery_device_changed_cb), battery);
-		      
-    g_signal_connect (G_OBJECT(xfpm_tray_icon_get_tray_icon(battery->priv->icon)), "popup-menu",
-		      G_CALLBACK(xfpm_battery_popup_menu_cb), battery);
 		      
     g_signal_connect (G_OBJECT(battery->priv->conf), "tray-icon-settings-changed",
 		      G_CALLBACK(xfpm_battery_tray_icon_settings_changed), battery);
@@ -565,19 +599,4 @@ const gchar *xfpm_battery_get_icon_name (XfpmBattery *battery)
     g_return_val_if_fail (XFPM_IS_BATTERY (battery), NULL);
     
     return xfpm_tray_icon_get_icon_name (battery->priv->icon);
-}
-    
-void xfpm_battery_show_info (XfpmBattery *battery)
-{
-    g_return_if_fail (XFPM_IS_BATTERY(battery));
-    
-    gchar *icon = g_strdup_printf("%s%s",
-				  battery->priv->icon_prefix, 
-	    			  xfpm_battery_get_icon_index(battery->priv->type, 100));
-				      
-    GtkWidget *info = xfpm_battery_info_new (battery->priv->device, icon);
-    
-    g_free (icon);
-    
-    gtk_widget_show_all (info);
 }
