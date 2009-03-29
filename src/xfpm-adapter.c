@@ -86,9 +86,8 @@ xfpm_adapter_device_changed_cb (HalDevice *device, const gchar *udi, const gchar
 }
 
 static void
-xfpm_adapter_set_device (XfpmAdapter *adapter)
+xfpm_adapter_set_device (XfpmAdapter *adapter, HalManager *manager)
 {
-    HalManager *manager;
     gchar **udi;
     
     manager = hal_manager_new ();
@@ -114,7 +113,7 @@ xfpm_adapter_set_device (XfpmAdapter *adapter)
 		      
     hal_device_watch (adapter->priv->device);
 out:
-    g_object_unref (manager);
+    ;
 }
 
 static void
@@ -139,8 +138,7 @@ xfpm_adapter_class_init(XfpmAdapterClass *klass)
 static void
 xfpm_adapter_init(XfpmAdapter *adapter)
 {
-    HalDevice *device;
-    gchar *form_factor = NULL;
+    HalManager *manager;
     
     adapter->priv = XFPM_ADAPTER_GET_PRIVATE(adapter);
     
@@ -148,15 +146,11 @@ xfpm_adapter_init(XfpmAdapter *adapter)
     adapter->priv->present  = TRUE;
     adapter->priv->hw_found = FALSE;
     
-    device = hal_device_new ();
-    hal_device_set_udi (device, "/org/freedesktop/Hal/devices/computer");
-    
-    form_factor = hal_device_get_property_string (device, "system.formfactor");
+    manager = hal_manager_new ();
         
-    TRACE("System formfactor=%s\n", form_factor);
-    if ( xfpm_strequal (form_factor, "laptop") )
+    if ( hal_manager_get_is_laptop (manager) )
     {
-	xfpm_adapter_set_device (adapter);
+	xfpm_adapter_set_device (adapter, manager);
 	TRACE("System is identified as a laptop");
     }
     else
@@ -164,9 +158,7 @@ xfpm_adapter_init(XfpmAdapter *adapter)
 	TRACE("System is not identified as a laptop");
     }
     
-    g_object_unref (device);
-    if ( form_factor )
-	g_free(form_factor);
+    g_object_unref (manager);
 }
 
 static void

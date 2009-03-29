@@ -129,6 +129,30 @@ set_sleep_changed_cb (GtkWidget *w, XfconfChannel *channel)
 }
 
 static void
+set_power_changed_cb (GtkWidget *w, XfconfChannel *channel)
+{
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint value = 0;
+    
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+	return;
+	
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+   
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       1,
+                       &value,
+                       -1);
+    
+    if (!xfconf_channel_set_string (channel, POWER_SWITCH_CFG, xfpm_int_to_shutdown_string(value) ) )
+    {
+	g_critical ("Cannot set value for property %s\n", POWER_SWITCH_CFG);
+    }
+}
+
+static void
 power_save_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 {
     gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
@@ -723,6 +747,53 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(dpms), val);
 #endif
+    /*
+     * Power button
+     */
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    GtkWidget *power = glade_xml_get_widget (xml, "power-combox");
+    if (!user_privilege )
+    {
+	gtk_widget_set_sensitive (power, FALSE);
+	gtk_widget_set_tooltip_text (power, _("Hibernate and suspend operations not permitted"));
+    }
+    
+    gtk_combo_box_set_model (GTK_COMBO_BOX(power), GTK_TREE_MODEL(list_store));
+
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
+    
+    if ( can_suspend )
+    {
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
+    }
+    
+    if ( can_hibernate )
+    {
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
+    }
+    
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, 2, -1);
+    
+    g_signal_connect (power, "changed",
+		      G_CALLBACK(set_power_changed_cb), channel);
+    
+    gchar *default_power_value = xfconf_channel_get_string (channel, POWER_SWITCH_CFG, "Nothing");
+    gint   power_val_int = xfpm_shutdown_string_to_int (default_power_value );
+    
+    if ( G_UNLIKELY (power_val_int == -1) ) 
+    {
+	g_warning ("Invalid value %s for property %s\n", default_power_value, POWER_SWITCH_CFG);
+	gtk_combo_box_set_active (GTK_COMBO_BOX(power), 0);
+    }
+    else
+	gtk_combo_box_set_active (GTK_COMBO_BOX(power), power_val_int);
+    
+    g_free (default_power_value);
+    
 
     /*
      * Sleep button 

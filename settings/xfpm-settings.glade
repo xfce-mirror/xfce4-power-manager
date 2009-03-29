@@ -67,7 +67,7 @@
                                           <widget class="GtkHBox" id="hbox13">
                                             <property name="visible">True</property>
                                             <child>
-                                              <widget class="GtkComboBox" id="sleep-combox">
+                                              <widget class="GtkComboBox" id="power-combox">
                                                 <property name="visible">True</property>
                                                 <property name="items" translatable="yes">Nothing</property>
                                               </widget>
@@ -124,7 +124,7 @@
                                             <child>
                                               <widget class="GtkLabel" id="label25">
                                                 <property name="visible">True</property>
-                                                <property name="label" translatable="yes">When sleep button is pressed:</property>
+                                                <property name="label" translatable="yes">When power button is pressed:</property>
                                               </widget>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -138,10 +138,44 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <placeholder/>
+                                          <widget class="GtkHBox" id="hbox3">
+                                            <property name="visible">True</property>
+                                            <child>
+                                              <widget class="GtkLabel" id="label3">
+                                                <property name="visible">True</property>
+                                                <property name="label" translatable="yes">When sleep button is pressed:</property>
+                                              </widget>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                          </widget>
+                                          <packing>
+                                            <property name="top_attach">2</property>
+                                            <property name="bottom_attach">3</property>
+                                          </packing>
                                         </child>
                                         <child>
-                                          <placeholder/>
+                                          <widget class="GtkHBox" id="hbox4">
+                                            <property name="visible">True</property>
+                                            <child>
+                                              <widget class="GtkComboBox" id="sleep-combox">
+                                                <property name="visible">True</property>
+                                                <property name="items" translatable="yes">Nothing</property>
+                                              </widget>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                          </widget>
+                                          <packing>
+                                            <property name="left_attach">1</property>
+                                            <property name="right_attach">2</property>
+                                            <property name="top_attach">2</property>
+                                            <property name="bottom_attach">3</property>
+                                          </packing>
                                         </child>
                                       </widget>
                                       <packing>

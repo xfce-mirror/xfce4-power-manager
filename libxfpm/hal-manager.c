@@ -30,6 +30,7 @@
 #include <glib.h>
 
 #include "hal-manager.h"
+#include "hal-device.h"
 
 /* Init */
 static void hal_manager_class_init (HalManagerClass *klass);
@@ -44,6 +45,7 @@ struct HalManagerPrivate
     DBusGConnection *bus;
     DBusGProxy      *proxy;
     gboolean 	     connected;
+    gboolean         is_laptop;
 };
 
 enum
@@ -113,6 +115,29 @@ out:
 }
 
 static void
+hal_manager_get_is_laptop_internal (HalManager *manager)
+{
+    HalDevice *device;
+    gchar *form_factor;
+    
+    device = hal_device_new ();
+    
+    hal_device_set_udi (device, "/org/freedesktop/Hal/devices/computer");
+
+    form_factor = hal_device_get_property_string (device, "system.formfactor");
+
+    if ( g_strcmp0 (form_factor, "laptop") == 0)
+	manager->priv->is_laptop = TRUE;
+    else
+	manager->priv->is_laptop = FALSE;
+    
+    if (form_factor)
+	g_free (form_factor);
+
+    g_object_unref (device);
+}
+
+static void
 hal_manager_class_init(HalManagerClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -137,7 +162,6 @@ hal_manager_class_init(HalManagerClass *klass)
     
     object_class->finalize = hal_manager_finalize;
 
-
     g_type_class_add_private (klass,sizeof(HalManagerPrivate));
 }
 
@@ -151,6 +175,7 @@ hal_manager_init (HalManager *manager)
     manager->priv->connected = FALSE;
     
     hal_manager_connect (manager);
+    hal_manager_get_is_laptop_internal (manager);
 }
 
 static void
@@ -205,6 +230,13 @@ gchar **hal_manager_find_device_by_capability (HalManager *manager, const gchar 
     }
     
     return udi;
+}
+
+gboolean hal_manager_get_is_laptop (HalManager *manager)
+{
+    g_return_val_if_fail (HAL_IS_MANAGER (manager), FALSE);
+    
+    return manager->priv->is_laptop;
 }
 
 void hal_manager_free_string_array (gchar **array)

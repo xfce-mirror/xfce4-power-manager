@@ -57,6 +57,7 @@ gboolean 	xfpm_send_message_to_network_manager  	(const gchar *message)
     
     dbus_g_proxy_call_no_reply (proxy, message, G_TYPE_INVALID);
     g_object_unref (G_OBJECT(proxy));
+    dbus_g_connection_unref (bus);
     
     return TRUE;
 }

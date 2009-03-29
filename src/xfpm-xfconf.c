@@ -51,6 +51,7 @@ struct XfpmXfconfPrivate
 {
     XfconfChannel 	*channel;
     
+    XfpmShutdownRequest  power_button;
     XfpmShutdownRequest  sleep_button;
     XfpmShutdownRequest  lid_button_ac;
     XfpmShutdownRequest  lid_button_battery;
@@ -104,9 +105,9 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     if ( xfpm_strequal (property, SLEEP_SWITCH_CFG) )
     {
 	str = g_value_get_string (value);
- 	gint val = xfpm_shutdown_string_to_int (str); 
+ 	val = xfpm_shutdown_string_to_int (str); 
 
-	if ( G_UNLIKELY (val == -1 || val == 3) )
+	if ( G_UNLIKELY (val == 3) )
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
 	    conf->priv->sleep_button = XFPM_DO_NOTHING;
@@ -114,10 +115,22 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 	else
 	    conf->priv->sleep_button = val;
     }
+    else if ( xfpm_strequal (property, POWER_SWITCH_CFG ) )
+    {
+	str = g_value_get_string (value);
+	val = xfpm_shutdown_string_to_int (str);
+	if ( G_UNLIKELY (val == -1) )
+	{
+	    g_warning ("Invalid value %s fpr property %s, using default\n", str, POWER_SWITCH_CFG);
+	    conf->priv->power_button = XFPM_DO_NOTHING;
+	}
+	else
+	    conf->priv->power_button = xfpm_shutdown_string_to_int (str);
+    }
     else if ( xfpm_strequal (property, LID_SWITCH_ON_AC_CFG) )
     {
 	str = g_value_get_string (value);
- 	gint val = xfpm_shutdown_string_to_int (str);
+ 	val = xfpm_shutdown_string_to_int (str);
 	if ( G_UNLIKELY (val == -1 || val == 3) )
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_AC_CFG);
@@ -129,7 +142,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     else if ( xfpm_strequal (property, LID_SWITCH_ON_BATTERY_CFG) )
     {
 	str = g_value_get_string (value);
- 	gint val = xfpm_shutdown_string_to_int (str); 
+ 	val = xfpm_shutdown_string_to_int (str); 
 	if ( G_UNLIKELY (val == -1 || val == 3) )
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_BATTERY_CFG);
@@ -260,6 +273,19 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
 	xfconf_channel_set_string (conf->priv->channel, SLEEP_SWITCH_CFG, "Nothing");
     }
     else conf->priv->sleep_button = val;
+    
+    g_free (str);
+    
+    str = xfconf_channel_get_string (conf->priv->channel, POWER_SWITCH_CFG, "Nothing");
+    val = xfpm_shutdown_string_to_int (str);
+    
+    if ( G_UNLIKELY (val == -1 ) )
+    {
+	g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
+	conf->priv->power_button = XFPM_DO_NOTHING;
+	xfconf_channel_set_string (conf->priv->channel, POWER_SWITCH_CFG, "Nothing");
+    }
+    else conf->priv->power_button = val;
     
     g_free (str);
     
@@ -499,6 +525,8 @@ guint8 xfpm_xfconf_get_property_enum (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->critical_action;
     else if ( xfpm_strequal (property, SHOW_TRAY_ICON_CFG ) )
 	return conf->priv->show_icon;
+    else if ( xfpm_strequal (property, POWER_SWITCH_CFG) )
+	return conf->priv->power_button;
     
     g_warn_if_reached ();
 

@@ -77,8 +77,8 @@ G_DEFINE_TYPE (XfpmInhibit, xfpm_inhibit, G_TYPE_OBJECT)
 static void
 xfpm_inhibit_screen_saver_inhibited_cb (XfpmScreenSaver *srv, gboolean is_inhibited, XfpmInhibit *inhibit)
 {
-    inhibit->priv->inhibited = is_inhibited;
-    g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, is_inhibited);
+   // inhibit->priv->inhibited = is_inhibited;
+    //g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, is_inhibited);
 }
 
 static void

@@ -162,11 +162,7 @@ xfpm_button_xf86_grab_keystring (XfpmButtonXf86 *button, guint keycode)
 
     gdk_flush ();
     gdk_error_trap_pop ();
-
-    TRACE("Grabbed modmask=%x, keycode=%li", modmask, (long int) keycode);
-    
     return TRUE;
-    
 }
 
 static gboolean
@@ -185,7 +181,17 @@ xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmXF86Butt
     	g_critical ("Failed to grab %i\n", keycode);
 	return FALSE;
     }
-	
+    
+#ifdef DEBUG
+    gchar *content;
+    GValue value = { 0, };
+    g_value_init (&value, XFPM_TYPE_XF86_BUTTON);
+    g_value_set_enum (&value, type);
+    content = g_strdup_value_contents (&value);
+    TRACE("Grabbed key=%s, keycode=%li", content, (long int) keycode);
+    g_free (content);
+#endif /* DEBUG */
+
     g_hash_table_insert (button->priv->hash, GINT_TO_POINTER(keycode), GINT_TO_POINTER(type));
     
     return TRUE;
@@ -202,10 +208,6 @@ xfpm_button_xf86_setup (XfpmButtonXf86 *button)
     xfpm_button_xf86_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP);
     xfpm_button_xf86_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN);
 
-/*    
-    xfpm_button_xf86_xf86_xevent_key (button, XF86XK_KbdBrightnessUp);
-    xfpm_button_xf86_xf86_xevent_key (button, XF86XK_KbdBrightnessDown);
-*/  
     gdk_window_add_filter (button->priv->window, 
 			   xfpm_button_xf86_filter_x_events, button);
 }

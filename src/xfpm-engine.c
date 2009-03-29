@@ -42,7 +42,7 @@
 #include <xfconf/xfconf.h>
 
 #include "libxfpm/hal-iface.h"
-#include "libxfpm/hal-device.h"
+#include "libxfpm/hal-manager.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
 #include "libxfpm/xfpm-notify.h"
@@ -106,7 +106,8 @@ struct XfpmEnginePrivate
 };
 
 G_DEFINE_TYPE (XfpmEngine, xfpm_engine, G_TYPE_OBJECT)
-     static gboolean xfpm_engine_do_suspend (XfpmEngine * engine)
+
+static gboolean xfpm_engine_do_suspend (XfpmEngine * engine)
 {
   GError *error = NULL;
 
@@ -209,19 +210,22 @@ static void
 xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 * button,
 				    XfpmXF86Button type, XfpmEngine * engine)
 {
-  TRACE ("Received button press event type %d", type);
-  XfpmShutdownRequest shutdown;
+    TRACE ("Received button press event type %d", type);
+    XfpmShutdownRequest shutdown;
   
-  shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf, SLEEP_SWITCH_CFG );
-
-  if (type == BUTTON_POWER_OFF || type == BUTTON_SLEEP)
-    {
-      if (engine->priv->block_shutdown)
+    if ( type != BUTTON_POWER_OFF && type != BUTTON_SLEEP )
 	return;
 
-      TRACE ("Accepting shutdown request");
-      xfpm_engine_shutdown_request (engine, shutdown, FALSE);
-    }
+    if (engine->priv->block_shutdown)
+	return;
+  
+    shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf, 
+					      type == BUTTON_POWER_OFF ? POWER_SWITCH_CFG :
+					      SLEEP_SWITCH_CFG );
+    g_print("---------------Configuration is %d\n", shutdown);
+    
+    TRACE ("Accepting shutdown request");
+    xfpm_engine_shutdown_request (engine, shutdown, FALSE);
 }
 
 static void
@@ -268,32 +272,18 @@ xfpm_engine_check_hal_iface (XfpmEngine * engine)
 static void
 xfpm_engine_load_all (XfpmEngine * engine)
 {
-  HalDevice *device;
-  gchar *form_factor = NULL;
+    HalManager *manager;
 
-  xfpm_engine_check_hal_iface (engine);
+    xfpm_engine_check_hal_iface (engine);
+    
+    manager = hal_manager_new ();
 
-  device = hal_device_new ();
+    if ( hal_manager_get_is_laptop (manager))
+	engine->priv->is_laptop = TRUE;
+    else
+	engine->priv->is_laptop = FALSE;
 
-  hal_device_set_udi (device, "/org/freedesktop/Hal/devices/computer");
-
-  form_factor = hal_device_get_property_string (device, "system.formfactor");
-
-  TRACE ("System formfactor=%s\n", form_factor);
-  if (xfpm_strequal (form_factor, "laptop"))
-    {
-      engine->priv->is_laptop = TRUE;
-      TRACE ("System is identified as a laptop");
-    }
-  else
-    {
-      engine->priv->is_laptop = FALSE;
-      TRACE ("System is not identified as a laptop");
-    }
-  if (form_factor)
-    g_free (form_factor);
-
-  g_object_unref (device);
+    g_object_unref (manager);
 
 #ifdef HAVE_DPMS
   engine->priv->dpms = xfpm_dpms_new ();

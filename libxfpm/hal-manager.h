@@ -54,6 +54,8 @@ HalManager       	       *hal_manager_new            		(void);
 
 gchar 			      **hal_manager_find_device_by_capability 	(HalManager *manager,
 									 const gchar *capability);
+
+gboolean                        hal_manager_get_is_laptop               (HalManager *manager) G_GNUC_PURE;
 						 
 void                            hal_manager_free_string_array           (gchar **array);
 
