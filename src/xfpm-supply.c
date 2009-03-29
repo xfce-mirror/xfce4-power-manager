@@ -110,6 +110,9 @@ xfpm_supply_init (XfpmSupply *supply)
     supply->priv->notify  = xfpm_notify_new    ();
     supply->priv->conf    = xfpm_xfconf_new    ();
     supply->priv->tray    = xfpm_tray_icon_new ();
+    xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
+    xfpm_tray_icon_set_icon (supply->priv->tray, "gpm-ac-adapter");
+    xfpm_tray_icon_set_show_info_menu (supply->priv->tray, FALSE);
 }
 
 static void
@@ -132,32 +135,44 @@ xfpm_supply_finalize (GObject *object)
 	
     G_OBJECT_CLASS(xfpm_supply_parent_class)->finalize(object);
 }
-/*
+
 static void
-xfpm_supply_show_tray_icon (XfpmSupply *supply)
+xfpm_supply_refresh_tray_icon (XfpmSupply *supply)
 {
     guint8 show_icon;
     
     show_icon = xfpm_xfconf_get_property_enum (supply->priv->conf, SHOW_TRAY_ICON_CFG);
     
-    if ( show_icon == SHOW_ICON_ALWAYS && g_hash_table_size (supply->priv->hash) == 0 )
+    if ( show_icon == SHOW_ICON_ALWAYS )
     {
-	
+	if ( g_hash_table_size (supply->priv->hash) == 0 )
+	{
+	    xfpm_tray_icon_set_tooltip (supply->priv->tray,
+					supply->priv->adapter_present ? 
+					(_("Adapter present")) :
+					(_("Adapter not present")) );
+	    xfpm_tray_icon_set_visible (supply->priv->tray, TRUE);
+	}
+	else
+	    xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
     }
-    else if ( sh
 }
-*/
 
 gboolean xfpm_supply_on_low_power (XfpmSupply *supply)
 {
+    guint low_power_level;
+    
     GList *list = NULL;
     int i;
     gboolean low_power = FALSE;
+    
     list = g_hash_table_get_values (supply->priv->hash);
     
     if ( !list)
 	return FALSE;
 	
+    low_power_level = xfpm_xfconf_get_property_int (supply->priv->conf, CRITICAL_POWER_LEVEL);
+     
     for ( i=0; i< g_list_length(list); i++)
     {
 	XfpmBattery *battery = NULL;
@@ -173,7 +188,7 @@ gboolean xfpm_supply_on_low_power (XfpmSupply *supply)
 	if ( type != HAL_DEVICE_TYPE_PRIMARY )
 	    continue;
 	    
-	if ( percentage < 10 ) //FIXME: make this configurable
+	if ( percentage < low_power_level ) 
 	    low_power = TRUE;
 	else 
 	    low_power = FALSE;
@@ -314,7 +329,8 @@ xfpm_supply_add_battery (XfpmSupply *supply, const HalBattery *device)
     
     g_signal_connect (G_OBJECT(battery), "battery-state-changed",
 		      G_CALLBACK(xfpm_supply_battery_state_changed_cb), supply);
-
+		      
+    xfpm_supply_refresh_tray_icon (supply);
 }
 
 static void
@@ -327,10 +343,10 @@ xfpm_supply_remove_battery (XfpmSupply *supply,  const HalBattery *device)
     if ( battery )
     {
 	TRACE("Removing battery %s", udi);
-	g_object_unref(battery);
 	if (!g_hash_table_remove(supply->priv->hash, udi))
 		g_critical ("Unable to remove battery object from hash");
     }
+    xfpm_supply_refresh_tray_icon (supply);
 }
 
 static void
@@ -400,6 +416,8 @@ void xfpm_supply_monitor (XfpmSupply *supply)
 		     
     g_signal_connect(supply->priv->power, "battery-removed",
 		     G_CALLBACK(xfpm_supply_battery_removed_cb), supply);
+		     
+    xfpm_supply_refresh_tray_icon (supply);
     
 }
 

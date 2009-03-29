@@ -58,6 +58,7 @@ struct XfpmTrayIconPrivate
     
     GtkStatusIcon *icon;
     GQuark         icon_quark;
+    gboolean       info_menu;
 };
 
 enum
@@ -230,36 +231,39 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     gtk_widget_show(mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
     
-    // Separator
-    mi = gtk_separator_menu_item_new();
-    gtk_widget_show(mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+    if ( tray->priv->info_menu )
+    {
+	mi = gtk_separator_menu_item_new();
+	gtk_widget_show(mi);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
     
-    // Battery informations
-    mi = gtk_image_menu_item_new_with_label (_("Information"));
-    img = gtk_image_new_from_stock (GTK_STOCK_INFO, GTK_ICON_SIZE_MENU);
-    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM(mi), img);
+	// Battery informations
     
-    gtk_widget_set_sensitive(mi,FALSE);
-    gtk_widget_set_sensitive (mi,TRUE);
+	mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_INFO, NULL);
+	
+	gtk_widget_set_sensitive(mi,FALSE);
+	gtk_widget_set_sensitive (mi,TRUE);
+	
+	g_signal_connect(mi,"activate",
+			 G_CALLBACK(xfpm_tray_info), tray);
+			 
+	gtk_widget_show(mi);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
     
-    g_signal_connect(mi,"activate",
-		     G_CALLBACK(xfpm_tray_info), tray);
-		     
-    gtk_widget_show(mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
     
-    // Separator
-    mi = gtk_separator_menu_item_new();
-    gtk_widget_show(mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
-    
+	// Separator
+	mi = gtk_separator_menu_item_new();
+	gtk_widget_show(mi);
+	gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+    }
+	
     mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_HELP,NULL);
     gtk_widget_set_sensitive(mi,TRUE);
     gtk_widget_show(mi);
     g_signal_connect(mi,"activate",G_CALLBACK(xfpm_help),NULL);
-    
+	
     gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+    
     
     mi = gtk_image_menu_item_new_from_stock(GTK_STOCK_ABOUT,NULL);
     gtk_widget_set_sensitive(mi,TRUE);
@@ -310,6 +314,7 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
     tray->priv->conf  = xfpm_xfconf_new ();
     tray->priv->notify = xfpm_notify_new ();
     
+    tray->priv->info_menu = TRUE;
     tray->priv->icon_quark = 0;
     
     g_signal_connect (tray->priv->icon, "size-changed",
@@ -343,6 +348,12 @@ xfpm_tray_icon_new(void)
     XfpmTrayIcon *tray = NULL;
     tray = g_object_new (XFPM_TYPE_TRAY_ICON, NULL);
     return tray;
+}
+
+void xfpm_tray_icon_set_show_info_menu (XfpmTrayIcon *icon, gboolean value)
+{
+    g_return_if_fail (XFPM_IS_TRAY_ICON (icon));
+    icon->priv->info_menu = value;
 }
 
 void xfpm_tray_icon_set_icon (XfpmTrayIcon *icon, const gchar *icon_name)
