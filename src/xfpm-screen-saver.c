@@ -81,25 +81,21 @@ xfpm_screen_saver_filter (DBusConnection *connection, DBusMessage *message, void
     if ( dbus_message_is_method_call (message, "org.gnome.ScreenSaver", "Inhibit") )
     {
 	g_signal_emit (G_OBJECT(srv), signals[SCREEN_SAVER_INHIBITED], 0, TRUE);
-	return DBUS_HANDLER_RESULT_HANDLED;
     }
     else if ( dbus_message_is_method_call (message, "org.gnome.ScreenSaver", "UnInhibit") )
     {
 	g_signal_emit (G_OBJECT(srv), signals[SCREEN_SAVER_INHIBITED], 0, FALSE);
-	return DBUS_HANDLER_RESULT_HANDLED;
     }
     else if ( dbus_message_is_method_call (message, "org.freedesktop.ScreenSaver", "Inhibit") )
     {
 	g_signal_emit (G_OBJECT(srv), signals[SCREEN_SAVER_INHIBITED], 0, TRUE);
-	return DBUS_HANDLER_RESULT_HANDLED;
     }
     else if ( dbus_message_is_method_call (message, "org.freedesktop.ScreenSaver", "UnInhibit") )
     {
 	g_signal_emit (G_OBJECT(srv), signals[SCREEN_SAVER_INHIBITED], 0, FALSE);
-	return DBUS_HANDLER_RESULT_HANDLED;
     }
     
-    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED; /* Keep on as we just want to spy */
 }
 
 static void

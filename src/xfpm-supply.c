@@ -44,6 +44,7 @@
 #include "xfpm-tray-icon.h"
 #include "xfpm-config.h"
 #include "xfpm-shutdown.h"
+#include "xfpm-inhibit.h"
 #include "xfpm-marshal.h"
 
 /* Init */
@@ -60,11 +61,13 @@ struct XfpmSupplyPrivate
     XfpmAdapter   *adapter;
     XfpmXfconf    *conf;
     XfpmTrayIcon  *tray;
+    XfpmInhibit   *inhibit;
     
     HalPower      *power;
     GHashTable    *hash;
     
     gboolean       adapter_present;
+    gboolean       inhibited;
     guint8         power_management;
 };
 
@@ -77,6 +80,12 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(XfpmSupply, xfpm_supply, G_TYPE_OBJECT)
+
+static void
+xfpm_supply_has_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmSupply *supply)
+{
+    supply->priv->inhibited = inhibited;
+}
 
 static void
 xfpm_supply_class_init(XfpmSupplyClass *klass)
@@ -110,9 +119,15 @@ xfpm_supply_init (XfpmSupply *supply)
     supply->priv->notify  = xfpm_notify_new    ();
     supply->priv->conf    = xfpm_xfconf_new    ();
     supply->priv->tray    = xfpm_tray_icon_new ();
+    supply->priv->inhibit = xfpm_inhibit_new   ();
+    supply->priv->inhibited = FALSE;
+    
     xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
     xfpm_tray_icon_set_icon (supply->priv->tray, "gpm-ac-adapter");
     xfpm_tray_icon_set_show_info_menu (supply->priv->tray, FALSE);
+    
+    g_signal_connect (supply->priv->inhibit, "has-inhibit-changed",
+		      G_CALLBACK (xfpm_supply_has_inhibit_changed_cb), supply);
 }
 
 static void
@@ -132,6 +147,8 @@ xfpm_supply_finalize (GObject *object)
     g_object_unref (supply->priv->adapter);
     
     g_object_unref (supply->priv->tray);
+    
+    g_object_unref (supply->priv->inhibit);
 	
     G_OBJECT_CLASS(xfpm_supply_parent_class)->finalize(object);
 }
@@ -218,21 +235,8 @@ _notify_action_callback (NotifyNotification *n, gchar *action, XfpmSupply *suppl
 }
 
 static void
-xfpm_supply_show_critical_action (XfpmSupply *supply, XfpmBattery *battery)
+xfpm_supply_add_actions_to_notification (XfpmSupply *supply, XfpmBattery *battery, NotifyNotification *n)
 {
-    const gchar *message;
-    message = _("Your battery is almost empty. "\
-              "Save your work to avoid losing data");
-	      
-    NotifyNotification *n = 
-	xfpm_notify_new_notification (supply->priv->notify, 
-				      _("Xfce power manager"), 
-				      message, 
-				      xfpm_battery_get_icon_name (battery),
-				      10000,
-				      XFPM_NOTIFY_CRITICAL,
-				      xfpm_battery_get_status_icon (battery));
-				   
     if (supply->priv->power_management != 0 )
     {
         xfpm_notify_add_action_to_notification(
@@ -254,6 +258,53 @@ xfpm_supply_show_critical_action (XfpmSupply *supply, XfpmBattery *battery)
                                (NotifyActionCallback)_notify_action_callback,
                                supply);      
     }
+}
+
+static void
+xfpm_supply_show_critical_action_inhibited (XfpmSupply *supply, XfpmBattery *battery)
+{
+    NotifyNotification *n;
+    const gchar *message;
+    
+    message = _("System is running on low power, "\
+               "but an application is currently disabling the automatic sleep, "\
+	       "this means that doing a sleep now may damage the data of this application. "\
+	       "Close this application before putting the computer on sleep mode or plug "\
+	       "in your AC adapter");
+    
+     n = 
+	xfpm_notify_new_notification (supply->priv->notify, 
+				      _("Xfce power manager"), 
+				      message, 
+				      xfpm_battery_get_icon_name (battery),
+				      30000,
+				      XFPM_NOTIFY_CRITICAL,
+				      xfpm_battery_get_status_icon (battery));
+				      
+    xfpm_supply_add_actions_to_notification (supply, battery, n);
+    
+    xfpm_notify_present_notification (supply->priv->notify, n, FALSE);
+}
+
+static void
+xfpm_supply_show_critical_action (XfpmSupply *supply, XfpmBattery *battery)
+{
+    const gchar *message;
+    NotifyNotification *n;
+    
+    message = _("System is running on low power. "\
+              "Save your work to avoid losing data");
+	      
+    n = 
+	xfpm_notify_new_notification (supply->priv->notify, 
+				      _("Xfce power manager"), 
+				      message, 
+				      xfpm_battery_get_icon_name (battery),
+				      15000,
+				      XFPM_NOTIFY_CRITICAL,
+				      xfpm_battery_get_status_icon (battery));
+    
+    xfpm_supply_add_actions_to_notification (supply, battery, n);
     
     xfpm_notify_present_notification (supply->priv->notify, n, FALSE);
 }
@@ -267,7 +318,11 @@ xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
     if ( xfpm_supply_on_low_power (supply) )
     {
 	TRACE ("System is running on low power");
-	if ( critical_action == XFPM_DO_NOTHING )
+	if ( supply->priv->inhibited )
+	{
+	    xfpm_supply_show_critical_action_inhibited (supply, battery);
+	}
+	else if ( critical_action == XFPM_DO_NOTHING )
 	{
 	    xfpm_supply_show_critical_action (supply, battery);
 	}
@@ -275,18 +330,6 @@ xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
 	{
 	    xfpm_supply_process_critical_action (supply);
 	}
-    }
-    else 
-    {
-	const gchar *message = _("Your battery is almost empty");
-	xfpm_notify_show_notification (supply->priv->notify, 
-				   _("Xfce power manager"), 
-				   message, 
-				   xfpm_battery_get_icon_name (battery),
-				   10000,
-				   FALSE,
-				   XFPM_NOTIFY_NORMAL,
-				   xfpm_battery_get_status_icon (battery));
     }
 }
 

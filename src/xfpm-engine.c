@@ -164,12 +164,12 @@ xfpm_engine_shutdown_request (XfpmEngine * engine,
 	}
 	else if (shutdown == XFPM_DO_HIBERNATE)
 	{
-	    g_timeout_add_seconds (4, (GSourceFunc) xfpm_engine_do_hibernate,
+	    g_timeout_add_seconds (2, (GSourceFunc) xfpm_engine_do_hibernate,
 				   engine);
 	}
 	else if (shutdown == XFPM_DO_SUSPEND)
 	{
-	    g_timeout_add_seconds (4, (GSourceFunc) xfpm_engine_do_suspend,
+	    g_timeout_add_seconds (2, (GSourceFunc) xfpm_engine_do_suspend,
 				   engine);
 	}
 
@@ -184,6 +184,9 @@ xfpm_engine_shutdown_request_battery_cb (XfpmSupply * supply,
 					 XfpmShutdownRequest action,
 					 XfpmEngine * engine)
 {
+    if ( engine->priv->inhibited && critical == FALSE ) /* We can ignore the request here */
+	return;
+	
     xfpm_engine_shutdown_request (engine, action, critical);
 }
 
@@ -193,6 +196,12 @@ xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 * button,
 {
     TRACE ("Received button press event type %d", type);
     XfpmShutdownRequest shutdown;
+  
+    if ( engine->priv->inhibited )
+    {
+	TRACE("Power manager automatic sleep is currently disabled");
+	return;
+    }
   
     if ( type != BUTTON_POWER_OFF && type != BUTTON_SLEEP )
 	return;
@@ -215,6 +224,11 @@ xfpm_engine_lid_closed_cb (XfpmLidHal * lid, XfpmEngine * engine)
 					      LID_SWITCH_ON_BATTERY_CFG :
 					      LID_SWITCH_ON_AC_CFG);
 
+    if ( engine->priv->inhibited )
+    {
+	TRACE("Power manager automatic sleep is currently disabled");
+	return;
+    }
     xfpm_engine_shutdown_request (engine, shutdown, FALSE);
 }
 

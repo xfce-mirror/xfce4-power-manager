@@ -39,6 +39,7 @@
 #include "xfpm-tray-icon.h"
 #include "xfpm-network-manager.h"
 #include "xfpm-shutdown.h"
+#include "xfpm-inhibit.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 
@@ -55,10 +56,12 @@ struct XfpmTrayIconPrivate
     XfpmShutdown  *shutdown;
     XfpmXfconf    *conf;
     XfpmNotify    *notify;
+    XfpmInhibit   *inhibit;
     
     GtkStatusIcon *icon;
     GQuark         icon_quark;
     gboolean       info_menu;
+    gboolean       inhibited;
 };
 
 enum
@@ -149,9 +152,17 @@ xfpm_tray_icon_do_hibernate (XfpmTrayIcon *tray)
 static void
 xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
 {
+    const gchar *message;
     gboolean lock_screen;
+    
+    message = tray->priv->inhibited ? 
+	     _("An application is currently disabling the automatic sleep,"
+	      " doing this action now may damage the working state of this application,"
+	      " are you sure you want to hibernate the system?") :
+	      _("Are you sure you want to procced?") ;
+    
     gboolean ret = 
-    xfce_confirm (_("Are you sure you want to hibernate the system?"),
+    xfce_confirm (message,
                   GTK_STOCK_YES,
                   _("Hibernate"));
     
@@ -168,10 +179,18 @@ xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
 static void
 xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
 {
+    const gchar *message;
     gboolean lock_screen;
+    
+    message = tray->priv->inhibited ? 
+	     _("An application is currently disabling the automatic sleep,"
+	      " doing this action now may damage the working state of this application,"
+	      " are you sure you want to suspend the system?") :
+	      _("Are you sure you want to procced?") ;
+    
     gboolean ret = 
-    xfce_confirm (_("Are you sure you want to suspend the system?"),
-                  GTK_STOCK_YES,
+    xfce_confirm  (message,
+                   GTK_STOCK_YES,
                   _("Suspend"));
     
     if ( ret ) 
@@ -286,6 +305,12 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
 }
 
 static void
+xfpm_tray_icon_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmTrayIcon *tray)
+{
+    tray->priv->inhibited = inhibited;
+}
+
+static void
 xfpm_tray_icon_class_init(XfpmTrayIconClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -313,6 +338,8 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
     tray->priv->shutdown = xfpm_shutdown_new ();
     tray->priv->conf  = xfpm_xfconf_new ();
     tray->priv->notify = xfpm_notify_new ();
+    tray->priv->inhibited = FALSE;
+    tray->priv->inhibit = xfpm_inhibit_new ();
     
     tray->priv->info_menu = TRUE;
     tray->priv->icon_quark = 0;
@@ -322,6 +349,9 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
 		      
     g_signal_connect (tray->priv->icon, "popup-menu",
 		      G_CALLBACK (xfpm_tray_icon_popup_menu_cb), tray);
+		      
+    g_signal_connect (tray->priv->inhibit, "has-inhibit-changed",
+		      G_CALLBACK (xfpm_tray_icon_inhibit_changed_cb), tray);
 }
 
 static void
@@ -338,6 +368,8 @@ xfpm_tray_icon_finalize(GObject *object)
     g_object_unref (tray->priv->conf);
     
     g_object_unref (tray->priv->notify);
+    
+    g_object_unref (tray->priv->inhibit);
 
     G_OBJECT_CLASS(xfpm_tray_icon_parent_class)->finalize(object);
 }
