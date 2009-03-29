@@ -23,25 +23,13 @@
 #endif
 
 #include <stdio.h>
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
 
 #include <glib.h>
 
 #include <libxfce4util/libxfce4util.h>
-#include <xfconf/xfconf.h>
 
-#include "libxfpm/hal-iface.h"
 #include "libxfpm/hal-manager.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
@@ -61,7 +49,7 @@
 #include "xfpm-lid-hal.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-backlight.h"
-#include "xfpm-screen-saver.h"
+#include "xfpm-shutdown.h"
 #include "xfpm-errors.h"
 #include "xfpm-config.h"
 
@@ -78,122 +66,115 @@ static void xfpm_engine_dbus_init (XfpmEngine * engine);
 
 struct XfpmEnginePrivate
 {
-  XfpmXfconf *conf;
-  XfpmSupply *supply;
-  XfpmNotify *notify;
+    XfpmXfconf 		*conf;
+    XfpmSupply 		*supply;
+    XfpmNotify 		*notify;
 
-  XfpmCpu *cpu;
-  XfpmButtonXf86 *xf86_button;
-  XfpmLidHal *lid;
-  XfpmBacklight *bk;
-  XfpmAdapter *adapter;
-  XfpmInhibit *inhibit;
-  HalIface *iface;
+    XfpmCpu 		*cpu;
+    XfpmButtonXf86 	*xf86_button;
+    XfpmLidHal 		*lid;
+    XfpmBacklight 	*bk;
+    XfpmAdapter 	*adapter;
+    XfpmInhibit 	*inhibit;
+    XfpmShutdown        *shutdown;
 #ifdef HAVE_DPMS
-  XfpmDpms *dpms;
+    XfpmDpms *dpms;
 #endif
+    gboolean inhibited;
 
-  gboolean inhibited;
+    guint8 power_management;
+    gboolean on_battery;
+    gboolean is_laptop;
 
-  guint8 power_management;
-  gboolean on_battery;
-
-  gboolean block_shutdown;
-
-  gboolean is_laptop;
-  gboolean has_lcd_brightness;
-  gboolean has_lid;
+    gboolean has_lcd_brightness;
+    gboolean has_lid;
 };
 
 G_DEFINE_TYPE (XfpmEngine, xfpm_engine, G_TYPE_OBJECT)
 
 static gboolean xfpm_engine_do_suspend (XfpmEngine * engine)
 {
-  GError *error = NULL;
+    GError *error = NULL;
 
-  hal_iface_shutdown (engine->priv->iface, "Suspend", &error);
+    xfpm_suspend (engine->priv->shutdown, &error);
 
-  if (error)
+    if (error)
     {
-      g_warning ("%s", error->message);
-      g_error_free (error);
+	g_warning ("%s", error->message);
+	g_error_free (error);
     }
-  xfpm_send_message_to_network_manager ("wake");
-  engine->priv->block_shutdown = FALSE;
-  return FALSE;
+    xfpm_send_message_to_network_manager ("wake");
+    return FALSE;
 }
 
 static gboolean
 xfpm_engine_do_hibernate (XfpmEngine * engine)
 {
-  GError *error = NULL;
+    GError *error = NULL;
 
-  hal_iface_shutdown (engine->priv->iface, "Hibernate", &error);
+    xfpm_hibernate (engine->priv->shutdown, &error);
 
-  if (error)
+    if (error)
     {
-      g_warning ("%s", error->message);
-      g_error_free (error);
+	g_warning ("%s", error->message);
+	g_error_free (error);
     }
-    
-  xfpm_send_message_to_network_manager ("wake");
-  engine->priv->block_shutdown = FALSE;
-  return FALSE;
+    xfpm_send_message_to_network_manager ("wake");
+    return FALSE;
 }
 
 static gboolean
 xfpm_engine_do_shutdown (XfpmEngine * engine)
 {
-  GError *error = NULL;
+    GError *error = NULL;
 
-  hal_iface_shutdown (engine->priv->iface, "Shutdown", &error);
+    xfpm_shutdown (engine->priv->shutdown, &error);
 
-  if (error)
+    if (error)
     {
-      g_warning ("%s", error->message);
-      g_error_free (error);
+	g_warning ("%s", error->message);
+	g_error_free (error);
     }
-  return FALSE;
+    return FALSE;
 }
 
 static void
 xfpm_engine_shutdown_request (XfpmEngine * engine,
 			      XfpmShutdownRequest shutdown, gboolean critical)
 {
-  gboolean lock_screen;
-  const gchar *action = xfpm_int_to_shutdown_string (shutdown);
+    gboolean lock_screen;
+    const gchar *action = xfpm_int_to_shutdown_string (shutdown);
 
-  lock_screen =
-    xfpm_xfconf_get_property_bool (engine->priv->conf, LOCK_SCREEN_ON_SLEEP);
+    lock_screen =
+	xfpm_xfconf_get_property_bool (engine->priv->conf, LOCK_SCREEN_ON_SLEEP);
 
-  if (xfpm_strequal (action, "Nothing"))
+    if (xfpm_strequal (action, "Nothing"))
     {
-      TRACE ("Sleep button disabled in configuration");
-      return;
+	TRACE ("Sleep button disabled in configuration");
+	return;
     }
-  else if (!engine->priv->inhibited)
+    else if (!engine->priv->inhibited)
     {
-      TRACE ("Going to do %s\n", action);
-      xfpm_send_message_to_network_manager ("sleep");
-      engine->priv->block_shutdown = TRUE;
+	TRACE ("Going to do %s\n", action);
+	xfpm_send_message_to_network_manager ("sleep");
 
-      if (shutdown == XFPM_DO_SHUTDOWN)
+	if (shutdown == XFPM_DO_SHUTDOWN)
 	{
-	  xfpm_engine_do_shutdown (engine);
+	    xfpm_engine_do_shutdown (engine);
 	}
-      else if (shutdown == XFPM_DO_HIBERNATE)
+	else if (shutdown == XFPM_DO_HIBERNATE)
 	{
-	  g_timeout_add_seconds (4, (GSourceFunc) xfpm_engine_do_hibernate,
-				 engine);
+	    g_timeout_add_seconds (4, (GSourceFunc) xfpm_engine_do_hibernate,
+				   engine);
 	}
-      else if (shutdown == XFPM_DO_SUSPEND)
+	else if (shutdown == XFPM_DO_SUSPEND)
 	{
-	  g_timeout_add_seconds (4, (GSourceFunc) xfpm_engine_do_suspend,
-				 engine);
+	    g_timeout_add_seconds (4, (GSourceFunc) xfpm_engine_do_suspend,
+				   engine);
 	}
 
-      if (lock_screen)
-	xfpm_lock_screen ();
+	if (lock_screen)
+	    xfpm_lock_screen ();
     }
 }
 
@@ -203,7 +184,7 @@ xfpm_engine_shutdown_request_battery_cb (XfpmSupply * supply,
 					 XfpmShutdownRequest action,
 					 XfpmEngine * engine)
 {
-  xfpm_engine_shutdown_request (engine, action, critical);
+    xfpm_engine_shutdown_request (engine, action, critical);
 }
 
 static void
@@ -216,14 +197,9 @@ xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 * button,
     if ( type != BUTTON_POWER_OFF && type != BUTTON_SLEEP )
 	return;
 
-    if (engine->priv->block_shutdown)
-	return;
-  
     shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf, 
 					      type == BUTTON_POWER_OFF ? POWER_SWITCH_CFG :
 					      SLEEP_SWITCH_CFG );
-    g_print("---------------Configuration is %d\n", shutdown);
-    
     TRACE ("Accepting shutdown request");
     xfpm_engine_shutdown_request (engine, shutdown, FALSE);
 }
@@ -231,40 +207,35 @@ xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 * button,
 static void
 xfpm_engine_lid_closed_cb (XfpmLidHal * lid, XfpmEngine * engine)
 {
-  XfpmShutdownRequest shutdown;
+    XfpmShutdownRequest shutdown;
 
-  shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
-					    engine->priv->
-					    on_battery ?
-					    LID_SWITCH_ON_BATTERY_CFG :
-					    LID_SWITCH_ON_AC_CFG);
+    shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
+					      engine->priv->
+					      on_battery ?
+					      LID_SWITCH_ON_BATTERY_CFG :
+					      LID_SWITCH_ON_AC_CFG);
 
-  if (engine->priv->block_shutdown)
-    return;
-
-  TRACE ("Accepting shutdown request");
-
-  xfpm_engine_shutdown_request (engine, shutdown, FALSE);
+    xfpm_engine_shutdown_request (engine, shutdown, FALSE);
 }
 
 static void
 xfpm_engine_check_hal_iface (XfpmEngine * engine)
 {
-  gboolean can_suspend, can_hibernate, caller, cpu;
+    gboolean can_suspend, can_hibernate, caller;
 
-  if (!hal_iface_connect (engine->priv->iface))
-    return;
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		  "caller-privilege", &caller,
+		  "can-suspend", &can_suspend,
+		  "can-hibernate", &can_hibernate,
+		  NULL);
 
-  g_object_get (G_OBJECT (engine->priv->iface),
-		"caller-privilege", &caller,
-		"can-suspend", &can_suspend,
-		"can-hibernate", &can_hibernate,
-		"cpu-freq-iface", &cpu, NULL);
-
-  if (can_hibernate)
-    engine->priv->power_management |= SYSTEM_CAN_HIBERNATE;
-  if (can_suspend)
-    engine->priv->power_management |= SYSTEM_CAN_SUSPEND;
+    if ( caller )
+    {
+	if (can_hibernate)
+	    engine->priv->power_management |= SYSTEM_CAN_HIBERNATE;
+	if (can_suspend)
+	    engine->priv->power_management |= SYSTEM_CAN_SUSPEND;
+    }
 
   //FIXME: Show errors here
 }
@@ -286,46 +257,46 @@ xfpm_engine_load_all (XfpmEngine * engine)
     g_object_unref (manager);
 
 #ifdef HAVE_DPMS
-  engine->priv->dpms = xfpm_dpms_new ();
+    engine->priv->dpms = xfpm_dpms_new ();
 #endif
-  if (engine->priv->is_laptop)
-    engine->priv->cpu = xfpm_cpu_new ();
+    if (engine->priv->is_laptop)
+	engine->priv->cpu = xfpm_cpu_new ();
 
-  engine->priv->supply = xfpm_supply_new (engine->priv->power_management);
-  g_signal_connect (G_OBJECT (engine->priv->supply), "shutdown-request",
-		    G_CALLBACK (xfpm_engine_shutdown_request_battery_cb),
-		    engine);
-  xfpm_supply_monitor (engine->priv->supply);
+    engine->priv->supply = xfpm_supply_new (engine->priv->power_management);
+    g_signal_connect (G_OBJECT (engine->priv->supply), "shutdown-request",
+		      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb),
+		      engine);
+    xfpm_supply_monitor (engine->priv->supply);
 
   /*
    * Keys from XF86
    */
-  engine->priv->xf86_button = xfpm_button_xf86_new ();
+    engine->priv->xf86_button = xfpm_button_xf86_new ();
 
-  g_signal_connect (engine->priv->xf86_button, "xf86-button-pressed",
-		    G_CALLBACK (xfpm_engine_xf86_button_pressed_cb), engine);
+    g_signal_connect (engine->priv->xf86_button, "xf86-button-pressed",
+		      G_CALLBACK (xfpm_engine_xf86_button_pressed_cb), engine);
 
   /*
    * Lid from HAL 
    */
-  if (engine->priv->is_laptop)
+    if (engine->priv->is_laptop)
     {
-      engine->priv->lid = xfpm_lid_hal_new ();
-      engine->priv->has_lid = xfpm_lid_hw_found (engine->priv->lid);
-      if (engine->priv->has_lid)
-	g_signal_connect (engine->priv->lid, "lid-closed",
-			  G_CALLBACK (xfpm_engine_lid_closed_cb), engine);
-      else
-	g_object_unref (engine->priv->lid);
+	engine->priv->lid = xfpm_lid_hal_new ();
+	engine->priv->has_lid = xfpm_lid_hw_found (engine->priv->lid);
+	if (engine->priv->has_lid)
+	    g_signal_connect (engine->priv->lid, "lid-closed",
+			      G_CALLBACK (xfpm_engine_lid_closed_cb), engine);
+	else
+	    g_object_unref (engine->priv->lid);
     }
 
   /*
    * Brightness HAL
    */
-  if (engine->priv->is_laptop)
+    if (engine->priv->is_laptop)
     {
-      engine->priv->bk = xfpm_backlight_new ();
-      engine->priv->has_lcd_brightness =
+	engine->priv->bk = xfpm_backlight_new ();
+	engine->priv->has_lcd_brightness =
 	xfpm_backlight_has_hw (engine->priv->bk);
     }
 }
@@ -334,112 +305,109 @@ static void
 xfpm_engine_adapter_changed_cb (XfpmAdapter * adapter, gboolean present,
 				XfpmEngine * engine)
 {
-  engine->priv->on_battery = !present;
+    engine->priv->on_battery = !present;
 }
 
 static void
 xfpm_engine_inhibit_changed_cb (XfpmInhibit * inhibit, gboolean inhibited,
 				XfpmEngine * engine)
 {
-  engine->priv->inhibited = inhibited;
+    engine->priv->inhibited = inhibited;
 }
 
 static void
 xfpm_engine_class_init (XfpmEngineClass * klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+    GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = xfpm_engine_finalize;
+    object_class->finalize = xfpm_engine_finalize;
 
-  g_type_class_add_private (klass, sizeof (XfpmEnginePrivate));
+    g_type_class_add_private (klass, sizeof (XfpmEnginePrivate));
 
-  xfpm_engine_dbus_class_init (klass);
+    xfpm_engine_dbus_class_init (klass);
 }
 
 static void
 xfpm_engine_init (XfpmEngine * engine)
 {
-  engine->priv = XFPM_ENGINE_GET_PRIVATE (engine);
+    engine->priv = XFPM_ENGINE_GET_PRIVATE (engine);
 
-  engine->priv->iface = hal_iface_new ();
-  engine->priv->adapter = xfpm_adapter_new ();
-  engine->priv->notify = xfpm_notify_new ();
+    engine->priv->shutdown = xfpm_shutdown_new ();
+    engine->priv->adapter = xfpm_adapter_new ();
+    engine->priv->notify = xfpm_notify_new ();
 
-  engine->priv->inhibit = xfpm_inhibit_new ();
-  engine->priv->inhibited = FALSE;
+    engine->priv->inhibit = xfpm_inhibit_new ();
+    engine->priv->inhibited = FALSE;
 
-  g_signal_connect (engine->priv->inhibit, "has-inhibit-changed",
-		    G_CALLBACK (xfpm_engine_inhibit_changed_cb), engine);
+    g_signal_connect (engine->priv->inhibit, "has-inhibit-changed",
+		      G_CALLBACK (xfpm_engine_inhibit_changed_cb), engine);
 
-  engine->priv->conf = NULL;
-  engine->priv->supply = NULL;
+    engine->priv->conf = NULL;
+    engine->priv->supply = NULL;
 #ifdef HAVE_DPMS
-  engine->priv->dpms = NULL;
+    engine->priv->dpms = NULL;
 #endif
-  engine->priv->cpu = NULL;
-  engine->priv->xf86_button = NULL;
-  engine->priv->lid = NULL;
-  engine->priv->bk = NULL;
+    engine->priv->cpu = NULL;
+    engine->priv->xf86_button = NULL;
+    engine->priv->lid = NULL;
+    engine->priv->bk = NULL;
 
-  engine->priv->power_management = 0;
+    engine->priv->power_management = 0;
 
-  xfpm_engine_dbus_init (engine);
+    xfpm_engine_dbus_init (engine);
 
-  engine->priv->conf = xfpm_xfconf_new ();
+    engine->priv->conf = xfpm_xfconf_new ();
 
-  engine->priv->on_battery =
-    !xfpm_adapter_get_present (engine->priv->adapter);
+    engine->priv->on_battery =
+	!xfpm_adapter_get_present (engine->priv->adapter);
 
-  g_signal_connect (engine->priv->adapter, "adapter-changed",
-		    G_CALLBACK (xfpm_engine_adapter_changed_cb), engine);
+    g_signal_connect (engine->priv->adapter, "adapter-changed",
+		      G_CALLBACK (xfpm_engine_adapter_changed_cb), engine);
 
-  xfpm_engine_load_all (engine);
+    xfpm_engine_load_all (engine);
 }
 
 static void
 xfpm_engine_finalize (GObject * object)
 {
-  XfpmEngine *engine;
+    XfpmEngine *engine;
 
-  engine = XFPM_ENGINE (object);
+    engine = XFPM_ENGINE (object);
 
-  g_object_unref (engine->priv->conf);
+    g_object_unref (engine->priv->conf);
 
-  if (engine->priv->supply)
     g_object_unref (engine->priv->supply);
 
 #ifdef HAVE_DPMS
-  if (engine->priv->dpms)
-    g_object_unref (engine->priv->dpms);
+    if (engine->priv->dpms)
+	g_object_unref (engine->priv->dpms);
 #endif
 
-  if (engine->priv->cpu)
-    g_object_unref (engine->priv->cpu);
+    if (engine->priv->cpu)
+	g_object_unref (engine->priv->cpu);
 
-  if (engine->priv->lid)
-    g_object_unref (engine->priv->lid);
+    if (engine->priv->lid)
+	g_object_unref (engine->priv->lid);
 
-  if (engine->priv->iface)
-    g_object_unref (engine->priv->iface);
+    g_object_unref (engine->priv->shutdown);
 
-  if (engine->priv->adapter)
     g_object_unref (engine->priv->adapter);
 
-  if (engine->priv->bk)
-    g_object_unref (engine->priv->bk);
+    if (engine->priv->bk)
+	g_object_unref (engine->priv->bk);
 
-  g_object_unref (engine->priv->notify);
+    g_object_unref (engine->priv->notify);
 
-  G_OBJECT_CLASS (xfpm_engine_parent_class)->finalize (object);
+    G_OBJECT_CLASS (xfpm_engine_parent_class)->finalize (object);
 }
 
 XfpmEngine *
 xfpm_engine_new (void)
 {
-  XfpmEngine *engine = NULL;
-  engine = g_object_new (XFPM_TYPE_ENGINE, NULL);
+    XfpmEngine *engine = NULL;
+    engine = g_object_new (XFPM_TYPE_ENGINE, NULL);
 
-  return engine;
+    return engine;
 }
 
 void
@@ -450,16 +418,16 @@ xfpm_engine_get_info (XfpmEngine * engine,
 		      gboolean * can_hibernate,
 		      gboolean * has_lcd_brightness, gboolean * has_lid)
 {
-  g_return_if_fail (XFPM_IS_ENGINE (engine));
+    g_return_if_fail (XFPM_IS_ENGINE (engine));
 
-  g_object_get (G_OBJECT (engine->priv->iface),
-		"caller-privilege", user_privilege,
-		"can-suspend", can_suspend,
-		"can-hibernate", can_hibernate, NULL);
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		  "caller-privilege", user_privilege,
+		  "can-suspend", can_suspend,
+		  "can-hibernate", can_hibernate, NULL);
 
-  *system_laptop = engine->priv->is_laptop;
-  *has_lcd_brightness = engine->priv->has_lcd_brightness;
-  *has_lid = engine->priv->has_lid;
+    *system_laptop = engine->priv->is_laptop;
+    *has_lcd_brightness = engine->priv->has_lcd_brightness;
+    *has_lid = engine->priv->has_lid;
 }
 
 /*
@@ -495,120 +463,120 @@ static gboolean xfpm_engine_dbus_get_low_battery (XfpmEngine * engine,
 static void
 xfpm_engine_dbus_class_init (XfpmEngineClass * klass)
 {
-  dbus_g_object_type_install_info (G_TYPE_FROM_CLASS (klass),
-				   &dbus_glib_xfpm_engine_object_info);
+    dbus_g_object_type_install_info (G_TYPE_FROM_CLASS (klass),
+				     &dbus_glib_xfpm_engine_object_info);
 
-  dbus_g_error_domain_register (XFPM_ERROR,
-				"org.freedesktop.PowerManagement",
-				XFPM_TYPE_ERROR);
+    dbus_g_error_domain_register (XFPM_ERROR,
+				  "org.freedesktop.PowerManagement",
+				  XFPM_TYPE_ERROR);
 }
 
 static void
 xfpm_engine_dbus_init (XfpmEngine * engine)
 {
-  DBusGConnection *bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+    DBusGConnection *bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
 
-  dbus_g_connection_register_g_object (bus,
-				       "/org/freedesktop/PowerManagement",
-				       G_OBJECT (engine));
+    dbus_g_connection_register_g_object (bus,
+				         "/org/freedesktop/PowerManagement",
+				         G_OBJECT (engine));
 }
 
 static gboolean
 xfpm_engine_dbus_hibernate (XfpmEngine * engine, GError ** error)
 {
-  TRACE ("Hibernate message received");
-  gboolean caller_privilege, can_hibernate;
+    TRACE ("Hibernate message received");
+    gboolean caller_privilege, can_hibernate;
 
-  g_object_get (G_OBJECT (engine->priv->iface),
-		"caller-privilege", &caller_privilege,
-		"can-hibernate", &can_hibernate, NULL);
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		  "caller-privilege", &caller_privilege,
+		  "can-hibernate", &can_hibernate, NULL);
 
-  if (!caller_privilege)
+    if (!caller_privilege)
     {
-      g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
-		   _("Permission denied"));
-      return FALSE;
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
+		    _("Permission denied"));
+	return FALSE;
     }
 
-  if (!can_hibernate)
+    if (!can_hibernate)
     {
-      g_set_error (error, XFPM_ERROR, XFPM_ERROR_HIBERNATE_NOT_SUPPORTED,
-		   _("Hibernate not supported"));
-      return FALSE;
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HIBERNATE_NOT_SUPPORTED,
+		    _("Hibernate not supported"));
+	return FALSE;
     }
 
-  xfpm_engine_shutdown_request (engine, XFPM_DO_HIBERNATE, FALSE);
+    xfpm_engine_shutdown_request (engine, XFPM_DO_HIBERNATE, FALSE);
 
-  return TRUE;
+    return TRUE;
 }
 
 static gboolean
 xfpm_engine_dbus_suspend (XfpmEngine * engine, GError ** error)
 {
-  TRACE ("Suspend message received");
-  gboolean caller_privilege, can_suspend;
+    TRACE ("Suspend message received");
+    gboolean caller_privilege, can_suspend;
 
-  g_object_get (G_OBJECT (engine->priv->iface),
-		"caller-privilege", &caller_privilege,
-		"can-suspend", &can_suspend, NULL);
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		  "caller-privilege", &caller_privilege,
+		  "can-suspend", &can_suspend, NULL);
 
-  if (!caller_privilege)
+    if (!caller_privilege)
     {
-      g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
-		   _("Permission denied"));
-      return FALSE;
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
+		    _("Permission denied"));
+	return FALSE;
     }
 
-  if (!can_suspend)
+    if (!can_suspend)
     {
-      g_set_error (error, XFPM_ERROR, XFPM_ERROR_SUSPEND_NOT_SUPPORTED,
-		   _("Suspend not supported"));
-      return FALSE;
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_SUSPEND_NOT_SUPPORTED,
+		    _("Suspend not supported"));
+	return FALSE;
     }
 
-  xfpm_engine_shutdown_request (engine, XFPM_DO_SUSPEND, FALSE);
+    xfpm_engine_shutdown_request (engine, XFPM_DO_SUSPEND, FALSE);
 
-  return TRUE;
+    return TRUE;
 }
 
 static gboolean
 xfpm_engine_dbus_can_hibernate (XfpmEngine * engine,
 				gboolean * OUT_can_hibernate, GError ** error)
 {
-  TRACE ("Can hibernate message received");
-  g_object_get (G_OBJECT (engine->priv->iface),
-		"can-hibernate", OUT_can_hibernate, NULL);
+    TRACE ("Can hibernate message received");
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		    "can-hibernate", OUT_can_hibernate, NULL);
 
-  return TRUE;
+    return TRUE;
 }
 
 static gboolean
 xfpm_engine_dbus_can_suspend (XfpmEngine * engine,
 			      gboolean * OUT_can_suspend, GError ** error)
 {
-  TRACE ("Can suspend message received");
-  g_object_get (G_OBJECT (engine->priv->iface),
-		"can-suspend", OUT_can_suspend, NULL);
+    TRACE ("Can suspend message received");
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		  "can-suspend", OUT_can_suspend, NULL);
 
-  return TRUE;
+    return TRUE;
 }
 
 static gboolean
 xfpm_engine_dbus_get_on_battery (XfpmEngine * engine,
 				 gboolean * OUT_on_battery, GError ** error)
 {
-  TRACE ("On battery message received");
-  *OUT_on_battery = engine->priv->on_battery;
+    TRACE ("On battery message received");
+    *OUT_on_battery = engine->priv->on_battery;
 
-  return TRUE;
+    return TRUE;
 }
 
 static gboolean
 xfpm_engine_dbus_get_low_battery (XfpmEngine * engine,
 				  gboolean * OUT_low_battery, GError ** error)
 {
-  TRACE ("On low battery message received");
-  *OUT_low_battery = xfpm_supply_on_low_battery (engine->priv->supply);
+    TRACE ("On low battery message received");
+    *OUT_low_battery = xfpm_supply_on_low_battery (engine->priv->supply);
 
-  return TRUE;
+    return TRUE;
 }

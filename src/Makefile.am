@@ -45,6 +45,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-screen-saver.h			\
 	xfpm-tray-icon.c			\
 	xfpm-tray-icon.h			\
+	xfpm-shutdown.c				\
+	xfpm-shutdown.h				\
 	xfpm-network-manager.c			\
 	xfpm-network-manager.h			\
 	xfpm-errors.c				\

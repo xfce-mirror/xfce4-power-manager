@@ -33,11 +33,12 @@
 #include <libxfcegui4/libxfcegui4.h>
 
 #include "libxfpm/xfpm-common.h"
-#include "libxfpm/hal-iface.h"
 #include "libxfpm/xfpm-string.h"
+#include "libxfpm/xfpm-notify.h"
 
 #include "xfpm-tray-icon.h"
 #include "xfpm-network-manager.h"
+#include "xfpm-shutdown.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 
@@ -51,8 +52,10 @@ static void xfpm_tray_icon_finalize   (GObject *object);
 
 struct XfpmTrayIconPrivate
 {
-    HalIface      *iface;
+    XfpmShutdown  *shutdown;
     XfpmXfconf    *conf;
+    XfpmNotify    *notify;
+    
     GtkStatusIcon *icon;
     GQuark         icon_quark;
 };
@@ -99,13 +102,22 @@ xfpm_tray_icon_do_suspend (XfpmTrayIcon *tray)
 {
     GError *error = NULL;
 
-    hal_iface_shutdown (tray->priv->iface, "Suspend", &error);
+    xfpm_suspend (tray->priv->shutdown, &error);
 
     if (error)
     {
 	g_warning ("%s", error->message);
+	xfpm_notify_show_notification (tray->priv->notify, 
+				      _("Xfce power manager"), 
+				       error->message, 
+				       xfpm_tray_icon_get_icon_name (tray),
+				       10000,
+				       FALSE,
+				       XFPM_NOTIFY_CRITICAL,
+				       tray->priv->icon);
 	g_error_free (error);
     }
+    xfpm_send_message_to_network_manager ("wake");
     return FALSE;
 }
 
@@ -114,13 +126,22 @@ xfpm_tray_icon_do_hibernate (XfpmTrayIcon *tray)
 {
     GError *error = NULL;
 
-    hal_iface_shutdown (tray->priv->iface, "Hibernate", &error);
-
+    xfpm_hibernate (tray->priv->shutdown, &error);
+    
     if (error)
     {
 	g_warning ("%s", error->message);
+	xfpm_notify_show_notification (tray->priv->notify, 
+				      _("Xfce power manager"), 
+				       error->message, 
+				       xfpm_tray_icon_get_icon_name (tray),
+				       10000,
+				       FALSE,
+				       XFPM_NOTIFY_CRITICAL,
+				       tray->priv->icon);
 	g_error_free (error);
     }
+    xfpm_send_message_to_network_manager ("wake");
     return FALSE;
 }
 
@@ -169,9 +190,11 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     		  
     GtkWidget *menu, *mi, *img;
     menu = gtk_menu_new();
-    gboolean can_suspend, can_hibernate, caller;
+    gboolean can_suspend = FALSE;
+    gboolean can_hibernate = FALSE ;
+    gboolean caller = FALSE;
 
-    g_object_get (G_OBJECT (tray->priv->iface),
+    g_object_get (G_OBJECT (tray->priv->shutdown),
 		  "caller-privilege", &caller,
 		  "can-suspend", &can_suspend,
 		  "can-hibernate", &can_hibernate,
@@ -283,8 +306,9 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
     tray->priv = XFPM_TRAY_ICON_GET_PRIVATE(tray);
     
     tray->priv->icon  = gtk_status_icon_new();
-    tray->priv->iface = hal_iface_new ();
+    tray->priv->shutdown = xfpm_shutdown_new ();
     tray->priv->conf  = xfpm_xfconf_new ();
+    tray->priv->notify = xfpm_notify_new ();
     
     tray->priv->icon_quark = 0;
     
@@ -304,9 +328,11 @@ xfpm_tray_icon_finalize(GObject *object)
 
     g_object_unref (tray->priv->icon);
 	
-    g_object_unref (tray->priv->iface);
+    g_object_unref (tray->priv->shutdown);
     
     g_object_unref (tray->priv->conf);
+    
+    g_object_unref (tray->priv->notify);
 
     G_OBJECT_CLASS(xfpm_tray_icon_parent_class)->finalize(object);
 }

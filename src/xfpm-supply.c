@@ -31,7 +31,6 @@
 #include <libxfcegui4/libxfcegui4.h>
 
 #include "libxfpm/hal-power.h"
-#include "libxfpm/hal-iface.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
 #include "libxfpm/xfpm-notify.h"
@@ -44,6 +43,7 @@
 #include "xfpm-xfconf.h"
 #include "xfpm-tray-icon.h"
 #include "xfpm-config.h"
+#include "xfpm-shutdown.h"
 #include "xfpm-marshal.h"
 
 /* Init */

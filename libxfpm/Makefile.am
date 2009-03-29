@@ -10,8 +10,6 @@ libxfpmhal_la_SOURCES =			\
 	hal-monitor.h			\
 	hal-manager.c			\
 	hal-manager.h			\
-	hal-iface.c			\
-	hal-iface.h			\
 	hal-device.c			\
 	hal-device.h
 

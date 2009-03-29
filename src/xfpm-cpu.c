@@ -23,22 +23,16 @@
 #endif
 
 #include <stdio.h>
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
 
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
+#include <dbus/dbus.h>
+#include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
 
 #include <libxfce4util/libxfce4util.h>
 
-#include "libxfpm/hal-iface.h"
+#include "libxfpm/hal-manager.h"
 #include "libxfpm/xfpm-string.h"
 
 #include "xfpm-cpu.h"
@@ -57,22 +51,152 @@ static void xfpm_cpu_finalize   (GObject *object);
 
 struct XfpmCpuPrivate
 {
-    XfpmAdapter   *adapter;
-    XfpmXfconf    *conf;
-    HalIface      *iface;
+    DBusGConnection *bus;
+    XfpmAdapter     *adapter;
+    XfpmXfconf      *conf;
     
-    gboolean 	   on_battery;
-    guint8         cpu_governors;
+    gboolean 	     on_battery;
+    guint8           cpu_governors;
 };
 
 G_DEFINE_TYPE(XfpmCpu, xfpm_cpu, G_TYPE_OBJECT)
+
+static gboolean
+xfpm_cpu_check_interface (XfpmCpu *cpu)
+{
+    DBusMessage *message;
+    DBusMessage *reply;
+    DBusError error ;
+    
+    message = dbus_message_new_method_call ("org.freedesktop.Hal",
+					    "/org/freedesktop/Hal",
+					    "org.freedesktop.Hal.Device.CPUFreq",
+					    "JustToCheck");
+    
+    if (!message)
+    	return FALSE;
+    
+    dbus_error_init (&error);
+    
+    reply = 
+    	dbus_connection_send_with_reply_and_block (dbus_g_connection_get_connection(cpu->priv->bus),
+						   message, 2000, &error);
+    dbus_message_unref (message);
+    
+    if ( reply ) dbus_message_unref (reply);
+    
+    if ( dbus_error_is_set(&error) )
+    {
+	if ( !g_strcmp0 (error.name, "org.freedesktop.DBus.Error.UnknownMethod") )
+        {
+            dbus_error_free(&error);
+	    return TRUE;
+        }
+    }
+    return FALSE;
+}
+
+static gchar **
+xfpm_cpu_get_hal_available_governors (XfpmCpu *cpu)
+{
+    gchar **governors = NULL;
+    GError *error = NULL;
+    DBusGProxy *proxy = dbus_g_proxy_new_for_name (cpu->priv->bus,
+						   "org.freedesktop.Hal",
+						   "/org/freedesktop/Hal/devices/computer",
+						   "org.freedesktop.Hal.Device.CPUFreq");
+    if ( !proxy )
+    {
+	g_critical ("Failed to create proxy");
+	goto out;
+    }
+    
+    dbus_g_proxy_call (proxy, "GetCPUFreqAvailableGovernors", &error,
+		       G_TYPE_INVALID,
+		       G_TYPE_STRV, &governors,
+		       G_TYPE_INVALID);
+		       
+    if ( error )
+    {
+	g_warning ("Failed to get cpu governors: %s", error->message);
+	g_error_free (error);
+    }
+    
+    g_object_unref (proxy);
+out:
+    return governors;
+}
+
+static gchar *
+xfpm_cpu_get_hal_current_governor (XfpmCpu *cpu)
+{
+    gchar *governor = NULL;
+    GError *error = NULL;
+    
+    DBusGProxy *proxy = dbus_g_proxy_new_for_name (cpu->priv->bus,
+						   "org.freedesktop.Hal",
+						   "/org/freedesktop/Hal/devices/computer",
+						   "org.freedesktop.Hal.Device.CPUFreq");
+    if ( !proxy )
+    {
+	g_critical ("Failed to create proxy");
+	goto out;
+    }
+    
+    dbus_g_proxy_call (proxy, "GetCPUFreqGovernor", &error,
+		       G_TYPE_INVALID,
+		       G_TYPE_STRING, &governor,
+		       G_TYPE_INVALID);
+    
+    if ( error )
+    {
+	g_warning ("Failed to get cpu governor: %s", error->message);
+	g_error_free (error);
+    }
+    
+    g_object_unref (proxy);
+out:
+    return governor;
+}
+
+static gboolean
+xfpm_cpu_set_hal_governor (XfpmCpu *cpu, const gchar *governor)
+{
+    gboolean ret = FALSE;
+    GError *error = NULL;
+    
+    DBusGProxy *proxy = dbus_g_proxy_new_for_name (cpu->priv->bus,
+						   "org.freedesktop.Hal",
+						   "/org/freedesktop/Hal/devices/computer",
+						   "org.freedesktop.Hal.Device.CPUFreq");
+    if ( !proxy )
+    {
+	g_critical ("Failed to create proxy");
+	goto out;
+    }
+    
+    ret = dbus_g_proxy_call (proxy, "SetCPUFreqGovernor", &error,
+	  		     G_TYPE_STRING, governor,
+			     G_TYPE_INVALID,
+			     G_TYPE_INVALID);
+			     
+    if ( error )
+    {
+	g_warning ("Failed to set cpu governor: %s", error->message);
+	g_error_free (error);
+    }
+    		     
+    g_object_unref (proxy);
+out:
+    return ret;
+}
 
 static void
 xfpm_cpu_set_governor (XfpmCpu *cpu, const gchar *governor)
 {
     TRACE("Settings cpu governor to %s", governor);
     
-    if (! hal_iface_set_cpu_governor(cpu->priv->iface, governor, NULL))
+    if (! xfpm_cpu_set_hal_governor(cpu, governor))
     {
     	g_critical ("Unable to set CPU governor to %s", governor);
     }
@@ -97,16 +221,14 @@ xfpm_cpu_get_current_governor (XfpmCpu *cpu)
     gchar *current_governor = NULL;
     XfpmCpuGovernor governor_enum;
     
-    current_governor = hal_iface_get_cpu_current_governor (cpu->priv->iface, NULL);
+    current_governor = xfpm_cpu_get_hal_current_governor (cpu);
     
     if ( !current_governor )
     {
 	g_warning ("Unable to get current governor");
 	return CPU_UNKNOWN;
     }
-    
     governor_enum = _governor_name_to_enum (current_governor);
-    
     g_free (current_governor);
     return governor_enum;
 }
@@ -119,7 +241,7 @@ xfpm_cpu_get_available_governors (XfpmCpu *cpu)
 {
     int i;
     gchar **governors = NULL;
-    governors = hal_iface_get_cpu_governors (cpu->priv->iface, NULL);
+    governors = xfpm_cpu_get_hal_available_governors (cpu);
 	
     if ( !governors || !governors[0])
     {
@@ -137,24 +259,17 @@ xfpm_cpu_get_available_governors (XfpmCpu *cpu)
 	else if ( xfpm_strequal(governors[i], "performance") )
 	    cpu->priv->cpu_governors |= CPU_PERFORMANCE;
     }
-    hal_iface_free_string_array (governors);
+    
+    hal_manager_free_string_array (governors);
 }
 
 static gboolean
 xfpm_cpu_check_iface (XfpmCpu *cpu)
 {
-    gboolean caller_privilege, cpu_freq_iface;
-    g_object_get (G_OBJECT(cpu->priv->iface), 
-		  "caller-privilege", &caller_privilege,
-		  "cpu-freq-iface", &cpu_freq_iface,
-		  NULL);
-		  
-    if ( !caller_privilege )
-    {
-	g_warning ("Using CPU FREQ interface permission denied");
-	return FALSE;
-    }
+    gboolean cpu_freq_iface;
     
+    cpu_freq_iface = xfpm_cpu_check_interface (cpu);
+		  
     if (!cpu_freq_iface)
     {
 	g_warning ("CPU FREQ interface cannot be used");
@@ -230,7 +345,10 @@ xfpm_cpu_init(XfpmCpu *cpu)
     cpu->priv = XFPM_CPU_GET_PRIVATE(cpu);
     cpu->priv->cpu_governors = 0;
     
-    cpu->priv->iface         = hal_iface_new ();
+    cpu->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, NULL);
+    
+    if (!cpu->priv->bus)
+	goto out;
     
     if ( xfpm_cpu_check_iface (cpu))
     {
@@ -246,6 +364,8 @@ xfpm_cpu_init(XfpmCpu *cpu)
 	cpu->priv->on_battery = !xfpm_adapter_get_present (cpu->priv->adapter);
     }
     
+out:
+    ;
 }
 
 static void
@@ -258,11 +378,11 @@ xfpm_cpu_finalize(GObject *object)
     if ( cpu->priv->conf )
 	g_object_unref (cpu->priv->conf);
 	
-    if ( cpu->priv->iface )
-	g_object_unref (cpu->priv->iface);
-	
     if ( cpu->priv->adapter)
 	g_object_unref (cpu->priv->adapter);
+	
+    if ( cpu->priv->bus )
+	dbus_g_connection_unref (cpu->priv->bus);
 
     G_OBJECT_CLASS(xfpm_cpu_parent_class)->finalize(object);
 }
