@@ -49,6 +49,7 @@ typedef struct
     
     DBusGConnection  *bus;
     DBusGProxy       *proxy;
+    DBusGProxy       *monitor_proxy;
     
     XfpmNotify       *notify;
     
@@ -260,6 +261,10 @@ inhibit_plugin_notify_callback (NotifyNotification *n, const gchar *id, inhibit_
     {
 	inhibit_plugin_save_bool_entry ("power-manager-disconnected-notification", FALSE);
     }
+    else if ( xfpm_strequal (id, "power-manager-connected-notification") )
+    {
+	inhibit_plugin_save_bool_entry ("power-manager-connected-notification", FALSE);
+    }
 }
 
 /*
@@ -353,6 +358,7 @@ inhibit_plugin_disconnect_proxy (inhibit_t *inhibit)
     g_signal_handlers_block_by_func (inhibit->proxy, proxy_destroy_cb, inhibit);
     g_object_unref (inhibit->proxy);
     inhibit->proxy = NULL;
+    inhibit->connected = FALSE;
 }
 
 /*
@@ -368,6 +374,9 @@ inhibit_plugin_free_data_cb (XfcePanelPlugin *plugin, inhibit_t *inhibit)
 	inhibit_plugin_disconnect_proxy (inhibit);
 	
     g_object_unref (inhibit->notify);
+    
+    if ( inhibit->monitor_proxy )
+	g_object_unref (inhibit->monitor_proxy);
     
     g_free (inhibit);
 }
@@ -414,9 +423,6 @@ inhibit_plugin_connect_more (inhibit_t *inhibit)
 static void
 inhibit_plugin_connect (inhibit_t *inhibit)
 {
-    if (!inhibit->bus )
-	inhibit->bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
-    
     if ( !xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(inhibit->bus),
 				    "org.freedesktop.PowerManagement") )
     {
@@ -481,6 +487,53 @@ button_press_event_cb (GtkWidget *button, GdkEventButton *ev, inhibit_t *inhibit
 }
 
 /*
+ * Monitor if a power manager won the org.freedesktop.PowerManagement.Inhibit name
+ */
+static void
+inhibit_plugin_name_owner_changed_cb (DBusGProxy *proxy, const gchar *name,
+				      const gchar *prev, const gchar *new,
+				      inhibit_t *inhibit)
+{
+    gboolean show_notification;
+    NotifyNotification *n;
+	
+    if ( g_strcmp0 (name, "org.freedesktop.PowerManagement.Inhibit") != 0)
+	return;
+	
+    if ( strlen (new) != 0 )
+    {
+	if ( inhibit->connected == TRUE )
+	{
+	    TRACE("Plugin is already connected!");
+	    return;
+	}
+	show_notification = inhibit_plugin_read_bool_entry ("power-manager-connected-notification");
+    
+	if ( show_notification )
+	{
+	    n = xfpm_notify_new_notification (inhibit->notify,
+					  (_("Inhibit plugin")),
+					  (_("Power manager is connected")),
+					  "gnome-inhibit-applet",
+					  5000,
+					  XFPM_NOTIFY_NORMAL,
+					  NULL);
+					  
+	    xfpm_notify_add_action_to_notification (inhibit->notify,
+						    n,
+						    "power-manager-connected-notification",
+						    (_("Don't show again")),
+						    (NotifyActionCallback) inhibit_plugin_notify_callback,
+						    inhibit);
+					  
+	    notify_notification_attach_to_widget (n, inhibit->button);
+	    xfpm_notify_present_notification (inhibit->notify, n, FALSE);
+	}
+	reload_activated (NULL, inhibit);
+    }
+}
+
+/*
  * Constructor of the plugin
  */
 static void
@@ -509,7 +562,27 @@ inhibit_plugin_construct (inhibit_t *inhibit)
 		      G_CALLBACK(reload_activated), inhibit);
 		      
     xfce_panel_plugin_menu_insert_item (inhibit->plugin, GTK_MENU_ITEM(mi));
+    
+    /*
+     * Create the monitor proxy
+     */
 
+    inhibit->monitor_proxy 
+	= dbus_g_proxy_new_for_name_owner (inhibit->bus,
+					   "org.freedesktop.DBus",
+					   "/org/freedesktop/DBus",
+					   "org.freedesktop.DBus",
+					   NULL);
+    if ( !inhibit->monitor_proxy )
+	goto out;
+
+    dbus_g_proxy_add_signal (inhibit->monitor_proxy, "NameOwnerChanged",
+			     G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
+			     
+    dbus_g_proxy_connect_signal (inhibit->monitor_proxy, "NameOwnerChanged",
+				 G_CALLBACK (inhibit_plugin_name_owner_changed_cb), inhibit, NULL);
+
+out:
     gtk_widget_show_all (inhibit->button);
 }
 
@@ -525,6 +598,7 @@ register_inhibit_plugin (XfcePanelPlugin *plugin)
     
     inhibit->plugin = plugin;
     
+    inhibit->bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
     inhibit_plugin_construct (inhibit);
     
     inhibit_plugin_connect (inhibit);

@@ -139,6 +139,13 @@ xfpm_notify_closed_cb (NotifyNotification *n, XfpmNotify *notify)
     g_object_unref (G_OBJECT(n));
 }
 
+static gboolean
+xfpm_notify_show (NotifyNotification *n)
+{
+    notify_notification_show (n, NULL);
+    return FALSE;
+}
+
 static void
 xfpm_notify_close_notification (XfpmNotify *notify )
 {
@@ -216,5 +223,5 @@ void xfpm_notify_present_notification (XfpmNotify *notify, NotifyNotification *n
 	notify->priv->notification = n;
     }
     
-    notify_notification_show (n, NULL);
+    g_idle_add ((GSourceFunc) xfpm_notify_show, n);
 }
