@@ -57,7 +57,6 @@ static void xfpm_inhibit_dbus_init	  (XfpmInhibit *inhibit);
 
 struct XfpmInhibitPrivate
 {
-    XfpmScreenSaver *srv;
     GHashTable      *hash;
     gboolean         inhibited;
 };
@@ -73,13 +72,6 @@ static guint signals[LAST_SIGNAL] = { 0 };
 static gpointer xfpm_inhibit_object = NULL;
 
 G_DEFINE_TYPE (XfpmInhibit, xfpm_inhibit, G_TYPE_OBJECT)
-
-static void
-xfpm_inhibit_screen_saver_inhibited_cb (XfpmScreenSaver *srv, gboolean is_inhibited, XfpmInhibit *inhibit)
-{
-    //inhibit->priv->inhibited = is_inhibited;
-    //g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, is_inhibited);
-}
 
 static void
 xfpm_inhibit_class_init(XfpmInhibitClass *klass)
@@ -109,11 +101,6 @@ xfpm_inhibit_init(XfpmInhibit *inhibit)
     
     inhibit->priv->hash = g_hash_table_new_full (NULL, NULL, NULL, g_free);
     
-    inhibit->priv->srv = xfpm_screen_saver_new ();
-    
-    g_signal_connect (inhibit->priv->srv, "screen-saver-inhibited",
-		      G_CALLBACK(xfpm_inhibit_screen_saver_inhibited_cb), inhibit);
-		      
     xfpm_inhibit_dbus_init (inhibit);
 }
 
@@ -124,9 +111,6 @@ xfpm_inhibit_finalize(GObject *object)
 
     inhibit = XFPM_INHIBIT(object);
     
-    if ( inhibit->priv->srv)
-	g_object_unref (inhibit->priv->srv);
-	
     g_hash_table_destroy (inhibit->priv->hash);
 
     G_OBJECT_CLASS(xfpm_inhibit_parent_class)->finalize(object);

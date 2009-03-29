@@ -52,7 +52,7 @@
 #include "xfpm-idle.h"
 #include "xfpm-config.h"
 #include "xfpm-adapter.h"
-#include "xfpm-inhibit.h"
+#include "xfpm-screen-saver.h"
 
 /* Init */
 static void xfpm_brightness_hal_class_init (XfpmBrightnessHalClass *klass);
@@ -64,13 +64,13 @@ static void xfpm_brightness_hal_finalize   (GObject *object);
 
 struct XfpmBrightnessHalPrivate
 {
-    DBusGProxy     *proxy;
+    DBusGProxy      *proxy;
     
-    XfpmXfconf     *conf;
-    XfpmIdle       *idle;
-    XfpmButtonXf86 *button;
-    XfpmAdapter    *adapter;
-    XfpmInhibit    *inhibit;
+    XfpmXfconf      *conf;
+    XfpmIdle        *idle;
+    XfpmButtonXf86  *button;
+    XfpmAdapter     *adapter;
+    XfpmScreenSaver *saver;
     
     gint            max_level;
     gint            hw_level;
@@ -324,7 +324,7 @@ xfpm_brightness_hal_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, 
 }
 
 static void
-xfpm_brightness_hal_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmBrightnessHal *brg)
+xfpm_brightness_hal_inhibit_changed_cb (XfpmScreenSaver *saver, gboolean inhibited, XfpmBrightnessHal *brg)
 {
     TRACE("Inhibit changed %s", xfpm_bool_to_string (inhibited));
     brg->priv->inhibited = inhibited;
@@ -394,9 +394,9 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
 	brg->priv->conf     = xfpm_xfconf_new ();
 	brg->priv->button   = xfpm_button_xf86_new ();
 	brg->priv->adapter  = xfpm_adapter_new ();
-	brg->priv->inhibit  = xfpm_inhibit_new ();
+	brg->priv->saver    = xfpm_screen_saver_new ();
 	
-	g_signal_connect (brg->priv->inhibit, "has-inhibit-changed",
+	g_signal_connect (brg->priv->saver, "screen-saver-inhibited",
 			  G_CALLBACK(xfpm_brightness_hal_inhibit_changed_cb), brg);
 	
 	brg->priv->on_battery = !xfpm_adapter_get_present (brg->priv->adapter);
@@ -434,17 +434,13 @@ xfpm_brightness_hal_finalize (GObject *object)
     if ( brg->priv->proxy )
 	g_object_unref (brg->priv->proxy);
     
-    if ( brg->priv->idle )
-	g_object_unref (brg->priv->idle);
+    g_object_unref (brg->priv->idle);
 	
-    if ( brg->priv->conf )
-	g_object_unref (brg->priv->conf);
+    g_object_unref (brg->priv->conf);
 	
-    if (brg->priv->adapter)
-	g_object_unref (brg->priv->adapter);
+    g_object_unref (brg->priv->adapter);
 	
-    if ( brg->priv->inhibit )
-	g_object_unref (brg->priv->inhibit);
+    g_object_unref (brg->priv->saver);
 	
     G_OBJECT_CLASS(xfpm_brightness_hal_parent_class)->finalize(object);
 }

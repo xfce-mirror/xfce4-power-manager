@@ -38,7 +38,7 @@
 #include "libxfpm/xfpm-common.h"
 #include "libxfpm/xfpm-string.h"
 
-#include "xfpm-settings_glade.h"
+#include "xfpm-settings-glade.h"
 
 #include "xfpm-config.h"
 

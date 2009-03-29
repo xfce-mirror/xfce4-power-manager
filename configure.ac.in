@@ -2,8 +2,8 @@ m4_define([intltool_minimum_version], [0.31])
 m4_define([xfpm_version_major],  [0])
 m4_define([xfpm_version_minor],  [8])
 m4_define([xfpm_version_micro],  [0])
-m4_define([xfpm_version_build],  [r@REVISION@])
-m4_define([xfpm_version_tag],[svn])
+m4_define([xfpm_version_build],  [])
+m4_define([xfpm_version_tag],[alpha])
 m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_version_micro()ifelse(xfpm_version_tag(), [svn], [xfpm_version_tag().xfpm_version_build()], [xfpm_version_tag()])])
 
 AC_INIT([xfce4-power-manager], [xfpm_version], [http://bugzilla.xfce.org/])
@@ -75,6 +75,7 @@ XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0],[xfconf_minimum_version])
 XDT_CHECK_PACKAGE([LIBXFCE4GUI], [libxfcegui4-1.0],[libxfcegui4_minimum_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_version])
 XDT_CHECK_PACKAGE([LIBGLADE], [libglade-2.0],[glade_minimum_version])
+XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
 
 #=======================================================#
 #           Check for DPMS support                      #
@@ -93,15 +94,6 @@ if test x"$enable_dpms" = x"yes"; then
         ],[])
 fi
 AC_SUBST([DPMS_LIBS])
-
-#=======================================================#
-#           Check for availability of libnotify         #
-#=======================================================#
-LIBNOTIFY_FOUND="no"
-XDT_CHECK_OPTIONAL_PACKAGE([LIBNOTIFY],
-                       [libnotify], [libnotify_minimum_version],
-                       [libnotify], 
-                       [libnotify library], [yes])
 
 #=======================================================#
 #                 Panel plugins ?                       #
@@ -155,7 +147,6 @@ echo "
 	prefix:			$prefix
 	xdg autostart:		$sysconfdir/xdg/autostart
    	DPMS         support:   $have_dpms
-   	Notification support:   $LIBNOTIFY_FOUND
   	Build panel  plugins:   $build_panel_plugins
    	Debug        support:   $enable_debug
 --------------------------------------------------

@@ -2,7 +2,7 @@ bin_PROGRAMS = xfce4-power-manager-settings
 
 xfce4_power_manager_settings_SOURCES = 				\
 	xfce-power-manager-dbus-client.h			\
-	xfpm-settings_glade.h					\
+	xfpm-settings-glade.h					\
 	xfpm-settings-main.c					\
 	xfpm-settings.c						\
 	xfpm-settings.h						\
@@ -39,12 +39,12 @@ if MAINTAINER_MODE
 
 BUILT_SOURCES = 				\
 	xfce-power-manager-dbus-client.h	\
-	xfpm-settings_glade.h
+	xfpm-settings-glade.h
 
 xfce-power-manager-dbus-client.h: $(top_srcdir)/src/org.xfce.Power.Manager.xml
 	dbus-binding-tool --mode=glib-client --prefix=xfpm_manager $< >$@
 
-xfpm-settings_glade.h: $(srcdir)/xfpm-settings.glade
+xfpm-settings-glade.h: $(srcdir)/xfpm-settings.glade
 	exo-csource --static --name=xfpm_settings_glade $< >$@
 
 endif
@@ -60,7 +60,8 @@ desktop_DATA =	$(desktop_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST = 					\
 	xfce-power-manager-dbus-client.h	\
-	xfpm-settings_glade.h			\
+	xfpm-settings-glade.h			\
+	xfpm-settings.glade			\
 	$(desktop_in_files)
 
 DISTCLEANFILES =				\

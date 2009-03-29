@@ -51,7 +51,7 @@
 #include "xfpm-dpms.h"
 #include "xfpm-adapter.h"
 #include "xfpm-xfconf.h"
-#include "xfpm-inhibit.h"
+#include "xfpm-screen-saver.h"
 #include "xfpm-config.h"
 
 #ifdef HAVE_DPMS
@@ -66,9 +66,9 @@ static void xfpm_dpms_finalize   (GObject *object);
 
 struct XfpmDpmsPrivate
 {
-    XfpmXfconf    *conf;
-    XfpmAdapter   *adapter;
-    XfpmInhibit   *inhibit;
+    XfpmXfconf      *conf;
+    XfpmAdapter     *adapter;
+    XfpmScreenSaver *saver;
     
     gboolean       dpms_capable;
     gboolean       inhibited;
@@ -205,7 +205,7 @@ xfpm_dpms_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmDpms *
 }
 
 static void
-xfpm_dpms_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmDpms *dpms)
+xfpm_dpms_inhibit_changed_cb (XfpmScreenSaver *saver, gboolean inhibited, XfpmDpms *dpms)
 {
     dpms->priv->inhibited = inhibited;
     
@@ -235,10 +235,10 @@ xfpm_dpms_init(XfpmDpms *dpms)
     if ( dpms->priv->dpms_capable )
     {
 	dpms->priv->adapter = xfpm_adapter_new ();
-	dpms->priv->inhibit = xfpm_inhibit_new ();
+	dpms->priv->saver   = xfpm_screen_saver_new ();
 	dpms->priv->conf    = xfpm_xfconf_new  ();
     
-	g_signal_connect (dpms->priv->inhibit, "has-inhibit-changed",
+	g_signal_connect (dpms->priv->saver, "screen-saver-inhibited",
 			  G_CALLBACK(xfpm_dpms_inhibit_changed_cb), dpms);
     
 	g_signal_connect (dpms->priv->adapter, "adapter-changed",
@@ -256,14 +256,11 @@ xfpm_dpms_finalize(GObject *object)
 
     dpms = XFPM_DPMS (object);
     
-    if ( dpms->priv->conf )
-	g_object_unref (dpms->priv->conf);
+    g_object_unref (dpms->priv->conf);
 	
-    if ( dpms->priv->adapter )
-	g_object_unref (dpms->priv->adapter);
+    g_object_unref (dpms->priv->adapter);
 	
-    if ( dpms->priv->inhibit )
-	g_object_unref ( dpms->priv->inhibit);
+    g_object_unref ( dpms->priv->saver);
 
     G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }

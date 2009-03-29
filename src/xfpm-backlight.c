@@ -68,7 +68,10 @@ xfpm_backlight_init(XfpmBacklight *bk)
     bk->priv = XFPM_BACKLIGHT_GET_PRIVATE(bk);
     
     bk->priv->br     = xfpm_brightness_hal_new ();
-    bk->priv->has_hw = xfpm_brightness_hal_has_hw(bk->priv->br);
+    bk->priv->has_hw = xfpm_brightness_hal_has_hw (bk->priv->br);
+    
+    if (!bk->priv->has_hw )
+	g_object_unref (bk->priv->br);
     
     xfpm_backlight_dbus_init (bk);
 }
@@ -79,6 +82,9 @@ xfpm_backlight_finalize(GObject *object)
     XfpmBacklight *bk;
 
     bk = XFPM_BACKLIGHT(object);
+    
+    if ( bk->priv->has_hw )
+	g_object_unref (bk->priv->br);
     
     G_OBJECT_CLASS(xfpm_backlight_parent_class)->finalize(object);
 }
