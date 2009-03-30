@@ -109,14 +109,14 @@ int main(int argc, char **argv)
 	g_printerr("\n");
 	return EXIT_FAILURE;
     }
+
+    if ( !g_thread_supported () )
+	g_thread_init (NULL);
+       
+    dbus_g_thread_init ();
     
-    if ( no_daemon == FALSE && daemon(0,0) )
-    {
-	g_critical ("Could not daemonize");
-    }
-        
     bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
-    
+            
     if ( error )
     {
 	gchar *message = g_strdup(_("Unable to get connection to the message bus session"));
@@ -227,6 +227,10 @@ int main(int argc, char **argv)
     else
     {	
 	TRACE("Starting the power manager\n");
+	if ( no_daemon == FALSE && daemon(0,0) )
+	{
+	    g_critical ("Could not daemonize");
+	}
     	XfpmManager *manager;
     	manager = xfpm_manager_new(bus);
     	xfpm_manager_start(manager);

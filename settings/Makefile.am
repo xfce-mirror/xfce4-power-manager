@@ -16,6 +16,7 @@ xfce4_power_manager_settings_CFLAGS =				\
 	-DG_LOG_DOMAIN=\"xfce4-power-manager-settings\" 	\
 	$(GTK_CFLAGS)						\
 	$(GLIB_CFLAGS)						\
+	$(GTHREAD_CFLAGS)					\
 	$(DBUS_CFLAGS)						\
 	$(DBUS_GLIB_CFLAGS)					\
 	$(LIBXFCE4GUI_CFLAGS)					\
@@ -26,6 +27,7 @@ xfce4_power_manager_settings_CFLAGS =				\
 xfce4_power_manager_settings_LDADD   =				\
 	$(GTK_LIBS)						\
 	$(GLIB_LIBS)						\
+	$(GTHREAD_LIBS)						\
 	$(DBUS_LIBS)						\
 	$(DBUS_GLIB_LIBS)					\
 	$(LIBXFCE4GUI_LIBS)					\

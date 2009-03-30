@@ -117,6 +117,11 @@ int main(int argc, char **argv)
 	    return EXIT_FAILURE;
     	}
 	
+	if ( !g_thread_supported () )
+	    g_thread_init (NULL);
+	    
+	dbus_g_thread_init ();
+	
 	channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
 	
    	proxy = dbus_g_proxy_new_for_name(bus,

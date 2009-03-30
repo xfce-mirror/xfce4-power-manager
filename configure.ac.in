@@ -69,6 +69,8 @@ m4_define([libnotify_minimum_version], [0.4.1])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
+XDT_CHECK_PACKAGE([GOBJECT], [gobject-2.0], [glib_minimum_version])
+XDT_CHECK_PACKAGE([GTHREAD], [gthread-2.0], [glib_minimum_version])
 XDT_CHECK_PACKAGE([DBUS], [dbus-1], [dbus_minimum_version])
 XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [dbus_glib_minimum_version])
 XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0],[xfconf_minimum_version])

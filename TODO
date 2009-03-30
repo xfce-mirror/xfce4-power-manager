@@ -1,3 +1,28 @@
-* : Should we inhibit the power manager when a screensaver is inhibited by a movie player
+* : Should we inhibit the power manager when a screensaver is inhibited by a movie player?
 
-* : 
+* : Brightness popup indicating the current level.
+
+* : Search for leacks if any.
+
+* : Option to sleep when system is idle for a long time (does anybody needs this?).
+
+* : OnBattery and OnLowBattery DBus signals.
+
+* : What we do if the application inhibiting the power manager crahes and didn't send us the cookie
+    back, the power manager will stay in inhibit state until a session restart, should we monitor
+    the DBusConnection opened by that application?
+    
+* : Block any other notification when OnCriticalPower notification is opened, in the way that
+    we don't close it before the user close it or the Adapter is plugged in again.
+
+* : Support Suspend Hybrid!
+    
+* : Probably an exit option in the context menu?
+
+* : Use the session logout when we do shutdown, probably use the shutdown session interface anyway.
+
+* : Translations need to be updated.
+
+* : Man pages for xfce4-power-manager and its settings.
+
+* : Updating the documentations.
