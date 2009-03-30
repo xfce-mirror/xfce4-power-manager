@@ -23,18 +23,8 @@
 #endif
 
 #include <stdio.h>
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
 
 #include <dbus/dbus-glib.h>
 
@@ -72,8 +62,8 @@ struct XfpmBrightnessHalPrivate
     XfpmAdapter     *adapter;
     XfpmScreenSaver *saver;
     
-    gint            max_level;
-    gint            hw_level;
+    guint           max_level;
+    guint           hw_level;
     gboolean        brightness_in_hw;
     gboolean        hw_found;
     gboolean        block;
@@ -89,6 +79,15 @@ enum
     TIMEOUT_ON_AC_ID,
     TIMEOUT_ON_BATTERY_ID
 };
+
+enum
+{
+    BRIGHTNESS_UP,
+    BRIGHTNESS_DOWN,
+    LAST_SIGNAL
+};
+
+static guint signals [LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(XfpmBrightnessHal, xfpm_brightness_hal, G_TYPE_OBJECT)
 
@@ -218,6 +217,7 @@ xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
 	TRACE ("Brightness key up");
 	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level + 1 );
 	brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
+	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
     }
 }
 
@@ -232,6 +232,7 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
 	TRACE("Brightness key down");
 	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level - 1 );
 	brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
+	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_DOWN], 0, brg->priv->hw_level);
     }
 }
 
@@ -367,6 +368,24 @@ xfpm_brightness_hal_class_init(XfpmBrightnessHalClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
+     signals [BRIGHTNESS_UP] = 
+        g_signal_new("brigthness-up",
+                      XFPM_TYPE_BRIGHTNESS_HAL,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET (XfpmBrightnessHalClass, brightness_up),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__UINT,
+                      G_TYPE_NONE, 1, G_TYPE_UINT);
+
+    signals [BRIGHTNESS_DOWN] = 
+        g_signal_new("brigthness-down",
+                      XFPM_TYPE_BRIGHTNESS_HAL,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET (XfpmBrightnessHalClass, brightness_down),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__UINT,
+                      G_TYPE_NONE, 1, G_TYPE_UINT);
+
     object_class->finalize = xfpm_brightness_hal_finalize;
 
     g_type_class_add_private(klass,sizeof(XfpmBrightnessHalPrivate));
@@ -434,13 +453,13 @@ xfpm_brightness_hal_finalize (GObject *object)
     if ( brg->priv->proxy )
 	g_object_unref (brg->priv->proxy);
     
-    g_object_unref (brg->priv->idle);
-	
     g_object_unref (brg->priv->conf);
 	
     g_object_unref (brg->priv->adapter);
 	
     g_object_unref (brg->priv->saver);
+    
+    g_object_unref (brg->priv->idle);
 	
     G_OBJECT_CLASS(xfpm_brightness_hal_parent_class)->finalize(object);
 }
@@ -465,4 +484,11 @@ void xfpm_brightness_hal_update_level (XfpmBrightnessHal *brg, guint level)
     g_return_if_fail (XFPM_IS_BRIGHTNESS_HAL (brg));
     
     brg->priv->hw_level = level;
+}
+
+guint xfpm_brightness_hal_get_max_level (XfpmBrightnessHal *brg)
+{
+    g_return_val_if_fail (XFPM_IS_BRIGHTNESS_HAL (brg), 0);
+    
+    return brg->priv->max_level;
 }

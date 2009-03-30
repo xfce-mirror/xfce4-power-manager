@@ -37,6 +37,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-backlight.h			\
 	xfpm-brightness-hal.c			\
 	xfpm-brightness-hal.h			\
+	xfpm-brightness-widget.c		\
+	xfpm-brightness-widget.h		\
 	xfpm-idle.c				\
 	xfpm-idle.h				\
 	xfpm-inhibit.c				\

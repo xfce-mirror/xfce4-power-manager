@@ -280,7 +280,10 @@ xfpm_idle_init (XfpmIdle *idle)
 static void
 xfpm_idle_free_alarm (XfpmIdle *idle, IdleAlarm *alarm)
 {
+    gdk_error_trap_push ();
     XSyncDestroyAlarm (GDK_DISPLAY(), alarm->xalarm);
+    gdk_flush ();
+    gdk_error_trap_pop ();
     g_free(alarm);
     g_ptr_array_remove (idle->priv->array, alarm);
 }
@@ -293,7 +296,7 @@ xfpm_idle_finalize(GObject *object)
     IdleAlarm *alarm;
     
     idle = XFPM_IDLE(object);
-    
+
     for ( i = 0; i<idle->priv->array->len; i++) 
     {
 	alarm = g_ptr_array_index (idle->priv->array, i);

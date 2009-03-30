@@ -30,6 +30,7 @@
 
 #include "xfpm-backlight.h"
 #include "xfpm-brightness-hal.h"
+#include "xfpm-brightness-widget.h"
 
 /* Init */
 static void xfpm_backlight_class_init (XfpmBacklightClass *klass);
@@ -44,11 +45,25 @@ static void xfpm_backlight_dbus_init       (XfpmBacklight *bk);
 
 struct XfpmBacklightPrivate
 {
-    XfpmBrightnessHal *br;
+    XfpmBrightnessHal    *br;
+    XfpmBrightnessWidget *widget;
+    
     gboolean has_hw;
 };
 
 G_DEFINE_TYPE(XfpmBacklight, xfpm_backlight, G_TYPE_OBJECT)
+
+static void
+xfpm_backlight_brightness_up (XfpmBrightnessHal *brg, guint level, XfpmBacklight *bk)
+{
+    xfpm_brightness_widget_set_level (bk->priv->widget, level);
+}
+
+static void
+xfpm_backlight_brightness_down (XfpmBrightnessHal *brg, guint level, XfpmBacklight *bk)
+{
+    xfpm_brightness_widget_set_level (bk->priv->widget, level);
+}
 
 static void
 xfpm_backlight_class_init(XfpmBacklightClass *klass)
@@ -65,13 +80,28 @@ xfpm_backlight_class_init(XfpmBacklightClass *klass)
 static void
 xfpm_backlight_init(XfpmBacklight *bk)
 {
+    guint max_level;
+    
     bk->priv = XFPM_BACKLIGHT_GET_PRIVATE(bk);
     
     bk->priv->br     = xfpm_brightness_hal_new ();
     bk->priv->has_hw = xfpm_brightness_hal_has_hw (bk->priv->br);
     
-    if (!bk->priv->has_hw )
+    if ( bk->priv->has_hw == FALSE )
 	g_object_unref (bk->priv->br);
+    else
+    {
+	bk->priv->widget = xfpm_brightness_widget_new ();
+	g_signal_connect (G_OBJECT(bk->priv->br), "brigthness-up",
+			  G_CALLBACK (xfpm_backlight_brightness_up), bk);
+			  
+	g_signal_connect (G_OBJECT(bk->priv->br), "brigthness-down",
+			  G_CALLBACK (xfpm_backlight_brightness_down), bk);
+	
+	max_level = xfpm_brightness_hal_get_max_level (bk->priv->br);
+	xfpm_brightness_widget_set_max_level (bk->priv->widget,
+					      max_level -1 );
+    }
     
     xfpm_backlight_dbus_init (bk);
 }
@@ -83,8 +113,11 @@ xfpm_backlight_finalize(GObject *object)
 
     bk = XFPM_BACKLIGHT(object);
     
-    if ( bk->priv->has_hw )
+    if ( bk->priv->has_hw == TRUE )
+    {
 	g_object_unref (bk->priv->br);
+	g_object_unref (bk->priv->widget);
+    }
     
     G_OBJECT_CLASS(xfpm_backlight_parent_class)->finalize(object);
 }

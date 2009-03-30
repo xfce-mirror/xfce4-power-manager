@@ -347,8 +347,6 @@ brightness_plugin_create_popup (brightness_t *plugin)
     gtk_box_pack_start (GTK_BOX(box), plugin->scale, TRUE, TRUE, 0);
     gtk_box_pack_start (GTK_BOX(box), plugin->minus, FALSE, FALSE, 0);
     
-    
-    plugin->win = gtk_window_new (GTK_WINDOW_POPUP);
     gtk_window_set_type_hint (GTK_WINDOW(plugin->win), GDK_WINDOW_TYPE_HINT_UTILITY );
     
     gtk_container_add (GTK_CONTAINER(plugin->win), box);

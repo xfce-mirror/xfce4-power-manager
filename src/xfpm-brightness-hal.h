@@ -42,14 +42,23 @@ typedef struct
 {
     GObjectClass 			parent_class;
     
+    void                                (*brightness_up)		    (XfpmBrightnessHal *brg,
+									     guint level);
+									     
+    void                                (*brightness_down)		    (XfpmBrightnessHal *brg,
+									     guint level);
+    
 } XfpmBrightnessHalClass;
 
 GType        				xfpm_brightness_hal_get_type        (void) G_GNUC_CONST;
 XfpmBrightnessHal      		       *xfpm_brightness_hal_new             (void);
 
 gboolean                                xfpm_brightness_hal_has_hw          (XfpmBrightnessHal *brg) G_GNUC_PURE;
+
 void                                    xfpm_brightness_hal_update_level    (XfpmBrightnessHal *brg,
 									     guint level);
+
+guint                                   xfpm_brightness_hal_get_max_level   (XfpmBrightnessHal *brg) G_GNUC_PURE;									     
 G_END_DECLS
 
 #endif /* __XFPM_BRIGHTNESS_HAL_H */
