@@ -212,7 +212,7 @@ void xfpm_manager_start (XfpmManager *manager)
     
     if (!hal_running )
     {
-	xfpm_error (_("Xfce power manager"), _("Hal daemon is not running"));
+	xfpm_error (_("Xfce power manager"), _("HAL daemon is not running"));
 	goto out;
     }
     manager->priv->engine = xfpm_engine_new ();

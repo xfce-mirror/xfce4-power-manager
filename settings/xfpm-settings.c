@@ -883,7 +883,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_latop, gboolean 
     if ( system_latop )
     {
 	gtk_widget_set_tooltip_text (critical_level, 
-				     _("When the main power on the computer reaches this value of charge percentage"));
+				     _("When all the power sources of the computer reach this charge level"));
     
 	g_signal_connect (critical_level, "output", 
 			  G_CALLBACK(critical_spin_output_cb), NULL);

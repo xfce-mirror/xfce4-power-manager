@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-29 19:40+0200\n"
+"POT-Creation-Date: 2009-03-30 14:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,8 +196,7 @@ msgid "When battery is charging or discharging"
 msgstr ""
 
 #: ../settings/xfpm-settings.c:886
-msgid ""
-"When the main power on the computer reaches this value of charge percentage"
+msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
 
 #: ../settings/xfpm-settings.c:1021 ../settings/xfpm-settings.c:1026
@@ -212,24 +211,25 @@ msgstr ""
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:134
+#: ../settings/xfpm-settings-main.c:139
 msgid "Xfce Power Manager Settings"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:135
+#: ../settings/xfpm-settings-main.c:140
 msgid "Unable to connect to Xfce Power Manager"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:154 ../src/xfpm-main.c:141
+#: ../settings/xfpm-settings-main.c:159 ../src/xfpm-main.c:141
+#: ../src/xfpm-main.c:188
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:157
+#: ../settings/xfpm-settings-main.c:162
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:159
+#: ../settings/xfpm-settings-main.c:164
 msgid "Run"
 msgstr ""
 
@@ -410,7 +410,7 @@ msgid "Do not daemonize"
 msgstr ""
 
 #: ../src/xfpm-main.c:74
-msgid "Restart the running instance of xfce power manager"
+msgid "Restart the running instance of Xfce power manager"
 msgstr ""
 
 #: ../src/xfpm-main.c:75
@@ -437,10 +437,6 @@ msgstr ""
 
 #: ../src/xfpm-main.c:122
 msgid "Unable to get connection to the message bus session"
-msgstr ""
-
-#: ../src/xfpm-main.c:188
-msgid "Xfce power manager is not running to releod it"
 msgstr ""
 
 #: ../src/xfpm-main.c:218
@@ -514,7 +510,7 @@ msgid "Suspend not supported"
 msgstr ""
 
 #: ../src/xfpm-manager.c:215
-msgid "Hal daemon is not running"
+msgid "HAL daemon is not running"
 msgstr ""
 
 #: ../src/xfpm-inhibit.c:247
@@ -553,7 +549,7 @@ msgstr ""
 #: ../src/xfpm-shutdown.c:359 ../src/xfpm-shutdown.c:377
 #: ../src/xfpm-shutdown.c:409
 #, c-format
-msgid "Hal daemon is currently not connected"
+msgid "HAL daemon is currently not connected"
 msgstr ""
 
 #: ../src/xfce4-power-manager.desktop.in.h:1

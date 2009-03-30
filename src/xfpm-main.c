@@ -71,7 +71,7 @@ int main(int argc, char **argv)
     {
 	{ "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &run, NULL, NULL },
 	{ "no-daemon",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &no_daemon, N_("Do not daemonize"), NULL },
-	{ "restart", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &reload, N_("Restart the running instance of xfce power manager"), NULL},
+	{ "restart", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &reload, N_("Restart the running instance of Xfce power manager"), NULL},
 	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
 	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
 	{ "version", 'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &version, N_("Version information"), NULL },
@@ -185,7 +185,7 @@ int main(int argc, char **argv)
 				      "org.xfce.PowerManager") )
 	{
 	    xfpm_info (_("Xfce Power Manager"),
-		       _("Xfce power manager is not running to releod it"));
+		       _("Xfce power manager is not running"));
 		       
 	    
 	    return EXIT_FAILURE;

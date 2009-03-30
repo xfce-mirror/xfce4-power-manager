@@ -356,7 +356,7 @@ void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
     
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("Hal daemon is currently not connected"));
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
 	return;
     }
     
@@ -374,7 +374,7 @@ void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
     
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("Hal daemon is currently not connected"));
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
 	return;
     }
 
@@ -406,7 +406,7 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
     
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("Hal daemon is currently not connected"));
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
 	return;
     }
     
