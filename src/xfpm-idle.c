@@ -278,7 +278,7 @@ xfpm_idle_init (XfpmIdle *idle)
 }
 
 static void
-xfpm_idle_free_alarm (XfpmIdle *idle, IdleAlarm *alarm)
+xfpm_idle_free_alarm_internal (XfpmIdle *idle, IdleAlarm *alarm)
 {
     gdk_error_trap_push ();
     XSyncDestroyAlarm (GDK_DISPLAY(), alarm->xalarm);
@@ -300,7 +300,7 @@ xfpm_idle_finalize(GObject *object)
     for ( i = 0; i<idle->priv->array->len; i++) 
     {
 	alarm = g_ptr_array_index (idle->priv->array, i);
-	xfpm_idle_free_alarm (idle, alarm);
+	xfpm_idle_free_alarm_internal (idle, alarm);
     }
     g_ptr_array_free (idle->priv->array, TRUE);
     
@@ -342,3 +342,22 @@ xfpm_idle_set_alarm (XfpmIdle *idle, guint id, guint timeout)
     return TRUE;
 }
 
+gboolean xfpm_idle_free_alarm (XfpmIdle *idle, guint id)
+{
+    IdleAlarm *alarm;
+    
+    g_return_val_if_fail (XFPM_IS_IDLE (idle), FALSE);
+    
+    if ( id == 0 )
+	return FALSE;
+	
+    alarm = xfpm_idle_find_alarm (idle, id);
+    
+    if ( alarm )
+    {
+	xfpm_idle_free_alarm_internal (idle, alarm);
+	return TRUE;
+    }
+    
+    return FALSE;
+}

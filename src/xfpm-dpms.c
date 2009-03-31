@@ -194,6 +194,7 @@ xfpm_dpms_refresh (XfpmDpms *dpms)
 static void
 xfpm_dpms_settings_changed_cb (XfpmXfconf *conf, XfpmDpms *dpms)
 {
+    TRACE ("User settings changed");
     xfpm_dpms_refresh (dpms);
 }
 
@@ -231,7 +232,7 @@ xfpm_dpms_init(XfpmDpms *dpms)
     dpms->priv = XFPM_DPMS_GET_PRIVATE(dpms);
     
     dpms->priv->dpms_capable = DPMSCapable (GDK_DISPLAY());
-    
+
     if ( dpms->priv->dpms_capable )
     {
 	dpms->priv->adapter = xfpm_adapter_new ();
@@ -246,6 +247,10 @@ xfpm_dpms_init(XfpmDpms *dpms)
 			  
 	g_signal_connect (dpms->priv->conf, "dpms-settings-changed",
 			  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
+    }
+    else
+    {
+	g_warning ("Monitor is not DPMS capable");
     }
 }
 

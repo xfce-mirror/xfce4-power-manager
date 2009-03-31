@@ -52,6 +52,8 @@ static void xfpm_brightness_hal_finalize   (GObject *object);
 #define XFPM_BRIGHTNESS_HAL_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_BRIGHTNESS_HAL, XfpmBrightnessHalPrivate))
 
+#define ALARM_DISABLED 9
+
 struct XfpmBrightnessHalPrivate
 {
     DBusGProxy      *proxy;
@@ -345,14 +347,23 @@ xfpm_brightness_hal_set_timeouts (XfpmBrightnessHal *brg )
     
     xfpm_brightness_get_user_timeouts (brg, &on_ac, &on_battery);
     
-    if ( on_ac == 9 )
-	on_ac = 0;
-    if ( on_battery == 9 )
-	on_battery = 0;
+    if ( on_ac == ALARM_DISABLED )
+    {
+	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID );
+    }
+    else
+    {
+	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID, on_ac * 1000);
+    }
     
-    xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID, on_ac * 1000);
-    
-    xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID, on_battery * 1000);
+    if ( on_battery == ALARM_DISABLED )
+    {
+	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID );
+    }
+    else
+    {
+	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID, on_battery * 1000);
+    }
     
     xfpm_idle_alarm_reset_all (brg->priv->idle);
 }
@@ -360,6 +371,7 @@ xfpm_brightness_hal_set_timeouts (XfpmBrightnessHal *brg )
 static void
 xfpm_brightness_hal_settings_changed_cb (XfpmXfconf *conf, XfpmBrightnessHal *brg)
 {
+    TRACE ("User settings changed");
     xfpm_brightness_hal_set_timeouts (brg);
 }
 
@@ -388,7 +400,7 @@ xfpm_brightness_hal_class_init(XfpmBrightnessHalClass *klass)
 
     object_class->finalize = xfpm_brightness_hal_finalize;
 
-    g_type_class_add_private(klass,sizeof(XfpmBrightnessHalPrivate));
+    g_type_class_add_private (klass, sizeof (XfpmBrightnessHalPrivate));
 }
 
 static void

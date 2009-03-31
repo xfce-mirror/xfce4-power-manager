@@ -408,7 +408,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 			 g_cclosure_marshal_VOID__VOID,
 			 G_TYPE_NONE, 0, G_TYPE_NONE);
     
-     signals[DPMS_SETTINGS_CHANGED] =
+     signals[POWER_SAVE_SETTINGS_CHANGED] =
 	    g_signal_new("power-save-settings-changed",
 			 XFPM_TYPE_XFCONF,
 			 G_SIGNAL_RUN_LAST,
