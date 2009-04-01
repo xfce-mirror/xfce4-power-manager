@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager 0.6.0\n"
+"Project-Id-Version: xfce4-power-manager 0.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-29 18:36+0200\n"
-"PO-Revision-Date: 2009-01-15 20:05+0100\n"
+"POT-Creation-Date: 2009-03-30 14:57+0200\n"
+"PO-Revision-Date: 2009-04-01 18:49+0100\n"
 "Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -17,6 +17,259 @@ msgstr ""
 "X-Poedit-Language: Danish\n"
 "X-Poedit-Country: DENMARK\n"
 "X-Poedit-SourceCharset: utf-8\n"
+
+#: ../settings/xfpm-settings.glade.h:1
+msgid "<b>Actions</b>"
+msgstr "<b>Handlinger</b>"
+
+#: ../settings/xfpm-settings.glade.h:2
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Avancerede indstillinger</b>"
+
+#: ../settings/xfpm-settings.glade.h:3
+msgid "<b>Brightness</b>"
+msgstr "<b>Lysstyrke</b>"
+
+#: ../settings/xfpm-settings.glade.h:4
+msgid "<b>General Options</b>"
+msgstr "<b>Generelle indstillinger</b>"
+
+#: ../settings/xfpm-settings.glade.h:5
+msgid "<b>Monitor</b>"
+msgstr "<b>Skærm</b>"
+
+#: ../settings/xfpm-settings.glade.h:6
+#: ../settings/xfpm-settings.c:1035
+msgid "Advanced"
+msgstr "Avanceret"
+
+#: ../settings/xfpm-settings.glade.h:7
+#: ../settings/xfpm-settings.c:724
+msgid "Always show icon"
+msgstr "Vis altid ikon"
+
+#: ../settings/xfpm-settings.glade.h:8
+msgid "Consider the computer on low power at:"
+msgstr "Betragt computeren på lav strøm ved:"
+
+#: ../settings/xfpm-settings.glade.h:9
+msgid "Enable monitor power management control"
+msgstr "Aktivér strømstyring til skærm"
+
+#: ../settings/xfpm-settings.glade.h:10
+msgid "Enable notification"
+msgstr "Slå påmindelse til"
+
+#: ../settings/xfpm-settings.glade.h:11
+#: ../settings/xfpm-settings.c:992
+#: ../settings/xfpm-settings.c:997
+msgid "General"
+msgstr "Generel"
+
+#: ../settings/xfpm-settings.glade.h:12
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Lås skærmen når systemet går i hvile-/dvaletilstand"
+
+#: ../settings/xfpm-settings.glade.h:13
+#: ../settings/xfpm-settings.c:452
+#: ../settings/xfpm-settings.c:534
+#: ../settings/xfpm-settings.c:648
+#: ../settings/xfpm-settings.c:764
+#: ../settings/xfpm-settings.c:812
+msgid "Nothing"
+msgstr "Ingenting"
+
+#: ../settings/xfpm-settings.glade.h:14
+#: ../settings/xfpm-settings.c:1006
+#: ../settings/xfpm-settings.c:1011
+msgid "On AC"
+msgstr "Vekselstrøm"
+
+#: ../settings/xfpm-settings.glade.h:15
+msgid "On battery"
+msgstr "Batteristrøm"
+
+#: ../settings/xfpm-settings.glade.h:16
+msgid "Power manager settings"
+msgstr "Strømstyringsindstillinger"
+
+#: ../settings/xfpm-settings.glade.h:17
+msgid "Prefer power savings over performance"
+msgstr "Foretræk strømbesparelse fremfor ydelse"
+
+#: ../settings/xfpm-settings.glade.h:18
+msgid "Put display to sleep when computer is inactive for:"
+msgstr "Lad skærmen gå i hviletilstand når computer er inaktiv i:"
+
+#: ../settings/xfpm-settings.glade.h:19
+msgid "Reduce screen brightness when computer is inactive for:"
+msgstr "Reducér skærmens lysstyrke når computeren er inaktiv i:"
+
+#: ../settings/xfpm-settings.glade.h:20
+msgid "Set monitor sleep mode:"
+msgstr "Indstil skærmens hviletilstand:"
+
+#: ../settings/xfpm-settings.glade.h:21
+msgid "Standby"
+msgstr "Standby"
+
+#. Suspend menu option
+#: ../settings/xfpm-settings.glade.h:22
+#: ../settings/xfpm-settings.c:539
+#: ../settings/xfpm-settings.c:653
+#: ../settings/xfpm-settings.c:769
+#: ../settings/xfpm-settings.c:817
+#: ../src/xfpm-tray-icon.c:194
+#: ../src/xfpm-tray-icon.c:239
+msgid "Suspend"
+msgstr "Hviletilstand"
+
+#: ../settings/xfpm-settings.glade.h:23
+msgid "Switch off display when computer is inactive for:"
+msgstr "Sluk for skærmen når computeren er inaktiv i:"
+
+#: ../settings/xfpm-settings.glade.h:24
+msgid "System tray icon: "
+msgstr "Statusfeltikon:"
+
+#: ../settings/xfpm-settings.glade.h:25
+msgid "When battery power is critical:"
+msgstr "Ved kritisk strømniveau på batteri:"
+
+#: ../settings/xfpm-settings.glade.h:26
+msgid "When laptop lid is closed:"
+msgstr "Når bærbarlåg er lukket:"
+
+#: ../settings/xfpm-settings.glade.h:27
+msgid "When power button is pressed:"
+msgstr "Ved tryk på tænd-knap:"
+
+#: ../settings/xfpm-settings.glade.h:28
+msgid "When sleep button is pressed:"
+msgstr "Ved tryk på hvile-knap:"
+
+#: ../settings/xfpm-settings.glade.h:29
+#: ../settings/xfpm-settings-main.c:113
+#: ../src/xfpm-main.c:125
+#: ../src/xfpm-main.c:187
+#: ../src/xfpm-main.c:217
+#: ../src/xfpm-tray-icon.c:290
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Xfce Power Manager"
+msgstr "Strømstyring til Xfce"
+
+#: ../settings/xfpm-settings.glade.h:30
+msgid "gtk-close"
+msgstr "gtk-close"
+
+#: ../settings/xfpm-settings.glade.h:31
+msgid "gtk-help"
+msgstr "gtk-help"
+
+#: ../settings/xfpm-settings.c:307
+#: ../settings/xfpm-settings.c:323
+msgid "Never"
+msgstr "Aldrig"
+
+#: ../settings/xfpm-settings.c:310
+msgid "One minute"
+msgstr "Et minut"
+
+#: ../settings/xfpm-settings.c:312
+msgid "Minutes"
+msgstr "Minutter"
+
+#: ../settings/xfpm-settings.c:325
+msgid "Seconds"
+msgstr "Sekunder"
+
+#: ../settings/xfpm-settings.c:442
+#: ../settings/xfpm-settings.c:526
+msgid "Shutdown and hibernate operations not permitted"
+msgstr "Handlingerne luk ned og dvale er ikke tilladte"
+
+#. Hibernate menu option
+#: ../settings/xfpm-settings.c:457
+#: ../settings/xfpm-settings.c:545
+#: ../settings/xfpm-settings.c:659
+#: ../settings/xfpm-settings.c:775
+#: ../settings/xfpm-settings.c:823
+#: ../src/xfpm-tray-icon.c:167
+#: ../src/xfpm-tray-icon.c:224
+msgid "Hibernate"
+msgstr "Dvaletilstand"
+
+#: ../settings/xfpm-settings.c:461
+#: ../settings/xfpm-settings.c:779
+msgid "Shutdown"
+msgstr "Luk ned"
+
+#: ../settings/xfpm-settings.c:642
+#: ../settings/xfpm-settings.c:758
+#: ../settings/xfpm-settings.c:806
+#: ../settings/xfpm-settings.c:918
+msgid "Hibernate and suspend operations not permitted"
+msgstr "Handlinger dvale og hvile er ikke tilladte"
+
+#: ../settings/xfpm-settings.c:727
+msgid "When battery is present"
+msgstr "Når batteri er tilstede"
+
+#: ../settings/xfpm-settings.c:730
+msgid "When battery is charging or discharging"
+msgstr "Når batteri oplader eller aflader"
+
+#: ../settings/xfpm-settings.c:886
+msgid "When all the power sources of the computer reach this charge level"
+msgstr "Når alle strømkilder på denne computer når til dette ladeniveau"
+
+#: ../settings/xfpm-settings.c:1021
+#: ../settings/xfpm-settings.c:1026
+msgid "On Battery"
+msgstr "Batteristrøm"
+
+#: ../settings/xfpm-settings.c:1040
+msgid "Advance"
+msgstr "Avanceret"
+
+#: ../settings/xfpm-settings-main.c:113
+msgid "Failed to load power manager configuration, using defaults"
+msgstr "Kunne ikke indlæse indstillinger for strømstyring, bruger standardværdier"
+
+#: ../settings/xfpm-settings-main.c:139
+msgid "Xfce Power Manager Settings"
+msgstr "Strømstyringsindstillinger til Xfce"
+
+#: ../settings/xfpm-settings-main.c:140
+msgid "Unable to connect to Xfce Power Manager"
+msgstr "Kunne ikke forbinde til strømstyring til Xfce"
+
+#: ../settings/xfpm-settings-main.c:159
+#: ../src/xfpm-main.c:141
+#: ../src/xfpm-main.c:188
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Strømstyring til Xfce kører ikke"
+
+#: ../settings/xfpm-settings-main.c:162
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Strømstyring til Xfce4 kører ikke, ønsker du at starte den nu?"
+
+#: ../settings/xfpm-settings-main.c:164
+msgid "Run"
+msgstr "Kør"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
+msgid "Power Manager"
+msgstr "Strømstyring"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:2
+msgid "Settings for the Xfce 4 Power Manager"
+msgstr "Indstillinger til strømstyring til Xfce 4"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
+msgid "Xfce 4 Power Manager"
+msgstr "Strømstyring til Xfce 4"
 
 #: ../src/xfpm-battery.c:106
 msgid "Your battery is fully charged"
@@ -30,11 +283,11 @@ msgstr "Batteri oplader"
 msgid "Your battery is discharging"
 msgstr "Dit batteri aflader"
 
-#: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:369
+#: ../src/xfpm-battery.c:112
+#: ../src/xfpm-battery.c:369
 #: ../src/xfpm-battery.c:381
-#, fuzzy
 msgid "System is running on battery power"
-msgstr "Skærmindstillinger ved strøm fra batteri"
+msgstr "System kører på batteri"
 
 #: ../src/xfpm-battery.c:115
 msgid "Your battery charge is low"
@@ -42,94 +295,80 @@ msgstr "Strømniveauet på dit batteri er lavt"
 
 #: ../src/xfpm-battery.c:115
 msgid "System is running on low power"
-msgstr ""
+msgstr "System kører med lavt strømniveau"
 
-#: ../src/xfpm-battery.c:213 ../src/xfpm-supply.c:277 ../src/xfpm-supply.c:300
-#: ../src/xfpm-tray-icon.c:115 ../src/xfpm-tray-icon.c:139
+#: ../src/xfpm-battery.c:213
+#: ../src/xfpm-supply.c:277
+#: ../src/xfpm-supply.c:300
+#: ../src/xfpm-tray-icon.c:115
+#: ../src/xfpm-tray-icon.c:139
 #: ../src/xfpm-manager.c:215
 msgid "Xfce power manager"
 msgstr "Strømstyring til Xfce"
 
 #: ../src/xfpm-battery.c:231
 msgid "Your UPS"
-msgstr ""
+msgstr "Din UPS"
 
 #: ../src/xfpm-battery.c:233
-#, fuzzy
 msgid "Your Mouse battery"
-msgstr "Kører på batteri"
+msgstr "Batteriet til din mus"
 
 #: ../src/xfpm-battery.c:235
 msgid "Your Keyboard battery"
-msgstr ""
+msgstr "Batteriet til dit tastatur"
 
 #: ../src/xfpm-battery.c:237
-#, fuzzy
 msgid "Your Camera battery"
-msgstr "Du kører på batterier"
+msgstr "Batteriet til dit kamera"
 
 #: ../src/xfpm-battery.c:239
 msgid "Your PDA battery"
-msgstr ""
+msgstr "Dit PDA-batteri"
 
 #: ../src/xfpm-battery.c:241
-#, fuzzy
 msgid "Your Battery"
-msgstr "Du kører på batterier"
+msgstr "Dit batteri"
 
 #: ../src/xfpm-battery.c:256
-#, fuzzy
 msgid "is fully charged"
-msgstr "Batteri fuldt opladt"
+msgstr "er fuldt opladet"
 
 #: ../src/xfpm-battery.c:261
-#, fuzzy
 msgid "charge level"
-msgstr "Strømniveau for batteri"
+msgstr "ladeniveau"
 
 #: ../src/xfpm-battery.c:266
-#, fuzzy
 msgid "is charging"
-msgstr "Batteri oplader"
+msgstr "oplader"
 
 #: ../src/xfpm-battery.c:273
-#, fuzzy
 msgid "is discharging"
-msgstr "Batteri aflader"
+msgstr "aflader"
 
 #: ../src/xfpm-battery.c:278
-#, fuzzy
 msgid "charge is low"
-msgstr "Strømniveau på batteri er lavt"
+msgstr "ladeniveau er lavt"
 
 #: ../src/xfpm-battery.c:283
-#, fuzzy
 msgid "is almost empty"
-msgstr "Batteri er næsten tomt"
+msgstr "er næsten tomt"
 
 #: ../src/xfpm-battery.c:300
-#, fuzzy
 msgid "is not present"
-msgstr "Ikke tilstede"
+msgstr "er ikke tilstede"
 
 #: ../src/xfpm-battery.c:331
-#, fuzzy
 msgid "Battery not present"
-msgstr "Når batteri er tilstede"
+msgstr "Batteri er ikke tilstede"
 
 #: ../src/xfpm-battery.c:353
-#, fuzzy
 msgid "Estimated time left"
-msgstr ""
-"\n"
-"Forventet tid tilbage"
+msgstr "Forventet tid tilbage"
 
 #: ../src/xfpm-battery.c:357
-#, fuzzy
 msgid "Estimated time to be fully charged"
-msgstr ""
-"\n"
-"Forventet ladetid"
+msgstr "Forventet ladetid til fuld opladning"
 
 #: ../src/xfpm-battery.c:360
 msgid "hours"
@@ -147,44 +386,44 @@ msgstr "minutter"
 msgid "minute"
 msgstr "minut"
 
-#: ../src/xfpm-battery.c:365 ../src/xfpm-battery.c:377
-#, fuzzy
+#: ../src/xfpm-battery.c:365
+#: ../src/xfpm-battery.c:377
 msgid "Battery"
-msgstr "Batteriindstillinger"
+msgstr "Batteri"
 
-#: ../src/xfpm-battery.c:368 ../src/xfpm-battery.c:380
-#, fuzzy
+#: ../src/xfpm-battery.c:368
+#: ../src/xfpm-battery.c:380
 msgid "System is running on AC power"
-msgstr "Skærmindstillinger ved vekselstrøm"
+msgstr "System kører på vekselstrøm"
 
-#: ../src/xfpm-battery-info.c:58 ../libxfpm/hal-battery.c:488
+#: ../src/xfpm-battery-info.c:58
+#: ../libxfpm/hal-battery.c:488
 msgid "Unknown unit"
-msgstr ""
+msgstr "Ukendt enhed"
 
 #: ../src/xfpm-battery-info.c:65
 msgid "Technology:"
-msgstr ""
+msgstr "Teknologi:"
 
 #: ../src/xfpm-battery-info.c:88
 msgid "Design:"
-msgstr ""
+msgstr "Design:"
 
 #: ../src/xfpm-battery-info.c:116
 msgid "Last full:"
-msgstr ""
+msgstr "Sidst fuldt opladet:"
 
 #: ../src/xfpm-battery-info.c:140
 msgid "Vendor:"
-msgstr ""
+msgstr "Leverandør:"
 
 #: ../src/xfpm-battery-info.c:164
 msgid "Model:"
-msgstr ""
+msgstr "Model:"
 
 #: ../src/xfpm-battery-info.c:197
-#, fuzzy
 msgid "Battery information"
-msgstr "Batteriindstilling"
+msgstr "Batteriinformation"
 
 #: ../src/xfpm-main.c:48
 #, c-format
@@ -209,12 +448,11 @@ msgstr ""
 
 #: ../src/xfpm-main.c:73
 msgid "Do not daemonize"
-msgstr ""
+msgstr "Undlad at dæmonisere"
 
 #: ../src/xfpm-main.c:74
-#, fuzzy
-msgid "Restart the running instance of xfce power manager"
-msgstr "Afslut enhver kørende strømstyring til Xfce"
+msgid "Restart the running instance of Xfce power manager"
+msgstr "Genstart den kørende instans af strømstyring til Xfce"
 
 #: ../src/xfpm-main.c:75
 msgid "Show the configuration dialog"
@@ -228,7 +466,8 @@ msgstr "Afslut enhver kørende strømstyring til Xfce"
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: ../src/xfpm-main.c:86 ../src/xfpm-main.c:108
+#: ../src/xfpm-main.c:86
+#: ../src/xfpm-main.c:108
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Tast '%s --help' for brug."
@@ -239,30 +478,12 @@ msgid "Too many arguments"
 msgstr "For mange argumenter"
 
 #: ../src/xfpm-main.c:122
-#, fuzzy
 msgid "Unable to get connection to the message bus session"
-msgstr "Kunne ikke forbinde til DBus: %s"
-
-#: ../src/xfpm-main.c:125 ../src/xfpm-main.c:187 ../src/xfpm-main.c:217
-#: ../src/xfpm-tray-icon.c:290 ../src/xfce4-power-manager.desktop.in.h:2
-#: ../settings/xfpm-settings-main.c:113 ../settings/xfpm-settings.glade.h:29
-msgid "Xfce Power Manager"
-msgstr "Strømstyring til Xfce"
-
-#: ../src/xfpm-main.c:141 ../settings/xfpm-settings-main.c:154
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "Strømstyring til Xfce kører ikke"
-
-#: ../src/xfpm-main.c:188
-#, fuzzy
-msgid "Xfce power manager is not running to releod it"
-msgstr "Strømstyring til Xfce kører ikke"
+msgstr "Kunne ikke forbinde til beskedsbussessionen"
 
 #: ../src/xfpm-main.c:218
-#, fuzzy
 msgid "Another power manager is already running"
-msgstr "Strømstyring til Xfce kører allerede"
+msgstr "En anden strømstyring kører allerede"
 
 #: ../src/xfpm-main.c:223
 #, c-format
@@ -270,14 +491,12 @@ msgid "Xfce power manager is already running"
 msgstr "Strømstyring til Xfce kører allerede"
 
 #: ../src/xfpm-supply.c:169
-#, fuzzy
 msgid "Adapter present"
-msgstr "Ikke tilstede"
+msgstr "Vekselstrøm tilstede"
 
 #: ../src/xfpm-supply.c:170
-#, fuzzy
 msgid "Adapter not present"
-msgstr "Ikke tilstede"
+msgstr "Vekselstrøm er ikke tilstede"
 
 #: ../src/xfpm-supply.c:246
 msgid "Shutdown the system"
@@ -288,79 +507,50 @@ msgid "Hibernate the system"
 msgstr "Sæt systemet i dvaletilstand"
 
 #: ../src/xfpm-supply.c:269
-msgid ""
-"System is running on low power, but an application is currently disabling "
-"the automatic sleep, this means that doing a sleep now may damage the data "
-"of this application. Close this application before putting the computer on "
-"sleep mode or plug in your AC adapter"
-msgstr ""
+msgid "System is running on low power, but an application is currently disabling the automatic sleep, this means that doing a sleep now may damage the data of this application. Close this application before putting the computer on sleep mode or plug in your AC adapter"
+msgstr "Systemet kører på lavt strømniveau, men et program forhindrer i øjeblikket den automatiske hviletilstand. Dette betyder at gennemførelse af sovetilstand nu kan være ødelæggende for data til dette program. Luk dette program før computeren går i sovetilstand eller tilslut til vekselstrøm"
 
 #: ../src/xfpm-supply.c:295
-#, fuzzy
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Strømniveauet på dit batteri er kritisk. Gem dine data for at undgå tab af "
-"data"
+msgstr "Systemet kører på lavt strømniveau. Gem dine data for at undgå tab af data"
 
 #: ../src/xfpm-tray-icon.c:159
-msgid ""
-"An application is currently disabling the automatic sleep, doing this action "
-"now may damage the working state of this application, are you sure you want "
-"to hibernate the system?"
-msgstr ""
+msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
+msgstr "Et program har for øjeblikket slået den automatiske hviletilstand fra. Udførelse af denne handling nu kan ødelægge tilstanden af programmet. Er du sikker på, at du ønsker at at bringe systemet i dvaletilstand?"
 
-#: ../src/xfpm-tray-icon.c:162 ../src/xfpm-tray-icon.c:189
-#, fuzzy
+#: ../src/xfpm-tray-icon.c:162
+#: ../src/xfpm-tray-icon.c:189
 msgid "Are you sure you want to procced?"
-msgstr "Er du sikker på, at du ønsker systemet i hviletilstand?"
-
-#. Hibernate menu option
-#: ../src/xfpm-tray-icon.c:167 ../src/xfpm-tray-icon.c:224
-#: ../settings/xfpm-settings.c:457 ../settings/xfpm-settings.c:545
-#: ../settings/xfpm-settings.c:659 ../settings/xfpm-settings.c:775
-#: ../settings/xfpm-settings.c:823
-msgid "Hibernate"
-msgstr "Dvaletilstand"
+msgstr "Er du sikker på, at du vil fortsætte?"
 
 #: ../src/xfpm-tray-icon.c:186
-msgid ""
-"An application is currently disabling the automatic sleep, doing this action "
-"now may damage the working state of this application, are you sure you want "
-"to suspend the system?"
-msgstr ""
+msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to suspend the system?"
+msgstr "Et program har for øjeblikket slået den automatiske hviletilstand fra. Udførelse af denne handling nu kan ødelægge tilstanden af programmet. Er du sikker på, at du ønsker at at bringe systemet i hviletilstand?"
 
-#. Suspend menu option
-#: ../src/xfpm-tray-icon.c:194 ../src/xfpm-tray-icon.c:239
-#: ../settings/xfpm-settings.c:539 ../settings/xfpm-settings.c:653
-#: ../settings/xfpm-settings.c:769 ../settings/xfpm-settings.c:817
-#: ../settings/xfpm-settings.glade.h:22
-msgid "Suspend"
-msgstr "Hviletilstand"
-
-#: ../src/xfpm-engine.c:511 ../src/xfpm-engine.c:540
+#: ../src/xfpm-engine.c:511
+#: ../src/xfpm-engine.c:540
 #, c-format
 msgid "Permission denied"
-msgstr ""
+msgstr "Tilladelse afvist"
 
 #: ../src/xfpm-engine.c:518
-#, fuzzy, c-format
+#, c-format
 msgid "Hibernate not supported"
-msgstr "Sæt systemet i dvaletilstand"
+msgstr "Dvaletilstand er ikke understøttet"
 
 #: ../src/xfpm-engine.c:547
 #, c-format
 msgid "Suspend not supported"
-msgstr ""
+msgstr "Dvaletilstand er ikke understøttet"
 
 #: ../src/xfpm-manager.c:215
-#, fuzzy
-msgid "Hal daemon is not running"
-msgstr "Strømstyring til Xfce kører ikke"
+msgid "HAL daemon is not running"
+msgstr "HAL-dæmonen kører ikke"
 
 #: ../src/xfpm-inhibit.c:247
 #, c-format
 msgid "Invalid cookie"
-msgstr ""
+msgstr "Ugyldig cookie"
 
 #: ../src/xfpm-shutdown.c:309
 msgid "No back-end for your operating system"
@@ -387,275 +577,47 @@ msgid "Out of memory"
 msgstr "Er løbet tør for hukommelse"
 
 #: ../src/xfpm-shutdown.c:333
-#, fuzzy
 msgid "System failed to sleep"
 msgstr "System kunne ikke gå i hviletilstand"
 
-#: ../src/xfpm-shutdown.c:359 ../src/xfpm-shutdown.c:377
+#: ../src/xfpm-shutdown.c:359
+#: ../src/xfpm-shutdown.c:377
 #: ../src/xfpm-shutdown.c:409
 #, c-format
-msgid "Hal daemon is currently not connected"
-msgstr ""
+msgid "HAL daemon is currently not connected"
+msgstr "HAL-dæmon er ikke forbundet i øjeblikket"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:307 ../settings/xfpm-settings.c:323
-#, fuzzy
-msgid "Never"
-msgstr "aldrig"
-
-#: ../settings/xfpm-settings.c:310
-#, fuzzy
-msgid "One minute"
-msgstr "minut"
-
-#: ../settings/xfpm-settings.c:312
-#, fuzzy
-msgid "Minutes"
-msgstr "minutter"
-
-#: ../settings/xfpm-settings.c:325
-msgid "Seconds"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:442 ../settings/xfpm-settings.c:526
-msgid "Shutdown and hibernate operations not permitted"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:452 ../settings/xfpm-settings.c:534
-#: ../settings/xfpm-settings.c:648 ../settings/xfpm-settings.c:764
-#: ../settings/xfpm-settings.c:812 ../settings/xfpm-settings.glade.h:13
-msgid "Nothing"
-msgstr "Ingenting"
-
-#: ../settings/xfpm-settings.c:461 ../settings/xfpm-settings.c:779
-msgid "Shutdown"
-msgstr "Luk ned"
-
-#: ../settings/xfpm-settings.c:642 ../settings/xfpm-settings.c:758
-#: ../settings/xfpm-settings.c:806 ../settings/xfpm-settings.c:918
-msgid "Hibernate and suspend operations not permitted"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:724 ../settings/xfpm-settings.glade.h:7
-#, fuzzy
-msgid "Always show icon"
-msgstr "Vis altid et ikon"
-
-#: ../settings/xfpm-settings.c:727
-msgid "When battery is present"
-msgstr "Når batteri er tilstede"
-
-#: ../settings/xfpm-settings.c:730
-msgid "When battery is charging or discharging"
-msgstr "Når batteri oplader eller aflader"
-
-#: ../settings/xfpm-settings.c:886
-msgid ""
-"When the main power on the computer reaches this value of charge percentage"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:992 ../settings/xfpm-settings.c:997
-#: ../settings/xfpm-settings.glade.h:11
-#, fuzzy
-msgid "General"
-msgstr "Generelle indstillinger"
-
-#: ../settings/xfpm-settings.c:1006 ../settings/xfpm-settings.c:1011
-#: ../settings/xfpm-settings.glade.h:14
-#, fuzzy
-msgid "On AC"
-msgstr "Ved vekselstrøm"
-
-#: ../settings/xfpm-settings.c:1021 ../settings/xfpm-settings.c:1026
-#, fuzzy
-msgid "On Battery"
-msgstr "Når batteristrøm"
-
-#: ../settings/xfpm-settings.c:1035 ../settings/xfpm-settings.glade.h:6
-#, fuzzy
-msgid "Advanced"
-msgstr "Avancerede indstillinger"
-
-#: ../settings/xfpm-settings.c:1040
-msgid "Advance"
-msgstr ""
-
-#: ../settings/xfpm-settings-main.c:113
-msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
-"Kunne ikke indlæse indstillinger for strømstyring, bruger standardværdier"
-
-#: ../settings/xfpm-settings-main.c:134
-#, fuzzy
-msgid "Xfce Power Manager Settings"
-msgstr "Strømstyring til Xfce"
-
-#: ../settings/xfpm-settings-main.c:135
-#, fuzzy
-msgid "Unable to connect to Xfce Power Manager"
-msgstr "Kunne ikke indlæse strømstyring til Xfce4"
-
-#: ../settings/xfpm-settings-main.c:157
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Strømstyring til Xfce4 kører ikke, ønsker du at starte den nu?"
-
-#: ../settings/xfpm-settings-main.c:159
-msgid "Run"
-msgstr "Kør"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-msgid "Power"
-msgstr "Strøm"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:2
-msgid "Power Manager"
-msgstr "Strømstyring"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
-msgid "Settings for the Xfce 4 Power Manager"
-msgstr "Indstillinger til strømstyring til Xfce4"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:4
-msgid "Xfce 4 Power Manager"
-msgstr "Strømstyring til Xfce4"
-
-#: ../settings/xfpm-settings.glade.h:1
-msgid "<b>Actions</b>"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:2
-#, fuzzy
-msgid "<b>Advanced Options</b>"
-msgstr "Avancerede indstillinger"
-
-#: ../settings/xfpm-settings.glade.h:3
-msgid "<b>Brightness</b>"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:4
-#, fuzzy
-msgid "<b>General Options</b>"
-msgstr "Generelle indstillinger"
-
-#: ../settings/xfpm-settings.glade.h:5
-msgid "<b>Monitor</b>"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:8
-msgid "Consider the computer on low power at:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:9
-msgid "Enable monitor power management control"
-msgstr "Aktivér strømstyring til skærm"
-
-#: ../settings/xfpm-settings.glade.h:10
-#, fuzzy
-msgid "Enable notification"
-msgstr "Aktivér påmindelse af UPS-ladning"
-
-#: ../settings/xfpm-settings.glade.h:12
-msgid "Lock screen when going for suspend/hibernate"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:15
-#, fuzzy
-msgid "On battery"
-msgstr "Når batteristrøm"
-
-#: ../settings/xfpm-settings.glade.h:16
-#, fuzzy
-msgid "Power manager settings"
-msgstr "Strømstyring"
-
-#: ../settings/xfpm-settings.glade.h:17
-msgid "Prefer power savings over performance"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:18
-msgid "Put display to sleep when computer is inactive for:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:19
-msgid "Reduce screen brightness when computer is inactive for:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:20
-msgid "Set monitor sleep mode:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:21
-#, fuzzy
-msgid "Standby"
-msgstr "Standby efter"
-
-#: ../settings/xfpm-settings.glade.h:23
-msgid "Switch off display when computer is inactive for:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:24
-#, fuzzy
-msgid "System tray icon: "
-msgstr "Statusfeltikon:"
-
-#: ../settings/xfpm-settings.glade.h:25
-#, fuzzy
-msgid "When battery power is critical:"
-msgstr "Ved kritisk strømniveau på batteri udfør"
-
-#: ../settings/xfpm-settings.glade.h:26
-#, fuzzy
-msgid "When laptop lid is closed:"
-msgstr "Når bærbarlåg er lukket"
-
-#: ../settings/xfpm-settings.glade.h:27
-#, fuzzy
-msgid "When power button is pressed:"
-msgstr "Ved tryk på tænd-knap udfør"
-
-#: ../settings/xfpm-settings.glade.h:28
-#, fuzzy
-msgid "When sleep button is pressed:"
-msgstr "Ved tryk på sove-knap udfør"
-
-#: ../settings/xfpm-settings.glade.h:30
-msgid "gtk-close"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:31
-msgid "gtk-help"
-msgstr ""
+msgstr "Strømstyring til skrivebordsmiljøet Xfce"
 
 #: ../libxfpm/hal-battery.c:458
 msgid "Lithium ion"
-msgstr ""
+msgstr "Lithium-ion"
 
 #: ../libxfpm/hal-battery.c:462
 msgid "Lead acid"
-msgstr ""
+msgstr "Bly-syre"
 
 #: ../libxfpm/hal-battery.c:466
 msgid "Lithium polymer"
-msgstr ""
+msgstr "Lithium-polymer"
 
 #: ../libxfpm/hal-battery.c:470
 msgid "Nickel metal hydride"
-msgstr ""
+msgstr "Nikkel-metalhybrid"
 
 #: ../libxfpm/hal-battery.c:473
 msgid "Unknown"
-msgstr ""
+msgstr "Ukendt"
 
 #: ../libxfpm/hal-battery.c:481
 msgid "mWh"
-msgstr ""
+msgstr "mWh"
 
 #: ../libxfpm/hal-battery.c:485
 msgid "mAh"
-msgstr ""
+msgstr "mAh"
 
 #: ../libxfpm/xfpm-common.c:168
 msgid "translator-credits"
@@ -667,47 +629,44 @@ msgstr ""
 
 #: ../panel-plugins/brightness/brightness-plugin.c:462
 #: ../panel-plugins/brightness/brightness-plugin.c:519
-#, fuzzy
 msgid "Control your LCD brightness level"
-msgstr "Aktivér LCD-lysstyrkekontrol"
+msgstr "Kontrollér dit LCD-lysstyrkeniveau"
 
 #: ../panel-plugins/brightness/brightness-plugin.c:466
 #: ../panel-plugins/brightness/brightness-plugin.c:523
-#, fuzzy
 msgid "No device found"
-msgstr "Ingen processorbestyrer fundet"
+msgstr "Ingen enhed fundet"
 
 #: ../panel-plugins/brightness/brightness-plugin.c:537
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr ""
+msgstr "Moduludvidelse for lysstyrke"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:205
 #: ../panel-plugins/inhibit/inhibit-plugin.c:429
 #: ../panel-plugins/inhibit/inhibit-plugin.c:437
-#, fuzzy
 msgid "No power manager instance running"
-msgstr "Strømstyring til Xfce kører ikke"
+msgstr "Ingen strømstyringinstans kører"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:208
 msgid "Automatic sleep inhibited"
-msgstr ""
+msgstr "Forbud mod automatisk hviletilstand"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:214
 msgid "Another application is disabling the automatic sleep"
-msgstr ""
+msgstr "Et andet program slår den automatiske hviletilstand fra"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:216
 msgid "Automatic sleep enabled"
-msgstr ""
+msgstr "Automatisk hviletilstand er slået til"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:288
 msgid "Power manager automatic sleep is disabled"
-msgstr ""
+msgstr "Strømstyrings automatiske hviletilstand er slået fra"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:289
 msgid "Power manager automatic sleep is enabled"
-msgstr ""
+msgstr "Strømstyrings automatiske hviletilstand er slået til"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:292
 #: ../panel-plugins/inhibit/inhibit-plugin.c:328
@@ -715,255 +674,50 @@ msgstr ""
 #: ../panel-plugins/inhibit/inhibit-plugin.c:617
 #: ../panel-plugins/inhibit/xfce4-inhibit-plugin.desktop.in.in.h:1
 msgid "Inhibit plugin"
-msgstr ""
+msgstr "Forbyd udvidelsesmodul"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:302
 #: ../panel-plugins/inhibit/inhibit-plugin.c:338
 #: ../panel-plugins/inhibit/inhibit-plugin.c:525
-#, fuzzy
 msgid "Don't show again"
 msgstr "Vis ikke denne besked igen"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:329
-#, fuzzy
 msgid "Power manager disconnected"
-msgstr "Indstillinger af strømstyring"
+msgstr "Strømstyring er ikke forbundet"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:516
-#, fuzzy
 msgid "Power manager is connected"
-msgstr "Strømstyring til Xfce kører ikke"
+msgstr "Strømstyring er forbundet"
 
+# Fejlrapporteret og afventer
+#, fuzzy
+#~ msgid "Xfce power manager is not running to releod it"
+#~ msgstr "Strømstyring til Xfce kører ikke. Genstart den"
+#~ msgid "Power"
+#~ msgstr "Strøm"
 #~ msgid ""
 #~ "Unable to read adapter status, the power manager will not work properly"
 #~ msgstr ""
 #~ "Kunne ikke aflæse tilslutningstilstand, strømstyringen vil ikke fungere "
 #~ "korrekt"
-
 #~ msgid "Adapter is online"
 #~ msgstr "Tilslutning tændt"
-
 #~ msgid "Adapter is offline"
 #~ msgstr "Tilslutning slukket"
-
 #~ msgid "Are you sure you want to hibernate the system?"
 #~ msgstr "Er du sikker på, at du ønsker systemet i dvaletilstand?"
-
 #~ msgid "UPS configuration"
 #~ msgstr "Nødstrømsindstilling"
-
 #~ msgid "Consider UPS charge critical"
 #~ msgstr "Opfat nødstrømladning som kritisk"
-
 #~ msgid "Consider battery charge critical"
 #~ msgstr "Opfat batteriladning som kritisk"
-
 #~ msgid "percent"
 #~ msgstr "procent"
-
 #~ msgid "Enable battery state notification"
 #~ msgstr "Aktivér påmindelse af batteritilstand"
-
 #~ msgid "Enable power save on UPS power"
 #~ msgstr "Aktivér strømstyring ved nødstrømstrøm"
-
 #~ msgid "Enable power save on battery power"
 #~ msgstr "Aktivér strømstyring ved strøm fra batteri"
-
-# CPU governor
-#~ msgid "Best performance"
-#~ msgstr "Bedste ydelse"
-
-#~ msgid "Set the CPU to its maximum frequency"
-#~ msgstr "Indstil processoren til maksimal frekvens"
-
-# CPU governor
-#~ msgid "Ondemand performance"
-#~ msgstr "Dynamisk ydelse"
-
-#~ msgid ""
-#~ "Set the CPU to its maximum speed when there is any load on it and to its "
-#~ "minimum speed when the system is idle"
-#~ msgstr ""
-#~ "Indstil processoren til maksimal hastighed ved enhver belastning og til "
-#~ "minimal hastighed, når systemet er i tomgang"
-
-#~ msgid "Best power savings"
-#~ msgstr "Bedste strømbesparelse"
-
-#~ msgid "Set the CPU to its minimum frequency"
-#~ msgstr "Indstil processoren til minimal frekvens"
-
-#~ msgid "Good power savings"
-#~ msgstr "God strømbesparelse"
-
-#~ msgid ""
-#~ "gracefully increases and decreases the CPU speed depending on the current "
-#~ "usage"
-#~ msgstr ""
-#~ "gradvis forøgelse og formindskelse af processorens hastighed afhængig af "
-#~ "aktuelt forbrug"
-
-#~ msgid "CPU frequency settings on UPS power"
-#~ msgstr "Indstillinger af processorfrekvens ved nødstrøm"
-
-#~ msgid "CPU frequency settings on battery power"
-#~ msgstr "Indstillinger af processorfrekvens ved batteristrøm"
-
-#~ msgid "CPU frequency control cannot be used"
-#~ msgstr "Frekvenskontrol på processor kan ikke bruges"
-
-#~ msgid "CPU frequency settings on AC power"
-#~ msgstr "Indstillinger af processorfrekvens ved vekselstrøm"
-
-#~ msgid "CPU frequency settings"
-#~ msgstr "Indstillinger for processorfrekvens"
-
-#~ msgid "Monitor settings on UPS power"
-#~ msgstr "Skærmindstillinger ved nødstrøm"
-
-#~ msgid "Monitor settings"
-#~ msgstr "Skærmindstillinger"
-
-#~ msgid "Your monitor doesn't support DPMS control"
-#~ msgstr "Din skærm understøtter ikke DPMS-kontrol"
-
-#~ msgid "Keyboard shortcuts"
-#~ msgstr "Tastaturgenveje"
-
-#~ msgid "No available keyboard shortcuts found"
-#~ msgstr "Ingen tilgængelige tastaturgenveje fundet"
-
-#~ msgid "Enable CPU frequency scaling control"
-#~ msgstr "Aktivér kontrol af frekvensskalering til processor"
-
-#~ msgid "CPU settings"
-#~ msgstr "Processorindstillinger"
-
-#~ msgid "Shortcuts"
-#~ msgstr "Genveje"
-
-#~ msgid "Monitor Settings"
-#~ msgstr "Skærmindstillinger"
-
-#~ msgid "Extended"
-#~ msgstr "Udvidet"
-
-#~ msgid "Your battery is almost empty"
-#~ msgstr "Dit batteri er næsten tomt"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "min"
-#~ msgstr "min."
-
-#~ msgid "Suspend after"
-#~ msgstr "Hviletilstand efter"
-
-#~ msgid "Turn off after"
-#~ msgstr "Sluk efter"
-
-#~ msgid "Xfce4 Power Manager"
-#~ msgstr "Strømstyring til Xfce4"
-
-#~ msgid ""
-#~ "Unable to read your home directory environment variable, autostart option "
-#~ "may not work"
-#~ msgstr ""
-#~ "Kunne ikke læse din hjemmemappe-miljøvariabel, automatisk startvalg "
-#~ "virker måske ikke"
-
-#~ msgid ""
-#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
-#~ "and the message bus daemon are running"
-#~ msgstr ""
-#~ "Kunne ikke køre strømstyring til Xfce4. Kontrollér at HAL og beskedsbus-"
-#~ "dæmonen kører"
-
-#~ msgid ""
-#~ "Unable to read AC adapter status, the power manager will not work "
-#~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
-#~ "connection with the hardware abstract layer or the message bus daemon is "
-#~ "not running"
-#~ msgstr ""
-#~ "Kunne ikke læse strømtilslutnings status og derfor vil strømstyring ikke "
-#~ "fungere korrekt. Mulige årsager: Drivprogrammet til strømstyring er ikke "
-#~ "indlæst, forbindelse til HAL afbrudt eller beskedbus-dæmonen kører ikke"
-
-#~ msgid "System failed to shutdown"
-#~ msgstr "Systemet kunne ikke lukke ned"
-
-#~ msgid ""
-#~ "Unable to use power management service, functionalities like hibernate "
-#~ "and suspend will not work. Possible reasons: you don't have enough "
-#~ "permission, broken connection with the hardware abstract layer or the "
-#~ "message bus daemon is not running"
-#~ msgstr ""
-#~ "Kunne ikke bruge strømstyringstjeneste, funktioner som dvaletilstand og "
-#~ "hviletilstand vil ikke virke. Mulige årsager: du har ikke tilstrækkelige "
-#~ "rettigheder, forbindelse til HAL afbrudt eller beskedbus-dæmonen kører "
-#~ "ikke"
-
-#~ msgid "Error monitoring HAL events"
-#~ msgstr "Fejl i overvågning af HAL-hændelser"
-
-#~ msgid "HAL is not running or not responding"
-#~ msgstr "HAL kører ikke eller reagerer ikke"
-
-#~ msgid "Unable to watch device using HAL: %s"
-#~ msgstr "Kunne ikke overvåge enhed ved brug af HAL: %s"
-
-#~ msgid "Message hibernate didn't get a reply"
-#~ msgstr "Beskeden gå i dvaletilstand modtog ikke et svar"
-
-#~ msgid "System failed to hibernate"
-#~ msgstr "System kunne ikke gå i dvaletilstand"
-
-#~ msgid "Error occured while trying to suspend"
-#~ msgstr "En fejl opstod under forsøg på at bringe i hviletilstand"
-
-#~ msgid "Unknown reply from the message daemon"
-#~ msgstr "Ukendt svar fra besked-dæmonenen"
-
-#~ msgid "Message suspend didn't get a reply"
-#~ msgstr "Beskeden gå i hviletilstand modtog ikke et svar"
-
-#~ msgid "No reply from HAL daemon to set monitor brightness level"
-#~ msgstr ""
-#~ "Intet svar fra HAL-dæmonen til at indstille skærmens lysstyrkeniveau"
-
-#~ msgid "No reply from HAL daemon to get monitor brightness level"
-#~ msgstr ""
-#~ "Intet svar fra HAL-dæmonen til aflæsning af skærmens lysstyrkeniveau"
-
-#~ msgid "No reply from HAL daemon to get available cpu governors"
-#~ msgstr ""
-#~ "Intet svar fra HAL-dæmon for at få kontakt til tilgængelige processor-"
-#~ "bestyrere"
-
-#~ msgid "No reply from HAL daemon to get current cpu governor"
-#~ msgstr ""
-#~ "Intet svar fra HAL-dæmon for at få kontakt til nuværende processor-"
-#~ "bestyrer"
-
-#~ msgid "No reply from HAL daemon to set cpu governor"
-#~ msgstr "Intet svar fra HAL-dæmon for at indstille processor-bestyrer"
-
-#~ msgid "No reply from HAL daemon to set power save profile"
-#~ msgstr "Intet svar fra HAL-dæmon til indstilling af strømspareprofil"
-
-#~ msgid "Settings manager socket"
-#~ msgstr "Sokkel til indstillingshåndtering"
-
-#~ msgid "SOCKET ID"
-#~ msgstr "SOKKEL ID"
-
-#~ msgid "Failed to create dbus message\n"
-#~ msgstr "Fejl ved oprettelse af dbusbesked\n"
-
-#~ msgid "Failed to send message\n"
-#~ msgstr "Fejl ved afsendelse af besked\n"
-
-#~ msgid "Start xfce power manager"
-#~ msgstr "Start strømstyring til Xfce"
