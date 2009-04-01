@@ -45,6 +45,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-inhibit.h				\
 	xfpm-screen-saver.c			\
 	xfpm-screen-saver.h			\
+	xfpm-dbus-monitor.c			\
+	xfpm-dbus-monitor.h			\
 	xfpm-tray-icon.c			\
 	xfpm-tray-icon.h			\
 	xfpm-shutdown.c				\

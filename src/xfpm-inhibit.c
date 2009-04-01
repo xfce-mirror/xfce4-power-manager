@@ -23,25 +23,18 @@
 #endif
 
 #include <stdio.h>
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
 
 #include <glib.h>
+
+#include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
 
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-inhibit.h"
-#include "xfpm-screen-saver.h"
+#include "xfpm-dbus-monitor.h"
 #include "xfpm-errors.h"
 
 /* Init */
@@ -57,9 +50,18 @@ static void xfpm_inhibit_dbus_init	  (XfpmInhibit *inhibit);
 
 struct XfpmInhibitPrivate
 {
-    GHashTable      *hash;
+    XfpmDBusMonitor *monitor;
+    GPtrArray       *array;
     gboolean         inhibited;
 };
+
+typedef struct
+{
+    gchar *app_name;
+    gchar *unique_name;
+    guint  cookie;
+    
+} Inhibitor;
 
 enum
 {
@@ -72,6 +74,135 @@ static guint signals[LAST_SIGNAL] = { 0 };
 static gpointer xfpm_inhibit_object = NULL;
 
 G_DEFINE_TYPE (XfpmInhibit, xfpm_inhibit, G_TYPE_OBJECT)
+
+static void
+xfpm_inhibit_free_inhibitor (XfpmInhibit *inhibit, Inhibitor *inhibitor)
+{
+    g_return_if_fail (inhibitor != NULL );
+    
+    g_free (inhibitor->app_name);
+    g_free (inhibitor->unique_name);
+    g_free (inhibitor);
+    
+    g_ptr_array_remove (inhibit->priv->array, inhibitor);
+}
+
+static gboolean
+xfpm_inhibit_has_inhibit_changed (XfpmInhibit *inhibit)
+{
+    if ( inhibit->priv->array->len == 0 && inhibit->priv->inhibited == TRUE )
+    {
+	TRACE("Inhibit removed");
+	inhibit->priv->inhibited = FALSE;
+	g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
+    }
+    else if ( inhibit->priv->array->len != 0 && inhibit->priv->inhibited == FALSE )
+    {
+	TRACE("Inhibit added");
+	inhibit->priv->inhibited = TRUE;
+	g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
+    }
+    
+    return inhibit->priv->inhibited;
+}
+
+static guint
+xfpm_inhibit_get_cookie (XfpmInhibit *inhibit)
+{
+    guint max = 0;
+    gint i;
+    Inhibitor *inhibitor;
+    
+    for ( i = 0; i<inhibit->priv->array->len; i++)
+    {
+	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+	max = MAX (max, inhibitor->cookie);
+    }
+    return (guint) g_random_int_range ( max + 1, max + 40);
+}
+
+static guint
+xfpm_inhibit_add_application (XfpmInhibit *inhibit, const gchar *app_name, const gchar *unique_name)
+{
+    guint cookie;
+    Inhibitor *inhibitor;
+    
+    inhibitor = g_new0 (Inhibitor, 1);
+    
+    cookie = xfpm_inhibit_get_cookie (inhibit);
+    
+    inhibitor->cookie      = cookie;
+    inhibitor->app_name    = g_strdup (app_name);
+    inhibitor->unique_name = g_strdup (unique_name);
+    
+    g_ptr_array_add (inhibit->priv->array, inhibitor);
+    
+    return cookie;
+}
+
+static Inhibitor *
+xfpm_inhibit_find_application_by_cookie (XfpmInhibit *inhibit, guint cookie)
+{
+    gint i;
+    Inhibitor *inhibitor;
+    for ( i = 0; i < inhibit->priv->array->len; i++)
+    {
+	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+	if ( inhibitor->cookie == cookie )
+	{
+	    return inhibitor;
+	}
+    }
+    return NULL;
+}
+
+static Inhibitor *
+xfpm_inhibit_find_application_by_unique_connection_name (XfpmInhibit *inhibit, const gchar *unique_name)
+{
+    gint i;
+    Inhibitor *inhibitor;
+    for ( i = 0; i < inhibit->priv->array->len; i++)
+    {
+	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+	if ( g_strcmp0 (inhibitor->unique_name, unique_name ) == 0 )
+	{
+	    return inhibitor;
+	}
+    }
+    return NULL;
+}
+
+static gboolean
+xfpm_inhibit_remove_application_by_cookie (XfpmInhibit *inhibit, guint cookie)
+{
+    Inhibitor *inhibitor;
+    
+    inhibitor = xfpm_inhibit_find_application_by_cookie (inhibit, cookie);
+    
+    if ( inhibitor )
+    {
+	xfpm_dbus_monitor_remove_match (inhibit->priv->monitor, inhibitor->unique_name);
+	xfpm_inhibit_free_inhibitor (inhibit, inhibitor);
+	return TRUE;
+    }
+    return FALSE;
+}
+
+static void
+xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor, gchar *unique_name, XfpmInhibit *inhibit)
+{
+    Inhibitor *inhibitor;
+    
+    inhibitor = xfpm_inhibit_find_application_by_unique_connection_name (inhibit, unique_name );
+    
+    if ( inhibitor )
+    {
+	TRACE ("Application=%s with unique connection name=%s disconnected", inhibitor->app_name, inhibitor->unique_name);
+	g_free (inhibitor);
+	g_ptr_array_remove (inhibit->priv->array, inhibitor);
+	xfpm_inhibit_has_inhibit_changed (inhibit);
+    }
+}
 
 static void
 xfpm_inhibit_class_init(XfpmInhibitClass *klass)
@@ -99,8 +230,12 @@ xfpm_inhibit_init(XfpmInhibit *inhibit)
 {
     inhibit->priv = XFPM_INHIBIT_GET_PRIVATE(inhibit);
     
-    inhibit->priv->hash = g_hash_table_new_full (NULL, NULL, NULL, g_free);
+    inhibit->priv->array   = g_ptr_array_new ();
+    inhibit->priv->monitor = xfpm_dbus_monitor_new ();
     
+    g_signal_connect (inhibit->priv->monitor, "connection-lost",
+		      G_CALLBACK (xfpm_inhibit_connection_lost_cb), inhibit);
+		      
     xfpm_inhibit_dbus_init (inhibit);
 }
 
@@ -108,56 +243,22 @@ static void
 xfpm_inhibit_finalize(GObject *object)
 {
     XfpmInhibit *inhibit;
+    Inhibitor *inhibitor;
+    gint i;
 
     inhibit = XFPM_INHIBIT(object);
     
-    g_hash_table_destroy (inhibit->priv->hash);
+    g_object_unref (inhibit->priv->monitor);
+    
+    for ( i = 0; i<inhibit->priv->array->len; i++)
+    {
+	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+	xfpm_inhibit_free_inhibitor (inhibit, inhibitor);
+    }
+    
+    g_ptr_array_free (inhibit->priv->array, TRUE);
 
     G_OBJECT_CLASS(xfpm_inhibit_parent_class)->finalize(object);
-}
-
-static guint
-xfpm_inhibit_get_cookie (XfpmInhibit *inhibit)
-{
-    GList *list;
-    guint cookie;
-    guint max = 0;
-    guint hash_cookie;
-    gint i;
-    
-    list = g_hash_table_get_keys (inhibit->priv->hash);
-
-    for ( i = 0; i < g_list_length (list); i++)
-    {
-	hash_cookie = GPOINTER_TO_INT ((gpointer) g_list_nth_data(list, i));
-	max = MAX(max, hash_cookie);
-    }
-	
-    if ( list )
-	g_list_free (list);
-	
-    /*
-     * Should work in all the cases as we will not have thounsands of applications inhibiting us
-     */
-    cookie = (guint) g_random_int_range ( max + 1, max + 40);
-    
-    return cookie;
-}
-
-static guint
-xfpm_inhibit_add_application (XfpmInhibit *inhibit, const gchar *app_name)
-{
-    guint cookie = xfpm_inhibit_get_cookie (inhibit);
-    g_hash_table_insert (inhibit->priv->hash, 
-			 GINT_TO_POINTER(cookie),
-			 g_strdup (app_name));
-    return cookie;
-}
-
-static gboolean
-xfpm_inhibit_remove_application (XfpmInhibit *inhibit, guint cookie)
-{
-    return g_hash_table_remove (inhibit->priv->hash, GINT_TO_POINTER(cookie));
 }
 
 XfpmInhibit *
@@ -180,19 +281,18 @@ xfpm_inhibit_new(void)
  * DBus server implementation for org.freedesktop.PowerManagement.Inhibit
  * 
  */
-static gboolean xfpm_inhibit_dbus_inhibit  	(XfpmInhibit *inhibit,
-						 const gchar *IN_appname,
-						 const gchar *IN_reason,
-						 guint       *OUT_cookie,
-						 GError     **error);
+static void xfpm_inhibit_inhibit  	(XfpmInhibit *inhibit,
+					 const gchar *IN_appname,
+					 const gchar *IN_reason,
+					 DBusGMethodInvocation *context);
 
-static gboolean xfpm_inhibit_dbus_un_inhibit    (XfpmInhibit *inhibit,
-						 guint        IN_cookie,
-						 GError     **error);
+static gboolean xfpm_inhibit_un_inhibit (XfpmInhibit *inhibit,
+					 guint        IN_cookie,
+					 GError     **error);
 
-static gboolean xfpm_inhibit_dbus_has_inhibit   (XfpmInhibit *inhibit,
-						 gboolean    *OUT_has_inhibit,
-						 GError     **error);
+static gboolean xfpm_inhibit_has_inhibit(XfpmInhibit *inhibit,
+					 gboolean    *OUT_has_inhibit,
+					 GError     **error);
 
 #include "org.freedesktop.PowerManagement.Inhibit.h"
 
@@ -215,56 +315,59 @@ static void xfpm_inhibit_dbus_init	  (XfpmInhibit *inhibit)
 					 G_OBJECT(inhibit));
 }
 
-static gboolean xfpm_inhibit_dbus_inhibit  	(XfpmInhibit *inhibit,
-						 const gchar *IN_appname,
-						 const gchar *IN_reason,
-						 guint       *OUT_cookie,
-						 GError     **error)
+static void xfpm_inhibit_inhibit  	(XfpmInhibit *inhibit,
+					 const gchar *IN_appname,
+					 const gchar *IN_reason,
+					 DBusGMethodInvocation *context)
 {
-    guint cookie = xfpm_inhibit_add_application (inhibit, IN_appname);
+    GError *error = NULL;
+    gchar *sender;
+    guint cookie;
     
-    TRACE("Inhibit send application name=%s reason=%s", IN_appname, IN_reason);
-    
-    if ( !inhibit->priv->inhibited )
+    if ( IN_appname == NULL || IN_reason == NULL )
     {
-	inhibit->priv->inhibited = TRUE;
-	g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
+	g_set_error (&error, XFPM_ERROR, XFPM_ERROR_INVALID_ARGUMENTS, _("Invalid arguments"));
+	dbus_g_method_return_error (context, error);
+	return;
     }
+
+    sender = dbus_g_method_get_sender (context);
+    cookie = xfpm_inhibit_add_application (inhibit, IN_appname, sender);
+     
+    TRACE("Inhibit send application name=%s reason=%s sender=%s", IN_appname, IN_reason ,sender);
     
-    *OUT_cookie = cookie;
+    xfpm_inhibit_has_inhibit_changed (inhibit);
     
-    return TRUE;
+    xfpm_dbus_monitor_add_match (inhibit->priv->monitor, sender);
+    
+    g_free (sender);
+    dbus_g_method_return (context, cookie);
 }
 
-static gboolean xfpm_inhibit_dbus_un_inhibit    (XfpmInhibit *inhibit,
-						 guint        IN_cookie,
-						 GError     **error)
+static gboolean xfpm_inhibit_un_inhibit    (XfpmInhibit *inhibit,
+					    guint        IN_cookie,
+					    GError     **error)
 {
     TRACE("UnHibit message received");
     
-    if (!xfpm_inhibit_remove_application (inhibit, IN_cookie))
+    if (!xfpm_inhibit_remove_application_by_cookie (inhibit, IN_cookie))
     {
 	g_set_error (error, XFPM_ERROR, XFPM_ERROR_INVALID_COOKIE, _("Invalid cookie"));
 	return FALSE;
     }
     
-    if ( g_hash_table_size (inhibit->priv->hash) == 0)
-    {
-	TRACE("Inhibit removed");
-	inhibit->priv->inhibited = FALSE;
-	g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
-    }
-    
+    xfpm_inhibit_has_inhibit_changed (inhibit);
+   
     return TRUE;
 }
 
-static gboolean xfpm_inhibit_dbus_has_inhibit   (XfpmInhibit *inhibit,
-						 gboolean    *OUT_has_inhibit,
-						 GError     **error)
+static gboolean xfpm_inhibit_has_inhibit   (XfpmInhibit *inhibit,
+					    gboolean    *OUT_has_inhibit,
+					    GError     **error)
 {
     TRACE("Has Inhibit message received");
-    
+
     *OUT_has_inhibit = inhibit->priv->inhibited;
-    
+
     return TRUE;
 }

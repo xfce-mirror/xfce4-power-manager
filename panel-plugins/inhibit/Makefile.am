@@ -2,8 +2,7 @@ plugindir = $(libexecdir)/xfce4/panel-plugins
 plugin_PROGRAMS = xfce4-inhibit-plugin
 
 xfce4_inhibit_plugin_SOURCES =			\
-	inhibit-plugin.c			\
-	inhibit-client.h
+	inhibit-plugin.c
 
 xfce4_inhibit_plugin_CFLAGS =			\
 	-I$(top_srcdir)				\
@@ -25,15 +24,6 @@ xfce4_inhibit_plugin_LDADD =			\
 	$(GLIB_LIBS)				\
 	$(DBUS_GLIB_LIBS)
 
-if MAINTAINER_MODE
-
-BUILT_SOURCES =					\
-	inhibit-client.h
-
-inhibit-client.h: $(top_srcdir)/src/org.freedesktop.PowerManagement.Inhibit.xml
-	dbus-binding-tool --mode=glib-client --prefix=inhibit_plugin $< >$@
-
-endif
 #
 # Desktop file
 #
@@ -52,6 +42,3 @@ CLEANFILES =                                                            \
 
 %.desktop.in: %.desktop.in.in
 	sed -e "s,\@libexecdir\@,$(libexecdir),g" < $< > $@
-
-DISTCLEANFILES =		\
-	$(BUILT_SOURCES)

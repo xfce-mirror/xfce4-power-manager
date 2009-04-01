@@ -209,6 +209,7 @@ static void
 xfpm_dpms_inhibit_changed_cb (XfpmScreenSaver *saver, gboolean inhibited, XfpmDpms *dpms)
 {
     dpms->priv->inhibited = inhibited;
+    TRACE ("Inhibit changed %s", xfpm_bool_to_string (inhibited));
     
     xfpm_dpms_refresh (dpms);
 }

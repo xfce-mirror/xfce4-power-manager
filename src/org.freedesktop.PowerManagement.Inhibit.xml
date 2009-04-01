@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <node name="/">
     <interface name="org.freedesktop.PowerManagement.Inhibit">
-        <annotation name="org.freedesktop.DBus.GLib.CSymbol"
-                    value="xfpm_inhibit_dbus"/>
-        <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
-                    value="xfpm_inhibit_dbus_client"/>   
-
     <method name="Inhibit">
+     <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
       <arg type="s" name="application" direction="in"/>
       <arg type="s" name="reason" direction="in"/>
       <arg type="u" name="cookie" direction="out"/>

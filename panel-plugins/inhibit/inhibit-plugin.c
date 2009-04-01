@@ -41,7 +41,6 @@
 #include "libxfpm/xfpm-notify.h"
 #include "libxfpm/xfpm-string.h"
 
-#include "inhibit-client.h"
 
 typedef struct
 {
@@ -147,8 +146,13 @@ inhibit_plugin_get_inhibit (inhibit_t *inhibit)
     
     if ( !inhibit->connected )
 	return FALSE;
-    
-    if (!xfpm_inhibit_dbus_client_has_inhibit (inhibit->proxy, &inhibited, &error) )
+   
+    dbus_g_proxy_call (inhibit->proxy, "HasInhibit", &error,
+		       G_TYPE_INVALID,
+		       G_TYPE_BOOLEAN, &inhibited,
+		       G_TYPE_INVALID );
+		       
+    if (error)
     {
 	g_critical ("Unable to get inhibit state: %s", error->message);
 	g_error_free (error);
@@ -169,7 +173,14 @@ inhibit_plugin_set_inhibit (inhibit_t *inhibit)
     const gchar *app = "Inhibit plugin";
     const gchar *reason = "User settings";
     
-    if (!xfpm_inhibit_dbus_client_inhibit (inhibit->proxy, app, reason, &inhibit->cookie, &error))
+    dbus_g_proxy_call (inhibit->proxy, "Inhibit", &error,
+		       G_TYPE_STRING, app,
+		       G_TYPE_STRING, reason,
+		       G_TYPE_INVALID,
+		       G_TYPE_UINT, &inhibit->cookie,
+		       G_TYPE_INVALID );
+		       
+    if (error)
     {
 	g_critical ("Unable to set inhibit: %s", error->message);
 	g_error_free (error);
@@ -185,7 +196,12 @@ inhibit_plugin_unset_inhibit (inhibit_t *inhibit)
 {
     GError *error = NULL;
     
-    if (!xfpm_inhibit_dbus_client_un_inhibit (inhibit->proxy, inhibit->cookie, &error))
+    dbus_g_proxy_call (inhibit->proxy, "UnInhibit", &error,
+		       G_TYPE_UINT, inhibit->cookie,
+		       G_TYPE_INVALID,
+		       G_TYPE_INVALID );
+		       
+    if (error)
     {
 	g_critical ("Unable to set UnInhibit: %s", error->message);
 	g_error_free (error);
