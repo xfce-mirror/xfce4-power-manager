@@ -37,6 +37,10 @@ xfce4_power_manager_settings_LDADD   =				\
 	$(top_builddir)/libxfpm/libxfpmcommon.la
 
 
+manpagedir = $(mandir)/man1
+
+manpage_DATA = xfce4-power-manager-settings.1
+
 if MAINTAINER_MODE
 
 BUILT_SOURCES = 				\
@@ -64,7 +68,8 @@ EXTRA_DIST = 					\
 	xfce-power-manager-dbus-client.h	\
 	xfpm-settings-glade.h			\
 	xfpm-settings.glade			\
-	$(desktop_in_files)
+	$(desktop_in_files)			\
+	$(manpage_DATA)
 
 DISTCLEANFILES =				\
 	$(BUILT_SOURCES)			\

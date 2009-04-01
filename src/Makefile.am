@@ -90,6 +90,10 @@ xfce4_power_manager_LDADD   =			\
 	$(LIBNOTIFY_LIBS)			\
 	$(DPMS_LIBS)		
 
+manpagedir = $(mandir)/man1
+
+manpage_DATA = xfce4-power-manager.1
+
 xfpm_glib_headers = 				\
 	$(srcdir)/xfpm-enum-glib.h			
 
@@ -163,9 +167,10 @@ autostart_in_files = xfce4-power-manager.desktop.in
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST = 					\
-	xfpm-marshal.list		\
-	xfpm-enum-glib.h		\
-	$(autostart_in_files)
+	xfpm-marshal.list			\
+	xfpm-enum-glib.h			\
+	$(autostart_in_files)			\
+	$(manpage_DATA)
 
 DISTCLEANFILES =				\
 	$(BUILT_SOURCES)			\

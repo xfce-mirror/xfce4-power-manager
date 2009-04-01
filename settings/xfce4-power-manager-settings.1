@@ -1,0 +1,36 @@
+.TH XFCE4-POWER-MANAGER 1 "Version 0.8.0" "31 March 2009"
+
+.SH NAME
+xfce4-power-manager-settings \- Settings dialog for the Xfce 4 Power manager
+
+.SH SYNOPSIS
+.B xfce4-power-manager-settings
+.I [options]
+.br
+
+.SH DESCRIPTION
+\fBxfce4-power-manager-settings\fP is a utility that comes with the Xfce4 power manager to access/change its configuration, 
+it is a separate program that uses xfconf to load/save settings with  respect  to  the  user  choice,
+\fBxfce4-power-manager-settings\fP requires the Xfce4 power manager to be up and running because it connects to it
+via DBus and gets information about which settings should be shown and  which  should  not,  for  example  the
+\fBxfce4-power-manager-settings\fP will not show the LCD brightness settings if no device was detected by the 
+running instance of the Xfce4 power manager.  \fBxfce4-power-manager-settings\fP doesn’t  not  have  any  command  line option.
+
+.SH BUGS
+Please report any bugs to
+.IR http://bugzilla.xfce.org/ .
+Development discussion should be conducted on the
+.IR goodies-dev@xfce.org
+mailing list.  Usage-related questions should be directed to the
+.IR xfce@xfce.org
+mailing list.
+
+.SH HOMEPAGE
+.I http://goodies.xfce.org/
+
+.SH AUTHOR
+Ali Abdallah <aliov@xfce.org>.
+
+This manual page was originally written by Ali Abdallah
+.br
+<aliov@xfce.org>.

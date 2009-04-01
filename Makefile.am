@@ -13,9 +13,11 @@ SUBDIRS =        	\
 	po           	\
 	doc
 
-EXTRA_DIST = \
-	intltool-extract.in \
-	intltool-merge.in \
+
+EXTRA_DIST = 			\
+	TODO			\
+	intltool-extract.in 	\
+	intltool-merge.in 	\
 	intltool-update.in
 
 DISTCLEANFILES = \
