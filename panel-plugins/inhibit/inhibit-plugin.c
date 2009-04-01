@@ -430,14 +430,6 @@ inhibit_plugin_connect (inhibit_t *inhibit)
 	inhibit->connected = FALSE;
 	return;
     }
-    
-    if ( !xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(inhibit->bus),
-				    "org.freedesktop.PowerManagement.Inhibit") )
-    {
-	gtk_widget_set_tooltip_text (inhibit->button, _("No power manager instance running"));
-	inhibit->connected = FALSE;
-	return;
-    }
 }
 
 /*
@@ -497,7 +489,7 @@ inhibit_plugin_name_owner_changed_cb (DBusGProxy *proxy, const gchar *name,
     gboolean show_notification;
     NotifyNotification *n;
 	
-    if ( g_strcmp0 (name, "org.freedesktop.PowerManagement.Inhibit") != 0)
+    if ( g_strcmp0 (name, "org.freedesktop.PowerManagement") != 0)
 	return;
 	
     if ( strlen (new) != 0 )

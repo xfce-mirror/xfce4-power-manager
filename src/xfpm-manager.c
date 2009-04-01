@@ -133,12 +133,6 @@ xfpm_manager_release_names (XfpmManager *manager)
     xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 			    "org.freedesktop.PowerManagement");
 				  
-    xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
-			    "org.freedesktop.PowerManagement.Inhibit");
-			    
-    xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
-			    "org.freedesktop.PowerManagement.Backlight");
-    
 }
 
 static gboolean
@@ -166,20 +160,6 @@ xfpm_manager_reserve_names (XfpmManager *manager)
     {
     
 	g_critical ("Unable to reserve bus name: PowerManagement\n");
-    }
-    
-    if (!xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
-				  "org.freedesktop.PowerManagement.Inhibit") )
-    {
-    
-	g_critical ("Unable to reserve bus name: Inhibit\n");
-    }
-    
-    if (!xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
-				  "org.freedesktop.PowerManagement.Backlight") )
-    {
-    
-	g_critical ("Unable to reserve bus name: Backlight\n");
     }
 }
 
