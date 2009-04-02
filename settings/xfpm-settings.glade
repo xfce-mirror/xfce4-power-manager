@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <glade-interface>
-  <!-- interface-requires gtk+ 2.16 -->
+  <!-- interface-requires gtk+ 2.12 -->
   <requires lib="xfce4"/>
   <!-- interface-requires xfce4 2360.6128 -->
   <!-- interface-naming-policy toplevel-contextual -->
@@ -40,7 +40,6 @@
                     <child>
                       <widget class="GtkVBox" id="vbox16">
                         <property name="visible">True</property>
-                        <property name="orientation">vertical</property>
                         <property name="spacing">10</property>
                         <child>
                           <widget class="GtkFrame" id="frame">
@@ -54,7 +53,6 @@
                                 <child>
                                   <widget class="GtkVBox" id="vbox17">
                                     <property name="visible">True</property>
-                                    <property name="orientation">vertical</property>
                                     <property name="spacing">10</property>
                                     <child>
                                       <widget class="GtkTable" id="table3">
@@ -243,7 +241,6 @@
                     <child>
                       <widget class="GtkVBox" id="vbox18">
                         <property name="visible">True</property>
-                        <property name="orientation">vertical</property>
                         <property name="spacing">10</property>
                         <child>
                           <widget class="GtkFrame" id="on-ac-actions-frame">
@@ -258,7 +255,6 @@
                                 <child>
                                   <widget class="GtkVBox" id="vbox19">
                                     <property name="visible">True</property>
-                                    <property name="orientation">vertical</property>
                                     <child>
                                       <widget class="GtkHBox" id="hbox17">
                                         <property name="visible">True</property>
@@ -325,12 +321,10 @@
                                 <child>
                                   <widget class="GtkVBox" id="vbox20">
                                     <property name="visible">True</property>
-                                    <property name="orientation">vertical</property>
                                     <property name="spacing">20</property>
                                     <child>
                                       <widget class="GtkVBox" id="vbox21">
                                         <property name="visible">True</property>
-                                        <property name="orientation">vertical</property>
                                         <child>
                                           <widget class="GtkLabel" id="label28">
                                             <property name="visible">True</property>
@@ -361,7 +355,6 @@
                                     <child>
                                       <widget class="GtkVBox" id="vbox22">
                                         <property name="visible">True</property>
-                                        <property name="orientation">vertical</property>
                                         <child>
                                           <widget class="GtkLabel" id="label29">
                                             <property name="visible">True</property>
@@ -422,7 +415,6 @@
                                 <child>
                                   <widget class="GtkVBox" id="vbox23">
                                     <property name="visible">True</property>
-                                    <property name="orientation">vertical</property>
                                     <child>
                                       <widget class="GtkLabel" id="label31">
                                         <property name="visible">True</property>
@@ -489,12 +481,10 @@
                     <child>
                       <widget class="GtkVBox" id="vbox24">
                         <property name="visible">True</property>
-                        <property name="orientation">vertical</property>
                         <property name="spacing">10</property>
                         <child>
                           <widget class="GtkVBox" id="vbox25">
                             <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
                             <child>
                               <widget class="GtkFrame" id="frame9">
                                 <property name="visible">True</property>
@@ -508,7 +498,6 @@
                                     <child>
                                       <widget class="GtkVBox" id="vbox26">
                                         <property name="visible">True</property>
-                                        <property name="orientation">vertical</property>
                                         <property name="spacing">10</property>
                                         <child>
                                           <widget class="GtkTable" id="table4">
@@ -643,12 +632,10 @@
                                     <child>
                                       <widget class="GtkVBox" id="vbox27">
                                         <property name="visible">True</property>
-                                        <property name="orientation">vertical</property>
                                         <property name="spacing">20</property>
                                         <child>
                                           <widget class="GtkVBox" id="vbox28">
                                             <property name="visible">True</property>
-                                            <property name="orientation">vertical</property>
                                             <child>
                                               <widget class="GtkLabel" id="label36">
                                                 <property name="visible">True</property>
@@ -679,7 +666,6 @@
                                         <child>
                                           <widget class="GtkVBox" id="vbox29">
                                             <property name="visible">True</property>
-                                            <property name="orientation">vertical</property>
                                             <child>
                                               <widget class="GtkLabel" id="label37">
                                                 <property name="visible">True</property>
@@ -740,7 +726,6 @@
                                     <child>
                                       <widget class="GtkVBox" id="vbox30">
                                         <property name="visible">True</property>
-                                        <property name="orientation">vertical</property>
                                         <child>
                                           <widget class="GtkLabel" id="label39">
                                             <property name="visible">True</property>
@@ -845,7 +830,6 @@
                             <child>
                               <widget class="GtkVBox" id="vbox2">
                                 <property name="visible">True</property>
-                                <property name="orientation">vertical</property>
                                 <property name="spacing">10</property>
                                 <child>
                                   <widget class="GtkHBox" id="hbox1">
@@ -864,7 +848,6 @@
                                     <child>
                                       <widget class="GtkVBox" id="vbox3">
                                         <property name="visible">True</property>
-                                        <property name="orientation">vertical</property>
                                         <child>
                                           <widget class="GtkRadioButton" id="sleep-dpms-mode">
                                             <property name="label" translatable="yes">Standby</property>
@@ -922,7 +905,6 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="invisible_char">&#x25CF;</property>
-                                        <property name="caps_lock_warning">False</property>
                                         <property name="adjustment">5 5 20 1 0 0</property>
                                       </widget>
                                       <packing>
