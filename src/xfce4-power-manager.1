@@ -9,18 +9,24 @@ xfce4-power-manager \- The Xfce 4 Power manager
 .br
 
 .SH DESCRIPTION
-\fBxfce4-power-manager\fP manages the power sources on the computer and the devices that can be controlled
-to reduce their power consumption such as LCD brightness level, monitor sleep, CPU frequency scaling. In addition
-\fBxfce4-power-manager\fP provides a set of freedesktop compliant DBus interfaces to inform other applications 
-about current power level so they can adjust their power consumption, also it provides the inhibit interface which allow to 
-inhibit automatic sleep of the power manager, as an example of an application that should use this interface is an
-update manager.
-You can run \fBxfce4-power-manager\fP from the command line without specifying any extra argument.
+\fBxfce4-power-manager\fP manages the power sources on the computer and the 
+devices that can be controlled to reduce their power consumption (such as LCD 
+brightness level, monitor sleep, CPU frequency scaling). In addition, 
+\fBxfce4-power-manager\fP provides a set of freedesktop-compliant DBus 
+interfaces to inform other applications about current power level so that 
+they can adjust their power consumption, and it provides the inhibit 
+interface which allows applications to prevent automatic sleep actions via 
+the power manager; as an example, the operating system's package manager
+should make use of this interface while it is performing update operations.
+.br
+.br
+You can run \fBxfce4-power-manager\fP from the command line without 
+specifying any extra arguments.
 
 .SH OPTIONS
 .TP
 .B \--no-daemon
-Starts the power manager in non-daemon mode, useful for debugging.
+Starts the power manager in non-daemon mode: useful for debugging.
 .TP
 .B \--restart
 Causes the running power manager to restart.
@@ -29,14 +35,14 @@ Causes the running power manager to restart.
 Shows the configuration dialog.
 .TP
 .B \--quit
-Causes any running \fBxfce4-power-manager\fP to exit.
+Causes any running instance of \fBxfce4-power-manager\fP to exit.
 
 .SH BUGS
 Please report any bugs to
 .IR http://bugzilla.xfce.org/ .
 Development discussion should be conducted on the
 .IR goodies-dev@xfce.org
-mailing list.  Usage-related questions should be directed to the
+mailing list.  Usage related questions should be directed to the
 .IR xfce@xfce.org
 mailing list.
 
@@ -45,6 +51,7 @@ mailing list.
 
 .SH AUTHOR
 Ali Abdallah <aliov@xfce.org>.
+Robby Workman <rw@rlworkman.net>.
 
 This manual page was originally written by Ali Abdallah
 .br
