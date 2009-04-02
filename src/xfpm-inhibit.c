@@ -294,6 +294,10 @@ static gboolean xfpm_inhibit_has_inhibit(XfpmInhibit *inhibit,
 					 gboolean    *OUT_has_inhibit,
 					 GError     **error);
 
+static gboolean xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
+					     gchar ***OUT_inhibitor,
+					     GError **error);
+
 #include "org.freedesktop.PowerManagement.Inhibit.h"
 
 static void xfpm_inhibit_dbus_class_init  (XfpmInhibitClass *klass)
@@ -369,5 +373,27 @@ static gboolean xfpm_inhibit_has_inhibit   (XfpmInhibit *inhibit,
 
     *OUT_has_inhibit = inhibit->priv->inhibited;
 
+    return TRUE;
+}
+
+static gboolean xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
+					     gchar ***OUT_inhibitors,
+					     GError **error)
+{
+    gint i;
+    Inhibitor *inhibitor;
+
+    TRACE ("Get Inhibitors message received");
+    
+    *OUT_inhibitors = g_new (gchar *, inhibit->priv->array->len + 1);
+    
+    for ( i = 0; i<inhibit->priv->array->len; i++)
+    {
+	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+	(*OUT_inhibitors)[i] = g_strdup (inhibitor->app_name);
+    }
+    
+    (*OUT_inhibitors)[inhibit->priv->array->len] = NULL;
+    
     return TRUE;
 }

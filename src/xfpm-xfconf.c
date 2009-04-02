@@ -231,7 +231,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     {
 	str = g_value_get_string (value);
 	val = xfpm_shutdown_string_to_int (str);
-	if ( G_UNLIKELY (val == -1 || val == 3 || val == 1 ))
+	if ( G_UNLIKELY (val == -1 || val == 1 ))
 	{
 	    g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
 	    conf->priv->critical_action = XFPM_DO_NOTHING;

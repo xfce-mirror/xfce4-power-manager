@@ -412,7 +412,7 @@ critical_level_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
 {
     guint val = (guint) gtk_spin_button_get_value (w);
     
-    if (!xfconf_channel_get_uint (channel, CRITICAL_POWER_LEVEL, val) )
+    if (!xfconf_channel_set_uint (channel, CRITICAL_POWER_LEVEL, val) )
     {
 	g_critical ("Unable to set value %d for property %s\n", val, CRITICAL_POWER_LEVEL);
     }

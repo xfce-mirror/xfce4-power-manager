@@ -283,6 +283,9 @@ xfpm_battery_get_battery_state (XfpmBatteryState *state,
 	    return _("is almost empty");
     	}
     }
+    
+    g_warn_if_reached ();
+    
     return "";
 }
 

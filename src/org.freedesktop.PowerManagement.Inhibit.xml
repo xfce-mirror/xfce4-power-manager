@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <node name="/">
     <interface name="org.freedesktop.PowerManagement.Inhibit">
+    
     <method name="Inhibit">
      <annotation name="org.freedesktop.DBus.GLib.Async" value=""/>
       <arg type="s" name="application" direction="in"/>
@@ -19,6 +20,11 @@
     <signal name="HasInhibitChanged">
       <arg type="b" name="has_inhibit_changed" direction="out"/>
     </signal>
+    
+    <!--*** NOT STANDARD ***-->
+    <method name="GetInhibitors">
+     <arg type="as" name="inhibitors" direction="out"/>
+    </method>
     
     </interface>
     
