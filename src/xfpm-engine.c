@@ -90,6 +90,14 @@ struct XfpmEnginePrivate
     gboolean has_lid;
 };
 
+enum
+{
+    ON_BATTERY_CHANGED,
+    LAST_SIGNAL
+};
+
+static guint signals [LAST_SIGNAL] = { 0 };
+
 G_DEFINE_TYPE (XfpmEngine, xfpm_engine, G_TYPE_OBJECT)
 
 static gboolean xfpm_engine_do_suspend (XfpmEngine * engine)
@@ -320,6 +328,7 @@ xfpm_engine_adapter_changed_cb (XfpmAdapter * adapter, gboolean present,
 				XfpmEngine * engine)
 {
     engine->priv->on_battery = !present;
+    g_signal_emit (G_OBJECT (engine), signals [ON_BATTERY_CHANGED], 0, engine->priv->on_battery);
 }
 
 static void
@@ -333,6 +342,15 @@ static void
 xfpm_engine_class_init (XfpmEngineClass * klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+    signals [ON_BATTERY_CHANGED] = 
+        g_signal_new("on-battery-changed",
+                      XFPM_TYPE_ENGINE,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmEngineClass, on_battery_changed),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__BOOLEAN,
+                      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
     object_class->finalize = xfpm_engine_finalize;
 

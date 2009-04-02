@@ -225,7 +225,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 	    g_warning ("Value %d for %s is out of range", conf->priv->brightness_on_battery_timeout, BRIGHTNESS_ON_BATTERY );
 	    conf->priv->brightness_on_battery_timeout = 9;
 	}
-	g_signal_emit (G_OBJECT(conf), signals[POWER_SAVE_SETTINGS_CHANGED], 0);
+	g_signal_emit (G_OBJECT(conf), signals[BRIGHTNESS_SETTINGS_CHANGED], 0);
     }
     else if ( xfpm_strequal (property, CRITICAL_BATT_ACTION_CFG) )
     {

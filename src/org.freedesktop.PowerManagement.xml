@@ -29,5 +29,9 @@
       <arg type="b" name="low_battery" direction="out"/>
     </method>
     
+    <signal name="OnBatteryChanged">
+      <arg type="b" name="on_battery" direction="out"/>
+    </signal>
+    
     </interface>
 </node>
