@@ -25,19 +25,26 @@
 #include <config.h>
 #endif
 
+#include <glib.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
 GdkPixbuf* 	xfpm_load_icon    		(const gchar *icon_name,
-						 gint size);
+						 gint size) G_GNUC_MALLOC;
 						 
-const gchar    *xfpm_int_to_shutdown_string	(gint val);
-gint            xfpm_shutdown_string_to_int     (const gchar *string);
+const gchar    *xfpm_int_to_shutdown_string	(gint val) G_GNUC_PURE;
+
+gint            xfpm_shutdown_string_to_int     (const gchar *string) G_GNUC_PURE;
 
 void       	xfpm_lock_screen  		(void);
+
 void       	xfpm_preferences		(void);
+
 void       	xfpm_help			(void);
+
+void            xfpm_quit                       (void);
+
 void       	xfpm_about			(GtkWidget *widget, 
 						 gpointer data);
 

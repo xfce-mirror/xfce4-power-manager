@@ -49,7 +49,7 @@ typedef struct
 GType        			xfpm_dbus_monitor_get_type        (void) G_GNUC_CONST;
 XfpmDBusMonitor       	       *xfpm_dbus_monitor_new             (void);
 
-void                            xfpm_dbus_monitor_add_match       (XfpmDBusMonitor *monitor,
+gboolean                        xfpm_dbus_monitor_add_match       (XfpmDBusMonitor *monitor,
 								   const gchar *unique_name);
 								   
 gboolean                        xfpm_dbus_monitor_remove_match    (XfpmDBusMonitor *monitor,

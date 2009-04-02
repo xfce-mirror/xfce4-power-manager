@@ -175,12 +175,26 @@ xfpm_dbus_monitor_new (void)
     return XFPM_DBUS_MONITOR (xfpm_dbus_monitor_object);
 }
 
-void xfpm_dbus_monitor_add_match (XfpmDBusMonitor *monitor, const gchar *unique_name)
+gboolean xfpm_dbus_monitor_add_match (XfpmDBusMonitor *monitor, const gchar *unique_name)
 {
-    g_return_if_fail (XFPM_IS_DBUS_MONITOR (monitor) );
-    g_return_if_fail (unique_name != NULL);
+    int i = 0;
+    gchar *name;
+    
+    g_return_val_if_fail (XFPM_IS_DBUS_MONITOR (monitor), FALSE);
+    g_return_val_if_fail (unique_name != NULL, FALSE);
+    
+    for ( i = 0; i<monitor->priv->array->len; i++)
+    {
+	name = g_ptr_array_index (monitor->priv->array, i);
+	if ( g_strcmp0 (name, unique_name) == 0 )
+	{
+	    return FALSE;
+	}
+    }
     
     g_ptr_array_add (monitor->priv->array, g_strdup (unique_name));
+    
+    return TRUE;
 }
 
 gboolean xfpm_dbus_monitor_remove_match (XfpmDBusMonitor *monitor, const gchar *unique_name)

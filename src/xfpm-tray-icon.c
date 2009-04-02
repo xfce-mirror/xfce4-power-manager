@@ -204,6 +204,20 @@ xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
 }
 
 static void
+xfpm_tray_icon_exit_activated_cb (GtkWidget *w, gpointer data)
+{
+    gboolean ret;
+    
+    ret = xfce_confirm (_("Exit Xfce power manager"),
+	                GTK_STOCK_YES,
+			_("Quit"));
+    if ( ret )
+    {
+	xfpm_quit ();
+    }
+}
+
+static void
 xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button, 
 			      guint activate_time, XfpmTrayIcon *tray)
 {
@@ -297,6 +311,16 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     g_signal_connect(mi,"activate",G_CALLBACK(xfpm_preferences),NULL);
     
     gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+
+    mi = gtk_separator_menu_item_new ();
+    gtk_widget_show (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+
+    mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_QUIT, NULL);
+    gtk_widget_set_sensitive (mi, TRUE);
+    gtk_widget_show (mi);
+    g_signal_connect (mi, "activate", G_CALLBACK (xfpm_tray_icon_exit_activated_cb), NULL);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
 
     // Popup the menu
     gtk_menu_popup(GTK_MENU(menu), NULL, NULL,

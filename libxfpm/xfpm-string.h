@@ -24,14 +24,12 @@
 #include <glib.h>
 #include <string.h>
 
-gint 		xfpm_strcmp 		(const gchar *str1,
-					 const gchar *str2);
-
 gboolean        xfpm_strequal		(const gchar *str1,
 					 const gchar *str2);
-const gchar    *xfpm_bool_to_string     (gboolean value);
 
-gboolean        xfpm_string_to_bool     (const gchar *string);
+const gchar    *xfpm_bool_to_string     (gboolean value) G_GNUC_PURE;
+
+gboolean        xfpm_string_to_bool     (const gchar *string) G_GNUC_PURE;
 
 
 #endif /* XFPM_STRING_H */

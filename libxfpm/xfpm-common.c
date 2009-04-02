@@ -19,7 +19,6 @@
  */
 
 #include <glib.h>
-#include <glib/gi18n.h>
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -27,18 +26,18 @@
 #include "xfpm-string.h"
 
 static void
-xfpm_link_browser(GtkAboutDialog *about,const gchar *link,gpointer data)
+xfpm_link_browser (GtkAboutDialog *about, const gchar *link, gpointer data)
 {
-    gchar *cmd = g_strdup_printf("%s %s","xfbrowser4",link);
+    gchar *cmd = g_strdup_printf ("%s %s","xfbrowser4", link);
     g_spawn_command_line_async (cmd, NULL);
-    g_free(cmd);
+    g_free (cmd);
 	
 }
 
 static void
-xfpm_link_mailto(GtkAboutDialog *about,const gchar *link,gpointer data)
+xfpm_link_mailto (GtkAboutDialog *about, const gchar *link, gpointer data)
 {
-    gchar *cmd = g_strdup_printf("%s %s","xdg-email",link);
+    gchar *cmd = g_strdup_printf( "%s %s", "xdg-email", link);
 
     g_spawn_command_line_async (cmd, NULL);
     
@@ -47,20 +46,20 @@ xfpm_link_mailto(GtkAboutDialog *about,const gchar *link,gpointer data)
 	
 
 GdkPixbuf *
-xfpm_load_icon(const char *icon_name,gint size)
+xfpm_load_icon (const char *icon_name, gint size)
 {
     GdkPixbuf *icon;
     GError *error = NULL;
     
-    icon = gtk_icon_theme_load_icon(gtk_icon_theme_get_default (),
-                                   icon_name,
-                                   size,
-                                   GTK_ICON_LOOKUP_FORCE_SVG,
-                                   &error);
+    icon = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                     icon_name,
+                                     size,
+                                     GTK_ICON_LOOKUP_FORCE_SVG,
+                                     &error);
     if ( error )
     {
-        g_warning("Error occured while loading icon %s: %s\n", icon_name, error->message);
-        g_error_free(error);
+        g_warning ("Error occured while loading icon %s: %s\n", icon_name, error->message);
+        g_error_free (error);
     }
     return icon;                               
 }
@@ -68,7 +67,7 @@ xfpm_load_icon(const char *icon_name,gint size)
 /*
  * Map of int to strings shutdown values
  */
-const gchar    *xfpm_int_to_shutdown_string	(gint val)
+const gchar    *xfpm_int_to_shutdown_string (gint val)
 {
     if ( val == 0 )
 	return "Nothing";
@@ -82,7 +81,7 @@ const gchar    *xfpm_int_to_shutdown_string	(gint val)
     return "Invalid";
 }
 
-gint            xfpm_shutdown_string_to_int     (const gchar *string)
+gint xfpm_shutdown_string_to_int (const gchar *string)
 {
     if ( xfpm_strequal("Nothing", string) )
 	return 0;
@@ -94,12 +93,10 @@ gint            xfpm_shutdown_string_to_int     (const gchar *string)
 	return 3;
 	
     return -1; /* error here */
-
-    
 }
 
 void       
-xfpm_lock_screen(void)
+xfpm_lock_screen (void)
 {
     gboolean ret = g_spawn_command_line_async ("xflock4", NULL);
     
@@ -126,15 +123,21 @@ xfpm_lock_screen(void)
 }
 
 void       
-xfpm_preferences(void) 
+xfpm_preferences (void) 
 {
     g_spawn_command_line_async ("xfce4-power-manager-settings", NULL);
 }
 
 void       
-xfpm_help(void)
+xfpm_help (void)
 {
     g_spawn_command_line_async ("xfhelp4 xfce4-power-manager.html", NULL);
+}
+
+void
+xfpm_quit (void)
+{
+    g_spawn_command_line_async ("xfce4-power-manager -q", NULL);
 }
 
 void       

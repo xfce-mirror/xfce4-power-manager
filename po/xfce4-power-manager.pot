@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-30 14:57+0200\n"
+"POT-Creation-Date: 2009-04-02 15:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -108,7 +108,7 @@ msgstr ""
 #: ../settings/xfpm-settings.glade.h:22 ../settings/xfpm-settings.c:539
 #: ../settings/xfpm-settings.c:653 ../settings/xfpm-settings.c:769
 #: ../settings/xfpm-settings.c:817 ../src/xfpm-tray-icon.c:194
-#: ../src/xfpm-tray-icon.c:239
+#: ../src/xfpm-tray-icon.c:253
 msgid "Suspend"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgstr ""
 
 #: ../settings/xfpm-settings.glade.h:29 ../settings/xfpm-settings-main.c:113
 #: ../src/xfpm-main.c:125 ../src/xfpm-main.c:187 ../src/xfpm-main.c:217
-#: ../src/xfpm-tray-icon.c:290 ../src/xfce4-power-manager.desktop.in.h:2
+#: ../src/xfpm-tray-icon.c:304 ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr ""
 
@@ -174,7 +174,7 @@ msgstr ""
 #: ../settings/xfpm-settings.c:457 ../settings/xfpm-settings.c:545
 #: ../settings/xfpm-settings.c:659 ../settings/xfpm-settings.c:775
 #: ../settings/xfpm-settings.c:823 ../src/xfpm-tray-icon.c:167
-#: ../src/xfpm-tray-icon.c:224
+#: ../src/xfpm-tray-icon.c:238
 msgid "Hibernate"
 msgstr ""
 
@@ -257,8 +257,8 @@ msgstr ""
 msgid "Your battery is discharging"
 msgstr ""
 
-#: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:369
-#: ../src/xfpm-battery.c:381
+#: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:372
+#: ../src/xfpm-battery.c:384
 msgid "System is running on battery power"
 msgstr ""
 
@@ -272,7 +272,7 @@ msgstr ""
 
 #: ../src/xfpm-battery.c:213 ../src/xfpm-supply.c:277 ../src/xfpm-supply.c:300
 #: ../src/xfpm-tray-icon.c:115 ../src/xfpm-tray-icon.c:139
-#: ../src/xfpm-manager.c:215
+#: ../src/xfpm-manager.c:195
 msgid "Xfce power manager"
 msgstr ""
 
@@ -324,43 +324,43 @@ msgstr ""
 msgid "is almost empty"
 msgstr ""
 
-#: ../src/xfpm-battery.c:300
+#: ../src/xfpm-battery.c:303
 msgid "is not present"
 msgstr ""
 
-#: ../src/xfpm-battery.c:331
+#: ../src/xfpm-battery.c:334
 msgid "Battery not present"
 msgstr ""
 
-#: ../src/xfpm-battery.c:353
+#: ../src/xfpm-battery.c:356
 msgid "Estimated time left"
 msgstr ""
 
-#: ../src/xfpm-battery.c:357
+#: ../src/xfpm-battery.c:360
 msgid "Estimated time to be fully charged"
 msgstr ""
 
-#: ../src/xfpm-battery.c:360
+#: ../src/xfpm-battery.c:363
 msgid "hours"
 msgstr ""
 
-#: ../src/xfpm-battery.c:360
+#: ../src/xfpm-battery.c:363
 msgid "hour"
 msgstr ""
 
-#: ../src/xfpm-battery.c:361
+#: ../src/xfpm-battery.c:364
 msgid "minutes"
 msgstr ""
 
-#: ../src/xfpm-battery.c:361
+#: ../src/xfpm-battery.c:364
 msgid "minute"
 msgstr ""
 
-#: ../src/xfpm-battery.c:365 ../src/xfpm-battery.c:377
+#: ../src/xfpm-battery.c:368 ../src/xfpm-battery.c:380
 msgid "Battery"
 msgstr ""
 
-#: ../src/xfpm-battery.c:368 ../src/xfpm-battery.c:380
+#: ../src/xfpm-battery.c:371 ../src/xfpm-battery.c:383
 msgid "System is running on AC power"
 msgstr ""
 
@@ -494,26 +494,39 @@ msgid ""
 "to suspend the system?"
 msgstr ""
 
-#: ../src/xfpm-engine.c:511 ../src/xfpm-engine.c:540
+#: ../src/xfpm-tray-icon.c:211
+msgid "Exit Xfce power manager"
+msgstr ""
+
+#: ../src/xfpm-tray-icon.c:213
+msgid "Quit"
+msgstr ""
+
+#: ../src/xfpm-engine.c:529 ../src/xfpm-engine.c:558
 #, c-format
 msgid "Permission denied"
 msgstr ""
 
-#: ../src/xfpm-engine.c:518
+#: ../src/xfpm-engine.c:536
 #, c-format
 msgid "Hibernate not supported"
 msgstr ""
 
-#: ../src/xfpm-engine.c:547
+#: ../src/xfpm-engine.c:565
 #, c-format
 msgid "Suspend not supported"
 msgstr ""
 
-#: ../src/xfpm-manager.c:215
+#: ../src/xfpm-manager.c:195
 msgid "HAL daemon is not running"
 msgstr ""
 
-#: ../src/xfpm-inhibit.c:247
+#: ../src/xfpm-inhibit.c:333
+#, c-format
+msgid "Invalid arguments"
+msgstr ""
+
+#: ../src/xfpm-inhibit.c:359
 #, c-format
 msgid "Invalid cookie"
 msgstr ""
@@ -584,69 +597,68 @@ msgstr ""
 msgid "mAh"
 msgstr ""
 
-#: ../libxfpm/xfpm-common.c:168
+#: ../libxfpm/xfpm-common.c:171
 msgid "translator-credits"
 msgstr ""
 
-#: ../panel-plugins/brightness/brightness-plugin.c:462
-#: ../panel-plugins/brightness/brightness-plugin.c:519
+#: ../panel-plugins/brightness/brightness-plugin.c:460
+#: ../panel-plugins/brightness/brightness-plugin.c:517
 msgid "Control your LCD brightness level"
 msgstr ""
 
-#: ../panel-plugins/brightness/brightness-plugin.c:466
-#: ../panel-plugins/brightness/brightness-plugin.c:523
+#: ../panel-plugins/brightness/brightness-plugin.c:464
+#: ../panel-plugins/brightness/brightness-plugin.c:521
 msgid "No device found"
 msgstr ""
 
-#: ../panel-plugins/brightness/brightness-plugin.c:537
+#: ../panel-plugins/brightness/brightness-plugin.c:535
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:205
-#: ../panel-plugins/inhibit/inhibit-plugin.c:429
-#: ../panel-plugins/inhibit/inhibit-plugin.c:437
+#: ../panel-plugins/inhibit/inhibit-plugin.c:221
+#: ../panel-plugins/inhibit/inhibit-plugin.c:445
 msgid "No power manager instance running"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:208
+#: ../panel-plugins/inhibit/inhibit-plugin.c:224
 msgid "Automatic sleep inhibited"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:214
+#: ../panel-plugins/inhibit/inhibit-plugin.c:230
 msgid "Another application is disabling the automatic sleep"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:216
+#: ../panel-plugins/inhibit/inhibit-plugin.c:232
 msgid "Automatic sleep enabled"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:288
+#: ../panel-plugins/inhibit/inhibit-plugin.c:304
 msgid "Power manager automatic sleep is disabled"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:289
+#: ../panel-plugins/inhibit/inhibit-plugin.c:305
 msgid "Power manager automatic sleep is enabled"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:292
-#: ../panel-plugins/inhibit/inhibit-plugin.c:328
-#: ../panel-plugins/inhibit/inhibit-plugin.c:515
-#: ../panel-plugins/inhibit/inhibit-plugin.c:617
+#: ../panel-plugins/inhibit/inhibit-plugin.c:308
+#: ../panel-plugins/inhibit/inhibit-plugin.c:344
+#: ../panel-plugins/inhibit/inhibit-plugin.c:523
+#: ../panel-plugins/inhibit/inhibit-plugin.c:625
 #: ../panel-plugins/inhibit/xfce4-inhibit-plugin.desktop.in.in.h:1
 msgid "Inhibit plugin"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:302
-#: ../panel-plugins/inhibit/inhibit-plugin.c:338
-#: ../panel-plugins/inhibit/inhibit-plugin.c:525
+#: ../panel-plugins/inhibit/inhibit-plugin.c:318
+#: ../panel-plugins/inhibit/inhibit-plugin.c:354
+#: ../panel-plugins/inhibit/inhibit-plugin.c:533
 msgid "Don't show again"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:329
+#: ../panel-plugins/inhibit/inhibit-plugin.c:345
 msgid "Power manager disconnected"
 msgstr ""
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:516
+#: ../panel-plugins/inhibit/inhibit-plugin.c:524
 msgid "Power manager is connected"
 msgstr ""
