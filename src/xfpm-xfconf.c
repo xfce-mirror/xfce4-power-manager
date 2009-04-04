@@ -75,6 +75,7 @@ struct XfpmXfconfPrivate
     
     XfpmShowIcon     	 show_icon;
     guint                critical_level;
+    gboolean             general_notification;
 };
 
 enum
@@ -114,6 +115,10 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 	}
 	else
 	    conf->priv->sleep_button = val;
+    }
+    else if ( xfpm_strequal (property, GENERAL_NOTIFICATION_CFG) )
+    {
+	conf->priv->general_notification = g_value_get_boolean (value);
     }
     else if ( xfpm_strequal (property, POWER_SWITCH_CFG ) )
     {
@@ -288,6 +293,8 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     else conf->priv->power_button = val;
     
     g_free (str);
+    
+    conf->priv->general_notification = xfconf_channel_get_bool (conf->priv->channel, GENERAL_NOTIFICATION_CFG, TRUE);
     
     str = xfconf_channel_get_string (conf->priv->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
     val = xfpm_shutdown_string_to_int (str);
@@ -499,6 +506,8 @@ gboolean xfpm_xfconf_get_property_bool (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->lock_screen;
     else if ( xfpm_strequal (property, POWER_SAVE_ON_BATTERY ) )
 	return conf->priv->power_save_on_battery;
+    else if ( xfpm_strequal (property, GENERAL_NOTIFICATION_CFG ) )
+	return conf->priv->general_notification;
 #ifdef HAVE_DPMS
     else if ( xfpm_strequal (property, DPMS_SLEEP_MODE ))
 	return conf->priv->sleep_dpms_mode;

@@ -621,6 +621,8 @@ register_inhibit_plugin (XfcePanelPlugin *plugin)
 		      G_CALLBACK(inhibit_plugin_size_changed_cb), inhibit);
 		      
     xfce_panel_plugin_menu_show_about(plugin);
+    
+    notify_init ("inhibit-plugin");
 
     g_signal_connect (plugin, "about", G_CALLBACK(xfpm_about), _("Inhibit plugin"));
 }

@@ -202,22 +202,28 @@ static void
 xfpm_battery_refresh_state (XfpmBattery *battery, XfpmBatteryState state)
 {
     const gchar *message;
+    gboolean notify;
+    
+    notify = xfpm_xfconf_get_property_bool (battery->priv->conf, GENERAL_NOTIFICATION_CFG);
     
     if ( battery->priv->state != state)
     {
 	battery->priv->state = state;
-	message = xfpm_battery_get_message_from_battery_state (state, battery->priv->adapter_present );
-	if ( !message )
-	    goto signal;
-	xfpm_notify_show_notification (battery->priv->notify, 
-				   _("Xfce power manager"), 
-				   message, 
-				   xfpm_tray_icon_get_icon_name (battery->priv->icon),
-				   10000,
-				   battery->priv->type == HAL_DEVICE_TYPE_PRIMARY ? FALSE : TRUE,
-				   XFPM_NOTIFY_NORMAL,
-				   xfpm_tray_icon_get_tray_icon(battery->priv->icon));
+	if ( notify )
+	{
+	    message = xfpm_battery_get_message_from_battery_state (state, battery->priv->adapter_present );
+	    if ( !message )
+		goto signal;
 	
+	    xfpm_notify_show_notification (battery->priv->notify, 
+				       _("Xfce power manager"), 
+				       message, 
+				       xfpm_tray_icon_get_icon_name (battery->priv->icon),
+				       8000,
+				       battery->priv->type == HAL_DEVICE_TYPE_PRIMARY ? FALSE : TRUE,
+				       XFPM_NOTIFY_NORMAL,
+				       xfpm_tray_icon_get_tray_icon(battery->priv->icon));
+	}
 signal:
 	g_signal_emit (G_OBJECT(battery), signals[BATTERY_STATE_CHANGED], 0, state);
 	TRACE("Emitting signal battery state changed");

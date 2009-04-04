@@ -85,6 +85,11 @@ void 			  xfpm_notify_add_action_to_notification    (XfpmNotify *notify,
 void 			  xfpm_notify_present_notification 	    (XfpmNotify *notify, 
 								     NotifyNotification *n,
 								     gboolean simple);
+								     
+void                      xfpm_notify_critical                      (XfpmNotify *notify,
+								     NotifyNotification *n);
+
+void                      xfpm_notify_close_critical                (XfpmNotify *notify);
 G_END_DECLS
 
 #endif /* __XFPM_NOTIFY_H */

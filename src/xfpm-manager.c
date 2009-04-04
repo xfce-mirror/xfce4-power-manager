@@ -35,6 +35,8 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
+#include <libnotify/notify.h>
+
 #include "libxfpm/hal-monitor.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-dbus.h"
@@ -104,6 +106,8 @@ xfpm_manager_init(XfpmManager *manager)
     manager->priv->session_bus   = NULL;
     manager->priv->engine        = NULL;
     manager->priv->monitor       = NULL;
+    
+    notify_init ("xfce4-power-manager");
 }
 
 static void

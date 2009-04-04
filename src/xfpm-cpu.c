@@ -362,6 +362,7 @@ xfpm_cpu_init(XfpmCpu *cpu)
 			  G_CALLBACK(xfpm_cpu_power_save_settings_changed_cb), cpu);
 	
 	cpu->priv->on_battery = !xfpm_adapter_get_present (cpu->priv->adapter);
+	xfpm_cpu_refresh (cpu);
     }
     
 out:
@@ -375,11 +376,9 @@ xfpm_cpu_finalize(GObject *object)
 
     cpu = XFPM_CPU(object);
     
-    if ( cpu->priv->conf )
-	g_object_unref (cpu->priv->conf);
+    g_object_unref (cpu->priv->conf);
 	
-    if ( cpu->priv->adapter)
-	g_object_unref (cpu->priv->adapter);
+    g_object_unref (cpu->priv->adapter);
 	
     if ( cpu->priv->bus )
 	dbus_g_connection_unref (cpu->priv->bus);

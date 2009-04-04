@@ -65,6 +65,8 @@ struct XfpmNotifyPrivate
     NotifyNotification *notification;
 };
 
+static gpointer xfpm_notify_object = NULL;
+
 G_DEFINE_TYPE(XfpmNotify, xfpm_notify, G_TYPE_OBJECT)
 
 static void
@@ -84,8 +86,6 @@ xfpm_notify_init(XfpmNotify *notify)
     notify->priv = XFPM_NOTIFY_GET_PRIVATE(notify);
     
     notify->priv->notification = NULL;
-        
-    notify_init ("xfce4-power-manager");
 }
 
 static void
@@ -136,7 +136,13 @@ static void
 xfpm_notify_closed_cb (NotifyNotification *n, XfpmNotify *notify)
 {
     notify->priv->notification = NULL;
-    g_object_unref (G_OBJECT(n));
+    g_object_unref (G_OBJECT (n));
+}
+
+static void
+xfpm_notify_close_critical_cb (NotifyNotification *n, XfpmNotify *notify)
+{
+    g_object_unref (G_OBJECT (n));
 }
 
 static gboolean
@@ -160,11 +166,18 @@ xfpm_notify_close_notification (XfpmNotify *notify )
 }
 
 XfpmNotify *
-xfpm_notify_new(void)
+xfpm_notify_new (void)
 {
-    XfpmNotify *notify = NULL;
-    notify = g_object_new (XFPM_TYPE_NOTIFY, NULL);
-    return notify;
+    if ( xfpm_notify_object != NULL )
+    {
+	g_object_ref (xfpm_notify_object);
+    }
+    else
+    {
+	xfpm_notify_object = g_object_new (XFPM_TYPE_NOTIFY, NULL);
+	g_object_add_weak_pointer (xfpm_notify_object, &xfpm_notify_object);
+    }
+    return XFPM_NOTIFY (xfpm_notify_object);
 }
 
 void xfpm_notify_show_notification (XfpmNotify *notify, const gchar *title,
@@ -224,4 +237,26 @@ void xfpm_notify_present_notification (XfpmNotify *notify, NotifyNotification *n
     }
     
     g_idle_add ((GSourceFunc) xfpm_notify_show, n);
+}
+
+void xfpm_notify_critical (XfpmNotify *notify, NotifyNotification *n)
+{
+    g_return_if_fail (XFPM_IS_NOTIFY (notify));
+    
+    g_object_set_data (G_OBJECT (notify), "critical", n);
+    
+    g_signal_connect (G_OBJECT (n), "closed", 
+		      G_CALLBACK (xfpm_notify_close_critical_cb), notify);
+    g_idle_add ((GSourceFunc) xfpm_notify_show, n);
+}
+
+void xfpm_notify_close_critical (XfpmNotify *notify)
+{
+    g_return_if_fail (XFPM_IS_NOTIFY (notify));
+    
+    NotifyNotification *n;
+    n = (NotifyNotification *)  g_object_get_data (G_OBJECT (notify), "critical");
+    
+    if ( n )
+	g_object_unref (n);
 }

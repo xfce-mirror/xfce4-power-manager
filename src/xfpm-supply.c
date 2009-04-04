@@ -66,6 +66,7 @@ struct XfpmSupplyPrivate
     HalPower      *power;
     GHashTable    *hash;
     
+    gboolean       low_power;
     gboolean       adapter_present;
     gboolean       inhibited;
     guint8         power_management;
@@ -105,7 +106,7 @@ xfpm_supply_class_init(XfpmSupplyClass *klass)
 
     object_class->finalize = xfpm_supply_finalize;
 
-    g_type_class_add_private(klass,sizeof(XfpmSupplyPrivate));
+    g_type_class_add_private (klass, sizeof (XfpmSupplyPrivate));
 }
 
 static void
@@ -121,6 +122,7 @@ xfpm_supply_init (XfpmSupply *supply)
     supply->priv->tray    = xfpm_tray_icon_new ();
     supply->priv->inhibit = xfpm_inhibit_new   ();
     supply->priv->inhibited = FALSE;
+    supply->priv->low_power = FALSE;
     
     xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
     xfpm_tray_icon_set_icon (supply->priv->tray, "gpm-ac-adapter");
@@ -283,7 +285,7 @@ xfpm_supply_show_critical_action_inhibited (XfpmSupply *supply, XfpmBattery *bat
 				      
     xfpm_supply_add_actions_to_notification (supply, battery, n);
     
-    xfpm_notify_present_notification (supply->priv->notify, n, FALSE);
+    xfpm_notify_critical (supply->priv->notify, n);
 }
 
 static void
@@ -300,13 +302,12 @@ xfpm_supply_show_critical_action (XfpmSupply *supply, XfpmBattery *battery)
 				      _("Xfce power manager"), 
 				      message, 
 				      xfpm_battery_get_icon_name (battery),
-				      15000,
+				      20000,
 				      XFPM_NOTIFY_CRITICAL,
 				      xfpm_battery_get_status_icon (battery));
     
     xfpm_supply_add_actions_to_notification (supply, battery, n);
-    
-    xfpm_notify_present_notification (supply->priv->notify, n, FALSE);
+    xfpm_notify_critical (supply->priv->notify, n);
 }
 
 static void
@@ -318,6 +319,7 @@ xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
     if ( xfpm_supply_on_low_power (supply) )
     {
 	TRACE ("System is running on low power");
+	supply->priv->low_power = TRUE;
 	if ( supply->priv->inhibited )
 	{
 	    xfpm_supply_show_critical_action_inhibited (supply, battery);
@@ -334,19 +336,22 @@ xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
 }
 
 static void
-xfpm_supply_primary_critical (XfpmSupply *supply, XfpmBattery *battery, XfpmBatteryState state)
-{
-    if ( state == BATTERY_CHARGE_CRITICAL )
-    {
-	xfpm_supply_handle_primary_critical (supply, battery);
-    }
-}
-
-static void
 xfpm_supply_battery_state_changed_cb (XfpmBattery *battery, XfpmBatteryState state, XfpmSupply *supply)
 {
     if ( state == BATTERY_CHARGE_CRITICAL )
-	xfpm_supply_primary_critical (supply, battery, state);
+	xfpm_supply_handle_primary_critical (supply, battery);
+    else if ( supply->priv->low_power == TRUE )
+    {
+	if ( xfpm_supply_on_low_power (supply) )
+	{
+	    xfpm_supply_handle_primary_critical (supply, battery);
+	}
+	else
+	{
+	    supply->priv->low_power = FALSE;
+	    xfpm_notify_close_critical (supply->priv->notify);
+	}
+    }
 }
 
 static XfpmBattery *

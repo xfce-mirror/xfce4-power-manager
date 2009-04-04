@@ -24,18 +24,8 @@
 #endif
 
 #include <stdio.h>
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
 
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
@@ -248,6 +238,9 @@ xfpm_dpms_init(XfpmDpms *dpms)
 			  
 	g_signal_connect (dpms->priv->conf, "dpms-settings-changed",
 			  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
+			  
+	dpms->priv->on_battery = !xfpm_adapter_get_present (dpms->priv->adapter);
+	xfpm_dpms_refresh (dpms);
     }
     else
     {

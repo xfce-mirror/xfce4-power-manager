@@ -4,9 +4,6 @@
 
 * : OnBattery and OnLowBattery DBus signals.
 
-* : Block any other notification when OnCriticalPower notification is opened, in the way that
-    we don't close it before the user close it or the Adapter is plugged in again.
-
 * : Support Suspend Hybrid! ( DeviceKit power will not support this ).
     
 * : Use the session logout when we do shutdown, probably use the shutdown session interface anyway.
