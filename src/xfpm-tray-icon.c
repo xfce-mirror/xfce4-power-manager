@@ -171,7 +171,11 @@ xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
 	lock_screen = xfpm_xfconf_get_property_bool (tray->priv->conf, LOCK_SCREEN_ON_SLEEP);
 	if ( lock_screen )
 	    xfpm_lock_screen ();
-	g_timeout_add_seconds (4, (GSourceFunc) xfpm_tray_icon_do_hibernate, tray);
+	    
+	xfpm_shutdown_add_callback (tray->priv->shutdown, 
+				    (GSourceFunc) xfpm_tray_icon_do_hibernate, 
+				    2,
+				    tray);
 	xfpm_send_message_to_network_manager ("sleep");
     }
 }
@@ -198,7 +202,12 @@ xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
 	lock_screen = xfpm_xfconf_get_property_bool (tray->priv->conf, LOCK_SCREEN_ON_SLEEP);
 	if ( lock_screen )
 	    xfpm_lock_screen ();
-	g_timeout_add_seconds (4, (GSourceFunc) xfpm_tray_icon_do_suspend, tray);
+	
+	xfpm_shutdown_add_callback (tray->priv->shutdown, 
+				    (GSourceFunc) xfpm_tray_icon_do_suspend, 
+				    2,
+				    tray);
+				    
 	xfpm_send_message_to_network_manager ("sleep");
     }
 }
@@ -208,7 +217,7 @@ xfpm_tray_icon_exit_activated_cb (GtkWidget *w, gpointer data)
 {
     gboolean ret;
     
-    ret = xfce_confirm (_("Exit Xfce power manager"),
+    ret = xfce_confirm (_("Quit the Xfce power manager"),
 	                GTK_STOCK_YES,
 			_("Quit"));
     if ( ret )

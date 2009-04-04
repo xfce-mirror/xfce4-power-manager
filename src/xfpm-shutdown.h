@@ -54,6 +54,12 @@ typedef struct
 GType        		  xfpm_shutdown_get_type        (void) G_GNUC_CONST;
 XfpmShutdown       	 *xfpm_shutdown_new             (void);
 
+gboolean                  xfpm_shutdown_add_callback    (XfpmShutdown *shutdown,
+							 GSourceFunc func,
+							 guint timeout,
+							 gpointer data);
+							 
+
 void                      xfpm_shutdown			(XfpmShutdown *shutdown,
 							 GError **error);
 

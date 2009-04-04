@@ -88,6 +88,8 @@ struct XfpmEnginePrivate
 
     gboolean has_lcd_brightness;
     gboolean has_lid;
+    
+    gboolean block;
 };
 
 enum
@@ -172,13 +174,17 @@ xfpm_engine_shutdown_request (XfpmEngine * engine,
 	}
 	else if (shutdown == XFPM_DO_HIBERNATE)
 	{
-	    g_timeout_add_seconds (2, (GSourceFunc) xfpm_engine_do_hibernate,
-				   engine);
+	    xfpm_shutdown_add_callback (engine->priv->shutdown, 
+					(GSourceFunc) xfpm_engine_do_hibernate,
+					2,
+					engine);
 	}
 	else if (shutdown == XFPM_DO_SUSPEND)
 	{
-	    g_timeout_add_seconds (2, (GSourceFunc) xfpm_engine_do_suspend,
-				   engine);
+	    xfpm_shutdown_add_callback (engine->priv->shutdown, 
+					(GSourceFunc) xfpm_engine_do_suspend,
+					2,
+					engine);
 	}
 
 	if (lock_screen)

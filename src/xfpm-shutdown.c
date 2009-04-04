@@ -350,6 +350,21 @@ xfpm_shutdown_new(void)
     return XFPM_SHUTDOWN (xfpm_shutdown_object);
 }
 
+gboolean                  xfpm_shutdown_add_callback    (XfpmShutdown *shutdown,
+							 GSourceFunc func,
+							 guint timeout,
+							 gpointer data)
+{
+    g_return_val_if_fail (XFPM_IS_SHUTDOWN (shutdown), FALSE);
+    
+    if (shutdown->priv->block_shutdown)
+	return FALSE;
+	
+    g_timeout_add_seconds (timeout, func, data);
+    shutdown->priv->block_shutdown = TRUE;
+    return TRUE;
+}
+
 void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
 {
     g_return_if_fail (XFPM_IS_SHUTDOWN(shutdown));
@@ -360,9 +375,8 @@ void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
 	return;
     }
     
-    if ( shutdown->priv->block_shutdown )
-	return;
     xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Shutdown", NULL);
+    shutdown->priv->block_shutdown = FALSE;
 }
 
 void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
@@ -378,13 +392,9 @@ void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
 	return;
     }
 
-    if ( shutdown->priv->block_shutdown )
-	return;
-
-    shutdown->priv->block_shutdown = TRUE;
     xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Hibernate", &error_internal);
     shutdown->priv->block_shutdown = FALSE;
-     
+    
     if ( error_internal )
     {
 	g_warning ("%s", error_internal->message);
@@ -410,10 +420,6 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
 	return;
     }
     
-    if ( shutdown->priv->block_shutdown )
-	return;
-
-    shutdown->priv->block_shutdown = TRUE;
     xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Suspend", &error_internal);
     shutdown->priv->block_shutdown = FALSE;
      
