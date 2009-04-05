@@ -9,14 +9,245 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-29 18:36+0200\n"
-"PO-Revision-Date: 2009-01-17 21:32+0100\n"
+"POT-Creation-Date: 2009-04-05 13:03+0200\n"
+"PO-Revision-Date: 2009-04-05 13:03+0200\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../settings/xfpm-settings.glade.h:1
+msgid "<b>Actions</b>"
+msgstr "<b>Aktionen</b>"
+
+#: ../settings/xfpm-settings.glade.h:2
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Erweiterte Einstellungen</b>"
+
+#: ../settings/xfpm-settings.glade.h:3
+msgid "<b>Brightness</b>"
+msgstr "<b>Helligkeit</b>"
+
+#: ../settings/xfpm-settings.glade.h:4
+msgid "<b>General Options</b>"
+msgstr "<b>Allgemeine Einstellungen</b>"
+
+#: ../settings/xfpm-settings.glade.h:5
+msgid "<b>Monitor</b>"
+msgstr "<b>Monitor</b>"
+
+#: ../settings/xfpm-settings.glade.h:6 ../settings/xfpm-settings.c:1092
+msgid "Advanced"
+msgstr "Erweitert"
+
+#: ../settings/xfpm-settings.glade.h:7 ../settings/xfpm-settings.c:759
+msgid "Always show icon"
+msgstr "Immer ein Symbol zeigen"
+
+#: ../settings/xfpm-settings.glade.h:8
+msgid "Consider the computer on low power at:"
+msgstr "Energiezustand als niedrig betrachten bei:"
+
+#: ../settings/xfpm-settings.glade.h:9
+msgid "Enable monitor power management control"
+msgstr "Energieverwaltung für Monitor aktivieren"
+
+#: ../settings/xfpm-settings.glade.h:10
+msgid "Enable notification"
+msgstr "Benachrichtigung aktivieren"
+
+#: ../settings/xfpm-settings.glade.h:11 ../settings/xfpm-settings.c:1049
+#: ../settings/xfpm-settings.c:1054
+msgid "General"
+msgstr "Allgemein"
+
+#: ../settings/xfpm-settings.glade.h:12
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Bildschirm sperren im Ruhezustand/Standby"
+
+#: ../settings/xfpm-settings.glade.h:13 ../settings/xfpm-settings.c:452
+#: ../settings/xfpm-settings.c:545 ../settings/xfpm-settings.c:671
+#: ../settings/xfpm-settings.c:799 ../settings/xfpm-settings.c:858
+msgid "Nothing"
+msgstr "Nichts"
+
+#: ../settings/xfpm-settings.glade.h:14 ../settings/xfpm-settings.c:1063
+#: ../settings/xfpm-settings.c:1068
+msgid "On AC"
+msgstr "Bei Netzversorgung"
+
+#: ../settings/xfpm-settings.glade.h:15
+msgid "On battery"
+msgstr "Im Batteriebetrieb"
+
+#: ../settings/xfpm-settings.glade.h:16
+msgid "Power manager settings"
+msgstr "Einstellungen der Energieverwaltung"
+
+#: ../settings/xfpm-settings.glade.h:17
+msgid "Prefer power savings over performance"
+msgstr "Stromsparen gegenüber Leistung bevorzugen"
+
+#: ../settings/xfpm-settings.glade.h:18
+msgid "Put display to sleep when computer is inactive for:"
+msgstr "Anzeige schlafen legen, wenn der Computer inaktiv ist für:"
+
+#: ../settings/xfpm-settings.glade.h:19
+msgid "Reduce screen brightness when computer is inactive for:"
+msgstr "Bildschirmhelligkeit reduzieren, wenn der Computer inaktiv ist für:"
+
+#: ../settings/xfpm-settings.glade.h:20
+msgid "Set monitor sleep mode:"
+msgstr "Schlafmodus für den Monitor einstellen:"
+
+#: ../settings/xfpm-settings.glade.h:21
+msgid "Standby"
+msgstr "Bereitschaft"
+
+#. Suspend menu option
+#: ../settings/xfpm-settings.glade.h:22 ../settings/xfpm-settings.c:550
+#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:804
+#: ../settings/xfpm-settings.c:863 ../src/xfpm-tray-icon.c:198
+#: ../src/xfpm-tray-icon.c:262
+msgid "Suspend"
+msgstr "Standby"
+
+#: ../settings/xfpm-settings.glade.h:23
+msgid "Switch off display when computer is inactive for:"
+msgstr "Anzeige abschalten, wenn der Computer inaktiv ist für:"
+
+#: ../settings/xfpm-settings.glade.h:24
+msgid "System tray icon: "
+msgstr "Symbol in der Systemleiste: "
+
+#: ../settings/xfpm-settings.glade.h:25
+msgid "When battery power is critical:"
+msgstr "Bei kritischem Ladezustand der Batterie:"
+
+#: ../settings/xfpm-settings.glade.h:26
+msgid "When laptop lid is closed:"
+msgstr "Beim Schließen der Bildschirmklappe:"
+
+#: ../settings/xfpm-settings.glade.h:27
+msgid "When power button is pressed:"
+msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
+
+#: ../settings/xfpm-settings.glade.h:28
+msgid "When sleep button is pressed:"
+msgstr "Bei Betätigung der Taste für den Schlafmodus:"
+
+#: ../settings/xfpm-settings.glade.h:29 ../settings/xfpm-settings-main.c:113
+#: ../src/xfpm-main.c:125 ../src/xfpm-main.c:187 ../src/xfpm-main.c:217
+#: ../src/xfpm-tray-icon.c:313 ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Xfce Power Manager"
+msgstr "Energieverwaltung für Xfce"
+
+#: ../settings/xfpm-settings.glade.h:30
+msgid "gtk-close"
+msgstr "gtk-close"
+
+#: ../settings/xfpm-settings.glade.h:31
+msgid "gtk-help"
+msgstr "gtk-help"
+
+#: ../settings/xfpm-settings.c:307 ../settings/xfpm-settings.c:323
+msgid "Never"
+msgstr "Nie"
+
+#: ../settings/xfpm-settings.c:310
+msgid "One minute"
+msgstr "Eine Minute"
+
+#: ../settings/xfpm-settings.c:312
+msgid "Minutes"
+msgstr "Minuten"
+
+#: ../settings/xfpm-settings.c:325
+msgid "Seconds"
+msgstr "Sekunden"
+
+#: ../settings/xfpm-settings.c:444 ../settings/xfpm-settings.c:537
+msgid "Shutdown and hibernate operations not permitted"
+msgstr "Die Operationen zum Herunterfahren und für den Ruhezustand sind nicht erlaubt"
+
+#. Hibernate menu option
+#: ../settings/xfpm-settings.c:457 ../settings/xfpm-settings.c:556
+#: ../settings/xfpm-settings.c:682 ../settings/xfpm-settings.c:810
+#: ../settings/xfpm-settings.c:869 ../src/xfpm-tray-icon.c:167
+#: ../src/xfpm-tray-icon.c:247
+msgid "Hibernate"
+msgstr "Ruhezustand"
+
+#: ../settings/xfpm-settings.c:461 ../settings/xfpm-settings.c:814
+msgid "Shutdown"
+msgstr "Herunterfahren"
+
+#: ../settings/xfpm-settings.c:665 ../settings/xfpm-settings.c:793
+#: ../settings/xfpm-settings.c:852 ../settings/xfpm-settings.c:975
+msgid "Hibernate and suspend operations not permitted"
+msgstr "Die Operationen für den Ruhezustand und Standby sind nicht erlaubt"
+
+#: ../settings/xfpm-settings.c:762
+msgid "When battery is present"
+msgstr "Bei Batterieversorgung"
+
+#: ../settings/xfpm-settings.c:765
+msgid "When battery is charging or discharging"
+msgstr "Beim Laden oder Entladen der Batterie"
+
+#: ../settings/xfpm-settings.c:943
+msgid "When all the power sources of the computer reach this charge level"
+msgstr "Wenn alle Stromquellen des Computers diesen Level erreichen"
+
+#: ../settings/xfpm-settings.c:1078 ../settings/xfpm-settings.c:1083
+msgid "On Battery"
+msgstr "Im Batteriebetrieb"
+
+#: ../settings/xfpm-settings.c:1097
+msgid "Advance"
+msgstr "Weiter"
+
+#: ../settings/xfpm-settings-main.c:113
+msgid "Failed to load power manager configuration, using defaults"
+msgstr ""
+"Konnte Konfiguration der Energieverwaltung nicht laden; nehme Standardwerte"
+
+#: ../settings/xfpm-settings-main.c:139
+msgid "Xfce Power Manager Settings"
+msgstr "Einstellungen der Energieverwaltung für Xfce"
+
+#: ../settings/xfpm-settings-main.c:140
+msgid "Unable to connect to Xfce Power Manager"
+msgstr "Kann keine Verbindung mit der Energieverwaltung für Xfce herstellen"
+
+#: ../settings/xfpm-settings-main.c:159 ../src/xfpm-main.c:141
+#: ../src/xfpm-main.c:188
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Energieverwaltung für Xfce läuft nicht"
+
+#: ../settings/xfpm-settings-main.c:162
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr ""
+"Die Energieverwaltung für Xfce läuft nicht. Möchten Sie sie jetzt starten?"
+
+#: ../settings/xfpm-settings-main.c:164
+msgid "Run"
+msgstr "Starten"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
+msgid "Power Manager"
+msgstr "Energieverwaltung"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:2
+msgid "Settings for the Xfce 4 Power Manager"
+msgstr "Einstellungen für die Energieverwaltung für Xfce"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
+msgid "Xfce 4 Power Manager"
+msgstr "Energieverwaltung für Xfce"
 
 #: ../src/xfpm-battery.c:106
 msgid "Your battery is fully charged"
@@ -30,11 +261,10 @@ msgstr "Batterie wird geladen"
 msgid "Your battery is discharging"
 msgstr "Ihre Batterie wird entladen"
 
-#: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:369
-#: ../src/xfpm-battery.c:381
-#, fuzzy
+#: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:378
+#: ../src/xfpm-battery.c:390
 msgid "System is running on battery power"
-msgstr "Monitoreinstellungen bei Batteriestrom"
+msgstr "System läuft gerade im Batteriebetrieb"
 
 #: ../src/xfpm-battery.c:115
 msgid "Your battery charge is low"
@@ -42,149 +272,129 @@ msgstr "Ihr Batterieladezustand ist gering"
 
 #: ../src/xfpm-battery.c:115
 msgid "System is running on low power"
-msgstr ""
+msgstr "Das System befindet sich in einem niedrigen Energiezustand"
 
-#: ../src/xfpm-battery.c:213 ../src/xfpm-supply.c:277 ../src/xfpm-supply.c:300
+#: ../src/xfpm-battery.c:219 ../src/xfpm-supply.c:279 ../src/xfpm-supply.c:302
 #: ../src/xfpm-tray-icon.c:115 ../src/xfpm-tray-icon.c:139
-#: ../src/xfpm-manager.c:215
+#: ../src/xfpm-manager.c:199
 msgid "Xfce power manager"
-msgstr "Energieverwaltung für Xfce4"
-
-#: ../src/xfpm-battery.c:231
-msgid "Your UPS"
-msgstr ""
-
-#: ../src/xfpm-battery.c:233
-#, fuzzy
-msgid "Your Mouse battery"
-msgstr "Batteriebetrieb"
-
-#: ../src/xfpm-battery.c:235
-msgid "Your Keyboard battery"
-msgstr ""
+msgstr "Energieverwaltung für Xfce"
 
 #: ../src/xfpm-battery.c:237
-#, fuzzy
-msgid "Your Camera battery"
-msgstr "Sie sind gerade im Batterierbetrieb"
+msgid "Your UPS"
+msgstr "Ihre USV"
 
 #: ../src/xfpm-battery.c:239
-msgid "Your PDA battery"
-msgstr ""
+msgid "Your Mouse battery"
+msgstr "Ihre Mausbatterie"
 
 #: ../src/xfpm-battery.c:241
-#, fuzzy
+msgid "Your Keyboard battery"
+msgstr "Ihre Tastaturbatterie"
+
+#: ../src/xfpm-battery.c:243
+msgid "Your Camera battery"
+msgstr "Ihre Kamerabatterie"
+
+#: ../src/xfpm-battery.c:245
+msgid "Your PDA battery"
+msgstr "Ihre PDA-Batterie"
+
+#: ../src/xfpm-battery.c:247
 msgid "Your Battery"
-msgstr "Sie sind gerade im Batterierbetrieb"
+msgstr "Ihre Batterie"
 
-#: ../src/xfpm-battery.c:256
-#, fuzzy
+#: ../src/xfpm-battery.c:262
 msgid "is fully charged"
-msgstr "Batterie vollständig geladen"
+msgstr "ist vollständig geladen"
 
-#: ../src/xfpm-battery.c:261
-#, fuzzy
+#: ../src/xfpm-battery.c:267
 msgid "charge level"
-msgstr "Ladezustand der Batterie"
+msgstr "Ladezustand"
 
-#: ../src/xfpm-battery.c:266
-#, fuzzy
+#: ../src/xfpm-battery.c:272
 msgid "is charging"
-msgstr "Batterie wird geladen"
+msgstr "wird geladen"
 
-#: ../src/xfpm-battery.c:273
-#, fuzzy
+#: ../src/xfpm-battery.c:279
 msgid "is discharging"
-msgstr "Batterie wird entladen"
+msgstr "wird entladen"
 
-#: ../src/xfpm-battery.c:278
-#, fuzzy
+#: ../src/xfpm-battery.c:284
 msgid "charge is low"
-msgstr "Ladezustand der Batterie ist gering"
+msgstr "Ladezustand ist gering"
 
-#: ../src/xfpm-battery.c:283
-#, fuzzy
+#: ../src/xfpm-battery.c:289
 msgid "is almost empty"
-msgstr "Die Batterie ist nahezu leer"
+msgstr "ist nahezu leer"
 
-#: ../src/xfpm-battery.c:300
-#, fuzzy
+#: ../src/xfpm-battery.c:309
 msgid "is not present"
-msgstr "Nicht vorhanden"
+msgstr "ist nicht vorhanden"
 
-#: ../src/xfpm-battery.c:331
-#, fuzzy
+#: ../src/xfpm-battery.c:340
 msgid "Battery not present"
-msgstr "Wenn die Batterie verfügbar ist"
+msgstr "Batterie nicht verfügbar"
 
-#: ../src/xfpm-battery.c:353
-#, fuzzy
+#: ../src/xfpm-battery.c:362
 msgid "Estimated time left"
-msgstr ""
-"\n"
-"Geschätzte verbleibende Zeit"
+msgstr "Geschätzte verbleibende Zeit"
 
-#: ../src/xfpm-battery.c:357
-#, fuzzy
+#: ../src/xfpm-battery.c:366
 msgid "Estimated time to be fully charged"
-msgstr ""
-"\n"
-"Geschätzte Ladedauer"
+msgstr "Geschätzte Ladedauer"
 
-#: ../src/xfpm-battery.c:360
+#: ../src/xfpm-battery.c:369
 msgid "hours"
 msgstr "Stunden"
 
-#: ../src/xfpm-battery.c:360
+#: ../src/xfpm-battery.c:369
 msgid "hour"
 msgstr "Stunde"
 
-#: ../src/xfpm-battery.c:361
+#: ../src/xfpm-battery.c:370
 msgid "minutes"
 msgstr "Minuten"
 
-#: ../src/xfpm-battery.c:361
+#: ../src/xfpm-battery.c:370
 msgid "minute"
 msgstr "Minute"
 
-#: ../src/xfpm-battery.c:365 ../src/xfpm-battery.c:377
-#, fuzzy
+#: ../src/xfpm-battery.c:374 ../src/xfpm-battery.c:386
 msgid "Battery"
-msgstr "Batterieeinstellungen"
+msgstr "Batterie"
 
-#: ../src/xfpm-battery.c:368 ../src/xfpm-battery.c:380
-#, fuzzy
+#: ../src/xfpm-battery.c:377 ../src/xfpm-battery.c:389
 msgid "System is running on AC power"
-msgstr "Monitoreinstellungen bei Netzstrom"
+msgstr "System läuft mit Netzversorgung"
 
 #: ../src/xfpm-battery-info.c:58 ../libxfpm/hal-battery.c:488
 msgid "Unknown unit"
-msgstr ""
+msgstr "Unbekannte Einheit"
 
 #: ../src/xfpm-battery-info.c:65
 msgid "Technology:"
-msgstr ""
+msgstr "Technologie:"
 
 #: ../src/xfpm-battery-info.c:88
 msgid "Design:"
-msgstr ""
+msgstr "Design:"
 
 #: ../src/xfpm-battery-info.c:116
 msgid "Last full:"
-msgstr ""
+msgstr "Letzter Füllgrad:"
 
 #: ../src/xfpm-battery-info.c:140
 msgid "Vendor:"
-msgstr ""
+msgstr "Hersteller:"
 
 #: ../src/xfpm-battery-info.c:164
 msgid "Model:"
-msgstr ""
+msgstr "Modell:"
 
 #: ../src/xfpm-battery-info.c:197
-#, fuzzy
 msgid "Battery information"
-msgstr "Batteriekonfiguration"
+msgstr "Batterieinformation"
 
 #: ../src/xfpm-main.c:48
 #, c-format
@@ -199,7 +409,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Xfce4-Energieverwaltung %s\n"
+"Energieverwaltung für Xfce %s\n"
 "\n"
 "Teil der Xfce Goodies\n"
 "http://goodies.xfce.org\n"
@@ -209,12 +419,11 @@ msgstr ""
 
 #: ../src/xfpm-main.c:73
 msgid "Do not daemonize"
-msgstr ""
+msgstr "Nicht in den Dämonmodus gehen"
 
 #: ../src/xfpm-main.c:74
-#, fuzzy
-msgid "Restart the running instance of xfce power manager"
-msgstr "Energieverwaltung für Xfce4 beenden"
+msgid "Restart the running instance of Xfce power manager"
+msgstr "Die laufende Energieverwaltung für Xfce neustarten"
 
 #: ../src/xfpm-main.c:75
 msgid "Show the configuration dialog"
@@ -222,7 +431,7 @@ msgstr "Einstellungsdialog anzeigen"
 
 #: ../src/xfpm-main.c:76
 msgid "Quit any running xfce power manager"
-msgstr "Energieverwaltung für Xfce4 beenden"
+msgstr "Energieverwaltung für Xfce beenden"
 
 #: ../src/xfpm-main.c:77
 msgid "Version information"
@@ -240,64 +449,48 @@ msgid "Too many arguments"
 msgstr "Zu viele Argumente"
 
 #: ../src/xfpm-main.c:122
-#, fuzzy
 msgid "Unable to get connection to the message bus session"
-msgstr "Kann keine Verbindung zum D-Bus aufbauen: %s"
-
-#: ../src/xfpm-main.c:125 ../src/xfpm-main.c:187 ../src/xfpm-main.c:217
-#: ../src/xfpm-tray-icon.c:290 ../src/xfce4-power-manager.desktop.in.h:2
-#: ../settings/xfpm-settings-main.c:113 ../settings/xfpm-settings.glade.h:29
-msgid "Xfce Power Manager"
-msgstr "Energieverwaltung für Xfce"
-
-#: ../src/xfpm-main.c:141 ../settings/xfpm-settings-main.c:154
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "Energieverwaltung für Xfce4 läuft nicht"
-
-#: ../src/xfpm-main.c:188
-#, fuzzy
-msgid "Xfce power manager is not running to releod it"
-msgstr "Energieverwaltung für Xfce4 läuft nicht"
+msgstr "Kann keine Verbindung zur Sitzung des Nachrichtenbusses erhalten"
 
 #: ../src/xfpm-main.c:218
-#, fuzzy
 msgid "Another power manager is already running"
-msgstr "Energieverwaltung für Xfce4 läuft bereits"
+msgstr "Eine andere Energieverwaltung läuft bereits"
 
 #: ../src/xfpm-main.c:223
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "Energieverwaltung für Xfce4 läuft bereits"
+msgstr "Energieverwaltung für Xfce läuft bereits"
 
-#: ../src/xfpm-supply.c:169
-#, fuzzy
+#: ../src/xfpm-supply.c:171
 msgid "Adapter present"
-msgstr "Nicht vorhanden"
+msgstr "Anschluss vorhanden"
 
-#: ../src/xfpm-supply.c:170
-#, fuzzy
+#: ../src/xfpm-supply.c:172
 msgid "Adapter not present"
-msgstr "Nicht vorhanden"
+msgstr "Anschluss nicht vorhanden"
 
-#: ../src/xfpm-supply.c:246
+#: ../src/xfpm-supply.c:248
 msgid "Shutdown the system"
 msgstr "Das System herunterfahren"
 
-#: ../src/xfpm-supply.c:257
+#: ../src/xfpm-supply.c:259
 msgid "Hibernate the system"
-msgstr "Das System in den Ruhemodus versetzen"
+msgstr "Das System in den Ruhezustand versetzen"
 
-#: ../src/xfpm-supply.c:269
+#: ../src/xfpm-supply.c:271
 msgid ""
 "System is running on low power, but an application is currently disabling "
 "the automatic sleep, this means that doing a sleep now may damage the data "
 "of this application. Close this application before putting the computer on "
 "sleep mode or plug in your AC adapter"
 msgstr ""
+"Das System hat nicht mehr viel Energie, eine Anwendung verhindert jedoch "
+"momentan das automatische Schlafen. Dies bedeuted, dass ein Wechsel in einen "
+"Schlafmodus die Daten der Anwendung beschädigen kann. Schließen Sie diese "
+"Anwendung, bevor Sie den Rechner in einen Schlafmodus versetzten, oder "
+"schließen Sie die Stromversorgung an."
 
-#: ../src/xfpm-supply.c:295
-#, fuzzy
+#: ../src/xfpm-supply.c:297
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
 "Ihre Batterie ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten "
@@ -309,59 +502,62 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
+"Eine laufende Anwendung verhindert momentan das automatische Schlafen. Wenn "
+"Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der Anwendung "
+"beschädigt werden. Sind Sie sicher, dass Sie Ihr System jetzt in den "
+"Ruhezustand versetzen wollen?"
 
-#: ../src/xfpm-tray-icon.c:162 ../src/xfpm-tray-icon.c:189
-#, fuzzy
+#: ../src/xfpm-tray-icon.c:162 ../src/xfpm-tray-icon.c:193
 msgid "Are you sure you want to procced?"
-msgstr "Möchten Sie das System wirklich in Standby versetzen?"
+msgstr "Möchten Sie wirklich fortfahren?"
 
-#. Hibernate menu option
-#: ../src/xfpm-tray-icon.c:167 ../src/xfpm-tray-icon.c:224
-#: ../settings/xfpm-settings.c:457 ../settings/xfpm-settings.c:545
-#: ../settings/xfpm-settings.c:659 ../settings/xfpm-settings.c:775
-#: ../settings/xfpm-settings.c:823
-msgid "Hibernate"
-msgstr "Ruhemodus"
-
-#: ../src/xfpm-tray-icon.c:186
+#: ../src/xfpm-tray-icon.c:190
 msgid ""
 "An application is currently disabling the automatic sleep, doing this action "
 "now may damage the working state of this application, are you sure you want "
 "to suspend the system?"
 msgstr ""
+"Eine laufende Anwendung verhindert momentan das automatische Schlafen. Wenn "
+"Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der Anwendung "
+"beschädigt werden. Sind Sie sicher, dass Sie das System jetzt in den "
+"Standbymodus versetzen wollen?"
 
-#. Suspend menu option
-#: ../src/xfpm-tray-icon.c:194 ../src/xfpm-tray-icon.c:239
-#: ../settings/xfpm-settings.c:539 ../settings/xfpm-settings.c:653
-#: ../settings/xfpm-settings.c:769 ../settings/xfpm-settings.c:817
-#: ../settings/xfpm-settings.glade.h:22
-msgid "Suspend"
-msgstr "Standby"
+#: ../src/xfpm-tray-icon.c:220
+msgid "Quit the Xfce power manager"
+msgstr "Energieverwaltung für Xfce beenden"
 
-#: ../src/xfpm-engine.c:511 ../src/xfpm-engine.c:540
+#: ../src/xfpm-tray-icon.c:222
+msgid "Quit"
+msgstr "Beenden"
+
+#: ../src/xfpm-engine.c:535 ../src/xfpm-engine.c:564
 #, c-format
 msgid "Permission denied"
-msgstr ""
+msgstr "Erlaubnis verweigert"
 
-#: ../src/xfpm-engine.c:518
-#, fuzzy, c-format
+#: ../src/xfpm-engine.c:542
+#, c-format
 msgid "Hibernate not supported"
-msgstr "Das System in den Ruhemodus versetzen"
+msgstr "Ruhezustand wird nicht unterstützt"
 
-#: ../src/xfpm-engine.c:547
+#: ../src/xfpm-engine.c:571
 #, c-format
 msgid "Suspend not supported"
-msgstr ""
+msgstr "Standbymodus wird nicht unterstützt"
 
-#: ../src/xfpm-manager.c:215
-#, fuzzy
-msgid "Hal daemon is not running"
-msgstr "Energieverwaltung für Xfce4 läuft nicht"
+#: ../src/xfpm-manager.c:199
+msgid "HAL daemon is not running"
+msgstr "Der HAL-Dienst läuft nicht"
 
-#: ../src/xfpm-inhibit.c:247
+#: ../src/xfpm-inhibit.c:333
+#, c-format
+msgid "Invalid arguments"
+msgstr "Ungültige Argumente"
+
+#: ../src/xfpm-inhibit.c:359
 #, c-format
 msgid "Invalid cookie"
-msgstr ""
+msgstr "Ungültiges Cookie"
 
 #: ../src/xfpm-shutdown.c:309
 msgid "No back-end for your operating system"
@@ -388,350 +584,120 @@ msgid "Out of memory"
 msgstr "Kein Speicher verfügbar"
 
 #: ../src/xfpm-shutdown.c:333
-#, fuzzy
 msgid "System failed to sleep"
-msgstr "System konnte nicht in den Ruhezustand versetzt werden"
+msgstr "System konnte nicht in den Schlafmodus versetzt werden"
 
-#: ../src/xfpm-shutdown.c:359 ../src/xfpm-shutdown.c:377
-#: ../src/xfpm-shutdown.c:409
+#: ../src/xfpm-shutdown.c:374 ../src/xfpm-shutdown.c:391
+#: ../src/xfpm-shutdown.c:419
 #, c-format
-msgid "Hal daemon is currently not connected"
-msgstr ""
+msgid "HAL daemon is currently not connected"
+msgstr "Der HAL-Dienst ist derzeitig nicht verbunden"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:307 ../settings/xfpm-settings.c:323
-#, fuzzy
-msgid "Never"
-msgstr "nie"
-
-#: ../settings/xfpm-settings.c:310
-#, fuzzy
-msgid "One minute"
-msgstr "Minute"
-
-#: ../settings/xfpm-settings.c:312
-#, fuzzy
-msgid "Minutes"
-msgstr "Minuten"
-
-#: ../settings/xfpm-settings.c:325
-msgid "Seconds"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:442 ../settings/xfpm-settings.c:526
-msgid "Shutdown and hibernate operations not permitted"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:452 ../settings/xfpm-settings.c:534
-#: ../settings/xfpm-settings.c:648 ../settings/xfpm-settings.c:764
-#: ../settings/xfpm-settings.c:812 ../settings/xfpm-settings.glade.h:13
-msgid "Nothing"
-msgstr "Nichts"
-
-#: ../settings/xfpm-settings.c:461 ../settings/xfpm-settings.c:779
-msgid "Shutdown"
-msgstr "Herunterfahren"
-
-#: ../settings/xfpm-settings.c:642 ../settings/xfpm-settings.c:758
-#: ../settings/xfpm-settings.c:806 ../settings/xfpm-settings.c:918
-msgid "Hibernate and suspend operations not permitted"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:724 ../settings/xfpm-settings.glade.h:7
-#, fuzzy
-msgid "Always show icon"
-msgstr "Immer ein Symbol zeigen"
-
-#: ../settings/xfpm-settings.c:727
-msgid "When battery is present"
-msgstr "Wenn die Batterie verfügbar ist"
-
-#: ../settings/xfpm-settings.c:730
-msgid "When battery is charging or discharging"
-msgstr "Wenn sich die Batterie lädt oder entlädt"
-
-#: ../settings/xfpm-settings.c:886
-msgid ""
-"When the main power on the computer reaches this value of charge percentage"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:992 ../settings/xfpm-settings.c:997
-#: ../settings/xfpm-settings.glade.h:11
-#, fuzzy
-msgid "General"
-msgstr "Allgemeine Einstellungen"
-
-#: ../settings/xfpm-settings.c:1006 ../settings/xfpm-settings.c:1011
-#: ../settings/xfpm-settings.glade.h:14
-#, fuzzy
-msgid "On AC"
-msgstr "Bei Netzversorgung"
-
-#: ../settings/xfpm-settings.c:1021 ../settings/xfpm-settings.c:1026
-#, fuzzy
-msgid "On Battery"
-msgstr "Wenn die Batterie verfügbar ist"
-
-#: ../settings/xfpm-settings.c:1035 ../settings/xfpm-settings.glade.h:6
-#, fuzzy
-msgid "Advanced"
-msgstr "Erweitert"
-
-#: ../settings/xfpm-settings.c:1040
-msgid "Advance"
-msgstr ""
-
-#: ../settings/xfpm-settings-main.c:113
-msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
-"Konnte Konfiguration der Energieverwaltung nicht laden; nehme Standardwerte"
-
-#: ../settings/xfpm-settings-main.c:134
-#, fuzzy
-msgid "Xfce Power Manager Settings"
-msgstr "Energieverwaltung für Xfce"
-
-#: ../settings/xfpm-settings-main.c:135
-#, fuzzy
-msgid "Unable to connect to Xfce Power Manager"
-msgstr "Kann die Energieverwaltung für Xfce4 nicht laden"
-
-#: ../settings/xfpm-settings-main.c:157
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr ""
-"Die Energieverwaltung für Xfce4 läuft nicht. Möchten Sie sie jetzt starten?"
-
-#: ../settings/xfpm-settings-main.c:159
-msgid "Run"
-msgstr "Starten"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-msgid "Power"
-msgstr "Energie"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:2
-msgid "Power Manager"
-msgstr "Energieverwaltung"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
-msgid "Settings for the Xfce 4 Power Manager"
-msgstr "Einstellungen für die Xfce4-Energieverwaltung"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:4
-msgid "Xfce 4 Power Manager"
-msgstr "Energieverwaltung für Xfce4"
-
-#: ../settings/xfpm-settings.glade.h:1
-msgid "<b>Actions</b>"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:2
-#, fuzzy
-msgid "<b>Advanced Options</b>"
-msgstr "Erweitert"
-
-#: ../settings/xfpm-settings.glade.h:3
-msgid "<b>Brightness</b>"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:4
-#, fuzzy
-msgid "<b>General Options</b>"
-msgstr "Allgemeine Einstellungen"
-
-#: ../settings/xfpm-settings.glade.h:5
-msgid "<b>Monitor</b>"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:8
-msgid "Consider the computer on low power at:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:9
-msgid "Enable monitor power management control"
-msgstr "Energieverwaltung für Monitor aktivieren"
-
-#: ../settings/xfpm-settings.glade.h:10
-#, fuzzy
-msgid "Enable notification"
-msgstr "Benachrichtigung über Ladezustand der USV aktivieren"
-
-#: ../settings/xfpm-settings.glade.h:12
-msgid "Lock screen when going for suspend/hibernate"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:15
-#, fuzzy
-msgid "On battery"
-msgstr "Wenn die Batterie verfügbar ist"
-
-#: ../settings/xfpm-settings.glade.h:16
-#, fuzzy
-msgid "Power manager settings"
-msgstr "Energieverwaltung"
-
-#: ../settings/xfpm-settings.glade.h:17
-msgid "Prefer power savings over performance"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:18
-msgid "Put display to sleep when computer is inactive for:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:19
-msgid "Reduce screen brightness when computer is inactive for:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:20
-msgid "Set monitor sleep mode:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:21
-#, fuzzy
-msgid "Standby"
-msgstr "Standbymodus nach"
-
-#: ../settings/xfpm-settings.glade.h:23
-msgid "Switch off display when computer is inactive for:"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:24
-#, fuzzy
-msgid "System tray icon: "
-msgstr "Symbol in der Systemleiste:"
-
-#: ../settings/xfpm-settings.glade.h:25
-#, fuzzy
-msgid "When battery power is critical:"
-msgstr "Bei kritischem Ladezustand der Batterie:"
-
-#: ../settings/xfpm-settings.glade.h:26
-#, fuzzy
-msgid "When laptop lid is closed:"
-msgstr "Beim Schließen der Bildschirmklappe:"
-
-#: ../settings/xfpm-settings.glade.h:27
-#, fuzzy
-msgid "When power button is pressed:"
-msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
-
-#: ../settings/xfpm-settings.glade.h:28
-#, fuzzy
-msgid "When sleep button is pressed:"
-msgstr "Bei Betätigung der Taste für den Schlafmodus:"
-
-#: ../settings/xfpm-settings.glade.h:30
-msgid "gtk-close"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:31
-msgid "gtk-help"
-msgstr ""
+msgstr "Energieverwaltung für den Xfce Desktop"
 
 #: ../libxfpm/hal-battery.c:458
 msgid "Lithium ion"
-msgstr ""
+msgstr "Lithium-Ionen"
 
 #: ../libxfpm/hal-battery.c:462
 msgid "Lead acid"
-msgstr ""
+msgstr "Bleisäure"
 
 #: ../libxfpm/hal-battery.c:466
 msgid "Lithium polymer"
-msgstr ""
+msgstr "Lithium-Polymere"
 
 #: ../libxfpm/hal-battery.c:470
 msgid "Nickel metal hydride"
-msgstr ""
+msgstr "Nickelmetallhydrid"
 
 #: ../libxfpm/hal-battery.c:473
 msgid "Unknown"
-msgstr ""
+msgstr "Unbekannt"
 
 #: ../libxfpm/hal-battery.c:481
 msgid "mWh"
-msgstr ""
+msgstr "mWh"
 
 #: ../libxfpm/hal-battery.c:485
 msgid "mAh"
-msgstr ""
+msgstr "mAh"
 
-#: ../libxfpm/xfpm-common.c:168
+#: ../libxfpm/xfpm-common.c:171
 msgid "translator-credits"
 msgstr ""
-"Fabian Nowak <timystery@arcor.de>Mark Trompell <mark@foresightlinux.org>"
+"Fabian Nowak <timystery@arcor.de>\n"
+"Mark Trompell <mark@foresightlinux.org>"
 
-#: ../panel-plugins/brightness/brightness-plugin.c:462
-#: ../panel-plugins/brightness/brightness-plugin.c:519
-#, fuzzy
+#: ../panel-plugins/brightness/brightness-plugin.c:460
+#: ../panel-plugins/brightness/brightness-plugin.c:517
 msgid "Control your LCD brightness level"
-msgstr "Helligkeitssteuerung erlauben"
+msgstr "Helligkeit des LCD-Bildschirms steuern"
 
-#: ../panel-plugins/brightness/brightness-plugin.c:466
-#: ../panel-plugins/brightness/brightness-plugin.c:523
-#, fuzzy
+#: ../panel-plugins/brightness/brightness-plugin.c:464
+#: ../panel-plugins/brightness/brightness-plugin.c:521
 msgid "No device found"
-msgstr "Kein CPU-Multiplikator gefunden"
+msgstr "Kein Gerät gefunden"
 
-#: ../panel-plugins/brightness/brightness-plugin.c:537
+#: ../panel-plugins/brightness/brightness-plugin.c:535
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr ""
+msgstr "Plugin zur Helligkeitsregelung"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:205
-#: ../panel-plugins/inhibit/inhibit-plugin.c:429
-#: ../panel-plugins/inhibit/inhibit-plugin.c:437
-#, fuzzy
+#: ../panel-plugins/inhibit/inhibit-plugin.c:221
+#: ../panel-plugins/inhibit/inhibit-plugin.c:445
 msgid "No power manager instance running"
-msgstr "Energieverwaltung für Xfce4 läuft nicht"
+msgstr "Energieverwaltung läuft nicht"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:208
+#: ../panel-plugins/inhibit/inhibit-plugin.c:224
 msgid "Automatic sleep inhibited"
-msgstr ""
+msgstr "Automatisches Schlafen verhindert"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:214
+#: ../panel-plugins/inhibit/inhibit-plugin.c:230
 msgid "Another application is disabling the automatic sleep"
-msgstr ""
+msgstr "Eine andere Anwendung verhindert das automatische Schlafen"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:216
+#: ../panel-plugins/inhibit/inhibit-plugin.c:232
 msgid "Automatic sleep enabled"
-msgstr ""
+msgstr "Automatisches Schlafen aktiviert"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:288
+#: ../panel-plugins/inhibit/inhibit-plugin.c:304
 msgid "Power manager automatic sleep is disabled"
-msgstr ""
+msgstr "Automatisches Schlafen der Energieverwaltung ist deaktiviert"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:289
+#: ../panel-plugins/inhibit/inhibit-plugin.c:305
 msgid "Power manager automatic sleep is enabled"
-msgstr ""
+msgstr "Automatisches Schlafen der Energieverwaltung ist aktiviert"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:292
-#: ../panel-plugins/inhibit/inhibit-plugin.c:328
-#: ../panel-plugins/inhibit/inhibit-plugin.c:515
-#: ../panel-plugins/inhibit/inhibit-plugin.c:617
+#: ../panel-plugins/inhibit/inhibit-plugin.c:308
+#: ../panel-plugins/inhibit/inhibit-plugin.c:344
+#: ../panel-plugins/inhibit/inhibit-plugin.c:523
+#: ../panel-plugins/inhibit/inhibit-plugin.c:627
 #: ../panel-plugins/inhibit/xfce4-inhibit-plugin.desktop.in.in.h:1
 msgid "Inhibit plugin"
-msgstr ""
+msgstr "Verhinderungs-Plugin"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:302
-#: ../panel-plugins/inhibit/inhibit-plugin.c:338
-#: ../panel-plugins/inhibit/inhibit-plugin.c:525
-#, fuzzy
+#: ../panel-plugins/inhibit/inhibit-plugin.c:318
+#: ../panel-plugins/inhibit/inhibit-plugin.c:354
+#: ../panel-plugins/inhibit/inhibit-plugin.c:533
 msgid "Don't show again"
-msgstr "Diese Nachricht nicht mehr anzeigen"
+msgstr "Nicht mehr anzeigen"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:329
-#, fuzzy
+#: ../panel-plugins/inhibit/inhibit-plugin.c:345
 msgid "Power manager disconnected"
-msgstr "Einstellungen für die Energieverwaltung"
+msgstr "Verbindung zur Energieverwaltung ist getrennt"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:516
-#, fuzzy
+#: ../panel-plugins/inhibit/inhibit-plugin.c:524
 msgid "Power manager is connected"
-msgstr "Energieverwaltung für Xfce4 läuft nicht"
+msgstr "Energieverwaltung ist verbunden"
+
+#~ msgid "Xfce power manager is not running to releod it"
+#~ msgstr "Energieverwaltung für Xfce4 läuft nicht, um sie neuladen zu können"
+
+#~ msgid "Power"
+#~ msgstr "Energie"
 
 #~ msgid ""
 #~ "Unable to read adapter status, the power manager will not work properly"
@@ -969,11 +935,9 @@ msgstr "Energieverwaltung für Xfce4 läuft nicht"
 #~ msgid "Start xfce power manager"
 #~ msgstr "Energieverwaltung für Xfce4 starten"
 
-#, fuzzy
 #~ msgid "On electric power"
-#~ msgstr "Monitoreinstellungen bei Netzversorgung"
+#~ msgstr "Bei Netzversorgung"
 
-#, fuzzy
 #~ msgid "CPU frequency settings on electric power"
 #~ msgstr "Einstellungen der CPU-Frequenz bei Netzstrom"
 
