@@ -46,10 +46,10 @@
 #include "xfpm-settings.h"
 #include "xfpm-config.h"
 
+//FIXME: Unref XfconfChannel
 static void dialog_response_cb (GtkDialog *dialog, gint response, gpointer data)
 {
     DBusGConnection *bus     = (DBusGConnection *) data;    
-    
     switch(response)
     {
 	case GTK_RESPONSE_HELP:
@@ -58,7 +58,6 @@ static void dialog_response_cb (GtkDialog *dialog, gint response, gpointer data)
 	default:
 	    xfpm_dbus_release_name(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager.Config");
 	    dbus_g_connection_unref(bus);
-	    
 	    xfconf_shutdown();
 	    gtk_widget_destroy(GTK_WIDGET(dialog));
 	    gtk_main_quit();

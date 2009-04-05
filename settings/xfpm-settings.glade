@@ -981,10 +981,10 @@
         <child internal-child="action_area">
           <widget class="GtkHButtonBox" id="dialog-action_area">
             <property name="visible">True</property>
-            <property name="layout_style">edge</property>
             <child>
-              <widget class="GtkButton" id="button2">
+              <widget class="GtkButton" id="help-button">
                 <property name="label" translatable="yes">gtk-help</property>
+                <property name="response_id">-11</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -997,8 +997,9 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="button1">
+              <widget class="GtkButton" id="close-button">
                 <property name="label" translatable="yes">gtk-close</property>
+                <property name="response_id">-7</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>

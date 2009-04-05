@@ -163,7 +163,7 @@ xfpm_about (GtkWidget *widget, gpointer data)
     
     gtk_show_about_dialog (NULL,
 		     "authors", authors,
-		     "copyright", "Copyright \302\251 2008 Ali Abdallah",
+		     "copyright", "Copyright \302\251 2008-2009 Ali Abdallah",
 		     "destroy-with-parent", TRUE,
 		     "documenters", documenters,
 		     "license", XFCE_LICENSE_GPL,

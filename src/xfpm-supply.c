@@ -185,6 +185,9 @@ gboolean xfpm_supply_on_low_power (XfpmSupply *supply)
     int i;
     gboolean low_power = FALSE;
     
+    if (supply->priv->adapter_present )
+	return FALSE;
+    
     list = g_hash_table_get_values (supply->priv->hash);
     
     if ( !list)

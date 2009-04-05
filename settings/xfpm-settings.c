@@ -58,7 +58,6 @@ static  GtkWidget *suspend_dpms_mode		= NULL;
 static void
 battery_critical_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    
     GtkTreeModel     *model;
     GtkTreeIter       selected_row;
     gint value = 0;
@@ -1107,21 +1106,6 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     g_signal_connect(view,"cursor-changed",G_CALLBACK(_cursor_changed_cb),NULL);
 }
 
-static void dialog_response_cb (GtkDialog *dialog, gint response, gpointer data)
-{
-    XfconfChannel *channel = (XfconfChannel *)data;
-    
-    switch(response)
-    {
-	case GTK_RESPONSE_HELP:
-	    xfpm_help();
-	    break;
-	default:
-	    g_object_unref(G_OBJECT(channel));
-	    break;
-    }
-}
-
 GtkWidget *
 xfpm_settings_dialog_new (XfconfChannel *channel, 
 			  gboolean system_laptop, gboolean user_privilege,
@@ -1150,8 +1134,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
     
     xfpm_settings_general   (channel, user_privilege, can_suspend, can_hibernate);
     xfpm_settings_advanced  (channel, system_laptop, user_privilege);
-
-    g_signal_connect (dialog, "response", G_CALLBACK(dialog_response_cb), channel);
     
     return dialog;
 }
