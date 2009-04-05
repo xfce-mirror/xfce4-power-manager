@@ -954,7 +954,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_latop, gboolean 
 	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), 10);
 	}
 	else
-	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), 10);
+	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), val);
     }
     else
     {
