@@ -531,7 +531,7 @@ inhibit_plugin_uninhibit_screen_saver (inhibit_t *inhibit, const gchar *name,
 				       path,
 				       interface);
     if ( !proxy )
-	return;
+	return FALSE;
 	
     dbus_g_proxy_call (proxy, "UnInhibit", &error,
 		       G_TYPE_UINT, inhibit->saver_cookie,
@@ -653,7 +653,6 @@ button_press_event_cb (GtkWidget *button, GdkEventButton *ev, inhibit_t *inhibit
     GtkWidget *menu;
     GtkWidget *mi;
     GtkWidget *img;
-    GdkPixbuf *pix;
     
     if ( ev->button != 1 )
 	return FALSE;
