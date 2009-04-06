@@ -78,18 +78,10 @@ brightness_plugin_update_xfpm_brightness_level (brightness_t *plugin, guint leve
 static void
 brightness_plugin_set_tooltip (brightness_t *brightness)
 {
-    gchar *tooltip;
-    
     if ( brightness->hw_found )
-    {
-	tooltip = g_strdup_printf (_("Current reported brightness level \"%i\""), brightness->current_level);
-	gtk_widget_set_tooltip_text (brightness->button, tooltip);
-	g_free (tooltip);
-    }
+	gtk_widget_set_tooltip_text (brightness->button, _("Control your LCD brightness"));
     else
-    {
 	gtk_widget_set_tooltip_text (brightness->button, _("No device found"));
-    }
 }
 
 static gint 
