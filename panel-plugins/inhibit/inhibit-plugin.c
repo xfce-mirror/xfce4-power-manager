@@ -57,8 +57,10 @@ typedef struct
     
     gboolean          connected;
     guint             cookie;
+    guint             saver_cookie;
     
     gboolean          plugin_inhibited;
+    gboolean          saver_inhibited;
 
 } inhibit_t;
 
@@ -135,8 +137,8 @@ inhibit_plugin_size_changed_cb (XfcePanelPlugin *plugin, gint size, inhibit_t *i
 
 /*
  * Get the inhibition state of the running instance of the power manager
- * returns: false is not instance running or no inhibit is set
- *          true is the power manager is inhibited
+ * returns: false if not instance running or no inhibit is set.
+ *          true  if the power manager is inhibited.
  */
 static gboolean
 inhibit_plugin_get_inhibit (inhibit_t *inhibit)
@@ -234,35 +236,11 @@ inhibit_plugin_set_tooltip (inhibit_t *inhibit)
 }
 
 /*
- * Set the button toggled state in respect to the inhibition state
- */
-static void
-inhibit_plugin_set_button (inhibit_t *inhibit)
-{
-    gboolean inhibited;
-    
-    if ( !inhibit->connected )
-    {
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(inhibit->button), FALSE);
-	return;
-    }
-	
-    if ( inhibit->plugin_inhibited )
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(inhibit->button), TRUE);
-    else
-    {
-	inhibited = inhibit_plugin_get_inhibit (inhibit);
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(inhibit->button), inhibited);
-    }
-}
-
-/*
  * Refresh all the info (button+tooltips)
  */
 static void
 inhibit_plugin_refresh_info (inhibit_t *inhibit)
 {
-    inhibit_plugin_set_button (inhibit);
     inhibit_plugin_set_tooltip (inhibit);
 }
 
@@ -364,14 +342,14 @@ proxy_destroy_cb (DBusGProxy *proxy, inhibit_t *inhibit)
 }
 
 /*
- * Destroying the proxy, but we block the destroy signal before as we 
+ * Destroying the proxy, but we disconnect the destroy signal before, cause we 
  * want to get the destroy signal only if the running instance of 
  * the power manager disappears from the session bus.
  */
 static void
 inhibit_plugin_disconnect_proxy (inhibit_t *inhibit)
 {
-    g_signal_handlers_block_by_func (inhibit->proxy, proxy_destroy_cb, inhibit);
+    g_signal_handlers_disconnect_by_func (inhibit->proxy, proxy_destroy_cb, inhibit);
     g_object_unref (inhibit->proxy);
     inhibit->proxy = NULL;
     inhibit->connected = FALSE;
@@ -433,7 +411,7 @@ inhibit_plugin_connect_more (inhibit_t *inhibit)
 }
 
 /*
- * Checks if a power manager found on the session bus and has a inhibit interface
+ * Checks if a power manager found on the session bus and has an inhibit interface
  * The names are Freedesktop standard.
  */
 static void
@@ -465,22 +443,189 @@ reload_activated (GtkWidget *widget, inhibit_t *inhibit)
     inhibit_plugin_refresh_info (inhibit);
 }
 
-/*
- * Button press events, Inhibit if pressed, UnInhibit if released
- */
-static gboolean
-button_press_event_cb (GtkWidget *button, GdkEventButton *ev, inhibit_t *inhibit)
+static void
+inhibit_plugin_pos_menu (GtkMenu *menu, gint *x, gint *y,
+			 gboolean *push, gpointer data)
 {
-    if ( ev->button != 1 )
+    GtkWidget *button;
+    gint sc_height, sc_width, menu_width, menu_height, button_height;
+    GtkRequisition requisition;
+    
+    button = (GtkWidget *) data;
+    
+    g_return_if_fail (x && y);
+
+    gdk_window_get_origin (button->window, x, y);
+    gdk_drawable_get_size (button->window, NULL, &button_height);
+
+    if (GTK_WIDGET_NO_WINDOW (button))
+        *x += button->allocation.x;
+
+    sc_height = gdk_screen_get_height (gdk_screen_get_default ());
+    sc_width = gdk_screen_get_width (gdk_screen_get_default ());
+
+    gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+
+    menu_width = requisition.width;
+    menu_height = requisition.height;
+
+    if (*y + button_height + menu_height < sc_height) 
+    {
+        *y = *y + button_height;
+    } 
+    else 
+    {
+        if (*y + button_height < sc_height / 2) 
+	    *y = *y + button_height;
+        else 
+	    *y = *y - menu_height;
+    }
+
+    if (*x + menu_width > sc_width)
+        *x = sc_width - menu_width;
+}
+
+static gboolean
+inhibit_plugin_inhibit_screen_saver (inhibit_t *inhibit, const gchar *name, 
+				     const gchar *path, const gchar *interface)
+{
+    DBusGProxy *proxy;
+    GError *error = NULL;
+    
+    proxy = dbus_g_proxy_new_for_name (inhibit->bus,
+				       name,
+				       path,
+				       interface);
+    if ( !proxy )
 	return FALSE;
     
+    const gchar *app = "Inhibit plugin";
+    const gchar *reason = "User settings";
     
-    if ( !inhibit->connected )
-	return TRUE;
+    dbus_g_proxy_call (proxy, "Inhibit", &error,
+		       G_TYPE_STRING, app,
+		       G_TYPE_STRING, reason,
+		       G_TYPE_INVALID,
+		       G_TYPE_UINT, &inhibit->saver_cookie,
+		       G_TYPE_INVALID );
+
+    g_object_unref (proxy);
+    if (error)
+    {
+	g_critical ("Unable to set inhibit: %s", error->message);
+	g_error_free (error);
+	return FALSE;
+    }
+    return TRUE;
+}
+
+static gboolean
+inhibit_plugin_uninhibit_screen_saver (inhibit_t *inhibit, const gchar *name, 
+				     const gchar *path, const gchar *interface)
+{
+    DBusGProxy *proxy;
+    GError *error = NULL;
+    
+    proxy = dbus_g_proxy_new_for_name (inhibit->bus,
+				       name,
+				       path,
+				       interface);
+    if ( !proxy )
+	return;
 	
-    /*User ask us to inhibit ?*/
-    //FIXME: Check if we manage to inhibit
-    if ( !inhibit->plugin_inhibited )
+    dbus_g_proxy_call (proxy, "UnInhibit", &error,
+		       G_TYPE_UINT, inhibit->saver_cookie,
+		       G_TYPE_INVALID,
+		       G_TYPE_INVALID );
+		    
+    g_object_unref (proxy);
+		       
+    if (error)
+    {
+	g_critical ("Unable to set UnInhibit: %s", error->message);
+	g_error_free (error);
+	return FALSE;
+    }
+    return TRUE;
+}
+
+static void
+inhibit_plugin_set_inhibit_screen_saver (inhibit_t *inhibit)
+{
+
+    if ( inhibit_plugin_inhibit_screen_saver (inhibit, 
+					      "org.freedesktop.ScreenSaver",
+					      "/org/freedesktop/ScreenSaver/Inhibit",
+					      "org.freedesktop.ScreenSaver") )
+    {
+	inhibit->saver_inhibited = TRUE;
+    }
+    else if ( inhibit_plugin_inhibit_screen_saver (inhibit, 
+						   "org.gnome.ScreenSaver",
+						   "/org/gnome/ScreenSaver/Inhibit",
+					           "org.gnome.ScreenSaver") )
+    {
+	
+	inhibit->saver_inhibited = TRUE;
+    }
+    else
+    {
+	g_warning ("Unable to inhibit screen saver");
+	inhibit->saver_inhibited = FALSE;
+    }
+}
+
+static void
+inhibit_plugin_set_uninhibit_screen_saver (inhibit_t *inhibit)
+{
+    if ( inhibit_plugin_uninhibit_screen_saver (inhibit, 
+					      "org.freedesktop.ScreenSaver",
+					      "/org/freedesktop/ScreenSaver/UnInhibit",
+					      "org.freedesktop.ScreenSaver") )
+    {
+	inhibit->saver_inhibited = FALSE;
+    }
+    else if ( inhibit_plugin_uninhibit_screen_saver (inhibit, 
+					      "org.gnome.ScreenSaver",
+					      "/org/gnome/ScreenSaver/UnInhibit",
+					      "org.gnome.ScreenSaver") )
+    {
+	
+	inhibit->saver_inhibited = FALSE;
+    }
+    else
+    {
+	g_warning ("Unable to uninhibit screen saver");
+	inhibit->saver_inhibited = TRUE;
+    }
+   
+}
+
+static void
+backlight_sleep_toggled_cb (GtkWidget *widget, inhibit_t *inhibit)
+{
+    gboolean active;
+    if ( G_UNLIKELY (inhibit->connected == FALSE) )
+	return ;
+	
+    active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (widget));
+    
+    if ( inhibit->saver_inhibited == FALSE && active == FALSE)
+	inhibit_plugin_set_inhibit_screen_saver (inhibit);
+    else
+	inhibit_plugin_set_uninhibit_screen_saver (inhibit);
+}
+
+static void
+automatic_sleep_toggled_cb (GtkWidget *widget, inhibit_t *inhibit)
+{
+    gboolean active;
+    if ( G_UNLIKELY (inhibit->connected == FALSE) )
+	return ;
+	
+    active = gtk_check_menu_item_get_active (GTK_CHECK_MENU_ITEM (widget));
+    
+    if ( inhibit->plugin_inhibited  == FALSE && active == FALSE )
     {
 	inhibit_plugin_set_inhibit (inhibit);
 	inhibit->plugin_inhibited = TRUE;
@@ -490,7 +635,63 @@ button_press_event_cb (GtkWidget *button, GdkEventButton *ev, inhibit_t *inhibit
 	inhibit_plugin_unset_inhibit (inhibit);
 	inhibit->plugin_inhibited = FALSE;
     }
-    inhibit_plugin_refresh_info (inhibit);
+}
+
+static void
+inhibit_plugin_menu_selection_done_cb (GtkWidget *menu, inhibit_t *inhibit)
+{
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inhibit->button), FALSE);
+    gtk_widget_destroy (menu);
+}
+
+/*
+ * Button press events, Inhibit if pressed, UnInhibit if released
+ */
+static gboolean
+button_press_event_cb (GtkWidget *button, GdkEventButton *ev, inhibit_t *inhibit)
+{
+    GtkWidget *menu;
+    GtkWidget *mi;
+    GtkWidget *img;
+    GdkPixbuf *pix;
+    
+    if ( ev->button != 1 )
+	return FALSE;
+    
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+    
+    menu = gtk_menu_new ();
+    
+    mi = gtk_image_menu_item_new_with_label (_("Inhibit plugin"));
+    img = gtk_image_new_from_icon_name ("gnome-inhibit-applet", GTK_ICON_SIZE_MENU);
+    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mi), img);
+    gtk_widget_set_sensitive (mi, FALSE);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+    
+    mi = gtk_separator_menu_item_new ();
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+    
+    mi = gtk_check_menu_item_new_with_label (_("Enable backlight sleep"));
+    gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (mi), !inhibit->saver_inhibited);
+    g_signal_connect (mi, "activate", 
+		      G_CALLBACK (backlight_sleep_toggled_cb), inhibit);
+    gtk_widget_set_sensitive (mi, inhibit->connected);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+    
+    mi = gtk_check_menu_item_new_with_label (_("Enable automatic sleep"));
+    gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (mi), !inhibit->plugin_inhibited);
+    g_signal_connect (mi, "activate", 
+		      G_CALLBACK (automatic_sleep_toggled_cb), inhibit);
+    gtk_widget_set_sensitive (mi, inhibit->connected);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+    
+    gtk_widget_show_all (menu);
+    g_signal_connect (menu, "selection-done",
+		      G_CALLBACK (inhibit_plugin_menu_selection_done_cb), inhibit);
+		      
+    gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
+		    inhibit_plugin_pos_menu, button, 
+		    0, gtk_get_current_event_time ());
     return TRUE;
 }
 
@@ -552,13 +753,15 @@ inhibit_plugin_construct (inhibit_t *inhibit)
     inhibit->image = gtk_image_new ();
     inhibit->button = gtk_toggle_button_new ();
     inhibit->notify = xfpm_notify_new ();
+    inhibit->plugin_inhibited = FALSE;
+    inhibit->saver_inhibited  = FALSE;
     
     gtk_container_add (GTK_CONTAINER(inhibit->button), inhibit->image);
     
     gtk_button_set_relief (GTK_BUTTON(inhibit->button), GTK_RELIEF_NONE);
     
     g_signal_connect (inhibit->button, "button-press-event",
-		      G_CALLBACK(button_press_event_cb), inhibit);
+		      G_CALLBACK (button_press_event_cb), inhibit);
     
     gtk_container_add (GTK_CONTAINER(inhibit->plugin), inhibit->button);
     
