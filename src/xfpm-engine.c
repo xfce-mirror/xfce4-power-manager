@@ -163,7 +163,11 @@ xfpm_engine_shutdown_request (XfpmEngine * engine,
 	TRACE ("Sleep button disabled in configuration");
 	return;
     }
-    else if (!engine->priv->inhibited)
+    else if ( engine->priv->inhibited == TRUE && critical == FALSE )
+    {
+	return;
+    }
+    else
     {
 	TRACE ("Going to do %s\n", action);
 	xfpm_send_message_to_network_manager ("sleep");
