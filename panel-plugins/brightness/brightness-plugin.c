@@ -75,6 +75,23 @@ brightness_plugin_update_xfpm_brightness_level (brightness_t *plugin, guint leve
 				G_TYPE_INVALID);
 }
 
+static void
+brightness_plugin_set_tooltip (brightness_t *brightness)
+{
+    gchar *tooltip;
+    
+    if ( brightness->hw_found )
+    {
+	tooltip = g_strdup_printf (_("Current reported brightness level \"%i\""), brightness->current_level);
+	gtk_widget_set_tooltip_text (brightness->button, tooltip);
+	g_free (tooltip);
+    }
+    else
+    {
+	gtk_widget_set_tooltip_text (brightness->button, _("No device found"));
+    }
+}
+
 static gint 
 brightness_plugin_get_level (brightness_t *brightness)
 {
@@ -111,6 +128,10 @@ brightness_plugin_set_level (brightness_t *brightness, gint level)
     {
 	g_critical ("Error setting brightness level: %s\n", error->message);
 	g_error_free (error);
+    }
+    else
+    {
+	brightness->current_level = level;
     }
     
     if ( brightness->xfpm_running )
@@ -294,6 +315,7 @@ scale_value_changed (GtkRange *range, brightness_t *plugin)
 	{
 	    g_warning("Failed to set brightness level\n");
 	}
+	brightness_plugin_set_tooltip (plugin);
     }
 }
 
@@ -383,6 +405,12 @@ brightness_plugin_size_changed_cb (XfcePanelPlugin *plugin, gint size, brightnes
 static void
 brightness_plugin_construct_popup (brightness_t *plugin)
 {
+    if ( plugin->win )
+    {
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (plugin->button), FALSE);
+	gtk_widget_destroy (plugin->win);
+    }
+    
     brightness_plugin_create_popup (plugin);
     plugin->open = FALSE;
 
@@ -457,15 +485,52 @@ reload_activated (GtkWidget *widget, brightness_t *brightness)
 	brightness_plugin_construct_popup (brightness);
 	brightness_plugin_set_level (brightness, 9);
 	brightness_plugin_xfpm (brightness);
-	gtk_widget_set_tooltip_text (brightness->button, _("Control your LCD brightness level"));
     }
-    else
-    {
-	gtk_widget_set_tooltip_text (brightness->button, _("No device found"));
-    }
-    
+
     size = xfce_panel_plugin_get_size (brightness->plugin);
     brightness_plugin_size_changed_cb (brightness->plugin, size, brightness);
+    brightness_plugin_set_tooltip (brightness);
+    
+}
+
+static void
+brightness_plugin_up (brightness_t *brightness)
+{
+    guint level;
+    level = brightness_plugin_get_level (brightness);
+    
+    if ( level != brightness->max_level )
+    {
+	plus_clicked (NULL, brightness);
+    }
+}
+
+static void
+brightness_plugin_down (brightness_t *brightness)
+{
+    guint level;
+    level = brightness_plugin_get_level (brightness);
+    
+    if ( level != 0 )
+    {
+	minus_clicked (NULL, brightness);
+    }
+}
+
+static gboolean
+brightness_plugin_scroll_event_cb (GtkWidget *button, GdkEventScroll *ev, brightness_t *brightness)
+{
+    if ( ev->direction  == GDK_SCROLL_DOWN )
+    {
+	brightness_plugin_down (brightness);
+	return TRUE;
+    }
+    else if ( ev->direction == GDK_SCROLL_UP )
+    {
+	brightness_plugin_up (brightness);
+	return TRUE;
+    }
+    return FALSE;
 }
 
 static void
@@ -486,6 +551,8 @@ brightness_plugin_construct (brightness_t *plugin)
 
     g_signal_connect (plugin->button, "clicked",
 		      G_CALLBACK (brightness_plugin_button_press_cb), plugin);
+    g_signal_connect (plugin->button, "scroll-event",
+		      G_CALLBACK (brightness_plugin_scroll_event_cb), plugin);
 		      
     mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_REFRESH, NULL);
     gtk_widget_show (mi);
@@ -512,14 +579,10 @@ register_brightness_plugin (XfcePanelPlugin *plugin)
     if ( brightness->hw_found )
     {
 	brightness_plugin_construct_popup (brightness);
-	brightness_plugin_set_level (brightness, 9);
 	brightness_plugin_xfpm (brightness);
-	gtk_widget_set_tooltip_text (brightness->button, _("Control your LCD brightness level"));
     }
-    else
-    {
-	gtk_widget_set_tooltip_text (brightness->button, _("No device found"));
-    }
+    
+    brightness_plugin_set_tooltip (brightness);
     
     g_signal_connect (plugin, "free-data",
 		      G_CALLBACK(brightness_plugin_free_data_cb), brightness);
