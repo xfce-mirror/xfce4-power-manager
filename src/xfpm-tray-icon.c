@@ -159,7 +159,7 @@ xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
 	     _("An application is currently disabling the automatic sleep,"
 	      " doing this action now may damage the working state of this application,"
 	      " are you sure you want to hibernate the system?") :
-	      _("Are you sure you want to procced?") ;
+	      _("Are you sure you want to proceed?") ;
     
     gboolean ret = 
     xfce_confirm (message,
@@ -190,7 +190,7 @@ xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
 	     _("An application is currently disabling the automatic sleep,"
 	      " doing this action now may damage the working state of this application,"
 	      " are you sure you want to suspend the system?") :
-	      _("Are you sure you want to procced?") ;
+	      _("Are you sure you want to proceed?") ;
     
     gboolean ret = 
     xfce_confirm  (message,
