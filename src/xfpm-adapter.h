@@ -54,6 +54,8 @@ gboolean 	  	 xfpm_adapter_get_present     (XfpmAdapter *adapter) G_GNUC_PURE;
 
 gboolean 		 xfpm_adapter_has_hw 	      (XfpmAdapter *adapter) G_GNUC_PURE;
 
+void                     xfpm_adapter_reload          (XfpmAdapter *adapter);
+
 G_END_DECLS
 
 #endif /* __XFPM_ADAPTER_H */

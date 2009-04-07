@@ -82,6 +82,14 @@ brightness_button_set_property (GObject *object,
     }
 }
 
+/*
+ * The Code for handling grab/ungrab events are taken from GtkScaleButton.
+ * GTK - The GIMP Toolkit
+ * Copyright (C) 2005 Ronald S. Bultje
+ * Copyright (C) 2006, 2007 Christian Persch
+ * Copyright (C) 2006 Jan Arne Petersen
+ * Copyright (C) 2005-2007 Red Hat, Inc.
+ */
 static void
 brightness_button_grab_notify (BrightnessButton *button, gboolean was_grabbed)
 {

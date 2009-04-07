@@ -202,3 +202,16 @@ gboolean xfpm_adapter_has_hw (XfpmAdapter *adapter)
     
     return adapter->priv->hw_found;
 }
+
+void xfpm_adapter_reload (XfpmAdapter *adapter)
+{
+    HalManager *manager;
+    
+    g_return_if_fail (XFPM_IS_ADAPTER (adapter));
+    
+    g_object_unref (adapter->priv->device);
+    
+    manager = hal_manager_new ();
+    xfpm_adapter_set_device (adapter, manager);
+    g_object_unref (manager);
+}

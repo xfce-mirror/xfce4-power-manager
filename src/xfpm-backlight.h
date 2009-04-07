@@ -49,6 +49,8 @@ XfpmBacklight       		*xfpm_backlight_new             (void);
 
 gboolean                         xfpm_backlight_has_hw          (XfpmBacklight *bk) G_GNUC_PURE;
 
+void                             xfpm_backlight_reload          (XfpmBacklight *bk);
+
 G_END_DECLS
 
 #endif /* __XFPM_BACKLIGHT_H */

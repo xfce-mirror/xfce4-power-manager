@@ -46,6 +46,7 @@ typedef struct
 
 GType          xfpm_cpu_get_type        (void) G_GNUC_CONST;
 XfpmCpu       *xfpm_cpu_new             (void);
+void           xfpm_cpu_reload          (XfpmCpu *cpu);
 
 G_END_DECLS
 

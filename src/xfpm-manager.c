@@ -74,7 +74,7 @@ xfpm_manager_hal_connection_changed_cb (HalMonitor *monitor, gboolean connected,
 {
     TRACE("connected = %s", xfpm_bool_to_string (connected));
     
-    if ( connected )
+    if ( connected  == TRUE )
     {
 	if ( manager->priv->engine == NULL)
 	{
@@ -82,8 +82,7 @@ xfpm_manager_hal_connection_changed_cb (HalMonitor *monitor, gboolean connected,
 	}
 	else
 	{
-	    xfpm_manager_quit (manager);
-	    g_spawn_command_line_async ("xfce4-power-manager", NULL);
+	    xfpm_engine_reload_hal_objects (manager->priv->engine);
 	}
     }
 }

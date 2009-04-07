@@ -259,7 +259,6 @@ xfpm_cpu_get_available_governors (XfpmCpu *cpu)
 	else if ( xfpm_strequal(governors[i], "performance") )
 	    cpu->priv->cpu_governors |= CPU_PERFORMANCE;
     }
-    
     hal_manager_free_string_array (governors);
 }
 
@@ -392,4 +391,12 @@ xfpm_cpu_new (void)
     XfpmCpu *cpu = NULL;
     cpu = g_object_new (XFPM_TYPE_CPU, NULL);
     return cpu;
+}
+
+void xfpm_cpu_reload (XfpmCpu *cpu)
+{
+    g_return_if_fail (XFPM_IS_CPU (cpu));
+    
+    cpu->priv->cpu_governors = 0;
+    xfpm_cpu_check_iface (cpu);
 }

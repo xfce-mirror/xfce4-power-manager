@@ -46,9 +46,13 @@ typedef struct
     
 } XfpmLidHalClass;
 
-GType        	  xfpm_lid_hal_get_type        (void) G_GNUC_CONST;
-XfpmLidHal       *xfpm_lid_hal_new             (void);
-gboolean          xfpm_lid_hw_found            (XfpmLidHal *lid);
+GType        	  	  xfpm_lid_hal_get_type        (void) G_GNUC_CONST;
+
+XfpmLidHal       	 *xfpm_lid_hal_new             (void);
+
+gboolean          	  xfpm_lid_hw_found            (XfpmLidHal *lid) G_GNUC_PURE;
+
+void                      xfpm_lid_hal_reload          (XfpmLidHal *lid);
 
 G_END_DECLS
 

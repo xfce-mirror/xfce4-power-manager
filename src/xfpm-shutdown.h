@@ -69,6 +69,7 @@ void                      xfpm_hibernate                (XfpmShutdown *shutdown,
 void                      xfpm_suspend                  (XfpmShutdown *shutdown,
 							 GError **error);
 
+void			  xfpm_shutdown_reload          (XfpmShutdown *shutdown);
 
 G_END_DECLS
 

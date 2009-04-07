@@ -66,24 +66,9 @@ xfpm_backlight_brightness_down (XfpmBrightnessHal *brg, guint level, XfpmBacklig
 }
 
 static void
-xfpm_backlight_class_init(XfpmBacklightClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
-
-    object_class->finalize = xfpm_backlight_finalize;
-
-    g_type_class_add_private(klass,sizeof(XfpmBacklightPrivate));
-    
-    xfpm_backlight_dbus_class_init (klass);
-}
-
-static void
-xfpm_backlight_init(XfpmBacklight *bk)
+xfpm_backlight_get_device (XfpmBacklight *bk)
 {
     guint max_level;
-    
-    bk->priv = XFPM_BACKLIGHT_GET_PRIVATE(bk);
-    
     bk->priv->br     = xfpm_brightness_hal_new ();
     bk->priv->has_hw = xfpm_brightness_hal_has_hw (bk->priv->br);
     
@@ -102,6 +87,27 @@ xfpm_backlight_init(XfpmBacklight *bk)
 	xfpm_brightness_widget_set_max_level (bk->priv->widget,
 					      max_level -1 );
     }
+    
+}
+
+static void
+xfpm_backlight_class_init(XfpmBacklightClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+
+    object_class->finalize = xfpm_backlight_finalize;
+
+    g_type_class_add_private(klass,sizeof(XfpmBacklightPrivate));
+    
+    xfpm_backlight_dbus_class_init (klass);
+}
+
+static void
+xfpm_backlight_init(XfpmBacklight *bk)
+{
+    bk->priv = XFPM_BACKLIGHT_GET_PRIVATE(bk);
+    
+    xfpm_backlight_get_device (bk);
     
     xfpm_backlight_dbus_init (bk);
 }
@@ -174,4 +180,17 @@ gboolean xfpm_backlight_has_hw (XfpmBacklight *bk)
     g_return_val_if_fail (XFPM_IS_BACKLIGHT (bk), FALSE);
     
     return bk->priv->has_hw;
+}
+
+void xfpm_backlight_reload (XfpmBacklight *bk)
+{
+    g_return_if_fail (XFPM_IS_BACKLIGHT (bk));
+    
+    if ( bk->priv->has_hw == TRUE )
+    {
+	g_object_unref (bk->priv->br);
+	g_object_unref (bk->priv->widget);
+    }
+    
+    xfpm_backlight_get_device (bk);
 }

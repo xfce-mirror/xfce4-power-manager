@@ -434,3 +434,10 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
 	g_error_free (error_internal);
     }
 }
+
+void xfpm_shutdown_reload (XfpmShutdown *shutdown)
+{
+    g_return_if_fail (XFPM_IS_SHUTDOWN (shutdown));
+    
+    xfpm_shutdown_power_management_check (shutdown);
+}

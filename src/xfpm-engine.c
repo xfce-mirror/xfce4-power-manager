@@ -472,6 +472,25 @@ xfpm_engine_get_info (XfpmEngine * engine,
     *has_lid = engine->priv->has_lid;
 }
 
+void xfpm_engine_reload_hal_objects (XfpmEngine *engine)
+{
+    g_return_if_fail (XFPM_IS_ENGINE (engine));
+    
+    xfpm_adapter_reload (engine->priv->adapter);
+    xfpm_supply_reload  (engine->priv->supply);
+    
+    
+    xfpm_shutdown_reload (engine->priv->shutdown);
+    
+    if ( engine->priv->is_laptop )
+    {
+	xfpm_backlight_reload (engine->priv->bk);
+	xfpm_cpu_reload       (engine->priv->cpu);
+	xfpm_lid_hal_reload   (engine->priv->lid);
+    }
+    
+}
+
 /*
  * 
  * DBus server implementation for org.freedesktop.PowerManagement

@@ -416,6 +416,7 @@ static gboolean
 xfpm_supply_monitor_start (XfpmSupply *supply)
 {
     //FIXME: Check the system formfactor
+    supply->priv->adapter_present = xfpm_adapter_get_present (supply->priv->adapter);
     
     GPtrArray *array = hal_power_get_batteries (supply->priv->power);
     
@@ -455,7 +456,6 @@ xfpm_supply_new (guint8 power_management_info)
 void xfpm_supply_monitor (XfpmSupply *supply)
 {
     supply->priv->adapter = xfpm_adapter_new ();
-    supply->priv->adapter_present = xfpm_adapter_get_present (supply->priv->adapter);
     
     g_signal_connect (supply->priv->adapter, "adapter-changed",
 		      G_CALLBACK(xfpm_supply_adapter_changed_cb), supply);
@@ -477,4 +477,17 @@ gboolean xfpm_supply_on_low_battery (XfpmSupply *supply)
     g_return_val_if_fail (XFPM_IS_SUPPLY(supply), FALSE);
     
     return xfpm_supply_on_low_power(supply);
+}
+
+void xfpm_supply_reload (XfpmSupply *supply)
+{
+    g_return_if_fail (XFPM_IS_SUPPLY (supply));
+    
+    g_object_unref (supply->priv->power);
+    g_hash_table_destroy (supply->priv->hash);
+    
+    supply->priv->power = hal_power_new ();
+    supply->priv->hash  = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+    
+    xfpm_supply_monitor_start (supply);
 }

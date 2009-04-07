@@ -59,6 +59,8 @@ void                     xfpm_supply_monitor        (XfpmSupply *supply);
 
 gboolean                 xfpm_supply_on_low_battery (XfpmSupply *supply);
 
+void                     xfpm_supply_reload         (XfpmSupply *supply);
+
 G_END_DECLS
 
 #endif /* __XFPM_SUPPLY_H */
