@@ -2,7 +2,11 @@ plugindir = $(libexecdir)/xfce4/panel-plugins
 plugin_PROGRAMS = xfce4-brightness-plugin
 
 xfce4_brightness_plugin_SOURCES =		\
-	brightness-plugin.c
+	brightness-plugin.c			\
+	brightness-button.c			\
+	brightness-button.h			\
+	brightness-proxy.c			\
+	brightness-proxy.h
 
 xfce4_brightness_plugin_CFLAGS =		\
 	-I$(top_srcdir)				\
