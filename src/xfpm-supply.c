@@ -394,9 +394,10 @@ xfpm_supply_remove_battery (XfpmSupply *supply,  const HalBattery *device)
     if ( battery )
     {
 	TRACE("Removing battery %s", udi);
-	if (!g_hash_table_remove(supply->priv->hash, udi))
+	if (!g_hash_table_remove (supply->priv->hash, udi))
 		g_critical ("Unable to remove battery object from hash");
     }
+//    g_object_unref (battery);
     xfpm_supply_refresh_tray_icon (supply);
 }
 
@@ -415,7 +416,6 @@ xfpm_supply_battery_removed_cb (HalPower *power, const HalBattery *device, XfpmS
 static gboolean
 xfpm_supply_monitor_start (XfpmSupply *supply)
 {
-    //FIXME: Check the system formfactor
     supply->priv->adapter_present = xfpm_adapter_get_present (supply->priv->adapter);
     
     GPtrArray *array = hal_power_get_batteries (supply->priv->power);
@@ -429,6 +429,12 @@ xfpm_supply_monitor_start (XfpmSupply *supply)
     }
     
     g_ptr_array_free(array, TRUE);
+    
+    g_signal_connect(supply->priv->power, "battery-added",
+		     G_CALLBACK(xfpm_supply_battery_added_cb), supply);
+		     
+    g_signal_connect(supply->priv->power, "battery-removed",
+		     G_CALLBACK(xfpm_supply_battery_removed_cb), supply);
     
     return FALSE;
 }
@@ -462,14 +468,7 @@ void xfpm_supply_monitor (XfpmSupply *supply)
       
     xfpm_supply_monitor_start (supply);
     
-    g_signal_connect(supply->priv->power, "battery-added",
-		     G_CALLBACK(xfpm_supply_battery_added_cb), supply);
-		     
-    g_signal_connect(supply->priv->power, "battery-removed",
-		     G_CALLBACK(xfpm_supply_battery_removed_cb), supply);
-		     
     xfpm_supply_refresh_tray_icon (supply);
-    
 }
 
 gboolean xfpm_supply_on_low_battery (XfpmSupply *supply)
@@ -484,6 +483,7 @@ void xfpm_supply_reload (XfpmSupply *supply)
     g_return_if_fail (XFPM_IS_SUPPLY (supply));
     
     g_object_unref (supply->priv->power);
+    
     g_hash_table_destroy (supply->priv->hash);
     
     supply->priv->power = hal_power_new ();

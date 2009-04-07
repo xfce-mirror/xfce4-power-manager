@@ -44,6 +44,9 @@ struct HalPowerPrivate
 {
     GHashTable *hash  	;
     HalManager *manager ;
+    
+    gulong      sig_1;
+    gulong      sig_2;
 };
 
 enum
@@ -130,7 +133,7 @@ hal_power_remove_battery (HalPower *power, HalBattery *battery, const gchar *udi
 {
     g_signal_emit (power, signals[BATTERY_REMOVED], 0, battery);
     
-    g_object_unref(battery );
+    //g_object_unref (battery);
     
     if (!g_hash_table_remove(power->priv->hash, udi))
     	g_warning ("Unable to removed object from hash\n");
@@ -172,7 +175,7 @@ hal_power_device_removed_cb (HalManager *manager, const gchar *udi, HalPower *po
 {
     HalBattery *battery  = hal_power_get_battery_from_hash (power, udi);
     
-    if (battery )
+    if (battery)
     {
 	hal_power_remove_battery (power, battery , udi);
     }
@@ -243,15 +246,14 @@ hal_power_init(HalPower *power)
     power->priv = HAL_POWER_GET_PRIVATE(power);
     
     power->priv->manager = hal_manager_new ();
-    power->priv->hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
+    power->priv->hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
     
-    g_signal_connect (power->priv->manager, "device-added", 
-		      G_CALLBACK(hal_power_device_added_cb), power);
+    power->priv->sig_1 = g_signal_connect (power->priv->manager, "device-added", 
+					   G_CALLBACK(hal_power_device_added_cb), power);
     
-    g_signal_connect (power->priv->manager, "device-removed",
-		      G_CALLBACK(hal_power_device_removed_cb), power);
+    power->priv->sig_2 = g_signal_connect (power->priv->manager, "device-removed",
+					    G_CALLBACK(hal_power_device_removed_cb), power);
    
-    
     hal_power_get_batteries_internal (power);
 }
 
@@ -262,11 +264,15 @@ hal_power_finalize(GObject *object)
     
     power = HAL_POWER(object);
     
-    if (power->priv->hash)
-    	g_hash_table_unref(power->priv->hash);
+    if ( g_signal_handler_is_connected (power->priv->manager, power->priv->sig_1 ) )
+	g_signal_handler_disconnect (power->priv->manager, power->priv->sig_1 );
+	
+    if ( g_signal_handler_is_connected (power->priv->manager, power->priv->sig_2 ) )
+	g_signal_handler_disconnect (power->priv->manager, power->priv->sig_2 );
     
-    if ( power->priv->manager )
-    	g_object_unref(power->priv->manager);
+    g_hash_table_destroy (power->priv->hash);
+    
+    g_object_unref (power->priv->manager);
 	
     G_OBJECT_CLASS(hal_power_parent_class)->finalize(object);
 }
@@ -302,7 +308,6 @@ hal_power_get_batteries (HalPower *power)
     for ( i=0; i < g_list_length (list); i++)
     {
        battery = g_list_nth_data (list, i);
-       g_object_ref (battery );
        g_ptr_array_add (array, battery);
     }
    

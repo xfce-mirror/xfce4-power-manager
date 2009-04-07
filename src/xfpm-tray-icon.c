@@ -62,6 +62,7 @@ struct XfpmTrayIconPrivate
     GQuark         icon_quark;
     gboolean       info_menu;
     gboolean       inhibited;
+    gulong         sig;
 };
 
 enum
@@ -383,8 +384,8 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
     g_signal_connect (tray->priv->icon, "popup-menu",
 		      G_CALLBACK (xfpm_tray_icon_popup_menu_cb), tray);
 		      
-    g_signal_connect (tray->priv->inhibit, "has-inhibit-changed",
-		      G_CALLBACK (xfpm_tray_icon_inhibit_changed_cb), tray);
+    tray->priv->sig = g_signal_connect (tray->priv->inhibit, "has-inhibit-changed",
+					G_CALLBACK (xfpm_tray_icon_inhibit_changed_cb), tray);
 }
 
 static void
@@ -393,7 +394,10 @@ xfpm_tray_icon_finalize(GObject *object)
     XfpmTrayIcon *tray;
 
     tray = XFPM_TRAY_ICON(object);
-
+    
+    if ( g_signal_handler_is_connected (tray->priv->inhibit, tray->priv->sig ) )
+	g_signal_handler_disconnect (G_OBJECT (tray->priv->inhibit), tray->priv->sig);
+    
     g_object_unref (tray->priv->icon);
 	
     g_object_unref (tray->priv->shutdown);

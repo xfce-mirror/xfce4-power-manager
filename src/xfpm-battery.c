@@ -68,6 +68,9 @@ struct XfpmBatteryPrivate
     
     gboolean         adapter_present;
     XfpmBatteryState state;
+    
+    gulong	     sig_1;
+    gulong           sig_2;
 };
 
 enum
@@ -527,9 +530,9 @@ xfpm_battery_init(XfpmBattery *battery)
     
     battery->priv->adapter_present = xfpm_adapter_get_present (battery->priv->adapter);
     
-    g_signal_connect (battery->priv->adapter ,"adapter-changed",
-		      G_CALLBACK (xfpm_battery_adapter_changed_cb), battery);
-		      
+    battery->priv->sig_1 = g_signal_connect (battery->priv->adapter ,"adapter-changed",
+					     G_CALLBACK (xfpm_battery_adapter_changed_cb), battery);
+    
     g_signal_connect (battery->priv->icon, "show-information", 
 		      G_CALLBACK (xfpm_battery_show_info), battery);
 }
@@ -539,7 +542,13 @@ xfpm_battery_finalize(GObject *object)
 {
     XfpmBattery *battery;
     battery = XFPM_BATTERY(object);
-    
+ 
+    if ( g_signal_handler_is_connected (battery->priv->adapter, battery->priv->sig_1 ) )
+	g_signal_handler_disconnect (G_OBJECT (battery->priv->adapter), battery->priv->sig_1);
+	
+    if ( g_signal_handler_is_connected (battery->priv->conf, battery->priv->sig_2 ) )
+	g_signal_handler_disconnect (G_OBJECT (battery->priv->conf), battery->priv->sig_2);
+
     g_object_unref (battery->priv->icon);
     
     g_object_unref (battery->priv->device);
@@ -574,8 +583,8 @@ xfpm_battery_new(const HalBattery *device)
     g_signal_connect (G_OBJECT(battery->priv->device), "battery-changed",
 		      G_CALLBACK(xfpm_battery_device_changed_cb), battery);
 		      
-    g_signal_connect (G_OBJECT(battery->priv->conf), "tray-icon-settings-changed",
-		      G_CALLBACK(xfpm_battery_tray_icon_settings_changed), battery);
+    battery->priv->sig_2 = g_signal_connect (G_OBJECT(battery->priv->conf), "tray-icon-settings-changed",
+					     G_CALLBACK(xfpm_battery_tray_icon_settings_changed), battery);
     
     return battery;
 }

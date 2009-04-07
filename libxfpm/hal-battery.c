@@ -23,18 +23,8 @@
 #endif
 
 #include <stdio.h>
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
 
 #include <glib.h>
 #include <glib/gi18n.h>
@@ -58,8 +48,6 @@ static void hal_battery_get_property(GObject *object,
 
 struct HalBatteryPrivate
 {
-    HalManager *manager;
-    
     /* Properties read-only */
     HalDeviceType type;
     
@@ -242,8 +230,6 @@ hal_battery_init (HalBattery *battery)
 
     battery->priv = HAL_BATTERY_GET_PRIVATE(battery);
     
-    battery->priv->manager = hal_manager_new ();
-    
     battery->priv->is_present      = FALSE;
     battery->priv->is_charging     = FALSE;
     battery->priv->is_discharging  = FALSE;
@@ -327,9 +313,6 @@ hal_battery_finalize(GObject *object)
 
     battery = HAL_BATTERY(object);
     
-    if ( battery->priv->manager )
-    	g_object_unref(battery->priv->manager);
-	
     if ( battery->priv->technology )
     	g_free (battery->priv->technology);
 	
