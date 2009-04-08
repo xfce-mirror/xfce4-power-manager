@@ -464,13 +464,17 @@ xfpm_brightness_hal_finalize (GObject *object)
     
     if ( brg->priv->proxy )
 	g_object_unref (brg->priv->proxy);
-    
-    g_object_unref (brg->priv->conf);
+
+    if ( brg->priv->conf )
+	g_object_unref (brg->priv->conf);
 	
-    g_object_unref (brg->priv->adapter);
+    if ( brg->priv->adapter)
+	g_object_unref (brg->priv->adapter);
 	
-    g_object_unref (brg->priv->saver);
+    if ( brg->priv->saver )
+	g_object_unref (brg->priv->saver);
     
+    if ( brg->priv->idle )
     g_object_unref (brg->priv->idle);
 	
     G_OBJECT_CLASS(xfpm_brightness_hal_parent_class)->finalize(object);

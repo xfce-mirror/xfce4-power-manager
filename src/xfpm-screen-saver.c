@@ -90,8 +90,6 @@ xfpm_screen_saver_uninhibit_message (XfpmScreenSaver *srv, const gchar *unique_n
 {
     gchar *name;
     
-    g_return_if_fail (srv->priv->inhibitors != 0 );
-    
     name = xfpm_screen_saver_find_unique_name (srv, unique_name);
     
     if ( name )
@@ -134,22 +132,13 @@ xfpm_screen_saver_filter (DBusConnection *connection, DBusMessage *message, void
     XfpmScreenSaver *srv = ( XfpmScreenSaver *)data;
     
     if ( dbus_message_is_method_call (message, "org.gnome.ScreenSaver", "Inhibit") )
-    {
 	xfpm_screen_saver_inhibit_message (srv, dbus_message_get_sender (message) );
-	
-    }
     else if ( dbus_message_is_method_call (message, "org.gnome.ScreenSaver", "UnInhibit") )
-    {
 	xfpm_screen_saver_uninhibit_message (srv, dbus_message_get_sender (message) );
-    }
     else if ( dbus_message_is_method_call (message, "org.freedesktop.ScreenSaver", "Inhibit") )
-    {
 	xfpm_screen_saver_inhibit_message (srv, dbus_message_get_sender (message) );
-    }
     else if ( dbus_message_is_method_call (message, "org.freedesktop.ScreenSaver", "UnInhibit") )
-    {
 	xfpm_screen_saver_uninhibit_message (srv, dbus_message_get_sender (message) );
-    }
     
     return DBUS_HANDLER_RESULT_NOT_YET_HANDLED; /* Keep on as we just want to spy */
 }
@@ -192,7 +181,7 @@ xfpm_screen_saver_init(XfpmScreenSaver *srv)
     g_signal_connect (srv->priv->monitor, "connection-lost",
 		      G_CALLBACK (xfpm_screen_saver_connection_lost), srv);
 		      
-    srv->priv->array   = g_ptr_array_new ();
+    srv->priv->array   	  = g_ptr_array_new ();
     srv->priv->inhibitors = 0;
     
     if ( dbus_error_is_set (&error) )
