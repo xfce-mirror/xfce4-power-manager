@@ -42,6 +42,8 @@
 #include "xfpm-shutdown.h"
 #include "xfpm-errors.h"
 
+#define DUPLICATE_SHUTDOWN_REQUEST 8.0f
+
 /* Init */
 static void xfpm_shutdown_class_init (XfpmShutdownClass *klass);
 static void xfpm_shutdown_init       (XfpmShutdown *shutdown);
@@ -372,6 +374,7 @@ void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
 	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
+	shutdown->priv->block_shutdown = FALSE;
 	return;
     }
     
@@ -389,6 +392,7 @@ void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
 	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
+	shutdown->priv->block_shutdown = FALSE;
 	return;
     }
 
@@ -417,6 +421,7 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
 	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
+	shutdown->priv->block_shutdown = FALSE;
 	return;
     }
     

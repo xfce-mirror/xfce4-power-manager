@@ -71,6 +71,7 @@ struct XfpmBatteryPrivate
     
     gulong	     sig_1;
     gulong           sig_2;
+    gulong           sig_3;
 };
 
 enum
@@ -548,6 +549,9 @@ xfpm_battery_finalize(GObject *object)
 	
     if ( g_signal_handler_is_connected (battery->priv->conf, battery->priv->sig_2 ) )
 	g_signal_handler_disconnect (G_OBJECT (battery->priv->conf), battery->priv->sig_2);
+	
+     if ( g_signal_handler_is_connected (battery->priv->device, battery->priv->sig_3 ) )
+	g_signal_handler_disconnect (G_OBJECT (battery->priv->device), battery->priv->sig_3);
 
     g_object_unref (battery->priv->icon);
     
@@ -580,8 +584,8 @@ xfpm_battery_new(const HalBattery *device)
     
     xfpm_battery_refresh (battery);
     
-    g_signal_connect (G_OBJECT(battery->priv->device), "battery-changed",
-		      G_CALLBACK(xfpm_battery_device_changed_cb), battery);
+    battery->priv->sig_3 = g_signal_connect (G_OBJECT(battery->priv->device), "battery-changed",
+					     G_CALLBACK(xfpm_battery_device_changed_cb), battery);
 		      
     battery->priv->sig_2 = g_signal_connect (G_OBJECT(battery->priv->conf), "tray-icon-settings-changed",
 					     G_CALLBACK(xfpm_battery_tray_icon_settings_changed), battery);
