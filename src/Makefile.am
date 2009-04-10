@@ -15,6 +15,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-manager.h				\
 	xfpm-engine.c				\
 	xfpm-engine.h				\
+	xfpm-session.c				\
+	xfpm-session.h				\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
 	xfpm-supply.c				\

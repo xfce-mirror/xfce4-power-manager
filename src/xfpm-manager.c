@@ -44,6 +44,7 @@
 
 #include "xfpm-manager.h"
 #include "xfpm-engine.h"
+#include "xfpm-session.h"
 
 /* Init */
 static void xfpm_manager_class_init (XfpmManagerClass *klass);
@@ -60,6 +61,7 @@ static gboolean xfpm_manager_quit (XfpmManager *manager);
 
 struct XfpmManagerPrivate
 {
+    XfpmSession     *session;
     XfpmEngine 	    *engine;
     
     HalMonitor      *monitor;
@@ -106,6 +108,8 @@ xfpm_manager_init(XfpmManager *manager)
     manager->priv->engine        = NULL;
     manager->priv->monitor       = NULL;
     
+    manager->priv->session = xfpm_session_new ();
+    
     notify_init ("xfce4-power-manager");
 }
 
@@ -121,6 +125,8 @@ xfpm_manager_finalize(GObject *object)
 	
     if ( manager->priv->engine )
     	g_object_unref (manager->priv->engine);
+	
+    g_object_unref (manager->priv->session);
 
     g_object_unref (manager->priv->monitor);
     
@@ -166,6 +172,12 @@ xfpm_manager_reserve_names (XfpmManager *manager)
     }
 }
 
+static void
+xfpm_manager_session_die_cb (XfpmSession *session, XfpmManager *manager)
+{
+    xfpm_manager_quit (manager);
+}
+
 XfpmManager *
 xfpm_manager_new (DBusGConnection *bus)
 {
@@ -199,6 +211,11 @@ void xfpm_manager_start (XfpmManager *manager)
 	goto out;
     }
     manager->priv->engine = xfpm_engine_new ();
+    
+    manager->priv->session = xfpm_session_new ();
+    
+    g_signal_connect (manager->priv->session, "session-die",
+		      G_CALLBACK (xfpm_manager_session_die_cb), manager);
     
 out:
 	;
