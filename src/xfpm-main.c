@@ -43,6 +43,9 @@
 #include "xfpm-manager.h"
 #include "xfpm-session.h"
 
+static gchar    *client_id = NULL;
+static gboolean no_daemon  = FALSE;
+
 static void
 show_version()
 {
@@ -51,6 +54,29 @@ show_version()
              "Part of the Xfce Goodies Project\n"
              "http://goodies.xfce.org\n\n"
              "Licensed under the GNU GPL.\n\n"), VERSION);
+}
+
+static void
+xfpm_start (DBusGConnection *bus)
+{
+    TRACE("Starting the power manager\n");
+    XfpmSession *session;
+    session = xfpm_session_new ();
+    
+    if ( client_id != NULL )
+	xfpm_session_set_client_id (session, client_id);
+    
+    if ( no_daemon == FALSE && daemon(0,0) )
+    {
+	g_critical ("Could not daemonize");
+    }
+    
+    XfpmManager *manager;
+    manager = xfpm_manager_new(bus);
+    xfpm_manager_start(manager);
+    gtk_main();
+    
+    g_object_unref (session);
 }
 
 int main(int argc, char **argv)
@@ -63,9 +89,7 @@ int main(int argc, char **argv)
     gboolean quit       = FALSE;
     gboolean config     = FALSE;
     gboolean version    = FALSE;
-    gboolean no_daemon  = FALSE;
     gboolean reload     = FALSE;
-    gchar    *client_id = NULL;
     
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
@@ -184,14 +208,11 @@ int main(int argc, char **argv)
     
     if ( reload )
     {
-	if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection (bus),
-				      "org.xfce.PowerManager") )
+	if (!xfpm_dbus_name_has_owner(dbus_g_connection_get_connection (bus), "org.xfce.PowerManager") &&
+	    !xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(bus), "org.freedesktop.PowerManagement"))
 	{
-	    xfpm_info (_("Xfce Power Manager"),
-		       _("Xfce power manager is not running"));
-		       
-	    
-	    return EXIT_FAILURE;
+	    g_print ("Xfce power manager is not running\n");
+	    xfpm_start (bus);
 	}
 	proxy = dbus_g_proxy_new_for_name(bus, 
 			                      "org.xfce.PowerManager",
@@ -229,24 +250,7 @@ int main(int argc, char **argv)
     }
     else
     {	
-	TRACE("Starting the power manager\n");
-	XfpmSession *session;
-	session = xfpm_session_new ();
-	
-	if ( client_id != NULL )
-	    xfpm_session_set_client_id (session, client_id);
-	
-	if ( no_daemon == FALSE && daemon(0,0) )
-	{
-	    g_critical ("Could not daemonize");
-	}
-	
-    	XfpmManager *manager;
-    	manager = xfpm_manager_new(bus);
-    	xfpm_manager_start(manager);
-	gtk_main();
-	
-	g_object_unref (session);
+	xfpm_start (bus);
     }
     
     return EXIT_SUCCESS;
