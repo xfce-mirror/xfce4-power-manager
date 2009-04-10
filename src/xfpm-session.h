@@ -51,6 +51,9 @@ XfpmSession       		*xfpm_session_new             (void);
 
 void			         xfpm_session_set_client_id   (XfpmSession *session,
 							       const gchar *client_id);
+							       
+/* This is used to change the restart Style */
+void				 xfpm_session_quit	      (XfpmSession *session);
 
 G_END_DECLS
 

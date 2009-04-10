@@ -167,3 +167,10 @@ void xfpm_session_set_client_id (XfpmSession *session, const gchar *client_id)
     
     client_session_set_client_id (session->priv->client, client_id);
 }
+
+void xfpm_session_quit (XfpmSession *session)
+{
+    g_return_if_fail (XFPM_IS_SESSION (session));
+    
+    client_session_set_restart_style (session->priv->client, SESSION_RESTART_IF_RUNNING);
+}

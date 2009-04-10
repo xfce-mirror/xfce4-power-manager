@@ -148,6 +148,7 @@ static gboolean
 xfpm_manager_quit (XfpmManager *manager)
 {
     xfpm_manager_release_names (manager);
+    xfpm_session_quit (manager->priv->session);
     
     g_object_unref(G_OBJECT(manager));
     
