@@ -55,6 +55,8 @@ void			         xfpm_session_set_client_id   (XfpmSession *session,
 /* This is used to change the restart Style */
 void				 xfpm_session_quit	      (XfpmSession *session);
 
+void				 xfpm_session_ask_shutdown    (XfpmSession *session);
+
 G_END_DECLS
 
 #endif /* __XFPM_SESSION_H */

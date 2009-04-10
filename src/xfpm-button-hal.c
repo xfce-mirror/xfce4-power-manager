@@ -69,22 +69,29 @@ xfpm_button_hal_emit_signals (XfpmButtonHal *bt, const gchar *condition, const g
     if ( !xfpm_strequal (condition, "ButtonPressed") )
 	return;
 
-    if ( xfpm_strequal (detail, "power")  && bt->priv->keys & POWER_KEY )
+    TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
+
+    if ( xfpm_strequal (detail, "power")  && !bt->priv->keys & POWER_KEY )
     {
 	TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
 	g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_POWER_OFF);
     }
-    else if ( xfpm_strequal (detail, "sleep")  && bt->priv->keys & SLEEP_KEY )
+    else if ( xfpm_strequal (detail, "sleep")  && !bt->priv->keys & SLEEP_KEY )
     {
 	TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
 	g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_SLEEP);
     }
-    else if ( xfpm_strequal (detail, "brightness-up")  && bt->priv->keys & BRIGHTNESS_KEY )
+    else if ( xfpm_strequal (detail, "hibernate") && !bt->priv->keys & HIBERNATE_KEY )
+    {
+	TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
+	g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_HIBERNATE);
+    }
+    else if ( xfpm_strequal (detail, "brightness-up")  && !bt->priv->keys & BRIGHTNESS_KEY )
     {
 	TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
 	g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_MON_BRIGHTNESS_UP);
     }
-    else if ( xfpm_strequal (detail, "brightness-down")  && bt->priv->keys & BRIGHTNESS_KEY )
+    else if ( xfpm_strequal (detail, "brightness-down")  && !bt->priv->keys & BRIGHTNESS_KEY )
     {
 	TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
 	g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_MON_BRIGHTNESS_DOWN);

@@ -43,8 +43,9 @@ G_BEGIN_DECLS
 
 #define 	LID_SWITCH_ON_AC_CFG        "/xfce4-power-manager/lid-action-on-ac"
 #define 	LID_SWITCH_ON_BATTERY_CFG   "/xfce4-power-manager/lid-action-on-battery"
-#define 	SLEEP_SWITCH_CFG            "/xfce4-power-manager/sleep-switch-action"
 #define 	POWER_SWITCH_CFG            "/xfce4-power-manager/power-switch-action"
+#define         HIBERNATE_SWITCH_CFG        "/xfce4-power-manager/hibernate-switch-action"
+#define 	SLEEP_SWITCH_CFG            "/xfce4-power-manager/sleep-switch-action"
 
 #define 	GENERAL_NOTIFICATION_CFG    "/xfce4-power-manager/general-notification"
 

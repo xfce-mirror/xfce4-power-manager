@@ -51,7 +51,8 @@ typedef enum
     LID_KEY   		= (1 << 0),
     BRIGHTNESS_KEY	= (1 << 1),
     SLEEP_KEY 		= (1 << 2),
-    POWER_KEY 		= (1 << 3)
+    HIBERNATE_KEY	= (1 << 3),
+    POWER_KEY 		= (1 << 4)
     
 } XfpmKeys;
 

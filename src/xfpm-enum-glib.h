@@ -32,7 +32,8 @@ typedef enum
     XFPM_DO_NOTHING,
     XFPM_DO_SUSPEND,
     XFPM_DO_HIBERNATE,
-    XFPM_DO_SHUTDOWN
+    XFPM_DO_SHUTDOWN,
+    XFPM_ASK
     
 } XfpmShutdownRequest;
 
@@ -51,6 +52,7 @@ typedef enum
 typedef enum
 {
     BUTTON_POWER_OFF,
+    BUTTON_HIBERNATE,
     BUTTON_SLEEP,
     BUTTON_MON_BRIGHTNESS_UP,
     BUTTON_MON_BRIGHTNESS_DOWN,

@@ -52,6 +52,7 @@ struct XfpmXfconfPrivate
     XfconfChannel 	*channel;
     
     XfpmShutdownRequest  power_button;
+    XfpmShutdownRequest  hibernate_button;
     XfpmShutdownRequest  sleep_button;
     XfpmShutdownRequest  lid_button_ac;
     XfpmShutdownRequest  lid_button_battery;
@@ -131,6 +132,18 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 	}
 	else
 	    conf->priv->power_button = xfpm_shutdown_string_to_int (str);
+    }
+    else if ( xfpm_strequal (property, HIBERNATE_SWITCH_CFG ) )
+    {
+	str = g_value_get_string (value);
+	val = xfpm_shutdown_string_to_int (str);
+	if ( G_UNLIKELY (val == -1) )
+	{
+	    g_warning ("Invalid value %s fpr property %s, using default\n", str, HIBERNATE_SWITCH_CFG);
+	    conf->priv->hibernate_button = XFPM_DO_NOTHING;
+	}
+	else
+	    conf->priv->hibernate_button = xfpm_shutdown_string_to_int (str);
     }
     else if ( xfpm_strequal (property, LID_SWITCH_ON_AC_CFG) )
     {
@@ -291,6 +304,19 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
 	xfconf_channel_set_string (conf->priv->channel, POWER_SWITCH_CFG, "Nothing");
     }
     else conf->priv->power_button = val;
+    
+    g_free (str);
+    
+    str = xfconf_channel_get_string (conf->priv->channel, HIBERNATE_SWITCH_CFG, "Nothing");
+    val = xfpm_shutdown_string_to_int (str);
+    
+    if ( G_UNLIKELY (val == -1 ) )
+    {
+	g_warning ("Invalid value %s for property %s, using default\n", str, HIBERNATE_SWITCH_CFG);
+	conf->priv->hibernate_button = XFPM_DO_NOTHING;
+	xfconf_channel_set_string (conf->priv->channel, HIBERNATE_SWITCH_CFG, "Nothing");
+    }
+    else conf->priv->hibernate_button = val;
     
     g_free (str);
     
@@ -536,6 +562,8 @@ guint8 xfpm_xfconf_get_property_enum (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->show_icon;
     else if ( xfpm_strequal (property, POWER_SWITCH_CFG) )
 	return conf->priv->power_button;
+    else if ( xfpm_strequal (property, HIBERNATE_SWITCH_CFG ) )
+	return conf->priv->hibernate_button;
     
     g_warn_if_reached ();
 

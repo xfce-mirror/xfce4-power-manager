@@ -98,6 +98,19 @@ fi
 AC_SUBST([DPMS_LIBS])
 
 #=======================================================#
+#      Check for XF86_XK_Suspend && Hibernate           #
+#=======================================================#
+
+AC_CHECK_DECL(XF86XK_Suspend,have_XF86XK_Suspend=1,have_XF86XK_Suspend=0,[#include <X11/XF86keysym.h>])
+if test "x${ac_cv_have_decl_XF86XK_Suspend}" != "xno"; then
+  AC_DEFINE(HAVE_XF86XK_SUSPEND, 1, [Define if XF86XK_Suspend is available])
+fi
+AC_CHECK_DECL(XF86XK_Hibernate,have_XF86XK_Hibernate=1,have_XF86XK_Hibernate=0,[#include <X11/XF86keysym.h>])
+if test "x${ac_cv_have_decl_XF86XK_Hibernate}" != "xno"; then
+  AC_DEFINE(HAVE_XF86XK_HIBERNATE, 1, [Define if XF86XK_Hibernate is available])
+fi
+
+#=======================================================#
 #                 Panel plugins ?                       #
 #=======================================================#
 AC_ARG_ENABLE([panel_plugins],

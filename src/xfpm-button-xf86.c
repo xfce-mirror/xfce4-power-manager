@@ -185,6 +185,16 @@ xfpm_button_xf86_setup (XfpmButtonXf86 *button)
     if ( xfpm_button_xf86_xevent_key (button, XF86XK_PowerOff, BUTTON_POWER_OFF) )
 	button->priv->mapped_buttons |= POWER_KEY;
     
+#ifdef HAVE_XF86XK_HIBERNATE
+    if ( xfpm_button_xf86_xevent_key (button, XF86XK_Hibernate, BUTTON_HIBERNATE) )
+	button->priv->mapped_buttons |= HIBERNATE_KEY;
+#endif 
+
+#ifdef HAVE_XF86XK_SUSPEND
+    if ( xfpm_button_xf86_xevent_key (button, XF86XK_Suspend, BUTTON_SLEEP) )
+	button->priv->mapped_buttons |= SLEEP_KEY;
+#endif 
+
     if ( xfpm_button_xf86_xevent_key (button, XF86XK_Sleep, BUTTON_SLEEP) )
 	button->priv->mapped_buttons |= SLEEP_KEY;
 	

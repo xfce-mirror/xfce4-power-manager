@@ -29,6 +29,8 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include <dbus/dbus-glib.h>
+
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 
@@ -173,4 +175,44 @@ void xfpm_session_quit (XfpmSession *session)
     g_return_if_fail (XFPM_IS_SESSION (session));
     
     client_session_set_restart_style (session->priv->client, SESSION_RESTART_IF_RUNNING);
+}
+
+// Currently we just spawn xfce4-session-logout, FIXME: change this
+void xfpm_session_ask_shutdown (XfpmSession *session)
+{
+    DBusGConnection *bus;
+    DBusGProxy *proxy;
+    GError *error = NULL;
+    gboolean allow_save = TRUE;
+    gint ask = 0;
+    
+    bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+    
+    proxy = dbus_g_proxy_new_for_name (bus,
+				       "org.xfce.SessionManager",
+                                       "/org/xfce/SessionManager",
+                                       "org.xfce.Session.Manager");
+				       
+    if ( !proxy )
+    {
+	g_critical ("Unable to create proxy for xfce session manager");
+	goto out;
+    }
+	
+    dbus_g_proxy_call (proxy, "Shutdown", &error,
+		       G_TYPE_UINT, ask,
+		       G_TYPE_BOOLEAN, allow_save,
+		       G_TYPE_INVALID,
+		       G_TYPE_INVALID);
+		       
+    if ( error )
+    {
+	g_warning ("%s", error->message);
+	g_error_free (error);
+    }
+    
+    g_object_unref (proxy);
+out:
+    dbus_g_connection_unref (bus);
+
 }

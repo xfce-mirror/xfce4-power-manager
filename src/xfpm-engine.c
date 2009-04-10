@@ -218,7 +218,7 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
 	return;
     }
     
-    if ( type == BUTTON_POWER_OFF || type == BUTTON_SLEEP )
+    if ( type == BUTTON_POWER_OFF || type == BUTTON_SLEEP || type == BUTTON_HIBERNATE )
 	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf, 
 					          type == BUTTON_POWER_OFF ? POWER_SWITCH_CFG :
 					          SLEEP_SWITCH_CFG );
@@ -228,7 +228,10 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
 					          LID_SWITCH_ON_BATTERY_CFG :
 					          LID_SWITCH_ON_AC_CFG);
 	
-    xfpm_engine_shutdown_request (engine, shutdown, FALSE);
+    if ( shutdown == XFPM_ASK )
+	xfpm_shutdown_ask (engine->priv->shutdown);
+    else
+	xfpm_engine_shutdown_request (engine, shutdown, FALSE);
 }
 
 static void

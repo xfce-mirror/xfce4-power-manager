@@ -77,6 +77,8 @@ const gchar    *xfpm_int_to_shutdown_string (gint val)
 	return "Hibernate";
     else if ( val == 3)
 	return "Shutdown";
+    else if ( val == 4)
+	return "Ask";
     
     return "Invalid";
 }
@@ -89,8 +91,10 @@ gint xfpm_shutdown_string_to_int (const gchar *string)
 	return 1;
     else if  (xfpm_strequal("Hibernate", string) )
 	return 2;
-    else if (xfpm_strequal("Shutdown", string) )
+    else if (xfpm_strequal ("Shutdown", string) )
 	return 3;
+    else if (xfpm_strequal ("Ask", string) )
+	return 4;
 	
     return -1; /* error here */
 }

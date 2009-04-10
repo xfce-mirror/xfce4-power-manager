@@ -40,6 +40,7 @@
 
 #include "libxfpm/xfpm-string.h"
 #include "xfpm-shutdown.h"
+#include "xfpm-session.h"
 #include "xfpm-errors.h"
 
 #define DUPLICATE_SHUTDOWN_REQUEST 8.0f
@@ -61,6 +62,7 @@ struct XfpmShutdownPrivate
     DBusGConnection *bus;
     HalMonitor      *monitor;
 
+    XfpmSession     *session;
     gboolean         connected;
     gboolean         can_suspend;
     gboolean         can_hibernate;
@@ -200,6 +202,8 @@ xfpm_shutdown_init (XfpmShutdown *shutdown)
     
     shutdown->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
     
+    shutdown->priv->session = xfpm_session_new ();
+    
     if ( error )
     {
 	g_critical ("Unable to get system bus %s.", error->message);
@@ -252,6 +256,8 @@ xfpm_shutdown_finalize(GObject *object)
 
     if ( shutdown->priv->monitor )
 	g_object_unref (shutdown->priv->monitor);
+	
+    g_object_unref (shutdown->priv->session);
 	
     G_OBJECT_CLASS(xfpm_shutdown_parent_class)->finalize(object);
 }
@@ -457,6 +463,13 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
 	g_error_free (error_internal);
     }
     g_signal_emit (G_OBJECT (shutdown), signals [WAKING_UP], 0);
+}
+
+void xfpm_shutdown_ask (XfpmShutdown *shutdown)
+{
+    g_return_if_fail (XFPM_IS_SHUTDOWN (shutdown));
+    
+    xfpm_session_ask_shutdown (shutdown->priv->session);
 }
 
 void xfpm_shutdown_reload (XfpmShutdown *shutdown)

@@ -68,7 +68,7 @@ G_DEFINE_TYPE (XfpmButton, xfpm_button, G_TYPE_OBJECT)
 static void
 xfpm_button_xf86_emit_signal (XfpmButton *button, XfpmButtonKey key)
 {
-    if ( key == BUTTON_LID_CLOSED || key == BUTTON_POWER_OFF || key == BUTTON_SLEEP )
+    if ( key == BUTTON_LID_CLOSED || key == BUTTON_POWER_OFF || key == BUTTON_SLEEP || key == BUTTON_HIBERNATE )
     {
 	if ( g_timer_elapsed (button->priv->timer, NULL) > SLEEP_KEY_TIMEOUT )
 	{
@@ -122,7 +122,6 @@ static void
 xfpm_button_init (XfpmButton *button)
 {
     guint8 xf86_mapped;
-    guint8 hal_keys = 0;
     gboolean only_lid = FALSE;
     
     button->priv = XFPM_BUTTON_GET_PRIVATE (button);
@@ -134,12 +133,11 @@ xfpm_button_init (XfpmButton *button)
 
     button->priv->hal = xfpm_button_hal_new ();
     
-    if ( xf86_mapped & SLEEP_KEY && xf86_mapped & POWER_KEY && xf86_mapped & BRIGHTNESS_KEY )
+    if ( xf86_mapped & SLEEP_KEY && xf86_mapped & POWER_KEY && 
+	 xf86_mapped & BRIGHTNESS_KEY && xf86_mapped & HIBERNATE_KEY )
 	only_lid = TRUE;
-	
-    hal_keys = ~xf86_mapped;
-    
-    xfpm_button_hal_get_keys (button->priv->hal, only_lid, hal_keys);
+
+    xfpm_button_hal_get_keys (button->priv->hal, only_lid, xf86_mapped);
     
     g_signal_connect (button->priv->xf86, "xf86-button-pressed",
 		      G_CALLBACK (xfpm_button_xf86_button_pressed_cb), button);

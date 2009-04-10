@@ -141,7 +141,6 @@ xfpm_manager_release_names (XfpmManager *manager)
 
     xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 			    "org.freedesktop.PowerManagement");
-				  
 }
 
 static gboolean
