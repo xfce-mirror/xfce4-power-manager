@@ -18,6 +18,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+/*
+ * Based on code from gpm-button (gnome power manager)
+ * Copyright (C) 2006-2007 Richard Hughes <richard@hughsie.com>
+ * 
+ */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -46,11 +52,13 @@ struct HalDevicePrivate
     gchar           *udi;
     
     gboolean         watch_added;
+    gboolean         watch_condition_added;
 };
 
 enum
 {
     DEVICE_CHANGED,
+    DEVICE_CONDITION,
     LAST_SIGNAL
 };
 
@@ -63,7 +71,6 @@ hal_device_class_init (HalDeviceClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     
-    
     signals[DEVICE_CHANGED] =
 	    g_signal_new("device-changed",
 			 HAL_TYPE_DEVICE,
@@ -74,6 +81,16 @@ hal_device_class_init (HalDeviceClass *klass)
 			 G_TYPE_NONE, 4, 
 			 G_TYPE_STRING, G_TYPE_STRING,
 			 G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
+			 
+    signals[DEVICE_CONDITION] =
+	    g_signal_new("device-condition",
+			 HAL_TYPE_DEVICE,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(HalDeviceClass, device_condition),
+			 NULL, NULL,
+			 _hal_marshal_VOID__STRING_STRING,
+			 G_TYPE_NONE, 2, 
+			 G_TYPE_STRING, G_TYPE_STRING);
 			 
     object_class->finalize = hal_device_finalize;
 
@@ -141,6 +158,33 @@ hal_device_add_watch (HalDevice *device)
 }
 
 static void
+hal_device_condition_cb (DBusGProxy  *proxy,
+			 const gchar *condition,
+			 const gchar *details,
+			 HalDevice  *device)
+{
+    g_signal_emit (device, signals [DEVICE_CONDITION], 0, condition, details);
+}
+
+static void
+hal_device_add_watch_condition (HalDevice *device)
+{
+    g_return_if_fail ( DBUS_IS_G_PROXY (device->priv->proxy) );
+    
+    dbus_g_object_register_marshaller (_hal_marshal_VOID__STRING_STRING,
+				       G_TYPE_NONE, G_TYPE_STRING, G_TYPE_STRING,
+				       G_TYPE_INVALID);
+
+    dbus_g_proxy_add_signal (device->priv->proxy, "Condition",
+			     G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
+			     
+    dbus_g_proxy_connect_signal (device->priv->proxy, "Condition",
+				     G_CALLBACK (hal_device_condition_cb), device, NULL);
+				     
+    device->priv->watch_condition_added = TRUE;
+}
+
+static void
 hal_device_init (HalDevice *device)
 {
     device->priv = HAL_DEVICE_GET_PRIVATE(device);
@@ -148,6 +192,7 @@ hal_device_init (HalDevice *device)
     device->priv->proxy  	= NULL;
     device->priv->udi           = NULL;
     device->priv->watch_added 	= FALSE;
+    device->priv->watch_condition_added = FALSE;
     
     GError *error = NULL;
     
@@ -177,6 +222,10 @@ hal_device_finalize(GObject *object)
     if ( device->priv->watch_added )
 	dbus_g_proxy_disconnect_signal (device->priv->proxy, "PropertyModified",
 					G_CALLBACK(hal_device_property_modified_cb), device);
+					
+    if ( device->priv->watch_condition_added )
+	dbus_g_proxy_disconnect_signal (device->priv->proxy, "Condition",
+					G_CALLBACK(hal_device_condition_cb), device);
 	
     if ( device->priv->proxy )
 	g_object_unref (device->priv->proxy);
@@ -227,7 +276,17 @@ hal_device_watch (HalDevice *device)
 
     return device->priv->watch_added;
 }
-									 
+
+gboolean
+hal_device_watch_condition (HalDevice *device)
+{
+    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
+    
+    hal_device_add_watch_condition (device);
+
+    return device->priv->watch_condition_added;
+}
+    
 gboolean hal_device_get_property_bool (HalDevice *device, const gchar *property)
 {
     g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);

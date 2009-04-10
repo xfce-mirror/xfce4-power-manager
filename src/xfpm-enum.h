@@ -48,11 +48,12 @@ typedef enum
 
 typedef enum
 {
-    LID_SWITCH   = (1<<0),
-    SLEEP_SWITCH = (1<<1),
-    POWER_SWITCH = (1<<2)
+    LID_KEY   		= (1 << 0),
+    BRIGHTNESS_KEY	= (1 << 1),
+    SLEEP_KEY 		= (1 << 2),
+    POWER_KEY 		= (1 << 3)
     
-} XfpmSwitchButton;
+} XfpmKeys;
 
 typedef enum
 {
@@ -63,5 +64,6 @@ typedef enum
     
 } XfpmCpuGovernor;
 
+G_END_DECLS
 
 #endif /*__XFPM_ENUM_H */

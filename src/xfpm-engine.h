@@ -55,9 +55,8 @@ void              	  xfpm_engine_get_info        	(XfpmEngine *engine,
 						         gboolean *user_privilege,
 							 gboolean *can_suspend,
 							 gboolean *can_hibernate,
-							 gboolean *has_lcd_brightness,
-							 gboolean *has_lid);
-						       
+							 gboolean *has_lcd_brightness);
+							 						       
 void                     xfpm_engine_reload_hal_objects (XfpmEngine *engine);
 G_END_DECLS
 

@@ -78,7 +78,6 @@ int main(int argc, char **argv)
     gboolean user_privilege;
     gboolean can_suspend;
     gboolean can_hibernate;
-    gboolean has_lid;
     gboolean has_lcd_brightness;
 	
     XfconfChannel *channel;
@@ -130,7 +129,7 @@ int main(int argc, char **argv)
 	
 	xfpm_manager_dbus_client_get_config (proxy, &system_laptop, &user_privilege,
 					     &can_suspend, &can_hibernate, &has_lcd_brightness,
-					     &has_lid, &error);
+					     &error);
 					     
 	if ( error )
 	{
@@ -143,7 +142,7 @@ int main(int argc, char **argv)
 	
 	dialog = xfpm_settings_dialog_new (channel, system_laptop, user_privilege,
 					   can_suspend, can_hibernate, has_lcd_brightness,
-					   has_lid);
+					   system_laptop);
 					   
 	g_signal_connect(dialog, "response", G_CALLBACK(dialog_response_cb), bus);
 	

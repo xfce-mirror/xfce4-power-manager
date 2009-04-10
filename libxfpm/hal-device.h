@@ -48,6 +48,10 @@ typedef struct
 							   gboolean is_added,
 							   gboolean is_removed);
     
+    void                  (*device_condition)             (HalDevice *device,
+							   const gchar *condition,
+							   const gchar *detail);
+    
 } HalDeviceClass;
 
 GType        	 	  hal_device_get_type             (void) G_GNUC_CONST;
@@ -60,6 +64,8 @@ void                      hal_device_set_udi              (HalDevice *device,
 const gchar 		 *hal_device_get_udi 		  (HalDevice *device);
 
 gboolean         	  hal_device_watch                (HalDevice *device);
+
+gboolean                  hal_device_watch_condition      (HalDevice *device);
 
 gboolean		  hal_device_get_property_bool    (HalDevice *device,
 							   const gchar *property);

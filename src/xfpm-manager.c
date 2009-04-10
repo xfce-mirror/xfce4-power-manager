@@ -284,8 +284,7 @@ static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
 			  OUT_user_privilege,
 			  OUT_can_suspend,
 			  OUT_can_hibernate,
-			  OUT_has_lcd_brightness,
-			  OUT_has_lid);
+			  OUT_has_lcd_brightness);
     return TRUE;
 }
 					      

@@ -42,15 +42,17 @@ typedef struct
 
 typedef struct
 {
-    GObjectClass parent_class;
+    GObjectClass 		parent_class;
      
-    void                 (*xf86_button_pressed)	(XfpmButtonXf86 *button,
-    						 XfpmXF86Button type);
+    void                 	(*xf86_button_pressed)		       (XfpmButtonXf86 *button,
+								        XfpmButtonKey type);
     
 } XfpmButtonXf86Class;
 
-GType                 xfpm_button_xf86_get_type        (void) G_GNUC_CONST;
-XfpmButtonXf86       *xfpm_button_xf86_new             (void);
+GType                 		xfpm_button_xf86_get_type               (void) G_GNUC_CONST;
+XfpmButtonXf86       	       *xfpm_button_xf86_new             	(void);
+
+guint8                		xfpm_button_xf86_get_mapped_buttons     (XfpmButtonXf86 *button) G_GNUC_PURE;
 
 G_END_DECLS
 

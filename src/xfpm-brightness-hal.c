@@ -36,7 +36,7 @@
 #include "libxfpm/xfpm-string.h"
 
 #include "xfpm-brightness-hal.h"
-#include "xfpm-button-xf86.h"
+#include "xfpm-button.h"
 #include "xfpm-enum-glib.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-idle.h"
@@ -60,7 +60,7 @@ struct XfpmBrightnessHalPrivate
     
     XfpmXfconf      *conf;
     XfpmIdle        *idle;
-    XfpmButtonXf86  *button;
+    XfpmButton      *button;
     XfpmAdapter     *adapter;
     XfpmScreenSaver *saver;
     
@@ -239,7 +239,7 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
 }
 
 static void
-xfpm_brightness_hal_button_pressed_cb (XfpmButtonXf86 *button, XfpmXF86Button type, XfpmBrightnessHal *brg)
+xfpm_brightness_hal_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBrightnessHal *brg)
 {
     if ( type == BUTTON_MON_BRIGHTNESS_UP )
     {
@@ -423,7 +423,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
     {
 	brg->priv->idle     = xfpm_idle_new ();
 	brg->priv->conf     = xfpm_xfconf_new ();
-	brg->priv->button   = xfpm_button_xf86_new ();
+	brg->priv->button   = xfpm_button_new ();
 	brg->priv->adapter  = xfpm_adapter_new ();
 	brg->priv->saver    = xfpm_screen_saver_new ();
 	
@@ -435,7 +435,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
 	g_signal_connect (brg->priv->adapter, "adapter-changed",
 			  G_CALLBACK(xfpm_brightness_hal_adapter_changed_cb), brg);
 	
-	g_signal_connect (brg->priv->button, "xf86-button-pressed",	
+	g_signal_connect (brg->priv->button, "button-pressed",	
 			  G_CALLBACK(xfpm_brightness_hal_button_pressed_cb), brg);
 	
 	g_signal_connect (brg->priv->idle, "alarm-timeout",
@@ -475,7 +475,10 @@ xfpm_brightness_hal_finalize (GObject *object)
 	g_object_unref (brg->priv->saver);
     
     if ( brg->priv->idle )
-    g_object_unref (brg->priv->idle);
+	g_object_unref (brg->priv->idle);
+	
+    if ( brg->priv->button)
+	g_object_unref (brg->priv->button);
 	
     G_OBJECT_CLASS(xfpm_brightness_hal_parent_class)->finalize(object);
 }

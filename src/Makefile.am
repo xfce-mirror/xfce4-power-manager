@@ -29,10 +29,12 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-dpms.h				\
 	xfpm-cpu.c				\
 	xfpm-cpu.h				\
+	xfpm-button.c				\
+	xfpm-button.h				\
 	xfpm-button-xf86.c			\
 	xfpm-button-xf86.h			\
-	xfpm-lid-hal.c				\
-	xfpm-lid-hal.h				\
+	xfpm-button-hal.c			\
+	xfpm-button-hal.h			\
 	xfpm-backlight.c			\
 	xfpm-backlight.h			\
 	xfpm-brightness-hal.c			\

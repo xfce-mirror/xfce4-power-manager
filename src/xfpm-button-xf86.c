@@ -30,18 +30,8 @@
 #endif
 
 #include <stdio.h>
-
-#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
 
 #include <X11/X.h>
 #include <X11/XF86keysym.h>
@@ -54,6 +44,7 @@
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-button-xf86.h"
+#include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
 
 /* Init */
@@ -72,7 +63,7 @@ struct XfpmButtonXf86Private
     GdkWindow   *window;
     GHashTable  *hash;
     
-    GTimer      *timer;
+    guint8       mapped_buttons;
 };
 
 enum
@@ -105,25 +96,12 @@ xfpm_button_xf86_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data
 	return GDK_FILTER_CONTINUE;
     }
     
-    XfpmXF86Button type = GPOINTER_TO_INT (key_hash);
+    XfpmButtonKey type = GPOINTER_TO_INT (key_hash);
     
     TRACE("Found key in hash %d", type);
     
-    if ( (type == BUTTON_POWER_OFF || type == BUTTON_SLEEP) )
-	  
-    {
-	if ( g_timer_elapsed (button->priv->timer, NULL ) < DUPLICATE_SHUTDOWN_TIMEOUT )
-	{
-	    TRACE("Button %d duplicated", type);
-	    goto out;
-	}
-	else
-	    g_timer_reset (button->priv->timer);
-    }
-	 
     g_signal_emit (G_OBJECT(button), signals[XF86_BUTTON_PRESSED], 0, type);
 
-out:
     return GDK_FILTER_REMOVE;
 }
 
@@ -165,8 +143,9 @@ xfpm_button_xf86_grab_keystring (XfpmButtonXf86 *button, guint keycode)
     return TRUE;
 }
 
+
 static gboolean
-xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmXF86Button type)
+xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmButtonKey type)
 {
     guint keycode = XKeysymToKeycode (GDK_DISPLAY(), keysym);
 
@@ -185,12 +164,12 @@ xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmXF86Butt
 #ifdef DEBUG
     gchar *content;
     GValue value = { 0, };
-    g_value_init (&value, XFPM_TYPE_XF86_BUTTON);
+    g_value_init (&value, XFPM_TYPE_BUTTON_KEY);
     g_value_set_enum (&value, type);
     content = g_strdup_value_contents (&value);
     TRACE("Grabbed key=%s, keycode=%li", content, (long int) keycode);
     g_free (content);
-#endif /* DEBUG */
+#endif /*DEBUG */
 
     g_hash_table_insert (button->priv->hash, GINT_TO_POINTER(keycode), GINT_TO_POINTER(type));
     
@@ -203,10 +182,15 @@ xfpm_button_xf86_setup (XfpmButtonXf86 *button)
     button->priv->screen = gdk_screen_get_default ();
     button->priv->window = gdk_screen_get_root_window (button->priv->screen);
     
-    xfpm_button_xf86_xevent_key (button, XF86XK_PowerOff, BUTTON_POWER_OFF);
-    xfpm_button_xf86_xevent_key (button, XF86XK_Sleep, BUTTON_SLEEP);
-    xfpm_button_xf86_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP);
-    xfpm_button_xf86_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN);
+    if ( xfpm_button_xf86_xevent_key (button, XF86XK_PowerOff, BUTTON_POWER_OFF) )
+	button->priv->mapped_buttons |= POWER_KEY;
+    
+    if ( xfpm_button_xf86_xevent_key (button, XF86XK_Sleep, BUTTON_SLEEP) )
+	button->priv->mapped_buttons |= SLEEP_KEY;
+	
+    if ( xfpm_button_xf86_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP) &&
+	 xfpm_button_xf86_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN) )
+	button->priv->mapped_buttons |= BRIGHTNESS_KEY;
 
     gdk_window_add_filter (button->priv->window, 
 			   xfpm_button_xf86_filter_x_events, button);
@@ -224,7 +208,7 @@ xfpm_button_xf86_class_init(XfpmButtonXf86Class *klass)
                       G_STRUCT_OFFSET(XfpmButtonXf86Class, xf86_button_pressed),
                       NULL, NULL,
                       g_cclosure_marshal_VOID__ENUM,
-                      G_TYPE_NONE, 1, XFPM_TYPE_XF86_BUTTON);
+                      G_TYPE_NONE, 1, XFPM_TYPE_BUTTON_KEY);
 
     object_class->finalize = xfpm_button_xf86_finalize;
 
@@ -236,9 +220,9 @@ xfpm_button_xf86_init(XfpmButtonXf86 *button)
 {
     button->priv = XFPM_BUTTON_XF86_GET_PRIVATE(button);
     
+    button->priv->mapped_buttons = 0;
     button->priv->screen = NULL;
     button->priv->window = NULL;
-    button->priv->timer  = g_timer_new ();
     
     button->priv->hash = g_hash_table_new (NULL, NULL);
     
@@ -253,7 +237,6 @@ xfpm_button_xf86_finalize(GObject *object)
     button = XFPM_BUTTON_XF86 (object);
     
     g_hash_table_destroy (button->priv->hash);
-    g_timer_destroy (button->priv->timer);
 
     G_OBJECT_CLASS(xfpm_button_xf86_parent_class)->finalize(object);
 }
@@ -271,4 +254,11 @@ xfpm_button_xf86_new(void)
 	g_object_add_weak_pointer (xfpm_button_xf86_object, &xfpm_button_xf86_object);
     }
     return XFPM_BUTTON_XF86 (xfpm_button_xf86_object);
+}
+
+guint8 xfpm_button_xf86_get_mapped_buttons (XfpmButtonXf86 *button)
+{
+    g_return_val_if_fail (XFPM_IS_BUTTON_XF86 (button), 0);
+    
+    return button->priv->mapped_buttons;
 }

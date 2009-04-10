@@ -45,8 +45,7 @@
 #include "xfpm-xfconf.h"
 #include "xfpm-cpu.h"
 #include "xfpm-network-manager.h"
-#include "xfpm-button-xf86.h"
-#include "xfpm-lid-hal.h"
+#include "xfpm-button.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-backlight.h"
 #include "xfpm-shutdown.h"
@@ -71,12 +70,11 @@ struct XfpmEnginePrivate
     XfpmNotify 		*notify;
 
     XfpmCpu 		*cpu;
-    XfpmButtonXf86 	*xf86_button;
-    XfpmLidHal 		*lid;
     XfpmBacklight 	*bk;
     XfpmAdapter 	*adapter;
     XfpmInhibit 	*inhibit;
     XfpmShutdown        *shutdown;
+    XfpmButton          *button;
 #ifdef HAVE_DPMS
     XfpmDpms *dpms;
 #endif
@@ -87,7 +85,6 @@ struct XfpmEnginePrivate
     gboolean is_laptop;
 
     gboolean has_lcd_brightness;
-    gboolean has_lid;
     
     gboolean block;
 };
@@ -209,8 +206,8 @@ xfpm_engine_shutdown_request_battery_cb (XfpmSupply * supply,
 }
 
 static void
-xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 * button,
-				    XfpmXF86Button type, XfpmEngine * engine)
+xfpm_engine_button_pressed_cb (XfpmButton *button,
+			       XfpmButtonKey type, XfpmEngine * engine)
 {
     TRACE ("Received button press event type %d", type);
     XfpmShutdownRequest shutdown;
@@ -220,33 +217,17 @@ xfpm_engine_xf86_button_pressed_cb (XfpmButtonXf86 * button,
 	TRACE("Power manager automatic sleep is currently disabled");
 	return;
     }
-  
-    if ( type != BUTTON_POWER_OFF && type != BUTTON_SLEEP )
-	return;
-
-    shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf, 
-					      type == BUTTON_POWER_OFF ? POWER_SWITCH_CFG :
-					      SLEEP_SWITCH_CFG );
-    TRACE ("Accepting shutdown request");
-    xfpm_engine_shutdown_request (engine, shutdown, FALSE);
-}
-
-static void
-xfpm_engine_lid_closed_cb (XfpmLidHal * lid, XfpmEngine * engine)
-{
-    XfpmShutdownRequest shutdown;
-
-    shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
-					      engine->priv->
-					      on_battery ?
-					      LID_SWITCH_ON_BATTERY_CFG :
-					      LID_SWITCH_ON_AC_CFG);
-
-    if ( engine->priv->inhibited )
-    {
-	TRACE("Power manager automatic sleep is currently disabled");
-	return;
-    }
+    
+    if ( type == BUTTON_POWER_OFF || type == BUTTON_SLEEP )
+	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf, 
+					          type == BUTTON_POWER_OFF ? POWER_SWITCH_CFG :
+					          SLEEP_SWITCH_CFG );
+    else
+	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
+					          engine->priv->on_battery ?
+					          LID_SWITCH_ON_BATTERY_CFG :
+					          LID_SWITCH_ON_AC_CFG);
+	
     xfpm_engine_shutdown_request (engine, shutdown, FALSE);
 }
 
@@ -300,27 +281,10 @@ xfpm_engine_load_all (XfpmEngine * engine)
 		      engine);
     xfpm_supply_monitor (engine->priv->supply);
 
-  /*
-   * Keys from XF86
-   */
-    engine->priv->xf86_button = xfpm_button_xf86_new ();
+    engine->priv->button = xfpm_button_new ();
 
-    g_signal_connect (engine->priv->xf86_button, "xf86-button-pressed",
-		      G_CALLBACK (xfpm_engine_xf86_button_pressed_cb), engine);
-
-  /*
-   * Lid from HAL 
-   */
-    if (engine->priv->is_laptop)
-    {
-	engine->priv->lid = xfpm_lid_hal_new ();
-	engine->priv->has_lid = xfpm_lid_hw_found (engine->priv->lid);
-	if (engine->priv->has_lid)
-	    g_signal_connect (engine->priv->lid, "lid-closed",
-			      G_CALLBACK (xfpm_engine_lid_closed_cb), engine);
-	else
-	    g_object_unref (engine->priv->lid);
-    }
+    g_signal_connect (engine->priv->button, "button-pressed",
+		      G_CALLBACK (xfpm_engine_button_pressed_cb), engine);
 
   /*
    * Brightness HAL
@@ -390,8 +354,7 @@ xfpm_engine_init (XfpmEngine * engine)
     engine->priv->dpms = NULL;
 #endif
     engine->priv->cpu = NULL;
-    engine->priv->xf86_button = NULL;
-    engine->priv->lid = NULL;
+    engine->priv->button = NULL;
     engine->priv->bk = NULL;
 
     engine->priv->power_management = 0;
@@ -419,6 +382,8 @@ xfpm_engine_finalize (GObject * object)
     g_object_unref (engine->priv->conf);
 
     g_object_unref (engine->priv->supply);
+    
+    g_object_unref (engine->priv->button);
 
 #ifdef HAVE_DPMS
     if (engine->priv->dpms)
@@ -427,9 +392,6 @@ xfpm_engine_finalize (GObject * object)
 
     if (engine->priv->cpu)
 	g_object_unref (engine->priv->cpu);
-
-    if (engine->priv->lid)
-	g_object_unref (engine->priv->lid);
 
     g_object_unref (engine->priv->shutdown);
 
@@ -458,7 +420,7 @@ xfpm_engine_get_info (XfpmEngine * engine,
 		      gboolean * user_privilege,
 		      gboolean * can_suspend,
 		      gboolean * can_hibernate,
-		      gboolean * has_lcd_brightness, gboolean * has_lid)
+		      gboolean * has_lcd_brightness)
 {
     g_return_if_fail (XFPM_IS_ENGINE (engine));
 
@@ -469,7 +431,6 @@ xfpm_engine_get_info (XfpmEngine * engine,
 
     *system_laptop = engine->priv->is_laptop;
     *has_lcd_brightness = engine->priv->has_lcd_brightness;
-    *has_lid = engine->priv->has_lid;
 }
 
 void xfpm_engine_reload_hal_objects (XfpmEngine *engine)
@@ -486,9 +447,7 @@ void xfpm_engine_reload_hal_objects (XfpmEngine *engine)
     {
 	xfpm_backlight_reload (engine->priv->bk);
 	xfpm_cpu_reload       (engine->priv->cpu);
-	xfpm_lid_hal_reload   (engine->priv->lid);
     }
-    
 }
 
 /*
