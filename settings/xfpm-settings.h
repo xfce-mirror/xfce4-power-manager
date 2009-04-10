@@ -22,13 +22,14 @@
 #define __XFPM_SETTINGS_H
 
 
-GtkWidget *	xfpm_settings_dialog_new 	(XfconfChannel *channel,
+void	       xfpm_settings_dialog_new 	(XfconfChannel *channel,
 						 gboolean system_laptop,
 						 gboolean user_privilege,
 					         gboolean can_suspend,
 					         gboolean can_hibernate,
 					         gboolean has_lcd_brightness,
-					         gboolean has_lid);
+					         gboolean has_lid,
+						 GdkNativeWindow id);
 
 
 

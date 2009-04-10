@@ -44,6 +44,20 @@ static void xfpm_session_finalize   (GObject *object);
 #define XFPM_SESSION_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_SESSION, XfpmSessionPrivate))
 
+/* copied from xfce4-session/shutdown.h -- ORDER MATTERS.  The numbers
+ * correspond to the 'type' parameter of org.xfce.Session.Manager.Shutdown
+ */
+typedef enum
+{
+    XFSM_SHUTDOWN_ASK = 0,
+    XFSM_SHUTDOWN_LOGOUT,
+    XFSM_SHUTDOWN_HALT,
+    XFSM_SHUTDOWN_REBOOT,
+    XFSM_SHUTDOWN_SUSPEND,
+    XFSM_SHUTDOWN_HIBERNATE,
+  
+} XfsmShutdownType;
+
 struct XfpmSessionPrivate
 {
     SessionClient *client;
@@ -145,6 +159,44 @@ xfpm_session_finalize (GObject *object)
     G_OBJECT_CLASS (xfpm_session_parent_class)->finalize (object);
 }
 
+static gboolean 
+xfpm_session_shutdown_internal (XfpmSession *session, XfsmShutdownType type, gboolean allow_save)
+{
+    DBusGConnection *bus;
+    DBusGProxy *proxy;
+    GError *error = NULL;
+    
+    bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+    
+    proxy = dbus_g_proxy_new_for_name (bus,
+				       "org.xfce.SessionManager",
+                                       "/org/xfce/SessionManager",
+                                       "org.xfce.Session.Manager");
+				       
+    if ( !proxy )
+    {
+	g_critical ("Unable to create proxy for xfce session manager");
+	dbus_g_connection_unref (bus);
+	return FALSE;
+    }
+	
+    dbus_g_proxy_call (proxy, "Shutdown", &error,
+		       G_TYPE_UINT, type,
+		       G_TYPE_BOOLEAN, allow_save,
+		       G_TYPE_INVALID,
+		       G_TYPE_INVALID);
+		       
+    if ( error )
+    {
+	g_warning ("%s", error->message);
+	g_error_free (error);
+    }
+    
+    g_object_unref (proxy);
+    dbus_g_connection_unref (bus);
+    return TRUE;
+}
+
 XfpmSession *
 xfpm_session_new (void)
 {
@@ -177,42 +229,22 @@ void xfpm_session_quit (XfpmSession *session)
     client_session_set_restart_style (session->priv->client, SESSION_RESTART_IF_RUNNING);
 }
 
-// Currently we just spawn xfce4-session-logout, FIXME: change this
-void xfpm_session_ask_shutdown (XfpmSession *session)
+gboolean xfpm_session_shutdown (XfpmSession *session)
 {
-    DBusGConnection *bus;
-    DBusGProxy *proxy;
-    GError *error = NULL;
-    gboolean allow_save = TRUE;
-    gint ask = 0;
+    g_return_val_if_fail (XFPM_IS_SESSION (session), FALSE);
     
-    bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+    gboolean allow_save   = TRUE;
+    XfsmShutdownType type = XFSM_SHUTDOWN_HALT;
     
-    proxy = dbus_g_proxy_new_for_name (bus,
-				       "org.xfce.SessionManager",
-                                       "/org/xfce/SessionManager",
-                                       "org.xfce.Session.Manager");
-				       
-    if ( !proxy )
-    {
-	g_critical ("Unable to create proxy for xfce session manager");
-	goto out;
-    }
-	
-    dbus_g_proxy_call (proxy, "Shutdown", &error,
-		       G_TYPE_UINT, ask,
-		       G_TYPE_BOOLEAN, allow_save,
-		       G_TYPE_INVALID,
-		       G_TYPE_INVALID);
-		       
-    if ( error )
-    {
-	g_warning ("%s", error->message);
-	g_error_free (error);
-    }
-    
-    g_object_unref (proxy);
-out:
-    dbus_g_connection_unref (bus);
+    return xfpm_session_shutdown_internal (session, type, allow_save);
+}
 
+gboolean xfpm_session_ask_shutdown (XfpmSession *session)
+{
+    g_return_val_if_fail (XFPM_IS_SESSION (session), FALSE);
+    
+    gboolean allow_save   = TRUE;
+    XfsmShutdownType type = XFSM_SHUTDOWN_ASK;
+    
+    return xfpm_session_shutdown_internal (session, type, allow_save);
 }

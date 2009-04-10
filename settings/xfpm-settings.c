@@ -804,6 +804,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     val = xfconf_channel_get_bool (channel, DPMS_ENABLED_CFG, TRUE);
     
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(dpms), val);
+    gtk_widget_set_tooltip_text (dpms, _("Disable Display Power Management Signaling (DPMS), "\
+				         "e.g don't attempt to switch off the display or put it in sleep mode."));
 #endif
     /*
      * Power button
@@ -1195,18 +1197,48 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     g_signal_connect(view,"cursor-changed",G_CALLBACK(_cursor_changed_cb),NULL);
 }
 
-GtkWidget *
-xfpm_settings_dialog_new (XfconfChannel *channel, 
-			  gboolean system_laptop, gboolean user_privilege,
-			  gboolean can_suspend, gboolean can_hibernate,
-			  gboolean has_lcd_brightness, gboolean has_lid)
+static void
+settings_quit (GtkWidget *widget, XfconfChannel *channel)
+{
+    g_object_unref (channel);
+    xfconf_shutdown();
+    gtk_widget_destroy (widget);
+    gtk_main_quit();
+}
+
+static void dialog_response_cb (GtkDialog *dialog, gint response, XfconfChannel *channel)
+{
+    switch(response)
+    {
+	case GTK_RESPONSE_HELP:
+	    xfpm_help();
+	    break;
+	default:
+	    settings_quit (GTK_WIDGET (dialog), channel);
+	    break;
+    }
+}
+
+static void
+delete_event_cb (GtkWidget *plug, GdkEvent *ev, XfconfChannel *channel)
+{
+    settings_quit (plug, channel);
+}
+
+void
+xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop, 
+			  gboolean user_privilege, gboolean can_suspend, 
+			  gboolean can_hibernate, gboolean has_lcd_brightness, 
+			  gboolean has_lid, GdkNativeWindow id)
 {
     TRACE("system_laptop=%s user_privilege=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s",
 	  xfpm_bool_to_string (system_laptop), xfpm_bool_to_string (user_privilege),
 	  xfpm_bool_to_string (can_suspend), xfpm_bool_to_string (can_hibernate),
 	  xfpm_bool_to_string (has_lcd_brightness), xfpm_bool_to_string (has_lid) );
 	  
+    GtkWidget *plug;
     GtkWidget *dialog;
+    GtkWidget *allbox;
     
     xml = glade_xml_new_from_buffer (xfpm_settings_glade,
 				     xfpm_settings_glade_length,
@@ -1224,5 +1256,19 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
     xfpm_settings_general   (channel, user_privilege, can_suspend, can_hibernate);
     xfpm_settings_advanced  (channel, system_laptop, user_privilege);
     
-    return dialog;
+    if ( id != 0 )
+    {
+	allbox = glade_xml_get_widget (xml, "allbox");
+	plug = gtk_plug_new (id);
+	gtk_widget_show (plug);
+	gtk_widget_reparent (allbox, plug);
+	g_signal_connect (plug, "delete-event", 
+			  G_CALLBACK (delete_event_cb), channel);
+	gdk_notify_startup_complete ();
+    }
+    else
+    {
+	g_signal_connect (dialog, "response", G_CALLBACK (dialog_response_cb), channel);
+	gtk_widget_show (dialog);
+    }
 }

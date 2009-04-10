@@ -401,7 +401,9 @@ void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
 	return;
     }
     
-    xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Shutdown", NULL);
+    if ( !xfpm_session_shutdown (shutdown->priv->session) )
+	xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Shutdown", NULL);
+
     shutdown->priv->block_shutdown = FALSE;
 }
 

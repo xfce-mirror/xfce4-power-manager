@@ -46,43 +46,46 @@
 #include "xfpm-settings.h"
 #include "xfpm-config.h"
 
-//FIXME: Unref XfconfChannel
-static void dialog_response_cb (GtkDialog *dialog, gint response, gpointer data)
-{
-    DBusGConnection *bus     = (DBusGConnection *) data;    
-    switch(response)
-    {
-	case GTK_RESPONSE_HELP:
-	    xfpm_help();
-	    break;
-	default:
-	    xfpm_dbus_release_name(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager.Config");
-	    dbus_g_connection_unref(bus);
-	    xfconf_shutdown();
-	    gtk_widget_destroy(GTK_WIDGET(dialog));
-	    gtk_main_quit();
-	    break;
-    }
-}
-
 int main(int argc, char **argv)
 {
     xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
-    //FIXME: Help argument
-    gtk_init(&argc, &argv);
-    
     GError *error = NULL;
-    DBusGConnection *bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
+    DBusGConnection *bus;
     gboolean system_laptop;
     gboolean user_privilege;
     gboolean can_suspend;
     gboolean can_hibernate;
     gboolean has_lcd_brightness;
+    
+    GdkNativeWindow socket_id = 0;
 	
     XfconfChannel *channel;
     DBusGProxy *proxy;
-    GtkWidget *dialog;
+    
+    GOptionEntry option_entries[] = 
+    {
+	{ "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
+	{ NULL, },
+    };
+    
+    if( !gtk_init_with_args (&argc, &argv, "", option_entries, PACKAGE, &error)) 
+    {
+        if( error) 
+        {
+            g_printerr("%s: %s.\n", G_LOG_DOMAIN, error->message);
+            g_printerr(_("Type '%s --help' for usage."), G_LOG_DOMAIN);
+            g_printerr("\n");
+            g_error_free(error);
+        }
+        else
+        {
+            g_error("Unable to open display.");
+	}
+        return EXIT_FAILURE;
+    }
+    
+    bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
     
     if ( error )
     {
@@ -140,15 +143,14 @@ int main(int argc, char **argv)
 	    return EXIT_FAILURE;
 	}
 	
-	dialog = xfpm_settings_dialog_new (channel, system_laptop, user_privilege,
-					   can_suspend, can_hibernate, has_lcd_brightness,
-					   system_laptop);
+	xfpm_settings_dialog_new (channel, system_laptop, user_privilege,
+				  can_suspend, can_hibernate, has_lcd_brightness,
+				  system_laptop, socket_id);
 					   
-	g_signal_connect(dialog, "response", G_CALLBACK(dialog_response_cb), bus);
-	
-	gtk_widget_show(dialog);
-	
 	gtk_main();
+	
+	xfpm_dbus_release_name(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager.Config");
+	dbus_g_connection_unref(bus);
 	
 	return EXIT_SUCCESS;
     }
