@@ -77,6 +77,14 @@ enum
     PROP_CAN_HIBERNATE,
 };
 
+enum
+{
+    WAKING_UP,
+    LAST_SIGNAL
+};
+
+static guint signals [LAST_SIGNAL] = { 0 };
+
 static gpointer xfpm_shutdown_object = NULL;
 
 G_DEFINE_TYPE(XfpmShutdown, xfpm_shutdown, G_TYPE_OBJECT)
@@ -142,6 +150,15 @@ static void
 xfpm_shutdown_class_init(XfpmShutdownClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
+
+    signals[WAKING_UP] = 
+        g_signal_new("waking-up",
+                      XFPM_TYPE_SHUTDOWN,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmShutdownClass, waking_up),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__VOID,
+                      G_TYPE_NONE, 0, G_TYPE_NONE);
 
     object_class->get_property = xfpm_shutdown_get_property;
     g_object_class_install_property(object_class,
@@ -409,6 +426,7 @@ void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
 	}
 	g_error_free (error_internal);
     }
+    g_signal_emit (G_OBJECT (shutdown), signals [WAKING_UP], 0);
 }
 
 void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
@@ -438,6 +456,7 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
 	}
 	g_error_free (error_internal);
     }
+    g_signal_emit (G_OBJECT (shutdown), signals [WAKING_UP], 0);
 }
 
 void xfpm_shutdown_reload (XfpmShutdown *shutdown)

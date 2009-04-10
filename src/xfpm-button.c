@@ -31,6 +31,7 @@
 #include "xfpm-button.h"
 #include "xfpm-button-xf86.h"
 #include "xfpm-button-hal.h"
+#include "xfpm-shutdown.h"
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
 
@@ -48,6 +49,7 @@ struct XfpmButtonPrivate
 {
     XfpmButtonXf86 *xf86;
     XfpmButtonHal  *hal;
+    XfpmShutdown   *shutdown;
     GTimer         *timer;
 };
 
@@ -93,6 +95,12 @@ xfpm_button_hal_button_pressed_cb (XfpmButtonHal *hal, XfpmButtonKey key, XfpmBu
 }
 
 static void
+xfpm_button_waking_up_cb (XfpmShutdown *shutdown, XfpmButton *button)
+{
+    g_timer_reset (button->priv->timer);
+}
+
+static void
 xfpm_button_class_init (XfpmButtonClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -120,6 +128,7 @@ xfpm_button_init (XfpmButton *button)
     button->priv = XFPM_BUTTON_GET_PRIVATE (button);
     button->priv->xf86 = xfpm_button_xf86_new ();
     button->priv->timer = g_timer_new ();
+    button->priv->shutdown = xfpm_shutdown_new ();
     
     xf86_mapped = xfpm_button_xf86_get_mapped_buttons (button->priv->xf86);
 
@@ -137,6 +146,9 @@ xfpm_button_init (XfpmButton *button)
 		      
     g_signal_connect (button->priv->hal, "hal-button-pressed",
 		      G_CALLBACK (xfpm_button_hal_button_pressed_cb), button);
+		      
+    g_signal_connect (button->priv->shutdown, "waking-up",
+		      G_CALLBACK (xfpm_button_waking_up_cb), button);
 }
 
 static void
@@ -148,6 +160,7 @@ xfpm_button_finalize (GObject *object)
     
     g_object_unref (button->priv->hal);
     g_object_unref (button->priv->xf86);
+    g_object_unref (button->priv->shutdown);
     
     g_timer_destroy (button->priv->timer);
 

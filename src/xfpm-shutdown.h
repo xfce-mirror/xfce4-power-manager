@@ -48,6 +48,8 @@ typedef struct
 typedef struct
 {
     GObjectClass 	  parent_class;
+    
+    void		  (*waking_up)			(XfpmShutdown *shutdown);
 	
 } XfpmShutdownClass;
 
