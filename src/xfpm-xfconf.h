@@ -53,6 +53,8 @@ typedef struct
     
     void                 (*tray_icon_settings_changed)          (XfpmXfconf *conf);
     
+    void                 (*inactivity_timeout_changed)		(XfpmXfconf *conf);
+    
 } XfpmXfconfClass;
 
 GType        		  xfpm_xfconf_get_type           	(void) G_GNUC_CONST;

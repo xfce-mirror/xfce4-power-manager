@@ -49,6 +49,7 @@
 #include "xfpm-inhibit.h"
 #include "xfpm-backlight.h"
 #include "xfpm-shutdown.h"
+#include "xfpm-idle.h"
 #include "xfpm-errors.h"
 #include "xfpm-config.h"
 
@@ -75,6 +76,7 @@ struct XfpmEnginePrivate
     XfpmInhibit 	*inhibit;
     XfpmShutdown        *shutdown;
     XfpmButton          *button;
+    XfpmIdle            *idle;
 #ifdef HAVE_DPMS
     XfpmDpms *dpms;
 #endif
@@ -318,6 +320,58 @@ xfpm_engine_inhibit_changed_cb (XfpmInhibit * inhibit, gboolean inhibited,
 }
 
 static void
+xfpm_engine_set_inactivity_timeouts (XfpmEngine *engine)
+{
+    guint on_ac, on_battery;
+    
+    on_ac = xfpm_xfconf_get_property_int (engine->priv->conf, ON_AC_INACTIVITY_TIMEOUT );
+    on_battery = xfpm_xfconf_get_property_int (engine->priv->conf, ON_BATTERY_INACTIVITY_TIMEOUT );
+    
+    TRACE ("timeouts on_ac=%d on_battery=%d", on_ac, on_battery);
+    
+    if ( on_ac == 30 )
+    {
+	xfpm_idle_free_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_AC );
+    }
+    else
+    {
+	xfpm_idle_set_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_AC, on_ac * 1000 * 60);
+    }
+    
+    if ( on_battery == 30 )
+    {
+	xfpm_idle_free_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY );
+    }
+    else
+    {
+	xfpm_idle_set_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY, on_battery * 1000 * 60);
+    }
+}
+
+static void
+xfpm_engine_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmEngine *engine)
+{
+    TRACE ("Alarm inactivity timeout id %d", id);
+    gboolean sleep_mode;
+    
+    sleep_mode = xfpm_xfconf_get_property_bool (engine->priv->conf, INACTIVITY_SLEEP_MODE);
+
+    if ( id == TIMEOUT_INACTIVITY_ON_AC && engine->priv->on_battery == FALSE )
+	xfpm_engine_shutdown_request (engine, sleep_mode == TRUE ? XFPM_DO_SUSPEND : XFPM_DO_HIBERNATE, FALSE);
+    else if ( id ==  TIMEOUT_INACTIVITY_ON_BATTERY && engine->priv->is_laptop && engine->priv->on_battery  )
+	xfpm_engine_shutdown_request (engine, sleep_mode == TRUE ? XFPM_DO_SUSPEND : XFPM_DO_HIBERNATE, FALSE);
+    
+}
+
+static void
+xfpm_engine_inactivity_timeout_changed_cb (XfpmXfconf *conf, XfpmEngine *engine)
+{
+    TRACE ("Timeouts alarm changed");
+    
+    xfpm_engine_set_inactivity_timeouts (engine);
+}
+
+static void
 xfpm_engine_class_init (XfpmEngineClass * klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -375,6 +429,16 @@ xfpm_engine_init (XfpmEngine * engine)
 		      G_CALLBACK (xfpm_engine_adapter_changed_cb), engine);
 
     xfpm_engine_load_all (engine);
+    
+    engine->priv->idle    = xfpm_idle_new ();
+
+    g_signal_connect (engine->priv->idle, "alarm-timeout",
+		      G_CALLBACK (xfpm_engine_alarm_timeout_cb), engine);
+		      
+    g_signal_connect (engine->priv->conf, "inactivity-timeout-changed",
+		      G_CALLBACK (xfpm_engine_inactivity_timeout_changed_cb), engine);
+		    
+    xfpm_engine_set_inactivity_timeouts (engine);
 }
 
 static void
@@ -389,6 +453,8 @@ xfpm_engine_finalize (GObject * object)
     g_object_unref (engine->priv->supply);
     
     g_object_unref (engine->priv->button);
+    
+    g_object_unref (engine->priv->idle);
 
 #ifdef HAVE_DPMS
     if (engine->priv->dpms)

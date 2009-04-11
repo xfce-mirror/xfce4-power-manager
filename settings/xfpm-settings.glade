@@ -295,6 +295,7 @@
                                 <child>
                                   <widget class="GtkVBox" id="vbox19">
                                     <property name="visible">True</property>
+                                    <property name="spacing">10</property>
                                     <child>
                                       <widget class="GtkHBox" id="hbox17">
                                         <property name="visible">True</property>
@@ -326,7 +327,34 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <placeholder/>
+                                      <widget class="GtkVBox" id="vbox1">
+                                        <property name="visible">True</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <widget class="GtkLabel" id="label5">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">Put the computer to sleep when inactive for:</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <widget class="GtkHScale" id="inactivity-on-ac">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="adjustment">30 30 360 1 10 10</property>
+                                            <property name="digits">0</property>
+                                            <property name="value_pos">bottom</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </widget>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
                                     </child>
                                   </widget>
                                 </child>
@@ -378,7 +406,7 @@
                                           <widget class="GtkHScale" id="sleep-dpms-on-ac">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
-                                            <property name="adjustment">10 0 60 1 0 0</property>
+                                            <property name="adjustment">17 0 60 1 0 0</property>
                                             <property name="show_fill_level">True</property>
                                             <property name="digits">0</property>
                                             <property name="value_pos">bottom</property>
@@ -475,12 +503,6 @@
                                       <packing>
                                         <property name="position">1</property>
                                       </packing>
-                                    </child>
-                                    <child>
-                                      <placeholder/>
-                                    </child>
-                                    <child>
-                                      <placeholder/>
                                     </child>
                                   </widget>
                                 </child>
@@ -639,6 +661,36 @@
                                             <property name="position">1</property>
                                           </packing>
                                         </child>
+                                        <child>
+                                          <widget class="GtkVBox" id="vbox4">
+                                            <property name="visible">True</property>
+                                            <property name="orientation">vertical</property>
+                                            <child>
+                                              <widget class="GtkLabel" id="label6">
+                                                <property name="visible">True</property>
+                                                <property name="label" translatable="yes">Put the computer to sleep when inactive for:</property>
+                                              </widget>
+                                              <packing>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <widget class="GtkHScale" id="inactivity-on-battery">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="adjustment">30 30 360 1 10 10</property>
+                                                <property name="digits">0</property>
+                                                <property name="value_pos">bottom</property>
+                                              </widget>
+                                              <packing>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </widget>
+                                          <packing>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
                                       </widget>
                                     </child>
                                   </widget>
@@ -787,36 +839,6 @@
                                             <property name="position">1</property>
                                           </packing>
                                         </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="hbox22">
-                                            <property name="visible">True</property>
-                                            <child>
-                                              <placeholder/>
-                                            </child>
-                                            <child>
-                                              <placeholder/>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="position">2</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkHBox" id="hbox23">
-                                            <property name="visible">True</property>
-                                            <child>
-                                              <placeholder/>
-                                            </child>
-                                            <child>
-                                              <placeholder/>
-                                            </child>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="position">3</property>
-                                          </packing>
-                                        </child>
                                       </widget>
                                     </child>
                                   </widget>
@@ -927,6 +949,62 @@
                                   </packing>
                                 </child>
                                 <child>
+                                  <widget class="GtkHBox" id="hbox7">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">10</property>
+                                    <child>
+                                      <widget class="GtkLabel" id="label7">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Set computer inactivity sleep mode:</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkVBox" id="vbox5">
+                                        <property name="visible">True</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <widget class="GtkRadioButton" id="inactivity-suspend">
+                                            <property name="label" translatable="yes">Suspend</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="active">True</property>
+                                            <property name="draw_indicator">True</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <widget class="GtkRadioButton" id="inactivity-hibernate">
+                                            <property name="label" translatable="yes">Hibernate</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="active">True</property>
+                                            <property name="draw_indicator">True</property>
+                                            <property name="group">inactivity-suspend</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </widget>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
                                   <widget class="GtkHBox" id="hbox2">
                                     <property name="visible">True</property>
                                     <property name="spacing">10</property>
@@ -955,7 +1033,7 @@
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
-                                    <property name="position">1</property>
+                                    <property name="position">2</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -968,7 +1046,7 @@
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
-                                    <property name="position">2</property>
+                                    <property name="position">3</property>
                                   </packing>
                                 </child>
                               </widget>

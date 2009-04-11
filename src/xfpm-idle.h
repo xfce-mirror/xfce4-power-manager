@@ -29,6 +29,15 @@ G_BEGIN_DECLS
 #define XFPM_IDLE(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_IDLE, XfpmIdle))
 #define XFPM_IS_IDLE(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_IDLE))
 
+enum
+{
+    TIMEOUT_INPUT = 0,
+    TIMEOUT_BRIGHTNESS_ON_AC,
+    TIMEOUT_BRIGHTNESS_ON_BATTERY,
+    TIMEOUT_INACTIVITY_ON_AC,
+    TIMEOUT_INACTIVITY_ON_BATTERY
+};
+
 typedef struct XfpmIdlePrivate XfpmIdlePrivate;
 
 typedef struct

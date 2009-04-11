@@ -104,6 +104,28 @@ set_show_tray_icon_cb (GtkWidget *w, XfconfChannel *channel)
 }
 
 static void
+inactivity_on_ac_value_changed_cb (GtkWidget *widget, XfconfChannel *channel)
+{
+    gint value    = (gint)gtk_range_get_value (GTK_RANGE (widget));
+    
+    if (!xfconf_channel_set_uint (channel, ON_AC_INACTIVITY_TIMEOUT, value))
+    {
+	g_critical ("Cannot set value for property %s\n", ON_AC_INACTIVITY_TIMEOUT);
+    }
+}
+
+static void
+inactivity_on_battery_value_changed_cb (GtkWidget *widget, XfconfChannel *channel)
+{
+    gint value    = (gint)gtk_range_get_value (GTK_RANGE (widget));
+    
+    if (!xfconf_channel_set_uint (channel, ON_BATTERY_INACTIVITY_TIMEOUT, value))
+    {
+	g_critical ("Cannot set value for property %s\n", ON_BATTERY_INACTIVITY_TIMEOUT);
+    }
+}
+
+static void
 set_sleep_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
     GtkTreeModel     *model;
@@ -194,6 +216,24 @@ notify_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     if (!xfconf_channel_set_bool (channel, GENERAL_NOTIFICATION_CFG, val) )
     {
 	g_critical ("Cannot set value for property %s\n", GENERAL_NOTIFICATION_CFG);
+    }
+}
+
+static void
+set_hibernate_inactivity (GtkWidget *w, XfconfChannel *channel)
+{
+    if (!xfconf_channel_set_string (channel, INACTIVITY_SLEEP_MODE, "hibernate") )
+    {
+	g_critical ("Cannot set value hibernate for property %s", INACTIVITY_SLEEP_MODE);
+    }
+}
+
+static void
+set_suspend_inactivity (GtkWidget *w, XfconfChannel *channel)
+{
+    if (!xfconf_channel_set_string (channel, INACTIVITY_SLEEP_MODE, "suspend") )
+    {
+	g_critical ("Cannot set value suspend for property %s", INACTIVITY_SLEEP_MODE);
     }
 }
 
@@ -326,7 +366,7 @@ off_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 static gchar *
 format_dpms_value_cb (GtkScale *scale, gdouble value)
 {
-    if ( (int)value == 0 )
+    if ( (gint)value == 0 )
     	return g_strdup (_("Never"));
     
     if ( (int)value == 1 )
@@ -336,13 +376,42 @@ format_dpms_value_cb (GtkScale *scale, gdouble value)
 }
 #endif /* HAVE_DPMS */
 
+static gchar *
+format_inactivity_value_cb (GtkScale *scale, gdouble value)
+{
+    gint h, min;
+    
+    if ( (gint)value <= 30 )
+	return g_strdup (_("Never"));
+    else if ( (gint)value < 60 )
+	return g_strdup_printf ("%d %s", (gint)value, _("Minutes"));
+    else if ( (gint)value == 60)
+	return g_strdup (_("One hour"));
+    else if ( (gint)value > 60 )
+    {
+	h = (gint)value/60;
+	min = (gint)value%60;
+	
+	if ( h <= 1 )
+	    if ( min == 0 )      return g_strdup_printf ("%s", _("One hour"));
+	    else if ( min == 1 ) return g_strdup_printf ("%s %s", _("One hour"),  _("one minute"));
+	    else                 return g_strdup_printf ("%s %d %s", _("One hour"), min, _("minutes"));
+	else 
+	    if ( min == 0 )      return g_strdup_printf ("%d %s", h, _("hours"));
+	    else if ( min == 1 ) return g_strdup_printf ("%d %s %s", h, _("hours"), _("one minute"));
+	    else            return g_strdup_printf ("%d %s %d %s", h, _("hours"), min, _("minutes"));
+    }
+	
+    return g_strdup_printf ("%d %s", (int)value, _("Minutes"));
+}
+
 /*
  * Format value of GtkRange used with Brightness
  */
 static gchar *
 format_brightness_value_cb (GtkScale *scale, gdouble value)
 {
-    if ( (int)value == 9 )
+    if ( (gint)value <= 9 )
     	return g_strdup (_("Never"));
         
     return g_strdup_printf ("%d %s", (int)value, _("Seconds"));
@@ -460,6 +529,22 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean user_privilege, gbool
     GtkListStore *list_store;
     GtkTreeIter iter;
     GtkWidget *battery_critical = glade_xml_get_widget (xml, "battery-critical-combox");
+    GtkWidget *inact;
+    
+    inact = glade_xml_get_widget (xml, "inactivity-on-battery");
+    
+    if ( !can_suspend && !can_hibernate )
+    {
+	gtk_widget_set_sensitive (inact, FALSE);
+	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not permitted"));
+    }
+    
+    val = xfconf_channel_get_uint (channel, ON_BATTERY_INACTIVITY_TIMEOUT, 30);
+    gtk_range_set_value (GTK_RANGE (inact), val);
+    g_signal_connect (inact, "value-changed",
+		      G_CALLBACK (inactivity_on_battery_value_changed_cb), channel);
+    g_signal_connect (inact, "format-value",
+		      G_CALLBACK (format_inactivity_value_cb), NULL);
     
     if (!user_privilege )
     {
@@ -642,8 +727,25 @@ static void
 xfpm_settings_on_ac (XfconfChannel *channel, gboolean user_privilege, gboolean can_suspend, 
 		     gboolean can_hibernate, gboolean has_lcd_brightness, gboolean has_lid)
 {
+    GtkWidget *inact;
     guint val;
     gboolean valid;
+    
+    inact = glade_xml_get_widget (xml, "inactivity-on-ac");
+    
+    if ( !can_suspend && !can_hibernate )
+    {
+	gtk_widget_set_sensitive (inact, FALSE);
+	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not permitted"));
+    }
+    
+    val = xfconf_channel_get_uint (channel, ON_AC_INACTIVITY_TIMEOUT, 30);
+    gtk_range_set_value (GTK_RANGE (inact), val);
+    g_signal_connect (inact, "value-changed",
+		      G_CALLBACK (inactivity_on_ac_value_changed_cb), channel);
+    g_signal_connect (inact, "format-value",
+		      G_CALLBACK (format_inactivity_value_cb), NULL);
+   
 #ifdef HAVE_DPMS
     /*
      * DPMS settings when running on AC power 
@@ -654,7 +756,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean user_privilege, gboolean c
     on_ac_dpms_sleep = glade_xml_get_widget (xml, "sleep-dpms-on-ac");
   
     val = xfconf_channel_get_uint (channel, ON_AC_DPMS_SLEEP, 10);
-    gtk_range_set_value (GTK_RANGE(on_ac_dpms_sleep), val);
+    gtk_range_set_value (GTK_RANGE (on_ac_dpms_sleep), val);
     
     g_signal_connect (on_ac_dpms_sleep, "value-changed",
 		      G_CALLBACK(sleep_on_ac_value_changed_cb), channel);
@@ -997,18 +1099,57 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
 }
 
 static void
-xfpm_settings_advanced (XfconfChannel *channel, gboolean system_latop, gboolean user_privilege )
+xfpm_settings_advanced (XfconfChannel *channel, gboolean system_latop, gboolean user_privilege,
+			gboolean can_suspend, gboolean can_hibernate)
 {
     guint val;
+    gchar *str;
+    
+    GtkWidget *inact_suspend = glade_xml_get_widget (xml, "inactivity-suspend");
+    GtkWidget *inact_hibernate = glade_xml_get_widget (xml, "inactivity-hibernate");
+    
+    if ( !can_suspend )
+    {
+	gtk_widget_set_sensitive (inact_suspend, FALSE);
+	gtk_widget_set_tooltip_text (inact_suspend, _("Suspend operation not permitted"));
+    }
+    
+    if ( !can_hibernate )
+    {
+	gtk_widget_set_sensitive (inact_hibernate, FALSE);
+	gtk_widget_set_tooltip_text (inact_hibernate, _("Hibernate operation not permitted"));
+    }
+   
+    g_signal_connect (inact_suspend, "toggled",
+		      G_CALLBACK (set_suspend_inactivity), channel);
+		      
+    g_signal_connect (inact_hibernate, "toggled",
+		      G_CALLBACK (set_hibernate_inactivity), channel);
+		      
+    str = xfconf_channel_get_string (channel, INACTIVITY_SLEEP_MODE, "suspend");
+    if ( xfpm_strequal (str, "suspend") )
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_suspend), TRUE);
+    else if ( xfpm_strequal (str, "hibernate"))
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_hibernate), TRUE);
+    else 
+    {
+	g_warning ("Invalid value %s for property %s ", str, INACTIVITY_SLEEP_MODE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_suspend), TRUE);
+    }
+   
+    g_free (str);
+    
 #ifdef HAVE_DPMS
     sleep_dpms_mode = glade_xml_get_widget (xml, "sleep-dpms-mode");
     suspend_dpms_mode = glade_xml_get_widget (xml, "suspend-dpms-mode");
+    
     g_signal_connect (sleep_dpms_mode, "toggled",
 		      G_CALLBACK(set_dpms_sleep_mode), channel);
     g_signal_connect (suspend_dpms_mode, "toggled",
 		      G_CALLBACK(set_dpms_suspend_mode), channel);
 		      
-    gchar *str = xfconf_channel_get_string (channel, DPMS_SLEEP_MODE, "sleep");
+    str = xfconf_channel_get_string (channel, DPMS_SLEEP_MODE, "sleep");
+    
     if ( xfpm_strequal (str, "sleep" ) )
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(sleep_dpms_mode), TRUE);
     else if ( xfpm_strequal (str, "suspend") )
@@ -1254,7 +1395,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     xfpm_settings_tree_view (channel, system_laptop);
     
     xfpm_settings_general   (channel, user_privilege, can_suspend, can_hibernate);
-    xfpm_settings_advanced  (channel, system_laptop, user_privilege);
+    xfpm_settings_advanced  (channel, system_laptop, user_privilege, can_suspend, can_hibernate);
     
     if ( id != 0 )
     {

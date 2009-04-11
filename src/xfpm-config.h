@@ -47,6 +47,10 @@ G_BEGIN_DECLS
 #define         HIBERNATE_SWITCH_CFG        "/xfce4-power-manager/hibernate-switch-action"
 #define 	SLEEP_SWITCH_CFG            "/xfce4-power-manager/sleep-switch-action"
 
+#define         ON_AC_INACTIVITY_TIMEOUT    "/xfce4-power-manager/inactivity-on-ac"
+#define         ON_BATTERY_INACTIVITY_TIMEOUT "/xfce4-power-manager/inactivity-on-battery"
+#define         INACTIVITY_SLEEP_MODE       "/xfce4-power-manager/inactivity-sleep-mode"
+
 #define 	GENERAL_NOTIFICATION_CFG    "/xfce4-power-manager/general-notification"
 
 #ifdef HAVE_LIBNOTIFY

@@ -77,6 +77,10 @@ struct XfpmXfconfPrivate
     XfpmShowIcon     	 show_icon;
     guint                critical_level;
     gboolean             general_notification;
+    
+    guint              	 inactivity_on_ac;
+    guint                inactivity_on_battery;
+    gboolean             sleep_inactivity; /* TRUE = suspend FALSE = hibernate*/
 };
 
 enum
@@ -85,6 +89,7 @@ enum
     POWER_SAVE_SETTINGS_CHANGED,
     BRIGHTNESS_SETTINGS_CHANGED,
     TRAY_ICON_SETTINGS_CHANGED,
+    INACTIVITY_TIMEOUT_CHANGED,
     LAST_SIGNAL
 };
 
@@ -273,6 +278,46 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 	else 
 	    conf->priv->critical_level = val;
     }
+    else if ( xfpm_strequal (property, ON_AC_INACTIVITY_TIMEOUT ) )
+    {
+	val = g_value_get_uint (value);
+	conf->priv->inactivity_on_ac = val;
+	if ( G_UNLIKELY (conf->priv->inactivity_on_ac < 30 ) )
+	{
+	    g_print ("Invalid value for property %s", ON_AC_INACTIVITY_TIMEOUT);
+	    conf->priv->inactivity_on_ac = 30;
+	}
+	g_signal_emit (G_OBJECT (conf), signals [INACTIVITY_TIMEOUT_CHANGED], 0);
+    }
+    else if ( xfpm_strequal (property, ON_BATTERY_INACTIVITY_TIMEOUT ) )
+    {
+	val = g_value_get_uint (value);
+	conf->priv->inactivity_on_battery = val;
+	if ( G_UNLIKELY (conf->priv->inactivity_on_battery < 30 ) )
+	{
+	    g_print ("Invalid value for property %s", ON_BATTERY_INACTIVITY_TIMEOUT);
+	    conf->priv->inactivity_on_battery = 30;
+	}
+	g_signal_emit (G_OBJECT (conf), signals [INACTIVITY_TIMEOUT_CHANGED], 0);
+    }
+    else if ( xfpm_strequal (property, INACTIVITY_SLEEP_MODE ) )
+    {
+	str = g_value_get_string (value);
+	
+	if ( xfpm_strequal (str, "Suspend"))
+	{
+	    conf->priv->sleep_inactivity = TRUE;
+	}
+	else if ( xfpm_strequal (str, "Hibernate") )
+	{
+	    conf->priv->sleep_inactivity = FALSE;
+	}
+	else
+	{
+	    g_critical("Invalid value %s for property %s\n", str, INACTIVITY_SLEEP_MODE);
+	    conf->priv->sleep_inactivity = TRUE;
+	}
+    }
 }
 
 static void
@@ -425,6 +470,36 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
 	g_warning ("Value %d for property %s is out of range \n", conf->priv->critical_level, CRITICAL_POWER_LEVEL);
 	conf->priv->critical_level = 10;
     }
+    
+    conf->priv->inactivity_on_ac =
+	xfconf_channel_get_uint (conf->priv->channel, ON_AC_INACTIVITY_TIMEOUT, 30);
+    if ( G_UNLIKELY (conf->priv->inactivity_on_ac < 30 ) )
+    {
+	conf->priv->inactivity_on_ac = 30;
+    }
+    
+    conf->priv->inactivity_on_battery =
+	xfconf_channel_get_uint (conf->priv->channel, ON_BATTERY_INACTIVITY_TIMEOUT, 30);
+    if ( G_UNLIKELY (conf->priv->inactivity_on_battery < 30) )
+    {
+	conf->priv->inactivity_on_battery = 30;
+    }
+    
+    str = xfconf_channel_get_string (conf->priv->channel, INACTIVITY_SLEEP_MODE, "Suspend");
+
+    if ( xfpm_strequal (str, "Suspend"))
+    {
+	conf->priv->sleep_inactivity = TRUE;
+    }
+    else if ( xfpm_strequal (str, "Hibernate") )
+    {
+	conf->priv->sleep_inactivity = FALSE;
+    }
+    else
+    {
+	g_critical("Invalid value %s for property %s\n", str, INACTIVITY_SLEEP_MODE);
+	conf->priv->sleep_inactivity = TRUE;
+    }
 }
 
 static void
@@ -467,8 +542,18 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 			 NULL, NULL,
 			 g_cclosure_marshal_VOID__VOID,
 			 G_TYPE_NONE, 0, G_TYPE_NONE);
+			 
+     signals[INACTIVITY_TIMEOUT_CHANGED] =
+	    g_signal_new("inactivity-timeout-changed",
+			 XFPM_TYPE_XFCONF,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(XfpmXfconfClass, inactivity_timeout_changed),
+			 NULL, NULL,
+			 g_cclosure_marshal_VOID__VOID,
+			 G_TYPE_NONE, 0, G_TYPE_NONE);
     
     object_class->finalize = xfpm_xfconf_finalize;
+    
     g_type_class_add_private (klass, sizeof(XfpmXfconfPrivate));
 }
 
@@ -486,7 +571,6 @@ xfpm_xfconf_init (XfpmXfconf *conf)
     }	
     else
     {
-    
 	conf->priv->channel = xfconf_channel_new ("xfce4-power-manager");
 
 	g_signal_connect (conf->priv->channel, "property-changed",
@@ -540,6 +624,8 @@ gboolean xfpm_xfconf_get_property_bool (XfpmXfconf *conf, const gchar *property)
     else if ( xfpm_strequal (property, DPMS_ENABLED_CFG) )
 	return conf->priv->dpms_enabled;
 #endif /* HAVE_DPMS */
+    else if ( xfpm_strequal (property, INACTIVITY_SLEEP_MODE) )
+	return conf->priv->sleep_inactivity;
     
     g_warn_if_reached ();
 
@@ -590,6 +676,10 @@ gint xfpm_xfconf_get_property_int (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->brightness_on_battery_timeout;
     else if ( xfpm_strequal (property, CRITICAL_POWER_LEVEL) )
 	return conf->priv->critical_level;
+    else if ( xfpm_strequal (property, ON_AC_INACTIVITY_TIMEOUT ) )
+	return conf->priv->inactivity_on_ac;
+    else if ( xfpm_strequal (property, ON_BATTERY_INACTIVITY_TIMEOUT ) )
+	return conf->priv->inactivity_on_battery;
 
     g_warn_if_reached ();
 

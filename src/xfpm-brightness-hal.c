@@ -77,13 +77,6 @@ struct XfpmBrightnessHalPrivate
 
 enum
 {
-    TIMEOUT_INPUT = 0,
-    TIMEOUT_ON_AC_ID,
-    TIMEOUT_ON_BATTERY_ID
-};
-
-enum
-{
     BRIGHTNESS_UP,
     BRIGHTNESS_DOWN,
     LAST_SIGNAL
@@ -316,7 +309,7 @@ xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHa
     if ( brg->priv->inhibited )
 	return;
     
-    id == TIMEOUT_ON_AC_ID ? xfpm_brightness_timeout_on_ac (brg) :
+    id == TIMEOUT_BRIGHTNESS_ON_AC ? xfpm_brightness_timeout_on_ac (brg) :
 			     xfpm_brightness_timeout_on_battery (brg);
 }
 
@@ -349,20 +342,20 @@ xfpm_brightness_hal_set_timeouts (XfpmBrightnessHal *brg )
     
     if ( on_ac == ALARM_DISABLED )
     {
-	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID );
+	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC );
     }
     else
     {
-	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_AC_ID, on_ac * 1000);
+	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC, on_ac * 1000);
     }
     
     if ( on_battery == ALARM_DISABLED )
     {
-	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID );
+	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY );
     }
     else
     {
-	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_ON_BATTERY_ID, on_battery * 1000);
+	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY, on_battery * 1000);
     }
     
     xfpm_idle_alarm_reset_all (brg->priv->idle);
