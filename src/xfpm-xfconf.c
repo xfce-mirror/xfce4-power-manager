@@ -583,13 +583,13 @@ gint xfpm_xfconf_get_property_int (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->dpms_off_on_ac;
     else if ( xfpm_strequal (property, ON_BATT_DPMS_OFF))
 	return conf->priv->dpms_off_on_battery;
+#endif /* HAVE_DPMS */
     else if ( xfpm_strequal (property, BRIGHTNESS_ON_AC ) )
 	return conf->priv->brightness_on_ac_timeout;
     else if ( xfpm_strequal (property, BRIGHTNESS_ON_BATTERY )) 
 	return conf->priv->brightness_on_battery_timeout;
     else if ( xfpm_strequal (property, CRITICAL_POWER_LEVEL) )
 	return conf->priv->critical_level;
-#endif /* HAVE_DPMS */
 
     g_warn_if_reached ();
 

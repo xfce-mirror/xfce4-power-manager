@@ -217,6 +217,9 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
 	return;
     }
     
+    if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
+	return;
+    
     if ( type == BUTTON_POWER_OFF || type == BUTTON_SLEEP || type == BUTTON_HIBERNATE )
 	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf, 
 					          type == BUTTON_POWER_OFF ? POWER_SWITCH_CFG :
