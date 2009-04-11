@@ -34,9 +34,9 @@ G_BEGIN_DECLS
 
 typedef enum 
 {
-    XFPM_NOTIFY_LOW,
-    XFPM_NOTIFY_CRITICAL,
-    XFPM_NOTIFY_NORMAL
+    XFPM_NOTIFY_LOW = 0,
+    XFPM_NOTIFY_NORMAL,
+    XFPM_NOTIFY_CRITICAL
     
 } XfpmNotifyUrgency;
 

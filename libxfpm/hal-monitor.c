@@ -31,7 +31,6 @@
 #include <dbus/dbus-glib.h>
 
 #include "hal-monitor.h"
-#include "xfpm-string.h"
 
 /* Init */
 static void hal_monitor_class_init (HalMonitorClass *klass);

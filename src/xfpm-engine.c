@@ -86,7 +86,6 @@ struct XfpmEnginePrivate
 
     gboolean has_lcd_brightness;
     
-    gboolean block;
 };
 
 enum

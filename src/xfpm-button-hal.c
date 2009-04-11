@@ -50,7 +50,7 @@ static void xfpm_button_hal_finalize   (GObject *object);
 struct XfpmButtonHalPrivate
 {
     GPtrArray  *array;
-    guint 	keys;
+    guint8 	keys;
 };
 
 enum
@@ -68,8 +68,6 @@ xfpm_button_hal_emit_signals (XfpmButtonHal *bt, const gchar *condition, const g
 {
     if ( !xfpm_strequal (condition, "ButtonPressed") )
 	return;
-
-    TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
 
     if ( xfpm_strequal (detail, "power")  && !bt->priv->keys & POWER_KEY )
     {
@@ -194,11 +192,11 @@ xfpm_button_hal_get_buttons (XfpmButtonHal *bt, gboolean lid_only)
     
     udi = hal_manager_find_device_by_capability (manager, "button");
     
+    g_object_unref (manager);
+    
     if ( udi == NULL || udi[0] == NULL )
 	return;
 	
-    g_object_unref (manager);
-    
     for ( i = 0; udi[i]; i++)
     {
 	xfpm_button_hal_add_button (bt, udi[i], lid_only);

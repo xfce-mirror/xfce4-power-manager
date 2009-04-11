@@ -19,7 +19,7 @@
  */
 
 /*
- * Based on code from gpm-button (gnome power manager)
+ * Based on code from gnome power manager
  * Copyright (C) 2006-2007 Richard Hughes <richard@hughsie.com>
  * 
  */

@@ -228,6 +228,12 @@ xfpm_tray_icon_exit_activated_cb (GtkWidget *w, gpointer data)
 }
 
 static void
+xfpm_tray_icon_menu_selection_done (GtkMenuShell *menu, gpointer data)
+{
+    gtk_widget_destroy (GTK_WIDGET (menu));
+}
+
+static void
 xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button, 
 			      guint activate_time, XfpmTrayIcon *tray)
 {
@@ -331,6 +337,9 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     gtk_widget_show (mi);
     g_signal_connect (mi, "activate", G_CALLBACK (xfpm_tray_icon_exit_activated_cb), NULL);
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+
+    g_signal_connect (menu, "selection-done",
+		      G_CALLBACK (xfpm_tray_icon_menu_selection_done), NULL);
 
     // Popup the menu
     gtk_menu_popup(GTK_MENU(menu), NULL, NULL,

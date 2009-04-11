@@ -30,7 +30,6 @@
 
 #include "hal-manager.h"
 #include "hal-power.h"
-#include "xfpm-string.h"
 
 /* Init */
 static void hal_power_class_init (HalPowerClass *klass);

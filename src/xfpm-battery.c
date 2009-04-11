@@ -109,6 +109,9 @@ xfpm_battery_get_message_from_battery_state (XfpmBatteryState state, gboolean ad
 	case BATTERY_FULLY_CHARGED:
 	    return _("Your battery is fully charged");
 	    break;
+	case BATTERY_NOT_FULLY_CHARGED:
+	    return _("Your battery is charging");
+	    break;
 	case BATTERY_IS_CHARGING:
 	    return  _("Battery is charging");
 	    break;
