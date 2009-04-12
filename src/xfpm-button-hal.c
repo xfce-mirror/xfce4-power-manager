@@ -70,7 +70,7 @@ xfpm_button_hal_emit_signals (XfpmButtonHal *bt, const gchar *condition, const g
     if ( !xfpm_strequal (condition, "ButtonPressed") )
 	return;
 
-    if ( xfpm_strequal (detail, "power")  && !(bt->priv->keys & POWER_KEY) )
+    if ( xfpm_strequal (detail, "power") )
     {
 	TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
 	g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_POWER_OFF);
