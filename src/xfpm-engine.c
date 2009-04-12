@@ -44,7 +44,6 @@
 #include "xfpm-adapter.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-cpu.h"
-#include "xfpm-network-manager.h"
 #include "xfpm-button.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-backlight.h"
@@ -113,7 +112,6 @@ static gboolean xfpm_engine_do_suspend (XfpmEngine * engine)
 	g_warning ("%s", error->message);
 	g_error_free (error);
     }
-    xfpm_send_message_to_network_manager ("wake");
     return FALSE;
 }
 
@@ -129,7 +127,6 @@ xfpm_engine_do_hibernate (XfpmEngine * engine)
 	g_warning ("%s", error->message);
 	g_error_free (error);
     }
-    xfpm_send_message_to_network_manager ("wake");
     return FALSE;
 }
 
@@ -170,7 +167,6 @@ xfpm_engine_shutdown_request (XfpmEngine * engine,
     else
     {
 	TRACE ("Going to do %s\n", action);
-	xfpm_send_message_to_network_manager ("sleep");
 
 	if (shutdown == XFPM_DO_SHUTDOWN)
 	{

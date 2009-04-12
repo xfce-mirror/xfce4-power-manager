@@ -204,6 +204,11 @@ xfpm_brightness_hal_setup (XfpmBrightnessHal *brg)
 static void
 xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
 {
+    gboolean enable_brightness = xfpm_xfconf_get_property_bool (brg->priv->conf, ENABLE_BRIGHTNESS_CONTROL);
+    
+    if ( !enable_brightness )
+	return;
+	
     if ( brg->priv->brightness_in_hw )
 	goto signal;
     
@@ -221,6 +226,11 @@ signal:
 static void
 xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
 {
+    gboolean enable_brightness = xfpm_xfconf_get_property_bool (brg->priv->conf, ENABLE_BRIGHTNESS_CONTROL);
+    
+    if ( !enable_brightness )
+	return;
+	
     if ( brg->priv->brightness_in_hw )
 	goto signal;
 	

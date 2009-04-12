@@ -37,7 +37,6 @@
 #include "libxfpm/xfpm-notify.h"
 
 #include "xfpm-tray-icon.h"
-#include "xfpm-network-manager.h"
 #include "xfpm-shutdown.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-xfconf.h"
@@ -122,7 +121,6 @@ xfpm_tray_icon_do_suspend (XfpmTrayIcon *tray)
 				       tray->priv->icon);
 	g_error_free (error);
     }
-    xfpm_send_message_to_network_manager ("wake");
     return FALSE;
 }
 
@@ -146,7 +144,6 @@ xfpm_tray_icon_do_hibernate (XfpmTrayIcon *tray)
 				       tray->priv->icon);
 	g_error_free (error);
     }
-    xfpm_send_message_to_network_manager ("wake");
     return FALSE;
 }
 
@@ -177,7 +174,6 @@ xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
 				    (GSourceFunc) xfpm_tray_icon_do_hibernate, 
 				    2,
 				    tray);
-	xfpm_send_message_to_network_manager ("sleep");
     }
 }
 
@@ -209,7 +205,6 @@ xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
 				    2,
 				    tray);
 				    
-	xfpm_send_message_to_network_manager ("sleep");
     }
 }
 

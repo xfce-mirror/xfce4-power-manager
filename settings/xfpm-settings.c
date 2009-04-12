@@ -1403,7 +1403,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 			  gboolean has_hibernate_button, gboolean has_power_button,
 			  GdkNativeWindow id)
 {
-    TRACE("system_laptop=%s user_privilege=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s"\
+    TRACE("system_laptop=%s user_privilege=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s "\
           "has_sleep_button=%s has_hibernate_button=%s has_power_button=%s",
 	  xfpm_bool_to_string (system_laptop), xfpm_bool_to_string (user_privilege),
 	  xfpm_bool_to_string (can_suspend), xfpm_bool_to_string (can_hibernate),

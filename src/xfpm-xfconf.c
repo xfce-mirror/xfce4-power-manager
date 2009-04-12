@@ -81,6 +81,7 @@ struct XfpmXfconfPrivate
     guint              	 inactivity_on_ac;
     guint                inactivity_on_battery;
     gboolean             sleep_inactivity; /* TRUE = suspend FALSE = hibernate*/
+    gboolean             enable_brightness;
 };
 
 enum
@@ -318,6 +319,8 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 	    conf->priv->sleep_inactivity = TRUE;
 	}
     }
+    else if ( xfpm_strequal (property, ENABLE_BRIGHTNESS_CONTROL) )
+	conf->priv->enable_brightness = g_value_get_boolean (value);
 }
 
 static void
@@ -500,6 +503,9 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
 	g_critical("Invalid value %s for property %s\n", str, INACTIVITY_SLEEP_MODE);
 	conf->priv->sleep_inactivity = TRUE;
     }
+    
+    conf->priv->enable_brightness =
+	xfconf_channel_get_bool (conf->priv->channel, ENABLE_BRIGHTNESS_CONTROL, TRUE);
 }
 
 static void
@@ -650,6 +656,8 @@ guint8 xfpm_xfconf_get_property_enum (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->power_button;
     else if ( xfpm_strequal (property, HIBERNATE_SWITCH_CFG ) )
 	return conf->priv->hibernate_button;
+    else if ( xfpm_strequal (property, ENABLE_BRIGHTNESS_CONTROL) )
+	return conf->priv->enable_brightness;
     
     g_warn_if_reached ();
 

@@ -71,6 +71,8 @@ G_BEGIN_DECLS
 #define         DPMS_SLEEP_MODE		     "/xfce4-power-manager/dpms-sleep-mode"	/* 0= sleep, 1=suspend */
 #endif
 
+#define         ENABLE_BRIGHTNESS_CONTROL    "/xfce4-power-manager/change-brightness-on-key-events"
+
 G_END_DECLS
 
 #endif /* __XFPM_CONFIG_H */

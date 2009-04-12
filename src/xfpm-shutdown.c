@@ -39,8 +39,10 @@
 #include "libxfpm/hal-monitor.h"
 
 #include "libxfpm/xfpm-string.h"
+
 #include "xfpm-shutdown.h"
 #include "xfpm-session.h"
+#include "xfpm-network-manager.h"
 #include "xfpm-errors.h"
 
 #define DUPLICATE_SHUTDOWN_REQUEST 8.0f
@@ -266,7 +268,7 @@ gboolean xfpm_shutdown_internal (DBusConnection *bus, const gchar *shutdown, GEr
 {
     DBusMessage *message, *reply = NULL;
     DBusError error;
-    gint exit_code;
+    gint exit_code = 0;
     
     message = dbus_message_new_method_call ("org.freedesktop.Hal",
 					    "/org/freedesktop/Hal/devices/computer",
@@ -278,7 +280,7 @@ gboolean xfpm_shutdown_internal (DBusConnection *bus, const gchar *shutdown, GEr
 	return FALSE;
     }
     
-    if ( !g_strcmp0("Suspend", shutdown ) )
+    if ( !g_strcmp0 ("Suspend", shutdown ) )
     {
 	gint seconds = 0;
     	dbus_message_append_args (message, DBUS_TYPE_INT32, &seconds, DBUS_TYPE_INVALID);
@@ -309,6 +311,7 @@ gboolean xfpm_shutdown_internal (DBusConnection *bus, const gchar *shutdown, GEr
 		if ( exit_code == 0) return TRUE;
 		else
 		{
+		    g_warning ("Sleep program exited with exit code %d", exit_code);
 		    g_set_error (gerror, 0, 0, "System failed to sleep");
 		    return FALSE;
 		}
@@ -385,6 +388,7 @@ gboolean                  xfpm_shutdown_add_callback    (XfpmShutdown *shutdown,
     if (shutdown->priv->block_shutdown)
 	return FALSE;
 	
+    xfpm_send_message_to_network_manager ("sleep");
     g_timeout_add_seconds (timeout, func, data);
     shutdown->priv->block_shutdown = TRUE;
     return TRUE;
@@ -401,10 +405,13 @@ void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
 	return;
     }
     
+    xfpm_send_message_to_network_manager ("sleep");
+    
     if ( !xfpm_session_shutdown (shutdown->priv->session) )
 	xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Shutdown", NULL);
 
     shutdown->priv->block_shutdown = FALSE;
+    xfpm_send_message_to_network_manager ("wake");
 }
 
 void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
@@ -421,6 +428,8 @@ void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
 	return;
     }
 
+    xfpm_send_message_to_network_manager ("sleep");
+
     xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Hibernate", &error_internal);
     shutdown->priv->block_shutdown = FALSE;
     
@@ -435,6 +444,8 @@ void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
 	g_error_free (error_internal);
     }
     g_signal_emit (G_OBJECT (shutdown), signals [WAKING_UP], 0);
+    
+    xfpm_send_message_to_network_manager ("wake");
 }
 
 void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
@@ -451,6 +462,7 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
 	return;
     }
     
+    xfpm_send_message_to_network_manager ("sleep");
     xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Suspend", &error_internal);
     shutdown->priv->block_shutdown = FALSE;
      
@@ -465,6 +477,8 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
 	g_error_free (error_internal);
     }
     g_signal_emit (G_OBJECT (shutdown), signals [WAKING_UP], 0);
+    
+    xfpm_send_message_to_network_manager ("wake");
 }
 
 void xfpm_shutdown_ask (XfpmShutdown *shutdown)
