@@ -489,22 +489,41 @@ xfpm_engine_new (void)
 }
 
 void
-xfpm_engine_get_info (XfpmEngine * engine,
-		      gboolean * system_laptop,
-		      gboolean * user_privilege,
-		      gboolean * can_suspend,
-		      gboolean * can_hibernate,
-		      gboolean * has_lcd_brightness)
+xfpm_engine_get_info (XfpmEngine * engine, GHashTable *hash)
 {
+    guint8 mapped_buttons;
+    gboolean user_privilege = FALSE;
+    gboolean can_suspend = FALSE;
+    gboolean can_hibernate = FALSE;
+    gboolean has_sleep_button = FALSE;
+    gboolean has_hibernate_button = FALSE;
+    gboolean has_power_button = FALSE;
+    
     g_return_if_fail (XFPM_IS_ENGINE (engine));
 
     g_object_get (G_OBJECT (engine->priv->shutdown),
-		  "caller-privilege", user_privilege,
-		  "can-suspend", can_suspend,
-		  "can-hibernate", can_hibernate, NULL);
-
-    *system_laptop = engine->priv->is_laptop;
-    *has_lcd_brightness = engine->priv->has_lcd_brightness;
+		  "caller-privilege", &user_privilege,
+		  "can-suspend", &can_suspend,
+		  "can-hibernate", &can_hibernate, NULL);
+		  
+   
+    mapped_buttons = xfpm_button_get_mapped (engine->priv->button);
+    
+    if ( mapped_buttons & SLEEP_KEY )
+	has_sleep_button = TRUE;
+    if ( mapped_buttons & HIBERNATE_KEY )
+	has_hibernate_button = TRUE;
+    if ( mapped_buttons & POWER_KEY )
+	has_power_button = TRUE;
+	
+    g_hash_table_insert (hash, g_strdup ("caller-privilege"), g_strdup (xfpm_bool_to_string (user_privilege)));
+    g_hash_table_insert (hash, g_strdup ("can-suspend"), g_strdup (xfpm_bool_to_string (can_suspend)));
+    g_hash_table_insert (hash, g_strdup ("can-hibernate"), g_strdup (xfpm_bool_to_string (can_hibernate)));
+    g_hash_table_insert (hash, g_strdup ("system-laptop"), g_strdup (xfpm_bool_to_string (engine->priv->is_laptop)));
+    g_hash_table_insert (hash, g_strdup ("has-brightness"), g_strdup (xfpm_bool_to_string (engine->priv->has_lcd_brightness)));
+    g_hash_table_insert (hash, g_strdup ("sleep-button"), g_strdup (xfpm_bool_to_string (has_sleep_button)));
+    g_hash_table_insert (hash, g_strdup ("power-button"), g_strdup (xfpm_bool_to_string (has_power_button)));
+    g_hash_table_insert (hash, g_strdup ("hibernate-button"), g_strdup (xfpm_bool_to_string (has_hibernate_button)));
 }
 
 void xfpm_engine_reload_hal_objects (XfpmEngine *engine)

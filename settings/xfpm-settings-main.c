@@ -52,11 +52,16 @@ int main(int argc, char **argv)
 
     GError *error = NULL;
     DBusGConnection *bus;
+    GHashTable *config_hash;
+    
     gboolean system_laptop;
     gboolean user_privilege;
     gboolean can_suspend;
     gboolean can_hibernate;
     gboolean has_lcd_brightness;
+    gboolean has_sleep_button;
+    gboolean has_hibernate_button;
+    gboolean has_power_button;
     
     GdkNativeWindow socket_id = 0;
 	
@@ -130,8 +135,8 @@ int main(int argc, char **argv)
 				           "/org/xfce/PowerManager",
 				           "org.xfce.Power.Manager");
 	
-	xfpm_manager_dbus_client_get_config (proxy, &system_laptop, &user_privilege,
-					     &can_suspend, &can_hibernate, &has_lcd_brightness,
+	xfpm_manager_dbus_client_get_config (proxy, 
+					     &config_hash,
 					     &error);
 					     
 	if ( error )
@@ -143,9 +148,19 @@ int main(int argc, char **argv)
 	    return EXIT_FAILURE;
 	}
 	
+	system_laptop = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "system-laptop"));
+	can_suspend = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-suspend"));
+	can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-hibernate"));
+	user_privilege = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "caller-privilege"));
+	has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-brightness"));
+	has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "sleep-button"));
+	has_power_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "power-button"));
+	has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "hibernate-button"));
+	
 	xfpm_settings_dialog_new (channel, system_laptop, user_privilege,
 				  can_suspend, can_hibernate, has_lcd_brightness,
-				  system_laptop, socket_id);
+				  system_laptop, has_sleep_button, has_hibernate_button, has_power_button,
+				  socket_id);
 					   
 	gtk_main();
 	

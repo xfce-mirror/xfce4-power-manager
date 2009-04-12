@@ -179,3 +179,19 @@ xfpm_button_new (void)
     }
     return XFPM_BUTTON (xfpm_button_object);
 }
+
+guint8 xfpm_button_get_mapped (XfpmButton *button)
+{
+    guint8 mapped_keys = 0;
+    guint8 hal_mapped;
+    guint8 xf86_mapped;
+    
+    g_return_val_if_fail (XFPM_IS_BUTTON (button), 0);
+    
+    hal_mapped  = xfpm_button_hal_get_mapped_keys (button->priv->hal);
+    xf86_mapped = xfpm_button_xf86_get_mapped_buttons (button->priv->xf86);
+    
+    mapped_keys = hal_mapped | xf86_mapped;
+    
+    return mapped_keys;
+}

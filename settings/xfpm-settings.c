@@ -867,7 +867,9 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean user_privilege, gboolean c
 
 static void
 xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
-			  gboolean can_suspend, gboolean can_hibernate)
+		       gboolean can_suspend, gboolean can_hibernate,
+		       gboolean has_sleep_button, gboolean has_hibernate_button,
+		       gboolean has_power_button)
 {
     gboolean valid;
     /*
@@ -914,177 +916,204 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
      */
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     GtkWidget *power = glade_xml_get_widget (xml, "power-combox");
-    if (!user_privilege )
+    GtkWidget *power_label = glade_xml_get_widget (xml, "power-label");
+    
+    if ( has_power_button )
     {
-	gtk_widget_set_sensitive (power, FALSE);
-	gtk_widget_set_tooltip_text (power, _("Hibernate and suspend operations not permitted"));
-    }
-    
-    gtk_combo_box_set_model (GTK_COMBO_BOX(power), GTK_TREE_MODEL(list_store));
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
-    
-    if ( can_suspend )
-    {
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
-    }
-    
-    if ( can_hibernate )
-    {
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
-    }
-    
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, 3, -1);
-    
-     gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, 4, -1);
-    
-    g_signal_connect (power, "changed",
-		      G_CALLBACK(set_power_changed_cb), channel);
-    
-    gchar *default_power_value = xfconf_channel_get_string (channel, POWER_SWITCH_CFG, "Nothing");
-    gint   power_val_int = xfpm_shutdown_string_to_int (default_power_value );
-    
-    if ( G_UNLIKELY (power_val_int == -1) ) 
-    {
-	g_warning ("Invalid value %s for property %s\n", default_power_value, POWER_SWITCH_CFG);
-	power_val_int = 0;
-    }
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-	      valid;
-	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-    {
-	gint list_value;
-	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-				1, &list_value, -1);
-	if ( power_val_int == list_value )
+	if (!user_privilege )
 	{
-	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power), &iter);
-	    break;
+	    gtk_widget_set_sensitive (power, FALSE);
+	    gtk_widget_set_tooltip_text (power, _("Hibernate and suspend operations not permitted"));
 	}
-    }
+	
+	gtk_combo_box_set_model (GTK_COMBO_BOX(power), GTK_TREE_MODEL(list_store));
 
-    g_free (default_power_value);
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
+	
+	if ( can_suspend )
+	{
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
+	}
+	
+	if ( can_hibernate )
+	{
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
+	}
+	
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, 3, -1);
+	
+	 gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, 4, -1);
+	
+	g_signal_connect (power, "changed",
+			  G_CALLBACK(set_power_changed_cb), channel);
+	
+	gchar *default_power_value = xfconf_channel_get_string (channel, POWER_SWITCH_CFG, "Nothing");
+	gint   power_val_int = xfpm_shutdown_string_to_int (default_power_value );
+	
+	if ( G_UNLIKELY (power_val_int == -1) ) 
+	{
+	    g_warning ("Invalid value %s for property %s\n", default_power_value, POWER_SWITCH_CFG);
+	    power_val_int = 0;
+	}
+	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+		  valid;
+		  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	{
+	    gint list_value;
+	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+				    1, &list_value, -1);
+	    if ( power_val_int == list_value )
+	    {
+		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power), &iter);
+		break;
+	    }
+	}
+
+	g_free (default_power_value);
+    }
+    else
+    {
+	gtk_widget_hide (power);
+	gtk_widget_hide (power_label);
+    }
     
     /*
      * Hibernate button
      */
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     GtkWidget *hibernate = glade_xml_get_widget (xml, "hibernate-combox");
-    if (!user_privilege )
+    GtkWidget *hibernate_label = glade_xml_get_widget (xml, "hibernate-label");
+    if (has_hibernate_button )
     {
-	gtk_widget_set_sensitive (hibernate, FALSE);
-	gtk_widget_set_tooltip_text (hibernate, _("Hibernate and suspend operations not permitted"));
-    }
-    
-    gtk_combo_box_set_model (GTK_COMBO_BOX(hibernate), GTK_TREE_MODEL(list_store));
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
-    
-    if ( can_suspend )
-    {
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
-    }
-    
-    if ( can_hibernate )
-    {
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
-    }
-    
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, 4, -1);
-    
-    g_signal_connect (hibernate, "changed",
-		      G_CALLBACK(set_hibernate_changed_cb), channel);
-    
-    gchar *default_hibernate_value = xfconf_channel_get_string (channel, HIBERNATE_SWITCH_CFG, "Nothing");
-    gint   hibernate_val_int = xfpm_shutdown_string_to_int (default_hibernate_value );
-    
-    if ( G_UNLIKELY (hibernate_val_int == -1) ) 
-    {
-	g_warning ("Invalid value %s for property %s\n", default_hibernate_value, POWER_SWITCH_CFG);
-	hibernate_val_int = 0;
-    }
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-	      valid;
-	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-    {
-	gint list_value;
-	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-				1, &list_value, -1);
-	if ( hibernate_val_int == list_value )
+	if (!user_privilege )
 	{
-	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (hibernate), &iter);
-	    break;
+	    gtk_widget_set_sensitive (hibernate, FALSE);
+	    gtk_widget_set_tooltip_text (hibernate, _("Hibernate and suspend operations not permitted"));
 	}
-    }
+	
+	gtk_combo_box_set_model (GTK_COMBO_BOX(hibernate), GTK_TREE_MODEL(list_store));
 
-    g_free (default_hibernate_value);
-    
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
+	
+	if ( can_suspend )
+	{
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
+	}
+	
+	if ( can_hibernate )
+	{
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
+	}
+	
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, 4, -1);
+	
+	g_signal_connect (hibernate, "changed",
+			  G_CALLBACK(set_hibernate_changed_cb), channel);
+	
+	gchar *default_hibernate_value = xfconf_channel_get_string (channel, HIBERNATE_SWITCH_CFG, "Nothing");
+	gint   hibernate_val_int = xfpm_shutdown_string_to_int (default_hibernate_value );
+	
+	if ( G_UNLIKELY (hibernate_val_int == -1) ) 
+	{
+	    g_warning ("Invalid value %s for property %s\n", default_hibernate_value, POWER_SWITCH_CFG);
+	    hibernate_val_int = 0;
+	}
+	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+		  valid;
+		  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	{
+	    gint list_value;
+	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+				    1, &list_value, -1);
+	    if ( hibernate_val_int == list_value )
+	    {
+		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (hibernate), &iter);
+		break;
+	    }
+	}
+
+	g_free (default_hibernate_value);
+    }
+    else
+    {
+	gtk_widget_hide ( hibernate);
+	gtk_widget_hide (hibernate_label);
+    }
 
     /*
      * Sleep button 
      */
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     GtkWidget *sleep = glade_xml_get_widget (xml, "sleep-combox");
-    if (!user_privilege )
+    GtkWidget *sleep_label = glade_xml_get_widget (xml, "sleep-label");
+    if ( has_sleep_button )
     {
-	gtk_widget_set_sensitive (sleep, FALSE);
-	gtk_widget_set_tooltip_text (sleep, _("Hibernate and suspend operations not permitted"));
-    }
-    
-    gtk_combo_box_set_model (GTK_COMBO_BOX(sleep), GTK_TREE_MODEL(list_store));
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
-    
-    if ( can_suspend )
-    {
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
-    }
-    
-    if ( can_hibernate )
-    {
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
-    }
-    
-     gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, 4, -1);
-    
-    g_signal_connect (sleep, "changed",
-		      G_CALLBACK(set_sleep_changed_cb), channel);
-    
-    gchar *default_sleep_value = xfconf_channel_get_string (channel, SLEEP_SWITCH_CFG, "Nothing");
-    gint   sleep_val_int = xfpm_shutdown_string_to_int (default_sleep_value );
-    if ( G_UNLIKELY (sleep_val_int == -1 || sleep_val_int == 3) ) 
-    {
-	g_warning ("Invalid value %s for property %s\n", default_sleep_value, SLEEP_SWITCH_CFG);
-	sleep_val_int = 0;
-    }
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-	      valid;
-	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	if (!user_privilege )
 	{
-	    gint list_value;
-	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-				1, &list_value, -1);
-	    if ( sleep_val_int == list_value )
-	    {
-		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep), &iter);
-		break;
-	    }
+	    gtk_widget_set_sensitive (sleep, FALSE);
+	    gtk_widget_set_tooltip_text (sleep, _("Hibernate and suspend operations not permitted"));
 	}
-    
-    g_free (default_sleep_value);
+	
+	gtk_combo_box_set_model (GTK_COMBO_BOX(sleep), GTK_TREE_MODEL(list_store));
+
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, 0, -1);
+	
+	if ( can_suspend )
+	{
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, 1, -1);
+	}
+	
+	if ( can_hibernate )
+	{
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, 2, -1);
+	}
+	
+	 gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, 4, -1);
+	
+	g_signal_connect (sleep, "changed",
+			  G_CALLBACK(set_sleep_changed_cb), channel);
+	
+	gchar *default_sleep_value = xfconf_channel_get_string (channel, SLEEP_SWITCH_CFG, "Nothing");
+	gint   sleep_val_int = xfpm_shutdown_string_to_int (default_sleep_value );
+	if ( G_UNLIKELY (sleep_val_int == -1 || sleep_val_int == 3) ) 
+	{
+	    g_warning ("Invalid value %s for property %s\n", default_sleep_value, SLEEP_SWITCH_CFG);
+	    sleep_val_int = 0;
+	}
+	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+		  valid;
+		  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	    {
+		gint list_value;
+		gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+				    1, &list_value, -1);
+		if ( sleep_val_int == list_value )
+		{
+		    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep), &iter);
+		    break;
+		}
+	    }
+	
+	g_free (default_sleep_value);
+    }
+    else
+    {
+	gtk_widget_hide (sleep);
+	gtk_widget_hide (sleep_label);
+    }
     /*
      * Enable/Disable Notification
      */
@@ -1370,12 +1399,17 @@ void
 xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop, 
 			  gboolean user_privilege, gboolean can_suspend, 
 			  gboolean can_hibernate, gboolean has_lcd_brightness, 
-			  gboolean has_lid, GdkNativeWindow id)
+			  gboolean has_lid, gboolean has_sleep_button, 
+			  gboolean has_hibernate_button, gboolean has_power_button,
+			  GdkNativeWindow id)
 {
-    TRACE("system_laptop=%s user_privilege=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s",
+    TRACE("system_laptop=%s user_privilege=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s"\
+          "has_sleep_button=%s has_hibernate_button=%s has_power_button=%s",
 	  xfpm_bool_to_string (system_laptop), xfpm_bool_to_string (user_privilege),
 	  xfpm_bool_to_string (can_suspend), xfpm_bool_to_string (can_hibernate),
-	  xfpm_bool_to_string (has_lcd_brightness), xfpm_bool_to_string (has_lid) );
+	  xfpm_bool_to_string (has_lcd_brightness), xfpm_bool_to_string (has_lid),
+	  xfpm_bool_to_string (has_sleep_button), xfpm_bool_to_string (has_hibernate_button),
+	  xfpm_bool_to_string (has_power_button) );
 	  
     GtkWidget *plug;
     GtkWidget *dialog;
@@ -1394,7 +1428,9 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 	
     xfpm_settings_tree_view (channel, system_laptop);
     
-    xfpm_settings_general   (channel, user_privilege, can_suspend, can_hibernate);
+    xfpm_settings_general   (channel, user_privilege, can_suspend, can_hibernate,
+			     has_sleep_button, has_hibernate_button, has_power_button );
+			     
     xfpm_settings_advanced  (channel, system_laptop, user_privilege, can_suspend, can_hibernate);
     
     if ( id != 0 )

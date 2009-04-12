@@ -55,6 +55,9 @@ XfpmButtonHal       	     *xfpm_button_hal_new             (void);
 void                          xfpm_button_hal_get_keys        (XfpmButtonHal *button,
 							       gboolean lid_only,
 							       guint8 buttons);
+							       
+guint8                        xfpm_button_hal_get_mapped_keys (XfpmButtonHal *button) G_GNUC_PURE;
+
 G_END_DECLS
 
 #endif /* __XFPM_BUTTON_HAL_H */

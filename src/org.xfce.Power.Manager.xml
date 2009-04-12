@@ -14,11 +14,7 @@
     </method>
     
     <method name="GetConfig">
-	<arg direction="out" name="system_laptop" type="b"/>
-	<arg direction="out" name="user_privilege" type="b"/>
-	<arg direction="out" name="can_suspend" type="b"/>
-	<arg direction="out" name="can_hibernate" type="b"/>
-	<arg direction="out" name="has_lcd_brightness" type="b"/>
+	<arg direction="out" name="config" type="a{ss}"/>
     </method>
     
     <method name="GetInfo">

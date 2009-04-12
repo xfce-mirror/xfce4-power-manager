@@ -120,7 +120,7 @@
                                           <widget class="GtkHBox" id="hbox16">
                                             <property name="visible">True</property>
                                             <child>
-                                              <widget class="GtkLabel" id="label25">
+                                              <widget class="GtkLabel" id="power-label">
                                                 <property name="visible">True</property>
                                                 <property name="label" translatable="yes">When power button is pressed:</property>
                                               </widget>
@@ -139,7 +139,7 @@
                                           <widget class="GtkHBox" id="hbox3">
                                             <property name="visible">True</property>
                                             <child>
-                                              <widget class="GtkLabel" id="label4">
+                                              <widget class="GtkLabel" id="hibernate-label">
                                                 <property name="visible">True</property>
                                                 <property name="label" translatable="yes">When hibernate button is pressed:</property>
                                               </widget>
@@ -179,7 +179,7 @@
                                           <widget class="GtkHBox" id="hbox5">
                                             <property name="visible">True</property>
                                             <child>
-                                              <widget class="GtkLabel" id="label3">
+                                              <widget class="GtkLabel" id="sleep-label">
                                                 <property name="visible">True</property>
                                                 <property name="label" translatable="yes">When sleep button is pressed:</property>
                                               </widget>
@@ -245,6 +245,17 @@
                                       <packing>
                                         <property name="expand">False</property>
                                         <property name="position">2</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkHBox" id="power-key-box">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                      </widget>
+                                      <packing>
+                                        <property name="position">3</property>
                                       </packing>
                                     </child>
                                   </widget>

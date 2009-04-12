@@ -51,6 +51,8 @@ typedef struct
 GType        			 xfpm_button_get_type        (void) G_GNUC_CONST;
 XfpmButton       		*xfpm_button_new             (void);
 
+guint8                           xfpm_button_get_mapped      (XfpmButton *button);
+
 G_END_DECLS
 
 #endif /* __XFPM_BUTTON_H */

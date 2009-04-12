@@ -233,14 +233,9 @@ static gboolean xfpm_manager_dbus_restart     (XfpmManager *manager,
 					       GError **error);
 					      
 static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
-					      gboolean *OUT_system_laptop,
-					      gboolean *OUT_user_privilege,
-					      gboolean *OUT_can_suspend,
-					      gboolean *OUT_can_hibernate,
-					      gboolean *OUT_has_lcd_brightness,
-					      gboolean *OUT_has_lid,
+					      GHashTable **OUT_config,
 					      GError **error);
-					      
+					      					      
 static gboolean xfpm_manager_dbus_get_info   (XfpmManager *manager,
 					      gchar **OUT_name,
 					      gchar **OUT_version,
@@ -287,21 +282,14 @@ static gboolean xfpm_manager_dbus_restart     (XfpmManager *manager,
 }
 
 static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
-					      gboolean *OUT_system_laptop,
-					      gboolean *OUT_user_privilege,
-					      gboolean *OUT_can_suspend,
-					      gboolean *OUT_can_hibernate,
-					      gboolean *OUT_has_lcd_brightness,
-					      gboolean *OUT_has_lid,
+					      GHashTable **OUT_config,
 					      GError **error)
 {
     
-    xfpm_engine_get_info (manager->priv->engine,
-			  OUT_system_laptop,
-			  OUT_user_privilege,
-			  OUT_can_suspend,
-			  OUT_can_hibernate,
-			  OUT_has_lcd_brightness);
+    *OUT_config = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+    
+    xfpm_engine_get_info (manager->priv->engine, *OUT_config);
+    
     return TRUE;
 }
 					      

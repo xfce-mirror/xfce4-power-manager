@@ -51,6 +51,7 @@ struct XfpmButtonHalPrivate
 {
     GPtrArray  *array;
     guint8 	keys;
+    guint8      mapped_keys;
 };
 
 enum
@@ -157,6 +158,7 @@ xfpm_button_hal_add_button (XfpmButtonHal *bt, const gchar *udi, gboolean lid_on
 	
 	if ( xfpm_strequal (button_type, "lid") )
 	{
+	    bt->priv->mapped_keys |= LID_KEY;
 	    g_free (button_type);
 	    goto out;
 	}
@@ -166,6 +168,23 @@ xfpm_button_hal_add_button (XfpmButtonHal *bt, const gchar *udi, gboolean lid_on
 	    g_object_unref (device);
 	    return;
 	}
+    }
+    
+    if ( hal_device_has_key (device, "button.type") )
+    {
+	button_type = hal_device_get_property_string (device, "button.type");
+	if ( button_type == NULL ) goto out;
+	
+	if ( xfpm_strequal (button_type, "lid") )
+	    bt->priv->mapped_keys |= LID_KEY;
+	else if ( xfpm_strequal (button_type, "sleep") )
+	    bt->priv->mapped_keys |= SLEEP_KEY;
+	else if ( xfpm_strequal (button_type, "hibernate") )
+	    bt->priv->mapped_keys |= HIBERNATE_KEY;
+	else if ( xfpm_strequal (button_type, "power") )
+	    bt->priv->mapped_keys |= POWER_KEY;
+	    
+	g_free (button_type);
     }
     
 out:    
@@ -229,6 +248,7 @@ xfpm_button_hal_init (XfpmButtonHal *button)
     button->priv = XFPM_BUTTON_HAL_GET_PRIVATE (button);
     button->priv->array = g_ptr_array_new ();
     button->priv->keys  = 0;
+    button->priv->mapped_keys = 0;
 }
 
 static void
@@ -272,4 +292,11 @@ void xfpm_button_hal_get_keys (XfpmButtonHal *button, gboolean lid_only, guint8 
     
     button->priv->keys = keys;
     xfpm_button_hal_get_buttons (button, lid_only);
+}
+
+guint8 xfpm_button_hal_get_mapped_keys (XfpmButtonHal *button)
+{
+    g_return_val_if_fail (XFPM_IS_BUTTON_HAL (button), 0);
+    
+    return button->priv->mapped_keys;
 }
