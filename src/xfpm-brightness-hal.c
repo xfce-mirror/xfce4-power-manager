@@ -205,30 +205,34 @@ static void
 xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
 {
     if ( brg->priv->brightness_in_hw )
-	return;
+	goto signal;
     
     if ( brg->priv->hw_level <= brg->priv->max_level -2 )
     {
 	TRACE ("Brightness key up");
 	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level + 1 );
-	brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
-	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
     }
+    
+signal:
+    brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
+    g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
 }
 
 static void
 xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
 {
     if ( brg->priv->brightness_in_hw )
-	return;
+	goto signal;
 	
     if ( brg->priv->hw_level != 0)
     {
 	TRACE("Brightness key down");
 	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level - 1 );
-	brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
-	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_DOWN], 0, brg->priv->hw_level);
     }
+    
+signal:
+    brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
+    g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_DOWN], 0, brg->priv->hw_level);
 }
 
 static void

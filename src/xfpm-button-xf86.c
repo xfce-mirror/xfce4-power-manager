@@ -46,6 +46,7 @@
 #include "xfpm-button-xf86.h"
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
+#include "xfpm-debug.h"
 
 /* Init */
 static void xfpm_button_xf86_class_init (XfpmButtonXf86Class *klass);
@@ -81,6 +82,7 @@ G_DEFINE_TYPE(XfpmButtonXf86, xfpm_button_xf86, G_TYPE_OBJECT)
 static GdkFilterReturn
 xfpm_button_xf86_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data)
 {
+    XfpmButtonKey key;
     XEvent *xev = (XEvent *) xevent;
     
     if ( xev->type != KeyPress )
@@ -96,11 +98,11 @@ xfpm_button_xf86_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data
 	return GDK_FILTER_CONTINUE;
     }
     
-    XfpmButtonKey type = GPOINTER_TO_INT (key_hash);
+    key = GPOINTER_TO_INT (key_hash);
     
-    TRACE("Found key in hash %d", type);
+    XFPM_DEBUG_ENUM ("Key press", key, XFPM_TYPE_BUTTON_KEY)
     
-    g_signal_emit (G_OBJECT(button), signals[XF86_BUTTON_PRESSED], 0, type);
+    g_signal_emit (G_OBJECT(button), signals[XF86_BUTTON_PRESSED], 0, key);
 
     return GDK_FILTER_REMOVE;
 }
@@ -145,7 +147,7 @@ xfpm_button_xf86_grab_keystring (XfpmButtonXf86 *button, guint keycode)
 
 
 static gboolean
-xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmButtonKey type)
+xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmButtonKey key)
 {
     guint keycode = XKeysymToKeycode (GDK_DISPLAY(), keysym);
 
@@ -161,17 +163,9 @@ xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmButtonKe
 	return FALSE;
     }
     
-#ifdef DEBUG
-    gchar *content;
-    GValue value = { 0, };
-    g_value_init (&value, XFPM_TYPE_BUTTON_KEY);
-    g_value_set_enum (&value, type);
-    content = g_strdup_value_contents (&value);
-    TRACE("Grabbed key=%s, keycode=%li", content, (long int) keycode);
-    g_free (content);
-#endif /*DEBUG */
-
-    g_hash_table_insert (button->priv->hash, GINT_TO_POINTER(keycode), GINT_TO_POINTER(type));
+    XFPM_DEBUG_ENUM_FULL (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key %li ", (long int) keycode)
+    
+    g_hash_table_insert (button->priv->hash, GINT_TO_POINTER(keycode), GINT_TO_POINTER(key));
     
     return TRUE;
 }

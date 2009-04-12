@@ -52,6 +52,8 @@
 #include "xfpm-idle.h"
 #include "xfpm-errors.h"
 #include "xfpm-config.h"
+#include "xfpm-enum-types.h"
+#include "xfpm-debug.h"
 
 /* Init */
 static void xfpm_engine_class_init (XfpmEngineClass * klass);
@@ -210,7 +212,6 @@ static void
 xfpm_engine_button_pressed_cb (XfpmButton *button,
 			       XfpmButtonKey type, XfpmEngine * engine)
 {
-    TRACE ("Received button press event type %d", type);
     XfpmShutdownRequest shutdown;
   
     if ( engine->priv->inhibited )
@@ -218,6 +219,8 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
 	TRACE("Power manager automatic sleep is currently disabled");
 	return;
     }
+    
+    XFPM_DEBUG_ENUM ("Received button press event", type, XFPM_TYPE_BUTTON_KEY);
     
     if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
 	return;

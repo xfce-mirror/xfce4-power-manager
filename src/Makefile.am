@@ -60,7 +60,8 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-errors.c				\
 	xfpm-errors.h				\
 	xfpm-config.h				\
-	xfpm-enum.h
+	xfpm-enum.h				\
+	xfpm-debug.h
 
 
 xfce4_power_manager_CFLAGS =			\
