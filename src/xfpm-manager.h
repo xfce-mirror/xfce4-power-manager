@@ -42,13 +42,17 @@ typedef struct
 
 typedef struct
 {
-    GObjectClass parent_class;
+    GObjectClass 	  parent_class;
     
 } XfpmManagerClass;
 
-GType        	xfpm_manager_get_type        (void) G_GNUC_CONST;
-XfpmManager    *xfpm_manager_new             (DBusGConnection *bus);
-void            xfpm_manager_start           (XfpmManager *manager);
+GType        		  xfpm_manager_get_type        (void) G_GNUC_CONST;
+
+XfpmManager    		 *xfpm_manager_new             (DBusGConnection *bus);
+
+void            	  xfpm_manager_start           (XfpmManager *manager);
+
+void                      xfpm_manager_stop            (XfpmManager *manager);
 
 G_END_DECLS
 

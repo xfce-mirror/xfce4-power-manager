@@ -57,24 +57,54 @@ show_version()
 }
 
 static void
+xfpm_quit_signal (gint sig, gpointer data)
+{
+    XfpmManager *manager = (XfpmManager *) data;
+    
+    xfpm_manager_stop (manager);
+}
+
+static void
 xfpm_start (DBusGConnection *bus)
 {
     TRACE("Starting the power manager\n");
+    GError *error = NULL;
     XfpmSession *session;
     session = xfpm_session_new ();
     
     if ( client_id != NULL )
 	xfpm_session_set_client_id (session, client_id);
     
+    XfpmManager *manager;
+    manager = xfpm_manager_new (bus);
+    
+     if ( xfce_posix_signal_handler_init (&error)) 
+     {
+        xfce_posix_signal_handler_set_handler(SIGHUP,
+                                              xfpm_quit_signal,
+                                              manager, NULL);
+
+        xfce_posix_signal_handler_set_handler(SIGINT,
+                                              xfpm_quit_signal,
+					      manager, NULL);
+
+        xfce_posix_signal_handler_set_handler(SIGTERM,
+                                              xfpm_quit_signal,
+                                              manager, NULL);
+    } 
+    else 
+    {
+        g_warning("Unable to set up POSIX signal handlers: %s", error->message);
+        g_error_free(error);
+    }
+
     if ( no_daemon == FALSE && daemon(0,0) )
     {
 	g_critical ("Could not daemonize");
     }
-    
-    XfpmManager *manager;
-    manager = xfpm_manager_new(bus);
-    xfpm_manager_start(manager);
-    gtk_main();
+ 
+    xfpm_manager_start (manager);
+    gtk_main ();
     
     g_object_unref (session);
 }

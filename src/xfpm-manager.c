@@ -221,6 +221,13 @@ out:
 	;
 }
 
+void xfpm_manager_stop (XfpmManager *manager)
+{
+    
+    g_return_if_fail (XFPM_IS_MANAGER (manager));
+    xfpm_manager_quit (manager);
+}
+
 /*
  * 
  * DBus server implementation

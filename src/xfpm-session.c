@@ -126,7 +126,7 @@ xfpm_session_init (XfpmSession *session)
     restart_command[2] = NULL;
     
     session->priv->client = client_session_new_full (NULL,
-						     SESSION_RESTART_IMMEDIATELY,
+						     SESSION_RESTART_IF_RUNNING,
 						     40,
 						     NULL,
 						     (gchar *) PACKAGE_NAME,
@@ -152,9 +152,14 @@ xfpm_session_finalize (GObject *object)
     XfpmSession *session;
 
     session = XFPM_SESSION (object);
-    
+
     if ( session->priv->client != NULL )
+    {
+	if ( session->priv->managed )
+	    logout_session (session->priv->client);
+    
 	client_session_free (session->priv->client);
+    }
 
     G_OBJECT_CLASS (xfpm_session_parent_class)->finalize (object);
 }
@@ -226,7 +231,7 @@ void xfpm_session_quit (XfpmSession *session)
 {
     g_return_if_fail (XFPM_IS_SESSION (session));
     
-    client_session_set_restart_style (session->priv->client, SESSION_RESTART_IF_RUNNING);
+    client_session_set_restart_style (session->priv->client, SESSION_RESTART_NEVER);
 }
 
 gboolean xfpm_session_shutdown (XfpmSession *session)
