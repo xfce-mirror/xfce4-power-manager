@@ -155,8 +155,6 @@ xfpm_battery_refresh_visible_icon (XfpmBattery *battery)
 static void
 xfpm_battery_refresh_icon (XfpmBattery *battery, 
 			   gboolean is_present,
-			   gboolean is_charging, 
-			   gboolean is_discharging,
 			   guint percentage
 			   )
 {
@@ -166,42 +164,41 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
 				 battery->priv->type == HAL_DEVICE_TYPE_UPS ? "gpm-ups-missing" : "gpm-primary-missing");
 	return;
     }
+    
     /* Battery full */
-    if ( !is_charging && !is_discharging )
+    if ( battery->priv->state == BATTERY_FULLY_CHARGED )
     {
 	if ( battery->priv->type == HAL_DEVICE_TYPE_PRIMARY)
-	    xfpm_tray_icon_set_icon (battery->priv->icon,
-				     "gpm-primary-charged");
+	    xfpm_tray_icon_set_icon (battery->priv->icon, battery->priv->adapter_present ? "gpm-primary-charged" : "gpm-primary-100");
 	else
 	{
 	    gchar *icon = g_strdup_printf("%s%s", 
 	    			          battery->priv->icon_prefix, 
-	    			          xfpm_battery_get_icon_index(battery->priv->type, percentage));
+	    			          xfpm_battery_get_icon_index (battery->priv->type, percentage));
 	    xfpm_tray_icon_set_icon (battery->priv->icon, icon);
 	    g_free(icon);
 	}
-	return;
     }
-    
-    if ( is_charging )
+    else if ( battery->priv->state == BATTERY_IS_CHARGING || battery->priv->state == BATTERY_NOT_FULLY_CHARGED )
     {
 	gchar *icon = g_strdup_printf("%s%s-%s",
 				      battery->priv->icon_prefix, 
-	    			      xfpm_battery_get_icon_index(battery->priv->type, percentage),
+	    			      xfpm_battery_get_icon_index (battery->priv->type, percentage),
 				      "charging");
+				      
 	xfpm_tray_icon_set_icon (battery->priv->icon, icon);
 	g_free(icon);
-	return;
     }
-    
-    if ( is_discharging )
+    else if ( battery->priv->state == BATTERY_IS_DISCHARGING || battery->priv->state == BATTERY_CHARGE_CRITICAL ||
+	      battery->priv->state == BATTERY_CHARGE_LOW )
     {
 	gchar *icon = g_strdup_printf("%s%s",
 				      battery->priv->icon_prefix, 
-	    			      xfpm_battery_get_icon_index(battery->priv->type, percentage));
+	    			      xfpm_battery_get_icon_index (battery->priv->type, percentage));
+				      
 	xfpm_tray_icon_set_icon (battery->priv->icon, icon);
 	g_free(icon);
-	return;
+	
     }
 }
 
@@ -420,7 +417,6 @@ xfpm_battery_refresh (XfpmBattery *battery)
 		  "time", &time,
 		  NULL);
     
-    xfpm_battery_refresh_icon (battery, is_present, is_charging, is_discharging, percentage);
     battery->priv->type == HAL_DEVICE_TYPE_PRIMARY ?
 			   xfpm_battery_refresh_tooltip_primary (battery, is_present, 
 								 is_charging, is_discharging, 
@@ -431,7 +427,8 @@ xfpm_battery_refresh (XfpmBattery *battery)
 								 is_charging, is_discharging, 
 								 last_full, current_charge,
 								 percentage, time);
-     xfpm_battery_refresh_visible_icon (battery);
+    xfpm_battery_refresh_icon (battery, is_present, percentage);
+    xfpm_battery_refresh_visible_icon (battery);
 }
 
 static void
