@@ -46,6 +46,7 @@
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 #include "xfpm-adapter.h"
+#include "xfpm-debug.h"
 
 /* Init */
 static void xfpm_battery_class_init (XfpmBatteryClass *klass);
@@ -158,6 +159,10 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
 			   guint percentage
 			   )
 {
+    gchar *icon;
+
+    XFPM_DEBUG_ENUM ("battery state", battery->priv->state, XFPM_TYPE_BATTERY_STATE)
+    
     if ( !is_present )
     {
 	xfpm_tray_icon_set_icon (battery->priv->icon, 
@@ -172,19 +177,38 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
 	    xfpm_tray_icon_set_icon (battery->priv->icon, battery->priv->adapter_present ? "gpm-primary-charged" : "gpm-primary-100");
 	else
 	{
-	    gchar *icon = g_strdup_printf("%s%s", 
-	    			          battery->priv->icon_prefix, 
-	    			          xfpm_battery_get_icon_index (battery->priv->type, percentage));
+	    icon = g_strdup_printf("%s%s", 
+	    		           battery->priv->icon_prefix, 
+	    			   xfpm_battery_get_icon_index (battery->priv->type, percentage));
 	    xfpm_tray_icon_set_icon (battery->priv->icon, icon);
 	    g_free(icon);
 	}
     }
-    else if ( battery->priv->state == BATTERY_IS_CHARGING || battery->priv->state == BATTERY_NOT_FULLY_CHARGED )
+    else if ( battery->priv->state == BATTERY_NOT_FULLY_CHARGED )
     {
-	gchar *icon = g_strdup_printf("%s%s-%s",
-				      battery->priv->icon_prefix, 
-	    			      xfpm_battery_get_icon_index (battery->priv->type, percentage),
-				      "charging");
+	if ( battery->priv->adapter_present )
+	{
+	    icon = g_strdup_printf("%s%s-%s",
+			      battery->priv->icon_prefix, 
+			      xfpm_battery_get_icon_index (battery->priv->type, percentage),
+			      "charging");
+	}
+	else
+	{
+	    icon = g_strdup_printf("%s%s",
+			      battery->priv->icon_prefix, 
+			      xfpm_battery_get_icon_index (battery->priv->type, percentage));
+	}
+	xfpm_tray_icon_set_icon (battery->priv->icon, icon);
+	g_free(icon);
+	
+    }
+    else if ( battery->priv->state == BATTERY_IS_CHARGING )
+    {
+	icon = g_strdup_printf("%s%s-%s",
+			      battery->priv->icon_prefix, 
+			      xfpm_battery_get_icon_index (battery->priv->type, percentage),
+			      "charging");
 				      
 	xfpm_tray_icon_set_icon (battery->priv->icon, icon);
 	g_free(icon);
@@ -192,9 +216,9 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
     else if ( battery->priv->state == BATTERY_IS_DISCHARGING || battery->priv->state == BATTERY_CHARGE_CRITICAL ||
 	      battery->priv->state == BATTERY_CHARGE_LOW )
     {
-	gchar *icon = g_strdup_printf("%s%s",
-				      battery->priv->icon_prefix, 
-	    			      xfpm_battery_get_icon_index (battery->priv->type, percentage));
+	icon = g_strdup_printf("%s%s",
+			      battery->priv->icon_prefix, 
+			      xfpm_battery_get_icon_index (battery->priv->type, percentage));
 				      
 	xfpm_tray_icon_set_icon (battery->priv->icon, icon);
 	g_free(icon);
