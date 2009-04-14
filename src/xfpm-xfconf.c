@@ -632,6 +632,8 @@ gboolean xfpm_xfconf_get_property_bool (XfpmXfconf *conf, const gchar *property)
 #endif /* HAVE_DPMS */
     else if ( xfpm_strequal (property, INACTIVITY_SLEEP_MODE) )
 	return conf->priv->sleep_inactivity;
+    else if ( xfpm_strequal (property, ENABLE_BRIGHTNESS_CONTROL) )
+	return conf->priv->enable_brightness;
     
     g_warn_if_reached ();
 
@@ -656,8 +658,6 @@ guint8 xfpm_xfconf_get_property_enum (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->power_button;
     else if ( xfpm_strequal (property, HIBERNATE_SWITCH_CFG ) )
 	return conf->priv->hibernate_button;
-    else if ( xfpm_strequal (property, ENABLE_BRIGHTNESS_CONTROL) )
-	return conf->priv->enable_brightness;
     
     g_warn_if_reached ();
 
