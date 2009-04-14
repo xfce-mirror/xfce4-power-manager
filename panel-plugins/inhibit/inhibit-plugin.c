@@ -555,14 +555,14 @@ inhibit_plugin_set_inhibit_screen_saver (inhibit_t *inhibit)
 
     if ( inhibit_plugin_inhibit_screen_saver (inhibit, 
 					      "org.freedesktop.ScreenSaver",
-					      "/org/freedesktop/ScreenSaver/Inhibit",
+					      "/org/freedesktop/ScreenSaver",
 					      "org.freedesktop.ScreenSaver") )
     {
 	inhibit->saver_inhibited = TRUE;
     }
     else if ( inhibit_plugin_inhibit_screen_saver (inhibit, 
 						   "org.gnome.ScreenSaver",
-						   "/org/gnome/ScreenSaver/Inhibit",
+						   "/org/gnome/ScreenSaver",
 					           "org.gnome.ScreenSaver") )
     {
 	

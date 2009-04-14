@@ -47,6 +47,7 @@
 #include "xfpm-button.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-backlight.h"
+#include "xfpm-screen-saver.h"
 #include "xfpm-shutdown.h"
 #include "xfpm-idle.h"
 #include "xfpm-errors.h"
@@ -78,6 +79,7 @@ struct XfpmEnginePrivate
     XfpmShutdown        *shutdown;
     XfpmButton          *button;
     XfpmIdle            *idle;
+    XfpmScreenSaver     *srv;
 #ifdef HAVE_DPMS
     XfpmDpms *dpms;
 #endif
@@ -352,6 +354,21 @@ xfpm_engine_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmEngine *engine)
 {
     TRACE ("Alarm inactivity timeout id %d", id);
     gboolean sleep_mode;
+    gboolean saver;
+    
+    if ( engine->priv->inhibited )
+    {
+	TRACE ("Power manager is currently inhibited");
+	return;
+    }
+    
+    saver = xfpm_screen_saver_get_inhibit (engine->priv->srv);
+    
+    if ( saver )
+    {
+	TRACE ("User disabled sleep on the context menu");
+	return;
+    }
     
     sleep_mode = xfpm_xfconf_get_property_bool (engine->priv->conf, INACTIVITY_SLEEP_MODE);
 
@@ -399,7 +416,7 @@ xfpm_engine_init (XfpmEngine * engine)
     engine->priv->shutdown = xfpm_shutdown_new ();
     engine->priv->adapter = xfpm_adapter_new ();
     engine->priv->notify = xfpm_notify_new ();
-
+    engine->priv->srv    = xfpm_screen_saver_new ();
     engine->priv->inhibit = xfpm_inhibit_new ();
     engine->priv->inhibited = FALSE;
 
@@ -466,6 +483,8 @@ xfpm_engine_finalize (GObject * object)
     g_object_unref (engine->priv->shutdown);
 
     g_object_unref (engine->priv->adapter);
+    
+    g_object_unref (engine->priv->srv);
 
     if (engine->priv->bk)
 	g_object_unref (engine->priv->bk);

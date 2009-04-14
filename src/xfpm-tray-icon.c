@@ -39,6 +39,7 @@
 #include "xfpm-tray-icon.h"
 #include "xfpm-shutdown.h"
 #include "xfpm-inhibit.h"
+#include "xfpm-screen-saver.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 
@@ -52,10 +53,11 @@ static void xfpm_tray_icon_finalize   (GObject *object);
 
 struct XfpmTrayIconPrivate
 {
-    XfpmShutdown  *shutdown;
-    XfpmXfconf    *conf;
-    XfpmNotify    *notify;
-    XfpmInhibit   *inhibit;
+    XfpmShutdown    *shutdown;
+    XfpmXfconf      *conf;
+    XfpmNotify      *notify;
+    XfpmInhibit     *inhibit;
+    XfpmScreenSaver *srv;
     
     GtkStatusIcon *icon;
     GQuark         icon_quark;
@@ -229,6 +231,16 @@ xfpm_tray_icon_menu_selection_done (GtkMenuShell *menu, gpointer data)
 }
 
 static void
+xfpm_tray_icon_inhibit_active_cb (GtkWidget *mi, XfpmTrayIcon *tray)
+{
+    gboolean active;
+    active = xfpm_screen_saver_get_inhibit (tray->priv->srv);
+    
+    active == FALSE ? xfpm_screen_saver_inhibit   (tray->priv->srv) :
+		      xfpm_screen_saver_uninhibit (tray->priv->srv);
+}
+
+static void
 xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button, 
 			      guint activate_time, XfpmTrayIcon *tray)
 {
@@ -238,6 +250,8 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     gboolean can_suspend = FALSE;
     gboolean can_hibernate = FALSE ;
     gboolean caller = FALSE;
+
+    gboolean saver_inhibited;
 
     g_object_get (G_OBJECT (tray->priv->shutdown),
 		  "caller-privilege", &caller,
@@ -272,6 +286,20 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
 	g_signal_connect (mi, "activate",
 			  G_CALLBACK (xfpm_tray_icon_suspend_cb), tray);
     }
+    gtk_widget_show(mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
+
+    saver_inhibited = xfpm_screen_saver_get_inhibit (tray->priv->srv);
+    mi = gtk_image_menu_item_new_with_label (saver_inhibited ? _("Clear inhibit") : _("Inhibit"));
+    
+    gtk_widget_set_tooltip_text (mi, _("Disable or enable automatic sleep, setting this will tell the power manager "\
+				       "to disable backlight sleep, for example you could active the inhibit if you are watching a movie."));
+    
+    img = gtk_image_new_from_stock (saver_inhibited ? GTK_STOCK_CANCEL : GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
+    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
+    g_signal_connect (G_OBJECT (mi), "activate",
+		      G_CALLBACK (xfpm_tray_icon_inhibit_active_cb), tray);
+    gtk_widget_set_sensitive (mi, TRUE);
     gtk_widget_show(mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
     
@@ -378,6 +406,7 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
     tray->priv->notify = xfpm_notify_new ();
     tray->priv->inhibited = FALSE;
     tray->priv->inhibit = xfpm_inhibit_new ();
+    tray->priv->srv     = xfpm_screen_saver_new ();
     
     tray->priv->info_menu = TRUE;
     tray->priv->icon_quark = 0;
@@ -411,6 +440,8 @@ xfpm_tray_icon_finalize(GObject *object)
     g_object_unref (tray->priv->notify);
     
     g_object_unref (tray->priv->inhibit);
+    
+    g_object_unref (tray->priv->srv);
 
     G_OBJECT_CLASS(xfpm_tray_icon_parent_class)->finalize(object);
 }

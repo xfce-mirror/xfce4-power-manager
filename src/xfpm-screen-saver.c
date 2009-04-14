@@ -37,6 +37,7 @@
 #include "libxfpm/xfpm-dbus.h"
 
 #include "xfpm-screen-saver.h"
+#include "xfpm-inhibit.h"
 #include "xfpm-dbus-monitor.h"
 
 /* Init */
@@ -47,15 +48,12 @@ static void xfpm_screen_saver_finalize   (GObject *object);
 #define XFPM_SCREEN_SAVER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_SCREEN_SAVER, XfpmScreenSaverPrivate))
 
-#define MAX_SCREEN_SAVER_INHIBITORS 10
-
 struct XfpmScreenSaverPrivate
 {
-    DBusConnection  *bus;
-    XfpmDBusMonitor *monitor;
-    GPtrArray       *array;
+    DBusGConnection *bus;
+    XfpmInhibit     *inhibit;
     
-    guint            inhibitors;
+    gboolean         inhibited;
 };
 
 enum
@@ -70,83 +68,10 @@ static gpointer xfpm_screen_saver_object = NULL;
 
 G_DEFINE_TYPE(XfpmScreenSaver, xfpm_screen_saver, G_TYPE_OBJECT)
 
-static gchar *
-xfpm_screen_saver_find_unique_name (XfpmScreenSaver *srv, const gchar *unique_name)
-{
-    gint i;
-    gchar *name;
-    
-    for ( i = 0; i<srv->priv->array->len; i++)
-    {
-	name = g_ptr_array_index (srv->priv->array, i);
-	if ( g_strcmp0 (name, unique_name) == 0 )
-	    return name;
-    }
-    return NULL;
-}
-
 static void
-xfpm_screen_saver_uninhibit_message (XfpmScreenSaver *srv, const gchar *unique_name)
+xfpm_screen_saver_inhibit_changed_cb (XfpmInhibit *inhbit, gboolean inhibited, XfpmScreenSaver *srv)
 {
-    gchar *name;
-    
-    name = xfpm_screen_saver_find_unique_name (srv, unique_name);
-    
-    if ( name )
-    {
-	TRACE ("%s", name);
-	xfpm_dbus_monitor_remove_match (srv->priv->monitor, name);
-	g_ptr_array_remove (srv->priv->array, name);
-	g_free (name);
-	
-	srv->priv->inhibitors--;
-
-	if ( srv->priv->inhibitors == 0 )
-	{
-	    g_signal_emit (G_OBJECT(srv), signals[SCREEN_SAVER_INHIBITED], 0, FALSE);
-	}
-    }
-}
-
-static void
-xfpm_screen_saver_inhibit_message (XfpmScreenSaver *srv, const gchar *unique_name)
-{
-    if (xfpm_screen_saver_find_unique_name (srv, unique_name) )
-	return /* We have it already!*/;
-	
-    TRACE ("%s", unique_name);
-    g_ptr_array_add (srv->priv->array, g_strdup (unique_name));
-    xfpm_dbus_monitor_add_match (srv->priv->monitor, unique_name);
-    
-    if ( srv->priv->inhibitors == 0 )
-    {
-	g_signal_emit (G_OBJECT(srv), signals[SCREEN_SAVER_INHIBITED], 0, TRUE);
-    }
-    
-    srv->priv->inhibitors++;
-}
-
-static DBusHandlerResult 
-xfpm_screen_saver_filter (DBusConnection *connection, DBusMessage *message, void *data)
-{
-    XfpmScreenSaver *srv = ( XfpmScreenSaver *)data;
-    
-    if ( dbus_message_is_method_call (message, "org.gnome.ScreenSaver", "Inhibit") )
-	xfpm_screen_saver_inhibit_message (srv, dbus_message_get_sender (message) );
-    else if ( dbus_message_is_method_call (message, "org.gnome.ScreenSaver", "UnInhibit") )
-	xfpm_screen_saver_uninhibit_message (srv, dbus_message_get_sender (message) );
-    else if ( dbus_message_is_method_call (message, "org.freedesktop.ScreenSaver", "Inhibit") )
-	xfpm_screen_saver_inhibit_message (srv, dbus_message_get_sender (message) );
-    else if ( dbus_message_is_method_call (message, "org.freedesktop.ScreenSaver", "UnInhibit") )
-	xfpm_screen_saver_uninhibit_message (srv, dbus_message_get_sender (message) );
-    
-    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED; /* Keep on as we just want to spy */
-}
-
-static void
-xfpm_screen_saver_connection_lost (XfpmDBusMonitor *monitor, gchar *unique_name, XfpmScreenSaver *srv)
-{
-    xfpm_screen_saver_uninhibit_message (srv, unique_name);
+    g_signal_emit (G_OBJECT (srv), signals [SCREEN_SAVER_INHIBITED], 0, inhibited);
 }
 
 static void
@@ -171,87 +96,22 @@ xfpm_screen_saver_class_init(XfpmScreenSaverClass *klass)
 static void
 xfpm_screen_saver_init(XfpmScreenSaver *srv)
 {
-    DBusError error;
-    dbus_error_init (&error);
-    
     srv->priv = XFPM_SCREEN_SAVER_GET_PRIVATE(srv);
     
-    srv->priv->bus = dbus_bus_get (DBUS_BUS_SESSION, &error);
-    srv->priv->monitor = xfpm_dbus_monitor_new ();
-    g_signal_connect (srv->priv->monitor, "connection-lost",
-		      G_CALLBACK (xfpm_screen_saver_connection_lost), srv);
-		      
-    srv->priv->array   	  = g_ptr_array_new ();
-    srv->priv->inhibitors = 0;
-    
-    if ( dbus_error_is_set (&error) )
-    {
-	g_critical ("Unable to get session bus: %s", error.message);
-	dbus_error_free (&error);
-	goto out;
-    }
-    
-    dbus_bus_add_match (srv->priv->bus, 
-			"type='method_call',interface='org.gnome.ScreenSaver'",
-			&error);
-			
-    if ( dbus_error_is_set (&error) )
-    {
-	g_warning ("Failed to add match for interface org.gnome.ScreenSaver: %s", error.message);
-	dbus_error_free (&error);
-    }
-	
-    dbus_error_init (&error);
-    
-    dbus_bus_add_match (srv->priv->bus, 
-			"type='method_call',interface='org.freedesktop.ScreenSaver'",
-			&error);
-			
-    if ( dbus_error_is_set (&error) )
-    {
-	g_warning ("Failed to add match for interface org.freedesktop.ScreenSaver: %s", error.message);
-	dbus_error_free (&error);
-    }
-	
-    if (!dbus_connection_add_filter (srv->priv->bus, xfpm_screen_saver_filter, srv, NULL) )
-    {
-	g_warning ("Couldn't add filter");
-    }
-out:
-    ;
+    srv->priv->inhibit = xfpm_inhibit_new ();
+    g_signal_connect (srv->priv->inhibit, "has-inhibit-changed",
+		      G_CALLBACK (xfpm_screen_saver_inhibit_changed_cb), srv);
 }
 
 static void
 xfpm_screen_saver_finalize(GObject *object)
 {
     XfpmScreenSaver *srv;
-    gint i;
-    gchar *name;
 
     srv = XFPM_SCREEN_SAVER(object);
     
-    dbus_bus_remove_match (srv->priv->bus,
-			  "type='method_call',interface='org.gnome.ScreenSaver'", 
-			  NULL);
+    g_object_unref (srv->priv->inhibit);
     
-    dbus_bus_remove_match (srv->priv->bus,
-			  "type='method_call',interface='org.freedesktop.ScreenSaver'", 
-			  NULL);
-
-    dbus_connection_unref (srv->priv->bus);
-    
-    g_object_unref (srv->priv->monitor);
-
-    
-    for ( i = 0; i<srv->priv->array->len; i++)
-    {
-	name = g_ptr_array_index (srv->priv->array, i);
-	g_ptr_array_remove (srv->priv->array, name);
-	g_free (name);
-    }
-    
-    g_ptr_array_free (srv->priv->array, TRUE);
-
     G_OBJECT_CLASS(xfpm_screen_saver_parent_class)->finalize(object);
 }
 
@@ -268,4 +128,33 @@ xfpm_screen_saver_new(void)
 	g_object_add_weak_pointer (xfpm_screen_saver_object, &xfpm_screen_saver_object);
     }
     return XFPM_SCREEN_SAVER (xfpm_screen_saver_object);
+}
+
+void xfpm_screen_saver_inhibit (XfpmScreenSaver *srv)
+{
+    g_return_if_fail (XFPM_IS_SCREEN_SAVER (srv));
+    
+    if ( srv->priv->inhibited == FALSE )
+    {
+	srv->priv->inhibited = TRUE;
+	g_signal_emit (G_OBJECT (srv), signals[SCREEN_SAVER_INHIBITED], 0, srv->priv->inhibited);
+    }
+}
+
+void xfpm_screen_saver_uninhibit (XfpmScreenSaver *srv)
+{
+    g_return_if_fail (XFPM_IS_SCREEN_SAVER (srv));
+    
+    if ( srv->priv->inhibited == TRUE )
+    {
+	srv->priv->inhibited = FALSE;
+	g_signal_emit (G_OBJECT (srv), signals[SCREEN_SAVER_INHIBITED], 0, srv->priv->inhibited);
+    }
+}
+
+gboolean xfpm_screen_saver_get_inhibit (XfpmScreenSaver *srv)
+{
+    g_return_val_if_fail (XFPM_IS_SCREEN_SAVER (srv), FALSE);
+    
+    return srv->priv->inhibited;
 }

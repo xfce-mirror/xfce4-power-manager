@@ -48,7 +48,14 @@ typedef struct
 } XfpmScreenSaverClass;
 
 GType        			  xfpm_screen_saver_get_type        (void) G_GNUC_CONST;
+
 XfpmScreenSaver       	 	 *xfpm_screen_saver_new             (void);
+
+void				  xfpm_screen_saver_inhibit         (XfpmScreenSaver *srv);
+
+void 				  xfpm_screen_saver_uninhibit       (XfpmScreenSaver *srv);
+
+gboolean                          xfpm_screen_saver_get_inhibit     (XfpmScreenSaver *srv);
 
 G_END_DECLS
 
