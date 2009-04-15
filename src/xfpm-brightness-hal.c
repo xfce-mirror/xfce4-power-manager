@@ -73,6 +73,7 @@ struct XfpmBrightnessHalPrivate
     
     gboolean        on_battery;
     
+    gulong	    sig[6];
 };
 
 enum
@@ -426,7 +427,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
     
     xfpm_brightness_hal_setup (brg);
 
-    if ( brg->priv->hw_found || brg->priv->max_level != 0 )
+    if ( brg->priv->hw_found && brg->priv->max_level != 0 )
     {
 	brg->priv->idle     = xfpm_idle_new ();
 	brg->priv->conf     = xfpm_xfconf_new ();
@@ -434,23 +435,29 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
 	brg->priv->adapter  = xfpm_adapter_new ();
 	brg->priv->saver    = xfpm_screen_saver_new ();
 	
+	brg->priv->sig[0] =
 	g_signal_connect (brg->priv->saver, "screen-saver-inhibited",
 			  G_CALLBACK(xfpm_brightness_hal_inhibit_changed_cb), brg);
 	
 	brg->priv->on_battery = !xfpm_adapter_get_present (brg->priv->adapter);
 	
+	brg->priv->sig[1] =
 	g_signal_connect (brg->priv->adapter, "adapter-changed",
 			  G_CALLBACK(xfpm_brightness_hal_adapter_changed_cb), brg);
 	
+	brg->priv->sig[2] =
 	g_signal_connect (brg->priv->button, "button-pressed",	
 			  G_CALLBACK(xfpm_brightness_hal_button_pressed_cb), brg);
 	
+	brg->priv->sig[3] =
 	g_signal_connect (brg->priv->idle, "alarm-timeout",
 			  G_CALLBACK(xfpm_brightness_hal_alarm_timeout_cb), brg);
-			  
+	
+	brg->priv->sig[4] =
 	g_signal_connect (brg->priv->idle, "reset",
 			  G_CALLBACK(xfpm_brightness_hal_reset_cb), brg);
-			  
+			
+	brg->priv->sig[5] =
 	g_signal_connect (brg->priv->conf, "brightness-settings-changed", 
 			  G_CALLBACK(xfpm_brightness_hal_settings_changed_cb), brg);
 			  
@@ -469,6 +476,24 @@ xfpm_brightness_hal_finalize (GObject *object)
 
     brg = XFPM_BRIGHTNESS_HAL(object);
     
+    if ( g_signal_handler_is_connected (brg->priv->saver, brg->priv->sig[0]) )
+	g_signal_handler_disconnect (G_OBJECT (brg->priv->saver), brg->priv->sig[0]);
+    
+    if ( g_signal_handler_is_connected (brg->priv->adapter, brg->priv->sig[1]) )
+	g_signal_handler_disconnect (G_OBJECT (brg->priv->adapter), brg->priv->sig[1]);
+    
+    if ( g_signal_handler_is_connected (brg->priv->button, brg->priv->sig[2]) )
+	g_signal_handler_disconnect (G_OBJECT (brg->priv->button), brg->priv->sig[2]);
+	
+    if ( g_signal_handler_is_connected (brg->priv->idle, brg->priv->sig[3]) )
+	g_signal_handler_disconnect (G_OBJECT (brg->priv->idle), brg->priv->sig[3]);
+	
+    if ( g_signal_handler_is_connected (brg->priv->idle, brg->priv->sig[4]) )
+	g_signal_handler_disconnect (G_OBJECT (brg->priv->idle), brg->priv->sig[4]);
+    
+    if ( g_signal_handler_is_connected (brg->priv->conf, brg->priv->sig[5]) )
+	g_signal_handler_disconnect (G_OBJECT (brg->priv->conf), brg->priv->sig[5]);
+	
     if ( brg->priv->proxy )
 	g_object_unref (brg->priv->proxy);
 
