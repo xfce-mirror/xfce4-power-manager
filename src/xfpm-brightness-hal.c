@@ -66,6 +66,7 @@ struct XfpmBrightnessHalPrivate
     
     guint           max_level;
     guint           hw_level;
+    guint           step;
     gboolean        brightness_in_hw;
     gboolean        hw_found;
     gboolean        block;
@@ -165,7 +166,9 @@ xfpm_brightness_hal_get_device (XfpmBrightnessHal *brg, const gchar *udi)
     hal_device_set_udi (device, udi);
 
     brg->priv->max_level = 
-	hal_device_get_property_int (device, "laptop_panel.num_levels");
+	hal_device_get_property_int (device, "laptop_panel.num_levels") -1;
+    
+    brg->priv->step = brg->priv->max_level <= 20 ? 1 : brg->priv->max_level / 20;
     
     if ( hal_device_has_key (device, "laptop_panel.brightness_in_hardware") )
 	brg->priv->brightness_in_hw = hal_device_get_property_bool (device ,"laptop_panel.brightness_in_hardware");
@@ -213,10 +216,10 @@ xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
     if ( brg->priv->brightness_in_hw )
 	goto signal;
     
-    if ( brg->priv->hw_level <= brg->priv->max_level -2 )
+    if ( brg->priv->hw_level <= brg->priv->max_level -1 )
     {
 	TRACE ("Brightness key up");
-	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level + 1 );
+	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level + brg->priv->step );
     }
     
 signal:
@@ -238,7 +241,7 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
     if ( brg->priv->hw_level != 0)
     {
 	TRACE("Brightness key down");
-	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level - 1 );
+	xfpm_brightness_hal_set_level (brg, brg->priv->hw_level - brg->priv->step );
     }
     
 signal:
@@ -291,10 +294,10 @@ xfpm_brightness_timeout_on_ac (XfpmBrightnessHal *brg)
     
     level = xfpm_brightness_hal_get_level(brg);
     
-    if ( level != 0 )
+    if ( level != 0 && level != brg->priv->step )
     {
 	TRACE ("Reducing brightness, on AC power\n");
-	xfpm_brightness_hal_set_level(brg, 0);
+	xfpm_brightness_hal_set_level(brg, brg->priv->step);
     }
 }
 
@@ -308,9 +311,9 @@ xfpm_brightness_timeout_on_battery (XfpmBrightnessHal *brg)
     
     level = xfpm_brightness_hal_get_level(brg);
     
-    if ( level != 0 )
+    if ( level != 0 && level != brg->priv->step )
     {
-	xfpm_brightness_hal_set_level(brg, 0);
+	xfpm_brightness_hal_set_level(brg, brg->priv->step);
 	TRACE ("Reducing brightness, on battery power\n");
     }
 }
@@ -427,7 +430,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
     
     xfpm_brightness_hal_setup (brg);
 
-    if ( brg->priv->hw_found && brg->priv->max_level != 0 )
+    if ( brg->priv->hw_found && brg->priv->max_level > 0 )
     {
 	brg->priv->idle     = xfpm_idle_new ();
 	brg->priv->conf     = xfpm_xfconf_new ();
