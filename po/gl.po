@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-04-07 11:07+0200\n"
-"PO-Revision-Date: 2009-04-14 21:41+0100\n"
+"PO-Revision-Date: 2009-04-17 22:18+0100\n"
 "Last-Translator: Leandro Regueiro <leandro.regueiro@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
 "MIME-Version: 1.0\n"
@@ -51,7 +51,7 @@ msgstr "Sempre mostrar a icona"
 
 #: ../settings/xfpm-settings.glade.h:8
 msgid "Consider the computer on low power at:"
-msgstr ""
+msgstr "Considerar que a batería case está descargada cando:"
 
 #: ../settings/xfpm-settings.glade.h:9
 msgid "Enable monitor power management control"
@@ -69,7 +69,7 @@ msgstr "Xeral"
 
 #: ../settings/xfpm-settings.glade.h:12
 msgid "Lock screen when going for suspend/hibernate"
-msgstr ""
+msgstr "Bloquear a pantalla ó suspender/hibernar"
 
 #: ../settings/xfpm-settings.glade.h:13
 #: ../settings/xfpm-settings.c:451
@@ -83,14 +83,12 @@ msgstr "Nada"
 #: ../settings/xfpm-settings.glade.h:14
 #: ../settings/xfpm-settings.c:1062
 #: ../settings/xfpm-settings.c:1067
-#, fuzzy
 msgid "On AC"
-msgstr "Coa CA"
+msgstr "Co adaptador de corrente"
 
 #: ../settings/xfpm-settings.glade.h:15
-#, fuzzy
 msgid "On battery"
-msgstr "Cando se estea coa batería"
+msgstr "Coa batería"
 
 #: ../settings/xfpm-settings.glade.h:16
 msgid "Power manager settings"
@@ -98,24 +96,24 @@ msgstr "Configuración do xestor de enerxía"
 
 #: ../settings/xfpm-settings.glade.h:17
 msgid "Prefer power savings over performance"
-msgstr ""
+msgstr "Primar o aforro de enerxía sobre o rendemento"
 
 #: ../settings/xfpm-settings.glade.h:18
 msgid "Put display to sleep when computer is inactive for:"
-msgstr ""
+msgstr "Suspender a pantalla cando o ordenador leve inactivo:"
 
 #: ../settings/xfpm-settings.glade.h:19
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr ""
+msgstr "Reducir o brillo da pantalla cando o ordenador leve inactivo:"
 
 #: ../settings/xfpm-settings.glade.h:20
+#, fuzzy
 msgid "Set monitor sleep mode:"
-msgstr ""
+msgstr "Fallo ao definir o modo en `%s': %s"
 
 #: ../settings/xfpm-settings.glade.h:21
-#, fuzzy
 msgid "Standby"
-msgstr "Despois de resplandecer"
+msgstr "En espera"
 
 #. Suspend menu option
 #: ../settings/xfpm-settings.glade.h:22
@@ -130,32 +128,27 @@ msgstr "Suspender"
 
 #: ../settings/xfpm-settings.glade.h:23
 msgid "Switch off display when computer is inactive for:"
-msgstr ""
+msgstr "Apagar a pantalla cando o ordenador leve inactivo:"
 
 #: ../settings/xfpm-settings.glade.h:24
-#, fuzzy
 msgid "System tray icon: "
-msgstr "Icona de Microsoft Windows"
+msgstr "Icona de estado:"
 
 #: ../settings/xfpm-settings.glade.h:25
-#, fuzzy
 msgid "When battery power is critical:"
-msgstr "Cando o nivel de carga da batería é crítico"
+msgstr "Cando a _carga da batería é crítica:"
 
 #: ../settings/xfpm-settings.glade.h:26
-#, fuzzy
 msgid "When laptop lid is closed:"
-msgstr "Cando se pecha a tapa do portátil"
+msgstr "Cando se _peche a tapa do portátil:"
 
 #: ../settings/xfpm-settings.glade.h:27
-#, fuzzy
 msgid "When power button is pressed:"
-msgstr "Cando se prema o botón de acendido"
+msgstr "Cando se preme o _botón de acendido:"
 
 #: ../settings/xfpm-settings.glade.h:28
-#, fuzzy
 msgid "When sleep button is pressed:"
-msgstr "Valor de inicio para o tempo de espera, cando se prema o botón"
+msgstr "Cando se preme o botón de _suspensión:"
 
 #: ../settings/xfpm-settings.glade.h:29
 #: ../settings/xfpm-settings-main.c:112
@@ -169,19 +162,16 @@ msgstr "Xestor de enerxía de Xfce"
 
 #: ../settings/xfpm-settings.c:306
 #: ../settings/xfpm-settings.c:322
-#, fuzzy
 msgid "Never"
-msgstr "nunca"
+msgstr "Nunca"
 
 #: ../settings/xfpm-settings.c:309
-#, fuzzy
 msgid "One minute"
-msgstr "minuto"
+msgstr "Un minuto"
 
 #: ../settings/xfpm-settings.c:311
-#, fuzzy
 msgid "Minutes"
-msgstr "minutos"
+msgstr "Minutos"
 
 #: ../settings/xfpm-settings.c:324
 msgid "Seconds"
@@ -190,7 +180,7 @@ msgstr "Segundos"
 #: ../settings/xfpm-settings.c:443
 #: ../settings/xfpm-settings.c:536
 msgid "Shutdown and hibernate operations not permitted"
-msgstr ""
+msgstr "As operacións de apagado e hibernación non están permitidas"
 
 #. Hibernate menu option
 #: ../settings/xfpm-settings.c:456
@@ -213,12 +203,11 @@ msgstr "Apagar"
 #: ../settings/xfpm-settings.c:851
 #: ../settings/xfpm-settings.c:974
 msgid "Hibernate and suspend operations not permitted"
-msgstr ""
+msgstr "As operacións de hibernación e suspensión non están permitidas"
 
 #: ../settings/xfpm-settings.c:761
-#, fuzzy
 msgid "When battery is present"
-msgstr "_Avisar cando a batería estea completamente recargada "
+msgstr "Cando haxa unha batería"
 
 #: ../settings/xfpm-settings.c:764
 msgid "When battery is charging or discharging"
@@ -226,13 +215,12 @@ msgstr "Cando a batería está cargando ou descargando"
 
 #: ../settings/xfpm-settings.c:942
 msgid "When all the power sources of the computer reach this charge level"
-msgstr ""
+msgstr "Cando tódalas fontes de enerxía do ordenador cheguen a este nivel de carga"
 
 #: ../settings/xfpm-settings.c:1077
 #: ../settings/xfpm-settings.c:1082
-#, fuzzy
 msgid "On Battery"
-msgstr "Cando se estea coa batería"
+msgstr "Coa batería"
 
 #: ../settings/xfpm-settings.c:1096
 msgid "Advance"
@@ -243,14 +231,12 @@ msgid "Failed to load power manager configuration, using defaults"
 msgstr "Non foi posible cargar a configuración do xestor de enerxía, usando a configuración predeterminada"
 
 #: ../settings/xfpm-settings-main.c:138
-#, fuzzy
 msgid "Xfce Power Manager Settings"
-msgstr "Xestor de enerxía de Xfce"
+msgstr "Configuración do xestor de enerxía de Xfce"
 
 #: ../settings/xfpm-settings-main.c:139
-#, fuzzy
 msgid "Unable to connect to Xfce Power Manager"
-msgstr "Non foi posible cargar o xestor de enerxía de Xfce4"
+msgstr "Non é posible conectar co Xestor de enerxía de Xfce"
 
 #: ../settings/xfpm-settings-main.c:158
 #: ../src/xfpm-main.c:141
@@ -294,9 +280,8 @@ msgstr "A súa batería estase descargando"
 #: ../src/xfpm-battery.c:112
 #: ../src/xfpm-battery.c:378
 #: ../src/xfpm-battery.c:390
-#, fuzzy
 msgid "System is running on battery power"
-msgstr "O sistema está a funcionar con enerxía da batería"
+msgstr "O sistema está a funcionar ca enerxía da batería"
 
 #: ../src/xfpm-battery.c:115
 msgid "Your battery charge is low"
@@ -304,7 +289,7 @@ msgstr "A carga da batería é baixa"
 
 #: ../src/xfpm-battery.c:115
 msgid "System is running on low power"
-msgstr ""
+msgstr "A batería case está descargada"
 
 #: ../src/xfpm-battery.c:219
 #: ../src/xfpm-supply.c:282
@@ -317,30 +302,27 @@ msgstr "Xestor de enerxía de Xfce"
 
 #: ../src/xfpm-battery.c:237
 msgid "Your UPS"
-msgstr ""
+msgstr "O seu SAI"
 
 #: ../src/xfpm-battery.c:239
-#, fuzzy
 msgid "Your Mouse battery"
-msgstr "Funcionando ca batería"
+msgstr "A batería do seu rato"
 
 #: ../src/xfpm-battery.c:241
 msgid "Your Keyboard battery"
-msgstr ""
+msgstr "A batería do seu teclado"
 
 #: ../src/xfpm-battery.c:243
-#, fuzzy
 msgid "Your Camera battery"
-msgstr "Está funcionando ca Batería"
+msgstr "A batería da súa cámara"
 
 #: ../src/xfpm-battery.c:245
 msgid "Your PDA battery"
-msgstr ""
+msgstr "A batería da súa PDA"
 
 #: ../src/xfpm-battery.c:247
-#, fuzzy
 msgid "Your Battery"
-msgstr "Está funcionando ca Batería"
+msgstr "A súa batería"
 
 #: ../src/xfpm-battery.c:262
 msgid "is fully charged"
@@ -359,37 +341,28 @@ msgid "is discharging"
 msgstr "estase descargando"
 
 #: ../src/xfpm-battery.c:284
-#, fuzzy
 msgid "charge is low"
-msgstr "Batería con pouca carga"
+msgstr "a carga é baixa"
 
 #: ../src/xfpm-battery.c:289
 msgid "is almost empty"
 msgstr "está case baleira"
 
 #: ../src/xfpm-battery.c:309
-#, fuzzy
 msgid "is not present"
-msgstr "Non presente"
+msgstr "non está presente"
 
 #: ../src/xfpm-battery.c:340
-#, fuzzy
 msgid "Battery not present"
-msgstr "_Avisar cando a batería estea completamente recargada "
+msgstr "Non hai ningunha batería"
 
 #: ../src/xfpm-battery.c:362
-#, fuzzy
 msgid "Estimated time left"
-msgstr ""
-"\n"
-"Tempo restante estimado"
+msgstr "Tempo restante estimado"
 
 #: ../src/xfpm-battery.c:366
-#, fuzzy
 msgid "Estimated time to be fully charged"
-msgstr ""
-"\n"
-"Tempo estimado para a carga"
+msgstr "Tempo estimado para completar a carga"
 
 #: ../src/xfpm-battery.c:369
 msgid "hours"
@@ -414,7 +387,6 @@ msgstr "Batería"
 
 #: ../src/xfpm-battery.c:377
 #: ../src/xfpm-battery.c:389
-#, fuzzy
 msgid "System is running on AC power"
 msgstr "O sistema está a funcionar con enerxía de corrente alterna"
 
@@ -433,7 +405,7 @@ msgstr "Deseño:"
 
 #: ../src/xfpm-battery-info.c:120
 msgid "Last full:"
-msgstr ""
+msgstr "Última carga completa:"
 
 #: ../src/xfpm-battery-info.c:144
 msgid "Vendor:"
@@ -470,12 +442,11 @@ msgstr ""
 
 #: ../src/xfpm-main.c:73
 msgid "Do not daemonize"
-msgstr ""
+msgstr "Non converter en daemon"
 
 #: ../src/xfpm-main.c:74
-#, fuzzy
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Saír de calquera xestor de enerxía de Xfce que se estea executando"
+msgstr "Reiniciar a instancia do xestor de enerxía de Xfce que se estea executando"
 
 #: ../src/xfpm-main.c:75
 msgid "Show the configuration dialog"
@@ -501,14 +472,12 @@ msgid "Too many arguments"
 msgstr "Demasiados argumentos"
 
 #: ../src/xfpm-main.c:122
-#, fuzzy
 msgid "Unable to get connection to the message bus session"
-msgstr "Non foi posible conectar con DBus: %s"
+msgstr "Non foi posible conectarse á sesión do bus de mensaxes"
 
 #: ../src/xfpm-main.c:218
-#, fuzzy
 msgid "Another power manager is already running"
-msgstr "O xestor de enerxía de Xfce xa se está executando"
+msgstr "Xa está executando outro xestor de enerxía"
 
 #: ../src/xfpm-main.c:223
 #, c-format
@@ -516,14 +485,12 @@ msgid "Xfce power manager is already running"
 msgstr "O xestor de enerxía de Xfce xa se está executando"
 
 #: ../src/xfpm-supply.c:171
-#, fuzzy
 msgid "Adapter present"
-msgstr "Non presente"
+msgstr "Adaptador presente"
 
 #: ../src/xfpm-supply.c:172
-#, fuzzy
 msgid "Adapter not present"
-msgstr "Non presente"
+msgstr "Non hai ningún adaptador"
 
 #: ../src/xfpm-supply.c:251
 msgid "Shutdown the system"
@@ -538,9 +505,8 @@ msgid "System is running on low power, but an application is currently disabling
 msgstr ""
 
 #: ../src/xfpm-supply.c:300
-#, fuzzy
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "A súa batería case está descargada. Garde o seu traballo para evitar a perda de datos"
+msgstr "A batería case está descargada. Garde o seu traballo para evitar a perda de datos"
 
 #: ../src/xfpm-tray-icon.c:159
 msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
@@ -548,18 +514,16 @@ msgstr ""
 
 #: ../src/xfpm-tray-icon.c:162
 #: ../src/xfpm-tray-icon.c:193
-#, fuzzy
 msgid "Are you sure you want to proceed?"
-msgstr "Está seguro de que desexa suspender o sistema?"
+msgstr "Está seguro de que desexa continuar?"
 
 #: ../src/xfpm-tray-icon.c:190
 msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to suspend the system?"
 msgstr ""
 
 #: ../src/xfpm-tray-icon.c:220
-#, fuzzy
 msgid "Quit the Xfce power manager"
-msgstr "Xestor de enerxía de Xfce"
+msgstr "Saír do xestor de enerxía de Xfce"
 
 #: ../src/xfpm-tray-icon.c:222
 msgid "Quit"
@@ -572,19 +536,18 @@ msgid "Permission denied"
 msgstr "Permiso denegado"
 
 #: ../src/xfpm-engine.c:546
-#, fuzzy, c-format
+#, c-format
 msgid "Hibernate not supported"
-msgstr "Hibernar o sistema"
+msgstr "A hibernación non está soportada"
 
 #: ../src/xfpm-engine.c:575
 #, c-format
 msgid "Suspend not supported"
-msgstr ""
+msgstr "A suspensión non está soportada"
 
 #: ../src/xfpm-manager.c:199
-#, fuzzy
 msgid "HAL daemon is not running"
-msgstr "Non se está executando o Xestor de enerxía de Xfce"
+msgstr "Non se está executando o daemon HAL"
 
 #: ../src/xfpm-inhibit.c:333
 #, c-format
@@ -621,7 +584,6 @@ msgid "Out of memory"
 msgstr "Sen memoria"
 
 #: ../src/xfpm-shutdown.c:333
-#, fuzzy
 msgid "System failed to sleep"
 msgstr "Fallo ó suspender o sistema"
 
@@ -630,11 +592,11 @@ msgstr "Fallo ó suspender o sistema"
 #: ../src/xfpm-shutdown.c:419
 #, c-format
 msgid "HAL daemon is currently not connected"
-msgstr ""
+msgstr "O daemon HAL non está conectado"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
-msgstr ""
+msgstr "Xestión de enerxía para o escritorio Xfce"
 
 #: ../libxfpm/hal-battery.c:458
 msgid "Lithium ion"
@@ -642,7 +604,7 @@ msgstr "Ión de litio"
 
 #: ../libxfpm/hal-battery.c:462
 msgid "Lead acid"
-msgstr ""
+msgstr "Chumbo e ácido"
 
 #: ../libxfpm/hal-battery.c:466
 msgid "Lithium polymer"
@@ -650,7 +612,7 @@ msgstr "Polímero de litio"
 
 #: ../libxfpm/hal-battery.c:470
 msgid "Nickel metal hydride"
-msgstr ""
+msgstr "Híbrido níquel metal"
 
 #: ../libxfpm/hal-battery.c:473
 msgid "Unknown"
@@ -673,9 +635,8 @@ msgstr ""
 
 #: ../panel-plugins/brightness/brightness-button.c:173
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
-#, fuzzy
 msgid "Control your LCD brightness"
-msgstr "Activar o control de brillo LCD"
+msgstr "Controle o brillo da súa pantalla LCD"
 
 #: ../panel-plugins/brightness/brightness-button.c:175
 msgid "No device found"
@@ -684,33 +645,32 @@ msgstr "Non se atopou ningún dispositivo"
 #: ../panel-plugins/brightness/brightness-button.c:585
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr ""
+msgstr "Engadido de brillo"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:223
 #: ../panel-plugins/inhibit/inhibit-plugin.c:423
-#, fuzzy
 msgid "No power manager instance running"
-msgstr "Non se está executando o Xestor de enerxía de Xfce"
+msgstr "Non se está executando ningunha instancia do xestor de enerxía"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:226
 msgid "Automatic sleep inhibited"
-msgstr ""
+msgstr "Suspensión automática inhibida"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:232
 msgid "Another application is disabling the automatic sleep"
-msgstr ""
+msgstr "Outra aplicación desactivou a suspensión automática"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:234
 msgid "Automatic sleep enabled"
-msgstr ""
+msgstr "Suspensión automática activada"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:282
 msgid "Power manager automatic sleep is disabled"
-msgstr ""
+msgstr "A suspensión automática do xestor de enerxía está desactivada"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:283
 msgid "Power manager automatic sleep is enabled"
-msgstr ""
+msgstr "A suspensión automática do xestor de enerxía está activada"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:286
 #: ../panel-plugins/inhibit/inhibit-plugin.c:322
@@ -719,7 +679,7 @@ msgstr ""
 #: ../panel-plugins/inhibit/inhibit-plugin.c:829
 #: ../panel-plugins/inhibit/xfce4-inhibit-plugin.desktop.in.in.h:2
 msgid "Inhibit plugin"
-msgstr ""
+msgstr "Inhibir o engadido"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:296
 #: ../panel-plugins/inhibit/inhibit-plugin.c:332
@@ -728,27 +688,25 @@ msgid "Don't show again"
 msgstr "Non volver mostrar"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:323
-#, fuzzy
 msgid "Power manager disconnected"
-msgstr "Preferencias de xestión de enerxía"
+msgstr "Desconectouse o xestor de enerxía"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:673
+#, fuzzy
 msgid "Enable backlight sleep"
-msgstr ""
+msgstr "Espera entre reintentos:"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:680
 msgid "Enable automatic sleep"
-msgstr ""
+msgstr "Activar a suspensión automática"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:724
-#, fuzzy
 msgid "Power manager is connected"
-msgstr "Non se está executando o Xestor de enerxía de Xfce"
+msgstr "O xestor de enerxía está conectado"
 
 #: ../panel-plugins/inhibit/xfce4-inhibit-plugin.desktop.in.in.h:1
-#, fuzzy
 msgid "Inhibit automatic power savings"
-msgstr "Mellor aforro de enerxía"
+msgstr "Inhibir os aforros de enerxía automáticos"
 
 #~ msgid ""
 #~ "Unable to read adapter status, the power manager will not work properly"
