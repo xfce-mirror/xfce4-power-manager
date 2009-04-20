@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-06 10:50+0200\n"
-"PO-Revision-Date: 2009-04-06 19:17+0100\n"
-"Last-Translator: Carles Muñoz Gorriz <carlesmu@internautas.org>\n"
+"POT-Creation-Date: 2009-04-07 11:07+0200\n"
+"PO-Revision-Date: 2009-04-18 13:06+0100\n"
+"Last-Translator: Harald Servat <redcrash@gmail.com>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -143,14 +143,6 @@ msgstr "Quan es pitja el botó d'adormiment:"
 #: ../src/xfpm-tray-icon.c:313 ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Gestor d'energia de Xfce"
-
-#: ../settings/xfpm-settings.glade.h:30
-msgid "gtk-close"
-msgstr ""
-
-#: ../settings/xfpm-settings.glade.h:31
-msgid "gtk-help"
-msgstr ""
 
 #: ../settings/xfpm-settings.c:306 ../settings/xfpm-settings.c:322
 msgid "Never"
@@ -508,7 +500,8 @@ msgstr ""
 "sistema?"
 
 #: ../src/xfpm-tray-icon.c:162 ../src/xfpm-tray-icon.c:193
-msgid "Are you sure you want to procced?"
+#, fuzzy
+msgid "Are you sure you want to proceed?"
 msgstr "Voleu continuar?"
 
 #: ../src/xfpm-tray-icon.c:190
@@ -628,24 +621,19 @@ msgstr "mAh"
 msgid "translator-credits"
 msgstr "Carles Muñoz Gorriz <carlesmu@internautas.org>"
 
-#: ../panel-plugins/brightness/brightness-plugin.c:460
-#: ../panel-plugins/brightness/brightness-plugin.c:517
-msgid "Control your LCD brightness level"
-msgstr "Controla en nivell de brillantor de la LCD"
-
-#: ../panel-plugins/brightness/brightness-plugin.c:464
-#: ../panel-plugins/brightness/brightness-plugin.c:521
-msgid "No device found"
-msgstr "No s'ha trobat el dispositiu"
-
-#: ../panel-plugins/brightness/brightness-plugin.c:535
-#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
-msgid "Brightness plugin"
-msgstr "Connector de brillantor"
-
+#: ../panel-plugins/brightness/brightness-button.c:173
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
 msgid "Control your LCD brightness"
 msgstr "Controla la brillantor de la LCD"
+
+#: ../panel-plugins/brightness/brightness-button.c:175
+msgid "No device found"
+msgstr "No s'ha trobat el dispositiu"
+
+#: ../panel-plugins/brightness/brightness-button.c:585
+#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
+msgid "Brightness plugin"
+msgstr "Connector de brillantor"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:223
 #: ../panel-plugins/inhibit/inhibit-plugin.c:423
@@ -674,16 +662,16 @@ msgstr "L'adormiment automàtic del gestor d'energia està habilitat"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:286
 #: ../panel-plugins/inhibit/inhibit-plugin.c:322
-#: ../panel-plugins/inhibit/inhibit-plugin.c:665
-#: ../panel-plugins/inhibit/inhibit-plugin.c:724
-#: ../panel-plugins/inhibit/inhibit-plugin.c:830
+#: ../panel-plugins/inhibit/inhibit-plugin.c:664
+#: ../panel-plugins/inhibit/inhibit-plugin.c:723
+#: ../panel-plugins/inhibit/inhibit-plugin.c:829
 #: ../panel-plugins/inhibit/xfce4-inhibit-plugin.desktop.in.in.h:2
 msgid "Inhibit plugin"
 msgstr "Connector d'inhibició"
 
 #: ../panel-plugins/inhibit/inhibit-plugin.c:296
 #: ../panel-plugins/inhibit/inhibit-plugin.c:332
-#: ../panel-plugins/inhibit/inhibit-plugin.c:734
+#: ../panel-plugins/inhibit/inhibit-plugin.c:733
 msgid "Don't show again"
 msgstr "No tornis a mostrar"
 
@@ -691,21 +679,30 @@ msgstr "No tornis a mostrar"
 msgid "Power manager disconnected"
 msgstr "Gestor d'energia desconnectat"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:674
+#: ../panel-plugins/inhibit/inhibit-plugin.c:673
 msgid "Enable backlight sleep"
 msgstr "Habilita l'adormiment de la retro-iŀluminació "
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:681
+#: ../panel-plugins/inhibit/inhibit-plugin.c:680
 msgid "Enable automatic sleep"
 msgstr "Habilita l'adormiment automàtica"
 
-#: ../panel-plugins/inhibit/inhibit-plugin.c:725
+#: ../panel-plugins/inhibit/inhibit-plugin.c:724
 msgid "Power manager is connected"
 msgstr "Gestor d'energia connectat"
 
 #: ../panel-plugins/inhibit/xfce4-inhibit-plugin.desktop.in.in.h:1
 msgid "Inhibit automatic power savings"
 msgstr "Inhabilita l'estalvi automàtic d'energia"
+
+#~ msgid "gtk-close"
+#~ msgstr "gtk-close"
+
+#~ msgid "gtk-help"
+#~ msgstr "gtk-help"
+
+#~ msgid "Control your LCD brightness level"
+#~ msgstr "Controla en nivell de brillantor de la LCD"
 
 #~ msgid "Xfce power manager is not running to releod it"
 #~ msgstr ""
