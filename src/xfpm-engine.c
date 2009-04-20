@@ -563,9 +563,11 @@ void xfpm_engine_reload_hal_objects (XfpmEngine *engine)
  * DBus server implementation for org.freedesktop.PowerManagement
  * 
  */
-
+static gboolean xfpm_engine_dbus_shutdown (XfpmEngine *engine,
+					   GError **error);
+					   
 static gboolean xfpm_engine_dbus_hibernate (XfpmEngine * engine,
-					    GError ** error);
+					    GError **error);
 
 static gboolean xfpm_engine_dbus_suspend (XfpmEngine * engine,
 					  GError ** error);
@@ -607,6 +609,31 @@ xfpm_engine_dbus_init (XfpmEngine * engine)
     dbus_g_connection_register_g_object (bus,
 				         "/org/freedesktop/PowerManagement",
 				         G_OBJECT (engine));
+}
+
+static gboolean xfpm_engine_dbus_shutdown (XfpmEngine *engine,
+					   GError **error)
+{
+    TRACE ("Hibernate message received");
+    gboolean caller_privilege, can_hibernate;
+
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		  "caller-privilege", &caller_privilege,
+		  "can-hibernate", &can_hibernate, NULL);
+
+    if (!caller_privilege)
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
+		    _("Permission denied"));
+	return FALSE;
+    }
+
+    if ( engine->priv->inhibited )
+	return TRUE;
+
+    xfpm_shutdown (engine->priv->shutdown, NULL);
+    
+    return TRUE;
 }
 
 static gboolean
