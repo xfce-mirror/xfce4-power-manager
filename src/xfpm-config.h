@@ -26,6 +26,10 @@
 #include <config.h>
 #endif
 
+#if defined(__linux__)
+#define SYSTEM_IS_LINUX 1
+#endif
+
 G_BEGIN_DECLS
 
 /* Configuration */
@@ -34,7 +38,7 @@ G_BEGIN_DECLS
 #define         CRITICAL_POWER_LEVEL        "/xfce4-power-manager/critical-power-level"
 
 #define 	POWER_SAVE_ON_BATTERY       "/xfce4-power-manager/power-save-on-battery"
-
+#define         CPU_FREQ_CONTROL            "/xfce4-power-manager/cpu-freq-control"
 #define         LOCK_SCREEN_ON_SLEEP        "/xfce4-power-manager/lock-screen-suspend-hibernate"
 
 #define 	LCD_BRIGHTNESS_CFG          "/xfce4-power-manager/lcd-brightness"
@@ -68,7 +72,7 @@ G_BEGIN_DECLS
 #define 	ON_BATT_DPMS_OFF	     "/xfce4-power-manager/on-battery-dpms-off"
 #define 	ON_AC_DPMS_SLEEP 	     "/xfce4-power-manager/on-ac-dpms-sleep"
 #define 	ON_AC_DPMS_OFF	     	     "/xfce4-power-manager/on-ac-dpms-off"
-#define         DPMS_SLEEP_MODE		     "/xfce4-power-manager/dpms-sleep-mode"	/* 0= sleep, 1=suspend */
+#define         DPMS_SLEEP_MODE		     "/xfce4-power-manager/dpms-sleep-mode"		/* 0= sleep, 1=suspend */
 #endif
 
 #define         ENABLE_BRIGHTNESS_CONTROL    "/xfce4-power-manager/change-brightness-on-key-events"

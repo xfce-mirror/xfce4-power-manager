@@ -23,7 +23,11 @@
 
 #include <glib-object.h>
 
+#include "xfpm-config.h"
+
 G_BEGIN_DECLS
+
+#ifdef SYSTEM_IS_LINUX
 
 #define XFPM_TYPE_CPU        (xfpm_cpu_get_type () )
 #define XFPM_CPU(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_CPU, XfpmCpu))
@@ -47,6 +51,8 @@ typedef struct
 GType          xfpm_cpu_get_type        (void) G_GNUC_CONST;
 XfpmCpu       *xfpm_cpu_new             (void);
 void           xfpm_cpu_reload          (XfpmCpu *cpu);
+
+#endif /*SYSTEM_IS_LINUX*/
 
 G_END_DECLS
 

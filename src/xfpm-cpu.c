@@ -41,6 +41,8 @@
 #include "xfpm-config.h"
 #include "xfpm-enum.h"
 
+#ifdef SYSTEM_IS_LINUX /* the end if at the end of the file */
+
 /* Init */
 static void xfpm_cpu_class_init (XfpmCpuClass *klass);
 static void xfpm_cpu_init       (XfpmCpu *cpu);
@@ -277,37 +279,51 @@ xfpm_cpu_check_iface (XfpmCpu *cpu)
     
     xfpm_cpu_get_available_governors (cpu);
     
-    if ( !cpu->priv->cpu_governors & CPU_POWERSAVE || 
-	 !cpu->priv->cpu_governors & CPU_ONDEMAND  ||
-	 !cpu->priv->cpu_governors & CPU_PERFORMANCE )
-    {
-	g_warning ("No convenient cpu governors found on the system, cpu frequency control will be disabled");
-	return FALSE;
-    }
-    return TRUE;
+    if ( (cpu->priv->cpu_governors & CPU_ONDEMAND || cpu->priv->cpu_governors & CPU_PERFORMANCE)
+	 && (cpu->priv->cpu_governors & CPU_POWERSAVE) )
+	return TRUE;
+    
+    g_warning ("No convenient cpu governors found on the system, cpu frequency control will be disabled");
+    return FALSE;
 }
 
 static void
 xfpm_cpu_set_power_save (XfpmCpu *cpu)
 {
-    if ( xfpm_cpu_get_current_governor (cpu) != CPU_POWERSAVE )
+    if ( xfpm_cpu_get_current_governor (cpu) != CPU_POWERSAVE && cpu->priv->cpu_governors & CPU_POWERSAVE )
 	xfpm_cpu_set_governor (cpu, "powersave");
 }
 
 static void
 xfpm_cpu_set_performance_ondemand (XfpmCpu *cpu)
 {
-    if ( xfpm_cpu_get_current_governor (cpu) != CPU_ONDEMAND )
+    XfpmCpuGovernor gov;
+    
+    gov = xfpm_cpu_get_current_governor (cpu);
+    
+    if ( gov == CPU_ONDEMAND )
+	return;
+	
+    if ( (gov != CPU_ONDEMAND) && (cpu->priv->cpu_governors & CPU_ONDEMAND) )
 	xfpm_cpu_set_governor (cpu, "ondemand");
+    else if ( (gov != CPU_PERFORMANCE) && (cpu->priv->cpu_governors & CPU_PERFORMANCE) )
+	xfpm_cpu_set_governor (cpu, "performance");
 }
 
 static void
 xfpm_cpu_refresh (XfpmCpu *cpu)
 {
     gboolean power_save = xfpm_xfconf_get_property_bool (cpu->priv->conf, POWER_SAVE_ON_BATTERY);
+    gboolean enable_cpu_freq = xfpm_xfconf_get_property_bool (cpu->priv->conf, CPU_FREQ_CONTROL);
     
-    if (!power_save)
+    if ( enable_cpu_freq == FALSE )
 	return;
+    
+    if (power_save == FALSE)
+    {
+	xfpm_cpu_set_performance_ondemand (cpu);
+	return;
+    }
 	
     if ( cpu->priv->on_battery )
 	xfpm_cpu_set_power_save (cpu);
@@ -400,3 +416,5 @@ void xfpm_cpu_reload (XfpmCpu *cpu)
     cpu->priv->cpu_governors = 0;
     xfpm_cpu_check_iface (cpu);
 }
+
+#endif /*SYSTEM_IS_LINUX*/

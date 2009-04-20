@@ -71,8 +71,9 @@ struct XfpmEnginePrivate
     XfpmXfconf 		*conf;
     XfpmSupply 		*supply;
     XfpmNotify 		*notify;
-
+#ifdef SYSTEM_IS_LINUX
     XfpmCpu 		*cpu;
+#endif
     XfpmBacklight 	*bk;
     XfpmAdapter 	*adapter;
     XfpmInhibit 	*inhibit;
@@ -280,8 +281,11 @@ xfpm_engine_load_all (XfpmEngine * engine)
 #ifdef HAVE_DPMS
     engine->priv->dpms = xfpm_dpms_new ();
 #endif
+
+#ifdef SYSTEM_IS_LINUX
     if (engine->priv->is_laptop)
 	engine->priv->cpu = xfpm_cpu_new ();
+#endif
 
     engine->priv->supply = xfpm_supply_new (engine->priv->power_management);
     g_signal_connect (G_OBJECT (engine->priv->supply), "shutdown-request",
@@ -428,7 +432,11 @@ xfpm_engine_init (XfpmEngine * engine)
 #ifdef HAVE_DPMS
     engine->priv->dpms = NULL;
 #endif
+
+#ifdef SYSTEM_IS_LINUX
     engine->priv->cpu = NULL;
+#endif
+
     engine->priv->button = NULL;
     engine->priv->bk = NULL;
 
@@ -477,8 +485,10 @@ xfpm_engine_finalize (GObject * object)
 	g_object_unref (engine->priv->dpms);
 #endif
 
+#ifdef SYSTEM_IS_LINUX
     if (engine->priv->cpu)
 	g_object_unref (engine->priv->cpu);
+#endif
 
     g_object_unref (engine->priv->shutdown);
 
@@ -554,7 +564,9 @@ void xfpm_engine_reload_hal_objects (XfpmEngine *engine)
     if ( engine->priv->is_laptop )
     {
 	xfpm_backlight_reload (engine->priv->bk);
+#ifdef SYSTEM_IS_LINUX
 	xfpm_cpu_reload       (engine->priv->cpu);
+#endif
     }
 }
 

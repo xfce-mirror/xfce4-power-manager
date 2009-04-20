@@ -520,6 +520,19 @@ lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     }
 }
 
+#ifdef SYSTEM_IS_LINUX
+static void
+cpu_freq_control_changed_cb (GtkWidget *w, XfconfChannel *channel)
+{
+    gboolean val = (gint) gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
+    
+    if ( !xfconf_channel_set_bool (channel, CPU_FREQ_CONTROL, val) )
+    {
+	g_critical ("Unable to set value for property %s\n", CPU_FREQ_CONTROL);
+    }
+}
+#endif
+
 static void
 xfpm_settings_on_battery (XfconfChannel *channel, gboolean user_privilege, gboolean can_suspend, 
 			 gboolean can_hibernate, gboolean has_lcd_brightness, gboolean has_lid)
@@ -1128,7 +1141,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
 }
 
 static void
-xfpm_settings_advanced (XfconfChannel *channel, gboolean system_latop, gboolean user_privilege,
+xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean user_privilege,
 			gboolean can_suspend, gboolean can_hibernate)
 {
     guint val;
@@ -1197,7 +1210,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_latop, gboolean 
      * Critical battery level
      */
     GtkWidget *critical_level = glade_xml_get_widget (xml, "critical-spin");
-    if ( system_latop )
+    if ( system_laptop )
     {
 	gtk_widget_set_tooltip_text (critical_level, 
 				     _("When all the power sources of the computer reach this charge level"));
@@ -1240,6 +1253,23 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_latop, gboolean 
     g_signal_connect (lock, "toggled",
 		      G_CALLBACK(lock_screen_toggled_cb), channel);
  
+    GtkWidget *cpu;
+    cpu = glade_xml_get_widget (xml, "cpu-freq");
+    
+#ifdef SYSTEM_IS_LINUX
+    if ( system_laptop )
+    {
+	val = xfconf_channel_get_bool (channel, CPU_FREQ_CONTROL, TRUE);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(cpu), val);
+	g_signal_connect (cpu, "toggled",
+		          G_CALLBACK(cpu_freq_control_changed_cb), channel);
+    }
+    else
+	gtk_widget_hide (cpu);
+#else
+    gtk_widget_hide (cpu);
+#endif
+
 }
 
 static void

@@ -907,7 +907,7 @@
                                 <child>
                                   <widget class="GtkTable" id="table1">
                                     <property name="visible">True</property>
-                                    <property name="n_rows">2</property>
+                                    <property name="n_rows">3</property>
                                     <property name="n_columns">2</property>
                                     <property name="row_spacing">8</property>
                                     <child>
@@ -1018,6 +1018,48 @@
                                         <property name="bottom_attach">2</property>
                                       </packing>
                                     </child>
+                                    <child>
+                                      <widget class="GtkHBox" id="hbox2">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <widget class="GtkLabel" id="critical-level-label">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">Consider the computer on low power at:</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                      </widget>
+                                      <packing>
+                                        <property name="top_attach">2</property>
+                                        <property name="bottom_attach">3</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkHBox" id="hbox8">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <widget class="GtkSpinButton" id="critical-spin">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="invisible_char">&#x25CF;</property>
+                                            <property name="adjustment">5 5 20 1 0 0</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                      </widget>
+                                      <packing>
+                                        <property name="left_attach">1</property>
+                                        <property name="right_attach">2</property>
+                                        <property name="top_attach">2</property>
+                                        <property name="bottom_attach">3</property>
+                                      </packing>
+                                    </child>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1025,31 +1067,12 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <widget class="GtkHBox" id="hbox2">
+                                  <widget class="GtkCheckButton" id="cpu-freq">
+                                    <property name="label" translatable="yes">Enable CPU frequency control</property>
                                     <property name="visible">True</property>
-                                    <property name="spacing">10</property>
-                                    <child>
-                                      <widget class="GtkLabel" id="critical-level-label">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Consider the computer on low power at:</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkSpinButton" id="critical-spin">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="invisible_char">&#x25CF;</property>
-                                        <property name="adjustment">5 5 20 1 0 0</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="draw_indicator">True</property>
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>

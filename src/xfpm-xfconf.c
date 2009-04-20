@@ -70,6 +70,9 @@ struct XfpmXfconfPrivate
     gboolean         	 sleep_dpms_mode; /*TRUE = standby FALSE = suspend*/
 #endif
     gboolean             power_save_on_battery;
+#ifdef SYSTEM_IS_LINUX
+    gboolean             cpu_freq_control;
+#endif
     
     guint16              brightness_on_ac_timeout;
     guint16              brightness_on_battery_timeout;
@@ -229,6 +232,13 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 	conf->priv->power_save_on_battery = g_value_get_boolean (value);
 	g_signal_emit (G_OBJECT(conf), signals[POWER_SAVE_SETTINGS_CHANGED], 0);
     }
+#ifdef SYSTEM_IS_LINUX
+    else if ( xfpm_strequal(property, CPU_FREQ_CONTROL) )
+    {
+	conf->priv->cpu_freq_control = g_value_get_boolean (value);
+	g_signal_emit (G_OBJECT(conf), signals[POWER_SAVE_SETTINGS_CHANGED], 0);
+    }
+#endif
     else if ( xfpm_strequal (property, BRIGHTNESS_ON_AC ) )
     {
 	conf->priv->brightness_on_ac_timeout = g_value_get_uint (value);
@@ -321,6 +331,8 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     }
     else if ( xfpm_strequal (property, ENABLE_BRIGHTNESS_CONTROL) )
 	conf->priv->enable_brightness = g_value_get_boolean (value);
+    else
+	g_warn_if_reached ();
 }
 
 static void
@@ -433,7 +445,10 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
 #endif /* HAVE_DPMS */
     conf->priv->power_save_on_battery =
     	xfconf_channel_get_bool (conf->priv->channel, POWER_SAVE_ON_BATTERY, TRUE);
-	
+#ifdef SYSTEM_IS_LINUX
+    conf->priv->cpu_freq_control =
+	xfconf_channel_get_bool (conf->priv->channel, CPU_FREQ_CONTROL, TRUE);
+#endif
     conf->priv->brightness_on_ac_timeout =
 	xfconf_channel_get_uint (conf->priv->channel, BRIGHTNESS_ON_AC, 9);
 	
@@ -622,6 +637,10 @@ gboolean xfpm_xfconf_get_property_bool (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->lock_screen;
     else if ( xfpm_strequal (property, POWER_SAVE_ON_BATTERY ) )
 	return conf->priv->power_save_on_battery;
+#ifdef SYSTEM_IS_LINUX
+    else if ( xfpm_strequal (property, CPU_FREQ_CONTROL) )
+	return conf->priv->cpu_freq_control;
+#endif
     else if ( xfpm_strequal (property, GENERAL_NOTIFICATION_CFG ) )
 	return conf->priv->general_notification;
 #ifdef HAVE_DPMS
