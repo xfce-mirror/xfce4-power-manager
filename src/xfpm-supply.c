@@ -440,9 +440,25 @@ xfpm_supply_monitor_start (XfpmSupply *supply)
 }
 
 static void
+xfpm_supply_save_power (XfpmSupply *supply)
+{
+    gboolean save_power;
+    
+    save_power = xfpm_xfconf_get_property_bool (supply->priv->conf, POWER_SAVE_ON_BATTERY);
+    
+    if ( save_power == FALSE )
+	hal_power_unset_power_save (supply->priv->power);
+    else if ( supply->priv->adapter_present )
+	hal_power_unset_power_save (supply->priv->power);
+    else 
+	hal_power_set_power_save (supply->priv->power);
+}
+
+static void
 xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupply *supply)
 {
     supply->priv->adapter_present = present;
+    xfpm_supply_save_power (supply);
 }
 
 /*

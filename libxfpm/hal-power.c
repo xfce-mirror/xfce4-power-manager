@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include <glib.h>
+#include <dbus/dbus-glib.h>
 
 #include "hal-manager.h"
 #include "hal-power.h"
@@ -131,8 +132,6 @@ static void
 hal_power_remove_battery (HalPower *power, HalBattery *battery, const gchar *udi)
 {
     g_signal_emit (power, signals[BATTERY_REMOVED], 0, battery);
-    
-    //g_object_unref (battery);
     
     if (!g_hash_table_remove(power->priv->hash, udi))
     	g_warning ("Unable to removed object from hash\n");
@@ -239,6 +238,68 @@ out:
     
 }
 
+static gboolean
+hal_power_is_power_save_set (void)
+{
+    HalDevice *device;
+    gboolean   val;
+    
+    device = hal_device_new ();
+    
+    hal_device_set_udi (device, "/org/freedesktop/Hal/devices/computer");
+    
+    val = hal_device_get_property_bool (device, "power_management.is_powersave_set");
+    
+    g_object_unref (device);
+    
+    return val;
+}
+
+static gboolean 
+hal_power_set_power_save_internal (HalPower *power, gboolean set)
+{
+    DBusGConnection *bus;
+    DBusGProxy      *proxy;
+    GError          *error = NULL;
+    gint             ret = 0;
+    
+    g_return_val_if_fail (HAL_IS_POWER (power), FALSE);
+
+    if ( hal_power_is_power_save_set () == set )
+	return TRUE;
+    
+    bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, NULL);
+    
+    proxy = dbus_g_proxy_new_for_name (bus, 
+				       "org.freedesktop.Hal",
+				       "/org/freedesktop/Hal/devices/computer",
+				       "org.freedesktop.Hal.Device.SystemPowerManagement");
+				       
+    if ( !proxy )
+    {
+	g_warning ("Unable to get proxy for /org/freedesktop/Hal/devices/computer");
+	dbus_g_connection_unref (bus);
+	return FALSE;
+    }
+    
+    dbus_g_proxy_call (proxy, "SetPowerSave", &error,
+		       G_TYPE_BOOLEAN, set,
+		       G_TYPE_INVALID,
+		       G_TYPE_INT, &ret,
+		       G_TYPE_INVALID);
+    
+    dbus_g_connection_unref (bus);
+    g_object_unref (proxy);
+    
+    if ( error )
+    {
+	g_warning ("%s: ", error->message);
+	g_error_free (error);
+	return FALSE;
+    }
+    return ret == 0 ? TRUE : FALSE;
+}
+
 static void
 hal_power_init(HalPower *power)
 {
@@ -313,4 +374,18 @@ hal_power_get_batteries (HalPower *power)
     g_list_free (list);
 out:
    return array;
+}
+
+gboolean hal_power_set_power_save  (HalPower *power)
+{
+    g_return_val_if_fail (HAL_IS_POWER (power), FALSE);
+
+    return hal_power_set_power_save_internal (power, TRUE);
+}
+
+gboolean hal_power_unset_power_save (HalPower *power)
+{
+    g_return_val_if_fail (HAL_IS_POWER (power), FALSE);
+
+    return hal_power_set_power_save_internal (power, FALSE);
 }

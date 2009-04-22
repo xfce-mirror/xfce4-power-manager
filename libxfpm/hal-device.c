@@ -333,30 +333,6 @@ gint hal_device_get_property_int (HalDevice *device, const gchar *property)
     return value;
 }
 
-gboolean hal_device_set_property_int (HalDevice *device, const gchar *property, gint value)
-{
-    g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
-    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
-    
-    GError *error = NULL;
-    gboolean ret;
-    
-    ret = dbus_g_proxy_call (device->priv->proxy, "SetPropertyInteger", &error,
-			     G_TYPE_STRING, property,
-			     G_TYPE_INT, value,
-			     G_TYPE_INVALID,
-			     G_TYPE_INVALID);
-    
-    if ( error )
-    {
-	g_critical ("Error setting int value %d on device %s in property %s: %s",
-		     value, device->priv->udi, property, error->message);
-	g_error_free (error);
-    }
-    
-    return ret;
-}
-
 gchar *hal_device_get_property_string  (HalDevice *device, const gchar *property)
 {
     g_return_val_if_fail (HAL_IS_DEVICE(device), NULL);
