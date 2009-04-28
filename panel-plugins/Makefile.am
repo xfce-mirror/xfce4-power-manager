@@ -1,3 +1,2 @@
 SUBDIRS = 		\
-	brightness	\
-	inhibit
+	brightness

@@ -263,8 +263,6 @@ hal_power_set_power_save_internal (HalPower *power, gboolean set)
     GError          *error = NULL;
     gint             ret = 0;
     
-    g_return_val_if_fail (HAL_IS_POWER (power), FALSE);
-
     if ( hal_power_is_power_save_set () == set )
 	return TRUE;
     

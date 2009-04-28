@@ -1273,7 +1273,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
 }
 
 static void
-_cursor_changed_cb(GtkIconView *view,gpointer data)
+_cursor_changed_cb(GtkTreeView *view,gpointer data)
 {
     GtkTreeSelection *sel;
     GtkTreeModel     *model;
@@ -1379,7 +1379,7 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     gtk_list_store_append(list_store, &iter);
     if ( pix )
     {
-	    gtk_list_store_set(list_store, &iter, 0, pix, 1, _("Advanced"), 2, i, -1);
+	    gtk_list_store_set(list_store, &iter, 0, pix, 1, _("Extended"), 2, i, -1);
 	    g_object_unref(pix);
     }
     else
