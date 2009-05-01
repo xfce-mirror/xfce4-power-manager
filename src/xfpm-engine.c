@@ -332,7 +332,16 @@ xfpm_engine_set_inactivity_timeouts (XfpmEngine *engine)
     on_ac = xfpm_xfconf_get_property_int (engine->priv->conf, ON_AC_INACTIVITY_TIMEOUT );
     on_battery = xfpm_xfconf_get_property_int (engine->priv->conf, ON_BATTERY_INACTIVITY_TIMEOUT );
     
-    TRACE ("timeouts on_ac=%d on_battery=%d", on_ac, on_battery);
+#ifdef DEBUG
+    if ( on_ac == 30 )
+	TRACE ("setting inactivity sleep timeout on ac to never");
+    else
+	TRACE ("setting inactivity sleep timeout on ac to %d", on_ac);
+    if ( on_battery == 30 )
+	TRACE ("setting inactivity sleep timeout on battery to never");
+    else
+	TRACE ("setting inactivity sleep timeout on battery to %d", on_battery);
+#endif
     
     if ( on_ac == 30 )
     {

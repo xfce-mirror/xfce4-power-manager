@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-28 13:18+0200\n"
+"POT-Creation-Date: 2009-05-01 09:51+0200\n"
 "PO-Revision-Date: 2009-04-05 13:03+0200\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German\n"
@@ -169,7 +169,7 @@ msgid "When sleep button is pressed:"
 msgstr "Bei Betätigung der Taste für den Schlafmodus:"
 
 #: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:119
-#: ../src/xfpm-main.c:182 ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:343
+#: ../src/xfpm-main.c:183 ../src/xfpm-main.c:272 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Energieverwaltung für Xfce"
@@ -266,13 +266,9 @@ msgstr "Wenn alle Stromquellen des Computers diesen Level erreichen"
 msgid "On Battery"
 msgstr "Im Batteriebetrieb"
 
-#: ../settings/xfpm-settings.c:1382
+#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1387
 msgid "Extended"
 msgstr "Erweitert"
-
-#: ../settings/xfpm-settings.c:1387
-msgid "Advance"
-msgstr "Weiter"
 
 #: ../settings/xfpm-settings-main.c:73
 msgid "Settings manager socket"
@@ -282,8 +278,8 @@ msgstr "Socket der Sitzungsverwaltung"
 msgid "SOCKET ID"
 msgstr "SOCKET-NR"
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:143
-#: ../src/xfpm-main.c:165
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:166
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr ""
@@ -302,7 +298,7 @@ msgstr "Einstellungen der Energieverwaltung für Xfce"
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Kann keine Verbindung mit der Energieverwaltung für Xfce herstellen"
 
-#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:198
+#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:199
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Energieverwaltung für Xfce läuft nicht"
@@ -472,7 +468,7 @@ msgstr "Modell:"
 msgid "Battery information"
 msgstr "Batterieinformation"
 
-#: ../src/xfpm-main.c:52
+#: ../src/xfpm-main.c:53
 #, c-format
 msgid ""
 "\n"
@@ -493,40 +489,40 @@ msgstr ""
 "Veröffentlicht unter der GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:130
 msgid "Do not daemonize"
 msgstr "Nicht in den Dämonmodus gehen"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:131
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Die laufende Energieverwaltung für Xfce neustarten"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:132
 msgid "Show the configuration dialog"
 msgstr "Einstellungsdialog anzeigen"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:133
 msgid "Quit any running xfce power manager"
 msgstr "Energieverwaltung für Xfce beenden"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:164
 #, c-format
 msgid "Too many arguments"
 msgstr "Zu viele Argumente"
 
-#: ../src/xfpm-main.c:179
+#: ../src/xfpm-main.c:180
 msgid "Unable to get connection to the message bus session"
 msgstr "Kann keine Verbindung zur Sitzung des Nachrichtenbusses erhalten"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:273
 msgid "Another power manager is already running"
 msgstr "Eine andere Energieverwaltung läuft bereits"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Energieverwaltung für Xfce läuft bereits"
@@ -617,17 +613,17 @@ msgid ""
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-engine.c:639 ../src/xfpm-engine.c:664 ../src/xfpm-engine.c:693
+#: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
 #, c-format
 msgid "Permission denied"
 msgstr "Erlaubnis verweigert"
 
-#: ../src/xfpm-engine.c:671
+#: ../src/xfpm-engine.c:680
 #, c-format
 msgid "Hibernate not supported"
 msgstr "Ruhezustand wird nicht unterstützt"
 
-#: ../src/xfpm-engine.c:700
+#: ../src/xfpm-engine.c:709
 #, c-format
 msgid "Suspend not supported"
 msgstr "Standbymodus wird nicht unterstützt"
@@ -732,6 +728,9 @@ msgstr "Kein Gerät gefunden"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Plugin zur Helligkeitsregelung"
+
+#~ msgid "Advance"
+#~ msgstr "Weiter"
 
 #~ msgid "gtk-close"
 #~ msgstr "gtk-close"

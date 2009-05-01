@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-28 13:18+0200\n"
+"POT-Creation-Date: 2009-05-01 09:51+0200\n"
 "PO-Revision-Date: 2009-01-15 20:16+0100\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech\n"
@@ -180,7 +180,7 @@ msgid "When sleep button is pressed:"
 msgstr "Stisknete-li tlačítko režimu spánku, provést tuto akci:"
 
 #: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:119
-#: ../src/xfpm-main.c:182 ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:343
+#: ../src/xfpm-main.c:183 ../src/xfpm-main.c:272 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Správce napájení pro Xfce"
@@ -279,13 +279,9 @@ msgstr ""
 msgid "On Battery"
 msgstr "Při napájení z baterie"
 
-#: ../settings/xfpm-settings.c:1382
+#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1387
 msgid "Extended"
 msgstr "Rozšířené"
-
-#: ../settings/xfpm-settings.c:1387
-msgid "Advance"
-msgstr ""
 
 #: ../settings/xfpm-settings-main.c:73
 msgid "Settings manager socket"
@@ -295,8 +291,8 @@ msgstr "Soket správce nastavení"
 msgid "SOCKET ID"
 msgstr "SOCKET ID"
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:143
-#: ../src/xfpm-main.c:165
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:166
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Informace o použití získáte příkazem '%s --help'."
@@ -317,7 +313,7 @@ msgstr "Správce napájení pro Xfce"
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Nelze zavést správce napájení pro xfce4"
 
-#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:198
+#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:199
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Správce napájení Xfce není spuštěn"
@@ -507,7 +503,7 @@ msgstr ""
 msgid "Battery information"
 msgstr "Konfigurace baterie"
 
-#: ../src/xfpm-main.c:52
+#: ../src/xfpm-main.c:53
 #, c-format
 msgid ""
 "\n"
@@ -528,43 +524,43 @@ msgstr ""
 "Vydáno pod licencí GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:130
 msgid "Do not daemonize"
 msgstr ""
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:131
 #, fuzzy
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Ukončit všechny běžící správce napájení"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:132
 msgid "Show the configuration dialog"
 msgstr "Zobrazit konfigurační dialogové okno"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:133
 msgid "Quit any running xfce power manager"
 msgstr "Ukončit všechny běžící správce napájení"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Version information"
 msgstr "Informace o verzi"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:164
 #, c-format
 msgid "Too many arguments"
 msgstr "Příliš mnoho argumentů"
 
-#: ../src/xfpm-main.c:179
+#: ../src/xfpm-main.c:180
 #, fuzzy
 msgid "Unable to get connection to the message bus session"
 msgstr "Spojení se sběrnicí DBus se nepodařilo navázat: %s"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:273
 #, fuzzy
 msgid "Another power manager is already running"
 msgstr "Správce napájení pro Xfce je již spuštěn"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Správce napájení pro Xfce je již spuštěn"
@@ -644,17 +640,17 @@ msgid ""
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-engine.c:639 ../src/xfpm-engine.c:664 ../src/xfpm-engine.c:693
+#: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
 #, c-format
 msgid "Permission denied"
 msgstr ""
 
-#: ../src/xfpm-engine.c:671
+#: ../src/xfpm-engine.c:680
 #, fuzzy, c-format
 msgid "Hibernate not supported"
 msgstr "Hibernovat systém"
 
-#: ../src/xfpm-engine.c:700
+#: ../src/xfpm-engine.c:709
 #, c-format
 msgid "Suspend not supported"
 msgstr ""

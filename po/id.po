@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-28 13:18+0200\n"
+"POT-Creation-Date: 2009-05-01 09:51+0200\n"
 "PO-Revision-Date: 2009-04-11 21:49-0400\n"
 "Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
 "Language-Team: Indonesian\n"
@@ -166,7 +166,7 @@ msgid "When sleep button is pressed:"
 msgstr "Ketika tombol tidur ditekan:"
 
 #: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:119
-#: ../src/xfpm-main.c:182 ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:343
+#: ../src/xfpm-main.c:183 ../src/xfpm-main.c:272 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Manajer Daya Xfce"
@@ -263,13 +263,9 @@ msgstr "Jika daya utama pada komputer mencapai nilai persentase pengisian ini"
 msgid "On Battery"
 msgstr "Pada Baterai"
 
-#: ../settings/xfpm-settings.c:1382
+#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1387
 msgid "Extended"
 msgstr "Diperluas"
-
-#: ../settings/xfpm-settings.c:1387
-msgid "Advance"
-msgstr "Mahir"
 
 #: ../settings/xfpm-settings-main.c:73
 msgid "Settings manager socket"
@@ -279,8 +275,8 @@ msgstr "Soket manajer pengaturan"
 msgid "SOCKET ID"
 msgstr "ID SOKET"
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:143
-#: ../src/xfpm-main.c:165
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:166
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Ketik '%s --help' untuk penggunaan."
@@ -297,7 +293,7 @@ msgstr "Pengaturan Manajer Daya Xfce"
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Tak dapat menyambung ke Manajer Daya Xfce"
 
-#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:198
+#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:199
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Manajer daya Xfce tak berjalan"
@@ -466,7 +462,7 @@ msgstr "Model:"
 msgid "Battery information"
 msgstr "Informasi baterai"
 
-#: ../src/xfpm-main.c:52
+#: ../src/xfpm-main.c:53
 #, c-format
 msgid ""
 "\n"
@@ -487,41 +483,41 @@ msgstr ""
 "Dilisensikan di bawah GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:130
 msgid "Do not daemonize"
 msgstr "Jangan jurikkan"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:131
 #, fuzzy
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Start ulang instansi manajer daya xfce yang berjalan"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:132
 msgid "Show the configuration dialog"
 msgstr "Tampilkan dialog konfigurasi"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:133
 msgid "Quit any running xfce power manager"
 msgstr "Keluar manajer daya xfce yang berjalan"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Version information"
 msgstr "Informasi versi"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:164
 #, c-format
 msgid "Too many arguments"
 msgstr "Terlalu banyak argumen"
 
-#: ../src/xfpm-main.c:179
+#: ../src/xfpm-main.c:180
 msgid "Unable to get connection to the message bus session"
 msgstr "Tak bisa mendapatkan koneksi ke sesi bus pesan"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:273
 msgid "Another power manager is already running"
 msgstr "Manajer daya lainnya telah berjalan"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Manajer daya Xfce telah berjalan"
@@ -610,17 +606,17 @@ msgid ""
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-engine.c:639 ../src/xfpm-engine.c:664 ../src/xfpm-engine.c:693
+#: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
 #, c-format
 msgid "Permission denied"
 msgstr "Hak akses ditolak"
 
-#: ../src/xfpm-engine.c:671
+#: ../src/xfpm-engine.c:680
 #, c-format
 msgid "Hibernate not supported"
 msgstr "Hibernasi tak disokong"
 
-#: ../src/xfpm-engine.c:700
+#: ../src/xfpm-engine.c:709
 #, c-format
 msgid "Suspend not supported"
 msgstr "Suspensi tak disokong"
@@ -724,6 +720,9 @@ msgstr "Tak ada divais yang ditemukan"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Plugin kecerahan"
+
+#~ msgid "Advance"
+#~ msgstr "Mahir"
 
 #~ msgid "Xfce power manager is not running to releod it"
 #~ msgstr "Manajer daya Xfce tak berjalan untuk memuatnya"

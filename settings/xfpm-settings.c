@@ -1384,7 +1384,7 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     }
     else
     {
-	    gtk_list_store_set(list_store, &iter, 1, _("Advance"), 2, i, -1);
+	    gtk_list_store_set(list_store, &iter, 1, _("Extended"), 2, i, -1);
     }
 
     sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));

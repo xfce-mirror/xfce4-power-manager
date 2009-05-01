@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-28 13:18+0200\n"
+"POT-Creation-Date: 2009-05-01 09:51+0200\n"
 "PO-Revision-Date: 2009-04-21 21:28+0200\n"
 "Last-Translator: Evaggelos Balaskas <ebalaskas@ebalaskas.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -170,7 +170,7 @@ msgid "When sleep button is pressed:"
 msgstr "Όταν το κουμπί κλεισίματος πατηθεί:"
 
 #: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:119
-#: ../src/xfpm-main.c:182 ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:343
+#: ../src/xfpm-main.c:183 ../src/xfpm-main.c:272 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Διαχειριστής ρεύματος xfce"
@@ -269,13 +269,9 @@ msgstr ""
 msgid "On Battery"
 msgstr "Σε μπαταρία"
 
-#: ../settings/xfpm-settings.c:1382
+#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1387
 msgid "Extended"
 msgstr "Εκτεναμένες"
-
-#: ../settings/xfpm-settings.c:1387
-msgid "Advance"
-msgstr "Προχωρημένο"
 
 #: ../settings/xfpm-settings-main.c:73
 msgid "Settings manager socket"
@@ -285,8 +281,8 @@ msgstr "Διαχειριστής ρυθμίσεων υποδοχής"
 msgid "SOCKET ID"
 msgstr "Ταυτότητα υποδοχής"
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:143
-#: ../src/xfpm-main.c:165
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:166
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Πληκτρολόγησε '%s --help' για την χρήση."
@@ -305,7 +301,7 @@ msgstr "Ρυθμίσεις xfce διαχειριστή ρεύματος"
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Αδυναμία σύνδεσης με τον διαχειριστή ρεύματος xfce"
 
-#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:198
+#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:199
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Ο διαχειριστής ρεύματος xfce δεν εκτελείται"
@@ -475,7 +471,7 @@ msgstr "Μοντέλο:"
 msgid "Battery information"
 msgstr "Πληροφορίες μπαταρίας"
 
-#: ../src/xfpm-main.c:52
+#: ../src/xfpm-main.c:53
 #, c-format
 msgid ""
 "\n"
@@ -496,41 +492,41 @@ msgstr ""
 "Αδειοδότηση κάτω από την GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:130
 msgid "Do not daemonize"
 msgstr "Όχι ως δαίμονας"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:131
 #, fuzzy
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Επανεκκίνηση του τρέχοντος στιγμιότυπου από τον διαχειριστή ρεύματος"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:132
 msgid "Show the configuration dialog"
 msgstr "Εμφάνιση διαλόγου ρύθμισης"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:133
 msgid "Quit any running xfce power manager"
 msgstr "Τερματισμός κάθε διαχειριστή ρεύματος xfce που εκτελείται"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Version information"
 msgstr "Πληροφορίες έκδοσης"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:164
 #, c-format
 msgid "Too many arguments"
 msgstr "Πάρα πολλά ορίσματα"
 
-#: ../src/xfpm-main.c:179
+#: ../src/xfpm-main.c:180
 msgid "Unable to get connection to the message bus session"
 msgstr "Αδυναμία να συνδεθεί με τον δίαυλο μηνυμάτων συνεδρίας"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:273
 msgid "Another power manager is already running"
 msgstr "Ένας άλλος διαχειριστής ρεύματος τρέχει ήδη"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Ο διαχειριστής ρεύματος xfce ήδη εκτελείται"
@@ -619,17 +615,17 @@ msgid ""
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-engine.c:639 ../src/xfpm-engine.c:664 ../src/xfpm-engine.c:693
+#: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
 #, c-format
 msgid "Permission denied"
 msgstr "Απαγορεύεται η πρόσβαση"
 
-#: ../src/xfpm-engine.c:671
+#: ../src/xfpm-engine.c:680
 #, c-format
 msgid "Hibernate not supported"
 msgstr "Η αδρανοποιήση δεν υποστηρίζεται"
 
-#: ../src/xfpm-engine.c:700
+#: ../src/xfpm-engine.c:709
 #, c-format
 msgid "Suspend not supported"
 msgstr "Η αναστολή δεν υποστήριζεται"
@@ -735,6 +731,9 @@ msgstr "Δεν βρέθηκε καμία συσκευή"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Άρθρωμα φωτεινότητας"
+
+#~ msgid "Advance"
+#~ msgstr "Προχωρημένο"
 
 #~ msgid "Xfce power manager is not running to releod it"
 #~ msgstr ""

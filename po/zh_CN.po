@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-28 13:18+0200\n"
+"POT-Creation-Date: 2009-05-01 09:51+0200\n"
 "PO-Revision-Date: 2009-01-15 10:25-0800\n"
 "Last-Translator: Chris K. Zhang <plutino@gmail.com>\n"
 "Language-Team: Chinese (simplified)\n"
@@ -180,7 +180,7 @@ msgid "When sleep button is pressed:"
 msgstr "按下睡眠按钮时执行"
 
 #: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:119
-#: ../src/xfpm-main.c:182 ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:343
+#: ../src/xfpm-main.c:183 ../src/xfpm-main.c:272 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Xfce 电源管理器"
@@ -279,13 +279,9 @@ msgstr ""
 msgid "On Battery"
 msgstr "使用电池"
 
-#: ../settings/xfpm-settings.c:1382
+#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1387
 msgid "Extended"
 msgstr "扩展"
-
-#: ../settings/xfpm-settings.c:1387
-msgid "Advance"
-msgstr ""
 
 #: ../settings/xfpm-settings-main.c:73
 msgid "Settings manager socket"
@@ -295,8 +291,8 @@ msgstr "设置管理器套接字"
 msgid "SOCKET ID"
 msgstr "套接字 ID"
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:143
-#: ../src/xfpm-main.c:165
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:166
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "输入 '%s --help' 查看使用方式"
@@ -315,7 +311,7 @@ msgstr "Xfce 电源管理器"
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "无法载入 xfce4 电源管理器"
 
-#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:198
+#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:199
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce 电源管理器未运行"
@@ -505,7 +501,7 @@ msgstr ""
 msgid "Battery information"
 msgstr "电池配置"
 
-#: ../src/xfpm-main.c:52
+#: ../src/xfpm-main.c:53
 #, c-format
 msgid ""
 "\n"
@@ -526,43 +522,43 @@ msgstr ""
 "Licensed under the GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:130
 msgid "Do not daemonize"
 msgstr ""
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:131
 #, fuzzy
 msgid "Restart the running instance of Xfce power manager"
 msgstr "退出正在运行中的任何 xfce 电源管理器程序"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:132
 msgid "Show the configuration dialog"
 msgstr "显示配置对话框"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:133
 msgid "Quit any running xfce power manager"
 msgstr "退出正在运行中的任何 xfce 电源管理器程序"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Version information"
 msgstr "版本信息"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:164
 #, c-format
 msgid "Too many arguments"
 msgstr "太多参数"
 
-#: ../src/xfpm-main.c:179
+#: ../src/xfpm-main.c:180
 #, fuzzy
 msgid "Unable to get connection to the message bus session"
 msgstr "无法连接至DBus：%s"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:273
 #, fuzzy
 msgid "Another power manager is already running"
 msgstr "Xfce 电源管理器已在运行中"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce 电源管理器已在运行中"
@@ -641,17 +637,17 @@ msgid ""
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-engine.c:639 ../src/xfpm-engine.c:664 ../src/xfpm-engine.c:693
+#: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
 #, c-format
 msgid "Permission denied"
 msgstr ""
 
-#: ../src/xfpm-engine.c:671
+#: ../src/xfpm-engine.c:680
 #, fuzzy, c-format
 msgid "Hibernate not supported"
 msgstr "休眠"
 
-#: ../src/xfpm-engine.c:700
+#: ../src/xfpm-engine.c:709
 #, c-format
 msgid "Suspend not supported"
 msgstr ""

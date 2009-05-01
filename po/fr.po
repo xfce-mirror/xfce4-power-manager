@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-28 13:18+0200\n"
+"POT-Creation-Date: 2009-05-01 09:51+0200\n"
 "PO-Revision-Date: 2009-04-28 23:00+0200\n"
 "Last-Translator: Maximilian Schleiss <maximilian@xfce.org>\n"
 "Language-Team: French <xfce-i18n@xfce.org>\n"
@@ -165,7 +165,7 @@ msgid "When sleep button is pressed:"
 msgstr "Appuie sur le bouton de mise en veille :"
 
 #: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:119
-#: ../src/xfpm-main.c:182 ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:343
+#: ../src/xfpm-main.c:183 ../src/xfpm-main.c:272 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Gestionnaire d'alimentation"
@@ -235,8 +235,8 @@ msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
-"Désactiver le DPMS, e.g. pour ne pas tenter l'extinction de l'écran ou "
-"sa mise en veille"
+"Désactiver le DPMS, e.g. pour ne pas tenter l'extinction de l'écran ou sa "
+"mise en veille"
 
 #: ../settings/xfpm-settings.c:963 ../settings/xfpm-settings.c:1030
 #: ../settings/xfpm-settings.c:1097
@@ -253,18 +253,15 @@ msgstr "Opération de mise en hibernation non autorisée"
 
 #: ../settings/xfpm-settings.c:1216
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Lorsque toutes les sources de puissance de la machine atteignent ce niveau"
+msgstr ""
+"Lorsque toutes les sources de puissance de la machine atteignent ce niveau"
 
 #: ../settings/xfpm-settings.c:1368 ../settings/xfpm-settings.c:1373
 msgid "On Battery"
 msgstr "Batterie"
 
-#: ../settings/xfpm-settings.c:1382
+#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1387
 msgid "Extended"
-msgstr "Avancée"
-
-#: ../settings/xfpm-settings.c:1387
-msgid "Advance"
 msgstr "Avancée"
 
 #: ../settings/xfpm-settings-main.c:73
@@ -275,8 +272,8 @@ msgstr "Socket du gestionnaire de paramètres"
 msgid "SOCKET ID"
 msgstr "ID SOCKET"
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:143
-#: ../src/xfpm-main.c:165
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:166
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Exécuter '%s --help' pour l'usage."
@@ -295,7 +292,8 @@ msgstr "Configuration du gestionnaire d'alimentation Xfce"
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Échec au chargement du gestionnaire d'alimentation Xfce"
 
-#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:198
+#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:199
+#, c-format
 msgid "Xfce power manager is not running"
 msgstr "Le gestionnaire d'alimentation Xfce n'est pas lancé"
 
@@ -414,13 +412,11 @@ msgstr "La batterie est absente"
 
 #: ../src/xfpm-battery.c:399
 msgid "Estimated time left"
-msgstr ""
-"Estimation du temps restant"
+msgstr "Estimation du temps restant"
 
 #: ../src/xfpm-battery.c:403
 msgid "Estimated time to be fully charged"
-msgstr ""
-"Estimation du temps de charge restant"
+msgstr "Estimation du temps de charge restant"
 
 #: ../src/xfpm-battery.c:406
 msgid "hour"
@@ -466,7 +462,7 @@ msgstr "Modèle :"
 msgid "Battery information"
 msgstr "Information de la batterie"
 
-#: ../src/xfpm-main.c:52
+#: ../src/xfpm-main.c:53
 #, c-format
 msgid ""
 "\n"
@@ -487,39 +483,41 @@ msgstr ""
 "Sous licence GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:130
 msgid "Do not daemonize"
 msgstr "Ne pas lancer en arrière-plan"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:131
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:132
 msgid "Show the configuration dialog"
 msgstr "Afficher le dialogue de configuration"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:133
 msgid "Quit any running xfce power manager"
 msgstr "Quitter toutes les instances de gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Version information"
 msgstr "Information sur la version"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:164
+#, c-format
 msgid "Too many arguments"
 msgstr "Trop d'arguments"
 
-#: ../src/xfpm-main.c:179
+#: ../src/xfpm-main.c:180
 msgid "Unable to get connection to the message bus session"
 msgstr "Échec de connexion à une session au bus de message"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:273
 msgid "Another power manager is already running"
 msgstr "Un autre gestionnaire d'alimentation est déjà lancé"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
+#, c-format
 msgid "Xfce power manager is already running"
 msgstr "Le gestionnaire d'alimentation Xfce est déjà lancé"
 
@@ -594,15 +592,18 @@ msgid ""
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-engine.c:639 ../src/xfpm-engine.c:664 ../src/xfpm-engine.c:693
+#: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
+#, c-format
 msgid "Permission denied"
 msgstr "Permission refusée"
 
-#: ../src/xfpm-engine.c:671
+#: ../src/xfpm-engine.c:680
+#, c-format
 msgid "Hibernate not supported"
 msgstr "Hibernation non supportée"
 
-#: ../src/xfpm-engine.c:700
+#: ../src/xfpm-engine.c:709
+#, c-format
 msgid "Suspend not supported"
 msgstr "Mise en veille non supportée"
 
@@ -611,10 +612,12 @@ msgid "HAL daemon is not running"
 msgstr "Le démon HAL n'est pas lancé"
 
 #: ../src/xfpm-inhibit.c:333
+#, c-format
 msgid "Invalid arguments"
 msgstr "Paramètres invalides"
 
 #: ../src/xfpm-inhibit.c:359
+#, c-format
 msgid "Invalid cookie"
 msgstr "Cookie invalide"
 
@@ -648,6 +651,7 @@ msgstr "Mise en veille du système échouée"
 
 #: ../src/xfpm-shutdown.c:403 ../src/xfpm-shutdown.c:426
 #: ../src/xfpm-shutdown.c:460
+#, c-format
 msgid "HAL daemon is currently not connected"
 msgstr "Le démon HAL n'est pas connecté"
 
@@ -705,6 +709,9 @@ msgstr "Aucun mode du processeur disponible"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr ""
+
+#~ msgid "Advance"
+#~ msgstr "Avancée"
 
 #, fuzzy
 #~ msgid "Xfce power manager is not running to releod it"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager 0.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-28 13:18+0200\n"
+"POT-Creation-Date: 2009-05-01 09:51+0200\n"
 "PO-Revision-Date: 2009-04-01 18:49+0100\n"
 "Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -168,7 +168,7 @@ msgid "When sleep button is pressed:"
 msgstr "Ved tryk på hvile-knap:"
 
 #: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:119
-#: ../src/xfpm-main.c:182 ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:343
+#: ../src/xfpm-main.c:183 ../src/xfpm-main.c:272 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Strømstyring til Xfce"
@@ -264,13 +264,9 @@ msgstr "Når alle strømkilder på denne computer når til dette ladeniveau"
 msgid "On Battery"
 msgstr "Batteristrøm"
 
-#: ../settings/xfpm-settings.c:1382
+#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1387
 msgid "Extended"
 msgstr ""
-
-#: ../settings/xfpm-settings.c:1387
-msgid "Advance"
-msgstr "Avanceret"
 
 #: ../settings/xfpm-settings-main.c:73
 msgid "Settings manager socket"
@@ -280,8 +276,8 @@ msgstr ""
 msgid "SOCKET ID"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:143
-#: ../src/xfpm-main.c:165
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:166
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Tast '%s --help' for brug."
@@ -299,7 +295,7 @@ msgstr "Strømstyringsindstillinger til Xfce"
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Kunne ikke forbinde til strømstyring til Xfce"
 
-#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:198
+#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:199
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Strømstyring til Xfce kører ikke"
@@ -468,7 +464,7 @@ msgstr "Model:"
 msgid "Battery information"
 msgstr "Batteriinformation"
 
-#: ../src/xfpm-main.c:52
+#: ../src/xfpm-main.c:53
 #, c-format
 msgid ""
 "\n"
@@ -489,40 +485,40 @@ msgstr ""
 "Licenceret under GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:130
 msgid "Do not daemonize"
 msgstr "Undlad at dæmonisere"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:131
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Genstart den kørende instans af strømstyring til Xfce"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:132
 msgid "Show the configuration dialog"
 msgstr "Vis indstillingsvindue"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:133
 msgid "Quit any running xfce power manager"
 msgstr "Afslut enhver kørende strømstyring til Xfce"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:164
 #, c-format
 msgid "Too many arguments"
 msgstr "For mange argumenter"
 
-#: ../src/xfpm-main.c:179
+#: ../src/xfpm-main.c:180
 msgid "Unable to get connection to the message bus session"
 msgstr "Kunne ikke forbinde til beskedsbussessionen"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:273
 msgid "Another power manager is already running"
 msgstr "En anden strømstyring kører allerede"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Strømstyring til Xfce kører allerede"
@@ -610,17 +606,17 @@ msgid ""
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-engine.c:639 ../src/xfpm-engine.c:664 ../src/xfpm-engine.c:693
+#: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
 #, c-format
 msgid "Permission denied"
 msgstr "Tilladelse afvist"
 
-#: ../src/xfpm-engine.c:671
+#: ../src/xfpm-engine.c:680
 #, c-format
 msgid "Hibernate not supported"
 msgstr "Dvaletilstand er ikke understøttet"
 
-#: ../src/xfpm-engine.c:700
+#: ../src/xfpm-engine.c:709
 #, c-format
 msgid "Suspend not supported"
 msgstr "Dvaletilstand er ikke understøttet"
@@ -727,6 +723,9 @@ msgstr "Ingen enhed fundet"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Moduludvidelse for lysstyrke"
+
+#~ msgid "Advance"
+#~ msgstr "Avanceret"
 
 #~ msgid "gtk-close"
 #~ msgstr "gtk-close"

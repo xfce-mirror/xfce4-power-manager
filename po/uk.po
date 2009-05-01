@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-28 13:18+0200\n"
+"POT-Creation-Date: 2009-05-01 09:51+0200\n"
 "PO-Revision-Date: 2009-01-26 17:30+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
@@ -182,7 +182,7 @@ msgid "When sleep button is pressed:"
 msgstr "Коли натиснуто кнопку заснути зробити"
 
 #: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:119
-#: ../src/xfpm-main.c:182 ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:343
+#: ../src/xfpm-main.c:183 ../src/xfpm-main.c:272 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Менеджер живлення Xfce"
@@ -281,13 +281,9 @@ msgstr ""
 msgid "On Battery"
 msgstr "Живлення від батареї"
 
-#: ../settings/xfpm-settings.c:1382
+#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1387
 msgid "Extended"
 msgstr "Розширені"
-
-#: ../settings/xfpm-settings.c:1387
-msgid "Advance"
-msgstr ""
 
 #: ../settings/xfpm-settings-main.c:73
 msgid "Settings manager socket"
@@ -297,8 +293,8 @@ msgstr "Сокет менеджера властивостей"
 msgid "SOCKET ID"
 msgstr "ID сокета"
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:143
-#: ../src/xfpm-main.c:165
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:166
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Наберіть '%s --help' для використання."
@@ -319,7 +315,7 @@ msgstr "Менеджер живлення Xfce"
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Неможливо завантажити менеджер живлення xfce4"
 
-#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:198
+#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:199
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Менеджер живлення Xfce не працює"
@@ -509,7 +505,7 @@ msgstr ""
 msgid "Battery information"
 msgstr "Налаштуванні при живленні від батареї"
 
-#: ../src/xfpm-main.c:52
+#: ../src/xfpm-main.c:53
 #, c-format
 msgid ""
 "\n"
@@ -530,43 +526,43 @@ msgstr ""
 "Ліцензовано під GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:130
 msgid "Do not daemonize"
 msgstr ""
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:131
 #, fuzzy
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Завершити будь-який запущений менеджер живлення xfce"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:132
 msgid "Show the configuration dialog"
 msgstr "Показати діалог налаштування"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:133
 msgid "Quit any running xfce power manager"
 msgstr "Завершити будь-який запущений менеджер живлення xfce"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Version information"
 msgstr "Інформація про версію"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:164
 #, c-format
 msgid "Too many arguments"
 msgstr "Забагато параметрів"
 
-#: ../src/xfpm-main.c:179
+#: ../src/xfpm-main.c:180
 #, fuzzy
 msgid "Unable to get connection to the message bus session"
 msgstr "Не можливо з'єднатись з DBus: %s"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:273
 #, fuzzy
 msgid "Another power manager is already running"
 msgstr "Менеджер живлення Xfce вже працює"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Менеджер живлення Xfce вже працює"
@@ -646,17 +642,17 @@ msgid ""
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-engine.c:639 ../src/xfpm-engine.c:664 ../src/xfpm-engine.c:693
+#: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
 #, c-format
 msgid "Permission denied"
 msgstr ""
 
-#: ../src/xfpm-engine.c:671
+#: ../src/xfpm-engine.c:680
 #, fuzzy, c-format
 msgid "Hibernate not supported"
 msgstr "Перевести систему в сплячку "
 
-#: ../src/xfpm-engine.c:700
+#: ../src/xfpm-engine.c:709
 #, c-format
 msgid "Suspend not supported"
 msgstr ""
