@@ -325,7 +325,8 @@ xfpm_battery_refresh_common (XfpmBattery *battery, guint percentage, XfpmBattery
 	battery->priv->state = state;
 	TRACE("Emitting signal battery state changed");
 	g_signal_emit (G_OBJECT(battery), signals[BATTERY_STATE_CHANGED], 0, state);
-	xfpm_battery_notify (battery);
+	if ( battery->priv->state != BATTERY_NOT_FULLY_CHARGED )
+	    xfpm_battery_notify (battery);
     }
 }
 
