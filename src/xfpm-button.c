@@ -43,7 +43,7 @@ static void xfpm_button_finalize   (GObject *object);
 #define XFPM_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_BUTTON, XfpmButtonPrivate))
 
-#define SLEEP_KEY_TIMEOUT 5.0f
+#define SLEEP_KEY_TIMEOUT 6.0f
 
 struct XfpmButtonPrivate
 {

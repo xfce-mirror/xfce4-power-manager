@@ -398,10 +398,11 @@ xfpm_battery_refresh_primary (XfpmBattery *battery, gboolean is_present,
         {
             est_time = _("Estimated time left");
         }
-        else if ( state == BATTERY_IS_CHARGING )
+        else //* BATTERY_IS_CHARGING
         {
             est_time = _("Estimated time to be fully charged");
         }
+
         time_str = g_strdup_printf("%s: %d %s %d %s",est_time,
                                    hours,hours > 1 ? _("hours") : _("hour") ,
                                    minutes_left, minutes_left > 1 ? _("minutes") : _("minute"));

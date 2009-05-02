@@ -85,7 +85,7 @@ xfpm_backlight_get_device (XfpmBacklight *bk)
 	
 	max_level = xfpm_brightness_hal_get_max_level (bk->priv->br);
 	xfpm_brightness_widget_set_max_level (bk->priv->widget,
-					      max_level -1 );
+					      max_level);
     }
     
 }

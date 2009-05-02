@@ -218,7 +218,7 @@ hal_battery_class_init(HalBatteryClass *klass)
 				    PROP_UNIT,
 				    g_param_spec_string("unit",
 							 NULL, NULL,
-							 FALSE,
+							 NULL,
 							 G_PARAM_READABLE));
 							 
     g_type_class_add_private(klass,sizeof(HalBatteryPrivate));

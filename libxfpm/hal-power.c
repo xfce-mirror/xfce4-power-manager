@@ -235,7 +235,6 @@ hal_power_get_batteries_internal (HalPower *power)
 
 out:
     g_object_unref (device);
-    
 }
 
 static gboolean
@@ -245,7 +244,7 @@ hal_power_is_power_save_set (void)
     gboolean   val;
     
     device = hal_device_new ();
-    
+
     hal_device_set_udi (device, "/org/freedesktop/Hal/devices/computer");
     
     val = hal_device_get_property_bool (device, "power_management.is_powersave_set");
