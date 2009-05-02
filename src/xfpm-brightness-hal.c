@@ -479,22 +479,22 @@ xfpm_brightness_hal_finalize (GObject *object)
 
     brg = XFPM_BRIGHTNESS_HAL(object);
     
-    if ( g_signal_handler_is_connected (brg->priv->saver, brg->priv->sig[0]) )
+    if ( brg->priv->saver && g_signal_handler_is_connected (brg->priv->saver, brg->priv->sig[0]) )
 	g_signal_handler_disconnect (G_OBJECT (brg->priv->saver), brg->priv->sig[0]);
     
-    if ( g_signal_handler_is_connected (brg->priv->adapter, brg->priv->sig[1]) )
+    if ( brg->priv->adapter && g_signal_handler_is_connected (brg->priv->adapter, brg->priv->sig[1]) )
 	g_signal_handler_disconnect (G_OBJECT (brg->priv->adapter), brg->priv->sig[1]);
     
-    if ( g_signal_handler_is_connected (brg->priv->button, brg->priv->sig[2]) )
+    if ( brg->priv->button && g_signal_handler_is_connected (brg->priv->button, brg->priv->sig[2]) )
 	g_signal_handler_disconnect (G_OBJECT (brg->priv->button), brg->priv->sig[2]);
 	
-    if ( g_signal_handler_is_connected (brg->priv->idle, brg->priv->sig[3]) )
+    if ( brg->priv->idle && g_signal_handler_is_connected (brg->priv->idle, brg->priv->sig[3]) )
 	g_signal_handler_disconnect (G_OBJECT (brg->priv->idle), brg->priv->sig[3]);
 	
-    if ( g_signal_handler_is_connected (brg->priv->idle, brg->priv->sig[4]) )
+    if ( brg->priv->idle && g_signal_handler_is_connected (brg->priv->idle, brg->priv->sig[4]) )
 	g_signal_handler_disconnect (G_OBJECT (brg->priv->idle), brg->priv->sig[4]);
     
-    if ( g_signal_handler_is_connected (brg->priv->conf, brg->priv->sig[5]) )
+    if ( brg->priv->conf && g_signal_handler_is_connected (brg->priv->conf, brg->priv->sig[5]) )
 	g_signal_handler_disconnect (G_OBJECT (brg->priv->conf), brg->priv->sig[5]);
 	
     if ( brg->priv->proxy )
