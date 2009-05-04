@@ -21,6 +21,8 @@
 #include <gtk/gtk.h>
 #include <glib.h>
 
+#include "xfpm-popups.h"
+
 static GtkWidget *
 xfpm_message_dialog (const gchar *title, const gchar *message, GtkMessageType message_type)
 {

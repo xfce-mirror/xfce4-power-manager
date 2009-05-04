@@ -48,9 +48,6 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-debug.h"
 
-/* Init */
-static void xfpm_button_xf86_class_init (XfpmButtonXf86Class *klass);
-static void xfpm_button_xf86_init       (XfpmButtonXf86 *button);
 static void xfpm_button_xf86_finalize   (GObject *object);
 
 static gpointer xfpm_button_xf86_object = NULL;
@@ -83,14 +80,17 @@ static GdkFilterReturn
 xfpm_button_xf86_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data)
 {
     XfpmButtonKey key;
+    XfpmButtonXf86 *button;
+    gpointer key_hash;
+    
     XEvent *xev = (XEvent *) xevent;
     
     if ( xev->type != KeyPress )
     	return GDK_FILTER_CONTINUE;
     
-    XfpmButtonXf86 *button = (XfpmButtonXf86 *) data;
+    button = (XfpmButtonXf86 *) data;
     
-    gpointer key_hash = g_hash_table_lookup (button->priv->hash, GINT_TO_POINTER(xev->xkey.keycode));
+    key_hash = g_hash_table_lookup (button->priv->hash, GINT_TO_POINTER(xev->xkey.keycode));
     
     if ( !key_hash )
     {

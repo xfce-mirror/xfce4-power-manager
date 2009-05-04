@@ -63,7 +63,7 @@ XfpmIdle       		 *xfpm_idle_new             (void);
 
 gboolean                  xfpm_idle_set_alarm       (XfpmIdle *idle,
 						     guint id,
-						     guint timeout);
+						     gint timeout);
 						     
 void                      xfpm_idle_alarm_reset_all (XfpmIdle *idle);
 

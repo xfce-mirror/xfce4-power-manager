@@ -139,17 +139,12 @@ xfpm-enum-types.c: xfpm-enum-types.h
 	&& cp xgen xfpm-enum-types.c  \
 	&& rm -f xgen xgen~
 
-xfpm-marshal.h: $(srcdir)/xfpm-marshal.list
-	glib-genmarshal --header --prefix="_xfpm_marshal" \
-            $(srcdir)/xfpm-marshal.list > tmp-marshal.h && \
-        cp tmp-marshal.h $(@F) && \
-        rm -f tmp-marshal.h tmp-marshal.h~
+xfpm-marshal.c: xfpm-marshal.list
+	echo "#include \"xfpm-marshal.h\"" > $@ && \
+	glib-genmarshal $< --prefix=_xfpm_marshal --body >> $@
 
-xfpm-marshal.c: xfpm-marshal.h
-	glib-genmarshal --body --prefix="_xfpm_marshal" \
-            $(srcdir)/xfpm-marshal.list > tmp-marshal.c && \
-        cp tmp-marshal.c $(@F) && \
-        rm -f tmp-marshal.c tmp-marshal.c~
+xfpm-marshal.h: xfpm-marshal.list
+	glib-genmarshal $< --prefix=_xfpm_marshal --header > $@
 
 xfce-power-manager-dbus-server.h: $(srcdir)/org.xfce.Power.Manager.xml
 	dbus-binding-tool --mode=glib-server --prefix=xfpm_manager $< >$@

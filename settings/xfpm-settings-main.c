@@ -48,8 +48,6 @@
 
 int main(int argc, char **argv)
 {
-    xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
-
     GError *error = NULL;
     DBusGConnection *bus;
     GHashTable *config_hash;
@@ -62,6 +60,7 @@ int main(int argc, char **argv)
     gboolean has_sleep_button;
     gboolean has_hibernate_button;
     gboolean has_power_button;
+    gboolean start_xfpm_if_not_running;
     
     GdkNativeWindow socket_id = 0;
 	
@@ -73,6 +72,8 @@ int main(int argc, char **argv)
 	{ "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
 	{ NULL, },
     };
+
+    xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
     
     if( !gtk_init_with_args (&argc, &argv, "", option_entries, PACKAGE, &error)) 
     {
@@ -173,11 +174,11 @@ int main(int argc, char **argv)
     {
 	g_print(_("Xfce power manager is not running"));
 	g_print("\n");
-  	gboolean ret = 
+	start_xfpm_if_not_running =
 	    xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now?"),
 			GTK_STOCK_YES,
 			_("Run"));
-	if ( ret ) 
+	if ( start_xfpm_if_not_running ) 
 	{
 	    g_spawn_command_line_async("xfce4-power-manager",NULL);
 	}

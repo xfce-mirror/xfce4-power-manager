@@ -35,18 +35,18 @@ G_BEGIN_DECLS
 
 #ifdef DEBUG
 
+static gchar *content = NULL;
+static GValue __value__ = { 0, };
+
 #define XFPM_DEBUG_ENUM(_text, _value, _type) 				\
-    char *content;							\
-    GValue __value__ = { 0, };						\
     g_value_init (&__value__, _type);					\
     g_value_set_enum (&__value__, _value);				\
     content = g_strdup_value_contents (&__value__);			\
     TRACE ("%s : %s", _text, content);					\
+    g_value_unset (&__value__);						\
     g_free (content);
     
 #define XFPM_DEBUG_ENUM_FULL(_value, _type, ...)			\
-    char *content;							\
-    GValue __value__ = { 0, };						\
     g_value_init (&__value__, _type);					\
     g_value_set_enum (&__value__, _value);				\
     content = g_strdup_value_contents (&__value__);			\
@@ -54,6 +54,7 @@ G_BEGIN_DECLS
     fprintf(stderr, __VA_ARGS__);					\
     fprintf(stderr, ": %s", content);					\
     fprintf(stderr, "\n");						\
+    g_value_unset (&__value__);						\
     g_free (content);
     
 #else

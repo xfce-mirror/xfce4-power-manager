@@ -32,9 +32,6 @@
 
 #include "xfpm-dbus-monitor.h"
 
-/* Init */
-static void xfpm_dbus_monitor_class_init (XfpmDBusMonitorClass *klass);
-static void xfpm_dbus_monitor_init       (XfpmDBusMonitor *monitor);
 static void xfpm_dbus_monitor_finalize   (GObject *object);
 
 #define XFPM_DBUS_MONITOR_GET_PRIVATE(o) \
@@ -62,7 +59,7 @@ G_DEFINE_TYPE (XfpmDBusMonitor, xfpm_dbus_monitor, G_TYPE_OBJECT)
 static void
 xfpm_dbus_monitor_unique_connection_name_lost (XfpmDBusMonitor *monitor, const gchar *name)
 {
-    int i = 0;
+    guint i = 0;
     gchar *array_name;
     
     for ( i = 0; i < monitor->priv->array->len; i++ )
@@ -138,7 +135,7 @@ static void
 xfpm_dbus_monitor_finalize (GObject *object)
 {
     XfpmDBusMonitor *monitor;
-    gint i;
+    guint i;
     gchar *name;
 
     monitor = XFPM_DBUS_MONITOR (object);
@@ -177,7 +174,7 @@ xfpm_dbus_monitor_new (void)
 
 gboolean xfpm_dbus_monitor_add_match (XfpmDBusMonitor *monitor, const gchar *unique_name)
 {
-    int i = 0;
+    guint i = 0;
     gchar *name;
     
     g_return_val_if_fail (XFPM_IS_DBUS_MONITOR (monitor), FALSE);
@@ -199,7 +196,7 @@ gboolean xfpm_dbus_monitor_add_match (XfpmDBusMonitor *monitor, const gchar *uni
 
 gboolean xfpm_dbus_monitor_remove_match (XfpmDBusMonitor *monitor, const gchar *unique_name)
 {
-    int i ;
+    guint i ;
     gchar *name;
     
     g_return_val_if_fail (XFPM_IS_DBUS_MONITOR (monitor), FALSE);

@@ -32,9 +32,6 @@
 #include "hal-manager.h"
 #include "hal-device.h"
 
-/* Init */
-static void hal_manager_class_init (HalManagerClass *klass);
-static void hal_manager_init       (HalManager *manager);
 static void hal_manager_finalize   (GObject *object);
 
 #define HAL_MANAGER_GET_PRIVATE(o) \
@@ -212,11 +209,11 @@ hal_manager_new (void)
 
 gchar **hal_manager_find_device_by_capability (HalManager *manager, const gchar *capability)
 {
+    GError *error = NULL;
+    gchar  **udi = NULL;
+    
     g_return_val_if_fail (HAL_IS_MANAGER(manager), NULL);
     g_return_val_if_fail (manager->priv->connected, NULL);
-    
-    gchar  **udi = NULL;
-    GError *error = NULL;
     
     dbus_g_proxy_call (manager->priv->proxy, "FindDeviceByCapability", &error, 
 		       G_TYPE_STRING, capability, 

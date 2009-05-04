@@ -33,9 +33,6 @@
 #include "hal-manager.h"
 #include "hal-enum.h"
 
-/* Init */
-static void hal_battery_class_init (HalBatteryClass *klass);
-static void hal_battery_init       (HalBattery *device);
 static void hal_battery_finalize   (GObject *object);
 
 static void hal_battery_get_property(GObject *object,
@@ -387,10 +384,11 @@ static guint
 _get_battery_percentage (guint32 last_full, guint32 current)
 {
     guint val = 100;
+    float f;
     
     if ( last_full <= current ) return val;
     
-    float f = (float)current/last_full *100;
+    f = (float)current/last_full *100;
 	
 	val = (guint)f;
     return val;   

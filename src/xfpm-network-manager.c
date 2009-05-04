@@ -25,6 +25,8 @@
 #include <glib.h>
 #include <dbus/dbus-glib.h>
 
+#include "xfpm-network-manager.h"
+
 /*
  * Inform the Network Manager when we do suspend/hibernate 
  * message is either "wake" or "sleep"

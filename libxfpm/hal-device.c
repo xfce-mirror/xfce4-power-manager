@@ -37,9 +37,6 @@
 #include "hal-device.h"
 #include "hal-marshal.h"
 
-/* Init */
-static void hal_device_class_init (HalDeviceClass *klass);
-static void hal_device_init       (HalDevice *device);
 static void hal_device_finalize   (GObject *object);
 
 #define HAL_DEVICE_GET_PRIVATE(o) \
@@ -108,7 +105,7 @@ hal_device_property_modified_cb (DBusGProxy *proxy,
     const gchar *key;
     gboolean     is_added;
     gboolean     is_removed;
-    int i;
+    guint i;
     
     udi = dbus_g_proxy_get_path (proxy);
     
@@ -187,14 +184,14 @@ hal_device_add_watch_condition (HalDevice *device)
 static void
 hal_device_init (HalDevice *device)
 {
+    GError *error = NULL;
+    
     device->priv = HAL_DEVICE_GET_PRIVATE(device);
     
     device->priv->proxy  	= NULL;
     device->priv->udi           = NULL;
     device->priv->watch_added 	= FALSE;
     device->priv->watch_condition_added = FALSE;
-    
-    GError *error = NULL;
     
     device->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
     
@@ -289,11 +286,11 @@ hal_device_watch_condition (HalDevice *device)
     
 gboolean hal_device_get_property_bool (HalDevice *device, const gchar *property)
 {
-    g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
-    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
-    
     gboolean value = FALSE;
     GError *error = NULL;
+    
+    g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
+    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
     
     dbus_g_proxy_call (device->priv->proxy, "GetPropertyBoolean", &error,
 		       G_TYPE_STRING, property,
@@ -312,11 +309,11 @@ gboolean hal_device_get_property_bool (HalDevice *device, const gchar *property)
 									 
 gint hal_device_get_property_int (HalDevice *device, const gchar *property)
 {
-    g_return_val_if_fail (HAL_IS_DEVICE(device), 0);
-    g_return_val_if_fail (device->priv->udi != NULL, 0);
-    
     gint value = 0;
     GError *error = NULL;
+    
+    g_return_val_if_fail (HAL_IS_DEVICE(device), 0);
+    g_return_val_if_fail (device->priv->udi != NULL, 0);
     
     dbus_g_proxy_call (device->priv->proxy, "GetPropertyInteger", &error,
 		       G_TYPE_STRING, property,
@@ -335,11 +332,11 @@ gint hal_device_get_property_int (HalDevice *device, const gchar *property)
 
 gchar *hal_device_get_property_string  (HalDevice *device, const gchar *property)
 {
-    g_return_val_if_fail (HAL_IS_DEVICE(device), NULL);
-    g_return_val_if_fail (device->priv->udi != NULL, NULL);
-    
     gchar *value = NULL;
     GError *error = NULL;
+    
+    g_return_val_if_fail (HAL_IS_DEVICE(device), NULL);
+    g_return_val_if_fail (device->priv->udi != NULL, NULL);
     
     dbus_g_proxy_call (device->priv->proxy, "GetPropertyString", &error,
 		       G_TYPE_STRING, property,
@@ -358,11 +355,11 @@ gchar *hal_device_get_property_string  (HalDevice *device, const gchar *property
 
 gboolean hal_device_has_key (HalDevice *device, const gchar *key)
 {
-    g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
-    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
-    
     gboolean value = FALSE;
     GError *error = NULL;
+    
+    g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
+    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
     
     dbus_g_proxy_call (device->priv->proxy, "PropertyExists", &error,
 		       G_TYPE_STRING, key,
@@ -382,11 +379,11 @@ gboolean hal_device_has_key (HalDevice *device, const gchar *key)
 									 
 gboolean hal_device_has_capability (HalDevice *device, const gchar *capability)
 {
-    g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
-    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
-    
     gboolean value = FALSE;
     GError *error = NULL;
+    
+    g_return_val_if_fail (HAL_IS_DEVICE(device), FALSE);
+    g_return_val_if_fail (device->priv->udi != NULL, FALSE);
     
     dbus_g_proxy_call (device->priv->proxy, "QueryCapability", &error,
 		       G_TYPE_STRING, capability,

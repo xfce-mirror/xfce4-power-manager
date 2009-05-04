@@ -37,9 +37,6 @@
 #include "xfpm-dbus-monitor.h"
 #include "xfpm-errors.h"
 
-/* Init */
-static void xfpm_inhibit_class_init (XfpmInhibitClass *klass);
-static void xfpm_inhibit_init       (XfpmInhibit *inhibit);
 static void xfpm_inhibit_finalize   (GObject *object);
 
 static void xfpm_inhibit_dbus_class_init  (XfpmInhibitClass *klass);
@@ -110,7 +107,7 @@ static guint
 xfpm_inhibit_get_cookie (XfpmInhibit *inhibit)
 {
     guint max = 0;
-    gint i;
+    guint i;
     Inhibitor *inhibitor;
     
     for ( i = 0; i<inhibit->priv->array->len; i++)
@@ -143,7 +140,7 @@ xfpm_inhibit_add_application (XfpmInhibit *inhibit, const gchar *app_name, const
 static Inhibitor *
 xfpm_inhibit_find_application_by_cookie (XfpmInhibit *inhibit, guint cookie)
 {
-    gint i;
+    guint i;
     Inhibitor *inhibitor;
     for ( i = 0; i < inhibit->priv->array->len; i++)
     {
@@ -159,7 +156,7 @@ xfpm_inhibit_find_application_by_cookie (XfpmInhibit *inhibit, guint cookie)
 static Inhibitor *
 xfpm_inhibit_find_application_by_unique_connection_name (XfpmInhibit *inhibit, const gchar *unique_name)
 {
-    gint i;
+    guint i;
     Inhibitor *inhibitor;
     for ( i = 0; i < inhibit->priv->array->len; i++)
     {
@@ -244,7 +241,7 @@ xfpm_inhibit_finalize(GObject *object)
 {
     XfpmInhibit *inhibit;
     Inhibitor *inhibitor;
-    gint i;
+    guint i;
 
     inhibit = XFPM_INHIBIT(object);
     
@@ -380,7 +377,7 @@ static gboolean xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
 					     gchar ***OUT_inhibitors,
 					     GError **error)
 {
-    gint i;
+    guint i;
     Inhibitor *inhibitor;
 
     TRACE ("Get Inhibitors message received");

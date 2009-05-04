@@ -47,9 +47,6 @@
 
 #define DUPLICATE_SHUTDOWN_REQUEST 8.0f
 
-/* Init */
-static void xfpm_shutdown_class_init (XfpmShutdownClass *klass);
-static void xfpm_shutdown_init       (XfpmShutdown *shutdown);
 static void xfpm_shutdown_finalize   (GObject *object);
 
 static void xfpm_shutdown_get_property (GObject *object,
@@ -264,7 +261,8 @@ xfpm_shutdown_finalize(GObject *object)
     G_OBJECT_CLASS(xfpm_shutdown_parent_class)->finalize(object);
 }
 
-gboolean xfpm_shutdown_internal (DBusConnection *bus, const gchar *shutdown, GError **gerror)
+static gboolean 
+xfpm_shutdown_internal (DBusConnection *bus, const gchar *shutdown, GError **gerror)
 {
     DBusMessage *message, *reply = NULL;
     DBusError error;

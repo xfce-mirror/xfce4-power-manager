@@ -48,9 +48,6 @@
 #include "xfpm-adapter.h"
 #include "xfpm-debug.h"
 
-/* Init */
-static void xfpm_battery_class_init (XfpmBatteryClass *klass);
-static void xfpm_battery_init       (XfpmBattery *battery);
 static void xfpm_battery_finalize   (GObject *object);
 
 #define XFPM_BATTERY_GET_PRIVATE(o) \
@@ -250,7 +247,7 @@ xfpm_battery_notify (XfpmBattery *battery)
     }
 }
 
-const gchar *
+static const gchar *
 _get_battery_name (HalDeviceType type)
 {
     if ( type ==  HAL_DEVICE_TYPE_UPS)
@@ -267,7 +264,7 @@ _get_battery_name (HalDeviceType type)
     return _("Your Battery");
 }
 
-const gchar *
+static const gchar *
 xfpm_battery_get_battery_state (XfpmBatteryState *state, 
 				gboolean is_charging, 
 				gboolean is_discharging,
@@ -334,9 +331,11 @@ static void
 xfpm_battery_refresh_misc (XfpmBattery *battery, gboolean is_present, 
 			   gboolean is_charging, gboolean is_discharging,
 			   guint32 last_full, guint32 current_charge,
-			   guint percentage, guint time)
+			   guint percentage, guint time_per)
 {
     gchar *tip;
+    XfpmBatteryState state;
+    const gchar *str;
     guint critical_level = xfpm_xfconf_get_property_int (battery->priv->conf, CRITICAL_POWER_LEVEL );
     
     if ( !is_present )
@@ -348,10 +347,10 @@ xfpm_battery_refresh_misc (XfpmBattery *battery, gboolean is_present,
 	return;
     }
     
-    XfpmBatteryState state = battery->priv->state;
-    const gchar *str = xfpm_battery_get_battery_state (&state, is_charging, is_discharging,
- 						       last_full, current_charge, percentage, 
-						       critical_level);
+    state = battery->priv->state;
+    str = xfpm_battery_get_battery_state (&state, is_charging, is_discharging,
+    				          last_full, current_charge, percentage, 
+					  critical_level);
     tip = g_strdup_printf("%i%% %s %s", percentage, _get_battery_name(battery->priv->type), str);
     //FIXME: Time for misc batteries
     xfpm_tray_icon_set_tooltip (battery->priv->icon, tip);
@@ -364,7 +363,7 @@ static void
 xfpm_battery_refresh_primary (XfpmBattery *battery, gboolean is_present, 
 			      gboolean is_charging, gboolean is_discharging,
 			      guint32 last_full, guint32 current_charge,
-			      guint percentage, guint time)
+			      guint percentage, guint time_per)
 {
     gchar *tip;
     const gchar *str;
@@ -382,15 +381,15 @@ xfpm_battery_refresh_primary (XfpmBattery *battery, gboolean is_present,
     str = xfpm_battery_get_battery_state (&state, is_charging, is_discharging,
 					  last_full, current_charge, percentage, critical_level);
     
-    if ( time != 0  && time <= 28800 /* 8 hours */ && 
+    if ( time_per != 0  && time_per <= 28800 /* 8 hours */ && 
 	 state != BATTERY_FULLY_CHARGED && state != BATTERY_NOT_FULLY_CHARGED )
     {
 	gchar *time_str;
         const gchar *est_time;
 	        
         gint minutes, hours, minutes_left;
-       	hours = time / 3600;
-		minutes = time / 60;
+       	hours = time_per / 3600;
+		minutes = time_per / 60;
 		minutes_left = minutes % 60;
 		
 	if ( state == BATTERY_IS_DISCHARGING || 
@@ -441,7 +440,7 @@ xfpm_battery_refresh (XfpmBattery *battery)
     gboolean is_present, is_charging, is_discharging = FALSE;
     guint percentage = 0;
     guint32 last_full, current_charge = 0;
-    guint time = 0;
+    guint time_per = 0;
     
     g_object_get (G_OBJECT(battery->priv->device), 
     		  "is-present", &is_present,
@@ -450,19 +449,19 @@ xfpm_battery_refresh (XfpmBattery *battery)
 		  "percentage", &percentage,
 		  "last-full", &last_full,
 		  "current-charge", &current_charge,
-		  "time", &time,
+		  "time", &time_per,
 		  NULL);
     
     battery->priv->type == HAL_DEVICE_TYPE_PRIMARY ?
 			   xfpm_battery_refresh_primary (battery, is_present, 
 							 is_charging, is_discharging, 
 							 last_full, current_charge,
-							 percentage, time)
+							 percentage, time_per)
   					           :
 			    xfpm_battery_refresh_misc   (battery, is_present, 
 							 is_charging, is_discharging, 
 							 last_full, current_charge,
-							 percentage, time);
+							 percentage, time_per);
     xfpm_battery_refresh_visible_icon (battery);
 }
 

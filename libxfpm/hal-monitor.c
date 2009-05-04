@@ -32,9 +32,6 @@
 
 #include "hal-monitor.h"
 
-/* Init */
-static void hal_monitor_class_init (HalMonitorClass *klass);
-static void hal_monitor_init       (HalMonitor *monitor);
 static void hal_monitor_finalize   (GObject *object);
 
 #define HAL_MONITOR_GET_PRIVATE(o) \

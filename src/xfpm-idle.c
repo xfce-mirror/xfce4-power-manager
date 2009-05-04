@@ -40,13 +40,14 @@
 
 #include "xfpm-idle.h"
 
-/* Init */
-static void xfpm_idle_class_init (XfpmIdleClass *klass);
-static void xfpm_idle_init       (XfpmIdle *idle);
 static void xfpm_idle_finalize   (GObject *object);
 
 #define XFPM_IDLE_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_IDLE, XfpmIdlePrivate))
+
+#ifdef XSyncValueAdd
+#undef XSyncValueAdd
+#endif
 
 struct XfpmIdlePrivate
 {
@@ -105,7 +106,7 @@ xfpm_idle_class_init(XfpmIdleClass *klass)
 static IdleAlarm *
 xfpm_idle_find_alarm (XfpmIdle *idle, guint id)
 {
-    int i;
+    guint i;
     IdleAlarm *alarm;
     for (i = 0; i<idle->priv->array->len; i++) 
     {
@@ -291,7 +292,7 @@ xfpm_idle_free_alarm_internal (XfpmIdle *idle, IdleAlarm *alarm)
 static void
 xfpm_idle_finalize(GObject *object)
 {
-    int i;
+    guint i;
     XfpmIdle *idle;
     IdleAlarm *alarm;
     
@@ -318,7 +319,7 @@ xfpm_idle_new(void)
 }
 
 gboolean 
-xfpm_idle_set_alarm (XfpmIdle *idle, guint id, guint timeout)
+xfpm_idle_set_alarm (XfpmIdle *idle, guint id, gint timeout)
 {
     IdleAlarm *alarm;
     

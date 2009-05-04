@@ -46,9 +46,6 @@
 #include "xfpm-engine.h"
 #include "xfpm-session.h"
 
-/* Init */
-static void xfpm_manager_class_init (XfpmManagerClass *klass);
-static void xfpm_manager_init       (XfpmManager *xfpm_manager);
 static void xfpm_manager_finalize   (GObject *object);
 
 static void xfpm_manager_dbus_class_init (XfpmManagerClass *klass);

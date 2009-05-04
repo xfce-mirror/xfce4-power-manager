@@ -47,9 +47,6 @@
 #include "xfpm-inhibit.h"
 #include "xfpm-marshal.h"
 
-/* Init */
-static void xfpm_supply_class_init (XfpmSupplyClass *klass);
-static void xfpm_supply_init       (XfpmSupply *xfpm_supply);
 static void xfpm_supply_finalize   (GObject *object);
 
 #define XFPM_SUPPLY_GET_PRIVATE(o) \
@@ -177,12 +174,14 @@ xfpm_supply_refresh_tray_icon (XfpmSupply *supply)
     }
 }
 
-gboolean xfpm_supply_on_low_power (XfpmSupply *supply)
+static gboolean 
+xfpm_supply_on_low_power (XfpmSupply *supply)
 {
+    const HalBattery *device;
     guint low_power_level;
     
     GList *list = NULL;
-    int i;
+    guint i;
     gboolean low_power = FALSE;
     
     if (supply->priv->adapter_present )
@@ -205,7 +204,7 @@ gboolean xfpm_supply_on_low_power (XfpmSupply *supply)
 	if ( !battery )
 	    continue;
 	    
-	const HalBattery *device = xfpm_battery_get_device (battery);
+	device = xfpm_battery_get_device (battery);
 	g_object_get (G_OBJECT(device), "type", &type, "percentage", &percentage, NULL);
 	if ( type != HAL_DEVICE_TYPE_PRIMARY )
 	    continue;
@@ -368,13 +367,14 @@ xfpm_supply_get_battery (XfpmSupply *supply, const gchar *udi)
 static void
 xfpm_supply_add_battery (XfpmSupply *supply, const HalBattery *device)
 {
+    XfpmBattery *battery;
     const gchar *udi;
     
     udi = hal_device_get_udi (HAL_DEVICE(device));
 
     TRACE("New battery found %s", udi);
 
-    XfpmBattery *battery = xfpm_battery_new (device);
+    battery = xfpm_battery_new (device);
     
     g_hash_table_insert (supply->priv->hash, g_strdup(udi), battery);
     
@@ -416,11 +416,13 @@ xfpm_supply_battery_removed_cb (HalPower *power, const HalBattery *device, XfpmS
 static gboolean
 xfpm_supply_monitor_start (XfpmSupply *supply)
 {
+    GPtrArray *array;
+    guint i = 0;
+    
     supply->priv->adapter_present = xfpm_adapter_get_present (supply->priv->adapter);
     
-    GPtrArray *array = hal_power_get_batteries (supply->priv->power);
+    array = hal_power_get_batteries (supply->priv->power);
     
-    int i = 0;
     for ( i = 0; i<array->len; i++ )
     {
 	HalBattery *device;

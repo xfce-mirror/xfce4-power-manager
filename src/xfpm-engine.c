@@ -55,9 +55,6 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-debug.h"
 
-/* Init */
-static void xfpm_engine_class_init (XfpmEngineClass * klass);
-static void xfpm_engine_init (XfpmEngine * engine);
 static void xfpm_engine_finalize (GObject * object);
 
 static void xfpm_engine_dbus_class_init (XfpmEngineClass * klass);
@@ -212,14 +209,13 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
 			       XfpmButtonKey type, XfpmEngine * engine)
 {
     XfpmShutdownRequest shutdown;
+    XFPM_DEBUG_ENUM ("Received button press event", type, XFPM_TYPE_BUTTON_KEY);
   
     if ( engine->priv->inhibited )
     {
 	TRACE("Power manager automatic sleep is currently disabled");
 	return;
     }
-    
-    XFPM_DEBUG_ENUM ("Received button press event", type, XFPM_TYPE_BUTTON_KEY);
     
     if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
 	return;
@@ -365,9 +361,10 @@ xfpm_engine_set_inactivity_timeouts (XfpmEngine *engine)
 static void
 xfpm_engine_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmEngine *engine)
 {
-    TRACE ("Alarm inactivity timeout id %d", id);
     gboolean sleep_mode;
     gboolean saver;
+    
+    TRACE ("Alarm inactivity timeout id %d", id);
     
     if ( engine->priv->inhibited )
     {
@@ -635,8 +632,9 @@ xfpm_engine_dbus_init (XfpmEngine * engine)
 static gboolean xfpm_engine_dbus_shutdown (XfpmEngine *engine,
 					   GError **error)
 {
-    TRACE ("Hibernate message received");
     gboolean caller_privilege, can_hibernate;
+    
+    TRACE ("Hibernate message received");
 
     g_object_get (G_OBJECT (engine->priv->shutdown),
 		  "caller-privilege", &caller_privilege,
@@ -660,8 +658,9 @@ static gboolean xfpm_engine_dbus_shutdown (XfpmEngine *engine,
 static gboolean
 xfpm_engine_dbus_hibernate (XfpmEngine * engine, GError ** error)
 {
-    TRACE ("Hibernate message received");
     gboolean caller_privilege, can_hibernate;
+    
+    TRACE ("Hibernate message received");
 
     g_object_get (G_OBJECT (engine->priv->shutdown),
 		  "caller-privilege", &caller_privilege,
@@ -689,8 +688,8 @@ xfpm_engine_dbus_hibernate (XfpmEngine * engine, GError ** error)
 static gboolean
 xfpm_engine_dbus_suspend (XfpmEngine * engine, GError ** error)
 {
-    TRACE ("Suspend message received");
     gboolean caller_privilege, can_suspend;
+    TRACE ("Suspend message received");
 
     g_object_get (G_OBJECT (engine->priv->shutdown),
 		  "caller-privilege", &caller_privilege,

@@ -44,9 +44,6 @@
 #include "xfpm-common.h"
 #include "xfpm-notify.h"
 
-/* Init */
-static void xfpm_notify_class_init (XfpmNotifyClass *klass);
-static void xfpm_notify_init       (XfpmNotify *notify);
 static void xfpm_notify_finalize   (GObject *object);
 
 static NotifyNotification * xfpm_notify_new_notification_internal (XfpmNotify *notify, 
@@ -185,13 +182,16 @@ void xfpm_notify_show_notification (XfpmNotify *notify, const gchar *title,
 				    gint timeout, gboolean simple,
 				    XfpmNotifyUrgency urgency, GtkStatusIcon *icon)
 {
+    NotifyNotification *n;
+    
     if ( !simple )
         xfpm_notify_close_notification (notify);
     
-    NotifyNotification *n = xfpm_notify_new_notification_internal (notify, title, 
-							           text, icon_name, 
-								   timeout, urgency, 
-								   icon);
+    n = xfpm_notify_new_notification_internal (notify, title, 
+				               text, icon_name, 
+					       timeout, urgency, 
+					       icon);
+					       
     xfpm_notify_present_notification (notify, n, simple);
 }
 
@@ -252,9 +252,9 @@ void xfpm_notify_critical (XfpmNotify *notify, NotifyNotification *n)
 
 void xfpm_notify_close_critical (XfpmNotify *notify)
 {
+    NotifyNotification *n;
     g_return_if_fail (XFPM_IS_NOTIFY (notify));
     
-    NotifyNotification *n;
     n = (NotifyNotification *)  g_object_get_data (G_OBJECT (notify), "critical");
     
     if ( n )

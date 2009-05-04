@@ -43,9 +43,6 @@
 
 #ifdef SYSTEM_IS_LINUX /* the end if at the end of the file */
 
-/* Init */
-static void xfpm_cpu_class_init (XfpmCpuClass *klass);
-static void xfpm_cpu_init       (XfpmCpu *cpu);
 static void xfpm_cpu_finalize   (GObject *object);
 
 #define XFPM_CPU_GET_PRIVATE(o) \

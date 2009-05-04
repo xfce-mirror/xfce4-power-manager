@@ -58,8 +58,6 @@ HalPower       	       *hal_power_new             (void);
 
 GPtrArray      	       *hal_power_get_batteries   (HalPower *power);
 
-gboolean		hal_power_set_power_save  (HalPower *power);
-
 gboolean                hal_power_set_power_save  (HalPower *power);
 
 gboolean                hal_power_unset_power_save(HalPower *power);

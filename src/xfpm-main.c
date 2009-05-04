@@ -48,7 +48,7 @@ static gchar    *client_id = NULL;
 static gboolean no_daemon  = FALSE;
 
 static void
-show_version()
+show_version (void)
 {
     g_print (_("\n"
              "Xfce Power Manager %s\n\n"
@@ -68,15 +68,16 @@ xfpm_quit_signal (gint sig, gpointer data)
 static void
 xfpm_start (DBusGConnection *bus)
 {
-    TRACE("Starting the power manager\n");
-    GError *error = NULL;
+    XfpmManager *manager;
     XfpmSession *session;
+    GError *error = NULL;
+    
+    TRACE("Starting the power manager\n");
     session = xfpm_session_new ();
     
     if ( client_id != NULL )
 	xfpm_session_set_client_id (session, client_id);
     
-    XfpmManager *manager;
     manager = xfpm_manager_new (bus);
     
      if ( xfce_posix_signal_handler_init (&error)) 
@@ -122,8 +123,6 @@ int main(int argc, char **argv)
     gboolean version    = FALSE;
     gboolean reload     = FALSE;
     
-    xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
-
     GOptionEntry option_entries[] = 
     {
 	{ "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &run, NULL, NULL },
@@ -136,7 +135,9 @@ int main(int argc, char **argv)
 	{ NULL, },
     };
 
-    if(!gtk_init_with_args(&argc, &argv, "", option_entries, PACKAGE, &error)) 
+    xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
+
+    if (!gtk_init_with_args (&argc, &argv, "", option_entries, PACKAGE, &error)) 
     {
         if(G_LIKELY(error)) 
         {

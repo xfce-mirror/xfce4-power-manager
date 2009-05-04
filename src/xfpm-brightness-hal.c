@@ -44,9 +44,6 @@
 #include "xfpm-adapter.h"
 #include "xfpm-screen-saver.h"
 
-/* Init */
-static void xfpm_brightness_hal_class_init (XfpmBrightnessHalClass *klass);
-static void xfpm_brightness_hal_init       (XfpmBrightnessHal *brg);
 static void xfpm_brightness_hal_finalize   (GObject *object);
 
 #define XFPM_BRIGHTNESS_HAL_GET_PRIVATE(o) \
@@ -116,11 +113,11 @@ xfpm_brightness_hal_get_level (XfpmBrightnessHal *brg)
 static gboolean
 xfpm_brightness_hal_set_level (XfpmBrightnessHal *brg, gint level)
 {
-    TRACE ("Setting level %d", level);
-    
     GError *error = NULL;
     gboolean ret = FALSE;
     gint dummy;
+    
+    TRACE ("Setting level %d", level);
     
     ret = dbus_g_proxy_call (brg->priv->proxy, "SetBrightness", &error,
 			     G_TYPE_INT, level,
@@ -267,7 +264,7 @@ xfpm_brightness_hal_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, X
 static void
 xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
 {
-    gint level;
+    guint level;
     
     if (brg->priv->block)
 	return;
@@ -287,7 +284,7 @@ xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
 static void
 xfpm_brightness_timeout_on_ac (XfpmBrightnessHal *brg)
 {
-    gint level;
+    guint level;
     
     if ( brg->priv->on_battery )
 	    return;
@@ -304,7 +301,7 @@ xfpm_brightness_timeout_on_ac (XfpmBrightnessHal *brg)
 static void
 xfpm_brightness_timeout_on_battery (XfpmBrightnessHal *brg)
 {
-    gint level;
+    guint level;
     
     if ( !brg->priv->on_battery )
 	    return;
@@ -519,7 +516,7 @@ xfpm_brightness_hal_finalize (GObject *object)
 }
 
 XfpmBrightnessHal *
-xfpm_brightness_hal_new ()
+xfpm_brightness_hal_new (void)
 {
     XfpmBrightnessHal *brg = NULL;
     brg = g_object_new (XFPM_TYPE_BRIGHTNESS_HAL, NULL);

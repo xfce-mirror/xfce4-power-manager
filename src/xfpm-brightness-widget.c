@@ -38,10 +38,6 @@
 
 #include "xfpm-brightness-widget.h"
 
-
-/* Init */
-static void xfpm_brightness_widget_class_init (XfpmBrightnessWidgetClass *klass);
-static void xfpm_brightness_widget_init       (XfpmBrightnessWidget *widget);
 static void xfpm_brightness_widget_finalize   (GObject *object);
 
 #define XFPM_BRIGHTNESS_WIDGET_GET_PRIVATE(o) \

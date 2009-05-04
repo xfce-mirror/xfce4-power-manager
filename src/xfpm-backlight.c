@@ -32,9 +32,6 @@
 #include "xfpm-brightness-hal.h"
 #include "xfpm-brightness-widget.h"
 
-/* Init */
-static void xfpm_backlight_class_init (XfpmBacklightClass *klass);
-static void xfpm_backlight_init       (XfpmBacklight *bk);
 static void xfpm_backlight_finalize   (GObject *object);
 
 static void xfpm_backlight_dbus_class_init (XfpmBacklightClass *klass);

@@ -46,9 +46,6 @@
 
 #ifdef HAVE_DPMS
 
-/* Init */
-static void xfpm_dpms_class_init (XfpmDpmsClass *klass);
-static void xfpm_dpms_init       (XfpmDpms *xfpm_dpms);
 static void xfpm_dpms_finalize   (GObject *object);
 
 #define XFPM_DPMS_GET_PRIVATE(o) \

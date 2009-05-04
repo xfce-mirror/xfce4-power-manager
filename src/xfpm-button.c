@@ -35,9 +35,6 @@
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
 
-/* Init */
-static void xfpm_button_class_init (XfpmButtonClass *klass);
-static void xfpm_button_init       (XfpmButton *button);
 static void xfpm_button_finalize   (GObject *object);
 
 #define XFPM_BUTTON_GET_PRIVATE(o) \

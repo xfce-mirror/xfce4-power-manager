@@ -39,9 +39,6 @@
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
 
-/* Init */
-static void xfpm_button_hal_class_init (XfpmButtonHalClass *klass);
-static void xfpm_button_hal_init       (XfpmButtonHal *button);
 static void xfpm_button_hal_finalize   (GObject *object);
 
 #define XFPM_BUTTON_HAL_GET_PRIVATE(o) \
@@ -255,7 +252,7 @@ static void
 xfpm_button_hal_free_device_array (XfpmButtonHal *button)
 {
     HalDevice *device;
-    int i;
+    guint i;
     
     for ( i = 0 ; i<button->priv->array->len; i++)
     {

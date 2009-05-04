@@ -46,9 +46,6 @@
 
 #include "xfpm-adapter.h"
 
-/* Init */
-static void xfpm_adapter_class_init (XfpmAdapterClass *klass);
-static void xfpm_adapter_init       (XfpmAdapter *adapter);
 static void xfpm_adapter_finalize   (GObject *object);
 
 #define XFPM_ADAPTER_GET_PRIVATE(o) \

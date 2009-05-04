@@ -37,9 +37,6 @@
 
 #include "brightness-proxy.h"
 
-/* Init */
-static void brightness_proxy_class_init (BrightnessProxyClass *klass);
-static void brightness_proxy_init       (BrightnessProxy *brightness_proxy);
 static void brightness_proxy_finalize   (GObject *object);
 
 #define BRIGHTNESS_PROXY_GET_PRIVATE(o) \
@@ -169,11 +166,11 @@ brightness_proxy_new (void)
 gboolean
 brightness_proxy_set_level (BrightnessProxy *brightness, guint level)
 {
-    g_return_val_if_fail (BRIGHTNESS_IS_PROXY (brightness), FALSE);
-    
     GError *error = NULL;
     gboolean ret;
     gint dummy;
+    
+    g_return_val_if_fail (BRIGHTNESS_IS_PROXY (brightness), FALSE);
     
     ret = dbus_g_proxy_call (brightness->priv->proxy, "SetBrightness", &error,
 			     G_TYPE_INT, level,
@@ -195,11 +192,11 @@ brightness_proxy_set_level (BrightnessProxy *brightness, guint level)
 guint
 brightness_proxy_get_level (BrightnessProxy *brightness)
 {
-    g_return_val_if_fail (BRIGHTNESS_IS_PROXY (brightness), 0);
-    
     GError *error = NULL;
     gint level = 0;
     gboolean ret;
+    
+    g_return_val_if_fail (BRIGHTNESS_IS_PROXY (brightness), 0);
     
     ret = dbus_g_proxy_call (brightness->priv->proxy, "GetBrightness", &error,
 	 		     G_TYPE_INVALID,

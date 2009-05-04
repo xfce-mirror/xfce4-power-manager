@@ -32,9 +32,6 @@
 #include "hal-manager.h"
 #include "hal-power.h"
 
-/* Init */
-static void hal_power_class_init (HalPowerClass *klass);
-static void hal_power_init       (HalPower *power);
 static void hal_power_finalize   (GObject *object);
 
 #define HAL_POWER_GET_PRIVATE(o) \
@@ -85,9 +82,9 @@ hal_power_is_battery_new (HalPower *power, HalDevice *device)
 {
     GList *list = NULL;
     gboolean new_device = TRUE;
-    gint is_new = 0;
+    guint is_new = 0;
     HalDevice *hash_device;
-    int i;
+    guint i;
     
     list = g_hash_table_get_values (power->priv->hash);
     if ( !list )
@@ -151,6 +148,7 @@ static void
 hal_power_device_added_cb (HalManager *manager, const gchar *udi, HalPower *power)
 {
     HalDevice *device = hal_device_new ();
+    HalBattery *battery;
     hal_device_set_udi (device, udi);
     
     if ( hal_device_has_capability (device, "battery") )
@@ -161,7 +159,7 @@ hal_power_device_added_cb (HalManager *manager, const gchar *udi, HalPower *powe
 	if ( !hal_power_is_battery_new (power, device) )
 	    goto out;
 	    
-	HalBattery *battery  = hal_power_add_battery (power, udi);
+	battery = hal_power_add_battery (power, udi);
         g_signal_emit (G_OBJECT(power), signals[BATTERY_ADDED], 0, battery);
     }
 out:
@@ -348,15 +346,15 @@ hal_power_new(void)
 GPtrArray *
 hal_power_get_batteries (HalPower *power)
 {
-    g_return_val_if_fail (HAL_IS_POWER (power), NULL);
-    
     guint i;
     GPtrArray *array;
     HalBattery *battery;
-   
+    GList *list = NULL;
+    
+    g_return_val_if_fail (HAL_IS_POWER (power), NULL);
+    
     array = g_ptr_array_new ();
    
-    GList *list = NULL;
     list = g_hash_table_get_values (power->priv->hash);
    
     if (!list)

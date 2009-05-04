@@ -35,9 +35,6 @@
 #include "brightness-button.h"
 #include "brightness-proxy.h"
 
-/* Init */
-static void brightness_button_class_init (BrightnessButtonClass *klass);
-static void brightness_button_init       (BrightnessButton *button);
 static void brightness_button_finalize   (GObject *object);
 
 #define BRIGHTNESS_BUTTON_GET_PRIVATE(o) \
@@ -184,7 +181,7 @@ brightness_button_set_tooltip (BrightnessButton *button)
 }
 
 static gboolean
-brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 time)
+brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
 {
     gint x, y, orientation;
     gint current_level;
@@ -212,7 +209,7 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 time)
 
     if (gdk_pointer_grab (button->priv->popup->window, TRUE,
 			GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-			GDK_POINTER_MOTION_MASK, NULL, NULL, time)
+			GDK_POINTER_MOTION_MASK, NULL, NULL, ev_time)
 	  != GDK_GRAB_SUCCESS)
     {
 	gtk_grab_remove (button->priv->popup);
@@ -220,9 +217,9 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 time)
 	return FALSE;
     }
 
-    if (gdk_keyboard_grab (button->priv->popup->window, TRUE, time) != GDK_GRAB_SUCCESS)
+    if (gdk_keyboard_grab (button->priv->popup->window, TRUE, ev_time) != GDK_GRAB_SUCCESS)
     {
-	gdk_display_pointer_ungrab (display, time);
+	gdk_display_pointer_ungrab (display, ev_time);
 	gtk_grab_remove (button->priv->popup);
 	gtk_widget_hide (button->priv->popup);
 	return FALSE;

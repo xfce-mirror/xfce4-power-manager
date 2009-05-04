@@ -39,6 +39,7 @@ xfpm_battery_info (HalBattery *device)
     gint i = 0;
 
     gchar   *unit = NULL;
+    gchar   *str;
     guint32  last_full = 0;
     guint32  design_capacity = 0;
     gchar   *tech = NULL;
@@ -100,7 +101,7 @@ xfpm_battery_info (HalBattery *device)
 			 GTK_FILL, GTK_FILL,
 			 2, 8);
 			 
-	gchar *str = g_strdup_printf ("%d %s", design_capacity, unit);
+	str = g_strdup_printf ("%d %s", design_capacity, unit);
 	
 	label = gtk_label_new (str);
 	g_free (str);
@@ -127,7 +128,7 @@ xfpm_battery_info (HalBattery *device)
 			 GTK_FILL, GTK_FILL,
 		     	 2, 8);
 			 
-	gchar *str = g_strdup_printf ("%d %s", last_full, unit);
+	str = g_strdup_printf ("%d %s", last_full, unit);
 	label = gtk_label_new (str);
 	align = gtk_alignment_new (0.0, 0.5, 0, 0);
 	gtk_container_add (GTK_CONTAINER(align), label);

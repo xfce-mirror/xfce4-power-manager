@@ -43,9 +43,6 @@
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 
-/* Init */
-static void xfpm_tray_icon_class_init (XfpmTrayIconClass *klass);
-static void xfpm_tray_icon_init       (XfpmTrayIcon *tray);
 static void xfpm_tray_icon_finalize   (GObject *object);
 
 #define XFPM_TRAY_ICON_GET_PRIVATE(o) \
@@ -154,6 +151,7 @@ xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
 {
     const gchar *message;
     gboolean lock_screen;
+    gboolean ret;
     
     message = tray->priv->inhibited ? 
 	     _("An application is currently disabling the automatic sleep,"
@@ -161,10 +159,10 @@ xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
 	      " are you sure you want to hibernate the system?") :
 	      _("Are you sure you want to proceed?") ;
     
-    gboolean ret = 
-    xfce_confirm (message,
-                  GTK_STOCK_YES,
-                  _("Hibernate"));
+    ret = 
+	xfce_confirm (message,
+		      GTK_STOCK_YES,
+		      _("Hibernate"));
     
     if ( ret ) 
     {
@@ -184,6 +182,7 @@ xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
 {
     const gchar *message;
     gboolean lock_screen;
+    gboolean ret;
     
     message = tray->priv->inhibited ? 
 	     _("An application is currently disabling the automatic sleep,"
@@ -191,10 +190,10 @@ xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
 	      " are you sure you want to suspend the system?") :
 	      _("Are you sure you want to proceed?") ;
     
-    gboolean ret = 
-    xfce_confirm  (message,
-                   GTK_STOCK_YES,
-                  _("Suspend"));
+    ret = 
+	xfce_confirm  (message,
+		       GTK_STOCK_YES,
+		       _("Suspend"));
     
     if ( ret ) 
     {
@@ -246,12 +245,13 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
 {
     		  
     GtkWidget *menu, *mi, *img;
-    menu = gtk_menu_new();
     gboolean can_suspend = FALSE;
     gboolean can_hibernate = FALSE ;
     gboolean caller = FALSE;
 
     gboolean saver_inhibited;
+
+    menu = gtk_menu_new();
 
     g_object_get (G_OBJECT (tray->priv->shutdown),
 		  "caller-privilege", &caller,

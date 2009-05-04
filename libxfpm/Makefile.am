@@ -4,14 +4,14 @@ noinst_LTLIBRARIES = 			\
 	libxfpmcommon.la
 
 libxfpmhal_la_SOURCES =			\
-	hal-marshal.c			\
-	hal-marshal.h			\
 	hal-monitor.c			\
 	hal-monitor.h			\
 	hal-manager.c			\
 	hal-manager.h			\
 	hal-device.c			\
-	hal-device.h
+	hal-device.h			\
+	hal-marshal.c			\
+	hal-marshal.h
 
 libxfpmhal_la_CFLAGS =			\
 	$(GLIB_CFLAGS)			\
@@ -53,16 +53,17 @@ BUILT_SOURCES =				\
 	hal-marshal.c			\
 	hal-marshal.h
 
-hal-marshal.h: hal-marshal.list
-	glib-genmarshal --header --prefix="_hal_marshal" \
-            hal-marshal.list > tmp-marshal.h && \
-        cp tmp-marshal.h $(@F) && \
-        rm -f tmp-marshal.h tmp-marshal.h~
+hal-marshal.c: hal-marshal.list
+	echo "#include \"hal-marshal.h\"" > $@ && \
+	glib-genmarshal $< --prefix=_hal_marshal --body >> $@
 
-hal-marshal.c: hal-marshal.h
-	glib-genmarshal --body --prefix="_hal_marshal" \
-            hal-marshal.list > tmp-marshal.c && \
-        cp tmp-marshal.c $(@F) && \
-        rm -f tmp-marshal.c tmp-marshal.c~
+hal-marshal.h: hal-marshal.list
+	glib-genmarshal $< --prefix=_hal_marshal --header > $@
 
 endif
+
+EXTRA_DIST =				\
+	hal-marshal.list
+
+DISTCLEANFILES =			\
+	$(BUILT_SOURCES)

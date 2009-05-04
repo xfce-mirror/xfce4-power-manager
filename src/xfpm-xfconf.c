@@ -37,9 +37,6 @@
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum.h"
 
-/* Init */
-static void xfpm_xfconf_class_init (XfpmXfconfClass *klass);
-static void xfpm_xfconf_init       (XfpmXfconf *conf);
 static void xfpm_xfconf_finalize   (GObject *object);
 
 #define XFPM_XFCONF_GET_PRIVATE(o) \
@@ -474,7 +471,7 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     
     conf->priv->show_icon =
     	xfconf_channel_get_uint (conf->priv->channel, SHOW_TRAY_ICON_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
-    if ( G_UNLIKELY (conf->priv->show_icon < 0 || conf->priv->show_icon > 3) )
+    if ( G_UNLIKELY ( conf->priv->show_icon > 3) )
     {
 	g_warning ("Invalid value %d for property %s, using default\n", conf->priv->show_icon, SHOW_TRAY_ICON_CFG);
 	xfconf_channel_set_uint (conf->priv->channel, CRITICAL_BATT_ACTION_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
@@ -483,7 +480,7 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     conf->priv->critical_level =
 	xfconf_channel_get_uint (conf->priv->channel, CRITICAL_POWER_LEVEL, 0);
 	
-    if ( G_UNLIKELY (conf->priv->critical_level <0 || conf->priv->critical_level > 20) )
+    if ( G_UNLIKELY ( conf->priv->critical_level > 20) )
     {
 	g_warning ("Value %d for property %s is out of range \n", conf->priv->critical_level, CRITICAL_POWER_LEVEL);
 	conf->priv->critical_level = 10;
@@ -687,8 +684,10 @@ gint xfpm_xfconf_get_property_int (XfpmXfconf *conf, const gchar *property)
 {
     g_return_val_if_fail (XFPM_IS_XFCONF(conf), 0);
 
+    if ( xfpm_strequal (property, BRIGHTNESS_ON_AC ) )
+	return conf->priv->brightness_on_ac_timeout;
 #ifdef HAVE_DPMS
-    if ( xfpm_strequal (property, ON_AC_DPMS_SLEEP))
+    else if ( xfpm_strequal (property, ON_AC_DPMS_SLEEP))
 	return conf->priv->dpms_sleep_on_ac;
     else if ( xfpm_strequal (property, ON_BATT_DPMS_SLEEP))
 	return conf->priv->dpms_sleep_on_battery;
@@ -697,8 +696,6 @@ gint xfpm_xfconf_get_property_int (XfpmXfconf *conf, const gchar *property)
     else if ( xfpm_strequal (property, ON_BATT_DPMS_OFF))
 	return conf->priv->dpms_off_on_battery;
 #endif /* HAVE_DPMS */
-    else if ( xfpm_strequal (property, BRIGHTNESS_ON_AC ) )
-	return conf->priv->brightness_on_ac_timeout;
     else if ( xfpm_strequal (property, BRIGHTNESS_ON_BATTERY )) 
 	return conf->priv->brightness_on_battery_timeout;
     else if ( xfpm_strequal (property, CRITICAL_POWER_LEVEL) )

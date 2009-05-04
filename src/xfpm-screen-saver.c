@@ -40,9 +40,6 @@
 #include "xfpm-inhibit.h"
 #include "xfpm-dbus-monitor.h"
 
-/* Init */
-static void xfpm_screen_saver_class_init (XfpmScreenSaverClass *klass);
-static void xfpm_screen_saver_init       (XfpmScreenSaver *srv);
 static void xfpm_screen_saver_finalize   (GObject *object);
 
 #define XFPM_SCREEN_SAVER_GET_PRIVATE(o) \

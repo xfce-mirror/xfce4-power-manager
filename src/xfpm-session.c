@@ -36,9 +36,6 @@
 
 #include "xfpm-session.h"
 
-/* Init */
-static void xfpm_session_class_init (XfpmSessionClass *klass);
-static void xfpm_session_init       (XfpmSession *session);
 static void xfpm_session_finalize   (GObject *object);
 
 #define XFPM_SESSION_GET_PRIVATE(o) \
@@ -236,20 +233,20 @@ void xfpm_session_quit (XfpmSession *session)
 
 gboolean xfpm_session_shutdown (XfpmSession *session)
 {
-    g_return_val_if_fail (XFPM_IS_SESSION (session), FALSE);
-    
     gboolean allow_save   = TRUE;
     XfsmShutdownType type = XFSM_SHUTDOWN_HALT;
+    
+    g_return_val_if_fail (XFPM_IS_SESSION (session), FALSE);
     
     return xfpm_session_shutdown_internal (session, type, allow_save);
 }
 
 gboolean xfpm_session_ask_shutdown (XfpmSession *session)
 {
-    g_return_val_if_fail (XFPM_IS_SESSION (session), FALSE);
-    
     gboolean allow_save   = TRUE;
     XfsmShutdownType type = XFSM_SHUTDOWN_ASK;
+    
+    g_return_val_if_fail (XFPM_IS_SESSION (session), FALSE);
     
     return xfpm_session_shutdown_internal (session, type, allow_save);
 }

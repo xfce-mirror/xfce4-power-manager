@@ -21,12 +21,14 @@
 #include "xfpm-dbus.h"
 
 gboolean
-xfpm_dbus_name_has_owner(DBusConnection *connection, const gchar *name)
+xfpm_dbus_name_has_owner (DBusConnection *connection, const gchar *name)
 {
     DBusError error;
-    dbus_error_init(&error);
+    gboolean ret;
     
-    gboolean ret = dbus_bus_name_has_owner(connection, name, &error);
+    dbus_error_init (&error);
+    
+    ret = dbus_bus_name_has_owner(connection, name, &error);
     
     if ( dbus_error_is_set(&error) )
     {
@@ -41,10 +43,11 @@ xfpm_dbus_name_has_owner(DBusConnection *connection, const gchar *name)
 gboolean xfpm_dbus_register_name(DBusConnection *connection, const gchar *name)
 {
     DBusError error;
+    int ret;
     
     dbus_error_init(&error);
     
-    int ret =
+    ret =
 	dbus_bus_request_name(connection,
 			      name,
 			      DBUS_NAME_FLAG_DO_NOT_QUEUE,
@@ -68,10 +71,11 @@ gboolean xfpm_dbus_register_name(DBusConnection *connection, const gchar *name)
 gboolean xfpm_dbus_release_name(DBusConnection *connection, const gchar *name)
 {
     DBusError error;
+    int ret;
     
     dbus_error_init(&error);
     
-    int ret =
+    ret =
 	dbus_bus_release_name(connection,
 			      name,
 			      &error);
