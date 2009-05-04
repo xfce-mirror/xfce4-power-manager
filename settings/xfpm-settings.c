@@ -1136,7 +1136,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
 	gtk_list_store_append (list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, 4, -1);
 	
-	g_signal_connect (sleep, "changed",
+	g_signal_connect (sleep_w, "changed",
 			  G_CALLBACK(set_sleep_changed_cb), channel);
 	
 	default_sleep_value = xfconf_channel_get_string (channel, SLEEP_SWITCH_CFG, "Nothing");
@@ -1154,7 +1154,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
 				    1, &list_value, -1);
 		if ( sleep_val_int == list_value )
 		{
-		    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep), &iter);
+		    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep_w), &iter);
 		    break;
 		}
 	    }
