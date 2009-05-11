@@ -44,9 +44,8 @@ msgid "Consider the computer on low power at:"
 msgstr "Kritik düşük güç seviyesini belirle:"
 
 #: ../settings/xfpm-settings.glade.h:9
-#, fuzzy
 msgid "Enable CPU frequency control"
-msgstr "İşlemci frekansı ölçekleme kontrolünü etkinleştir"
+msgstr "İşlemci frekansı kontrolünü etkinleştir"
 
 #: ../settings/xfpm-settings.glade.h:10
 msgid "Enable monitor power management control"
@@ -105,9 +104,8 @@ msgid "Put display to sleep when computer is inactive for:"
 msgstr "Bilgisayar kullanılmadığında şu kadar süre sonra askıya al:"
 
 #: ../settings/xfpm-settings.glade.h:21
-#, fuzzy
 msgid "Put the computer to sleep when inactive for:"
-msgstr "Bilgisayar kullanılmadığında şu kadar süre sonra askıya al:"
+msgstr "Bilgisayar kullanılmadığı zaman şu kadar süre sonra askıya al:"
 
 #: ../settings/xfpm-settings.glade.h:22
 msgid "Reduce screen brightness when computer is inactive for:"
@@ -116,13 +114,12 @@ msgstr ""
 "düşür:"
 
 #: ../settings/xfpm-settings.glade.h:23
-#, fuzzy
 msgid "Set computer inactivity sleep mode:"
-msgstr "Monitörü uyku kipine al:"
+msgstr "Bilgisayar kullanılmadığında uygulanacak uyku kipi:"
 
 #: ../settings/xfpm-settings.glade.h:24
 msgid "Set monitor sleep mode:"
-msgstr "Monitörü uyku kipine al:"
+msgstr "Monitör için kullanılacak uyku kipi:"
 
 #: ../settings/xfpm-settings.glade.h:25
 msgid "Standby"
@@ -149,9 +146,8 @@ msgid "When battery power is critical:"
 msgstr "Pil seviyesi kritik ise şu işlemi gerçekleştir:"
 
 #: ../settings/xfpm-settings.glade.h:30
-#, fuzzy
 msgid "When hibernate button is pressed:"
-msgstr "Kapatma düğmesine basıldığında yap:"
+msgstr "Hazırda beklet düğmesine basıldığında yap:"
 
 #: ../settings/xfpm-settings.glade.h:31
 msgid "When laptop lid is closed:"
@@ -187,12 +183,10 @@ msgstr "Dakika"
 
 #: ../settings/xfpm-settings.c:389 ../settings/xfpm-settings.c:396
 #: ../settings/xfpm-settings.c:397 ../settings/xfpm-settings.c:398
-#, fuzzy
 msgid "One hour"
-msgstr "saat"
+msgstr "Bir saat"
 
 #: ../settings/xfpm-settings.c:397 ../settings/xfpm-settings.c:401
-#, fuzzy
 msgid "one minute"
 msgstr "Bir dakika"
 
@@ -238,26 +232,25 @@ msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
+"Görüntü Güç Yönetimi Sinyalizasyonunu (DPMS) Devredışı bırak, ör. ekranı "
+"kapatma veya hazırda bekletme kipine alma."
 
 #: ../settings/xfpm-settings.c:963 ../settings/xfpm-settings.c:1030
 #: ../settings/xfpm-settings.c:1097
 msgid "Ask"
-msgstr ""
+msgstr "Sor"
 
 #: ../settings/xfpm-settings.c:1156
-#, fuzzy
 msgid "Suspend operation not permitted"
-msgstr "Askıya alma ve hazırda bekletme işlemlerine izin verilmedi"
+msgstr "Askıya alma işlemine izin verilmedi"
 
 #: ../settings/xfpm-settings.c:1162
-#, fuzzy
 msgid "Hibernate operation not permitted"
-msgstr "Askıya alma ve hazırda bekletme işlemlerine izin verilmedi"
+msgstr "Hazırda bekletme işlemine izin verilmedi"
 
 #: ../settings/xfpm-settings.c:1216
-#, fuzzy
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Bilgisayarın şarjı şu seviye yüzdesine geldiğinde"
+msgstr "Bilgisayarın şarj seviyesi şu seviye yüzdesine geldiğinde"
 
 #: ../settings/xfpm-settings.c:1368 ../settings/xfpm-settings.c:1373
 msgid "On Battery"
@@ -324,9 +317,8 @@ msgid "Your battery is fully charged"
 msgstr "Pil tamamen şarj edildi"
 
 #: ../src/xfpm-battery.c:114
-#, fuzzy
 msgid "Your battery is charging"
-msgstr "Piliniz tükeniyor"
+msgstr "Piliniz şarj ediliyor"
 
 #: ../src/xfpm-battery.c:117
 msgid "Battery is charging"
@@ -489,9 +481,8 @@ msgid "Do not daemonize"
 msgstr "Servis olarak çalıştırma"
 
 #: ../src/xfpm-main.c:131
-#, fuzzy
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Çalışan tüm xfce güç yöneticisi uygulamalarını yeniden başlat"
+msgstr "Çalışan tüm Xfce güç yöneticisi uygulamalarını yeniden başlat"
 
 #: ../src/xfpm-main.c:132
 msgid "Show the configuration dialog"
@@ -567,7 +558,6 @@ msgstr ""
 "rağmen sistemi hazırda bekletmek istediğinizden emin misiniz?"
 
 #: ../src/xfpm-tray-icon.c:162 ../src/xfpm-tray-icon.c:192
-#, fuzzy
 msgid "Are you sure you want to proceed?"
 msgstr "İşlemi gerçekleştirmek istediğinizden emin misiniz?"
 
@@ -582,22 +572,20 @@ msgstr ""
 "buna rağmen sistemi askıya almak istiyor musunuz?"
 
 #: ../src/xfpm-tray-icon.c:218
-#, fuzzy
 msgid "Quit the Xfce power manager"
-msgstr "Xfce güç yöneticisi"
+msgstr "Xfce güç yöneticisini kapat"
 
 #: ../src/xfpm-tray-icon.c:220
 msgid "Quit"
-msgstr ""
+msgstr "Kapat"
 
 #: ../src/xfpm-tray-icon.c:293
 msgid "Clear inhibit"
-msgstr ""
+msgstr "Engelleyiciyi temizle"
 
 #: ../src/xfpm-tray-icon.c:293
-#, fuzzy
 msgid "Inhibit"
-msgstr "Durdurma eklentisi"
+msgstr "Engelleyici Eklentisi"
 
 #: ../src/xfpm-tray-icon.c:295
 msgid ""
@@ -605,6 +593,9 @@ msgid ""
 "to disable backlight sleep, for example you could active the inhibit if you "
 "are watching a movie."
 msgstr ""
+"Uyku kipine almayı etkinleştir/devredışı bırak. Bu seçeneği ayarlamak güç "
+"yöneticisinin ekranı karartmamasını sağlar, mesela film izlerken "
+"engelleyiciyi çalıştırabilirsiniz. "
 
 #: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
 #, c-format
@@ -622,14 +613,13 @@ msgid "Suspend not supported"
 msgstr "Askıya alma desteklenmiyor"
 
 #: ../src/xfpm-manager.c:210
-#, fuzzy
 msgid "HAL daemon is not running"
 msgstr "Hal servisi çalışmıyor"
 
 #: ../src/xfpm-inhibit.c:333
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid arguments"
-msgstr "Çok fazla değişken kullandınız"
+msgstr "Geçersiz argüman"
 
 #: ../src/xfpm-inhibit.c:359
 #, c-format
@@ -666,9 +656,9 @@ msgstr "Sistem askıya alınamadı"
 
 #: ../src/xfpm-shutdown.c:403 ../src/xfpm-shutdown.c:426
 #: ../src/xfpm-shutdown.c:460
-#, fuzzy, c-format
+#, c-format
 msgid "HAL daemon is currently not connected"
-msgstr "Hal servisi bağlı değil"
+msgstr "Hal servisi bağlı durumda değil"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
@@ -708,7 +698,6 @@ msgstr "Samed Beyribey <ras0ir@eventualis.org>, 2009"
 
 #: ../panel-plugins/brightness/brightness-button.c:181
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
-#, fuzzy
 msgid "Control your LCD brightness"
 msgstr "LCD parlaklık seviyesini belirleyin"
 
