@@ -100,7 +100,7 @@ xfpm_button_xf86_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data
     
     key = GPOINTER_TO_INT (key_hash);
     
-    XFPM_DEBUG_ENUM ("Key press", key, XFPM_TYPE_BUTTON_KEY)
+    XFPM_DEBUG_ENUM ("Key press", key, XFPM_TYPE_BUTTON_KEY);
     
     g_signal_emit (G_OBJECT(button), signals[XF86_BUTTON_PRESSED], 0, key);
 
@@ -163,7 +163,7 @@ xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmButtonKe
 	return FALSE;
     }
     
-    XFPM_DEBUG_ENUM_FULL (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key %li ", (long int) keycode)
+    XFPM_DEBUG_ENUM_FULL (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key %li ", (long int) keycode);
     
     g_hash_table_insert (button->priv->hash, GINT_TO_POINTER(keycode), GINT_TO_POINTER(key));
     

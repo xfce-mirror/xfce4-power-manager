@@ -157,7 +157,7 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
 {
     gchar *icon;
 
-    XFPM_DEBUG_ENUM ("battery state", battery->priv->state, XFPM_TYPE_BATTERY_STATE)
+    XFPM_DEBUG_ENUM ("battery state", battery->priv->state, XFPM_TYPE_BATTERY_STATE);
     
     if ( state == BATTERY_NOT_PRESENT )
     {

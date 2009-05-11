@@ -61,6 +61,7 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-errors.h				\
 	xfpm-config.h				\
 	xfpm-enum.h				\
+	xfpm-debug.c				\
 	xfpm-debug.h
 
 

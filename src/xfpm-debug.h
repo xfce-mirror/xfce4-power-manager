@@ -25,42 +25,39 @@
 #include <config.h>
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
+#include <stdarg.h>
 #include <glib.h>
 
 G_BEGIN_DECLS
 
 #ifdef DEBUG
 
-static gchar *content = NULL;
-static GValue __value__ = { 0, };
+#define XFPM_DEBUG_ENUM(_text, _value, _type)\
+    xfpm_debug_enum (__func__, __FILE__, __LINE__, _text, _value, _type)
 
-#define XFPM_DEBUG_ENUM(_text, _value, _type) 				\
-    g_value_init (&__value__, _type);					\
-    g_value_set_enum (&__value__, _value);				\
-    content = g_strdup_value_contents (&__value__);			\
-    TRACE ("%s : %s", _text, content);					\
-    g_value_unset (&__value__);						\
-    g_free (content);
-    
-#define XFPM_DEBUG_ENUM_FULL(_value, _type, ...)			\
-    g_value_init (&__value__, _type);					\
-    g_value_set_enum (&__value__, _value);				\
-    content = g_strdup_value_contents (&__value__);			\
-    fprintf(stderr, "TRACE[%s:%d] %s(): ",__FILE__,__LINE__,__func__);  \
-    fprintf(stderr, __VA_ARGS__);					\
-    fprintf(stderr, ": %s", content);					\
-    fprintf(stderr, "\n");						\
-    g_value_unset (&__value__);						\
-    g_free (content);
-    
+#define XFPM_DEBUG_ENUM_FULL(_value, _type, ...)\
+    xfpm_debug_enum_full (__func__, __FILE__, __LINE__, _value, _type, __VA_ARGS__)
+
+
+
+void		xfpm_debug_enum 	(const gchar *func,
+					 const gchar *file,
+					 gint line,
+					 const gchar *text,
+					 gint v_enum, 
+					 GType type);
+					 
+void		xfpm_debug_enum_full    (const gchar *func,
+					 const gchar *file,
+					 gint line,
+					 gint v_enum,
+					 GType type,
+					 const gchar *format,
+					 ...);
 #else
 
 #define XFPM_DEBUG_ENUM(_text, _value, _type)
-#define XFPM_DEBUG_ENUM_FULL(_value, _type, ...)			
+#define XFPM_DEBUG_ENUM_FULL(_value, _type, ...)
 
 #endif
 
