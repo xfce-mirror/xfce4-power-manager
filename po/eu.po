@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-01 09:51+0200\n"
+"POT-Creation-Date: 2009-05-15 22:17+0200\n"
 "PO-Revision-Date: 2008-12-08 23:22+0100\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Euskara <debian-l10n-basque@lists.debian.org>\n"
@@ -45,7 +45,7 @@ msgstr ""
 msgid "Advanced"
 msgstr "Ezarpen aurreratuak"
 
-#: ../settings/xfpm-settings.glade.h:7 ../settings/xfpm-settings.c:899
+#: ../settings/xfpm-settings.glade.h:7 ../settings/xfpm-settings.c:942
 #, fuzzy
 msgid "Always show icon"
 msgstr "Beti bistarazi ikonoa"
@@ -68,18 +68,18 @@ msgstr "Gaitu monitore indar kudeaketa kontrola"
 msgid "Enable notification"
 msgstr "Gaitu UPS karga berri-ematea"
 
-#: ../settings/xfpm-settings.glade.h:12 ../settings/xfpm-settings.c:1339
-#: ../settings/xfpm-settings.c:1344
+#: ../settings/xfpm-settings.glade.h:12 ../settings/xfpm-settings.c:1381
+#: ../settings/xfpm-settings.c:1386
 #, fuzzy
 msgid "General"
 msgstr "Aukera orokorrak"
 
 #. Hibernate menu option
-#: ../settings/xfpm-settings.glade.h:13 ../settings/xfpm-settings.c:578
-#: ../settings/xfpm-settings.c:677 ../settings/xfpm-settings.c:820
-#: ../settings/xfpm-settings.c:956 ../settings/xfpm-settings.c:1026
-#: ../settings/xfpm-settings.c:1093 ../src/xfpm-tray-icon.c:167
-#: ../src/xfpm-tray-icon.c:263
+#: ../settings/xfpm-settings.glade.h:13 ../settings/xfpm-settings.c:592
+#: ../settings/xfpm-settings.c:690 ../settings/xfpm-settings.c:841
+#: ../settings/xfpm-settings.c:998 ../settings/xfpm-settings.c:1067
+#: ../settings/xfpm-settings.c:1133 ../src/xfpm-tray-icon.c:170
+#: ../src/xfpm-tray-icon.c:268
 msgid "Hibernate"
 msgstr "Hibernatu"
 
@@ -87,15 +87,15 @@ msgstr "Hibernatu"
 msgid "Lock screen when going for suspend/hibernate"
 msgstr ""
 
-#: ../settings/xfpm-settings.glade.h:15 ../settings/xfpm-settings.c:573
-#: ../settings/xfpm-settings.c:666 ../settings/xfpm-settings.c:809
-#: ../settings/xfpm-settings.c:945 ../settings/xfpm-settings.c:1015
-#: ../settings/xfpm-settings.c:1082
+#: ../settings/xfpm-settings.glade.h:15 ../settings/xfpm-settings.c:587
+#: ../settings/xfpm-settings.c:679 ../settings/xfpm-settings.c:830
+#: ../settings/xfpm-settings.c:987 ../settings/xfpm-settings.c:1056
+#: ../settings/xfpm-settings.c:1122
 msgid "Nothing"
 msgstr "Ezer ez"
 
-#: ../settings/xfpm-settings.glade.h:16 ../settings/xfpm-settings.c:1353
-#: ../settings/xfpm-settings.c:1358
+#: ../settings/xfpm-settings.glade.h:16 ../settings/xfpm-settings.c:1395
+#: ../settings/xfpm-settings.c:1400
 #, fuzzy
 msgid "On AC"
 msgstr "Bateriaz"
@@ -140,10 +140,10 @@ msgid "Standby"
 msgstr "Noiz itzali: "
 
 #. Suspend menu option
-#: ../settings/xfpm-settings.glade.h:26 ../settings/xfpm-settings.c:671
-#: ../settings/xfpm-settings.c:814 ../settings/xfpm-settings.c:950
-#: ../settings/xfpm-settings.c:1020 ../settings/xfpm-settings.c:1087
-#: ../src/xfpm-tray-icon.c:197 ../src/xfpm-tray-icon.c:278
+#: ../settings/xfpm-settings.glade.h:26 ../settings/xfpm-settings.c:684
+#: ../settings/xfpm-settings.c:835 ../settings/xfpm-settings.c:992
+#: ../settings/xfpm-settings.c:1061 ../settings/xfpm-settings.c:1127
+#: ../src/xfpm-tray-icon.c:201 ../src/xfpm-tray-icon.c:283
 msgid "Suspend"
 msgstr "Eseki"
 
@@ -181,150 +181,150 @@ msgstr "Power botoia sakatzean"
 msgid "When sleep button is pressed:"
 msgstr "Sleep botoia sakatzean"
 
-#: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:119
-#: ../src/xfpm-main.c:183 ../src/xfpm-main.c:272 ../src/xfpm-tray-icon.c:343
+#: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:120
+#: ../src/xfpm-main.c:184 ../src/xfpm-main.c:273 ../src/xfpm-tray-icon.c:348
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Xfce energia kudeatzailea"
 
-#: ../settings/xfpm-settings.c:370 ../settings/xfpm-settings.c:385
-#: ../settings/xfpm-settings.c:415
+#: ../settings/xfpm-settings.c:371 ../settings/xfpm-settings.c:386
+#: ../settings/xfpm-settings.c:416
 #, fuzzy
 msgid "Never"
 msgstr "inoiz"
 
-#: ../settings/xfpm-settings.c:373
+#: ../settings/xfpm-settings.c:374
 #, fuzzy
 msgid "One minute"
 msgstr "minutu"
 
-#: ../settings/xfpm-settings.c:375 ../settings/xfpm-settings.c:387
-#: ../settings/xfpm-settings.c:405
+#: ../settings/xfpm-settings.c:376 ../settings/xfpm-settings.c:388
+#: ../settings/xfpm-settings.c:406
 #, fuzzy
 msgid "Minutes"
 msgstr "minutu"
 
-#: ../settings/xfpm-settings.c:389 ../settings/xfpm-settings.c:396
-#: ../settings/xfpm-settings.c:397 ../settings/xfpm-settings.c:398
+#: ../settings/xfpm-settings.c:390 ../settings/xfpm-settings.c:397
+#: ../settings/xfpm-settings.c:398 ../settings/xfpm-settings.c:399
 #, fuzzy
 msgid "One hour"
 msgstr "ordu"
 
-#: ../settings/xfpm-settings.c:397 ../settings/xfpm-settings.c:401
+#: ../settings/xfpm-settings.c:398 ../settings/xfpm-settings.c:402
 #, fuzzy
 msgid "one minute"
 msgstr "minutu"
 
-#: ../settings/xfpm-settings.c:398 ../settings/xfpm-settings.c:402
-#: ../src/xfpm-battery.c:407
+#: ../settings/xfpm-settings.c:399 ../settings/xfpm-settings.c:403
+#: ../src/xfpm-battery.c:408
 msgid "minutes"
 msgstr "minutu"
 
-#: ../settings/xfpm-settings.c:400 ../settings/xfpm-settings.c:401
-#: ../settings/xfpm-settings.c:402 ../src/xfpm-battery.c:406
+#: ../settings/xfpm-settings.c:401 ../settings/xfpm-settings.c:402
+#: ../settings/xfpm-settings.c:403 ../src/xfpm-battery.c:407
 msgid "hours"
 msgstr "ordu"
 
-#: ../settings/xfpm-settings.c:417
+#: ../settings/xfpm-settings.c:418
 msgid "Seconds"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:552 ../settings/xfpm-settings.c:752
-#: ../settings/xfpm-settings.c:803 ../settings/xfpm-settings.c:939
-#: ../settings/xfpm-settings.c:1009 ../settings/xfpm-settings.c:1076
-#: ../settings/xfpm-settings.c:1248
+#: ../settings/xfpm-settings.c:566 ../settings/xfpm-settings.c:775
+#: ../settings/xfpm-settings.c:824 ../settings/xfpm-settings.c:981
+#: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1116
+#: ../settings/xfpm-settings.c:1291
 msgid "Hibernate and suspend operations not permitted"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:565 ../settings/xfpm-settings.c:658
+#: ../settings/xfpm-settings.c:579 ../settings/xfpm-settings.c:671
 msgid "Shutdown and hibernate operations not permitted"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:582 ../settings/xfpm-settings.c:960
+#: ../settings/xfpm-settings.c:596 ../settings/xfpm-settings.c:1002
 msgid "Shutdown"
 msgstr "Itzali"
 
-#: ../settings/xfpm-settings.c:902
+#: ../settings/xfpm-settings.c:945
 msgid "When battery is present"
 msgstr "Bateria dagoenean"
 
-#: ../settings/xfpm-settings.c:905
+#: ../settings/xfpm-settings.c:948
 msgid "When battery is charging or discharging"
 msgstr "Bateria kargatu edo deskargatzean"
 
-#: ../settings/xfpm-settings.c:924
+#: ../settings/xfpm-settings.c:966
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
 
-#: ../settings/xfpm-settings.c:963 ../settings/xfpm-settings.c:1030
-#: ../settings/xfpm-settings.c:1097
+#: ../settings/xfpm-settings.c:1005 ../settings/xfpm-settings.c:1071
+#: ../settings/xfpm-settings.c:1137
 msgid "Ask"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1156
+#: ../settings/xfpm-settings.c:1199
 msgid "Suspend operation not permitted"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1162
+#: ../settings/xfpm-settings.c:1205
 #, fuzzy
 msgid "Hibernate operation not permitted"
 msgstr "Hibernatu sistema"
 
-#: ../settings/xfpm-settings.c:1216
+#: ../settings/xfpm-settings.c:1259
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1368 ../settings/xfpm-settings.c:1373
+#: ../settings/xfpm-settings.c:1410 ../settings/xfpm-settings.c:1415
 #, fuzzy
 msgid "On Battery"
 msgstr "Bateriaz"
 
-#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1387
+#: ../settings/xfpm-settings.c:1424 ../settings/xfpm-settings.c:1429
 msgid "Extended"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:73
+#: ../settings/xfpm-settings-main.c:72
 msgid "Settings manager socket"
 msgstr "Ezarpen kudeatzaile socketa"
 
-#: ../settings/xfpm-settings-main.c:73
+#: ../settings/xfpm-settings-main.c:72
 msgid "SOCKET ID"
 msgstr "SOCKET IDa"
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:144
-#: ../src/xfpm-main.c:166
+#: ../settings/xfpm-settings-main.c:83 ../src/xfpm-main.c:145
+#: ../src/xfpm-main.c:167
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Idatzi '%s --help' erabilera laguntzarentzat."
 
-#: ../settings/xfpm-settings-main.c:119
+#: ../settings/xfpm-settings-main.c:120
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
 "Huts energia kudeatzaile konfigurazio kargatzean, hobetsiriko balioak "
 "erabiltzen"
 
-#: ../settings/xfpm-settings-main.c:145
+#: ../settings/xfpm-settings-main.c:146
 #, fuzzy
 msgid "Xfce Power Manager Settings"
 msgstr "Xfce energia kudeatzailea"
 
-#: ../settings/xfpm-settings-main.c:146
+#: ../settings/xfpm-settings-main.c:147
 #, fuzzy
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Ezin da xfce4 energia kudeatzailea kargatu"
 
-#: ../settings/xfpm-settings-main.c:174 ../src/xfpm-main.c:199
+#: ../settings/xfpm-settings-main.c:175 ../src/xfpm-main.c:200
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce energia kudeatzaile ez dago abiarazirik"
 
-#: ../settings/xfpm-settings-main.c:177
+#: ../settings/xfpm-settings-main.c:178
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce energia kudeatzaile ez dago abiarazirik, abiarazi nahi al duzu?"
 
-#: ../settings/xfpm-settings-main.c:179
+#: ../settings/xfpm-settings-main.c:180
 msgid "Run"
 msgstr "Exekutatu"
 
@@ -340,96 +340,96 @@ msgstr "Xfce 4 energia kudeaketa ezarpenak"
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce 4 energia kudeaketa"
 
-#: ../src/xfpm-battery.c:111
+#: ../src/xfpm-battery.c:108
 msgid "Your battery is fully charged"
 msgstr "Zure bateria guztiz kargaturik dago"
 
-#: ../src/xfpm-battery.c:114
+#: ../src/xfpm-battery.c:111
 #, fuzzy
 msgid "Your battery is charging"
 msgstr "Zure bateria deskargatzen ari da"
 
-#: ../src/xfpm-battery.c:117
+#: ../src/xfpm-battery.c:114
 msgid "Battery is charging"
 msgstr "Bateria kargatzen ari da"
 
-#: ../src/xfpm-battery.c:120
+#: ../src/xfpm-battery.c:117
 msgid "Your battery is discharging"
 msgstr "Zure bateria deskargatzen ari da"
 
-#: ../src/xfpm-battery.c:120 ../src/xfpm-battery.c:415
-#: ../src/xfpm-battery.c:427
+#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:416
+#: ../src/xfpm-battery.c:428
 #, fuzzy
 msgid "System is running on battery power"
 msgstr "Monitore ezarpenak bateria indarrez"
 
-#: ../src/xfpm-battery.c:123
+#: ../src/xfpm-battery.c:120
 msgid "Your battery charge is low"
 msgstr "Bateria karga baxua da"
 
-#: ../src/xfpm-battery.c:123
+#: ../src/xfpm-battery.c:120
 msgid "System is running on low power"
 msgstr ""
 
-#: ../src/xfpm-battery.c:243 ../src/xfpm-supply.c:282 ../src/xfpm-supply.c:305
-#: ../src/xfpm-tray-icon.c:117 ../src/xfpm-tray-icon.c:140
-#: ../src/xfpm-manager.c:210
+#: ../src/xfpm-battery.c:240 ../src/xfpm-supply.c:281 ../src/xfpm-supply.c:304
+#: ../src/xfpm-tray-icon.c:119 ../src/xfpm-tray-icon.c:142
+#: ../src/xfpm-manager.c:226
 msgid "Xfce power manager"
 msgstr "Xfce argindar kudeatzailea"
 
-#: ../src/xfpm-battery.c:257
+#: ../src/xfpm-battery.c:254
 msgid "Your UPS"
 msgstr ""
 
-#: ../src/xfpm-battery.c:259
+#: ../src/xfpm-battery.c:256
 #, fuzzy
 msgid "Your Mouse battery"
 msgstr "Bateriaz lanean"
 
-#: ../src/xfpm-battery.c:261
+#: ../src/xfpm-battery.c:258
 msgid "Your Keyboard battery"
 msgstr ""
 
-#: ../src/xfpm-battery.c:263
+#: ../src/xfpm-battery.c:260
 #, fuzzy
 msgid "Your Camera battery"
 msgstr "Bateriaz lanean ari zara"
 
-#: ../src/xfpm-battery.c:265
+#: ../src/xfpm-battery.c:262
 msgid "Your PDA battery"
 msgstr ""
 
-#: ../src/xfpm-battery.c:267
+#: ../src/xfpm-battery.c:264
 #, fuzzy
 msgid "Your Battery"
 msgstr "Bateriaz lanean ari zara"
 
-#: ../src/xfpm-battery.c:282
+#: ../src/xfpm-battery.c:279
 #, fuzzy
 msgid "is fully charged"
 msgstr "Bateria guztiz kargaturik dago"
 
-#: ../src/xfpm-battery.c:287
+#: ../src/xfpm-battery.c:284
 #, fuzzy
 msgid "charge level"
 msgstr "Bateria karga maila"
 
-#: ../src/xfpm-battery.c:292
+#: ../src/xfpm-battery.c:289
 #, fuzzy
 msgid "is charging"
 msgstr "Bateria kargatzen ari da"
 
-#: ../src/xfpm-battery.c:299
+#: ../src/xfpm-battery.c:296
 #, fuzzy
 msgid "is discharging"
 msgstr "Bateria deskargatzen ari da"
 
-#: ../src/xfpm-battery.c:304
+#: ../src/xfpm-battery.c:301
 #, fuzzy
 msgid "charge is low"
 msgstr "Bateria karga baxua da"
 
-#: ../src/xfpm-battery.c:309
+#: ../src/xfpm-battery.c:306
 #, fuzzy
 msgid "is almost empty"
 msgstr "Bateria ia hutsik dago"
@@ -458,49 +458,49 @@ msgstr ""
 "\n"
 "Kargatzeko falta den denbora: "
 
-#: ../src/xfpm-battery.c:406
+#: ../src/xfpm-battery.c:407
 msgid "hour"
 msgstr "ordu"
 
-#: ../src/xfpm-battery.c:407
+#: ../src/xfpm-battery.c:408
 msgid "minute"
 msgstr "minutu"
 
-#: ../src/xfpm-battery.c:411 ../src/xfpm-battery.c:423
+#: ../src/xfpm-battery.c:412 ../src/xfpm-battery.c:424
 #, fuzzy
 msgid "Battery"
 msgstr "Bateria ezarpenak"
 
-#: ../src/xfpm-battery.c:414 ../src/xfpm-battery.c:426
+#: ../src/xfpm-battery.c:415 ../src/xfpm-battery.c:427
 #, fuzzy
 msgid "System is running on AC power"
 msgstr "Monitore ezarpenak UPS indarrez"
 
-#: ../src/xfpm-battery-info.c:62 ../libxfpm/hal-battery.c:471
+#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:469
 msgid "Unknown unit"
 msgstr ""
 
-#: ../src/xfpm-battery-info.c:69
+#: ../src/xfpm-battery-info.c:70
 msgid "Technology:"
 msgstr ""
 
-#: ../src/xfpm-battery-info.c:92
+#: ../src/xfpm-battery-info.c:93
 msgid "Design:"
 msgstr ""
 
-#: ../src/xfpm-battery-info.c:120
+#: ../src/xfpm-battery-info.c:121
 msgid "Last full:"
 msgstr ""
 
-#: ../src/xfpm-battery-info.c:144
+#: ../src/xfpm-battery-info.c:145
 msgid "Vendor:"
 msgstr ""
 
-#: ../src/xfpm-battery-info.c:168
+#: ../src/xfpm-battery-info.c:169
 msgid "Model:"
 msgstr ""
 
-#: ../src/xfpm-battery-info.c:201
+#: ../src/xfpm-battery-info.c:202
 #, fuzzy
 msgid "Battery information"
 msgstr "Bateria konfigurazioa"
@@ -526,66 +526,66 @@ msgstr ""
 "GNU GPL lizentziaz argitaratua.\n"
 "\n"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:129
 msgid "Do not daemonize"
 msgstr ""
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:130
 #, fuzzy
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Itxi abiarazitako edozein xfce energia kudeatzaile"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:131
 msgid "Show the configuration dialog"
 msgstr "Ikusi konfigurazio leihoa"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:132
 msgid "Quit any running xfce power manager"
 msgstr "Itxi abiarazitako edozein xfce energia kudeatzaile"
 
-#: ../src/xfpm-main.c:134
+#: ../src/xfpm-main.c:133
 msgid "Version information"
 msgstr "Bertsio argibideak"
 
-#: ../src/xfpm-main.c:164
+#: ../src/xfpm-main.c:165
 #, c-format
 msgid "Too many arguments"
 msgstr "Argumentu gehiegi"
 
-#: ../src/xfpm-main.c:180
+#: ../src/xfpm-main.c:181
 #, fuzzy
 msgid "Unable to get connection to the message bus session"
 msgstr "Ezin da DBus-ekin konektatu: %s"
 
-#: ../src/xfpm-main.c:273
+#: ../src/xfpm-main.c:274
 #, fuzzy
 msgid "Another power manager is already running"
 msgstr "Xfce energia kudeatzailea ez dago abiarazirik"
 
-#: ../src/xfpm-main.c:278
+#: ../src/xfpm-main.c:279
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce energia kudeatzailea ez dago abiarazirik"
 
-#: ../src/xfpm-supply.c:171
+#: ../src/xfpm-supply.c:168
 #, fuzzy
 msgid "Adapter present"
 msgstr "Ez dago"
 
-#: ../src/xfpm-supply.c:172
+#: ../src/xfpm-supply.c:169
 #, fuzzy
 msgid "Adapter not present"
 msgstr "Ez dago"
 
-#: ../src/xfpm-supply.c:251
+#: ../src/xfpm-supply.c:250
 msgid "Shutdown the system"
 msgstr "Itzali sistema"
 
-#: ../src/xfpm-supply.c:262
+#: ../src/xfpm-supply.c:261
 msgid "Hibernate the system"
 msgstr "Hibernatu sistema"
 
-#: ../src/xfpm-supply.c:274
+#: ../src/xfpm-supply.c:273
 msgid ""
 "System is running on low power, but an application is currently disabling "
 "the automatic sleep, this means that doing a sleep now may damage the data "
@@ -593,116 +593,120 @@ msgid ""
 "sleep mode or plug in your AC adapter"
 msgstr ""
 
-#: ../src/xfpm-supply.c:300
+#: ../src/xfpm-supply.c:299
 #, fuzzy
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
 "Zure bateria nahiko hutsik dago. Gorde zure lana datu galerak saihesteko"
 
-#: ../src/xfpm-tray-icon.c:159
+#: ../src/xfpm-tray-icon.c:162
 msgid ""
 "An application is currently disabling the automatic sleep, doing this action "
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:162 ../src/xfpm-tray-icon.c:192
+#: ../src/xfpm-tray-icon.c:165 ../src/xfpm-tray-icon.c:196
 #, fuzzy
 msgid "Are you sure you want to proceed?"
 msgstr "Ziur zaude sistema eseki nahi duzula?"
 
-#: ../src/xfpm-tray-icon.c:189
+#: ../src/xfpm-tray-icon.c:193
 msgid ""
 "An application is currently disabling the automatic sleep, doing this action "
 "now may damage the working state of this application, are you sure you want "
 "to suspend the system?"
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:218
+#: ../src/xfpm-tray-icon.c:222
 #, fuzzy
 msgid "Quit the Xfce power manager"
 msgstr "Xfce argindar kudeatzailea"
 
-#: ../src/xfpm-tray-icon.c:220
+#: ../src/xfpm-tray-icon.c:224
 msgid "Quit"
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:293
+#: ../src/xfpm-tray-icon.c:298
 msgid "Clear inhibit"
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:293
+#: ../src/xfpm-tray-icon.c:298
 msgid "Inhibit"
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:295
+#: ../src/xfpm-tray-icon.c:300
 msgid ""
 "Disable or enable automatic sleep, setting this will tell the power manager "
 "to disable backlight sleep, for example you could active the inhibit if you "
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-engine.c:648 ../src/xfpm-engine.c:673 ../src/xfpm-engine.c:702
+#: ../src/xfpm-tray-icon.c:388
+msgid "No data available"
+msgstr ""
+
+#: ../src/xfpm-engine.c:646 ../src/xfpm-engine.c:672 ../src/xfpm-engine.c:701
 #, c-format
 msgid "Permission denied"
 msgstr ""
 
-#: ../src/xfpm-engine.c:680
+#: ../src/xfpm-engine.c:679
 #, fuzzy, c-format
 msgid "Hibernate not supported"
 msgstr "Hibernatu sistema"
 
-#: ../src/xfpm-engine.c:709
+#: ../src/xfpm-engine.c:708
 #, c-format
 msgid "Suspend not supported"
 msgstr ""
 
-#: ../src/xfpm-manager.c:210
+#: ../src/xfpm-manager.c:226
 #, fuzzy
 msgid "HAL daemon is not running"
 msgstr "Xfce energia kudeatzaile ez dago abiarazirik"
 
-#: ../src/xfpm-inhibit.c:333
+#: ../src/xfpm-inhibit.c:330
 #, fuzzy, c-format
 msgid "Invalid arguments"
 msgstr "Argumentu gehiegi"
 
-#: ../src/xfpm-inhibit.c:359
+#: ../src/xfpm-inhibit.c:356
 #, c-format
 msgid "Invalid cookie"
 msgstr ""
 
-#: ../src/xfpm-shutdown.c:337
+#: ../src/xfpm-shutdown.c:335
 msgid "No back-end for your operating system"
 msgstr "Ez dago zure sistema eragilerako interfazerik"
 
-#: ../src/xfpm-shutdown.c:341
+#: ../src/xfpm-shutdown.c:339
 msgid "No hibernate script found"
 msgstr "Ez da hibernatzeko scripta aurkitu"
 
-#: ../src/xfpm-shutdown.c:345
+#: ../src/xfpm-shutdown.c:343
 msgid "No suspend script found"
 msgstr "Ez da esekitzeko scripta aurkitu"
 
-#: ../src/xfpm-shutdown.c:349
+#: ../src/xfpm-shutdown.c:347
 msgid "No suspend method found"
 msgstr "Ez da esekitzeko metodorik aurkitu"
 
-#: ../src/xfpm-shutdown.c:353
+#: ../src/xfpm-shutdown.c:351
 msgid "No hibernate method found"
 msgstr "Ez da hibernatzeko metodorik aurkitu"
 
-#: ../src/xfpm-shutdown.c:357
+#: ../src/xfpm-shutdown.c:355
 msgid "Out of memory"
 msgstr "Memoriaz kanpo"
 
-#: ../src/xfpm-shutdown.c:361
+#: ../src/xfpm-shutdown.c:359
 #, fuzzy
 msgid "System failed to sleep"
 msgstr "Sistemak huts egin du esekitzerakoan"
 
-#: ../src/xfpm-shutdown.c:403 ../src/xfpm-shutdown.c:426
-#: ../src/xfpm-shutdown.c:460
+#: ../src/xfpm-shutdown.c:401 ../src/xfpm-shutdown.c:424
+#: ../src/xfpm-shutdown.c:458
 #, c-format
 msgid "HAL daemon is currently not connected"
 msgstr ""
@@ -711,31 +715,31 @@ msgstr ""
 msgid "Power management for the Xfce desktop"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:441
+#: ../libxfpm/hal-battery.c:439
 msgid "Lithium ion"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:445
+#: ../libxfpm/hal-battery.c:443
 msgid "Lead acid"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:449
+#: ../libxfpm/hal-battery.c:447
 msgid "Lithium polymer"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:453
+#: ../libxfpm/hal-battery.c:451
 msgid "Nickel metal hydride"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:456
+#: ../libxfpm/hal-battery.c:454
 msgid "Unknown"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:464
+#: ../libxfpm/hal-battery.c:462
 msgid "mWh"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:468
+#: ../libxfpm/hal-battery.c:466
 msgid "mAh"
 msgstr ""
 
@@ -743,18 +747,18 @@ msgstr ""
 msgid "translator-credits"
 msgstr "Piarres Beobide <pi@beobide.net>"
 
-#: ../panel-plugins/brightness/brightness-button.c:181
+#: ../panel-plugins/brightness/brightness-button.c:178
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
 #, fuzzy
 msgid "Control your LCD brightness"
 msgstr "Gaitu LCD distira kontrola"
 
-#: ../panel-plugins/brightness/brightness-button.c:183
+#: ../panel-plugins/brightness/brightness-button.c:180
 #, fuzzy
 msgid "No device found"
 msgstr "Ez da CPU gobernurik aurkitu"
 
-#: ../panel-plugins/brightness/brightness-button.c:646
+#: ../panel-plugins/brightness/brightness-button.c:643
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr ""

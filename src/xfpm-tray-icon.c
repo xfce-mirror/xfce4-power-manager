@@ -35,6 +35,7 @@
 #include "libxfpm/xfpm-common.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-notify.h"
+#include "libxfpm/hal-monitor.h"
 
 #include "xfpm-tray-icon.h"
 #include "xfpm-shutdown.h"
@@ -55,12 +56,16 @@ struct XfpmTrayIconPrivate
     XfpmNotify      *notify;
     XfpmInhibit     *inhibit;
     XfpmScreenSaver *srv;
+    HalMonitor      *hal_monitor;
     
     GtkStatusIcon *icon;
     GQuark         icon_quark;
     gboolean       info_menu;
     gboolean       inhibited;
+    gboolean	   data_available;
+    
     gulong         sig;
+    gulong	   sig_1;
 };
 
 enum
@@ -265,7 +270,7 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
     gtk_widget_set_sensitive(mi,FALSE);
     
-    if ( caller && can_hibernate )
+    if ( caller && can_hibernate && tray->priv->data_available )
     {
 	gtk_widget_set_sensitive (mi, TRUE);
 	g_signal_connect (G_OBJECT(mi), "activate",
@@ -280,7 +285,7 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
     
     gtk_widget_set_sensitive(mi,FALSE);
-    if ( caller && can_suspend )
+    if ( caller && can_suspend && tray->priv->data_available )
     {
 	gtk_widget_set_sensitive (mi,TRUE);
 	g_signal_connect (mi, "activate",
@@ -377,6 +382,19 @@ xfpm_tray_icon_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, Xfp
 }
 
 static void
+xfpm_tray_icon_hal_connection_changed_cb (HalMonitor *monitor, gboolean connected, XfpmTrayIcon *tray)
+{
+    if ( connected == FALSE )
+	xfpm_tray_icon_set_tooltip (tray, _("No data available"));
+	
+    /*
+     * We set this variable after since xfpm_tray_icon_set_tooltip will return 
+     * if data_available is set to FALSE
+     */
+    tray->priv->data_available = connected;
+}
+
+static void
 xfpm_tray_icon_class_init(XfpmTrayIconClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -407,6 +425,7 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
     tray->priv->inhibited = FALSE;
     tray->priv->inhibit = xfpm_inhibit_new ();
     tray->priv->srv     = xfpm_screen_saver_new ();
+    tray->priv->hal_monitor = hal_monitor_new ();
     
     tray->priv->info_menu = TRUE;
     tray->priv->icon_quark = 0;
@@ -419,6 +438,11 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
 		      
     tray->priv->sig = g_signal_connect (tray->priv->inhibit, "has-inhibit-changed",
 					G_CALLBACK (xfpm_tray_icon_inhibit_changed_cb), tray);
+					
+    tray->priv->sig_1 = g_signal_connect (tray->priv->hal_monitor, "connection_changed",
+					 G_CALLBACK (xfpm_tray_icon_hal_connection_changed_cb), tray);
+					 
+    tray->priv->data_available = hal_monitor_get_connected (tray->priv->hal_monitor);
 }
 
 static void
@@ -430,6 +454,11 @@ xfpm_tray_icon_finalize(GObject *object)
     
     if ( g_signal_handler_is_connected (tray->priv->inhibit, tray->priv->sig ) )
 	g_signal_handler_disconnect (G_OBJECT (tray->priv->inhibit), tray->priv->sig);
+    
+    if ( g_signal_handler_is_connected (tray->priv->hal_monitor, tray->priv->sig_1) )
+	g_signal_handler_disconnect (G_OBJECT (tray->priv->hal_monitor), tray->priv->sig_1);
+	
+    g_object_unref (tray->priv->hal_monitor);
     
     g_object_unref (tray->priv->icon);
 	
@@ -473,7 +502,11 @@ void xfpm_tray_icon_set_icon (XfpmTrayIcon *icon, const gchar *icon_name)
 
 void xfpm_tray_icon_set_tooltip (XfpmTrayIcon *icon, const gchar *tooltip)
 {
-    g_return_if_fail(XFPM_IS_TRAY_ICON(icon));
+    g_return_if_fail (XFPM_IS_TRAY_ICON (icon));
+    /*
+     * Hal is disconnected we have the tooltips set to "no data available"
+     */
+    g_return_if_fail (icon->priv->data_available);
 
 #if GTK_CHECK_VERSION (2, 16, 0)
     gtk_status_icon_set_tooltip_text (GTK_STATUS_ICON(icon->priv->icon), tooltip);

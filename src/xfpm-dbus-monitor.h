@@ -41,8 +41,17 @@ typedef struct
 typedef struct
 {
     GObjectClass 		parent_class;
+    /*
+     * Connection lost on the session bus
+     */
     void                        (*connection_lost)		  (XfpmDBusMonitor *monitor,
 								   gchar *unique_name);
+								   
+    /*
+     * DBus: system bus disconnected
+     */
+    void			(*system_bus_connection_changed)  (XfpmDBusMonitor *monitor,
+								   gboolean connected);
     
 } XfpmDBusMonitorClass;
 

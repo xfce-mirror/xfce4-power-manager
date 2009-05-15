@@ -23,12 +23,11 @@
 #endif
 
 #include <glib.h>
+#include <glib-object.h>
 #include <glib/gprintf.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-
-#include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-debug.h"
 
@@ -45,8 +44,8 @@ void xfpm_debug_enum (const gchar *func, const gchar *file, gint line,
     
     content = g_strdup_value_contents (&__value__);
     
-    fprintf(stderr, "TRACE[%s:%d] %s(): %s : %s", file, line , func, text, content);
-    fprintf(stderr, "\n");
+    fprintf(stdout, "TRACE[%s:%d] %s(): %s : %s", file, line , func, text, content);
+    fprintf(stdout, "\n");
     
     g_value_unset (&__value__);						
     g_free (content);
@@ -70,9 +69,9 @@ void xfpm_debug_enum_full (const gchar *func, const gchar *file, gint line,
     g_vasprintf (&buffer, format, args);
     va_end (args);
 	
-    fprintf(stderr, "TRACE[%s:%d] %s(): ",file,line,func);
-    fprintf(stderr, "%s: %s", buffer, content);
-    fprintf(stderr, "\n");
+    fprintf(stdout, "TRACE[%s:%d] %s(): ",file,line,func);
+    fprintf(stdout, "%s: %s", buffer, content);
+    fprintf(stdout, "\n");
     
     g_value_unset (&__value__);	
     g_free (content);

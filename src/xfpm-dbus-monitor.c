@@ -26,6 +26,9 @@
 #include <string.h>
 
 #include <glib.h>
+
+#include <dbus/dbus.h>
+#include <dbus/dbus-glib-lowlevel.h>
 #include <dbus/dbus-glib.h>
 
 #include <libxfce4util/libxfce4util.h>
@@ -39,6 +42,7 @@ static void xfpm_dbus_monitor_finalize   (GObject *object);
 
 struct XfpmDBusMonitorPrivate
 {
+    DBusGConnection *system_bus;
     DBusGConnection *bus;
     DBusGProxy      *proxy;
     GPtrArray       *array;
@@ -49,6 +53,7 @@ static gpointer xfpm_dbus_monitor_object = NULL;
 enum
 {
     CONNECTION_LOST,
+    SYSTEM_BUS_CONNECTION_CHANGED,
     LAST_SIGNAL
 };
 
@@ -85,6 +90,57 @@ xfpm_dbus_monitor_name_owner_changed_cb (DBusGProxy *proxy, const gchar *name,
     }
 }
 
+static gboolean
+xfpm_dbus_monitor_query_system_bus_idle (gpointer data)
+{
+    XfpmDBusMonitor *monitor;
+    DBusGConnection *bus;
+    GError *error = NULL;
+
+    bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+    
+    if ( error )
+    {
+	TRACE ("System bus is not connected  %s:", error->message);
+	g_error_free (error);
+	return TRUE;
+    }
+    
+    /*
+     * This message is catched by xfpm manager then it simply
+     * restarts all the power manager
+     */
+    monitor = XFPM_DBUS_MONITOR (data);
+    g_signal_emit (G_OBJECT (monitor), signals [SYSTEM_BUS_CONNECTION_CHANGED], 0, TRUE);
+    
+    return FALSE;
+}
+
+static void
+xfpm_dbus_monitor_setup_system_watch (XfpmDBusMonitor *monitor)
+{
+    g_timeout_add_seconds (5, (GSourceFunc) xfpm_dbus_monitor_query_system_bus_idle, monitor);
+}
+
+static DBusHandlerResult
+xfpm_dbus_monitor_system_bus_filter (DBusConnection *bus, DBusMessage *message, void *data)
+{
+    XfpmDBusMonitor *monitor;
+    
+    if ( dbus_message_is_signal (message, DBUS_INTERFACE_LOCAL, "Disconnected") )
+    {
+	TRACE ("System bus is disconnected");
+	monitor = XFPM_DBUS_MONITOR (data);
+	g_signal_emit (G_OBJECT (monitor), signals [SYSTEM_BUS_CONNECTION_CHANGED], 0, FALSE);
+	
+	xfpm_dbus_monitor_setup_system_watch (monitor);
+	
+	return DBUS_HANDLER_RESULT_HANDLED;
+    }
+    
+    return DBUS_HANDLER_RESULT_NOT_YET_HANDLED;
+}
+
 static void
 xfpm_dbus_monitor_class_init (XfpmDBusMonitorClass *klass)
 {
@@ -99,6 +155,15 @@ xfpm_dbus_monitor_class_init (XfpmDBusMonitorClass *klass)
 		     g_cclosure_marshal_VOID__STRING,
 		     G_TYPE_NONE, 1, G_TYPE_STRING);
 		     
+    signals [SYSTEM_BUS_CONNECTION_CHANGED] =
+    	g_signal_new("system-bus-connection-changed",
+		     XFPM_TYPE_DBUS_MONITOR,
+		     G_SIGNAL_RUN_LAST,
+		     G_STRUCT_OFFSET(XfpmDBusMonitorClass, system_bus_connection_changed),
+		     NULL, NULL,
+		     g_cclosure_marshal_VOID__BOOLEAN,
+		     G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+		     
     object_class->finalize = xfpm_dbus_monitor_finalize;
 
     g_type_class_add_private (klass, sizeof (XfpmDBusMonitorPrivate));
@@ -107,6 +172,8 @@ xfpm_dbus_monitor_class_init (XfpmDBusMonitorClass *klass)
 static void
 xfpm_dbus_monitor_init (XfpmDBusMonitor *monitor)
 {
+    GError *error = NULL;
+    
     monitor->priv = XFPM_DBUS_MONITOR_GET_PRIVATE (monitor);
     
     monitor->priv->bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
@@ -128,7 +195,21 @@ xfpm_dbus_monitor_init (XfpmDBusMonitor *monitor)
 			     
     dbus_g_proxy_connect_signal (monitor->priv->proxy, "NameOwnerChanged",
 				 G_CALLBACK(xfpm_dbus_monitor_name_owner_changed_cb), monitor, NULL);
-	
+
+    monitor->priv->system_bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+    
+    if ( error )
+    {
+	g_error ("Error in getting connection to the system bus %s:", error->message);
+    }
+    
+    dbus_connection_set_exit_on_disconnect (dbus_g_connection_get_connection (monitor->priv->system_bus), 
+					    FALSE);
+    
+    dbus_connection_add_filter (dbus_g_connection_get_connection (monitor->priv->system_bus),
+			        xfpm_dbus_monitor_system_bus_filter,
+				monitor, 
+				NULL);
 }
 
 static void
@@ -139,6 +220,12 @@ xfpm_dbus_monitor_finalize (GObject *object)
     gchar *name;
 
     monitor = XFPM_DBUS_MONITOR (object);
+    
+    dbus_connection_remove_filter (dbus_g_connection_get_connection (monitor->priv->system_bus),
+				   xfpm_dbus_monitor_system_bus_filter,
+				   monitor);
+
+    dbus_g_connection_unref (monitor->priv->system_bus);
     
     dbus_g_connection_unref (monitor->priv->bus);
     

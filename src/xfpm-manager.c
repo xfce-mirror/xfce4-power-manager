@@ -45,6 +45,7 @@
 #include "xfpm-manager.h"
 #include "xfpm-engine.h"
 #include "xfpm-session.h"
+#include "xfpm-dbus-monitor.h"
 
 static void xfpm_manager_finalize   (GObject *object);
 
@@ -60,6 +61,7 @@ struct XfpmManagerPrivate
 {
     XfpmSession     *session;
     XfpmEngine 	    *engine;
+    XfpmDBusMonitor *dbus;
     
     HalMonitor      *monitor;
     
@@ -87,6 +89,17 @@ xfpm_manager_hal_connection_changed_cb (HalMonitor *monitor, gboolean connected,
 }
 
 static void
+xfpm_manager_system_bus_connection_changed_cb (XfpmDBusMonitor *monitor, gboolean connected, XfpmManager *manager)
+{
+    if ( connected == TRUE )
+    {
+	TRACE ("System bus connection changed to TRUE, restarting the power manager");
+	xfpm_manager_quit (manager);
+	g_spawn_command_line_async ("xfce4-power-manager", NULL);
+    }
+}
+
+static void
 xfpm_manager_class_init (XfpmManagerClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -106,7 +119,11 @@ xfpm_manager_init(XfpmManager *manager)
     manager->priv->monitor       = NULL;
     
     manager->priv->session = xfpm_session_new ();
+    manager->priv->dbus = xfpm_dbus_monitor_new ();
     
+    g_signal_connect (G_OBJECT (manager->priv->dbus), "system_bus_connection_changed",
+		      G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager);
+		      
     notify_init ("xfce4-power-manager");
 }
 
@@ -127,13 +144,15 @@ xfpm_manager_finalize(GObject *object)
 
     g_object_unref (manager->priv->monitor);
     
+    g_object_unref (manager->priv->dbus);
+    
     G_OBJECT_CLASS(xfpm_manager_parent_class)->finalize(object);
 }
 
 static void
 xfpm_manager_release_names (XfpmManager *manager)
 {
-    xfpm_dbus_release_name(dbus_g_connection_get_connection(manager->priv->session_bus),
+    xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 			   "org.xfce.PowerManager");
 
     xfpm_dbus_release_name (dbus_g_connection_get_connection(manager->priv->session_bus),
