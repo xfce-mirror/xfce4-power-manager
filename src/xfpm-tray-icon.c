@@ -395,6 +395,12 @@ xfpm_tray_icon_hal_connection_changed_cb (HalMonitor *monitor, gboolean connecte
 }
 
 static void
+xfpm_tray_icon_activated_cb (XfpmTrayIcon *tray)
+{
+    xfpm_preferences ();
+}
+
+static void
 xfpm_tray_icon_class_init(XfpmTrayIconClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -436,6 +442,8 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
     g_signal_connect (tray->priv->icon, "popup-menu",
 		      G_CALLBACK (xfpm_tray_icon_popup_menu_cb), tray);
 		      
+    g_signal_connect_swapped (tray->priv->icon, "activate",
+			      G_CALLBACK (xfpm_tray_icon_activated_cb), tray);
     tray->priv->sig = g_signal_connect (tray->priv->inhibit, "has-inhibit-changed",
 					G_CALLBACK (xfpm_tray_icon_inhibit_changed_cb), tray);
 					
