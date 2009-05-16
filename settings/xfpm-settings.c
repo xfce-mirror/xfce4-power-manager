@@ -44,13 +44,12 @@
 #include "xfpm-config.h"
 
 static 	GladeXML *xml 				= NULL;
+
 #ifdef HAVE_DPMS
 static  GtkWidget *on_battery_dpms_sleep 	= NULL;
 static  GtkWidget *on_battery_dpms_off  	= NULL;
 static  GtkWidget *on_ac_dpms_sleep 		= NULL;
 static  GtkWidget *on_ac_dpms_off 		= NULL;
-static  GtkWidget *sleep_dpms_mode 		= NULL;
-static  GtkWidget *suspend_dpms_mode		= NULL;
 #endif
 
 /*
@@ -746,6 +745,12 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean user_privilege, gbool
 	frame = glade_xml_get_widget (xml, "on-battery-brg-frame");
 	gtk_widget_hide_all (frame);
     }
+#ifndef HAVE_DPMS
+    if ( !has_lcd_brightness )
+    {
+	gtk_notebook_remove_page (GTK_NOTEBOOK (glade_xml_get_widget (xml, "on-battery-notebook")), 1);
+    }
+#endif
 }
 
 static void
@@ -896,6 +901,12 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean user_privilege, gboolean c
 	frame = glade_xml_get_widget (xml, "on-ac-brg-frame");
 	gtk_widget_hide_all (frame);
     }
+#ifndef HAVE_DPMS
+    if ( !has_lcd_brightness )
+    {
+	gtk_notebook_remove_page (GTK_NOTEBOOK (glade_xml_get_widget (xml, "on-ac-notebook")), 1);
+    }
+#endif
 }
 
 static void
@@ -924,9 +935,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     guint show_tray;
     gboolean val;
     
-#ifdef HAVE_DPMS
     GtkWidget *dpms;
-#endif
+
     /*
      *  Tray icon settings
      */
@@ -951,11 +961,12 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     gtk_combo_box_set_active (GTK_COMBO_BOX(tray), show_tray);
     g_signal_connect (tray, "changed",
 		      G_CALLBACK(set_show_tray_icon_cb), channel);
+		      
+    dpms = glade_xml_get_widget (xml, "enable-dpms");
 #ifdef HAVE_DPMS
     /*
      * Global dpms settings (enable/disable)
      */
-    dpms = glade_xml_get_widget (xml, "enable-dpms");
    
     g_signal_connect (dpms, "toggled",
 		      G_CALLBACK(dpms_toggled_cb), channel);
@@ -965,7 +976,10 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(dpms), val);
     gtk_widget_set_tooltip_text (dpms, _("Disable Display Power Management Signaling (DPMS), "\
 				         "e.g don't attempt to switch off the display or put it in sleep mode."));
+#else
+    gtk_widget_hide (dpms);
 #endif
+
     /*
      * Power button
      */
@@ -1189,6 +1203,8 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
     GtkWidget *lock;
     GtkWidget *cpu;
     GtkWidget *label;
+    GtkWidget *sleep_dpms_mode;
+    GtkWidget *suspend_dpms_mode;
     
     GtkWidget *inact_suspend = glade_xml_get_widget (xml, "inactivity-suspend");
     GtkWidget *inact_hibernate = glade_xml_get_widget (xml, "inactivity-hibernate");
@@ -1223,11 +1239,11 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
     }
    
     g_free (str);
-    
-#ifdef HAVE_DPMS
+
     sleep_dpms_mode = glade_xml_get_widget (xml, "sleep-dpms-mode");
     suspend_dpms_mode = glade_xml_get_widget (xml, "suspend-dpms-mode");
     
+#ifdef HAVE_DPMS
     g_signal_connect (sleep_dpms_mode, "toggled",
 		      G_CALLBACK(set_dpms_sleep_mode), channel);
     g_signal_connect (suspend_dpms_mode, "toggled",
@@ -1247,7 +1263,11 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
     
     g_free (str);
     
-#endif /* HAVE_DPMS */
+#else
+    gtk_widget_hide (sleep_dpms_mode);
+    gtk_widget_hide (suspend_dpms_mode);
+    gtk_widget_hide (glade_xml_get_widget (xml, "dpms-mode-label"));
+#endif
 
     /*
      * Critical battery level
