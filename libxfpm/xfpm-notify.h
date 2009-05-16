@@ -90,6 +90,9 @@ void                      xfpm_notify_critical                      (XfpmNotify 
 								     NotifyNotification *n);
 
 void                      xfpm_notify_close_critical                (XfpmNotify *notify);
+
+void			  xfpm_notify_close_normal		    (XfpmNotify *notify);
+
 G_END_DECLS
 
 #endif /* __XFPM_NOTIFY_H */

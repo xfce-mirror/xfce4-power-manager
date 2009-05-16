@@ -386,11 +386,20 @@ _get_battery_percentage (guint32 last_full, guint32 current)
     guint val = 100;
     float f;
     
-    if ( last_full <= current ) return val;
+    if ( G_UNLIKELY (last_full <= current) ) return val;
     
+    /*
+     * Special case when we get 0 as last full
+     * this happens for me once i had the battery
+     * totally empty on my aspire one.
+     */
+    if ( G_UNLIKELY (last_full == 0 ) )
+	return 0;
+	
     f = (float)current/last_full *100;
 	
 	val = (guint)f;
+	
     return val;   
 }
 

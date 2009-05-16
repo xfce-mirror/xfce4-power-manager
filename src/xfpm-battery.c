@@ -273,7 +273,13 @@ xfpm_battery_get_battery_state (XfpmBatteryState *state,
 				guint percentage,
 				guint8 critical_level)
 {
-    if ( !is_charging && !is_discharging && last_full == current_charge )
+    if ( G_UNLIKELY (current_charge == 0 || percentage == 0) )
+    {
+	*state = BATTERY_CHARGE_CRITICAL;
+	return _("is empty");
+    }
+    
+    if ( !is_charging && !is_discharging &&  current_charge >= last_full )
     {
 	*state = BATTERY_FULLY_CHARGED;
 	return _("is fully charged");
@@ -322,8 +328,11 @@ xfpm_battery_refresh_common (XfpmBattery *battery, guint percentage, XfpmBattery
 	battery->priv->state = state;
 	TRACE("Emitting signal battery state changed");
 	g_signal_emit (G_OBJECT(battery), signals[BATTERY_STATE_CHANGED], 0, state);
+	
 	if ( battery->priv->state != BATTERY_NOT_FULLY_CHARGED )
 	    xfpm_battery_notify (battery);
+	else
+	    xfpm_notify_close_normal (battery->priv->notify);
     }
 }
 
@@ -451,7 +460,15 @@ xfpm_battery_refresh (XfpmBattery *battery)
 		  "current-charge", &current_charge,
 		  "time", &time_per,
 		  NULL);
-    
+		  
+    TRACE ("Battery status is_present %s is_charging %s is_discharging %s", 
+	   xfpm_bool_to_string (is_present), 
+	   xfpm_bool_to_string (is_charging), 
+	   xfpm_bool_to_string (is_discharging));
+	   
+    TRACE ("Battery info precentage %i last_full %i current_charge %i time_per %i",
+	   percentage, last_full, current_charge, time_per);
+	   
     battery->priv->type == HAL_DEVICE_TYPE_PRIMARY ?
 			   xfpm_battery_refresh_primary (battery, is_present, 
 							 is_charging, is_discharging, 

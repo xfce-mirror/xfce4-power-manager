@@ -260,3 +260,10 @@ void xfpm_notify_close_critical (XfpmNotify *notify)
     if ( n )
 	g_object_unref (n);
 }
+
+void xfpm_notify_close_normal  (XfpmNotify *notify)
+{
+    g_return_if_fail (XFPM_IS_NOTIFY (notify));
+    
+    xfpm_notify_close_notification (notify);
+}
