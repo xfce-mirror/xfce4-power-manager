@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-15 22:17+0200\n"
+"POT-Creation-Date: 2009-05-16 19:38+0200\n"
 "PO-Revision-Date: 2009-04-11 10:20+0100\n"
 "Last-Translator: Cristian Marchi <cri.penta@gmail.com>\n"
 "Language-Team: Italian Translation Team <xfce-it-translators@googlegroups."
@@ -37,233 +37,243 @@ msgid "<b>Monitor</b>"
 msgstr "<b>Schermo</b>"
 
 #: ../settings/xfpm-settings.glade.h:6
+#, fuzzy
+msgid "Actions"
+msgstr "<b>Azioni</b>"
+
+#: ../settings/xfpm-settings.glade.h:7
 msgid "Advanced"
 msgstr "Avanzate"
 
-#: ../settings/xfpm-settings.glade.h:7 ../settings/xfpm-settings.c:942
+#: ../settings/xfpm-settings.glade.h:8 ../settings/xfpm-settings.c:952
 msgid "Always show icon"
 msgstr "Mostra sempre l'icona"
 
-#: ../settings/xfpm-settings.glade.h:8
+#: ../settings/xfpm-settings.glade.h:9
 msgid "Consider the computer on low power at:"
 msgstr "Considera il computer con poca carica quando:"
 
-#: ../settings/xfpm-settings.glade.h:9
+#: ../settings/xfpm-settings.glade.h:10
 msgid "Enable CPU frequency control"
 msgstr ""
 
-#: ../settings/xfpm-settings.glade.h:10
+#: ../settings/xfpm-settings.glade.h:11
 msgid "Enable monitor power management control"
 msgstr "Abilita il controllo della gestione dell'energia dello schermo"
 
-#: ../settings/xfpm-settings.glade.h:11
+#: ../settings/xfpm-settings.glade.h:12
 msgid "Enable notification"
 msgstr "Abilita le notifiche"
 
-#: ../settings/xfpm-settings.glade.h:12 ../settings/xfpm-settings.c:1381
-#: ../settings/xfpm-settings.c:1386
+#: ../settings/xfpm-settings.glade.h:13 ../settings/xfpm-settings.c:1401
+#: ../settings/xfpm-settings.c:1406
 msgid "General"
 msgstr "Generali"
 
 #. Hibernate menu option
-#: ../settings/xfpm-settings.glade.h:13 ../settings/xfpm-settings.c:592
-#: ../settings/xfpm-settings.c:690 ../settings/xfpm-settings.c:841
-#: ../settings/xfpm-settings.c:998 ../settings/xfpm-settings.c:1067
-#: ../settings/xfpm-settings.c:1133 ../src/xfpm-tray-icon.c:170
+#: ../settings/xfpm-settings.glade.h:14 ../settings/xfpm-settings.c:591
+#: ../settings/xfpm-settings.c:689 ../settings/xfpm-settings.c:846
+#: ../settings/xfpm-settings.c:1012 ../settings/xfpm-settings.c:1081
+#: ../settings/xfpm-settings.c:1147 ../src/xfpm-tray-icon.c:170
 #: ../src/xfpm-tray-icon.c:268
 msgid "Hibernate"
 msgstr "Iberna"
 
-#: ../settings/xfpm-settings.glade.h:14
+#: ../settings/xfpm-settings.glade.h:15
 msgid "Lock screen when going for suspend/hibernate"
 msgstr "Blocca lo schermo se si avvia la sopsensione o ibernazione"
 
-#: ../settings/xfpm-settings.glade.h:15 ../settings/xfpm-settings.c:587
-#: ../settings/xfpm-settings.c:679 ../settings/xfpm-settings.c:830
-#: ../settings/xfpm-settings.c:987 ../settings/xfpm-settings.c:1056
-#: ../settings/xfpm-settings.c:1122
+#: ../settings/xfpm-settings.glade.h:16
+#, fuzzy
+msgid "Monitor"
+msgstr "<b>Schermo</b>"
+
+#: ../settings/xfpm-settings.glade.h:17 ../settings/xfpm-settings.c:586
+#: ../settings/xfpm-settings.c:678 ../settings/xfpm-settings.c:835
+#: ../settings/xfpm-settings.c:1001 ../settings/xfpm-settings.c:1070
+#: ../settings/xfpm-settings.c:1136
 msgid "Nothing"
 msgstr "Niente"
 
-#: ../settings/xfpm-settings.glade.h:16 ../settings/xfpm-settings.c:1395
-#: ../settings/xfpm-settings.c:1400
+#: ../settings/xfpm-settings.glade.h:18 ../settings/xfpm-settings.c:1415
+#: ../settings/xfpm-settings.c:1420
 msgid "On AC"
 msgstr "Alimentazione da rete elettrica"
 
-#: ../settings/xfpm-settings.glade.h:17
+#: ../settings/xfpm-settings.glade.h:19
 msgid "On battery"
 msgstr "Alimentazione da batteria"
 
-#: ../settings/xfpm-settings.glade.h:18
+#: ../settings/xfpm-settings.glade.h:20
 msgid "Power manager settings"
 msgstr "Impostazioni per il gestore di energia"
 
-#: ../settings/xfpm-settings.glade.h:19
+#: ../settings/xfpm-settings.glade.h:21
 msgid "Prefer power savings over performance"
 msgstr "Preferisci il risparmio energetico alle prestazioni"
 
-#: ../settings/xfpm-settings.glade.h:20
+#: ../settings/xfpm-settings.glade.h:22
 msgid "Put display to sleep when computer is inactive for:"
 msgstr ""
 
-#: ../settings/xfpm-settings.glade.h:21
+#: ../settings/xfpm-settings.glade.h:23
 #, fuzzy
 msgid "Put the computer to sleep when inactive for:"
 msgstr "Spegni il monitor se il computer è inattivo per:"
 
-#: ../settings/xfpm-settings.glade.h:22
+#: ../settings/xfpm-settings.glade.h:24
 msgid "Reduce screen brightness when computer is inactive for:"
 msgstr "Riduci la luminosità dello schermo se il computer è inattivo per:"
 
-#: ../settings/xfpm-settings.glade.h:23
+#: ../settings/xfpm-settings.glade.h:25
 msgid "Set computer inactivity sleep mode:"
 msgstr ""
 
-#: ../settings/xfpm-settings.glade.h:24
+#: ../settings/xfpm-settings.glade.h:26
 msgid "Set monitor sleep mode:"
 msgstr ""
 
-#: ../settings/xfpm-settings.glade.h:25
+#: ../settings/xfpm-settings.glade.h:27
 msgid "Standby"
 msgstr "Standby"
 
 #. Suspend menu option
-#: ../settings/xfpm-settings.glade.h:26 ../settings/xfpm-settings.c:684
-#: ../settings/xfpm-settings.c:835 ../settings/xfpm-settings.c:992
-#: ../settings/xfpm-settings.c:1061 ../settings/xfpm-settings.c:1127
+#: ../settings/xfpm-settings.glade.h:28 ../settings/xfpm-settings.c:683
+#: ../settings/xfpm-settings.c:840 ../settings/xfpm-settings.c:1006
+#: ../settings/xfpm-settings.c:1075 ../settings/xfpm-settings.c:1141
 #: ../src/xfpm-tray-icon.c:201 ../src/xfpm-tray-icon.c:283
 msgid "Suspend"
 msgstr "Sospendi"
 
-#: ../settings/xfpm-settings.glade.h:27
+#: ../settings/xfpm-settings.glade.h:29
 msgid "Switch off display when computer is inactive for:"
 msgstr "Spegni il monitor se il computer è inattivo per:"
 
-#: ../settings/xfpm-settings.glade.h:28
+#: ../settings/xfpm-settings.glade.h:30
 msgid "System tray icon: "
 msgstr "Icona del vassoio di sistema:"
 
-#: ../settings/xfpm-settings.glade.h:29
+#: ../settings/xfpm-settings.glade.h:31
 msgid "When battery power is critical:"
 msgstr "Quando il livello di carica della batteria è critico, fai:"
 
-#: ../settings/xfpm-settings.glade.h:30
+#: ../settings/xfpm-settings.glade.h:32
 #, fuzzy
 msgid "When hibernate button is pressed:"
 msgstr "Alla pressione del tasto di accensione fai:"
 
-#: ../settings/xfpm-settings.glade.h:31
+#: ../settings/xfpm-settings.glade.h:33
 msgid "When laptop lid is closed:"
 msgstr "Quando il coperchio del portatile è chiuso:"
 
-#: ../settings/xfpm-settings.glade.h:32
+#: ../settings/xfpm-settings.glade.h:34
 msgid "When power button is pressed:"
 msgstr "Alla pressione del tasto di accensione fai:"
 
-#: ../settings/xfpm-settings.glade.h:33
+#: ../settings/xfpm-settings.glade.h:35
 msgid "When sleep button is pressed:"
 msgstr "Alla pressione del pulsante sleep fai:"
 
-#: ../settings/xfpm-settings.glade.h:34 ../settings/xfpm-settings-main.c:120
+#: ../settings/xfpm-settings.glade.h:36 ../settings/xfpm-settings-main.c:120
 #: ../src/xfpm-main.c:184 ../src/xfpm-main.c:273 ../src/xfpm-tray-icon.c:348
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Gestore di energia di Xfce"
 
-#: ../settings/xfpm-settings.c:371 ../settings/xfpm-settings.c:386
-#: ../settings/xfpm-settings.c:416
+#: ../settings/xfpm-settings.c:370 ../settings/xfpm-settings.c:385
+#: ../settings/xfpm-settings.c:415
 msgid "Never"
 msgstr "Mai"
 
-#: ../settings/xfpm-settings.c:374
+#: ../settings/xfpm-settings.c:373
 msgid "One minute"
 msgstr "Un minuto"
 
-#: ../settings/xfpm-settings.c:376 ../settings/xfpm-settings.c:388
-#: ../settings/xfpm-settings.c:406
+#: ../settings/xfpm-settings.c:375 ../settings/xfpm-settings.c:387
+#: ../settings/xfpm-settings.c:405
 msgid "Minutes"
 msgstr "Minuti"
 
-#: ../settings/xfpm-settings.c:390 ../settings/xfpm-settings.c:397
-#: ../settings/xfpm-settings.c:398 ../settings/xfpm-settings.c:399
+#: ../settings/xfpm-settings.c:389 ../settings/xfpm-settings.c:396
+#: ../settings/xfpm-settings.c:397 ../settings/xfpm-settings.c:398
 #, fuzzy
 msgid "One hour"
 msgstr "ora"
 
-#: ../settings/xfpm-settings.c:398 ../settings/xfpm-settings.c:402
+#: ../settings/xfpm-settings.c:397 ../settings/xfpm-settings.c:401
 #, fuzzy
 msgid "one minute"
 msgstr "Un minuto"
 
-#: ../settings/xfpm-settings.c:399 ../settings/xfpm-settings.c:403
-#: ../src/xfpm-battery.c:408
+#: ../settings/xfpm-settings.c:398 ../settings/xfpm-settings.c:402
+#: ../src/xfpm-battery.c:417
 msgid "minutes"
 msgstr "minuti"
 
-#: ../settings/xfpm-settings.c:401 ../settings/xfpm-settings.c:402
-#: ../settings/xfpm-settings.c:403 ../src/xfpm-battery.c:407
+#: ../settings/xfpm-settings.c:400 ../settings/xfpm-settings.c:401
+#: ../settings/xfpm-settings.c:402 ../src/xfpm-battery.c:416
 msgid "hours"
 msgstr "ore"
 
-#: ../settings/xfpm-settings.c:418
+#: ../settings/xfpm-settings.c:417
 msgid "Seconds"
 msgstr "Secondi"
 
-#: ../settings/xfpm-settings.c:566 ../settings/xfpm-settings.c:775
-#: ../settings/xfpm-settings.c:824 ../settings/xfpm-settings.c:981
-#: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1116
-#: ../settings/xfpm-settings.c:1291
+#: ../settings/xfpm-settings.c:565 ../settings/xfpm-settings.c:780
+#: ../settings/xfpm-settings.c:829 ../settings/xfpm-settings.c:995
+#: ../settings/xfpm-settings.c:1064 ../settings/xfpm-settings.c:1130
+#: ../settings/xfpm-settings.c:1311
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Operazioni di ibernazione e sospensione non permesse"
 
-#: ../settings/xfpm-settings.c:579 ../settings/xfpm-settings.c:671
+#: ../settings/xfpm-settings.c:578 ../settings/xfpm-settings.c:670
 msgid "Shutdown and hibernate operations not permitted"
 msgstr "Operazioni di spegnimento e ibernazione non permesse"
 
-#: ../settings/xfpm-settings.c:596 ../settings/xfpm-settings.c:1002
+#: ../settings/xfpm-settings.c:595 ../settings/xfpm-settings.c:1016
 msgid "Shutdown"
 msgstr "Arresta"
 
-#: ../settings/xfpm-settings.c:945
+#: ../settings/xfpm-settings.c:955
 msgid "When battery is present"
 msgstr "Quando la batteria è presente"
 
-#: ../settings/xfpm-settings.c:948
+#: ../settings/xfpm-settings.c:958
 msgid "When battery is charging or discharging"
 msgstr "Quando la batteria si sta caricando o scaricando"
 
-#: ../settings/xfpm-settings.c:966
+#: ../settings/xfpm-settings.c:977
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1005 ../settings/xfpm-settings.c:1071
-#: ../settings/xfpm-settings.c:1137
+#: ../settings/xfpm-settings.c:1019 ../settings/xfpm-settings.c:1085
+#: ../settings/xfpm-settings.c:1151
 msgid "Ask"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1199
+#: ../settings/xfpm-settings.c:1215
 #, fuzzy
 msgid "Suspend operation not permitted"
 msgstr "Operazioni di ibernazione e sospensione non permesse"
 
-#: ../settings/xfpm-settings.c:1205
+#: ../settings/xfpm-settings.c:1221
 #, fuzzy
 msgid "Hibernate operation not permitted"
 msgstr "Operazioni di ibernazione e sospensione non permesse"
 
-#: ../settings/xfpm-settings.c:1259
+#: ../settings/xfpm-settings.c:1279
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
 "Quando tutte le fonti di energia del computer raggiungono questo livello di "
 "carica"
 
-#: ../settings/xfpm-settings.c:1410 ../settings/xfpm-settings.c:1415
+#: ../settings/xfpm-settings.c:1430 ../settings/xfpm-settings.c:1435
 msgid "On Battery"
 msgstr "Alimentazione da batteria"
 
-#: ../settings/xfpm-settings.c:1424 ../settings/xfpm-settings.c:1429
+#: ../settings/xfpm-settings.c:1444 ../settings/xfpm-settings.c:1449
 msgid "Extended"
 msgstr ""
 
@@ -337,8 +347,8 @@ msgstr "La batteria si sta caricando"
 msgid "Your battery is discharging"
 msgstr "La batteria si sta scaricando"
 
-#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:416
-#: ../src/xfpm-battery.c:428
+#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:425
+#: ../src/xfpm-battery.c:437
 msgid "System is running on battery power"
 msgstr "Il sistema è alimentato dalla batteria"
 
@@ -381,62 +391,67 @@ msgid "Your Battery"
 msgstr "La batteria"
 
 #: ../src/xfpm-battery.c:279
+#, fuzzy
+msgid "is empty"
+msgstr "è quasi esaurita"
+
+#: ../src/xfpm-battery.c:285
 msgid "is fully charged"
 msgstr "è completamente carica"
 
-#: ../src/xfpm-battery.c:284
+#: ../src/xfpm-battery.c:290
 msgid "charge level"
 msgstr "livello di carica"
 
-#: ../src/xfpm-battery.c:289
+#: ../src/xfpm-battery.c:295
 msgid "is charging"
 msgstr "si sta caricando"
 
-#: ../src/xfpm-battery.c:296
+#: ../src/xfpm-battery.c:302
 msgid "is discharging"
 msgstr "si sta scaricando"
 
-#: ../src/xfpm-battery.c:301
+#: ../src/xfpm-battery.c:307
 msgid "charge is low"
 msgstr "la carica è bassa"
 
-#: ../src/xfpm-battery.c:306
+#: ../src/xfpm-battery.c:312
 msgid "is almost empty"
 msgstr "è quasi esaurita"
 
-#: ../src/xfpm-battery.c:343
+#: ../src/xfpm-battery.c:352
 msgid "is not present"
 msgstr "non è presente"
 
-#: ../src/xfpm-battery.c:376
+#: ../src/xfpm-battery.c:385
 msgid "Battery not present"
 msgstr "Batteria non presente"
 
-#: ../src/xfpm-battery.c:399
+#: ../src/xfpm-battery.c:408
 msgid "Estimated time left"
 msgstr "Tempo rimanente stimato"
 
-#: ../src/xfpm-battery.c:403
+#: ../src/xfpm-battery.c:412
 msgid "Estimated time to be fully charged"
 msgstr "Tempo stimato per il raggiungimento della carica completa"
 
-#: ../src/xfpm-battery.c:407
+#: ../src/xfpm-battery.c:416
 msgid "hour"
 msgstr "ora"
 
-#: ../src/xfpm-battery.c:408
+#: ../src/xfpm-battery.c:417
 msgid "minute"
 msgstr "minuto"
 
-#: ../src/xfpm-battery.c:412 ../src/xfpm-battery.c:424
+#: ../src/xfpm-battery.c:421 ../src/xfpm-battery.c:433
 msgid "Battery"
 msgstr "Batteria"
 
-#: ../src/xfpm-battery.c:415 ../src/xfpm-battery.c:427
+#: ../src/xfpm-battery.c:424 ../src/xfpm-battery.c:436
 msgid "System is running on AC power"
 msgstr "Il sistema è alimentato dalla rete elettrica"
 
-#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:469
+#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:478
 msgid "Unknown unit"
 msgstr "Unità sconosciuta"
 
@@ -667,31 +682,31 @@ msgstr "Il demone di HAL non è al momento connesso"
 msgid "Power management for the Xfce desktop"
 msgstr "Gestione dell'energia per l'ambiente Xfce"
 
-#: ../libxfpm/hal-battery.c:439
+#: ../libxfpm/hal-battery.c:448
 msgid "Lithium ion"
 msgstr "Ioni di litio"
 
-#: ../libxfpm/hal-battery.c:443
+#: ../libxfpm/hal-battery.c:452
 msgid "Lead acid"
 msgstr "Acido di piombo"
 
-#: ../libxfpm/hal-battery.c:447
+#: ../libxfpm/hal-battery.c:456
 msgid "Lithium polymer"
 msgstr "Polimeri di litio"
 
-#: ../libxfpm/hal-battery.c:451
+#: ../libxfpm/hal-battery.c:460
 msgid "Nickel metal hydride"
 msgstr "lega metallo-nickel"
 
-#: ../libxfpm/hal-battery.c:454
+#: ../libxfpm/hal-battery.c:463
 msgid "Unknown"
 msgstr "Sconosciuto"
 
-#: ../libxfpm/hal-battery.c:462
+#: ../libxfpm/hal-battery.c:471
 msgid "mWh"
 msgstr "mWh"
 
-#: ../libxfpm/hal-battery.c:466
+#: ../libxfpm/hal-battery.c:475
 msgid "mAh"
 msgstr "mAh"
 
