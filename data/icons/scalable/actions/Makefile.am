@@ -4,5 +4,5 @@ EXTRA_DIST =				\
 Datadir = $(datadir)/icons/hicolor/scalable/actions
 
 Data_DATA =				\
-	gpm-hibernate.svg		\
-	gpm-suspend.svg		
+	xfpm-hibernate.svg		\
+	xfpm-suspend.svg		

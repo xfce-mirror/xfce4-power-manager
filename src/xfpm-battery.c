@@ -162,7 +162,7 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
     if ( state == BATTERY_NOT_PRESENT )
     {
 	xfpm_tray_icon_set_icon (battery->priv->icon, 
-				 battery->priv->type == HAL_DEVICE_TYPE_UPS ? "gpm-ups-missing" : "gpm-primary-missing");
+				 battery->priv->type == HAL_DEVICE_TYPE_UPS ? "xfpm-ups-missing" : "xfpm-primary-missing");
 	return;
     }
     
@@ -170,7 +170,7 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
     if ( state == BATTERY_FULLY_CHARGED )
     {
 	if ( battery->priv->type == HAL_DEVICE_TYPE_PRIMARY)
-	    xfpm_tray_icon_set_icon (battery->priv->icon, battery->priv->adapter_present ? "gpm-primary-charged" : "gpm-primary-100");
+	    xfpm_tray_icon_set_icon (battery->priv->icon, battery->priv->adapter_present ? "xfpm-primary-charged" : "xfpm-primary-100");
 	else
 	{
 	    icon = g_strdup_printf("%s%s", 
@@ -477,34 +477,34 @@ _get_icon_prefix_from_enum_type (HalDeviceType type)
 {
     if ( type == HAL_DEVICE_TYPE_PRIMARY )
     {
-	return g_strdup("gpm-primary-");
+	return g_strdup("xfpm-primary-");
     }
     else if ( type == HAL_DEVICE_TYPE_UPS ) 
     {
-	return g_strdup("gpm-ups-");
+	return g_strdup("xfpm-ups-");
     }
     else if ( type == HAL_DEVICE_TYPE_MOUSE ) 
     {
-	return g_strdup("gpm-mouse-");
+	return g_strdup("xfpm-mouse-");
     }
     else if ( type == HAL_DEVICE_TYPE_KEYBOARD ) 
     {
-	return g_strdup("gpm-keyboard-");
+	return g_strdup("xfpm-keyboard-");
     }
     else if ( type == HAL_DEVICE_TYPE_CAMERA ) 
     {
-	return g_strdup("gpm-camera-");
+	return g_strdup("xfpm-camera-");
     }
     else if ( type == HAL_DEVICE_TYPE_PDA ) 
     {
-	return g_strdup("gpm-pda-");
+	return g_strdup("xfpm-pda-");
     }
     else if ( type == HAL_DEVICE_TYPE_KEYBOARD_MOUSE ) 
     {
-	return g_strdup("gpm-keyboard-mouse-");
+	return g_strdup("xfpm-keyboard-mouse-");
     }
     
-    return g_strdup("gpm-primary-");
+    return g_strdup("xfpm-primary-");
 }
 
 static void

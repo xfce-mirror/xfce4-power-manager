@@ -122,7 +122,7 @@ xfpm_supply_init (XfpmSupply *supply)
     supply->priv->low_power = FALSE;
     
     xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
-    xfpm_tray_icon_set_icon (supply->priv->tray, "gpm-ac-adapter");
+    xfpm_tray_icon_set_icon (supply->priv->tray, "xfpm-ac-adapter");
     xfpm_tray_icon_set_show_info_menu (supply->priv->tray, FALSE);
     
     g_signal_connect (supply->priv->inhibit, "has-inhibit-changed",

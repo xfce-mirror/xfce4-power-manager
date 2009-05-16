@@ -150,7 +150,7 @@ xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
     gtk_widget_set_size_request (widget->priv->window, 148, 148);
     gtk_window_set_type_hint (GTK_WINDOW (widget->priv->window), GDK_WINDOW_TYPE_HINT_UTILITY);
     
-    pix = xfpm_load_icon ("gpm-brightness-lcd", 128 );
+    pix = xfpm_load_icon ("xfpm-brightness-lcd", 128 );
     if ( pix )
     {
 	image = gtk_image_new_from_pixbuf (pix);

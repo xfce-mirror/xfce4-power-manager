@@ -557,7 +557,7 @@ brightness_button_set_icon (BrightnessButton *button, gint width)
     
     hw_found = brightness_proxy_has_hw (button->priv->brightness);
     
-    icon_name = hw_found ? "gpm-brightness-lcd" : "gpm-brightness-lcd-invalid";
+    icon_name = hw_found ? "xfpm-brightness-lcd" : "xfpm-brightness-lcd-invalid";
     
     pixbuf = xfce_themed_icon_load (icon_name, width);
     
