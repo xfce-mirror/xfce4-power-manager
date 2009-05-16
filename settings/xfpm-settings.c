@@ -1388,7 +1388,7 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     i++;
     
     /* ON ac power */
-    pix = xfpm_load_icon("gpm-ac-adapter", 48); 
+    pix = xfpm_load_icon("xfpm-ac-adapter", 48); 
     gtk_list_store_append(list_store, &iter);
     if ( pix )
     {
