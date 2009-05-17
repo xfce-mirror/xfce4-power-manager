@@ -1344,7 +1344,8 @@ _cursor_changed_cb(GtkTreeView *view,gpointer data)
 
     sel = gtk_tree_view_get_selection (GTK_TREE_VIEW(view));
 
-    gtk_tree_selection_get_selected (sel, &model, &selected_row);
+    if ( !gtk_tree_selection_get_selected (sel, &model, &selected_row))
+	return;
 
     gtk_tree_model_get(model,
                        &selected_row,
