@@ -31,7 +31,7 @@
 
 #include "xfpm-debug.h"
 
-#ifdef DEBUG
+#if  defined(DEBUG) && defined(VARIADIC_MACRO_SUPPORTED)
 
 void xfpm_debug_enum (const gchar *func, const gchar *file, gint line, 
 		      const gchar *text, gint v_enum, GType type)
@@ -69,7 +69,7 @@ void xfpm_debug_enum_full (const gchar *func, const gchar *file, gint line,
     g_vasprintf (&buffer, format, args);
     va_end (args);
 	
-    fprintf(stdout, "TRACE[%s:%d] %s(): ",file,line,func);
+    fprintf(stdout, "TRACE[%s:%d] %s(): ", file, line, func);
     fprintf(stdout, "%s: %s", buffer, content);
     fprintf(stdout, "\n");
     
@@ -78,4 +78,4 @@ void xfpm_debug_enum_full (const gchar *func, const gchar *file, gint line,
     g_free (buffer);
 }
 
-#endif /*DEBUG*/
+#endif /*DEBUG && VARIADIC_MACRO_SUPPORTED*/
