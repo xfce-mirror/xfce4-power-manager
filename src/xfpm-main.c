@@ -47,7 +47,7 @@
 static gchar    *client_id = NULL;
 static gboolean no_daemon  = FALSE;
 
-static void
+static void G_GNUC_NORETURN
 show_version (void)
 {
     g_print (_("\n"
@@ -55,6 +55,8 @@ show_version (void)
              "Part of the Xfce Goodies Project\n"
              "http://goodies.xfce.org\n\n"
              "Licensed under the GNU GPL.\n\n"), VERSION);
+
+    exit (EXIT_SUCCESS);
 }
 
 static void
@@ -65,14 +67,14 @@ xfpm_quit_signal (gint sig, gpointer data)
     xfpm_manager_stop (manager);
 }
 
-static void
+static void G_GNUC_NORETURN
 xfpm_start (DBusGConnection *bus)
 {
     XfpmManager *manager;
     XfpmSession *session;
     GError *error = NULL;
     
-    TRACE("Starting the power manager\n");
+    TRACE ("Starting the power manager");
     session = xfpm_session_new ();
     
     if ( client_id != NULL )
@@ -96,7 +98,7 @@ xfpm_start (DBusGConnection *bus)
     } 
     else 
     {
-        g_warning("Unable to set up POSIX signal handlers: %s", error->message);
+        g_warning ("Unable to set up POSIX signal handlers: %s", error->message);
         g_error_free(error);
     }
 
@@ -109,6 +111,8 @@ xfpm_start (DBusGConnection *bus)
     gtk_main ();
     
     g_object_unref (session);
+    
+    exit (EXIT_SUCCESS);
 }
 
 int main(int argc, char **argv)
@@ -157,7 +161,6 @@ int main(int argc, char **argv)
     if ( version )    
     {
 	show_version();
-    	return EXIT_SUCCESS;
     }
     
     if ( run + quit + config + version > 1 )

@@ -222,7 +222,7 @@ notify_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 static void
 set_hibernate_inactivity (GtkWidget *w, XfconfChannel *channel)
 {
-    if (!xfconf_channel_set_string (channel, INACTIVITY_SLEEP_MODE, "hibernate") )
+    if (!xfconf_channel_set_string (channel, INACTIVITY_SLEEP_MODE, "Hibernate") )
     {
 	g_critical ("Cannot set value hibernate for property %s", INACTIVITY_SLEEP_MODE);
     }
@@ -231,7 +231,7 @@ set_hibernate_inactivity (GtkWidget *w, XfconfChannel *channel)
 static void
 set_suspend_inactivity (GtkWidget *w, XfconfChannel *channel)
 {
-    if (!xfconf_channel_set_string (channel, INACTIVITY_SLEEP_MODE, "suspend") )
+    if (!xfconf_channel_set_string (channel, INACTIVITY_SLEEP_MODE, "Suspend") )
     {
 	g_critical ("Cannot set value suspend for property %s", INACTIVITY_SLEEP_MODE);
     }
@@ -1227,10 +1227,10 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
     g_signal_connect (inact_hibernate, "toggled",
 		      G_CALLBACK (set_hibernate_inactivity), channel);
 		      
-    str = xfconf_channel_get_string (channel, INACTIVITY_SLEEP_MODE, "suspend");
-    if ( xfpm_strequal (str, "suspend") )
+    str = xfconf_channel_get_string (channel, INACTIVITY_SLEEP_MODE, "Suspend");
+    if ( xfpm_strequal (str, "Suspend") )
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_suspend), TRUE);
-    else if ( xfpm_strequal (str, "hibernate"))
+    else if ( xfpm_strequal (str, "Hibernate"))
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_hibernate), TRUE);
     else 
     {

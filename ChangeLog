@@ -1,3 +1,11 @@
+2009-05-18 19:40
+	* : Fix inactivity sleep string in the settings dialog to
+	Suspend instead of suspend (same for hibernate).
+	* : Change the storage type of some variables used in xfpm-debug.c
+	* : some optimization for const fuctions.
+	* : use G_GNUC_NORETURN in the xfpm_start and the 
+	xfpm_show_version functions.
+
 2009-05-18 18:35
 	* : libxfpm/xfpm-notify Remove unused parameter to some functions.
 	* : xfpm-debug.h Check if the compiler supports variadic macros.

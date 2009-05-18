@@ -57,12 +57,10 @@ G_BEGIN_DECLS
 
 #define 	GENERAL_NOTIFICATION_CFG    "/xfce4-power-manager/general-notification"
 
-#ifdef HAVE_LIBNOTIFY
 #define 	BATT_STATE_NOTIFICATION_CFG "/xfce4-power-manager/battery-state-notification"  /* default TRUE */
 
 #define 	SHOW_SLEEP_ERRORS_CFG       "/xfce4-power-manager/show-sleep-errors"
 #define 	SHOW_POWER_MANAGEMENT_ERROR "/xfce4-power-manager/show-power-management-error"
-#endif
 
 #define 	SHOW_TRAY_ICON_CFG          "/xfce4-power-manager/show-tray-icon"              /* default 0 = always,1 = when charging or discharging, 2 = when battery is present */
 

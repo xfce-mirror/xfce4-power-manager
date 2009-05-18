@@ -327,7 +327,7 @@ xfpm_shutdown_internal (DBusConnection *bus, const gchar *shutdown, GError **ger
     return TRUE;
 }
 
-static const gchar *
+static const gchar * G_GNUC_PURE
 _filter_error_message(const gchar *error)
 {
     if( xfpm_strequal ("No back-end for your operating system", error))

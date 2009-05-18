@@ -36,8 +36,8 @@
 void xfpm_debug_enum (const gchar *func, const gchar *file, gint line, 
 		      const gchar *text, gint v_enum, GType type)
 {
-    static gchar *content = NULL;
-    static GValue __value__ = { 0, };
+    gchar *content = NULL;
+    GValue __value__ = { 0, };
 
     g_value_init (&__value__, type);
     g_value_set_enum (&__value__, v_enum);
@@ -57,8 +57,8 @@ void xfpm_debug_enum_full (const gchar *func, const gchar *file, gint line,
     va_list args;
     gchar *buffer;
     
-    static gchar *content = NULL;
-    static GValue __value__ = { 0, };
+    gchar *content = NULL;
+    GValue __value__ = { 0, };
     
     g_value_init (&__value__, type);
     g_value_set_enum (&__value__, v_enum);

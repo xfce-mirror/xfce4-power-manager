@@ -38,13 +38,13 @@ gboolean 	xfpm_send_message_to_network_manager  	(const gchar *message)
     GError          *error = NULL;
     
     bus = dbus_g_bus_get ( DBUS_BUS_SYSTEM, &error);
+    
     if ( error )
     {
 	g_warning("%s", error->message);
 	g_error_free (error);
 	return FALSE;
     }
-    
     
     proxy = dbus_g_proxy_new_for_name (bus,
 				       "org.freedesktop.NetworkManager",
@@ -53,7 +53,7 @@ gboolean 	xfpm_send_message_to_network_manager  	(const gchar *message)
 				       
     if (!proxy)
     {
-	g_critical ("Failed to create proxy for Network Manager interface");
+	g_warning ("Failed to create proxy for Network Manager interface");
 	return FALSE;
     }
     

@@ -82,7 +82,7 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(XfpmBattery, xfpm_battery, G_TYPE_OBJECT)
 
-static const gchar *
+static const gchar * G_GNUC_CONST
 xfpm_battery_get_icon_index (HalDeviceType type, guint percent)
 {
     if (percent < 10) {
@@ -99,7 +99,7 @@ xfpm_battery_get_icon_index (HalDeviceType type, guint percent)
     return "100";
 }
 
-static const gchar *
+static const gchar * G_GNUC_CONST
 xfpm_battery_get_message_from_battery_state (XfpmBatteryState state, gboolean adapter_present)
 {
     switch (state)
@@ -247,7 +247,7 @@ xfpm_battery_notify (XfpmBattery *battery)
     }
 }
 
-static const gchar *
+static const gchar * G_GNUC_CONST
 _get_battery_name (HalDeviceType type)
 {
     if ( type ==  HAL_DEVICE_TYPE_UPS)
@@ -264,7 +264,7 @@ _get_battery_name (HalDeviceType type)
     return _("Your Battery");
 }
 
-static const gchar *
+static const gchar * G_GNUC_PURE
 xfpm_battery_get_battery_state (XfpmBatteryState *state, 
 				gboolean is_charging, 
 				gboolean is_discharging,

@@ -325,7 +325,7 @@ hal_battery_finalize(GObject *object)
     G_OBJECT_CLASS(hal_battery_parent_class)->finalize(object);
 }
 
-static HalDeviceType
+static HalDeviceType G_GNUC_PURE
 hal_battery_type_enum_from_string(const gchar *string)
 {
     if ( !g_strcmp0 (string, "primary") )
@@ -375,12 +375,10 @@ hal_battery_get_device_type (HalBattery *battery)
 	type_enum  = hal_battery_type_enum_from_string(type);
 	g_free(type);
     }
- 
-    //g_free (udi);
     return type_enum;
 }
 
-static guint 
+static guint G_GNUC_CONST
 _get_battery_percentage (guint32 last_full, guint32 current)
 {
     guint val = 100;
@@ -440,7 +438,7 @@ hal_battery_refresh_all (HalBattery *battery)
 		
 }
 
-static const gchar *
+static const gchar * G_GNUC_PURE
 _translate_technology (const gchar *tech)
 {
     if ( !g_strcmp0 (tech, "lithium-ion") )
@@ -463,7 +461,7 @@ _translate_technology (const gchar *tech)
     return _("Unknown");
 }
 
-static const gchar *
+static const gchar * G_GNUC_PURE
 _translate_unit (const gchar *unit)
 {
     if ( !g_strcmp0 (unit, "mWh") )

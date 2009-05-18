@@ -180,7 +180,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 	conf->priv->lock_screen = g_value_get_boolean (value);
     }
 #ifdef HAVE_DPMS
-    if ( xfpm_strequal (property, DPMS_ENABLED_CFG) )
+    else if ( xfpm_strequal (property, DPMS_ENABLED_CFG) )
     {
 	conf->priv->dpms_enabled = g_value_get_boolean (value);
 	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);

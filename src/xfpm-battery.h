@@ -56,13 +56,13 @@ typedef struct
 GType        		 xfpm_battery_get_type           (void) G_GNUC_CONST;
 XfpmBattery    		*xfpm_battery_new                (const HalBattery *device);
 
-const HalBattery	*xfpm_battery_get_device         (XfpmBattery *battery);
+const HalBattery	*xfpm_battery_get_device         (XfpmBattery *battery) G_GNUC_PURE;
 
-XfpmBatteryState         xfpm_battery_get_state          (XfpmBattery *battery);
+XfpmBatteryState         xfpm_battery_get_state          (XfpmBattery *battery) G_GNUC_PURE;
 
 GtkStatusIcon  		*xfpm_battery_get_status_icon    (XfpmBattery *battery);
 
-const gchar    		*xfpm_battery_get_icon_name      (XfpmBattery *battery);
+const gchar    		*xfpm_battery_get_icon_name      (XfpmBattery *battery) G_GNUC_PURE;
 
 G_END_DECLS
 
