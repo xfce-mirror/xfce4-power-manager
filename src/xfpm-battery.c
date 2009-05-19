@@ -222,28 +222,40 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
     }
 }
 
+static gboolean
+xfpm_battery_notify_idle (gpointer data)
+{
+    XfpmBattery *battery;
+    const gchar *message;
+    
+    battery = XFPM_BATTERY (data);
+    
+    message = xfpm_battery_get_message_from_battery_state (battery->priv->state, battery->priv->adapter_present);
+    if ( !message )
+	return FALSE;
+	
+    xfpm_notify_show_notification (battery->priv->notify, 
+				    _("Xfce power manager"), 
+				    message, 
+				    xfpm_tray_icon_get_icon_name (battery->priv->icon),
+				    8000,
+				    battery->priv->type == HAL_DEVICE_TYPE_PRIMARY ? FALSE : TRUE,
+				    XFPM_NOTIFY_NORMAL,
+				    xfpm_tray_icon_get_tray_icon(battery->priv->icon));
+    
+    return FALSE;
+}
+
 static void
 xfpm_battery_notify (XfpmBattery *battery)
 {
-    const gchar *message;
     gboolean notify;
     
     notify = xfpm_xfconf_get_property_bool (battery->priv->conf, GENERAL_NOTIFICATION_CFG);
     
     if ( notify )
     {
-	message = xfpm_battery_get_message_from_battery_state (battery->priv->state, battery->priv->adapter_present);
-	if ( !message )
-	    return;
-	
-	xfpm_notify_show_notification (battery->priv->notify, 
-				       _("Xfce power manager"), 
-				       message, 
-				       xfpm_tray_icon_get_icon_name (battery->priv->icon),
-				       8000,
-				       battery->priv->type == HAL_DEVICE_TYPE_PRIMARY ? FALSE : TRUE,
-				       XFPM_NOTIFY_NORMAL,
-				       xfpm_tray_icon_get_tray_icon(battery->priv->icon));
+	g_idle_add ((GSourceFunc) xfpm_battery_notify_idle, battery);
     }
 }
 
@@ -394,13 +406,22 @@ xfpm_battery_refresh_primary (XfpmBattery *battery, gboolean is_present,
 	 state != BATTERY_FULLY_CHARGED && state != BATTERY_NOT_FULLY_CHARGED )
     {
 	gchar *time_str;
-        const gchar *est_time;
+        gchar *tip_no_time;
+	const gchar *est_time;
 	        
         gint minutes, hours, minutes_left;
        	hours = time_per / 3600;
 		minutes = time_per / 60;
 		minutes_left = minutes % 60;
-		
+
+	tip_no_time = g_strdup_printf ("%i%% %s %s\n%s", 
+			       percentage, 
+			       _("Battery"),
+			       str,
+			       battery->priv->adapter_present ? 
+			       _("System is running on AC power") :
+			       _("System is running on battery power"));
+
 	if ( state == BATTERY_IS_DISCHARGING || 
 	     state == BATTERY_CHARGE_LOW         || 
 	     state == BATTERY_CHARGE_CRITICAL )
@@ -415,15 +436,12 @@ xfpm_battery_refresh_primary (XfpmBattery *battery, gboolean is_present,
         time_str = g_strdup_printf("%s: %d %s %d %s",est_time,
                                    hours,hours > 1 ? _("hours") : _("hour") ,
                                    minutes_left, minutes_left > 1 ? _("minutes") : _("minute"));
-				   
-	tip = g_strdup_printf ("%i%% %s %s\n%s\n%s", 
-			       percentage, 
-			       _("Battery"),
-			       str,
-			       battery->priv->adapter_present ? 
-			       _("System is running on AC power") :
-			       _("System is running on battery power"),
-			       time_str);
+
+	tip = hours != 0 && minutes_left != 0 ? 
+	     g_strdup_printf ("%s\n%s", tip_no_time, time_str) :
+	     g_strdup (tip_no_time);
+	     
+	g_free (tip_no_time);
 	g_free (time_str);
     }
     else
@@ -479,6 +497,7 @@ xfpm_battery_refresh (XfpmBattery *battery)
 							 is_charging, is_discharging, 
 							 last_full, current_charge,
 							 percentage, time_per);
+							 
     xfpm_battery_refresh_visible_icon (battery);
 }
 

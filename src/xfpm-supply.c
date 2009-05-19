@@ -71,6 +71,13 @@ struct XfpmSupplyPrivate
 
 enum
 {
+    PROP_O,
+    PROP_ON_BATTERY,
+    PROP_ON_LOW_BATTERY
+};    
+
+enum
+{
     SHUTDOWN_REQUEST,
     LAST_SIGNAL
 };
@@ -78,6 +85,31 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(XfpmSupply, xfpm_supply, G_TYPE_OBJECT)
+
+static void
+xfpm_supply_get_property (GObject *object,
+			  guint prop_id,
+			  GValue *value,
+			  GParamSpec *pspec)
+{
+    XfpmSupply *supply;
+    
+    supply = XFPM_SUPPLY (object);
+    
+    switch ( prop_id )
+    {
+	case PROP_ON_BATTERY:
+	    g_value_set_boolean (value, !supply->priv->adapter_present);
+	    break;
+	case PROP_ON_LOW_BATTERY:
+	    g_value_set_boolean (value, supply->priv->low_power);
+	    break;
+	default:
+	    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+	    break;
+    }
+    
+}
 
 static void
 xfpm_supply_has_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmSupply *supply)
@@ -90,6 +122,8 @@ xfpm_supply_class_init(XfpmSupplyClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
+    object_class->get_property = xfpm_supply_get_property;
+
     signals[SHUTDOWN_REQUEST] = 
     	g_signal_new("shutdown-request",
                       XFPM_TYPE_SUPPLY,
@@ -100,6 +134,20 @@ xfpm_supply_class_init(XfpmSupplyClass *klass)
                       G_TYPE_NONE, 2, 
 		      G_TYPE_BOOLEAN,
 		      XFPM_TYPE_SHUTDOWN_REQUEST);
+		      
+    g_object_class_install_property(object_class,
+                                    PROP_ON_BATTERY,
+                                    g_param_spec_boolean("on-battery",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
+							 
+    g_object_class_install_property(object_class,
+                                    PROP_ON_LOW_BATTERY,
+                                    g_param_spec_boolean("on-low-battery",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
 
     object_class->finalize = xfpm_supply_finalize;
 
@@ -318,41 +366,40 @@ xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
     XfpmShutdownRequest critical_action = 
 	xfpm_xfconf_get_property_enum (supply->priv->conf, CRITICAL_BATT_ACTION_CFG);
     
-    if ( xfpm_supply_on_low_power (supply) )
+    TRACE ("System is running on low power");
+    
+    if ( supply->priv->inhibited )
     {
-	TRACE ("System is running on low power");
-	supply->priv->low_power = TRUE;
-	if ( supply->priv->inhibited )
-	{
-	    xfpm_supply_show_critical_action_inhibited (supply, battery);
-	}
-	else if ( critical_action == XFPM_DO_NOTHING )
-	{
-	    xfpm_supply_show_critical_action (supply, battery);
-	}
-	else
-	{
-	    xfpm_supply_process_critical_action (supply);
-	}
+	xfpm_supply_show_critical_action_inhibited (supply, battery);
+    }
+    else if ( critical_action == XFPM_DO_NOTHING )
+    {
+	xfpm_supply_show_critical_action (supply, battery);
+    }
+    else
+    {
+	xfpm_supply_process_critical_action (supply);
     }
 }
 
 static void
 xfpm_supply_battery_state_changed_cb (XfpmBattery *battery, XfpmBatteryState state, XfpmSupply *supply)
 {
-    if ( state == BATTERY_CHARGE_CRITICAL )
-	xfpm_supply_handle_primary_critical (supply, battery);
-    else if ( supply->priv->low_power == TRUE )
+    gboolean low_power;
+    
+    low_power = xfpm_supply_on_low_power (supply);
+    
+    if ( state == BATTERY_CHARGE_CRITICAL && low_power )
     {
-	if ( xfpm_supply_on_low_power (supply) )
-	{
-	    xfpm_supply_handle_primary_critical (supply, battery);
-	}
-	else
-	{
-	    supply->priv->low_power = FALSE;
-	    xfpm_notify_close_critical (supply->priv->notify);
-	}
+	supply->priv->low_power = TRUE;
+	g_object_notify (G_OBJECT (supply), "on-low-battery");
+	xfpm_supply_handle_primary_critical (supply, battery);
+    }
+    else if ( !low_power && supply->priv->low_power )
+    {
+	supply->priv->low_power = FALSE;
+	g_object_notify (G_OBJECT (supply), "on-low-battery");
+	xfpm_notify_close_critical (supply->priv->notify);
     }
 }
 
@@ -397,7 +444,6 @@ xfpm_supply_remove_battery (XfpmSupply *supply,  const HalBattery *device)
 	if (!g_hash_table_remove (supply->priv->hash, udi))
 		g_critical ("Unable to remove battery object from hash");
     }
-//    g_object_unref (battery);
     xfpm_supply_refresh_tray_icon (supply);
 }
 
@@ -460,6 +506,16 @@ static void
 xfpm_supply_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmSupply *supply)
 {
     supply->priv->adapter_present = present;
+    
+    g_object_notify (G_OBJECT (supply), "on-battery");
+    
+    if ( supply->priv->adapter_present && supply->priv->low_power )
+    {
+	supply->priv->low_power = FALSE;
+	g_object_notify (G_OBJECT (supply), "on-low-battery");
+	xfpm_notify_close_critical (supply->priv->notify);
+    }
+    
     xfpm_supply_save_power (supply);
 }
 
@@ -487,13 +543,18 @@ void xfpm_supply_monitor (XfpmSupply *supply)
     xfpm_supply_monitor_start (supply);
     
     xfpm_supply_refresh_tray_icon (supply);
+    
+    supply->priv->low_power = xfpm_supply_on_low_power (supply);
+    
+    if ( supply->priv->low_power )
+	g_object_notify (G_OBJECT (supply), "on-low-battery");
 }
 
 gboolean xfpm_supply_on_low_battery (XfpmSupply *supply)
 {
     g_return_val_if_fail (XFPM_IS_SUPPLY(supply), FALSE);
     
-    return xfpm_supply_on_low_power(supply);
+    return supply->priv->low_power;
 }
 
 void xfpm_supply_reload (XfpmSupply *supply)

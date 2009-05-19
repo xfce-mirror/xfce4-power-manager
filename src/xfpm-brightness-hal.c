@@ -207,12 +207,9 @@ xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
 {
     gboolean enable_brightness = xfpm_xfconf_get_property_bool (brg->priv->conf, ENABLE_BRIGHTNESS_CONTROL);
     
-    if ( !enable_brightness )
-	return;
-	
-    if ( brg->priv->brightness_in_hw )
+    if ( enable_brightness == FALSE || brg->priv->brightness_in_hw)
 	goto signal;
-    
+	
     if ( brg->priv->hw_level <= brg->priv->max_level -1 )
     {
 	TRACE ("Brightness key up");
@@ -221,7 +218,8 @@ xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
     
 signal:
     brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
-    g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
+    if ( G_LIKELY ( brg->priv->hw_level != 0 ) )
+	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
 }
 
 static void
@@ -229,10 +227,7 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
 {
     gboolean enable_brightness = xfpm_xfconf_get_property_bool (brg->priv->conf, ENABLE_BRIGHTNESS_CONTROL);
     
-    if ( !enable_brightness )
-	return;
-	
-    if ( brg->priv->brightness_in_hw )
+    if ( enable_brightness == FALSE || brg->priv->brightness_in_hw)
 	goto signal;
 	
     if ( brg->priv->hw_level != 0)
@@ -243,7 +238,8 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
     
 signal:
     brg->priv->hw_level = xfpm_brightness_hal_get_level (brg);
-    g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_DOWN], 0, brg->priv->hw_level);
+    if ( G_LIKELY ( brg->priv->hw_level != 0 ) )
+	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_DOWN], 0, brg->priv->hw_level);
 }
 
 static void

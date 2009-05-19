@@ -1,3 +1,12 @@
+2009-05-19 12:00
+	* : check brightness value and only display relevent values in
+	the brightness popup.
+	* : Load the brightness object in idle, seems to fix the issue
+	of wrong num_level sent from HAL on aspire one machine.
+	* : Provides LowBattery DBus signal.
+	* : Doesn't show funny estimated battery time to be fully charged
+	in case of wrong value estimated.
+
 2009-05-18 19:40
 	* : Fix inactivity sleep string in the settings dialog to
 	Suspend instead of suspend (same for hibernate).

@@ -45,6 +45,9 @@ typedef struct
     void                  (*on_battery_changed)       	(XfpmEngine *engine,
 							 gboolean    on_battery);
     
+    void                  (*low_battery_changed)       	(XfpmEngine *engine,
+							 gboolean    low_battery);
+							 
 } XfpmEngineClass;
 
 GType        	  	  xfpm_engine_get_type        	(void) G_GNUC_CONST;

@@ -57,7 +57,7 @@ XfpmSupply     	        *xfpm_supply_new            (guint8 power_management_inf
 
 void                     xfpm_supply_monitor        (XfpmSupply *supply);
 
-gboolean                 xfpm_supply_on_low_battery (XfpmSupply *supply);
+gboolean                 xfpm_supply_on_low_battery (XfpmSupply *supply) G_GNUC_PURE;
 
 void                     xfpm_supply_reload         (XfpmSupply *supply);
 

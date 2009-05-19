@@ -94,6 +94,7 @@ struct XfpmEnginePrivate
 enum
 {
     ON_BATTERY_CHANGED,
+    LOW_BATTERY_CHANGED,
     LAST_SIGNAL
 };
 
@@ -259,9 +260,25 @@ xfpm_engine_check_hal_iface (XfpmEngine * engine)
 }
 
 static void
-xfpm_engine_load_all (XfpmEngine * engine)
+xfpm_engine_supply_notify_cb (GObject *object, GParamSpec *spec, XfpmEngine *engine)
 {
+    gboolean low_power;
+    
+    if ( xfpm_strequal (spec->name, "on-low-battery") )
+    {
+	g_object_get (object, "on-low-battery", &low_power, NULL);
+	TRACE ("On low battery changed %s", xfpm_bool_to_string (low_power));
+	g_signal_emit (G_OBJECT (engine), signals [LOW_BATTERY_CHANGED], 0, low_power);
+    }
+}
+
+static gboolean
+xfpm_engine_load_all (gpointer data)
+{
+    XfpmEngine *engine;
     HalManager *manager;
+
+    engine = XFPM_ENGINE (data);
 
     xfpm_engine_check_hal_iface (engine);
     
@@ -287,6 +304,10 @@ xfpm_engine_load_all (XfpmEngine * engine)
     g_signal_connect (G_OBJECT (engine->priv->supply), "shutdown-request",
 		      G_CALLBACK (xfpm_engine_shutdown_request_battery_cb),
 		      engine);
+		      
+    g_signal_connect (G_OBJECT (engine->priv->supply), "notify",
+		      G_CALLBACK (xfpm_engine_supply_notify_cb), engine);
+		      
     xfpm_supply_monitor (engine->priv->supply);
 
     engine->priv->button = xfpm_button_new ();
@@ -303,6 +324,7 @@ xfpm_engine_load_all (XfpmEngine * engine)
 	engine->priv->has_lcd_brightness =
 	xfpm_backlight_has_hw (engine->priv->bk);
     }
+    return FALSE;
 }
 
 static void
@@ -411,6 +433,15 @@ xfpm_engine_class_init (XfpmEngineClass * klass)
                       g_cclosure_marshal_VOID__BOOLEAN,
                       G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
+    signals [LOW_BATTERY_CHANGED] = 
+        g_signal_new("low-battery-changed",
+                      XFPM_TYPE_ENGINE,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmEngineClass, low_battery_changed),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__BOOLEAN,
+                      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+
     object_class->finalize = xfpm_engine_finalize;
 
     g_type_class_add_private (klass, sizeof (XfpmEnginePrivate));
@@ -458,8 +489,6 @@ xfpm_engine_init (XfpmEngine * engine)
     g_signal_connect (engine->priv->adapter, "adapter-changed",
 		      G_CALLBACK (xfpm_engine_adapter_changed_cb), engine);
 
-    xfpm_engine_load_all (engine);
-    
     engine->priv->idle    = xfpm_idle_new ();
 
     g_signal_connect (engine->priv->idle, "alarm-timeout",
@@ -469,6 +498,14 @@ xfpm_engine_init (XfpmEngine * engine)
 		      G_CALLBACK (xfpm_engine_inactivity_timeout_changed_cb), engine);
 		    
     xfpm_engine_set_inactivity_timeouts (engine);
+    
+    /*
+     * We load other objects in idle, in princilpe we shouldn't do that
+     * but it turns out that some time for some reason the HAL brightness 
+     * object is failing to get correct brightness num_levels, and the idle
+     * seems to fix this.
+     */
+    g_idle_add ((GSourceFunc)xfpm_engine_load_all, engine);
 }
 
 static void

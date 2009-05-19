@@ -45,6 +45,10 @@ static void xfpm_idle_finalize   (GObject *object);
 #define XFPM_IDLE_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_IDLE, XfpmIdlePrivate))
 
+/*
+ * Undef and use the function instead of the macro
+ * as the macro is buggy.
+ */
 #ifdef XSyncValueAdd
 #undef XSyncValueAdd
 #endif
