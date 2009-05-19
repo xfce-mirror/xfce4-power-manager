@@ -102,11 +102,6 @@ xfpm_start (DBusGConnection *bus)
         g_error_free(error);
     }
 
-    if ( no_daemon == FALSE && daemon(0,0) )
-    {
-	g_critical ("Could not daemonize");
-    }
- 
     xfpm_manager_start (manager);
     gtk_main ();
     
@@ -177,8 +172,13 @@ int main(int argc, char **argv)
        
     dbus_g_thread_init ();
     
+    if ( no_daemon == FALSE && daemon(0,0) )
+    {
+	g_critical ("Could not daemonize");
+    }
+    
     bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
-            
+    
     if ( error )
     {
 	gchar *message = g_strdup(_("Unable to get connection to the message bus session"));
