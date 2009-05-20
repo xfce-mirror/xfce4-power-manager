@@ -39,6 +39,7 @@
 #include "libxfpm/hal-monitor.h"
 
 #include "libxfpm/xfpm-string.h"
+#include "libxfpm/xfpm-common.h"
 
 #include "xfpm-shutdown.h"
 #include "xfpm-session.h"
@@ -378,16 +379,23 @@ xfpm_shutdown_new(void)
 
 gboolean                  xfpm_shutdown_add_callback    (XfpmShutdown *shutdown,
 							 GSourceFunc func,
-							 guint timeout,
+							 gboolean lock_screen,
 							 gpointer data)
 {
     g_return_val_if_fail (XFPM_IS_SHUTDOWN (shutdown), FALSE);
     
     if (shutdown->priv->block_shutdown)
 	return FALSE;
-	
+    
     xfpm_send_message_to_network_manager ("sleep");
-    g_timeout_add_seconds (timeout, func, data);
+    if ( lock_screen )
+	xfpm_lock_screen ();
+	
+    if ( lock_screen )
+	g_timeout_add_seconds (2 , func, data);
+    else
+	g_timeout_add (100, func, data);
+	
     shutdown->priv->block_shutdown = TRUE;
     return TRUE;
 }

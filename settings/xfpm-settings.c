@@ -387,22 +387,19 @@ format_inactivity_value_cb (GtkScale *scale, gdouble value)
 	return g_strdup_printf ("%d %s", (gint)value, _("Minutes"));
     else if ( (gint)value == 60)
 	return g_strdup (_("One hour"));
-    else if ( (gint)value > 60 )
-    {
-	h = (gint)value/60;
-	min = (gint)value%60;
-	
-	if ( h <= 1 )
-	    if ( min == 0 )      return g_strdup_printf ("%s", _("One hour"));
-	    else if ( min == 1 ) return g_strdup_printf ("%s %s", _("One hour"),  _("one minute"));
-	    else                 return g_strdup_printf ("%s %d %s", _("One hour"), min, _("minutes"));
-	else 
-	    if ( min == 0 )      return g_strdup_printf ("%d %s", h, _("hours"));
-	    else if ( min == 1 ) return g_strdup_printf ("%d %s %s", h, _("hours"), _("one minute"));
-	    else            return g_strdup_printf ("%d %s %d %s", h, _("hours"), min, _("minutes"));
-    }
-	
-    return g_strdup_printf ("%d %s", (int)value, _("Minutes"));
+
+    /* value > 60 */
+    h = (gint)value/60;
+    min = (gint)value%60;
+    
+    if ( h <= 1 )
+	if ( min == 0 )      return g_strdup_printf ("%s", _("One hour"));
+	else if ( min == 1 ) return g_strdup_printf ("%s %s", _("One hour"),  _("one minute"));
+	else                 return g_strdup_printf ("%s %d %s", _("One hour"), min, _("minutes"));
+    else 
+	if ( min == 0 )      return g_strdup_printf ("%d %s", h, _("hours"));
+	else if ( min == 1 ) return g_strdup_printf ("%d %s %s", h, _("hours"), _("one minute"));
+	else            return g_strdup_printf ("%d %s %d %s", h, _("hours"), min, _("minutes"));
 }
 
 /*

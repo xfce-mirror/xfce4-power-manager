@@ -1,5 +1,5 @@
 SUBDIRS = \
-  	 images
+	 images
 
 noinst_DATA = \
 	xfce4-power-manager.xml
@@ -11,6 +11,11 @@ doc_DATA= \
 
 EXTRA_DIST = $(noinst_DATA) $(doc_DATA)
 
-html: $(srcdir)/xfce4-power-manager.xml
-	xsltproc $(top_srcdir)/doc/xfce-nochunk.xsl \
-		$(srcdir)/xfce4-power-manager.xml
+if MAINTAINER_MODE
+if HAVE_XSLTPROC
+
+xfce4-power-manager.html: $(srcdir)/xfce4-power-manager.xml
+	$(XSLTPROC) $(top_srcdir)/doc/xfce-nochunk.xsl $(srcdir)/xfce4-power-manager.xml
+
+endif
+endif

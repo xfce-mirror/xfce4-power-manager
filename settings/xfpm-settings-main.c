@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 
     xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
     
-    if( !gtk_init_with_args (&argc, &argv, "", option_entries, PACKAGE, &error)) 
+    if( !gtk_init_with_args (&argc, &argv, (gchar *)"", option_entries, (gchar *)PACKAGE, &error)) 
     {
         if( error) 
         {
@@ -95,9 +95,7 @@ int main(int argc, char **argv)
     
     if ( error )
     {
-	g_error("%s\n",error->message);
-	g_error_free(error);
-	return EXIT_FAILURE;
+	g_error ("%s\n",error->message);
     }
 
     if ( xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager") ) 

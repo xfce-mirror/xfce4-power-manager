@@ -82,8 +82,8 @@ xfpm_start (DBusGConnection *bus)
     
     manager = xfpm_manager_new (bus);
     
-     if ( xfce_posix_signal_handler_init (&error)) 
-     {
+    if ( xfce_posix_signal_handler_init (&error)) 
+    {
         xfce_posix_signal_handler_set_handler(SIGHUP,
                                               xfpm_quit_signal,
                                               manager, NULL);
@@ -102,11 +102,6 @@ xfpm_start (DBusGConnection *bus)
         g_error_free(error);
     }
 
-    if ( no_daemon == FALSE && daemon(0,0) )
-    {
-	g_critical ("Could not daemonize");
-    }
- 
     xfpm_manager_start (manager);
     gtk_main ();
     
@@ -141,7 +136,7 @@ int main(int argc, char **argv)
 
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
-    if (!gtk_init_with_args (&argc, &argv, "", option_entries, PACKAGE, &error)) 
+    if (!gtk_init_with_args (&argc, &argv, (gchar *)"", option_entries, (gchar *)PACKAGE, &error)) 
     {
         if(G_LIKELY(error)) 
         {
@@ -177,6 +172,11 @@ int main(int argc, char **argv)
        
     dbus_g_thread_init ();
     
+    if ( no_daemon == FALSE && daemon(0,0) )
+    {
+	g_critical ("Could not daemonize");
+    }
+    
     bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
             
     if ( error )
@@ -187,12 +187,7 @@ int main(int argc, char **argv)
 	xfpm_error (_("Xfce Power Manager"),
 		    message );
 			   
-	g_error("%s: \n",message);
-	g_print("\n");
-	g_error_free(error);
-	g_free(message);
-	
-	return EXIT_FAILURE;
+	g_error ("%s: \n", message);
     }
     
     if ( quit )

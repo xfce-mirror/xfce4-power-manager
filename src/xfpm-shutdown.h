@@ -58,7 +58,7 @@ XfpmShutdown       	 *xfpm_shutdown_new             (void);
 
 gboolean                  xfpm_shutdown_add_callback    (XfpmShutdown *shutdown,
 							 GSourceFunc func,
-							 guint timeout,
+							 gboolean lock_screen,
 							 gpointer data);
 							 
 

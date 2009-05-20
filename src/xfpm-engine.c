@@ -177,19 +177,17 @@ xfpm_engine_shutdown_request (XfpmEngine * engine,
 	{
 	    xfpm_shutdown_add_callback (engine->priv->shutdown, 
 					(GSourceFunc) xfpm_engine_do_hibernate,
-					2,
+					lock_screen,
 					engine);
 	}
 	else if (shutdown == XFPM_DO_SUSPEND)
 	{
 	    xfpm_shutdown_add_callback (engine->priv->shutdown, 
 					(GSourceFunc) xfpm_engine_do_suspend,
-					2,
+					lock_screen,
 					engine);
 	}
 
-	if (lock_screen)
-	    xfpm_lock_screen ();
     }
 }
 

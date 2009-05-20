@@ -172,12 +172,10 @@ xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
     if ( ret ) 
     {
 	lock_screen = xfpm_xfconf_get_property_bool (tray->priv->conf, LOCK_SCREEN_ON_SLEEP);
-	if ( lock_screen )
-	    xfpm_lock_screen ();
 	    
 	xfpm_shutdown_add_callback (tray->priv->shutdown, 
 				    (GSourceFunc) xfpm_tray_icon_do_hibernate, 
-				    2,
+				    lock_screen,
 				    tray);
     }
 }
@@ -203,12 +201,10 @@ xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
     if ( ret ) 
     {
 	lock_screen = xfpm_xfconf_get_property_bool (tray->priv->conf, LOCK_SCREEN_ON_SLEEP);
-	if ( lock_screen )
-	    xfpm_lock_screen ();
 	
 	xfpm_shutdown_add_callback (tray->priv->shutdown, 
 				    (GSourceFunc) xfpm_tray_icon_do_suspend, 
-				    2,
+				    lock_screen,
 				    tray);
 				    
     }
