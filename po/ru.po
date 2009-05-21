@@ -1,6 +1,6 @@
 # translation of xfce4-power-manager.po to Russian
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) 2008-2009 Ali Abdallah
+# This file is distributed under the same license as the xfce4-power-manager package.
 #
 # Denis Koryavov <dkoryavov@yandex.ru>, 2009.
 msgid ""
@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-05-16 19:38+0200\n"
-"PO-Revision-Date: 2009-05-01 16:48+0400\n"
+"PO-Revision-Date: 2009-05-20 15:00+0400\n"
 "Last-Translator: Denis Koryavov <dkoryavov@yandex.ru>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
@@ -37,9 +37,8 @@ msgid "<b>Monitor</b>"
 msgstr "<b>Монитор</b>"
 
 #: ../settings/xfpm-settings.glade.h:6
-#, fuzzy
 msgid "Actions"
-msgstr "<b>Действия</b>"
+msgstr "Действия "
 
 #: ../settings/xfpm-settings.glade.h:7
 msgid "Advanced"
@@ -84,9 +83,8 @@ msgid "Lock screen when going for suspend/hibernate"
 msgstr "Блокировать экран при переходе в спящий/ждущий режимы"
 
 #: ../settings/xfpm-settings.glade.h:16
-#, fuzzy
 msgid "Monitor"
-msgstr "<b>Монитор</b>"
+msgstr "Монитор "
 
 #: ../settings/xfpm-settings.glade.h:17 ../settings/xfpm-settings.c:586
 #: ../settings/xfpm-settings.c:678 ../settings/xfpm-settings.c:835
@@ -118,8 +116,7 @@ msgstr "Отключать питание экрана при отсутстви
 
 #: ../settings/xfpm-settings.glade.h:23
 msgid "Put the computer to sleep when inactive for:"
-msgstr ""
-"Перевести компьютер в спящий режим при отсутствии активности в течении:"
+msgstr "Перевести компьютер в спящий режим при отсутствии активности в течении:"
 
 #: ../settings/xfpm-settings.glade.h:24
 msgid "Reduce screen brightness when computer is inactive for:"
@@ -243,9 +240,7 @@ msgstr "Когда батарея разряжается или заряжает
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr ""
-"Выключить автоматическое управление питанием монитора (DPMS), в этом случае, "
-"ваш монитор будет работать постоянно. "
+msgstr "Выключить автоматическое управление питанием монитора (DPMS), в этом случае, ваш монитор будет работать постоянно. "
 
 #: ../settings/xfpm-settings.c:1019 ../settings/xfpm-settings.c:1085
 #: ../settings/xfpm-settings.c:1151
@@ -383,9 +378,8 @@ msgid "Your Battery"
 msgstr "Батарея "
 
 #: ../src/xfpm-battery.c:279
-#, fuzzy
 msgid "is empty"
-msgstr "практически не осталось заряда "
+msgstr "пуста "
 
 #: ../src/xfpm-battery.c:285
 msgid "is fully charged"
@@ -552,18 +546,11 @@ msgid ""
 "the automatic sleep, this means that doing a sleep now may damage the data "
 "of this application. Close this application before putting the computer on "
 "sleep mode or plug in your AC adapter"
-msgstr ""
-"Система работает от батарей с низким зарядом, однако одно из запущенных "
-"приложений препятствует автоматическому переходу в спящий режим. Это "
-"означает, что немедленный переход в спящий режим может повредить данные "
-"этого приложения. Сохраните данные и закройте блокирующую программу, либо "
-"подключите компьютер к источнику питания. "
+msgstr "Система работает от батарей с низким зарядом, однако одно из запущенных приложений препятствует автоматическому переходу в спящий режим. Это означает, что немедленный переход в спящий режим может повредить данные этого приложения. Сохраните данные и закройте блокирующую программу, либо подключите компьютер к источнику питания. "
 
 #: ../src/xfpm-supply.c:299
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Ваша батарея практически разряжена. Сохраните свою работу чтобы избежать "
-"потери данных. "
+msgstr "Ваша батарея практически разряжена. Сохраните свою работу чтобы избежать потери данных. "
 
 #: ../src/xfpm-tray-icon.c:162
 msgid ""
@@ -571,9 +558,9 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
-"Другое приложение блокирует автоматический переход в режим пониженного "
-"энергопотребления выполнение данного действия может повредить работе данного "
-"приложения, вы действительно желаете  перевести систему в спящий режим?"
+"Другое приложение блокирует автоматический переход в режим пониженного энергопотребления "
+"выполнение данного действия может повредить работе данного приложения, вы действительно желаете "
+" перевести систему в спящий режим?"
 
 #: ../src/xfpm-tray-icon.c:165 ../src/xfpm-tray-icon.c:196
 msgid "Are you sure you want to proceed?"
@@ -584,11 +571,7 @@ msgid ""
 "An application is currently disabling the automatic sleep, doing this action "
 "now may damage the working state of this application, are you sure you want "
 "to suspend the system?"
-msgstr ""
-"Одно из запущенных приложений блокирует автоматический переход в режим "
-"пониженного энергопотребления, принудительное выполнение данного действия "
-"может повредить работе этого приложения, вы действительно желаете перевести "
-"систему в ждущий режим?"
+msgstr "Одно из запущенных приложений блокирует автоматический переход в режим пониженного энергопотребления, принудительное выполнение данного действия может повредить работе этого приложения, вы действительно желаете перевести систему в ждущий режим?"
 
 #: ../src/xfpm-tray-icon.c:222
 msgid "Quit the Xfce power manager"
@@ -611,14 +594,11 @@ msgid ""
 "Disable or enable automatic sleep, setting this will tell the power manager "
 "to disable backlight sleep, for example you could active the inhibit if you "
 "are watching a movie."
-msgstr ""
-"Включить или выключить автоматические действия управления "
-"энергопотреблением. Подобное действие вам может понадобиться, например, при "
-"просмотре фильма. "
+msgstr "Включить или выключить автоматические действия управления энергопотреблением. Подобное действие вам может понадобиться, например, при просмотре фильма. "
 
 #: ../src/xfpm-tray-icon.c:388
 msgid "No data available"
-msgstr ""
+msgstr "Данные отсутствуют "
 
 #: ../src/xfpm-engine.c:646 ../src/xfpm-engine.c:672 ../src/xfpm-engine.c:701
 #, c-format
@@ -733,5 +713,3 @@ msgstr "Устройства не найдены "
 msgid "Brightness plugin"
 msgstr "Управление яркостью экрана"
 
-#~ msgid "Advance"
-#~ msgstr "Режим эксперта "
