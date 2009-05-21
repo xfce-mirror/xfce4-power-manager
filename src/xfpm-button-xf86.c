@@ -50,8 +50,6 @@
 
 static void xfpm_button_xf86_finalize   (GObject *object);
 
-static gpointer xfpm_button_xf86_object = NULL;
-
 #define XFPM_BUTTON_XF86_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_BUTTON_XF86, XfpmButtonXf86Private))
 
@@ -248,16 +246,9 @@ xfpm_button_xf86_finalize(GObject *object)
 XfpmButtonXf86 *
 xfpm_button_xf86_new(void)
 {
-    if ( xfpm_button_xf86_object != NULL )
-    {
-	g_object_ref (xfpm_button_xf86_object);
-    }
-    else
-    {
-	xfpm_button_xf86_object = g_object_new (XFPM_TYPE_BUTTON_XF86, NULL);
-	g_object_add_weak_pointer (xfpm_button_xf86_object, &xfpm_button_xf86_object);
-    }
-    return XFPM_BUTTON_XF86 (xfpm_button_xf86_object);
+    XfpmButtonXf86 *button = NULL;
+    button = g_object_new (XFPM_TYPE_BUTTON_XF86, NULL);
+    return button;
 }
 
 guint8 xfpm_button_xf86_get_mapped_buttons (XfpmButtonXf86 *button)

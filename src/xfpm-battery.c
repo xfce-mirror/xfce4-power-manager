@@ -437,7 +437,7 @@ xfpm_battery_refresh_primary (XfpmBattery *battery, gboolean is_present,
                                    hours,hours > 1 ? _("hours") : _("hour") ,
                                    minutes_left, minutes_left > 1 ? _("minutes") : _("minute"));
 
-	tip = hours != 0 && minutes_left != 0 ? 
+	tip = (hours != 0 || minutes_left != 0 ) ? 
 	     g_strdup_printf ("%s\n%s", tip_no_time, time_str) :
 	     g_strdup (tip_no_time);
 	     

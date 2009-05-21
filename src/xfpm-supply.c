@@ -283,7 +283,7 @@ _notify_action_callback (NotifyNotification *n, gchar *action, XfpmSupply *suppl
     if ( xfpm_strequal(action, "shutdown") )
 	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, XFPM_DO_SHUTDOWN);
     else if ( xfpm_strequal(action, "hibernate") )
-	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, XFPM_DO_SHUTDOWN);
+	g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, XFPM_DO_HIBERNATE);
 }
 
 static void

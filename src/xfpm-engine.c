@@ -219,15 +219,32 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
     if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
 	return;
     
-    if ( type == BUTTON_POWER_OFF || type == BUTTON_SLEEP || type == BUTTON_HIBERNATE )
-	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf, 
-					          type == BUTTON_POWER_OFF ? POWER_SWITCH_CFG :
-					          SLEEP_SWITCH_CFG );
-    else
+    if ( type == BUTTON_POWER_OFF )
+    {
+	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
+						  POWER_SWITCH_CFG);
+    }
+    else if ( type == BUTTON_SLEEP )
+    {
+	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
+						  SLEEP_SWITCH_CFG);
+    }
+    else if ( type == BUTTON_HIBERNATE )
+    {
+	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
+						  HIBERNATE_SWITCH_CFG);
+    }
+    else if ( type == BUTTON_LID_CLOSED )
+    {
 	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
 					          engine->priv->on_battery ?
 					          LID_SWITCH_ON_BATTERY_CFG :
 					          LID_SWITCH_ON_AC_CFG);
+    }
+    else
+    {
+	g_return_if_reached ();
+    }
 	
     if ( shutdown == XFPM_ASK )
 	xfpm_shutdown_ask (engine->priv->shutdown);

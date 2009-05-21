@@ -77,11 +77,11 @@ xfpm_inhibit_free_inhibitor (XfpmInhibit *inhibit, Inhibitor *inhibitor)
 {
     g_return_if_fail (inhibitor != NULL );
     
+    g_ptr_array_remove (inhibit->priv->array, inhibitor);
+    
     g_free (inhibitor->app_name);
     g_free (inhibitor->unique_name);
     g_free (inhibitor);
-    
-    g_ptr_array_remove (inhibit->priv->array, inhibitor);
 }
 
 static gboolean
@@ -195,8 +195,7 @@ xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor, gchar *unique_name, X
     if ( inhibitor )
     {
 	TRACE ("Application=%s with unique connection name=%s disconnected", inhibitor->app_name, inhibitor->unique_name);
-	g_free (inhibitor);
-	g_ptr_array_remove (inhibit->priv->array, inhibitor);
+	xfpm_inhibit_free_inhibitor (inhibit, inhibitor);
 	xfpm_inhibit_has_inhibit_changed (inhibit);
     }
 }

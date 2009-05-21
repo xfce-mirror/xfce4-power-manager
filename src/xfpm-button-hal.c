@@ -174,6 +174,8 @@ xfpm_button_hal_add_button (XfpmButtonHal *bt, const gchar *udi, gboolean lid_on
 	
 	if ( xfpm_strequal (button_type, "lid") )
 	    bt->priv->mapped_keys |= LID_KEY;
+	else if ( xfpm_strequal (button_type, "suspend") )
+	    bt->priv->mapped_keys |= SLEEP_KEY;
 	else if ( xfpm_strequal (button_type, "sleep") )
 	    bt->priv->mapped_keys |= SLEEP_KEY;
 	else if ( xfpm_strequal (button_type, "hibernate") )
