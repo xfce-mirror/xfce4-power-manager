@@ -48,6 +48,7 @@
 #include "xfpm-marshal.h"
 
 static void xfpm_supply_finalize   (GObject *object);
+static void xfpm_supply_refresh_tray_icon (XfpmSupply *supply);
 
 #define XFPM_SUPPLY_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_SUPPLY, XfpmSupplyPrivate))
@@ -117,6 +118,12 @@ xfpm_supply_has_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, Xf
     supply->priv->inhibited = inhibited;
 }
 
+static void 
+xfpm_supply_tray_settings_changed (XfpmSupply *supply)
+{
+	xfpm_supply_refresh_tray_icon (supply);
+}
+
 static void
 xfpm_supply_class_init(XfpmSupplyClass *klass)
 {
@@ -175,6 +182,9 @@ xfpm_supply_init (XfpmSupply *supply)
     
     g_signal_connect (supply->priv->inhibit, "has-inhibit-changed",
 		      G_CALLBACK (xfpm_supply_has_inhibit_changed_cb), supply);
+			  
+    g_signal_connect_swapped (supply->priv->conf, "tray_icon_settings_changed",
+			      G_CALLBACK (xfpm_supply_tray_settings_changed), supply);
 }
 
 static void
@@ -218,7 +228,13 @@ xfpm_supply_refresh_tray_icon (XfpmSupply *supply)
 	    xfpm_tray_icon_set_visible (supply->priv->tray, TRUE);
 	}
 	else
+	{
 	    xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
+	}
+    }
+    else
+    {
+	xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
     }
 }
 
