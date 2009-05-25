@@ -1,13 +1,9 @@
 imagesdir = $(datadir)/xfce4/doc/C/images
 
-images_DATA = cpu-settings.png	\
-	      general-settings.png	\
-	      battery-settings.png	\
-	      monitor-settings.png	\
-	      button-settings.png	\
-	      battery.png		\
-	      battery-discharging.png	\
-	      settings.png
+images_DATA = xfpm-general-settings.png		\
+              xfpm-extended-settings.png	\
+	      xfpm-context-menu.png		\
+	      xfpm-brightness-plugin.png
 
 EXTRA_DIST = $(images_DATA)
 

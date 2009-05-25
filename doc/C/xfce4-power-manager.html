@@ -1,94 +1,137 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Xfce 4 Power Manager</title><link rel="stylesheet" href="../xfce.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="#xfce4-power-manager" title="Xfce 4 Power Manager"><link rel="next" href="#xfpm-intro" title="Introduction"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="xfce4-power-manager"></a>Xfce 4 Power Manager</h2></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Ali</span> <span class="surname">Abdallah</span></h3><div class="affiliation"><div class="address"><p><code class="email">&lt;<a class="email" href="mailto:aliov@xfce.org">aliov@xfce.org</a>&gt;</code></p></div></div></div></div></div><div><span xmlns="http://www.w3.org/TR/xhtml1/transitional" class="releaseinfo">This manual describes <strong xmlns="" class="application"><code>xfce4-power-manager</code></strong> version 0.8.0r07351
-<br></br></span></div><div><p class="copyright">Copyright © 2008 Ali Abdallah</p></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#xfpm-intro">Introduction</a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfpm-started">Getting Started</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfpm-configuration">Power Manager Configuration</a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfpm-general">General Settings</a></span></dt><dt><span class="sect2"><a href="#xfpm-cpu">CPU Settings</a></span></dt><dt><span class="sect2"><a href="#xfpm-battery">Battery settings</a></span></dt><dt><span class="sect2"><a href="#xfpm-button">Keyboard shortcuts</a></span></dt><dt><span class="sect2"><a href="#xfpm-monitor">Monitor settings</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfpm-systray-notify">System Tray Icon and Notification</a></span></dt><dt><span class="sect1"><a href="#xfpm-faq">FAQ</a></span></dt><dt><span class="sect1"><a href="#xfpm-about">About <strong class="application"><code>xfce4-power-manager</code></strong></a></span></dt></dl></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-intro"></a>Introduction</h2></div></div></div>
-  The Xfce4 power manager is a part of the Xfce goodies project and features cpu frequency control,
-  battery monitoring, monitor DPMS control, LCD brightness control, lid sleep and power buttons controls.
-  All those features can be controlled from the user interface settings dialog.
-  <div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-started"></a>Getting Started</h3></div></div></div><p>To launch the Power Manager you need to run the following command <strong class="application"><code>xfce4-power-manager</code></strong> -r which you can do from the xfce run
-  command by pressing on ALT-F2, or by going to the Xfce settings manager and clicking on the Power Manager item -
-  a popup will be displayed to run the power manger if it is not already running. 
-  Once the power manager is launched for the first time, it will place an autostart desktop file in your .config/autostart
-  in order to be able to be launched automatically each time you log into your Xfce desktop.
-  </p></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-configuration"></a>Power Manager Configuration</h2></div></div></div><div class="figure"><a name="id2551345"></a><p class="title"><b>Figure 1. Power Manager settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/settings.png" alt="Power Manager settings"></div></div></div></div><p><br class="figure-break"></p><p>
-  Almost all the <strong class="application"><code>xfce4-power-manager</code></strong> items are configurable from the configuration window, laptop users can set up 
-  a power profile for two different modes &#8220;on battery power&#8221; and &#8220;on ac power&#8221;, desktop users still can change 
-  DPMS settings and CPU frequency.
-  </p><p>
-  The settings dialog differs from one system to another depending on the computer (PC,laptop,...) and on
-  the available manageabale interfaces.  
-  </p><p>
-  In this section we will describe the possible configuration for the power manager.
-  </p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-general"></a>General Settings</h3></div></div></div><div class="figure"><a name="id2512626"></a><p class="title"><b>Figure 2. General settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/general-settings.png" alt="General settings"></div></div></div></div><p><br class="figure-break"></p><p>
-	Here you can select the configuration of the system tray icon, enable/disable cpu frequency and DPMS controls. 
-	For example, you would need to disable DPMS control when watching a movie.	
-	</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-cpu"></a>CPU Settings</h3></div></div></div><div class="figure"><a name="id2512671"></a><p class="title"><b>Figure 3. CPU Linux governors</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/cpu-settings.png" alt="CPU Linux governors"></div></div></div></div><p><br class="figure-break"></p><p>
-	The linux governors found in the system are listed as radio buttons.
-	If the acpi_cpufreq module is not loaded in the kernel or the cpu itself does not support frequency
-	changes these options might not show.
-	</p><p>Here is a brief descritption on linux cpu governors</p><div class="variablelist"><dl><dt><span class="term">Best performance:</span></dt><dd><p> Set CPU to its maximum frequency: consume more power, 
-	and it is not ideal when running on battery.
-	</p></dd><dt><span class="term">Best power savings:</span></dt><dd><p> 
-	Set the CPU to its minimum frequency: ideal when running on battery power.	
-	</p></dd><dt><span class="term">Ondemand performance:</span></dt><dd><p> What you want is what you get: set the CPU depending on the
-	current usage.
-	</p></dd><dt><span class="term">Good power savings:</span></dt><dd><p> 
-	 Same as Ondemand but differs in behaviour in that it gracefully increases and decreases 
-	 the CPU speed rather than jumping to max speed the moment there is any load on the CPU.
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Xfce 4 Power Manager</title><link rel="stylesheet" href="../xfce.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.73.2"><link rel="start" href="#xfce4-power-manager" title="Xfce 4 Power Manager"><link rel="next" href="#xfpm-intro" title="Introduction"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="article" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="xfce4-power-manager"></a>Xfce 4 Power Manager</h2></div><div><div class="authorgroup"><div class="author"><h3 class="author"><span class="firstname">Ali</span> <span class="surname">Abdallah</span></h3><div class="affiliation"><div class="address"><p><code class="email">&lt;<a class="email" href="mailto:aliov@xfce.org">aliov@xfce.org</a>&gt;</code></p></div></div></div></div></div><div><span xmlns="http://www.w3.org/TR/xhtml1/transitional" class="releaseinfo">This manual describes <strong xmlns="" class="application"><code>xfce4-power-manager</code></strong> version 0.8.0r07387
+<br></br></span></div><div><p class="copyright">Copyright © 2008 Ali Abdallah</p></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#xfpm-intro">Introduction</a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfpm-started">Getting Started</a></span></dt><dt><span class="sect2"><a href="#xfmp-usage">Usage</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfpm">Power Manager</a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfpm-command-line">Command line options</a></span></dt><dt><span class="sect2"><a href="#xfpm-menu">Context menu</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfpm-configuration">Power Manager Configuration</a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfpm-general">General options</a></span></dt><dt><span class="sect2"><a href="#xfpm-on-ac">Running on  AC power</a></span></dt><dt><span class="sect2"><a href="#xfpm-on-battery">Running on battery power</a></span></dt><dt><span class="sect2"><a href="#xfpm-extended">Extended options</a></span></dt><dt><span class="sect2"><a href="#xfpm-hidden-options">Hidden options</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfpm-plugins"> Panel plugins </a></span></dt><dt><span class="sect1"><a href="#xfpm-faq">FAQ</a></span></dt><dt><span class="sect1"><a href="#xfpm-technical">
+ Technical information
+ </a></span></dt><dd><dl><dt><span class="sect2"><a href="#xfpm-dbus">DBus interfaces</a></span></dt></dl></dd><dt><span class="sect1"><a href="#xfpm-about">About <strong class="application"><code>xfce4-power-manager</code></strong></a></span></dt></dl></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-intro"></a>Introduction</h2></div></div></div>
+ This software is a power manager for the Xfce desktop, Xfce power manager manages the power sources on the computer and the devices that can 
+ be controlled to reduce their power consumption (such as LCD brightness level, monitor sleep, CPU frequency scaling). 
+ In addition, xfce4-power-manager provides a set of freedesktop-compliant DBus interfaces to inform other applications about current power level so that 
+ they can adjust their power consumption, and it provides the inhibit interface which allows applications to prevent automatic sleep actions via the power manager; 
+ as an example, the operating system&#8217;s package manager should make use of this interface while it is performing update operations.
+  
+  <div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-started"></a>Getting Started</h3></div></div></div><p>If your distribution doesn't come with a default installation of <strong class="application"><code>xfce4-power-manager</code></strong> usually when you install it, it will be started next time you log into your Xfce desktop, 
+  in order to start it manually you just need to run  the following command <strong class="application"><code>xfce4-power-manager</code></strong> from your terminal emulator, please not that running this <strong class="application"><code>xfce4-power-manager</code></strong> command 
+  will cause the power manager to run in daemon mode, you can optionally add --no-daemon as a command line argument to disable this behaviour, 
+  this can be useful if you want to see debugging outputs from your terminal emulator.
+  </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfmp-usage"></a>Usage</h3></div></div></div><p>
+ The main idea behind a power manager is to control the power sources on mobile computers, such as laptops, on desktops or servers a power manager is basically less useful.
+ </p></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm"></a>Power Manager</h2></div></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-command-line"></a>Command line options</h3></div></div></div><div class="variablelist"><p class="title"><b></b></p><dl><dt><span class="term"><span class="keycap"><strong>--no-daemon</strong></span></span></dt><dd><p>
+	Starts the power manager in non-daemon mode: useful for debugging.
+	</p></dd><dt><span class="term"><span class="keycap"><strong>--restart</strong></span></span></dt><dd><p>
+	Causes the running power manager to restart.
+	</p></dd><dt><span class="term"><span class="keycap"><strong>--quit</strong></span></span></dt><dd><p>
+	Causes any running instance of the power manager to exit.
+	</p></dd></dl></div></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-menu"></a>Context menu</h3></div></div></div><div class="figure"><a name="id2630986"></a><p class="title"><b>Figure 1. Context menu</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/xfpm-context-menu.png" alt="Context menu"></div></div></div></div><p><br class="figure-break"></p><p>
+The context menu is popped up when you click on the icon placed in your notification area, say a battery or an adapter icon, it contains some useful options like suspend/hibernate,
+display information of the battery device open the settings dialog, it contains as well option to inhibit the power manager, if enabled, the power manager will not attempt
+to dim the screen or switch off the monitor.
+
+</p><div class="note" style="text-align: left;"><h3 class="title">Note</h3><p>If the inhibit option is selected and the computer is in idle for a long time the power manager will not put the system in suspend or hibernate, even
+if it is enabled in the settings dialog, only critical actions are processed.</p></div><p>
+
+</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-configuration"></a>Power Manager Configuration</h2></div></div></div><p>
+  In this section we will explain in details the possible configuration of the power manager running on laptop computer, please note that the configurations are different when 
+  the power manager is running on a desktop computer, for example you will not have LCD brightness or so.
+  </p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-general"></a>General options</h3></div></div></div><div class="figure"><a name="id2635917"></a><p class="title"><b>Figure 2. General settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/xfpm-general-settings.png" alt="General settings"></div></div></div></div><p><br class="figure-break"></p><p>
+
+</p><div class="variablelist"><p class="title"><b></b></p><dl><dt><span class="term"><span class="keycap"><strong>Notification area:</strong></span></span></dt><dd><p>The notification area settings allows you to control when the icon placed in your notification are is shown, you can set it to be always visible, for battery devices
+	you can select the icon to be visible only when your are running on battery for example.</p></dd><dt><span class="term"><span class="keycap"><strong>Keyboard special keys:</strong></span></span></dt><dd><p>
+	Enables you to specify which key will trigger which action, these keys are not found on all the systems, in the screen shot for example the hibernate key is missing,
+	since the screen shot was taken on a computer which doesn't have this key.
+	The default action of all these keys is set to do nothing. 
+	</p></dd><dt><span class="term"><span class="keycap"><strong>Monitor power management control:</strong></span></span></dt><dd><p>Enable/Disable Display Power Management Signaling (DPMS).</p></dd><dt><span class="term"><span class="keycap"><strong>Power manager Notification:</strong></span></span></dt><dd><p>If the notification of a battery status change are annoying you, you can always disabling them by unselecting the checkbox, please note this
+	doesn't apply on the notification that the power manager sends them to notify the user of error or when the system is running out of power,
+	 so it is safe to disable them.</p></dd></dl></div><p>
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-on-ac"></a>Running on  AC power</h3></div></div></div><p>
+  The on AC power tab contains self explanatory options such as lid close system idle and monitor sleep configurations.   
+  </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-on-battery"></a>Running on battery power</h3></div></div></div><p>
+The on battery tab is only shown on systems that have battery devices, it contains the same options as the AC power tabs plus two other important options
+
+</p><div class="variablelist"><p class="title"><b></b></p><dl><dt><span class="term"><span class="keycap"><strong>Power is critical</strong></span></span></dt><dd><p>
+	With this option you can tell the power manager what it should do if the system is running on low power, if this option is disabled and the computer
+	is running on low battery power, the power manager will display a warning message.
+	</p></dd><dt><span class="term"><span class="keycap"><strong>Prefer power savings over performance:</strong></span></span></dt><dd><p>
+	This is the power profile when running on battery, enabling this allows you to run more time on your battery power, but this might be over the performance of your system,
+	enabling this option is always a good idea.
 	</p></dd></dl></div><p>
-NOTE:In <strong class="application"><code>xfce4-power-manager</code></strong> version 0.8.0r07351 only Linux is supported for changing the CPU frequency.
-</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-battery"></a>Battery settings</h3></div></div></div><div class="figure"><a name="id2517651"></a><p class="title"><b>Figure 4. Battery settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/battery-settings.png" alt="Battery settings"></div></div></div></div><p><br class="figure-break"></p><p>
-	The user can select the his critical battery percentage, usually this is for a laptop or
-	UPS battery, this option is important for a broken battery for example, which lasts only 5 minutes when it
-	is 10% charged.    
-   </p><p>
-   The user can define an action to be taken by the power manager in case the battery that is giving the main power
-   for the computer reaches a critical charge level.
-   </p> 
-   The battery notification is a way to notify the user when the battery state changes ( ex: battery charge is full )
-   <p>
-   
-   </p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-button"></a>Keyboard shortcuts</h3></div></div></div><div class="figure"><a name="id2517708"></a><p class="title"><b>Figure 5. button control</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/button-settings.png" alt="button control"></div></div></div></div><p><br class="figure-break"></p>
-   For those buttons you can define an action to be taken by the power manager when pressing to one of them 
-   - for example when you close the laptop screen. 
-    
-  </div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-monitor"></a>Monitor settings</h3></div></div></div><div class="figure"><a name="id2517749"></a><p class="title"><b>Figure 6. Monitor DPMS and LCD brightness</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/monitor-settings.png" alt="Monitor DPMS and LCD brightness"></div></div></div></div><p><br class="figure-break"></p><p>
-	DPMS is an old X extension that allows standby/suspend/turn off options of the monitor, usually the timeouts 
-	have to be consecutive, so standby timeout is less than suspend timeout and so on, but any option can always
-	be disabled.
-	</p><p>
-	For laptop users, clicking on the checkbox allows the power manager to reduce the screen luminosity when
-	it detects that system in running on battery power and increase it again when the system is running
-	on AC power.
-	</p></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-systray-notify"></a>System Tray Icon and Notification</h2></div></div></div><p>
-</p><div class="figure"><a name="id2512977"></a><p class="title"><b>Figure 7. Battery icon in the system tray</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/battery.png" alt="Battery icon in the system tray"></div></div></div></div><p><br class="figure-break"></p><p>
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-extended"></a>Extended options</h3></div></div></div><div class="figure"><a name="id2631283"></a><p class="title"><b>Figure 3. Extended settings</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/xfpm-extended-settings.png" alt="Extended settings"></div></div></div></div><p><br class="figure-break"></p><p>
+</p><div class="variablelist"><p class="title"><b></b></p><dl><dt><span class="term"><span class="keycap"><strong>Inactivity sleep mode:</strong></span></span></dt><dd><p>You can select the inactivity sleep action to be taken by the power manger when the system is idle for a interval of  time specified by you, 
+	either on ac power or on battery power, expired. Of course if you disable idle timeout those settings will have no effects.</p></dd><dt><span class="term"><span class="keycap"><strong>Monitor sleep mode:</strong></span></span></dt><dd><p>
+	DPMS to modes before switching off the monitor, standby and suspend, they are technically different, this option is provided for convenience.
+	</p></dd><dt><span class="term"><span class="keycap"><strong>Computer on low power level:</strong></span></span></dt><dd><p>
+	Ideally when the battery giving the main power to the computer reaches 10 percent of charge the computer can be considered on low power, but for some broken or old
+	batteries between 10 percent and a power cut there is a matter of minutes if not seconds, so you can adjust the level at which your computer will be considered on low power.
+	</p><div class="note" style="text-align: left;"><h3 class="title">Note</h3><p>This option might disappear in future releases.</p></div><p>
 
-The "system tray" is an application running on a given X screen that can display small icons 
-provided by running applications. In Xfce, it is a panel plugin that catches the icon and resizes it
-to the size of the panel, if you don't have this plugin added to the panel you will not see any 
-tray icon, for example pidgin places an icon in the system tray as well as many other applications.
+	</p></dd><dt><span class="term"><span class="keycap"><strong>CPU Frequency control:</strong></span></span></dt><dd><p>
+	Unselecting this checkbox you tell the power manager to don't attempt to play with the CPU frequency.
+	</p></dd><dt><span class="term"><span class="keycap"><strong>Lock screen when going for suspend/hibernate:</strong></span></span></dt><dd><p>
+	Just tell your power manager if it should lock the screen before suspending the computer, it is enabled by default.
+	</p></dd></dl></div><p>
+	
+</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-hidden-options"></a>Hidden options</h3></div></div></div><p>
+Hidden options are the options that in normal situations one should not play with, but these options are provided in case of misbehaviour of the backend
+the power manager is relying on.
 </p><p>
-<strong class="application"><code>xfce4-power-manager</code></strong> uses GtkStatusIcon to display the different kinds of batteries found in the system.
-</p><p>
-</p><div class="figure"><a name="id2513026"></a><p class="title"><b>Figure 8. Battery Notification</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/battery-discharging.png" alt="Battery Notification"></div></div></div></div><p><br class="figure-break"></p><p>
+Since <strong class="application"><code>xfce4-power-manager</code></strong> relies on xfconf to store and retreive configuration you can change any settings by using xfconf-query or by using your Xfce settings editor.
 
-To notify the user about the status of the battery, serious errors occured, the notification daemon is used
-to display such messages.
+</p><div class="variablelist"><p class="title"><b></b></p><dl><dt><span class="term">LCD Brightness</span></dt><dd><p>
+	 The <strong class="application"><code>xfce4-power-manager</code></strong> detects brightness key events and interact with the backend to update the brightness level, this might be problematic on some systems, for this the key
+	"/xfce4-power-manager/change-brightness-on-key-events" is provided, just set this key to false if you have any problem related to this, please refer
+    to the xfconf-query manual, but as an example you can disable this property by running the following command.
+	 
+	</p><pre class="programlisting">xfconf-query -c <strong class="application"><code>xfce4-power-manager</code></strong> -n -p "/<strong class="application"><code>xfce4-power-manager</code></strong>/change-brightness-on-key-events" -t bool -s false</pre><p>
+	 
+	</p></dd></dl></div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-plugins"></a> Panel plugins </h2></div></div></div><div class="figure"><a name="id2635459"></a><p class="title"><b>Figure 4. Brightness plugin</b></p><div class="figure-contents"><div class="screenshot"><div class="mediaobject"><img src="images/xfpm-brightness-plugin.png" alt="Brightness plugin"></div></div></div></div><p><br class="figure-break"></p><p>
+<strong class="application"><code>xfce4-power-manager</code></strong> version 0.8.0r07387 includes one panel plugin for LCD brightness control, possible other plugins might be added for future releases, the usage of the brightness plugin
+is simple, just add the plugin to the panel same way you add any other plugin, then click on the plugin it will pop up a slider that you move/scroll on it to change
+the brightness level of your screen, of course the plugin will not work on a system with no back light panel. 
 </p></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-faq"></a>FAQ</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">Q: Why the icons look very similar to the icon of gnome power manager?</span></dt><dd><p>A: No, they are not similar, they are the same, just there is no point of re-drawing icons,
-	gnome power manager icons are good enough. Not all of them are used.  
+	gnome power manager icons are good enough. Not all the gnome power manager icons are used. please note that 
+	for version 0.8.0r07387 the icons are renamed to avoid possible conflicts with a gnome power manager installation.   
 	</p></dd><dt><span class="term">Q: What is the difference between suspend and hibernate?</span></dt><dd><p>A: Suspend is a power save feature. When suspending, the computer is still using power,
 	since the running applications are kept in the memory, but it is the lowest power level that the computer
 	can use. While Hibernate saves the system state on the hard drive and turns off the power, when you start up your 
 	computer	again those data will be loaded and the system back up. 
 	</p></dd><dt><span class="term">Q: Why the options of suspend/hibernate are not there or I can not select them?</span></dt><dd><p>A: Many possible reasons, for example your kernel is not compiled with suspend/hibernate options.
 	Another possible reason is the fact that you are not allowed to use them.
-	</p></dd><dt><span class="term">Q: How the power manager actually suspend or hibernate my system?</span></dt><dd><p>A: The power manager checks if the user is allowed to use power management service, then send a D-Bus message 
-	to HAL asking to suspend/hibernate, usually the methods to suspend or hibernate used by HAL are scripts located in 
-	/usr/lib/hal/scripts/YourOs.
+	</p></dd><dt><span class="term">Q: I had put my computer into suspend or hibernate mode, but the computer is not waking up.</span></dt><dd><p>A: This was subject for many bug reports, please note that the power manager has nothing to do with these problems, since the kernel
+	is responsible of these tasks, the kernel team are puting a lot of efforts into fixing these kind of problems, if you still have troubles please
+	report a bug to your distribution provider, they can contact the kernel team and possibly they can provide you a work-around.  
 	</p></dd><dt><span class="term">Q: If the power manager puts the computer in hibernate because my battery charge is critical what will happen
 	if I turn it on again without plugging my adapter?</span></dt><dd><p>A: Nothing actually, the power manager had taken the action defined by the user already.
-	In the best cases, it will display a warning popup with different options.
-	</p></dd><dt><span class="term">Q: I select the option of the LCD brightness control but I do not see the brightness changing when I switch 
-	from AC adapter to battery power?</span></dt><dd><p>A: Your kernel does not have the right driver, or the driver is not loaded.
-	</p></dd></dl></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-about"></a>About <strong class="application"><code>xfce4-power-manager</code></strong></h2></div></div></div><p>
+	In the best cases, it will display a warning pop up with different options.
+	</p></dd><dt><span class="term">Q: I'm not able to control my laptop brightness and/or my brightness pluing is reporting no device found.</span></dt><dd><p>A: One possible reason is the fact that the correct kernel driver is missing or doesn't exist for your laptop brightness panel, you can debug this fact by running this
+	command:  
+	</p><pre class="programlisting">lshal &gt; output.txt</pre><p>
+	then search in output.txt for "laptop_panel", if you don't find this key this means a driver problem, but in the other hand if you find it then come to us complaining.
+	</p></dd></dl></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-technical"></a>
+ Technical information
+ </h2></div></div></div><p>
+Ideally these details should go in a technical guide not the user guide but we need someplace to keep these informations, please
+ ignore if these is not what you are looking for.
+</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xfpm-dbus"></a>DBus interfaces</h3></div></div></div><p>
+ in this section the DBus interfaces provided by <strong class="application"><code>xfce4-power-manager</code></strong> are expanded, those interfaces listed here are freedesktop compliant power
+ management interfaces, this section might be useful if you are developing an application and wishing to use these interfaces, or they
+ can be useful for debugging purpose.
+ 
+ </p><span class="keycap"><strong>Power management DBus interface.</strong></span><p>
+
+</p><div class="table"><a name="id2635696"></a><p class="title"><b>Table 1. Standard methods (org.freedesktop.PowerManagement):</b></p><div class="table-contents"><table xmlns="http://www.w3.org/TR/xhtml1/transitional" bgcolor="#F8F9FD" cellspacing="0" cellpadding="4" summary="Standard methods (org.freedesktop.PowerManagement):" border="1"><colgroup><col xmlns="" align="left"><col xmlns="" align="left"><col xmlns="" align="left"><col xmlns=""><col xmlns="" align="left"></colgroup><thead xmlns=""><tr><th colspan="2" align="center">Name</th><th align="left">Input parameter</th><th align="left">Return Values</th><th align="left">Errors</th><th align="left">Description</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">CanHibernate</th><th align="left"> </th><th align="left">bool</th><th align="left"> </th><th align="left">whether the system is able to hibernate</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">CanSuspend</th><th align="left"> </th><th align="left">bool</th><th align="left"> </th><th align="left">whether the system is able to suspend</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">GetOnBattery</th><th align="left"> </th><th align="left">bool</th><th align="left"> </th><th align="left">whether the system is running on battery</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">GetLowBattery</th><th align="left"> </th><th align="left">bool</th><th align="left"> </th><th align="left">whether the system is running on low battery</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">Hibernate</th><th align="left"> </th><th align="left"> </th><th align="left">PermissionDenied, NotSupported</th><th align="left"> </th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">Suspend</th><th align="left"> </th><th align="left"> </th><th align="left">PermissionDenied, NotSupported</th><th align="left"> </th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">Shutdown</th><th align="left"> </th><th align="left"> </th><th align="left">PermissionDenied, NotSupported</th><th align="left"> </th></tr></thead></table></div></div><p><br class="table-break">
+
+
+    </p><div class="table"><a name="id2679073"></a><p class="title"><b>Table 2. Standard signals (org.freedesktop.PowerManagement):</b></p><div class="table-contents"><table xmlns="http://www.w3.org/TR/xhtml1/transitional" bgcolor="#F8F9FD" cellspacing="0" cellpadding="4" summary="Standard signals (org.freedesktop.PowerManagement):" border="1"><colgroup><col xmlns="" align="left"><col xmlns="" align="left"><col xmlns="" align="left"></colgroup><thead xmlns=""><tr><th colspan="2" align="center">Name</th><th align="left">Values</th><th align="left">Description</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">OnBatteryChanged</th><th align="left">bool</th><th align="left">whether on battery status changed</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">LowBatteryChanged</th><th align="left">bool</th><th align="left">whether on low battery status changed</th></tr></thead></table></div></div><p><br class="table-break">
+
+</p><span class="keycap"><strong>Power management DBus inhibit interface.</strong></span><p>
+
+</p><div class="table"><a name="id2679181"></a><p class="title"><b>Table 3. Standard methods (org.freedesktop.PowerManagement.Inhibit):</b></p><div class="table-contents"><table xmlns="http://www.w3.org/TR/xhtml1/transitional" bgcolor="#F8F9FD" cellspacing="0" cellpadding="4" summary="Standard methods (org.freedesktop.PowerManagement.Inhibit):" border="1"><colgroup><col xmlns="" align="left"><col xmlns="" align="left"><col xmlns="" align="left"><col xmlns=""><col xmlns="" align="left"></colgroup><thead xmlns=""><tr><th colspan="2" align="center">Name</th><th align="left">Input parameter</th><th align="left">Return Values</th><th align="left">Errors</th><th align="left">Description</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">Inhibit</th><th align="left">string application name, string reason</th><th align="left">uint32 (random cookie)</th><th align="left"> </th><th align="left">Inhibit the power manager.</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">UnInhibit</th><th align="left">uint32 cookie</th><th align="left"> </th><th align="left">InvalidCookie</th><th align="left">Unihibit the power manager.</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">HasInhibit</th><th align="left"> </th><th align="left">bool</th><th align="left"> </th><th align="left">Whether the power manager is currently inhibited or not.</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">GetInhibitors</th><th align="left"> </th><th align="left">Array of strings</th><th align="left"> </th><th align="left">List all the applications currently inhibiting the power manager (Not standard, use just for debugging)</th></tr></thead></table></div></div><p><br class="table-break">
+
+
+    </p><div class="table"><a name="id2679361"></a><p class="title"><b>Table 4. Standard signals (org.freedesktop.PowerManagement.Inhibit):</b></p><div class="table-contents"><table xmlns="http://www.w3.org/TR/xhtml1/transitional" bgcolor="#F8F9FD" cellspacing="0" cellpadding="4" summary="Standard signals (org.freedesktop.PowerManagement.Inhibit):" border="1"><colgroup><col xmlns="" align="left"><col xmlns="" align="left"><col xmlns="" align="left"></colgroup><thead xmlns=""><tr><th colspan="2" align="center">Name</th><th align="left">Values</th><th align="left">Description</th></tr></thead><thead xmlns=""><tr><th colspan="2" align="center">HasInhibitChanged</th><th align="left">bool</th><th align="left">whether the inhibit status changed.</th></tr></thead></table></div></div><p><br class="table-break">
+
+</p><p>
+In addition, <strong class="application"><code>xfce4-power-manager</code></strong> has other interfaces, but those interfaces are mainly used internally, for example the settings application uses such interface to
+get information about the current status of the running instance of the power manager.
+</p></div></div><p> </p><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xfpm-about"></a>About <strong class="application"><code>xfce4-power-manager</code></strong></h2></div></div></div><p>
 	This power manager was written following the philosophy of Xfce, having light weight application that does
 	what the user is expecting from it.
 	</p><p>To report a bug or make a suggestion regarding this application or

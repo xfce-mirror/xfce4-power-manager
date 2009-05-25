@@ -50,217 +50,325 @@ maintainers, etc. Commented out by default.
     
 <sect1 id="xfpm-intro">
   <title>Introduction</title>
-  The Xfce4 power manager is a part of the Xfce goodies project and features cpu frequency control,
-  battery monitoring, monitor DPMS control, LCD brightness control, lid sleep and power buttons controls.
-  All those features can be controlled from the user interface settings dialog.
+ This software is a power manager for the Xfce desktop, Xfce power manager manages the power sources on the computer and the devices that can 
+ be controlled to reduce their power consumption (such as LCD brightness level, monitor sleep, CPU frequency scaling). 
+ In addition, xfce4-power-manager provides a set of freedesktop-compliant DBus interfaces to inform other applications about current power level so that 
+ they can adjust their power consumption, and it provides the inhibit interface which allows applications to prevent automatic sleep actions via the power manager; 
+ as an example, the operating system’s package manager should make use of this interface while it is performing update operations.
+  
   <sect2 id="xfpm-started">
+  
   <title>Getting Started</title>
-  <para>To launch the Power Manager you need to run the following command &app; -r which you can do from the xfce run
-  command by pressing on ALT-F2, or by going to the Xfce settings manager and clicking on the Power Manager item -
-  a popup will be displayed to run the power manger if it is not already running. 
-  Once the power manager is launched for the first time, it will place an autostart desktop file in your .config/autostart
-  in order to be able to be launched automatically each time you log into your Xfce desktop.
-  </para> 
-  </sect2> 
+  <para>If your distribution doesn't come with a default installation of &app; usually when you install it, it will be started next time you log into your Xfce desktop, 
+  in order to start it manually you just need to run  the following command &app; from your terminal emulator, please not that running this &app; command 
+  will cause the power manager to run in daemon mode, you can optionally add --no-daemon as a command line argument to disable this behaviour, 
+  this can be useful if you want to see debugging outputs from your terminal emulator.
+  </para>
+   
+  </sect2>
+   
+ <sect2 id="xfmp-usage">
+ <title>Usage</title>
+ <para>
+ The main idea behind a power manager is to control the power sources on mobile computers, such as laptops, on desktops or servers a power manager is basically less useful.
+ </para>
+ </sect2>   
+   
 </sect1>
 
  <!-- extra space -->
   <para>&nbsp;</para>
  
-<sect1 id="xfpm-configuration">
-  <title>Power Manager Configuration</title>
-  <para><figure float="0">
-	<title>Power Manager settings</title>
-	<screenshot><mediaobject>
-	<imageobject>
-	<imagedata fileref="images/settings.png" format="PNG"/>
-	</imageobject>
-	<textobject>
-	<phrase></phrase>
-	</textobject>
-	</mediaobject></screenshot>
-</figure></para>
-  <para>
-  Almost all the &app; items are configurable from the configuration window, laptop users can set up 
-  a power profile for two different modes “on battery power” and “on ac power”, desktop users still can change 
-  DPMS settings and CPU frequency.
-  </para>
-  <para>
-  The settings dialog differs from one system to another depending on the computer (PC,laptop,...) and on
-  the available manageabale interfaces.  
-  </para>
-  <para>
-  In this section we will describe the possible configuration for the power manager.
-  </para>
-  <sect2 id="xfpm-general">
-  <title>General Settings</title>
-  <para><figure float="0">
-	<title>General settings</title>
-	<screenshot><mediaobject>
-	<imageobject>
-	<imagedata fileref="images/general-settings.png" format="png"/>
-	</imageobject>
-	<textobject>
-	<phrase></phrase>
-	</textobject>
-	</mediaobject></screenshot>
-	</figure></para>
-	<para>
-	Here you can select the configuration of the system tray icon, enable/disable cpu frequency and DPMS controls. 
-	For example, you would need to disable DPMS control when watching a movie.	
-	</para>
-  </sect2> 
-	  
-  
-  <sect2 id="xfpm-cpu">
-   <title>CPU Settings</title>
-   <para><figure float="0">
-	<title>CPU Linux governors</title>
-	<screenshot><mediaobject>
-	<imageobject>
-	<imagedata fileref="images/cpu-settings.png" format="PNG"/>
-	</imageobject>
-	<textobject>
-	<phrase></phrase>
-	</textobject>
-	</mediaobject></screenshot>
-	</figure></para>
-	<para>
-	The linux governors found in the system are listed as radio buttons.
-	If the acpi_cpufreq module is not loaded in the kernel or the cpu itself does not support frequency
-	changes these options might not show.
-	</para>
-	<para>Here is a brief descritption on linux cpu governors</para>
-		
-<variablelist>
+ <sect1 id="xfpm">
+ <title>Power Manager</title>
 
-   <varlistentry>
-	<term>Best performance:</term>
+<sect2 id="xfpm-command-line">
+<title>Command line options</title>
+
+<variablelist><title></title>
+
+	<varlistentry><term><keycap>--no-daemon</keycap></term>
 	<listitem>
-	<para> Set CPU to its maximum frequency: consume more power, 
-	and it is not ideal when running on battery.
+	<para>
+	Starts the power manager in non-daemon mode: useful for debugging.
 	</para>
 	</listitem>
 	</varlistentry>
 	
-	<varlistentry>
-	<term>Best power savings:</term>
+    <varlistentry><term><keycap>--restart</keycap></term>
 	<listitem>
-	<para> 
-	Set the CPU to its minimum frequency: ideal when running on battery power.	
-	</para>
-	</listitem>
-	</varlistentry>
-	
-	<varlistentry>
-	<term>Ondemand performance:</term>
-	<listitem>
-	<para> What you want is what you get: set the CPU depending on the
-	current usage.
+	<para>
+	Causes the running power manager to restart.
 	</para>
 	</listitem>
 	</varlistentry>	
 	
-	<varlistentry>
-	<term>Good power savings:</term>
+    <varlistentry><term><keycap>--quit</keycap></term>
 	<listitem>
-	<para> 
-	 Same as Ondemand but differs in behaviour in that it gracefully increases and decreases 
-	 the CPU speed rather than jumping to max speed the moment there is any load on the CPU.
+	<para>
+	Causes any running instance of the power manager to exit.
 	</para>
 	</listitem>
 	</varlistentry>	
 	
 </variablelist>
+
+</sect2> 
+ 
+<sect2 id="xfpm-menu">
+<title>Context menu</title>
+
+<para><figure float="0">
+	<title>Context menu</title>
+	<screenshot><mediaobject>
+	<imageobject>
+	<imagedata fileref="images/xfpm-context-menu.png" format="png"/>
+	</imageobject>
+	<textobject>
+	<phrase></phrase>
+	</textobject>
+	</mediaobject></screenshot>
+</figure></para>
+
 <para>
-NOTE:In &app; version &appversion; only Linux is supported for changing the CPU frequency.
+The context menu is popped up when you click on the icon placed in your notification area, say a battery or an adapter icon, it contains some useful options like suspend/hibernate,
+display information of the battery device open the settings dialog, it contains as well option to inhibit the power manager, if enabled, the power manager will not attempt
+to dim the screen or switch off the monitor.
+
+<note><para>If the inhibit option is selected and the computer is in idle for a long time the power manager will not put the system in suspend or hibernate, even
+if it is enabled in the settings dialog, only critical actions are processed.</para></note>
+
 </para>
 
-</sect2>  
+</sect2> 
+  </sect1>
   
-  <sect2 id="xfpm-battery">
-    <title>Battery settings</title>
-	<para><figure float="0">
-	<title>Battery settings</title>
+  <!--- Xfpm configurations --> 
+ 
+<sect1 id="xfpm-configuration">
+  <title>Power Manager Configuration</title>
+  <para>
+  In this section we will explain in details the possible configuration of the power manager running on laptop computer, please note that the configurations are different when 
+  the power manager is running on a desktop computer, for example you will not have LCD brightness or so.
+  </para>
+  
+  <sect2 id="xfpm-general">
+  <title>General options</title>
+
+<para><figure float="0">
+	<title>General settings</title>
 	<screenshot><mediaobject>
 	<imageobject>
-	<imagedata fileref="images/battery-settings.png" format="PNG"/>
+	<imagedata fileref="images/xfpm-general-settings.png" format="png"/>
 	</imageobject>
 	<textobject>
 	<phrase></phrase>
 	</textobject>
 	</mediaobject></screenshot>
 </figure></para>
+
+<para>
+
+<variablelist><title></title>
+
+	<varlistentry>
+	<term><keycap>Notification area:</keycap></term>
+	<listitem>
+	<para>The notification area settings allows you to control when the icon placed in your notification are is shown, you can set it to be always visible, for battery devices
+	you can select the icon to be visible only when your are running on battery for example.</para>
+	</listitem>
+	</varlistentry>
+	
+    <varlistentry>
+	<term><keycap>Keyboard special keys:</keycap></term>
+	<listitem>
 	<para>
-	The user can select the his critical battery percentage, usually this is for a laptop or
-	UPS battery, this option is important for a broken battery for example, which lasts only 5 minutes when it
-	is 10% charged.    
-   </para>
-   <para>
-   The user can define an action to be taken by the power manager in case the battery that is giving the main power
-   for the computer reaches a critical charge level.
-   </para> 
-   The battery notification is a way to notify the user when the battery state changes ( ex: battery charge is full )
-   <para>
+	Enables you to specify which key will trigger which action, these keys are not found on all the systems, in the screen shot for example the hibernate key is missing,
+	since the screen shot was taken on a computer which doesn't have this key.
+	The default action of all these keys is set to do nothing. 
+	</para>
+	</listitem>
+	</varlistentry>
+	
+	<varlistentry>
+	<term><keycap>Monitor power management control:</keycap></term>
+	<listitem>
+	<para>Enable/Disable Display Power Management Signaling (DPMS).</para>
+	</listitem>
+	</varlistentry>
+	
+	<varlistentry>
+	<term><keycap>Power manager Notification:</keycap></term>
+	<listitem>
+	<para>If the notification of a battery status change are annoying you, you can always disabling them by unselecting the checkbox, please note this
+	doesn't apply on the notification that the power manager sends them to notify the user of error or when the system is running out of power,
+	 so it is safe to disable them.</para>
+	</listitem>
+	</varlistentry>	
+	
+</variablelist>
+</para>  
+  
+  </sect2>  
+  
+   <sect2 id="xfpm-on-ac">
+  <title>Running on  AC power</title>
+
+  <para>
+  The on AC power tab contains self explanatory options such as lid close system idle and monitor sleep configurations.   
+  </para>
+  
+  </sect2> 
+  
+  <sect2 id="xfpm-on-battery">
+  <title>Running on battery power</title>
+  
+<para>
+The on battery tab is only shown on systems that have battery devices, it contains the same options as the AC power tabs plus two other important options
+
+<variablelist><title></title>
+
+	<varlistentry><term><keycap>Power is critical</keycap></term>
+	<listitem>
+	<para>
+	With this option you can tell the power manager what it should do if the system is running on low power, if this option is disabled and the computer
+	is running on low battery power, the power manager will display a warning message.
+	</para></listitem>
+	</varlistentry>
+	
+	<varlistentry><term><keycap>Prefer power savings over performance:</keycap></term>
+	<listitem>
+	<para>
+	This is the power profile when running on battery, enabling this allows you to run more time on your battery power, but this might be over the performance of your system,
+	enabling this option is always a good idea.
+	</para></listitem>
+	</varlistentry>
+	
+</variablelist>
+</para>  
+  
+  </sect2>   
+  
+  <sect2 id="xfpm-extended">
+  <title>Extended options</title>
+  
+  <para><figure float="0">
+	<title>Extended settings</title>
+	<screenshot><mediaobject>
+	<imageobject>
+	<imagedata fileref="images/xfpm-extended-settings.png" format="png"/>
+	</imageobject>
+	<textobject>
+	<phrase></phrase>
+	</textobject>
+	</mediaobject></screenshot>
+</figure></para>
+
+<para>
+<variablelist><title></title>
+
+	<varlistentry>
+	<term><keycap>Inactivity sleep mode:</keycap></term>
+	<listitem>
+	<para>You can select the inactivity sleep action to be taken by the power manger when the system is idle for a interval of  time specified by you, 
+	either on ac power or on battery power, expired. Of course if you disable idle timeout those settings will have no effects.</para>
+	</listitem>
+	</varlistentry>
+	
+    <varlistentry>
+	<term><keycap>Monitor sleep mode:</keycap></term>
+	<listitem>
+	<para>
+	DPMS to modes before switching off the monitor, standby and suspend, they are technically different, this option is provided for convenience.
+	</para>
+	</listitem>
+	</varlistentry>
+	
+	<varlistentry>
+	<term><keycap>Computer on low power level:</keycap></term>
+	<listitem>
+	<para>
+	Ideally when the battery giving the main power to the computer reaches 10 percent of charge the computer can be considered on low power, but for some broken or old
+	batteries between 10 percent and a power cut there is a matter of minutes if not seconds, so you can adjust the level at which your computer will be considered on low power.
+	<note><para>This option might disappear in future releases.</para></note>
+
+	</para>
+	</listitem>
+	</varlistentry>
+	
+	<varlistentry>
+	<term><keycap>CPU Frequency control:</keycap></term>
+	<listitem>
+	<para>
+	Unselecting this checkbox you tell the power manager to don't attempt to play with the CPU frequency.
+	</para>
+	</listitem>
+	</varlistentry>	
+	
+    <varlistentry>
+	<term><keycap>Lock screen when going for suspend/hibernate:</keycap></term>
+	<listitem>
+	<para>
+	Just tell your power manager if it should lock the screen before suspending the computer, it is enabled by default.
+	</para>
+	</listitem>
+	</varlistentry>		
+	
+</variablelist>
+	
+</para>
+
+</sect2>
+
+<!-- Hidden options -->
+<sect2 id="xfpm-hidden-options">
+<title>Hidden options</title>
+
+<para>
+Hidden options are the options that in normal situations one should not play with, but these options are provided in case of misbehaviour of the backend
+the power manager is relying on.
+</para>
+
+<para>
+Since &app; relies on xfconf to store and retreive configuration you can change any settings by using xfconf-query or by using your Xfce settings editor.
+
+</para>
+
+<variablelist><title></title>
+
+	<varlistentry><term>LCD Brightness</term>
+	<listitem>
+	
+	<para>
+	 The &app; detects brightness key events and interact with the backend to update the brightness level, this might be problematic on some systems, for this the key
+	"/xfce4-power-manager/change-brightness-on-key-events" is provided, just set this key to false if you have any problem related to this, please refer
+    to the xfconf-query manual, but as an example you can disable this property by running the following command.
+	 
+	<programlisting>xfconf-query -c &app; -n -p "/&app;/change-brightness-on-key-events" -t bool -s false</programlisting>
+	 
+	</para>
+	
+	</listitem>
+	
+	</varlistentry>
+	
+	
+</variablelist>
+
+</sect2>
    
-   </para>
-  </sect2>  
   
-  <sect2 id="xfpm-button">
-    <title>Keyboard shortcuts</title>
-	<para><figure float="0">
-	<title>button control</title>
-	<screenshot><mediaobject>
-	<imageobject>
-	<imagedata fileref="images/button-settings.png" format="PNG"/>
-	</imageobject>
-	<textobject>
-	<phrase></phrase>
-	</textobject>
-	</mediaobject></screenshot>
-</figure></para>
-   For those buttons you can define an action to be taken by the power manager when pressing to one of them 
-   - for example when you close the laptop screen. 
-    
-  </sect2>  
-  
-  <sect2 id="xfpm-monitor">
-   <title>Monitor settings</title>
-   <para><figure float="0">
-	<title>Monitor DPMS and LCD brightness</title>
-	<screenshot><mediaobject>
-	<imageobject>
-	<imagedata fileref="images/monitor-settings.png" format="PNG"/>
-	</imageobject>
-	<textobject>
-	<phrase></phrase>
-	</textobject>
-	</mediaobject></screenshot>
-</figure></para>
-	<para>
-	DPMS is an old X extension that allows standby/suspend/turn off options of the monitor, usually the timeouts 
-	have to be consecutive, so standby timeout is less than suspend timeout and so on, but any option can always
-	be disabled.
-	</para>
-	<para>
-	For laptop users, clicking on the checkbox allows the power manager to reduce the screen luminosity when
-	it detects that system in running on battery power and increase it again when the system is running
-	on AC power.
-	</para>
-	</sect2>  
 </sect1>
 
-<!-- extra space -->
-  <para>&nbsp;</para>
-  
-<sect1 id="xfpm-systray-notify">
-<title>System Tray Icon and Notification</title>
-<para>
+<!-- Panel Plugins -->
+<sect1 id="xfpm-plugins">
+<title> Panel plugins </title>
+
 <para><figure float="0">
-	<title>Battery icon in the system tray</title>
+	<title>Brightness plugin</title>
 	<screenshot><mediaobject>
 	<imageobject>
-	<imagedata fileref="images/battery.png" format="PNG"/>
+	<imagedata fileref="images/xfpm-brightness-plugin.png" format="png"/>
 	</imageobject>
 	<textobject>
 	<phrase></phrase>
@@ -268,30 +376,12 @@ NOTE:In &app; version &appversion; only Linux is supported for changing the CPU 
 	</mediaobject></screenshot>
 </figure></para>
 
-The "system tray" is an application running on a given X screen that can display small icons 
-provided by running applications. In Xfce, it is a panel plugin that catches the icon and resizes it
-to the size of the panel, if you don't have this plugin added to the panel you will not see any 
-tray icon, for example pidgin places an icon in the system tray as well as many other applications.
-</para>
 <para>
-&app; uses GtkStatusIcon to display the different kinds of batteries found in the system.
+&app; version &appversion; includes one panel plugin for LCD brightness control, possible other plugins might be added for future releases, the usage of the brightness plugin
+is simple, just add the plugin to the panel same way you add any other plugin, then click on the plugin it will pop up a slider that you move/scroll on it to change
+the brightness level of your screen, of course the plugin will not work on a system with no back light panel. 
 </para>
-<para>
-<para><figure float="0">
-	<title>Battery Notification</title>
-	<screenshot><mediaobject>
-	<imageobject>
-	<imagedata fileref="images/battery-discharging.png" format="PNG"/>
-	</imageobject>
-	<textobject>
-	<phrase></phrase>
-	</textobject>
-	</mediaobject></screenshot>
-</figure></para>
 
-To notify the user about the status of the battery, serious errors occured, the notification daemon is used
-to display such messages.
-</para>
 </sect1>
 
  <!-- extra space -->
@@ -305,7 +395,8 @@ to display such messages.
 	<term>Q: Why the icons look very similar to the icon of gnome power manager?</term>
 	<listitem>
 	<para>A: No, they are not similar, they are the same, just there is no point of re-drawing icons,
-	gnome power manager icons are good enough. Not all of them are used.  
+	gnome power manager icons are good enough. Not all the gnome power manager icons are used. please note that 
+	for version &appversion; the icons are renamed to avoid possible conflicts with a gnome power manager installation.   
 	</para>
 	</listitem>
 	</varlistentry>
@@ -330,37 +421,299 @@ to display such messages.
 	</listitem>
 	</varlistentry>
 	
-	 <varlistentry>
-	<term>Q: How the power manager actually suspend or hibernate my system?</term>
+   <varlistentry>
+	<term>Q: I had put my computer into suspend or hibernate mode, but the computer is not waking up.</term>
 	<listitem>
-	<para>A: The power manager checks if the user is allowed to use power management service, then send a D-Bus message 
-	to HAL asking to suspend/hibernate, usually the methods to suspend or hibernate used by HAL are scripts located in 
-	/usr/lib/hal/scripts/YourOs.
+	<para>A: This was subject for many bug reports, please note that the power manager has nothing to do with these problems, since the kernel
+	is responsible of these tasks, the kernel team are puting a lot of efforts into fixing these kind of problems, if you still have troubles please
+	report a bug to your distribution provider, they can contact the kernel team and possibly they can provide you a work-around.  
 	</para>
 	</listitem>
-	</varlistentry>
-	
+	</varlistentry>	
+		
 	 <varlistentry>
 	<term>Q: If the power manager puts the computer in hibernate because my battery charge is critical what will happen
 	if I turn it on again without plugging my adapter?</term>
 	<listitem>
 	<para>A: Nothing actually, the power manager had taken the action defined by the user already.
-	In the best cases, it will display a warning popup with different options.
+	In the best cases, it will display a warning pop up with different options.
 	</para>
 	</listitem>
 	</varlistentry>
 	
 	 <varlistentry>
-	<term>Q: I select the option of the LCD brightness control but I do not see the brightness changing when I switch 
-	from AC adapter to battery power?</term>
+	<term>Q: I'm not able to control my laptop brightness and/or my brightness pluing is reporting no device found.</term>
 	<listitem>
-	<para>A: Your kernel does not have the right driver, or the driver is not loaded.
+	
+	<para>A: One possible reason is the fact that the correct kernel driver is missing or doesn't exist for your laptop brightness panel, you can debug this fact by running this
+	command:  
+	<programlisting>lshal > output.txt</programlisting>
+	then search in output.txt for "laptop_panel", if you don't find this key this means a driver problem, but in the other hand if you find it then come to us complaining.
 	</para>
+	
 	</listitem>
 	</varlistentry>
-		
+			
 </variablelist>
+
 </sect1>  
+
+
+<!-- Technical stuff -->
+<sect1 id="xfpm-technical">
+ <title>
+ Technical information
+ </title>
+ 
+<para>
+Ideally these details should go in a technical guide not the user guide but we need someplace to keep these informations, please
+ ignore if these is not what you are looking for.
+</para> 
+ 
+ <sect2 id="xfpm-dbus">
+ <title>DBus interfaces</title>
+ 
+ <para>
+ in this section the DBus interfaces provided by &app; are expanded, those interfaces listed here are freedesktop compliant power
+ management interfaces, this section might be useful if you are developing an application and wishing to use these interfaces, or they
+ can be useful for debugging purpose.
+ 
+ </para>
+ 
+<keycap>Power management DBus interface.</keycap>
+
+<para>
+
+<table frame='all'><title>Standard methods (org.freedesktop.PowerManagement):</title>
+<tgroup cols='5' align='left' colsep='1' rowsep='1'>
+<colspec colname='c1'/>
+<colspec colname='c2'/>
+<colspec colname='c3'/>
+<colspec colnum='5' colname='c5'/>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">Name</entry>
+  <entry>Input parameter</entry>
+  <entry>Return Values</entry>
+  <entry>Errors</entry>
+  <entry>Description</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">CanHibernate</entry>
+  <entry></entry>
+  <entry>bool</entry>
+  <entry></entry>
+  <entry>whether the system is able to hibernate</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">CanSuspend</entry>
+  <entry></entry>
+  <entry>bool</entry>
+  <entry></entry>
+  <entry>whether the system is able to suspend</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">GetOnBattery</entry>
+  <entry></entry>
+  <entry>bool</entry>
+  <entry></entry>
+  <entry>whether the system is running on battery</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">GetLowBattery</entry>
+  <entry></entry>
+  <entry>bool</entry>
+  <entry></entry>
+  <entry>whether the system is running on low battery</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">Hibernate</entry>
+  <entry></entry>
+  <entry></entry>
+  <entry>PermissionDenied, NotSupported</entry>
+  <entry></entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">Suspend</entry>
+  <entry></entry>
+  <entry></entry>
+  <entry>PermissionDenied, NotSupported</entry>
+  <entry></entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">Shutdown</entry>
+  <entry></entry>
+  <entry></entry>
+  <entry>PermissionDenied, NotSupported</entry>
+  <entry></entry>
+</row>
+</thead>
+
+</tgroup>
+</table>
+
+<!-- Signals -->
+    <table frame='all'><title>Standard signals (org.freedesktop.PowerManagement):</title>
+<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+<colspec colname='c1'/>
+<colspec colname='c2'/>
+<colspec colname='c3'/>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">Name</entry>
+  <entry>Values</entry>
+  <entry>Description</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">OnBatteryChanged</entry>
+  <entry>bool</entry>
+  <entry>whether on battery status changed</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">LowBatteryChanged</entry>
+  <entry>bool</entry>
+  <entry>whether on low battery status changed</entry>
+</row>
+</thead>
+
+</tgroup>
+</table>
+
+</para>
+
+ <keycap>Power management DBus inhibit interface.</keycap>
+
+<para>
+
+<table frame='all'><title>Standard methods (org.freedesktop.PowerManagement.Inhibit):</title>
+<tgroup cols='5' align='left' colsep='1' rowsep='1'>
+<colspec colname='c1'/>
+<colspec colname='c2'/>
+<colspec colname='c3'/>
+<colspec colnum='5' colname='c5'/>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">Name</entry>
+  <entry>Input parameter</entry>
+  <entry>Return Values</entry>
+  <entry>Errors</entry>
+  <entry>Description</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">Inhibit</entry>
+  <entry>string application name, string reason</entry>
+  <entry>uint32 (random cookie)</entry>
+  <entry></entry>
+  <entry>Inhibit the power manager.</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">UnInhibit</entry>
+  <entry>uint32 cookie</entry>
+  <entry></entry>
+  <entry>InvalidCookie</entry>
+  <entry>Unihibit the power manager.</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">HasInhibit</entry>
+  <entry></entry>
+  <entry>bool</entry>
+  <entry></entry>
+  <entry>Whether the power manager is currently inhibited or not.</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">GetInhibitors</entry>
+  <entry></entry>
+  <entry>Array of strings</entry>
+  <entry></entry>
+  <entry>List all the applications currently inhibiting the power manager (Not standard, use just for debugging)</entry>
+</row>
+</thead>
+
+</tgroup>
+</table>
+
+<!-- Signals -->
+    <table frame='all'><title>Standard signals (org.freedesktop.PowerManagement.Inhibit):</title>
+<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+<colspec colname='c1'/>
+<colspec colname='c2'/>
+<colspec colname='c3'/>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">Name</entry>
+  <entry>Values</entry>
+  <entry>Description</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">HasInhibitChanged</entry>
+  <entry>bool</entry>
+  <entry>whether the inhibit status changed.</entry>
+</row>
+</thead>
+
+</tgroup>
+</table>
+
+</para>
+
+
+<para>
+In addition, &app; has other interfaces, but those interfaces are mainly used internally, for example the settings application uses such interface to
+get information about the current status of the running instance of the power manager.
+</para>
+
+</sect2>
+
+</sect1>
+
+
+<!-- ABOUT -->
 
  <!-- extra space -->
   <para>&nbsp;</para>
