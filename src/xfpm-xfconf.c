@@ -82,6 +82,7 @@ struct XfpmXfconfPrivate
     guint                inactivity_on_battery;
     gboolean             sleep_inactivity; /* TRUE = suspend FALSE = hibernate*/
     gboolean             enable_brightness;
+    gboolean		 show_brightness_popup;
 };
 
 enum
@@ -328,6 +329,8 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     }
     else if ( xfpm_strequal (property, ENABLE_BRIGHTNESS_CONTROL) )
 	conf->priv->enable_brightness = g_value_get_boolean (value);
+    else if ( xfpm_strequal (property, SHOW_BRIGHTNESS_POPUP ) )
+	conf->priv->show_brightness_popup = g_value_get_boolean (value);
     else
 	g_warn_if_reached ();
 }
@@ -518,6 +521,8 @@ xfpm_xfconf_load_configuration (XfpmXfconf *conf)
     
     conf->priv->enable_brightness =
 	xfconf_channel_get_bool (conf->priv->channel, ENABLE_BRIGHTNESS_CONTROL, TRUE);
+    conf->priv->show_brightness_popup =
+	xfconf_channel_get_bool (conf->priv->channel, SHOW_BRIGHTNESS_POPUP, TRUE);
 }
 
 static void
@@ -650,6 +655,8 @@ gboolean xfpm_xfconf_get_property_bool (XfpmXfconf *conf, const gchar *property)
 	return conf->priv->sleep_inactivity;
     else if ( xfpm_strequal (property, ENABLE_BRIGHTNESS_CONTROL) )
 	return conf->priv->enable_brightness;
+    else if ( xfpm_strequal (property, SHOW_BRIGHTNESS_POPUP) )
+	return conf->priv->show_brightness_popup;
     
     g_warn_if_reached ();
 

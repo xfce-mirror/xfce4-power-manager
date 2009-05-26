@@ -331,7 +331,6 @@ the power manager is relying on.
 
 <para>
 Since &app; relies on xfconf to store and retreive configuration you can change any settings by using xfconf-query or by using your Xfce settings editor.
-
 </para>
 
 <variablelist><title></title>
@@ -352,6 +351,20 @@ Since &app; relies on xfconf to store and retreive configuration you can change 
 	
 	</varlistentry>
 	
+<varlistentry><term>Disabling Brightness popup</term>
+	<listitem>
+	
+	<para>
+	If you want, for some reason, to disable the brightness popup indicator (the one which popup to disblay the brightness level), just run the following command
+	in your terminal. 
+	 
+	<programlisting>xfconf-query -c &app; -n -p "/&app;/show-brightness-popup" -t bool -s false</programlisting>
+	 
+	</para>
+	
+	</listitem>
+	
+	</varlistentry>	
 	
 </variablelist>
 

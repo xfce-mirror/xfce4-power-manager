@@ -74,6 +74,7 @@ G_BEGIN_DECLS
 #endif
 
 #define         ENABLE_BRIGHTNESS_CONTROL    "/xfce4-power-manager/change-brightness-on-key-events"
+#define         SHOW_BRIGHTNESS_POPUP        "/xfce4-power-manager/show-brightness-popup"
 
 G_END_DECLS
 

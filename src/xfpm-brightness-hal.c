@@ -199,7 +199,7 @@ static void
 xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
 {
     GError *error = NULL;
-    
+    gboolean show_popup;
     gboolean enable_brightness = xfpm_xfconf_get_property_bool (brg->priv->conf, ENABLE_BRIGHTNESS_CONTROL);
     
     if ( enable_brightness == FALSE || brg->priv->brightness_in_hw)
@@ -220,15 +220,18 @@ signal:
 	g_error_free (error);
 	return;
     }
-	
-    g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
+    
+    show_popup = xfpm_xfconf_get_property_bool (brg->priv->conf, SHOW_BRIGHTNESS_POPUP);
+    
+    if ( show_popup )
+	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
 }
 
 static void
 xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
 {
     GError *error = NULL;
-    
+    gboolean show_popup;
     gboolean enable_brightness = xfpm_xfconf_get_property_bool (brg->priv->conf, ENABLE_BRIGHTNESS_CONTROL);
     
     if ( enable_brightness == FALSE || brg->priv->brightness_in_hw)
@@ -249,7 +252,11 @@ signal:
 	g_error_free (error);
 	return;
     }
-    g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
+    
+    show_popup = xfpm_xfconf_get_property_bool (brg->priv->conf, SHOW_BRIGHTNESS_POPUP);
+    
+    if ( show_popup )
+	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
 }
 
 static void
