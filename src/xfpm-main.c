@@ -134,6 +134,11 @@ int main(int argc, char **argv)
 	{ NULL, },
     };
 
+    if ( !g_thread_supported () )
+	g_thread_init (NULL);
+       
+    dbus_g_thread_init ();
+
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
     if (!gtk_init_with_args (&argc, &argv, (gchar *)"", option_entries, (gchar *)PACKAGE, &error)) 
@@ -167,11 +172,6 @@ int main(int argc, char **argv)
 	return EXIT_FAILURE;
     }
 
-    if ( !g_thread_supported () )
-	g_thread_init (NULL);
-       
-    dbus_g_thread_init ();
-    
     if ( no_daemon == FALSE && daemon(0,0) )
     {
 	g_critical ("Could not daemonize");

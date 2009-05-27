@@ -30,15 +30,7 @@
 
 G_BEGIN_DECLS
 
-#ifdef DEBUG
-
-#if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
-#define VARIADIC_MACRO_SUPPORTED
-#elif defined(__GNUC__) && __GNUC__ >= 3
-#define VARIADIC_MACRO_SUPPORTED
-#endif
-
-#ifdef VARIADIC_MACRO_SUPPORTED
+#if defined(DEBUG) && defined(G_HAVE_ISO_VARARGS)
 
 #define XFPM_DEBUG_ENUM(_text, _value, _type)\
     xfpm_debug_enum (__func__, __FILE__, __LINE__, _text, _value, _type)
@@ -61,14 +53,7 @@ void		xfpm_debug_enum_full    (const gchar *func,
 					 const gchar *format,
 					 ...);
 
-#else /* !VARIADIC_MACRO_SUPPORTED */
-
-#define XFPM_DEBUG_ENUM(_text, _value, _type)
-#define XFPM_DEBUG_ENUM_FULL(_value, _type, ...)
-
-#endif /* VARIADIC_MACRO_SUPPORTED */
-
-#else /* DEBUG */
+#else
 
 #define XFPM_DEBUG_ENUM(_text, _value, _type)
 #define XFPM_DEBUG_ENUM_FULL(_value, _type, ...)

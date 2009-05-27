@@ -174,7 +174,7 @@ if it is enabled in the settings dialog, only critical actions are processed.</p
 	<varlistentry>
 	<term><keycap>Notification area:</keycap></term>
 	<listitem>
-	<para>The notification area settings allows you to control when the icon placed in your notification are is shown, you can set it to be always visible, for battery devices
+	<para>The notification area settings allows you to control the behaviour of the icon placed in your notification are, you can set it to be always visible, for battery devices
 	you can select the icon to be visible only when your are running on battery for example.</para>
 	</listitem>
 	</varlistentry>
@@ -200,8 +200,8 @@ if it is enabled in the settings dialog, only critical actions are processed.</p
 	<varlistentry>
 	<term><keycap>Power manager Notification:</keycap></term>
 	<listitem>
-	<para>If the notification of a battery status change are annoying you, you can always disabling them by unselecting the checkbox, please note this
-	doesn't apply on the notification that the power manager sends them to notify the user of error or when the system is running out of power,
+	<para>If the notification of a battery status change are annoying you, you can always disable them by unselecting the checkbox, please note this
+	doesn't apply on the notification that the power manager sends to notify the user of error or when the system is running out of power,
 	 so it is safe to disable them.</para>
 	</listitem>
 	</varlistentry>	
@@ -231,7 +231,7 @@ The on battery tab is only shown on systems that have battery devices, it contai
 	<varlistentry><term><keycap>Power is critical</keycap></term>
 	<listitem>
 	<para>
-	With this option you can tell the power manager what it should do if the system is running on low power, if this option is disabled and the computer
+	With this option you can specify the action taken by the power manager in case the system is running on low power, if this option is disabled and the computer
 	is running on low battery power, the power manager will display a warning message.
 	</para></listitem>
 	</varlistentry>
@@ -239,8 +239,8 @@ The on battery tab is only shown on systems that have battery devices, it contai
 	<varlistentry><term><keycap>Prefer power savings over performance:</keycap></term>
 	<listitem>
 	<para>
-	This is the power profile when running on battery, enabling this allows you to run more time on your battery power, but this might be over the performance of your system,
-	enabling this option is always a good idea.
+	This is the power profile when running on battery, with this option you battery will last more when running on battery power, 
+	having this option enabled is always a good idea.
 	</para></listitem>
 	</varlistentry>
 	
@@ -279,7 +279,7 @@ The on battery tab is only shown on systems that have battery devices, it contai
 	<term><keycap>Monitor sleep mode:</keycap></term>
 	<listitem>
 	<para>
-	DPMS to modes before switching off the monitor, standby and suspend, they are technically different, this option is provided for convenience.
+	DPMS sleep modes before switching off the monitor, standby and suspend, they are technically different, this option is provided for convenience.
 	</para>
 	</listitem>
 	</varlistentry>

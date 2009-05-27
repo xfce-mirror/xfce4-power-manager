@@ -31,7 +31,7 @@
 
 #include "xfpm-debug.h"
 
-#if  defined(DEBUG) && defined(VARIADIC_MACRO_SUPPORTED)
+#if defined(DEBUG) && defined(G_HAVE_ISO_VARARGS)
 
 void xfpm_debug_enum (const gchar *func, const gchar *file, gint line, 
 		      const gchar *text, gint v_enum, GType type)
@@ -78,4 +78,4 @@ void xfpm_debug_enum_full (const gchar *func, const gchar *file, gint line,
     g_free (buffer);
 }
 
-#endif /*DEBUG && VARIADIC_MACRO_SUPPORTED*/
+#endif /* #ifdef DEBUG && defined(G_HAVE_ISO_VARARGS)*/
