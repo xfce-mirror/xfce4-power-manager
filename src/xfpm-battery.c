@@ -157,8 +157,6 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
 {
     gchar *icon;
 
-    XFPM_DEBUG_ENUM ("battery state", battery->priv->state, XFPM_TYPE_BATTERY_STATE);
-    
     if ( state == BATTERY_NOT_PRESENT )
     {
 	xfpm_tray_icon_set_icon (battery->priv->icon, 
@@ -338,6 +336,7 @@ xfpm_battery_refresh_common (XfpmBattery *battery, guint percentage, XfpmBattery
     if ( battery->priv->state != state)
     {
 	battery->priv->state = state;
+	XFPM_DEBUG_ENUM ("battery state change", battery->priv->state, XFPM_TYPE_BATTERY_STATE);
 	TRACE("Emitting signal battery state changed");
 	g_signal_emit (G_OBJECT(battery), signals[BATTERY_STATE_CHANGED], 0, state);
 	
@@ -392,6 +391,8 @@ xfpm_battery_refresh_primary (XfpmBattery *battery, gboolean is_present,
     
     XfpmBatteryState state = battery->priv->state;
     
+    TRACE ("Start");
+    
     if ( !is_present )
     {
 	xfpm_tray_icon_set_tooltip(battery->priv->icon, _("Battery not present"));
@@ -401,6 +402,8 @@ xfpm_battery_refresh_primary (XfpmBattery *battery, gboolean is_present,
 
     str = xfpm_battery_get_battery_state (&state, is_charging, is_discharging,
 					  last_full, current_charge, percentage, critical_level);
+    
+    XFPM_DEBUG_ENUM ("battery state", state, XFPM_TYPE_BATTERY_STATE);
     
     if ( time_per != 0  && time_per <= 28800 /* 8 hours */ && 
 	 state != BATTERY_FULLY_CHARGED && state != BATTERY_NOT_FULLY_CHARGED )
@@ -598,6 +601,7 @@ xfpm_battery_init(XfpmBattery *battery)
     battery->priv->adapter   = xfpm_adapter_new ();
     battery->priv->conf      = xfpm_xfconf_new ();
     battery->priv->notify    = xfpm_notify_new ();
+    battery->priv->state = BATTERY_STATE_UNKNOWN;
     
     battery->priv->adapter_present = xfpm_adapter_get_present (battery->priv->adapter);
     

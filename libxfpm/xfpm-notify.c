@@ -59,6 +59,7 @@ static NotifyNotification * xfpm_notify_new_notification_internal (const gchar *
 struct XfpmNotifyPrivate
 {
     NotifyNotification *notification;
+    NotifyNotification *critical;
 };
 
 static gpointer xfpm_notify_object = NULL;
@@ -82,6 +83,7 @@ xfpm_notify_init(XfpmNotify *notify)
     notify->priv = XFPM_NOTIFY_GET_PRIVATE(notify);
     
     notify->priv->notification = NULL;
+    notify->priv->critical = NULL;
 }
 
 static void
@@ -139,8 +141,9 @@ xfpm_notify_closed_cb (NotifyNotification *n, XfpmNotify *notify)
 }
 
 static void
-xfpm_notify_close_critical_cb (NotifyNotification *n, gpointer data)
+xfpm_notify_close_critical_cb (NotifyNotification *n, XfpmNotify *notify)
 {
+    notify->priv->critical = NULL;
     g_object_unref (G_OBJECT (n));
 }
 
@@ -244,24 +247,29 @@ void xfpm_notify_present_notification (XfpmNotify *notify, NotifyNotification *n
 void xfpm_notify_critical (XfpmNotify *notify, NotifyNotification *n)
 {
     g_return_if_fail (XFPM_IS_NOTIFY (notify));
+
+    xfpm_notify_close_critical (notify);
     
-    g_object_set_data (G_OBJECT (notify), "critical", n);
+    notify->priv->critical = n;
     
     g_signal_connect (G_OBJECT (n), "closed", 
-		      G_CALLBACK (xfpm_notify_close_critical_cb), NULL);
+		      G_CALLBACK (xfpm_notify_close_critical_cb), notify);
 		      
     g_idle_add ((GSourceFunc) xfpm_notify_show, n);
 }
 
 void xfpm_notify_close_critical (XfpmNotify *notify)
 {
-    NotifyNotification *n;
     g_return_if_fail (XFPM_IS_NOTIFY (notify));
     
-    n = (NotifyNotification *)  g_object_get_data (G_OBJECT (notify), "critical");
-    
-    if ( n )
-	g_object_unref (n);
+    if ( notify->priv->critical )
+    {
+    	if (!notify_notification_close (notify->priv->critical, NULL))
+	    g_warning ("Failed to close notification\n");
+	
+	g_object_unref (G_OBJECT(notify->priv->critical) );
+	notify->priv->critical  = NULL;
+    }
 }
 
 void xfpm_notify_close_normal  (XfpmNotify *notify)
