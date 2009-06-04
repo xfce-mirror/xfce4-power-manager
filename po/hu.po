@@ -1,0 +1,713 @@
+# Hungarian translation of xfce4-power-manager
+# Copyright (C) 2009, Free Software Foundation, Inc.
+# This file is distributed under the same license as the xfce4-power-manager package.
+#
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: xfce4-power-manager\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-16 19:38+0200\n"
+"PO-Revision-Date: 2009-06-03 02:16+0200\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Language-Team: Hungarian <gnome at gnome dot hu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../settings/xfpm-settings.glade.h:1
+msgid "<b>Actions</b>"
+msgstr "<b>Műveletek</b>"
+
+#: ../settings/xfpm-settings.glade.h:2
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Speciális beállítások</b>"
+
+#: ../settings/xfpm-settings.glade.h:3
+msgid "<b>Brightness</b>"
+msgstr "<b>Fényerősség</b>"
+
+#: ../settings/xfpm-settings.glade.h:4
+msgid "<b>General Options</b>"
+msgstr "<b>Általános beállítások</b>"
+
+#: ../settings/xfpm-settings.glade.h:5
+msgid "<b>Monitor</b>"
+msgstr "<b>Monitor</b>"
+
+#: ../settings/xfpm-settings.glade.h:6
+msgid "Actions"
+msgstr "Műveletek"
+
+#: ../settings/xfpm-settings.glade.h:7
+msgid "Advanced"
+msgstr "Speciális"
+
+#: ../settings/xfpm-settings.glade.h:8 ../settings/xfpm-settings.c:952
+msgid "Always show icon"
+msgstr "Ikon megjelenítése mindig"
+
+#: ../settings/xfpm-settings.glade.h:9
+msgid "Consider the computer on low power at:"
+msgstr "A számítógép áramellátása gyenge, ha:"
+
+#: ../settings/xfpm-settings.glade.h:10
+msgid "Enable CPU frequency control"
+msgstr "CPU frekvenciaszabályozás engedélyezése"
+
+#: ../settings/xfpm-settings.glade.h:11
+msgid "Enable monitor power management control"
+msgstr "Energiagazdálkodás szabályozásának engedélyezése"
+
+#: ../settings/xfpm-settings.glade.h:12
+msgid "Enable notification"
+msgstr "Értesítés engedélyezése"
+
+#: ../settings/xfpm-settings.glade.h:13 ../settings/xfpm-settings.c:1401
+#: ../settings/xfpm-settings.c:1406
+msgid "General"
+msgstr "Általános"
+
+#. Hibernate menu option
+#: ../settings/xfpm-settings.glade.h:14 ../settings/xfpm-settings.c:591
+#: ../settings/xfpm-settings.c:689 ../settings/xfpm-settings.c:846
+#: ../settings/xfpm-settings.c:1012 ../settings/xfpm-settings.c:1081
+#: ../settings/xfpm-settings.c:1147 ../src/xfpm-tray-icon.c:170
+#: ../src/xfpm-tray-icon.c:268
+msgid "Hibernate"
+msgstr "Hibernálás"
+
+#: ../settings/xfpm-settings.glade.h:15
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Képernyő zárolása felfüggesztés/hibernálás esetén"
+
+#: ../settings/xfpm-settings.glade.h:16
+msgid "Monitor"
+msgstr "Monitor"
+
+#: ../settings/xfpm-settings.glade.h:17 ../settings/xfpm-settings.c:586
+#: ../settings/xfpm-settings.c:678 ../settings/xfpm-settings.c:835
+#: ../settings/xfpm-settings.c:1001 ../settings/xfpm-settings.c:1070
+#: ../settings/xfpm-settings.c:1136
+msgid "Nothing"
+msgstr "Semmi"
+
+#: ../settings/xfpm-settings.glade.h:18 ../settings/xfpm-settings.c:1415
+#: ../settings/xfpm-settings.c:1420
+msgid "On AC"
+msgstr "Hálózaton"
+
+#: ../settings/xfpm-settings.glade.h:19
+msgid "On battery"
+msgstr "Akkumulátoron"
+
+#: ../settings/xfpm-settings.glade.h:20
+msgid "Power manager settings"
+msgstr "Energiagazdálkodási beállítások"
+
+#: ../settings/xfpm-settings.glade.h:21
+msgid "Prefer power savings over performance"
+msgstr "Energiatakarékosság előnyben részesítése a teljesítménnyel szemben"
+
+#: ../settings/xfpm-settings.glade.h:22
+msgid "Put display to sleep when computer is inactive for:"
+msgstr "Képernyő energiatakarékos módba helyezése ennyi tétlenség után:"
+
+#: ../settings/xfpm-settings.glade.h:23
+msgid "Put the computer to sleep when inactive for:"
+msgstr "Számítógép energiatakarékos módba helyezése ennyi tétlenség után:"
+
+#: ../settings/xfpm-settings.glade.h:24
+msgid "Reduce screen brightness when computer is inactive for:"
+msgstr "Képernyő fényerejének csökkentése ennyi tétlenség után:"
+
+#: ../settings/xfpm-settings.glade.h:25
+msgid "Set computer inactivity sleep mode:"
+msgstr "Számítógép energiatakarékos módja tétlenség esetén:"
+
+#: ../settings/xfpm-settings.glade.h:26
+msgid "Set monitor sleep mode:"
+msgstr "Monitor energiatakarékos módja tétlenség esetén:"
+
+#: ../settings/xfpm-settings.glade.h:27
+msgid "Standby"
+msgstr "Készenlét"
+
+#. Suspend menu option
+#: ../settings/xfpm-settings.glade.h:28 ../settings/xfpm-settings.c:683
+#: ../settings/xfpm-settings.c:840 ../settings/xfpm-settings.c:1006
+#: ../settings/xfpm-settings.c:1075 ../settings/xfpm-settings.c:1141
+#: ../src/xfpm-tray-icon.c:201 ../src/xfpm-tray-icon.c:283
+msgid "Suspend"
+msgstr "Felfüggesztés"
+
+#: ../settings/xfpm-settings.glade.h:29
+msgid "Switch off display when computer is inactive for:"
+msgstr "Képernyő kikapcsolása ennyi tétlenség után:"
+
+#: ../settings/xfpm-settings.glade.h:30
+msgid "System tray icon: "
+msgstr "Rendszertálca-ikon: "
+
+#: ../settings/xfpm-settings.glade.h:31
+msgid "When battery power is critical:"
+msgstr "Ha az akkumulátor energiaszintje kritikus:"
+
+#: ../settings/xfpm-settings.glade.h:32
+msgid "When hibernate button is pressed:"
+msgstr "A hibernálás gomb megnyomásakor:"
+
+#: ../settings/xfpm-settings.glade.h:33
+msgid "When laptop lid is closed:"
+msgstr "A noteszgép fedelének lehajtásakor:"
+
+#: ../settings/xfpm-settings.glade.h:34
+msgid "When power button is pressed:"
+msgstr "A főkapcsoló gomb megnyomásakor:"
+
+#: ../settings/xfpm-settings.glade.h:35
+msgid "When sleep button is pressed:"
+msgstr "Az alvás gomb megnyomásakor:"
+
+#: ../settings/xfpm-settings.glade.h:36 ../settings/xfpm-settings-main.c:120
+#: ../src/xfpm-main.c:184 ../src/xfpm-main.c:273 ../src/xfpm-tray-icon.c:348
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Xfce Power Manager"
+msgstr "Xfce energiakezelő"
+
+#: ../settings/xfpm-settings.c:370 ../settings/xfpm-settings.c:385
+#: ../settings/xfpm-settings.c:415
+msgid "Never"
+msgstr "Soha"
+
+#: ../settings/xfpm-settings.c:373
+msgid "One minute"
+msgstr "Egy perc"
+
+#: ../settings/xfpm-settings.c:375 ../settings/xfpm-settings.c:387
+#: ../settings/xfpm-settings.c:405
+msgid "Minutes"
+msgstr "Perc"
+
+#: ../settings/xfpm-settings.c:389 ../settings/xfpm-settings.c:396
+#: ../settings/xfpm-settings.c:397 ../settings/xfpm-settings.c:398
+msgid "One hour"
+msgstr "Egy óra"
+
+#: ../settings/xfpm-settings.c:397 ../settings/xfpm-settings.c:401
+msgid "one minute"
+msgstr "egy perc"
+
+#: ../settings/xfpm-settings.c:398 ../settings/xfpm-settings.c:402
+#: ../src/xfpm-battery.c:417
+msgid "minutes"
+msgstr "perc"
+
+#: ../settings/xfpm-settings.c:400 ../settings/xfpm-settings.c:401
+#: ../settings/xfpm-settings.c:402 ../src/xfpm-battery.c:416
+msgid "hours"
+msgstr "óra"
+
+#: ../settings/xfpm-settings.c:417
+msgid "Seconds"
+msgstr "Másodperc"
+
+#: ../settings/xfpm-settings.c:565 ../settings/xfpm-settings.c:780
+#: ../settings/xfpm-settings.c:829 ../settings/xfpm-settings.c:995
+#: ../settings/xfpm-settings.c:1064 ../settings/xfpm-settings.c:1130
+#: ../settings/xfpm-settings.c:1311
+msgid "Hibernate and suspend operations not permitted"
+msgstr "A hibernálás és felfüggesztés műveletek nem engedélyezettek"
+
+#: ../settings/xfpm-settings.c:578 ../settings/xfpm-settings.c:670
+msgid "Shutdown and hibernate operations not permitted"
+msgstr "A leállítás és hibernálás műveletek nem engedélyezettek"
+
+#: ../settings/xfpm-settings.c:595 ../settings/xfpm-settings.c:1016
+msgid "Shutdown"
+msgstr "Leállítás"
+
+#: ../settings/xfpm-settings.c:955
+msgid "When battery is present"
+msgstr "Akkumulátor jelenlétében"
+
+#: ../settings/xfpm-settings.c:958
+msgid "When battery is charging or discharging"
+msgstr "Akkumulátor töltésekor vagy kisülésekor"
+
+#: ../settings/xfpm-settings.c:977
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr "A DPMS kikapcsolása, így például nem próbálja kikapcsolni a képernyőt, vagy energiatakarékos módba kapcsolni."
+
+#: ../settings/xfpm-settings.c:1019 ../settings/xfpm-settings.c:1085
+#: ../settings/xfpm-settings.c:1151
+msgid "Ask"
+msgstr "Kérdezzen"
+
+#: ../settings/xfpm-settings.c:1215
+msgid "Suspend operation not permitted"
+msgstr "A felfüggesztés művelet nem engedélyezett"
+
+#: ../settings/xfpm-settings.c:1221
+msgid "Hibernate operation not permitted"
+msgstr "A hibernálás művelet nem engedélyezett"
+
+#: ../settings/xfpm-settings.c:1279
+msgid "When all the power sources of the computer reach this charge level"
+msgstr "Amikor a számítógép minden áramforrása eléri ezt a töltöttségi szintet"
+
+#: ../settings/xfpm-settings.c:1430 ../settings/xfpm-settings.c:1435
+msgid "On Battery"
+msgstr "Akkumulátoron"
+
+#: ../settings/xfpm-settings.c:1444 ../settings/xfpm-settings.c:1449
+msgid "Extended"
+msgstr "Kiterjesztett"
+
+#: ../settings/xfpm-settings-main.c:72
+msgid "Settings manager socket"
+msgstr "Beállításkezelő foglalat"
+
+#: ../settings/xfpm-settings-main.c:72
+msgid "SOCKET ID"
+msgstr "FOGLALATAZONOSÍTÓ"
+
+#: ../settings/xfpm-settings-main.c:83 ../src/xfpm-main.c:145
+#: ../src/xfpm-main.c:167
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr "Segítségért adja ki az „%s --help” parancsot."
+
+#: ../settings/xfpm-settings-main.c:120
+msgid "Failed to load power manager configuration, using defaults"
+msgstr "Az energiagazdálkodási konfiguráció betöltése meghiúsult, alapértelmezések használata"
+
+#: ../settings/xfpm-settings-main.c:146
+msgid "Xfce Power Manager Settings"
+msgstr "Xfce energiagazdálkodási beállítások"
+
+#: ../settings/xfpm-settings-main.c:147
+msgid "Unable to connect to Xfce Power Manager"
+msgstr "Nem lehet csatlakozni az Xfce energiakezelőhöz"
+
+#: ../settings/xfpm-settings-main.c:175 ../src/xfpm-main.c:200
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Az Xfce energiakezelő nem fut"
+
+#: ../settings/xfpm-settings-main.c:178
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Az Xfce energiakezelő nem fut, el kívánja indítani?"
+
+#: ../settings/xfpm-settings-main.c:180
+msgid "Run"
+msgstr "Futtatás"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
+msgid "Power Manager"
+msgstr "Energiakezelő"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:2
+msgid "Settings for the Xfce 4 Power Manager"
+msgstr "Az Xfce energiakezelő beállításai"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
+msgid "Xfce 4 Power Manager"
+msgstr "Xfce energiakezelő"
+
+#: ../src/xfpm-battery.c:108
+msgid "Your battery is fully charged"
+msgstr "Az akkumulátor teljesen feltöltve"
+
+#: ../src/xfpm-battery.c:111
+msgid "Your battery is charging"
+msgstr "Az akkumulátor töltődik"
+
+#: ../src/xfpm-battery.c:114
+msgid "Battery is charging"
+msgstr "Akkumulátor töltődik"
+
+#: ../src/xfpm-battery.c:117
+msgid "Your battery is discharging"
+msgstr "Az akkumulátor kisül"
+
+#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:425
+#: ../src/xfpm-battery.c:437
+msgid "System is running on battery power"
+msgstr "A rendszer akkumulátorról üzemel"
+
+#: ../src/xfpm-battery.c:120
+msgid "Your battery charge is low"
+msgstr "Az akkumulátor töltése alacsony"
+
+#: ../src/xfpm-battery.c:120
+msgid "System is running on low power"
+msgstr "A rendszer energiaellátása gyenge"
+
+#: ../src/xfpm-battery.c:240 ../src/xfpm-supply.c:281 ../src/xfpm-supply.c:304
+#: ../src/xfpm-tray-icon.c:119 ../src/xfpm-tray-icon.c:142
+#: ../src/xfpm-manager.c:226
+msgid "Xfce power manager"
+msgstr "Xfce energiakezelő"
+
+#: ../src/xfpm-battery.c:254
+msgid "Your UPS"
+msgstr "Az UPS"
+
+#: ../src/xfpm-battery.c:256
+msgid "Your Mouse battery"
+msgstr "Az egér akkumulátora"
+
+#: ../src/xfpm-battery.c:258
+msgid "Your Keyboard battery"
+msgstr "A billentyűzet akkumulátora"
+
+#: ../src/xfpm-battery.c:260
+msgid "Your Camera battery"
+msgstr "A fényképezőgép akkumulátora"
+
+#: ../src/xfpm-battery.c:262
+msgid "Your PDA battery"
+msgstr "A PDA akkumulátora"
+
+#: ../src/xfpm-battery.c:264
+msgid "Your Battery"
+msgstr "Az akkumulátora"
+
+#: ../src/xfpm-battery.c:279
+msgid "is empty"
+msgstr "üres"
+
+#: ../src/xfpm-battery.c:285
+msgid "is fully charged"
+msgstr "teljesen feltöltve"
+
+#: ../src/xfpm-battery.c:290
+msgid "charge level"
+msgstr "töltési szintje"
+
+#: ../src/xfpm-battery.c:295
+msgid "is charging"
+msgstr "töltődik"
+
+#: ../src/xfpm-battery.c:302
+msgid "is discharging"
+msgstr "kisül"
+
+#: ../src/xfpm-battery.c:307
+msgid "charge is low"
+msgstr "töltése alacsony"
+
+#: ../src/xfpm-battery.c:312
+msgid "is almost empty"
+msgstr "majdnem üres"
+
+#: ../src/xfpm-battery.c:352
+msgid "is not present"
+msgstr "nem észlelhető"
+
+#: ../src/xfpm-battery.c:385
+msgid "Battery not present"
+msgstr "Az akkumulátor nem észlelhető"
+
+#: ../src/xfpm-battery.c:408
+msgid "Estimated time left"
+msgstr "Becsült hátralévő idő"
+
+#: ../src/xfpm-battery.c:412
+msgid "Estimated time to be fully charged"
+msgstr "Becsült hátralévő idő a teljes feltöltésig"
+
+#: ../src/xfpm-battery.c:416
+msgid "hour"
+msgstr "óra"
+
+#: ../src/xfpm-battery.c:417
+msgid "minute"
+msgstr "perc"
+
+#: ../src/xfpm-battery.c:421 ../src/xfpm-battery.c:433
+msgid "Battery"
+msgstr "Akkumulátor"
+
+#: ../src/xfpm-battery.c:424 ../src/xfpm-battery.c:436
+msgid "System is running on AC power"
+msgstr "A rendszer hálózati feszültségről üzemel"
+
+#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:478
+msgid "Unknown unit"
+msgstr "Ismeretlen egység"
+
+#: ../src/xfpm-battery-info.c:70
+msgid "Technology:"
+msgstr "Technológia:"
+
+#: ../src/xfpm-battery-info.c:93
+msgid "Design:"
+msgstr "Tervezés:"
+
+#: ../src/xfpm-battery-info.c:121
+msgid "Last full:"
+msgstr "Utoljára tele:"
+
+#: ../src/xfpm-battery-info.c:145
+msgid "Vendor:"
+msgstr "Szállító:"
+
+#: ../src/xfpm-battery-info.c:169
+msgid "Model:"
+msgstr "Modell:"
+
+#: ../src/xfpm-battery-info.c:202
+msgid "Battery information"
+msgstr "Akkumulátorinformációk"
+
+#: ../src/xfpm-main.c:53
+#, c-format
+msgid ""
+"\n"
+"Xfce Power Manager %s\n"
+"\n"
+"Part of the Xfce Goodies Project\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Licensed under the GNU GPL.\n"
+"\n"
+msgstr ""
+"\n"
+"Xfce energiakezelő %s\n"
+"\n"
+"Az Xfce Goodies projekt része\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Licenc: GNU GPL.\n"
+"\n"
+
+#: ../src/xfpm-main.c:129
+msgid "Do not daemonize"
+msgstr "Ne démonként induljon"
+
+#: ../src/xfpm-main.c:130
+msgid "Restart the running instance of Xfce power manager"
+msgstr "Az Xfce energiakezelő futó példányának újraindítása"
+
+#: ../src/xfpm-main.c:131
+msgid "Show the configuration dialog"
+msgstr "Beállítóablak megjelenítése"
+
+#: ../src/xfpm-main.c:132
+msgid "Quit any running xfce power manager"
+msgstr "Kilépés a futó Xfce energiakezelőből"
+
+#: ../src/xfpm-main.c:133
+msgid "Version information"
+msgstr "Verzióinformációk"
+
+#: ../src/xfpm-main.c:165
+#, c-format
+msgid "Too many arguments"
+msgstr "Túl sok paraméter"
+
+#: ../src/xfpm-main.c:181
+msgid "Unable to get connection to the message bus session"
+msgstr "Nem kérhető kapcsolat az üzenetbusz-munkamenethez"
+
+#: ../src/xfpm-main.c:274
+msgid "Another power manager is already running"
+msgstr "Már fut egy másik energiakezelő"
+
+#: ../src/xfpm-main.c:279
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr "Az Xfce energiakezelő már fut"
+
+#: ../src/xfpm-supply.c:168
+msgid "Adapter present"
+msgstr "A csatlakozó észlelhető"
+
+#: ../src/xfpm-supply.c:169
+msgid "Adapter not present"
+msgstr "A csatlakozó nem észlelhető"
+
+#: ../src/xfpm-supply.c:250
+msgid "Shutdown the system"
+msgstr "A rendszer leállítása"
+
+#: ../src/xfpm-supply.c:261
+msgid "Hibernate the system"
+msgstr "A rendszer hibernálása"
+
+#: ../src/xfpm-supply.c:273
+msgid ""
+"System is running on low power, but an application is currently disabling "
+"the automatic sleep, this means that doing a sleep now may damage the data "
+"of this application. Close this application before putting the computer on "
+"sleep mode or plug in your AC adapter"
+msgstr "A rendszer áramellátása gyenge, de egy alkalmazás jelenleg megakadályozza az automatikus elalvást; ez azt jelenti, hogy az alvás károsíthatja ezen alkalmazás adatait. Zárja be a kérdéses alkalmazást az energiatakarékos módba lépés előtt, vagy csatlakoztassa a hálózati adaptert."
+
+#: ../src/xfpm-supply.c:299
+msgid "System is running on low power. Save your work to avoid losing data"
+msgstr "A rendszer áramellátása gyenge. Az adatvesztés elkerüléséhez mentse a munkáját."
+
+#: ../src/xfpm-tray-icon.c:162
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
+msgstr "Egy alkalmazás jelenleg megakadályozza az automatikus elalvást; ez azt jelenti, hogy az alvás károsíthatja ezen alkalmazás futási állapotát. Biztosan hibernálni akarja a rendszert?"
+
+#: ../src/xfpm-tray-icon.c:165 ../src/xfpm-tray-icon.c:196
+msgid "Are you sure you want to proceed?"
+msgstr "Biztos folytatja?"
+
+#: ../src/xfpm-tray-icon.c:193
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to suspend the system?"
+msgstr "Egy alkalmazás jelenleg megakadályozza az automatikus elalvást; ez azt jelenti, hogy az alvás károsíthatja ezen alkalmazás futási állapotát. Biztosan fel akarja függeszteni a rendszert?"
+
+#: ../src/xfpm-tray-icon.c:222
+msgid "Quit the Xfce power manager"
+msgstr "Kilépés az Xfce energiakezelőből"
+
+#: ../src/xfpm-tray-icon.c:224
+msgid "Quit"
+msgstr "Kilépés"
+
+#: ../src/xfpm-tray-icon.c:298
+msgid "Clear inhibit"
+msgstr "Korlátozás törlése"
+
+#: ../src/xfpm-tray-icon.c:298
+msgid "Inhibit"
+msgstr "Korlátozás"
+
+#: ../src/xfpm-tray-icon.c:300
+msgid ""
+"Disable or enable automatic sleep, setting this will tell the power manager "
+"to disable backlight sleep, for example you could active the inhibit if you "
+"are watching a movie."
+msgstr "Az automatikus alvás engedélyezése vagy tiltása, ennek beállításakor az energiakezelő letiltja a háttérvilágítás csökkentését. Ez a fajta korlátozás például filmnézéskor lehet hasznos."
+
+#: ../src/xfpm-tray-icon.c:388
+msgid "No data available"
+msgstr "Nem érhetők el adatok"
+
+#: ../src/xfpm-engine.c:646 ../src/xfpm-engine.c:672 ../src/xfpm-engine.c:701
+#, c-format
+msgid "Permission denied"
+msgstr "Hozzáférés megtagadva"
+
+#: ../src/xfpm-engine.c:679
+#, c-format
+msgid "Hibernate not supported"
+msgstr "A hibernálás nem támogatott"
+
+#: ../src/xfpm-engine.c:708
+#, c-format
+msgid "Suspend not supported"
+msgstr "A felfüggesztés nem támogatott"
+
+#: ../src/xfpm-manager.c:226
+msgid "HAL daemon is not running"
+msgstr "A HAL démon nem fut"
+
+#: ../src/xfpm-inhibit.c:330
+#, c-format
+msgid "Invalid arguments"
+msgstr "Érvénytelen argumentumok"
+
+#: ../src/xfpm-inhibit.c:356
+#, c-format
+msgid "Invalid cookie"
+msgstr "Érvénytelen süti"
+
+#: ../src/xfpm-shutdown.c:335
+msgid "No back-end for your operating system"
+msgstr "Nincs háttérprogram ehhez az operációs rendszerhez"
+
+#: ../src/xfpm-shutdown.c:339
+msgid "No hibernate script found"
+msgstr "Nem található hibernálási parancsfájl"
+
+#: ../src/xfpm-shutdown.c:343
+msgid "No suspend script found"
+msgstr "Nem található felfüggesztési parancsfájl"
+
+#: ../src/xfpm-shutdown.c:347
+msgid "No suspend method found"
+msgstr "Nem található felfüggesztési módszer"
+
+#: ../src/xfpm-shutdown.c:351
+msgid "No hibernate method found"
+msgstr "Nem található hibernálási módszer"
+
+#: ../src/xfpm-shutdown.c:355
+msgid "Out of memory"
+msgstr "Nincs több memória"
+
+#: ../src/xfpm-shutdown.c:359
+msgid "System failed to sleep"
+msgstr "A rendszer alvása meghiúsult"
+
+#: ../src/xfpm-shutdown.c:401 ../src/xfpm-shutdown.c:424
+#: ../src/xfpm-shutdown.c:458
+#, c-format
+msgid "HAL daemon is currently not connected"
+msgstr "A HAL démon jelenleg nem kapcsolódik"
+
+#: ../src/xfce4-power-manager.desktop.in.h:1
+msgid "Power management for the Xfce desktop"
+msgstr "Energiagazdálkodás az Xfce környezetben"
+
+#: ../libxfpm/hal-battery.c:448
+msgid "Lithium ion"
+msgstr "Lítiumion"
+
+#: ../libxfpm/hal-battery.c:452
+msgid "Lead acid"
+msgstr "Ólmos-savas"
+
+#: ../libxfpm/hal-battery.c:456
+msgid "Lithium polymer"
+msgstr "Lítiumpolimer"
+
+#: ../libxfpm/hal-battery.c:460
+msgid "Nickel metal hydride"
+msgstr "Nikkel-fém hidrid"
+
+#: ../libxfpm/hal-battery.c:463
+msgid "Unknown"
+msgstr "Ismeretlen"
+
+#: ../libxfpm/hal-battery.c:471
+msgid "mWh"
+msgstr "mWh"
+
+#: ../libxfpm/hal-battery.c:475
+msgid "mAh"
+msgstr "mAh"
+
+#: ../libxfpm/xfpm-common.c:175
+msgid "translator-credits"
+msgstr "Kelemen Gábor <kelemeng@gnome.hu>"
+
+#: ../panel-plugins/brightness/brightness-button.c:178
+#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
+msgid "Control your LCD brightness"
+msgstr "Az LCD fényerejének vezérlése"
+
+#: ../panel-plugins/brightness/brightness-button.c:180
+msgid "No device found"
+msgstr "Nem található eszköz"
+
+#: ../panel-plugins/brightness/brightness-button.c:643
+#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
+msgid "Brightness plugin"
+msgstr "Fényerősség-bővítmény"
+
