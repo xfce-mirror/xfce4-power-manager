@@ -348,6 +348,7 @@ xfpm_engine_adapter_changed_cb (XfpmAdapter * adapter, gboolean present,
 {
     engine->priv->on_battery = !present;
     g_signal_emit (G_OBJECT (engine), signals [ON_BATTERY_CHANGED], 0, engine->priv->on_battery);
+    xfpm_idle_alarm_reset_all (engine->priv->idle);
 }
 
 static void
