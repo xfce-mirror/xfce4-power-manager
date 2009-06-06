@@ -29,6 +29,8 @@
 #include <glib.h>
 #include <libxfce4util/libxfce4util.h>
 
+#include <xfconf/xfconf.h>
+
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
 
@@ -600,7 +602,6 @@ xfpm_xfconf_init (XfpmXfconf *conf)
 			  G_CALLBACK (xfpm_xfconf_property_changed_cb), conf);
 	xfpm_xfconf_load_configuration (conf);
     }
-    conf->channel = xfconf_channel_new ("xfce4-power-manager");
 }
 
 static void

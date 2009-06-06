@@ -267,9 +267,10 @@ int main(int argc, char **argv)
     
     if (xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(bus), "org.freedesktop.PowerManagement") )
     {
-	
-	xfpm_info(_("Xfce Power Manager"),
-		  _("Another power manager is already running"));
+	g_print ("%s: %s\n", 
+		 _("Xfce Power Manager"),
+		 _("Another power manager is already running"));
+		  
     }
     else if (xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), 
 				      "org.xfce.PowerManager"))

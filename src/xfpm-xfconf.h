@@ -23,8 +23,6 @@
 
 #include <glib-object.h>
 
-#include <xfconf/xfconf.h>
-
 G_BEGIN_DECLS
 
 #define XFPM_TYPE_XFCONF        (xfpm_xfconf_get_type () )
@@ -36,7 +34,6 @@ typedef struct  XfpmXfconfPrivate XfpmXfconfPrivate;
 typedef struct
 {
     GObject		  parent;
-    XfconfChannel        *channel;
     XfpmXfconfPrivate    *priv;
     
 } XfpmXfconf;
