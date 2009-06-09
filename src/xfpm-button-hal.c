@@ -69,18 +69,27 @@ xfpm_button_hal_emit_signals (XfpmButtonHal *bt, const gchar *condition, const g
 
     if ( xfpm_strequal (detail, "power") )
     {
-	TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
-	g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_POWER_OFF);
+	if ( bt->priv->mapped_keys & POWER_KEY )
+	{
+	    TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
+	    g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_POWER_OFF);
+	}
     }
-    else if ( xfpm_strequal (detail, "sleep")  && !(bt->priv->keys & SLEEP_KEY) )
+    else if ( ( xfpm_strequal (detail, "sleep")  || xfpm_strequal (detail, "suspend") ) && !(bt->priv->keys & SLEEP_KEY) )
     {
-	TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
-	g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_SLEEP);
+	if ( bt->priv->mapped_keys & SLEEP_KEY )
+	{
+	    TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
+	    g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_SLEEP);
+	}
     }
     else if ( xfpm_strequal (detail, "hibernate") && !(bt->priv->keys & HIBERNATE_KEY) )
     {
-	TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
-	g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_HIBERNATE);
+	if ( bt->priv->mapped_keys & HIBERNATE_KEY )
+	{
+	    TRACE ("Emitting signal button press condition %s detail %s", condition, detail);
+	    g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_HIBERNATE);
+	}
     }
     else if ( xfpm_strequal (detail, "brightness-up")  && !(bt->priv->keys & BRIGHTNESS_KEY) )
     {
@@ -174,9 +183,9 @@ xfpm_button_hal_add_button (XfpmButtonHal *bt, const gchar *udi, gboolean lid_on
 	
 	if ( xfpm_strequal (button_type, "lid") )
 	    bt->priv->mapped_keys |= LID_KEY;
-	else if ( xfpm_strequal (button_type, "suspend") )
-	    bt->priv->mapped_keys |= SLEEP_KEY;
 	else if ( xfpm_strequal (button_type, "sleep") )
+	    bt->priv->mapped_keys |= SLEEP_KEY;
+	else if ( xfpm_strequal (button_type, "suspend") )
 	    bt->priv->mapped_keys |= SLEEP_KEY;
 	else if ( xfpm_strequal (button_type, "hibernate") )
 	    bt->priv->mapped_keys |= HIBERNATE_KEY;

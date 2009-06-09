@@ -59,21 +59,15 @@ maintainers, etc. Commented out by default.
   <sect2 id="xfpm-started">
   
   <title>Getting Started</title>
-  <para>If your distribution doesn't come with a default installation of &app; usually when you install it, it will be started next time you log into your Xfce desktop, 
-  in order to start it manually you just need to run  the following command &app; from your terminal emulator, please not that running this &app; command 
-  will cause the power manager to run in daemon mode, you can optionally add --no-daemon as a command line argument to disable this behaviour, 
-  this can be useful if you want to see debugging outputs from your terminal emulator.
+  <para>If your distribution doesn't come with a default installation of &app; usually when you install it, it will be started next time you log into your Xfce desktop.
+  In order to start it manually you just need to run  the following command &app; from your terminal emulator. Please note that running this &app; command 
+  will cause the power manager to run in daemon mode. You can optionally add --no-daemon as a command line argument to disable this behaviour, 
+  This can be useful if you want to see debugging outputs from your terminal emulator.
   </para>
    
   </sect2>
    
- <sect2 id="xfmp-usage">
- <title>Usage</title>
- <para>
- The main idea behind a power manager is to control the power sources on mobile computers, such as laptops, on desktops or servers a power manager is basically less useful.
- </para>
- </sect2>   
-   
+
 </sect1>
 
  <!-- extra space -->
@@ -98,7 +92,7 @@ maintainers, etc. Commented out by default.
     <varlistentry><term><keycap>--restart</keycap></term>
 	<listitem>
 	<para>
-	Causes the running power manager to restart.
+	Restarts the power manager.
 	</para>
 	</listitem>
 	</varlistentry>	
@@ -131,12 +125,12 @@ maintainers, etc. Commented out by default.
 </figure></para>
 
 <para>
-The context menu is popped up when you click on the icon placed in your notification area, say a battery or an adapter icon, it contains some useful options like suspend/hibernate,
-display information of the battery device open the settings dialog, it contains as well option to inhibit the power manager, if enabled, the power manager will not attempt
+The context menu pops up when you click on the icon placed in your notification area for example a battery or an adapter icon. It contains some useful options like suspend/hibernate,
+display information of the battery device and open the settings dialog. It contains as well option to inhibit the power manager. If enabled, the power manager will not attempt
 to dim the screen or switch off the monitor.
 
 <note><para>If the inhibit option is selected and the computer is in idle for a long time the power manager will not put the system in suspend or hibernate, even
-if it is enabled in the settings dialog, only critical actions are processed.</para></note>
+if it is enabled in the settings dialog. Only critical actions are processed.</para></note>
 
 </para>
 
@@ -148,8 +142,8 @@ if it is enabled in the settings dialog, only critical actions are processed.</p
 <sect1 id="xfpm-configuration">
   <title>Power Manager Configuration</title>
   <para>
-  In this section we will explain in details the possible configuration of the power manager running on laptop computer, please note that the configurations are different when 
-  the power manager is running on a desktop computer, for example you will not have LCD brightness or so.
+  In this section we will explain in details the possible configuration of the power manager running on laptop computer. Please note that the configurations are different when 
+  the power manager is running on a desktop computer, for example you will not have LCD brightness etc.
   </para>
   
   <sect2 id="xfpm-general">
@@ -174,7 +168,7 @@ if it is enabled in the settings dialog, only critical actions are processed.</p
 	<varlistentry>
 	<term><keycap>Notification area:</keycap></term>
 	<listitem>
-	<para>The notification area settings allows you to control the behaviour of the icon placed in your notification are, you can set it to be always visible, for battery devices
+	<para>The notification area settings allow you to control the behaviour of the icon placed in your notification area. You can set it to be always visible. For battery devices,
 	you can select the icon to be visible only when your are running on battery for example.</para>
 	</listitem>
 	</varlistentry>
@@ -183,7 +177,7 @@ if it is enabled in the settings dialog, only critical actions are processed.</p
 	<term><keycap>Keyboard special keys:</keycap></term>
 	<listitem>
 	<para>
-	Enables you to specify which key will trigger which action, these keys are not found on all the systems, in the screen shot for example the hibernate key is missing,
+	Enable you to specify which key will trigger which action. These keys are not found on all the systems. For example, in the screen shot the hibernate key is missing
 	since the screen shot was taken on a computer which doesn't have this key.
 	The default action of all these keys is set to do nothing. 
 	</para>
@@ -193,16 +187,16 @@ if it is enabled in the settings dialog, only critical actions are processed.</p
 	<varlistentry>
 	<term><keycap>Monitor power management control:</keycap></term>
 	<listitem>
-	<para>Enable/Disable Display Power Management Signaling (DPMS).</para>
+	<para>Enable/Disable the Display Power Management Signaling (DPMS).</para>
 	</listitem>
 	</varlistentry>
 	
 	<varlistentry>
 	<term><keycap>Power manager Notification:</keycap></term>
 	<listitem>
-	<para>If the notification of a battery status change are annoying you, you can always disable them by unselecting the checkbox, please note this
-	doesn't apply on the notification that the power manager sends to notify the user of error or when the system is running out of power,
-	 so it is safe to disable them.</para>
+	<para>If the notification of a battery status change are annoying you, you can always disable them by unselecting the checkbox. Please note this
+	doesn't apply on the notification that the power manager sends notifying the user of errors or that the system is running out of power.
+	 </para>
 	</listitem>
 	</varlistentry>	
 	
@@ -215,7 +209,7 @@ if it is enabled in the settings dialog, only critical actions are processed.</p
   <title>Running on  AC power</title>
 
   <para>
-  The on AC power tab contains self explanatory options such as lid close system idle and monitor sleep configurations.   
+  The on AC power tab contains self explanatory options such as lid close, system idle and monitor sleep configurations.   
   </para>
   
   </sect2> 
@@ -224,14 +218,14 @@ if it is enabled in the settings dialog, only critical actions are processed.</p
   <title>Running on battery power</title>
   
 <para>
-The on battery tab is only shown on systems that have battery devices, it contains the same options as the AC power tabs plus two other important options
+The on battery tab is only shown on systems that have battery devices. It contains the same options as the AC power tabs plus two other important options:
 
 <variablelist><title></title>
 
 	<varlistentry><term><keycap>Power is critical</keycap></term>
 	<listitem>
 	<para>
-	With this option you can specify the action taken by the power manager in case the system is running on low power, if this option is disabled and the computer
+	With this option you can specify the action taken by the power manager in case the system is running on low power. If this option is disabled and the computer
 	is running on low battery power, the power manager will display a warning message.
 	</para></listitem>
 	</varlistentry>
@@ -239,8 +233,8 @@ The on battery tab is only shown on systems that have battery devices, it contai
 	<varlistentry><term><keycap>Prefer power savings over performance:</keycap></term>
 	<listitem>
 	<para>
-	This is the power profile when running on battery, with this option you battery will last more when running on battery power, 
-	having this option enabled is always a good idea.
+	This is the power profile when running on battery. With this option your battery will last more when running on battery power.
+	Enabling this option is always a good idea.
 	</para></listitem>
 	</varlistentry>
 	
@@ -270,8 +264,8 @@ The on battery tab is only shown on systems that have battery devices, it contai
 	<varlistentry>
 	<term><keycap>Inactivity sleep mode:</keycap></term>
 	<listitem>
-	<para>You can select the inactivity sleep action to be taken by the power manger when the system is idle for a interval of  time specified by you, 
-	either on ac power or on battery power, expired. Of course if you disable idle timeout those settings will have no effects.</para>
+	<para>You can select the inactivity sleep action to be taken by the power manger when the system is idle for a interval of  time set by you
+	either on ac power or on battery power. Of course if you disable idle timeout those settings will have no effects.</para>
 	</listitem>
 	</varlistentry>
 	
@@ -279,7 +273,7 @@ The on battery tab is only shown on systems that have battery devices, it contai
 	<term><keycap>Monitor sleep mode:</keycap></term>
 	<listitem>
 	<para>
-	DPMS sleep modes before switching off the monitor, standby and suspend, they are technically different, this option is provided for convenience.
+	DPMS sleep modes before switching off the monitor are either standby or suspend. They are technically different and provided for convenience.
 	</para>
 	</listitem>
 	</varlistentry>
@@ -288,8 +282,8 @@ The on battery tab is only shown on systems that have battery devices, it contai
 	<term><keycap>Computer on low power level:</keycap></term>
 	<listitem>
 	<para>
-	Ideally when the battery giving the main power to the computer reaches 10 percent of charge the computer can be considered on low power, but for some broken or old
-	batteries between 10 percent and a power cut there is a matter of minutes if not seconds, so you can adjust the level at which your computer will be considered on low power.
+	Ideally when the battery giving the main power to the computer reaches 10 percent of charge, the computer can be considered on low power. However, for some broken or old
+	batteries the interval of time between 10 percent and a power cut is a matter of minutes if not seconds. You can adjust the level at which your computer will be considered on low power.
 	<note><para>This option might disappear in future releases.</para></note>
 
 	</para>
@@ -300,7 +294,7 @@ The on battery tab is only shown on systems that have battery devices, it contai
 	<term><keycap>CPU Frequency control:</keycap></term>
 	<listitem>
 	<para>
-	Unselecting this checkbox you tell the power manager to don't attempt to play with the CPU frequency.
+	Unselecting this checkbox, the power manager don't attempt to play with the CPU frequency.
 	</para>
 	</listitem>
 	</varlistentry>	
@@ -309,7 +303,7 @@ The on battery tab is only shown on systems that have battery devices, it contai
 	<term><keycap>Lock screen when going for suspend/hibernate:</keycap></term>
 	<listitem>
 	<para>
-	Just tell your power manager if it should lock the screen before suspending the computer, it is enabled by default.
+	Just tell your power manager if it should lock the screen before suspending or hibernating the computer. It is enabled by default.
 	</para>
 	</listitem>
 	</varlistentry>		
@@ -325,12 +319,12 @@ The on battery tab is only shown on systems that have battery devices, it contai
 <title>Hidden options</title>
 
 <para>
-Hidden options are the options that in normal situations one should not play with, but these options are provided in case of misbehaviour of the backend
-the power manager is relying on.
+Hidden options are the options that in normal situations one should not be changed, but these options are provided in case of misbehaviour of the backend
+that the power manager is relying on.
 </para>
 
 <para>
-Since &app; relies on xfconf to store and retreive configuration you can change any settings by using xfconf-query or by using your Xfce settings editor.
+Since &app; relies on xfconf to store and retreive configurations, you can change any settings by using xfconf-query or by using your Xfce settings editor.
 </para>
 
 <variablelist><title></title>
@@ -339,8 +333,8 @@ Since &app; relies on xfconf to store and retreive configuration you can change 
 	<listitem>
 	
 	<para>
-	 The &app; detects brightness key events and interact with the backend to update the brightness level, this might be problematic on some systems, for this the key
-	"/xfce4-power-manager/change-brightness-on-key-events" is provided, just set this key to false if you have any problem related to this, please refer
+	 The &app; detects brightness key events and interacts with the backend to update the brightness level. This might be problematic on some systems therefore the key
+	"/xfce4-power-manager/change-brightness-on-key-events" is provided. Just set this key to false if you have any such problem. Please refer
     to the xfconf-query manual, but as an example you can disable this property by running the following command.
 	 
 	<programlisting>xfconf-query -c &app; -n -p "/&app;/change-brightness-on-key-events" -t bool -s false</programlisting>
@@ -355,7 +349,7 @@ Since &app; relies on xfconf to store and retreive configuration you can change 
 	<listitem>
 	
 	<para>
-	If you want, for some reason, to disable the brightness popup indicator (the one which popup to disblay the brightness level), just run the following command
+	If you want for some reason to disable the brightness popup indicator (the one which popup to display the brightness level), just run the following command
 	in your terminal. 
 	 
 	<programlisting>xfconf-query -c &app; -n -p "/&app;/show-brightness-popup" -t bool -s false</programlisting>
@@ -390,9 +384,9 @@ Since &app; relies on xfconf to store and retreive configuration you can change 
 </figure></para>
 
 <para>
-&app; version &appversion; includes one panel plugin for LCD brightness control, possible other plugins might be added for future releases, the usage of the brightness plugin
-is simple, just add the plugin to the panel same way you add any other plugin, then click on the plugin it will pop up a slider that you move/scroll on it to change
-the brightness level of your screen, of course the plugin will not work on a system with no back light panel. 
+&app; version &appversion; includes one panel plugin for LCD brightness control (possible other plugins might be added for future releases). The usage of the brightness plugin
+is simple; just add the plugin to the panel same way  as the one used to add any other plugin; then click on the plugin; a slider will pop up that you move/scroll on it to change
+the brightness level of your screen. Of course the plugin will not work on a system with no back light panel. 
 </para>
 
 </sect1>
@@ -407,8 +401,8 @@ the brightness level of your screen, of course the plugin will not work on a sys
    <varlistentry>
 	<term>Q: Why the icons look very similar to the icon of gnome power manager?</term>
 	<listitem>
-	<para>A: No, they are not similar, they are the same, just there is no point of re-drawing icons,
-	gnome power manager icons are good enough. Not all the gnome power manager icons are used. please note that 
+	<para>A: No, they are not similar; they are the same. Just there is no point of re-drawing icons.
+	gnome power manager icons are good enough. Not all the gnome power manager icons are used. Please note that 
 	for version &appversion; the icons are renamed to avoid possible conflicts with a gnome power manager installation.   
 	</para>
 	</listitem>
@@ -429,33 +423,23 @@ the brightness level of your screen, of course the plugin will not work on a sys
 	<term>Q: Why the options of suspend/hibernate are not there or I can not select them?</term>
 	<listitem>
 	<para>A: Many possible reasons, for example your kernel is not compiled with suspend/hibernate options.
-	Another possible reason is the fact that you are not allowed to use them.
+	Another possible reason is the fact that you don't have engough premission to use them.
 	</para>
 	</listitem>
 	</varlistentry>
 	
    <varlistentry>
-	<term>Q: I had put my computer into suspend or hibernate mode, but the computer is not waking up.</term>
+	<term>Q: I had put my computer into suspend or hibernate mode, but the computer is not waking up?</term>
 	<listitem>
 	<para>A: This was subject for many bug reports, please note that the power manager has nothing to do with these problems, since the kernel
-	is responsible of these tasks, the kernel team are puting a lot of efforts into fixing these kind of problems, if you still have troubles please
+	is responsible of these tasks. The kernel team are puting a lot of efforts into fixing these kind of problems, if you still have troubles please
 	report a bug to your distribution provider, they can contact the kernel team and possibly they can provide you a work-around.  
 	</para>
 	</listitem>
 	</varlistentry>	
 		
 	 <varlistentry>
-	<term>Q: If the power manager puts the computer in hibernate because my battery charge is critical what will happen
-	if I turn it on again without plugging my adapter?</term>
-	<listitem>
-	<para>A: Nothing actually, the power manager had taken the action defined by the user already.
-	In the best cases, it will display a warning pop up with different options.
-	</para>
-	</listitem>
-	</varlistentry>
-	
-	 <varlistentry>
-	<term>Q: I'm not able to control my laptop brightness and/or my brightness pluing is reporting no device found.</term>
+	<term>Q: I'm not able to control my laptop brightness and/or my brightness plug in is reporting no device found?</term>
 	<listitem>
 	
 	<para>A: One possible reason is the fact that the correct kernel driver is missing or doesn't exist for your laptop brightness panel, you can debug this fact by running this
@@ -479,7 +463,7 @@ the brightness level of your screen, of course the plugin will not work on a sys
  </title>
  
 <para>
-Ideally these details should go in a technical guide not the user guide but we need someplace to keep these informations, please
+Ideally these details should go in a technical guide not the user guide, but we need someplace to keep this information, please
  ignore if these is not what you are looking for.
 </para> 
  
@@ -488,7 +472,7 @@ Ideally these details should go in a technical guide not the user guide but we n
  
  <para>
  in this section the DBus interfaces provided by &app; are expanded, those interfaces listed here are freedesktop compliant power
- management interfaces, this section might be useful if you are developing an application and wishing to use these interfaces, or they
+ management interfaces. This section might be useful if you are developing an application and wishing to use these interfaces, or they
  can be useful for debugging purpose.
  
  </para>
