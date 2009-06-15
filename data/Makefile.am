@@ -1,1 +1,3 @@
-SUBDIRS = icons
+SUBDIRS = 		\
+	icons		\
+	interfaces

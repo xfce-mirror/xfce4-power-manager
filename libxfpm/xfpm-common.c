@@ -25,6 +25,19 @@
 #include "xfpm-common.h"
 #include "xfpm-string.h"
 
+GtkBuilder *xfpm_builder_new_from_file (const gchar *file, GError **error)
+{
+    GtkBuilder *builder;
+
+    builder = gtk_builder_new ();
+    
+    gtk_builder_add_from_file (GTK_BUILDER (builder),
+			       file,
+			       error);
+			       
+    return builder;
+}
+
 static void
 xfpm_link_browser (GtkAboutDialog *about, const gchar *link, gpointer data)
 {
