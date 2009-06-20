@@ -799,7 +799,19 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean user_privilege, gbool
 	gtk_list_store_set (list_store, &iter, 0, _("Lock screen"), 1, LID_TRIGGER_LOCK_SCREEN, -1);
 	
 	val = xfconf_channel_get_uint (channel, "/" LID_SWITCH_ON_BATTERY_CFG, LID_TRIGGER_LOCK_SCREEN);
-	gtk_combo_box_set_active (GTK_COMBO_BOX (lid), val);
+	
+	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+	      valid;
+	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	{
+	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+				1, &list_value, -1);
+	    if ( val == list_value )
+	    {
+		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (lid), &iter);
+		break;
+	    }
+	} 
     }
     else
     {
@@ -843,7 +855,9 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean user_privilege, gboolean c
     GtkWidget *brg;
     GtkListStore *list_store;
     GtkTreeIter iter;
-    gint val;
+    guint val;
+    gboolean valid;
+    guint list_value;
     
 #ifdef HAVE_DPMS
     GtkWidget *dpms_frame_on_ac;
@@ -909,8 +923,18 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean user_privilege, gboolean c
 	gtk_list_store_set (list_store, &iter, 0, _("Lock screen"), 1, LID_TRIGGER_LOCK_SCREEN, -1);
 	
 	val = xfconf_channel_get_uint (channel, "/" LID_SWITCH_ON_AC_CFG, LID_TRIGGER_LOCK_SCREEN);
-	
-	gtk_combo_box_set_active (GTK_COMBO_BOX (lid), val);
+	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+	      valid;
+	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	{
+	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+				1, &list_value, -1);
+	    if ( val == list_value )
+	    {
+		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (lid), &iter);
+		break;
+	    }
+	} 
     }
     else
     {
@@ -959,6 +983,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     GtkWidget *notify;
     
     guint  value;
+    guint list_value;
+    gboolean valid;
     gboolean val;
     
     GtkWidget *dpms;
@@ -985,7 +1011,18 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     
     value = xfconf_channel_get_uint (channel, "/" SHOW_TRAY_ICON_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
     
-    gtk_combo_box_set_active (GTK_COMBO_BOX (tray), value);
+    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+	  valid;
+	  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+    {
+	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+			    1, &list_value, -1);
+	if ( value == list_value )
+	{
+	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (tray), &iter);
+	    break;
+	}
+    } 
 		      
     dpms = GTK_WIDGET (gtk_builder_get_object (xml, "enable-dpms"));
 #ifdef HAVE_DPMS
@@ -1041,8 +1078,18 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
 	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
 	
 	value = xfconf_channel_get_uint (channel, "/" POWER_SWITCH_CFG, XFPM_DO_NOTHING);
-	
-	gtk_combo_box_set_active (GTK_COMBO_BOX(power), value);
+	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+	      valid;
+	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	{
+	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+				1, &list_value, -1);
+	    if ( value == list_value )
+	    {
+		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power), &iter);
+		break;
+	    }
+	} 
     }
     else
     {
@@ -1086,8 +1133,18 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
 	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
 	
 	value = xfconf_channel_get_uint (channel, "/" HIBERNATE_SWITCH_CFG, XFPM_DO_NOTHING);
-
-	gtk_combo_box_set_active (GTK_COMBO_BOX (hibernate), value);
+	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+	      valid;
+	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	{
+	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+				1, &list_value, -1);
+	    if ( value == list_value )
+	    {
+		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (hibernate), &iter);
+		break;
+	    }
+	} 
     }
     else
     {
@@ -1131,7 +1188,18 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
 	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
 	
 	value = xfconf_channel_get_uint (channel, "/" SLEEP_SWITCH_CFG, XFPM_DO_NOTHING);
-	gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_w), value);
+	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+	      valid;
+	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	{
+	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+				1, &list_value, -1);
+	    if ( value == list_value )
+	    {
+		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep_w), &iter);
+		break;
+	    }
+	} 
     }
     else
     {

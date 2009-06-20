@@ -146,6 +146,25 @@ xfpm_engine_do_shutdown (XfpmEngine * engine)
     return FALSE;
 }
 
+/*
+ * Map of int to strings shutdown values
+ */
+const gchar    *xfpm_int_to_shutdown_string (gint val)
+{
+    if ( val == XFPM_DO_NOTHING )
+	return "Nothing";
+    else if ( val == XFPM_DO_SUSPEND)
+	return "Suspend";
+    else if ( val == XFPM_DO_HIBERNATE)
+	return "Hibernate";
+    else if ( val == XFPM_DO_SHUTDOWN)
+	return "Shutdown";
+    else if ( val == XFPM_ASK)
+	return "Ask";
+    
+    return "Invalid";
+}
+
 static void
 xfpm_engine_shutdown_request (XfpmEngine * engine,
 			      XfpmShutdownRequest shutdown, gboolean critical)
@@ -159,7 +178,12 @@ xfpm_engine_shutdown_request (XfpmEngine * engine,
 
     if (xfpm_strequal (action, "Nothing"))
     {
-	TRACE ("Sleep button disabled in configuration");
+	TRACE ("Button is disabled in configuration");
+	return;
+    }
+    else if ( xfpm_strequal (action, "Ask") && xfpm_strequal (action, "Invalid"))
+    {
+	g_warning ("Invalid configuration action %s", action);
 	return;
     }
     else if ( engine->priv->inhibited == TRUE && critical == FALSE )
@@ -227,7 +251,6 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
 {
     XfpmShutdownRequest req = XFPM_DO_NOTHING;
     
-    
     XFPM_DEBUG_ENUM ("Received button press event", type, XFPM_TYPE_BUTTON_KEY);
   
     if ( engine->priv->inhibited )
@@ -254,13 +277,14 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
     else if ( type == BUTTON_SLEEP )
     {
 	g_object_get (G_OBJECT (engine->priv->conf),
-		      POWER_SWITCH_CFG, &req,
+		      SLEEP_SWITCH_CFG, &req,
 		      NULL);
+	g_print ("req %d\n", req);
     }
     else if ( type == BUTTON_HIBERNATE )
     {
 	g_object_get (G_OBJECT (engine->priv->conf),
-		      POWER_SWITCH_CFG, &req,
+		      HIBERNATE_SWITCH_CFG, &req,
 		      NULL);
     }
     else

@@ -77,25 +77,6 @@ xfpm_load_icon (const char *icon_name, gint size)
     return icon;                               
 }
 
-/*
- * Map of int to strings shutdown values
- */
-const gchar    *xfpm_int_to_shutdown_string (gint val)
-{
-    if ( val == 0 )
-	return "Nothing";
-    else if ( val == 1)
-	return "Suspend";
-    else if ( val == 2)
-	return "Hibernate";
-    else if ( val == 3)
-	return "Shutdown";
-    else if ( val == 4)
-	return "Ask";
-    
-    return "Invalid";
-}
-
 gint xfpm_shutdown_string_to_int (const gchar *string)
 {
     if ( xfpm_strequal("Nothing", string) )

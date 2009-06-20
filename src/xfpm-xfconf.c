@@ -146,18 +146,20 @@ xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
     for ( i = 0; i < nspecs; i++)
     {
 	gchar *prop_name;
-	prop_name = g_strjoin ("/", specs[i]->name, NULL);
+	prop_name = g_strdup_printf ("/%s", specs[i]->name);
+	g_value_init (&value, specs[i]->value_type);
 	
-	if (channel_valid )
+	if (channel_valid)
 	{
 	    if ( !xfconf_channel_get_property (conf->priv->channel, prop_name, &value) )
 	    {
-		g_value_init (&value, specs[i]->value_type);
+		TRACE ("Using default configuration for %s", specs[i]->name);
 		g_param_value_set_default (specs[i], &value);
 	    }
 	}
 	else
 	{
+	    TRACE ("Using default configuration for %s", specs[i]->name);
 	    g_param_value_set_default (specs[i], &value);
 	}
 	g_free (prop_name);
