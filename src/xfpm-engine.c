@@ -149,7 +149,8 @@ xfpm_engine_do_shutdown (XfpmEngine * engine)
 /*
  * Map of int to strings shutdown values
  */
-const gchar    *xfpm_int_to_shutdown_string (gint val)
+static const gchar * G_GNUC_PURE
+xfpm_int_to_shutdown_string (gint val)
 {
     if ( val == XFPM_DO_NOTHING )
 	return "Nothing";

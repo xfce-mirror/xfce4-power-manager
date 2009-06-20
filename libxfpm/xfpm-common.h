@@ -35,10 +35,6 @@ GtkBuilder     *xfpm_builder_new_from_file   	(const gchar *file,
 
 GdkPixbuf* 	xfpm_load_icon    		(const gchar *icon_name,
 						 gint size) G_GNUC_MALLOC;
-						 
-const gchar    *xfpm_int_to_shutdown_string	(gint val) G_GNUC_PURE;
-
-gint            xfpm_shutdown_string_to_int     (const gchar *string) G_GNUC_PURE;
 
 void       	xfpm_lock_screen  		(void);
 

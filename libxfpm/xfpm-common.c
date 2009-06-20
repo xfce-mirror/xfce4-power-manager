@@ -77,22 +77,6 @@ xfpm_load_icon (const char *icon_name, gint size)
     return icon;                               
 }
 
-gint xfpm_shutdown_string_to_int (const gchar *string)
-{
-    if ( xfpm_strequal("Nothing", string) )
-	return 0;
-    else if ( xfpm_strequal("Suspend", string) )
-	return 1;
-    else if  (xfpm_strequal("Hibernate", string) )
-	return 2;
-    else if (xfpm_strequal ("Shutdown", string) )
-	return 3;
-    else if (xfpm_strequal ("Ask", string) )
-	return 4;
-	
-    return -1; /* error here */
-}
-
 void       
 xfpm_lock_screen (void)
 {
