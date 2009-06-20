@@ -317,29 +317,48 @@ notify_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 void
 set_hibernate_inactivity (GtkWidget *w, XfconfChannel *channel)
 {
-    if (!xfconf_channel_set_string (channel, "/" INACTIVITY_SLEEP_MODE, "Hibernate") )
+    gboolean active;
+    
+    active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
+    
+    if ( active )
     {
-	g_critical ("Cannot set value hibernate for property %s", INACTIVITY_SLEEP_MODE);
+	if (!xfconf_channel_set_string (channel, "/" INACTIVITY_SLEEP_MODE, "Hibernate") )
+	{
+	    g_critical ("Cannot set value hibernate for property %s", INACTIVITY_SLEEP_MODE);
+	}
     }
 }
 
 void
 set_suspend_inactivity (GtkWidget *w, XfconfChannel *channel)
 {
-    if (!xfconf_channel_set_string (channel, "/" INACTIVITY_SLEEP_MODE, "Suspend") )
+    gboolean active;
+    
+    active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
+    if ( active )
     {
-	g_critical ("Cannot set value suspend for property %s", INACTIVITY_SLEEP_MODE);
+	if (!xfconf_channel_set_string (channel, "/" INACTIVITY_SLEEP_MODE, "Suspend") )
+	{
+	    g_critical ("Cannot set value suspend for property %s", INACTIVITY_SLEEP_MODE);
+	}
     }
 }
-
 
 void
 set_dpms_standby_mode (GtkWidget *w, XfconfChannel *channel)
 {
 #ifdef HAVE_DPMS
-    if (!xfconf_channel_set_string (channel, "/" DPMS_SLEEP_MODE, "standby") )
+    gboolean active;
+    
+    active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
+    
+    if ( active )
     {
-	g_critical ("Cannot set value sleep for property %s\n", DPMS_SLEEP_MODE);
+	if (!xfconf_channel_set_string (channel, "/" DPMS_SLEEP_MODE, "standby") )
+	{
+	    g_critical ("Cannot set value sleep for property %s\n", DPMS_SLEEP_MODE);
+	}
     }
 #endif
 }
@@ -348,9 +367,15 @@ void
 set_dpms_suspend_mode (GtkWidget *w, XfconfChannel *channel)
 {
 #ifdef HAVE_DPMS
-    if (!xfconf_channel_set_string (channel, "/" DPMS_SLEEP_MODE, "suspend") )
+    gboolean active;
+    
+    active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
+    if ( active )
     {
-	g_critical ("Cannot set value sleep for property %s\n", DPMS_SLEEP_MODE);
+	if (!xfconf_channel_set_string (channel, "/" DPMS_SLEEP_MODE, "suspend") )
+	{
+	    g_critical ("Cannot set value sleep for property %s\n", DPMS_SLEEP_MODE);
+	}
     }
 #endif
 }
@@ -1169,9 +1194,9 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
     suspend_dpms_mode = GTK_WIDGET (gtk_builder_get_object (xml, "suspend-dpms-mode"));
     
 #ifdef HAVE_DPMS
-    str = xfconf_channel_get_string (channel, "/" DPMS_SLEEP_MODE, "sleep");
+    str = xfconf_channel_get_string (channel, "/" DPMS_SLEEP_MODE, "standby");
     
-    if ( xfpm_strequal (str, "sleep" ) )
+    if ( xfpm_strequal (str, "standby" ) )
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sleep_dpms_mode), TRUE);
     else if ( xfpm_strequal (str, "suspend") )
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (suspend_dpms_mode), TRUE);

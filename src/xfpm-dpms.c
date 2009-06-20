@@ -128,7 +128,7 @@ xfpm_dpms_get_sleep_mode (XfpmDpms *dpms, gboolean *ret_standby_mode)
     g_object_get (G_OBJECT (dpms->priv->conf),
 		  DPMS_SLEEP_MODE, &sleep_mode,
 		  NULL);
-
+    
     if ( !g_strcmp0 (sleep_mode, "standby"))
 	*ret_standby_mode = TRUE;
     else
@@ -140,10 +140,10 @@ xfpm_dpms_get_sleep_mode (XfpmDpms *dpms, gboolean *ret_standby_mode)
 static void
 xfpm_dpms_get_configuration_timeouts (XfpmDpms *dpms, guint16 *ret_sleep, guint16 *ret_off )
 {
-    guint16 sleep, off;
+    guint sleep, off;
     
     g_object_get (G_OBJECT (dpms->priv->conf),
-		  dpms->priv->on_battery ? ON_BATT_DPMS_SLEEP : ON_AC_DPMS_OFF, &sleep,
+		  dpms->priv->on_battery ? ON_BATT_DPMS_SLEEP : ON_AC_DPMS_SLEEP, &sleep,
 		  dpms->priv->on_battery ? ON_BATT_DPMS_OFF : ON_AC_DPMS_OFF, &off,
 		  NULL);
 		  
@@ -172,11 +172,11 @@ xfpm_dpms_refresh (XfpmDpms *dpms)
 	xfpm_dpms_disable (dpms);
 	return;
     }
-        
+
     xfpm_dpms_enable (dpms);
     xfpm_dpms_get_configuration_timeouts (dpms, &sleep_timeout, &off_timeout);
     xfpm_dpms_get_sleep_mode (dpms, &sleep_mode);
-    
+
     if (sleep_mode == TRUE )
     {
 	xfpm_dpms_set_timeouts	   (dpms, 
@@ -197,7 +197,10 @@ static void
 xfpm_dpms_settings_changed_cb (GObject *obj, GParamSpec *spec, XfpmDpms *dpms)
 {
     if ( g_str_has_prefix (spec->name, "dpms"))
+    {
+	TRACE ("Configuration changed");
 	xfpm_dpms_refresh (dpms);
+    }
 }
 
 static void
