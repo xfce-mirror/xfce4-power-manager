@@ -130,8 +130,10 @@ xfpm_battery_refresh_visible_icon (XfpmBattery *battery)
     XfpmShowIcon show_icon;
     gboolean visible = TRUE;
     
-    show_icon = xfpm_xfconf_get_property_enum (battery->priv->conf, SHOW_TRAY_ICON_CFG);
-    
+    g_object_get (G_OBJECT (battery->priv->conf),
+		  SHOW_TRAY_ICON_CFG, &show_icon,
+		  NULL);
+		  
     if ( show_icon == SHOW_ICON_ALWAYS )
     	visible = TRUE;
     else if ( show_icon == SHOW_ICON_WHEN_BATTERY_PRESENT )
@@ -248,9 +250,11 @@ static void
 xfpm_battery_notify (XfpmBattery *battery)
 {
     gboolean notify;
-    
-    notify = xfpm_xfconf_get_property_bool (battery->priv->conf, GENERAL_NOTIFICATION_CFG);
-    
+
+    g_object_get (G_OBJECT (battery->priv->conf),
+		  GENERAL_NOTIFICATION_CFG, &notify,
+		  NULL);
+		  
     if ( notify )
     {
 	g_idle_add ((GSourceFunc) xfpm_battery_notify_idle, battery);
@@ -356,7 +360,11 @@ xfpm_battery_refresh_misc (XfpmBattery *battery, gboolean is_present,
     gchar *tip;
     XfpmBatteryState state;
     const gchar *str;
-    guint critical_level = xfpm_xfconf_get_property_int (battery->priv->conf, CRITICAL_POWER_LEVEL );
+    guint critical_level;
+    
+    g_object_get (G_OBJECT (battery->priv->conf),
+		  CRITICAL_POWER_LEVEL, &critical_level,
+		  NULL);
     
     if ( !is_present )
     {
@@ -387,9 +395,13 @@ xfpm_battery_refresh_primary (XfpmBattery *battery, gboolean is_present,
 {
     gchar *tip;
     const gchar *str;
-    guint critical_level = xfpm_xfconf_get_property_int (battery->priv->conf, CRITICAL_POWER_LEVEL );
-    
+    guint critical_level;
+
     XfpmBatteryState state = battery->priv->state;
+    
+    g_object_get (G_OBJECT (battery->priv->conf),
+		  CRITICAL_POWER_LEVEL, &critical_level,
+		  NULL);
     
     TRACE ("Start");
     
@@ -554,7 +566,7 @@ xfpm_battery_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmBat
 }
 
 static void
-xfpm_battery_tray_icon_settings_changed (XfpmXfconf *conf, XfpmBattery *battery)
+xfpm_battery_tray_icon_settings_changed (GObject *obj, GParamSpec *spec, XfpmBattery *battery)
 {
     xfpm_battery_refresh_visible_icon (battery);
 }
@@ -661,7 +673,7 @@ xfpm_battery_new(const HalBattery *device)
     battery->priv->sig_3 = g_signal_connect (G_OBJECT(battery->priv->device), "battery-changed",
 					     G_CALLBACK(xfpm_battery_device_changed_cb), battery);
 		      
-    battery->priv->sig_2 = g_signal_connect (G_OBJECT(battery->priv->conf), "tray-icon-settings-changed",
+    battery->priv->sig_2 = g_signal_connect (G_OBJECT(battery->priv->conf), "notify::" SHOW_TRAY_ICON_CFG,
 					     G_CALLBACK(xfpm_battery_tray_icon_settings_changed), battery);
     
     return battery;

@@ -38,6 +38,7 @@
 #include "xfpm-config.h"
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum.h"
+#include "xfpm-enum-types.h"
 
 static void xfpm_xfconf_finalize   (GObject *object);
 
@@ -49,482 +50,133 @@ static gpointer xfpm_xfconf_object = NULL;
 struct XfpmXfconfPrivate
 {
     XfconfChannel 	*channel;
-    
-    XfpmShutdownRequest  power_button;
-    XfpmShutdownRequest  hibernate_button;
-    XfpmShutdownRequest  sleep_button;
-    XfpmShutdownRequest  lid_button_ac;
-    XfpmShutdownRequest  lid_button_battery;
-    XfpmShutdownRequest  critical_action;
-    
-    gboolean             lock_screen;
-#ifdef HAVE_DPMS
-    gboolean       	 dpms_enabled;
-    
-    guint16        	 dpms_sleep_on_battery;
-    guint16        	 dpms_off_on_battery;
-    guint16        	 dpms_sleep_on_ac;
-    guint16        	 dpms_off_on_ac;
-    
-    gboolean         	 sleep_dpms_mode; /*TRUE = standby FALSE = suspend*/
-#endif
-    gboolean             power_save_on_battery;
-#ifdef SYSTEM_IS_LINUX
-    gboolean             cpu_freq_control;
-#endif
-    
-    guint16              brightness_on_ac_timeout;
-    guint16              brightness_on_battery_timeout;
-    
-    XfpmShowIcon     	 show_icon;
-    guint                critical_level;
-    gboolean             general_notification;
-    
-    guint              	 inactivity_on_ac;
-    guint                inactivity_on_battery;
-    gboolean             sleep_inactivity; /* TRUE = suspend FALSE = hibernate*/
-    gboolean             enable_brightness;
-    gboolean		 show_brightness_popup;
+    GValue              *values;
 };
 
 enum
 {
-    DPMS_SETTINGS_CHANGED,
-    POWER_SAVE_SETTINGS_CHANGED,
-    BRIGHTNESS_SETTINGS_CHANGED,
-    TRAY_ICON_SETTINGS_CHANGED,
-    INACTIVITY_TIMEOUT_CHANGED,
-    LAST_SIGNAL
+    PROP_0,
+    PROP_GENERAL_NOTIFICATION,
+    PROP_LOCK_SCREEN_ON_SLEEP,
+    PROP_POWER_SAVE_ON_BATTERY,
+    PROP_ENABLE_CPU_FREQ,
+    PROP_CRITICAL_LEVEL,
+    PROP_SHOW_BRIGHTNESS_POPUP,
+    PROP_ENABLE_BRIGHTNESS,
+    PROP_TRAY_ICON,
+    PROP_CRITICAL_BATTERY_ACTION,
+    PROP_POWER_BUTTON,
+    PROP_HIBERNATE_BUTTON,
+    PROP_SLEEP_BUTTON,
+    PROP_LID_ACTION_ON_AC,
+    PROP_LID_ACTION_ON_BATTERY,
+#ifdef HAVE_DPMS
+    PROP_ENABLE_DPMS,
+    PROP_DPMS_SLEEP_ON_AC,
+    PROP_DPMS_OFF_ON_AC,
+    PROP_DPMS_SLEEP_ON_BATTERY,
+    PROP_DPMS_OFF_ON_BATTERY,
+    PROP_DPMS_SLEEP_MODE,
+#endif
+    PROP_IDLE_ON_AC,
+    PROP_IDLE_ON_BATTERY,
+    PROP_IDLE_SLEEP_MODE,
+    PROP_DIM_ON_AC_TIMEOUT,
+    PROP_DIM_ON_BATTERY_TIMEOUT,
+    N_PROPERTIES
 };
 
-static guint signals[LAST_SIGNAL] = { 0 };
-
 G_DEFINE_TYPE(XfpmXfconf, xfpm_xfconf, G_TYPE_OBJECT)
+
+static void 
+xfpm_xfconf_set_property (GObject *object,
+			  guint prop_id,
+			  const GValue *value,
+			  GParamSpec *pspec)
+{
+    XfpmXfconf *conf;
+    GValue *dst;
+    
+    conf = XFPM_XFCONF (object);
+    
+    dst = conf->priv->values + prop_id;
+    
+    if ( !G_IS_VALUE (dst) )
+    {
+	g_value_init (dst, pspec->value_type);
+	g_param_value_set_default (pspec, dst);
+    }
+    
+    if ( g_param_values_cmp (pspec, value, dst) != 0)
+    {
+	g_value_copy (value, dst);
+	g_object_notify (object, pspec->name);
+    }
+}
+
+static void 
+xfpm_xfconf_get_property (GObject *object,
+			  guint prop_id,
+			  GValue *value,
+			  GParamSpec *pspec)
+{
+    XfpmXfconf *conf;
+    GValue *src;
+    
+    conf = XFPM_XFCONF (object);
+    
+    src = conf->priv->values + prop_id;
+    
+    if ( G_VALUE_HOLDS (src, pspec->value_type) )
+	g_value_copy (src, value);
+    else
+	g_param_value_set_default (pspec, value);
+}
+
+static void
+xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
+{
+    GParamSpec **specs;
+    GValue value = { 0, };
+    guint nspecs;
+    guint i;
+    
+    specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (conf), &nspecs);
+    
+    for ( i = 0; i < nspecs; i++)
+    {
+	gchar *prop_name;
+	prop_name = g_strjoin ("/", specs[i]->name, NULL);
+	
+	if (channel_valid )
+	{
+	    if ( !xfconf_channel_get_property (conf->priv->channel, prop_name, &value) )
+	    {
+		g_value_init (&value, specs[i]->value_type);
+		g_param_value_set_default (specs[i], &value);
+	    }
+	}
+	else
+	{
+	    g_param_value_set_default (specs[i], &value);
+	}
+	g_free (prop_name);
+	g_object_set_property (G_OBJECT (conf), specs[i]->name, &value);
+	g_value_unset (&value);
+    }
+}
 
 static void
 xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 				 GValue *value, XfpmXfconf *conf)
 {
-    const gchar *str;
-    gint val;
-    
+    /*FIXME: Set default for this key*/
     if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
         return;
 
     TRACE("Property modified: %s\n", property);
     
-    if ( xfpm_strequal (property, SLEEP_SWITCH_CFG) )
-    {
-	str = g_value_get_string (value);
- 	val = xfpm_shutdown_string_to_int (str); 
-
-	if ( G_UNLIKELY (val == 3) )
-	{
-	    g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
-	    conf->priv->sleep_button = XFPM_DO_NOTHING;
-	}
-	else
-	    conf->priv->sleep_button = val;
-    }
-    else if ( xfpm_strequal (property, GENERAL_NOTIFICATION_CFG) )
-    {
-	conf->priv->general_notification = g_value_get_boolean (value);
-    }
-    else if ( xfpm_strequal (property, POWER_SWITCH_CFG ) )
-    {
-	str = g_value_get_string (value);
-	val = xfpm_shutdown_string_to_int (str);
-	if ( G_UNLIKELY (val == -1) )
-	{
-	    g_warning ("Invalid value %s fpr property %s, using default\n", str, POWER_SWITCH_CFG);
-	    conf->priv->power_button = XFPM_DO_NOTHING;
-	}
-	else
-	    conf->priv->power_button = xfpm_shutdown_string_to_int (str);
-    }
-    else if ( xfpm_strequal (property, HIBERNATE_SWITCH_CFG ) )
-    {
-	str = g_value_get_string (value);
-	val = xfpm_shutdown_string_to_int (str);
-	if ( G_UNLIKELY (val == -1) )
-	{
-	    g_warning ("Invalid value %s fpr property %s, using default\n", str, HIBERNATE_SWITCH_CFG);
-	    conf->priv->hibernate_button = XFPM_DO_NOTHING;
-	}
-	else
-	    conf->priv->hibernate_button = xfpm_shutdown_string_to_int (str);
-    }
-    else if ( xfpm_strequal (property, LID_SWITCH_ON_AC_CFG) )
-    {
-	str = g_value_get_string (value);
- 	val = xfpm_shutdown_string_to_int (str);
-	if ( G_UNLIKELY (val == -1 || val == 3) )
-	{
-	    g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_AC_CFG);
-	    conf->priv->lid_button_ac = XFPM_DO_NOTHING;
-	}
-	else
-	    conf->priv->lid_button_ac = val;
-    }
-    else if ( xfpm_strequal (property, LID_SWITCH_ON_BATTERY_CFG) )
-    {
-	str = g_value_get_string (value);
- 	val = xfpm_shutdown_string_to_int (str); 
-	if ( G_UNLIKELY (val == -1 || val == 3) )
-	{
-	    g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_BATTERY_CFG);
-	    conf->priv->lid_button_battery = XFPM_DO_NOTHING;
-	}
-	else
-	    conf->priv->lid_button_battery = val;
-    }
-    else if ( xfpm_strequal (property, LOCK_SCREEN_ON_SLEEP ) )
-    {
-	conf->priv->lock_screen = g_value_get_boolean (value);
-    }
-#ifdef HAVE_DPMS
-    else if ( xfpm_strequal (property, DPMS_ENABLED_CFG) )
-    {
-	conf->priv->dpms_enabled = g_value_get_boolean (value);
-	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
-    }
-    else if ( xfpm_strequal (property, ON_AC_DPMS_SLEEP) )
-    {
-	conf->priv->dpms_sleep_on_ac = MIN(3600, g_value_get_uint (value) * 60);
-	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
-    }
-    else if ( xfpm_strequal (property, ON_AC_DPMS_OFF) )
-    {
-	conf->priv->dpms_off_on_ac = MIN(3600, g_value_get_uint (value) * 60);
-	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
-    }
-    else if ( xfpm_strequal (property, ON_BATT_DPMS_SLEEP) )
-    {
-	conf->priv->dpms_sleep_on_battery = MIN(3600, g_value_get_uint (value) * 60);
-	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
-    }
-    else if ( xfpm_strequal (property, ON_BATT_DPMS_OFF) )
-    {
-	conf->priv->dpms_off_on_battery = MIN (3600, g_value_get_uint (value) * 60);
-	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
-    }
-    else if ( xfpm_strequal (property, DPMS_SLEEP_MODE) )
-    {
-	str = g_value_get_string (value);
-	if ( xfpm_strequal (str, "sleep" ) )
-	{
-	    conf->priv->sleep_dpms_mode = TRUE;
-	}
-	else if ( xfpm_strequal (str, "suspend") )
-	{
-	    conf->priv->sleep_dpms_mode = FALSE;
-	}
-	else
-	{
-	    g_critical("Invalid value %s for property %s\n", str, DPMS_SLEEP_MODE);
-	    conf->priv->sleep_dpms_mode = TRUE;
-	}
-	g_signal_emit (G_OBJECT(conf), signals[DPMS_SETTINGS_CHANGED], 0);
-    }
-#endif /* HAVE_DPMS */
-    else if ( xfpm_strequal(property, POWER_SAVE_ON_BATTERY) )
-    {
-	conf->priv->power_save_on_battery = g_value_get_boolean (value);
-	g_signal_emit (G_OBJECT(conf), signals[POWER_SAVE_SETTINGS_CHANGED], 0);
-    }
-#ifdef SYSTEM_IS_LINUX
-    else if ( xfpm_strequal(property, CPU_FREQ_CONTROL) )
-    {
-	conf->priv->cpu_freq_control = g_value_get_boolean (value);
-	g_signal_emit (G_OBJECT(conf), signals[POWER_SAVE_SETTINGS_CHANGED], 0);
-    }
-#endif
-    else if ( xfpm_strequal (property, BRIGHTNESS_ON_AC ) )
-    {
-	conf->priv->brightness_on_ac_timeout = g_value_get_uint (value);
-	
-	if ( G_UNLIKELY (conf->priv->brightness_on_ac_timeout > 120 || conf->priv->brightness_on_ac_timeout < 9 ))
-	{
-	    g_warning ("Value %d for %s is out of range", conf->priv->brightness_on_ac_timeout, BRIGHTNESS_ON_AC );
-	    conf->priv->brightness_on_ac_timeout = 9;
-	}
-	g_signal_emit (G_OBJECT(conf), signals[BRIGHTNESS_SETTINGS_CHANGED], 0);
-    }
-    else if ( xfpm_strequal (property, BRIGHTNESS_ON_BATTERY ) )
-    {
-	conf->priv->brightness_on_battery_timeout = g_value_get_uint (value);
-	
-	if ( G_UNLIKELY (conf->priv->brightness_on_battery_timeout > 120 || conf->priv->brightness_on_battery_timeout < 9 ))
-	{
-	    g_warning ("Value %d for %s is out of range", conf->priv->brightness_on_battery_timeout, BRIGHTNESS_ON_BATTERY );
-	    conf->priv->brightness_on_battery_timeout = 9;
-	}
-	g_signal_emit (G_OBJECT(conf), signals[BRIGHTNESS_SETTINGS_CHANGED], 0);
-    }
-    else if ( xfpm_strequal (property, CRITICAL_BATT_ACTION_CFG) )
-    {
-	str = g_value_get_string (value);
-	val = xfpm_shutdown_string_to_int (str);
-	if ( G_UNLIKELY (val == -1 || val == 1 ))
-	{
-	    g_warning ("Invalid value %s for property %s, using default\n", str, CRITICAL_BATT_ACTION_CFG);
-	    conf->priv->critical_action = XFPM_DO_NOTHING;
-	}
-	else
-	    conf->priv->critical_action = val;
-    }
-    else if ( xfpm_strequal (property, SHOW_TRAY_ICON_CFG) )
-    {
-	conf->priv->show_icon = g_value_get_uint (value);
-	g_signal_emit (G_OBJECT(conf), signals[TRAY_ICON_SETTINGS_CHANGED], 0 );
-    }
-    else if ( xfpm_strequal( property, CRITICAL_POWER_LEVEL) )
-    {
-	val = g_value_get_uint (value);
-	if ( G_UNLIKELY (val > 20) )
-	{
-	    g_warning ("Value %d for property %s is out of range \n", val, CRITICAL_POWER_LEVEL);
-	    conf->priv->critical_level = 10;
-	}
-	else 
-	    conf->priv->critical_level = val;
-    }
-    else if ( xfpm_strequal (property, ON_AC_INACTIVITY_TIMEOUT ) )
-    {
-	val = g_value_get_uint (value);
-	conf->priv->inactivity_on_ac = val;
-	if ( G_UNLIKELY (conf->priv->inactivity_on_ac < 30 ) )
-	{
-	    g_print ("Invalid value for property %s", ON_AC_INACTIVITY_TIMEOUT);
-	    conf->priv->inactivity_on_ac = 30;
-	}
-	g_signal_emit (G_OBJECT (conf), signals [INACTIVITY_TIMEOUT_CHANGED], 0);
-    }
-    else if ( xfpm_strequal (property, ON_BATTERY_INACTIVITY_TIMEOUT ) )
-    {
-	val = g_value_get_uint (value);
-	conf->priv->inactivity_on_battery = val;
-	if ( G_UNLIKELY (conf->priv->inactivity_on_battery < 30 ) )
-	{
-	    g_print ("Invalid value for property %s", ON_BATTERY_INACTIVITY_TIMEOUT);
-	    conf->priv->inactivity_on_battery = 30;
-	}
-	g_signal_emit (G_OBJECT (conf), signals [INACTIVITY_TIMEOUT_CHANGED], 0);
-    }
-    else if ( xfpm_strequal (property, INACTIVITY_SLEEP_MODE ) )
-    {
-	str = g_value_get_string (value);
-	
-	if ( xfpm_strequal (str, "Suspend"))
-	{
-	    conf->priv->sleep_inactivity = TRUE;
-	}
-	else if ( xfpm_strequal (str, "Hibernate") )
-	{
-	    conf->priv->sleep_inactivity = FALSE;
-	}
-	else
-	{
-	    g_critical("Invalid value %s for property %s\n", str, INACTIVITY_SLEEP_MODE);
-	    conf->priv->sleep_inactivity = TRUE;
-	}
-    }
-    else if ( xfpm_strequal (property, ENABLE_BRIGHTNESS_CONTROL) )
-	conf->priv->enable_brightness = g_value_get_boolean (value);
-    else if ( xfpm_strequal (property, SHOW_BRIGHTNESS_POPUP ) )
-	conf->priv->show_brightness_popup = g_value_get_boolean (value);
-    else
-	g_warn_if_reached ();
-}
-
-static void
-xfpm_xfconf_load_configuration (XfpmXfconf *conf)
-{
-    gchar *str;
-    gint val;
-    
-    str = xfconf_channel_get_string (conf->priv->channel, SLEEP_SWITCH_CFG, "Nothing");
-    val = xfpm_shutdown_string_to_int (str);
-    
-    if ( G_UNLIKELY (val == -1 || val == 3) )
-    {
-	g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
-	conf->priv->sleep_button = XFPM_DO_NOTHING;
-	xfconf_channel_set_string (conf->priv->channel, SLEEP_SWITCH_CFG, "Nothing");
-    }
-    else conf->priv->sleep_button = val;
-    
-    g_free (str);
-    
-    str = xfconf_channel_get_string (conf->priv->channel, POWER_SWITCH_CFG, "Nothing");
-    val = xfpm_shutdown_string_to_int (str);
-    
-    if ( G_UNLIKELY (val == -1 ) )
-    {
-	g_warning ("Invalid value %s for property %s, using default\n", str, SLEEP_SWITCH_CFG);
-	conf->priv->power_button = XFPM_DO_NOTHING;
-	xfconf_channel_set_string (conf->priv->channel, POWER_SWITCH_CFG, "Nothing");
-    }
-    else conf->priv->power_button = val;
-    
-    g_free (str);
-    
-    str = xfconf_channel_get_string (conf->priv->channel, HIBERNATE_SWITCH_CFG, "Nothing");
-    val = xfpm_shutdown_string_to_int (str);
-    
-    if ( G_UNLIKELY (val == -1 ) )
-    {
-	g_warning ("Invalid value %s for property %s, using default\n", str, HIBERNATE_SWITCH_CFG);
-	conf->priv->hibernate_button = XFPM_DO_NOTHING;
-	xfconf_channel_set_string (conf->priv->channel, HIBERNATE_SWITCH_CFG, "Nothing");
-    }
-    else conf->priv->hibernate_button = val;
-    
-    g_free (str);
-    
-    conf->priv->general_notification = xfconf_channel_get_bool (conf->priv->channel, GENERAL_NOTIFICATION_CFG, TRUE);
-    
-    str = xfconf_channel_get_string (conf->priv->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
-    val = xfpm_shutdown_string_to_int (str);
-
-    if ( G_UNLIKELY (val == -1 || val == 3) )
-    {
-	g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_AC_CFG);
-	conf->priv->lid_button_ac = XFPM_DO_NOTHING;
-	xfconf_channel_set_string (conf->priv->channel, LID_SWITCH_ON_AC_CFG, "Nothing");
-    }
-    else conf->priv->lid_button_ac = val;
-    
-    g_free (str);
-    
-    str = xfconf_channel_get_string (conf->priv->channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
-    val = xfpm_shutdown_string_to_int (str);
-    
-    if ( G_UNLIKELY (val == -1 || val == 3) )
-    {
-	g_warning ("Invalid value %s for property %s, using default\n", str, LID_SWITCH_ON_BATTERY_CFG);
-	conf->priv->lid_button_battery = XFPM_DO_NOTHING;
-	xfconf_channel_set_string (conf->priv->channel, LID_SWITCH_ON_BATTERY_CFG, "Nothing");
-    }
-    else conf->priv->lid_button_battery = val;
-    
-    g_free (str);
-    
-    conf->priv->lock_screen = xfconf_channel_get_bool (conf->priv->channel, LOCK_SCREEN_ON_SLEEP, TRUE);
-    
-#ifdef HAVE_DPMS
-    conf->priv->dpms_enabled =
-    	xfconf_channel_get_bool (conf->priv->channel, DPMS_ENABLED_CFG, TRUE);
-    
-    conf->priv->dpms_sleep_on_battery = 
-    	MIN( xfconf_channel_get_uint( conf->priv->channel, ON_BATT_DPMS_SLEEP, 3) * 60, 3600);
-
-    conf->priv->dpms_off_on_battery = 
-    	MIN(xfconf_channel_get_uint( conf->priv->channel, ON_BATT_DPMS_OFF, 5) * 60, 3600);
-	
-    conf->priv->dpms_sleep_on_ac = 
-    	MIN(xfconf_channel_get_uint( conf->priv->channel, ON_AC_DPMS_SLEEP, 10) * 60, 3600);
-    
-    conf->priv->dpms_off_on_ac = 
-    	MIN(xfconf_channel_get_uint( conf->priv->channel, ON_AC_DPMS_OFF, 15) * 60, 3600);
-	
-    str = xfconf_channel_get_string (conf->priv->channel, DPMS_SLEEP_MODE, "sleep");
-    
-    if ( xfpm_strequal (str, "sleep" ) )
-    {
-	conf->priv->sleep_dpms_mode = 0;
-    }
-    else if ( xfpm_strequal (str, "suspend") )
-    {
-	conf->priv->sleep_dpms_mode = 1;
-    }
-    else
-    {
-	g_critical("Invalid value %s for property %s\n", str, DPMS_SLEEP_MODE);
-	conf->priv->sleep_dpms_mode = 0;
-    }
-    g_free (str);
-#endif /* HAVE_DPMS */
-    conf->priv->power_save_on_battery =
-    	xfconf_channel_get_bool (conf->priv->channel, POWER_SAVE_ON_BATTERY, TRUE);
-#ifdef SYSTEM_IS_LINUX
-    conf->priv->cpu_freq_control =
-	xfconf_channel_get_bool (conf->priv->channel, CPU_FREQ_CONTROL, TRUE);
-#endif
-    conf->priv->brightness_on_ac_timeout =
-	xfconf_channel_get_uint (conf->priv->channel, BRIGHTNESS_ON_AC, 9);
-	
-    if ( G_UNLIKELY (conf->priv->brightness_on_ac_timeout > 120 || conf->priv->brightness_on_ac_timeout < 9 ))
-    {
-	g_warning ("Value %d for %s is out of range", conf->priv->brightness_on_ac_timeout, BRIGHTNESS_ON_AC );
-	conf->priv->brightness_on_ac_timeout = 9;
-    }
-    
-    conf->priv->brightness_on_battery_timeout =
-	xfconf_channel_get_uint (conf->priv->channel, BRIGHTNESS_ON_BATTERY, 10);
-	
-    if ( G_UNLIKELY (conf->priv->brightness_on_battery_timeout > 120 || conf->priv->brightness_on_battery_timeout < 9) )
-    {
-	g_warning ("Value %d for %s is out of range", conf->priv->brightness_on_battery_timeout, BRIGHTNESS_ON_BATTERY );
-	conf->priv->brightness_on_battery_timeout = 10;
-    }
-    
-    //FIXME: check if valid
-    str = xfconf_channel_get_string (conf->priv->channel, CRITICAL_BATT_ACTION_CFG, "Nothing");
-    conf->priv->critical_action = xfpm_shutdown_string_to_int (str);
-    g_free (str);
-    
-    conf->priv->show_icon =
-    	xfconf_channel_get_uint (conf->priv->channel, SHOW_TRAY_ICON_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
-    if ( G_UNLIKELY ( conf->priv->show_icon > 3) )
-    {
-	g_warning ("Invalid value %d for property %s, using default\n", conf->priv->show_icon, SHOW_TRAY_ICON_CFG);
-	xfconf_channel_set_uint (conf->priv->channel, CRITICAL_BATT_ACTION_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
-    }
-    
-    conf->priv->critical_level =
-	xfconf_channel_get_uint (conf->priv->channel, CRITICAL_POWER_LEVEL, 0);
-	
-    if ( G_UNLIKELY ( conf->priv->critical_level > 20) )
-    {
-	g_warning ("Value %d for property %s is out of range \n", conf->priv->critical_level, CRITICAL_POWER_LEVEL);
-	conf->priv->critical_level = 10;
-    }
-    
-    conf->priv->inactivity_on_ac =
-	xfconf_channel_get_uint (conf->priv->channel, ON_AC_INACTIVITY_TIMEOUT, 30);
-    if ( G_UNLIKELY (conf->priv->inactivity_on_ac < 30 ) )
-    {
-	conf->priv->inactivity_on_ac = 30;
-    }
-    
-    conf->priv->inactivity_on_battery =
-	xfconf_channel_get_uint (conf->priv->channel, ON_BATTERY_INACTIVITY_TIMEOUT, 30);
-    if ( G_UNLIKELY (conf->priv->inactivity_on_battery < 30) )
-    {
-	conf->priv->inactivity_on_battery = 30;
-    }
-    
-    str = xfconf_channel_get_string (conf->priv->channel, INACTIVITY_SLEEP_MODE, "Suspend");
-
-    if ( xfpm_strequal (str, "Suspend"))
-    {
-	conf->priv->sleep_inactivity = TRUE;
-    }
-    else if ( xfpm_strequal (str, "Hibernate") )
-    {
-	conf->priv->sleep_inactivity = FALSE;
-    }
-    else
-    {
-	g_critical("Invalid value %s for property %s\n", str, INACTIVITY_SLEEP_MODE);
-	conf->priv->sleep_inactivity = TRUE;
-    }
-    
-    conf->priv->enable_brightness =
-	xfconf_channel_get_bool (conf->priv->channel, ENABLE_BRIGHTNESS_CONTROL, TRUE);
-    conf->priv->show_brightness_popup =
-	xfconf_channel_get_bool (conf->priv->channel, SHOW_BRIGHTNESS_POPUP, TRUE);
+    g_object_set_property (G_OBJECT (conf), strchr (property, '/') + 1, value);
 }
 
 static void
@@ -532,67 +184,301 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     
-    signals[DPMS_SETTINGS_CHANGED] =
-	    g_signal_new("dpms-settings-changed",
-			 XFPM_TYPE_XFCONF,
-			 G_SIGNAL_RUN_LAST,
-			 G_STRUCT_OFFSET(XfpmXfconfClass, dpms_settings_changed),
-			 NULL, NULL,
-			 g_cclosure_marshal_VOID__VOID,
-			 G_TYPE_NONE, 0, G_TYPE_NONE);
-    
-     signals[POWER_SAVE_SETTINGS_CHANGED] =
-	    g_signal_new("power-save-settings-changed",
-			 XFPM_TYPE_XFCONF,
-			 G_SIGNAL_RUN_LAST,
-			 G_STRUCT_OFFSET(XfpmXfconfClass, power_save_settings_changed),
-			 NULL, NULL,
-			 g_cclosure_marshal_VOID__VOID,
-			 G_TYPE_NONE, 0, G_TYPE_NONE);
-			 
-     signals[BRIGHTNESS_SETTINGS_CHANGED] =
-	    g_signal_new("brightness-settings-changed",
-			 XFPM_TYPE_XFCONF,
-			 G_SIGNAL_RUN_LAST,
-			 G_STRUCT_OFFSET(XfpmXfconfClass, brightness_settings_changed),
-			 NULL, NULL,
-			 g_cclosure_marshal_VOID__VOID,
-			 G_TYPE_NONE, 0, G_TYPE_NONE);
-    
-    signals[TRAY_ICON_SETTINGS_CHANGED] =
-	    g_signal_new("tray-icon-settings-changed",
-			 XFPM_TYPE_XFCONF,
-			 G_SIGNAL_RUN_LAST,
-			 G_STRUCT_OFFSET(XfpmXfconfClass, tray_icon_settings_changed),
-			 NULL, NULL,
-			 g_cclosure_marshal_VOID__VOID,
-			 G_TYPE_NONE, 0, G_TYPE_NONE);
-			 
-     signals[INACTIVITY_TIMEOUT_CHANGED] =
-	    g_signal_new("inactivity-timeout-changed",
-			 XFPM_TYPE_XFCONF,
-			 G_SIGNAL_RUN_LAST,
-			 G_STRUCT_OFFSET(XfpmXfconfClass, inactivity_timeout_changed),
-			 NULL, NULL,
-			 g_cclosure_marshal_VOID__VOID,
-			 G_TYPE_NONE, 0, G_TYPE_NONE);
+    object_class->set_property = xfpm_xfconf_set_property;
+    object_class->get_property = xfpm_xfconf_get_property;
     
     object_class->finalize = xfpm_xfconf_finalize;
     
-    g_type_class_add_private (klass, sizeof(XfpmXfconfPrivate));
+    /**
+     * XfpmXfconf:general-notification:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_GENERAL_NOTIFICATION,
+                                     g_param_spec_boolean (GENERAL_NOTIFICATION_CFG,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:lock-screen-suspend-hibernate:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_LOCK_SCREEN_ON_SLEEP,
+                                     g_param_spec_boolean (LOCK_SCREEN_ON_SLEEP,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+    
+    /**
+     * XfpmXfconf:power-save-on-battery:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_POWER_SAVE_ON_BATTERY,
+                                     g_param_spec_boolean (POWER_SAVE_ON_BATTERY,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:enable-cpu-freq-control:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_ENABLE_CPU_FREQ,
+                                     g_param_spec_boolean (CPU_FREQ_CONTROL,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:critical-power-level:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_CRITICAL_LEVEL,
+                                     g_param_spec_uint (CRITICAL_POWER_LEVEL,
+                                                        NULL, NULL,
+							0,
+							20,
+							10,
+                                                        G_PARAM_READWRITE));
+	
+    /**
+     * XfpmXfconf:show-brightness-popup:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SHOW_BRIGHTNESS_POPUP,
+                                     g_param_spec_boolean (SHOW_BRIGHTNESS_POPUP,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+    
+    /**
+     * XfpmXfconf:show-brightness-popup:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_ENABLE_BRIGHTNESS,
+                                     g_param_spec_boolean (ENABLE_BRIGHTNESS_CONTROL,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:show-tray-icon:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_TRAY_ICON,
+                                     g_param_spec_uint (SHOW_TRAY_ICON_CFG,
+                                                        NULL, NULL,
+							SHOW_ICON_ALWAYS,
+							SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING,
+							SHOW_ICON_WHEN_BATTERY_PRESENT,
+                                                        G_PARAM_READWRITE));
+							
+    /**
+     * XfpmXfconf:critical-battery-action:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_CRITICAL_BATTERY_ACTION,
+                                     g_param_spec_uint (CRITICAL_BATT_ACTION_CFG,
+                                                        NULL, NULL,
+							XFPM_DO_NOTHING,
+							XFPM_DO_SHUTDOWN,
+							XFPM_DO_NOTHING,
+                                                        G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:power-switch-action:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_POWER_BUTTON,
+                                     g_param_spec_uint (POWER_SWITCH_CFG,
+                                                        NULL, NULL,
+							XFPM_DO_NOTHING,
+							XFPM_DO_SHUTDOWN,
+							XFPM_DO_NOTHING,
+                                                        G_PARAM_READWRITE));
+							
+    /**
+     * XfpmXfconf:sleep-switch-action:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SLEEP_BUTTON,
+                                     g_param_spec_uint (SLEEP_SWITCH_CFG,
+                                                        NULL, NULL,
+							XFPM_DO_NOTHING,
+							XFPM_DO_SHUTDOWN,
+							XFPM_DO_NOTHING,
+                                                        G_PARAM_READWRITE));
+							
+    /**
+     * XfpmXfconf:hibernate-switch-action:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_HIBERNATE_BUTTON,
+                                     g_param_spec_uint (HIBERNATE_SWITCH_CFG,
+                                                        NULL, NULL,
+							XFPM_DO_NOTHING,
+							XFPM_DO_SHUTDOWN,
+							XFPM_DO_NOTHING,
+                                                        G_PARAM_READWRITE));
+    
+    /**
+     * XfpmXfconf:lid-action-on-ac:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_LID_ACTION_ON_AC,
+                                     g_param_spec_uint (LID_SWITCH_ON_AC_CFG,
+                                                        NULL, NULL,
+							LID_TRIGGER_NOTHING,
+							LID_TRIGGER_LOCK_SCREEN,
+							LID_TRIGGER_LOCK_SCREEN,
+                                                        G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:lid-action-on-battery:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_LID_ACTION_ON_BATTERY,
+                                     g_param_spec_uint (LID_SWITCH_ON_BATTERY_CFG,
+                                                        NULL, NULL,
+							LID_TRIGGER_NOTHING,
+							LID_TRIGGER_LOCK_SCREEN,
+							LID_TRIGGER_LOCK_SCREEN,
+                                                        G_PARAM_READWRITE));
+#ifdef HAVE_DPMS
+    /**
+     * XfpmXfconf:dpms-enabled:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_ENABLE_DPMS,
+                                     g_param_spec_boolean (DPMS_ENABLED_CFG,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:dpms-on-ac-sleep:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_DPMS_SLEEP_ON_AC,
+                                     g_param_spec_uint (ON_AC_DPMS_SLEEP,
+                                                        NULL, NULL,
+							0,
+							G_MAXUINT16,
+							10,
+                                                        G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:dpms-on-ac-off:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_DPMS_OFF_ON_AC,
+                                     g_param_spec_uint (ON_AC_DPMS_OFF,
+                                                        NULL, NULL,
+							0,
+							G_MAXUINT16,
+							15,
+                                                        G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:dpms-on-battery-sleep:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_DPMS_SLEEP_ON_BATTERY,
+                                     g_param_spec_uint (ON_BATT_DPMS_SLEEP,
+                                                        NULL, NULL,
+							0,
+							G_MAXUINT16,
+							5,
+                                                        G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:dpms-on-battery-off:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_DPMS_OFF_ON_BATTERY,
+                                     g_param_spec_uint (ON_BATT_DPMS_OFF,
+                                                        NULL, NULL,
+							0,
+							G_MAXUINT16,
+							10,
+                                                        G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:dpms-sleep-mode:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_DPMS_SLEEP_MODE,
+                                     g_param_spec_string  (DPMS_SLEEP_MODE,
+                                                           NULL, NULL,
+                                                           "standby",
+                                                           G_PARAM_READWRITE));
+#endif /* HAVE_DPMS */
+
+    /**
+     * XfpmXfconf:inactivity-on-ac:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_IDLE_ON_AC,
+                                     g_param_spec_uint (ON_AC_INACTIVITY_TIMEOUT,
+                                                        NULL, NULL,
+							0,
+							G_MAXUINT,
+							30,
+                                                        G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf:inactivity-on-battery:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_IDLE_ON_BATTERY,
+                                     g_param_spec_uint (ON_BATTERY_INACTIVITY_TIMEOUT,
+                                                        NULL, NULL,
+							0,
+							G_MAXUINT,
+							30,
+                                                        G_PARAM_READWRITE));
+
+    
+     /**
+     * XfpmXfconf:inactivity-sleep-mode:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_IDLE_SLEEP_MODE,
+                                     g_param_spec_string (INACTIVITY_SLEEP_MODE,
+                                                          NULL, NULL,
+							  "Suspend",
+                                                          G_PARAM_READWRITE));
+    /**
+     * XfpmXfconf:brightness-on-ac:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_DIM_ON_AC_TIMEOUT,
+                                     g_param_spec_uint (BRIGHTNESS_ON_AC,
+                                                        NULL, NULL,
+							0,
+							G_MAXUINT,
+							9,
+                                                        G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf:brightness-on-battery:
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_DIM_ON_BATTERY_TIMEOUT,
+                                     g_param_spec_uint (BRIGHTNESS_ON_BATTERY,
+                                                        NULL, NULL,
+							0,
+							G_MAXUINT,
+							120,
+                                                        G_PARAM_READWRITE));
+
+    g_type_class_add_private (klass, sizeof (XfpmXfconfPrivate));
 }
 
 static void
 xfpm_xfconf_init (XfpmXfconf *conf)
 {
     GError *error = NULL;
+    gboolean channel_valid;
       
     conf->priv = XFPM_XFCONF_GET_PRIVATE (conf);
     
-    if ( !xfconf_init(&error) )
+    conf->priv->values = g_new0 (GValue, N_PROPERTIES);
+    
+    if ( !xfconf_init (&error) )
     {
     	g_critical ("xfconf_init failed: %s\n", error->message);
        	g_error_free (error);
+	channel_valid = FALSE;
     }	
     else
     {
@@ -600,16 +486,26 @@ xfpm_xfconf_init (XfpmXfconf *conf)
 
 	g_signal_connect (conf->priv->channel, "property-changed",
 			  G_CALLBACK (xfpm_xfconf_property_changed_cb), conf);
-	xfpm_xfconf_load_configuration (conf);
+	channel_valid = TRUE;
     }
+    xfpm_xfconf_load (conf, channel_valid);
 }
 
 static void
 xfpm_xfconf_finalize(GObject *object)
 {
     XfpmXfconf *conf;
+    guint i;
     
     conf = XFPM_XFCONF(object);
+    
+    for ( i = 0; i < N_PROPERTIES; i++)
+    {
+	if ( G_IS_VALUE (conf->priv->values + i) )
+	    g_value_unset (conf->priv->values + i);
+    }
+    
+    g_free (conf->priv->values);
     
     if (conf->priv->channel )
 	g_object_unref (conf->priv->channel);
@@ -630,90 +526,4 @@ xfpm_xfconf_new(void)
 	g_object_add_weak_pointer (xfpm_xfconf_object, &xfpm_xfconf_object);
     }
     return XFPM_XFCONF (xfpm_xfconf_object);
-}
-
-gboolean xfpm_xfconf_get_property_bool (XfpmXfconf *conf, const gchar *property)
-{
-    g_return_val_if_fail (XFPM_IS_XFCONF(conf), FALSE);
-    
-    if ( xfpm_strequal (property, LOCK_SCREEN_ON_SLEEP))
-	return conf->priv->lock_screen;
-    else if ( xfpm_strequal (property, POWER_SAVE_ON_BATTERY ) )
-	return conf->priv->power_save_on_battery;
-#ifdef SYSTEM_IS_LINUX
-    else if ( xfpm_strequal (property, CPU_FREQ_CONTROL) )
-	return conf->priv->cpu_freq_control;
-#endif
-    else if ( xfpm_strequal (property, GENERAL_NOTIFICATION_CFG ) )
-	return conf->priv->general_notification;
-#ifdef HAVE_DPMS
-    else if ( xfpm_strequal (property, DPMS_SLEEP_MODE ))
-	return conf->priv->sleep_dpms_mode;
-    else if ( xfpm_strequal (property, DPMS_ENABLED_CFG) )
-	return conf->priv->dpms_enabled;
-#endif /* HAVE_DPMS */
-    else if ( xfpm_strequal (property, INACTIVITY_SLEEP_MODE) )
-	return conf->priv->sleep_inactivity;
-    else if ( xfpm_strequal (property, ENABLE_BRIGHTNESS_CONTROL) )
-	return conf->priv->enable_brightness;
-    else if ( xfpm_strequal (property, SHOW_BRIGHTNESS_POPUP) )
-	return conf->priv->show_brightness_popup;
-    
-    g_warn_if_reached ();
-
-    return FALSE;
-}
-
-guint8 xfpm_xfconf_get_property_enum (XfpmXfconf *conf, const gchar *property)
-{
-    g_return_val_if_fail (XFPM_IS_XFCONF(conf), 0);
-
-    if ( xfpm_strequal (property, LID_SWITCH_ON_AC_CFG) )
-	return conf->priv->lid_button_ac;
-    else if ( xfpm_strequal (property, LID_SWITCH_ON_BATTERY_CFG) )
-	return conf->priv->lid_button_battery;
-    else if ( xfpm_strequal (property, SLEEP_SWITCH_CFG) )
-	return conf->priv->sleep_button;
-    else if ( xfpm_strequal (property, CRITICAL_BATT_ACTION_CFG) )
-	return conf->priv->critical_action;
-    else if ( xfpm_strequal (property, SHOW_TRAY_ICON_CFG ) )
-	return conf->priv->show_icon;
-    else if ( xfpm_strequal (property, POWER_SWITCH_CFG) )
-	return conf->priv->power_button;
-    else if ( xfpm_strequal (property, HIBERNATE_SWITCH_CFG ) )
-	return conf->priv->hibernate_button;
-    
-    g_warn_if_reached ();
-
-    return 0;
-}
-
-gint xfpm_xfconf_get_property_int (XfpmXfconf *conf, const gchar *property)
-{
-    g_return_val_if_fail (XFPM_IS_XFCONF(conf), 0);
-
-    if ( xfpm_strequal (property, BRIGHTNESS_ON_AC ) )
-	return conf->priv->brightness_on_ac_timeout;
-#ifdef HAVE_DPMS
-    else if ( xfpm_strequal (property, ON_AC_DPMS_SLEEP))
-	return conf->priv->dpms_sleep_on_ac;
-    else if ( xfpm_strequal (property, ON_BATT_DPMS_SLEEP))
-	return conf->priv->dpms_sleep_on_battery;
-    else if ( xfpm_strequal (property, ON_AC_DPMS_OFF))
-	return conf->priv->dpms_off_on_ac;
-    else if ( xfpm_strequal (property, ON_BATT_DPMS_OFF))
-	return conf->priv->dpms_off_on_battery;
-#endif /* HAVE_DPMS */
-    else if ( xfpm_strequal (property, BRIGHTNESS_ON_BATTERY )) 
-	return conf->priv->brightness_on_battery_timeout;
-    else if ( xfpm_strequal (property, CRITICAL_POWER_LEVEL) )
-	return conf->priv->critical_level;
-    else if ( xfpm_strequal (property, ON_AC_INACTIVITY_TIMEOUT ) )
-	return conf->priv->inactivity_on_ac;
-    else if ( xfpm_strequal (property, ON_BATTERY_INACTIVITY_TIMEOUT ) )
-	return conf->priv->inactivity_on_battery;
-
-    g_warn_if_reached ();
-
-    return 0;
 }

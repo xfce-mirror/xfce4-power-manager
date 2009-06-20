@@ -45,6 +45,7 @@
 #include "xfpm-config.h"
 #include "xfpm-shutdown.h"
 #include "xfpm-inhibit.h"
+#include "xfpm-debug.h"
 #include "xfpm-marshal.h"
 
 static void xfpm_supply_finalize   (GObject *object);
@@ -119,9 +120,9 @@ xfpm_supply_has_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, Xf
 }
 
 static void 
-xfpm_supply_tray_settings_changed (XfpmSupply *supply)
+xfpm_supply_tray_settings_changed (GObject *obj, GParamSpec *spec, XfpmSupply *supply)
 {
-	xfpm_supply_refresh_tray_icon (supply);
+    xfpm_supply_refresh_tray_icon (supply);
 }
 
 static void
@@ -183,8 +184,8 @@ xfpm_supply_init (XfpmSupply *supply)
     g_signal_connect (supply->priv->inhibit, "has-inhibit-changed",
 		      G_CALLBACK (xfpm_supply_has_inhibit_changed_cb), supply);
 			  
-    g_signal_connect_swapped (supply->priv->conf, "tray_icon_settings_changed",
-			      G_CALLBACK (xfpm_supply_tray_settings_changed), supply);
+    g_signal_connect (supply->priv->conf, "notify::" SHOW_TRAY_ICON_CFG,
+		      G_CALLBACK (xfpm_supply_tray_settings_changed), supply);
 }
 
 static void
@@ -213,9 +214,13 @@ xfpm_supply_finalize (GObject *object)
 static void
 xfpm_supply_refresh_tray_icon (XfpmSupply *supply)
 {
-    guint8 show_icon;
+    XfpmShowIcon show_icon;
     
-    show_icon = xfpm_xfconf_get_property_enum (supply->priv->conf, SHOW_TRAY_ICON_CFG);
+    g_object_get (G_OBJECT (supply->priv->conf),
+		  SHOW_TRAY_ICON_CFG, &show_icon,
+		  NULL);
+		  
+    XFPM_DEBUG_ENUM ("Tray icon configuration: ", show_icon, XFPM_TYPE_SHOW_ICON);
     
     if ( show_icon == SHOW_ICON_ALWAYS )
     {
@@ -256,8 +261,10 @@ xfpm_supply_on_low_power (XfpmSupply *supply)
     if ( !list)
 	return FALSE;
 	
-    low_power_level = xfpm_xfconf_get_property_int (supply->priv->conf, CRITICAL_POWER_LEVEL);
-     
+    g_object_get (G_OBJECT (supply->priv->conf),
+		  CRITICAL_POWER_LEVEL, &low_power_level,
+		  NULL);
+		  
     for ( i=0; i< g_list_length(list); i++)
     {
 	XfpmBattery *battery = NULL;
@@ -279,18 +286,6 @@ xfpm_supply_on_low_power (XfpmSupply *supply)
 	    low_power = FALSE;
     }
     return low_power;
-}
-
-static void
-xfpm_supply_process_critical_action (XfpmSupply *supply)
-{
-     XfpmShutdownRequest critical_action = 
-	xfpm_xfconf_get_property_enum (supply->priv->conf, CRITICAL_BATT_ACTION_CFG);
-
-    if ( G_UNLIKELY (critical_action == XFPM_DO_SUSPEND ) )
-	return;
-	
-    g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, critical_action);
 }
 
 static void
@@ -377,12 +372,32 @@ xfpm_supply_show_critical_action (XfpmSupply *supply, XfpmBattery *battery)
 }
 
 static void
+xfpm_supply_process_critical_action (XfpmSupply *supply, XfpmBattery *battery, XfpmShutdownRequest critical_action)
+{
+    if ( critical_action == XFPM_ASK )
+    {
+	if ( supply->priv->inhibited )
+	    xfpm_supply_show_critical_action_inhibited (supply, battery);
+	else
+	    xfpm_supply_show_critical_action (supply, battery);
+	    
+	return;
+    }
+	
+    g_signal_emit (G_OBJECT(supply ), signals[SHUTDOWN_REQUEST], 0, TRUE, critical_action);
+}
+
+static void
 xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
 {
-    XfpmShutdownRequest critical_action = 
-	xfpm_xfconf_get_property_enum (supply->priv->conf, CRITICAL_BATT_ACTION_CFG);
+    XfpmShutdownRequest critical_action;
     
+    g_object_get (G_OBJECT (supply),
+	          CRITICAL_BATT_ACTION_CFG, &critical_action,
+		  NULL);
+
     TRACE ("System is running on low power");
+    XFPM_DEBUG_ENUM ("Critical battery action", critical_action, XFPM_TYPE_SHUTDOWN_REQUEST);
     
     if ( supply->priv->inhibited )
     {
@@ -394,7 +409,7 @@ xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
     }
     else
     {
-	xfpm_supply_process_critical_action (supply);
+	xfpm_supply_process_critical_action (supply, battery, critical_action);
     }
 }
 
@@ -507,8 +522,10 @@ static void
 xfpm_supply_save_power (XfpmSupply *supply)
 {
     gboolean save_power;
-    
-    save_power = xfpm_xfconf_get_property_bool (supply->priv->conf, POWER_SAVE_ON_BATTERY);
+
+    g_object_get (G_OBJECT (supply->priv->conf),
+		  POWER_SAVE_ON_BATTERY, &save_power,
+		  NULL);
     
     if ( save_power == FALSE )
 	hal_power_unset_power_save (supply->priv->power);

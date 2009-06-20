@@ -26,55 +26,48 @@
 #include <config.h>
 #endif
 
+#include <glib.h>
+
 #if defined(__linux__)
 #define SYSTEM_IS_LINUX 1
 #endif
 
 G_BEGIN_DECLS
 
-/* Configuration */
-#define 	XFPM_CHANNEL_CFG            "xfce4-power-manager"
-#define 	CRITICAL_BATT_ACTION_CFG    "/xfce4-power-manager/critical-battery-action"
-#define         CRITICAL_POWER_LEVEL        "/xfce4-power-manager/critical-power-level"
+#define 	XFPM_CHANNEL_CFG             	"xfce4-power-manager"
 
-#define 	POWER_SAVE_ON_BATTERY       "/xfce4-power-manager/power-save-on-battery"
-#define         CPU_FREQ_CONTROL            "/xfce4-power-manager/cpu-freq-control"
-#define         LOCK_SCREEN_ON_SLEEP        "/xfce4-power-manager/lock-screen-suspend-hibernate"
+#define 	POWER_SAVE_ON_BATTERY        	"power-save-on-battery"
+#define         CPU_FREQ_CONTROL             	"enable-cpu-freq-control"
+#define         LOCK_SCREEN_ON_SLEEP         	"lock-screen-suspend-hibernate"
 
-#define 	LCD_BRIGHTNESS_CFG          "/xfce4-power-manager/lcd-brightness"
-#define         BRIGHTNESS_ON_AC            "/xfce4-power-manager/brightness-on-ac"
-#define         BRIGHTNESS_ON_BATTERY       "/xfce4-power-manager/brightness-on-battery"
+#define 	DPMS_ENABLED_CFG             	"dpms-enabled" 
+#define 	ON_AC_DPMS_SLEEP 	     	"dpms-on-ac-sleep"
+#define 	ON_AC_DPMS_OFF	     	     	"dpms-on-ac-off"
+#define 	ON_BATT_DPMS_SLEEP 	     	"dpms-on-battery-sleep"
+#define 	ON_BATT_DPMS_OFF	     	"dpms-on-battery-off"
+#define         DPMS_SLEEP_MODE		     	"dpms-sleep-mode"		
 
-#define 	LID_SWITCH_ON_AC_CFG        "/xfce4-power-manager/lid-action-on-ac"
-#define 	LID_SWITCH_ON_BATTERY_CFG   "/xfce4-power-manager/lid-action-on-battery"
-#define 	POWER_SWITCH_CFG            "/xfce4-power-manager/power-switch-action"
-#define         HIBERNATE_SWITCH_CFG        "/xfce4-power-manager/hibernate-switch-action"
-#define 	SLEEP_SWITCH_CFG            "/xfce4-power-manager/sleep-switch-action"
+#define 	GENERAL_NOTIFICATION_CFG     	"general-notification"
 
-#define         ON_AC_INACTIVITY_TIMEOUT    "/xfce4-power-manager/inactivity-on-ac"
-#define         ON_BATTERY_INACTIVITY_TIMEOUT "/xfce4-power-manager/inactivity-on-battery"
-#define         INACTIVITY_SLEEP_MODE       "/xfce4-power-manager/inactivity-sleep-mode"
+#define         ON_AC_INACTIVITY_TIMEOUT     	"inactivity-on-ac"
+#define         ON_BATTERY_INACTIVITY_TIMEOUT 	"inactivity-on-battery"
+#define         INACTIVITY_SLEEP_MODE        	"inactivity-sleep-mode"
 
-#define 	GENERAL_NOTIFICATION_CFG    "/xfce4-power-manager/general-notification"
+#define         BRIGHTNESS_ON_AC             	"brightness-on-ac"
+#define         BRIGHTNESS_ON_BATTERY        	"brightness-on-battery"
 
-#define 	BATT_STATE_NOTIFICATION_CFG "/xfce4-power-manager/battery-state-notification"  /* default TRUE */
+#define         CRITICAL_POWER_LEVEL        	"critical-power-level"
+#define         SHOW_BRIGHTNESS_POPUP        	"show-brightness-popup"
+#define         ENABLE_BRIGHTNESS_CONTROL       "change-brightness-on-key-events"
 
-#define 	SHOW_SLEEP_ERRORS_CFG       "/xfce4-power-manager/show-sleep-errors"
-#define 	SHOW_POWER_MANAGEMENT_ERROR "/xfce4-power-manager/show-power-management-error"
+#define 	SHOW_TRAY_ICON_CFG          	"show-tray-icon"
+#define 	CRITICAL_BATT_ACTION_CFG    	"critical-battery-action"
 
-#define 	SHOW_TRAY_ICON_CFG          "/xfce4-power-manager/show-tray-icon"              /* default 0 = always,1 = when charging or discharging, 2 = when battery is present */
-
-#ifdef HAVE_DPMS
-#define 	DPMS_ENABLED_CFG             "/xfce4-power-manager/dpms-enabled" 
-#define 	ON_BATT_DPMS_SLEEP 	     "/xfce4-power-manager/on-battery-dpms-sleep"
-#define 	ON_BATT_DPMS_OFF	     "/xfce4-power-manager/on-battery-dpms-off"
-#define 	ON_AC_DPMS_SLEEP 	     "/xfce4-power-manager/on-ac-dpms-sleep"
-#define 	ON_AC_DPMS_OFF	     	     "/xfce4-power-manager/on-ac-dpms-off"
-#define         DPMS_SLEEP_MODE		     "/xfce4-power-manager/dpms-sleep-mode"		/* 0= sleep, 1=suspend */
-#endif
-
-#define         ENABLE_BRIGHTNESS_CONTROL    "/xfce4-power-manager/change-brightness-on-key-events"
-#define         SHOW_BRIGHTNESS_POPUP        "/xfce4-power-manager/show-brightness-popup"
+#define 	POWER_SWITCH_CFG            	"power-switch-action"
+#define         HIBERNATE_SWITCH_CFG        	"hibernate-switch-action"
+#define 	SLEEP_SWITCH_CFG            	"sleep-switch-action"
+#define 	LID_SWITCH_ON_AC_CFG        	"lid-action-on-ac"
+#define 	LID_SWITCH_ON_BATTERY_CFG   	"lid-action-on-battery"
 
 G_END_DECLS
 

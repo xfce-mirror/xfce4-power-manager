@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-16 19:38+0200\n"
+"POT-Creation-Date: 2009-06-20 18:36+0200\n"
 "PO-Revision-Date: 2009-06-07 16:54+0100\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech\n"
@@ -16,287 +16,140 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../settings/xfpm-settings.glade.h:1
-msgid "<b>Actions</b>"
-msgstr "<b>Akce</b>"
-
-#: ../settings/xfpm-settings.glade.h:2
-msgid "<b>Advanced Options</b>"
-msgstr "<b>Pokročilé volby</b>"
-
-#: ../settings/xfpm-settings.glade.h:3
-msgid "<b>Brightness</b>"
-msgstr "<b>Jas</b>"
-
-#: ../settings/xfpm-settings.glade.h:4
-msgid "<b>General Options</b>"
-msgstr "<b>Obecné volby</b>"
-
-#: ../settings/xfpm-settings.glade.h:5
-msgid "<b>Monitor</b>"
-msgstr "<b>Monitor</b>"
-
-#: ../settings/xfpm-settings.glade.h:6
-msgid "Actions"
-msgstr "Akce"
-
-#: ../settings/xfpm-settings.glade.h:7
-msgid "Advanced"
-msgstr "Pokročilé"
-
-#: ../settings/xfpm-settings.glade.h:8
-#: ../settings/xfpm-settings.c:952
-msgid "Always show icon"
-msgstr "Vždy zobrazovat ikonu"
-
-#: ../settings/xfpm-settings.glade.h:9
-msgid "Consider the computer on low power at:"
-msgstr "Považovat baterii za vybitou při:"
-
-#: ../settings/xfpm-settings.glade.h:10
-msgid "Enable CPU frequency control"
-msgstr "Povolit ovládání frekvence procesoru"
-
-#: ../settings/xfpm-settings.glade.h:11
-msgid "Enable monitor power management control"
-msgstr "Povolit ovládání správy napájení monitoru"
-
-#: ../settings/xfpm-settings.glade.h:12
-msgid "Enable notification"
-msgstr "Povolit oznámení"
-
-#: ../settings/xfpm-settings.glade.h:13
-#: ../settings/xfpm-settings.c:1401
-#: ../settings/xfpm-settings.c:1406
-msgid "General"
-msgstr "Obecné"
-
-#. Hibernate menu option
-#: ../settings/xfpm-settings.glade.h:14
-#: ../settings/xfpm-settings.c:591
-#: ../settings/xfpm-settings.c:689
-#: ../settings/xfpm-settings.c:846
-#: ../settings/xfpm-settings.c:1012
-#: ../settings/xfpm-settings.c:1081
-#: ../settings/xfpm-settings.c:1147
-#: ../src/xfpm-tray-icon.c:170
-#: ../src/xfpm-tray-icon.c:268
-msgid "Hibernate"
-msgstr "Hibernovat"
-
-#: ../settings/xfpm-settings.glade.h:15
-msgid "Lock screen when going for suspend/hibernate"
-msgstr "Uzamknout obrazovku při přechodu do režimu spánku nebo hibernace"
-
-#: ../settings/xfpm-settings.glade.h:16
-msgid "Monitor"
-msgstr "Monitor"
-
-#: ../settings/xfpm-settings.glade.h:17
-#: ../settings/xfpm-settings.c:586
-#: ../settings/xfpm-settings.c:678
-#: ../settings/xfpm-settings.c:835
-#: ../settings/xfpm-settings.c:1001
-#: ../settings/xfpm-settings.c:1070
-#: ../settings/xfpm-settings.c:1136
-msgid "Nothing"
-msgstr "Nic"
-
-#: ../settings/xfpm-settings.glade.h:18
-#: ../settings/xfpm-settings.c:1415
-#: ../settings/xfpm-settings.c:1420
-msgid "On AC"
-msgstr "Napájení ze sítě"
-
-#: ../settings/xfpm-settings.glade.h:19
-msgid "On battery"
-msgstr "Napájení z baterie"
-
-#: ../settings/xfpm-settings.glade.h:20
-msgid "Power manager settings"
-msgstr "Nastavení správce napájení"
-
-#: ../settings/xfpm-settings.glade.h:21
-msgid "Prefer power savings over performance"
-msgstr "Upřednostnit úsporu energie před výkonem"
-
-#: ../settings/xfpm-settings.glade.h:22
-msgid "Put display to sleep when computer is inactive for:"
-msgstr "Přepnout displej do režimu spánku, pokud je počítač neaktivní:"
-
-#: ../settings/xfpm-settings.glade.h:23
-msgid "Put the computer to sleep when inactive for:"
-msgstr "Přepnout počítač do režimu spánku, pokud je neaktivní:"
-
-#: ../settings/xfpm-settings.glade.h:24
-msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Snížit jak obrazovky, pokud je počítač neaktivní:"
-
-#: ../settings/xfpm-settings.glade.h:25
-msgid "Set computer inactivity sleep mode:"
-msgstr "Uvést počítač do režimu spánku při nečinnosti:"
-
-#: ../settings/xfpm-settings.glade.h:26
-msgid "Set monitor sleep mode:"
-msgstr "Uvést monitor do režimu spánku:"
-
-#: ../settings/xfpm-settings.glade.h:27
-msgid "Standby"
-msgstr "Pohotovostní režim"
-
-#. Suspend menu option
-#: ../settings/xfpm-settings.glade.h:28
-#: ../settings/xfpm-settings.c:683
-#: ../settings/xfpm-settings.c:840
-#: ../settings/xfpm-settings.c:1006
-#: ../settings/xfpm-settings.c:1075
-#: ../settings/xfpm-settings.c:1141
-#: ../src/xfpm-tray-icon.c:201
-#: ../src/xfpm-tray-icon.c:283
-msgid "Suspend"
-msgstr "Režim spánku"
-
-#: ../settings/xfpm-settings.glade.h:29
-msgid "Switch off display when computer is inactive for:"
-msgstr "Vypnout displej, pokud je počítač neaktivní:"
-
-#: ../settings/xfpm-settings.glade.h:30
-msgid "System tray icon: "
-msgstr "Ikona v oznamovací oblasti:"
-
-#: ../settings/xfpm-settings.glade.h:31
-msgid "When battery power is critical:"
-msgstr "Je-li úroveň nabití baterie kritická:"
-
-#: ../settings/xfpm-settings.glade.h:32
-msgid "When hibernate button is pressed:"
-msgstr "Po stisknutí tlačítka hibernovat:"
-
-#: ../settings/xfpm-settings.glade.h:33
-msgid "When laptop lid is closed:"
-msgstr "Při zavření laptopu:"
-
-#: ../settings/xfpm-settings.glade.h:34
-msgid "When power button is pressed:"
-msgstr "Po stisknutí hlavního vypínače:"
-
-#: ../settings/xfpm-settings.glade.h:35
-msgid "When sleep button is pressed:"
-msgstr "Po stisknutí tlačítka režim spánku:"
-
-#: ../settings/xfpm-settings.glade.h:36
-#: ../settings/xfpm-settings-main.c:120
-#: ../src/xfpm-main.c:184
-#: ../src/xfpm-main.c:273
-#: ../src/xfpm-tray-icon.c:348
-#: ../src/xfce4-power-manager.desktop.in.h:2
-msgid "Xfce Power Manager"
-msgstr "Správce napájení pro Xfce"
-
-#: ../settings/xfpm-settings.c:370
-#: ../settings/xfpm-settings.c:385
-#: ../settings/xfpm-settings.c:415
+#: ../settings/xfpm-settings.c:478 ../settings/xfpm-settings.c:493
+#: ../settings/xfpm-settings.c:520
 msgid "Never"
 msgstr "Nikdy"
 
-#: ../settings/xfpm-settings.c:373
+#: ../settings/xfpm-settings.c:481
 msgid "One minute"
 msgstr "Jedna minuta"
 
-#: ../settings/xfpm-settings.c:375
-#: ../settings/xfpm-settings.c:387
-#: ../settings/xfpm-settings.c:405
+#: ../settings/xfpm-settings.c:483 ../settings/xfpm-settings.c:495
 msgid "Minutes"
 msgstr "Minut"
 
-#: ../settings/xfpm-settings.c:389
-#: ../settings/xfpm-settings.c:396
-#: ../settings/xfpm-settings.c:397
-#: ../settings/xfpm-settings.c:398
+#: ../settings/xfpm-settings.c:497 ../settings/xfpm-settings.c:504
+#: ../settings/xfpm-settings.c:505 ../settings/xfpm-settings.c:506
 msgid "One hour"
 msgstr "Jedna hodina"
 
-#: ../settings/xfpm-settings.c:397
-#: ../settings/xfpm-settings.c:401
+#: ../settings/xfpm-settings.c:505 ../settings/xfpm-settings.c:509
 msgid "one minute"
 msgstr "jedna minuta"
 
-#: ../settings/xfpm-settings.c:398
-#: ../settings/xfpm-settings.c:402
-#: ../src/xfpm-battery.c:417
+#: ../settings/xfpm-settings.c:506 ../settings/xfpm-settings.c:510
+#: ../src/xfpm-battery.c:453
 msgid "minutes"
 msgstr "minut"
 
-#: ../settings/xfpm-settings.c:400
-#: ../settings/xfpm-settings.c:401
-#: ../settings/xfpm-settings.c:402
-#: ../src/xfpm-battery.c:416
+#: ../settings/xfpm-settings.c:508 ../settings/xfpm-settings.c:509
+#: ../settings/xfpm-settings.c:510 ../src/xfpm-battery.c:452
 msgid "hours"
 msgstr "hodin"
 
-#: ../settings/xfpm-settings.c:417
+#: ../settings/xfpm-settings.c:522
 msgid "Seconds"
 msgstr "Sekund"
 
-#: ../settings/xfpm-settings.c:565
-#: ../settings/xfpm-settings.c:780
-#: ../settings/xfpm-settings.c:829
-#: ../settings/xfpm-settings.c:995
-#: ../settings/xfpm-settings.c:1064
-#: ../settings/xfpm-settings.c:1130
-#: ../settings/xfpm-settings.c:1311
+#: ../settings/xfpm-settings.c:671 ../settings/xfpm-settings.c:832
+#: ../settings/xfpm-settings.c:863 ../settings/xfpm-settings.c:992
+#: ../settings/xfpm-settings.c:1040 ../settings/xfpm-settings.c:1085
+#: ../settings/xfpm-settings.c:1226
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Operace hibernovat a přejít do režimu spánku nejsou povoleny"
 
-#: ../settings/xfpm-settings.c:578
-#: ../settings/xfpm-settings.c:670
+#: ../settings/xfpm-settings.c:681 ../settings/xfpm-settings.c:751
 msgid "Shutdown and hibernate operations not permitted"
 msgstr "Operace vypnout a hibernovat nejsou povoleny"
 
-#: ../settings/xfpm-settings.c:595
-#: ../settings/xfpm-settings.c:1016
+#: ../settings/xfpm-settings.c:689 ../settings/xfpm-settings.c:759
+#: ../settings/xfpm-settings.c:869 ../settings/xfpm-settings.c:998
+#: ../settings/xfpm-settings.c:1046 ../settings/xfpm-settings.c:1091
+msgid "Nothing"
+msgstr "Nic"
+
+#. Suspend menu option
+#: ../settings/xfpm-settings.c:694 ../settings/xfpm-settings.c:764
+#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1003
+#: ../settings/xfpm-settings.c:1051 ../settings/xfpm-settings.c:1096
+#: ../src/xfpm-tray-icon.c:205 ../src/xfpm-tray-icon.c:282
+msgid "Suspend"
+msgstr "Režim spánku"
+
+#. Hibernate menu option
+#: ../settings/xfpm-settings.c:700 ../settings/xfpm-settings.c:770
+#: ../settings/xfpm-settings.c:880 ../settings/xfpm-settings.c:1009
+#: ../settings/xfpm-settings.c:1057 ../settings/xfpm-settings.c:1102
+#: ../src/xfpm-tray-icon.c:174 ../src/xfpm-tray-icon.c:267
+msgid "Hibernate"
+msgstr "Hibernovat"
+
+#: ../settings/xfpm-settings.c:704 ../settings/xfpm-settings.c:1013
 msgid "Shutdown"
 msgstr "Vypnout"
 
-#: ../settings/xfpm-settings.c:955
-msgid "When battery is present"
-msgstr "Pokud je přítomna baterie"
-
-#: ../settings/xfpm-settings.c:958
-msgid "When battery is charging or discharging"
-msgstr "Pokud se baterie nabíjí nebo vybíjí"
-
-#: ../settings/xfpm-settings.c:977
-msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr "Zakázat signál správy napájení displeje (DPMS), například nepokoušet se o vypnutí displeje nebo přechod do režimu spánku."
-
-#: ../settings/xfpm-settings.c:1019
-#: ../settings/xfpm-settings.c:1085
-#: ../settings/xfpm-settings.c:1151
+#: ../settings/xfpm-settings.c:707 ../settings/xfpm-settings.c:1016
+#: ../settings/xfpm-settings.c:1061 ../settings/xfpm-settings.c:1106
 msgid "Ask"
 msgstr "Zeptat se"
 
-#: ../settings/xfpm-settings.c:1215
+#: ../settings/xfpm-settings.c:774 ../settings/xfpm-settings.c:884
+msgid "Lock screen"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:953
+msgid "Always show icon"
+msgstr "Vždy zobrazovat ikonu"
+
+#: ../settings/xfpm-settings.c:956
+msgid "When battery is present"
+msgstr "Pokud je přítomna baterie"
+
+#: ../settings/xfpm-settings.c:959
+msgid "When battery is charging or discharging"
+msgstr "Pokud se baterie nabíjí nebo vybíjí"
+
+#: ../settings/xfpm-settings.c:974
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr ""
+"Zakázat signál správy napájení displeje (DPMS), například nepokoušet se o "
+"vypnutí displeje nebo přechod do režimu spánku."
+
+#: ../settings/xfpm-settings.c:1146
 msgid "Suspend operation not permitted"
 msgstr "Operace přechod do režimu spánku není povolena"
 
-#: ../settings/xfpm-settings.c:1221
+#: ../settings/xfpm-settings.c:1152
 msgid "Hibernate operation not permitted"
 msgstr "Operace hibernace není povolena"
 
-#: ../settings/xfpm-settings.c:1279
+#: ../settings/xfpm-settings.c:1199
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Po dosažení všech zdrojů napájení počítače této úrovně nabití"
 
-#: ../settings/xfpm-settings.c:1430
-#: ../settings/xfpm-settings.c:1435
+#: ../settings/xfpm-settings.c:1312 ../settings/xfpm-settings.c:1317
+msgid "General"
+msgstr "Obecné"
+
+#: ../settings/xfpm-settings.c:1326 ../settings/xfpm-settings.c:1331
+msgid "On AC"
+msgstr "Napájení ze sítě"
+
+#: ../settings/xfpm-settings.c:1341 ../settings/xfpm-settings.c:1346
 msgid "On Battery"
 msgstr "Napájení z baterie"
 
-#: ../settings/xfpm-settings.c:1444
-#: ../settings/xfpm-settings.c:1449
+#: ../settings/xfpm-settings.c:1355 ../settings/xfpm-settings.c:1360
 msgid "Extended"
 msgstr "Rozšířené"
+
+#: ../settings/xfpm-settings.c:1425
+#, fuzzy
+msgid "Check your power manager installation"
+msgstr "Správce napájení Xfce není spuštěn"
 
 #: ../settings/xfpm-settings-main.c:72
 msgid "Settings manager socket"
@@ -306,36 +159,42 @@ msgstr "Soket správce nastavení"
 msgid "SOCKET ID"
 msgstr "SOCKET ID"
 
-#: ../settings/xfpm-settings-main.c:83
-#: ../src/xfpm-main.c:145
-#: ../src/xfpm-main.c:167
+#: ../settings/xfpm-settings-main.c:83 ../src/xfpm-main.c:149
+#: ../src/xfpm-main.c:170
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Informace o použití získáte příkazem '%s --help'."
 
-#: ../settings/xfpm-settings-main.c:120
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "Načtení konfigurace správce napájení se nezdařilo, používá se výchozí nastavení"
+#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:187
+#: ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:347
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Xfce Power Manager"
+msgstr "Správce napájení pro Xfce"
 
-#: ../settings/xfpm-settings-main.c:146
+#: ../settings/xfpm-settings-main.c:118
+msgid "Failed to load power manager configuration, using defaults"
+msgstr ""
+"Načtení konfigurace správce napájení se nezdařilo, používá se výchozí "
+"nastavení"
+
+#: ../settings/xfpm-settings-main.c:144
 msgid "Xfce Power Manager Settings"
 msgstr "Nastavení správce napájení pro Xfce"
 
-#: ../settings/xfpm-settings-main.c:147
+#: ../settings/xfpm-settings-main.c:145
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Nelze se připojit ke Správci napájení pro prostředí Xfce"
 
-#: ../settings/xfpm-settings-main.c:175
-#: ../src/xfpm-main.c:200
+#: ../settings/xfpm-settings-main.c:173 ../src/xfpm-main.c:198
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Správce napájení Xfce není spuštěn"
 
-#: ../settings/xfpm-settings-main.c:178
+#: ../settings/xfpm-settings-main.c:176
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Správce napájení pro Xfce neběží, chcete jej nyní spustit?"
 
-#: ../settings/xfpm-settings-main.c:180
+#: ../settings/xfpm-settings-main.c:178
 msgid "Run"
 msgstr "Spustit"
 
@@ -367,9 +226,8 @@ msgstr "Baterie se nabíjí"
 msgid "Your battery is discharging"
 msgstr "Baterie se vybíjí"
 
-#: ../src/xfpm-battery.c:117
-#: ../src/xfpm-battery.c:425
-#: ../src/xfpm-battery.c:437
+#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:438
+#: ../src/xfpm-battery.c:470
 msgid "System is running on battery power"
 msgstr "Systém je napájen z baterie"
 
@@ -381,103 +239,97 @@ msgstr "Úroveň nabití baterie je nízká"
 msgid "System is running on low power"
 msgstr "Baterie je téměř vybitá"
 
-#: ../src/xfpm-battery.c:240
-#: ../src/xfpm-supply.c:281
-#: ../src/xfpm-supply.c:304
-#: ../src/xfpm-tray-icon.c:119
-#: ../src/xfpm-tray-icon.c:142
+#: ../src/xfpm-battery.c:238 ../src/xfpm-supply.c:340 ../src/xfpm-supply.c:363
+#: ../src/xfpm-tray-icon.c:119 ../src/xfpm-tray-icon.c:142
 #: ../src/xfpm-manager.c:226
 msgid "Xfce power manager"
 msgstr "Správce napájeni pro Xfce"
 
-#: ../src/xfpm-battery.c:254
+#: ../src/xfpm-battery.c:268
 msgid "Your UPS"
 msgstr "Záložní zdroj UPS"
 
-#: ../src/xfpm-battery.c:256
+#: ../src/xfpm-battery.c:270
 msgid "Your Mouse battery"
 msgstr "Baterie myši"
 
-#: ../src/xfpm-battery.c:258
+#: ../src/xfpm-battery.c:272
 msgid "Your Keyboard battery"
 msgstr "Baterie klávesnice"
 
-#: ../src/xfpm-battery.c:260
+#: ../src/xfpm-battery.c:274
 msgid "Your Camera battery"
 msgstr "Baterie fotoaparátu"
 
-#: ../src/xfpm-battery.c:262
+#: ../src/xfpm-battery.c:276
 msgid "Your PDA battery"
 msgstr "Baterie PDA"
 
-#: ../src/xfpm-battery.c:264
+#: ../src/xfpm-battery.c:278
 msgid "Your Battery"
 msgstr "Baterie"
 
-#: ../src/xfpm-battery.c:279
+#: ../src/xfpm-battery.c:293
 msgid "is empty"
 msgstr "je vybitá"
 
-#: ../src/xfpm-battery.c:285
+#: ../src/xfpm-battery.c:299
 msgid "is fully charged"
 msgstr "je plně nabitá"
 
-#: ../src/xfpm-battery.c:290
+#: ../src/xfpm-battery.c:304
 msgid "charge level"
 msgstr "úroveň nabití"
 
-#: ../src/xfpm-battery.c:295
+#: ../src/xfpm-battery.c:309
 msgid "is charging"
 msgstr "se nabíjí"
 
-#: ../src/xfpm-battery.c:302
+#: ../src/xfpm-battery.c:316
 msgid "is discharging"
 msgstr "se vybíjí"
 
-#: ../src/xfpm-battery.c:307
+#: ../src/xfpm-battery.c:321
 msgid "charge is low"
 msgstr "úroveň nabití je nízká"
 
-#: ../src/xfpm-battery.c:312
+#: ../src/xfpm-battery.c:326
 msgid "is almost empty"
 msgstr "je téměř vybitá"
 
-#: ../src/xfpm-battery.c:352
+#: ../src/xfpm-battery.c:371
 msgid "is not present"
 msgstr "není přítomna"
 
-#: ../src/xfpm-battery.c:385
+#: ../src/xfpm-battery.c:410
 msgid "Battery not present"
 msgstr "Baterie není přítomná"
 
-#: ../src/xfpm-battery.c:408
-msgid "Estimated time left"
-msgstr "Odhad zbývajícího času"
-
-#: ../src/xfpm-battery.c:412
-msgid "Estimated time to be fully charged"
-msgstr "Odhad času pro úplné nabití"
-
-#: ../src/xfpm-battery.c:416
-msgid "hour"
-msgstr "hodina"
-
-#: ../src/xfpm-battery.c:417
-msgid "minute"
-msgstr "minuta"
-
-#: ../src/xfpm-battery.c:421
-#: ../src/xfpm-battery.c:433
+#: ../src/xfpm-battery.c:434 ../src/xfpm-battery.c:466
 msgid "Battery"
 msgstr "Baterie"
 
-#: ../src/xfpm-battery.c:424
-#: ../src/xfpm-battery.c:436
+#: ../src/xfpm-battery.c:437 ../src/xfpm-battery.c:469
 msgid "System is running on AC power"
 msgstr "Systém je napájen ze sítě"
 
-#: ../src/xfpm-battery-info.c:63
-#: ../libxfpm/hal-battery.c:478
+#: ../src/xfpm-battery.c:444
+msgid "Estimated time left"
+msgstr "Odhad zbývajícího času"
+
+#: ../src/xfpm-battery.c:448
+msgid "Estimated time to be fully charged"
+msgstr "Odhad času pro úplné nabití"
+
+#: ../src/xfpm-battery.c:452
+msgid "hour"
+msgstr "hodina"
+
+#: ../src/xfpm-battery.c:453
+msgid "minute"
+msgstr "minuta"
+
+#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:476
 msgid "Unknown unit"
 msgstr "Neznámá jednotka"
 
@@ -526,118 +378,141 @@ msgstr ""
 "Vydáno pod licencí GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:128
 msgid "Do not daemonize"
 msgstr "Nepřecházet do režimu démon"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:129
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Restartovat všechny běžící instance Správce napájení pro Xfce"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:130
 msgid "Show the configuration dialog"
 msgstr "Zobrazit konfigurační dialogové okno"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:131
 msgid "Quit any running xfce power manager"
 msgstr "Ukončit všechny běžící správce napájení"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:132
 msgid "Version information"
 msgstr "Informace o verzi"
 
-#: ../src/xfpm-main.c:165
+#: ../src/xfpm-main.c:168
 #, c-format
 msgid "Too many arguments"
 msgstr "Příliš mnoho argumentů"
 
-#: ../src/xfpm-main.c:181
+#: ../src/xfpm-main.c:184
 msgid "Unable to get connection to the message bus session"
 msgstr "Spojení se sběrnicí zpráv se nepodařilo navázat"
 
-#: ../src/xfpm-main.c:274
+#: ../src/xfpm-main.c:272
 msgid "Another power manager is already running"
 msgstr "Již je spuštěn jiný správce napájení"
 
-#: ../src/xfpm-main.c:279
+#: ../src/xfpm-main.c:278
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Správce napájení pro Xfce je již spuštěn"
 
-#: ../src/xfpm-supply.c:168
+#: ../src/xfpm-supply.c:231
 msgid "Adapter present"
 msgstr "Adaptér je příomný"
 
-#: ../src/xfpm-supply.c:169
+#: ../src/xfpm-supply.c:232
 msgid "Adapter not present"
 msgstr "Adaptér není přítomný"
 
-#: ../src/xfpm-supply.c:250
+#: ../src/xfpm-supply.c:309
 msgid "Shutdown the system"
 msgstr "Vypnout systém"
 
-#: ../src/xfpm-supply.c:261
+#: ../src/xfpm-supply.c:320
 msgid "Hibernate the system"
 msgstr "Hibernovat systém"
 
-#: ../src/xfpm-supply.c:273
-msgid "System is running on low power, but an application is currently disabling the automatic sleep, this means that doing a sleep now may damage the data of this application. Close this application before putting the computer on sleep mode or plug in your AC adapter"
-msgstr "Baterie je téměř vybitá, ale aplikace zakazuje automatický přechod do režimu spánku, což znamená, že přechod do režimu spánku může poškodit data této aplikace. Zavřete tuto aplikaci před přechodem do režimu spánku nebo zapojte adaptér pro napájení ze sítě."
+#: ../src/xfpm-supply.c:332
+msgid ""
+"System is running on low power, but an application is currently disabling "
+"the automatic sleep, this means that doing a sleep now may damage the data "
+"of this application. Close this application before putting the computer on "
+"sleep mode or plug in your AC adapter"
+msgstr ""
+"Baterie je téměř vybitá, ale aplikace zakazuje automatický přechod do režimu "
+"spánku, což znamená, že přechod do režimu spánku může poškodit data této "
+"aplikace. Zavřete tuto aplikaci před přechodem do režimu spánku nebo zapojte "
+"adaptér pro napájení ze sítě."
 
-#: ../src/xfpm-supply.c:299
+#: ../src/xfpm-supply.c:358
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Baterie je téměř vybitá. Uložte si svoji práci, abyste předešli ztrátě dat"
+msgstr ""
+"Baterie je téměř vybitá. Uložte si svoji práci, abyste předešli ztrátě dat"
 
-#: ../src/xfpm-tray-icon.c:162
-msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
-msgstr "Aplikace zakatuje funkci automatického přechozu do režimu spánku, tato akce může poškodit pracovní stav této aplikace. Opravdu chcete hibernovat systém?"
+#: ../src/xfpm-tray-icon.c:166
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
+msgstr ""
+"Aplikace zakatuje funkci automatického přechozu do režimu spánku, tato akce "
+"může poškodit pracovní stav této aplikace. Opravdu chcete hibernovat systém?"
 
-#: ../src/xfpm-tray-icon.c:165
-#: ../src/xfpm-tray-icon.c:196
+#: ../src/xfpm-tray-icon.c:169 ../src/xfpm-tray-icon.c:200
 msgid "Are you sure you want to proceed?"
 msgstr "Opravdu chcete pokračovat?"
 
-#: ../src/xfpm-tray-icon.c:193
-msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to suspend the system?"
-msgstr "Aplikace zakatuje funkci automatického přechozu do režimu spánku, tato akce může poškodit pracovní stav této aplikace. Opravdu chcete systém uvést do režimu spánku?"
+#: ../src/xfpm-tray-icon.c:197
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to suspend the system?"
+msgstr ""
+"Aplikace zakatuje funkci automatického přechozu do režimu spánku, tato akce "
+"může poškodit pracovní stav této aplikace. Opravdu chcete systém uvést do "
+"režimu spánku?"
 
-#: ../src/xfpm-tray-icon.c:222
+#: ../src/xfpm-tray-icon.c:221
 msgid "Quit the Xfce power manager"
 msgstr "Ukončit správce napájeni pro Xfce"
 
-#: ../src/xfpm-tray-icon.c:224
+#: ../src/xfpm-tray-icon.c:223
 msgid "Quit"
 msgstr "Ukončit"
 
-#: ../src/xfpm-tray-icon.c:298
+#: ../src/xfpm-tray-icon.c:297
 msgid "Clear inhibit"
 msgstr "Potlačit čistě"
 
-#: ../src/xfpm-tray-icon.c:298
+#: ../src/xfpm-tray-icon.c:297
 msgid "Inhibit"
 msgstr "Potlačit"
 
-#: ../src/xfpm-tray-icon.c:300
-msgid "Disable or enable automatic sleep, setting this will tell the power manager to disable backlight sleep, for example you could active the inhibit if you are watching a movie."
-msgstr "Zakázat nebo povolit automatický přechod do režimu spánku, nastavení této možnosti sdělí správci napájení, aby zakázal režim spánku, například při sledování filmu."
+#: ../src/xfpm-tray-icon.c:299
+msgid ""
+"Disable or enable automatic sleep, setting this will tell the power manager "
+"to disable backlight sleep, for example you could active the inhibit if you "
+"are watching a movie."
+msgstr ""
+"Zakázat nebo povolit automatický přechod do režimu spánku, nastavení této "
+"možnosti sdělí správci napájení, aby zakázal režim spánku, například při "
+"sledování filmu."
 
-#: ../src/xfpm-tray-icon.c:388
+#: ../src/xfpm-tray-icon.c:387
 msgid "No data available"
 msgstr "Žádná data nejsou dostupná"
 
-#: ../src/xfpm-engine.c:646
-#: ../src/xfpm-engine.c:672
-#: ../src/xfpm-engine.c:701
+#: ../src/xfpm-engine.c:728 ../src/xfpm-engine.c:754 ../src/xfpm-engine.c:783
 #, c-format
 msgid "Permission denied"
 msgstr "Přístup zamítnut"
 
-#: ../src/xfpm-engine.c:679
+#: ../src/xfpm-engine.c:761
 #, c-format
 msgid "Hibernate not supported"
 msgstr "Hibernace není podporována"
 
-#: ../src/xfpm-engine.c:708
+#: ../src/xfpm-engine.c:790
 #, c-format
 msgid "Suspend not supported"
 msgstr "Režim spánku není podporován"
@@ -646,47 +521,46 @@ msgstr "Režim spánku není podporován"
 msgid "HAL daemon is not running"
 msgstr "Démon vrstvy HAL není spuštěn"
 
-#: ../src/xfpm-inhibit.c:330
+#: ../src/xfpm-inhibit.c:329
 #, c-format
 msgid "Invalid arguments"
 msgstr "Neplatné argumenty"
 
-#: ../src/xfpm-inhibit.c:356
+#: ../src/xfpm-inhibit.c:355
 #, c-format
 msgid "Invalid cookie"
 msgstr "Neplatná cookie"
 
-#: ../src/xfpm-shutdown.c:335
+#: ../src/xfpm-shutdown.c:336
 msgid "No back-end for your operating system"
 msgstr "Pro váš operační systém není přítomen back-end"
 
-#: ../src/xfpm-shutdown.c:339
+#: ../src/xfpm-shutdown.c:340
 msgid "No hibernate script found"
 msgstr "Nebyl nalezen skript pro hibernaci"
 
-#: ../src/xfpm-shutdown.c:343
+#: ../src/xfpm-shutdown.c:344
 msgid "No suspend script found"
 msgstr "Nebyl nalezen skript pro režim spánku"
 
-#: ../src/xfpm-shutdown.c:347
+#: ../src/xfpm-shutdown.c:348
 msgid "No suspend method found"
 msgstr "Nebyla nalezena metoda pro režim spánku"
 
-#: ../src/xfpm-shutdown.c:351
+#: ../src/xfpm-shutdown.c:352
 msgid "No hibernate method found"
 msgstr "Nebyla nalezena metoda pro hibernaci"
 
-#: ../src/xfpm-shutdown.c:355
+#: ../src/xfpm-shutdown.c:356
 msgid "Out of memory"
 msgstr "Nedostatek paměti"
 
-#: ../src/xfpm-shutdown.c:359
+#: ../src/xfpm-shutdown.c:360
 msgid "System failed to sleep"
 msgstr "Nepodařilo se přejít do režimu spánku"
 
-#: ../src/xfpm-shutdown.c:401
-#: ../src/xfpm-shutdown.c:424
-#: ../src/xfpm-shutdown.c:458
+#: ../src/xfpm-shutdown.c:409 ../src/xfpm-shutdown.c:432
+#: ../src/xfpm-shutdown.c:466
 #, c-format
 msgid "HAL daemon is currently not connected"
 msgstr "Démon vrstvy HAL není připojen"
@@ -695,35 +569,35 @@ msgstr "Démon vrstvy HAL není připojen"
 msgid "Power management for the Xfce desktop"
 msgstr "Správa napájení pro prostředí Xfce"
 
-#: ../libxfpm/hal-battery.c:448
+#: ../libxfpm/hal-battery.c:446
 msgid "Lithium ion"
 msgstr "Lithium ionové"
 
-#: ../libxfpm/hal-battery.c:452
+#: ../libxfpm/hal-battery.c:450
 msgid "Lead acid"
 msgstr "Olověný akumulátor"
 
-#: ../libxfpm/hal-battery.c:456
+#: ../libxfpm/hal-battery.c:454
 msgid "Lithium polymer"
 msgstr "Lithium polymerové"
 
-#: ../libxfpm/hal-battery.c:460
+#: ../libxfpm/hal-battery.c:458
 msgid "Nickel metal hydride"
 msgstr "Nikl metal hydridové"
 
-#: ../libxfpm/hal-battery.c:463
+#: ../libxfpm/hal-battery.c:461
 msgid "Unknown"
 msgstr "Neznámý"
 
-#: ../libxfpm/hal-battery.c:471
+#: ../libxfpm/hal-battery.c:469
 msgid "mWh"
 msgstr "mWh"
 
-#: ../libxfpm/hal-battery.c:475
+#: ../libxfpm/hal-battery.c:473
 msgid "mAh"
 msgstr "mAh"
 
-#: ../libxfpm/xfpm-common.c:175
+#: ../libxfpm/xfpm-common.c:188
 msgid "translator-credits"
 msgstr "Michal Várady <miko.vaji@gmail.com>"
 
@@ -741,15 +615,99 @@ msgstr "Nebylo nalezeno žádné zařízení"
 msgid "Brightness plugin"
 msgstr "Zásuvný modul Jas"
 
+#~ msgid "<b>Actions</b>"
+#~ msgstr "<b>Akce</b>"
+
+#~ msgid "<b>Advanced Options</b>"
+#~ msgstr "<b>Pokročilé volby</b>"
+
+#~ msgid "<b>Brightness</b>"
+#~ msgstr "<b>Jas</b>"
+
+#~ msgid "<b>General Options</b>"
+#~ msgstr "<b>Obecné volby</b>"
+
+#~ msgid "<b>Monitor</b>"
+#~ msgstr "<b>Monitor</b>"
+
+#~ msgid "Actions"
+#~ msgstr "Akce"
+
+#~ msgid "Advanced"
+#~ msgstr "Pokročilé"
+
+#~ msgid "Consider the computer on low power at:"
+#~ msgstr "Považovat baterii za vybitou při:"
+
+#~ msgid "Enable CPU frequency control"
+#~ msgstr "Povolit ovládání frekvence procesoru"
+
+#~ msgid "Enable monitor power management control"
+#~ msgstr "Povolit ovládání správy napájení monitoru"
+
+#~ msgid "Enable notification"
+#~ msgstr "Povolit oznámení"
+
+#~ msgid "Lock screen when going for suspend/hibernate"
+#~ msgstr "Uzamknout obrazovku při přechodu do režimu spánku nebo hibernace"
+
+#~ msgid "Monitor"
+#~ msgstr "Monitor"
+
+#~ msgid "On battery"
+#~ msgstr "Napájení z baterie"
+
+#~ msgid "Power manager settings"
+#~ msgstr "Nastavení správce napájení"
+
+#~ msgid "Prefer power savings over performance"
+#~ msgstr "Upřednostnit úsporu energie před výkonem"
+
+#~ msgid "Put display to sleep when computer is inactive for:"
+#~ msgstr "Přepnout displej do režimu spánku, pokud je počítač neaktivní:"
+
+#~ msgid "Put the computer to sleep when inactive for:"
+#~ msgstr "Přepnout počítač do režimu spánku, pokud je neaktivní:"
+
+#~ msgid "Reduce screen brightness when computer is inactive for:"
+#~ msgstr "Snížit jak obrazovky, pokud je počítač neaktivní:"
+
+#~ msgid "Set computer inactivity sleep mode:"
+#~ msgstr "Uvést počítač do režimu spánku při nečinnosti:"
+
+#~ msgid "Set monitor sleep mode:"
+#~ msgstr "Uvést monitor do režimu spánku:"
+
+#~ msgid "Standby"
+#~ msgstr "Pohotovostní režim"
+
+#~ msgid "Switch off display when computer is inactive for:"
+#~ msgstr "Vypnout displej, pokud je počítač neaktivní:"
+
+#~ msgid "System tray icon: "
+#~ msgstr "Ikona v oznamovací oblasti:"
+
+#~ msgid "When battery power is critical:"
+#~ msgstr "Je-li úroveň nabití baterie kritická:"
+
+#~ msgid "When hibernate button is pressed:"
+#~ msgstr "Po stisknutí tlačítka hibernovat:"
+
+#~ msgid "When laptop lid is closed:"
+#~ msgstr "Při zavření laptopu:"
+
+#~ msgid "When power button is pressed:"
+#~ msgstr "Po stisknutí hlavního vypínače:"
+
+#~ msgid "When sleep button is pressed:"
+#~ msgstr "Po stisknutí tlačítka režim spánku:"
+
 #, fuzzy
 #~ msgid "Xfce power manager is not running to releod it"
 #~ msgstr "Správce napájení Xfce není spuštěn"
+
 #~ msgid "Power"
 #~ msgstr "Napájení"
-
-#, fuzzy
-#~ msgid "No power manager instance running"
-#~ msgstr "Správce napájení Xfce není spuštěn"
 
 #, fuzzy
 #~ msgid "Don't show again"
@@ -762,101 +720,141 @@ msgstr "Zásuvný modul Jas"
 #, fuzzy
 #~ msgid "Power manager is connected"
 #~ msgstr "Správce napájení Xfce není spuštěn"
+
 #~ msgid ""
 #~ "Unable to read adapter status, the power manager will not work properly"
 #~ msgstr ""
 #~ "Nelze zjistit stav adaptéru, správce napájení nebude fungovat korektně"
+
 #~ msgid "Adapter is online"
 #~ msgstr "Adaptér je připojen"
+
 #~ msgid "Adapter is offline"
 #~ msgstr "Adaptér je odpojen"
+
 #~ msgid "Are you sure you want to hibernate the system?"
 #~ msgstr "Opravdu chcete hibernovat systém?"
+
 #~ msgid "UPS configuration"
 #~ msgstr "Konfigurace záložního zdroje"
+
 #~ msgid "Consider UPS charge critical"
 #~ msgstr "Kritický stav nabití záložního zdroje"
+
 #~ msgid "Consider battery charge critical"
 #~ msgstr "Kritický stav nabití baterie"
+
 #~ msgid "percent"
 #~ msgstr "procent"
+
 #~ msgid "Enable battery state notification"
 #~ msgstr "Povolit oznámení o nabíjení baterie"
+
 #~ msgid "Enable power save on UPS power"
 #~ msgstr "Povolit úsporný režim při napájení ze záložního zdroje"
+
 #~ msgid "Enable power save on battery power"
 #~ msgstr "Povolit úsporný režim při napájení z baterie"
+
 #~ msgid "Best performance"
 #~ msgstr "Nejvyšší výkon"
+
 #~ msgid "Set the CPU to its maximum frequency"
 #~ msgstr "Nastavit procesor na nejvyšší frekvenci"
+
 #~ msgid "Ondemand performance"
 #~ msgstr "Výkon na vyžádání"
+
 #~ msgid ""
 #~ "Set the CPU to its maximum speed when there is any load on it and to its "
 #~ "minimum speed when the system is idle"
 #~ msgstr ""
 #~ "Nastavit procesor na nejvyšší frekvenci pokud je vytížen a na nejnižší "
 #~ "pokud je systém nečinný"
+
 #~ msgid "Best power savings"
 #~ msgstr "Nejlepší úspora napájení"
+
 #~ msgid "Set the CPU to its minimum frequency"
 #~ msgstr "Nastavit procesor na nejnižší frekvenci"
+
 #~ msgid "Good power savings"
 #~ msgstr "Dobrá úspora napájení"
+
 #~ msgid ""
 #~ "gracefully increases and decreases the CPU speed depending on the current "
 #~ "usage"
 #~ msgstr ""
 #~ "zvyšuje a snižuje rychlost procesoru v závislosti na aktuálním využití"
+
 #~ msgid "CPU frequency settings on UPS power"
 #~ msgstr "Nastavení frekvence procesoru při napájení ze záložního zdroje"
+
 #~ msgid "CPU frequency settings on battery power"
 #~ msgstr "Nastavení frekvence procesoru při napájení ze baterie"
+
 #~ msgid "CPU frequency control cannot be used"
 #~ msgstr "Ovládání frekvence procesoru nelze použít"
+
 #~ msgid "CPU frequency settings on AC power"
 #~ msgstr "Nastavení frekvence procesoru při napájení ze sítě"
+
 #~ msgid "CPU frequency settings"
 #~ msgstr "Nastavení frekvence procesoru"
+
 #~ msgid "Monitor settings on UPS power"
 #~ msgstr "Nastavení monitoru při napájení ze záložního zdroje"
+
 #~ msgid "Your monitor doesn't support DPMS control"
 #~ msgstr "Váš monitor nepodporuje ovládání DPMS"
+
 #~ msgid "Keyboard shortcuts"
 #~ msgstr "Klávesové zkratky"
+
 #~ msgid "No available keyboard shortcuts found"
 #~ msgstr "Nebyly nalezeny žádné dostupné klávesové zkratky"
+
 #~ msgid "CPU settings"
 #~ msgstr "Nastavení procesoru"
+
 #~ msgid "Shortcuts"
 #~ msgstr "Klávesové zkratky"
+
 #~ msgid "Monitor Settings"
 #~ msgstr "Nastavení monitoru"
+
 #~ msgid "Your battery is almost empty"
 #~ msgstr "Baterie je téměř vybitá"
+
 #~ msgid "%"
 #~ msgstr "%"
+
 #~ msgid "min"
 #~ msgstr "min"
+
 #~ msgid "Suspend after"
 #~ msgstr "Režim spánku po"
+
 #~ msgid "Turn off after"
 #~ msgstr "Vypnout po"
+
 #~ msgid "Xfce4 Power Manager"
 #~ msgstr "Správce napájení pro Xfce4"
+
 #~ msgid ""
 #~ "Unable to read your home directory environment variable, autostart option "
 #~ "may not work"
 #~ msgstr ""
 #~ "Nelze číst proměnnou prostředí domovského adresáře, funkce automatického "
 #~ "spuštění nemusí fungovat"
+
 #~ msgid ""
 #~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
 #~ "and the message bus daemon are running"
 #~ msgstr ""
 #~ "Nelze spustit správce napájení pro Xfce, ujistěte se, že abstraktní "
 #~ "vrstva hardwaru a démon sběrnice zpráv běží"
+
 #~ msgid ""
 #~ "Unable to read AC adapter status, the power manager will not work "
 #~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
@@ -866,8 +864,10 @@ msgstr "Zásuvný modul Jas"
 #~ "Nelze číst stav adaptéru AC, správce napájení nebude pracovat správně. "
 #~ "Možné důvody: Ovladač adaptéru AC není zaveden, přerušené spojení s "
 #~ "abstraktní hardwarovou vrstvou nebo démon sběrnice zpráv neběží"
+
 #~ msgid "System failed to shutdown"
 #~ msgstr "Vypnutí systému se nezdařilo"
+
 #~ msgid ""
 #~ "Unable to use power management service, functionalities like hibernate "
 #~ "and suspend will not work. Possible reasons: you don't have enough "
@@ -877,59 +877,82 @@ msgstr "Zásuvný modul Jas"
 #~ "Nelze použít službu správy napájení, funkce jako hibernace a režim spánku "
 #~ "nebudou pracovat. Možné důvody: nemáte dostatečná oprávnění, přerušené "
 #~ "spojení s abstraktní hardwarovou vrstvou nebo démon sběrnice zpráv neběží"
+
 #~ msgid "Error monitoring HAL events"
 #~ msgstr "Chyba při monitorování událostí vrstvy HAL"
+
 #~ msgid "HAL is not running or not responding"
 #~ msgstr "Vrstva HAL neběží nebo neodpovídá"
+
 #~ msgid "Unable to watch device using HAL: %s"
 #~ msgstr "Nelze sledovat zařízení pomocí vrstvy HAL: %s"
+
 #~ msgid "Message hibernate didn't get a reply"
 #~ msgstr "Zpráva o hibernaci neobdržela odpověď"
+
 #~ msgid "System failed to hibernate"
 #~ msgstr "Hibernace systému se nezdařila"
+
 #~ msgid "Error occured while trying to suspend"
 #~ msgstr "Při pokusu o přejití do režimu spánku došlo k chybě"
+
 #~ msgid "Unknown reply from the message daemon"
 #~ msgstr "Neznámá odpověď démona zpráv"
+
 #~ msgid "Message suspend didn't get a reply"
 #~ msgstr "Zpráva o režimu spánku neobdržela odpověď"
+
 #~ msgid "No reply from HAL daemon to set monitor brightness level"
 #~ msgstr ""
 #~ "Žádná odpověď od démona vrstvy HAL pro nastavení úrovně jasu monitoru"
+
 #~ msgid "No reply from HAL daemon to get monitor brightness level"
 #~ msgstr "Žádná odpověď od démona vrstvy HAL pro získání úrovně jasu monitoru"
+
 #~ msgid "No reply from HAL daemon to get available cpu governors"
 #~ msgstr ""
 #~ "Žádná odpověď od démona vrstvy HAL pro získání dostupných regulátorů "
 #~ "procesoru"
+
 #~ msgid "No reply from HAL daemon to get current cpu governor"
 #~ msgstr ""
 #~ "Žádná odpověď od démona vrstvy HAL pro získání stávajícího regulátoru "
 #~ "procesoru"
+
 #~ msgid "No reply from HAL daemon to set cpu governor"
 #~ msgstr ""
 #~ "Žádná odpověď od démona vrstvy HAL pro nastavení regulátoru procesoru"
+
 #~ msgid "No reply from HAL daemon to set power save profile"
 #~ msgstr ""
 #~ "Žádná odpověď od démona vrstvy HAL pro nastavení profilu úsporného režimu"
+
 #~ msgid "Failed to create dbus message\n"
 #~ msgstr "Nepodařilo se vytvořit zprávu sběrnice dbus\n"
+
 #~ msgid "Failed to send message\n"
 #~ msgstr "Nepodařilo se odeslat zprávu\n"
+
 #~ msgid "Start xfce power manager"
 #~ msgstr "Spustit správce napájení pro Xfce"
+
 #~ msgid "On electric power"
 #~ msgstr "Při napájení z elektrické sítě"
+
 #~ msgid "CPU frequency settings on electric power"
 #~ msgstr "Nastavení frekvence procesoru při napájení z elektrické sítě"
+
 #~ msgid "Monitor settings on electric power"
 #~ msgstr "Nastavení monitoru při napájení z elektrické sítě"
+
 #~ msgid "Ondemand"
 #~ msgstr "Na vyžádání"
+
 #~ msgid "Userspace"
 #~ msgstr "Uživatelský prostor"
+
 #~ msgid "Powersave"
 #~ msgstr "Úsporný"
+
 #~ msgid "Conservative"
 #~ msgstr "Konzervativní"
-

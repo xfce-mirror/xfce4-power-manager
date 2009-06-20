@@ -5,8 +5,9 @@ xfce4_power_manager_settings_SOURCES = 				\
 	xfpm-settings-main.c					\
 	xfpm-settings.c						\
 	xfpm-settings.h						\
-	$(top_srcdir)/src/xfpm-config.h
-
+	$(top_srcdir)/src/xfpm-config.h				\
+	$(top_srcdir)/src/xfpm-enum.h				\
+	$(top_srcdir)/src/xfpm-enum-glib.h
 
 xfce4_power_manager_settings_CFLAGS =				\
 	-I$(top_srcdir)						\

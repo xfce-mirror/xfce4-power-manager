@@ -153,8 +153,9 @@ xfpm_engine_shutdown_request (XfpmEngine * engine,
     gboolean lock_screen;
     const gchar *action = xfpm_int_to_shutdown_string (shutdown);
 
-    lock_screen =
-	xfpm_xfconf_get_property_bool (engine->priv->conf, LOCK_SCREEN_ON_SLEEP);
+    g_object_get (G_OBJECT (engine->priv->conf),
+		  LOCK_SCREEN_ON_SLEEP, &lock_screen,
+		  NULL);
 
     if (xfpm_strequal (action, "Nothing"))
     {
@@ -204,10 +205,29 @@ xfpm_engine_shutdown_request_battery_cb (XfpmSupply * supply,
 }
 
 static void
+xfpm_engine_lid_event (XfpmEngine *engine)
+{
+    XfpmLidTriggerAction action;
+    
+    g_object_get (G_OBJECT (engine->priv->conf),
+		  engine->priv->on_battery ? LID_SWITCH_ON_BATTERY_CFG : LID_SWITCH_ON_AC_CFG, &action,
+		  NULL);
+		  
+    XFPM_DEBUG_ENUM ("LID close event", action, XFPM_TYPE_LID_TRIGGER_ACTION);
+    
+    if ( action == LID_TRIGGER_LOCK_SCREEN )
+	xfpm_lock_screen ();
+    else 
+	xfpm_engine_shutdown_request (engine, action, FALSE);
+}
+
+static void
 xfpm_engine_button_pressed_cb (XfpmButton *button,
 			       XfpmButtonKey type, XfpmEngine * engine)
 {
-    XfpmShutdownRequest shutdown;
+    XfpmShutdownRequest req = XFPM_DO_NOTHING;
+    
+    
     XFPM_DEBUG_ENUM ("Received button press event", type, XFPM_TYPE_BUTTON_KEY);
   
     if ( engine->priv->inhibited )
@@ -219,37 +239,41 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
     if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
 	return;
     
+    if ( type == BUTTON_LID_CLOSED )
+    {
+	xfpm_engine_lid_event (engine);
+	return;
+    }
+    
     if ( type == BUTTON_POWER_OFF )
     {
-	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
-						  POWER_SWITCH_CFG);
+	g_object_get (G_OBJECT (engine->priv->conf),
+		      POWER_SWITCH_CFG, &req,
+		      NULL);
     }
     else if ( type == BUTTON_SLEEP )
     {
-	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
-						  SLEEP_SWITCH_CFG);
+	g_object_get (G_OBJECT (engine->priv->conf),
+		      POWER_SWITCH_CFG, &req,
+		      NULL);
     }
     else if ( type == BUTTON_HIBERNATE )
     {
-	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
-						  HIBERNATE_SWITCH_CFG);
-    }
-    else if ( type == BUTTON_LID_CLOSED )
-    {
-	shutdown = xfpm_xfconf_get_property_enum (engine->priv->conf,
-					          engine->priv->on_battery ?
-					          LID_SWITCH_ON_BATTERY_CFG :
-					          LID_SWITCH_ON_AC_CFG);
+	g_object_get (G_OBJECT (engine->priv->conf),
+		      POWER_SWITCH_CFG, &req,
+		      NULL);
     }
     else
     {
 	g_return_if_reached ();
     }
+
+    XFPM_DEBUG_ENUM ("Shutdown request : ", req, XFPM_TYPE_SHUTDOWN_REQUEST);
 	
-    if ( shutdown == XFPM_ASK )
+    if ( req == XFPM_ASK )
 	xfpm_shutdown_ask (engine->priv->shutdown);
     else
-	xfpm_engine_shutdown_request (engine, shutdown, FALSE);
+	xfpm_engine_shutdown_request (engine, req, FALSE);
 }
 
 static void
@@ -363,8 +387,10 @@ xfpm_engine_set_inactivity_timeouts (XfpmEngine *engine)
 {
     guint on_ac, on_battery;
     
-    on_ac = xfpm_xfconf_get_property_int (engine->priv->conf, ON_AC_INACTIVITY_TIMEOUT );
-    on_battery = xfpm_xfconf_get_property_int (engine->priv->conf, ON_BATTERY_INACTIVITY_TIMEOUT );
+    g_object_get (G_OBJECT (engine->priv->conf),
+		  ON_AC_INACTIVITY_TIMEOUT, &on_ac,
+		  ON_BATTERY_INACTIVITY_TIMEOUT, &on_battery,
+		  NULL);
     
 #ifdef DEBUG
     if ( on_ac == 30 )
@@ -399,7 +425,8 @@ xfpm_engine_set_inactivity_timeouts (XfpmEngine *engine)
 static void
 xfpm_engine_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmEngine *engine)
 {
-    gboolean sleep_mode;
+    XfpmShutdownRequest req = XFPM_DO_NOTHING;
+    gchar *sleep_mode;
     gboolean saver;
     
     TRACE ("Alarm inactivity timeout id %d", id);
@@ -418,21 +445,29 @@ xfpm_engine_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmEngine *engine)
 	return;
     }
     
-    sleep_mode = xfpm_xfconf_get_property_bool (engine->priv->conf, INACTIVITY_SLEEP_MODE);
+    g_object_get (G_OBJECT (engine->priv->conf),
+		  INACTIVITY_SLEEP_MODE, &sleep_mode,
+		  NULL);
+		  
+    if ( !g_strcmp0 (sleep_mode, "Suspend") )
+	req = XFPM_DO_SUSPEND;
+    else
+	req = XFPM_DO_HIBERNATE;
+	
+    g_free (sleep_mode);
 
     if ( id == TIMEOUT_INACTIVITY_ON_AC && engine->priv->on_battery == FALSE )
-	xfpm_engine_shutdown_request (engine, sleep_mode == TRUE ? XFPM_DO_SUSPEND : XFPM_DO_HIBERNATE, FALSE);
+	xfpm_engine_shutdown_request (engine, req, FALSE);
     else if ( id ==  TIMEOUT_INACTIVITY_ON_BATTERY && engine->priv->is_laptop && engine->priv->on_battery  )
-	xfpm_engine_shutdown_request (engine, sleep_mode == TRUE ? XFPM_DO_SUSPEND : XFPM_DO_HIBERNATE, FALSE);
+	xfpm_engine_shutdown_request (engine, req, FALSE);
     
 }
 
 static void
-xfpm_engine_inactivity_timeout_changed_cb (XfpmXfconf *conf, XfpmEngine *engine)
+xfpm_engine_settings_changed_cb (GObject *obj, GParamSpec *spec, XfpmEngine *engine)
 {
-    TRACE ("Timeouts alarm changed");
-    
-    xfpm_engine_set_inactivity_timeouts (engine);
+    if ( g_str_has_prefix (spec->name, "inactivity") )
+	xfpm_engine_set_inactivity_timeouts (engine);
 }
 
 static void
@@ -510,17 +545,11 @@ xfpm_engine_init (XfpmEngine * engine)
     g_signal_connect (engine->priv->idle, "alarm-timeout",
 		      G_CALLBACK (xfpm_engine_alarm_timeout_cb), engine);
 		      
-    g_signal_connect (engine->priv->conf, "inactivity-timeout-changed",
-		      G_CALLBACK (xfpm_engine_inactivity_timeout_changed_cb), engine);
+    g_signal_connect (engine->priv->conf, "notify",
+		      G_CALLBACK (xfpm_engine_settings_changed_cb), engine);
 		    
     xfpm_engine_set_inactivity_timeouts (engine);
     
-    /*
-     * We load other objects in idle, in princilpe we shouldn't do that
-     * but it turns out that some time for some reason the HAL brightness 
-     * object is failing to get correct brightness num_levels, and the idle
-     * seems to fix this.
-     */
     g_idle_add ((GSourceFunc)xfpm_engine_load_all, engine);
 }
 

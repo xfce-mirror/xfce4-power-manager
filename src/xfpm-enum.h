@@ -40,14 +40,6 @@ typedef enum
 
 typedef enum
 {
-    SHOW_ICON_ALWAYS,
-    SHOW_ICON_WHEN_BATTERY_PRESENT,
-    SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING
-    
-} XfpmShowIcon;
-
-typedef enum
-{
     LID_KEY   		= (1 << 0),
     BRIGHTNESS_KEY	= (1 << 1),
     SLEEP_KEY 		= (1 << 2),

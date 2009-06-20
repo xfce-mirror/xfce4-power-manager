@@ -115,25 +115,40 @@ xfpm_dpms_enable (XfpmDpms *dpms)
 static void
 xfpm_dpms_get_enabled (XfpmDpms *dpms, gboolean *dpms_enabled)
 {
-    *dpms_enabled = xfpm_xfconf_get_property_bool (dpms->priv->conf, DPMS_ENABLED_CFG);
+    g_object_get (G_OBJECT (dpms->priv->conf),
+		  DPMS_ENABLED_CFG, dpms_enabled,
+		  NULL);
 }
 
 static void
-xfpm_dpms_get_sleep_mode (XfpmDpms *dpms, gboolean *sleep_mode)
+xfpm_dpms_get_sleep_mode (XfpmDpms *dpms, gboolean *ret_standby_mode)
 {
-    *sleep_mode = xfpm_xfconf_get_property_bool (dpms->priv->conf, DPMS_SLEEP_MODE);
+    gchar *sleep_mode;
+    
+    g_object_get (G_OBJECT (dpms->priv->conf),
+		  DPMS_SLEEP_MODE, &sleep_mode,
+		  NULL);
+
+    if ( !g_strcmp0 (sleep_mode, "standby"))
+	*ret_standby_mode = TRUE;
+    else
+	*ret_standby_mode = FALSE;
+	
+    g_free (sleep_mode);
 }
 
 static void
-xfpm_dpms_get_configuration_timeouts (XfpmDpms *dpms, guint16 *sleep, guint16 *off )
+xfpm_dpms_get_configuration_timeouts (XfpmDpms *dpms, guint16 *ret_sleep, guint16 *ret_off )
 {
-    *sleep   = xfpm_xfconf_get_property_int  (dpms->priv->conf,
-					      dpms->priv->on_battery ? ON_BATT_DPMS_SLEEP :
-					      ON_AC_DPMS_SLEEP);
-					      
-    *off     = xfpm_xfconf_get_property_int  (dpms->priv->conf,
-					      dpms->priv->on_battery ? ON_BATT_DPMS_OFF :
-					      ON_AC_DPMS_OFF);
+    guint16 sleep, off;
+    
+    g_object_get (G_OBJECT (dpms->priv->conf),
+		  dpms->priv->on_battery ? ON_BATT_DPMS_SLEEP : ON_AC_DPMS_OFF, &sleep,
+		  dpms->priv->on_battery ? ON_BATT_DPMS_OFF : ON_AC_DPMS_OFF, &off,
+		  NULL);
+		  
+    *ret_sleep = sleep * 60;
+    *ret_off =  off * 60;
 }
 
 static void
@@ -179,10 +194,10 @@ xfpm_dpms_refresh (XfpmDpms *dpms)
 }
 
 static void
-xfpm_dpms_settings_changed_cb (XfpmXfconf *conf, XfpmDpms *dpms)
+xfpm_dpms_settings_changed_cb (GObject *obj, GParamSpec *spec, XfpmDpms *dpms)
 {
-    TRACE ("User settings changed");
-    xfpm_dpms_refresh (dpms);
+    if ( g_str_has_prefix (spec->name, "dpms"))
+	xfpm_dpms_refresh (dpms);
 }
 
 static void
@@ -233,7 +248,7 @@ xfpm_dpms_init(XfpmDpms *dpms)
 	g_signal_connect (dpms->priv->adapter, "adapter-changed",
 			  G_CALLBACK(xfpm_dpms_adapter_changed_cb), dpms);
 			  
-	g_signal_connect (dpms->priv->conf, "dpms-settings-changed",
+	g_signal_connect (dpms->priv->conf, "notify",
 			  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
 			  
 	dpms->priv->on_battery = !xfpm_adapter_get_present (dpms->priv->adapter);

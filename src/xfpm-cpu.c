@@ -310,8 +310,15 @@ xfpm_cpu_set_performance_ondemand (XfpmCpu *cpu)
 static void
 xfpm_cpu_refresh (XfpmCpu *cpu)
 {
-    gboolean power_save = xfpm_xfconf_get_property_bool (cpu->priv->conf, POWER_SAVE_ON_BATTERY);
-    gboolean enable_cpu_freq = xfpm_xfconf_get_property_bool (cpu->priv->conf, CPU_FREQ_CONTROL);
+    gboolean power_save;
+    gboolean enable_cpu_freq;
+
+    TRACE ("start");
+    
+    g_object_get (G_OBJECT (cpu->priv->conf),
+		  POWER_SAVE_ON_BATTERY, &power_save,
+		  CPU_FREQ_CONTROL, &enable_cpu_freq,
+		  NULL);
     
     if ( enable_cpu_freq == FALSE )
 	return;
@@ -336,9 +343,10 @@ xfpm_cpu_adapter_changed_cb (XfpmAdapter *adapter, gboolean is_present, XfpmCpu 
 }
 
 static void
-xfpm_cpu_power_save_settings_changed_cb (XfpmXfconf *conf, XfpmCpu *cpu)
+xfpm_cpu_settings_changed (GObject *obj, GParamSpec *spec, XfpmCpu *cpu)
 {
-    xfpm_cpu_refresh (cpu);
+    if ( !g_strcmp0 (spec->name, CPU_FREQ_CONTROL) || !g_strcmp0 (spec->name, POWER_SAVE_ON_BATTERY))
+	xfpm_cpu_refresh (cpu);
 }
 
 static void
@@ -369,9 +377,9 @@ xfpm_cpu_init(XfpmCpu *cpu)
 	
 	g_signal_connect (cpu->priv->adapter, "adapter-changed",
 			  G_CALLBACK(xfpm_cpu_adapter_changed_cb), cpu);
-			  
-	g_signal_connect (cpu->priv->conf, "power-save-settings-changed",
-			  G_CALLBACK(xfpm_cpu_power_save_settings_changed_cb), cpu);
+	
+	g_signal_connect (cpu->priv->conf, "notify",
+			  G_CALLBACK (xfpm_cpu_settings_changed), cpu);
 	
 	cpu->priv->on_battery = !xfpm_adapter_get_present (cpu->priv->adapter);
 	xfpm_cpu_refresh (cpu);

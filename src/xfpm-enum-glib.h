@@ -32,10 +32,19 @@ typedef enum
     XFPM_DO_NOTHING,
     XFPM_DO_SUSPEND,
     XFPM_DO_HIBERNATE,
-    XFPM_DO_SHUTDOWN,
-    XFPM_ASK
+    XFPM_ASK,
+    XFPM_DO_SHUTDOWN
     
 } XfpmShutdownRequest;
+
+typedef enum
+{
+    LID_TRIGGER_NOTHING,
+    LID_TRIGGER_SUSPEND,
+    LID_TRIGGER_HIBERNATE,
+    LID_TRIGGER_LOCK_SCREEN,
+    
+} XfpmLidTriggerAction;
 
 typedef enum
 {
@@ -60,6 +69,15 @@ typedef enum
     BUTTON_LID_CLOSED
     
 } XfpmButtonKey;
+
+typedef enum
+{
+    SHOW_ICON_ALWAYS,
+    SHOW_ICON_WHEN_BATTERY_PRESENT,
+    SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING
+    
+} XfpmShowIcon;
+
 
 G_END_DECLS
 

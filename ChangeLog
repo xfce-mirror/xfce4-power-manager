@@ -1,3 +1,17 @@
+2009-06-20: 16:30  Ali aliov@xfce.org
+	* settings/xfpm-settings.c
+	Get a pointer to the notebook before connecting signals.
+	* src/xfpm-xfconf.c Store Configurations in GValues instead of 
+	individual variables.
+	* src/xfpm-xfconf.c All configurations now are properties, this gives us
+	configuration change signals for FREE.
+	* settings/xfpm-settings.c Make it compatible with the new configuration
+	changes.
+	* src/xfpm-supply.c Allow suspend as a critical action.
+	* src/xfpm-engine.c Provide lock screen option for LID events.
+	* po/xfce4-power-manager.pot update for new strings.
+	* po/* Updates all the po files.
+
 2009-06-15: 15:40 Ali aliov@xfce.org
 	* Remove libglade and use GtkBuilder instead.
 

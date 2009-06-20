@@ -157,6 +157,10 @@ xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
     const gchar *message;
     gboolean lock_screen;
     gboolean ret;
+
+    g_object_get (G_OBJECT (tray->priv->conf),
+		  LOCK_SCREEN_ON_SLEEP, &lock_screen,
+		  NULL);
     
     message = tray->priv->inhibited ? 
 	     _("An application is currently disabling the automatic sleep,"
@@ -171,8 +175,6 @@ xfpm_tray_icon_hibernate_cb (GtkWidget *w, XfpmTrayIcon *tray)
     
     if ( ret ) 
     {
-	lock_screen = xfpm_xfconf_get_property_bool (tray->priv->conf, LOCK_SCREEN_ON_SLEEP);
-	    
 	xfpm_shutdown_add_callback (tray->priv->shutdown, 
 				    (GSourceFunc) xfpm_tray_icon_do_hibernate, 
 				    lock_screen,
@@ -187,6 +189,10 @@ xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
     gboolean lock_screen;
     gboolean ret;
     
+    g_object_get (G_OBJECT (tray->priv->conf),
+		  LOCK_SCREEN_ON_SLEEP, &lock_screen,
+		  NULL);
+    
     message = tray->priv->inhibited ? 
 	     _("An application is currently disabling the automatic sleep,"
 	      " doing this action now may damage the working state of this application,"
@@ -200,13 +206,10 @@ xfpm_tray_icon_suspend_cb (GtkWidget *w, XfpmTrayIcon *tray)
     
     if ( ret ) 
     {
-	lock_screen = xfpm_xfconf_get_property_bool (tray->priv->conf, LOCK_SCREEN_ON_SLEEP);
-	
 	xfpm_shutdown_add_callback (tray->priv->shutdown, 
 				    (GSourceFunc) xfpm_tray_icon_do_suspend, 
 				    lock_screen,
 				    tray);
-				    
     }
 }
 

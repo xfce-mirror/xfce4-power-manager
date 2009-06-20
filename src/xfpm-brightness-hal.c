@@ -200,7 +200,12 @@ xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
 {
     GError *error = NULL;
     gboolean show_popup;
-    gboolean enable_brightness = xfpm_xfconf_get_property_bool (brg->priv->conf, ENABLE_BRIGHTNESS_CONTROL);
+    gboolean enable_brightness;
+    
+    g_object_get (G_OBJECT (brg->priv->conf),
+		  ENABLE_BRIGHTNESS_CONTROL, &enable_brightness,
+		  SHOW_BRIGHTNESS_POPUP, &show_popup,
+		  NULL);
     
     if ( enable_brightness == FALSE || brg->priv->brightness_in_hw)
 	goto signal;
@@ -221,8 +226,6 @@ signal:
 	return;
     }
     
-    show_popup = xfpm_xfconf_get_property_bool (brg->priv->conf, SHOW_BRIGHTNESS_POPUP);
-    
     if ( show_popup )
 	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
 }
@@ -232,7 +235,12 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
 {
     GError *error = NULL;
     gboolean show_popup;
-    gboolean enable_brightness = xfpm_xfconf_get_property_bool (brg->priv->conf, ENABLE_BRIGHTNESS_CONTROL);
+    gboolean enable_brightness;
+    
+    g_object_get (G_OBJECT (brg->priv->conf),
+		  ENABLE_BRIGHTNESS_CONTROL, &enable_brightness,
+		  SHOW_BRIGHTNESS_POPUP, &show_popup,
+		  NULL);
     
     if ( enable_brightness == FALSE || brg->priv->brightness_in_hw)
 	goto signal;
@@ -252,8 +260,6 @@ signal:
 	g_error_free (error);
 	return;
     }
-    
-    show_popup = xfpm_xfconf_get_property_bool (brg->priv->conf, SHOW_BRIGHTNESS_POPUP);
     
     if ( show_popup )
 	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
@@ -381,8 +387,10 @@ xfpm_brightness_hal_inhibit_changed_cb (XfpmScreenSaver *saver, gboolean inhibit
 static void
 xfpm_brightness_get_user_timeouts (XfpmBrightnessHal *brg, guint16 *on_ac, guint16 *on_battery)
 {
-    *on_ac      = xfpm_xfconf_get_property_int (brg->priv->conf, BRIGHTNESS_ON_AC);
-    *on_battery = xfpm_xfconf_get_property_int (brg->priv->conf, BRIGHTNESS_ON_BATTERY);
+    g_object_get (G_OBJECT (brg->priv->conf),
+		  BRIGHTNESS_ON_AC, on_ac,
+		  BRIGHTNESS_ON_BATTERY, on_battery,
+		  NULL);
 }
 
 static void
@@ -414,10 +422,13 @@ xfpm_brightness_hal_set_timeouts (XfpmBrightnessHal *brg )
 }
 
 static void
-xfpm_brightness_hal_settings_changed_cb (XfpmXfconf *conf, XfpmBrightnessHal *brg)
+xfpm_brightness_hal_settings_changed_cb (GObject *objm, GParamSpec *spec, XfpmBrightnessHal *brg)
 {
-    TRACE ("User settings changed");
-    xfpm_brightness_hal_set_timeouts (brg);
+    if ( g_str_has_prefix (spec->name, "brightness") )
+    {
+	TRACE ("User settings changed");
+	xfpm_brightness_hal_set_timeouts (brg);
+    }
 }
 
 static void
@@ -495,7 +506,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
 			  G_CALLBACK(xfpm_brightness_hal_reset_cb), brg);
 			
 	brg->priv->sig[5] =
-	g_signal_connect (brg->priv->conf, "brightness-settings-changed", 
+	g_signal_connect (brg->priv->conf, "notify", 
 			  G_CALLBACK(xfpm_brightness_hal_settings_changed_cb), brg);
 			  
 	xfpm_brightness_hal_set_timeouts (brg);
