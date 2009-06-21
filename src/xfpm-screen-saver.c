@@ -61,8 +61,6 @@ enum
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
-static gpointer xfpm_screen_saver_object = NULL;
-
 G_DEFINE_TYPE(XfpmScreenSaver, xfpm_screen_saver, G_TYPE_OBJECT)
 
 static void
@@ -115,7 +113,9 @@ xfpm_screen_saver_finalize(GObject *object)
 XfpmScreenSaver *
 xfpm_screen_saver_new(void)
 {
-    if ( xfpm_screen_saver_object != NULL )
+    static gpointer xfpm_screen_saver_object = NULL;
+    
+    if ( G_LIKELY (xfpm_screen_saver_object != NULL) )
     {
 	g_object_ref (xfpm_screen_saver_object);
     }

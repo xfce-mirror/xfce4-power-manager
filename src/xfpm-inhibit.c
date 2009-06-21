@@ -68,8 +68,6 @@ enum
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
-static gpointer xfpm_inhibit_object = NULL;
-
 G_DEFINE_TYPE (XfpmInhibit, xfpm_inhibit, G_TYPE_OBJECT)
 
 static void
@@ -260,7 +258,9 @@ xfpm_inhibit_finalize(GObject *object)
 XfpmInhibit *
 xfpm_inhibit_new(void)
 {
-    if ( xfpm_inhibit_object != NULL )
+    static gpointer xfpm_inhibit_object = NULL;
+    
+    if ( G_LIKELY (xfpm_inhibit_object != NULL) )
     {
 	g_object_ref (xfpm_inhibit_object);
     }

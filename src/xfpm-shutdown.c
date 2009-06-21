@@ -87,8 +87,6 @@ enum
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
-static gpointer xfpm_shutdown_object = NULL;
-
 G_DEFINE_TYPE(XfpmShutdown, xfpm_shutdown, G_TYPE_OBJECT)
 
 static gboolean
@@ -365,7 +363,9 @@ _filter_error_message(const gchar *error)
 XfpmShutdown *
 xfpm_shutdown_new(void)
 {
-    if ( xfpm_shutdown_object != NULL )
+    static gpointer xfpm_shutdown_object = NULL;
+    
+    if ( G_LIKELY (xfpm_shutdown_object != NULL) )
     {
 	g_object_ref (xfpm_shutdown_object);
     }

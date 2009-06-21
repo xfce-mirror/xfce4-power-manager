@@ -66,8 +66,6 @@ enum
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
-static gpointer xfpm_adapter_object = NULL;
-
 G_DEFINE_TYPE(XfpmAdapter, xfpm_adapter, G_TYPE_OBJECT)
 
 static void
@@ -174,7 +172,9 @@ xfpm_adapter_finalize(GObject *object)
 XfpmAdapter *
 xfpm_adapter_new (void)
 {
-    if ( xfpm_adapter_object != NULL )
+    static gpointer xfpm_adapter_object = NULL;
+    
+    if ( G_LIKELY (xfpm_adapter_object != NULL) )
     {
 	g_object_ref (xfpm_adapter_object);
     }

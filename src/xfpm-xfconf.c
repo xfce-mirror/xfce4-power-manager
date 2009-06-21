@@ -45,8 +45,6 @@ static void xfpm_xfconf_finalize   (GObject *object);
 #define XFPM_XFCONF_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_XFCONF, XfpmXfconfPrivate ))
 
-static gpointer xfpm_xfconf_object = NULL;
-
 struct XfpmXfconfPrivate
 {
     XfconfChannel 	*channel;
@@ -166,6 +164,7 @@ xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
 	g_object_set_property (G_OBJECT (conf), specs[i]->name, &value);
 	g_value_unset (&value);
     }
+    g_free (specs);
 }
 
 static void
@@ -192,7 +191,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
     object_class->finalize = xfpm_xfconf_finalize;
     
     /**
-     * XfpmXfconf:general-notification:
+     * XfpmXfconf::general-notification
      **/
     g_object_class_install_property (object_class,
                                      PROP_GENERAL_NOTIFICATION,
@@ -201,7 +200,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            TRUE,
                                                            G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:lock-screen-suspend-hibernate:
+     * XfpmXfconf::lock-screen-suspend-hibernate
      **/
     g_object_class_install_property (object_class,
                                      PROP_LOCK_SCREEN_ON_SLEEP,
@@ -211,7 +210,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            G_PARAM_READWRITE));
     
     /**
-     * XfpmXfconf:power-save-on-battery:
+     * XfpmXfconf::power-save-on-battery
      **/
     g_object_class_install_property (object_class,
                                      PROP_POWER_SAVE_ON_BATTERY,
@@ -220,7 +219,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            TRUE,
                                                            G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:enable-cpu-freq-control:
+     * XfpmXfconf::enable-cpu-freq-control
      **/
     g_object_class_install_property (object_class,
                                      PROP_ENABLE_CPU_FREQ,
@@ -229,7 +228,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            TRUE,
                                                            G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:critical-power-level:
+     * XfpmXfconf::critical-power-level
      **/
     g_object_class_install_property (object_class,
                                      PROP_CRITICAL_LEVEL,
@@ -241,7 +240,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         G_PARAM_READWRITE));
 	
     /**
-     * XfpmXfconf:show-brightness-popup:
+     * XfpmXfconf::show-brightness-popup
      **/
     g_object_class_install_property (object_class,
                                      PROP_SHOW_BRIGHTNESS_POPUP,
@@ -251,7 +250,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            G_PARAM_READWRITE));
     
     /**
-     * XfpmXfconf:show-brightness-popup:
+     * XfpmXfconf::show-brightness-popup
      **/
     g_object_class_install_property (object_class,
                                      PROP_ENABLE_BRIGHTNESS,
@@ -260,7 +259,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            TRUE,
                                                            G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:show-tray-icon:
+     * XfpmXfconf::show-tray-icon
      **/
     g_object_class_install_property (object_class,
                                      PROP_TRAY_ICON,
@@ -272,7 +271,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         G_PARAM_READWRITE));
 							
     /**
-     * XfpmXfconf:critical-battery-action:
+     * XfpmXfconf::critical-battery-action
      **/
     g_object_class_install_property (object_class,
                                      PROP_CRITICAL_BATTERY_ACTION,
@@ -283,7 +282,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							XFPM_DO_NOTHING,
                                                         G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:power-switch-action:
+     * XfpmXfconf::power-switch-action
      **/
     g_object_class_install_property (object_class,
                                      PROP_POWER_BUTTON,
@@ -295,7 +294,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         G_PARAM_READWRITE));
 							
     /**
-     * XfpmXfconf:sleep-switch-action:
+     * XfpmXfconf::sleep-switch-action
      **/
     g_object_class_install_property (object_class,
                                      PROP_SLEEP_BUTTON,
@@ -307,7 +306,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         G_PARAM_READWRITE));
 							
     /**
-     * XfpmXfconf:hibernate-switch-action:
+     * XfpmXfconf::hibernate-switch-action
      **/
     g_object_class_install_property (object_class,
                                      PROP_HIBERNATE_BUTTON,
@@ -319,7 +318,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         G_PARAM_READWRITE));
     
     /**
-     * XfpmXfconf:lid-action-on-ac:
+     * XfpmXfconf::lid-action-on-ac
      **/
     g_object_class_install_property (object_class,
                                      PROP_LID_ACTION_ON_AC,
@@ -330,7 +329,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							LID_TRIGGER_LOCK_SCREEN,
                                                         G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:lid-action-on-battery:
+     * XfpmXfconf::lid-action-on-battery
      **/
     g_object_class_install_property (object_class,
                                      PROP_LID_ACTION_ON_BATTERY,
@@ -342,7 +341,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         G_PARAM_READWRITE));
 #ifdef HAVE_DPMS
     /**
-     * XfpmXfconf:dpms-enabled:
+     * XfpmXfconf::dpms-enabled
      **/
     g_object_class_install_property (object_class,
                                      PROP_ENABLE_DPMS,
@@ -351,7 +350,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            TRUE,
                                                            G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:dpms-on-ac-sleep:
+     * XfpmXfconf::dpms-on-ac-sleep
      **/
     g_object_class_install_property (object_class,
                                      PROP_DPMS_SLEEP_ON_AC,
@@ -362,7 +361,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							10,
                                                         G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:dpms-on-ac-off:
+     * XfpmXfconf::dpms-on-ac-off
      **/
     g_object_class_install_property (object_class,
                                      PROP_DPMS_OFF_ON_AC,
@@ -373,7 +372,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							15,
                                                         G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:dpms-on-battery-sleep:
+     * XfpmXfconf::dpms-on-battery-sleep
      **/
     g_object_class_install_property (object_class,
                                      PROP_DPMS_SLEEP_ON_BATTERY,
@@ -384,7 +383,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							5,
                                                         G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:dpms-on-battery-off:
+     * XfpmXfconf::dpms-on-battery-off
      **/
     g_object_class_install_property (object_class,
                                      PROP_DPMS_OFF_ON_BATTERY,
@@ -395,7 +394,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							10,
                                                         G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:dpms-sleep-mode:
+     * XfpmXfconf::dpms-sleep-mode
      **/
     g_object_class_install_property (object_class,
                                      PROP_DPMS_SLEEP_MODE,
@@ -406,7 +405,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 #endif /* HAVE_DPMS */
 
     /**
-     * XfpmXfconf:inactivity-on-ac:
+     * XfpmXfconf::inactivity-on-ac
      **/
     g_object_class_install_property (object_class,
                                      PROP_IDLE_ON_AC,
@@ -418,7 +417,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         G_PARAM_READWRITE));
 
     /**
-     * XfpmXfconf:inactivity-on-battery:
+     * XfpmXfconf::inactivity-on-battery
      **/
     g_object_class_install_property (object_class,
                                      PROP_IDLE_ON_BATTERY,
@@ -429,9 +428,8 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							30,
                                                         G_PARAM_READWRITE));
 
-    
      /**
-     * XfpmXfconf:inactivity-sleep-mode:
+     * XfpmXfconf::inactivity-sleep-mode
      **/
     g_object_class_install_property (object_class,
                                      PROP_IDLE_SLEEP_MODE,
@@ -440,7 +438,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							  "Suspend",
                                                           G_PARAM_READWRITE));
     /**
-     * XfpmXfconf:brightness-on-ac:
+     * XfpmXfconf::brightness-on-ac
      **/
     g_object_class_install_property (object_class,
                                      PROP_DIM_ON_AC_TIMEOUT,
@@ -452,7 +450,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         G_PARAM_READWRITE));
 
     /**
-     * XfpmXfconf:brightness-on-battery:
+     * XfpmXfconf::brightness-on-battery
      **/
     g_object_class_install_property (object_class,
                                      PROP_DIM_ON_BATTERY_TIMEOUT,
@@ -518,7 +516,9 @@ xfpm_xfconf_finalize(GObject *object)
 XfpmXfconf *
 xfpm_xfconf_new(void)
 {
-    if ( xfpm_xfconf_object != NULL )
+    static gpointer xfpm_xfconf_object = NULL;
+    
+    if ( G_LIKELY (xfpm_xfconf_object != NULL) )
     {
 	g_object_ref (xfpm_xfconf_object);
     } 

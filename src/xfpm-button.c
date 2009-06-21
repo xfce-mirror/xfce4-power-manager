@@ -58,8 +58,6 @@ enum
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
-static gpointer xfpm_button_object = NULL;
-
 G_DEFINE_TYPE (XfpmButton, xfpm_button, G_TYPE_OBJECT)
 
 static void
@@ -165,7 +163,9 @@ xfpm_button_finalize (GObject *object)
 XfpmButton *
 xfpm_button_new (void)
 {
-    if ( xfpm_button_object != NULL )
+    static gpointer xfpm_button_object = NULL;
+    
+    if ( G_LIKELY (xfpm_button_object != NULL) )
     {
 	g_object_ref (xfpm_button_object);
     }

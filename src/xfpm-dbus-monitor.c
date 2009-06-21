@@ -48,8 +48,6 @@ struct XfpmDBusMonitorPrivate
     GPtrArray       *array;
 };
 
-static gpointer xfpm_dbus_monitor_object = NULL;
-
 enum
 {
     CONNECTION_LOST,
@@ -246,7 +244,8 @@ xfpm_dbus_monitor_finalize (GObject *object)
 XfpmDBusMonitor *
 xfpm_dbus_monitor_new (void)
 {
-    if ( xfpm_dbus_monitor_object != NULL )
+    static gpointer xfpm_dbus_monitor_object = NULL;
+    if ( G_LIKELY (xfpm_dbus_monitor_object != NULL) )
     {
 	g_object_ref (xfpm_dbus_monitor_object);
     }

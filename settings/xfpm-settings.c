@@ -758,10 +758,11 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean user_privilege, gbool
     dpms_frame_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-on-battery-frame"));
     gtk_widget_show (GTK_WIDGET(dpms_frame_on_battery));
   
-    val = xfconf_channel_get_uint (channel, "/" ON_BATT_DPMS_SLEEP, 3);
+    val = xfconf_channel_get_uint (channel, "/" ON_BATT_DPMS_SLEEP, 5);
     gtk_range_set_value (GTK_RANGE(on_battery_dpms_sleep), val);
     
-    val = xfconf_channel_get_uint (channel, "/" ON_BATT_DPMS_OFF, 5);
+    val = xfconf_channel_get_uint (channel, "/" ON_BATT_DPMS_OFF, 10);
+    gtk_range_set_value (GTK_RANGE(on_battery_dpms_off), val);
 #endif
 
      /*
