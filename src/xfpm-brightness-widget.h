@@ -21,6 +21,7 @@
 #ifndef __XFPM_BRIGHTNESS_WIDGET_H
 #define __XFPM_BRIGHTNESS_WIDGET_H
 
+#include <gtk/gtk.h>
 #include <glib-object.h>
 
 G_BEGIN_DECLS
@@ -44,15 +45,15 @@ typedef struct
     
 } XfpmBrightnessWidgetClass;
 
-GType        		   	     xfpm_brightness_widget_get_type    (void) G_GNUC_CONST;
+GType        		   	     xfpm_brightness_widget_get_type      (void) G_GNUC_CONST;
 
-XfpmBrightnessWidget       	    *xfpm_brightness_widget_new         (void);
+XfpmBrightnessWidget   	            *xfpm_brightness_widget_new           (void);
 
 void				     xfpm_brightness_widget_set_max_level (XfpmBrightnessWidget *widget, 
 									   guint level);
 
-void                        	     xfpm_brightness_widget_set_level   (XfpmBrightnessWidget *widget,
-									 guint level);
+void                        	     xfpm_brightness_widget_set_level     (XfpmBrightnessWidget *widget,
+									   guint level);
 
 G_END_DECLS
 
