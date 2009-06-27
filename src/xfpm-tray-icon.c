@@ -35,10 +35,10 @@
 #include "libxfpm/xfpm-common.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-notify.h"
-#include "libxfpm/hal-monitor.h"
 
 #include "xfpm-tray-icon.h"
 #include "xfpm-shutdown.h"
+#include "xfpm-dbus-monitor.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-screen-saver.h"
 #include "xfpm-xfconf.h"
@@ -56,16 +56,16 @@ struct XfpmTrayIconPrivate
     XfpmNotify      *notify;
     XfpmInhibit     *inhibit;
     XfpmScreenSaver *srv;
-    HalMonitor      *hal_monitor;
+    XfpmDBusMonitor *monitor;
     
-    GtkStatusIcon *icon;
-    GQuark         icon_quark;
-    gboolean       info_menu;
-    gboolean       inhibited;
-    gboolean	   data_available;
+    GtkStatusIcon   *icon;
+    GQuark           icon_quark;
+    gboolean         info_menu;
+    gboolean         inhibited;
+    gboolean	     data_available;
     
-    gulong         sig;
-    gulong	   sig_1;
+    gulong           sig;
+    gulong	     sig_1;
 };
 
 enum
@@ -247,7 +247,6 @@ static void
 xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button, 
 			      guint activate_time, XfpmTrayIcon *tray)
 {
-    		  
     GtkWidget *menu, *mi, *img;
     gboolean can_suspend = FALSE;
     gboolean can_hibernate = FALSE ;
@@ -272,8 +271,8 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     if ( caller && can_hibernate && tray->priv->data_available )
     {
 	gtk_widget_set_sensitive (mi, TRUE);
-	g_signal_connect (G_OBJECT(mi), "activate",
-			  G_CALLBACK(xfpm_tray_icon_hibernate_cb), tray);
+	g_signal_connect (G_OBJECT (mi), "activate",
+			  G_CALLBACK (xfpm_tray_icon_hibernate_cb), tray);
     }
     gtk_widget_show(mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
@@ -381,7 +380,7 @@ xfpm_tray_icon_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, Xfp
 }
 
 static void
-xfpm_tray_icon_hal_connection_changed_cb (HalMonitor *monitor, gboolean connected, XfpmTrayIcon *tray)
+xfpm_tray_icon_hal_connection_changed_cb (XfpmDBusMonitor *monitor, gboolean connected, XfpmTrayIcon *tray)
 {
     if ( connected == FALSE )
 	xfpm_tray_icon_set_tooltip (tray, _("No data available"));
@@ -430,7 +429,7 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
     tray->priv->inhibited = FALSE;
     tray->priv->inhibit = xfpm_inhibit_new ();
     tray->priv->srv     = xfpm_screen_saver_new ();
-    tray->priv->hal_monitor = hal_monitor_new ();
+    tray->priv->monitor = xfpm_dbus_monitor_new ();
     
     tray->priv->info_menu = TRUE;
     tray->priv->icon_quark = 0;
@@ -443,13 +442,14 @@ xfpm_tray_icon_init(XfpmTrayIcon *tray)
 		      
     g_signal_connect_swapped (tray->priv->icon, "activate",
 			      G_CALLBACK (xfpm_tray_icon_activated_cb), tray);
+			      
     tray->priv->sig = g_signal_connect (tray->priv->inhibit, "has-inhibit-changed",
 					G_CALLBACK (xfpm_tray_icon_inhibit_changed_cb), tray);
 					
-    tray->priv->sig_1 = g_signal_connect (tray->priv->hal_monitor, "connection_changed",
+    tray->priv->sig_1 = g_signal_connect (tray->priv->monitor, "hal-connection-changed",
 					 G_CALLBACK (xfpm_tray_icon_hal_connection_changed_cb), tray);
 					 
-    tray->priv->data_available = hal_monitor_get_connected (tray->priv->hal_monitor);
+    tray->priv->data_available = xfpm_dbus_monitor_hal_connected (tray->priv->monitor);
 }
 
 static void
@@ -462,10 +462,10 @@ xfpm_tray_icon_finalize(GObject *object)
     if ( g_signal_handler_is_connected (tray->priv->inhibit, tray->priv->sig ) )
 	g_signal_handler_disconnect (G_OBJECT (tray->priv->inhibit), tray->priv->sig);
     
-    if ( g_signal_handler_is_connected (tray->priv->hal_monitor, tray->priv->sig_1) )
-	g_signal_handler_disconnect (G_OBJECT (tray->priv->hal_monitor), tray->priv->sig_1);
+    if ( g_signal_handler_is_connected (tray->priv->monitor, tray->priv->sig_1) )
+	g_signal_handler_disconnect (G_OBJECT (tray->priv->monitor), tray->priv->sig_1);
 	
-    g_object_unref (tray->priv->hal_monitor);
+    g_object_unref (tray->priv->monitor);
     
     g_object_unref (tray->priv->icon);
 	

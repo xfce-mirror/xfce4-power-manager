@@ -152,9 +152,6 @@ xfpm_session_finalize (GObject *object)
 
     if ( session->priv->client != NULL )
     {
-	if ( session->priv->managed )
-	    logout_session (session->priv->client);
-    
 	client_session_free (session->priv->client);
     }
 

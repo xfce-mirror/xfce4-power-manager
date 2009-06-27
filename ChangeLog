@@ -1,3 +1,7 @@
+2009-06-28: 12:10 Ali aliov@xfce.org
+	* Use xfpm-dbus-monitor for dbus monitoring stuff, so hal-monitor is removed.
+	* hal-device.c Fix a Glib warnings when DBus is disconnected.
+	
 2009-06-27: 11:15 Ali aliov@xfce.org 
 	* Use "/xfce4-power-manager" as a prefix for properties name to avoid
 	incompatibile installation with old versions.

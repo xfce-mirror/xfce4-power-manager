@@ -22,6 +22,7 @@
 #define __XFPM_DBUS_MONITOR_H
 
 #include <glib-object.h>
+#include <dbus/dbus.h>
 
 G_BEGIN_DECLS
 
@@ -40,29 +41,58 @@ typedef struct
 
 typedef struct
 {
-    GObjectClass 		parent_class;
+    GObjectClass 	parent_class;
+    
     /*
-     * Connection lost on the session bus
+     * Unique name connection lost.
      */
-    void                        (*connection_lost)		  (XfpmDBusMonitor *monitor,
-								   gchar *unique_name);
-								   
+    void                (*unique_name_lost)			(XfpmDBusMonitor *monitor,
+								 gchar *unique_name,
+								 gboolean on_session);
+								 
+    /*
+     * A Service connection changed.
+     */
+    void                (*service_connection_changed)		(XfpmDBusMonitor *monitor,
+								 gchar *service_name,
+							         gboolean connected,
+								 gboolean on_session);
+								 
+    /*
+     * Hal Connection
+     */
+    void		(*hal_connection_changed)		(XfpmDBusMonitor *monitor,
+								 gboolean connected);
+      
     /*
      * DBus: system bus disconnected
      */
-    void			(*system_bus_connection_changed)  (XfpmDBusMonitor *monitor,
-								   gboolean connected);
+    void		(*system_bus_connection_changed)  	(XfpmDBusMonitor *monitor,
+								 gboolean connected);
     
 } XfpmDBusMonitorClass;
 
-GType        			xfpm_dbus_monitor_get_type        (void) G_GNUC_CONST;
-XfpmDBusMonitor       	       *xfpm_dbus_monitor_new             (void);
+GType        		xfpm_dbus_monitor_get_type        	(void) G_GNUC_CONST;
 
-gboolean                        xfpm_dbus_monitor_add_match       (XfpmDBusMonitor *monitor,
-								   const gchar *unique_name);
+XfpmDBusMonitor        *xfpm_dbus_monitor_new             	(void);
+
+gboolean                xfpm_dbus_monitor_add_unique_name     	(XfpmDBusMonitor *monitor,
+								 DBusBusType bus_type,
+								 const gchar *unique_name);
 								   
-gboolean                        xfpm_dbus_monitor_remove_match    (XfpmDBusMonitor *monitor,
-								   const gchar *unique_name);
+void                    xfpm_dbus_monitor_remove_unique_name    (XfpmDBusMonitor *monitor,
+								 DBusBusType bus_type,
+								 const gchar *unique_name);
+
+gboolean		xfpm_dbus_monitor_add_service	  	(XfpmDBusMonitor *monitor,
+								 DBusBusType bus_type,
+								 const gchar *service_name);
+
+void			xfpm_dbus_monitor_remove_service  	(XfpmDBusMonitor *monitor,
+								 DBusBusType bus_type,
+								 const gchar *service_name);
+
+gboolean		xfpm_dbus_monitor_hal_connected		(XfpmDBusMonitor *monitor);
 
 G_END_DECLS
 

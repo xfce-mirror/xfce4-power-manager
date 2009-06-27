@@ -149,7 +149,7 @@ hal_device_add_watch (HalDevice *device)
 			     G_TYPE_INVALID);
     
     dbus_g_proxy_connect_signal (device->priv->proxy, "PropertyModified",
-				 G_CALLBACK(hal_device_property_modified_cb), device, NULL);
+				 G_CALLBACK (hal_device_property_modified_cb), device, NULL);
     
     device->priv->watch_added = TRUE;
 }
@@ -182,6 +182,14 @@ hal_device_add_watch_condition (HalDevice *device)
 }
 
 static void
+hal_device_proxy_destroy_cb (HalDevice *device)
+{
+    g_return_if_fail (HAL_IS_DEVICE (device));
+    
+    device->priv->proxy = NULL;
+}
+
+static void
 hal_device_init (HalDevice *device)
 {
     GError *error = NULL;
@@ -204,30 +212,35 @@ hal_device_init (HalDevice *device)
 }
 
 static void
-hal_device_finalize(GObject *object)
+hal_device_finalize (GObject *object)
 {
     HalDevice *device;
 
-    device = HAL_DEVICE(object);
+    device = HAL_DEVICE (object);
+
+    g_debug ("Finalizing object with udi=%s", device->priv->udi);
     
     if ( device->priv->udi )
 	g_free (device->priv->udi);
-	
+
     if ( device->priv->bus )
 	dbus_g_connection_unref (device->priv->bus);
 	
-    if ( device->priv->watch_added )
+    if ( device->priv->watch_added && device->priv->proxy )
 	dbus_g_proxy_disconnect_signal (device->priv->proxy, "PropertyModified",
 					G_CALLBACK(hal_device_property_modified_cb), device);
 					
-    if ( device->priv->watch_condition_added )
+    if ( device->priv->watch_condition_added && device->priv->proxy )
+    {
 	dbus_g_proxy_disconnect_signal (device->priv->proxy, "Condition",
 					G_CALLBACK(hal_device_condition_cb), device);
-	
+    }
+    
+    
     if ( device->priv->proxy )
 	g_object_unref (device->priv->proxy);
 
-    G_OBJECT_CLASS(hal_device_parent_class)->finalize(object);
+    G_OBJECT_CLASS (hal_device_parent_class)->finalize (object);
 }
 
 HalDevice *
@@ -256,6 +269,8 @@ void hal_device_set_udi (HalDevice *device, const gchar *udi)
 						     "org.freedesktop.Hal",
 						     device->priv->udi,
 						     "org.freedesktop.Hal.Device");
+    g_signal_connect_swapped (G_OBJECT (device->priv->proxy), "destroy",
+			      G_CALLBACK (hal_device_proxy_destroy_cb), device);
 }
 
 const gchar *hal_device_get_udi (HalDevice *device)

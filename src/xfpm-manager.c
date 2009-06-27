@@ -37,7 +37,6 @@
 
 #include <libnotify/notify.h>
 
-#include "libxfpm/hal-monitor.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-dbus.h"
 #include "libxfpm/xfpm-popups.h"
@@ -61,9 +60,8 @@ struct XfpmManagerPrivate
 {
     XfpmSession     *session;
     XfpmEngine 	    *engine;
-    XfpmDBusMonitor *dbus;
     
-    HalMonitor      *monitor;
+    XfpmDBusMonitor *monitor;
     
     DBusGConnection *session_bus;
 };
@@ -71,7 +69,7 @@ struct XfpmManagerPrivate
 G_DEFINE_TYPE(XfpmManager, xfpm_manager, G_TYPE_OBJECT)
 
 static void
-xfpm_manager_hal_connection_changed_cb (HalMonitor *monitor, gboolean connected, XfpmManager *manager)
+xfpm_manager_hal_connection_changed_cb (XfpmDBusMonitor *monitor, gboolean connected, XfpmManager *manager)
 {
     TRACE("connected = %s", xfpm_bool_to_string (connected));
     
@@ -100,6 +98,12 @@ xfpm_manager_system_bus_connection_changed_cb (XfpmDBusMonitor *monitor, gboolea
 }
 
 static void
+xfpm_manager_session_die_cb (XfpmSession *session, XfpmManager *manager)
+{
+    xfpm_manager_quit (manager);
+}
+
+static void
 xfpm_manager_class_init (XfpmManagerClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -114,15 +118,19 @@ xfpm_manager_init(XfpmManager *manager)
 {
     manager->priv = XFPM_MANAGER_GET_PRIVATE(manager);
 
-    manager->priv->session_bus   = NULL;
     manager->priv->engine        = NULL;
-    manager->priv->monitor       = NULL;
     
     manager->priv->session = xfpm_session_new ();
-    manager->priv->dbus = xfpm_dbus_monitor_new ();
+    manager->priv->monitor = xfpm_dbus_monitor_new ();
     
-    g_signal_connect (G_OBJECT (manager->priv->dbus), "system_bus_connection_changed",
+    g_signal_connect (manager->priv->monitor, "hal-connection-changed",
+		      G_CALLBACK(xfpm_manager_hal_connection_changed_cb), manager);
+		      
+    g_signal_connect (G_OBJECT (manager->priv->monitor), "system_bus_connection_changed",
 		      G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager);
+
+    g_signal_connect (manager->priv->session, "session-die",
+		      G_CALLBACK (xfpm_manager_session_die_cb), manager);
 		      
     notify_init ("xfce4-power-manager");
 }
@@ -135,7 +143,7 @@ xfpm_manager_finalize(GObject *object)
     manager = XFPM_MANAGER(object);
 
     if ( manager->priv->session_bus )
-	dbus_g_connection_unref(manager->priv->session_bus);
+	dbus_g_connection_unref (manager->priv->session_bus);
 	
     if ( manager->priv->engine )
     	g_object_unref (manager->priv->engine);
@@ -144,9 +152,7 @@ xfpm_manager_finalize(GObject *object)
 
     g_object_unref (manager->priv->monitor);
     
-    g_object_unref (manager->priv->dbus);
-    
-    G_OBJECT_CLASS(xfpm_manager_parent_class)->finalize(object);
+    G_OBJECT_CLASS (xfpm_manager_parent_class)->finalize (object);
 }
 
 static void
@@ -163,9 +169,9 @@ static gboolean
 xfpm_manager_quit (XfpmManager *manager)
 {
     xfpm_manager_release_names (manager);
-    xfpm_session_quit (manager->priv->session);
+    //xfpm_session_quit (manager->priv->session);
     
-    g_object_unref(G_OBJECT(manager));
+    g_object_unref (G_OBJECT (manager));
     
     gtk_main_quit ();
     return TRUE;
@@ -188,12 +194,6 @@ xfpm_manager_reserve_names (XfpmManager *manager)
     }
 }
 
-static void
-xfpm_manager_session_die_cb (XfpmSession *session, XfpmManager *manager)
-{
-    xfpm_manager_quit (manager);
-}
-
 XfpmManager *
 xfpm_manager_new (DBusGConnection *bus)
 {
@@ -214,12 +214,7 @@ void xfpm_manager_start (XfpmManager *manager)
     
     xfpm_manager_reserve_names (manager);
     
-    manager->priv->monitor = hal_monitor_new ();
-    
-    g_signal_connect (manager->priv->monitor, "connection-changed",
-		      G_CALLBACK(xfpm_manager_hal_connection_changed_cb), manager);
-		      
-    hal_running = hal_monitor_get_connected (manager->priv->monitor);
+    hal_running = xfpm_dbus_monitor_hal_connected (manager->priv->monitor);
     
     if (!hal_running )
     {
@@ -227,11 +222,6 @@ void xfpm_manager_start (XfpmManager *manager)
 	goto out;
     }
     manager->priv->engine = xfpm_engine_new ();
-    
-    manager->priv->session = xfpm_session_new ();
-    
-    g_signal_connect (manager->priv->session, "session-die",
-		      G_CALLBACK (xfpm_manager_session_die_cb), manager);
     
 out:
 	;
@@ -268,26 +258,26 @@ static gboolean xfpm_manager_dbus_get_info   (XfpmManager *manager,
 #include "xfce-power-manager-dbus-server.h"
 
 static void
-xfpm_manager_dbus_class_init(XfpmManagerClass *klass)
+xfpm_manager_dbus_class_init (XfpmManagerClass *klass)
 {
-     dbus_g_object_type_install_info(G_TYPE_FROM_CLASS(klass),
-				    &dbus_glib_xfpm_manager_object_info);
+     dbus_g_object_type_install_info (G_TYPE_FROM_CLASS (klass),
+				     &dbus_glib_xfpm_manager_object_info);
 }
 
 static void
-xfpm_manager_dbus_init(XfpmManager *manager)
+xfpm_manager_dbus_init (XfpmManager *manager)
 {
-    dbus_g_connection_register_g_object(manager->priv->session_bus,
+    dbus_g_connection_register_g_object (manager->priv->session_bus,
 					"/org/xfce/PowerManager",
-					G_OBJECT(manager));
+					G_OBJECT (manager));
 }
 
 static gboolean
-xfpm_manager_dbus_quit(XfpmManager *manager, GError **error)
+xfpm_manager_dbus_quit (XfpmManager *manager, GError **error)
 {
     TRACE("Quit message received\n");
     
-    xfpm_manager_quit(manager);
+    xfpm_manager_quit (manager);
     
     return TRUE;
 }

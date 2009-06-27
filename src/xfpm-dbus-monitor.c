@@ -33,7 +33,11 @@
 
 #include <libxfce4util/libxfce4util.h>
 
+#include "libxfpm/xfpm-string.h"
+#include "libxfpm/xfpm-dbus.h"
+
 #include "xfpm-dbus-monitor.h"
+#include "xfpm-marshal.h"
 
 static void xfpm_dbus_monitor_finalize   (GObject *object);
 
@@ -43,14 +47,29 @@ static void xfpm_dbus_monitor_finalize   (GObject *object);
 struct XfpmDBusMonitorPrivate
 {
     DBusGConnection *system_bus;
-    DBusGConnection *bus;
-    DBusGProxy      *proxy;
-    GPtrArray       *array;
+    DBusGConnection *session_bus;
+
+    DBusGProxy      *system_proxy;
+    DBusGProxy      *session_proxy;
+    
+    GPtrArray       *names_array;
+    GPtrArray 	    *services_array;
+    
+    gboolean	     hal_connected;
 };
+
+typedef struct
+{
+    gchar 	*name;
+    DBusBusType  bus_type;
+    
+} XfpmWatchData;
 
 enum
 {
-    CONNECTION_LOST,
+    UNIQUE_NAME_LOST,
+    SERVICE_CONNECTION_CHANGED,
+    HAL_CONNECTION_CHANGED,
     SYSTEM_BUS_CONNECTION_CHANGED,
     LAST_SIGNAL
 };
@@ -60,32 +79,107 @@ static guint signals [LAST_SIGNAL] = { 0 };
 G_DEFINE_TYPE (XfpmDBusMonitor, xfpm_dbus_monitor, G_TYPE_OBJECT)
 
 static void
-xfpm_dbus_monitor_unique_connection_name_lost (XfpmDBusMonitor *monitor, const gchar *name)
+xfpm_dbus_monitor_free_watch_data (XfpmWatchData *data)
 {
-    guint i = 0;
-    gchar *array_name;
+    g_free (data->name);
+    g_free (data);
+}
+
+static XfpmWatchData *
+xfpm_dbus_monitor_get_watch_data (GPtrArray *array, const gchar *name, DBusBusType bus_type)
+{
+    XfpmWatchData *data;
+    guint i;
     
-    for ( i = 0; i < monitor->priv->array->len; i++ )
+    for ( i = 0; i < array->len; i++)
     {
-	array_name = g_ptr_array_index (monitor->priv->array, i);
-	if ( g_strcmp0 (array_name, name) == 0 )
+	data = g_ptr_array_index (array, i);
+	if ( !g_strcmp0 (data->name, name) && data->bus_type == bus_type )
+	    return data;
+    }
+    return NULL;
+}
+
+static void
+xfpm_dbus_monitor_unique_connection_name_lost (XfpmDBusMonitor *monitor, DBusBusType bus_type, const gchar *name)
+{
+    XfpmWatchData *watch;
+    guint i = 0;
+    
+    for ( i = 0; i < monitor->priv->names_array->len; i++ )
+    {
+	watch = g_ptr_array_index (monitor->priv->names_array, i);
+	
+	if ( !g_strcmp0 (watch->name, name) && bus_type == watch->bus_type )
 	{
-	    g_signal_emit (G_OBJECT(monitor), signals [CONNECTION_LOST], 0, array_name);
-	    //g_free (array_name);
-	    //g_ptr_array_remove_index (monitor->priv->array, i);
+	    TRACE ("Unique name %s disconnected ", name);
+	    g_signal_emit (G_OBJECT(monitor), signals [UNIQUE_NAME_LOST], 0, 
+			   watch->name, bus_type == DBUS_BUS_SESSION ? TRUE : FALSE);
+	    xfpm_dbus_monitor_free_watch_data (watch);
 	}
     }
 }
 
 static void
-xfpm_dbus_monitor_name_owner_changed_cb (DBusGProxy *proxy, const gchar *name,
-					 const gchar *prev, const gchar *new,
-					 XfpmDBusMonitor *monitor)
+xfpm_dbus_monitor_service_connection_changed (XfpmDBusMonitor *monitor, DBusBusType bus_type, 
+					      const gchar *name, gboolean connected)
+{
+    XfpmWatchData *watch;
+    guint i;
+    
+    /* Simplify things for HAL */
+    if ( !g_strcmp0 (name, "org.freedesktop.Hal") && bus_type == DBUS_BUS_SYSTEM )
+    {
+	monitor->priv->hal_connected = connected;
+	g_signal_emit (G_OBJECT (monitor), signals [HAL_CONNECTION_CHANGED], 0, connected);
+	return;
+    }
+    
+    for ( i = 0; i < monitor->priv->services_array->len; i++)
+    {
+	watch = g_ptr_array_index (monitor->priv->services_array, i);
+	
+	if ( !g_strcmp0 (watch->name, name) && watch->bus_type == bus_type)
+	{
+	    TRACE ("Service %s connection changed %s", name, xfpm_bool_to_string (connected));
+	    g_signal_emit (G_OBJECT (monitor), signals [SERVICE_CONNECTION_CHANGED], 0,
+			   name, connected, bus_type == DBUS_BUS_SESSION ? TRUE : FALSE);
+	}
+    }
+}
+
+static void
+xfpm_dbus_monitor_name_owner_changed (XfpmDBusMonitor *monitor, const gchar *name,
+				      const gchar *prev, const gchar *new, DBusBusType bus_type)
 {
     if ( strlen (prev) != 0 )
     {
-	xfpm_dbus_monitor_unique_connection_name_lost (monitor, prev);
+	xfpm_dbus_monitor_unique_connection_name_lost (monitor, bus_type, prev);
+	
+	/* Connection has name */
+	if ( strlen (name) != 0 )
+	    xfpm_dbus_monitor_service_connection_changed (monitor, bus_type, name, FALSE);
     }
+    else if ( strlen (name) != 0 && strlen (new) != 0)
+    {
+	xfpm_dbus_monitor_service_connection_changed (monitor, bus_type, name, FALSE);
+    }
+}
+
+static void
+xfpm_dbus_monitor_session_name_owner_changed_cb (DBusGProxy *proxy, const gchar *name,
+						 const gchar *prev, const gchar *new,
+						 XfpmDBusMonitor *monitor)
+{
+    xfpm_dbus_monitor_name_owner_changed (monitor, name, prev, new, DBUS_BUS_SESSION);
+}
+
+static void
+xfpm_dbus_monitor_system_name_owner_changed_cb  (DBusGProxy *proxy, const gchar *name,
+						 const gchar *prev, const gchar *new,
+						 XfpmDBusMonitor *monitor)
+{
+    xfpm_dbus_monitor_name_owner_changed (monitor, name, prev, new, DBUS_BUS_SYSTEM);
 }
 
 static gboolean
@@ -140,27 +234,89 @@ xfpm_dbus_monitor_system_bus_filter (DBusConnection *bus, DBusMessage *message, 
 }
 
 static void
+xfpm_dbus_monitor_session (XfpmDBusMonitor *monitor)
+{
+    monitor->priv->session_proxy = dbus_g_proxy_new_for_name_owner (monitor->priv->session_bus,
+								    "org.freedesktop.DBus",
+								    "/org/freedesktop/DBus",
+								    "org.freedesktop.DBus",
+								    NULL);
+    if ( !monitor->priv->session_proxy )
+    {
+	g_critical ("Unable to create proxy on /org/freedesktop/DBus");
+	return;
+    }
+    
+    dbus_g_proxy_add_signal (monitor->priv->session_proxy, "NameOwnerChanged", 
+			     G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
+			     
+    dbus_g_proxy_connect_signal (monitor->priv->session_proxy, "NameOwnerChanged",
+				 G_CALLBACK (xfpm_dbus_monitor_session_name_owner_changed_cb), monitor, NULL);
+}
+
+static void
+xfpm_dbus_monitor_system (XfpmDBusMonitor *monitor)
+{
+    monitor->priv->system_proxy = dbus_g_proxy_new_for_name_owner (monitor->priv->system_bus,
+								   "org.freedesktop.DBus",
+								   "/org/freedesktop/DBus",
+								   "org.freedesktop.DBus",
+								   NULL);
+    if ( !monitor->priv->system_proxy )
+    {
+	g_critical ("Unable to create proxy on /org/freedesktop/DBus");
+	return;
+    }
+    
+    dbus_g_proxy_add_signal (monitor->priv->system_proxy, "NameOwnerChanged", 
+			     G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
+			     
+    dbus_g_proxy_connect_signal (monitor->priv->system_proxy, "NameOwnerChanged",
+				 G_CALLBACK (xfpm_dbus_monitor_system_name_owner_changed_cb), monitor, NULL);
+}
+
+static void
 xfpm_dbus_monitor_class_init (XfpmDBusMonitorClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-    signals [CONNECTION_LOST] =
-    	g_signal_new("connection-lost",
-		     XFPM_TYPE_DBUS_MONITOR,
-		     G_SIGNAL_RUN_LAST,
-		     G_STRUCT_OFFSET(XfpmDBusMonitorClass, connection_lost),
-		     NULL, NULL,
-		     g_cclosure_marshal_VOID__STRING,
-		     G_TYPE_NONE, 1, G_TYPE_STRING);
+    signals [UNIQUE_NAME_LOST] =
+    	g_signal_new ("unique-name-lost",
+		      XFPM_TYPE_DBUS_MONITOR,
+		      G_SIGNAL_RUN_LAST,
+		      G_STRUCT_OFFSET (XfpmDBusMonitorClass, unique_name_lost),
+		      NULL, NULL,
+		      _xfpm_marshal_VOID__STRING_BOOLEAN,
+		      G_TYPE_NONE, 2, 
+		      G_TYPE_STRING, G_TYPE_BOOLEAN);
 		     
+    signals [HAL_CONNECTION_CHANGED] =
+    	g_signal_new ("hal-connection-changed",
+		      XFPM_TYPE_DBUS_MONITOR,
+		      G_SIGNAL_RUN_LAST,
+		      G_STRUCT_OFFSET (XfpmDBusMonitorClass, hal_connection_changed),
+		      NULL, NULL,
+		      g_cclosure_marshal_VOID__BOOLEAN,
+		      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+		      
+    signals [SERVICE_CONNECTION_CHANGED] =
+    	g_signal_new ("service-connection-changed",
+		      XFPM_TYPE_DBUS_MONITOR,
+		      G_SIGNAL_RUN_LAST,
+		      G_STRUCT_OFFSET (XfpmDBusMonitorClass, service_connection_changed),
+		      NULL, NULL,
+		      _xfpm_marshal_VOID__STRING_BOOLEAN_BOOLEAN,
+		      G_TYPE_NONE, 3, G_TYPE_STRING,
+		      G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
+		      
     signals [SYSTEM_BUS_CONNECTION_CHANGED] =
-    	g_signal_new("system-bus-connection-changed",
-		     XFPM_TYPE_DBUS_MONITOR,
-		     G_SIGNAL_RUN_LAST,
-		     G_STRUCT_OFFSET(XfpmDBusMonitorClass, system_bus_connection_changed),
-		     NULL, NULL,
-		     g_cclosure_marshal_VOID__BOOLEAN,
-		     G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+    	g_signal_new ("system-bus-connection-changed",
+		      XFPM_TYPE_DBUS_MONITOR,
+		      G_SIGNAL_RUN_LAST,
+		      G_STRUCT_OFFSET (XfpmDBusMonitorClass, system_bus_connection_changed),
+		      NULL, NULL,
+		      g_cclosure_marshal_VOID__BOOLEAN,
+		      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 		     
     object_class->finalize = xfpm_dbus_monitor_finalize;
 
@@ -170,36 +326,19 @@ xfpm_dbus_monitor_class_init (XfpmDBusMonitorClass *klass)
 static void
 xfpm_dbus_monitor_init (XfpmDBusMonitor *monitor)
 {
-    GError *error = NULL;
-    
     monitor->priv = XFPM_DBUS_MONITOR_GET_PRIVATE (monitor);
     
-    monitor->priv->bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
-    monitor->priv->array = g_ptr_array_new ();
+    monitor->priv->session_proxy = NULL;
+    monitor->priv->system_proxy  = NULL;
     
-    monitor->priv->proxy = dbus_g_proxy_new_for_name_owner (monitor->priv->bus,
-							    "org.freedesktop.DBus",
-							    "/org/freedesktop/DBus",
-							    "org.freedesktop.DBus",
-							    NULL);
-    if ( !monitor->priv->proxy )
-    {
-	g_critical ("Unable to create proxy on /org/freedesktop/DBus");
-	return;
-    }
+    monitor->priv->names_array = g_ptr_array_new ();
+    monitor->priv->services_array = g_ptr_array_new ();
+         
+    monitor->priv->session_bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+    monitor->priv->system_bus  = dbus_g_bus_get (DBUS_BUS_SYSTEM,  NULL);
     
-    dbus_g_proxy_add_signal (monitor->priv->proxy, "NameOwnerChanged", 
-			     G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_INVALID);
-			     
-    dbus_g_proxy_connect_signal (monitor->priv->proxy, "NameOwnerChanged",
-				 G_CALLBACK(xfpm_dbus_monitor_name_owner_changed_cb), monitor, NULL);
-
-    monitor->priv->system_bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-    
-    if ( error )
-    {
-	g_error ("Error in getting connection to the system bus %s:", error->message);
-    }
+    xfpm_dbus_monitor_session (monitor);
+    xfpm_dbus_monitor_system  (monitor);
     
     dbus_connection_set_exit_on_disconnect (dbus_g_connection_get_connection (monitor->priv->system_bus), 
 					    FALSE);
@@ -208,35 +347,46 @@ xfpm_dbus_monitor_init (XfpmDBusMonitor *monitor)
 			        xfpm_dbus_monitor_system_bus_filter,
 				monitor, 
 				NULL);
+				
+    monitor->priv->hal_connected  = xfpm_dbus_name_has_owner (dbus_g_connection_get_connection (monitor->priv->system_bus), 
+							      "org.freedesktop.Hal");
+							      
+    xfpm_dbus_monitor_add_service (monitor, DBUS_BUS_SESSION, "org.freedesktop.Hal");
 }
 
 static void
 xfpm_dbus_monitor_finalize (GObject *object)
 {
     XfpmDBusMonitor *monitor;
-    guint i;
-    gchar *name;
 
     monitor = XFPM_DBUS_MONITOR (object);
     
+    if ( monitor->priv->session_proxy )
+    {
+	dbus_g_proxy_disconnect_signal (monitor->priv->session_proxy, "NameOwnerChanged",
+					G_CALLBACK (xfpm_dbus_monitor_session_name_owner_changed_cb), monitor);
+	g_object_unref (monitor->priv->session_proxy);
+    }
+
+    if ( monitor->priv->system_proxy )
+    {
+	dbus_g_proxy_disconnect_signal (monitor->priv->system_proxy, "NameOwnerChanged",
+				        G_CALLBACK (xfpm_dbus_monitor_system_name_owner_changed_cb), monitor);
+	g_object_unref (monitor->priv->system_proxy);
+    }
+
     dbus_connection_remove_filter (dbus_g_connection_get_connection (monitor->priv->system_bus),
 				   xfpm_dbus_monitor_system_bus_filter,
 				   monitor);
 
     dbus_g_connection_unref (monitor->priv->system_bus);
-    
-    dbus_g_connection_unref (monitor->priv->bus);
-    
-    g_object_unref (monitor->priv->proxy);
+    dbus_g_connection_unref (monitor->priv->session_bus);
 
-    for ( i = 0; i<monitor->priv->array->len; i++)
-    {
-	name = g_ptr_array_index (monitor->priv->array, i);
-	g_ptr_array_remove (monitor->priv->array, name);
-	g_free (name);
-    }
-    
-    g_ptr_array_free (monitor->priv->array, TRUE);
+    g_ptr_array_foreach (monitor->priv->names_array, (GFunc) xfpm_dbus_monitor_free_watch_data, NULL);
+    g_ptr_array_foreach (monitor->priv->services_array, (GFunc) xfpm_dbus_monitor_free_watch_data, NULL);
+
+    g_ptr_array_free (monitor->priv->names_array, TRUE);
+    g_ptr_array_free (monitor->priv->services_array, TRUE);
 
     G_OBJECT_CLASS (xfpm_dbus_monitor_parent_class)->finalize (object);
 }
@@ -245,6 +395,7 @@ XfpmDBusMonitor *
 xfpm_dbus_monitor_new (void)
 {
     static gpointer xfpm_dbus_monitor_object = NULL;
+    
     if ( G_LIKELY (xfpm_dbus_monitor_object != NULL) )
     {
 	g_object_ref (xfpm_dbus_monitor_object);
@@ -258,45 +409,76 @@ xfpm_dbus_monitor_new (void)
     return XFPM_DBUS_MONITOR (xfpm_dbus_monitor_object);
 }
 
-gboolean xfpm_dbus_monitor_add_match (XfpmDBusMonitor *monitor, const gchar *unique_name)
+gboolean xfpm_dbus_monitor_add_unique_name (XfpmDBusMonitor *monitor, DBusBusType bus_type, const gchar *unique_name)
 {
-    guint i = 0;
-    gchar *name;
+    XfpmWatchData *watch;
     
     g_return_val_if_fail (XFPM_IS_DBUS_MONITOR (monitor), FALSE);
     g_return_val_if_fail (unique_name != NULL, FALSE);
     
-    for ( i = 0; i<monitor->priv->array->len; i++)
-    {
-	name = g_ptr_array_index (monitor->priv->array, i);
-	if ( g_strcmp0 (name, unique_name) == 0 )
-	{
-	    return FALSE;
-	}
-    }
+    /* We have it already */
+    if ( xfpm_dbus_monitor_get_watch_data (monitor->priv->names_array, unique_name, bus_type) )
+	return FALSE;
+	
+    TRACE ("Monitoring application with unique_name %s", unique_name);
     
-    g_ptr_array_add (monitor->priv->array, g_strdup (unique_name));
+    watch = g_new0 (XfpmWatchData , 1);
+    watch->name = g_strdup (unique_name);
+    watch->bus_type = bus_type;
+    
+    g_ptr_array_add (monitor->priv->names_array, watch);
+    return TRUE;
+}
+
+void xfpm_dbus_monitor_remove_unique_name (XfpmDBusMonitor *monitor, DBusBusType bus_type, const gchar *unique_name)
+{
+    XfpmWatchData *watch;
+    
+    g_return_if_fail (XFPM_IS_DBUS_MONITOR (monitor));
+
+    watch = xfpm_dbus_monitor_get_watch_data (monitor->priv->names_array, unique_name, bus_type);
+    
+    if ( watch )
+    {
+	g_ptr_array_remove (monitor->priv->names_array, watch);
+	xfpm_dbus_monitor_free_watch_data (watch);
+    }
+}
+
+gboolean xfpm_dbus_monitor_add_service (XfpmDBusMonitor *monitor, DBusBusType bus_type, const gchar *service_name)
+{
+    XfpmWatchData *watch;
+    
+    g_return_val_if_fail (XFPM_IS_DBUS_MONITOR (monitor), FALSE);
+    
+    if ( xfpm_dbus_monitor_get_watch_data (monitor->priv->services_array, service_name, bus_type ) )
+	return FALSE;
+	
+    watch = g_new0 (XfpmWatchData , 1);
+    watch->name = g_strdup (service_name);
+    watch->bus_type = bus_type;
+    
+    g_ptr_array_add (monitor->priv->services_array, watch);
     
     return TRUE;
 }
 
-gboolean xfpm_dbus_monitor_remove_match (XfpmDBusMonitor *monitor, const gchar *unique_name)
+void xfpm_dbus_monitor_remove_service (XfpmDBusMonitor *monitor, DBusBusType bus_type, const gchar *service_name)
 {
-    guint i ;
-    gchar *name;
+    XfpmWatchData *watch;
     
-    g_return_val_if_fail (XFPM_IS_DBUS_MONITOR (monitor), FALSE);
+    g_return_if_fail (XFPM_IS_DBUS_MONITOR (monitor));
     
-    for ( i = 0; i<monitor->priv->array->len; i++)
+    watch = xfpm_dbus_monitor_get_watch_data (monitor->priv->services_array, service_name, bus_type);
+    
+    if ( watch )
     {
-	name = g_ptr_array_index (monitor->priv->array, i);
-	
-	if ( g_strcmp0 (name, unique_name) == 0 )
-	{
-	    g_free (name);
-	    g_ptr_array_remove_index (monitor->priv->array, i);
-	    return TRUE;
-	}
+	g_ptr_array_remove (monitor->priv->services_array, watch);
+	xfpm_dbus_monitor_free_watch_data (watch);
     }
-    return FALSE;
+}
+
+gboolean xfpm_dbus_monitor_hal_connected (XfpmDBusMonitor *monitor)
+{
+    return monitor->priv->hal_connected;
 }

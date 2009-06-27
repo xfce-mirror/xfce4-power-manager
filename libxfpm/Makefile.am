@@ -4,8 +4,6 @@ noinst_LTLIBRARIES = 			\
 	libxfpmcommon.la
 
 libxfpmhal_la_SOURCES =			\
-	hal-monitor.c			\
-	hal-monitor.h			\
 	hal-manager.c			\
 	hal-manager.h			\
 	hal-device.c			\

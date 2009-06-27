@@ -176,7 +176,7 @@ xfpm_inhibit_remove_application_by_cookie (XfpmInhibit *inhibit, guint cookie)
     
     if ( inhibitor )
     {
-	xfpm_dbus_monitor_remove_match (inhibit->priv->monitor, inhibitor->unique_name);
+	xfpm_dbus_monitor_remove_unique_name (inhibit->priv->monitor, DBUS_BUS_SESSION, inhibitor->unique_name);
 	xfpm_inhibit_free_inhibitor (inhibit, inhibitor);
 	return TRUE;
     }
@@ -184,9 +184,13 @@ xfpm_inhibit_remove_application_by_cookie (XfpmInhibit *inhibit, guint cookie)
 }
 
 static void
-xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor, gchar *unique_name, XfpmInhibit *inhibit)
+xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor, gchar *unique_name, 
+				 gboolean on_session, XfpmInhibit *inhibit)
 {
     Inhibitor *inhibitor;
+    
+    if ( !on_session)
+	return;
     
     inhibitor = xfpm_inhibit_find_application_by_unique_connection_name (inhibit, unique_name );
     
@@ -204,7 +208,7 @@ xfpm_inhibit_class_init(XfpmInhibitClass *klass)
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
     signals[HAS_INHIBIT_CHANGED] =
-	    g_signal_new("has-inhibit-changed",
+	    g_signal_new ("has-inhibit-changed",
 			 XFPM_TYPE_INHIBIT,
 			 G_SIGNAL_RUN_LAST,
 			 G_STRUCT_OFFSET(XfpmInhibitClass, has_inhibit_changed),
@@ -214,27 +218,27 @@ xfpm_inhibit_class_init(XfpmInhibitClass *klass)
 
     object_class->finalize = xfpm_inhibit_finalize;
 
-    g_type_class_add_private(klass,sizeof(XfpmInhibitPrivate));
+    g_type_class_add_private (klass, sizeof (XfpmInhibitPrivate));
     
     xfpm_inhibit_dbus_class_init (klass);
 }
 
 static void
-xfpm_inhibit_init(XfpmInhibit *inhibit)
+xfpm_inhibit_init (XfpmInhibit *inhibit)
 {
     inhibit->priv = XFPM_INHIBIT_GET_PRIVATE(inhibit);
     
     inhibit->priv->array   = g_ptr_array_new ();
     inhibit->priv->monitor = xfpm_dbus_monitor_new ();
     
-    g_signal_connect (inhibit->priv->monitor, "connection-lost",
+    g_signal_connect (inhibit->priv->monitor, "unique-name-lost",
 		      G_CALLBACK (xfpm_inhibit_connection_lost_cb), inhibit);
 		      
     xfpm_inhibit_dbus_init (inhibit);
 }
 
 static void
-xfpm_inhibit_finalize(GObject *object)
+xfpm_inhibit_finalize (GObject *object)
 {
     XfpmInhibit *inhibit;
     Inhibitor *inhibitor;
@@ -338,7 +342,7 @@ static void xfpm_inhibit_inhibit  	(XfpmInhibit *inhibit,
     
     xfpm_inhibit_has_inhibit_changed (inhibit);
     
-    xfpm_dbus_monitor_add_match (inhibit->priv->monitor, sender);
+    xfpm_dbus_monitor_add_unique_name (inhibit->priv->monitor, DBUS_BUS_SESSION, sender);
     
     g_free (sender);
     dbus_g_method_return (context, cookie);

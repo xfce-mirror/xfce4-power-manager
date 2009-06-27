@@ -395,10 +395,12 @@ xfpm_cpu_finalize(GObject *object)
     XfpmCpu *cpu;
 
     cpu = XFPM_CPU(object);
+
+    if ( cpu->priv->conf )
+	g_object_unref (cpu->priv->conf);
     
-    g_object_unref (cpu->priv->conf);
-	
-    g_object_unref (cpu->priv->adapter);
+    if ( cpu->priv->conf )
+	g_object_unref (cpu->priv->adapter);
 	
     if ( cpu->priv->bus )
 	dbus_g_connection_unref (cpu->priv->bus);

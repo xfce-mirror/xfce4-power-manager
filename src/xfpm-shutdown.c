@@ -34,9 +34,7 @@
 
 #include <glib.h>
 
-#include "libxfpm/hal-monitor.h"
 #include "libxfpm/hal-device.h"
-#include "libxfpm/hal-monitor.h"
 
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
@@ -44,6 +42,7 @@
 #include "xfpm-shutdown.h"
 #include "xfpm-session.h"
 #include "xfpm-network-manager.h"
+#include "xfpm-dbus-monitor.h"
 #include "xfpm-errors.h"
 
 #define DUPLICATE_SHUTDOWN_REQUEST 8.0f
@@ -60,7 +59,7 @@ static void xfpm_shutdown_get_property (GObject *object,
 struct XfpmShutdownPrivate
 {
     DBusGConnection *bus;
-    HalMonitor      *monitor;
+    XfpmDBusMonitor *monitor;
 
     XfpmSession     *session;
     gboolean         connected;
@@ -140,7 +139,7 @@ xfpm_shutdown_power_management_check (XfpmShutdown *shutdown)
 }
 
 static void
-xfpm_shutdown_connection_changed_cb (HalMonitor *monitor, gboolean connected, XfpmShutdown *shutdown)
+xfpm_shutdown_connection_changed_cb (XfpmDBusMonitor *monitor, gboolean connected, XfpmShutdown *shutdown)
 {
     TRACE ("Hal connection changed=%s", xfpm_bool_to_string (connected));
     shutdown->priv->connected = connected;
@@ -209,10 +208,12 @@ xfpm_shutdown_init (XfpmShutdown *shutdown)
 	return;
     }
     
-    shutdown->priv->monitor = hal_monitor_new ();
-    g_signal_connect (shutdown->priv->monitor, "connection-changed",
+    shutdown->priv->monitor = xfpm_dbus_monitor_new ();
+    
+    g_signal_connect (shutdown->priv->monitor, "hal-connection-changed",
 		      G_CALLBACK (xfpm_shutdown_connection_changed_cb), shutdown);
-    shutdown->priv->connected = hal_monitor_get_connected (shutdown->priv->monitor);
+		      
+    shutdown->priv->connected = xfpm_dbus_monitor_hal_connected (shutdown->priv->monitor);
     
     xfpm_shutdown_power_management_check (shutdown);
 }
@@ -252,8 +253,7 @@ xfpm_shutdown_finalize(GObject *object)
     if ( shutdown->priv->bus )
 	dbus_g_connection_unref (shutdown->priv->bus);	
 
-    if ( shutdown->priv->monitor )
-	g_object_unref (shutdown->priv->monitor);
+    g_object_unref (shutdown->priv->monitor);
 	
     g_object_unref (shutdown->priv->session);
 	
