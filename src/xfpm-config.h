@@ -36,6 +36,12 @@ G_BEGIN_DECLS
 
 #define 	XFPM_CHANNEL_CFG             	"xfce4-power-manager"
 
+/*
+ * Backward compatibility with old version.
+ */
+#define 	PROPERTIES_PREFIX		"/xfce4-power-manager/"
+
+
 #define 	POWER_SAVE_ON_BATTERY        	"power-save-on-battery"
 #define         CPU_FREQ_CONTROL             	"enable-cpu-freq-control"
 #define         LOCK_SCREEN_ON_SLEEP         	"lock-screen-suspend-hibernate"

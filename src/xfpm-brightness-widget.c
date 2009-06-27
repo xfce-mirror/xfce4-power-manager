@@ -43,18 +43,16 @@ static void xfpm_brightness_widget_finalize   (GObject *object);
 #define XFPM_BRIGHTNESS_WIDGET_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_BRIGHTNESS_WIDGET, XfpmBrightnessWidgetPrivate))
 
-#define WINDOW_HIDE_TIMEOUT	1.0f
 #define BRIGHTNESS_POPUP_SIZE	180
 
 struct XfpmBrightnessWidgetPrivate
 {
     GtkWidget *window;
-    GTimer    *timer;
     GdkPixbuf *pix;
     
     guint      level;
     guint      max_level;
-    gboolean   timeout_added;
+    gulong     timeout_id;
 };
 
 G_DEFINE_TYPE (XfpmBrightnessWidget, xfpm_brightness_widget, G_TYPE_OBJECT)
@@ -62,13 +60,8 @@ G_DEFINE_TYPE (XfpmBrightnessWidget, xfpm_brightness_widget, G_TYPE_OBJECT)
 static gboolean
 xfpm_brightness_widget_timeout (XfpmBrightnessWidget *widget)
 {
-    if ( g_timer_elapsed (widget->priv->timer, NULL) > WINDOW_HIDE_TIMEOUT )
-    {
-	gtk_widget_hide (widget->priv->window);
-	widget->priv->timeout_added = FALSE;
-	return FALSE;
-    }
-    return TRUE;
+    gtk_widget_hide (widget->priv->window);
+    return FALSE;
 }
 
 static gboolean
@@ -98,24 +91,13 @@ xfpm_brightness_widget_expose_event (GtkWidget *w, GdkEventExpose *ev, XfpmBrigh
     {
 	if ( i >= widget->priv->level )
 	{
-	    cairo_set_source_rgb (cr, 0.3, 0.3, 0.4);
+	    cairo_set_source_rgb (cr, 0., 0., 0.);
 	}
 	else
 	{
-	    cairo_set_source_rgb (cr, 0.6, 1.0, 0.4);
+	    cairo_set_source_rgb (cr, 1., 1.0, 0.0);
 	}
-	cairo_rectangle (cr, (gdouble)i*width, 140, width - padding , 10);
-	cairo_fill (cr);
-	
-	if ( i >= widget->priv->level )
-	{
-	    cairo_set_source_rgb (cr, 0.3, 0.3, 0.3);
-	}
-	else
-	{
-	    cairo_set_source_rgb (cr, 0.6, 1.0, 0.);
-	}
-	cairo_rectangle (cr, (gdouble)i*width, 150, width - padding , 10);
+	cairo_rectangle (cr, (gdouble)i*width, 130, width - padding , 20);
 	cairo_fill (cr);
     }
 
@@ -163,6 +145,7 @@ xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
     
     widget->priv->level  = 0;
     widget->priv->max_level = 0;
+    widget->priv->timeout_id = 0;
 
     gtk_widget_set_size_request (GTK_WIDGET (widget->priv->window), BRIGHTNESS_POPUP_SIZE, BRIGHTNESS_POPUP_SIZE);
     
@@ -170,8 +153,6 @@ xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
     
     xfpm_brightness_widget_set_colormap (GTK_WIDGET (widget->priv->window));
 
-    widget->priv->timer = g_timer_new ();
-    
     g_signal_connect (widget->priv->window, "expose_event",
 		      G_CALLBACK (xfpm_brightness_widget_expose_event), widget);
 }
@@ -183,7 +164,6 @@ xfpm_brightness_widget_finalize (GObject *object)
 
     widget = XFPM_BRIGHTNESS_WIDGET (object);
     
-    g_timer_destroy (widget->priv->timer);
     if ( widget->priv->pix )
 	gdk_pixbuf_unref (widget->priv->pix);
 
@@ -213,13 +193,10 @@ void xfpm_brightness_widget_set_level (XfpmBrightnessWidget *widget, guint level
     widget->priv->level = level;
 
     gtk_window_present (GTK_WINDOW (widget->priv->window));
-    gtk_widget_queue_draw (widget->priv->window);
     
-    if ( widget->priv->timeout_added == FALSE )
-    {
-	g_timeout_add (100, (GSourceFunc) xfpm_brightness_widget_timeout, widget);
-	widget->priv->timeout_added = TRUE;
-    }
+    if ( widget->priv->timeout_id != 0 )
+	g_source_remove (widget->priv->timeout_id);
 	
-    g_timer_reset (widget->priv->timer);
+    widget->priv->timeout_id = 
+	g_timeout_add (900, (GSourceFunc) xfpm_brightness_widget_timeout, widget);
 }

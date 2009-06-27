@@ -175,9 +175,12 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
         return;
 
+    if ( !g_str_has_prefix (property, PROPERTIES_PREFIX) )
+	return;
+
     TRACE("Property modified: %s\n", property);
     
-    g_object_set_property (G_OBJECT (conf), strchr (property, '/') + 1, value);
+    g_object_set_property (G_OBJECT (conf), property + strlen (PROPERTIES_PREFIX), value);
 }
 
 static void
