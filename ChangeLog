@@ -1,3 +1,7 @@
+2009-06-30: 15:00 Ali aliov@xfce.org
+	* settings/xfpm-setting.c Don't allow brightness timeout to be less than
+	DPMS sleep timeout.
+	
 2009-06-28: 12:10 Ali aliov@xfce.org
 	* Use xfpm-dbus-monitor for dbus monitoring stuff, so hal-monitor is removed.
 	* hal-device.c Fix a Glib warnings when DBus is disconnected.

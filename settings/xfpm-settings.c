@@ -43,6 +43,7 @@
 #include "xfpm-enum.h"
 
 #define INTERFACE_FILE INTERFACES_DIR "/xfpm-settings.ui"
+#define BRIGHTNESS_DISABLED 	9
 
 static 	GtkBuilder *xml 			= NULL;
 static  GtkWidget  *nt				= NULL;
@@ -53,6 +54,8 @@ static  GtkWidget *on_battery_dpms_off  	= NULL;
 static  GtkWidget *on_ac_dpms_sleep 		= NULL;
 static  GtkWidget *on_ac_dpms_off 		= NULL;
 #endif
+
+static  gboolean  lcd_brightness = FALSE;
 
 /*
  * GtkBuilder callbacks
@@ -403,14 +406,27 @@ void
 sleep_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
 #ifdef HAVE_DPMS
+    GtkWidget *brg;
     gint off_value    = (gint)gtk_range_get_value (GTK_RANGE (on_battery_dpms_off));
     gint sleep_value  = (gint)gtk_range_get_value (GTK_RANGE (w));
+    gint brightness_value;
     
     if ( off_value != 0 )
     {
 	if ( sleep_value >= off_value )
 	{
 	    gtk_range_set_value (GTK_RANGE(on_battery_dpms_off), sleep_value + 1 );
+	}
+    }
+    
+    if ( lcd_brightness )
+    {
+	brg = GTK_WIDGET (gtk_builder_get_object (xml, "brg-on-battery"));
+	brightness_value = (gint) gtk_range_get_value (GTK_RANGE (brg));
+	
+	if ( sleep_value * 60 <= brightness_value && brightness_value != BRIGHTNESS_DISABLED)
+	{
+	    gtk_range_set_value (GTK_RANGE (brg), BRIGHTNESS_DISABLED);
 	}
     }
     
@@ -447,6 +463,9 @@ void
 sleep_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
 #ifdef HAVE_DPMS
+    GtkWidget *brg;
+
+    gint brightness_value;
     gint off_value    = (gint)gtk_range_get_value (GTK_RANGE(on_ac_dpms_off));
     gint sleep_value  = (gint)gtk_range_get_value (GTK_RANGE(w));
     
@@ -458,6 +477,18 @@ sleep_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	if ( sleep_value >= off_value )
 	{
 	    gtk_range_set_value (GTK_RANGE(on_ac_dpms_off), sleep_value + 1 );
+	}
+    }
+
+    if ( lcd_brightness )
+    {
+	brg = GTK_WIDGET (gtk_builder_get_object (xml, "brg-on-ac"));
+    
+	brightness_value = (gint) gtk_range_get_value (GTK_RANGE (brg));
+	
+	if ( sleep_value * 60 <= brightness_value && brightness_value != BRIGHTNESS_DISABLED)
+	{
+	    gtk_range_set_value (GTK_RANGE (brg), BRIGHTNESS_DISABLED);
 	}
     }
 
@@ -532,7 +563,7 @@ format_inactivity_value_cb (GtkScale *scale, gdouble value, gpointer data)
     else 
 	if ( min == 0 )      return g_strdup_printf ("%d %s", h, _("hours"));
 	else if ( min == 1 ) return g_strdup_printf ("%d %s %s", h, _("hours"), _("one minute"));
-	else            return g_strdup_printf ("%d %s %d %s", h, _("hours"), min, _("minutes"));
+	else                 return g_strdup_printf ("%d %s %d %s", h, _("hours"), min, _("minutes"));
 }
 
 /*
@@ -550,7 +581,16 @@ format_brightness_value_cb (GtkScale *scale, gdouble value, gpointer data)
 void
 brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    gint value    = (gint)gtk_range_get_value (GTK_RANGE(w));
+    gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_battery_dpms_sleep) );
+    gint value    = (gint)gtk_range_get_value (GTK_RANGE (w));
+
+    if ( value != BRIGHTNESS_DISABLED )
+    {
+	if ( dpms_sleep != 0 && dpms_sleep * 60 <= value)
+	{
+	    gtk_range_set_value (GTK_RANGE (on_battery_dpms_sleep), (value / 60) + 1);
+	}
+    }
     
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, value))
     {
@@ -561,8 +601,17 @@ brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 void
 brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    gint value    = (gint)gtk_range_get_value (GTK_RANGE(w));
-    
+    gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_ac_dpms_sleep) );
+    gint value    = (gint)gtk_range_get_value (GTK_RANGE (w));
+
+    if ( value != BRIGHTNESS_DISABLED )
+    {
+	if ( dpms_sleep != 0 && dpms_sleep * 60 <= value)
+	{
+	    gtk_range_set_value (GTK_RANGE (on_ac_dpms_sleep), (value / 60) + 1);
+	}
+    }
+
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, value))
     {
 	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_AC);
@@ -1519,7 +1568,9 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 	xfce_err ("%s : %s", error->message, _("Check your power manager installation"));
 	g_error ("%s", error->message);
     }
-
+    
+    lcd_brightness = has_lcd_brightness;
+    
 #ifdef HAVE_DPMS
     on_battery_dpms_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-on-battery"));
     on_battery_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "off-dpms-on-battery"));
