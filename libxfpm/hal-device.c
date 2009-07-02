@@ -218,8 +218,6 @@ hal_device_finalize (GObject *object)
 
     device = HAL_DEVICE (object);
 
-    g_debug ("Finalizing object with udi=%s", device->priv->udi);
-    
     if ( device->priv->udi )
 	g_free (device->priv->udi);
 
