@@ -1,8 +1,8 @@
-interfaces_h =					\
-	xfpm-settings_ui.h
-
 interfaces =					\
 	xfpm-settings.ui
+
+interfaces_h =					\
+	$(interfaces:.ui=_ui.h)
 
 if MAINTAINER_MODE
 BUILT_SOURCES = $(interfaces_h)

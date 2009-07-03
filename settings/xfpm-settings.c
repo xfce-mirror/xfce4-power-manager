@@ -44,7 +44,6 @@
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum.h"
 
-#define INTERFACE_FILE INTERFACES_DIR "/xfpm-settings.ui"
 #define BRIGHTNESS_DISABLED 	9
 
 static 	GtkBuilder *xml 			= NULL;
