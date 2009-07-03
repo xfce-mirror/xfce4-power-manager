@@ -37,6 +37,8 @@
 #include "libxfpm/xfpm-common.h"
 #include "libxfpm/xfpm-string.h"
 
+#include "interfaces/xfpm-settings_ui.h"
+
 #include "xfpm-settings.h"
 #include "xfpm-config.h"
 #include "xfpm-enum-glib.h"
@@ -1561,7 +1563,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 	  xfpm_bool_to_string (has_sleep_button), xfpm_bool_to_string (has_hibernate_button),
 	  xfpm_bool_to_string (has_power_button) );
 
-    xml = xfpm_builder_new_from_file (INTERFACE_FILE, &error);
+    xml = xfpm_builder_new_from_string (xfpm_settings_ui, &error);
     
     if ( G_UNLIKELY (error) )
     {

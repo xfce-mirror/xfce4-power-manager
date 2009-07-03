@@ -5,11 +5,11 @@ plugins_dir = panel-plugins
 endif
 
 SUBDIRS =        	\
+	data		\
 	libxfpm		\
 	src		\
 	settings	\
 	$(plugins_dir)	\
-	data         	\
 	po           	\
 	doc
 

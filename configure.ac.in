@@ -3,7 +3,7 @@ m4_define([xfpm_version_major],  [0])
 m4_define([xfpm_version_minor],  [8])
 m4_define([xfpm_version_micro],  [1])
 m4_define([xfpm_version_build],  [])
-m4_define([xfpm_version_tag],[])
+m4_define([xfpm_version_tag],[@REVISION@])
 m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_version_micro()ifelse(xfpm_version_tag(), [svn], [xfpm_version_tag().xfpm_version_build()], [xfpm_version_tag()])])
 
 AC_INIT([xfce4-power-manager], [xfpm_version], [http://bugzilla.xfce.org/])
@@ -107,20 +107,6 @@ if test "x${ac_cv_have_decl_XF86XK_Hibernate}" != "xno"; then
   AC_DEFINE(HAVE_XF86XK_HIBERNATE, 1, [Define if XF86XK_Hibernate is available])
 fi
 
-# Taken from Gnome system tools
-#=======================================================#
-#              Pixmaps and interface files              #
-#=======================================================#
-if test "x${prefix}" = "xNONE"; then
-  AC_DEFINE_UNQUOTED(INTERFACES_DIR, "${ac_default_prefix}/${DATADIRNAME}/${PACKAGE}/ui", [path where UI files will be installed])
-  interfacesdir="${ac_default_prefix}/${DATADIRNAME}/${PACKAGE}/ui"
-else
-  AC_DEFINE_UNQUOTED(INTERFACES_DIR, "${prefix}/${DATADIRNAME}/${PACKAGE}/ui", [path where UI files will be installed])
-  interfacesdir="${prefix}/${DATADIRNAME}/${PACKAGE}/ui"
-fi
-
-AC_SUBST(interfacesdir)
-
 #=======================================================#
 #                 Panel plugins ?                       #
 #=======================================================#
@@ -200,7 +186,6 @@ echo "
  
 	prefix:			$prefix
 	xdg autostart:		$sysconfdir/xdg/autostart
-	interfaces dir:		$interfacesdir
    	DPMS         support:   $have_dpms
   	Build panel  plugins:   $build_panel_plugins
    	Debug        support:   $enable_debug

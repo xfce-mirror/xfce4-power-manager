@@ -25,16 +25,17 @@
 #include "xfpm-common.h"
 #include "xfpm-string.h"
 
-GtkBuilder *xfpm_builder_new_from_file (const gchar *file, GError **error)
+GtkBuilder *xfpm_builder_new_from_string (const gchar *ui, GError **error)
 {
     GtkBuilder *builder;
 
     builder = gtk_builder_new ();
     
-    gtk_builder_add_from_file (GTK_BUILDER (builder),
-			       file,
-			       error);
-			       
+    gtk_builder_add_from_string (GTK_BUILDER (builder),
+                                 ui,
+                                 -1,
+                                 error);
+    
     return builder;
 }
 

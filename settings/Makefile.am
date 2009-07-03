@@ -12,6 +12,7 @@ xfce4_power_manager_settings_SOURCES = 				\
 xfce4_power_manager_settings_CFLAGS =				\
 	-I$(top_srcdir)						\
 	-I$(top_srcdir)/src					\
+	-I$(top_srcdir)/data					\
 	-DLOCALEDIR=\"$(localedir)\"				\
 	-DG_LOG_DOMAIN=\"xfce4-power-manager-settings\" 	\
 	-export-dynamic						\

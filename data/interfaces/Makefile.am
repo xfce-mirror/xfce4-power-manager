@@ -1,9 +1,18 @@
+interfaces_h =					\
+	xfpm-settings_ui.h
+
 interfaces =					\
 	xfpm-settings.ui
 
+if MAINTAINER_MODE
+BUILT_SOURCES = $(interfaces_h)
+xfpm-settings_ui.h: xfpm-settings.ui
+	exo-csource --static --strip-comments --strip-content --name=xfpm_settings_ui $< > $@
+endif
 
-interfaces_DATA = 				\
-	$(interfaces)
+DISTCLEANFILES =				\
+	$(interfaces_h)
 
 EXTRA_DIST =					\
-	$(interfaces)
+	$(interfaces)				\
+	$(interfaces_h)

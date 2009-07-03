@@ -30,7 +30,7 @@
 
 G_BEGIN_DECLS
 
-GtkBuilder     *xfpm_builder_new_from_file   	(const gchar *file,
+GtkBuilder     *xfpm_builder_new_from_string   	(const gchar *file,
 						 GError **error);
 
 GdkPixbuf* 	xfpm_load_icon    		(const gchar *icon_name,
