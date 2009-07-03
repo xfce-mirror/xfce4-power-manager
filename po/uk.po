@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-20 18:36+0200\n"
+"POT-Creation-Date: 2009-07-03 21:53+0200\n"
 "PO-Revision-Date: 2009-01-26 17:30+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
@@ -18,145 +18,290 @@ msgstr ""
 "Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../settings/xfpm-settings.c:478 ../settings/xfpm-settings.c:493
-#: ../settings/xfpm-settings.c:520
+#: ../data/interfaces/xfpm-settings.ui.h:1
 #, fuzzy
-msgid "Never"
-msgstr "ніколи"
+msgid "<b>Actions</b>"
+msgstr "Додаткові налаштування"
 
-#: ../settings/xfpm-settings.c:481
+#: ../data/interfaces/xfpm-settings.ui.h:2
 #, fuzzy
-msgid "One minute"
-msgstr "хвилина"
+msgid "<b>Advanced Options</b>"
+msgstr "Додаткові налаштування"
 
-#: ../settings/xfpm-settings.c:483 ../settings/xfpm-settings.c:495
-#, fuzzy
-msgid "Minutes"
-msgstr "хвилин"
-
-#: ../settings/xfpm-settings.c:497 ../settings/xfpm-settings.c:504
-#: ../settings/xfpm-settings.c:505 ../settings/xfpm-settings.c:506
-#, fuzzy
-msgid "One hour"
-msgstr "година"
-
-#: ../settings/xfpm-settings.c:505 ../settings/xfpm-settings.c:509
-#, fuzzy
-msgid "one minute"
-msgstr "хвилина"
-
-#: ../settings/xfpm-settings.c:506 ../settings/xfpm-settings.c:510
-#: ../src/xfpm-battery.c:453
-msgid "minutes"
-msgstr "хвилин"
-
-#: ../settings/xfpm-settings.c:508 ../settings/xfpm-settings.c:509
-#: ../settings/xfpm-settings.c:510 ../src/xfpm-battery.c:452
-msgid "hours"
-msgstr "годин"
-
-#: ../settings/xfpm-settings.c:522
-msgid "Seconds"
+#: ../data/interfaces/xfpm-settings.ui.h:3
+msgid "<b>Brightness</b>"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:671 ../settings/xfpm-settings.c:832
-#: ../settings/xfpm-settings.c:863 ../settings/xfpm-settings.c:992
-#: ../settings/xfpm-settings.c:1040 ../settings/xfpm-settings.c:1085
-#: ../settings/xfpm-settings.c:1226
-msgid "Hibernate and suspend operations not permitted"
+#: ../data/interfaces/xfpm-settings.ui.h:4
+#, fuzzy
+msgid "<b>General Options</b>"
+msgstr "Основні параметри"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+#, fuzzy
+msgid "<b>Monitor</b>"
+msgstr "Властивості стеження"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "Actions"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:681 ../settings/xfpm-settings.c:751
-msgid "Shutdown and hibernate operations not permitted"
-msgstr ""
+#: ../data/interfaces/xfpm-settings.ui.h:7
+#, fuzzy
+msgid "Advanced"
+msgstr "Додаткові налаштування"
 
-#: ../settings/xfpm-settings.c:689 ../settings/xfpm-settings.c:759
-#: ../settings/xfpm-settings.c:869 ../settings/xfpm-settings.c:998
-#: ../settings/xfpm-settings.c:1046 ../settings/xfpm-settings.c:1091
-msgid "Nothing"
-msgstr "Нічого"
-
-#. Suspend menu option
-#: ../settings/xfpm-settings.c:694 ../settings/xfpm-settings.c:764
-#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1003
-#: ../settings/xfpm-settings.c:1051 ../settings/xfpm-settings.c:1096
-#: ../src/xfpm-tray-icon.c:205 ../src/xfpm-tray-icon.c:282
-msgid "Suspend"
-msgstr "Призупинити"
-
-#. Hibernate menu option
-#: ../settings/xfpm-settings.c:700 ../settings/xfpm-settings.c:770
-#: ../settings/xfpm-settings.c:880 ../settings/xfpm-settings.c:1009
-#: ../settings/xfpm-settings.c:1057 ../settings/xfpm-settings.c:1102
-#: ../src/xfpm-tray-icon.c:174 ../src/xfpm-tray-icon.c:267
-msgid "Hibernate"
-msgstr "Сплячка"
-
-#: ../settings/xfpm-settings.c:704 ../settings/xfpm-settings.c:1013
-msgid "Shutdown"
-msgstr "Вимкнути"
-
-#: ../settings/xfpm-settings.c:707 ../settings/xfpm-settings.c:1016
-#: ../settings/xfpm-settings.c:1061 ../settings/xfpm-settings.c:1106
-msgid "Ask"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:774 ../settings/xfpm-settings.c:884
-msgid "Lock screen"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:953
+#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:1055
 #, fuzzy
 msgid "Always show icon"
 msgstr "Завжди відображати значок"
 
-#: ../settings/xfpm-settings.c:956
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "Consider the computer on low power at:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:10
+#, fuzzy
+msgid "Enable CPU frequency control"
+msgstr "Дозволити управління частотою процесора"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "Enable monitor power management control"
+msgstr "Дозволити стеження за управлінням живленням"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+#, fuzzy
+msgid "Enable notification"
+msgstr "Дозволити повідомлення зарядки UPS"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:1456
+#: ../settings/xfpm-settings.c:1461
+#, fuzzy
+msgid "General"
+msgstr "Основні параметри"
+
+#. Hibernate menu option
+#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:775
+#: ../settings/xfpm-settings.c:846 ../settings/xfpm-settings.c:970
+#: ../settings/xfpm-settings.c:1122 ../settings/xfpm-settings.c:1180
+#: ../settings/xfpm-settings.c:1235 ../src/xfpm-tray-icon.c:174
+#: ../src/xfpm-tray-icon.c:266
+msgid "Hibernate"
+msgstr "Сплячка"
+
+#: ../data/interfaces/xfpm-settings.ui.h:15
+msgid "Lock screen when going for suspend/hibernate"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:16
+#, fuzzy
+msgid "Monitor"
+msgstr "Властивості стеження"
+
+#: ../data/interfaces/xfpm-settings.ui.h:17 ../settings/xfpm-settings.c:764
+#: ../settings/xfpm-settings.c:835 ../settings/xfpm-settings.c:959
+#: ../settings/xfpm-settings.c:1111 ../settings/xfpm-settings.c:1169
+#: ../settings/xfpm-settings.c:1224
+msgid "Nothing"
+msgstr "Нічого"
+
+#: ../data/interfaces/xfpm-settings.ui.h:18 ../settings/xfpm-settings.c:1470
+#: ../settings/xfpm-settings.c:1475
+#, fuzzy
+msgid "On AC"
+msgstr "Живлення від мережі"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
+#, fuzzy
+msgid "On battery"
+msgstr "Живлення від батареї"
+
+#: ../data/interfaces/xfpm-settings.ui.h:20
+#, fuzzy
+msgid "Power manager settings"
+msgstr "Менеджер живлення"
+
+#: ../data/interfaces/xfpm-settings.ui.h:21
+msgid "Prefer power savings over performance"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:22
+msgid "Put display to sleep when computer is inactive for:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:23
+msgid "Put the computer to sleep when inactive for:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Reduce screen brightness when computer is inactive for:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:25
+msgid "Set computer inactivity sleep mode:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:26
+msgid "Set monitor sleep mode:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:27
+#, fuzzy
+msgid "Standby"
+msgstr "В режим очікування після"
+
+#. Suspend menu option
+#: ../data/interfaces/xfpm-settings.ui.h:28 ../settings/xfpm-settings.c:769
+#: ../settings/xfpm-settings.c:840 ../settings/xfpm-settings.c:964
+#: ../settings/xfpm-settings.c:1116 ../settings/xfpm-settings.c:1174
+#: ../settings/xfpm-settings.c:1229 ../src/xfpm-tray-icon.c:205
+#: ../src/xfpm-tray-icon.c:281
+msgid "Suspend"
+msgstr "Призупинити"
+
+#: ../data/interfaces/xfpm-settings.ui.h:29
+msgid "Switch off display when computer is inactive for:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:30
+#, fuzzy
+msgid "System tray icon: "
+msgstr "Значок в системному лотку:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:31
+#, fuzzy
+msgid "When battery power is critical:"
+msgstr "Коли заряд батареї досягне критичного рівня зробити"
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+#, fuzzy
+msgid "When hibernate button is pressed:"
+msgstr "Коли натиснуто кнопку живлення зробити"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+#, fuzzy
+msgid "When laptop lid is closed:"
+msgstr "Коли закрито кришку ноутбука"
+
+#: ../data/interfaces/xfpm-settings.ui.h:34
+#, fuzzy
+msgid "When power button is pressed:"
+msgstr "Коли натиснуто кнопку живлення зробити"
+
+#: ../data/interfaces/xfpm-settings.ui.h:35
+#, fuzzy
+msgid "When sleep button is pressed:"
+msgstr "Коли натиснуто кнопку заснути зробити"
+
+#: ../data/interfaces/xfpm-settings.ui.h:36
+#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:187
+#: ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:346
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Xfce Power Manager"
+msgstr "Менеджер живлення Xfce"
+
+#: ../settings/xfpm-settings.c:535 ../settings/xfpm-settings.c:550
+#: ../settings/xfpm-settings.c:577
+#, fuzzy
+msgid "Never"
+msgstr "ніколи"
+
+#: ../settings/xfpm-settings.c:538
+#, fuzzy
+msgid "One minute"
+msgstr "хвилина"
+
+#: ../settings/xfpm-settings.c:540 ../settings/xfpm-settings.c:552
+#, fuzzy
+msgid "Minutes"
+msgstr "хвилин"
+
+#: ../settings/xfpm-settings.c:554 ../settings/xfpm-settings.c:561
+#: ../settings/xfpm-settings.c:562 ../settings/xfpm-settings.c:563
+#, fuzzy
+msgid "One hour"
+msgstr "година"
+
+#: ../settings/xfpm-settings.c:562 ../settings/xfpm-settings.c:566
+#, fuzzy
+msgid "one minute"
+msgstr "хвилина"
+
+#: ../settings/xfpm-settings.c:563 ../settings/xfpm-settings.c:567
+#: ../src/xfpm-battery.c:453
+msgid "minutes"
+msgstr "хвилин"
+
+#: ../settings/xfpm-settings.c:565 ../settings/xfpm-settings.c:566
+#: ../settings/xfpm-settings.c:567 ../src/xfpm-battery.c:452
+msgid "hours"
+msgstr "годин"
+
+#: ../settings/xfpm-settings.c:579
+msgid "Seconds"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:746 ../settings/xfpm-settings.c:922
+#: ../settings/xfpm-settings.c:953 ../settings/xfpm-settings.c:1105
+#: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1218
+#: ../settings/xfpm-settings.c:1370
+msgid "Hibernate and suspend operations not permitted"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:756 ../settings/xfpm-settings.c:827
+msgid "Shutdown and hibernate operations not permitted"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:779 ../settings/xfpm-settings.c:1126
+msgid "Shutdown"
+msgstr "Вимкнути"
+
+#: ../settings/xfpm-settings.c:782 ../settings/xfpm-settings.c:1129
+#: ../settings/xfpm-settings.c:1184 ../settings/xfpm-settings.c:1239
+msgid "Ask"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:850 ../settings/xfpm-settings.c:974
+msgid "Lock screen"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:1058
 msgid "When battery is present"
 msgstr "Коли присутня батарея"
 
-#: ../settings/xfpm-settings.c:959
+#: ../settings/xfpm-settings.c:1061
 msgid "When battery is charging or discharging"
 msgstr "Коли батарея заряджається або розряджається"
 
-#: ../settings/xfpm-settings.c:974
+#: ../settings/xfpm-settings.c:1087
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1146
+#: ../settings/xfpm-settings.c:1290
 msgid "Suspend operation not permitted"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1152
+#: ../settings/xfpm-settings.c:1296
 #, fuzzy
 msgid "Hibernate operation not permitted"
 msgstr "Перевести систему в сплячку "
 
-#: ../settings/xfpm-settings.c:1199
+#: ../settings/xfpm-settings.c:1343
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1312 ../settings/xfpm-settings.c:1317
-#, fuzzy
-msgid "General"
-msgstr "Основні параметри"
-
-#: ../settings/xfpm-settings.c:1326 ../settings/xfpm-settings.c:1331
-#, fuzzy
-msgid "On AC"
-msgstr "Живлення від мережі"
-
-#: ../settings/xfpm-settings.c:1341 ../settings/xfpm-settings.c:1346
+#: ../settings/xfpm-settings.c:1485 ../settings/xfpm-settings.c:1490
 #, fuzzy
 msgid "On Battery"
 msgstr "Живлення від батареї"
 
-#: ../settings/xfpm-settings.c:1355 ../settings/xfpm-settings.c:1360
+#: ../settings/xfpm-settings.c:1499 ../settings/xfpm-settings.c:1504
 msgid "Extended"
 msgstr "Розширені"
 
-#: ../settings/xfpm-settings.c:1425
+#: ../settings/xfpm-settings.c:1569
 #, fuzzy
 msgid "Check your power manager installation"
 msgstr "Менеджер живлення Xfce не працює"
@@ -174,12 +319,6 @@ msgstr "ID сокета"
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Наберіть '%s --help' для використання."
-
-#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:187
-#: ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:347
-#: ../src/xfce4-power-manager.desktop.in.h:2
-msgid "Xfce Power Manager"
-msgstr "Менеджер живлення Xfce"
 
 #: ../settings/xfpm-settings-main.c:118
 msgid "Failed to load power manager configuration, using defaults"
@@ -255,7 +394,7 @@ msgstr ""
 
 #: ../src/xfpm-battery.c:238 ../src/xfpm-supply.c:340 ../src/xfpm-supply.c:363
 #: ../src/xfpm-tray-icon.c:119 ../src/xfpm-tray-icon.c:142
-#: ../src/xfpm-manager.c:226
+#: ../src/xfpm-manager.c:221
 msgid "Xfce power manager"
 msgstr "Менеджер живлення Xfce"
 
@@ -514,80 +653,80 @@ msgstr "Менеджер живлення Xfce"
 msgid "Quit"
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:297
+#: ../src/xfpm-tray-icon.c:296
 msgid "Clear inhibit"
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:297
+#: ../src/xfpm-tray-icon.c:296
 msgid "Inhibit"
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:299
+#: ../src/xfpm-tray-icon.c:298
 msgid ""
 "Disable or enable automatic sleep, setting this will tell the power manager "
 "to disable backlight sleep, for example you could active the inhibit if you "
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:387
+#: ../src/xfpm-tray-icon.c:386
 msgid "No data available"
 msgstr ""
 
-#: ../src/xfpm-engine.c:728 ../src/xfpm-engine.c:754 ../src/xfpm-engine.c:783
+#: ../src/xfpm-engine.c:753 ../src/xfpm-engine.c:779 ../src/xfpm-engine.c:808
 #, c-format
 msgid "Permission denied"
 msgstr ""
 
-#: ../src/xfpm-engine.c:761
+#: ../src/xfpm-engine.c:786
 #, fuzzy, c-format
 msgid "Hibernate not supported"
 msgstr "Перевести систему в сплячку "
 
-#: ../src/xfpm-engine.c:790
+#: ../src/xfpm-engine.c:815
 #, c-format
 msgid "Suspend not supported"
 msgstr ""
 
-#: ../src/xfpm-manager.c:226
+#: ../src/xfpm-manager.c:221
 #, fuzzy
 msgid "HAL daemon is not running"
 msgstr "Менеджер живлення Xfce не працює"
 
-#: ../src/xfpm-inhibit.c:329
+#: ../src/xfpm-inhibit.c:333
 #, fuzzy, c-format
 msgid "Invalid arguments"
 msgstr "Забагато параметрів"
 
-#: ../src/xfpm-inhibit.c:355
+#: ../src/xfpm-inhibit.c:359
 #, c-format
 msgid "Invalid cookie"
 msgstr ""
 
-#: ../src/xfpm-shutdown.c:336
+#: ../src/xfpm-shutdown.c:334
 msgid "No back-end for your operating system"
 msgstr "Немає підтримки для Вашої операційної системи"
 
-#: ../src/xfpm-shutdown.c:340
+#: ../src/xfpm-shutdown.c:338
 msgid "No hibernate script found"
 msgstr "Не знайдено скрипт для сплячки"
 
-#: ../src/xfpm-shutdown.c:344
+#: ../src/xfpm-shutdown.c:342
 msgid "No suspend script found"
 msgstr "Не знайдено скрипт для призупинення"
 
-#: ../src/xfpm-shutdown.c:348
+#: ../src/xfpm-shutdown.c:346
 msgid "No suspend method found"
 msgstr "Не знайдено метод призупинення"
 
-#: ../src/xfpm-shutdown.c:352
+#: ../src/xfpm-shutdown.c:350
 msgid "No hibernate method found"
 msgstr "Не знайдено метод сплячки"
 
-#: ../src/xfpm-shutdown.c:356
+#: ../src/xfpm-shutdown.c:354
 msgid "Out of memory"
 msgstr "Переповнення пам'яті"
 
-#: ../src/xfpm-shutdown.c:360
+#: ../src/xfpm-shutdown.c:358
 #, fuzzy
 msgid "System failed to sleep"
 msgstr "Не вдалось призупинити систему"
@@ -630,7 +769,7 @@ msgstr ""
 msgid "mAh"
 msgstr ""
 
-#: ../libxfpm/xfpm-common.c:188
+#: ../libxfpm/xfpm-common.c:154
 msgid "translator-credits"
 msgstr "Dmitry Nikitin <luckas_fb@mail.ru>"
 
@@ -649,69 +788,6 @@ msgstr "Не знайдено управління процесором"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr ""
-
-#, fuzzy
-#~ msgid "<b>Advanced Options</b>"
-#~ msgstr "Додаткові налаштування"
-
-#, fuzzy
-#~ msgid "<b>General Options</b>"
-#~ msgstr "Основні параметри"
-
-#, fuzzy
-#~ msgid "Advanced"
-#~ msgstr "Додаткові налаштування"
-
-#, fuzzy
-#~ msgid "Enable CPU frequency control"
-#~ msgstr "Дозволити управління частотою процесора"
-
-#~ msgid "Enable monitor power management control"
-#~ msgstr "Дозволити стеження за управлінням живленням"
-
-#, fuzzy
-#~ msgid "Enable notification"
-#~ msgstr "Дозволити повідомлення зарядки UPS"
-
-#, fuzzy
-#~ msgid "Monitor"
-#~ msgstr "Властивості стеження"
-
-#, fuzzy
-#~ msgid "On battery"
-#~ msgstr "Живлення від батареї"
-
-#, fuzzy
-#~ msgid "Power manager settings"
-#~ msgstr "Менеджер живлення"
-
-#, fuzzy
-#~ msgid "Standby"
-#~ msgstr "В режим очікування після"
-
-#, fuzzy
-#~ msgid "System tray icon: "
-#~ msgstr "Значок в системному лотку:"
-
-#, fuzzy
-#~ msgid "When battery power is critical:"
-#~ msgstr "Коли заряд батареї досягне критичного рівня зробити"
-
-#, fuzzy
-#~ msgid "When hibernate button is pressed:"
-#~ msgstr "Коли натиснуто кнопку живлення зробити"
-
-#, fuzzy
-#~ msgid "When laptop lid is closed:"
-#~ msgstr "Коли закрито кришку ноутбука"
-
-#, fuzzy
-#~ msgid "When power button is pressed:"
-#~ msgstr "Коли натиснуто кнопку живлення зробити"
-
-#, fuzzy
-#~ msgid "When sleep button is pressed:"
-#~ msgstr "Коли натиснуто кнопку заснути зробити"
 
 #, fuzzy
 #~ msgid "Xfce power manager is not running to releod it"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-20 18:36+0200\n"
+"POT-Creation-Date: 2009-07-03 21:53+0200\n"
 "PO-Revision-Date: 2009-05-20 15:00+0400\n"
 "Last-Translator: Denis Koryavov <dkoryavov@yandex.ru>\n"
 "Language-Team: Russian\n"
@@ -16,101 +16,238 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../settings/xfpm-settings.c:478 ../settings/xfpm-settings.c:493
-#: ../settings/xfpm-settings.c:520
+#: ../data/interfaces/xfpm-settings.ui.h:1
+msgid "<b>Actions</b>"
+msgstr "<b>Действия</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:2
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Дополнительные настройки</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
+msgid "<b>Brightness</b>"
+msgstr "<b>Яркость</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "<b>General Options</b>"
+msgstr "<b>Общие настройки</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "<b>Monitor</b>"
+msgstr "<b>Монитор</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "Actions"
+msgstr "Действия "
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "Advanced"
+msgstr "Дополнительно "
+
+#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:1055
+msgid "Always show icon"
+msgstr "Всегда отображать"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "Consider the computer on low power at:"
+msgstr "Считать заряд батареи низким при:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:10
+msgid "Enable CPU frequency control"
+msgstr "Включить управление частотой центрального процессора"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "Enable monitor power management control"
+msgstr "Включить управление питанием"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Enable notification"
+msgstr "Включить уведомления "
+
+#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:1456
+#: ../settings/xfpm-settings.c:1461
+msgid "General"
+msgstr "Общие "
+
+#. Hibernate menu option
+#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:775
+#: ../settings/xfpm-settings.c:846 ../settings/xfpm-settings.c:970
+#: ../settings/xfpm-settings.c:1122 ../settings/xfpm-settings.c:1180
+#: ../settings/xfpm-settings.c:1235 ../src/xfpm-tray-icon.c:174
+#: ../src/xfpm-tray-icon.c:266
+msgid "Hibernate"
+msgstr "Спящий режим "
+
+#: ../data/interfaces/xfpm-settings.ui.h:15
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Блокировать экран при переходе в спящий/ждущий режимы"
+
+#: ../data/interfaces/xfpm-settings.ui.h:16
+msgid "Monitor"
+msgstr "Монитор "
+
+#: ../data/interfaces/xfpm-settings.ui.h:17 ../settings/xfpm-settings.c:764
+#: ../settings/xfpm-settings.c:835 ../settings/xfpm-settings.c:959
+#: ../settings/xfpm-settings.c:1111 ../settings/xfpm-settings.c:1169
+#: ../settings/xfpm-settings.c:1224
+msgid "Nothing"
+msgstr "Ничего не делать"
+
+#: ../data/interfaces/xfpm-settings.ui.h:18 ../settings/xfpm-settings.c:1470
+#: ../settings/xfpm-settings.c:1475
+msgid "On AC"
+msgstr "От сети "
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
+msgid "On battery"
+msgstr "От батареи "
+
+#: ../data/interfaces/xfpm-settings.ui.h:20
+msgid "Power manager settings"
+msgstr "Настройки менеджера питания "
+
+#: ../data/interfaces/xfpm-settings.ui.h:21
+msgid "Prefer power savings over performance"
+msgstr "Использовать энергосберегающие функции"
+
+#: ../data/interfaces/xfpm-settings.ui.h:22
+msgid "Put display to sleep when computer is inactive for:"
+msgstr "Отключать питание экрана при отсутствии активности в течении:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:23
+msgid "Put the computer to sleep when inactive for:"
+msgstr ""
+"Перевести компьютер в спящий режим при отсутствии активности в течении:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Reduce screen brightness when computer is inactive for:"
+msgstr "Уменьшать яркость экрана при отсутствии активности в течении:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:25
+msgid "Set computer inactivity sleep mode:"
+msgstr "При отсутствии активности переходить в: "
+
+#: ../data/interfaces/xfpm-settings.ui.h:26
+msgid "Set monitor sleep mode:"
+msgstr "При активации энергосберегающих функций переводить монитор в: "
+
+#: ../data/interfaces/xfpm-settings.ui.h:27
+msgid "Standby"
+msgstr "Дежурный режим "
+
+#. Suspend menu option
+#: ../data/interfaces/xfpm-settings.ui.h:28 ../settings/xfpm-settings.c:769
+#: ../settings/xfpm-settings.c:840 ../settings/xfpm-settings.c:964
+#: ../settings/xfpm-settings.c:1116 ../settings/xfpm-settings.c:1174
+#: ../settings/xfpm-settings.c:1229 ../src/xfpm-tray-icon.c:205
+#: ../src/xfpm-tray-icon.c:281
+msgid "Suspend"
+msgstr "Ждущий режим "
+
+#: ../data/interfaces/xfpm-settings.ui.h:29
+msgid "Switch off display when computer is inactive for:"
+msgstr "Выключать экран при отсутствии активности в течении:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:30
+msgid "System tray icon: "
+msgstr "Отображать значок в системном лотке:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "When battery power is critical:"
+msgstr "При критическом уровне заряда батареи:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "When hibernate button is pressed:"
+msgstr "Когда нажата клавиша перехода в спящий режим:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid "When laptop lid is closed:"
+msgstr "При закрытии крышки ноутбука перейти в: "
+
+#: ../data/interfaces/xfpm-settings.ui.h:34
+msgid "When power button is pressed:"
+msgstr "Когда нажата клавиша включения/выключения питания:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:35
+msgid "When sleep button is pressed:"
+msgstr "Когда нажата клавиша перехода в спящий режим: "
+
+#: ../data/interfaces/xfpm-settings.ui.h:36
+#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:187
+#: ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:346
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Xfce Power Manager"
+msgstr "Менеджер питания Xfce "
+
+#: ../settings/xfpm-settings.c:535 ../settings/xfpm-settings.c:550
+#: ../settings/xfpm-settings.c:577
 msgid "Never"
 msgstr "Никогда "
 
-#: ../settings/xfpm-settings.c:481
+#: ../settings/xfpm-settings.c:538
 msgid "One minute"
 msgstr "Одной минуты "
 
-#: ../settings/xfpm-settings.c:483 ../settings/xfpm-settings.c:495
+#: ../settings/xfpm-settings.c:540 ../settings/xfpm-settings.c:552
 msgid "Minutes"
 msgstr "Минут "
 
-#: ../settings/xfpm-settings.c:497 ../settings/xfpm-settings.c:504
-#: ../settings/xfpm-settings.c:505 ../settings/xfpm-settings.c:506
+#: ../settings/xfpm-settings.c:554 ../settings/xfpm-settings.c:561
+#: ../settings/xfpm-settings.c:562 ../settings/xfpm-settings.c:563
 msgid "One hour"
 msgstr "Одного часа"
 
-#: ../settings/xfpm-settings.c:505 ../settings/xfpm-settings.c:509
+#: ../settings/xfpm-settings.c:562 ../settings/xfpm-settings.c:566
 msgid "one minute"
 msgstr "одна минута"
 
-#: ../settings/xfpm-settings.c:506 ../settings/xfpm-settings.c:510
+#: ../settings/xfpm-settings.c:563 ../settings/xfpm-settings.c:567
 #: ../src/xfpm-battery.c:453
 msgid "minutes"
 msgstr "минут "
 
-#: ../settings/xfpm-settings.c:508 ../settings/xfpm-settings.c:509
-#: ../settings/xfpm-settings.c:510 ../src/xfpm-battery.c:452
+#: ../settings/xfpm-settings.c:565 ../settings/xfpm-settings.c:566
+#: ../settings/xfpm-settings.c:567 ../src/xfpm-battery.c:452
 msgid "hours"
 msgstr "часов "
 
-#: ../settings/xfpm-settings.c:522
+#: ../settings/xfpm-settings.c:579
 msgid "Seconds"
 msgstr "Секунд "
 
-#: ../settings/xfpm-settings.c:671 ../settings/xfpm-settings.c:832
-#: ../settings/xfpm-settings.c:863 ../settings/xfpm-settings.c:992
-#: ../settings/xfpm-settings.c:1040 ../settings/xfpm-settings.c:1085
-#: ../settings/xfpm-settings.c:1226
+#: ../settings/xfpm-settings.c:746 ../settings/xfpm-settings.c:922
+#: ../settings/xfpm-settings.c:953 ../settings/xfpm-settings.c:1105
+#: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1218
+#: ../settings/xfpm-settings.c:1370
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Спящий и ждущий режимы не поддерживаются "
 
-#: ../settings/xfpm-settings.c:681 ../settings/xfpm-settings.c:751
+#: ../settings/xfpm-settings.c:756 ../settings/xfpm-settings.c:827
 msgid "Shutdown and hibernate operations not permitted"
 msgstr "Операции выключения и спящего режима не поддерживаются "
 
-#: ../settings/xfpm-settings.c:689 ../settings/xfpm-settings.c:759
-#: ../settings/xfpm-settings.c:869 ../settings/xfpm-settings.c:998
-#: ../settings/xfpm-settings.c:1046 ../settings/xfpm-settings.c:1091
-msgid "Nothing"
-msgstr "Ничего не делать"
-
-#. Suspend menu option
-#: ../settings/xfpm-settings.c:694 ../settings/xfpm-settings.c:764
-#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1003
-#: ../settings/xfpm-settings.c:1051 ../settings/xfpm-settings.c:1096
-#: ../src/xfpm-tray-icon.c:205 ../src/xfpm-tray-icon.c:282
-msgid "Suspend"
-msgstr "Ждущий режим "
-
-#. Hibernate menu option
-#: ../settings/xfpm-settings.c:700 ../settings/xfpm-settings.c:770
-#: ../settings/xfpm-settings.c:880 ../settings/xfpm-settings.c:1009
-#: ../settings/xfpm-settings.c:1057 ../settings/xfpm-settings.c:1102
-#: ../src/xfpm-tray-icon.c:174 ../src/xfpm-tray-icon.c:267
-msgid "Hibernate"
-msgstr "Спящий режим "
-
-#: ../settings/xfpm-settings.c:704 ../settings/xfpm-settings.c:1013
+#: ../settings/xfpm-settings.c:779 ../settings/xfpm-settings.c:1126
 msgid "Shutdown"
 msgstr "Выключить компьютер"
 
-#: ../settings/xfpm-settings.c:707 ../settings/xfpm-settings.c:1016
-#: ../settings/xfpm-settings.c:1061 ../settings/xfpm-settings.c:1106
+#: ../settings/xfpm-settings.c:782 ../settings/xfpm-settings.c:1129
+#: ../settings/xfpm-settings.c:1184 ../settings/xfpm-settings.c:1239
 msgid "Ask"
 msgstr "Спрашивать "
 
-#: ../settings/xfpm-settings.c:774 ../settings/xfpm-settings.c:884
+#: ../settings/xfpm-settings.c:850 ../settings/xfpm-settings.c:974
 msgid "Lock screen"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:953
-msgid "Always show icon"
-msgstr "Всегда отображать"
-
-#: ../settings/xfpm-settings.c:956
+#: ../settings/xfpm-settings.c:1058
 msgid "When battery is present"
 msgstr "Когда присутствует батарея "
 
-#: ../settings/xfpm-settings.c:959
+#: ../settings/xfpm-settings.c:1061
 msgid "When battery is charging or discharging"
 msgstr "Когда батарея разряжается или заряжается "
 
-#: ../settings/xfpm-settings.c:974
+#: ../settings/xfpm-settings.c:1087
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
@@ -118,35 +255,27 @@ msgstr ""
 "Выключить автоматическое управление питанием монитора (DPMS), в этом случае, "
 "ваш монитор будет работать постоянно. "
 
-#: ../settings/xfpm-settings.c:1146
+#: ../settings/xfpm-settings.c:1290
 msgid "Suspend operation not permitted"
 msgstr "Операция перехода в ждущий режим запрещена "
 
-#: ../settings/xfpm-settings.c:1152
+#: ../settings/xfpm-settings.c:1296
 msgid "Hibernate operation not permitted"
 msgstr "Операция перехода в спящий режим запрещена "
 
-#: ../settings/xfpm-settings.c:1199
+#: ../settings/xfpm-settings.c:1343
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Когда заряд всех источников питания компьютера близок к заданному "
 
-#: ../settings/xfpm-settings.c:1312 ../settings/xfpm-settings.c:1317
-msgid "General"
-msgstr "Общие "
-
-#: ../settings/xfpm-settings.c:1326 ../settings/xfpm-settings.c:1331
-msgid "On AC"
-msgstr "От сети "
-
-#: ../settings/xfpm-settings.c:1341 ../settings/xfpm-settings.c:1346
+#: ../settings/xfpm-settings.c:1485 ../settings/xfpm-settings.c:1490
 msgid "On Battery"
 msgstr "От батареи "
 
-#: ../settings/xfpm-settings.c:1355 ../settings/xfpm-settings.c:1360
+#: ../settings/xfpm-settings.c:1499 ../settings/xfpm-settings.c:1504
 msgid "Extended"
 msgstr "Расширенные"
 
-#: ../settings/xfpm-settings.c:1425
+#: ../settings/xfpm-settings.c:1569
 #, fuzzy
 msgid "Check your power manager installation"
 msgstr "Другой менеджер питания уже запущен "
@@ -164,12 +293,6 @@ msgstr "ID сокета "
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Наберите '%s --help' для просмотра справки."
-
-#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:187
-#: ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:347
-#: ../src/xfce4-power-manager.desktop.in.h:2
-msgid "Xfce Power Manager"
-msgstr "Менеджер питания Xfce "
 
 #: ../settings/xfpm-settings-main.c:118
 msgid "Failed to load power manager configuration, using defaults"
@@ -239,7 +362,7 @@ msgstr "Система работает от батареи c низким за�
 
 #: ../src/xfpm-battery.c:238 ../src/xfpm-supply.c:340 ../src/xfpm-supply.c:363
 #: ../src/xfpm-tray-icon.c:119 ../src/xfpm-tray-icon.c:142
-#: ../src/xfpm-manager.c:226
+#: ../src/xfpm-manager.c:221
 msgid "Xfce power manager"
 msgstr "Менеджер питания Xfce "
 
@@ -482,15 +605,15 @@ msgstr "Выключить менеджер питания Xfce?"
 msgid "Quit"
 msgstr "Выключить"
 
-#: ../src/xfpm-tray-icon.c:297
+#: ../src/xfpm-tray-icon.c:296
 msgid "Clear inhibit"
 msgstr "Отменить сдерживание"
 
-#: ../src/xfpm-tray-icon.c:297
+#: ../src/xfpm-tray-icon.c:296
 msgid "Inhibit"
 msgstr "Сдерживать"
 
-#: ../src/xfpm-tray-icon.c:299
+#: ../src/xfpm-tray-icon.c:298
 msgid ""
 "Disable or enable automatic sleep, setting this will tell the power manager "
 "to disable backlight sleep, for example you could active the inhibit if you "
@@ -500,64 +623,64 @@ msgstr ""
 "энергопотреблением. Подобное действие вам может понадобиться, например, при "
 "просмотре фильма. "
 
-#: ../src/xfpm-tray-icon.c:387
+#: ../src/xfpm-tray-icon.c:386
 msgid "No data available"
 msgstr "Данные отсутствуют "
 
-#: ../src/xfpm-engine.c:728 ../src/xfpm-engine.c:754 ../src/xfpm-engine.c:783
+#: ../src/xfpm-engine.c:753 ../src/xfpm-engine.c:779 ../src/xfpm-engine.c:808
 #, c-format
 msgid "Permission denied"
 msgstr "Доступ запрещен "
 
-#: ../src/xfpm-engine.c:761
+#: ../src/xfpm-engine.c:786
 #, c-format
 msgid "Hibernate not supported"
 msgstr "Спящий режим не поддерживается  "
 
-#: ../src/xfpm-engine.c:790
+#: ../src/xfpm-engine.c:815
 #, c-format
 msgid "Suspend not supported"
 msgstr "Ждущий режим не поддерживается "
 
-#: ../src/xfpm-manager.c:226
+#: ../src/xfpm-manager.c:221
 msgid "HAL daemon is not running"
 msgstr "Системная служба HAL не запущена"
 
-#: ../src/xfpm-inhibit.c:329
+#: ../src/xfpm-inhibit.c:333
 #, c-format
 msgid "Invalid arguments"
 msgstr "Неверные аргументы"
 
-#: ../src/xfpm-inhibit.c:355
+#: ../src/xfpm-inhibit.c:359
 #, c-format
 msgid "Invalid cookie"
 msgstr "Неверные данные "
 
-#: ../src/xfpm-shutdown.c:336
+#: ../src/xfpm-shutdown.c:334
 msgid "No back-end for your operating system"
 msgstr "Отсутствует графический интерфейс для вашей операционной системы "
 
-#: ../src/xfpm-shutdown.c:340
+#: ../src/xfpm-shutdown.c:338
 msgid "No hibernate script found"
 msgstr "Не найдено программ для перевода систему в спящий режим "
 
-#: ../src/xfpm-shutdown.c:344
+#: ../src/xfpm-shutdown.c:342
 msgid "No suspend script found"
 msgstr "Не найдено программ для перевода систему в ждущий режим "
 
-#: ../src/xfpm-shutdown.c:348
+#: ../src/xfpm-shutdown.c:346
 msgid "No suspend method found"
 msgstr "Не найдено методов перевода системы в ждущий режим "
 
-#: ../src/xfpm-shutdown.c:352
+#: ../src/xfpm-shutdown.c:350
 msgid "No hibernate method found"
 msgstr "Не найдено методов перевода системы в спящий режим "
 
-#: ../src/xfpm-shutdown.c:356
+#: ../src/xfpm-shutdown.c:354
 msgid "Out of memory"
 msgstr "Выход за границы памяти "
 
-#: ../src/xfpm-shutdown.c:360
+#: ../src/xfpm-shutdown.c:358
 msgid "System failed to sleep"
 msgstr "Не удалось перевести систему в ждущий режим "
 
@@ -599,7 +722,7 @@ msgstr "мВч "
 msgid "mAh"
 msgstr "мАч "
 
-#: ../libxfpm/xfpm-common.c:188
+#: ../libxfpm/xfpm-common.c:154
 msgid "translator-credits"
 msgstr "Denis Koryavov <dkoryavov@yandex.ru> "
 
@@ -616,91 +739,3 @@ msgstr "Устройства не найдены "
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Управление яркостью экрана"
-
-#~ msgid "<b>Actions</b>"
-#~ msgstr "<b>Действия</b>"
-
-#~ msgid "<b>Advanced Options</b>"
-#~ msgstr "<b>Дополнительные настройки</b>"
-
-#~ msgid "<b>Brightness</b>"
-#~ msgstr "<b>Яркость</b>"
-
-#~ msgid "<b>General Options</b>"
-#~ msgstr "<b>Общие настройки</b>"
-
-#~ msgid "<b>Monitor</b>"
-#~ msgstr "<b>Монитор</b>"
-
-#~ msgid "Actions"
-#~ msgstr "Действия "
-
-#~ msgid "Advanced"
-#~ msgstr "Дополнительно "
-
-#~ msgid "Consider the computer on low power at:"
-#~ msgstr "Считать заряд батареи низким при:"
-
-#~ msgid "Enable CPU frequency control"
-#~ msgstr "Включить управление частотой центрального процессора"
-
-#~ msgid "Enable monitor power management control"
-#~ msgstr "Включить управление питанием"
-
-#~ msgid "Enable notification"
-#~ msgstr "Включить уведомления "
-
-#~ msgid "Lock screen when going for suspend/hibernate"
-#~ msgstr "Блокировать экран при переходе в спящий/ждущий режимы"
-
-#~ msgid "Monitor"
-#~ msgstr "Монитор "
-
-#~ msgid "On battery"
-#~ msgstr "От батареи "
-
-#~ msgid "Power manager settings"
-#~ msgstr "Настройки менеджера питания "
-
-#~ msgid "Prefer power savings over performance"
-#~ msgstr "Использовать энергосберегающие функции"
-
-#~ msgid "Put display to sleep when computer is inactive for:"
-#~ msgstr "Отключать питание экрана при отсутствии активности в течении:"
-
-#~ msgid "Put the computer to sleep when inactive for:"
-#~ msgstr ""
-#~ "Перевести компьютер в спящий режим при отсутствии активности в течении:"
-
-#~ msgid "Reduce screen brightness when computer is inactive for:"
-#~ msgstr "Уменьшать яркость экрана при отсутствии активности в течении:"
-
-#~ msgid "Set computer inactivity sleep mode:"
-#~ msgstr "При отсутствии активности переходить в: "
-
-#~ msgid "Set monitor sleep mode:"
-#~ msgstr "При активации энергосберегающих функций переводить монитор в: "
-
-#~ msgid "Standby"
-#~ msgstr "Дежурный режим "
-
-#~ msgid "Switch off display when computer is inactive for:"
-#~ msgstr "Выключать экран при отсутствии активности в течении:"
-
-#~ msgid "System tray icon: "
-#~ msgstr "Отображать значок в системном лотке:"
-
-#~ msgid "When battery power is critical:"
-#~ msgstr "При критическом уровне заряда батареи:"
-
-#~ msgid "When hibernate button is pressed:"
-#~ msgstr "Когда нажата клавиша перехода в спящий режим:"
-
-#~ msgid "When laptop lid is closed:"
-#~ msgstr "При закрытии крышки ноутбука перейти в: "
-
-#~ msgid "When power button is pressed:"
-#~ msgstr "Когда нажата клавиша включения/выключения питания:"
-
-#~ msgid "When sleep button is pressed:"
-#~ msgstr "Когда нажата клавиша перехода в спящий режим: "

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-20 18:36+0200\n"
+"POT-Creation-Date: 2009-07-03 21:53+0200\n"
 "PO-Revision-Date: 2009-04-05 13:03+0200\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German\n"
@@ -18,140 +18,274 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../settings/xfpm-settings.c:478 ../settings/xfpm-settings.c:493
-#: ../settings/xfpm-settings.c:520
+#: ../data/interfaces/xfpm-settings.ui.h:1
+msgid "<b>Actions</b>"
+msgstr "<b>Aktionen</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:2
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Erweiterte Einstellungen</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
+msgid "<b>Brightness</b>"
+msgstr "<b>Helligkeit</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "<b>General Options</b>"
+msgstr "<b>Allgemeine Einstellungen</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "<b>Monitor</b>"
+msgstr "<b>Monitor</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+#, fuzzy
+msgid "Actions"
+msgstr "<b>Aktionen</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "Advanced"
+msgstr "Erweitert"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:1055
+msgid "Always show icon"
+msgstr "Immer ein Symbol zeigen"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "Consider the computer on low power at:"
+msgstr "Energiezustand als niedrig betrachten bei:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:10
+#, fuzzy
+msgid "Enable CPU frequency control"
+msgstr "Skalierung der CPU-Geschwindigkeit aktivieren"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "Enable monitor power management control"
+msgstr "Energieverwaltung für Monitor aktivieren"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Enable notification"
+msgstr "Benachrichtigung aktivieren"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:1456
+#: ../settings/xfpm-settings.c:1461
+msgid "General"
+msgstr "Allgemein"
+
+#. Hibernate menu option
+#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:775
+#: ../settings/xfpm-settings.c:846 ../settings/xfpm-settings.c:970
+#: ../settings/xfpm-settings.c:1122 ../settings/xfpm-settings.c:1180
+#: ../settings/xfpm-settings.c:1235 ../src/xfpm-tray-icon.c:174
+#: ../src/xfpm-tray-icon.c:266
+msgid "Hibernate"
+msgstr "Ruhezustand"
+
+#: ../data/interfaces/xfpm-settings.ui.h:15
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Bildschirm sperren im Ruhezustand/Standby"
+
+#: ../data/interfaces/xfpm-settings.ui.h:16
+#, fuzzy
+msgid "Monitor"
+msgstr "<b>Monitor</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:17 ../settings/xfpm-settings.c:764
+#: ../settings/xfpm-settings.c:835 ../settings/xfpm-settings.c:959
+#: ../settings/xfpm-settings.c:1111 ../settings/xfpm-settings.c:1169
+#: ../settings/xfpm-settings.c:1224
+msgid "Nothing"
+msgstr "Nichts"
+
+#: ../data/interfaces/xfpm-settings.ui.h:18 ../settings/xfpm-settings.c:1470
+#: ../settings/xfpm-settings.c:1475
+msgid "On AC"
+msgstr "Bei Netzversorgung"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
+msgid "On battery"
+msgstr "Im Batteriebetrieb"
+
+#: ../data/interfaces/xfpm-settings.ui.h:20
+msgid "Power manager settings"
+msgstr "Einstellungen der Energieverwaltung"
+
+#: ../data/interfaces/xfpm-settings.ui.h:21
+msgid "Prefer power savings over performance"
+msgstr "Stromsparen gegenüber Leistung bevorzugen"
+
+#: ../data/interfaces/xfpm-settings.ui.h:22
+msgid "Put display to sleep when computer is inactive for:"
+msgstr "Anzeige schlafen legen, wenn der Computer inaktiv ist für:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:23
+#, fuzzy
+msgid "Put the computer to sleep when inactive for:"
+msgstr "Anzeige schlafen legen, wenn der Computer inaktiv ist für:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Reduce screen brightness when computer is inactive for:"
+msgstr "Bildschirmhelligkeit reduzieren, wenn der Computer inaktiv ist für:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:25
+#, fuzzy
+msgid "Set computer inactivity sleep mode:"
+msgstr "Schlafmodus für den Monitor einstellen:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:26
+msgid "Set monitor sleep mode:"
+msgstr "Schlafmodus für den Monitor einstellen:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:27
+msgid "Standby"
+msgstr "Bereitschaft"
+
+#. Suspend menu option
+#: ../data/interfaces/xfpm-settings.ui.h:28 ../settings/xfpm-settings.c:769
+#: ../settings/xfpm-settings.c:840 ../settings/xfpm-settings.c:964
+#: ../settings/xfpm-settings.c:1116 ../settings/xfpm-settings.c:1174
+#: ../settings/xfpm-settings.c:1229 ../src/xfpm-tray-icon.c:205
+#: ../src/xfpm-tray-icon.c:281
+msgid "Suspend"
+msgstr "Standby"
+
+#: ../data/interfaces/xfpm-settings.ui.h:29
+msgid "Switch off display when computer is inactive for:"
+msgstr "Anzeige abschalten, wenn der Computer inaktiv ist für:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:30
+msgid "System tray icon: "
+msgstr "Symbol in der Systemleiste: "
+
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "When battery power is critical:"
+msgstr "Bei kritischem Ladezustand der Batterie:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+#, fuzzy
+msgid "When hibernate button is pressed:"
+msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid "When laptop lid is closed:"
+msgstr "Beim Schließen der Bildschirmklappe:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:34
+msgid "When power button is pressed:"
+msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:35
+msgid "When sleep button is pressed:"
+msgstr "Bei Betätigung der Taste für den Schlafmodus:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:36
+#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:187
+#: ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:346
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Xfce Power Manager"
+msgstr "Energieverwaltung für Xfce"
+
+#: ../settings/xfpm-settings.c:535 ../settings/xfpm-settings.c:550
+#: ../settings/xfpm-settings.c:577
 msgid "Never"
 msgstr "Nie"
 
-#: ../settings/xfpm-settings.c:481
+#: ../settings/xfpm-settings.c:538
 msgid "One minute"
 msgstr "Eine Minute"
 
-#: ../settings/xfpm-settings.c:483 ../settings/xfpm-settings.c:495
+#: ../settings/xfpm-settings.c:540 ../settings/xfpm-settings.c:552
 msgid "Minutes"
 msgstr "Minuten"
 
-#: ../settings/xfpm-settings.c:497 ../settings/xfpm-settings.c:504
-#: ../settings/xfpm-settings.c:505 ../settings/xfpm-settings.c:506
+#: ../settings/xfpm-settings.c:554 ../settings/xfpm-settings.c:561
+#: ../settings/xfpm-settings.c:562 ../settings/xfpm-settings.c:563
 #, fuzzy
 msgid "One hour"
 msgstr "Stunde"
 
-#: ../settings/xfpm-settings.c:505 ../settings/xfpm-settings.c:509
+#: ../settings/xfpm-settings.c:562 ../settings/xfpm-settings.c:566
 #, fuzzy
 msgid "one minute"
 msgstr "Eine Minute"
 
-#: ../settings/xfpm-settings.c:506 ../settings/xfpm-settings.c:510
+#: ../settings/xfpm-settings.c:563 ../settings/xfpm-settings.c:567
 #: ../src/xfpm-battery.c:453
 msgid "minutes"
 msgstr "Minuten"
 
-#: ../settings/xfpm-settings.c:508 ../settings/xfpm-settings.c:509
-#: ../settings/xfpm-settings.c:510 ../src/xfpm-battery.c:452
+#: ../settings/xfpm-settings.c:565 ../settings/xfpm-settings.c:566
+#: ../settings/xfpm-settings.c:567 ../src/xfpm-battery.c:452
 msgid "hours"
 msgstr "Stunden"
 
-#: ../settings/xfpm-settings.c:522
+#: ../settings/xfpm-settings.c:579
 msgid "Seconds"
 msgstr "Sekunden"
 
-#: ../settings/xfpm-settings.c:671 ../settings/xfpm-settings.c:832
-#: ../settings/xfpm-settings.c:863 ../settings/xfpm-settings.c:992
-#: ../settings/xfpm-settings.c:1040 ../settings/xfpm-settings.c:1085
-#: ../settings/xfpm-settings.c:1226
+#: ../settings/xfpm-settings.c:746 ../settings/xfpm-settings.c:922
+#: ../settings/xfpm-settings.c:953 ../settings/xfpm-settings.c:1105
+#: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1218
+#: ../settings/xfpm-settings.c:1370
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Die Operationen für den Ruhezustand und Standby sind nicht erlaubt"
 
-#: ../settings/xfpm-settings.c:681 ../settings/xfpm-settings.c:751
+#: ../settings/xfpm-settings.c:756 ../settings/xfpm-settings.c:827
 msgid "Shutdown and hibernate operations not permitted"
 msgstr ""
 "Die Operationen zum Herunterfahren und für den Ruhezustand sind nicht erlaubt"
 
-#: ../settings/xfpm-settings.c:689 ../settings/xfpm-settings.c:759
-#: ../settings/xfpm-settings.c:869 ../settings/xfpm-settings.c:998
-#: ../settings/xfpm-settings.c:1046 ../settings/xfpm-settings.c:1091
-msgid "Nothing"
-msgstr "Nichts"
-
-#. Suspend menu option
-#: ../settings/xfpm-settings.c:694 ../settings/xfpm-settings.c:764
-#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1003
-#: ../settings/xfpm-settings.c:1051 ../settings/xfpm-settings.c:1096
-#: ../src/xfpm-tray-icon.c:205 ../src/xfpm-tray-icon.c:282
-msgid "Suspend"
-msgstr "Standby"
-
-#. Hibernate menu option
-#: ../settings/xfpm-settings.c:700 ../settings/xfpm-settings.c:770
-#: ../settings/xfpm-settings.c:880 ../settings/xfpm-settings.c:1009
-#: ../settings/xfpm-settings.c:1057 ../settings/xfpm-settings.c:1102
-#: ../src/xfpm-tray-icon.c:174 ../src/xfpm-tray-icon.c:267
-msgid "Hibernate"
-msgstr "Ruhezustand"
-
-#: ../settings/xfpm-settings.c:704 ../settings/xfpm-settings.c:1013
+#: ../settings/xfpm-settings.c:779 ../settings/xfpm-settings.c:1126
 msgid "Shutdown"
 msgstr "Herunterfahren"
 
-#: ../settings/xfpm-settings.c:707 ../settings/xfpm-settings.c:1016
-#: ../settings/xfpm-settings.c:1061 ../settings/xfpm-settings.c:1106
+#: ../settings/xfpm-settings.c:782 ../settings/xfpm-settings.c:1129
+#: ../settings/xfpm-settings.c:1184 ../settings/xfpm-settings.c:1239
 msgid "Ask"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:774 ../settings/xfpm-settings.c:884
+#: ../settings/xfpm-settings.c:850 ../settings/xfpm-settings.c:974
 msgid "Lock screen"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:953
-msgid "Always show icon"
-msgstr "Immer ein Symbol zeigen"
-
-#: ../settings/xfpm-settings.c:956
+#: ../settings/xfpm-settings.c:1058
 msgid "When battery is present"
 msgstr "Bei Batterieversorgung"
 
-#: ../settings/xfpm-settings.c:959
+#: ../settings/xfpm-settings.c:1061
 msgid "When battery is charging or discharging"
 msgstr "Beim Laden oder Entladen der Batterie"
 
-#: ../settings/xfpm-settings.c:974
+#: ../settings/xfpm-settings.c:1087
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1146
+#: ../settings/xfpm-settings.c:1290
 #, fuzzy
 msgid "Suspend operation not permitted"
 msgstr "Die Operationen für den Ruhezustand und Standby sind nicht erlaubt"
 
-#: ../settings/xfpm-settings.c:1152
+#: ../settings/xfpm-settings.c:1296
 #, fuzzy
 msgid "Hibernate operation not permitted"
 msgstr "Die Operationen für den Ruhezustand und Standby sind nicht erlaubt"
 
-#: ../settings/xfpm-settings.c:1199
+#: ../settings/xfpm-settings.c:1343
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Wenn alle Stromquellen des Computers diesen Level erreichen"
 
-#: ../settings/xfpm-settings.c:1312 ../settings/xfpm-settings.c:1317
-msgid "General"
-msgstr "Allgemein"
-
-#: ../settings/xfpm-settings.c:1326 ../settings/xfpm-settings.c:1331
-msgid "On AC"
-msgstr "Bei Netzversorgung"
-
-#: ../settings/xfpm-settings.c:1341 ../settings/xfpm-settings.c:1346
+#: ../settings/xfpm-settings.c:1485 ../settings/xfpm-settings.c:1490
 msgid "On Battery"
 msgstr "Im Batteriebetrieb"
 
-#: ../settings/xfpm-settings.c:1355 ../settings/xfpm-settings.c:1360
+#: ../settings/xfpm-settings.c:1499 ../settings/xfpm-settings.c:1504
 msgid "Extended"
 msgstr "Erweitert"
 
-#: ../settings/xfpm-settings.c:1425
+#: ../settings/xfpm-settings.c:1569
 #, fuzzy
 msgid "Check your power manager installation"
 msgstr "Energieverwaltung läuft nicht"
@@ -170,12 +304,6 @@ msgstr "SOCKET-NR"
 msgid "Type '%s --help' for usage."
 msgstr ""
 "Geben Sie »%s --help« ein, um Informationen über die Verwendung zu erhalten"
-
-#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:187
-#: ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:347
-#: ../src/xfce4-power-manager.desktop.in.h:2
-msgid "Xfce Power Manager"
-msgstr "Energieverwaltung für Xfce"
 
 #: ../settings/xfpm-settings-main.c:118
 msgid "Failed to load power manager configuration, using defaults"
@@ -248,7 +376,7 @@ msgstr "Das System befindet sich in einem niedrigen Energiezustand"
 
 #: ../src/xfpm-battery.c:238 ../src/xfpm-supply.c:340 ../src/xfpm-supply.c:363
 #: ../src/xfpm-tray-icon.c:119 ../src/xfpm-tray-icon.c:142
-#: ../src/xfpm-manager.c:226
+#: ../src/xfpm-manager.c:221
 msgid "Xfce power manager"
 msgstr "Energieverwaltung für Xfce"
 
@@ -494,80 +622,80 @@ msgstr "Energieverwaltung für Xfce beenden"
 msgid "Quit"
 msgstr "Beenden"
 
-#: ../src/xfpm-tray-icon.c:297
+#: ../src/xfpm-tray-icon.c:296
 msgid "Clear inhibit"
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:297
+#: ../src/xfpm-tray-icon.c:296
 #, fuzzy
 msgid "Inhibit"
 msgstr "Verhinderungs-Plugin"
 
-#: ../src/xfpm-tray-icon.c:299
+#: ../src/xfpm-tray-icon.c:298
 msgid ""
 "Disable or enable automatic sleep, setting this will tell the power manager "
 "to disable backlight sleep, for example you could active the inhibit if you "
 "are watching a movie."
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:387
+#: ../src/xfpm-tray-icon.c:386
 msgid "No data available"
 msgstr ""
 
-#: ../src/xfpm-engine.c:728 ../src/xfpm-engine.c:754 ../src/xfpm-engine.c:783
+#: ../src/xfpm-engine.c:753 ../src/xfpm-engine.c:779 ../src/xfpm-engine.c:808
 #, c-format
 msgid "Permission denied"
 msgstr "Erlaubnis verweigert"
 
-#: ../src/xfpm-engine.c:761
+#: ../src/xfpm-engine.c:786
 #, c-format
 msgid "Hibernate not supported"
 msgstr "Ruhezustand wird nicht unterstützt"
 
-#: ../src/xfpm-engine.c:790
+#: ../src/xfpm-engine.c:815
 #, c-format
 msgid "Suspend not supported"
 msgstr "Standbymodus wird nicht unterstützt"
 
-#: ../src/xfpm-manager.c:226
+#: ../src/xfpm-manager.c:221
 msgid "HAL daemon is not running"
 msgstr "Der HAL-Dienst läuft nicht"
 
-#: ../src/xfpm-inhibit.c:329
+#: ../src/xfpm-inhibit.c:333
 #, c-format
 msgid "Invalid arguments"
 msgstr "Ungültige Argumente"
 
-#: ../src/xfpm-inhibit.c:355
+#: ../src/xfpm-inhibit.c:359
 #, c-format
 msgid "Invalid cookie"
 msgstr "Ungültiges Cookie"
 
-#: ../src/xfpm-shutdown.c:336
+#: ../src/xfpm-shutdown.c:334
 msgid "No back-end for your operating system"
 msgstr "Keine Unterstützung für Ihr Betriebssystem gefunden"
 
-#: ../src/xfpm-shutdown.c:340
+#: ../src/xfpm-shutdown.c:338
 msgid "No hibernate script found"
 msgstr "Kein Skript für den Ruhezustand gefunden"
 
-#: ../src/xfpm-shutdown.c:344
+#: ../src/xfpm-shutdown.c:342
 msgid "No suspend script found"
 msgstr "Kein Skript für Standby gefunden"
 
-#: ../src/xfpm-shutdown.c:348
+#: ../src/xfpm-shutdown.c:346
 msgid "No suspend method found"
 msgstr "Keine Methode für Standby gefunden"
 
-#: ../src/xfpm-shutdown.c:352
+#: ../src/xfpm-shutdown.c:350
 msgid "No hibernate method found"
 msgstr "Keine Methode für den Ruhezustand gefunden"
 
-#: ../src/xfpm-shutdown.c:356
+#: ../src/xfpm-shutdown.c:354
 msgid "Out of memory"
 msgstr "Kein Speicher verfügbar"
 
-#: ../src/xfpm-shutdown.c:360
+#: ../src/xfpm-shutdown.c:358
 msgid "System failed to sleep"
 msgstr "System konnte nicht in den Schlafmodus versetzt werden"
 
@@ -609,7 +737,7 @@ msgstr "mWh"
 msgid "mAh"
 msgstr "mAh"
 
-#: ../libxfpm/xfpm-common.c:188
+#: ../libxfpm/xfpm-common.c:154
 msgid "translator-credits"
 msgstr ""
 "Fabian Nowak <timystery@arcor.de>\n"
@@ -629,99 +757,6 @@ msgstr "Kein Gerät gefunden"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Plugin zur Helligkeitsregelung"
-
-#~ msgid "<b>Actions</b>"
-#~ msgstr "<b>Aktionen</b>"
-
-#~ msgid "<b>Advanced Options</b>"
-#~ msgstr "<b>Erweiterte Einstellungen</b>"
-
-#~ msgid "<b>Brightness</b>"
-#~ msgstr "<b>Helligkeit</b>"
-
-#~ msgid "<b>General Options</b>"
-#~ msgstr "<b>Allgemeine Einstellungen</b>"
-
-#~ msgid "<b>Monitor</b>"
-#~ msgstr "<b>Monitor</b>"
-
-#, fuzzy
-#~ msgid "Actions"
-#~ msgstr "<b>Aktionen</b>"
-
-#~ msgid "Advanced"
-#~ msgstr "Erweitert"
-
-#~ msgid "Consider the computer on low power at:"
-#~ msgstr "Energiezustand als niedrig betrachten bei:"
-
-#, fuzzy
-#~ msgid "Enable CPU frequency control"
-#~ msgstr "Skalierung der CPU-Geschwindigkeit aktivieren"
-
-#~ msgid "Enable monitor power management control"
-#~ msgstr "Energieverwaltung für Monitor aktivieren"
-
-#~ msgid "Enable notification"
-#~ msgstr "Benachrichtigung aktivieren"
-
-#~ msgid "Lock screen when going for suspend/hibernate"
-#~ msgstr "Bildschirm sperren im Ruhezustand/Standby"
-
-#, fuzzy
-#~ msgid "Monitor"
-#~ msgstr "<b>Monitor</b>"
-
-#~ msgid "On battery"
-#~ msgstr "Im Batteriebetrieb"
-
-#~ msgid "Power manager settings"
-#~ msgstr "Einstellungen der Energieverwaltung"
-
-#~ msgid "Prefer power savings over performance"
-#~ msgstr "Stromsparen gegenüber Leistung bevorzugen"
-
-#~ msgid "Put display to sleep when computer is inactive for:"
-#~ msgstr "Anzeige schlafen legen, wenn der Computer inaktiv ist für:"
-
-#, fuzzy
-#~ msgid "Put the computer to sleep when inactive for:"
-#~ msgstr "Anzeige schlafen legen, wenn der Computer inaktiv ist für:"
-
-#~ msgid "Reduce screen brightness when computer is inactive for:"
-#~ msgstr "Bildschirmhelligkeit reduzieren, wenn der Computer inaktiv ist für:"
-
-#, fuzzy
-#~ msgid "Set computer inactivity sleep mode:"
-#~ msgstr "Schlafmodus für den Monitor einstellen:"
-
-#~ msgid "Set monitor sleep mode:"
-#~ msgstr "Schlafmodus für den Monitor einstellen:"
-
-#~ msgid "Standby"
-#~ msgstr "Bereitschaft"
-
-#~ msgid "Switch off display when computer is inactive for:"
-#~ msgstr "Anzeige abschalten, wenn der Computer inaktiv ist für:"
-
-#~ msgid "System tray icon: "
-#~ msgstr "Symbol in der Systemleiste: "
-
-#~ msgid "When battery power is critical:"
-#~ msgstr "Bei kritischem Ladezustand der Batterie:"
-
-#, fuzzy
-#~ msgid "When hibernate button is pressed:"
-#~ msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
-
-#~ msgid "When laptop lid is closed:"
-#~ msgstr "Beim Schließen der Bildschirmklappe:"
-
-#~ msgid "When power button is pressed:"
-#~ msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
-
-#~ msgid "When sleep button is pressed:"
-#~ msgstr "Bei Betätigung der Taste für den Schlafmodus:"
 
 #~ msgid "Advance"
 #~ msgstr "Weiter"
