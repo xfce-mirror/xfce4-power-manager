@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-03 21:53+0200\n"
-"PO-Revision-Date: 2009-04-28 23:00+0200\n"
-"Last-Translator: Maximilian Schleiss <maximilian@xfce.org>\n"
+"PO-Revision-Date: 2009-07-03 19:200+0200\n"
+"Last-Translator: Jérôme Guelfucci <jeromeg@xfce.org>\n"
 "Language-Team: French <xfce-i18n@xfce.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -39,9 +39,8 @@ msgid "<b>Monitor</b>"
 msgstr "<b>Moniteur</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
-#, fuzzy
 msgid "Actions"
-msgstr "<b>Actions</b>"
+msgstr "Actions"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "Advanced"
@@ -79,16 +78,15 @@ msgstr "Général"
 #: ../settings/xfpm-settings.c:1235 ../src/xfpm-tray-icon.c:174
 #: ../src/xfpm-tray-icon.c:266
 msgid "Hibernate"
-msgstr "Mettre en hibernation"
+msgstr "Mettre en veille prolongée"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Lock screen when going for suspend/hibernate"
-msgstr "Activer l'écran de veille lors de la suspension/hibernation"
+msgstr "Activer l'écran de veille lors de la mise en veille/veille prolongée"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
-#, fuzzy
 msgid "Monitor"
-msgstr "<b>Moniteur</b>"
+msgstr "Écran"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17 ../settings/xfpm-settings.c:764
 #: ../settings/xfpm-settings.c:835 ../settings/xfpm-settings.c:959
@@ -100,7 +98,7 @@ msgstr "Rien"
 #: ../data/interfaces/xfpm-settings.ui.h:18 ../settings/xfpm-settings.c:1470
 #: ../settings/xfpm-settings.c:1475
 msgid "On AC"
-msgstr "Secteur"
+msgstr "Sur secteur"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "On battery"
@@ -112,11 +110,11 @@ msgstr "Configuration du gestionnaire"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Prefer power savings over performance"
-msgstr "Préférer une réduction de l'alimentation au lieu de la performance"
+msgstr "Préférer l'économie d'énergie à la performance"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Put display to sleep when computer is inactive for:"
-msgstr "Mettre l'écran en veille si la machine est inactive depuis  :"
+msgstr "Mettre l'écran en veille si la machine est inactive depuis :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "Put the computer to sleep when inactive for:"
@@ -153,7 +151,7 @@ msgstr "Éteindre l'écran si la machine est inactive depuis :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "System tray icon: "
-msgstr "Icône de notification :"
+msgstr "Icône de la zone de notification :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "When battery power is critical:"
@@ -161,7 +159,7 @@ msgstr "Niveau de la batterie critique :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "When hibernate button is pressed:"
-msgstr "Appuie sur le bouton de mise en hibernation :"
+msgstr "Appui sur le bouton de mise en hibernation :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "When laptop lid is closed:"
@@ -169,11 +167,11 @@ msgstr "Fermeture du couvercle du portable :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "When power button is pressed:"
-msgstr "Appuie sur le bouton d'alimentation :"
+msgstr "Appui sur le bouton d'alimentation :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "When sleep button is pressed:"
-msgstr "Appuie sur le bouton de mise en veille :"
+msgstr "Appui sur le bouton de mise en veille :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:36
 #: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:187
@@ -223,11 +221,11 @@ msgstr "Secondes"
 #: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1218
 #: ../settings/xfpm-settings.c:1370
 msgid "Hibernate and suspend operations not permitted"
-msgstr "Opérations d'hibernation et de mise en veille non autorisées"
+msgstr "Opérations de mise en veille prolongée et de mise en veille non autorisées"
 
 #: ../settings/xfpm-settings.c:756 ../settings/xfpm-settings.c:827
 msgid "Shutdown and hibernate operations not permitted"
-msgstr "Opérations d'extinction et d'hibernation non autorisées"
+msgstr "Opérations d'extinction et de mise en veille porlongée non autorisées"
 
 #: ../settings/xfpm-settings.c:779 ../settings/xfpm-settings.c:1126
 msgid "Shutdown"
@@ -240,7 +238,7 @@ msgstr "Demander"
 
 #: ../settings/xfpm-settings.c:850 ../settings/xfpm-settings.c:974
 msgid "Lock screen"
-msgstr ""
+msgstr "Verrouiller l'écran"
 
 #: ../settings/xfpm-settings.c:1058
 msgid "When battery is present"
@@ -264,25 +262,24 @@ msgstr "Opération de mise en veille non autorisée"
 
 #: ../settings/xfpm-settings.c:1296
 msgid "Hibernate operation not permitted"
-msgstr "Opération de mise en hibernation non autorisée"
+msgstr "Opération de mise en veille prolongée non autorisée"
 
 #: ../settings/xfpm-settings.c:1343
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
-"Lorsque toutes les sources de puissance de la machine atteignent ce niveau"
+"Lorsque toutes les sources d'alimentation de la machine atteignent ce niveau"
 
 #: ../settings/xfpm-settings.c:1485 ../settings/xfpm-settings.c:1490
 msgid "On Battery"
-msgstr "Batterie"
+msgstr "Sur batterie"
 
 #: ../settings/xfpm-settings.c:1499 ../settings/xfpm-settings.c:1504
 msgid "Extended"
 msgstr "Avancée"
 
 #: ../settings/xfpm-settings.c:1569
-#, fuzzy
 msgid "Check your power manager installation"
-msgstr "Le gestionnaire d'alimentation Xfce n'est pas lancé\n"
+msgstr "Vérifiez votre installation du gestionnaire d'alimentation"
 
 #: ../settings/xfpm-settings-main.c:72
 msgid "Settings manager socket"
@@ -399,9 +396,8 @@ msgid "Your Battery"
 msgstr "Votre batterie"
 
 #: ../src/xfpm-battery.c:293
-#, fuzzy
 msgid "is empty"
-msgstr "est presque vide"
+msgstr "est vide"
 
 #: ../src/xfpm-battery.c:299
 msgid "is fully charged"
@@ -518,7 +514,7 @@ msgstr "Gestionnaire d'alimentation Xfce"
 
 #: ../src/xfpm-main.c:130
 msgid "Show the configuration dialog"
-msgstr "Afficher le dialogue de configuration"
+msgstr "Afficher la fenêtre configuration"
 
 #: ../src/xfpm-main.c:131
 msgid "Quit any running xfce power manager"
@@ -560,7 +556,7 @@ msgstr "Éteindre le système"
 
 #: ../src/xfpm-supply.c:320
 msgid "Hibernate the system"
-msgstr "Mettre le système en hibernation"
+msgstr "Mettre le système en veille prolongée"
 
 #: ../src/xfpm-supply.c:332
 msgid ""
@@ -569,6 +565,10 @@ msgid ""
 "of this application. Close this application before putting the computer on "
 "sleep mode or plug in your AC adapter"
 msgstr ""
+"Le sytème fonctionne avec peu d'énergie, mais une application a désactivé "
+"la mise en veille automatique, donc mettre le système en veille maintenant "
+"pourrait endommager les données de cette application. Fermez cette application "
+"avant de mettre votre système en veille, ou reliez votre ordinateur au secteur."
 
 #: ../src/xfpm-supply.c:358
 msgid "System is running on low power. Save your work to avoid losing data"
@@ -582,10 +582,13 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
+"Une application a désactivé la mise en veille automatique, effectuer cette "
+"action pourrait perturber cette application, voulez-vous vraiment mettre le "
+"système en veille prolongée ?"
 
 #: ../src/xfpm-tray-icon.c:169 ../src/xfpm-tray-icon.c:200
 msgid "Are you sure you want to proceed?"
-msgstr "Êtes-vous sûr de vouloir procéder ?"
+msgstr "Êtes-vous sûr de vouloir continuer ?"
 
 #: ../src/xfpm-tray-icon.c:197
 msgid ""
@@ -593,6 +596,9 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to suspend the system?"
 msgstr ""
+"Une application a désactivé la mise en veille automatique, effectuer cette "
+"action pourrait perturber cette application, voulez-vous vraiment mettre le "
+"système en veille ?"
 
 #: ../src/xfpm-tray-icon.c:221
 msgid "Quit the Xfce power manager"
@@ -616,10 +622,13 @@ msgid ""
 "to disable backlight sleep, for example you could active the inhibit if you "
 "are watching a movie."
 msgstr ""
+"Activer ou désactiver la mise en veille automatique, régler ceci permettra par "
+" exemple au gestionnaire d'alimentation de ne pas mettre le système en veille lorsque "
+"vous regardez un film."
 
 #: ../src/xfpm-tray-icon.c:386
 msgid "No data available"
-msgstr ""
+msgstr "Pas de données disponibles"
 
 #: ../src/xfpm-engine.c:753 ../src/xfpm-engine.c:779 ../src/xfpm-engine.c:808
 #, c-format
@@ -629,12 +638,12 @@ msgstr "Permission refusée"
 #: ../src/xfpm-engine.c:786
 #, c-format
 msgid "Hibernate not supported"
-msgstr "Hibernation non supportée"
+msgstr "Mise en veille prolongée non prise en charge"
 
 #: ../src/xfpm-engine.c:815
 #, c-format
 msgid "Suspend not supported"
-msgstr "Mise en veille non supportée"
+msgstr "Mise en veille non prise en charge"
 
 #: ../src/xfpm-manager.c:221
 msgid "HAL daemon is not running"
@@ -656,7 +665,7 @@ msgstr "Aucun backend pour votre système"
 
 #: ../src/xfpm-shutdown.c:338
 msgid "No hibernate script found"
-msgstr "Aucun script d'hibernation trouvé"
+msgstr "Aucun script de mise en veille prolongée trouvé"
 
 #: ../src/xfpm-shutdown.c:342
 msgid "No suspend script found"
@@ -668,7 +677,7 @@ msgstr "Aucune méthode de mise en veille trouvée"
 
 #: ../src/xfpm-shutdown.c:350
 msgid "No hibernate method found"
-msgstr "Aucune méthode d'hibernation trouvée"
+msgstr "Aucune méthode de mise en veille prolongée trouvée"
 
 #: ../src/xfpm-shutdown.c:354
 msgid "Out of memory"
@@ -676,33 +685,33 @@ msgstr "Plus de mémoire disponible"
 
 #: ../src/xfpm-shutdown.c:358
 msgid "System failed to sleep"
-msgstr "Mise en veille du système échouée"
+msgstr "La mise en veille du système a échoué"
 
 #: ../src/xfpm-shutdown.c:409 ../src/xfpm-shutdown.c:432
 #: ../src/xfpm-shutdown.c:466
 #, c-format
 msgid "HAL daemon is currently not connected"
-msgstr "Le démon HAL n'est pas connecté"
+msgstr "Le démon HAL n'est pas connecté actuellement"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
-msgstr "Gestion d'alimentation pour l'environnement Xfce"
+msgstr "Gestion d'alimentation pour l'environnement de bureau Xfce"
 
 #: ../libxfpm/hal-battery.c:446
 msgid "Lithium ion"
-msgstr ""
+msgstr "Lithium ion"
 
 #: ../libxfpm/hal-battery.c:450
 msgid "Lead acid"
-msgstr ""
+msgstr "Accumulateur au plomb-acide"
 
 #: ../libxfpm/hal-battery.c:454
 msgid "Lithium polymer"
-msgstr ""
+msgstr "Lithium polymère"
 
 #: ../libxfpm/hal-battery.c:458
 msgid "Nickel metal hydride"
-msgstr ""
+msgstr "Hybride nickel-métal"
 
 #: ../libxfpm/hal-battery.c:461
 msgid "Unknown"
@@ -710,325 +719,30 @@ msgstr "Inconnue"
 
 #: ../libxfpm/hal-battery.c:469
 msgid "mWh"
-msgstr ""
+msgstr "mWh"
 
 #: ../libxfpm/hal-battery.c:473
 msgid "mAh"
-msgstr ""
+msgstr "mAh"
 
 #: ../libxfpm/xfpm-common.c:154
 msgid "translator-credits"
 msgstr ""
 "Maximilian Schleiss\n"
 "Yves-Alexis Perez\n"
-"Mike Massonnet"
+"Mike Massonnet\n"
+"Jérôme Guelfucci"
 
 #: ../panel-plugins/brightness/brightness-button.c:178
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
-#, fuzzy
 msgid "Control your LCD brightness"
-msgstr "Activer le contrôle de la luminosité de l'écran"
+msgstr "Contrôle de la luminosité de votre écran"
 
 #: ../panel-plugins/brightness/brightness-button.c:180
-#, fuzzy
 msgid "No device found"
-msgstr "Aucun mode du processeur disponible"
+msgstr "Aucun périphérique n'a été trouvé"
 
 #: ../panel-plugins/brightness/brightness-button.c:643
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr ""
-
-#~ msgid "Advance"
-#~ msgstr "Avancée"
-
-#, fuzzy
-#~ msgid "Xfce power manager is not running to releod it"
-#~ msgstr "Le gestionnaire d'alimentation Xfce n'est pas lancé\n"
-
-#, fuzzy
-#~ msgid "Power"
-#~ msgstr "Powersave (économie)"
-
-#, fuzzy
-#~ msgid "Don't show again"
-#~ msgstr "Ne plus afficher ce message"
-
-#, fuzzy
-#~ msgid "Power manager disconnected"
-#~ msgstr "Préférences du gestionnaire d'alimentation"
-
-#, fuzzy
-#~ msgid "Power manager is connected"
-#~ msgstr "Le gestionnaire d'alimentation Xfce n'est pas lancé\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Unable to read adapter status, the power manager will not work properly"
-#~ msgstr ""
-#~ "État de l'alimentation inconnu, le gestionnaire d'alimentation ne "
-#~ "fonctionnera pas correctement"
-
-#~ msgid "Adapter is online"
-#~ msgstr "L'alimentation est sur secteur"
-
-#~ msgid "Adapter is offline"
-#~ msgstr "L'alimentation est sur batterie"
-
-#, fuzzy
-#~ msgid "Are you sure you want to hibernate the system?"
-#~ msgstr "Êtes-vous sûr de vouloir mettre le système en hibernation ?"
-
-#~ msgid "UPS configuration"
-#~ msgstr "Configuration de l'onduleur"
-
-#, fuzzy
-#~ msgid "Consider UPS charge critical"
-#~ msgstr "Niveau de la batterie critique"
-
-#~ msgid "Consider battery charge critical"
-#~ msgstr "Niveau de la batterie critique"
-
-#~ msgid "percent"
-#~ msgstr "pour cent"
-
-#~ msgid "Enable battery state notification"
-#~ msgstr "Activer la notification du niveau de la batterie"
-
-#~ msgid "Enable power save on UPS power"
-#~ msgstr ""
-#~ "Activer le mode d'économie d'énergie quand le système fonctionne sur "
-#~ "onduleur"
-
-#~ msgid "Enable power save on battery power"
-#~ msgstr ""
-#~ "Activer le mode d'économie d'énergie quand le système fonctionne sur "
-#~ "batterie"
-
-#, fuzzy
-#~ msgid "Best performance"
-#~ msgstr "Performance"
-
-#, fuzzy
-#~ msgid "Ondemand performance"
-#~ msgstr "Performance"
-
-#, fuzzy
-#~ msgid "Best power savings"
-#~ msgstr "Gestionnaire d'alimentation Xfce"
-
-#, fuzzy
-#~ msgid "CPU frequency settings on UPS power"
-#~ msgstr "Mode du processeur quand le système fonctionne sur onduleur"
-
-#, fuzzy
-#~ msgid "CPU frequency settings on battery power"
-#~ msgstr "Mode du processeur quand le système fonctionne sur batterie"
-
-#~ msgid "CPU frequency control cannot be used"
-#~ msgstr "Le contrôle de fréquence du processeur est inutilisable"
-
-#, fuzzy
-#~ msgid "CPU frequency settings on AC power"
-#~ msgstr "Mode du processeur quand le système fonctionne sur onduleur"
-
-#, fuzzy
-#~ msgid "CPU frequency settings"
-#~ msgstr "Contrôle de fréquence"
-
-#~ msgid "Monitor settings on UPS power"
-#~ msgstr "Réglages de l'écran quand le système fonctionne sur onduleur"
-
-#~ msgid "Monitor settings"
-#~ msgstr "Réglages DPMS de l'écran"
-
-#~ msgid "Your monitor doesn't support DPMS control"
-#~ msgstr "L'écran ne supporte pas les réglages DPMS"
-
-#~ msgid "Keyboard shortcuts"
-#~ msgstr "Raccourcis claviers"
-
-#~ msgid "No available keyboard shortcuts found"
-#~ msgstr "Aucun raccourci clavier disponible"
-
-#~ msgid "CPU settings"
-#~ msgstr "Processeur"
-
-#~ msgid "Shortcuts"
-#~ msgstr "Raccourcis"
-
-#~ msgid "Monitor Settings"
-#~ msgstr "Écran"
-
-#~ msgid "Your battery is almost empty"
-#~ msgstr "La batterie est presque vide"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "min"
-#~ msgstr "min"
-
-#~ msgid "Suspend after"
-#~ msgstr "Mettre en veille prolongée après"
-
-#~ msgid "Turn off after"
-#~ msgstr "Éteindre after"
-
-#~ msgid "Xfce4 Power Manager"
-#~ msgstr "Gestionnaire d'alimentation Xfce4"
-
-#~ msgid ""
-#~ "Unable to read your home directory environment variable, autostart option "
-#~ "may not work"
-#~ msgstr ""
-#~ "Impossible de lire la variable d'environnement de votre répertoire "
-#~ "utilisateur, l'option de démarrage automatique peut ne pas fonctionner"
-
-#~ msgid ""
-#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
-#~ "and the message bus daemon are running"
-#~ msgstr ""
-#~ "Impossible de lancer le gestionnaire d'alimentation, vérifiez que la "
-#~ "couche d'abstraction matérielle (hal) et le bus de messagerie (dbus) "
-#~ "fonctionnent"
-
-#~ msgid ""
-#~ "Unable to read AC adapter status, the power manager will not work "
-#~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
-#~ "connection with the hardware abstract layer or the message bus daemon is "
-#~ "not running"
-#~ msgstr ""
-#~ "Impossible de lire l'état de l'alimentation, le gestionnaire ne "
-#~ "fonctionnera pas correctement. Raisons possibles : le pilote "
-#~ "d'alimentation n'est pas chargé, connexion impossible avec la couche "
-#~ "d'abstraction matérielle (hal) ou le démon du bus de messagerie n'est pas "
-#~ "lancé"
-
-#~ msgid "System failed to shutdown"
-#~ msgstr "Le système n'a pu s'arrêter"
-
-#, fuzzy
-#~ msgid ""
-#~ "Unable to use power management service, functionalities like hibernate "
-#~ "and suspend will not work. Possible reasons: you don't have enough "
-#~ "permission, broken connection with the hardware abstract layer or the "
-#~ "message bus daemon is not running"
-#~ msgstr ""
-#~ "Impossible d'utiliser le service de gestion d'alimentation, certaines "
-#~ "fonctionnalités comme l'hibernation et la mise en veille ne "
-#~ "fonctionneront pas. Raisons possibles : permissions insufisantes, "
-#~ "connexion impossible avec la couche d'abstraction (hal), ou le démon du "
-#~ "bus de messagerie n'est pas lancé"
-
-#, fuzzy
-#~ msgid "Error monitoring HAL events"
-#~ msgstr "Erreur de contrôle des événements HAL\n"
-
-#, fuzzy
-#~ msgid "HAL is not running or not responding"
-#~ msgstr "HAL n'est pas en cours d'exécution ou ne répond pas\n"
-
-#, fuzzy
-#~ msgid "Unable to watch device using HAL: %s"
-#~ msgstr "Échec de visualisation avec HAL du périphérique %s\n"
-
-#, fuzzy
-#~ msgid "Message hibernate didn't get a reply"
-#~ msgstr "La demande de mise en hibernation n'a pas été reçue"
-
-#~ msgid "System failed to hibernate"
-#~ msgstr "L'hibernation du système a échoué"
-
-#~ msgid "Error occured while trying to suspend"
-#~ msgstr "Une erreur s'est produite lors de la tentative de mise en veille"
-
-#~ msgid "Unknown reply from the message daemon"
-#~ msgstr "Réponse inconnue de la part du démon de messagerie"
-
-#~ msgid "Message suspend didn't get a reply"
-#~ msgstr "La demande de mise en veille n'a pas été reçue"
-
-#~ msgid "No reply from HAL daemon to set monitor brightness level"
-#~ msgstr "Pas de réponse du démon HAL pour régler la luminosité de l'écran"
-
-#~ msgid "No reply from HAL daemon to get monitor brightness level"
-#~ msgstr "Pas de réponse du démon HAL pour lire la luminosité de l'écran"
-
-#~ msgid "No reply from HAL daemon to get available cpu governors"
-#~ msgstr ""
-#~ "Pas de réponse du démon HAL pour lire les modes du processeur disponibles"
-
-#~ msgid "No reply from HAL daemon to get current cpu governor"
-#~ msgstr "Pas de réponse du démon HAL pour lire le mode actuel du processeur"
-
-#~ msgid "No reply from HAL daemon to set cpu governor"
-#~ msgstr "Pas de réponse du démon HAL pour régler le mode du processeur"
-
-#~ msgid "No reply from HAL daemon to set power save profile"
-#~ msgstr ""
-#~ "Pas de réponse du démon HAL pour régler le profil d'économie d'énergie"
-
-#, fuzzy
-#~ msgid "Start xfce power manager"
-#~ msgstr "Gestionnaire d'alimentation Xfce"
-
-#~ msgid "On electric power"
-#~ msgstr "Sur secteur"
-
-#, fuzzy
-#~ msgid "CPU frequency settings on electric power"
-#~ msgstr "Fréquence du processeur quand le système fonctionne sur secteur"
-
-#~ msgid "Monitor settings on electric power"
-#~ msgstr "Réglages DPMS de l'écran quand le système fonctionne sur secteur"
-
-#~ msgid "Ondemand"
-#~ msgstr "Ondemand (à la demande du processeur)"
-
-#~ msgid "Userspace"
-#~ msgstr "Userspace (géré par un programme)"
-
-#~ msgid "Powersave"
-#~ msgstr "Powersave (économie)"
-
-#~ msgid "Conservative"
-#~ msgstr "Conservative"
-
-#~ msgid "Part of the Xfce goodies project"
-#~ msgstr "Membre du projet Xfce Goodies"
-
-#~ msgid ""
-#~ "\n"
-#~ "Usage: xfce-power-manager [options] \n"
-#~ "\n"
-#~ "Options:\n"
-#~ "-h, --help       Print this help message and exit\n"
-#~ "-v, --version    Print this help message and exit\n"
-#~ "-r, --run        Start xfce power manager\n"
-#~ "-c, --customize  Show Configuration dialog\n"
-#~ "-q, --quit       Quit any running xfce power manager\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Utilisation : xfce-power-manager [options] \n"
-#~ "\n"
-#~ "Options :\n"
-#~ "-h, --help       Affiche ce message d'aide et quitte\n"
-#~ "-v, --version   Affiche la version et quitte\n"
-#~ "-r, --run       Démarrer le gestionnaire d'alimentation Xfce\n"
-#~ "-c, --customize   Affiche le fenêtre de configuration\n"
-#~ "-q, --quit      Ferme toute instance du gestionnaire d'alimentation\n"
-#~ "\n"
-
-#~ msgid "When lid button is pressed do"
-#~ msgstr "Action lors de la fermeture de l'écran"
-
-#~ msgid "Enable DPMS control"
-#~ msgstr "Activer le contrôle DPMS (mise en veille de l'écran)"
-
-#~ msgid "Your battery charge level is critical"
-#~ msgstr "Le niveau de batterie est critique"
-
-#~ msgid "Battery charge level is critical"
-#~ msgstr "Niveau de batterie critique"
+msgstr "Régler la luminosité"
