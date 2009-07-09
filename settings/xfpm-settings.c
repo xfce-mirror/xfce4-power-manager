@@ -546,7 +546,7 @@ format_inactivity_value_cb (GtkScale *scale, gdouble value, gpointer data)
 {
     gint h, min;
     
-    if ( (gint)value <= 30 )
+    if ( (gint)value <= 14 )
 	return g_strdup (_("Never"));
     else if ( (gint)value < 60 )
 	return g_strdup_printf ("%d %s", (gint)value, _("Minutes"));
@@ -746,7 +746,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean user_privilege, gbool
 	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not permitted"));
     }
     
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, 30);
+    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, 14);
     gtk_range_set_value (GTK_RANGE (inact), val);
     
     
@@ -922,7 +922,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean user_privilege, gboolean c
 	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not permitted"));
     }
     
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, 30);
+    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, 14);
     gtk_range_set_value (GTK_RANGE (inact), val);
    
 #ifdef HAVE_DPMS
@@ -1286,6 +1286,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
     
     if ( !can_suspend )
     {
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_hibernate), TRUE);
 	gtk_widget_set_sensitive (inact_suspend, FALSE);
 	gtk_widget_set_tooltip_text (inact_suspend, _("Suspend operation not permitted"));
     }

@@ -1,3 +1,13 @@
+2009-07-09: Ali aliov@xfce.org
+	* settings/xfpm-settings.c automatically switch inactivity sleep mode 
+	to hibernate if suspend is not supported.
+	* Allow 15 minutes as a minimum value for idle.
+	* src/xfpm-dbus-monitor.c Fix regression for detecting when HAL restarts.
+	* src/xfpm-brightness-widget.c automatically detect if the running 
+	Notification daemon is notify-osd and use its brightness feedback interface for 
+	displaying the brightness level.
+	* configure.ac.in add 'r' as a prefix for version tag.
+
 2009-07-06 10:00 Ali aliov@xfce.org
 	* 0.8.1.1 release.
 

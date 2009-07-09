@@ -32,11 +32,14 @@
 #include <glib.h>
 #include <cairo.h>
 
+#include <libnotify/notify.h>
+
 #include <libxfce4util/libxfce4util.h>
 
 #include "libxfpm/xfpm-common.h"
 
 #include "xfpm-brightness-widget.h"
+#include "xfpm-dbus-monitor.h"
 
 static void xfpm_brightness_widget_finalize   (GObject *object);
 
@@ -47,15 +50,91 @@ static void xfpm_brightness_widget_finalize   (GObject *object);
 
 struct XfpmBrightnessWidgetPrivate
 {
-    GtkWidget *window;
-    GdkPixbuf *pix;
+    XfpmDBusMonitor     *monitor;
+    GtkWidget 		*window;
+    GdkPixbuf 		*pix;
     
-    guint      level;
-    guint      max_level;
-    gulong     timeout_id;
+    guint      		 level;
+    guint      		 max_level;
+    gulong     		 timeout_id;
+    
+    gboolean		 check_server_caps;
+    gboolean		 notify_osd;
+    NotifyNotification	*n;
+    
+    gulong		 sig_1;
 };
 
 G_DEFINE_TYPE (XfpmBrightnessWidget, xfpm_brightness_widget, G_TYPE_OBJECT)
+
+static void
+xfpm_brightness_widget_service_connection_changed_cb (XfpmDBusMonitor *monitor, gchar *service_name, 
+						      gboolean connected, gboolean on_session,
+						      XfpmBrightnessWidget *widget)
+{
+    if ( !g_strcmp0 (service_name, "org.freedesktop.Notifications")  && on_session )
+    {
+	if ( connected )
+	    widget->priv->check_server_caps = TRUE;
+	else
+	    widget->priv->notify_osd = FALSE;
+    }
+}
+
+static gboolean
+xfpm_brightness_widget_server_is_notify_osd (void)
+{
+    gboolean supports_sync = FALSE;
+    GList *caps = NULL;
+
+    caps = notify_get_server_caps ();
+    if (caps != NULL) 
+    {
+	if (g_list_find_custom (caps, "x-canonical-private-synchronous", (GCompareFunc) g_strcmp0) != NULL)
+	    supports_sync = TRUE;
+
+	    g_list_foreach(caps, (GFunc)g_free, NULL);
+	    g_list_free(caps);
+    }
+
+    return supports_sync;
+}
+
+static void
+xfpm_brightness_widget_display_notification (XfpmBrightnessWidget *widget)
+{
+    guint i;
+    gfloat value = 0;
+    
+    static const char *display_icon_name[] = 
+    {
+	"notification-display-brightness-off",
+	"notification-display-brightness-low",
+	"notification-display-brightness-medium",
+	"notification-display-brightness-high",
+	"notification-display-brightness-full",
+	NULL
+    };
+    
+    value = (gfloat) 100 * widget->priv->level / widget->priv->max_level;
+    
+    i = (gint)value / 25;
+    
+    notify_notification_set_hint_int32 (widget->priv->n,
+					"value",
+					 value);
+    
+    notify_notification_set_hint_string (widget->priv->n,
+					 "x-canonical-private-synchronous",
+					 "brightness");
+					 
+    notify_notification_update (widget->priv->n,
+			        " ",
+				"",
+				display_icon_name[i]);
+				
+    notify_notification_show (widget->priv->n, NULL);
+}
 
 static gboolean
 xfpm_brightness_widget_timeout (XfpmBrightnessWidget *widget)
@@ -131,6 +210,15 @@ static void
 xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
 {
     widget->priv = XFPM_BRIGHTNESS_WIDGET_GET_PRIVATE (widget);
+    widget->priv->monitor = xfpm_dbus_monitor_new ();
+    
+    xfpm_dbus_monitor_add_service (widget->priv->monitor, 
+				   DBUS_BUS_SESSION,
+				   "org.freedesktop.Notifications");
+    
+    widget->priv->sig_1 = g_signal_connect (widget->priv->monitor, "service-connection-changed",
+					    G_CALLBACK (xfpm_brightness_widget_service_connection_changed_cb),
+					    widget);
     
     widget->priv->window = gtk_window_new (GTK_WINDOW_POPUP);
 
@@ -146,6 +234,8 @@ xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
     widget->priv->level  = 0;
     widget->priv->max_level = 0;
     widget->priv->timeout_id = 0;
+    widget->priv->notify_osd = FALSE;
+    widget->priv->check_server_caps = TRUE;
 
     gtk_widget_set_size_request (GTK_WIDGET (widget->priv->window), BRIGHTNESS_POPUP_SIZE, BRIGHTNESS_POPUP_SIZE);
     
@@ -155,6 +245,11 @@ xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
 
     g_signal_connect (widget->priv->window, "expose_event",
 		      G_CALLBACK (xfpm_brightness_widget_expose_event), widget);
+		      
+    widget->priv->n = notify_notification_new (" ",
+					       "",
+					       NULL,
+					       NULL);
 }
 
 static void
@@ -166,6 +261,12 @@ xfpm_brightness_widget_finalize (GObject *object)
     
     if ( widget->priv->pix )
 	gdk_pixbuf_unref (widget->priv->pix);
+	
+    if ( g_signal_handler_is_connected (G_OBJECT (widget->priv->monitor), widget->priv->sig_1) )
+	g_signal_handler_disconnect (G_OBJECT (widget->priv->monitor), widget->priv->sig_1);
+	
+    g_object_unref (widget->priv->n);
+    g_object_unref (widget->priv->monitor);
 
     G_OBJECT_CLASS (xfpm_brightness_widget_parent_class)->finalize (object);
 }
@@ -192,11 +293,24 @@ void xfpm_brightness_widget_set_level (XfpmBrightnessWidget *widget, guint level
     
     widget->priv->level = level;
 
-    gtk_window_present (GTK_WINDOW (widget->priv->window));
-    
-    if ( widget->priv->timeout_id != 0 )
-	g_source_remove (widget->priv->timeout_id);
+    if ( widget->priv->check_server_caps )
+    {
+	widget->priv->notify_osd = xfpm_brightness_widget_server_is_notify_osd ();
+	widget->priv->check_server_caps = FALSE;
+    }
 	
-    widget->priv->timeout_id = 
-	g_timeout_add (900, (GSourceFunc) xfpm_brightness_widget_timeout, widget);
+    if ( widget->priv->notify_osd )
+    {
+	xfpm_brightness_widget_display_notification (widget);
+    }
+    else
+    {
+	gtk_window_present (GTK_WINDOW (widget->priv->window));
+	
+	if ( widget->priv->timeout_id != 0 )
+	    g_source_remove (widget->priv->timeout_id);
+	    
+	widget->priv->timeout_id = 
+	    g_timeout_add (900, (GSourceFunc) xfpm_brightness_widget_timeout, widget);
+    }
 }
