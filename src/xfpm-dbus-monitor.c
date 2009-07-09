@@ -162,7 +162,7 @@ xfpm_dbus_monitor_name_owner_changed (XfpmDBusMonitor *monitor, const gchar *nam
     }
     else if ( strlen (name) != 0 && strlen (new) != 0)
     {
-	xfpm_dbus_monitor_service_connection_changed (monitor, bus_type, name, FALSE);
+	xfpm_dbus_monitor_service_connection_changed (monitor, bus_type, name, TRUE);
     }
 }
 
