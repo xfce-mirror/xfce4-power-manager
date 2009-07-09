@@ -280,7 +280,6 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
 	g_object_get (G_OBJECT (engine->priv->conf),
 		      SLEEP_SWITCH_CFG, &req,
 		      NULL);
-	g_print ("req %d\n", req);
     }
     else if ( type == BUTTON_HIBERNATE )
     {
@@ -418,17 +417,17 @@ xfpm_engine_set_inactivity_timeouts (XfpmEngine *engine)
 		  NULL);
     
 #ifdef DEBUG
-    if ( on_ac == 30 )
+    if ( on_ac == 14 )
 	TRACE ("setting inactivity sleep timeout on ac to never");
     else
 	TRACE ("setting inactivity sleep timeout on ac to %d", on_ac);
-    if ( on_battery == 30 )
+    if ( on_battery == 14 )
 	TRACE ("setting inactivity sleep timeout on battery to never");
     else
 	TRACE ("setting inactivity sleep timeout on battery to %d", on_battery);
 #endif
     
-    if ( on_ac == 30 )
+    if ( on_ac == 14 )
     {
 	xfpm_idle_free_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_AC );
     }
@@ -437,7 +436,7 @@ xfpm_engine_set_inactivity_timeouts (XfpmEngine *engine)
 	xfpm_idle_set_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_AC, on_ac * 1000 * 60);
     }
     
-    if ( on_battery == 30 )
+    if ( on_battery == 14 )
     {
 	xfpm_idle_free_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY );
     }

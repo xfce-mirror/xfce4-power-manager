@@ -144,7 +144,7 @@ xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
     for ( i = 0; i < nspecs; i++)
     {
 	gchar *prop_name;
-	prop_name = g_strdup_printf ("/%s", specs[i]->name);
+	prop_name = g_strdup_printf ("%s%s", PROPERTIES_PREFIX, specs[i]->name);
 	g_value_init (&value, specs[i]->value_type);
 	
 	if (channel_valid)
