@@ -689,12 +689,23 @@ void xfpm_engine_reload_hal_objects (XfpmEngine *engine)
  */
 static gboolean xfpm_engine_dbus_shutdown (XfpmEngine *engine,
 					   GError **error);
+
+static gboolean xfpm_engine_dbus_reboot   (XfpmEngine *engine,
+					   GError **error);
 					   
 static gboolean xfpm_engine_dbus_hibernate (XfpmEngine * engine,
 					    GError **error);
 
 static gboolean xfpm_engine_dbus_suspend (XfpmEngine * engine,
 					  GError ** error);
+
+static gboolean xfpm_engine_dbus_can_reboot (XfpmEngine * engine,
+					     gboolean * OUT_can_reboot, 
+					     GError ** error);
+
+static gboolean xfpm_engine_dbus_can_shutdown (XfpmEngine * engine,
+					       gboolean * OUT_can_reboot, 
+					       GError ** error);
 
 static gboolean xfpm_engine_dbus_can_hibernate (XfpmEngine * engine,
 						gboolean * OUT_can_hibernate,
@@ -703,6 +714,10 @@ static gboolean xfpm_engine_dbus_can_hibernate (XfpmEngine * engine,
 static gboolean xfpm_engine_dbus_can_suspend (XfpmEngine * engine,
 					      gboolean * OUT_can_suspend,
 					      GError ** error);
+
+static gboolean xfpm_engine_dbus_get_power_save_status (XfpmEngine * engine,
+						        gboolean * OUT_save_power,
+						        GError ** error);
 
 static gboolean xfpm_engine_dbus_get_on_battery (XfpmEngine * engine,
 						 gboolean * OUT_on_battery,
@@ -761,6 +776,32 @@ static gboolean xfpm_engine_dbus_shutdown (XfpmEngine *engine,
     return TRUE;
 }
 
+static gboolean xfpm_engine_dbus_reboot   (XfpmEngine *engine,
+					   GError **error)
+{
+    gboolean caller_privilege;
+    
+    TRACE ("Hibernate message received");
+
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		  "caller-privilege", &caller_privilege,
+		  NULL);
+
+    if (!caller_privilege)
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
+		    _("Permission denied"));
+	return FALSE;
+    }
+
+    if ( engine->priv->inhibited )
+	return TRUE;
+
+    xfpm_reboot (engine->priv->shutdown, NULL);
+    
+    return TRUE;
+}
+
 static gboolean
 xfpm_engine_dbus_hibernate (XfpmEngine * engine, GError ** error)
 {
@@ -781,7 +822,7 @@ xfpm_engine_dbus_hibernate (XfpmEngine * engine, GError ** error)
 
     if (!can_hibernate)
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HIBERNATE_NOT_SUPPORTED,
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_NO_HARDWARE_SUPPORT,
 		    _("Hibernate not supported"));
 	return FALSE;
     }
@@ -810,12 +851,36 @@ xfpm_engine_dbus_suspend (XfpmEngine * engine, GError ** error)
 
     if (!can_suspend)
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_SUSPEND_NOT_SUPPORTED,
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_NO_HARDWARE_SUPPORT,
 		    _("Suspend not supported"));
 	return FALSE;
     }
 
     xfpm_engine_shutdown_request (engine, XFPM_DO_SUSPEND, FALSE);
+
+    return TRUE;
+}
+
+static gboolean
+xfpm_engine_dbus_can_shutdown (XfpmEngine * engine,
+			       gboolean * OUT_can_shutdown, GError ** error)
+{
+    TRACE ("Can shutdown message received");
+    
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		  "caller-privilege", OUT_can_shutdown, NULL);
+
+    return TRUE;
+}
+
+static gboolean
+xfpm_engine_dbus_can_reboot (XfpmEngine * engine,
+			     gboolean * OUT_can_reboot, GError ** error)
+{
+    TRACE ("Can reboot message received");
+    
+    g_object_get (G_OBJECT (engine->priv->shutdown),
+		  "caller-privilege", OUT_can_reboot, NULL);
 
     return TRUE;
 }
@@ -839,6 +904,23 @@ xfpm_engine_dbus_can_suspend (XfpmEngine * engine,
     g_object_get (G_OBJECT (engine->priv->shutdown),
 		  "can-suspend", OUT_can_suspend, NULL);
 
+    return TRUE;
+}
+
+static gboolean xfpm_engine_dbus_get_power_save_status (XfpmEngine * engine,
+						        gboolean * OUT_save_power,
+						        GError ** error)
+{
+    gboolean save_power;
+    
+    TRACE ("Can power save message received");
+    
+    g_object_get (G_OBJECT (engine->priv->conf),
+		  POWER_SAVE_ON_BATTERY, &save_power,
+		  NULL);
+		  
+    *OUT_save_power = save_power && engine->priv->on_battery;
+    
     return TRUE;
 }
 

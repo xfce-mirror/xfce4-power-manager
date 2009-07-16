@@ -65,6 +65,9 @@ gboolean                  xfpm_shutdown_add_callback    (XfpmShutdown *shutdown,
 void                      xfpm_shutdown			(XfpmShutdown *shutdown,
 							 GError **error);
 
+void                      xfpm_reboot			(XfpmShutdown *shutdown,
+							 GError **error);
+
 void                      xfpm_hibernate                (XfpmShutdown *shutdown,
 							 GError **error);
 

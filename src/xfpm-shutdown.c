@@ -413,12 +413,36 @@ void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
     
     xfpm_send_message_to_network_manager ("sleep");
     
+    //FIXME: Shutdown the system without asking the session to do.
     if ( !xfpm_session_shutdown (shutdown->priv->session) )
-	xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Shutdown", NULL);
+    {
+	if ( !xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Shutdown", NULL))
+	    xfpm_send_message_to_network_manager ("wake");
+    }
+    
+    shutdown->priv->block_shutdown = FALSE;
+}
+
+void xfpm_reboot (XfpmShutdown *shutdown, GError **error)
+{
+    g_return_if_fail (XFPM_IS_SHUTDOWN(shutdown));
+    
+    if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
+	shutdown->priv->block_shutdown = FALSE;
+	return;
+    }
+    
+    xfpm_send_message_to_network_manager ("sleep");
+    if ( !xfpm_session_reboot (shutdown->priv->session) )
+    {
+	if ( !xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Reboot", NULL))
+	    xfpm_send_message_to_network_manager ("wake");
+    }
 
     shutdown->priv->block_shutdown = FALSE;
-    xfpm_send_message_to_network_manager ("wake");
-}
+}    
 
 void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
 {
@@ -483,7 +507,6 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
 	g_error_free (error_internal);
     }
     g_signal_emit (G_OBJECT (shutdown), signals [WAKING_UP], 0);
-    
     xfpm_send_message_to_network_manager ("wake");
 }
 

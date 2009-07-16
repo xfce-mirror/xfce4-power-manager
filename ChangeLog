@@ -1,3 +1,12 @@
+2009-07-15: Ali aliov@xfce.org
+	* Provides the following standard DBus methods:
+	CanReboot(),CanShutdown(),Reboot(),GetPowerSaveStatus().
+	* src/xfpm-error.{c,h} correct errors name for non 
+	supported shutdown/hibernate... .
+	to NoHardwareSupported+Invalid cookie to Cookie not found.
+	* Update TODO.
+	* Update the documentation.
+
 2009-07-09: Ali aliov@xfce.org
 	* src/xfpm-xfconf.c fix a bug affecting 0.8.1.* for the properties prefix.
 	* src/xfpm-engine.c Fix default idle timeout.

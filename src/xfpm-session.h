@@ -57,6 +57,8 @@ void				 xfpm_session_quit	      (XfpmSession *session);
 
 gboolean                         xfpm_session_shutdown        (XfpmSession *session);
 
+gboolean 			 xfpm_session_reboot 	      (XfpmSession *session);
+
 gboolean			 xfpm_session_ask_shutdown    (XfpmSession *session);
 
 G_END_DECLS

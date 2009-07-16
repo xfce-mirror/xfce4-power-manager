@@ -520,6 +520,26 @@ Ideally these details should go in a technical guide not the user guide, but we 
 
 <thead>
 <row>
+  <entry namest="c1" nameend="c2" align="center">CanReboot</entry>
+  <entry></entry>
+  <entry>bool</entry>
+  <entry></entry>
+  <entry>whether the system is able to reboot</entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">CanShutdown</entry>
+  <entry></entry>
+  <entry>bool</entry>
+  <entry></entry>
+  <entry>whether the system is able to shutdown</entry>
+</row>
+</thead>
+
+<thead>
+<row>
   <entry namest="c1" nameend="c2" align="center">GetOnBattery</entry>
   <entry></entry>
   <entry>bool</entry>
@@ -540,10 +560,21 @@ Ideally these details should go in a technical guide not the user guide, but we 
 
 <thead>
 <row>
+  <entry namest="c1" nameend="c2" align="center">GetPowerSaveStatus</entry>
+  <entry></entry>
+  <entry>bool</entry>
+  <entry></entry>
+  <entry>whether the system is running in power save mode.</entry>
+</row>
+</thead>
+
+
+<thead>
+<row>
   <entry namest="c1" nameend="c2" align="center">Hibernate</entry>
   <entry></entry>
   <entry></entry>
-  <entry>PermissionDenied, NotSupported</entry>
+  <entry>PermissionDenied, NoHardwareSupport</entry>
   <entry></entry>
 </row>
 </thead>
@@ -553,7 +584,17 @@ Ideally these details should go in a technical guide not the user guide, but we 
   <entry namest="c1" nameend="c2" align="center">Suspend</entry>
   <entry></entry>
   <entry></entry>
-  <entry>PermissionDenied, NotSupported</entry>
+  <entry>PermissionDenied, NoHardwareSupport</entry>
+  <entry></entry>
+</row>
+</thead>
+
+<thead>
+<row>
+  <entry namest="c1" nameend="c2" align="center">Reboot</entry>
+  <entry></entry>
+  <entry></entry>
+  <entry>PermissionDenied, NoHardwareSupport</entry>
   <entry></entry>
 </row>
 </thead>
@@ -563,7 +604,7 @@ Ideally these details should go in a technical guide not the user guide, but we 
   <entry namest="c1" nameend="c2" align="center">Shutdown</entry>
   <entry></entry>
   <entry></entry>
-  <entry>PermissionDenied, NotSupported</entry>
+  <entry>PermissionDenied, NoHardwareSupport</entry>
   <entry></entry>
 </row>
 </thead>

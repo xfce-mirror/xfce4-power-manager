@@ -238,6 +238,16 @@ gboolean xfpm_session_shutdown (XfpmSession *session)
     return xfpm_session_shutdown_internal (session, type, allow_save);
 }
 
+gboolean xfpm_session_reboot (XfpmSession *session)
+{
+    gboolean allow_save   = TRUE;
+    XfsmShutdownType type = XFSM_SHUTDOWN_REBOOT;
+    
+    g_return_val_if_fail (XFPM_IS_SESSION (session), FALSE);
+    
+    return xfpm_session_shutdown_internal (session, type, allow_save);
+}
+
 gboolean xfpm_session_ask_shutdown (XfpmSession *session)
 {
     gboolean allow_save   = TRUE;

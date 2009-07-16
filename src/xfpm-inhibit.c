@@ -356,7 +356,7 @@ static gboolean xfpm_inhibit_un_inhibit    (XfpmInhibit *inhibit,
     
     if (!xfpm_inhibit_remove_application_by_cookie (inhibit, IN_cookie))
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_INVALID_COOKIE, _("Invalid cookie"));
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_COOKIE_NOT_FOUND, _("Invalid cookie"));
 	return FALSE;
     }
     

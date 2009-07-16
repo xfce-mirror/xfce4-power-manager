@@ -10,10 +10,21 @@
     <method name="Shutdown">
     </method>
     
+    <method name="Reboot">
+    </method>
+    
     <method name="Hibernate">
     </method>
     
     <method name="Suspend">
+    </method>
+
+    <method name="CanShutdown">
+      <arg type="b" name="can_shutdown" direction="out"/>
+    </method>
+    
+    <method name="CanReboot">
+      <arg type="b" name="can_reboot" direction="out"/>
     </method>
     
     <method name="CanSuspend">
@@ -22,6 +33,10 @@
     
     <method name="CanHibernate">
       <arg type="b" name="can_hibernate" direction="out"/>
+    </method>
+    
+    <method name="GetPowerSaveStatus">
+      <arg type="b" name="save_power" direction="out"/>
     </method>
     
     <method name="GetOnBattery">
