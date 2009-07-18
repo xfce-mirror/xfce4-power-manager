@@ -41,8 +41,8 @@ typedef enum
     
 } XfpmError;
 
-GType	xfpm_error_get_type  () G_GNUC_CONST;
-GQuark  xfpm_get_error_quark ();
+GType	xfpm_error_get_type  (void) G_GNUC_CONST;
+GQuark  xfpm_get_error_quark (void);
 
 
 G_END_DECLS

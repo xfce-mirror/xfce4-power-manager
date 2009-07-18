@@ -45,6 +45,7 @@
 #include "xfpm-engine.h"
 #include "xfpm-session.h"
 #include "xfpm-dbus-monitor.h"
+#include "xfpm-errors.h"
 
 static void xfpm_manager_finalize   (GObject *object);
 
@@ -213,6 +214,10 @@ void xfpm_manager_start (XfpmManager *manager)
     gboolean hal_running;
     
     xfpm_manager_reserve_names (manager);
+    
+    dbus_g_error_domain_register (XFPM_ERROR,
+				  NULL,
+				  XFPM_TYPE_ERROR);
     
     hal_running = xfpm_dbus_monitor_hal_connected (manager->priv->monitor);
     

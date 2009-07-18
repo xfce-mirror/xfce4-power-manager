@@ -1583,8 +1583,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     dialog = GTK_WIDGET (gtk_builder_get_object (xml, "xfpm-settings-dialog"));
     nt = GTK_WIDGET (gtk_builder_get_object (xml, "main-notebook"));
     
-    gtk_builder_connect_signals (xml, channel);
-
     xfpm_settings_on_ac (channel, user_privilege, can_suspend, can_hibernate, has_lcd_brightness, has_lid );
     
     if ( system_laptop )
@@ -1612,4 +1610,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 	g_signal_connect (dialog, "response", G_CALLBACK (dialog_response_cb), channel);
 	gtk_widget_show (dialog);
     }
+    
+    gtk_builder_connect_signals (xml, channel);
 }

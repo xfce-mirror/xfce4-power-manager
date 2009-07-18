@@ -305,9 +305,6 @@ static void xfpm_inhibit_dbus_class_init  (XfpmInhibitClass *klass)
     dbus_g_object_type_install_info(G_TYPE_FROM_CLASS(klass),
 				    &dbus_glib_xfpm_inhibit_object_info);
 				    
-    dbus_g_error_domain_register (XFPM_ERROR, 
-				  "org.freedesktop.PowerManagement.Inhibit",
-				  XFPM_TYPE_ERROR);
 }
 
 static void xfpm_inhibit_dbus_init	  (XfpmInhibit *inhibit)

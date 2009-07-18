@@ -33,6 +33,8 @@
  */
 gboolean 	xfpm_send_message_to_network_manager  	(const gchar *message)
 {
+#ifdef WITH_NETWORK_MANAGER
+
     DBusGConnection *bus   = NULL;
     DBusGProxy      *proxy = NULL;
     GError          *error = NULL;
@@ -61,5 +63,6 @@ gboolean 	xfpm_send_message_to_network_manager  	(const gchar *message)
     g_object_unref (G_OBJECT(proxy));
     dbus_g_connection_unref (bus);
     
+#endif /* WITH_NETWORK_MANAGER */
     return TRUE;
 }

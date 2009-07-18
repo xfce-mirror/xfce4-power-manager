@@ -413,7 +413,6 @@ void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
     
     xfpm_send_message_to_network_manager ("sleep");
     
-    //FIXME: Shutdown the system without asking the session to do.
     if ( !xfpm_session_shutdown (shutdown->priv->session) )
     {
 	if ( !xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Shutdown", NULL))

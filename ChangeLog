@@ -1,3 +1,12 @@
+Ali aliov@xfce.org
+	* Allow compilation without network manager support, since some
+	distros doesn't have it (like Slackware).
+	* settings/xfpm-settings.c connect to the signals after settings up all
+	the widgets this way we don't get property_changed signals for nothing.
+	* Register DBus error code only once at startup to avoid a Metadata
+	warning error domain.
+	* Update README, NEWS.
+	
 2009-07-15: Ali aliov@xfce.org
 	* Provides the following standard DBus methods:
 	CanReboot(),CanShutdown(),Reboot(),GetPowerSaveStatus().

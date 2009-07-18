@@ -1,9 +1,33 @@
-A power manager is an important software for laptop users
-This software supports alsmot all the features for making
-power management easy.
+What is it?
+===========
 
-This software is a part of Xfce goodies projects, in case you use it
-and you find any problems/bugs please report to:
+This software is a power manager for the Xfce desktop, Xfce power manager manages the power sources 
+on the computer and the devices that can be controlled to reduce their power consumption 
+(such as LCD brightness level, monitor sleep, CPU frequency scaling). 
+In addition, xfce4-power-manager provides a set of freedesktop-compliant DBus interfaces to 
+inform other applications about current power level so that they can adjust their power consumption.
 
-http://bugzilla.xfce.org/ 
+Required packages
+=================
+Parole depends on the following packages:
+
+ - Gtk 2.16 or above.
+ - Glib 2.16 or above.
+ - DBus 0.60 or above.
+ - DBus glib 0.70 or above.
+ - libxfcegui4 4.6.0 or above.
+ - libxfce4util 4.6.0 or above
+ - libnotify 0.4.1 or above.
+ - xfconf 4.6.0 or above.
+ - libxfce4panel 4.6.0 or above (for the panel plugins).
+ - DPMS X extension ( for DPMS support);
+
+ - HAL daemon version 0.5.6 or above is needed.
+
+How to report bugs?
+===================
+
+Bugs should be reported to the Xfce bug tracking system
+(http://bugzilla.xfce.org, product Parole). You will need to
+create an account for yourself.
 ( Please attach the output of lshal )

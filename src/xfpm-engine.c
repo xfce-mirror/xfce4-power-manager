@@ -734,10 +734,6 @@ xfpm_engine_dbus_class_init (XfpmEngineClass * klass)
 {
     dbus_g_object_type_install_info (G_TYPE_FROM_CLASS (klass),
 				     &dbus_glib_xfpm_engine_object_info);
-
-    dbus_g_error_domain_register (XFPM_ERROR,
-				  "org.freedesktop.PowerManagement",
-				  XFPM_TYPE_ERROR);
 }
 
 static void
