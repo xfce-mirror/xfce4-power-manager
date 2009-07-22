@@ -1,4 +1,12 @@
-Ali aliov@xfce.org
+2009-07-22: Ali aliov@xfce.org
+	* <!-- interface-requires libxfcegui4 4.6 --> in the interface
+	file instead, not sure why glade inserts this 
+	<requires lib="xfce4" version="2360.6128"/>  instead! since 
+	this will not work on gtk+2.12, however the interface file
+	passes the Gtk version check, a glade bug? anyway this might
+	fix bug 5599.
+
+2009-07-19: Ali aliov@xfce.org
 	* Allow compilation without network manager support, since some
 	distros doesn't have it (like Slackware).
 	* settings/xfpm-settings.c connect to the signals after settings up all
