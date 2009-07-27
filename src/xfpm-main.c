@@ -64,7 +64,10 @@ xfpm_quit_signal (gint sig, gpointer data)
 {
     XfpmManager *manager = (XfpmManager *) data;
     
-    xfpm_manager_stop (manager);
+    TRACE ("sig %d", sig);
+    
+    if ( sig != SIGHUP )
+	xfpm_manager_stop (manager);
 }
 
 static void G_GNUC_NORETURN

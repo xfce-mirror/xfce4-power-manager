@@ -165,7 +165,14 @@ xfpm_session_shutdown_internal (XfpmSession *session, XfsmShutdownType type, gbo
     DBusGProxy *proxy;
     GError *error = NULL;
     
-    bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+    bus = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+    
+    if ( error )
+    {
+	g_print ("Unable to get DBUS session connection, %s", error->message);
+	g_error_free (error);
+	return FALSE;
+    }
     
     proxy = dbus_g_proxy_new_for_name (bus,
 				       "org.xfce.SessionManager",

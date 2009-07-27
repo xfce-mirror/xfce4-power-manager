@@ -136,6 +136,8 @@ xfpm_battery_refresh_visible_icon (XfpmBattery *battery)
 		  
     if ( show_icon == SHOW_ICON_ALWAYS )
     	visible = TRUE;
+    else if ( show_icon == NEVER_SHOW_ICON )
+	visible = FALSE;
     else if ( show_icon == SHOW_ICON_WHEN_BATTERY_PRESENT )
     {
 	if ( battery->priv->state == BATTERY_NOT_PRESENT )
@@ -250,6 +252,13 @@ static void
 xfpm_battery_notify (XfpmBattery *battery)
 {
     gboolean notify;
+    static gboolean starting_up = TRUE;
+
+    if ( starting_up )
+    {
+	starting_up = FALSE;
+	return;
+    }
 
     g_object_get (G_OBJECT (battery->priv->conf),
 		  GENERAL_NOTIFICATION_CFG, &notify,
@@ -335,7 +344,14 @@ xfpm_battery_get_battery_state (XfpmBatteryState *state,
 static void
 xfpm_battery_refresh_common (XfpmBattery *battery, guint percentage, XfpmBatteryState state)
 {
-    xfpm_battery_refresh_icon (battery, state, percentage);
+    XfpmShowIcon show_icon;
+    
+    g_object_get (G_OBJECT (battery->priv->conf),
+		  SHOW_TRAY_ICON_CFG, &show_icon,
+		  NULL);
+
+    if ( show_icon != NEVER_SHOW_ICON )
+	xfpm_battery_refresh_icon (battery, state, percentage);
     
     if ( battery->priv->state != state)
     {
@@ -344,7 +360,7 @@ xfpm_battery_refresh_common (XfpmBattery *battery, guint percentage, XfpmBattery
 	TRACE("Emitting signal battery state changed");
 	g_signal_emit (G_OBJECT(battery), signals[BATTERY_STATE_CHANGED], 0, state);
 	
-	if ( battery->priv->state != BATTERY_NOT_FULLY_CHARGED )
+	if ( battery->priv->state != BATTERY_NOT_FULLY_CHARGED && show_icon != NEVER_SHOW_ICON)
 	    xfpm_battery_notify (battery);
 	else
 	    xfpm_notify_close_normal (battery->priv->notify);

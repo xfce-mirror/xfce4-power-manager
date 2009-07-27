@@ -101,6 +101,7 @@ xfpm_manager_system_bus_connection_changed_cb (XfpmDBusMonitor *monitor, gboolea
 static void
 xfpm_manager_session_die_cb (XfpmSession *session, XfpmManager *manager)
 {
+    TRACE ("Session die signal, exiting");
     xfpm_manager_quit (manager);
 }
 
@@ -169,8 +170,10 @@ xfpm_manager_release_names (XfpmManager *manager)
 static gboolean
 xfpm_manager_quit (XfpmManager *manager)
 {
+    TRACE ("Exiting");
+    
     xfpm_manager_release_names (manager);
-    //xfpm_session_quit (manager->priv->session);
+    xfpm_session_quit (manager->priv->session);
     
     g_object_unref (G_OBJECT (manager));
     
@@ -184,14 +187,13 @@ xfpm_manager_reserve_names (XfpmManager *manager)
     if ( !xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 				  "org.xfce.PowerManager") ) 
     {
-	g_critical("Unable to reserve bus name: Xfce Power Manager\n");
+	g_error ("Unable to reserve bus name: Xfce Power Manager\n");
     }
     
     if (!xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
 				  "org.freedesktop.PowerManagement") )
     {
-    
-	g_critical ("Unable to reserve bus name: PowerManagement\n");
+	g_error ("Unable to reserve bus name: PowerManagement\n");
     }
 }
 
@@ -234,7 +236,7 @@ out:
 
 void xfpm_manager_stop (XfpmManager *manager)
 {
-    
+    TRACE ("Stopping");
     g_return_if_fail (XFPM_IS_MANAGER (manager));
     xfpm_manager_quit (manager);
 }

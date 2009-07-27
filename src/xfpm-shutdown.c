@@ -404,6 +404,8 @@ void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
 {
     g_return_if_fail (XFPM_IS_SHUTDOWN(shutdown));
     
+    TRACE ("Start");
+    
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
 	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
@@ -426,6 +428,8 @@ void xfpm_reboot (XfpmShutdown *shutdown, GError **error)
 {
     g_return_if_fail (XFPM_IS_SHUTDOWN(shutdown));
     
+    TRACE ("Start");
+    
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
 	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
@@ -434,7 +438,7 @@ void xfpm_reboot (XfpmShutdown *shutdown, GError **error)
     }
     
     xfpm_send_message_to_network_manager ("sleep");
-    if ( !xfpm_session_reboot (shutdown->priv->session) )
+//    if ( !xfpm_session_reboot (shutdown->priv->session) )
     {
 	if ( !xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Reboot", NULL))
 	    xfpm_send_message_to_network_manager ("wake");
@@ -449,6 +453,8 @@ void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)
     const gchar *error_message;
     
     g_return_if_fail (XFPM_IS_SHUTDOWN(shutdown));
+    
+    TRACE ("Start");
     
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
@@ -484,6 +490,8 @@ void xfpm_suspend (XfpmShutdown *shutdown, GError **error)
     
     g_return_if_fail (XFPM_IS_SHUTDOWN(shutdown));
     
+    TRACE ("Start");
+    
     if ( G_UNLIKELY (shutdown->priv->connected == FALSE) )
     {
 	g_set_error (error, XFPM_ERROR, XFPM_ERROR_HAL_DISCONNECTED, _("HAL daemon is currently not connected"));
@@ -513,12 +521,16 @@ void xfpm_shutdown_ask (XfpmShutdown *shutdown)
 {
     g_return_if_fail (XFPM_IS_SHUTDOWN (shutdown));
     
+    TRACE ("Start");
+    
     xfpm_session_ask_shutdown (shutdown->priv->session);
 }
 
 void xfpm_shutdown_reload (XfpmShutdown *shutdown)
 {
     g_return_if_fail (XFPM_IS_SHUTDOWN (shutdown));
+    
+    TRACE ("Start");
     
     xfpm_shutdown_power_management_check (shutdown);
 }

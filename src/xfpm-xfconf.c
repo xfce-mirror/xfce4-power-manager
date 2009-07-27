@@ -269,7 +269,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      g_param_spec_uint (SHOW_TRAY_ICON_CFG,
                                                         NULL, NULL,
 							SHOW_ICON_ALWAYS,
-							SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING,
+							NEVER_SHOW_ICON,
 							SHOW_ICON_WHEN_BATTERY_PRESENT,
                                                         G_PARAM_READWRITE));
 							

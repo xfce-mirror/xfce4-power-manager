@@ -1046,7 +1046,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     GtkListStore *list_store;
     GtkTreeIter iter;
     
-    list_store = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     
     tray = GTK_WIDGET (gtk_builder_get_object (xml, "tray-combox"));
     gtk_combo_box_set_model (GTK_COMBO_BOX(tray), GTK_TREE_MODEL(list_store));
@@ -1059,6 +1059,9 @@ xfpm_settings_general (XfconfChannel *channel, gboolean user_privilege,
     
     gtk_list_store_append(list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("When battery is charging or discharging"), 1, SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING, -1);
+    
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Never show icon"), 1, NEVER_SHOW_ICON, -1);
     
     value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
     

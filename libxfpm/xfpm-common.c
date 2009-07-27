@@ -42,8 +42,16 @@ GtkBuilder *xfpm_builder_new_from_string (const gchar *ui, GError **error)
 static void
 xfpm_link_browser (GtkAboutDialog *about, const gchar *link, gpointer data)
 {
-    gchar *cmd = g_strdup_printf ("%s %s","xfbrowser4", link);
-    g_spawn_command_line_async (cmd, NULL);
+    gchar *cmd;
+    
+    cmd = g_strdup_printf ("%s %s","xdg-open", link);
+    
+    if ( !g_spawn_command_line_async (cmd, NULL) )
+    {
+	g_free (cmd);
+	cmd = g_strdup_printf ("%s %s","xfbrowser4", link);
+	g_spawn_command_line_async (cmd, NULL);
+    }
     g_free (cmd);
 	
 }

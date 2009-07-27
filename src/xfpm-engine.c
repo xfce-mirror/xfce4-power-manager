@@ -777,7 +777,7 @@ static gboolean xfpm_engine_dbus_reboot   (XfpmEngine *engine,
 {
     gboolean caller_privilege;
     
-    TRACE ("Hibernate message received");
+    TRACE ("Reboot message received");
 
     g_object_get (G_OBJECT (engine->priv->shutdown),
 		  "caller-privilege", &caller_privilege,

@@ -1,3 +1,15 @@
+2009-07-27: Ali aliov@xfce.org
+	* src/xfpm-battery.c don't notify when starting up.
+	* src/xfpm-engine.c fix a typo output message.
+	* src/xfpm-session.c Add error checking for getting DBus connection.
+	* src/xfpm-shutdown.c more verbosity.
+	* src/xfpm-main.c don't exit on SIGHUP.
+	* src/xfpm-manager.c exits if we fail to get primary name owner
+	of org.freedesktop.PowerManagement.
+	* libxfpm/xfpm-common.c use xdg-open first to open links.
+	* Another patch to the interface file by Josef Havran.
+	* Add the possibility to don't show a tray icon bug 5613.
+
 2009-07-24: Ali aliov@xfce.org
 	* Better alignement in the interface file, worked by Josef Havran.
 
