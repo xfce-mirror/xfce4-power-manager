@@ -181,20 +181,21 @@ xfpm_manager_quit (XfpmManager *manager)
     return TRUE;
 }
 
-static void
+static gboolean
 xfpm_manager_reserve_names (XfpmManager *manager)
 {
-    if ( !xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
-				  "org.xfce.PowerManager") ) 
-    {
-	g_error ("Unable to reserve bus name: Xfce Power Manager\n");
-    }
-    
-    if (!xfpm_dbus_register_name (dbus_g_connection_get_connection(manager->priv->session_bus),
+    if ( !xfpm_dbus_register_name (dbus_g_connection_get_connection (manager->priv->session_bus),
+				   "org.xfce.PowerManager") ||
+	 !xfpm_dbus_register_name (dbus_g_connection_get_connection (manager->priv->session_bus),
 				  "org.freedesktop.PowerManagement") )
     {
-	g_error ("Unable to reserve bus name: PowerManagement\n");
+	g_warning ("Unable to reserve bus name: Maybe any already running instance?\n");
+	xfpm_session_quit (manager->priv->session);
+	g_object_unref (G_OBJECT (manager));
+	gtk_main_quit ();
+	return FALSE;
     }
+    return TRUE;
 }
 
 XfpmManager *
@@ -215,8 +216,9 @@ void xfpm_manager_start (XfpmManager *manager)
 {
     gboolean hal_running;
     
-    xfpm_manager_reserve_names (manager);
-    
+    if ( !xfpm_manager_reserve_names (manager) )
+	goto out;
+	
     dbus_g_error_domain_register (XFPM_ERROR,
 				  NULL,
 				  XFPM_TYPE_ERROR);

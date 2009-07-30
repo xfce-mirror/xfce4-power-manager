@@ -392,7 +392,7 @@ xfpm_supply_handle_primary_critical (XfpmSupply *supply, XfpmBattery *battery)
 {
     XfpmShutdownRequest critical_action;
     
-    g_object_get (G_OBJECT (supply),
+    g_object_get (G_OBJECT (supply->priv->conf),
 	          CRITICAL_BATT_ACTION_CFG, &critical_action,
 		  NULL);
 
