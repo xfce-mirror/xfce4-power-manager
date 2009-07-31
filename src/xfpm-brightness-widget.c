@@ -52,7 +52,7 @@ struct XfpmBrightnessWidgetPrivate
 {
     XfpmDBusMonitor     *monitor;
     GtkWidget 		*window;
-    GdkPixbuf 		*pix;
+    GtkWidget           *progress_bar;
     
     guint      		 level;
     guint      		 max_level;
@@ -143,59 +143,6 @@ xfpm_brightness_widget_timeout (XfpmBrightnessWidget *widget)
     return FALSE;
 }
 
-static gboolean
-xfpm_brightness_widget_expose_event (GtkWidget *w, GdkEventExpose *ev, XfpmBrightnessWidget *widget)
-{
-    cairo_t *cr;
-    gdouble width;
-    gdouble padding;
-    guint i;
-
-    g_return_val_if_fail (widget->priv->max_level != 0, FALSE );
-
-    cr = gdk_cairo_create (widget->priv->window->window);
-
-    cairo_set_source_rgba (cr, 1.0f, 1.0f, 1.0f, 0.0f);
-    cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-    cairo_paint (cr); 
-    
-    gdk_cairo_set_source_pixbuf (cr, widget->priv->pix,  (180 - 128)/2, 0);
-    cairo_paint (cr);
-    
-    width = (gdouble)  (180-20) / widget->priv->max_level;
-    padding = width /10;
-    cairo_translate (cr, 10, 0);
-    
-    for ( i = 0; i < widget->priv->max_level; i++) 
-    {
-	if ( i >= widget->priv->level )
-	{
-	    cairo_set_source_rgb (cr, 0., 0., 0.);
-	}
-	else
-	{
-	    cairo_set_source_rgb (cr, 1., 1.0, 0.0);
-	}
-	cairo_rectangle (cr, (gdouble)i*width, 130, width - padding , 20);
-	cairo_fill (cr);
-    }
-
-    cairo_destroy (cr);
-    return TRUE;
-}
-
-static void
-xfpm_brightness_widget_set_colormap (GtkWidget *widget)
-{
-    GdkScreen *screen = gtk_widget_get_screen (widget);
-    GdkColormap* colmap = gdk_screen_get_rgba_colormap (screen);
-  
-    if (!colmap)
-	colmap = gdk_screen_get_rgb_colormap (screen);
-  
-    gtk_widget_set_colormap (widget, colmap);
-}
-
 static void
 xfpm_brightness_widget_class_init (XfpmBrightnessWidgetClass *klass)
 {
@@ -209,8 +156,19 @@ xfpm_brightness_widget_class_init (XfpmBrightnessWidgetClass *klass)
 static void
 xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
 {
+    GtkWidget *vbox;
+    GtkWidget *img;
+    GtkWidget *align;
+    
     widget->priv = XFPM_BRIGHTNESS_WIDGET_GET_PRIVATE (widget);
+    
     widget->priv->monitor = xfpm_dbus_monitor_new ();
+    
+    widget->priv->level  = 0;
+    widget->priv->max_level = 0;
+    widget->priv->timeout_id = 0;
+    widget->priv->notify_osd = FALSE;
+    widget->priv->check_server_caps = TRUE;
     
     xfpm_dbus_monitor_add_service (widget->priv->monitor, 
 				   DBUS_BUS_SESSION,
@@ -230,26 +188,31 @@ xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
 		  "app-paintable", TRUE,
 		  NULL);
 
+    gtk_window_set_default_size (GTK_WINDOW (widget->priv->window), BRIGHTNESS_POPUP_SIZE, BRIGHTNESS_POPUP_SIZE);
     
-    widget->priv->level  = 0;
-    widget->priv->max_level = 0;
-    widget->priv->timeout_id = 0;
-    widget->priv->notify_osd = FALSE;
-    widget->priv->check_server_caps = TRUE;
-
-    gtk_widget_set_size_request (GTK_WIDGET (widget->priv->window), BRIGHTNESS_POPUP_SIZE, BRIGHTNESS_POPUP_SIZE);
+    align = gtk_alignment_new (0., 0.5, 0, 0);
+    gtk_alignment_set_padding (GTK_ALIGNMENT (align), 5, 5, 5, 5);
     
-    widget->priv->pix = xfpm_load_icon ("xfpm-brightness-lcd", 128);
+    vbox = gtk_vbox_new (FALSE, 0);
     
-    xfpm_brightness_widget_set_colormap (GTK_WIDGET (widget->priv->window));
-
-    g_signal_connect (widget->priv->window, "expose_event",
-		      G_CALLBACK (xfpm_brightness_widget_expose_event), widget);
-		      
+    gtk_container_add (GTK_CONTAINER (widget->priv->window), align);
+    gtk_container_add (GTK_CONTAINER (align), vbox);
+    
+    img = gtk_image_new_from_icon_name ("xfpm-brightness-lcd", GTK_ICON_SIZE_DIALOG);
+    
+    gtk_box_pack_start (GTK_BOX (vbox), img, TRUE, TRUE, 0);
+    
+    widget->priv->progress_bar = gtk_progress_bar_new ();
+    
+    gtk_box_pack_start (GTK_BOX (vbox), widget->priv->progress_bar, TRUE, TRUE, 0);
+    
+    gtk_widget_show_all (align);
+    
     widget->priv->n = notify_notification_new (" ",
 					       "",
 					       NULL,
 					       NULL);
+					       
 }
 
 static void
@@ -259,14 +222,13 @@ xfpm_brightness_widget_finalize (GObject *object)
 
     widget = XFPM_BRIGHTNESS_WIDGET (object);
     
-    if ( widget->priv->pix )
-	gdk_pixbuf_unref (widget->priv->pix);
-	
     if ( g_signal_handler_is_connected (G_OBJECT (widget->priv->monitor), widget->priv->sig_1) )
 	g_signal_handler_disconnect (G_OBJECT (widget->priv->monitor), widget->priv->sig_1);
 	
     g_object_unref (widget->priv->n);
     g_object_unref (widget->priv->monitor);
+
+    gtk_widget_destroy (widget->priv->window);
 
     G_OBJECT_CLASS (xfpm_brightness_widget_parent_class)->finalize (object);
 }
@@ -282,13 +244,24 @@ xfpm_brightness_widget_new (void)
 
 void xfpm_brightness_widget_set_max_level (XfpmBrightnessWidget *widget, guint level)
 {
+    GtkObject *adj;
+    
     g_return_if_fail (XFPM_IS_BRIGHTNESS_WIDGET (widget));
 
+    adj = gtk_adjustment_new (0., 0., level, 1., 0., 0.);
+
     widget->priv->max_level = level;
+    
+    g_object_set (G_OBJECT (widget->priv->progress_bar),
+		  "adjustment", adj,
+		  NULL);
+    
 }
 
 void xfpm_brightness_widget_set_level (XfpmBrightnessWidget *widget, guint level)
 {
+    GtkAdjustment *adj;
+    
     g_return_if_fail (XFPM_IS_BRIGHTNESS_WIDGET (widget));
     
     widget->priv->level = level;
@@ -305,6 +278,12 @@ void xfpm_brightness_widget_set_level (XfpmBrightnessWidget *widget, guint level
     }
     else
     {
+	g_object_get (G_OBJECT (widget->priv->progress_bar),
+		      "adjustment", &adj,
+		      NULL);
+	
+	gtk_adjustment_set_value (adj, level);
+	
 	gtk_window_present (GTK_WINDOW (widget->priv->window));
 	
 	if ( widget->priv->timeout_id != 0 )
