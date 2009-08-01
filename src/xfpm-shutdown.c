@@ -415,13 +415,11 @@ void xfpm_shutdown	(XfpmShutdown *shutdown, GError **error)
     
     xfpm_send_message_to_network_manager ("sleep");
     
-    if ( !xfpm_session_shutdown (shutdown->priv->session) )
+    if ( !xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Shutdown", NULL))
     {
-	if ( !xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Shutdown", NULL))
-	    xfpm_send_message_to_network_manager ("wake");
+	xfpm_send_message_to_network_manager ("wake");
+	shutdown->priv->block_shutdown = FALSE;
     }
-    
-    shutdown->priv->block_shutdown = FALSE;
 }
 
 void xfpm_reboot (XfpmShutdown *shutdown, GError **error)
@@ -438,13 +436,11 @@ void xfpm_reboot (XfpmShutdown *shutdown, GError **error)
     }
     
     xfpm_send_message_to_network_manager ("sleep");
-//    if ( !xfpm_session_reboot (shutdown->priv->session) )
+    if ( !xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Reboot", NULL))
     {
-	if ( !xfpm_shutdown_internal (dbus_g_connection_get_connection(shutdown->priv->bus), "Reboot", NULL))
-	    xfpm_send_message_to_network_manager ("wake");
+	xfpm_send_message_to_network_manager ("wake");
+	shutdown->priv->block_shutdown = FALSE;
     }
-
-    shutdown->priv->block_shutdown = FALSE;
 }    
 
 void xfpm_hibernate (XfpmShutdown *shutdown, GError **error)

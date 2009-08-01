@@ -298,8 +298,6 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     gtk_widget_set_tooltip_text (mi, _("Disable or enable automatic sleep, setting this will tell the power manager "\
 				       "to disable backlight sleep, for example you could active the inhibit if you are watching a movie."));
     
-    img = gtk_image_new_from_stock (saver_inhibited ? GTK_STOCK_CANCEL : GTK_STOCK_APPLY, GTK_ICON_SIZE_MENU);
-    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
     g_signal_connect (G_OBJECT (mi), "activate",
 		      G_CALLBACK (xfpm_tray_icon_inhibit_active_cb), tray);
     gtk_widget_set_sensitive (mi, TRUE);

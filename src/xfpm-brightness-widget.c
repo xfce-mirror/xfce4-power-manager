@@ -284,7 +284,8 @@ void xfpm_brightness_widget_set_level (XfpmBrightnessWidget *widget, guint level
 	
 	gtk_adjustment_set_value (adj, level);
 	
-	gtk_window_present (GTK_WINDOW (widget->priv->window));
+	if ( !GTK_WIDGET_VISIBLE (widget->priv->window))
+	    gtk_window_present (GTK_WINDOW (widget->priv->window));
 	
 	if ( widget->priv->timeout_id != 0 )
 	    g_source_remove (widget->priv->timeout_id);

@@ -116,6 +116,7 @@ xfpm_session_init (XfpmSession *session)
     session->priv = XFPM_SESSION_GET_PRIVATE (session);
     
     session->priv->client = NULL;
+    session->priv->managed = FALSE;
     
     restart_command    = g_new (gchar *, 3);
     restart_command[0] = g_strdup ("xfce4-power-manager");
@@ -231,6 +232,9 @@ void xfpm_session_set_client_id (XfpmSession *session, const gchar *client_id)
 void xfpm_session_quit (XfpmSession *session)
 {
     g_return_if_fail (XFPM_IS_SESSION (session));
+    
+    if ( !session->priv->managed)
+	return;
     
     client_session_set_restart_style (session->priv->client, SESSION_RESTART_NEVER);
 }

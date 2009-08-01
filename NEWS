@@ -1,5 +1,9 @@
-Current
+0.8.3
 =======
+- Provides more standard org.fd.PowerManagement DBus methods and signal (bug #5569).
 - Make it possible to compile without network manager support.
 - Add never show icon to the system tray configuration (bug #5613).
 - Fix a typo that prevents from getting the correct critical configuration (bug #5619).
+- Use Gtk as a popup indicator to show the brightness level as the cairo seems to be 
+  problematic on some hardware. (bug #5544 #5632).
+- Better alignement in the interface file, worked by Josef Havran.
