@@ -237,9 +237,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      PROP_CRITICAL_LEVEL,
                                      g_param_spec_uint (CRITICAL_POWER_LEVEL,
                                                         NULL, NULL,
-							0,
+							5,
 							20,
-							1,
+							5,
                                                         G_PARAM_READWRITE));
 	
     /**

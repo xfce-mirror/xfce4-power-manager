@@ -1346,12 +1346,12 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
 	gtk_widget_set_tooltip_text (critical_level, 
 				     _("When all the power sources of the computer reach this charge level"));
     
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, 1 );
+	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, 5);
 
 	if ( val > 20 )
 	{
 	    g_critical ("Value %d if out of range for property %s\n", val, CRITICAL_POWER_LEVEL);
-	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), 10);
+	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), 5);
 	}
 	else
 	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), val);
