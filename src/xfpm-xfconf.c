@@ -239,7 +239,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         NULL, NULL,
 							0,
 							20,
-							10,
+							1,
                                                         G_PARAM_READWRITE));
 	
     /**

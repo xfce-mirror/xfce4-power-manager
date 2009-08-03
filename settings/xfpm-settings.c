@@ -1346,7 +1346,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
 	gtk_widget_set_tooltip_text (critical_level, 
 				     _("When all the power sources of the computer reach this charge level"));
     
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, 10 );
+	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, 1 );
 
 	if ( val > 20 )
 	{
