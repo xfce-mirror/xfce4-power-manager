@@ -175,7 +175,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
         return;
 
-    if ( !g_str_has_prefix (property, PROPERTIES_PREFIX) )
+    if ( !g_str_has_prefix (property, PROPERTIES_PREFIX) || strlen (property) <= strlen (PROPERTIES_PREFIX) )
 	return;
 
     TRACE("Property modified: %s\n", property);
@@ -239,7 +239,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         NULL, NULL,
 							5,
 							20,
-							5,
+							10,
                                                         G_PARAM_READWRITE));
 	
     /**
