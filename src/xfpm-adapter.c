@@ -89,7 +89,7 @@ xfpm_adapter_set_device (XfpmAdapter *adapter, HalManager *manager)
     
     udi = hal_manager_find_device_by_capability (manager, "ac_adapter");
     
-    if (!udi )//FIXME Adapter should be present on laptops
+    if (udi == NULL || udi[0] == NULL)//FIXME Adapter should be present on laptops
 	goto out;
 	
     TRACE("Found AC Adapter with udi=%s\n", udi[0]);

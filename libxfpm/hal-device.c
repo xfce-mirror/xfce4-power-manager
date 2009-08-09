@@ -260,6 +260,8 @@ void hal_device_set_udi (HalDevice *device, const gchar *udi)
 	device->priv->udi = NULL;
 	g_object_unref (device->priv->proxy);
     }
+    
+    g_return_if_fail (udi != NULL);
 	
     device->priv->udi = g_strdup (udi);
     

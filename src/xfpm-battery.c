@@ -630,6 +630,7 @@ xfpm_battery_init(XfpmBattery *battery)
     battery->priv->conf      = xfpm_xfconf_new ();
     battery->priv->notify    = xfpm_notify_new ();
     battery->priv->state = BATTERY_STATE_UNKNOWN;
+    battery->priv->icon_prefix = NULL;
     
     battery->priv->adapter_present = xfpm_adapter_get_present (battery->priv->adapter);
     

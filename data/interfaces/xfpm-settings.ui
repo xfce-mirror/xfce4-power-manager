@@ -193,6 +193,7 @@
                                           <object class="GtkComboBox" id="power-combox">
                                             <property name="visible">True</property>
                                             <property name="model">model1</property>
+                                            <signal name="changed" handler="button_power_changed_cb"/>
                                             <child>
                                               <object class="GtkCellRendererText" id="renderer1"/>
                                               <attributes>
