@@ -241,7 +241,10 @@ xfpm_engine_lid_event (XfpmEngine *engine)
     XFPM_DEBUG_ENUM ("LID close event", action, XFPM_TYPE_LID_TRIGGER_ACTION);
     
     if ( action == LID_TRIGGER_LOCK_SCREEN )
-	xfpm_lock_screen ();
+    {
+	if ( !xfpm_guess_is_multimonitor () )
+	    xfpm_lock_screen ();
+    }
     else 
 	xfpm_engine_shutdown_request (engine, action, FALSE);
 }

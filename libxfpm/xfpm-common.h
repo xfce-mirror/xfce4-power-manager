@@ -47,6 +47,8 @@ void            xfpm_quit                       (void);
 void       	xfpm_about			(GtkWidget *widget, 
 						 gpointer data);
 
+gboolean	xfpm_guess_is_multimonitor	(void);
+
 G_END_DECLS
 
 #endif /* XFPM_COMMON_H */

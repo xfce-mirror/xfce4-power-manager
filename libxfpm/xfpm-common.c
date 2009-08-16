@@ -165,3 +165,38 @@ xfpm_about (GtkWidget *widget, gpointer data)
 		     NULL);
 						 
 }
+
+gboolean xfpm_guess_is_multimonitor (void)
+{
+    GdkDisplay *dpy;
+    GdkScreen *screen;
+    gint nscreen;
+    gint nmonitor;
+    
+    dpy = gdk_display_get_default ();
+    
+    nscreen = gdk_display_get_n_screens (dpy);
+    
+    if ( nscreen == 1 )
+    {
+	screen = gdk_display_get_screen (dpy, 0);
+	if ( screen )
+	{
+	    nmonitor = gdk_screen_get_n_monitors (screen);
+	    if ( nmonitor > 1 )
+	    {
+		g_debug ("Multiple monitor connected");
+		return TRUE; 
+	    }
+	    else
+		return FALSE;
+	}
+    }
+    else if ( nscreen > 1 )
+    {
+	g_debug ("Multiple screen connected");
+	return TRUE;
+    }
+    
+    return FALSE;
+}
