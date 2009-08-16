@@ -49,6 +49,7 @@
 #include "xfpm-backlight.h"
 #include "xfpm-screen-saver.h"
 #include "xfpm-shutdown.h"
+#include "xfpm-button-hal.h"
 #include "xfpm-idle.h"
 #include "xfpm-errors.h"
 #include "xfpm-config.h"
@@ -76,6 +77,7 @@ struct XfpmEnginePrivate
     XfpmInhibit 	*inhibit;
     XfpmShutdown        *shutdown;
     XfpmButton          *button;
+    XfpmButtonHal       *bt_hal;
     XfpmIdle            *idle;
     XfpmScreenSaver     *srv;
 #ifdef HAVE_DPMS
@@ -230,23 +232,26 @@ xfpm_engine_shutdown_request_battery_cb (XfpmSupply * supply,
 }
 
 static void
-xfpm_engine_lid_event (XfpmEngine *engine)
+xfpm_engine_lid_event (XfpmButtonHal *bt_hal, gboolean pressed, XfpmEngine *engine)
 {
     XfpmLidTriggerAction action;
     
-    g_object_get (G_OBJECT (engine->priv->conf),
-		  engine->priv->on_battery ? LID_SWITCH_ON_BATTERY_CFG : LID_SWITCH_ON_AC_CFG, &action,
-		  NULL);
-		  
-    XFPM_DEBUG_ENUM ("LID close event", action, XFPM_TYPE_LID_TRIGGER_ACTION);
-    
-    if ( action == LID_TRIGGER_LOCK_SCREEN )
+    if ( pressed )
     {
-	if ( !xfpm_guess_is_multimonitor () )
-	    xfpm_lock_screen ();
+	g_object_get (G_OBJECT (engine->priv->conf),
+		      engine->priv->on_battery ? LID_SWITCH_ON_BATTERY_CFG : LID_SWITCH_ON_AC_CFG, &action,
+		      NULL);
+		      
+	XFPM_DEBUG_ENUM ("LID close event", action, XFPM_TYPE_LID_TRIGGER_ACTION);
+	
+	if ( action == LID_TRIGGER_LOCK_SCREEN )
+	{
+	    if ( !xfpm_guess_is_multimonitor () )
+		xfpm_lock_screen ();
+	}
+	else 
+	    xfpm_engine_shutdown_request (engine, action, FALSE);
     }
-    else 
-	xfpm_engine_shutdown_request (engine, action, FALSE);
 }
 
 static void
@@ -265,12 +270,6 @@ xfpm_engine_button_pressed_cb (XfpmButton *button,
     
     if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
 	return;
-    
-    if ( type == BUTTON_LID_CLOSED )
-    {
-	xfpm_engine_lid_event (engine);
-	return;
-    }
     
     if ( type == BUTTON_POWER_OFF )
     {
@@ -381,6 +380,9 @@ xfpm_engine_load_all (gpointer data)
     g_signal_connect (engine->priv->button, "button-pressed",
 		      G_CALLBACK (xfpm_engine_button_pressed_cb), engine);
 
+    engine->priv->bt_hal = xfpm_button_hal_get ();
+    g_signal_connect (engine->priv->bt_hal, "lid_event",
+		      G_CALLBACK (xfpm_engine_lid_event), engine);
   /*
    * Brightness HAL
    */

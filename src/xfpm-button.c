@@ -63,7 +63,7 @@ G_DEFINE_TYPE (XfpmButton, xfpm_button, G_TYPE_OBJECT)
 static void
 xfpm_button_xf86_emit_signal (XfpmButton *button, XfpmButtonKey key)
 {
-    if ( key == BUTTON_LID_CLOSED || key == BUTTON_POWER_OFF || key == BUTTON_SLEEP || key == BUTTON_HIBERNATE )
+    if ( key == BUTTON_POWER_OFF || key == BUTTON_SLEEP || key == BUTTON_HIBERNATE )
     {
 	if ( g_timer_elapsed (button->priv->timer, NULL) > SLEEP_KEY_TIMEOUT )
 	{
@@ -126,7 +126,7 @@ xfpm_button_init (XfpmButton *button)
     
     xf86_mapped = xfpm_button_xf86_get_mapped_buttons (button->priv->xf86);
 
-    button->priv->hal = xfpm_button_hal_new ();
+    button->priv->hal = xfpm_button_hal_get ();
     
     if ( xf86_mapped & SLEEP_KEY && xf86_mapped & POWER_KEY && 
 	 xf86_mapped & BRIGHTNESS_KEY && xf86_mapped & HIBERNATE_KEY )

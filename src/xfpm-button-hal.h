@@ -46,11 +46,15 @@ typedef struct
     
     void                      (*hal_button_pressed)	      (XfpmButtonHal *button,
 							       XfpmButtonKey type);
+							       
+    void		      (*lid_event)		      (XfpmButtonHal *button,
+							       gboolean pressed);
     
 } XfpmButtonHalClass;
 
 GType        		      xfpm_button_hal_get_type        (void) G_GNUC_CONST;
-XfpmButtonHal       	     *xfpm_button_hal_new             (void);
+
+XfpmButtonHal       	     *xfpm_button_hal_get             (void);
 
 void                          xfpm_button_hal_get_keys        (XfpmButtonHal *button,
 							       gboolean lid_only,

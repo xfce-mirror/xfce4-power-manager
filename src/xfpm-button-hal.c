@@ -54,6 +54,7 @@ struct XfpmButtonHalPrivate
 enum
 {
     HAL_BUTTON_PRESSED,
+    LID_EVENT,
     LAST_SIGNAL
 };
 
@@ -124,11 +125,8 @@ xfpm_button_hal_device_changed_cb (HalDevice *device, const gchar *udi, const gc
 	{
 	    pressed = hal_device_get_property_bool (device, key);
     
-	    if ( pressed )
-	    {
-		TRACE ("Emitting signal lid closed");
-		g_signal_emit (G_OBJECT (bt), signals [HAL_BUTTON_PRESSED], 0, BUTTON_LID_CLOSED );
-	    }
+	    TRACE ("Emitting signal lid event : pressed %s", xfpm_bool_to_string (pressed));
+	    g_signal_emit (G_OBJECT (bt), signals [LID_EVENT], 0, pressed);
 	}
 	g_free (button_type);
     }
@@ -245,6 +243,15 @@ xfpm_button_hal_class_init (XfpmButtonHalClass *klass)
                       g_cclosure_marshal_VOID__ENUM,
                       G_TYPE_NONE, 1, XFPM_TYPE_BUTTON_KEY);
 
+    signals[LID_EVENT] = 
+        g_signal_new("lid-event",
+                      XFPM_TYPE_BUTTON_HAL,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmButtonHalClass, lid_event),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__BOOLEAN,
+                      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+
     object_class->finalize = xfpm_button_hal_finalize;
 
     g_type_class_add_private (klass, sizeof (XfpmButtonHalPrivate));
@@ -287,11 +294,21 @@ xfpm_button_hal_finalize (GObject *object)
 }
 
 XfpmButtonHal *
-xfpm_button_hal_new (void)
+xfpm_button_hal_get (void)
 {
-    XfpmButtonHal *button = NULL;
-    button = g_object_new (XFPM_TYPE_BUTTON_HAL, NULL);
-    return button;
+    static gpointer button = NULL;
+    
+    if ( G_LIKELY (button) )
+    {
+	g_object_ref (button);
+    }
+    else
+    {
+	button = g_object_new (XFPM_TYPE_BUTTON_HAL, NULL);
+	g_object_add_weak_pointer (button, &button);
+    }
+	
+    return XFPM_BUTTON_HAL (button);
 }
 
 void xfpm_button_hal_get_keys (XfpmButtonHal *button, gboolean lid_only, guint8 keys)
