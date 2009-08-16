@@ -380,6 +380,7 @@ xfpm_dpms_finalize(GObject *object)
     g_object_unref (dpms->priv->adapter);
 	
     g_object_unref ( dpms->priv->saver);
+    g_object_unref ( dpms->priv->bt_hal);
 
     G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }

@@ -596,6 +596,7 @@ xfpm_engine_finalize (GObject * object)
     g_object_unref (engine->priv->button);
     
     g_object_unref (engine->priv->idle);
+    g_object_unref (engine->priv->bt_hal);
 
 #ifdef HAVE_DPMS
     if (engine->priv->dpms)
