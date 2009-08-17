@@ -47,7 +47,10 @@ typedef struct
 } XfpmSessionClass;
 
 GType  		      		 xfpm_session_get_type        (void) G_GNUC_CONST;
+
 XfpmSession       		*xfpm_session_new             (void);
+
+void				 xfpm_session_real_init	      (XfpmSession *session);
 
 void			         xfpm_session_set_client_id   (XfpmSession *session,
 							       const gchar *client_id);

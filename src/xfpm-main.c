@@ -82,6 +82,8 @@ xfpm_start (DBusGConnection *bus)
     
     if ( client_id != NULL )
 	xfpm_session_set_client_id (session, client_id);
+	
+    xfpm_session_real_init (session);
     
     manager = xfpm_manager_new (bus);
     

@@ -59,6 +59,7 @@ struct XfpmSessionPrivate
 {
     SessionClient *client;
     gboolean       managed;
+    gboolean	   initted;
 };
 
 enum
@@ -117,6 +118,7 @@ xfpm_session_init (XfpmSession *session)
     
     session->priv->client = NULL;
     session->priv->managed = FALSE;
+    session->priv->initted = FALSE;
     
     restart_command    = g_new (gchar *, 3);
     restart_command[0] = g_strdup ("xfce4-power-manager");
@@ -140,7 +142,6 @@ xfpm_session_init (XfpmSession *session)
 	return;
     }
     
-    session->priv->managed 	   = session_init (session->priv->client);
     session->priv->client->die     = xfpm_session_die;
 }
 
@@ -219,13 +220,21 @@ xfpm_session_new (void)
     return XFPM_SESSION (xfpm_session_object);
 }
 
+void xfpm_session_real_init (XfpmSession *session)
+{
+    session->priv->managed = session_init (session->priv->client);
+    session->priv->initted = TRUE;
+}
+
 void xfpm_session_set_client_id (XfpmSession *session, const gchar *client_id)
 {
     g_return_if_fail (XFPM_IS_SESSION (session));
+    g_return_if_fail (session->priv->initted == FALSE);
     
-    if ( G_UNLIKELY (session->priv->client == NULL) )
+    if ( G_UNLIKELY (session->priv->client == NULL || session->priv->managed == FALSE) )
 	return;
     
+    TRACE ("Setting client id : %s\n", client_id);
     client_session_set_client_id (session->priv->client, client_id);
 }
 
@@ -233,7 +242,7 @@ void xfpm_session_quit (XfpmSession *session)
 {
     g_return_if_fail (XFPM_IS_SESSION (session));
     
-    if ( !session->priv->managed)
+    if ( G_UNLIKELY (session->priv->client == NULL || session->priv->managed == FALSE) )
 	return;
     
     client_session_set_restart_style (session->priv->client, SESSION_RESTART_NEVER);
