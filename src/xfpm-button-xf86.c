@@ -151,13 +151,13 @@ xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmButtonKe
 
     if ( keycode == 0 )
     {
-	g_critical ("could not map keysym %x to keycode\n", keysym);
+	g_warning ("could not map keysym %x to keycode\n", keysym);
 	return FALSE;
     }
     
     if ( !xfpm_button_xf86_grab_keystring(button, keycode)) 
     {
-    	g_critical ("Failed to grab %i\n", keycode);
+    	g_warning ("Failed to grab %i\n", keycode);
 	return FALSE;
     }
     
@@ -183,8 +183,8 @@ xfpm_button_xf86_setup (XfpmButtonXf86 *button)
 #endif 
 
 #ifdef HAVE_XF86XK_SUSPEND
-    if ( xfpm_button_xf86_xevent_key (button, XF86XK_Suspend, BUTTON_SLEEP) )
-	button->priv->mapped_buttons |= SLEEP_KEY;
+    if ( xfpm_button_xf86_xevent_key (button, XF86XK_Suspend, BUTTON_HIBERNATE) )
+	button->priv->mapped_buttons |= HIBERNATE_KEY;
 #endif 
 
     if ( xfpm_button_xf86_xevent_key (button, XF86XK_Sleep, BUTTON_SLEEP) )
