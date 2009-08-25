@@ -57,6 +57,7 @@ struct XfpmBrightnessWidgetPrivate
     guint      		 level;
     guint      		 max_level;
     gulong     		 timeout_id;
+    gulong		 destroy_id;
     
     gboolean		 check_server_caps;
     gboolean		 notify_osd;
@@ -144,40 +145,16 @@ xfpm_brightness_widget_timeout (XfpmBrightnessWidget *widget)
 }
 
 static void
-xfpm_brightness_widget_class_init (XfpmBrightnessWidgetClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-    object_class->finalize = xfpm_brightness_widget_finalize;
-    
-    g_type_class_add_private (klass, sizeof (XfpmBrightnessWidgetPrivate));
-}
-
-static void
-xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
+xfpm_brightness_widget_create_popup (XfpmBrightnessWidget *widget)
 {
     GtkWidget *vbox;
     GtkWidget *img;
     GtkWidget *align;
+    GtkObject *adj;
     
-    widget->priv = XFPM_BRIGHTNESS_WIDGET_GET_PRIVATE (widget);
-    
-    widget->priv->monitor = xfpm_dbus_monitor_new ();
-    
-    widget->priv->level  = 0;
-    widget->priv->max_level = 0;
-    widget->priv->timeout_id = 0;
-    widget->priv->notify_osd = FALSE;
-    widget->priv->check_server_caps = TRUE;
-    
-    xfpm_dbus_monitor_add_service (widget->priv->monitor, 
-				   DBUS_BUS_SESSION,
-				   "org.freedesktop.Notifications");
-    
-    widget->priv->sig_1 = g_signal_connect (widget->priv->monitor, "service-connection-changed",
-					    G_CALLBACK (xfpm_brightness_widget_service_connection_changed_cb),
-					    widget);
-    
+    if ( widget->priv->window != NULL )
+	return;
+	
     widget->priv->window = gtk_window_new (GTK_WINDOW_POPUP);
 
     g_object_set (G_OBJECT (widget->priv->window), 
@@ -204,15 +181,86 @@ xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
     
     widget->priv->progress_bar = gtk_progress_bar_new ();
     
+    adj = gtk_adjustment_new (0., 0., widget->priv->max_level, 1., 0., 0.);
+
+    g_object_set (G_OBJECT (widget->priv->progress_bar),
+		  "adjustment", adj,
+		  NULL);
+    
     gtk_box_pack_start (GTK_BOX (vbox), widget->priv->progress_bar, TRUE, TRUE, 0);
     
     gtk_widget_show_all (align);
+}
+
+static void
+xfpm_brightness_widget_create_notification (XfpmBrightnessWidget *widget)
+{
+    if ( widget->priv->n == NULL )
+    {
+	widget->priv->n = notify_notification_new (" ",
+						   "",
+					           NULL,
+					           NULL);
+    }
+}
+
+static gboolean
+xfpm_brightness_widget_destroy (gpointer data)
+{
+    XfpmBrightnessWidget *widget;
     
-    widget->priv->n = notify_notification_new (" ",
-					       "",
-					       NULL,
-					       NULL);
-					       
+    widget = XFPM_BRIGHTNESS_WIDGET (data);
+    
+    if ( widget->priv->window )
+    {
+	gtk_widget_destroy (widget->priv->window);
+	widget->priv->window = NULL;
+    }
+    
+    
+    if ( widget->priv->n )
+    {
+	g_object_unref (widget->priv->n);
+	widget->priv->n = NULL;
+    }
+    
+    return FALSE;
+}
+
+static void
+xfpm_brightness_widget_class_init (XfpmBrightnessWidgetClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+    object_class->finalize = xfpm_brightness_widget_finalize;
+    
+    g_type_class_add_private (klass, sizeof (XfpmBrightnessWidgetPrivate));
+}
+
+static void
+xfpm_brightness_widget_init (XfpmBrightnessWidget *widget)
+{
+    widget->priv = XFPM_BRIGHTNESS_WIDGET_GET_PRIVATE (widget);
+    
+    widget->priv->monitor = xfpm_dbus_monitor_new ();
+    
+    widget->priv->level  = 0;
+    widget->priv->max_level = 0;
+    widget->priv->timeout_id = 0;
+    widget->priv->destroy_id = 0;
+    widget->priv->notify_osd = FALSE;
+    widget->priv->check_server_caps = TRUE;
+    widget->priv->window = NULL;
+    widget->priv->progress_bar = NULL;
+    widget->priv->n = NULL;
+    
+    xfpm_dbus_monitor_add_service (widget->priv->monitor, 
+				   DBUS_BUS_SESSION,
+				   "org.freedesktop.Notifications");
+    
+    widget->priv->sig_1 = g_signal_connect (widget->priv->monitor, "service-connection-changed",
+					    G_CALLBACK (xfpm_brightness_widget_service_connection_changed_cb),
+					    widget);
 }
 
 static void
@@ -225,13 +273,52 @@ xfpm_brightness_widget_finalize (GObject *object)
     if ( g_signal_handler_is_connected (G_OBJECT (widget->priv->monitor), widget->priv->sig_1) )
 	g_signal_handler_disconnect (G_OBJECT (widget->priv->monitor), widget->priv->sig_1);
 	
-    g_object_unref (widget->priv->n);
+    xfpm_brightness_widget_destroy (widget);
+    
     g_object_unref (widget->priv->monitor);
-
-    gtk_widget_destroy (widget->priv->window);
 
     G_OBJECT_CLASS (xfpm_brightness_widget_parent_class)->finalize (object);
 }
+
+static void
+xfpm_brightness_widget_show (XfpmBrightnessWidget *widget)
+{
+    if ( widget->priv->notify_osd )
+    {
+	xfpm_brightness_widget_create_notification (widget);
+	xfpm_brightness_widget_display_notification (widget);
+    }
+    else
+    {
+	GtkAdjustment *adj;
+	
+	xfpm_brightness_widget_create_popup (widget);
+	g_object_get (G_OBJECT (widget->priv->progress_bar),
+		      "adjustment", &adj,
+		      NULL);
+	
+	gtk_adjustment_set_value (adj, widget->priv->level);
+	
+	if ( !GTK_WIDGET_VISIBLE (widget->priv->window))
+	    gtk_window_present (GTK_WINDOW (widget->priv->window));
+	
+	if ( widget->priv->timeout_id != 0 )
+	    g_source_remove (widget->priv->timeout_id);
+	    
+	widget->priv->timeout_id = 
+	    g_timeout_add (900, (GSourceFunc) xfpm_brightness_widget_timeout, widget);
+    }
+    
+    if ( widget->priv->destroy_id != 0 )
+    {
+	g_source_remove (widget->priv->destroy_id);
+	widget->priv->destroy_id = 0;
+    }
+    
+    /* Release the memory after 60 seconds */
+    widget->priv->destroy_id = g_timeout_add_seconds (60, (GSourceFunc) xfpm_brightness_widget_destroy, widget);
+}
+    
 
 XfpmBrightnessWidget *
 xfpm_brightness_widget_new (void)
@@ -244,24 +331,13 @@ xfpm_brightness_widget_new (void)
 
 void xfpm_brightness_widget_set_max_level (XfpmBrightnessWidget *widget, guint level)
 {
-    GtkObject *adj;
-    
     g_return_if_fail (XFPM_IS_BRIGHTNESS_WIDGET (widget));
 
-    adj = gtk_adjustment_new (0., 0., level, 1., 0., 0.);
-
     widget->priv->max_level = level;
-    
-    g_object_set (G_OBJECT (widget->priv->progress_bar),
-		  "adjustment", adj,
-		  NULL);
-    
 }
 
 void xfpm_brightness_widget_set_level (XfpmBrightnessWidget *widget, guint level)
 {
-    GtkAdjustment *adj;
-    
     g_return_if_fail (XFPM_IS_BRIGHTNESS_WIDGET (widget));
     
     widget->priv->level = level;
@@ -271,26 +347,6 @@ void xfpm_brightness_widget_set_level (XfpmBrightnessWidget *widget, guint level
 	widget->priv->notify_osd = xfpm_brightness_widget_server_is_notify_osd ();
 	widget->priv->check_server_caps = FALSE;
     }
-	
-    if ( widget->priv->notify_osd )
-    {
-	xfpm_brightness_widget_display_notification (widget);
-    }
-    else
-    {
-	g_object_get (G_OBJECT (widget->priv->progress_bar),
-		      "adjustment", &adj,
-		      NULL);
-	
-	gtk_adjustment_set_value (adj, level);
-	
-	if ( !GTK_WIDGET_VISIBLE (widget->priv->window))
-	    gtk_window_present (GTK_WINDOW (widget->priv->window));
-	
-	if ( widget->priv->timeout_id != 0 )
-	    g_source_remove (widget->priv->timeout_id);
-	    
-	widget->priv->timeout_id = 
-	    g_timeout_add (900, (GSourceFunc) xfpm_brightness_widget_timeout, widget);
-    }
+    
+    xfpm_brightness_widget_show (widget);
 }

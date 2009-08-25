@@ -1,52 +1,181 @@
-@SET_MAKE@
+bin_PROGRAMS = xfce4-power-manager
 
-if BUILD_PANEL_PLUGINS
-plugins_dir = panel-plugins
+xfce4_power_manager_SOURCES = 			\
+	xfpm-enum-types.c			\
+	xfpm-enum-types.h			\
+	xfpm-marshal.c				\
+	xfpm-marshal.h				\
+	org.freedesktop.PowerManagement.h	\
+	org.freedesktop.PowerManagement.Inhibit.h\
+	org.freedesktop.PowerManagement.Backlight.h\
+	xfce-power-manager-dbus-server.h	\
+	xfce-power-manager-dbus-client.h	\
+	xfpm-main.c				\
+	xfpm-manager.c				\
+	xfpm-manager.h				\
+	xfpm-engine.c				\
+	xfpm-engine.h				\
+	xfpm-session.c				\
+	xfpm-session.h				\
+	xfpm-xfconf.c				\
+	xfpm-xfconf.h				\
+	xfpm-supply.c				\
+	xfpm-supply.h				\
+	xfpm-adapter.c				\
+	xfpm-adapter.h				\
+	xfpm-battery.c				\
+	xfpm-battery.h				\
+	xfpm-battery-info.c			\
+	xfpm-battery-info.h			\
+	xfpm-dpms.c				\
+	xfpm-dpms.h				\
+	xfpm-cpu.c				\
+	xfpm-cpu.h				\
+	xfpm-button.c				\
+	xfpm-button.h				\
+	xfpm-button-xf86.c			\
+	xfpm-button-xf86.h			\
+	xfpm-button-hal.c			\
+	xfpm-button-hal.h			\
+	xfpm-backlight.c			\
+	xfpm-backlight.h			\
+	xfpm-brightness-hal.c			\
+	xfpm-brightness-hal.h			\
+	xfpm-brightness-widget.c		\
+	xfpm-brightness-widget.h		\
+	xfpm-idle.c				\
+	xfpm-idle.h				\
+	xfpm-inhibit.c				\
+	xfpm-inhibit.h				\
+	xfpm-screen-saver.c			\
+	xfpm-screen-saver.h			\
+	xfpm-dbus-monitor.c			\
+	xfpm-dbus-monitor.h			\
+	xfpm-tray-icon.c			\
+	xfpm-tray-icon.h			\
+	xfpm-shutdown.c				\
+	xfpm-shutdown.h				\
+	xfpm-network-manager.c			\
+	xfpm-network-manager.h			\
+	xfpm-errors.c				\
+	xfpm-errors.h				\
+	xfpm-config.h				\
+	xfpm-enum.h				\
+	xfpm-debug.c				\
+	xfpm-debug.h
+
+
+xfce4_power_manager_CFLAGS =			\
+	-I$(top_srcdir)				\
+	-I$(top_srcdir)/libxfpm			\
+	-DLOCALEDIR=\"$(localedir)\"		\
+	-DG_LOG_DOMAIN=\"xfce4-power-manager\" 	\
+	$(GTK_CFLAGS)				\
+	$(GLIB_CFLAGS)				\
+	$(GOBJECT_CFLAGS)			\
+	$(GTHREAD_CFLAGS)			\
+	$(DBUS_CFLAGS)				\
+	$(DBUS_GLIB_CFLAGS)			\
+	$(LIBXFCE4GUI_CFLAGS)			\
+	$(LIBXFCE4UTIL_CFLAGS)			\
+	$(XFCONF_CFLAGS)			\
+	$(LIBNOTIFY_CFLAGS)			\
+	$(DPMS_CFLAGS)              	
+
+xfce4_power_manager_LDADD   =			\
+	$(top_builddir)/libxfpm/libxfpmhal.la	\
+	$(top_builddir)/libxfpm/libxfpmhalpower.la\
+	$(top_builddir)/libxfpm/libxfpmcommon.la\
+	$(GTK_LIBS)				\
+	$(GLIB_LIBS)				\
+	$(GOBJECT_LIBS)				\
+	$(GTHREAD_LIBS)				\
+	$(DBUS_LIBS)				\
+	$(DBUS_GLIB_LIBS)			\
+	$(LIBXFCE4GUI_LIBS)			\
+	$(LIBXFCE4UTIL_LIBS)			\
+	$(XFCONF_LIBS)				\
+	$(LIBNOTIFY_LIBS)			\
+	$(DPMS_LIBS)		
+
+manpagedir = $(mandir)/man1
+
+manpage_DATA = xfce4-power-manager.1
+
+xfpm_glib_headers = 				\
+	$(srcdir)/xfpm-enum-glib.h			
+
+if MAINTAINER_MODE
+
+BUILT_SOURCES = 					\
+	xfce-power-manager-dbus-server.h		\
+	xfce-power-manager-dbus-client.h		\
+	org.freedesktop.PowerManagement.h		\
+	org.freedesktop.PowerManagement.Inhibit.h	\
+	org.freedesktop.PowerManagement.Backlight.h	\
+	xfpm-marshal.c					\
+	xfpm-marshal.h					\
+	xfpm-enum-types.c				\
+	xfpm-enum-types.h
+
+xfpm-enum-types.h: $(xfpm_glib_headers)
+	( cd $(srcdir) && glib-mkenums \
+		--fhead "#ifndef _XFPM_ENUM_TYPES_H\n#define _XFPM_ENUM_TYPES_H\n#include <glib-object.h>\nG_BEGIN_DECLS\n" \
+		--fprod "/* enumerations from \"@filename@\" */\n" \
+		--vhead "GType @enum_name@_get_type (void);\n#define XFPM_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
+		--ftail "G_END_DECLS\n\n#endif /* _XFPM_ENUM_TYPES_H__ */" \
+		$(xfpm_glib_headers) ) >> xgen \
+	&& (cmp -s xgen xfpm-enum-types.h || cp xgen xfpm-enum-types.h ) \
+	&& rm -f xgen xgen~
+
+xfpm-enum-types.c: xfpm-enum-types.h
+	( cd $(srcdir) && glib-mkenums \
+		--fhead "#include <xfpm-enum-types.h>\n" \
+		--fhead "#include \"xfpm-enum-glib.h\"\n\n" \
+		--fprod "\n/* enumerations from \"@filename@\" */\n" \
+		--vhead "GType\n@enum_name@_get_type (void)\n{\n\tstatic GType type = 0;\n\tif (type == 0) {\n\tstatic const G@Type@Value values[] = {"\
+		--vprod "\t{ @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vtail "\t{ 0, NULL, NULL }\n\t};\n\ttype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n\treturn type;\n}\n" \
+		$(xfpm_glib_headers) ) > xgen \
+	&& cp xgen xfpm-enum-types.c  \
+	&& rm -f xgen xgen~
+
+xfpm-marshal.c: xfpm-marshal.list
+	echo "#include \"xfpm-marshal.h\"" > $@ && \
+	glib-genmarshal $< --prefix=_xfpm_marshal --body >> $@
+
+xfpm-marshal.h: xfpm-marshal.list
+	glib-genmarshal $< --prefix=_xfpm_marshal --header > $@
+
+xfce-power-manager-dbus-server.h: $(srcdir)/org.xfce.Power.Manager.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_manager $< >$@
+
+xfce-power-manager-dbus-client.h: $(srcdir)/org.xfce.Power.Manager.xml
+	dbus-binding-tool --mode=glib-client --prefix=xfpm_manager $< >$@
+
+org.freedesktop.PowerManagement.h: $(srcdir)/org.freedesktop.PowerManagement.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_engine $< >$@
+
+org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_inhibit $< >$@
+
+org.freedesktop.PowerManagement.Backlight.h: $(srcdir)/org.freedesktop.PowerManagement.Backlight.xml
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_backlight $< >$@
+
 endif
 
-SUBDIRS =        	\
-	data		\
-	libxfpm		\
-	src		\
-	settings	\
-	$(plugins_dir)	\
-	po           	\
-	doc
+@INTLTOOL_DESKTOP_RULE@
+autostartdir = $(sysconfdir)/xdg/autostart
+autostart_in_files = xfce4-power-manager.desktop.in
+autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 
+EXTRA_DIST = 					\
+	xfpm-marshal.list			\
+	xfpm-enum-glib.h			\
+	$(autostart_in_files)			\
+	$(manpage_DATA)
 
-EXTRA_DIST = 			\
-	TODO			\
-	intltool-extract.in 	\
-	intltool-merge.in 	\
-	intltool-update.in
+DISTCLEANFILES =				\
+	$(BUILT_SOURCES)			\
+	xfce4-power-manager.desktop
 
-DISTCLEANFILES = \
-	intltool-extract \
-	intltool-merge \
-	intltool-update
-
-distclean-local:
-	rm -rf *.cache
-
-rpm: dist
-	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
-	@rm -f $(PACKAGE)-$(VERSION).tar.gz
-
-html: Makefile
-	make -C doc html
-
-dist-bz2: dist
-	zcat $(PACKAGE)-$(VERSION).tar.gz | \
-	bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
-
-distcheck-bz2: distcheck
-	zcat $(PACKAGE)-$(VERSION).tar.gz | \
-	bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
-         
-snapshot: dist
-	mv $(PACKAGE)-$(VERSION).tar.gz \
-	$(PACKAGE)-$(VERSION)-r@REVISION@.tar.gz
-
-snapshot-bz2: dist-bz2
-	mv $(PACKAGE)-$(VERSION).tar.bz2 \
-	$(PACKAGE)-$(VERSION)-r@REVISION@.tar.bz2         

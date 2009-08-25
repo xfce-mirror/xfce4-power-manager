@@ -43,6 +43,11 @@ static void hal_battery_get_property(GObject *object,
 #define HAL_BATTERY_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), HAL_TYPE_BATTERY, HalBatteryPrivate))
 
+#define FREE_STR_PROP(str)            		    \
+    if ( str )                                      \
+        g_free (str);                               \
+    str = NULL;
+
 struct HalBatteryPrivate
 {
     /* Properties read-only */
@@ -52,10 +57,6 @@ struct HalBatteryPrivate
     gboolean  is_charging;
     gboolean  is_discharging;
     
-    gchar    *unit;
-    gchar    *technology;
-    gchar    *vendor;
-    gchar    *model;
     guint     percentage;
 
     guint32   current_charge;
@@ -96,6 +97,19 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(HalBattery, hal_battery, HAL_TYPE_DEVICE)
+
+static gchar *
+hal_battery_get_info_string (HalBattery *battery, const gchar *key)
+{
+    gchar *val = NULL;
+    
+    if ( hal_device_has_key (HAL_DEVICE (battery), key) )
+    {
+	val = hal_device_get_property_string (HAL_DEVICE(battery), key);
+    }
+    
+    return val;
+}
 
 static void
 hal_battery_class_init(HalBatteryClass *klass)
@@ -231,10 +245,6 @@ hal_battery_init (HalBattery *battery)
     battery->priv->is_charging     = FALSE;
     battery->priv->is_discharging  = FALSE;
 
-    battery->priv->unit            = NULL;
-    battery->priv->vendor          = NULL;
-    battery->priv->technology      = NULL;
-    battery->priv->model           = NULL;
     battery->priv->type            = HAL_DEVICE_TYPE_UNKNOWN;
     
     battery->priv->percentage      = 0;
@@ -243,6 +253,44 @@ hal_battery_init (HalBattery *battery)
     battery->priv->time            = 0;
     battery->priv->reporting_design = 0;
     battery->priv->reporting_last_full = 0;
+}
+
+static const gchar * G_GNUC_PURE
+_translate_technology (const gchar *tech)
+{
+    if ( !g_strcmp0 (tech, "lithium-ion") )
+    {
+	return _("Lithium ion");
+    }
+    else if ( !g_strcmp0 (tech, "lead-acid") )
+    {
+	return _("Lead acid");
+    }
+    else if ( !g_strcmp0 (tech, "lithium-polymer") )
+    {
+	return _("Lithium polymer");
+    }
+    else if ( !g_strcmp0 (tech, "nickel-metal-hydride") )
+    {
+	return _("Nickel metal hydride");
+    }
+    
+    return _("Unknown");
+}
+
+static const gchar * G_GNUC_PURE
+_translate_unit (const gchar *unit)
+{
+    if ( !g_strcmp0 (unit, "mWh") )
+    {
+	return _("mWh");
+    }
+    else if ( !g_strcmp0 (unit, "mAh") )
+    {
+	return _("mAh");
+    }
+    
+    return _("Unknown unit");
 }
 
 static void hal_battery_get_property(GObject *object,
@@ -267,18 +315,51 @@ static void hal_battery_get_property(GObject *object,
 	case PROP_IS_DISCHARGING:
 		g_value_set_boolean (value, battery->priv->is_discharging);
 		break;
+		
 	case PROP_UNIT:
-		g_value_set_string (value, battery->priv->unit);
+	{
+		gchar *unit = NULL;
+		gchar *val;
+		val = hal_battery_get_info_string (battery, "battery.reporting.unit");
+		if ( val )
+		{
+		    unit = g_strdup(_translate_unit (val));
+		    g_free (val);
+		}
+		g_value_set_string (value, unit);
 		break;
+	}
 	case PROP_TECHNOLOGY:
-		g_value_set_string (value, battery->priv->technology);
+	{
+		gchar *val;
+		gchar *technology = NULL;
+		val = hal_battery_get_info_string (battery, "battery.technology");
+		if ( val )
+		{
+		    technology = g_strdup (_translate_technology (val));
+		    g_free (val);
+		}
+		
+		g_value_set_string (value, technology);
+		g_free (technology);
 		break;
+	}
 	case PROP_VENDOR:
-		g_value_set_string (value, battery->priv->vendor);
+	{
+		gchar *vendor = NULL;
+		vendor = hal_battery_get_info_string (battery, "battery.vendor");
+		g_value_set_string (value, vendor);
+		g_free (vendor);
 		break;
+	}
 	case PROP_MODEL:
-		g_value_set_string (value, battery->priv->model);
+	{
+		gchar *model = NULL;
+		model = hal_battery_get_info_string (battery, "battery.model");
+		g_value_set_string (value, model);
+		g_free (model);
 		break;
+	}
 	case PROP_PERCENTAGE:
 		g_value_set_uint (value, battery->priv->percentage);
 		break;
@@ -310,18 +391,6 @@ hal_battery_finalize(GObject *object)
 
     battery = HAL_BATTERY(object);
     
-    if ( battery->priv->technology )
-    	g_free (battery->priv->technology);
-	
-    if ( battery->priv->vendor )
-    	g_free (battery->priv->vendor);
-	
-    if ( battery->priv->model )
-    	g_free (battery->priv->model);
-	
-    if ( battery->priv->unit )
-    	g_free (battery->priv->unit);
-
     G_OBJECT_CLASS(hal_battery_parent_class)->finalize(object);
 }
 
@@ -426,7 +495,6 @@ hal_battery_refresh_all (HalBattery *battery)
     else
     	battery->priv->time = 0;
     
-    //FIXME: calculate the percentage if it is not found on HAL
     if ( hal_device_has_key(HAL_DEVICE(battery), "battery.charge_level.percentage") )
      	battery->priv->percentage = 
     		hal_device_get_property_int(HAL_DEVICE(battery), "battery.charge_level.percentage");
@@ -435,93 +503,9 @@ hal_battery_refresh_all (HalBattery *battery)
     if ( hal_device_has_key(HAL_DEVICE(battery), "battery.reporting.last_full") )
      	battery->priv->reporting_last_full = 
     		hal_device_get_property_int(HAL_DEVICE(battery), "battery.reporting.last_full");
-		
-}
 
-static const gchar * G_GNUC_PURE
-_translate_technology (const gchar *tech)
-{
-    if ( !g_strcmp0 (tech, "lithium-ion") )
-    {
-	return _("Lithium ion");
-    }
-    else if ( !g_strcmp0 (tech, "lead-acid") )
-    {
-	return _("Lead acid");
-    }
-    else if ( !g_strcmp0 (tech, "lithium-polymer") )
-    {
-	return _("Lithium polymer");
-    }
-    else if ( !g_strcmp0 (tech, "nickel-metal-hydride") )
-    {
-	return _("Nickel metal hydride");
-    }
-    
-    return _("Unknown");
-}
-
-static const gchar * G_GNUC_PURE
-_translate_unit (const gchar *unit)
-{
-    if ( !g_strcmp0 (unit, "mWh") )
-    {
-	return _("mWh");
-    }
-    else if ( !g_strcmp0 (unit, "mAh") )
-    {
-	return _("mAh");
-    }
-    
-    return _("Unknown unit");
-}
-
-static void
-hal_battery_get_battery_info (HalBattery *battery)
-{
-    if ( hal_device_has_key (HAL_DEVICE(battery), "battery.technology") )
-    {
-	gchar *tech = hal_device_get_property_string (HAL_DEVICE(battery), "battery.technology");
-	if ( tech )
-	{
-	    battery->priv->technology = g_strdup (_translate_technology (tech));
-	    g_free (tech);
-	}
-    }
-    
-    if ( hal_device_has_key (HAL_DEVICE(battery), "battery.vendor") )
-    {
-	gchar *vendor = hal_device_get_property_string (HAL_DEVICE(battery), "battery.vendor");
-	if ( vendor )
-	{
-	    battery->priv->vendor = g_strdup ( vendor);
-	    g_free (vendor);
-	}
-    }
-    
-    if ( hal_device_has_key (HAL_DEVICE(battery), "battery.model") )
-    {
-	gchar *model = hal_device_get_property_string (HAL_DEVICE(battery), "battery.model");
-	if ( model )
-	{
-	    battery->priv->model = g_strdup (model);
-	    g_free (model);
-	}
-    }
-    
     battery->priv->reporting_design = hal_device_get_property_int (HAL_DEVICE(battery), 
-							                   "battery.reporting.design");
-							      
-    if ( hal_device_has_key (HAL_DEVICE(battery), "battery.reporting.unit") )
-    {
-	gchar *unit = hal_device_get_property_string (HAL_DEVICE(battery), "battery.reporting.unit");
-	
-	if ( unit )
-	{
-	    battery->priv->unit = g_strdup(_translate_unit(unit));
-	    g_free(unit);	    
-	}
-    }
+								   "battery.reporting.design");
 }
 
 static void
@@ -537,9 +521,7 @@ hal_battery_battery_changed_cb (HalBattery *battery, const gchar *key)
 	hal_battery_refresh_all (battery);
     	g_signal_emit (G_OBJECT (battery), signals[BATTERY_CHANGED], 0);
     }
-    
 }
-
 
 static void
 hal_battery_property_modified_cb(HalBattery *battery, 
@@ -563,7 +545,6 @@ hal_battery_new (const gchar *udi)
     battery->priv->type = hal_battery_get_device_type (battery);
    
     hal_battery_refresh_all (battery);
-    hal_battery_get_battery_info (battery);
 	
     hal_device_watch (HAL_DEVICE(battery));
     

@@ -50,6 +50,7 @@
 
 static void xfpm_supply_finalize   (GObject *object);
 static void xfpm_supply_refresh_tray_icon (XfpmSupply *supply);
+static void xfpm_supply_hide_adapter_icon (XfpmSupply *supply);
 
 #define XFPM_SUPPLY_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_SUPPLY, XfpmSupplyPrivate))
@@ -172,14 +173,10 @@ xfpm_supply_init (XfpmSupply *supply)
     supply->priv->power   = hal_power_new      ();
     supply->priv->notify  = xfpm_notify_new    ();
     supply->priv->conf    = xfpm_xfconf_new    ();
-    supply->priv->tray    = xfpm_tray_icon_new ();
+    supply->priv->tray    = NULL;
     supply->priv->inhibit = xfpm_inhibit_new   ();
     supply->priv->inhibited = FALSE;
     supply->priv->low_power = FALSE;
-    
-    xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
-    xfpm_tray_icon_set_icon (supply->priv->tray, "xfpm-ac-adapter");
-    xfpm_tray_icon_set_show_info_menu (supply->priv->tray, FALSE);
     
     g_signal_connect (supply->priv->inhibit, "has-inhibit-changed",
 		      G_CALLBACK (xfpm_supply_has_inhibit_changed_cb), supply);
@@ -204,11 +201,39 @@ xfpm_supply_finalize (GObject *object)
 	
     g_object_unref (supply->priv->adapter);
     
-    g_object_unref (supply->priv->tray);
-    
     g_object_unref (supply->priv->inhibit);
+    xfpm_supply_hide_adapter_icon (supply);
 	
     G_OBJECT_CLASS(xfpm_supply_parent_class)->finalize(object);
+}
+
+static void
+xfpm_supply_hide_adapter_icon (XfpmSupply *supply)
+{
+    if ( supply->priv->tray )
+    {
+	g_object_unref (supply->priv->tray);
+	supply->priv->tray = NULL;
+    }
+}
+
+static void
+xfpm_supply_show_tray_icon (XfpmSupply *supply)
+{
+#ifdef DEBUG 
+    /* This shouldn't happen at all*/
+    if ( supply->priv->tray )
+    {
+	g_critical ("Already have tray icon for adapter!");
+	xfpm_supply_hide_adapter_icon (supply);
+    }
+#endif    
+
+    supply->priv->tray = xfpm_tray_icon_new ();
+    
+    xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
+    xfpm_tray_icon_set_icon (supply->priv->tray, "xfpm-ac-adapter");
+    xfpm_tray_icon_set_show_info_menu (supply->priv->tray, FALSE);
 }
 
 static void
@@ -226,20 +251,20 @@ xfpm_supply_refresh_tray_icon (XfpmSupply *supply)
     {
 	if ( g_hash_table_size (supply->priv->hash) == 0 )
 	{
+	    xfpm_supply_show_tray_icon (supply);
 	    xfpm_tray_icon_set_tooltip (supply->priv->tray,
 					supply->priv->adapter_present ? 
 					(_("Adapter present")) :
 					(_("Adapter not present")) );
-	    xfpm_tray_icon_set_visible (supply->priv->tray, TRUE);
 	}
 	else
 	{
-	    xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
+	    xfpm_supply_hide_adapter_icon (supply);
 	}
     }
     else
     {
-	xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
+	xfpm_supply_hide_adapter_icon (supply);
     }
 }
 
