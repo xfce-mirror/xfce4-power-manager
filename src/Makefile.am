@@ -70,14 +70,10 @@ xfce4_power_manager_CFLAGS =			\
 	-I$(top_srcdir)/libxfpm			\
 	-DLOCALEDIR=\"$(localedir)\"		\
 	-DG_LOG_DOMAIN=\"xfce4-power-manager\" 	\
-	$(GTK_CFLAGS)				\
-	$(GLIB_CFLAGS)				\
 	$(GOBJECT_CFLAGS)			\
 	$(GTHREAD_CFLAGS)			\
-	$(DBUS_CFLAGS)				\
 	$(DBUS_GLIB_CFLAGS)			\
 	$(LIBXFCE4GUI_CFLAGS)			\
-	$(LIBXFCE4UTIL_CFLAGS)			\
 	$(XFCONF_CFLAGS)			\
 	$(LIBNOTIFY_CFLAGS)			\
 	$(DPMS_CFLAGS)              	
@@ -86,14 +82,10 @@ xfce4_power_manager_LDADD   =			\
 	$(top_builddir)/libxfpm/libxfpmhal.la	\
 	$(top_builddir)/libxfpm/libxfpmhalpower.la\
 	$(top_builddir)/libxfpm/libxfpmcommon.la\
-	$(GTK_LIBS)				\
-	$(GLIB_LIBS)				\
 	$(GOBJECT_LIBS)				\
 	$(GTHREAD_LIBS)				\
-	$(DBUS_LIBS)				\
 	$(DBUS_GLIB_LIBS)			\
 	$(LIBXFCE4GUI_LIBS)			\
-	$(LIBXFCE4UTIL_LIBS)			\
 	$(XFCONF_LIBS)				\
 	$(LIBNOTIFY_LIBS)			\
 	$(DPMS_LIBS)		

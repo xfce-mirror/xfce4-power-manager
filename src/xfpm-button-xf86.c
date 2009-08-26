@@ -53,11 +53,16 @@ static void xfpm_button_xf86_finalize   (GObject *object);
 #define XFPM_BUTTON_XF86_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_BUTTON_XF86, XfpmButtonXf86Private))
 
+static struct
+{
+    XfpmButtonKey    key;
+    guint            key_code;
+} xfpm_key_map [NUMBER_OF_BUTTONS] = { {0, 0}, };
+
 struct XfpmButtonXf86Private
 {
     GdkScreen	*screen;
     GdkWindow   *window;
-    GHashTable  *hash;
     
     guint8       mapped_buttons;
 };
@@ -74,35 +79,45 @@ static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE(XfpmButtonXf86, xfpm_button_xf86, G_TYPE_OBJECT)
 
+static guint
+xfpm_button_get_key (unsigned int keycode)
+{
+    XfpmButtonKey key = BUTTON_UNKNOWN;
+    guint i;
+    
+    for ( i = 0; i < G_N_ELEMENTS (xfpm_key_map); i++)
+    {
+	if ( xfpm_key_map [i].key_code == keycode )
+	    key = xfpm_key_map [i].key;
+    }
+    
+    return key;
+}
+
 static GdkFilterReturn
 xfpm_button_xf86_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data)
 {
     XfpmButtonKey key;
     XfpmButtonXf86 *button;
-    gpointer key_hash;
     
     XEvent *xev = (XEvent *) xevent;
     
     if ( xev->type != KeyPress )
     	return GDK_FILTER_CONTINUE;
     
-    button = (XfpmButtonXf86 *) data;
+    key = xfpm_button_get_key (xev->xkey.keycode);
     
-    key_hash = g_hash_table_lookup (button->priv->hash, GINT_TO_POINTER(xev->xkey.keycode));
-    
-    if ( !key_hash )
+    if ( key != BUTTON_UNKNOWN )
     {
-	TRACE("Key %d not found in hash\n", xev->xkey.keycode);
-	return GDK_FILTER_CONTINUE;
+	button = (XfpmButtonXf86 *) data;
+    
+	XFPM_DEBUG_ENUM ("Key press", key, XFPM_TYPE_BUTTON_KEY);
+    
+	g_signal_emit (G_OBJECT(button), signals[XF86_BUTTON_PRESSED], 0, key);
+	return GDK_FILTER_REMOVE;
     }
     
-    key = GPOINTER_TO_INT (key_hash);
-    
-    XFPM_DEBUG_ENUM ("Key press", key, XFPM_TYPE_BUTTON_KEY);
-    
-    g_signal_emit (G_OBJECT(button), signals[XF86_BUTTON_PRESSED], 0, key);
-
-    return GDK_FILTER_REMOVE;
+    return GDK_FILTER_CONTINUE;
 }
 
 static gboolean
@@ -163,7 +178,8 @@ xfpm_button_xf86_xevent_key (XfpmButtonXf86 *button, guint keysym , XfpmButtonKe
     
     XFPM_DEBUG_ENUM_FULL (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key %li ", (long int) keycode);
     
-    g_hash_table_insert (button->priv->hash, GINT_TO_POINTER(keycode), GINT_TO_POINTER(key));
+    xfpm_key_map [key].key_code = keycode;
+    xfpm_key_map [key].key = key;
     
     return TRUE;
 }
@@ -226,8 +242,6 @@ xfpm_button_xf86_init(XfpmButtonXf86 *button)
     button->priv->screen = NULL;
     button->priv->window = NULL;
     
-    button->priv->hash = g_hash_table_new (NULL, NULL);
-    
     xfpm_button_xf86_setup (button);
 }
 
@@ -238,8 +252,6 @@ xfpm_button_xf86_finalize(GObject *object)
 
     button = XFPM_BUTTON_XF86 (object);
     
-    g_hash_table_destroy (button->priv->hash);
-
     G_OBJECT_CLASS(xfpm_button_xf86_parent_class)->finalize(object);
 }
 

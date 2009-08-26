@@ -50,10 +50,10 @@ typedef enum
 
 typedef enum
 {
-    CPU_UNKNOWN         = (1<<0),
-    CPU_POWERSAVE	= (1<<1),
-    CPU_ONDEMAND	= (1<<2),
-    CPU_PERFORMANCE	= (1<<3)
+    CPU_UNKNOWN         = (1 << 0),
+    CPU_POWERSAVE	= (1 << 1),
+    CPU_ONDEMAND	= (1 << 2),
+    CPU_PERFORMANCE	= (1 << 3)
     
 } XfpmCpuGovernor;
 

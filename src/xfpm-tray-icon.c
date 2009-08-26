@@ -293,10 +293,9 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
 
     saver_inhibited = xfpm_screen_saver_get_inhibit (tray->priv->srv);
-    mi = gtk_image_menu_item_new_with_label (saver_inhibited ? _("Clear inhibit") : _("Inhibit"));
-    
-    gtk_widget_set_tooltip_text (mi, _("Disable or enable automatic sleep, setting this will tell the power manager "\
-				       "to disable backlight sleep, for example you could active the inhibit if you are watching a movie."));
+    mi = gtk_check_menu_item_new_with_label (_("Monitor power control"));
+    gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (mi), !saver_inhibited);
+    gtk_widget_set_tooltip_text (mi, _("Disable or enable monitor power control, for example you could disable the screen power when watching a movie."));
     
     g_signal_connect (G_OBJECT (mi), "activate",
 		      G_CALLBACK (xfpm_tray_icon_inhibit_active_cb), tray);

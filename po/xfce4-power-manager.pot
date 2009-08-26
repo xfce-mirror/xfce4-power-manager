@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-27 08:46+0200\n"
+"POT-Creation-Date: 2009-08-26 14:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,23 +41,15 @@ msgid "Actions"
 msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "Consider the computer on low power at:"
+msgid "CPU frequency control"
 msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:8
-msgid "Enable CPU frequency control"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Enable monitor power management control"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "Enable notification"
+msgid "Consider the computer on low power at:"
 msgstr ""
 
 #. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:11 ../settings/xfpm-settings.c:775
+#: ../data/interfaces/xfpm-settings.ui.h:9 ../settings/xfpm-settings.c:775
 #: ../settings/xfpm-settings.c:846 ../settings/xfpm-settings.c:970
 #: ../settings/xfpm-settings.c:1125 ../settings/xfpm-settings.c:1183
 #: ../settings/xfpm-settings.c:1238 ../src/xfpm-tray-icon.c:174
@@ -65,47 +57,55 @@ msgstr ""
 msgid "Hibernate"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:12
+#: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "Lock screen when going for suspend/hibernate"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:13
+#: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "Monitor"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:764
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Monitor power management control"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:764
 #: ../settings/xfpm-settings.c:835 ../settings/xfpm-settings.c:959
 #: ../settings/xfpm-settings.c:1114 ../settings/xfpm-settings.c:1172
 #: ../settings/xfpm-settings.c:1227
 msgid "Nothing"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
+#: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Power manager settings"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:16
+#: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Prefer power savings over performance"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:17
+#: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:18
+#: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Put the computer to sleep when inactive for:"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
+#: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:21
+#: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "Set monitor sleep mode:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:21
+msgid "Show notifications to notify about the battery state"
 msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
@@ -150,8 +150,8 @@ msgid "When sleep button is pressed:"
 msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:190
-#: ../src/xfpm-main.c:274 ../src/xfpm-tray-icon.c:346
+#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:192
+#: ../src/xfpm-main.c:276 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr ""
@@ -278,8 +278,8 @@ msgstr ""
 msgid "SOCKET ID"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:83 ../src/xfpm-main.c:152
-#: ../src/xfpm-main.c:173
+#: ../settings/xfpm-settings-main.c:83 ../src/xfpm-main.c:154
+#: ../src/xfpm-main.c:175
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr ""
@@ -296,7 +296,7 @@ msgstr ""
 msgid "Unable to connect to Xfce Power Manager"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:173 ../src/xfpm-main.c:201
+#: ../settings/xfpm-settings-main.c:173 ../src/xfpm-main.c:203
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr ""
@@ -350,9 +350,9 @@ msgstr ""
 msgid "System is running on low power"
 msgstr ""
 
-#: ../src/xfpm-battery.c:240 ../src/xfpm-supply.c:340 ../src/xfpm-supply.c:363
+#: ../src/xfpm-battery.c:240 ../src/xfpm-supply.c:365 ../src/xfpm-supply.c:388
 #: ../src/xfpm-tray-icon.c:119 ../src/xfpm-tray-icon.c:142
-#: ../src/xfpm-manager.c:228
+#: ../src/xfpm-manager.c:230
 msgid "Xfce power manager"
 msgstr ""
 
@@ -440,7 +440,7 @@ msgstr ""
 msgid "minute"
 msgstr ""
 
-#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:476
+#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:293
 msgid "Unknown unit"
 msgstr ""
 
@@ -481,61 +481,61 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:133
 msgid "Do not daemonize"
 msgstr ""
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:134
 msgid "Restart the running instance of Xfce power manager"
 msgstr ""
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:135
 msgid "Show the configuration dialog"
 msgstr ""
 
-#: ../src/xfpm-main.c:134
+#: ../src/xfpm-main.c:136
 msgid "Quit any running xfce power manager"
 msgstr ""
 
-#: ../src/xfpm-main.c:135
+#: ../src/xfpm-main.c:137
 msgid "Version information"
 msgstr ""
 
-#: ../src/xfpm-main.c:171
+#: ../src/xfpm-main.c:173
 #, c-format
 msgid "Too many arguments"
 msgstr ""
 
-#: ../src/xfpm-main.c:187
+#: ../src/xfpm-main.c:189
 msgid "Unable to get connection to the message bus session"
 msgstr ""
 
-#: ../src/xfpm-main.c:275
+#: ../src/xfpm-main.c:277
 msgid "Another power manager is already running"
 msgstr ""
 
-#: ../src/xfpm-main.c:281
+#: ../src/xfpm-main.c:283
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr ""
 
-#: ../src/xfpm-supply.c:231
+#: ../src/xfpm-supply.c:257
 msgid "Adapter present"
 msgstr ""
 
-#: ../src/xfpm-supply.c:232
+#: ../src/xfpm-supply.c:258
 msgid "Adapter not present"
 msgstr ""
 
-#: ../src/xfpm-supply.c:309
+#: ../src/xfpm-supply.c:334
 msgid "Shutdown the system"
 msgstr ""
 
-#: ../src/xfpm-supply.c:320
+#: ../src/xfpm-supply.c:345
 msgid "Hibernate the system"
 msgstr ""
 
-#: ../src/xfpm-supply.c:332
+#: ../src/xfpm-supply.c:357
 msgid ""
 "System is running on low power, but an application is currently disabling "
 "the automatic sleep, this means that doing a sleep now may damage the data "
@@ -543,7 +543,7 @@ msgid ""
 "sleep mode or plug in your AC adapter"
 msgstr ""
 
-#: ../src/xfpm-supply.c:358
+#: ../src/xfpm-supply.c:383
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
 
@@ -574,41 +574,36 @@ msgid "Quit"
 msgstr ""
 
 #: ../src/xfpm-tray-icon.c:296
-msgid "Clear inhibit"
-msgstr ""
-
-#: ../src/xfpm-tray-icon.c:296
-msgid "Inhibit"
+msgid "Monitor power control"
 msgstr ""
 
 #: ../src/xfpm-tray-icon.c:298
 msgid ""
-"Disable or enable automatic sleep, setting this will tell the power manager "
-"to disable backlight sleep, for example you could active the inhibit if you "
-"are watching a movie."
+"Disable or enable monitor power control, for example you could disable the "
+"screen power when watching a movie."
 msgstr ""
 
-#: ../src/xfpm-tray-icon.c:386
+#: ../src/xfpm-tray-icon.c:383
 msgid "No data available"
 msgstr ""
 
-#: ../src/xfpm-engine.c:763 ../src/xfpm-engine.c:789 ../src/xfpm-engine.c:815
-#: ../src/xfpm-engine.c:844
+#: ../src/xfpm-engine.c:769 ../src/xfpm-engine.c:795 ../src/xfpm-engine.c:821
+#: ../src/xfpm-engine.c:850
 #, c-format
 msgid "Permission denied"
 msgstr ""
 
-#: ../src/xfpm-engine.c:822
+#: ../src/xfpm-engine.c:828
 #, c-format
 msgid "Hibernate not supported"
 msgstr ""
 
-#: ../src/xfpm-engine.c:851
+#: ../src/xfpm-engine.c:857
 #, c-format
 msgid "Suspend not supported"
 msgstr ""
 
-#: ../src/xfpm-manager.c:228
+#: ../src/xfpm-manager.c:230
 msgid "HAL daemon is not running"
 msgstr ""
 
@@ -650,8 +645,8 @@ msgstr ""
 msgid "System failed to sleep"
 msgstr ""
 
-#: ../src/xfpm-shutdown.c:411 ../src/xfpm-shutdown.c:435
-#: ../src/xfpm-shutdown.c:461 ../src/xfpm-shutdown.c:497
+#: ../src/xfpm-shutdown.c:411 ../src/xfpm-shutdown.c:433
+#: ../src/xfpm-shutdown.c:457 ../src/xfpm-shutdown.c:493
 #, c-format
 msgid "HAL daemon is currently not connected"
 msgstr ""
@@ -660,31 +655,31 @@ msgstr ""
 msgid "Power management for the Xfce desktop"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:446
+#: ../libxfpm/hal-battery.c:263
 msgid "Lithium ion"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:450
+#: ../libxfpm/hal-battery.c:267
 msgid "Lead acid"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:454
+#: ../libxfpm/hal-battery.c:271
 msgid "Lithium polymer"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:458
+#: ../libxfpm/hal-battery.c:275
 msgid "Nickel metal hydride"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:461
+#: ../libxfpm/hal-battery.c:278
 msgid "Unknown"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:469
+#: ../libxfpm/hal-battery.c:286
 msgid "mWh"
 msgstr ""
 
-#: ../libxfpm/hal-battery.c:473
+#: ../libxfpm/hal-battery.c:290
 msgid "mAh"
 msgstr ""
 

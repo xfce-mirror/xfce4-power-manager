@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-03 21:57+0200\n"
+"POT-Creation-Date: 2009-08-26 14:47+0000\n"
 "PO-Revision-Date: 2009-07-05 14:04+0100\n"
 "Last-Translator: Carles Muñoz Gorriz <carlesmu@internautas.org>\n"
 "Language-Team: Catalan\n"
@@ -43,139 +43,119 @@ msgid "Actions"
 msgstr "Accions"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "Advanced"
-msgstr "Avançat"
+#, fuzzy
+msgid "CPU frequency control"
+msgstr "Habilita el controlador d'escalat de freqüència de la CPU"
 
-#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:1055
-msgid "Always show icon"
-msgstr "Mostra sempre la icona"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
+#: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "Consider the computer on low power at:"
 msgstr "Considera que el nivell de baixa energia comença a:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "Enable CPU frequency control"
-msgstr "Habilita el controlador d'escalat de freqüència de la CPU"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "Enable monitor power management control"
-msgstr "Habilita el controlador de pantalla del gestor d'energia"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Enable notification"
-msgstr "Habilita la notificació"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:1456
-#: ../settings/xfpm-settings.c:1461
-msgid "General"
-msgstr "General"
-
 #. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:775
+#: ../data/interfaces/xfpm-settings.ui.h:9 ../settings/xfpm-settings.c:775
 #: ../settings/xfpm-settings.c:846 ../settings/xfpm-settings.c:970
-#: ../settings/xfpm-settings.c:1122 ../settings/xfpm-settings.c:1180
-#: ../settings/xfpm-settings.c:1235 ../src/xfpm-tray-icon.c:174
+#: ../settings/xfpm-settings.c:1125 ../settings/xfpm-settings.c:1183
+#: ../settings/xfpm-settings.c:1238 ../src/xfpm-tray-icon.c:174
 #: ../src/xfpm-tray-icon.c:266
 msgid "Hibernate"
 msgstr "Hiberna"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
+#: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "Lock screen when going for suspend/hibernate"
 msgstr "Bloca la pantalla quan es vulgui suspendre o hibernar"
 
-#: ../data/interfaces/xfpm-settings.ui.h:16
+#: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "Monitor"
 msgstr "Pantalla"
 
-#: ../data/interfaces/xfpm-settings.ui.h:17 ../settings/xfpm-settings.c:764
+#: ../data/interfaces/xfpm-settings.ui.h:12
+#, fuzzy
+msgid "Monitor power management control"
+msgstr "Habilita el controlador de pantalla del gestor d'energia"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:764
 #: ../settings/xfpm-settings.c:835 ../settings/xfpm-settings.c:959
-#: ../settings/xfpm-settings.c:1111 ../settings/xfpm-settings.c:1169
-#: ../settings/xfpm-settings.c:1224
+#: ../settings/xfpm-settings.c:1114 ../settings/xfpm-settings.c:1172
+#: ../settings/xfpm-settings.c:1227
 msgid "Nothing"
 msgstr "Res"
 
-#: ../data/interfaces/xfpm-settings.ui.h:18 ../settings/xfpm-settings.c:1470
-#: ../settings/xfpm-settings.c:1475
-msgid "On AC"
-msgstr "Amb xarxa elèctrica"
-
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "On battery"
-msgstr "Amb bateria"
-
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Power manager settings"
 msgstr "Ajustament del gestor d'energia"
 
-#: ../data/interfaces/xfpm-settings.ui.h:21
+#: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Prefer power savings over performance"
 msgstr "Millor estalvi d'energia que rendiment"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
+#: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
 msgstr "Deixa la pantalla adormida quan l'ordinador està inactiu durant:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:23
+#: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Put the computer to sleep when inactive for:"
 msgstr "Deixa l'ordinador adormit quan l'ordinador està inactiu durant:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:24
+#: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
 msgstr "Disminueix la brillantor de la pantalla quan estigui inactiva durant:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
 msgstr "Ajusta el mode d'adormiment de l'ordinador:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:26
+#: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "Set monitor sleep mode:"
 msgstr "Ajusta el mode d'adormiment de la pantalla:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:27
+#: ../data/interfaces/xfpm-settings.ui.h:21
+msgid "Show notifications to notify about the battery state"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Standby"
 msgstr "En espera"
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:28 ../settings/xfpm-settings.c:769
+#: ../data/interfaces/xfpm-settings.ui.h:23 ../settings/xfpm-settings.c:769
 #: ../settings/xfpm-settings.c:840 ../settings/xfpm-settings.c:964
-#: ../settings/xfpm-settings.c:1116 ../settings/xfpm-settings.c:1174
-#: ../settings/xfpm-settings.c:1229 ../src/xfpm-tray-icon.c:205
+#: ../settings/xfpm-settings.c:1119 ../settings/xfpm-settings.c:1177
+#: ../settings/xfpm-settings.c:1232 ../src/xfpm-tray-icon.c:205
 #: ../src/xfpm-tray-icon.c:281
 msgid "Suspend"
 msgstr "Suspèn"
 
-#: ../data/interfaces/xfpm-settings.ui.h:29
+#: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "Switch off display when computer is inactive for:"
 msgstr "Apaga la pantalla quan l'ordinador estigui inactiu durant:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:30
+#: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "System tray icon: "
 msgstr "Icona d'estat:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:31
+#: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "When battery power is critical:"
 msgstr "Quan el nivell de càrrega és crític:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:32
+#: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "When hibernate button is pressed:"
 msgstr "Quan es pitja el botó d'hivernar:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:33
+#: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "When laptop lid is closed:"
 msgstr "Quan es tanca la tapa del portàtil:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:34
+#: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "When power button is pressed:"
 msgstr "Quan es pitja el botó d'encesa:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:35
+#: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "When sleep button is pressed:"
 msgstr "Quan es pitja el botó d'adormiment:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:36
-#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:187
-#: ../src/xfpm-main.c:271 ../src/xfpm-tray-icon.c:346
+#: ../data/interfaces/xfpm-settings.ui.h:31
+#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:192
+#: ../src/xfpm-main.c:276 ../src/xfpm-tray-icon.c:343
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Gestor d'energia de Xfce"
@@ -203,12 +183,12 @@ msgid "one minute"
 msgstr "un minut"
 
 #: ../settings/xfpm-settings.c:563 ../settings/xfpm-settings.c:567
-#: ../src/xfpm-battery.c:453
+#: ../src/xfpm-battery.c:469
 msgid "minutes"
 msgstr "minuts"
 
 #: ../settings/xfpm-settings.c:565 ../settings/xfpm-settings.c:566
-#: ../settings/xfpm-settings.c:567 ../src/xfpm-battery.c:452
+#: ../settings/xfpm-settings.c:567 ../src/xfpm-battery.c:468
 msgid "hours"
 msgstr "hores"
 
@@ -217,9 +197,9 @@ msgid "Seconds"
 msgstr "Segons"
 
 #: ../settings/xfpm-settings.c:746 ../settings/xfpm-settings.c:922
-#: ../settings/xfpm-settings.c:953 ../settings/xfpm-settings.c:1105
-#: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1218
-#: ../settings/xfpm-settings.c:1370
+#: ../settings/xfpm-settings.c:953 ../settings/xfpm-settings.c:1108
+#: ../settings/xfpm-settings.c:1166 ../settings/xfpm-settings.c:1221
+#: ../settings/xfpm-settings.c:1374
 msgid "Hibernate and suspend operations not permitted"
 msgstr "No es permet ni hibernar ni suspendre el sistema"
 
@@ -227,18 +207,22 @@ msgstr "No es permet ni hibernar ni suspendre el sistema"
 msgid "Shutdown and hibernate operations not permitted"
 msgstr "No es permet ni apagar ni hibernar el sistema"
 
-#: ../settings/xfpm-settings.c:779 ../settings/xfpm-settings.c:1126
+#: ../settings/xfpm-settings.c:779 ../settings/xfpm-settings.c:1129
 msgid "Shutdown"
 msgstr "Atura"
 
-#: ../settings/xfpm-settings.c:782 ../settings/xfpm-settings.c:1129
-#: ../settings/xfpm-settings.c:1184 ../settings/xfpm-settings.c:1239
+#: ../settings/xfpm-settings.c:782 ../settings/xfpm-settings.c:1132
+#: ../settings/xfpm-settings.c:1187 ../settings/xfpm-settings.c:1242
 msgid "Ask"
 msgstr "Preguntar"
 
 #: ../settings/xfpm-settings.c:850 ../settings/xfpm-settings.c:974
 msgid "Lock screen"
 msgstr "Bloca la pantalla"
+
+#: ../settings/xfpm-settings.c:1055
+msgid "Always show icon"
+msgstr "Mostra sempre la icona"
 
 #: ../settings/xfpm-settings.c:1058
 msgid "When battery is present"
@@ -248,7 +232,12 @@ msgstr "Quan hi ha alguna bateria"
 msgid "When battery is charging or discharging"
 msgstr "Quan s'està carregant o descarregant la bateria"
 
-#: ../settings/xfpm-settings.c:1087
+#: ../settings/xfpm-settings.c:1064
+#, fuzzy
+msgid "Never show icon"
+msgstr "Mostra sempre la icona"
+
+#: ../settings/xfpm-settings.c:1090
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
@@ -256,29 +245,37 @@ msgstr ""
 "Desactivar DPMS (Display Power Management Signaling). No permet apagar ni "
 "adormir la pantalla."
 
-#: ../settings/xfpm-settings.c:1290
+#: ../settings/xfpm-settings.c:1294
 msgid "Suspend operation not permitted"
 msgstr "No es permet suspendre el sistema"
 
-#: ../settings/xfpm-settings.c:1296
+#: ../settings/xfpm-settings.c:1300
 msgid "Hibernate operation not permitted"
 msgstr "No es permet hivernar el sistema"
 
-#: ../settings/xfpm-settings.c:1343
+#: ../settings/xfpm-settings.c:1347
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
 "Quan totes les fonts d'energia de l'ordinador assoleixin aquest valor de "
 "càrrega"
 
-#: ../settings/xfpm-settings.c:1485 ../settings/xfpm-settings.c:1490
+#: ../settings/xfpm-settings.c:1460 ../settings/xfpm-settings.c:1465
+msgid "General"
+msgstr "General"
+
+#: ../settings/xfpm-settings.c:1474 ../settings/xfpm-settings.c:1479
+msgid "On AC"
+msgstr "Amb xarxa elèctrica"
+
+#: ../settings/xfpm-settings.c:1489 ../settings/xfpm-settings.c:1494
 msgid "On Battery"
 msgstr "Amb Bateria"
 
-#: ../settings/xfpm-settings.c:1499 ../settings/xfpm-settings.c:1504
+#: ../settings/xfpm-settings.c:1503 ../settings/xfpm-settings.c:1508
 msgid "Extended"
 msgstr "Estès"
 
-#: ../settings/xfpm-settings.c:1569
+#: ../settings/xfpm-settings.c:1573
 msgid "Check your power manager installation"
 msgstr "Comprova la instaŀlació del gestor d'energia"
 
@@ -290,8 +287,8 @@ msgstr "Sòcol del gestor d'ajustaments"
 msgid "SOCKET ID"
 msgstr "SÒCOL ID"
 
-#: ../settings/xfpm-settings-main.c:83 ../src/xfpm-main.c:149
-#: ../src/xfpm-main.c:170
+#: ../settings/xfpm-settings-main.c:83 ../src/xfpm-main.c:154
+#: ../src/xfpm-main.c:175
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Feu «%s --help» per veure l'ús."
@@ -310,7 +307,7 @@ msgstr "Ajustaments del gestor d'energia de Xfce"
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "No s'ha pogut connectar al gestor d'energia de Xfce"
 
-#: ../settings/xfpm-settings-main.c:173 ../src/xfpm-main.c:198
+#: ../settings/xfpm-settings-main.c:173 ../src/xfpm-main.c:203
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "No s'està executant el gestor d'energia de Xfce"
@@ -352,8 +349,8 @@ msgstr "S'està carregant la bateria"
 msgid "Your battery is discharging"
 msgstr "S'ha descarregat la bateria"
 
-#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:438
-#: ../src/xfpm-battery.c:470
+#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:454
+#: ../src/xfpm-battery.c:486
 msgid "System is running on battery power"
 msgstr "El sistema està funcionant amb l'energia de la bateria"
 
@@ -365,97 +362,97 @@ msgstr "La càrrega de bateria és baixa"
 msgid "System is running on low power"
 msgstr "El sistema està funcionant amb un nivell baix de càrrega"
 
-#: ../src/xfpm-battery.c:238 ../src/xfpm-supply.c:340 ../src/xfpm-supply.c:363
+#: ../src/xfpm-battery.c:240 ../src/xfpm-supply.c:365 ../src/xfpm-supply.c:388
 #: ../src/xfpm-tray-icon.c:119 ../src/xfpm-tray-icon.c:142
-#: ../src/xfpm-manager.c:221
+#: ../src/xfpm-manager.c:230
 msgid "Xfce power manager"
 msgstr "Gestor d'energia de Xfce"
 
-#: ../src/xfpm-battery.c:268
+#: ../src/xfpm-battery.c:277
 msgid "Your UPS"
 msgstr "El SAI"
 
-#: ../src/xfpm-battery.c:270
+#: ../src/xfpm-battery.c:279
 msgid "Your Mouse battery"
 msgstr "La bateria del ratolí"
 
-#: ../src/xfpm-battery.c:272
+#: ../src/xfpm-battery.c:281
 msgid "Your Keyboard battery"
 msgstr "La bateria del teclat"
 
-#: ../src/xfpm-battery.c:274
+#: ../src/xfpm-battery.c:283
 msgid "Your Camera battery"
 msgstr "La bateria de la càmera"
 
-#: ../src/xfpm-battery.c:276
+#: ../src/xfpm-battery.c:285
 msgid "Your PDA battery"
 msgstr "La bateria de la PDA"
 
-#: ../src/xfpm-battery.c:278
+#: ../src/xfpm-battery.c:287
 msgid "Your Battery"
 msgstr "La bateria"
 
-#: ../src/xfpm-battery.c:293
+#: ../src/xfpm-battery.c:302
 msgid "is empty"
 msgstr "és buida"
 
-#: ../src/xfpm-battery.c:299
+#: ../src/xfpm-battery.c:308
 msgid "is fully charged"
 msgstr "Totalment carregada"
 
-#: ../src/xfpm-battery.c:304
+#: ../src/xfpm-battery.c:313
 msgid "charge level"
 msgstr "Nivell de càrrega"
 
-#: ../src/xfpm-battery.c:309
+#: ../src/xfpm-battery.c:318
 msgid "is charging"
 msgstr "S'està carregant"
 
-#: ../src/xfpm-battery.c:316
+#: ../src/xfpm-battery.c:325
 msgid "is discharging"
 msgstr "S'està descarregant"
 
-#: ../src/xfpm-battery.c:321
+#: ../src/xfpm-battery.c:330
 msgid "charge is low"
 msgstr "La càrrega és baixa"
 
-#: ../src/xfpm-battery.c:326
+#: ../src/xfpm-battery.c:335
 msgid "is almost empty"
 msgstr "Està gaire bé descarregada"
 
-#: ../src/xfpm-battery.c:371
+#: ../src/xfpm-battery.c:387
 msgid "is not present"
 msgstr "no hi és"
 
-#: ../src/xfpm-battery.c:410
+#: ../src/xfpm-battery.c:426
 msgid "Battery not present"
 msgstr "No hi ha cap bateria"
 
-#: ../src/xfpm-battery.c:434 ../src/xfpm-battery.c:466
+#: ../src/xfpm-battery.c:450 ../src/xfpm-battery.c:482
 msgid "Battery"
 msgstr "Bateria"
 
-#: ../src/xfpm-battery.c:437 ../src/xfpm-battery.c:469
+#: ../src/xfpm-battery.c:453 ../src/xfpm-battery.c:485
 msgid "System is running on AC power"
 msgstr "El sistema està funcionant endollat a la corrent elèctrica"
 
-#: ../src/xfpm-battery.c:444
+#: ../src/xfpm-battery.c:460
 msgid "Estimated time left"
 msgstr "Temps restant previst"
 
-#: ../src/xfpm-battery.c:448
+#: ../src/xfpm-battery.c:464
 msgid "Estimated time to be fully charged"
 msgstr "Temps de càrrega previst"
 
-#: ../src/xfpm-battery.c:452
+#: ../src/xfpm-battery.c:468
 msgid "hour"
 msgstr "hora"
 
-#: ../src/xfpm-battery.c:453
+#: ../src/xfpm-battery.c:469
 msgid "minute"
 msgstr "minut"
 
-#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:476
+#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:293
 msgid "Unknown unit"
 msgstr "Unitat no reconeguda"
 
@@ -504,61 +501,61 @@ msgstr ""
 "Amb llicència GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:128
+#: ../src/xfpm-main.c:133
 msgid "Do not daemonize"
 msgstr "No en facis un dimoni"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:134
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Reinicia el gestor d'energia de Xfce"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:135
 msgid "Show the configuration dialog"
 msgstr "Mostra el diàleg de configuració"
 
-#: ../src/xfpm-main.c:131
+#: ../src/xfpm-main.c:136
 msgid "Quit any running xfce power manager"
 msgstr "Surt de tots els gestors d'energia de Xfce en execució"
 
-#: ../src/xfpm-main.c:132
+#: ../src/xfpm-main.c:137
 msgid "Version information"
 msgstr "Informació de la versió"
 
-#: ../src/xfpm-main.c:168
+#: ../src/xfpm-main.c:173
 #, c-format
 msgid "Too many arguments"
 msgstr "Masses arguments"
 
-#: ../src/xfpm-main.c:184
+#: ../src/xfpm-main.c:189
 msgid "Unable to get connection to the message bus session"
 msgstr "No es pot connectar a la sessió de missatges de bus"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:277
 msgid "Another power manager is already running"
 msgstr "S'està executant un altre gestor d'energia"
 
-#: ../src/xfpm-main.c:278
+#: ../src/xfpm-main.c:283
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "El gestor d'energia de Xfce ja s'està executant"
 
-#: ../src/xfpm-supply.c:231
+#: ../src/xfpm-supply.c:257
 msgid "Adapter present"
 msgstr "Adaptador trobat"
 
-#: ../src/xfpm-supply.c:232
+#: ../src/xfpm-supply.c:258
 msgid "Adapter not present"
 msgstr "Adaptador no trobat"
 
-#: ../src/xfpm-supply.c:309
+#: ../src/xfpm-supply.c:334
 msgid "Shutdown the system"
 msgstr "Apaga el sistema"
 
-#: ../src/xfpm-supply.c:320
+#: ../src/xfpm-supply.c:345
 msgid "Hibernate the system"
 msgstr "Hiberna el sistema"
 
-#: ../src/xfpm-supply.c:332
+#: ../src/xfpm-supply.c:357
 msgid ""
 "System is running on low power, but an application is currently disabling "
 "the automatic sleep, this means that doing a sleep now may damage the data "
@@ -570,7 +567,7 @@ msgstr ""
 "malmetre l'aplicació. Tanqueu aquesta aplicació abans de deixar l'ordinador "
 "en mode d'adormiment or connecteu-lo a la xarxa elèctrica"
 
-#: ../src/xfpm-supply.c:358
+#: ../src/xfpm-supply.c:383
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
 "El sistema està funcionant amb un nivell de càrrega baix. Deseu el que "
@@ -609,52 +606,50 @@ msgid "Quit"
 msgstr "Surt"
 
 #: ../src/xfpm-tray-icon.c:296
-msgid "Clear inhibit"
-msgstr "Netejar inhibir"
-
-#: ../src/xfpm-tray-icon.c:296
-msgid "Inhibit"
-msgstr "Inhibir"
+#, fuzzy
+msgid "Monitor power control"
+msgstr "Habilita el controlador de pantalla del gestor d'energia"
 
 #: ../src/xfpm-tray-icon.c:298
+#, fuzzy
 msgid ""
-"Disable or enable automatic sleep, setting this will tell the power manager "
-"to disable backlight sleep, for example you could active the inhibit if you "
-"are watching a movie."
+"Disable or enable monitor power control, for example you could disable the "
+"screen power when watching a movie."
 msgstr ""
 "Activa o desactiva l'adormit automàtic. Si l'activeu, tingueu en compte que "
 "la pantalla es podrà apagar a petició del gestor i, per exemple, dificultar-"
 "vos el visionat d'una pel·lícula."
 
-#: ../src/xfpm-tray-icon.c:386
+#: ../src/xfpm-tray-icon.c:383
 msgid "No data available"
 msgstr "No hi ha informació disponible"
 
-#: ../src/xfpm-engine.c:753 ../src/xfpm-engine.c:779 ../src/xfpm-engine.c:808
+#: ../src/xfpm-engine.c:769 ../src/xfpm-engine.c:795 ../src/xfpm-engine.c:821
+#: ../src/xfpm-engine.c:850
 #, c-format
 msgid "Permission denied"
 msgstr "S'ha denegat el permís"
 
-#: ../src/xfpm-engine.c:786
+#: ../src/xfpm-engine.c:828
 #, c-format
 msgid "Hibernate not supported"
 msgstr "La hibernació no és compatible"
 
-#: ../src/xfpm-engine.c:815
+#: ../src/xfpm-engine.c:857
 #, c-format
 msgid "Suspend not supported"
 msgstr "La suspensió no és compatible"
 
-#: ../src/xfpm-manager.c:221
+#: ../src/xfpm-manager.c:230
 msgid "HAL daemon is not running"
 msgstr "El dimoni HAL no s'està executant"
 
-#: ../src/xfpm-inhibit.c:333
+#: ../src/xfpm-inhibit.c:330
 #, c-format
 msgid "Invalid arguments"
 msgstr "Arguments no vàlids"
 
-#: ../src/xfpm-inhibit.c:359
+#: ../src/xfpm-inhibit.c:356
 #, c-format
 msgid "Invalid cookie"
 msgstr "La galeta no és vàlida"
@@ -687,8 +682,8 @@ msgstr "Memòria esgotada"
 msgid "System failed to sleep"
 msgstr "No s'ha pogut adormir el sistema"
 
-#: ../src/xfpm-shutdown.c:409 ../src/xfpm-shutdown.c:432
-#: ../src/xfpm-shutdown.c:466
+#: ../src/xfpm-shutdown.c:411 ../src/xfpm-shutdown.c:433
+#: ../src/xfpm-shutdown.c:457 ../src/xfpm-shutdown.c:493
 #, c-format
 msgid "HAL daemon is currently not connected"
 msgstr "El dimoni HAL no està actiu"
@@ -697,35 +692,35 @@ msgstr "El dimoni HAL no està actiu"
 msgid "Power management for the Xfce desktop"
 msgstr "Gestor d'energia per l'escriptori Xfce"
 
-#: ../libxfpm/hal-battery.c:446
+#: ../libxfpm/hal-battery.c:263
 msgid "Lithium ion"
 msgstr "Ió liti"
 
-#: ../libxfpm/hal-battery.c:450
+#: ../libxfpm/hal-battery.c:267
 msgid "Lead acid"
 msgstr "Plom i àcid"
 
-#: ../libxfpm/hal-battery.c:454
+#: ../libxfpm/hal-battery.c:271
 msgid "Lithium polymer"
 msgstr "Liti-polímer"
 
-#: ../libxfpm/hal-battery.c:458
+#: ../libxfpm/hal-battery.c:275
 msgid "Nickel metal hydride"
 msgstr "Níquel i Hidrur metàŀlic"
 
-#: ../libxfpm/hal-battery.c:461
+#: ../libxfpm/hal-battery.c:278
 msgid "Unknown"
 msgstr "Desconeguda"
 
-#: ../libxfpm/hal-battery.c:469
+#: ../libxfpm/hal-battery.c:286
 msgid "mWh"
 msgstr "mWh"
 
-#: ../libxfpm/hal-battery.c:473
+#: ../libxfpm/hal-battery.c:290
 msgid "mAh"
 msgstr "mAh"
 
-#: ../libxfpm/xfpm-common.c:154
+#: ../libxfpm/xfpm-common.c:162
 msgid "translator-credits"
 msgstr "Carles Muñoz Gorriz <carlesmu@internautas.org>"
 
@@ -742,6 +737,21 @@ msgstr "No s'ha trobat el dispositiu"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Connector de brillantor"
+
+#~ msgid "Advanced"
+#~ msgstr "Avançat"
+
+#~ msgid "Enable notification"
+#~ msgstr "Habilita la notificació"
+
+#~ msgid "On battery"
+#~ msgstr "Amb bateria"
+
+#~ msgid "Clear inhibit"
+#~ msgstr "Netejar inhibir"
+
+#~ msgid "Inhibit"
+#~ msgstr "Inhibir"
 
 #~ msgid "Advance"
 #~ msgstr "Avança"
