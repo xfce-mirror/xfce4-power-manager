@@ -295,7 +295,9 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     saver_inhibited = xfpm_screen_saver_get_inhibit (tray->priv->srv);
     mi = gtk_check_menu_item_new_with_label (_("Monitor power control"));
     gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (mi), !saver_inhibited);
-    gtk_widget_set_tooltip_text (mi, _("Disable or enable monitor power control, for example you could disable the screen power when watching a movie."));
+    gtk_widget_set_tooltip_text (mi, _("Disable or enable monitor power control, "\
+                                       "for example you could disable the screen power "\
+				       "control to avoid screen blanking when watching a movie."));
     
     g_signal_connect (G_OBJECT (mi), "activate",
 		      G_CALLBACK (xfpm_tray_icon_inhibit_active_cb), tray);
