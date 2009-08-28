@@ -115,6 +115,7 @@ xfpm_dbus_monitor_unique_connection_name_lost (XfpmDBusMonitor *monitor, DBusBus
 	    TRACE ("Unique name %s disconnected ", name);
 	    g_signal_emit (G_OBJECT(monitor), signals [UNIQUE_NAME_LOST], 0, 
 			   watch->name, bus_type == DBUS_BUS_SESSION ? TRUE : FALSE);
+	    g_ptr_array_remove (monitor->priv->names_array, watch);
 	    xfpm_dbus_monitor_free_watch_data (watch);
 	}
     }
