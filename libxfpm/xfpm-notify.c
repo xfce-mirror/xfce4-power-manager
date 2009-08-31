@@ -37,7 +37,9 @@
 #endif
 
 #include <gtk/gtk.h>
+
 #include <libxfce4util/libxfce4util.h>
+#include <libxfcegui4/libxfcegui4.h>
 
 #include <libnotify/notify.h>
 
@@ -102,14 +104,15 @@ xfpm_notify_finalize(GObject *object)
 static void
 xfpm_notify_set_notification_icon (NotifyNotification *n, const gchar *icon_name )
 {
-    GdkPixbuf *pix = xfpm_load_icon (icon_name, 48);
+    GdkPixbuf *pix = xfce_themed_icon_load (icon_name, 48);
     
     if ( pix )
     {
-	notify_notification_set_icon_from_pixbuf (n, 
+	notify_notification_set_icon_from_pixbuf (n,
 						  pix);
 	g_object_unref ( G_OBJECT(pix));
     }
+    
 }
 
 static NotifyNotification *

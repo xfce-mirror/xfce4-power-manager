@@ -36,6 +36,7 @@
 
 #include "libxfpm/xfpm-common.h"
 #include "libxfpm/xfpm-string.h"
+#include "libxfpm/xfpm-icons.h"
 
 #include "interfaces/xfpm-settings_ui.h"
 
@@ -1451,7 +1452,7 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     gtk_tree_view_append_column(GTK_TREE_VIEW(view),col);
     
     /*General settings */
-    pix = xfpm_load_icon("preferences-system", 48); 
+    pix = xfce_themed_icon_load ("preferences-system", 48); 
     
     gtk_list_store_append(list_store, &iter);
     
@@ -1467,7 +1468,7 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     i++;
     
     /* ON ac power */
-    pix = xfpm_load_icon("xfpm-ac-adapter", 48); 
+    pix = xfce_themed_icon_load (XFPM_AC_ADAPTER_ICON, 48); 
     gtk_list_store_append(list_store, &iter);
     if ( pix )
     {
@@ -1482,7 +1483,7 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     
     if ( system_laptop )
     {
-	pix = xfpm_load_icon("battery", 48); 
+	pix = xfce_themed_icon_load (XFPM_BATTERY_ICON, 48); 
 	gtk_list_store_append(list_store, &iter);
 	if ( pix )
 	{
@@ -1496,7 +1497,7 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     }
     i++;
     
-    pix = xfpm_load_icon("applications-other", 48); 
+    pix = xfce_themed_icon_load ("applications-other", 48); 
     gtk_list_store_append(list_store, &iter);
     if ( pix )
     {

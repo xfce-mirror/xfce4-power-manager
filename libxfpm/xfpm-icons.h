@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
+ * * Copyright (C) 2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -18,34 +18,27 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __XFPM_COMMON_H
-#define __XFPM_COMMON_H
-
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <glib.h>
-#include <gtk/gtk.h>
+#ifndef __XFPM_ICONS_H
+#define __XFPM_ICONS_H
 
 G_BEGIN_DECLS
 
-GtkBuilder     *xfpm_builder_new_from_string   	(const gchar *file,
-						 GError **error);
+#define XFPM_AC_ADAPTER_ICON			"xfpm-ac-adapter"
+#define XFPM_BATTERY_ICON			"battery"
 
-void       	xfpm_lock_screen  		(void);
+#define XFPM_PRIMARY_ICON_PREFIX		"xfpm-primary-"
+#define XFPM_UPS_ICON_PREFIX			"xfpm-ups-"
+#define XFPM_MOUSE_ICON_PREFIX			"xfpm-mouse-"
+#define XFPM_KBD_ICON_PREFIX			"xfpm-keyboard-"
+#define XFPM_CAMERA_ICON_PREFIX			"xfpm-camera-"
+#define XFPM_PDA_ICON_PREFIX			"xfpm-pda-"
+#define XFPM_KBD_MOUSE_ICON_PREFIX		"xfpm-keyboard-mouse-"
 
-void       	xfpm_preferences		(void);
-
-void       	xfpm_help			(void);
-
-void            xfpm_quit                       (void);
-
-void       	xfpm_about			(GtkWidget *widget, 
-						 gpointer data);
-
-gboolean	xfpm_guess_is_multimonitor	(void);
+#define XFPM_DISPLAY_BRIGHTNESS_ICON	        "xfpm-brightness-lcd"
+#define XFPM_DISPLAY_BRIGHTNESS_INVALID_ICON	"xfpm-brightness-lcd-invalid" /* When no hw found */
+#define XFPM_HIBERNATE_ICON			"xfpm-hibernate"
+#define XFPM_SUSPEND_ICON			"xfpm-suspend"
 
 G_END_DECLS
 
-#endif /* XFPM_COMMON_H */
+#endif

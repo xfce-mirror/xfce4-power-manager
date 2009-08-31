@@ -66,26 +66,6 @@ xfpm_link_mailto (GtkAboutDialog *about, const gchar *link, gpointer data)
     g_free (cmd);
 }
 	
-
-GdkPixbuf *
-xfpm_load_icon (const char *icon_name, gint size)
-{
-    GdkPixbuf *icon;
-    GError *error = NULL;
-    
-    icon = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                     icon_name,
-                                     size,
-                                     GTK_ICON_LOOKUP_FORCE_SVG,
-                                     &error);
-    if ( error )
-    {
-        g_warning ("Error occured while loading icon %s: %s\n", icon_name, error->message);
-        g_error_free (error);
-    }
-    return icon;                               
-}
-
 void       
 xfpm_lock_screen (void)
 {

@@ -34,6 +34,7 @@
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-common.h"
 #include "libxfpm/xfpm-notify.h"
+#include "libxfpm/xfpm-icons.h"
 
 #include "xfpm-supply.h"
 #include "xfpm-adapter.h"
@@ -232,7 +233,7 @@ xfpm_supply_show_tray_icon (XfpmSupply *supply)
     supply->priv->tray = xfpm_tray_icon_new ();
     
     xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
-    xfpm_tray_icon_set_icon (supply->priv->tray, "xfpm-ac-adapter");
+    xfpm_tray_icon_set_icon (supply->priv->tray, XFPM_AC_ADAPTER_ICON);
     xfpm_tray_icon_set_show_info_menu (supply->priv->tray, FALSE);
 }
 

@@ -43,6 +43,7 @@ libxfpmcommon_la_CFLAGS =       	\
         $(GLIB_CFLAGS)          	\
         $(DBUS_CFLAGS)			\
 	$(LIBXFCE4UTIL_CFLAGS)		\
+	$(LIBXFCEGUI4_CFLAGS)		\
 	$(LIBNOTIFY_CFLAGS)
 
 if MAINTAINER_MODE

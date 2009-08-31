@@ -35,6 +35,7 @@
 
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-notify.h"
+#include "libxfpm/xfpm-icons.h"
 
 #include "xfpm-battery.h"
 #include "xfpm-tray-icon.h"
@@ -164,7 +165,9 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
     if ( state == BATTERY_NOT_PRESENT )
     {
 	xfpm_tray_icon_set_icon (battery->priv->icon, 
-				 battery->priv->type == HAL_DEVICE_TYPE_UPS ? "xfpm-ups-missing" : "xfpm-primary-missing");
+				 battery->priv->type == HAL_DEVICE_TYPE_UPS ? 
+				 XFPM_UPS_ICON_PREFIX "missing" : 
+				 XFPM_PRIMARY_ICON_PREFIX "missing");
 	return;
     }
     
@@ -172,7 +175,10 @@ xfpm_battery_refresh_icon (XfpmBattery *battery,
     if ( state == BATTERY_FULLY_CHARGED )
     {
 	if ( battery->priv->type == HAL_DEVICE_TYPE_PRIMARY)
-	    xfpm_tray_icon_set_icon (battery->priv->icon, battery->priv->adapter_present ? "xfpm-primary-charged" : "xfpm-primary-100");
+	    xfpm_tray_icon_set_icon (battery->priv->icon, 
+				     battery->priv->adapter_present ? 
+				     XFPM_PRIMARY_ICON_PREFIX "charged" : 
+				     XFPM_PRIMARY_ICON_PREFIX "100");
 	else
 	{
 	    icon = g_strdup_printf("%s%s", 
@@ -544,34 +550,34 @@ _get_icon_prefix_from_enum_type (HalDeviceType type)
 {
     if ( type == HAL_DEVICE_TYPE_PRIMARY )
     {
-	return g_strdup("xfpm-primary-");
+	return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
     }
     else if ( type == HAL_DEVICE_TYPE_UPS ) 
     {
-	return g_strdup("xfpm-ups-");
+	return g_strdup (XFPM_UPS_ICON_PREFIX);
     }
     else if ( type == HAL_DEVICE_TYPE_MOUSE ) 
     {
-	return g_strdup("xfpm-mouse-");
+	return g_strdup (XFPM_MOUSE_ICON_PREFIX);
     }
     else if ( type == HAL_DEVICE_TYPE_KEYBOARD ) 
     {
-	return g_strdup("xfpm-keyboard-");
+	return g_strdup (XFPM_KBD_ICON_PREFIX);
     }
     else if ( type == HAL_DEVICE_TYPE_CAMERA ) 
     {
-	return g_strdup("xfpm-camera-");
+	return g_strdup (XFPM_CAMERA_ICON_PREFIX);
     }
     else if ( type == HAL_DEVICE_TYPE_PDA ) 
     {
-	return g_strdup("xfpm-pda-");
+	return g_strdup (XFPM_PDA_ICON_PREFIX);
     }
     else if ( type == HAL_DEVICE_TYPE_KEYBOARD_MOUSE ) 
     {
-	return g_strdup("xfpm-keyboard-mouse-");
+	return g_strdup (XFPM_KBD_MOUSE_ICON_PREFIX);
     }
     
-    return g_strdup("xfpm-primary-");
+    return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
 }
 
 static void

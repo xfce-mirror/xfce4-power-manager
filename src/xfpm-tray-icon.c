@@ -35,6 +35,7 @@
 #include "libxfpm/xfpm-common.h"
 #include "libxfpm/xfpm-string.h"
 #include "libxfpm/xfpm-notify.h"
+#include "libxfpm/xfpm-icons.h"
 
 #include "xfpm-tray-icon.h"
 #include "xfpm-shutdown.h"
@@ -263,10 +264,10 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
 		  NULL);
     
     // Hibernate menu option
-    mi = gtk_image_menu_item_new_with_label(_("Hibernate"));
-    img = gtk_image_new_from_icon_name("xfpm-hibernate",GTK_ICON_SIZE_MENU);
-    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
-    gtk_widget_set_sensitive(mi,FALSE);
+    mi = gtk_image_menu_item_new_with_label (_("Hibernate"));
+    img = gtk_image_new_from_icon_name (XFPM_HIBERNATE_ICON, GTK_ICON_SIZE_MENU);
+    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM(mi), img);
+    gtk_widget_set_sensitive (mi,FALSE);
     
     if ( caller && can_hibernate && tray->priv->data_available )
     {
@@ -279,7 +280,7 @@ xfpm_tray_icon_popup_menu_cb (GtkStatusIcon *icon, guint button,
     
     // Suspend menu option
     mi = gtk_image_menu_item_new_with_label(_("Suspend"));
-    img = gtk_image_new_from_icon_name("xfpm-suspend",GTK_ICON_SIZE_MENU);
+    img = gtk_image_new_from_icon_name (XFPM_SUSPEND_ICON, GTK_ICON_SIZE_MENU);
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),img);
     
     gtk_widget_set_sensitive(mi,FALSE);
