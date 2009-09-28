@@ -385,37 +385,37 @@ xfpm_brightness_hal_inhibit_changed_cb (XfpmScreenSaver *saver, gboolean inhibit
 }
 
 static void
-xfpm_brightness_get_user_timeouts (XfpmBrightnessHal *brg, guint16 *on_ac, guint16 *on_battery)
+xfpm_brightness_get_user_timeouts (XfpmBrightnessHal *brg, guint *timeout_on_ac, guint *timeout_on_battery)
 {
     g_object_get (G_OBJECT (brg->priv->conf),
-		  BRIGHTNESS_ON_AC, on_ac,
-		  BRIGHTNESS_ON_BATTERY, on_battery,
+		  BRIGHTNESS_ON_AC, timeout_on_ac,
+		  BRIGHTNESS_ON_BATTERY, timeout_on_battery,
 		  NULL);
 }
 
 static void
 xfpm_brightness_hal_set_timeouts (XfpmBrightnessHal *brg )
 {
-    guint16 on_ac, on_battery;
+    guint timeout_on_ac, timeout_on_battery ;
     
-    xfpm_brightness_get_user_timeouts (brg, &on_ac, &on_battery);
+    xfpm_brightness_get_user_timeouts (brg, &timeout_on_ac, &timeout_on_battery);
     
-    if ( on_ac == ALARM_DISABLED )
+    if ( timeout_on_ac == ALARM_DISABLED )
     {
 	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC );
     }
     else
     {
-	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC, on_ac * 1000);
+	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC, timeout_on_ac * 1000);
     }
     
-    if ( on_battery == ALARM_DISABLED )
+    if ( timeout_on_battery == ALARM_DISABLED )
     {
 	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY );
     }
     else
     {
-	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY, on_battery * 1000);
+	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY, timeout_on_battery * 1000);
     }
     
     xfpm_idle_alarm_reset_all (brg->priv->idle);

@@ -124,7 +124,7 @@ xfpm_xfconf_get_property (GObject *object,
     conf = XFPM_XFCONF (object);
     
     src = conf->priv->values + prop_id;
-    
+
     if ( G_VALUE_HOLDS (src, pspec->value_type) )
 	g_value_copy (src, value);
     else
@@ -447,7 +447,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      PROP_DIM_ON_AC_TIMEOUT,
                                      g_param_spec_uint (BRIGHTNESS_ON_AC,
                                                         NULL, NULL,
-							0,
+							9,
 							G_MAXUINT,
 							9,
                                                         G_PARAM_READWRITE));
@@ -459,7 +459,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      PROP_DIM_ON_BATTERY_TIMEOUT,
                                      g_param_spec_uint (BRIGHTNESS_ON_BATTERY,
                                                         NULL, NULL,
-							0,
+							9,
 							G_MAXUINT,
 							120,
                                                         G_PARAM_READWRITE));
