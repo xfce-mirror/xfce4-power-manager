@@ -146,7 +146,7 @@ xfpm_about (GtkWidget *widget, gpointer data)
 						 
 }
 
-gboolean xfpm_guess_is_multimonitor (void)
+gboolean xfpm_is_multihead_connected (void)
 {
     GdkDisplay *dpy;
     GdkScreen *screen;

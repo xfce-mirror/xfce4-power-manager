@@ -246,7 +246,7 @@ xfpm_engine_lid_event (XfpmButtonHal *bt_hal, gboolean pressed, XfpmEngine *engi
 	
 	if ( action == LID_TRIGGER_LOCK_SCREEN )
 	{
-	    if ( !xfpm_guess_is_multimonitor () )
+	    if ( !xfpm_is_multihead_connected () )
 		xfpm_lock_screen ();
 	}
 	else 

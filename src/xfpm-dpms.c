@@ -244,7 +244,7 @@ xfpm_dpms_force_off (gpointer data)
 
     if ( power_level != DPMSModeOff )
     {
-	if ( xfpm_guess_is_multimonitor () )
+	if ( xfpm_is_multihead_connected () )
 	    goto out;
 	
 	TRACE ("Checking if we have multiple monitor : no");

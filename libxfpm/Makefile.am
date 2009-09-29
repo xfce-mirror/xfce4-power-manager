@@ -36,7 +36,8 @@ libxfpmcommon_la_SOURCES =      	\
         xfpm-common.c           	\
         xfpm-common.h			\
 	xfpm-notify.c			\
-	xfpm-notify.h
+	xfpm-notify.h			\
+	xfpm-icons.h
 
 libxfpmcommon_la_CFLAGS =       	\
         $(GTK_CFLAGS)           	\
