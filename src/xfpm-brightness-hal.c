@@ -168,6 +168,19 @@ xfpm_brightness_hal_get_device (XfpmBrightnessHal *brg, const gchar *udi)
     g_object_unref (device);
 }
 
+static void
+xfpm_brightness_hal_read_hal_level (XfpmBrightnessHal *brg)
+{
+    GError *error = NULL;
+    
+    brg->priv->hw_level = xfpm_brightness_hal_get_level (brg, &error);
+   
+    if ( error )
+    {
+	g_warning ("Error getting brightness level: %s\n", error->message);
+	g_error_free (error);
+    }
+}
 
 static gboolean
 xfpm_brightness_hal_setup (XfpmBrightnessHal *brg)
@@ -188,7 +201,8 @@ xfpm_brightness_hal_setup (XfpmBrightnessHal *brg)
     xfpm_brightness_hal_get_device (brg, udi[0]);
     xfpm_brightness_hal_set_proxy (brg, udi[0]);
 
-    brg->priv->hw_level = xfpm_brightness_hal_get_level (brg, NULL);
+    xfpm_brightness_hal_read_hal_level (brg);
+    
     TRACE ("Current hw level =%d\n", brg->priv->hw_level);
     
     hal_manager_free_string_array (udi);
@@ -198,7 +212,6 @@ xfpm_brightness_hal_setup (XfpmBrightnessHal *brg)
 static void
 xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
 {
-    GError *error = NULL;
     gboolean show_popup;
     gboolean enable_brightness;
     
@@ -217,14 +230,7 @@ xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
     }
     
 signal:
-    brg->priv->hw_level = xfpm_brightness_hal_get_level (brg, &error);
-   
-    if ( error )
-    {
-	g_warning ("Error getting brightness level: %s\n", error->message);
-	g_error_free (error);
-	return;
-    }
+    xfpm_brightness_hal_read_hal_level (brg);
     
     if ( show_popup )
 	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
@@ -233,9 +239,7 @@ signal:
 static void
 xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
 {
-    GError *error = NULL;
-    gboolean show_popup;
-    gboolean enable_brightness;
+    gboolean show_popup, enable_brightness;
     
     g_object_get (G_OBJECT (brg->priv->conf),
 		  ENABLE_BRIGHTNESS_CONTROL, &enable_brightness,
@@ -252,14 +256,7 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
     }
     
 signal:
-    brg->priv->hw_level = xfpm_brightness_hal_get_level (brg, &error);
-    
-    if ( error )
-    {
-	g_warning ("Error getting brightness level: %s\n", error->message);
-	g_error_free (error);
-	return;
-    }
+    xfpm_brightness_hal_read_hal_level (brg);
     
     if ( show_popup )
 	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
@@ -319,6 +316,8 @@ xfpm_brightness_timeout_on_ac (XfpmBrightnessHal *brg)
     
     level = xfpm_brightness_hal_get_level (brg, &error);
     
+    brg->priv->hw_level = level;
+    
     if ( error )
     {
 	g_warning ("Error getting brightness level: %s\n", error->message);
@@ -343,6 +342,8 @@ xfpm_brightness_timeout_on_battery (XfpmBrightnessHal *brg)
 	    return;
     
     level = xfpm_brightness_hal_get_level (brg, &error);
+    
+    brg->priv->hw_level = level;
     
     if ( error )
     {
