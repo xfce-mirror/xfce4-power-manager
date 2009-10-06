@@ -271,6 +271,8 @@ xfpm_idle_init (XfpmIdle *idle)
 	    idle->priv->idle_counter = counters[i].counter;
     }
     
+    XSyncFreeSystemCounterList (counters);
+    
     if ( !idle->priv->idle_counter )
     {
 	g_warning ("No idle counter.");
