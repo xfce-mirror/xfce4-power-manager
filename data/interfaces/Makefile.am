@@ -10,7 +10,7 @@ xfpm-settings_ui.h: xfpm-settings.ui
 	exo-csource --static --strip-comments --strip-content --name=xfpm_settings_ui $< > $@
 endif
 
-DISTCLEANFILES =				\
+MAINTAINERCLEANFILES =				\
 	$(interfaces_h)
 
 EXTRA_DIST =					\
