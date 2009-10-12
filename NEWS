@@ -1,3 +1,11 @@
+0.8.4.1
+=======
+- Because on some systems we might not have the brightness keys mapped
+  brightness changes are not reflected to xfpm when keys are pressed, so
+  save the actual brightness before dimming the screen on idle to restore it 
+  afterword. (bug #5811).
+- 
+
 0.8.4
 =======
 - Don't lock screen on lid event when multiple monitor are connected.

@@ -252,7 +252,9 @@ xfpm_dpms_force_off (gpointer data)
 	if ( !DPMSForceLevel (GDK_DISPLAY (), DPMSModeOff ) )
 	{
 	    g_warning ("Cannot set Force DPMSModeOff");
+	    goto out;
 	}
+	XSync (GDK_DISPLAY (), FALSE);
     }
     
 out:
@@ -283,7 +285,9 @@ xfpm_dpms_force_on (gpointer data)
 	if ( !DPMSForceLevel (GDK_DISPLAY (), DPMSModeOn ) )
 	{
 	    g_warning ("Cannot set Force DPMSModeOn");
+	    goto out;
 	}
+	XSync (GDK_DISPLAY (), FALSE);
     }
     
 out:
