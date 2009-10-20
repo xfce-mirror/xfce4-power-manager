@@ -1349,7 +1349,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, gboolean
     
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, 10);
 
-	if ( val > 20 || val < 5)
+	if ( G_UNLIKELY (val > 20) )
 	{
 	    g_critical ("Value %d if out of range for property %s\n", val, CRITICAL_POWER_LEVEL);
 	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), 10);

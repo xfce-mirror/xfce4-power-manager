@@ -4,7 +4,8 @@
   brightness changes are not reflected to xfpm when keys are pressed, so
   save the actual brightness before dimming the screen on idle to restore it 
   afterword. (bug #5811).
-- 
+- Check if DPMS is enabled before doing action on lid close event (bug #5805).
+- Allow 1% as a minimum critical charge level.
 
 0.8.4
 =======
