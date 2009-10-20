@@ -236,21 +236,31 @@ xfpm_engine_lid_event (XfpmButtonHal *bt_hal, gboolean pressed, XfpmEngine *engi
 {
     XfpmLidTriggerAction action;
     
-    if ( pressed )
-    {
-	g_object_get (G_OBJECT (engine->priv->conf),
+    g_object_get (G_OBJECT (engine->priv->conf),
 		      engine->priv->on_battery ? LID_SWITCH_ON_BATTERY_CFG : LID_SWITCH_ON_AC_CFG, &action,
 		      NULL);
-		      
+
+    if ( pressed )
+    {
 	XFPM_DEBUG_ENUM ("LID close event", action, XFPM_TYPE_LID_TRIGGER_ACTION);
 	
-	if ( action == LID_TRIGGER_LOCK_SCREEN )
+	if ( action == LID_TRIGGER_NOTHING )
+	{
+	    if ( !xfpm_is_multihead_connected () )
+		xfpm_dpms_force_level (engine->priv->dpms, DPMSModeOff);
+	}
+	else if ( action == LID_TRIGGER_LOCK_SCREEN )
 	{
 	    if ( !xfpm_is_multihead_connected () )
 		xfpm_lock_screen ();
 	}
 	else 
 	    xfpm_engine_shutdown_request (engine, action, FALSE);
+    }
+    else
+    {
+	XFPM_DEBUG_ENUM ("LID opened", action, XFPM_TYPE_LID_TRIGGER_ACTION);
+	xfpm_dpms_force_level (engine->priv->dpms, DPMSModeOn);
     }
 }
 

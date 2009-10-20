@@ -31,6 +31,11 @@
 
 #ifdef HAVE_DPMS
 
+#include <gdk/gdkx.h>
+#include <X11/Xproto.h>
+#include <X11/extensions/dpms.h>
+#include <X11/extensions/dpmsstr.h>
+
 G_BEGIN_DECLS
 
 #define XFPM_TYPE_DPMS        (xfpm_dpms_get_type () )
@@ -53,9 +58,12 @@ typedef struct
 } XfpmDpmsClass;
 
 GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
+
 XfpmDpms       *xfpm_dpms_new             (void);
 
 gboolean        xfpm_dpms_capable         (XfpmDpms *dpms) G_GNUC_PURE;
+
+void		xfpm_dpms_force_level	  (XfpmDpms *dpms, CARD16 level);
 
 G_END_DECLS
 

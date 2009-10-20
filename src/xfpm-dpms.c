@@ -28,11 +28,6 @@
 #include <string.h>
 
 #include <gdk/gdk.h>
-#include <gdk/gdkx.h>
-
-#include <X11/Xproto.h>
-#include <X11/extensions/dpms.h>
-#include <X11/extensions/dpmsstr.h>
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -43,7 +38,6 @@
 #include "xfpm-adapter.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-screen-saver.h"
-#include "xfpm-button-hal.h"
 #include "xfpm-config.h"
 
 #ifdef HAVE_DPMS
@@ -58,7 +52,6 @@ struct XfpmDpmsPrivate
     XfpmXfconf      *conf;
     XfpmAdapter     *adapter;
     XfpmScreenSaver *saver;
-    XfpmButtonHal   *bt_hal;
     
     gboolean       dpms_capable;
     gboolean       inhibited;
@@ -225,103 +218,6 @@ xfpm_dpms_inhibit_changed_cb (XfpmScreenSaver *saver, gboolean inhibited, XfpmDp
     xfpm_dpms_refresh (dpms);
 }
 
-static gboolean
-xfpm_dpms_force_off (gpointer data)
-{ 
-    XfpmDpms *dpms;
-    CARD16 power_level;
-    BOOL state;
-    
-    dpms = XFPM_DPMS (data);
-    
-    TRACE ("Start");
-    
-    if ( G_UNLIKELY (!DPMSInfo (GDK_DISPLAY (), &power_level, &state)) )
-    {
-	g_warning ("Cannot get DPMSInfo");
-	goto out;
-    }
-
-    if ( power_level != DPMSModeOff )
-    {
-	if ( xfpm_is_multihead_connected () )
-	    goto out;
-	
-	TRACE ("Checking if we have multiple monitor : no");
-	TRACE ("Forcing DPMSModeOff");
-	if ( !DPMSForceLevel (GDK_DISPLAY (), DPMSModeOff ) )
-	{
-	    g_warning ("Cannot set Force DPMSModeOff");
-	    goto out;
-	}
-	XSync (GDK_DISPLAY (), FALSE);
-    }
-    
-out:
-    dpms->priv->switch_off_timeout_id = 0;
-    return FALSE;
-}
-
-static gboolean
-xfpm_dpms_force_on (gpointer data)
-{
-    XfpmDpms *dpms;
-    CARD16 power_level;
-    BOOL state;
-    
-    dpms = XFPM_DPMS (data);
-    
-    TRACE ("start");
-    
-    if ( G_UNLIKELY (!DPMSInfo (GDK_DISPLAY (), &power_level, &state)) )
-    {
-	g_warning ("Cannot get DPMSInfo");
-	goto out;
-    }
-
-    if ( power_level != DPMSModeOn )
-    {
-	TRACE ("Forcing DPMSModeOn");
-	if ( !DPMSForceLevel (GDK_DISPLAY (), DPMSModeOn ) )
-	{
-	    g_warning ("Cannot set Force DPMSModeOn");
-	    goto out;
-	}
-	XSync (GDK_DISPLAY (), FALSE);
-    }
-    
-out:
-    dpms->priv->switch_on_timeout_id = 0;
-    return FALSE;
-}
-
-static void
-xfpm_dpms_lid_event_cb (XfpmButtonHal *bt, gboolean pressed, XfpmDpms *dpms)
-{
-    TRACE ("pressed: %s", xfpm_bool_to_string (pressed));
-
-    if ( dpms->priv->switch_off_timeout_id != 0 )
-    {
-	g_source_remove (dpms->priv->switch_off_timeout_id);
-	dpms->priv->switch_off_timeout_id = 0;
-    }
-    
-    if ( dpms->priv->switch_on_timeout_id != 0 )
-    {
-	g_source_remove (dpms->priv->switch_on_timeout_id );
-	dpms->priv->switch_on_timeout_id = 0;
-    }
-	
-    if ( pressed )
-    {
-	g_timeout_add (100, (GSourceFunc) xfpm_dpms_force_off, dpms);
-    }
-    else
-    {
-	g_timeout_add (100, (GSourceFunc) xfpm_dpms_force_on, dpms);
-    }
-}
-
 static void
 xfpm_dpms_class_init(XfpmDpmsClass *klass)
 {
@@ -349,7 +245,6 @@ xfpm_dpms_init(XfpmDpms *dpms)
 	dpms->priv->adapter = xfpm_adapter_new ();
 	dpms->priv->saver   = xfpm_screen_saver_new ();
 	dpms->priv->conf    = xfpm_xfconf_new  ();
-	dpms->priv->bt_hal  = xfpm_button_hal_get ();
     
 	g_signal_connect (dpms->priv->saver, "screen-saver-inhibited",
 			  G_CALLBACK(xfpm_dpms_inhibit_changed_cb), dpms);
@@ -359,9 +254,6 @@ xfpm_dpms_init(XfpmDpms *dpms)
 			  
 	g_signal_connect (dpms->priv->conf, "notify",
 			  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
-			  
-	g_signal_connect (dpms->priv->bt_hal, "lid-event",
-			  G_CALLBACK (xfpm_dpms_lid_event_cb), dpms);
 			  
 	dpms->priv->on_battery = !xfpm_adapter_get_present (dpms->priv->adapter);
 	xfpm_dpms_refresh (dpms);
@@ -380,11 +272,8 @@ xfpm_dpms_finalize(GObject *object)
     dpms = XFPM_DPMS (object);
     
     g_object_unref (dpms->priv->conf);
-	
     g_object_unref (dpms->priv->adapter);
-	
     g_object_unref ( dpms->priv->saver);
-    g_object_unref ( dpms->priv->bt_hal);
 
     G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }
@@ -397,14 +286,53 @@ xfpm_dpms_new (void)
     return dpms;
 }
 
-/*
- * Get if the display is DPMS capable. if not the dpms
- * object is freed by xfpm-engine
- */
 gboolean xfpm_dpms_capable (XfpmDpms *dpms)
 {
     g_return_val_if_fail (XFPM_IS_DPMS(dpms), FALSE);
     
     return dpms->priv->dpms_capable;
 }
+
+void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
+{
+    CARD16 current_level;
+    BOOL current_state;
+    
+    TRACE ("start");
+    
+    if ( !dpms->priv->dpms_capable )
+	goto out;
+    
+    if ( G_UNLIKELY (!DPMSInfo (GDK_DISPLAY (), &current_level, &current_state)) )
+    {
+	g_warning ("Cannot get DPMSInfo");
+	goto out;
+    }
+
+    if ( !current_state )
+    {
+	TRACE ("DPMS is disabled");
+	goto out;
+    }
+
+    if ( current_level != level )
+    {
+	TRACE ("Forcing DPMS mode %d", level);
+	
+	if ( !DPMSForceLevel (GDK_DISPLAY (), level ) )
+	{
+	    g_warning ("Cannot set Force DPMS level %d", level);
+	    goto out;
+	}
+	XSync (GDK_DISPLAY (), FALSE);
+    }
+    else
+    {
+	TRACE ("No need to change DPMS mode, current_level=%d requested_level=%d", current_level, level);
+    }
+    
+    out:
+	;
+}
+
 #endif /* HAVE_DPMS */
