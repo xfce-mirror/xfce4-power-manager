@@ -152,6 +152,9 @@ xfpm_battery_refresh_visible_icon (XfpmBattery *battery)
 	else visible = TRUE;
     }
 
+    XFPM_DEBUG_ENUM ("Tray icon configuration: ", show_icon, XFPM_TYPE_SHOW_ICON);
+    XFPM_DEBUG_ENUM_FULL (battery->priv->state, XFPM_TYPE_BATTERY_STATE, " setting tray icon visible %s", 
+			  xfpm_bool_to_string (visible));
     xfpm_tray_icon_set_visible (battery->priv->icon, visible);
 }
     

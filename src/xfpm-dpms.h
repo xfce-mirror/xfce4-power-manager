@@ -34,7 +34,6 @@
 #include <gdk/gdkx.h>
 #include <X11/Xproto.h>
 #include <X11/extensions/dpms.h>
-#include <X11/extensions/dpmsstr.h>
 
 G_BEGIN_DECLS
 

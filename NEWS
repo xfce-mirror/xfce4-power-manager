@@ -1,11 +1,12 @@
 0.8.4.1
 =======
-- Because on some systems we might not have the brightness keys mapped
-  brightness changes are not reflected to xfpm when keys are pressed, so
+- Because on some systems we might not have the brightness keys mapped.
+  LCD brightness change are not reflected to xfpm when keys are pressed, so
   save the actual brightness before dimming the screen on idle to restore it 
   afterword. (bug #5811).
 - Check if DPMS is enabled before doing action on lid close event (bug #5805).
 - Allow 1% as a minimum critical charge level.
+- Build fix with xextproto > 7.0.5 (bug #5897).
 
 0.8.4
 =======

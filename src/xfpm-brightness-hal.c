@@ -298,7 +298,7 @@ xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
 	return;
     }
      
-    if ( level != brg->priv->hw_level )
+    if ( level != brg->priv->hw_level && level != 0)
     {
 	TRACE("Resetting brightness level to %d", brg->priv->hw_level);
 	xfpm_brightness_hal_set_level(brg, brg->priv->hw_level);

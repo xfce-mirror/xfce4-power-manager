@@ -92,7 +92,10 @@ xfpm_dpms_disable (XfpmDpms *dpms)
 	g_warning ("Cannot get DPMSInfo");
 	
     if ( state )
+    {
+	xfpm_dpms_set_timeouts (dpms, 0, 0, 0);
 	DPMSDisable (GDK_DISPLAY());
+    }
 }
 
 /*
