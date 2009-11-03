@@ -3,9 +3,9 @@
 <node name="/org/freedesktop/PowerManagement">
     <interface name="org.freedesktop.PowerManagement">
         <annotation name="org.freedesktop.DBus.GLib.CSymbol"
-                    value="xfpm_engine_dbus"/>
+                    value="xfpm_dkp_dbus"/>
         <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
-                    value="xfpm_engine_dbus_client"/>   
+                    value="xfpm_dkp_dbus_client"/>   
 
     <method name="Shutdown">
     </method>

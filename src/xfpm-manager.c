@@ -30,6 +30,7 @@
 #include <glib.h>
 
 #include <libxfce4util/libxfce4util.h>
+#include <libxfce4ui/libxfce4ui.h>
 #include <xfconf/xfconf.h>
 
 #include <dbus/dbus-glib.h>
@@ -37,15 +38,21 @@
 
 #include <libnotify/notify.h>
 
-#include "libxfpm/xfpm-string.h"
-#include "libxfpm/xfpm-dbus.h"
-#include "libxfpm/xfpm-popups.h"
-
+#include "xfpm-dkp.h"
+#include "xfpm-dbus.h"
+#include "xfpm-dpms.h"
 #include "xfpm-manager.h"
-#include "xfpm-engine.h"
-#include "xfpm-session.h"
-#include "xfpm-dbus-monitor.h"
+#include "xfpm-button.h"
+#include "xfpm-inhibit.h"
+#include "xfpm-brightness.h"
+#include "xfpm-config.h"
+#include "xfpm-debug.h"
+#include "xfpm-xfconf.h"
 #include "xfpm-errors.h"
+#include "xfpm-common.h"
+#include "xfpm-enum.h"
+#include "xfpm-enum-glib.h"
+#include "xfpm-enum-types.h"
 
 static void xfpm_manager_finalize   (GObject *object);
 
@@ -59,51 +66,24 @@ static gboolean xfpm_manager_quit (XfpmManager *manager);
 
 struct XfpmManagerPrivate
 {
-    XfpmSession     *session;
-    XfpmEngine 	    *engine;
-    
-    XfpmDBusMonitor *monitor;
-    
     DBusGConnection *session_bus;
+    
+    XfceSMClient    *client;
+    
+    XfpmDkp         *dkp;
+    XfpmButton      *button;
+    XfpmInhibit     *inhibit;
+    XfpmXfconf      *conf;
+    XfpmBrightness  *brightness;
+#ifdef HAVE_DPMS
+    XfpmDpms        *dpms;
+#endif
+    
+    gboolean	     inhibited;
+    gboolean	     session_managed;
 };
 
-G_DEFINE_TYPE(XfpmManager, xfpm_manager, G_TYPE_OBJECT)
-
-static void
-xfpm_manager_hal_connection_changed_cb (XfpmDBusMonitor *monitor, gboolean connected, XfpmManager *manager)
-{
-    TRACE("connected = %s", xfpm_bool_to_string (connected));
-    
-    if ( connected  == TRUE )
-    {
-	if ( manager->priv->engine == NULL)
-	{
-	    manager->priv->engine = xfpm_engine_new ();
-	}
-	else
-	{
-	    xfpm_engine_reload_hal_objects (manager->priv->engine);
-	}
-    }
-}
-
-static void
-xfpm_manager_system_bus_connection_changed_cb (XfpmDBusMonitor *monitor, gboolean connected, XfpmManager *manager)
-{
-    if ( connected == TRUE )
-    {
-	TRACE ("System bus connection changed to TRUE, restarting the power manager");
-	xfpm_manager_quit (manager);
-	g_spawn_command_line_async ("xfce4-power-manager", NULL);
-    }
-}
-
-static void
-xfpm_manager_session_die_cb (XfpmSession *session, XfpmManager *manager)
-{
-    TRACE ("Session die signal, exiting");
-    xfpm_manager_quit (manager);
-}
+G_DEFINE_TYPE (XfpmManager, xfpm_manager, G_TYPE_OBJECT)
 
 static void
 xfpm_manager_class_init (XfpmManagerClass *klass)
@@ -112,33 +92,21 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
 
     object_class->finalize = xfpm_manager_finalize;
 
-    g_type_class_add_private(klass,sizeof(XfpmManagerPrivate));
+    g_type_class_add_private (klass, sizeof (XfpmManagerPrivate));
 }
 
 static void
-xfpm_manager_init(XfpmManager *manager)
+xfpm_manager_init (XfpmManager *manager)
 {
     manager->priv = XFPM_MANAGER_GET_PRIVATE(manager);
-
-    manager->priv->engine        = NULL;
     
-    manager->priv->session = xfpm_session_new ();
-    manager->priv->monitor = xfpm_dbus_monitor_new ();
-    
-    g_signal_connect (manager->priv->monitor, "hal-connection-changed",
-		      G_CALLBACK(xfpm_manager_hal_connection_changed_cb), manager);
-		      
-    g_signal_connect (G_OBJECT (manager->priv->monitor), "system_bus_connection_changed",
-		      G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager);
+    manager->priv->inhibited = FALSE;
 
-    g_signal_connect (manager->priv->session, "session-die",
-		      G_CALLBACK (xfpm_manager_session_die_cb), manager);
-		      
     notify_init ("xfce4-power-manager");
 }
 
 static void
-xfpm_manager_finalize(GObject *object)
+xfpm_manager_finalize (GObject *object)
 {
     XfpmManager *manager;
 
@@ -147,13 +115,19 @@ xfpm_manager_finalize(GObject *object)
     if ( manager->priv->session_bus )
 	dbus_g_connection_unref (manager->priv->session_bus);
 	
-    if ( manager->priv->engine )
-    	g_object_unref (manager->priv->engine);
-	
-    g_object_unref (manager->priv->session);
-
-    g_object_unref (manager->priv->monitor);
+    g_object_unref (manager->priv->dkp);
+    g_object_unref (manager->priv->button);
+    g_object_unref (manager->priv->inhibit);
+    g_object_unref (manager->priv->conf);
+    g_object_unref (manager->priv->client);
     
+#ifdef HAVE_DPMS
+    g_object_unref (manager->priv->dpms);
+#endif
+    
+    if ( manager->priv->brightness )
+	g_object_unref (manager->priv->brightness);
+	
     G_OBJECT_CLASS (xfpm_manager_parent_class)->finalize (object);
 }
 
@@ -173,10 +147,6 @@ xfpm_manager_quit (XfpmManager *manager)
     TRACE ("Exiting");
     
     xfpm_manager_release_names (manager);
-    xfpm_session_quit (manager->priv->session);
-    
-    g_object_unref (G_OBJECT (manager));
-    
     gtk_main_quit ();
     return TRUE;
 }
@@ -190,32 +160,158 @@ xfpm_manager_reserve_names (XfpmManager *manager)
 				  "org.freedesktop.PowerManagement") )
     {
 	g_warning ("Unable to reserve bus name: Maybe any already running instance?\n");
-	xfpm_session_quit (manager->priv->session);
+	
 	g_object_unref (G_OBJECT (manager));
 	gtk_main_quit ();
+	
 	return FALSE;
     }
     return TRUE;
 }
 
+static void
+xfpm_manager_button_pressed_cb (XfpmButton *bt, XfpmButtonKey type, XfpmManager *manager)
+{
+    XfpmShutdownRequest req = XFPM_DO_NOTHING;
+    
+    XFPM_DEBUG_ENUM ("Received button press event", type, XFPM_TYPE_BUTTON_KEY);
+  
+    if ( manager->priv->inhibited )
+    {
+        TRACE("Power manager automatic sleep is currently disabled");
+        return;
+    }
+    
+    if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
+        return;
+    
+    if ( type == BUTTON_POWER_OFF )
+    {
+        g_object_get (G_OBJECT (manager->priv->conf),
+                      POWER_SWITCH_CFG, &req,
+                      NULL);
+    }
+    else if ( type == BUTTON_SLEEP )
+    {
+        g_object_get (G_OBJECT (manager->priv->conf),
+                      SLEEP_SWITCH_CFG, &req,
+                      NULL);
+    }
+    else if ( type == BUTTON_HIBERNATE )
+    {
+        g_object_get (G_OBJECT (manager->priv->conf),
+                      HIBERNATE_SWITCH_CFG, &req,
+                      NULL);
+    }
+    else
+    {
+        g_return_if_reached ();
+    }
+
+    XFPM_DEBUG_ENUM ("Shutdown request : ", req, XFPM_TYPE_SHUTDOWN_REQUEST);
+        
+    if ( req == XFPM_ASK && manager->priv->session_managed )
+        xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_ASK);
+    /*
+    else
+        xfpm_engine_shutdown_request (engine, req, FALSE);
+    */
+}
+
+static void
+xfpm_manager_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmManager *manager)
+{
+    manager->priv->inhibited = is_inhibit;
+}
+
+static void
+xfpm_manager_lid_changed_cb (XfpmDkp *dkp, gboolean lid_is_closed, XfpmManager *manager)
+{
+    XfpmLidTriggerAction action;
+    gboolean on_battery;
+    
+    g_object_get (G_OBJECT (dkp),
+		  "on-battery", &on_battery,
+		  NULL);
+    
+    g_object_get (G_OBJECT (manager->priv->conf),
+		  on_battery ? LID_SWITCH_ON_BATTERY_CFG : LID_SWITCH_ON_AC_CFG, &action,
+		  NULL);
+
+    if ( lid_is_closed )
+    {
+	XFPM_DEBUG_ENUM ("LID close event", action, XFPM_TYPE_LID_TRIGGER_ACTION);
+	
+	if ( action == LID_TRIGGER_NOTHING )
+	{
+	    if ( !xfpm_is_multihead_connected () )
+		xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOff);
+	}
+	else if ( action == LID_TRIGGER_LOCK_SCREEN )
+	{
+	    if ( !xfpm_is_multihead_connected () )
+		xfpm_lock_screen ();
+	}
+	/*
+	else 
+	    xfpm_engine_shutdown_request (engine, action, FALSE);
+	*/
+    }
+    else
+    {
+	XFPM_DEBUG_ENUM ("LID opened", action, XFPM_TYPE_LID_TRIGGER_ACTION);
+	xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOn);
+    }
+}
+
 XfpmManager *
-xfpm_manager_new (DBusGConnection *bus)
+xfpm_manager_new (DBusGConnection *bus, const gchar *client_id)
 {
     XfpmManager *manager = NULL;
-    manager = g_object_new(XFPM_TYPE_MANAGER,NULL);
+    GError *error = NULL;
+    gchar *current_dir;
+    
+    const gchar *restart_command[] =
+    {
+	"xfce4-power-manager",
+	"--restart",
+	NULL
+    };
+	
+    manager = g_object_new (XFPM_TYPE_MANAGER, NULL);
 
     manager->priv->session_bus = bus;
     
-    xfpm_manager_dbus_class_init (XFPM_MANAGER_GET_CLASS(manager));
-    xfpm_manager_dbus_init (manager);
+    current_dir = g_get_current_dir ();
+    manager->priv->client = xfce_sm_client_get_full (XFCE_SM_CLIENT_RESTART_NORMAL,
+						     XFCE_SM_CLIENT_PRIORITY_DEFAULT,
+						     client_id,
+						     current_dir,
+						     restart_command,
+						     NULL);
     
+    g_free (current_dir);
+    
+    manager->priv->session_managed = xfce_sm_client_connect (manager->priv->client, &error);
+    
+    if ( error )
+    {
+	g_warning ("Unable to connect to session managet : %s", error->message);
+	g_error_free (error);
+    }
+    else
+    {
+	g_signal_connect_swapped (manager->priv->client, "quit",
+				  G_CALLBACK (xfpm_manager_quit), manager);
+    }
+    
+    xfpm_manager_dbus_class_init (XFPM_MANAGER_GET_CLASS (manager));
+    xfpm_manager_dbus_init (manager);
     return manager;
 }
 
 void xfpm_manager_start (XfpmManager *manager)
 {
-    gboolean hal_running;
-    
     if ( !xfpm_manager_reserve_names (manager) )
 	goto out;
 	
@@ -223,14 +319,31 @@ void xfpm_manager_start (XfpmManager *manager)
 				  NULL,
 				  XFPM_TYPE_ERROR);
     
-    hal_running = xfpm_dbus_monitor_hal_connected (manager->priv->monitor);
+    manager->priv->dkp = xfpm_dkp_get ();
+    manager->priv->button = xfpm_button_new ();
+    manager->priv->inhibit = xfpm_inhibit_new ();
+    manager->priv->conf = xfpm_xfconf_new ();
+   
+    manager->priv->brightness = xfpm_brightness_new ();
     
-    if (!hal_running )
+#ifdef HAVE_DPMS
+    manager->priv->dpms = xfpm_dpms_new ();
+#endif
+    
+    if ( !xfpm_brightness_setup (manager->priv->brightness) )
     {
-	xfpm_error (_("Xfce power manager"), _("HAL daemon is not running"));
-	goto out;
+	g_object_unref (manager->priv->brightness);
+	manager->priv->brightness = NULL;
     }
-    manager->priv->engine = xfpm_engine_new ();
+     
+    g_signal_connect (manager->priv->button, "button_pressed",
+		      G_CALLBACK (xfpm_manager_button_pressed_cb), manager);
+    
+    g_signal_connect (manager->priv->inhibit, "has-inhibit-changed",
+		      G_CALLBACK (xfpm_manager_inhibit_changed_cb), manager);
+    
+    g_signal_connect (manager->priv->dkp, "lid-changed",
+		      G_CALLBACK (xfpm_manager_lid_changed_cb), manager);
     
 out:
 	;
@@ -308,10 +421,54 @@ static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
 					      GError **error)
 {
     
+    guint8 mapped_buttons;
+    gboolean auth_hibernate = FALSE;
+    gboolean auth_suspend = FALSE;
+    gboolean can_suspend = FALSE;
+    gboolean can_hibernate = FALSE;
+    gboolean has_sleep_button = FALSE;
+    gboolean has_hibernate_button = FALSE;
+    gboolean has_power_button = FALSE;
+    gboolean has_battery = TRUE;
+    gboolean has_lcd_brightness = TRUE;
+    gboolean has_lid = FALSE;
+    
     *OUT_config = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
     
-    xfpm_engine_get_info (manager->priv->engine, *OUT_config);
+
+    g_object_get (G_OBJECT (manager->priv->dkp),
+                  "auth-suspend", &auth_suspend,
+		  "auth-hibernate", &auth_hibernate,
+                  "can-suspend", &can_suspend,
+                  "can-hibernate", &can_hibernate, 
+		  "has-lid", &has_lid,
+		  NULL);
     
+    has_battery = xfpm_dkp_has_battery (manager->priv->dkp);
+    
+    mapped_buttons = xfpm_button_get_mapped (manager->priv->button);
+    
+    if ( mapped_buttons & SLEEP_KEY )
+        has_sleep_button = TRUE;
+    if ( mapped_buttons & HIBERNATE_KEY )
+        has_hibernate_button = TRUE;
+    if ( mapped_buttons & POWER_KEY )
+        has_power_button = TRUE;
+
+    g_hash_table_insert (*OUT_config, g_strdup ("sleep-button"), g_strdup (xfpm_bool_to_string (has_sleep_button)));
+    g_hash_table_insert (*OUT_config, g_strdup ("power-button"), g_strdup (xfpm_bool_to_string (has_power_button)));
+    g_hash_table_insert (*OUT_config, g_strdup ("hibernate-button"), g_strdup (xfpm_bool_to_string (has_hibernate_button)));
+    g_hash_table_insert (*OUT_config, g_strdup ("auth-suspend"), g_strdup (xfpm_bool_to_string (auth_suspend)));
+    g_hash_table_insert (*OUT_config, g_strdup ("auth-hibernate"), g_strdup (xfpm_bool_to_string (auth_hibernate)));
+    g_hash_table_insert (*OUT_config, g_strdup ("can-suspend"), g_strdup (xfpm_bool_to_string (can_suspend)));
+    g_hash_table_insert (*OUT_config, g_strdup ("can-hibernate"), g_strdup (xfpm_bool_to_string (can_hibernate)));
+    
+    g_hash_table_insert (*OUT_config, g_strdup ("has-battery"), g_strdup (xfpm_bool_to_string (has_battery)));
+    g_hash_table_insert (*OUT_config, g_strdup ("has-lid"), g_strdup (xfpm_bool_to_string (has_lid)));
+    
+    /*
+    g_hash_table_insert (*OUT_config, g_strdup ("has-brightness"), g_strdup (xfpm_bool_to_string (has_lcd_brightness)));
+    */
     return TRUE;
 }
 					      

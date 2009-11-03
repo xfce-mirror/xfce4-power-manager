@@ -4,9 +4,15 @@ if BUILD_PANEL_PLUGINS
 plugins_dir = panel-plugins
 endif
 
+if ENABLE_HAL
+libhal_dir = libhal
+endif
+
 SUBDIRS =        	\
 	data		\
-	libxfpm		\
+	$(libhal_dir)	\
+	libdbus		\
+	common		\
 	src		\
 	settings	\
 	$(plugins_dir)	\

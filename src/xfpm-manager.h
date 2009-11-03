@@ -48,7 +48,8 @@ typedef struct
 
 GType        		  xfpm_manager_get_type        (void) G_GNUC_CONST;
 
-XfpmManager    		 *xfpm_manager_new             (DBusGConnection *bus);
+XfpmManager    		 *xfpm_manager_new             (DBusGConnection *bus,
+							const gchar *client_id);
 
 void            	  xfpm_manager_start           (XfpmManager *manager);
 

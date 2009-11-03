@@ -30,36 +30,36 @@
 #include <glib.h>
 
 #include <libxfce4util/libxfce4util.h>
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
 #include <xfconf/xfconf.h>
 
-#include "libxfpm/xfpm-popups.h"
-#include "libxfpm/xfpm-string.h"
-#include "libxfpm/xfpm-common.h"
-#include "libxfpm/xfpm-dbus.h"
+#include "common/xfpm-common.h"
 
 #include "xfce-power-manager-dbus-client.h"
 #include "xfpm-settings.h"
 #include "xfpm-config.h"
+#include "xfpm-dbus.h"
 
-int main(int argc, char **argv)
+int main (int argc, char **argv)
 {
     GError *error = NULL;
     DBusGConnection *bus;
     GHashTable *config_hash;
     
-    gboolean system_laptop;
-    gboolean user_privilege;
+    gboolean has_battery;
+    gboolean auth_suspend;
+    gboolean auth_hibernate;
     gboolean can_suspend;
     gboolean can_hibernate;
     gboolean has_lcd_brightness;
     gboolean has_sleep_button;
     gboolean has_hibernate_button;
     gboolean has_power_button;
+    gboolean has_lid;
     gboolean start_xfpm_if_not_running;
     
     GdkNativeWindow socket_id = 0;
@@ -98,7 +98,7 @@ int main(int argc, char **argv)
 	g_error ("%s\n",error->message);
     }
 
-    if ( xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager") ) 
+    if ( xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(bus), "org.xfce.PowerManager") ) 
     {
 	TRACE("Xfce power manager is running\n");
 	
@@ -114,10 +114,11 @@ int main(int argc, char **argv)
 	if ( !xfconf_init(&error) )
     	{
 	    g_critical("xfconf init failed: %s using default settings\n", error->message);
-	    
-	    xfpm_popup_message(_("Xfce Power Manager"),_("Failed to load power manager configuration, "\
-	    			"using defaults"), GTK_MESSAGE_WARNING);
-	    g_error_free(error);
+	    xfce_dialog_show_warning (NULL, 
+				      _("Xfce Power Manager"), 
+				      "%s",
+				      _("Failed to load power manager configuration, using defaults"));
+	    g_error_free (error);
 	    error = NULL;
 	    return EXIT_FAILURE;
     	}
@@ -141,24 +142,25 @@ int main(int argc, char **argv)
 	if ( error )
 	{
 	    g_critical ("Unable to get configuration information from xfce power manager: %s", error->message);
-	    xfpm_error (_("Xfce Power Manager Settings"),
-		       _("Unable to connect to Xfce Power Manager") );
+	    xfce_dialog_show_error (NULL, error, "%s", _("Unable to connect to Xfce Power Manager"));
 	    g_error_free (error);
 	    return EXIT_FAILURE;
 	}
 	
-	system_laptop = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "system-laptop"));
+	has_battery = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-battery"));
+	has_lid = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-lid"));
 	can_suspend = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-suspend"));
 	can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-hibernate"));
-	user_privilege = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "caller-privilege"));
+	auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "auth-suspend"));
+	auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "auth-hibernate"));
 	has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-brightness"));
 	has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "sleep-button"));
 	has_power_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "power-button"));
 	has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "hibernate-button"));
 	
-	xfpm_settings_dialog_new (channel, system_laptop, user_privilege,
+	xfpm_settings_dialog_new (channel, has_battery, auth_hibernate, auth_suspend,
 				  can_suspend, can_hibernate, has_lcd_brightness,
-				  system_laptop, has_sleep_button, has_hibernate_button, has_power_button,
+				  has_lid, has_sleep_button, has_hibernate_button, has_power_button,
 				  socket_id);
 					   
 	gtk_main();
@@ -173,9 +175,12 @@ int main(int argc, char **argv)
 	g_print(_("Xfce power manager is not running"));
 	g_print("\n");
 	start_xfpm_if_not_running =
-	    xfce_confirm(_("Xfce4 Power Manager is not running, do you want to launch it now?"),
-			GTK_STOCK_YES,
-			_("Run"));
+	    xfce_dialog_confirm (NULL, 
+				 GTK_STOCK_YES, 
+				 _("Run"), 
+				 _("Xfce4 Power Manager is not running, do you want to launch it now?"),
+				 NULL);
+	
 	if ( start_xfpm_if_not_running ) 
 	{
 	    g_spawn_command_line_async("xfce4-power-manager",NULL);

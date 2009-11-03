@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2009 Ali <aliov@xfce.org>
+ * * Copyright (C) 2008 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -18,29 +18,27 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ifndef __XFPM_DBUS_H
+#define __XFPM_DBUS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <gtk/gtk.h>
 #include <glib.h>
+#include <dbus/dbus.h>
+#include <dbus/dbus-glib.h>
 
-#include <libxfce4panel/xfce-panel-plugin.h>
+gboolean	xfpm_dbus_name_has_owner 	   (DBusConnection *bus,
+						    const gchar *name);
+					  
+gboolean        xfpm_dbus_register_name  	   (DBusConnection *bus,
+						    const gchar *name);
+					  
+gboolean        xfpm_dbus_release_name   	   (DBusConnection *bus,
+						    const gchar *name);
 
-#include "brightness-button.h"
+GHashTable     *xfpm_dbus_get_interface_properties (DBusGProxy *proxy_prop,
+						    const gchar *iface_name);
 
-static void
-register_brightness_plugin (XfcePanelPlugin *plugin)
-{
-    GtkWidget *button;
-    
-    button = brightness_button_new (plugin);
-    
-    brightness_button_show (BRIGHTNESS_BUTTON (button));
-}
+GValue 		xfpm_dbus_get_interface_property   (DBusGProxy *proxy, 
+						    const gchar *iface_name, 
+						    const gchar *prop_name);
 
-XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL(register_brightness_plugin);
+#endif /* __XFPM_DBUS_H */

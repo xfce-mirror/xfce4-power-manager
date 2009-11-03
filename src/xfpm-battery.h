@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2008 Ali <aliov@xfce.org>
+ * * Copyright (C) 2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -23,46 +23,42 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
+#include <dbus/dbus-glib.h>
 
-#include "libxfpm/hal-battery.h"
-
-#include "xfpm-enum-glib.h"
-#include "xfpm-notify.h"
+#include "xfpm-dkp.h"
 
 G_BEGIN_DECLS
 
 #define XFPM_TYPE_BATTERY        (xfpm_battery_get_type () )
-#define XFPM_BATTERY(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_BATTERY, XfpmBattery))
-#define XFPM_IS_BATTERY(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_BATTERY))
+#define XFPM_BATTERY(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_BATTERY, XfpmBattery))
+#define XFPM_IS_BATTERY(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_BATTERY))
 
 typedef struct XfpmBatteryPrivate XfpmBatteryPrivate;
 
 typedef struct
 {
-    GObject		 parent;
-    XfpmBatteryPrivate	*priv;
+    GtkStatusIcon      	    parent;
+    
+    XfpmBatteryPrivate     *priv;
     
 } XfpmBattery;
 
 typedef struct
 {
-    GObjectClass         parent_class;
+    GtkStatusIconClass 	    parent_class;
     
-    void	        (*battery_state_changed)	(XfpmBattery *battery,
-    					            	 XfpmBatteryState state);
-       
 } XfpmBatteryClass;
 
-GType        		 xfpm_battery_get_type           (void) G_GNUC_CONST;
-XfpmBattery    		*xfpm_battery_new                (const HalBattery *device);
+GType        		    xfpm_battery_get_type        (void) G_GNUC_CONST;
 
-const HalBattery	*xfpm_battery_get_device         (XfpmBattery *battery) G_GNUC_PURE;
+GtkStatusIcon              *xfpm_battery_new             (void);
 
-XfpmBatteryState         xfpm_battery_get_state          (XfpmBattery *battery) G_GNUC_PURE;
+void			    xfpm_battery_monitor_device  (XfpmBattery *battery,
+							  DBusGProxy *proxy,
+							  DBusGProxy *proxy_prop,
+							  XfpmDkpDeviceType device_type);
 
-GtkStatusIcon  		*xfpm_battery_get_status_icon    (XfpmBattery *battery);
-
-const gchar    		*xfpm_battery_get_icon_name      (XfpmBattery *battery) G_GNUC_PURE;
+XfpmDkpDeviceType	    xfpm_battery_get_device_type (XfpmBattery *battery);
 
 G_END_DECLS
 

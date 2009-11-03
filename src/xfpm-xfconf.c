@@ -31,9 +31,6 @@
 
 #include <xfconf/xfconf.h>
 
-#include "libxfpm/xfpm-string.h"
-#include "libxfpm/xfpm-common.h"
-
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 #include "xfpm-enum-glib.h"
@@ -237,7 +234,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      PROP_CRITICAL_LEVEL,
                                      g_param_spec_uint (CRITICAL_POWER_LEVEL,
                                                         NULL, NULL,
-							1,
+							5,
 							20,
 							10,
                                                         G_PARAM_READWRITE));

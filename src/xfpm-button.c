@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2009 Ali <aliov@xfce.org>
+ * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -18,6 +18,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+
+/*
+ * Based on code from gpm-button (gnome power manager)
+ * Copyright (C) 2006-2007 Richard Hughes <richard@hughsie.com>
+ * 
+ */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -26,28 +33,38 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <X11/X.h>
+#include <X11/XF86keysym.h>
+
+#include <gdk/gdkx.h>
+#include <gtk/gtk.h>
+
 #include <glib.h>
 
+#include <libxfce4util/libxfce4util.h>
+
 #include "xfpm-button.h"
-#include "xfpm-button-xf86.h"
-#include "xfpm-button-hal.h"
-#include "xfpm-shutdown.h"
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
+#include "xfpm-debug.h"
 
 static void xfpm_button_finalize   (GObject *object);
 
 #define XFPM_BUTTON_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_BUTTON, XfpmButtonPrivate))
+(G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_BUTTON, XfpmButtonPrivate))
 
-#define SLEEP_KEY_TIMEOUT 6.0f
+static struct
+{
+    XfpmButtonKey    key;
+    guint            key_code;
+} xfpm_key_map [NUMBER_OF_BUTTONS] = { {0, 0}, };
 
 struct XfpmButtonPrivate
 {
-    XfpmButtonXf86 *xf86;
-    XfpmButtonHal  *hal;
-    XfpmShutdown   *shutdown;
-    GTimer         *timer;
+    GdkScreen	*screen;
+    GdkWindow   *window;
+    
+    guint8       mapped_buttons;
 };
 
 enum
@@ -56,92 +73,176 @@ enum
     LAST_SIGNAL
 };
 
-static guint signals [LAST_SIGNAL] = { 0 };
+#define DUPLICATE_SHUTDOWN_TIMEOUT 4.0f
 
-G_DEFINE_TYPE (XfpmButton, xfpm_button, G_TYPE_OBJECT)
+static guint signals[LAST_SIGNAL] = { 0 };
 
-static void
-xfpm_button_xf86_emit_signal (XfpmButton *button, XfpmButtonKey key)
+G_DEFINE_TYPE(XfpmButton, xfpm_button, G_TYPE_OBJECT)
+
+static guint
+xfpm_button_get_key (unsigned int keycode)
 {
-    if ( key == BUTTON_POWER_OFF || key == BUTTON_SLEEP || key == BUTTON_HIBERNATE )
+    XfpmButtonKey key = BUTTON_UNKNOWN;
+    guint i;
+    
+    for ( i = 0; i < G_N_ELEMENTS (xfpm_key_map); i++)
     {
-	if ( g_timer_elapsed (button->priv->timer, NULL) > SLEEP_KEY_TIMEOUT )
-	{
-	    g_signal_emit (G_OBJECT (button), signals [BUTTON_PRESSED], 0, key);
-	    g_timer_reset (button->priv->timer);
-	}
+	if ( xfpm_key_map [i].key_code == keycode )
+	    key = xfpm_key_map [i].key;
     }
-    else
+    
+    return key;
+}
+
+static GdkFilterReturn
+xfpm_button_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data)
+{
+    XfpmButtonKey key;
+    XfpmButton *button;
+    
+    XEvent *xev = (XEvent *) xevent;
+    
+    if ( xev->type != KeyPress )
+    	return GDK_FILTER_CONTINUE;
+    
+    key = xfpm_button_get_key (xev->xkey.keycode);
+    
+    if ( key != BUTTON_UNKNOWN )
     {
-	g_signal_emit (G_OBJECT (button), signals [BUTTON_PRESSED], 0, key);
+	button = (XfpmButton *) data;
+    
+	XFPM_DEBUG_ENUM ("Key press", key, XFPM_TYPE_BUTTON_KEY);
+    
+	g_signal_emit (G_OBJECT(button), signals[BUTTON_PRESSED], 0, key);
+	return GDK_FILTER_REMOVE;
     }
+    
+    return GDK_FILTER_CONTINUE;
+}
+
+static gboolean
+xfpm_button_grab_keystring (XfpmButton *button, guint keycode)
+{
+    Display *display;
+    guint ret;
+    guint modmask = 0;
+    
+    display = GDK_DISPLAY ();
+    
+    gdk_error_trap_push ();
+
+    ret = XGrabKey (display, keycode, modmask,
+		    GDK_WINDOW_XID (button->priv->window), True,
+		    GrabModeAsync, GrabModeAsync);
+		    
+    if ( ret == BadAccess )
+    {
+	g_warning ("Failed to grab modmask=%u, keycode=%li",
+		    modmask, (long int) keycode);
+	return FALSE;
+    }
+	
+    ret = XGrabKey (display, keycode, LockMask | modmask,
+		    GDK_WINDOW_XID (button->priv->window), True,
+		    GrabModeAsync, GrabModeAsync);
+			
+    if (ret == BadAccess)
+    {
+	g_warning ("Failed to grab modmask=%u, keycode=%li",
+		   LockMask | modmask, (long int) keycode);
+	return FALSE;
+    }
+
+    gdk_flush ();
+    gdk_error_trap_pop ();
+    return TRUE;
+}
+
+
+static gboolean
+xfpm_button_xevent_key (XfpmButton *button, guint keysym , XfpmButtonKey key)
+{
+    guint keycode = XKeysymToKeycode (GDK_DISPLAY(), keysym);
+
+    if ( keycode == 0 )
+    {
+	g_warning ("could not map keysym %x to keycode\n", keysym);
+	return FALSE;
+    }
+    
+    if ( !xfpm_button_grab_keystring(button, keycode)) 
+    {
+    	g_warning ("Failed to grab %i\n", keycode);
+	return FALSE;
+    }
+    
+    XFPM_DEBUG_ENUM_FULL (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key %li ", (long int) keycode);
+    
+    xfpm_key_map [key].key_code = keycode;
+    xfpm_key_map [key].key = key;
+    
+    return TRUE;
 }
 
 static void
-xfpm_button_xf86_button_pressed_cb (XfpmButtonXf86 *xf86, XfpmButtonKey key, XfpmButton *button)
+xfpm_button_setup (XfpmButton *button)
 {
-    xfpm_button_xf86_emit_signal (button, key);
+    button->priv->screen = gdk_screen_get_default ();
+    button->priv->window = gdk_screen_get_root_window (button->priv->screen);
+    
+    if ( xfpm_button_xevent_key (button, XF86XK_PowerOff, BUTTON_POWER_OFF) )
+	button->priv->mapped_buttons |= POWER_KEY;
+    
+#ifdef HAVE_XF86XK_HIBERNATE
+    if ( xfpm_button_xevent_key (button, XF86XK_Hibernate, BUTTON_HIBERNATE) )
+	button->priv->mapped_buttons |= HIBERNATE_KEY;
+#endif 
+
+#ifdef HAVE_XF86XK_SUSPEND
+    if ( xfpm_button_xevent_key (button, XF86XK_Suspend, BUTTON_HIBERNATE) )
+	button->priv->mapped_buttons |= HIBERNATE_KEY;
+#endif 
+
+    if ( xfpm_button_xevent_key (button, XF86XK_Sleep, BUTTON_SLEEP) )
+	button->priv->mapped_buttons |= SLEEP_KEY;
+	
+    if ( xfpm_button_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP) &&
+	 xfpm_button_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN) )
+	button->priv->mapped_buttons |= BRIGHTNESS_KEY;
+
+    gdk_window_add_filter (button->priv->window, 
+			   xfpm_button_filter_x_events, button);
 }
 
 static void
-xfpm_button_hal_button_pressed_cb (XfpmButtonHal *hal, XfpmButtonKey key, XfpmButton *button)
+xfpm_button_class_init(XfpmButtonClass *klass)
 {
-    xfpm_button_xf86_emit_signal (button, key);
-}
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
-static void
-xfpm_button_waking_up_cb (XfpmShutdown *shutdown, XfpmButton *button)
-{
-    g_timer_reset (button->priv->timer);
-}
-
-static void
-xfpm_button_class_init (XfpmButtonClass *klass)
-{
-    GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-    signals[BUTTON_PRESSED] = 
-        g_signal_new("button-pressed",
+    signals [BUTTON_PRESSED] = 
+        g_signal_new ("button-pressed",
                       XFPM_TYPE_BUTTON,
                       G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmButtonClass, button_pressed),
+                      G_STRUCT_OFFSET (XfpmButtonClass, button_pressed),
                       NULL, NULL,
                       g_cclosure_marshal_VOID__ENUM,
                       G_TYPE_NONE, 1, XFPM_TYPE_BUTTON_KEY);
 
     object_class->finalize = xfpm_button_finalize;
+
     g_type_class_add_private (klass, sizeof (XfpmButtonPrivate));
 }
 
 static void
 xfpm_button_init (XfpmButton *button)
 {
-    guint8 xf86_mapped;
-    gboolean only_lid = FALSE;
-    
     button->priv = XFPM_BUTTON_GET_PRIVATE (button);
-    button->priv->xf86 = xfpm_button_xf86_new ();
-    button->priv->timer = g_timer_new ();
-    button->priv->shutdown = xfpm_shutdown_new ();
     
-    xf86_mapped = xfpm_button_xf86_get_mapped_buttons (button->priv->xf86);
-
-    button->priv->hal = xfpm_button_hal_get ();
+    button->priv->mapped_buttons = 0;
+    button->priv->screen = NULL;
+    button->priv->window = NULL;
     
-    if ( xf86_mapped & SLEEP_KEY && xf86_mapped & POWER_KEY && 
-	 xf86_mapped & BRIGHTNESS_KEY && xf86_mapped & HIBERNATE_KEY )
-	only_lid = TRUE;
-
-    xfpm_button_hal_get_keys (button->priv->hal, only_lid, xf86_mapped);
-    
-    g_signal_connect (button->priv->xf86, "xf86-button-pressed",
-		      G_CALLBACK (xfpm_button_xf86_button_pressed_cb), button);
-		      
-    g_signal_connect (button->priv->hal, "hal-button-pressed",
-		      G_CALLBACK (xfpm_button_hal_button_pressed_cb), button);
-		      
-    g_signal_connect (button->priv->shutdown, "waking-up",
-		      G_CALLBACK (xfpm_button_waking_up_cb), button);
+    xfpm_button_setup (button);
 }
 
 static void
@@ -151,44 +252,20 @@ xfpm_button_finalize (GObject *object)
 
     button = XFPM_BUTTON (object);
     
-    g_object_unref (button->priv->hal);
-    g_object_unref (button->priv->xf86);
-    g_object_unref (button->priv->shutdown);
-    
-    g_timer_destroy (button->priv->timer);
-
-    G_OBJECT_CLASS (xfpm_button_parent_class)->finalize (object);
+    G_OBJECT_CLASS(xfpm_button_parent_class)->finalize(object);
 }
 
 XfpmButton *
 xfpm_button_new (void)
 {
-    static gpointer xfpm_button_object = NULL;
-    
-    if ( G_LIKELY (xfpm_button_object != NULL) )
-    {
-	g_object_ref (xfpm_button_object);
-    }
-    else
-    {
-	xfpm_button_object = g_object_new (XFPM_TYPE_BUTTON, NULL);
-	g_object_add_weak_pointer (xfpm_button_object, &xfpm_button_object);
-    }
-    return XFPM_BUTTON (xfpm_button_object);
+    XfpmButton *button = NULL;
+    button = g_object_new (XFPM_TYPE_BUTTON, NULL);
+    return button;
 }
 
 guint8 xfpm_button_get_mapped (XfpmButton *button)
 {
-    guint8 mapped_keys = 0;
-    guint8 hal_mapped;
-    guint8 xf86_mapped;
-    
     g_return_val_if_fail (XFPM_IS_BUTTON (button), 0);
     
-    hal_mapped  = xfpm_button_hal_get_mapped_keys (button->priv->hal);
-    xf86_mapped = xfpm_button_xf86_get_mapped_buttons (button->priv->xf86);
-    
-    mapped_keys = hal_mapped | xf86_mapped;
-    
-    return mapped_keys;
+    return button->priv->mapped_buttons;
 }

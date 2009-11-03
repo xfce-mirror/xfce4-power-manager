@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2009 Ali <aliov@xfce.org>
+ * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -27,31 +27,33 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_BUTTON        (xfpm_button_get_type () )
-#define XFPM_BUTTON(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_BUTTON, XfpmButton))
-#define XFPM_IS_BUTTON(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_BUTTON))
+#define XFPM_TYPE_BUTTON   (xfpm_button_get_type () )
+#define XFPM_BUTTON(o)     (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_BUTTON, XfpmButton))
+#define XFPM_IS_BUTTON(o)  (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_BUTTON))
 
 typedef struct XfpmButtonPrivate XfpmButtonPrivate;
 
 typedef struct
 {
-    GObject         		 parent;
-    XfpmButtonPrivate     	*priv;
+    GObject		  	parent;
+    XfpmButtonPrivate          *priv;
     
 } XfpmButton;
 
 typedef struct
 {
-    GObjectClass 		 parent_class;
-    void                         (*button_pressed)	     (XfpmButton *button,
-							      XfpmButtonKey key);
+    GObjectClass 		parent_class;
+     
+    void                 	(*button_pressed)		        (XfpmButton *button,
+								         XfpmButtonKey type);
     
 } XfpmButtonClass;
 
-GType        			 xfpm_button_get_type        (void) G_GNUC_CONST;
-XfpmButton       		*xfpm_button_new             (void);
+GType                 		xfpm_button_get_type               	(void) G_GNUC_CONST;
 
-guint8                           xfpm_button_get_mapped      (XfpmButton *button);
+XfpmButton       	       *xfpm_button_new             		(void);
+
+guint8                		xfpm_button_get_mapped		     	(XfpmButton *button) G_GNUC_PURE;
 
 G_END_DECLS
 

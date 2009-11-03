@@ -4,9 +4,7 @@ plugin_PROGRAMS = xfce4-brightness-plugin
 xfce4_brightness_plugin_SOURCES =		\
 	brightness-plugin.c			\
 	brightness-button.c			\
-	brightness-button.h			\
-	brightness-proxy.c			\
-	brightness-proxy.h
+	brightness-button.h
 
 xfce4_brightness_plugin_CFLAGS =		\
 	-I$(top_srcdir)				\
@@ -15,17 +13,24 @@ xfce4_brightness_plugin_CFLAGS =		\
 	$(LIBXFCE4PANEL_CFLAGS)       		\
 	$(LIBXFCE4UTIL_CFLAGS)        		\
 	$(GTK_CFLAGS)			      	\
-	$(GLIB_CFLAGS)				\
-	$(DBUS_GLIB_CFLAGS)
+	$(GLIB_CFLAGS)
 
 xfce4_brightness_plugin_LDADD =			\
-	$(top_builddir)/libxfpm/libxfpmhal.la	\
-	$(top_builddir)/libxfpm/libxfpmcommon.la\
+	$(top_builddir)/common/libxfpmcommon.la \
 	$(LIBXFCE4PANEL_LIBS)   		\
 	$(LIBXFCE4UTIL_LIBS)			\
 	$(GTK_LIBS)   				\
-	$(GLIB_LIBS)				\
+	$(GLIB_LIBS)
+
+if ENABLE_HAL
+
+xfce4_brightness_plugin_CFLAGS += 		\
+	$(DBUS_GLIB_CFLAGS)
+
+xfce4_brightness_plugin_LDADD += 		\
 	$(DBUS_GLIB_LIBS)
+
+endif
 
 #
 # Desktop file

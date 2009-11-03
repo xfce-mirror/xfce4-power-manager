@@ -30,11 +30,11 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 
-#include "libxfpm/xfpm-common.h"
-#include "libxfpm/xfpm-icons.h"
+#include "common/xfpm-common.h"
+#include "common/xfpm-icons.h"
+#include "common/xfpm-brightness.h"
 
 #include "brightness-button.h"
-#include "brightness-proxy.h"
 
 static void brightness_button_finalize   (GObject *object);
 
@@ -44,7 +44,8 @@ static void brightness_button_finalize   (GObject *object);
 struct BrightnessButtonPrivate
 {
     XfcePanelPlugin *plugin;
-    BrightnessProxy *brightness;
+    
+    XfpmBrightness  *brightness;
     
     GtkWidget       *popup;
     GtkWidget       *range;
@@ -173,7 +174,7 @@ brightness_button_set_tooltip (BrightnessButton *button)
 {
     gboolean has_hw;
     
-    has_hw = brightness_proxy_has_hw (button->priv->brightness);
+    has_hw = xfpm_brightness_has_hw (button->priv->brightness);
     
     if ( has_hw )
 	gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Control your LCD brightness"));
@@ -194,7 +195,7 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
     
     button = BRIGHTNESS_BUTTON (widget);
     
-    has_hw = brightness_proxy_has_hw (button->priv->brightness);
+    has_hw = xfpm_brightness_has_hw (button->priv->brightness);
     
     if ( !has_hw ) 
 	return FALSE;
@@ -303,7 +304,7 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
    
     gtk_window_move (GTK_WINDOW(button->priv->popup), x, y);
     TRACE("Displaying window on x=%d y=%d", x, y);
-    current_level = brightness_proxy_get_level (button->priv->brightness);
+    current_level = xfpm_brightness_get_level (button->priv->brightness);
     
     gtk_range_set_value (GTK_RANGE(button->priv->range), current_level);
     button->priv->popup_open = TRUE;
@@ -321,7 +322,7 @@ minus_clicked (GtkWidget *widget, BrightnessButton *button)
 {
     guint level, max_level;
     
-    max_level = brightness_proxy_get_max_level (button->priv->brightness);
+    max_level = xfpm_brightness_get_max_level (button->priv->brightness);
     level = (guint ) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
     if ( level != 0 )
@@ -333,7 +334,7 @@ plus_clicked (GtkWidget *widget, BrightnessButton *button)
 {
     guint level, max_level;
     
-    max_level = brightness_proxy_get_max_level (button->priv->brightness);
+    max_level = xfpm_brightness_get_max_level (button->priv->brightness);
     level = (guint ) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
     if ( level != max_level )
@@ -347,11 +348,11 @@ range_value_changed (GtkWidget *widget, BrightnessButton *button)
     
     range_level = (guint) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
-    hw_level = brightness_proxy_get_level (button->priv->brightness);
+    hw_level = xfpm_brightness_get_level (button->priv->brightness);
     
     if ( hw_level != range_level )
     {
-	brightness_proxy_set_level (button->priv->brightness, range_level);
+	xfpm_brightness_set_level (button->priv->brightness, range_level);
     }
 }
 
@@ -363,11 +364,12 @@ brightness_button_create_popup (BrightnessButton *button)
     guint max_level;
     gboolean has_hw;
     
-    has_hw = brightness_proxy_has_hw (button->priv->brightness);
+    has_hw = xfpm_brightness_has_hw (button->priv->brightness);
+    
     if ( !has_hw )
 	return;
 	
-    max_level = brightness_proxy_get_max_level (button->priv->brightness);
+    max_level = xfpm_brightness_get_max_level (button->priv->brightness);
      
     button->priv->popup = gtk_window_new (GTK_WINDOW_POPUP);
     gtk_window_set_decorated (GTK_WINDOW(button->priv->popup), FALSE);
@@ -431,8 +433,8 @@ brightness_button_up (BrightnessButton *button)
     guint level;
     guint max_level;
     
-    level = brightness_proxy_get_level (button->priv->brightness);
-    max_level = brightness_proxy_get_max_level (button->priv->brightness);
+    level = xfpm_brightness_get_level (button->priv->brightness);
+    max_level = xfpm_brightness_get_max_level (button->priv->brightness);
     
     if ( level != max_level )
     {
@@ -444,7 +446,7 @@ static void
 brightness_button_down (BrightnessButton *button)
 {
     guint level;
-    level = brightness_proxy_get_level (button->priv->brightness);
+    level = xfpm_brightness_get_level (button->priv->brightness);
     
     if ( level != 0 )
     {
@@ -460,7 +462,7 @@ brightness_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
     
     button = BRIGHTNESS_BUTTON (widget);
     
-    hw_found = brightness_proxy_has_hw (button->priv->brightness);
+    hw_found = xfpm_brightness_has_hw (button->priv->brightness);
     
     if ( !hw_found )
 	return FALSE;
@@ -507,7 +509,8 @@ brightness_button_init (BrightnessButton *button)
 {
     button->priv = BRIGHTNESS_BUTTON_GET_PRIVATE (button);
     
-    button->priv->brightness = brightness_proxy_new ();
+    button->priv->brightness = xfpm_brightness_new ();
+    xfpm_brightness_setup (button->priv->brightness);
     
     gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 }
@@ -556,7 +559,7 @@ brightness_button_set_icon (BrightnessButton *button, gint width)
     GdkPixbuf *pixbuf;
     const gchar *icon_name;
     
-    hw_found = brightness_proxy_has_hw (button->priv->brightness);
+    hw_found = xfpm_brightness_has_hw (button->priv->brightness);
     
     icon_name = hw_found ? XFPM_DISPLAY_BRIGHTNESS_ICON : XFPM_DISPLAY_BRIGHTNESS_INVALID_ICON;
     
@@ -586,7 +589,6 @@ reload_activated (GtkWidget *widget, BrightnessButton *button)
 {
     gint size;
     
-    brightness_proxy_reload (button->priv->brightness);
     destroy_popup (button);
     brightness_button_create_popup (button);
     brightness_button_set_tooltip (button);
