@@ -514,7 +514,7 @@ xfpm_xfconf_finalize(GObject *object)
 }
 
 XfpmXfconf *
-xfpm_xfconf_new(void)
+xfpm_xfconf_new (void)
 {
     static gpointer xfpm_xfconf_object = NULL;
     

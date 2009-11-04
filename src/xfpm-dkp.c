@@ -35,11 +35,14 @@
 #include "xfpm-dkp.h"
 #include "xfpm-dbus.h"
 #include "xfpm-battery.h"
+#include "xfpm-xfconf.h"
 #include "xfpm-notify.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-polkit.h"
+#include "xfpm-network-manager.h"
 #include "xfpm-icons.h"
 #include "xfpm-common.h"
+#include "xfpm-config.h"
 
 static void xfpm_dkp_finalize     (GObject *object);
 
@@ -69,6 +72,7 @@ struct XfpmDkpPrivate
     GHashTable      *hash;
     
     XfpmInhibit	    *inhibit;
+    XfpmXfconf      *conf;
     gboolean	     inhibited;
     
     XfpmNotify	    *notify;
@@ -103,6 +107,8 @@ enum
     ON_BATTERY_CHANGED,
     LOW_BATTERY_CHANGED,
     LID_CHANGED,
+    WAKING_UP,
+    SLEEPING,
     LAST_SIGNAL
 };
 
@@ -299,9 +305,38 @@ xfpm_dkp_report_error (XfpmDkp *dkp, const gchar *error, const gchar *icon_name)
 }
 
 static void
-xfpm_dkp_sleep (XfpmDkp *dkp, const gchar *sleep)
+xfpm_dkp_sleep (XfpmDkp *dkp, const gchar *sleep, gboolean force)
 {
     GError *error = NULL;
+    gboolean lock_screen;
+    
+    if ( dkp->priv->inhibited && force == FALSE)
+    {
+	gboolean ret;
+	
+	ret = xfce_dialog_confirm (NULL,
+				   GTK_STOCK_YES,
+				   "Yes",
+				   _("An application is currently disabling the automatic sleep,"
+				   " doing this action now may damage the working state of this application,"
+				   " are you sure you want to hibernate the system?"),
+				   NULL);
+				   
+	if ( !ret )
+	    return;
+    }
+    
+    xfpm_send_message_to_network_manager ("sleep");
+        
+    g_object_get (G_OBJECT (dkp->priv->conf),
+		  LOCK_SCREEN_ON_SLEEP, &lock_screen,
+		  NULL);
+    
+    if ( lock_screen )
+    {
+	g_usleep (2000000); /* 2 seconds */
+	xfpm_lock_screen ();
+    }
     
     dbus_g_proxy_call (dkp->priv->proxy, sleep, &error,
 		       G_TYPE_INVALID,
@@ -309,28 +344,37 @@ xfpm_dkp_sleep (XfpmDkp *dkp, const gchar *sleep)
     
     if ( error )
     {
-	const gchar *icon_name;
-	if ( !g_strcmp0 (sleep, "Hibernate") )
-	    icon_name = XFPM_HIBERNATE_ICON;
+	if ( g_error_matches (error, DBUS_GERROR, DBUS_GERROR_NO_REPLY) )
+	{
+	    g_debug ("D-Bus time out, but should be harmless");
+	}
 	else
-	    icon_name = XFPM_SUSPEND_ICON;
+	{
+	    const gchar *icon_name;
+	    if ( !g_strcmp0 (sleep, "Hibernate") )
+		icon_name = XFPM_HIBERNATE_ICON;
+	    else
+		icon_name = XFPM_SUSPEND_ICON;
 	    
-	xfpm_dkp_report_error (dkp, error->message, icon_name);
-	g_error_free (error);
+	    xfpm_dkp_report_error (dkp, error->message, icon_name);
+	    g_error_free (error);
+	}
     }
-}
-
-static void
-xfpm_dkp_hibernate_cb (XfpmDkp *dkp, GtkStatusIcon *icon)
-{
-    xfpm_dkp_sleep (dkp, "Hibernate");
-}
-
-static void
-xfpm_dkp_suspend_cb (XfpmDkp *dkp, GtkStatusIcon *icon)
-{
-    xfpm_dkp_sleep (dkp, "Suspend");
     
+    g_signal_emit (G_OBJECT (dkp), signals [WAKING_UP], 0);
+    xfpm_send_message_to_network_manager ("wake");
+}
+
+static void
+xfpm_dkp_hibernate_cb (GtkStatusIcon *icon, XfpmDkp *dkp)
+{
+    xfpm_dkp_sleep (dkp, "Hibernate", FALSE);
+}
+
+static void
+xfpm_dkp_suspend_cb (GtkStatusIcon *icon, XfpmDkp *dkp)
+{
+    xfpm_dkp_sleep (dkp, "Suspend", FALSE);
 }
 
 static void
@@ -376,8 +420,8 @@ xfpm_dkp_show_tray_menu (XfpmDkp *dkp,
     if ( dkp->priv->can_hibernate && dkp->priv->auth_hibernate)
     {
 	gtk_widget_set_sensitive (mi, TRUE);
-	g_signal_connect(G_OBJECT (mi), "activate",
-			G_CALLBACK (xfpm_dkp_hibernate_cb), icon);
+	g_signal_connect (G_OBJECT (mi), "activate",
+			 G_CALLBACK (xfpm_dkp_hibernate_cb), dkp);
     }
     gtk_widget_show (mi);
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
@@ -393,7 +437,7 @@ xfpm_dkp_show_tray_menu (XfpmDkp *dkp,
     {
 	gtk_widget_set_sensitive (mi, TRUE);
 	g_signal_connect (mi, "activate",
-			  G_CALLBACK (xfpm_dkp_suspend_cb), icon);
+			  G_CALLBACK (xfpm_dkp_suspend_cb), dkp);
     }
     
     gtk_widget_show (mi);
@@ -673,6 +717,24 @@ xfpm_dkp_class_init (XfpmDkpClass *klass)
                       g_cclosure_marshal_VOID__BOOLEAN,
                       G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
+    signals [WAKING_UP] = 
+        g_signal_new ("waking-up",
+                      XFPM_TYPE_DKP,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmDkpClass, waking_up),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__VOID,
+                      G_TYPE_NONE, 0, G_TYPE_NONE);
+
+    signals [SLEEPING] = 
+        g_signal_new ("sleeping",
+                      XFPM_TYPE_DKP,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmDkpClass, sleeping),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__VOID,
+                      G_TYPE_NONE, 0, G_TYPE_NONE);
+
     g_object_class_install_property (object_class,
                                      PROP_ON_BATTERY,
                                      g_param_spec_boolean ("on-battery",
@@ -739,6 +801,7 @@ xfpm_dkp_init (XfpmDkp *dkp)
     
     dkp->priv->inhibit = xfpm_inhibit_new ();
     dkp->priv->notify  = xfpm_notify_new ();
+    dkp->priv->conf    = xfpm_xfconf_new ();
 #ifdef HAVE_POLKIT
     dkp->priv->polkit  = xfpm_polkit_get ();
     g_signal_connect_swapped (dkp->priv->polkit, "auth-changed",
@@ -867,6 +930,7 @@ xfpm_dkp_finalize (GObject *object)
     
     g_object_unref (dkp->priv->inhibit);
     g_object_unref (dkp->priv->notify);
+    g_object_unref (dkp->priv->conf);
     
     dbus_g_connection_unref (dkp->priv->bus);
     
@@ -913,13 +977,14 @@ xfpm_dkp_get (void)
     return XFPM_DKP (xfpm_dkp_object);
 }
 
-void xfpm_dkp_suspend (XfpmDkp *dkp)
+void xfpm_dkp_suspend (XfpmDkp *dkp, gboolean force)
 {
+    xfpm_dkp_sleep (dkp, "Suspend", force);
 }
 
-void xfpm_dkp_hibernate (XfpmDkp *dkp)
+void xfpm_dkp_hibernate (XfpmDkp *dkp, gboolean force)
 {
-    
+    xfpm_dkp_sleep (dkp, "Hibernate", force);
 }
 
 gboolean xfpm_dkp_has_battery (XfpmDkp *dkp)

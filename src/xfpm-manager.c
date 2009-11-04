@@ -43,7 +43,6 @@
 #include "xfpm-dpms.h"
 #include "xfpm-manager.h"
 #include "xfpm-button.h"
-#include "xfpm-inhibit.h"
 #include "xfpm-brightness.h"
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
@@ -64,6 +63,8 @@ static gboolean xfpm_manager_quit (XfpmManager *manager);
 #define XFPM_MANAGER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_MANAGER, XfpmManagerPrivate))
 
+#define SLEEP_KEY_TIMEOUT 6.0f
+
 struct XfpmManagerPrivate
 {
     DBusGConnection *session_bus;
@@ -72,12 +73,12 @@ struct XfpmManagerPrivate
     
     XfpmDkp         *dkp;
     XfpmButton      *button;
-    XfpmInhibit     *inhibit;
     XfpmXfconf      *conf;
     XfpmBrightness  *brightness;
 #ifdef HAVE_DPMS
     XfpmDpms        *dpms;
 #endif
+    GTimer	    *timer;
     
     gboolean	     inhibited;
     gboolean	     session_managed;
@@ -99,9 +100,8 @@ static void
 xfpm_manager_init (XfpmManager *manager)
 {
     manager->priv = XFPM_MANAGER_GET_PRIVATE(manager);
+    manager->priv->timer = g_timer_new ();
     
-    manager->priv->inhibited = FALSE;
-
     notify_init ("xfce4-power-manager");
 }
 
@@ -117,9 +117,9 @@ xfpm_manager_finalize (GObject *object)
 	
     g_object_unref (manager->priv->dkp);
     g_object_unref (manager->priv->button);
-    g_object_unref (manager->priv->inhibit);
     g_object_unref (manager->priv->conf);
     g_object_unref (manager->priv->client);
+    g_timer_destroy (manager->priv->timer);
     
 #ifdef HAVE_DPMS
     g_object_unref (manager->priv->dpms);
@@ -170,21 +170,46 @@ xfpm_manager_reserve_names (XfpmManager *manager)
 }
 
 static void
+xfpm_manager_sleep_request (XfpmManager *manager, XfpmShutdownRequest req, gboolean force)
+{
+    switch (req)
+    {
+	case XFPM_DO_NOTHING:
+	    break;
+	case XFPM_DO_SUSPEND:
+	    xfpm_dkp_suspend (manager->priv->dkp, force);
+	    break;
+	case XFPM_DO_HIBERNATE:
+	    xfpm_dkp_hibernate (manager->priv->dkp, force);
+	    break;
+	case XFPM_DO_SHUTDOWN:
+	    /*FIXME ConsoleKit*/
+	    break;
+	case XFPM_ASK:
+	    xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_ASK);
+	    break;
+	default:
+	    g_warn_if_reached ();
+	    break;
+    }
+}
+
+static void
+xfpm_manager_reset_sleep_timer (XfpmManager *manager)
+{
+    g_timer_reset (manager->priv->timer);
+}
+
+static void
 xfpm_manager_button_pressed_cb (XfpmButton *bt, XfpmButtonKey type, XfpmManager *manager)
 {
     XfpmShutdownRequest req = XFPM_DO_NOTHING;
     
     XFPM_DEBUG_ENUM ("Received button press event", type, XFPM_TYPE_BUTTON_KEY);
   
-    if ( manager->priv->inhibited )
-    {
-        TRACE("Power manager automatic sleep is currently disabled");
-        return;
-    }
-    
     if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
         return;
-    
+	
     if ( type == BUTTON_POWER_OFF )
     {
         g_object_get (G_OBJECT (manager->priv->conf),
@@ -212,16 +237,15 @@ xfpm_manager_button_pressed_cb (XfpmButton *bt, XfpmButtonKey type, XfpmManager 
         
     if ( req == XFPM_ASK && manager->priv->session_managed )
         xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_ASK);
-    /*
     else
-        xfpm_engine_shutdown_request (engine, req, FALSE);
-    */
-}
-
-static void
-xfpm_manager_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmManager *manager)
-{
-    manager->priv->inhibited = is_inhibit;
+    {
+	if ( g_timer_elapsed (manager->priv->timer, NULL) > SLEEP_KEY_TIMEOUT )
+	{
+	    g_timer_reset (manager->priv->timer);
+	    xfpm_manager_sleep_request (manager, req, FALSE);
+	}
+    }
+    
 }
 
 static void
@@ -252,10 +276,16 @@ xfpm_manager_lid_changed_cb (XfpmDkp *dkp, gboolean lid_is_closed, XfpmManager *
 	    if ( !xfpm_is_multihead_connected () )
 		xfpm_lock_screen ();
 	}
-	/*
 	else 
-	    xfpm_engine_shutdown_request (engine, action, FALSE);
-	*/
+	{
+	    /*
+	     * Force sleep here as lid is closed and no point of asking the
+	     * user for confirmation in case of an application is inhibiting
+	     * the power manager. 
+	     */
+	    xfpm_manager_sleep_request (manager, action, TRUE);
+	}
+	
     }
     else
     {
@@ -321,7 +351,6 @@ void xfpm_manager_start (XfpmManager *manager)
     
     manager->priv->dkp = xfpm_dkp_get ();
     manager->priv->button = xfpm_button_new ();
-    manager->priv->inhibit = xfpm_inhibit_new ();
     manager->priv->conf = xfpm_xfconf_new ();
    
     manager->priv->brightness = xfpm_brightness_new ();
@@ -339,12 +368,14 @@ void xfpm_manager_start (XfpmManager *manager)
     g_signal_connect (manager->priv->button, "button_pressed",
 		      G_CALLBACK (xfpm_manager_button_pressed_cb), manager);
     
-    g_signal_connect (manager->priv->inhibit, "has-inhibit-changed",
-		      G_CALLBACK (xfpm_manager_inhibit_changed_cb), manager);
-    
     g_signal_connect (manager->priv->dkp, "lid-changed",
 		      G_CALLBACK (xfpm_manager_lid_changed_cb), manager);
     
+    g_signal_connect_swapped (manager->priv->dkp, "waking-up",
+			      G_CALLBACK (xfpm_manager_reset_sleep_timer), manager);
+    
+    g_signal_connect_swapped (manager->priv->dkp, "sleeping",
+			      G_CALLBACK (xfpm_manager_reset_sleep_timer), manager);
 out:
 	;
 }

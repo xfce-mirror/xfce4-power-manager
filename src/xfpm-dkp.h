@@ -82,6 +82,10 @@ typedef struct
     
     void		(*lid_changed)			(XfpmDkp *dkp,
 							 gboolean lid_is_closed);
+							
+    void		(*waking_up)			(XfpmDkp *dkp);
+    
+    void		(*sleeping)			(XfpmDkp *dkp);
     
 } XfpmDkpClass;
 
@@ -89,9 +93,11 @@ GType        		xfpm_dkp_get_type        	(void) G_GNUC_CONST;
 
 XfpmDkp       	       *xfpm_dkp_get             	(void);
 
-void			xfpm_dkp_suspend         	(XfpmDkp *dkp);
+void			xfpm_dkp_suspend         	(XfpmDkp *dkp,
+							 gboolean force);
 
-void			xfpm_dkp_hibernate       	(XfpmDkp *dkp);
+void			xfpm_dkp_hibernate       	(XfpmDkp *dkp,
+							 gboolean force);
 
 gboolean		xfpm_dkp_has_battery		(XfpmDkp *dkp);
 
