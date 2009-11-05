@@ -398,7 +398,7 @@ xfpm_dkp_suspend_clicked (XfpmDkp *dkp)
 static void
 xfpm_dkp_battery_info_cb (GtkStatusIcon *icon)
 {
-    
+    xfpm_battery_show_info (XFPM_BATTERY (icon));
 }
 
 static void

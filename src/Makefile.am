@@ -11,6 +11,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-dkp.h				\
 	xfpm-battery.c				\
 	xfpm-battery.h				\
+	xfpm-battery-info.c			\
+	xfpm-battery-info.h			\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
 	xfpm-dpms.c				\

@@ -31,6 +31,7 @@
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-battery.h"
+#include "xfpm-battery-info.h"
 #include "xfpm-dbus.h"
 #include "xfpm-icons.h"
 #include "xfpm-xfconf.h"
@@ -721,4 +722,16 @@ XfpmBatteryCharge xfpm_battery_get_charge (XfpmBattery *battery)
     g_return_val_if_fail (XFPM_IS_BATTERY (battery), XFPM_BATTERY_CHARGE_UNKNOWN);
     
     return battery->priv->charge;
+}
+
+void xfpm_battery_show_info (XfpmBattery *battery)
+{
+    GHashTable *props;
+    gchar *icon;
+    
+    props = xfpm_dbus_get_interface_properties (battery->priv->proxy_prop, DKP_IFACE_DEVICE);
+    icon = g_strdup_printf ("%s100", battery->priv->icon_prefix);
+    xfpm_battery_info_show (props, icon);
+    g_free (icon);
+    g_hash_table_destroy (props);
 }
