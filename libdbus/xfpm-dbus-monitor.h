@@ -59,12 +59,6 @@ typedef struct
 								 gboolean on_session);
 								 
     /*
-     * Hal Connection
-     */
-    void		(*hal_connection_changed)		(XfpmDBusMonitor *monitor,
-								 gboolean connected);
-      
-    /*
      * DBus: system bus disconnected
      */
     void		(*system_bus_connection_changed)  	(XfpmDBusMonitor *monitor,
@@ -91,9 +85,6 @@ gboolean		xfpm_dbus_monitor_add_service	  	(XfpmDBusMonitor *monitor,
 void			xfpm_dbus_monitor_remove_service  	(XfpmDBusMonitor *monitor,
 								 DBusBusType bus_type,
 								 const gchar *service_name);
-
-gboolean		xfpm_dbus_monitor_hal_connected		(XfpmDBusMonitor *monitor);
-
 G_END_DECLS
 
 #endif /* __XFPM_DBUS_MONITOR_H */

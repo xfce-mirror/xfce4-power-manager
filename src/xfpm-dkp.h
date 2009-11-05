@@ -87,6 +87,8 @@ typedef struct
     
     void		(*sleeping)			(XfpmDkp *dkp);
     
+    void		(*ask_shutdown)			(XfpmDkp *dkp);
+    
 } XfpmDkpClass;
 
 GType        		xfpm_dkp_get_type        	(void) G_GNUC_CONST;

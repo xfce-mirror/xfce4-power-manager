@@ -55,11 +55,12 @@ struct XfpmBatteryPrivate
     
     gchar		   *icon_prefix;
     
+    XfpmBatteryCharge       charge;
     XfpmDkpDeviceState      state;
     XfpmDkpDeviceType       type;
     gboolean		    ac_online;
     gboolean                present;
-    gint 		    percentage;
+    guint 		    percentage;
     gint64		    time_to_full;
     gint64		    time_to_empty;
     
@@ -72,6 +73,14 @@ enum
     PROP_AC_ONLINE
 };
     
+enum
+{
+    BATTERY_CHARGE_CHANGED,
+    LAST_SIGNAL
+};
+
+static guint signals [LAST_SIGNAL] = { 0 };
+
 G_DEFINE_TYPE (XfpmBattery, xfpm_battery, GTK_TYPE_STATUS_ICON)
 
 static const gchar * G_GNUC_CONST
@@ -219,7 +228,6 @@ xfpm_battery_notify_idle (gpointer data)
 				   FALSE,
 				   XFPM_NOTIFY_NORMAL,
 				   GTK_STATUS_ICON (battery));
-    
     return FALSE;
 }
 
@@ -389,6 +397,32 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 }
 
 static void
+xfpm_battery_check_charge (XfpmBattery *battery)
+{
+    XfpmBatteryCharge charge;
+    guint critical_level, low_level;
+    
+    g_object_get (G_OBJECT (battery->priv->conf),
+		  CRITICAL_POWER_LEVEL, &critical_level,
+		  NULL);
+		  
+    low_level = critical_level + 10;
+    
+    if ( battery->priv->percentage > low_level )
+	charge = XFPM_BATTERY_CHARGE_OK;
+    else if ( battery->priv->percentage <= low_level && battery->priv->percentage > critical_level )
+	charge = XFPM_BATTERY_CHARGE_LOW;
+    else if ( battery->priv->percentage <= critical_level )
+	charge = XFPM_BATTERY_CHARGE_CRITICAL;
+	
+    if ( charge != battery->priv->charge )
+    {
+	battery->priv->charge = charge;
+	g_signal_emit (G_OBJECT (battery), signals [BATTERY_CHARGE_CHANGED], 0);
+    }
+}
+
+static void
 xfpm_battery_refresh (XfpmBattery *battery, GHashTable *props)
 {
     GValue *value;
@@ -427,7 +461,9 @@ xfpm_battery_refresh (XfpmBattery *battery, GHashTable *props)
 	goto out;
     }
     
-    battery->priv->percentage = (gint) g_value_get_double (value);
+    battery->priv->percentage = (guint) g_value_get_double (value);
+    
+    xfpm_battery_check_charge (battery);
     
     xfpm_battery_refresh_icon (battery);
     
@@ -551,6 +587,15 @@ xfpm_battery_class_init (XfpmBatteryClass *klass)
 
     status_icon_class->query_tooltip = xfpm_battery_query_tooltip;
     
+    signals [BATTERY_CHARGE_CHANGED] = 
+        g_signal_new ("battery-charge-changed",
+                      XFPM_TYPE_BATTERY,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmBatteryClass, battery_charge_changed),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__VOID,
+                      G_TYPE_NONE, 0, G_TYPE_NONE);
+    
     g_object_class_install_property (object_class,
                                      PROP_AC_ONLINE,
                                      g_param_spec_boolean("ac-online",
@@ -571,6 +616,7 @@ xfpm_battery_init (XfpmBattery *battery)
     battery->priv->proxy_prop    = NULL;
     battery->priv->state         = XFPM_DKP_DEVICE_STATE_UNKNOWN;
     battery->priv->type          = XFPM_DKP_DEVICE_TYPE_UNKNOWN;
+    battery->priv->charge        = XFPM_BATTERY_CHARGE_UNKNOWN;
     battery->priv->icon_prefix   = NULL;
     battery->priv->time_to_full  = 0;
     battery->priv->time_to_empty = 0;
@@ -661,9 +707,16 @@ void xfpm_battery_monitor_device (XfpmBattery *battery,
     xfpm_battery_changed_cb (proxy, battery);
 }
 
-XfpmDkpDeviceType	    xfpm_battery_get_device_type (XfpmBattery *battery)
+XfpmDkpDeviceType xfpm_battery_get_device_type (XfpmBattery *battery)
 {
     g_return_val_if_fail (XFPM_IS_BATTERY (battery), XFPM_DKP_DEVICE_TYPE_UNKNOWN );
     
     return battery->priv->type;
+}
+
+XfpmBatteryCharge xfpm_battery_get_charge (XfpmBattery *battery)
+{
+    g_return_val_if_fail (XFPM_IS_BATTERY (battery), XFPM_BATTERY_CHARGE_UNKNOWN);
+    
+    return battery->priv->charge;
 }

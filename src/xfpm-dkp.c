@@ -43,14 +43,12 @@
 #include "xfpm-icons.h"
 #include "xfpm-common.h"
 #include "xfpm-config.h"
+#include "xfpm-enum-glib.h"
+#include "xfpm-debug.h"
+#include "xfpm-enum-types.h"
 
 static void xfpm_dkp_finalize     (GObject *object);
 
-static void xfpm_dkp_set_property (GObject *object,
-				   guint prop_id,
-				   const GValue *value,
-				   GParamSpec *pspec);
-				   
 static void xfpm_dkp_get_property (GObject *object,
 				   guint prop_id,
 				   GValue *value,
@@ -89,6 +87,8 @@ struct XfpmDkpPrivate
     gchar           *daemon_version;
     gboolean	     can_suspend;
     gboolean         can_hibernate;
+    
+    GtkWidget 	    *dialog;
 };
 
 enum
@@ -109,6 +109,7 @@ enum
     LID_CHANGED,
     WAKING_UP,
     SLEEPING,
+    ASK_SHUTDOWN,
     LAST_SIGNAL
 };
 
@@ -326,6 +327,7 @@ xfpm_dkp_sleep (XfpmDkp *dkp, const gchar *sleep, gboolean force)
 	    return;
     }
     
+    g_signal_emit (G_OBJECT (dkp), signals [SLEEPING], 0);
     xfpm_send_message_to_network_manager ("sleep");
         
     g_object_get (G_OBJECT (dkp->priv->conf),
@@ -366,15 +368,31 @@ xfpm_dkp_sleep (XfpmDkp *dkp, const gchar *sleep, gboolean force)
 }
 
 static void
-xfpm_dkp_hibernate_cb (GtkStatusIcon *icon, XfpmDkp *dkp)
+xfpm_dkp_hibernate_cb (XfpmDkp *dkp)
 {
     xfpm_dkp_sleep (dkp, "Hibernate", FALSE);
 }
 
 static void
-xfpm_dkp_suspend_cb (GtkStatusIcon *icon, XfpmDkp *dkp)
+xfpm_dkp_suspend_cb (XfpmDkp *dkp)
 {
     xfpm_dkp_sleep (dkp, "Suspend", FALSE);
+}
+
+static void
+xfpm_dkp_hibernate_clicked (XfpmDkp *dkp)
+{
+    gtk_widget_destroy (dkp->priv->dialog );
+    dkp->priv->dialog = NULL;
+    xfpm_dkp_sleep (dkp, "Hibernate", TRUE);
+}
+
+static void
+xfpm_dkp_suspend_clicked (XfpmDkp *dkp)
+{
+    gtk_widget_destroy (dkp->priv->dialog );
+    dkp->priv->dialog = NULL;
+    xfpm_dkp_sleep (dkp, "Suspend", TRUE);
 }
 
 static void
@@ -420,8 +438,8 @@ xfpm_dkp_show_tray_menu (XfpmDkp *dkp,
     if ( dkp->priv->can_hibernate && dkp->priv->auth_hibernate)
     {
 	gtk_widget_set_sensitive (mi, TRUE);
-	g_signal_connect (G_OBJECT (mi), "activate",
-			 G_CALLBACK (xfpm_dkp_hibernate_cb), dkp);
+	g_signal_connect_swapped (G_OBJECT (mi), "activate",
+				  G_CALLBACK (xfpm_dkp_hibernate_cb), dkp);
     }
     gtk_widget_show (mi);
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
@@ -436,8 +454,8 @@ xfpm_dkp_show_tray_menu (XfpmDkp *dkp,
     if ( dkp->priv->can_suspend && dkp->priv->auth_hibernate)
     {
 	gtk_widget_set_sensitive (mi, TRUE);
-	g_signal_connect (mi, "activate",
-			  G_CALLBACK (xfpm_dkp_suspend_cb), dkp);
+	g_signal_connect_swapped (mi, "activate",
+				  G_CALLBACK (xfpm_dkp_suspend_cb), dkp);
     }
     
     gtk_widget_show (mi);
@@ -530,6 +548,242 @@ xfpm_dkp_show_tray_menu_battery (GtkStatusIcon *icon, guint button,
     xfpm_dkp_show_tray_menu (dkp, icon, button, activate_time, TRUE);
 }
 
+static XfpmBatteryCharge
+xfpm_dkp_get_current_charge_state (XfpmDkp *dkp)
+{
+    GList *list;
+    XfpmBatteryCharge charge = XFPM_BATTERY_CHARGE_UNKNOWN;
+    guint len, i;
+    
+    list = g_hash_table_get_values (dkp->priv->hash);
+    len = g_list_length (list);
+    
+    for ( i = 0; i < len; i++)
+    {
+	charge = MAX (charge, xfpm_battery_get_charge (XFPM_BATTERY (g_list_nth_data (list, i))));
+    }
+    
+    return charge;
+}
+
+static void
+xfpm_dkp_notify_action_callback (NotifyNotification *n, gchar *action, XfpmDkp *dkp)
+{
+    if ( !g_strcmp0 (action, "Shutdown") )
+	;
+    else
+	xfpm_dkp_sleep (dkp, action, TRUE);
+}
+
+
+static void
+xfpm_dkp_add_actions_to_notification (XfpmDkp *dkp, NotifyNotification *n)
+{
+    if (  dkp->priv->can_hibernate && dkp->priv->auth_hibernate )
+    {
+        xfpm_notify_add_action_to_notification(
+			       dkp->priv->notify,
+			       n,
+                               "Hibernate",
+                               _("Hibernate the system"),
+                               (NotifyActionCallback)xfpm_dkp_notify_action_callback,
+                               dkp);      
+    }
+    
+    if (  dkp->priv->can_suspend && dkp->priv->auth_suspend )
+    {
+        xfpm_notify_add_action_to_notification(
+			       dkp->priv->notify,
+			       n,
+                               "Suspend",
+                               _("Suspend the system"),
+                               (NotifyActionCallback)xfpm_dkp_notify_action_callback,
+                               dkp);      
+    }
+    //FIXME, Shutdown
+}
+
+static void
+xfpm_dkp_show_critical_action_notification (XfpmDkp *dkp, XfpmBattery *battery)
+{
+    const gchar *message;
+    NotifyNotification *n;
+    
+    message = _("System is running on low power. "\
+               "Save your work to avoid losing data");
+	      
+    n = 
+	xfpm_notify_new_notification (dkp->priv->notify, 
+				      _("Xfce power manager"), 
+				      message, 
+				      gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
+				      20000,
+				      XFPM_NOTIFY_CRITICAL,
+				      GTK_STATUS_ICON (battery));
+    
+    xfpm_dkp_add_actions_to_notification (dkp, n);
+    xfpm_notify_critical (dkp->priv->notify, n);
+
+}
+
+static void
+xfpm_dkp_close_critical_dialog (XfpmDkp *dkp)
+{
+    gtk_widget_destroy (dkp->priv->dialog);
+    dkp->priv->dialog = NULL;
+}
+
+static void
+xfpm_dkp_show_critical_action_gtk (XfpmDkp *dkp)
+{
+    GtkWidget *dialog;
+    GtkWidget *content_area;
+    GtkWidget *img;
+    GtkWidget *cancel;
+    const gchar *message;
+    
+    message = _("System is running on low power. "\
+               "Save your work to avoid losing data");
+    
+    dialog = gtk_dialog_new_with_buttons (_("Xfce Power Manager"), NULL, GTK_DIALOG_MODAL,
+                                          NULL);
+    
+    gtk_dialog_set_default_response (GTK_DIALOG (dialog),
+                                     GTK_RESPONSE_CANCEL);
+    
+    content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
+
+    gtk_box_pack_start_defaults (GTK_BOX (content_area), gtk_label_new (message));
+    
+    if ( dkp->priv->can_hibernate && dkp->priv->auth_hibernate )
+    {
+	GtkWidget *hibernate;
+	hibernate = gtk_button_new_with_label (_("Hibernate"));
+	img = gtk_image_new_from_icon_name (XFPM_HIBERNATE_ICON, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image (GTK_BUTTON (hibernate), img);
+	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), hibernate, GTK_RESPONSE_NONE);
+	
+	g_signal_connect_swapped (hibernate, "clicked",
+			          G_CALLBACK (xfpm_dkp_hibernate_clicked), dkp);
+    }
+    
+    if ( dkp->priv->can_suspend && dkp->priv->auth_suspend )
+    {
+	GtkWidget *suspend;
+	
+	suspend = gtk_button_new_with_label (_("Suspend"));
+	img = gtk_image_new_from_icon_name (XFPM_SUSPEND_ICON, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image (GTK_BUTTON (suspend), img);
+	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), suspend, GTK_RESPONSE_NONE);
+	
+	g_signal_connect_swapped (suspend, "clicked",
+			          G_CALLBACK (xfpm_dkp_suspend_clicked), dkp);
+    }
+    
+    cancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+    gtk_dialog_add_action_widget (GTK_DIALOG (dialog), cancel, GTK_RESPONSE_NONE);
+    
+    g_signal_connect_swapped (cancel, "clicked",
+			      G_CALLBACK (xfpm_dkp_close_critical_dialog), dkp);
+    
+    g_signal_connect_swapped (dialog, "destroy",
+			      G_CALLBACK (xfpm_dkp_close_critical_dialog), dkp);
+    
+    dkp->priv->dialog = dialog;
+    gtk_widget_show_all (dialog);
+}
+
+static void
+xfpm_dkp_show_critical_action (XfpmDkp *dkp, XfpmBattery *battery)
+{
+    gboolean supports_actions;
+    
+    g_object_get (G_OBJECT (dkp->priv->notify),
+		  "actions", &supports_actions,
+		  NULL);
+		  
+    if ( supports_actions )
+	xfpm_dkp_show_critical_action_notification (dkp, battery);
+    else
+	xfpm_dkp_show_critical_action_gtk (dkp);
+}
+
+static void
+xfpm_dkp_process_critical_action (XfpmDkp *dkp, XfpmShutdownRequest req)
+{
+    if ( req == XFPM_ASK )
+	g_signal_emit (G_OBJECT (dkp), signals [ASK_SHUTDOWN], 0);
+    else if ( req == XFPM_DO_SUSPEND )
+	xfpm_dkp_sleep (dkp, "Suspend", TRUE);
+    else if ( req == XFPM_DO_HIBERNATE )
+	xfpm_dkp_sleep (dkp, "Hibernate", TRUE);
+    //FIXME, Shutdown also.
+    
+}
+
+static void
+xfpm_dkp_system_on_low_power (XfpmDkp *dkp, XfpmBattery *battery)
+{
+    XfpmShutdownRequest critical_action;
+    
+    g_object_get (G_OBJECT (dkp->priv->conf),
+	          CRITICAL_BATT_ACTION_CFG, &critical_action,
+		  NULL);
+
+    TRACE ("System is running on low power");
+    XFPM_DEBUG_ENUM ("Critical battery action", critical_action, XFPM_TYPE_SHUTDOWN_REQUEST);
+
+    if ( critical_action == XFPM_DO_NOTHING )
+    {
+	xfpm_dkp_show_critical_action (dkp, battery);
+    }
+    else
+    {
+	xfpm_dkp_process_critical_action (dkp, critical_action);
+    }
+}
+
+static void
+xfpm_dkp_battery_charge_changed_cb (XfpmBattery *battery, XfpmDkp *dkp)
+{
+    XfpmBatteryCharge battery_charge;
+    XfpmBatteryCharge current_charge;
+    
+    battery_charge = xfpm_battery_get_charge (battery);
+    current_charge = xfpm_dkp_get_current_charge_state (dkp);
+    
+    if ( current_charge == XFPM_BATTERY_CHARGE_CRITICAL )
+    {
+	xfpm_dkp_system_on_low_power (dkp, battery);
+	return;
+    }
+    
+    if ( battery_charge == XFPM_BATTERY_CHARGE_LOW )
+    {
+	gboolean notify;
+	
+	g_object_get (G_OBJECT (dkp->priv->conf),
+		      GENERAL_NOTIFICATION_CFG, &notify,
+		      NULL);
+	if ( notify )
+	    xfpm_notify_show_notification (dkp->priv->notify, 
+					   _("Xfce power manager"), 
+					   _("Battery charge level is low"), 
+					   gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
+					   10000,
+					   FALSE,
+					   XFPM_NOTIFY_NORMAL,
+					   GTK_STATUS_ICON (battery));
+    }
+    
+    /*Current charge is okay now, then close the dialog*/
+    if ( dkp->priv->dialog )
+    {
+	gtk_widget_destroy (dkp->priv->dialog);
+	dkp->priv->dialog = NULL;
+    }
+}
+
 static void
 xfpm_dkp_add_device (XfpmDkp *dkp, const gchar *object_path)
 {
@@ -554,7 +808,7 @@ xfpm_dkp_add_device (XfpmDkp *dkp, const gchar *object_path)
     
     if ( device_type == XFPM_DKP_DEVICE_TYPE_LINE_POWER )
     {
-	
+	//FIXME: Handel adaptor.
     }
     else if ( device_type == XFPM_DKP_DEVICE_TYPE_BATTERY || 
 	      device_type == XFPM_DKP_DEVICE_TYPE_UPS     ||
@@ -576,6 +830,8 @@ xfpm_dkp_add_device (XfpmDkp *dkp, const gchar *object_path)
 	g_signal_connect (battery, "popup-menu",
 			  G_CALLBACK (xfpm_dkp_show_tray_menu_battery), dkp);
 	
+	g_signal_connect (battery, "battery-charge-changed",
+			  G_CALLBACK (xfpm_dkp_battery_charge_changed_cb), dkp);
     }
     else 
     {
@@ -688,7 +944,6 @@ xfpm_dkp_class_init (XfpmDkpClass *klass)
     object_class->finalize = xfpm_dkp_finalize;
 
     object_class->get_property = xfpm_dkp_get_property;
-    object_class->set_property = xfpm_dkp_set_property;
 
     signals [ON_BATTERY_CHANGED] = 
         g_signal_new ("on-battery-changed",
@@ -731,6 +986,15 @@ xfpm_dkp_class_init (XfpmDkpClass *klass)
                       XFPM_TYPE_DKP,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmDkpClass, sleeping),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__VOID,
+                      G_TYPE_NONE, 0, G_TYPE_NONE);
+
+    signals [ASK_SHUTDOWN] = 
+        g_signal_new ("ask-shutdown",
+                      XFPM_TYPE_DKP,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmDkpClass, ask_shutdown),
                       NULL, NULL,
                       g_cclosure_marshal_VOID__VOID,
                       G_TYPE_NONE, 0, G_TYPE_NONE);
@@ -798,6 +1062,7 @@ xfpm_dkp_init (XfpmDkp *dkp)
     dkp->priv->can_hibernate   = FALSE;
     dkp->priv->auth_hibernate  = TRUE;
     dkp->priv->auth_suspend    = TRUE;
+    dkp->priv->dialog          = NULL;
     
     dkp->priv->inhibit = xfpm_inhibit_new ();
     dkp->priv->notify  = xfpm_notify_new ();
@@ -845,7 +1110,7 @@ xfpm_dkp_init (XfpmDkp *dkp)
 #ifdef HAVE_POLKIT
     xfpm_dkp_check_polkit_auth (dkp);
 #endif
-    
+
     dbus_g_proxy_add_signal (dkp->priv->proxy, "Changed", G_TYPE_INVALID);
     dbus_g_proxy_add_signal (dkp->priv->proxy, "DeviceAdded", G_TYPE_STRING, G_TYPE_INVALID);
     dbus_g_proxy_add_signal (dkp->priv->proxy, "DeviceRemoved", G_TYPE_STRING, G_TYPE_INVALID);
@@ -864,27 +1129,11 @@ xfpm_dkp_init (XfpmDkp *dkp)
     
 out:
     xfpm_dkp_dbus_init (dkp);
-    
+
     /*
      * Emit org.freedesktop.PowerManagement session signals on startup
      */
     g_signal_emit (G_OBJECT (dkp), signals [ON_BATTERY_CHANGED], 0, dkp->priv->on_battery);
-}
-
-static void xfpm_dkp_set_property (GObject *object,
-				   guint prop_id,
-				   const GValue *value,
-				   GParamSpec *pspec)
-{
-    XfpmDkp *dkp;
-    dkp = XFPM_DKP (object);
-
-    switch (prop_id)
-    {
-         default:
-            G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-            break;
-    }
 }
 
 static void xfpm_dkp_get_property (GObject *object,

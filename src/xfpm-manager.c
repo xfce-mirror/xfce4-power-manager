@@ -170,6 +170,13 @@ xfpm_manager_reserve_names (XfpmManager *manager)
 }
 
 static void
+xfpm_manager_ask_shutdown (XfpmManager *manager)
+{
+    if ( manager->priv->session_managed )
+	xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_ASK);
+}
+
+static void
 xfpm_manager_sleep_request (XfpmManager *manager, XfpmShutdownRequest req, gboolean force)
 {
     switch (req)
@@ -186,7 +193,7 @@ xfpm_manager_sleep_request (XfpmManager *manager, XfpmShutdownRequest req, gbool
 	    /*FIXME ConsoleKit*/
 	    break;
 	case XFPM_ASK:
-	    xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_ASK);
+	    xfpm_manager_ask_shutdown (manager);
 	    break;
 	default:
 	    g_warn_if_reached ();
@@ -235,8 +242,8 @@ xfpm_manager_button_pressed_cb (XfpmButton *bt, XfpmButtonKey type, XfpmManager 
 
     XFPM_DEBUG_ENUM ("Shutdown request : ", req, XFPM_TYPE_SHUTDOWN_REQUEST);
         
-    if ( req == XFPM_ASK && manager->priv->session_managed )
-        xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_ASK);
+    if ( req == XFPM_ASK )
+	xfpm_manager_ask_shutdown (manager);
     else
     {
 	if ( g_timer_elapsed (manager->priv->timer, NULL) > SLEEP_KEY_TIMEOUT )
@@ -245,7 +252,6 @@ xfpm_manager_button_pressed_cb (XfpmButton *bt, XfpmButtonKey type, XfpmManager 
 	    xfpm_manager_sleep_request (manager, req, FALSE);
 	}
     }
-    
 }
 
 static void
@@ -376,6 +382,9 @@ void xfpm_manager_start (XfpmManager *manager)
     
     g_signal_connect_swapped (manager->priv->dkp, "sleeping",
 			      G_CALLBACK (xfpm_manager_reset_sleep_timer), manager);
+			      
+    g_signal_connect_swapped (manager->priv->dkp, "ask-shutdown",
+			      G_CALLBACK (xfpm_manager_ask_shutdown), manager);
 out:
 	;
 }

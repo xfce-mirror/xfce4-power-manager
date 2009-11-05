@@ -44,6 +44,7 @@
 
 #include "xfpm-common.h"
 #include "xfpm-notify.h"
+#include "xfpm-dbus-monitor.h"
 
 static void xfpm_notify_finalize   (GObject *object);
 
@@ -59,45 +60,132 @@ static NotifyNotification * xfpm_notify_new_notification_internal (const gchar *
 
 struct XfpmNotifyPrivate
 {
+    XfpmDBusMonitor    *monitor;
+    
     NotifyNotification *notification;
     NotifyNotification *critical;
+    
+    gboolean	        supports_actions;
+    gboolean		supports_sync; /*For x-canonical-private-synchronous */
 };
 
-static gpointer xfpm_notify_object = NULL;
+enum
+{
+    PROP_0,
+    PROP_ACTIONS,
+    PROP_SYNC
+};
 
 G_DEFINE_TYPE(XfpmNotify, xfpm_notify, G_TYPE_OBJECT)
 
 static void
-xfpm_notify_class_init(XfpmNotifyClass *klass)
+xfpm_notify_get_server_caps (XfpmNotify *notify)
 {
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    GList *caps = NULL;
+    notify->priv->supports_actions = FALSE;
+    notify->priv->supports_sync    = FALSE;
+    
+    caps = notify_get_server_caps ();
+    
+    if (caps != NULL) 
+    {
+	if (g_list_find_custom (caps, "x-canonical-private-synchronous", (GCompareFunc) g_strcmp0) != NULL)
+	    notify->priv->supports_sync = TRUE;
+    
+	if (g_list_find_custom (caps, "actions", (GCompareFunc) g_strcmp0) != NULL)
+	    notify->priv->supports_actions = TRUE;
 
-    object_class->finalize = xfpm_notify_finalize;
-
-
-    g_type_class_add_private(klass,sizeof(XfpmNotifyPrivate));
+	g_list_foreach(caps, (GFunc)g_free, NULL);
+	g_list_free(caps);
+    }
 }
 
 static void
-xfpm_notify_init(XfpmNotify *notify)
+xfpm_notify_check_server (XfpmDBusMonitor *monitor, 
+			  gchar *service_name, 
+			  gboolean connected,
+			  gboolean on_session,
+			  XfpmNotify *notify)
 {
-    notify->priv = XFPM_NOTIFY_GET_PRIVATE(notify);
+    if ( !g_strcmp0 (service_name, "org.freedesktop.Notifications") && on_session && connected )
+	xfpm_notify_get_server_caps (notify);
+}
+
+static void xfpm_notify_get_property (GObject *object,
+				      guint prop_id,
+				      GValue *value,
+				      GParamSpec *pspec)
+{
+    XfpmNotify *notify;
+    
+    notify = XFPM_NOTIFY (object);
+    
+    switch (prop_id)
+    {
+	case PROP_ACTIONS:
+	    g_value_set_boolean (value, notify->priv->supports_actions);
+	    break;
+	case PROP_SYNC:
+	    g_value_set_boolean (value, notify->priv->supports_sync);
+	    break;
+	default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+            break;
+    }
+}
+
+static void
+xfpm_notify_class_init (XfpmNotifyClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+    object_class->finalize = xfpm_notify_finalize;
+    object_class->get_property = xfpm_notify_get_property;
+
+    g_object_class_install_property (object_class,
+                                     PROP_ACTIONS,
+                                     g_param_spec_boolean ("actions",
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READABLE));
+
+    g_object_class_install_property (object_class,
+                                     PROP_SYNC,
+                                     g_param_spec_boolean ("sync",
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READABLE));
+
+    g_type_class_add_private (klass, sizeof (XfpmNotifyPrivate));
+}
+
+static void
+xfpm_notify_init (XfpmNotify *notify)
+{
+    notify->priv = XFPM_NOTIFY_GET_PRIVATE (notify);
     
     notify->priv->notification = NULL;
     notify->priv->critical = NULL;
+    
+    notify->priv->monitor = xfpm_dbus_monitor_new ();
+    xfpm_dbus_monitor_add_service (notify->priv->monitor, DBUS_BUS_SESSION, "org.freedesktop.Notifications");
+    g_signal_connect (notify->priv->monitor, "service-connection-changed",
+		      G_CALLBACK (xfpm_notify_check_server), notify);
+    
+    xfpm_notify_get_server_caps (notify);
 }
 
 static void
-xfpm_notify_finalize(GObject *object)
+xfpm_notify_finalize (GObject *object)
 {
     XfpmNotify *notify;
 
-    notify = XFPM_NOTIFY(object);
+    notify = XFPM_NOTIFY (object);
     
     xfpm_notify_close_normal (notify);
     xfpm_notify_close_critical (notify);
     
-    G_OBJECT_CLASS(xfpm_notify_parent_class)->finalize(object);
+    G_OBJECT_CLASS (xfpm_notify_parent_class)->finalize(object);
 }
 
 static void
@@ -172,6 +260,8 @@ xfpm_notify_close_notification (XfpmNotify *notify )
 XfpmNotify *
 xfpm_notify_new (void)
 {
+    static gpointer xfpm_notify_object = NULL;
+    
     if ( xfpm_notify_object != NULL )
     {
 	g_object_ref (xfpm_notify_object);

@@ -53,8 +53,6 @@ struct XfpmDBusMonitorPrivate
     
     GPtrArray       *names_array;
     GPtrArray 	    *services_array;
-    
-    gboolean	     hal_connected;
 };
 
 typedef struct
@@ -68,7 +66,6 @@ enum
 {
     UNIQUE_NAME_LOST,
     SERVICE_CONNECTION_CHANGED,
-    HAL_CONNECTION_CHANGED,
     SYSTEM_BUS_CONNECTION_CHANGED,
     LAST_SIGNAL
 };
@@ -125,14 +122,6 @@ xfpm_dbus_monitor_service_connection_changed (XfpmDBusMonitor *monitor, DBusBusT
 {
     XfpmWatchData *watch;
     guint i;
-    
-    /* Simplify things for HAL */
-    if ( !g_strcmp0 (name, "org.freedesktop.Hal") && bus_type == DBUS_BUS_SYSTEM )
-    {
-	monitor->priv->hal_connected = connected;
-	g_signal_emit (G_OBJECT (monitor), signals [HAL_CONNECTION_CHANGED], 0, connected);
-	return;
-    }
     
     for ( i = 0; i < monitor->priv->services_array->len; i++)
     {
@@ -196,10 +185,6 @@ xfpm_dbus_monitor_query_system_bus_idle (gpointer data)
 	return TRUE;
     }
     
-    /*
-     * This message is catched by xfpm manager then it simply
-     * restarts all the power manager
-     */
     monitor = XFPM_DBUS_MONITOR (data);
     g_signal_emit (G_OBJECT (monitor), signals [SYSTEM_BUS_CONNECTION_CHANGED], 0, TRUE);
     
@@ -288,15 +273,6 @@ xfpm_dbus_monitor_class_init (XfpmDBusMonitorClass *klass)
 		      G_TYPE_NONE, 2, 
 		      G_TYPE_STRING, G_TYPE_BOOLEAN);
 		     
-    signals [HAL_CONNECTION_CHANGED] =
-    	g_signal_new ("hal-connection-changed",
-		      XFPM_TYPE_DBUS_MONITOR,
-		      G_SIGNAL_RUN_LAST,
-		      G_STRUCT_OFFSET (XfpmDBusMonitorClass, hal_connection_changed),
-		      NULL, NULL,
-		      g_cclosure_marshal_VOID__BOOLEAN,
-		      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
-		      
     signals [SERVICE_CONNECTION_CHANGED] =
     	g_signal_new ("service-connection-changed",
 		      XFPM_TYPE_DBUS_MONITOR,
@@ -345,11 +321,6 @@ xfpm_dbus_monitor_init (XfpmDBusMonitor *monitor)
 			        xfpm_dbus_monitor_system_bus_filter,
 				monitor, 
 				NULL);
-				
-    monitor->priv->hal_connected  = xfpm_dbus_name_has_owner (dbus_g_connection_get_connection (monitor->priv->system_bus), 
-							      "org.freedesktop.Hal");
-							      
-    xfpm_dbus_monitor_add_service (monitor, DBUS_BUS_SESSION, "org.freedesktop.Hal");
 }
 
 static void
@@ -472,9 +443,4 @@ void xfpm_dbus_monitor_remove_service (XfpmDBusMonitor *monitor, DBusBusType bus
 	g_ptr_array_remove (monitor->priv->services_array, watch);
 	xfpm_dbus_monitor_free_watch_data (watch);
     }
-}
-
-gboolean xfpm_dbus_monitor_hal_connected (XfpmDBusMonitor *monitor)
-{
-    return monitor->priv->hal_connected;
 }

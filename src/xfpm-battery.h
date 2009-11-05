@@ -33,6 +33,18 @@ G_BEGIN_DECLS
 #define XFPM_BATTERY(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_BATTERY, XfpmBattery))
 #define XFPM_IS_BATTERY(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_BATTERY))
 
+/*
+ * Order matters
+ */
+typedef enum
+{
+    XFPM_BATTERY_CHARGE_UNKNOWN,
+    XFPM_BATTERY_CHARGE_CRITICAL,
+    XFPM_BATTERY_CHARGE_LOW,
+    XFPM_BATTERY_CHARGE_OK
+    
+} XfpmBatteryCharge;
+
 typedef struct XfpmBatteryPrivate XfpmBatteryPrivate;
 
 typedef struct
@@ -47,6 +59,8 @@ typedef struct
 {
     GtkStatusIconClass 	    parent_class;
     
+    void		    (*battery_charge_changed)	 (XfpmBattery *battery);
+    
 } XfpmBatteryClass;
 
 GType        		    xfpm_battery_get_type        (void) G_GNUC_CONST;
@@ -57,8 +71,10 @@ void			    xfpm_battery_monitor_device  (XfpmBattery *battery,
 							  DBusGProxy *proxy,
 							  DBusGProxy *proxy_prop,
 							  XfpmDkpDeviceType device_type);
-
+//FIXME, make these as properties
 XfpmDkpDeviceType	    xfpm_battery_get_device_type (XfpmBattery *battery);
+
+XfpmBatteryCharge	    xfpm_battery_get_charge      (XfpmBattery *battery);
 
 G_END_DECLS
 
