@@ -127,7 +127,7 @@ xfpm_battery_refresh_visible (XfpmBattery *battery)
 	else visible = TRUE;
     }
 
-    XFPM_DEBUG_ENUM ("Tray icon configuration: ", show_icon, XFPM_TYPE_SHOW_ICON);
+    XFPM_DEBUG_ENUM_FULL (show_icon, XFPM_TYPE_SHOW_ICON, "visible=%s", xfpm_bool_to_string (visible));
 			  
     gtk_status_icon_set_visible (GTK_STATUS_ICON (battery), visible);
 }
@@ -324,16 +324,19 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	if ( battery->priv->time_to_empty > 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
-	    tip = g_strdup_printf (_("%s.\n(%i%%), Your %s is fully charged.\nProvides %s runtime"), 
+	    tip = g_strdup_printf (_("%s.\nYour %s is fully charged (%i%%).\nProvides %s runtime"), 
 				   power_status,
-				   battery->priv->percentage, battery_name, est_time_str);
+				   battery_name, 
+				   battery->priv->percentage,
+				   est_time_str);
 	    g_free (est_time_str);
 	}
 	else
 	{
-	    tip = g_strdup_printf (_("%s.\n(%i%%), Your %s is fully charged."), 
-				  power_status,
-				  battery->priv->percentage, battery_name);
+	    tip = g_strdup_printf (_("%s.\nYour %s is fully charged (%i%%)."), 
+				   power_status,
+				   battery_name,
+				   battery->priv->percentage);
 	}
     }
     else if ( battery->priv->state == XFPM_DKP_DEVICE_STATE_CHARGING )
@@ -341,17 +344,19 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	if ( battery->priv->time_to_full != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_full);
-	    tip = g_strdup_printf (_("%s.\n(%i%%), Your %s is charging.\n%s until is fully charged."), 
-				    power_status,
-				   battery->priv->percentage, battery_name, est_time_str);
+	    tip = g_strdup_printf (_("%s.\nYour %s is charging (%i%%).\n%s until is fully charged."), 
+				   power_status,
+				   battery_name, 
+				   battery->priv->percentage, 
+				   est_time_str);
 	    g_free (est_time_str);
 	}
 	else
 	{
-	    tip = g_strdup_printf (_("%s.\n(%i%%), Your %s is charging."),
+	    tip = g_strdup_printf (_("%s.\nYour %s is charging (%i%%)."),
 				   power_status,
-				   battery->priv->percentage, 
-				   battery_name);
+				   battery_name,
+				   battery->priv->percentage);
 	}
     }
     else if ( battery->priv->state == XFPM_DKP_DEVICE_STATE_DISCHARGING )
@@ -359,27 +364,29 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	if ( battery->priv->time_to_empty != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
-	    tip = g_strdup_printf (_("%s.\n(%i%%), Your %s is discharging.\n%s left."), 
+	    tip = g_strdup_printf (_("%s.\nYour %s is discharging (%i%%).\n estimate time left is %s."), 
 				   power_status,
-				   battery->priv->percentage, battery_name, est_time_str);
+				   battery_name, 
+				   battery->priv->percentage, 
+				   est_time_str);
 	    g_free (est_time_str);
 	}
 	else
 	{
-	    tip = g_strdup_printf (_("%s.\n(%i%%), Your %s is discharging."),
+	    tip = g_strdup_printf (_("%s.\nYour %s is discharging (%i%%)."),
 				   power_status,
-				   battery->priv->percentage,
-				   battery_name);
+				   battery_name,
+				   battery->priv->percentage);
 	}
 	
     }
     else if ( battery->priv->state == XFPM_DKP_DEVICE_STATE_PENDING_CHARGING )
     {
-	tip = g_strdup_printf (_("%s.\n%s waiting to discharge (%i%%)"), power_status, battery_name, battery->priv->percentage);
+	tip = g_strdup_printf (_("%s.\n%s waiting to discharge (%i%%)."), power_status, battery_name, battery->priv->percentage);
     }
     else if ( battery->priv->state == XFPM_DKP_DEVICE_STATE_PENDING_DISCHARGING )
     {
-	tip = g_strdup_printf (_("%s.\n%s waiting to charge (%i%%)"), power_status, battery_name, battery->priv->percentage);
+	tip = g_strdup_printf (_("%s.\n%s waiting to charge (%i%%)."), power_status, battery_name, battery->priv->percentage);
     }
     else if ( battery->priv->state == XFPM_DKP_DEVICE_STATE_EMPTY )
     {
@@ -387,11 +394,6 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
     }
     
     gtk_tooltip_set_text (tooltip, tip);
-    gtk_tooltip_set_icon_from_icon_name (tooltip, 
-					 gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
-					 GTK_ICON_SIZE_BUTTON);
-					 
-    
     g_free (power_status);
     g_free (tip);
 }

@@ -824,6 +824,7 @@ xfpm_dkp_add_device (XfpmDkp *dkp, const gchar *object_path)
 					   object_path,
 					   DKP_IFACE_DEVICE);
 	battery = xfpm_battery_new ();
+	gtk_status_icon_set_visible (battery, FALSE);
 	xfpm_battery_monitor_device (XFPM_BATTERY (battery), proxy, proxy_prop, device_type);
 	g_hash_table_insert (dkp->priv->hash, g_strdup (object_path), battery);
 	
