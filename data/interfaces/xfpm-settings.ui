@@ -264,7 +264,7 @@
                                         <child>
                                           <object class="GtkLabel" id="hibernate-label">
                                             <property name="visible">True</property>
-					    <property name="xalign">0</property>
+                                            <property name="xalign">0</property>
                                             <property name="label" translatable="yes">When hibernate button is pressed:</property>
                                           </object>
                                           <packing>
@@ -1230,20 +1230,6 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkCheckButton" id="cpu-freq">
-                                        <property name="label" translatable="yes">CPU frequency control</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="receives_default">False</property>
-                                        <property name="draw_indicator">True</property>
-                                        <signal name="toggled" handler="cpu_freq_control_changed_cb"/>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                    <child>
                                       <object class="GtkCheckButton" id="lock-screen">
                                         <property name="label" translatable="yes">Lock screen when going for suspend/hibernate</property>
                                         <property name="visible">True</property>
@@ -1254,7 +1240,7 @@
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
-                                        <property name="position">2</property>
+                                        <property name="position">1</property>
                                       </packing>
                                     </child>
                                   </object>

@@ -55,6 +55,7 @@ int main (int argc, char **argv)
     gboolean auth_hibernate;
     gboolean can_suspend;
     gboolean can_hibernate;
+    gboolean can_shutdown;
     gboolean has_lcd_brightness;
     gboolean has_sleep_button;
     gboolean has_hibernate_button;
@@ -157,9 +158,10 @@ int main (int argc, char **argv)
 	has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "sleep-button"));
 	has_power_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "power-button"));
 	has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "hibernate-button"));
+	can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-shutdown"));
 	
 	xfpm_settings_dialog_new (channel, has_battery, auth_hibernate, auth_suspend,
-				  can_suspend, can_hibernate, has_lcd_brightness,
+				  can_shutdown, can_suspend, can_hibernate, has_lcd_brightness,
 				  has_lid, has_sleep_button, has_hibernate_button, has_power_button,
 				  socket_id);
 					   

@@ -716,7 +716,8 @@ cpu_freq_control_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
 
 static void
-xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate, gboolean auth_suspend, gboolean can_suspend, 
+xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate, gboolean auth_suspend, 
+			 gboolean can_shutdown, gboolean can_suspend, 
 			 gboolean can_hibernate, gboolean has_lcd_brightness, gboolean has_lid)
 {
     gboolean valid;
@@ -743,18 +744,17 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate, gbool
     if ( !can_suspend && !can_hibernate )
     {
 	gtk_widget_set_sensitive (inact, FALSE);
+	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not supported"));
+    }
+    else if ( !auth_suspend && !auth_hibernate )
+    {
+	gtk_widget_set_sensitive (inact, FALSE);
 	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not permitted"));
     }
     
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, 14);
     gtk_range_set_value (GTK_RANGE (inact), val);
     
-    
-    if (!auth_suspend && auth_hibernate )
-    {
-	gtk_widget_set_sensitive (battery_critical, FALSE);
-	gtk_widget_set_tooltip_text (battery_critical, _("Shutdown and hibernate operations not permitted"));
-    }
     
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     
@@ -775,8 +775,11 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate, gbool
 	gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
     }
 
-    gtk_list_store_append(list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, XFPM_DO_SHUTDOWN, -1);
+    if ( can_shutdown )
+    {
+	gtk_list_store_append(list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, XFPM_DO_SHUTDOWN, -1);
+    }
     
     gtk_list_store_append(list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
@@ -821,12 +824,6 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate, gbool
     lid = GTK_WIDGET (gtk_builder_get_object (xml, "on-battery-lid"));
     if ( has_lid )
     {
-	if (!auth_hibernate && !auth_suspend )
-	{
-	    gtk_widget_set_sensitive (lid, FALSE);
-	    gtk_widget_set_tooltip_text (lid, _("Shutdown and hibernate operations not permitted"));
-	}
-	
 	list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
 	
 	gtk_combo_box_set_model (GTK_COMBO_BOX(lid), GTK_TREE_MODEL(list_store));
@@ -897,8 +894,9 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate, gbool
 }
 
 static void
-xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend, gboolean auth_hibernate, 
-		     gboolean can_suspend, gboolean can_hibernate, gboolean has_lcd_brightness, gboolean has_lid)
+xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend, gboolean auth_hibernate,
+		     gboolean can_suspend, gboolean can_hibernate, 
+		     gboolean has_lcd_brightness, gboolean has_lid)
 {
     GtkWidget *inact;
     GtkWidget *lid;
@@ -917,6 +915,11 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend, gboolean aut
     inact = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-on-ac"));
     
     if ( !can_suspend && !can_hibernate )
+    {
+	gtk_widget_set_sensitive (inact, FALSE);
+	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not supported"));
+    }
+    else  if ( !auth_suspend && !auth_hibernate )
     {
 	gtk_widget_set_sensitive (inact, FALSE);
 	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not permitted"));
@@ -947,12 +950,6 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend, gboolean aut
     {
 	list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
 	
-	if ( !auth_hibernate && !auth_suspend )
-	{
-	    gtk_widget_set_sensitive (lid, FALSE);
-	    gtk_widget_set_tooltip_text (lid, _("Hibernate and suspend operations not permitted"));
-	    
-	}
 	gtk_combo_box_set_model (GTK_COMBO_BOX(lid), GTK_TREE_MODEL(list_store));
 	
 	gtk_list_store_append(list_store, &iter);
@@ -1019,7 +1016,8 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend, gboolean aut
 }
 
 static void
-xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate, gboolean auth_suspend,
+xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate, 
+		       gboolean auth_suspend, gboolean can_shutdown,  
 		       gboolean can_suspend, gboolean can_hibernate,
 		       gboolean has_sleep_button, gboolean has_hibernate_button,
 		       gboolean has_power_button)
@@ -1102,12 +1100,6 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate, gboolean
     
     if ( has_power_button )
     {
-	if (!auth_hibernate && !auth_suspend)
-	{
-	    gtk_widget_set_sensitive (power, FALSE);
-	    gtk_widget_set_tooltip_text (power, _("Hibernate and suspend operations not permitted"));
-	}
-	
 	gtk_combo_box_set_model (GTK_COMBO_BOX(power), GTK_TREE_MODEL(list_store));
 
 	gtk_list_store_append (list_store, &iter);
@@ -1125,8 +1117,11 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate, gboolean
 	    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
 	}
 	
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, XFPM_DO_SHUTDOWN, -1);
+	if ( can_shutdown )
+	{
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, XFPM_DO_SHUTDOWN, -1);
+	}
 	
 	gtk_list_store_append (list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
@@ -1160,12 +1155,6 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate, gboolean
     
     if (has_hibernate_button )
     {
-	if (!auth_hibernate && !auth_suspend )
-	{
-	    gtk_widget_set_sensitive (hibernate, FALSE);
-	    gtk_widget_set_tooltip_text (hibernate, _("Hibernate and suspend operations not permitted"));
-	}
-	
 	gtk_combo_box_set_model (GTK_COMBO_BOX(hibernate), GTK_TREE_MODEL(list_store));
 
 	gtk_list_store_append (list_store, &iter);
@@ -1187,6 +1176,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate, gboolean
 	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
 	
 	value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, XFPM_DO_NOTHING);
+	
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
 	      valid;
 	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
@@ -1215,12 +1205,6 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate, gboolean
     
     if ( has_sleep_button )
     {
-	if (!auth_hibernate && !auth_suspend )
-	{
-	    gtk_widget_set_sensitive (sleep_w, FALSE);
-	    gtk_widget_set_tooltip_text (sleep_w, _("Hibernate and suspend operations not permitted"));
-	}
-	
 	gtk_combo_box_set_model (GTK_COMBO_BOX(sleep_w), GTK_TREE_MODEL(list_store));
 
 	gtk_list_store_append (list_store, &iter);
@@ -1268,7 +1252,6 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate, gboolean
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX GENERAL_NOTIFICATION_CFG, TRUE);
     
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(notify), val);
-    
 }
 
 static void
@@ -1280,7 +1263,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
     gchar *str;
     GtkWidget *critical_level;
     GtkWidget *lock;
-    GtkWidget *cpu;
     GtkWidget *label;
     GtkWidget *sleep_dpms_mode;
     GtkWidget *suspend_dpms_mode;
@@ -1288,14 +1270,24 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
     GtkWidget *inact_suspend = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-suspend"));
     GtkWidget *inact_hibernate = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-hibernate"));
     
-    if ( !auth_suspend || !can_suspend)
+    if ( !can_suspend )
+    {
+	gtk_widget_set_sensitive (inact_suspend, FALSE);
+	gtk_widget_set_tooltip_text (inact_suspend, _("Suspend operation not supported"));
+    }
+    else if ( !auth_suspend )
     {
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_hibernate), TRUE);
 	gtk_widget_set_sensitive (inact_suspend, FALSE);
 	gtk_widget_set_tooltip_text (inact_suspend, _("Suspend operation not permitted"));
     }
     
-    if ( !auth_hibernate || !can_hibernate )
+    if ( !can_hibernate )
+    {
+	gtk_widget_set_sensitive (inact_hibernate, FALSE);
+	gtk_widget_set_tooltip_text (inact_hibernate, _("Hibernate operation not supported"));
+    }
+    else if ( !auth_hibernate)
     {
 	gtk_widget_set_sensitive (inact_hibernate, FALSE);
 	gtk_widget_set_tooltip_text (inact_hibernate, _("Hibernate operation not permitted"));
@@ -1369,7 +1361,12 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
      */
     lock = GTK_WIDGET (gtk_builder_get_object (xml, "lock-screen"));
     
-    if ( (!auth_hibernate && !auth_suspend) || (!can_suspend && !can_hibernate) )
+    if ( !can_suspend && !can_hibernate )
+    {
+	gtk_widget_set_sensitive (lock, FALSE);
+	gtk_widget_set_tooltip_text (lock, _("Hibernate and suspend operations not supported"));
+    }
+    else if ( !auth_hibernate && !auth_suspend)
     {
 	gtk_widget_set_sensitive (lock, FALSE);
 	gtk_widget_set_tooltip_text (lock, _("Hibernate and suspend operations not permitted"));
@@ -1377,21 +1374,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
     
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(lock), val);
- 
-    cpu = GTK_WIDGET (gtk_builder_get_object (xml, "cpu-freq"));
-    
-#ifdef SYSTEM_IS_LINUX
-    if ( system_laptop )
-    {
-	val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX CPU_FREQ_CONTROL, TRUE);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(cpu), val);
-    }
-    else
-	gtk_widget_hide (cpu);
-#else
-    gtk_widget_hide (cpu);
-#endif
-
 }
 
 void
@@ -1548,7 +1530,8 @@ delete_event_cb (GtkWidget *plug, GdkEvent *ev, XfconfChannel *channel)
 
 void
 xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop, 
-			  gboolean auth_hibernate, gboolean auth_suspend, gboolean can_suspend, 
+			  gboolean auth_hibernate, gboolean auth_suspend, 
+			  gboolean can_shutdown, gboolean can_suspend, 
 			  gboolean can_hibernate, gboolean has_lcd_brightness, 
 			  gboolean has_lid, gboolean has_sleep_button, 
 			  gboolean has_hibernate_button, gboolean has_power_button,
@@ -1559,9 +1542,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     GtkWidget *allbox;
     GError *error = NULL;
 
-    g_debug("system_laptop=%s auth_hibernate=%s  auth_suspend=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s "\
-          "has_sleep_button=%s has_hibernate_button=%s has_power_button=%s",
-	  xfpm_bool_to_string (system_laptop), xfpm_bool_to_string (auth_hibernate), xfpm_bool_to_string (auth_suspend),
+    g_debug ("system_laptop=%s auth_hibernate=%s  auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s "\
+           "has_sleep_button=%s has_hibernate_button=%s has_power_button=%s",
+	  xfpm_bool_to_string (system_laptop), xfpm_bool_to_string (auth_hibernate), 
+	  xfpm_bool_to_string (can_shutdown), xfpm_bool_to_string (auth_suspend),
 	  xfpm_bool_to_string (can_suspend), xfpm_bool_to_string (can_hibernate),
 	  xfpm_bool_to_string (has_lcd_brightness), xfpm_bool_to_string (has_lid),
 	  xfpm_bool_to_string (has_sleep_button), xfpm_bool_to_string (has_hibernate_button),
@@ -1590,11 +1574,11 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     xfpm_settings_on_ac (channel, auth_hibernate, auth_suspend, can_suspend, can_hibernate, has_lcd_brightness, has_lid );
     
     if ( system_laptop )
-	xfpm_settings_on_battery (channel, auth_hibernate, auth_suspend, can_suspend, can_hibernate, has_lcd_brightness, has_lid);
+	xfpm_settings_on_battery (channel, auth_hibernate, auth_suspend, can_shutdown, can_suspend, can_hibernate, has_lcd_brightness, has_lid);
 	
     xfpm_settings_tree_view (channel, system_laptop);
     
-    xfpm_settings_general   (channel, auth_hibernate, auth_suspend, can_suspend, can_hibernate,
+    xfpm_settings_general   (channel, auth_hibernate, auth_suspend, can_shutdown, can_suspend, can_hibernate,
 			     has_sleep_button, has_hibernate_button, has_power_button );
 			     
     xfpm_settings_advanced  (channel, system_laptop, auth_hibernate, auth_suspend, can_suspend, can_hibernate);

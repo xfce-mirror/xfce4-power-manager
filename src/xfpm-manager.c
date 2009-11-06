@@ -537,7 +537,7 @@ static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
         has_hibernate_button = TRUE;
     if ( mapped_buttons & POWER_KEY )
         has_power_button = TRUE;
-
+	
     g_hash_table_insert (*OUT_config, g_strdup ("sleep-button"), g_strdup (xfpm_bool_to_string (has_sleep_button)));
     g_hash_table_insert (*OUT_config, g_strdup ("power-button"), g_strdup (xfpm_bool_to_string (has_power_button)));
     g_hash_table_insert (*OUT_config, g_strdup ("hibernate-button"), g_strdup (xfpm_bool_to_string (has_hibernate_button)));
