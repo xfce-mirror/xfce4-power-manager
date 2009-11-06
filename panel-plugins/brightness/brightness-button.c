@@ -590,6 +590,7 @@ reload_activated (GtkWidget *widget, BrightnessButton *button)
     gint size;
     
     destroy_popup (button);
+    xfpm_brightness_setup (button->priv->brightness);
     brightness_button_create_popup (button);
     brightness_button_set_tooltip (button);
     

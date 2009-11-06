@@ -390,12 +390,15 @@ xfpm_brightness_setup_hal (XfpmBrightness *brightness)
     HalDevice *device;
     gchar **udi = NULL;
     
-    brightness->priv->manager = hal_manager_new ();
     
+    if ( !brightness->priv->manager )
+    {
+	brightness->priv->manager = hal_manager_new ();
+	
+	g_signal_connect (brightness->priv->manager, "connection-changed",
+			  G_CALLBACK (xfpm_brightness_hal_connection_changed_cb), brightness);
+    }
     brightness->priv->connected = hal_manager_get_is_connected (brightness->priv->manager);
-    
-    g_signal_connect (brightness->priv->manager, "connection-changed",
-		      G_CALLBACK (xfpm_brightness_hal_connection_changed_cb), brightness);
 		      
     udi = hal_manager_find_device_by_capability (brightness->priv->manager, "laptop_panel");
 
@@ -472,12 +475,8 @@ xfpm_brightness_init (XfpmBrightness *brightness)
 }
 
 static void
-xfpm_brightness_finalize (GObject *object)
+xfpm_brightness_free_data (XfpmBrightness *brightness)
 {
-    XfpmBrightness *brightness;
-
-    brightness = XFPM_BRIGHTNESS (object);
-
     if ( brightness->priv->resource )
 	XRRFreeScreenResources (brightness->priv->resource);
 
@@ -487,7 +486,19 @@ xfpm_brightness_finalize (GObject *object)
 	
     if ( brightness->priv->hal_proxy )
 	g_object_unref (brightness->priv->hal_proxy);
+#endif
+}
 
+static void
+xfpm_brightness_finalize (GObject *object)
+{
+    XfpmBrightness *brightness;
+
+    brightness = XFPM_BRIGHTNESS (object);
+
+    xfpm_brightness_free_data (brightness);
+
+#ifdef WITH_HAL
     if ( brightness->priv->manager )
 	g_object_unref (brightness->priv->manager);
 #endif
@@ -506,6 +517,7 @@ xfpm_brightness_new (void)
 gboolean
 xfpm_brightness_setup (XfpmBrightness *brightness)
 {
+    xfpm_brightness_free_data (brightness);
     brightness->priv->xrandr_has_hw = xfpm_brightness_setup_xrandr (brightness);
 
     if ( brightness->priv->xrandr_has_hw )
