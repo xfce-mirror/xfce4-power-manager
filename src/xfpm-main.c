@@ -71,7 +71,7 @@ xfpm_quit_signal (gint sig, gpointer data)
 static const gchar *
 xfpm_bool_to_local_string (gboolean value)
 {
-    value == TRUE ? _("True") : _("False");
+    return value == TRUE ? _("True") : _("False");
 }
 
 static void

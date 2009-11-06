@@ -269,7 +269,7 @@ xfpm_dkp_check_daemon_version (XfpmDkp *dkp, GHashTable *props)
     XFPM_DEBUG ("Dkp daemon version %s", dkp->priv->daemon_version);
     dkp_version = strtol (dkp->priv->daemon_version, NULL, 10);
     
-    if ( dkp_version < 15)
+    if ( dkp_version < 11)
     {
 	XfconfChannel *channel;
 	gboolean show_error;
@@ -290,7 +290,7 @@ xfpm_dkp_check_daemon_version (XfpmDkp *dkp, GHashTable *props)
 				   "to work properly while the version found is"), 
 				   dkp->priv->daemon_version);
 		
-	    g_set_error (&error, 0, 0, message);
+	    g_set_error (&error, 0, 0, "%s", message);
 	    xfce_dialog_show_error (NULL, error, "%s", _("Devicekit-power version 011 or above not found"));
 	    xfconf_channel_set_bool (channel, PROPERTIES_PREFIX "show-dkp-version-error", FALSE);
 	    g_free (message);
@@ -329,7 +329,6 @@ xfpm_dkp_get_properties (XfpmDkp *dkp)
     {
 	xfpm_dkp_check_daemon_version (dkp, props);
     }
-out:
     g_hash_table_destroy (props);
 }
 
