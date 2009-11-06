@@ -194,7 +194,7 @@ xfpm_dbus_monitor_query_system_bus_idle (gpointer data)
 static void
 xfpm_dbus_monitor_setup_system_watch (XfpmDBusMonitor *monitor)
 {
-    g_timeout_add_seconds (5, (GSourceFunc) xfpm_dbus_monitor_query_system_bus_idle, monitor);
+    g_timeout_add_seconds (2, (GSourceFunc) xfpm_dbus_monitor_query_system_bus_idle, monitor);
 }
 
 static DBusHandlerResult

@@ -53,6 +53,7 @@
 #include "xfpm-enum.h"
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum-types.h"
+#include "xfpm-dbus-monitor.h"
 
 static void xfpm_manager_finalize   (GObject *object);
 
@@ -77,9 +78,12 @@ struct XfpmManagerPrivate
     XfpmXfconf      *conf;
     XfpmBacklight   *backlight;
     XfpmConsoleKit  *console;
+    XfpmDBusMonitor *monitor;
+    
 #ifdef HAVE_DPMS
     XfpmDpms        *dpms;
 #endif
+
     GTimer	    *timer;
     
     gboolean	     inhibited;
@@ -122,6 +126,7 @@ xfpm_manager_finalize (GObject *object)
     g_object_unref (manager->priv->conf);
     g_object_unref (manager->priv->client);
     g_object_unref (manager->priv->console);
+    g_object_unref (manager->priv->monitor);
     g_timer_destroy (manager->priv->timer);
     
 #ifdef HAVE_DPMS
@@ -151,6 +156,17 @@ xfpm_manager_quit (XfpmManager *manager)
     xfpm_manager_release_names (manager);
     gtk_main_quit ();
     return TRUE;
+}
+
+static void
+xfpm_manager_system_bus_connection_changed_cb (XfpmDBusMonitor *monitor, gboolean connected, XfpmManager *manager)
+{
+    if ( connected == TRUE )
+    {
+        TRACE ("System bus connection changed to TRUE, restarting the power manager");
+        xfpm_manager_quit (manager);
+        g_spawn_command_line_async ("xfce4-power-manager", NULL);
+    }
 }
 
 static gboolean
@@ -378,6 +394,10 @@ void xfpm_manager_start (XfpmManager *manager)
     manager->priv->button = xfpm_button_new ();
     manager->priv->conf = xfpm_xfconf_new ();
     manager->priv->console = xfpm_console_kit_new ();
+    manager->priv->monitor = xfpm_dbus_monitor_new ();
+    
+    g_signal_connect (manager->priv->monitor, "system-bus-connection-changed",
+		      G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager);
    
     manager->priv->backlight = xfpm_backlight_new ();
     

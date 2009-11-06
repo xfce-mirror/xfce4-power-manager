@@ -70,6 +70,8 @@ GType        		xfpm_dbus_monitor_get_type        	(void) G_GNUC_CONST;
 
 XfpmDBusMonitor        *xfpm_dbus_monitor_new             	(void);
 
+void			xfpm_dbus_monitor_watch_system_bus	(XfpmDBusMonitor *monitor);
+
 gboolean                xfpm_dbus_monitor_add_unique_name     	(XfpmDBusMonitor *monitor,
 								 DBusBusType bus_type,
 								 const gchar *unique_name);
