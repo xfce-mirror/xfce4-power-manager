@@ -57,12 +57,15 @@ struct XfpmBrightnessPrivate
     gint 		output;
     gboolean		xrandr_has_hw;
     
+    guint		max_level;
+    guint		current_level;
+    guint		min_level;
+    guint		step;
+    
 #ifdef WITH_HAL
     DBusGProxy         *hal_proxy;
     gboolean		hal_brightness_in_hw;
     gboolean		hal_hw_found;
-    guint		hal_max_level;
-    guint		hal_step;
 #endif
 };
 
@@ -97,8 +100,8 @@ out:
     return ret;
 }
 
-static gboolean G_GNUC_UNUSED
-xfpm_brightness_xrandr_get_current (XfpmBrightness *brightness, RROutput output, guint *current)
+static gboolean
+xfpm_brightness_xrandr_get_level (XfpmBrightness *brightness, RROutput output, guint *current)
 {
     unsigned long nitems;
     unsigned long bytes_after;
@@ -123,6 +126,27 @@ xfpm_brightness_xrandr_get_current (XfpmBrightness *brightness, RROutput output,
     }
     
     XFree (prop);
+    
+    return ret;
+}
+
+static gboolean
+xfpm_brightness_xrandr_set_level (XfpmBrightness *brightness, RROutput output, guint level)
+{
+    gboolean ret = TRUE;
+
+    gdk_error_trap_push ();
+    XRRChangeOutputProperty (GDK_DISPLAY (), output, brightness->priv->backlight, XA_INTEGER, 32,
+			     PropModeReplace, (unsigned char *) &level, 1);
+			     
+    XFlush (GDK_DISPLAY ());
+    gdk_flush ();
+    
+    if ( gdk_error_trap_pop () ) 
+    {
+	    g_warning ("failed to XRRChangeOutputProperty for brightness %i", level);
+	    ret = FALSE;
+    }
     
     return ret;
 }
@@ -180,10 +204,65 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 	}
 	XRRFreeOutputInfo (info);
     }
+    return ret;
+}
+
+static gboolean
+xfpm_brightness_xrand_up (XfpmBrightness *brightness, guint *new_level)
+{
+    guint hw_level;
+    gboolean ret;
+    
+    ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, &hw_level);
+    
+    if ( !ret )
+	return FALSE;
+	
+    if ( hw_level + brightness->priv->step <= brightness->priv->max_level)
+	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, hw_level + brightness->priv->step);
+    else
+	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, brightness->priv->max_level);
+	
+    ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, new_level);
+    
+    if ( !ret )
+	return FALSE;
+	
+    /* Nothing changed in the hardware*/
+    if ( *new_level == hw_level )
+	return FALSE;
     
     return ret;
 }
 
+static gboolean
+xfpm_brightness_xrand_down (XfpmBrightness *brightness, guint *new_level)
+{
+    guint hw_level;
+    gboolean ret;
+    
+    ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, &hw_level);
+    
+    if ( !ret )
+	return FALSE;
+	
+    if ( hw_level - brightness->priv->step >= brightness->priv->min_level)
+	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, hw_level - brightness->priv->step);
+    else
+	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, brightness->priv->min_level);
+	
+    ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, new_level);
+    
+    if ( !ret )
+	return FALSE;
+    
+    /* Nothing changed in the hardware*/
+    if ( *new_level == hw_level )
+	return FALSE;
+    
+    return ret;
+
+}
 
 /*
  * Begin HAL optional brightness code. 
@@ -191,16 +270,15 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
  */
 
 #ifdef WITH_HAL
-static gint 
-xfpm_brightness_hal_get_level (XfpmBrightness *brg)
+static gboolean
+xfpm_brightness_hal_get_level (XfpmBrightness *brg, guint *level)
 {
     GError *error = NULL;
-    gint level = 0;
     gboolean ret = FALSE;
     
     ret = dbus_g_proxy_call (brg->priv->hal_proxy, "GetBrightness", &error,
 	 		     G_TYPE_INVALID,
-			     G_TYPE_INT, &level,
+			     G_TYPE_INT, level,
 			     G_TYPE_INVALID);
 
     if (error)
@@ -208,7 +286,8 @@ xfpm_brightness_hal_get_level (XfpmBrightness *brg)
 	g_warning ("GetBrightness failed : %s\n", error->message);
 	g_error_free (error);
     }
-    return level;
+    
+    return ret;
 }
 
 static gboolean
@@ -242,31 +321,50 @@ xfpm_brightness_hal_set_level (XfpmBrightness *brg, gint level)
 }
 
 
-static void
+static gboolean
 xfpm_brightness_hal_up (XfpmBrightness *brightness)
 {
-    gint hw_level;
+    guint hw_level;
+    gboolean ret = TRUE;
     
-    hw_level = xfpm_brightness_hal_get_level (brightness);
+    ret = xfpm_brightness_hal_get_level (brightness, &hw_level);
     
-    if ( hw_level != 0 )
+    if ( !ret )
+	return FALSE;
+	
+    if ( hw_level + brightness->priv->step <= brightness->priv->max_level )
     {
-	xfpm_brightness_hal_set_level (brightness, hw_level + brightness->priv->hal_step);
+	ret = xfpm_brightness_hal_set_level (brightness, hw_level + brightness->priv->step);
     }
+    else
+    {
+	ret = xfpm_brightness_hal_set_level (brightness, brightness->priv->max_level);
+    }
+    
+    return ret;
 }
 
-static void
+static gboolean
 xfpm_brightness_hal_down (XfpmBrightness *brightness)
 {
-    gint hw_level;
+    guint hw_level;
+    gboolean ret = TRUE;
     
-    hw_level = xfpm_brightness_hal_get_level (brightness);
+    ret = xfpm_brightness_hal_get_level (brightness, &hw_level);
     
-    if ( hw_level != 0 )
+    if ( !ret )
+	return FALSE;
+    
+    if ( hw_level - brightness->priv->step >= brightness->priv->min_level  )
     {
-	xfpm_brightness_hal_set_level (brightness, hw_level - brightness->priv->hal_step);
+	ret = xfpm_brightness_hal_set_level (brightness, hw_level - brightness->priv->step);
+    }
+    else
+    {
+	ret = xfpm_brightness_hal_set_level (brightness, brightness->priv->min_level);
     }
     
+    return ret;
 }
 
 static gboolean
@@ -290,14 +388,15 @@ xfpm_brightness_setup_hal (XfpmBrightness *brightness)
     device = hal_device_new ();
     hal_device_set_udi (device, udi[0]);
     
-    brightness->priv->hal_max_level = hal_device_get_property_int (device, "laptop_panel.num_levels") -1;
-    brightness->priv->hal_step = brightness->priv->hal_max_level <= 20 ? 1 : brightness->priv->hal_max_level / 20;
+    brightness->priv->max_level = hal_device_get_property_int (device, "laptop_panel.num_levels") - 1;
+    brightness->priv->step = brightness->priv->max_level <= 20 ? 1 : brightness->priv->max_level / 20;
+    brightness->priv->min_level = brightness->priv->step;
     brightness->priv->hal_hw_found = TRUE;
     
     if ( hal_device_has_key (device, "laptop_panel.brightness_in_hardware") )
 	brightness->priv->hal_brightness_in_hw = hal_device_get_property_bool (device ,"laptop_panel.brightness_in_hardware");
 	
-    TRACE ("laptop_panel.num_levels=%d\n", brightness->priv->hal_max_level);
+    TRACE ("laptop_panel.num_levels=%d\n", brightness->priv->max_level);
     
     g_object_unref (device);
 
@@ -310,10 +409,14 @@ xfpm_brightness_setup_hal (XfpmBrightness *brightness)
 							     "org.freedesktop.Hal.Device.LaptopPanel");
      
     if ( !brightness->priv->hal_proxy )
+    {
 	g_warning ("Unable to get proxy for device %s\n", udi[0]);
+	brightness->priv->hal_hw_found = FALSE;
+    }
     
     hal_manager_free_string_array (udi);
-    return FALSE;
+    
+    return brightness->priv->hal_hw_found;
 }
 #endif /* WITH_HAL*/
 
@@ -333,7 +436,18 @@ xfpm_brightness_init (XfpmBrightness *brightness)
     brightness->priv = XFPM_BRIGHTNESS_GET_PRIVATE (brightness);
     
     brightness->priv->resource = NULL;
+    brightness->priv->xrandr_has_hw = FALSE;
+    brightness->priv->max_level = 0;
+    brightness->priv->min_level = 0;
+    brightness->priv->current_level = 0;
+    brightness->priv->output = 0;
+    brightness->priv->step = 0;
     
+#ifdef WITH_HAL
+    brightness->priv->hal_proxy = NULL;
+    brightness->priv->hal_brightness_in_hw = FALSE;
+    brightness->priv->hal_hw_found = FALSE;
+#endif
 }
 
 static void
@@ -361,31 +475,68 @@ gboolean
 xfpm_brightness_setup (XfpmBrightness *brightness)
 {
     brightness->priv->xrandr_has_hw = xfpm_brightness_setup_xrandr (brightness);
-    
-    if ( !brightness->priv->xrandr_has_hw )
+
+    if ( brightness->priv->xrandr_has_hw )
     {
-	TRACE ("Unable to control brightness via xrandr, trying to use HAL");
-	if ( !xfpm_brightness_setup_hal (brightness) )
-	    return FALSE;
+	xfpm_brightness_xrand_get_limit (brightness,
+					 brightness->priv->output, 
+					 &brightness->priv->min_level, 
+					 &brightness->priv->max_level);
+	g_debug ("Brightness controlled by xrandr, min_level=%u max_level=%u", 
+		 brightness->priv->min_level, 
+		 brightness->priv->max_level);
+		 
     }
+#ifdef WITH_HAL    
+    else if ( !brightness->priv->xrandr_has_hw )
+    {
+	g_debug ("Unable to control brightness via xrandr, trying to use HAL");
+	if ( xfpm_brightness_setup_hal (brightness) )
+	    return TRUE;
+    }
+#endif
     
-    return TRUE;
+    return brightness->priv->xrandr_has_hw;
 }
 
-void xfpm_brightness_up	(XfpmBrightness *brightness)
+gboolean xfpm_brightness_up (XfpmBrightness *brightness, guint *new_level)
 {
+    gboolean ret = FALSE;
+    
+    if ( brightness->priv->xrandr_has_hw )
+    {
+	ret = xfpm_brightness_xrand_up (brightness, new_level);
+    }	
 #ifdef WITH_HAL
-    if ( brightness->priv->hal_hw_found )
-	xfpm_brightness_hal_up (brightness);
+    else if ( brightness->priv->hal_hw_found )
+    {
+	ret = xfpm_brightness_hal_up (brightness);
+	if ( ret )
+	    ret = xfpm_brightness_hal_get_level (brightness, new_level);
+    }
 #endif
+    return ret;
 }
 
-void xfpm_brightness_down (XfpmBrightness *brightness)
+gboolean xfpm_brightness_down (XfpmBrightness *brightness, guint *new_level)
 {
+    gboolean ret = FALSE;
+    
+    if ( brightness->priv->xrandr_has_hw )
+    {
+	ret = xfpm_brightness_xrand_down (brightness, new_level);
+	if ( ret )
+	    ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, new_level);
+    }	
 #ifdef WITH_HAL
-    if ( brightness->priv->hal_hw_found )
-	xfpm_brightness_hal_down (brightness);
+    else if ( brightness->priv->hal_hw_found )
+    {
+	ret = xfpm_brightness_hal_down (brightness);
+	if ( ret )
+	    ret = xfpm_brightness_hal_get_level (brightness, new_level);
+    }
 #endif
+    return ret;
 }
 
 gboolean xfpm_brightness_has_hw (XfpmBrightness *brightness)
@@ -400,25 +551,66 @@ gboolean xfpm_brightness_has_hw (XfpmBrightness *brightness)
 
 guint xfpm_brightness_get_max_level (XfpmBrightness *brightness)
 {
-#ifdef WITH_HAL
-    return brightness->priv->hal_max_level;
-#endif
-    return 0;
+    return brightness->priv->max_level;
 }
 
-guint xfpm_brightness_get_level	(XfpmBrightness *brightness)
+gboolean xfpm_brightness_get_level	(XfpmBrightness *brightness, guint *level)
 {
+    gboolean ret = FALSE;
+    
+    if ( brightness->priv->xrandr_has_hw )
+	ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, level);
 #ifdef WITH_HAL
-    return xfpm_brightness_hal_get_level (brightness);
+    else if ( brightness->priv->hal_hw_found )
+	ret = xfpm_brightness_hal_get_level (brightness, level);
 #endif
-    return 0;
+
+    return ret;
 }
 
 gboolean xfpm_brightness_set_level (XfpmBrightness *brightness, guint level)
 {
+    gboolean ret = FALSE;
+    
+    if (brightness->priv->xrandr_has_hw )
+	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, level);
 #ifdef WITH_HAL
-    return xfpm_brightness_hal_set_level (brightness, level);
+    else if ( brightness->priv->hal_hw_found )
+	ret = xfpm_brightness_hal_set_level (brightness, level);
 #endif
     
+    return ret;
+}
+
+gboolean xfpm_brightness_dim_down (XfpmBrightness *brightness)
+{
+    gboolean ret = FALSE;
+    
+    if (brightness->priv->xrandr_has_hw )
+	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, brightness->priv->min_level);
+#ifdef WITH_HAL
+    else if ( brightness->priv->hal_hw_found )
+	ret = xfpm_brightness_hal_set_level (brightness, brightness->priv->min_level);
+#endif
+    
+    return ret;
+}
+
+XfpmBrightnessControl xfpm_brightness_get_control (XfpmBrightness *brightness)
+{
+    if ( brightness->priv->xrandr_has_hw )
+	return XFPM_BRIGHTNESS_CONTROL_XRANDR;
+#ifdef WITH_HAL
+    else if ( brightness->priv->hal_hw_found )
+	return XFPM_BRIGHTNESS_CONTROL_HAL;
+#endif
+    return XFPM_BRIGHTNESS_CONTROL_UNKNOWN;
+}
+
+gboolean xfpm_brightness_in_hw	(XfpmBrightness *brightness)
+{
+#ifdef WITH_HAL
+    return brightness->priv->hal_brightness_in_hw;
+#endif
     return FALSE;
 }

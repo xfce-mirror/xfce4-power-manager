@@ -263,7 +263,7 @@ xfpm_battery_info (GHashTable *props)
     cstr = xfpm_battery_info_get_device_prop_string (props, "Serial");
     if ( cstr )
     {
-	xfpm_battery_info_add (table, pfd, _("Serial:"), cstr, i);
+	xfpm_battery_info_add (table, pfd, _("Serial number:"), cstr, i);
 	i++;
     }
     

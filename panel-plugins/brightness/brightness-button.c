@@ -186,7 +186,7 @@ static gboolean
 brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
 {
     gint x, y, orientation;
-    gint current_level;
+    guint current_level = 0;
     GdkDisplay *display;
     GdkScreen *screen;
     BrightnessButton *button;
@@ -304,7 +304,7 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
    
     gtk_window_move (GTK_WINDOW(button->priv->popup), x, y);
     TRACE("Displaying window on x=%d y=%d", x, y);
-    current_level = xfpm_brightness_get_level (button->priv->brightness);
+    xfpm_brightness_get_level (button->priv->brightness, &current_level);
     
     gtk_range_set_value (GTK_RANGE(button->priv->range), current_level);
     button->priv->popup_open = TRUE;
@@ -348,7 +348,7 @@ range_value_changed (GtkWidget *widget, BrightnessButton *button)
     
     range_level = (guint) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
-    hw_level = xfpm_brightness_get_level (button->priv->brightness);
+    xfpm_brightness_get_level (button->priv->brightness, &hw_level);
     
     if ( hw_level != range_level )
     {
@@ -433,7 +433,7 @@ brightness_button_up (BrightnessButton *button)
     guint level;
     guint max_level;
     
-    level = xfpm_brightness_get_level (button->priv->brightness);
+    xfpm_brightness_get_level (button->priv->brightness, &level);
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);
     
     if ( level != max_level )
@@ -446,7 +446,7 @@ static void
 brightness_button_down (BrightnessButton *button)
 {
     guint level;
-    level = xfpm_brightness_get_level (button->priv->brightness);
+    xfpm_brightness_get_level (button->priv->brightness, &level);
     
     if ( level != 0 )
     {

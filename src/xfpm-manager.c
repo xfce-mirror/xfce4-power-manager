@@ -43,7 +43,7 @@
 #include "xfpm-dpms.h"
 #include "xfpm-manager.h"
 #include "xfpm-button.h"
-#include "xfpm-brightness.h"
+#include "xfpm-backlight.h"
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
 #include "xfpm-xfconf.h"
@@ -74,7 +74,7 @@ struct XfpmManagerPrivate
     XfpmDkp         *dkp;
     XfpmButton      *button;
     XfpmXfconf      *conf;
-    XfpmBrightness  *brightness;
+    XfpmBacklight   *backlight;
 #ifdef HAVE_DPMS
     XfpmDpms        *dpms;
 #endif
@@ -125,8 +125,7 @@ xfpm_manager_finalize (GObject *object)
     g_object_unref (manager->priv->dpms);
 #endif
     
-    if ( manager->priv->brightness )
-	g_object_unref (manager->priv->brightness);
+    g_object_unref (manager->priv->backlight);
 	
     G_OBJECT_CLASS (xfpm_manager_parent_class)->finalize (object);
 }
@@ -359,18 +358,12 @@ void xfpm_manager_start (XfpmManager *manager)
     manager->priv->button = xfpm_button_new ();
     manager->priv->conf = xfpm_xfconf_new ();
    
-    manager->priv->brightness = xfpm_brightness_new ();
+    manager->priv->backlight = xfpm_backlight_new ();
     
 #ifdef HAVE_DPMS
     manager->priv->dpms = xfpm_dpms_new ();
 #endif
     
-    if ( !xfpm_brightness_setup (manager->priv->brightness) )
-    {
-	g_object_unref (manager->priv->brightness);
-	manager->priv->brightness = NULL;
-    }
-     
     g_signal_connect (manager->priv->button, "button_pressed",
 		      G_CALLBACK (xfpm_manager_button_pressed_cb), manager);
     
@@ -485,6 +478,7 @@ static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
 		  NULL);
     
     has_battery = xfpm_dkp_has_battery (manager->priv->dkp);
+    has_lcd_brightness = xfpm_backlight_has_hw (manager->priv->backlight);
     
     mapped_buttons = xfpm_button_get_mapped (manager->priv->button);
     
@@ -506,9 +500,8 @@ static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
     g_hash_table_insert (*OUT_config, g_strdup ("has-battery"), g_strdup (xfpm_bool_to_string (has_battery)));
     g_hash_table_insert (*OUT_config, g_strdup ("has-lid"), g_strdup (xfpm_bool_to_string (has_lid)));
     
-    /*
     g_hash_table_insert (*OUT_config, g_strdup ("has-brightness"), g_strdup (xfpm_bool_to_string (has_lcd_brightness)));
-    */
+    
     return TRUE;
 }
 					      

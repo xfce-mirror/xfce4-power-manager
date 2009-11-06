@@ -325,7 +325,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	if ( battery->priv->time_to_empty > 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
-	    tip = g_strdup_printf (_("%s.\nYour %s is fully charged (%i%%).\nProvides %s runtime"), 
+	    tip = g_strdup_printf (_("%s\nYour %s is fully charged (%i%%).\nProvides %s runtime"), 
 				   power_status,
 				   battery_name, 
 				   battery->priv->percentage,
@@ -334,7 +334,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	}
 	else
 	{
-	    tip = g_strdup_printf (_("%s.\nYour %s is fully charged (%i%%)."), 
+	    tip = g_strdup_printf (_("%s\nYour %s is fully charged (%i%%)."), 
 				   power_status,
 				   battery_name,
 				   battery->priv->percentage);
@@ -345,7 +345,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	if ( battery->priv->time_to_full != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_full);
-	    tip = g_strdup_printf (_("%s.\nYour %s is charging (%i%%).\n%s until is fully charged."), 
+	    tip = g_strdup_printf (_("%s\nYour %s is charging (%i%%)\n%s until is fully charged."), 
 				   power_status,
 				   battery_name, 
 				   battery->priv->percentage, 
@@ -354,7 +354,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	}
 	else
 	{
-	    tip = g_strdup_printf (_("%s.\nYour %s is charging (%i%%)."),
+	    tip = g_strdup_printf (_("%s\nYour %s is charging (%i%%)."),
 				   power_status,
 				   battery_name,
 				   battery->priv->percentage);
@@ -365,7 +365,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	if ( battery->priv->time_to_empty != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
-	    tip = g_strdup_printf (_("%s.\nYour %s is discharging (%i%%).\n estimate time left is %s."), 
+	    tip = g_strdup_printf (_("%s\nYour %s is discharging (%i%%)\n estimate time left is %s."), 
 				   power_status,
 				   battery_name, 
 				   battery->priv->percentage, 
@@ -374,7 +374,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	}
 	else
 	{
-	    tip = g_strdup_printf (_("%s.\nYour %s is discharging (%i%%)."),
+	    tip = g_strdup_printf (_("%s\nYour %s is discharging (%i%%)."),
 				   power_status,
 				   battery_name,
 				   battery->priv->percentage);
@@ -383,15 +383,15 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
     }
     else if ( battery->priv->state == XFPM_DKP_DEVICE_STATE_PENDING_CHARGING )
     {
-	tip = g_strdup_printf (_("%s.\n%s waiting to discharge (%i%%)."), power_status, battery_name, battery->priv->percentage);
+	tip = g_strdup_printf (_("%s\n%s waiting to discharge (%i%%)."), power_status, battery_name, battery->priv->percentage);
     }
     else if ( battery->priv->state == XFPM_DKP_DEVICE_STATE_PENDING_DISCHARGING )
     {
-	tip = g_strdup_printf (_("%s.\n%s waiting to charge (%i%%)."), power_status, battery_name, battery->priv->percentage);
+	tip = g_strdup_printf (_("%s\n%s waiting to charge (%i%%)."), power_status, battery_name, battery->priv->percentage);
     }
     else if ( battery->priv->state == XFPM_DKP_DEVICE_STATE_EMPTY )
     {
-	tip = g_strdup_printf (_("%s.\nYour %s is empty"), power_status, battery_name);
+	tip = g_strdup_printf (_("%s\nYour %s is empty"), power_status, battery_name);
     }
     
     gtk_tooltip_set_text (tooltip, tip);
@@ -418,10 +418,15 @@ xfpm_battery_check_charge (XfpmBattery *battery)
     else if ( battery->priv->percentage <= critical_level )
 	charge = XFPM_BATTERY_CHARGE_CRITICAL;
 	
-    if ( charge != battery->priv->charge )
+    if ( charge != battery->priv->charge)
     {
 	battery->priv->charge = charge;
-	g_signal_emit (G_OBJECT (battery), signals [BATTERY_CHARGE_CHANGED], 0);
+	/*
+	 * only emit signal when when battery charge changes from ok->low->critical
+	 * and not the other way round.
+	 */
+	if ( battery->priv->charge != XFPM_BATTERY_CHARGE_CRITICAL || charge != XFPM_BATTERY_CHARGE_LOW )
+	    g_signal_emit (G_OBJECT (battery), signals [BATTERY_CHARGE_CHANGED], 0);
     }
 }
 

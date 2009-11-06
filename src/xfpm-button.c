@@ -258,9 +258,19 @@ xfpm_button_finalize (GObject *object)
 XfpmButton *
 xfpm_button_new (void)
 {
-    XfpmButton *button = NULL;
-    button = g_object_new (XFPM_TYPE_BUTTON, NULL);
-    return button;
+    static gpointer xfpm_button_object = NULL;
+    
+    if ( G_LIKELY (xfpm_button_object != NULL) )
+    {
+        g_object_ref (xfpm_button_object);
+    }
+    else
+    {
+        xfpm_button_object = g_object_new (XFPM_TYPE_BUTTON, NULL);
+        g_object_add_weak_pointer (xfpm_button_object, &xfpm_button_object);
+    }
+    
+    return XFPM_BUTTON (xfpm_button_object);
 }
 
 guint8 xfpm_button_get_mapped (XfpmButton *button)

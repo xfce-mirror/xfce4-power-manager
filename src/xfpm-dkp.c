@@ -688,7 +688,12 @@ xfpm_dkp_show_critical_action_gtk (XfpmDkp *dkp)
     
     g_signal_connect_swapped (dialog, "destroy",
 			      G_CALLBACK (xfpm_dkp_close_critical_dialog), dkp);
-    
+    if ( dkp->priv->dialog )
+    {
+	gtk_widget_destroy (dkp->priv->dialog);
+	dkp->priv->dialog = NULL;
+	
+    }
     dkp->priv->dialog = dialog;
     gtk_widget_show_all (dialog);
 }
@@ -746,25 +751,39 @@ xfpm_dkp_system_on_low_power (XfpmDkp *dkp, XfpmBattery *battery)
 static void
 xfpm_dkp_battery_charge_changed_cb (XfpmBattery *battery, XfpmDkp *dkp)
 {
+    gboolean notify;
     XfpmBatteryCharge battery_charge;
     XfpmBatteryCharge current_charge;
     
     battery_charge = xfpm_battery_get_charge (battery);
     current_charge = xfpm_dkp_get_current_charge_state (dkp);
     
-    if ( current_charge == XFPM_BATTERY_CHARGE_CRITICAL )
+    if ( current_charge == XFPM_BATTERY_CHARGE_CRITICAL && dkp->priv->on_battery)
     {
 	xfpm_dkp_system_on_low_power (dkp, battery);
 	return;
     }
     
-    if ( battery_charge == XFPM_BATTERY_CHARGE_LOW )
+    g_object_get (G_OBJECT (dkp->priv->conf),
+		  GENERAL_NOTIFICATION_CFG, &notify,
+		  NULL);
+    
+    if ( current_charge == XFPM_BATTERY_CHARGE_LOW && dkp->priv->on_battery )
     {
-	gboolean notify;
+	if ( notify )
+	    xfpm_notify_show_notification (dkp->priv->notify, 
+					   _("Xfce power manager"), 
+					   _("System is running on low power"), 
+					   gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
+					   10000,
+					   FALSE,
+					   XFPM_NOTIFY_NORMAL,
+					   GTK_STATUS_ICON (battery));
 	
-	g_object_get (G_OBJECT (dkp->priv->conf),
-		      GENERAL_NOTIFICATION_CFG, &notify,
-		      NULL);
+    }
+    else if ( battery_charge == XFPM_BATTERY_CHARGE_LOW )
+    {
+	
 	if ( notify )
 	    xfpm_notify_show_notification (dkp->priv->notify, 
 					   _("Xfce power manager"), 

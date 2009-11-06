@@ -29,6 +29,14 @@ G_BEGIN_DECLS
 #define XFPM_BRIGHTNESS(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_BRIGHTNESS, XfpmBrightness))
 #define XFPM_IS_BRIGHTNESS(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_BRIGHTNESS))
 
+typedef enum
+{
+    XFPM_BRIGHTNESS_CONTROL_UNKNOWN,
+    XFPM_BRIGHTNESS_CONTROL_XRANDR,
+    XFPM_BRIGHTNESS_CONTROL_HAL
+    
+} XfpmBrightnessControl;
+
 typedef struct XfpmBrightnessPrivate XfpmBrightnessPrivate;
 
 typedef struct
@@ -50,18 +58,27 @@ XfpmBrightness       	       *xfpm_brightness_new             (void);
 
 gboolean			xfpm_brightness_setup 		(XfpmBrightness *brightness);
 
-void				xfpm_brightness_up		(XfpmBrightness *brightness);
+gboolean			xfpm_brightness_up		(XfpmBrightness *brightness,
+								 guint *new_level);
 
-void				xfpm_brightness_down		(XfpmBrightness *brightness);
+gboolean			xfpm_brightness_down		(XfpmBrightness *brightness,
+								 guint *new_level);
 
 gboolean			xfpm_brightness_has_hw 		(XfpmBrightness *brightness);
 
 guint 				xfpm_brightness_get_max_level   (XfpmBrightness *brightness);
 
-guint 				xfpm_brightness_get_level	(XfpmBrightness *brightness);
+gboolean			xfpm_brightness_get_level	(XfpmBrightness *brightness,
+								 guint *level);
 
 gboolean			xfpm_brightness_set_level	(XfpmBrightness *brightness,
 								 guint level);
+
+gboolean			xfpm_brightness_dim_down	(XfpmBrightness *brightness);
+
+XfpmBrightnessControl		xfpm_brightness_get_control	(XfpmBrightness *brightness);
+
+gboolean			xfpm_brightness_in_hw		(XfpmBrightness *brightness);
 
 G_END_DECLS
 

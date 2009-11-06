@@ -218,7 +218,9 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
     	notify_notification_attach_to_status_icon (n, icon);
 	
     notify_notification_set_urgency (n, (NotifyUrgency)urgency);
-    notify_notification_set_timeout (n, timeout);
+    
+    if ( timeout != 0)
+	notify_notification_set_timeout (n, timeout);
     
     return n;
 }

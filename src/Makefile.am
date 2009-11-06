@@ -15,6 +15,10 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-battery-info.h			\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
+	xfpm-idle.c				\
+	xfpm-idle.h				\
+	xfpm-backlight.c			\
+	xfpm-backlight.h			\
 	xfpm-dpms.c				\
 	xfpm-dpms.h				\
 	xfpm-button.c				\
