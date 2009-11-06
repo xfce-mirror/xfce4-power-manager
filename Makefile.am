@@ -10,8 +10,8 @@ endif
 
 SUBDIRS =        	\
 	data		\
-	$(libhal_dir)	\
 	libdbus		\
+	$(libhal_dir)	\
 	common		\
 	src		\
 	settings	\

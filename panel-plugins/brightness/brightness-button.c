@@ -445,7 +445,7 @@ brightness_button_up (BrightnessButton *button)
 static void
 brightness_button_down (BrightnessButton *button)
 {
-    guint level;
+    gint level;
     xfpm_brightness_get_level (button->priv->brightness, &level);
     
     if ( level != 0 )

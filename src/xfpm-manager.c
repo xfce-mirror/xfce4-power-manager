@@ -169,6 +169,14 @@ xfpm_manager_reserve_names (XfpmManager *manager)
 }
 
 static void
+xfpm_manager_shutdown (XfpmManager *manager)
+{
+    //FIXME, try other solutions.
+    if ( manager->priv->session_managed )
+	xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_HALT);
+}
+
+static void
 xfpm_manager_ask_shutdown (XfpmManager *manager)
 {
     if ( manager->priv->session_managed )
@@ -189,7 +197,7 @@ xfpm_manager_sleep_request (XfpmManager *manager, XfpmShutdownRequest req, gbool
 	    xfpm_dkp_hibernate (manager->priv->dkp, force);
 	    break;
 	case XFPM_DO_SHUTDOWN:
-	    /*FIXME ConsoleKit*/
+	    xfpm_manager_shutdown (manager);
 	    break;
 	case XFPM_ASK:
 	    xfpm_manager_ask_shutdown (manager);
@@ -342,6 +350,7 @@ xfpm_manager_new (DBusGConnection *bus, const gchar *client_id)
     
     xfpm_manager_dbus_class_init (XFPM_MANAGER_GET_CLASS (manager));
     xfpm_manager_dbus_init (manager);
+    
     return manager;
 }
 
@@ -378,6 +387,10 @@ void xfpm_manager_start (XfpmManager *manager)
 			      
     g_signal_connect_swapped (manager->priv->dkp, "ask-shutdown",
 			      G_CALLBACK (xfpm_manager_ask_shutdown), manager);
+    
+    g_signal_connect_swapped (manager->priv->dkp, "shutdown",
+			      G_CALLBACK (xfpm_manager_shutdown), manager);
+			      
 out:
 	;
 }

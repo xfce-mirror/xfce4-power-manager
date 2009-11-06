@@ -110,6 +110,7 @@ enum
     WAKING_UP,
     SLEEPING,
     ASK_SHUTDOWN,
+    SHUTDOWN,
     LAST_SIGNAL
 };
 
@@ -396,6 +397,14 @@ xfpm_dkp_suspend_clicked (XfpmDkp *dkp)
 }
 
 static void
+xfpm_dkp_shutdown_clicked (XfpmDkp *dkp)
+{
+    gtk_widget_destroy (dkp->priv->dialog );
+    dkp->priv->dialog = NULL;
+    g_signal_emit (G_OBJECT (dkp), signals [SHUTDOWN], 0);
+}
+
+static void
 xfpm_dkp_battery_info_cb (GtkStatusIcon *icon)
 {
     xfpm_battery_show_info (XFPM_BATTERY (icon));
@@ -570,11 +579,10 @@ static void
 xfpm_dkp_notify_action_callback (NotifyNotification *n, gchar *action, XfpmDkp *dkp)
 {
     if ( !g_strcmp0 (action, "Shutdown") )
-	;
+	g_signal_emit (G_OBJECT (dkp), signals [SHUTDOWN], 0);
     else
 	xfpm_dkp_sleep (dkp, action, TRUE);
 }
-
 
 static void
 xfpm_dkp_add_actions_to_notification (XfpmDkp *dkp, NotifyNotification *n)
@@ -600,7 +608,14 @@ xfpm_dkp_add_actions_to_notification (XfpmDkp *dkp, NotifyNotification *n)
                                (NotifyActionCallback)xfpm_dkp_notify_action_callback,
                                dkp);      
     }
-    //FIXME, Shutdown
+    
+    xfpm_notify_add_action_to_notification(
+			       dkp->priv->notify,
+			       n,
+                               "Shutdown",
+                               _("Shutdown the system"),
+                               (NotifyActionCallback)xfpm_dkp_notify_action_callback,
+                               dkp);    
 }
 
 static void
@@ -680,6 +695,18 @@ xfpm_dkp_show_critical_action_gtk (XfpmDkp *dkp)
 			          G_CALLBACK (xfpm_dkp_suspend_clicked), dkp);
     }
     
+    {
+	GtkWidget *shutdown;
+	
+	shutdown = gtk_button_new_with_label (_("Shutdown"));
+	img = gtk_image_new_from_icon_name (XFPM_SUSPEND_ICON, GTK_ICON_SIZE_BUTTON);
+	gtk_button_set_image (GTK_BUTTON (shutdown), img);
+	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), shutdown, GTK_RESPONSE_NONE);
+	
+	g_signal_connect_swapped (shutdown, "clicked",
+			          G_CALLBACK (xfpm_dkp_shutdown_clicked), dkp);
+    }
+    
     cancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
     gtk_dialog_add_action_widget (GTK_DIALOG (dialog), cancel, GTK_RESPONSE_NONE);
     
@@ -722,8 +749,8 @@ xfpm_dkp_process_critical_action (XfpmDkp *dkp, XfpmShutdownRequest req)
 	xfpm_dkp_sleep (dkp, "Suspend", TRUE);
     else if ( req == XFPM_DO_HIBERNATE )
 	xfpm_dkp_sleep (dkp, "Hibernate", TRUE);
-    //FIXME, Shutdown also.
-    
+    else if ( req == XFPM_DO_SHUTDOWN )
+	g_signal_emit (G_OBJECT (dkp), signals [SHUTDOWN], 0);
 }
 
 static void
@@ -1015,6 +1042,15 @@ xfpm_dkp_class_init (XfpmDkpClass *klass)
                       XFPM_TYPE_DKP,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmDkpClass, ask_shutdown),
+                      NULL, NULL,
+                      g_cclosure_marshal_VOID__VOID,
+                      G_TYPE_NONE, 0, G_TYPE_NONE);
+
+    signals [SHUTDOWN] = 
+        g_signal_new ("shutdown",
+                      XFPM_TYPE_DKP,
+                      G_SIGNAL_RUN_LAST,
+                      G_STRUCT_OFFSET(XfpmDkpClass, shutdown),
                       NULL, NULL,
                       g_cclosure_marshal_VOID__VOID,
                       G_TYPE_NONE, 0, G_TYPE_NONE);
