@@ -39,6 +39,7 @@
 #include <dbus/dbus-glib-lowlevel.h>
 
 #include "xfpm-dbus.h"
+#include "xfpm-debug.h"
 
 #include "xfce-power-manager-dbus-client.h"
 #include "xfpm-manager.h"
@@ -60,7 +61,7 @@ xfpm_quit_signal (gint sig, gpointer data)
 {
     XfpmManager *manager = (XfpmManager *) data;
     
-    TRACE ("sig %d", sig);
+    XFPM_DEBUG ("sig %d", sig);
     
     if ( sig != SIGHUP )
 	xfpm_manager_stop (manager);
@@ -72,7 +73,7 @@ xfpm_start (DBusGConnection *bus, const gchar *client_id)
     XfpmManager *manager;
     GError *error = NULL;
     
-    TRACE ("Starting the power manager");
+    XFPM_DEBUG ("Starting the power manager");
     
     manager = xfpm_manager_new (bus, client_id);
     
@@ -116,12 +117,14 @@ int main (int argc, char **argv)
     gboolean version    = FALSE;
     gboolean reload     = FALSE;
     gboolean no_daemon  = FALSE;
+    gboolean debug      = FALSE;
     gchar   *client_id  = NULL;
     
     GOptionEntry option_entries[] = 
     {
 	{ "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &run, NULL, NULL },
 	{ "no-daemon",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &no_daemon, N_("Do not daemonize"), NULL },
+	{ "debug",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &debug, N_("Enable debugging"), NULL },
 	{ "restart", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &reload, N_("Restart the running instance of Xfce power manager"), NULL},
 	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
 	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
@@ -169,8 +172,10 @@ int main (int argc, char **argv)
 	g_printerr ("\n");
 	return EXIT_FAILURE;
     }
+    
+    xfpm_debug_init (debug);
 
-    if ( no_daemon == FALSE && daemon(0,0) )
+    if ( debug == FALSE && no_daemon == FALSE && daemon(0,0) )
     {
 	g_critical ("Could not daemonize");
     }

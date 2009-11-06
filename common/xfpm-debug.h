@@ -30,35 +30,47 @@
 
 G_BEGIN_DECLS
 
-#if defined(DEBUG) && defined(G_HAVE_ISO_VARARGS)
+#if defined(G_HAVE_ISO_VARARGS)
 
-#define XFPM_DEBUG_ENUM(_text, _value, _type)\
-    xfpm_debug_enum (__func__, __FILE__, __LINE__, _text, _value, _type)
+#define XFPM_DEBUG(...)\
+    xfpm_debug (__func__, __FILE__, __LINE__, __VA_ARGS__)
 
-#define XFPM_DEBUG_ENUM_FULL(_value, _type, ...)\
-    xfpm_debug_enum_full (__func__, __FILE__, __LINE__, _value, _type, __VA_ARGS__)
+#define XFPM_WARNING(...)\
+    xfpm_warn (__func__, __FILE__, __LINE__, __VA_ARGS__)
 
-void		xfpm_debug_enum 	(const gchar *func,
-					 const gchar *file,
-					 gint line,
-					 const gchar *text,
-					 gint v_enum, 
-					 GType type);
+#define XFPM_DEBUG_ENUM(_value, _type, ...)\
+    xfpm_debug_enum (__func__, __FILE__, __LINE__, _value, _type, __VA_ARGS__)
+
 					 
-void		xfpm_debug_enum_full    (const gchar *func,
+void		xfpm_debug_enum         (const gchar *func,
 					 const gchar *file,
 					 gint line,
 					 gint v_enum,
 					 GType type,
 					 const gchar *format,
-					 ...);
+					 ...) __attribute__((format (printf,6,7)));
+
+void		xfpm_debug 		(const char *func,
+					 const char *file,
+					 int line,
+					 const char *format,
+					 ...) __attribute__((format (printf,4,5)));
+
+void		xfpm_warn 		(const char *func,
+					 const char *file,
+					 int line,
+					 const char *format,
+					 ...) __attribute__((format (printf,4,5)));
 
 #else
 
-#define XFPM_DEBUG_ENUM(_text, _value, _type)
-#define XFPM_DEBUG_ENUM_FULL(_value, _type, ...)
+#define XFPM_DEBUG(...)
+#define XFPM_WARNING(...)
+#define XFPM_DEBUG_ENUM(_value, _type, ...)
 
 #endif
+
+void		xfpm_debug_init		(gboolean debug);
 
 G_END_DECLS
 

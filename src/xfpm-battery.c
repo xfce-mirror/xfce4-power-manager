@@ -128,7 +128,7 @@ xfpm_battery_refresh_visible (XfpmBattery *battery)
 	else visible = TRUE;
     }
 
-    XFPM_DEBUG_ENUM_FULL (show_icon, XFPM_TYPE_SHOW_ICON, "visible=%s", xfpm_bool_to_string (visible));
+    XFPM_DEBUG_ENUM (show_icon, XFPM_TYPE_SHOW_ICON, "visible=%s", xfpm_bool_to_string (visible));
 			  
     gtk_status_icon_set_visible (GTK_STATUS_ICON (battery), visible);
 }
@@ -158,7 +158,7 @@ xfpm_battery_refresh_icon (XfpmBattery *battery)
 {
     gchar icon_name[128];
     
-    TRACE ("Battery state %d", battery->priv->state);
+    XFPM_DEBUG ("Battery state %d", battery->priv->state);
     
     if ( battery->priv->type == XFPM_DKP_DEVICE_TYPE_BATTERY || 
 	 battery->priv->type == XFPM_DKP_DEVICE_TYPE_UPS )

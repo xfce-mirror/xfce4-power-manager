@@ -354,7 +354,7 @@ xfpm_dkp_sleep (XfpmDkp *dkp, const gchar *sleep, gboolean force)
     {
 	if ( g_error_matches (error, DBUS_GERROR, DBUS_GERROR_NO_REPLY) )
 	{
-	    g_debug ("D-Bus time out, but should be harmless");
+	    XFPM_DEBUG ("D-Bus time out, but should be harmless");
 	}
 	else
 	{
@@ -780,8 +780,8 @@ xfpm_dkp_system_on_low_power (XfpmDkp *dkp, XfpmBattery *battery)
 	          CRITICAL_BATT_ACTION_CFG, &critical_action,
 		  NULL);
 
-    TRACE ("System is running on low power");
-    XFPM_DEBUG_ENUM ("Critical battery action", critical_action, XFPM_TYPE_SHUTDOWN_REQUEST);
+    XFPM_DEBUG ("System is running on low power");
+    XFPM_DEBUG_ENUM (critical_action, XFPM_TYPE_SHUTDOWN_REQUEST, "Critical battery action");
 
     if ( critical_action == XFPM_DO_NOTHING )
     {
@@ -890,7 +890,7 @@ xfpm_dkp_add_device (XfpmDkp *dkp, const gchar *object_path)
     {
 	GtkStatusIcon *battery;
 	DBusGProxy *proxy;
-	TRACE ("Battery device detected at : %s", object_path);
+	XFPM_DEBUG ("Battery device detected at : %s", object_path);
 	proxy = dbus_g_proxy_new_for_name (dkp->priv->bus,
 					   DKP_NAME,
 					   object_path,
@@ -951,7 +951,7 @@ xfpm_dkp_get_power_devices (XfpmDkp *dkp)
     for ( i = 0; i < array->len; i++)
     {
 	const gchar *object_path = ( const gchar *) g_ptr_array_index (array, i);
-	TRACE ("Power device detected at : %s", object_path);
+	XFPM_DEBUG ("Power device detected at : %s", object_path);
 	xfpm_dkp_add_device (dkp, object_path);
     }
     

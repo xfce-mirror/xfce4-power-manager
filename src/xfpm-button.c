@@ -119,7 +119,7 @@ xfpm_button_filter_x_events (GdkXEvent *xevent, GdkEvent *ev, gpointer data)
     {
 	button = (XfpmButton *) data;
     
-	XFPM_DEBUG_ENUM ("Key press", key, XFPM_TYPE_BUTTON_KEY);
+	XFPM_DEBUG_ENUM (key, XFPM_TYPE_BUTTON_KEY, "Key press");
     
 	g_signal_emit (G_OBJECT(button), signals[BUTTON_PRESSED], 0, key);
 	return GDK_FILTER_REMOVE;
@@ -184,7 +184,7 @@ xfpm_button_xevent_key (XfpmButton *button, guint keysym , XfpmButtonKey key)
 	return FALSE;
     }
     
-    XFPM_DEBUG_ENUM_FULL (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key %li ", (long int) keycode);
+    XFPM_DEBUG_ENUM (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key %li ", (long int) keycode);
     
     xfpm_key_map [key].key_code = keycode;
     xfpm_key_map [key].key = key;
@@ -231,7 +231,7 @@ xfpm_button_hal_emit_signals (XfpmButton *button, const gchar *condition, const 
     if ( g_strcmp0 (condition, "ButtonPressed") )
 	return;
 
-    TRACE ("Button press condition %s detail %s", condition, detail);
+    XFPM_DEBUG ("Button press condition %s detail %s", condition, detail);
 
     if ( !g_strcmp0 (detail, "power") )
 	g_signal_emit (G_OBJECT (button), signals [BUTTON_PRESSED], 0, BUTTON_POWER_OFF);
@@ -321,7 +321,7 @@ xfpm_button_setup_failed_hal (XfpmButton *button)
     gchar     **udi;
     int 	i;
     
-    g_debug ("Getting missing buttons from HAL");
+    XFPM_DEBUG ("Getting missing buttons from HAL");
     
     manager = hal_manager_new ();
     
@@ -339,7 +339,7 @@ xfpm_button_setup_failed_hal (XfpmButton *button)
     
     hal_manager_free_string_array (udi);
     if ( button->priv->array )
-	g_debug ("Mapped HAL buttons : %u", button->priv->array->len);
+	XFPM_DEBUG ("Mapped HAL buttons : %u", button->priv->array->len);
 }
 #endif /* WITH_HAL*/
 

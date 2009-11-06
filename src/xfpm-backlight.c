@@ -37,6 +37,7 @@
 #include "xfpm-config.h"
 #include "xfpm-button.h"
 #include "xfpm-brightness.h"
+#include "xfpm-debug.h"
 
 static void xfpm_backlight_finalize   (GObject *object);
 
@@ -85,7 +86,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 	g_warning ("Unable to get current brightness level");
 	return;
     }
-    TRACE ("Current brightness level : %u", brightness->priv->last_level);
+    XFPM_DEBUG ("Current brightness level : %u", backlight->priv->last_level);
     
     xfpm_brightness_dim_down (backlight->priv->brightness);
 }
@@ -222,7 +223,7 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
     gboolean sync;
     gboolean show_popup;
     
-    g_debug ("Level %u", level);
+    XFPM_DEBUG ("Level %u", level);
     
     
     g_object_get (G_OBJECT (backlight->priv->conf),

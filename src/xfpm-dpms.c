@@ -37,6 +37,7 @@
 #include "xfpm-dkp.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
+#include "xfpm-debug.h"
 
 #ifdef HAVE_DPMS
 
@@ -70,7 +71,7 @@ xfpm_dpms_set_timeouts (XfpmDpms *dpms, guint16 standby, guint16 suspend, guint 
     
     if ( standby != x_standby || suspend != x_suspend || off != x_off )
     {
-	TRACE ("Settings dpms: standby=%d suspend=%d off=%d\n", standby, suspend, off);
+	XFPM_DEBUG ("Settings dpms: standby=%d suspend=%d off=%d\n", standby, suspend, off);
 	DPMSSetTimeouts (GDK_DISPLAY(), standby,
 					suspend,
 					off );
@@ -195,7 +196,7 @@ xfpm_dpms_settings_changed_cb (GObject *obj, GParamSpec *spec, XfpmDpms *dpms)
 {
     if ( g_str_has_prefix (spec->name, "dpms"))
     {
-	TRACE ("Configuration changed");
+	XFPM_DEBUG ("Configuration changed");
 	xfpm_dpms_refresh (dpms);
     }
 }
@@ -285,7 +286,7 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
     CARD16 current_level;
     BOOL current_state;
     
-    TRACE ("start");
+    XFPM_DEBUG ("start");
     
     if ( !dpms->priv->dpms_capable )
 	goto out;
@@ -298,13 +299,13 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
 
     if ( !current_state )
     {
-	TRACE ("DPMS is disabled");
+	XFPM_DEBUG ("DPMS is disabled");
 	goto out;
     }
 
     if ( current_level != level )
     {
-	TRACE ("Forcing DPMS mode %d", level);
+	XFPM_DEBUG ("Forcing DPMS mode %d", level);
 	
 	if ( !DPMSForceLevel (GDK_DISPLAY (), level ) )
 	{
@@ -315,7 +316,7 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
     }
     else
     {
-	TRACE ("No need to change DPMS mode, current_level=%d requested_level=%d", current_level, level);
+	XFPM_DEBUG ("No need to change DPMS mode, current_level=%d requested_level=%d", current_level, level);
     }
     
     out:

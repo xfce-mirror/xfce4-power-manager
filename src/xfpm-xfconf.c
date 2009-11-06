@@ -36,6 +36,7 @@
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
+#include "xfpm-debug.h"
 
 static void xfpm_xfconf_finalize   (GObject *object);
 
@@ -152,13 +153,13 @@ xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
 	{
 	    if ( !xfconf_channel_get_property (conf->priv->channel, prop_name, &value) )
 	    {
-		TRACE ("Using default configuration for %s", specs[i]->name);
+		XFPM_DEBUG ("Using default configuration for %s", specs[i]->name);
 		g_param_value_set_default (specs[i], &value);
 	    }
 	}
 	else
 	{
-	    TRACE ("Using default configuration for %s", specs[i]->name);
+	    XFPM_DEBUG ("Using default configuration for %s", specs[i]->name);
 	    g_param_value_set_default (specs[i], &value);
 	}
 	g_free (prop_name);
@@ -179,7 +180,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     if ( !g_str_has_prefix (property, PROPERTIES_PREFIX) || strlen (property) <= strlen (PROPERTIES_PREFIX) )
 	return;
 
-    TRACE("Property modified: %s\n", property);
+    XFPM_DEBUG("Property modified: %s\n", property);
     
     g_object_set_property (G_OBJECT (conf), property + strlen (PROPERTIES_PREFIX), value);
 }

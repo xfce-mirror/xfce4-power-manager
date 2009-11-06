@@ -1583,7 +1583,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     GtkWidget *allbox;
     GError *error = NULL;
 
-    g_debug ("system_laptop=%s auth_hibernate=%s  auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s "\
+    XFPM_DEBUG ("system_laptop=%s auth_hibernate=%s  auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s "\
            "has_sleep_button=%s has_hibernate_button=%s has_power_button=%s can_spin_down=%s",
 	  xfpm_bool_to_string (system_laptop), xfpm_bool_to_string (auth_hibernate), 
 	  xfpm_bool_to_string (can_shutdown), xfpm_bool_to_string (auth_suspend),

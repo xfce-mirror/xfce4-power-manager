@@ -155,7 +155,7 @@ xfpm_manager_release_names (XfpmManager *manager)
 static gboolean
 xfpm_manager_quit (XfpmManager *manager)
 {
-    TRACE ("Exiting");
+    XFPM_DEBUG ("Exiting");
     
     xfpm_manager_release_names (manager);
     gtk_main_quit ();
@@ -167,7 +167,7 @@ xfpm_manager_system_bus_connection_changed_cb (XfpmDBusMonitor *monitor, gboolea
 {
     if ( connected == TRUE )
     {
-        TRACE ("System bus connection changed to TRUE, restarting the power manager");
+        XFPM_DEBUG ("System bus connection changed to TRUE, restarting the power manager");
         xfpm_manager_quit (manager);
         g_spawn_command_line_async ("xfce4-power-manager", NULL);
     }
@@ -250,7 +250,7 @@ xfpm_manager_button_pressed_cb (XfpmButton *bt, XfpmButtonKey type, XfpmManager 
 {
     XfpmShutdownRequest req = XFPM_DO_NOTHING;
     
-    XFPM_DEBUG_ENUM ("Received button press event", type, XFPM_TYPE_BUTTON_KEY);
+    XFPM_DEBUG_ENUM (type, XFPM_TYPE_BUTTON_KEY, "Received button press event");
   
     if ( type == BUTTON_MON_BRIGHTNESS_DOWN || type == BUTTON_MON_BRIGHTNESS_UP )
         return;
@@ -278,7 +278,7 @@ xfpm_manager_button_pressed_cb (XfpmButton *bt, XfpmButtonKey type, XfpmManager 
         g_return_if_reached ();
     }
 
-    XFPM_DEBUG_ENUM ("Shutdown request : ", req, XFPM_TYPE_SHUTDOWN_REQUEST);
+    XFPM_DEBUG_ENUM (req, XFPM_TYPE_SHUTDOWN_REQUEST, "Shutdown request : ");
         
     if ( req == XFPM_ASK )
 	xfpm_manager_ask_shutdown (manager);
@@ -308,7 +308,7 @@ xfpm_manager_lid_changed_cb (XfpmDkp *dkp, gboolean lid_is_closed, XfpmManager *
 
     if ( lid_is_closed )
     {
-	XFPM_DEBUG_ENUM ("LID close event", action, XFPM_TYPE_LID_TRIGGER_ACTION);
+	XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID close event");
 	
 	if ( action == LID_TRIGGER_NOTHING )
 	{
@@ -333,7 +333,7 @@ xfpm_manager_lid_changed_cb (XfpmDkp *dkp, gboolean lid_is_closed, XfpmManager *
     }
     else
     {
-	XFPM_DEBUG_ENUM ("LID opened", action, XFPM_TYPE_LID_TRIGGER_ACTION);
+	XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID opened");
 	xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOn);
     }
 }
@@ -434,7 +434,7 @@ out:
 
 void xfpm_manager_stop (XfpmManager *manager)
 {
-    TRACE ("Stopping");
+    XFPM_DEBUG ("Stopping");
     g_return_if_fail (XFPM_IS_MANAGER (manager));
     xfpm_manager_quit (manager);
 }
@@ -480,7 +480,7 @@ xfpm_manager_dbus_init (XfpmManager *manager)
 static gboolean
 xfpm_manager_dbus_quit (XfpmManager *manager, GError **error)
 {
-    TRACE("Quit message received\n");
+    XFPM_DEBUG("Quit message received\n");
     
     xfpm_manager_quit (manager);
     
@@ -490,7 +490,7 @@ xfpm_manager_dbus_quit (XfpmManager *manager, GError **error)
 static gboolean xfpm_manager_dbus_restart     (XfpmManager *manager,
 					       GError **error)
 {
-    TRACE("Restart message received");
+    XFPM_DEBUG("Restart message received");
     
     xfpm_manager_quit (manager);
     

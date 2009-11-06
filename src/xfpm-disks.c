@@ -33,6 +33,7 @@
 #include "xfpm-xfconf.h"
 #include "xfpm-dkp.h"
 #include "xfpm-config.h"
+#include "xfpm-debug.h"
 
 static void xfpm_disks_finalize   (GObject *object);
 
@@ -71,7 +72,7 @@ xfpm_disks_disable_spin_down_timeouts (XfpmDisks *disks)
     
     disks->priv->set = FALSE;
     
-    g_debug ("Clearing spin down timeout");
+    XFPM_DEBUG ("Clearing spin down timeout");
     
     dbus_g_proxy_call (disks->priv->proxy, "DriveUnsetAllSpindownTimeouts", &error,
 		       G_TYPE_STRING, disks->priv->cookie,
@@ -97,7 +98,7 @@ xfpm_disks_enable_spin_down_timeouts (XfpmDisks *disks, gint timeout)
     
     disks->priv->set = TRUE;
     
-    g_debug ("Setting spin down timeout %d", timeout);
+    XFPM_DEBUG ("Setting spin down timeout %d", timeout);
     
     dbus_g_proxy_call (disks->priv->proxy, "DriveSetAllSpindownTimeouts", &error,
 		       G_TYPE_INT, timeout,
@@ -143,7 +144,7 @@ xfpm_disks_set_spin_timeouts (XfpmDisks *disks)
 		      NULL);
     }
     
-    g_debug ("On Battery=%d spin_down_enabled=%d timeout=%d\n", on_battery, enabled, timeout);
+    XFPM_DEBUG ("On Battery=%d spin_down_enabled=%d timeout=%d\n", on_battery, enabled, timeout);
     
     if ( !enabled )
     {
@@ -162,7 +163,7 @@ xfpm_disks_get_is_auth_to_spin (XfpmDisks *disks)
     disks->priv->can_spin = xfpm_polkit_check_auth (disks->priv->polkit, 
 						    "org.freedesktop.devicekit.disks.drive-set-spindown");
 						    
-    g_debug ("Is auth to spin down disks : %d", disks->priv->can_spin);
+    XFPM_DEBUG ("Is auth to spin down disks : %d", disks->priv->can_spin);
 }
 
 static void
