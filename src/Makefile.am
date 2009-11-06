@@ -15,6 +15,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-battery-info.h			\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
+	xfpm-disks.c				\
+	xfpm-disks.h				\
 	xfpm-console-kit.c			\
 	xfpm-console-kit.h			\
 	xfpm-idle.c				\

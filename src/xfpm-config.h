@@ -28,10 +28,6 @@
 
 #include <glib.h>
 
-#if defined(__linux__)
-#define SYSTEM_IS_LINUX 1
-#endif
-
 G_BEGIN_DECLS
 
 #define 	XFPM_CHANNEL_CFG             	"xfce4-power-manager"
@@ -39,42 +35,48 @@ G_BEGIN_DECLS
 /*
  * Backward compatibility with old version.
  */
-#define 	PROPERTIES_PREFIX		        "/xfce4-power-manager/"
+#define 	PROPERTIES_PREFIX		"/xfce4-power-manager/"
 
 
 #define 	POWER_SAVE_ON_BATTERY        	"power-save-on-battery"
-#define     CPU_FREQ_CONTROL             	"enable-cpu-freq-control"
-#define     LOCK_SCREEN_ON_SLEEP         	"lock-screen-suspend-hibernate"
+#define     	CPU_FREQ_CONTROL             	"enable-cpu-freq-control"
+#define     	LOCK_SCREEN_ON_SLEEP         	"lock-screen-suspend-hibernate"
 
 #define 	DPMS_ENABLED_CFG             	"dpms-enabled" 
-#define 	ON_AC_DPMS_SLEEP 	     	    "dpms-on-ac-sleep"
+#define 	ON_AC_DPMS_SLEEP 	     	"dpms-on-ac-sleep"
 #define 	ON_AC_DPMS_OFF	     	     	"dpms-on-ac-off"
-#define 	ON_BATT_DPMS_SLEEP 	     	    "dpms-on-battery-sleep"
-#define 	ON_BATT_DPMS_OFF	     	    "dpms-on-battery-off"
-#define     DPMS_SLEEP_MODE		     	    "dpms-sleep-mode"		
+#define 	ON_BATT_DPMS_SLEEP 	     	"dpms-on-battery-sleep"
+#define 	ON_BATT_DPMS_OFF	     	"dpms-on-battery-off"
+#define     	DPMS_SLEEP_MODE		     	"dpms-sleep-mode"		
 
 #define 	GENERAL_NOTIFICATION_CFG     	"general-notification"
 
-#define     ON_AC_INACTIVITY_TIMEOUT     	"inactivity-on-ac"
-#define     ON_BATTERY_INACTIVITY_TIMEOUT 	"inactivity-on-battery"
-#define     INACTIVITY_SLEEP_MODE        	"inactivity-sleep-mode"
+#define     	ON_AC_INACTIVITY_TIMEOUT     	"inactivity-on-ac"
+#define     	ON_BATTERY_INACTIVITY_TIMEOUT 	"inactivity-on-battery"
+#define     	INACTIVITY_SLEEP_MODE        	"inactivity-sleep-mode"
 
-#define     BRIGHTNESS_ON_AC             	"brightness-on-ac"
-#define     BRIGHTNESS_ON_BATTERY        	"brightness-on-battery"
+#define     	BRIGHTNESS_ON_AC             	"brightness-on-ac"
+#define     	BRIGHTNESS_ON_BATTERY        	"brightness-on-battery"
 
-#define     CRITICAL_POWER_LEVEL        	"critical-power-level"
-#define     SHOW_BRIGHTNESS_POPUP        	"show-brightness-popup"
-#define     ENABLE_BRIGHTNESS_CONTROL       "change-brightness-on-key-events"
+#define     	CRITICAL_POWER_LEVEL        	"critical-power-level"
+#define     	SHOW_BRIGHTNESS_POPUP        	"show-brightness-popup"
+#define     	ENABLE_BRIGHTNESS_CONTROL       "change-brightness-on-key-events"
 
 #define 	SHOW_TRAY_ICON_CFG          	"show-tray-icon"
 #define 	CRITICAL_BATT_ACTION_CFG    	"critical-power-action"
 
 #define 	POWER_SWITCH_CFG            	"power-button-action"
-#define     HIBERNATE_SWITCH_CFG        	"hibernate-button-action"
+#define     	HIBERNATE_SWITCH_CFG        	"hibernate-button-action"
 #define 	SLEEP_SWITCH_CFG            	"sleep-button-action"
 
 #define 	LID_SWITCH_ON_AC_CFG        	"lid-action-on-ac"
 #define 	LID_SWITCH_ON_BATTERY_CFG   	"lid-action-on-battery"
+
+#define         SPIN_DOWN_ON_AC			"spin-down-on-ac"
+#define         SPIN_DOWN_ON_BATTERY		"spin-down-on-battery"
+
+#define         SPIN_DOWN_ON_AC_TIMEOUT		"spin-down-on-ac-timeout"
+#define         SPIN_DOWN_ON_BATTERY_TIMEOUT	"spin-down-on-battery-timeout"
 
 G_END_DECLS
 

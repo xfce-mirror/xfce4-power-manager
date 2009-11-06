@@ -78,6 +78,10 @@ enum
     PROP_IDLE_SLEEP_MODE,
     PROP_DIM_ON_AC_TIMEOUT,
     PROP_DIM_ON_BATTERY_TIMEOUT,
+    PROP_SPIN_DOWN_DISK_ON_AC,
+    PROP_SPIN_DOWN_DISK_ON_BATTERY,
+    PROP_SPIN_DOWN_DISK_ON_AC_TIMEOUT,
+    PROP_SPIN_DOWN_DISK_ON_BATTERY_TIMEOUT,
     N_PROPERTIES
 };
 
@@ -457,6 +461,50 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      g_param_spec_uint (BRIGHTNESS_ON_BATTERY,
                                                         NULL, NULL,
 							9,
+							G_MAXUINT,
+							120,
+                                                        G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::spin-down-on-ac
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SPIN_DOWN_DISK_ON_AC,
+                                     g_param_spec_boolean (SPIN_DOWN_ON_AC,
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::spin-down-on-battery
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SPIN_DOWN_DISK_ON_BATTERY,
+                                     g_param_spec_boolean (SPIN_DOWN_ON_BATTERY,
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::spin-down-on-ac-timeout
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SPIN_DOWN_DISK_ON_AC_TIMEOUT,
+                                     g_param_spec_uint (SPIN_DOWN_ON_AC_TIMEOUT,
+                                                        NULL, NULL,
+							800,
+							G_MAXUINT,
+							800,
+                                                        G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::spin-down-on-battery-timeout
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SPIN_DOWN_DISK_ON_BATTERY_TIMEOUT,
+                                     g_param_spec_uint (SPIN_DOWN_ON_BATTERY_TIMEOUT,
+                                                        NULL, NULL,
+							120,
 							G_MAXUINT,
 							120,
                                                         G_PARAM_READWRITE));

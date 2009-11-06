@@ -34,6 +34,8 @@ void	       xfpm_settings_dialog_new 	(XfconfChannel *channel,
 						 gboolean has_sleep_button,
 						 gboolean has_hibernate_button,
 						 gboolean has_power_button,
+						 gboolean devkit_disk,
+						 gboolean can_spin_down,
 						 GdkNativeWindow id);
 
 

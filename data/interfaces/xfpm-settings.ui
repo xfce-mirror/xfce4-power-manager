@@ -464,6 +464,19 @@
                                             <property name="position">1</property>
                                           </packing>
                                         </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="spin-down-on-ac">
+                                            <property name="label" translatable="yes">Spin down hard disks</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="draw_indicator">True</property>
+                                            <signal name="toggled" handler="on_ac_spin_changed"/>
+                                          </object>
+                                          <packing>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                     </child>
                                   </object>
@@ -789,20 +802,6 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkCheckButton" id="power-save">
-                                            <property name="label" translatable="yes">Prefer power savings over performance</property>
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="receives_default">False</property>
-                                            <property name="draw_indicator">True</property>
-                                            <signal name="toggled" handler="power_save_toggled_cb"/>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
                                           <object class="GtkVBox" id="vbox4">
                                             <property name="visible">True</property>
                                             <property name="orientation">vertical</property>
@@ -833,7 +832,34 @@
                                             </child>
                                           </object>
                                           <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="power-save">
+                                            <property name="label" translatable="yes">Prefer power savings over performance</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="draw_indicator">True</property>
+                                            <signal name="toggled" handler="power_save_toggled_cb"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
                                             <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkCheckButton" id="spin-down-on-battery">
+                                            <property name="label" translatable="yes">Spin down hard disks</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="draw_indicator">True</property>
+                                            <signal name="toggled" handler="on_battery_spin_changed"/>
+                                          </object>
+                                          <packing>
+                                            <property name="position">3</property>
                                           </packing>
                                         </child>
                                       </object>

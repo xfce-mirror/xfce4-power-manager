@@ -137,6 +137,8 @@ int main (int argc, char **argv)
 
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
     
+    g_set_application_name (PACKAGE_NAME);
+    
     if (!gtk_init_with_args (&argc, &argv, (gchar *)"", option_entries, (gchar *)PACKAGE, &error)) 
     {
         if (G_LIKELY (error)) 

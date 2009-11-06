@@ -61,6 +61,8 @@ int main (int argc, char **argv)
     gboolean has_hibernate_button;
     gboolean has_power_button;
     gboolean has_lid;
+    gboolean can_spin_down;
+    gboolean devkit_disk;
     gboolean start_xfpm_if_not_running;
     
     GdkNativeWindow socket_id = 0;
@@ -159,11 +161,13 @@ int main (int argc, char **argv)
 	has_power_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "power-button"));
 	has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "hibernate-button"));
 	can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-shutdown"));
+	can_spin_down = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-spin"));
+	devkit_disk = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "devkit-disk"));
 	
 	xfpm_settings_dialog_new (channel, has_battery, auth_hibernate, auth_suspend,
 				  can_shutdown, can_suspend, can_hibernate, has_lcd_brightness,
 				  has_lid, has_sleep_button, has_hibernate_button, has_power_button,
-				  socket_id);
+				  devkit_disk, can_spin_down, socket_id);
 					   
 	gtk_main();
 	
