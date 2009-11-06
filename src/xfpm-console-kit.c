@@ -142,8 +142,8 @@ xfpm_console_kit_init (XfpmConsoleKit *console)
     
     console->priv->proxy = dbus_g_proxy_new_for_name (console->priv->bus,
 						      "org.freedesktop.ConsoleKit",
-						      "/org/freedesktop/ConsoleKit",
-						      "org.freedesktop.ConsoleKit");
+						      "/org/freedesktop/ConsoleKit/Manager",
+						      "org.freedesktop.ConsoleKit.Manager");
 						      
     if ( !console->priv->proxy )
     {
