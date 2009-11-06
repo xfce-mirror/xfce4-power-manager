@@ -708,9 +708,9 @@ void on_battery_spin_changed (GtkWidget *w,  XfconfChannel *channel)
 {
     gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
     
-    if ( !xfconf_channel_set_bool (channel, SPIN_DOWN_ON_BATTERY, val) )
+    if ( !xfconf_channel_set_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_BATTERY, val) )
     {
-	g_critical ("Unable to set value for property %s\n", SPIN_DOWN_ON_BATTERY);
+	g_critical ("Unable to set value for property %s", SPIN_DOWN_ON_BATTERY);
     }
     
 }
@@ -719,9 +719,9 @@ void on_ac_spin_changed	(GtkWidget *w, XfconfChannel *channel)
 {
     gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
     
-    if ( !xfconf_channel_set_bool (channel, SPIN_DOWN_ON_AC, val) )
+    if ( !xfconf_channel_set_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_AC, val) )
     {
-	g_critical ("Unable to set value for property %s\n", SPIN_DOWN_ON_AC);
+	g_critical ("Unable to set value for property %s", SPIN_DOWN_ON_AC);
     }
 }
 

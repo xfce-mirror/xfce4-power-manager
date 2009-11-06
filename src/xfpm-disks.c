@@ -101,13 +101,14 @@ xfpm_disks_enable_spin_down_timeouts (XfpmDisks *disks, gint timeout)
     
     dbus_g_proxy_call (disks->priv->proxy, "DriveSetAllSpindownTimeouts", &error,
 		       G_TYPE_INT, timeout,
-		       G_TYPE_STRING, options,
-		       G_TYPE_STRING, disks->priv->cookie,
+		       G_TYPE_STRV, options,
+		       G_TYPE_INVALID,
+		       G_TYPE_STRING, &disks->priv->cookie,
 		       G_TYPE_INVALID);
 		       
     if ( error )
     {
-	g_warning ("Failed to unset spindown timeouts : %s", error->message);
+	g_warning ("Failed to set spindown timeouts : %s", error->message);
 	g_error_free (error);
 	disks->priv->set = FALSE;
     }
@@ -123,7 +124,7 @@ xfpm_disks_set_spin_timeouts (XfpmDisks *disks)
     if (!disks->priv->can_spin )
 	return;
     
-    g_object_get (G_OBJECT (disks),
+    g_object_get (G_OBJECT (disks->priv->dkp),
 		  "on-battery", &on_battery,
 		  NULL);
 
@@ -144,9 +145,10 @@ xfpm_disks_set_spin_timeouts (XfpmDisks *disks)
     
     g_debug ("On Battery=%d spin_down_enabled=%d timeout=%d\n", on_battery, enabled, timeout);
     
-    if ( !enabled && disks->priv->set && disks->priv->cookie)
+    if ( !enabled )
     {
-	xfpm_disks_disable_spin_down_timeouts (disks);
+	if ( disks->priv->set && disks->priv->cookie )
+	    xfpm_disks_disable_spin_down_timeouts (disks);
     }
     else if ( timeout != 0 && timeout > 120 && !disks->priv->set)
     {
