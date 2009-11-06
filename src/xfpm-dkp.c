@@ -37,6 +37,8 @@
 #include "xfpm-battery.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-notify.h"
+#include "xfpm-errors.h"
+#include "xfpm-console-kit.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-polkit.h"
 #include "xfpm-network-manager.h"
@@ -69,6 +71,7 @@ struct XfpmDkpPrivate
     
     GHashTable      *hash;
     
+    XfpmConsoleKit  *console;
     XfpmInhibit	    *inhibit;
     XfpmXfconf      *conf;
     gboolean	     inhibited;
@@ -81,6 +84,7 @@ struct XfpmDkpPrivate
     gboolean	     auth_hibernate;
     
     /* Properties */
+    gboolean	     on_low_battery;
     gboolean	     lid_is_present;
     gboolean         lid_is_closed;
     gboolean	     on_battery;
@@ -94,6 +98,7 @@ struct XfpmDkpPrivate
 enum
 {
     PROP_0,
+    PROP_ON_LOW_BATTERY,
     PROP_ON_BATTERY,
     PROP_AUTH_SUSPEND,
     PROP_AUTH_HIBERNATE,
@@ -587,6 +592,12 @@ xfpm_dkp_notify_action_callback (NotifyNotification *n, gchar *action, XfpmDkp *
 static void
 xfpm_dkp_add_actions_to_notification (XfpmDkp *dkp, NotifyNotification *n)
 {
+    gboolean can_shutdown;
+    
+    g_object_get (G_OBJECT (dkp->priv->console),
+		  "can-shutdown", &can_shutdown,
+		  NULL);
+		  
     if (  dkp->priv->can_hibernate && dkp->priv->auth_hibernate )
     {
         xfpm_notify_add_action_to_notification(
@@ -609,13 +620,14 @@ xfpm_dkp_add_actions_to_notification (XfpmDkp *dkp, NotifyNotification *n)
                                dkp);      
     }
     
-    xfpm_notify_add_action_to_notification(
-			       dkp->priv->notify,
-			       n,
-                               "Shutdown",
-                               _("Shutdown the system"),
-                               (NotifyActionCallback)xfpm_dkp_notify_action_callback,
-                               dkp);    
+    if (can_shutdown )
+	xfpm_notify_add_action_to_notification(
+				   dkp->priv->notify,
+				   n,
+				   "Shutdown",
+				   _("Shutdown the system"),
+				   (NotifyActionCallback)xfpm_dkp_notify_action_callback,
+				   dkp);    
 }
 
 static void
@@ -656,6 +668,11 @@ xfpm_dkp_show_critical_action_gtk (XfpmDkp *dkp)
     GtkWidget *img;
     GtkWidget *cancel;
     const gchar *message;
+    gboolean can_shutdown;
+    
+    g_object_get (G_OBJECT (dkp->priv->console),
+		  "can-shutdown", &can_shutdown,
+		  NULL);
     
     message = _("System is running on low power. "\
                "Save your work to avoid losing data");
@@ -695,6 +712,7 @@ xfpm_dkp_show_critical_action_gtk (XfpmDkp *dkp)
 			          G_CALLBACK (xfpm_dkp_suspend_clicked), dkp);
     }
     
+    if ( can_shutdown )
     {
 	GtkWidget *shutdown;
 	
@@ -788,7 +806,15 @@ xfpm_dkp_battery_charge_changed_cb (XfpmBattery *battery, XfpmDkp *dkp)
     if ( current_charge == XFPM_BATTERY_CHARGE_CRITICAL && dkp->priv->on_battery)
     {
 	xfpm_dkp_system_on_low_power (dkp, battery);
+	dkp->priv->on_low_battery = TRUE;
+	g_signal_emit (G_OBJECT (dkp), signals [LOW_BATTERY_CHANGED], 0, dkp->priv->on_low_battery);
 	return;
+    }
+    
+    if ( dkp->priv->on_low_battery )
+    {
+	dkp->priv->on_low_battery = FALSE;
+	g_signal_emit (G_OBJECT (dkp), signals [LOW_BATTERY_CHANGED], 0, dkp->priv->on_low_battery);
     }
     
     g_object_get (G_OBJECT (dkp->priv->conf),
@@ -1063,6 +1089,13 @@ xfpm_dkp_class_init (XfpmDkpClass *klass)
                                                           G_PARAM_READABLE));
 
     g_object_class_install_property (object_class,
+                                     PROP_ON_LOW_BATTERY,
+                                     g_param_spec_boolean ("on-low-battery",
+                                                          NULL, NULL,
+                                                          FALSE,
+                                                          G_PARAM_READABLE));
+
+    g_object_class_install_property (object_class,
                                      PROP_AUTH_SUSPEND,
                                      g_param_spec_boolean ("auth-suspend",
                                                           NULL, NULL,
@@ -1113,6 +1146,7 @@ xfpm_dkp_init (XfpmDkp *dkp)
     dkp->priv->lid_is_present  = FALSE;
     dkp->priv->lid_is_closed   = FALSE;
     dkp->priv->on_battery      = FALSE;
+    dkp->priv->on_low_battery  = FALSE;
     dkp->priv->daemon_version  = NULL;
     dkp->priv->can_suspend     = FALSE;
     dkp->priv->can_hibernate   = FALSE;
@@ -1123,6 +1157,7 @@ xfpm_dkp_init (XfpmDkp *dkp)
     dkp->priv->inhibit = xfpm_inhibit_new ();
     dkp->priv->notify  = xfpm_notify_new ();
     dkp->priv->conf    = xfpm_xfconf_new ();
+    dkp->priv->console = xfpm_console_kit_new ();
 #ifdef HAVE_POLKIT
     dkp->priv->polkit  = xfpm_polkit_get ();
     g_signal_connect_swapped (dkp->priv->polkit, "auth-changed",
@@ -1236,6 +1271,7 @@ xfpm_dkp_finalize (GObject *object)
     g_object_unref (dkp->priv->inhibit);
     g_object_unref (dkp->priv->notify);
     g_object_unref (dkp->priv->conf);
+    g_object_unref (dkp->priv->console);
     
     dbus_g_connection_unref (dkp->priv->bus);
     
@@ -1386,24 +1422,88 @@ xfpm_dkp_dbus_init (XfpmDkp *dkp)
 static gboolean xfpm_dkp_dbus_shutdown (XfpmDkp *dkp,
 				        GError **error)
 {
+    gboolean can_reboot;
+    
+    g_object_get (G_OBJECT (dkp->priv->console),
+		  "can-shutdown", &can_reboot,
+		  NULL);
+    
+    if ( !can_reboot)
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
+                    _("Permission denied"));
+        return FALSE;
+    }
+    
+    xfpm_console_kit_shutdown (dkp->priv->console, error);
+    
     return TRUE;
 }
 
 static gboolean xfpm_dkp_dbus_reboot   (XfpmDkp *dkp,
 					GError **error)
 {
+    gboolean can_reboot;
+    
+    g_object_get (G_OBJECT (dkp->priv->console),
+		  "can-reboot", &can_reboot,
+		  NULL);
+    
+    if ( !can_reboot)
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
+                    _("Permission denied"));
+        return FALSE;
+    }
+    
+    xfpm_console_kit_reboot (dkp->priv->console, error);
+    
     return TRUE;
 }
 					   
 static gboolean xfpm_dkp_dbus_hibernate (XfpmDkp * dkp,
 					 GError **error)
 {
+    if ( !dkp->priv->auth_suspend )
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
+                    _("Permission denied"));
+        return FALSE;
+	
+    }
+    
+    if (!dkp->priv->can_hibernate )
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_NO_HARDWARE_SUPPORT,
+                    _("Suspend not supported"));
+        return FALSE;
+    }
+    
+    xfpm_dkp_sleep (dkp, "Hibernate", FALSE);
+    
     return TRUE;
 }
 
 static gboolean xfpm_dkp_dbus_suspend (XfpmDkp * dkp,
 				       GError ** error)
 {
+    if ( !dkp->priv->auth_suspend )
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
+                    _("Permission denied"));
+        return FALSE;
+	
+    }
+    
+    if (!dkp->priv->can_suspend )
+    {
+	g_set_error (error, XFPM_ERROR, XFPM_ERROR_NO_HARDWARE_SUPPORT,
+                    _("Suspend not supported"));
+        return FALSE;
+    }
+    
+    xfpm_dkp_sleep (dkp, "Suspend", FALSE);
+    
     return TRUE;
 }
 
@@ -1411,13 +1511,20 @@ static gboolean xfpm_dkp_dbus_can_reboot (XfpmDkp * dkp,
 					  gboolean * OUT_can_reboot, 
 					  GError ** error)
 {
+    g_object_get (G_OBJECT (dkp->priv->console),
+		  "can-reboot", OUT_can_reboot,
+		  NULL);
+		  
     return TRUE;
 }
 
 static gboolean xfpm_dkp_dbus_can_shutdown (XfpmDkp * dkp,
-					    gboolean * OUT_can_reboot, 
+					    gboolean * OUT_can_shutdown, 
 					    GError ** error)
 {
+    g_object_get (G_OBJECT (dkp->priv->console),
+		  "can-shutdown", OUT_can_shutdown,
+		  NULL);
     return TRUE;
 }
 
@@ -1425,6 +1532,7 @@ static gboolean xfpm_dkp_dbus_can_hibernate (XfpmDkp * dkp,
 					     gboolean * OUT_can_hibernate,
 					     GError ** error)
 {
+    *OUT_can_hibernate = dkp->priv->can_hibernate;
     return TRUE;
 }
 
@@ -1432,6 +1540,8 @@ static gboolean xfpm_dkp_dbus_can_suspend (XfpmDkp * dkp,
 					   gboolean * OUT_can_suspend,
 					   GError ** error)
 {
+    *OUT_can_suspend = dkp->priv->can_suspend;
+    
     return TRUE;
 }
 
@@ -1439,6 +1549,7 @@ static gboolean xfpm_dkp_dbus_get_power_save_status (XfpmDkp * dkp,
 						     gboolean * OUT_save_power,
 						     GError ** error)
 {
+    //FIXME
     return TRUE;
 }
 
@@ -1446,6 +1557,8 @@ static gboolean xfpm_dkp_dbus_get_on_battery (XfpmDkp * dkp,
 					      gboolean * OUT_on_battery,
 					      GError ** error)
 {
+    *OUT_on_battery = dkp->priv->on_battery;
+    
     return TRUE;
 }
 
@@ -1453,5 +1566,7 @@ static gboolean xfpm_dkp_dbus_get_low_battery (XfpmDkp * dkp,
 					       gboolean * OUT_low_battery,
 					       GError ** error)
 {
+    *OUT_low_battery = dkp->priv->on_low_battery;
+    
     return TRUE;
 }

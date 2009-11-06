@@ -42,6 +42,7 @@
 #include "xfpm-dbus.h"
 #include "xfpm-dpms.h"
 #include "xfpm-manager.h"
+#include "xfpm-console-kit.h"
 #include "xfpm-button.h"
 #include "xfpm-backlight.h"
 #include "xfpm-config.h"
@@ -75,6 +76,7 @@ struct XfpmManagerPrivate
     XfpmButton      *button;
     XfpmXfconf      *conf;
     XfpmBacklight   *backlight;
+    XfpmConsoleKit  *console;
 #ifdef HAVE_DPMS
     XfpmDpms        *dpms;
 #endif
@@ -119,6 +121,7 @@ xfpm_manager_finalize (GObject *object)
     g_object_unref (manager->priv->button);
     g_object_unref (manager->priv->conf);
     g_object_unref (manager->priv->client);
+    g_object_unref (manager->priv->console);
     g_timer_destroy (manager->priv->timer);
     
 #ifdef HAVE_DPMS
@@ -171,9 +174,17 @@ xfpm_manager_reserve_names (XfpmManager *manager)
 static void
 xfpm_manager_shutdown (XfpmManager *manager)
 {
-    //FIXME, try other solutions.
-    if ( manager->priv->session_managed )
-	xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_HALT);
+    GError *error = NULL;
+    xfpm_console_kit_shutdown (manager->priv->console, &error );
+    
+    if ( error )
+    {
+	g_warning ("Failed to shutdown the system : %s", error->message);
+	g_error_free (error);
+	/* Try with the session then */
+	if ( manager->priv->session_managed )
+	    xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_HALT);
+    }
 }
 
 static void
@@ -366,6 +377,7 @@ void xfpm_manager_start (XfpmManager *manager)
     manager->priv->dkp = xfpm_dkp_get ();
     manager->priv->button = xfpm_button_new ();
     manager->priv->conf = xfpm_xfconf_new ();
+    manager->priv->console = xfpm_console_kit_new ();
    
     manager->priv->backlight = xfpm_backlight_new ();
     
@@ -477,10 +489,14 @@ static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
     gboolean has_power_button = FALSE;
     gboolean has_battery = TRUE;
     gboolean has_lcd_brightness = TRUE;
+    gboolean can_shutdown = TRUE;
     gboolean has_lid = FALSE;
     
     *OUT_config = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
     
+    g_object_get (G_OBJECT (manager->priv->console),
+		  "can-shutdown", &can_shutdown,
+		  NULL);
 
     g_object_get (G_OBJECT (manager->priv->dkp),
                   "auth-suspend", &auth_suspend,
@@ -509,6 +525,7 @@ static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
     g_hash_table_insert (*OUT_config, g_strdup ("auth-hibernate"), g_strdup (xfpm_bool_to_string (auth_hibernate)));
     g_hash_table_insert (*OUT_config, g_strdup ("can-suspend"), g_strdup (xfpm_bool_to_string (can_suspend)));
     g_hash_table_insert (*OUT_config, g_strdup ("can-hibernate"), g_strdup (xfpm_bool_to_string (can_hibernate)));
+    g_hash_table_insert (*OUT_config, g_strdup ("can-shutdown"), g_strdup (xfpm_bool_to_string (can_shutdown)));
     
     g_hash_table_insert (*OUT_config, g_strdup ("has-battery"), g_strdup (xfpm_bool_to_string (has_battery)));
     g_hash_table_insert (*OUT_config, g_strdup ("has-lid"), g_strdup (xfpm_bool_to_string (has_lid)));
