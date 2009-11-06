@@ -186,7 +186,7 @@ static gboolean
 brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
 {
     gint x, y, orientation;
-    guint current_level = 0;
+    gint current_level = 0;
     GdkDisplay *display;
     GdkScreen *screen;
     BrightnessButton *button;
@@ -320,10 +320,10 @@ brightness_button_press_event (GtkWidget *widget, GdkEventButton *ev)
 static void
 minus_clicked (GtkWidget *widget, BrightnessButton *button)
 {
-    guint level, max_level;
+    gint level, max_level;
     
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);
-    level = (guint ) gtk_range_get_value (GTK_RANGE (button->priv->range));
+    level = (gint ) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
     if ( level != 0 )
 	gtk_range_set_value (GTK_RANGE (button->priv->range), level - 1);
@@ -332,10 +332,10 @@ minus_clicked (GtkWidget *widget, BrightnessButton *button)
 static void
 plus_clicked (GtkWidget *widget, BrightnessButton *button)
 {
-    guint level, max_level;
+    gint level, max_level;
     
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);
-    level = (guint ) gtk_range_get_value (GTK_RANGE (button->priv->range));
+    level = (gint ) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
     if ( level != max_level )
 	gtk_range_set_value (GTK_RANGE (button->priv->range), level + 1);
@@ -344,9 +344,9 @@ plus_clicked (GtkWidget *widget, BrightnessButton *button)
 static void
 range_value_changed (GtkWidget *widget, BrightnessButton *button)
 {
-    guint range_level, hw_level;
+    gint range_level, hw_level;
     
-    range_level = (guint) gtk_range_get_value (GTK_RANGE (button->priv->range));
+    range_level = (gint) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
     xfpm_brightness_get_level (button->priv->brightness, &hw_level);
     
@@ -361,7 +361,7 @@ brightness_button_create_popup (BrightnessButton *button)
 {
     GtkWidget *box;
     GtkOrientation orientation;
-    guint max_level;
+    gint max_level;
     gboolean has_hw;
     
     has_hw = xfpm_brightness_has_hw (button->priv->brightness);
@@ -430,8 +430,8 @@ brightness_button_create_popup (BrightnessButton *button)
 static void
 brightness_button_up (BrightnessButton *button)
 {
-    guint level;
-    guint max_level;
+    gint level;
+    gint max_level;
     
     xfpm_brightness_get_level (button->priv->brightness, &level);
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);

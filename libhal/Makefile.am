@@ -13,6 +13,9 @@ libxfpmhal_la_CFLAGS =			\
 	$(GLIB_CFLAGS)			\
 	$(DBUS_GLIB_CFLAGS)
 
+libxfpmhal_la_LIBADD =			\
+	$(top_builddir)/libdbus/libxfpmdbus.la
+
 if MAINTAINER_MODE
 
 BUILT_SOURCES =				\

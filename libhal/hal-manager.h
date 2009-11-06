@@ -47,6 +47,9 @@ typedef struct
     void                        (*device_removed)			(HalManager *manager,
 									 const gchar *udi);
     
+    void			(*connection_changed)			(HalManager *manager,
+									 gboolean connected);
+    
 } HalManagerClass;
 
 GType        	  		hal_manager_get_type        		(void) G_GNUC_CONST;
@@ -58,6 +61,8 @@ gchar 			      **hal_manager_find_device_by_capability 	(HalManager *manager,
 gboolean                        hal_manager_get_is_laptop               (HalManager *manager) G_GNUC_PURE;
 						 
 void                            hal_manager_free_string_array           (gchar **array);
+
+gboolean			hal_manager_get_is_connected		(HalManager *manager);
 
 G_END_DECLS
 

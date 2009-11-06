@@ -64,8 +64,8 @@ struct XfpmBacklightPrivate
     gulong	    destroy_id;
     gboolean	    has_hw;
     gboolean	    on_battery;
-    guint           last_level;
-    guint 	    max_level;
+    gint           last_level;
+    gint 	    max_level;
 #ifdef WITH_HAL
     gboolean	    brightness_in_hw;
 #endif
@@ -113,9 +113,9 @@ xfpm_backlight_destroy_popup (gpointer data)
 }
 
 static void
-xfpm_backlight_show_notification (XfpmBacklight *backlight, guint level, guint max_level)
+xfpm_backlight_show_notification (XfpmBacklight *backlight, gint level, gint max_level)
 {
-    guint i;
+    gint i;
     gfloat value = 0;
     NotifyNotification *n;
     
@@ -217,7 +217,7 @@ xfpm_backlight_create_popup (XfpmBacklight *backlight)
 }
 
 static void
-xfpm_backlight_show (XfpmBacklight *backlight, guint level)
+xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 {
     gboolean sync;
     gboolean show_popup;
@@ -291,7 +291,7 @@ xfpm_backlight_reset_cb (XfpmIdle *idle, XfpmBacklight *backlight)
 static void
 xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBacklight *backlight)
 {
-    guint level;
+    gint level;
     gboolean ret = TRUE;
     
     gboolean enable_brightness;

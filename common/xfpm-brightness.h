@@ -59,20 +59,20 @@ XfpmBrightness       	       *xfpm_brightness_new             (void);
 gboolean			xfpm_brightness_setup 		(XfpmBrightness *brightness);
 
 gboolean			xfpm_brightness_up		(XfpmBrightness *brightness,
-								 guint *new_level);
+								 gint *new_level);
 
 gboolean			xfpm_brightness_down		(XfpmBrightness *brightness,
-								 guint *new_level);
+								 gint *new_level);
 
 gboolean			xfpm_brightness_has_hw 		(XfpmBrightness *brightness);
 
-guint 				xfpm_brightness_get_max_level   (XfpmBrightness *brightness);
+gint 				xfpm_brightness_get_max_level   (XfpmBrightness *brightness);
 
 gboolean			xfpm_brightness_get_level	(XfpmBrightness *brightness,
-								 guint *level);
+								 gint *level);
 
 gboolean			xfpm_brightness_set_level	(XfpmBrightness *brightness,
-								 guint level);
+								 gint level);
 
 gboolean			xfpm_brightness_dim_down	(XfpmBrightness *brightness);
 

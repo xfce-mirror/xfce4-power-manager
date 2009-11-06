@@ -27,10 +27,14 @@
 #include <string.h>
 
 #include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
 #include <glib.h>
 
 #include "hal-manager.h"
 #include "hal-device.h"
+
+#include "libdbus/xfpm-dbus-monitor.h"
+#include "libdbus/xfpm-dbus.h"
 
 static void hal_manager_finalize   (GObject *object);
 
@@ -39,20 +43,22 @@ static void hal_manager_finalize   (GObject *object);
 
 struct HalManagerPrivate
 {
+    XfpmDBusMonitor *monitor;
     DBusGConnection *bus;
     DBusGProxy      *proxy;
     gboolean 	     connected;
     gboolean         is_laptop;
+    
+    gulong	     sig_hal;
 };
 
 enum
 {
     DEVICE_ADDED,
     DEVICE_REMOVED,
+    CONNECTION_CHANGED,
     LAST_SIGNAL
 };
-
-static gpointer hal_manager_object = NULL;
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
@@ -83,7 +89,12 @@ hal_manager_connect (HalManager *manager)
 	g_error_free (error);
 	goto out;
     }
-    manager->priv->connected = TRUE;
+    
+    manager->priv->connected = xfpm_dbus_name_has_owner (dbus_g_connection_get_connection (manager->priv->bus),
+							 "org.freedesktop.Hal");
+    
+    if ( !manager->priv->connected )
+	goto out;
     
     manager->priv->proxy = dbus_g_proxy_new_for_name (manager->priv->bus,
 		  				      "org.freedesktop.Hal",
@@ -112,30 +123,27 @@ out:
 }
 
 static void
-hal_manager_get_is_laptop_internal (HalManager *manager)
+hal_manager_service_connection_changed_cb (XfpmDBusMonitor *monitor, 
+					   gchar *service_name, 
+					   gboolean is_connected,
+					   gboolean on_session, 
+					   HalManager *manager)
 {
-    HalDevice *device;
-    gchar *form_factor;
-    
-    device = hal_device_new ();
-    
-    hal_device_set_udi (device, "/org/freedesktop/Hal/devices/computer");
-
-    form_factor = hal_device_get_property_string (device, "system.formfactor");
-
-    if ( g_strcmp0 (form_factor, "laptop") == 0)
-	manager->priv->is_laptop = TRUE;
-    else
-	manager->priv->is_laptop = FALSE;
-    
-    if (form_factor)
-	g_free (form_factor);
-
-    g_object_unref (device);
+    if ( !on_session)
+    {
+	if (!g_strcmp0 (service_name, "org.freedesktop.Hal") )
+	{
+	    if ( manager->priv->connected != is_connected )
+	    {
+		manager->priv->connected = is_connected;
+		g_signal_emit (G_OBJECT (manager), signals [CONNECTION_CHANGED], 0, is_connected);
+	    }
+	}
+    }
 }
 
 static void
-hal_manager_class_init(HalManagerClass *klass)
+hal_manager_class_init (HalManagerClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     
@@ -157,6 +165,15 @@ hal_manager_class_init(HalManagerClass *klass)
 		     g_cclosure_marshal_VOID__STRING,
 		     G_TYPE_NONE, 1, G_TYPE_STRING);
     
+    signals[CONNECTION_CHANGED] =
+    	g_signal_new("connection-changed",
+		     HAL_TYPE_MANAGER,
+		     G_SIGNAL_RUN_LAST,
+		     G_STRUCT_OFFSET(HalManagerClass, connection_changed),
+		     NULL, NULL,
+		     g_cclosure_marshal_VOID__VOID,
+		     G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+    
     object_class->finalize = hal_manager_finalize;
 
     g_type_class_add_private (klass,sizeof(HalManagerPrivate));
@@ -170,17 +187,26 @@ hal_manager_init (HalManager *manager)
     manager->priv->bus 	     = NULL;
     manager->priv->proxy     = NULL;
     manager->priv->connected = FALSE;
+    manager->priv->monitor   = xfpm_dbus_monitor_new ();
     
     hal_manager_connect (manager);
-    hal_manager_get_is_laptop_internal (manager);
+    
+    xfpm_dbus_monitor_add_service (manager->priv->monitor, DBUS_BUS_SYSTEM, "org.freedesktop.Hal");
+    
+    manager->priv->sig_hal = 
+    g_signal_connect (manager->priv->monitor, "service-connection-changed",
+		      G_CALLBACK (hal_manager_service_connection_changed_cb), manager);
 }
 
 static void
-hal_manager_finalize(GObject *object)
+hal_manager_finalize (GObject *object)
 {
     HalManager *manager;
 
     manager = HAL_MANAGER(object);
+
+    if ( g_signal_handler_is_connected (manager->priv->monitor, manager->priv->sig_hal) )
+	g_signal_handler_disconnect (manager->priv->monitor, manager->priv->sig_hal);
     
     if ( manager->priv->proxy )
 	g_object_unref (manager->priv->proxy);
@@ -188,12 +214,18 @@ hal_manager_finalize(GObject *object)
     if ( manager->priv->bus )
 	dbus_g_connection_unref (manager->priv->bus);
 
+    xfpm_dbus_monitor_remove_service (manager->priv->monitor, DBUS_BUS_SYSTEM, "org.freedesktop.Hal");
+
+    g_object_unref (manager->priv->monitor);
+
     G_OBJECT_CLASS(hal_manager_parent_class)->finalize(object);
 }
 
 HalManager *
 hal_manager_new (void)
 {
+    static gpointer hal_manager_object = NULL;
+    
     if ( hal_manager_object != NULL )
     {
 	g_object_ref (hal_manager_object);
@@ -229,13 +261,6 @@ gchar **hal_manager_find_device_by_capability (HalManager *manager, const gchar 
     return udi;
 }
 
-gboolean hal_manager_get_is_laptop (HalManager *manager)
-{
-    g_return_val_if_fail (HAL_IS_MANAGER (manager), FALSE);
-    
-    return manager->priv->is_laptop;
-}
-
 void hal_manager_free_string_array (gchar **array)
 {
     gint i;
@@ -247,4 +272,11 @@ void hal_manager_free_string_array (gchar **array)
 	g_free (array[i]);
     
     g_free (array);
+}
+
+gboolean hal_manager_get_is_connected (HalManager *manager)
+{
+    g_return_val_if_fail (HAL_IS_MANAGER (manager), FALSE);
+    
+    return manager->priv->connected;
 }
