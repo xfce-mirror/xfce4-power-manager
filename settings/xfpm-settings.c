@@ -36,6 +36,7 @@
 
 #include "xfpm-common.h"
 #include "xfpm-icons.h"
+#include "xfpm-debug.h"
 
 #include "interfaces/xfpm-settings_ui.h"
 

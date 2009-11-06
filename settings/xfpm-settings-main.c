@@ -164,6 +164,8 @@ int main (int argc, char **argv)
 	can_spin_down = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-spin"));
 	devkit_disk = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "devkit-disk"));
 	
+	g_hash_table_destroy (config_hash);
+	
 	xfpm_settings_dialog_new (channel, has_battery, auth_hibernate, auth_suspend,
 				  can_shutdown, can_suspend, can_hibernate, has_lcd_brightness,
 				  has_lid, has_sleep_button, has_hibernate_button, has_power_button,
@@ -172,7 +174,8 @@ int main (int argc, char **argv)
 	gtk_main();
 	
 	xfpm_dbus_release_name(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager.Config");
-	dbus_g_connection_unref(bus);
+	dbus_g_connection_unref (bus);
+	g_object_unref (proxy);
 	
 	return EXIT_SUCCESS;
     }

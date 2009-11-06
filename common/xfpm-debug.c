@@ -105,6 +105,5 @@ void xfpm_debug_enum (const gchar *func, const gchar *file, gint line,
 
 void xfpm_debug_init (gboolean debug)
 {
-    g_print ("Debugging=%d\n", debug);
     enable_debug = debug;
 }

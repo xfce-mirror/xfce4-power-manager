@@ -40,6 +40,7 @@
 
 #include "xfpm-dbus.h"
 #include "xfpm-debug.h"
+#include "xfpm-common.h"
 
 #include "xfce-power-manager-dbus-client.h"
 #include "xfpm-manager.h"
@@ -65,6 +66,129 @@ xfpm_quit_signal (gint sig, gpointer data)
     
     if ( sig != SIGHUP )
 	xfpm_manager_stop (manager);
+}
+
+static const gchar *
+xfpm_bool_to_local_string (gboolean value)
+{
+    value == TRUE ? _("True") : _("False");
+}
+
+static void
+xfpm_dump (DBusGConnection *bus)
+{
+    DBusGProxy *proxy;
+    GError *error = NULL;
+    GHashTable *hash;
+    
+    gboolean has_battery;
+    gboolean auth_suspend;
+    gboolean auth_hibernate;
+    gboolean can_suspend;
+    gboolean can_hibernate;
+    gboolean can_shutdown;
+    gboolean has_lcd_brightness;
+    gboolean has_sleep_button;
+    gboolean has_hibernate_button;
+    gboolean has_power_button;
+    gboolean has_lid;
+    gboolean can_spin_down;
+    gboolean devkit_disk;
+    
+    proxy = dbus_g_proxy_new_for_name (bus,
+				       "org.xfce.PowerManager",
+				       "/org/xfce/PowerManager",
+				       "org.xfce.Power.Manager");
+	
+    xfpm_manager_dbus_client_get_config (proxy, 
+					 &hash,
+					 &error);
+					     
+    if ( error )
+    {
+	g_error ("%s", error->message);
+	exit (EXIT_FAILURE);
+    }
+    
+    has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
+    has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
+    can_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-suspend"));
+    can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hibernate"));
+    auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-suspend"));
+    auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hibernate"));
+    has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-brightness"));
+    has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "sleep-button"));
+    has_power_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "power-button"));
+    has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "hibernate-button"));
+    can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
+    can_spin_down = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-spin"));
+    devkit_disk = xfpm_string_to_bool (g_hash_table_lookup (hash, "devkit-disk"));
+    
+    dbus_g_connection_unref (bus);
+    g_object_unref (proxy);
+	
+    g_print ("---------------------------------------------------\n");
+    g_print ("       Xfce power manager version %s\n", VERSION);
+#ifdef WITH_HAL
+    g_print (_("With HAL support\n"));
+#else
+    g_print (_("Without HAL support\n"));
+#endif
+#ifdef HAVE_POLKIT
+    g_print (_("With policykit support\n"));
+#else
+    g_print (_("Without policykit support\n"));
+#endif
+#ifdef WITH_NETWORK_MANAGER
+    g_print (_("With network manager support\n"));
+#else
+    g_print (_("Without network manager support\n"));
+#endif
+#ifdef HAVE_DPMS
+    g_print (_("With DPMS support\n"));
+#else
+    g_print (_("Without DPMS support\n"));
+#endif
+    g_print ("---------------------------------------------------\n");
+    g_print ( "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n"
+	      "%s: %s\n",
+	     _("Has LID"),
+	     xfpm_bool_to_local_string (has_lid),
+	     _("Can suspend"),
+	     xfpm_bool_to_local_string (can_suspend),
+	     _("Can hibernate"),
+	     xfpm_bool_to_local_string (can_hibernate),
+	     _("Can spin down hard disks"),
+	     xfpm_bool_to_local_string (devkit_disk),
+	     _("Authorized to suspend"),
+	     xfpm_bool_to_local_string (auth_suspend),
+	     _("Authorized to hibernate"),
+	     xfpm_bool_to_local_string (auth_hibernate),
+	     _("Authorized to shutdown"),
+	     xfpm_bool_to_local_string (can_shutdown),
+	     _("Authorized to spin down hard disks"),
+	     xfpm_bool_to_local_string (can_spin_down),
+	     _("Has brightness panel"),
+	     xfpm_bool_to_local_string (has_lcd_brightness),
+	     _("Has power button"),
+	     xfpm_bool_to_local_string (has_power_button),
+	     _("Has hibernate button"),
+	     xfpm_bool_to_local_string (has_hibernate_button),
+	     _("Has sleep button"),
+	      xfpm_bool_to_local_string (has_sleep_button),
+	     _("Has LID"),
+	      xfpm_bool_to_local_string (has_lid));
 }
 
 static void G_GNUC_NORETURN
@@ -118,6 +242,7 @@ int main (int argc, char **argv)
     gboolean reload     = FALSE;
     gboolean no_daemon  = FALSE;
     gboolean debug      = FALSE;
+    gboolean dump       = FALSE;
     gchar   *client_id  = NULL;
     
     GOptionEntry option_entries[] = 
@@ -125,6 +250,7 @@ int main (int argc, char **argv)
 	{ "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &run, NULL, NULL },
 	{ "no-daemon",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &no_daemon, N_("Do not daemonize"), NULL },
 	{ "debug",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &debug, N_("Enable debugging"), NULL },
+	{ "dump",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &dump, N_("Dump all information"), NULL },
 	{ "restart", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &reload, N_("Restart the running instance of Xfce power manager"), NULL},
 	{ "customize", 'c', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &config, N_("Show the configuration dialog"), NULL },
 	{ "quit", 'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &quit, N_("Quit any running xfce power manager"), NULL },
@@ -164,18 +290,9 @@ int main (int argc, char **argv)
 	show_version ();
     }
     
-    if ( run + quit + config + version > 1 )
-    {
-	g_printerr (_("Too many arguments"));
-	g_printerr ("\n");
-	g_printerr (_("Type '%s --help' for usage."), G_LOG_DOMAIN);
-	g_printerr ("\n");
-	return EXIT_FAILURE;
-    }
-    
     xfpm_debug_init (debug);
 
-    if ( debug == FALSE && no_daemon == FALSE && daemon(0,0) )
+    if ( dump == FALSE && debug == FALSE && no_daemon == FALSE && daemon(0,0) )
     {
 	g_critical ("Could not daemonize");
     }
@@ -267,6 +384,16 @@ int main (int argc, char **argv)
 	return EXIT_SUCCESS;
     }
     
+    if (dump)
+    {
+	if (xfpm_dbus_name_has_owner (dbus_g_connection_get_connection (bus), 
+				      "org.xfce.PowerManager"))
+	{
+	    xfpm_dump (bus);
+	    return EXIT_SUCCESS;
+	}
+    }
+    
     if (xfpm_dbus_name_has_owner (dbus_g_connection_get_connection (bus), "org.freedesktop.PowerManagement") )
     {
 	g_print ("%s: %s\n", 
@@ -284,6 +411,7 @@ int main (int argc, char **argv)
     else
     {	
 	xfpm_start (bus, client_id);
+	xfpm_dump (bus);
     }
     
     return EXIT_SUCCESS;
