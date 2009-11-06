@@ -22,6 +22,7 @@
 #define __XFPM_XFCONF_H
 
 #include <glib-object.h>
+#include <xfconf/xfconf.h>
 
 G_BEGIN_DECLS
 
@@ -47,6 +48,8 @@ typedef struct
 GType        		  xfpm_xfconf_get_type           	(void) G_GNUC_CONST;
 
 XfpmXfconf       	 *xfpm_xfconf_new                 	(void);
+
+XfconfChannel 		 *xfpm_xfconf_get_channel		(XfpmXfconf *conf);
 
 G_END_DECLS
 

@@ -242,6 +242,67 @@ xfpm_dkp_check_lid (XfpmDkp *dkp, GHashTable *props)
     }
 }
 
+static void
+xfpm_dkp_check_daemon_version (XfpmDkp *dkp, GHashTable *props)
+{
+    GValue *value;
+    gint dkp_version;
+	
+    value = g_hash_table_lookup (props, "DaemonVersion");
+
+    if (value == NULL) 
+    {
+	g_warning ("No 'DaemonVersion' property");
+	/*
+	 * Version less than 011 uses dash-dash
+	 */
+	value = g_hash_table_lookup (props, "daemon-version");
+	
+	if (value == NULL) 
+	{
+	    g_warning ("No 'daemon-version' property");
+	    goto out;
+	}
+    }
+    
+    dkp->priv->daemon_version = g_strdup (g_value_get_string (value));
+    XFPM_DEBUG ("Dkp daemon version %s", dkp->priv->daemon_version);
+    dkp_version = strtol (dkp->priv->daemon_version, NULL, 10);
+    
+    if ( dkp_version < 15)
+    {
+	XfconfChannel *channel;
+	gboolean show_error;
+	
+	channel = xfpm_xfconf_get_channel (dkp->priv->conf);
+	
+	show_error = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX "show-dkp-version-error", TRUE);
+	
+	XFPM_WARNING ("Dkp version %d is less than the required minimum version 011", dkp_version);
+	
+	
+	if ( show_error )
+	{
+	    GError *error = NULL;
+	    gchar *message;
+	    message = g_strdup_printf ("%s %s", 
+				   _("Xfce Power Manager requires version 011 of devicekit-power " 
+				   "to work properly while the version found is"), 
+				   dkp->priv->daemon_version);
+		
+	    g_set_error (&error, 0, 0, message);
+	    xfce_dialog_show_error (NULL, error, "%s", _("Devicekit-power version 011 or above not found"));
+	    xfconf_channel_set_bool (channel, PROPERTIES_PREFIX "show-dkp-version-error", FALSE);
+	    g_free (message);
+	    g_error_free (error);
+	}
+	
+	g_error (_("Devicekit-power version 011 or above not found"));
+    }
+out:
+    ;
+}
+
 /*
  * Get the properties on org.freedesktop.DeviceKit.Power
  * 
@@ -263,20 +324,12 @@ xfpm_dkp_get_properties (XfpmDkp *dkp)
     xfpm_dkp_check_pm (dkp, props);
     xfpm_dkp_check_lid (dkp, props);
     xfpm_dkp_check_power (dkp, props);
-    /*
+
     if ( dkp->priv->daemon_version == NULL )
     {
-	value = g_hash_table_lookup (props, "DaemonVersion");
-    
-	if (value == NULL) 
-	{
-	    g_warning ("No 'DaemonVersion' property");
-	    goto out;
-	}
-	//FIXME: Check daemon version
-	client->priv->daemon_version = g_strdup (g_value_get_string (value));
+	xfpm_dkp_check_daemon_version (dkp, props);
     }
-    */
+out:
     g_hash_table_destroy (props);
 }
 
@@ -1267,6 +1320,8 @@ xfpm_dkp_finalize (GObject *object)
     XfpmDkp *dkp;
 
     dkp = XFPM_DKP (object);
+    
+    g_free (dkp->priv->daemon_version);
     
     g_object_unref (dkp->priv->inhibit);
     g_object_unref (dkp->priv->notify);

@@ -29,8 +29,6 @@
 #include <glib.h>
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfconf/xfconf.h>
-
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 #include "xfpm-enum-glib.h"
@@ -577,4 +575,9 @@ xfpm_xfconf_new (void)
 	g_object_add_weak_pointer (xfpm_xfconf_object, &xfpm_xfconf_object);
     }
     return XFPM_XFCONF (xfpm_xfconf_object);
+}
+
+XfconfChannel *xfpm_xfconf_get_channel (XfpmXfconf *conf)
+{
+    return conf->priv->channel;
 }
