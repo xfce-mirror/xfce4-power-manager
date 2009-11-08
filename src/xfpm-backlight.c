@@ -337,6 +337,8 @@ xfpm_backlight_brightness_on_ac_settings_changed (XfpmBacklight *backlight)
 		  BRIGHTNESS_ON_AC, &timeout_on_ac,
 		  NULL);
 		  
+    XFPM_DEBUG ("Alarm on ac timeout changed %u", timeout_on_ac);
+    
     if ( timeout_on_ac == ALARM_DISABLED )
     {
 	xfpm_idle_free_alarm (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC );
@@ -355,6 +357,8 @@ xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
     g_object_get (G_OBJECT (backlight->priv->conf),
 		  BRIGHTNESS_ON_BATTERY, &timeout_on_battery,
 		  NULL);
+    
+    XFPM_DEBUG ("Alarm on ac timeout changed %u", timeout_on_battery);
     
     if ( timeout_on_battery == ALARM_DISABLED )
     {

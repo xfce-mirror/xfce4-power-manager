@@ -46,6 +46,8 @@
 #include "xfpm-console-kit.h"
 #include "xfpm-button.h"
 #include "xfpm-backlight.h"
+#include "xfpm-inhibit.h"
+#include "xfpm-idle.h"
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
 #include "xfpm-xfconf.h"
@@ -81,7 +83,8 @@ struct XfpmManagerPrivate
     XfpmConsoleKit  *console;
     XfpmDBusMonitor *monitor;
     XfpmDisks       *disks;
-    
+    XfpmInhibit     *inhibit;
+    XfpmIdle        *idle;
 #ifdef HAVE_DPMS
     XfpmDpms        *dpms;
 #endif
@@ -130,6 +133,8 @@ xfpm_manager_finalize (GObject *object)
     g_object_unref (manager->priv->console);
     g_object_unref (manager->priv->monitor);
     g_object_unref (manager->priv->disks);
+    g_object_unref (manager->priv->inhibit);
+    g_object_unref (manager->priv->idle);
     
     g_timer_destroy (manager->priv->timer);
     
@@ -338,6 +343,121 @@ xfpm_manager_lid_changed_cb (XfpmDkp *dkp, gboolean lid_is_closed, XfpmManager *
     }
 }
 
+static void
+xfpm_manager_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmManager *manager)
+{
+    manager->priv->inhibited = inhibited;
+}
+
+static void
+xfpm_manager_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmManager *manager)
+{
+    XFPM_DEBUG ("Alarm inactivity timeout id %d", id);
+    
+    if ( id == TIMEOUT_INACTIVITY_ON_AC || id == TIMEOUT_INACTIVITY_ON_BATTERY )
+    {
+	XfpmShutdownRequest req = XFPM_DO_NOTHING;
+	gchar *sleep_mode;
+	gboolean on_battery;
+	
+	if ( manager->priv->inhibited )
+	{
+	    XFPM_DEBUG ("Idle sleep alarm timeout, but power manager is currently inhibited, action ignored");
+	    return;
+	}
+    
+	g_object_get (G_OBJECT (manager->priv->conf),
+		      INACTIVITY_SLEEP_MODE, &sleep_mode,
+		      NULL);
+	
+	g_object_get (G_OBJECT (manager->priv->dkp),
+		      "on-battery", &on_battery,
+		      NULL);
+		  
+	if ( !g_strcmp0 (sleep_mode, "Suspend") )
+	    req = XFPM_DO_SUSPEND;
+	else
+	    req = XFPM_DO_HIBERNATE;
+	
+	g_free (sleep_mode);
+
+	if ( id == TIMEOUT_INACTIVITY_ON_AC && on_battery == FALSE )
+	    xfpm_manager_sleep_request (manager, req, FALSE);
+	else if ( id ==  TIMEOUT_INACTIVITY_ON_BATTERY && on_battery  )
+	    xfpm_manager_sleep_request (manager, req, FALSE);
+    }
+}
+
+static void
+xfpm_manager_set_idle_alarm_on_ac (XfpmManager *manager)
+{
+    guint on_ac;
+    
+    g_object_get (G_OBJECT (manager->priv->conf),
+		  ON_AC_INACTIVITY_TIMEOUT, &on_ac,
+		  NULL);
+    
+#ifdef DEBUG
+    if ( on_ac == 14 )
+	TRACE ("setting inactivity sleep timeout on ac to never");
+    else
+	TRACE ("setting inactivity sleep timeout on ac to %d", on_ac);
+#endif
+    
+    if ( on_ac == 14 )
+    {
+	xfpm_idle_free_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC );
+    }
+    else
+    {
+	xfpm_idle_set_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC, on_ac * 1000 * 60);
+    }
+}
+
+static void
+xfpm_manager_set_idle_alarm_on_battery (XfpmManager *manager)
+{
+    guint on_battery;
+    
+    g_object_get (G_OBJECT (manager->priv->conf),
+		  ON_BATTERY_INACTIVITY_TIMEOUT, &on_battery,
+		  NULL);
+    
+#ifdef DEBUG
+    if ( on_battery == 14 )
+	TRACE ("setting inactivity sleep timeout on battery to never");
+    else
+	TRACE ("setting inactivity sleep timeout on battery to %d", on_battery);
+#endif
+    
+    if ( on_battery == 14 )
+    {
+	xfpm_idle_free_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY );
+    }
+    else
+    {
+	xfpm_idle_set_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY, on_battery * 1000 * 60);
+    }
+}
+
+static void
+xfpm_manager_on_battery_changed_cb (XfpmDkp *dkp, gboolean on_battery, XfpmManager *manager)
+{
+    if ( on_battery )
+	xfpm_idle_reset_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY);
+    else
+	xfpm_idle_reset_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC);
+	
+}
+
+static void
+xfpm_manager_set_idle_alarm (XfpmManager *manager)
+{
+    xfpm_manager_set_idle_alarm_on_ac (manager);
+    xfpm_manager_set_idle_alarm_on_battery (manager);
+    
+}
+
 XfpmManager *
 xfpm_manager_new (DBusGConnection *bus, const gchar *client_id)
 {
@@ -400,6 +520,22 @@ void xfpm_manager_start (XfpmManager *manager)
     manager->priv->console = xfpm_console_kit_new ();
     manager->priv->monitor = xfpm_dbus_monitor_new ();
     manager->priv->disks = xfpm_disks_new ();
+    manager->priv->inhibit = xfpm_inhibit_new ();
+    manager->priv->idle = xfpm_idle_new ();
+    
+    g_signal_connect (manager->priv->idle, "alarm-timeout",
+		      G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager);
+    
+    g_signal_connect (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
+		      G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager);
+		      
+    g_signal_connect (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
+		      G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager);
+    
+    xfpm_manager_set_idle_alarm (manager);
+    
+    g_signal_connect (manager->priv->inhibit, "has-inhibit-changed",
+		      G_CALLBACK (xfpm_manager_inhibit_changed_cb), manager);
     
     g_signal_connect (manager->priv->monitor, "system-bus-connection-changed",
 		      G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager);
@@ -415,6 +551,9 @@ void xfpm_manager_start (XfpmManager *manager)
     
     g_signal_connect (manager->priv->dkp, "lid-changed",
 		      G_CALLBACK (xfpm_manager_lid_changed_cb), manager);
+    
+    g_signal_connect (manager->priv->dkp, "on-battery-changed",
+		      G_CALLBACK (xfpm_manager_on_battery_changed_cb), manager);
     
     g_signal_connect_swapped (manager->priv->dkp, "waking-up",
 			      G_CALLBACK (xfpm_manager_reset_sleep_timer), manager);
