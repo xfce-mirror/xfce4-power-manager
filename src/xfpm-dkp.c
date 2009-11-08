@@ -59,6 +59,8 @@ static void xfpm_dkp_get_property (GObject *object,
 static void xfpm_dkp_dbus_class_init (XfpmDkpClass * klass);
 static void xfpm_dkp_dbus_init (XfpmDkp *dkp);
 
+static void xfpm_dkp_refresh_adaptor_visible (XfpmDkp *dkp);
+
 #define XFPM_DKP_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_DKP, XfpmDkpPrivate))
 
@@ -74,6 +76,8 @@ struct XfpmDkpPrivate
     XfpmConsoleKit  *console;
     XfpmInhibit	    *inhibit;
     XfpmXfconf      *conf;
+    GtkStatusIcon   *adapter_icon;
+    
     gboolean	     inhibited;
     
     XfpmNotify	    *notify;
@@ -614,6 +618,13 @@ xfpm_dkp_show_tray_menu_battery (GtkStatusIcon *icon, guint button,
     xfpm_dkp_show_tray_menu (dkp, icon, button, activate_time, TRUE);
 }
 
+static void 
+xfpm_dkp_show_tray_menu_adaptor (GtkStatusIcon *icon, guint button, 
+			         guint activate_time, XfpmDkp *dkp)
+{
+    xfpm_dkp_show_tray_menu (dkp, icon, button, activate_time, FALSE);
+}
+
 static XfpmBatteryCharge
 xfpm_dkp_get_current_charge_state (XfpmDkp *dkp)
 {
@@ -957,6 +968,8 @@ xfpm_dkp_add_device (XfpmDkp *dkp, const gchar *object_path)
 	
 	g_signal_connect (battery, "battery-charge-changed",
 			  G_CALLBACK (xfpm_dkp_battery_charge_changed_cb), dkp);
+			  
+	xfpm_dkp_refresh_adaptor_visible (dkp);
     }
     else 
     {
@@ -1014,6 +1027,7 @@ static void
 xfpm_dkp_remove_device (XfpmDkp *dkp, const gchar *object_path)
 {
     g_hash_table_remove (dkp->priv->hash, object_path);
+    xfpm_dkp_refresh_adaptor_visible (dkp);
 }
 
 static void
@@ -1060,6 +1074,74 @@ xfpm_dkp_polkit_auth_changed_cb (XfpmDkp *dkp)
     xfpm_dkp_check_polkit_auth (dkp);
 }
 #endif
+
+static void
+xfpm_dkp_hide_adapter_icon (XfpmDkp *dkp)
+{
+     XFPM_DEBUG ("Hide adaptor icon");
+     
+    if ( dkp->priv->adapter_icon )
+    {
+        g_object_unref (dkp->priv->adapter_icon);
+        dkp->priv->adapter_icon = NULL;
+    }
+}
+
+static void
+xfpm_dkp_show_adapter_icon (XfpmDkp *dkp)
+{
+    g_return_if_fail (dkp->priv->adapter_icon == NULL);
+    
+    dkp->priv->adapter_icon = gtk_status_icon_new ();
+    
+    XFPM_DEBUG ("Showing adaptor icon");
+    
+    gtk_status_icon_set_from_icon_name (dkp->priv->adapter_icon, XFPM_AC_ADAPTER_ICON);
+    
+    gtk_status_icon_set_visible (dkp->priv->adapter_icon, TRUE);
+    
+    g_signal_connect (dkp->priv->adapter_icon, "popup-menu",
+		      G_CALLBACK (xfpm_dkp_show_tray_menu_adaptor), dkp);
+}
+
+static void
+xfpm_dkp_refresh_adaptor_visible (XfpmDkp *dkp)
+{
+    XfpmShowIcon show_icon;
+    
+    g_object_get (G_OBJECT (dkp->priv->conf),
+		  SHOW_TRAY_ICON_CFG, &show_icon,
+		  NULL);
+		  
+    XFPM_DEBUG_ENUM (show_icon, XFPM_TYPE_SHOW_ICON, "Tray icon configuration: ");
+    
+    if ( show_icon == SHOW_ICON_ALWAYS )
+    {
+	if ( g_hash_table_size (dkp->priv->hash) == 0 )
+	{
+	    xfpm_dkp_show_adapter_icon (dkp);
+#if GTK_CHECK_VERSION (2, 16, 0)
+	    gtk_status_icon_set_tooltip_text (dkp->priv->adapter_icon, 
+					      dkp->priv->on_battery ? 
+					      _("Adaptor is offline") :
+					      _("Adaptor is online") );
+#else
+	    gtk_status_icon_set_tooltip (dkp->priv->adapter_icon, 
+					 dkp->priv->on_battery ? 
+					 _("Adaptor is offline") :
+					 _("Adaptor is online") );
+#endif
+	}
+	else
+	{
+	    xfpm_dkp_hide_adapter_icon (dkp);
+	}
+    }
+    else
+    {
+	xfpm_dkp_hide_adapter_icon (dkp);
+    }
+}
 
 static void
 xfpm_dkp_class_init (XfpmDkpClass *klass)
@@ -1205,11 +1287,16 @@ xfpm_dkp_init (XfpmDkp *dkp)
     dkp->priv->auth_hibernate  = TRUE;
     dkp->priv->auth_suspend    = TRUE;
     dkp->priv->dialog          = NULL;
+    dkp->priv->adapter_icon    = NULL;
     
     dkp->priv->inhibit = xfpm_inhibit_new ();
     dkp->priv->notify  = xfpm_notify_new ();
     dkp->priv->conf    = xfpm_xfconf_new ();
     dkp->priv->console = xfpm_console_kit_new ();
+    
+    g_signal_connect_swapped (dkp->priv->conf, "notify::" SHOW_TRAY_ICON_CFG,
+			      G_CALLBACK (xfpm_dkp_refresh_adaptor_visible), dkp);
+    
 #ifdef HAVE_POLKIT
     dkp->priv->polkit  = xfpm_polkit_get ();
     g_signal_connect_swapped (dkp->priv->polkit, "auth-changed",
@@ -1271,6 +1358,8 @@ xfpm_dkp_init (XfpmDkp *dkp)
 
     
 out:
+    xfpm_dkp_refresh_adaptor_visible (dkp);
+
     xfpm_dkp_dbus_init (dkp);
 
     /*
@@ -1326,6 +1415,8 @@ xfpm_dkp_finalize (GObject *object)
     g_object_unref (dkp->priv->notify);
     g_object_unref (dkp->priv->conf);
     g_object_unref (dkp->priv->console);
+    
+    xfpm_dkp_hide_adapter_icon (dkp);
     
     dbus_g_connection_unref (dkp->priv->bus);
     
@@ -1500,7 +1591,7 @@ static gboolean xfpm_dkp_dbus_reboot   (XfpmDkp *dkp,
     gboolean can_reboot;
     
     g_object_get (G_OBJECT (dkp->priv->console),
-		  "can-reboot", &can_reboot,
+		  "can-restart", &can_reboot,
 		  NULL);
     
     if ( !can_reboot)
