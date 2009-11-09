@@ -64,10 +64,15 @@ struct XfpmBacklightPrivate
     
     gulong     	    timeout_id;
     gulong	    destroy_id;
+    
     gboolean	    has_hw;
     gboolean	    on_battery;
-    gint           last_level;
+    
+    gint            last_level;
     gint 	    max_level;
+    
+    gboolean        dimmed;
+    gboolean	    block;
 #ifdef WITH_HAL
     gboolean	    brightness_in_hw;
 #endif
@@ -89,7 +94,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
     }
     XFPM_DEBUG ("Current brightness level before dimming : %u", backlight->priv->last_level);
     
-    xfpm_brightness_dim_down (backlight->priv->brightness);
+    backlight->priv->dimmed = xfpm_brightness_dim_down (backlight->priv->brightness);
 }
 
 static gboolean
@@ -278,6 +283,8 @@ out:
 static void
 xfpm_backlight_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBacklight *backlight)
 {
+    backlight->priv->block = FALSE;
+    
     if ( id == TIMEOUT_BRIGHTNESS_ON_AC && !backlight->priv->on_battery)
 	xfpm_backlight_dim_brightness (backlight);
     else if ( id == TIMEOUT_BRIGHTNESS_ON_BATTERY && backlight->priv->on_battery)
@@ -287,8 +294,15 @@ xfpm_backlight_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBacklight *backli
 static void
 xfpm_backlight_reset_cb (XfpmIdle *idle, XfpmBacklight *backlight)
 {
-    XFPM_DEBUG ("Alarm reset, setting level to %i", backlight->priv->last_level);
-    xfpm_brightness_set_level (backlight->priv->brightness, backlight->priv->last_level);
+    if ( backlight->priv->dimmed)
+    {
+	if ( !backlight->priv->block)
+	{
+	    XFPM_DEBUG ("Alarm reset, setting level to %i", backlight->priv->last_level);
+	    xfpm_brightness_set_level (backlight->priv->brightness, backlight->priv->last_level);
+	}
+	backlight->priv->dimmed = FALSE;
+    }
 }
 
 static void
@@ -297,14 +311,16 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
     gint level;
     gboolean ret = TRUE;
     
-    gboolean enable_brightness;
+    gboolean enable_brightness, show_popup;
     
     g_object_get (G_OBJECT (backlight->priv->conf),
                   ENABLE_BRIGHTNESS_CONTROL, &enable_brightness,
+		  SHOW_BRIGHTNESS_POPUP, &show_popup,
                   NULL);
     
     if ( type == BUTTON_MON_BRIGHTNESS_UP )
     {
+	backlight->priv->block = TRUE;
 #ifdef WITH_HAL
 	if ( !backlight->priv->brightness_in_hw && enable_brightness)
 	    ret = xfpm_brightness_up (backlight->priv->brightness, &level);
@@ -312,11 +328,12 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
 	if ( enable_brightness )
 	    ret = xfpm_brightness_up (backlight->priv->brightness, &level);
 #endif
-	if ( ret )
+	if ( ret && show_popup)
 	    xfpm_backlight_show (backlight, level);
     }
     else if ( type == BUTTON_MON_BRIGHTNESS_DOWN )
     {
+	backlight->priv->block = TRUE;
 #ifdef WITH_HAL
 	if ( !backlight->priv->brightness_in_hw && enable_brightness )
 	    ret = xfpm_brightness_down (backlight->priv->brightness, &level);
@@ -325,7 +342,7 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
 	    ret = xfpm_brightness_down (backlight->priv->brightness, &level);
 #endif
 	    
-	if ( ret )
+	if ( ret && show_popup)
 	    xfpm_backlight_show (backlight, level);
     }
 }
@@ -411,6 +428,8 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->dkp    = NULL;
     backlight->priv->window = NULL;
     backlight->priv->progress_bar = NULL;
+    backlight->priv->dimmed = FALSE;
+    backlight->priv->block = FALSE;
     backlight->priv->destroy_id = 0;
     backlight->priv->timeout_id = 0;
     
@@ -451,6 +470,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 	g_object_get (G_OBJECT (backlight->priv->dkp),
 		      "on-battery", &backlight->priv->on_battery,
 		      NULL);
+	xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
 	xfpm_backlight_set_timeouts (backlight);
     }
 }
