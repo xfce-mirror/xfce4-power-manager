@@ -38,6 +38,7 @@
 #include "xfpm-button.h"
 #include "xfpm-brightness.h"
 #include "xfpm-debug.h"
+#include "xfpm-icons.h"
 
 static void xfpm_backlight_finalize   (GObject *object);
 
@@ -86,7 +87,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 	g_warning ("Unable to get current brightness level");
 	return;
     }
-    XFPM_DEBUG ("Current brightness level : %u", backlight->priv->last_level);
+    XFPM_DEBUG ("Current brightness level before dimming : %u", backlight->priv->last_level);
     
     xfpm_brightness_dim_down (backlight->priv->brightness);
 }
@@ -200,7 +201,7 @@ xfpm_backlight_create_popup (XfpmBacklight *backlight)
     gtk_container_add (GTK_CONTAINER (backlight->priv->window), align);
     gtk_container_add (GTK_CONTAINER (align), vbox);
     
-    img = gtk_image_new_from_icon_name ("xfpm-brightness-lcd", GTK_ICON_SIZE_DIALOG);
+    img = gtk_image_new_from_icon_name (XFPM_DISPLAY_BRIGHTNESS_ICON, GTK_ICON_SIZE_DIALOG);
     
     gtk_box_pack_start (GTK_BOX (vbox), img, TRUE, TRUE, 0);
     
@@ -286,6 +287,7 @@ xfpm_backlight_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBacklight *backli
 static void
 xfpm_backlight_reset_cb (XfpmIdle *idle, XfpmBacklight *backlight)
 {
+    XFPM_DEBUG ("Alarm reset, setting level to %i", backlight->priv->last_level);
     xfpm_brightness_set_level (backlight->priv->brightness, backlight->priv->last_level);
 }
 
@@ -358,7 +360,7 @@ xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
 		  BRIGHTNESS_ON_BATTERY, &timeout_on_battery,
 		  NULL);
     
-    XFPM_DEBUG ("Alarm on ac timeout changed %u", timeout_on_battery);
+    XFPM_DEBUG ("Alarm on battery timeout changed %u", timeout_on_battery);
     
     if ( timeout_on_battery == ALARM_DISABLED )
     {

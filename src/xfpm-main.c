@@ -77,12 +77,8 @@ xfpm_bool_to_local_string (gboolean value)
 }
 
 static void
-xfpm_dump (DBusGConnection *bus)
+xfpm_dump (GHashTable *hash)
 {
-    DBusGProxy *proxy;
-    GError *error = NULL;
-    GHashTable *hash;
-    
     gboolean has_battery;
     gboolean auth_suspend;
     gboolean auth_hibernate;
@@ -97,21 +93,6 @@ xfpm_dump (DBusGConnection *bus)
     gboolean can_spin_down;
     gboolean devkit_disk;
     
-    proxy = dbus_g_proxy_new_for_name (bus,
-				       "org.xfce.PowerManager",
-				       "/org/xfce/PowerManager",
-				       "org.xfce.Power.Manager");
-	
-    xfpm_manager_dbus_client_get_config (proxy, 
-					 &hash,
-					 &error);
-					     
-    if ( error )
-    {
-	g_error ("%s", error->message);
-	exit (EXIT_FAILURE);
-    }
-    
     has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
     has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
     can_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-suspend"));
@@ -125,9 +106,6 @@ xfpm_dump (DBusGConnection *bus)
     can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
     can_spin_down = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-spin"));
     devkit_disk = xfpm_string_to_bool (g_hash_table_lookup (hash, "devkit-disk"));
-    
-    dbus_g_connection_unref (bus);
-    g_object_unref (proxy);
 	
     g_print ("---------------------------------------------------\n");
     g_print ("       Xfce power manager version %s\n", VERSION);
@@ -193,8 +171,36 @@ xfpm_dump (DBusGConnection *bus)
 	      xfpm_bool_to_local_string (has_lid));
 }
 
+static void
+xfpm_dump_remote (DBusGConnection *bus)
+{
+    DBusGProxy *proxy;
+    GError *error = NULL;
+    GHashTable *hash;
+    
+    proxy = dbus_g_proxy_new_for_name (bus,
+				       "org.xfce.PowerManager",
+				       "/org/xfce/PowerManager",
+				       "org.xfce.Power.Manager");
+	
+    xfpm_manager_dbus_client_get_config (proxy, 
+					 &hash,
+					 &error);
+					     
+    g_object_unref (proxy);
+    
+    if ( error )
+    {
+	g_error ("%s", error->message);
+	exit (EXIT_FAILURE);
+    }
+    
+    xfpm_dump (hash);
+    g_hash_table_destroy (hash);
+}
+
 static void G_GNUC_NORETURN
-xfpm_start (DBusGConnection *bus, const gchar *client_id)
+xfpm_start (DBusGConnection *bus, const gchar *client_id, gboolean dump)
 {
     XfpmManager *manager;
     GError *error = NULL;
@@ -224,6 +230,16 @@ xfpm_start (DBusGConnection *bus, const gchar *client_id)
     }
 
     xfpm_manager_start (manager);
+    
+    if ( dump )
+    {
+	GHashTable *hash;
+	hash = xfpm_manager_get_config (manager);
+	xfpm_dump (hash);
+	g_hash_table_destroy (hash);
+    }
+
+    
     gtk_main ();
     
     g_object_unref (manager);
@@ -362,7 +378,7 @@ int main (int argc, char **argv)
 	    !xfpm_dbus_name_has_owner (dbus_g_connection_get_connection (bus), "org.freedesktop.PowerManagement"))
 	{
 	    g_print ("Xfce power manager is not running\n");
-	    xfpm_start (bus, client_id);
+	    xfpm_start (bus, client_id, dump);
 	}
 	
 	proxy = dbus_g_proxy_new_for_name (bus, 
@@ -391,7 +407,7 @@ int main (int argc, char **argv)
 	if (xfpm_dbus_name_has_owner (dbus_g_connection_get_connection (bus), 
 				      "org.xfce.PowerManager"))
 	{
-	    xfpm_dump (bus);
+	    xfpm_dump_remote (bus);
 	    return EXIT_SUCCESS;
 	}
     }
@@ -412,8 +428,7 @@ int main (int argc, char **argv)
     }
     else
     {	
-	xfpm_start (bus, client_id);
-	xfpm_dump (bus);
+	xfpm_start (bus, client_id, dump);
     }
     
     return EXIT_SUCCESS;

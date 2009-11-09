@@ -578,6 +578,73 @@ void xfpm_manager_stop (XfpmManager *manager)
     xfpm_manager_quit (manager);
 }
 
+GHashTable *xfpm_manager_get_config (XfpmManager *manager)
+{
+    GHashTable *hash;
+    
+    guint8 mapped_buttons;
+    gboolean auth_hibernate = FALSE;
+    gboolean auth_suspend = FALSE;
+    gboolean can_suspend = FALSE;
+    gboolean can_hibernate = FALSE;
+    gboolean has_sleep_button = FALSE;
+    gboolean has_hibernate_button = FALSE;
+    gboolean has_power_button = FALSE;
+    gboolean has_battery = TRUE;
+    gboolean has_lcd_brightness = TRUE;
+    gboolean can_shutdown = TRUE;
+    gboolean has_lid = FALSE;
+    gboolean can_spin = FALSE;
+    gboolean devkit_disk = FALSE;
+    
+    hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+    
+    g_object_get (G_OBJECT (manager->priv->console),
+		  "can-shutdown", &can_shutdown,
+		  NULL);
+
+    g_object_get (G_OBJECT (manager->priv->dkp),
+                  "auth-suspend", &auth_suspend,
+		  "auth-hibernate", &auth_hibernate,
+                  "can-suspend", &can_suspend,
+                  "can-hibernate", &can_hibernate, 
+		  "has-lid", &has_lid,
+		  NULL);
+
+    can_spin = xfpm_disks_get_can_spin (manager->priv->disks);
+    devkit_disk = xfpm_disks_kit_is_running (manager->priv->disks);
+    
+    has_battery = xfpm_dkp_has_battery (manager->priv->dkp);
+    has_lcd_brightness = xfpm_backlight_has_hw (manager->priv->backlight);
+    
+    mapped_buttons = xfpm_button_get_mapped (manager->priv->button);
+    
+    if ( mapped_buttons & SLEEP_KEY )
+        has_sleep_button = TRUE;
+    if ( mapped_buttons & HIBERNATE_KEY )
+        has_hibernate_button = TRUE;
+    if ( mapped_buttons & POWER_KEY )
+        has_power_button = TRUE;
+	
+    g_hash_table_insert (hash, g_strdup ("sleep-button"), g_strdup (xfpm_bool_to_string (has_sleep_button)));
+    g_hash_table_insert (hash, g_strdup ("power-button"), g_strdup (xfpm_bool_to_string (has_power_button)));
+    g_hash_table_insert (hash, g_strdup ("hibernate-button"), g_strdup (xfpm_bool_to_string (has_hibernate_button)));
+    g_hash_table_insert (hash, g_strdup ("auth-suspend"), g_strdup (xfpm_bool_to_string (auth_suspend)));
+    g_hash_table_insert (hash, g_strdup ("auth-hibernate"), g_strdup (xfpm_bool_to_string (auth_hibernate)));
+    g_hash_table_insert (hash, g_strdup ("can-suspend"), g_strdup (xfpm_bool_to_string (can_suspend)));
+    g_hash_table_insert (hash, g_strdup ("can-hibernate"), g_strdup (xfpm_bool_to_string (can_hibernate)));
+    g_hash_table_insert (hash, g_strdup ("can-shutdown"), g_strdup (xfpm_bool_to_string (can_shutdown)));
+    
+    g_hash_table_insert (hash, g_strdup ("has-battery"), g_strdup (xfpm_bool_to_string (has_battery)));
+    g_hash_table_insert (hash, g_strdup ("has-lid"), g_strdup (xfpm_bool_to_string (has_lid)));
+    g_hash_table_insert (hash, g_strdup ("can-spin"), g_strdup (xfpm_bool_to_string (can_spin)));
+    g_hash_table_insert (hash, g_strdup ("devkit-disk"), g_strdup (xfpm_bool_to_string (devkit_disk)));
+    
+    g_hash_table_insert (hash, g_strdup ("has-brightness"), g_strdup (xfpm_bool_to_string (has_lcd_brightness)));
+    
+    return hash;
+}
+
 /*
  * 
  * DBus server implementation
@@ -643,66 +710,7 @@ static gboolean xfpm_manager_dbus_get_config (XfpmManager *manager,
 					      GError **error)
 {
     
-    guint8 mapped_buttons;
-    gboolean auth_hibernate = FALSE;
-    gboolean auth_suspend = FALSE;
-    gboolean can_suspend = FALSE;
-    gboolean can_hibernate = FALSE;
-    gboolean has_sleep_button = FALSE;
-    gboolean has_hibernate_button = FALSE;
-    gboolean has_power_button = FALSE;
-    gboolean has_battery = TRUE;
-    gboolean has_lcd_brightness = TRUE;
-    gboolean can_shutdown = TRUE;
-    gboolean has_lid = FALSE;
-    gboolean can_spin = FALSE;
-    gboolean devkit_disk = FALSE;
-    
-    *OUT_config = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
-    
-    g_object_get (G_OBJECT (manager->priv->console),
-		  "can-shutdown", &can_shutdown,
-		  NULL);
-
-    g_object_get (G_OBJECT (manager->priv->dkp),
-                  "auth-suspend", &auth_suspend,
-		  "auth-hibernate", &auth_hibernate,
-                  "can-suspend", &can_suspend,
-                  "can-hibernate", &can_hibernate, 
-		  "has-lid", &has_lid,
-		  NULL);
-
-    can_spin = xfpm_disks_get_can_spin (manager->priv->disks);
-    devkit_disk = xfpm_disks_kit_is_running (manager->priv->disks);
-    
-    has_battery = xfpm_dkp_has_battery (manager->priv->dkp);
-    has_lcd_brightness = xfpm_backlight_has_hw (manager->priv->backlight);
-    
-    mapped_buttons = xfpm_button_get_mapped (manager->priv->button);
-    
-    if ( mapped_buttons & SLEEP_KEY )
-        has_sleep_button = TRUE;
-    if ( mapped_buttons & HIBERNATE_KEY )
-        has_hibernate_button = TRUE;
-    if ( mapped_buttons & POWER_KEY )
-        has_power_button = TRUE;
-	
-    g_hash_table_insert (*OUT_config, g_strdup ("sleep-button"), g_strdup (xfpm_bool_to_string (has_sleep_button)));
-    g_hash_table_insert (*OUT_config, g_strdup ("power-button"), g_strdup (xfpm_bool_to_string (has_power_button)));
-    g_hash_table_insert (*OUT_config, g_strdup ("hibernate-button"), g_strdup (xfpm_bool_to_string (has_hibernate_button)));
-    g_hash_table_insert (*OUT_config, g_strdup ("auth-suspend"), g_strdup (xfpm_bool_to_string (auth_suspend)));
-    g_hash_table_insert (*OUT_config, g_strdup ("auth-hibernate"), g_strdup (xfpm_bool_to_string (auth_hibernate)));
-    g_hash_table_insert (*OUT_config, g_strdup ("can-suspend"), g_strdup (xfpm_bool_to_string (can_suspend)));
-    g_hash_table_insert (*OUT_config, g_strdup ("can-hibernate"), g_strdup (xfpm_bool_to_string (can_hibernate)));
-    g_hash_table_insert (*OUT_config, g_strdup ("can-shutdown"), g_strdup (xfpm_bool_to_string (can_shutdown)));
-    
-    g_hash_table_insert (*OUT_config, g_strdup ("has-battery"), g_strdup (xfpm_bool_to_string (has_battery)));
-    g_hash_table_insert (*OUT_config, g_strdup ("has-lid"), g_strdup (xfpm_bool_to_string (has_lid)));
-    g_hash_table_insert (*OUT_config, g_strdup ("can-spin"), g_strdup (xfpm_bool_to_string (can_spin)));
-    g_hash_table_insert (*OUT_config, g_strdup ("devkit-disk"), g_strdup (xfpm_bool_to_string (devkit_disk)));
-    
-    g_hash_table_insert (*OUT_config, g_strdup ("has-brightness"), g_strdup (xfpm_bool_to_string (has_lcd_brightness)));
-    
+    *OUT_config = xfpm_manager_get_config (manager);
     return TRUE;
 }
 					      

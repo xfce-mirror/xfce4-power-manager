@@ -365,7 +365,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	if ( battery->priv->time_to_empty != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
-	    tip = g_strdup_printf (_("%s\nYour %s is discharging (%i%%)\n estimate time left is %s."), 
+	    tip = g_strdup_printf (_("%s\nYour %s is discharging (%i%%)\nestimated time left is %s."), 
 				   power_status,
 				   battery_name, 
 				   battery->priv->percentage, 
