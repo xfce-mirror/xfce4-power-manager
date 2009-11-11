@@ -303,14 +303,19 @@ xfpm_supply_on_low_power (XfpmSupply *supply)
 	    
 	device = xfpm_battery_get_device (battery);
 	g_object_get (G_OBJECT(device), "type", &type, "percentage", &percentage, NULL);
+	
 	if ( type != HAL_DEVICE_TYPE_PRIMARY )
 	    continue;
 	    
 	if ( percentage < low_power_level ) 
 	    low_power = TRUE;
 	else 
+	{
 	    low_power = FALSE;
+	    break;
+	}
     }
+    
     return low_power;
 }
 
