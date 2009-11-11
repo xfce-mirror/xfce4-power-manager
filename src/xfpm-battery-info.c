@@ -26,7 +26,7 @@
 #include <libxfce4ui/libxfce4ui.h>
 
 #include "xfpm-battery-info.h"
-#include "xfpm-dkp.h"
+#include "xfpm-enum-glib.h"
 
 static const gchar *
 xfpm_battery_info_get_device_tech (GHashTable *props)

@@ -629,18 +629,29 @@ static XfpmBatteryCharge
 xfpm_dkp_get_current_charge_state (XfpmDkp *dkp)
 {
     GList *list;
-    XfpmBatteryCharge charge = XFPM_BATTERY_CHARGE_UNKNOWN;
     guint len, i;
+    XfpmBatteryCharge max_charge_status = XFPM_BATTERY_CHARGE_UNKNOWN;
     
     list = g_hash_table_get_values (dkp->priv->hash);
     len = g_list_length (list);
     
     for ( i = 0; i < len; i++)
     {
-	charge = MAX (charge, xfpm_battery_get_charge (XFPM_BATTERY (g_list_nth_data (list, i))));
+	XfpmBatteryCharge battery_charge;
+	XfpmDkpDeviceType type;
+	
+	g_object_get (G_OBJECT (g_list_nth_data (list, i)),
+		      "charge-status", &battery_charge,
+		      "device-type", &type,
+		      NULL);
+	if ( type != XFPM_DKP_DEVICE_TYPE_BATTERY && 
+	     type != XFPM_DKP_DEVICE_TYPE_UPS )
+	    continue;
+	
+	max_charge_status = MAX (max_charge_status, battery_charge);
     }
     
-    return charge;
+    return max_charge_status;
 }
 
 static void
@@ -866,6 +877,8 @@ xfpm_dkp_battery_charge_changed_cb (XfpmBattery *battery, XfpmDkp *dkp)
     battery_charge = xfpm_battery_get_charge (battery);
     current_charge = xfpm_dkp_get_current_charge_state (dkp);
     
+    XFPM_DEBUG_ENUM (current_charge, XFPM_TYPE_BATTERY_CHARGE, "Current system charge status");
+    
     if ( current_charge == XFPM_BATTERY_CHARGE_CRITICAL && dkp->priv->on_battery)
     {
 	xfpm_dkp_system_on_low_power (dkp, battery);
@@ -953,7 +966,8 @@ xfpm_dkp_add_device (XfpmDkp *dkp, const gchar *object_path)
     {
 	GtkStatusIcon *battery;
 	DBusGProxy *proxy;
-	XFPM_DEBUG ("Battery device detected at : %s", object_path);
+	XFPM_DEBUG_ENUM (device_type, XFPM_TYPE_DKP_DEVICE_TYPE, 
+			"Battery device detected at : %s", object_path);
 	proxy = dbus_g_proxy_new_for_name (dkp->priv->bus,
 					   DKP_NAME,
 					   object_path,

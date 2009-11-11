@@ -71,7 +71,9 @@ struct XfpmBatteryPrivate
 enum
 {
     PROP_0,
-    PROP_AC_ONLINE
+    PROP_AC_ONLINE,
+    PROP_CHARGE_STATUS,
+    PROP_DEVICE_TYPE
 };
     
 enum
@@ -555,6 +557,12 @@ static void xfpm_battery_get_property (GObject *object,
 	case PROP_AC_ONLINE:
 	    g_value_set_boolean (value, battery->priv->ac_online);
 	    break;
+	case PROP_DEVICE_TYPE:
+	    g_value_set_enum (value, battery->priv->type);
+	    break;
+	case PROP_CHARGE_STATUS:
+	    g_value_set_enum (value, battery->priv->charge);
+	    break;
 	default:
 	    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
             break;
@@ -610,6 +618,22 @@ xfpm_battery_class_init (XfpmBatteryClass *klass)
                                                           NULL, NULL,
                                                           FALSE,
                                                           G_PARAM_READWRITE));
+
+    g_object_class_install_property (object_class,
+                                     PROP_DEVICE_TYPE,
+                                     g_param_spec_enum ("device-type",
+                                                        NULL, NULL,
+							XFPM_TYPE_DKP_DEVICE_TYPE,
+							XFPM_DKP_DEVICE_TYPE_UNKNOWN,
+                                                        G_PARAM_READABLE));
+
+    g_object_class_install_property (object_class,
+                                     PROP_CHARGE_STATUS,
+                                     g_param_spec_enum ("charge-status",
+                                                        NULL, NULL,
+							XFPM_TYPE_BATTERY_CHARGE,
+							XFPM_BATTERY_CHARGE_UNKNOWN,
+                                                        G_PARAM_READABLE));
 
     g_type_class_add_private (klass, sizeof (XfpmBatteryPrivate));
 }
