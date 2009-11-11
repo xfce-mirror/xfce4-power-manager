@@ -1014,8 +1014,10 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     }
     else
     {
-	frame = GTK_WIDGET (gtk_builder_get_object (xml, "on-ac-actions-frame"));
-	gtk_widget_hide_all (frame);
+	GtkWidget *label;
+	label = GTK_WIDGET (gtk_builder_get_object (xml, "on-ac-lid-label"));
+	gtk_widget_hide (label);
+	gtk_widget_hide (lid);
     }
     
     /*
