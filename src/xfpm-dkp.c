@@ -1027,14 +1027,17 @@ xfpm_dkp_get_power_devices (XfpmDkp *dkp)
     
     array = xfpm_dkp_enumerate_devices (dkp);
     
-    for ( i = 0; i < array->len; i++)
+    if ( array )
     {
-	const gchar *object_path = ( const gchar *) g_ptr_array_index (array, i);
-	XFPM_DEBUG ("Power device detected at : %s", object_path);
-	xfpm_dkp_add_device (dkp, object_path);
+	for ( i = 0; i < array->len; i++)
+	{
+	    const gchar *object_path = ( const gchar *) g_ptr_array_index (array, i);
+	    XFPM_DEBUG ("Power device detected at : %s", object_path);
+	    xfpm_dkp_add_device (dkp, object_path);
+	}
+	g_ptr_array_free (array, TRUE);
     }
     
-    g_ptr_array_free (array, TRUE);
 }
 
 static void
