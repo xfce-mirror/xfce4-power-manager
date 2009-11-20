@@ -39,7 +39,7 @@
 #include "xfpm-button.h"
 #include "xfpm-enum-glib.h"
 #include "xfpm-xfconf.h"
-#include "xfpm-idle.h"
+#include "egg-idletime.h"
 #include "xfpm-config.h"
 #include "xfpm-adapter.h"
 #include "xfpm-screen-saver.h"
@@ -56,7 +56,7 @@ struct XfpmBrightnessHalPrivate
     DBusGProxy      *proxy;
     
     XfpmXfconf      *conf;
-    XfpmIdle        *idle;
+    EggIdletime     *idle;
     XfpmButton      *button;
     XfpmAdapter     *adapter;
     XfpmScreenSaver *saver;
@@ -278,7 +278,7 @@ xfpm_brightness_hal_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, X
 }
 
 static void
-xfpm_brightness_hal_reset_cb (XfpmIdle *idle, XfpmBrightnessHal *brg)
+xfpm_brightness_hal_reset_cb (EggIdletime *idle, XfpmBrightnessHal *brg)
 {
     GError *error = NULL;
     guint level;
@@ -360,7 +360,7 @@ xfpm_brightness_timeout_on_battery (XfpmBrightnessHal *brg)
 }
 
 static void
-xfpm_brightness_hal_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmBrightnessHal *brg)
+xfpm_brightness_hal_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmBrightnessHal *brg)
 {
     if ( brg->priv->block )
 	brg->priv->block = FALSE;
@@ -403,23 +403,23 @@ xfpm_brightness_hal_set_timeouts (XfpmBrightnessHal *brg )
     
     if ( timeout_on_ac == ALARM_DISABLED )
     {
-	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC );
+	egg_idletime_alarm_remove (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC );
     }
     else
     {
-	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC, timeout_on_ac * 1000);
+	egg_idletime_alarm_set (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC, timeout_on_ac * 1000);
     }
     
     if ( timeout_on_battery == ALARM_DISABLED )
     {
-	xfpm_idle_free_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY );
+	egg_idletime_alarm_remove (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY );
     }
     else
     {
-	xfpm_idle_set_alarm (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY, timeout_on_battery * 1000);
+	egg_idletime_alarm_set (brg->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY, timeout_on_battery * 1000);
     }
     
-    xfpm_idle_alarm_reset_all (brg->priv->idle);
+    egg_idletime_alarm_reset_all (brg->priv->idle);
 }
 
 static void
@@ -478,7 +478,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
 
     if ( brg->priv->hw_found && brg->priv->max_level > 0 )
     {
-	brg->priv->idle     = xfpm_idle_new ();
+	brg->priv->idle     = egg_idletime_new ();
 	brg->priv->conf     = xfpm_xfconf_new ();
 	brg->priv->button   = xfpm_button_new ();
 	brg->priv->adapter  = xfpm_adapter_new ();
@@ -499,7 +499,7 @@ xfpm_brightness_hal_init(XfpmBrightnessHal *brg)
 			  G_CALLBACK(xfpm_brightness_hal_button_pressed_cb), brg);
 	
 	brg->priv->sig[3] =
-	g_signal_connect (brg->priv->idle, "alarm-timeout",
+	g_signal_connect (brg->priv->idle, "alarm-expired",
 			  G_CALLBACK(xfpm_brightness_hal_alarm_timeout_cb), brg);
 	
 	brg->priv->sig[4] =

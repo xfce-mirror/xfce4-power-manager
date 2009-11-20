@@ -43,8 +43,6 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-brightness-hal.h			\
 	xfpm-brightness-widget.c		\
 	xfpm-brightness-widget.h		\
-	xfpm-idle.c				\
-	xfpm-idle.h				\
 	xfpm-inhibit.c				\
 	xfpm-inhibit.h				\
 	xfpm-screen-saver.c			\
@@ -62,7 +60,9 @@ xfce4_power_manager_SOURCES = 			\
 	xfpm-config.h				\
 	xfpm-enum.h				\
 	xfpm-debug.c				\
-	xfpm-debug.h
+	xfpm-debug.h				\
+	egg-idletime.c				\
+	egg-idletime.h
 
 
 xfce4_power_manager_CFLAGS =			\

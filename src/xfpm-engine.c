@@ -50,7 +50,7 @@
 #include "xfpm-screen-saver.h"
 #include "xfpm-shutdown.h"
 #include "xfpm-button-hal.h"
-#include "xfpm-idle.h"
+#include "egg-idletime.h"
 #include "xfpm-errors.h"
 #include "xfpm-config.h"
 #include "xfpm-enum-types.h"
@@ -78,7 +78,7 @@ struct XfpmEnginePrivate
     XfpmShutdown        *shutdown;
     XfpmButton          *button;
     XfpmButtonHal       *bt_hal;
-    XfpmIdle            *idle;
+    EggIdletime         *idle;
     XfpmScreenSaver     *srv;
 #ifdef HAVE_DPMS
     XfpmDpms *dpms;
@@ -411,7 +411,7 @@ xfpm_engine_adapter_changed_cb (XfpmAdapter * adapter, gboolean present,
 {
     engine->priv->on_battery = !present;
     g_signal_emit (G_OBJECT (engine), signals [ON_BATTERY_CHANGED], 0, engine->priv->on_battery);
-    xfpm_idle_alarm_reset_all (engine->priv->idle);
+    egg_idletime_alarm_reset_all (engine->priv->idle);
 }
 
 static void
@@ -444,25 +444,25 @@ xfpm_engine_set_inactivity_timeouts (XfpmEngine *engine)
     
     if ( on_ac == 14 )
     {
-	xfpm_idle_free_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_AC );
+	egg_idletime_alarm_remove (engine->priv->idle, TIMEOUT_INACTIVITY_ON_AC );
     }
     else
     {
-	xfpm_idle_set_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_AC, on_ac * 1000 * 60);
+	egg_idletime_alarm_set (engine->priv->idle, TIMEOUT_INACTIVITY_ON_AC, on_ac * 1000 * 60);
     }
     
     if ( on_battery == 14 )
     {
-	xfpm_idle_free_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY );
+	egg_idletime_alarm_remove (engine->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY );
     }
     else
     {
-	xfpm_idle_set_alarm (engine->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY, on_battery * 1000 * 60);
+	egg_idletime_alarm_set (engine->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY, on_battery * 1000 * 60);
     }
 }
 
 static void
-xfpm_engine_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmEngine *engine)
+xfpm_engine_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmEngine *engine)
 {
     XfpmShutdownRequest req = XFPM_DO_NOTHING;
     gchar *sleep_mode;
@@ -579,9 +579,9 @@ xfpm_engine_init (XfpmEngine * engine)
     g_signal_connect (engine->priv->adapter, "adapter-changed",
 		      G_CALLBACK (xfpm_engine_adapter_changed_cb), engine);
 
-    engine->priv->idle    = xfpm_idle_new ();
+    engine->priv->idle    = egg_idletime_new ();
 
-    g_signal_connect (engine->priv->idle, "alarm-timeout",
+    g_signal_connect (engine->priv->idle, "alarm-expired",
 		      G_CALLBACK (xfpm_engine_alarm_timeout_cb), engine);
 		      
     g_signal_connect (engine->priv->conf, "notify",
