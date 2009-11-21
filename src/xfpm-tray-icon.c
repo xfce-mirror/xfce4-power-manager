@@ -85,6 +85,11 @@ xfpm_tray_icon_size_changed_cb (GtkStatusIcon *icon, gint size, XfpmTrayIcon *tr
     GdkPixbuf *pix;
     
     g_return_val_if_fail (size > 0, FALSE);
+    
+    g_debug ("Size Changed %d icon=%s", size, g_quark_to_string (tray->priv->icon_quark));
+    
+    if ( size > 128 )
+	return FALSE;
 
     if ( tray->priv->icon_quark == 0 )
 	return FALSE;

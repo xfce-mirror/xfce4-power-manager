@@ -213,6 +213,7 @@ xfpm_supply_hide_adapter_icon (XfpmSupply *supply)
 {
     if ( supply->priv->tray )
     {
+	TRACE ("hide adapter icon");
 	g_object_unref (supply->priv->tray);
 	supply->priv->tray = NULL;
     }
@@ -231,8 +232,8 @@ xfpm_supply_show_tray_icon (XfpmSupply *supply)
 #endif    
 
     supply->priv->tray = xfpm_tray_icon_new ();
-    
-    xfpm_tray_icon_set_visible (supply->priv->tray, FALSE);
+    TRACE ("show adapter icon");
+    xfpm_tray_icon_set_visible (supply->priv->tray, TRUE);
     xfpm_tray_icon_set_icon (supply->priv->tray, XFPM_AC_ADAPTER_ICON);
     xfpm_tray_icon_set_show_info_menu (supply->priv->tray, FALSE);
 }
