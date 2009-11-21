@@ -327,6 +327,8 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
 	    g_warning ("Cannot set Force DPMS level %d", level);
 	    goto out;
 	}
+	if ( level == DPMSModeOn )
+	    XResetScreenSaver (GDK_DISPLAY ());
 	XSync (GDK_DISPLAY (), FALSE);
     }
     else
