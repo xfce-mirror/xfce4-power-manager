@@ -47,7 +47,7 @@
 #include "xfpm-button.h"
 #include "xfpm-backlight.h"
 #include "xfpm-inhibit.h"
-#include "xfpm-idle.h"
+#include "egg-idletime.h"
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
 #include "xfpm-xfconf.h"
@@ -84,7 +84,7 @@ struct XfpmManagerPrivate
     XfpmDBusMonitor *monitor;
     XfpmDisks       *disks;
     XfpmInhibit     *inhibit;
-    XfpmIdle        *idle;
+    EggIdletime     *idle;
 #ifdef HAVE_DPMS
     XfpmDpms        *dpms;
 #endif
@@ -350,7 +350,7 @@ xfpm_manager_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmM
 }
 
 static void
-xfpm_manager_alarm_timeout_cb (XfpmIdle *idle, guint id, XfpmManager *manager)
+xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager)
 {
     XFPM_DEBUG ("Alarm inactivity timeout id %d", id);
     
@@ -406,11 +406,11 @@ xfpm_manager_set_idle_alarm_on_ac (XfpmManager *manager)
     
     if ( on_ac == 14 )
     {
-	xfpm_idle_free_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC );
+	egg_idletime_alarm_remove (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC );
     }
     else
     {
-	xfpm_idle_set_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC, on_ac * 1000 * 60);
+	egg_idletime_alarm_set (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC, on_ac * 1000 * 60);
     }
 }
 
@@ -432,22 +432,18 @@ xfpm_manager_set_idle_alarm_on_battery (XfpmManager *manager)
     
     if ( on_battery == 14 )
     {
-	xfpm_idle_free_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY );
+	egg_idletime_alarm_remove (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY );
     }
     else
     {
-	xfpm_idle_set_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY, on_battery * 1000 * 60);
+	egg_idletime_alarm_set (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY, on_battery * 1000 * 60);
     }
 }
 
 static void
 xfpm_manager_on_battery_changed_cb (XfpmDkp *dkp, gboolean on_battery, XfpmManager *manager)
 {
-    if ( on_battery )
-	xfpm_idle_reset_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY);
-    else
-	xfpm_idle_reset_alarm (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC);
-	
+    egg_idletime_alarm_reset_all (manager->priv->idle);
 }
 
 static void
@@ -521,9 +517,9 @@ void xfpm_manager_start (XfpmManager *manager)
     manager->priv->monitor = xfpm_dbus_monitor_new ();
     manager->priv->disks = xfpm_disks_new ();
     manager->priv->inhibit = xfpm_inhibit_new ();
-    manager->priv->idle = xfpm_idle_new ();
+    manager->priv->idle = egg_idletime_new ();
     
-    g_signal_connect (manager->priv->idle, "alarm-timeout",
+    g_signal_connect (manager->priv->idle, "alarm-expired",
 		      G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager);
     
     g_signal_connect (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,

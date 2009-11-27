@@ -398,7 +398,7 @@ egg_idletime_init (EggIdletime *idletime)
 
 	/* gtk_init should do XSyncInitialize for us */
 	counters = XSyncListSystemCounters (idletime->priv->dpy, &ncounters);
-	for (i=0; i < ncounters && !idletime->priv->idle_counter; i++) {
+	for (i=0; i < (guint)ncounters && !idletime->priv->idle_counter; i++) {
 		if (strcmp(counters[i].name, "IDLETIME") == 0)
 			idletime->priv->idle_counter = counters[i].counter;
 	}
