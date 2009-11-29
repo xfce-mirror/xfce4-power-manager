@@ -167,7 +167,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     
     if ( !XRRQueryVersion (GDK_DISPLAY (), &major, &minor) )
     {
-	TRACE ("No XRANDR extension found");
+	g_warning ("No XRANDR extension found");
 	return FALSE;
     }
     
@@ -175,7 +175,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     
     if (brightness->priv->backlight == None) 
     {
-	TRACE ("No outputs have backlight property");
+	g_warning ("No outputs have backlight property");
 	return FALSE;
     }
 	
@@ -190,24 +190,26 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 #else
     brightness->priv->resource = XRRGetScreenResources (GDK_DISPLAY (), window);
 #endif
-    
+
     for ( i = 0; i < brightness->priv->resource->noutput; i++)
     {
 	info = XRRGetOutputInfo (GDK_DISPLAY (), brightness->priv->resource, brightness->priv->resource->outputs[i]);
-	
-	if ( !g_strcmp0 (info->name, "LVDS") )
+
+	if ( g_str_has_prefix (info->name, "LVDS") )
 	{
+	    
 	    if ( xfpm_brightness_xrand_get_limit (brightness, brightness->priv->resource->outputs[i], &min, &max) &&
 		 min != max )
 	    {
 		ret = TRUE;
 		brightness->priv->output = brightness->priv->resource->outputs[i];
-		brightness->priv->step = max / 20;
+		brightness->priv->step =  max <= 20 ? 1 : max / 10;
 	    }
 	    
 	}
 	XRRFreeOutputInfo (info);
     }
+    
     return ret;
 }
 
@@ -215,28 +217,40 @@ static gboolean
 xfpm_brightness_xrand_up (XfpmBrightness *brightness, gint *new_level)
 {
     gint hw_level;
-    gboolean ret;
+    gboolean ret = FALSE;
+    gint set_level;
     
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, &hw_level);
     
     if ( !ret )
 	return FALSE;
+
+    if ( hw_level == brightness->priv->max_level )
+    {
+	*new_level = brightness->priv->max_level;
+	return TRUE;
+    }
 	
-    if ( hw_level + brightness->priv->step <= brightness->priv->max_level)
-	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, hw_level + brightness->priv->step);
-    else
-	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, brightness->priv->max_level);
+    set_level = MIN (hw_level + brightness->priv->step, brightness->priv->max_level );
+	
+    g_warn_if_fail (xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, set_level));
 	
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, new_level);
     
     if ( !ret )
+    {
+	g_warning ("xfpm_brightness_xrand_up failed for %d", set_level);
 	return FALSE;
+    }
 	
     /* Nothing changed in the hardware*/
     if ( *new_level == hw_level )
+    {
+	g_warning ("xfpm_brightness_xrand_up did not change the hw level to %d", set_level);
 	return FALSE;
+    }
     
-    return ret;
+    return TRUE;
 }
 
 static gboolean
@@ -244,28 +258,39 @@ xfpm_brightness_xrand_down (XfpmBrightness *brightness, gint *new_level)
 {
     gint hw_level;
     gboolean ret;
+    gint set_level;
     
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, &hw_level);
     
     if ( !ret )
 	return FALSE;
     
-    if ( hw_level - brightness->priv->step >= brightness->priv->min_level)
-	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, hw_level - brightness->priv->step);
-    else
-	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, brightness->priv->min_level);
+    if ( hw_level == brightness->priv->min_level )
+    {
+	*new_level = brightness->priv->min_level;
+	return TRUE;
+    }
+    
+    set_level = MAX (hw_level - brightness->priv->step, brightness->priv->min_level);
+    
+    g_warn_if_fail (xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, set_level));
 	
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, new_level);
     
     if ( !ret )
+    {
+	g_warning ("xfpm_brightness_xrand_down failed for %d", set_level);
 	return FALSE;
+    }
     
     /* Nothing changed in the hardware*/
     if ( *new_level == hw_level )
+    {
+	g_warning ("xfpm_brightness_xrand_down did not change the hw level to %d", set_level);
 	return FALSE;
+    }
     
-    return ret;
-
+    return TRUE;
 }
 
 /*
@@ -335,6 +360,7 @@ static gboolean
 xfpm_brightness_hal_up (XfpmBrightness *brightness)
 {
     gint hw_level;
+    gint set_level;
     gboolean ret = TRUE;
     
     ret = xfpm_brightness_hal_get_level (brightness, &hw_level);
@@ -342,14 +368,14 @@ xfpm_brightness_hal_up (XfpmBrightness *brightness)
     if ( !ret )
 	return FALSE;
 	
-    if ( hw_level + brightness->priv->step <= brightness->priv->max_level )
+    if ( hw_level == brightness->priv->max_level )
     {
-	ret = xfpm_brightness_hal_set_level (brightness, hw_level + brightness->priv->step);
+	return TRUE;
     }
-    else
-    {
-	ret = xfpm_brightness_hal_set_level (brightness, brightness->priv->max_level);
-    }
+    
+    set_level =  MIN (hw_level + brightness->priv->step, brightness->priv->max_level );
+    
+    ret = xfpm_brightness_hal_set_level (brightness, set_level);
     
     return ret;
 }
@@ -358,21 +384,20 @@ static gboolean
 xfpm_brightness_hal_down (XfpmBrightness *brightness)
 {
     gint hw_level;
+    gint set_level;
     gboolean ret = TRUE;
     
     ret = xfpm_brightness_hal_get_level (brightness, &hw_level);
     
     if ( !ret )
 	return FALSE;
+
+    if ( hw_level == brightness->priv->min_level )
+	return TRUE;
+	
+    set_level = MAX (hw_level - brightness->priv->step, brightness->priv->min_level);
     
-    if ( hw_level - brightness->priv->step >= brightness->priv->min_level  )
-    {
-	ret = xfpm_brightness_hal_set_level (brightness, hw_level - brightness->priv->step);
-    }
-    else
-    {
-	ret = xfpm_brightness_hal_set_level (brightness, brightness->priv->min_level);
-    }
+    ret = xfpm_brightness_hal_set_level (brightness, brightness->priv->min_level);
     
     return ret;
 }
