@@ -124,7 +124,6 @@ xfpm_backlight_show_notification (XfpmBacklight *backlight, gint level, gint max
 {
     gint i;
     gfloat value = 0;
-    NotifyNotification *n;
     
     static const char *display_icon_name[] = 
     {
@@ -136,36 +135,38 @@ xfpm_backlight_show_notification (XfpmBacklight *backlight, gint level, gint max
 	NULL
     };
     
-    if ( !backlight->priv->n )
+    if ( backlight->priv->n == NULL )
     {
-	n = xfpm_notify_new_notification (backlight->priv->notify, 
-					  NULL, 
-					  NULL, 
-					  NULL, 
-					  0, 
-					  XFPM_NOTIFY_NORMAL,
-					  NULL);
+	backlight->priv->n = xfpm_notify_new_notification (backlight->priv->notify, 
+							   " ", 
+							   "", 
+							   NULL, 
+							   0, 
+							   XFPM_NOTIFY_NORMAL,
+							   NULL);
     }
     
     value = (gfloat) 100 * level / max_level;
     
     i = (gint)value / 25;
     
-    notify_notification_set_hint_int32  (n,
+    if ( i > 4 || i < 0 )
+	return;
+    
+    notify_notification_set_hint_int32  (backlight->priv->n,
 					 "value",
 					 value);
     
-    notify_notification_set_hint_string (n,
+    notify_notification_set_hint_string (backlight->priv->n,
 					 "x-canonical-private-synchronous",
 					 "brightness");
-					 
-    notify_notification_update (n,
+    
+    notify_notification_update (backlight->priv->n,
 			        " ",
 				"",
 				display_icon_name[i]);
 				
-    notify_notification_show (n, NULL);
-    backlight->priv->n = n;
+    notify_notification_show (backlight->priv->n, NULL);
 }
 
 static gboolean
