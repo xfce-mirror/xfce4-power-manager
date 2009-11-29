@@ -478,7 +478,7 @@ xfpm_manager_new (DBusGConnection *bus, const gchar *client_id)
 						     client_id,
 						     current_dir,
 						     restart_command,
-						     PACKAGE_NAME ".desktop");
+						     SYSCONFDIR "/xdg/autostart/" PACKAGE_NAME ".desktop");
     
     g_free (current_dir);
     

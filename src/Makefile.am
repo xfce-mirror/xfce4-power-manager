@@ -39,33 +39,34 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-errors.h
 
 xfce4_power_manager_CFLAGS =                    \
-        -I$(top_srcdir)                         \
+	-I$(top_srcdir)                         \
 	-I$(top_srcdir)/common                  \
 	-I$(top_srcdir)/libdbus                 \
-        -DLOCALEDIR=\"$(localedir)\"            \
-        -DG_LOG_DOMAIN=\"xfce4-power-manager\"  \
-        $(GOBJECT_CFLAGS)                       \
-        $(GTHREAD_CFLAGS)                       \
-        $(DBUS_GLIB_CFLAGS)                     \
-        $(LIBXFCE4UI_CFLAGS)                    \
-        $(XFCONF_CFLAGS)                        \
-        $(LIBNOTIFY_CFLAGS)                     \
+	-DLOCALEDIR=\"$(localedir)\"            \
+	-DG_LOG_DOMAIN=\"xfce4-power-manager\"  \
+	-DSYSCONFDIR=\"$(sysconfdir)\"		\
+	$(GOBJECT_CFLAGS)                       \
+	$(GTHREAD_CFLAGS)                       \
+	$(DBUS_GLIB_CFLAGS)                     \
+	$(LIBXFCE4UI_CFLAGS)                    \
+	$(XFCONF_CFLAGS)                        \
+	$(LIBNOTIFY_CFLAGS)                     \
 	$(XRANDR_CFLAGS)			\
 	$(POLKIT_CFLAGS)			\
-        $(DPMS_CFLAGS)                  
+	$(DPMS_CFLAGS)                  
 
 xfce4_power_manager_LDADD =                     \
 	$(top_builddir)/common/libxfpmcommon.la \
 	$(top_builddir)/libdbus/libxfpmdbus.la  \
-        $(GOBJECT_LIBS)                         \
-        $(GTHREAD_LIBS)                         \
-        $(DBUS_GLIB_LIBS)                       \
-        $(LIBXFCE4UI_LIBS)                      \
-        $(XFCONF_LIBS)                          \
-        $(LIBNOTIFY_LIBS)                       \
+	$(GOBJECT_LIBS)                         \
+	$(GTHREAD_LIBS)                         \
+	$(DBUS_GLIB_LIBS)                       \
+	$(LIBXFCE4UI_LIBS)                      \
+	$(XFCONF_LIBS)                          \
+	$(LIBNOTIFY_LIBS)                       \
 	$(XRANDR_LIBS)				\
 	$(POLKIT_LIBS)				\
-        $(DPMS_LIBS)
+	$(DPMS_LIBS)
 
 manpagedir = $(mandir)/man1
 
