@@ -1088,6 +1088,7 @@ xfpm_dkp_device_changed_cb (DBusGProxy *proxy, const gchar *object_path, XfpmDkp
 static void
 xfpm_dkp_polkit_auth_changed_cb (XfpmDkp *dkp)
 {
+    XFPM_DEBUG ("Auth configuration changed");
     xfpm_dkp_check_polkit_auth (dkp);
 }
 #endif
