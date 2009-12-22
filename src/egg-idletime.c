@@ -39,6 +39,14 @@ static void     egg_idletime_finalize   (GObject       *object);
 
 #define EGG_IDLETIME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), EGG_IDLETIME_TYPE, EggIdletimePrivate))
 
+/*
+ * Undef and use the function instead of the macro
+ * as the macro is buggy.
+ */
+#ifdef XSyncValueAdd
+#undef XSyncValueAdd
+#endif
+
 struct EggIdletimePrivate
 {
 	gint			 sync_event;
@@ -398,7 +406,7 @@ egg_idletime_init (EggIdletime *idletime)
 
 	/* gtk_init should do XSyncInitialize for us */
 	counters = XSyncListSystemCounters (idletime->priv->dpy, &ncounters);
-	for (i=0; i < (guint) ncounters && !idletime->priv->idle_counter; i++) {
+	for (i=0; i < (guint)ncounters && !idletime->priv->idle_counter; i++) {
 		if (strcmp(counters[i].name, "IDLETIME") == 0)
 			idletime->priv->idle_counter = counters[i].counter;
 	}
