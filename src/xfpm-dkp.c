@@ -897,31 +897,34 @@ xfpm_dkp_battery_charge_changed_cb (XfpmBattery *battery, XfpmDkp *dkp)
 		  GENERAL_NOTIFICATION_CFG, &notify,
 		  NULL);
     
-    if ( current_charge == XFPM_BATTERY_CHARGE_LOW && dkp->priv->on_battery )
+    if ( dkp->priv->on_battery )
     {
-	if ( notify )
-	    xfpm_notify_show_notification (dkp->priv->notify, 
-					   _("Xfce power manager"), 
-					   _("System is running on low power"), 
-					   gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
-					   10000,
-					   FALSE,
-					   XFPM_NOTIFY_NORMAL,
-					   GTK_STATUS_ICON (battery));
-	
-    }
-    else if ( battery_charge == XFPM_BATTERY_CHARGE_LOW )
-    {
-	
-	if ( notify )
-	    xfpm_notify_show_notification (dkp->priv->notify, 
-					   _("Xfce power manager"), 
-					   _("Battery charge level is low"), 
-					   gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
-					   10000,
-					   FALSE,
-					   XFPM_NOTIFY_NORMAL,
-					   GTK_STATUS_ICON (battery));
+	if ( current_charge == XFPM_BATTERY_CHARGE_LOW )
+	{
+	    if ( notify )
+		xfpm_notify_show_notification (dkp->priv->notify, 
+					       _("Xfce power manager"), 
+					       _("System is running on low power"), 
+					       gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
+					       10000,
+					       FALSE,
+					       XFPM_NOTIFY_NORMAL,
+					       GTK_STATUS_ICON (battery));
+	    
+	}
+	else if ( battery_charge == XFPM_BATTERY_CHARGE_LOW )
+	{
+	    
+	    if ( notify )
+		xfpm_notify_show_notification (dkp->priv->notify, 
+					       _("Xfce power manager"), 
+					       _("Battery charge level is low"), 
+					       gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
+					       10000,
+					       FALSE,
+					       XFPM_NOTIFY_NORMAL,
+					       GTK_STATUS_ICON (battery));
+	}
     }
     
     /*Current charge is okay now, then close the dialog*/
