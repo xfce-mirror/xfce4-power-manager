@@ -36,7 +36,9 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-polkit.c				\
 	xfpm-polkit.h				\
 	xfpm-errors.c				\
-	xfpm-errors.h
+	xfpm-errors.h				\
+	gsd-media-keys-window.c			\
+	gsd-media-keys-window.h
 
 xfce4_power_manager_CFLAGS =                    \
 	-I$(top_srcdir)                         \

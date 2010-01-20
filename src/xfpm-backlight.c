@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <math.h>
+
 #include <gtk/gtk.h>
 #include <libxfce4util/libxfce4util.h>
 
@@ -40,7 +42,11 @@
 #include "xfpm-debug.h"
 #include "xfpm-icons.h"
 
-static void xfpm_backlight_finalize   (GObject *object);
+#include "gsd-media-keys-window.h"
+
+static void xfpm_backlight_finalize     (GObject *object);
+
+static void xfpm_backlight_create_popup (XfpmBacklight *backlight);
 
 #define ALARM_DISABLED 9
 #define BRIGHTNESS_POPUP_SIZE	180
@@ -57,12 +63,10 @@ struct XfpmBacklightPrivate
     XfpmButton     *button;
     XfpmNotify     *notify;
     
-    GtkWidget 	   *window;
-    GtkWidget      *progress_bar;
+    GtkWidget	   *osd;
     NotifyNotification *n;
     
     
-    gulong     	    timeout_id;
     gulong	    destroy_id;
     
     gboolean	    has_hw;
@@ -104,10 +108,10 @@ xfpm_backlight_destroy_popup (gpointer data)
     
     backlight = XFPM_BACKLIGHT (data);
     
-    if ( backlight->priv->window )
+    if ( backlight->priv->osd )
     {
-	gtk_widget_destroy (backlight->priv->window);
-	backlight->priv->window = NULL;
+	gtk_widget_destroy (backlight->priv->osd);
+	backlight->priv->osd = NULL;
     }
     
     if ( backlight->priv->n )
@@ -120,10 +124,16 @@ xfpm_backlight_destroy_popup (gpointer data)
 }
 
 static void
-xfpm_backlight_show_notification (XfpmBacklight *backlight, gint level, gint max_level)
+xfpm_backlight_composited_changed_cb (XfpmBacklight *backlight)
+{
+    xfpm_backlight_destroy_popup (backlight);
+    xfpm_backlight_create_popup (backlight);
+}
+
+static void
+xfpm_backlight_show_notification (XfpmBacklight *backlight, gfloat value)
 {
     gint i;
-    gfloat value = 0;
     
     static const char *display_icon_name[] = 
     {
@@ -146,8 +156,6 @@ xfpm_backlight_show_notification (XfpmBacklight *backlight, gint level, gint max
 							   NULL);
     }
     
-    value = (gfloat) 100 * level / max_level;
-    
     i = (gint)value / 25;
     
     if ( i > 4 || i < 0 )
@@ -169,69 +177,31 @@ xfpm_backlight_show_notification (XfpmBacklight *backlight, gint level, gint max
     notify_notification_show (backlight->priv->n, NULL);
 }
 
-static gboolean
-xfpm_backlight_hide_popup_timeout (XfpmBacklight *backlight)
-{
-    gtk_widget_hide (backlight->priv->window);
-    return FALSE;
-}
-
 static void
 xfpm_backlight_create_popup (XfpmBacklight *backlight)
 {
-    GtkWidget *vbox;
-    GtkWidget *img;
-    GtkWidget *align;
-    GtkObject *adj;
-    
-    if ( backlight->priv->window != NULL )
+    if ( backlight->priv->osd != NULL )
 	return;
 	
-    backlight->priv->window = gtk_window_new (GTK_WINDOW_POPUP);
-
-    g_object_set (G_OBJECT (backlight->priv->window), 
-		  "window-position", GTK_WIN_POS_CENTER_ALWAYS,
-		  "decorated", FALSE,
-		  "resizable", FALSE,
-		  "type-hint", GDK_WINDOW_TYPE_HINT_UTILITY,
-		  "app-paintable", TRUE,
-		  NULL);
-
-    gtk_window_set_default_size (GTK_WINDOW (backlight->priv->window), BRIGHTNESS_POPUP_SIZE, BRIGHTNESS_POPUP_SIZE);
+    backlight->priv->osd = gsd_media_keys_window_new ();
+    gsd_media_keys_window_set_action_custom (GSD_MEDIA_KEYS_WINDOW (backlight->priv->osd),
+					     XFPM_DISPLAY_BRIGHTNESS_ICON,
+					     TRUE);
+    gtk_window_set_position (GTK_WINDOW (backlight->priv->osd), GTK_WIN_POS_CENTER);
     
-    align = gtk_alignment_new (0., 0.5, 0, 0);
-    gtk_alignment_set_padding (GTK_ALIGNMENT (align), 5, 5, 5, 5);
-    
-    vbox = gtk_vbox_new (FALSE, 0);
-    
-    gtk_container_add (GTK_CONTAINER (backlight->priv->window), align);
-    gtk_container_add (GTK_CONTAINER (align), vbox);
-    
-    img = gtk_image_new_from_icon_name (XFPM_DISPLAY_BRIGHTNESS_ICON, GTK_ICON_SIZE_DIALOG);
-    
-    gtk_box_pack_start (GTK_BOX (vbox), img, TRUE, TRUE, 0);
-    
-    backlight->priv->progress_bar = gtk_progress_bar_new ();
-    
-    adj = gtk_adjustment_new (0., 0., backlight->priv->max_level, 1., 0., 0.);
-
-    g_object_set (G_OBJECT (backlight->priv->progress_bar),
-		  "adjustment", adj,
-		  NULL);
-    
-    gtk_box_pack_start (GTK_BOX (vbox), backlight->priv->progress_bar, TRUE, TRUE, 0);
-    
-    gtk_widget_show_all (align);
+    g_signal_connect_swapped (backlight->priv->osd, "composited-changed",
+			      G_CALLBACK (xfpm_backlight_composited_changed_cb), backlight);
+			      
 }
 
 static void
 xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 {
+    gfloat value;
     gboolean sync;
     gboolean show_popup;
     
     XFPM_DEBUG ("Level %u", level);
-    
     
     g_object_get (G_OBJECT (backlight->priv->conf),
                   SHOW_BRIGHTNESS_POPUP, &show_popup,
@@ -244,29 +214,19 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 		  "sync", &sync,
 		  NULL);
     
-    if ( sync )
+    value = (gfloat) 100 * level / backlight->priv->max_level;
+    
+    if ( !sync ) /*Notification server doesn't support sync notifications*/
     {
-	xfpm_backlight_show_notification (backlight, level, backlight->priv->max_level);
+	xfpm_backlight_create_popup (backlight);
+	gsd_media_keys_window_set_volume_level (GSD_MEDIA_KEYS_WINDOW (backlight->priv->osd),
+						round (value));
+	if ( !GTK_WIDGET_VISIBLE (backlight->priv->osd))
+	    gtk_window_present (GTK_WINDOW (backlight->priv->osd));
     }
     else
     {
-	GtkAdjustment *adj;
-	
-	xfpm_backlight_create_popup (backlight);
-	g_object_get (G_OBJECT (backlight->priv->progress_bar),
-		      "adjustment", &adj,
-		      NULL);
-	
-	gtk_adjustment_set_value (adj, level);
-	
-	if ( !GTK_WIDGET_VISIBLE (backlight->priv->window))
-	    gtk_window_present (GTK_WINDOW (backlight->priv->window));
-	
-	if ( backlight->priv->timeout_id != 0 )
-	    g_source_remove (backlight->priv->timeout_id);
-	    
-	backlight->priv->timeout_id = 
-	    g_timeout_add (900, (GSourceFunc) xfpm_backlight_hide_popup_timeout, backlight);
+	xfpm_backlight_show_notification (backlight, value);
     }
     
     if ( backlight->priv->destroy_id != 0 )
@@ -342,7 +302,6 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
 	if ( enable_brightness )
 	    ret = xfpm_brightness_down (backlight->priv->brightness, &level);
 #endif
-	    
 	if ( ret && show_popup)
 	    xfpm_backlight_show (backlight, level);
     }
@@ -422,17 +381,15 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->brightness = xfpm_brightness_new ();
     backlight->priv->has_hw     = xfpm_brightness_setup (backlight->priv->brightness);
     
+    backlight->priv->osd    = NULL;
     backlight->priv->notify = NULL;
     backlight->priv->idle   = NULL;
     backlight->priv->conf   = NULL;
     backlight->priv->button = NULL;
     backlight->priv->dkp    = NULL;
-    backlight->priv->window = NULL;
-    backlight->priv->progress_bar = NULL;
     backlight->priv->dimmed = FALSE;
     backlight->priv->block = FALSE;
     backlight->priv->destroy_id = 0;
-    backlight->priv->timeout_id = 0;
     
     if ( !backlight->priv->has_hw )
     {
