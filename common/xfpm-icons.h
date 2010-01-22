@@ -24,7 +24,15 @@
 G_BEGIN_DECLS
 
 #define XFPM_AC_ADAPTER_ICON			"xfpm-ac-adapter"
+
 #define XFPM_BATTERY_ICON			"battery"
+#define XFPM_UPS_ICON				"xfpm-ups-100"
+#define XFPM_KBD_ICON				"xfpm-keyboard-100"
+#define XFPM_MOUSE_ICON				"xfpm-mouse-100"
+#define XFPM_PHONE_ICON				"xfpm-phone-100"
+#define XFPM_PDA_ICON				"xfpm-pda-100"
+
+#define XFPM_PROCESSOR_ICON			"processor"
 
 #define XFPM_PRIMARY_ICON_PREFIX		"xfpm-primary-"
 #define XFPM_UPS_ICON_PREFIX			"xfpm-ups-"

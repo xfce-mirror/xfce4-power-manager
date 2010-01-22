@@ -1571,7 +1571,7 @@ delete_event_cb (GtkWidget *plug, GdkEvent *ev, XfconfChannel *channel)
     settings_quit (plug, channel);
 }
 
-void
+GtkWidget *
 xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop, 
 			  gboolean auth_hibernate, gboolean auth_suspend, 
 			  gboolean can_shutdown, gboolean can_suspend, 
@@ -1661,4 +1661,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     }
     
     gtk_builder_connect_signals (xml, channel);
+    
+    return dialog;
 }

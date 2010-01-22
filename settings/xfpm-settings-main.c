@@ -44,8 +44,11 @@
 #include "xfpm-config.h"
 #include "xfpm-dbus.h"
 
+#include "xfpm-unique.h"
+
 int main (int argc, char **argv)
 {
+    
     GError *error = NULL;
     DBusGConnection *bus;
     GHashTable *config_hash;
@@ -103,79 +106,82 @@ int main (int argc, char **argv)
 
     if ( xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(bus), "org.xfce.PowerManager") ) 
     {
+	GtkWidget *dialog;
+	XfpmUnique *unique;
 	TRACE("Xfce power manager is running\n");
 	
-	if ( xfpm_dbus_name_has_owner(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager.Config") )
+	unique = xfpm_unique_new ("org.xfce.PowerManager.Config");
+	
+	if ( !xfpm_unique_app_is_running (unique) )
 	{
-	    TRACE("Settings dialog already open\n");
-	    dbus_g_connection_unref(bus);
-	    return EXIT_SUCCESS;
-	}
-	
-	xfpm_dbus_register_name(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager.Config");
-	
-	if ( !xfconf_init(&error) )
-    	{
-	    g_critical("xfconf init failed: %s using default settings\n", error->message);
-	    xfce_dialog_show_warning (NULL, 
-				      _("Xfce Power Manager"), 
-				      "%s",
-				      _("Failed to load power manager configuration, using defaults"));
-	    g_error_free (error);
-	    error = NULL;
-	    return EXIT_FAILURE;
-    	}
-	
-	if ( !g_thread_supported () )
-	    g_thread_init (NULL);
+	    if ( !xfconf_init(&error) )
+	    {
+		g_critical("xfconf init failed: %s using default settings\n", error->message);
+		xfce_dialog_show_warning (NULL, 
+					  _("Xfce Power Manager"), 
+					  "%s",
+					  _("Failed to load power manager configuration, using defaults"));
+		g_error_free (error);
+		error = NULL;
+		return EXIT_FAILURE;
+	    }
 	    
-	dbus_g_thread_init ();
-	
-	channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
-	
-   	proxy = dbus_g_proxy_new_for_name(bus,
-				           "org.xfce.PowerManager",
-				           "/org/xfce/PowerManager",
-				           "org.xfce.Power.Manager");
-	
-	xfpm_manager_dbus_client_get_config (proxy, 
-					     &config_hash,
-					     &error);
-					     
-	if ( error )
-	{
-	    g_critical ("Unable to get configuration information from xfce power manager: %s", error->message);
-	    xfce_dialog_show_error (NULL, error, "%s", _("Unable to connect to Xfce Power Manager"));
-	    g_error_free (error);
-	    return EXIT_FAILURE;
+	    if ( !g_thread_supported () )
+		g_thread_init (NULL);
+		
+	    dbus_g_thread_init ();
+	    
+	    channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
+	    
+	    proxy = dbus_g_proxy_new_for_name(bus,
+					       "org.xfce.PowerManager",
+					       "/org/xfce/PowerManager",
+					       "org.xfce.Power.Manager");
+	    
+	    xfpm_manager_dbus_client_get_config (proxy, 
+						 &config_hash,
+						 &error);
+						 
+	    if ( error )
+	    {
+		g_critical ("Unable to get configuration information from xfce power manager: %s", error->message);
+		xfce_dialog_show_error (NULL, error, "%s", _("Unable to connect to Xfce Power Manager"));
+		g_error_free (error);
+		return EXIT_FAILURE;
+	    }
+	    
+	    has_battery = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-battery"));
+	    has_lid = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-lid"));
+	    can_suspend = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-suspend"));
+	    can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-hibernate"));
+	    auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "auth-suspend"));
+	    auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "auth-hibernate"));
+	    has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-brightness"));
+	    has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "sleep-button"));
+	    has_power_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "power-button"));
+	    has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "hibernate-button"));
+	    can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-shutdown"));
+	    can_spin_down = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-spin"));
+	    devkit_disk = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "devkit-disk"));
+	    
+	    g_hash_table_destroy (config_hash);
+	    
+	    dialog = xfpm_settings_dialog_new (channel, has_battery, auth_hibernate, auth_suspend,
+					       can_shutdown, can_suspend, can_hibernate, has_lcd_brightness,
+					       has_lid, has_sleep_button, has_hibernate_button, has_power_button,
+					       devkit_disk, can_spin_down, socket_id);
+	    
+	    g_signal_connect_swapped (unique, "ping-received",
+				      G_CALLBACK (gtk_window_present), dialog);
+					       
+	    gtk_main();
+	    
+	    xfpm_dbus_release_name(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager.Config");
+	    dbus_g_connection_unref (bus);
+	    g_object_unref (proxy);
 	}
 	
-	has_battery = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-battery"));
-	has_lid = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-lid"));
-	can_suspend = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-suspend"));
-	can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-hibernate"));
-	auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "auth-suspend"));
-	auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "auth-hibernate"));
-	has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-brightness"));
-	has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "sleep-button"));
-	has_power_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "power-button"));
-	has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "hibernate-button"));
-	can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-shutdown"));
-	can_spin_down = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-spin"));
-	devkit_disk = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "devkit-disk"));
-	
-	g_hash_table_destroy (config_hash);
-	
-	xfpm_settings_dialog_new (channel, has_battery, auth_hibernate, auth_suspend,
-				  can_shutdown, can_suspend, can_hibernate, has_lcd_brightness,
-				  has_lid, has_sleep_button, has_hibernate_button, has_power_button,
-				  devkit_disk, can_spin_down, socket_id);
-					   
-	gtk_main();
-	
-	xfpm_dbus_release_name(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager.Config");
-	dbus_g_connection_unref (bus);
-	g_object_unref (proxy);
+	g_object_unref (unique);
 	
 	return EXIT_SUCCESS;
     }

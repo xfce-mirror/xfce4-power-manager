@@ -22,7 +22,7 @@
 #define __XFPM_SETTINGS_H
 
 
-void	       xfpm_settings_dialog_new 	(XfconfChannel *channel,
+GtkWidget      *xfpm_settings_dialog_new 	(XfconfChannel *channel,
 						 gboolean has_battery,
 						 gboolean auth_hibernate,
 						 gboolean auth_suspend,

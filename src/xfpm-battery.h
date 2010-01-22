@@ -65,8 +65,6 @@ XfpmDkpDeviceType	    xfpm_battery_get_device_type (XfpmBattery *battery);
 
 XfpmBatteryCharge	    xfpm_battery_get_charge      (XfpmBattery *battery);
 
-void			    xfpm_battery_show_info	 (XfpmBattery *battery);
-
 G_END_DECLS
 
 #endif /* __XFPM_BATTERY_H */

@@ -44,6 +44,7 @@
 #include "xfpm-network-manager.h"
 #include "xfpm-icons.h"
 #include "xfpm-common.h"
+#include "xfpm-power-common.h"
 #include "xfpm-config.h"
 #include "xfpm-enum-glib.h"
 #include "xfpm-debug.h"
@@ -96,6 +97,10 @@ struct XfpmDkpPrivate
     gboolean	     can_suspend;
     gboolean         can_hibernate;
     
+    /**
+     * Warning dialog to use when notification daemon 
+     * doesn't support actions.
+     **/
     GtkWidget 	    *dialog;
 };
 
@@ -323,7 +328,7 @@ xfpm_dkp_get_properties (XfpmDkp *dkp)
 {
     GHashTable *props;
     
-    props = xfpm_dbus_get_interface_properties (dkp->priv->proxy_prop, DKP_IFACE);
+    props = xfpm_power_get_interface_properties (dkp->priv->proxy_prop, DKP_IFACE);
     
     xfpm_dkp_check_pm (dkp, props);
     xfpm_dkp_check_lid (dkp, props);
@@ -466,9 +471,9 @@ xfpm_dkp_shutdown_clicked (XfpmDkp *dkp)
 }
 
 static void
-xfpm_dkp_battery_info_cb (GtkStatusIcon *icon)
+xfpm_dkp_power_info_cb (gpointer data)
 {
-    xfpm_battery_show_info (XFPM_BATTERY (icon));
+    g_spawn_command_line_async ("xfce4-power-information", NULL);
 }
 
 static void
@@ -544,32 +549,29 @@ xfpm_dkp_show_tray_menu (XfpmDkp *dkp,
     gtk_widget_show(mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
 */
-    if ( show_info_item )
-    {
-	mi = gtk_separator_menu_item_new ();
-	gtk_widget_show (mi);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
     
-	// Battery informations
+    mi = gtk_separator_menu_item_new ();
+    gtk_widget_show (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+
+    // Power information
     
-	mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_INFO, NULL);
-	
-	gtk_widget_set_sensitive (mi,FALSE);
-	gtk_widget_set_sensitive (mi,TRUE);
-	
-	g_signal_connect_swapped (mi,"activate",
-				  G_CALLBACK (xfpm_dkp_battery_info_cb), icon);
-			 
-	gtk_widget_show (mi);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+    mi = gtk_image_menu_item_new_with_label (_("Power Information"));
+    img = gtk_image_new_from_stock (GTK_STOCK_INFO, GTK_ICON_SIZE_MENU);
+    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mi), img);
+
+    gtk_widget_set_sensitive (mi,TRUE);
     
+    g_signal_connect_swapped (mi, "activate",
+			      G_CALLBACK (xfpm_dkp_power_info_cb), icon);
+		     
+    gtk_widget_show (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
     
-	// Separator
-	mi = gtk_separator_menu_item_new ();
-	gtk_widget_show (mi);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-    }
-	
+    mi = gtk_separator_menu_item_new ();
+    gtk_widget_show (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+		     
     mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_HELP, NULL);
     gtk_widget_set_sensitive (mi, TRUE);
     gtk_widget_show (mi);
@@ -953,19 +955,15 @@ xfpm_dkp_add_device (XfpmDkp *dkp, const gchar *object_path)
 	return;
     }
     
-    value = xfpm_dbus_get_interface_property (proxy_prop, DKP_IFACE_DEVICE, "Type");
+    value = xfpm_power_get_interface_property (proxy_prop, DKP_IFACE_DEVICE, "Type");
     
     device_type = g_value_get_uint (&value);
     
-    if ( device_type == XFPM_DKP_DEVICE_TYPE_LINE_POWER )
-    {
-	//FIXME: Handel adaptor.
-    }
-    else if ( device_type == XFPM_DKP_DEVICE_TYPE_BATTERY || 
-	      device_type == XFPM_DKP_DEVICE_TYPE_UPS     ||
-	      device_type == XFPM_DKP_DEVICE_TYPE_MOUSE   ||
-	      device_type == XFPM_DKP_DEVICE_TYPE_KBD     ||
-	      device_type == XFPM_DKP_DEVICE_TYPE_PHONE)
+    if ( device_type == XFPM_DKP_DEVICE_TYPE_BATTERY || 
+	 device_type == XFPM_DKP_DEVICE_TYPE_UPS     ||
+	 device_type == XFPM_DKP_DEVICE_TYPE_MOUSE   ||
+	 device_type == XFPM_DKP_DEVICE_TYPE_KBD     ||
+	 device_type == XFPM_DKP_DEVICE_TYPE_PHONE)
     {
 	GtkStatusIcon *battery;
 	DBusGProxy *proxy;
@@ -988,7 +986,7 @@ xfpm_dkp_add_device (XfpmDkp *dkp, const gchar *object_path)
 			  
 	xfpm_dkp_refresh_adaptor_visible (dkp);
     }
-    else 
+    else if ( device_type != XFPM_DKP_DEVICE_TYPE_LINE_POWER )
     {
 	g_warning ("Unable to monitor unkown power device with object_path : %s", object_path);
 	g_object_unref (proxy_prop);

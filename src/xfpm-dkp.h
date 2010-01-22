@@ -29,11 +29,6 @@ G_BEGIN_DECLS
 #define XFPM_DKP(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_DKP, XfpmDkp))
 #define XFPM_IS_DKP(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_DKP))
 
-#define DKP_NAME 	     "org.freedesktop.DeviceKit.Power"
-#define DKP_PATH 	     "/org/freedesktop/DeviceKit/Power"
-#define DKP_IFACE 	     "org.freedesktop.DeviceKit.Power"
-#define DKP_IFACE_DEVICE     "org.freedesktop.DeviceKit.Power.Device"
-
 typedef struct XfpmDkpPrivate XfpmDkpPrivate;
 
 typedef struct

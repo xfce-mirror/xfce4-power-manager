@@ -1,4 +1,5 @@
-bin_PROGRAMS = xfce4-power-manager
+bin_PROGRAMS = xfce4-power-manager		\
+	       xfce4-power-information
 
 xfce4_power_manager_SOURCES =                   \
 	$(BUILT_SOURCES)			\
@@ -9,10 +10,10 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-manager.h				\
 	xfpm-dkp.c				\
 	xfpm-dkp.h				\
+	xfpm-power-common.c			\
+	xfpm-power-common.h			\
 	xfpm-battery.c				\
 	xfpm-battery.h				\
-	xfpm-battery-info.c			\
-	xfpm-battery-info.h			\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
 	xfpm-disks.c				\
@@ -69,6 +70,27 @@ xfce4_power_manager_LDADD =                     \
 	$(XRANDR_LIBS)				\
 	$(POLKIT_LIBS)				\
 	$(DPMS_LIBS)
+
+xfce4_power_information_SOURCES =		\
+	xfpm-power-info.c			\
+	xfpm-power-common.c			\
+	xfpm-power-common.h
+
+xfce4_power_information_CFLAGS =		\
+	-I$(top_srcdir)                         \
+	-I$(top_srcdir)/common                  \
+	-I$(top_srcdir)/libdbus                 \
+	-DLOCALEDIR=\"$(localedir)\"            \
+	-DG_LOG_DOMAIN=\"xfce4-power-information\"\
+	$(GOBJECT_CFLAGS)                       \
+	$(DBUS_GLIB_CFLAGS)                     \
+	$(LIBXFCE4UI_CFLAGS)
+
+xfce4_power_information_LDADD =			\
+	$(GOBJECT_LIBS)                         \
+	$(DBUS_GLIB_LIBS)                       \
+	$(LIBXFCE4UI_LIBS)			\
+	$(top_builddir)/libdbus/libxfpmdbus.la
 
 manpagedir = $(mandir)/man1
 
