@@ -33,12 +33,4 @@ gboolean        xfpm_dbus_register_name  	   (DBusConnection *bus,
 					  
 gboolean        xfpm_dbus_release_name   	   (DBusConnection *bus,
 						    const gchar *name);
-
-GHashTable     *xfpm_dbus_get_interface_properties (DBusGProxy *proxy_prop,
-						    const gchar *iface_name);
-
-GValue 		xfpm_dbus_get_interface_property   (DBusGProxy *proxy, 
-						    const gchar *iface_name, 
-						    const gchar *prop_name);
-
 #endif /* __XFPM_DBUS_H */
