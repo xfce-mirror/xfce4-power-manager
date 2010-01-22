@@ -10,6 +10,8 @@ libxfpmhal_la_SOURCES =			\
 	hal-marshal.h
 
 libxfpmhal_la_CFLAGS =			\
+	-I$(top_srcdir) 	        \
+	-I$(top_srcdir)/libdbus         \
 	$(GLIB_CFLAGS)			\
 	$(DBUS_GLIB_CFLAGS)
 
