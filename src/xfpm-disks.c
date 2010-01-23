@@ -31,7 +31,7 @@
 #include "xfpm-disks.h"
 #include "xfpm-polkit.h"
 #include "xfpm-xfconf.h"
-#include "xfpm-dkp.h"
+#include "xfpm-power.h"
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
 
@@ -43,7 +43,7 @@ static void xfpm_disks_finalize   (GObject *object);
 struct XfpmDisksPrivate
 {
     XfpmXfconf      *conf;
-    XfpmDkp         *dkp;
+    XfpmPower       *power;
     XfpmPolkit      *polkit;
     
     DBusGConnection *bus;
@@ -125,7 +125,7 @@ xfpm_disks_set_spin_timeouts (XfpmDisks *disks)
     if (!disks->priv->can_spin )
 	return;
     
-    g_object_get (G_OBJECT (disks->priv->dkp),
+    g_object_get (G_OBJECT (disks->priv->power),
 		  "on-battery", &on_battery,
 		  NULL);
 
@@ -177,7 +177,7 @@ xfpm_disks_init (XfpmDisks *disks)
     disks->priv->bus    = NULL;
     disks->priv->proxy  = NULL;
     disks->priv->conf   = NULL;
-    disks->priv->dkp    = NULL;
+    disks->priv->power    = NULL;
     disks->priv->cookie = NULL;
     disks->priv->polkit = NULL;
     
@@ -202,7 +202,7 @@ xfpm_disks_init (XfpmDisks *disks)
     }
 
     disks->priv->conf = xfpm_xfconf_new ();
-    disks->priv->dkp  = xfpm_dkp_get    ();
+    disks->priv->power  = xfpm_power_get    ();
     disks->priv->polkit = xfpm_polkit_get ();
 
     xfpm_disks_get_is_auth_to_spin (disks);
@@ -210,7 +210,7 @@ xfpm_disks_init (XfpmDisks *disks)
     g_signal_connect_swapped (disks->priv->polkit, "auth-changed",
 			      G_CALLBACK (xfpm_disks_get_is_auth_to_spin), disks);
 
-    g_signal_connect_swapped (disks->priv->dkp, "on-battery-changed",
+    g_signal_connect_swapped (disks->priv->power, "on-battery-changed",
 			      G_CALLBACK (xfpm_disks_set_spin_timeouts), disks);
 
     g_signal_connect_swapped (disks->priv->conf, "notify::" SPIN_DOWN_ON_AC,
@@ -254,8 +254,8 @@ xfpm_disks_finalize (GObject *object)
     if ( disks->priv->conf )
 	g_object_unref (disks->priv->conf);
 	
-    if ( disks->priv->dkp )
-	g_object_unref (disks->priv->dkp );
+    if ( disks->priv->power )
+	g_object_unref (disks->priv->power );
 
     G_OBJECT_CLASS (xfpm_disks_parent_class)->finalize (object);
 }

@@ -35,7 +35,7 @@
 #include "egg-idletime.h"
 #include "xfpm-notify.h"
 #include "xfpm-xfconf.h"
-#include "xfpm-dkp.h"
+#include "xfpm-power.h"
 #include "xfpm-config.h"
 #include "xfpm-button.h"
 #include "xfpm-brightness.h"
@@ -57,7 +57,7 @@ static void xfpm_backlight_create_popup (XfpmBacklight *backlight);
 struct XfpmBacklightPrivate
 {
     XfpmBrightness *brightness;
-    XfpmDkp        *dkp;
+    XfpmPower      *power;
     EggIdletime    *idle;
     XfpmXfconf     *conf;
     XfpmButton     *button;
@@ -358,7 +358,7 @@ xfpm_backlight_set_timeouts (XfpmBacklight *backlight)
 }
 
 static void
-xfpm_backlight_on_battery_changed_cb (XfpmDkp *dkp, gboolean on_battery, XfpmBacklight *backlight)
+xfpm_backlight_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmBacklight *backlight)
 {
     backlight->priv->on_battery = on_battery;
 }
@@ -386,7 +386,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->idle   = NULL;
     backlight->priv->conf   = NULL;
     backlight->priv->button = NULL;
-    backlight->priv->dkp    = NULL;
+    backlight->priv->power    = NULL;
     backlight->priv->dimmed = FALSE;
     backlight->priv->block = FALSE;
     backlight->priv->destroy_id = 0;
@@ -401,7 +401,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 	backlight->priv->idle   = egg_idletime_new ();
 	backlight->priv->conf   = xfpm_xfconf_new ();
 	backlight->priv->button = xfpm_button_new ();
-	backlight->priv->dkp    = xfpm_dkp_get ();
+	backlight->priv->power    = xfpm_power_get ();
 	backlight->priv->notify = xfpm_notify_new ();
 	backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
 #ifdef WITH_HAL
@@ -423,9 +423,9 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 	g_signal_connect_swapped (backlight->priv->conf, "notify::" BRIGHTNESS_ON_BATTERY,
 				  G_CALLBACK (xfpm_backlight_brightness_on_battery_settings_changed), backlight);
 				
-	g_signal_connect (backlight->priv->dkp, "on-battery-changed",
+	g_signal_connect (backlight->priv->power, "on-battery-changed",
 			  G_CALLBACK (xfpm_backlight_on_battery_changed_cb), backlight);
-	g_object_get (G_OBJECT (backlight->priv->dkp),
+	g_object_get (G_OBJECT (backlight->priv->power),
 		      "on-battery", &backlight->priv->on_battery,
 		      NULL);
 	xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
@@ -454,8 +454,8 @@ xfpm_backlight_finalize (GObject *object)
     if ( backlight->priv->button )
 	g_object_unref (backlight->priv->button);
 
-    if ( backlight->priv->dkp )
-	g_object_unref (backlight->priv->dkp);
+    if ( backlight->priv->power )
+	g_object_unref (backlight->priv->power);
 
     if ( backlight->priv->notify)
 	g_object_unref (backlight->priv->notify);

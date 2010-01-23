@@ -378,7 +378,7 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 	i++;
     }
     
-    if ( type != XFPM_DKP_DEVICE_TYPE_LINE_POWER )
+    if ( type != XFPM_DEVICE_TYPE_LINE_POWER )
     {
 	/*Model*/
 	value = g_hash_table_lookup (props, "Model");

@@ -38,7 +38,7 @@
 
 #include <libnotify/notify.h>
 
-#include "xfpm-dkp.h"
+#include "xfpm-power.h"
 #include "xfpm-dbus.h"
 #include "xfpm-disks.h"
 #include "xfpm-dpms.h"
@@ -76,7 +76,7 @@ struct XfpmManagerPrivate
     
     XfceSMClient    *client;
     
-    XfpmDkp         *dkp;
+    XfpmPower       *power;
     XfpmButton      *button;
     XfpmXfconf      *conf;
     XfpmBacklight   *backlight;
@@ -126,7 +126,7 @@ xfpm_manager_finalize (GObject *object)
     if ( manager->priv->session_bus )
 	dbus_g_connection_unref (manager->priv->session_bus);
 	
-    g_object_unref (manager->priv->dkp);
+    g_object_unref (manager->priv->power);
     g_object_unref (manager->priv->button);
     g_object_unref (manager->priv->conf);
     g_object_unref (manager->priv->client);
@@ -227,10 +227,10 @@ xfpm_manager_sleep_request (XfpmManager *manager, XfpmShutdownRequest req, gbool
 	case XFPM_DO_NOTHING:
 	    break;
 	case XFPM_DO_SUSPEND:
-	    xfpm_dkp_suspend (manager->priv->dkp, force);
+	    xfpm_power_suspend (manager->priv->power, force);
 	    break;
 	case XFPM_DO_HIBERNATE:
-	    xfpm_dkp_hibernate (manager->priv->dkp, force);
+	    xfpm_power_hibernate (manager->priv->power, force);
 	    break;
 	case XFPM_DO_SHUTDOWN:
 	    xfpm_manager_shutdown (manager);
@@ -298,12 +298,12 @@ xfpm_manager_button_pressed_cb (XfpmButton *bt, XfpmButtonKey type, XfpmManager 
 }
 
 static void
-xfpm_manager_lid_changed_cb (XfpmDkp *dkp, gboolean lid_is_closed, XfpmManager *manager)
+xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManager *manager)
 {
     XfpmLidTriggerAction action;
     gboolean on_battery;
     
-    g_object_get (G_OBJECT (dkp),
+    g_object_get (G_OBJECT (power),
 		  "on-battery", &on_battery,
 		  NULL);
     
@@ -370,7 +370,7 @@ xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager
 		      INACTIVITY_SLEEP_MODE, &sleep_mode,
 		      NULL);
 	
-	g_object_get (G_OBJECT (manager->priv->dkp),
+	g_object_get (G_OBJECT (manager->priv->power),
 		      "on-battery", &on_battery,
 		      NULL);
 		  
@@ -441,7 +441,7 @@ xfpm_manager_set_idle_alarm_on_battery (XfpmManager *manager)
 }
 
 static void
-xfpm_manager_on_battery_changed_cb (XfpmDkp *dkp, gboolean on_battery, XfpmManager *manager)
+xfpm_manager_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmManager *manager)
 {
     egg_idletime_alarm_reset_all (manager->priv->idle);
 }
@@ -510,7 +510,7 @@ void xfpm_manager_start (XfpmManager *manager)
 				  NULL,
 				  XFPM_TYPE_ERROR);
     
-    manager->priv->dkp = xfpm_dkp_get ();
+    manager->priv->power = xfpm_power_get ();
     manager->priv->button = xfpm_button_new ();
     manager->priv->conf = xfpm_xfconf_new ();
     manager->priv->console = xfpm_console_kit_new ();
@@ -545,22 +545,22 @@ void xfpm_manager_start (XfpmManager *manager)
     g_signal_connect (manager->priv->button, "button_pressed",
 		      G_CALLBACK (xfpm_manager_button_pressed_cb), manager);
     
-    g_signal_connect (manager->priv->dkp, "lid-changed",
+    g_signal_connect (manager->priv->power, "lid-changed",
 		      G_CALLBACK (xfpm_manager_lid_changed_cb), manager);
     
-    g_signal_connect (manager->priv->dkp, "on-battery-changed",
+    g_signal_connect (manager->priv->power, "on-battery-changed",
 		      G_CALLBACK (xfpm_manager_on_battery_changed_cb), manager);
     
-    g_signal_connect_swapped (manager->priv->dkp, "waking-up",
+    g_signal_connect_swapped (manager->priv->power, "waking-up",
 			      G_CALLBACK (xfpm_manager_reset_sleep_timer), manager);
     
-    g_signal_connect_swapped (manager->priv->dkp, "sleeping",
+    g_signal_connect_swapped (manager->priv->power, "sleeping",
 			      G_CALLBACK (xfpm_manager_reset_sleep_timer), manager);
 			      
-    g_signal_connect_swapped (manager->priv->dkp, "ask-shutdown",
+    g_signal_connect_swapped (manager->priv->power, "ask-shutdown",
 			      G_CALLBACK (xfpm_manager_ask_shutdown), manager);
     
-    g_signal_connect_swapped (manager->priv->dkp, "shutdown",
+    g_signal_connect_swapped (manager->priv->power, "shutdown",
 			      G_CALLBACK (xfpm_manager_shutdown), manager);
 			      
 out:
@@ -599,7 +599,7 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
 		  "can-shutdown", &can_shutdown,
 		  NULL);
 
-    g_object_get (G_OBJECT (manager->priv->dkp),
+    g_object_get (G_OBJECT (manager->priv->power),
                   "auth-suspend", &auth_suspend,
 		  "auth-hibernate", &auth_hibernate,
                   "can-suspend", &can_suspend,
@@ -610,7 +610,7 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
     can_spin = xfpm_disks_get_can_spin (manager->priv->disks);
     devkit_disk = xfpm_disks_kit_is_running (manager->priv->disks);
     
-    has_battery = xfpm_dkp_has_battery (manager->priv->dkp);
+    has_battery = xfpm_power_has_battery (manager->priv->power);
     has_lcd_brightness = xfpm_backlight_has_hw (manager->priv->backlight);
     
     mapped_buttons = xfpm_button_get_mapped (manager->priv->button);

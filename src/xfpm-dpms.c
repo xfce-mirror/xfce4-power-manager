@@ -34,7 +34,7 @@
 #include "xfpm-common.h"
 
 #include "xfpm-dpms.h"
-#include "xfpm-dkp.h"
+#include "xfpm-power.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
@@ -49,7 +49,7 @@ static void xfpm_dpms_finalize   (GObject *object);
 struct XfpmDpmsPrivate
 {
     XfpmXfconf      *conf;
-    XfpmDkp         *dkp;
+    XfpmPower         *power;
     
     gboolean         dpms_capable;
     gboolean         inhibited;
@@ -202,7 +202,7 @@ xfpm_dpms_settings_changed_cb (GObject *obj, GParamSpec *spec, XfpmDpms *dpms)
 }
 
 static void
-xfpm_dpms_on_battery_changed_cb (XfpmDkp *dkp, gboolean on_battery, XfpmDpms *dpms)
+xfpm_dpms_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmDpms *dpms)
 {
     dpms->priv->on_battery = on_battery;
     xfpm_dpms_refresh (dpms);
@@ -232,16 +232,16 @@ xfpm_dpms_init(XfpmDpms *dpms)
 
     if ( dpms->priv->dpms_capable )
     {
-	dpms->priv->dkp     = xfpm_dkp_get ();
+	dpms->priv->power     = xfpm_power_get ();
 	dpms->priv->conf    = xfpm_xfconf_new  ();
     
-	g_signal_connect (dpms->priv->dkp, "on-battery-changed",
+	g_signal_connect (dpms->priv->power, "on-battery-changed",
 			  G_CALLBACK(xfpm_dpms_on_battery_changed_cb), dpms);
 			  
 	g_signal_connect (dpms->priv->conf, "notify",
 			  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
 			  
-	g_object_get (G_OBJECT (dpms->priv->dkp),
+	g_object_get (G_OBJECT (dpms->priv->power),
 		      "on-battery", &dpms->priv->on_battery,
 		      NULL);
 	
@@ -261,7 +261,7 @@ xfpm_dpms_finalize(GObject *object)
     dpms = XFPM_DPMS (object);
     
     g_object_unref (dpms->priv->conf);
-    g_object_unref (dpms->priv->dkp);
+    g_object_unref (dpms->priv->power);
 
     G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }

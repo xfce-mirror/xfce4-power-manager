@@ -18,62 +18,62 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_DKP_H
-#define __XFPM_DKP_H
+#ifndef __XFPM_POWER_H
+#define __XFPM_POWER_H
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DKP        (xfpm_dkp_get_type () )
-#define XFPM_DKP(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_DKP, XfpmDkp))
+#define XFPM_TYPE_DKP        (xfpm_power_get_type () )
+#define XFPM_POWER(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_DKP, XfpmPower))
 #define XFPM_IS_DKP(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_DKP))
 
-typedef struct XfpmDkpPrivate XfpmDkpPrivate;
+typedef struct XfpmPowerPrivate XfpmPowerPrivate;
 
 typedef struct
 {
     GObject         	parent;
     
-    XfpmDkpPrivate     *priv;
+    XfpmPowerPrivate     *priv;
     
-} XfpmDkp;
+} XfpmPower;
 
 typedef struct
 {
     GObjectClass 	parent_class;
     
-    void                (*on_battery_changed)         	(XfpmDkp *dkp,
+    void                (*on_battery_changed)         	(XfpmPower *power,
 						         gboolean on_battery);
     
-    void                (*low_battery_changed)        	(XfpmDkp *dkp,
+    void                (*low_battery_changed)        	(XfpmPower *power,
 							 gboolean low_battery);
     
-    void		(*lid_changed)			(XfpmDkp *dkp,
+    void		(*lid_changed)			(XfpmPower *power,
 							 gboolean lid_is_closed);
 							
-    void		(*waking_up)			(XfpmDkp *dkp);
+    void		(*waking_up)			(XfpmPower *power);
     
-    void		(*sleeping)			(XfpmDkp *dkp);
+    void		(*sleeping)			(XfpmPower *power);
     
-    void		(*ask_shutdown)			(XfpmDkp *dkp);
+    void		(*ask_shutdown)			(XfpmPower *power);
     
-    void		(*shutdown)			(XfpmDkp *dkp);
+    void		(*shutdown)			(XfpmPower *power);
     
-} XfpmDkpClass;
+} XfpmPowerClass;
 
-GType        		xfpm_dkp_get_type        	(void) G_GNUC_CONST;
+GType        		xfpm_power_get_type        	(void) G_GNUC_CONST;
 
-XfpmDkp       	       *xfpm_dkp_get             	(void);
+XfpmPower       	       *xfpm_power_get             	(void);
 
-void			xfpm_dkp_suspend         	(XfpmDkp *dkp,
+void			xfpm_power_suspend         	(XfpmPower *power,
 							 gboolean force);
 
-void			xfpm_dkp_hibernate       	(XfpmDkp *dkp,
+void			xfpm_power_hibernate       	(XfpmPower *power,
 							 gboolean force);
 
-gboolean		xfpm_dkp_has_battery		(XfpmDkp *dkp);
+gboolean		xfpm_power_has_battery		(XfpmPower *power);
 
 G_END_DECLS
 
-#endif /* __XFPM_DKP_H */
+#endif /* __XFPM_POWER_H */

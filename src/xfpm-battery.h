@@ -25,7 +25,6 @@
 #include <gtk/gtk.h>
 #include <dbus/dbus-glib.h>
 
-#include "xfpm-dkp.h"
 #include "xfpm-enum-glib.h"
 
 G_BEGIN_DECLS
@@ -59,9 +58,9 @@ GtkStatusIcon              *xfpm_battery_new             (void);
 void			    xfpm_battery_monitor_device  (XfpmBattery *battery,
 							  DBusGProxy *proxy,
 							  DBusGProxy *proxy_prop,
-							  XfpmDkpDeviceType device_type);
+							  XfpmDeviceType device_type);
 
-XfpmDkpDeviceType	    xfpm_battery_get_device_type (XfpmBattery *battery);
+XfpmDeviceType	   	    xfpm_battery_get_device_type (XfpmBattery *battery);
 
 XfpmBatteryCharge	    xfpm_battery_get_charge      (XfpmBattery *battery);
 

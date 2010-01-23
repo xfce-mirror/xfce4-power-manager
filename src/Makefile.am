@@ -8,8 +8,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-main.c				\
 	xfpm-manager.c				\
 	xfpm-manager.h				\
-	xfpm-dkp.c				\
-	xfpm-dkp.h				\
+	xfpm-power.c				\
+	xfpm-power.h				\
 	xfpm-power-common.c			\
 	xfpm-power-common.h			\
 	xfpm-battery.c				\
@@ -147,7 +147,7 @@ xfce-power-manager-dbus-client.h: $(srcdir)/org.xfce.Power.Manager.xml
 	dbus-binding-tool --mode=glib-client --prefix=xfpm_manager $< >$@
 
 org.freedesktop.PowerManagement.h: $(srcdir)/org.freedesktop.PowerManagement.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfpm_dkp $< >$@
+	dbus-binding-tool --mode=glib-server --prefix=xfpm_power $< >$@
 
 org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
 	dbus-binding-tool --mode=glib-server --prefix=xfpm_inhibit $< >$@
