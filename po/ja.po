@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager 0.6.0svn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-12 15:41+0900\n"
-"PO-Revision-Date: 2009-10-12 15:40+0900\n"
+"POT-Creation-Date: 2010-01-30 22:17+0900\n"
+"PO-Revision-Date: 2010-01-30 23:33+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-users-jp@ml.fdiary.net>\n"
 "MIME-Version: 1.0\n"
@@ -42,84 +42,84 @@ msgid "Actions"
 msgstr "アクション"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "CPU frequency control"
-msgstr "CPU 周波数制御"
-
-#: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "Consider the computer on low power at:"
 msgstr "コンピュータが低電力状態にあるとみなす充電率:"
 
 #. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:9 ../settings/xfpm-settings.c:776
-#: ../settings/xfpm-settings.c:847 ../settings/xfpm-settings.c:971
-#: ../settings/xfpm-settings.c:1126 ../settings/xfpm-settings.c:1184
-#: ../settings/xfpm-settings.c:1239 ../src/xfpm-tray-icon.c:175
-#: ../src/xfpm-tray-icon.c:267
+#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:789
+#: ../settings/xfpm-settings.c:857 ../settings/xfpm-settings.c:995
+#: ../settings/xfpm-settings.c:1160 ../settings/xfpm-settings.c:1215
+#: ../settings/xfpm-settings.c:1265 ../src/xfpm-power.c:508
+#: ../src/xfpm-power.c:769
 msgid "Hibernate"
 msgstr "ハイバネート"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "Lock screen when going for suspend/hibernate"
 msgstr "サスペンド/ハイバネートへ遷移中に画面をロックする"
 
-#: ../data/interfaces/xfpm-settings.ui.h:11
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../src/xfpm-power-common.c:131
 msgid "Monitor"
 msgstr "モニタ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:12
+#: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "Monitor power management control"
 msgstr "モニタ電源管理制御"
 
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:765
-#: ../settings/xfpm-settings.c:836 ../settings/xfpm-settings.c:960
-#: ../settings/xfpm-settings.c:1115 ../settings/xfpm-settings.c:1173
-#: ../settings/xfpm-settings.c:1228
+#: ../data/interfaces/xfpm-settings.ui.h:12 ../settings/xfpm-settings.c:778
+#: ../settings/xfpm-settings.c:846 ../settings/xfpm-settings.c:984
+#: ../settings/xfpm-settings.c:1149 ../settings/xfpm-settings.c:1204
+#: ../settings/xfpm-settings.c:1254
 msgid "Nothing"
 msgstr "何もしない"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Power manager settings"
 msgstr "電源管理設定"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
+#: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Prefer power savings over performance"
 msgstr "性能より省電力を優先する"
 
-#: ../data/interfaces/xfpm-settings.ui.h:16
+#: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Put display to sleep when computer is inactive for:"
 msgstr ""
 "コンピュータを操作していない状態でディスプレイをスリープするまでの時間:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:17
+#: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put the computer to sleep when inactive for:"
 msgstr "コンピュータを操作していない状態でスリープするまでの時間:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:18
+#: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Reduce screen brightness when computer is inactive for:"
 msgstr "コンピュータを操作していない状態で画面の輝度を下げるまでの時間:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
+#: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Set computer inactivity sleep mode:"
 msgstr "コンピュータを休止するときのスリープモード:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set monitor sleep mode:"
 msgstr "モニタのスリープモード:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:21
+#: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "Show notifications to notify about the battery state"
 msgstr "バッテリステータス通知を表示する"
+
+#: ../data/interfaces/xfpm-settings.ui.h:21
+msgid "Spin down hard disks"
+msgstr "ハードディスクをスピンダウンする"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Standby"
 msgstr "スタンバイ"
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:23 ../settings/xfpm-settings.c:770
-#: ../settings/xfpm-settings.c:841 ../settings/xfpm-settings.c:965
-#: ../settings/xfpm-settings.c:1120 ../settings/xfpm-settings.c:1178
-#: ../settings/xfpm-settings.c:1233 ../src/xfpm-tray-icon.c:206
-#: ../src/xfpm-tray-icon.c:282
+#: ../data/interfaces/xfpm-settings.ui.h:23 ../settings/xfpm-settings.c:783
+#: ../settings/xfpm-settings.c:851 ../settings/xfpm-settings.c:989
+#: ../settings/xfpm-settings.c:1154 ../settings/xfpm-settings.c:1209
+#: ../settings/xfpm-settings.c:1259 ../src/xfpm-power.c:523
+#: ../src/xfpm-power.c:782
 msgid "Suspend"
 msgstr "サスペンド"
 
@@ -153,89 +153,92 @@ msgid "When sleep button is pressed:"
 msgstr "スリープボタンが押されたとき:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-#: ../settings/xfpm-settings-main.c:118 ../src/xfpm-main.c:192
-#: ../src/xfpm-main.c:276 ../src/xfpm-tray-icon.c:346
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-power.c:585
+#: ../src/xfpm-power.c:756 ../src/xfpm-main.c:418
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Xfce 電源管理"
 
-#: ../settings/xfpm-settings.c:536 ../settings/xfpm-settings.c:551
-#: ../settings/xfpm-settings.c:578
+#: ../settings/xfpm-settings.c:539 ../settings/xfpm-settings.c:554
+#: ../settings/xfpm-settings.c:581
 msgid "Never"
 msgstr "しない"
 
-#: ../settings/xfpm-settings.c:539
+#: ../settings/xfpm-settings.c:542
 msgid "One minute"
 msgstr "1 分"
 
-#: ../settings/xfpm-settings.c:541 ../settings/xfpm-settings.c:553
+#: ../settings/xfpm-settings.c:544 ../settings/xfpm-settings.c:556
 msgid "Minutes"
 msgstr "分"
 
-#: ../settings/xfpm-settings.c:555 ../settings/xfpm-settings.c:562
-#: ../settings/xfpm-settings.c:563 ../settings/xfpm-settings.c:564
+#: ../settings/xfpm-settings.c:558 ../settings/xfpm-settings.c:565
+#: ../settings/xfpm-settings.c:566 ../settings/xfpm-settings.c:567
 msgid "One hour"
 msgstr "1 時間"
 
-#: ../settings/xfpm-settings.c:563 ../settings/xfpm-settings.c:567
+#: ../settings/xfpm-settings.c:566 ../settings/xfpm-settings.c:570
 msgid "one minute"
 msgstr "1 分"
 
-#: ../settings/xfpm-settings.c:564 ../settings/xfpm-settings.c:568
-#: ../src/xfpm-battery.c:475
+#: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:571
 msgid "minutes"
 msgstr "分"
 
-#: ../settings/xfpm-settings.c:566 ../settings/xfpm-settings.c:567
-#: ../settings/xfpm-settings.c:568 ../src/xfpm-battery.c:474
+#: ../settings/xfpm-settings.c:569 ../settings/xfpm-settings.c:570
+#: ../settings/xfpm-settings.c:571
 msgid "hours"
 msgstr "時間"
 
-#: ../settings/xfpm-settings.c:580
+#: ../settings/xfpm-settings.c:583
 msgid "Seconds"
 msgstr "秒"
 
-#: ../settings/xfpm-settings.c:747 ../settings/xfpm-settings.c:923
-#: ../settings/xfpm-settings.c:954 ../settings/xfpm-settings.c:1109
-#: ../settings/xfpm-settings.c:1167 ../settings/xfpm-settings.c:1222
-#: ../settings/xfpm-settings.c:1375
+#: ../settings/xfpm-settings.c:761 ../settings/xfpm-settings.c:948
+#: ../settings/xfpm-settings.c:1410
+msgid "Hibernate and suspend operations not supported"
+msgstr "ハイバネートおよびサスペンド操作はサポートされていません。"
+
+#: ../settings/xfpm-settings.c:766 ../settings/xfpm-settings.c:953
+#: ../settings/xfpm-settings.c:1415
 msgid "Hibernate and suspend operations not permitted"
 msgstr "ハイバネートおよびサスペンド操作が許可されていません"
 
-#: ../settings/xfpm-settings.c:757 ../settings/xfpm-settings.c:828
-msgid "Shutdown and hibernate operations not permitted"
-msgstr "シャットダウンおよびハイバネート操作が許可されていません"
-
-#: ../settings/xfpm-settings.c:780 ../settings/xfpm-settings.c:1130
+#: ../settings/xfpm-settings.c:795 ../settings/xfpm-settings.c:1166
+#: ../src/xfpm-power.c:795
 msgid "Shutdown"
 msgstr "シャットダウン"
 
-#: ../settings/xfpm-settings.c:783 ../settings/xfpm-settings.c:1133
-#: ../settings/xfpm-settings.c:1188 ../settings/xfpm-settings.c:1243
+#: ../settings/xfpm-settings.c:799 ../settings/xfpm-settings.c:1170
+#: ../settings/xfpm-settings.c:1219 ../settings/xfpm-settings.c:1269
 msgid "Ask"
 msgstr "問い合わせる"
 
-#: ../settings/xfpm-settings.c:851 ../settings/xfpm-settings.c:975
+#: ../settings/xfpm-settings.c:861 ../settings/xfpm-settings.c:999
 msgid "Lock screen"
 msgstr "画面をロック"
 
-#: ../settings/xfpm-settings.c:1056
+#: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1056
+msgid "Spinning down hard disks permission denied"
+msgstr "ハードディスクのスピンダウンの許可がありません"
+
+#: ../settings/xfpm-settings.c:1096
 msgid "Always show icon"
 msgstr "常に表示する"
 
-#: ../settings/xfpm-settings.c:1059
+#: ../settings/xfpm-settings.c:1099
 msgid "When battery is present"
 msgstr "バッテリが存在するとき表示する"
 
-#: ../settings/xfpm-settings.c:1062
+#: ../settings/xfpm-settings.c:1102
 msgid "When battery is charging or discharging"
 msgstr "バッテリが充電中または使用中のとき表示する"
 
-#: ../settings/xfpm-settings.c:1065
+#: ../settings/xfpm-settings.c:1105
 msgid "Never show icon"
 msgstr "表示しない"
 
-#: ../settings/xfpm-settings.c:1091
+#: ../settings/xfpm-settings.c:1131
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
@@ -243,77 +246,81 @@ msgstr ""
 "DPMS (Display Power Management Signaling) を無効にすると、ディスプレイの電源"
 "オフやスリープモードへの移行を行いません。"
 
-#: ../settings/xfpm-settings.c:1295
+#: ../settings/xfpm-settings.c:1319
+msgid "Suspend operation not supported"
+msgstr "サスペンド操作はサポートされていません。"
+
+#: ../settings/xfpm-settings.c:1325
 msgid "Suspend operation not permitted"
 msgstr "サスペンド操作が許可されていません"
 
-#: ../settings/xfpm-settings.c:1301
+#: ../settings/xfpm-settings.c:1331
+msgid "Hibernate operation not supported"
+msgstr "ハイバネート操作はサポートされていません。"
+
+#: ../settings/xfpm-settings.c:1336
 msgid "Hibernate operation not permitted"
 msgstr "ハイバネート操作が許可されていません"
 
-#: ../settings/xfpm-settings.c:1348
+#: ../settings/xfpm-settings.c:1383
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
 "コンピュータのすべての電源の充電レベルがこの値に達した時が対象となります"
 
-#: ../settings/xfpm-settings.c:1461 ../settings/xfpm-settings.c:1466
+#: ../settings/xfpm-settings.c:1486 ../settings/xfpm-settings.c:1491
 msgid "General"
 msgstr "一般"
 
-#: ../settings/xfpm-settings.c:1475 ../settings/xfpm-settings.c:1480
+#: ../settings/xfpm-settings.c:1500 ../settings/xfpm-settings.c:1505
 msgid "On AC"
 msgstr "AC 電源"
 
-#: ../settings/xfpm-settings.c:1490 ../settings/xfpm-settings.c:1495
+#: ../settings/xfpm-settings.c:1515 ../settings/xfpm-settings.c:1520
 msgid "On Battery"
 msgstr "バッテリ電源"
 
-#: ../settings/xfpm-settings.c:1504 ../settings/xfpm-settings.c:1509
+#: ../settings/xfpm-settings.c:1529 ../settings/xfpm-settings.c:1534
 msgid "Extended"
 msgstr "拡張"
 
-#: ../settings/xfpm-settings.c:1574
+#: ../settings/xfpm-settings.c:1602
 msgid "Check your power manager installation"
 msgstr "電源管理が正しくインストールされていることを確認してください"
 
-#: ../settings/xfpm-settings-main.c:72
+#: ../settings/xfpm-settings-main.c:78
 msgid "Settings manager socket"
 msgstr "設定マネージャソケット"
 
-#: ../settings/xfpm-settings-main.c:72
+#: ../settings/xfpm-settings-main.c:78
 msgid "SOCKET ID"
 msgstr "SOCKET ID"
 
-#: ../settings/xfpm-settings-main.c:83 ../src/xfpm-main.c:154
-#: ../src/xfpm-main.c:175
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:294
+#: ../src/xfpm-power-info.c:947
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "'%s --help' で使用方法を表示します。"
 
-#: ../settings/xfpm-settings-main.c:118
+#: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "電源管理設定の読み込みに失敗しました。デフォルト値を使用します。"
 
-#: ../settings/xfpm-settings-main.c:144
-msgid "Xfce Power Manager Settings"
-msgstr "Xfce 電源管理設定"
-
-#: ../settings/xfpm-settings-main.c:145
+#: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Xfce 電源管理に接続できません"
 
-#: ../settings/xfpm-settings-main.c:173 ../src/xfpm-main.c:203
+#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:334
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce 電源管理は動作していません"
 
-#: ../settings/xfpm-settings-main.c:176
-msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce4 電源管理は動作していません。今起動しますか?"
-
-#: ../settings/xfpm-settings-main.c:178
+#: ../settings/xfpm-settings-main.c:195
 msgid "Run"
 msgstr "起動"
+
+#: ../settings/xfpm-settings-main.c:196
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Xfce4 電源管理は動作していません。今起動しますか?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 msgid "Power Manager"
@@ -327,154 +334,284 @@ msgstr "Xfce 4 電源管理を設定します"
 msgid "Xfce 4 Power Manager"
 msgstr "Xfce 4 電源管理"
 
-#: ../src/xfpm-battery.c:109
-msgid "Your battery is fully charged"
-msgstr "バッテリはフル充電されています"
+#: ../common/xfpm-common.c:155
+msgid "translator-credits"
+msgstr "Masato Hashimoto <hashimoto@xfce.org>"
 
-#: ../src/xfpm-battery.c:112
-msgid "Your battery is charging"
-msgstr "バッテリは充電中です"
+#: ../src/xfpm-power.c:298
+msgid ""
+"Xfce Power Manager requires version 011 of devicekit-power to work properly "
+"while the version found is"
+msgstr ""
+"Xfce 電源管理を正常に動作させるためには devicekit-power バージョン 011 以降が"
+"必要です。現在のバージョン :"
 
-#: ../src/xfpm-battery.c:115
-msgid "Battery is charging"
-msgstr "バッテリは充電中です"
+#: ../src/xfpm-power.c:303 ../src/xfpm-power.c:309
+msgid "Devicekit-power version 011 or above not found"
+msgstr "DeviceKit-power バージョン 011 以降が見つかりませんでした。"
 
-#: ../src/xfpm-battery.c:118
-msgid "Your battery is discharging"
-msgstr "バッテリを使用しています"
-
-#: ../src/xfpm-battery.c:118 ../src/xfpm-battery.c:460
-#: ../src/xfpm-battery.c:492
-msgid "System is running on battery power"
-msgstr "システムはバッテリ駆動で動作しています"
-
-#: ../src/xfpm-battery.c:121
-msgid "Your battery charge is low"
-msgstr "バッテリ充電量は低いです"
-
-#: ../src/xfpm-battery.c:121
-msgid "System is running on low power"
-msgstr "システムは低電力下で動作しています"
-
-#: ../src/xfpm-battery.c:246 ../src/xfpm-supply.c:366 ../src/xfpm-supply.c:389
-#: ../src/xfpm-tray-icon.c:120 ../src/xfpm-tray-icon.c:143
-#: ../src/xfpm-manager.c:230
+#: ../src/xfpm-power.c:365 ../src/xfpm-power.c:720 ../src/xfpm-power.c:908
+#: ../src/xfpm-power.c:922 ../src/xfpm-battery.c:227
 msgid "Xfce power manager"
 msgstr "Xfce 電源管理"
 
-#: ../src/xfpm-battery.c:283
-msgid "Your UPS"
-msgstr "UPS"
+#: ../src/xfpm-power.c:388
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
+msgstr ""
+"アプリケーションは現在自動スリープが無効になっているため、今ハイバネートを行"
+"うと、このアプリケーションの作業状態が破壊されるかもしれません。システムをハ"
+"イバネートしてもよろしいですか?"
 
-#: ../src/xfpm-battery.c:285
-msgid "Your Mouse battery"
-msgstr "マウスのバッテリ"
+#: ../src/xfpm-power.c:486
+msgid "Quit"
+msgstr "終了"
 
-#: ../src/xfpm-battery.c:287
-msgid "Your Keyboard battery"
-msgstr "キーボードのバッテリ"
+#: ../src/xfpm-power.c:487
+msgid "All running instances of the power manager will exit"
+msgstr "動作中の全ての Xfce 電源管理インスタンスを終了します"
 
-#: ../src/xfpm-battery.c:289
-msgid "Your Camera battery"
-msgstr "カメラのバッテリ"
+#: ../src/xfpm-power.c:489
+msgid "Quit Xfce power manager?"
+msgstr "Xfce 電源管理を終了しますか?"
 
-#: ../src/xfpm-battery.c:291
-msgid "Your PDA battery"
-msgstr "PDA のバッテリ"
+#. Power information
+#: ../src/xfpm-power.c:559 ../src/xfpm-power-info.c:817
+msgid "Power Information"
+msgstr "電源情報"
 
-#: ../src/xfpm-battery.c:293
-msgid "Your Battery"
-msgstr "バッテリ"
+#: ../src/xfpm-power.c:683
+msgid "Hibernate the system"
+msgstr "システムをハイバネートします"
 
-#: ../src/xfpm-battery.c:308
-msgid "is empty"
-msgstr "は空です"
+#: ../src/xfpm-power.c:694
+msgid "Suspend the system"
+msgstr "システムをサスペンドします"
 
-#: ../src/xfpm-battery.c:314
-msgid "is fully charged"
-msgstr "はフル充電されています"
+#: ../src/xfpm-power.c:704
+msgid "Shutdown the system"
+msgstr "システムをシャットダウンします"
 
-#: ../src/xfpm-battery.c:319
-msgid "charge level"
-msgstr "充電レベル"
+#: ../src/xfpm-power.c:715 ../src/xfpm-power.c:753
+msgid "System is running on low power. Save your work to avoid losing data"
+msgstr ""
+"システムは低電力下で動作しています。作業中のデータを失ってしまわないよう保存"
+"してください。"
 
-#: ../src/xfpm-battery.c:324
-msgid "is charging"
-msgstr "は充電中です"
+#: ../src/xfpm-power.c:909
+msgid "System is running on low power"
+msgstr "システムは低電力下で動作しています"
 
-#: ../src/xfpm-battery.c:331
-msgid "is discharging"
-msgstr "を使用中です"
+#: ../src/xfpm-power.c:923
+msgid "Battery charge level is low"
+msgstr "バッテリ充電量は低いです"
 
-#: ../src/xfpm-battery.c:336
-msgid "charge is low"
-msgstr "の充電量が低くなっています"
+#: ../src/xfpm-power.c:1118 ../src/xfpm-power.c:1123
+msgid "Adaptor is offline"
+msgstr "アダプタはオフラインです"
 
-#: ../src/xfpm-battery.c:341
-msgid "is almost empty"
-msgstr "はほぼ空です"
+#: ../src/xfpm-power.c:1119 ../src/xfpm-power.c:1124 ../src/xfpm-battery.c:321
+#, c-format
+msgid "Adaptor is online"
+msgstr "アダプタはオンラインです"
 
-#: ../src/xfpm-battery.c:393
-msgid "is not present"
-msgstr "は存在しません"
+#: ../src/xfpm-power.c:1571 ../src/xfpm-power.c:1592 ../src/xfpm-power.c:1607
+#: ../src/xfpm-power.c:1630
+#, c-format
+msgid "Permission denied"
+msgstr "許可がありません"
 
-#: ../src/xfpm-battery.c:432
-msgid "Battery not present"
-msgstr "バッテリは存在しません"
+#: ../src/xfpm-power.c:1615 ../src/xfpm-power.c:1638
+#, c-format
+msgid "Suspend not supported"
+msgstr "サスペンドはサポートされていません"
 
-#: ../src/xfpm-battery.c:456 ../src/xfpm-battery.c:488
+#: ../src/xfpm-power-common.c:121 ../src/xfpm-power-common.c:140
+#: ../src/xfpm-battery.c:323
 msgid "Battery"
 msgstr "バッテリ"
 
-#: ../src/xfpm-battery.c:459 ../src/xfpm-battery.c:491
-msgid "System is running on AC power"
-msgstr "システムは AC 電源で動作しています"
+#: ../src/xfpm-power-common.c:123 ../src/xfpm-battery.c:323
+msgid "UPS"
+msgstr "UPS"
 
-#: ../src/xfpm-battery.c:466
-msgid "Estimated time left"
-msgstr "推定残り時間"
+#: ../src/xfpm-power-common.c:125
+msgid "Line power"
+msgstr "AC 電源"
 
-#: ../src/xfpm-battery.c:470
-msgid "Estimated time to be fully charged"
-msgstr "フル充電までの推定時間"
+#: ../src/xfpm-power-common.c:127
+msgid "Mouse"
+msgstr "マウス"
 
-#: ../src/xfpm-battery.c:474
+#: ../src/xfpm-power-common.c:129
+msgid "Keyboard"
+msgstr "キーボード"
+
+#: ../src/xfpm-power-common.c:133
+msgid "PDA"
+msgstr "PDA"
+
+#: ../src/xfpm-power-common.c:135
+msgid "Phone"
+msgstr "電話"
+
+#: ../src/xfpm-power-common.c:137 ../src/xfpm-power-common.c:152
+#: ../src/xfpm-power-common.c:167
+msgid "Unknown"
+msgstr "不明"
+
+#: ../src/xfpm-power-common.c:154
+msgid "Lithium ion"
+msgstr "リチウムイオン"
+
+#: ../src/xfpm-power-common.c:156
+msgid "Lithium polymer"
+msgstr "リチウムポリマー"
+
+#: ../src/xfpm-power-common.c:158
+msgid "Lithium iron phosphate"
+msgstr "リン酸鉄リチウムイオン"
+
+#: ../src/xfpm-power-common.c:160
+msgid "Lead acid"
+msgstr "鉛酸"
+
+#: ../src/xfpm-power-common.c:162
+msgid "Nickel cadmium"
+msgstr "ニッケルカドミウム"
+
+#: ../src/xfpm-power-common.c:164
+msgid "Nickel metal hybride"
+msgstr "ニッケルメタルハイブリッド"
+
+#: ../src/xfpm-battery.c:145
+msgid "Your battery is fully charged"
+msgstr "バッテリはフル充電されています"
+
+#: ../src/xfpm-battery.c:148
+msgid "Your battery is charging"
+msgstr "バッテリは充電中です"
+
+#: ../src/xfpm-battery.c:151
+msgid "Your battery is discharging"
+msgstr "バッテリを使用しています"
+
+#: ../src/xfpm-battery.c:151 ../src/xfpm-battery.c:321
+#, c-format
+msgid "System is running on battery power"
+msgstr "システムはバッテリ駆動で動作しています"
+
+# Could not estimate provided battery runtime
+#: ../src/xfpm-battery.c:281
+msgid "Unknown time"
+msgstr "(わかりませんでした)"
+
+#: ../src/xfpm-battery.c:287
+#, c-format
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i 分"
+
+#: ../src/xfpm-battery.c:298
+#, c-format
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i 時間"
+
+#. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
+#. * Swap order with "%2$s %2$i %1$s %1$i if needed
+#: ../src/xfpm-battery.c:304
+#, c-format
+msgid "%i %s %i %s"
+msgstr "%i %s %i %s"
+
+#: ../src/xfpm-battery.c:305
 msgid "hour"
-msgstr "時間"
+msgid_plural "hours"
+msgstr[0] "時間"
 
-#: ../src/xfpm-battery.c:475
+#: ../src/xfpm-battery.c:306
 msgid "minute"
-msgstr "分"
+msgid_plural "minutes"
+msgstr[0] "分"
 
-#: ../src/xfpm-battery-info.c:63 ../libxfpm/hal-battery.c:293
-msgid "Unknown unit"
-msgstr "未知のユニット"
+#: ../src/xfpm-battery.c:330
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is fully charged (%i%%).\n"
+"Provides %s runtime"
+msgstr ""
+"%s\n"
+"%s はフル充電されています (%i%%)。\n"
+"バッテリ駆動時間は %s ほどです。"
 
-#: ../src/xfpm-battery-info.c:70
-msgid "Technology:"
-msgstr "テクノロジ:"
+#: ../src/xfpm-battery.c:339
+#, fuzzy, c-format
+msgid ""
+"%s\n"
+"Your %s is fully charged (%i%%)."
+msgstr "バッテリはフル充電されています"
 
-#: ../src/xfpm-battery-info.c:93
-msgid "Design:"
-msgstr "デザイン:"
+#: ../src/xfpm-battery.c:350
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is charging (%i%%)\n"
+"%s until is fully charged."
+msgstr ""
+"%s\n"
+"%s は充電中です (%i%%)。\n"
+"フル充電まで約 %s です。"
 
-#: ../src/xfpm-battery-info.c:121
-msgid "Last full:"
-msgstr "最終フル充電:"
+#: ../src/xfpm-battery.c:359
+#, fuzzy, c-format
+msgid ""
+"%s\n"
+"Your %s is charging (%i%%)."
+msgstr "バッテリは充電中です"
 
-#: ../src/xfpm-battery-info.c:145
-msgid "Vendor:"
-msgstr "ベンダ:"
+#: ../src/xfpm-battery.c:370
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is discharging (%i%%)\n"
+"estimated time left is %s."
+msgstr ""
 
-#: ../src/xfpm-battery-info.c:169
-msgid "Model:"
-msgstr "モデル:"
+#: ../src/xfpm-battery.c:379
+#, fuzzy, c-format
+msgid ""
+"%s\n"
+"Your %s is discharging (%i%%)."
+msgstr "バッテリを使用しています"
 
-#: ../src/xfpm-battery-info.c:202
-msgid "Battery information"
-msgstr "バッテリ情報"
+#: ../src/xfpm-battery.c:388
+#, c-format
+msgid ""
+"%s\n"
+"%s waiting to discharge (%i%%)."
+msgstr ""
 
-#: ../src/xfpm-main.c:53
+#: ../src/xfpm-battery.c:392
+#, c-format
+msgid ""
+"%s\n"
+"%s waiting to charge (%i%%)."
+msgstr ""
+
+#: ../src/xfpm-battery.c:396
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is empty"
+msgstr ""
+"%s\n"
+"%s は空です。"
+
+#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
 msgid ""
 "\n"
@@ -495,239 +632,513 @@ msgstr ""
 "Licensed under the GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+msgid "True"
+msgstr "あり"
+
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+msgid "False"
+msgstr "なし"
+
+#: ../src/xfpm-main.c:113
+#, c-format
+msgid "With HAL support\n"
+msgstr "HAL サポートあり\n"
+
+#: ../src/xfpm-main.c:115
+#, c-format
+msgid "Without HAL support\n"
+msgstr "HAL サポートなし\n"
+
+#: ../src/xfpm-main.c:118
+#, c-format
+msgid "With policykit support\n"
+msgstr "policykit サポートあり\n"
+
+#: ../src/xfpm-main.c:120
+#, c-format
+msgid "Without policykit support\n"
+msgstr "policykit サポートなし\n"
+
+#: ../src/xfpm-main.c:123
+#, c-format
+msgid "With network manager support\n"
+msgstr "ネットワークマネージャサポートあり\n"
+
+#: ../src/xfpm-main.c:125
+#, c-format
+msgid "Without network manager support\n"
+msgstr "ネットワークマネージャサポートなし\n"
+
+#: ../src/xfpm-main.c:128
+#, c-format
+msgid "With DPMS support\n"
+msgstr "DPMS サポートあり\n"
+
+#: ../src/xfpm-main.c:130
+#, c-format
+msgid "Without DPMS support\n"
+msgstr "DPMS サポートなし\n"
+
+#: ../src/xfpm-main.c:146 ../src/xfpm-main.c:170
+msgid "Has LID"
+msgstr "蓋の有無"
+
+#: ../src/xfpm-main.c:148
+msgid "Can suspend"
+msgstr "サスペンドの可否"
+
+#: ../src/xfpm-main.c:150
+msgid "Can hibernate"
+msgstr "ハイバネートの可否"
+
+#: ../src/xfpm-main.c:152
+msgid "Can spin down hard disks"
+msgstr "ハードディスクのスピンダウンの可否"
+
+#: ../src/xfpm-main.c:154
+msgid "Authorized to suspend"
+msgstr "サスペンド権限"
+
+#: ../src/xfpm-main.c:156
+msgid "Authorized to hibernate"
+msgstr "ハイバネート権限"
+
+#: ../src/xfpm-main.c:158
+msgid "Authorized to shutdown"
+msgstr "シャットダウン権限"
+
+#: ../src/xfpm-main.c:160
+msgid "Authorized to spin down hard disks"
+msgstr "ハードディスクのスピンダウン権限"
+
+#: ../src/xfpm-main.c:162
+#, fuzzy
+msgid "Has brightness panel"
+msgstr "輝度プラグイン"
+
+#: ../src/xfpm-main.c:164
+msgid "Has power button"
+msgstr "電源ボタンの有無"
+
+#: ../src/xfpm-main.c:166
+msgid "Has hibernate button"
+msgstr "ハイバネートボタンの有無"
+
+#: ../src/xfpm-main.c:168
+msgid "Has sleep button"
+msgstr "スリープボタンの有無"
+
+#: ../src/xfpm-main.c:269
 msgid "Do not daemonize"
 msgstr "デーモンとして起動しない"
 
-#: ../src/xfpm-main.c:134
+#: ../src/xfpm-main.c:270
+msgid "Enable debugging"
+msgstr "デバッグモードを有効にする"
+
+#: ../src/xfpm-main.c:271
+msgid "Dump all information"
+msgstr "全情報を表示する"
+
+#: ../src/xfpm-main.c:272
 msgid "Restart the running instance of Xfce power manager"
 msgstr "動作中の Xfce 電源管理インスタンスを再起動する"
 
-#: ../src/xfpm-main.c:135
+#: ../src/xfpm-main.c:273
 msgid "Show the configuration dialog"
 msgstr "設定ダイアログを表示します"
 
-#: ../src/xfpm-main.c:136
+#: ../src/xfpm-main.c:274
 msgid "Quit any running xfce power manager"
 msgstr "動作中の Xfce 電源管理を終了します"
 
-#: ../src/xfpm-main.c:137
+#: ../src/xfpm-main.c:275 ../src/xfpm-power-info.c:934
 msgid "Version information"
 msgstr "バージョン情報"
 
-#: ../src/xfpm-main.c:173
-#, c-format
-msgid "Too many arguments"
-msgstr "引数が多すぎます"
-
-#: ../src/xfpm-main.c:189
+#: ../src/xfpm-main.c:325
 msgid "Unable to get connection to the message bus session"
 msgstr "メッセージバスセッションに接続できませんでした"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:419
 msgid "Another power manager is already running"
 msgstr "他の Xfce 電源管理がすでに動作しています"
 
-#: ../src/xfpm-main.c:283
+#: ../src/xfpm-main.c:425
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce 電源管理はすでに動作しています"
 
-#: ../src/xfpm-supply.c:258
-msgid "Adapter present"
-msgstr "アダプタが接続されています"
-
-#: ../src/xfpm-supply.c:259
-msgid "Adapter not present"
-msgstr "アダプタは接続されていません"
-
-#: ../src/xfpm-supply.c:335
-msgid "Shutdown the system"
-msgstr "システムをシャットダウンします"
-
-#: ../src/xfpm-supply.c:346
-msgid "Hibernate the system"
-msgstr "システムをハイバネートします"
-
-#: ../src/xfpm-supply.c:358
-msgid ""
-"System is running on low power, but an application is currently disabling "
-"the automatic sleep, this means that doing a sleep now may damage the data "
-"of this application. Close this application before putting the computer on "
-"sleep mode or plug in your AC adapter"
-msgstr ""
-"システムは低電力下で動作していますが、アプリケーションは現在自動スリープが無"
-"効になっています。これは今スリープすると、このアプリケーションのデータが破壊"
-"されるかもしれないことを意味します。コンピュータがスリープする前にこのアプリ"
-"ケーションを終了するか、AC アダプタをつなげてください。"
-
-#: ../src/xfpm-supply.c:384
-msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"システムは低電力下で動作しています。作業中のデータを失ってしまわないよう保存"
-"してください。"
-
-#: ../src/xfpm-tray-icon.c:167
-msgid ""
-"An application is currently disabling the automatic sleep, doing this action "
-"now may damage the working state of this application, are you sure you want "
-"to hibernate the system?"
-msgstr ""
-"アプリケーションは現在自動スリープが無効になっているため、今ハイバネートを行"
-"うと、このアプリケーションの作業状態が破壊されるかもしれません。システムをハ"
-"イバネートしてもよろしいですか?"
-
-#: ../src/xfpm-tray-icon.c:170 ../src/xfpm-tray-icon.c:201
-msgid "Are you sure you want to proceed?"
-msgstr "続行してもよろしいですか?"
-
-#: ../src/xfpm-tray-icon.c:198
-msgid ""
-"An application is currently disabling the automatic sleep, doing this action "
-"now may damage the working state of this application, are you sure you want "
-"to suspend the system?"
-msgstr ""
-"アプリケーションは現在自動スリープが無効になっているため、今サスペンドを行う"
-"と、このアプリケーションの作業状態が破壊されるかもしれません。システムをサス"
-"ペンドしてもよろしいですか?"
-
-#: ../src/xfpm-tray-icon.c:222
-msgid "Quit the Xfce power manager"
-msgstr "Xfce 電源管理を終了します"
-
-#: ../src/xfpm-tray-icon.c:224
-msgid "Quit"
-msgstr "終了"
-
-#: ../src/xfpm-tray-icon.c:297
-msgid "Monitor power control"
-msgstr "モニタ電源制御"
-
-#: ../src/xfpm-tray-icon.c:299
-msgid ""
-"Disable or enable monitor power control, for example you could disable the "
-"screen power control to avoid screen blanking when watching a movie."
-msgstr ""
-"モニタ電源制御の有効/無効を切り換えます。例えば映画を観ているときなどにモニタ"
-"がスリープしないように無効にするとよいでしょう。"
-
-#: ../src/xfpm-tray-icon.c:386
-msgid "No data available"
-msgstr "有効なデータがありません"
-
-#: ../src/xfpm-engine.c:769 ../src/xfpm-engine.c:795 ../src/xfpm-engine.c:821
-#: ../src/xfpm-engine.c:850
-#, c-format
-msgid "Permission denied"
-msgstr "許可がありません"
-
-#: ../src/xfpm-engine.c:828
-#, c-format
-msgid "Hibernate not supported"
-msgstr "ハイバネートはサポートされていません"
-
-#: ../src/xfpm-engine.c:857
-#, c-format
-msgid "Suspend not supported"
-msgstr "サスペンドはサポートされていません"
-
-#: ../src/xfpm-manager.c:230
-msgid "HAL daemon is not running"
-msgstr "HAL デーモンが動作していません"
-
-#: ../src/xfpm-inhibit.c:330
+#: ../src/xfpm-inhibit.c:331
 #, c-format
 msgid "Invalid arguments"
 msgstr "不正な引数です"
 
-#: ../src/xfpm-inhibit.c:356
+#: ../src/xfpm-inhibit.c:357
 #, c-format
 msgid "Invalid cookie"
 msgstr "不正な Cookie です"
 
-#: ../src/xfpm-shutdown.c:334
-msgid "No back-end for your operating system"
-msgstr "あなたのオペレーティングシステム用のバックエンドはありません"
+#. TRANSLATORS: the command line was not provided
+#: ../src/xfpm-power-info.c:118
+msgid "No data"
+msgstr "データなし"
 
-#: ../src/xfpm-shutdown.c:338
-msgid "No hibernate script found"
-msgstr "ハイバネートスクリプトが見つかりませんでした"
+#. TRANSLATORS: kernel module, usually a device driver
+#: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
+msgid "Kernel module"
+msgstr "カーネルモジュール"
 
-#: ../src/xfpm-shutdown.c:342
-msgid "No suspend script found"
-msgstr "サスペンドスクリプトが見つかりませんでした"
+#. TRANSLATORS: kernel housekeeping
+#: ../src/xfpm-power-info.c:135
+msgid "Kernel core"
+msgstr "カーネルコア"
 
-#: ../src/xfpm-shutdown.c:346
-msgid "No suspend method found"
-msgstr "サスペンドメソッドが見つかりませんでした"
+#. TRANSLATORS: interrupt between processors
+#: ../src/xfpm-power-info.c:140
+msgid "Interprocessor interrupt"
+msgstr "プロセッサ間割り込み"
 
-#: ../src/xfpm-shutdown.c:350
-msgid "No hibernate method found"
-msgstr "ハイバネートメソッドが見つかりませんでした"
+#. TRANSLATORS: unknown interrupt
+#: ../src/xfpm-power-info.c:145
+msgid "Interrupt"
+msgstr "割り込み"
 
-#: ../src/xfpm-shutdown.c:354
-msgid "Out of memory"
-msgstr "メモリ不足です"
+#. TRANSLATORS: the keyboard and mouse device event
+#: ../src/xfpm-power-info.c:189
+msgid "PS/2 keyboard/mouse/touchpad"
+msgstr "PS/2 キーボード/マウス/タッチパッド"
 
-#: ../src/xfpm-shutdown.c:358
-msgid "System failed to sleep"
-msgstr "システムはスリープに失敗しました"
+#. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
+#: ../src/xfpm-power-info.c:192
+msgid "ACPI"
+msgstr "ACPI"
 
-#: ../src/xfpm-shutdown.c:411 ../src/xfpm-shutdown.c:433
-#: ../src/xfpm-shutdown.c:457 ../src/xfpm-shutdown.c:493
+#. TRANSLATORS: serial ATA is a new style of hard disk interface
+#: ../src/xfpm-power-info.c:195
+msgid "Serial ATA"
+msgstr "シリアル ATA"
+
+#. TRANSLATORS: this is the old-style ATA interface
+#: ../src/xfpm-power-info.c:198
+msgid "ATA host controller"
+msgstr "ATA ホストコントローラ"
+
+#. TRANSLATORS: 802.11 wireless adaptor
+#: ../src/xfpm-power-info.c:201
+msgid "Intel wireless adaptor"
+msgstr "Intel ワイヤレスアダプタ"
+
+#. TRANSLATORS: a timer is something that fires periodically
+#: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
+#: ../src/xfpm-power-info.c:212 ../src/xfpm-power-info.c:215
+#: ../src/xfpm-power-info.c:218
 #, c-format
-msgid "HAL daemon is currently not connected"
-msgstr "HAL デーモンに現在接続していません"
+msgid "Timer %s"
+msgstr "タイマー %s"
+
+#. TRANSLATORS: this is a task that's woken up from sleeping
+#: ../src/xfpm-power-info.c:221
+#, c-format
+msgid "Sleep %s"
+msgstr "スリープ %s"
+
+#. TRANSLATORS: this is a new realtime task
+#: ../src/xfpm-power-info.c:224
+#, c-format
+msgid "New task %s"
+msgstr "新規タスク %s"
+
+#. TRANSLATORS: this is a task thats woken to check state
+#: ../src/xfpm-power-info.c:227
+#, c-format
+msgid "Wait %s"
+msgstr ""
+
+#. TRANSLATORS: a work queue is a list of work that has to be done
+#: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
+#, c-format
+msgid "Work queue %s"
+msgstr ""
+
+#. TRANSLATORS: this is when the networking subsystem clears out old entries
+#: ../src/xfpm-power-info.c:236
+#, c-format
+msgid "Network route flush %s"
+msgstr ""
+
+#. TRANSLATORS: activity on the USB bus
+#: ../src/xfpm-power-info.c:239
+#, c-format
+msgid "USB activity %s"
+msgstr ""
+
+#. TRANSLATORS: we've timed out of an aligned timer
+#: ../src/xfpm-power-info.c:242
+#, c-format
+msgid "Wakeup %s"
+msgstr ""
+
+#. TRANSLATORS: interupts on the system required for basic operation
+#: ../src/xfpm-power-info.c:245
+msgid "Local interrupts"
+msgstr "ローカル割り込み"
+
+#. TRANSLATORS: interrupts when a task gets moved from one core to another
+#: ../src/xfpm-power-info.c:248
+msgid "Rescheduling interrupts"
+msgstr "再スケジュール割り込み"
+
+#: ../src/xfpm-power-info.c:331
+msgid "Attribute"
+msgstr "属性"
+
+#: ../src/xfpm-power-info.c:338
+msgid "Value"
+msgstr "値"
+
+#: ../src/xfpm-power-info.c:348
+msgid "Device"
+msgstr "デバイス"
+
+#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:739
+msgid "Type"
+msgstr "タイプ"
+
+#: ../src/xfpm-power-info.c:375
+msgid "PowerSupply"
+msgstr "電源"
+
+#: ../src/xfpm-power-info.c:393
+msgid "Model"
+msgstr "モデル"
+
+#: ../src/xfpm-power-info.c:407
+msgid "Technology"
+msgstr "テクノロジ"
+
+#. TRANSLATORS: Unit here is What hour
+#: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
+#: ../src/xfpm-power-info.c:442
+msgid "Wh"
+msgstr "Wh"
+
+#: ../src/xfpm-power-info.c:420
+msgid "Energy full design"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:434
+msgid "Energy full"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:448
+#, fuzzy
+msgid "Energy empty"
+msgstr "は空です"
+
+#. TRANSLATORS: Unit here is volt
+#: ../src/xfpm-power-info.c:456
+msgid "V"
+msgstr "V"
+
+#: ../src/xfpm-power-info.c:461
+msgid "Voltage"
+msgstr "電圧"
+
+#: ../src/xfpm-power-info.c:478
+msgid "Vendor"
+msgstr "ベンダ"
+
+#: ../src/xfpm-power-info.c:495
+msgid "Serial"
+msgstr "シリアル番号"
+
+#: ../src/xfpm-power-info.c:731
+msgid "Processor"
+msgstr "プロセッサ"
+
+#. TANSLATORS: PID, is the process id, e.g what ps x gives
+#: ../src/xfpm-power-info.c:748
+msgid "PID"
+msgstr "PID"
+
+#: ../src/xfpm-power-info.c:754
+msgid "Wakeups"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:760
+msgid "Command"
+msgstr "コマンド"
+
+#: ../src/xfpm-power-info.c:766
+msgid "Details"
+msgstr "詳細"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
 msgstr "Xfce デスクトップ用電源管理"
 
-#: ../libxfpm/hal-battery.c:263
-msgid "Lithium ion"
-msgstr "リチウムイオン"
-
-#: ../libxfpm/hal-battery.c:267
-msgid "Lead acid"
-msgstr "鉛酸"
-
-#: ../libxfpm/hal-battery.c:271
-msgid "Lithium polymer"
-msgstr "リチウムポリマー"
-
-#: ../libxfpm/hal-battery.c:275
-msgid "Nickel metal hydride"
-msgstr "ニッケル水素"
-
-#: ../libxfpm/hal-battery.c:278
-msgid "Unknown"
-msgstr "不明"
-
-#: ../libxfpm/hal-battery.c:286
-msgid "mWh"
-msgstr "mWh"
-
-#: ../libxfpm/hal-battery.c:290
-msgid "mAh"
-msgstr "mAh"
-
-#: ../libxfpm/xfpm-common.c:142
-msgid "translator-credits"
-msgstr "Masato Hashimoto <hashimoto@xfce.org>"
-
-#: ../panel-plugins/brightness/brightness-button.c:179
+#: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
 msgid "Control your LCD brightness"
 msgstr "LCD の輝度を調整します"
 
-#: ../panel-plugins/brightness/brightness-button.c:181
+#: ../panel-plugins/brightness/brightness-button.c:182
 msgid "No device found"
 msgstr "デバイスが見つかりません"
 
-#: ../panel-plugins/brightness/brightness-button.c:644
+#: ../panel-plugins/brightness/brightness-button.c:647
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "輝度プラグイン"
+
+#~ msgid "CPU frequency control"
+#~ msgstr "CPU 周波数制御"
+
+#~ msgid "Shutdown and hibernate operations not permitted"
+#~ msgstr "シャットダウンおよびハイバネート操作が許可されていません"
+
+#~ msgid "Xfce Power Manager Settings"
+#~ msgstr "Xfce 電源管理設定"
+
+#~ msgid "Battery is charging"
+#~ msgstr "バッテリは充電中です"
+
+#~ msgid "Your UPS"
+#~ msgstr "UPS"
+
+#~ msgid "Your Mouse battery"
+#~ msgstr "マウスのバッテリ"
+
+#~ msgid "Your Keyboard battery"
+#~ msgstr "キーボードのバッテリ"
+
+#~ msgid "Your Camera battery"
+#~ msgstr "カメラのバッテリ"
+
+#~ msgid "Your PDA battery"
+#~ msgstr "PDA のバッテリ"
+
+#~ msgid "Your Battery"
+#~ msgstr "バッテリ"
+
+#~ msgid "is fully charged"
+#~ msgstr "はフル充電されています"
+
+#~ msgid "charge level"
+#~ msgstr "充電レベル"
+
+#~ msgid "is charging"
+#~ msgstr "は充電中です"
+
+#~ msgid "is discharging"
+#~ msgstr "を使用中です"
+
+#~ msgid "charge is low"
+#~ msgstr "の充電量が低くなっています"
+
+#~ msgid "is almost empty"
+#~ msgstr "はほぼ空です"
+
+#~ msgid "is not present"
+#~ msgstr "は存在しません"
+
+#~ msgid "Battery not present"
+#~ msgstr "バッテリは存在しません"
+
+#~ msgid "System is running on AC power"
+#~ msgstr "システムは AC 電源で動作しています"
+
+#~ msgid "Estimated time left"
+#~ msgstr "推定残り時間"
+
+#~ msgid "Estimated time to be fully charged"
+#~ msgstr "フル充電までの推定時間"
+
+#~ msgid "Design:"
+#~ msgstr "デザイン:"
+
+#~ msgid "Last full:"
+#~ msgstr "最終フル充電:"
+
+#~ msgid "Too many arguments"
+#~ msgstr "引数が多すぎます"
+
+#~ msgid "Adapter present"
+#~ msgstr "アダプタが接続されています"
+
+#~ msgid "Adapter not present"
+#~ msgstr "アダプタは接続されていません"
+
+#~ msgid ""
+#~ "System is running on low power, but an application is currently disabling "
+#~ "the automatic sleep, this means that doing a sleep now may damage the "
+#~ "data of this application. Close this application before putting the "
+#~ "computer on sleep mode or plug in your AC adapter"
+#~ msgstr ""
+#~ "システムは低電力下で動作していますが、アプリケーションは現在自動スリープが"
+#~ "無効になっています。これは今スリープすると、このアプリケーションのデータが"
+#~ "破壊されるかもしれないことを意味します。コンピュータがスリープする前にこの"
+#~ "アプリケーションを終了するか、AC アダプタをつなげてください。"
+
+#~ msgid "Are you sure you want to proceed?"
+#~ msgstr "続行してもよろしいですか?"
+
+#~ msgid ""
+#~ "An application is currently disabling the automatic sleep, doing this "
+#~ "action now may damage the working state of this application, are you sure "
+#~ "you want to suspend the system?"
+#~ msgstr ""
+#~ "アプリケーションは現在自動スリープが無効になっているため、今サスペンドを行"
+#~ "うと、このアプリケーションの作業状態が破壊されるかもしれません。システムを"
+#~ "サスペンドしてもよろしいですか?"
+
+#~ msgid "Monitor power control"
+#~ msgstr "モニタ電源制御"
+
+#~ msgid ""
+#~ "Disable or enable monitor power control, for example you could disable "
+#~ "the screen power control to avoid screen blanking when watching a movie."
+#~ msgstr ""
+#~ "モニタ電源制御の有効/無効を切り換えます。例えば映画を観ているときなどにモ"
+#~ "ニタがスリープしないように無効にするとよいでしょう。"
+
+#~ msgid "No data available"
+#~ msgstr "有効なデータがありません"
+
+#~ msgid "Hibernate not supported"
+#~ msgstr "ハイバネートはサポートされていません"
+
+#~ msgid "HAL daemon is not running"
+#~ msgstr "HAL デーモンが動作していません"
+
+#~ msgid "No back-end for your operating system"
+#~ msgstr "あなたのオペレーティングシステム用のバックエンドはありません"
+
+#~ msgid "No hibernate script found"
+#~ msgstr "ハイバネートスクリプトが見つかりませんでした"
+
+#~ msgid "No suspend script found"
+#~ msgstr "サスペンドスクリプトが見つかりませんでした"
+
+#~ msgid "No suspend method found"
+#~ msgstr "サスペンドメソッドが見つかりませんでした"
+
+#~ msgid "No hibernate method found"
+#~ msgstr "ハイバネートメソッドが見つかりませんでした"
+
+#~ msgid "Out of memory"
+#~ msgstr "メモリ不足です"
+
+#~ msgid "System failed to sleep"
+#~ msgstr "システムはスリープに失敗しました"
+
+#~ msgid "HAL daemon is currently not connected"
+#~ msgstr "HAL デーモンに現在接続していません"
+
+#~ msgid "mAh"
+#~ msgstr "mAh"
 
 #~ msgid "Enable notification"
 #~ msgstr "通知を有効にする"
