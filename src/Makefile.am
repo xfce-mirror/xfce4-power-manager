@@ -38,41 +38,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-polkit.h				\
 	xfpm-errors.c				\
 	xfpm-errors.h				\
-	xfpm-config.h				\
-	xfpm-enum.h				\
-	xfpm-debug.c				\
-	xfpm-debug.h				\
-	egg-idletime.c				\
-	egg-idletime.h				\
 	gsd-media-keys-window.c			\
 	gsd-media-keys-window.h
-
-
-xfce4_power_manager_CFLAGS =			\
-	-I$(top_srcdir)				\
-	-I$(top_srcdir)/libxfpm			\
-	-DLOCALEDIR=\"$(localedir)\"		\
-	-DG_LOG_DOMAIN=\"xfce4-power-manager\" 	\
-	$(GOBJECT_CFLAGS)			\
-	$(GTHREAD_CFLAGS)			\
-	$(DBUS_GLIB_CFLAGS)			\
-	$(LIBXFCE4GUI_CFLAGS)			\
-	$(XFCONF_CFLAGS)			\
-	$(LIBNOTIFY_CFLAGS)			\
-	$(DPMS_CFLAGS)              	
-
-xfce4_power_manager_LDADD   =			\
-	$(top_builddir)/libxfpm/libxfpmhal.la	\
-	$(top_builddir)/libxfpm/libxfpmhalpower.la\
-	$(top_builddir)/libxfpm/libxfpmcommon.la\
-	$(GOBJECT_LIBS)				\
-	$(GTHREAD_LIBS)				\
-	$(DBUS_GLIB_LIBS)			\
-	$(LIBXFCE4GUI_LIBS)			\
-	$(XFCONF_LIBS)				\
-	$(LIBNOTIFY_LIBS)			\
-	$(DPMS_LIBS)		
-
 
 xfce4_power_manager_CFLAGS =                    \
 	-I$(top_srcdir)                         \
