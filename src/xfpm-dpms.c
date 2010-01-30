@@ -31,14 +31,13 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#include "libxfpm/xfpm-string.h"
-#include "libxfpm/xfpm-common.h"
+#include "xfpm-common.h"
 
 #include "xfpm-dpms.h"
-#include "xfpm-adapter.h"
+#include "xfpm-power.h"
 #include "xfpm-xfconf.h"
-#include "xfpm-screen-saver.h"
 #include "xfpm-config.h"
+#include "xfpm-debug.h"
 
 #ifdef HAVE_DPMS
 
@@ -50,18 +49,18 @@ static void xfpm_dpms_finalize   (GObject *object);
 struct XfpmDpmsPrivate
 {
     XfpmXfconf      *conf;
-    XfpmAdapter     *adapter;
-    XfpmScreenSaver *saver;
+    XfpmPower         *power;
     
-    gboolean       dpms_capable;
-    gboolean       inhibited;
-    gboolean       on_battery;
+    gboolean         dpms_capable;
+    gboolean         inhibited;
     
-    gulong	   switch_off_timeout_id;
-    gulong	   switch_on_timeout_id;
+    gboolean         on_battery;
+    
+    gulong	     switch_off_timeout_id;
+    gulong	     switch_on_timeout_id;
 };
 
-G_DEFINE_TYPE(XfpmDpms, xfpm_dpms, G_TYPE_OBJECT)
+G_DEFINE_TYPE (XfpmDpms, xfpm_dpms, G_TYPE_OBJECT)
 
 static void
 xfpm_dpms_set_timeouts (XfpmDpms *dpms, guint16 standby, guint16 suspend, guint off)
@@ -72,7 +71,7 @@ xfpm_dpms_set_timeouts (XfpmDpms *dpms, guint16 standby, guint16 suspend, guint 
     
     if ( standby != x_standby || suspend != x_suspend || off != x_off )
     {
-	TRACE ("Settings dpms: standby=%d suspend=%d off=%d\n", standby, suspend, off);
+	XFPM_DEBUG ("Settings dpms: standby=%d suspend=%d off=%d\n", standby, suspend, off);
 	DPMSSetTimeouts (GDK_DISPLAY(), standby,
 					suspend,
 					off );
@@ -92,10 +91,7 @@ xfpm_dpms_disable (XfpmDpms *dpms)
 	g_warning ("Cannot get DPMSInfo");
 	
     if ( state )
-    {
-	xfpm_dpms_set_timeouts (dpms, 0, 0, 0);
 	DPMSDisable (GDK_DISPLAY());
-    }
 }
 
 /*
@@ -200,24 +196,15 @@ xfpm_dpms_settings_changed_cb (GObject *obj, GParamSpec *spec, XfpmDpms *dpms)
 {
     if ( g_str_has_prefix (spec->name, "dpms"))
     {
-	TRACE ("Configuration changed");
+	XFPM_DEBUG ("Configuration changed");
 	xfpm_dpms_refresh (dpms);
     }
 }
 
 static void
-xfpm_dpms_adapter_changed_cb (XfpmAdapter *adapter, gboolean present, XfpmDpms *dpms)
+xfpm_dpms_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmDpms *dpms)
 {
-    dpms->priv->on_battery = !present;
-    xfpm_dpms_refresh (dpms);
-}
-
-static void
-xfpm_dpms_inhibit_changed_cb (XfpmScreenSaver *saver, gboolean inhibited, XfpmDpms *dpms)
-{
-    dpms->priv->inhibited = inhibited;
-    TRACE ("Inhibit changed %s", xfpm_bool_to_string (inhibited));
-    
+    dpms->priv->on_battery = on_battery;
     xfpm_dpms_refresh (dpms);
 }
 
@@ -245,20 +232,19 @@ xfpm_dpms_init(XfpmDpms *dpms)
 
     if ( dpms->priv->dpms_capable )
     {
-	dpms->priv->adapter = xfpm_adapter_new ();
-	dpms->priv->saver   = xfpm_screen_saver_new ();
+	dpms->priv->power     = xfpm_power_get ();
 	dpms->priv->conf    = xfpm_xfconf_new  ();
     
-	g_signal_connect (dpms->priv->saver, "screen-saver-inhibited",
-			  G_CALLBACK(xfpm_dpms_inhibit_changed_cb), dpms);
-    
-	g_signal_connect (dpms->priv->adapter, "adapter-changed",
-			  G_CALLBACK(xfpm_dpms_adapter_changed_cb), dpms);
+	g_signal_connect (dpms->priv->power, "on-battery-changed",
+			  G_CALLBACK(xfpm_dpms_on_battery_changed_cb), dpms);
 			  
 	g_signal_connect (dpms->priv->conf, "notify",
 			  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
 			  
-	dpms->priv->on_battery = !xfpm_adapter_get_present (dpms->priv->adapter);
+	g_object_get (G_OBJECT (dpms->priv->power),
+		      "on-battery", &dpms->priv->on_battery,
+		      NULL);
+	
 	xfpm_dpms_refresh (dpms);
     }
     else
@@ -275,8 +261,7 @@ xfpm_dpms_finalize(GObject *object)
     dpms = XFPM_DPMS (object);
     
     g_object_unref (dpms->priv->conf);
-    g_object_unref (dpms->priv->adapter);
-    g_object_unref ( dpms->priv->saver);
+    g_object_unref (dpms->priv->power);
 
     G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }
@@ -301,7 +286,7 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
     CARD16 current_level;
     BOOL current_state;
     
-    TRACE ("start");
+    XFPM_DEBUG ("start");
     
     if ( !dpms->priv->dpms_capable )
 	goto out;
@@ -314,13 +299,13 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
 
     if ( !current_state )
     {
-	TRACE ("DPMS is disabled");
+	XFPM_DEBUG ("DPMS is disabled");
 	goto out;
     }
 
     if ( current_level != level )
     {
-	TRACE ("Forcing DPMS mode %d", level);
+	XFPM_DEBUG ("Forcing DPMS mode %d", level);
 	
 	if ( !DPMSForceLevel (GDK_DISPLAY (), level ) )
 	{
@@ -333,7 +318,7 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
     }
     else
     {
-	TRACE ("No need to change DPMS mode, current_level=%d requested_level=%d", current_level, level);
+	XFPM_DEBUG ("No need to change DPMS mode, current_level=%d requested_level=%d", current_level, level);
     }
     
     out:

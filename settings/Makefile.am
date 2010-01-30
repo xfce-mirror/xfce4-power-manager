@@ -11,8 +11,10 @@ xfce4_power_manager_settings_SOURCES = 				\
 
 xfce4_power_manager_settings_CFLAGS =				\
 	-I$(top_srcdir)						\
+	-I$(top_srcdir)/common					\
 	-I$(top_srcdir)/src					\
 	-I$(top_srcdir)/data					\
+	-I$(top_srcdir)/libdbus                 		\
 	-DLOCALEDIR=\"$(localedir)\"				\
 	-DG_LOG_DOMAIN=\"xfce4-power-manager-settings\" 	\
 	-export-dynamic						\
@@ -23,21 +25,22 @@ xfce4_power_manager_settings_CFLAGS =				\
 	$(GMODULE_CFLAGS)					\
 	$(DBUS_CFLAGS)						\
 	$(DBUS_GLIB_CFLAGS)					\
-	$(LIBXFCE4GUI_CFLAGS)					\
+	$(LIBXFCE4UI_CFLAGS)					\
 	$(LIBXFCE4UTIL_CFLAGS)					\
 	$(XFCONF_CFLAGS)
 
 xfce4_power_manager_settings_LDADD   =				\
+	$(top_builddir)/libdbus/libxfpmdbus.la  		\
+	$(top_builddir)/common/libxfpmcommon.la			\
 	$(GTK_LIBS)						\
 	$(GLIB_LIBS)						\
 	$(GTHREAD_LIBS)						\
 	$(GMODULE_LIBS)						\
 	$(DBUS_LIBS)						\
 	$(DBUS_GLIB_LIBS)					\
-	$(LIBXFCE4GUI_LIBS)					\
+	$(LIBXFCE4UI_LIBS)					\
 	$(LIBXFCE4UTIL_LIBS)					\
-	$(XFCONF_LIBS)						\
-	$(top_builddir)/libxfpm/libxfpmcommon.la
+	$(XFCONF_LIBS)
 
 
 manpagedir = $(mandir)/man1

@@ -36,6 +36,7 @@
 #include "xfpm-inhibit.h"
 #include "xfpm-dbus-monitor.h"
 #include "xfpm-errors.h"
+#include "xfpm-debug.h"
 
 static void xfpm_inhibit_finalize   (GObject *object);
 
@@ -87,13 +88,13 @@ xfpm_inhibit_has_inhibit_changed (XfpmInhibit *inhibit)
 {
     if ( inhibit->priv->array->len == 0 && inhibit->priv->inhibited == TRUE )
     {
-	TRACE("Inhibit removed");
+	XFPM_DEBUG("Inhibit removed");
 	inhibit->priv->inhibited = FALSE;
 	g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
     }
     else if ( inhibit->priv->array->len != 0 && inhibit->priv->inhibited == FALSE )
     {
-	TRACE("Inhibit added");
+	XFPM_DEBUG("Inhibit added");
 	inhibit->priv->inhibited = TRUE;
 	g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
     }
@@ -196,7 +197,7 @@ xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor, gchar *unique_name,
     
     if ( inhibitor )
     {
-	TRACE ("Application=%s with unique connection name=%s disconnected", inhibitor->app_name, inhibitor->unique_name);
+	XFPM_DEBUG ("Application=%s with unique connection name=%s disconnected", inhibitor->app_name, inhibitor->unique_name);
 	xfpm_inhibit_free_inhibitor (inhibit, inhibitor);
 	xfpm_inhibit_has_inhibit_changed (inhibit);
     }
@@ -335,7 +336,7 @@ static void xfpm_inhibit_inhibit  	(XfpmInhibit *inhibit,
     sender = dbus_g_method_get_sender (context);
     cookie = xfpm_inhibit_add_application (inhibit, IN_appname, sender);
      
-    TRACE("Inhibit send application name=%s reason=%s sender=%s", IN_appname, IN_reason ,sender);
+    XFPM_DEBUG("Inhibit send application name=%s reason=%s sender=%s", IN_appname, IN_reason ,sender);
     
     xfpm_inhibit_has_inhibit_changed (inhibit);
     
@@ -349,7 +350,7 @@ static gboolean xfpm_inhibit_un_inhibit    (XfpmInhibit *inhibit,
 					    guint        IN_cookie,
 					    GError     **error)
 {
-    TRACE("UnHibit message received");
+    XFPM_DEBUG("UnHibit message received");
     
     if (!xfpm_inhibit_remove_application_by_cookie (inhibit, IN_cookie))
     {
@@ -366,7 +367,7 @@ static gboolean xfpm_inhibit_has_inhibit   (XfpmInhibit *inhibit,
 					    gboolean    *OUT_has_inhibit,
 					    GError     **error)
 {
-    TRACE("Has Inhibit message received");
+    XFPM_DEBUG("Has Inhibit message received");
 
     *OUT_has_inhibit = inhibit->priv->inhibited;
 
@@ -380,7 +381,7 @@ static gboolean xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
     guint i;
     Inhibitor *inhibitor;
 
-    TRACE ("Get Inhibitors message received");
+    XFPM_DEBUG ("Get Inhibitors message received");
     
     *OUT_inhibitors = g_new (gchar *, inhibit->priv->array->len + 1);
     

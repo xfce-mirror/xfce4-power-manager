@@ -1,7 +1,7 @@
 m4_define([intltool_minimum_version], [0.31])
 m4_define([xfpm_version_major],  [0])
-m4_define([xfpm_version_minor],  [8])
-m4_define([xfpm_version_micro],  [4.1])
+m4_define([xfpm_version_minor],  [9])
+m4_define([xfpm_version_micro],  [90])
 m4_define([xfpm_version_build],  [@REVISION@])
 m4_define([xfpm_version_tag],[git])
 m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_version_micro()ifelse(xfpm_version_tag(), [git], [xfpm_version_tag().xfpm_version_build()], [xfpm_version_tag()])])
@@ -54,11 +54,13 @@ m4_define([dbus_minimum_version], [0.60])
 m4_define([dbus_glib_minimum_version], [0.70])
 
 m4_define([xfconf_minimum_version], [4.6.0])
-m4_define([libxfcegui4_minimum_version],[4.6.0])
+m4_define([libxfce4ui_minimum_version],[4.7.0])
 m4_define([libxfce4util_minimum_version],[4.6.0])
 m4_define([libxfce4panel_minimum_version],[4.6.0])
 
 m4_define([libnotify_minimum_version], [0.4.1])
+m4_define([xrandr_minimum_version], [1.2.0])
+m4_define([polkit_minimum_version], [0.91])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
@@ -68,9 +70,29 @@ XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [glib_minimum_version])
 XDT_CHECK_PACKAGE([DBUS], [dbus-1], [dbus_minimum_version])
 XDT_CHECK_PACKAGE([DBUS_GLIB], [dbus-glib-1], [dbus_glib_minimum_version])
 XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0],[xfconf_minimum_version])
-XDT_CHECK_PACKAGE([LIBXFCE4GUI], [libxfcegui4-1.0],[libxfcegui4_minimum_version])
+XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-1],[libxfce4ui_minimum_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_version])
 XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
+XDT_CHECK_PACKAGE([XRANDR],[xrandr], [xrandr_minimum_version])
+
+POLKIT="no"
+XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [polkit_minimum_version], [polkit], [Polkit support])
+
+#=======================================================#
+#              Use HAL?			                #
+#=======================================================#
+AC_ARG_ENABLE([hal],
+	[AC_HELP_STRING([--disable-hal],
+		[Do not enable HAL (default=enabled)])],
+	[ac_cv_enable_hal=$enableval],
+	[ac_cv_enable_hal=yes])
+if test "x$ac_cv_enable_hal" = "xno"; then
+	enable_hal="no"
+else
+	enable_hal="yes"
+	AC_DEFINE(WITH_HAL, 1 , [HAL support])
+fi
+AM_CONDITIONAL([ENABLE_HAL], [test "x$enable_hal" = "xyes"])
 
 #=======================================================#
 #           Check for DPMS support                      #
@@ -168,13 +190,29 @@ XDT_FEATURE_DEBUG
 
 AC_OUTPUT([
 Makefile
-libxfpm/Makefile
+libdbus/Makefile
+libhal/Makefile
+common/Makefile
 src/Makefile
 settings/Makefile
 panel-plugins/Makefile
 panel-plugins/brightness/Makefile
 data/Makefile
 data/icons/Makefile
+data/icons/16x16/Makefile
+data/icons/16x16/actions/Makefile
+data/icons/16x16/status/Makefile
+data/icons/22x22/Makefile
+data/icons/22x22/actions/Makefile
+data/icons/22x22/status/Makefile
+data/icons/24x24/Makefile
+data/icons/24x24/actions/Makefile
+data/icons/24x24/status/Makefile
+data/icons/48x48/Makefile
+data/icons/48x48/actions/Makefile
+data/icons/48x48/status/Makefile
+data/icons/128x128/Makefile
+data/icons/128x128/devices/Makefile
 data/icons/scalable/Makefile
 data/icons/scalable/status/Makefile
 data/icons/scalable/actions/Makefile
@@ -191,12 +229,14 @@ echo "
  	    Xfce Power Manager $VERSION
 	======================================
  
-	prefix:			$prefix
-	xdg autostart:		$sysconfdir/xdg/autostart
-   	DPMS:   		$have_dpms
-	Network manager:	$ac_network_manager
-  	Build panel plugins:	$build_panel_plugins
-   	Debug:		   	$enable_debug
+	prefix:			${prefix}
+	xdg autostart:		${sysconfdir/xdg/autostart}
+	HAL:			${enable_hal}
+	POLKIT:			${POLKIT_FOUND}
+   	DPMS:   		${have_dpms}
+	Network manager:	${ac_network_manager}
+  	Build panel plugins:	${build_panel_plugins}
+   	Debug:		   	${enable_debug}
 --------------------------------------------------
 
 Configuration finished, type make to compile"

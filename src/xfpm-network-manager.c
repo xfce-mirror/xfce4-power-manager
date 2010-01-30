@@ -63,6 +63,9 @@ gboolean 	xfpm_send_message_to_network_manager  	(const gchar *message)
     g_object_unref (G_OBJECT(proxy));
     dbus_g_connection_unref (bus);
     
+    /* Sleep 0.5 second to allow the nm applet to disconnect*/
+    g_usleep (500000);
+    
 #endif /* WITH_NETWORK_MANAGER */
     return TRUE;
 }

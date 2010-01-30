@@ -29,16 +29,12 @@
 #include <glib.h>
 #include <libxfce4util/libxfce4util.h>
 
-#include <xfconf/xfconf.h>
-
-#include "libxfpm/xfpm-string.h"
-#include "libxfpm/xfpm-common.h"
-
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum.h"
 #include "xfpm-enum-types.h"
+#include "xfpm-debug.h"
 
 static void xfpm_xfconf_finalize   (GObject *object);
 
@@ -81,6 +77,10 @@ enum
     PROP_IDLE_SLEEP_MODE,
     PROP_DIM_ON_AC_TIMEOUT,
     PROP_DIM_ON_BATTERY_TIMEOUT,
+    PROP_SPIN_DOWN_DISK_ON_AC,
+    PROP_SPIN_DOWN_DISK_ON_BATTERY,
+    PROP_SPIN_DOWN_DISK_ON_AC_TIMEOUT,
+    PROP_SPIN_DOWN_DISK_ON_BATTERY_TIMEOUT,
     N_PROPERTIES
 };
 
@@ -151,13 +151,13 @@ xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
 	{
 	    if ( !xfconf_channel_get_property (conf->priv->channel, prop_name, &value) )
 	    {
-		TRACE ("Using default configuration for %s", specs[i]->name);
+		XFPM_DEBUG ("Using default configuration for %s", specs[i]->name);
 		g_param_value_set_default (specs[i], &value);
 	    }
 	}
 	else
 	{
-	    TRACE ("Using default configuration for %s", specs[i]->name);
+	    XFPM_DEBUG ("Using default configuration for %s", specs[i]->name);
 	    g_param_value_set_default (specs[i], &value);
 	}
 	g_free (prop_name);
@@ -178,7 +178,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     if ( !g_str_has_prefix (property, PROPERTIES_PREFIX) || strlen (property) <= strlen (PROPERTIES_PREFIX) )
 	return;
 
-    TRACE("Property modified: %s\n", property);
+    XFPM_DEBUG("Property modified: %s\n", property);
     
     g_object_set_property (G_OBJECT (conf), property + strlen (PROPERTIES_PREFIX), value);
 }
@@ -464,6 +464,50 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							120,
                                                         G_PARAM_READWRITE));
 
+    /**
+     * XfpmXfconf::spin-down-on-ac
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SPIN_DOWN_DISK_ON_AC,
+                                     g_param_spec_boolean (SPIN_DOWN_ON_AC,
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::spin-down-on-battery
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SPIN_DOWN_DISK_ON_BATTERY,
+                                     g_param_spec_boolean (SPIN_DOWN_ON_BATTERY,
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::spin-down-on-ac-timeout
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SPIN_DOWN_DISK_ON_AC_TIMEOUT,
+                                     g_param_spec_uint (SPIN_DOWN_ON_AC_TIMEOUT,
+                                                        NULL, NULL,
+							800,
+							G_MAXUINT,
+							800,
+                                                        G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::spin-down-on-battery-timeout
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_SPIN_DOWN_DISK_ON_BATTERY_TIMEOUT,
+                                     g_param_spec_uint (SPIN_DOWN_ON_BATTERY_TIMEOUT,
+                                                        NULL, NULL,
+							120,
+							G_MAXUINT,
+							120,
+                                                        G_PARAM_READWRITE));
+
     g_type_class_add_private (klass, sizeof (XfpmXfconfPrivate));
 }
 
@@ -517,7 +561,7 @@ xfpm_xfconf_finalize(GObject *object)
 }
 
 XfpmXfconf *
-xfpm_xfconf_new(void)
+xfpm_xfconf_new (void)
 {
     static gpointer xfpm_xfconf_object = NULL;
     
@@ -531,4 +575,9 @@ xfpm_xfconf_new(void)
 	g_object_add_weak_pointer (xfpm_xfconf_object, &xfpm_xfconf_object);
     }
     return XFPM_XFCONF (xfpm_xfconf_object);
+}
+
+XfconfChannel *xfpm_xfconf_get_channel (XfpmXfconf *conf)
+{
+    return conf->priv->channel;
 }

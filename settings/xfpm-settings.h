@@ -22,9 +22,11 @@
 #define __XFPM_SETTINGS_H
 
 
-void	       xfpm_settings_dialog_new 	(XfconfChannel *channel,
-						 gboolean system_laptop,
-						 gboolean user_privilege,
+GtkWidget      *xfpm_settings_dialog_new 	(XfconfChannel *channel,
+						 gboolean has_battery,
+						 gboolean auth_hibernate,
+						 gboolean auth_suspend,
+						 gboolean can_shutdown,
 					         gboolean can_suspend,
 					         gboolean can_hibernate,
 					         gboolean has_lcd_brightness,
@@ -32,6 +34,8 @@ void	       xfpm_settings_dialog_new 	(XfconfChannel *channel,
 						 gboolean has_sleep_button,
 						 gboolean has_hibernate_button,
 						 gboolean has_power_button,
+						 gboolean devkit_disk,
+						 gboolean can_spin_down,
 						 GdkNativeWindow id);
 
 

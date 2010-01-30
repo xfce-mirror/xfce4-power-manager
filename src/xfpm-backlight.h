@@ -26,30 +26,29 @@
 G_BEGIN_DECLS
 
 #define XFPM_TYPE_BACKLIGHT        (xfpm_backlight_get_type () )
-#define XFPM_BACKLIGHT(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_BACKLIGHT, XfpmBacklight))
-#define XFPM_IS_BACKLIGHT(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_BACKLIGHT))
+#define XFPM_BACKLIGHT(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_BACKLIGHT, XfpmBacklight))
+#define XFPM_IS_BACKLIGHT(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_BACKLIGHT))
 
 typedef struct XfpmBacklightPrivate XfpmBacklightPrivate;
 
 typedef struct
 {
-    GObject		 	  parent;
-    XfpmBacklightPrivate	 *priv;
-	
+    GObject         		parent;
+    XfpmBacklightPrivate       *priv;
+    
 } XfpmBacklight;
 
 typedef struct
 {
-    GObjectClass parent_class;
-	
+    GObjectClass 		parent_class;
+    
 } XfpmBacklightClass;
 
-GType			         xfpm_backlight_get_type        (void) G_GNUC_CONST;
-XfpmBacklight       		*xfpm_backlight_new             (void);
+GType        			xfpm_backlight_get_type         (void) G_GNUC_CONST;
 
-gboolean                         xfpm_backlight_has_hw          (XfpmBacklight *bk) G_GNUC_PURE;
+XfpmBacklight       	       *xfpm_backlight_new              (void);
 
-void                             xfpm_backlight_reload          (XfpmBacklight *bk);
+gboolean			xfpm_backlight_has_hw		(XfpmBacklight *backlight);
 
 G_END_DECLS
 

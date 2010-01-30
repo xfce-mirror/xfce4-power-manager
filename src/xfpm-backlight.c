@@ -26,168 +26,452 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <math.h>
+
+#include <gtk/gtk.h>
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-backlight.h"
-#include "xfpm-brightness-hal.h"
-#include "xfpm-brightness-widget.h"
+#include "egg-idletime.h"
+#include "xfpm-notify.h"
+#include "xfpm-xfconf.h"
+#include "xfpm-power.h"
+#include "xfpm-config.h"
+#include "xfpm-button.h"
+#include "xfpm-brightness.h"
+#include "xfpm-debug.h"
+#include "xfpm-icons.h"
 
-static void xfpm_backlight_finalize   (GObject *object);
+#include "gsd-media-keys-window.h"
 
-static void xfpm_backlight_dbus_class_init (XfpmBacklightClass *klass);
-static void xfpm_backlight_dbus_init       (XfpmBacklight *bk);
+static void xfpm_backlight_finalize     (GObject *object);
+
+static void xfpm_backlight_create_popup (XfpmBacklight *backlight);
+
+#define ALARM_DISABLED 9
+#define BRIGHTNESS_POPUP_SIZE	180
 
 #define XFPM_BACKLIGHT_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_BACKLIGHT, XfpmBacklightPrivate))
+(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_BACKLIGHT, XfpmBacklightPrivate))
 
 struct XfpmBacklightPrivate
 {
-    XfpmBrightnessHal    *br;
-    XfpmBrightnessWidget *widget;
+    XfpmBrightness *brightness;
+    XfpmPower      *power;
+    EggIdletime    *idle;
+    XfpmXfconf     *conf;
+    XfpmButton     *button;
+    XfpmNotify     *notify;
     
-    gboolean has_hw;
+    GtkWidget	   *osd;
+    NotifyNotification *n;
+    
+    
+    gulong	    destroy_id;
+    
+    gboolean	    has_hw;
+    gboolean	    on_battery;
+    
+    gint            last_level;
+    gint 	    max_level;
+    
+    gboolean        dimmed;
+    gboolean	    block;
+#ifdef WITH_HAL
+    gboolean	    brightness_in_hw;
+#endif
 };
 
-G_DEFINE_TYPE(XfpmBacklight, xfpm_backlight, G_TYPE_OBJECT)
+G_DEFINE_TYPE (XfpmBacklight, xfpm_backlight, G_TYPE_OBJECT)
 
 static void
-xfpm_backlight_brightness_up (XfpmBrightnessHal *brg, guint level, XfpmBacklight *bk)
+xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 {
-    xfpm_brightness_widget_set_level (bk->priv->widget, level);
-}
-
-static void
-xfpm_backlight_brightness_down (XfpmBrightnessHal *brg, guint level, XfpmBacklight *bk)
-{
-    xfpm_brightness_widget_set_level (bk->priv->widget, level);
-}
-
-static void
-xfpm_backlight_get_device (XfpmBacklight *bk)
-{
-    guint max_level;
-    bk->priv->br     = xfpm_brightness_hal_new ();
-    bk->priv->has_hw = xfpm_brightness_hal_has_hw (bk->priv->br);
+    gboolean ret;
     
-    if ( bk->priv->has_hw == FALSE )
-	g_object_unref (bk->priv->br);
-    else
+    ret = xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
+    
+    if ( !ret )
     {
-	bk->priv->widget = xfpm_brightness_widget_new ();
-	g_signal_connect (G_OBJECT(bk->priv->br), "brigthness-up",
-			  G_CALLBACK (xfpm_backlight_brightness_up), bk);
-			  
-	g_signal_connect (G_OBJECT(bk->priv->br), "brigthness-down",
-			  G_CALLBACK (xfpm_backlight_brightness_down), bk);
-	
-	max_level = xfpm_brightness_hal_get_max_level (bk->priv->br);
-	xfpm_brightness_widget_set_max_level (bk->priv->widget,
-					      max_level);
+	g_warning ("Unable to get current brightness level");
+	return;
+    }
+    XFPM_DEBUG ("Current brightness level before dimming : %u", backlight->priv->last_level);
+    
+    backlight->priv->dimmed = xfpm_brightness_dim_down (backlight->priv->brightness);
+}
+
+static gboolean
+xfpm_backlight_destroy_popup (gpointer data)
+{
+    XfpmBacklight *backlight;
+    
+    backlight = XFPM_BACKLIGHT (data);
+    
+    if ( backlight->priv->osd )
+    {
+	gtk_widget_destroy (backlight->priv->osd);
+	backlight->priv->osd = NULL;
     }
     
+    if ( backlight->priv->n )
+    {
+	g_object_unref (backlight->priv->n);
+	backlight->priv->n = NULL;
+    }
+    
+    return FALSE;
 }
 
 static void
-xfpm_backlight_class_init(XfpmBacklightClass *klass)
+xfpm_backlight_composited_changed_cb (XfpmBacklight *backlight)
 {
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    xfpm_backlight_destroy_popup (backlight);
+    xfpm_backlight_create_popup (backlight);
+}
+
+static void
+xfpm_backlight_show_notification (XfpmBacklight *backlight, gfloat value)
+{
+    gint i;
+    
+    static const char *display_icon_name[] = 
+    {
+	"notification-display-brightness-off",
+	"notification-display-brightness-low",
+	"notification-display-brightness-medium",
+	"notification-display-brightness-high",
+	"notification-display-brightness-full",
+	NULL
+    };
+    
+    if ( backlight->priv->n == NULL )
+    {
+	backlight->priv->n = xfpm_notify_new_notification (backlight->priv->notify, 
+							   " ", 
+							   "", 
+							   NULL, 
+							   0, 
+							   XFPM_NOTIFY_NORMAL,
+							   NULL);
+    }
+    
+    i = (gint)value / 25;
+    
+    if ( i > 4 || i < 0 )
+	return;
+    
+    notify_notification_set_hint_int32  (backlight->priv->n,
+					 "value",
+					 value);
+    
+    notify_notification_set_hint_string (backlight->priv->n,
+					 "x-canonical-private-synchronous",
+					 "brightness");
+    
+    notify_notification_update (backlight->priv->n,
+			        " ",
+				"",
+				display_icon_name[i]);
+				
+    notify_notification_show (backlight->priv->n, NULL);
+}
+
+static void
+xfpm_backlight_create_popup (XfpmBacklight *backlight)
+{
+    if ( backlight->priv->osd != NULL )
+	return;
+	
+    backlight->priv->osd = gsd_media_keys_window_new ();
+    gsd_media_keys_window_set_action_custom (GSD_MEDIA_KEYS_WINDOW (backlight->priv->osd),
+					     XFPM_DISPLAY_BRIGHTNESS_ICON,
+					     TRUE);
+    gtk_window_set_position (GTK_WINDOW (backlight->priv->osd), GTK_WIN_POS_CENTER);
+    
+    g_signal_connect_swapped (backlight->priv->osd, "composited-changed",
+			      G_CALLBACK (xfpm_backlight_composited_changed_cb), backlight);
+			      
+}
+
+static void
+xfpm_backlight_show (XfpmBacklight *backlight, gint level)
+{
+    gfloat value;
+    gboolean sync;
+    gboolean show_popup;
+    
+    XFPM_DEBUG ("Level %u", level);
+    
+    g_object_get (G_OBJECT (backlight->priv->conf),
+                  SHOW_BRIGHTNESS_POPUP, &show_popup,
+                  NULL);
+		  
+    if ( !show_popup )
+	goto out;
+    
+    g_object_get (G_OBJECT (backlight->priv->notify),
+		  "sync", &sync,
+		  NULL);
+    
+    value = (gfloat) 100 * level / backlight->priv->max_level;
+    
+    if ( !sync ) /*Notification server doesn't support sync notifications*/
+    {
+	xfpm_backlight_create_popup (backlight);
+	gsd_media_keys_window_set_volume_level (GSD_MEDIA_KEYS_WINDOW (backlight->priv->osd),
+						round (value));
+	if ( !GTK_WIDGET_VISIBLE (backlight->priv->osd))
+	    gtk_window_present (GTK_WINDOW (backlight->priv->osd));
+    }
+    else
+    {
+	xfpm_backlight_show_notification (backlight, value);
+    }
+    
+    if ( backlight->priv->destroy_id != 0 )
+    {
+	g_source_remove (backlight->priv->destroy_id);
+	backlight->priv->destroy_id = 0;
+    }
+    
+out:
+    /* Release the memory after 60 seconds */
+    backlight->priv->destroy_id = g_timeout_add_seconds (60, (GSourceFunc) xfpm_backlight_destroy_popup, backlight);
+}
+
+
+static void
+xfpm_backlight_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmBacklight *backlight)
+{
+    backlight->priv->block = FALSE;
+    
+    if ( id == TIMEOUT_BRIGHTNESS_ON_AC && !backlight->priv->on_battery)
+	xfpm_backlight_dim_brightness (backlight);
+    else if ( id == TIMEOUT_BRIGHTNESS_ON_BATTERY && backlight->priv->on_battery)
+	xfpm_backlight_dim_brightness (backlight);
+}
+
+static void
+xfpm_backlight_reset_cb (EggIdletime *idle, XfpmBacklight *backlight)
+{
+    if ( backlight->priv->dimmed)
+    {
+	if ( !backlight->priv->block)
+	{
+	    XFPM_DEBUG ("Alarm reset, setting level to %i", backlight->priv->last_level);
+	    xfpm_brightness_set_level (backlight->priv->brightness, backlight->priv->last_level);
+	}
+	backlight->priv->dimmed = FALSE;
+    }
+}
+
+static void
+xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBacklight *backlight)
+{
+    gint level;
+    gboolean ret = TRUE;
+    
+    gboolean enable_brightness, show_popup;
+    
+    g_object_get (G_OBJECT (backlight->priv->conf),
+                  ENABLE_BRIGHTNESS_CONTROL, &enable_brightness,
+		  SHOW_BRIGHTNESS_POPUP, &show_popup,
+                  NULL);
+    
+    if ( type == BUTTON_MON_BRIGHTNESS_UP )
+    {
+	backlight->priv->block = TRUE;
+#ifdef WITH_HAL
+	if ( !backlight->priv->brightness_in_hw && enable_brightness)
+	    ret = xfpm_brightness_up (backlight->priv->brightness, &level);
+#else
+	if ( enable_brightness )
+	    ret = xfpm_brightness_up (backlight->priv->brightness, &level);
+#endif
+	if ( ret && show_popup)
+	    xfpm_backlight_show (backlight, level);
+    }
+    else if ( type == BUTTON_MON_BRIGHTNESS_DOWN )
+    {
+	backlight->priv->block = TRUE;
+#ifdef WITH_HAL
+	if ( !backlight->priv->brightness_in_hw && enable_brightness )
+	    ret = xfpm_brightness_down (backlight->priv->brightness, &level);
+#else
+	if ( enable_brightness )
+	    ret = xfpm_brightness_down (backlight->priv->brightness, &level);
+#endif
+	if ( ret && show_popup)
+	    xfpm_backlight_show (backlight, level);
+    }
+}
+
+static void
+xfpm_backlight_brightness_on_ac_settings_changed (XfpmBacklight *backlight)
+{
+    guint timeout_on_ac;
+    
+    g_object_get (G_OBJECT (backlight->priv->conf),
+		  BRIGHTNESS_ON_AC, &timeout_on_ac,
+		  NULL);
+		  
+    XFPM_DEBUG ("Alarm on ac timeout changed %u", timeout_on_ac);
+    
+    if ( timeout_on_ac == ALARM_DISABLED )
+    {
+	egg_idletime_alarm_remove (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC );
+    }
+    else
+    {
+	egg_idletime_alarm_set (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC, timeout_on_ac * 1000);
+    }
+}
+
+static void
+xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
+{
+    guint timeout_on_battery ;
+    
+    g_object_get (G_OBJECT (backlight->priv->conf),
+		  BRIGHTNESS_ON_BATTERY, &timeout_on_battery,
+		  NULL);
+    
+    XFPM_DEBUG ("Alarm on battery timeout changed %u", timeout_on_battery);
+    
+    if ( timeout_on_battery == ALARM_DISABLED )
+    {
+	egg_idletime_alarm_remove (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY );
+    }
+    else
+    {
+	egg_idletime_alarm_set (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY, timeout_on_battery * 1000);
+    } 
+}
+
+
+static void
+xfpm_backlight_set_timeouts (XfpmBacklight *backlight)
+{
+    xfpm_backlight_brightness_on_ac_settings_changed (backlight);
+    xfpm_backlight_brightness_on_battery_settings_changed (backlight);
+}
+
+static void
+xfpm_backlight_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmBacklight *backlight)
+{
+    backlight->priv->on_battery = on_battery;
+}
+
+static void
+xfpm_backlight_class_init (XfpmBacklightClass *klass)
+{
+    GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
     object_class->finalize = xfpm_backlight_finalize;
 
-    g_type_class_add_private(klass,sizeof(XfpmBacklightPrivate));
-    
-    xfpm_backlight_dbus_class_init (klass);
+    g_type_class_add_private (klass, sizeof (XfpmBacklightPrivate));
 }
 
 static void
-xfpm_backlight_init(XfpmBacklight *bk)
+xfpm_backlight_init (XfpmBacklight *backlight)
 {
-    bk->priv = XFPM_BACKLIGHT_GET_PRIVATE(bk);
+    backlight->priv = XFPM_BACKLIGHT_GET_PRIVATE (backlight);
     
-    xfpm_backlight_get_device (bk);
+    backlight->priv->brightness = xfpm_brightness_new ();
+    backlight->priv->has_hw     = xfpm_brightness_setup (backlight->priv->brightness);
     
-    xfpm_backlight_dbus_init (bk);
-}
-
-static void
-xfpm_backlight_finalize(GObject *object)
-{
-    XfpmBacklight *bk;
-
-    bk = XFPM_BACKLIGHT(object);
+    backlight->priv->osd    = NULL;
+    backlight->priv->notify = NULL;
+    backlight->priv->idle   = NULL;
+    backlight->priv->conf   = NULL;
+    backlight->priv->button = NULL;
+    backlight->priv->power    = NULL;
+    backlight->priv->dimmed = FALSE;
+    backlight->priv->block = FALSE;
+    backlight->priv->destroy_id = 0;
     
-    if ( bk->priv->has_hw == TRUE )
+    if ( !backlight->priv->has_hw )
     {
-	g_object_unref (bk->priv->br);
-	g_object_unref (bk->priv->widget);
+	g_object_unref (backlight->priv->brightness);
+	backlight->priv->brightness = NULL;
     }
-    
-    G_OBJECT_CLASS(xfpm_backlight_parent_class)->finalize(object);
+    else
+    {
+	backlight->priv->idle   = egg_idletime_new ();
+	backlight->priv->conf   = xfpm_xfconf_new ();
+	backlight->priv->button = xfpm_button_new ();
+	backlight->priv->power    = xfpm_power_get ();
+	backlight->priv->notify = xfpm_notify_new ();
+	backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
+#ifdef WITH_HAL
+	if ( xfpm_brightness_get_control (backlight->priv->brightness) == XFPM_BRIGHTNESS_CONTROL_HAL )
+	    backlight->priv->brightness_in_hw = xfpm_brightness_in_hw (backlight->priv->brightness);
+#endif
+	g_signal_connect (backlight->priv->idle, "alarm-expired",
+                          G_CALLBACK (xfpm_backlight_alarm_timeout_cb), backlight);
+        
+        g_signal_connect (backlight->priv->idle, "reset",
+                          G_CALLBACK(xfpm_backlight_reset_cb), backlight);
+			  
+	g_signal_connect (backlight->priv->button, "button-pressed",
+		          G_CALLBACK (xfpm_backlight_button_pressed_cb), backlight);
+			  
+	g_signal_connect_swapped (backlight->priv->conf, "notify::" BRIGHTNESS_ON_AC,
+				  G_CALLBACK (xfpm_backlight_brightness_on_ac_settings_changed), backlight);
+	
+	g_signal_connect_swapped (backlight->priv->conf, "notify::" BRIGHTNESS_ON_BATTERY,
+				  G_CALLBACK (xfpm_backlight_brightness_on_battery_settings_changed), backlight);
+				
+	g_signal_connect (backlight->priv->power, "on-battery-changed",
+			  G_CALLBACK (xfpm_backlight_on_battery_changed_cb), backlight);
+	g_object_get (G_OBJECT (backlight->priv->power),
+		      "on-battery", &backlight->priv->on_battery,
+		      NULL);
+	xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
+	xfpm_backlight_set_timeouts (backlight);
+    }
+}
+
+static void
+xfpm_backlight_finalize (GObject *object)
+{
+    XfpmBacklight *backlight;
+
+    backlight = XFPM_BACKLIGHT (object);
+
+    xfpm_backlight_destroy_popup (backlight);
+
+    if ( backlight->priv->brightness )
+	g_object_unref (backlight->priv->brightness);
+
+    if ( backlight->priv->idle )
+	g_object_unref (backlight->priv->idle);
+
+    if ( backlight->priv->conf )
+	g_object_unref (backlight->priv->conf);
+
+    if ( backlight->priv->button )
+	g_object_unref (backlight->priv->button);
+
+    if ( backlight->priv->power )
+	g_object_unref (backlight->priv->power);
+
+    if ( backlight->priv->notify)
+	g_object_unref (backlight->priv->notify);
+
+    G_OBJECT_CLASS (xfpm_backlight_parent_class)->finalize (object);
 }
 
 XfpmBacklight *
-xfpm_backlight_new(void)
+xfpm_backlight_new (void)
 {
-    XfpmBacklight *bk = NULL;
-    bk = g_object_new (XFPM_TYPE_BACKLIGHT, NULL);
-    return bk;
+    XfpmBacklight *backlight = NULL;
+    backlight = g_object_new (XFPM_TYPE_BACKLIGHT, NULL);
+    return backlight;
 }
 
-/*
- * 
- * DBus server implementation for org.freedesktop.PowerManagement.Backlight (Not standard) 
- *
- */
-
-static gboolean xfpm_backlight_dbus_update_brightness (XfpmBacklight *bk,
-						       guint IN_level,
-						       GError **error);
-
-#include "org.freedesktop.PowerManagement.Backlight.h"
-
-static void xfpm_backlight_dbus_class_init  (XfpmBacklightClass *klass)
+gboolean xfpm_backlight_has_hw (XfpmBacklight *backlight)
 {
-    dbus_g_object_type_install_info (G_TYPE_FROM_CLASS(klass),
-				     &dbus_glib_xfpm_backlight_object_info);
-}
-
-static void xfpm_backlight_dbus_init	  (XfpmBacklight *bk)
-{
-    DBusGConnection *bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
-    
-    dbus_g_connection_register_g_object (bus,
-					 "/org/freedesktop/PowerManagement/Backlight",
-					 G_OBJECT(bk));
-}
-
-
-static gboolean xfpm_backlight_dbus_update_brightness (XfpmBacklight *bk,
-						       guint IN_level,
-						       GError **error)
-{
-    TRACE("Update backlight message received");
-    if ( bk->priv->has_hw )
-	xfpm_brightness_hal_update_level (bk->priv->br, IN_level);
-    
-    return TRUE;
-}
-
-gboolean xfpm_backlight_has_hw (XfpmBacklight *bk)
-{
-    g_return_val_if_fail (XFPM_IS_BACKLIGHT (bk), FALSE);
-    
-    return bk->priv->has_hw;
-}
-
-void xfpm_backlight_reload (XfpmBacklight *bk)
-{
-    g_return_if_fail (XFPM_IS_BACKLIGHT (bk));
-    
-    if ( bk->priv->has_hw == TRUE )
-    {
-	g_object_unref (bk->priv->br);
-	g_object_unref (bk->priv->widget);
-    }
-    
-    xfpm_backlight_get_device (bk);
+    return backlight->priv->has_hw;
 }

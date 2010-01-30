@@ -31,8 +31,6 @@
 
 #include <libxfce4panel/xfce-panel-plugin.h>
 
-#include <dbus/dbus-glib.h>
-
 #include "brightness-button.h"
 
 static void
