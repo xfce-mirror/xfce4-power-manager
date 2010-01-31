@@ -104,7 +104,7 @@ xfpm_brightness_widget_server_is_notify_osd (void)
 static void
 xfpm_brightness_widget_display_notification (XfpmBrightnessWidget *widget)
 {
-    guint i;
+    guint brightness_icon_index;
     gfloat value = 0;
     
     static const char *display_icon_name[] = 
@@ -119,7 +119,10 @@ xfpm_brightness_widget_display_notification (XfpmBrightnessWidget *widget)
     
     value = (gfloat) 100 * widget->priv->level / widget->priv->max_level;
     
-    i = (gint)value / 25;
+    brightness_icon_index = (gint)value / 25;
+
+    g_return_if_fail (brightness_icon_index < 4);
+    g_return_if_fail (brightness_icon_index > 0);
     
     notify_notification_set_hint_int32 (widget->priv->n,
 					"value",
@@ -132,7 +135,7 @@ xfpm_brightness_widget_display_notification (XfpmBrightnessWidget *widget)
     notify_notification_update (widget->priv->n,
 			        " ",
 				"",
-				display_icon_name[i]);
+				display_icon_name[brightness_icon_index]);
 				
     notify_notification_show (widget->priv->n, NULL);
 }
