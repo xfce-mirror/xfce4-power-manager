@@ -64,6 +64,8 @@ struct XfpmBatteryPrivate
     guint 		    percentage;
     gint64		    time_to_full;
     gint64		    time_to_empty;
+
+    const gchar            *backend_iface_device; /*upower or devkit*/
     
     gulong		    sig;
 };
@@ -510,7 +512,8 @@ xfpm_battery_changed_cb (DBusGProxy *proxy, XfpmBattery *battery)
 {
     GHashTable *props;
     
-    props = xfpm_power_get_interface_properties (battery->priv->proxy_prop, DKP_IFACE_DEVICE);
+    props = xfpm_power_get_interface_properties (battery->priv->proxy_prop, 
+						 battery->priv->backend_iface_device);
     
     if ( props )
 	xfpm_battery_refresh (battery, props);
@@ -721,12 +724,14 @@ xfpm_battery_new (void)
 void xfpm_battery_monitor_device (XfpmBattery *battery,
 				  DBusGProxy *proxy,
 				  DBusGProxy *proxy_prop,
+				  const gchar *backend_iface_device,
 				  XfpmDeviceType device_type)
 {
     battery->priv->type = device_type;
     battery->priv->proxy_prop = proxy_prop;
     battery->priv->proxy = proxy;
     battery->priv->icon_prefix = xfpm_battery_get_icon_prefix_device_enum_type (device_type);
+    battery->priv->backend_iface_device = backend_iface_device;
     
     dbus_g_proxy_add_signal (proxy, "Changed", G_TYPE_INVALID);
     dbus_g_proxy_connect_signal (proxy, "Changed",

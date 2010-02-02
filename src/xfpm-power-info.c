@@ -46,6 +46,14 @@
 
 #include "xfpm-unique.h"
 
+static const gchar *BACKEND_NAME;
+static const gchar *BACKEND_PATH;
+static const gchar *BACKEND_IFACE;
+static const gchar *BACKEND_IFACE_DEVICE;
+static const gchar *BACKEND_PATH_DEVICE;
+static const gchar *BACKEND_IFACE_WAKEUPS;
+static const gchar *BACKEND_PATH_WAKEUPS;
+
 typedef struct 
 {
     DBusGConnection *bus;
@@ -346,7 +354,7 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter, 
 			XFPM_DEVICE_INFO_NAME, _("Device"), 
-			XFPM_DEVICE_INFO_VALUE, g_str_has_prefix (object_path, DKP_PATH_DEVICE) ? object_path + strlen (DKP_PATH_DEVICE) : object_path,
+			XFPM_DEVICE_INFO_VALUE, g_str_has_prefix (object_path, BACKEND_PATH_DEVICE) ? object_path + strlen (BACKEND_PATH_DEVICE) : object_path,
 			-1);
     i++;
     
@@ -513,7 +521,7 @@ xfpm_info_add_device (XfpmInfo *info, const gchar *object_path)
     GHashTable *props;
     
     proxy_prop = dbus_g_proxy_new_for_name (info->bus, 
-					    DKP_NAME,
+					    BACKEND_NAME,
 					    object_path,
 					    DBUS_INTERFACE_PROPERTIES);
 					    
@@ -523,7 +531,7 @@ xfpm_info_add_device (XfpmInfo *info, const gchar *object_path)
 	return;
     }
     
-    props = xfpm_power_get_interface_properties (proxy_prop, DKP_IFACE_DEVICE);
+    props = xfpm_power_get_interface_properties (proxy_prop, BACKEND_IFACE_DEVICE);
     
     if ( props )
     {
@@ -538,17 +546,50 @@ xfpm_info_power_devices (XfpmInfo *info)
     GPtrArray *array = NULL;
     guint i;
     
-    info->power_proxy = dbus_g_proxy_new_for_name (info->bus, 
-						   DKP_NAME,
-						   DKP_PATH,
-						   DKP_IFACE);
-						   
-    if ( !info->power_proxy )
-    {
-	g_warning ("Unable to create proxy for : %s", DKP_NAME);
-	return;
-    }
+    /*Check for upower/devkit power here*/
+
+    info->power_proxy = dbus_g_proxy_new_for_name_owner (info->bus,
+							 UPOWER_NAME,
+							 UPOWER_PATH,
+							 UPOWER_IFACE,
+							 NULL);
     
+    if ( info->power_proxy )
+    {
+	BACKEND_NAME          =  UPOWER_NAME;
+	BACKEND_PATH          =  UPOWER_PATH;
+	BACKEND_IFACE         =  UPOWER_IFACE;
+	BACKEND_IFACE_DEVICE  =  UPOWER_IFACE_DEVICE;
+	BACKEND_PATH_DEVICE   =  UPOWER_PATH_DEVICE;
+	BACKEND_IFACE_WAKEUPS =  UPOWER_IFACE_WAKEUPS;
+	BACKEND_PATH_WAKEUPS  =  UPOWER_PATH_WAKEUPS;
+     }
+    else
+    {
+	g_message ("Unable to create proxy for UPower, trying DeviceKit Power...");
+	info->power_proxy = dbus_g_proxy_new_for_name_owner (info->bus,
+							     DKP_NAME,
+							     DKP_PATH,
+							     DKP_IFACE,
+							     NULL);
+	if ( info->power_proxy )
+	{
+	    g_message ("Devkit Power found in the system");
+	    
+	    BACKEND_NAME          =  DKP_NAME;
+	    BACKEND_PATH          =  DKP_PATH;
+	    BACKEND_IFACE         =  DKP_IFACE;
+	    BACKEND_IFACE_DEVICE  =  DKP_IFACE_DEVICE;
+	    BACKEND_PATH_DEVICE   =  DKP_PATH_DEVICE;
+	    BACKEND_IFACE_WAKEUPS =  DKP_IFACE_WAKEUPS;
+	    BACKEND_PATH_WAKEUPS  =  DKP_PATH_WAKEUPS;
+	}
+	else
+	{
+	    g_error ("UPower and DevkitPower are not found");
+	}
+    }
+
     array = xfpm_power_enumerate_devices (info->power_proxy);
     
     if ( array )
@@ -583,23 +624,26 @@ xfpm_info_update_wakeups (XfpmInfo *info)
     
     GError *error = NULL;
     
-    GType collection_type;
-    GType struct_type;
-    
+    static GType collection_type = G_TYPE_INVALID;
+    static GType struct_type = G_TYPE_INVALID;
+
     GPtrArray *array = NULL;
     
     gboolean ret;
     guint i;
     
-    struct_type = dbus_g_type_get_struct ("GValueArray",
-					  G_TYPE_BOOLEAN,
-					  G_TYPE_UINT,
-					  G_TYPE_DOUBLE,
-					  G_TYPE_STRING,
-					  G_TYPE_STRING,
-					  G_TYPE_INVALID);
+    if ( G_UNLIKELY (collection_type == G_TYPE_INVALID ) )
+    {
+	struct_type = dbus_g_type_get_struct ("GValueArray",
+					      G_TYPE_BOOLEAN,
+					      G_TYPE_UINT,
+					      G_TYPE_DOUBLE,
+					      G_TYPE_STRING,
+					      G_TYPE_STRING,
+					      G_TYPE_INVALID);
     
-    collection_type = dbus_g_type_get_collection ("GPtrArray", struct_type);
+	collection_type = dbus_g_type_get_collection ("GPtrArray", struct_type);
+    }
     
     ret = dbus_g_proxy_call (info->wakeups_proxy, "GetData", &error,
 			     G_TYPE_INVALID,
@@ -608,7 +652,7 @@ xfpm_info_update_wakeups (XfpmInfo *info)
 		       
     if ( !ret )
     {
-	g_warning ("GetData Failed on %s : %s", DKP_PATH_WAKEUPS, error->message);
+	g_warning ("GetData Failed on %s : %s", BACKEND_PATH_WAKEUPS, error->message);
 	g_error_free (error);
 	return;
     }
@@ -709,13 +753,13 @@ xfpm_info_cpu_wakeups (XfpmInfo *info)
     GtkCellRenderer *renderer;
     
     info->wakeups_proxy = dbus_g_proxy_new_for_name (info->bus,
-						     DKP_NAME,
-						     DKP_PATH_WAKEUPS,
-						     DKP_IFACE_WAKEUPS);
+						     BACKEND_NAME,
+						     BACKEND_PATH_WAKEUPS,
+						     BACKEND_IFACE_WAKEUPS);
 							  
     if ( !info->wakeups_proxy )
     {
-	g_warning ("Unable to create proxy for %s", DKP_PATH_WAKEUPS);
+	g_warning ("Unable to create proxy for %s", BACKEND_PATH_WAKEUPS);
 	return;
     }
     

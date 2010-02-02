@@ -23,6 +23,7 @@
 #endif
 
 #include <libxfce4util/libxfce4util.h>
+#include <dbus/dbus-glib-lowlevel.h>
 
 #include "xfpm-power-common.h"
 #include "xfpm-enum-glib.h"

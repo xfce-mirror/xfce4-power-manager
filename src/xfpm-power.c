@@ -50,12 +50,23 @@
 #include "xfpm-debug.h"
 #include "xfpm-enum-types.h"
 
+
+static const gchar *BACKEND_NAME;
+static const gchar *BACKEND_PATH;
+static const gchar *BACKEND_IFACE;
+static const gchar *BACKEND_IFACE_DEVICE;
+static const gchar *BACKEND_PATH_DEVICE;
+#ifdef HAVE_POLKIT
+static const gchar *POLKIT_AUTH_SUSPEND;
+static const gchar *POLKIT_AUTH_HIBERNATE;
+#endif /*HAVE_POLKIT*/
+
 static void xfpm_power_finalize     (GObject *object);
 
 static void xfpm_power_get_property (GObject *object,
-				   guint prop_id,
-				   GValue *value,
-				   GParamSpec *pspec);
+				     guint prop_id,
+				     GValue *value,
+				     GParamSpec *pspec);
 
 static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
@@ -63,7 +74,7 @@ static void xfpm_power_dbus_init (XfpmPower *power);
 static void xfpm_power_refresh_adaptor_visible (XfpmPower *power);
 
 #define XFPM_POWER_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_DKP, XfpmPowerPrivate))
+(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_POWER, XfpmPowerPrivate))
 
 struct XfpmPowerPrivate
 {
@@ -87,6 +98,8 @@ struct XfpmPowerPrivate
 #endif
     gboolean	     auth_suspend;
     gboolean	     auth_hibernate;
+
+    gboolean         dkp_is_upower;
     
     /* Properties */
     gboolean	     on_low_battery;
@@ -138,10 +151,10 @@ static void
 xfpm_power_check_polkit_auth (XfpmPower *power)
 {
     power->priv->auth_suspend = xfpm_polkit_check_auth (power->priv->polkit, 
-						      "org.freedesktop.devicekit.power.suspend");
+							POLKIT_AUTH_SUSPEND);
 
     power->priv->auth_hibernate = xfpm_polkit_check_auth (power->priv->polkit, 
-							"org.freedesktop.devicekit.power.hibernate");
+							  POLKIT_AUTH_HIBERNATE);
 
 }
 #endif
@@ -328,7 +341,7 @@ xfpm_power_get_properties (XfpmPower *power)
 {
     GHashTable *props;
     
-    props = xfpm_power_get_interface_properties (power->priv->proxy_prop, DKP_IFACE);
+    props = xfpm_power_get_interface_properties (power->priv->proxy_prop, BACKEND_IFACE);
     
     xfpm_power_check_pm (power, props);
     xfpm_power_check_lid (power, props);
@@ -945,7 +958,7 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
     GValue value;
     
     proxy_prop = dbus_g_proxy_new_for_name (power->priv->bus, 
-					    DKP_NAME,
+					    BACKEND_NAME,
 					    object_path,
 					    DBUS_INTERFACE_PROPERTIES);
 				       
@@ -955,7 +968,7 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
 	return;
     }
     
-    value = xfpm_power_get_interface_property (proxy_prop, DKP_IFACE_DEVICE, "Type");
+    value = xfpm_power_get_interface_property (proxy_prop, BACKEND_IFACE_DEVICE, "Type");
     
     device_type = g_value_get_uint (&value);
     
@@ -970,12 +983,17 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
 	XFPM_DEBUG_ENUM (device_type, XFPM_TYPE_DEVICE_TYPE, 
 			"Battery device detected at : %s", object_path);
 	proxy = dbus_g_proxy_new_for_name (power->priv->bus,
-					   DKP_NAME,
+					   BACKEND_NAME,
 					   object_path,
-					   DKP_IFACE_DEVICE);
+					   BACKEND_IFACE_DEVICE);
 	battery = xfpm_battery_new ();
 	gtk_status_icon_set_visible (battery, FALSE);
-	xfpm_battery_monitor_device (XFPM_BATTERY (battery), proxy, proxy_prop, device_type);
+	xfpm_battery_monitor_device (XFPM_BATTERY (battery), 
+				     proxy, 
+				     proxy_prop, 
+				     BACKEND_IFACE_DEVICE, 
+				     device_type);
+
 	g_hash_table_insert (power->priv->hash, g_strdup (object_path), battery);
 	
 	g_signal_connect (battery, "popup-menu",
@@ -1146,7 +1164,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
 
     signals [ON_BATTERY_CHANGED] = 
         g_signal_new ("on-battery-changed",
-                      XFPM_TYPE_DKP,
+                      XFPM_TYPE_POWER,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmPowerClass, on_battery_changed),
                       NULL, NULL,
@@ -1155,7 +1173,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
 
     signals [LOW_BATTERY_CHANGED] = 
         g_signal_new ("low-battery-changed",
-                      XFPM_TYPE_DKP,
+                      XFPM_TYPE_POWER,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmPowerClass, low_battery_changed),
                       NULL, NULL,
@@ -1164,7 +1182,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
 
     signals [LID_CHANGED] = 
         g_signal_new ("lid-changed",
-                      XFPM_TYPE_DKP,
+                      XFPM_TYPE_POWER,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmPowerClass, lid_changed),
                       NULL, NULL,
@@ -1173,7 +1191,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
 
     signals [WAKING_UP] = 
         g_signal_new ("waking-up",
-                      XFPM_TYPE_DKP,
+                      XFPM_TYPE_POWER,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmPowerClass, waking_up),
                       NULL, NULL,
@@ -1182,7 +1200,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
 
     signals [SLEEPING] = 
         g_signal_new ("sleeping",
-                      XFPM_TYPE_DKP,
+                      XFPM_TYPE_POWER,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmPowerClass, sleeping),
                       NULL, NULL,
@@ -1191,7 +1209,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
 
     signals [ASK_SHUTDOWN] = 
         g_signal_new ("ask-shutdown",
-                      XFPM_TYPE_DKP,
+                      XFPM_TYPE_POWER,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmPowerClass, ask_shutdown),
                       NULL, NULL,
@@ -1200,7 +1218,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
 
     signals [SHUTDOWN] = 
         g_signal_new ("shutdown",
-                      XFPM_TYPE_DKP,
+                      XFPM_TYPE_POWER,
                       G_SIGNAL_RUN_LAST,
                       G_STRUCT_OFFSET(XfpmPowerClass, shutdown),
                       NULL, NULL,
@@ -1306,24 +1324,64 @@ xfpm_power_init (XfpmPower *power)
 	g_error_free (error);
 	goto out;
     }
-    
-    power->priv->proxy = dbus_g_proxy_new_for_name (power->priv->bus,
-					          DKP_NAME,
-						  DKP_PATH,
-						  DKP_IFACE);
-    if (power->priv->proxy == NULL) 
+
+    power->priv->proxy = dbus_g_proxy_new_for_name_owner (power->priv->bus,
+							  UPOWER_NAME,
+							  UPOWER_PATH,
+							  UPOWER_IFACE,
+							  NULL);
+
+    if ( power->priv->proxy )
     {
-	g_critical ("Unable to create proxy for %s", DKP_NAME);
-	goto out;
+	power->priv->dkp_is_upower = TRUE;
+
+	BACKEND_NAME          =  UPOWER_NAME;
+	BACKEND_PATH          =  UPOWER_PATH;
+	BACKEND_IFACE         =  UPOWER_IFACE;
+	BACKEND_IFACE_DEVICE  =  UPOWER_IFACE_DEVICE;
+	BACKEND_PATH_DEVICE   =  UPOWER_PATH_DEVICE;
+#ifdef HAVE_POLKIT
+	POLKIT_AUTH_SUSPEND   = "org.freedesktop.upower.suspend";
+	POLKIT_AUTH_HIBERNATE = "org.freedesktop.upower.hibernate";
+#endif
+    }
+    else
+    {
+	g_message ("Unable to create proxy for UPower, trying DeviceKit Power...");
+	power->priv->proxy = dbus_g_proxy_new_for_name_owner (power->priv->bus,
+							      DKP_NAME,
+							      DKP_PATH,
+							      DKP_IFACE,
+							      NULL);
+	if ( power->priv->proxy )
+	{
+	    g_message ("Devkit Power found in the system");
+	    power->priv->dkp_is_upower = FALSE;
+	    
+	    BACKEND_NAME  = DKP_NAME;
+	    BACKEND_PATH  =  DKP_PATH;
+	    BACKEND_IFACE =   DKP_IFACE;
+	    BACKEND_IFACE_DEVICE =  DKP_IFACE_DEVICE;
+	    BACKEND_PATH_DEVICE  =  DKP_PATH_DEVICE;
+#ifdef HAVE_POLKIT
+	    POLKIT_AUTH_SUSPEND = "org.freedesktop.devicekit.power.suspend";
+	    POLKIT_AUTH_HIBERNATE = "org.freedesktop.devicekit.power.hibernate";
+#endif
+	}
+	else
+	{
+	    g_critical ("UPower and DevkitPower are not found");
+	    goto out;
+	}
     }
     
     power->priv->proxy_prop = dbus_g_proxy_new_for_name (power->priv->bus,
-						       DKP_NAME,
-						       DKP_PATH,
-						       DBUS_INTERFACE_PROPERTIES);
+							 BACKEND_NAME,
+							 BACKEND_PATH,
+							 DBUS_INTERFACE_PROPERTIES);
     if (power->priv->proxy_prop == NULL) 
     {
-	g_critical ("Unable to create proxy for %s", DKP_NAME);
+	g_critical ("Unable to create proxy for %s", BACKEND_NAME);
 	goto out;
     }
     
@@ -1448,7 +1506,7 @@ xfpm_power_get (void)
     }
     else
     {
-	xfpm_power_object = g_object_new (XFPM_TYPE_DKP, NULL);
+	xfpm_power_object = g_object_new (XFPM_TYPE_POWER, NULL);
 	g_object_add_weak_pointer (xfpm_power_object, &xfpm_power_object);
     }
     

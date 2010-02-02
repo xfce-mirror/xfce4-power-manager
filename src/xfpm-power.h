@@ -25,9 +25,9 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DKP        (xfpm_power_get_type () )
-#define XFPM_POWER(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_DKP, XfpmPower))
-#define XFPM_IS_DKP(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_DKP))
+#define XFPM_TYPE_POWER        (xfpm_power_get_type () )
+#define XFPM_POWER(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_POWER, XfpmPower))
+#define XFPM_IS_POWER(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_POWER))
 
 typedef struct XfpmPowerPrivate XfpmPowerPrivate;
 

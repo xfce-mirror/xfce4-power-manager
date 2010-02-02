@@ -33,29 +33,31 @@
 #define DKP_PATH_WAKEUPS     "/org/freedesktop/DeviceKit/Power/Wakeups"
 #define DKP_IFACE_WAKEUPS    "org.freedesktop.DeviceKit.Power.Wakeups"
 
-#define UPOWER_NAME 	     "org.freedesktop.DeviceKit.Power"
-#define UPOWER_PATH 	     "/org/freedesktop/DeviceKit/Power"
 
-#define UPOWER_IFACE 	     "org.freedesktop.DeviceKit.Power"
-#define UPOWER_IFACE_DEVICE  "org.freedesktop.DeviceKit.Power.Device"
+#define UPOWER_NAME 	     "org.freedesktop.UPower"
+#define UPOWER_PATH 	     "/org/freedesktop/UPower"
 
-#define UPOWER_PATH_WAKEUPS  "/org/freedesktop/DeviceKit/Power/Wakeups"
-#define UPOWER_IFACE_WAKEUPS "org.freedesktop.DeviceKit.Power.Wakeups"
+#define UPOWER_IFACE 	     "org.freedesktop.UPower"
+#define UPOWER_IFACE_DEVICE  "org.freedesktop.UPower.Device"
+#define UPOWER_PATH_DEVICE   "/org/freedesktop/UPower/devices/"
 
+#define UPOWER_PATH_WAKEUPS  "/org/freedesktop/UPower/Wakeups"
+#define UPOWER_IFACE_WAKEUPS "org.freedesktop.UPower.Wakeups"
 
-GPtrArray 		*xfpm_power_enumerate_devices		 	(DBusGProxy *proxy);
+GPtrArray 	*xfpm_power_enumerate_devices		(DBusGProxy *proxy);
 
-GHashTable 		*xfpm_power_get_interface_properties 		(DBusGProxy *proxy_prop, 
-									 const gchar *iface_name);
+GHashTable	*xfpm_power_get_interface_properties 	(DBusGProxy *proxy_prop, 
+							 const gchar *iface_name);
 
-GValue 			 xfpm_power_get_interface_property   		(DBusGProxy *proxy, 
-									 const gchar *iface_name, 
-									 const gchar *prop_name);
+GValue 		 xfpm_power_get_interface_property   	(DBusGProxy *proxy, 
+							 const gchar *iface_name, 
+							 const gchar *prop_name);
 
-const gchar 		*xfpm_power_translate_device_type 		(guint type);
+const gchar 	*xfpm_power_translate_device_type 	(guint type);
 
-const gchar		*xfpm_power_translate_technology		(guint value);
+const gchar	*xfpm_power_translate_technology	(guint value);
 
-const gchar 		*xfpm_power_get_icon_name			(guint device_type);
+const gchar	*xfpm_power_get_icon_name		(guint device_type);
+
 
 #endif /* XFPM_UPOWER_COMMON */

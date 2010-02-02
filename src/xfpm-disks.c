@@ -191,10 +191,19 @@ xfpm_disks_init (XfpmDisks *disks)
     }
     
     disks->priv->proxy = dbus_g_proxy_new_for_name (disks->priv->bus,
-						    "org.freedesktop.DeviceKit.Disks",
-						    "/org/freedesktop/DeviceKit/Disks",
-						    "org.freedesktop.DeviceKit.Disks");
-						      
+						    "org.freedesktop.UDisks",
+						    "/org/freedesktop/UDisks",
+						    "org.freedesktop.UDisks");
+    
+    if ( !disks->priv->proxy )
+    {
+	g_message ("UDisks not found, trying devkit-disks");
+	disks->priv->proxy = dbus_g_proxy_new_for_name (disks->priv->bus,
+							"org.freedesktop.DeviceKit.Disks",
+							"/org/freedesktop/DeviceKit/Disks",
+							"org.freedesktop.DeviceKit.Disks");
+    }
+    
     if ( !disks->priv->proxy )
     {
 	g_warning ("Unable to create proxy for 'org.freedesktop.DeviceKit.Disks'");
@@ -202,7 +211,7 @@ xfpm_disks_init (XfpmDisks *disks)
     }
 
     disks->priv->conf = xfpm_xfconf_new ();
-    disks->priv->power  = xfpm_power_get    ();
+    disks->priv->power  = xfpm_power_get ();
     disks->priv->polkit = xfpm_polkit_get ();
 
     xfpm_disks_get_is_auth_to_spin (disks);

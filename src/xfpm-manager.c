@@ -110,7 +110,8 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
 static void
 xfpm_manager_init (XfpmManager *manager)
 {
-    manager->priv = XFPM_MANAGER_GET_PRIVATE(manager);
+    manager->priv = XFPM_MANAGER_GET_PRIVATE (manager);
+
     manager->priv->timer = g_timer_new ();
     
     notify_init ("xfce4-power-manager");
