@@ -270,6 +270,9 @@ xfpm_power_check_daemon_version (XfpmPower *power, GHashTable *props)
     GValue *value;
     gint power_version;
 	
+    if ( power->priv->dkp_is_upower)
+	return;
+
     value = g_hash_table_lookup (props, "DaemonVersion");
 
     if (value == NULL) 
