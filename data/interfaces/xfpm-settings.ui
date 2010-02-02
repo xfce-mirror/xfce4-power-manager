@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <interface>
   <!-- interface-requires gtk+ 2.12 -->
+  <!-- interface-requires libxfce4ui 4.5 -->
   <!-- interface-naming-policy toplevel-contextual -->
   <object class="GtkAdjustment" id="adjustment1">
     <property name="value">14</property>
@@ -449,6 +450,7 @@
                                               <object class="GtkHScale" id="inactivity-on-ac">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
+                                                <property name="update_policy">discontinuous</property>
                                                 <property name="adjustment">adjustment1</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -546,6 +548,7 @@
                                               <object class="GtkHScale" id="sleep-dpms-on-ac">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
+                                                <property name="update_policy">discontinuous</property>
                                                 <property name="adjustment">adjustment2</property>
                                                 <property name="show_fill_level">True</property>
                                                 <property name="digits">0</property>
@@ -582,6 +585,7 @@
                                               <object class="GtkHScale" id="off-dpms-on-ac">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
+                                                <property name="update_policy">discontinuous</property>
                                                 <property name="adjustment">adjustment3</property>
                                                 <property name="show_fill_level">True</property>
                                                 <property name="digits">0</property>
@@ -647,6 +651,7 @@
                                           <object class="GtkHScale" id="brg-on-ac">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
+                                            <property name="update_policy">discontinuous</property>
                                             <property name="adjustment">adjustment4</property>
                                             <property name="digits">0</property>
                                             <property name="value_pos">bottom</property>
@@ -821,6 +826,7 @@
                                               <object class="GtkHScale" id="inactivity-on-battery">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
+                                                <property name="update_policy">discontinuous</property>
                                                 <property name="adjustment">adjustment5</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -932,6 +938,7 @@
                                               <object class="GtkHScale" id="sleep-dpms-on-battery">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
+                                                <property name="update_policy">discontinuous</property>
                                                 <property name="adjustment">adjustment6</property>
                                                 <property name="show_fill_level">True</property>
                                                 <property name="digits">0</property>
@@ -970,6 +977,7 @@
                                               <object class="GtkHScale" id="off-dpms-on-battery">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
+                                                <property name="update_policy">discontinuous</property>
                                                 <property name="adjustment">adjustment7</property>
                                                 <property name="show_fill_level">True</property>
                                                 <property name="digits">0</property>
@@ -1036,6 +1044,7 @@
                                           <object class="GtkHScale" id="brg-on-battery">
                                             <property name="visible">True</property>
                                             <property name="can_focus">True</property>
+                                            <property name="update_policy">discontinuous</property>
                                             <property name="adjustment">adjustment8</property>
                                             <property name="digits">0</property>
                                             <property name="value_pos">bottom</property>
