@@ -86,9 +86,11 @@ AC_ARG_ENABLE([polkit],
     AC_MSG_CHECKING([whether to build with polkit support])
 if test "x$ac_cv_enable_polkit" = !"xyes"; then
     AC_MSG_RESULT([no])
+    polkit="no"
 else
     AC_MSG_RESULT([yes])
     AC_DEFINE(ENABLE_POLKIT, 1 , [PolicyKit support])
+    polkit="yes"
 fi
 
 #=======================================================#
@@ -245,7 +247,7 @@ echo "
 	prefix:			${prefix}
 	xdg autostart:		${sysconfdir/xdg/autostart}
 	HAL:			${enable_hal}
-	POLKIT:			${ac_cv_enable_polkit}
+	POLKIT:			${polkit}
    	DPMS:   		${have_dpms}
 	Network manager:	${ac_network_manager}
   	Build panel plugins:	${build_panel_plugins}
