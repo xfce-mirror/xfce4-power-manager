@@ -51,6 +51,9 @@ struct XfpmDisksPrivate
     gchar           *cookie;
     gboolean         set;
     gboolean         can_spin;
+
+
+    gboolean         is_udisks;
 };
 
 G_DEFINE_TYPE (XfpmDisks, xfpm_disks, G_TYPE_OBJECT)
@@ -160,8 +163,12 @@ xfpm_disks_set_spin_timeouts (XfpmDisks *disks)
 static void
 xfpm_disks_get_is_auth_to_spin (XfpmDisks *disks)
 {
+    const gchar *action_id;
+
+    action_id = disks->priv->is_udisks ? "org.freedesktop.udisks.drive-set-spindown" : "org.freedesktop.devicekit.disks.drive-set-spindown";
+
     disks->priv->can_spin = xfpm_polkit_check_auth (disks->priv->polkit, 
-						    "org.freedesktop.devicekit.disks.drive-set-spindown");
+						    action_id);
 						    
     XFPM_DEBUG ("Is auth to spin down disks : %d", disks->priv->can_spin);
 }
@@ -177,9 +184,11 @@ xfpm_disks_init (XfpmDisks *disks)
     disks->priv->bus    = NULL;
     disks->priv->proxy  = NULL;
     disks->priv->conf   = NULL;
-    disks->priv->power    = NULL;
+    disks->priv->power  = NULL;
     disks->priv->cookie = NULL;
     disks->priv->polkit = NULL;
+
+    disks->priv->is_udisks = FALSE;
     
     disks->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
     
@@ -189,7 +198,7 @@ xfpm_disks_init (XfpmDisks *disks)
 	g_error_free (error);
 	goto out;
     }
-    
+
     disks->priv->proxy = dbus_g_proxy_new_for_name_owner (disks->priv->bus,
 							  "org.freedesktop.UDisks",
 							  "/org/freedesktop/UDisks",
@@ -204,6 +213,10 @@ xfpm_disks_init (XfpmDisks *disks)
 							      "/org/freedesktop/DeviceKit/Disks",
 							      "org.freedesktop.DeviceKit.Disks",
 							      NULL);
+    }
+    else
+    {
+	disks->priv->is_udisks = TRUE;
     }
     
     if ( !disks->priv->proxy )
