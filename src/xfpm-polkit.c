@@ -340,11 +340,10 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 						   g_str_equal, 
 						   g_free, 
 						   g_free);
-
     
-    /*Clean these data after 2 minutes*/
+    /*Clean these data after 1 minute*/
     polkit->priv->destroy_id = 
-	g_timeout_add_seconds (2, (GSourceFunc) xfpm_polkit_free_data, polkit);
+	g_timeout_add_seconds (60, (GSourceFunc) xfpm_polkit_free_data, polkit);
     
     polkit->priv->subject_valid = TRUE;
 }
