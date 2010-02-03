@@ -75,8 +75,21 @@ XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_versi
 XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
 XDT_CHECK_PACKAGE([XRANDR],[xrandr], [xrandr_minimum_version])
 
-POLKIT="no"
-XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [polkit_minimum_version], [polkit], [Polkit support])
+#=======================================================#
+#              Polkit?			                #
+#=======================================================#
+AC_ARG_ENABLE([polkit],
+        [AC_HELP_STRING([--disable-polkit],
+                [Do not enable PolicyKit support (default=enabled)])],
+        [],
+        [ac_cv_enable_polkit=polkit])
+    AC_MSG_CHECKING([whether to build with polkit support])
+if test "x$ac_cv_enable_polkit" = !"xyes"; then
+    AC_MSG_RESULT([no])
+else
+    AC_MSG_RESULT([yes])
+    AC_DEFINE(ENABLE_POLKIT, 1 , [PolicyKit support])
+fi
 
 #=======================================================#
 #              Use HAL?			                #
@@ -232,7 +245,7 @@ echo "
 	prefix:			${prefix}
 	xdg autostart:		${sysconfdir/xdg/autostart}
 	HAL:			${enable_hal}
-	POLKIT:			${POLKIT_FOUND}
+	POLKIT:			${ac_cv_enable_polkit}
    	DPMS:   		${have_dpms}
 	Network manager:	${ac_network_manager}
   	Build panel plugins:	${build_panel_plugins}

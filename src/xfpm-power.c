@@ -56,10 +56,10 @@ static const gchar *BACKEND_PATH;
 static const gchar *BACKEND_IFACE;
 static const gchar *BACKEND_IFACE_DEVICE;
 static const gchar *BACKEND_PATH_DEVICE;
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
 static const gchar *POLKIT_AUTH_SUSPEND;
 static const gchar *POLKIT_AUTH_HIBERNATE;
-#endif /*HAVE_POLKIT*/
+#endif /*ENABLE_POLKIT*/
 
 static void xfpm_power_finalize     (GObject *object);
 
@@ -93,7 +93,7 @@ struct XfpmPowerPrivate
     gboolean	     inhibited;
     
     XfpmNotify	    *notify;
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
     XfpmPolkit 	    *polkit;
 #endif
     gboolean	     auth_suspend;
@@ -146,7 +146,7 @@ static guint signals [LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE (XfpmPower, xfpm_power, G_TYPE_OBJECT)
 
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
 static void
 xfpm_power_check_polkit_auth (XfpmPower *power)
 {
@@ -1079,7 +1079,7 @@ xfpm_power_device_changed_cb (DBusGProxy *proxy, const gchar *object_path, XfpmP
     }
 }
 
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
 static void
 xfpm_power_polkit_auth_changed_cb (XfpmPower *power)
 {
@@ -1310,7 +1310,7 @@ xfpm_power_init (XfpmPower *power)
     g_signal_connect_swapped (power->priv->conf, "notify::" SHOW_TRAY_ICON_CFG,
 			      G_CALLBACK (xfpm_power_refresh_adaptor_visible), power);
     
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
     power->priv->polkit  = xfpm_polkit_get ();
     g_signal_connect_swapped (power->priv->polkit, "auth-changed",
 			      G_CALLBACK (xfpm_power_polkit_auth_changed_cb), power);
@@ -1343,7 +1343,7 @@ xfpm_power_init (XfpmPower *power)
 	BACKEND_IFACE         =  UPOWER_IFACE;
 	BACKEND_IFACE_DEVICE  =  UPOWER_IFACE_DEVICE;
 	BACKEND_PATH_DEVICE   =  UPOWER_PATH_DEVICE;
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
 	POLKIT_AUTH_SUSPEND   = "org.freedesktop.upower.suspend";
 	POLKIT_AUTH_HIBERNATE = "org.freedesktop.upower.hibernate";
 #endif
@@ -1366,7 +1366,7 @@ xfpm_power_init (XfpmPower *power)
 	    BACKEND_IFACE =   DKP_IFACE;
 	    BACKEND_IFACE_DEVICE =  DKP_IFACE_DEVICE;
 	    BACKEND_PATH_DEVICE  =  DKP_PATH_DEVICE;
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
 	    POLKIT_AUTH_SUSPEND = "org.freedesktop.devicekit.power.suspend";
 	    POLKIT_AUTH_HIBERNATE = "org.freedesktop.devicekit.power.hibernate";
 #endif
@@ -1390,7 +1390,7 @@ xfpm_power_init (XfpmPower *power)
     
     xfpm_power_get_power_devices (power);
     xfpm_power_get_properties (power);
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
     xfpm_power_check_polkit_auth (power);
 #endif
 
@@ -1491,7 +1491,7 @@ xfpm_power_finalize (GObject *object)
 
     g_hash_table_destroy (power->priv->hash);
 
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
     g_object_unref (power->priv->polkit);
 #endif
 

@@ -99,6 +99,8 @@ manpage_DATA = xfce4-power-manager.1
 xfpm_glib_headers =                             \
         $(srcdir)/xfpm-enum-glib.h
 
+if MAINTAINER_MODE
+
 BUILT_SOURCES =					\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
@@ -108,8 +110,6 @@ BUILT_SOURCES =					\
         xfpm-marshal.h				\
 	org.freedesktop.PowerManagement.h       \
 	org.freedesktop.PowerManagement.Inhibit.h
-
-if MAINTAINER_MODE
 
 xfpm-enum-types.h: $(xfpm_glib_headers)
 	( cd $(srcdir) && glib-mkenums \

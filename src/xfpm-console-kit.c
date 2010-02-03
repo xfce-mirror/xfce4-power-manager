@@ -140,10 +140,11 @@ xfpm_console_kit_init (XfpmConsoleKit *console)
 	goto out;
     }
     
-    console->priv->proxy = dbus_g_proxy_new_for_name (console->priv->bus,
-						      "org.freedesktop.ConsoleKit",
-						      "/org/freedesktop/ConsoleKit/Manager",
-						      "org.freedesktop.ConsoleKit.Manager");
+    console->priv->proxy = dbus_g_proxy_new_for_name_owner (console->priv->bus,
+							    "org.freedesktop.ConsoleKit",
+							    "/org/freedesktop/ConsoleKit/Manager",
+							    "org.freedesktop.ConsoleKit.Manager",
+							    NULL);
 						      
     if ( !console->priv->proxy )
     {

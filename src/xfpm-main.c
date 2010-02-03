@@ -114,7 +114,7 @@ xfpm_dump (GHashTable *hash)
 #else
     g_print (_("Without HAL support\n"));
 #endif
-#ifdef HAVE_POLKIT
+#ifdef ENABLE_POLKIT
     g_print (_("With policykit support\n"));
 #else
     g_print (_("Without policykit support\n"));

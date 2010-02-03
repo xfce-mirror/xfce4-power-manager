@@ -190,18 +190,20 @@ xfpm_disks_init (XfpmDisks *disks)
 	goto out;
     }
     
-    disks->priv->proxy = dbus_g_proxy_new_for_name (disks->priv->bus,
-						    "org.freedesktop.UDisks",
-						    "/org/freedesktop/UDisks",
-						    "org.freedesktop.UDisks");
+    disks->priv->proxy = dbus_g_proxy_new_for_name_owner (disks->priv->bus,
+							  "org.freedesktop.UDisks",
+							  "/org/freedesktop/UDisks",
+							  "org.freedesktop.UDisks",
+							  NULL);
     
     if ( !disks->priv->proxy )
     {
 	g_message ("UDisks not found, trying devkit-disks");
-	disks->priv->proxy = dbus_g_proxy_new_for_name (disks->priv->bus,
-							"org.freedesktop.DeviceKit.Disks",
-							"/org/freedesktop/DeviceKit/Disks",
-							"org.freedesktop.DeviceKit.Disks");
+	disks->priv->proxy = dbus_g_proxy_new_for_name_owner (disks->priv->bus,
+							      "org.freedesktop.DeviceKit.Disks",
+							      "/org/freedesktop/DeviceKit/Disks",
+							      "org.freedesktop.DeviceKit.Disks",
+							      NULL);
     }
     
     if ( !disks->priv->proxy )
