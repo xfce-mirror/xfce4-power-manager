@@ -141,10 +141,7 @@ xfpm_dump (GHashTable *hash)
 	      "%s: %s\n"
 	      "%s: %s\n"
 	      "%s: %s\n"
-	      "%s: %s\n"
 	      "%s: %s\n",
-	     _("Has LID"),
-	     xfpm_bool_to_local_string (has_lid),
 	     _("Can suspend"),
 	     xfpm_bool_to_local_string (can_suspend),
 	     _("Can hibernate"),
