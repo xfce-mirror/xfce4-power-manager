@@ -4,12 +4,12 @@
 # This file is distributed under the same license as the xfce package.
 # Fabian Nowak <timystery@arcor.de>, 2008.
 # Mark Trompell <mark@foresightlinux.org>, 2008.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-19 12:01+0100\n"
+"POT-Creation-Date: 2010-02-23 18:01+0100\n"
 "PO-Revision-Date: 2010-02-20 16:56+0100\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German\n"
@@ -64,9 +64,8 @@ msgid "Monitor"
 msgstr "Monitor"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11
-#, fuzzy
 msgid "Monitor power management control"
-msgstr "Energieverwaltung für Monitor aktivieren"
+msgstr "Energieverwaltung des Monitors"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12 ../settings/xfpm-settings.c:778
 #: ../settings/xfpm-settings.c:846 ../settings/xfpm-settings.c:984
@@ -239,12 +238,8 @@ msgid "Never show icon"
 msgstr "Nie das Symbol zeigen"
 
 #: ../settings/xfpm-settings.c:1131
-msgid ""
-"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
-"switch off the display or put it in sleep mode."
-msgstr ""
-"Automatische Energieverwaltung des Bildschirms (DPMS) ausschalten, also "
-"nicht versuchen, die Anzeige abzuschalten oder schlafen zu legen."
+msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
+msgstr "Automatische Energieverwaltung des Bildschirms (DPMS) ausschalten, also nicht versuchen, die Anzeige abzuschalten oder schlafen zu legen."
 
 #: ../settings/xfpm-settings.c:1319
 msgid "Suspend operation not supported"
@@ -298,13 +293,11 @@ msgstr "SOCKET-NR"
 #: ../src/xfpm-power-info.c:991
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr ""
-"Geben Sie »%s --help« ein, um Informationen über die Verwendung zu erhalten"
+msgstr "Geben Sie »%s --help« ein, um Informationen über die Verwendung zu erhalten"
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
-"Konnte Konfiguration der Energieverwaltung nicht laden; nehme Standardwerte"
+msgstr "Konnte Konfiguration der Energieverwaltung nicht laden; nehme Standardwerte"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -321,8 +314,7 @@ msgstr "Starten"
 
 #: ../settings/xfpm-settings-main.c:196
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr ""
-"Die Energieverwaltung für Xfce läuft nicht. Möchten Sie sie jetzt starten?"
+msgstr "Die Energieverwaltung für Xfce läuft nicht. Möchten Sie sie jetzt starten?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 msgid "Power Manager"
@@ -343,9 +335,7 @@ msgstr ""
 "Mark Trompell <mark@foresightlinux.org>"
 
 #: ../src/xfpm-power.c:314
-msgid ""
-"Xfce Power Manager requires version 011 of devicekit-power to work properly "
-"while the version found is"
+msgid "Xfce Power Manager requires version 011 of devicekit-power to work properly while the version found is"
 msgstr ""
 "Xfce Energieverwaltung benötigt Version 011 des Pakets »devicekit-power« um ordnungsgemäß\n"
 "zu funktionieren. Die vorliegende Version ist jedoch"
@@ -360,24 +350,16 @@ msgid "Xfce power manager"
 msgstr "Energieverwaltung für Xfce"
 
 #: ../src/xfpm-power.c:404
-msgid ""
-"An application is currently disabling the automatic sleep, doing this action "
-"now may damage the working state of this application, are you sure you want "
-"to hibernate the system?"
-msgstr ""
-"Eine laufende Anwendung verhindert momentan das automatische Schlafen. Wenn "
-"Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der Anwendung "
-"beschädigt werden. Sind Sie sicher, dass Sie Ihr System jetzt in den "
-"Ruhezustand versetzen wollen?"
+msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
+msgstr "Eine laufende Anwendung verhindert momentan das automatische Schlafen. Wenn Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der Anwendung beschädigt werden. Sind Sie sicher, dass Sie Ihr System jetzt in den Ruhezustand versetzen wollen?"
 
 #: ../src/xfpm-power.c:502
 msgid "Quit"
 msgstr "Beenden"
 
 #: ../src/xfpm-power.c:503
-#, fuzzy
 msgid "All running instances of the power manager will exit"
-msgstr "Die laufende Energieverwaltung für Xfce neustarten"
+msgstr "Alle Instanzen der Energieverwaltung werden beendet"
 
 #: ../src/xfpm-power.c:505
 msgid "Quit Xfce power manager?"
@@ -402,9 +384,7 @@ msgstr "Das System herunterfahren"
 
 #: ../src/xfpm-power.c:731 ../src/xfpm-power.c:769
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Ihre Batterie ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten "
-"verloren gehen"
+msgstr "Ihre Batterie ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten verloren gehen"
 
 #: ../src/xfpm-power.c:925
 msgid "System is running on low power"
@@ -415,12 +395,11 @@ msgid "Battery charge level is low"
 msgstr "Ihr Batterieladestand ist niedrig"
 
 #: ../src/xfpm-power.c:1139 ../src/xfpm-power.c:1144
-#, fuzzy
 msgid "Adaptor is offline"
 msgstr "Stromversorgung getrennt"
 
 #: ../src/xfpm-power.c:1140 ../src/xfpm-power.c:1145 ../src/xfpm-battery.c:323
-#, fuzzy, c-format
+#, c-format
 msgid "Adaptor is online"
 msgstr "Stromversorgung angeschlossen"
 
@@ -442,7 +421,7 @@ msgstr "Batterie"
 
 #: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:325
 msgid "UPS"
-msgstr ""
+msgstr "USV (Unterbrechungsfreie Stromversorgung)"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
@@ -555,7 +534,7 @@ msgstr[0] "Minute"
 msgstr[1] "Minuten"
 
 #: ../src/xfpm-battery.c:332
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
@@ -1025,14 +1004,11 @@ msgstr "Kein Gerät gefunden"
 msgid "Brightness plugin"
 msgstr "Plugin zur Helligkeitsregelung"
 
-#, fuzzy
 #~ msgid "CPU frequency control"
 #~ msgstr "Anpassung der CPU-Geschwindigkeit erlauben"
 
 #~ msgid "Shutdown and hibernate operations not permitted"
-#~ msgstr ""
-#~ "Die Operationen zum Herunterfahren und für den Ruhezustand sind nicht "
-#~ "erlaubt"
+#~ msgstr "Die Operationen zum Herunterfahren und für den Ruhezustand sind nicht erlaubt"
 
 #~ msgid "Xfce Power Manager Settings"
 #~ msgstr "Einstellungen der Energieverwaltung für Xfce"
@@ -1106,43 +1082,20 @@ msgstr "Plugin zur Helligkeitsregelung"
 #~ msgid "Adapter not present"
 #~ msgstr "Anschluss nicht vorhanden"
 
-#~ msgid ""
-#~ "System is running on low power, but an application is currently disabling "
-#~ "the automatic sleep, this means that doing a sleep now may damage the "
-#~ "data of this application. Close this application before putting the "
-#~ "computer on sleep mode or plug in your AC adapter"
-#~ msgstr ""
-#~ "Das System hat nicht mehr viel Energie, eine Anwendung verhindert jedoch "
-#~ "momentan das automatische Schlafen. Dies bedeuted, dass ein Wechsel in "
-#~ "einen Schlafmodus die Daten der Anwendung beschädigen kann. Schließen Sie "
-#~ "diese Anwendung, bevor Sie den Rechner in einen Schlafmodus versetzten, "
-#~ "oder schließen Sie die Stromversorgung an."
+#~ msgid "System is running on low power, but an application is currently disabling the automatic sleep, this means that doing a sleep now may damage the data of this application. Close this application before putting the computer on sleep mode or plug in your AC adapter"
+#~ msgstr "Das System hat nicht mehr viel Energie, eine Anwendung verhindert jedoch momentan das automatische Schlafen. Dies bedeuted, dass ein Wechsel in einen Schlafmodus die Daten der Anwendung beschädigen kann. Schließen Sie diese Anwendung, bevor Sie den Rechner in einen Schlafmodus versetzten, oder schließen Sie die Stromversorgung an."
 
 #~ msgid "Are you sure you want to proceed?"
 #~ msgstr "Möchten Sie wirklich fortfahren?"
 
-#~ msgid ""
-#~ "An application is currently disabling the automatic sleep, doing this "
-#~ "action now may damage the working state of this application, are you sure "
-#~ "you want to suspend the system?"
-#~ msgstr ""
-#~ "Eine laufende Anwendung verhindert momentan das automatische Schlafen. "
-#~ "Wenn Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der "
-#~ "Anwendung beschädigt werden. Sind Sie sicher, dass Sie das System jetzt "
-#~ "in den Standbymodus versetzen wollen?"
+#~ msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to suspend the system?"
+#~ msgstr "Eine laufende Anwendung verhindert momentan das automatische Schlafen. Wenn Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der Anwendung beschädigt werden. Sind Sie sicher, dass Sie das System jetzt in den Standbymodus versetzen wollen?"
 
-#, fuzzy
 #~ msgid "Monitor power control"
 #~ msgstr "Energieverwaltung für Monitor aktivieren"
 
-#, fuzzy
-#~ msgid ""
-#~ "Disable or enable monitor power control, for example you could disable "
-#~ "the screen power control to avoid screen blanking when watching a movie."
-#~ msgstr ""
-#~ "Automatisches Schlafen (de-)aktivieren. Wenn Sie dies einstellen, wird "
-#~ "die Energieverwaltung die Hintergrundbeleuchtung nicht abschalten. Diese "
-#~ "Verhinderung kann sinnvoll sein, wenn Sie einen Film anschauen."
+#~ msgid "Disable or enable monitor power control, for example you could disable the screen power control to avoid screen blanking when watching a movie."
+#~ msgstr "Automatisches Schlafen (de-)aktivieren. Wenn Sie dies einstellen, wird die Energieverwaltung die Hintergrundbeleuchtung nicht abschalten. Diese Verhinderung kann sinnvoll sein, wenn Sie einen Film anschauen."
 
 #~ msgid "No data available"
 #~ msgstr "Keine Daten verfügbar"
@@ -1231,11 +1184,8 @@ msgstr "Plugin zur Helligkeitsregelung"
 #~ msgid "Xfce power manager is not running to releod it"
 #~ msgstr "Energieverwaltung für Xfce4 läuft nicht, um sie neuladen zu können"
 
-#~ msgid ""
-#~ "Unable to read adapter status, the power manager will not work properly"
-#~ msgstr ""
-#~ "Kann Zustand der Stromversorgung nicht auslesen, die Energieverwaltung "
-#~ "wird nicht ordnungsgemäß funktionieren"
+#~ msgid "Unable to read adapter status, the power manager will not work properly"
+#~ msgstr "Kann Zustand der Stromversorgung nicht auslesen, die Energieverwaltung wird nicht ordnungsgemäß funktionieren"
 
 #~ msgid "Are you sure you want to hibernate the system?"
 #~ msgstr "Möchten Sie das System wirklich in den Ruhezustand versetzen?"
@@ -1270,12 +1220,8 @@ msgstr "Plugin zur Helligkeitsregelung"
 #~ msgid "Ondemand performance"
 #~ msgstr "Bedarfsabhängige Leistung"
 
-#~ msgid ""
-#~ "Set the CPU to its maximum speed when there is any load on it and to its "
-#~ "minimum speed when the system is idle"
-#~ msgstr ""
-#~ "Die CPU unter Last auf maximale Geschwindigkeit stellen und auf minimale "
-#~ "Geschwindigkeit im Ruhebetrieb"
+#~ msgid "Set the CPU to its maximum speed when there is any load on it and to its minimum speed when the system is idle"
+#~ msgstr "Die CPU unter Last auf maximale Geschwindigkeit stellen und auf minimale Geschwindigkeit im Ruhebetrieb"
 
 #~ msgid "Best power savings"
 #~ msgstr "Maximaler Energiesparmodus"
@@ -1286,12 +1232,8 @@ msgstr "Plugin zur Helligkeitsregelung"
 #~ msgid "Good power savings"
 #~ msgstr "Guter Energiesparmodus"
 
-#~ msgid ""
-#~ "gracefully increases and decreases the CPU speed depending on the current "
-#~ "usage"
-#~ msgstr ""
-#~ "Steigert und senkt die CPU-Geschwdindigkeit gemächlich in Abhängigkeit "
-#~ "von der aktuellen Verwendung"
+#~ msgid "gracefully increases and decreases the CPU speed depending on the current usage"
+#~ msgstr "Steigert und senkt die CPU-Geschwdindigkeit gemächlich in Abhängigkeit von der aktuellen Verwendung"
 
 #~ msgid "CPU frequency settings on UPS power"
 #~ msgstr "Einstellungen der CPU-Geschwindigkeit bei Strom über USV"
@@ -1347,43 +1289,17 @@ msgstr "Plugin zur Helligkeitsregelung"
 #~ msgid "Xfce4 Power Manager"
 #~ msgstr "Energieverwaltung für Xfce4"
 
-#~ msgid ""
-#~ "Unable to read your home directory environment variable, autostart option "
-#~ "may not work"
-#~ msgstr ""
-#~ "Kann die Umgebungsvariable »$HOME« nicht lesen, der Autostart "
-#~ "funktioniert daher eventuell nicht."
+#~ msgid "Unable to read your home directory environment variable, autostart option may not work"
+#~ msgstr "Kann die Umgebungsvariable »$HOME« nicht lesen, der Autostart funktioniert daher eventuell nicht."
 
-#~ msgid ""
-#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
-#~ "and the message bus daemon are running"
-#~ msgstr ""
-#~ "Kann die Energieverwaltung für Xfce4 nicht starten. Stellen Sie sicher, "
-#~ "dass die Hardwareabstraktionsschicht und der Nachrichtendienst laufen."
+#~ msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
+#~ msgstr "Kann die Energieverwaltung für Xfce4 nicht starten. Stellen Sie sicher, dass die Hardwareabstraktionsschicht und der Nachrichtendienst laufen."
 
-#~ msgid ""
-#~ "Unable to read AC adapter status, the power manager will not work "
-#~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
-#~ "connection with the hardware abstract layer or the message bus daemon is "
-#~ "not running"
-#~ msgstr ""
-#~ "Kann den Zustand der Stromversorgung nicht lesen, die Energieverwaltung "
-#~ "wird nicht ordnungsgemäß funktionieren. Mögliche Grunde: Der Treiber für "
-#~ "das Netzteil ist nicht geladen, die Verbindung mit der "
-#~ "Hardwareabstraktionsschicht ist unterbrochen oder der Nachrichtendienst "
-#~ "läuft nicht."
+#~ msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
+#~ msgstr "Kann den Zustand der Stromversorgung nicht lesen, die Energieverwaltung wird nicht ordnungsgemäß funktionieren. Mögliche Grunde: Der Treiber für das Netzteil ist nicht geladen, die Verbindung mit der Hardwareabstraktionsschicht ist unterbrochen oder der Nachrichtendienst läuft nicht."
 
-#~ msgid ""
-#~ "Unable to use power management service, functionalities like hibernate "
-#~ "and suspend will not work. Possible reasons: you don't have enough "
-#~ "permission, broken connection with the hardware abstract layer or the "
-#~ "message bus daemon is not running"
-#~ msgstr ""
-#~ "Kann die Dienste für die Energieverwaltung nicht nutzen; Ruhezustand und "
-#~ "Standby werden nicht funktionieren. Mögliche Gründe: Sie haben nicht die "
-#~ "nötigen Berechtigungen, die Verbindung mit der "
-#~ "Hardwareabstraktionsschicht ist unterbrochen, oder der Nachrichtendienst "
-#~ "läuft nicht."
+#~ msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
+#~ msgstr "Kann die Dienste für die Energieverwaltung nicht nutzen; Ruhezustand und Standby werden nicht funktionieren. Mögliche Gründe: Sie haben nicht die nötigen Berechtigungen, die Verbindung mit der Hardwareabstraktionsschicht ist unterbrochen, oder der Nachrichtendienst läuft nicht."
 
 #~ msgid "Error monitoring HAL events"
 #~ msgstr "Fehler beim Überwachen der HAL-Ereignisse"
@@ -1398,8 +1314,7 @@ msgstr "Plugin zur Helligkeitsregelung"
 #~ msgstr "Aufforderung für den Ruhezustand hat keine Antwort erhalten"
 
 #~ msgid "Error occured while trying to suspend"
-#~ msgstr ""
-#~ "Ein Fehler ist aufgetreten, während das System in Standby gehen sollte"
+#~ msgstr "Ein Fehler ist aufgetreten, während das System in Standby gehen sollte"
 
 #~ msgid "Unknown reply from the message daemon"
 #~ msgstr "Unbekannte Antwort vom Nachrichtendienst"
@@ -1408,22 +1323,16 @@ msgstr "Plugin zur Helligkeitsregelung"
 #~ msgstr "Aufforderung für den Ruhezustand hat keine Antwort erhalten"
 
 #~ msgid "No reply from HAL daemon to set monitor brightness level"
-#~ msgstr ""
-#~ "Keine Antwort vom HAL-Daemon, die Helligkeitsstufe des Monitors zu setzen"
+#~ msgstr "Keine Antwort vom HAL-Daemon, die Helligkeitsstufe des Monitors zu setzen"
 
 #~ msgid "No reply from HAL daemon to get monitor brightness level"
-#~ msgstr ""
-#~ "Keine Antwort vom HAL-Daemon, die Helligkeitsstufe des Monitors zu "
-#~ "bekommen"
+#~ msgstr "Keine Antwort vom HAL-Daemon, die Helligkeitsstufe des Monitors zu bekommen"
 
 #~ msgid "No reply from HAL daemon to get available cpu governors"
-#~ msgstr ""
-#~ "Keine Antwort vom HAL-Daemon, die verfügbaren CPU-Multiplikatoren zu "
-#~ "bekommen"
+#~ msgstr "Keine Antwort vom HAL-Daemon, die verfügbaren CPU-Multiplikatoren zu bekommen"
 
 #~ msgid "No reply from HAL daemon to get current cpu governor"
-#~ msgstr ""
-#~ "Keine Antwort vom HAL-Daemon, den aktuellen CPU-Multiplikator zu lesen"
+#~ msgstr "Keine Antwort vom HAL-Daemon, den aktuellen CPU-Multiplikator zu lesen"
 
 #~ msgid "No reply from HAL daemon to set cpu governor"
 #~ msgstr "Keine Antwort vom HAL-Daemon, den CPU-Multiplikator zu setzen"
