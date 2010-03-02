@@ -56,9 +56,9 @@ XfpmBrightnessHal      		       *xfpm_brightness_hal_new             (void);
 gboolean                                xfpm_brightness_hal_has_hw          (XfpmBrightnessHal *brg) G_GNUC_PURE;
 
 void                                    xfpm_brightness_hal_update_level    (XfpmBrightnessHal *brg,
-									     guint level);
+									     gint level);
 
-guint                                   xfpm_brightness_hal_get_max_level   (XfpmBrightnessHal *brg) G_GNUC_PURE;									     
+gint                                    xfpm_brightness_hal_get_max_level   (XfpmBrightnessHal *brg) G_GNUC_PURE;									     
 G_END_DECLS
 
 #endif /* __XFPM_BRIGHTNESS_HAL_H */

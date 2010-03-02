@@ -61,9 +61,9 @@ struct XfpmBrightnessHalPrivate
     XfpmAdapter     *adapter;
     XfpmScreenSaver *saver;
     
-    guint           max_level;
-    guint           hw_level;
-    guint           step;
+    gint            max_level;
+    gint            hw_level;
+    gint            step;
     gboolean        brightness_in_hw;
     gboolean        hw_found;
     gboolean        block;
@@ -180,6 +180,16 @@ xfpm_brightness_hal_read_hal_level (XfpmBrightnessHal *brg)
 	g_warning ("Error getting brightness level: %s\n", error->message);
 	g_error_free (error);
     }
+    
+    /* 
+     * Sometimes HAL send us negative values, it seems to be
+     * a bug in rounding in bash shell
+     */
+    if (brg->priv->hw_level < 0)
+    {
+	g_warning ("Negative value returned by HAL, assuming 0");
+	brg->priv->hw_level = 0;
+    }
 }
 
 static gboolean
@@ -231,7 +241,6 @@ xfpm_brightness_hal_up (XfpmBrightnessHal *brg)
     
 signal:
     xfpm_brightness_hal_read_hal_level (brg);
-    
     if ( show_popup )
 	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
 }
@@ -248,7 +257,7 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
     
     if ( enable_brightness == FALSE || brg->priv->brightness_in_hw)
 	goto signal;
-	
+
     if ( brg->priv->hw_level != 0)
     {
 	TRACE("Brightness key down");
@@ -257,7 +266,6 @@ xfpm_brightness_hal_down (XfpmBrightnessHal *brg)
     
 signal:
     xfpm_brightness_hal_read_hal_level (brg);
-    
     if ( show_popup )
 	g_signal_emit (G_OBJECT (brg), signals [BRIGHTNESS_UP], 0, brg->priv->hw_level);
 }
@@ -281,7 +289,7 @@ static void
 xfpm_brightness_hal_reset_cb (EggIdletime *idle, XfpmBrightnessHal *brg)
 {
     GError *error = NULL;
-    guint level;
+    gint level;
     
     if (brg->priv->block)
 	return;
@@ -309,7 +317,7 @@ static void
 xfpm_brightness_timeout_on_ac (XfpmBrightnessHal *brg)
 {
     GError *error = NULL;
-    guint level;
+    gint level;
     
     if ( brg->priv->on_battery )
 	    return;
@@ -336,7 +344,7 @@ static void
 xfpm_brightness_timeout_on_battery (XfpmBrightnessHal *brg)
 {
     GError *error = NULL;
-    guint level;
+    gint level;
     
     if ( !brg->priv->on_battery )
 	    return;
@@ -579,14 +587,14 @@ gboolean xfpm_brightness_hal_has_hw (XfpmBrightnessHal *brg)
     return brg->priv->hw_found;
 }
 
-void xfpm_brightness_hal_update_level (XfpmBrightnessHal *brg, guint level)
+void xfpm_brightness_hal_update_level (XfpmBrightnessHal *brg, gint level)
 {
     g_return_if_fail (XFPM_IS_BRIGHTNESS_HAL (brg));
     
     brg->priv->hw_level = level;
 }
 
-guint xfpm_brightness_hal_get_max_level (XfpmBrightnessHal *brg)
+gint xfpm_brightness_hal_get_max_level (XfpmBrightnessHal *brg)
 {
     g_return_val_if_fail (XFPM_IS_BRIGHTNESS_HAL (brg), 0);
     
