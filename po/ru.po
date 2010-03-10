@@ -1,23 +1,23 @@
 # translation of xfce4-power-manager.po to Russian
 # Copyright (C) 2008-2009 Ali Abdallah
 # This file is distributed under the same license as the xfce4-power-manager package.
-#
+# 
 # Denis Koryavov <dkoryavov@yandex.ru>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-16 18:01+0100\n"
+"POT-Creation-Date: 2010-03-10 18:01+0100\n"
 "PO-Revision-Date: 2010-02-16 23:40+0600\n"
 "Last-Translator: Urmas <davian818@gmail.com>\n"
 "Language-Team: Russian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 "X-Poedit-Language: Russian\n"
 "X-Poedit-Country: RUSSIAN FEDERATION\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -48,14 +48,10 @@ msgid "Consider the computer on low power at:"
 msgstr "Считать заряд батареи низким при:"
 
 #. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:8
-#: ../settings/xfpm-settings.c:789
-#: ../settings/xfpm-settings.c:857
-#: ../settings/xfpm-settings.c:995
-#: ../settings/xfpm-settings.c:1160
-#: ../settings/xfpm-settings.c:1215
-#: ../settings/xfpm-settings.c:1265
-#: ../src/xfpm-power.c:524
+#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:789
+#: ../settings/xfpm-settings.c:857 ../settings/xfpm-settings.c:995
+#: ../settings/xfpm-settings.c:1160 ../settings/xfpm-settings.c:1215
+#: ../settings/xfpm-settings.c:1265 ../src/xfpm-power.c:524
 #: ../src/xfpm-power.c:785
 msgid "Hibernate"
 msgstr "Спящий режим "
@@ -64,8 +60,7 @@ msgstr "Спящий режим "
 msgid "Lock screen when going for suspend/hibernate"
 msgstr "Блокировать экран при переходе в спящий/ждущий режимы"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10
-#: ../src/xfpm-power-common.c:132
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../src/xfpm-power-common.c:132
 msgid "Monitor"
 msgstr "Монитор "
 
@@ -73,12 +68,9 @@ msgstr "Монитор "
 msgid "Monitor power management control"
 msgstr "Управление питанием монитора"
 
-#: ../data/interfaces/xfpm-settings.ui.h:12
-#: ../settings/xfpm-settings.c:778
-#: ../settings/xfpm-settings.c:846
-#: ../settings/xfpm-settings.c:984
-#: ../settings/xfpm-settings.c:1149
-#: ../settings/xfpm-settings.c:1204
+#: ../data/interfaces/xfpm-settings.ui.h:12 ../settings/xfpm-settings.c:778
+#: ../settings/xfpm-settings.c:846 ../settings/xfpm-settings.c:984
+#: ../settings/xfpm-settings.c:1149 ../settings/xfpm-settings.c:1204
 #: ../settings/xfpm-settings.c:1254
 msgid "Nothing"
 msgstr "Ничего не делать"
@@ -124,14 +116,10 @@ msgid "Standby"
 msgstr "Дежурный режим "
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:23
-#: ../settings/xfpm-settings.c:783
-#: ../settings/xfpm-settings.c:851
-#: ../settings/xfpm-settings.c:989
-#: ../settings/xfpm-settings.c:1154
-#: ../settings/xfpm-settings.c:1209
-#: ../settings/xfpm-settings.c:1259
-#: ../src/xfpm-power.c:539
+#: ../data/interfaces/xfpm-settings.ui.h:23 ../settings/xfpm-settings.c:783
+#: ../settings/xfpm-settings.c:851 ../settings/xfpm-settings.c:989
+#: ../settings/xfpm-settings.c:1154 ../settings/xfpm-settings.c:1209
+#: ../settings/xfpm-settings.c:1259 ../src/xfpm-power.c:539
 #: ../src/xfpm-power.c:798
 msgid "Suspend"
 msgstr "Ждущий режим "
@@ -165,16 +153,13 @@ msgid "When sleep button is pressed:"
 msgstr "Когда нажата клавиша перехода в спящий режим: "
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-#: ../settings/xfpm-settings-main.c:121
-#: ../src/xfpm-power.c:601
-#: ../src/xfpm-power.c:772
-#: ../src/xfpm-main.c:415
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-power.c:601
+#: ../src/xfpm-power.c:772 ../src/xfpm-main.c:415
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Менеджер питания Xfce "
 
-#: ../settings/xfpm-settings.c:539
-#: ../settings/xfpm-settings.c:554
+#: ../settings/xfpm-settings.c:539 ../settings/xfpm-settings.c:554
 #: ../settings/xfpm-settings.c:581
 msgid "Never"
 msgstr "Никогда "
@@ -183,30 +168,24 @@ msgstr "Никогда "
 msgid "One minute"
 msgstr "Одной минуты "
 
-#: ../settings/xfpm-settings.c:544
-#: ../settings/xfpm-settings.c:556
+#: ../settings/xfpm-settings.c:544 ../settings/xfpm-settings.c:556
 msgid "Minutes"
 msgstr "Минут "
 
-#: ../settings/xfpm-settings.c:558
-#: ../settings/xfpm-settings.c:565
-#: ../settings/xfpm-settings.c:566
-#: ../settings/xfpm-settings.c:567
+#: ../settings/xfpm-settings.c:558 ../settings/xfpm-settings.c:565
+#: ../settings/xfpm-settings.c:566 ../settings/xfpm-settings.c:567
 msgid "One hour"
 msgstr "Одного часа"
 
-#: ../settings/xfpm-settings.c:566
-#: ../settings/xfpm-settings.c:570
+#: ../settings/xfpm-settings.c:566 ../settings/xfpm-settings.c:570
 msgid "one minute"
 msgstr "одна минута"
 
-#: ../settings/xfpm-settings.c:567
-#: ../settings/xfpm-settings.c:571
+#: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:571
 msgid "minutes"
 msgstr "минут "
 
-#: ../settings/xfpm-settings.c:569
-#: ../settings/xfpm-settings.c:570
+#: ../settings/xfpm-settings.c:569 ../settings/xfpm-settings.c:570
 #: ../settings/xfpm-settings.c:571
 msgid "hours"
 msgstr "часов "
@@ -215,38 +194,31 @@ msgstr "часов "
 msgid "Seconds"
 msgstr "Секунд "
 
-#: ../settings/xfpm-settings.c:761
-#: ../settings/xfpm-settings.c:948
+#: ../settings/xfpm-settings.c:761 ../settings/xfpm-settings.c:948
 #: ../settings/xfpm-settings.c:1410
 msgid "Hibernate and suspend operations not supported"
 msgstr "Спящий и ждущий режимы не поддерживаются "
 
-#: ../settings/xfpm-settings.c:766
-#: ../settings/xfpm-settings.c:953
+#: ../settings/xfpm-settings.c:766 ../settings/xfpm-settings.c:953
 #: ../settings/xfpm-settings.c:1415
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Спящий и ждущий режимы не поддерживаются "
 
-#: ../settings/xfpm-settings.c:795
-#: ../settings/xfpm-settings.c:1166
+#: ../settings/xfpm-settings.c:795 ../settings/xfpm-settings.c:1166
 #: ../src/xfpm-power.c:811
 msgid "Shutdown"
 msgstr "Выключить компьютер"
 
-#: ../settings/xfpm-settings.c:799
-#: ../settings/xfpm-settings.c:1170
-#: ../settings/xfpm-settings.c:1219
-#: ../settings/xfpm-settings.c:1269
+#: ../settings/xfpm-settings.c:799 ../settings/xfpm-settings.c:1170
+#: ../settings/xfpm-settings.c:1219 ../settings/xfpm-settings.c:1269
 msgid "Ask"
 msgstr "Спрашивать "
 
-#: ../settings/xfpm-settings.c:861
-#: ../settings/xfpm-settings.c:999
+#: ../settings/xfpm-settings.c:861 ../settings/xfpm-settings.c:999
 msgid "Lock screen"
 msgstr "Заблокировать экран"
 
-#: ../settings/xfpm-settings.c:918
-#: ../settings/xfpm-settings.c:1056
+#: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1056
 msgid "Spinning down hard disks permission denied"
 msgstr "Недостаточно прав для замедления жестких дисков"
 
@@ -290,23 +262,19 @@ msgstr "Операция перехода в спящий режим запре�
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Когда заряд всех источников питания компьютера близок к заданному "
 
-#: ../settings/xfpm-settings.c:1486
-#: ../settings/xfpm-settings.c:1491
+#: ../settings/xfpm-settings.c:1486 ../settings/xfpm-settings.c:1491
 msgid "General"
 msgstr "Общие "
 
-#: ../settings/xfpm-settings.c:1500
-#: ../settings/xfpm-settings.c:1505
+#: ../settings/xfpm-settings.c:1500 ../settings/xfpm-settings.c:1505
 msgid "On AC"
 msgstr "От сети "
 
-#: ../settings/xfpm-settings.c:1515
-#: ../settings/xfpm-settings.c:1520
+#: ../settings/xfpm-settings.c:1515 ../settings/xfpm-settings.c:1520
 msgid "On Battery"
 msgstr "От батареи "
 
-#: ../settings/xfpm-settings.c:1529
-#: ../settings/xfpm-settings.c:1534
+#: ../settings/xfpm-settings.c:1529 ../settings/xfpm-settings.c:1534
 msgid "Extended"
 msgstr "Расширенные"
 
@@ -322,8 +290,7 @@ msgstr "Сокет менеджера настроек "
 msgid "SOCKET ID"
 msgstr "ID сокета "
 
-#: ../settings/xfpm-settings-main.c:89
-#: ../src/xfpm-main.c:291
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
 #: ../src/xfpm-power-info.c:991
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -337,8 +304,7 @@ msgstr "Не удалось загрузить настройки питания
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Невозможно подключиться к менеджеру питания Xfce "
 
-#: ../settings/xfpm-settings-main.c:190
-#: ../src/xfpm-main.c:331
+#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:331
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Менеджер питания Xfce не запущен "
@@ -371,16 +337,12 @@ msgstr "Denis Koryavov <dkoryavov@yandex.ru> "
 msgid "Xfce Power Manager requires version 011 of devicekit-power to work properly while the version found is"
 msgstr ""
 
-#: ../src/xfpm-power.c:319
-#: ../src/xfpm-power.c:325
+#: ../src/xfpm-power.c:319 ../src/xfpm-power.c:325
 msgid "Devicekit-power version 011 or above not found"
-msgstr ""
+msgstr "Devicekit-power версии 011 или выше не найден"
 
-#: ../src/xfpm-power.c:381
-#: ../src/xfpm-power.c:736
-#: ../src/xfpm-power.c:924
-#: ../src/xfpm-power.c:938
-#: ../src/xfpm-battery.c:229
+#: ../src/xfpm-power.c:381 ../src/xfpm-power.c:736 ../src/xfpm-power.c:924
+#: ../src/xfpm-power.c:938 ../src/xfpm-battery.c:229
 msgid "Xfce power manager"
 msgstr "Менеджер питания Xfce "
 
@@ -402,8 +364,7 @@ msgid "Quit Xfce power manager?"
 msgstr "Выйти из Менеджера питания Xfce?"
 
 #. Power information
-#: ../src/xfpm-power.c:575
-#: ../src/xfpm-power-info.c:861
+#: ../src/xfpm-power.c:575 ../src/xfpm-power-info.c:861
 msgid "Power Information"
 msgstr "Информация об источниках питания"
 
@@ -419,8 +380,7 @@ msgstr "Переход в ждущий режим"
 msgid "Shutdown the system"
 msgstr "Выключить систему "
 
-#: ../src/xfpm-power.c:731
-#: ../src/xfpm-power.c:769
+#: ../src/xfpm-power.c:731 ../src/xfpm-power.c:769
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Ваша батарея практически разряжена. Сохраните свою работу чтобы избежать потери данных. "
 
@@ -432,40 +392,32 @@ msgstr "Система работает от батареи c низким за�
 msgid "Battery charge level is low"
 msgstr "Низкий заряд батареи "
 
-#: ../src/xfpm-power.c:1139
-#: ../src/xfpm-power.c:1144
+#: ../src/xfpm-power.c:1139 ../src/xfpm-power.c:1144
 msgid "Adaptor is offline"
 msgstr "Блок питания отключен от сети"
 
-#: ../src/xfpm-power.c:1140
-#: ../src/xfpm-power.c:1145
-#: ../src/xfpm-battery.c:323
+#: ../src/xfpm-power.c:1140 ../src/xfpm-power.c:1145 ../src/xfpm-battery.c:323
 #, c-format
 msgid "Adaptor is online"
 msgstr "Блок питания подключен к сети"
 
-#: ../src/xfpm-power.c:1632
-#: ../src/xfpm-power.c:1653
-#: ../src/xfpm-power.c:1668
+#: ../src/xfpm-power.c:1632 ../src/xfpm-power.c:1653 ../src/xfpm-power.c:1668
 #: ../src/xfpm-power.c:1691
 #, c-format
 msgid "Permission denied"
 msgstr "Доступ запрещен "
 
-#: ../src/xfpm-power.c:1676
-#: ../src/xfpm-power.c:1699
+#: ../src/xfpm-power.c:1676 ../src/xfpm-power.c:1699
 #, c-format
 msgid "Suspend not supported"
 msgstr "Ждущий режим не поддерживается "
 
-#: ../src/xfpm-power-common.c:122
-#: ../src/xfpm-power-common.c:141
+#: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 #: ../src/xfpm-battery.c:325
 msgid "Battery"
 msgstr "Батарея "
 
-#: ../src/xfpm-power-common.c:124
-#: ../src/xfpm-battery.c:325
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:325
 msgid "UPS"
 msgstr "ИБП"
 
@@ -489,8 +441,7 @@ msgstr "PDA"
 msgid "Phone"
 msgstr "Телефон"
 
-#: ../src/xfpm-power-common.c:138
-#: ../src/xfpm-power-common.c:153
+#: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
 #: ../src/xfpm-power-common.c:168
 msgid "Unknown"
 msgstr "Неизвестно "
@@ -533,8 +484,7 @@ msgstr "Батарея заряжается "
 msgid "Your battery is discharging"
 msgstr "Батарея разряжается "
 
-#: ../src/xfpm-battery.c:153
-#: ../src/xfpm-battery.c:323
+#: ../src/xfpm-battery.c:153 ../src/xfpm-battery.c:323
 #, c-format
 msgid "System is running on battery power"
 msgstr "Система работает от батареи "
@@ -667,8 +617,7 @@ msgstr ""
 "%s\n"
 "Устройство (%s) полностью разряжено"
 
-#: ../src/xfpm-main.c:53
-#: ../src/xfpm-power-info.c:101
+#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:101
 #, c-format
 msgid ""
 "\n"
@@ -689,13 +638,11 @@ msgstr ""
 "Лицензия GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:76
-#: ../src/xfpm-power-info.c:384
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:384
 msgid "True"
 msgstr "Да"
 
-#: ../src/xfpm-main.c:76
-#: ../src/xfpm-power-info.c:384
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:384
 msgid "False"
 msgstr "Нет"
 
@@ -722,12 +669,12 @@ msgstr "Без поддержки policykit\n"
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "С поддержкой менеджера сети\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Без поддержки менеджера сети\n"
 
 #: ../src/xfpm-main.c:128
 #, c-format
@@ -811,8 +758,7 @@ msgstr "Показать диалог настроек программы "
 msgid "Quit any running xfce power manager"
 msgstr "Завершить работу менеджера питания Xfce "
 
-#: ../src/xfpm-main.c:272
-#: ../src/xfpm-power-info.c:978
+#: ../src/xfpm-main.c:272 ../src/xfpm-power-info.c:978
 msgid "Version information"
 msgstr "Информация о версии "
 
@@ -845,8 +791,7 @@ msgid "No data"
 msgstr "Нет данных"
 
 #. TRANSLATORS: kernel module, usually a device driver
-#: ../src/xfpm-power-info.c:133
-#: ../src/xfpm-power-info.c:138
+#: ../src/xfpm-power-info.c:133 ../src/xfpm-power-info.c:138
 msgid "Kernel module"
 msgstr "Модуль ядра"
 
@@ -891,14 +836,12 @@ msgid "Intel wireless adaptor"
 msgstr "Беспроводной адаптер Intel"
 
 #. TRANSLATORS: a timer is something that fires periodically
-#: ../src/xfpm-power-info.c:214
-#: ../src/xfpm-power-info.c:217
-#: ../src/xfpm-power-info.c:220
-#: ../src/xfpm-power-info.c:223
+#: ../src/xfpm-power-info.c:214 ../src/xfpm-power-info.c:217
+#: ../src/xfpm-power-info.c:220 ../src/xfpm-power-info.c:223
 #: ../src/xfpm-power-info.c:226
 #, c-format
 msgid "Timer %s"
-msgstr ""
+msgstr "Таймер %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:229
@@ -910,17 +853,16 @@ msgstr ""
 #: ../src/xfpm-power-info.c:232
 #, c-format
 msgid "New task %s"
-msgstr ""
+msgstr "Новая задача %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
 #: ../src/xfpm-power-info.c:235
 #, c-format
 msgid "Wait %s"
-msgstr ""
+msgstr "Ожидание %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
-#: ../src/xfpm-power-info.c:238
-#: ../src/xfpm-power-info.c:241
+#: ../src/xfpm-power-info.c:238 ../src/xfpm-power-info.c:241
 #, c-format
 msgid "Work queue %s"
 msgstr ""
@@ -935,7 +877,7 @@ msgstr ""
 #: ../src/xfpm-power-info.c:247
 #, c-format
 msgid "USB activity %s"
-msgstr ""
+msgstr "Активность USB %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:250
@@ -946,7 +888,7 @@ msgstr ""
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:253
 msgid "Local interrupts"
-msgstr ""
+msgstr "Локальные прерывания"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:256
@@ -965,8 +907,7 @@ msgstr "Значение"
 msgid "Device"
 msgstr "Устройство"
 
-#: ../src/xfpm-power-info.c:371
-#: ../src/xfpm-power-info.c:783
+#: ../src/xfpm-power-info.c:371 ../src/xfpm-power-info.c:783
 msgid "Type"
 msgstr "Тип"
 
@@ -983,8 +924,7 @@ msgid "Technology"
 msgstr "Технология"
 
 #. TRANSLATORS: Unit here is What hour
-#: ../src/xfpm-power-info.c:422
-#: ../src/xfpm-power-info.c:436
+#: ../src/xfpm-power-info.c:422 ../src/xfpm-power-info.c:436
 #: ../src/xfpm-power-info.c:450
 msgid "Wh"
 msgstr "Втч "
@@ -1059,119 +999,144 @@ msgstr "Управление яркостью экрана"
 
 #~ msgid "CPU frequency control"
 #~ msgstr "Управление частотой центрального процессора"
+
 #~ msgid "Shutdown and hibernate operations not permitted"
 #~ msgstr "Операции выключения и спящего режима не поддерживаются "
+
 #~ msgid "Xfce Power Manager Settings"
 #~ msgstr "Настройки Менеджера питания Xfce "
+
 #~ msgid "Battery is charging"
 #~ msgstr "Батарея заряжается "
+
 #~ msgid "Your UPS"
 #~ msgstr "Ваш ИБП "
+
 #~ msgid "Your Mouse battery"
 #~ msgstr "Батарея мыши "
+
 #~ msgid "Your Keyboard battery"
 #~ msgstr "Батарея клавиатуры "
+
 #~ msgid "Your Camera battery"
 #~ msgstr "Батарея камеры "
+
 #~ msgid "Your PDA battery"
 #~ msgstr "Батарея наладонника "
+
 #~ msgid "Your Battery"
 #~ msgstr "Батарея "
+
 #~ msgid "is fully charged"
 #~ msgstr "полностью заряжена "
+
 #~ msgid "charge level"
 #~ msgstr "уровень заряда "
+
 #~ msgid "is charging"
 #~ msgstr "зяряжается "
+
 #~ msgid "is discharging"
 #~ msgstr "разряжается "
+
 #~ msgid "charge is low"
 #~ msgstr "низкий заряд "
+
 #~ msgid "is almost empty"
 #~ msgstr "практически не осталось заряда "
+
 #~ msgid "is not present"
 #~ msgstr "отсуствует "
+
 #~ msgid "Battery not present"
 #~ msgstr "Батарея отсутствует "
+
 #~ msgid "System is running on AC power"
 #~ msgstr "Система работает от сети "
+
 #~ msgid "Estimated time left"
 #~ msgstr "Осталось времени (приблизительно) "
+
 #~ msgid "Estimated time to be fully charged"
 #~ msgstr "Примерное время зарядки "
+
 #~ msgid "Design:"
 #~ msgstr "Емкость: "
+
 #~ msgid "Last full:"
 #~ msgstr "Последняя зарядка до: "
+
 #~ msgid "Too many arguments"
 #~ msgstr "Слишком много аргументов "
+
 #~ msgid "Adapter present"
 #~ msgstr "Адаптер присутствует "
+
 #~ msgid "Adapter not present"
 #~ msgstr "Адаптер отсуствует "
-#~ msgid ""
-#~ "System is running on low power, but an application is currently disabling "
-#~ "the automatic sleep, this means that doing a sleep now may damage the "
-#~ "data of this application. Close this application before putting the "
-#~ "computer on sleep mode or plug in your AC adapter"
-#~ msgstr ""
-#~ "Система работает от батарей с низким зарядом, однако одно из запущенных "
-#~ "приложений препятствует автоматическому переходу в спящий режим. Это "
-#~ "означает, что немедленный переход в спящий режим может повредить данные "
-#~ "этого приложения. Сохраните данные и закройте блокирующую программу, либо "
-#~ "подключите компьютер к источнику питания. "
+
+#~ msgid "System is running on low power, but an application is currently disabling the automatic sleep, this means that doing a sleep now may damage the data of this application. Close this application before putting the computer on sleep mode or plug in your AC adapter"
+#~ msgstr "Система работает от батарей с низким зарядом, однако одно из запущенных приложений препятствует автоматическому переходу в спящий режим. Это означает, что немедленный переход в спящий режим может повредить данные этого приложения. Сохраните данные и закройте блокирующую программу, либо подключите компьютер к источнику питания. "
+
 #~ msgid "Are you sure you want to proceed?"
 #~ msgstr "Вы действительно желаете продолжить?"
-#~ msgid ""
-#~ "An application is currently disabling the automatic sleep, doing this "
-#~ "action now may damage the working state of this application, are you sure "
-#~ "you want to suspend the system?"
-#~ msgstr ""
-#~ "Одно из запущенных приложений блокирует автоматический переход в режим "
-#~ "пониженного энергопотребления, принудительное выполнение данного действия "
-#~ "может повредить работе этого приложения, вы действительно желаете "
-#~ "перевести систему в ждущий режим?"
+
+#~ msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to suspend the system?"
+#~ msgstr "Одно из запущенных приложений блокирует автоматический переход в режим пониженного энергопотребления, принудительное выполнение данного действия может повредить работе этого приложения, вы действительно желаете перевести систему в ждущий режим?"
+
 #~ msgid "Monitor power control"
 #~ msgstr "Управлять питанием монитора"
-#~ msgid ""
-#~ "Disable or enable monitor power control, for example you could disable "
-#~ "the screen power control to avoid screen blanking when watching a movie."
-#~ msgstr ""
-#~ "Включить или выключить автоматические действия управления "
-#~ "энергопотреблением монитора. Подобное действие вам может понадобиться, "
-#~ "например, при просмотре фильма. "
+
+#~ msgid "Disable or enable monitor power control, for example you could disable the screen power control to avoid screen blanking when watching a movie."
+#~ msgstr "Включить или выключить автоматические действия управления энергопотреблением монитора. Подобное действие вам может понадобиться, например, при просмотре фильма. "
+
 #~ msgid "No data available"
 #~ msgstr "Данные отсутствуют "
+
 #~ msgid "Hibernate not supported"
 #~ msgstr "Спящий режим не поддерживается  "
+
 #~ msgid "HAL daemon is not running"
 #~ msgstr "Системная служба HAL не запущена"
+
 #~ msgid "No back-end for your operating system"
 #~ msgstr "Отсутствует графический интерфейс для вашей операционной системы "
+
 #~ msgid "No hibernate script found"
 #~ msgstr "Не найдено программ для перевода систему в спящий режим "
+
 #~ msgid "No suspend script found"
 #~ msgstr "Не найдено программ для перевода систему в ждущий режим "
+
 #~ msgid "No suspend method found"
 #~ msgstr "Не найдено методов перевода системы в ждущий режим "
+
 #~ msgid "No hibernate method found"
 #~ msgstr "Не найдено методов перевода системы в спящий режим "
+
 #~ msgid "Out of memory"
 #~ msgstr "Выход за границы памяти "
+
 #~ msgid "System failed to sleep"
 #~ msgstr "Не удалось перевести систему в ждущий режим "
+
 #~ msgid "HAL daemon is currently not connected"
 #~ msgstr "Системная служба HAL не подсоединена"
+
 #~ msgid "mAh"
 #~ msgstr "мАч "
+
 #~ msgid "Advanced"
 #~ msgstr "Дополнительно "
+
 #~ msgid "Enable notification"
 #~ msgstr "Включить уведомления "
+
 #~ msgid "On battery"
 #~ msgstr "От батареи "
+
 #~ msgid "Clear inhibit"
 #~ msgstr "Отменить сдерживание"
+
 #~ msgid "Inhibit"
 #~ msgstr "Сдерживать"
-
