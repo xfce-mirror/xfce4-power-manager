@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -25,7 +25,6 @@ msgid "<b>Advanced Options</b>"
 msgstr "<b>ප්‍රගත විකල්පය</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:3
-#, fuzzy
 msgid "<b>Brightness</b>"
 msgstr "<b>දීප්තිය</b>"
 
@@ -59,7 +58,6 @@ msgid "Lock screen when going for suspend/hibernate"
 msgstr "suspend/hibernate සඳහා යොමුවන විට තිරය අගුළු දමන්න"
 
 #: ../data/interfaces/xfpm-settings.ui.h:10 ../src/xfpm-power-common.c:132
-#, fuzzy
 msgid "Monitor"
 msgstr "මොනිටරය"
 
@@ -283,7 +281,7 @@ msgstr "ඔබේ ශක්ති කළමණාකාරක ස්ථාපන
 
 #: ../settings/xfpm-settings-main.c:78
 msgid "Settings manager socket"
-msgstr ""
+msgstr "සැකසුම් කළමනාකාරක කෙවෙනිය"
 
 #: ../settings/xfpm-settings-main.c:78
 #, fuzzy
@@ -409,7 +407,7 @@ msgstr "අවසර නැත"
 #: ../src/xfpm-power.c:1676 ../src/xfpm-power.c:1699
 #, c-format
 msgid "Suspend not supported"
-msgstr ""
+msgstr "අත්හිටුවීම සහය නොදක්වයි"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 #: ../src/xfpm-battery.c:325
@@ -417,7 +415,6 @@ msgid "Battery"
 msgstr "බැටරිය"
 
 #: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:325
-#, fuzzy
 msgid "UPS"
 msgstr "UPS"
 
@@ -427,19 +424,19 @@ msgstr ""
 
 #: ../src/xfpm-power-common.c:128
 msgid "Mouse"
-msgstr ""
+msgstr "මූසිකය"
 
 #: ../src/xfpm-power-common.c:130
 msgid "Keyboard"
-msgstr ""
+msgstr "යතුරුපුවරුව"
 
 #: ../src/xfpm-power-common.c:134
 msgid "PDA"
-msgstr ""
+msgstr "PDA"
 
 #: ../src/xfpm-power-common.c:136
 msgid "Phone"
-msgstr ""
+msgstr "Phone"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
 #: ../src/xfpm-power-common.c:168
@@ -452,7 +449,7 @@ msgstr "ලිතියම් අයන්"
 
 #: ../src/xfpm-power-common.c:157
 msgid "Lithium polymer"
-msgstr ""
+msgstr "ලිතියම් ‍බහුඅවයවකය"
 
 #: ../src/xfpm-power-common.c:159
 msgid "Lithium iron phosphate"
@@ -502,27 +499,27 @@ msgstr[1] ""
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "පැය"
+msgstr[1] "පැය %i "
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
 #: ../src/xfpm-battery.c:306
 #, c-format
 msgid "%i %s %i %s"
-msgstr ""
+msgstr "%i %s %i %s"
 
 #: ../src/xfpm-battery.c:307
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "පැය"
+msgstr[1] "පැය"
 
 #: ../src/xfpm-battery.c:308
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "විනාඩිය"
+msgstr[1] "විනාඩි"
 
 #: ../src/xfpm-battery.c:332
 #, c-format
@@ -531,13 +528,16 @@ msgid ""
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
+"%s\n"
+"ඔබගේ %s සම්පූර්ණයෙන් ආරෝපිතයි (%i%%).\n"
+" %s ධාවනය කල හැක"
 
 #: ../src/xfpm-battery.c:341
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
+msgstr "%s\\ඔබගේ %s සම්පූර්ණයෙන් ආරෝපිතයි (%i%%)."
 
 #: ../src/xfpm-battery.c:352
 #, c-format
@@ -546,6 +546,9 @@ msgid ""
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
+"%s\n"
+"ඔබගේ %s ආරෝපණය වෙමින් (%i%%)\n"
+"සම්පූර්ණ ආරෝපනයට %s ඉතිරිව ඇත."
 
 #: ../src/xfpm-battery.c:361
 #, c-format
@@ -553,6 +556,8 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
 msgstr ""
+"%s\n"
+"ඔබගේ %s ආරෝපණය වෙමින් (%i%%)."
 
 #: ../src/xfpm-battery.c:372
 #, c-format
@@ -561,6 +566,9 @@ msgid ""
 "Your %s is discharging (%i%%)\n"
 "estimated time left is %s."
 msgstr ""
+"%s\n"
+"ඔබගේ %s විසර්ජනය වෙමින්  (%i%%)\n"
+"%s උපකල්පිත කාලයක් ඉතිරිව ඇත. "
 
 #: ../src/xfpm-battery.c:381
 #, c-format
@@ -568,6 +576,8 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
 msgstr ""
+"%s\n"
+"ඔබගේ %s විසර්ජනය වෙමින් (%i%%)."
 
 #: ../src/xfpm-battery.c:390
 #, c-format
@@ -575,6 +585,8 @@ msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr ""
+"%s\n"
+"%s විසර්ජනයට  (%i%%)."
 
 #: ../src/xfpm-battery.c:394
 #, c-format
