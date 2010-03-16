@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -42,7 +42,7 @@ msgstr "ක්‍රියා"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "Consider the computer on low power at:"
-msgstr ""
+msgstr "පරිගණකය අඩු බලශක්තියට පාත්‍ර කිරීම:"
 
 #. Hibernate menu option
 #: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:789
@@ -106,7 +106,7 @@ msgstr "බැටරි තත්ත්වය ගැන දැනුම් ද�
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Spin down hard disks"
-msgstr ""
+msgstr " දෘඩ තැටිය කරකැවීම අව කරන්න"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Standby"
@@ -217,7 +217,7 @@ msgstr "තිරය අගුළු දමන්න"
 
 #: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1056
 msgid "Spinning down hard disks permission denied"
-msgstr ""
+msgstr "දෘඩ තැටිය කරකැවීම අව කිරිමට අවසර නැත"
 
 #: ../settings/xfpm-settings.c:1096
 msgid "Always show icon"
@@ -237,7 +237,7 @@ msgstr "අයිකනය කිසිවිටක පෙන්වන්න එ
 
 #: ../settings/xfpm-settings.c:1131
 msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr ""
+msgstr "බලශක්ති කළමනාකාරක සන් කිරීම (DPMS) දර්ශනය වලකන්න, උදා. සංදර්ශකය වසා දැමීමට හෝ නිද්‍රාතත්වයට පත් කරන්න එපා."
 
 #: ../settings/xfpm-settings.c:1319
 msgid "Suspend operation not supported"
@@ -332,11 +332,11 @@ msgstr "පරිවර්තක-ස්තූතිය"
 
 #: ../src/xfpm-power.c:314
 msgid "Xfce Power Manager requires version 011 of devicekit-power to work properly while the version found is"
-msgstr ""
+msgstr "අනුවාදය හමුවන තුරු Xfce බලශක්ති කළමනාකාරකය නිවැරදිව ක්‍රියාකිරීමට devicekit-power 011 අනුවාදය අවශ්‍යයි"
 
 #: ../src/xfpm-power.c:319 ../src/xfpm-power.c:325
 msgid "Devicekit-power version 011 or above not found"
-msgstr ""
+msgstr "Devicekit-power 011 අනුවාදය හෝ ඉහළ හමු නොවුණි"
 
 #: ../src/xfpm-power.c:381 ../src/xfpm-power.c:736 ../src/xfpm-power.c:924
 #: ../src/xfpm-power.c:938 ../src/xfpm-battery.c:229
@@ -419,7 +419,7 @@ msgstr "UPS"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
-msgstr ""
+msgstr "රේඛා බලශක්තිය"
 
 #: ../src/xfpm-power-common.c:128
 msgid "Mouse"
@@ -676,7 +676,7 @@ msgstr "hibernate කළ හැක"
 
 #: ../src/xfpm-main.c:149
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "දෘඩ තැටිය කරකැවීම අව කළ හැක"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to suspend"
@@ -692,7 +692,7 @@ msgstr "වසා දැමීමට බලය ඇත"
 
 #: ../src/xfpm-main.c:157
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "දෘඩ තැටිය කරකැවීම අව කිරීමට බලය ඇත"
 
 #: ../src/xfpm-main.c:159
 msgid "Has brightness panel"
@@ -724,7 +724,7 @@ msgstr "නිදොස් කිරීම සක්‍රියකරන්න"
 
 #: ../src/xfpm-main.c:268
 msgid "Dump all information"
-msgstr ""
+msgstr "සියලු තොරතුරු නික්ෂේපය"
 
 #: ../src/xfpm-main.c:269
 msgid "Restart the running instance of Xfce power manager"
@@ -897,21 +897,21 @@ msgstr "බලසැපයුම"
 
 #: ../src/xfpm-power-info.c:401
 msgid "Model"
-msgstr ""
+msgstr "මාදිළිය"
 
 #: ../src/xfpm-power-info.c:415
 msgid "Technology"
-msgstr ""
+msgstr "තාක්ෂණය"
 
 #. TRANSLATORS: Unit here is What hour
 #: ../src/xfpm-power-info.c:422 ../src/xfpm-power-info.c:436
 #: ../src/xfpm-power-info.c:450
 msgid "Wh"
-msgstr ""
+msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:428
 msgid "Energy full design"
-msgstr ""
+msgstr "ශක්ති පිරුණු පිරිසැලසුම"
 
 #: ../src/xfpm-power-info.c:442
 msgid "Energy full"
@@ -923,7 +923,6 @@ msgstr "ශක්තිය අවසන්"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:464
-#, fuzzy
 msgid "V"
 msgstr "V"
 
@@ -933,11 +932,11 @@ msgstr "වෝල්ටීයතාව"
 
 #: ../src/xfpm-power-info.c:486
 msgid "Vendor"
-msgstr ""
+msgstr "විකුණුම්කරු"
 
 #: ../src/xfpm-power-info.c:503
 msgid "Serial"
-msgstr ""
+msgstr "ශ්‍රේණීය"
 
 #: ../src/xfpm-power-info.c:775
 msgid "Processor"
