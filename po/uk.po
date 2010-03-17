@@ -14,8 +14,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -279,9 +279,8 @@ msgid "Extended"
 msgstr "Розширені"
 
 #: ../settings/xfpm-settings.c:1602
-#, fuzzy
 msgid "Check your power manager installation"
-msgstr "Менеджер живлення Xfce не працює"
+msgstr "Перевірте правильність встановлення менеджера живлення"
 
 #: ../settings/xfpm-settings-main.c:78
 msgid "Settings manager socket"
@@ -340,7 +339,7 @@ msgstr ""
 
 #: ../src/xfpm-power.c:319 ../src/xfpm-power.c:325
 msgid "Devicekit-power version 011 or above not found"
-msgstr ""
+msgstr "Devicekit-power версії 011 чи вище не знайдено"
 
 #: ../src/xfpm-power.c:381 ../src/xfpm-power.c:736 ../src/xfpm-power.c:924
 #: ../src/xfpm-power.c:938 ../src/xfpm-battery.c:229
@@ -388,20 +387,18 @@ msgstr "Ваша батарея майже розряджена. Збережі�
 
 #: ../src/xfpm-power.c:925
 msgid "System is running on low power"
-msgstr ""
+msgstr "Система працює на слабком заряді"
 
 #: ../src/xfpm-power.c:939
-#, fuzzy
 msgid "Battery charge level is low"
-msgstr "Заряд Вашої батареї низький"
+msgstr "Рівень заряду батареї низький"
 
 #: ../src/xfpm-power.c:1139 ../src/xfpm-power.c:1144
-#, fuzzy
 msgid "Adaptor is offline"
 msgstr "Адаптер вимкнуто"
 
 #: ../src/xfpm-power.c:1140 ../src/xfpm-power.c:1145 ../src/xfpm-battery.c:323
-#, fuzzy, c-format
+#, c-format
 msgid "Adaptor is online"
 msgstr "Адаптер увімкнено"
 
@@ -409,31 +406,29 @@ msgstr "Адаптер увімкнено"
 #: ../src/xfpm-power.c:1691
 #, c-format
 msgid "Permission denied"
-msgstr ""
+msgstr "Доступ заборонено"
 
 #: ../src/xfpm-power.c:1676 ../src/xfpm-power.c:1699
 #, c-format
 msgid "Suspend not supported"
-msgstr ""
+msgstr "Сплячка не підтримується"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 #: ../src/xfpm-battery.c:325
-#, fuzzy
 msgid "Battery"
-msgstr "Налаштування батареї"
+msgstr "Батарея"
 
 #: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:325
 msgid "UPS"
-msgstr ""
+msgstr "БПЖ"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
-msgstr ""
+msgstr "Електромережа"
 
 #: ../src/xfpm-power-common.c:128
-#, fuzzy
 msgid "Mouse"
-msgstr "годин"
+msgstr "Мишка"
 
 #: ../src/xfpm-power-common.c:130
 #, fuzzy
@@ -498,61 +493,64 @@ msgstr "Стежити за властивостями при живленні �
 
 #: ../src/xfpm-battery.c:283
 msgid "Unknown time"
-msgstr ""
+msgstr "Час невідомий"
 
 #: ../src/xfpm-battery.c:289
-#, fuzzy, c-format
+#, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] "хвилина"
-msgstr[1] "хвилина"
-msgstr[2] "хвилина"
+msgstr[0] "%i хвилина"
+msgstr[1] "%i хвилини"
+msgstr[2] "%i хвилин"
 
 #: ../src/xfpm-battery.c:300
-#, fuzzy, c-format
+#, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] "година"
-msgstr[1] "година"
-msgstr[2] "година"
+msgstr[0] "%i година"
+msgstr[1] "%i години"
+msgstr[2] "%i годин"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
 #: ../src/xfpm-battery.c:306
-#, c-format
+#, c-format, fuzzy
 msgid "%i %s %i %s"
-msgstr ""
+msgstr "%i %s %i %s"
 
 #: ../src/xfpm-battery.c:307
-#, fuzzy
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "година"
-msgstr[1] "година"
-msgstr[2] "година"
+msgstr[1] "години"
+msgstr[2] "годин"
 
 #: ../src/xfpm-battery.c:308
-#, fuzzy
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "хвилина"
-msgstr[1] "хвилина"
-msgstr[2] "хвилина"
+msgstr[1] "хвилини"
+msgstr[2] "хвилин"
 
 #: ../src/xfpm-battery.c:332
-#, c-format
+#, c-format, fuzzy
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
+"%s\n"
+"Ваша %s повністю зарядж. (%i%%).\n"
+"Забезпечить %s часу діяльності"
 
 #: ../src/xfpm-battery.c:341
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr "Вашу батарею повністю заряджено"
+msgstr ""
+"%s\n"
+"Вашу %s повністю заряджено (%i%%)."
 
 #: ../src/xfpm-battery.c:352
 #, c-format
@@ -628,11 +626,11 @@ msgstr ""
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:384
 msgid "True"
-msgstr ""
+msgstr "Правда"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:384
 msgid "False"
-msgstr ""
+msgstr "Брехня"
 
 #: ../src/xfpm-main.c:113
 #, c-format
