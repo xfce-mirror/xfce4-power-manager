@@ -51,9 +51,6 @@ struct XfpmDisksPrivate
     gchar           *cookie;
     gboolean         set;
     gboolean         can_spin;
-
-
-    gboolean         is_udisks;
 };
 
 G_DEFINE_TYPE (XfpmDisks, xfpm_disks, G_TYPE_OBJECT)
@@ -165,7 +162,7 @@ xfpm_disks_get_is_auth_to_spin (XfpmDisks *disks)
 {
     const gchar *action_id;
 
-    action_id = disks->priv->is_udisks ? "org.freedesktop.udisks.drive-set-spindown" : "org.freedesktop.devicekit.disks.drive-set-spindown";
+    action_id = "org.freedesktop.udisks.drive-set-spindown";
 
     disks->priv->can_spin = xfpm_polkit_check_auth (disks->priv->polkit, 
 						    action_id);
@@ -188,7 +185,6 @@ xfpm_disks_init (XfpmDisks *disks)
     disks->priv->cookie = NULL;
     disks->priv->polkit = NULL;
 
-    disks->priv->is_udisks = FALSE;
     
     disks->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
     
@@ -199,31 +195,11 @@ xfpm_disks_init (XfpmDisks *disks)
 	goto out;
     }
 
-    disks->priv->proxy = dbus_g_proxy_new_for_name_owner (disks->priv->bus,
-							  "org.freedesktop.UDisks",
-							  "/org/freedesktop/UDisks",
-							  "org.freedesktop.UDisks",
-							  NULL);
+    disks->priv->proxy = dbus_g_proxy_new_for_name (disks->priv->bus,
+						    "org.freedesktop.UDisks",
+						    "/org/freedesktop/UDisks",
+						    "org.freedesktop.UDisks");
     
-    if ( !disks->priv->proxy )
-    {
-	g_message ("UDisks not found, trying devkit-disks");
-	disks->priv->proxy = dbus_g_proxy_new_for_name_owner (disks->priv->bus,
-							      "org.freedesktop.DeviceKit.Disks",
-							      "/org/freedesktop/DeviceKit/Disks",
-							      "org.freedesktop.DeviceKit.Disks",
-							      NULL);
-    }
-    else
-    {
-	disks->priv->is_udisks = TRUE;
-    }
-    
-    if ( !disks->priv->proxy )
-    {
-	g_warning ("Unable to create proxy for 'org.freedesktop.DeviceKit.Disks'");
-	goto out;
-    }
 
     disks->priv->conf = xfpm_xfconf_new ();
     disks->priv->power  = xfpm_power_get ();

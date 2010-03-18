@@ -50,17 +50,6 @@
 #include "xfpm-debug.h"
 #include "xfpm-enum-types.h"
 
-
-static const gchar *BACKEND_NAME;
-static const gchar *BACKEND_PATH;
-static const gchar *BACKEND_IFACE;
-static const gchar *BACKEND_IFACE_DEVICE;
-static const gchar *BACKEND_PATH_DEVICE;
-#ifdef ENABLE_POLKIT
-static const gchar *POLKIT_AUTH_SUSPEND;
-static const gchar *POLKIT_AUTH_HIBERNATE;
-#endif /*ENABLE_POLKIT*/
-
 static void xfpm_power_finalize     (GObject *object);
 
 static void xfpm_power_get_property (GObject *object,
@@ -99,8 +88,6 @@ struct XfpmPowerPrivate
     gboolean	     auth_suspend;
     gboolean	     auth_hibernate;
 
-    gboolean         dkp_is_upower;
-    
     /* Properties */
     gboolean	     on_low_battery;
     gboolean	     lid_is_present;
@@ -264,70 +251,6 @@ xfpm_power_check_lid (XfpmPower *power, GHashTable *props)
     }
 }
 
-static void
-xfpm_power_check_daemon_version (XfpmPower *power, GHashTable *props)
-{
-    GValue *value;
-    gint power_version;
-	
-    if ( power->priv->dkp_is_upower)
-	return;
-
-    value = g_hash_table_lookup (props, "DaemonVersion");
-
-    if (value == NULL) 
-    {
-	g_warning ("No 'DaemonVersion' property");
-	/*
-	 * Version less than 011 uses dash-dash
-	 */
-	value = g_hash_table_lookup (props, "daemon-version");
-	
-	if (value == NULL) 
-	{
-	    g_warning ("No 'daemon-version' property");
-	    goto out;
-	}
-    }
-    
-    power->priv->daemon_version = g_strdup (g_value_get_string (value));
-    XFPM_DEBUG ("Dkp daemon version %s", power->priv->daemon_version);
-    power_version = strtol (power->priv->daemon_version, NULL, 10);
-    
-    if ( power_version < 11)
-    {
-	XfconfChannel *channel;
-	gboolean show_error;
-	
-	channel = xfpm_xfconf_get_channel (power->priv->conf);
-	
-	show_error = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX "show-power-version-error", TRUE);
-	
-	XFPM_WARNING ("Dkp version %d is less than the required minimum version 011", power_version);
-	
-	
-	if ( show_error )
-	{
-	    GError *error = NULL;
-	    gchar *message;
-	    message = g_strdup_printf ("%s %s", 
-				   _("Xfce Power Manager requires version 011 of devicekit-power " 
-				   "to work properly while the version found is"), 
-				   power->priv->daemon_version);
-		
-	    g_set_error (&error, 0, 0, "%s", message);
-	    xfce_dialog_show_error (NULL, error, "%s", _("Devicekit-power version 011 or above not found"));
-	    xfconf_channel_set_bool (channel, PROPERTIES_PREFIX "show-power-version-error", FALSE);
-	    g_free (message);
-	    g_error_free (error);
-	}
-	
-	g_error (_("Devicekit-power version 011 or above not found"));
-    }
-out:
-    ;
-}
-
 /*
  * Get the properties on org.freedesktop.DeviceKit.Power
  * 
@@ -344,16 +267,12 @@ xfpm_power_get_properties (XfpmPower *power)
 {
     GHashTable *props;
     
-    props = xfpm_power_get_interface_properties (power->priv->proxy_prop, BACKEND_IFACE);
+    props = xfpm_power_get_interface_properties (power->priv->proxy_prop, UPOWER_IFACE);
     
     xfpm_power_check_pm (power, props);
     xfpm_power_check_lid (power, props);
     xfpm_power_check_power (power, props);
 
-    if ( power->priv->daemon_version == NULL )
-    {
-	xfpm_power_check_daemon_version (power, props);
-    }
     g_hash_table_destroy (props);
 }
 
@@ -961,7 +880,7 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
     GValue value;
     
     proxy_prop = dbus_g_proxy_new_for_name (power->priv->bus, 
-					    BACKEND_NAME,
+					    UPOWER_NAME,
 					    object_path,
 					    DBUS_INTERFACE_PROPERTIES);
 				       
@@ -971,7 +890,7 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
 	return;
     }
     
-    value = xfpm_power_get_interface_property (proxy_prop, BACKEND_IFACE_DEVICE, "Type");
+    value = xfpm_power_get_interface_property (proxy_prop, UPOWER_IFACE_DEVICE, "Type");
     
     device_type = g_value_get_uint (&value);
     
@@ -986,15 +905,15 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
 	XFPM_DEBUG_ENUM (device_type, XFPM_TYPE_DEVICE_TYPE, 
 			"Battery device detected at : %s", object_path);
 	proxy = dbus_g_proxy_new_for_name (power->priv->bus,
-					   BACKEND_NAME,
+					   UPOWER_NAME,
 					   object_path,
-					   BACKEND_IFACE_DEVICE);
+					   UPOWER_IFACE_DEVICE);
 	battery = xfpm_battery_new ();
 	gtk_status_icon_set_visible (battery, FALSE);
 	xfpm_battery_monitor_device (XFPM_BATTERY (battery), 
 				     proxy, 
 				     proxy_prop, 
-				     BACKEND_IFACE_DEVICE, 
+				     UPOWER_IFACE_DEVICE, 
 				     device_type);
 
 	g_hash_table_insert (power->priv->hash, g_strdup (object_path), battery);
@@ -1328,63 +1247,19 @@ xfpm_power_init (XfpmPower *power)
 	goto out;
     }
 
-    power->priv->proxy = dbus_g_proxy_new_for_name_owner (power->priv->bus,
-							  UPOWER_NAME,
-							  UPOWER_PATH,
-							  UPOWER_IFACE,
-							  NULL);
-
-    if ( power->priv->proxy )
-    {
-	power->priv->dkp_is_upower = TRUE;
-
-	BACKEND_NAME          =  UPOWER_NAME;
-	BACKEND_PATH          =  UPOWER_PATH;
-	BACKEND_IFACE         =  UPOWER_IFACE;
-	BACKEND_IFACE_DEVICE  =  UPOWER_IFACE_DEVICE;
-	BACKEND_PATH_DEVICE   =  UPOWER_PATH_DEVICE;
-#ifdef ENABLE_POLKIT
-	POLKIT_AUTH_SUSPEND   = "org.freedesktop.upower.suspend";
-	POLKIT_AUTH_HIBERNATE = "org.freedesktop.upower.hibernate";
-#endif
-    }
-    else
-    {
-	g_message ("Unable to create proxy for UPower, trying DeviceKit Power...");
-	power->priv->proxy = dbus_g_proxy_new_for_name_owner (power->priv->bus,
-							      DKP_NAME,
-							      DKP_PATH,
-							      DKP_IFACE,
-							      NULL);
-	if ( power->priv->proxy )
-	{
-	    g_message ("Devkit Power found in the system");
-	    power->priv->dkp_is_upower = FALSE;
-	    
-	    BACKEND_NAME  = DKP_NAME;
-	    BACKEND_PATH  =  DKP_PATH;
-	    BACKEND_IFACE =   DKP_IFACE;
-	    BACKEND_IFACE_DEVICE =  DKP_IFACE_DEVICE;
-	    BACKEND_PATH_DEVICE  =  DKP_PATH_DEVICE;
-#ifdef ENABLE_POLKIT
-	    POLKIT_AUTH_SUSPEND = "org.freedesktop.devicekit.power.suspend";
-	    POLKIT_AUTH_HIBERNATE = "org.freedesktop.devicekit.power.hibernate";
-#endif
-	}
-	else
-	{
-	    g_critical ("UPower and DevkitPower are not found");
-	    goto out;
-	}
-    }
+    power->priv->proxy = dbus_g_proxy_new_for_name (power->priv->bus,
+						    UPOWER_NAME,
+						    UPOWER_PATH,
+						    UPOWER_IFACE);
+    
     
     power->priv->proxy_prop = dbus_g_proxy_new_for_name (power->priv->bus,
-							 BACKEND_NAME,
-							 BACKEND_PATH,
+							 UPOWER_NAME,
+							 UPOWER_PATH,
 							 DBUS_INTERFACE_PROPERTIES);
     if (power->priv->proxy_prop == NULL) 
     {
-	g_critical ("Unable to create proxy for %s", BACKEND_NAME);
+	g_critical ("Unable to create proxy for %s", UPOWER_NAME);
 	goto out;
     }
     

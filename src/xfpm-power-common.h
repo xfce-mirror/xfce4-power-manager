@@ -23,26 +23,19 @@
 
 #include <dbus/dbus-glib.h>
 
-#define DKP_NAME 	     "org.freedesktop.DeviceKit.Power"
-#define DKP_PATH 	     "/org/freedesktop/DeviceKit/Power"
+#define UPOWER_NAME 	      "org.freedesktop.UPower"
+#define UPOWER_PATH 	      "/org/freedesktop/UPower"
 
-#define DKP_IFACE 	     "org.freedesktop.DeviceKit.Power"
-#define DKP_IFACE_DEVICE     "org.freedesktop.DeviceKit.Power.Device"
-#define DKP_PATH_DEVICE      "/org/freedesktop/DeviceKit/Power/devices/"
+#define UPOWER_IFACE 	      "org.freedesktop.UPower"
+#define UPOWER_IFACE_DEVICE   "org.freedesktop.UPower.Device"
+#define UPOWER_PATH_DEVICE    "/org/freedesktop/UPower/devices/"
 
-#define DKP_PATH_WAKEUPS     "/org/freedesktop/DeviceKit/Power/Wakeups"
-#define DKP_IFACE_WAKEUPS    "org.freedesktop.DeviceKit.Power.Wakeups"
+#define UPOWER_PATH_WAKEUPS   "/org/freedesktop/UPower/Wakeups"
+#define UPOWER_IFACE_WAKEUPS  "org.freedesktop.UPower.Wakeups"
 
+#define POLKIT_AUTH_SUSPEND   "org.freedesktop.upower.suspend"
+#define	POLKIT_AUTH_HIBERNATE "org.freedesktop.upower.hibernate"
 
-#define UPOWER_NAME 	     "org.freedesktop.UPower"
-#define UPOWER_PATH 	     "/org/freedesktop/UPower"
-
-#define UPOWER_IFACE 	     "org.freedesktop.UPower"
-#define UPOWER_IFACE_DEVICE  "org.freedesktop.UPower.Device"
-#define UPOWER_PATH_DEVICE   "/org/freedesktop/UPower/devices/"
-
-#define UPOWER_PATH_WAKEUPS  "/org/freedesktop/UPower/Wakeups"
-#define UPOWER_IFACE_WAKEUPS "org.freedesktop.UPower.Wakeups"
 
 GPtrArray 	*xfpm_power_enumerate_devices		(DBusGProxy *proxy);
 
