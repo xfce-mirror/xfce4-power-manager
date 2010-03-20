@@ -458,9 +458,8 @@ msgid "Nickel cadmium"
 msgstr "Níquel cadmio"
 
 #: ../src/xfpm-power-common.c:165
-#, fuzzy
 msgid "Nickel metal hybride"
-msgstr "Híbrido de níquel metal"
+msgstr "Níquel e hidruro metálico"
 
 #: ../src/xfpm-battery.c:147
 msgid "Your battery is fully charged"
@@ -480,44 +479,41 @@ msgid "System is running on battery power"
 msgstr "El equipo está funcionando con la batería"
 
 #: ../src/xfpm-battery.c:283
-#, fuzzy
 msgid "Unknown time"
-msgstr "Unidad desconocida:"
+msgstr "Hora desconocida:"
 
 #: ../src/xfpm-battery.c:289
-#, fuzzy, c-format
+#, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] "minuto"
-msgstr[1] "minuto"
+msgstr[0] "%i minuto"
+msgstr[1] "%i minutos"
 
 #: ../src/xfpm-battery.c:300
-#, fuzzy, c-format
+#, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] "hora"
-msgstr[1] "hora"
+msgstr[0] "%i hora"
+msgstr[1] "%i horas"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
 #: ../src/xfpm-battery.c:306
 #, c-format
 msgid "%i %s %i %s"
-msgstr ""
+msgstr "%i %s %i %s"
 
 #: ../src/xfpm-battery.c:307
-#, fuzzy
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hora"
-msgstr[1] "hora"
+msgstr[1] "horas"
 
 #: ../src/xfpm-battery.c:308
-#, fuzzy
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuto"
-msgstr[1] "minuto"
+msgstr[1] "minutos"
 
 #: ../src/xfpm-battery.c:332
 #, c-format
@@ -526,13 +522,18 @@ msgid ""
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
+"%s\n"
+"La %s está totalmente cargada (%i%%).\n"
+"Proporciona %s de funcionamiento."
 
 #: ../src/xfpm-battery.c:341
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr "La batería está completamente cargada"
+msgstr ""
+"%s\n"
+"La %s está totalmente cargada (%i%%)."
 
 #: ../src/xfpm-battery.c:352
 #, c-format
@@ -541,13 +542,18 @@ msgid ""
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
+"%s\n"
+"La %s se está cargando (%i%%)\n"
+"%s hasta que esté totalmente cargada."
 
 #: ../src/xfpm-battery.c:361
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr "La batería se está descargando"
+msgstr ""
+"%s\n"
+"La %s se está cargando (%i%%)."
 
 #: ../src/xfpm-battery.c:372
 #, c-format
@@ -556,13 +562,18 @@ msgid ""
 "Your %s is discharging (%i%%)\n"
 "estimated time left is %s."
 msgstr ""
+"%s\n"
+"La %s se está descargando (%i%%)\n"
+"el tiempo restante estimado es de %s."
 
 #: ../src/xfpm-battery.c:381
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr "La batería se está descargando"
+msgstr ""
+"%s\n"
+"La %s se está descargando (%i%%)."
 
 #: ../src/xfpm-battery.c:390
 #, c-format
@@ -570,6 +581,8 @@ msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr ""
+"%s\n"
+"%s esperando para descargarse (%i%%)."
 
 #: ../src/xfpm-battery.c:394
 #, c-format
@@ -577,6 +590,8 @@ msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
 msgstr ""
+"%s\n"
+"%s esperando para cargarse (%i%%)."
 
 #: ../src/xfpm-battery.c:398
 #, c-format
@@ -584,6 +599,8 @@ msgid ""
 "%s\n"
 "Your %s is empty"
 msgstr ""
+"%s\n"
+"La %s está vacía"
 
 #: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
@@ -608,21 +625,21 @@ msgstr ""
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
-msgstr ""
+msgstr "Verdadero"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "False"
-msgstr ""
+msgstr "Falso"
 
 #: ../src/xfpm-main.c:113
 #, c-format
 msgid "With HAL support\n"
-msgstr ""
+msgstr "Con soporte HAL\n"
 
 #: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without HAL support\n"
-msgstr ""
+msgstr "Sin soporte HAL\n"
 
 #: ../src/xfpm-main.c:118
 #, c-format
