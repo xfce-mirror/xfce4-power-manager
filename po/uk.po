@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-17 18:01+0100\n"
+"POT-Creation-Date: 2010-03-26 12:01+0100\n"
 "PO-Revision-Date: 2009-01-26 17:30+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -49,8 +49,8 @@ msgstr "Рахувати низьким заряд при: "
 #: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:789
 #: ../settings/xfpm-settings.c:857 ../settings/xfpm-settings.c:995
 #: ../settings/xfpm-settings.c:1160 ../settings/xfpm-settings.c:1215
-#: ../settings/xfpm-settings.c:1265 ../src/xfpm-power.c:524
-#: ../src/xfpm-power.c:785
+#: ../settings/xfpm-settings.c:1265 ../src/xfpm-power.c:443
+#: ../src/xfpm-power.c:704
 msgid "Hibernate"
 msgstr "Сплячка"
 
@@ -117,8 +117,8 @@ msgstr "В режим очікування"
 #: ../data/interfaces/xfpm-settings.ui.h:23 ../settings/xfpm-settings.c:783
 #: ../settings/xfpm-settings.c:851 ../settings/xfpm-settings.c:989
 #: ../settings/xfpm-settings.c:1154 ../settings/xfpm-settings.c:1209
-#: ../settings/xfpm-settings.c:1259 ../src/xfpm-power.c:539
-#: ../src/xfpm-power.c:798
+#: ../settings/xfpm-settings.c:1259 ../src/xfpm-power.c:458
+#: ../src/xfpm-power.c:717
 msgid "Suspend"
 msgstr "Призупинити"
 
@@ -151,8 +151,8 @@ msgid "When sleep button is pressed:"
 msgstr "Коли натиснуто кнопку заснути:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-power.c:601
-#: ../src/xfpm-power.c:772 ../src/xfpm-main.c:415
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-power.c:520
+#: ../src/xfpm-power.c:691 ../src/xfpm-main.c:415
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Менеджер живлення Xfce"
@@ -203,7 +203,7 @@ msgid "Hibernate and suspend operations not permitted"
 msgstr "Операції сплячки і присипання недоступні"
 
 #: ../settings/xfpm-settings.c:795 ../settings/xfpm-settings.c:1166
-#: ../src/xfpm-power.c:811
+#: ../src/xfpm-power.c:730
 msgid "Shutdown"
 msgstr "Вимкнути"
 
@@ -265,14 +265,12 @@ msgid "General"
 msgstr "Основні"
 
 #: ../settings/xfpm-settings.c:1500 ../settings/xfpm-settings.c:1505
-#, fuzzy
 msgid "On AC"
-msgstr "Живлення від мережі"
+msgstr "Від мережі"
 
 #: ../settings/xfpm-settings.c:1515 ../settings/xfpm-settings.c:1520
-#, fuzzy
 msgid "On Battery"
-msgstr "Живлення від батареї"
+msgstr "Від батареї"
 
 #: ../settings/xfpm-settings.c:1529 ../settings/xfpm-settings.c:1534
 msgid "Extended"
@@ -291,7 +289,7 @@ msgid "SOCKET ID"
 msgstr "ID сокета"
 
 #: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
-#: ../src/xfpm-power-info.c:991
+#: ../src/xfpm-power-info.c:946
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Наберіть '%s --help' для використання."
@@ -333,82 +331,72 @@ msgstr "Менеджер живлення Xfce 4"
 msgid "translator-credits"
 msgstr "Dmitry Nikitin <luckas_fb@mail.ru>"
 
-#: ../src/xfpm-power.c:314
-msgid "Xfce Power Manager requires version 011 of devicekit-power to work properly while the version found is"
-msgstr ""
-
-#: ../src/xfpm-power.c:319 ../src/xfpm-power.c:325
-msgid "Devicekit-power version 011 or above not found"
-msgstr "Devicekit-power версії 011 чи вище не знайдено"
-
-#: ../src/xfpm-power.c:381 ../src/xfpm-power.c:736 ../src/xfpm-power.c:924
-#: ../src/xfpm-power.c:938 ../src/xfpm-battery.c:229
+#: ../src/xfpm-power.c:300 ../src/xfpm-power.c:655 ../src/xfpm-power.c:843
+#: ../src/xfpm-power.c:857 ../src/xfpm-battery.c:229
 msgid "Xfce power manager"
 msgstr "Менеджер живлення Xfce"
 
-#: ../src/xfpm-power.c:404
+#: ../src/xfpm-power.c:323
 msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
 msgstr ""
 
-#: ../src/xfpm-power.c:502
+#: ../src/xfpm-power.c:421
 msgid "Quit"
 msgstr "Вийти"
 
-#: ../src/xfpm-power.c:503
-#, fuzzy
+#: ../src/xfpm-power.c:422
 msgid "All running instances of the power manager will exit"
-msgstr "Завершити будь-який запущений менеджер живлення xfce"
+msgstr "Всі працюючі копії менеджера живлення будуть завершені"
 
-#: ../src/xfpm-power.c:505
+#: ../src/xfpm-power.c:424
 msgid "Quit Xfce power manager?"
 msgstr "Вийти з менеджера живлення Xfce"
 
 #. Power information
-#: ../src/xfpm-power.c:575 ../src/xfpm-power-info.c:861
+#: ../src/xfpm-power.c:494 ../src/xfpm-power-info.c:816
 msgid "Power Information"
 msgstr "Інформація про живлення"
 
-#: ../src/xfpm-power.c:699
+#: ../src/xfpm-power.c:618
 msgid "Hibernate the system"
 msgstr "Перевести систему в сплячку "
 
-#: ../src/xfpm-power.c:710
+#: ../src/xfpm-power.c:629
 msgid "Suspend the system"
 msgstr "Приспати систему"
 
-#: ../src/xfpm-power.c:720
+#: ../src/xfpm-power.c:639
 msgid "Shutdown the system"
 msgstr "Вимкнути систему"
 
-#: ../src/xfpm-power.c:731 ../src/xfpm-power.c:769
-#, fuzzy
+#: ../src/xfpm-power.c:650 ../src/xfpm-power.c:688
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Ваша батарея майже розряджена. Збережіть Вашу роботу щоб не втратити дані"
+msgstr "Система працює на погано зарядженій батареї. Збережіть Вашу роботу щоб не допустити втрати даних"
 
-#: ../src/xfpm-power.c:925
+#: ../src/xfpm-power.c:844
 msgid "System is running on low power"
 msgstr "Система працює на слабком заряді"
 
-#: ../src/xfpm-power.c:939
+#: ../src/xfpm-power.c:858
 msgid "Battery charge level is low"
 msgstr "Рівень заряду батареї низький"
 
-#: ../src/xfpm-power.c:1139 ../src/xfpm-power.c:1144
+#: ../src/xfpm-power.c:1058 ../src/xfpm-power.c:1063
 msgid "Adaptor is offline"
 msgstr "Адаптер вимкнуто"
 
-#: ../src/xfpm-power.c:1140 ../src/xfpm-power.c:1145 ../src/xfpm-battery.c:323
+#: ../src/xfpm-power.c:1059 ../src/xfpm-power.c:1064 ../src/xfpm-battery.c:323
 #, c-format
 msgid "Adaptor is online"
 msgstr "Адаптер увімкнено"
 
-#: ../src/xfpm-power.c:1632 ../src/xfpm-power.c:1653 ../src/xfpm-power.c:1668
-#: ../src/xfpm-power.c:1691
+#: ../src/xfpm-power.c:1507 ../src/xfpm-power.c:1528 ../src/xfpm-power.c:1543
+#: ../src/xfpm-power.c:1566
 #, c-format
 msgid "Permission denied"
 msgstr "Доступ заборонено"
 
-#: ../src/xfpm-power.c:1676 ../src/xfpm-power.c:1699
+#: ../src/xfpm-power.c:1551 ../src/xfpm-power.c:1574
 #, c-format
 msgid "Suspend not supported"
 msgstr "Сплячка не підтримується"
@@ -431,65 +419,62 @@ msgid "Mouse"
 msgstr "Мишка"
 
 #: ../src/xfpm-power-common.c:130
-#, fuzzy
 msgid "Keyboard"
-msgstr "Швидкі клавіші клавіатури"
+msgstr "Клавіатура"
 
 #: ../src/xfpm-power-common.c:134
 msgid "PDA"
-msgstr ""
+msgstr "КПК"
 
 #: ../src/xfpm-power-common.c:136
-#, fuzzy
 msgid "Phone"
-msgstr "Живлення"
+msgstr "Телефон"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
 #: ../src/xfpm-power-common.c:168
 msgid "Unknown"
-msgstr ""
+msgstr "Невідомий"
 
 #: ../src/xfpm-power-common.c:155
 msgid "Lithium ion"
-msgstr ""
+msgstr "Літіум йонна"
 
 #: ../src/xfpm-power-common.c:157
 msgid "Lithium polymer"
-msgstr ""
+msgstr "Літіум полімерна"
 
 #: ../src/xfpm-power-common.c:159
 msgid "Lithium iron phosphate"
-msgstr ""
+msgstr "Літіум залізофосфатна"
 
 #: ../src/xfpm-power-common.c:161
 msgid "Lead acid"
-msgstr ""
+msgstr "Свинцево кисла"
 
 #: ../src/xfpm-power-common.c:163
 msgid "Nickel cadmium"
-msgstr ""
+msgstr "Нікель кадмієва"
 
 #: ../src/xfpm-power-common.c:165
 msgid "Nickel metal hybride"
-msgstr ""
+msgstr "Нікель металгібридна"
 
 #: ../src/xfpm-battery.c:147
 msgid "Your battery is fully charged"
 msgstr "Вашу батарею повністю заряджено"
 
 #: ../src/xfpm-battery.c:150
-#, fuzzy
 msgid "Your battery is charging"
-msgstr "Ваша батарея розряджається"
+msgstr "Ваша батарея заряджається"
 
 #: ../src/xfpm-battery.c:153
 msgid "Your battery is discharging"
 msgstr "Ваша батарея розряджається"
 
 #: ../src/xfpm-battery.c:153 ../src/xfpm-battery.c:323
-#, fuzzy, c-format
+#, c-format
 msgid "System is running on battery power"
-msgstr "Стежити за властивостями при живленні від батареї"
+msgstr "Система працює на живленні від батареї"
 
 #: ../src/xfpm-battery.c:283
 msgid "Unknown time"
@@ -514,7 +499,7 @@ msgstr[2] "%i годин"
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
 #: ../src/xfpm-battery.c:306
-#, c-format, fuzzy
+#, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
@@ -533,7 +518,7 @@ msgstr[1] "хвилини"
 msgstr[2] "хвилин"
 
 #: ../src/xfpm-battery.c:332
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
@@ -603,7 +588,7 @@ msgid ""
 "Your %s is empty"
 msgstr ""
 
-#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:101
+#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
 msgid ""
 "\n"
@@ -624,11 +609,11 @@ msgstr ""
 "Ліцензовано під GNU GPL.\n"
 "\n"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:384
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
 msgstr "Правда"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:384
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "False"
 msgstr "Брехня"
 
@@ -751,7 +736,7 @@ msgstr "Показати діалог налаштування"
 msgid "Quit any running xfce power manager"
 msgstr "Завершити будь-який запущений менеджер живлення xfce"
 
-#: ../src/xfpm-main.c:272 ../src/xfpm-power-info.c:978
+#: ../src/xfpm-main.c:272 ../src/xfpm-power-info.c:933
 msgid "Version information"
 msgstr "Інформація про версію"
 
@@ -781,199 +766,199 @@ msgid "Invalid cookie"
 msgstr ""
 
 #. TRANSLATORS: the command line was not provided
-#: ../src/xfpm-power-info.c:126
+#: ../src/xfpm-power-info.c:118
 msgid "No data"
 msgstr ""
 
 #. TRANSLATORS: kernel module, usually a device driver
-#: ../src/xfpm-power-info.c:133 ../src/xfpm-power-info.c:138
+#: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
 msgid "Kernel module"
 msgstr ""
 
 #. TRANSLATORS: kernel housekeeping
-#: ../src/xfpm-power-info.c:143
+#: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
 msgstr ""
 
 #. TRANSLATORS: interrupt between processors
-#: ../src/xfpm-power-info.c:148
+#: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
 msgstr ""
 
 #. TRANSLATORS: unknown interrupt
-#: ../src/xfpm-power-info.c:153
+#: ../src/xfpm-power-info.c:145
 msgid "Interrupt"
 msgstr ""
 
 #. TRANSLATORS: the keyboard and mouse device event
-#: ../src/xfpm-power-info.c:197
+#: ../src/xfpm-power-info.c:189
 msgid "PS/2 keyboard/mouse/touchpad"
 msgstr ""
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
-#: ../src/xfpm-power-info.c:200
+#: ../src/xfpm-power-info.c:192
 msgid "ACPI"
 msgstr ""
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
-#: ../src/xfpm-power-info.c:203
+#: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
 msgstr ""
 
 #. TRANSLATORS: this is the old-style ATA interface
-#: ../src/xfpm-power-info.c:206
+#: ../src/xfpm-power-info.c:198
 msgid "ATA host controller"
 msgstr ""
 
 #. TRANSLATORS: 802.11 wireless adaptor
-#: ../src/xfpm-power-info.c:209
+#: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
 msgstr ""
 
 #. TRANSLATORS: a timer is something that fires periodically
-#: ../src/xfpm-power-info.c:214 ../src/xfpm-power-info.c:217
-#: ../src/xfpm-power-info.c:220 ../src/xfpm-power-info.c:223
-#: ../src/xfpm-power-info.c:226
+#: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
+#: ../src/xfpm-power-info.c:212 ../src/xfpm-power-info.c:215
+#: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
 msgstr ""
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
-#: ../src/xfpm-power-info.c:229
+#: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Sleep %s"
 msgstr ""
 
 #. TRANSLATORS: this is a new realtime task
-#: ../src/xfpm-power-info.c:232
+#: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "New task %s"
 msgstr ""
 
 #. TRANSLATORS: this is a task thats woken to check state
-#: ../src/xfpm-power-info.c:235
+#: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "Wait %s"
 msgstr ""
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
-#: ../src/xfpm-power-info.c:238 ../src/xfpm-power-info.c:241
+#: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
 #, c-format
 msgid "Work queue %s"
 msgstr ""
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
-#: ../src/xfpm-power-info.c:244
+#: ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Network route flush %s"
 msgstr ""
 
 #. TRANSLATORS: activity on the USB bus
-#: ../src/xfpm-power-info.c:247
+#: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "USB activity %s"
 msgstr ""
 
 #. TRANSLATORS: we've timed out of an aligned timer
-#: ../src/xfpm-power-info.c:250
+#: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
 msgstr ""
 
 #. TRANSLATORS: interupts on the system required for basic operation
-#: ../src/xfpm-power-info.c:253
+#: ../src/xfpm-power-info.c:245
 msgid "Local interrupts"
 msgstr ""
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
-#: ../src/xfpm-power-info.c:256
+#: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:339
+#: ../src/xfpm-power-info.c:331
 msgid "Attribute"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:346
+#: ../src/xfpm-power-info.c:338
 msgid "Value"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:356
+#: ../src/xfpm-power-info.c:348
 msgid "Device"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:371 ../src/xfpm-power-info.c:783
+#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:738
 msgid "Type"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:383
+#: ../src/xfpm-power-info.c:375
 #, fuzzy
 msgid "PowerSupply"
 msgstr "Живлення"
 
-#: ../src/xfpm-power-info.c:401
+#: ../src/xfpm-power-info.c:393
 msgid "Model"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:415
+#: ../src/xfpm-power-info.c:407
 msgid "Technology"
 msgstr ""
 
 #. TRANSLATORS: Unit here is What hour
-#: ../src/xfpm-power-info.c:422 ../src/xfpm-power-info.c:436
-#: ../src/xfpm-power-info.c:450
+#: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
+#: ../src/xfpm-power-info.c:442
 msgid "Wh"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:428
+#: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:442
+#: ../src/xfpm-power-info.c:434
 msgid "Energy full"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:456
+#: ../src/xfpm-power-info.c:448
 #, fuzzy
 msgid "Energy empty"
 msgstr "Заряд батареї майже вичерпано"
 
 #. TRANSLATORS: Unit here is volt
-#: ../src/xfpm-power-info.c:464
+#: ../src/xfpm-power-info.c:456
 msgid "V"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:469
+#: ../src/xfpm-power-info.c:461
 msgid "Voltage"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:486
+#: ../src/xfpm-power-info.c:478
 msgid "Vendor"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:503
+#: ../src/xfpm-power-info.c:495
 #, fuzzy
 msgid "Serial"
 msgstr "Основні параметри"
 
-#: ../src/xfpm-power-info.c:775
+#: ../src/xfpm-power-info.c:730
 msgid "Processor"
 msgstr ""
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
-#: ../src/xfpm-power-info.c:792
+#: ../src/xfpm-power-info.c:747
 msgid "PID"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:798
+#: ../src/xfpm-power-info.c:753
 msgid "Wakeups"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:804
+#: ../src/xfpm-power-info.c:759
 msgid "Command"
 msgstr ""
 
-#: ../src/xfpm-power-info.c:810
+#: ../src/xfpm-power-info.c:765
 msgid "Details"
 msgstr ""
 
@@ -996,6 +981,9 @@ msgstr "Не знайдено управління процесором"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr ""
+
+#~ msgid "Devicekit-power version 011 or above not found"
+#~ msgstr "Devicekit-power версії 011 чи вище не знайдено"
 
 #~ msgid "CPU frequency control"
 #~ msgstr "Дозволити управління частотою процесора"
