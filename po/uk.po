@@ -339,6 +339,9 @@ msgstr "Менеджер живлення Xfce"
 #: ../src/xfpm-power.c:323
 msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
 msgstr ""
+"%s\n"
+"Ваша %s повністю зарядж. (%i%%).\n"
+"Забезпечить %s часу діяльності"
 
 #: ../src/xfpm-power.c:421
 msgid "Quit"
@@ -518,15 +521,15 @@ msgstr[1] "хвилини"
 msgstr[2] "хвилин"
 
 #: ../src/xfpm-battery.c:332
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
 "%s\n"
-"Ваша %s повністю зарядж. (%i%%).\n"
-"Забезпечить %s часу діяльності"
+"Ваша %s повністю зарядже (%i%%).\n"
+"Забезпечить %s часу"
 
 #: ../src/xfpm-battery.c:341
 #, c-format
@@ -544,13 +547,18 @@ msgid ""
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
+"%s\n"
+"Ваша %s заряджається (%i%%)\n"
+"після %s буде повністю заряджена."
 
 #: ../src/xfpm-battery.c:361
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr "Ваша батарея розряджається"
+msgstr ""
+"%s\n"
+"Ваша %s заряджається (%i%%)."
 
 #: ../src/xfpm-battery.c:372
 #, c-format
@@ -559,13 +567,18 @@ msgid ""
 "Your %s is discharging (%i%%)\n"
 "estimated time left is %s."
 msgstr ""
+"%s\n"
+"Ваша %s розряджається (%i%%)\n"
+"приблизно залишилось %s."
 
 #: ../src/xfpm-battery.c:381
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr "Ваша батарея розряджається"
+msgstr ""
+"%s\n"
+"Ваша %s розряджається (%i%%)."
 
 #: ../src/xfpm-battery.c:390
 #, c-format
@@ -573,6 +586,8 @@ msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr ""
+"%s\n"
+"%s очікується до розрядки (%i%%)."
 
 #: ../src/xfpm-battery.c:394
 #, c-format
@@ -580,6 +595,8 @@ msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
 msgstr ""
+"%s\n"
+"%s очікується до зарядки (%i%%)."
 
 #: ../src/xfpm-battery.c:398
 #, c-format
@@ -587,6 +604,8 @@ msgid ""
 "%s\n"
 "Your %s is empty"
 msgstr ""
+"%s\n"
+"Ваша %s вичерпана"
 
 #: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
@@ -620,12 +639,12 @@ msgstr "Брехня"
 #: ../src/xfpm-main.c:113
 #, c-format
 msgid "With HAL support\n"
-msgstr ""
+msgstr "З підтримкою HAL\n"
 
 #: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without HAL support\n"
-msgstr ""
+msgstr "Без підтримкт HAL\n"
 
 #: ../src/xfpm-main.c:118
 #, c-format
@@ -658,9 +677,8 @@ msgid "Without DPMS support\n"
 msgstr ""
 
 #: ../src/xfpm-main.c:145
-#, fuzzy
 msgid "Can suspend"
-msgstr "Призупинити"
+msgstr "Можна приспати"
 
 #: ../src/xfpm-main.c:147
 #, fuzzy
