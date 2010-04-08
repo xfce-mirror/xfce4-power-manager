@@ -12,14 +12,14 @@ xfce4_brightness_plugin_CFLAGS =		\
 	-DLOCALEDIR=\"$(localedir)\"  		\
 	$(LIBXFCE4PANEL_CFLAGS)       		\
 	$(LIBXFCE4UTIL_CFLAGS)        		\
-	$(LIBXFCE4GUI_CFLAGS)			\
+	$(LIBXFCE4UI_CFLAGS)			\
 	$(GTK_CFLAGS)			      	\
 	$(GLIB_CFLAGS)
 
 xfce4_brightness_plugin_LDADD =			\
 	$(top_builddir)/common/libxfpmcommon.la \
 	$(LIBXFCE4PANEL_LIBS)   		\
-	$(LIBXFCE4GUI_LIBS)			\
+	$(LIBXFCE4UI_LIBS)			\
 	$(LIBXFCE4UTIL_LIBS)			\
 	$(GTK_LIBS)   				\
 	$(GLIB_LIBS)

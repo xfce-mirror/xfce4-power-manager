@@ -558,18 +558,22 @@ brightness_button_set_icon (BrightnessButton *button, gint width)
     gboolean hw_found;
     GdkPixbuf *pixbuf;
     const gchar *icon_name;
-    
+
     hw_found = xfpm_brightness_has_hw (button->priv->brightness);
-    
+
     icon_name = hw_found ? XFPM_DISPLAY_BRIGHTNESS_ICON : XFPM_DISPLAY_BRIGHTNESS_INVALID_ICON;
-    
-    pixbuf = xfce_themed_icon_load (icon_name, width);
-    
+
+    pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                       icon_name,
+                                       width,
+                                       GTK_ICON_LOOKUP_FORCE_SIZE,
+                                       NULL);
+
     if ( pixbuf )
     {
-	gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->image), pixbuf);
-	g_object_unref (pixbuf);
-	return TRUE;
+        gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->image), pixbuf);
+        g_object_unref (pixbuf);
+        return TRUE;
     }
     return FALSE;
 }
