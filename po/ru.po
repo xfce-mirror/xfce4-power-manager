@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-07 04:01+0000\n"
+"POT-Creation-Date: 2010-04-23 04:01+0000\n"
 "PO-Revision-Date: 2010-02-16 23:40+0600\n"
 "Last-Translator: Urmas <davian818@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -347,9 +347,8 @@ msgid "Quit"
 msgstr "Выключить"
 
 #: ../src/xfpm-power.c:422
-#, fuzzy
 msgid "All running instances of the power manager will exit"
-msgstr "Перезапустить менеджер питания Xfce "
+msgstr "Все запущенные экземпляры программы будут завершены"
 
 #: ../src/xfpm-power.c:424
 msgid "Quit Xfce power manager?"
@@ -792,8 +791,9 @@ msgstr "Ядро"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
+#, fuzzy
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "Прерывание промежуточного процессора"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
@@ -835,9 +835,9 @@ msgstr "Таймер %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
-#, c-format
+#, c-format, fuzzy
 msgid "Sleep %s"
-msgstr ""
+msgstr "Засыпание %s"
 
 #. TRANSLATORS: this is a new realtime task
 #: ../src/xfpm-power-info.c:224
@@ -859,9 +859,9 @@ msgstr ""
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
-#, c-format
+#, c-format, fuzzy
 msgid "Network route flush %s"
-msgstr ""
+msgstr "Сброс сетевых настроек %s"
 
 #. TRANSLATORS: activity on the USB bus
 #: ../src/xfpm-power-info.c:239
@@ -871,9 +871,9 @@ msgstr "Активность USB %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:242
-#, c-format
+#, c-format, fuzzy
 msgid "Wakeup %s"
-msgstr ""
+msgstr "Пробуждение %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
@@ -984,7 +984,7 @@ msgstr "Управляйте яркостью экрана вашего LCD мо
 msgid "No device found"
 msgstr "Устройства не найдены "
 
-#: ../panel-plugins/brightness/brightness-button.c:647
+#: ../panel-plugins/brightness/brightness-button.c:651
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Управление яркостью экрана"
