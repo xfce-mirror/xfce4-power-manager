@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-23 04:01+0000\n"
+"POT-Creation-Date: 2010-04-27 04:01+0000\n"
 "PO-Revision-Date: 2010-02-16 23:40+0600\n"
 "Last-Translator: Urmas <davian818@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -835,7 +835,7 @@ msgstr "Таймер %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
-#, c-format, fuzzy
+#, c-format
 msgid "Sleep %s"
 msgstr "Засыпание %s"
 
@@ -853,13 +853,13 @@ msgstr "Ожидание %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
-#, c-format
+#, c-format, fuzzy
 msgid "Work queue %s"
-msgstr ""
+msgstr "Рабочая очередь %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "Network route flush %s"
 msgstr "Сброс сетевых настроек %s"
 
@@ -871,7 +871,7 @@ msgstr "Активность USB %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:242
-#, c-format, fuzzy
+#, c-format
 msgid "Wakeup %s"
 msgstr "Пробуждение %s"
 
@@ -902,9 +902,8 @@ msgid "Type"
 msgstr "Тип"
 
 #: ../src/xfpm-power-info.c:375
-#, fuzzy
 msgid "PowerSupply"
-msgstr "Питание"
+msgstr "Подача питания"
 
 #: ../src/xfpm-power-info.c:393
 msgid "Model"
@@ -959,7 +958,6 @@ msgid "PID"
 msgstr "PID"
 
 #: ../src/xfpm-power-info.c:753
-#, fuzzy
 msgid "Wakeups"
 msgstr "Пробуждения"
 
