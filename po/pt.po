@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-14 16:01+0000\n"
+"POT-Creation-Date: 2010-04-28 10:01+0000\n"
 "PO-Revision-Date: 2009-08-31 16:32+0100\n"
 "Last-Translator: Nuno Miguel <nunis@netcabo.pt>\n"
 "Language-Team: \n"
@@ -82,7 +82,7 @@ msgstr "Preferir poupança de energia sobre performance"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Put display to sleep when computer is inactive for:"
-msgstr "Colacar o monitor inactivo quando o computador está inactivo por:"
+msgstr "Colocar o monitor inactivo quando o computador está inactivo por:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put the computer to sleep when inactive for:"
@@ -106,7 +106,7 @@ msgstr "Mostrar notificações para avisar do estado da bateria"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Spin down hard disks"
-msgstr ""
+msgstr "Reduzir rotação do disco"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Standby"
@@ -139,7 +139,7 @@ msgstr "Quando o botão de hibernar é pressionado:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "When laptop lid is closed:"
-msgstr "Quando a tampa do laptop é fechada:"
+msgstr "Quando a tampa do portátil é fechada:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "When power button is pressed:"
@@ -217,7 +217,7 @@ msgstr "Bloquear ecrã"
 
 #: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1056
 msgid "Spinning down hard disks permission denied"
-msgstr ""
+msgstr "Permissão negada para baixar a rotação do disco"
 
 #: ../settings/xfpm-settings.c:1096
 msgid "Always show icon"
@@ -387,7 +387,7 @@ msgstr "Adaptador desligado"
 #: ../src/xfpm-power.c:1059 ../src/xfpm-power.c:1064 ../src/xfpm-battery.c:323
 #, c-format
 msgid "Adaptor is online"
-msgstr "Adaptar ligado"
+msgstr "Adaptador ligado"
 
 #: ../src/xfpm-power.c:1507 ../src/xfpm-power.c:1528 ../src/xfpm-power.c:1543
 #: ../src/xfpm-power.c:1566
@@ -541,7 +541,7 @@ msgid ""
 msgstr ""
 "%s\n"
 "A sua %s está a carregar (%i%%)\n"
-"%s para estar totalmente carregada."
+"%s até estar totalmente carregada."
 
 #: ../src/xfpm-battery.c:361
 #, c-format
@@ -678,7 +678,7 @@ msgstr "Pode hibernar"
 
 #: ../src/xfpm-main.c:149
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Pode baixar a rotação do disco rígido"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to suspend"
@@ -694,7 +694,7 @@ msgstr "Autorizado a desligar"
 
 #: ../src/xfpm-main.c:157
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "Autorizado a baixar a rotação do disco"
 
 #: ../src/xfpm-main.c:159
 msgid "Has brightness panel"
@@ -775,17 +775,17 @@ msgstr "Sem dados"
 #. TRANSLATORS: kernel module, usually a device driver
 #: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
 msgid "Kernel module"
-msgstr "Módulo Kernel"
+msgstr "Módulo kernel"
 
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
-msgstr "Núcleo Kernel"
+msgstr "Núcleo kernel"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "Interrrupção entre processos"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
@@ -853,7 +853,7 @@ msgstr "Fila de tarefas %s"
 #: ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Network route flush %s"
-msgstr "Rota de rede %s"
+msgstr "Rota de rede vazia %s"
 
 #. TRANSLATORS: activity on the USB bus
 #: ../src/xfpm-power-info.c:239
@@ -913,7 +913,7 @@ msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
-msgstr ""
+msgstr "Design de energia plena"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
@@ -951,7 +951,7 @@ msgstr "PID"
 
 #: ../src/xfpm-power-info.c:753
 msgid "Wakeups"
-msgstr "Acordares"
+msgstr "Despertares"
 
 #: ../src/xfpm-power-info.c:759
 msgid "Command"
