@@ -4,9 +4,9 @@ msgstr ""
 "Project-Id-Version: xfce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-05-10 16:01+0000\n"
-"PO-Revision-Date: 2010-05-11 00:01+0300\n"
+"PO-Revision-Date: 2010-05-12 17:15+0300\n"
 "Last-Translator: Ayhan YALÇINSOY <ayhanyalcinsoy@gmail.com>\n"
-"Language-Team: Turkish <kde-i18n-doc@kde.org,xfce-i18n@xfce.org>\n"
+"Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -219,7 +219,7 @@ msgstr "Ekranı kilitle"
 
 #: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1056
 msgid "Spinning down hard disks permission denied"
-msgstr ""
+msgstr "Sabit disk izinleri kapatmaya izin vermiyor"
 
 #: ../settings/xfpm-settings.c:1096
 msgid "Always show icon"
@@ -363,24 +363,21 @@ msgid "All running instances of the power manager will exit"
 msgstr "Tüm çalışan güç yöneticisi uygulamaları kapatılacak"
 
 #: ../src/xfpm-power.c:424
-#, fuzzy
 msgid "Quit Xfce power manager?"
-msgstr "Xfce güç yöneticisini kapat"
+msgstr "Xfce güç yöneticisinden çık?"
 
 #. Power information
 #: ../src/xfpm-power.c:494 ../src/xfpm-power-info.c:816
-#, fuzzy
 msgid "Power Information"
-msgstr "Pil Bilgisi"
+msgstr "Güç Bilgisi"
 
 #: ../src/xfpm-power.c:618
 msgid "Hibernate the system"
 msgstr "Sistemi hazırda beklet moduna al"
 
 #: ../src/xfpm-power.c:629
-#, fuzzy
 msgid "Suspend the system"
-msgstr "Sistemi kapat"
+msgstr "Sistemi askıya al"
 
 #: ../src/xfpm-power.c:639
 msgid "Shutdown the system"
@@ -396,19 +393,17 @@ msgid "System is running on low power"
 msgstr "Sistem düşük güçte çalışıyor"
 
 #: ../src/xfpm-power.c:858
-#, fuzzy
 msgid "Battery charge level is low"
-msgstr "Pil seviyesi düşük"
+msgstr "Pil şarj seviyesi düşük"
 
 #: ../src/xfpm-power.c:1058 ../src/xfpm-power.c:1063
-#, fuzzy
 msgid "Adaptor is offline"
-msgstr "Güç bağdaştırıcısı etkin değil"
+msgstr "Adaptör takılı değil"
 
 #: ../src/xfpm-power.c:1059 ../src/xfpm-power.c:1064 ../src/xfpm-battery.c:323
-#, fuzzy, c-format
+#, c-format
 msgid "Adaptor is online"
-msgstr "Güç bağdaştırıcısı etkin"
+msgstr "Adaptör takılı"
 
 #: ../src/xfpm-power.c:1507 ../src/xfpm-power.c:1528 ../src/xfpm-power.c:1543
 #: ../src/xfpm-power.c:1566
@@ -536,6 +531,9 @@ msgid ""
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
+"%s\n"
+"%s tam şarj oldu (%i%%).\n"
+"%s çalışma zamanı sağlar"
 
 #: ../src/xfpm-battery.c:341
 #, c-format
@@ -665,89 +663,82 @@ msgstr "Policykit desteksiz\n"
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "Ağ yönetici desteği ile\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Ağ yönetici desteksiz\n"
 
 #: ../src/xfpm-main.c:128
 #, c-format
 msgid "With DPMS support\n"
-msgstr ""
+msgstr "DPMS desteği\n"
 
 #: ../src/xfpm-main.c:130
 #, c-format
 msgid "Without DPMS support\n"
-msgstr ""
+msgstr "DPMS desteksiz\n"
 
 #: ../src/xfpm-main.c:145
-#, fuzzy
 msgid "Can suspend"
-msgstr "Askıya Al"
+msgstr "Askıya alınabilir"
 
 #: ../src/xfpm-main.c:147
-#, fuzzy
 msgid "Can hibernate"
-msgstr "Hazırda beklet"
+msgstr "Hazırda bekletilebilir"
 
 #: ../src/xfpm-main.c:149
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Sabit diskler askıya alınabilir"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to suspend"
-msgstr ""
+msgstr "Yetkilendirilmiş askıya al"
 
 #: ../src/xfpm-main.c:153
-#, fuzzy
 msgid "Authorized to hibernate"
-msgstr "Sistem hazırda beklet moduna alınamadı"
+msgstr "Yetkilendirilmiş hazırda bekle"
 
 #: ../src/xfpm-main.c:155
-#, fuzzy
 msgid "Authorized to shutdown"
-msgstr "Sistem kapatılamadı"
+msgstr "Kapatmak için yetkilendirildi"
 
 #: ../src/xfpm-main.c:157
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "Yetkilendirilmiş sabit diskleri kapat"
 
 #: ../src/xfpm-main.c:159
-#, fuzzy
 msgid "Has brightness panel"
-msgstr "Ekran Parlaklığı eklentisi"
+msgstr "Parlaklık paneli"
 
 #: ../src/xfpm-main.c:161
 msgid "Has power button"
-msgstr ""
+msgstr "Güç düğmesi"
 
 #: ../src/xfpm-main.c:163
-#, fuzzy
 msgid "Has hibernate button"
-msgstr "Hazırda beklet düğmesine basıldığında yap:"
+msgstr "Hazırda bekletme düğmesi"
 
 #: ../src/xfpm-main.c:165
 msgid "Has sleep button"
-msgstr ""
+msgstr "Uyku düğmesi"
 
 #: ../src/xfpm-main.c:167
 msgid "Has LID"
-msgstr ""
+msgstr "LID"
 
 #: ../src/xfpm-main.c:266
 msgid "Do not daemonize"
-msgstr "Servis olarak çalıştırma"
+msgstr ""
 
 #: ../src/xfpm-main.c:267
 msgid "Enable debugging"
-msgstr ""
+msgstr "Hata ayıklama açık"
 
 #: ../src/xfpm-main.c:268
-#, fuzzy
 msgid "Dump all information"
-msgstr "Pil Bilgisi"
+msgstr "Tüm bilgileri boşalt"
 
 #: ../src/xfpm-main.c:269
 msgid "Restart the running instance of Xfce power manager"
@@ -791,52 +782,52 @@ msgstr "Geçersiz çerez"
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
 msgid "No data"
-msgstr ""
+msgstr "veri yok"
 
 #. TRANSLATORS: kernel module, usually a device driver
 #: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
 msgid "Kernel module"
-msgstr ""
+msgstr "Kernel module"
 
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
-msgstr ""
+msgstr "Kernel core"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "İşlemciler arası kesme"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
 msgid "Interrupt"
-msgstr ""
+msgstr "Kesme"
 
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
 msgid "PS/2 keyboard/mouse/touchpad"
-msgstr ""
+msgstr "PS/2 klavye/fare/touchpad"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
 msgid "ACPI"
-msgstr ""
+msgstr "ACPI"
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
-msgstr ""
+msgstr "Serial ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
 msgid "ATA host controller"
-msgstr ""
+msgstr "ATA host controller"
 
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
-msgstr ""
+msgstr "İntel kablosuz adaptör"
 
 #. TRANSLATORS: a timer is something that fires periodically
 #: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
@@ -844,31 +835,31 @@ msgstr ""
 #: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
-msgstr ""
+msgstr "Zamanlayıcı %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Sleep %s"
-msgstr ""
+msgstr "Uyku %s"
 
 #. TRANSLATORS: this is a new realtime task
 #: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "New task %s"
-msgstr ""
+msgstr "Yeni görev %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
 #: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "Wait %s"
-msgstr ""
+msgstr "Bekle %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
 #, c-format
 msgid "Work queue %s"
-msgstr ""
+msgstr "Çalışma kuyruğu %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
@@ -880,114 +871,107 @@ msgstr ""
 #: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "USB activity %s"
-msgstr ""
+msgstr "USB eylemi %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
-msgstr ""
+msgstr "Uyan %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
 msgid "Local interrupts"
-msgstr ""
+msgstr "Yerel Kesmeler"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
-msgstr ""
+msgstr "Kesmeleri yeniden listele"
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
-msgstr ""
+msgstr "Öznitelik"
 
 #: ../src/xfpm-power-info.c:338
 msgid "Value"
-msgstr ""
+msgstr "Değer"
 
 #: ../src/xfpm-power-info.c:348
 msgid "Device"
-msgstr ""
+msgstr "Cihaz"
 
 #: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:738
 msgid "Type"
-msgstr ""
+msgstr "Tür"
 
 #: ../src/xfpm-power-info.c:375
-#, fuzzy
 msgid "PowerSupply"
-msgstr "Güç"
+msgstr "Güç Desteği"
 
 #: ../src/xfpm-power-info.c:393
-#, fuzzy
 msgid "Model"
-msgstr "Model:"
+msgstr "Model"
 
 #: ../src/xfpm-power-info.c:407
-#, fuzzy
 msgid "Technology"
-msgstr "Teknoloji:"
+msgstr "Teknoloji"
 
 #. TRANSLATORS: Unit here is What hour
 #: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
 #: ../src/xfpm-power-info.c:442
-#, fuzzy
 msgid "Wh"
-msgstr "mWh"
+msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
-msgstr ""
+msgstr "Enerji tam tasarım"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
-msgstr ""
+msgstr "Enerji tam"
 
 #: ../src/xfpm-power-info.c:448
-#, fuzzy
 msgid "Energy empty"
-msgstr "boş"
+msgstr "Enerji boş"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: ../src/xfpm-power-info.c:461
 msgid "Voltage"
-msgstr ""
+msgstr "Voltaj"
 
 #: ../src/xfpm-power-info.c:478
-#, fuzzy
 msgid "Vendor"
-msgstr "Üretici:"
+msgstr "Üretici"
 
 #: ../src/xfpm-power-info.c:495
-#, fuzzy
 msgid "Serial"
-msgstr "Genel"
+msgstr "Seri"
 
 #: ../src/xfpm-power-info.c:730
 msgid "Processor"
-msgstr ""
+msgstr "İşlemci"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
 #: ../src/xfpm-power-info.c:747
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: ../src/xfpm-power-info.c:753
 msgid "Wakeups"
-msgstr ""
+msgstr "Uyan"
 
 #: ../src/xfpm-power-info.c:759
 msgid "Command"
-msgstr ""
+msgstr "Komut"
 
 #: ../src/xfpm-power-info.c:765
 msgid "Details"
-msgstr ""
+msgstr "Detaylar"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
