@@ -55,7 +55,6 @@ xfce4_power_manager_CFLAGS =                    \
 	$(XFCONF_CFLAGS)                        \
 	$(LIBNOTIFY_CFLAGS)                     \
 	$(XRANDR_CFLAGS)			\
-	$(POLKIT_CFLAGS)			\
 	$(DPMS_CFLAGS)                  
 
 xfce4_power_manager_LDADD =                     \
@@ -68,7 +67,6 @@ xfce4_power_manager_LDADD =                     \
 	$(XFCONF_LIBS)                          \
 	$(LIBNOTIFY_LIBS)                       \
 	$(XRANDR_LIBS)				\
-	$(POLKIT_LIBS)				\
 	$(DPMS_LIBS)
 
 xfce4_power_information_SOURCES =		\
@@ -99,8 +97,6 @@ manpage_DATA = xfce4-power-manager.1
 xfpm_glib_headers =                             \
         $(srcdir)/xfpm-enum-glib.h
 
-if MAINTAINER_MODE
-
 BUILT_SOURCES =					\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
@@ -110,6 +106,8 @@ BUILT_SOURCES =					\
         xfpm-marshal.h				\
 	org.freedesktop.PowerManagement.h       \
 	org.freedesktop.PowerManagement.Inhibit.h
+
+if MAINTAINER_MODE
 
 xfpm-enum-types.h: $(xfpm_glib_headers)
 	( cd $(srcdir) && glib-mkenums \

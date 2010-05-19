@@ -1,9 +1,9 @@
 m4_define([intltool_minimum_version], [0.31])
 m4_define([xfpm_version_major],  [0])
 m4_define([xfpm_version_minor],  [9])
-m4_define([xfpm_version_micro],  [90])
-m4_define([xfpm_version_build],  [@REVISION@])
-m4_define([xfpm_version_tag],[git])
+m4_define([xfpm_version_micro],  [98])
+m4_define([xfpm_version_build],  [])
+m4_define([xfpm_version_tag],[])
 m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_version_micro()ifelse(xfpm_version_tag(), [git], [xfpm_version_tag().xfpm_version_build()], [xfpm_version_tag()])])
 
 AC_INIT([xfce4-power-manager], [xfpm_version], [http://bugzilla.xfce.org/])
@@ -60,7 +60,6 @@ m4_define([libxfce4panel_minimum_version],[4.6.0])
 
 m4_define([libnotify_minimum_version], [0.4.1])
 m4_define([xrandr_minimum_version], [1.2.0])
-m4_define([polkit_minimum_version], [0.91])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
