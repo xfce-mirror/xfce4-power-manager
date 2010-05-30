@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-08 12:01+0100\n"
-"PO-Revision-Date: 2010-03-08 21:26+0200\n"
+"POT-Creation-Date: 2010-05-30 10:01+0000\n"
+"PO-Revision-Date: 2010-05-30 13:26+0300\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -48,8 +48,8 @@ msgstr "Virta on vähissä, kun jäljellä on:"
 #: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:789
 #: ../settings/xfpm-settings.c:857 ../settings/xfpm-settings.c:995
 #: ../settings/xfpm-settings.c:1160 ../settings/xfpm-settings.c:1215
-#: ../settings/xfpm-settings.c:1265 ../src/xfpm-power.c:524
-#: ../src/xfpm-power.c:785
+#: ../settings/xfpm-settings.c:1265 ../src/xfpm-power.c:443
+#: ../src/xfpm-power.c:704
 msgid "Hibernate"
 msgstr "Lepotila"
 
@@ -116,8 +116,8 @@ msgstr "Valmiustila"
 #: ../data/interfaces/xfpm-settings.ui.h:23 ../settings/xfpm-settings.c:783
 #: ../settings/xfpm-settings.c:851 ../settings/xfpm-settings.c:989
 #: ../settings/xfpm-settings.c:1154 ../settings/xfpm-settings.c:1209
-#: ../settings/xfpm-settings.c:1259 ../src/xfpm-power.c:539
-#: ../src/xfpm-power.c:798
+#: ../settings/xfpm-settings.c:1259 ../src/xfpm-power.c:458
+#: ../src/xfpm-power.c:717
 msgid "Suspend"
 msgstr "Keskeytystila"
 
@@ -150,8 +150,8 @@ msgid "When sleep button is pressed:"
 msgstr "Virransäästötilanäppäimellä:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-power.c:601
-#: ../src/xfpm-power.c:772 ../src/xfpm-main.c:415
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-power.c:520
+#: ../src/xfpm-power.c:691 ../src/xfpm-main.c:415
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Xfce:n virranhallinta"
@@ -202,7 +202,7 @@ msgid "Hibernate and suspend operations not permitted"
 msgstr "Lepo- ja keskeytystoimintoihin ei ole oikeutta"
 
 #: ../settings/xfpm-settings.c:795 ../settings/xfpm-settings.c:1166
-#: ../src/xfpm-power.c:811
+#: ../src/xfpm-power.c:730
 msgid "Shutdown"
 msgstr "Sammuta"
 
@@ -240,8 +240,8 @@ msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
-"Älä käytä DPMS-toimintoja, eli älä yritä sammuttaa näyttöä tai asettaa "
-"sitä virransäästötilaan."
+"Älä käytä DPMS-toimintoja, eli älä yritä sammuttaa näyttöä tai asettaa sitä "
+"virransäästötilaan."
 
 #: ../settings/xfpm-settings.c:1319
 msgid "Suspend operation not supported"
@@ -292,7 +292,7 @@ msgid "SOCKET ID"
 msgstr "PISTOKE"
 
 #: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
-#: ../src/xfpm-power-info.c:991
+#: ../src/xfpm-power-info.c:946
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Saat ohjeita komennolla \"%s --help\"."
@@ -324,34 +324,22 @@ msgstr "Virranhallinta"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce 4 Power Manager"
-msgstr "Xfce4 virranhallinnan asetukset"
+msgstr "Xfce 4 virrankäyttöasetukset"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:3
 msgid "Xfce 4 Power Manager"
-msgstr "Xfce4 virranhallinta"
+msgstr "Xfce:n virrankäytön hallinta"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
 msgstr "Jari Rahkonen <jari.rahkonen@pp1.inet.fi>"
 
-#: ../src/xfpm-power.c:314
-msgid ""
-"Xfce Power Manager requires version 011 of devicekit-power to work properly "
-"while the version found is"
-msgstr ""
-"Xfce:n virranhallinta vaatii devicekit-power -ohjelmiston version 011 "
-"toimiakseen oikein, mutta löydettiin versio"
-
-#: ../src/xfpm-power.c:319 ../src/xfpm-power.c:325
-msgid "Devicekit-power version 011 or above not found"
-msgstr "Devicekit-power -versiota 011 tai uudempaa ei löydy"
-
-#: ../src/xfpm-power.c:381 ../src/xfpm-power.c:736 ../src/xfpm-power.c:924
-#: ../src/xfpm-power.c:938 ../src/xfpm-battery.c:229
+#: ../src/xfpm-power.c:300 ../src/xfpm-power.c:655 ../src/xfpm-power.c:843
+#: ../src/xfpm-power.c:857 ../src/xfpm-battery.c:229
 msgid "Xfce power manager"
-msgstr "Xfce:n virranhallinta"
+msgstr "Xfce:n virrankäytön hallinta"
 
-#: ../src/xfpm-power.c:404
+#: ../src/xfpm-power.c:323
 msgid ""
 "An application is currently disabling the automatic sleep, doing this action "
 "now may damage the working state of this application, are you sure you want "
@@ -360,64 +348,64 @@ msgstr ""
 "Jokin sovellus estää automaattisen virransäästötilan, eikä se välttämättä "
 "kykene palautumaan oikein. Siirrytäänkö silti lepotilaan?"
 
-#: ../src/xfpm-power.c:502
+#: ../src/xfpm-power.c:421
 msgid "Quit"
 msgstr "Lopeta"
 
-#: ../src/xfpm-power.c:503
+#: ../src/xfpm-power.c:422
 msgid "All running instances of the power manager will exit"
-msgstr "Kaikki Xfce:n virranhallinnan instanssit lopetetaan"
+msgstr "Kaikki virrankäytön hallinnan instanssit lopetetaan"
 
-#: ../src/xfpm-power.c:505
+#: ../src/xfpm-power.c:424
 msgid "Quit Xfce power manager?"
 msgstr "Suljetaanko Xfce:n virranhallinta?"
 
 #. Power information
-#: ../src/xfpm-power.c:575 ../src/xfpm-power-info.c:861
+#: ../src/xfpm-power.c:494 ../src/xfpm-power-info.c:816
 msgid "Power Information"
 msgstr "Virtatiedot"
 
-#: ../src/xfpm-power.c:699
+#: ../src/xfpm-power.c:618
 msgid "Hibernate the system"
 msgstr "Siirry lepotilaan"
 
-#: ../src/xfpm-power.c:710
+#: ../src/xfpm-power.c:629
 msgid "Suspend the system"
 msgstr "Siirry keskeytystilaan"
 
-#: ../src/xfpm-power.c:720
+#: ../src/xfpm-power.c:639
 msgid "Shutdown the system"
 msgstr "Sammuta järjestelmä"
 
-#: ../src/xfpm-power.c:731 ../src/xfpm-power.c:769
+#: ../src/xfpm-power.c:650 ../src/xfpm-power.c:688
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
 "Järjetelmän virta on vähissä. Varmista, että olet tallentanut tärkeät tiedot."
 
-#: ../src/xfpm-power.c:925
+#: ../src/xfpm-power.c:844
 msgid "System is running on low power"
 msgstr "Järjestelmän virta on vähissä"
 
-#: ../src/xfpm-power.c:939
+#: ../src/xfpm-power.c:858
 msgid "Battery charge level is low"
 msgstr "Akussa on enää vähän virtaa"
 
-#: ../src/xfpm-power.c:1139 ../src/xfpm-power.c:1144
+#: ../src/xfpm-power.c:1058 ../src/xfpm-power.c:1063
 msgid "Adaptor is offline"
 msgstr "Ei verkkovirtaa"
 
-#: ../src/xfpm-power.c:1140 ../src/xfpm-power.c:1145 ../src/xfpm-battery.c:323
-#,  c-format
+#: ../src/xfpm-power.c:1059 ../src/xfpm-power.c:1064 ../src/xfpm-battery.c:323
+#, c-format
 msgid "Adaptor is online"
 msgstr "Verkkovirta kytketty"
 
-#: ../src/xfpm-power.c:1632 ../src/xfpm-power.c:1653 ../src/xfpm-power.c:1668
-#: ../src/xfpm-power.c:1691
+#: ../src/xfpm-power.c:1507 ../src/xfpm-power.c:1528 ../src/xfpm-power.c:1543
+#: ../src/xfpm-power.c:1566
 #, c-format
 msgid "Permission denied"
 msgstr "Lupa evätty"
 
-#: ../src/xfpm-power.c:1676 ../src/xfpm-power.c:1699
+#: ../src/xfpm-power.c:1551 ../src/xfpm-power.c:1574
 #, c-format
 msgid "Suspend not supported"
 msgstr "Keskeytystilaa ei tueta"
@@ -543,7 +531,7 @@ msgid ""
 msgstr ""
 "%s\n"
 "%s on täysin latautunut (%i%%).\n"
-"Arvioitu kesto %s."
+"Arvioitu käyttöaika %s."
 
 #: ../src/xfpm-battery.c:341
 #, c-format
@@ -621,7 +609,7 @@ msgstr ""
 "%s\n"
 "%s on tyhjä"
 
-#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:101
+#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
 msgid ""
 "\n"
@@ -641,11 +629,11 @@ msgstr ""
 "Lisensoitu GNU GPL:n mukaisesti\n"
 "\n"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:384
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
 msgstr "Kyllä"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:384
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "False"
 msgstr "Ei"
 
@@ -751,7 +739,7 @@ msgstr "Tulosta kaikki tiedot"
 
 #: ../src/xfpm-main.c:269
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Käynnistä Xfce:n virranhallinta uudelleen"
+msgstr "Käynnistä Xfce:n virrankäytön hallinta uudelleen"
 
 #: ../src/xfpm-main.c:270
 msgid "Show the configuration dialog"
@@ -761,7 +749,7 @@ msgstr "Näytä asetusikkuna"
 msgid "Quit any running xfce power manager"
 msgstr "Sammuta käynnissä oleva Xfce:n virranhallinta"
 
-#: ../src/xfpm-main.c:272 ../src/xfpm-power-info.c:978
+#: ../src/xfpm-main.c:272 ../src/xfpm-power-info.c:933
 msgid "Version information"
 msgstr "Versiotiedot"
 
@@ -771,7 +759,7 @@ msgstr "Viestiväyläistuntoon ei voi yhdistää"
 
 #: ../src/xfpm-main.c:416
 msgid "Another power manager is already running"
-msgstr "Toinen virranhallinta on jo käynnissä"
+msgstr "Toinen virranhallintasovellus on jo käynnissä"
 
 #: ../src/xfpm-main.c:422
 #, c-format
@@ -789,202 +777,202 @@ msgid "Invalid cookie"
 msgstr "Eväste ei kelpaa"
 
 #. TRANSLATORS: the command line was not provided
-#: ../src/xfpm-power-info.c:126
+#: ../src/xfpm-power-info.c:118
 msgid "No data"
 msgstr "Ei komentoriviä"
 
 #. TRANSLATORS: kernel module, usually a device driver
-#: ../src/xfpm-power-info.c:133 ../src/xfpm-power-info.c:138
+#: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
 msgid "Kernel module"
 msgstr "Ytimen moduuli"
 
 #. TRANSLATORS: kernel housekeeping
-#: ../src/xfpm-power-info.c:143
+#: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
 msgstr "Ytimen vedos"
 
 #. TRANSLATORS: interrupt between processors
-#: ../src/xfpm-power-info.c:148
+#: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
 msgstr "Suoritinten välinen keskeytys"
 
 #. TRANSLATORS: unknown interrupt
-#: ../src/xfpm-power-info.c:153
+#: ../src/xfpm-power-info.c:145
 msgid "Interrupt"
 msgstr "Keskeytys"
 
 #. TRANSLATORS: the keyboard and mouse device event
-#: ../src/xfpm-power-info.c:197
+#: ../src/xfpm-power-info.c:189
 msgid "PS/2 keyboard/mouse/touchpad"
 msgstr "PS/2 näppäimistö/hiiri/kosketuslevy"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
-#: ../src/xfpm-power-info.c:200
+#: ../src/xfpm-power-info.c:192
 msgid "ACPI"
 msgstr "ACPI"
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
-#: ../src/xfpm-power-info.c:203
+#: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
 msgstr "Serial ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
-#: ../src/xfpm-power-info.c:206
+#: ../src/xfpm-power-info.c:198
 msgid "ATA host controller"
 msgstr "ATA-ohjain"
 
 #. TRANSLATORS: 802.11 wireless adaptor
-#: ../src/xfpm-power-info.c:209
+#: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
 msgstr "Intel langaton sovitin"
 
 #. TRANSLATORS: a timer is something that fires periodically
-#: ../src/xfpm-power-info.c:214 ../src/xfpm-power-info.c:217
-#: ../src/xfpm-power-info.c:220 ../src/xfpm-power-info.c:223
-#: ../src/xfpm-power-info.c:226
+#: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
+#: ../src/xfpm-power-info.c:212 ../src/xfpm-power-info.c:215
+#: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
 msgstr "Ajastin %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
-#: ../src/xfpm-power-info.c:229
+#: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Sleep %s"
 msgstr "Nukkuva %s"
 
 #. TRANSLATORS: this is a new realtime task
-#: ../src/xfpm-power-info.c:232
+#: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "New task %s"
 msgstr "Uusi tehtävä %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
-#: ../src/xfpm-power-info.c:235
+#: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "Wait %s"
 msgstr "Odottava %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
-#: ../src/xfpm-power-info.c:238 ../src/xfpm-power-info.c:241
+#: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
 #, c-format
 msgid "Work queue %s"
 msgstr "Työjono %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
-#: ../src/xfpm-power-info.c:244
+#: ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Network route flush %s"
 msgstr "Verkkoreittien nollaus %s"
 
 #. TRANSLATORS: activity on the USB bus
-#: ../src/xfpm-power-info.c:247
+#: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "USB activity %s"
 msgstr "USB-toiminta %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
-#: ../src/xfpm-power-info.c:250
+#: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
 msgstr "Herätys %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
-#: ../src/xfpm-power-info.c:253
+#: ../src/xfpm-power-info.c:245
 msgid "Local interrupts"
 msgstr "Paikalliset keskeytykset"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
-#: ../src/xfpm-power-info.c:256
+#: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
 msgstr "Uudelleenvuorottavat keskeytykset"
 
-#: ../src/xfpm-power-info.c:339
+#: ../src/xfpm-power-info.c:331
 msgid "Attribute"
 msgstr "Määre"
 
-#: ../src/xfpm-power-info.c:346
+#: ../src/xfpm-power-info.c:338
 msgid "Value"
 msgstr "Arvo"
 
-#: ../src/xfpm-power-info.c:356
+#: ../src/xfpm-power-info.c:348
 msgid "Device"
 msgstr "Laite"
 
-#: ../src/xfpm-power-info.c:371 ../src/xfpm-power-info.c:783
+#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:738
 msgid "Type"
 msgstr "Tyyppi"
 
-#: ../src/xfpm-power-info.c:383
+#: ../src/xfpm-power-info.c:375
 msgid "PowerSupply"
 msgstr "VirtaLähde"
 
-#: ../src/xfpm-power-info.c:401
+#: ../src/xfpm-power-info.c:393
 msgid "Model"
 msgstr "Malli"
 
-#: ../src/xfpm-power-info.c:415
+#: ../src/xfpm-power-info.c:407
 msgid "Technology"
 msgstr "Teknologia"
 
 #. TRANSLATORS: Unit here is What hour
-#: ../src/xfpm-power-info.c:422 ../src/xfpm-power-info.c:436
-#: ../src/xfpm-power-info.c:450
+#: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
+#: ../src/xfpm-power-info.c:442
 msgid "Wh"
 msgstr "Wh"
 
-#: ../src/xfpm-power-info.c:428
+#: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
 msgstr "Ohjeellinen täysi lataus"
 
-#: ../src/xfpm-power-info.c:442
+#: ../src/xfpm-power-info.c:434
 msgid "Energy full"
 msgstr "Täysi lataus"
 
-#: ../src/xfpm-power-info.c:456
+#: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
 msgstr "Virta loppu"
 
 #. TRANSLATORS: Unit here is volt
-#: ../src/xfpm-power-info.c:464
+#: ../src/xfpm-power-info.c:456
 msgid "V"
 msgstr "V"
 
-#: ../src/xfpm-power-info.c:469
+#: ../src/xfpm-power-info.c:461
 msgid "Voltage"
 msgstr "Jännite"
 
-#: ../src/xfpm-power-info.c:486
+#: ../src/xfpm-power-info.c:478
 msgid "Vendor"
 msgstr "Valmistaja"
 
-#: ../src/xfpm-power-info.c:503
+#: ../src/xfpm-power-info.c:495
 msgid "Serial"
-msgstr "Sarjanumero"
+msgstr "Sarjanro"
 
-#: ../src/xfpm-power-info.c:775
+#: ../src/xfpm-power-info.c:730
 msgid "Processor"
 msgstr "Suoritin"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
-#: ../src/xfpm-power-info.c:792
+#: ../src/xfpm-power-info.c:747
 msgid "PID"
 msgstr "PID"
 
-#: ../src/xfpm-power-info.c:798
+#: ../src/xfpm-power-info.c:753
 msgid "Wakeups"
 msgstr "Herätyksiä"
 
-#: ../src/xfpm-power-info.c:804
+#: ../src/xfpm-power-info.c:759
 msgid "Command"
 msgstr "Komento"
 
-#: ../src/xfpm-power-info.c:810
+#: ../src/xfpm-power-info.c:765
 msgid "Details"
 msgstr "Lisätiedot"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
-msgstr "Xfce-työpöydän virranhallintasovellus"
+msgstr "Xfce-työpöydän virrankäytön hallinta"
 
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
@@ -995,7 +983,7 @@ msgstr "Säädä LCD:n kirkkautta"
 msgid "No device found"
 msgstr "Laitetta ei löydy"
 
-#: ../panel-plugins/brightness/brightness-button.c:647
+#: ../panel-plugins/brightness/brightness-button.c:651
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Kirkkausliitännäinen"
