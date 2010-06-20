@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-26 12:01+0100\n"
+"POT-Creation-Date: 2010-06-20 04:01+0000\n"
 "PO-Revision-Date: 2009-01-26 17:30+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
@@ -649,41 +649,40 @@ msgstr "Без підтримкт HAL\n"
 #: ../src/xfpm-main.c:118
 #, c-format
 msgid "With policykit support\n"
-msgstr ""
+msgstr "З підтримкою policykit\n"
 
 #: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without policykit support\n"
-msgstr ""
+msgstr "Без підтримки policykit\n"
 
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "З підтримкою network manager\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Без підтримки network manager\n"
 
 #: ../src/xfpm-main.c:128
 #, c-format
 msgid "With DPMS support\n"
-msgstr ""
+msgstr "З підтримкою DPMS\n"
 
 #: ../src/xfpm-main.c:130
 #, c-format
 msgid "Without DPMS support\n"
-msgstr ""
+msgstr "Без підтримки DPMS\n"
 
 #: ../src/xfpm-main.c:145
 msgid "Can suspend"
 msgstr "Можна приспати"
 
 #: ../src/xfpm-main.c:147
-#, fuzzy
 msgid "Can hibernate"
-msgstr "Сплячка"
+msgstr "Може западати в сплячку"
 
 #: ../src/xfpm-main.c:149
 msgid "Can spin down hard disks"
@@ -694,14 +693,12 @@ msgid "Authorized to suspend"
 msgstr ""
 
 #: ../src/xfpm-main.c:153
-#, fuzzy
 msgid "Authorized to hibernate"
-msgstr "Не вдалось перевести систему у сплячку"
+msgstr ""
 
 #: ../src/xfpm-main.c:155
-#, fuzzy
 msgid "Authorized to shutdown"
-msgstr "Не вдалось вимкнути систему"
+msgstr ""
 
 #: ../src/xfpm-main.c:157
 msgid "Authorized to spin down hard disks"
@@ -709,16 +706,15 @@ msgstr ""
 
 #: ../src/xfpm-main.c:159
 msgid "Has brightness panel"
-msgstr ""
+msgstr "Має панель управління яскравості"
 
 #: ../src/xfpm-main.c:161
 msgid "Has power button"
-msgstr ""
+msgstr "Має кнопку вимкнення живлення"
 
 #: ../src/xfpm-main.c:163
-#, fuzzy
 msgid "Has hibernate button"
-msgstr "Коли натиснуто кнопку живлення зробити"
+msgstr "Має кнопку переводу системи в режим сплячки"
 
 #: ../src/xfpm-main.c:165
 msgid "Has sleep button"
@@ -734,17 +730,15 @@ msgstr ""
 
 #: ../src/xfpm-main.c:267
 msgid "Enable debugging"
-msgstr ""
+msgstr "Включити режим відладки"
 
 #: ../src/xfpm-main.c:268
-#, fuzzy
 msgid "Dump all information"
-msgstr "Налаштуванні при живленні від батареї"
+msgstr ""
 
 #: ../src/xfpm-main.c:269
-#, fuzzy
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Завершити будь-який запущений менеджер живлення xfce"
+msgstr "Перезапустити будь-який запущений менеджер живлення xfce"
 
 #: ../src/xfpm-main.c:270
 msgid "Show the configuration dialog"
@@ -759,14 +753,12 @@ msgid "Version information"
 msgstr "Інформація про версію"
 
 #: ../src/xfpm-main.c:322
-#, fuzzy
 msgid "Unable to get connection to the message bus session"
-msgstr "Не можливо з'єднатись з DBus: %s"
+msgstr "Не можливо з'єднатись з сесією DBus"
 
 #: ../src/xfpm-main.c:416
-#, fuzzy
 msgid "Another power manager is already running"
-msgstr "Менеджер живлення Xfce вже працює"
+msgstr "Інший менеджер живлення вже працює"
 
 #: ../src/xfpm-main.c:422
 #, c-format
@@ -774,24 +766,24 @@ msgid "Xfce power manager is already running"
 msgstr "Менеджер живлення Xfce вже працює"
 
 #: ../src/xfpm-inhibit.c:331
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid arguments"
-msgstr "Забагато параметрів"
+msgstr "Неправильні параметри"
 
 #: ../src/xfpm-inhibit.c:357
 #, c-format
 msgid "Invalid cookie"
-msgstr ""
+msgstr "Неправильні коржики"
 
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
 msgid "No data"
-msgstr ""
+msgstr "Немає даних"
 
 #. TRANSLATORS: kernel module, usually a device driver
 #: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
 msgid "Kernel module"
-msgstr ""
+msgstr "Модуль ядра"
 
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
@@ -816,12 +808,12 @@ msgstr ""
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
 msgid "ACPI"
-msgstr ""
+msgstr "ACPI"
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
-msgstr ""
+msgstr "Серійний ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
@@ -839,7 +831,7 @@ msgstr ""
 #: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
-msgstr ""
+msgstr "Таймер %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
@@ -851,13 +843,13 @@ msgstr ""
 #: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "New task %s"
-msgstr ""
+msgstr "Нове завдання %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
 #: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "Wait %s"
-msgstr ""
+msgstr "Чекати %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
@@ -875,7 +867,7 @@ msgstr ""
 #: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "USB activity %s"
-msgstr ""
+msgstr "Активність USB %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:242
@@ -886,7 +878,7 @@ msgstr ""
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
 msgid "Local interrupts"
-msgstr ""
+msgstr "Локальні переривання"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:248
@@ -899,28 +891,27 @@ msgstr ""
 
 #: ../src/xfpm-power-info.c:338
 msgid "Value"
-msgstr ""
+msgstr "Значення"
 
 #: ../src/xfpm-power-info.c:348
 msgid "Device"
-msgstr ""
+msgstr "Пристрій"
 
 #: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:738
 msgid "Type"
-msgstr ""
+msgstr "Тип"
 
 #: ../src/xfpm-power-info.c:375
-#, fuzzy
 msgid "PowerSupply"
 msgstr "Живлення"
 
 #: ../src/xfpm-power-info.c:393
 msgid "Model"
-msgstr ""
+msgstr "Модель"
 
 #: ../src/xfpm-power-info.c:407
 msgid "Technology"
-msgstr ""
+msgstr "Технологія"
 
 #. TRANSLATORS: Unit here is What hour
 #: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
@@ -944,29 +935,28 @@ msgstr "Заряд батареї майже вичерпано"
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
 msgid "V"
-msgstr ""
+msgstr "В"
 
 #: ../src/xfpm-power-info.c:461
 msgid "Voltage"
-msgstr ""
+msgstr "Напруга"
 
 #: ../src/xfpm-power-info.c:478
 msgid "Vendor"
-msgstr ""
+msgstr "Виробник"
 
 #: ../src/xfpm-power-info.c:495
-#, fuzzy
 msgid "Serial"
-msgstr "Основні параметри"
+msgstr "Серійний номер"
 
 #: ../src/xfpm-power-info.c:730
 msgid "Processor"
-msgstr ""
+msgstr "Процесор"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
 #: ../src/xfpm-power-info.c:747
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: ../src/xfpm-power-info.c:753
 msgid "Wakeups"
@@ -974,11 +964,11 @@ msgstr ""
 
 #: ../src/xfpm-power-info.c:759
 msgid "Command"
-msgstr ""
+msgstr "Команда"
 
 #: ../src/xfpm-power-info.c:765
 msgid "Details"
-msgstr ""
+msgstr "Деталі"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
@@ -986,19 +976,17 @@ msgstr ""
 
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
-#, fuzzy
 msgid "Control your LCD brightness"
-msgstr "Увімкнути управління яскравістю рідкокристалічного дисплею"
+msgstr "Управління яскравістю рідкокристалічного дисплею"
 
 #: ../panel-plugins/brightness/brightness-button.c:182
-#, fuzzy
 msgid "No device found"
-msgstr "Не знайдено управління процесором"
+msgstr "Не знайдено пристрою"
 
-#: ../panel-plugins/brightness/brightness-button.c:647
+#: ../panel-plugins/brightness/brightness-button.c:651
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr ""
+msgstr "Плагін зміни яскравості"
 
 #~ msgid "Devicekit-power version 011 or above not found"
 #~ msgstr "Devicekit-power версії 011 чи вище не знайдено"
