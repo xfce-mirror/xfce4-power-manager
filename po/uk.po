@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-06-20 04:01+0000\n"
+"POT-Creation-Date: 2010-06-23 04:01+0000\n"
 "PO-Revision-Date: 2009-01-26 17:30+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -686,7 +686,7 @@ msgstr "Може западати в сплячку"
 
 #: ../src/xfpm-main.c:149
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Може зменшувати швидкість обертання твердих дисків"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to suspend"
@@ -726,7 +726,7 @@ msgstr ""
 
 #: ../src/xfpm-main.c:266
 msgid "Do not daemonize"
-msgstr ""
+msgstr "Не створювати демона"
 
 #: ../src/xfpm-main.c:267
 msgid "Enable debugging"
@@ -788,22 +788,22 @@ msgstr "Модуль ядра"
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
-msgstr ""
+msgstr "Ядро"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "Пререривання інтерпроцесора"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
 msgid "Interrupt"
-msgstr ""
+msgstr "Пререривання"
 
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
 msgid "PS/2 keyboard/mouse/touchpad"
-msgstr ""
+msgstr "PS/2 клавіатура/мишка/дотикова панель"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
@@ -818,12 +818,12 @@ msgstr "Серійний ATA"
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
 msgid "ATA host controller"
-msgstr ""
+msgstr "Контролер ATA"
 
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
-msgstr ""
+msgstr "Безпровідний адаптор Intel"
 
 #. TRANSLATORS: a timer is something that fires periodically
 #: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
@@ -873,7 +873,7 @@ msgstr "Активність USB %s"
 #: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
-msgstr ""
+msgstr "Просинання %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
@@ -887,7 +887,7 @@ msgstr ""
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
-msgstr ""
+msgstr "Атрибут"
 
 #: ../src/xfpm-power-info.c:338
 msgid "Value"
@@ -925,12 +925,11 @@ msgstr ""
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
-msgstr ""
+msgstr "Повний заряд"
 
 #: ../src/xfpm-power-info.c:448
-#, fuzzy
 msgid "Energy empty"
-msgstr "Заряд батареї майже вичерпано"
+msgstr "Заряд вичерпано"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
@@ -960,7 +959,7 @@ msgstr "PID"
 
 #: ../src/xfpm-power-info.c:753
 msgid "Wakeups"
-msgstr ""
+msgstr "Просинання"
 
 #: ../src/xfpm-power-info.c:759
 msgid "Command"
@@ -972,7 +971,7 @@ msgstr "Деталі"
 
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power management for the Xfce desktop"
-msgstr ""
+msgstr "Менеджер живлення для робочого столу Xfce"
 
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
