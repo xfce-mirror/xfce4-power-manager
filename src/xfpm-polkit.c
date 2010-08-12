@@ -213,9 +213,9 @@ xfpm_polkit_free_data (gpointer data)
 static void
 xfpm_polkit_init_data (XfpmPolkit *polkit)
 {
-    const gchar *consolekit_cookie;
+    //const gchar *consolekit_cookie;
     GValue hash_elem = { 0 };
-    gboolean subject_created = FALSE;
+    //gboolean subject_created = FALSE;
 
     if (polkit->priv->subject_valid)
 	return;
@@ -226,6 +226,10 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
      * it is set by the session manager (4.8 and above)  
      * since we don't have a login manager, yet!
      **/
+     /*
+      *	
+      *	Disable for the moment
+      * 
     consolekit_cookie = g_getenv ("XDG_SESSION_COOKIE");
   
     if ( consolekit_cookie )
@@ -240,6 +244,7 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 						  "/org/freedesktop/ConsoleKit/Manager",
 						  "org.freedesktop.ConsoleKit.Manager",
 						  NULL);
+
 	if ( proxy )
 	{
 	    ret = dbus_g_proxy_call (proxy, "GetSessionForCookie", &error,
@@ -280,9 +285,11 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 	    g_warning ("'GetSessionForCookie' failed : %s", error->message);
 	    g_error_free (error);
 	}
+	
     }
-
-    if ( subject_created == FALSE )
+    */
+    
+    //if ( subject_created == FALSE )
     {
 	gint pid;
 	guint64 start_time;
