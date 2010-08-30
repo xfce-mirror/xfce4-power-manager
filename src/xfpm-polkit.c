@@ -494,11 +494,10 @@ xfpm_polkit_init (XfpmPolkit *polkit)
 
 #ifdef ENABLE_POLKIT
     polkit->priv->proxy = 
-	dbus_g_proxy_new_for_name_owner (polkit->priv->bus,
-					 "org.freedesktop.PolicyKit1",
-					 "/org/freedesktop/PolicyKit1/Authority",
-					 "org.freedesktop.PolicyKit1.Authority",
-					 &error);
+	dbus_g_proxy_new_for_name (polkit->priv->bus,
+				   "org.freedesktop.PolicyKit1",
+				   "/org/freedesktop/PolicyKit1/Authority",
+				   "org.freedesktop.PolicyKit1.Authority");
     
     if (G_LIKELY (polkit->priv->proxy) )
     {
@@ -508,8 +507,7 @@ xfpm_polkit_init (XfpmPolkit *polkit)
     }
     else
     {
-	g_warning ("Failed to create proxy for 'org.freedesktop.PolicyKit1' : %s", error->message);
-	g_error_free (error);
+	g_warning ("Failed to create proxy for 'org.freedesktop.PolicyKit1'");
     }
 #endif /*ENABLE_POLKIT*/
 

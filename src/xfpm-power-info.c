@@ -683,6 +683,7 @@ xfpm_info_update_wakeups (XfpmInfo *info)
     }
 	
     g_ptr_array_free (array, TRUE);
+    
 }
 
 static gboolean
@@ -776,6 +777,7 @@ xfpm_info_cpu_wakeups (XfpmInfo *info)
     
     xfpm_info_update_wakeups (info);
     
+    xfpm_info_update_wakeups (info);
     g_timeout_add_seconds (4, (GSourceFunc) xfpm_info_update_wakeups_idle, info);
     
     gtk_widget_show (vbox);
@@ -818,7 +820,7 @@ xfpm_info_create (XfpmInfo *info)
 							GTK_DIALOG_DESTROY_WITH_PARENT,
 							GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 							NULL);
-							
+    gtk_window_set_position (GTK_WINDOW (info->dialog), GTK_WIN_POS_CENTER_ALWAYS);
     gtk_window_set_default_size (GTK_WINDOW (info->dialog), -1, 400);
 				 
     gtk_window_set_icon_name (GTK_WINDOW (info->dialog), GTK_STOCK_INFO);
