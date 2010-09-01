@@ -40,6 +40,11 @@ AC_CHECK_HEADERS([errno.h signal.h stddef.h \
                   unistd.h])
 
 # ===================================================== #
+# 		Check for libm	 			#
+# ===================================================== #
+AC_CHECK_LIB([m], [round])
+
+# ===================================================== #
 # 		Check for i18n support 			#
 # ===================================================== #
 
@@ -201,6 +206,19 @@ AM_CONDITIONAL([ENABLE_XML2PO], [test "x$enable_xml2po" = "xyes"])
 #              Check for debugging support              #
 #=======================================================#
 XDT_FEATURE_DEBUG
+
+#=======================================================#
+#              Substitute platform flags                #
+#=======================================================#
+AC_MSG_CHECKING([PLATFORM_CPPFLAGS])
+AC_MSG_RESULT([$PLATFORM_CPPFLAGS])
+AC_SUBST([PLATFORM_CPPFLAGS])
+AC_MSG_CHECKING([PLATFORM_CFLAGS])
+AC_MSG_RESULT([$PLATFORM_CFLAGS])
+AC_SUBST([PLATFORM_CFLAGS])
+AC_MSG_CHECKING([PLATFORM_LDFLAGS])
+AC_MSG_RESULT([$PLATFORM_LDFLAGS])
+AC_SUBST([PLATFORM_LDFLAGS])
 
 AC_OUTPUT([
 Makefile

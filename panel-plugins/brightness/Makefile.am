@@ -14,7 +14,14 @@ xfce4_brightness_plugin_CFLAGS =		\
 	$(LIBXFCE4UTIL_CFLAGS)        		\
 	$(LIBXFCE4UI_CFLAGS)			\
 	$(GTK_CFLAGS)			      	\
-	$(GLIB_CFLAGS)
+	$(GLIB_CFLAGS)				\
+	$(XRANDR_CFLAGS)			\
+	$(PLATFORM_CPPFLAGS)			\
+	$(PLATFORM_CFLAGS)
+
+xfce4_brightness_plugin_LDFLAGS =		\
+	-no-undefined				\
+	$(PLATFORM_LDFLAGS)
 
 xfce4_brightness_plugin_LDADD =			\
 	$(top_builddir)/common/libxfpmcommon.la \
@@ -22,7 +29,8 @@ xfce4_brightness_plugin_LDADD =			\
 	$(LIBXFCE4UI_LIBS)			\
 	$(LIBXFCE4UTIL_LIBS)			\
 	$(GTK_LIBS)   				\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)				\
+	$(XRANDR_LIBS)
 
 if ENABLE_HAL
 
