@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-22 04:01+0000\n"
+"POT-Creation-Date: 2010-09-14 04:02+0000\n"
 "PO-Revision-Date: 2010-02-16 23:40+0600\n"
 "Last-Translator: Urmas <davian818@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -291,7 +291,7 @@ msgid "SOCKET ID"
 msgstr "ID сокета "
 
 #: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
-#: ../src/xfpm-power-info.c:946
+#: ../src/xfpm-power-info.c:948
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Наберите '%s --help' для просмотра справки."
@@ -355,7 +355,7 @@ msgid "Quit Xfce power manager?"
 msgstr "Выйти из Менеджера питания Xfce?"
 
 #. Power information
-#: ../src/xfpm-power.c:494 ../src/xfpm-power-info.c:816
+#: ../src/xfpm-power.c:494 ../src/xfpm-power-info.c:818
 msgid "Power Information"
 msgstr "Информация об источниках питания"
 
@@ -747,7 +747,7 @@ msgstr "Показать диалог настроек программы "
 msgid "Quit any running xfce power manager"
 msgstr "Завершить работу менеджера питания Xfce "
 
-#: ../src/xfpm-main.c:272 ../src/xfpm-power-info.c:933
+#: ../src/xfpm-main.c:272 ../src/xfpm-power-info.c:935
 msgid "Version information"
 msgstr "Информация о версии "
 
@@ -791,9 +791,8 @@ msgstr "Ядро"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
-#, fuzzy
 msgid "Interprocessor interrupt"
-msgstr "Прерывание промежуточного процессора"
+msgstr "Межпроцессорное прерывание"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
@@ -853,13 +852,13 @@ msgstr "Ожидание %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
-#, fuzzy, c-format
+#, c-format
 msgid "Work queue %s"
 msgstr "Рабочая очередь %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
-#, fuzzy, c-format
+#, c-format
 msgid "Network route flush %s"
 msgstr "Сброс сетевых настроек %s"
 
@@ -897,7 +896,7 @@ msgstr "Значение"
 msgid "Device"
 msgstr "Устройство"
 
-#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:738
+#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:739
 msgid "Type"
 msgstr "Тип"
 
@@ -920,9 +919,8 @@ msgid "Wh"
 msgstr "Втч "
 
 #: ../src/xfpm-power-info.c:420
-#, fuzzy
 msgid "Energy full design"
-msgstr "Энергичный дизайн"
+msgstr "Емкость"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
@@ -949,24 +947,24 @@ msgstr "Производитель"
 msgid "Serial"
 msgstr "Номер"
 
-#: ../src/xfpm-power-info.c:730
+#: ../src/xfpm-power-info.c:731
 msgid "Processor"
 msgstr "Процессор"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
-#: ../src/xfpm-power-info.c:747
+#: ../src/xfpm-power-info.c:748
 msgid "PID"
 msgstr "PID"
 
-#: ../src/xfpm-power-info.c:753
+#: ../src/xfpm-power-info.c:754
 msgid "Wakeups"
 msgstr "Пробуждения"
 
-#: ../src/xfpm-power-info.c:759
+#: ../src/xfpm-power-info.c:760
 msgid "Command"
 msgstr "Команда"
 
-#: ../src/xfpm-power-info.c:765
+#: ../src/xfpm-power-info.c:766
 msgid "Details"
 msgstr "Сведения"
 
