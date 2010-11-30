@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.8.4-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-30 17:02+0000\n"
+"POT-Creation-Date: 2010-11-30 23:02+0000\n"
 "PO-Revision-Date: 2010-03-08 11:46+0100\n"
 "Last-Translator: Robert Hartl <hartl.robert@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -106,7 +106,7 @@ msgstr "Zobraziť oznámenia o stave batérie"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Spin down hard disks"
-msgstr ""
+msgstr "Zastaviť pevné disky"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Standby"
@@ -217,7 +217,7 @@ msgstr "Uzamknúť obrazovku"
 
 #: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1056
 msgid "Spinning down hard disks permission denied"
-msgstr ""
+msgstr "Oprávnenie pre zastavenie pevných diskov bolo zamietnuté"
 
 #: ../settings/xfpm-settings.c:1096
 msgid "Always show icon"
@@ -635,12 +635,12 @@ msgstr "Bez podpory policykit\n"
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "S podporou správcu siete\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Bez podpory správcu siete\n"
 
 #: ../src/xfpm-main.c:128
 #, c-format
@@ -653,18 +653,16 @@ msgid "Without DPMS support\n"
 msgstr "Bez podpory DPMS\n"
 
 #: ../src/xfpm-main.c:145
-#, fuzzy
 msgid "Can suspend"
-msgstr "Režim spánku"
+msgstr "Je možné prejsť do režimu spánku"
 
 #: ../src/xfpm-main.c:147
-#, fuzzy
 msgid "Can hibernate"
-msgstr "Hibernovať"
+msgstr "Je možné hibernovať systém"
 
 #: ../src/xfpm-main.c:149
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Je možné zastaviť pevné disky"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to suspend"
@@ -683,9 +681,8 @@ msgid "Authorized to spin down hard disks"
 msgstr ""
 
 #: ../src/xfpm-main.c:159
-#, fuzzy
 msgid "Has brightness panel"
-msgstr "Zosuvný modul jasu"
+msgstr ""
 
 #: ../src/xfpm-main.c:161
 msgid "Has power button"
@@ -714,7 +711,7 @@ msgstr "Povoliť ladenie"
 
 #: ../src/xfpm-main.c:268
 msgid "Dump all information"
-msgstr ""
+msgstr "Výpis všetkých informácií"
 
 #: ../src/xfpm-main.c:269
 msgid "Restart the running instance of Xfce power manager"
@@ -768,17 +765,17 @@ msgstr "Modul jadra"
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
-msgstr ""
+msgstr "Jadro"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "Medziprocesorové prerušenie"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
 msgid "Interrupt"
-msgstr ""
+msgstr "Prerušenie"
 
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
@@ -798,12 +795,12 @@ msgstr "Serial ATA"
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
 msgid "ATA host controller"
-msgstr ""
+msgstr "Hostiteľský radič ATA"
 
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
-msgstr ""
+msgstr "Bezdrôtový adaptér Intel"
 
 #. TRANSLATORS: a timer is something that fires periodically
 #: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
@@ -811,31 +808,31 @@ msgstr ""
 #: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
-msgstr ""
+msgstr "Odpočet času %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Sleep %s"
-msgstr ""
+msgstr "Režim spánku %s"
 
 #. TRANSLATORS: this is a new realtime task
 #: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "New task %s"
-msgstr ""
+msgstr "Nová úloha %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
 #: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "Wait %s"
-msgstr ""
+msgstr "Čakanie %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
 #, c-format
 msgid "Work queue %s"
-msgstr ""
+msgstr "Pracovná fronta %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
@@ -853,21 +850,21 @@ msgstr "Aktivita USB %s"
 #: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
-msgstr ""
+msgstr "Prebudenie %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
 msgid "Local interrupts"
-msgstr ""
+msgstr "Miestne prerušenia"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
-msgstr ""
+msgstr "Znovu naplánovanie prerušení"
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
-msgstr ""
+msgstr "Atribút"
 
 #: ../src/xfpm-power-info.c:338
 msgid "Value"
@@ -883,7 +880,7 @@ msgstr "Typ"
 
 #: ../src/xfpm-power-info.c:375
 msgid "PowerSupply"
-msgstr ""
+msgstr "Zdroj napájania"
 
 #: ../src/xfpm-power-info.c:393
 msgid "Model"
@@ -926,7 +923,7 @@ msgstr "Predajca"
 
 #: ../src/xfpm-power-info.c:495
 msgid "Serial"
-msgstr ""
+msgstr "Sériové číslo"
 
 #: ../src/xfpm-power-info.c:731
 msgid "Processor"
@@ -939,7 +936,7 @@ msgstr "PID"
 
 #: ../src/xfpm-power-info.c:754
 msgid "Wakeups"
-msgstr ""
+msgstr "Prebudenia"
 
 #: ../src/xfpm-power-info.c:760
 msgid "Command"
