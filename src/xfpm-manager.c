@@ -523,11 +523,11 @@ void xfpm_manager_start (XfpmManager *manager)
     g_signal_connect (manager->priv->idle, "alarm-expired",
 		      G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager);
     
-    g_signal_connect (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
-		      G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager);
+    g_signal_connect_swapped (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
+			      G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager);
 		      
-    g_signal_connect (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
-		      G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager);
+    g_signal_connect_swapped (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
+			      G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager);
     
     xfpm_manager_set_idle_alarm (manager);
     
