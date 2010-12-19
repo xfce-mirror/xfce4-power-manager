@@ -565,6 +565,8 @@ xfpm_polkit_get (void)
 
 gboolean xfpm_polkit_check_auth	(XfpmPolkit *polkit, const gchar *action_id)
 {
+#ifdef ENABLE_POLKIT
     xfpm_polkit_init_data (polkit);
+#endif
     return xfpm_polkit_check_auth_intern (polkit, action_id);
 }
