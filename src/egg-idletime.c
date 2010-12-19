@@ -105,7 +105,7 @@ egg_idletime_get_time (EggIdletime *idletime)
  * egg_idletime_xsync_alarm_set:
  */
 static void
-egg_idletime_xsync_alarm_set (EggIdletime *idletime, EggIdletimeAlarm *alarm, EggIdletimeAlarmType alarm_type)
+egg_idletime_xsync_alarm_set (EggIdletime *idletime, EggIdletimeAlarm *eggalarm, EggIdletimeAlarmType alarm_type)
 {
 	XSyncAlarmAttributes attr;
 	XSyncValue delta;
@@ -114,9 +114,9 @@ egg_idletime_xsync_alarm_set (EggIdletime *idletime, EggIdletimeAlarm *alarm, Eg
 
 	/* just remove it */
 	if (alarm_type == EGG_IDLETIME_ALARM_TYPE_DISABLED) {
-		if (alarm->xalarm) {
-			XSyncDestroyAlarm (idletime->priv->dpy, alarm->xalarm);
-			alarm->xalarm = None;
+		if (eggalarm->xalarm) {
+			XSyncDestroyAlarm (idletime->priv->dpy, eggalarm->xalarm);
+			eggalarm->xalarm = None;
 		}
 		return;
 	}
@@ -132,15 +132,15 @@ egg_idletime_xsync_alarm_set (EggIdletime *idletime, EggIdletimeAlarm *alarm, Eg
 	attr.trigger.counter = idletime->priv->idle_counter;
 	attr.trigger.value_type = XSyncAbsolute;
 	attr.trigger.test_type = test;
-	attr.trigger.wait_value = alarm->timeout;
+	attr.trigger.wait_value = eggalarm->timeout;
 	attr.delta = delta;
 
 	flags = XSyncCACounter | XSyncCAValueType | XSyncCATestType | XSyncCAValue | XSyncCADelta;
 
-	if (alarm->xalarm)
-		XSyncChangeAlarm (idletime->priv->dpy, alarm->xalarm, flags, &attr);
+	if (eggalarm->xalarm)
+		XSyncChangeAlarm (idletime->priv->dpy, eggalarm->xalarm, flags, &attr);
 	else
-		alarm->xalarm = XSyncCreateAlarm (idletime->priv->dpy, flags, &attr);
+		eggalarm->xalarm = XSyncCreateAlarm (idletime->priv->dpy, flags, &attr);
 }
 
 /**
@@ -150,19 +150,19 @@ void
 egg_idletime_alarm_reset_all (EggIdletime *idletime)
 {
 	guint i;
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 
 	g_return_if_fail (EGG_IS_IDLETIME (idletime));
 
 	/* reset all the alarms (except the reset alarm) to their timeouts */
 	for (i=1; i<idletime->priv->array->len; i++) {
-		alarm = g_ptr_array_index (idletime->priv->array, i);
-		egg_idletime_xsync_alarm_set (idletime, alarm, EGG_IDLETIME_ALARM_TYPE_POSITIVE);
+		eggalarm = g_ptr_array_index (idletime->priv->array, i);
+		egg_idletime_xsync_alarm_set (idletime, eggalarm, EGG_IDLETIME_ALARM_TYPE_POSITIVE);
 	}
 
 	/* set the reset alarm to be disabled */
-	alarm = g_ptr_array_index (idletime->priv->array, 0);
-	egg_idletime_xsync_alarm_set (idletime, alarm, EGG_IDLETIME_ALARM_TYPE_DISABLED);
+	eggalarm = g_ptr_array_index (idletime->priv->array, 0);
+	egg_idletime_xsync_alarm_set (idletime, eggalarm, EGG_IDLETIME_ALARM_TYPE_DISABLED);
 
 	/* emit signal so say we've reset all timers */
 	g_signal_emit (idletime, signals [SIGNAL_RESET], 0);
@@ -178,11 +178,11 @@ static EggIdletimeAlarm *
 egg_idletime_alarm_find_id (EggIdletime *idletime, guint id)
 {
 	guint i;
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 	for (i=0; i<idletime->priv->array->len; i++) {
-		alarm = g_ptr_array_index (idletime->priv->array, i);
-		if (alarm->id == id)
-			return alarm;
+		eggalarm = g_ptr_array_index (idletime->priv->array, i);
+		if (eggalarm->id == id)
+			return eggalarm;
 	}
 	return NULL;
 }
@@ -193,21 +193,21 @@ egg_idletime_alarm_find_id (EggIdletime *idletime, guint id)
 static void
 egg_idletime_set_reset_alarm (EggIdletime *idletime, XSyncAlarmNotifyEvent *alarm_event)
 {
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 	int overflow;
 	XSyncValue add;
 
-	alarm = egg_idletime_alarm_find_id (idletime, 0);
+	eggalarm = egg_idletime_alarm_find_id (idletime, 0);
 
 	if (!idletime->priv->reset_set) {
 		/* don't match on the current value because
 		 * XSyncNegativeComparison means less or equal. */
 		XSyncIntToValue (&add, -1);
-		XSyncValueAdd (&alarm->timeout, alarm_event->counter_value, add, &overflow);
+		XSyncValueAdd (&eggalarm->timeout, alarm_event->counter_value, add, &overflow);
 
 		/* set the reset alarm to fire the next time
 		 * idletime->priv->idle_counter < the current counter value */
-		egg_idletime_xsync_alarm_set (idletime, alarm, EGG_IDLETIME_ALARM_TYPE_NEGATIVE);
+		egg_idletime_xsync_alarm_set (idletime, eggalarm, EGG_IDLETIME_ALARM_TYPE_NEGATIVE);
 
 		/* don't try to set this again if multiple timers are going off in sequence */
 		idletime->priv->reset_set = TRUE;
@@ -221,11 +221,11 @@ static EggIdletimeAlarm *
 egg_idletime_alarm_find_event (EggIdletime *idletime, XSyncAlarmNotifyEvent *alarm_event)
 {
 	guint i;
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 	for (i=0; i<idletime->priv->array->len; i++) {
-		alarm = g_ptr_array_index (idletime->priv->array, i);
-		if (alarm_event->alarm == alarm->xalarm)
-			return alarm;
+		eggalarm = g_ptr_array_index (idletime->priv->array, i);
+		if (alarm_event->alarm == eggalarm->xalarm)
+			return eggalarm;
 	}
 	return NULL;
 }
@@ -236,7 +236,7 @@ egg_idletime_alarm_find_event (EggIdletime *idletime, XSyncAlarmNotifyEvent *ala
 static GdkFilterReturn
 egg_idletime_event_filter_cb (GdkXEvent *gdkxevent, GdkEvent *event, gpointer data)
 {
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 	XEvent *xevent = (XEvent *) gdkxevent;
 	EggIdletime *idletime = (EggIdletime *) data;
 	XSyncAlarmNotifyEvent *alarm_event;
@@ -248,18 +248,18 @@ egg_idletime_event_filter_cb (GdkXEvent *gdkxevent, GdkEvent *event, gpointer da
 	alarm_event = (XSyncAlarmNotifyEvent *) xevent;
 
 	/* did we match one of our alarms? */
-	alarm = egg_idletime_alarm_find_event (idletime, alarm_event);
-	if (alarm == NULL)
+	eggalarm = egg_idletime_alarm_find_event (idletime, alarm_event);
+	if (eggalarm == NULL)
 		return GDK_FILTER_CONTINUE;
 
 	/* are we the reset alarm? */
-	if (alarm->id == 0) {
+	if (eggalarm->id == 0) {
 		egg_idletime_alarm_reset_all (idletime);
 		goto out;
 	}
 
 	/* emit */
-	g_signal_emit (alarm->idletime, signals [SIGNAL_ALARM_EXPIRED], 0, alarm->id);
+	g_signal_emit (eggalarm->idletime, signals [SIGNAL_ALARM_EXPIRED], 0, eggalarm->id);
 
 	/* we need the first alarm to go off to set the reset alarm */
 	egg_idletime_set_reset_alarm (idletime, alarm_event);
@@ -274,17 +274,17 @@ out:
 static EggIdletimeAlarm *
 egg_idletime_alarm_new (EggIdletime *idletime, guint id)
 {
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 
 	/* create a new alarm */
-	alarm = g_new0 (EggIdletimeAlarm, 1);
+	eggalarm = g_new0 (EggIdletimeAlarm, 1);
 
 	/* set the default values */
-	alarm->id = id;
-	alarm->xalarm = None;
-	alarm->idletime = g_object_ref (idletime);
+	eggalarm->id = id;
+	eggalarm->xalarm = None;
+	eggalarm->idletime = g_object_ref (idletime);
 
-	return alarm;
+	return eggalarm;
 }
 
 /**
@@ -293,27 +293,27 @@ egg_idletime_alarm_new (EggIdletime *idletime, guint id)
 gboolean
 egg_idletime_alarm_set (EggIdletime *idletime, guint id, guint timeout)
 {
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 
 	g_return_val_if_fail (EGG_IS_IDLETIME (idletime), FALSE);
 	g_return_val_if_fail (id != 0, FALSE);
 	g_return_val_if_fail (timeout != 0, FALSE);
 
 	/* see if we already created an alarm with this ID */
-	alarm = egg_idletime_alarm_find_id (idletime, id);
-	if (alarm == NULL) {
+	eggalarm = egg_idletime_alarm_find_id (idletime, id);
+	if (eggalarm == NULL) {
 		/* create a new alarm */
-		alarm = egg_idletime_alarm_new (idletime, id);
+		eggalarm = egg_idletime_alarm_new (idletime, id);
 
 		/* add to array */
-		g_ptr_array_add (idletime->priv->array, alarm);
+		g_ptr_array_add (idletime->priv->array, eggalarm);
 	}
 
 	/* set the timeout */
-	XSyncIntToValue (&alarm->timeout, (gint)timeout);
+	XSyncIntToValue (&eggalarm->timeout, (gint)timeout);
 
 	/* set, and start the timer */
-	egg_idletime_xsync_alarm_set (idletime, alarm, EGG_IDLETIME_ALARM_TYPE_POSITIVE);
+	egg_idletime_xsync_alarm_set (idletime, eggalarm, EGG_IDLETIME_ALARM_TYPE_POSITIVE);
 	return TRUE;
 }
 
@@ -321,16 +321,16 @@ egg_idletime_alarm_set (EggIdletime *idletime, guint id, guint timeout)
  * egg_idletime_alarm_free:
  */
 static gboolean
-egg_idletime_alarm_free (EggIdletime *idletime, EggIdletimeAlarm *alarm)
+egg_idletime_alarm_free (EggIdletime *idletime, EggIdletimeAlarm *eggalarm)
 {
 	g_return_val_if_fail (EGG_IS_IDLETIME (idletime), FALSE);
-	g_return_val_if_fail (alarm != NULL, FALSE);
+	g_return_val_if_fail (eggalarm != NULL, FALSE);
 
-	if (alarm->xalarm)
-		XSyncDestroyAlarm (idletime->priv->dpy, alarm->xalarm);
-	g_object_unref (alarm->idletime);
-	g_free (alarm);
-	g_ptr_array_remove (idletime->priv->array, alarm);
+	if (eggalarm->xalarm)
+		XSyncDestroyAlarm (idletime->priv->dpy, eggalarm->xalarm);
+	g_object_unref (eggalarm->idletime);
+	g_free (eggalarm);
+	g_ptr_array_remove (idletime->priv->array, eggalarm);
 	return TRUE;
 }
 
@@ -340,14 +340,14 @@ egg_idletime_alarm_free (EggIdletime *idletime, EggIdletimeAlarm *alarm)
 gboolean
 egg_idletime_alarm_remove (EggIdletime *idletime, guint id)
 {
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 
 	g_return_val_if_fail (EGG_IS_IDLETIME (idletime), FALSE);
 
-	alarm = egg_idletime_alarm_find_id (idletime, id);
-	if (alarm == NULL)
+	eggalarm = egg_idletime_alarm_find_id (idletime, id);
+	if (eggalarm == NULL)
 		return FALSE;
-	egg_idletime_alarm_free (idletime, alarm);
+	egg_idletime_alarm_free (idletime, eggalarm);
 	return TRUE;
 }
 
@@ -386,7 +386,7 @@ egg_idletime_init (EggIdletime *idletime)
 	int sync_error;
 	int ncounters;
 	XSyncSystemCounter *counters;
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 	guint i;
 
 	idletime->priv = EGG_IDLETIME_GET_PRIVATE (idletime);
@@ -422,8 +422,8 @@ egg_idletime_init (EggIdletime *idletime)
 	gdk_window_add_filter (NULL, egg_idletime_event_filter_cb, idletime);
 
 	/* create a reset alarm */
-	alarm = egg_idletime_alarm_new (idletime, 0);
-	g_ptr_array_add (idletime->priv->array, alarm);
+	eggalarm = egg_idletime_alarm_new (idletime, 0);
+	g_ptr_array_add (idletime->priv->array, eggalarm);
 }
 
 /**
@@ -434,7 +434,7 @@ egg_idletime_finalize (GObject *object)
 {
 	guint i;
 	EggIdletime *idletime;
-	EggIdletimeAlarm *alarm;
+	EggIdletimeAlarm *eggalarm;
 
 	g_return_if_fail (object != NULL);
 	g_return_if_fail (EGG_IS_IDLETIME (object));
@@ -444,8 +444,8 @@ egg_idletime_finalize (GObject *object)
 
 	/* free all counters, including reset counter */
 	for (i=0; i<idletime->priv->array->len; i++) {
-		alarm = g_ptr_array_index (idletime->priv->array, i);
-		egg_idletime_alarm_free (idletime, alarm);
+		eggalarm = g_ptr_array_index (idletime->priv->array, i);
+		egg_idletime_alarm_free (idletime, eggalarm);
 	}
 	g_ptr_array_free (idletime->priv->array, TRUE);
 

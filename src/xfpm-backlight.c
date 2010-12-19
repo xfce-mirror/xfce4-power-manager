@@ -198,7 +198,7 @@ static void
 xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 {
     gfloat value;
-    gboolean sync;
+    gboolean sync_notify;
     gboolean show_popup;
     
     XFPM_DEBUG ("Level %u", level);
@@ -211,12 +211,12 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 	goto out;
     
     g_object_get (G_OBJECT (backlight->priv->notify),
-		  "sync", &sync,
+		  "sync", &sync_notify,
 		  NULL);
     
     value = (gfloat) 100 * level / backlight->priv->max_level;
     
-    if ( !sync ) /*Notification server doesn't support sync notifications*/
+    if ( !sync_notify ) /*Notification server doesn't support sync notifications*/
     {
 	xfpm_backlight_create_popup (backlight);
 	gsd_media_keys_window_set_volume_level (GSD_MEDIA_KEYS_WINDOW (backlight->priv->osd),

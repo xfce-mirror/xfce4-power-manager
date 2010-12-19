@@ -53,16 +53,16 @@ GtkBuilder *xfpm_builder_new_from_string (const gchar *ui, GError **error)
 }
 
 static void
-xfpm_link_browser (GtkAboutDialog *about, const gchar *link, gpointer data)
+xfpm_link_browser (GtkAboutDialog *about, const gchar *linkto, gpointer data)
 {
     gchar *cmd;
     
-    cmd = g_strdup_printf ("%s %s","xdg-open", link);
+    cmd = g_strdup_printf ("%s %s","xdg-open", linkto);
     
     if ( !g_spawn_command_line_async (cmd, NULL) )
     {
 	g_free (cmd);
-	cmd = g_strdup_printf ("%s %s","xfbrowser4", link);
+	cmd = g_strdup_printf ("%s %s","xfbrowser4", linkto);
 	g_spawn_command_line_async (cmd, NULL);
     }
     g_free (cmd);
@@ -70,9 +70,9 @@ xfpm_link_browser (GtkAboutDialog *about, const gchar *link, gpointer data)
 }
 
 static void
-xfpm_link_mailto (GtkAboutDialog *about, const gchar *link, gpointer data)
+xfpm_link_mailto (GtkAboutDialog *about, const gchar *linkto, gpointer data)
 {
-    gchar *cmd = g_strdup_printf( "%s %s", "xdg-email", link);
+    gchar *cmd = g_strdup_printf( "%s %s", "xdg-email", linkto);
 
     g_spawn_command_line_async (cmd, NULL);
     

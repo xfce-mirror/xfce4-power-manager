@@ -138,15 +138,15 @@ xfpm_dpms_get_sleep_mode (XfpmDpms *dpms, gboolean *ret_standby_mode)
 static void
 xfpm_dpms_get_configuration_timeouts (XfpmDpms *dpms, guint16 *ret_sleep, guint16 *ret_off )
 {
-    guint sleep, off;
+    guint sleep_time, off_time;
     
     g_object_get (G_OBJECT (dpms->priv->conf),
-		  dpms->priv->on_battery ? ON_BATT_DPMS_SLEEP : ON_AC_DPMS_SLEEP, &sleep,
-		  dpms->priv->on_battery ? ON_BATT_DPMS_OFF : ON_AC_DPMS_OFF, &off,
+		  dpms->priv->on_battery ? ON_BATT_DPMS_SLEEP : ON_AC_DPMS_SLEEP, &sleep_time,
+		  dpms->priv->on_battery ? ON_BATT_DPMS_OFF : ON_AC_DPMS_OFF, &off_time,
 		  NULL);
 		  
-    *ret_sleep = sleep * 60;
-    *ret_off =  off * 60;
+    *ret_sleep = sleep_time * 60;
+    *ret_off =  off_time * 60;
 }
 
 static void

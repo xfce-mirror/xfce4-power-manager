@@ -308,7 +308,7 @@ xfpm_power_report_error (XfpmPower *power, const gchar *error, const gchar *icon
 }
 
 static void
-xfpm_power_sleep (XfpmPower *power, const gchar *sleep, gboolean force)
+xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 {
     GError *error = NULL;
     gboolean lock_screen;
@@ -342,7 +342,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep, gboolean force)
 	xfpm_lock_screen ();
     }
     
-    dbus_g_proxy_call (power->priv->proxy, sleep, &error,
+    dbus_g_proxy_call (power->priv->proxy, sleep_time, &error,
 		       G_TYPE_INVALID,
 		       G_TYPE_INVALID);
     
@@ -355,7 +355,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep, gboolean force)
 	else
 	{
 	    const gchar *icon_name;
-	    if ( !g_strcmp0 (sleep, "Hibernate") )
+	    if ( !g_strcmp0 (sleep_time, "Hibernate") )
 		icon_name = XFPM_HIBERNATE_ICON;
 	    else
 		icon_name = XFPM_SUSPEND_ICON;
