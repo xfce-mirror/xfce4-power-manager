@@ -201,11 +201,11 @@ autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 EXTRA_DIST =                                    \
 	xfpm-marshal.list			\
         $(autostart_in_files)                   \
-        org.gnome.power.policy.in2              \
+        org.xfce.power.policy.in2              \
         $(manpage_DATA)
 
 DISTCLEANFILES =                                \
         $(BUILT_SOURCES)                        \
         xfce4-power-manager.desktop             \
-        org.gnome.power.policy                  \
-        org.gnome.power.policy.in
+        org.xfce.power.policy                  \
+        org.xfce.power.policy.in

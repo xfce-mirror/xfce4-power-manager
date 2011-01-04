@@ -1,4 +1,4 @@
-plugindir = $(libexecdir)/xfce4/panel-plugins
+plugindir = $(libdir)/xfce4/panel-plugins
 plugin_PROGRAMS = xfce4-brightness-plugin
 
 xfce4_brightness_plugin_SOURCES =		\
@@ -59,4 +59,4 @@ CLEANFILES =                                                            \
         $(desktop_DATA)
 
 %.desktop.in: %.desktop.in.in
-	sed -e "s,\@libexecdir\@,$(libexecdir),g" < $< > $@
+	sed -e "s,\@libdir\@,$(libdir),g" < $< > $@
