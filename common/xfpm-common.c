@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2008-2009 Ali <aliov@xfce.org>
+ * * Copyright (C) 2008-2011 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -147,7 +147,7 @@ xfpm_about (GtkWidget *widget, gpointer data)
     
     gtk_show_about_dialog (NULL,
 		     "authors", authors,
-		     "copyright", "Copyright \302\251 2008-2009 Ali Abdallah",
+		     "copyright", "Copyright \302\251 2008-2011 Ali Abdallah",
 		     "destroy-with-parent", TRUE,
 		     "documenters", documenters,
 		     "license", XFCE_LICENSE_GPL,
