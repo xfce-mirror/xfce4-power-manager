@@ -26,6 +26,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <string.h>
+#include <stdio.h>
 
 #define GCM_BACKLIGHT_HELPER_EXIT_CODE_SUCCESS			0
 #define GCM_BACKLIGHT_HELPER_EXIT_CODE_FAILED			1
@@ -38,7 +40,7 @@
  * gcm_backlight_helper_get_best_backlight:
  **/
 static gchar *
-gcm_backlight_helper_get_best_backlight ()
+gcm_backlight_helper_get_best_backlight (void)
 {
 	gchar *filename;
 	guint i;
