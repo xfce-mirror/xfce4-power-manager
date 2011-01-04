@@ -17,6 +17,11 @@ libxfpmdbus_la_CFLAGS =			\
 	$(LIBXFCE4UTIL_CFLAGS)		\
 	$(DBUS_GLIB_CFLAGS)
 
+libxfpmdbus_la_LIBADD =			\
+	$(GLIB_LIBS)			\
+	$(DBUS_GLIB_LIBS)		\
+	$(DBUS_LIBS)
+
 if MAINTAINER_MODE
 
 BUILT_SOURCES =				\

@@ -16,3 +16,9 @@ libxfpmcommon_la_CFLAGS =               \
 	$(GTK_CFLAGS)                   \
 	$(GLIB_CFLAGS)                  \
 	$(LIBXFCE4UTIL_CFLAGS)
+
+libxfpmcommon_la_LIBADD =               \
+	$(GTK_LIBS)                     \
+	$(GLIB_LIBS)                    \
+	$(XRANDR_LIBS)                   \
+	$(X11_LIBS)
