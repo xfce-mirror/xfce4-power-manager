@@ -102,6 +102,35 @@ xfce4_power_information_LDADD =			\
 	$(LIBXFCE4UI_LIBS)			\
 	$(top_builddir)/libdbus/libxfpmdbus.la
 
+if ENABLE_POLKIT
+
+sbin_PROGRAMS = xfpm-power-backlight-helper 
+
+xfpm_power_backlight_helper_SOURCES =           \
+       xfpm-backlight-helper.c
+
+xfpm_power_backlight_helper_LDADD =             \
+       $(GLIB_LIBS)                             \
+       -lm
+
+xfpm_power_backlight_helper_CFLAGS =            \
+        $(GLIB_CFLAGS)                          \
+	$(PLATFORM_CPPFLAGS)			\
+	$(PLATFORM_CFLAGS)
+
+polkit_policydir = $(datadir)/polkit-1/actions
+polkit_policy_DATA =					\
+	org.xfce.power.policy
+
+# You will need a recent intltool or the patch from this bug
+# http://bugzilla.gnome.org/show_bug.cgi?id=462312
+@INTLTOOL_POLICY_RULE@
+
+.in2.in:
+	sed "s|[@]sbindir@|${sbindir}|" $< > $@
+
+endif
+
 manpagedir = $(mandir)/man1
 
 manpage_DATA = xfce4-power-manager.1
@@ -172,8 +201,11 @@ autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 EXTRA_DIST =                                    \
 	xfpm-marshal.list			\
         $(autostart_in_files)                   \
+        org.gnome.power.policy.in2              \
         $(manpage_DATA)
 
 DISTCLEANFILES =                                \
         $(BUILT_SOURCES)                        \
-        xfce4-power-manager.desktop
+        xfce4-power-manager.desktop             \
+        org.gnome.power.policy                  \
+        org.gnome.power.policy.in

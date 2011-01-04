@@ -29,14 +29,6 @@ G_BEGIN_DECLS
 #define XFPM_BRIGHTNESS(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_BRIGHTNESS, XfpmBrightness))
 #define XFPM_IS_BRIGHTNESS(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_BRIGHTNESS))
 
-typedef enum
-{
-    XFPM_BRIGHTNESS_CONTROL_UNKNOWN,
-    XFPM_BRIGHTNESS_CONTROL_XRANDR,
-    XFPM_BRIGHTNESS_CONTROL_HAL
-    
-} XfpmBrightnessControl;
-
 typedef struct XfpmBrightnessPrivate XfpmBrightnessPrivate;
 
 typedef struct
@@ -75,10 +67,6 @@ gboolean			xfpm_brightness_set_level	(XfpmBrightness *brightness,
 								 gint level);
 
 gboolean			xfpm_brightness_dim_down	(XfpmBrightness *brightness);
-
-XfpmBrightnessControl		xfpm_brightness_get_control	(XfpmBrightness *brightness);
-
-gboolean			xfpm_brightness_in_hw		(XfpmBrightness *brightness);
 
 G_END_DECLS
 

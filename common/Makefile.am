@@ -12,6 +12,7 @@ libxfpmcommon_la_SOURCES =              \
 
 libxfpmcommon_la_CFLAGS =               \
 	-I$(top_srcdir) 	        \
+	-DSBINDIR=\"$(sbindir)\"		\
 	$(GTK_CFLAGS)                   \
 	$(GLIB_CFLAGS)                  \
 	$(LIBXFCE4UTIL_CFLAGS)

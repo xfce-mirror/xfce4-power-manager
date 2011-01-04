@@ -77,9 +77,6 @@ struct XfpmBacklightPrivate
     
     gboolean        dimmed;
     gboolean	    block;
-#ifdef WITH_HAL
-    gboolean	    brightness_in_hw;
-#endif
 };
 
 G_DEFINE_TYPE (XfpmBacklight, xfpm_backlight, G_TYPE_OBJECT)
@@ -282,26 +279,16 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
     if ( type == BUTTON_MON_BRIGHTNESS_UP )
     {
 	backlight->priv->block = TRUE;
-#ifdef WITH_HAL
-	if ( !backlight->priv->brightness_in_hw && enable_brightness)
-	    ret = xfpm_brightness_up (backlight->priv->brightness, &level);
-#else
 	if ( enable_brightness )
 	    ret = xfpm_brightness_up (backlight->priv->brightness, &level);
-#endif
 	if ( ret && show_popup)
 	    xfpm_backlight_show (backlight, level);
     }
     else if ( type == BUTTON_MON_BRIGHTNESS_DOWN )
     {
 	backlight->priv->block = TRUE;
-#ifdef WITH_HAL
-	if ( !backlight->priv->brightness_in_hw && enable_brightness )
-	    ret = xfpm_brightness_down (backlight->priv->brightness, &level);
-#else
 	if ( enable_brightness )
 	    ret = xfpm_brightness_down (backlight->priv->brightness, &level);
-#endif
 	if ( ret && show_popup)
 	    xfpm_backlight_show (backlight, level);
     }
@@ -404,10 +391,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 	backlight->priv->power    = xfpm_power_get ();
 	backlight->priv->notify = xfpm_notify_new ();
 	backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
-#ifdef WITH_HAL
-	if ( xfpm_brightness_get_control (backlight->priv->brightness) == XFPM_BRIGHTNESS_CONTROL_HAL )
-	    backlight->priv->brightness_in_hw = xfpm_brightness_in_hw (backlight->priv->brightness);
-#endif
 	g_signal_connect (backlight->priv->idle, "alarm-expired",
                           G_CALLBACK (xfpm_backlight_alarm_timeout_cb), backlight);
         

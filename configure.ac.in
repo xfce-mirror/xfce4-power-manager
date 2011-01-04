@@ -96,6 +96,7 @@ else
     AC_DEFINE(ENABLE_POLKIT, 1 , [PolicyKit support])
     polkit="yes"
 fi
+AM_CONDITIONAL([ENABLE_POLKIT], [test "x$polkit" = "xyes"])
 
 #=======================================================#
 #              Use HAL?			                #
