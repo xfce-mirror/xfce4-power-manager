@@ -48,11 +48,6 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-debug.h"
 
-#ifdef WITH_HAL
-#include "libhal/hal-manager.h"
-#include "libhal/hal-device.h"
-#endif
-
 static void xfpm_button_finalize   (GObject *object);
 
 #define XFPM_BUTTON_GET_PRIVATE(o) \
@@ -70,9 +65,6 @@ struct XfpmButtonPrivate
     GdkWindow   *window;
     
     guint8       mapped_buttons;
-#ifdef WITH_HAL
-    GPtrArray  *array;
-#endif
 };
 
 enum
@@ -224,125 +216,6 @@ xfpm_button_setup (XfpmButton *button)
 			   xfpm_button_filter_x_events, button);
 }
 
-#ifdef WITH_HAL
-static void
-xfpm_button_hal_emit_signals (XfpmButton *button, const gchar *condition, const gchar *detail)
-{
-    if ( g_strcmp0 (condition, "ButtonPressed") )
-	return;
-
-    XFPM_DEBUG ("Button press condition %s detail %s", condition, detail);
-
-    if ( !g_strcmp0 (detail, "power") )
-	g_signal_emit (G_OBJECT (button), signals [BUTTON_PRESSED], 0, BUTTON_POWER_OFF);
-    else if ( !g_strcmp0 (detail, "sleep")  || !g_strcmp0 (detail, "suspend") )
-	g_signal_emit (G_OBJECT (button), signals [BUTTON_PRESSED], 0, BUTTON_SLEEP);
-    else if ( !g_strcmp0 (detail, "hibernate"))
-	g_signal_emit (G_OBJECT (button), signals [BUTTON_PRESSED], 0, BUTTON_HIBERNATE);
-    else if ( !g_strcmp0 (detail, "brightness-up") )
-	g_signal_emit (G_OBJECT (button), signals [BUTTON_PRESSED], 0, BUTTON_MON_BRIGHTNESS_UP);
-    else if ( !g_strcmp0 (detail, "brightness-down") )
-	g_signal_emit (G_OBJECT (button), signals [BUTTON_PRESSED], 0, BUTTON_MON_BRIGHTNESS_DOWN);
-}
-
-static void
-xfpm_button_hal_condition_cb (HalDevice *device, const gchar *condition, 
-			      const gchar *detail, XfpmButton *button)
-{
-    xfpm_button_hal_emit_signals (button, condition, detail);
-}
-
-static void
-xfpm_button_add_button_hal (XfpmButton *button, const gchar *udi)
-{
-    HalDevice *device;
-    gchar *button_type = NULL;
-    
-    device = hal_device_new ();
-    
-    hal_device_set_udi (device, udi);
-   
-    if ( hal_device_has_key (device, "button.type") )
-    {
-	button_type = hal_device_get_property_string (device, "button.type");
-	
-	if ( button_type == NULL ) 
-	{
-	    g_object_unref (device);
-	    return;
-	}
-	
-	if ( !g_strcmp0 (button_type, "sleep") && !(button->priv->mapped_buttons & SLEEP_KEY))
-	    button->priv->mapped_buttons |= SLEEP_KEY;
-	else if ( !g_strcmp0 (button_type, "suspend") && !(button->priv->mapped_buttons & SLEEP_KEY))
-	    button->priv->mapped_buttons |= SLEEP_KEY;
-	else if ( !g_strcmp0 (button_type, "hibernate") && !(button->priv->mapped_buttons & HIBERNATE_KEY))
-	    button->priv->mapped_buttons |= HIBERNATE_KEY;
-	else if ( !g_strcmp0 (button_type, "power") && !(button->priv->mapped_buttons & POWER_KEY))
-	    button->priv->mapped_buttons |= POWER_KEY;
-	else if ( !g_strcmp0 (button_type, "brightness-up") && !(button->priv->mapped_buttons & BRIGHTNESS_KEY_UP))
-	    button->priv->mapped_buttons |= BRIGHTNESS_KEY_UP;
-	else if ( !g_strcmp0 (button_type, "brightness-down") && !(button->priv->mapped_buttons & BRIGHTNESS_KEY_DOWN))
-	    button->priv->mapped_buttons |= BRIGHTNESS_KEY_DOWN;
-	else
-	{
-	    g_object_unref (device);
-	    if ( button_type )
-		g_free (button_type);
-	    return;
-	}
-	
-	if ( button_type )
-		g_free (button_type);
-    }
-    else
-    {
-	g_object_unref (device);
-	return;
-    }
-    
-    g_signal_connect (device, "device-condition",
-		      G_CALLBACK (xfpm_button_hal_condition_cb), button);
-		      
-    hal_device_watch_condition (device);
-   
-    if ( button->priv->array == NULL )
-    {
-	button->priv->array = g_ptr_array_new ();
-    }
-    g_ptr_array_add (button->priv->array, device);
-
-}
-
-static void
-xfpm_button_setup_failed_hal (XfpmButton *button)
-{
-    HalManager *manager;
-    gchar     **udi;
-    int 	i;
-    
-    XFPM_DEBUG ("Getting missing buttons from HAL");
-    
-    manager = hal_manager_new ();
-    
-    udi = hal_manager_find_device_by_capability (manager, "button");
-    
-    g_object_unref (manager);
-    
-    if ( udi == NULL || udi[0] == NULL )
-	return;
-	
-    for ( i = 0; udi[i]; i++)
-    {
-	xfpm_button_add_button_hal (button, udi[i]);
-    }
-    
-    hal_manager_free_string_array (udi);
-    if ( button->priv->array )
-	XFPM_DEBUG ("Mapped HAL buttons : %u", button->priv->array->len);
-}
-#endif /* WITH_HAL*/
-
 static void
 xfpm_button_class_init(XfpmButtonClass *klass)
 {
@@ -372,31 +245,7 @@ xfpm_button_init (XfpmButton *button)
     button->priv->window = NULL;
     
     xfpm_button_setup (button);
-#ifdef WITH_HAL
-    if ( !(button->priv->mapped_buttons & BRIGHTNESS_KEY_DOWN ) ||
-         !(button->priv->mapped_buttons & BRIGHTNESS_KEY_UP )   ||
-	 !(button->priv->mapped_buttons & SLEEP_KEY )   ||
-	 !(button->priv->mapped_buttons & HIBERNATE_KEY)   ||
-	 !(button->priv->mapped_buttons & POWER_KEY )  )
-	xfpm_button_setup_failed_hal (button);
-#endif
-    
 }
-
-#ifdef WITH_HAL
-static void
-xfpm_button_free_device_array (XfpmButton *button)
-{
-    HalDevice *device;
-    guint i;
-    
-    for ( i = 0 ; i<button->priv->array->len; i++)
-    {
-	device = g_ptr_array_index (button->priv->array, i);
-	g_object_unref (device);
-    }
-}
-#endif
 
 static void
 xfpm_button_finalize (GObject *object)
@@ -404,14 +253,6 @@ xfpm_button_finalize (GObject *object)
     XfpmButton *button;
 
     button = XFPM_BUTTON (object);
-    
-#ifdef WITH_HAL
-    if ( button->priv->array )
-    {
-	xfpm_button_free_device_array (button);
-	g_ptr_array_free (button->priv->array, TRUE);
-    }
-#endif
     
     G_OBJECT_CLASS(xfpm_button_parent_class)->finalize(object);
 }

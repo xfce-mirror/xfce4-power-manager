@@ -109,11 +109,6 @@ xfpm_dump (GHashTable *hash)
 	
     g_print ("---------------------------------------------------\n");
     g_print ("       Xfce power manager version %s\n", VERSION);
-#ifdef WITH_HAL
-    g_print (_("With HAL support\n"));
-#else
-    g_print (_("Without HAL support\n"));
-#endif
 #ifdef ENABLE_POLKIT
     g_print (_("With policykit support\n"));
 #else

@@ -32,16 +32,6 @@ xfce4_brightness_plugin_LDADD =			\
 	$(GLIB_LIBS)				\
 	$(XRANDR_LIBS)
 
-if ENABLE_HAL
-
-xfce4_brightness_plugin_CFLAGS += 		\
-	$(DBUS_GLIB_CFLAGS)
-
-xfce4_brightness_plugin_LDADD += 		\
-	$(DBUS_GLIB_LIBS)
-
-endif
-
 #
 # Desktop file
 #

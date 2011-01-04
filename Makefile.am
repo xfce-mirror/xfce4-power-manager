@@ -4,14 +4,9 @@ if BUILD_PANEL_PLUGINS
 plugins_dir = panel-plugins
 endif
 
-if ENABLE_HAL
-libhal_dir = libhal
-endif
-
 SUBDIRS =        	\
 	data		\
 	libdbus		\
-	$(libhal_dir)	\
 	common		\
 	src		\
 	settings	\
