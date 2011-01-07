@@ -30,6 +30,18 @@
 #include <unistd.h>
 #endif
 
+#include <sys/types.h>
+
+#ifndef HAVE_FREEBSD
+#include <sys/stat.h>
+#else
+#include <sys/param.h>
+#include <sys/sysctl.h>
+#include <sys/user.h>
+#endif
+
+#include <errno.h>
+
 #include <dbus/dbus-glib.h>
 
 #include "xfpm-polkit.h"
