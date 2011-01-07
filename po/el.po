@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager git\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-06 11:02+0000\n"
+"POT-Creation-Date: 2011-01-07 05:03+0000\n"
 "PO-Revision-Date: 2010-03-26 00:12+0200\n"
 "Last-Translator: Evaggelos Balaskas <ebalaskas@ebalaskas.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Country: GREECE\n"
-"X-Generator: Lokalize 0.2\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Country: GREECE\n"
+"X-Generator: Lokalize 0.2\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -110,7 +110,7 @@ msgstr "Να εμφανίζονται ειδοποιήσεις σχετικά μ
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Spin down hard disks"
-msgstr ""
+msgstr "Μείωση αυτοστροφορμής σκληρών δίσκων"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Standby"
@@ -197,9 +197,8 @@ msgstr "Δευτερόλεπτα"
 
 #: ../settings/xfpm-settings.c:761 ../settings/xfpm-settings.c:948
 #: ../settings/xfpm-settings.c:1410
-#, fuzzy
 msgid "Hibernate and suspend operations not supported"
-msgstr "Οι λειτουργίες αδρανοποίηση και αναστολή δεν επιτρέπονται"
+msgstr "Οι λειτουργίες αδρανοποίηση και αναστολή δεν υποστηρίζονται"
 
 #: ../settings/xfpm-settings.c:766 ../settings/xfpm-settings.c:953
 #: ../settings/xfpm-settings.c:1415
@@ -222,7 +221,7 @@ msgstr "Κλείδωμα οθόνης"
 
 #: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1056
 msgid "Spinning down hard disks permission denied"
-msgstr ""
+msgstr "Άρνηση άδειας μείωσης αυτοστροφορμής σκληρών δίσκων"
 
 #: ../settings/xfpm-settings.c:1096
 msgid "Always show icon"
@@ -245,18 +244,16 @@ msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to s
 msgstr "Απενεργοποίηση των σημάτων διαχείρισης ρεύματος της οθόνης (DPMS), π.χ. καμία προσπάθεια απενεργοποίησης ή κλεισίματος της οθόνης."
 
 #: ../settings/xfpm-settings.c:1319
-#, fuzzy
 msgid "Suspend operation not supported"
-msgstr "Δεν επιτρέπεται η λειτουργία αναστολής"
+msgstr "Η λειτουργία αναστολής  δεν υποστηρίζεται"
 
 #: ../settings/xfpm-settings.c:1325
 msgid "Suspend operation not permitted"
 msgstr "Δεν επιτρέπεται η λειτουργία αναστολής"
 
 #: ../settings/xfpm-settings.c:1331
-#, fuzzy
 msgid "Hibernate operation not supported"
-msgstr "Δεν επιτρέπεται η λειτουργία αδρανοποίησης"
+msgstr "Η λειτουργία αδρανοποίησης  δεν υποστηρίζεται"
 
 #: ../settings/xfpm-settings.c:1336
 msgid "Hibernate operation not permitted"
@@ -353,29 +350,25 @@ msgid "Quit"
 msgstr "Τερματισμός"
 
 #: ../src/xfpm-power.c:422
-#, fuzzy
 msgid "All running instances of the power manager will exit"
-msgstr "Επανεκκίνηση του τρέχοντος στιγμιότυπου του διαχειριστή ρεύματος xfce"
+msgstr "Όλα τα εκτελούμενα στιγμιότυπα του διαχειριστή ρεύματος θα τερματιστούν"
 
 #: ../src/xfpm-power.c:424
-#, fuzzy
 msgid "Quit Xfce power manager?"
-msgstr "Τερματισμός του διαχειριστής ρεύματος xfce"
+msgstr "Τερματισμός του διαχειριστής ρεύματος xfce;"
 
 #. Power information
 #: ../src/xfpm-power.c:494 ../src/xfpm-power-info.c:818
-#, fuzzy
 msgid "Power Information"
-msgstr "Πληροφορίες έκδοσης"
+msgstr "Πληροφορίες ενέργειας"
 
 #: ../src/xfpm-power.c:618
 msgid "Hibernate the system"
 msgstr "Αδρανοποίηση του συστήματος"
 
 #: ../src/xfpm-power.c:629
-#, fuzzy
 msgid "Suspend the system"
-msgstr "Σφάλμα συστήματος"
+msgstr "Αναστολή συστήματος"
 
 #: ../src/xfpm-power.c:639
 msgid "Shutdown the system"
@@ -390,19 +383,17 @@ msgid "System is running on low power"
 msgstr "Το σύστημα τρέχει σε λίγο ρεύμα"
 
 #: ../src/xfpm-power.c:858
-#, fuzzy
 msgid "Battery charge level is low"
 msgstr "Χαμηλή φόρτιση της μπαταρίας σας"
 
 #: ../src/xfpm-power.c:1058 ../src/xfpm-power.c:1063
-#, fuzzy
 msgid "Adaptor is offline"
-msgstr "Ο χρήστης δεν είναι συνδεδεμένος."
+msgstr "Ο μετασχηματιστής ρεύματος δεν είναι συνδεδεμένος"
 
 #: ../src/xfpm-power.c:1059 ../src/xfpm-power.c:1064 ../src/xfpm-battery.c:323
-#, fuzzy, c-format
+#, c-format
 msgid "Adaptor is online"
-msgstr "Ο επιλεγμένος λογαριασμός δεν είναι συνδεδεμένος."
+msgstr "Ο μετασχηματιστής ρεύματος είναι συνδεδεμένος."
 
 #: ../src/xfpm-power.c:1507 ../src/xfpm-power.c:1528 ../src/xfpm-power.c:1543
 #: ../src/xfpm-power.c:1566
@@ -421,14 +412,12 @@ msgid "Battery"
 msgstr "Μπαταρία"
 
 #: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:325
-#, fuzzy
 msgid "UPS"
-msgstr "Το UPS σας"
+msgstr "UPS"
 
 #: ../src/xfpm-power-common.c:126
-#, fuzzy
 msgid "Line power"
-msgstr "Εμφάνιση ρεύματος"
+msgstr "Γραμμή ρεύματος"
 
 #: ../src/xfpm-power-common.c:128
 msgid "Mouse"
@@ -460,21 +449,18 @@ msgid "Lithium polymer"
 msgstr "Πολυμερές λιθίου"
 
 #: ../src/xfpm-power-common.c:159
-#, fuzzy
 msgid "Lithium iron phosphate"
-msgstr "Ιόντων λιθίου"
+msgstr "Λιθίου φωσφόρου σιδήρου"
 
 #: ../src/xfpm-power-common.c:161
 msgid "Lead acid"
 msgstr "Οξύ μόλυβδου"
 
 #: ../src/xfpm-power-common.c:163
-#, fuzzy
 msgid "Nickel cadmium"
-msgstr "Υβριδικό νικελίου μετάλλου"
+msgstr "Νικελίου καδμίου"
 
 #: ../src/xfpm-power-common.c:165
-#, fuzzy
 msgid "Nickel metal hybride"
 msgstr "Υβριδικό νικελίου μετάλλου"
 
@@ -539,13 +525,18 @@ msgid ""
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
+"%s\n"
+"Η %s σας είναι πλήρως φορτισμένη (%i%%).\n"
+"Παρέχοντας %s λειτουργία"
 
 #: ../src/xfpm-battery.c:341
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr "Η μπαταρία σας έχει φορτιστεί πλήρως"
+msgstr ""
+"%s\n"
+"Η %s σας είναι πλήρως φορτισμένη (%i%%)."
 
 #: ../src/xfpm-battery.c:352
 #, c-format
@@ -554,13 +545,18 @@ msgid ""
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
+"%s\n"
+"Η %s σας φορτίζει (%i%%)\n"
+"%s μέχρι την πλήρη φόρτιση."
 
 #: ../src/xfpm-battery.c:361
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr "Η μπαταρία φορτίζει"
+msgstr ""
+"%s\n"
+"Η %s σας φορτίζει (%i%%)."
 
 #: ../src/xfpm-battery.c:372
 #, c-format
@@ -569,34 +565,45 @@ msgid ""
 "Your %s is discharging (%i%%)\n"
 "estimated time left is %s."
 msgstr ""
+"%s\n"
+"Η %s σας αποφορτίζεται (%i%%)\n"
+"εκτιμώμενος απομένοντας χρόνος είναι %s."
 
 #: ../src/xfpm-battery.c:381
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr "Η μπαταρία σας αποφορτίζει"
+msgstr ""
+"%s\n"
+"Η %s σας αποφορτίζεται  (%i%%)."
 
 #: ../src/xfpm-battery.c:390
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr "Αναμονή έναρξης μεταφοράς"
+msgstr ""
+"%s\n"
+"%s αναμένεται για αποφόρτιση (%i%%)."
 
 #: ../src/xfpm-battery.c:394
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr "Αναμονή έναρξης μεταφοράς"
+msgstr ""
+"%s\n"
+"%s αναμένεται για φόρτιση (%i%%)."
 
 #: ../src/xfpm-battery.c:398
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr "Ο κάδος είναι κενός"
+msgstr ""
+"%s\n"
+"Η %s σας είναι άδεια"
 
 #: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
@@ -628,106 +635,94 @@ msgid "False"
 msgstr "Ψευδές"
 
 #: ../src/xfpm-main.c:113
-#, fuzzy, c-format
+#, c-format
 msgid "With policykit support\n"
-msgstr "Είσοδος DVB με υποστήριξη v4l2"
+msgstr "Με  PolicyKit\n"
 
 #: ../src/xfpm-main.c:115
-#, fuzzy, c-format
+#, c-format
 msgid "Without policykit support\n"
-msgstr "Υποστήριξη SSL μη διαθέσιμη"
+msgstr "Χωρίς υποστήριξη PolicyKit\n"
 
 #: ../src/xfpm-main.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "With network manager support\n"
-msgstr "Είσοδος DVB με υποστήριξη v4l2"
+msgstr "Με υποστήριξη διαχειριστή δικτύου\n"
 
 #: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Χωρίς υποστήριξη διαχειριστή δικτύου\n"
 
 #: ../src/xfpm-main.c:123
-#, fuzzy, c-format
+#, c-format
 msgid "With DPMS support\n"
-msgstr "Είσοδος DVB με υποστήριξη v4l2"
+msgstr "Με υποστήριξη DPMS\n"
 
 #: ../src/xfpm-main.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Without DPMS support\n"
-msgstr "Υποστήριξη SSL μη διαθέσιμη"
+msgstr "Χωρίς υποστήριξη DPMS\n"
 
 #: ../src/xfpm-main.c:140
-#, fuzzy
 msgid "Can suspend"
-msgstr "Δεν είναι δυνατή η αναστολή εκτέλεσης(suspend) του νήματος(thread) %x"
+msgstr "Δυνατότητα αναστολής"
 
 #: ../src/xfpm-main.c:142
-#, fuzzy
 msgid "Can hibernate"
-msgstr "Αδρανοποίηση του συστήματος"
+msgstr "Δυνατότητα αδρανοποίησης"
 
 #: ../src/xfpm-main.c:144
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Δυνατότητα μείωσης αυτοστροφορμής σκληρών δίσκων"
 
 #: ../src/xfpm-main.c:146
-#, fuzzy
 msgid "Authorized to suspend"
-msgstr "Απέτυχε η αναστολή"
+msgstr "Εξουσιοδοτημένος αναστολής"
 
 #: ../src/xfpm-main.c:148
-#, fuzzy
 msgid "Authorized to hibernate"
-msgstr "Απέτυχε η αδρανοποίηση"
+msgstr "Εξουσιοδοτημένος αδρανοποίησης"
 
 #: ../src/xfpm-main.c:150
-#, fuzzy
 msgid "Authorized to shutdown"
-msgstr "Αδυναμία πραγματοποίησης τερματισμού"
+msgstr "Εξουσιοδοτημένος τερματισμού"
 
 #: ../src/xfpm-main.c:152
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "Εξουσιοδοτημένος μείωσης αυτοστροφορμής σκληρών δίσκων"
 
 #: ../src/xfpm-main.c:154
-#, fuzzy
 msgid "Has brightness panel"
-msgstr "Περί Ταμπλό του Xfce"
+msgstr "Έχει ταμπλό φωτεινότητα"
 
 #: ../src/xfpm-main.c:156
-#, fuzzy
 msgid "Has power button"
-msgstr "Όταν το κουμπί τερματισμού πατηθεί:"
+msgstr "Έχει κουμπί λειτουργίας"
 
 #: ../src/xfpm-main.c:158
-#, fuzzy
 msgid "Has hibernate button"
-msgstr "Όταν το κουμπί αδρανοποίησης πατηθεί:"
+msgstr "Έχει κουμπί αδρανοποίησης"
 
 #: ../src/xfpm-main.c:160
-#, fuzzy
 msgid "Has sleep button"
-msgstr "Όταν το κουμπί κλεισίματος πατηθεί:"
+msgstr "Έχει κουμπί ύπνου"
 
 #: ../src/xfpm-main.c:162
-#, fuzzy
 msgid "Has LID"
-msgstr "Σας έχει"
+msgstr "Έχει LID"
 
 #: ../src/xfpm-main.c:261
 msgid "Do not daemonize"
 msgstr "Όχι ως δαίμονας"
 
 #: ../src/xfpm-main.c:262
-#, fuzzy
 msgid "Enable debugging"
-msgstr "Πληροφορίες αποσφαλμάτωσης"
+msgstr "Ενεργοποίηση αποσφαλμάτωσης"
 
 #: ../src/xfpm-main.c:263
-#, fuzzy
 msgid "Dump all information"
-msgstr "Εμφάνιση πληροφορίες έκδοσης"
+msgstr "Αποτύπωση όλων των πληροφοριών"
 
 #: ../src/xfpm-main.c:264
 msgid "Restart the running instance of Xfce power manager"
@@ -770,38 +765,33 @@ msgstr "Άκυρο cookie"
 
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
-#, fuzzy
 msgid "No data"
-msgstr "Μη διαθέσιμα δεδομένα"
+msgstr "Δεν υπάρχουν δεδομένα"
 
 #. TRANSLATORS: kernel module, usually a device driver
 #: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
-#, fuzzy
 msgid "Kernel module"
-msgstr "IM module"
+msgstr "Άρθρωμα πυρήνα"
 
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
-#, fuzzy
 msgid "Kernel core"
-msgstr "Κύριοι προγραμματιστές"
+msgstr "Κέντρο πυρήνα"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "Διαπεξεργαστική διακοπή"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
-#, fuzzy
 msgid "Interrupt"
 msgstr "Διακοπή"
 
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
-#, fuzzy
 msgid "PS/2 keyboard/mouse/touchpad"
-msgstr "Βελτίωση προσβασιμότητας πληκτρολογίου και ποντικιού"
+msgstr "PS/2 πληκτρολόγιο/ποντίκι/touchpad"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
@@ -810,86 +800,82 @@ msgstr "ACPI"
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
-#, fuzzy
 msgid "Serial ATA"
-msgstr "Συσκευή ATA"
+msgstr "Serial ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
-#, fuzzy
 msgid "ATA host controller"
-msgstr "Εκκινείται ο Ρυθμιστής της έντασης ήχου"
+msgstr "Κεντρικός ελεγκτής ΑΤΑ"
 
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
-#, fuzzy
 msgid "Intel wireless adaptor"
-msgstr "Αριθμός προσαρμογέα XVideo"
+msgstr "Ασύρματος προσαρμογέας Intel"
 
 #. TRANSLATORS: a timer is something that fires periodically
 #: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
 #: ../src/xfpm-power-info.c:212 ../src/xfpm-power-info.c:215
 #: ../src/xfpm-power-info.c:218
-#, fuzzy, c-format
+#, c-format
 msgid "Timer %s"
-msgstr "Έναρξη χρονόμετρου "
+msgstr "Χρονόμετρο %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Sleep %s"
-msgstr ""
+msgstr "Ύπνος %s"
 
 #. TRANSLATORS: this is a new realtime task
 #: ../src/xfpm-power-info.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "New task %s"
-msgstr "Λίστα εργασιών"
+msgstr "Νέα εργασία %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
 #: ../src/xfpm-power-info.c:227
-#, fuzzy, c-format
+#, c-format
 msgid "Wait %s"
-msgstr "Παρακαλώ περιμένετε..."
+msgstr "Περιμένετε %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
-#, fuzzy, c-format
+#, c-format
 msgid "Work queue %s"
-msgstr "Ουρά πλήρης"
+msgstr "Ουρά εργασίας %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
-#, fuzzy, c-format
+#, c-format
 msgid "Network route flush %s"
-msgstr "Εμφάνιση δικτυακής κίνησης"
+msgstr "Καθαρισμός διαδρομής δικτύου %s"
 
 #. TRANSLATORS: activity on the USB bus
 #: ../src/xfpm-power-info.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "USB activity %s"
-msgstr "Μπλόκ δραστηριότητας"
+msgstr "Δραστηριότητα USB %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
-msgstr ""
+msgstr "Αφύπνιση %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
-#, fuzzy
 msgid "Local interrupts"
-msgstr "Τοπική διαδρομή"
+msgstr "Τοπικές διακοπές"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
-msgstr ""
+msgstr "Επαναπρογραμματισμός διακοπών"
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
-msgstr ""
+msgstr "Ιδιότητα"
 
 #: ../src/xfpm-power-info.c:338
 msgid "Value"
@@ -905,7 +891,7 @@ msgstr "Τύπος"
 
 #: ../src/xfpm-power-info.c:375
 msgid "PowerSupply"
-msgstr ""
+msgstr "Παροχή ρεύματος"
 
 #: ../src/xfpm-power-info.c:393
 msgid "Model"
@@ -922,19 +908,16 @@ msgid "Wh"
 msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:420
-#, fuzzy
 msgid "Energy full design"
-msgstr "Προβολή ολόκληρης της διαδρομής"
+msgstr "Σχέδιο πλήρους ενέργειας"
 
 #: ../src/xfpm-power-info.c:434
-#, fuzzy
 msgid "Energy full"
-msgstr "Πλήρες πλάτος"
+msgstr "Πλήρης ενέργεια"
 
 #: ../src/xfpm-power-info.c:448
-#, fuzzy
 msgid "Energy empty"
-msgstr "_Κενό αρχείο"
+msgstr "Άδεια ενέργεια"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
@@ -942,9 +925,8 @@ msgid "V"
 msgstr "V"
 
 #: ../src/xfpm-power-info.c:461
-#, fuzzy
 msgid "Voltage"
-msgstr "Τάση LNB"
+msgstr "Τάση"
 
 #: ../src/xfpm-power-info.c:478
 msgid "Vendor"
@@ -965,7 +947,7 @@ msgstr "PID"
 
 #: ../src/xfpm-power-info.c:754
 msgid "Wakeups"
-msgstr ""
+msgstr "Αφυπνίσεις"
 
 #: ../src/xfpm-power-info.c:760
 msgid "Command"
