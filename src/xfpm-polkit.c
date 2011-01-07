@@ -32,7 +32,7 @@
 
 #include <sys/types.h>
 
-#ifndef HAVE_FREEBSD
+#if defined(__FreeBSD__)
 #include <sys/stat.h>
 #else
 #include <sys/param.h>
