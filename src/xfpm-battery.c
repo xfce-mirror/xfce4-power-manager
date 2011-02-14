@@ -141,20 +141,27 @@ xfpm_battery_refresh_visible (XfpmBattery *battery)
 static const gchar * G_GNUC_CONST
 xfpm_battery_get_message_from_battery_state (XfpmDeviceState state, gboolean ac_online)
 {
+    const gchar *msg  = NULL;
+    
     switch (state)
     {
 	case XFPM_DEVICE_STATE_FULLY_CHARGED:
-	    return _("Your battery is fully charged");
+	    msg = _("Your battery is fully charged");
 	    break;
 	case XFPM_DEVICE_STATE_CHARGING:
-	    return  _("Your battery is charging");
+	    msg = _("Your battery is charging");
 	    break;
 	case XFPM_DEVICE_STATE_DISCHARGING:
-	    return  ac_online ? _("Your battery is discharging"): _("System is running on battery power");
+	    msg =  ac_online ? _("Your battery is discharging"): _("System is running on battery power");
+	    break;
+	case XFPM_DEVICE_STATE_EMPTY:
+	    msg = _("Battery is empty");
 	    break;
 	default:
-	    return NULL;
+	    break;
     }
+    
+    return msg;
 }
 
 static void
