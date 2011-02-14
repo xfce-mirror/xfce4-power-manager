@@ -297,7 +297,7 @@ xfpm_power_report_error (XfpmPower *power, const gchar *error, const gchar *icon
     }
     
     xfpm_notify_show_notification (power->priv->notify, 
-				   _("Xfce power manager"), 
+				   _("Power Manager"), 
 				   error, 
 				   icon_name,
 				   10000,
@@ -421,7 +421,7 @@ xfpm_power_tray_exit_activated_cb (gpointer data)
 			       _("Quit"),
 			       _("All running instances of the power manager will exit"),
 			       "%s",
-			        _("Quit Xfce power manager?"));
+			        _("Quit the power manager?"));
     if ( ret )
     {
 	xfpm_quit ();
@@ -517,7 +517,7 @@ xfpm_power_show_tray_menu (XfpmPower *power,
     mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_ABOUT, NULL);
     gtk_widget_set_sensitive (mi, TRUE);
     gtk_widget_show (mi);
-    g_signal_connect (mi, "activate", G_CALLBACK (xfpm_about), _("Xfce Power Manager"));
+    g_signal_connect (mi, "activate", G_CALLBACK (xfpm_about), _("Power Manager"));
     
     gtk_menu_shell_append (GTK_MENU_SHELL(menu), mi);
     
@@ -652,7 +652,7 @@ xfpm_power_show_critical_action_notification (XfpmPower *power, XfpmBattery *bat
 	      
     n = 
 	xfpm_notify_new_notification (power->priv->notify, 
-				      _("Xfce power manager"), 
+				      _("Power Manager"), 
 				      message, 
 				      gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
 				      20000,
@@ -688,7 +688,7 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
     message = _("System is running on low power. "\
                "Save your work to avoid losing data");
     
-    dialog = gtk_dialog_new_with_buttons (_("Xfce Power Manager"), NULL, GTK_DIALOG_MODAL,
+    dialog = gtk_dialog_new_with_buttons (_("Power Manager"), NULL, GTK_DIALOG_MODAL,
                                           NULL);
     
     gtk_dialog_set_default_response (GTK_DIALOG (dialog),
@@ -840,7 +840,7 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 	{
 	    if ( notify )
 		xfpm_notify_show_notification (power->priv->notify, 
-					       _("Xfce power manager"), 
+					       _("Power Manager"), 
 					       _("System is running on low power"), 
 					       gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
 					       10000,
@@ -854,7 +854,7 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 	    
 	    if ( notify )
 		xfpm_notify_show_notification (power->priv->notify, 
-					       _("Xfce power manager"), 
+					       _("Power Manager"), 
 					       _("Battery charge level is low"), 
 					       gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
 					       10000,

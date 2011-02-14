@@ -226,7 +226,7 @@ xfpm_battery_notify_idle (gpointer data)
 	return FALSE;
 	
     xfpm_notify_show_notification (battery->priv->notify, 
-				   _("Xfce power manager"), 
+				   _("Power Manager"), 
 				   message, 
 				   gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
 				   8000,
