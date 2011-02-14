@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-10-18 04:02+0000\n"
+"POT-Creation-Date: 2011-01-30 05:03+0000\n"
 "PO-Revision-Date: 2010-02-08 18:17+0100\n"
 "Last-Translator: Douart Patrick <patrick.2@laposte.net>\n"
 "Language-Team: French <xfce-i18n@xfce.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Country: FRANCE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Language: French\n"
-"X-Poedit-Country: FRANCE\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -155,7 +155,7 @@ msgstr "Appui sur le bouton de mise en veille :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 #: ../settings/xfpm-settings-main.c:121 ../src/xfpm-power.c:520
-#: ../src/xfpm-power.c:691 ../src/xfpm-main.c:415
+#: ../src/xfpm-power.c:691 ../src/xfpm-main.c:410
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Xfce Power Manager"
 msgstr "Gestionnaire d'alimentation"
@@ -197,9 +197,8 @@ msgstr "Secondes"
 
 #: ../settings/xfpm-settings.c:761 ../settings/xfpm-settings.c:948
 #: ../settings/xfpm-settings.c:1410
-#, fuzzy
 msgid "Hibernate and suspend operations not supported"
-msgstr "Opérations de mise en veille prolongée et de mise en veille non autorisées"
+msgstr "Opérations de mise en veille prolongée et de mise en veille non supportées"
 
 #: ../settings/xfpm-settings.c:766 ../settings/xfpm-settings.c:953
 #: ../settings/xfpm-settings.c:1415
@@ -245,18 +244,16 @@ msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to s
 msgstr "Désactiver le DPMS, e.g. pour ne pas tenter l'extinction de l'écran ou sa mise en veille"
 
 #: ../settings/xfpm-settings.c:1319
-#, fuzzy
 msgid "Suspend operation not supported"
-msgstr "Opération de mise en veille non autorisée"
+msgstr "Opération de mise en veille non supportée"
 
 #: ../settings/xfpm-settings.c:1325
 msgid "Suspend operation not permitted"
 msgstr "Opération de mise en veille non autorisée"
 
 #: ../settings/xfpm-settings.c:1331
-#, fuzzy
 msgid "Hibernate operation not supported"
-msgstr "Opération de mise en veille prolongée non autorisée"
+msgstr "Opération de mise en veille prolongée non supportée"
 
 #: ../settings/xfpm-settings.c:1336
 msgid "Hibernate operation not permitted"
@@ -294,7 +291,7 @@ msgstr "Socket du gestionnaire de paramètres"
 msgid "SOCKET ID"
 msgstr "ID SOCKET"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:286
 #: ../src/xfpm-power-info.c:948
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -308,7 +305,7 @@ msgstr "Impossible de charger la configuration, les paramètres par défauts ser
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Échec au chargement du gestionnaire d'alimentation Xfce"
 
-#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:331
+#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:326
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Le gestionnaire d'alimentation Xfce n'est pas lancé"
@@ -355,9 +352,8 @@ msgid "Quit"
 msgstr "Quitter"
 
 #: ../src/xfpm-power.c:422
-#, fuzzy
 msgid "All running instances of the power manager will exit"
-msgstr "Gestionnaire d'alimentation Xfce"
+msgstr "Toutes les instances en fonctionnement du gestionnaire d'énergie vont quitter"
 
 #: ../src/xfpm-power.c:424
 msgid "Quit Xfce power manager?"
@@ -365,7 +361,6 @@ msgstr "Quitter le gestionnaire d'alimentation Xfce"
 
 #. Power information
 #: ../src/xfpm-power.c:494 ../src/xfpm-power-info.c:818
-#, fuzzy
 msgid "Power Information"
 msgstr "Information de la batterie"
 
@@ -456,9 +451,8 @@ msgid "Lithium polymer"
 msgstr "Lithium polymère"
 
 #: ../src/xfpm-power-common.c:159
-#, fuzzy
 msgid "Lithium iron phosphate"
-msgstr "Lithium ion"
+msgstr "Lithium phosphate de fer"
 
 #: ../src/xfpm-power-common.c:161
 msgid "Lead acid"
@@ -644,133 +638,119 @@ msgstr "Faux"
 
 #: ../src/xfpm-main.c:113
 #, c-format
-msgid "With HAL support\n"
-msgstr "Avec le support de HAL\n"
-
-#: ../src/xfpm-main.c:115
-#, c-format
-msgid "Without HAL support\n"
-msgstr "Sans support de HAL\n"
-
-#: ../src/xfpm-main.c:118
-#, c-format
 msgid "With policykit support\n"
 msgstr "Avec le support de policykit\n"
 
-#: ../src/xfpm-main.c:120
+#: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without policykit support\n"
 msgstr "Sans support de policykit\n"
 
-#: ../src/xfpm-main.c:123
+#: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
 msgstr "Avec support du gestionnaire du réseau\n"
 
-#: ../src/xfpm-main.c:125
+#: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
 msgstr "Sans le support du gestionnaire de réseau\n"
 
-#: ../src/xfpm-main.c:128
+#: ../src/xfpm-main.c:123
 #, c-format
 msgid "With DPMS support\n"
 msgstr "Avec le support DPMS \n"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without DPMS support\n"
 msgstr "Sans support DPMS\n"
 
-#: ../src/xfpm-main.c:145
-#, fuzzy
+#: ../src/xfpm-main.c:140
 msgid "Can suspend"
-msgstr "Mettre en veille"
+msgstr "Peut se mettre en veille"
 
-#: ../src/xfpm-main.c:147
-#, fuzzy
+#: ../src/xfpm-main.c:142
 msgid "Can hibernate"
-msgstr "Mettre en veille prolongée"
+msgstr "Peut se mettre en veille prolongée"
 
-#: ../src/xfpm-main.c:149
+#: ../src/xfpm-main.c:144
 msgid "Can spin down hard disks"
 msgstr "Arrêt des disques durs quand cela est possible"
 
-#: ../src/xfpm-main.c:151
+#: ../src/xfpm-main.c:146
 msgid "Authorized to suspend"
 msgstr "Mode hibernation"
 
-#: ../src/xfpm-main.c:153
+#: ../src/xfpm-main.c:148
 msgid "Authorized to hibernate"
 msgstr "Autorisé à hiberner"
 
-#: ../src/xfpm-main.c:155
+#: ../src/xfpm-main.c:150
 msgid "Authorized to shutdown"
 msgstr "Autorisé à mettre hors tension"
 
-#: ../src/xfpm-main.c:157
+#: ../src/xfpm-main.c:152
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "Autorisé à réduire la vitesse de rotation des disques durs"
 
-#: ../src/xfpm-main.c:159
-#, fuzzy
+#: ../src/xfpm-main.c:154
 msgid "Has brightness panel"
 msgstr "Régler la luminosité"
 
-#: ../src/xfpm-main.c:161
+#: ../src/xfpm-main.c:156
 msgid "Has power button"
 msgstr "A un bouton de mise en marche"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:158
 msgid "Has hibernate button"
 msgstr "A un bouton d'hibernation"
 
-#: ../src/xfpm-main.c:165
+#: ../src/xfpm-main.c:160
 msgid "Has sleep button"
 msgstr "A un bouton de mise en veille"
 
-#: ../src/xfpm-main.c:167
+#: ../src/xfpm-main.c:162
 msgid "Has LID"
 msgstr "A un couvercle"
 
-#: ../src/xfpm-main.c:266
+#: ../src/xfpm-main.c:261
 msgid "Do not daemonize"
 msgstr "Ne pas lancer en arrière-plan"
 
-#: ../src/xfpm-main.c:267
+#: ../src/xfpm-main.c:262
 msgid "Enable debugging"
 msgstr "Active le débogage"
 
-#: ../src/xfpm-main.c:268
-#, fuzzy
+#: ../src/xfpm-main.c:263
 msgid "Dump all information"
-msgstr "Information de la batterie"
+msgstr "Exporter toutes les informations"
 
-#: ../src/xfpm-main.c:269
+#: ../src/xfpm-main.c:264
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-main.c:270
+#: ../src/xfpm-main.c:265
 msgid "Show the configuration dialog"
 msgstr "Afficher la fenêtre configuration"
 
-#: ../src/xfpm-main.c:271
+#: ../src/xfpm-main.c:266
 msgid "Quit any running xfce power manager"
 msgstr "Quitter toutes les instances de gestionnaire d'alimentation Xfce"
 
-#: ../src/xfpm-main.c:272 ../src/xfpm-power-info.c:935
+#: ../src/xfpm-main.c:267 ../src/xfpm-power-info.c:935
 msgid "Version information"
 msgstr "Information sur la version"
 
-#: ../src/xfpm-main.c:322
+#: ../src/xfpm-main.c:317
 msgid "Unable to get connection to the message bus session"
 msgstr "Échec de connexion à une session au bus de message"
 
-#: ../src/xfpm-main.c:416
+#: ../src/xfpm-main.c:411
 msgid "Another power manager is already running"
 msgstr "Un autre gestionnaire d'alimentation est déjà lancé"
 
-#: ../src/xfpm-main.c:422
+#: ../src/xfpm-main.c:417
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Le gestionnaire d'alimentation Xfce est déjà lancé"
@@ -996,6 +976,12 @@ msgstr "Aucun périphérique n'a été trouvé"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Régler la luminosité"
+
+#~ msgid "With HAL support\n"
+#~ msgstr "Avec le support de HAL\n"
+
+#~ msgid "Without HAL support\n"
+#~ msgstr "Sans support de HAL\n"
 
 #~ msgid "Xfce Power Manager requires version 011 of devicekit-power to work properly while the version found is"
 #~ msgstr "Xfce Power Manager requiert la version 011 de devicekit-power pour fonctionner correctement alors que la version trouvée est"
