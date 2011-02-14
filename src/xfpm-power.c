@@ -79,7 +79,8 @@ struct XfpmPowerPrivate
     XfpmXfconf      *conf;
     GtkStatusIcon   *adapter_icon;
     
-    XfpmBatterState  overall_state;
+    XfpmBatteryCharge overall_state;
+    gboolean         critical_action_done;
     
     gboolean	     inhibited;
     
@@ -802,7 +803,15 @@ xfpm_power_system_on_critical_power (XfpmPower *power, XfpmBattery *battery)
     }
     else
     {
-	xfpm_power_process_critical_action (power, critical_action);
+	if (power->priv->critical_action_done == FALSE)
+	{
+	    power->priv->critical_action_done = TRUE;
+	    xfpm_power_process_critical_action (power, critical_action);
+	}
+	else
+	{
+	    xfpm_power_show_critical_action (power, battery);
+	}
     }
 }
 
@@ -821,7 +830,10 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
     if (current_charge == power->priv->overall_state)
 	return;
     
-    power->priv->overall_state = current_state;
+    if (current_charge >= XFPM_BATTERY_CHARGE_LOW)
+	power->priv->critical_action_done = FALSE;
+    
+    power->priv->overall_state = current_charge;
     
     if ( current_charge == XFPM_BATTERY_CHARGE_CRITICAL && power->priv->on_battery)
     {
@@ -1229,6 +1241,7 @@ xfpm_power_init (XfpmPower *power)
     power->priv->dialog          = NULL;
     power->priv->adapter_icon    = NULL;
     power->priv->overall_state   = XFPM_BATTERY_CHARGE_OK;
+    power->priv->critical_action_done = FALSE;
     
     power->priv->inhibit = xfpm_inhibit_new ();
     power->priv->notify  = xfpm_notify_new ();
