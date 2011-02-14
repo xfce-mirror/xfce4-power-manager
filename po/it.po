@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-15 11:03+0000\n"
+"POT-Creation-Date: 2011-02-14 17:03+0000\n"
 "PO-Revision-Date: 2010-12-23 21:06+0100\n"
 "Last-Translator: Cristian Marchi <cri.penta@gmail.com>\n"
 "Language-Team: Italian Translation Team <xfce-it-translators@googlegroups.com>\n"
@@ -160,9 +160,7 @@ msgid "When sleep button is pressed:"
 msgstr "Alla pressione del pulsante addormenta:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-power.c:520
-#: ../src/xfpm-power.c:691 ../src/xfpm-main.c:410
-#: ../src/xfce4-power-manager.desktop.in.h:2
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:410
 msgid "Xfce Power Manager"
 msgstr "Gestore di energia di Xfce"
 
@@ -325,16 +323,15 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Il gestore di energia di Xfce4 non è in esecuzione; avviarlo ora?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
+#: ../src/xfpm-power.c:300 ../src/xfpm-power.c:520 ../src/xfpm-power.c:655
+#: ../src/xfpm-power.c:691 ../src/xfpm-power.c:843 ../src/xfpm-power.c:857
+#: ../src/xfpm-battery.c:229 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Gestore di energia"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
-msgid "Settings for the Xfce 4 Power Manager"
-msgstr "Impostazioni per il gestore di energia di Xfce4"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
-msgid "Xfce 4 Power Manager"
-msgstr "Gestore di energia di Xfce4"
+msgid "Settings for the Xfce Power Manager"
+msgstr "Impostazioni per il gestore di energia di Xfce"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
@@ -342,11 +339,6 @@ msgstr ""
 "Roberto Pariset <robdebian@gmail.com>\n"
 "Gianluca Foddis <gianluca.foddis@gmail.com>\n"
 "Cristian Marchi <cri.penta@gmail.com>, 2009"
-
-#: ../src/xfpm-power.c:300 ../src/xfpm-power.c:655 ../src/xfpm-power.c:843
-#: ../src/xfpm-power.c:857 ../src/xfpm-battery.c:229
-msgid "Xfce power manager"
-msgstr "Gestore di energia di Xfce"
 
 #: ../src/xfpm-power.c:323
 msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
@@ -361,8 +353,8 @@ msgid "All running instances of the power manager will exit"
 msgstr "Tutte le istanze in esecuzione del gestore di energia verranno chiuse"
 
 #: ../src/xfpm-power.c:424
-msgid "Quit Xfce power manager?"
-msgstr "Uscire dal gestore di energia di Xfce?"
+msgid "Quit the power manager?"
+msgstr "Uscire dal gestore di energia?"
 
 #. Power information
 #: ../src/xfpm-power.c:494 ../src/xfpm-power-info.c:818
@@ -964,7 +956,7 @@ msgstr "Comando"
 msgid "Details"
 msgstr "Dettagli"
 
-#: ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
 msgstr "Gestione dell'energia per l'ambiente Xfce"
 
@@ -981,6 +973,12 @@ msgstr "Nessun dispositivo trovato"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Plugin della luminosità"
+
+#~ msgid "Xfce 4 Power Manager"
+#~ msgstr "Gestore di energia di Xfce4"
+
+#~ msgid "Xfce power manager"
+#~ msgstr "Gestore di energia di Xfce"
 
 #~ msgid "With HAL support\n"
 #~ msgstr "Con supporto ad HAL\n"
