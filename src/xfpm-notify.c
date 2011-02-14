@@ -65,6 +65,9 @@ struct XfpmNotifyPrivate
     NotifyNotification *notification;
     NotifyNotification *critical;
     
+    gulong		critical_id;
+    gulong		notify_id;
+    
     gboolean	        supports_actions;
     gboolean		supports_sync; /*For x-canonical-private-synchronous */
 };
@@ -167,6 +170,9 @@ xfpm_notify_init (XfpmNotify *notify)
     notify->priv->notification = NULL;
     notify->priv->critical = NULL;
     
+    notify->priv->critical_id = 0;
+    notify->priv->notify_id   = 0;
+    
     notify->priv->monitor = xfpm_dbus_monitor_new ();
     xfpm_dbus_monitor_add_service (notify->priv->monitor, DBUS_BUS_SESSION, "org.freedesktop.Notifications");
     g_signal_connect (notify->priv->monitor, "service-connection-changed",
@@ -249,6 +255,12 @@ xfpm_notify_show (NotifyNotification *n)
 static void
 xfpm_notify_close_notification (XfpmNotify *notify )
 {
+    if (notify->priv->notify_id != 0)
+    {
+	g_source_remove (notify->priv->notify_id);
+	notify->priv->notify_id = 0;
+    }
+    
     if ( notify->priv->notification )
     {
     	if (!notify_notification_close (notify->priv->notification, NULL))
@@ -335,7 +347,7 @@ void xfpm_notify_present_notification (XfpmNotify *notify, NotifyNotification *n
 	notify->priv->notification = n;
     }
     
-    g_idle_add ((GSourceFunc) xfpm_notify_show, n);
+    notify->priv->notify_id = g_idle_add ((GSourceFunc) xfpm_notify_show, n);
 }
 
 void xfpm_notify_critical (XfpmNotify *notify, NotifyNotification *n)
@@ -349,12 +361,19 @@ void xfpm_notify_critical (XfpmNotify *notify, NotifyNotification *n)
     g_signal_connect (G_OBJECT (n), "closed", 
 		      G_CALLBACK (xfpm_notify_close_critical_cb), notify);
 		      
-    g_idle_add ((GSourceFunc) xfpm_notify_show, n);
+    notify->priv->critical_id = g_idle_add ((GSourceFunc) xfpm_notify_show, n);
 }
 
 void xfpm_notify_close_critical (XfpmNotify *notify)
 {
     g_return_if_fail (XFPM_IS_NOTIFY (notify));
+    
+    
+    if (notify->priv->critical_id != 0)
+    {
+	g_source_remove (notify->priv->critical_id);
+	notify->priv->critical_id = 0;
+    }
     
     if ( notify->priv->critical )
     {
