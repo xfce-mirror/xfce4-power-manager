@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-12-04 11:02+0000\n"
+"POT-Creation-Date: 2011-02-15 05:03+0000\n"
 "PO-Revision-Date: 2009-08-31 16:32+0100\n"
 "Last-Translator: Nuno Miguel <nunis@netcabo.pt>\n"
 "Language-Team: \n"
@@ -150,9 +150,7 @@ msgid "When sleep button is pressed:"
 msgstr "Quando o botão suspender for pressionado:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-power.c:520
-#: ../src/xfpm-power.c:691 ../src/xfpm-main.c:415
-#: ../src/xfce4-power-manager.desktop.in.h:2
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:410
 msgid "Xfce Power Manager"
 msgstr "Gestão de energia Xfce"
 
@@ -287,7 +285,7 @@ msgstr "\"Socket\" do gestor de definições"
 msgid "SOCKET ID"
 msgstr "ID de \"SOCKET\""
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:286
 #: ../src/xfpm-power-info.c:948
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -301,7 +299,7 @@ msgstr "Falha ao carregar a configuração de gestão de energia, usando as omis
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Incapaz de iniciar a gestão de energia Xfce"
 
-#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:331
+#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:326
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "A gestão de energia Xfce não está em execução"
@@ -315,25 +313,19 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "A gestão de energia Xfce4 não está em execução. Pretende iniciar?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
+#: ../src/xfpm-power.c:300 ../src/xfpm-power.c:520 ../src/xfpm-power.c:655
+#: ../src/xfpm-power.c:691 ../src/xfpm-power.c:843 ../src/xfpm-power.c:857
+#: ../src/xfpm-battery.c:229 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Gestão de energia"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
-msgid "Settings for the Xfce 4 Power Manager"
-msgstr "Definições para a gestão de energia Xfce 4"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
-msgid "Xfce 4 Power Manager"
-msgstr "Gestão de energia Xfce 4"
+msgid "Settings for the Xfce Power Manager"
+msgstr "Definições para a gestão de energia Xfce"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
 msgstr "Nuno Miguel <nunis@netcabo.pt>"
-
-#: ../src/xfpm-power.c:300 ../src/xfpm-power.c:655 ../src/xfpm-power.c:843
-#: ../src/xfpm-power.c:857 ../src/xfpm-battery.c:229
-msgid "Xfce power manager"
-msgstr "Gestão de energia Xfce"
 
 #: ../src/xfpm-power.c:323
 msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
@@ -348,8 +340,8 @@ msgid "All running instances of the power manager will exit"
 msgstr "Todas as instâncias do gestor de energia irão terminar"
 
 #: ../src/xfpm-power.c:424
-msgid "Quit Xfce power manager?"
-msgstr "Sair da gestão de energia Xfce?"
+msgid "Quit the power manager?"
+msgstr "Fechar gestão de energia?"
 
 #. Power information
 #: ../src/xfpm-power.c:494 ../src/xfpm-power-info.c:818
@@ -630,129 +622,119 @@ msgstr "Falso"
 
 #: ../src/xfpm-main.c:113
 #, c-format
-msgid "With HAL support\n"
-msgstr "Com suporte HAL\n"
-
-#: ../src/xfpm-main.c:115
-#, c-format
-msgid "Without HAL support\n"
-msgstr "Sem suporte HAL\n"
-
-#: ../src/xfpm-main.c:118
-#, c-format
 msgid "With policykit support\n"
 msgstr "Com suporte policykit\n"
 
-#: ../src/xfpm-main.c:120
+#: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without policykit support\n"
 msgstr "Sem suporte policykit\n"
 
-#: ../src/xfpm-main.c:123
+#: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
 msgstr "Com suporte à gestão de rede\n"
 
-#: ../src/xfpm-main.c:125
+#: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
 msgstr "Sem suporte à gestão de rede\n"
 
-#: ../src/xfpm-main.c:128
+#: ../src/xfpm-main.c:123
 #, c-format
 msgid "With DPMS support\n"
 msgstr "Com suporte a DPMS\n"
 
-#: ../src/xfpm-main.c:130
+#: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without DPMS support\n"
 msgstr "Sem suporte a DPMS\n"
 
-#: ../src/xfpm-main.c:145
+#: ../src/xfpm-main.c:140
 msgid "Can suspend"
 msgstr "Pode suspender"
 
-#: ../src/xfpm-main.c:147
+#: ../src/xfpm-main.c:142
 msgid "Can hibernate"
 msgstr "Pode hibernar"
 
-#: ../src/xfpm-main.c:149
+#: ../src/xfpm-main.c:144
 msgid "Can spin down hard disks"
 msgstr "Pode reduzir a rotação dos discos"
 
-#: ../src/xfpm-main.c:151
+#: ../src/xfpm-main.c:146
 msgid "Authorized to suspend"
 msgstr "Autorizado a suspender"
 
-#: ../src/xfpm-main.c:153
+#: ../src/xfpm-main.c:148
 msgid "Authorized to hibernate"
 msgstr "Autorizado a hibernar"
 
-#: ../src/xfpm-main.c:155
+#: ../src/xfpm-main.c:150
 msgid "Authorized to shutdown"
 msgstr "Autorizado a desligar"
 
-#: ../src/xfpm-main.c:157
+#: ../src/xfpm-main.c:152
 msgid "Authorized to spin down hard disks"
 msgstr "Autorizado a reduzir a rotação do disco"
 
-#: ../src/xfpm-main.c:159
+#: ../src/xfpm-main.c:154
 msgid "Has brightness panel"
 msgstr "Tem brilho de painel"
 
-#: ../src/xfpm-main.c:161
+#: ../src/xfpm-main.c:156
 msgid "Has power button"
 msgstr "Tem botão para desligar"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:158
 msgid "Has hibernate button"
 msgstr "Tem botão de hibernar"
 
-#: ../src/xfpm-main.c:165
+#: ../src/xfpm-main.c:160
 msgid "Has sleep button"
 msgstr "Tem botão de suspender"
 
-#: ../src/xfpm-main.c:167
+#: ../src/xfpm-main.c:162
 msgid "Has LID"
 msgstr "Tem LID"
 
-#: ../src/xfpm-main.c:266
+#: ../src/xfpm-main.c:261
 msgid "Do not daemonize"
 msgstr "Não colocar em segundo plano"
 
-#: ../src/xfpm-main.c:267
+#: ../src/xfpm-main.c:262
 msgid "Enable debugging"
 msgstr "Activar depuração"
 
-#: ../src/xfpm-main.c:268
+#: ../src/xfpm-main.c:263
 msgid "Dump all information"
 msgstr "Ignorar todas as informações"
 
-#: ../src/xfpm-main.c:269
+#: ../src/xfpm-main.c:264
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Reiniciar a instância da gestão de energia do Xfce"
 
-#: ../src/xfpm-main.c:270
+#: ../src/xfpm-main.c:265
 msgid "Show the configuration dialog"
 msgstr "Mostrar a janela de configuração"
 
-#: ../src/xfpm-main.c:271
+#: ../src/xfpm-main.c:266
 msgid "Quit any running xfce power manager"
 msgstr "Sair de qualquer gestão de energia xfce"
 
-#: ../src/xfpm-main.c:272 ../src/xfpm-power-info.c:935
+#: ../src/xfpm-main.c:267 ../src/xfpm-power-info.c:935
 msgid "Version information"
 msgstr "Informação de versão"
 
-#: ../src/xfpm-main.c:322
+#: ../src/xfpm-main.c:317
 msgid "Unable to get connection to the message bus session"
 msgstr "Incapaz de ligar ao bus de mensagem de sessão"
 
-#: ../src/xfpm-main.c:416
+#: ../src/xfpm-main.c:411
 msgid "Another power manager is already running"
 msgstr "Outra gestão de energia está em execução"
 
-#: ../src/xfpm-main.c:422
+#: ../src/xfpm-main.c:417
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Gestão de energia Xfce já em execução"
@@ -961,7 +943,7 @@ msgstr "Comando"
 msgid "Details"
 msgstr "Detalhes"
 
-#: ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
 msgstr "Gestão de energia para o ambiente Xfce"
 
@@ -978,6 +960,18 @@ msgstr "Nenhum dispositivo encontrado"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "\"Plug-in\" brilho"
+
+#~ msgid "Xfce 4 Power Manager"
+#~ msgstr "Gestão de energia Xfce 4"
+
+#~ msgid "Xfce power manager"
+#~ msgstr "Gestão de energia Xfce"
+
+#~ msgid "With HAL support\n"
+#~ msgstr "Com suporte HAL\n"
+
+#~ msgid "Without HAL support\n"
+#~ msgstr "Sem suporte HAL\n"
 
 #~ msgid "CPU frequency control"
 #~ msgstr "Controlo de frequência do CPU"
