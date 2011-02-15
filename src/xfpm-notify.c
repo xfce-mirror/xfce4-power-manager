@@ -216,7 +216,7 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
     NotifyNotification *n;
     
     n = notify_notification_new (title, message, NULL
-#ifdef HAVE_LIBNOTIFY_07
+#if NOTIFY_CHECK_VERSION (0, 7, 0) 
     );
 #else
     , NULL);
@@ -225,7 +225,7 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
     if ( icon_name )
     	xfpm_notify_set_notification_icon (n, icon_name);
 
-#ifndef HAVE_LIBNOTIFY_07
+#if NOTIFY_CHECK_VERSION (0, 7, 0) 
     if ( icon )
     	notify_notification_attach_to_status_icon (n, icon);
 #endif
