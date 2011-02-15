@@ -881,3 +881,17 @@ XfpmBatteryCharge xfpm_battery_get_charge (XfpmBattery *battery)
     
     return battery->priv->charge;
 }
+
+const gchar *xfpm_battery_get_battery_name (XfpmBattery *battery)
+{
+    g_return_val_if_fail (XFPM_IS_BATTERY (battery), NULL);
+    
+    return battery->priv->battery_name;
+}
+
+gchar *xfpm_battery_get_time_left (XfpmBattery *battery)
+{
+    g_return_val_if_fail (XFPM_IS_BATTERY (battery), NULL);
+    
+    return xfpm_battery_get_time_string (battery->priv->time_to_empty);
+}

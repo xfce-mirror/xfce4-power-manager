@@ -64,6 +64,10 @@ XfpmDeviceType	   	    xfpm_battery_get_device_type (XfpmBattery *battery);
 
 XfpmBatteryCharge	    xfpm_battery_get_charge      (XfpmBattery *battery);
 
+const gchar 		   *xfpm_battery_get_battery_name(XfpmBattery *battery);
+
+gchar 			   *xfpm_battery_get_time_left   (XfpmBattery *battery);
+
 G_END_DECLS
 
 #endif /* __XFPM_BATTERY_H */

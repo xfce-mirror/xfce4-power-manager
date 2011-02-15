@@ -871,16 +871,29 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 	}
 	else if ( battery_charge == XFPM_BATTERY_CHARGE_LOW )
 	{
-	    
 	    if ( notify )
+	    {
+		gchar *msg;
+		gchar *time_str;
+		
+		const gchar *battery_name = xfpm_battery_get_battery_name (battery);
+		
+		time_str = xfpm_battery_get_time_left (battery);
+		
+		msg = g_strdup_printf (_("Your %s y charge level is low\nEstimated time left %s"), battery_name, time_str);
+		
+		
 		xfpm_notify_show_notification (power->priv->notify, 
 					       _("Power Manager"), 
-					       _("Battery charge level is low"), 
+					       msg, 
 					       gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
 					       10000,
 					       FALSE,
 					       XFPM_NOTIFY_NORMAL,
 					       GTK_STATUS_ICON (battery));
+		g_free (msg);
+		g_free (time_str);
+	    }
 	}
     }
     
