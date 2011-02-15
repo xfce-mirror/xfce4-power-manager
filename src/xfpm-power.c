@@ -34,6 +34,7 @@
 
 #include "xfpm-power.h"
 #include "xfpm-dbus.h"
+#include "xfpm-dpms.h"
 #include "xfpm-battery.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-notify.h"
@@ -46,9 +47,9 @@
 #include "xfpm-common.h"
 #include "xfpm-power-common.h"
 #include "xfpm-config.h"
-#include "xfpm-enum-glib.h"
 #include "xfpm-debug.h"
 #include "xfpm-enum-types.h"
+#include "egg-idletime.h"
 
 static void xfpm_power_finalize     (GObject *object);
 
@@ -81,6 +82,9 @@ struct XfpmPowerPrivate
     
     XfpmBatteryCharge overall_state;
     gboolean         critical_action_done;
+    
+    XfpmPowerMode    power_mode;
+    EggIdletime     *idletime;
     
     gboolean	     inhibited;
     
@@ -431,6 +435,40 @@ xfpm_power_tray_exit_activated_cb (gpointer data)
     }
 }
 
+
+static void
+xfpm_power_change_mode (XfpmPower *power, XfpmPowerMode mode)
+{
+    XfpmDpms *dpms;
+    
+    power->priv->power_mode = mode;
+    
+    dpms = xfpm_dpms_new ();
+    xfpm_dpms_refresh (dpms);
+    g_object_unref (dpms);
+    
+    if (mode == XFPM_POWER_MODE_NORMAL)
+    {
+	EggIdletime *idletime;
+	idletime = egg_idletime_new ();
+	egg_idletime_alarm_reset_all (idletime);
+    
+	g_object_unref (idletime);
+    }
+}
+
+static void
+xfpm_power_normal_mode_cb (XfpmPower *power)
+{
+    xfpm_power_change_mode (power, XFPM_POWER_MODE_NORMAL);
+}
+
+static void
+xfpm_power_presentation_mode_cb (XfpmPower *power)
+{
+    xfpm_power_change_mode (power, XFPM_POWER_MODE_PRESENTATION);
+}
+
 static void
 xfpm_power_show_tray_menu (XfpmPower *power, 
 			 GtkStatusIcon *icon, 
@@ -438,7 +476,7 @@ xfpm_power_show_tray_menu (XfpmPower *power,
 			 guint activate_time,
 			 gboolean show_info_item)
 {
-    GtkWidget *menu, *mi, *img;
+    GtkWidget *menu, *mi, *img, *subm;
 
     menu = gtk_menu_new();
 
@@ -493,7 +531,6 @@ xfpm_power_show_tray_menu (XfpmPower *power,
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
 
     // Power information
-    
     mi = gtk_image_menu_item_new_with_label (_("Power Information"));
     img = gtk_image_new_from_stock (GTK_STOCK_INFO, GTK_ICON_SIZE_MENU);
     gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mi), img);
@@ -505,6 +542,41 @@ xfpm_power_show_tray_menu (XfpmPower *power,
 		     
     gtk_widget_show (mi);
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+    
+    /** 
+     * Power Mode
+     **/
+    /* TRANSLATOR: Mode here is the power profile (presentation, power save, normal) */
+    mi = gtk_image_menu_item_new_with_label (_("Mode"));
+    img = gtk_image_new_from_icon_name (XFPM_AC_ADAPTER_ICON, GTK_ICON_SIZE_MENU);
+    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mi), img);
+    gtk_widget_set_sensitive (mi,TRUE);
+    gtk_widget_show (mi);
+    
+    subm = gtk_menu_new ();
+    gtk_menu_item_set_submenu (GTK_MENU_ITEM (mi), subm);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+    
+    /* Normal*/
+    mi = gtk_check_menu_item_new_with_label (_("Normal"));
+    gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (mi), power->priv->power_mode == XFPM_POWER_MODE_NORMAL);
+    gtk_widget_set_sensitive (mi,TRUE);
+    
+    g_signal_connect_swapped (mi, "activate",
+			      G_CALLBACK (xfpm_power_normal_mode_cb), power);
+    gtk_widget_show (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (subm), mi);
+    
+    /* Normal*/
+    mi = gtk_check_menu_item_new_with_label (_("Presentation"));
+    gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (mi), power->priv->power_mode == XFPM_POWER_MODE_PRESENTATION);
+    gtk_widget_set_sensitive (mi, TRUE);
+    
+    g_signal_connect_swapped (mi, "activate",
+			      G_CALLBACK (xfpm_power_presentation_mode_cb), power);
+    gtk_widget_show (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (subm), mi);
+    
     
     mi = gtk_separator_menu_item_new ();
     gtk_widget_show (mi);
@@ -1254,6 +1326,7 @@ xfpm_power_init (XfpmPower *power)
     power->priv->adapter_icon    = NULL;
     power->priv->overall_state   = XFPM_BATTERY_CHARGE_OK;
     power->priv->critical_action_done = FALSE;
+    power->priv->power_mode      = XFPM_POWER_MODE_NORMAL;
     
     power->priv->inhibit = xfpm_inhibit_new ();
     power->priv->notify  = xfpm_notify_new ();
@@ -1460,6 +1533,13 @@ gboolean xfpm_power_has_battery (XfpmPower *power)
     }
     
     return ret;
+}
+
+XfpmPowerMode  xfpm_power_get_mode (XfpmPower *power)
+{
+    g_return_val_if_fail (XFPM_IS_POWER (power), XFPM_POWER_MODE_NORMAL);
+    
+    return power->priv->power_mode;
 }
 
 /*

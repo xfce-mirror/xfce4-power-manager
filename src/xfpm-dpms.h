@@ -64,6 +64,8 @@ gboolean        xfpm_dpms_capable         (XfpmDpms *dpms) G_GNUC_PURE;
 
 void		xfpm_dpms_force_level	  (XfpmDpms *dpms, CARD16 level);
 
+void		xfpm_dpms_refresh 	  (XfpmDpms *dpms);
+
 G_END_DECLS
 
 #endif /* HAVE_DPMS */

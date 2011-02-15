@@ -353,6 +353,9 @@ xfpm_manager_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmM
 static void
 xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager)
 {
+    if (xfpm_power_get_mode (manager->priv->power) == XFPM_POWER_MODE_PRESENTATION)
+	return;
+    
     XFPM_DEBUG ("Alarm inactivity timeout id %d", id);
     
     if ( id == TIMEOUT_INACTIVITY_ON_AC || id == TIMEOUT_INACTIVITY_ON_BATTERY )

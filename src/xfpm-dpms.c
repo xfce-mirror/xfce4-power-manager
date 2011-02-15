@@ -49,7 +49,7 @@ static void xfpm_dpms_finalize   (GObject *object);
 struct XfpmDpmsPrivate
 {
     XfpmXfconf      *conf;
-    XfpmPower         *power;
+    XfpmPower       *power;
     
     gboolean         dpms_capable;
     gboolean         inhibited;
@@ -149,15 +149,18 @@ xfpm_dpms_get_configuration_timeouts (XfpmDpms *dpms, guint16 *ret_sleep, guint1
     *ret_off =  off_time * 60;
 }
 
-static void
+void
 xfpm_dpms_refresh (XfpmDpms *dpms)
 {
     gboolean enabled;
     guint16 off_timeout;
     guint16 sleep_timeout;
     gboolean sleep_mode;
+    gboolean presentation_mode;
     
-    if ( dpms->priv->inhibited )
+    presentation_mode = (xfpm_power_get_mode (dpms->priv->power) == XFPM_POWER_MODE_PRESENTATION);
+    
+    if ( dpms->priv->inhibited || presentation_mode)
     {
 	xfpm_dpms_disable (dpms);
 	return;
@@ -269,9 +272,19 @@ xfpm_dpms_finalize(GObject *object)
 XfpmDpms *
 xfpm_dpms_new (void)
 {
-    XfpmDpms *dpms = NULL;
-    dpms = g_object_new (XFPM_TYPE_DPMS, NULL);
-    return dpms;
+    static gpointer xfpm_dpms_object = NULL;
+    
+    if ( G_LIKELY (xfpm_dpms_object != NULL ) )
+    {
+	g_object_ref (xfpm_dpms_object);
+    }
+    else
+    {
+	xfpm_dpms_object = g_object_new (XFPM_TYPE_DPMS, NULL);
+	g_object_add_weak_pointer (xfpm_dpms_object, &xfpm_dpms_object);
+    }
+    
+    return XFPM_DPMS (xfpm_dpms_object);
 }
 
 gboolean xfpm_dpms_capable (XfpmDpms *dpms)

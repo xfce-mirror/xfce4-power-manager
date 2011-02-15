@@ -107,6 +107,13 @@ typedef enum
     
 } XfpmShowIcon;
 
+typedef enum
+{
+    XFPM_POWER_MODE_NORMAL,
+    XFPM_POWER_MODE_PRESENTATION
+    
+} XfpmPowerMode;
+
 G_END_DECLS
 
 #endif /* __XFPM_ENUM_GLIB_H */

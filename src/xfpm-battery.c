@@ -94,20 +94,27 @@ G_DEFINE_TYPE (XfpmBattery, xfpm_battery, GTK_TYPE_STATUS_ICON)
 static const gchar * G_GNUC_CONST
 xfpm_battery_get_icon_index (XfpmDeviceType type, guint percent)
 {
-    
-    g_debug ("Battery percent %d\n", percent);
-    
-    if (percent < 10) {
+    if (percent < 10) 
+    {
         return "000";
-    } else if (percent < 30) {
+    } 
+    else if (percent < 30) 
+    {
         return ( (type == XFPM_DEVICE_TYPE_BATTERY || type == XFPM_DEVICE_TYPE_UPS) ? "020" : "030");
-    } else if (percent < 50) {
+    } 
+    else if (percent < 50) 
+    {
         return ( (type == XFPM_DEVICE_TYPE_BATTERY || type == XFPM_DEVICE_TYPE_UPS ) ? "040" : "030");
-    } else if (percent < 70) {
+    } 
+    else if (percent < 70) 
+    {
         return "060";
-    } else if (percent < 90) {
+    } 
+    else if (percent < 90) 
+    {
         return ((type == XFPM_DEVICE_TYPE_BATTERY || type == XFPM_DEVICE_TYPE_UPS) ? "080" : "060");
     }
+    
     return "100";
 }
 

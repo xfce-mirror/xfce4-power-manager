@@ -22,6 +22,7 @@
 #define __XFPM_POWER_H
 
 #include <glib-object.h>
+#include "xfpm-enum-glib.h"
 
 G_BEGIN_DECLS
 
@@ -73,6 +74,8 @@ void			xfpm_power_hibernate       	(XfpmPower *power,
 							 gboolean force);
 
 gboolean		xfpm_power_has_battery		(XfpmPower *power);
+
+XfpmPowerMode           xfpm_power_get_mode		(XfpmPower *power);
 
 G_END_DECLS
 

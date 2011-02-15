@@ -86,16 +86,19 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 {
     gboolean ret;
     
-    ret = xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
-    
-    if ( !ret )
+    if (xfpm_power_get_mode (backlight->priv->power) == XFPM_POWER_MODE_NORMAL )
     {
-	g_warning ("Unable to get current brightness level");
-	return;
+	ret = xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
+	
+	if ( !ret )
+	{
+	    g_warning ("Unable to get current brightness level");
+	    return;
+	}
+	XFPM_DEBUG ("Current brightness level before dimming : %u", backlight->priv->last_level);
+	
+	backlight->priv->dimmed = xfpm_brightness_dim_down (backlight->priv->brightness);
     }
-    XFPM_DEBUG ("Current brightness level before dimming : %u", backlight->priv->last_level);
-    
-    backlight->priv->dimmed = xfpm_brightness_dim_down (backlight->priv->brightness);
 }
 
 static gboolean
