@@ -215,13 +215,20 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
 {
     NotifyNotification *n;
     
-    n = notify_notification_new (title, message, NULL, NULL);
+    n = notify_notification_new (title, message, NULL
+#ifdef HAVE_LIBNOTIFY_07
+    );
+#else
+    , NULL);
+#endif
     
     if ( icon_name )
     	xfpm_notify_set_notification_icon (n, icon_name);
-	
+
+#ifndef HAVE_LIBNOTIFY_07
     if ( icon )
     	notify_notification_attach_to_status_icon (n, icon);
+#endif
 	
     notify_notification_set_urgency (n, (NotifyUrgency)urgency);
     
