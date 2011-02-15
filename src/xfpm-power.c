@@ -933,7 +933,6 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
 	xfpm_battery_monitor_device (XFPM_BATTERY (battery), 
 				     proxy, 
 				     proxy_prop, 
-				     UPOWER_IFACE_DEVICE, 
 				     device_type);
 
 	g_hash_table_insert (power->priv->hash, g_strdup (object_path), battery);

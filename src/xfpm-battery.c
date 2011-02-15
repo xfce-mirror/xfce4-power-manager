@@ -36,6 +36,7 @@
 #include "xfpm-xfconf.h"
 #include "xfpm-notify.h"
 #include "xfpm-config.h"
+#include "xfpm-button.h"
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-debug.h"
@@ -51,6 +52,7 @@ struct XfpmBatteryPrivate
 {
     XfpmXfconf             *conf;
     XfpmNotify		   *notify;
+    XfpmButton             *button;
     DBusGProxy             *proxy;
     DBusGProxy 		   *proxy_prop;
     
@@ -65,10 +67,10 @@ struct XfpmBatteryPrivate
     gint64		    time_to_full;
     gint64		    time_to_empty;
 
-    const gchar            *backend_iface_device; /*upower or devkit*/
     const gchar            *battery_name;
     
     gulong		    sig;
+    gulong		    sig_bt;
 };
 
 enum
@@ -322,18 +324,15 @@ xfpm_battery_refresh_icon (XfpmBattery *battery)
     gtk_status_icon_set_from_icon_name (GTK_STATUS_ICON (battery), icon_name);
 }
 
-static gboolean
-xfpm_battery_notify_idle (gpointer data)
+static void
+xfpm_battery_notify (XfpmBattery *battery)
 {
-    XfpmBattery *battery;
     gchar *message = NULL;
-    
-    battery = XFPM_BATTERY (data);
     
     message = xfpm_battery_get_message_from_battery_state (battery);
     
     if ( !message )
-	return FALSE;
+	return;
 	
     xfpm_notify_show_notification (battery->priv->notify, 
 				   _("Power Manager"), 
@@ -345,7 +344,14 @@ xfpm_battery_notify_idle (gpointer data)
 				   GTK_STATUS_ICON (battery));
     
     g_free (message);
-    
+}
+
+static gboolean
+xfpm_battery_notify_idle (gpointer data)
+{
+    XfpmBattery *battery;
+    battery = XFPM_BATTERY (data);
+    xfpm_battery_notify (battery);
     return FALSE;
 }
 
@@ -574,12 +580,19 @@ xfpm_battery_refresh (XfpmBattery *battery, GHashTable *props)
 }
 
 static void
+xfpm_battery_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBattery *battery)
+{
+    if (type == BUTTON_BATTERY)
+	xfpm_battery_notify (battery);
+}
+
+static void
 xfpm_battery_changed_cb (DBusGProxy *proxy, XfpmBattery *battery)
 {
     GHashTable *props;
     
     props = xfpm_power_get_interface_properties (battery->priv->proxy_prop, 
-						 battery->priv->backend_iface_device);
+						 UPOWER_IFACE_DEVICE);
     
     if ( props )
 	xfpm_battery_refresh (battery, props);
@@ -721,10 +734,15 @@ xfpm_battery_init (XfpmBattery *battery)
     battery->priv->icon_prefix   = NULL;
     battery->priv->time_to_full  = 0;
     battery->priv->time_to_empty = 0;
+    battery->priv->button        = xfpm_button_new ();
     battery->priv->ac_online     = TRUE;
     
     battery->priv->sig = g_signal_connect (G_OBJECT (battery->priv->conf), "notify::" SHOW_TRAY_ICON_CFG,
 					   G_CALLBACK (xfpm_battery_tray_icon_settings_changed), battery);
+					   
+    
+    battery->priv->sig_bt = g_signal_connect (G_OBJECT (battery->priv->button), "button-pressed",
+					   G_CALLBACK (xfpm_battery_button_pressed_cb), battery);
 }
 
 static void
@@ -741,11 +759,15 @@ xfpm_battery_finalize (GObject *object)
 				    
     if ( g_signal_handler_is_connected (battery->priv->conf, battery->priv->sig ) )
 	g_signal_handler_disconnect (G_OBJECT (battery->priv->conf), battery->priv->sig);
+	
+     if ( g_signal_handler_is_connected (battery->priv->button, battery->priv->sig_bt ) )
+	g_signal_handler_disconnect (G_OBJECT (battery->priv->button), battery->priv->sig_bt);
 				    
     g_object_unref (battery->priv->proxy);
     g_object_unref (battery->priv->proxy_prop);
     g_object_unref (battery->priv->conf);
     g_object_unref (battery->priv->notify);
+    g_object_unref (battery->priv->button);
 
     G_OBJECT_CLASS (xfpm_battery_parent_class)->finalize (object);
 }
@@ -826,14 +848,12 @@ xfpm_battery_new (void)
 void xfpm_battery_monitor_device (XfpmBattery *battery,
 				  DBusGProxy *proxy,
 				  DBusGProxy *proxy_prop,
-				  const gchar *backend_iface_device,
 				  XfpmDeviceType device_type)
 {
     battery->priv->type = device_type;
     battery->priv->proxy_prop = proxy_prop;
     battery->priv->proxy = proxy;
     battery->priv->icon_prefix = xfpm_battery_get_icon_prefix_device_enum_type (device_type);
-    battery->priv->backend_iface_device = backend_iface_device;
     battery->priv->battery_name = xfpm_battery_get_name (device_type);
     
     

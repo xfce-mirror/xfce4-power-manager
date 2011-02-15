@@ -58,7 +58,6 @@ GtkStatusIcon              *xfpm_battery_new             (void);
 void			    xfpm_battery_monitor_device  (XfpmBattery *battery,
 							  DBusGProxy *proxy,
 							  DBusGProxy *proxy_prop,
-							  const gchar *backend_iface_device,
 							  XfpmDeviceType device_type);
 
 XfpmDeviceType	   	    xfpm_battery_get_device_type (XfpmBattery *battery);
