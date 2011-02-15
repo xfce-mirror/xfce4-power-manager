@@ -64,6 +64,8 @@ enum
     PROP_SLEEP_BUTTON,
     PROP_LID_ACTION_ON_AC,
     PROP_LID_ACTION_ON_BATTERY,
+    PROP_BRIGHTNESS_LEVEL_ON_AC,
+    PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
 #ifdef HAVE_DPMS
     PROP_ENABLE_DPMS,
     PROP_DPMS_SLEEP_ON_AC,
@@ -331,6 +333,31 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							LID_TRIGGER_LOCK_SCREEN,
 							LID_TRIGGER_LOCK_SCREEN,
                                                         G_PARAM_READWRITE));
+    
+     /**
+     * XfpmXfconf::brightness-level-on-ac
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_BRIGHTNESS_LEVEL_ON_AC,
+                                     g_param_spec_int  (BRIGHTNESS_LEVEL_ON_AC,
+                                                        NULL, NULL,
+							1,
+							100,
+							80,
+                                                        G_PARAM_READWRITE));
+							
+    /**
+     * XfpmXfconf::brightness-level-on-battery
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
+                                     g_param_spec_int  (BRIGHTNESS_LEVEL_ON_BATTERY,
+                                                        NULL, NULL,
+							1,
+							100,
+							20,
+                                                        G_PARAM_READWRITE));
+    
     /**
      * XfpmXfconf::lid-action-on-battery
      **/

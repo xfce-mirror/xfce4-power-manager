@@ -88,6 +88,12 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
     
     if (xfpm_power_get_mode (backlight->priv->power) == XFPM_POWER_MODE_NORMAL )
     {
+	gint dim_level;
+	
+	g_object_get (G_OBJECT (backlight->priv->conf),
+		      backlight->priv->on_battery ? BRIGHTNESS_LEVEL_ON_BATTERY : BRIGHTNESS_LEVEL_ON_AC, &dim_level,
+		      NULL);
+	
 	ret = xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
 	
 	if ( !ret )
@@ -95,9 +101,12 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 	    g_warning ("Unable to get current brightness level");
 	    return;
 	}
-	XFPM_DEBUG ("Current brightness level before dimming : %u", backlight->priv->last_level);
 	
-	backlight->priv->dimmed = xfpm_brightness_dim_down (backlight->priv->brightness);
+	dim_level = dim_level * backlight->priv->max_level / 100;
+	
+	XFPM_DEBUG ("Current brightness level before dimming : %i, new %i", backlight->priv->last_level, dim_level);
+	
+	backlight->priv->dimmed = xfpm_brightness_set_level (backlight->priv->brightness, dim_level);
     }
 }
 

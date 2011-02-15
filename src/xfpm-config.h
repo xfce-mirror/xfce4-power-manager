@@ -58,6 +58,10 @@ G_BEGIN_DECLS
 #define     	BRIGHTNESS_ON_AC             	"brightness-on-ac"
 #define     	BRIGHTNESS_ON_BATTERY        	"brightness-on-battery"
 
+
+#define     	BRIGHTNESS_LEVEL_ON_AC          "brightness-level-on-ac"
+#define     	BRIGHTNESS_LEVEL_ON_BATTERY     "brightness-level-on-battery"
+
 #define     	CRITICAL_POWER_LEVEL        	"critical-power-level"
 #define     	SHOW_BRIGHTNESS_POPUP        	"show-brightness-popup"
 #define     	ENABLE_BRIGHTNESS_CONTROL       "change-brightness-on-key-events"

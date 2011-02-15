@@ -62,6 +62,12 @@ static  gboolean  lcd_brightness = FALSE;
 /*
  * GtkBuilder callbacks
  */
+void	    brightness_level_on_ac		   (GtkSpinButton *w,
+						    XfconfChannel *channel);
+
+void 	    brightness_level_on_battery 	   (GtkSpinButton *w,  
+						    XfconfChannel *channel);
+
 void	    battery_critical_changed_cb 	   (GtkWidget *w, 
 						    XfconfChannel *channel);
 
@@ -157,6 +163,28 @@ void        on_ac_spin_changed		   	   (GtkWidget *w,
 
 void        _cursor_changed_cb 			   (GtkTreeView *view, 
 						    gpointer data);
+
+
+
+void brightness_level_on_ac (GtkSpinButton *w,  XfconfChannel *channel)
+{
+     gint val = (gint) gtk_spin_button_get_value (w);
+    
+    if (!xfconf_channel_set_int (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, val) )
+    {
+	g_critical ("Unable to set value %d for property %s\n", val, BRIGHTNESS_LEVEL_ON_AC);
+    }
+}
+
+void brightness_level_on_battery (GtkSpinButton *w,  XfconfChannel *channel)
+{
+     gint val = (gint) gtk_spin_button_get_value (w);
+    
+    if (!xfconf_channel_set_int (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, val) )
+    {
+	g_critical ("Unable to set value %d for property %s\n", val, BRIGHTNESS_LEVEL_ON_BATTERY);
+    }
+}
 
 void
 battery_critical_changed_cb (GtkWidget *w, XfconfChannel *channel)
@@ -860,6 +888,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
 	gtk_list_store_append(list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Lock screen"), 1, LID_TRIGGER_LOCK_SCREEN, -1);
 	
+	gtk_combo_box_set_active (GTK_COMBO_BOX (lid), XFPM_DO_NOTHING);
+	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, LID_TRIGGER_LOCK_SCREEN);
 	
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
@@ -889,9 +919,16 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
     brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery"));
     if ( has_lcd_brightness )
     {
+	GtkWidget *brg_level;
+	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
 	
 	gtk_range_set_value (GTK_RANGE(brg), val);
+	
+	brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery"));
+	
+	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, 20);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (brg_level), val);
 	
     }
     else
@@ -998,6 +1035,8 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_list_store_append(list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Lock screen"), 1, LID_TRIGGER_LOCK_SCREEN, -1);
 	
+	gtk_combo_box_set_active (GTK_COMBO_BOX (lid), 0);
+	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, LID_TRIGGER_LOCK_SCREEN);
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
 	      valid;
@@ -1027,9 +1066,16 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-ac"));
     if ( has_lcd_brightness )
     {
+	GtkWidget *brg_level;
+	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
 	
 	gtk_range_set_value (GTK_RANGE(brg), val);
+	
+	brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-ac"));
+	
+	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, 80);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (brg_level), val);
 	
     }
     else
@@ -1169,6 +1215,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
 	gtk_list_store_append (list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
 	
+	gtk_combo_box_set_active (GTK_COMBO_BOX (power), 0);
+	
 	value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX POWER_SWITCH_CFG, XFPM_DO_NOTHING);
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
 	      valid;
@@ -1220,6 +1268,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
 	
 	value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, XFPM_DO_NOTHING);
 	
+	gtk_combo_box_set_active (GTK_COMBO_BOX (hibernate), 0);
+	
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
 	      valid;
 	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
@@ -1267,6 +1317,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
 	
 	gtk_list_store_append (list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
+	
+	gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_w), 0);
 	
 	value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX SLEEP_SWITCH_CFG, XFPM_DO_NOTHING);
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
@@ -1384,7 +1436,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
     
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, 10);
 
-	if ( val > 20 || val < 5)
+	if ( val > 20 || val < 1)
 	{
 	    g_critical ("Value %d if out of range for property %s\n", val, CRITICAL_POWER_LEVEL);
 	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), 10);
