@@ -952,7 +952,7 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 		
 		time_str = xfpm_battery_get_time_left (battery);
 		
-		msg = g_strdup_printf (_("Your %s y charge level is low\nEstimated time left %s"), battery_name, time_str);
+		msg = g_strdup_printf (_("Your %s charge level is low\nEstimated time left %s"), battery_name, time_str);
 		
 		
 		xfpm_notify_show_notification (power->priv->notify, 
