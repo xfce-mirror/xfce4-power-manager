@@ -66,6 +66,7 @@ struct XfpmBatteryPrivate
     gint64		    time_to_empty;
 
     const gchar            *backend_iface_device; /*upower or devkit*/
+    const gchar            *battery_name;
     
     gulong		    sig;
 };
@@ -91,6 +92,9 @@ G_DEFINE_TYPE (XfpmBattery, xfpm_battery, GTK_TYPE_STATUS_ICON)
 static const gchar * G_GNUC_CONST
 xfpm_battery_get_icon_index (XfpmDeviceType type, guint percent)
 {
+    
+    g_debug ("Battery percent %d\n", percent);
+    
     if (percent < 10) {
         return "000";
     } else if (percent < 30) {
@@ -138,27 +142,126 @@ xfpm_battery_refresh_visible (XfpmBattery *battery)
 }
 
 
-static const gchar * G_GNUC_CONST
-xfpm_battery_get_message_from_battery_state (XfpmDeviceState state, gboolean ac_online)
+/*
+ * Taken from gpm
+ */
+static gchar *
+xfpm_battery_get_time_string (guint seconds)
 {
-    const gchar *msg  = NULL;
-    
-    switch (state)
+    char* timestring = NULL;
+    gint  hours;
+    gint  minutes;
+
+    /* Add 0.5 to do rounding */
+    minutes = (int) ( ( seconds / 60.0 ) + 0.5 );
+
+    if (minutes == 0) 
     {
-	case XFPM_DEVICE_STATE_FULLY_CHARGED:
-	    msg = _("Your battery is fully charged");
-	    break;
-	case XFPM_DEVICE_STATE_CHARGING:
-	    msg = _("Your battery is charging");
-	    break;
-	case XFPM_DEVICE_STATE_DISCHARGING:
-	    msg =  ac_online ? _("Your battery is discharging"): _("System is running on battery power");
-	    break;
-	case XFPM_DEVICE_STATE_EMPTY:
-	    msg = _("Battery is empty");
-	    break;
-	default:
-	    break;
+	timestring = g_strdup (_("Unknown time"));
+	return timestring;
+    }
+
+    if (minutes < 60) 
+    {
+	timestring = g_strdup_printf (ngettext ("%i minute",
+			              "%i minutes",
+				      minutes), minutes);
+	return timestring;
+    }
+
+    hours = minutes / 60;
+    minutes = minutes % 60;
+
+    if (minutes == 0)
+	timestring = g_strdup_printf (ngettext (
+			    "%i hour",
+			    "%i hours",
+			    hours), hours);
+    else
+	/* TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
+	 * Swap order with "%2$s %2$i %1$s %1$i if needed */
+	timestring = g_strdup_printf (_("%i %s %i %s"),
+			    hours, ngettext ("hour", "hours", hours),
+			    minutes, ngettext ("minute", "minutes", minutes));
+    return timestring;
+}
+
+static gchar *
+xfpm_battery_get_message_from_battery_state (XfpmBattery *battery)
+{
+    gchar *msg  = NULL;
+    
+    
+    if (battery->priv->type == XFPM_DEVICE_TYPE_BATTERY || battery->priv->type == XFPM_DEVICE_TYPE_UPS)
+    {
+	switch (battery->priv->state)
+	{
+	    case XFPM_DEVICE_STATE_FULLY_CHARGED:
+		msg = g_strdup_printf (_("Your %s is fully charged"), battery->priv->battery_name);
+		break;
+	    case XFPM_DEVICE_STATE_CHARGING:
+		msg = g_strdup_printf (_("Your %s is charging"), battery->priv->battery_name);
+		
+		if ( battery->priv->time_to_full != 0 )
+		{
+		    gchar *tmp, *est_time_str;
+		    tmp = g_strdup (msg);
+		    g_free (msg);
+		    
+		    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_full);
+		    
+		    msg = g_strdup_printf ("%s (%i%%)\n%s until is fully charged.", tmp, battery->priv->percentage, est_time_str);
+		    g_free (est_time_str);
+		    g_free (tmp);
+		}
+
+		break;
+	    case XFPM_DEVICE_STATE_DISCHARGING:
+		if (battery->priv->ac_online)
+		    msg =  g_strdup_printf (_("Your %s is discharging"), battery->priv->battery_name);
+		else
+		    msg =  g_strdup_printf (_("System is running on %s power"), battery->priv->battery_name);
+		    
+		    if ( battery->priv->time_to_empty != 0 )
+		    {
+			gchar *tmp, *est_time_str;
+			tmp = g_strdup (msg);
+			g_free (msg);
+			
+			est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
+			
+			msg = g_strdup_printf ("%s (%i%%)\nEstimated time left is %s.", tmp, battery->priv->percentage, est_time_str);
+			g_free (tmp);
+			g_free (est_time_str);
+		    }
+		break;
+	    case XFPM_DEVICE_STATE_EMPTY:
+		msg = g_strdup_printf (_("Your %s is empty"), battery->priv->battery_name);
+		break;
+	    default:
+		break;
+	}
+	
+    }
+    else if (battery->priv->type >= XFPM_DEVICE_TYPE_MONITOR)
+    {
+	switch (battery->priv->state)
+	{
+	    case XFPM_DEVICE_STATE_FULLY_CHARGED:
+		msg = g_strdup_printf (_("Your %s is fully charged"), battery->priv->battery_name);
+		break;
+	    case XFPM_DEVICE_STATE_CHARGING:
+		msg = g_strdup_printf (_("Your %s is charging"), battery->priv->battery_name);
+		break;
+	    case XFPM_DEVICE_STATE_DISCHARGING:
+		msg =  g_strdup_printf (_("Your %s is discharging"), battery->priv->battery_name);
+		break;
+	    case XFPM_DEVICE_STATE_EMPTY:
+		msg = g_strdup_printf (_("Your %s is empty"), battery->priv->battery_name);
+		break;
+	    default:
+		break;
+	}
     }
     
     return msg;
@@ -223,11 +326,11 @@ static gboolean
 xfpm_battery_notify_idle (gpointer data)
 {
     XfpmBattery *battery;
-    const gchar *message;
+    gchar *message = NULL;
     
     battery = XFPM_BATTERY (data);
     
-    message = xfpm_battery_get_message_from_battery_state (battery->priv->state, battery->priv->ac_online);
+    message = xfpm_battery_get_message_from_battery_state (battery);
     
     if ( !message )
 	return FALSE;
@@ -240,6 +343,9 @@ xfpm_battery_notify_idle (gpointer data)
 				   FALSE,
 				   XFPM_NOTIFY_NORMAL,
 				   GTK_STATUS_ICON (battery));
+    
+    g_free (message);
+    
     return FALSE;
 }
 
@@ -273,63 +379,16 @@ xfpm_battery_notify_state (XfpmBattery *battery)
 }
 
 /*
- * Taken from gpm
- */
-static gchar *
-xfpm_battery_get_time_string (guint seconds)
-{
-    char* timestring = NULL;
-    gint  hours;
-    gint  minutes;
-
-    /* Add 0.5 to do rounding */
-    minutes = (int) ( ( seconds / 60.0 ) + 0.5 );
-
-    if (minutes == 0) 
-    {
-	timestring = g_strdup (_("Unknown time"));
-	return timestring;
-    }
-
-    if (minutes < 60) 
-    {
-	timestring = g_strdup_printf (ngettext ("%i minute",
-			              "%i minutes",
-				      minutes), minutes);
-	return timestring;
-    }
-
-    hours = minutes / 60;
-    minutes = minutes % 60;
-
-    if (minutes == 0)
-	timestring = g_strdup_printf (ngettext (
-			    "%i hour",
-			    "%i hours",
-			    hours), hours);
-    else
-	/* TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
-	 * Swap order with "%2$s %2$i %1$s %1$i if needed */
-	timestring = g_strdup_printf (_("%i %s %i %s"),
-			    hours, ngettext ("hour", "hours", hours),
-			    minutes, ngettext ("minute", "minutes", minutes));
-    return timestring;
-}
-
-/*
  * Refresh tooltip function for UPS and battery device only.
  */
 static void
 xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 {
-    const gchar *battery_name;
-    gchar *tip = NULL;
+    gchar *tip;
     gchar *est_time_str = NULL;
     gchar *power_status = NULL;
     
     power_status = g_strdup_printf (battery->priv->ac_online ? _("Adaptor is online") : _("System is running on battery power"));
-    
-    battery_name = battery->priv->type == XFPM_DEVICE_TYPE_BATTERY ? _("Battery") : _("UPS");
     
     if ( battery->priv->state == XFPM_DEVICE_STATE_FULLY_CHARGED )
     {
@@ -338,7 +397,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
 	    tip = g_strdup_printf (_("%s\nYour %s is fully charged (%i%%).\nProvides %s runtime"), 
 				   power_status,
-				   battery_name, 
+				   battery->priv->battery_name, 
 				   battery->priv->percentage,
 				   est_time_str);
 	    g_free (est_time_str);
@@ -347,7 +406,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	{
 	    tip = g_strdup_printf (_("%s\nYour %s is fully charged (%i%%)."), 
 				   power_status,
-				   battery_name,
+				   battery->priv->battery_name,
 				   battery->priv->percentage);
 	}
     }
@@ -358,7 +417,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_full);
 	    tip = g_strdup_printf (_("%s\nYour %s is charging (%i%%)\n%s until is fully charged."), 
 				   power_status,
-				   battery_name, 
+				   battery->priv->battery_name, 
 				   battery->priv->percentage, 
 				   est_time_str);
 	    g_free (est_time_str);
@@ -367,7 +426,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	{
 	    tip = g_strdup_printf (_("%s\nYour %s is charging (%i%%)."),
 				   power_status,
-				   battery_name,
+				   battery->priv->battery_name,
 				   battery->priv->percentage);
 	}
     }
@@ -376,9 +435,9 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	if ( battery->priv->time_to_empty != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
-	    tip = g_strdup_printf (_("%s\nYour %s is discharging (%i%%)\nestimated time left is %s."), 
+	    tip = g_strdup_printf (_("%s\nYour %s is discharging (%i%%)\nEstimated time left is %s."), 
 				   power_status,
-				   battery_name, 
+				   battery->priv->battery_name, 
 				   battery->priv->percentage, 
 				   est_time_str);
 	    g_free (est_time_str);
@@ -387,22 +446,22 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	{
 	    tip = g_strdup_printf (_("%s\nYour %s is discharging (%i%%)."),
 				   power_status,
-				   battery_name,
+				   battery->priv->battery_name,
 				   battery->priv->percentage);
 	}
 	
     }
     else if ( battery->priv->state == XFPM_DEVICE_STATE_PENDING_CHARGING )
     {
-	tip = g_strdup_printf (_("%s\n%s waiting to discharge (%i%%)."), power_status, battery_name, battery->priv->percentage);
+	tip = g_strdup_printf (_("%s\n%s waiting to discharge (%i%%)."), power_status, battery->priv->battery_name, battery->priv->percentage);
     }
     else if ( battery->priv->state == XFPM_DEVICE_STATE_PENDING_DISCHARGING )
     {
-	tip = g_strdup_printf (_("%s\n%s waiting to charge (%i%%)."), power_status, battery_name, battery->priv->percentage);
+	tip = g_strdup_printf (_("%s\n%s waiting to charge (%i%%)."), power_status, battery->priv->battery_name, battery->priv->percentage);
     }
     else if ( battery->priv->state == XFPM_DEVICE_STATE_EMPTY )
     {
-	tip = g_strdup_printf (_("%s\nYour %s is empty"), power_status, battery_name);
+	tip = g_strdup_printf (_("%s\nYour %s is empty"), power_status, battery->priv->battery_name);
     }
     
     gtk_tooltip_set_text (tooltip, tip);
@@ -718,6 +777,42 @@ xfpm_battery_get_icon_prefix_device_enum_type (XfpmDeviceType type)
     return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
 }
 
+static const gchar *
+xfpm_battery_get_name (XfpmDeviceType type)
+{
+    const gchar *name = NULL;
+    
+    switch (type)
+    {
+	case XFPM_DEVICE_TYPE_BATTERY:
+	    name = _("battery");
+	    break;
+	case XFPM_DEVICE_TYPE_UPS:
+	    name = _("UPS");
+	    break;
+	case XFPM_DEVICE_TYPE_MONITOR:
+	    name = _("monitor battery");
+	    break;
+	case XFPM_DEVICE_TYPE_MOUSE:
+	    name = _("mouse battery");
+	    break;
+	case XFPM_DEVICE_TYPE_KBD:
+	    name = _("keyboard battery");
+	    break;
+	case XFPM_DEVICE_TYPE_PDA:
+	    name = _("PDA battery");
+	    break;
+	case XFPM_DEVICE_TYPE_PHONE:
+	    name = _("Phone battery");
+	    break;
+	default:
+	    name = _("Unknown");
+	    break;
+    }
+    
+    return name;
+}
+
 GtkStatusIcon *
 xfpm_battery_new (void)
 {
@@ -739,6 +834,8 @@ void xfpm_battery_monitor_device (XfpmBattery *battery,
     battery->priv->proxy = proxy;
     battery->priv->icon_prefix = xfpm_battery_get_icon_prefix_device_enum_type (device_type);
     battery->priv->backend_iface_device = backend_iface_device;
+    battery->priv->battery_name = xfpm_battery_get_name (device_type);
+    
     
     dbus_g_proxy_add_signal (proxy, "Changed", G_TYPE_INVALID);
     dbus_g_proxy_connect_signal (proxy, "Changed",
