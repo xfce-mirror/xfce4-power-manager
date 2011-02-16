@@ -215,19 +215,28 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
 {
     NotifyNotification *n;
     
-    n = notify_notification_new (title, message, NULL
+#ifdef NOTIFY_CHECK_VERSION
 #if NOTIFY_CHECK_VERSION (0, 7, 0) 
-    );
+    n = notify_notification_new (title, message, NULL);
 #else
-    , NULL);
+    n = notify_notification_new (title, message, NULL, NULL);
 #endif
+#else
+    n = notify_notification_new (title, message, NULL, NULL);
+#endif
+
     
     if ( icon_name )
     	xfpm_notify_set_notification_icon (n, icon_name);
 
-#if NOTIFY_CHECK_VERSION (0, 7, 0) 
+#ifdef NOTIFY_CHECK_VERSION
+#if !NOTIFY_CHECK_VERSION (0, 7, 0) 
     if ( icon )
     	notify_notification_attach_to_status_icon (n, icon);
+#else
+    if ( icon )
+    	notify_notification_attach_to_status_icon (n, icon);
+#endif
 #endif
 	
     notify_notification_set_urgency (n, (NotifyUrgency)urgency);
