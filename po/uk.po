@@ -396,14 +396,13 @@ msgid "System is running on low power"
 msgstr "Система працює на слабком заряді"
 
 #: ../src/xfpm-power.c:955
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr ""
-"%s\n"
-"Ваша %s розряджається (%i%%)\n"
-"приблизно залишилось %s."
+"Ваша %s розряджається\n"
+"Приблизно залишилось %s."
 
 #: ../src/xfpm-power.c:1162 ../src/xfpm-power.c:1167
 msgid "Adaptor is offline"
@@ -539,9 +538,9 @@ msgid "Your %s is discharging"
 msgstr "Ваша %s розряджається"
 
 #: ../src/xfpm-battery.c:232
-#, fuzzy, c-format
+#, c-format
 msgid "System is running on %s power"
-msgstr "Стежити за властивостями при живленні від мережі"
+msgstr "Система працює на живленні від %s"
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
@@ -594,7 +593,7 @@ msgstr ""
 "Ваша %s заряджається (%i%%)."
 
 #: ../src/xfpm-battery.c:451
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
@@ -602,7 +601,7 @@ msgid ""
 msgstr ""
 "%s\n"
 "Ваша %s розряджається (%i%%)\n"
-"приблизно залишилось %s."
+"Приблизно залишилось %s."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
