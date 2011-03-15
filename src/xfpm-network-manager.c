@@ -29,9 +29,8 @@
 
 /*
  * Inform the Network Manager when we do suspend/hibernate 
- * message is either "wake" or "sleep"
  */
-gboolean 	xfpm_send_message_to_network_manager  	(const gchar *message)
+gboolean 	xfpm_network_manager_sleep  	(gboolean sleep)
 {
 #ifdef WITH_NETWORK_MANAGER
 
@@ -59,7 +58,7 @@ gboolean 	xfpm_send_message_to_network_manager  	(const gchar *message)
 	return FALSE;
     }
     
-    dbus_g_proxy_call_no_reply (proxy, message, G_TYPE_INVALID);
+    dbus_g_proxy_call_no_reply (proxy, "Sleep", G_TYPE_BOOLEAN, sleep, G_TYPE_INVALID);
     g_object_unref (G_OBJECT(proxy));
     dbus_g_connection_unref (bus);
     

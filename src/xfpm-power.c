@@ -337,7 +337,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
     
     g_signal_emit (G_OBJECT (power), signals [SLEEPING], 0);
-    xfpm_send_message_to_network_manager ("sleep");
+    xfpm_network_manager_sleep (TRUE);
         
     g_object_get (G_OBJECT (power->priv->conf),
 		  LOCK_SCREEN_ON_SLEEP, &lock_screen,
@@ -373,7 +373,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
     
     g_signal_emit (G_OBJECT (power), signals [WAKING_UP], 0);
-    xfpm_send_message_to_network_manager ("wake");
+    xfpm_network_manager_sleep (FALSE);
 }
 
 static void
