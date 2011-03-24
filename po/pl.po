@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-03-15 11:06+0000\n"
-"PO-Revision-Date: 2011-03-22 11:02+0100\n"
+"POT-Creation-Date: 2011-03-23 05:06+0000\n"
+"PO-Revision-Date: 2011-03-24 09:26+0100\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: Polish <>\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,7 @@ msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "Lock screen when going for suspend/hibernate"
-msgstr ""
+msgstr "Zablokowanie ekranu przed wstrzymaniem lub zahibernowaniem komputera"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
 msgid "Monitor"
@@ -99,16 +99,15 @@ msgstr "Czas bezczynności, po którym zostanie zmniejszona jasność ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
-msgstr ""
+msgstr "Tryb wstrzymywania pracy komputera:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
-#, fuzzy
 msgid "Set monitor sleep mode:"
-msgstr "Tryb wstrzymania ekranu:"
+msgstr "Tryb wstrzymania pracy ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Show notifications to notify about the battery state"
-msgstr ""
+msgstr "Wyświetlanie powiadomień o stanie akumulatora"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Spin down hard disks"
@@ -144,7 +143,6 @@ msgid "When hibernate button is pressed:"
 msgstr "Działanie przycisku hibernacji:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-#, fuzzy
 msgid "When laptop lid is closed:"
 msgstr "Działanie zamknięcia pokrywy laptopa:"
 
@@ -159,7 +157,7 @@ msgstr "Działanie przycisku wstrzymania:"
 #: ../data/interfaces/xfpm-settings.ui.h:32
 #: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:410
 msgid "Xfce Power Manager"
-msgstr "Menedżer zasilania"
+msgstr "Zasilanie"
 
 #: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
 #: ../settings/xfpm-settings.c:609
@@ -271,12 +269,10 @@ msgid "General"
 msgstr "Ogólne"
 
 #: ../settings/xfpm-settings.c:1552 ../settings/xfpm-settings.c:1557
-#, fuzzy
 msgid "On AC"
 msgstr "Sieć"
 
 #: ../settings/xfpm-settings.c:1567 ../settings/xfpm-settings.c:1572
-#, fuzzy
 msgid "On Battery"
 msgstr "Akumulator"
 
@@ -303,9 +299,10 @@ msgid "Type '%s --help' for usage."
 msgstr "Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy."
 
 #: ../settings/xfpm-settings-main.c:123
-#, fuzzy
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Nie udało się wczytać konfiguracji menedżera zasilania. "
+msgstr ""
+"Nie udało się wczytać konfiguracji menedżera zasilania. Użyto ustawień "
+"domyślnych."
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -333,7 +330,7 @@ msgstr "Menedżer zasilania"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
-msgstr ""
+msgstr "Konfiguruje ustawienia zasilania"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
@@ -360,7 +357,6 @@ msgstr "Zakończyć działanie menedżera zasilania?"
 
 #. Power information
 #: ../src/xfpm-power.c:534 ../src/xfpm-power-info.c:818
-#, fuzzy
 msgid "Power Information"
 msgstr "O zasilaniu"
 
@@ -439,7 +435,7 @@ msgstr "Zasilacz awaryjny"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
-msgstr ""
+msgstr "Sieć"
 
 #: ../src/xfpm-power-common.c:128
 msgid "Mouse"
@@ -687,11 +683,11 @@ msgstr ""
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
-msgstr ""
+msgstr "Prawda"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "False"
-msgstr ""
+msgstr "Fałsz"
 
 #: ../src/xfpm-main.c:113
 #, c-format
@@ -773,7 +769,7 @@ msgstr ""
 
 #: ../src/xfpm-main.c:261
 msgid "Do not daemonize"
-msgstr ""
+msgstr "Pomija uruchamianie w trybie demona."
 
 #: ../src/xfpm-main.c:262
 msgid "Enable debugging"
@@ -797,15 +793,16 @@ msgstr "Kończy działanie wszystkich wystąpień programu"
 
 #: ../src/xfpm-main.c:267 ../src/xfpm-power-info.c:935
 msgid "Version information"
-msgstr ""
+msgstr "Wypisuje informacje o wersji"
 
 #: ../src/xfpm-main.c:317
 msgid "Unable to get connection to the message bus session"
-msgstr ""
+msgstr "Nie można połączyć z sesją "
 
 #: ../src/xfpm-main.c:411
+#, fuzzy
 msgid "Another power manager is already running"
-msgstr ""
+msgstr "Inny menedżer zasilania jest już uruchomiony"
 
 #: ../src/xfpm-main.c:417
 #, c-format
@@ -935,7 +932,7 @@ msgstr ""
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
-msgstr ""
+msgstr "Atrybut"
 
 #: ../src/xfpm-power-info.c:338
 msgid "Value"
@@ -951,7 +948,7 @@ msgstr "Typ"
 
 #: ../src/xfpm-power-info.c:375
 msgid "PowerSupply"
-msgstr ""
+msgstr "Źródło zasilania"
 
 #: ../src/xfpm-power-info.c:393
 msgid "Model"
@@ -959,13 +956,13 @@ msgstr "Model"
 
 #: ../src/xfpm-power-info.c:407
 msgid "Technology"
-msgstr ""
+msgstr "Technologia"
 
 #. TRANSLATORS: Unit here is What hour
 #: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
 #: ../src/xfpm-power-info.c:442
 msgid "Wh"
-msgstr ""
+msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
@@ -976,7 +973,6 @@ msgid "Energy full"
 msgstr "Pojemność rzeczywista"
 
 #: ../src/xfpm-power-info.c:448
-#, fuzzy
 msgid "Energy empty"
 msgstr "Pojemność po rozładowaniu"
 
@@ -1008,8 +1004,9 @@ msgid "PID"
 msgstr "Identyfikator procesu"
 
 #: ../src/xfpm-power-info.c:754
+#, fuzzy
 msgid "Wakeups"
-msgstr ""
+msgstr "Ilość wybudzeń"
 
 #: ../src/xfpm-power-info.c:760
 msgid "Command"
@@ -1026,7 +1023,7 @@ msgstr ""
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
 msgid "Control your LCD brightness"
-msgstr ""
+msgstr "Reguluje jasność ekranu LCD"
 
 #: ../panel-plugins/brightness/brightness-button.c:182
 msgid "No device found"
@@ -1034,5 +1031,6 @@ msgstr "Nie odnaleziono urządzenia"
 
 #: ../panel-plugins/brightness/brightness-button.c:651
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
+#, fuzzy
 msgid "Brightness plugin"
-msgstr ""
+msgstr "Jasność ekranu"
