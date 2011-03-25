@@ -233,9 +233,6 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
 #if !NOTIFY_CHECK_VERSION (0, 7, 0) 
     if ( icon )
     	notify_notification_attach_to_status_icon (n, icon);
-#else
-    if ( icon )
-    	notify_notification_attach_to_status_icon (n, icon);
 #endif
 #endif
 	
