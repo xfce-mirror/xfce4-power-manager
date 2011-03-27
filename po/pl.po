@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce-power-manager 1.0.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-03-23 05:06+0000\n"
-"PO-Revision-Date: 2011-03-26 10:48+0100\n"
+"PO-Revision-Date: 2011-03-27 12:58+0200\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: Polish <>\n"
 "MIME-Version: 1.0\n"
@@ -55,12 +55,14 @@ msgid "Hibernate"
 msgstr "Zahibernowanie"
 
 #: ../data/interfaces/xfpm-settings.ui.h:9
+#, fuzzy
 msgid "Level:"
-msgstr ""
+msgstr "Poziom:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "Lock screen when going for suspend/hibernate"
-msgstr "Zablokowanie ekranu przed wstrzymaniem lub zahibernowaniem komputera"
+msgstr ""
+"Blokowanie ekranu podczas wstrzymywania lub hibernowania pracy komputera"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
 msgid "Monitor"
@@ -89,10 +91,12 @@ msgstr "Oszczędzanie energii w zamian za niższą wydajność"
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
 msgstr ""
+"Czas bezczynności, po którym ekran zostanie wprowadzony w stan uśpienia:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Put the computer to sleep when inactive for:"
-msgstr "Czas bezczynności, po którym działanie komputera zostanie wstrzymane:"
+msgstr ""
+"Czas bezczynności, po którym komputer zostanie wprowadzony w stan uśpienia:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
@@ -100,11 +104,11 @@ msgstr "Czas bezczynności, po którym zostanie zmniejszona jasność ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
-msgstr "Tryb wstrzymania pracy komputera:"
+msgstr "Tryb uśpienia pracy komputera:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "Set monitor sleep mode:"
-msgstr "Tryb wstrzymania pracy ekranu:"
+msgstr "Tryb uśpienia pracy ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Show notifications to notify about the battery state"
@@ -116,7 +120,7 @@ msgstr "Wstrzymywanie pracy dysków twardych"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "Standby"
-msgstr "Stan oczekiwania"
+msgstr "Czuwanie"
 
 #. Suspend menu option
 #: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:811
@@ -153,7 +157,7 @@ msgstr "Działanie przycisku zasilania:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "When sleep button is pressed:"
-msgstr "Działanie przycisku wstrzymania:"
+msgstr "Działanie przycisku uśpienia:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 #: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:410
@@ -397,10 +401,12 @@ msgstr "Wyłącz komputer"
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
+"Źródło zasilania zostanie wkrótce rozładowane. Proszę zapisać bieżący stan "
+"pracy, w celu uniknięcia utraty danych."
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
-msgstr ""
+msgstr "Źródło zasilania zostanie wkrótce rozładowane."
 
 #: ../src/xfpm-power.c:955
 #, c-format
@@ -408,6 +414,8 @@ msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr ""
+"%s zostanie wkrótce rozładowany.\n"
+"Przewidywany czas zasilania: %s."
 
 #: ../src/xfpm-power.c:1162 ../src/xfpm-power.c:1167
 msgid "Adaptor is offline"
@@ -694,82 +702,93 @@ msgid "False"
 msgstr "Fałsz"
 
 #: ../src/xfpm-main.c:113
-#, c-format
+#, fuzzy, c-format
 msgid "With policykit support\n"
-msgstr ""
+msgstr "Obsługa policykit\n"
 
 #: ../src/xfpm-main.c:115
-#, c-format
+#, fuzzy, c-format
 msgid "Without policykit support\n"
-msgstr ""
+msgstr "Brak obsługi policykit\n"
 
 #: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "Obsługa menedżera sieci\n"
 
 #: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Brak obsługi menedżera sieci\n"
 
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With DPMS support\n"
-msgstr ""
+msgstr "Obsługa DPMS\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without DPMS support\n"
-msgstr ""
+msgstr "Brak obsługi DPMS\n"
 
 #: ../src/xfpm-main.c:140
+#, fuzzy
 msgid "Can suspend"
-msgstr ""
+msgstr "Potrafi wstrzymać pracę komputera"
 
 #: ../src/xfpm-main.c:142
+#, fuzzy
 msgid "Can hibernate"
-msgstr ""
+msgstr "Potrafi zahibernować pracę komputera"
 
 #: ../src/xfpm-main.c:144
+#, fuzzy
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Potrafi wstrzymać pracę dysków twardych"
 
 #: ../src/xfpm-main.c:146
+#, fuzzy
 msgid "Authorized to suspend"
-msgstr ""
+msgstr "Uprawniony do wstrzymywania"
 
 #: ../src/xfpm-main.c:148
+#, fuzzy
 msgid "Authorized to hibernate"
-msgstr ""
+msgstr "Uprawniony do hibernowania"
 
 #: ../src/xfpm-main.c:150
+#, fuzzy
 msgid "Authorized to shutdown"
-msgstr ""
+msgstr "Uprawniony do wyłączania"
 
 #: ../src/xfpm-main.c:152
+#, fuzzy
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "Uprawniony do wstrzymywania pracy dysków twardych"
 
 #: ../src/xfpm-main.c:154
 msgid "Has brightness panel"
 msgstr ""
 
 #: ../src/xfpm-main.c:156
+#, fuzzy
 msgid "Has power button"
-msgstr ""
+msgstr "Posiada przycisk zasialania"
 
 #: ../src/xfpm-main.c:158
+#, fuzzy
 msgid "Has hibernate button"
-msgstr ""
+msgstr "Posiada przycisk hibernowania"
 
 #: ../src/xfpm-main.c:160
+#, fuzzy
 msgid "Has sleep button"
-msgstr ""
+msgstr "Posiada przycisk uśpienia"
 
 #: ../src/xfpm-main.c:162
+#, fuzzy
 msgid "Has LID"
-msgstr ""
+msgstr "Posiada pokrywę ekranu"
 
 #: ../src/xfpm-main.c:261
 msgid "Do not daemonize"
@@ -836,7 +855,7 @@ msgstr "Moduł jądra"
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
-msgstr ""
+msgstr "Jądro"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
@@ -850,8 +869,9 @@ msgstr ""
 
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
+#, fuzzy
 msgid "PS/2 keyboard/mouse/touchpad"
-msgstr ""
+msgstr "Klawiatura PS/2/mysz/gładzik"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
@@ -870,7 +890,6 @@ msgstr ""
 
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
-#, fuzzy
 msgid "Intel wireless adaptor"
 msgstr "Moduł sieci bezprzewodowej Intel"
 
