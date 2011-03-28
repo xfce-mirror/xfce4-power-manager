@@ -32,12 +32,15 @@
 
 #include <sys/types.h>
 
-#if defined(__FreeBSD__)
-#include <sys/stat.h>
-#else
+#if defined(__linux)
 #include <sys/param.h>
 #include <sys/sysctl.h>
 #include <sys/user.h>
+#elif defined(__FreeBSD__)
+#include <sys/stat.h>
+#elif defined(__SVR4) || defined(__sun)
+#include <fcntl.h>
+#include <procfs.h>
 #endif
 
 #include <errno.h>
@@ -115,7 +118,7 @@ static guint64
 get_start_time_for_pid (pid_t pid)
 {
     guint64 start_time;
-#if !defined(__FreeBSD__)
+#if defined(__linux)
     gchar *filename;
     gchar *contents;
     size_t length;
@@ -172,7 +175,7 @@ get_start_time_for_pid (pid_t pid)
     g_free (filename);
     g_free (contents);
     
-#else /*if !defined(__FreeBSD__)*/
+#elif defined(__FreeBSD__)
 
     struct kinfo_proc p;
     
@@ -189,6 +192,33 @@ get_start_time_for_pid (pid_t pid)
     start_time = (guint64) p.ki_start.tv_sec;
     
 out:
+#elif defined(__SVR4) || defined(__sun)
+
+    psinfo_t p;
+    gchar *filename;
+    int fd;
+
+    start_time = 0;
+
+    filename = g_strdup_printf ("/proc/%d/psinfo", (int) pid);
+    if ((fd = open(filename, O_RDONLY)) < 0)
+    {
+	g_warning ("Error opening %s (%s)",
+		   filename,
+		   g_strerror (errno));
+	goto out;
+    }
+    if (read(fd, &p, sizeof (p)) != sizeof (p))
+    {
+	g_warning ("Error reading %s",
+		   filename);
+	close(fd);
+	goto out;
+    }
+    start_time = (guint64) p.pr_start.tv_sec;
+    close(fd);
+out:
+    g_free (filename);
 #endif
     
     return start_time;
