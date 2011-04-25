@@ -38,7 +38,7 @@
 #include <sys/user.h>
 #elif defined(__FreeBSD__)
 #include <sys/stat.h>
-#elif defined(__SVR4) || defined(__sun)
+#elif defined(__SVR4) && defined(__sun)
 #include <fcntl.h>
 #include <procfs.h>
 #endif
@@ -192,7 +192,7 @@ get_start_time_for_pid (pid_t pid)
     start_time = (guint64) p.ki_start.tv_sec;
     
 out:
-#elif defined(__SVR4) || defined(__sun)
+#elif defined(__SVR4) && defined(__sun)
 
     psinfo_t p;
     gchar *filename;
