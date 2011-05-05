@@ -185,7 +185,7 @@ brightness_button_set_tooltip (BrightnessButton *button)
 static gboolean
 brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
 {
-    gint x, y, orientation;
+    gint x, y;
     gint current_level = 0;
     GdkDisplay *display;
     GdkScreen *screen;
@@ -234,7 +234,6 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
     gdk_window_get_origin (widget->window, &x, &y);
 
     pos = xfce_panel_plugin_get_screen_position (button->priv->plugin);
-    orientation = xfce_panel_plugin_get_orientation (button->priv->plugin);
     
     /* top */
     if ( pos == XFCE_SCREEN_POSITION_NW_H || 
@@ -320,9 +319,8 @@ brightness_button_press_event (GtkWidget *widget, GdkEventButton *ev)
 static void
 minus_clicked (GtkWidget *widget, BrightnessButton *button)
 {
-    gint level, max_level;
+    gint level;
     
-    max_level = xfpm_brightness_get_max_level (button->priv->brightness);
     level = (gint ) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
     if ( level != 0 )

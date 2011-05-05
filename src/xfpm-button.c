@@ -252,10 +252,6 @@ xfpm_button_init (XfpmButton *button)
 static void
 xfpm_button_finalize (GObject *object)
 {
-    XfpmButton *button;
-
-    button = XFPM_BUTTON (object);
-    
     G_OBJECT_CLASS(xfpm_button_parent_class)->finalize(object);
 }
 

@@ -185,7 +185,9 @@ xfpm_dbus_monitor_query_system_bus_idle (gpointer data)
 	return TRUE;
     }
     
+    
     monitor = XFPM_DBUS_MONITOR (data);
+    monitor->priv->system_bus = bus;
     g_signal_emit (G_OBJECT (monitor), signals [SYSTEM_BUS_CONNECTION_CHANGED], 0, TRUE);
     
     return FALSE;

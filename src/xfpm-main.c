@@ -136,6 +136,7 @@ xfpm_dump (GHashTable *hash)
 	      "%s: %s\n"
 	      "%s: %s\n"
 	      "%s: %s\n"
+	      "%s: %s\n"
 	      "%s: %s\n",
 	     _("Can suspend"),
 	     xfpm_bool_to_local_string (can_suspend),
@@ -151,6 +152,8 @@ xfpm_dump (GHashTable *hash)
 	     xfpm_bool_to_local_string (can_shutdown),
 	     _("Authorized to spin down hard disks"),
 	     xfpm_bool_to_local_string (can_spin_down),
+	     _("Has battery"),
+	     xfpm_bool_to_local_string (has_battery),
 	     _("Has brightness panel"),
 	     xfpm_bool_to_local_string (has_lcd_brightness),
 	     _("Has power button"),
