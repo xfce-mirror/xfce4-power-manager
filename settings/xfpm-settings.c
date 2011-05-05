@@ -944,6 +944,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
 #endif
 
     spin_down = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-on-battery"));
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (spin_down), 
+				  xfconf_channel_get_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_BATTERY, TRUE));
     gtk_widget_set_sensitive (spin_down, can_spin_down);
     
     if ( !devkit_disk )
@@ -1091,6 +1093,9 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 #endif
 
     spin_down = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-on-ac"));
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (spin_down), 
+				  xfconf_channel_get_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_AC, FALSE));
+				  
     gtk_widget_set_sensitive (spin_down, can_spin_down);
     
     if ( !devkit_disk )
