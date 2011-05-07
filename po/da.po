@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager 0.9.90\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-05 10:05+0000\n"
+"POT-Creation-Date: 2011-05-07 04:06+0000\n"
 "PO-Revision-Date: 2010-01-30 16:24+0100\n"
 "Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -531,6 +531,15 @@ msgstr "Dit %s er fuldt opladt"
 msgid "Your %s is charging"
 msgstr "Dit %s oplader"
 
+#: ../src/xfpm-battery.c:222
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"%s until is fully charged."
+msgstr ""
+"%s (%i%%)\n"
+"%s indtil fuldt opladet."
+
 #: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
 #, c-format
 msgid "Your %s is discharging"
@@ -540,6 +549,15 @@ msgstr "Dit %s aflader"
 #, c-format
 msgid "System is running on %s power"
 msgstr "System kører på strøm fra %s"
+
+#: ../src/xfpm-battery.c:242
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"Estimated time left is %s."
+msgstr ""
+"%s (%i%%)\n"
+"Beregnet tid tilbage %s."
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
