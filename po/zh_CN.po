@@ -238,9 +238,7 @@ msgid "Never show icon"
 msgstr "从不显示图标"
 
 #: ../settings/xfpm-settings.c:1182
-msgid ""
-"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
-"switch off the display or put it in sleep mode."
+msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
 msgstr "禁用显示器电源管理 (DPMS)，如在睡眠模式时不关闭显示器"
 
 #: ../settings/xfpm-settings.c:1376
@@ -334,13 +332,8 @@ msgid "translator-credits"
 msgstr "HuntXu <huntxu@live.cn>"
 
 #: ../src/xfpm-power.c:330
-msgid ""
-"An application is currently disabling the automatic sleep, doing this action "
-"now may damage the working state of this application, are you sure you want "
-"to hibernate the system?"
-msgstr ""
-"一个程序禁用了自动睡眠，执行这个动作可能损坏该程序目前的工作状态，您确定要休"
-"眠系统？"
+msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
+msgstr "一个程序禁用了自动睡眠，执行这个动作可能损坏该程序目前的工作状态，您确定要休眠系统？"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -362,7 +355,8 @@ msgstr "电源信息"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save,
+#. normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "模式"
@@ -527,13 +521,13 @@ msgid "Your %s is charging"
 msgstr "您的 %s 正在充电中"
 
 #: ../src/xfpm-battery.c:222
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
 "%s (%i%%)\n"
-"离充电完毕还有 %s。"
+" 离充完电还有 %s "
 
 #: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
 #, c-format
@@ -546,13 +540,13 @@ msgid "System is running on %s power"
 msgstr "系统正在使用 %s 电源"
 
 #: ../src/xfpm-battery.c:242
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr ""
 "%s (%i%%)\n"
-"预计剩余时间 %s。"
+" 估计剩余时间是 %s 。"
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
@@ -763,9 +757,8 @@ msgid "Authorized to spin down hard disks"
 msgstr "降低硬盘转速操作已被授权"
 
 #: ../src/xfpm-main.c:155
-#, fuzzy
 msgid "Has battery"
-msgstr "电池"
+msgstr "电池供电"
 
 #: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
@@ -1131,36 +1124,20 @@ msgstr "亮度插件"
 #~ msgid "Adapter not present"
 #~ msgstr "电源适配器不可用"
 
-#~ msgid ""
-#~ "System is running on low power, but an application is currently disabling "
-#~ "the automatic sleep, this means that doing a sleep now may damage the "
-#~ "data of this application. Close this application before putting the "
-#~ "computer on sleep mode or plug in your AC adapter"
-#~ msgstr ""
-#~ "系统正在低电量环境下工作，但一个程序禁用了自动睡眠，这意味着现在转入睡眠模"
-#~ "式可能损坏该程序的数据。请在系统转入睡眠模式前关闭该程序或者插上您的电源适"
-#~ "配器使用交流电源供电"
+#~ msgid "System is running on low power, but an application is currently disabling the automatic sleep, this means that doing a sleep now may damage the data of this application. Close this application before putting the computer on sleep mode or plug in your AC adapter"
+#~ msgstr "系统正在低电量环境下工作，但一个程序禁用了自动睡眠，这意味着现在转入睡眠模式可能损坏该程序的数据。请在系统转入睡眠模式前关闭该程序或者插上您的电源适配器使用交流电源供电"
 
 #~ msgid "Are you sure you want to proceed?"
 #~ msgstr "您确定执行该动作吗？"
 
-#~ msgid ""
-#~ "An application is currently disabling the automatic sleep, doing this "
-#~ "action now may damage the working state of this application, are you sure "
-#~ "you want to suspend the system?"
-#~ msgstr ""
-#~ "一个程序禁用了自动睡眠，执行这个动作可能损坏该程序目前的工作状态，您确定要"
-#~ "挂起系统？"
+#~ msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to suspend the system?"
+#~ msgstr "一个程序禁用了自动睡眠，执行这个动作可能损坏该程序目前的工作状态，您确定要挂起系统？"
 
 #~ msgid "Monitor power control"
 #~ msgstr "显示器电源控制"
 
-#~ msgid ""
-#~ "Disable or enable monitor power control, for example you could disable "
-#~ "the screen power control to avoid screen blanking when watching a movie."
-#~ msgstr ""
-#~ "禁用或启用显示器电源控制，例如当您在看电影时可以选择禁用以避免显示器变空"
-#~ "白。"
+#~ msgid "Disable or enable monitor power control, for example you could disable the screen power control to avoid screen blanking when watching a movie."
+#~ msgstr "禁用或启用显示器电源控制，例如当您在看电影时可以选择禁用以避免显示器变空白。"
 
 #~ msgid "No data available"
 #~ msgstr "没有可用数据"
@@ -1222,8 +1199,7 @@ msgstr "亮度插件"
 #~ msgid "Power manager is connected"
 #~ msgstr "Xfce 电源管理器未运行"
 
-#~ msgid ""
-#~ "Unable to read adapter status, the power manager will not work properly"
+#~ msgid "Unable to read adapter status, the power manager will not work properly"
 #~ msgstr "无法读取电源状态，电源管理器可能无法正常工作"
 
 #~ msgid "Are you sure you want to hibernate the system?"
@@ -1259,9 +1235,7 @@ msgstr "亮度插件"
 #~ msgid "Ondemand performance"
 #~ msgstr "按需要调节"
 
-#~ msgid ""
-#~ "Set the CPU to its maximum speed when there is any load on it and to its "
-#~ "minimum speed when the system is idle"
+#~ msgid "Set the CPU to its maximum speed when there is any load on it and to its minimum speed when the system is idle"
 #~ msgstr "CPU 有任何负载时将其调节到最快速度， 没有任何负载时使用最底速度"
 
 #~ msgid "Best power savings"
@@ -1273,9 +1247,7 @@ msgstr "亮度插件"
 #~ msgid "Good power savings"
 #~ msgstr "一般节能"
 
-#~ msgid ""
-#~ "gracefully increases and decreases the CPU speed depending on the current "
-#~ "usage"
+#~ msgid "gracefully increases and decreases the CPU speed depending on the current usage"
 #~ msgstr "根据当前的使用情况适当增减 CPU 速度"
 
 #~ msgid "CPU frequency settings on UPS power"
@@ -1329,33 +1301,20 @@ msgstr "亮度插件"
 #~ msgid "Xfce4 Power Manager"
 #~ msgstr "Xfce4 电源管理器"
 
-#~ msgid ""
-#~ "Unable to read your home directory environment variable, autostart option "
-#~ "may not work"
+#~ msgid "Unable to read your home directory environment variable, autostart option may not work"
 #~ msgstr "无法读取家目录环境变量，可能无法开机自动启动"
 
-#~ msgid ""
-#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
-#~ "and the message bus daemon are running"
+#~ msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
 #~ msgstr "无法启动 Xfce4 电源管理器。请检查 HAL 和 D-Bus 是否都已启动"
 
-#~ msgid ""
-#~ "Unable to read AC adapter status, the power manager will not work "
-#~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
-#~ "connection with the hardware abstract layer or the message bus daemon is "
-#~ "not running"
+#~ msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
 #~ msgstr ""
 #~ "无法读取交流电源信息，电源管理器无法正常工作。可能是由于交流电源驱动没有\n"
 #~ "加载，或者无法和 HAL 以及 D-Bus 通讯"
 
-#~ msgid ""
-#~ "Unable to use power management service, functionalities like hibernate "
-#~ "and suspend will not work. Possible reasons: you don't have enough "
-#~ "permission, broken connection with the hardware abstract layer or the "
-#~ "message bus daemon is not running"
+#~ msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
 #~ msgstr ""
-#~ "无法使用电源管理器提供的服务。系统无法休眠或挂起。你可能没有这个权限，或"
-#~ "者\n"
+#~ "无法使用电源管理器提供的服务。系统无法休眠或挂起。你可能没有这个权限，或者\n"
 #~ "HAL 以及 D-Bus 没有启动"
 
 #~ msgid "Error monitoring HAL events"
