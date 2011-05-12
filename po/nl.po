@@ -3,15 +3,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-11 16:05+0000\n"
+"POT-Creation-Date: 2011-05-12 10:06+0000\n"
 "PO-Revision-Date: 2008-11-07 14:21+0100\n"
-"Last-Translator: Vincent Tunru <projects@vinnl.nl>\n"
+"Last-Translator: Pjotr\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: Dutch\n"
 "X-Poedit-Country: NETHERLANDS\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -91,7 +92,8 @@ msgstr "Zet de computer in slaapstand wanneer inactief voor:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Verminder helderheid van het scherm wanneer de computer inactief is voor:"
+msgstr ""
+"Verminder helderheid van het scherm wanneer de computer inactief is voor:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
@@ -235,8 +237,13 @@ msgid "Never show icon"
 msgstr "Nooit pictogram weergeven"
 
 #: ../settings/xfpm-settings.c:1182
-msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr "Schakel de signalering uit van het energiebeheer van het scherm (DPMS), bijvoorbeeld: probeer niet om het scherm uit te schakelen of het in slaapmodus te brengen."
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr ""
+"Schakel de signalering uit van het energiebeheer van het scherm (DPMS), "
+"bijvoorbeeld: probeer niet om het scherm uit te schakelen of het in "
+"slaapmodus te brengen."
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
@@ -256,7 +263,8 @@ msgstr "Slaapstand niet toegestaan"
 
 #: ../settings/xfpm-settings.c:1440
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Wanneer al de krachtbronnen van de computer dit opladingsniveau bereiken"
+msgstr ""
+"Wanneer al de krachtbronnen van de computer dit opladingsniveau bereiken"
 
 #: ../settings/xfpm-settings.c:1543 ../settings/xfpm-settings.c:1548
 msgid "General"
@@ -294,7 +302,9 @@ msgstr "Type '%s --help' voor gebruiksinstructies."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Kon de configuratie van de energiebeheerder niet laden, gebruikt standaardwaarden"
+msgstr ""
+"Kon de configuratie van de energiebeheerder niet laden, gebruikt "
+"standaardwaarden"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -329,8 +339,14 @@ msgid "translator-credits"
 msgstr "Vincent Tunru <projects@vinnl.nl>"
 
 #: ../src/xfpm-power.c:330
-msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
-msgstr "Een toepassing belemmert nu de automatische slaapmodus, deze actie nu uitvoeren kan de toepassing in zijn werk schaden, weet u zeker dat u het systeem in slaapstand wil brengen?"
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
+msgstr ""
+"Een toepassing belemmert nu de automatische slaapmodus, deze actie nu "
+"uitvoeren kan de toepassing in zijn werk schaden, weet u zeker dat u het "
+"systeem in slaapstand wil brengen?"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -352,8 +368,7 @@ msgstr "Energie-informatie"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save,
-#. normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "Modus"
@@ -382,7 +397,9 @@ msgstr "Afsluiten"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Het systeem draait op lage acculading - sla uw werk op om gegevensverlies te voorkomen"
+msgstr ""
+"Het systeem draait op lage acculading - sla uw werk op om gegevensverlies te "
+"voorkomen"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -479,18 +496,18 @@ msgid "Unknown time"
 msgstr "Onbekende tijd"
 
 #: ../src/xfpm-battery.c:175
-#, fuzzy, c-format
+#, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] "%i minute"
-msgstr[1] "%i minutes"
+msgstr[0] "%i minuut"
+msgstr[1] "%i minuten"
 
 #: ../src/xfpm-battery.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] "%i hour"
-msgstr[1] "%i hours"
+msgstr[0] "%i uur"
+msgstr[1] "%i uren"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
@@ -500,18 +517,16 @@ msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
 #: ../src/xfpm-battery.c:193
-#, fuzzy
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] "hour"
-msgstr[1] "hours"
+msgstr[0] "uur"
+msgstr[1] "uren"
 
 #: ../src/xfpm-battery.c:194
-#, fuzzy
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] "minute"
-msgstr[1] "minutes"
+msgstr[0] "minuut"
+msgstr[1] "minuten"
 
 #: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
 #, c-format
@@ -1047,72 +1062,70 @@ msgid "Brightness plugin"
 msgstr "Helderheid-plugin"
 
 #~ msgid "CPU frequency control"
-#~ msgstr "CPU-frequentie controle"
+#~ msgstr "CPU-frequentiecontrole"
 
 #~ msgid "Xfce Power Manager Settings"
-#~ msgstr "Energiebeheer"
+#~ msgstr "Instellingen van Xfce Energiebeheerder"
 
 #~ msgid "Xfce 4 Power Manager"
-#~ msgstr "Energiebeheer"
+#~ msgstr "Xfce 4 Energiebeheerder"
 
 #~ msgid "Battery is charging"
-#~ msgstr "De batterij is aan het opladen"
+#~ msgstr "De accu is aan het opladen"
 
 #~ msgid "Your battery charge is low"
-#~ msgstr "Het energie-niveau van de batterij is laag"
+#~ msgstr "Uw acculading is laag"
 
 #~ msgid "Xfce power manager"
-#~ msgstr "Xfce energiebeheer"
+#~ msgstr "Xfce energiebeheerder"
 
 #~ msgid "Your Camera battery"
-#~ msgstr "U werkt op de batterij"
+#~ msgstr "De accu van uw Camera"
 
 #~ msgid "charge level"
-#~ msgstr "Energie-niveau"
+#~ msgstr "Niveau van acculading"
 
 #~ msgid "is charging"
-#~ msgstr "De batterij is aan het opladen"
+#~ msgstr "is aan het opladen"
 
 #~ msgid "is discharging"
-#~ msgstr "De batterij is aan het ontladen"
+#~ msgstr "is aan het ontladen"
 
 #~ msgid "charge is low"
-#~ msgstr "Het energie-niveau van de batterij is laag"
+#~ msgstr "acculading is laag"
 
 #~ msgid "is almost empty"
-#~ msgstr "De batterij is volledig opgeladen"
+#~ msgstr "is bijna leeg"
 
 #~ msgid "is not present"
-#~ msgstr "Niet aanwezig"
+#~ msgstr "is niet aanwezig"
 
 #~ msgid "Battery not present"
-#~ msgstr "Als er een batterij is"
+#~ msgstr "Accu niet aanwezig"
 
 #~ msgid "Estimated time to be fully charged"
-#~ msgstr ""
-#~ "\n"
-#~ "Geschatte tijd om op te laden"
+#~ msgstr "Geschatte tijd tot volledige lading"
 
 #~ msgid "Too many arguments"
 #~ msgstr "Te veel argumenten"
 
 #~ msgid "Adapter present"
-#~ msgstr "Niet aanwezig"
+#~ msgstr "Laadblok aanwezig"
 
 #~ msgid "Adapter not present"
-#~ msgstr "Niet aanwezig"
+#~ msgstr "Laadblok niet aanwezig"
 
 #~ msgid "Are you sure you want to proceed?"
-#~ msgstr "Weet u zeker dat u het systeem in de pauzestand wilt brengen"
+#~ msgstr "Weet u zeker dat u door wil gaan?"
 
 #~ msgid "Hibernate not supported"
-#~ msgstr "Slaapstand"
+#~ msgstr "Slaapstand niet ondersteund"
 
 #~ msgid "HAL daemon is not running"
-#~ msgstr "Xfce energiebeheer"
+#~ msgstr "Achtergronddienst van HAL draait niet"
 
 #~ msgid "No back-end for your operating system"
-#~ msgstr "Geen backend voor dit besturingssysteem beschikbaar"
+#~ msgstr "Geen backend voor uw besturingssysteem"
 
 #~ msgid "No hibernate script found"
 #~ msgstr "Geen slaapstand-script gevonden"
@@ -1133,76 +1146,78 @@ msgstr "Helderheid-plugin"
 #~ msgstr "Kon de pauzestand niet aanvangen"
 
 #~ msgid "Advanced"
-#~ msgstr "Geavanceerde instellingen"
+#~ msgstr "Geavanceerd"
 
 #~ msgid "Enable notification"
-#~ msgstr "Ups-opladen notificatie inschakelen"
+#~ msgstr "Notificatie inschakelen"
 
 #~ msgid "Xfce power manager is not running to releod it"
-#~ msgstr "Xfce energiebeheer"
+#~ msgstr "Xfce energiebeheerder draait niet"
 
 #~ msgid "Don't show again"
 #~ msgstr "Niet meer weergeven"
 
 #~ msgid "Power manager disconnected"
-#~ msgstr "Voorkeuren energiebeheer"
+#~ msgstr "Energiebeheerder losgekoppeld"
 
 #~ msgid "Power manager is connected"
-#~ msgstr "Xfce energiebeheer"
+#~ msgstr "Energiebeheerder is verbonden"
 
-#~ msgid "Unable to read adapter status, the power manager will not work properly"
-#~ msgstr "Onbekende status van adapter, energiebeheer werkt mogelijk niet correct"
+#~ msgid ""
+#~ "Unable to read adapter status, the power manager will not work properly"
+#~ msgstr ""
+#~ "Kon status van laadblok niet lezen, de energiebeheerder zal niet correct werken"
 
 #~ msgid "Are you sure you want to hibernate the system?"
-#~ msgstr "Weet u zeker dat u het systeem in de slaapstand wilt brengen"
+#~ msgstr "Weet u zeker dat u het systeem in de slaapstand wilt brengen?"
 
 #~ msgid "UPS configuration"
-#~ msgstr "Ups-configuratie"
+#~ msgstr "UPS-configuratie"
 
 #~ msgid "Consider UPS charge critical"
-#~ msgstr "Beschouw de batterijlading als kritiek"
+#~ msgstr "Beschouw de UPS-lading als kritiek"
 
 #~ msgid "Consider battery charge critical"
-#~ msgstr "Beschouw de batterijlading als kritiek"
+#~ msgstr "Beschouw de acculading als kritiek"
 
 #~ msgid "percent"
 #~ msgstr "procent"
 
 #~ msgid "Enable battery state notification"
-#~ msgstr "Batterij-status-notificatie inschakelen"
+#~ msgstr "Accustatus-notificatie inschakelen"
 
 #~ msgid "Enable power save on UPS power"
-#~ msgstr "Energiebesparende modus op ups-energie inschakelen"
+#~ msgstr "Energiebesparende modus op UPS-stroom inschakelen"
 
 #~ msgid "Enable power save on battery power"
-#~ msgstr "Energiebesparende modus op batterij inschakelen"
+#~ msgstr "Energiebesparende modus op accustroom inschakelen"
 
 #~ msgid "Best performance"
-#~ msgstr "Prestaties"
+#~ msgstr "Beste prestaties"
 
 #~ msgid "Ondemand performance"
-#~ msgstr "Prestaties"
+#~ msgstr "Prestaties op aanvraag"
 
 #~ msgid "Best power savings"
-#~ msgstr "Xfce energiebeheer"
+#~ msgstr "Beste energiebesparing"
 
 #~ msgid "CPU frequency settings on UPS power"
-#~ msgstr "CPU-instellingen"
+#~ msgstr "Instellingen van de processorfrequentie op UPS-stroom"
 
 #~ msgid "CPU frequency settings on battery power"
-#~ msgstr "Energiebesparende modus op batterij inschakelen"
+#~ msgstr "Instellingen van de processorfrequentie op accustroom"
 
 #~ msgid "CPU frequency settings on AC power"
-#~ msgstr "CPU-instellingen"
+#~ msgstr "Instellingen van de processorfrequentie op netstroom"
 
 #~ msgid "CPU frequency settings"
-#~ msgstr "CPU-instellingen"
+#~ msgstr "Instellingen van de processorfrequentie"
 
 #~ msgid "No available keyboard shortcuts found"
 #~ msgstr "Geen beschikbare sneltoetsen gevonden"
 
 #~ msgid "CPU settings"
-#~ msgstr "CPU-instellingen"
+#~ msgstr "processor-instellingen"
 
 #~ msgid "Shortcuts"
 #~ msgstr "Sneltoetsen"
@@ -1220,19 +1235,34 @@ msgstr "Helderheid-plugin"
 #~ msgstr "Afsluiten na"
 
 #~ msgid "Xfce4 Power Manager"
-#~ msgstr "Energiebeheer"
+#~ msgstr "Xfce 4 Energiebeheerder"
 
-#~ msgid "Unable to read your home directory environment variable, autostart option may not work"
-#~ msgstr "Kan de locatie van uw persoonlijke map niet uitlezen, wellicht werkt autostarten niet"
+#~ msgid ""
+#~ "Unable to read your home directory environment variable, autostart option "
+#~ "may not work"
+#~ msgstr ""
+#~ "Kon de variabele van uw persoonlijke mapomgeving niet uitlezen, wellicht werkt "
+#~ "autostarten niet"
 
-#~ msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
-#~ msgstr "Kan het energiebeheer niet uitvoeren, controlleer of HAL en de berichtenserver draaien"
+#~ msgid ""
+#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
+#~ "and the message bus daemon are running"
+#~ msgstr ""
+#~ "Kon Xfce 4-energiebeheerder niet uitvoeren, controleer of HAL en de "
+#~ "berichtenserver draaien"
 
-#~ msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
-#~ msgstr "Kan energiebeheer niet gebruiken, functies zoals de slaap- en pauzestand zullen niet werken. Mogelijke redenen: onvoldoende rechten, foutieve verbinding met de hardware, of de berichtenserver is niet actief."
+#~ msgid ""
+#~ "Unable to use power management service, functionalities like hibernate "
+#~ "and suspend will not work. Possible reasons: you don't have enough "
+#~ "permission, broken connection with the hardware abstract layer or the "
+#~ "message bus daemon is not running"
+#~ msgstr ""
+#~ "Kon energiebeheer niet gebruiken, functies zoals de slaap- en pauzestand "
+#~ "zullen niet werken. Mogelijke redenen: u hebt onvoldoende rechten, foutieve "
+#~ "verbinding met HAL, of de berichtenserver is niet actief."
 
 #~ msgid "Message hibernate didn't get a reply"
-#~ msgstr "Slaapstand kreeg geen antwoord"
+#~ msgstr "Slaapstandbericht kreeg geen antwoord"
 
 #~ msgid "Error occured while trying to suspend"
 #~ msgstr "Fout bij aanvangen van pauzestand"
@@ -1241,49 +1271,53 @@ msgstr "Helderheid-plugin"
 #~ msgstr "Onbekend antwoord van de berichtenserver"
 
 #~ msgid "Message suspend didn't get a reply"
-#~ msgstr "Pauzestand kreeg geen antwoord"
+#~ msgstr "Pauzestandbericht kreeg geen antwoord"
 
 #~ msgid "No reply from HAL daemon to set monitor brightness level"
-#~ msgstr "Geen antwoord van HAL-daemon om de helderheid in te stellen"
+#~ msgstr "Geen antwoord van HAL-achtergronddienst om de schermhelderheid in te stellen"
 
 #~ msgid "No reply from HAL daemon to get monitor brightness level"
-#~ msgstr "Geen antwoord van HAL-daemon om de helderheid te achterhalen"
+#~ msgstr "Geen antwoord van HAL-achtergronddienst om de schermhelderheid te achterhalen"
 
 #~ msgid "No reply from HAL daemon to get available cpu governors"
-#~ msgstr "Geen antwoord van HAL-daemon om de beschikbare CPU-beheerders te achterhalen"
+#~ msgstr ""
+#~ "Geen antwoord van HAL-achtergronddienst om de beschikbare processorbeheerders te "
+#~ "achterhalen"
 
 #~ msgid "No reply from HAL daemon to get current cpu governor"
-#~ msgstr "Geen antwoord van HAL-daemon om de huidige CPU-beheerder te achterhalen"
+#~ msgstr ""
+#~ "Geen antwoord van HAL-achtergronddienst om de huidige processorbeheerder te achterhalen"
 
 #~ msgid "No reply from HAL daemon to set cpu governor"
-#~ msgstr "Geen antwoord van HAL-daemon om de CPU-beheerder in te stellen"
+#~ msgstr "Geen antwoord van HAL-achtergronddienst om de processorbeheerder in te stellen"
 
 #~ msgid "No reply from HAL daemon to set power save profile"
-#~ msgstr "Geen antwoord van HAL-daemon om een energiebesparend profiel op te slaan"
+#~ msgstr ""
+#~ "Geen antwoord van HAL-achtergronddienst om een energiebesparingsprofiel in te stellen"
 
 #~ msgid "Start xfce power manager"
-#~ msgstr "Xfce energiebeheer"
+#~ msgstr "Start Xfce-energiebeheerder"
 
 #~ msgid "CPU frequency settings on electric power"
-#~ msgstr "Energiebesparende modus op batterij inschakelen"
+#~ msgstr "Instellingen voor processorfrequentie op netstroom"
 
 #~ msgid "Ondemand"
-#~ msgstr "Op verzoek"
+#~ msgstr "Op aanvraag"
 
 #~ msgid "Powersave"
-#~ msgstr "Energiebesparend"
+#~ msgstr "Energiebesparing"
 
 #~ msgid "Conservative"
-#~ msgstr "Conservatief"
+#~ msgstr "Behoudend"
 
 #~ msgid "Your battery charge level is critical"
-#~ msgstr "Het energie-niveau van de batterij is kritiek"
+#~ msgstr "Het laadniveau van uw accu is kritiek"
 
 #~ msgid "Battery charge level is critical"
-#~ msgstr "Het energie-niveau van de batterij is kritiek"
+#~ msgstr "Het laadniveau van de accu is kritiek"
 
 #~ msgid "Part of the Xfce goodies project"
-#~ msgstr "Onderdeel van het Goodies project van Xfce"
+#~ msgstr "Onderdeel van het Goodiesproject van Xfce"
 
 #~ msgid "When lid button is pressed do"
-#~ msgstr "Als de deksel-knop wordt omgezet"
+#~ msgstr "Wanneer de dekselknop wordt ingedrukt doe"
