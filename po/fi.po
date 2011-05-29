@@ -1,14 +1,14 @@
 # Finnish translations for xfce4-power-manager package.
 # Copyright (C) 2010 Ali Abdallah <aliov@xfce.org>
 # This file is distributed under the same license as the xfce4-power-manager package.
-# Jari Rahkonen <jari.rahkonen@pp1.inet.fi>, 2008-2010.
+# Jari Rahkonen <jari.rahkonen@pp1.inet.fi>, 2008-2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-17 17:03+0000\n"
-"PO-Revision-Date: 2011-02-17 22:06+0200\n"
+"POT-Creation-Date: 2011-05-29 10:06+0000\n"
+"PO-Revision-Date: 2011-05-29 13:26+0300\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
@@ -46,9 +46,9 @@ msgstr "Virta on vähissä, kun jäljellä on:"
 
 #. Hibernate menu option
 #: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:817
-#: ../settings/xfpm-settings.c:885 ../settings/xfpm-settings.c:1032
-#: ../settings/xfpm-settings.c:1206 ../settings/xfpm-settings.c:1263
-#: ../settings/xfpm-settings.c:1315 ../src/xfpm-power.c:484
+#: ../settings/xfpm-settings.c:885 ../settings/xfpm-settings.c:1034
+#: ../settings/xfpm-settings.c:1211 ../settings/xfpm-settings.c:1268
+#: ../settings/xfpm-settings.c:1320 ../src/xfpm-power.c:484
 #: ../src/xfpm-power.c:779
 msgid "Hibernate"
 msgstr "Lepotila"
@@ -70,9 +70,9 @@ msgid "Monitor power management control"
 msgstr "Näytön virransäästöasetukset"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:806
-#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1021
-#: ../settings/xfpm-settings.c:1195 ../settings/xfpm-settings.c:1252
-#: ../settings/xfpm-settings.c:1304
+#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1023
+#: ../settings/xfpm-settings.c:1200 ../settings/xfpm-settings.c:1257
+#: ../settings/xfpm-settings.c:1309
 msgid "Nothing"
 msgstr "Älä tee mitään"
 
@@ -118,9 +118,9 @@ msgstr "Valmiustila"
 
 #. Suspend menu option
 #: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:811
-#: ../settings/xfpm-settings.c:879 ../settings/xfpm-settings.c:1026
-#: ../settings/xfpm-settings.c:1200 ../settings/xfpm-settings.c:1257
-#: ../settings/xfpm-settings.c:1309 ../src/xfpm-power.c:499
+#: ../settings/xfpm-settings.c:879 ../settings/xfpm-settings.c:1028
+#: ../settings/xfpm-settings.c:1205 ../settings/xfpm-settings.c:1262
+#: ../settings/xfpm-settings.c:1314 ../src/xfpm-power.c:499
 #: ../src/xfpm-power.c:792
 msgid "Suspend"
 msgstr "Keskeytystila"
@@ -154,7 +154,7 @@ msgid "When sleep button is pressed:"
 msgstr "Virransäästötilanäppäimellä:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:410
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
 msgid "Xfce Power Manager"
 msgstr "Xfce:n virranhallinta"
 
@@ -193,51 +193,51 @@ msgstr "tuntia"
 msgid "Seconds"
 msgstr "Sekuntia"
 
-#: ../settings/xfpm-settings.c:789 ../settings/xfpm-settings.c:985
-#: ../settings/xfpm-settings.c:1462
+#: ../settings/xfpm-settings.c:789 ../settings/xfpm-settings.c:987
+#: ../settings/xfpm-settings.c:1467
 msgid "Hibernate and suspend operations not supported"
 msgstr "Lepo- ja keskeytystoimintoja ei tueta"
 
-#: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:990
-#: ../settings/xfpm-settings.c:1467
+#: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:992
+#: ../settings/xfpm-settings.c:1472
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Lepo- ja keskeytystoimintoihin ei ole oikeutta"
 
-#: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1212
+#: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1217
 #: ../src/xfpm-power.c:805
 msgid "Shutdown"
 msgstr "Sammuta"
 
-#: ../settings/xfpm-settings.c:827 ../settings/xfpm-settings.c:1216
-#: ../settings/xfpm-settings.c:1267 ../settings/xfpm-settings.c:1319
+#: ../settings/xfpm-settings.c:827 ../settings/xfpm-settings.c:1221
+#: ../settings/xfpm-settings.c:1272 ../settings/xfpm-settings.c:1324
 msgid "Ask"
 msgstr "Kysy"
 
-#: ../settings/xfpm-settings.c:889 ../settings/xfpm-settings.c:1036
+#: ../settings/xfpm-settings.c:889 ../settings/xfpm-settings.c:1038
 msgid "Lock screen"
 msgstr "Lukitse näyttö"
 
-#: ../settings/xfpm-settings.c:955 ../settings/xfpm-settings.c:1102
+#: ../settings/xfpm-settings.c:957 ../settings/xfpm-settings.c:1107
 msgid "Spinning down hard disks permission denied"
 msgstr "Ei oikeutta sammuttaa kiintolevyjä"
 
-#: ../settings/xfpm-settings.c:1142
+#: ../settings/xfpm-settings.c:1147
 msgid "Always show icon"
 msgstr "Näytä kuvake aina"
 
-#: ../settings/xfpm-settings.c:1145
+#: ../settings/xfpm-settings.c:1150
 msgid "When battery is present"
 msgstr "Kun akku on liitetty"
 
-#: ../settings/xfpm-settings.c:1148
+#: ../settings/xfpm-settings.c:1153
 msgid "When battery is charging or discharging"
 msgstr "Kun akku latautuu tai purkautuu"
 
-#: ../settings/xfpm-settings.c:1151
+#: ../settings/xfpm-settings.c:1156
 msgid "Never show icon"
 msgstr "Älä näytä kuvaketta"
 
-#: ../settings/xfpm-settings.c:1177
+#: ../settings/xfpm-settings.c:1182
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
@@ -245,43 +245,43 @@ msgstr ""
 "Älä käytä DPMS-toimintoja, eli älä yritä sammuttaa näyttöä tai asettaa sitä "
 "virransäästötilaan."
 
-#: ../settings/xfpm-settings.c:1371
+#: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
 msgstr "Keskeytystilaa ei tueta"
 
-#: ../settings/xfpm-settings.c:1377
+#: ../settings/xfpm-settings.c:1382
 msgid "Suspend operation not permitted"
 msgstr "Keskeytystilaan ei oikeutta"
 
-#: ../settings/xfpm-settings.c:1383
+#: ../settings/xfpm-settings.c:1388
 msgid "Hibernate operation not supported"
 msgstr "Lepotilaa ei tueta"
 
-#: ../settings/xfpm-settings.c:1388
+#: ../settings/xfpm-settings.c:1393
 msgid "Hibernate operation not permitted"
 msgstr "Lepotilaan ei oikeutta"
 
-#: ../settings/xfpm-settings.c:1435
+#: ../settings/xfpm-settings.c:1440
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Kun kaikki koneen virtalähteet saavuttavat tämän lataustason"
 
-#: ../settings/xfpm-settings.c:1538 ../settings/xfpm-settings.c:1543
+#: ../settings/xfpm-settings.c:1543 ../settings/xfpm-settings.c:1548
 msgid "General"
 msgstr "Yleiset"
 
-#: ../settings/xfpm-settings.c:1552 ../settings/xfpm-settings.c:1557
+#: ../settings/xfpm-settings.c:1557 ../settings/xfpm-settings.c:1562
 msgid "On AC"
 msgstr "Verkkovirtakäyttö"
 
-#: ../settings/xfpm-settings.c:1567 ../settings/xfpm-settings.c:1572
+#: ../settings/xfpm-settings.c:1572 ../settings/xfpm-settings.c:1577
 msgid "On Battery"
 msgstr "Akkukäyttö"
 
-#: ../settings/xfpm-settings.c:1581 ../settings/xfpm-settings.c:1586
+#: ../settings/xfpm-settings.c:1586 ../settings/xfpm-settings.c:1591
 msgid "Extended"
 msgstr "Lisäasetukset"
 
-#: ../settings/xfpm-settings.c:1654
+#: ../settings/xfpm-settings.c:1659
 msgid "Check your power manager installation"
 msgstr "Tarkista virranhallinnan asennus"
 
@@ -293,7 +293,7 @@ msgstr "Asetustenhallinnan pistoke"
 msgid "SOCKET ID"
 msgstr "PISTOKE"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:286
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
 #: ../src/xfpm-power-info.c:948
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -307,7 +307,7 @@ msgstr "Virranhallinnan asetusten lataaminen epäonnistui, käytetään oletuksi
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Xfce:n virranhallintaan ei voi yhdistää"
 
-#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:326
+#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce:n virranhallinta ei ole käynnissä"
@@ -533,6 +533,15 @@ msgstr "%s on täysin latautunut."
 msgid "Your %s is charging"
 msgstr "%s latautuu."
 
+#: ../src/xfpm-battery.c:222
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"%s until is fully charged."
+msgstr ""
+"%s (%i%%)\n"
+"Täysi lataus %s kuluttua."
+
 #: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
 #, c-format
 msgid "Your %s is discharging"
@@ -542,6 +551,15 @@ msgstr "%s purkautuu."
 #, c-format
 msgid "System is running on %s power"
 msgstr "Käytetään virtaa kohtesta \"%s\"."
+
+#: ../src/xfpm-battery.c:242
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"Estimated time left is %s."
+msgstr ""
+"%s (%i%%).\n"
+"Käyttöaikaa arviolta %s."
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
@@ -722,91 +740,95 @@ msgstr "DPMS-tuella\n"
 msgid "Without DPMS support\n"
 msgstr "Ilman DPMS-tukea\n"
 
-#: ../src/xfpm-main.c:140
+#: ../src/xfpm-main.c:141
 msgid "Can suspend"
 msgstr "Keskeytystila käytettävissä"
 
-#: ../src/xfpm-main.c:142
+#: ../src/xfpm-main.c:143
 msgid "Can hibernate"
 msgstr "Lepotila käytettävissä"
 
-#: ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
 msgstr "Voi pysäyttää kiintolevyt"
 
-#: ../src/xfpm-main.c:146
+#: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
 msgstr "Keskeytystila sallittu"
 
-#: ../src/xfpm-main.c:148
+#: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
 msgstr "Lepotila sallittu"
 
-#: ../src/xfpm-main.c:150
+#: ../src/xfpm-main.c:151
 msgid "Authorized to shutdown"
 msgstr "Sammutus sallittu"
 
-#: ../src/xfpm-main.c:152
+#: ../src/xfpm-main.c:153
 msgid "Authorized to spin down hard disks"
 msgstr "Kiintolevyjen pysäytys sallittu"
 
-#: ../src/xfpm-main.c:154
+#: ../src/xfpm-main.c:155
+msgid "Has battery"
+msgstr "Akku"
+
+#: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
 msgstr "Kirkkaussäätö"
 
-#: ../src/xfpm-main.c:156
+#: ../src/xfpm-main.c:159
 msgid "Has power button"
 msgstr "Virtapainike"
 
-#: ../src/xfpm-main.c:158
+#: ../src/xfpm-main.c:161
 msgid "Has hibernate button"
 msgstr "Keskeytystilapainike"
 
-#: ../src/xfpm-main.c:160
+#: ../src/xfpm-main.c:163
 msgid "Has sleep button"
 msgstr "Virransäästötilapainike"
 
-#: ../src/xfpm-main.c:162
+#: ../src/xfpm-main.c:165
 msgid "Has LID"
 msgstr "Suljettava kansi"
 
-#: ../src/xfpm-main.c:261
+#: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
 msgstr "Älä suorita taustalla"
 
-#: ../src/xfpm-main.c:262
+#: ../src/xfpm-main.c:265
 msgid "Enable debugging"
 msgstr "Salli vianetsintä"
 
-#: ../src/xfpm-main.c:263
+#: ../src/xfpm-main.c:266
 msgid "Dump all information"
 msgstr "Tulosta kaikki tiedot"
 
-#: ../src/xfpm-main.c:264
+#: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Käynnistä Xfce:n virrankäytön hallinta uudelleen"
 
-#: ../src/xfpm-main.c:265
+#: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
 msgstr "Näytä asetusikkuna"
 
-#: ../src/xfpm-main.c:266
+#: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
 msgstr "Sammuta käynnissä oleva Xfce:n virranhallinta"
 
-#: ../src/xfpm-main.c:267 ../src/xfpm-power-info.c:935
+#: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:935
 msgid "Version information"
 msgstr "Versiotiedot"
 
-#: ../src/xfpm-main.c:317
+#: ../src/xfpm-main.c:320
 msgid "Unable to get connection to the message bus session"
 msgstr "Viestiväyläistuntoon ei voi yhdistää"
 
-#: ../src/xfpm-main.c:411
+#: ../src/xfpm-main.c:414
 msgid "Another power manager is already running"
 msgstr "Toinen virranhallintasovellus on jo käynnissä"
 
-#: ../src/xfpm-main.c:417
+#: ../src/xfpm-main.c:420
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce:n virranhallinta on jo käynnissä"
@@ -1028,7 +1050,7 @@ msgstr "Säädä LCD:n kirkkautta"
 msgid "No device found"
 msgstr "Laitetta ei löydy"
 
-#: ../panel-plugins/brightness/brightness-button.c:651
+#: ../panel-plugins/brightness/brightness-button.c:649
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Kirkkausliitännäinen"
