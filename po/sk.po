@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.8.4-dev\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-23 10:06+0000\n"
-"PO-Revision-Date: 2011-05-23 16:47+0100\n"
+"POT-Creation-Date: 2011-06-01 04:06+0000\n"
+"PO-Revision-Date: 2011-06-01 09:05+0100\n"
 "Last-Translator: Tomáš Vadina <kyberdev@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -200,7 +200,7 @@ msgstr "Jedna hodina"
 #: ../settings/xfpm-settings.c:594
 #: ../settings/xfpm-settings.c:598
 msgid "one minute"
-msgstr "jenda minúta"
+msgstr "jedna minúta"
 
 #: ../settings/xfpm-settings.c:595
 #: ../settings/xfpm-settings.c:599
@@ -221,7 +221,7 @@ msgstr "Sekúnd"
 #: ../settings/xfpm-settings.c:987
 #: ../settings/xfpm-settings.c:1467
 msgid "Hibernate and suspend operations not supported"
-msgstr "Hibernovanie a prejdenie do režimu spánku nie sú podporavné"
+msgstr "Hibernácia a prechod do režimu spánku nie sú podporované"
 
 #: ../settings/xfpm-settings.c:794
 #: ../settings/xfpm-settings.c:992
@@ -333,7 +333,7 @@ msgstr "Informácie o použití získate príkazom '%s --help'."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Nepodarilo sa načítať konfiguráciu správcu napájania, používa sa východzia"
+msgstr "Nepodarilo sa načítať konfiguráciu správcu napájania, používa sa predvolená"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -351,7 +351,7 @@ msgstr "Spustiť"
 
 #: ../settings/xfpm-settings-main.c:196
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Správca napájania pre Xfce 4 nebeží, chcete ho spustiť?"
+msgstr "Správca napájania pre Xfce4 nebeží, chcete ho spustiť?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307
@@ -442,7 +442,7 @@ msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr ""
-"Zariadenie \"%s\" je takmer vybité\n"
+"Vaša %s je takmer vybitá\n"
 "Odhadovaný zostávajúci čas: %s"
 
 #: ../src/xfpm-power.c:1162
@@ -577,13 +577,13 @@ msgstr[2] "minúty"
 #: ../src/xfpm-battery.c:260
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "Zariadenie \"%s\" je plne nabité"
+msgstr "Vaša %s je plne nabitá"
 
 #: ../src/xfpm-battery.c:212
 #: ../src/xfpm-battery.c:263
 #, c-format
 msgid "Your %s is charging"
-msgstr "Zariadenie \"%s\" sa nabíja"
+msgstr "Vaša %s sa nabíja"
 
 #: ../src/xfpm-battery.c:222
 #, c-format
@@ -598,7 +598,7 @@ msgstr ""
 #: ../src/xfpm-battery.c:266
 #, c-format
 msgid "Your %s is discharging"
-msgstr "Zariadenie \"%s\" sa vybíja"
+msgstr "Vaša %s sa vybíja"
 
 #: ../src/xfpm-battery.c:232
 #, c-format
@@ -618,7 +618,7 @@ msgstr ""
 #: ../src/xfpm-battery.c:269
 #, c-format
 msgid "Your %s is empty"
-msgstr "Zariadenie \"%s\" je vybité"
+msgstr "Vaša %s je vybitá"
 
 #: ../src/xfpm-battery.c:404
 #, c-format
@@ -633,7 +633,7 @@ msgid ""
 "Provides %s runtime"
 msgstr ""
 "%s\n"
-"Zariadenie \"%s\" je plne nabité (%i%%).\n"
+"Vaša %s je plne nabitá (%i%%).\n"
 "Odhadovaný čas výdrže: %s"
 
 #: ../src/xfpm-battery.c:420
@@ -643,7 +643,7 @@ msgid ""
 "Your %s is fully charged (%i%%)."
 msgstr ""
 "%s\n"
-"Zariadenie \"%s\" je plne nabité (%i%%)."
+"Vaša %s je plne nabitá (%i%%)."
 
 #: ../src/xfpm-battery.c:431
 #, c-format
@@ -653,7 +653,7 @@ msgid ""
 "%s until is fully charged."
 msgstr ""
 "%s\n"
-"Zariadenie \"%s\" sa nabíja (%i%%)\n"
+"Vaša %s sa nabíja (%i%%)\n"
 "Do úplného nabitia ostáva: %s"
 
 #: ../src/xfpm-battery.c:440
@@ -663,7 +663,7 @@ msgid ""
 "Your %s is charging (%i%%)."
 msgstr ""
 "%s\n"
-"Zariadenie \"%s\" sa nabíja (%i%%)."
+"Vaša %s sa nabíja (%i%%)."
 
 #: ../src/xfpm-battery.c:451
 #, c-format
@@ -673,7 +673,7 @@ msgid ""
 "Estimated time left is %s."
 msgstr ""
 "%s\n"
-"Zariadenie \"%s\" sa vybíja (%i%%)\n"
+"Vaša %s sa vybíja (%i%%)\n"
 "Odhadovaný zostávajúci čas: %s."
 
 #: ../src/xfpm-battery.c:460
@@ -683,7 +683,7 @@ msgid ""
 "Your %s is discharging (%i%%)."
 msgstr ""
 "%s\n"
-"Zariadenie \"%s\" sa vybíja (%i%%)."
+"Vaša %s sa vybíja (%i%%)."
 
 #: ../src/xfpm-battery.c:469
 #, c-format
@@ -710,7 +710,7 @@ msgid ""
 "Your %s is empty"
 msgstr ""
 "%s\n"
-"zariadenie \"%s\" je vybité"
+"Vaša %s je vybitá"
 
 #: ../src/xfpm-battery.c:817
 msgid "battery"
