@@ -2,22 +2,21 @@
 # Copyright (C) The Xfce development team.
 # This file is distributed under the same license as the 
 # xfce4-power-manager package.
-# NOTE: (I accidentally deleted names of previous translators: sorry!)
+# Vincent Tunru, 2008.
 # Pjotr, 2011.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-27 10:06+0000\n"
-"PO-Revision-Date: 2008-11-07 14:21+0100\n"
+"POT-Creation-Date: 2011-06-16 10:06+0000\n"
+"PO-Revision-Date: 2011-06-16 12:21+0200\n"
 "Last-Translator: Pjotr\n"
-"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"Language-Team: Dutch (Flemish)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Dutch\n"
-"X-Poedit-Country: NETHERLANDS\n"
+"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
@@ -82,7 +81,7 @@ msgstr "Niets doen"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Power manager settings"
-msgstr "Energiebeheer"
+msgstr "Energiebeheer-instellingen"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Prefer power savings over performance"
@@ -90,7 +89,7 @@ msgstr "Kies energiebesparing boven prestaties"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
-msgstr "Zet display uit als de computer inactief is voor:"
+msgstr "Zet scherm uit als de computer inactief is voor:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Put the computer to sleep when inactive for:"
@@ -140,7 +139,7 @@ msgstr "Pictogram in systeemvak:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "When battery power is critical:"
-msgstr "Als het energieniveau van de batterij kritiek is:"
+msgstr "Als het energieniveau van de accu kritiek is:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "When hibernate button is pressed:"
@@ -161,7 +160,7 @@ msgstr "Wanneer de slaapknop wordt ingedrukt:"
 #: ../data/interfaces/xfpm-settings.ui.h:32
 #: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
 msgid "Xfce Power Manager"
-msgstr "Xfce Energiebeheer"
+msgstr "Xfce Energiebeheerder"
 
 #: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
 #: ../settings/xfpm-settings.c:609
@@ -201,12 +200,12 @@ msgstr "Seconden"
 #: ../settings/xfpm-settings.c:789 ../settings/xfpm-settings.c:987
 #: ../settings/xfpm-settings.c:1467
 msgid "Hibernate and suspend operations not supported"
-msgstr "Slaapstand en ruststand zijn niet ondersteund"
+msgstr "Slaapstand en pauzestand zijn niet ondersteund"
 
 #: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:992
 #: ../settings/xfpm-settings.c:1472
 msgid "Hibernate and suspend operations not permitted"
-msgstr "Slaapstand en stand-by zijn niet toegestaan"
+msgstr "Slaapstand en pauzestand zijn niet toegestaan"
 
 #: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1217
 #: ../src/xfpm-power.c:805
@@ -232,11 +231,11 @@ msgstr "Altijd pictogram weergeven"
 
 #: ../settings/xfpm-settings.c:1150
 msgid "When battery is present"
-msgstr "Als er een batterij is"
+msgstr "Als er een accu is"
 
 #: ../settings/xfpm-settings.c:1153
 msgid "When battery is charging or discharging"
-msgstr "Als de batterij aan het opladen of ontladen is"
+msgstr "Als de accu aan het opladen of ontladen is"
 
 #: ../settings/xfpm-settings.c:1156
 msgid "Never show icon"
@@ -270,7 +269,7 @@ msgstr "Slaapstand niet toegestaan"
 #: ../settings/xfpm-settings.c:1440
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
-"Wanneer al de krachtbronnen van de computer dit opladingsniveau bereiken"
+"Wanneer al de krachtbronnen van de computer dit opladingniveau bereiken"
 
 #: ../settings/xfpm-settings.c:1543 ../settings/xfpm-settings.c:1548
 msgid "General"
@@ -278,11 +277,11 @@ msgstr "Algemeen"
 
 #: ../settings/xfpm-settings.c:1557 ../settings/xfpm-settings.c:1562
 msgid "On AC"
-msgstr "Op netstroom"
+msgstr "Op Netstroom"
 
 #: ../settings/xfpm-settings.c:1572 ../settings/xfpm-settings.c:1577
 msgid "On Battery"
-msgstr "Op accu"
+msgstr "Op Accu"
 
 #: ../settings/xfpm-settings.c:1586 ../settings/xfpm-settings.c:1591
 msgid "Extended"
@@ -298,13 +297,13 @@ msgstr "Contactpunt voor instellingenbeheerder"
 
 #: ../settings/xfpm-settings-main.c:78
 msgid "SOCKET ID"
-msgstr "SOCKET ID"
+msgstr "CONTACTPUNT ID"
 
 #: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
 #: ../src/xfpm-power-info.c:948
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Type '%s --help' voor gebruiksinstructies."
+msgstr "Type '%s --help' voor gebruikinstructies."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
@@ -342,7 +341,8 @@ msgstr "Instellingen voor de Xfce-energiebeheerder"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
-msgstr "Vincent Tunru <projects@vinnl.nl>"
+msgstr "Vincent Tunru <projects@vinnl.nl>\n"
+"Pjotr"
 
 #: ../src/xfpm-power.c:330
 msgid ""
@@ -350,7 +350,7 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
-"Een toepassing belemmert nu de automatische slaapmodus, deze actie nu "
+"Een toepassing belemmert thans de automatische slaapmodus, deze actie nu "
 "uitvoeren kan de toepassing in zijn werk schaden, weet u zeker dat u het "
 "systeem in slaapstand wil brengen?"
 
@@ -399,7 +399,7 @@ msgstr "Zet het systeem in pauzestand"
 
 #: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
-msgstr "Afsluiten"
+msgstr "Systeem afsluiten"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
@@ -422,12 +422,12 @@ msgstr ""
 
 #: ../src/xfpm-power.c:1162 ../src/xfpm-power.c:1167
 msgid "Adaptor is offline"
-msgstr "Adapter is uit"
+msgstr "Voedingsblok is uit"
 
 #: ../src/xfpm-power.c:1163 ../src/xfpm-power.c:1168 ../src/xfpm-battery.c:404
 #, c-format
 msgid "Adaptor is online"
-msgstr "Adapter staat aan"
+msgstr "Voedingsblok staat aan"
 
 #: ../src/xfpm-power.c:1621 ../src/xfpm-power.c:1642 ../src/xfpm-power.c:1657
 #: ../src/xfpm-power.c:1680
@@ -475,15 +475,15 @@ msgstr "Onbekend"
 
 #: ../src/xfpm-power-common.c:155
 msgid "Lithium ion"
-msgstr "Lithium ion"
+msgstr "Lithium-ion"
 
 #: ../src/xfpm-power-common.c:157
 msgid "Lithium polymer"
-msgstr "Lithium polymeer"
+msgstr "Lithium-polymeer"
 
 #: ../src/xfpm-power-common.c:159
 msgid "Lithium iron phosphate"
-msgstr "Lithium ijzerfosfaat"
+msgstr "Lithium-ijzerfosfaat"
 
 #: ../src/xfpm-power-common.c:161
 msgid "Lead acid"
@@ -1001,15 +1001,15 @@ msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
-msgstr "Energie vol ontwerp"
+msgstr "Energie-vol-ontwerp"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
-msgstr "Energie vol"
+msgstr "Energie is vol"
 
 #: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
-msgstr "Energie op"
+msgstr "Energie is op"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
@@ -1116,10 +1116,10 @@ msgstr "Helderheid-plugin"
 #~ msgstr "Te veel argumenten"
 
 #~ msgid "Adapter present"
-#~ msgstr "Laadblok aanwezig"
+#~ msgstr "Voedingsblok aanwezig"
 
 #~ msgid "Adapter not present"
-#~ msgstr "Laadblok niet aanwezig"
+#~ msgstr "Voedingsblok niet aanwezig"
 
 #~ msgid "Are you sure you want to proceed?"
 #~ msgstr "Weet u zeker dat u door wil gaan?"
@@ -1140,10 +1140,10 @@ msgstr "Helderheid-plugin"
 #~ msgstr "Geen pauzestand-script gevonden"
 
 #~ msgid "No suspend method found"
-#~ msgstr "Geen pauzestand-methode gevonden"
+#~ msgstr "Geen pauzestandmethode gevonden"
 
 #~ msgid "No hibernate method found"
-#~ msgstr "Geen slaapstand-methode gevonden"
+#~ msgstr "Geen slaapstandmethode gevonden"
 
 #~ msgid "Out of memory"
 #~ msgstr "Onvoldoende geheugen"
@@ -1158,7 +1158,7 @@ msgstr "Helderheid-plugin"
 #~ msgstr "Notificatie inschakelen"
 
 #~ msgid "Xfce power manager is not running to releod it"
-#~ msgstr "Xfce energiebeheerder draait niet"
+#~ msgstr "Xfce-energiebeheerder draait niet"
 
 #~ msgid "Don't show again"
 #~ msgstr "Niet meer weergeven"
@@ -1172,7 +1172,7 @@ msgstr "Helderheid-plugin"
 #~ msgid ""
 #~ "Unable to read adapter status, the power manager will not work properly"
 #~ msgstr ""
-#~ "Kon status van laadblok niet lezen, de energiebeheerder zal niet correct "
+#~ "Kon status van voedingsblok niet lezen, de energiebeheerder zal niet correct "
 #~ "werken"
 
 #~ msgid "Are you sure you want to hibernate the system?"
