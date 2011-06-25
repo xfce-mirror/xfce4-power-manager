@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-22 04:06+0000\n"
+"POT-Creation-Date: 2011-06-25 16:06+0000\n"
 "PO-Revision-Date: 2010-02-20 16:56+0100\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German\n"
@@ -538,12 +538,11 @@ msgid "Your %s is charging"
 msgstr "Ihr %s wird geladen"
 
 #: ../src/xfpm-battery.c:222
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
-"%s\n"
 "%s lädt (%i%%)\n"
 " %s bis vollständig geladen."
 
@@ -558,14 +557,13 @@ msgid "System is running on %s power"
 msgstr "System läuft mit Strom von %s"
 
 #: ../src/xfpm-battery.c:242
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr ""
-"%s\n"
-"Ihr %s wird entladen (%i%%)\n"
-"Geschätzte verbleibende Zeit: %s"
+"%s wird entladen (%i%%)\n"
+"Geschätzte verbleibende Zeit: %s."
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
@@ -778,7 +776,7 @@ msgstr "Darf Festplatten herunterfahren"
 #: ../src/xfpm-main.c:155
 #, fuzzy
 msgid "Has battery"
-msgstr "Akku"
+msgstr "Hat Akku"
 
 #: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
