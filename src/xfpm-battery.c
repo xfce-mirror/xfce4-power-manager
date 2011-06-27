@@ -309,10 +309,14 @@ xfpm_battery_refresh_icon (XfpmBattery *battery)
 			battery->priv->icon_prefix, 
 			xfpm_battery_get_icon_index (battery->priv->type, battery->priv->percentage));
 	}
+	else if ( battery->priv->state == XFPM_DEVICE_STATE_EMPTY)
+	{
+	    g_snprintf (icon_name, 128, "%s%s", battery->priv->icon_prefix, battery->priv->ac_online ? "000-charging" : "000");
+	}
     }
     else
     {
-	if ( !battery->priv->present )
+	if ( !battery->priv->present || battery->priv->state == XFPM_DEVICE_STATE_EMPTY )
 	{
 	    g_snprintf (icon_name, 128, "%s-000", battery->priv->icon_prefix);
 	}
