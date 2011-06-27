@@ -234,6 +234,9 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
     if ( icon )
     	notify_notification_attach_to_status_icon (n, icon);
 #endif
+#else
+     if ( icon )
+     	notify_notification_attach_to_status_icon (n, icon);
 #endif
 	
     notify_notification_set_urgency (n, (NotifyUrgency)urgency);
