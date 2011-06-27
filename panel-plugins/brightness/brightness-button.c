@@ -186,7 +186,7 @@ static gboolean
 brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
 {
     gint x, y;
-    gint current_level = 0;
+    glong current_level = 0;
     GdkDisplay *display;
     GdkScreen *screen;
     BrightnessButton *button;
@@ -342,7 +342,7 @@ plus_clicked (GtkWidget *widget, BrightnessButton *button)
 static void
 range_value_changed (GtkWidget *widget, BrightnessButton *button)
 {
-    gint range_level, hw_level;
+    glong range_level, hw_level;
     
     range_level = (gint) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
@@ -428,8 +428,8 @@ brightness_button_create_popup (BrightnessButton *button)
 static void
 brightness_button_up (BrightnessButton *button)
 {
-    gint level;
-    gint max_level;
+    glong level;
+    glong max_level;
     
     xfpm_brightness_get_level (button->priv->brightness, &level);
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);
@@ -443,7 +443,7 @@ brightness_button_up (BrightnessButton *button)
 static void
 brightness_button_down (BrightnessButton *button)
 {
-    gint level;
+    glong level;
     xfpm_brightness_get_level (button->priv->brightness, &level);
     
     if ( level != 0 )
