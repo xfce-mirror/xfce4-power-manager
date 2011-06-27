@@ -104,9 +104,15 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 	
 	dim_level = dim_level * backlight->priv->max_level / 100;
 	
-	XFPM_DEBUG ("Current brightness level before dimming : %li, new %li", backlight->priv->last_level, dim_level);
-	
-	backlight->priv->dimmed = xfpm_brightness_set_level (backlight->priv->brightness, dim_level);
+	/**
+	 * Only reduce if the current level is brighter than
+	 * the configured dim_level
+	 **/
+	if (backlight->priv->last_level > dim_level)
+	{
+	    XFPM_DEBUG ("Current brightness level before dimming : %li, new %li", backlight->priv->last_level, dim_level);
+	    backlight->priv->dimmed = xfpm_brightness_set_level (backlight->priv->brightness, dim_level);
+	}
     }
 }
 
