@@ -242,18 +242,11 @@ doc/C/images/Makefile
 po/Makefile.in
 ])
 
-echo "
---------------------------------------------------
- 	    Xfce Power Manager $VERSION
-	======================================
- 
-	prefix:			${prefix}
-	xdg autostart:		${sysconfdir/xdg/autostart}
-	POLKIT:			${polkit}
-   	DPMS:   		${have_dpms}
-	Network manager:	${ac_network_manager}
-  	Build panel plugins:	${build_panel_plugins}
-   	Debug:		   	${enable_debug}
---------------------------------------------------
-
-Configuration finished, type make to compile"
+echo "prefix:			${prefix}"
+echo "xdg autostart:		${sysconfdir}/xdg/autostart"
+echo "POLKIT:			${polkit}"
+echo "DPMS:			${have_dpms}"
+echo "Network manager:	${ac_network_manager}"
+echo "Build panel plugins:	${build_panel_plugins}"
+echo "Debug:			${enable_debug}"
+echo "Configuration finished, type make to compile"
