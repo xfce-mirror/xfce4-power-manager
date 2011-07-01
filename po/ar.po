@@ -14,9 +14,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Country: Morocco\n"
 "Plural-Forms: nplurals=2; plural=1;\n"
 "X-Poedit-Language: Arabic\n"
+"X-Poedit-Country: Morocco\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -220,7 +220,6 @@ msgid "Lock screen"
 msgstr "قفل الشاشة"
 
 #: ../settings/xfpm-settings.c:957 ../settings/xfpm-settings.c:1107
-#, fuzzy
 msgid "Spinning down hard disks permission denied"
 msgstr "تقليل دوران القرص عند عدم الحاجة"
 
@@ -415,7 +414,7 @@ msgstr "محول متصل"
 #: ../src/xfpm-power.c:1680
 #, c-format
 msgid "Permission denied"
-msgstr ""
+msgstr "رفض الإذن"
 
 #: ../src/xfpm-power.c:1665 ../src/xfpm-power.c:1688
 #, c-format
@@ -487,8 +486,8 @@ msgstr "زمن غير محدد"
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i دقيقة"
+msgstr[1] "%i دقائق"
 
 #: ../src/xfpm-battery.c:186
 #, c-format
