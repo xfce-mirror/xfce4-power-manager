@@ -14,9 +14,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Country: Morocco\n"
 "Plural-Forms: nplurals=2; plural=1;\n"
 "X-Poedit-Language: Arabic\n"
-"X-Poedit-Country: Morocco\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -493,8 +493,8 @@ msgstr[1] "%i دقائق"
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i ساعه"
+msgstr[1] "%i ساعات"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
@@ -506,14 +506,14 @@ msgstr "%i %s %i %s"
 #: ../src/xfpm-battery.c:193
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "ساعة"
+msgstr[1] "ساعات"
 
 #: ../src/xfpm-battery.c:194
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "دقيقة"
+msgstr[1] "دقائق"
 
 #: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
 #, c-format
@@ -698,22 +698,22 @@ msgstr ""
 #: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "بدعم من مدير الشبكة\n"
 
 #: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "بدون دعم مدير الشبكة\n"
 
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With DPMS support\n"
-msgstr ""
+msgstr "مع دعم DPMS\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without DPMS support\n"
-msgstr ""
+msgstr "بدون دعم DPMS\n"
 
 #: ../src/xfpm-main.c:141
 msgid "Can suspend"
@@ -774,23 +774,24 @@ msgstr ""
 
 #: ../src/xfpm-main.c:265
 msgid "Enable debugging"
-msgstr ""
+msgstr "تمكين التصحيح"
 
 #: ../src/xfpm-main.c:266
 msgid "Dump all information"
 msgstr ""
 
 #: ../src/xfpm-main.c:267
+#, fuzzy
 msgid "Restart the running instance of Xfce power manager"
-msgstr ""
+msgstr "إعادة تشغيل مدير طاقة إكسفيس"
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
-msgstr ""
+msgstr "عرض حوار التكوين"
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
-msgstr ""
+msgstr "إنهاء أية مدير طاقة اكسفيس يعمل"
 
 #: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:935
 msgid "Version information"
@@ -802,12 +803,12 @@ msgstr ""
 
 #: ../src/xfpm-main.c:414
 msgid "Another power manager is already running"
-msgstr ""
+msgstr "مدير طاقة آخر قيد التشغيل"
 
 #: ../src/xfpm-main.c:420
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr ""
+msgstr " إدارة طاقة اكسفيس قيد التشغيل"
 
 #: ../src/xfpm-inhibit.c:331
 #, c-format
@@ -817,7 +818,7 @@ msgstr ""
 #: ../src/xfpm-inhibit.c:357
 #, c-format
 msgid "Invalid cookie"
-msgstr ""
+msgstr "كوكي غير صالح"
 
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
@@ -842,7 +843,7 @@ msgstr ""
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
 msgid "Interrupt"
-msgstr ""
+msgstr "قطع"
 
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
@@ -857,12 +858,12 @@ msgstr ""
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
-msgstr ""
+msgstr "ATA التسلسلي"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
 msgid "ATA host controller"
-msgstr ""
+msgstr "ATA تحكم مضيف"
 
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
@@ -998,7 +999,6 @@ msgstr "معالج"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
 #: ../src/xfpm-power-info.c:748
-#, fuzzy
 msgid "PID"
 msgstr "PID"
 
