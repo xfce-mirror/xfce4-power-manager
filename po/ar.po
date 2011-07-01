@@ -241,7 +241,7 @@ msgstr "لا تعرض الأيقونة ابداً"
 
 #: ../settings/xfpm-settings.c:1182
 msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr ""
+msgstr "تعطيل إشارة إدارة طاقة الشاشة(DPMS)، مثلاً لا تعطل الشاشة، أو تضعها في وضع السكون."
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
@@ -296,7 +296,7 @@ msgstr "معرف المنفذ"
 #: ../src/xfpm-power-info.c:948
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr ""
+msgstr "اكتب '%s --help' لدليل المستخدم"
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
@@ -336,7 +336,7 @@ msgstr "المترجم - الاعتمادات"
 
 #: ../src/xfpm-power.c:330
 msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "عطل تطبيق الآن النوم التلقائي، القيام بهذا الآن قد يؤدي إلى تعطيل حالة عمل من هذا التطبيق،  متأكد أنك تريد إسبات النظام؟"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -388,7 +388,7 @@ msgstr "إيقاف تشغيل النظام"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
+msgstr "النظام يعمل على الطاقة المنخفضة. احفظ أعمالك لتجنب فقدان البيانات"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -400,6 +400,8 @@ msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr ""
+"مستوى %s الشحن منخفض\n"
+" الوقت المتبقي %s"
 
 #: ../src/xfpm-power.c:1162 ../src/xfpm-power.c:1167
 msgid "Adaptor is offline"
@@ -518,12 +520,12 @@ msgstr[1] "دقائق"
 #: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
 #, c-format
 msgid "Your %s is fully charged"
-msgstr ""
+msgstr "البطارية %s مشحونة بالكامل"
 
 #: ../src/xfpm-battery.c:212 ../src/xfpm-battery.c:263
 #, c-format
 msgid "Your %s is charging"
-msgstr ""
+msgstr "البطارية %s تشحن"
 
 #: ../src/xfpm-battery.c:222
 #, c-format
@@ -531,23 +533,25 @@ msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
+"%s (%i%%)\n"
+"%s حتى يكتمل الشحن."
 
 #: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
 #, c-format
 msgid "Your %s is discharging"
-msgstr ""
+msgstr "بطاريتك %s لا تشحن"
 
 #: ../src/xfpm-battery.c:232
 #, c-format
 msgid "System is running on %s power"
-msgstr ""
+msgstr "النظام يعمل على %s طاقة"
 
 #: ../src/xfpm-battery.c:242
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
+msgstr "%s (%i%%)\\الوقت المقدر للإنتهاء %s."
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
@@ -566,6 +570,9 @@ msgid ""
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
+"%s\n"
+"بطاريتك %s مشحونة بالكامل(%i%%).\n"
+"لديك وقت %s تشغيل"
 
 #: ../src/xfpm-battery.c:424
 #, c-format
@@ -603,6 +610,9 @@ msgid ""
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
 msgstr ""
+"%s\n"
+"بطاريتك %s غير مشحونة (%i%%)\n"
+"الزمن المتبقي %s."
 
 #: ../src/xfpm-battery.c:464
 #, c-format
@@ -676,6 +686,14 @@ msgid ""
 "Licensed under the GNU GPL.\n"
 "\n"
 msgstr ""
+"\n"
+"مدير طاقة إكسفيس %s\n"
+"\n"
+"جزء من مشروع إضافات إكسفيس الجديدة\n"
+"http://goodies.xfce.org\n"
+"\n"
+"تحت رخصة GNU GPL.\n"
+"\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
@@ -688,12 +706,12 @@ msgstr "خاطئ"
 #: ../src/xfpm-main.c:113
 #, c-format
 msgid "With policykit support\n"
-msgstr ""
+msgstr "مع دعم policykit\n"
 
 #: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without policykit support\n"
-msgstr ""
+msgstr "بدون دعم policykit\n"
 
 #: ../src/xfpm-main.c:118
 #, c-format
@@ -744,9 +762,8 @@ msgid "Authorized to spin down hard disks"
 msgstr "تصريح بتدور الأقراص الصلبة"
 
 #: ../src/xfpm-main.c:155
-#, fuzzy
 msgid "Has battery"
-msgstr "والبطارية"
+msgstr ""
 
 #: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
