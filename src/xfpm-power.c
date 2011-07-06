@@ -981,7 +981,7 @@ static void
 xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
 {
     DBusGProxy *proxy_prop;
-    guint device_type;
+    guint device_type = XFPM_DEVICE_TYPE_UNKNOWN;
     GValue value;
     
     proxy_prop = dbus_g_proxy_new_for_name (power->priv->bus, 
@@ -998,6 +998,8 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
     value = xfpm_power_get_interface_property (proxy_prop, UPOWER_IFACE_DEVICE, "Type");
     
     device_type = g_value_get_uint (&value);
+    
+    XFPM_DEBUG_ENUM (device_type, XFPM_TYPE_DEVICE_TYPE, " device added");
     
     if ( device_type == XFPM_DEVICE_TYPE_BATTERY || 
 	 device_type == XFPM_DEVICE_TYPE_UPS     ||
@@ -1075,6 +1077,7 @@ static void
 xfpm_power_changed_cb (DBusGProxy *proxy, XfpmPower *power)
 {
     xfpm_power_get_properties (power);
+    xfpm_power_refresh_adaptor_visible (power);
 }
 
 static void
@@ -1092,14 +1095,7 @@ xfpm_power_device_removed_cb (DBusGProxy *proxy, const gchar *object_path, XfpmP
 static void
 xfpm_power_device_changed_cb (DBusGProxy *proxy, const gchar *object_path, XfpmPower *power)
 {
-    XfpmBattery *battery;
-    
-    battery = g_hash_table_lookup (power->priv->hash, object_path);
-    
-    if ( battery )
-    {
-	
-    }
+    xfpm_power_refresh_adaptor_visible (power);
 }
 
 #ifdef ENABLE_POLKIT
