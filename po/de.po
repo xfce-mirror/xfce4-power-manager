@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-25 16:06+0000\n"
+"POT-Creation-Date: 2011-08-22 16:07+0000\n"
 "PO-Revision-Date: 2010-02-20 16:56+0100\n"
 "Last-Translator: Fabian Nowak <timystery@arcor.de>\n"
 "Language-Team: German\n"
@@ -325,7 +325,7 @@ msgstr "Die Energieverwaltung für Xfce läuft nicht. Möchten Sie sie jetzt sta
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:345 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-battery.c:349 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Energieverwaltung"
 
@@ -413,22 +413,22 @@ msgstr ""
 "Die Ladung von %s ist niedrig\n"
 "Geschätzte verbleibende Zeit: %s"
 
-#: ../src/xfpm-power.c:1162 ../src/xfpm-power.c:1167
+#: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
 msgstr "Stromversorgung getrennt"
 
-#: ../src/xfpm-power.c:1163 ../src/xfpm-power.c:1168 ../src/xfpm-battery.c:404
+#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
 #, c-format
 msgid "Adaptor is online"
 msgstr "Stromversorgung angeschlossen"
 
-#: ../src/xfpm-power.c:1621 ../src/xfpm-power.c:1642 ../src/xfpm-power.c:1657
-#: ../src/xfpm-power.c:1680
+#: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
+#: ../src/xfpm-power.c:1676
 #, c-format
 msgid "Permission denied"
 msgstr "Erlaubnis verweigert"
 
-#: ../src/xfpm-power.c:1665 ../src/xfpm-power.c:1688
+#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
 msgstr "Standbymodus wird nicht unterstützt"
@@ -437,7 +437,7 @@ msgstr "Standbymodus wird nicht unterstützt"
 msgid "Battery"
 msgstr "Batterie"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:820
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
 msgid "UPS"
 msgstr "USV (Unterbrechungsfreie Stromversorgung)"
 
@@ -462,7 +462,7 @@ msgid "Phone"
 msgstr "Telefon"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:838
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
 msgid "Unknown"
 msgstr "Unbekannt"
 
@@ -570,12 +570,12 @@ msgstr ""
 msgid "Your %s is empty"
 msgstr "Ihr %s ist leer"
 
-#: ../src/xfpm-battery.c:404
+#: ../src/xfpm-battery.c:408
 #, c-format
 msgid "System is running on battery power"
 msgstr "System läuft gerade im Batteriebetrieb"
 
-#: ../src/xfpm-battery.c:411
+#: ../src/xfpm-battery.c:415
 #, c-format
 msgid ""
 "%s\n"
@@ -586,7 +586,7 @@ msgstr ""
 "%s ist voll geladen (%i%%).\n"
 "Stellt %s Laufzeit zur Verfügung"
 
-#: ../src/xfpm-battery.c:420
+#: ../src/xfpm-battery.c:424
 #, c-format
 msgid ""
 "%s\n"
@@ -595,7 +595,7 @@ msgstr ""
 "%s\n"
 "%s ist vollständig geladen (%i%%)"
 
-#: ../src/xfpm-battery.c:431
+#: ../src/xfpm-battery.c:435
 #, c-format
 msgid ""
 "%s\n"
@@ -606,7 +606,7 @@ msgstr ""
 "%s lädt (%i%%)\n"
 " %s bis vollständig geladen."
 
-#: ../src/xfpm-battery.c:440
+#: ../src/xfpm-battery.c:444
 #, c-format
 msgid ""
 "%s\n"
@@ -615,7 +615,7 @@ msgstr ""
 "%s\n"
 "%s wird geladen (%i%%)."
 
-#: ../src/xfpm-battery.c:451
+#: ../src/xfpm-battery.c:455
 #, c-format
 msgid ""
 "%s\n"
@@ -626,7 +626,7 @@ msgstr ""
 "Ihr %s wird entladen (%i%%)\n"
 "Geschätzte verbleibende Zeit: %s"
 
-#: ../src/xfpm-battery.c:460
+#: ../src/xfpm-battery.c:464
 #, c-format
 msgid ""
 "%s\n"
@@ -635,7 +635,7 @@ msgstr ""
 "%s\n"
 "%s wird entladen (%i%%)."
 
-#: ../src/xfpm-battery.c:469
+#: ../src/xfpm-battery.c:473
 #, c-format
 msgid ""
 "%s\n"
@@ -644,7 +644,7 @@ msgstr ""
 "%s\n"
 "%s wartet auf Entladen (%i%%)."
 
-#: ../src/xfpm-battery.c:473
+#: ../src/xfpm-battery.c:477
 #, c-format
 msgid ""
 "%s\n"
@@ -653,7 +653,7 @@ msgstr ""
 "%s\n"
 "%s wartet auf Laden (%i%%)."
 
-#: ../src/xfpm-battery.c:477
+#: ../src/xfpm-battery.c:481
 #, c-format
 msgid ""
 "%s\n"
@@ -662,27 +662,27 @@ msgstr ""
 "%s\n"
 "%s ist leer"
 
-#: ../src/xfpm-battery.c:817
+#: ../src/xfpm-battery.c:821
 msgid "battery"
 msgstr "Akku"
 
-#: ../src/xfpm-battery.c:823
+#: ../src/xfpm-battery.c:827
 msgid "monitor battery"
 msgstr "Monitorbatterie"
 
-#: ../src/xfpm-battery.c:826
+#: ../src/xfpm-battery.c:830
 msgid "mouse battery"
 msgstr "Mausbatterie"
 
-#: ../src/xfpm-battery.c:829
+#: ../src/xfpm-battery.c:833
 msgid "keyboard battery"
 msgstr "Tastaturbatterie"
 
-#: ../src/xfpm-battery.c:832
+#: ../src/xfpm-battery.c:836
 msgid "PDA battery"
 msgstr "PDA-Batterie"
 
-#: ../src/xfpm-battery.c:835
+#: ../src/xfpm-battery.c:839
 msgid "Phone battery"
 msgstr "Telefonbatterie"
 
@@ -774,7 +774,6 @@ msgid "Authorized to spin down hard disks"
 msgstr "Darf Festplatten herunterdrehen"
 
 #: ../src/xfpm-main.c:155
-#, fuzzy
 msgid "Has battery"
 msgstr "Hat Akku"
 
