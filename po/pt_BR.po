@@ -223,9 +223,8 @@ msgid "Spinning down hard disks permission denied"
 msgstr "Permissão de redução de velocidade dos discos rígidos negada"
 
 #: ../settings/xfpm-settings.c:1147
-#, fuzzy
 msgid "Always show icon"
-msgstr "Sempre exibir um ícone"
+msgstr "Sempre mostrar ícone"
 
 #: ../settings/xfpm-settings.c:1150
 msgid "When battery is present"
@@ -236,60 +235,52 @@ msgid "When battery is charging or discharging"
 msgstr "Quando a bateria está carregando ou descarregando"
 
 #: ../settings/xfpm-settings.c:1156
-#, fuzzy
 msgid "Never show icon"
-msgstr "Sempre exibir um ícone"
+msgstr "Nunca mostrar ícone"
 
 #: ../settings/xfpm-settings.c:1182
 msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr ""
+msgstr "Desabilita a \"Sinalização de exibição de gerenciamento de energia\" (DPMS). Por exemplo: não tenta desligar o monitor ou colocá-lo no modo de inatividade."
 
 #: ../settings/xfpm-settings.c:1376
-#, fuzzy
 msgid "Suspend operation not supported"
-msgstr "Hibernar o sistema"
+msgstr "Operação de suspensão não suportada"
 
 #: ../settings/xfpm-settings.c:1382
 msgid "Suspend operation not permitted"
-msgstr ""
+msgstr "Operação de suspensão não permitida"
 
 #: ../settings/xfpm-settings.c:1388
-#, fuzzy
 msgid "Hibernate operation not supported"
-msgstr "Hibernar o sistema"
+msgstr "Operação de hibernarção não suportada"
 
 #: ../settings/xfpm-settings.c:1393
-#, fuzzy
 msgid "Hibernate operation not permitted"
-msgstr "Hibernar o sistema"
+msgstr "Operação de hibernação não permitida"
 
 #: ../settings/xfpm-settings.c:1440
 msgid "When all the power sources of the computer reach this charge level"
-msgstr ""
+msgstr "Quando todas as fontes de energia do computador atingirem este nível"
 
 #: ../settings/xfpm-settings.c:1543 ../settings/xfpm-settings.c:1548
-#, fuzzy
 msgid "General"
-msgstr "Opções gerais"
+msgstr "Geral"
 
 #: ../settings/xfpm-settings.c:1557 ../settings/xfpm-settings.c:1562
-#, fuzzy
 msgid "On AC"
 msgstr "Usando a tomada"
 
 #: ../settings/xfpm-settings.c:1572 ../settings/xfpm-settings.c:1577
-#, fuzzy
 msgid "On Battery"
-msgstr "Em energia da bateria"
+msgstr "Usando a bateria"
 
 #: ../settings/xfpm-settings.c:1586 ../settings/xfpm-settings.c:1591
 msgid "Extended"
 msgstr "Estendido"
 
 #: ../settings/xfpm-settings.c:1659
-#, fuzzy
 msgid "Check your power manager installation"
-msgstr "O Gerenciador de energia do Xfce não está em execução"
+msgstr "Veja a instalação de seu gerenciador de energia"
 
 #: ../settings/xfpm-settings-main.c:78
 msgid "Settings manager socket"
@@ -310,9 +301,8 @@ msgid "Failed to load power manager configuration, using defaults"
 msgstr "Falha ao carregar a configuração do Gerenciador de energia, usando os padrões"
 
 #: ../settings/xfpm-settings-main.c:148
-#, fuzzy
 msgid "Unable to connect to Xfce Power Manager"
-msgstr "Não foi possível carregar o Gerenciador de energia do xfce4"
+msgstr "Não foi possível conectar-se ao Gerenciador de energia do Xfce"
 
 #: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
 #, c-format
@@ -335,9 +325,8 @@ msgid "Power Manager"
 msgstr "Gerenciador de energia"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
-#, fuzzy
 msgid "Settings for the Xfce Power Manager"
-msgstr "Configurações para o Gerenciador de energia do Xfce 4"
+msgstr "Configurações para o Gerenciador de energia do Xfce"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
@@ -348,27 +337,24 @@ msgstr ""
 
 #: ../src/xfpm-power.c:330
 msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "Um aplicativo está atualmente desabilitando o modo de inatividade automaticamente. Ao executar esta ação agora, poderá danificar o estado de trabalho atual deste aplicativo. Você tem certeza de que quer hibernar o sistema?"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
-msgstr ""
+msgstr "Sair"
 
 #: ../src/xfpm-power.c:429
-#, fuzzy
 msgid "All running instances of the power manager will exit"
 msgstr "Sai do Gerenciador de energia xfce"
 
 #: ../src/xfpm-power.c:431
-#, fuzzy
 msgid "Quit the power manager?"
-msgstr "Gerenciador de energia Xfce"
+msgstr "Sair do Gerenciador de energia Xfce?"
 
 #. Power information
 #: ../src/xfpm-power.c:534 ../src/xfpm-power-info.c:818
-#, fuzzy
 msgid "Power Information"
-msgstr "Configuração da bateria"
+msgstr "Informações de energia"
 
 #. *
 #. * Power Mode
@@ -377,39 +363,37 @@ msgstr "Configuração da bateria"
 #. normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
-msgstr ""
+msgstr "Modo"
 
 #. Normal
 #: ../src/xfpm-power.c:561
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #. Normal
 #: ../src/xfpm-power.c:571
 msgid "Presentation"
-msgstr ""
+msgstr "Apresentação"
 
 #: ../src/xfpm-power.c:693
 msgid "Hibernate the system"
 msgstr "Hibernar o sistema"
 
 #: ../src/xfpm-power.c:704
-#, fuzzy
 msgid "Suspend the system"
-msgstr "Desligar o sistema"
+msgstr "Suspender o sistema"
 
 #: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
 msgstr "Desligar o sistema"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
-#, fuzzy
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "A sua bateria está quase esgotada. Grave o seu trabalho para evitar perda de dados"
+msgstr "O sistema está executando com pouca energia. Grave o seu trabalho para evitar perda de dados"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
-msgstr ""
+msgstr "Sistema executando com pouca energia"
 
 #: ../src/xfpm-power.c:955
 #, c-format
