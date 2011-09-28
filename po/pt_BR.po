@@ -3,19 +3,20 @@
 # This file is distributed under the same license as the xfce4-power-manager package.
 # Vladimir Melo <vmelo@gnome.org>, 2008.
 # Og Maciel <ogmaciel@gnome.org>, 2008-2009.
-# Henrique P Machado <zehrique@gmail.com>, 2008.
+# Henrique P Machado <hpmachado@gnome.org>, 2008, 2011.
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-27 16:07+0000\n"
-"PO-Revision-Date: 2009-02-16 08:12-0500\n"
-"Last-Translator: Og Maciel <ogmaciel@gnome.org>\n"
+"POT-Creation-Date: 2011-09-28 16:06+0000\n"
+"PO-Revision-Date: 2009-09-28 17:53-0500\n"
+"Last-Translator: Henrique P Machado <hpmachado@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -333,7 +334,7 @@ msgid "translator-credits"
 msgstr ""
 "Vladimir Melo <vmelo@gnome.org>\n"
 "Og Maciel <ogmaciel@gnome.org>\n"
-"Henrique P Machado <zehrique@gmail.com>"
+"Henrique P Machado <hpmachado@gnome.org>"
 
 #: ../src/xfpm-power.c:330
 msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
@@ -401,14 +402,15 @@ msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr ""
+"O nível de carga de %s está baixo\n"
+"Tempo restante estimado: %s"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
-#, fuzzy
 msgid "Adaptor is offline"
 msgstr "O adaptador está desligado"
 
 #: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
-#, fuzzy, c-format
+#, c-format
 msgid "Adaptor is online"
 msgstr "O adaptador está ligado"
 
@@ -416,158 +418,154 @@ msgstr "O adaptador está ligado"
 #: ../src/xfpm-power.c:1676
 #, c-format
 msgid "Permission denied"
-msgstr ""
+msgstr "Permissão negada"
 
 #: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
-msgstr ""
+msgstr "Suspensão não suportada"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
-#, fuzzy
 msgid "Battery"
-msgstr "Configurações da bateria"
+msgstr "Bateria"
 
 #: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
 msgid "UPS"
-msgstr ""
+msgstr "UPS"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
-msgstr ""
+msgstr "Tomada"
 
 #: ../src/xfpm-power-common.c:128
-#, fuzzy
 msgid "Mouse"
-msgstr "horas"
+msgstr "Mouse"
 
 #: ../src/xfpm-power-common.c:130
-#, fuzzy
 msgid "Keyboard"
-msgstr "Atalhos de teclado"
+msgstr "Teclado"
 
 #: ../src/xfpm-power-common.c:134
 msgid "PDA"
-msgstr ""
+msgstr "PDA"
 
 #: ../src/xfpm-power-common.c:136
-#, fuzzy
 msgid "Phone"
-msgstr "Energia"
+msgstr "Telefone"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
 #: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
 msgid "Unknown"
-msgstr ""
+msgstr "Desconhecido"
 
 #: ../src/xfpm-power-common.c:155
 msgid "Lithium ion"
-msgstr ""
+msgstr "Íons de lítio"
 
 #: ../src/xfpm-power-common.c:157
 msgid "Lithium polymer"
-msgstr ""
+msgstr "Polímero de lítio"
 
 #: ../src/xfpm-power-common.c:159
 msgid "Lithium iron phosphate"
-msgstr ""
+msgstr "Fosfato ferroso de lítio"
 
 #: ../src/xfpm-power-common.c:161
 msgid "Lead acid"
-msgstr ""
+msgstr "Chumbo-ácido"
 
 #: ../src/xfpm-power-common.c:163
 msgid "Nickel cadmium"
-msgstr ""
+msgstr "Níquel-Cádmio"
 
 #: ../src/xfpm-power-common.c:165
 msgid "Nickel metal hybride"
-msgstr ""
+msgstr "Metal de níquel híbrido"
 
 #: ../src/xfpm-battery.c:169
 msgid "Unknown time"
-msgstr ""
+msgstr "Tempo desconhecido"
 
 #: ../src/xfpm-battery.c:175
-#, fuzzy, c-format
+#, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] "minuto"
-msgstr[1] "minuto"
+msgstr[0] "%i minuto"
+msgstr[1] "%i minutos"
 
 #: ../src/xfpm-battery.c:186
-#, fuzzy, c-format
+#, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] "hora"
-msgstr[1] "hora"
+msgstr[0] "%i hora"
+msgstr[1] "%i horas"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
 #: ../src/xfpm-battery.c:192
 #, c-format
 msgid "%i %s %i %s"
-msgstr ""
+msgstr "%i %s %i %s"
 
 #: ../src/xfpm-battery.c:193
-#, fuzzy
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hora"
-msgstr[1] "hora"
+msgstr[1] "horas"
 
 #: ../src/xfpm-battery.c:194
-#, fuzzy
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuto"
-msgstr[1] "minuto"
+msgstr[1] "minutos"
 
 #: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s is fully charged"
-msgstr "A sua bateria está totalmente carregada"
+msgstr "%s está totalmente carregado"
 
 #: ../src/xfpm-battery.c:212 ../src/xfpm-battery.c:263
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s is charging"
-msgstr "A sua bateria está descarregando"
+msgstr "%s está carregando"
 
 #: ../src/xfpm-battery.c:222
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
-msgstr "Bateria totalmente carregada"
+msgstr ""
+"%s (%i%%)\n"
+"%s até que esteja totalmente carregado."
 
 #: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s is discharging"
-msgstr "A sua bateria está descarregando"
+msgstr "%s está descarregando"
 
 #: ../src/xfpm-battery.c:232
-#, fuzzy, c-format
+#, c-format
 msgid "System is running on %s power"
-msgstr "Configurações do monitor quando usando a tomada"
+msgstr "O sistema está executando na energia de %s"
 
 #: ../src/xfpm-battery.c:242
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr ""
-"\n"
-"Tempo estimado restante"
+"%s (%i%%)\n"
+"Tempo restante estimado é %s."
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "Your %s is empty"
-msgstr "A bateria está quase esgotada"
+msgstr "%s esgotado"
 
 #: ../src/xfpm-battery.c:408
-#, fuzzy, c-format
+#, c-format
 msgid "System is running on battery power"
-msgstr "Configurações do monitor quando usando energia da bateria"
+msgstr "O sistema está executando com energia da bateria"
 
 #: ../src/xfpm-battery.c:415
 #, c-format
@@ -576,13 +574,18 @@ msgid ""
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
+"%s\n"
+"%s está totalmente carregado (%i%%).\n"
+"Funcionará por %s"
 
 #: ../src/xfpm-battery.c:424
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr "A sua bateria está totalmente carregada"
+msgstr ""
+"%s\n"
+"%s está totalmente carregado (%i%%)."
 
 #: ../src/xfpm-battery.c:435
 #, c-format
@@ -591,13 +594,18 @@ msgid ""
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
+"%s\n"
+"%s está carregando (%i%%)\n"
+"%s até que esteja totalmente carregado."
 
 #: ../src/xfpm-battery.c:444
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr "A sua bateria está descarregando"
+msgstr ""
+"%s\n"
+"%s está carregando (%i%%)."
 
 #: ../src/xfpm-battery.c:455
 #, c-format
@@ -606,13 +614,18 @@ msgid ""
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
 msgstr ""
+"%s\n"
+"%s está descarregando (%i%%)\n"
+"Tempo restante estimado: %s."
 
 #: ../src/xfpm-battery.c:464
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr "A sua bateria está descarregando"
+msgstr ""
+"%s\n"
+"%s está descarregando (%i%%)."
 
 #: ../src/xfpm-battery.c:473
 #, c-format
@@ -620,6 +633,8 @@ msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr ""
+"%s\n"
+"%s aguardando descarregar (%i%%)."
 
 #: ../src/xfpm-battery.c:477
 #, c-format
@@ -627,6 +642,8 @@ msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
 msgstr ""
+"%s\n"
+"%s aguardando carregar (%i%%)."
 
 #: ../src/xfpm-battery.c:481
 #, c-format
@@ -634,36 +651,32 @@ msgid ""
 "%s\n"
 "Your %s is empty"
 msgstr ""
+"%s\n"
+"%s está descarregado"
 
 #: ../src/xfpm-battery.c:821
-#, fuzzy
 msgid "battery"
-msgstr "Configurações da bateria"
+msgstr "bateria"
 
 #: ../src/xfpm-battery.c:827
-#, fuzzy
 msgid "monitor battery"
-msgstr "Em energia da bateria"
+msgstr "monitorar bateria"
 
 #: ../src/xfpm-battery.c:830
-#, fuzzy
 msgid "mouse battery"
-msgstr "Usando bateria"
+msgstr "bateria do mouse"
 
 #: ../src/xfpm-battery.c:833
-#, fuzzy
 msgid "keyboard battery"
-msgstr "Usando bateria"
+msgstr "bateria do teclado"
 
 #: ../src/xfpm-battery.c:836
-#, fuzzy
 msgid "PDA battery"
-msgstr "Em energia da bateria"
+msgstr "bateria do PDA"
 
 #: ../src/xfpm-battery.c:839
-#, fuzzy
 msgid "Phone battery"
-msgstr "Em energia da bateria"
+msgstr "bateria do telefone"
 
 #: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
@@ -688,117 +701,109 @@ msgstr ""
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
-msgstr ""
+msgstr "Verdadeiro"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "False"
-msgstr ""
+msgstr "Falso"
 
 #: ../src/xfpm-main.c:113
 #, c-format
 msgid "With policykit support\n"
-msgstr ""
+msgstr "Com suporte ao policykit\n"
 
 #: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without policykit support\n"
-msgstr ""
+msgstr "Sem suporte ao policykit\n"
 
 #: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "Com suporte ao gerenciador de redes\n"
 
 #: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Sem suporte ao gerenciador de redes\n"
 
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With DPMS support\n"
-msgstr ""
+msgstr "Com suporte a DPMS\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without DPMS support\n"
-msgstr ""
+msgstr "Sem suporte a DPMS\n"
 
 #: ../src/xfpm-main.c:141
-#, fuzzy
 msgid "Can suspend"
-msgstr "Suspender"
+msgstr "Pode suspender"
 
 #: ../src/xfpm-main.c:143
-#, fuzzy
 msgid "Can hibernate"
-msgstr "Hibernar"
+msgstr "Pode hibernar"
 
 #: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Pode reduzir a velocidade dos discos rígidos"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr ""
+msgstr "Autorizad a suspender"
 
 #: ../src/xfpm-main.c:149
-#, fuzzy
 msgid "Authorized to hibernate"
-msgstr "Falha do sistema ao hibernar"
+msgstr "Autorizado a hibernar"
 
 #: ../src/xfpm-main.c:151
-#, fuzzy
 msgid "Authorized to shutdown"
-msgstr "Falha do sistema ao desligar"
+msgstr "Autorizado a desligar"
 
 #: ../src/xfpm-main.c:153
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "Autorizado a reduzir a velocidade dos discos rígidos"
 
 #: ../src/xfpm-main.c:155
-#, fuzzy
 msgid "Has battery"
-msgstr "Em energia da bateria"
+msgstr "Tem bateria"
 
 #: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
-msgstr ""
+msgstr "Tem painel de brilho"
 
 #: ../src/xfpm-main.c:159
 msgid "Has power button"
-msgstr ""
+msgstr "Tem botão liga-desliga"
 
 #: ../src/xfpm-main.c:161
-#, fuzzy
 msgid "Has hibernate button"
-msgstr "Quando o botão desligar é pressionado, fazer"
+msgstr "Tem botão hibernar"
 
 #: ../src/xfpm-main.c:163
 msgid "Has sleep button"
-msgstr ""
+msgstr "Tem botão dormir"
 
 #: ../src/xfpm-main.c:165
 msgid "Has LID"
-msgstr ""
+msgstr "Tem LID"
 
 #: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
-msgstr ""
+msgstr "Não daemoniza"
 
 #: ../src/xfpm-main.c:265
 msgid "Enable debugging"
-msgstr ""
+msgstr "Habilitar depuração"
 
 #: ../src/xfpm-main.c:266
-#, fuzzy
 msgid "Dump all information"
-msgstr "Configuração da bateria"
+msgstr "Despejar todas as informações"
 
 #: ../src/xfpm-main.c:267
-#, fuzzy
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Sai do Gerenciador de energia xfce"
+msgstr "Renicia a instância do Gerenciador de energia Xfce em execução"
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
@@ -813,14 +818,12 @@ msgid "Version information"
 msgstr "Informações da versão"
 
 #: ../src/xfpm-main.c:320
-#, fuzzy
 msgid "Unable to get connection to the message bus session"
-msgstr "Não foi possível conectar ao DBus %s"
+msgstr "Não foi possível conectar à sessão DBus"
 
 #: ../src/xfpm-main.c:414
-#, fuzzy
 msgid "Another power manager is already running"
-msgstr "O Gerenciador de energia do Xfce já está em execução"
+msgstr "Um outro gerenciador de energia já está em execução"
 
 #: ../src/xfpm-main.c:420
 #, c-format
@@ -828,64 +831,64 @@ msgid "Xfce power manager is already running"
 msgstr "O Gerenciador de energia do Xfce já está em execução"
 
 #: ../src/xfpm-inhibit.c:331
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid arguments"
-msgstr "Muitos argumentos"
+msgstr "Argumentos inválidos"
 
 #: ../src/xfpm-inhibit.c:357
 #, c-format
 msgid "Invalid cookie"
-msgstr ""
+msgstr "Cookie inválido"
 
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
 msgid "No data"
-msgstr ""
+msgstr "Sem dados"
 
 #. TRANSLATORS: kernel module, usually a device driver
 #: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
 msgid "Kernel module"
-msgstr ""
+msgstr "Módulo do kernel"
 
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
-msgstr ""
+msgstr "Núcleo do kernel"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "Interrupção inter-processadores"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
 msgid "Interrupt"
-msgstr ""
+msgstr "Interrupção"
 
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
 msgid "PS/2 keyboard/mouse/touchpad"
-msgstr ""
+msgstr "Teclado PS/2/mouse/touchpad"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
 msgid "ACPI"
-msgstr ""
+msgstr "ACPI"
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
-msgstr ""
+msgstr "Serial ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
 msgid "ATA host controller"
-msgstr ""
+msgstr "Controlador de host ATA"
 
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
-msgstr ""
+msgstr "Adaptador sem-fio Intel"
 
 #. TRANSLATORS: a timer is something that fires periodically
 #: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
@@ -893,166 +896,161 @@ msgstr ""
 #: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
-msgstr ""
+msgstr "Timer %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Sleep %s"
-msgstr ""
+msgstr "Dormir %s"
 
 #. TRANSLATORS: this is a new realtime task
 #: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "New task %s"
-msgstr ""
+msgstr "Nova tarefa %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
 #: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "Wait %s"
-msgstr ""
+msgstr "Aguarde %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
 #, c-format
 msgid "Work queue %s"
-msgstr ""
+msgstr "Fila de trabalho %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Network route flush %s"
-msgstr ""
+msgstr "Descarga de rota de rede %s"
 
 #. TRANSLATORS: activity on the USB bus
 #: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "USB activity %s"
-msgstr ""
+msgstr "Atividade USB %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
-msgstr ""
+msgstr "Acordar %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
 msgid "Local interrupts"
-msgstr ""
+msgstr "Interrupções locais"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
-msgstr ""
+msgstr "Reescalonando interrupções"
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
-msgstr ""
+msgstr "Atributo"
 
 #: ../src/xfpm-power-info.c:338
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 #: ../src/xfpm-power-info.c:348
 msgid "Device"
-msgstr ""
+msgstr "Dispositivo"
 
 #: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:739
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: ../src/xfpm-power-info.c:375
-#, fuzzy
 msgid "PowerSupply"
 msgstr "Energia"
 
 #: ../src/xfpm-power-info.c:393
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #: ../src/xfpm-power-info.c:407
 msgid "Technology"
-msgstr ""
+msgstr "Tecnologia"
 
 #. TRANSLATORS: Unit here is What hour
 #: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
 #: ../src/xfpm-power-info.c:442
 msgid "Wh"
-msgstr ""
+msgstr "W/h"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
-msgstr ""
+msgstr "Desenho carregado"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
-msgstr ""
+msgstr "Carregado"
 
 #: ../src/xfpm-power-info.c:448
-#, fuzzy
 msgid "Energy empty"
-msgstr "A bateria está quase esgotada"
+msgstr "Energia esgotada"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: ../src/xfpm-power-info.c:461
 msgid "Voltage"
-msgstr ""
+msgstr "Voltagem"
 
 #: ../src/xfpm-power-info.c:478
 msgid "Vendor"
-msgstr ""
+msgstr "Distribuidor"
 
 #: ../src/xfpm-power-info.c:495
-#, fuzzy
 msgid "Serial"
-msgstr "Opções gerais"
+msgstr "Série"
 
 #: ../src/xfpm-power-info.c:731
 msgid "Processor"
-msgstr ""
+msgstr "Processador"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
 #: ../src/xfpm-power-info.c:748
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: ../src/xfpm-power-info.c:754
 msgid "Wakeups"
-msgstr ""
+msgstr "Acordados"
 
 #: ../src/xfpm-power-info.c:760
 msgid "Command"
-msgstr ""
+msgstr "Comando"
 
 #: ../src/xfpm-power-info.c:766
 msgid "Details"
-msgstr ""
+msgstr "Detalhes"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
-msgstr ""
+msgstr "Gerenciamento de energia para o Xfce desktop"
 
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
-#, fuzzy
 msgid "Control your LCD brightness"
-msgstr "Habilitar controle de brilho do LCD"
+msgstr "Controle o brilho de seu LCD"
 
 #: ../panel-plugins/brightness/brightness-button.c:182
-#, fuzzy
 msgid "No device found"
-msgstr "Nenhum governador de CPU localizado"
+msgstr "Nenhum dispositivo encontrado"
 
 #: ../panel-plugins/brightness/brightness-button.c:649
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr ""
+msgstr "Plug-in de brilho"
 
 #~ msgid "CPU frequency control"
 #~ msgstr "Habilitar controle da escala de freqüência da CPU"
