@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-25 10:07+0000\n"
+"POT-Creation-Date: 2011-10-08 22:03+0000\n"
 "PO-Revision-Date: 2009-08-27 10:23+0200\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Euskara <debian-l10n-eu@lists.debian.org>\n"
@@ -240,8 +240,12 @@ msgid "Never show icon"
 msgstr "Ez inoin bistarazi ikonoa"
 
 #: ../settings/xfpm-settings.c:1182
-msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr "Desgaitu pantaila energia kudeatzaile seinaleak (DPMS), adib. ez saiatu ordenagailua itzali edo lokartze moduan ipintzen."
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr ""
+"Desgaitu pantaila energia kudeatzaile seinaleak (DPMS), adib. ez saiatu "
+"ordenagailua itzali edo lokartze moduan ipintzen."
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
@@ -299,7 +303,9 @@ msgstr "Idatzi '%s --help' erabilera laguntzarentzat."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Huts energia kudeatzaile konfigurazio kargatzean, hobetsiriko balioak erabiltzen"
+msgstr ""
+"Huts energia kudeatzaile konfigurazio kargatzean, hobetsiriko balioak "
+"erabiltzen"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -334,8 +340,14 @@ msgid "translator-credits"
 msgstr "Piarres Beobide <pi@beobide.net>"
 
 #: ../src/xfpm-power.c:330
-msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
-msgstr "Aplikazio batek lokartze automatikoa desgaiturik du, ekintza hau aurrera eramatean aplikazio horren funtzionamendu egoera kaltetu dezake, ziur zaude sistema hibernatu nahi duzula?"
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
+msgstr ""
+"Aplikazio batek lokartze automatikoa desgaiturik du, ekintza hau aurrera "
+"eramatean aplikazio horren funtzionamendu egoera kaltetu dezake, ziur zaude "
+"sistema hibernatu nahi duzula?"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -387,7 +399,8 @@ msgstr "Itzali sistema"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Zure bateria nahiko hutsik dago. Gorde zure lana datu galerak saihesteko"
+msgstr ""
+"Zure bateria nahiko hutsik dago. Gorde zure lana datu galerak saihesteko"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -572,11 +585,14 @@ msgid ""
 msgstr ""
 
 #: ../src/xfpm-battery.c:424
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr "Zure bateria guztiz kargaturik dago"
+msgstr ""
+"\r\n"
+"%s\n"
+"Zure %s gutiz kargaturik dago (%i%%)."
 
 #: ../src/xfpm-battery.c:435
 #, c-format
@@ -585,13 +601,18 @@ msgid ""
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
+"%s\n"
+"Zure %s kargatzen ari da (%i%%)\n"
+"%s falta du osatzeko."
 
 #: ../src/xfpm-battery.c:444
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr "Zure bateria kargatzen ari da"
+msgstr ""
+"%s\n"
+"Zure %s kargatzen ari da (%i%%)."
 
 #: ../src/xfpm-battery.c:455
 #, fuzzy, c-format
@@ -602,11 +623,13 @@ msgid ""
 msgstr "Zure bateria deskargatzen ari da"
 
 #: ../src/xfpm-battery.c:464
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr "Zure bateria deskargatzen ari da"
+msgstr ""
+"%s\n"
+"Zure %s skargatzen ari da (%i%%)."
 
 #: ../src/xfpm-battery.c:473
 #, c-format
@@ -695,31 +718,30 @@ msgstr ""
 #: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "Sare kudeatzaile euskarriarekin\n"
 
 #: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Sare kudeatzaile euskarri gabe\n"
 
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With DPMS support\n"
-msgstr ""
+msgstr "DPMS euskarriarekin\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without DPMS support\n"
-msgstr ""
+msgstr "DPMS euskarririk gabe\n"
 
 #: ../src/xfpm-main.c:141
 msgid "Can suspend"
 msgstr "Eseki daiteke"
 
 #: ../src/xfpm-main.c:143
-#, fuzzy
 msgid "Can hibernate"
-msgstr "Hibernatu"
+msgstr "Hibernatu daiteke"
 
 #: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
@@ -727,29 +749,27 @@ msgstr ""
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr ""
+msgstr "Esekitzeko baimenarekin."
 
 #: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
-msgstr ""
+msgstr "Hibernatzeko baimenarekin."
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to shutdown"
-msgstr ""
+msgstr "Itzaltzeko baimenarekin."
 
 #: ../src/xfpm-main.c:153
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "Disko gogorrak itzaltzeko baimenarekin."
 
 #: ../src/xfpm-main.c:155
-#, fuzzy
 msgid "Has battery"
 msgstr "Bateriaz"
 
 #: ../src/xfpm-main.c:157
-#, fuzzy
 msgid "Has brightness panel"
-msgstr "Distira plugina"
+msgstr ""
 
 #: ../src/xfpm-main.c:159
 msgid "Has power button"
@@ -1107,20 +1127,39 @@ msgstr "Distira plugina"
 #~ msgid "Adapter not present"
 #~ msgstr "Moldagailua ez dago"
 
-#~ msgid "System is running on low power, but an application is currently disabling the automatic sleep, this means that doing a sleep now may damage the data of this application. Close this application before putting the computer on sleep mode or plug in your AC adapter"
-#~ msgstr "Sistema energia baxuaz funtzionatzen ari da, baina aplikazio batek lokartze automatikoa desgaiturik du, hau dela eta orain sistema lokartzen baduzu aplikazio honen datuak hondatu daitezke. Itxi aplikazio hori sistema lokartu baino lehen edo entxufatu energia moldagailua"
+#~ msgid ""
+#~ "System is running on low power, but an application is currently disabling "
+#~ "the automatic sleep, this means that doing a sleep now may damage the "
+#~ "data of this application. Close this application before putting the "
+#~ "computer on sleep mode or plug in your AC adapter"
+#~ msgstr ""
+#~ "Sistema energia baxuaz funtzionatzen ari da, baina aplikazio batek "
+#~ "lokartze automatikoa desgaiturik du, hau dela eta orain sistema lokartzen "
+#~ "baduzu aplikazio honen datuak hondatu daitezke. Itxi aplikazio hori "
+#~ "sistema lokartu baino lehen edo entxufatu energia moldagailua"
 
 #~ msgid "Are you sure you want to proceed?"
 #~ msgstr "Ziur zaude aurrera jarraitu nahi duzula?"
 
-#~ msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to suspend the system?"
-#~ msgstr "Aplikazio batek lokartze automatikoa desgaiturik du, ekintza hau aurrera eramatean aplikazio horren funtzionamendu egoera kaltetu dezake, ziur zaude sistema hibernatu nahi duzula?"
+#~ msgid ""
+#~ "An application is currently disabling the automatic sleep, doing this "
+#~ "action now may damage the working state of this application, are you sure "
+#~ "you want to suspend the system?"
+#~ msgstr ""
+#~ "Aplikazio batek lokartze automatikoa desgaiturik du, ekintza hau aurrera "
+#~ "eramatean aplikazio horren funtzionamendu egoera kaltetu dezake, ziur "
+#~ "zaude sistema hibernatu nahi duzula?"
 
 #~ msgid "Monitor power control"
 #~ msgstr "Ikusi energia kontrola"
 
-#~ msgid "Disable or enable monitor power control, for example you could disable the screen power control to avoid screen blanking when watching a movie."
-#~ msgstr "Desgaitu edo gaitu monitore energia kontrola, adibidez pantaila energia kontrola desgaitzea interesgarri  izan daiteke pelikula bat ikusten ari zarenean pantaila ez beltzean ipintzeko."
+#~ msgid ""
+#~ "Disable or enable monitor power control, for example you could disable "
+#~ "the screen power control to avoid screen blanking when watching a movie."
+#~ msgstr ""
+#~ "Desgaitu edo gaitu monitore energia kontrola, adibidez pantaila energia "
+#~ "kontrola desgaitzea interesgarri  izan daiteke pelikula bat ikusten ari "
+#~ "zarenean pantaila ez beltzean ipintzeko."
 
 #~ msgid "No data available"
 #~ msgstr "Ez dago daturik erabilgarri"
