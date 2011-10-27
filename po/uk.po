@@ -7,15 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-07 16:06+0000\n"
+"POT-Creation-Date: 2011-10-27 16:04+0000\n"
 "PO-Revision-Date: 2009-01-26 17:30+0200\n"
 "Last-Translator: Dmitry Nikitin <luckas_fb@mail.ru>\n"
 "Language-Team: Ukrainian <xfce4-dev@xfce.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: uk\n"
 "X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -43,7 +44,7 @@ msgstr "Дії"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "Consider the computer on low power at:"
-msgstr "Рахувати низьким заряд при: "
+msgstr "Вважати заряд низьким при:"
 
 #. Hibernate menu option
 #: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:817
@@ -79,11 +80,11 @@ msgstr "Нічого"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Power manager settings"
-msgstr "Параметри менеджер живлення"
+msgstr "Параметри менеджера живлення"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Prefer power savings over performance"
-msgstr "Пріорітет на збереження енергії перед швидкодією"
+msgstr "Пріоритет на збереження енергії перед швидкодією"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
@@ -95,7 +96,7 @@ msgstr "Перевести комп'ютер в сплячий режим кол
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Знмзити яскравість коли комп'ютер неактивний протягом:"
+msgstr "Зменшити яскравість коли комп'ютер неактивний протягом:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
@@ -107,11 +108,11 @@ msgstr "Призначити монітору режим засинання:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Show notifications to notify about the battery state"
-msgstr "Відображати повідомлення про стан батареї"
+msgstr "Показувати повідомлення про стан батареї"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Spin down hard disks"
-msgstr "Зупинити жорстку диски"
+msgstr "Зупинити жорсткі диски"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "Standby"
@@ -128,7 +129,7 @@ msgstr "Призупинити"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Switch off display when computer is inactive for:"
-msgstr "Вимкнути дисплей коли ком'ютер бездіяльний протягом:"
+msgstr "Вимкнути дисплей коли комп'ютер бездіяльний протягом:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "System tray icon: "
@@ -224,7 +225,7 @@ msgstr "Доступ до зупинки жорстких дисків забо�
 
 #: ../settings/xfpm-settings.c:1147
 msgid "Always show icon"
-msgstr "Завжди відображати значок"
+msgstr "Завжди показувати значок"
 
 #: ../settings/xfpm-settings.c:1150
 msgid "When battery is present"
@@ -236,11 +237,15 @@ msgstr "Коли батарея заряджається або розряджа
 
 #: ../settings/xfpm-settings.c:1156
 msgid "Never show icon"
-msgstr "Ніколи не відображати значок"
+msgstr "Ніколи не показувати значок"
 
 #: ../settings/xfpm-settings.c:1182
-msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr "Виключення повідомлень менеджера живлення екрану (DPMS), наприклад не намагатися виключати дисплей або включення режиму засинання."
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr ""
+"Виключення повідомлень менеджера живлення екрану (DPMS), наприклад не "
+"намагатися виключати дисплей або включення режиму засинання."
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
@@ -298,7 +303,9 @@ msgstr "Наберіть '%s --help' для використання."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Не вдалось завантажити конфігурацію менеджера живлення, використовується типова"
+msgstr ""
+"Не вдалось завантажити конфігурацію менеджера живлення, використовується "
+"типова"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -320,7 +327,7 @@ msgstr "Менеджер живлення Xfce4 не працює, може хо
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:345 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-battery.c:349 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Менеджер живлення"
 
@@ -333,7 +340,10 @@ msgid "translator-credits"
 msgstr "Dmitry Nikitin <luckas_fb@mail.ru>"
 
 #: ../src/xfpm-power.c:330
-msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
 msgstr ""
 "%s\n"
 "Ваша %s повністю зарядж. (%i%%).\n"
@@ -389,11 +399,13 @@ msgstr "Вимкнути систему"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Система працює на погано зарядженій батареї. Збережіть Вашу роботу щоб не допустити втрати даних"
+msgstr ""
+"Система працює на погано зарядженій батареї. Збережіть Вашу роботу щоб не "
+"допустити втрати даних"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
-msgstr "Система працює на слабком заряді"
+msgstr "Система працює на слабкому заряді"
 
 #: ../src/xfpm-power.c:955
 #, c-format
@@ -404,22 +416,22 @@ msgstr ""
 "Ваша %s розряджається\n"
 "Приблизно залишилось %s."
 
-#: ../src/xfpm-power.c:1162 ../src/xfpm-power.c:1167
+#: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
 msgstr "Адаптер вимкнуто"
 
-#: ../src/xfpm-power.c:1163 ../src/xfpm-power.c:1168 ../src/xfpm-battery.c:404
+#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
 #, c-format
 msgid "Adaptor is online"
 msgstr "Адаптер увімкнено"
 
-#: ../src/xfpm-power.c:1621 ../src/xfpm-power.c:1642 ../src/xfpm-power.c:1657
-#: ../src/xfpm-power.c:1680
+#: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
+#: ../src/xfpm-power.c:1676
 #, c-format
 msgid "Permission denied"
 msgstr "Доступ заборонено"
 
-#: ../src/xfpm-power.c:1665 ../src/xfpm-power.c:1688
+#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
 msgstr "Сплячка не підтримується"
@@ -428,7 +440,7 @@ msgstr "Сплячка не підтримується"
 msgid "Battery"
 msgstr "Батарея"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:820
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
 msgid "UPS"
 msgstr "БПЖ"
 
@@ -453,7 +465,7 @@ msgid "Phone"
 msgstr "Телефон"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:838
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
 msgid "Unknown"
 msgstr "Невідомий"
 
@@ -565,12 +577,12 @@ msgstr ""
 msgid "Your %s is empty"
 msgstr "Ваша %s вичерпана"
 
-#: ../src/xfpm-battery.c:404
+#: ../src/xfpm-battery.c:408
 #, c-format
 msgid "System is running on battery power"
 msgstr "Система працює на живленні від батареї"
 
-#: ../src/xfpm-battery.c:411
+#: ../src/xfpm-battery.c:415
 #, c-format
 msgid ""
 "%s\n"
@@ -581,7 +593,7 @@ msgstr ""
 "Ваша %s повністю зарядже (%i%%).\n"
 "Забезпечить %s часу"
 
-#: ../src/xfpm-battery.c:420
+#: ../src/xfpm-battery.c:424
 #, c-format
 msgid ""
 "%s\n"
@@ -590,7 +602,7 @@ msgstr ""
 "%s\n"
 "Вашу %s повністю заряджено (%i%%)."
 
-#: ../src/xfpm-battery.c:431
+#: ../src/xfpm-battery.c:435
 #, c-format
 msgid ""
 "%s\n"
@@ -601,7 +613,7 @@ msgstr ""
 "Ваша %s заряджається (%i%%)\n"
 "після %s буде повністю заряджена."
 
-#: ../src/xfpm-battery.c:440
+#: ../src/xfpm-battery.c:444
 #, c-format
 msgid ""
 "%s\n"
@@ -610,7 +622,7 @@ msgstr ""
 "%s\n"
 "Ваша %s заряджається (%i%%)."
 
-#: ../src/xfpm-battery.c:451
+#: ../src/xfpm-battery.c:455
 #, c-format
 msgid ""
 "%s\n"
@@ -621,7 +633,7 @@ msgstr ""
 "Ваша %s розряджається (%i%%)\n"
 "Приблизно залишилось %s."
 
-#: ../src/xfpm-battery.c:460
+#: ../src/xfpm-battery.c:464
 #, c-format
 msgid ""
 "%s\n"
@@ -630,7 +642,7 @@ msgstr ""
 "%s\n"
 "Ваша %s розряджається (%i%%)."
 
-#: ../src/xfpm-battery.c:469
+#: ../src/xfpm-battery.c:473
 #, c-format
 msgid ""
 "%s\n"
@@ -639,7 +651,7 @@ msgstr ""
 "%s\n"
 "%s очікується до розрядки (%i%%)."
 
-#: ../src/xfpm-battery.c:473
+#: ../src/xfpm-battery.c:477
 #, c-format
 msgid ""
 "%s\n"
@@ -648,7 +660,7 @@ msgstr ""
 "%s\n"
 "%s очікується до зарядки (%i%%)."
 
-#: ../src/xfpm-battery.c:477
+#: ../src/xfpm-battery.c:481
 #, c-format
 msgid ""
 "%s\n"
@@ -657,29 +669,29 @@ msgstr ""
 "%s\n"
 "Ваша %s вичерпана"
 
-#: ../src/xfpm-battery.c:817
+#: ../src/xfpm-battery.c:821
 msgid "battery"
 msgstr "батарея"
 
-#: ../src/xfpm-battery.c:823
+#: ../src/xfpm-battery.c:827
 msgid "monitor battery"
-msgstr "монітот батареї"
+msgstr "батарея монітора"
 
-#: ../src/xfpm-battery.c:826
+#: ../src/xfpm-battery.c:830
 msgid "mouse battery"
-msgstr "мишка батареї"
+msgstr "батарея мишки"
 
-#: ../src/xfpm-battery.c:829
+#: ../src/xfpm-battery.c:833
 msgid "keyboard battery"
-msgstr "клавіатура батареї"
+msgstr "батарея клавіатури"
 
-#: ../src/xfpm-battery.c:832
+#: ../src/xfpm-battery.c:836
 msgid "PDA battery"
-msgstr "Батарея PDA"
+msgstr "батарея PDA"
 
-#: ../src/xfpm-battery.c:835
+#: ../src/xfpm-battery.c:839
 msgid "Phone battery"
-msgstr "Батарея телефону"
+msgstr "батарея телефону"
 
 #: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
@@ -861,12 +873,12 @@ msgstr "Ядро"
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr "Пререривання інтерпроцесора"
+msgstr "Переривання інтерпроцесора"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
 msgid "Interrupt"
-msgstr "Пререривання"
+msgstr "Переривання"
 
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
@@ -881,7 +893,7 @@ msgstr "ACPI"
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
-msgstr "Серійний ATA"
+msgstr "Serial ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
@@ -891,7 +903,7 @@ msgstr "Контролер ATA"
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
-msgstr "Безпровідний адаптор Intel"
+msgstr "Безпровідний адаптер Intel"
 
 #. TRANSLATORS: a timer is something that fires periodically
 #: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
@@ -985,7 +997,7 @@ msgstr "Технологія"
 #: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
 #: ../src/xfpm-power-info.c:442
 msgid "Wh"
-msgstr "Втч"
+msgstr "Вт*г"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
@@ -1053,7 +1065,7 @@ msgstr "Не знайдено пристрою"
 #: ../panel-plugins/brightness/brightness-button.c:649
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr "Плагін зміни яскравості"
+msgstr "Додаток зміни яскравості"
 
 #~ msgid "Xfce 4 Power Manager"
 #~ msgstr "Менеджер живлення Xfce 4"
@@ -1179,8 +1191,10 @@ msgstr "Плагін зміни яскравості"
 #~ msgid "Power manager is connected"
 #~ msgstr "Менеджер живлення Xfce не працює"
 
-#~ msgid "Unable to read adapter status, the power manager will not work properly"
-#~ msgstr "Неможливо визначити стан адаптера, менеджер живлення не працює правильно"
+#~ msgid ""
+#~ "Unable to read adapter status, the power manager will not work properly"
+#~ msgstr ""
+#~ "Неможливо визначити стан адаптера, менеджер живлення не працює правильно"
 
 #~ msgid "Are you sure you want to hibernate the system?"
 #~ msgstr "Ви впевнені, що бажаєте перевести систему у сплячку?"
@@ -1215,8 +1229,12 @@ msgstr "Плагін зміни яскравості"
 #~ msgid "Ondemand performance"
 #~ msgstr "Продуктивність за вимогою"
 
-#~ msgid "Set the CPU to its maximum speed when there is any load on it and to its minimum speed when the system is idle"
-#~ msgstr "Призначити процесору його максимальну швидкість коли в цьому є потреба і мінімальну коли система в режимі очікування"
+#~ msgid ""
+#~ "Set the CPU to its maximum speed when there is any load on it and to its "
+#~ "minimum speed when the system is idle"
+#~ msgstr ""
+#~ "Призначити процесору його максимальну швидкість коли в цьому є потреба і "
+#~ "мінімальну коли система в режимі очікування"
 
 #~ msgid "Best power savings"
 #~ msgstr "Найкраще збереження енергії"
@@ -1227,8 +1245,12 @@ msgstr "Плагін зміни яскравості"
 #~ msgid "Good power savings"
 #~ msgstr "Добре збереження енергії"
 
-#~ msgid "gracefully increases and decreases the CPU speed depending on the current usage"
-#~ msgstr "граціозно збільшувати і зменшувати швидкість процесора в залежності від поточного використання"
+#~ msgid ""
+#~ "gracefully increases and decreases the CPU speed depending on the current "
+#~ "usage"
+#~ msgstr ""
+#~ "граціозно збільшувати і зменшувати швидкість процесора в залежності від "
+#~ "поточного використання"
 
 #~ msgid "CPU frequency settings on UPS power"
 #~ msgstr "Налаштування частоти процесора при живленні від UPS"
@@ -1281,17 +1303,39 @@ msgstr "Плагін зміни яскравості"
 #~ msgid "Xfce4 Power Manager"
 #~ msgstr "Менеджер живлення для Xfce4"
 
-#~ msgid "Unable to read your home directory environment variable, autostart option may not work"
-#~ msgstr "Неможливо прочитати змінні середовища домашньої теки, опція автозапуску може не працювати"
+#~ msgid ""
+#~ "Unable to read your home directory environment variable, autostart option "
+#~ "may not work"
+#~ msgstr ""
+#~ "Неможливо прочитати змінні середовища домашньої теки, опція автозапуску "
+#~ "може не працювати"
 
-#~ msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
-#~ msgstr "Неможливо запустити менеджер живлення Xfce4, впевніться, що працюють HAL і служба повідомлень шини даних"
+#~ msgid ""
+#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
+#~ "and the message bus daemon are running"
+#~ msgstr ""
+#~ "Неможливо запустити менеджер живлення Xfce4, впевніться, що працюють HAL "
+#~ "і служба повідомлень шини даних"
 
-#~ msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
-#~ msgstr "Неможливо визначити стан адаптера AC, менеджер живлення може працювати. неправильно. Можливі причини: драйвер адаптера AC не завантажено, відсутній зв'язок з HAL або не запущено службу повідомлень шини даних"
+#~ msgid ""
+#~ "Unable to read AC adapter status, the power manager will not work "
+#~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
+#~ "connection with the hardware abstract layer or the message bus daemon is "
+#~ "not running"
+#~ msgstr ""
+#~ "Неможливо визначити стан адаптера AC, менеджер живлення може працювати. "
+#~ "неправильно. Можливі причини: драйвер адаптера AC не завантажено, "
+#~ "відсутній зв'язок з HAL або не запущено службу повідомлень шини даних"
 
-#~ msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
-#~ msgstr "Неможливо використовувати службу управління живленням, так як сплячка і призупинення не працюють. Можливі причини: Ви не маєте достатніх прав, порушений зв'язок з HAL, або служба повідомлень шини даних не працює"
+#~ msgid ""
+#~ "Unable to use power management service, functionalities like hibernate "
+#~ "and suspend will not work. Possible reasons: you don't have enough "
+#~ "permission, broken connection with the hardware abstract layer or the "
+#~ "message bus daemon is not running"
+#~ msgstr ""
+#~ "Неможливо використовувати службу управління живленням, так як сплячка і "
+#~ "призупинення не працюють. Можливі причини: Ви не маєте достатніх прав, "
+#~ "порушений зв'язок з HAL, або служба повідомлень шини даних не працює"
 
 #~ msgid "Error monitoring HAL events"
 #~ msgstr "Помилка стеження подій HAL"
@@ -1315,22 +1359,30 @@ msgstr "Плагін зміни яскравості"
 #~ msgstr "Повідомлення про призупинення системи не отримало відповіді"
 
 #~ msgid "No reply from HAL daemon to set monitor brightness level"
-#~ msgstr "Немає відповіді від служби HAL для встановлення рівня яскравості монітора"
+#~ msgstr ""
+#~ "Немає відповіді від служби HAL для встановлення рівня яскравості монітора"
 
 #~ msgid "No reply from HAL daemon to get monitor brightness level"
-#~ msgstr "Немає відповіді від служби HAL для визначення рівня яскравості монітора"
+#~ msgstr ""
+#~ "Немає відповіді від служби HAL для визначення рівня яскравості монітора"
 
 #~ msgid "No reply from HAL daemon to get available cpu governors"
-#~ msgstr "Немає відповіді від служби HAL для визначення наявного управління процесорами"
+#~ msgstr ""
+#~ "Немає відповіді від служби HAL для визначення наявного управління "
+#~ "процесорами"
 
 #~ msgid "No reply from HAL daemon to get current cpu governor"
-#~ msgstr "Немає відповіді від служби HAL для визначення наявного управління процесором"
+#~ msgstr ""
+#~ "Немає відповіді від служби HAL для визначення наявного управління "
+#~ "процесором"
 
 #~ msgid "No reply from HAL daemon to set cpu governor"
-#~ msgstr "Немає відповіді від служби HAL для встановлення управління процесором"
+#~ msgstr ""
+#~ "Немає відповіді від служби HAL для встановлення управління процесором"
 
 #~ msgid "No reply from HAL daemon to set power save profile"
-#~ msgstr "Немає відповіді від служби HAL для встановлення профілю збереження енергії"
+#~ msgstr ""
+#~ "Немає відповіді від служби HAL для встановлення профілю збереження енергії"
 
 #~ msgid "Failed to create dbus message\n"
 #~ msgstr "Не вдалось створити повідомлення dbus\n"
