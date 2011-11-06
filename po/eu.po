@@ -2,21 +2,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # 
-# Piarres Beobide <pi@beobide.net>, 2008, 2009.
+# Piarres Beobide <pi@beobide.net>, 2008, 2009, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager.master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-11-04 23:04+0000\n"
-"PO-Revision-Date: 2009-08-27 10:23+0200\n"
+"PO-Revision-Date: 2011-11-06 19:02+0200\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
-"Language-Team: Euskara <debian-l10n-eu@lists.debian.org>\n"
+"Language-Team: debian-l10n-eu@lists.debian.org\n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: eu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Virtaal 0.7.0\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -560,11 +560,13 @@ msgid "System is running on %s power"
 msgstr "Sistema %s energiaz funtzionatzen ari da"
 
 #: ../src/xfpm-battery.c:242
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr "Geratzen zaion denbora"
+msgstr ""
+"%s (%i%%)\n"
+"Geratzen zaion denbora: %s."
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
@@ -583,6 +585,9 @@ msgid ""
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
+"%s\n"
+"Zure %s guztiz kargaturik dago (%i%%).\n"
+"%s energia hornitzeko"
 
 #: ../src/xfpm-battery.c:424
 #, c-format
@@ -615,12 +620,15 @@ msgstr ""
 "Zure %s kargatzen ari da (%i%%)."
 
 #: ../src/xfpm-battery.c:455
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr "Zure bateria deskargatzen ari da"
+msgstr ""
+"%s\n"
+"Zure %s deskargatzen ari da (%i%%)\n"
+"Geratzen zaion denbora: %s."
 
 #: ../src/xfpm-battery.c:464
 #, c-format
@@ -637,6 +645,8 @@ msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr ""
+"%s\n"
+"%s denbora deskargatzeko (%i%%)."
 
 #: ../src/xfpm-battery.c:477
 #, c-format
@@ -644,6 +654,8 @@ msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
 msgstr ""
+"%s\n"
+"%s denbora kargatzeko (%i%%)."
 
 #: ../src/xfpm-battery.c:481
 #, c-format
@@ -651,6 +663,8 @@ msgid ""
 "%s\n"
 "Your %s is empty"
 msgstr ""
+"%s\n"
+"Zure %s hutsik dago"
 
 #: ../src/xfpm-battery.c:821
 msgid "battery"
@@ -745,7 +759,7 @@ msgstr "Hibernatu daiteke"
 
 #: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Ezin dira disko-gogorrak gelditu"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
@@ -773,7 +787,7 @@ msgstr ""
 
 #: ../src/xfpm-main.c:159
 msgid "Has power button"
-msgstr ""
+msgstr "Energia botoia du"
 
 #: ../src/xfpm-main.c:161
 msgid "Has hibernate button"
@@ -785,7 +799,7 @@ msgstr "Lokartze botoia du"
 
 #: ../src/xfpm-main.c:165
 msgid "Has LID"
-msgstr ""
+msgstr "LID du"
 
 #: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
@@ -886,7 +900,7 @@ msgstr "ATA ostalari kontrolatzailea"
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
-msgstr ""
+msgstr "Intel-en haririk gabeko moldagailua"
 
 #. TRANSLATORS: a timer is something that fires periodically
 #: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
@@ -894,13 +908,13 @@ msgstr ""
 #: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
-msgstr ""
+msgstr "%s tenporizadorea"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Sleep %s"
-msgstr ""
+msgstr "%s lotan"
 
 #. TRANSLATORS: this is a new realtime task
 #: ../src/xfpm-power-info.c:224
@@ -918,35 +932,35 @@ msgstr "%s itxoin"
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
 #, c-format
 msgid "Work queue %s"
-msgstr ""
+msgstr "%s lan-ilara"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Network route flush %s"
-msgstr ""
+msgstr "%s sareko bideratze-garbiketa"
 
 #. TRANSLATORS: activity on the USB bus
 #: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "USB activity %s"
-msgstr "%S USB aktibitatea"
+msgstr "%s USB aktibitatea"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
-msgstr ""
+msgstr "%s esnatzea"
 
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
 msgid "Local interrupts"
-msgstr ""
+msgstr "Etendura lokalak"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
-msgstr ""
+msgstr "Etendurak birplanifikatzen"
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
@@ -966,7 +980,7 @@ msgstr "Mota"
 
 #: ../src/xfpm-power-info.c:375
 msgid "PowerSupply"
-msgstr ""
+msgstr "EnergiHornitzea"
 
 #: ../src/xfpm-power-info.c:393
 msgid "Model"
@@ -979,9 +993,8 @@ msgstr "Teknologia"
 #. TRANSLATORS: Unit here is What hour
 #: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
 #: ../src/xfpm-power-info.c:442
-#, fuzzy
 msgid "Wh"
-msgstr "mWh"
+msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
@@ -989,52 +1002,51 @@ msgstr ""
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
-msgstr ""
+msgstr "Energia betea"
 
 #: ../src/xfpm-power-info.c:448
 #, fuzzy
 msgid "Energy empty"
-msgstr "hutsik dago"
+msgstr "Energia hutsik"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: ../src/xfpm-power-info.c:461
 msgid "Voltage"
-msgstr ""
+msgstr "Tensioa"
 
 #: ../src/xfpm-power-info.c:478
 #, fuzzy
 msgid "Vendor"
-msgstr "Saltzailea:"
+msgstr "Saltzailea"
 
 #: ../src/xfpm-power-info.c:495
-#, fuzzy
 msgid "Serial"
-msgstr "Orokorra"
+msgstr "Seriekoa"
 
 #: ../src/xfpm-power-info.c:731
 msgid "Processor"
-msgstr ""
+msgstr "Prozesatzailea"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
 #: ../src/xfpm-power-info.c:748
 msgid "PID"
-msgstr ""
+msgstr "PIDa"
 
 #: ../src/xfpm-power-info.c:754
 msgid "Wakeups"
-msgstr ""
+msgstr "Esnatzeak"
 
 #: ../src/xfpm-power-info.c:760
 msgid "Command"
-msgstr ""
+msgstr "Komandoa"
 
 #: ../src/xfpm-power-info.c:766
 msgid "Details"
-msgstr ""
+msgstr "Xehetasunak"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
