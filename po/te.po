@@ -7,13 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-22 16:07+0000\n"
+"POT-Creation-Date: 2011-11-19 10:06+0000\n"
 "PO-Revision-Date: 2011-05-19 15:12+0530\n"
 "Last-Translator: Praveen Illa <mail2ipn@gmail.com>\n"
 "Language-Team: Telugu <indlinux-telugu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: te\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
@@ -238,8 +239,12 @@ msgid "Never show icon"
 msgstr "ప్రతీకను ఎప్పుడూ చూపించవద్దు"
 
 #: ../settings/xfpm-settings.c:1182
-msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr "Display Power Management Signaling (DPMS) ను అచేతనపరుచు, ఉదా మానిటర్‌ను స్విచ్ ఆపవద్దు లేదా నిద్రావస్థ రీతిలో ఉంచుటకు ప్రయత్నించవద్దు."
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr ""
+"Display Power Management Signaling (DPMS) ను అచేతనపరుచు, ఉదా మానిటర్‌ను స్విచ్ ఆపవద్దు "
+"లేదా నిద్రావస్థ రీతిలో ఉంచుటకు ప్రయత్నించవద్దు."
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
@@ -332,8 +337,13 @@ msgid "translator-credits"
 msgstr "Praveen Illa <mail2ipn@gmail.com>, 2011."
 
 #: ../src/xfpm-power.c:330
-msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
-msgstr "స్వయంచాలక నిద్రావస్థను ఒక అనువర్తనము నిరోధిస్తున్నది, ఈ చర్యను చేయడం వలన పనిచేస్తున్న అనువర్తనము యొక్క పనితీరుకు నష్టం కలిగించవచ్చు, మీరు ఖచ్చితంగా వ్యవస్థను సుప్తావస్థలో ఉంచాలనుకుంటున్నారా?"
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
+msgstr ""
+"స్వయంచాలక నిద్రావస్థను ఒక అనువర్తనము నిరోధిస్తున్నది, ఈ చర్యను చేయడం వలన పనిచేస్తున్న అనువర్తనము "
+"యొక్క పనితీరుకు నష్టం కలిగించవచ్చు, మీరు ఖచ్చితంగా వ్యవస్థను సుప్తావస్థలో ఉంచాలనుకుంటున్నారా?"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -385,7 +395,8 @@ msgstr "వ్యవస్థను మూసివేయి"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "వ్యవస్థ తక్కువ విద్యుచ్ఛక్తి వద్ద నడుస్తున్నది. డేటాను కోల్పోకుండా ఉండటానికి మీ పనిని భద్రపరుచుకోండి"
+msgstr ""
+"వ్యవస్థ తక్కువ విద్యుచ్ఛక్తి వద్ద నడుస్తున్నది. డేటాను కోల్పోకుండా ఉండటానికి మీ పనిని భద్రపరుచుకోండి"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -525,7 +536,7 @@ msgid "Your %s is charging"
 msgstr "మీ %s చార్జింగ్ అవుతున్నది"
 
 #: ../src/xfpm-battery.c:222
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
@@ -545,7 +556,7 @@ msgid "System is running on %s power"
 msgstr "వ్యవస్థ %s విద్యుత్ పై నడుస్తున్నది"
 
 #: ../src/xfpm-battery.c:242
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
