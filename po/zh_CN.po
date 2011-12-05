@@ -1,20 +1,22 @@
-# Chinese translations for xfce package.
-# Copyright (C) 2008 THE xfce'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the xfce package.
+# Simplified Chinese translations for xfce4-power-manager package.
+# This file is distributed under the same license as 
+# the xfce4-power-manager package.
 # Hunt Xu <huntxu@live.cn>, 2008, 2009, 2010, 2011.
 # Chris K. Zhang <plutino@gmail.com>, 2009.
+# Chipong Luo <chipong_l@yahoo.com>, 2011.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce 4-power-manager\n"
+"Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-21 04:06+0000\n"
+"POT-Creation-Date: 2011-12-04 21:48+0000\n"
 "PO-Revision-Date: 2011-02-15 21:22+0800\n"
 "Last-Translator: Chipong Luo <chipong_l@yahoo.com>\n"
-"Language-Team: Simplified Chinese <xfce-i18n@xfce.org>\n"
+"Language-Team: Chinese (simplified) <xfce-i18n@xfce.org>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -42,7 +44,7 @@ msgstr "动作"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "Consider the computer on low power at:"
-msgstr "电脑处于低电力状态时的电量认定值："
+msgstr "在此认为计算机处于低电量："
 
 #. Hibernate menu option
 #: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:817
@@ -59,7 +61,7 @@ msgstr "级别："
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "Lock screen when going for suspend/hibernate"
-msgstr "当休眠/挂起时锁住屏幕"
+msgstr "进入待机/休眠时锁屏"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
 msgid "Monitor"
@@ -86,27 +88,27 @@ msgstr "节能优先于性能"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
-msgstr "当电脑多久没有活动时显示器转入睡眠状态："
+msgstr "计算机此时间无活动后显示器转入睡眠："
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Put the computer to sleep when inactive for:"
-msgstr "当电脑多久没有活动时关闭电脑："
+msgstr "计算机此时间无活动后计算机转入睡眠："
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "当电脑多久没有活动时减弱屏幕亮度:"
+msgstr "计算机此时间无活动后降低屏幕亮度："
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
-msgstr "设置电脑不活动时睡眠的方式:"
+msgstr "设置计算机无活动睡眠模式："
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "Set monitor sleep mode:"
-msgstr "设置显示器睡眠方式："
+msgstr "设置显示器睡眠模式："
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Show notifications to notify about the battery state"
-msgstr "显示通知电池状态的通知"
+msgstr "显示有关电池状态报告的通知"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Spin down hard disks"
@@ -123,11 +125,11 @@ msgstr "备用"
 #: ../settings/xfpm-settings.c:1314 ../src/xfpm-power.c:499
 #: ../src/xfpm-power.c:792
 msgid "Suspend"
-msgstr "挂起"
+msgstr "待机"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Switch off display when computer is inactive for:"
-msgstr "当电脑多久没有活动时关闭显示器："
+msgstr "计算机此时间无活动后切断显示器："
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "System tray icon: "
@@ -151,7 +153,7 @@ msgstr "按下电源按钮时："
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "When sleep button is pressed:"
-msgstr "按下睡眠按钮时执行："
+msgstr "按下睡眠按钮时："
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 #: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
@@ -196,12 +198,12 @@ msgstr "秒"
 #: ../settings/xfpm-settings.c:789 ../settings/xfpm-settings.c:987
 #: ../settings/xfpm-settings.c:1467
 msgid "Hibernate and suspend operations not supported"
-msgstr "不支持休眠或挂起操作"
+msgstr "不支持休眠和待机操作"
 
 #: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:992
 #: ../settings/xfpm-settings.c:1472
 msgid "Hibernate and suspend operations not permitted"
-msgstr "不允许休眠或挂起操作"
+msgstr "不允许休眠和待机操作"
 
 #: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1217
 #: ../src/xfpm-power.c:805
@@ -219,7 +221,7 @@ msgstr "锁屏"
 
 #: ../settings/xfpm-settings.c:957 ../settings/xfpm-settings.c:1107
 msgid "Spinning down hard disks permission denied"
-msgstr "不允许降低硬盘转速"
+msgstr "无降低硬盘转速权限"
 
 #: ../settings/xfpm-settings.c:1147
 msgid "Always show icon"
@@ -242,15 +244,16 @@ msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
-"禁用显示器电源管理 (DPMS)，如不尝试关闭显示器或使显示器处于睡眠模式。"
+"禁用显示器电源管理信号(DPMS)，比如不尝试切断显示器"
+"或使之处于睡眠模式。"
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
-msgstr "不支持挂起操作"
+msgstr "不支持待机操作"
 
 #: ../settings/xfpm-settings.c:1382
 msgid "Suspend operation not permitted"
-msgstr "不允许挂起操作"
+msgstr "不允许待机操作"
 
 #: ../settings/xfpm-settings.c:1388
 msgid "Hibernate operation not supported"
@@ -282,7 +285,7 @@ msgstr "扩展"
 
 #: ../settings/xfpm-settings.c:1659
 msgid "Check your power manager installation"
-msgstr "检查您的电源管理器是否正确安装"
+msgstr "检查您的电源管理器安装"
 
 #: ../settings/xfpm-settings-main.c:78
 msgid "Settings manager socket"
@@ -296,15 +299,15 @@ msgstr "套接字 ID"
 #: ../src/xfpm-power-info.c:948
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "输入 ‘%s --help’ 获取使用说明。"
+msgstr "输入 ‘%s --help’ 获取用法。"
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "无法载入电源管理器配置，使用默认配置"
+msgstr "无法载入电源管理器配置，使用默认"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
-msgstr "无法与 xfce4 电源管理器连接"
+msgstr "未能与 Xfce 电源管理器连接"
 
 #: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
 #, c-format
@@ -342,8 +345,8 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
-"当前有一应用程序禁用了自动睡眠，执行这个动作可能会损坏该应用程序目前的"
-"工作状态，您确定要休眠系统？"
+"当前有一应用程序禁用了自动睡眠，执行此动作可能会"
+"损坏此应用程序工作状态，您确定要休眠系统吗？"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -351,7 +354,7 @@ msgstr "退出"
 
 #: ../src/xfpm-power.c:429
 msgid "All running instances of the power manager will exit"
-msgstr "所有正在运行中的电源管理器实例都将退出"
+msgstr "所有正在运行的电源管理器实例都将退出"
 
 #: ../src/xfpm-power.c:431
 msgid "Quit the power manager?"
@@ -382,15 +385,15 @@ msgstr "演示"
 
 #: ../src/xfpm-power.c:693
 msgid "Hibernate the system"
-msgstr "休眠系统"
+msgstr "系统休眠"
 
 #: ../src/xfpm-power.c:704
 msgid "Suspend the system"
-msgstr "挂起系统"
+msgstr "系统待机"
 
 #: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
-msgstr "关闭系统"
+msgstr "系统关闭"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
@@ -407,7 +410,7 @@ msgid ""
 "Estimated time left %s"
 msgstr ""
 "您的 %s 电量低\n"
-"预计剩余时间 %s。"
+"预计剩余时间 %s"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -422,12 +425,12 @@ msgstr "适配器已连接"
 #: ../src/xfpm-power.c:1676
 #, c-format
 msgid "Permission denied"
-msgstr "不允许"
+msgstr "无权限"
 
 #: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
-msgstr "不支持挂起"
+msgstr "不支持待机"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 msgid "Battery"
@@ -439,7 +442,7 @@ msgstr "不间断电源"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
-msgstr "线路功率"
+msgstr "交流电源"
 
 #: ../src/xfpm-power-common.c:128
 msgid "Mouse"
@@ -535,8 +538,8 @@ msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
-"%s (%i%%)\n"
-" 离充完电还有 %s "
+"%s(%i%%)\n"
+"离充完电还有 %s。"
 
 #: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
 #, c-format
@@ -554,8 +557,8 @@ msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr ""
-"%s (%i%%)\n"
-"预计剩余时间是 %s 。"
+"%s(%i%%)\n"
+"预计剩余时间是 %s。"
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
@@ -565,7 +568,7 @@ msgstr "您的 %s 没电"
 #: ../src/xfpm-battery.c:408
 #, c-format
 msgid "System is running on battery power"
-msgstr "系统正在使用电池供电"
+msgstr "系统正在使用电池"
 
 #: ../src/xfpm-battery.c:415
 #, c-format
@@ -576,7 +579,7 @@ msgid ""
 msgstr ""
 "%s\n"
 "您的 %s 充电完毕(%i%%)。\n"
-"提供 %s 的运行时间"
+"提供 %s 运行时"
 
 #: ../src/xfpm-battery.c:424
 #, c-format
@@ -693,7 +696,7 @@ msgstr ""
 "\n"
 "Xfce 电源管理器 %s\n"
 "\n"
-"作为 Xfce Goodies 项目的一部分\n"
+"Xfce Goodies 项目的一部分\n"
 "http://goodies.xfce.org\n"
 "\n"
 "GNU GPL 授权。\n"
@@ -739,7 +742,7 @@ msgstr "没有 DPMS 支持\n"
 
 #: ../src/xfpm-main.c:141
 msgid "Can suspend"
-msgstr "可以挂起"
+msgstr "可以待机"
 
 #: ../src/xfpm-main.c:143
 msgid "Can hibernate"
@@ -751,7 +754,7 @@ msgstr "可以降低硬盘转速"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr "已授权挂起"
+msgstr "已授权待机"
 
 #: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
@@ -791,7 +794,7 @@ msgstr "有 LID"
 
 #: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
-msgstr "不作为守护进程运行"
+msgstr "不作为守护进程"
 
 #: ../src/xfpm-main.c:265
 msgid "Enable debugging"
@@ -811,7 +814,7 @@ msgstr "显示配置对话框"
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
-msgstr "退出正在运行的任一 xfce 电源管理器"
+msgstr "退出任何正在运行的 xfce 电源管理器"
 
 #: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:935
 msgid "Version information"
@@ -823,7 +826,7 @@ msgstr "无法与信息总线会话连接"
 
 #: ../src/xfpm-main.c:414
 msgid "Another power manager is already running"
-msgstr "另一个 Xfce 电源管理器已在运行"
+msgstr "另一个电源管理器已在运行"
 
 #: ../src/xfpm-main.c:420
 #, c-format
@@ -838,12 +841,12 @@ msgstr "无效参数"
 #: ../src/xfpm-inhibit.c:357
 #, c-format
 msgid "Invalid cookie"
-msgstr "无效 cookie"
+msgstr "无效隐私信息"
 
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
 msgid "No data"
-msgstr "没有数据"
+msgstr "无数据"
 
 #. TRANSLATORS: kernel module, usually a device driver
 #: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
@@ -926,7 +929,7 @@ msgstr "工作队列 %s"
 #: ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Network route flush %s"
-msgstr "网络路由清空 %s"
+msgstr "网络路由器清空 %s"
 
 #. TRANSLATORS: activity on the USB bus
 #: ../src/xfpm-power-info.c:239
@@ -982,24 +985,24 @@ msgstr "技术"
 #: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
 #: ../src/xfpm-power-info.c:442
 msgid "Wh"
-msgstr "Wh"
+msgstr "瓦时"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
-msgstr "最高电量设计"
+msgstr "满电量设计"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
-msgstr "电量满"
+msgstr "满电量"
 
 #: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
-msgstr "电量耗尽"
+msgstr "无电量"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
 msgid "V"
-msgstr "V"
+msgstr "伏"
 
 #: ../src/xfpm-power-info.c:461
 msgid "Voltage"
@@ -1045,7 +1048,7 @@ msgstr "控制您的 LCD 亮度"
 
 #: ../panel-plugins/brightness/brightness-button.c:182
 msgid "No device found"
-msgstr "找不到设备"
+msgstr "未找到设备"
 
 #: ../panel-plugins/brightness/brightness-button.c:649
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
