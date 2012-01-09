@@ -61,7 +61,7 @@ msgstr "Рівень:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "Lock screen when going for suspend/hibernate"
-msgstr "Блокувати екран коли переходимо до сну/сплячки"
+msgstr "Блокувати екран при переході до сну/сплячки"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
 msgid "Monitor"
@@ -133,7 +133,7 @@ msgstr "Вимкнути дисплей коли комп'ютер бездія�
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "System tray icon: "
-msgstr "Значок системного лотка:"
+msgstr "Значок системного лотка: "
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "When battery power is critical:"
@@ -265,7 +265,7 @@ msgstr "Присипляння системи недоступне"
 
 #: ../settings/xfpm-settings.c:1440
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Коли всі джерела живлення комп'ютера досягають повного заряду"
+msgstr "Коли всі джерела живлення комп'ютера досягають вказаного заряду"
 
 #: ../settings/xfpm-settings.c:1543 ../settings/xfpm-settings.c:1548
 msgid "General"
@@ -345,9 +345,8 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
-"%s\n"
-"Ваша %s повністю зарядж. (%i%%).\n"
-"Забезпечить %s часу діяльності"
+"Зараз програма блокує автоматичний перехід до сну, якщо зробити це зараз, то "
+"може порушитись її робота, дійсно бажаєте перевести систему до сну?"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -355,7 +354,7 @@ msgstr "Вийти"
 
 #: ../src/xfpm-power.c:429
 msgid "All running instances of the power manager will exit"
-msgstr "Всі працюючі копії менеджера живлення будуть завершені"
+msgstr "Всі запущені копії менеджера живлення будуть завершені"
 
 #: ../src/xfpm-power.c:431
 msgid "Quit the power manager?"
@@ -387,7 +386,7 @@ msgstr "Презентація"
 
 #: ../src/xfpm-power.c:693
 msgid "Hibernate the system"
-msgstr "Перевести систему в сплячку "
+msgstr "Перевести систему в сплячку"
 
 #: ../src/xfpm-power.c:704
 msgid "Suspend the system"
@@ -400,8 +399,8 @@ msgstr "Вимкнути систему"
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
-"Система працює на погано зарядженій батареї. Збережіть Вашу роботу щоб не "
-"допустити втрати даних"
+"Система працює на слабкому заряді. Збережіть Вашу роботу щоб не допустити "
+"втрати даних"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -413,12 +412,12 @@ msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr ""
-"Ваша %s розряджається\n"
-"Приблизно залишилось %s."
+"Ваша %s має слабкий заряд\n"
+"Приблизно залишилось %s"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
-msgstr "Адаптер вимкнуто"
+msgstr "Адаптер вимкнено"
 
 #: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
 #, c-format
@@ -471,19 +470,19 @@ msgstr "Невідомий"
 
 #: ../src/xfpm-power-common.c:155
 msgid "Lithium ion"
-msgstr "Літіум йонна"
+msgstr "Літій-іонна"
 
 #: ../src/xfpm-power-common.c:157
 msgid "Lithium polymer"
-msgstr "Літіум полімерна"
+msgstr "Літій-полімерна"
 
 #: ../src/xfpm-power-common.c:159
 msgid "Lithium iron phosphate"
-msgstr "Літіум залізо-фосфатна"
+msgstr "Літій залізо-фосфатна"
 
 #: ../src/xfpm-power-common.c:161
 msgid "Lead acid"
-msgstr "Свинцево кисла"
+msgstr "Свинцево-кислотна"
 
 #: ../src/xfpm-power-common.c:163
 msgid "Nickel cadmium"
@@ -537,7 +536,7 @@ msgstr[2] "хвилин"
 #: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "Вашу %s  повністю заряджено"
+msgstr "Ваша %s повністю заряджена"
 
 #: ../src/xfpm-battery.c:212 ../src/xfpm-battery.c:263
 #, c-format
@@ -570,7 +569,7 @@ msgid ""
 "Estimated time left is %s."
 msgstr ""
 "%s (%i%%)\n"
-"Залишилося %s."
+"Приблизно залишилося %s."
 
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
@@ -590,7 +589,7 @@ msgid ""
 "Provides %s runtime"
 msgstr ""
 "%s\n"
-"Ваша %s повністю зарядже (%i%%).\n"
+"Ваша %s повністю заряджена (%i%%).\n"
 "Забезпечить %s часу"
 
 #: ../src/xfpm-battery.c:424
@@ -600,7 +599,7 @@ msgid ""
 "Your %s is fully charged (%i%%)."
 msgstr ""
 "%s\n"
-"Вашу %s повністю заряджено (%i%%)."
+"Ваша %s повністю заряджена (%i%%)."
 
 #: ../src/xfpm-battery.c:435
 #, c-format
@@ -766,19 +765,19 @@ msgstr "Може зменшувати швидкість обертання тв
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr "Може переводити в режим очікування"
+msgstr "Дозволено переводити в режим очікування"
 
 #: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
-msgstr "Може переводити в режим сну"
+msgstr "Дозволено переводити в режим сну"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to shutdown"
-msgstr "Може виключати"
+msgstr "Дозволено виключати"
 
 #: ../src/xfpm-main.c:153
 msgid "Authorized to spin down hard disks"
-msgstr "Може знижувати швидкість твердого диску"
+msgstr "Дозволено знижувати швидкість твердого диску"
 
 #: ../src/xfpm-main.c:155
 msgid "Has battery"
@@ -873,7 +872,7 @@ msgstr "Ядро"
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr "Переривання інтерпроцесора"
+msgstr "Міжпроцесорне переривання"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
@@ -1009,7 +1008,7 @@ msgstr "Повний заряд"
 
 #: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
-msgstr "Заряд вичерпано"
+msgstr "Вичерпано заряду"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
@@ -1039,7 +1038,7 @@ msgstr "PID"
 
 #: ../src/xfpm-power-info.c:754
 msgid "Wakeups"
-msgstr "Просинання"
+msgstr "Просинань"
 
 #: ../src/xfpm-power-info.c:760
 msgid "Command"
