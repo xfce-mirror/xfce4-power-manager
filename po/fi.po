@@ -2,18 +2,19 @@
 # Copyright (C) 2010 Ali Abdallah <aliov@xfce.org>
 # This file is distributed under the same license as the xfce4-power-manager package.
 # Jari Rahkonen <jari.rahkonen@pp1.inet.fi>, 2008-2011.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 10:06+0000\n"
+"POT-Creation-Date: 2012-01-11 21:18+0000\n"
 "PO-Revision-Date: 2011-05-29 13:26+0300\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
@@ -323,7 +324,7 @@ msgstr "Xfce4 virranhallinta ei ole käynnissä. Haluatko käynnistää sen?"
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:345 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-battery.c:349 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Virranhallinta"
 
@@ -364,7 +365,8 @@ msgstr "Virtatiedot"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save,
+#. normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "Profiili"
@@ -409,22 +411,22 @@ msgstr ""
 "Kohteen \"%s\" virta on vähissä.\n"
 "Käyttöaikaa arviolta %s."
 
-#: ../src/xfpm-power.c:1162 ../src/xfpm-power.c:1167
+#: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
 msgstr "Ei verkkovirtaa"
 
-#: ../src/xfpm-power.c:1163 ../src/xfpm-power.c:1168 ../src/xfpm-battery.c:404
+#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
 #, c-format
 msgid "Adaptor is online"
 msgstr "Verkkovirta kytketty"
 
-#: ../src/xfpm-power.c:1621 ../src/xfpm-power.c:1642 ../src/xfpm-power.c:1657
-#: ../src/xfpm-power.c:1680
+#: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
+#: ../src/xfpm-power.c:1676
 #, c-format
 msgid "Permission denied"
 msgstr "Lupa evätty"
 
-#: ../src/xfpm-power.c:1665 ../src/xfpm-power.c:1688
+#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
 msgstr "Keskeytystilaa ei tueta"
@@ -433,7 +435,7 @@ msgstr "Keskeytystilaa ei tueta"
 msgid "Battery"
 msgstr "Akku"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:820
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
 msgid "UPS"
 msgstr "UPS"
 
@@ -458,7 +460,7 @@ msgid "Phone"
 msgstr "Puhelin"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:838
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
 msgid "Unknown"
 msgstr "Tuntematon"
 
@@ -550,7 +552,7 @@ msgstr "%s purkautuu."
 #: ../src/xfpm-battery.c:232
 #, c-format
 msgid "System is running on %s power"
-msgstr "Käytetään virtaa kohtesta \"%s\"."
+msgstr "Käytetään virtaa kohteesta \"%s\"."
 
 #: ../src/xfpm-battery.c:242
 #, c-format
@@ -566,12 +568,12 @@ msgstr ""
 msgid "Your %s is empty"
 msgstr "%s on tyhjä."
 
-#: ../src/xfpm-battery.c:404
+#: ../src/xfpm-battery.c:408
 #, c-format
 msgid "System is running on battery power"
 msgstr "Käytetään akkuvirtaa."
 
-#: ../src/xfpm-battery.c:411
+#: ../src/xfpm-battery.c:415
 #, c-format
 msgid ""
 "%s\n"
@@ -582,7 +584,7 @@ msgstr ""
 "%s on täysin latautunut (%i%%).\n"
 "Arvioitu käyttöaika %s."
 
-#: ../src/xfpm-battery.c:420
+#: ../src/xfpm-battery.c:424
 #, c-format
 msgid ""
 "%s\n"
@@ -591,7 +593,7 @@ msgstr ""
 "%s\n"
 "%s on täysin latautunut (%i%%)."
 
-#: ../src/xfpm-battery.c:431
+#: ../src/xfpm-battery.c:435
 #, c-format
 msgid ""
 "%s\n"
@@ -602,7 +604,7 @@ msgstr ""
 "%s latautuu (%i%%)\n"
 "Lataus vie vielä %s."
 
-#: ../src/xfpm-battery.c:440
+#: ../src/xfpm-battery.c:444
 #, c-format
 msgid ""
 "%s\n"
@@ -611,7 +613,7 @@ msgstr ""
 "%s\n"
 "%s latautuu (%i%%)."
 
-#: ../src/xfpm-battery.c:451
+#: ../src/xfpm-battery.c:455
 #, c-format
 msgid ""
 "%s\n"
@@ -622,7 +624,7 @@ msgstr ""
 "%s purkautuu (%i%%).\n"
 "Käyttöaikaa arviolta %s."
 
-#: ../src/xfpm-battery.c:460
+#: ../src/xfpm-battery.c:464
 #, c-format
 msgid ""
 "%s\n"
@@ -631,7 +633,7 @@ msgstr ""
 "%s\n"
 "%s purkautuu (%i%%)."
 
-#: ../src/xfpm-battery.c:469
+#: ../src/xfpm-battery.c:473
 #, c-format
 msgid ""
 "%s\n"
@@ -640,7 +642,7 @@ msgstr ""
 "%s\n"
 "%s odottaa purkautumistaan (%i%%)."
 
-#: ../src/xfpm-battery.c:473
+#: ../src/xfpm-battery.c:477
 #, c-format
 msgid ""
 "%s\n"
@@ -649,7 +651,7 @@ msgstr ""
 "%s\n"
 "%s odottaa latautumista (%i%%)."
 
-#: ../src/xfpm-battery.c:477
+#: ../src/xfpm-battery.c:481
 #, c-format
 msgid ""
 "%s\n"
@@ -658,27 +660,27 @@ msgstr ""
 "%s\n"
 "%s on tyhjä"
 
-#: ../src/xfpm-battery.c:817
+#: ../src/xfpm-battery.c:821
 msgid "battery"
 msgstr "Akku"
 
-#: ../src/xfpm-battery.c:823
+#: ../src/xfpm-battery.c:827
 msgid "monitor battery"
 msgstr "Näytön akku"
 
-#: ../src/xfpm-battery.c:826
+#: ../src/xfpm-battery.c:830
 msgid "mouse battery"
 msgstr "Hiiren akku"
 
-#: ../src/xfpm-battery.c:829
+#: ../src/xfpm-battery.c:833
 msgid "keyboard battery"
 msgstr "Näppäimistön akku"
 
-#: ../src/xfpm-battery.c:832
+#: ../src/xfpm-battery.c:836
 msgid "PDA battery"
 msgstr "Kämmentietokoneen akku"
 
-#: ../src/xfpm-battery.c:835
+#: ../src/xfpm-battery.c:839
 msgid "Phone battery"
 msgstr "Puhelimen akku"
 
