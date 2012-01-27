@@ -53,12 +53,9 @@ typedef struct
 
 GType        		    xfpm_battery_get_type        (void) G_GNUC_CONST;
 
-GtkStatusIcon              *xfpm_battery_new             (void);
+GtkStatusIcon              *xfpm_battery_new             (UpDevice    *device);
 
-void			    xfpm_battery_monitor_device  (XfpmBattery *battery,
-							  DBusGProxy *proxy,
-							  DBusGProxy *proxy_prop,
-							  XfpmDeviceType device_type);
+void			    xfpm_battery_monitor_device  (XfpmBattery *battery);
 
 XfpmDeviceType	   	    xfpm_battery_get_device_type (XfpmBattery *battery);
 

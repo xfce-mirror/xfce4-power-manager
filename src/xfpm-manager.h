@@ -55,8 +55,6 @@ void            	  xfpm_manager_start           (XfpmManager *manager);
 
 void                      xfpm_manager_stop            (XfpmManager *manager);
 
-GHashTable		 *xfpm_manager_get_config      (XfpmManager *manager);
-
 G_END_DECLS
 
 #endif /* __XFPM_MANAGER_H */

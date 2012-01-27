@@ -5,6 +5,8 @@ xfce4_power_manager_SOURCES =                   \
 	$(BUILT_SOURCES)			\
 	xfpm-enum.h				\
 	xfpm-enum-glib.h			\
+	xfpm-dbus-service.c			\
+	xfpm-dbus-service.h			\
 	xfpm-main.c				\
 	xfpm-manager.c				\
 	xfpm-manager.h				\
@@ -18,8 +20,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-xfconf.h				\
 	xfpm-disks.c				\
 	xfpm-disks.h				\
-	xfpm-console-kit.c			\
-	xfpm-console-kit.h			\
+	xfpm-sm-client.c			\
+	xfpm-sm-client.h			\
 	egg-idletime.c				\
 	egg-idletime.h				\
 	xfpm-backlight.c			\
@@ -30,8 +32,6 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-button.h				\
 	xfpm-network-manager.c			\
 	xfpm-network-manager.h			\
-	xfpm-inhibit.c				\
-	xfpm-inhibit.h				\
 	xfpm-notify.c				\
 	xfpm-notify.h				\
 	xfpm-polkit.c				\
@@ -56,6 +56,7 @@ xfce4_power_manager_CFLAGS =                    \
 	$(LIBNOTIFY_CFLAGS)                     \
 	$(XRANDR_CFLAGS)			\
 	$(DPMS_CFLAGS)           		\
+	$(UPOWER_GLIB_CFLAGS)			\
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
 
@@ -73,6 +74,7 @@ xfce4_power_manager_LDADD =                     \
 	$(XFCONF_LIBS)                          \
 	$(LIBNOTIFY_LIBS)                       \
 	$(XRANDR_LIBS)				\
+	$(UPOWER_GLIB_LIBS)			\
 	$(DPMS_LIBS)
 
 xfce4_power_information_SOURCES =		\
@@ -139,14 +141,11 @@ xfpm_glib_headers =                             \
         $(srcdir)/xfpm-enum-glib.h
 
 BUILT_SOURCES =					\
-	xfce-power-manager-dbus-server.h	\
-	xfce-power-manager-dbus-client.h	\
+	xfpm-dbus-service-infos.h		\
 	xfpm-enum-types.c                       \
 	xfpm-enum-types.h			\
 	xfpm-marshal.c                          \
-        xfpm-marshal.h				\
-	org.freedesktop.PowerManagement.h       \
-	org.freedesktop.PowerManagement.Inhibit.h
+        xfpm-marshal.h
 
 if MAINTAINER_MODE
 
@@ -179,17 +178,8 @@ xfpm-marshal.c: xfpm-marshal.list
 xfpm-marshal.h: xfpm-marshal.list
 	glib-genmarshal $< --prefix=_xfpm_marshal --header > $@
 
-xfce-power-manager-dbus-server.h: $(srcdir)/org.xfce.Power.Manager.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfpm_manager $< >$@
-
-xfce-power-manager-dbus-client.h: $(srcdir)/org.xfce.Power.Manager.xml
-	dbus-binding-tool --mode=glib-client --prefix=xfpm_manager $< >$@
-
-org.freedesktop.PowerManagement.h: $(srcdir)/org.freedesktop.PowerManagement.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfpm_power $< >$@
-
-org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfpm_inhibit $< >$@
+xfpm-dbus-service-infos.h: $(srcdir)/xfpm-dbus-service-infos.xml Makefile
+	$(AM_V_GEN) dbus-binding-tool --prefix=xfpm_dbus_service --mode=glib-server $< >$@
 
 endif
 

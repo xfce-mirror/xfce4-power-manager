@@ -52,7 +52,6 @@ struct XfpmDpmsPrivate
     XfpmPower       *power;
     
     gboolean         dpms_capable;
-    gboolean         inhibited;
     
     gboolean         on_battery;
     
@@ -160,7 +159,7 @@ xfpm_dpms_refresh (XfpmDpms *dpms)
     
     presentation_mode = (xfpm_power_get_mode (dpms->priv->power) == XFPM_POWER_MODE_PRESENTATION);
     
-    if ( dpms->priv->inhibited || presentation_mode)
+    if (presentation_mode)
     {
 	xfpm_dpms_disable (dpms);
 	return;

@@ -26,56 +26,43 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_POWER        (xfpm_power_get_type () )
-#define XFPM_POWER(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_POWER, XfpmPower))
-#define XFPM_IS_POWER(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_POWER))
+typedef struct _XfpmPowerClass XfpmPowerClass;
+typedef struct _XfpmPower      XfpmPower;
 
-typedef struct XfpmPowerPrivate XfpmPowerPrivate;
+#define XFPM_TYPE_POWER            (xfpm_power_get_type ())
+#define XFPM_POWER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFPM_TYPE_POWER, XfpmPower))
+#define XFPM_POWER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), XFPM_TYPE_POWER, XfpmPowerClass))
+#define XFPM_IS_POWER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFPM_TYPE_POWER))
+#define XFPM_IS_POWER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFPM_TYPE_POWER))
+#define XFPM_POWER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), XFPM_TYPE_POWER, XfpmPowerClass))
 
-typedef struct
-{
-    GObject         	parent;
-    
-    XfpmPowerPrivate     *priv;
-    
-} XfpmPower;
+GType                   xfpm_power_get_type             (void) G_GNUC_CONST;
 
-typedef struct
-{
-    GObjectClass 	parent_class;
-    
-    void                (*on_battery_changed)         	(XfpmPower *power,
-						         gboolean on_battery);
-    
-    void                (*low_battery_changed)        	(XfpmPower *power,
-							 gboolean low_battery);
-    
-    void		(*lid_changed)			(XfpmPower *power,
-							 gboolean lid_is_closed);
-							
-    void		(*waking_up)			(XfpmPower *power);
-    
-    void		(*sleeping)			(XfpmPower *power);
-    
-    void		(*ask_shutdown)			(XfpmPower *power);
-    
-    void		(*shutdown)			(XfpmPower *power);
-    
-} XfpmPowerClass;
+XfpmPower               *xfpm_power_get                 (void);
 
-GType        		xfpm_power_get_type        	(void) G_GNUC_CONST;
+void                    xfpm_power_suspend              (XfpmPower *power,
+                                                         gboolean   force);
 
-XfpmPower       	       *xfpm_power_get             	(void);
+void                    xfpm_power_hibernate            (XfpmPower *power,
+                                                         gboolean   force);
 
-void			xfpm_power_suspend         	(XfpmPower *power,
-							 gboolean force);
+gboolean                xfpm_power_can_suspend          (XfpmPower  *power,
+                                                         gboolean   *can_suspend,
+                                                         GError    **error);
 
-void			xfpm_power_hibernate       	(XfpmPower *power,
-							 gboolean force);
+gboolean                xfpm_power_can_hibernate        (XfpmPower  *power,
+                                                         gboolean   *can_hibernate,
+                                                         GError    **error);
 
-gboolean		xfpm_power_has_battery		(XfpmPower *power);
+gboolean                xfpm_power_get_on_battery       (XfpmPower  *power,
+                                                         gboolean   *on_battery,
+                                                         GError    **error);
 
-XfpmPowerMode           xfpm_power_get_mode		(XfpmPower *power);
+gboolean                xfpm_power_get_low_battery      (XfpmPower  *power,
+                                                         gboolean   *low_battery,
+                                                         GError    **error);
+
+XfpmPowerMode           xfpm_power_get_mode             (XfpmPower *power);
 
 G_END_DECLS
 

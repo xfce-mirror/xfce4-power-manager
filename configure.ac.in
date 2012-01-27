@@ -66,6 +66,7 @@ m4_define([libxfce4panel_minimum_version],[4.6.0])
 m4_define([libnotify_minimum_version], [0.4.1])
 m4_define([xrandr_minimum_version], [1.2.0])
 m4_define([x11_minimum_version], [1.0.0])
+m4_define([upower_minimum_version], [0.9.0])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
@@ -80,6 +81,7 @@ XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_versi
 XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
 XDT_CHECK_PACKAGE([XRANDR],[xrandr], [xrandr_minimum_version])
 XDT_CHECK_PACKAGE([X11], [x11], [x11_minimum_version])
+XDT_CHECK_PACKAGE([UPOWER_GLIB], [upower-glib], [upower_minimum_version])
 
 #=======================================================#
 #              Polkit?			                #

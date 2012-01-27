@@ -44,7 +44,6 @@
 #include "xfpm-debug.h"
 #include "xfpm-common.h"
 
-#include "xfce-power-manager-dbus-client.h"
 #include "xfpm-manager.h"
 
 static void G_GNUC_NORETURN
@@ -69,7 +68,7 @@ xfpm_quit_signal (gint sig, gpointer data)
     if ( sig != SIGHUP )
 	xfpm_manager_stop (manager);
 }
-
+/*
 static const gchar *
 xfpm_bool_to_local_string (gboolean value)
 {
@@ -165,11 +164,11 @@ xfpm_dump (GHashTable *hash)
 	     _("Has LID"),
 	      xfpm_bool_to_local_string (has_lid));
 }
-
+*/
 static void
 xfpm_dump_remote (DBusGConnection *bus)
 {
-    DBusGProxy *proxy;
+    /*DBusGProxy *proxy;
     GError *error = NULL;
     GHashTable *hash;
     
@@ -191,7 +190,7 @@ xfpm_dump_remote (DBusGConnection *bus)
     }
     
     xfpm_dump (hash);
-    g_hash_table_destroy (hash);
+    g_hash_table_destroy (hash);*/
 }
 
 static void G_GNUC_NORETURN
@@ -228,10 +227,7 @@ xfpm_start (DBusGConnection *bus, const gchar *client_id, gboolean dump)
     
     if ( dump )
     {
-	GHashTable *hash;
-	hash = xfpm_manager_get_config (manager);
-	xfpm_dump (hash);
-	g_hash_table_destroy (hash);
+	//TODO
     }
 
     
@@ -342,7 +338,7 @@ int main (int argc, char **argv)
 		dbus_g_connection_unref(bus);
             	return EXIT_FAILURE;
 	    }
-	    xfpm_manager_dbus_client_quit (proxy , &error);
+	    //xfpm_manager_dbus_client_quit (proxy , &error);
 	    g_object_unref (proxy);
 	    
 	    if ( error)
@@ -387,13 +383,13 @@ int main (int argc, char **argv)
 	    return EXIT_FAILURE;
 	}
 	    
-	if ( !xfpm_manager_dbus_client_restart (proxy, NULL) )
+	/*if ( !xfpm_manager_dbus_client_restart (proxy, NULL) )
 	{
 	    g_critical ("Unable to send reload message");
 	    g_object_unref (proxy);
 	    dbus_g_connection_unref (bus);
 	    return EXIT_SUCCESS;
-	}
+	}*/
 	return EXIT_SUCCESS;
     }
     
