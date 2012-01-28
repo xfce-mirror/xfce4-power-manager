@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: power manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-12 03:03+0000\n"
-"PO-Revision-Date: 2012-01-12 18:49+0200\n"
+"POT-Creation-Date: 2012-01-28 09:36+0000\n"
+"PO-Revision-Date: 2012-01-28 14:37+0200\n"
 "Last-Translator: Algimantas Margevičius <margevicius.algimantas@gmail.com>\n"
 "Language-Team: Lietuvių <>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2)\n"
 
@@ -66,7 +66,7 @@ msgstr "Sustabdant/užmigdant užrakinti ekraną"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
 msgid "Monitor"
-msgstr "Stebėjimas"
+msgstr "Stebėtojas"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "Monitor power management control"
@@ -245,24 +245,24 @@ msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
-"Išjungti Ekrano energijos tvarkymą (DPMS), t.y. nebandyti išjungti ekrano ar "
+"Išjungti ekrano energijos tvarkymą (DPMS), t.y. nebandyti išjungti ekrano ar "
 "nusiųsti į miego režimą."
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
-msgstr "Sustabdymo operacija nepalaikoma."
+msgstr "Sustabdymo operacija nepalaikoma"
 
 #: ../settings/xfpm-settings.c:1382
 msgid "Suspend operation not permitted"
-msgstr "Sustabdymo operacija neleidžiama."
+msgstr "Sustabdymo operacija neleidžiama"
 
 #: ../settings/xfpm-settings.c:1388
 msgid "Hibernate operation not supported"
-msgstr "Užmigdymo operacija nepalaikoma."
+msgstr "Užmigdymo operacija nepalaikoma"
 
 #: ../settings/xfpm-settings.c:1393
 msgid "Hibernate operation not permitted"
-msgstr "Užmigdymo operacija neleidžiama."
+msgstr "Užmigdymo operacija neleidžiama"
 
 #: ../settings/xfpm-settings.c:1440
 msgid "When all the power sources of the computer reach this charge level"
@@ -286,7 +286,7 @@ msgstr "Išplėstinis"
 
 #: ../settings/xfpm-settings.c:1659
 msgid "Check your power manager installation"
-msgstr "Patikrinkite savo energijos tvarkymo diegimą"
+msgstr "Patikrinkite savo energijos tvarkymo įdiegimą"
 
 #: ../settings/xfpm-settings-main.c:78
 msgid "Settings manager socket"
@@ -345,7 +345,7 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
-"Šiuo metu programa išjungia automatinį užmigdymą, darant šį veiksmą dabar "
+"Šiuo metu programa išjungia automatinį užmigdymą, darant šį veiksmą dabar, "
 "gali būti pažeista darbinė programos būsena, ar jūs tikrai norite užmigdyti "
 "sistemą?"
 
@@ -486,7 +486,7 @@ msgstr "Švino rūgšties"
 
 #: ../src/xfpm-power-common.c:163
 msgid "Nickel cadmium"
-msgstr "Nikelio Kadmio"
+msgstr "Nikelio kadmio"
 
 #: ../src/xfpm-power-common.c:165
 msgid "Nickel metal hybride"
@@ -590,7 +590,7 @@ msgid ""
 msgstr ""
 "%s\n"
 "Jūsų %s pilnai įkrauta (%i%%).\n"
-"Tai suteiks %s veikimo"
+"Tai suteiks %s veikimo laiko"
 
 #: ../src/xfpm-battery.c:424
 #, c-format
@@ -724,7 +724,7 @@ msgstr "Ne"
 #: ../src/xfpm-main.c:113
 #, c-format
 msgid "With policykit support\n"
-msgstr "Su policykit palaikymo\n"
+msgstr "Su policykit palaikymu\n"
 
 #: ../src/xfpm-main.c:115
 #, c-format
@@ -734,7 +734,7 @@ msgstr "Be policykit palaikymo\n"
 #: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
-msgstr "Su tinklo tvarkyklės palaikymo\n"
+msgstr "Su tinklo tvarkyklės palaikymu\n"
 
 #: ../src/xfpm-main.c:120
 #, c-format
@@ -761,7 +761,7 @@ msgstr "Gali užmigdyti"
 
 #: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
-msgstr "Gali sukti kietuosius diskus"
+msgstr "Gali sulėtinti kietuosius diskus"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
@@ -833,7 +833,7 @@ msgstr "Versija"
 
 #: ../src/xfpm-main.c:320
 msgid "Unable to get connection to the message bus session"
-msgstr "Nepavyko gauti, prisijungimo prie magistralės seanso, pranešimo"
+msgstr "Nepavyko gauti prisijungimo prie magistralės seanso, pranešimo"
 
 #: ../src/xfpm-main.c:414
 msgid "Another power manager is already running"
@@ -892,7 +892,7 @@ msgstr "ACPI"
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
-msgstr "Serial ATA"
+msgstr "Serijinis ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
@@ -1004,11 +1004,11 @@ msgstr "Energija, kai pilna"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
-msgstr "Energija pilna"
+msgstr "Energija, kai pilna"
 
 #: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
-msgstr "Energija tuščia"
+msgstr "Energija, kai tuščia"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
