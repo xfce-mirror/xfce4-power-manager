@@ -4,13 +4,13 @@
 # the xfce4-power-manager package.
 # Hunt Xu <huntxu@live.cn>, 2008, 2009, 2010, 2011.
 # Chris K. Zhang <plutino@gmail.com>, 2009.
-# Chipong Luo <chipong_l@yahoo.com>, 2011.
+# Chipong Luo <chipong_l@yahoo.com>, 2011, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-04 21:48+0000\n"
+"POT-Creation-Date: 2012-01-28 21:12+0000\n"
 "PO-Revision-Date: 2011-02-15 21:22+0800\n"
 "Last-Translator: Chipong Luo <chipong_l@yahoo.com>\n"
 "Language-Team: Chinese (Simplified) <xfce-i18n@xfce.org>\n"
@@ -29,7 +29,7 @@ msgstr "<b>高级选项</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "<b>Brightness</b>"
-msgstr "亮度"
+msgstr "<b>亮度</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
 msgid "<b>General Options</b>"
@@ -245,8 +245,8 @@ msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
-"禁用显示器电源管理信号(DPMS)，比如不尝试切断显示器"
-"或使之处于睡眠模式。"
+"禁用显示器电源管理信号(DPMS)，比如不尝试"
+"切断显示器或使之处于睡眠模式。"
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
@@ -338,7 +338,7 @@ msgstr "Xfce 电源管理器设置"
 msgid "translator-credits"
 msgstr ""
 "HuntXu <huntxu@live.cn>\n"
-"Chipong Luo <chipong_l@yahoo.com>, 2011."
+"Chipong Luo <chipong_l@yahoo.com>, 2011, 2012."
 
 #: ../src/xfpm-power.c:330
 msgid ""
@@ -346,8 +346,9 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
-"当前有一应用程序禁用了自动睡眠，执行此动作可能会"
-"损坏此应用程序工作状态，您确定要休眠系统吗？"
+"当前有应用程序禁用了自动睡眠，执行此动作"
+"可能会损坏此应用程序的工作状态，您确定要"
+"休眠系统吗？"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -398,11 +399,12 @@ msgstr "系统关闭"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "系统正在低电量运行。保存工作以免丢失数据"
+msgstr ""
+"系统正在低电量下运行。保存工作以免丢失数据"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
-msgstr "系统正在低电量运行"
+msgstr "系统正在低电量下运行"
 
 #: ../src/xfpm-power.c:955
 #, c-format
@@ -455,7 +457,7 @@ msgstr "键盘"
 
 #: ../src/xfpm-power-common.c:134
 msgid "PDA"
-msgstr "PDA"
+msgstr "掌上电脑"
 
 #: ../src/xfpm-power-common.c:136
 msgid "Phone"
@@ -569,7 +571,7 @@ msgstr "您的 %s 没电"
 #: ../src/xfpm-battery.c:408
 #, c-format
 msgid "System is running on battery power"
-msgstr "系统正在使用电池"
+msgstr "系统正在使用电池电源"
 
 #: ../src/xfpm-battery.c:415
 #, c-format
@@ -580,7 +582,7 @@ msgid ""
 msgstr ""
 "%s\n"
 "您的 %s 充电完毕(%i%%)。\n"
-"提供 %s 运行时"
+"提供 %s 运行时间"
 
 #: ../src/xfpm-battery.c:424
 #, c-format
@@ -638,7 +640,7 @@ msgid ""
 "%s waiting to discharge (%i%%)."
 msgstr ""
 "%s\n"
-"%s 等待放电(%i%%)。"
+"%s 正在等待放电(%i%%)。"
 
 #: ../src/xfpm-battery.c:477
 #, c-format
@@ -647,7 +649,7 @@ msgid ""
 "%s waiting to charge (%i%%)."
 msgstr ""
 "%s\n"
-"%s 等待充电(%i%%)。"
+"%s 正在等待充电(%i%%)。"
 
 #: ../src/xfpm-battery.c:481
 #, c-format
@@ -676,7 +678,7 @@ msgstr "键盘电池"
 
 #: ../src/xfpm-battery.c:836
 msgid "PDA battery"
-msgstr "PDA 电池"
+msgstr "掌上电脑电池"
 
 #: ../src/xfpm-battery.c:839
 msgid "Phone battery"
@@ -697,10 +699,10 @@ msgstr ""
 "\n"
 "Xfce 电源管理器 %s\n"
 "\n"
-"Xfce Goodies 项目的一部分\n"
+"Xfce 好东西项目的一部分\n"
 "http://goodies.xfce.org\n"
 "\n"
-"GNU GPL 授权。\n"
+"以 GNU GPL 授权。\n"
 "\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
@@ -791,11 +793,11 @@ msgstr "有睡眠按钮"
 
 #: ../src/xfpm-main.c:165
 msgid "Has LID"
-msgstr "有 LID"
+msgstr "有盖子"
 
 #: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
-msgstr "不作为守护进程"
+msgstr "不守护"
 
 #: ../src/xfpm-main.c:265
 msgid "Enable debugging"
@@ -807,7 +809,7 @@ msgstr "转存所有信息"
 
 #: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
-msgstr "重启正在运行的 xfce 电源管理器实例"
+msgstr "重启正在运行的 Xfce 电源管理器实例"
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
@@ -815,7 +817,7 @@ msgstr "显示配置对话框"
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
-msgstr "退出任何正在运行的 xfce 电源管理器"
+msgstr "退出任何正在运行的 Xfce 电源管理器"
 
 #: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:935
 msgid "Version information"
@@ -823,7 +825,7 @@ msgstr "版本信息"
 
 #: ../src/xfpm-main.c:320
 msgid "Unable to get connection to the message bus session"
-msgstr "无法与信息总线会话连接"
+msgstr "未能与信息总线会话连接"
 
 #: ../src/xfpm-main.c:414
 msgid "Another power manager is already running"
@@ -952,7 +954,7 @@ msgstr "本地中断"
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
-msgstr "重新安排中断"
+msgstr "正在重新安排中断"
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
@@ -1036,7 +1038,7 @@ msgstr "命令"
 
 #: ../src/xfpm-power-info.c:766
 msgid "Details"
-msgstr "详细"
+msgstr "详情"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
@@ -1045,7 +1047,7 @@ msgstr "Xfce 桌面的电源管理"
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
 msgid "Control your LCD brightness"
-msgstr "控制您的 LCD 亮度"
+msgstr "控制您的液晶显示器亮度"
 
 #: ../panel-plugins/brightness/brightness-button.c:182
 msgid "No device found"
