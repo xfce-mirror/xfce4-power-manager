@@ -3,13 +3,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-14 10:06+0000\n"
+"POT-Creation-Date: 2012-02-18 04:54+0000\n"
 "PO-Revision-Date: 2010-05-12 17:15+0300\n"
 "Last-Translator: Ayhan YALÇINSOY <ayhanyalcinsoy@gmail.com>\n"
 "Language-Team: Turkish <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: tr\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-Country: TURKEY\n"
 "X-Generator: Lokalize 1.0\n"
@@ -57,7 +58,9 @@ msgstr "Seviye:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "Lock screen when going for suspend/hibernate"
-msgstr "Askıya alınırken veya hazırda bekletme işlemi gerçekleştirilirken ekranı kilitle"
+msgstr ""
+"Askıya alınırken veya hazırda bekletme işlemi gerçekleştirilirken ekranı "
+"kilitle"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
 msgid "Monitor"
@@ -92,7 +95,9 @@ msgstr "Bilgisayar kullanılmadığı zaman şu kadar süre sonra askıya al:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Bilgisayar kullanılmadığında ekran parlaklığı seviyesini şu kadar süre sonra düşür:"
+msgstr ""
+"Bilgisayar kullanılmadığında ekran parlaklığı seviyesini şu kadar süre sonra "
+"düşür:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
@@ -236,8 +241,12 @@ msgid "Never show icon"
 msgstr "Simge gösterme"
 
 #: ../settings/xfpm-settings.c:1182
-msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr "Görüntü Güç Yönetimi Sinyalizasyonunu (DPMS) Devredışı bırak, ör. ekranı kapatma veya hazırda bekletme kipine alma."
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr ""
+"Görüntü Güç Yönetimi Sinyalizasyonunu (DPMS) Devredışı bırak, ör. ekranı "
+"kapatma veya hazırda bekletme kipine alma."
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
@@ -295,7 +304,8 @@ msgstr "Kullanımı öğrenmek için '%s --help' yazınız."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Güç yöneticisi yapılandırması yüklenemedi, öntanımlı ayarlar kullanılacak"
+msgstr ""
+"Güç yöneticisi yapılandırması yüklenemedi, öntanımlı ayarlar kullanılacak"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -327,11 +337,19 @@ msgstr "Xfce 4 Güç Yöneticisi Ayarları"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
-msgstr "Samed Beyribey <ras0ir@eventualis.org>, 2009 Ayhan YALÇINSOY<ayhanyalcinsoy@gmail.com>,2010"
+msgstr ""
+"Samed Beyribey <ras0ir@eventualis.org>, 2009 Ayhan "
+"YALÇINSOY<ayhanyalcinsoy@gmail.com>,2010"
 
 #: ../src/xfpm-power.c:330
-msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
-msgstr "Bir uygulama otomatik askıya alma işlemini devre dışı bırakıyor. Bu işlemi şu an gerçekleştirirseniz çalışan uygulamaya zarar verebilirsiniz, buna rağmen sistemi hazırda bekletmek istediğinizden emin misiniz?"
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
+msgstr ""
+"Bir uygulama otomatik askıya alma işlemini devre dışı bırakıyor. Bu işlemi "
+"şu an gerçekleştirirseniz çalışan uygulamaya zarar verebilirsiniz, buna "
+"rağmen sistemi hazırda bekletmek istediğinizden emin misiniz?"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -383,7 +401,8 @@ msgstr "Sistemi kapat"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Güç seviyesi çok düşük. Veri kaybetmemek için lütfen işlerinizi kaydediniz"
+msgstr ""
+"Güç seviyesi çok düşük. Veri kaybetmemek için lütfen işlerinizi kaydediniz"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -532,12 +551,12 @@ msgstr ""
 #: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
 #, fuzzy, c-format
 msgid "Your %s is discharging"
-msgstr "Piliniz tükeniyor"
+msgstr "%s deşarj oluyor."
 
 #: ../src/xfpm-battery.c:232
 #, fuzzy, c-format
 msgid "System is running on %s power"
-msgstr "Sistem AC gücü (fişe takılı) üzerinde çalışıyor"
+msgstr "Sistem %s gücüyle çalışıyor."
 
 #: ../src/xfpm-battery.c:242
 #, fuzzy, c-format
@@ -653,7 +672,7 @@ msgstr "pil"
 #: ../src/xfpm-battery.c:827
 #, fuzzy
 msgid "monitor battery"
-msgstr "Pil ile çalışırken"
+msgstr "pili izle"
 
 #: ../src/xfpm-battery.c:830
 msgid "mouse battery"
@@ -670,7 +689,7 @@ msgstr "PDA pili"
 #: ../src/xfpm-battery.c:839
 #, fuzzy
 msgid "Phone battery"
-msgstr "Pil ile çalışırken"
+msgstr "telefon pili"
 
 #: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
@@ -762,7 +781,7 @@ msgstr "Yetkilendirilmiş sabit diskleri kapat"
 #: ../src/xfpm-main.c:155
 #, fuzzy
 msgid "Has battery"
-msgstr "Pil"
+msgstr "Pil takılı"
 
 #: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
@@ -1128,20 +1147,38 @@ msgstr "Ekran Parlaklığı eklentisi"
 #~ msgid "Adapter not present"
 #~ msgstr "Bağdaştırıcı mevcut değil iken"
 
-#~ msgid "System is running on low power, but an application is currently disabling the automatic sleep, this means that doing a sleep now may damage the data of this application. Close this application before putting the computer on sleep mode or plug in your AC adapter"
-#~ msgstr "Sistem güç seviyesi düşük, fakat bir uygulama otomatik askıya alma işlemini engelliyor, bu durumda askıya alma işlemi veri kaybına yol açabilir. Lütfen askıya alma işlemini gerçekleştirmek için işlemi engelleyen uygulamayı kapatın veya sarj aletini takın "
+#~ msgid ""
+#~ "System is running on low power, but an application is currently disabling "
+#~ "the automatic sleep, this means that doing a sleep now may damage the "
+#~ "data of this application. Close this application before putting the "
+#~ "computer on sleep mode or plug in your AC adapter"
+#~ msgstr ""
+#~ "Sistem güç seviyesi düşük, fakat bir uygulama otomatik askıya alma "
+#~ "işlemini engelliyor, bu durumda askıya alma işlemi veri kaybına yol "
+#~ "açabilir. Lütfen askıya alma işlemini gerçekleştirmek için işlemi "
+#~ "engelleyen uygulamayı kapatın veya sarj aletini takın "
 
 #~ msgid "Are you sure you want to proceed?"
 #~ msgstr "İşlemi gerçekleştirmek istediğinizden emin misiniz?"
 
-#~ msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to suspend the system?"
-#~ msgstr "Bir uygulama şu an otomatik askıya alma işlemini devre dışı bırakıyor. Bu işlemi şu an gerçekleştirirseniz çalışan uygulamaya zarar verebilirsiniz, buna rağmen sistemi askıya almak istiyor musunuz?"
+#~ msgid ""
+#~ "An application is currently disabling the automatic sleep, doing this "
+#~ "action now may damage the working state of this application, are you sure "
+#~ "you want to suspend the system?"
+#~ msgstr ""
+#~ "Bir uygulama şu an otomatik askıya alma işlemini devre dışı bırakıyor. Bu "
+#~ "işlemi şu an gerçekleştirirseniz çalışan uygulamaya zarar verebilirsiniz, "
+#~ "buna rağmen sistemi askıya almak istiyor musunuz?"
 
 #~ msgid "Monitor power control"
 #~ msgstr "Monitör güç kontrolü"
 
-#~ msgid "Disable or enable monitor power control, for example you could disable the screen power control to avoid screen blanking when watching a movie."
-#~ msgstr "Monitör güç kontrolünü etkinleştirir/devredışı bırakır, mesela film izlerken monitör güç yönetimini devredışı bırakabilirsiniz. "
+#~ msgid ""
+#~ "Disable or enable monitor power control, for example you could disable "
+#~ "the screen power control to avoid screen blanking when watching a movie."
+#~ msgstr ""
+#~ "Monitör güç kontrolünü etkinleştirir/devredışı bırakır, mesela film "
+#~ "izlerken monitör güç yönetimini devredışı bırakabilirsiniz. "
 
 #~ msgid "No data available"
 #~ msgstr "Veri bulunmamaktadır"
@@ -1227,8 +1264,11 @@ msgstr "Ekran Parlaklığı eklentisi"
 #~ msgid "Power manager is connected"
 #~ msgstr "Güç yöneticisi bağlandı"
 
-#~ msgid "Unable to read adapter status, the power manager will not work properly"
-#~ msgstr "Güç bağdaştırıcısı durumu bilgisi okunamadı, güç yöneticisi düzgün çalışmayabilir"
+#~ msgid ""
+#~ "Unable to read adapter status, the power manager will not work properly"
+#~ msgstr ""
+#~ "Güç bağdaştırıcısı durumu bilgisi okunamadı, güç yöneticisi düzgün "
+#~ "çalışmayabilir"
 
 #~ msgid "Are you sure you want to hibernate the system?"
 #~ msgstr "Sistemi hazırda beklet moduna almak istediğinizden emin misiniz?"
@@ -1263,8 +1303,12 @@ msgstr "Ekran Parlaklığı eklentisi"
 #~ msgid "Ondemand performance"
 #~ msgstr "Akustik performans"
 
-#~ msgid "Set the CPU to its maximum speed when there is any load on it and to its minimum speed when the system is idle"
-#~ msgstr "İşlemciyi yüklenme durumunda azami hızda, sistem boşta iken asgari hızda çalıştır "
+#~ msgid ""
+#~ "Set the CPU to its maximum speed when there is any load on it and to its "
+#~ "minimum speed when the system is idle"
+#~ msgstr ""
+#~ "İşlemciyi yüklenme durumunda azami hızda, sistem boşta iken asgari hızda "
+#~ "çalıştır "
 
 #~ msgid "Best power savings"
 #~ msgstr "En iyi güç koruma"
@@ -1275,7 +1319,9 @@ msgstr "Ekran Parlaklığı eklentisi"
 #~ msgid "Good power savings"
 #~ msgstr "Güç koruma"
 
-#~ msgid "gracefully increases and decreases the CPU speed depending on the current usage"
+#~ msgid ""
+#~ "gracefully increases and decreases the CPU speed depending on the current "
+#~ "usage"
 #~ msgstr "mevcut kullanıma göre işlemci hızını nazikçe artırır veya azaltır"
 
 #~ msgid "CPU frequency settings on UPS power"
@@ -1332,17 +1378,41 @@ msgstr "Ekran Parlaklığı eklentisi"
 #~ msgid "Xfce4 Power Manager"
 #~ msgstr "Xfce4 Güç Yöneticisi"
 
-#~ msgid "Unable to read your home directory environment variable, autostart option may not work"
-#~ msgstr "Ev dizini çevre değişkeni bilgileriniz okunamadı, otomatik başlangıç seçeneği çalışmayabilir"
+#~ msgid ""
+#~ "Unable to read your home directory environment variable, autostart option "
+#~ "may not work"
+#~ msgstr ""
+#~ "Ev dizini çevre değişkeni bilgileriniz okunamadı, otomatik başlangıç "
+#~ "seçeneği çalışmayabilir"
 
-#~ msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
-#~ msgstr "Xfce4 güç yöneticisi çalıştırılamadı, donanım soyutlama katmanı (HAL) ve haberleşme (bus) servislerinin çalıştığından emin olunuz"
+#~ msgid ""
+#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
+#~ "and the message bus daemon are running"
+#~ msgstr ""
+#~ "Xfce4 güç yöneticisi çalıştırılamadı, donanım soyutlama katmanı (HAL) ve "
+#~ "haberleşme (bus) servislerinin çalıştığından emin olunuz"
 
-#~ msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
-#~ msgstr "AC güç bağdaştırıcısı durumu bilgisi okunamadı, güç yöneticisi düzgün çalışmayabilir. Muhtemel nedenler: AC güç bağdaştırıcısı sürücüsü yüklenmemiş olabilir, HAL ile bağlantı kurulamıyor olabilir ve DBus servisi çalışmıyor olabilir"
+#~ msgid ""
+#~ "Unable to read AC adapter status, the power manager will not work "
+#~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
+#~ "connection with the hardware abstract layer or the message bus daemon is "
+#~ "not running"
+#~ msgstr ""
+#~ "AC güç bağdaştırıcısı durumu bilgisi okunamadı, güç yöneticisi düzgün "
+#~ "çalışmayabilir. Muhtemel nedenler: AC güç bağdaştırıcısı sürücüsü "
+#~ "yüklenmemiş olabilir, HAL ile bağlantı kurulamıyor olabilir ve DBus "
+#~ "servisi çalışmıyor olabilir"
 
-#~ msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
-#~ msgstr "Güç yönetimi servisi kullanılamıyor, hazırda beklet modu ve askıya alma gibi bazı fonksiyonlar çalışmayabilir. Muhtemel nedenler: izin problemi olabilir, HAL ile bağlantı kurulamıyor olabilir veya DBus servisi çalışmıyor olabilir"
+#~ msgid ""
+#~ "Unable to use power management service, functionalities like hibernate "
+#~ "and suspend will not work. Possible reasons: you don't have enough "
+#~ "permission, broken connection with the hardware abstract layer or the "
+#~ "message bus daemon is not running"
+#~ msgstr ""
+#~ "Güç yönetimi servisi kullanılamıyor, hazırda beklet modu ve askıya alma "
+#~ "gibi bazı fonksiyonlar çalışmayabilir. Muhtemel nedenler: izin problemi "
+#~ "olabilir, HAL ile bağlantı kurulamıyor olabilir veya DBus servisi "
+#~ "çalışmıyor olabilir"
 
 #~ msgid "Error monitoring HAL events"
 #~ msgstr "HAL işlemleri izlenirken hata meydana geldi"
@@ -1369,13 +1439,18 @@ msgstr "Ekran Parlaklığı eklentisi"
 #~ msgstr "Monitör parlaklığı belirlemek için HAL servisinden yanıt gelmedi"
 
 #~ msgid "No reply from HAL daemon to get monitor brightness level"
-#~ msgstr "Monitör parlıklığı seviyesinin alınması için HAL servisinden yanıt gelmedi"
+#~ msgstr ""
+#~ "Monitör parlıklığı seviyesinin alınması için HAL servisinden yanıt gelmedi"
 
 #~ msgid "No reply from HAL daemon to get available cpu governors"
-#~ msgstr "Kullanılabilir işlemci yönetimi bilgilerinin alınması için HAL servisinden yanıt gelmedi"
+#~ msgstr ""
+#~ "Kullanılabilir işlemci yönetimi bilgilerinin alınması için HAL "
+#~ "servisinden yanıt gelmedi"
 
 #~ msgid "No reply from HAL daemon to get current cpu governor"
-#~ msgstr "Mevcut işlemci yönetimi bilgilerinin alınması için HAL servisinden yanıt gelmedi"
+#~ msgstr ""
+#~ "Mevcut işlemci yönetimi bilgilerinin alınması için HAL servisinden yanıt "
+#~ "gelmedi"
 
 #~ msgid "No reply from HAL daemon to set cpu governor"
 #~ msgstr "İşlemci yöneticisi belirlemek için HAL servisinden yanıt gelmedi"
