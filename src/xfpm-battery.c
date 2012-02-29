@@ -788,6 +788,8 @@ xfpm_battery_finalize (GObject *object)
     g_object_unref (battery->priv->notify);
     g_object_unref (battery->priv->button);
 
+    gtk_status_icon_set_visible(GTK_STATUS_ICON(battery), FALSE);
+
     G_OBJECT_CLASS (xfpm_battery_parent_class)->finalize (object);
 }
 

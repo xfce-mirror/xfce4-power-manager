@@ -1137,6 +1137,7 @@ xfpm_power_hide_adapter_icon (XfpmPower *power)
 
     if ( power->priv->adapter_icon )
     {
+        gtk_status_icon_set_visible (power->priv->adapter_icon, FALSE);
         g_object_unref (power->priv->adapter_icon);
         power->priv->adapter_icon = NULL;
     }
