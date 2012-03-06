@@ -312,7 +312,7 @@ xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager
     {
 	XfpmShutdownRequest req = XFPM_DO_NOTHING;
 	gchar *sleep_mode;
-	gboolean on_battery;
+	gboolean on_battery = FALSE;
     
 	g_object_get (G_OBJECT (manager->priv->conf),
 		      INACTIVITY_SLEEP_MODE, &sleep_mode,

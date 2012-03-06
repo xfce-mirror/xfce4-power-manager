@@ -22,35 +22,13 @@
 #define XFPM_UPOWER_COMMON
 
 #include <dbus/dbus-glib.h>
+#include <libupower-glib/upower.h>
 
-#define UPOWER_NAME 	      "org.freedesktop.UPower"
-#define UPOWER_PATH 	      "/org/freedesktop/UPower"
+const gchar 	*xfpm_power_translate_kind      	(UpDeviceKind kind);
 
-#define UPOWER_IFACE 	      "org.freedesktop.UPower"
-#define UPOWER_IFACE_DEVICE   "org.freedesktop.UPower.Device"
-#define UPOWER_PATH_DEVICE    "/org/freedesktop/UPower/devices/"
+const gchar	*xfpm_power_translate_technology	(UpDeviceTechnology technology);
 
-#define UPOWER_PATH_WAKEUPS   "/org/freedesktop/UPower/Wakeups"
-#define UPOWER_IFACE_WAKEUPS  "org.freedesktop.UPower.Wakeups"
-
-#define POLKIT_AUTH_SUSPEND   "org.freedesktop.upower.suspend"
-#define	POLKIT_AUTH_HIBERNATE "org.freedesktop.upower.hibernate"
-
-
-GPtrArray 	*xfpm_power_enumerate_devices		(DBusGProxy *proxy);
-
-GHashTable	*xfpm_power_get_interface_properties 	(DBusGProxy *proxy_prop, 
-							 const gchar *iface_name);
-
-GValue 		 xfpm_power_get_interface_property   	(DBusGProxy *proxy, 
-							 const gchar *iface_name, 
-							 const gchar *prop_name);
-
-const gchar 	*xfpm_power_translate_device_type 	(guint type);
-
-const gchar	*xfpm_power_translate_technology	(guint value);
-
-const gchar	*xfpm_power_get_icon_name		(guint device_type);
+const gchar	*xfpm_power_get_icon_name		(UpDeviceKind kind);
 
 
 #endif /* XFPM_UPOWER_COMMON */

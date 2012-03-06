@@ -31,168 +31,113 @@
 #include "xfpm-icons.h"
 
 /**
- * xfpm_power_enumerate_devices:
- * 
- **/
-GPtrArray *
-xfpm_power_enumerate_devices (DBusGProxy *proxy)
-{
-    gboolean ret;
-    GError *error = NULL;
-    GPtrArray *array = NULL;
-    GType g_type_array;
-
-    g_type_array = dbus_g_type_get_collection ("GPtrArray", DBUS_TYPE_G_OBJECT_PATH);
-    
-    ret = dbus_g_proxy_call (proxy, "EnumerateDevices", &error,
-			     G_TYPE_INVALID,
-			     g_type_array, &array,
-			     G_TYPE_INVALID);
-    if (!ret) 
-    {
-	g_critical ("Couldn't enumerate power devices: %s", error->message);
-	g_error_free (error);
-    }
-    
-    return array;
-}
-
-/**
- * xfpm_power_get_interface_properties:
- * 
- **/
-GHashTable *xfpm_power_get_interface_properties (DBusGProxy *proxy_prop, const gchar *iface_name)
-{
-    gboolean ret;
-    GError *error = NULL;
-    GHashTable *props = NULL;
-
-    props = NULL;
-
-    ret = dbus_g_proxy_call (proxy_prop, "GetAll", &error,
-			     G_TYPE_STRING, iface_name,
-			     G_TYPE_INVALID,
-			     dbus_g_type_get_map ("GHashTable", G_TYPE_STRING, G_TYPE_VALUE), &props,
-			     G_TYPE_INVALID);
-			    
-    if (!ret) 
-    {
-	g_warning ("Unable to get interface properties for : %s : %s", iface_name, error->message);
-	g_error_free (error);
-    }
-    
-    return props;
-}
-
-/**
- * xfpm_power_get_interface_property:
- * 
- **/
-GValue xfpm_power_get_interface_property (DBusGProxy *proxy, const gchar *iface_name, const gchar *prop_name)
-{
-    gboolean ret;
-    GError *error = NULL;
-    GValue value = { 0, };
-
-    ret = dbus_g_proxy_call (proxy, "Get", &error,
-			     G_TYPE_STRING, iface_name,
-			     G_TYPE_STRING, prop_name,
-			     G_TYPE_INVALID,
-			     G_TYPE_VALUE, &value, G_TYPE_INVALID);
-							
-    if (!ret) 
-    {
-	g_warning ("Unable to get property %s on interface  %s : %s", prop_name, iface_name, error->message);
-	g_error_free (error);
-    }
-    
-    return value;
-}
-
-/**
- * xfpm_power_translate_device_type:
- * 
+ * xfpm_power_translate_kind:
+ *
  **/
 const gchar *
-xfpm_power_translate_device_type (guint type)
+xfpm_power_translate_kind (UpDeviceKind kind)
 {
-    switch (type)
+    switch (kind)
     {
-        case XFPM_DEVICE_TYPE_BATTERY:
+        case UP_DEVICE_KIND_BATTERY:
             return _("Battery");
-        case XFPM_DEVICE_TYPE_UPS:
+
+        case UP_DEVICE_KIND_UPS:
             return _("UPS");
-        case XFPM_DEVICE_TYPE_LINE_POWER:
+
+        case UP_DEVICE_KIND_LINE_POWER:
             return _("Line power");
-        case XFPM_DEVICE_TYPE_MOUSE:
+
+        case UP_DEVICE_KIND_MOUSE:
             return _("Mouse");
-        case XFPM_DEVICE_TYPE_KBD:
+
+        case UP_DEVICE_KIND_KEYBOARD:
             return _("Keyboard");
-	case XFPM_DEVICE_TYPE_MONITOR:
-	    return _("Monitor");
-	case XFPM_DEVICE_TYPE_PDA:
-	    return _("PDA");
-	case XFPM_DEVICE_TYPE_PHONE:
-	    return _("Phone");
-	case XFPM_DEVICE_TYPE_UNKNOWN:
-	    return _("Unknown");
+
+        case UP_DEVICE_KIND_MONITOR:
+            return _("Monitor");
+
+        case UP_DEVICE_KIND_PDA:
+            return _("PDA");
+
+        case UP_DEVICE_KIND_PHONE:
+            return _("Phone");
+
+        case UP_DEVICE_KIND_UNKNOWN:
+            return _("Unknown");
+
+        default:
+            return _("Battery");
     }
-    
-    return _("Battery");
 }
 
 /**
  * xfpm_power_translate_technology:
- * 
+ *
  **/
-const gchar *xfpm_power_translate_technology (guint value)
+const gchar *
+xfpm_power_translate_technology (UpDeviceTechnology technology)
 {
-    switch (value)
+    switch (technology)
     {
-        case 0:
-            return _("Unknown");
-        case 1:
+        case UP_DEVICE_TECHNOLOGY_LITHIUM_ION:
             return _("Lithium ion");
-        case 2:
+
+        case UP_DEVICE_TECHNOLOGY_LITHIUM_POLYMER:
             return _("Lithium polymer");
-        case 3:
+
+        case UP_DEVICE_TECHNOLOGY_LITHIUM_IRON_PHOSPHATE:
             return _("Lithium iron phosphate");
-        case 4:
+
+        case UP_DEVICE_TECHNOLOGY_LEAD_ACID:
             return _("Lead acid");
-        case 5:
+
+        case UP_DEVICE_TECHNOLOGY_NICKEL_CADMIUM:
             return _("Nickel cadmium");
-        case 6:
+
+        case UP_DEVICE_TECHNOLOGY_NICKEL_METAL_HYDRIDE:
             return _("Nickel metal hybride");
+
+        default:
+            return _("Unknown");
     }
-    
-    return _("Unknown");
 }
 
-const gchar *xfpm_power_get_icon_name (guint device_type)
+const gchar *
+xfpm_power_get_icon_name (UpDeviceKind kind)
 {
-    switch (device_type)
+    switch (kind)
     {
-        case XFPM_DEVICE_TYPE_BATTERY:
+        case UP_DEVICE_KIND_BATTERY:
             return XFPM_BATTERY_ICON;
-        case XFPM_DEVICE_TYPE_UPS:
+
+        case UP_DEVICE_KIND_UPS:
             return XFPM_UPS_ICON;
-        case XFPM_DEVICE_TYPE_LINE_POWER:
+
+        case UP_DEVICE_KIND_LINE_POWER:
             return XFPM_AC_ADAPTER_ICON;
-        case XFPM_DEVICE_TYPE_MOUSE:
+
+        case UP_DEVICE_KIND_MOUSE:
             return XFPM_MOUSE_ICON;
-        case XFPM_DEVICE_TYPE_KBD:
+
+        case UP_DEVICE_KIND_KEYBOARD:
             return XFPM_KBD_ICON;
-	case XFPM_DEVICE_TYPE_MONITOR:
-	    return "monitor";
-	case XFPM_DEVICE_TYPE_PDA:
-	    return XFPM_PDA_ICON;
-	case XFPM_DEVICE_TYPE_PHONE:
-	    return XFPM_PHONE_ICON;
-	case XFPM_DEVICE_TYPE_UNKNOWN:
-	    return XFPM_BATTERY_ICON;
+
+        case UP_DEVICE_KIND_MONITOR:
+            return "monitor";
+
+        case UP_DEVICE_KIND_PDA:
+            return XFPM_PDA_ICON;
+
+        case UP_DEVICE_KIND_PHONE:
+            return XFPM_PHONE_ICON;
+
+        case UP_DEVICE_KIND_UNKNOWN:
+            return XFPM_BATTERY_ICON;
+
+        default:
+            return XFPM_BATTERY_ICON;
     }
-    
-    return XFPM_BATTERY_ICON;
 }
 
 

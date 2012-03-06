@@ -107,20 +107,18 @@ static void
 xfpm_power_report_error (XfpmPower *power, const gchar *error, const gchar *icon_name)
 {
     GtkStatusIcon *battery = NULL;
-    guint i, len;
-    GList *list;
+    UpDeviceKind kind;
+    GSList *li;
     
-    list = g_hash_table_get_values (power->hash);
-    len = g_list_length (list);
-    
-    for ( i = 0; i < len; i++)
+    for (li = power->devices; li != NULL; li = li->next)
     {
-        XfpmDeviceType type;
-        battery = g_list_nth_data (list, i);
-        type = xfpm_battery_get_device_type (XFPM_BATTERY (battery));
-        if ( type == XFPM_DEVICE_TYPE_BATTERY ||
-             type == XFPM_DEVICE_TYPE_UPS )
-             break;
+        kind = xfpm_battery_get_kind (XFPM_BATTERY (li->data));
+        if (kind == UP_DEVICE_KIND_BATTERY
+            || kind == UP_DEVICE_KIND_UPS)
+        {
+            battery = GTK_STATUS_ICON (li->data);
+            break;
+        }        
     }
     
     xfpm_notify_show_notification (power->notify, 
@@ -169,9 +167,9 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
         xfpm_lock_screen ();
     }
     
-    dbus_g_proxy_call (power->proxy, sleep_time, &error,
+    /*TODO dbus_g_proxy_call (power->proxy, sleep_time, &error,
                        G_TYPE_INVALID,
-                       G_TYPE_INVALID);
+                       G_TYPE_INVALID);*/
     
     if ( error )
     {
@@ -452,7 +450,7 @@ xfpm_power_show_tray_menu_battery (GtkStatusIcon *icon, guint button,
 
 static void 
 xfpm_power_show_tray_menu_adaptor (GtkStatusIcon *icon, guint button, 
-                                 guint activate_time, XfpmPower *power)
+                                   guint activate_time, XfpmPower *power)
 {
     xfpm_power_show_tray_menu (power, icon, button, activate_time, FALSE);
 }
@@ -460,30 +458,25 @@ xfpm_power_show_tray_menu_adaptor (GtkStatusIcon *icon, guint button,
 static XfpmBatteryCharge
 xfpm_power_get_current_charge_state (XfpmPower *power)
 {
-    GList *list;
-    guint len, i;
-    XfpmBatteryCharge max_charge_status = XFPM_BATTERY_CHARGE_UNKNOWN;
+    XfpmBattery *battery;
+    UpDeviceKind kind;
+    GSList *li;
+    XfpmBatteryCharge max_charge, charge;
     
-    list = g_hash_table_get_values (power->hash);
-    len = g_list_length (list);
+    max_charge = XFPM_BATTERY_CHARGE_UNKNOWN;
     
-    for ( i = 0; i < len; i++)
+    for (li = power->devices; li != NULL; li = li->next)
     {
-        XfpmBatteryCharge battery_charge;
-        XfpmDeviceType type;
-        
-        g_object_get (G_OBJECT (g_list_nth_data (list, i)),
-                      "charge-status", &battery_charge,
-                      "device-type", &type,
-                      NULL);
-        if ( type != XFPM_DEVICE_TYPE_BATTERY && 
-             type != XFPM_DEVICE_TYPE_UPS )
-            continue;
-        
-        max_charge_status = MAX (max_charge_status, battery_charge);
+        battery = XFPM_BATTERY (li->data);
+        kind = xfpm_battery_get_kind (battery);
+        if (kind == UP_DEVICE_KIND_BATTERY || kind == UP_DEVICE_KIND_UPS)
+        {
+            charge = xfpm_battery_get_charge (battery);
+            max_charge = MAX (max_charge, charge);
+        }
     }
-    
-    return max_charge_status;
+
+    return max_charge;
 }
 
 static void
@@ -760,7 +753,7 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
                 gchar *msg;
                 gchar *time_str;
                 
-                const gchar *battery_name = xfpm_battery_get_battery_name (battery);
+                const gchar *battery_name = xfpm_battery_get_name (battery);
                 
                 time_str = xfpm_battery_get_time_left (battery);
                 
@@ -792,12 +785,15 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 static void
 xfpm_power_add_device (XfpmPower *power, UpDevice *device)
 {
-    UpDeviceKind device_kind;
+    UpDeviceKind kind;
     GtkStatusIcon *battery;
+    
+    g_return_if_fail (UP_IS_DEVICE (device));
+    g_return_if_fail (XFPM_IS_POWER (power));
     
     g_object_get (device, "kind", &kind, NULL);
     
-    XFPM_DEBUG_ENUM (device_type, XFPM_TYPE_DEVICE_TYPE, " device added");
+    XFPM_DEBUG (" device added");
                                        
     switch (kind)
     {
@@ -820,7 +816,7 @@ xfpm_power_add_device (XfpmPower *power, UpDevice *device)
             break;
         
         case UP_DEVICE_KIND_LINE_POWER:
-            g_warning ("Unable to monitor unkown power device with object_path : %s", object_path);
+            g_warning ("Unable to monitor unkown power device: %s", "TODO");
             break;
         
         default:
@@ -832,22 +828,23 @@ xfpm_power_add_device (XfpmPower *power, UpDevice *device)
 static void
 xfpm_power_get_power_devices (XfpmPower *power)
 {
-    GPtrArray *array = NULL;
+    GPtrArray *array;
     guint i;
+    UpDevice *device;
     
-    array = xfpm_power_enumerate_devices (power->proxy);
+    array = up_client_get_devices (power->up_client);
     
     if ( array )
     {
         for ( i = 0; i < array->len; i++)
         {
-            const gchar *object_path = ( const gchar *) g_ptr_array_index (array, i);
-            XFPM_DEBUG ("Power device detected at : %s", object_path);
-            xfpm_power_add_device (power, object_path);
+            device = g_ptr_array_index (array, i);
+            g_return_if_fail (UP_IS_DEVICE (device));
+        
+            xfpm_power_add_device (power, device);
         }
-        g_ptr_array_free (array, TRUE);
+        g_ptr_array_unref (array);
     }
-    
 }
 
 static void
@@ -928,20 +925,14 @@ xfpm_power_refresh_adaptor_visible (XfpmPower *power)
     
     if ( show_icon == SHOW_ICON_ALWAYS )
     {
-        if ( g_hash_table_size (power->hash) == 0 )
+        
+        if (power->devices == NULL)
         {
             xfpm_power_show_adapter_icon (power);
-#if GTK_CHECK_VERSION (2, 16, 0)
             gtk_status_icon_set_tooltip_text (power->adapter_icon, 
                                               TRUE ? //power->on_battery ? 
                                               _("Adaptor is offline") :
                                               _("Adaptor is online") );
-#else
-            gtk_status_icon_set_tooltip (power->adapter_icon, 
-                                         TRUE ?//power->on_battery ? 
-                                         _("Adaptor is offline") :
-                                         _("Adaptor is online") );
-#endif
         }
         else
         {
@@ -1024,7 +1015,6 @@ xfpm_power_init (XfpmPower *power)
     GError *error = NULL;
     gboolean on_battery;
 
-    power->hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
     power->dialog          = NULL;
     power->adapter_icon    = NULL;
     power->overall_state   = XFPM_BATTERY_CHARGE_OK;
@@ -1071,28 +1061,9 @@ xfpm_power_finalize (GObject *object)
     power = XFPM_POWER (object);
 
     g_object_unref (power->conf);
+    g_object_unref (power->up_client);
     
     xfpm_power_hide_adapter_icon (power);
-    
-    dbus_g_connection_unref (power->bus);
-    
-    if ( power->proxy )
-    {
-        dbus_g_proxy_disconnect_signal (power->proxy, "Changed",
-                                        G_CALLBACK (xfpm_power_changed_cb), power);
-        dbus_g_proxy_disconnect_signal (power->proxy, "DeviceRemoved",
-                                        G_CALLBACK (xfpm_power_device_removed_cb), power);
-        dbus_g_proxy_disconnect_signal (power->proxy, "DeviceAdded",
-                                        G_CALLBACK (xfpm_power_device_added_cb), power);
-        dbus_g_proxy_disconnect_signal (power->proxy, "DeviceChanged",
-                                        G_CALLBACK (xfpm_power_device_changed_cb), power);
-        g_object_unref (power->proxy);
-    }
-    
-    if ( power->proxy_prop )
-        g_object_unref (power->proxy_prop);
-
-    g_hash_table_destroy (power->hash);
 
     G_OBJECT_CLASS (xfpm_power_parent_class)->finalize (object);
 }

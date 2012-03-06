@@ -91,6 +91,7 @@ xfce4_power_information_CFLAGS =		\
 	$(GOBJECT_CFLAGS)                       \
 	$(DBUS_GLIB_CFLAGS)                     \
 	$(LIBXFCE4UI_CFLAGS)			\
+	$(UPOWER_GLIB_CFLAGS)			\
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
 
@@ -102,6 +103,7 @@ xfce4_power_information_LDADD =			\
 	$(GOBJECT_LIBS)                         \
 	$(DBUS_GLIB_LIBS)                       \
 	$(LIBXFCE4UI_LIBS)			\
+	$(UPOWER_GLIB_LIBS)			\
 	$(top_builddir)/libdbus/libxfpmdbus.la
 
 if ENABLE_POLKIT

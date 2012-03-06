@@ -38,7 +38,7 @@ typedef struct _XfpmPower      XfpmPower;
 
 GType                   xfpm_power_get_type             (void) G_GNUC_CONST;
 
-XfpmPower               *xfpm_power_get                 (void);
+XfpmPower              *xfpm_power_get                  (void);
 
 void                    xfpm_power_suspend              (XfpmPower *power,
                                                          gboolean   force);
