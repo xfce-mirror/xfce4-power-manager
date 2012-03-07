@@ -277,6 +277,12 @@ xfpm_inhibit_new(void)
     return XFPM_INHIBIT (xfpm_inhibit_object);
 }
 
+gboolean
+xfpm_inhibit_get_inhibited (XfpmInhibit *inhibit)
+{
+    return inhibit->priv->inhibited;
+}
+
 /*
  * 
  * DBus server implementation for org.freedesktop.PowerManagement.Inhibit
@@ -299,7 +305,7 @@ static gboolean xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
 					     gchar ***OUT_inhibitor,
 					     GError **error);
 
-#include "org.freedesktop.PowerManagement.Inhibit.h"
+#include "xfpm-inhibit-service-infos.h"
 
 static void xfpm_inhibit_dbus_class_init  (XfpmInhibitClass *klass)
 {

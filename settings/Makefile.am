@@ -52,8 +52,8 @@ if MAINTAINER_MODE
 BUILT_SOURCES = 				\
 	xfce-power-manager-dbus-client.h
 
-xfce-power-manager-dbus-client.h: $(top_srcdir)/src/org.xfce.Power.Manager.xml
-	dbus-binding-tool --mode=glib-client --prefix=xfpm_manager $< >$@
+xfce-power-manager-dbus-client.h: $(top_srcdir)/src/xfpm-manager-service-infos.xml
+	dbus-binding-tool --mode=glib-client --prefix=xfpm_dbus_client $< >$@
 
 endif
 

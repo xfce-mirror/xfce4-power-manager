@@ -53,6 +53,8 @@ GQuark                    xfpm_inhibit_get_error_quark ();
 
 XfpmInhibit              *xfpm_inhibit_new             (void);
 
+gboolean                  xfpm_inhibit_get_inhibited   (XfpmInhibit *inhibit);
+
 G_END_DECLS
 
 #endif /* __XFPM_INHIBIT_H */

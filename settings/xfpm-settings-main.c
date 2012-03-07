@@ -104,7 +104,7 @@ int main (int argc, char **argv)
 	g_error ("%s\n",error->message);
     }
 
-    if ( xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(bus), "org.xfce.PowerManager") ) 
+    if ( xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(bus), "org.xfce.PowerManagement") ) 
     {
 	GtkWidget *dialog;
 	XfpmUnique *unique;
@@ -138,9 +138,7 @@ int main (int argc, char **argv)
 					       "/org/xfce/PowerManager",
 					       "org.xfce.Power.Manager");
 	    
-	    xfpm_manager_dbus_client_get_config (proxy, 
-						 &config_hash,
-						 &error);
+	    xfpm_dbus_client_get_config (proxy,  &config_hash, &error);
 						 
 	    if ( error )
 	    {

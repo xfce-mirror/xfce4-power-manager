@@ -111,26 +111,26 @@ xfpm_battery_get_icon_index (UpDeviceKind kind, gdouble percentage)
 {
     if (KIND_IS_BATTERY_OR_UPS (kind))
     {
-        if (percentage < 20)
+        if (percentage < 10)
             return "000";
-        else if (percentage < 40)
+        else if (percentage < 30)
             return "020";
-        else if (percentage < 60)
+        else if (percentage < 50)
             return "040";
-        else if (percentage < 80)
+        else if (percentage < 70)
             return "060";
-        else if (percentage < 100)
+        else if (percentage < 90)
             return "080";
         else
             return "100";
     }
     else
     {
-        if (percentage < 30)
+        if (percentage < 10)
             return "000";
-        else if (percentage < 60)
+        else if (percentage < 30)
             return "030";
-        else if (percentage < 100)
+        else if (percentage < 60)
             return "060";
         else
             return "100";
@@ -659,9 +659,7 @@ static void xfpm_battery_get_property (GObject *object,
                                        GValue *value,
                                        GParamSpec *pspec)
 {
-    XfpmBattery *battery;
-
-    battery = XFPM_BATTERY (object);
+    XfpmBattery *battery = XFPM_BATTERY (object);
 
     switch (prop_id)
     {
@@ -682,9 +680,7 @@ static void xfpm_battery_set_property (GObject *object,
                                        const GValue *value,
                                        GParamSpec *pspec)
 {
-    XfpmBattery *battery;
-
-    battery = XFPM_BATTERY (object);
+    XfpmBattery *battery = XFPM_BATTERY (object);
 
     switch (prop_id)
     {

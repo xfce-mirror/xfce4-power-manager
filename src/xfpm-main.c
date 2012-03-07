@@ -194,14 +194,14 @@ xfpm_dump_remote (DBusGConnection *bus)
 }
 
 static void G_GNUC_NORETURN
-xfpm_start (DBusGConnection *bus, const gchar *client_id, gboolean dump)
+xfpm_start (const gchar *client_id, gboolean dump)
 {
     XfpmManager *manager;
     GError *error = NULL;
     
     XFPM_DEBUG ("Starting the power manager");
     
-    manager = xfpm_manager_new (bus, client_id);
+    manager = xfpm_manager_new (client_id);
     
     if ( xfce_posix_signal_handler_init (&error)) 
     {
@@ -369,7 +369,7 @@ int main (int argc, char **argv)
 	    !xfpm_dbus_name_has_owner (dbus_g_connection_get_connection (bus), "org.freedesktop.PowerManagement"))
 	{
 	    g_print ("Xfce power manager is not running\n");
-	    xfpm_start (bus, client_id, dump);
+	    xfpm_start (client_id, dump);
 	}
 	
 	proxy = dbus_g_proxy_new_for_name (bus, 
@@ -419,7 +419,7 @@ int main (int argc, char **argv)
     }
     else
     {	
-	xfpm_start (bus, client_id, dump);
+	xfpm_start (client_id, dump);
     }
     
     return EXIT_SUCCESS;

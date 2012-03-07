@@ -234,8 +234,8 @@ xfpm_dpms_init(XfpmDpms *dpms)
 
     if ( dpms->priv->dpms_capable )
     {
-	dpms->priv->power     = xfpm_power_get ();
-	dpms->priv->conf    = xfpm_xfconf_new  ();
+	dpms->priv->power = xfpm_power_get ();
+	dpms->priv->conf = xfpm_xfconf_new  ();
     
 	g_signal_connect (dpms->priv->power, "on-battery-changed",
 			  G_CALLBACK(xfpm_dpms_on_battery_changed_cb), dpms);
@@ -243,9 +243,7 @@ xfpm_dpms_init(XfpmDpms *dpms)
 	g_signal_connect (dpms->priv->conf, "notify",
 			  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
 			  
-	g_object_get (G_OBJECT (dpms->priv->power),
-		      "on-battery", &dpms->priv->on_battery,
-		      NULL);
+	dpms->priv->on_battery = xfpm_power_get_on_battery (dpms->priv->power);
 	
 	xfpm_dpms_refresh (dpms);
     }

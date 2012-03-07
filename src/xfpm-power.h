@@ -40,11 +40,13 @@ GType                   xfpm_power_get_type             (void) G_GNUC_CONST;
 
 XfpmPower              *xfpm_power_get                  (void);
 
-void                    xfpm_power_suspend              (XfpmPower *power,
-                                                         gboolean   force);
+gboolean                xfpm_power_suspend              (XfpmPower  *power,
+                                                         gboolean    force,
+                                                         GError    **error);
 
-void                    xfpm_power_hibernate            (XfpmPower *power,
-                                                         gboolean   force);
+gboolean                xfpm_power_hibernate            (XfpmPower  *power,
+                                                         gboolean    force,
+                                                         GError    **error);
 
 gboolean                xfpm_power_can_suspend          (XfpmPower  *power,
                                                          gboolean   *can_suspend,
@@ -54,13 +56,9 @@ gboolean                xfpm_power_can_hibernate        (XfpmPower  *power,
                                                          gboolean   *can_hibernate,
                                                          GError    **error);
 
-gboolean                xfpm_power_get_on_battery       (XfpmPower  *power,
-                                                         gboolean   *on_battery,
-                                                         GError    **error);
+gboolean                xfpm_power_get_on_battery       (XfpmPower  *power);
 
-gboolean                xfpm_power_get_low_battery      (XfpmPower  *power,
-                                                         gboolean   *low_battery,
-                                                         GError    **error);
+gboolean                xfpm_power_get_low_battery      (XfpmPower  *power);
 
 XfpmPowerMode           xfpm_power_get_mode             (XfpmPower *power);
 

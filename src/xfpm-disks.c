@@ -125,9 +125,7 @@ xfpm_disks_set_spin_timeouts (XfpmDisks *disks)
     if (!disks->priv->can_spin )
 	return;
     
-    g_object_get (G_OBJECT (disks->priv->power),
-		  "on-battery", &on_battery,
-		  NULL);
+    on_battery = xfpm_power_get_on_battery (disks->priv->power);
 
     if ( !on_battery )
     {

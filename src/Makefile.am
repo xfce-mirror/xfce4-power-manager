@@ -1,12 +1,10 @@
 bin_PROGRAMS = xfce4-power-manager		\
 	       xfce4-power-information
 
-xfce4_power_manager_SOURCES =                   \
+xfce4_power_manager_SOURCES =			\
 	$(BUILT_SOURCES)			\
 	xfpm-enum.h				\
 	xfpm-enum-glib.h			\
-	xfpm-dbus-service.c			\
-	xfpm-dbus-service.h			\
 	xfpm-main.c				\
 	xfpm-manager.c				\
 	xfpm-manager.h				\
@@ -16,6 +14,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-power-common.h			\
 	xfpm-battery.c				\
 	xfpm-battery.h				\
+	xfpm-inhibit.c				\
+	xfpm-inhibit.h				\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
 	xfpm-disks.c				\
@@ -41,21 +41,21 @@ xfce4_power_manager_SOURCES =                   \
 	gsd-media-keys-window.c			\
 	gsd-media-keys-window.h
 
-xfce4_power_manager_CFLAGS =                    \
-	-I$(top_srcdir)                         \
-	-I$(top_srcdir)/common                  \
-	-I$(top_srcdir)/libdbus                 \
-	-DLOCALEDIR=\"$(localedir)\"            \
-	-DG_LOG_DOMAIN=\"xfce4-power-manager\"  \
+xfce4_power_manager_CFLAGS =			\
+	-I$(top_srcdir)				\
+	-I$(top_srcdir)/common			\
+	-I$(top_srcdir)/libdbus			\
+	-DLOCALEDIR=\"$(localedir)\"		\
+	-DG_LOG_DOMAIN=\"xfce4-power-manager\"	\
 	-DSYSCONFDIR=\"$(sysconfdir)\"		\
-	$(GOBJECT_CFLAGS)                       \
-	$(GTHREAD_CFLAGS)                       \
-	$(DBUS_GLIB_CFLAGS)                     \
-	$(LIBXFCE4UI_CFLAGS)                    \
-	$(XFCONF_CFLAGS)                        \
-	$(LIBNOTIFY_CFLAGS)                     \
+	$(GOBJECT_CFLAGS)			\
+	$(GTHREAD_CFLAGS)			\
+	$(DBUS_GLIB_CFLAGS)			\
+	$(LIBXFCE4UI_CFLAGS)			\
+	$(XFCONF_CFLAGS)			\
+	$(LIBNOTIFY_CFLAGS)			\
 	$(XRANDR_CFLAGS)			\
-	$(DPMS_CFLAGS)           		\
+	$(DPMS_CFLAGS)				\
 	$(UPOWER_GLIB_CFLAGS)			\
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
@@ -64,15 +64,15 @@ xfce4_power_manager_LDFLAGS =			\
 	-no-undefined				\
 	$(PLATFORM_LDFLAGS)
 
-xfce4_power_manager_LDADD =                     \
-	$(top_builddir)/common/libxfpmcommon.la \
-	$(top_builddir)/libdbus/libxfpmdbus.la  \
-	$(GOBJECT_LIBS)                         \
-	$(GTHREAD_LIBS)                         \
-	$(DBUS_GLIB_LIBS)                       \
-	$(LIBXFCE4UI_LIBS)                      \
-	$(XFCONF_LIBS)                          \
-	$(LIBNOTIFY_LIBS)                       \
+xfce4_power_manager_LDADD =			\
+	$(top_builddir)/common/libxfpmcommon.la	\
+	$(top_builddir)/libdbus/libxfpmdbus.la	\
+	$(GOBJECT_LIBS)				\
+	$(GTHREAD_LIBS)				\
+	$(DBUS_GLIB_LIBS)			\
+	$(LIBXFCE4UI_LIBS)			\
+	$(XFCONF_LIBS)				\
+	$(LIBNOTIFY_LIBS)			\
 	$(XRANDR_LIBS)				\
 	$(UPOWER_GLIB_LIBS)			\
 	$(DPMS_LIBS)
@@ -83,13 +83,13 @@ xfce4_power_information_SOURCES =		\
 	xfpm-power-common.h
 
 xfce4_power_information_CFLAGS =		\
-	-I$(top_srcdir)                         \
-	-I$(top_srcdir)/common                  \
-	-I$(top_srcdir)/libdbus                 \
-	-DLOCALEDIR=\"$(localedir)\"            \
-	-DG_LOG_DOMAIN=\"xfce4-power-information\"\
-	$(GOBJECT_CFLAGS)                       \
-	$(DBUS_GLIB_CFLAGS)                     \
+	-I$(top_srcdir)				\
+	-I$(top_srcdir)/common			\
+	-I$(top_srcdir)/libdbus			\
+	-DLOCALEDIR=\"$(localedir)\"		\
+	-DG_LOG_DOMAIN=\"xfce4-power-information\"	\
+	$(GOBJECT_CFLAGS)			\
+	$(DBUS_GLIB_CFLAGS)			\
 	$(LIBXFCE4UI_CFLAGS)			\
 	$(UPOWER_GLIB_CFLAGS)			\
 	$(PLATFORM_CPPFLAGS)			\
@@ -100,8 +100,8 @@ xfce4_power_information_LDFLAGS =		\
 	$(PLATFORM_LDFLAGS)
 
 xfce4_power_information_LDADD =			\
-	$(GOBJECT_LIBS)                         \
-	$(DBUS_GLIB_LIBS)                       \
+	$(GOBJECT_LIBS)				\
+	$(DBUS_GLIB_LIBS)			\
 	$(LIBXFCE4UI_LIBS)			\
 	$(UPOWER_GLIB_LIBS)			\
 	$(top_builddir)/libdbus/libxfpmdbus.la
@@ -110,20 +110,20 @@ if ENABLE_POLKIT
 
 sbin_PROGRAMS = xfpm-power-backlight-helper 
 
-xfpm_power_backlight_helper_SOURCES =           \
+xfpm_power_backlight_helper_SOURCES =		\
        xfpm-backlight-helper.c
 
-xfpm_power_backlight_helper_LDADD =             \
-       $(GLIB_LIBS)                             \
+xfpm_power_backlight_helper_LDADD =		\
+       $(GLIB_LIBS)				\
        -lm
 
-xfpm_power_backlight_helper_CFLAGS =            \
-        $(GLIB_CFLAGS)                          \
+xfpm_power_backlight_helper_CFLAGS =		\
+	$(GLIB_CFLAGS)				\
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
 
 polkit_policydir = $(datadir)/polkit-1/actions
-polkit_policy_DATA =					\
+polkit_policy_DATA =				\
 	org.xfce.power.policy
 
 # You will need a recent intltool or the patch from this bug
@@ -139,20 +139,22 @@ manpagedir = $(mandir)/man1
 
 manpage_DATA = xfce4-power-manager.1
 
-xfpm_glib_headers =                             \
-        $(srcdir)/xfpm-enum-glib.h
+xfpm_glib_headers =				\
+	$(srcdir)/xfpm-enum-glib.h
 
 BUILT_SOURCES =					\
-	xfpm-dbus-service-infos.h		\
-	xfpm-enum-types.c                       \
+	xfpm-power-service-infos.h		\
+	xfpm-manager-service-infos.h		\
+	xfpm-inhibit-service-infos.h		\
+	xfpm-enum-types.c			\
 	xfpm-enum-types.h			\
-	xfpm-marshal.c                          \
-        xfpm-marshal.h
+	xfpm-marshal.c				\
+	xfpm-marshal.h
 
 if MAINTAINER_MODE
 
 xfpm-enum-types.h: $(xfpm_glib_headers)
-	( cd $(srcdir) && glib-mkenums \
+	$(AM_V_GEN) ( cd $(srcdir) && glib-mkenums \
 		--fhead "#ifndef _XFPM_ENUM_TYPES_H\n#define _XFPM_ENUM_TYPES_H\n#include <glib-object.h>\nG_BEGIN_DECLS\n" \
 		--fprod "/* enumerations from \"@filename@\" */\n" \
 		--vhead "GType @enum_name@_get_type (void);\n#define XFPM_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
@@ -162,7 +164,7 @@ xfpm-enum-types.h: $(xfpm_glib_headers)
 	&& rm -f xgen xgen~
 
 xfpm-enum-types.c: xfpm-enum-types.h
-	( cd $(srcdir) && glib-mkenums \
+	$(AM_V_GEN) ( cd $(srcdir) && glib-mkenums \
 		--fhead "#include <xfpm-enum-types.h>\n" \
 		--fhead "#include \"xfpm-enum-glib.h\"\n\n" \
 		--fprod "\n/* enumerations from \"@filename@\" */\n" \
@@ -174,14 +176,20 @@ xfpm-enum-types.c: xfpm-enum-types.h
 	&& rm -f xgen xgen~
 
 xfpm-marshal.c: xfpm-marshal.list
-	echo "#include \"xfpm-marshal.h\"" > $@ && \
+	$(AM_V_GEN) echo "#include \"xfpm-marshal.h\"" > $@ && \
 	glib-genmarshal $< --prefix=_xfpm_marshal --body >> $@
 
 xfpm-marshal.h: xfpm-marshal.list
-	glib-genmarshal $< --prefix=_xfpm_marshal --header > $@
+	$(AM_V_GEN) glib-genmarshal $< --prefix=_xfpm_marshal --header > $@
 
-xfpm-dbus-service-infos.h: $(srcdir)/xfpm-dbus-service-infos.xml Makefile
-	$(AM_V_GEN) dbus-binding-tool --prefix=xfpm_dbus_service --mode=glib-server $< >$@
+xfpm-power-service-infos.h: $(srcdir)/xfpm-power-service-infos.xml Makefile
+	$(AM_V_GEN) dbus-binding-tool --prefix=xfpm_power_dbus --mode=glib-server $< >$@
+
+xfpm-manager-service-infos.h: $(srcdir)/xfpm-manager-service-infos.xml Makefile
+	$(AM_V_GEN) dbus-binding-tool --prefix=xfpm_manager_dbus --mode=glib-server $< >$@
+
+xfpm-inhibit-service-infos.h: $(srcdir)/xfpm-inhibit-service-infos.xml Makefile
+	$(AM_V_GEN) dbus-binding-tool --prefix=xfpm_inhibit --mode=glib-server $< >$@
 
 endif
 
@@ -190,14 +198,14 @@ autostartdir = $(sysconfdir)/xdg/autostart
 autostart_in_files = xfce4-power-manager.desktop.in
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 
-EXTRA_DIST =                                    \
+EXTRA_DIST =					\
 	xfpm-marshal.list			\
-        $(autostart_in_files)                   \
-        org.xfce.power.policy.in2              \
-        $(manpage_DATA)
+	$(autostart_in_files)			\
+	org.xfce.power.policy.in2		\
+	$(manpage_DATA)
 
-DISTCLEANFILES =                                \
-        $(BUILT_SOURCES)                        \
-        xfce4-power-manager.desktop             \
-        org.xfce.power.policy                  \
-        org.xfce.power.policy.in
+DISTCLEANFILES =				\
+	$(BUILT_SOURCES)			\
+	xfce4-power-manager.desktop		\
+	org.xfce.power.policy			\
+	org.xfce.power.policy.in

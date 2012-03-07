@@ -426,9 +426,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 				
 	g_signal_connect (backlight->priv->power, "on-battery-changed",
 			  G_CALLBACK (xfpm_backlight_on_battery_changed_cb), backlight);
-	g_object_get (G_OBJECT (backlight->priv->power),
-		      "on-battery", &backlight->priv->on_battery,
-		      NULL);
+	backlight->priv->on_battery = xfpm_power_get_on_battery (backlight->priv->power);
 	xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
 	xfpm_backlight_set_timeouts (backlight);
     }
