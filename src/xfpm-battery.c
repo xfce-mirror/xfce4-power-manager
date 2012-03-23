@@ -755,6 +755,8 @@ xfpm_battery_finalize (GObject *object)
 {
     XfpmBattery *battery = XFPM_BATTERY (object);
 
+    XFPM_DEBUG ("Device %s destroyed", up_device_get_object_path (battery->device));
+
     g_signal_handlers_disconnect_by_func (battery->device,
         G_CALLBACK (xfpm_battery_changed_cb), battery);
 

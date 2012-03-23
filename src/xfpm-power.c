@@ -597,9 +597,9 @@ xfpm_power_remove_device (XfpmPower *power, UpDevice *device)
     {
         if (xfpm_battery_get_device (XFPM_BATTERY (li->data)) == device)
         {
-            power->batteries = g_slist_delete_link (power->batteries, li);
-
             g_object_unref (G_OBJECT (li->data));
+
+            power->batteries = g_slist_delete_link (power->batteries, li);
 
             xfpm_power_refresh_adaptor_visible (power);
 
