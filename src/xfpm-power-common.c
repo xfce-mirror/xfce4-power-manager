@@ -115,7 +115,7 @@ xfpm_power_get_icon_name (UpDeviceKind kind)
             return XFPM_UPS_ICON;
 
         case UP_DEVICE_KIND_LINE_POWER:
-            return XFPM_AC_ADAPTER_ICON;
+            return XFPM_AC_ADAPTOR_ICON;
 
         case UP_DEVICE_KIND_MOUSE:
             return XFPM_MOUSE_ICON;

@@ -1550,7 +1550,7 @@ xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
     i++;
     
     /* ON ac power */
-    pix = xfpm_icon_load (XFPM_AC_ADAPTER_ICON, 48); 
+    pix = xfpm_icon_load (XFPM_AC_ADAPTOR_ICON, 48); 
     gtk_list_store_append(list_store, &iter);
     if ( pix )
     {

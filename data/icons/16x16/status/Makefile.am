@@ -4,7 +4,7 @@ EXTRA_DIST =				\
 Datadir = $(datadir)/icons/hicolor/16x16/status
 
 Data_DATA =				\
-	xfpm-ac-adapter.png		\
+	xfpm-ac-adaptor.png		\
 	xfpm-primary-000.png		\
 	xfpm-primary-020.png		\
 	xfpm-primary-040.png		\

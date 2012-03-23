@@ -23,7 +23,7 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_AC_ADAPTER_ICON			"xfpm-ac-adapter"
+#define XFPM_AC_ADAPTOR_ICON			"xfpm-ac-adaptor"
 
 #define XFPM_BATTERY_ICON			"battery"
 #define XFPM_UPS_ICON				"xfpm-ups-100"

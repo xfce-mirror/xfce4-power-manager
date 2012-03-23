@@ -772,7 +772,7 @@ xfpm_info_create (XfpmInfo *info)
     gtk_box_pack_start (GTK_BOX (hbox), info->notebook, TRUE, TRUE, 0);
     gtk_notebook_set_show_tabs (GTK_NOTEBOOK (info->notebook), FALSE);
 
-    /* Show power devices information, AC adapter, batteries */
+    /* Show power devices information, AC adaptor, batteries */
     xfpm_info_power_devices (info);
 
     /* Show CPU wakeups */

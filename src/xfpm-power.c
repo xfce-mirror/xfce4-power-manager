@@ -103,8 +103,8 @@ struct _XfpmPower
     /* last know on-battery state */
     gboolean on_battery;
 
-    /* ac-adapter icon */
-    GtkStatusIcon *adapter_icon;
+    /* ac-adaptor icon */
+    GtkStatusIcon *adaptor_icon;
 
     XfpmBatteryCharge overall_state;
     gboolean          critical_action_done;
@@ -289,7 +289,7 @@ xfpm_power_show_tray_menu (XfpmPower *power,
      **/
     /* TRANSLATOR: Mode here is the power profile (presentation, power save, normal) */
     mi = gtk_image_menu_item_new_with_label (_("Mode"));
-    img = gtk_image_new_from_icon_name (XFPM_AC_ADAPTER_ICON, GTK_ICON_SIZE_MENU);
+    img = gtk_image_new_from_icon_name (XFPM_AC_ADAPTOR_ICON, GTK_ICON_SIZE_MENU);
     gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mi), img);
     gtk_widget_set_sensitive (mi,TRUE);
     gtk_widget_show (mi);
@@ -545,7 +545,8 @@ xfpm_power_add_device (XfpmPower *power, UpDevice *device)
             break;
 
         case UP_DEVICE_KIND_LINE_POWER:
-            g_warning ("Unable to monitor unkown power device: %s", "TODO");
+            g_warning ("Unable to monitor unkown power device: %s",
+                       up_device_get_object_path (device));
             break;
 
         default:
@@ -672,31 +673,31 @@ xfpm_power_device_changed_cb (UpClient *up_client, UpDevice *device, XfpmPower *
 }
 
 static void
-xfpm_power_hide_adapter_icon (XfpmPower *power)
+xfpm_power_hide_adaptor_icon (XfpmPower *power)
 {
-     XFPM_DEBUG ("Hide adaptor icon");
-
-    if ( power->adapter_icon )
+    if ( power->adaptor_icon )
     {
-        g_object_unref (power->adapter_icon);
-        power->adapter_icon = NULL;
+        XFPM_DEBUG ("Hide adaptor icon");
+
+        g_object_unref (power->adaptor_icon);
+        power->adaptor_icon = NULL;
     }
 }
 
 static void
-xfpm_power_show_adapter_icon (XfpmPower *power)
+xfpm_power_show_adaptor_icon (XfpmPower *power)
 {
-    g_return_if_fail (power->adapter_icon == NULL);
+    g_return_if_fail (power->adaptor_icon == NULL);
 
-    power->adapter_icon = gtk_status_icon_new ();
+    power->adaptor_icon = gtk_status_icon_new ();
 
     XFPM_DEBUG ("Showing adaptor icon");
 
-    gtk_status_icon_set_from_icon_name (power->adapter_icon, XFPM_AC_ADAPTER_ICON);
+    gtk_status_icon_set_from_icon_name (power->adaptor_icon, XFPM_AC_ADAPTOR_ICON);
 
-    gtk_status_icon_set_visible (power->adapter_icon, TRUE);
+    gtk_status_icon_set_visible (power->adaptor_icon, TRUE);
 
-    g_signal_connect (power->adapter_icon, "popup-menu",
+    g_signal_connect (power->adaptor_icon, "popup-menu",
                       G_CALLBACK (xfpm_power_show_tray_menu_adaptor), power);
 }
 
@@ -709,27 +710,25 @@ xfpm_power_refresh_adaptor_visible (XfpmPower *power)
                   SHOW_TRAY_ICON_CFG, &show_icon,
                   NULL);
 
-    XFPM_DEBUG_ENUM (show_icon, XFPM_TYPE_SHOW_ICON, "Tray icon configuration: ");
-
     if ( show_icon == SHOW_ICON_ALWAYS )
     {
-
         if (power->batteries == NULL)
         {
-            xfpm_power_show_adapter_icon (power);
-            gtk_status_icon_set_tooltip_text (power->adapter_icon,
+            xfpm_power_show_adaptor_icon (power);
+
+            gtk_status_icon_set_tooltip_text (power->adaptor_icon,
                                               power->on_battery ?
                                               _("Adaptor is offline") :
                                               _("Adaptor is online") );
         }
         else
         {
-            xfpm_power_hide_adapter_icon (power);
+            xfpm_power_hide_adaptor_icon (power);
         }
     }
     else
     {
-        xfpm_power_hide_adapter_icon (power);
+        xfpm_power_hide_adaptor_icon (power);
     }
 }
 
@@ -790,7 +789,7 @@ xfpm_power_init (XfpmPower *power)
 {
     GError *error = NULL;
 
-    power->adapter_icon = NULL;
+    power->adaptor_icon = NULL;
     power->overall_state = XFPM_BATTERY_CHARGE_OK;
     power->critical_action_done = FALSE;
     power->power_mode = XFPM_POWER_MODE_NORMAL;
@@ -860,7 +859,7 @@ xfpm_power_finalize (GObject *object)
     g_slist_foreach (power->batteries, (GFunc) g_object_unref, NULL);
     g_slist_free (power->batteries);
 
-    xfpm_power_hide_adapter_icon (power);
+    xfpm_power_hide_adaptor_icon (power);
 
     G_OBJECT_CLASS (xfpm_power_parent_class)->finalize (object);
 }

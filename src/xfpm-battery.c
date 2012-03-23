@@ -318,8 +318,6 @@ xfpm_battery_refresh_icon (XfpmBattery *battery)
     gboolean is_present;
     gdouble percentage;
 
-    XFPM_DEBUG ("Battery state %d", battery->device_state);
-
     g_snprintf (icon_name, sizeof (icon_name), GTK_STOCK_MISSING_IMAGE);
 
     g_object_get (battery->device,
@@ -618,6 +616,8 @@ xfpm_battery_changed_cb (UpDevice *device, XfpmBattery *battery)
 
     if ( state != battery->device_state )
     {
+        XFPM_DEBUG ("Battery state %d", state);
+
         battery->device_state = state;
         xfpm_battery_refresh_visible (battery);
         xfpm_battery_notify_state (battery);

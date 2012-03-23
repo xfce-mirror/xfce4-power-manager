@@ -4,7 +4,7 @@ EXTRA_DIST =				\
 Datadir = $(datadir)/icons/hicolor/scalable/status
 
 Data_DATA =				\
-	xfpm-ac-adapter.svg		\
+	xfpm-ac-adaptor.svg		\
 	xfpm-primary-000.svg		\
 	xfpm-primary-020.svg		\
 	xfpm-primary-040.svg		\
