@@ -534,7 +534,6 @@ xfpm_power_add_device (XfpmPower *power, UpDevice *device)
         case UP_DEVICE_KIND_KEYBOARD:
         case UP_DEVICE_KIND_PHONE:
             battery = xfpm_battery_new (device);
-            gtk_status_icon_set_visible (battery, FALSE);
 
             g_signal_connect (battery, "popup-menu",
                               G_CALLBACK (xfpm_power_show_tray_menu_battery), power);
