@@ -94,6 +94,9 @@ struct _XfpmPower
     /* UPower client */
     UpClient *up_client;
 
+    /* UPower proxy for async calls */
+    DBusGProxy *up_proxy;
+
     /* XfpmBattery items */
     GSList *batteries;
 
@@ -790,6 +793,7 @@ static void
 xfpm_power_init (XfpmPower *power)
 {
     GError *error = NULL;
+    DBusGConnection *bus;
 
     power->adaptor_icon = NULL;
     power->overall_state = XFPM_BATTERY_CHARGE_OK;
@@ -815,6 +819,20 @@ xfpm_power_init (XfpmPower *power)
         /* notify the user that D-BUS service won't be available */
         g_printerr ("%s: Failed to connect to the D-BUS session bus: %s\n",
                     PACKAGE_NAME, error->message);
+        g_clear_error (&error);
+    }
+
+    bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+    if (bus)
+    {
+        power->up_proxy = dbus_g_proxy_new_for_name (bus,
+                                                     "org.freedesktop.UPower",
+                                                     "/org/freedesktop/UPower",
+                                                     "org.freedesktop.UPower");
+    }
+    else
+    {
+        g_warning ("Couldn't connect to system bus: %s", error->message);
         g_error_free (error);
     }
 
@@ -853,6 +871,9 @@ xfpm_power_finalize (GObject *object)
 
     if (G_LIKELY (power->connection != NULL))
         dbus_g_connection_unref (power->connection);
+
+    if (power->up_proxy)
+        g_object_unref (power->up_proxy);
 
     g_object_unref (power->conf);
     g_object_unref (power->up_client);
@@ -928,6 +949,39 @@ xfpm_power_dbus_get_low_battery (XfpmPower  *power,
     return TRUE;
 }
 
+static void
+xfpm_power_async_upower_cb (DBusGProxy *proxy,
+                            DBusGProxyCall *call,
+                            gpointer user_data)
+{
+    GError *error = NULL;
+
+    if (!dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_INVALID, G_TYPE_INVALID))
+    {
+        xfce_dialog_show_error (NULL, error, _("Failed to suspend the system"));
+        g_error_free (error);
+    }
+}
+
+static gboolean
+xfpm_power_async_upower (XfpmPower *power,
+                         const gchar *method,
+                         GError **error)
+{
+    DBusGProxyCall *call;
+
+    g_return_val_if_fail (power->up_proxy != NULL, FALSE);
+
+    call = dbus_g_proxy_begin_call (power->up_proxy,
+                                    method,
+                                    xfpm_power_async_upower_cb,
+                                    power,
+                                    G_TYPE_INVALID,
+                                    G_TYPE_INVALID);
+
+    return call != NULL;
+}
+
 XfpmPower *
 xfpm_power_get (void)
 {
@@ -956,7 +1010,9 @@ xfpm_power_suspend (XfpmPower *power,
 
     XFPM_DEBUG ("Ask UPower to Suspend");
 
-    return up_client_suspend_sync (power->up_client, NULL, error);
+    /*return up_client_suspend_sync (power->up_client, NULL, error);*/
+
+    return xfpm_power_async_upower (power, "Suspend", error);
 }
 
 gboolean
@@ -965,12 +1021,16 @@ xfpm_power_hibernate (XfpmPower *power,
                       GError **error)
 {
 
+    g_return_val_if_fail (power->up_proxy != NULL, FALSE);
+
     if (!force && xfpm_power_check_inhibited (power, _("Hibernate")))
         return TRUE;
 
     XFPM_DEBUG ("Ask UPower to Hibernate");
 
-    return up_client_hibernate_sync (power->up_client, NULL, error);
+    /*return up_client_hibernate_sync (power->up_client, NULL, error);*/
+
+    return xfpm_power_async_upower (power, "Hibernate", error);
 }
 
 gboolean
@@ -981,7 +1041,7 @@ xfpm_power_can_suspend (XfpmPower  *power,
     if (!up_client_get_properties_sync (power->up_client, NULL, error))
         return FALSE;
 
-    *can_suspend = up_client_get_can_suspend (power->up_client);
+    *can_suspend = up_client_get_can_suspend (power->up_client) && power->up_proxy;
     return TRUE;
 }
 
@@ -993,7 +1053,7 @@ xfpm_power_can_hibernate (XfpmPower  *power,
     if (!up_client_get_properties_sync (power->up_client, NULL, error))
         return FALSE;
 
-    *can_hibernate = up_client_get_can_hibernate (power->up_client);
+    *can_hibernate = up_client_get_can_hibernate (power->up_client) && power->up_proxy;
     return TRUE;
 }
 
