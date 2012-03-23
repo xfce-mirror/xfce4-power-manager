@@ -958,7 +958,7 @@ xfpm_power_async_upower_cb (DBusGProxy *proxy,
 
     if (!dbus_g_proxy_end_call (proxy, call, &error, G_TYPE_INVALID, G_TYPE_INVALID))
     {
-        xfce_dialog_show_error (NULL, error, _("Failed to suspend the system"));
+        g_warning ("Failed to suspend the system: %s", error->message);
         g_error_free (error);
     }
 }
@@ -976,6 +976,7 @@ xfpm_power_async_upower (XfpmPower *power,
                                     method,
                                     xfpm_power_async_upower_cb,
                                     power,
+                                    NULL,
                                     G_TYPE_INVALID,
                                     G_TYPE_INVALID);
 
