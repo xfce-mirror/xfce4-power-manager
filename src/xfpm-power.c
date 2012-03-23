@@ -84,7 +84,7 @@ struct _XfpmPowerClass
 struct _XfpmPower
 {
     GObjectClass __parent__;
-    
+
     XfpmXfconf  *conf;
     XfpmInhibit	*inhibit;
     XfpmNotify  *notify;
@@ -95,7 +95,7 @@ struct _XfpmPower
     UpClient *up_client;
 
     /* XfpmBattery items */
-    GSList *devices;
+    GSList *batteries;
 
     /* last known lid state */
     gboolean lid_closed;
@@ -384,7 +384,7 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
 
     max_charge = XFPM_BATTERY_CHARGE_UNKNOWN;
 
-    for (li = power->devices; li != NULL; li = li->next)
+    for (li = power->batteries; li != NULL; li = li->next)
     {
         battery = XFPM_BATTERY (li->data);
         kind = xfpm_battery_get_kind (battery);
@@ -535,12 +535,13 @@ xfpm_power_add_device (XfpmPower *power, UpDevice *device)
         case UP_DEVICE_KIND_PHONE:
             battery = xfpm_battery_new (device);
             gtk_status_icon_set_visible (battery, FALSE);
+
             g_signal_connect (battery, "popup-menu",
                               G_CALLBACK (xfpm_power_show_tray_menu_battery), power);
             g_signal_connect (battery, "battery-charge-changed",
                               G_CALLBACK (xfpm_power_battery_charge_changed_cb), power);
 
-            power->devices = g_slist_prepend (power->devices, device);
+            power->batteries = g_slist_prepend (power->batteries, battery);
 
             break;
 
@@ -588,8 +589,21 @@ xfpm_power_get_power_devices (XfpmPower *power)
 static void
 xfpm_power_remove_device (XfpmPower *power, UpDevice *device)
 {
-    power->devices = g_slist_remove (power->devices, device);
-    xfpm_power_refresh_adaptor_visible (power);
+    GSList *li;
+
+    for (li = power->batteries; li != NULL; li = li->next)
+    {
+        if (xfpm_battery_get_device (XFPM_BATTERY (li->data)) == device)
+        {
+            power->batteries = g_slist_delete_link (power->batteries, li);
+
+            g_object_unref (G_OBJECT (li->data));
+
+            xfpm_power_refresh_adaptor_visible (power);
+
+            break;
+        }
+    }
 }
 
 static void
@@ -625,7 +639,7 @@ xfpm_power_changed_cb (UpClient *up_client, XfpmPower *power)
                        0, on_battery);
 
         /* tell all batteries the ac-power changed */
-        for (li = power->devices; li != NULL; li = li->next)
+        for (li = power->batteries; li != NULL; li = li->next)
         {
             g_object_set (G_OBJECT (li->data),
                           "ac-online", !on_battery,
@@ -701,7 +715,7 @@ xfpm_power_refresh_adaptor_visible (XfpmPower *power)
     if ( show_icon == SHOW_ICON_ALWAYS )
     {
 
-        if (power->devices == NULL)
+        if (power->batteries == NULL)
         {
             xfpm_power_show_adapter_icon (power);
             gtk_status_icon_set_tooltip_text (power->adapter_icon,
@@ -844,6 +858,9 @@ xfpm_power_finalize (GObject *object)
     g_object_unref (power->up_client);
     g_object_unref (power->inhibit);
 
+    g_slist_foreach (power->batteries, (GFunc) g_object_unref, NULL);
+    g_slist_free (power->batteries);
+
     xfpm_power_hide_adapter_icon (power);
 
     G_OBJECT_CLASS (xfpm_power_parent_class)->finalize (object);
@@ -855,7 +872,7 @@ xfpm_power_check_inhibited (XfpmPower *power,
 {
     if (!xfpm_inhibit_get_inhibited (power->inhibit))
         return FALSE;
-    
+
     return !xfce_dialog_confirm (NULL, GTK_STOCK_YES, label,
                                  _("An application is currently disabling the automatic sleep,"
                                    " doing this action now may damage the working state of this application,"
@@ -936,7 +953,7 @@ xfpm_power_suspend (XfpmPower *power,
 {
     if (!force && xfpm_power_check_inhibited (power, _("Suspend")))
         return TRUE;
-    
+
     return up_client_suspend_sync (power->up_client, NULL, error);
 }
 
@@ -945,10 +962,10 @@ xfpm_power_hibernate (XfpmPower *power,
                       gboolean force,
                       GError **error)
 {
-    
+
     if (!force && xfpm_power_check_inhibited (power, _("Hibernate")))
         return TRUE;
-    
+
     return up_client_hibernate_sync (power->up_client, NULL, error);
 }
 

@@ -51,6 +51,8 @@ const gchar                *xfpm_battery_get_name        (XfpmBattery *battery);
 
 gchar                      *xfpm_battery_get_time_left   (XfpmBattery *battery);
 
+UpDevice                   *xfpm_battery_get_device      (XfpmBattery *battery);
+
 G_END_DECLS
 
 #endif /* __XFPM_BATTERY_H */

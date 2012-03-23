@@ -886,3 +886,10 @@ xfpm_battery_get_time_left (XfpmBattery *battery)
 
     return xfpm_battery_get_time_string (time_to_empty);
 }
+
+UpDevice *
+xfpm_battery_get_device (XfpmBattery *battery)
+{
+    g_return_val_if_fail (XFPM_IS_BATTERY (battery), NULL);
+    return battery->device;
+}
