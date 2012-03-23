@@ -524,7 +524,7 @@ xfpm_power_add_device (XfpmPower *power, UpDevice *device)
 
     g_object_get (device, "kind", &kind, NULL);
 
-    XFPM_DEBUG (" device added");
+    XFPM_DEBUG ("Device added %s", up_device_get_object_path (device));
 
     switch (kind)
     {
@@ -590,6 +590,8 @@ static void
 xfpm_power_remove_device (XfpmPower *power, UpDevice *device)
 {
     GSList *li;
+
+    XFPM_DEBUG ("Device removed %s", up_device_get_object_path (device));
 
     for (li = power->batteries; li != NULL; li = li->next)
     {
@@ -952,6 +954,8 @@ xfpm_power_suspend (XfpmPower *power,
     if (!force && xfpm_power_check_inhibited (power, _("Suspend")))
         return TRUE;
 
+    XFPM_DEBUG ("Ask UPower to Suspend");
+
     return up_client_suspend_sync (power->up_client, NULL, error);
 }
 
@@ -963,6 +967,8 @@ xfpm_power_hibernate (XfpmPower *power,
 
     if (!force && xfpm_power_check_inhibited (power, _("Hibernate")))
         return TRUE;
+
+    XFPM_DEBUG ("Ask UPower to Hibernate");
 
     return up_client_hibernate_sync (power->up_client, NULL, error);
 }
