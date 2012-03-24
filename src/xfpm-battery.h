@@ -39,6 +39,8 @@ typedef struct _XfpmBattery      XfpmBattery;
 #define XFPM_IS_BATTERY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), XFPM_TYPE_BATTERY))
 #define XFPM_BATTERY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), XFPM_TYPE_BATTERY, XfpmBatteryClass))
 
+#define KIND_IS_BATTERY_OR_UPS(kind) ((kind) == UP_DEVICE_KIND_BATTERY || (kind) == UP_DEVICE_KIND_UPS)
+
 GType                       xfpm_battery_get_type        (void) G_GNUC_CONST;
 
 GtkStatusIcon              *xfpm_battery_new             (UpDevice    *device);

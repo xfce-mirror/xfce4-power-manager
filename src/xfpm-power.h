@@ -60,6 +60,10 @@ gboolean                xfpm_power_get_on_battery       (XfpmPower  *power);
 
 gboolean                xfpm_power_get_low_battery      (XfpmPower  *power);
 
+gboolean                xfpm_power_has_battery          (XfpmPower  *power);
+
+gboolean                xfpm_power_has_lid              (XfpmPower  *power);
+
 XfpmPowerMode           xfpm_power_get_mode             (XfpmPower *power);
 
 G_END_DECLS

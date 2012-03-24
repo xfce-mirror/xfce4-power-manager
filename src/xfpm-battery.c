@@ -45,8 +45,6 @@
 #include "xfpm-power-common.h"
 #include "xfpm-common.h"
 
-#define KIND_IS_BATTERY_OR_UPS(kind) ((kind) == UP_DEVICE_KIND_BATTERY || (kind) == UP_DEVICE_KIND_UPS)
-
 
 
 static void xfpm_battery_finalize   (GObject *object);

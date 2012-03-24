@@ -1072,6 +1072,31 @@ xfpm_power_get_low_battery (XfpmPower *power)
     return FALSE /*TODO */;
 }
 
+gboolean
+xfpm_power_has_battery (XfpmPower *power)
+{
+    GSList *li;
+    UpDeviceKind kind;
+
+    g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
+
+    for (li = power->batteries; li != NULL; li = li->next)
+    {
+        kind = xfpm_battery_get_kind (XFPM_BATTERY (li->data));
+        if (KIND_IS_BATTERY_OR_UPS (kind))
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+gboolean
+xfpm_power_has_lid (XfpmPower *power)
+{
+    g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
+    return up_client_get_lid_is_present (power->up_client);
+}
+
 XfpmPowerMode
 xfpm_power_get_mode (XfpmPower *power)
 {
