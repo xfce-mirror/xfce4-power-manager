@@ -354,7 +354,7 @@ xfpm_info_add_device (XfpmInfo *info, UpDevice *device)
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter,
                         XFPM_DEVICE_INFO_NAME, _("Device"),
-                        XFPM_DEVICE_INFO_VALUE, "TODO",
+                        XFPM_DEVICE_INFO_VALUE, up_device_get_object_path (device),
                         -1);
 
     /* Kind */
