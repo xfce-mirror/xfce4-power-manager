@@ -541,6 +541,8 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
     guint8 mapped_buttons;
     gboolean can_suspend;
     gboolean can_hibernate;
+    gboolean auth_suspend;
+    gboolean auth_hibernate;
     gboolean has_sleep_button;
     gboolean has_hibernate_button;
     gboolean has_power_button;
@@ -553,10 +555,13 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
 
     hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
-    if (!xfpm_power_can_suspend (manager->priv->power, &can_suspend, NULL))
-        can_suspend = FALSE;
-    if (!xfpm_power_can_hibernate (manager->priv->power, &can_hibernate, NULL))
-        can_hibernate = FALSE;
+    can_suspend = xfpm_power_can_suspend (manager->priv->power, &auth_suspend, NULL);
+    if (!can_suspend)
+        auth_suspend = FALSE;
+
+    can_hibernate = xfpm_power_can_hibernate (manager->priv->power, &auth_hibernate, NULL);
+    if (!can_hibernate)
+        auth_hibernate = FALSE;
 
     /* TODO */
     //if (!xfpm_sm_client_can_shutdown (manager->priv->sm_client, &can_shutdown, NULL))
@@ -584,6 +589,8 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
     g_hash_table_insert (hash, g_strdup ("hibernate-button"), g_strdup (xfpm_bool_to_string (has_hibernate_button)));
     g_hash_table_insert (hash, g_strdup ("can-suspend"), g_strdup (xfpm_bool_to_string (can_suspend)));
     g_hash_table_insert (hash, g_strdup ("can-hibernate"), g_strdup (xfpm_bool_to_string (can_hibernate)));
+    g_hash_table_insert (hash, g_strdup ("auth-suspend"), g_strdup (xfpm_bool_to_string (auth_suspend)));
+    g_hash_table_insert (hash, g_strdup ("auth-hibernate"), g_strdup (xfpm_bool_to_string (auth_hibernate)));
     g_hash_table_insert (hash, g_strdup ("can-shutdown"), g_strdup (xfpm_bool_to_string (can_shutdown)));
 
     g_hash_table_insert (hash, g_strdup ("has-battery"), g_strdup (xfpm_bool_to_string (has_battery)));
