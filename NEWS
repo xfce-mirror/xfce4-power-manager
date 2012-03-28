@@ -1,3 +1,26 @@
+1.0.11
+======
+- Solaris-specific code for determining the start time of a process.
+- Don't attach to the status icon if libnotify >= 0.7.
+- Corrected check for Solaris macros
+- Fix default spin down toggle value.
+- Fix a bunch of set but unused variables.
+- Support NetworkManager 0.9
+- Fix configure.ac.in with openbsd.
+- Fix libnotify detection of notify_notification_attach_to_status_icon.
+- Fix Broken empty battery icon.
+- Change backlight property type to long.
+- Only dim brightness if the current level is brighter.
+- Refresh adaptor icon when battery device removed.
+- Optimize icons.
+- Translation updates (ar, bg, ca, cs, da, de, es, et, eu, fi, fr, hr,
+  hu, id, is, it, ja, kk, ko, lt, nl, nn, pl, pt, pt_BR, ru, sk, sv,
+  te, tr, uk, zh_CN, zh_TW).
+
+
+[...]
+
+
 0.8.4.1
 =======
 - Because on some systems we might not have the brightness keys mapped.
