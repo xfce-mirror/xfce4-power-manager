@@ -26,12 +26,11 @@ DISTCLEANFILES = \
 	intltool-merge \
 	intltool-update
 
+distuninstallcheck_listfiles = 						\ 
+	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
+
 distclean-local:
 	rm -rf *.cache
-
-rpm: dist
-	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
-	@rm -f $(PACKAGE)-$(VERSION).tar.gz
 
 html: Makefile
 	make -C doc html
