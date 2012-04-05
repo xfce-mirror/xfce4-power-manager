@@ -13,11 +13,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager.master\n"
-"Report-Msgid-Bugs-To: xfce4-users-kr-i18n <xfce4-users-kr-i18n@lists.sourceforge.net>\n"
+"Report-Msgid-Bugs-To: xfce-i18n <xfce-i18n@xfce.org>\n"
 "POT-Creation-Date: 2012-02-27 17:03+0000\n"
 "PO-Revision-Date: 2011-09-13 20:21+0900\n"
 "Last-Translator: Seong-ho, Cho <darkcircle.0426@gmail.com>\n"
-"Language-Team: xfce4-users-kr-i18n <xfce4-users-kr-i18n@lists.sourceforge.net>\n"
+"Language-Team: xfce-i18n <xfce-i18n@xfce.org>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -212,7 +212,7 @@ msgstr "최대 절전과 절전 동작을 지원하지 않습니다"
 #: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:992
 #: ../settings/xfpm-settings.c:1472
 msgid "Hibernate and suspend operations not permitted"
-msgstr "최대 절전과 절전 동작이 허용되지 않았습니다"
+msgstr "최대 절전과 절전 동작을 허용하지 않습니다"
 
 #: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1217
 #: ../src/xfpm-power.c:805
@@ -230,7 +230,7 @@ msgstr "화면 잠금"
 
 #: ../settings/xfpm-settings.c:957 ../settings/xfpm-settings.c:1107
 msgid "Spinning down hard disks permission denied"
-msgstr "하드 디스크의 회전을 중지하는 동작에 대한 권한이 거부되었습니다"
+msgstr "하드 디스크의 회전을 중지하는 동작에 대한 권한을 거부했습니다"
 
 #: ../settings/xfpm-settings.c:1147
 msgid "Always show icon"
@@ -262,7 +262,7 @@ msgstr "절전 동작을 지원하지 않습니다"
 
 #: ../settings/xfpm-settings.c:1382
 msgid "Suspend operation not permitted"
-msgstr "절전 동작이 수행되지 않았습니다"
+msgstr "절전 동작을 수행하지 않았습니다"
 
 #: ../settings/xfpm-settings.c:1388
 msgid "Hibernate operation not supported"
@@ -270,7 +270,7 @@ msgstr "최대 절전 동작을 지원하지 않습니다"
 
 #: ../settings/xfpm-settings.c:1393
 msgid "Hibernate operation not permitted"
-msgstr "최대 절전 동작이 수행되지 않았습니다"
+msgstr "최대 절전 동작을 수행하지 않았습니다"
 
 #: ../settings/xfpm-settings.c:1440
 msgid "When all the power sources of the computer reach this charge level"
@@ -352,7 +352,7 @@ msgid ""
 "now may damage the working state of this application, are you sure you want "
 "to hibernate the system?"
 msgstr ""
-"프로그램이 현재 자동으로 일시중지 상태로 진입하는 것이 비활성화되었습니다. 이 동"
+"프로그램이 현재 자동으로 일시중지 상태로의 진입을 비활성화했습니다. 이 동"
 "작을 지금 수행하면 이 프로그램의 작업 상태에 치명적인 영향을 줄 수도 있습니"
 "다. 정말로 시스템을 최대 절전 하시렵니까?"
 
@@ -362,7 +362,7 @@ msgstr "나가기"
 
 #: ../src/xfpm-power.c:429
 msgid "All running instances of the power manager will exit"
-msgstr "실행되고 있는 모든 전원 관리자의 인스턴스를 끝낼 것입니다"
+msgstr "실행하고 있는 모든 전원 관리자의 인스턴스를 끝낼 것입니다"
 
 #: ../src/xfpm-power.c:431
 msgid "Quit the power manager?"
@@ -429,7 +429,7 @@ msgstr "어댑터가 끊어졌습니다"
 #: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
 #, c-format
 msgid "Adaptor is online"
-msgstr "어댑터가 연결되었습니다"
+msgstr "어댑터를 연결했습니다"
 
 #: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
 #: ../src/xfpm-power.c:1676
@@ -440,7 +440,7 @@ msgstr "권한이 거부됨"
 #: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
-msgstr "절전이 지원되지 않음"
+msgstr "절전을 지원하지 않음"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 msgid "Battery"
@@ -535,7 +535,7 @@ msgstr[0] "분\t"
 #: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "%s이(가) 완전히 충전되었습니다"
+msgstr "%s을(를) 완전히 충전했습니다"
 
 #: ../src/xfpm-battery.c:212 ../src/xfpm-battery.c:263
 #, c-format
@@ -588,8 +588,8 @@ msgid ""
 "Provides %s runtime"
 msgstr ""
 "%s\n"
-"%s이(가) 완전히 충전되었습니다 (%i%%).\n"
-"실행 시간 %s이(가) 제공됩니다"
+"%s을(를) 완전히 충전했습니다 (%i%%).\n"
+"실행 시간 %s을(를) 제공합니다"
 
 #: ../src/xfpm-battery.c:424
 #, c-format
@@ -598,7 +598,7 @@ msgid ""
 "Your %s is fully charged (%i%%)."
 msgstr ""
 "%s\n"
-"%s이(가) 완전히 충전되었습니다 (%i%%)."
+"%s을(를) 완전히 충전했습니다 (%i%%)."
 
 #: ../src/xfpm-battery.c:435
 #, c-format
