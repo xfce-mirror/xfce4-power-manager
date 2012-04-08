@@ -1,22 +1,25 @@
 # Translation of xfce4-power-manager to Greek
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Evaggelos Balaskas <ebalaskas@ebalaskas.gr> , 2008, 2009.
+# Efstathios Iosifidis <iosifidis@opensuse.org>, 2012.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager git\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-16 11:03+0000\n"
-"PO-Revision-Date: 2010-03-26 00:12+0200\n"
-"Last-Translator: Evaggelos Balaskas <ebalaskas@ebalaskas.gr>\n"
-"Language-Team: Greek <nls@tux.hellug.gr>\n"
+"POT-Creation-Date: 2012-04-08 19:36+0000\n"
+"PO-Revision-Date: 2012-04-08 22:58+0300\n"
+"Last-Translator: Efstathios Iosifidis <iosifidis@opensuse.org>\n"
+"Language-Team: Ελληνικά, Σύγχρονα <opensuse-translation-el@opensuse.org>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Country: GREECE\n"
 "X-Generator: Lokalize 0.2\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 "X-Poedit-Language: Greek\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -50,9 +53,9 @@ msgstr "Θεωρείστε τον υπολογιστή σε λίγο ρεύμα 
 
 #. Hibernate menu option
 #: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:817
-#: ../settings/xfpm-settings.c:885 ../settings/xfpm-settings.c:1032
-#: ../settings/xfpm-settings.c:1206 ../settings/xfpm-settings.c:1263
-#: ../settings/xfpm-settings.c:1315 ../src/xfpm-power.c:484
+#: ../settings/xfpm-settings.c:885 ../settings/xfpm-settings.c:1034
+#: ../settings/xfpm-settings.c:1211 ../settings/xfpm-settings.c:1268
+#: ../settings/xfpm-settings.c:1320 ../src/xfpm-power.c:484
 #: ../src/xfpm-power.c:779
 msgid "Hibernate"
 msgstr "Αδρανοποίηση"
@@ -74,9 +77,9 @@ msgid "Monitor power management control"
 msgstr "Παρακολούθηση ελέγχου διαχείρισης ρεύματος"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:806
-#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1021
-#: ../settings/xfpm-settings.c:1195 ../settings/xfpm-settings.c:1252
-#: ../settings/xfpm-settings.c:1304
+#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1023
+#: ../settings/xfpm-settings.c:1200 ../settings/xfpm-settings.c:1257
+#: ../settings/xfpm-settings.c:1309
 msgid "Nothing"
 msgstr "Τίποτα"
 
@@ -98,7 +101,8 @@ msgstr "Κλείσιμο υπολογιστή εάν είναι ανενεργό
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Μείωση της φωτεινότητας της οθόνης όταν ο υπολογιστής είναι ανενεργός για:"
+msgstr ""
+"Μείωση της φωτεινότητας της οθόνης όταν ο υπολογιστής είναι ανενεργός για:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
@@ -122,9 +126,9 @@ msgstr "Σε αναμονή"
 
 #. Suspend menu option
 #: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:811
-#: ../settings/xfpm-settings.c:879 ../settings/xfpm-settings.c:1026
-#: ../settings/xfpm-settings.c:1200 ../settings/xfpm-settings.c:1257
-#: ../settings/xfpm-settings.c:1309 ../src/xfpm-power.c:499
+#: ../settings/xfpm-settings.c:879 ../settings/xfpm-settings.c:1028
+#: ../settings/xfpm-settings.c:1205 ../settings/xfpm-settings.c:1262
+#: ../settings/xfpm-settings.c:1314 ../src/xfpm-power.c:499
 #: ../src/xfpm-power.c:792
 msgid "Suspend"
 msgstr "Αναστολή"
@@ -158,7 +162,7 @@ msgid "When sleep button is pressed:"
 msgstr "Όταν το κουμπί κλεισίματος πατηθεί:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:410
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
 msgid "Xfce Power Manager"
 msgstr "Διαχειριστής ρεύματος xfce"
 
@@ -197,91 +201,97 @@ msgstr "ώρες"
 msgid "Seconds"
 msgstr "Δευτερόλεπτα"
 
-#: ../settings/xfpm-settings.c:789 ../settings/xfpm-settings.c:985
-#: ../settings/xfpm-settings.c:1462
+#: ../settings/xfpm-settings.c:789 ../settings/xfpm-settings.c:987
+#: ../settings/xfpm-settings.c:1467
 msgid "Hibernate and suspend operations not supported"
 msgstr "Οι λειτουργίες αδρανοποίηση και αναστολή δεν υποστηρίζονται"
 
-#: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:990
-#: ../settings/xfpm-settings.c:1467
+#: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:992
+#: ../settings/xfpm-settings.c:1472
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Οι λειτουργίες αδρανοποίηση και αναστολή δεν επιτρέπονται"
 
-#: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1212
+#: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1217
 #: ../src/xfpm-power.c:805
 msgid "Shutdown"
 msgstr "Τερματισμός"
 
-#: ../settings/xfpm-settings.c:827 ../settings/xfpm-settings.c:1216
-#: ../settings/xfpm-settings.c:1267 ../settings/xfpm-settings.c:1319
+#: ../settings/xfpm-settings.c:827 ../settings/xfpm-settings.c:1221
+#: ../settings/xfpm-settings.c:1272 ../settings/xfpm-settings.c:1324
 msgid "Ask"
 msgstr "Ερώτηση"
 
-#: ../settings/xfpm-settings.c:889 ../settings/xfpm-settings.c:1036
+#: ../settings/xfpm-settings.c:889 ../settings/xfpm-settings.c:1038
 msgid "Lock screen"
 msgstr "Κλείδωμα οθόνης"
 
-#: ../settings/xfpm-settings.c:955 ../settings/xfpm-settings.c:1102
+#: ../settings/xfpm-settings.c:957 ../settings/xfpm-settings.c:1107
 msgid "Spinning down hard disks permission denied"
 msgstr "Άρνηση άδειας μείωσης αυτοστροφορμής σκληρών δίσκων"
 
-#: ../settings/xfpm-settings.c:1142
+#: ../settings/xfpm-settings.c:1147
 msgid "Always show icon"
 msgstr "Να εμφανίζεται πάντα το εικονίδιο"
 
-#: ../settings/xfpm-settings.c:1145
+#: ../settings/xfpm-settings.c:1150
 msgid "When battery is present"
 msgstr "Όταν η μπαταρία είναι παρούσα"
 
-#: ../settings/xfpm-settings.c:1148
+#: ../settings/xfpm-settings.c:1153
 msgid "When battery is charging or discharging"
 msgstr "Όταν η μπαταρία φορτίζει ή αποφορτίζει"
 
-#: ../settings/xfpm-settings.c:1151
+#: ../settings/xfpm-settings.c:1156
 msgid "Never show icon"
 msgstr "Να μην εμφανίζεται εικονίδιο"
 
-#: ../settings/xfpm-settings.c:1177
-msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr "Απενεργοποίηση των σημάτων διαχείρισης ρεύματος της οθόνης (DPMS), π.χ. καμία προσπάθεια απενεργοποίησης ή κλεισίματος της οθόνης."
+#: ../settings/xfpm-settings.c:1182
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr ""
+"Απενεργοποίηση των σημάτων διαχείρισης ρεύματος της οθόνης (DPMS), π.χ. "
+"καμία προσπάθεια απενεργοποίησης ή κλεισίματος της οθόνης."
 
-#: ../settings/xfpm-settings.c:1371
+#: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
 msgstr "Η λειτουργία αναστολής  δεν υποστηρίζεται"
 
-#: ../settings/xfpm-settings.c:1377
+#: ../settings/xfpm-settings.c:1382
 msgid "Suspend operation not permitted"
 msgstr "Δεν επιτρέπεται η λειτουργία αναστολής"
 
-#: ../settings/xfpm-settings.c:1383
+#: ../settings/xfpm-settings.c:1388
 msgid "Hibernate operation not supported"
 msgstr "Η λειτουργία αδρανοποίησης  δεν υποστηρίζεται"
 
-#: ../settings/xfpm-settings.c:1388
+#: ../settings/xfpm-settings.c:1393
 msgid "Hibernate operation not permitted"
 msgstr "Δεν επιτρέπεται η λειτουργία αδρανοποίησης"
 
-#: ../settings/xfpm-settings.c:1435
+#: ../settings/xfpm-settings.c:1440
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Όταν όλες οι πηγές ρεύματος του υπολογιστή σας φτάσουν σε αυτό το ποσοστό φόρτισης"
+msgstr ""
+"Όταν όλες οι πηγές ρεύματος του υπολογιστή σας φτάσουν σε αυτό το ποσοστό "
+"φόρτισης"
 
-#: ../settings/xfpm-settings.c:1538 ../settings/xfpm-settings.c:1543
+#: ../settings/xfpm-settings.c:1543 ../settings/xfpm-settings.c:1548
 msgid "General"
 msgstr "Γενικά"
 
-#: ../settings/xfpm-settings.c:1552 ../settings/xfpm-settings.c:1557
+#: ../settings/xfpm-settings.c:1557 ../settings/xfpm-settings.c:1562
 msgid "On AC"
 msgstr "Σε ρεύμα"
 
-#: ../settings/xfpm-settings.c:1567 ../settings/xfpm-settings.c:1572
+#: ../settings/xfpm-settings.c:1572 ../settings/xfpm-settings.c:1577
 msgid "On Battery"
 msgstr "Σε μπαταρία"
 
-#: ../settings/xfpm-settings.c:1581 ../settings/xfpm-settings.c:1586
+#: ../settings/xfpm-settings.c:1586 ../settings/xfpm-settings.c:1591
 msgid "Extended"
 msgstr "Εκτεταμένες"
 
-#: ../settings/xfpm-settings.c:1654
+#: ../settings/xfpm-settings.c:1659
 msgid "Check your power manager installation"
 msgstr "Ελέγξετε την εγκατάσταση του διαχειριστή ρεύματος σας"
 
@@ -293,7 +303,7 @@ msgstr "Διαχειριστής ρυθμίσεων υποδοχής"
 msgid "SOCKET ID"
 msgstr "Ταυτότητα υποδοχής"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:286
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
 #: ../src/xfpm-power-info.c:948
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -301,13 +311,15 @@ msgstr "Πληκτρολόγησε '%s --help' για την χρήση."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Αποτυχία φόρτωσης των ρυθμίσεων του διαχειριστή ρεύματος, χρήση των προκαθορισμένων"
+msgstr ""
+"Αποτυχία φόρτωσης των ρυθμίσεων του διαχειριστή ρεύματος, χρήση των "
+"προκαθορισμένων"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Αδυναμία σύνδεσης με τον διαχειριστή ρεύματος xfce"
 
-#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:326
+#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Ο διαχειριστής ρεύματος xfce δεν εκτελείται"
@@ -318,12 +330,13 @@ msgstr "Εκτέλεση"
 
 #: ../settings/xfpm-settings-main.c:196
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Ο διαχειριστής ρεύματος xfce δεν εκτελείται, θέλετε να τον εκκινήσετε τώρα;"
+msgstr ""
+"Ο διαχειριστής ρεύματος xfce δεν εκτελείται, θέλετε να τον εκκινήσετε τώρα;"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:345 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-battery.c:349 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Διαχειριστής ρεύματος"
 
@@ -338,8 +351,14 @@ msgstr ""
 "Stavros Giannouris <stavrosg@hellug.gr>"
 
 #: ../src/xfpm-power.c:330
-msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
-msgstr "Μία εφαρμογή για την ώρα έχει απενεργοποιήσει το αυτόματο κλείσιμο, με αυτή την ενέργεια τώρα μπορεί να καταστρέψετε την κατάσταση που λειτουργεί αυτή η εφαρμογή, είστε σίγουροι ότι θέλετε να απενεργοποιήσετε το σύστημα;"
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
+msgstr ""
+"Μία εφαρμογή για την ώρα έχει απενεργοποιήσει το αυτόματο κλείσιμο, με αυτή "
+"την ενέργεια τώρα μπορεί να καταστρέψετε την κατάσταση που λειτουργεί αυτή η "
+"εφαρμογή, είστε σίγουροι ότι θέλετε να απενεργοποιήσετε το σύστημα;"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -347,7 +366,8 @@ msgstr "Τερματισμός"
 
 #: ../src/xfpm-power.c:429
 msgid "All running instances of the power manager will exit"
-msgstr "Όλα τα εκτελούμενα στιγμιότυπα του διαχειριστή ρεύματος θα τερματιστούν"
+msgstr ""
+"Όλα τα εκτελούμενα στιγμιότυπα του διαχειριστή ρεύματος θα τερματιστούν"
 
 #: ../src/xfpm-power.c:431
 msgid "Quit the power manager?"
@@ -361,8 +381,7 @@ msgstr "Πληροφορίες ενέργειας"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save,
-#. normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "Κατάσταση λειτουργίας"
@@ -391,7 +410,9 @@ msgstr "Τερματισμός συστήματος"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Το σύστημα λειτουργεί σε χαμηλό ρεύμα. Αποθηκεύστε την δουλειά σας για να αποφύγετε την απώλεια δεδομένων."
+msgstr ""
+"Το σύστημα λειτουργεί σε χαμηλό ρεύμα. Αποθηκεύστε την δουλειά σας για να "
+"αποφύγετε την απώλεια δεδομένων."
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -406,22 +427,22 @@ msgstr ""
 "Το επίπεδο της %s σας είναι χαμηλό.\n"
 "Εκτιμώμενος απομένοντας χρόνος είναι %s."
 
-#: ../src/xfpm-power.c:1162 ../src/xfpm-power.c:1167
+#: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
 msgstr "Ο μετασχηματιστής ρεύματος δεν είναι συνδεδεμένος"
 
-#: ../src/xfpm-power.c:1163 ../src/xfpm-power.c:1168 ../src/xfpm-battery.c:404
+#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
 #, c-format
 msgid "Adaptor is online"
 msgstr "Ο μετασχηματιστής ρεύματος είναι συνδεδεμένος."
 
-#: ../src/xfpm-power.c:1621 ../src/xfpm-power.c:1642 ../src/xfpm-power.c:1657
-#: ../src/xfpm-power.c:1680
+#: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
+#: ../src/xfpm-power.c:1676
 #, c-format
 msgid "Permission denied"
 msgstr "Απαγορεύεται η πρόσβαση"
 
-#: ../src/xfpm-power.c:1665 ../src/xfpm-power.c:1688
+#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
 msgstr "Η αναστολή δεν υποστηρίζεται"
@@ -430,7 +451,7 @@ msgstr "Η αναστολή δεν υποστηρίζεται"
 msgid "Battery"
 msgstr "Μπαταρία"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:820
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
 msgid "UPS"
 msgstr "UPS"
 
@@ -455,7 +476,7 @@ msgid "Phone"
 msgstr "Τηλέφωνο"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:838
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
 msgid "Unknown"
 msgstr "Άγνωστο"
 
@@ -530,6 +551,15 @@ msgstr "Η %s σας έχει φορτιστεί πλήρως"
 msgid "Your %s is charging"
 msgstr "Η %s σας φορτίζει"
 
+#: ../src/xfpm-battery.c:222
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"%s until is fully charged."
+msgstr ""
+"%s (%i%%)\n"
+"%s μέχρι την πλήρη φόρτιση."
+
 #: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
 #, c-format
 msgid "Your %s is discharging"
@@ -540,17 +570,26 @@ msgstr "Η %s σας αποφορτίζει"
 msgid "System is running on %s power"
 msgstr "Το σύστημα τρέχει σε %s"
 
+#: ../src/xfpm-battery.c:242
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"Estimated time left is %s."
+msgstr ""
+"%s (%i%%)\n"
+"Εκτιμώμενος εναπομείναντας χρόνος είναι %s."
+
 #: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
 msgid "Your %s is empty"
 msgstr "Η %s σας είναι άδεια"
 
-#: ../src/xfpm-battery.c:404
+#: ../src/xfpm-battery.c:408
 #, c-format
 msgid "System is running on battery power"
 msgstr "Το σύστημα τρέχει σε χαμηλή μπαταρία"
 
-#: ../src/xfpm-battery.c:411
+#: ../src/xfpm-battery.c:415
 #, c-format
 msgid ""
 "%s\n"
@@ -561,7 +600,7 @@ msgstr ""
 "Η %s σας είναι πλήρως φορτισμένη (%i%%).\n"
 "Παρέχοντας %s λειτουργία"
 
-#: ../src/xfpm-battery.c:420
+#: ../src/xfpm-battery.c:424
 #, c-format
 msgid ""
 "%s\n"
@@ -570,7 +609,7 @@ msgstr ""
 "%s\n"
 "Η %s σας είναι πλήρως φορτισμένη (%i%%)."
 
-#: ../src/xfpm-battery.c:431
+#: ../src/xfpm-battery.c:435
 #, c-format
 msgid ""
 "%s\n"
@@ -581,7 +620,7 @@ msgstr ""
 "Η %s σας φορτίζει (%i%%)\n"
 "%s μέχρι την πλήρη φόρτιση."
 
-#: ../src/xfpm-battery.c:440
+#: ../src/xfpm-battery.c:444
 #, c-format
 msgid ""
 "%s\n"
@@ -590,7 +629,7 @@ msgstr ""
 "%s\n"
 "Η %s σας φορτίζει (%i%%)."
 
-#: ../src/xfpm-battery.c:451
+#: ../src/xfpm-battery.c:455
 #, c-format
 msgid ""
 "%s\n"
@@ -601,7 +640,7 @@ msgstr ""
 "Η %s σας αποφορτίζεται (%i%%)\n"
 "εκτιμώμενος απομένοντας χρόνος είναι %s."
 
-#: ../src/xfpm-battery.c:460
+#: ../src/xfpm-battery.c:464
 #, c-format
 msgid ""
 "%s\n"
@@ -610,7 +649,7 @@ msgstr ""
 "%s\n"
 "Η %s σας αποφορτίζεται  (%i%%)."
 
-#: ../src/xfpm-battery.c:469
+#: ../src/xfpm-battery.c:473
 #, c-format
 msgid ""
 "%s\n"
@@ -619,7 +658,7 @@ msgstr ""
 "%s\n"
 "%s αναμένεται για αποφόρτιση (%i%%)."
 
-#: ../src/xfpm-battery.c:473
+#: ../src/xfpm-battery.c:477
 #, c-format
 msgid ""
 "%s\n"
@@ -628,7 +667,7 @@ msgstr ""
 "%s\n"
 "%s αναμένεται για φόρτιση (%i%%)."
 
-#: ../src/xfpm-battery.c:477
+#: ../src/xfpm-battery.c:481
 #, c-format
 msgid ""
 "%s\n"
@@ -637,27 +676,27 @@ msgstr ""
 "%s\n"
 "Η %s σας είναι άδεια"
 
-#: ../src/xfpm-battery.c:817
+#: ../src/xfpm-battery.c:821
 msgid "battery"
 msgstr "μπαταρία"
 
-#: ../src/xfpm-battery.c:823
+#: ../src/xfpm-battery.c:827
 msgid "monitor battery"
 msgstr "μπαταρία οθόνης"
 
-#: ../src/xfpm-battery.c:826
+#: ../src/xfpm-battery.c:830
 msgid "mouse battery"
 msgstr "μπαταρία του ποντικιού"
 
-#: ../src/xfpm-battery.c:829
+#: ../src/xfpm-battery.c:833
 msgid "keyboard battery"
 msgstr "μπαταρία του πληκτρολογίου"
 
-#: ../src/xfpm-battery.c:832
+#: ../src/xfpm-battery.c:836
 msgid "PDA battery"
 msgstr "μπαταρία PDA"
 
-#: ../src/xfpm-battery.c:835
+#: ../src/xfpm-battery.c:839
 msgid "Phone battery"
 msgstr "μπαταρία τηλεφώνου"
 
@@ -720,91 +759,95 @@ msgstr "Με υποστήριξη DPMS\n"
 msgid "Without DPMS support\n"
 msgstr "Χωρίς υποστήριξη DPMS\n"
 
-#: ../src/xfpm-main.c:140
+#: ../src/xfpm-main.c:141
 msgid "Can suspend"
 msgstr "Δυνατότητα αναστολής"
 
-#: ../src/xfpm-main.c:142
+#: ../src/xfpm-main.c:143
 msgid "Can hibernate"
 msgstr "Δυνατότητα αδρανοποίησης"
 
-#: ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
 msgstr "Δυνατότητα μείωσης παύσης σκληρών δίσκων"
 
-#: ../src/xfpm-main.c:146
+#: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
 msgstr "Εξουσιοδοτημένος αναστολής"
 
-#: ../src/xfpm-main.c:148
+#: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
 msgstr "Εξουσιοδοτημένος αδρανοποίησης"
 
-#: ../src/xfpm-main.c:150
+#: ../src/xfpm-main.c:151
 msgid "Authorized to shutdown"
 msgstr "Εξουσιοδοτημένος τερματισμού"
 
-#: ../src/xfpm-main.c:152
+#: ../src/xfpm-main.c:153
 msgid "Authorized to spin down hard disks"
 msgstr "Εξουσιοδοτημένος παύσης σκληρών δίσκων"
 
-#: ../src/xfpm-main.c:154
+#: ../src/xfpm-main.c:155
+msgid "Has battery"
+msgstr "Έχει μπαταρία"
+
+#: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
 msgstr "Έχει ρύθμιση φωτεινότητας οθόνης"
 
-#: ../src/xfpm-main.c:156
+#: ../src/xfpm-main.c:159
 msgid "Has power button"
 msgstr "Έχει κουμπί λειτουργίας"
 
-#: ../src/xfpm-main.c:158
+#: ../src/xfpm-main.c:161
 msgid "Has hibernate button"
 msgstr "Έχει κουμπί αδρανοποίησης"
 
-#: ../src/xfpm-main.c:160
+#: ../src/xfpm-main.c:163
 msgid "Has sleep button"
 msgstr "Έχει κουμπί αδρανοποίησης"
 
-#: ../src/xfpm-main.c:162
+#: ../src/xfpm-main.c:165
 msgid "Has LID"
 msgstr "Έχει LID"
 
-#: ../src/xfpm-main.c:261
+#: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
 msgstr "Όχι ως δαίμονας"
 
-#: ../src/xfpm-main.c:262
+#: ../src/xfpm-main.c:265
 msgid "Enable debugging"
 msgstr "Ενεργοποίηση αποσφαλμάτωσης"
 
-#: ../src/xfpm-main.c:263
+#: ../src/xfpm-main.c:266
 msgid "Dump all information"
 msgstr "Αποτύπωση όλων των πληροφοριών"
 
-#: ../src/xfpm-main.c:264
+#: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Επανεκκίνηση του τρέχοντος στιγμιότυπου του διαχειριστή ρεύματος xfce"
 
-#: ../src/xfpm-main.c:265
+#: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
 msgstr "Εμφάνιση διαλόγου ρύθμισης"
 
-#: ../src/xfpm-main.c:266
+#: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
 msgstr "Τερματισμός κάθε διαχειριστή ρεύματος xfce που εκτελείται"
 
-#: ../src/xfpm-main.c:267 ../src/xfpm-power-info.c:935
+#: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:935
 msgid "Version information"
 msgstr "Πληροφορίες έκδοσης"
 
-#: ../src/xfpm-main.c:317
+#: ../src/xfpm-main.c:320
 msgid "Unable to get connection to the message bus session"
 msgstr "Αδυναμία να συνδεθεί με τον δίαυλο μηνυμάτων συνεδρίας"
 
-#: ../src/xfpm-main.c:411
+#: ../src/xfpm-main.c:414
 msgid "Another power manager is already running"
 msgstr "Ένας άλλος διαχειριστής ρεύματος τρέχει ήδη"
 
-#: ../src/xfpm-main.c:417
+#: ../src/xfpm-main.c:420
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Ο διαχειριστής ρεύματος xfce ήδη εκτελείται"
@@ -1026,7 +1069,7 @@ msgstr "Ρύθμιση φωτεινότητας LCD"
 msgid "No device found"
 msgstr "Δεν βρέθηκε καμία συσκευή"
 
-#: ../panel-plugins/brightness/brightness-button.c:651
+#: ../panel-plugins/brightness/brightness-button.c:649
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Άρθρωμα φωτεινότητας"
