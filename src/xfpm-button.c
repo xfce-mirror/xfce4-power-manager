@@ -125,7 +125,7 @@ xfpm_button_grab_keystring (XfpmButton *button, guint keycode)
 {
     Display *display;
     guint ret;
-    guint modmask = 0;
+    guint modmask = AnyModifier;
     
     display = GDK_DISPLAY ();
     
