@@ -339,7 +339,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
      **/
     g_object_class_install_property (object_class,
                                      PROP_BRIGHTNESS_LEVEL_ON_AC,
-                                     g_param_spec_int  (BRIGHTNESS_LEVEL_ON_AC,
+                                     g_param_spec_uint  (BRIGHTNESS_LEVEL_ON_AC,
                                                         NULL, NULL,
 							1,
 							100,
@@ -351,7 +351,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
      **/
     g_object_class_install_property (object_class,
                                      PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
-                                     g_param_spec_int  (BRIGHTNESS_LEVEL_ON_BATTERY,
+                                     g_param_spec_uint  (BRIGHTNESS_LEVEL_ON_BATTERY,
                                                         NULL, NULL,
 							1,
 							100,

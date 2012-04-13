@@ -168,21 +168,21 @@ void        _cursor_changed_cb 			   (GtkTreeView *view,
 
 void brightness_level_on_ac (GtkSpinButton *w,  XfconfChannel *channel)
 {
-     gint val = (gint) gtk_spin_button_get_value (w);
+    guint val = (guint) gtk_spin_button_get_value (w);
     
-    if (!xfconf_channel_set_int (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, val) )
+    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, val) )
     {
-	g_critical ("Unable to set value %d for property %s\n", val, BRIGHTNESS_LEVEL_ON_AC);
+	g_critical ("Unable to set value %u for property %s\n", val, BRIGHTNESS_LEVEL_ON_AC);
     }
 }
 
 void brightness_level_on_battery (GtkSpinButton *w,  XfconfChannel *channel)
 {
-     gint val = (gint) gtk_spin_button_get_value (w);
+     guint val = (guint) gtk_spin_button_get_value (w);
     
-    if (!xfconf_channel_set_int (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, val) )
+    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, val) )
     {
-	g_critical ("Unable to set value %d for property %s\n", val, BRIGHTNESS_LEVEL_ON_BATTERY);
+	g_critical ("Unable to set value %u for property %s\n", val, BRIGHTNESS_LEVEL_ON_BATTERY);
     }
 }
 
