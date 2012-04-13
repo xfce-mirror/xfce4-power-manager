@@ -66,9 +66,11 @@ xfpm_brightness_xrand_get_limit (XfpmBrightness *brightness, RROutput output, gi
     XRRPropertyInfo *info;
     gboolean ret = TRUE;
 
+    gdk_error_trap_push ();
     info = XRRQueryOutputProperty (GDK_DISPLAY (), output, brightness->priv->backlight);
     
-    if (info == NULL) 
+    if (gdk_error_trap_pop () != 0
+        || info == NULL)
     {
 	g_warning ("could not get output property");
 	return FALSE;
@@ -99,10 +101,12 @@ xfpm_brightness_xrandr_get_level (XfpmBrightness *brightness, RROutput output, l
     int actual_format;
     gboolean ret = FALSE;
 
+    gdk_error_trap_push ();
     if (XRRGetOutputProperty (GDK_DISPLAY (), output, brightness->priv->backlight,
 			      0, 4, False, False, None,
 			      &actual_type, &actual_format,
-			      &nitems, &bytes_after, ((unsigned char **)&prop)) != Success) 
+			      &nitems, &bytes_after, ((unsigned char **)&prop)) != Success
+	|| gdk_error_trap_pop () != 0)
     {
 	g_warning ("failed to get property");
 	return FALSE;
@@ -152,12 +156,16 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     gboolean ret = FALSE;
     gint i;
     
+    gdk_error_trap_push ();
     if (!XRRQueryExtension (GDK_DISPLAY (), &event_base, &error_base) ||
 	!XRRQueryVersion (GDK_DISPLAY (), &major, &minor) )
     {
+	gdk_error_trap_pop ();
 	g_warning ("No XRANDR extension found");
 	return FALSE;
     }
+    gdk_error_trap_pop ();
+
     if (major == 1 && minor < 2)
     {
 	g_warning ("XRANDR version < 1.2");
@@ -179,6 +187,8 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     screen = gdk_display_get_default_screen (gdk_display_get_default ());
     
     screen_num = gdk_screen_get_number (screen);
+
+    gdk_error_trap_push ();
     
     window = RootWindow (GDK_DISPLAY (), screen_num);
     
@@ -207,6 +217,9 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 	}
 	XRRFreeOutputInfo (info);
     }
+
+    if (gdk_error_trap_pop () != 0)
+        g_critical ("Failed to get output/resource info");
     
     return ret;
 }
