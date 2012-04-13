@@ -71,6 +71,8 @@ struct XfpmBatteryPrivate
     
     gulong		    sig;
     gulong		    sig_bt;
+    
+    guint                   notify_idle;
 };
 
 enum
@@ -360,9 +362,11 @@ xfpm_battery_notify (XfpmBattery *battery)
 static gboolean
 xfpm_battery_notify_idle (gpointer data)
 {
-    XfpmBattery *battery;
-    battery = XFPM_BATTERY (data);
+    XfpmBattery *battery = XFPM_BATTERY (data);
+    
     xfpm_battery_notify (battery);
+    battery->priv->notify_idle = 0;
+    
     return FALSE;
 }
 
@@ -390,7 +394,8 @@ xfpm_battery_notify_state (XfpmBattery *battery)
 		      
 	if ( notify )
 	{
-	    g_idle_add ((GSourceFunc) xfpm_battery_notify_idle, battery);
+	    if (battery->priv->notify_idle == 0)
+	        battery->priv->notify_idle = g_idle_add (xfpm_battery_notify_idle, battery);
 	}
     }
 }
@@ -764,7 +769,10 @@ xfpm_battery_finalize (GObject *object)
     battery = XFPM_BATTERY (object);
     
     g_free (battery->priv->icon_prefix);
-    
+
+    if (battery->priv->notify_idle != 0)
+        g_source_remove (battery->priv->notify_idle);
+
     dbus_g_proxy_disconnect_signal (battery->priv->proxy, "Changed",
 				    G_CALLBACK (xfpm_battery_changed_cb), battery);
 				    
