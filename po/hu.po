@@ -1,21 +1,21 @@
 # Hungarian translation of xfce4-power-manager
-# Copyright (C) 2009, 2010, Free Software Foundation, Inc.
+# Copyright (C) 2009, 2010, 2012, Free Software Foundation, Inc.
 # This file is distributed under the same license as the xfce4-power-manager package.
-# 
-# Gabor Kelemen <kelemeng at gnome dot hu>, 2009, 2010.
+#
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2009, 2010, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-09 00:18+0000\n"
-"PO-Revision-Date: 2010-02-05 15:36+0100\n"
+"POT-Creation-Date: 2012-04-14 13:36+0000\n"
+"PO-Revision-Date: 2012-04-14 20:32+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
-"Language-Team: Hungarian <gnome at fsf dot hu>\n"
+"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
@@ -327,7 +327,7 @@ msgstr "Az Xfce energiakezelő nem fut, el kívánja indítani?"
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:349 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-battery.c:351 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Energiakezelő"
 
@@ -337,7 +337,7 @@ msgstr "Az Xfce energiakezelő beállításai"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
-msgstr "Kelemen Gábor <kelemeng@gnome.hu>"
+msgstr "Kelemen Gábor <kelemeng at gnome dot hu>"
 
 #: ../src/xfpm-power.c:330
 msgid ""
@@ -413,15 +413,14 @@ msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr ""
-"%s\n"
-"A(z) %s kisül (%i%%).\n"
+"A(z) %s töltési szintje alacsony.\n"
 "A becsült hátralévő idő: %s."
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
 msgstr "Az adapter nincs csatlakoztatva"
 
-#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
+#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:413
 #, c-format
 msgid "Adaptor is online"
 msgstr "Az adapter csatlakoztatva"
@@ -441,7 +440,7 @@ msgstr "A felfüggesztés nem támogatott"
 msgid "Battery"
 msgstr "Akkumulátor"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
 msgid "UPS"
 msgstr "UPS"
 
@@ -466,7 +465,7 @@ msgid "Phone"
 msgstr "Telefon"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:850
 msgid "Unknown"
 msgstr "Ismeretlen"
 
@@ -494,18 +493,18 @@ msgstr "Nikkel-kadmium"
 msgid "Nickel metal hybride"
 msgstr "Nikkel-fém hidrid"
 
-#: ../src/xfpm-battery.c:169
+#: ../src/xfpm-battery.c:171
 msgid "Unknown time"
 msgstr "Ismeretlen idő"
 
-#: ../src/xfpm-battery.c:175
+#: ../src/xfpm-battery.c:177
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i perc"
 msgstr[1] "%i perc"
 
-#: ../src/xfpm-battery.c:186
+#: ../src/xfpm-battery.c:188
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -514,76 +513,72 @@ msgstr[1] "%i óra"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../src/xfpm-battery.c:192
+#: ../src/xfpm-battery.c:194
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s, %i %s"
 
-#: ../src/xfpm-battery.c:193
+#: ../src/xfpm-battery.c:195
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "óra"
 msgstr[1] "óra"
 
-#: ../src/xfpm-battery.c:194
+#: ../src/xfpm-battery.c:196
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "perc"
 msgstr[1] "perc"
 
-#: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
+#: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "A(z) %s teljesen feltöltve"
 
-#: ../src/xfpm-battery.c:212 ../src/xfpm-battery.c:263
+#: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
 #, c-format
 msgid "Your %s is charging"
 msgstr "A(z) %s töltődik"
 
-#: ../src/xfpm-battery.c:222
+#: ../src/xfpm-battery.c:224
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
-"%s\n"
-"A(z) %s töltődik (%i%%)\n"
+"%s (%i%%)\n"
 "A teljes feltöltésig még %s van."
 
-#: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
+#: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
 msgid "Your %s is discharging"
 msgstr "A(z) %s kisül"
 
-#: ../src/xfpm-battery.c:232
+#: ../src/xfpm-battery.c:234
 #, c-format
 msgid "System is running on %s power"
-msgstr "A rendszer %s  tápellátásról működik"
+msgstr "A rendszer %s tápellátásról működik"
 
-#: ../src/xfpm-battery.c:242
+#: ../src/xfpm-battery.c:244
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr ""
-"%s\n"
-"A(z) %s kisül (%i%%).\n"
+"%s (%i%%).\n"
 "A becsült hátralévő idő: %s."
 
-#: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
+#: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
 msgid "Your %s is empty"
-msgstr ""
-"%s\n"
-"A(z) %s üres"
+msgstr "A(z) %s üres"
 
-#: ../src/xfpm-battery.c:408
+#: ../src/xfpm-battery.c:413
 #, c-format
 msgid "System is running on battery power"
 msgstr "A rendszer akkumulátorról üzemel"
 
-#: ../src/xfpm-battery.c:415
+#: ../src/xfpm-battery.c:420
 #, c-format
 msgid ""
 "%s\n"
@@ -594,7 +589,7 @@ msgstr ""
 "A(z) %s teljesen feltöltve (%i%%).\n"
 "%s működési időt biztosít"
 
-#: ../src/xfpm-battery.c:424
+#: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
@@ -603,7 +598,7 @@ msgstr ""
 "%s\n"
 "A(z) %s teljesen feltöltve (%i%%)."
 
-#: ../src/xfpm-battery.c:435
+#: ../src/xfpm-battery.c:440
 #, c-format
 msgid ""
 "%s\n"
@@ -614,7 +609,7 @@ msgstr ""
 "A(z) %s töltődik (%i%%)\n"
 "A teljes feltöltésig még %s van."
 
-#: ../src/xfpm-battery.c:444
+#: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
@@ -623,7 +618,7 @@ msgstr ""
 "%s\n"
 "A(z) %s töltődik (%i%%)."
 
-#: ../src/xfpm-battery.c:455
+#: ../src/xfpm-battery.c:460
 #, c-format
 msgid ""
 "%s\n"
@@ -634,7 +629,7 @@ msgstr ""
 "A(z) %s kisül (%i%%).\n"
 "A becsült hátralévő idő: %s."
 
-#: ../src/xfpm-battery.c:464
+#: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
@@ -643,7 +638,7 @@ msgstr ""
 "%s\n"
 "A(z) %s kisül (%i%%)."
 
-#: ../src/xfpm-battery.c:473
+#: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
@@ -652,7 +647,7 @@ msgstr ""
 "%s\n"
 "A(z) %s kisülésre vár (%i%%)."
 
-#: ../src/xfpm-battery.c:477
+#: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
@@ -661,7 +656,7 @@ msgstr ""
 "%s\n"
 "A(z) %s töltésre vár (%i%%)."
 
-#: ../src/xfpm-battery.c:481
+#: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
@@ -670,27 +665,27 @@ msgstr ""
 "%s\n"
 "A(z) %s üres"
 
-#: ../src/xfpm-battery.c:821
+#: ../src/xfpm-battery.c:829
 msgid "battery"
 msgstr "akkumulátor"
 
-#: ../src/xfpm-battery.c:827
+#: ../src/xfpm-battery.c:835
 msgid "monitor battery"
 msgstr "monitorakkumulátor"
 
-#: ../src/xfpm-battery.c:830
+#: ../src/xfpm-battery.c:838
 msgid "mouse battery"
 msgstr "egérakkumulátor"
 
-#: ../src/xfpm-battery.c:833
+#: ../src/xfpm-battery.c:841
 msgid "keyboard battery"
 msgstr "billentyűzetakkumulátor"
 
-#: ../src/xfpm-battery.c:836
+#: ../src/xfpm-battery.c:844
 msgid "PDA battery"
 msgstr "PDA-akkumulátor"
 
-#: ../src/xfpm-battery.c:839
+#: ../src/xfpm-battery.c:847
 msgid "Phone battery"
 msgstr "Telefonakkumulátor"
 
@@ -1092,3 +1087,4 @@ msgstr "Fényerősség-bővítmény"
 
 #~ msgid "Without HAL support\n"
 #~ msgstr "HAL támogatás nélkül\n"
+
