@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-28 11:42+0000\n"
+"POT-Creation-Date: 2012-04-14 13:36+0000\n"
 "PO-Revision-Date: 2012-03-24 09:12+0100\n"
 "Last-Translator: Raphael Groner <raphgro(at)web.de>\n"
 "Language-Team: German\n"
@@ -332,7 +332,7 @@ msgstr ""
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:349 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-battery.c:351 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Energieverwaltung"
 
@@ -433,7 +433,7 @@ msgstr ""
 msgid "Adaptor is offline"
 msgstr "Stromversorgung getrennt"
 
-#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
+#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:413
 #, c-format
 msgid "Adaptor is online"
 msgstr "Stromversorgung angeschlossen"
@@ -453,7 +453,7 @@ msgstr "Standbymodus wird nicht unterstützt"
 msgid "Battery"
 msgstr "Batterie"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
 msgid "UPS"
 msgstr "USV (Unterbrechungsfreie Stromversorgung)"
 
@@ -478,7 +478,7 @@ msgid "Phone"
 msgstr "Telefon"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:850
 msgid "Unknown"
 msgstr "Unbekannt"
 
@@ -506,18 +506,18 @@ msgstr "Nickel-Cadmium"
 msgid "Nickel metal hybride"
 msgstr "Nickel-Metallhydrid"
 
-#: ../src/xfpm-battery.c:169
+#: ../src/xfpm-battery.c:171
 msgid "Unknown time"
 msgstr "Unbekannte Zeit"
 
-#: ../src/xfpm-battery.c:175
+#: ../src/xfpm-battery.c:177
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i Minute"
 msgstr[1] "%i Minuten"
 
-#: ../src/xfpm-battery.c:186
+#: ../src/xfpm-battery.c:188
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -526,34 +526,34 @@ msgstr[1] "%i Stunden"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../src/xfpm-battery.c:192
+#: ../src/xfpm-battery.c:194
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s und %i %s"
 
-#: ../src/xfpm-battery.c:193
+#: ../src/xfpm-battery.c:195
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "Stunde"
 msgstr[1] "Stunden"
 
-#: ../src/xfpm-battery.c:194
+#: ../src/xfpm-battery.c:196
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "Minute"
 msgstr[1] "Minuten"
 
-#: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
+#: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "Ihr %s ist vollständig geladen"
 
-#: ../src/xfpm-battery.c:212 ../src/xfpm-battery.c:263
+#: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
 #, c-format
 msgid "Your %s is charging"
 msgstr "Ihr %s wird geladen"
 
-#: ../src/xfpm-battery.c:222
+#: ../src/xfpm-battery.c:224
 #, c-format
 msgid ""
 "%s (%i%%)\n"
@@ -562,17 +562,17 @@ msgstr ""
 "%s lädt (%i%%)\n"
 " %s bis vollständig geladen."
 
-#: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
+#: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
 msgid "Your %s is discharging"
 msgstr "Ihr %s wird entladen"
 
-#: ../src/xfpm-battery.c:232
+#: ../src/xfpm-battery.c:234
 #, c-format
 msgid "System is running on %s power"
 msgstr "System läuft mit Strom von %s"
 
-#: ../src/xfpm-battery.c:242
+#: ../src/xfpm-battery.c:244
 #, c-format
 msgid ""
 "%s (%i%%)\n"
@@ -581,17 +581,17 @@ msgstr ""
 "%s wird entladen (%i%%)\n"
 "Geschätzte verbleibende Zeit: %s."
 
-#: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
+#: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
 msgid "Your %s is empty"
 msgstr "Ihr %s ist leer"
 
-#: ../src/xfpm-battery.c:408
+#: ../src/xfpm-battery.c:413
 #, c-format
 msgid "System is running on battery power"
 msgstr "System läuft gerade im Batteriebetrieb"
 
-#: ../src/xfpm-battery.c:415
+#: ../src/xfpm-battery.c:420
 #, c-format
 msgid ""
 "%s\n"
@@ -602,7 +602,7 @@ msgstr ""
 "%s ist voll geladen (%i%%).\n"
 "Stellt %s Laufzeit zur Verfügung"
 
-#: ../src/xfpm-battery.c:424
+#: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
@@ -611,7 +611,7 @@ msgstr ""
 "%s\n"
 "%s ist vollständig geladen (%i%%)"
 
-#: ../src/xfpm-battery.c:435
+#: ../src/xfpm-battery.c:440
 #, fuzzy, c-format
 msgid ""
 "%s\n"
@@ -622,7 +622,7 @@ msgstr ""
 "%s lädt (%i%%)\n"
 " %s bis vollständig geladen."
 
-#: ../src/xfpm-battery.c:444
+#: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
@@ -631,7 +631,7 @@ msgstr ""
 "%s\n"
 "%s wird geladen (%i%%)."
 
-#: ../src/xfpm-battery.c:455
+#: ../src/xfpm-battery.c:460
 #, c-format
 msgid ""
 "%s\n"
@@ -642,7 +642,7 @@ msgstr ""
 "Ihr %s wird entladen (%i%%)\n"
 "Geschätzte verbleibende Zeit: %s"
 
-#: ../src/xfpm-battery.c:464
+#: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
@@ -651,7 +651,7 @@ msgstr ""
 "%s\n"
 "%s wird entladen (%i%%)."
 
-#: ../src/xfpm-battery.c:473
+#: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
@@ -660,7 +660,7 @@ msgstr ""
 "%s\n"
 "%s wartet auf Entladen (%i%%)."
 
-#: ../src/xfpm-battery.c:477
+#: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
@@ -669,7 +669,7 @@ msgstr ""
 "%s\n"
 "%s wartet auf Laden (%i%%)."
 
-#: ../src/xfpm-battery.c:481
+#: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
@@ -678,27 +678,27 @@ msgstr ""
 "%s\n"
 "%s ist leer"
 
-#: ../src/xfpm-battery.c:821
+#: ../src/xfpm-battery.c:829
 msgid "battery"
 msgstr "Akku"
 
-#: ../src/xfpm-battery.c:827
+#: ../src/xfpm-battery.c:835
 msgid "monitor battery"
 msgstr "Monitorbatterie"
 
-#: ../src/xfpm-battery.c:830
+#: ../src/xfpm-battery.c:838
 msgid "mouse battery"
 msgstr "Mausbatterie"
 
-#: ../src/xfpm-battery.c:833
+#: ../src/xfpm-battery.c:841
 msgid "keyboard battery"
 msgstr "Tastaturbatterie"
 
-#: ../src/xfpm-battery.c:836
+#: ../src/xfpm-battery.c:844
 msgid "PDA battery"
 msgstr "PDA-Batterie"
 
-#: ../src/xfpm-battery.c:839
+#: ../src/xfpm-battery.c:847
 msgid "Phone battery"
 msgstr "Telefonbatterie"
 
