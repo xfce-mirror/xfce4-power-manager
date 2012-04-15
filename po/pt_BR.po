@@ -3,16 +3,17 @@
 # This file is distributed under the same license as the xfce4-power-manager package.
 # Vladimir Melo <vmelo@gnome.org>, 2008.
 # Og Maciel <ogmaciel@gnome.org>, 2008-2009.
-# Henrique P Machado <hpmachado@gnome.org>, 2008, 2011.
-# 
+# Henrique P Machado <zehrique@xfce.org>, 2008, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-09-28 16:06+0000\n"
-"PO-Revision-Date: 2009-09-28 17:53-0500\n"
-"Last-Translator: Henrique P Machado <hpmachado@gnome.org>\n"
+"POT-Creation-Date: 2012-04-15 18:21+0000\n"
+"PO-Revision-Date: 2012-04-15 17:33-0300\n"
+"Last-Translator: Henrique P Machado <zehrique@xfce.org>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -69,7 +70,7 @@ msgstr "Configurações do monitor"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "Monitor power management control"
-msgstr "Habilitar  gerenciador de energia do monitor"
+msgstr "Habilitar gerenciador de energia do monitor"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:806
 #: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1023
@@ -88,7 +89,9 @@ msgstr "Priorizar economia de energia a custo de desempenho"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
-msgstr "Colocar a tela em modo de inatividade quando o computador estiver inativo por:"
+msgstr ""
+"Colocar a tela em modo de inatividade quando o computador estiver inativo "
+"por:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Put the computer to sleep when inactive for:"
@@ -133,7 +136,7 @@ msgstr "Desligar a tela quando o computador estiver inativo por:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "System tray icon: "
-msgstr "Ícone da bandeja do sistema"
+msgstr "Ícone da bandeja do sistema:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "When battery power is critical:"
@@ -145,7 +148,7 @@ msgstr "Quando o botão desligar for pressionado:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "When laptop lid is closed:"
-msgstr "Quando a tampa do laptop está fechada:"
+msgstr "Quando a tampa do laptop é fechada:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "When power button is pressed:"
@@ -198,12 +201,12 @@ msgstr "Segundos"
 #: ../settings/xfpm-settings.c:789 ../settings/xfpm-settings.c:987
 #: ../settings/xfpm-settings.c:1467
 msgid "Hibernate and suspend operations not supported"
-msgstr "Não há suporte a hibernação e suspenção de operações"
+msgstr "Não há suporte a hibernação e suspensão de operações"
 
 #: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:992
 #: ../settings/xfpm-settings.c:1472
 msgid "Hibernate and suspend operations not permitted"
-msgstr "Hibernação e suspenção de operações não permitidas"
+msgstr "Hibernação e suspensão de operações não permitidas"
 
 #: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1217
 #: ../src/xfpm-power.c:805
@@ -240,8 +243,13 @@ msgid "Never show icon"
 msgstr "Nunca mostrar ícone"
 
 #: ../settings/xfpm-settings.c:1182
-msgid "Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode."
-msgstr "Desabilita a \"Sinalização de exibição de gerenciamento de energia\" (DPMS). Por exemplo: não tenta desligar o monitor ou colocá-lo no modo de inatividade."
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr ""
+"Desabilita a \"Sinalização de exibição de gerenciamento de energia\" (DPMS). "
+"Por exemplo: não tenta desligar o monitor ou colocá-lo no modo de "
+"inatividade."
 
 #: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
@@ -253,7 +261,7 @@ msgstr "Operação de suspensão não permitida"
 
 #: ../settings/xfpm-settings.c:1388
 msgid "Hibernate operation not supported"
-msgstr "Operação de hibernarção não suportada"
+msgstr "Operação de hibernação não suportada"
 
 #: ../settings/xfpm-settings.c:1393
 msgid "Hibernate operation not permitted"
@@ -299,7 +307,8 @@ msgstr "Digite \"%s --help\" para informações de uso."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Falha ao carregar a configuração do Gerenciador de energia, usando os padrões"
+msgstr ""
+"Falha ao carregar a configuração do Gerenciador de energia, usando os padrões"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -316,12 +325,14 @@ msgstr "Executar"
 
 #: ../settings/xfpm-settings-main.c:196
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "O Gerenciador de energia do Xfce4 não está em execução, você deseja lançá-lo agora?"
+msgstr ""
+"O Gerenciador de energia Xfce4 não está em execução, você deseja lançá-lo "
+"agora?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:349 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-battery.c:351 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Gerenciador de energia"
 
@@ -337,8 +348,15 @@ msgstr ""
 "Henrique P Machado <hpmachado@gnome.org>"
 
 #: ../src/xfpm-power.c:330
-msgid "An application is currently disabling the automatic sleep, doing this action now may damage the working state of this application, are you sure you want to hibernate the system?"
-msgstr "Um aplicativo está atualmente desabilitando o modo de inatividade automaticamente. Ao executar esta ação agora, poderá danificar o estado de trabalho atual deste aplicativo. Você tem certeza de que quer hibernar o sistema?"
+msgid ""
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
+msgstr ""
+"Um aplicativo está atualmente desabilitando o modo de inatividade "
+"automaticamente. Ao executar esta ação agora, poderá danificar o estado de "
+"trabalho atual deste aplicativo. Você tem certeza de que quer hibernar o "
+"sistema?"
 
 #: ../src/xfpm-power.c:428
 msgid "Quit"
@@ -346,7 +364,7 @@ msgstr "Sair"
 
 #: ../src/xfpm-power.c:429
 msgid "All running instances of the power manager will exit"
-msgstr "Sai do Gerenciador de energia xfce"
+msgstr "Todas as instâncias do Gerenciador de energia serão fechadas"
 
 #: ../src/xfpm-power.c:431
 msgid "Quit the power manager?"
@@ -360,8 +378,7 @@ msgstr "Informações de energia"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save,
-#. normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "Modo"
@@ -390,7 +407,9 @@ msgstr "Desligar o sistema"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "O sistema está executando com pouca energia. Grave o seu trabalho para evitar perda de dados"
+msgstr ""
+"O sistema está executando com pouca energia. Grave o seu trabalho para "
+"evitar perda de dados"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -409,7 +428,7 @@ msgstr ""
 msgid "Adaptor is offline"
 msgstr "O adaptador está desligado"
 
-#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
+#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:413
 #, c-format
 msgid "Adaptor is online"
 msgstr "O adaptador está ligado"
@@ -429,7 +448,7 @@ msgstr "Suspensão não suportada"
 msgid "Battery"
 msgstr "Bateria"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
 msgid "UPS"
 msgstr "UPS"
 
@@ -454,7 +473,7 @@ msgid "Phone"
 msgstr "Telefone"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:850
 msgid "Unknown"
 msgstr "Desconhecido"
 
@@ -482,18 +501,18 @@ msgstr "Níquel-Cádmio"
 msgid "Nickel metal hybride"
 msgstr "Metal de níquel híbrido"
 
-#: ../src/xfpm-battery.c:169
+#: ../src/xfpm-battery.c:171
 msgid "Unknown time"
 msgstr "Tempo desconhecido"
 
-#: ../src/xfpm-battery.c:175
+#: ../src/xfpm-battery.c:177
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i minuto"
 msgstr[1] "%i minutos"
 
-#: ../src/xfpm-battery.c:186
+#: ../src/xfpm-battery.c:188
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -502,34 +521,34 @@ msgstr[1] "%i horas"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../src/xfpm-battery.c:192
+#: ../src/xfpm-battery.c:194
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: ../src/xfpm-battery.c:193
+#: ../src/xfpm-battery.c:195
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hora"
 msgstr[1] "horas"
 
-#: ../src/xfpm-battery.c:194
+#: ../src/xfpm-battery.c:196
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuto"
 msgstr[1] "minutos"
 
-#: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
+#: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "%s está totalmente carregado"
 
-#: ../src/xfpm-battery.c:212 ../src/xfpm-battery.c:263
+#: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
 #, c-format
 msgid "Your %s is charging"
 msgstr "%s está carregando"
 
-#: ../src/xfpm-battery.c:222
+#: ../src/xfpm-battery.c:224
 #, c-format
 msgid ""
 "%s (%i%%)\n"
@@ -538,17 +557,17 @@ msgstr ""
 "%s (%i%%)\n"
 "%s até que esteja totalmente carregado."
 
-#: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
+#: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
 msgid "Your %s is discharging"
 msgstr "%s está descarregando"
 
-#: ../src/xfpm-battery.c:232
+#: ../src/xfpm-battery.c:234
 #, c-format
 msgid "System is running on %s power"
 msgstr "O sistema está executando na energia de %s"
 
-#: ../src/xfpm-battery.c:242
+#: ../src/xfpm-battery.c:244
 #, c-format
 msgid ""
 "%s (%i%%)\n"
@@ -557,17 +576,17 @@ msgstr ""
 "%s (%i%%)\n"
 "Tempo restante estimado é %s."
 
-#: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
+#: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
 msgid "Your %s is empty"
 msgstr "%s esgotado"
 
-#: ../src/xfpm-battery.c:408
+#: ../src/xfpm-battery.c:413
 #, c-format
 msgid "System is running on battery power"
 msgstr "O sistema está executando com energia da bateria"
 
-#: ../src/xfpm-battery.c:415
+#: ../src/xfpm-battery.c:420
 #, c-format
 msgid ""
 "%s\n"
@@ -578,7 +597,7 @@ msgstr ""
 "%s está totalmente carregado (%i%%).\n"
 "Funcionará por %s"
 
-#: ../src/xfpm-battery.c:424
+#: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
@@ -587,7 +606,7 @@ msgstr ""
 "%s\n"
 "%s está totalmente carregado (%i%%)."
 
-#: ../src/xfpm-battery.c:435
+#: ../src/xfpm-battery.c:440
 #, c-format
 msgid ""
 "%s\n"
@@ -598,7 +617,7 @@ msgstr ""
 "%s está carregando (%i%%)\n"
 "%s até que esteja totalmente carregado."
 
-#: ../src/xfpm-battery.c:444
+#: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
@@ -607,7 +626,7 @@ msgstr ""
 "%s\n"
 "%s está carregando (%i%%)."
 
-#: ../src/xfpm-battery.c:455
+#: ../src/xfpm-battery.c:460
 #, c-format
 msgid ""
 "%s\n"
@@ -618,7 +637,7 @@ msgstr ""
 "%s está descarregando (%i%%)\n"
 "Tempo restante estimado: %s."
 
-#: ../src/xfpm-battery.c:464
+#: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
@@ -627,7 +646,7 @@ msgstr ""
 "%s\n"
 "%s está descarregando (%i%%)."
 
-#: ../src/xfpm-battery.c:473
+#: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
@@ -636,7 +655,7 @@ msgstr ""
 "%s\n"
 "%s aguardando descarregar (%i%%)."
 
-#: ../src/xfpm-battery.c:477
+#: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
@@ -645,7 +664,7 @@ msgstr ""
 "%s\n"
 "%s aguardando carregar (%i%%)."
 
-#: ../src/xfpm-battery.c:481
+#: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
@@ -654,27 +673,27 @@ msgstr ""
 "%s\n"
 "%s está descarregado"
 
-#: ../src/xfpm-battery.c:821
+#: ../src/xfpm-battery.c:829
 msgid "battery"
 msgstr "bateria"
 
-#: ../src/xfpm-battery.c:827
+#: ../src/xfpm-battery.c:835
 msgid "monitor battery"
 msgstr "monitorar bateria"
 
-#: ../src/xfpm-battery.c:830
+#: ../src/xfpm-battery.c:838
 msgid "mouse battery"
 msgstr "bateria do mouse"
 
-#: ../src/xfpm-battery.c:833
+#: ../src/xfpm-battery.c:841
 msgid "keyboard battery"
 msgstr "bateria do teclado"
 
-#: ../src/xfpm-battery.c:836
+#: ../src/xfpm-battery.c:844
 msgid "PDA battery"
 msgstr "bateria do PDA"
 
-#: ../src/xfpm-battery.c:839
+#: ../src/xfpm-battery.c:847
 msgid "Phone battery"
 msgstr "bateria do telefone"
 
@@ -751,7 +770,7 @@ msgstr "Pode reduzir a velocidade dos discos rígidos"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr "Autorizad a suspender"
+msgstr "Autorizado a suspender"
 
 #: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
@@ -803,7 +822,7 @@ msgstr "Despejar todas as informações"
 
 #: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Renicia a instância do Gerenciador de energia Xfce em execução"
+msgstr "Reinicia a instância do Gerenciador de energia Xfce em execução"
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
@@ -1159,8 +1178,11 @@ msgstr "Plug-in de brilho"
 #~ msgid "Power manager is connected"
 #~ msgstr "O Gerenciador de energia do Xfce não está em execução"
 
-#~ msgid "Unable to read adapter status, the power manager will not work properly"
-#~ msgstr "Não foi possível ler o status do adaptador, o gerenciador de energia não funcionará adequadamente"
+#~ msgid ""
+#~ "Unable to read adapter status, the power manager will not work properly"
+#~ msgstr ""
+#~ "Não foi possível ler o status do adaptador, o gerenciador de energia não "
+#~ "funcionará adequadamente"
 
 #~ msgid "Are you sure you want to hibernate the system?"
 #~ msgstr "Você tem certeza que deseja hibernar o sistema?"
@@ -1195,8 +1217,12 @@ msgstr "Plug-in de brilho"
 #~ msgid "Ondemand performance"
 #~ msgstr "Desempenho em demanda"
 
-#~ msgid "Set the CPU to its maximum speed when there is any load on it and to its minimum speed when the system is idle"
-#~ msgstr "Configura a CPU para sua velocidade máxima quando há qualquer carga e para sua velocidade mínima quando o sistema estiver ocioso."
+#~ msgid ""
+#~ "Set the CPU to its maximum speed when there is any load on it and to its "
+#~ "minimum speed when the system is idle"
+#~ msgstr ""
+#~ "Configura a CPU para sua velocidade máxima quando há qualquer carga e "
+#~ "para sua velocidade mínima quando o sistema estiver ocioso."
 
 #~ msgid "Best power savings"
 #~ msgstr "Melhor economia de energia"
@@ -1207,8 +1233,11 @@ msgstr "Plug-in de brilho"
 #~ msgid "Good power savings"
 #~ msgstr "Boa economia de energia"
 
-#~ msgid "gracefully increases and decreases the CPU speed depending on the current usage"
-#~ msgstr "Aumenta e diminui gradualmente a velocidade da CPU dependendo do uso atual"
+#~ msgid ""
+#~ "gracefully increases and decreases the CPU speed depending on the current "
+#~ "usage"
+#~ msgstr ""
+#~ "Aumenta e diminui gradualmente a velocidade da CPU dependendo do uso atual"
 
 #~ msgid "CPU frequency settings on UPS power"
 #~ msgstr "Configurações de freqüência de CPU ao usar UPS"
@@ -1261,17 +1290,41 @@ msgstr "Plug-in de brilho"
 #~ msgid "Xfce4 Power Manager"
 #~ msgstr "Gerenciador de energia do Xfce4"
 
-#~ msgid "Unable to read your home directory environment variable, autostart option may not work"
-#~ msgstr "Não foi possível ler a variável de ambiente do diretório home, a opção de início automático pode não funcionar"
+#~ msgid ""
+#~ "Unable to read your home directory environment variable, autostart option "
+#~ "may not work"
+#~ msgstr ""
+#~ "Não foi possível ler a variável de ambiente do diretório home, a opção de "
+#~ "início automático pode não funcionar"
 
-#~ msgid "Unable to run Xfce4 power manager, make sure the hardware abstract layer and the message bus daemon are running"
-#~ msgstr "Não foi possível executar o gerenciador de energia do Xfce4, certifique-se que o hardware abstract layer e o daemon message bus estão em execução"
+#~ msgid ""
+#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
+#~ "and the message bus daemon are running"
+#~ msgstr ""
+#~ "Não foi possível executar o gerenciador de energia do Xfce4, certifique-"
+#~ "se que o hardware abstract layer e o daemon message bus estão em execução"
 
-#~ msgid "Unable to read AC adapter status, the power manager will not work properly. Possible reasons: The AC adapter driver is not loaded, broken connection with the hardware abstract layer or the message bus daemon is not running"
-#~ msgstr "Não foi possível ler o estado do adaptador AC, o gerenciador de energia não funcionará adequadamente. Motivos possíveis: o driver do adaptador AC não está carregado, conexão com o hardware abstract layer quebrada ou o daemon message bus não está em execução"
+#~ msgid ""
+#~ "Unable to read AC adapter status, the power manager will not work "
+#~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
+#~ "connection with the hardware abstract layer or the message bus daemon is "
+#~ "not running"
+#~ msgstr ""
+#~ "Não foi possível ler o estado do adaptador AC, o gerenciador de energia "
+#~ "não funcionará adequadamente. Motivos possíveis: o driver do adaptador AC "
+#~ "não está carregado, conexão com o hardware abstract layer quebrada ou o "
+#~ "daemon message bus não está em execução"
 
-#~ msgid "Unable to use power management service, functionalities like hibernate and suspend will not work. Possible reasons: you don't have enough permission, broken connection with the hardware abstract layer or the message bus daemon is not running"
-#~ msgstr "Não foi possível usar o serviço de gerenciamento de energia, funcionalidades como hibernar e suspender não funcionarão. Motivos possíveis: não há permissão suficiente, conexão com o hardware abstract layer quebrada ou o daemon message bus não está em execução"
+#~ msgid ""
+#~ "Unable to use power management service, functionalities like hibernate "
+#~ "and suspend will not work. Possible reasons: you don't have enough "
+#~ "permission, broken connection with the hardware abstract layer or the "
+#~ "message bus daemon is not running"
+#~ msgstr ""
+#~ "Não foi possível usar o serviço de gerenciamento de energia, "
+#~ "funcionalidades como hibernar e suspender não funcionarão. Motivos "
+#~ "possíveis: não há permissão suficiente, conexão com o hardware abstract "
+#~ "layer quebrada ou o daemon message bus não está em execução"
 
 #~ msgid "Error monitoring HAL events"
 #~ msgstr "Erro a monitorar eventos do HAL"
@@ -1295,13 +1348,17 @@ msgstr "Plug-in de brilho"
 #~ msgstr "A mensagem de suspender não obteve resposta"
 
 #~ msgid "No reply from HAL daemon to set monitor brightness level"
-#~ msgstr "Nenhuma resposta do daemon HAL para definir o nível de brilho do monitor"
+#~ msgstr ""
+#~ "Nenhuma resposta do daemon HAL para definir o nível de brilho do monitor"
 
 #~ msgid "No reply from HAL daemon to get monitor brightness level"
-#~ msgstr "Nenhuma resposta do daemon HAL para obter o nível de brilho do monitor"
+#~ msgstr ""
+#~ "Nenhuma resposta do daemon HAL para obter o nível de brilho do monitor"
 
 #~ msgid "No reply from HAL daemon to get available cpu governors"
-#~ msgstr "Nenhuma resposta do daemon HAL para obter os governadores de cpu disponíveis"
+#~ msgstr ""
+#~ "Nenhuma resposta do daemon HAL para obter os governadores de cpu "
+#~ "disponíveis"
 
 #~ msgid "No reply from HAL daemon to get current cpu governor"
 #~ msgstr "Nenhuma resposta do daemon HAL para obter o governador de cpu atual"
@@ -1310,7 +1367,9 @@ msgstr "Plug-in de brilho"
 #~ msgstr "Nenhuma resposta do daemon HAL para definir o governador de cpu"
 
 #~ msgid "No reply from HAL daemon to set power save profile"
-#~ msgstr "Nenhuma resposta do daemon HAL para definir o perfil de economia de energia"
+#~ msgstr ""
+#~ "Nenhuma resposta do daemon HAL para definir o perfil de economia de "
+#~ "energia"
 
 #~ msgid "Failed to create dbus message\n"
 #~ msgstr "Falhou ao criar mensagem dbus\n"
