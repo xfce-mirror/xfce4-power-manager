@@ -31,11 +31,11 @@
 #endif
 
 #include <sys/types.h>
+#include <sys/sysctl.h>
+#include <sys/user.h>
 
 #if defined(__linux)
 #include <sys/param.h>
-#include <sys/sysctl.h>
-#include <sys/user.h>
 #elif defined(__FreeBSD__)
 #include <sys/stat.h>
 #elif defined(__SVR4) && defined(__sun)
