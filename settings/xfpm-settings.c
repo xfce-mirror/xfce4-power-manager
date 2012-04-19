@@ -614,8 +614,9 @@ format_brightness_value_cb (GtkScale *scale, gdouble value, gpointer data)
 void
 brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_battery_dpms_sleep) );
     gint value    = (gint)gtk_range_get_value (GTK_RANGE (w));
+#ifdef HAVE_DPMS
+    gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_battery_dpms_sleep) );
 
     if ( value != BRIGHTNESS_DISABLED )
     {
@@ -624,6 +625,7 @@ brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	    gtk_range_set_value (GTK_RANGE (on_battery_dpms_sleep), (value / 60) + 1);
 	}
     }
+#endif
     
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, value))
     {
@@ -634,8 +636,9 @@ brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 void
 brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_ac_dpms_sleep) );
     gint value    = (gint)gtk_range_get_value (GTK_RANGE (w));
+#ifdef HAVE_DPMS
+    gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_ac_dpms_sleep) );
 
     if ( value != BRIGHTNESS_DISABLED )
     {
@@ -644,7 +647,7 @@ brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	    gtk_range_set_value (GTK_RANGE (on_ac_dpms_sleep), (value / 60) + 1);
 	}
     }
-
+#endif
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, value))
     {
 	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_AC);
