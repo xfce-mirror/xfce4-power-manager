@@ -439,6 +439,7 @@ xfpm_power_tray_exit_activated_cb (gpointer data)
 static void
 xfpm_power_change_mode (XfpmPower *power, XfpmPowerMode mode)
 {
+#ifdef HAVE_DPMS
     XfpmDpms *dpms;
     
     power->priv->power_mode = mode;
@@ -455,6 +456,7 @@ xfpm_power_change_mode (XfpmPower *power, XfpmPowerMode mode)
     
 	g_object_unref (idletime);
     }
+#endif
 }
 
 static void
