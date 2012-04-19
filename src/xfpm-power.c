@@ -330,7 +330,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 				   _("An application is currently disabling the automatic sleep,"
 				   " doing this action now may damage the working state of this application,"
 				   " are you sure you want to hibernate the system?"),
-				   NULL);
+				   "");
 				   
 	if ( !ret )
 	    return;
