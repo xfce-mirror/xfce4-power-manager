@@ -318,8 +318,10 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
 	
 	if ( action == LID_TRIGGER_NOTHING )
 	{
+#ifdef HAVE_DPMS
 	    if ( !xfpm_is_multihead_connected () )
 		xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOff);
+#endif
 	}
 	else if ( action == LID_TRIGGER_LOCK_SCREEN )
 	{
@@ -340,7 +342,9 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
     else
     {
 	XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID opened");
+#ifdef HAVE_DPMS
 	xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOn);
+#endif
     }
 }
 
