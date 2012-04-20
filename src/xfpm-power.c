@@ -326,9 +326,9 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 
 	ret = xfce_dialog_confirm (NULL,
 				   GTK_STOCK_OK, _("_Hibernate"),
-				   _("An application is currently disabling the automatic sleep."
-				     "Doing this action now may damage the working state of this application?"),
-				   _("Are you sure you want to hibernate the system."));
+				   _("An application is currently disabling the automatic sleep. "
+				     "Doing this action now may damage the working state of this application."),
+				   _("Are you sure you want to hibernate the system?"));
 
 	if ( !ret )
 	    return;
