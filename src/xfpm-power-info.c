@@ -885,9 +885,6 @@ xfpm_info_connect (XfpmInfo *info)
     
     if ( error )
     {
-	xfce_dialog_show_error (NULL,
-				error,
-				NULL);
 	g_error ("Cannot connect to system bus : %s", error->message);
     }
 }
