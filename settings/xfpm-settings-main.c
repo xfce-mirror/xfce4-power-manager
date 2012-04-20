@@ -191,10 +191,9 @@ int main (int argc, char **argv)
 	g_print("\n");
 	start_xfpm_if_not_running =
 	    xfce_dialog_confirm (NULL, 
-				 GTK_STOCK_YES, 
-				 _("Run"), 
-				 _("Xfce4 Power Manager is not running, do you want to launch it now?"),
-				 NULL);
+				 GTK_STOCK_EXECUTE,
+				 _("Run"), NULL,
+				 _("Xfce4 Power Manager is not running, do you want to launch it now?"));
 	
 	if ( start_xfpm_if_not_running ) 
 	{
