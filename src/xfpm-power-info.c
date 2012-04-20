@@ -886,6 +886,7 @@ xfpm_info_connect (XfpmInfo *info)
     if ( error )
     {
 	g_error ("Cannot connect to system bus : %s", error->message);
+	g_error_free (error);
     }
 }
 
