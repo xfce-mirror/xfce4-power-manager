@@ -5,19 +5,19 @@
 # Hunt Xu <huntxu@live.cn>, 2008, 2009, 2010, 2011.
 # Chris K. Zhang <plutino@gmail.com>, 2009.
 # Chipong Luo <chipong.luo@yahoo.com>, 2011, 2012.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-20 13:21+0000\n"
+"POT-Creation-Date: 2012-03-11 02:06+0000\n"
 "PO-Revision-Date: 2011-02-15 21:22+0800\n"
 "Last-Translator: Chipong Luo <chipong.luo@yahoo.com>\n"
-"Language-Team: Chinese (Simplified) <xfce-i18n-cn@xfce.org>\n"
+"Language-Team: Chinese (Simplified) <xfce-i18n@xfce.org>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
@@ -49,10 +49,10 @@ msgid "Consider the computer on low power at:"
 msgstr "在此认为计算机处于低电量："
 
 #. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:820
-#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
-#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
+#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:817
+#: ../settings/xfpm-settings.c:885 ../settings/xfpm-settings.c:1034
+#: ../settings/xfpm-settings.c:1211 ../settings/xfpm-settings.c:1268
+#: ../settings/xfpm-settings.c:1320 ../src/xfpm-power.c:484
 #: ../src/xfpm-power.c:779
 msgid "Hibernate"
 msgstr "休眠"
@@ -63,7 +63,7 @@ msgstr "级别："
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "Lock screen when going for suspend/hibernate"
-msgstr "进入挂起/休眠时锁屏"
+msgstr "进入待机/休眠时锁屏"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
 msgid "Monitor"
@@ -73,10 +73,10 @@ msgstr "显示器"
 msgid "Monitor power management control"
 msgstr "显示器电源管理控制"
 
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:809
-#: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
-#: ../settings/xfpm-settings.c:1203 ../settings/xfpm-settings.c:1260
-#: ../settings/xfpm-settings.c:1312
+#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:806
+#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1023
+#: ../settings/xfpm-settings.c:1200 ../settings/xfpm-settings.c:1257
+#: ../settings/xfpm-settings.c:1309
 msgid "Nothing"
 msgstr "无"
 
@@ -118,20 +118,20 @@ msgstr "降低硬盘转速"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "Standby"
-msgstr "待机"
+msgstr "备用"
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:814
-#: ../settings/xfpm-settings.c:882 ../settings/xfpm-settings.c:1031
-#: ../settings/xfpm-settings.c:1208 ../settings/xfpm-settings.c:1265
-#: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
+#: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:811
+#: ../settings/xfpm-settings.c:879 ../settings/xfpm-settings.c:1028
+#: ../settings/xfpm-settings.c:1205 ../settings/xfpm-settings.c:1262
+#: ../settings/xfpm-settings.c:1314 ../src/xfpm-power.c:499
 #: ../src/xfpm-power.c:792
 msgid "Suspend"
-msgstr "挂起"
+msgstr "待机"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Switch off display when computer is inactive for:"
-msgstr "计算机此时间无活动后关闭显示器："
+msgstr "计算机此时间无活动后切断显示器："
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "System tray icon: "
@@ -197,93 +197,93 @@ msgstr "小时"
 msgid "Seconds"
 msgstr "秒"
 
-#: ../settings/xfpm-settings.c:792 ../settings/xfpm-settings.c:990
-#: ../settings/xfpm-settings.c:1470
+#: ../settings/xfpm-settings.c:789 ../settings/xfpm-settings.c:987
+#: ../settings/xfpm-settings.c:1467
 msgid "Hibernate and suspend operations not supported"
-msgstr "不支持休眠和挂起操作"
+msgstr "不支持休眠和待机操作"
 
-#: ../settings/xfpm-settings.c:797 ../settings/xfpm-settings.c:995
-#: ../settings/xfpm-settings.c:1475
+#: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:992
+#: ../settings/xfpm-settings.c:1472
 msgid "Hibernate and suspend operations not permitted"
-msgstr "不允许休眠和挂起操作"
+msgstr "不允许休眠和待机操作"
 
-#: ../settings/xfpm-settings.c:826 ../settings/xfpm-settings.c:1220
+#: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1217
 #: ../src/xfpm-power.c:805
 msgid "Shutdown"
 msgstr "关机"
 
-#: ../settings/xfpm-settings.c:830 ../settings/xfpm-settings.c:1224
-#: ../settings/xfpm-settings.c:1275 ../settings/xfpm-settings.c:1327
+#: ../settings/xfpm-settings.c:827 ../settings/xfpm-settings.c:1221
+#: ../settings/xfpm-settings.c:1272 ../settings/xfpm-settings.c:1324
 msgid "Ask"
 msgstr "询问"
 
-#: ../settings/xfpm-settings.c:892 ../settings/xfpm-settings.c:1041
+#: ../settings/xfpm-settings.c:889 ../settings/xfpm-settings.c:1038
 msgid "Lock screen"
 msgstr "锁屏"
 
-#: ../settings/xfpm-settings.c:960 ../settings/xfpm-settings.c:1110
+#: ../settings/xfpm-settings.c:957 ../settings/xfpm-settings.c:1107
 msgid "Spinning down hard disks permission denied"
-msgstr "无权限降低硬盘转速"
+msgstr "无降低硬盘转速权限"
 
-#: ../settings/xfpm-settings.c:1150
+#: ../settings/xfpm-settings.c:1147
 msgid "Always show icon"
 msgstr "总是显示图标"
 
-#: ../settings/xfpm-settings.c:1153
+#: ../settings/xfpm-settings.c:1150
 msgid "When battery is present"
 msgstr "有电池时"
 
-#: ../settings/xfpm-settings.c:1156
+#: ../settings/xfpm-settings.c:1153
 msgid "When battery is charging or discharging"
 msgstr "电池充电或放电时"
 
-#: ../settings/xfpm-settings.c:1159
+#: ../settings/xfpm-settings.c:1156
 msgid "Never show icon"
 msgstr "从不显示图标"
 
-#: ../settings/xfpm-settings.c:1185
+#: ../settings/xfpm-settings.c:1182
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr "禁用显示器电源管理信号(DPMS)，比如，不关闭显示或切换到睡眠模式。"
+msgstr "禁用显示器电源管理信号(DPMS)，比如不尝试切断显示器或使之处于睡眠模式。"
 
-#: ../settings/xfpm-settings.c:1379
+#: ../settings/xfpm-settings.c:1376
 msgid "Suspend operation not supported"
-msgstr "不支持挂起操作"
+msgstr "不支持待机操作"
 
-#: ../settings/xfpm-settings.c:1385
+#: ../settings/xfpm-settings.c:1382
 msgid "Suspend operation not permitted"
-msgstr "不允许挂起操作"
+msgstr "不允许待机操作"
 
-#: ../settings/xfpm-settings.c:1391
+#: ../settings/xfpm-settings.c:1388
 msgid "Hibernate operation not supported"
 msgstr "不支持休眠操作"
 
-#: ../settings/xfpm-settings.c:1396
+#: ../settings/xfpm-settings.c:1393
 msgid "Hibernate operation not permitted"
 msgstr "不允许休眠操作"
 
-#: ../settings/xfpm-settings.c:1443
+#: ../settings/xfpm-settings.c:1440
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "当所有计算机电源到达此电量级别"
 
-#: ../settings/xfpm-settings.c:1546 ../settings/xfpm-settings.c:1551
+#: ../settings/xfpm-settings.c:1543 ../settings/xfpm-settings.c:1548
 msgid "General"
 msgstr "一般"
 
-#: ../settings/xfpm-settings.c:1560 ../settings/xfpm-settings.c:1565
+#: ../settings/xfpm-settings.c:1557 ../settings/xfpm-settings.c:1562
 msgid "On AC"
 msgstr "使用交流电源"
 
-#: ../settings/xfpm-settings.c:1575 ../settings/xfpm-settings.c:1580
+#: ../settings/xfpm-settings.c:1572 ../settings/xfpm-settings.c:1577
 msgid "On Battery"
 msgstr "使用电池"
 
-#: ../settings/xfpm-settings.c:1589 ../settings/xfpm-settings.c:1594
+#: ../settings/xfpm-settings.c:1586 ../settings/xfpm-settings.c:1591
 msgid "Extended"
 msgstr "扩展"
 
-#: ../settings/xfpm-settings.c:1662
+#: ../settings/xfpm-settings.c:1659
 msgid "Check your power manager installation"
 msgstr "检查您的电源管理器安装"
 
@@ -296,7 +296,7 @@ msgid "SOCKET ID"
 msgstr "套接字 ID"
 
 #: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
-#: ../src/xfpm-power-info.c:946
+#: ../src/xfpm-power-info.c:948
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "输入 ‘%s --help’ 获取用法。"
@@ -325,7 +325,7 @@ msgstr "Xfce4 电源管理器未运行，您现在要启动它吗？"
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:351 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-battery.c:349 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "电源管理器"
 
@@ -339,31 +339,24 @@ msgstr ""
 "HuntXu <huntxu@live.cn>\n"
 "Chipong Luo <chipong.luo@yahoo.com>, 2011, 2012."
 
-#: ../src/xfpm-power.c:328
-msgid "_Hibernate"
-msgstr "休眠（_H）"
-
-#: ../src/xfpm-power.c:329
+#: ../src/xfpm-power.c:330
 msgid ""
-"An application is currently disabling the automatic sleep.Doing this action "
-"now may damage the working state of this application?"
+"An application is currently disabling the automatic sleep, doing this action "
+"now may damage the working state of this application, are you sure you want "
+"to hibernate the system?"
 msgstr ""
 "当前有应用程序禁用了自动睡眠，执行此动作可能会损坏此应用程序的工作状态，您确"
 "定要休眠系统吗？"
 
-#: ../src/xfpm-power.c:331
-msgid "Are you sure you want to hibernate the system."
-msgstr "你确定要将系统休眠吗？"
-
-#: ../src/xfpm-power.c:426
+#: ../src/xfpm-power.c:428
 msgid "Quit"
 msgstr "退出"
 
-#: ../src/xfpm-power.c:427
+#: ../src/xfpm-power.c:429
 msgid "All running instances of the power manager will exit"
 msgstr "所有正在运行的电源管理器实例都将退出"
 
-#: ../src/xfpm-power.c:429
+#: ../src/xfpm-power.c:431
 msgid "Quit the power manager?"
 msgstr "退出电源管理器？"
 
@@ -375,8 +368,7 @@ msgstr "电源信息"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save,
-#. normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "模式"
@@ -397,7 +389,7 @@ msgstr "系统休眠"
 
 #: ../src/xfpm-power.c:704
 msgid "Suspend the system"
-msgstr "挂起系统"
+msgstr "系统待机"
 
 #: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
@@ -424,7 +416,7 @@ msgstr ""
 msgid "Adaptor is offline"
 msgstr "适配器已断开"
 
-#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:413
+#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
 #, c-format
 msgid "Adaptor is online"
 msgstr "适配器已连接"
@@ -438,13 +430,13 @@ msgstr "无权限"
 #: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
-msgstr "不支持挂起"
+msgstr "不支持待机"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 msgid "Battery"
 msgstr "电池"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
 msgid "UPS"
 msgstr "不间断电源"
 
@@ -469,7 +461,7 @@ msgid "Phone"
 msgstr "电话"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:850
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
 msgid "Unknown"
 msgstr "未知"
 
@@ -497,17 +489,17 @@ msgstr "镍镉电池"
 msgid "Nickel metal hybride"
 msgstr "镍合金电池"
 
-#: ../src/xfpm-battery.c:171
+#: ../src/xfpm-battery.c:169
 msgid "Unknown time"
 msgstr "未知时间"
 
-#: ../src/xfpm-battery.c:177
+#: ../src/xfpm-battery.c:175
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i 分钟"
 
-#: ../src/xfpm-battery.c:188
+#: ../src/xfpm-battery.c:186
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -515,32 +507,32 @@ msgstr[0] "%i 小时"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../src/xfpm-battery.c:194
+#: ../src/xfpm-battery.c:192
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: ../src/xfpm-battery.c:195
+#: ../src/xfpm-battery.c:193
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "小时"
 
-#: ../src/xfpm-battery.c:196
+#: ../src/xfpm-battery.c:194
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "分钟"
 
-#: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
+#: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "您的 %s 充电完毕"
 
-#: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
+#: ../src/xfpm-battery.c:212 ../src/xfpm-battery.c:263
 #, c-format
 msgid "Your %s is charging"
 msgstr "您的 %s 正在充电"
 
-#: ../src/xfpm-battery.c:224
+#: ../src/xfpm-battery.c:222
 #, c-format
 msgid ""
 "%s (%i%%)\n"
@@ -549,17 +541,17 @@ msgstr ""
 "%s(%i%%)\n"
 "离充完电还有 %s。"
 
-#: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
+#: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
 #, c-format
 msgid "Your %s is discharging"
 msgstr "您的 %s 正在放电"
 
-#: ../src/xfpm-battery.c:234
+#: ../src/xfpm-battery.c:232
 #, c-format
 msgid "System is running on %s power"
 msgstr "系统正在使用 %s 电源"
 
-#: ../src/xfpm-battery.c:244
+#: ../src/xfpm-battery.c:242
 #, c-format
 msgid ""
 "%s (%i%%)\n"
@@ -568,17 +560,17 @@ msgstr ""
 "%s(%i%%)\n"
 "预计剩余时间是 %s。"
 
-#: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
+#: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
 #, c-format
 msgid "Your %s is empty"
 msgstr "您的 %s 没电"
 
-#: ../src/xfpm-battery.c:413
+#: ../src/xfpm-battery.c:408
 #, c-format
 msgid "System is running on battery power"
 msgstr "系统正在使用电池电源"
 
-#: ../src/xfpm-battery.c:420
+#: ../src/xfpm-battery.c:415
 #, c-format
 msgid ""
 "%s\n"
@@ -589,7 +581,7 @@ msgstr ""
 "您的 %s 充电完毕(%i%%)。\n"
 "提供 %s 运行时间"
 
-#: ../src/xfpm-battery.c:429
+#: ../src/xfpm-battery.c:424
 #, c-format
 msgid ""
 "%s\n"
@@ -598,7 +590,7 @@ msgstr ""
 "%s\n"
 "您的 %s 充电完毕(%i%%)。"
 
-#: ../src/xfpm-battery.c:440
+#: ../src/xfpm-battery.c:435
 #, c-format
 msgid ""
 "%s\n"
@@ -609,7 +601,7 @@ msgstr ""
 "您的 %s 正在充电(%i%%)\n"
 "离充电完毕还有 %s。"
 
-#: ../src/xfpm-battery.c:449
+#: ../src/xfpm-battery.c:444
 #, c-format
 msgid ""
 "%s\n"
@@ -618,7 +610,7 @@ msgstr ""
 "%s\n"
 "您的 %s 正在充电(%i%%)。"
 
-#: ../src/xfpm-battery.c:460
+#: ../src/xfpm-battery.c:455
 #, c-format
 msgid ""
 "%s\n"
@@ -629,7 +621,7 @@ msgstr ""
 "您的 %s 正在放电(%i%%)\n"
 "预计剩余时间 %s。"
 
-#: ../src/xfpm-battery.c:469
+#: ../src/xfpm-battery.c:464
 #, c-format
 msgid ""
 "%s\n"
@@ -638,7 +630,7 @@ msgstr ""
 "%s\n"
 "您的 %s 正在放电(%i%%)。"
 
-#: ../src/xfpm-battery.c:478
+#: ../src/xfpm-battery.c:473
 #, c-format
 msgid ""
 "%s\n"
@@ -647,7 +639,7 @@ msgstr ""
 "%s\n"
 "%s 正在等待放电(%i%%)。"
 
-#: ../src/xfpm-battery.c:482
+#: ../src/xfpm-battery.c:477
 #, c-format
 msgid ""
 "%s\n"
@@ -656,7 +648,7 @@ msgstr ""
 "%s\n"
 "%s 正在等待充电(%i%%)。"
 
-#: ../src/xfpm-battery.c:486
+#: ../src/xfpm-battery.c:481
 #, c-format
 msgid ""
 "%s\n"
@@ -665,27 +657,27 @@ msgstr ""
 "%s\n"
 "您的 %s 没电"
 
-#: ../src/xfpm-battery.c:829
+#: ../src/xfpm-battery.c:821
 msgid "battery"
 msgstr "电池"
 
-#: ../src/xfpm-battery.c:835
+#: ../src/xfpm-battery.c:827
 msgid "monitor battery"
 msgstr "显示器电池"
 
-#: ../src/xfpm-battery.c:838
+#: ../src/xfpm-battery.c:830
 msgid "mouse battery"
 msgstr "鼠标电池"
 
-#: ../src/xfpm-battery.c:841
+#: ../src/xfpm-battery.c:833
 msgid "keyboard battery"
 msgstr "键盘电池"
 
-#: ../src/xfpm-battery.c:844
+#: ../src/xfpm-battery.c:836
 msgid "PDA battery"
 msgstr "掌上电脑电池"
 
-#: ../src/xfpm-battery.c:847
+#: ../src/xfpm-battery.c:839
 msgid "Phone battery"
 msgstr "手机电池"
 
@@ -750,7 +742,7 @@ msgstr "没有 DPMS 支持\n"
 
 #: ../src/xfpm-main.c:141
 msgid "Can suspend"
-msgstr "可以挂起"
+msgstr "可以待机"
 
 #: ../src/xfpm-main.c:143
 msgid "Can hibernate"
@@ -762,7 +754,7 @@ msgstr "可以降低硬盘转速"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr "已授权挂起"
+msgstr "已授权待机"
 
 #: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
@@ -778,7 +770,7 @@ msgstr "已授权降低硬盘转速"
 
 #: ../src/xfpm-main.c:155
 msgid "Has battery"
-msgstr "有电池"
+msgstr "电池供电"
 
 #: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
@@ -824,7 +816,7 @@ msgstr "显示配置对话框"
 msgid "Quit any running xfce power manager"
 msgstr "退出任何正在运行的 Xfce 电源管理器"
 
-#: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:933
+#: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:935
 msgid "Version information"
 msgstr "版本信息"
 
@@ -869,7 +861,7 @@ msgstr "内核核心"
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr "处理器间中断"
+msgstr "处理器中断"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
@@ -889,7 +881,7 @@ msgstr "ACPI"
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
-msgstr "串行 ATA "
+msgstr "ATA 串口"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
