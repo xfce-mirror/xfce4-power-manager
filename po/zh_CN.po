@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-21 12:21+0000\n"
+"POT-Creation-Date: 2012-04-22 22:51+0000\n"
 "PO-Revision-Date: 2011-02-15 21:22+0800\n"
 "Last-Translator: Chipong Luo <chipong.luo@yahoo.com>\n"
 "Language-Team: Chinese (Simplified) <xfce-i18n-cn@xfce.org>\n"
@@ -131,7 +131,7 @@ msgstr "挂起"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Switch off display when computer is inactive for:"
-msgstr "此时间无活动后切断显示器："
+msgstr "此时间无活动后关闭显示器："
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "System tray icon: "
@@ -223,7 +223,7 @@ msgstr "锁屏"
 
 #: ../settings/xfpm-settings.c:960 ../settings/xfpm-settings.c:1110
 msgid "Spinning down hard disks permission denied"
-msgstr "无降低硬盘转速权限"
+msgstr "无降低硬盘转速的权限"
 
 #: ../settings/xfpm-settings.c:1150
 msgid "Always show icon"
@@ -245,7 +245,7 @@ msgstr "从不显示图标"
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr "禁用显示器电源管理信号(DPMS)，比如不尝试切断显示器或使之处于睡眠模式。"
+msgstr "禁用显示器电源管理信号(DPMS)，比如不尝试关闭显示器或使之处于睡眠模式。"
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -281,7 +281,7 @@ msgstr "使用电池"
 
 #: ../settings/xfpm-settings.c:1589 ../settings/xfpm-settings.c:1594
 msgid "Extended"
-msgstr "扩展"
+msgstr "扩展的"
 
 #: ../settings/xfpm-settings.c:1662
 msgid "Check your power manager installation"
@@ -336,7 +336,6 @@ msgstr "Xfce 电源管理器设置"
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
 msgstr ""
-"HuntXu <huntxu@live.cn>\n"
 "Chipong Luo <chipong.luo@yahoo.com>, 2011, 2012."
 
 #: ../src/xfpm-power.c:328
@@ -574,7 +573,7 @@ msgstr "您的 %s 没电"
 #: ../src/xfpm-battery.c:413
 #, c-format
 msgid "System is running on battery power"
-msgstr "系统正在使用电池电源"
+msgstr "系统正在使用电池供电"
 
 #: ../src/xfpm-battery.c:420
 #, c-format
@@ -585,7 +584,7 @@ msgid ""
 msgstr ""
 "%s\n"
 "您的 %s 充电完毕(%i%%)。\n"
-"提供 %s 运行时间"
+"提供 %s 运行时间。"
 
 #: ../src/xfpm-battery.c:429
 #, c-format
@@ -604,7 +603,7 @@ msgid ""
 "%s until is fully charged."
 msgstr ""
 "%s\n"
-"您的 %s 正在充电(%i%%)\n"
+"您的 %s 正在充电(%i%%)，\n"
 "离充电完毕还有 %s。"
 
 #: ../src/xfpm-battery.c:449
@@ -624,7 +623,7 @@ msgid ""
 "Estimated time left is %s."
 msgstr ""
 "%s\n"
-"您的 %s 正在放电(%i%%)\n"
+"您的 %s 正在放电(%i%%)，\n"
 "预计剩余时间 %s。"
 
 #: ../src/xfpm-battery.c:469
@@ -820,7 +819,7 @@ msgstr "显示配置对话框"
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
-msgstr "退出任何正在运行的 Xfce 电源管理器"
+msgstr "退出所有正在运行的 Xfce 电源管理器"
 
 #: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:933
 msgid "Version information"
@@ -842,12 +841,12 @@ msgstr "Xfce 电源管理器已在运行"
 #: ../src/xfpm-inhibit.c:331
 #, c-format
 msgid "Invalid arguments"
-msgstr "无效参数"
+msgstr "无效的参数"
 
 #: ../src/xfpm-inhibit.c:357
 #, c-format
 msgid "Invalid cookie"
-msgstr "无效隐私信息"
+msgstr "无效的隐私信息"
 
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
