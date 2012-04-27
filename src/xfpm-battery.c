@@ -608,9 +608,24 @@ static void
 xfpm_battery_changed_cb (DBusGProxy *proxy, XfpmBattery *battery)
 {
     GHashTable *props;
+    GValue *value;
+    const gchar *cstr;
+    const gchar *p;
 
     props = xfpm_power_get_interface_properties (battery->priv->proxy_prop,
 						 UPOWER_IFACE_DEVICE);
+
+    value = g_hash_table_lookup (props, "NativePath");
+    if ( value )
+    {
+	cstr = g_value_get_string (value);
+	p = strrchr (cstr, '/');
+	if ( p && (strncmp( p, "/hid-", 5 ) == 0) )
+	{
+	    XFPM_DEBUG("Ignoring battery '%s' - is a HID device\n", cstr);
+	    return;
+	}
+    }
 
     if ( props )
 	xfpm_battery_refresh (battery, props);
