@@ -410,6 +410,20 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 	    i++;
 	}
 	
+	value = g_hash_table_lookup (props, "Percentage");
+
+	if ( value )
+	{
+	    str = g_strdup_printf("%d", (guint) g_value_get_double (value));
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter,
+				XFPM_DEVICE_INFO_NAME, _("Energy percent"),
+				XFPM_DEVICE_INFO_VALUE, str,
+				-1);
+	    i++;
+	    g_free(str);
+	}
+
 	/* TRANSLATORS: Unit here is What hour*/
 	str = xfpm_info_get_energy_property (props, "EnergyFullDesign", _("Wh"));
 	
