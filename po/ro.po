@@ -3,7 +3,7 @@
 # Copyright (C) 2012 THE xfce4-power-manager'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the xfce4-power-manager package.
 # Mișu Moldovan <dumol@xfce.org>, 2012.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-power-manager 1.1\n"
@@ -12,13 +12,12 @@ msgstr ""
 "PO-Revision-Date: 2012-04-27 12:12+0300\n"
 "Last-Translator: Mișu Moldovan <dumol@xfce.org>\n"
 "Language-Team: Romanian <diacritice@googlegroups.com>\n"
-"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
-"20)) ? 1 : 2);;\n"
+"Language: ro\n"
 "X-Generator: Virtaal 0.7.0\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);;\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
 #: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
@@ -378,10 +377,11 @@ msgstr "Consum de curent"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save,
+#. normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
-msgstr "Mod"
+msgstr "Profil"
 
 #. Normal
 #: ../src/xfpm-power.c:561
@@ -479,15 +479,15 @@ msgstr "Necunoscută"
 
 #: ../src/xfpm-power-common.c:155
 msgid "Lithium ion"
-msgstr "Litiu-Ion"
+msgstr "Litiu - Ion"
 
 #: ../src/xfpm-power-common.c:157
 msgid "Lithium polymer"
-msgstr "Litiu-Polimer"
+msgstr "Litiu - Polimer"
 
 #: ../src/xfpm-power-common.c:159
 msgid "Lithium iron phosphate"
-msgstr "Litiu-Fosfat de fier"
+msgstr "Litiu - Fosfat de fier"
 
 #: ../src/xfpm-power-common.c:161
 msgid "Lead acid"
@@ -495,11 +495,11 @@ msgstr "Plăci de plumb"
 
 #: ../src/xfpm-power-common.c:163
 msgid "Nickel cadmium"
-msgstr "Nichel-Cadmiu"
+msgstr "Nichel - Cadmiu"
 
 #: ../src/xfpm-power-common.c:165
 msgid "Nickel metal hybride"
-msgstr "Nichel-Metal hibrid"
+msgstr "Hibrid Nichel - Metal"
 
 #: ../src/xfpm-battery.c:171
 msgid "Unknown time"
@@ -526,7 +526,7 @@ msgstr[2] "%i de ore"
 #: ../src/xfpm-battery.c:194
 #, c-format
 msgid "%i %s %i %s"
-msgstr "%i %s %i %s"
+msgstr "%i %s și %i %s"
 
 #: ../src/xfpm-battery.c:195
 msgid "hour"
@@ -545,7 +545,7 @@ msgstr[2] "de minute"
 #: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "%s este 100% încărcată"
+msgstr "%s este complet încărcată"
 
 #: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
 #, c-format
@@ -679,19 +679,19 @@ msgstr ""
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
-msgstr "baterie"
+msgstr "Baterie"
 
 #: ../src/xfpm-battery.c:835
 msgid "monitor battery"
-msgstr "baterie monitor"
+msgstr "Baterie monitor"
 
 #: ../src/xfpm-battery.c:838
 msgid "mouse battery"
-msgstr "baterie maus"
+msgstr "Baterie maus"
 
 #: ../src/xfpm-battery.c:841
 msgid "keyboard battery"
-msgstr "baterie tastatură"
+msgstr "Baterie tastatură"
 
 #: ../src/xfpm-battery.c:844
 msgid "PDA battery"
@@ -826,7 +826,7 @@ msgstr "Salvează toate detaliile"
 
 #: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Reinițializează instanța pornită a managerului de consum Xfce"
+msgstr "Reinițializează managerul de consum Xfce pornit"
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
@@ -834,7 +834,7 @@ msgstr "Arată un dialog de configurare"
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
-msgstr "Închide orice instanță pornită a managerului de consum Xfce"
+msgstr "Închide managerul de consum Xfce pornit"
 
 #: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:933
 msgid "Version information"
@@ -856,12 +856,12 @@ msgstr "Managerul de consum Xfce este deja pornit"
 #: ../src/xfpm-inhibit.c:331
 #, c-format
 msgid "Invalid arguments"
-msgstr "Opțiuni invalide"
+msgstr "Opțiuni nevalide"
 
 #: ../src/xfpm-inhibit.c:357
 #, c-format
 msgid "Invalid cookie"
-msgstr "Cookie invalid"
+msgstr "Cookie nevalid"
 
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
@@ -876,7 +876,7 @@ msgstr "Modul de kernel"
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
-msgstr "Nucleu kernel"
+msgstr "Nucleu de kernel"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
@@ -919,7 +919,7 @@ msgstr "Adaptor fără fir 802.11"
 #: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
-msgstr "Cronometru %s"
+msgstr "Declanșator %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
