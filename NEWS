@@ -1,3 +1,18 @@
+1.2.0
+=====
+- Fix compilation without dpms.
+- Fix incorrect dialog message and error.
+- Plug memory leak.
+- Use valid printf string.
+- Fix compilation with polkit in freebsd (bug #8712).
+- Translation updates: Czech, Danish, German, English (United
+  Kingdom), Spanish (Castilian), Basque, Finnish, French, Galician,
+  Croatian, Hungarian, Italian, Japanese, Kazakh, Korean, Lithuanian,
+  Dutch (Flemish), Norwegian Nynorsk, Portuguese, Portuguese
+  (Brazilian), Romanian, Russian, Slovak, Ukrainian, Chinese (China),
+  Chinese (Taiwan).
+
+
 1.1.0
 =====
 - Show dialog in settings category.
@@ -5,7 +20,7 @@
 - Put traps around X functions (bug #7999).
 - Prevent idle being called on removed battery (bug #7851).
 - Fix brightness not working with numlock on (bug #6549).
-- Translation updates: Greek, French, Japanese, Korean, Dutch 
+- Translation updates: Greek, French, Japanese, Korean, Dutch
   (Flemish), Polish, Portuguese, Turkish.
 
 
@@ -36,7 +51,7 @@
 =======
 - Because on some systems we might not have the brightness keys mapped.
   LCD brightness change are not reflected to xfpm when keys are pressed, so
-  save the actual brightness before dimming the screen on idle to restore it 
+  save the actual brightness before dimming the screen on idle to restore it
   afterword. (bug #5811).
 - Check if DPMS is enabled before doing action on lid close event (bug #5805).
 - Allow 1% as a minimum critical charge level.
@@ -53,7 +68,7 @@
 =======
 - Missing signal handler for power button settings (bug #5656).
 - Allow 5% as a minimum critical charge instead of 10%.
-- Change some property names, specially for buttons to avoid 
+- Change some property names, specially for buttons to avoid
   problems with old 0.6 configuration.
 
 0.8.3
@@ -62,6 +77,6 @@
 - Make it possible to compile without network manager support.
 - Add never show icon to the system tray configuration (bug #5613).
 - Fix a typo that prevents from getting the correct critical configuration (bug #5619).
-- Use Gtk as a popup indicator to show the brightness level as the cairo seems to be 
+- Use Gtk as a popup indicator to show the brightness level as the cairo seems to be
   problematic on some hardware. (bug #5544 #5632).
 - Better alignement in the interface file, worked by Josef Havran.
