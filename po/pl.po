@@ -2,20 +2,21 @@
 # Copyright (C) 2011 xfce4-power-manager COPYRIGHT HOLDER
 # This file is distributed under the same license as the xfce4-power-manager package.
 # Piotr Sokół <psokol@jabster.pl>, 2011, 2012.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce-power-manager 1.0.10\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-29 11:33+0000\n"
-"PO-Revision-Date: 2012-04-12 09:28+0200\n"
+"PO-Revision-Date: 2012-04-29 18:56+0200\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: polski <>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bits\n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2));\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n"
+"%100<10 || n%100>=20)) ? 1 : 2));\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -88,25 +89,23 @@ msgstr "Oszczędzanie energii w zamian za niższą wydajność"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
-msgstr ""
-"Czas bezczynności, po którym ekran zostanie wprowadzony w stan uśpienia:"
+msgstr "Czas bezczynności trybu niskiego poboru energii?"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Put the computer to sleep when inactive for:"
-msgstr ""
-"Czas bezczynności, po którym komputer zostanie wprowadzony w stan uśpienia:"
+msgstr "Czas bezczynności wstrzymania działania komputera:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Czas bezczynności, po którym zostanie zmniejszona jasność ekranu:"
+msgstr "Czas bezczynności zmniejszenia jasności ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
-msgstr "Tryb niskiego poboru mocy komputera:"
+msgstr "Tryb niskiego poboru energii komputera:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "Set monitor sleep mode:"
-msgstr "Tryb niskiego poboru mocy ekranu:"
+msgstr "Tryb niskiego poboru energii ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Show notifications to notify about the battery state"
@@ -131,7 +130,7 @@ msgstr "Wstrzymanie"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Switch off display when computer is inactive for:"
-msgstr "Czas bezczynności, po którym ekran zostanie wygaszony:"
+msgstr "Czas bezczynności wygaszenia ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "System tray icon: "
@@ -246,8 +245,8 @@ msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr ""
-"Wyłączenie obsługi standardu DPMS (np. wyłączania lub wstrzymywania "
-"działania ekranu)."
+"Przełącza obsługę standardu DPMS (np. wyłączania lub wstrzymywania działania "
+"ekranu)."
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -343,23 +342,20 @@ msgid "translator-credits"
 msgstr "Piotr Sokół <psokol@jabster.pl>, 2011, 2012."
 
 #: ../src/xfpm-power.c:328
-#, fuzzy
 msgid "_Hibernate"
-msgstr "Zahibernowanie"
+msgstr "_Zahibernuj"
 
 #: ../src/xfpm-power.c:329
-#, fuzzy
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action "
 "now may damage the working state of this application."
 msgstr ""
-"Aktualnie uruchomiony program zapobiega automatycznemu wstrzymaniu dzałania "
-"komputera. Kontynuowanie może spowodować jego niewłaściwe działanie. "
-"Zahibernować działanie komputera?"
+"Aktualnie uruchomiony program zapobiega automatycznemu wstrzymaniu działania "
+"komputera. Kontynuowanie może spowodować jego niewłaściwe działanie."
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "Zahibernować działanie komputera?"
 
 #: ../src/xfpm-power.c:426
 msgid "Quit"
