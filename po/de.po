@@ -7,19 +7,18 @@
 # Christian Weiske, 2010.
 # Hubert Hesse, 2010.
 # Paul Seyfert, 2010.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-02 12:45+0000\n"
-"PO-Revision-Date: 2012-04-14 16:22+0200\n"
-"Last-Translator: Jakob Kramer <jakob.kramer@gmx.de>\n"
+"POT-Creation-Date: 2012-10-07 10:27+0000\n"
+"PO-Revision-Date: 2012-10-07 17:16+0100\n"
+"Last-Translator: Raphael Groner <raphgro(at)web(dot)de>\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
@@ -391,8 +390,7 @@ msgstr "Batterieinformationen"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save,
-#. normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "Betriebsart"
@@ -581,13 +579,14 @@ msgstr "Ihr %s wird entladen"
 msgid "System is running on %s power"
 msgstr "System läuft mit Strom von %s"
 
+# "wird entladen" ist hier redundant, da sonst doppelt in Kombination mit Ersetzung für %s.
 #: ../src/xfpm-battery.c:244
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr ""
-"%s wird entladen (%i%%)\n"
+"%s (%i%%)\n"
 "Geschätzte verbleibende Zeit: %s."
 
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
@@ -601,44 +600,44 @@ msgid "System is running on battery power"
 msgstr "System läuft gerade im Batteriebetrieb"
 
 #: ../src/xfpm-battery.c:420
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
 msgstr ""
 "%s\n"
-"%s ist voll geladen (%i%%).\n"
+"Ihr %s ist voll geladen (%i%%).\n"
 "Stellt %s Laufzeit zur Verfügung"
 
 #: ../src/xfpm-battery.c:429
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
 msgstr ""
 "%s\n"
-"%s ist vollständig geladen (%i%%)"
+"Ihr %s ist vollständig geladen (%i%%)"
 
 #: ../src/xfpm-battery.c:440
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
 msgstr ""
 "%s\n"
-"%s lädt (%i%%)\n"
+"Ihr %s lädt (%i%%)\n"
 " %s bis vollständig geladen."
 
 #: ../src/xfpm-battery.c:449
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
 msgstr ""
 "%s\n"
-"%s wird geladen (%i%%)."
+"Ihr %s wird geladen (%i%%)."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -652,13 +651,13 @@ msgstr ""
 "Geschätzte verbleibende Zeit: %s"
 
 #: ../src/xfpm-battery.c:469
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
 msgstr ""
 "%s\n"
-"%s wird entladen (%i%%)."
+"Ihr %s wird entladen (%i%%)."
 
 #: ../src/xfpm-battery.c:478
 #, c-format
