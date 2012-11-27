@@ -2,20 +2,22 @@
 # Copyright (C) 2011 xfce4-power-manager COPYRIGHT HOLDER
 # This file is distributed under the same license as the xfce4-power-manager package.
 # Piotr Sokół <psokol@jabster.pl>, 2011, 2012.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce-power-manager 1.0.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-28 09:21+0000\n"
-"PO-Revision-Date: 2012-04-29 18:56+0200\n"
+"POT-Creation-Date: 2012-11-27 11:36+0000\n"
+"PO-Revision-Date: 2012-11-27 18:15+0100\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: polski <>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bits\n"
-"Language: pl\n"
-"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2));\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n"
+"%100<10 || n%100>=20)) ? 1 : 2));\n"
+"X-Generator: Gtranslator 2.91.5\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
 msgid "<b>Actions</b>"
@@ -88,15 +90,16 @@ msgstr "Oszczędzanie energii w zamian za niższą wydajność"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
-msgstr "Czas bezczynności trybu niskiego poboru energii?"
+msgstr ""
+"Czas bezczynności wymagany do przejścia w tryb niskiego poboru energii:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Put the computer to sleep when inactive for:"
-msgstr "Czas bezczynności wstrzymania działania komputera:"
+msgstr "Czas bezczynności wymagany do wstrzymania działania komputera:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Czas bezczynności zmniejszenia jasności ekranu:"
+msgstr "Czas bezczynności wymagany do zmniejszenia jasności ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Set computer inactivity sleep mode:"
@@ -129,7 +132,7 @@ msgstr "Wstrzymanie"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Switch off display when computer is inactive for:"
-msgstr "Czas bezczynności wygaszenia ekranu:"
+msgstr "Czas bezczynności wymagany do wygaszenia ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "System tray icon: "
@@ -167,7 +170,7 @@ msgstr "Nigdy"
 
 #: ../settings/xfpm-settings.c:570
 msgid "One minute"
-msgstr "Jedna minuta"
+msgstr "1 minuta"
 
 #: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:584
 msgid "Minutes"
@@ -176,11 +179,11 @@ msgstr "minut"
 #: ../settings/xfpm-settings.c:586 ../settings/xfpm-settings.c:593
 #: ../settings/xfpm-settings.c:594 ../settings/xfpm-settings.c:595
 msgid "One hour"
-msgstr "Jedna godzina"
+msgstr "1 godzina"
 
 #: ../settings/xfpm-settings.c:594 ../settings/xfpm-settings.c:598
 msgid "one minute"
-msgstr "jedna minuta"
+msgstr "1 minuta"
 
 #: ../settings/xfpm-settings.c:595 ../settings/xfpm-settings.c:599
 msgid "minutes"
@@ -189,7 +192,7 @@ msgstr "minut"
 #: ../settings/xfpm-settings.c:597 ../settings/xfpm-settings.c:598
 #: ../settings/xfpm-settings.c:599
 msgid "hours"
-msgstr "godzin"
+msgstr "godziny"
 
 #: ../settings/xfpm-settings.c:611
 msgid "Seconds"
@@ -203,7 +206,7 @@ msgstr "Hibernowanie i wstrzymywanie pracy komputera nie jest obsługiwane"
 #: ../settings/xfpm-settings.c:797 ../settings/xfpm-settings.c:995
 #: ../settings/xfpm-settings.c:1475
 msgid "Hibernate and suspend operations not permitted"
-msgstr "Brak uprawnień, aby wstrzymać lub zahibernować pracę komputera"
+msgstr "Brak uprawnień, aby wstrzymać lub zahibernować działanie komputera"
 
 #: ../settings/xfpm-settings.c:826 ../settings/xfpm-settings.c:1220
 #: ../src/xfpm-power.c:805
@@ -229,7 +232,7 @@ msgstr "Zawsze"
 
 #: ../settings/xfpm-settings.c:1153
 msgid "When battery is present"
-msgstr "Po wykryciu akumulatora"
+msgstr "Podczas obecności akumulatora"
 
 #: ../settings/xfpm-settings.c:1156
 msgid "When battery is charging or discharging"
@@ -257,16 +260,17 @@ msgstr "Brak uprawnień, aby wstrzymać pracę komputera"
 
 #: ../settings/xfpm-settings.c:1391
 msgid "Hibernate operation not supported"
-msgstr "Hibernowanie pracy komputera nie jest obsługiwane"
+msgstr "Hibernowanie działania komputera nie jest obsługiwane"
 
 #: ../settings/xfpm-settings.c:1396
 msgid "Hibernate operation not permitted"
-msgstr "Brak uprawnień, aby zahibernować pracę komputera"
+msgstr "Brak uprawnień, aby zahibernować działanie komputera"
 
 #: ../settings/xfpm-settings.c:1443
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
-"Kiedy wszystkie źródła zasilania osiągną następujący poziom naładowania"
+"Określa poziom naładowania źródeł zasilania interpretowany jako bliski "
+"rozładowaniu"
 
 #: ../settings/xfpm-settings.c:1546 ../settings/xfpm-settings.c:1551
 msgid "General"
@@ -274,11 +278,11 @@ msgstr "Ogólne"
 
 #: ../settings/xfpm-settings.c:1560 ../settings/xfpm-settings.c:1565
 msgid "On AC"
-msgstr "Zasilanie sieciowe"
+msgstr "Zasilacz sieciowy"
 
 #: ../settings/xfpm-settings.c:1575 ../settings/xfpm-settings.c:1580
 msgid "On Battery"
-msgstr "Zasilanie akumulatorowe"
+msgstr "Akumulator"
 
 #: ../settings/xfpm-settings.c:1589 ../settings/xfpm-settings.c:1594
 msgid "Extended"
@@ -376,8 +380,7 @@ msgstr "O zasilaniu"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save,
-#. normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "Tryb"
@@ -407,12 +410,12 @@ msgstr "Wyłącz komputer"
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
-"Źródło zasilania zostanie wkrótce rozładowane. Proszę zapisać bieżący stan "
+"Źródło zasilania jest bliskie rozładowania. Proszę zapisać bieżący stan "
 "pracy, w celu uniknięcia utraty danych."
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
-msgstr "Źródło zasilania zostanie wkrótce rozładowane."
+msgstr "Źródło zasilania jest bliskie rozładowania"
 
 #: ../src/xfpm-power.c:955
 #, c-format
@@ -544,7 +547,7 @@ msgstr[2] "minut"
 #: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "%s został całkowicie naładowany"
+msgstr "%s został naładowany"
 
 #: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
 #, c-format
@@ -558,7 +561,7 @@ msgid ""
 "%s until is fully charged."
 msgstr ""
 "%s (%i%%).\n"
-"Pozostały czas do całkowitego naładowania: %s"
+"Pozostały czas ładowania: %s"
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -582,12 +585,12 @@ msgstr ""
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
 msgid "Your %s is empty"
-msgstr "%s został całkowicie rozładowany"
+msgstr "%s został rozładowany"
 
 #: ../src/xfpm-battery.c:413
 #, c-format
 msgid "System is running on battery power"
-msgstr "Komputer jest zasilany przez akumulator"
+msgstr "Akumulator jest używany jako bieżące źródło zasilania"
 
 #: ../src/xfpm-battery.c:420
 #, c-format
@@ -618,7 +621,7 @@ msgid ""
 msgstr ""
 "%s\n"
 "%s jest ładowany (%i%%).\n"
-"Pozostały czas do całkowitego naładowania: %s"
+"Pozostały czas ładowania: %s"
 
 #: ../src/xfpm-battery.c:449
 #, c-format
@@ -674,7 +677,7 @@ msgid ""
 "Your %s is empty"
 msgstr ""
 "%s\n"
-"%s został całkowicie rozładowany."
+"%s został rozładowany."
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
@@ -715,7 +718,7 @@ msgstr ""
 "\n"
 "Menedżer zasilania Xfce %s\n"
 "\n"
-"Element projektu Xfce Goodies\n"
+"Część projektu Xfce Goodies\n"
 "http://goodies.xfce.org\n"
 "\n"
 "Wydany na licencji GNU GPL.\n"
