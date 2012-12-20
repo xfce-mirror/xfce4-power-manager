@@ -75,7 +75,7 @@ msgstr "螢幕電力管理控制"
 #: ../settings/xfpm-settings.c:1203 ../settings/xfpm-settings.c:1260
 #: ../settings/xfpm-settings.c:1312
 msgid "Nothing"
-msgstr "無"
+msgstr "無動作"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Power manager settings"
@@ -140,11 +140,11 @@ msgstr "當電池電量危急時："
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "When hibernate button is pressed:"
-msgstr "當按壓休眠按鈕時："
+msgstr "按下休眠按鈕時："
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "When laptop lid is closed:"
-msgstr "當關閉筆電上蓋時："
+msgstr "關閉筆電上蓋時："
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "When power button is pressed:"
@@ -152,12 +152,12 @@ msgstr "按下電源按鈕時："
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "When sleep button is pressed:"
-msgstr "當按壓睡眠按鈕時："
+msgstr "按下睡眠按鈕時："
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 #: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
 msgid "Xfce Power Manager"
-msgstr "Xfce 電力管理員"
+msgstr "Xfce 電源管理員"
 
 #: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
 #: ../settings/xfpm-settings.c:609
@@ -224,7 +224,7 @@ msgstr "不許關閉硬碟轉動"
 
 #: ../settings/xfpm-settings.c:1150
 msgid "Always show icon"
-msgstr "總是顯示圖示"
+msgstr "一定顯示圖示"
 
 #: ../settings/xfpm-settings.c:1153
 msgid "When battery is present"
@@ -236,7 +236,7 @@ msgstr "當電池充電或放電時"
 
 #: ../settings/xfpm-settings.c:1159
 msgid "Never show icon"
-msgstr "永不顯示圖示"
+msgstr "不會顯示圖示"
 
 #: ../settings/xfpm-settings.c:1185
 msgid ""
@@ -306,7 +306,7 @@ msgstr "無法載入電源管理員組態，改為使用預設值"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
-msgstr "無法連接至 Xfce 電力管理員"
+msgstr "無法連接至 Xfce 電源管理員"
 
 #: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
 #, c-format
@@ -319,18 +319,18 @@ msgstr "執行"
 
 #: ../settings/xfpm-settings-main.c:196
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce4 電力管理員未有執行，想要現在啟動嗎？"
+msgstr "Xfce4 電源管理員未有執行，想要現在啟動嗎？"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
 #: ../src/xfpm-battery.c:351 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
-msgstr "電力管理員"
+msgstr "電源管理員"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
-msgstr "Xfce 電力管理員設定值"
+msgstr "Xfce 電源管理員設定值"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
@@ -354,7 +354,7 @@ msgstr "確定要讓系統休眠嗎？"
 
 #: ../src/xfpm-power.c:426
 msgid "Quit"
-msgstr "退出"
+msgstr "結束"
 
 #: ../src/xfpm-power.c:427
 msgid "All running instances of the power manager will exit"
@@ -439,11 +439,11 @@ msgstr "不支援暫停"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 msgid "Battery"
-msgstr "電源"
+msgstr "電池"
 
 #: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
 msgid "UPS"
-msgstr "UPS"
+msgstr "不斷電系統 UPS"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
@@ -459,7 +459,7 @@ msgstr "鍵盤"
 
 #: ../src/xfpm-power-common.c:134
 msgid "PDA"
-msgstr "PDA"
+msgstr "電子手帳 PDA"
 
 #: ../src/xfpm-power-common.c:136
 msgid "Phone"
@@ -468,7 +468,7 @@ msgstr "手機"
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
 #: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:850
 msgid "Unknown"
-msgstr "未知"
+msgstr "不詳"
 
 #: ../src/xfpm-power-common.c:155
 msgid "Lithium ion"
@@ -496,7 +496,7 @@ msgstr "鎳氫"
 
 #: ../src/xfpm-battery.c:171
 msgid "Unknown time"
-msgstr "未知時間"
+msgstr "時間不詳"
 
 #: ../src/xfpm-battery.c:177
 #, c-format
@@ -528,7 +528,7 @@ msgstr[1] "小時"
 #: ../src/xfpm-battery.c:196
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] "小時"
+msgstr[0] "分鐘"
 msgstr[1] "分鐘"
 
 #: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
@@ -684,7 +684,7 @@ msgstr "鍵盤電池"
 
 #: ../src/xfpm-battery.c:844
 msgid "PDA battery"
-msgstr "PDA 電池"
+msgstr "電子手帳 PDA 電池"
 
 #: ../src/xfpm-battery.c:847
 msgid "Phone battery"
@@ -819,7 +819,7 @@ msgstr "重新啟動 Xfce 電源管理員執行中的實體"
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
-msgstr "顯示組態對話窗"
+msgstr "顯示組態對話視窗"
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
