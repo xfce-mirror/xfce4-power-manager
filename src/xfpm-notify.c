@@ -69,7 +69,7 @@ struct XfpmNotifyPrivate
     gulong		notify_id;
     
     gboolean	        supports_actions;
-    gboolean		supports_sync; /*For x-canonical-private-synchronous */
+    gboolean		supports_sync; /* For x-canonical-private-synchronous */
 };
 
 enum

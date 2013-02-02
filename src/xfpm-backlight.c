@@ -42,14 +42,9 @@
 #include "xfpm-debug.h"
 #include "xfpm-icons.h"
 
-#include "gsd-media-keys-window.h"
-
 static void xfpm_backlight_finalize     (GObject *object);
 
-static void xfpm_backlight_create_popup (XfpmBacklight *backlight);
-
 #define ALARM_DISABLED 9
-#define BRIGHTNESS_POPUP_SIZE	180
 
 #define XFPM_BACKLIGHT_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_BACKLIGHT, XfpmBacklightPrivate))
@@ -63,11 +58,7 @@ struct XfpmBacklightPrivate
     XfpmButton     *button;
     XfpmNotify     *notify;
     
-    GtkWidget	   *osd;
     NotifyNotification *n;
-    
-    
-    gulong	    destroy_id;
     
     gboolean	    has_hw;
     gboolean	    on_battery;
@@ -123,12 +114,6 @@ xfpm_backlight_destroy_popup (gpointer data)
     
     backlight = XFPM_BACKLIGHT (data);
     
-    if ( backlight->priv->osd )
-    {
-	gtk_widget_destroy (backlight->priv->osd);
-	backlight->priv->osd = NULL;
-    }
-    
     if ( backlight->priv->n )
     {
 	g_object_unref (backlight->priv->n);
@@ -139,120 +124,43 @@ xfpm_backlight_destroy_popup (gpointer data)
 }
 
 static void
-xfpm_backlight_composited_changed_cb (XfpmBacklight *backlight)
-{
-    xfpm_backlight_destroy_popup (backlight);
-    xfpm_backlight_create_popup (backlight);
-}
-
-static void
 xfpm_backlight_show_notification (XfpmBacklight *backlight, gfloat value)
 {
-    gint i;
-    
-    static const char *display_icon_name[] = 
-    {
-	"notification-display-brightness-off",
-	"notification-display-brightness-low",
-	"notification-display-brightness-medium",
-	"notification-display-brightness-high",
-	"notification-display-brightness-full",
-	NULL
-    };
-    
+    gchar *summary;
+
+    /* create the notification on demand */
     if ( backlight->priv->n == NULL )
     {
-	backlight->priv->n = xfpm_notify_new_notification (backlight->priv->notify, 
-							   " ", 
-							   "", 
-							   NULL, 
-							   0, 
+	backlight->priv->n = xfpm_notify_new_notification (backlight->priv->notify,
+							   "",
+							   "",
+							   "xfpm-brightness-lcd",
+							   0,
 							   XFPM_NOTIFY_NORMAL,
 							   NULL);
     }
-    
-    i = (gint)value / 25;
-    
-    if ( i > 4 || i < 0 )
-	return;
-    
-    notify_notification_set_hint_int32  (backlight->priv->n,
-					 "value",
-					 value);
-    
-    notify_notification_set_hint_string (backlight->priv->n,
-					 "x-canonical-private-synchronous",
-					 "brightness");
-    
-    notify_notification_update (backlight->priv->n,
-			        " ",
-				"",
-				display_icon_name[i]);
-				
-    notify_notification_show (backlight->priv->n, NULL);
-}
 
-static void
-xfpm_backlight_create_popup (XfpmBacklight *backlight)
-{
-    if ( backlight->priv->osd != NULL )
-	return;
-	
-    backlight->priv->osd = gsd_media_keys_window_new ();
-    gsd_media_keys_window_set_action_custom (GSD_MEDIA_KEYS_WINDOW (backlight->priv->osd),
-					     XFPM_DISPLAY_BRIGHTNESS_ICON,
-					     TRUE);
-    gtk_window_set_position (GTK_WINDOW (backlight->priv->osd), GTK_WIN_POS_CENTER);
+    /* generate a human-readable summary for the notification */
+    summary = g_strdup_printf (_("Brightness: %.0f percent"), value);
+    notify_notification_update (backlight->priv->n, summary, NULL, NULL);
+    g_free (summary);
     
-    g_signal_connect_swapped (backlight->priv->osd, "composited-changed",
-			      G_CALLBACK (xfpm_backlight_composited_changed_cb), backlight);
-			      
+    /* add the brightness value to the notification */
+    notify_notification_set_hint_int32 (backlight->priv->n, "value", value);
+    
+    /* show the notification */
+    notify_notification_show (backlight->priv->n, NULL);
 }
 
 static void
 xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 {
     gfloat value;
-    gboolean sync_notify;
-    gboolean show_popup;
     
     XFPM_DEBUG ("Level %u", level);
     
-    g_object_get (G_OBJECT (backlight->priv->conf),
-                  SHOW_BRIGHTNESS_POPUP, &show_popup,
-                  NULL);
-		  
-    if ( !show_popup )
-	goto out;
-    
-    g_object_get (G_OBJECT (backlight->priv->notify),
-		  "sync", &sync_notify,
-		  NULL);
-    
     value = (gfloat) 100 * level / backlight->priv->max_level;
-    
-    if ( !sync_notify ) /*Notification server doesn't support sync notifications*/
-    {
-	xfpm_backlight_create_popup (backlight);
-	gsd_media_keys_window_set_volume_level (GSD_MEDIA_KEYS_WINDOW (backlight->priv->osd),
-						round (value));
-	if ( !GTK_WIDGET_VISIBLE (backlight->priv->osd))
-	    gtk_window_present (GTK_WINDOW (backlight->priv->osd));
-    }
-    else
-    {
-	xfpm_backlight_show_notification (backlight, value);
-    }
-    
-    if ( backlight->priv->destroy_id != 0 )
-    {
-	g_source_remove (backlight->priv->destroy_id);
-	backlight->priv->destroy_id = 0;
-    }
-    
-out:
-    /* Release the memory after 60 seconds */
-    backlight->priv->destroy_id = g_timeout_add_seconds (60, (GSourceFunc) xfpm_backlight_destroy_popup, backlight);
+    xfpm_backlight_show_notification (backlight, value);
 }
 
 
@@ -386,7 +294,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->brightness = xfpm_brightness_new ();
     backlight->priv->has_hw     = xfpm_brightness_setup (backlight->priv->brightness);
     
-    backlight->priv->osd    = NULL;
     backlight->priv->notify = NULL;
     backlight->priv->idle   = NULL;
     backlight->priv->conf   = NULL;
@@ -394,7 +301,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->power    = NULL;
     backlight->priv->dimmed = FALSE;
     backlight->priv->block = FALSE;
-    backlight->priv->destroy_id = 0;
     
     if ( !backlight->priv->has_hw )
     {
