@@ -1034,7 +1034,7 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
     }
     else if ( device_type != XFPM_DEVICE_TYPE_LINE_POWER )
     {
-	g_warning ("Unable to monitor unkown power device with object_path : %s", object_path);
+	g_warning ("Unable to monitor unknown power device with object_path : %s", object_path);
 	g_object_unref (proxy_prop);
     }
 }
