@@ -272,9 +272,11 @@ int main (int argc, char **argv)
 	{ NULL, },
     };
 
+#if !GLIB_CHECK_VERSION (2, 32, 0)
     if ( !g_thread_supported () )
 	g_thread_init (NULL);
-       
+#endif
+
     dbus_g_thread_init ();
 
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
