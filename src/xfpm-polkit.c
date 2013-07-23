@@ -239,7 +239,10 @@ xfpm_polkit_free_data (gpointer data)
 
     g_hash_table_destroy (polkit->priv->details);
     g_hash_table_destroy (polkit->priv->subject_hash);
+
+    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     g_value_array_free   (polkit->priv->subject);
+    G_GNUC_END_IGNORE_DEPRECATIONS
     
     polkit->priv->details      = NULL;
     polkit->priv->subject_hash = NULL;
@@ -342,8 +345,10 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 	if ( G_LIKELY (start_time != 0 ) )
 	{
 	    GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
-	    
+
+	    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 	    polkit->priv->subject = g_value_array_new (2);
+	    G_GNUC_END_IGNORE_DEPRECATIONS
 	    polkit->priv->subject_hash = g_hash_table_new_full (g_str_hash, 
 								g_str_equal, 
 								g_free, 
@@ -351,7 +356,9 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 	
 	    g_value_init (&val, G_TYPE_STRING);
 	    g_value_set_string (&val, "unix-process");
+	    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 	    g_value_array_append (polkit->priv->subject, &val);
+	    G_GNUC_END_IGNORE_DEPRECATIONS
 	    
 	    g_value_unset (&val);
 	    
@@ -379,7 +386,9 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 				       G_TYPE_VALUE));
     
     g_value_set_static_boxed (&hash_elem, polkit->priv->subject_hash);
+    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     g_value_array_append (polkit->priv->subject, &hash_elem);
+    G_GNUC_END_IGNORE_DEPRECATIONS
     
     /**
      * Polkit details, will leave it empty.
@@ -421,8 +430,10 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
     
     g_return_val_if_fail (polkit->priv->proxy != NULL, FALSE);
     g_return_val_if_fail (polkit->priv->subject_valid, FALSE);
-     
+    
+    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     result = g_value_array_new (0);
+    G_GNUC_END_IGNORE_DEPRECATIONS
     
     ret = dbus_g_proxy_call (polkit->priv->proxy, "CheckAuthorization", &error,
 			     polkit->priv->subject_gtype, polkit->priv->subject,
@@ -450,7 +461,9 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
 	g_error_free (error);
     }
 
+    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     g_value_array_free (result);
+    G_GNUC_END_IGNORE_DEPRECATIONS
     
     XFPM_DEBUG ("Action=%s is authorized=%s", action_id, xfpm_bool_to_string (is_authorized));
     
