@@ -63,8 +63,8 @@ struct XfpmBacklightPrivate
     gboolean	    has_hw;
     gboolean	    on_battery;
     
-    glong            last_level;
-    glong 	    max_level;
+    gint32          last_level;
+    gint32 	    max_level;
     
     gboolean        dimmed;
     gboolean	    block;
@@ -79,7 +79,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
     
     if (xfpm_power_get_mode (backlight->priv->power) == XFPM_POWER_MODE_NORMAL )
     {
-	glong dim_level;
+	gint32 dim_level;
 	
 	g_object_get (G_OBJECT (backlight->priv->conf),
 		      backlight->priv->on_battery ? BRIGHTNESS_LEVEL_ON_BATTERY : BRIGHTNESS_LEVEL_ON_AC, &dim_level,
@@ -101,7 +101,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 	 **/
 	if (backlight->priv->last_level > dim_level)
 	{
-	    XFPM_DEBUG ("Current brightness level before dimming : %li, new %li", backlight->priv->last_level, dim_level);
+	    XFPM_DEBUG ("Current brightness level before dimming : %d, new %d", backlight->priv->last_level, dim_level);
 	    backlight->priv->dimmed = xfpm_brightness_set_level (backlight->priv->brightness, dim_level);
 	}
     }
@@ -182,7 +182,7 @@ xfpm_backlight_reset_cb (EggIdletime *idle, XfpmBacklight *backlight)
     {
 	if ( !backlight->priv->block)
 	{
-	    XFPM_DEBUG ("Alarm reset, setting level to %li", backlight->priv->last_level);
+	    XFPM_DEBUG ("Alarm reset, setting level to %d", backlight->priv->last_level);
 	    xfpm_brightness_set_level (backlight->priv->brightness, backlight->priv->last_level);
 	}
 	backlight->priv->dimmed = FALSE;
@@ -192,7 +192,7 @@ xfpm_backlight_reset_cb (EggIdletime *idle, XfpmBacklight *backlight)
 static void
 xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBacklight *backlight)
 {
-    glong level;
+    gint32 level;
     gboolean ret = TRUE;
     
     gboolean enable_brightness, show_popup;

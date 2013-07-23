@@ -92,11 +92,11 @@ out:
 }
 
 static gboolean
-xfpm_brightness_xrandr_get_level (XfpmBrightness *brightness, RROutput output, long *current)
+xfpm_brightness_xrandr_get_level (XfpmBrightness *brightness, RROutput output, gint32 *current)
 {
     unsigned long nitems;
     unsigned long bytes_after;
-    long *prop;
+    gint32 *prop;
     Atom actual_type;
     int actual_format;
     gboolean ret = FALSE;
@@ -124,7 +124,7 @@ xfpm_brightness_xrandr_get_level (XfpmBrightness *brightness, RROutput output, l
 }
 
 static gboolean
-xfpm_brightness_xrandr_set_level (XfpmBrightness *brightness, RROutput output, long level)
+xfpm_brightness_xrandr_set_level (XfpmBrightness *brightness, RROutput output, gint32 level)
 {
     gboolean ret = TRUE;
 
@@ -137,7 +137,7 @@ xfpm_brightness_xrandr_set_level (XfpmBrightness *brightness, RROutput output, l
     
     if ( gdk_error_trap_pop () ) 
     {
-	    g_warning ("failed to XRRChangeOutputProperty for brightness %li", level);
+	    g_warning ("failed to XRRChangeOutputProperty for brightness %d", level);
 	    ret = FALSE;
     }
     
@@ -225,11 +225,11 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 }
 
 static gboolean
-xfpm_brightness_xrand_up (XfpmBrightness *brightness, glong *new_level)
+xfpm_brightness_xrand_up (XfpmBrightness *brightness, gint32 *new_level)
 {
-    long hw_level;
+    gint32 hw_level;
     gboolean ret = FALSE;
-    long set_level;
+    gint32 set_level;
     
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, &hw_level);
     
@@ -250,14 +250,14 @@ xfpm_brightness_xrand_up (XfpmBrightness *brightness, glong *new_level)
     
     if ( !ret )
     {
-	g_warning ("xfpm_brightness_xrand_up failed for %li", set_level);
+	g_warning ("xfpm_brightness_xrand_up failed for %d", set_level);
 	return FALSE;
     }
 	
     /* Nothing changed in the hardware*/
     if ( *new_level == hw_level )
     {
-	g_warning ("xfpm_brightness_xrand_up did not change the hw level to %li", set_level);
+	g_warning ("xfpm_brightness_xrand_up did not change the hw level to %d", set_level);
 	return FALSE;
     }
     
@@ -265,11 +265,11 @@ xfpm_brightness_xrand_up (XfpmBrightness *brightness, glong *new_level)
 }
 
 static gboolean
-xfpm_brightness_xrand_down (XfpmBrightness *brightness, long *new_level)
+xfpm_brightness_xrand_down (XfpmBrightness *brightness, gint32 *new_level)
 {
-    long hw_level;
+    gint32 hw_level;
     gboolean ret;
-    long set_level;
+    gint32 set_level;
     
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, &hw_level);
     
@@ -290,14 +290,14 @@ xfpm_brightness_xrand_down (XfpmBrightness *brightness, long *new_level)
     
     if ( !ret )
     {
-	g_warning ("xfpm_brightness_xrand_down failed for %li", set_level);
+	g_warning ("xfpm_brightness_xrand_down failed for %d", set_level);
 	return FALSE;
     }
     
     /* Nothing changed in the hardware*/
     if ( *new_level == hw_level )
     {
-	g_warning ("xfpm_brightness_xrand_down did not change the hw level to %li", set_level);
+	g_warning ("xfpm_brightness_xrand_down did not change the hw level to %d", set_level);
 	return FALSE;
     }
     
@@ -361,7 +361,7 @@ xfpm_brightness_setup_helper (XfpmBrightness *brightness)
 }
 
 static gboolean
-xfpm_brightness_helper_get_level (XfpmBrightness *brg, glong *level)
+xfpm_brightness_helper_get_level (XfpmBrightness *brg, gint32 *level)
 {
     int ret;
 
@@ -406,11 +406,11 @@ out:
 }
 
 static gboolean
-xfpm_brightness_helper_up (XfpmBrightness *brightness, glong *new_level)
+xfpm_brightness_helper_up (XfpmBrightness *brightness, gint32 *new_level)
 {
-    glong hw_level;
+    gint32 hw_level;
     gboolean ret = FALSE;
-    gint set_level;
+    gint32 set_level;
     
     ret = xfpm_brightness_helper_get_level (brightness, &hw_level);
     
@@ -446,11 +446,11 @@ xfpm_brightness_helper_up (XfpmBrightness *brightness, glong *new_level)
 }
 
 static gboolean
-xfpm_brightness_helper_down (XfpmBrightness *brightness, glong *new_level)
+xfpm_brightness_helper_down (XfpmBrightness *brightness, gint32 *new_level)
 {
-    glong hw_level;
+    gint32 hw_level;
     gboolean ret;
-    gint set_level;
+    gint32 set_level;
     
     ret = xfpm_brightness_helper_get_level (brightness, &hw_level);
     
@@ -572,7 +572,7 @@ xfpm_brightness_setup (XfpmBrightness *brightness)
     return FALSE;
 }
 
-gboolean xfpm_brightness_up (XfpmBrightness *brightness, glong *new_level)
+gboolean xfpm_brightness_up (XfpmBrightness *brightness, gint32 *new_level)
 {
     gboolean ret = FALSE;
     
@@ -589,7 +589,7 @@ gboolean xfpm_brightness_up (XfpmBrightness *brightness, glong *new_level)
     return ret;
 }
 
-gboolean xfpm_brightness_down (XfpmBrightness *brightness, glong *new_level)
+gboolean xfpm_brightness_down (XfpmBrightness *brightness, gint32 *new_level)
 {
     gboolean ret = FALSE;
     
@@ -618,7 +618,7 @@ gint xfpm_brightness_get_max_level (XfpmBrightness *brightness)
     return brightness->priv->max_level;
 }
 
-gboolean xfpm_brightness_get_level	(XfpmBrightness *brightness, glong *level)
+gboolean xfpm_brightness_get_level	(XfpmBrightness *brightness, gint32 *level)
 {
     gboolean ret = FALSE;
     
@@ -632,7 +632,7 @@ gboolean xfpm_brightness_get_level	(XfpmBrightness *brightness, glong *level)
     return ret;
 }
 
-gboolean xfpm_brightness_set_level (XfpmBrightness *brightness, glong level)
+gboolean xfpm_brightness_set_level (XfpmBrightness *brightness, gint32 level)
 {
     gboolean ret = FALSE;
     
