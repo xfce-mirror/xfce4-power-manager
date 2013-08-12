@@ -1,123 +1,126 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# salepetronije <salepetronije@gmail.com>, 2012.
+# 
+# Translators:
+# salepetronije <salepetronije@gmail.com>, 2012
+# salepetronije <salepetronije@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-4.10\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-06 16:21+0000\n"
-"PO-Revision-Date: 2012-06-20 11:03+0200\n"
+"POT-Creation-Date: 2013-08-12 00:30+0200\n"
+"PO-Revision-Date: 2013-08-12 05:17+0000\n"
 "Last-Translator: salepetronije <salepetronije@gmail.com>\n"
-"Language-Team: српски <xfce-i18n@xfce.org>\n"
+"Language-Team: Serbian (http://www.transifex.com/projects/p/xfce/language/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sr\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1
-msgid "<b>Actions</b>"
-msgstr "<b>Радње</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:2
-msgid "<b>Advanced Options</b>"
-msgstr "<b>Напредне могућности</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "<b>Brightness</b>"
-msgstr "<b>Осветљење</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "<b>General Options</b>"
-msgstr "<b>Опште могућности</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "<b>Monitor</b>"
-msgstr "<b>Екран</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Actions"
-msgstr "Радње"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "Consider the computer on low power at:"
-msgstr "Сматрај рачунар пред истеком снаге при:"
-
-#. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:820
-#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
-#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
-#: ../src/xfpm-power.c:779
-msgid "Hibernate"
-msgstr "Замрзни"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Level:"
-msgstr "Ниво:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "Lock screen when going for suspend/hibernate"
-msgstr "Закључај екран при преласку на обуставу/замрзавање"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
-msgid "Monitor"
-msgstr "Екран"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Monitor power management control"
-msgstr "Управљање потрошњом монитора"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:809
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
 #: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
 #: ../settings/xfpm-settings.c:1203 ../settings/xfpm-settings.c:1260
 #: ../settings/xfpm-settings.c:1312
 msgid "Nothing"
 msgstr "Ништа"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:415
+msgid "Xfce Power Manager"
+msgstr "ИксФЦЕ управник потрошње"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "Power manager settings"
 msgstr "Поставке управника потрошње"
 
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When sleep button is pressed:"
+msgstr "Кад је дугме спавања притиснуто:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When hibernate button is pressed:"
+msgstr "Кад је дугме замрзавања притиснуто:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When power button is pressed:"
+msgstr "Кад је дугме напајања притиснуто:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "System tray icon: "
+msgstr "Икона системске касете"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "Monitor power management control"
+msgstr "Управљање потрошњом монитора"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "Show notifications to notify about the battery state"
+msgstr "Прикажи обавештења о стању батерије"
+
+#: ../data/interfaces/xfpm-settings.ui.h:10
+msgid "<b>General Options</b>"
+msgstr "<b>Опште могућности</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "When laptop lid is closed:"
+msgstr "Кад је поклопац преклопног рачунара затворен:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Put the computer to sleep when inactive for:"
+msgstr "Успавај рачунар кад мирује:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Spin down hard disks"
+msgstr "Успори чврсте дискове"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "<b>Actions</b>"
+msgstr "<b>Радње</b>"
+
 #: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "Prefer power savings over performance"
-msgstr "Дај предност штедњи енергије над учинком"
+msgid "Actions"
+msgstr "Радње"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
 msgstr "Успавај екран кад рачунар мирује:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "Put the computer to sleep when inactive for:"
-msgstr "Успавај рачунар кад мирује:"
+msgid "Switch off display when computer is inactive for:"
+msgstr "Искључи приказ кад је рачунар у мировању:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "<b>Monitor</b>"
+msgstr "<b>Екран</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Reduce screen brightness when computer is inactive for:"
 msgstr "Смањи осветљење екрана кад рачунар мирује:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "Set computer inactivity sleep mode:"
-msgstr "Подеси начин успављивања рачунара:"
-
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "Set monitor sleep mode:"
-msgstr "Подеси начин успављивања екрана"
+msgid "Level:"
+msgstr "Ниво:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "Show notifications to notify about the battery state"
-msgstr "Прикажи обавештења о стању батерије"
+msgid "<b>Brightness</b>"
+msgstr "<b>Осветљење</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Spin down hard disks"
-msgstr "Успори чврсте дискове"
+#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
+msgid "Monitor"
+msgstr "Екран"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "Standby"
-msgstr "Приправност"
+msgid "When battery power is critical:"
+msgstr "Кад је снага батерије критична:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Prefer power savings over performance"
+msgstr "Дај предност штедњи енергије над учинком"
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:814
+#: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:814
 #: ../settings/xfpm-settings.c:882 ../settings/xfpm-settings.c:1031
 #: ../settings/xfpm-settings.c:1208 ../settings/xfpm-settings.c:1265
 #: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
@@ -125,38 +128,38 @@ msgstr "Приправност"
 msgid "Suspend"
 msgstr "Обустава"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "Switch off display when computer is inactive for:"
-msgstr "Искључи приказ кад је рачунар у мировању:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:26
-msgid "System tray icon: "
-msgstr "Икона системске касете"
+#. Hibernate menu option
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
+#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
+#: ../src/xfpm-power.c:779
+msgid "Hibernate"
+msgstr "Замрзни"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "When battery power is critical:"
-msgstr "Кад је снага батерије критична:"
+msgid "Standby"
+msgstr "Приправност"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "When hibernate button is pressed:"
-msgstr "Кад је дугме замрзавања притиснуто:"
+msgid "Set computer inactivity sleep mode:"
+msgstr "Подеси начин успављивања рачунара:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "When laptop lid is closed:"
-msgstr "Кад је поклопац преклопног рачунара затворен:"
+msgid "Consider the computer on low power at:"
+msgstr "Сматрај рачунар пред истеком снаге при:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "When power button is pressed:"
-msgstr "Кад је дугме напајања притиснуто:"
+msgid "Set monitor sleep mode:"
+msgstr "Подеси начин успављивања екрана"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "When sleep button is pressed:"
-msgstr "Кад је дугме спавања притиснуто:"
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Закључај екран при преласку на обуставу/замрзавање"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
-msgid "Xfce Power Manager"
-msgstr "ИксФЦЕ управник потрошње"
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Напредне могућности</b>"
 
 #: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
 #: ../settings/xfpm-settings.c:609
@@ -241,9 +244,7 @@ msgstr "Никад не приказуј икону"
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr ""
-"Искључује сигнализацију управљања потрошњом екрана (ДПМС), тј. не покушава "
-"да искључи екран или да га пошаље на спавање."
+msgstr "Искључује сигнализацију управљања потрошњом екрана (ДПМС), тј. не покушава да искључи екран или да га пошаље на спавање."
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -293,7 +294,7 @@ msgstr "Управник подешавања утичнице"
 msgid "SOCKET ID"
 msgstr "ИБ УТИЧНИЦЕ"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
 #: ../src/xfpm-power-info.c:946
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -303,23 +304,22 @@ msgstr "Упишите „%s --help“ за употребу."
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "Не успевам да учитам поставке управника потрошње, користим задато"
 
-#: ../settings/xfpm-settings-main.c:148
+#: ../settings/xfpm-settings-main.c:150
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Не успевам да се повежем са ИксФЦЕ управником потрошње"
 
-#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
+#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:331
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "ИксФЦЕ управник потрошње није покренут"
 
-#: ../settings/xfpm-settings-main.c:195
+#: ../settings/xfpm-settings-main.c:197
 msgid "Run"
 msgstr "Покрени"
 
-#: ../settings/xfpm-settings-main.c:196
+#: ../settings/xfpm-settings-main.c:198
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr ""
-"ИксФЦЕ управник потрошње није покренут, да ли желите да га покренете сада?"
+msgstr "ИксФЦЕ управник потрошње није покренут, да ли желите да га покренете сада?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
@@ -342,11 +342,9 @@ msgstr "_Замрзни"
 
 #: ../src/xfpm-power.c:329
 msgid ""
-"An application is currently disabling the automatic sleep. Doing this action "
-"now may damage the working state of this application."
-msgstr ""
-"Један порограм тренутно онемогућава аутоматско успављивање. Примена ове "
-"радње сада може оштетити стање рада овог програма."
+"An application is currently disabling the automatic sleep. Doing this action"
+" now may damage the working state of this application."
+msgstr "Један порограм тренутно онемогућава аутоматско успављивање. Примена ове радње сада може оштетити стање рада овог програма."
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
@@ -402,9 +400,7 @@ msgstr "Гаси систем"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Систем ради са напајањем на истеку. Сачувајте ваш рад да би избегли губитак "
-"података"
+msgstr "Систем ради са напајањем на истеку. Сачувајте ваш рад да би избегли губитак података"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -415,9 +411,7 @@ msgstr "Систем ради са напајањем на истеку"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"Ваш %s ниво пуњења је низак\n"
-"процењено преостало време је %s"
+msgstr "Ваш %s ниво пуњења је низак\nпроцењено преостало време је %s"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -551,10 +545,8 @@ msgstr "Ваша %s се пуни"
 #, c-format
 msgid ""
 "%s (%i%%)\n"
-"%s until is fully charged."
-msgstr ""
-"%s (%i%%)\n"
-"%s до краја пуњења."
+"%s until it is fully charged."
+msgstr "%s (%i%%)⏎\n%s до потпуне попуне."
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -571,9 +563,7 @@ msgstr "Систем ради на %s снаге"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s (%i%%)\n"
-"Преостало време је %s."
+msgstr "%s (%i%%)\nПреостало време је %s."
 
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
@@ -591,19 +581,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr ""
-"%s\n"
-"Ваша %s је потпуно напуњена (%i%%).\n"
-"Обезбеђује %s време рада"
+msgstr "%s\nВаша %s је потпуно напуњена (%i%%).\nОбезбеђује %s време рада"
 
 #: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
-"%s\n"
-"ваша %s је потпуно напуњена (%i%%)."
+msgstr "%s\nваша %s је потпуно напуњена (%i%%)."
 
 #: ../src/xfpm-battery.c:440
 #, c-format
@@ -611,19 +596,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s\n"
-"Ваша %s с пуни (%i%%)\n"
-"%s до краја пуњења."
+msgstr "%s\nВаша %s с пуни (%i%%)\n%s до краја пуњења."
 
 #: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr ""
-"%s\n"
-"Ваша %s се пуни (%i%%)."
+msgstr "%s\nВаша %s се пуни (%i%%)."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -631,46 +611,35 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s\n"
-"Ваша %s се празни (%i%%)\n"
-"Процењено преостало време је %s."
+msgstr "%s\nВаша %s се празни (%i%%)\nПроцењено преостало време је %s."
 
 #: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr ""
-"%s\n"
-"Ваша %s се празни (%i%%)."
+msgstr "%s\nВаша %s се празни (%i%%)."
 
 #: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr ""
-"%s\n"
-"%s чека на пражњење (%i%%)."
+msgstr "%s\n%s чека на пражњење (%i%%)."
 
 #: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr ""
-"%s\n"
-"%s чека на пуњење (%i%%)."
+msgstr "%s\n%s чека на пуњење (%i%%)."
 
 #: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr ""
-"%s\n"
-"Ваша %s је празна"
+msgstr "%s\nВаша %s је празна"
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
@@ -707,14 +676,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"ИксФЦЕ управник потрошње %s\n"
-"Део пројекта ИксФЦЕ добара\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Објавњен под лиценцом ГНУ ОЈЛ.\n"
-"\n"
+msgstr "\nИксФЦЕ управник потрошње %s\nДео пројекта ИксФЦЕ добара\nhttp://goodies.xfce.org\n\nОбјавњен под лиценцом ГНУ ОЈЛ.\n\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
@@ -834,15 +796,15 @@ msgstr "Искључи било којег ИксФЦЕ управника по�
 msgid "Version information"
 msgstr "Подаци о издању"
 
-#: ../src/xfpm-main.c:320
+#: ../src/xfpm-main.c:322
 msgid "Unable to get connection to the message bus session"
 msgstr "Не могу да добавим везу до сесије сабирнице поруке"
 
-#: ../src/xfpm-main.c:414
+#: ../src/xfpm-main.c:416
 msgid "Another power manager is already running"
 msgstr "Неки други управник потрошње је у погону"
 
-#: ../src/xfpm-main.c:420
+#: ../src/xfpm-main.c:422
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "ИксФЦЕ управник потрошње је већ у употреби"
