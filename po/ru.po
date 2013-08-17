@@ -1,25 +1,22 @@
-# translation of xfce4-power-manager.po to Russian
-# Copyright (C) 2008-2009 Ali Abdallah
-# This file is distributed under the same license as the xfce4-power-manager package.
-#
-# Denis Koryavov <dkoryavov@yandex.ru>, 2009.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Denis Koryavov <dkoryavov@yandex.ru>, 2009
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-27 22:10+0400\n"
-"PO-Revision-Date: 2013-02-27 22:22+0400\n"
-"Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
-"Language-Team: Russian\n"
-"Language: \n"
+"POT-Creation-Date: 2013-08-12 00:30+0200\n"
+"PO-Revision-Date: 2013-08-17 10:33+0000\n"
+"Last-Translator: asvl <alyoshin.s@gmail.com>\n"
+"Language-Team: Russian (http://www.transifex.com/projects/p/xfce/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Poedit-Language: Russian\n"
-"X-Poedit-Country: RUSSIAN FEDERATION\n"
-"X-Generator: VIM 7.3\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
 #: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
@@ -29,7 +26,7 @@ msgid "Nothing"
 msgstr "Ничего не делать"
 
 #: ../data/interfaces/xfpm-settings.ui.h:2
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:415
 msgid "Xfce Power Manager"
 msgstr "Менеджер питания Xfce"
 
@@ -71,8 +68,7 @@ msgstr "При закрытии крышки ноутбука перейти в:
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "Put the computer to sleep when inactive for:"
-msgstr ""
-"Перевести компьютер в спящий режим при отсутствии активности в течение:"
+msgstr "Перевести компьютер в спящий режим при отсутствии активности в течение:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Spin down hard disks"
@@ -247,9 +243,7 @@ msgstr "Никогда не отображать значок"
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr ""
-"Выключить автоматическое управление питанием монитора (DPMS), в этом случае, "
-"ваш монитор будет работать постоянно."
+msgstr "Выключить автоматическое управление питанием монитора (DPMS), в этом случае, ваш монитор будет работать постоянно."
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -269,7 +263,7 @@ msgstr "Операция перехода в спящий режим запре�
 
 #: ../settings/xfpm-settings.c:1443
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Когда заряд всех источников питания компьютера близок к заданному"
+msgstr "Считать заряд батареи низким, когда заряд всех источников питания компьютера достигает указанного уровня"
 
 #: ../settings/xfpm-settings.c:1546 ../settings/xfpm-settings.c:1551
 msgid "General"
@@ -299,7 +293,7 @@ msgstr "Сокет менеджера настроек"
 msgid "SOCKET ID"
 msgstr "ID сокета"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
 #: ../src/xfpm-power-info.c:946
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -309,20 +303,20 @@ msgstr "Наберите '%s --help' для просмотра справки."
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "Не удалось загрузить настройки питания, используются умалчиваемые"
 
-#: ../settings/xfpm-settings-main.c:148
+#: ../settings/xfpm-settings-main.c:150
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Невозможно подключиться к менеджеру питания Xfce"
 
-#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
+#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:331
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Менеджер питания Xfce не запущен"
 
-#: ../settings/xfpm-settings-main.c:195
+#: ../settings/xfpm-settings-main.c:197
 msgid "Run"
 msgstr "Запустить"
 
-#: ../settings/xfpm-settings-main.c:196
+#: ../settings/xfpm-settings-main.c:198
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Менеджер питания Xfce не запущен, хотите запустить его сейчас?"
 
@@ -347,13 +341,9 @@ msgstr "Сп_ящий режим"
 
 #: ../src/xfpm-power.c:329
 msgid ""
-"An application is currently disabling the automatic sleep. Doing this action "
-"now may damage the working state of this application."
-msgstr ""
-"Одно из запущенных приложений блокирует автоматический переход в режим "
-"пониженного энергопотребления, принудительное выполнение данного действия "
-"может повредить работе этого приложения, вы действительно желаете перевести "
-"систему в ждущий режим?"
+"An application is currently disabling the automatic sleep. Doing this action"
+" now may damage the working state of this application."
+msgstr "Одно из запущенных приложений блокирует автоматический переход в режим пониженного энергопотребления, принудительное выполнение данного действия может повредить работе этого приложения, вы действительно желаете перевести систему в ждущий режим?"
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
@@ -379,7 +369,8 @@ msgstr "Информация об источниках питания"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save,
+#. normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "Шаблон"
@@ -408,9 +399,7 @@ msgstr "Выключить систему"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Ваша батарея практически разряжена. Сохраните свою работу чтобы избежать "
-"потери данных."
+msgstr "Ваша батарея практически разряжена. Сохраните свою работу чтобы избежать потери данных."
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -421,9 +410,7 @@ msgstr "Система работает от батареи с низким за
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"Устройство (%s) почти разряжено\n"
-"Оставшееся время работы: %s."
+msgstr "Устройство (%s) почти разряжено\nОставшееся время работы: %s."
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -557,10 +544,8 @@ msgstr "Ваше устройство (%s) заряжается"
 #, c-format
 msgid ""
 "%s (%i%%)\n"
-"%s until is fully charged."
-msgstr ""
-"%s (%i%%)\n"
-"%s до полного заряда."
+"%s until it is fully charged."
+msgstr "%s (%i%%)\n%s до полного заряда."
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -577,9 +562,7 @@ msgstr "Система работает от: %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s (%i%%)\n"
-"Оставшееся время работы: %s."
+msgstr "%s (%i%%)\nОставшееся время работы: %s."
 
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
@@ -597,19 +580,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr ""
-"%s\n"
-"Устройство (%s) полностью заряжено (%i%%).\n"
-"Время работы около %s"
+msgstr "%s\nУстройство (%s) полностью заряжено (%i%%).\nВремя работы около %s"
 
 #: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
-"%s\n"
-"Устройство (%s) полностью заряжено (%i%%)."
+msgstr "%s\nУстройство (%s) полностью заряжено (%i%%)."
 
 #: ../src/xfpm-battery.c:440
 #, c-format
@@ -617,19 +595,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s\n"
-"Устройство (%s) заряжается (%i%%)\n"
-"%s до полного заряда."
+msgstr "%s\nУстройство (%s) заряжается (%i%%)\n%s до полного заряда."
 
 #: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr ""
-"%s\n"
-"Устройство (%s) заряжается (%i%%)."
+msgstr "%s\nУстройство (%s) заряжается (%i%%)."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -637,46 +610,35 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s\n"
-"Устройство (%s) разряжается (%i%%)\n"
-"Оставшееся время работы около %s."
+msgstr "%s\nУстройство (%s) разряжается (%i%%)\nОставшееся время работы около %s."
 
 #: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr ""
-"%s\n"
-"Устройство (%s) разряжается (%i%%)."
+msgstr "%s\nУстройство (%s) разряжается (%i%%)."
 
 #: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr ""
-"%s\n"
-"%s ожидает разрядки (%i%%)."
+msgstr "%s\n%s ожидает разрядки (%i%%)."
 
 #: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr ""
-"%s\n"
-"%s ожидает зарядки (%i%%)."
+msgstr "%s\n%s ожидает зарядки (%i%%)."
 
 #: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr ""
-"%s\n"
-"Устройство (%s) полностью разряжено"
+msgstr "%s\nУстройство (%s) полностью разряжено"
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
@@ -696,7 +658,7 @@ msgstr "батарея клавиатуры"
 
 #: ../src/xfpm-battery.c:844
 msgid "PDA battery"
-msgstr "батарея наладонника"
+msgstr "батарея КПК"
 
 #: ../src/xfpm-battery.c:847
 msgid "Phone battery"
@@ -713,15 +675,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Менеджер питания Xfce %s\n"
-"\n"
-"Разрабатывается в рамках проекта Xfce Goodies\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Лицензия GNU GPL.\n"
-"\n"
+msgstr "\nМенеджер питания Xfce %s\n\nРазрабатывается в рамках проекта Xfce Goodies\nhttp://goodies.xfce.org\n\nЛицензия GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
@@ -841,15 +795,15 @@ msgstr "Завершить работу менеджера питания Xfce"
 msgid "Version information"
 msgstr "Информация о версии"
 
-#: ../src/xfpm-main.c:320
+#: ../src/xfpm-main.c:322
 msgid "Unable to get connection to the message bus session"
 msgstr "Невозможно соединиться с системной коммуникационной шиной DBus"
 
-#: ../src/xfpm-main.c:414
+#: ../src/xfpm-main.c:416
 msgid "Another power manager is already running"
 msgstr "Другой менеджер питания уже запущен"
 
-#: ../src/xfpm-main.c:420
+#: ../src/xfpm-main.c:422
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Менеджер питания Xfce уже запущен"
