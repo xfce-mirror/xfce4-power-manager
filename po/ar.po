@@ -1,0 +1,1043 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Karim Oulad Chalha <herr.linux88@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Xfce4-power-manager\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-02 23:12+0200\n"
+"PO-Revision-Date: 2013-08-23 01:28+0000\n"
+"Last-Translator: Karim Oulad Chalha <herr.linux88@gmail.com>\n"
+"Language-Team: Arabic (http://www.transifex.com/projects/p/xfce/language/ar/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
+#: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
+#: ../settings/xfpm-settings.c:1203 ../settings/xfpm-settings.c:1260
+#: ../settings/xfpm-settings.c:1312
+msgid "Nothing"
+msgstr "لا شيئ"
+
+#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
+msgid "Xfce Power Manager"
+msgstr "مدير طاقة إكسفس"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
+msgid "Power manager settings"
+msgstr "إعدادات مدير الطاقة"
+
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When sleep button is pressed:"
+msgstr "عند الضغط على زر النوم:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When hibernate button is pressed:"
+msgstr "عند الضغط على زر السبات:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When power button is pressed:"
+msgstr "عند الضغط على زر الطاقة:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "System tray icon: "
+msgstr "أيقونة مصغرات شريط النظام:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "Monitor power management control"
+msgstr "متحكم في إدارة مدير الطاقة"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "Show notifications to notify about the battery state"
+msgstr "عرض إشعارات عن حالة البطارية"
+
+#: ../data/interfaces/xfpm-settings.ui.h:10
+msgid "<b>General Options</b>"
+msgstr "<b>خيارات عامة</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "When laptop lid is closed:"
+msgstr "عندما يكون غطاء الحاسوب المحمول مغلق:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Put the computer to sleep when inactive for:"
+msgstr "ضع الحاسوب في وضع النوم عندما يكون غير نشط لمدة:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Spin down hard disks"
+msgstr "تخفيف سرعة دوران الأقراص الصلبة"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "<b>Actions</b>"
+msgstr "<b>إجراءات</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:15
+msgid "Actions"
+msgstr "إجراءات"
+
+#: ../data/interfaces/xfpm-settings.ui.h:16
+msgid "Put display to sleep when computer is inactive for:"
+msgstr "ضع العرض في وضع النوم عندما يكون غير نشط لمدة:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:17
+msgid "Switch off display when computer is inactive for:"
+msgstr "إيقاف العرض عندما يكون الحاسوب غير نشط لمدة:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "<b>Monitor</b>"
+msgstr "<b>مراقب</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
+msgid "Reduce screen brightness when computer is inactive for:"
+msgstr "تقليل لمعان الشاشة عندما يكون الحاسوب غير نشط لمدة:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:20
+msgid "Level:"
+msgstr "مستوى:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:21
+msgid "<b>Brightness</b>"
+msgstr "<b>لمعان</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
+msgid "Monitor"
+msgstr "مراقب"
+
+#: ../data/interfaces/xfpm-settings.ui.h:23
+msgid "When battery power is critical:"
+msgstr "عندما تكون البطارية في وضع حرج:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Prefer power savings over performance"
+msgstr "تفضيل حفظ الطاقة على الكفائة"
+
+#. Suspend menu option
+#: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:814
+#: ../settings/xfpm-settings.c:882 ../settings/xfpm-settings.c:1031
+#: ../settings/xfpm-settings.c:1208 ../settings/xfpm-settings.c:1265
+#: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
+#: ../src/xfpm-power.c:792
+msgid "Suspend"
+msgstr "علق"
+
+#. Hibernate menu option
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
+#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
+#: ../src/xfpm-power.c:779
+msgid "Hibernate"
+msgstr "إسبات"
+
+#: ../data/interfaces/xfpm-settings.ui.h:27
+msgid "Standby"
+msgstr "بديل"
+
+#: ../data/interfaces/xfpm-settings.ui.h:28
+msgid "Set computer inactivity sleep mode:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:29
+msgid "Consider the computer on low power at:"
+msgstr "إعتبار الحاسوب منخفظ الطاقة إبتداءا من :"
+
+#: ../data/interfaces/xfpm-settings.ui.h:30
+msgid "Set monitor sleep mode:"
+msgstr "إختيار نمط نوم المراقب:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "إقفال الشاشة عند تعليق/إسبات"
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "<b>Advanced Options</b>"
+msgstr "<b>خيارات متقدمة</b>"
+
+#: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
+#: ../settings/xfpm-settings.c:609
+msgid "Never"
+msgstr "أبدًا"
+
+#: ../settings/xfpm-settings.c:570
+msgid "One minute"
+msgstr "دقيقة واحدة"
+
+#: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:584
+msgid "Minutes"
+msgstr "دقائق"
+
+#: ../settings/xfpm-settings.c:586 ../settings/xfpm-settings.c:593
+#: ../settings/xfpm-settings.c:594 ../settings/xfpm-settings.c:595
+msgid "One hour"
+msgstr "ساعة واحدة"
+
+#: ../settings/xfpm-settings.c:594 ../settings/xfpm-settings.c:598
+msgid "one minute"
+msgstr "دقيقة واحدة"
+
+#: ../settings/xfpm-settings.c:595 ../settings/xfpm-settings.c:599
+msgid "minutes"
+msgstr "دقائق"
+
+#: ../settings/xfpm-settings.c:597 ../settings/xfpm-settings.c:598
+#: ../settings/xfpm-settings.c:599
+msgid "hours"
+msgstr "ساعات"
+
+#: ../settings/xfpm-settings.c:611
+msgid "Seconds"
+msgstr "ثوان"
+
+#: ../settings/xfpm-settings.c:792 ../settings/xfpm-settings.c:990
+#: ../settings/xfpm-settings.c:1470
+msgid "Hibernate and suspend operations not supported"
+msgstr "إجراءات الإسبات و التعليق غير مدعومة"
+
+#: ../settings/xfpm-settings.c:797 ../settings/xfpm-settings.c:995
+#: ../settings/xfpm-settings.c:1475
+msgid "Hibernate and suspend operations not permitted"
+msgstr "إجراءات الإسبات و التعليق غير مسموح بها"
+
+#: ../settings/xfpm-settings.c:826 ../settings/xfpm-settings.c:1220
+#: ../src/xfpm-power.c:805
+msgid "Shutdown"
+msgstr "إطفاء الجهاز"
+
+#: ../settings/xfpm-settings.c:830 ../settings/xfpm-settings.c:1224
+#: ../settings/xfpm-settings.c:1275 ../settings/xfpm-settings.c:1327
+msgid "Ask"
+msgstr "إسأل"
+
+#: ../settings/xfpm-settings.c:892 ../settings/xfpm-settings.c:1041
+msgid "Lock screen"
+msgstr "قفل الشاشة"
+
+#: ../settings/xfpm-settings.c:960 ../settings/xfpm-settings.c:1110
+msgid "Spinning down hard disks permission denied"
+msgstr "صلاحيات غير كافية لتخفيظ سرعة الأقراص الصلبة"
+
+#: ../settings/xfpm-settings.c:1150
+msgid "Always show icon"
+msgstr "إظهار الأيقونة دائما"
+
+#: ../settings/xfpm-settings.c:1153
+msgid "When battery is present"
+msgstr "عنذ وجود البطارية"
+
+#: ../settings/xfpm-settings.c:1156
+msgid "When battery is charging or discharging"
+msgstr "عندما يتم شحن او تفريغ البطارية"
+
+#: ../settings/xfpm-settings.c:1159
+msgid "Never show icon"
+msgstr "عدم عرض الأيقونة"
+
+#: ../settings/xfpm-settings.c:1185
+msgid ""
+"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
+"switch off the display or put it in sleep mode."
+msgstr "تعطيل إشارات مدير الطاقة للعرض (DPMS). مثال عدم محاولة إيقاف العرض أو وضع في نمط النوم."
+
+#: ../settings/xfpm-settings.c:1379
+msgid "Suspend operation not supported"
+msgstr "إجراء التعليق غير مدعوم"
+
+#: ../settings/xfpm-settings.c:1385
+msgid "Suspend operation not permitted"
+msgstr "إجراء التعليق غير مسموح به"
+
+#: ../settings/xfpm-settings.c:1391
+msgid "Hibernate operation not supported"
+msgstr "إجراء الإسبات غير مدعوم"
+
+#: ../settings/xfpm-settings.c:1396
+msgid "Hibernate operation not permitted"
+msgstr "إجراء الإسبات غير مسموح به"
+
+#: ../settings/xfpm-settings.c:1443
+msgid "When all the power sources of the computer reach this charge level"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:1546 ../settings/xfpm-settings.c:1551
+msgid "General"
+msgstr "عام"
+
+#: ../settings/xfpm-settings.c:1560 ../settings/xfpm-settings.c:1565
+msgid "On AC"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:1575 ../settings/xfpm-settings.c:1580
+msgid "On Battery"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:1589 ../settings/xfpm-settings.c:1594
+msgid "Extended"
+msgstr "ممدد"
+
+#: ../settings/xfpm-settings.c:1662
+msgid "Check your power manager installation"
+msgstr "تحقق من تثبيت مدير الطاقة"
+
+#: ../settings/xfpm-settings-main.c:78
+msgid "Settings manager socket"
+msgstr "مقبض مدير الإعدادات"
+
+#: ../settings/xfpm-settings-main.c:78
+msgid "SOCKET ID"
+msgstr "معرف المفبض"
+
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
+#: ../src/xfpm-power-info.c:946
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr "أكتب '%s --help' للإستعمال."
+
+#: ../settings/xfpm-settings-main.c:123
+msgid "Failed to load power manager configuration, using defaults"
+msgstr "خطأ في تحميل إعدادات مدير طاقة, الإفتراضية"
+
+#: ../settings/xfpm-settings-main.c:148
+msgid "Unable to connect to Xfce Power Manager"
+msgstr "عاجز عن الإتصال بمدير طاقة إكسفس"
+
+#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "مدير طاقة إكسفس ليس قيد التشغيل"
+
+#: ../settings/xfpm-settings-main.c:195
+msgid "Run"
+msgstr "تشغيل"
+
+#: ../settings/xfpm-settings-main.c:196
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "مدير طاقة إكسفس ليس قيد التشغيل، تريد تشغيله الآن؟"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
+#: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
+#: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
+#: ../src/xfpm-battery.c:351 ../src/xfce4-power-manager.desktop.in.h:1
+msgid "Power Manager"
+msgstr "مدير طاقة"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:2
+msgid "Settings for the Xfce Power Manager"
+msgstr "إعدادات مدير طاقة إكسفس"
+
+#: ../common/xfpm-common.c:155
+msgid "translator-credits"
+msgstr "فريق تعريب إكسفس:\\n كريم اولاد الشلحة <herr.linux88@gmail.com>\\n محمد الحرقان <malham1@gmail.com>\\n"
+
+#: ../src/xfpm-power.c:328
+msgid "_Hibernate"
+msgstr "إ_سبات"
+
+#: ../src/xfpm-power.c:329
+msgid ""
+"An application is currently disabling the automatic sleep. Doing this action"
+" now may damage the working state of this application."
+msgstr "هنالك تطبيق يقوم حاليا بتعطيل التلقائي للنوم. القيام بهذا الإجراء الأن يمكن ان يسبب ضرر لحالة عمل هذا التطبيق."
+
+#: ../src/xfpm-power.c:331
+msgid "Are you sure you want to hibernate the system?"
+msgstr "هل انت متاكد من انك تريد إسبات النظام؟"
+
+#: ../src/xfpm-power.c:426
+msgid "Quit"
+msgstr "خروج"
+
+#: ../src/xfpm-power.c:427
+msgid "All running instances of the power manager will exit"
+msgstr "كل مثيلات مدير الطاقة قيد التشغيل سيتم إغلاقها"
+
+#: ../src/xfpm-power.c:429
+msgid "Quit the power manager?"
+msgstr "خروج من مدير طاقة؟"
+
+#. Power information
+#: ../src/xfpm-power.c:534 ../src/xfpm-power-info.c:818
+msgid "Power Information"
+msgstr "معلومات الطاقة"
+
+#. *
+#. * Power Mode
+#. *
+#. TRANSLATOR: Mode here is the power profile (presentation, power save,
+#. normal)
+#: ../src/xfpm-power.c:550
+msgid "Mode"
+msgstr "نمط"
+
+#. Normal
+#: ../src/xfpm-power.c:561
+msgid "Normal"
+msgstr "عادي"
+
+#. Normal
+#: ../src/xfpm-power.c:571
+msgid "Presentation"
+msgstr "مقدمة"
+
+#: ../src/xfpm-power.c:693
+msgid "Hibernate the system"
+msgstr "إسبات النظام"
+
+#: ../src/xfpm-power.c:704
+msgid "Suspend the system"
+msgstr "تعليق النظام"
+
+#: ../src/xfpm-power.c:714
+msgid "Shutdown the system"
+msgstr "إطفاء النظام"
+
+#: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
+msgid "System is running on low power. Save your work to avoid losing data"
+msgstr "النظام يعمل بطاقة منخفظة, قم بحفظ العمل لتجنب فقدان البيانات"
+
+#: ../src/xfpm-power.c:936
+msgid "System is running on low power"
+msgstr "النظام يعمل بطاقة منخفظة"
+
+#: ../src/xfpm-power.c:955
+#, c-format
+msgid ""
+"Your %s charge level is low\n"
+"Estimated time left %s"
+msgstr "%s مستوى الشحن منخفظ\nوقت حياة المحتمل هو %s"
+
+#: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
+msgid "Adaptor is offline"
+msgstr "المحول غير متصل"
+
+#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:413
+#, c-format
+msgid "Adaptor is online"
+msgstr "المحول متصل"
+
+#: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
+#: ../src/xfpm-power.c:1676
+#, c-format
+msgid "Permission denied"
+msgstr "صلاحيات غير كافية"
+
+#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
+#, c-format
+msgid "Suspend not supported"
+msgstr "تعليق غير مدعوم"
+
+#: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
+msgid "Battery"
+msgstr "بطارية"
+
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
+msgid "UPS"
+msgstr "UPS"
+
+#: ../src/xfpm-power-common.c:126
+msgid "Line power"
+msgstr "خط الطاقة"
+
+#: ../src/xfpm-power-common.c:128
+msgid "Mouse"
+msgstr "فارة"
+
+#: ../src/xfpm-power-common.c:130
+msgid "Keyboard"
+msgstr "لوحة المفاتيح"
+
+#: ../src/xfpm-power-common.c:134
+msgid "PDA"
+msgstr "PDA"
+
+#: ../src/xfpm-power-common.c:136
+msgid "Phone"
+msgstr "هاتف"
+
+#: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:850
+msgid "Unknown"
+msgstr "مجهول"
+
+#: ../src/xfpm-power-common.c:155
+msgid "Lithium ion"
+msgstr "أيون ليثيوم"
+
+#: ../src/xfpm-power-common.c:157
+msgid "Lithium polymer"
+msgstr "مركب كميائي لليثيوم"
+
+#: ../src/xfpm-power-common.c:159
+msgid "Lithium iron phosphate"
+msgstr "أيون ليثيوم الفوسفات"
+
+#: ../src/xfpm-power-common.c:161
+msgid "Lead acid"
+msgstr ""
+
+#: ../src/xfpm-power-common.c:163
+msgid "Nickel cadmium"
+msgstr ""
+
+#: ../src/xfpm-power-common.c:165
+msgid "Nickel metal hybride"
+msgstr ""
+
+#: ../src/xfpm-battery.c:171
+msgid "Unknown time"
+msgstr "وقت غير محدد"
+
+#: ../src/xfpm-battery.c:177
+#, c-format
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i دقيقة"
+msgstr[1] "%i دقيقة"
+msgstr[2] "%i دقائق"
+msgstr[3] "%i دقائق"
+msgstr[4] "%i دقائق"
+msgstr[5] "%i دقائق"
+
+#: ../src/xfpm-battery.c:188
+#, c-format
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i ساعة"
+msgstr[1] "%i ساعة"
+msgstr[2] "%i ساعات"
+msgstr[3] "%i ساعات"
+msgstr[4] "%i ساعات"
+msgstr[5] "%i ساعات"
+
+#. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
+#. * Swap order with "%2$s %2$i %1$s %1$i if needed
+#: ../src/xfpm-battery.c:194
+#, c-format
+msgid "%i %s %i %s"
+msgstr "%i %s %i %s"
+
+#: ../src/xfpm-battery.c:195
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "ساعة"
+msgstr[1] "ساعة"
+msgstr[2] "ساعات"
+msgstr[3] "ساعات"
+msgstr[4] "ساعات"
+msgstr[5] "ساعات"
+
+#: ../src/xfpm-battery.c:196
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "دقيقة"
+msgstr[1] "دقيقة"
+msgstr[2] "دقائق"
+msgstr[3] "دقائق"
+msgstr[4] "دقائق"
+msgstr[5] "دقائق"
+
+#: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
+#, c-format
+msgid "Your %s is fully charged"
+msgstr "%s خاصتك تم شحنها بشكل كلي"
+
+#: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
+#, c-format
+msgid "Your %s is charging"
+msgstr "يتم شحن %s"
+
+#: ../src/xfpm-battery.c:224
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"%s until is fully charged."
+msgstr "%s (%i%%)\n%s حنى يتم شحنها كليا."
+
+#: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
+#, c-format
+msgid "Your %s is discharging"
+msgstr "يتم تفريغ %s"
+
+#: ../src/xfpm-battery.c:234
+#, c-format
+msgid "System is running on %s power"
+msgstr "النظام يعمل بـ %s من طاقة"
+
+#: ../src/xfpm-battery.c:244
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"Estimated time left is %s."
+msgstr "%s (%i%%)\nالوقت الحياة المحتمل هو %s."
+
+#: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
+#, c-format
+msgid "Your %s is empty"
+msgstr "%s فارغة"
+
+#: ../src/xfpm-battery.c:413
+#, c-format
+msgid "System is running on battery power"
+msgstr "النظام يعمل ببطارية الطاقة "
+
+#: ../src/xfpm-battery.c:420
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is fully charged (%i%%).\n"
+"Provides %s runtime"
+msgstr "%s\n%s مشحون كليا (%i%%).\nيزود %s وقت للعمل"
+
+#: ../src/xfpm-battery.c:429
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is fully charged (%i%%)."
+msgstr "%s\n%s مشحون كليا (%i%%)."
+
+#: ../src/xfpm-battery.c:440
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is charging (%i%%)\n"
+"%s until is fully charged."
+msgstr "%s\n%s يتم شحنها (%i%%)\n%s حتى يتم شحنها كليا."
+
+#: ../src/xfpm-battery.c:449
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is charging (%i%%)."
+msgstr "%s\n%s يتم شحنه (%i%%)."
+
+#: ../src/xfpm-battery.c:460
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is discharging (%i%%)\n"
+"Estimated time left is %s."
+msgstr "%s\n%s يتم شحنه (%i%%)\nوقت الحياة المحتمل %s."
+
+#: ../src/xfpm-battery.c:469
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is discharging (%i%%)."
+msgstr "%s\n%s يتم تفريغه (%i%%)."
+
+#: ../src/xfpm-battery.c:478
+#, c-format
+msgid ""
+"%s\n"
+"%s waiting to discharge (%i%%)."
+msgstr "%s\n%s إنتظار للتفريغ (%i%%)."
+
+#: ../src/xfpm-battery.c:482
+#, c-format
+msgid ""
+"%s\n"
+"%s waiting to charge (%i%%)."
+msgstr "%s\n%s إنتظار للشحن (%i%%)."
+
+#: ../src/xfpm-battery.c:486
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is empty"
+msgstr "%s\n%s فارغة"
+
+#: ../src/xfpm-battery.c:829
+msgid "battery"
+msgstr "بطارية"
+
+#: ../src/xfpm-battery.c:835
+msgid "monitor battery"
+msgstr "بطارية المراقب"
+
+#: ../src/xfpm-battery.c:838
+msgid "mouse battery"
+msgstr "بطارية الفأرة"
+
+#: ../src/xfpm-battery.c:841
+msgid "keyboard battery"
+msgstr "بطارية لوحة مفاتيح"
+
+#: ../src/xfpm-battery.c:844
+msgid "PDA battery"
+msgstr "بطارية PDA"
+
+#: ../src/xfpm-battery.c:847
+msgid "Phone battery"
+msgstr "بطارية الهاتف"
+
+#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
+#, c-format
+msgid ""
+"\n"
+"Xfce Power Manager %s\n"
+"\n"
+"Part of the Xfce Goodies Project\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Licensed under the GNU GPL.\n"
+"\n"
+msgstr "\nمدير طاقة إكسفس %s\n\nجزء من مشروع إكسفس Goodies\nhttp://goodies.xfce.org\n\nتم ترخيصه تحت رخصة الجنو العمومية\n\n"
+
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+msgid "True"
+msgstr "صحيح"
+
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+msgid "False"
+msgstr "خطأ"
+
+#: ../src/xfpm-main.c:113
+#, c-format
+msgid "With policykit support\n"
+msgstr "مع دعم policykit\n"
+
+#: ../src/xfpm-main.c:115
+#, c-format
+msgid "Without policykit support\n"
+msgstr ""
+
+#: ../src/xfpm-main.c:118
+#, c-format
+msgid "With network manager support\n"
+msgstr "مع دعم مدير الشبكة\n"
+
+#: ../src/xfpm-main.c:120
+#, c-format
+msgid "Without network manager support\n"
+msgstr "بدون دعم مدير الشبكة\n"
+
+#: ../src/xfpm-main.c:123
+#, c-format
+msgid "With DPMS support\n"
+msgstr "مع دعم DPMS\n"
+
+#: ../src/xfpm-main.c:125
+#, c-format
+msgid "Without DPMS support\n"
+msgstr "بدون دعم DPMS\n"
+
+#: ../src/xfpm-main.c:141
+msgid "Can suspend"
+msgstr "يمكن التعليق"
+
+#: ../src/xfpm-main.c:143
+msgid "Can hibernate"
+msgstr "يمكن الإسبات"
+
+#: ../src/xfpm-main.c:145
+msgid "Can spin down hard disks"
+msgstr "يمكن تخفيف سرعة دوران الأقراص الصلبة"
+
+#: ../src/xfpm-main.c:147
+msgid "Authorized to suspend"
+msgstr ""
+
+#: ../src/xfpm-main.c:149
+msgid "Authorized to hibernate"
+msgstr ""
+
+#: ../src/xfpm-main.c:151
+msgid "Authorized to shutdown"
+msgstr ""
+
+#: ../src/xfpm-main.c:153
+msgid "Authorized to spin down hard disks"
+msgstr ""
+
+#: ../src/xfpm-main.c:155
+msgid "Has battery"
+msgstr ""
+
+#: ../src/xfpm-main.c:157
+msgid "Has brightness panel"
+msgstr ""
+
+#: ../src/xfpm-main.c:159
+msgid "Has power button"
+msgstr ""
+
+#: ../src/xfpm-main.c:161
+msgid "Has hibernate button"
+msgstr ""
+
+#: ../src/xfpm-main.c:163
+msgid "Has sleep button"
+msgstr ""
+
+#: ../src/xfpm-main.c:165
+msgid "Has LID"
+msgstr ""
+
+#: ../src/xfpm-main.c:264
+msgid "Do not daemonize"
+msgstr ""
+
+#: ../src/xfpm-main.c:265
+msgid "Enable debugging"
+msgstr ""
+
+#: ../src/xfpm-main.c:266
+msgid "Dump all information"
+msgstr ""
+
+#: ../src/xfpm-main.c:267
+msgid "Restart the running instance of Xfce power manager"
+msgstr ""
+
+#: ../src/xfpm-main.c:268
+msgid "Show the configuration dialog"
+msgstr ""
+
+#: ../src/xfpm-main.c:269
+msgid "Quit any running xfce power manager"
+msgstr ""
+
+#: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:933
+msgid "Version information"
+msgstr ""
+
+#: ../src/xfpm-main.c:320
+msgid "Unable to get connection to the message bus session"
+msgstr ""
+
+#: ../src/xfpm-main.c:414
+msgid "Another power manager is already running"
+msgstr ""
+
+#: ../src/xfpm-main.c:420
+#, c-format
+msgid "Xfce power manager is already running"
+msgstr ""
+
+#: ../src/xfpm-inhibit.c:331
+#, c-format
+msgid "Invalid arguments"
+msgstr ""
+
+#: ../src/xfpm-inhibit.c:357
+#, c-format
+msgid "Invalid cookie"
+msgstr ""
+
+#. TRANSLATORS: the command line was not provided
+#: ../src/xfpm-power-info.c:118
+msgid "No data"
+msgstr ""
+
+#. TRANSLATORS: kernel module, usually a device driver
+#: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
+msgid "Kernel module"
+msgstr ""
+
+#. TRANSLATORS: kernel housekeeping
+#: ../src/xfpm-power-info.c:135
+msgid "Kernel core"
+msgstr ""
+
+#. TRANSLATORS: interrupt between processors
+#: ../src/xfpm-power-info.c:140
+msgid "Interprocessor interrupt"
+msgstr ""
+
+#. TRANSLATORS: unknown interrupt
+#: ../src/xfpm-power-info.c:145
+msgid "Interrupt"
+msgstr ""
+
+#. TRANSLATORS: the keyboard and mouse device event
+#: ../src/xfpm-power-info.c:189
+msgid "PS/2 keyboard/mouse/touchpad"
+msgstr ""
+
+#. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
+#: ../src/xfpm-power-info.c:192
+msgid "ACPI"
+msgstr ""
+
+#. TRANSLATORS: serial ATA is a new style of hard disk interface
+#: ../src/xfpm-power-info.c:195
+msgid "Serial ATA"
+msgstr ""
+
+#. TRANSLATORS: this is the old-style ATA interface
+#: ../src/xfpm-power-info.c:198
+msgid "ATA host controller"
+msgstr ""
+
+#. TRANSLATORS: 802.11 wireless adaptor
+#: ../src/xfpm-power-info.c:201
+msgid "Intel wireless adaptor"
+msgstr ""
+
+#. TRANSLATORS: a timer is something that fires periodically
+#: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
+#: ../src/xfpm-power-info.c:212 ../src/xfpm-power-info.c:215
+#: ../src/xfpm-power-info.c:218
+#, c-format
+msgid "Timer %s"
+msgstr ""
+
+#. TRANSLATORS: this is a task that's woken up from sleeping
+#: ../src/xfpm-power-info.c:221
+#, c-format
+msgid "Sleep %s"
+msgstr ""
+
+#. TRANSLATORS: this is a new realtime task
+#: ../src/xfpm-power-info.c:224
+#, c-format
+msgid "New task %s"
+msgstr ""
+
+#. TRANSLATORS: this is a task thats woken to check state
+#: ../src/xfpm-power-info.c:227
+#, c-format
+msgid "Wait %s"
+msgstr ""
+
+#. TRANSLATORS: a work queue is a list of work that has to be done
+#: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
+#, c-format
+msgid "Work queue %s"
+msgstr ""
+
+#. TRANSLATORS: this is when the networking subsystem clears out old entries
+#: ../src/xfpm-power-info.c:236
+#, c-format
+msgid "Network route flush %s"
+msgstr ""
+
+#. TRANSLATORS: activity on the USB bus
+#: ../src/xfpm-power-info.c:239
+#, c-format
+msgid "USB activity %s"
+msgstr ""
+
+#. TRANSLATORS: we've timed out of an aligned timer
+#: ../src/xfpm-power-info.c:242
+#, c-format
+msgid "Wakeup %s"
+msgstr ""
+
+#. TRANSLATORS: interupts on the system required for basic operation
+#: ../src/xfpm-power-info.c:245
+msgid "Local interrupts"
+msgstr ""
+
+#. TRANSLATORS: interrupts when a task gets moved from one core to another
+#: ../src/xfpm-power-info.c:248
+msgid "Rescheduling interrupts"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:331
+msgid "Attribute"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:338
+msgid "Value"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:348
+msgid "Device"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:739
+msgid "Type"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:375
+msgid "PowerSupply"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:393
+msgid "Model"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:407
+msgid "Technology"
+msgstr ""
+
+#. TRANSLATORS: Unit here is What hour
+#: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
+#: ../src/xfpm-power-info.c:442
+msgid "Wh"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:420
+msgid "Energy full design"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:434
+msgid "Energy full"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:448
+msgid "Energy empty"
+msgstr ""
+
+#. TRANSLATORS: Unit here is volt
+#: ../src/xfpm-power-info.c:456
+msgid "V"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:461
+msgid "Voltage"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:478
+msgid "Vendor"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:495
+msgid "Serial"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:731
+msgid "Processor"
+msgstr ""
+
+#. TANSLATORS: PID, is the process id, e.g what ps x gives
+#: ../src/xfpm-power-info.c:748
+msgid "PID"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:754
+msgid "Wakeups"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:760
+msgid "Command"
+msgstr ""
+
+#: ../src/xfpm-power-info.c:766
+msgid "Details"
+msgstr ""
+
+#: ../src/xfce4-power-manager.desktop.in.h:2
+msgid "Power management for the Xfce desktop"
+msgstr ""
+
+#: ../panel-plugins/brightness/brightness-button.c:180
+#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
+msgid "Control your LCD brightness"
+msgstr ""
+
+#: ../panel-plugins/brightness/brightness-button.c:182
+msgid "No device found"
+msgstr ""
+
+#: ../panel-plugins/brightness/brightness-button.c:649
+#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
+msgid "Brightness plugin"
+msgstr ""
