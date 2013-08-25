@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Necdet Yücel <necdetyucel@gmail.com>, 2013
+# wexaw, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 22:42+0200\n"
-"PO-Revision-Date: 2013-08-02 13:04+0000\n"
-"Last-Translator: Necdet Yücel <necdetyucel@gmail.com>\n"
+"POT-Creation-Date: 2013-08-12 00:30+0200\n"
+"PO-Revision-Date: 2013-08-25 01:39+0000\n"
+"Last-Translator: wexaw\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/xfce/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,7 +27,7 @@ msgid "Nothing"
 msgstr "Hiçbiri"
 
 #: ../data/interfaces/xfpm-settings.ui.h:2
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:415
 msgid "Xfce Power Manager"
 msgstr "Xfce Güç Yöneticisi"
 
@@ -125,7 +126,7 @@ msgstr ""
 #: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
 #: ../src/xfpm-power.c:792
 msgid "Suspend"
-msgstr ""
+msgstr "Askıya Al"
 
 #. Hibernate menu option
 #: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
@@ -293,7 +294,7 @@ msgstr ""
 msgid "SOCKET ID"
 msgstr "SOKET ID"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
 #: ../src/xfpm-power-info.c:946
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -303,20 +304,20 @@ msgstr ""
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:148
+#: ../settings/xfpm-settings-main.c:150
 msgid "Unable to connect to Xfce Power Manager"
-msgstr ""
+msgstr "Xfce Güç Yöneticisine bağlanılamadı"
 
-#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
+#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:331
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr ""
+msgstr "Xfce güç yöneticisi çalışmıyor"
 
-#: ../settings/xfpm-settings-main.c:195
+#: ../settings/xfpm-settings-main.c:197
 msgid "Run"
-msgstr ""
+msgstr "Çalıştır"
 
-#: ../settings/xfpm-settings-main.c:196
+#: ../settings/xfpm-settings-main.c:198
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr ""
 
@@ -359,12 +360,12 @@ msgstr ""
 
 #: ../src/xfpm-power.c:429
 msgid "Quit the power manager?"
-msgstr ""
+msgstr "Güç yöneticisinden çıkılsın mı?"
 
 #. Power information
 #: ../src/xfpm-power.c:534 ../src/xfpm-power-info.c:818
 msgid "Power Information"
-msgstr ""
+msgstr "Güç Bilgisi"
 
 #. *
 #. * Power Mode
@@ -391,7 +392,7 @@ msgstr ""
 
 #: ../src/xfpm-power.c:704
 msgid "Suspend the system"
-msgstr ""
+msgstr "Sistemi askıya al"
 
 #: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
@@ -414,12 +415,12 @@ msgstr ""
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
-msgstr ""
+msgstr "Adaptör takılı değil"
 
 #: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:413
 #, c-format
 msgid "Adaptor is online"
-msgstr ""
+msgstr "Adaptör takılı"
 
 #: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
 #: ../src/xfpm-power.c:1676
@@ -430,7 +431,7 @@ msgstr "İzin reddedildi"
 #: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
-msgstr ""
+msgstr "Askıya alma desteklenmiyor"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 msgid "Battery"
@@ -438,11 +439,11 @@ msgstr "Pil"
 
 #: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
 msgid "UPS"
-msgstr ""
+msgstr "UPS"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
-msgstr ""
+msgstr "Hat gücü"
 
 #: ../src/xfpm-power-common.c:128
 msgid "Mouse"
@@ -540,7 +541,7 @@ msgstr "%s aygıtı şarj ediliyor"
 #, c-format
 msgid ""
 "%s (%i%%)\n"
-"%s until is fully charged."
+"%s until it is fully charged."
 msgstr ""
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
@@ -568,7 +569,7 @@ msgstr "%s aygıtı boş"
 #: ../src/xfpm-battery.c:413
 #, c-format
 msgid "System is running on battery power"
-msgstr ""
+msgstr "Sistem pil gücü ile çalışıyor"
 
 #: ../src/xfpm-battery.c:420
 #, c-format
@@ -741,11 +742,11 @@ msgstr ""
 
 #: ../src/xfpm-main.c:155
 msgid "Has battery"
-msgstr ""
+msgstr "Pil takılı"
 
 #: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
-msgstr ""
+msgstr "Parlaklık paneli"
 
 #: ../src/xfpm-main.c:159
 msgid "Has power button"
@@ -769,7 +770,7 @@ msgstr ""
 
 #: ../src/xfpm-main.c:265
 msgid "Enable debugging"
-msgstr ""
+msgstr "Hata ayıklama açık"
 
 #: ../src/xfpm-main.c:266
 msgid "Dump all information"
@@ -791,15 +792,15 @@ msgstr ""
 msgid "Version information"
 msgstr "Sürüm bilgisi"
 
-#: ../src/xfpm-main.c:320
+#: ../src/xfpm-main.c:322
 msgid "Unable to get connection to the message bus session"
 msgstr ""
 
-#: ../src/xfpm-main.c:414
+#: ../src/xfpm-main.c:416
 msgid "Another power manager is already running"
 msgstr "Başka bir güç yöneticisi halen çalışıyor"
 
-#: ../src/xfpm-main.c:420
+#: ../src/xfpm-main.c:422
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce güç yöneticisi zaten çalışıyor"
@@ -842,7 +843,7 @@ msgstr "Kesme"
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
 msgid "PS/2 keyboard/mouse/touchpad"
-msgstr ""
+msgstr "PS/2 klavye/fare/touchpad"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
@@ -906,13 +907,13 @@ msgstr ""
 #: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "USB activity %s"
-msgstr ""
+msgstr "USB eylemi %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
-msgstr ""
+msgstr "Uyan %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
@@ -960,7 +961,7 @@ msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
-msgstr ""
+msgstr "Enerji tam tasarım"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
