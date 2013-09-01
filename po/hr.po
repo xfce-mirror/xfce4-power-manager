@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-08-12 00:30+0200\n"
-"PO-Revision-Date: 2013-09-01 12:17+0000\n"
+"PO-Revision-Date: 2013-09-01 17:08+0000\n"
 "Last-Translator: destogl <denisstogl@gmail.com>\n"
 "Language-Team: Croatian (http://www.transifex.com/projects/p/xfce/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -515,7 +515,7 @@ msgstr[2] "%i sati"
 #: ../src/xfpm-battery.c:194
 #, c-format
 msgid "%i %s %i %s"
-msgstr ""
+msgstr "%i %s %i %s"
 
 #: ../src/xfpm-battery.c:195
 msgid "hour"
@@ -546,7 +546,7 @@ msgstr "Vaš %s se puni"
 msgid ""
 "%s (%i%%)\n"
 "%s until it is fully charged."
-msgstr ""
+msgstr "%s (%i%%)\n%s do potpune napunjenosti."
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -647,7 +647,7 @@ msgstr "baterija"
 
 #: ../src/xfpm-battery.c:835
 msgid "monitor battery"
-msgstr ""
+msgstr "nadziri bateriju"
 
 #: ../src/xfpm-battery.c:838
 msgid "mouse battery"
@@ -676,7 +676,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
+msgstr "\nXfce upravitelj energijom %s\n\nDio Xfce Goodies projekta\nhttp://goodies.xfce.org\n\nLicencirano GNU GPL licencom.\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
@@ -726,7 +726,7 @@ msgstr "Može hibernirati"
 
 #: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Usporavanje vrtnje tvrdih diskova je moguće"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
@@ -742,7 +742,7 @@ msgstr "Ovlašten da isključi"
 
 #: ../src/xfpm-main.c:153
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "Usporavanje vrtnje tvrdih diskova je odobreno"
 
 #: ../src/xfpm-main.c:155
 msgid "Has battery"
@@ -754,15 +754,15 @@ msgstr "Ima ploču svjetline"
 
 #: ../src/xfpm-main.c:159
 msgid "Has power button"
-msgstr ""
+msgstr "Postoji gumb za uključivanje"
 
 #: ../src/xfpm-main.c:161
 msgid "Has hibernate button"
-msgstr ""
+msgstr "Postoji gumb za hibernaciju"
 
 #: ../src/xfpm-main.c:163
 msgid "Has sleep button"
-msgstr ""
+msgstr "Postoji gumb za spavanje"
 
 #: ../src/xfpm-main.c:165
 msgid "Has LID"
@@ -770,19 +770,19 @@ msgstr "Ima LID"
 
 #: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
-msgstr ""
+msgstr "Onemogući pokretanje procesa kao deamona"
 
 #: ../src/xfpm-main.c:265
 msgid "Enable debugging"
-msgstr ""
+msgstr "Omogući debagiranje"
 
 #: ../src/xfpm-main.c:266
 msgid "Dump all information"
-msgstr ""
+msgstr "Odbaci sve informacije"
 
 #: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
-msgstr ""
+msgstr "Ponovno pokreni pokrenutu instancu Xfce upravitelja energijom"
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
@@ -790,7 +790,7 @@ msgstr "Pokaži dijalog konfiguracije"
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
-msgstr ""
+msgstr "Isključi sve pokrenute Xfce upravitelje energijom"
 
 #: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:933
 msgid "Version information"
@@ -798,11 +798,11 @@ msgstr "Informacija o verziji"
 
 #: ../src/xfpm-main.c:322
 msgid "Unable to get connection to the message bus session"
-msgstr ""
+msgstr "Nemoguće spajanje na sabirnicu poruka"
 
 #: ../src/xfpm-main.c:416
 msgid "Another power manager is already running"
-msgstr ""
+msgstr "Upravitelj energijom je već pokrenut"
 
 #: ../src/xfpm-main.c:422
 #, c-format
@@ -837,7 +837,7 @@ msgstr "Kernel jezgra"
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "Unutarprocesorski prekid"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
@@ -847,7 +847,7 @@ msgstr "Prekini"
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
 msgid "PS/2 keyboard/mouse/touchpad"
-msgstr ""
+msgstr "PS/2 tipkovnica/miš/touchpad"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
@@ -862,12 +862,12 @@ msgstr "Serijski ATA"
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
 msgid "ATA host controller"
-msgstr ""
+msgstr "ATA host kontroler"
 
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
-msgstr ""
+msgstr "Intel wireless adapter"
 
 #. TRANSLATORS: a timer is something that fires periodically
 #: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
@@ -875,7 +875,7 @@ msgstr ""
 #: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
-msgstr ""
+msgstr "Tajmer %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
@@ -899,7 +899,7 @@ msgstr "Pričekajte %s"
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
 #, c-format
 msgid "Work queue %s"
-msgstr ""
+msgstr "Radni red %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
@@ -922,12 +922,12 @@ msgstr "Probudi %s"
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
 msgid "Local interrupts"
-msgstr ""
+msgstr "Lokalni prekid"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
-msgstr ""
+msgstr "Ponovno planiranje prekida"
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
@@ -965,15 +965,15 @@ msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
-msgstr ""
+msgstr "Nazivni kapacitet - dizajn"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
-msgstr ""
+msgstr "Nazivni kapacitet"
 
 #: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
-msgstr ""
+msgstr "Prazni kapacitet"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
