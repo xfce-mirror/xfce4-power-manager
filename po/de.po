@@ -6,6 +6,7 @@
 # Christian Weiske, 2010
 # Christoph Wickert, 2010
 # Fabian Nowak <timystery@arcor.de>, 2008,2010
+# hjudt <h.judt@gmx.at>, 2013
 # Hubert Hesse, 2010
 # hannes_xfce <johannes.lips@gmail.com>, 2013
 # Mark__T <mark@foresightlinux.org>, 2008
@@ -14,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-02 22:42+0200\n"
-"PO-Revision-Date: 2013-07-14 06:56+0000\n"
-"Last-Translator: hannes_xfce <johannes.lips@gmail.com>\n"
+"POT-Creation-Date: 2013-08-12 00:30+0200\n"
+"PO-Revision-Date: 2013-10-01 21:25+0000\n"
+"Last-Translator: hjudt <h.judt@gmx.at>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xfce/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,7 +33,7 @@ msgid "Nothing"
 msgstr "Nichts"
 
 #: ../data/interfaces/xfpm-settings.ui.h:2
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:415
 msgid "Xfce Power Manager"
 msgstr "Energieverwaltung für Xfce"
 
@@ -131,7 +132,7 @@ msgstr "Stromsparen gegenüber Leistung bevorzugen"
 #: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
 #: ../src/xfpm-power.c:792
 msgid "Suspend"
-msgstr "Standby"
+msgstr "Bereitschaft"
 
 #. Hibernate menu option
 #: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
@@ -160,7 +161,7 @@ msgstr "Schlafmodus für den Monitor:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Lock screen when going for suspend/hibernate"
-msgstr "Bildschirm sperren im Ruhezustand/Standby"
+msgstr "Bildschirm sperren bei Bereitschaft/Ruhezustand"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "<b>Advanced Options</b>"
@@ -204,12 +205,12 @@ msgstr "Sekunden"
 #: ../settings/xfpm-settings.c:792 ../settings/xfpm-settings.c:990
 #: ../settings/xfpm-settings.c:1470
 msgid "Hibernate and suspend operations not supported"
-msgstr "Ruhezustand und Standby-Modus werden nicht unterstützt"
+msgstr "Versetzen in Ruhezustand und Bereitschaftsmodus wird nicht unterstützt"
 
 #: ../settings/xfpm-settings.c:797 ../settings/xfpm-settings.c:995
 #: ../settings/xfpm-settings.c:1475
 msgid "Hibernate and suspend operations not permitted"
-msgstr "Die Operationen für den Ruhezustand und Standby sind nicht erlaubt"
+msgstr "Versetzen in Ruhezustand und Bereitschaftsmodus ist nicht erlaubt"
 
 #: ../settings/xfpm-settings.c:826 ../settings/xfpm-settings.c:1220
 #: ../src/xfpm-power.c:805
@@ -253,11 +254,11 @@ msgstr "Automatische Energieverwaltung des Bildschirms (DPMS) ausschalten, also 
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
-msgstr "Standby-Modus wird nicht unterstützt"
+msgstr "Versetzen in den Bereitschaftsmodus wird nicht unterstützt"
 
 #: ../settings/xfpm-settings.c:1385
 msgid "Suspend operation not permitted"
-msgstr "Die Operation für Standby ist nicht erlaubt"
+msgstr "Versetzen in den Bereitschaftsmodus ist nicht erlaubt"
 
 #: ../settings/xfpm-settings.c:1391
 msgid "Hibernate operation not supported"
@@ -265,7 +266,7 @@ msgstr "Ruhezustand wird nicht unterstützt"
 
 #: ../settings/xfpm-settings.c:1396
 msgid "Hibernate operation not permitted"
-msgstr "Die Operation für den Ruhezustand ist nicht erlaubt"
+msgstr "Versetzen in den Ruhezustand ist nicht erlaubt"
 
 #: ../settings/xfpm-settings.c:1443
 msgid "When all the power sources of the computer reach this charge level"
@@ -299,7 +300,7 @@ msgstr "Socket der Sitzungsverwaltung"
 msgid "SOCKET ID"
 msgstr "SOCKET-NR"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
 #: ../src/xfpm-power-info.c:946
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -309,20 +310,20 @@ msgstr "Geben Sie »%s --help« ein, um Informationen über die Verwendung zu er
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "Konnte Konfiguration der Energieverwaltung nicht laden; nehme Standardwerte"
 
-#: ../settings/xfpm-settings-main.c:148
+#: ../settings/xfpm-settings-main.c:150
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Kann keine Verbindung mit der Energieverwaltung für Xfce herstellen"
 
-#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
+#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:331
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Energieverwaltung für Xfce läuft nicht"
 
-#: ../settings/xfpm-settings-main.c:195
+#: ../settings/xfpm-settings-main.c:197
 msgid "Run"
 msgstr "Starten"
 
-#: ../settings/xfpm-settings-main.c:196
+#: ../settings/xfpm-settings-main.c:198
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Die Energieverwaltung für Xfce läuft nicht. Möchten Sie sie jetzt starten?"
 
@@ -397,7 +398,7 @@ msgstr "Das System in den Ruhezustand versetzen"
 
 #: ../src/xfpm-power.c:704
 msgid "Suspend the system"
-msgstr "Das System in Standby versetzen"
+msgstr "Das System in den Bereitschaftsmodus versetzen"
 
 #: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
@@ -436,7 +437,7 @@ msgstr "Erlaubnis verweigert"
 #: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
-msgstr "Standbymodus wird nicht unterstützt"
+msgstr "Der Bereitschaftsmodus wird nicht unterstützt"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 msgid "Battery"
@@ -546,7 +547,7 @@ msgstr "Ihr %s lädt"
 #, c-format
 msgid ""
 "%s (%i%%)\n"
-"%s until is fully charged."
+"%s until it is fully charged."
 msgstr "%s (%i %%)\n%s bis vollständig geladen."
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
@@ -719,7 +720,7 @@ msgstr "Ohne Unterstützung von DPMS\n"
 
 #: ../src/xfpm-main.c:141
 msgid "Can suspend"
-msgstr "Kann in Standby versetzen"
+msgstr "Kann in Bereitschaftsmodus versetzen"
 
 #: ../src/xfpm-main.c:143
 msgid "Can hibernate"
@@ -731,7 +732,7 @@ msgstr "Kann Festplatten herunterdrehen"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr "Darf in den Standbybetrieb versetzen"
+msgstr "Darf in Bereitschaftsmodus versetzen"
 
 #: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
@@ -797,15 +798,15 @@ msgstr "Energieverwaltung für Xfce beenden"
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: ../src/xfpm-main.c:320
+#: ../src/xfpm-main.c:322
 msgid "Unable to get connection to the message bus session"
 msgstr "Kann keine Verbindung zur Sitzung des Nachrichtenbusses erhalten"
 
-#: ../src/xfpm-main.c:414
+#: ../src/xfpm-main.c:416
 msgid "Another power manager is already running"
 msgstr "Eine andere Energieverwaltung läuft bereits"
 
-#: ../src/xfpm-main.c:420
+#: ../src/xfpm-main.c:422
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Energieverwaltung für Xfce läuft bereits"
