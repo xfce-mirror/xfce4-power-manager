@@ -1,127 +1,124 @@
-# Danish translation of xfce4-power-manager
-# Copyright (C) 2008 xfce4-power-manager'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the xfce4-power-manager package.
-# Per Kongstad <p_kongstad@op.pl>, 2008, 09, 10.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager 0.9.90\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-22 17:06+0000\n"
-"PO-Revision-Date: 2010-01-30 16:24+0100\n"
-"Last-Translator: Per Kongstad <p_kongstad@op.pl>\n"
-"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"POT-Creation-Date: 2013-07-02 23:12+0200\n"
+"PO-Revision-Date: 2013-11-19 14:35+0000\n"
+"Last-Translator: Nick <nick@xfce.org>\n"
+"Language-Team: Danish (http://www.transifex.com/projects/p/xfce/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Poedit-Language: Danish\n"
-"X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-Country: DENMARK\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1
-msgid "<b>Actions</b>"
-msgstr "<b>Handlinger</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:2
-msgid "<b>Advanced Options</b>"
-msgstr "<b>Avancerede indstillinger</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "<b>Brightness</b>"
-msgstr "<b>Lysstyrke</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "<b>General Options</b>"
-msgstr "<b>Generelle indstillinger</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "<b>Monitor</b>"
-msgstr "<b>Skærm</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Actions"
-msgstr "Handlinger"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "Consider the computer on low power at:"
-msgstr "Betragt computeren på lav strøm ved:"
-
-#. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:820
-#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
-#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
-#: ../src/xfpm-power.c:779
-msgid "Hibernate"
-msgstr "Dvaletilstand"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Level:"
-msgstr "Niveau:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "Lock screen when going for suspend/hibernate"
-msgstr "Lås skærmen når systemet går i hvile-/dvaletilstand"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
-msgid "Monitor"
-msgstr "Skærm"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Monitor power management control"
-msgstr "Overvåg strømstyring"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:809
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
 #: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
 #: ../settings/xfpm-settings.c:1203 ../settings/xfpm-settings.c:1260
 #: ../settings/xfpm-settings.c:1312
 msgid "Nothing"
 msgstr "Ingenting"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
+msgid "Xfce Power Manager"
+msgstr "Strømstyring til Xfce"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "Power manager settings"
 msgstr "Strømstyringsindstillinger"
 
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When sleep button is pressed:"
+msgstr "Ved tryk på hvile-knap:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When hibernate button is pressed:"
+msgstr "Ved tryk på dvaleknap:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When power button is pressed:"
+msgstr "Ved tryk på tænd-knap:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "System tray icon: "
+msgstr "Ikon til statusfelt:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "Monitor power management control"
+msgstr "Overvåg strømstyring"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "Show notifications to notify about the battery state"
+msgstr "Vis påmindelser for at informere om batteriets tilstand"
+
+#: ../data/interfaces/xfpm-settings.ui.h:10
+msgid "<b>General Options</b>"
+msgstr "<b>Generelle indstillinger</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "When laptop lid is closed:"
+msgstr "Når bærbarlåg er lukket:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Put the computer to sleep when inactive for:"
+msgstr "Lad computeren gå i hviletilstand ved inaktivitet i:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Spin down hard disks"
+msgstr "Nedsæt harddiskenes omdrejninger"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "<b>Actions</b>"
+msgstr "<b>Handlinger</b>"
+
 #: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "Prefer power savings over performance"
-msgstr "Foretræk strømbesparelse fremfor ydelse"
+msgid "Actions"
+msgstr "Handlinger"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
 msgstr "Lad skærmen gå i hviletilstand når computer er inaktiv i:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "Put the computer to sleep when inactive for:"
-msgstr "Lad computeren gå i hviletilstand ved inaktivitet i:"
+msgid "Switch off display when computer is inactive for:"
+msgstr "Sluk for skærmen når computeren er inaktiv i:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "<b>Monitor</b>"
+msgstr "<b>Skærm</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Reduce screen brightness when computer is inactive for:"
 msgstr "Reducér skærmens lysstyrke når computeren er inaktiv i:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "Set computer inactivity sleep mode:"
-msgstr "Indstil computerens inaktivitets hviletilstand:"
-
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "Set monitor sleep mode:"
-msgstr "Indstil skærmens hviletilstand:"
+msgid "Level:"
+msgstr "Niveau:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "Show notifications to notify about the battery state"
-msgstr "Vis påmindelser for at informere om batteriets tilstand"
+msgid "<b>Brightness</b>"
+msgstr "<b>Lysstyrke</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Spin down hard disks"
-msgstr "Nedsæt harddiskenes omdrejninger"
+#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
+msgid "Monitor"
+msgstr "Skærm"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "Standby"
-msgstr "Standby"
+msgid "When battery power is critical:"
+msgstr "Ved kritisk strømniveau på batteri:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Prefer power savings over performance"
+msgstr "Foretræk strømbesparelse fremfor ydelse"
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:814
+#: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:814
 #: ../settings/xfpm-settings.c:882 ../settings/xfpm-settings.c:1031
 #: ../settings/xfpm-settings.c:1208 ../settings/xfpm-settings.c:1265
 #: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
@@ -129,38 +126,38 @@ msgstr "Standby"
 msgid "Suspend"
 msgstr "Hviletilstand"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "Switch off display when computer is inactive for:"
-msgstr "Sluk for skærmen når computeren er inaktiv i:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:26
-msgid "System tray icon: "
-msgstr "Ikon til statusfelt:"
+#. Hibernate menu option
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
+#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
+#: ../src/xfpm-power.c:779
+msgid "Hibernate"
+msgstr "Dvaletilstand"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "When battery power is critical:"
-msgstr "Ved kritisk strømniveau på batteri:"
+msgid "Standby"
+msgstr "Standby"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "When hibernate button is pressed:"
-msgstr "Ved tryk på dvaleknap:"
+msgid "Set computer inactivity sleep mode:"
+msgstr "Indstil computerens inaktivitets hviletilstand:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "When laptop lid is closed:"
-msgstr "Når bærbarlåg er lukket:"
+msgid "Consider the computer on low power at:"
+msgstr "Betragt computeren på lav strøm ved:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "When power button is pressed:"
-msgstr "Ved tryk på tænd-knap:"
+msgid "Set monitor sleep mode:"
+msgstr "Indstil skærmens hviletilstand:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "When sleep button is pressed:"
-msgstr "Ved tryk på hvile-knap:"
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Lås skærmen når systemet går i hvile-/dvaletilstand"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
-msgid "Xfce Power Manager"
-msgstr "Strømstyring til Xfce"
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Avancerede indstillinger</b>"
 
 #: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
 #: ../settings/xfpm-settings.c:609
@@ -245,9 +242,7 @@ msgstr "Vis aldrig ikon"
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr ""
-"Slå strømstyringssignal til skærm fra (DPMS), så skærmen ikke bliver slukket "
-"eller bragt i hviletilstand."
+msgstr "Slå strømstyringssignal til skærm fra (DPMS), så skærmen ikke bliver slukket eller bragt i hviletilstand."
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -305,8 +300,7 @@ msgstr "Tast '%s --help' for brug."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
-"Kunne ikke indlæse indstillinger for strømstyring, bruger standardværdier"
+msgstr "Kunne ikke indlæse indstillinger for strømstyring, bruger standardværdier"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -338,11 +332,7 @@ msgstr "Indstillinger til strømstyring til Xfce"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
-msgstr ""
-"Per Kongstad <p_kongstad@op.pl>\n"
-"\n"
-"Dansk-gruppen dansk@dansk-gruppen.dk\n"
-"Mere info: http://www.dansk-gruppen.dk"
+msgstr "Per Kongstad <p_kongstad@op.pl>\n\nDansk-gruppen dansk@dansk-gruppen.dk\nMere info: http://www.dansk-gruppen.dk"
 
 #: ../src/xfpm-power.c:328
 msgid "_Hibernate"
@@ -350,12 +340,9 @@ msgstr "_Dvaletilstand"
 
 #: ../src/xfpm-power.c:329
 msgid ""
-"An application is currently disabling the automatic sleep. Doing this action "
-"now may damage the working state of this application."
-msgstr ""
-"Et program har for øjeblikket slået den automatiske hviletilstand fra. "
-"Udførelse af denne handling nu kan ødelægge tilstanden af programmet. Er du "
-"sikker på, at du ønsker at bringe systemet i hviletilstand?"
+"An application is currently disabling the automatic sleep. Doing this action"
+" now may damage the working state of this application."
+msgstr "Et program har for øjeblikket slået den automatiske hviletilstand fra. Udførelse af denne handling nu kan ødelægge tilstanden af programmet. Er du sikker på, at du ønsker at bringe systemet i hviletilstand?"
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
@@ -411,8 +398,7 @@ msgstr "Luk systemet ned"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Systemet kører på lavt strømniveau. Gem dine data for at undgå tab af data"
+msgstr "Systemet kører på lavt strømniveau. Gem dine data for at undgå tab af data"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -423,9 +409,7 @@ msgstr "System kører med lavt strømniveau"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"Dit %s ladeniveau er lavt\n"
-"Forventet tid tilbage %s."
+msgstr "Dit %s ladeniveau er lavt\nForventet tid tilbage %s."
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -556,9 +540,7 @@ msgstr "Dit %s oplader"
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s (%i%%)\n"
-"%s indtil fuldt opladet."
+msgstr "%s (%i%%)\n%s indtil fuldt opladet."
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -575,9 +557,7 @@ msgstr "System kører på strøm fra %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s (%i%%)\n"
-"Beregnet tid tilbage %s."
+msgstr "%s (%i%%)\nBeregnet tid tilbage %s."
 
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
@@ -595,19 +575,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr ""
-"%s\n"
-"Dit %s er fuldt opladet (%i%%).\n"
-"Forventet %s køretid"
+msgstr "%s\nDit %s er fuldt opladet (%i%%).\nForventet %s køretid"
 
 #: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
-"%s\n"
-"Dit %s er fuldt opladet (%i%%)."
+msgstr "%s\nDit %s er fuldt opladet (%i%%)."
 
 #: ../src/xfpm-battery.c:440
 #, c-format
@@ -615,19 +590,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s\n"
-"Dit %s oplader (%i%%)\n"
-"%s indtil det er fuldt opladet."
+msgstr "%s\nDit %s oplader (%i%%)\n%s indtil det er fuldt opladet."
 
 #: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr ""
-"%s\n"
-"Dit %s oplader (%i%%)."
+msgstr "%s\nDit %s oplader (%i%%)."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -635,46 +605,35 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s\n"
-"Dit %s aflader (%i%%)\n"
-"forventet tid tilbage %s."
+msgstr "%s\nDit %s aflader (%i%%)\nforventet tid tilbage %s."
 
 #: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr ""
-"%s\n"
-"Dit %s aflader (%i%%)."
+msgstr "%s\nDit %s aflader (%i%%)."
 
 #: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr ""
-"%s\n"
-"%s venter for afladning (%i%%)."
+msgstr "%s\n%s venter for afladning (%i%%)."
 
 #: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr ""
-"%s\n"
-"%s venter for opladning (%i%%)."
+msgstr "%s\n%s venter for opladning (%i%%)."
 
 #: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr ""
-"%s\n"
-"Dit %s er tomt"
+msgstr "%s\nDit %s er tomt"
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
@@ -711,15 +670,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Strømstyring til Xfce %s\n"
-"\n"
-"En del af Xfce Goodies-projektet\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licenceret under GNU GPL.\n"
-"\n"
+msgstr "\nStrømstyring til Xfce %s\n\nEn del af Xfce Goodies-projektet\nhttp://goodies.xfce.org\n\nLicenceret under GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
@@ -1073,239 +1024,3 @@ msgstr "Ingen enhed fundet"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Moduludvidelse for lysstyrke"
-
-#~ msgid ""
-#~ "An application is currently disabling the automatic sleep, doing this "
-#~ "action now may damage the working state of this application, are you sure "
-#~ "you want to hibernate the system?"
-#~ msgstr ""
-#~ "Et program har for øjeblikket slået den automatiske hviletilstand fra. "
-#~ "Udførelse af denne handling nu kan ødelægge tilstanden af programmet. Er "
-#~ "du sikker på, at du ønsker at bringe systemet i dvaletilstand?"
-
-#~ msgid "Xfce 4 Power Manager"
-#~ msgstr "Strømstyring til Xfce 4"
-
-#~ msgid ""
-#~ "Xfce Power Manager requires version 011 of devicekit-power to work "
-#~ "properly while the version found is"
-#~ msgstr ""
-#~ "Xfce Power Manager kræver version 011 af devicekit-power for at virke "
-#~ "korrekt, og den fundne version er"
-
-#~ msgid "Devicekit-power version 011 or above not found"
-#~ msgstr "Devicekit-power version 011 eller højere er ikke fundet"
-
-#~ msgid "Xfce power manager"
-#~ msgstr "Strømstyring til Xfce"
-
-#~ msgid "Battery charge level is low"
-#~ msgstr "Strømniveauet på dit batteri er lavt"
-
-#~ msgid "With HAL support\n"
-#~ msgstr "Med understøttelse af HAL\n"
-
-#~ msgid "Without HAL support\n"
-#~ msgstr "Uden understøttelse af HAL\n"
-
-#~ msgid "CPU frequency control"
-#~ msgstr "Frekvenskontrol til processor"
-
-#~ msgid "Shutdown and hibernate operations not permitted"
-#~ msgstr "Handlingerne luk ned og dvale er ikke tilladte"
-
-#~ msgid "Xfce Power Manager Settings"
-#~ msgstr "Strømstyringsindstillinger til Xfce"
-
-#~ msgid "Battery is charging"
-#~ msgstr "Batteri oplader"
-
-#~ msgid "Your UPS"
-#~ msgstr "Din UPS"
-
-#~ msgid "Your Camera battery"
-#~ msgstr "Batteriet til dit kamera"
-
-#~ msgid "Your Battery"
-#~ msgstr "Dit batteri"
-
-#~ msgid "is fully charged"
-#~ msgstr "er fuldt opladet"
-
-#~ msgid "charge level"
-#~ msgstr "ladeniveau"
-
-#~ msgid "is charging"
-#~ msgstr "oplader"
-
-#~ msgid "is discharging"
-#~ msgstr "aflader"
-
-#~ msgid "charge is low"
-#~ msgstr "ladeniveau er lavt"
-
-#~ msgid "is almost empty"
-#~ msgstr "er næsten tomt"
-
-#~ msgid "is not present"
-#~ msgstr "er ikke tilstede"
-
-#~ msgid "Battery not present"
-#~ msgstr "Batteri er ikke tilstede"
-
-#~ msgid "Estimated time left"
-#~ msgstr "Forventet tid tilbage"
-
-#~ msgid "Estimated time to be fully charged"
-#~ msgstr "Forventet ladetid til fuld opladning"
-
-#~ msgid "Design:"
-#~ msgstr "Design:"
-
-#~ msgid "Last full:"
-#~ msgstr "Sidst fuldt opladet:"
-
-#~ msgid "Too many arguments"
-#~ msgstr "For mange argumenter"
-
-#~ msgid "Adapter present"
-#~ msgstr "Vekselstrøm tilstede"
-
-#~ msgid "Adapter not present"
-#~ msgstr "Vekselstrøm er ikke tilstede"
-
-#~ msgid ""
-#~ "System is running on low power, but an application is currently disabling "
-#~ "the automatic sleep, this means that doing a sleep now may damage the "
-#~ "data of this application. Close this application before putting the "
-#~ "computer on sleep mode or plug in your AC adapter"
-#~ msgstr ""
-#~ "Systemet kører på lavt strømniveau, men et program forhindrer i "
-#~ "øjeblikket den automatiske hviletilstand. Dette betyder at gennemførelse "
-#~ "af sovetilstand nu kan være ødelæggende for data til dette program. Luk "
-#~ "dette program før computeren går i sovetilstand eller tilslut til "
-#~ "vekselstrøm"
-
-#~ msgid "Are you sure you want to proceed?"
-#~ msgstr "Er du sikker på, at du vil fortsætte?"
-
-#~ msgid "Monitor power control"
-#~ msgstr "Overvåg strømstyring"
-
-#~ msgid ""
-#~ "Disable or enable monitor power control, for example you could disable "
-#~ "the screen power control to avoid screen blanking when watching a movie."
-#~ msgstr ""
-#~ "Slå til/fra overvågning af strømstyring. For eksempel kan du slå "
-#~ "strømstyring af skærm fra for at undgå pauserskærm, når du ser en film."
-
-#~ msgid "No data available"
-#~ msgstr "Ingen tilgængelige data"
-
-#~ msgid "Hibernate not supported"
-#~ msgstr "Dvaletilstand er ikke understøttet"
-
-#~ msgid "HAL daemon is not running"
-#~ msgstr "HAL-dæmonen kører ikke"
-
-#~ msgid "No back-end for your operating system"
-#~ msgstr "Ingen underliggende proces til dit operativsystem"
-
-#~ msgid "No hibernate script found"
-#~ msgstr "Intet dvale-skript fundet"
-
-#~ msgid "No suspend script found"
-#~ msgstr "Intet hvile-skript fundet"
-
-#~ msgid "No suspend method found"
-#~ msgstr "Ingen hvile-metode fundet"
-
-#~ msgid "No hibernate method found"
-#~ msgstr "Ingen hvile-metode fundet"
-
-#~ msgid "Out of memory"
-#~ msgstr "Er løbet tør for hukommelse"
-
-#~ msgid "System failed to sleep"
-#~ msgstr "System kunne ikke gå i hviletilstand"
-
-#~ msgid "HAL daemon is currently not connected"
-#~ msgstr "HAL-dæmon er ikke forbundet i øjeblikket"
-
-#~ msgid "mAh"
-#~ msgstr "mAh"
-
-#~ msgid "Enable notification"
-#~ msgstr "Slå påmindelse til"
-
-#~ msgid "Clear inhibit"
-#~ msgstr "Ryd forbud"
-
-#~ msgid "Inhibit"
-#~ msgstr "Forbyd"
-
-#~ msgid "Advanced"
-#~ msgstr "Avanceret"
-
-#~ msgid "Advance"
-#~ msgstr "Avanceret"
-
-#~ msgid "gtk-close"
-#~ msgstr "gtk-close"
-
-#~ msgid "gtk-help"
-#~ msgstr "gtk-help"
-
-#~ msgid "Automatic sleep inhibited"
-#~ msgstr "Forbud mod automatisk hviletilstand"
-
-#~ msgid "Another application is disabling the automatic sleep"
-#~ msgstr "Et andet program slår den automatiske hviletilstand fra"
-
-#~ msgid "Automatic sleep enabled"
-#~ msgstr "Automatisk hviletilstand er slået til"
-
-#~ msgid "Power manager automatic sleep is disabled"
-#~ msgstr "Strømstyrings automatiske hviletilstand er slået fra"
-
-#~ msgid "Power manager automatic sleep is enabled"
-#~ msgstr "Strømstyrings automatiske hviletilstand er slået til"
-
-#~ msgid "Don't show again"
-#~ msgstr "Vis ikke denne besked igen"
-
-#~ msgid "Power manager disconnected"
-#~ msgstr "Strømstyring er ikke forbundet"
-
-#~ msgid "Power manager is connected"
-#~ msgstr "Strømstyring er forbundet"
-
-#~ msgid "Xfce power manager is not running to releod it"
-#~ msgstr "Strømstyring til Xfce kører ikke. Genstart den"
-
-#~ msgid ""
-#~ "Unable to read adapter status, the power manager will not work properly"
-#~ msgstr ""
-#~ "Kunne ikke aflæse tilslutningstilstand, strømstyringen vil ikke fungere "
-#~ "korrekt"
-
-#~ msgid "UPS configuration"
-#~ msgstr "Nødstrømsindstilling"
-
-#~ msgid "Consider UPS charge critical"
-#~ msgstr "Opfat nødstrømladning som kritisk"
-
-#~ msgid "Consider battery charge critical"
-#~ msgstr "Opfat batteriladning som kritisk"
-
-#~ msgid "percent"
-#~ msgstr "procent"
-
-#~ msgid "Enable battery state notification"
-#~ msgstr "Aktivér påmindelse af batteritilstand"
-
-#~ msgid "Enable power save on UPS power"
-#~ msgstr "Aktivér strømstyring ved nødstrømstrøm"
-
-#~ msgid "Enable power save on battery power"
-#~ msgstr "Aktivér strømstyring ved strøm fra batteri"
