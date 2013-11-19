@@ -1,124 +1,125 @@
-# Indonesian translations for xfce4-power-manager package.
-# Copyright (C) 2008 THE xfce'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the xfce package.
-# Andhika Padmawan <andhika.padmawan@gmail.com>, 2011.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # 
+# Translators:
+# Andhika Padmawan <andhika.padmawan@gmail.com>, 2011
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-23 15:00+0000\n"
-"PO-Revision-Date: 2011-03-05 18:52+0700\n"
-"Last-Translator: Andhika Padmawan <andhika.padmawan@gmail.com>\n"
-"Language-Team: Indonesian <translation-team-id@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2013-07-02 23:12+0200\n"
+"PO-Revision-Date: 2013-11-19 14:35+0000\n"
+"Last-Translator: Nick <nick@xfce.org>\n"
+"Language-Team: Indonesian (http://www.transifex.com/projects/p/xfce/language/id/)\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1
-msgid "<b>Actions</b>"
-msgstr "<b>Aksi</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:2
-msgid "<b>Advanced Options</b>"
-msgstr "<b>Pengaturan Lanjutan</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "<b>Brightness</b>"
-msgstr "<b>Kecerahan</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "<b>General Options</b>"
-msgstr "<b>Opsi Umum</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "<b>Monitor</b>"
-msgstr "<b>Monitor</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Actions"
-msgstr "Aksi"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "Consider the computer on low power at:"
-msgstr "Anggap komputer pada daya rendah di:"
-
-#. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:820
-#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
-#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
-#: ../src/xfpm-power.c:779
-msgid "Hibernate"
-msgstr "Hibernasi"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Level:"
-msgstr "Level:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "Lock screen when going for suspend/hibernate"
-msgstr "Kunci layar jika akan suspensi/hibernasi"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
-msgid "Monitor"
-msgstr "Monitor"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Monitor power management control"
-msgstr "Monitor kendali manajemen daya"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:809
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
 #: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
 #: ../settings/xfpm-settings.c:1203 ../settings/xfpm-settings.c:1260
 #: ../settings/xfpm-settings.c:1312
 msgid "Nothing"
 msgstr "Tak ada"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
+msgid "Xfce Power Manager"
+msgstr "Manajer Daya Xfce"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "Power manager settings"
 msgstr "Pengaturan manajer daya"
 
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When sleep button is pressed:"
+msgstr "Ketika tombol tidur ditekan:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When hibernate button is pressed:"
+msgstr "Ketika tombol hibernasi ditekan:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When power button is pressed:"
+msgstr "Ketika tombol power ditekan:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "System tray icon: "
+msgstr "Ikon baki sistem: "
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "Monitor power management control"
+msgstr "Monitor kendali manajemen daya"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "Show notifications to notify about the battery state"
+msgstr "Tampilkan notifikasi untuk memberitahu tentang tingkat baterai"
+
+#: ../data/interfaces/xfpm-settings.ui.h:10
+msgid "<b>General Options</b>"
+msgstr "<b>Opsi Umum</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "When laptop lid is closed:"
+msgstr "Ketika tutup laptop ditutup:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Put the computer to sleep when inactive for:"
+msgstr "Buat komputer tertidur jika tidak aktif selama:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Spin down hard disks"
+msgstr "Perlambat cakram keras"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "<b>Actions</b>"
+msgstr "<b>Aksi</b>"
+
 #: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "Prefer power savings over performance"
-msgstr "Memilih penyimpanan daya dibanding performa"
+msgid "Actions"
+msgstr "Aksi"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
 msgstr "Buat tampilan tertidur jika komputer tidak aktif selama:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "Put the computer to sleep when inactive for:"
-msgstr "Buat komputer tertidur jika tidak aktif selama:"
+msgid "Switch off display when computer is inactive for:"
+msgstr "Matikan tampilan jika komputer tidak aktif selama:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "<b>Monitor</b>"
+msgstr "<b>Monitor</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Reduce screen brightness when computer is inactive for:"
 msgstr "Kurangi kecerahan jika komputer tidak aktif selama:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "Set computer inactivity sleep mode:"
-msgstr "Atur mode tidur jika komputer tidak aktif:"
-
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "Set monitor sleep mode:"
-msgstr "Atur mode tidur monitor:"
+msgid "Level:"
+msgstr "Level:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "Show notifications to notify about the battery state"
-msgstr "Tampilkan notifikasi untuk memberitahu tentang tingkat baterai"
+msgid "<b>Brightness</b>"
+msgstr "<b>Kecerahan</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Spin down hard disks"
-msgstr "Perlambat cakram keras"
+#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
+msgid "Monitor"
+msgstr "Monitor"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "Standby"
-msgstr "Siaga"
+msgid "When battery power is critical:"
+msgstr "Ketika level muatan baterai kritis:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Prefer power savings over performance"
+msgstr "Memilih penyimpanan daya dibanding performa"
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:814
+#: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:814
 #: ../settings/xfpm-settings.c:882 ../settings/xfpm-settings.c:1031
 #: ../settings/xfpm-settings.c:1208 ../settings/xfpm-settings.c:1265
 #: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
@@ -126,38 +127,38 @@ msgstr "Siaga"
 msgid "Suspend"
 msgstr "Suspensi"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "Switch off display when computer is inactive for:"
-msgstr "Matikan tampilan jika komputer tidak aktif selama:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:26
-msgid "System tray icon: "
-msgstr "Ikon baki sistem: "
+#. Hibernate menu option
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
+#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
+#: ../src/xfpm-power.c:779
+msgid "Hibernate"
+msgstr "Hibernasi"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "When battery power is critical:"
-msgstr "Ketika level muatan baterai kritis:"
+msgid "Standby"
+msgstr "Siaga"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "When hibernate button is pressed:"
-msgstr "Ketika tombol hibernasi ditekan:"
+msgid "Set computer inactivity sleep mode:"
+msgstr "Atur mode tidur jika komputer tidak aktif:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "When laptop lid is closed:"
-msgstr "Ketika tutup laptop ditutup:"
+msgid "Consider the computer on low power at:"
+msgstr "Anggap komputer pada daya rendah di:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "When power button is pressed:"
-msgstr "Ketika tombol power ditekan:"
+msgid "Set monitor sleep mode:"
+msgstr "Atur mode tidur monitor:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "When sleep button is pressed:"
-msgstr "Ketika tombol tidur ditekan:"
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Kunci layar jika akan suspensi/hibernasi"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
-msgid "Xfce Power Manager"
-msgstr "Manajer Daya Xfce"
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Pengaturan Lanjutan</b>"
 
 #: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
 #: ../settings/xfpm-settings.c:609
@@ -242,9 +243,7 @@ msgstr "Jangan pernah tampilkan ikon"
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr ""
-"Nonaktifkan Pengisyaratan Manajemen Daya Tampilan (DPMS), misalnya jangan "
-"matikan tampilan atau letakkan dalam mode tidur."
+msgstr "Nonaktifkan Pengisyaratan Manajemen Daya Tampilan (DPMS), misalnya jangan matikan tampilan atau letakkan dalam mode tidur."
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -342,12 +341,9 @@ msgstr "_Hibernasi"
 
 #: ../src/xfpm-power.c:329
 msgid ""
-"An application is currently disabling the automatic sleep. Doing this action "
-"now may damage the working state of this application."
-msgstr ""
-"Sebuah aplikasi saat ini menonaktifkan tidur otomatis, melakukan aksi ini "
-"sekarang dapat merusak kondisi kerja dari aplikasi ini, apakah anda yakin "
-"ingin menyuspensi sistem?"
+"An application is currently disabling the automatic sleep. Doing this action"
+" now may damage the working state of this application."
+msgstr "Sebuah aplikasi saat ini menonaktifkan tidur otomatis, melakukan aksi ini sekarang dapat merusak kondisi kerja dari aplikasi ini, apakah anda yakin ingin menyuspensi sistem?"
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
@@ -403,9 +399,7 @@ msgstr "Matikan sistem"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Sistem berjalan pada daya yang rendah. Simpan pekerjaan anda untuk "
-"menghindari hilangnya data"
+msgstr "Sistem berjalan pada daya yang rendah. Simpan pekerjaan anda untuk menghindari hilangnya data"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -416,9 +410,7 @@ msgstr "Sistem berjalan pada daya rendah"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"Level pengisian %s anda rendah\n"
-"Waktu yang tersisa %s"
+msgstr "Level pengisian %s anda rendah\nWaktu yang tersisa %s"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -545,9 +537,7 @@ msgstr "%s anda sedang mengisi"
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s (%i%%)\n"
-"%s hingga penuh terisi."
+msgstr "%s (%i%%)\n%s hingga penuh terisi."
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -564,9 +554,7 @@ msgstr "Sistem berjalan pada daya %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s (%i%%)\n"
-"Waktu tersisa adalah %s."
+msgstr "%s (%i%%)\nWaktu tersisa adalah %s."
 
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
@@ -584,19 +572,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr ""
-"%s\n"
-"%s anda penuh terisi (%i%%).\n"
-"Memberikan waktu %s "
+msgstr "%s\n%s anda penuh terisi (%i%%).\nMemberikan waktu %s "
 
 #: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
-"%s\n"
-"%s anda penuh terisi (%i%%)."
+msgstr "%s\n%s anda penuh terisi (%i%%)."
 
 #: ../src/xfpm-battery.c:440
 #, c-format
@@ -604,19 +587,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s\n"
-"%s anda sedang mengisi (%i%%)\n"
-"%s hingga penuh terisi."
+msgstr "%s\n%s anda sedang mengisi (%i%%)\n%s hingga penuh terisi."
 
 #: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr ""
-"%s\n"
-"%s anda sedang mengisi (%i%%)."
+msgstr "%s\n%s anda sedang mengisi (%i%%)."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -624,46 +602,35 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s\n"
-"%s anda tidak mengisi (%i%%)\n"
-"Waktu tersisa adalah %s."
+msgstr "%s\n%s anda tidak mengisi (%i%%)\nWaktu tersisa adalah %s."
 
 #: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr ""
-"%s\n"
-"%s anda tidak mengisi (%i%%)."
+msgstr "%s\n%s anda tidak mengisi (%i%%)."
 
 #: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr ""
-"%s\n"
-"%s menunggu untuk tidak diisi (%i%%)."
+msgstr "%s\n%s menunggu untuk tidak diisi (%i%%)."
 
 #: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr ""
-"%s\n"
-"%s menunggu untuk diisi (%i%%)."
+msgstr "%s\n%s menunggu untuk diisi (%i%%)."
 
 #: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr ""
-"%s\n"
-"%s anda kosong"
+msgstr "%s\n%s anda kosong"
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
@@ -700,15 +667,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Manajer Daya Xfce %s\n"
-"\n"
-"Bagian dari Proyek Goodies Xfce\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Dilisensikan di bawah GNU GPL.\n"
-"\n"
+msgstr "\nManajer Daya Xfce %s\n\nBagian dari Proyek Goodies Xfce\nhttp://goodies.xfce.org\n\nDilisensikan di bawah GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
@@ -1062,446 +1021,3 @@ msgstr "Tak ada divais yang ditemukan"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Plugin kecerahan"
-
-#~ msgid ""
-#~ "An application is currently disabling the automatic sleep, doing this "
-#~ "action now may damage the working state of this application, are you sure "
-#~ "you want to hibernate the system?"
-#~ msgstr ""
-#~ "Sebuah aplikasi saat ini menonaktifkan tidur otomatis, melakukan aksi ini "
-#~ "sekarang dapat merusak kondisi kerja dari aplikasi ini, apakah anda yakin "
-#~ "ingin menghibernasi sistem?"
-
-#~ msgid "CPU frequency control"
-#~ msgstr "Kendali frekuensi CPU"
-
-#~ msgid "Shutdown and hibernate operations not permitted"
-#~ msgstr "Operasi matikan dan hibernasi tidak diizinkan"
-
-#~ msgid "Xfce Power Manager Settings"
-#~ msgstr "Pengaturan Manajer Daya Xfce"
-
-#~ msgid "Xfce 4 Power Manager"
-#~ msgstr "Manajer Daya Xfce 4"
-
-#~ msgid "Battery is charging"
-#~ msgstr "Baterai sedang mengisi"
-
-#~ msgid "Your battery charge is low"
-#~ msgstr "Muatan baterai anda sedikit"
-
-#~ msgid "Xfce power manager"
-#~ msgstr "Manajer daya Xfce"
-
-#~ msgid "Your UPS"
-#~ msgstr "UPS anda"
-
-#~ msgid "Your Camera battery"
-#~ msgstr "Baterai Kamera anda"
-
-#~ msgid "Your Battery"
-#~ msgstr "Baterai Anda"
-
-#~ msgid "is fully charged"
-#~ msgstr "telah penuh terisi"
-
-#~ msgid "charge level"
-#~ msgstr "level pengisian"
-
-#~ msgid "is charging"
-#~ msgstr "sedang mengisi"
-
-#~ msgid "is discharging"
-#~ msgstr "sedang tidak diisi"
-
-#~ msgid "charge is low"
-#~ msgstr "pengisian rendah"
-
-#~ msgid "is almost empty"
-#~ msgstr "hampir kosong"
-
-#~ msgid "is not present"
-#~ msgstr "tidak ada"
-
-#~ msgid "Battery not present"
-#~ msgstr "Baterai tidak ada"
-
-#~ msgid "Estimated time left"
-#~ msgstr "Estimasi waktu tersisa"
-
-#~ msgid "Estimated time to be fully charged"
-#~ msgstr "Estimasi waktu sampai penuh terisi"
-
-#~ msgid "Design:"
-#~ msgstr "Desain:"
-
-#~ msgid "Last full:"
-#~ msgstr "Terakhir penuh:"
-
-#~ msgid "Too many arguments"
-#~ msgstr "Terlalu banyak argumen"
-
-#~ msgid "Adapter present"
-#~ msgstr "Adapter ada"
-
-#~ msgid "Adapter not present"
-#~ msgstr "Adapter tak ada"
-
-#~ msgid ""
-#~ "System is running on low power, but an application is currently disabling "
-#~ "the automatic sleep, this means that doing a sleep now may damage the "
-#~ "data of this application. Close this application before putting the "
-#~ "computer on sleep mode or plug in your AC adapter"
-#~ msgstr ""
-#~ "Sistem berjalan pada daya rendah, tapi sebuah aplikasi saat ini "
-#~ "menonaktifkan tidur otomatis, ini berarti menidurkan sekarang dapat "
-#~ "merusak data dari aplikasi ini. Tutup aplikasi ini sebelum menempatkan "
-#~ "komputer pada mode tidur atau mecolokkan adapter AC anda"
-
-#~ msgid "Are you sure you want to proceed?"
-#~ msgstr "Apakah anda yakin ingin melanjutkan?"
-
-#~ msgid "Monitor power control"
-#~ msgstr "Monitor kendali daya"
-
-#~ msgid ""
-#~ "Disable or enable monitor power control, for example you could disable "
-#~ "the screen power control to avoid screen blanking when watching a movie."
-#~ msgstr ""
-#~ "Nonaktifkan atau aktifkan monitor kendali daya, misalnya anda dapat "
-#~ "menonaktifkan kendali daya untuk menghindari pengosongan layar ketika "
-#~ "anda sedang menonton film."
-
-#~ msgid "No data available"
-#~ msgstr "Tak ada data yang tersedia"
-
-#~ msgid "Hibernate not supported"
-#~ msgstr "Hibernasi tak disokong"
-
-#~ msgid "HAL daemon is not running"
-#~ msgstr "Jurik HAL tidak berjalan"
-
-#~ msgid "No back-end for your operating system"
-#~ msgstr "Tak ada ujung-belakang untuk sistem operasi anda"
-
-#~ msgid "No hibernate script found"
-#~ msgstr "Tak ada skrip hibernasi yang ditemukan"
-
-#~ msgid "No suspend script found"
-#~ msgstr "Tak ada skrip suspensi yang ditemukan"
-
-#~ msgid "No suspend method found"
-#~ msgstr "Tak ada metode suspensi yang ditemukan"
-
-#~ msgid "No hibernate method found"
-#~ msgstr "Tak ada metode hibernasi yang ditemukan"
-
-#~ msgid "Out of memory"
-#~ msgstr "Kehabisan memori"
-
-#~ msgid "System failed to sleep"
-#~ msgstr "Sistem gagal untuk tidur"
-
-#~ msgid "HAL daemon is currently not connected"
-#~ msgstr "Jurik HAL saat ini tidak tersambung"
-
-#~ msgid "mAh"
-#~ msgstr "mAh"
-
-#~ msgid "Enable notification"
-#~ msgstr "Aktifkan notifikasi"
-
-#~ msgid "Clear inhibit"
-#~ msgstr "Hapus penghambat"
-
-#~ msgid "Inhibit"
-#~ msgstr "Penghambat"
-
-#~ msgid "Advanced"
-#~ msgstr "Mahir"
-
-#~ msgid "Advance"
-#~ msgstr "Mahir"
-
-#~ msgid "Xfce power manager is not running to releod it"
-#~ msgstr "Manajer daya Xfce tak berjalan untuk memuatnya"
-
-#~ msgid "gtk-close"
-#~ msgstr "gtk-close"
-
-#~ msgid "gtk-help"
-#~ msgstr "gtk-help"
-
-#~ msgid "Automatic sleep inhibited"
-#~ msgstr "Tidur otomatis dicegah"
-
-#~ msgid "Another application is disabling the automatic sleep"
-#~ msgstr "Aplikasi lain telah menonaktifkan tidur otomatis"
-
-#~ msgid "Automatic sleep enabled"
-#~ msgstr "Tidur otomatis diaktifkan"
-
-#~ msgid "Power manager automatic sleep is disabled"
-#~ msgstr "Tidur otomatis manajer daya dinonaktifkan"
-
-#~ msgid "Power manager automatic sleep is enabled"
-#~ msgstr "Tidur otomatis manajer daya diaktifkan"
-
-#~ msgid "Don't show again"
-#~ msgstr "Jangan tampilkan lagi"
-
-#~ msgid "Power manager disconnected"
-#~ msgstr "Manajer daya terputus"
-
-#~ msgid "Power manager is connected"
-#~ msgstr "Manajer daya tersambung"
-
-#~ msgid ""
-#~ "Unable to read adapter status, the power manager will not work properly"
-#~ msgstr ""
-#~ "Tak dapat membaca status adapter, manajer daya tak akan bekerja dengan "
-#~ "baik"
-
-#~ msgid "UPS configuration"
-#~ msgstr "Konfigurasi UPS"
-
-#~ msgid "Consider UPS charge critical"
-#~ msgstr "Anggap muatan UPS kritis"
-
-#~ msgid "Consider battery charge critical"
-#~ msgstr "Anggap muatan baterai kritis"
-
-#~ msgid "percent"
-#~ msgstr "persen"
-
-#~ msgid "Enable battery state notification"
-#~ msgstr "Aktifkan notifikasi kondisi baterai"
-
-#~ msgid "Enable power save on UPS power"
-#~ msgstr "Aktifkan penyimpan daya di tenaga UPS"
-
-#~ msgid "Enable power save on battery power"
-#~ msgstr "Aktifkan penyimpan daya di tenaga baterai"
-
-#~ msgid "Best performance"
-#~ msgstr "Performa terbaik"
-
-#~ msgid "Set the CPU to its maximum frequency"
-#~ msgstr "Atur CPU ke frekuensi maksimumnya"
-
-#~ msgid "Ondemand performance"
-#~ msgstr "Performa sesuai permintaan"
-
-#~ msgid ""
-#~ "Set the CPU to its maximum speed when there is any load on it and to its "
-#~ "minimum speed when the system is idle"
-#~ msgstr ""
-#~ "Atur CPU ke kecepatan maksimumnya ketika ada beban di dalamnya dan ke "
-#~ "kecepatan minimum ketika sistem menganggur"
-
-#~ msgid "Best power savings"
-#~ msgstr "Penyimpan daya terbaik"
-
-#~ msgid "Set the CPU to its minimum frequency"
-#~ msgstr "Atur CPU ke frekuensi minimumnya"
-
-#~ msgid "Good power savings"
-#~ msgstr "Penyimpan daya bagus"
-
-#~ msgid ""
-#~ "gracefully increases and decreases the CPU speed depending on the current "
-#~ "usage"
-#~ msgstr ""
-#~ "dengan baik meningkatkan dan menurunkan kecepatan CPU tergantung "
-#~ "penggunaan saat ini"
-
-#~ msgid "CPU frequency settings on UPS power"
-#~ msgstr "Pengaturan frekuensi CPU pada daya UPS"
-
-#~ msgid "CPU frequency settings on battery power"
-#~ msgstr "Pengaturan frekuensi CPU pada daya baterai"
-
-#~ msgid "CPU frequency control cannot be used"
-#~ msgstr "Kendali frekuensi CPU tak dapat digunakan"
-
-#~ msgid "CPU frequency settings on AC power"
-#~ msgstr "Pengaturan frekuensi CPU pada daya AC"
-
-#~ msgid "CPU frequency settings"
-#~ msgstr "Pengaturan frekuensi CPU"
-
-#~ msgid "Monitor settings on UPS power"
-#~ msgstr "Pengaturan monitor pada daya UPS"
-
-#~ msgid "Monitor settings"
-#~ msgstr "Pengaturan monitor"
-
-#~ msgid "Your monitor doesn't support DPMS control"
-#~ msgstr "Monitor anda tak mendukung kendali DPMS"
-
-#~ msgid "No available keyboard shortcuts found"
-#~ msgstr "Tak ada jalan pintas papan ketik yang ditemukan"
-
-#~ msgid "CPU settings"
-#~ msgstr "Pengaturan CPU"
-
-#~ msgid "Shortcuts"
-#~ msgstr "Jalan pintas"
-
-#~ msgid "Monitor Settings"
-#~ msgstr "Pengaturan Monitor"
-
-#~ msgid "Your battery is almost empty"
-#~ msgstr "Baterai anda hampir kosong"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "min"
-#~ msgstr "min"
-
-#~ msgid "Suspend after"
-#~ msgstr "Suspensi setelah"
-
-#~ msgid "Turn off after"
-#~ msgstr "Matikan setelah"
-
-#~ msgid "Xfce4 Power Manager"
-#~ msgstr "Manajer Daya Xfce4"
-
-#~ msgid ""
-#~ "Unable to read your home directory environment variable, autostart option "
-#~ "may not work"
-#~ msgstr ""
-#~ "Tak dapat membaca variabel lingkungan direktori rumah anda, opsi mulai "
-#~ "otomatis mungkin tak akan bekerja"
-
-#~ msgid ""
-#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
-#~ "and the message bus daemon are running"
-#~ msgstr ""
-#~ "Tak dapat menjalankan manajer daya Xfce4, pastikan lapisan abstrak "
-#~ "perangkat keras dan jurik bus pesan berjalan"
-
-#~ msgid ""
-#~ "Unable to read AC adapter status, the power manager will not work "
-#~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
-#~ "connection with the hardware abstract layer or the message bus daemon is "
-#~ "not running"
-#~ msgstr ""
-#~ "Tak dapat membaca status adapter AC, manajer daya tak akan bekerja dengan "
-#~ "benar. Kemungkinan penyebab: Driver adapter AC tidak dimuat, koneksi "
-#~ "rusak dengan lapisan abstrak perangkat keras atau jurik bus pesan tidak "
-#~ "berjalan"
-
-#~ msgid ""
-#~ "Unable to use power management service, functionalities like hibernate "
-#~ "and suspend will not work. Possible reasons: you don't have enough "
-#~ "permission, broken connection with the hardware abstract layer or the "
-#~ "message bus daemon is not running"
-#~ msgstr ""
-#~ "Tak dapat menggunakan layanan manajemen daya, fungsionalitas seperti "
-#~ "hibernasi dan suspensi tak akan bekerja. Kemungkinan penyebab: anda tak "
-#~ "punya cukup hak akses, koneksi rusak dengan lapisan abstrak perangkat "
-#~ "keras atau jurik bus pesan tak berjalan"
-
-#~ msgid "Error monitoring HAL events"
-#~ msgstr "Galat memonitor peristiwa HAL"
-
-#~ msgid "HAL is not running or not responding"
-#~ msgstr "HAL tidak berjalan atau tidak merespon"
-
-#~ msgid "Unable to watch device using HAL: %s"
-#~ msgstr "Tak dapat mengawasi divais menggunakan HAL: %s"
-
-#~ msgid "Message hibernate didn't get a reply"
-#~ msgstr "Pesan hibernasi tak mendapat balasan"
-
-#~ msgid "Error occured while trying to suspend"
-#~ msgstr "Galat terjadi ketika mencoba suspensi"
-
-#~ msgid "Unknown reply from the message daemon"
-#~ msgstr "Balasan tak diketahui dari jurik pesan"
-
-#~ msgid "Message suspend didn't get a reply"
-#~ msgstr "Pesan suspensi tak mendapat balasan"
-
-#~ msgid "No reply from HAL daemon to set monitor brightness level"
-#~ msgstr ""
-#~ "Tak ada balasan dari jurik HAL untuk mengatur level kecerahan monitor"
-
-#~ msgid "No reply from HAL daemon to get monitor brightness level"
-#~ msgstr ""
-#~ "Tak ada balasan dari jurik HAL untuk mendapatkan level kecerahan monitor"
-
-#~ msgid "No reply from HAL daemon to get available cpu governors"
-#~ msgstr ""
-#~ "Tak ada balasan dari jurik HAL untuk mendapatkan governor cpu yang "
-#~ "tersedia"
-
-#~ msgid "No reply from HAL daemon to get current cpu governor"
-#~ msgstr ""
-#~ "Tak ada balasan dari jurik HAL untuk mendapatkan governor cpu saat ini"
-
-#~ msgid "No reply from HAL daemon to set cpu governor"
-#~ msgstr "Tak ada balasan dari jurik HAL untuk mengatur governor cpu"
-
-#~ msgid "No reply from HAL daemon to set power save profile"
-#~ msgstr ""
-#~ "Tak ada balasan dari jurik HAL untuk mengatur profil penyimpanan daya"
-
-#~ msgid "Failed to create dbus message\n"
-#~ msgstr "Gagal membuat pesan dbus\n"
-
-#~ msgid "Failed to send message\n"
-#~ msgstr "Gagal mengirim pesan\n"
-
-#~ msgid "Start xfce power manager"
-#~ msgstr "Jalankan manajer daya xfce"
-
-#~ msgid "On electric power"
-#~ msgstr "Pada daya listrik"
-
-#~ msgid "CPU frequency settings on electric power"
-#~ msgstr "Pengaturan frekuensi CPU pada daya listrik"
-
-#~ msgid "Monitor settings on electric power"
-#~ msgstr "Pengaturan monitor pada daya listrik"
-
-#~ msgid "Ondemand"
-#~ msgstr "Sesuaipermintaan"
-
-#~ msgid "Userspace"
-#~ msgstr "Ruangpengguna"
-
-#~ msgid "Powersave"
-#~ msgstr "Penyimpandaya"
-
-#~ msgid "Conservative"
-#~ msgstr "Konservatif"
-
-#~ msgid "Part of the Xfce goodies project"
-#~ msgstr "Bagian dari proyek goodies Xfce"
-
-#~ msgid ""
-#~ "\n"
-#~ "Usage: xfce-power-manager [options] \n"
-#~ "\n"
-#~ "Options:\n"
-#~ "-h, --help       Print this help message and exit\n"
-#~ "-v, --version    Print this help message and exit\n"
-#~ "-r, --run        Start xfce power manager\n"
-#~ "-c, --customize  Show Configuration dialog\n"
-#~ "-q, --quit       Quit any running xfce power manager\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Penggunaan: xfce-power-manager [opsi] \n"
-#~ "\n"
-#~ "Opsi:\n"
-#~ "-h, --help       Tampilkan pesan bantuan ini lalu keluar\n"
-#~ "-v, --version    Tampilkan pesan bantuan ini lalu keluar\n"
-#~ "-r, --run        Jalankan manajer daya xfce\n"
-#~ "-c, --customize  Tampilkan dialog konfigurasi\n"
-#~ "-q, --quit       Hentikan manajer daya xfce yang sedang berjalan\n"
-#~ "\n"
