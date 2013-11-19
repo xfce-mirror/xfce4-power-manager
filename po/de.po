@@ -1,129 +1,130 @@
-# German messages for xfce.
-# Copyright (C) 2008 Ali Abdallah <ali.slackware@gmail.com>
-# This file is distributed under the same license as the xfce package.
-# Fabian Nowak <timystery@arcor.de>, 2008, 2010.
-# Mark Trompell <mark@foresightlinux.org>, 2008.
-# Christoph Wickert, 2010.
-# Christian Weiske, 2010.
-# Hubert Hesse, 2010.
-# Paul Seyfert, 2010.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # 
+# Translators:
+# Christian Weiske, 2010
+# Christoph Wickert, 2010
+# Fabian Nowak <timystery@arcor.de>, 2008,2010
+# Hubert Hesse, 2010
+# Mark__T <mark@foresightlinux.org>, 2008
+# Paul Seyfert, 2010
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce 4-power-manager\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-02 12:48+0000\n"
-"PO-Revision-Date: 2012-04-14 16:22+0200\n"
-"Last-Translator: Jakob Kramer <jakob.kramer@gmx.de>\n"
-"Language-Team: German\n"
+"POT-Creation-Date: 2013-07-02 23:12+0200\n"
+"PO-Revision-Date: 2013-11-19 14:35+0000\n"
+"Last-Translator: Nick <nick@xfce.org>\n"
+"Language-Team: German (http://www.transifex.com/projects/p/xfce/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
+"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1
-msgid "<b>Actions</b>"
-msgstr "<b>Aktionen</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:2
-msgid "<b>Advanced Options</b>"
-msgstr "<b>Erweiterte Einstellungen</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "<b>Brightness</b>"
-msgstr "<b>Helligkeit</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "<b>General Options</b>"
-msgstr "<b>Allgemeine Einstellungen</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "<b>Monitor</b>"
-msgstr "<b>Monitor</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Actions"
-msgstr "Aktionen"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "Consider the computer on low power at:"
-msgstr "Energiezustand als niedrig betrachten bei:"
-
-#. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:820
-#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
-#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
-#: ../src/xfpm-power.c:779
-msgid "Hibernate"
-msgstr "Ruhezustand"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Level:"
-msgstr "Stufe:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "Lock screen when going for suspend/hibernate"
-msgstr "Bildschirm sperren im Ruhezustand/Standby"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
-msgid "Monitor"
-msgstr "Monitor"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Monitor power management control"
-msgstr "Energieverwaltung des Monitors"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:809
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
 #: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
 #: ../settings/xfpm-settings.c:1203 ../settings/xfpm-settings.c:1260
 #: ../settings/xfpm-settings.c:1312
 msgid "Nothing"
 msgstr "Nichts"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
+msgid "Xfce Power Manager"
+msgstr "Energieverwaltung für Xfce"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "Power manager settings"
 msgstr "Einstellungen der Energieverwaltung"
 
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When sleep button is pressed:"
+msgstr "Bei Betätigung der Taste für den Schlafmodus:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When hibernate button is pressed:"
+msgstr "Bei Betätigung der Taste für den Ruhezustand:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When power button is pressed:"
+msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "System tray icon: "
+msgstr "Symbol in der Systemleiste: "
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "Monitor power management control"
+msgstr "Energieverwaltung des Monitors"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "Show notifications to notify about the battery state"
+msgstr "Benachrichtigungen über den Batteriezustand anzeigen"
+
+#: ../data/interfaces/xfpm-settings.ui.h:10
+msgid "<b>General Options</b>"
+msgstr "<b>Allgemeine Einstellungen</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "When laptop lid is closed:"
+msgstr "Beim Schließen der Bildschirmklappe:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Put the computer to sleep when inactive for:"
+msgstr "Computer schlafen legen, wenn er inaktiv ist für:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Spin down hard disks"
+msgstr "Festplatte langsamer drehen lassen"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "<b>Actions</b>"
+msgstr "<b>Aktionen</b>"
+
 #: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "Prefer power savings over performance"
-msgstr "Stromsparen gegenüber Leistung bevorzugen"
+msgid "Actions"
+msgstr "Aktionen"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
 msgstr "Anzeige schlafen legen, wenn der Computer inaktiv ist für:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "Put the computer to sleep when inactive for:"
-msgstr "Computer schlafen legen, wenn er inaktiv ist für:"
+msgid "Switch off display when computer is inactive for:"
+msgstr "Anzeige abschalten, wenn der Computer inaktiv ist für:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "<b>Monitor</b>"
+msgstr "<b>Monitor</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Reduce screen brightness when computer is inactive for:"
 msgstr "Bildschirmhelligkeit reduzieren, wenn der Computer inaktiv ist für:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "Set computer inactivity sleep mode:"
-msgstr "Schlafmodus für den Computer:"
-
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "Set monitor sleep mode:"
-msgstr "Schlafmodus für den Monitor:"
+msgid "Level:"
+msgstr "Stufe:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "Show notifications to notify about the battery state"
-msgstr "Benachrichtigungen über den Batteriezustand anzeigen"
+msgid "<b>Brightness</b>"
+msgstr "<b>Helligkeit</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Spin down hard disks"
-msgstr "Festplatte langsamer drehen lassen"
+#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
+msgid "Monitor"
+msgstr "Monitor"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "Standby"
-msgstr "Bereitschaft"
+msgid "When battery power is critical:"
+msgstr "Bei kritischem Ladezustand der Batterie:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Prefer power savings over performance"
+msgstr "Stromsparen gegenüber Leistung bevorzugen"
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:814
+#: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:814
 #: ../settings/xfpm-settings.c:882 ../settings/xfpm-settings.c:1031
 #: ../settings/xfpm-settings.c:1208 ../settings/xfpm-settings.c:1265
 #: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
@@ -131,38 +132,38 @@ msgstr "Bereitschaft"
 msgid "Suspend"
 msgstr "Standby"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "Switch off display when computer is inactive for:"
-msgstr "Anzeige abschalten, wenn der Computer inaktiv ist für:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:26
-msgid "System tray icon: "
-msgstr "Symbol in der Systemleiste: "
+#. Hibernate menu option
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
+#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
+#: ../src/xfpm-power.c:779
+msgid "Hibernate"
+msgstr "Ruhezustand"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "When battery power is critical:"
-msgstr "Bei kritischem Ladezustand der Batterie:"
+msgid "Standby"
+msgstr "Bereitschaft"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "When hibernate button is pressed:"
-msgstr "Bei Betätigung der Taste für den Ruhezustand:"
+msgid "Set computer inactivity sleep mode:"
+msgstr "Schlafmodus für den Computer:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "When laptop lid is closed:"
-msgstr "Beim Schließen der Bildschirmklappe:"
+msgid "Consider the computer on low power at:"
+msgstr "Energiezustand als niedrig betrachten bei:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "When power button is pressed:"
-msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
+msgid "Set monitor sleep mode:"
+msgstr "Schlafmodus für den Monitor:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "When sleep button is pressed:"
-msgstr "Bei Betätigung der Taste für den Schlafmodus:"
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Bildschirm sperren im Ruhezustand/Standby"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
-msgid "Xfce Power Manager"
-msgstr "Energieverwaltung für Xfce"
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Erweiterte Einstellungen</b>"
 
 #: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
 #: ../settings/xfpm-settings.c:609
@@ -247,9 +248,7 @@ msgstr "Nie das Symbol zeigen"
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr ""
-"Automatische Energieverwaltung des Bildschirms (DPMS) ausschalten, also "
-"nicht versuchen, die Anzeige abzuschalten oder schlafen zu legen."
+msgstr "Automatische Energieverwaltung des Bildschirms (DPMS) ausschalten, also nicht versuchen, die Anzeige abzuschalten oder schlafen zu legen."
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -303,13 +302,11 @@ msgstr "SOCKET-NR"
 #: ../src/xfpm-power-info.c:946
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr ""
-"Geben Sie »%s --help« ein, um Informationen über die Verwendung zu erhalten"
+msgstr "Geben Sie »%s --help« ein, um Informationen über die Verwendung zu erhalten"
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
-"Konnte Konfiguration der Energieverwaltung nicht laden; nehme Standardwerte"
+msgstr "Konnte Konfiguration der Energieverwaltung nicht laden; nehme Standardwerte"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -326,8 +323,7 @@ msgstr "Starten"
 
 #: ../settings/xfpm-settings-main.c:196
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr ""
-"Die Energieverwaltung für Xfce läuft nicht. Möchten Sie sie jetzt starten?"
+msgstr "Die Energieverwaltung für Xfce läuft nicht. Möchten Sie sie jetzt starten?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
@@ -342,14 +338,7 @@ msgstr "Einstellungen für die Xfce Energieverwaltung"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
-msgstr ""
-"Fabian Nowak <timystery@arcor.de>\n"
-"Mark Trompell <mark@foresightlinux.org>\n"
-"Christoph Wickert\n"
-"Christian Weiske\n"
-"Hubert Hesse\n"
-"Paul Seyfert\n"
-"Johannes Lips"
+msgstr "Fabian Nowak <timystery@arcor.de>\nMark Trompell <mark@foresightlinux.org>\nChristoph Wickert\nChristian Weiske\nHubert Hesse\nPaul Seyfert\nJohannes Lips"
 
 #: ../src/xfpm-power.c:328
 msgid "_Hibernate"
@@ -357,13 +346,9 @@ msgstr "_Ruhezustand"
 
 #: ../src/xfpm-power.c:329
 msgid ""
-"An application is currently disabling the automatic sleep. Doing this action "
-"now may damage the working state of this application."
-msgstr ""
-"Eine laufende Anwendung verhindert momentan das automatische Schlafen. Wenn "
-"Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der Anwendung "
-"beschädigt werden. Sind Sie sicher, dass Sie das System jetzt in den "
-"Standbymodus versetzen wollen?"
+"An application is currently disabling the automatic sleep. Doing this action"
+" now may damage the working state of this application."
+msgstr "Eine laufende Anwendung verhindert momentan das automatische Schlafen. Wenn Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der Anwendung beschädigt werden. Sind Sie sicher, dass Sie das System jetzt in den Standbymodus versetzen wollen?"
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
@@ -419,9 +404,7 @@ msgstr "Das System herunterfahren"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Ihre Batterie ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten "
-"verloren gehen"
+msgstr "Ihre Batterie ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten verloren gehen"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -432,9 +415,7 @@ msgstr "Das System befindet sich in einem niedrigen Energiezustand"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"Die Ladung von %s ist niedrig\n"
-"Geschätzte verbleibende Zeit: %s"
+msgstr "Die Ladung von %s ist niedrig\nGeschätzte verbleibende Zeit: %s"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -565,9 +546,7 @@ msgstr "Ihr %s lädt"
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s (%i %%)\n"
-"%s bis vollständig geladen."
+msgstr "%s (%i %%)\n%s bis vollständig geladen."
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -584,9 +563,7 @@ msgstr "System läuft mit Strom von %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s wird entladen (%i%%)\n"
-"Geschätzte verbleibende Zeit: %s."
+msgstr "%s wird entladen (%i%%)\nGeschätzte verbleibende Zeit: %s."
 
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
@@ -604,19 +581,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr ""
-"%s\n"
-"%s ist voll geladen (%i%%).\n"
-"Stellt %s Laufzeit zur Verfügung"
+msgstr "%s\n%s ist voll geladen (%i%%).\nStellt %s Laufzeit zur Verfügung"
 
 #: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
-"%s\n"
-"%s ist vollständig geladen (%i%%)"
+msgstr "%s\n%s ist vollständig geladen (%i%%)"
 
 #: ../src/xfpm-battery.c:440
 #, c-format
@@ -624,19 +596,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s\n"
-"%s lädt (%i%%)\n"
-" %s bis vollständig geladen."
+msgstr "%s\n%s lädt (%i%%)\n %s bis vollständig geladen."
 
 #: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr ""
-"%s\n"
-"%s wird geladen (%i%%)."
+msgstr "%s\n%s wird geladen (%i%%)."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -644,46 +611,35 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s\n"
-"Ihr %s wird entladen (%i%%)\n"
-"Geschätzte verbleibende Zeit: %s"
+msgstr "%s\nIhr %s wird entladen (%i%%)\nGeschätzte verbleibende Zeit: %s"
 
 #: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr ""
-"%s\n"
-"%s wird entladen (%i%%)."
+msgstr "%s\n%s wird entladen (%i%%)."
 
 #: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr ""
-"%s\n"
-"%s wartet auf Entladen (%i%%)."
+msgstr "%s\n%s wartet auf Entladen (%i%%)."
 
 #: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr ""
-"%s\n"
-"%s wartet auf Laden (%i%%)."
+msgstr "%s\n%s wartet auf Laden (%i%%)."
 
 #: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr ""
-"%s\n"
-"%s ist leer"
+msgstr "%s\n%s ist leer"
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
@@ -720,15 +676,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Energieverwaltung für Xfce %s\n"
-"\n"
-"Teil der Xfce Goodies\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Veröffentlicht unter der GNU GPL.\n"
-"\n"
+msgstr "\nEnergieverwaltung für Xfce %s\n\nTeil der Xfce Goodies\nhttp://goodies.xfce.org\n\nVeröffentlicht unter der GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
@@ -1082,470 +1030,3 @@ msgstr "Kein Gerät gefunden"
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Helligkeitsregelung"
-
-#~ msgid ""
-#~ "An application is currently disabling the automatic sleep, doing this "
-#~ "action now may damage the working state of this application, are you sure "
-#~ "you want to hibernate the system?"
-#~ msgstr ""
-#~ "Eine laufende Anwendung verhindert momentan das automatische Schlafen. "
-#~ "Wenn Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der "
-#~ "Anwendung beschädigt werden. Sind Sie sicher, dass Sie Ihr System jetzt "
-#~ "in den Ruhezustand versetzen wollen?"
-
-#~ msgid "Xfce 4 Power Manager"
-#~ msgstr "Energieverwaltung für Xfce"
-
-#~ msgid "Xfce power manager"
-#~ msgstr "Energieverwaltung für Xfce"
-
-#~ msgid "Battery charge level is low"
-#~ msgstr "Ihr Batterieladestand ist niedrig"
-
-#~ msgid "With HAL support\n"
-#~ msgstr "Mit Unterstützung für HAL\n"
-
-#~ msgid "Without HAL support\n"
-#~ msgstr "Ohne Unterstützung für HAL\n"
-
-#~ msgid ""
-#~ "Xfce Power Manager requires version 011 of devicekit-power to work "
-#~ "properly while the version found is"
-#~ msgstr ""
-#~ "Xfce Energieverwaltung benötigt Version 011 des Pakets »devicekit-power«, "
-#~ "um ordnungsgemäß\n"
-#~ "zu funktionieren. Die vorliegende Version ist jedoch"
-
-#~ msgid "Devicekit-power version 011 or above not found"
-#~ msgstr "»devicekit-power« Version 011 oder neuer nicht gefunden"
-
-#~ msgid "CPU frequency control"
-#~ msgstr "Anpassung der CPU-Geschwindigkeit erlauben"
-
-#~ msgid "Shutdown and hibernate operations not permitted"
-#~ msgstr ""
-#~ "Die Operationen zum Herunterfahren und für den Ruhezustand sind nicht "
-#~ "erlaubt"
-
-#~ msgid "Xfce Power Manager Settings"
-#~ msgstr "Einstellungen der Energieverwaltung für Xfce"
-
-#~ msgid "Battery is charging"
-#~ msgstr "Batterie wird geladen"
-
-#~ msgid "Your UPS"
-#~ msgstr "Ihre USV"
-
-#~ msgid "Your Camera battery"
-#~ msgstr "Ihre Kamerabatterie"
-
-#~ msgid "Your Battery"
-#~ msgstr "Ihre Batterie"
-
-#~ msgid "is fully charged"
-#~ msgstr "ist vollständig geladen"
-
-#~ msgid "charge level"
-#~ msgstr "Ladezustand"
-
-#~ msgid "is charging"
-#~ msgstr "wird geladen"
-
-#~ msgid "is discharging"
-#~ msgstr "wird entladen"
-
-#~ msgid "charge is low"
-#~ msgstr "Ladezustand ist gering"
-
-#~ msgid "is almost empty"
-#~ msgstr "ist nahezu leer"
-
-#~ msgid "is not present"
-#~ msgstr "ist nicht vorhanden"
-
-#~ msgid "Battery not present"
-#~ msgstr "Batterie nicht verfügbar"
-
-#~ msgid "Estimated time left"
-#~ msgstr "Geschätzte verbleibende Zeit"
-
-#~ msgid "Estimated time to be fully charged"
-#~ msgstr "Geschätzte Ladedauer"
-
-#~ msgid "Design:"
-#~ msgstr "Design:"
-
-#~ msgid "Last full:"
-#~ msgstr "Letzter Füllgrad:"
-
-#~ msgid "Too many arguments"
-#~ msgstr "Zu viele Argumente"
-
-#~ msgid "Adapter present"
-#~ msgstr "Anschluss vorhanden"
-
-#~ msgid "Adapter not present"
-#~ msgstr "Anschluss nicht vorhanden"
-
-#~ msgid ""
-#~ "System is running on low power, but an application is currently disabling "
-#~ "the automatic sleep, this means that doing a sleep now may damage the "
-#~ "data of this application. Close this application before putting the "
-#~ "computer on sleep mode or plug in your AC adapter"
-#~ msgstr ""
-#~ "Das System hat nicht mehr viel Energie, eine Anwendung verhindert jedoch "
-#~ "momentan das automatische Schlafen. Dies bedeuted, dass ein Wechsel in "
-#~ "einen Schlafmodus die Daten der Anwendung beschädigen kann. Schließen Sie "
-#~ "diese Anwendung, bevor Sie den Rechner in einen Schlafmodus versetzten, "
-#~ "oder schließen Sie die Stromversorgung an."
-
-#~ msgid "Are you sure you want to proceed?"
-#~ msgstr "Möchten Sie wirklich fortfahren?"
-
-#~ msgid "Monitor power control"
-#~ msgstr "Energieverwaltung für Monitor aktivieren"
-
-#~ msgid ""
-#~ "Disable or enable monitor power control, for example you could disable "
-#~ "the screen power control to avoid screen blanking when watching a movie."
-#~ msgstr ""
-#~ "Automatisches Schlafen (de-)aktivieren. Wenn Sie dies einstellen, wird "
-#~ "die Energieverwaltung die Hintergrundbeleuchtung nicht abschalten. Diese "
-#~ "Verhinderung kann sinnvoll sein, wenn Sie einen Film anschauen."
-
-#~ msgid "No data available"
-#~ msgstr "Keine Daten verfügbar"
-
-#~ msgid "Hibernate not supported"
-#~ msgstr "Ruhezustand wird nicht unterstützt"
-
-#~ msgid "HAL daemon is not running"
-#~ msgstr "Der HAL-Dienst läuft nicht"
-
-#~ msgid "No back-end for your operating system"
-#~ msgstr "Keine Unterstützung für Ihr Betriebssystem gefunden"
-
-#~ msgid "No hibernate script found"
-#~ msgstr "Kein Skript für den Ruhezustand gefunden"
-
-#~ msgid "No suspend script found"
-#~ msgstr "Kein Skript für Standby gefunden"
-
-#~ msgid "No suspend method found"
-#~ msgstr "Keine Methode für Standby gefunden"
-
-#~ msgid "No hibernate method found"
-#~ msgstr "Keine Methode für den Ruhezustand gefunden"
-
-#~ msgid "Out of memory"
-#~ msgstr "Kein Speicher verfügbar"
-
-#~ msgid "System failed to sleep"
-#~ msgstr "System konnte nicht in den Schlafmodus versetzt werden"
-
-#~ msgid "HAL daemon is currently not connected"
-#~ msgstr "Der HAL-Dienst ist derzeitig nicht verbunden"
-
-#~ msgid "mAh"
-#~ msgstr "mAh"
-
-#~ msgid "Enable notification"
-#~ msgstr "Benachrichtigung aktivieren"
-
-#~ msgid "Clear inhibit"
-#~ msgstr "Verhinderung entfernen"
-
-#~ msgid "Inhibit"
-#~ msgstr "Verhinderungs-Plugin"
-
-#~ msgid "Advanced"
-#~ msgstr "Erweitert"
-
-#~ msgid "Advance"
-#~ msgstr "Weiter"
-
-#~ msgid "gtk-close"
-#~ msgstr "gtk-close"
-
-#~ msgid "gtk-help"
-#~ msgstr "gtk-help"
-
-#~ msgid "Automatic sleep inhibited"
-#~ msgstr "Automatisches Schlafen verhindert"
-
-#~ msgid "Another application is disabling the automatic sleep"
-#~ msgstr "Eine andere Anwendung verhindert das automatische Schlafen"
-
-#~ msgid "Automatic sleep enabled"
-#~ msgstr "Automatisches Schlafen aktiviert"
-
-#~ msgid "Power manager automatic sleep is disabled"
-#~ msgstr "Automatisches Schlafen der Energieverwaltung ist deaktiviert"
-
-#~ msgid "Power manager automatic sleep is enabled"
-#~ msgstr "Automatisches Schlafen der Energieverwaltung ist aktiviert"
-
-#~ msgid "Don't show again"
-#~ msgstr "Nicht mehr anzeigen"
-
-#~ msgid "Power manager disconnected"
-#~ msgstr "Verbindung zur Energieverwaltung ist getrennt"
-
-#~ msgid "Power manager is connected"
-#~ msgstr "Energieverwaltung ist verbunden"
-
-#~ msgid "Xfce power manager is not running to releod it"
-#~ msgstr "Energieverwaltung für Xfce4 läuft nicht, um sie neuladen zu können"
-
-#~ msgid ""
-#~ "Unable to read adapter status, the power manager will not work properly"
-#~ msgstr ""
-#~ "Kann Zustand der Stromversorgung nicht auslesen, die Energieverwaltung "
-#~ "wird nicht ordnungsgemäß funktionieren"
-
-#~ msgid "UPS configuration"
-#~ msgstr "Konfiguration der USV"
-
-#~ msgid "Consider UPS charge critical"
-#~ msgstr "Ladezustand der USV als kritisch betrachten bei"
-
-#~ msgid "Consider battery charge critical"
-#~ msgstr "Ladezustand der Batterie als kritisch betrachten bei"
-
-#~ msgid "percent"
-#~ msgstr "Prozent"
-
-#~ msgid "Enable battery state notification"
-#~ msgstr "Benachrichtigung über Batteriezustand aktivieren"
-
-#~ msgid "Enable power save on UPS power"
-#~ msgstr "Stromsparen bei Strom über USV aktivieren"
-
-#~ msgid "Enable power save on battery power"
-#~ msgstr "Stromsparen bei Batteristrom aktivieren"
-
-#~ msgid "Best performance"
-#~ msgstr "Beste Leistung"
-
-#~ msgid "Set the CPU to its maximum frequency"
-#~ msgstr "Die CPU auf maximale Leistung einstellen"
-
-#~ msgid "Ondemand performance"
-#~ msgstr "Bedarfsabhängige Leistung"
-
-#~ msgid ""
-#~ "Set the CPU to its maximum speed when there is any load on it and to its "
-#~ "minimum speed when the system is idle"
-#~ msgstr ""
-#~ "Die CPU unter Last auf maximale Geschwindigkeit stellen und auf minimale "
-#~ "Geschwindigkeit im Ruhebetrieb"
-
-#~ msgid "Best power savings"
-#~ msgstr "Maximaler Energiesparmodus"
-
-#~ msgid "Set the CPU to its minimum frequency"
-#~ msgstr "Die CPU auf minimale Geschwindigkeit einstellen"
-
-#~ msgid "Good power savings"
-#~ msgstr "Guter Energiesparmodus"
-
-#~ msgid ""
-#~ "gracefully increases and decreases the CPU speed depending on the current "
-#~ "usage"
-#~ msgstr ""
-#~ "Steigert und senkt die CPU-Geschwdindigkeit gemächlich in Abhängigkeit "
-#~ "von der aktuellen Verwendung"
-
-#~ msgid "CPU frequency settings on UPS power"
-#~ msgstr "Einstellungen der CPU-Geschwindigkeit bei Strom über USV"
-
-#~ msgid "CPU frequency settings on battery power"
-#~ msgstr "Einstellungen des CPU-Geschwindigkeit bei Batterieversorgung"
-
-#~ msgid "CPU frequency control cannot be used"
-#~ msgstr "Steuerung der CPU-Frequenz nicht möglich"
-
-#~ msgid "CPU frequency settings on AC power"
-#~ msgstr "Einstellungen der CPU-Geschwindigkeit bei Netzstrom"
-
-#~ msgid "CPU frequency settings"
-#~ msgstr "Einstellungen der CPU-Geschwindigkeit"
-
-#~ msgid "Monitor settings on UPS power"
-#~ msgstr "Monitoreinstellungen bei Strom über USV"
-
-#~ msgid "Monitor settings"
-#~ msgstr "Monitoreinstellungen"
-
-#~ msgid "Your monitor doesn't support DPMS control"
-#~ msgstr "Ihr Monitor unterstützt kein DPMS"
-
-#~ msgid "No available keyboard shortcuts found"
-#~ msgstr "Keine verfügbaren Tastenkürzel gefunden"
-
-#~ msgid "CPU settings"
-#~ msgstr "CPU-Einstellungen"
-
-#~ msgid "Shortcuts"
-#~ msgstr "Tastenkürzel"
-
-#~ msgid "Monitor Settings"
-#~ msgstr "Monitoreinstellungen"
-
-#~ msgid "Your battery is almost empty"
-#~ msgstr "Ihre Batterie ist nahezu leer"
-
-#~ msgid "%"
-#~ msgstr "%"
-
-#~ msgid "min"
-#~ msgstr "min"
-
-#~ msgid "Suspend after"
-#~ msgstr "Ruhezustand nach"
-
-#~ msgid "Turn off after"
-#~ msgstr "Abschalten nach"
-
-#~ msgid "Xfce4 Power Manager"
-#~ msgstr "Energieverwaltung für Xfce4"
-
-#~ msgid ""
-#~ "Unable to read your home directory environment variable, autostart option "
-#~ "may not work"
-#~ msgstr ""
-#~ "Kann die Umgebungsvariable »$HOME« nicht lesen, der Autostart "
-#~ "funktioniert daher eventuell nicht."
-
-#~ msgid ""
-#~ "Unable to run Xfce4 power manager, make sure the hardware abstract layer "
-#~ "and the message bus daemon are running"
-#~ msgstr ""
-#~ "Kann die Energieverwaltung für Xfce4 nicht starten. Stellen Sie sicher, "
-#~ "dass die Hardwareabstraktionsschicht und der Nachrichtendienst laufen."
-
-#~ msgid ""
-#~ "Unable to read AC adapter status, the power manager will not work "
-#~ "properly. Possible reasons: The AC adapter driver is not loaded, broken "
-#~ "connection with the hardware abstract layer or the message bus daemon is "
-#~ "not running"
-#~ msgstr ""
-#~ "Kann den Zustand der Stromversorgung nicht lesen, die Energieverwaltung "
-#~ "wird nicht ordnungsgemäß funktionieren. Mögliche Grunde: Der Treiber für "
-#~ "das Netzteil ist nicht geladen, die Verbindung mit der "
-#~ "Hardwareabstraktionsschicht ist unterbrochen oder der Nachrichtendienst "
-#~ "läuft nicht."
-
-#~ msgid ""
-#~ "Unable to use power management service, functionalities like hibernate "
-#~ "and suspend will not work. Possible reasons: you don't have enough "
-#~ "permission, broken connection with the hardware abstract layer or the "
-#~ "message bus daemon is not running"
-#~ msgstr ""
-#~ "Kann die Dienste für die Energieverwaltung nicht nutzen; Ruhezustand und "
-#~ "Standby werden nicht funktionieren. Mögliche Gründe: Sie haben nicht die "
-#~ "nötigen Berechtigungen, die Verbindung mit der "
-#~ "Hardwareabstraktionsschicht ist unterbrochen, oder der Nachrichtendienst "
-#~ "läuft nicht."
-
-#~ msgid "Error monitoring HAL events"
-#~ msgstr "Fehler beim Überwachen der HAL-Ereignisse"
-
-#~ msgid "HAL is not running or not responding"
-#~ msgstr "HAL läuft nicht oder antwortet nicht"
-
-#~ msgid "Unable to watch device using HAL: %s"
-#~ msgstr "Kann Gerät nicht mittels HAL überwachen: %s"
-
-#~ msgid "Message hibernate didn't get a reply"
-#~ msgstr "Aufforderung für den Ruhezustand hat keine Antwort erhalten"
-
-#~ msgid "Error occured while trying to suspend"
-#~ msgstr ""
-#~ "Ein Fehler ist aufgetreten, während das System in Standby gehen sollte"
-
-#~ msgid "Unknown reply from the message daemon"
-#~ msgstr "Unbekannte Antwort vom Nachrichtendienst"
-
-#~ msgid "Message suspend didn't get a reply"
-#~ msgstr "Aufforderung für den Ruhezustand hat keine Antwort erhalten"
-
-#~ msgid "No reply from HAL daemon to set monitor brightness level"
-#~ msgstr ""
-#~ "Keine Antwort vom HAL-Daemon, die Helligkeitsstufe des Monitors zu setzen"
-
-#~ msgid "No reply from HAL daemon to get monitor brightness level"
-#~ msgstr ""
-#~ "Keine Antwort vom HAL-Daemon, die Helligkeitsstufe des Monitors zu "
-#~ "bekommen"
-
-#~ msgid "No reply from HAL daemon to get available cpu governors"
-#~ msgstr ""
-#~ "Keine Antwort vom HAL-Daemon, die verfügbaren CPU-Multiplikatoren zu "
-#~ "bekommen"
-
-#~ msgid "No reply from HAL daemon to get current cpu governor"
-#~ msgstr ""
-#~ "Keine Antwort vom HAL-Daemon, den aktuellen CPU-Multiplikator zu lesen"
-
-#~ msgid "No reply from HAL daemon to set cpu governor"
-#~ msgstr "Keine Antwort vom HAL-Daemon, den CPU-Multiplikator zu setzen"
-
-#~ msgid "No reply from HAL daemon to set power save profile"
-#~ msgstr "Keine Antwort vom HAL-Daemon, das Energiesparprofil zu laden"
-
-#~ msgid "Failed to create dbus message\n"
-#~ msgstr "Konnte D-Bus-Nachricht nicht erzeugen\n"
-
-#~ msgid "Failed to send message\n"
-#~ msgstr "Konnte Nachricht nicht senden\n"
-
-#~ msgid "Start xfce power manager"
-#~ msgstr "Energieverwaltung für Xfce4 starten"
-
-#~ msgid "On electric power"
-#~ msgstr "Bei Netzversorgung"
-
-#~ msgid "CPU frequency settings on electric power"
-#~ msgstr "Einstellungen der CPU-Frequenz bei Netzstrom"
-
-#~ msgid "Monitor settings on electric power"
-#~ msgstr "Monitoreinstellungen bei Netzversorgung"
-
-#~ msgid "Ondemand"
-#~ msgstr "Bedarfsorientiert"
-
-#~ msgid "Userspace"
-#~ msgstr "Benutzerdefiniert"
-
-#~ msgid "Powersave"
-#~ msgstr "Strom sparen"
-
-#~ msgid "Conservative"
-#~ msgstr "Gemächliche Bedarfsorientierung"
-
-#~ msgid "Part of the Xfce goodies project"
-#~ msgstr "Teil der Xfce Goodies"
-
-#~ msgid ""
-#~ "\n"
-#~ "Usage: xfce-power-manager [options] \n"
-#~ "\n"
-#~ "Options:\n"
-#~ "-h, --help       Print this help message and exit\n"
-#~ "-v, --version    Print this help message and exit\n"
-#~ "-r, --run        Start xfce power manager\n"
-#~ "-c, --customize  Show Configuration dialog\n"
-#~ "-q, --quit       Quit any running xfce power manager\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Verwendung: xfce-power-manager [optionen] \n"
-#~ "\n"
-#~ "Optionen:\n"
-#~ "-h, --help       Diese Hilfe ausgeben und beenden\n"
-#~ "-v, --version    Diese Hilfe ausgeben und beenden\n"
-#~ "-r, --run        Energieverwaltung für Xfce starten\n"
-#~ "-c, --customize  Einstellungen öffnen\n"
-#~ "-q, --quit       Alle laufenden Xfce4-Energieverwaltungen beenden\n"
-#~ "\n"
