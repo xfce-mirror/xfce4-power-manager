@@ -465,6 +465,19 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 	    g_free (str);
 	}
 	
+	/*Percentage*/
+	str = xfpm_info_get_energy_property (props, "Percentage", _("%"));
+	if ( str )
+	{
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter,
+				XFPM_DEVICE_INFO_NAME, _("Percentage"),
+				XFPM_DEVICE_INFO_VALUE, str,
+				-1);
+	    i++;
+	    g_free (str);
+	}
+
 	/*Vendor*/
 	value = g_hash_table_lookup (props, "Vendor");
 	
