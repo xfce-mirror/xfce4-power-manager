@@ -50,6 +50,8 @@
 #include "xfpm-debug.h"
 #include "xfpm-enum-types.h"
 #include "egg-idletime.h"
+#include "xfpm-systemd.h"
+
 
 static void xfpm_power_finalize     (GObject *object);
 
@@ -75,6 +77,8 @@ struct XfpmPowerPrivate
 
     GHashTable      *hash;
 
+
+    XfpmSystemd     *systemd;
     XfpmConsoleKit  *console;
     XfpmInhibit	    *inhibit;
     XfpmXfconf      *conf;
@@ -680,9 +684,19 @@ xfpm_power_add_actions_to_notification (XfpmPower *power, NotifyNotification *n)
 {
     gboolean can_shutdown;
 
-    g_object_get (G_OBJECT (power->priv->console),
-		  "can-shutdown", &can_shutdown,
-		  NULL);
+
+    if ( LOGIND_RUNNING () )
+    {
+        g_object_get (G_OBJECT (power->priv->systemd),
+                      "can-shutdown", &can_shutdown,
+                      NULL);
+    }
+    else
+    {
+        g_object_get (G_OBJECT (power->priv->console),
+                      "can-shutdown", &can_shutdown,
+                      NULL);
+    }
 
     if (  power->priv->can_hibernate && power->priv->auth_hibernate )
     {
@@ -756,9 +770,18 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
     const gchar *message;
     gboolean can_shutdown;
 
-    g_object_get (G_OBJECT (power->priv->console),
-		  "can-shutdown", &can_shutdown,
-		  NULL);
+    if ( LOGIND_RUNNING () )
+    {
+        g_object_get (G_OBJECT (power->priv->systemd),
+                      "can-shutdown", &can_shutdown,
+                      NULL);
+    }
+    else
+    {
+        g_object_get (G_OBJECT (power->priv->console),
+                      "can-shutdown", &can_shutdown,
+                      NULL);
+    }
 
     message = _("System is running on low power. "\
                "Save your work to avoid losing data");
@@ -1327,7 +1350,13 @@ xfpm_power_init (XfpmPower *power)
     power->priv->inhibit = xfpm_inhibit_new ();
     power->priv->notify  = xfpm_notify_new ();
     power->priv->conf    = xfpm_xfconf_new ();
-    power->priv->console = xfpm_console_kit_new ();
+
+    power->priv->systemd = NULL;
+    power->priv->console = NULL;
+    if ( LOGIND_RUNNING () )
+        power->priv->systemd = xfpm_systemd_new ();
+    else
+	power->priv->console = xfpm_console_kit_new ();
 
     g_signal_connect_swapped (power->priv->conf, "notify::" SHOW_TRAY_ICON_CFG,
 			      G_CALLBACK (xfpm_power_refresh_adaptor_visible), power);
@@ -1445,7 +1474,11 @@ xfpm_power_finalize (GObject *object)
     g_object_unref (power->priv->inhibit);
     g_object_unref (power->priv->notify);
     g_object_unref (power->priv->conf);
-    g_object_unref (power->priv->console);
+
+    if ( power->priv->systemd != NULL )
+        g_object_unref (power->priv->systemd);
+    if ( power->priv->console != NULL )
+        g_object_unref (power->priv->console);
 
     xfpm_power_hide_adapter_icon (power);
 
@@ -1607,9 +1640,18 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
 {
     gboolean can_reboot;
 
-    g_object_get (G_OBJECT (power->priv->console),
-		  "can-shutdown", &can_reboot,
-		  NULL);
+    if ( LOGIND_RUNNING () )
+    {
+        g_object_get (G_OBJECT (power->priv->systemd),
+                      "can-shutdown", &can_reboot,
+                      NULL);
+    }
+    else
+    {
+        g_object_get (G_OBJECT (power->priv->console),
+                      "can-shutdown", &can_reboot,
+                      NULL);
+    }
 
     if ( !can_reboot)
     {
@@ -1618,7 +1660,10 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
         return FALSE;
     }
 
-    xfpm_console_kit_shutdown (power->priv->console, error);
+    if ( LOGIND_RUNNING () )
+        xfpm_systemd_shutdown (power->priv->systemd, error);
+    else
+	xfpm_console_kit_shutdown (power->priv->console, error);
 
     return TRUE;
 }
@@ -1628,9 +1673,18 @@ static gboolean xfpm_power_dbus_reboot   (XfpmPower *power,
 {
     gboolean can_reboot;
 
-    g_object_get (G_OBJECT (power->priv->console),
-		  "can-restart", &can_reboot,
-		  NULL);
+    if ( LOGIND_RUNNING () )
+    {
+        g_object_get (G_OBJECT (power->priv->systemd),
+                      "can-restart", &can_reboot,
+                      NULL);
+    }
+    else
+    {
+        g_object_get (G_OBJECT (power->priv->console),
+                      "can-restart", &can_reboot,
+                      NULL);
+    }
 
     if ( !can_reboot)
     {
@@ -1639,7 +1693,11 @@ static gboolean xfpm_power_dbus_reboot   (XfpmPower *power,
         return FALSE;
     }
 
-    xfpm_console_kit_reboot (power->priv->console, error);
+   if ( LOGIND_RUNNING () )
+        xfpm_systemd_reboot (power->priv->systemd, error);
+    else
+	xfpm_console_kit_reboot (power->priv->console, error);
+
 
     return TRUE;
 }
@@ -1694,9 +1752,19 @@ static gboolean xfpm_power_dbus_can_reboot (XfpmPower * power,
 					  gboolean * OUT_can_reboot,
 					  GError ** error)
 {
-    g_object_get (G_OBJECT (power->priv->console),
-		  "can-reboot", OUT_can_reboot,
-		  NULL);
+
+    if ( LOGIND_RUNNING () )
+    {
+        g_object_get (G_OBJECT (power->priv->systemd),
+                      "can-reboot", OUT_can_reboot,
+                      NULL);
+    }
+    else
+    {
+        g_object_get (G_OBJECT (power->priv->console),
+                      "can-reboot", OUT_can_reboot,
+		      NULL);
+    }
 
     return TRUE;
 }
@@ -1705,9 +1773,20 @@ static gboolean xfpm_power_dbus_can_shutdown (XfpmPower * power,
 					    gboolean * OUT_can_shutdown,
 					    GError ** error)
 {
-    g_object_get (G_OBJECT (power->priv->console),
-		  "can-shutdown", OUT_can_shutdown,
-		  NULL);
+
+    if ( LOGIND_RUNNING () )
+    {
+        g_object_get (G_OBJECT (power->priv->systemd),
+                  "can-shutdown", OUT_can_shutdown,
+                  NULL);
+    }
+    else
+    {
+	g_object_get (G_OBJECT (power->priv->console),
+		      "can-shutdown", OUT_can_shutdown,
+		      NULL);
+    }
+
     return TRUE;
 }
 

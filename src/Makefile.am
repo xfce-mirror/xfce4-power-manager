@@ -20,6 +20,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-disks.h				\
 	xfpm-console-kit.c			\
 	xfpm-console-kit.h			\
+	xfpm-systemd.c				\
+	xfpm-systemd.h				\
 	egg-idletime.c				\
 	egg-idletime.h				\
 	xfpm-backlight.c			\
