@@ -57,6 +57,8 @@
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-dbus-monitor.h"
+#include "xfpm-systemd.h"
+
 
 static void xfpm_manager_finalize   (GObject *object);
 
@@ -81,6 +83,7 @@ struct XfpmManagerPrivate
     XfpmXfconf      *conf;
     XfpmBacklight   *backlight;
     XfpmConsoleKit  *console;
+    XfpmSystemd     *systemd;
     XfpmDBusMonitor *monitor;
     XfpmDisks       *disks;
     XfpmInhibit     *inhibit;
@@ -131,7 +134,10 @@ xfpm_manager_finalize (GObject *object)
     g_object_unref (manager->priv->button);
     g_object_unref (manager->priv->conf);
     g_object_unref (manager->priv->client);
-    g_object_unref (manager->priv->console);
+    if ( manager->priv->systemd != NULL )
+        g_object_unref (manager->priv->systemd);
+    if ( manager->priv->console != NULL )
+        g_object_unref (manager->priv->console);
     g_object_unref (manager->priv->monitor);
     g_object_unref (manager->priv->disks);
     g_object_unref (manager->priv->inhibit);
@@ -201,7 +207,11 @@ static void
 xfpm_manager_shutdown (XfpmManager *manager)
 {
     GError *error = NULL;
-    xfpm_console_kit_shutdown (manager->priv->console, &error );
+
+    if ( LOGIND_RUNNING () )
+        xfpm_systemd_shutdown (manager->priv->systemd, &error );
+    else
+        xfpm_console_kit_shutdown (manager->priv->console, &error );
 
     if ( error )
     {
@@ -521,7 +531,14 @@ void xfpm_manager_start (XfpmManager *manager)
     manager->priv->power = xfpm_power_get ();
     manager->priv->button = xfpm_button_new ();
     manager->priv->conf = xfpm_xfconf_new ();
-    manager->priv->console = xfpm_console_kit_new ();
+    manager->priv->console = NULL;
+    manager->priv->systemd = NULL;
+
+    if ( LOGIND_RUNNING () )
+        manager->priv->systemd = xfpm_systemd_new ();
+    else
+        manager->priv->console = xfpm_console_kit_new ();
+
     manager->priv->monitor = xfpm_dbus_monitor_new ();
     manager->priv->disks = xfpm_disks_new ();
     manager->priv->inhibit = xfpm_inhibit_new ();
@@ -603,9 +620,18 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
 
     hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
-    g_object_get (G_OBJECT (manager->priv->console),
-		  "can-shutdown", &can_shutdown,
-		  NULL);
+    if ( LOGIND_RUNNING () )
+    {
+        g_object_get (G_OBJECT (manager->priv->systemd),
+                      "can-shutdown", &can_shutdown,
+                      NULL);
+    }
+    else
+    {
+        g_object_get (G_OBJECT (manager->priv->console),
+                      "can-shutdown", &can_shutdown,
+                      NULL);
+    }
 
     g_object_get (G_OBJECT (manager->priv->power),
                   "auth-suspend", &auth_suspend,
