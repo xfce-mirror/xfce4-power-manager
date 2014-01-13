@@ -619,12 +619,9 @@ void brightness_button_show (BrightnessButton *button)
     GtkWidget *mi;
     
     g_return_if_fail (BRIGHTNESS_IS_BUTTON (button));
-    
-    gtk_container_add (GTK_CONTAINER (button->priv->plugin),
-		       GTK_WIDGET (button));
-		       
+
     xfce_panel_plugin_add_action_widget (button->priv->plugin, GTK_WIDGET (button));
-    
+
     button->priv->image = gtk_image_new ();
     gtk_container_add (GTK_CONTAINER (button), button->priv->image);
     

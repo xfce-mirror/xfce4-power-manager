@@ -151,10 +151,10 @@ xfpm_about (GtkWidget *widget, gpointer data)
 		     "destroy-with-parent", TRUE,
 		     "documenters", documenters,
 		     "license", XFCE_LICENSE_GPL,
-		     "name", package,
+		     "program-name", package,
 		     "translator-credits", _("translator-credits"),
 		     "version", PACKAGE_VERSION,
-		     "website", "http://goodies.xfce.org",
+		     "website", "http://goodies.xfce.org/projects/applications/xfce4-power-manager",
 		     NULL);
 						 
 }

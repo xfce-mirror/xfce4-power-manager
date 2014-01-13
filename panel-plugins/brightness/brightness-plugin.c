@@ -34,14 +34,60 @@
 
 #include "brightness-button.h"
 
-static void
-register_brightness_plugin (XfcePanelPlugin *plugin)
+/* plugin structure */
+typedef struct
 {
-    GtkWidget *button;
-    
-    button = brightness_button_new (plugin);
-    
-    brightness_button_show (BRIGHTNESS_BUTTON (button));
+    XfcePanelPlugin *plugin;
+
+    /* panel widgets */
+    GtkWidget       *ebox;
+    GtkWidget       *brightness_button;
+}
+BrightnessPlugin;
+
+/* prototypes */
+static void brightness_plugin_construct (XfcePanelPlugin *plugin);
+
+
+/* register the plugin */
+XFCE_PANEL_PLUGIN_REGISTER (brightness_plugin_construct);
+
+
+static BrightnessPlugin *
+brightness_plugin_new (XfcePanelPlugin *plugin)
+{
+    BrightnessPlugin *brightness_plugin;
+
+    /* allocate memory for the plugin structure */
+    brightness_plugin = panel_slice_new0 (BrightnessPlugin);
+
+    /* pointer to plugin */
+    brightness_plugin->plugin = plugin;
+
+    /* pointer to plugin */
+    brightness_plugin->plugin = plugin;
+
+    /* create some panel ebox */
+    brightness_plugin->ebox = gtk_event_box_new ();
+    gtk_widget_show (brightness_plugin->ebox);
+    gtk_event_box_set_visible_window (GTK_EVENT_BOX(brightness_plugin->ebox), FALSE);
+
+    brightness_plugin->brightness_button = brightness_button_new (plugin);
+    brightness_button_show(BRIGHTNESS_BUTTON(brightness_plugin->brightness_button));
+    gtk_container_add (GTK_CONTAINER (brightness_plugin->ebox), brightness_plugin->brightness_button);
+
+    return brightness_plugin;
 }
 
-XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL(register_brightness_plugin);
+
+static void
+brightness_plugin_construct (XfcePanelPlugin *plugin)
+{
+    BrightnessPlugin *brightness_plugin;
+
+    /* create the plugin */
+    brightness_plugin = brightness_plugin_new (plugin);
+
+    /* add the ebox to the panel */
+    gtk_container_add (GTK_CONTAINER (plugin), brightness_plugin->ebox);
+}

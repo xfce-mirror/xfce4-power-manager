@@ -1,12 +1,24 @@
-plugindir = $(libdir)/xfce4/panel-plugins
-plugin_PROGRAMS = xfce4-brightness-plugin
+INCLUDES = \
+	-I$(top_srcdir) \
+	-DG_LOG_DOMAIN=\"xfce4-brightness-plugin\" \
+	-DPACKAGE_LOCALE_DIR=\"$(localedir)\" \
+	$(PLATFORM_CPPFLAGS)
 
-xfce4_brightness_plugin_SOURCES =		\
+#
+# xfce4 brightness plugin
+#
+plugin_LTLIBRARIES = \
+	libxfce4brightness.la
+
+plugindir = \
+	$(libdir)/xfce4/panel/plugins
+
+libxfce4brightness_la_SOURCES =		\
 	brightness-plugin.c			\
 	brightness-button.c			\
 	brightness-button.h
 
-xfce4_brightness_plugin_CFLAGS =		\
+libxfce4brightness_la_CFLAGS =		\
 	-I$(top_srcdir)				\
 	-I$(top_srcdir)/src			\
 	-DLOCALEDIR=\"$(localedir)\"  		\
@@ -19,11 +31,14 @@ xfce4_brightness_plugin_CFLAGS =		\
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
 
-xfce4_brightness_plugin_LDFLAGS =		\
-	-no-undefined				\
-	$(PLATFORM_LDFLAGS)
+libxfce4brightness_la_LDFLAGS =		\
+       -avoid-version \
+       -module \
+       -no-undefined \
+       -export-symbols-regex '^xfce_panel_module_(preinit|init|construct)' \
+       $(PLATFORM_LDFLAGS)
 
-xfce4_brightness_plugin_LDADD =			\
+libxfce4brightness_la_LIBADD =			\
 	$(top_builddir)/common/libxfpmcommon.la \
 	$(LIBXFCE4PANEL_LIBS)   		\
 	$(LIBXFCE4UI_LIBS)			\
