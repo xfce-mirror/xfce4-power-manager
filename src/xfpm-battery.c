@@ -320,19 +320,21 @@ xfpm_battery_refresh_icon (XfpmBattery *battery)
     {
 	if ( !battery->priv->present || battery->priv->state == XFPM_DEVICE_STATE_EMPTY )
 	{
-	    g_snprintf (icon_name, 128, "%s-000", battery->priv->icon_prefix);
+	    g_snprintf (icon_name, 128, "%s000", battery->priv->icon_prefix);
 	}
 	else if ( battery->priv->state == XFPM_DEVICE_STATE_FULLY_CHARGED )
 	{
-	    g_snprintf (icon_name, 128, "%s-100", battery->priv->icon_prefix);
+	    g_snprintf (icon_name, 128, "%s100", battery->priv->icon_prefix);
 	}
-	else if ( battery->priv->state == XFPM_DEVICE_STATE_DISCHARGING )
+	else if ( battery->priv->state == XFPM_DEVICE_STATE_DISCHARGING || battery->priv->state == XFPM_DEVICE_STATE_CHARGING )
 	{
-	    g_snprintf (icon_name, 128, "%s-%s",
+	    g_snprintf (icon_name, 128, "%s%s",
 			battery->priv->icon_prefix,
 			xfpm_battery_get_icon_index (battery->priv->type, battery->priv->percentage));
 	}
     }
+
+    XFPM_DEBUG ("Battery icon %s", icon_name);
 
     gtk_status_icon_set_from_icon_name (GTK_STATUS_ICON (battery), icon_name);
 }
