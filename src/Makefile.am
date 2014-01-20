@@ -26,6 +26,8 @@ xfce4_power_manager_SOURCES =                   \
 	egg-idletime.h				\
 	xfpm-backlight.c			\
 	xfpm-backlight.h			\
+	xfpm-kbd-backlight.c			\
+	xfpm-kbd-backlight.h			\
 	xfpm-dpms.c				\
 	xfpm-dpms.h				\
 	xfpm-button.c				\

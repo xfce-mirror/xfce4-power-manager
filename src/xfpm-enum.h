@@ -40,13 +40,15 @@ typedef enum
 
 typedef enum
 {
-    LID_KEY   		= (1 << 0),
-    BRIGHTNESS_KEY_UP	= (1 << 1),
-    BRIGHTNESS_KEY_DOWN	= (1 << 2),
-    SLEEP_KEY 		= (1 << 3),
-    HIBERNATE_KEY	= (1 << 4),
-    POWER_KEY 		= (1 << 5)
-    
+    LID_KEY   	        	= (1 << 0),
+    BRIGHTNESS_KEY_UP   	= (1 << 1),
+    BRIGHTNESS_KEY_DOWN  	= (1 << 2),
+    SLEEP_KEY 	        	= (1 << 3),
+    HIBERNATE_KEY	        = (1 << 4),
+    POWER_KEY 	        	= (1 << 5),
+    KBD_BRIGHTNESS_KEY_UP	= (1 << 6),
+    KBD_BRIGHTNESS_KEY_DOWN	= (1 << 7)
+
 } XfpmKeys;
 
 typedef enum
