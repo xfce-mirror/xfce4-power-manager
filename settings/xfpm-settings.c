@@ -728,8 +728,14 @@ critical_level_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
 void
 lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 {
+    XfconfChannel *session_channel = xfconf_channel_get ("xfce4-session");
     gboolean val = (gint) gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
-    
+
+    if ( !xfconf_channel_set_bool (session_channel, "/shutdown/LockScreen", val) )
+    {
+	g_critical ("Unable to set value for property %s\n", LOCK_SCREEN_ON_SLEEP);
+    }
+
     if ( !xfconf_channel_set_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, val) )
     {
 	g_critical ("Unable to set value for property %s\n", LOCK_SCREEN_ON_SLEEP);
