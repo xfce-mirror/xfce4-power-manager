@@ -44,8 +44,6 @@ void       	xfpm_lock_screen  		(void);
 
 void       	xfpm_preferences		(void);
 
-void       	xfpm_help			(void);
-
 void            xfpm_quit                       (void);
 
 void       	xfpm_about			(GtkWidget *widget, 

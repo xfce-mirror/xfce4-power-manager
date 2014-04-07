@@ -112,12 +112,6 @@ xfpm_preferences (void)
     g_spawn_command_line_async ("xfce4-power-manager-settings", NULL);
 }
 
-void       
-xfpm_help (void)
-{
-    g_spawn_command_line_async ("xfhelp4 xfce4-power-manager.html", NULL);
-}
-
 void
 xfpm_quit (void)
 {
