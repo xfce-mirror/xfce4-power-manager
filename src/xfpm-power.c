@@ -474,6 +474,13 @@ xfpm_power_presentation_mode_cb (XfpmPower *power)
 }
 
 static void
+xfpm_power_help_cb (GtkMenuItem *menuitem, gpointer user_data)
+{
+    XfpmPower *power = XFPM_POWER (user_data);
+    xfce_dialog_show_help (GTK_WINDOW (power->priv->dialog), "xfce4-power-manager", "start", NULL);
+}
+
+static void
 xfpm_power_show_tray_menu (XfpmPower *power,
 			 GtkStatusIcon *icon,
 			 guint button,
@@ -589,7 +596,7 @@ xfpm_power_show_tray_menu (XfpmPower *power,
     mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_HELP, NULL);
     gtk_widget_set_sensitive (mi, TRUE);
     gtk_widget_show (mi);
-    g_signal_connect (mi, "activate", G_CALLBACK (xfpm_help), NULL);
+    g_signal_connect (mi, "activate", G_CALLBACK (xfpm_power_help_cb), power);
 
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
 

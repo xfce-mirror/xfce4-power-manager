@@ -11,8 +11,7 @@ SUBDIRS =        	\
 	src		\
 	settings	\
 	$(plugins_dir)	\
-	po           	\
-	doc
+	po
 
 
 EXTRA_DIST = 			\
@@ -40,9 +39,6 @@ dist-hook: ChangeLog
 
 distclean-local:
 	rm -rf *.cache
-
-html: Makefile
-	make -C doc html
 
 dist-bz2: dist
 	zcat $(PACKAGE)-$(VERSION).tar.gz | \

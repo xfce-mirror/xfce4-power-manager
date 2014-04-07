@@ -1620,10 +1620,11 @@ settings_quit (GtkWidget *widget, XfconfChannel *channel)
 
 static void dialog_response_cb (GtkDialog *dialog, gint response, XfconfChannel *channel)
 {
+    DBG("response %d", response);
     switch(response)
     {
 	case GTK_RESPONSE_HELP:
-	    xfpm_help();
+	    xfce_dialog_show_help (GTK_WINDOW (dialog), "xfce4-power-manager", "start", NULL);
 	    break;
 	default:
 	    settings_quit (GTK_WIDGET (dialog), channel);
