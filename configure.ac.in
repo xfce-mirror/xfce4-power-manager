@@ -160,36 +160,6 @@ fi
 AM_CONDITIONAL([BUILD_PANEL_PLUGINS], [test "x$build_panel_plugins" = "xyes"])
 
 #=======================================================#
-#              Generate html doc		        #
-#=======================================================#
-AC_ARG_ENABLE([xsltproc],
-              [AC_HELP_STRING([--enable-xsltproc],
-                              [Use xsltproc to generate HTML documentation @<:@default=no@:>@])],
-                              , [enable_xsltproc=no])
-if test "x$enable_xsltproc" = "xyes"; then
-    AC_PATH_PROG([XSLTPROC], [xsltproc], [no])
-    if test "x$XSLTPROC" = "xno"; then
-        AC_MSG_FAILURE([*** xsltproc was requested, but not found.])
-    fi
-fi
-AM_CONDITIONAL([HAVE_XSLTPROC], [test "x$enable_xsltproc" = "xyes"])
-
-#=======================================================#
-#              Support for doc translations	        #
-#=======================================================#
-AC_ARG_ENABLE([xml2po],
-              [AC_HELP_STRING([--enable-xml2po],
-                              [Use xml2po to translate documentation @<:@default=no@:>@])],
-              [], [enable_xml2po=no])
-if test "x$enable_xml2po" = "xyes"; then
-    AC_PATH_PROG([XML2PO], [xml2po], [no])
-    if test "x$XML2PO" = "xno"; then
-        AC_MSG_FAILURE([*** xml2po was requested, but not found.])
-    fi
-fi
-AM_CONDITIONAL([ENABLE_XML2PO], [test "x$enable_xml2po" = "xyes"])
-
-#=======================================================#
 #              Check for debugging support              #
 #=======================================================#
 XDT_FEATURE_DEBUG
