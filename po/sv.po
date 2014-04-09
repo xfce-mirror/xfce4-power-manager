@@ -4,12 +4,13 @@
 # 
 # Translators:
 # Daniel Nylander <po@danielnylander.se>, 2008-2009
+# PavelNicklasson <pavelnicklasson@bahnhof.se>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-12 00:30+0200\n"
-"PO-Revision-Date: 2014-03-18 21:37+0000\n"
+"POT-Creation-Date: 2014-04-09 00:30+0200\n"
+"PO-Revision-Date: 2014-04-09 15:10+0000\n"
 "Last-Translator: PavelNicklasson <pavelnicklasson@bahnhof.se>\n"
 "Language-Team: Swedish (http://www.transifex.com/projects/p/xfce/language/sv/)\n"
 "MIME-Version: 1.0\n"
@@ -18,15 +19,15 @@ msgstr ""
 "Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
-#: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
-#: ../settings/xfpm-settings.c:1203 ../settings/xfpm-settings.c:1260
-#: ../settings/xfpm-settings.c:1312
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:815
+#: ../settings/xfpm-settings.c:883 ../settings/xfpm-settings.c:1032
+#: ../settings/xfpm-settings.c:1209 ../settings/xfpm-settings.c:1266
+#: ../settings/xfpm-settings.c:1318
 msgid "Nothing"
 msgstr "Ingenting"
 
 #: ../data/interfaces/xfpm-settings.ui.h:2
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:415
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:498
 msgid "Xfce Power Manager"
 msgstr "Strömhanterare för Xfce"
 
@@ -119,20 +120,20 @@ msgid "Prefer power savings over performance"
 msgstr "Föredra strömsparning framför prestanda"
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:814
-#: ../settings/xfpm-settings.c:882 ../settings/xfpm-settings.c:1031
-#: ../settings/xfpm-settings.c:1208 ../settings/xfpm-settings.c:1265
-#: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
-#: ../src/xfpm-power.c:792
+#: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:820
+#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:510
+#: ../src/xfpm-power.c:822
 msgid "Suspend"
 msgstr "Vänteläge"
 
 #. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
-#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
-#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
-#: ../src/xfpm-power.c:779
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:826
+#: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1043
+#: ../settings/xfpm-settings.c:1220 ../settings/xfpm-settings.c:1277
+#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:495
+#: ../src/xfpm-power.c:809
 msgid "Hibernate"
 msgstr "Viloläge"
 
@@ -195,93 +196,93 @@ msgstr "timmar"
 msgid "Seconds"
 msgstr "sekunder"
 
-#: ../settings/xfpm-settings.c:792 ../settings/xfpm-settings.c:990
-#: ../settings/xfpm-settings.c:1470
+#: ../settings/xfpm-settings.c:798 ../settings/xfpm-settings.c:996
+#: ../settings/xfpm-settings.c:1476
 msgid "Hibernate and suspend operations not supported"
 msgstr "Viloläge och vänteläge stöds inte"
 
-#: ../settings/xfpm-settings.c:797 ../settings/xfpm-settings.c:995
-#: ../settings/xfpm-settings.c:1475
+#: ../settings/xfpm-settings.c:803 ../settings/xfpm-settings.c:1001
+#: ../settings/xfpm-settings.c:1481
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Viloläge och vänteläge tillåts inte"
 
-#: ../settings/xfpm-settings.c:826 ../settings/xfpm-settings.c:1220
-#: ../src/xfpm-power.c:805
+#: ../settings/xfpm-settings.c:832 ../settings/xfpm-settings.c:1226
+#: ../src/xfpm-power.c:835
 msgid "Shutdown"
 msgstr "Stäng av"
 
-#: ../settings/xfpm-settings.c:830 ../settings/xfpm-settings.c:1224
-#: ../settings/xfpm-settings.c:1275 ../settings/xfpm-settings.c:1327
+#: ../settings/xfpm-settings.c:836 ../settings/xfpm-settings.c:1230
+#: ../settings/xfpm-settings.c:1281 ../settings/xfpm-settings.c:1333
 msgid "Ask"
 msgstr "Fråga"
 
-#: ../settings/xfpm-settings.c:892 ../settings/xfpm-settings.c:1041
+#: ../settings/xfpm-settings.c:898 ../settings/xfpm-settings.c:1047
 msgid "Lock screen"
 msgstr "Lås skärmen"
 
-#: ../settings/xfpm-settings.c:960 ../settings/xfpm-settings.c:1110
+#: ../settings/xfpm-settings.c:966 ../settings/xfpm-settings.c:1116
 msgid "Spinning down hard disks permission denied"
 msgstr "Nedvarvning av hårddiskar tillåts inte"
 
-#: ../settings/xfpm-settings.c:1150
+#: ../settings/xfpm-settings.c:1156
 msgid "Always show icon"
 msgstr "Visa alltid en ikon"
 
-#: ../settings/xfpm-settings.c:1153
+#: ../settings/xfpm-settings.c:1159
 msgid "When battery is present"
 msgstr "När batteri är anslutet"
 
-#: ../settings/xfpm-settings.c:1156
+#: ../settings/xfpm-settings.c:1162
 msgid "When battery is charging or discharging"
 msgstr "När batteri laddas upp eller laddas ur"
 
-#: ../settings/xfpm-settings.c:1159
+#: ../settings/xfpm-settings.c:1165
 msgid "Never show icon"
 msgstr "Visa aldrig en ikon"
 
-#: ../settings/xfpm-settings.c:1185
+#: ../settings/xfpm-settings.c:1191
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
 msgstr "Inaktivera Skärmströmhantering (DPMS), d.v.s. försök inte stänga av skärmen eller försätta den i sovläge."
 
-#: ../settings/xfpm-settings.c:1379
+#: ../settings/xfpm-settings.c:1385
 msgid "Suspend operation not supported"
 msgstr "Väntelägesåtgärden stöds inte"
 
-#: ../settings/xfpm-settings.c:1385
+#: ../settings/xfpm-settings.c:1391
 msgid "Suspend operation not permitted"
 msgstr "Väntelägesåtgärden tillåts inte"
 
-#: ../settings/xfpm-settings.c:1391
+#: ../settings/xfpm-settings.c:1397
 msgid "Hibernate operation not supported"
 msgstr "Viloläge stöds inte"
 
-#: ../settings/xfpm-settings.c:1396
+#: ../settings/xfpm-settings.c:1402
 msgid "Hibernate operation not permitted"
 msgstr "Viloläge tillåts inte"
 
-#: ../settings/xfpm-settings.c:1443
+#: ../settings/xfpm-settings.c:1449
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "När alla strömkällor för datorn når denna uppladdningsnivå"
 
-#: ../settings/xfpm-settings.c:1546 ../settings/xfpm-settings.c:1551
+#: ../settings/xfpm-settings.c:1552 ../settings/xfpm-settings.c:1557
 msgid "General"
 msgstr "Allmänt"
 
-#: ../settings/xfpm-settings.c:1560 ../settings/xfpm-settings.c:1565
+#: ../settings/xfpm-settings.c:1566 ../settings/xfpm-settings.c:1571
 msgid "On AC"
 msgstr "På extern ström"
 
-#: ../settings/xfpm-settings.c:1575 ../settings/xfpm-settings.c:1580
+#: ../settings/xfpm-settings.c:1581 ../settings/xfpm-settings.c:1586
 msgid "On Battery"
 msgstr "På batteriström"
 
-#: ../settings/xfpm-settings.c:1589 ../settings/xfpm-settings.c:1594
+#: ../settings/xfpm-settings.c:1595 ../settings/xfpm-settings.c:1600
 msgid "Extended"
 msgstr "Utökad"
 
-#: ../settings/xfpm-settings.c:1662
+#: ../settings/xfpm-settings.c:1669
 msgid "Check your power manager installation"
 msgstr "Kontrollera din installation av strömhanteraren"
 
@@ -293,8 +294,8 @@ msgstr "Uttag för inställningshanterare"
 msgid "SOCKET ID"
 msgstr "UTTAGS-ID"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
-#: ../src/xfpm-power-info.c:946
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:374
+#: ../src/xfpm-power-info.c:973
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Ange \"%s --help\" för användningsinformation."
@@ -307,7 +308,7 @@ msgstr "Misslyckades med att läsa in konfiguration för strömhantering, använ
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Kunde inte ansluta till Strömhanterare för Xfce"
 
-#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:331
+#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:414
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Strömhanterare för Xfce är inte igång"
@@ -321,9 +322,9 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Strömhanterare för Xfce4 är inte igång. Vill du starta den nu?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
-#: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:351 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-power.c:311 ../src/xfpm-power.c:606 ../src/xfpm-power.c:751
+#: ../src/xfpm-power.c:796 ../src/xfpm-power.c:965 ../src/xfpm-power.c:989
+#: ../src/xfpm-battery.c:353 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Strömhanterare"
 
@@ -331,38 +332,38 @@ msgstr "Strömhanterare"
 msgid "Settings for the Xfce Power Manager"
 msgstr "Inställningar för Strömhanterare för Xfce"
 
-#: ../common/xfpm-common.c:155
+#: ../common/xfpm-common.c:149
 msgid "translator-credits"
 msgstr "Daniel Nylander <po@danielnylander.se>\n\nSkicka synpunkter på översättningen till\n<tp-sv@listor.tp-sv.se>"
 
-#: ../src/xfpm-power.c:328
+#: ../src/xfpm-power.c:332
 msgid "_Hibernate"
 msgstr "_Viloläge"
 
-#: ../src/xfpm-power.c:329
+#: ../src/xfpm-power.c:333
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
 msgstr "Ett program inaktiverar för närvarande automatisk sömn. Att genomföra denna åtgärd nu kan skada programmets arbete. "
 
-#: ../src/xfpm-power.c:331
+#: ../src/xfpm-power.c:335
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Är du säker på att du vill försätta systemet i viloläge?"
 
-#: ../src/xfpm-power.c:426
+#: ../src/xfpm-power.c:430
 msgid "Quit"
 msgstr "Avsluta"
 
-#: ../src/xfpm-power.c:427
+#: ../src/xfpm-power.c:431
 msgid "All running instances of the power manager will exit"
 msgstr "Alla körande instanser av strömhanteraren kommer att avslutas"
 
-#: ../src/xfpm-power.c:429
+#: ../src/xfpm-power.c:433
 msgid "Quit the power manager?"
 msgstr "Avsluta strömhanteraren?"
 
 #. Power information
-#: ../src/xfpm-power.c:534 ../src/xfpm-power-info.c:818
+#: ../src/xfpm-power.c:545 ../src/xfpm-power-info.c:845
 msgid "Power Information"
 msgstr "Ströminformation"
 
@@ -371,63 +372,63 @@ msgstr "Ströminformation"
 #. *
 #. TRANSLATOR: Mode here is the power profile (presentation, power save,
 #. normal)
-#: ../src/xfpm-power.c:550
+#: ../src/xfpm-power.c:561
 msgid "Mode"
 msgstr "Läge"
 
 #. Normal
-#: ../src/xfpm-power.c:561
+#: ../src/xfpm-power.c:572
 msgid "Normal"
 msgstr "Normal"
 
 #. Normal
-#: ../src/xfpm-power.c:571
+#: ../src/xfpm-power.c:582
 msgid "Presentation"
 msgstr "Presentation"
 
-#: ../src/xfpm-power.c:693
+#: ../src/xfpm-power.c:714
 msgid "Hibernate the system"
 msgstr "Försätt i viloläge"
 
-#: ../src/xfpm-power.c:704
+#: ../src/xfpm-power.c:725
 msgid "Suspend the system"
 msgstr "Försätt systemet i vänteläge"
 
-#: ../src/xfpm-power.c:714
+#: ../src/xfpm-power.c:735
 msgid "Shutdown the system"
 msgstr "Stäng av systemet"
 
-#: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
+#: ../src/xfpm-power.c:746 ../src/xfpm-power.c:793
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Systemet börjar få slut på ström. Spara ditt arbete för att förhindra att data förloras"
 
-#: ../src/xfpm-power.c:936
+#: ../src/xfpm-power.c:966
 msgid "System is running on low power"
 msgstr "Systemet kör på låg strömnivå"
 
-#: ../src/xfpm-power.c:955
+#: ../src/xfpm-power.c:985
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Din %s batterinivå är låg\nUngefärlig tid kvar %s"
 
-#: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
+#: ../src/xfpm-power.c:1189 ../src/xfpm-power.c:1194
 msgid "Adaptor is offline"
 msgstr "Extern strömkälla är inte ansluten"
 
-#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:413
+#: ../src/xfpm-power.c:1190 ../src/xfpm-power.c:1195 ../src/xfpm-battery.c:415
 #, c-format
 msgid "Adaptor is online"
 msgstr "Extern strömkälla är ansluten"
 
-#: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
-#: ../src/xfpm-power.c:1676
+#: ../src/xfpm-power.c:1667 ../src/xfpm-power.c:1700 ../src/xfpm-power.c:1719
+#: ../src/xfpm-power.c:1742
 #, c-format
 msgid "Permission denied"
 msgstr "Åtkomst nekas"
 
-#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
+#: ../src/xfpm-power.c:1727 ../src/xfpm-power.c:1750
 #, c-format
 msgid "Suspend not supported"
 msgstr "Vänteläge stöds inte"
@@ -436,7 +437,7 @@ msgstr "Vänteläge stöds inte"
 msgid "Battery"
 msgstr "Batteri"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
+#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:851
 msgid "UPS"
 msgstr "UPS"
 
@@ -461,7 +462,7 @@ msgid "Phone"
 msgstr "Telefon"
 
 #: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:850
+#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:869
 msgid "Unknown"
 msgstr "Okänd"
 
@@ -488,6 +489,12 @@ msgstr "Nickel-kadmium"
 #: ../src/xfpm-power-common.c:165
 msgid "Nickel metal hybride"
 msgstr "Nickel-metallhydrid"
+
+#. generate a human-readable summary for the notification
+#: ../src/xfpm-backlight.c:144
+#, c-format
+msgid "Brightness: %.0f percent"
+msgstr "Ljusstyrka: %.0f procent"
 
 #: ../src/xfpm-battery.c:171
 msgid "Unknown time"
@@ -565,12 +572,12 @@ msgstr "%s (%i%%)\nUppskattad återstående tid är %s."
 msgid "Your %s is empty"
 msgstr "Din %s är tom"
 
-#: ../src/xfpm-battery.c:413
+#: ../src/xfpm-battery.c:415
 #, c-format
 msgid "System is running on battery power"
 msgstr "Systemet kör på batteriström"
 
-#: ../src/xfpm-battery.c:420
+#: ../src/xfpm-battery.c:422
 #, c-format
 msgid ""
 "%s\n"
@@ -578,14 +585,14 @@ msgid ""
 "Provides %s runtime"
 msgstr "%s\nDin %s är fullständigt uppladdat (%i%%).\nGer %s körtid"
 
-#: ../src/xfpm-battery.c:429
+#: ../src/xfpm-battery.c:431
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
 msgstr "%s\nDin %s är fullständigt uppladdat (%i%%)."
 
-#: ../src/xfpm-battery.c:440
+#: ../src/xfpm-battery.c:442
 #, c-format
 msgid ""
 "%s\n"
@@ -593,14 +600,14 @@ msgid ""
 "%s until is fully charged."
 msgstr "%s\nDin %s laddar upp (%i%%)\n%s tills fullständigt uppladdat."
 
-#: ../src/xfpm-battery.c:449
+#: ../src/xfpm-battery.c:451
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
 msgstr "%s\nDin %s laddas upp (%i%%)."
 
-#: ../src/xfpm-battery.c:460
+#: ../src/xfpm-battery.c:462
 #, c-format
 msgid ""
 "%s\n"
@@ -608,55 +615,55 @@ msgid ""
 "Estimated time left is %s."
 msgstr "%s\nDin %s laddar ur (%i%%)\nUngefärlig tid kvar är %s."
 
-#: ../src/xfpm-battery.c:469
+#: ../src/xfpm-battery.c:471
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
 msgstr "%s\nDin %s laddar ur (%i%%)."
 
-#: ../src/xfpm-battery.c:478
+#: ../src/xfpm-battery.c:480
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr "%s\n%s väntar på att laddas ur (%i%%)."
 
-#: ../src/xfpm-battery.c:482
+#: ../src/xfpm-battery.c:484
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
 msgstr "%s\n%s väntar på att laddas upp (%i%%)."
 
-#: ../src/xfpm-battery.c:486
+#: ../src/xfpm-battery.c:488
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
 msgstr "%s\nDin %s är tom"
 
-#: ../src/xfpm-battery.c:829
+#: ../src/xfpm-battery.c:848
 msgid "battery"
 msgstr "batteri"
 
-#: ../src/xfpm-battery.c:835
+#: ../src/xfpm-battery.c:854
 msgid "monitor battery"
 msgstr "övervaka batteri"
 
-#: ../src/xfpm-battery.c:838
+#: ../src/xfpm-battery.c:857
 msgid "mouse battery"
 msgstr "musbatteri"
 
-#: ../src/xfpm-battery.c:841
+#: ../src/xfpm-battery.c:860
 msgid "keyboard battery"
 msgstr "tangentbordsbatteri"
 
-#: ../src/xfpm-battery.c:844
+#: ../src/xfpm-battery.c:863
 msgid "PDA battery"
 msgstr "handdatorbatteri"
 
-#: ../src/xfpm-battery.c:847
+#: ../src/xfpm-battery.c:866
 msgid "Phone battery"
 msgstr "Telefonbatteri"
 
@@ -763,43 +770,43 @@ msgstr "Har väntelägesknapp"
 msgid "Has LID"
 msgstr "Har lock"
 
-#: ../src/xfpm-main.c:264
+#: ../src/xfpm-main.c:347
 msgid "Do not daemonize"
 msgstr "Kör inte i bakgrunden"
 
-#: ../src/xfpm-main.c:265
+#: ../src/xfpm-main.c:348
 msgid "Enable debugging"
 msgstr "Aktivera felsökning"
 
-#: ../src/xfpm-main.c:266
+#: ../src/xfpm-main.c:349
 msgid "Dump all information"
 msgstr "Dumpa all information"
 
-#: ../src/xfpm-main.c:267
+#: ../src/xfpm-main.c:350
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Starta om den körande instansen av Xfce-strömhanterare"
 
-#: ../src/xfpm-main.c:268
+#: ../src/xfpm-main.c:351
 msgid "Show the configuration dialog"
 msgstr "Visa konfigurationsdialogen"
 
-#: ../src/xfpm-main.c:269
+#: ../src/xfpm-main.c:352
 msgid "Quit any running xfce power manager"
 msgstr "Avsluta alla körande xfce-strömhanterare"
 
-#: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:933
+#: ../src/xfpm-main.c:353 ../src/xfpm-power-info.c:960
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: ../src/xfpm-main.c:322
+#: ../src/xfpm-main.c:405
 msgid "Unable to get connection to the message bus session"
 msgstr "Kunde inte ansluta till meddelandebussessionen"
 
-#: ../src/xfpm-main.c:416
+#: ../src/xfpm-main.c:499
 msgid "Another power manager is already running"
 msgstr "En annan strömhanterare är redan igång"
 
-#: ../src/xfpm-main.c:422
+#: ../src/xfpm-main.c:505
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Strömhanterare för Xfce är redan igång"
@@ -936,7 +943,7 @@ msgstr "Värde"
 msgid "Device"
 msgstr "Enhet"
 
-#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:739
+#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:766
 msgid "Type"
 msgstr "Typ"
 
@@ -952,59 +959,72 @@ msgstr "Modell"
 msgid "Technology"
 msgstr "Teknik"
 
+#: ../src/xfpm-power-info.c:420
+msgid "Energy percent"
+msgstr "Energi procent"
+
 #. TRANSLATORS: Unit here is What hour
-#: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
-#: ../src/xfpm-power-info.c:442
+#: ../src/xfpm-power-info.c:428 ../src/xfpm-power-info.c:442
+#: ../src/xfpm-power-info.c:456
 msgid "Wh"
 msgstr "Wh"
 
-#: ../src/xfpm-power-info.c:420
+#: ../src/xfpm-power-info.c:434
 msgid "Energy full design"
 msgstr "Energi full design"
 
-#: ../src/xfpm-power-info.c:434
+#: ../src/xfpm-power-info.c:448
 msgid "Energy full"
 msgstr "Energi full"
 
-#: ../src/xfpm-power-info.c:448
+#: ../src/xfpm-power-info.c:462
 msgid "Energy empty"
 msgstr "Energi tom"
 
 #. TRANSLATORS: Unit here is volt
-#: ../src/xfpm-power-info.c:456
+#: ../src/xfpm-power-info.c:470
 msgid "V"
 msgstr "V"
 
-#: ../src/xfpm-power-info.c:461
+#: ../src/xfpm-power-info.c:475
 msgid "Voltage"
 msgstr "Volttal"
 
-#: ../src/xfpm-power-info.c:478
+#. Percentage
+#: ../src/xfpm-power-info.c:483
+msgid "%"
+msgstr "%"
+
+#: ../src/xfpm-power-info.c:488
+msgid "Percentage"
+msgstr "Procentandel"
+
+#: ../src/xfpm-power-info.c:505
 msgid "Vendor"
 msgstr "Tillverkare"
 
-#: ../src/xfpm-power-info.c:495
+#: ../src/xfpm-power-info.c:522
 msgid "Serial"
 msgstr "Seriell"
 
-#: ../src/xfpm-power-info.c:731
+#: ../src/xfpm-power-info.c:758
 msgid "Processor"
 msgstr "Processor"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
-#: ../src/xfpm-power-info.c:748
+#: ../src/xfpm-power-info.c:775
 msgid "PID"
 msgstr "PID"
 
-#: ../src/xfpm-power-info.c:754
+#: ../src/xfpm-power-info.c:781
 msgid "Wakeups"
 msgstr "Uppvaknanden"
 
-#: ../src/xfpm-power-info.c:760
+#: ../src/xfpm-power-info.c:787
 msgid "Command"
 msgstr "Kommando"
 
-#: ../src/xfpm-power-info.c:766
+#: ../src/xfpm-power-info.c:793
 msgid "Details"
 msgstr "Detaljer"
 
@@ -1021,7 +1041,7 @@ msgstr "Kontrollera ljusstyrkan för din LCD-skärm"
 msgid "No device found"
 msgstr "Ingen enhet hittades"
 
-#: ../panel-plugins/brightness/brightness-button.c:649
+#: ../panel-plugins/brightness/brightness-button.c:646
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Insticksprogram ljusstyrka"
