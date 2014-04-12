@@ -25,7 +25,7 @@ DISTCLEANFILES = \
 	intltool-merge \
 	intltool-update
 
-distuninstallcheck_listfiles = 						\ 
+distuninstallcheck_listfiles = 						\
 	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
 
 .PHONY: ChangeLog
@@ -54,4 +54,4 @@ snapshot: dist
 
 snapshot-bz2: dist-bz2
 	mv $(PACKAGE)-$(VERSION).tar.bz2 \
-	$(PACKAGE)-$(VERSION)-r@REVISION@.tar.bz2         
+	$(PACKAGE)-$(VERSION)-r@REVISION@.tar.bz2
