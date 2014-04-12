@@ -46,6 +46,8 @@ struct XfpmSystemdPrivate
 {
     gboolean         can_shutdown;
     gboolean         can_restart;
+    gboolean         can_suspend;
+    gboolean         can_hibernate;
 #ifdef ENABLE_POLKIT
     XfpmPolkit      *polkit;
 #endif
@@ -55,7 +57,9 @@ enum
 {
     PROP_0,
     PROP_CAN_RESTART,
-    PROP_CAN_SHUTDOWN
+    PROP_CAN_SHUTDOWN,
+    PROP_CAN_SUSPEND,
+    PROP_CAN_HIBERNATE,
 };
 
 G_DEFINE_TYPE (XfpmSystemd, xfpm_systemd, G_TYPE_OBJECT)
@@ -67,6 +71,8 @@ G_DEFINE_TYPE (XfpmSystemd, xfpm_systemd, G_TYPE_OBJECT)
 #define SYSTEMD_POWEROFF_ACTION         "PowerOff"
 #define SYSTEMD_REBOOT_TEST             "org.freedesktop.login1.reboot"
 #define SYSTEMD_POWEROFF_TEST           "org.freedesktop.login1.power-off"
+#define SYSTEMD_SUSPEND_TEST            "org.freedesktop.login1.suspend"
+#define SYSTEMD_HIBERNATE_TEST          "org.freedesktop.login1.hibernate"
 
 static void
 xfpm_systemd_class_init (XfpmSystemdClass *klass)
@@ -87,6 +93,20 @@ xfpm_systemd_class_init (XfpmSystemdClass *klass)
     g_object_class_install_property (object_class,
                                      PROP_CAN_SHUTDOWN,
                                      g_param_spec_boolean ("can-shutdown",
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READABLE));
+
+    g_object_class_install_property (object_class,
+                                     PROP_CAN_SUSPEND,
+                                     g_param_spec_boolean ("can-suspend",
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READABLE));
+
+    g_object_class_install_property (object_class,
+                                     PROP_CAN_HIBERNATE,
+                                     g_param_spec_boolean ("can-hibernate",
                                                            NULL, NULL,
                                                            FALSE,
                                                            G_PARAM_READABLE));
@@ -126,6 +146,12 @@ xfpm_systemd_init (XfpmSystemd *systemd)
     xfpm_systemd_can_method (systemd,
                              &systemd->priv->can_restart,
                              SYSTEMD_REBOOT_TEST);
+    xfpm_systemd_can_method (systemd,
+                             &systemd->priv->can_suspend,
+                             SYSTEMD_SUSPEND_TEST);
+    xfpm_systemd_can_method (systemd,
+                             &systemd->priv->can_hibernate,
+                             SYSTEMD_HIBERNATE_TEST);
 }
 
 static void xfpm_systemd_get_property (GObject *object,
@@ -143,6 +169,12 @@ static void xfpm_systemd_get_property (GObject *object,
         break;
     case PROP_CAN_RESTART:
         g_value_set_boolean (value, systemd->priv->can_restart);
+        break;
+    case PROP_CAN_SUSPEND:
+        g_value_set_boolean (value, systemd->priv->can_suspend);
+        break;
+    case PROP_CAN_HIBERNATE:
+        g_value_set_boolean (value, systemd->priv->can_hibernate);
         break;
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -175,12 +207,12 @@ xfpm_systemd_new (void)
 
     if ( G_LIKELY (systemd_obj != NULL ) )
     {
-    g_object_ref (systemd_obj);
+        g_object_ref (systemd_obj);
     }
     else
     {
-    systemd_obj = g_object_new (XFPM_TYPE_SYSTEMD, NULL);
-    g_object_add_weak_pointer (systemd_obj, &systemd_obj);
+        systemd_obj = g_object_new (XFPM_TYPE_SYSTEMD, NULL);
+        g_object_add_weak_pointer (systemd_obj, &systemd_obj);
     }
 
     return XFPM_SYSTEMD (systemd_obj);
@@ -226,4 +258,11 @@ void xfpm_systemd_reboot (XfpmSystemd *systemd, GError **error)
     xfpm_systemd_try_method (systemd,
                              SYSTEMD_REBOOT_ACTION,
                              error);
+}
+
+void xfpm_systemd_sleep (XfpmSystemd *systemd,
+                         const gchar *method,
+                         GError **error)
+{
+    xfpm_systemd_try_method (systemd, method, error);
 }

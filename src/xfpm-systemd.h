@@ -57,6 +57,10 @@ void                xfpm_systemd_shutdown   (XfpmSystemd *systemd,
 void                xfpm_systemd_reboot (XfpmSystemd *systemd,
                                          GError **error);
 
+void                xfpm_systemd_sleep (XfpmSystemd *systemd,
+                                        const gchar *method,
+                                        GError **error);
+
 G_END_DECLS
 
 #endif /* __XFPM_SYSTEMD_H */

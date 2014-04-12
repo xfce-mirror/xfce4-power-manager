@@ -280,7 +280,20 @@ xfpm_power_get_properties (XfpmPower *power)
 
     props = xfpm_power_get_interface_properties (power->priv->proxy_prop, UPOWER_IFACE);
 
-    xfpm_power_check_pm (power, props);
+    if ( LOGIND_RUNNING () )
+    {
+        g_object_get (G_OBJECT (power->priv->systemd),
+                      "can-suspend", &power->priv->can_suspend,
+                      NULL);
+	g_object_get (G_OBJECT (power->priv->systemd),
+                      "can-hibernate", &power->priv->can_hibernate,
+                      NULL);
+    }
+    else
+    {
+	xfpm_power_check_pm (power, props);
+    }
+
     xfpm_power_check_lid (power, props);
     xfpm_power_check_power (power, props);
 
@@ -351,9 +364,16 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 	xfpm_lock_screen ();
     }
 
-    dbus_g_proxy_call (power->priv->proxy, sleep_time, &error,
-		       G_TYPE_INVALID,
-		       G_TYPE_INVALID);
+    if ( LOGIND_RUNNING () )
+    {
+	xfpm_systemd_sleep (power->priv->systemd, sleep_time, &error);
+    }
+    else
+    {
+	dbus_g_proxy_call (power->priv->proxy, sleep_time, &error,
+			   G_TYPE_INVALID,
+			   G_TYPE_INVALID);
+    }
 
     if ( error )
     {
