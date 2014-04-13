@@ -28,6 +28,7 @@
 
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
+#include <upower.h>
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -72,8 +73,7 @@ struct XfpmPowerPrivate
 {
     DBusGConnection *bus;
 
-    DBusGProxy      *proxy;
-    DBusGProxy      *proxy_prop;
+    UpClient        *upower;
 
     GHashTable      *hash;
 
@@ -148,61 +148,28 @@ G_DEFINE_TYPE (XfpmPower, xfpm_power, G_TYPE_OBJECT)
 static void
 xfpm_power_check_polkit_auth (XfpmPower *power)
 {
+    const char *suspend, *hibernate;
+    if (LOGIND_RUNNING())
+    {
+	suspend   = POLKIT_AUTH_SUSPEND_LOGIND;
+	hibernate = POLKIT_AUTH_HIBERNATE_LOGIND;
+    }
+    else
+    {
+	suspend   = POLKIT_AUTH_SUSPEND_UPOWER;
+	hibernate = POLKIT_AUTH_HIBERNATE_UPOWER;
+    }
     power->priv->auth_suspend = xfpm_polkit_check_auth (power->priv->polkit,
-							POLKIT_AUTH_SUSPEND);
+							suspend);
 
     power->priv->auth_hibernate = xfpm_polkit_check_auth (power->priv->polkit,
-							  POLKIT_AUTH_HIBERNATE);
-
+							  hibernate);
 }
 #endif
 
 static void
-xfpm_power_check_pm (XfpmPower *power, GHashTable *props)
+xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
 {
-    GValue *value;
-    gboolean ret;
-
-    value = g_hash_table_lookup (props, "CanSuspend");
-
-    if (value == NULL)
-    {
-	g_warning ("No 'CanSuspend' property");
-    }
-    ret = g_value_get_boolean (value);
-
-    if (ret != power->priv->can_suspend)
-    {
-	power->priv->can_suspend = ret;
-    }
-
-    value = g_hash_table_lookup (props, "CanHibernate");
-
-    if (value == NULL)
-    {
-	g_warning ("No 'CanHibernate' property");
-    }
-
-    ret = g_value_get_boolean (value);
-
-    if (ret != power->priv->can_hibernate)
-    {
-	power->priv->can_hibernate = ret;
-    }
-}
-
-static void
-xfpm_power_check_power (XfpmPower *power, GHashTable *props)
-{
-    GValue *value;
-    gboolean on_battery;
-
-    value = g_hash_table_lookup (props, "OnBattery");
-
-    if (G_LIKELY (value))
-    {
-	on_battery = g_value_get_boolean (value);
-
 	if (on_battery != power->priv->on_battery )
 	{
 	    GList *list;
@@ -218,42 +185,15 @@ xfpm_power_check_power (XfpmPower *power, GHashTable *props)
 			      NULL);
 	    }
 	}
-    }
-    else
-    {
-	g_warning ("No 'OnBattery' property");
-    }
 }
 
 static void
-xfpm_power_check_lid (XfpmPower *power, GHashTable *props)
+xfpm_power_check_lid (XfpmPower *power, gboolean present, gboolean closed)
 {
-    GValue *value;
-
-    value = g_hash_table_lookup (props, "LidIsPresent");
-
-    if (value == NULL)
-    {
-	g_warning ("No 'LidIsPresent' property");
-	return;
-    }
-
-    power->priv->lid_is_present = g_value_get_boolean (value);
+    power->priv->lid_is_present = present;
 
     if (power->priv->lid_is_present)
     {
-	gboolean closed;
-
-	value = g_hash_table_lookup (props, "LidIsClosed");
-
-	if (value == NULL)
-	{
-	    g_warning ("No 'LidIsClosed' property");
-	    return;
-	}
-
-	closed = g_value_get_boolean (value);
-
 	if (closed != power->priv->lid_is_closed )
 	{
 	    power->priv->lid_is_closed = closed;
@@ -276,10 +216,15 @@ xfpm_power_check_lid (XfpmPower *power, GHashTable *props)
 static void
 xfpm_power_get_properties (XfpmPower *power)
 {
-    GHashTable *props;
+    gboolean on_battery;
+    gboolean lid_is_closed;
+    gboolean lid_is_present;
 
-    props = xfpm_power_get_interface_properties (power->priv->proxy_prop, UPOWER_IFACE);
-
+    /* TODO: newer versions of upower don't have that => logind handles it */
+#if !UP_CHECK_VERSION(0, 99, 0)
+    power->priv->can_suspend = up_client_get_can_suspend(power->priv->upower);
+    power->priv->can_hibernate = up_client_get_can_hibernate(power->priv->upower);
+#else
     if ( LOGIND_RUNNING () )
     {
         g_object_get (G_OBJECT (power->priv->systemd),
@@ -291,13 +236,17 @@ xfpm_power_get_properties (XfpmPower *power)
     }
     else
     {
-	xfpm_power_check_pm (power, props);
+	g_warning("Error: using upower >= 0.99.0 but logind is not running");
+	g_warning("       suspend / hibernate will not work!");
     }
-
-    xfpm_power_check_lid (power, props);
-    xfpm_power_check_power (power, props);
-
-    g_hash_table_destroy (props);
+#endif
+    g_object_get (power->priv->upower,
+                  "on-battery", &on_battery,
+                  "lid-is-closed", &lid_is_closed,
+                  "lid-is-present", &lid_is_present,
+                  NULL);
+    xfpm_power_check_lid (power, lid_is_present, lid_is_closed);
+    xfpm_power_check_power (power, on_battery);
 }
 
 static void
@@ -370,9 +319,19 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
     else
     {
-	dbus_g_proxy_call (power->priv->proxy, sleep_time, &error,
-			   G_TYPE_INVALID,
-			   G_TYPE_INVALID);
+#if !UP_CHECK_VERSION(0, 99, 0)
+	if (!g_strcmp0 (sleep_time, "Hibernate"))
+	{
+	    up_client_hibernate_sync(power->priv->upower, NULL, &error);
+	}
+	else
+	{
+	    up_client_suspend_sync(power->priv->upower, NULL, &error);
+	}
+#else
+	g_warning("Error: using upower >= 0.99.0 but logind is not running");
+	g_warning("       suspend / hibernate will not work!");
+#endif
     }
 
     if ( error )
@@ -1028,26 +987,18 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 }
 
 static void
-xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
+xfpm_power_add_device (UpDevice *device, XfpmPower *power)
 {
-    DBusGProxy *proxy_prop;
     guint device_type = XFPM_DEVICE_TYPE_UNKNOWN;
-    GValue value;
+    const gchar *object_path = up_device_get_object_path(device);
 
-    proxy_prop = dbus_g_proxy_new_for_name (power->priv->bus,
-					    UPOWER_NAME,
-					    object_path,
-					    DBUS_INTERFACE_PROPERTIES);
+    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
+    g_object_get (device,
+		  "kind", &device_type,
+		  NULL);
 
-    if ( !proxy_prop )
-    {
-	g_warning ("Unable to create proxy for : %s", object_path);
-	return;
-    }
-
-    value = xfpm_power_get_interface_property (proxy_prop, UPOWER_IFACE_DEVICE, "Type");
-
-    device_type = g_value_get_uint (&value);
+    if (device_type > XFPM_DEVICE_TYPE_PHONE)
+        device_type = XFPM_DEVICE_TYPE_UNKNOWN;
 
     XFPM_DEBUG_ENUM (device_type, XFPM_TYPE_DEVICE_TYPE, " device added");
 
@@ -1058,20 +1009,13 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
 	 device_type == XFPM_DEVICE_TYPE_PHONE)
     {
 	GtkStatusIcon *battery;
-	DBusGProxy *proxy;
 	XFPM_DEBUG_ENUM (device_type, XFPM_TYPE_DEVICE_TYPE,
 			"Battery device detected at : %s", object_path);
-	proxy = dbus_g_proxy_new_for_name (power->priv->bus,
-					   UPOWER_NAME,
-					   object_path,
-					   UPOWER_IFACE_DEVICE);
 	battery = xfpm_battery_new ();
 	gtk_status_icon_set_visible (battery, FALSE);
 	xfpm_battery_monitor_device (XFPM_BATTERY (battery),
-				     proxy,
-				     proxy_prop,
+				     object_path,
 				     device_type);
-
 	g_hash_table_insert (power->priv->hash, g_strdup (object_path), battery);
 
 	g_signal_connect (battery, "popup-menu",
@@ -1082,32 +1026,32 @@ xfpm_power_add_device (XfpmPower *power, const gchar *object_path)
 
 	xfpm_power_refresh_adaptor_visible (power);
     }
-    else if ( device_type != XFPM_DEVICE_TYPE_LINE_POWER )
-    {
-	g_warning ("Unable to monitor unknown power device with object_path : %s", object_path);
-	g_object_unref (proxy_prop);
-    }
 }
 
 static void
 xfpm_power_get_power_devices (XfpmPower *power)
 {
+#if !UP_CHECK_VERSION(0, 99, 0)
+    /* the device-add callback is called for each device */
+    up_client_enumerate_devices_sync(power->priv->upower, NULL, NULL);
+#else
     GPtrArray *array = NULL;
     guint i;
 
-    array = xfpm_power_enumerate_devices (power->priv->proxy);
+    array = up_client_get_devices(power->priv->upower);
 
     if ( array )
     {
 	for ( i = 0; i < array->len; i++)
 	{
-	    const gchar *object_path = ( const gchar *) g_ptr_array_index (array, i);
+	    UpDevice *device = g_ptr_array_index (array, i);
+	    const gchar *object_path = up_device_get_object_path(device);
 	    XFPM_DEBUG ("Power device detected at : %s", object_path);
-	    xfpm_power_add_device (power, object_path);
+	    xfpm_power_add_device (device, power);
 	}
 	g_ptr_array_free (array, TRUE);
     }
-
+#endif
 }
 
 static void
@@ -1124,23 +1068,36 @@ xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPo
 }
 
 static void
-xfpm_power_changed_cb (DBusGProxy *proxy, XfpmPower *power)
+xfpm_power_changed_cb (UpClient *upower,
+#if UP_CHECK_VERSION(0, 99, 0)
+		       GParamSpec *pspec,
+#endif
+		       XfpmPower *power)
 {
     xfpm_power_get_properties (power);
     xfpm_power_refresh_adaptor_visible (power);
 }
 
 static void
-xfpm_power_device_added_cb (DBusGProxy *proxy, const gchar *object_path, XfpmPower *power)
+xfpm_power_device_added_cb (UpClient *upower, UpDevice *device, XfpmPower *power)
 {
-    xfpm_power_add_device (power, object_path);
+    xfpm_power_add_device (device, power);
 }
 
+#if UP_CHECK_VERSION(0, 99, 0)
 static void
-xfpm_power_device_removed_cb (DBusGProxy *proxy, const gchar *object_path, XfpmPower *power)
+xfpm_power_device_removed_cb (UpClient *upower, const gchar *object_path, XfpmPower *power)
 {
     xfpm_power_remove_device (power, object_path);
 }
+#else
+static void
+xfpm_power_device_removed_cb (UpClient *upower, UpDevice *device, XfpmPower *power)
+{
+    const gchar *object_path = up_device_get_object_path(device);
+    xfpm_power_remove_device (power, object_path);
+}
+#endif
 
 static void
 xfpm_power_device_changed_cb (DBusGProxy *proxy, const gchar *object_path, XfpmPower *power)
@@ -1378,6 +1335,7 @@ xfpm_power_init (XfpmPower *power)
     power->priv->inhibit = xfpm_inhibit_new ();
     power->priv->notify  = xfpm_notify_new ();
     power->priv->conf    = xfpm_xfconf_new ();
+    power->priv->upower  = up_client_new ();
 
     power->priv->systemd = NULL;
     power->priv->console = NULL;
@@ -1407,43 +1365,18 @@ xfpm_power_init (XfpmPower *power)
 	goto out;
     }
 
-    power->priv->proxy = dbus_g_proxy_new_for_name (power->priv->bus,
-						    UPOWER_NAME,
-						    UPOWER_PATH,
-						    UPOWER_IFACE);
-
-
-    power->priv->proxy_prop = dbus_g_proxy_new_for_name (power->priv->bus,
-							 UPOWER_NAME,
-							 UPOWER_PATH,
-							 DBUS_INTERFACE_PROPERTIES);
-    if (power->priv->proxy_prop == NULL)
-    {
-	g_critical ("Unable to create proxy for %s", UPOWER_NAME);
-	goto out;
-    }
-
+    g_signal_connect (power->priv->upower, "device-added", G_CALLBACK (xfpm_power_device_added_cb), power);
+    g_signal_connect (power->priv->upower, "device-removed", G_CALLBACK (xfpm_power_device_removed_cb), power);
+#if UP_CHECK_VERSION(0, 99, 0)
+    g_signal_connect (power->priv->upower, "notify", G_CALLBACK (xfpm_power_changed_cb), power);
+#else
+    g_signal_connect (power->priv->upower, "changed", G_CALLBACK (xfpm_power_changed_cb), power);
+#endif
     xfpm_power_get_power_devices (power);
     xfpm_power_get_properties (power);
 #ifdef ENABLE_POLKIT
     xfpm_power_check_polkit_auth (power);
 #endif
-
-    dbus_g_proxy_add_signal (power->priv->proxy, "Changed", G_TYPE_INVALID);
-    dbus_g_proxy_add_signal (power->priv->proxy, "DeviceAdded", G_TYPE_STRING, G_TYPE_INVALID);
-    dbus_g_proxy_add_signal (power->priv->proxy, "DeviceRemoved", G_TYPE_STRING, G_TYPE_INVALID);
-    dbus_g_proxy_add_signal (power->priv->proxy, "DeviceChanged", G_TYPE_STRING, G_TYPE_INVALID);
-
-    dbus_g_proxy_connect_signal (power->priv->proxy, "Changed",
-				 G_CALLBACK (xfpm_power_changed_cb), power, NULL);
-    dbus_g_proxy_connect_signal (power->priv->proxy, "DeviceRemoved",
-				 G_CALLBACK (xfpm_power_device_removed_cb), power, NULL);
-    dbus_g_proxy_connect_signal (power->priv->proxy, "DeviceAdded",
-				 G_CALLBACK (xfpm_power_device_added_cb), power, NULL);
-
-    dbus_g_proxy_connect_signal (power->priv->proxy, "DeviceChanged",
-				 G_CALLBACK (xfpm_power_device_changed_cb), power, NULL);
-
 
 out:
     xfpm_power_refresh_adaptor_visible (power);
@@ -1511,22 +1444,6 @@ xfpm_power_finalize (GObject *object)
     xfpm_power_hide_adapter_icon (power);
 
     dbus_g_connection_unref (power->priv->bus);
-
-    if ( power->priv->proxy )
-    {
-	dbus_g_proxy_disconnect_signal (power->priv->proxy, "Changed",
-					G_CALLBACK (xfpm_power_changed_cb), power);
-	dbus_g_proxy_disconnect_signal (power->priv->proxy, "DeviceRemoved",
-					G_CALLBACK (xfpm_power_device_removed_cb), power);
-	dbus_g_proxy_disconnect_signal (power->priv->proxy, "DeviceAdded",
-					G_CALLBACK (xfpm_power_device_added_cb), power);
-	dbus_g_proxy_disconnect_signal (power->priv->proxy, "DeviceChanged",
-					G_CALLBACK (xfpm_power_device_changed_cb), power);
-	g_object_unref (power->priv->proxy);
-    }
-
-    if ( power->priv->proxy_prop )
-	g_object_unref (power->priv->proxy_prop);
 
     g_hash_table_destroy (power->priv->hash);
 

@@ -39,6 +39,7 @@
 
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
+#include <upower.h>
 
 #include "xfpm-icons.h"
 #include "xfpm-power-common.h"
@@ -59,6 +60,8 @@ typedef struct
     
     GtkWidget	    *wakeups; /* Tree view processor wakeups*/
     
+    UpClient        *upower;
+
 } XfpmInfo;
 
 enum
@@ -253,18 +256,9 @@ gpm_stats_format_details (const gchar *command_details)
 }
 
 static gchar *
-xfpm_info_get_energy_property (GHashTable *props, const gchar *prop, const gchar *unit)
+xfpm_info_get_energy_property (gdouble energy, const gchar *unit)
 {
-    GValue *value;
     gchar *val = NULL;
-    gdouble energy;
-    
-    value = g_hash_table_lookup (props, prop);
-    
-    if ( !value )
-	return NULL;
-	
-    energy = g_value_get_double (value);
     
     val = g_strdup_printf ("%.1f %s", energy, unit);
     
@@ -301,7 +295,7 @@ xfpm_info_add_sidebar_icon (XfpmInfo *info, const gchar *name, const gchar *icon
 }
 
 static void
-xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *object_path)
+xfpm_info_add_device_view (XfpmInfo *info, UpDevice *device, const gchar *object_path)
 {
     GtkWidget *view;
 
@@ -309,11 +303,12 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
     GtkTreeIter iter;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
-    GValue *value;
-    const gchar *cstr;
     gchar *str;
     gint i = 0;
-    guint type = 0;
+    guint type = 0, tech = 0;
+    gdouble energy_full_design = -1.0, energy_full = -1.0, energy_empty = -1.0, voltage = -1.0, percent = -1.0;
+    gboolean p_supply = FALSE;
+    gchar *model = NULL, *vendor = NULL, *serial = NULL;
     const gchar *battery_type = NULL;
     
     view = gtk_tree_view_new ();
@@ -352,11 +347,26 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
     
     
     /*Type*/
-    value = g_hash_table_lookup (props, "Type");
-    
-    if ( value )
+    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
+    g_object_get (device,
+		  "kind", &type,
+		  "power-supply", &p_supply,
+		  "model", &model,
+		  "vendor", &vendor,
+		  "serial", &serial,
+		  "technology", &tech,
+		  "energy-full-design", &energy_full_design,
+		  "energy-full", &energy_full,
+		  "energy-empty", &energy_empty,
+		  "voltage", &voltage,
+		  "percentage", &percent,
+		  NULL);
+
+    if (type > XFPM_DEVICE_TYPE_PHONE)
+        type = XFPM_DEVICE_TYPE_UNKNOWN;
+
+    if (type != XFPM_DEVICE_TYPE_UNKNOWN)
     {
-	type = g_value_get_uint (value);
 	battery_type = xfpm_power_translate_device_type (type);
 	gtk_list_store_append (list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 
@@ -366,55 +376,37 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 	i++;
     }
     
-    value = g_hash_table_lookup (props, "PowerSupply");
-    
-    if ( value )
-    {
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 
-			    XFPM_DEVICE_INFO_NAME, _("PowerSupply"), 
-			    XFPM_DEVICE_INFO_VALUE, g_value_get_boolean (value) == TRUE ? _("True") : _("False"),
-			    -1);
-	i++;
-    }
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter,
+			XFPM_DEVICE_INFO_NAME, _("PowerSupply"),
+			XFPM_DEVICE_INFO_VALUE, p_supply == TRUE ? _("True") : _("False"),
+			-1);
+    i++;
     
     if ( type != XFPM_DEVICE_TYPE_LINE_POWER )
     {
 	/*Model*/
-	value = g_hash_table_lookup (props, "Model");
-	
-	if ( value )
-	{
-	    cstr = g_value_get_string (value);
-	    if ( cstr && strlen (cstr) > 0)
-	    {
-		gtk_list_store_append (list_store, &iter);
-		gtk_list_store_set (list_store, &iter, 
-				    XFPM_DEVICE_INFO_NAME, _("Model"), 
-				    XFPM_DEVICE_INFO_VALUE, g_value_get_string (value),
-				    -1);
-		i++;
-	    }
-	}
-	
-	/*Technology*/
-	value = g_hash_table_lookup (props, "Technology");
-	
-	if ( value )
+	if (model && strlen (model) > 0)
 	{
 	    gtk_list_store_append (list_store, &iter);
-	    gtk_list_store_set (list_store, &iter, 
-				XFPM_DEVICE_INFO_NAME, _("Technology"), 
-				XFPM_DEVICE_INFO_VALUE, xfpm_power_translate_technology (g_value_get_uint (value)),
+	    gtk_list_store_set (list_store, &iter,
+				XFPM_DEVICE_INFO_NAME, _("Model"),
+				XFPM_DEVICE_INFO_VALUE, model,
 				-1);
 	    i++;
 	}
 	
-	value = g_hash_table_lookup (props, "Percentage");
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter,
+			    XFPM_DEVICE_INFO_NAME, _("Technology"),
+			    XFPM_DEVICE_INFO_VALUE, xfpm_power_translate_technology (tech),
+			    -1);
+	i++;
 
-	if ( value )
+	/*Percentage*/
+	if (percent >= 0)
 	{
-	    str = g_strdup_printf("%d", (guint) g_value_get_double (value));
+	    str = g_strdup_printf("%d", (guint) percent);
 	    gtk_list_store_append (list_store, &iter);
 	    gtk_list_store_set (list_store, &iter,
 				XFPM_DEVICE_INFO_NAME, _("Energy percent"),
@@ -424,11 +416,10 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 	    g_free(str);
 	}
 
-	/* TRANSLATORS: Unit here is What hour*/
-	str = xfpm_info_get_energy_property (props, "EnergyFullDesign", _("Wh"));
-	
-	if ( str )
+	if (energy_full_design > 0)
 	{
+	    /* TRANSLATORS: Unit here is Watt hour*/
+	    str = xfpm_info_get_energy_property (energy_full_design, _("Wh"));
 	    gtk_list_store_append (list_store, &iter);
 	    gtk_list_store_set (list_store, &iter, 
 				XFPM_DEVICE_INFO_NAME, _("Energy full design"), 
@@ -438,11 +429,10 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 	    g_free (str);
 	}
 	
-	/* TRANSLATORS: Unit here is What hour*/
-	str = xfpm_info_get_energy_property (props, "EnergyFull", _("Wh"));
-	
-	if ( str )
+	if (energy_full > 0)
 	{
+	    /* TRANSLATORS: Unit here is Watt hour*/
+	    str = xfpm_info_get_energy_property (energy_full, _("Wh"));
 	    gtk_list_store_append (list_store, &iter);
 	    gtk_list_store_set (list_store, &iter, 
 				XFPM_DEVICE_INFO_NAME, _("Energy full"), 
@@ -452,11 +442,10 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 	    g_free (str);
 	}
 	
-	/* TRANSLATORS: Unit here is What hour*/
-	str = xfpm_info_get_energy_property (props, "EnergyEmpty", _("Wh"));
-	
-	if ( str )
+	if (energy_empty > 0)
 	{
+	    /* TRANSLATORS: Unit here is Watt hour*/
+	    str = xfpm_info_get_energy_property (energy_empty, _("Wh"));
 	    gtk_list_store_append (list_store, &iter);
 	    gtk_list_store_set (list_store, &iter, 
 				XFPM_DEVICE_INFO_NAME, _("Energy empty"), 
@@ -466,10 +455,10 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 	    g_free (str);
 	}
 	
-	/* TRANSLATORS: Unit here is volt*/
-	str = xfpm_info_get_energy_property (props, "Voltage", _("V"));
-	if ( str )
+	if (voltage > 0)
 	{
+	    /* TRANSLATORS: Unit here is Volt*/
+	    str = xfpm_info_get_energy_property (voltage, _("V"));
 	    gtk_list_store_append (list_store, &iter);
 	    gtk_list_store_set (list_store, &iter, 
 				XFPM_DEVICE_INFO_NAME, _("Voltage"), 
@@ -478,52 +467,25 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 	    i++;
 	    g_free (str);
 	}
-	
-	/*Percentage*/
-	str = xfpm_info_get_energy_property (props, "Percentage", _("%"));
-	if ( str )
+
+	if (vendor && strlen (vendor) > 0)
 	{
 	    gtk_list_store_append (list_store, &iter);
 	    gtk_list_store_set (list_store, &iter,
-				XFPM_DEVICE_INFO_NAME, _("Percentage"),
-				XFPM_DEVICE_INFO_VALUE, str,
+				XFPM_DEVICE_INFO_NAME, _("Vendor"),
+				XFPM_DEVICE_INFO_VALUE, vendor,
 				-1);
 	    i++;
-	    g_free (str);
 	}
 
-	/*Vendor*/
-	value = g_hash_table_lookup (props, "Vendor");
-	
-	if ( value )
+	if (serial && strlen (serial) > 0)
 	{
-	    cstr = g_value_get_string (value);
-	    if ( cstr && strlen (cstr) > 0)
-	    {
-		gtk_list_store_append (list_store, &iter);
-		gtk_list_store_set (list_store, &iter, 
-				    XFPM_DEVICE_INFO_NAME, _("Vendor"), 
-				    XFPM_DEVICE_INFO_VALUE, g_value_get_string (value),
-				    -1);
-		i++;
-	    }
-	}
-	
-	/*Serial*/
-	value = g_hash_table_lookup (props, "Serial");
-	
-	if ( value )
-	{
-	    cstr = g_value_get_string (value);
-	    if ( cstr && strlen (cstr) > 0)
-	    {
-		gtk_list_store_append (list_store, &iter);
-		gtk_list_store_set (list_store, &iter, 
-				    XFPM_DEVICE_INFO_NAME, _("Serial"), 
-				    XFPM_DEVICE_INFO_VALUE, g_value_get_string (value),
-				    -1);
-		i++;
-	    }
+	    gtk_list_store_append (list_store, &iter);
+	    gtk_list_store_set (list_store, &iter,
+				XFPM_DEVICE_INFO_NAME, _("Serial"),
+				XFPM_DEVICE_INFO_VALUE, serial,
+				-1);
+	    i++;
 	}
     }
     
@@ -534,29 +496,10 @@ xfpm_info_add_device_view (XfpmInfo *info, GHashTable *props, const gchar *objec
 }
 
 static void
-xfpm_info_add_device (XfpmInfo *info, const gchar *object_path)
+xfpm_info_add_device (XfpmInfo *info, UpDevice *device)
 {
-    DBusGProxy *proxy_prop;
-    GHashTable *props;
-    
-    proxy_prop = dbus_g_proxy_new_for_name (info->bus, 
-					    UPOWER_NAME,
-					    object_path,
-					    DBUS_INTERFACE_PROPERTIES);
-					    
-    if ( !proxy_prop )
-    {
-	g_warning ("Unable to create proxy for : %s", object_path);
-	return;
-    }
-    
-    props = xfpm_power_get_interface_properties (proxy_prop, UPOWER_IFACE_DEVICE);
-    
-    if ( props )
-    {
-	xfpm_info_add_device_view (info, props, object_path);
-	g_hash_table_destroy (props);
-    }
+    const gchar *object_path = up_device_get_object_path(device);
+    xfpm_info_add_device_view (info, device, object_path);
 }
 
 static void
@@ -564,22 +507,18 @@ xfpm_info_power_devices (XfpmInfo *info)
 {
     GPtrArray *array = NULL;
     guint i;
-    
+#if !UP_CHECK_VERSION(0, 99, 0)
+    up_client_enumerate_devices_sync(info->upower, NULL, NULL);
+#endif
     /*Check for upower/devkit power here*/
-
-    info->power_proxy = dbus_g_proxy_new_for_name (info->bus,
-						   UPOWER_NAME,
-						   UPOWER_PATH,
-						   UPOWER_IFACE);
-    
-    array = xfpm_power_enumerate_devices (info->power_proxy);
+    array = up_client_get_devices(info->upower);
     
     if ( array )
     {
 	for ( i = 0; i < array->len; i++)
 	{
-	    const gchar *object_path = ( const gchar *) g_ptr_array_index (array, i);
-	    xfpm_info_add_device (info, object_path);
+	    UpDevice *device = g_ptr_array_index (array, i);
+	    xfpm_info_add_device (info, device);
 	}
 	g_ptr_array_free (array, TRUE);
     }
@@ -928,6 +867,7 @@ xfpm_info_new (void)
     info->power_proxy   = NULL;
     info->wakeups_proxy = NULL;
     info->dialog        = NULL;
+    info->upower        = up_client_new ();
     
     return info;
 }

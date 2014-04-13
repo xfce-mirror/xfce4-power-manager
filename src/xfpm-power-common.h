@@ -33,18 +33,13 @@
 #define UPOWER_PATH_WAKEUPS   "/org/freedesktop/UPower/Wakeups"
 #define UPOWER_IFACE_WAKEUPS  "org.freedesktop.UPower.Wakeups"
 
-#define POLKIT_AUTH_SUSPEND   "org.freedesktop.upower.suspend"
-#define	POLKIT_AUTH_HIBERNATE "org.freedesktop.upower.hibernate"
+#define POLKIT_AUTH_SUSPEND_UPOWER	"org.freedesktop.upower.suspend"
+#define POLKIT_AUTH_HIBERNATE_UPOWER	"org.freedesktop.upower.hibernate"
+
+#define POLKIT_AUTH_SUSPEND_LOGIND	"org.freedesktop.login1.suspend"
+#define POLKIT_AUTH_HIBERNATE_LOGIND	"org.freedesktop.login1.hibernate"
 
 
-GPtrArray 	*xfpm_power_enumerate_devices		(DBusGProxy *proxy);
-
-GHashTable	*xfpm_power_get_interface_properties 	(DBusGProxy *proxy_prop, 
-							 const gchar *iface_name);
-
-GValue 		 xfpm_power_get_interface_property   	(DBusGProxy *proxy, 
-							 const gchar *iface_name, 
-							 const gchar *prop_name);
 
 const gchar 	*xfpm_power_translate_device_type 	(guint type);
 

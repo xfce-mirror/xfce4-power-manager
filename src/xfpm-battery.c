@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <upower.h>
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -53,8 +54,8 @@ struct XfpmBatteryPrivate
     XfpmXfconf             *conf;
     XfpmNotify		   *notify;
     XfpmButton             *button;
-    DBusGProxy             *proxy;
-    DBusGProxy 		   *proxy_prop;
+    UpDevice               *device;
+    UpClient               *client;
 
     gchar		   *icon_prefix;
 
@@ -71,6 +72,7 @@ struct XfpmBatteryPrivate
 
     gulong		    sig;
     gulong		    sig_bt;
+    gulong		    sig_up;
 
     guint                   notify_idle;
 };
@@ -525,45 +527,28 @@ xfpm_battery_check_charge (XfpmBattery *battery)
 }
 
 static void
-xfpm_battery_refresh (XfpmBattery *battery, GHashTable *props)
+xfpm_battery_refresh (XfpmBattery *battery, UpDevice *device)
 {
-    GValue *value;
+    gboolean present;
     guint state;
+    gdouble percentage;
+    guint64 to_empty, to_full;
+    g_object_get(device,
+		 "is-present", &present,
+		 "percentage", &percentage,
+		 "state", &state,
+		 "time-to-empty", &to_empty,
+		 "time-to-full", &to_full,
+		 NULL);
 
-    value = g_hash_table_lookup (props, "IsPresent");
-
-    if ( value == NULL )
-    {
-	g_warning ("No 'IsPresent' property found");
-	goto out;
-    }
-
-    battery->priv->present = g_value_get_boolean (value);
-
-    value = g_hash_table_lookup (props, "State");
-
-    if ( value == NULL )
-    {
-	g_warning ("No 'State' property found");
-    }
-
-    state = g_value_get_uint (value);
+    battery->priv->present = present;
     if ( state != battery->priv->state )
     {
 	battery->priv->state = state;
 	xfpm_battery_refresh_visible (battery);
 	xfpm_battery_notify_state (battery);
     }
-
-    value = g_hash_table_lookup (props, "Percentage");
-
-    if ( value == NULL )
-    {
-	g_warning ("No 'Percentage' property found on battery device");
-	goto out;
-    }
-
-    battery->priv->percentage = (guint) g_value_get_double (value);
+    battery->priv->percentage = (guint) percentage;
 
     xfpm_battery_check_charge (battery);
 
@@ -572,29 +557,9 @@ xfpm_battery_refresh (XfpmBattery *battery, GHashTable *props)
     if ( battery->priv->type == XFPM_DEVICE_TYPE_BATTERY ||
 	 battery->priv->type == XFPM_DEVICE_TYPE_UPS )
     {
-	value = g_hash_table_lookup (props, "TimeToEmpty");
-
-	if ( value == NULL )
-	{
-	    g_warning ("No 'TimeToEmpty' property found on battery device");
-	    goto out;
-	}
-
-	battery->priv->time_to_empty = g_value_get_int64 (value);
-
-	value = g_hash_table_lookup (props, "TimeToFull");
-
-	if ( value == NULL )
-	{
-	    g_warning ("No 'TimeToFull' property found on battery device");
-	    goto out;
-	}
-
-	battery->priv->time_to_full = g_value_get_int64 (value);
+	battery->priv->time_to_empty = to_empty;
+	battery->priv->time_to_full  = to_empty;
     }
-
-    out:
-	g_hash_table_destroy (props);
 }
 
 static void
@@ -605,30 +570,13 @@ xfpm_battery_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBatt
 }
 
 static void
-xfpm_battery_changed_cb (DBusGProxy *proxy, XfpmBattery *battery)
+xfpm_battery_changed_cb (UpDevice *device,
+#if UP_CHECK_VERSION(0, 99, 0)
+			 GParamSpec *pspec,
+#endif
+			 XfpmBattery *battery)
 {
-    GHashTable *props;
-    GValue *value;
-    const gchar *cstr;
-    const gchar *p;
-
-    props = xfpm_power_get_interface_properties (battery->priv->proxy_prop,
-						 UPOWER_IFACE_DEVICE);
-
-    value = g_hash_table_lookup (props, "NativePath");
-    if ( value )
-    {
-	cstr = g_value_get_string (value);
-	p = strrchr (cstr, '/');
-	if ( p && (strncmp( p, "/hid-", 5 ) == 0) )
-	{
-	    XFPM_DEBUG("Ignoring battery '%s' - is a HID device\n", cstr);
-	    return;
-	}
-    }
-
-    if ( props )
-	xfpm_battery_refresh (battery, props);
+    xfpm_battery_refresh (battery, device);
 }
 
 static gboolean
@@ -760,7 +708,8 @@ xfpm_battery_init (XfpmBattery *battery)
 
     battery->priv->conf          = xfpm_xfconf_new ();
     battery->priv->notify        = xfpm_notify_new ();
-    battery->priv->proxy_prop    = NULL;
+    battery->priv->device        = NULL;
+    battery->priv->client        = NULL;
     battery->priv->state         = XFPM_DEVICE_STATE_UNKNOWN;
     battery->priv->type          = XFPM_DEVICE_TYPE_UNKNOWN;
     battery->priv->charge        = XFPM_BATTERY_CHARGE_UNKNOWN;
@@ -790,8 +739,8 @@ xfpm_battery_finalize (GObject *object)
     if (battery->priv->notify_idle != 0)
         g_source_remove (battery->priv->notify_idle);
 
-    dbus_g_proxy_disconnect_signal (battery->priv->proxy, "Changed",
-				    G_CALLBACK (xfpm_battery_changed_cb), battery);
+    if ( g_signal_handler_is_connected (battery->priv->device, battery->priv->sig_up ) )
+	g_signal_handler_disconnect (G_OBJECT (battery->priv->device), battery->priv->sig_up);
 
     if ( g_signal_handler_is_connected (battery->priv->conf, battery->priv->sig ) )
 	g_signal_handler_disconnect (G_OBJECT (battery->priv->conf), battery->priv->sig);
@@ -799,8 +748,7 @@ xfpm_battery_finalize (GObject *object)
      if ( g_signal_handler_is_connected (battery->priv->button, battery->priv->sig_bt ) )
 	g_signal_handler_disconnect (G_OBJECT (battery->priv->button), battery->priv->sig_bt);
 
-    g_object_unref (battery->priv->proxy);
-    g_object_unref (battery->priv->proxy_prop);
+    g_object_unref (battery->priv->device);
     g_object_unref (battery->priv->conf);
     g_object_unref (battery->priv->notify);
     g_object_unref (battery->priv->button);
@@ -884,26 +832,28 @@ xfpm_battery_new (void)
 }
 
 void xfpm_battery_monitor_device (XfpmBattery *battery,
-				  DBusGProxy *proxy,
-				  DBusGProxy *proxy_prop,
+				  const char *object_path,
 				  XfpmDeviceType device_type)
 {
+    UpDevice *device;
     battery->priv->type = device_type;
-    battery->priv->proxy_prop = proxy_prop;
-    battery->priv->proxy = proxy;
+    battery->priv->client = up_client_new();
     battery->priv->icon_prefix = xfpm_battery_get_icon_prefix_device_enum_type (device_type);
     battery->priv->battery_name = xfpm_battery_get_name (device_type);
 
-
-    dbus_g_proxy_add_signal (proxy, "Changed", G_TYPE_INVALID);
-    dbus_g_proxy_connect_signal (proxy, "Changed",
-				 G_CALLBACK (xfpm_battery_changed_cb), battery, NULL);
-
+    device = up_device_new();
+    up_device_set_object_path_sync (device, object_path, NULL, NULL);
+    battery->priv->device = device;
+#if UP_CHECK_VERSION(0, 99, 0)
+    battery->priv->sig_up = g_signal_connect (battery->priv->device, "notify", G_CALLBACK (xfpm_battery_changed_cb), battery);
+#else
+    battery->priv->sig_up = g_signal_connect (battery->priv->device, "changed", G_CALLBACK (xfpm_battery_changed_cb), battery);
+#endif
     g_object_set (G_OBJECT (battery),
 		  "has-tooltip", TRUE,
 		  NULL);
 
-    xfpm_battery_changed_cb (proxy, battery);
+    xfpm_battery_refresh (battery, device);
 }
 
 XfpmDeviceType xfpm_battery_get_device_type (XfpmBattery *battery)

@@ -56,6 +56,7 @@ xfce4_power_manager_CFLAGS =                    \
 	$(LIBXFCE4UI_CFLAGS)                    \
 	$(XFCONF_CFLAGS)                        \
 	$(LIBNOTIFY_CFLAGS)                     \
+	$(UPOWER_CFLAGS)                        \
 	$(XRANDR_CFLAGS)			\
 	$(DPMS_CFLAGS)           		\
 	$(PLATFORM_CPPFLAGS)			\
@@ -74,6 +75,7 @@ xfce4_power_manager_LDADD =                     \
 	$(LIBXFCE4UI_LIBS)                      \
 	$(XFCONF_LIBS)                          \
 	$(LIBNOTIFY_LIBS)                       \
+	$(UPOWER_LIBS)                          \
 	$(XRANDR_LIBS)				\
 	$(DPMS_LIBS)
 
@@ -90,6 +92,7 @@ xfce4_power_information_CFLAGS =		\
 	-DG_LOG_DOMAIN=\"xfce4-power-information\"\
 	$(GOBJECT_CFLAGS)                       \
 	$(DBUS_GLIB_CFLAGS)                     \
+	$(UPOWER_CFLAGS)                        \
 	$(LIBXFCE4UI_CFLAGS)			\
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
@@ -101,6 +104,7 @@ xfce4_power_information_LDFLAGS =		\
 xfce4_power_information_LDADD =			\
 	$(GOBJECT_LIBS)                         \
 	$(DBUS_GLIB_LIBS)                       \
+	$(UPOWER_LIBS)                          \
 	$(LIBXFCE4UI_LIBS)			\
 	$(top_builddir)/libdbus/libxfpmdbus.la
 
