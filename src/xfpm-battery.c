@@ -513,6 +513,8 @@ xfpm_battery_check_charge (XfpmBattery *battery)
 	charge = XFPM_BATTERY_CHARGE_LOW;
     else if ( battery->priv->percentage <= critical_level )
 	charge = XFPM_BATTERY_CHARGE_CRITICAL;
+    else
+	charge = XFPM_BATTERY_CHARGE_UNKNOWN;
 
     if ( charge != battery->priv->charge)
     {
