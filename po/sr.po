@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-09 00:30+0200\n"
-"PO-Revision-Date: 2014-04-13 11:19+0000\n"
+"PO-Revision-Date: 2014-04-13 20:03+0000\n"
 "Last-Translator: salepetronije <salepetronije@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/projects/p/xfce/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -53,7 +53,7 @@ msgstr "Иконица обавештајне области"
 
 #: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "Monitor power management control"
-msgstr "Надгледање управљањем потрошњом"
+msgstr "Надгледање управљања потрошњом"
 
 #: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "Show notifications to notify about the battery state"
@@ -400,7 +400,7 @@ msgstr "Гаси систем"
 
 #: ../src/xfpm-power.c:746 ../src/xfpm-power.c:793
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Систем ради са напајањем на истеку. Сачувајте ваш рад да би избегли губитак података"
+msgstr "Систем ради са напајањем на истеку. Сачувајте свој рад да би избегли губитак података"
 
 #: ../src/xfpm-power.c:966
 msgid "System is running on low power"
@@ -411,7 +411,7 @@ msgstr "Систем ради са напајањем на истеку"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "Ваш %s ниво пуњења је низак\nпроцењено преостало време је %s"
+msgstr "Пуњење %s је ниско\nпроцењено преостало време је %s"
 
 #: ../src/xfpm-power.c:1189 ../src/xfpm-power.c:1194
 msgid "Adaptor is offline"
@@ -540,12 +540,12 @@ msgstr[2] "минута"
 #: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "Ваша %s је потпуно напуњена"
+msgstr "%s је потпуно напуњена"
 
 #: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
 #, c-format
 msgid "Your %s is charging"
-msgstr "Ваша %s се пуни"
+msgstr "%s се пуни"
 
 #: ../src/xfpm-battery.c:224
 #, c-format
@@ -557,7 +557,7 @@ msgstr "%s (%i%%)⏎\n%s до потпуне попуне."
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
 msgid "Your %s is discharging"
-msgstr "Ваша %s се празни"
+msgstr "%s се празни"
 
 #: ../src/xfpm-battery.c:234
 #, c-format
@@ -574,7 +574,7 @@ msgstr "%s (%i%%)\nПреостало време је %s."
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
 msgid "Your %s is empty"
-msgstr "Ваша %s је празна"
+msgstr "%s је празна"
 
 #: ../src/xfpm-battery.c:415
 #, c-format
@@ -587,14 +587,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr "%s\nВаша %s је потпуно напуњена (%i%%).\nОбезбеђује %s време рада"
+msgstr "%s\n%s је потпуно напуњена (%i%%).\nОбезбеђује %s време рада"
 
 #: ../src/xfpm-battery.c:431
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr "%s\nваша %s је потпуно напуњена (%i%%)."
+msgstr "%s\n%s је потпуно напуњена (%i%%)."
 
 #: ../src/xfpm-battery.c:442
 #, c-format
@@ -602,14 +602,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr "%s\nВаша %s с пуни (%i%%)\n%s до краја пуњења."
+msgstr "%s\n%s с пуни (%i%%)\n%s до краја пуњења."
 
 #: ../src/xfpm-battery.c:451
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr "%s\nВаша %s се пуни (%i%%)."
+msgstr "%s\n%s се пуни (%i%%)."
 
 #: ../src/xfpm-battery.c:462
 #, c-format
@@ -617,14 +617,14 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr "%s\nВаша %s се празни (%i%%)\nПроцењено преостало време је %s."
+msgstr "%s\n%s се празни (%i%%)\nПроцењено преостало време је %s."
 
 #: ../src/xfpm-battery.c:471
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr "%s\nВаша %s се празни (%i%%)."
+msgstr "%s\n%s се празни (%i%%)."
 
 #: ../src/xfpm-battery.c:480
 #, c-format
@@ -645,7 +645,7 @@ msgstr "%s\n%s чека на пуњење (%i%%)."
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr "%s\nВаша %s је празна"
+msgstr "%s\n%s је празна"
 
 #: ../src/xfpm-battery.c:848
 msgid "battery"
