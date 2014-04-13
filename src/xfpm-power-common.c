@@ -24,6 +24,7 @@
 
 #include <libxfce4util/libxfce4util.h>
 #include <dbus/dbus-glib-lowlevel.h>
+#include <upower.h>
 
 #include "xfpm-power-common.h"
 #include "xfpm-enum-glib.h"
@@ -39,23 +40,27 @@ xfpm_power_translate_device_type (guint type)
 {
     switch (type)
     {
-        case XFPM_DEVICE_TYPE_BATTERY:
+        case UP_DEVICE_KIND_BATTERY:
             return _("Battery");
-        case XFPM_DEVICE_TYPE_UPS:
+        case UP_DEVICE_KIND_UPS:
             return _("UPS");
-        case XFPM_DEVICE_TYPE_LINE_POWER:
+        case UP_DEVICE_KIND_LINE_POWER:
             return _("Line power");
-        case XFPM_DEVICE_TYPE_MOUSE:
+        case UP_DEVICE_KIND_MOUSE:
             return _("Mouse");
-        case XFPM_DEVICE_TYPE_KBD:
+        case UP_DEVICE_KIND_KEYBOARD:
             return _("Keyboard");
-	case XFPM_DEVICE_TYPE_MONITOR:
+	case UP_DEVICE_KIND_MONITOR:
 	    return _("Monitor");
-	case XFPM_DEVICE_TYPE_PDA:
+	case UP_DEVICE_KIND_PDA:
 	    return _("PDA");
-	case XFPM_DEVICE_TYPE_PHONE:
+	case UP_DEVICE_KIND_PHONE:
 	    return _("Phone");
-	case XFPM_DEVICE_TYPE_UNKNOWN:
+	case UP_DEVICE_KIND_TABLET:
+	    return _("Tablet");
+	case UP_DEVICE_KIND_COMPUTER:
+	    return _("Computer");
+	case UP_DEVICE_KIND_UNKNOWN:
 	    return _("Unknown");
     }
     
@@ -93,23 +98,29 @@ const gchar *xfpm_power_get_icon_name (guint device_type)
 {
     switch (device_type)
     {
-        case XFPM_DEVICE_TYPE_BATTERY:
+        case UP_DEVICE_KIND_BATTERY:
             return XFPM_BATTERY_ICON;
-        case XFPM_DEVICE_TYPE_UPS:
+        case UP_DEVICE_KIND_UPS:
             return XFPM_UPS_ICON;
-        case XFPM_DEVICE_TYPE_LINE_POWER:
+        case UP_DEVICE_KIND_LINE_POWER:
             return XFPM_AC_ADAPTER_ICON;
-        case XFPM_DEVICE_TYPE_MOUSE:
+        case UP_DEVICE_KIND_MOUSE:
             return XFPM_MOUSE_ICON;
-        case XFPM_DEVICE_TYPE_KBD:
+        case UP_DEVICE_KIND_KEYBOARD:
             return XFPM_KBD_ICON;
-	case XFPM_DEVICE_TYPE_MONITOR:
+	case UP_DEVICE_KIND_MONITOR:
 	    return "monitor";
-	case XFPM_DEVICE_TYPE_PDA:
+	case UP_DEVICE_KIND_COMPUTER:
+	    return "monitor";		/* fixme */
+	case UP_DEVICE_KIND_PDA:
 	    return XFPM_PDA_ICON;
-	case XFPM_DEVICE_TYPE_PHONE:
+	case UP_DEVICE_KIND_PHONE:
 	    return XFPM_PHONE_ICON;
-	case XFPM_DEVICE_TYPE_UNKNOWN:
+	case UP_DEVICE_KIND_TABLET:
+	    return XFPM_PHONE_ICON;
+	case UP_DEVICE_KIND_MEDIA_PLAYER:
+	    return XFPM_PHONE_ICON;	/* fixme */
+	case UP_DEVICE_KIND_UNKNOWN:
 	    return XFPM_BATTERY_ICON;
     }
     

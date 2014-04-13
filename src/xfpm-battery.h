@@ -24,6 +24,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <dbus/dbus-glib.h>
+#include <upower.h>
 
 #include "xfpm-enum-glib.h"
 
@@ -57,9 +58,9 @@ GtkStatusIcon              *xfpm_battery_new             (void);
 
 void			    xfpm_battery_monitor_device  (XfpmBattery *battery,
 							  const char *object_path,
-							  XfpmDeviceType device_type);
+							  UpDeviceKind device_type);
 
-XfpmDeviceType	   	    xfpm_battery_get_device_type (XfpmBattery *battery);
+UpDeviceKind		    xfpm_battery_get_device_type (XfpmBattery *battery);
 
 XfpmBatteryCharge	    xfpm_battery_get_charge      (XfpmBattery *battery);
 

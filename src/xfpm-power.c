@@ -261,11 +261,11 @@ xfpm_power_report_error (XfpmPower *power, const gchar *error, const gchar *icon
 
     for ( i = 0; i < len; i++)
     {
-	XfpmDeviceType type;
+	UpDeviceKind type;
 	battery = g_list_nth_data (list, i);
 	type = xfpm_battery_get_device_type (XFPM_BATTERY (battery));
-	if ( type == XFPM_DEVICE_TYPE_BATTERY ||
-	     type == XFPM_DEVICE_TYPE_UPS )
+	if ( type == UP_DEVICE_KIND_BATTERY ||
+	     type == UP_DEVICE_KIND_UPS )
 	     break;
     }
 
@@ -640,14 +640,14 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
     for ( i = 0; i < len; i++)
     {
 	XfpmBatteryCharge battery_charge;
-	XfpmDeviceType type;
+	UpDeviceKind type;
 
 	g_object_get (G_OBJECT (g_list_nth_data (list, i)),
 		      "charge-status", &battery_charge,
 		      "device-type", &type,
 		      NULL);
-	if ( type != XFPM_DEVICE_TYPE_BATTERY &&
-	     type != XFPM_DEVICE_TYPE_UPS )
+	if ( type != UP_DEVICE_KIND_BATTERY &&
+	     type != UP_DEVICE_KIND_UPS )
 	    continue;
 
 	max_charge_status = MAX (max_charge_status, battery_charge);
@@ -989,7 +989,7 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 static void
 xfpm_power_add_device (UpDevice *device, XfpmPower *power)
 {
-    guint device_type = XFPM_DEVICE_TYPE_UNKNOWN;
+    guint device_type = UP_DEVICE_KIND_UNKNOWN;
     const gchar *object_path = up_device_get_object_path(device);
 
     /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
@@ -997,20 +997,17 @@ xfpm_power_add_device (UpDevice *device, XfpmPower *power)
 		  "kind", &device_type,
 		  NULL);
 
-    if (device_type > XFPM_DEVICE_TYPE_PHONE)
-        device_type = XFPM_DEVICE_TYPE_UNKNOWN;
+    XFPM_DEBUG ("'%s' device added", up_device_kind_to_string(device_type));
 
-    XFPM_DEBUG_ENUM (device_type, XFPM_TYPE_DEVICE_TYPE, " device added");
-
-    if ( device_type == XFPM_DEVICE_TYPE_BATTERY ||
-	 device_type == XFPM_DEVICE_TYPE_UPS     ||
-	 device_type == XFPM_DEVICE_TYPE_MOUSE   ||
-	 device_type == XFPM_DEVICE_TYPE_KBD     ||
-	 device_type == XFPM_DEVICE_TYPE_PHONE)
+    if ( device_type == UP_DEVICE_KIND_BATTERY	||
+	 device_type == UP_DEVICE_KIND_UPS	||
+	 device_type == UP_DEVICE_KIND_MOUSE	||
+	 device_type == UP_DEVICE_KIND_KEYBOARD	||
+	 device_type == UP_DEVICE_KIND_PHONE)
     {
 	GtkStatusIcon *battery;
-	XFPM_DEBUG_ENUM (device_type, XFPM_TYPE_DEVICE_TYPE,
-			"Battery device detected at : %s", object_path);
+	XFPM_DEBUG( "Battery device type '%s' detected at: %s",
+		     up_device_kind_to_string(device_type), object_path);
 	battery = xfpm_battery_new ();
 	gtk_status_icon_set_visible (battery, FALSE);
 	xfpm_battery_monitor_device (XFPM_BATTERY (battery),
@@ -1495,11 +1492,11 @@ gboolean xfpm_power_has_battery (XfpmPower *power)
 
     for ( i = 0; i < len; i++)
     {
-	XfpmDeviceType type;
+	UpDeviceKind type;
 	battery = g_list_nth_data (list, i);
 	type = xfpm_battery_get_device_type (XFPM_BATTERY (battery));
-	if ( type == XFPM_DEVICE_TYPE_BATTERY ||
-	     type == XFPM_DEVICE_TYPE_UPS )
+	if ( type == UP_DEVICE_KIND_BATTERY ||
+	     type == UP_DEVICE_KIND_UPS )
 	{
 	    ret = TRUE;
 	    break;

@@ -60,8 +60,8 @@ struct XfpmBatteryPrivate
     gchar		   *icon_prefix;
 
     XfpmBatteryCharge       charge;
-    XfpmDeviceState         state;
-    XfpmDeviceType          type;
+    UpDeviceState	    state;
+    UpDeviceKind	    type;
     gboolean		    ac_online;
     gboolean                present;
     guint 		    percentage;
@@ -96,7 +96,7 @@ static guint signals [LAST_SIGNAL] = { 0 };
 G_DEFINE_TYPE (XfpmBattery, xfpm_battery, GTK_TYPE_STATUS_ICON)
 
 static const gchar * G_GNUC_CONST
-xfpm_battery_get_icon_index (XfpmDeviceType type, guint percent)
+xfpm_battery_get_icon_index (UpDeviceKind type, guint percent)
 {
     if (percent < 10)
     {
@@ -104,11 +104,11 @@ xfpm_battery_get_icon_index (XfpmDeviceType type, guint percent)
     }
     else if (percent < 30)
     {
-        return ( (type == XFPM_DEVICE_TYPE_BATTERY || type == XFPM_DEVICE_TYPE_UPS) ? "020" : "030");
+        return ( (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS) ? "020" : "030");
     }
     else if (percent < 50)
     {
-        return ( (type == XFPM_DEVICE_TYPE_BATTERY || type == XFPM_DEVICE_TYPE_UPS ) ? "040" : "030");
+        return ( (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS ) ? "040" : "030");
     }
     else if (percent < 70)
     {
@@ -116,7 +116,7 @@ xfpm_battery_get_icon_index (XfpmDeviceType type, guint percent)
     }
     else if (percent < 90)
     {
-        return ((type == XFPM_DEVICE_TYPE_BATTERY || type == XFPM_DEVICE_TYPE_UPS) ? "080" : "060");
+        return ((type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS) ? "080" : "060");
     }
 
     return "100";
@@ -144,7 +144,7 @@ xfpm_battery_refresh_visible (XfpmBattery *battery)
     }
     else if ( show_icon == SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING )
     {
-	if ( battery->priv->state == XFPM_DEVICE_STATE_FULLY_CHARGED )
+	if ( battery->priv->state == UP_DEVICE_STATE_FULLY_CHARGED )
 	    visible = FALSE;
 	else visible = TRUE;
     }
@@ -205,14 +205,14 @@ xfpm_battery_get_message_from_battery_state (XfpmBattery *battery)
     gchar *msg  = NULL;
 
 
-    if (battery->priv->type == XFPM_DEVICE_TYPE_BATTERY || battery->priv->type == XFPM_DEVICE_TYPE_UPS)
+    if (battery->priv->type == UP_DEVICE_KIND_BATTERY || battery->priv->type == UP_DEVICE_KIND_UPS)
     {
 	switch (battery->priv->state)
 	{
-	    case XFPM_DEVICE_STATE_FULLY_CHARGED:
+	    case UP_DEVICE_STATE_FULLY_CHARGED:
 		msg = g_strdup_printf (_("Your %s is fully charged"), battery->priv->battery_name);
 		break;
-	    case XFPM_DEVICE_STATE_CHARGING:
+	    case UP_DEVICE_STATE_CHARGING:
 		msg = g_strdup_printf (_("Your %s is charging"), battery->priv->battery_name);
 
 		if ( battery->priv->time_to_full != 0 )
@@ -229,7 +229,7 @@ xfpm_battery_get_message_from_battery_state (XfpmBattery *battery)
 		}
 
 		break;
-	    case XFPM_DEVICE_STATE_DISCHARGING:
+	    case UP_DEVICE_STATE_DISCHARGING:
 		if (battery->priv->ac_online)
 		    msg =  g_strdup_printf (_("Your %s is discharging"), battery->priv->battery_name);
 		else
@@ -248,7 +248,7 @@ xfpm_battery_get_message_from_battery_state (XfpmBattery *battery)
 			g_free (est_time_str);
 		    }
 		break;
-	    case XFPM_DEVICE_STATE_EMPTY:
+	    case UP_DEVICE_STATE_EMPTY:
 		msg = g_strdup_printf (_("Your %s is empty"), battery->priv->battery_name);
 		break;
 	    default:
@@ -256,20 +256,20 @@ xfpm_battery_get_message_from_battery_state (XfpmBattery *battery)
 	}
 
     }
-    else if (battery->priv->type >= XFPM_DEVICE_TYPE_MONITOR)
+    else if (battery->priv->type >= UP_DEVICE_KIND_MONITOR)
     {
 	switch (battery->priv->state)
 	{
-	    case XFPM_DEVICE_STATE_FULLY_CHARGED:
+	    case UP_DEVICE_STATE_FULLY_CHARGED:
 		msg = g_strdup_printf (_("Your %s is fully charged"), battery->priv->battery_name);
 		break;
-	    case XFPM_DEVICE_STATE_CHARGING:
+	    case UP_DEVICE_STATE_CHARGING:
 		msg = g_strdup_printf (_("Your %s is charging"), battery->priv->battery_name);
 		break;
-	    case XFPM_DEVICE_STATE_DISCHARGING:
+	    case UP_DEVICE_STATE_DISCHARGING:
 		msg =  g_strdup_printf (_("Your %s is discharging"), battery->priv->battery_name);
 		break;
-	    case XFPM_DEVICE_STATE_EMPTY:
+	    case UP_DEVICE_STATE_EMPTY:
 		msg = g_strdup_printf (_("Your %s is empty"), battery->priv->battery_name);
 		break;
 	    default:
@@ -287,48 +287,48 @@ xfpm_battery_refresh_icon (XfpmBattery *battery)
 
     XFPM_DEBUG ("Battery state %d", battery->priv->state);
 
-    if ( battery->priv->type == XFPM_DEVICE_TYPE_BATTERY ||
-	 battery->priv->type == XFPM_DEVICE_TYPE_UPS )
+    if ( battery->priv->type == UP_DEVICE_KIND_BATTERY ||
+	 battery->priv->type == UP_DEVICE_KIND_UPS )
     {
 	if (!battery->priv->present)
 	{
 	    g_snprintf (icon_name, 128, "%s%s", battery->priv->icon_prefix, "missing");
 	}
-	else if (battery->priv->state == XFPM_DEVICE_STATE_FULLY_CHARGED )
+	else if (battery->priv->state == UP_DEVICE_STATE_FULLY_CHARGED )
 	{
 	    g_snprintf (icon_name, 128, "%s%s", battery->priv->icon_prefix, battery->priv->ac_online ? "charged" : "100");
 	}
-	else if ( battery->priv->state == XFPM_DEVICE_STATE_CHARGING ||
-		  battery->priv->state == XFPM_DEVICE_STATE_PENDING_CHARGING)
+	else if ( battery->priv->state == UP_DEVICE_STATE_CHARGING ||
+		  battery->priv->state == UP_DEVICE_STATE_PENDING_CHARGE)
 	{
 	    g_snprintf (icon_name, 128, "%s%s-%s",
 			battery->priv->icon_prefix,
 			xfpm_battery_get_icon_index (battery->priv->type, battery->priv->percentage),
 			"charging");
 	}
-	else if ( battery->priv->state == XFPM_DEVICE_STATE_DISCHARGING ||
-		  battery->priv->state == XFPM_DEVICE_STATE_PENDING_DISCHARGING)
+	else if ( battery->priv->state == UP_DEVICE_STATE_DISCHARGING ||
+		  battery->priv->state == UP_DEVICE_STATE_PENDING_DISCHARGE)
 	{
 	    g_snprintf (icon_name, 128, "%s%s",
 			battery->priv->icon_prefix,
 			xfpm_battery_get_icon_index (battery->priv->type, battery->priv->percentage));
 	}
-	else if ( battery->priv->state == XFPM_DEVICE_STATE_EMPTY)
+	else if ( battery->priv->state == UP_DEVICE_STATE_EMPTY)
 	{
 	    g_snprintf (icon_name, 128, "%s%s", battery->priv->icon_prefix, battery->priv->ac_online ? "000-charging" : "000");
 	}
     }
     else
     {
-	if ( !battery->priv->present || battery->priv->state == XFPM_DEVICE_STATE_EMPTY )
+	if ( !battery->priv->present || battery->priv->state == UP_DEVICE_STATE_EMPTY )
 	{
 	    g_snprintf (icon_name, 128, "%s000", battery->priv->icon_prefix);
 	}
-	else if ( battery->priv->state == XFPM_DEVICE_STATE_FULLY_CHARGED )
+	else if ( battery->priv->state == UP_DEVICE_STATE_FULLY_CHARGED )
 	{
 	    g_snprintf (icon_name, 128, "%s100", battery->priv->icon_prefix);
 	}
-	else if ( battery->priv->state == XFPM_DEVICE_STATE_DISCHARGING || battery->priv->state == XFPM_DEVICE_STATE_CHARGING )
+	else if ( battery->priv->state == UP_DEVICE_STATE_DISCHARGING || battery->priv->state == UP_DEVICE_STATE_CHARGING )
 	{
 	    g_snprintf (icon_name, 128, "%s%s",
 			battery->priv->icon_prefix,
@@ -383,8 +383,8 @@ xfpm_battery_notify_state (XfpmBattery *battery)
     if ( !gtk_status_icon_get_visible (GTK_STATUS_ICON (battery)) )
 	return;
 
-    if ( battery->priv->type == XFPM_DEVICE_TYPE_BATTERY ||
-	 battery->priv->type == XFPM_DEVICE_TYPE_UPS )
+    if ( battery->priv->type == UP_DEVICE_KIND_BATTERY ||
+	 battery->priv->type == UP_DEVICE_KIND_UPS )
     {
 	if ( starting_up )
 	{
@@ -416,7 +416,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 
     power_status = g_strdup_printf (battery->priv->ac_online ? _("Adaptor is online") : _("System is running on battery power"));
 
-    if ( battery->priv->state == XFPM_DEVICE_STATE_FULLY_CHARGED )
+    if ( battery->priv->state == UP_DEVICE_STATE_FULLY_CHARGED )
     {
 	if ( battery->priv->time_to_empty > 0 )
 	{
@@ -436,7 +436,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 				   battery->priv->percentage);
 	}
     }
-    else if ( battery->priv->state == XFPM_DEVICE_STATE_CHARGING )
+    else if ( battery->priv->state == UP_DEVICE_STATE_CHARGING )
     {
 	if ( battery->priv->time_to_full != 0 )
 	{
@@ -456,7 +456,7 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 				   battery->priv->percentage);
 	}
     }
-    else if ( battery->priv->state == XFPM_DEVICE_STATE_DISCHARGING )
+    else if ( battery->priv->state == UP_DEVICE_STATE_DISCHARGING )
     {
 	if ( battery->priv->time_to_empty != 0 )
 	{
@@ -477,15 +477,15 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 	}
 
     }
-    else if ( battery->priv->state == XFPM_DEVICE_STATE_PENDING_CHARGING )
+    else if ( battery->priv->state == UP_DEVICE_STATE_PENDING_CHARGE )
     {
 	tip = g_strdup_printf (_("%s\n%s waiting to discharge (%i%%)."), power_status, battery->priv->battery_name, battery->priv->percentage);
     }
-    else if ( battery->priv->state == XFPM_DEVICE_STATE_PENDING_DISCHARGING )
+    else if ( battery->priv->state == UP_DEVICE_STATE_PENDING_DISCHARGE )
     {
 	tip = g_strdup_printf (_("%s\n%s waiting to charge (%i%%)."), power_status, battery->priv->battery_name, battery->priv->percentage);
     }
-    else if ( battery->priv->state == XFPM_DEVICE_STATE_EMPTY )
+    else if ( battery->priv->state == UP_DEVICE_STATE_EMPTY )
     {
 	tip = g_strdup_printf (_("%s\nYour %s is empty"), power_status, battery->priv->battery_name);
     }
@@ -554,8 +554,8 @@ xfpm_battery_refresh (XfpmBattery *battery, UpDevice *device)
 
     xfpm_battery_refresh_icon (battery);
 
-    if ( battery->priv->type == XFPM_DEVICE_TYPE_BATTERY ||
-	 battery->priv->type == XFPM_DEVICE_TYPE_UPS )
+    if ( battery->priv->type == UP_DEVICE_KIND_BATTERY ||
+	 battery->priv->type == UP_DEVICE_KIND_UPS )
     {
 	battery->priv->time_to_empty = to_empty;
 	battery->priv->time_to_full  = to_empty;
@@ -590,8 +590,8 @@ xfpm_battery_query_tooltip (GtkStatusIcon *icon,
 
     battery = XFPM_BATTERY (icon);
 
-    if ( battery->priv->type == XFPM_DEVICE_TYPE_BATTERY ||
-	 battery->priv->type == XFPM_DEVICE_TYPE_UPS )
+    if ( battery->priv->type == UP_DEVICE_KIND_BATTERY ||
+	 battery->priv->type == UP_DEVICE_KIND_UPS )
     {
 	xfpm_battery_set_tooltip_primary (battery, tooltip);
 	return TRUE;
@@ -684,10 +684,11 @@ xfpm_battery_class_init (XfpmBatteryClass *klass)
 
     g_object_class_install_property (object_class,
                                      PROP_DEVICE_TYPE,
-                                     g_param_spec_enum ("device-type",
+                                     g_param_spec_uint ("device-type",
                                                         NULL, NULL,
-							XFPM_TYPE_DEVICE_TYPE,
-							XFPM_DEVICE_TYPE_UNKNOWN,
+							UP_DEVICE_KIND_UNKNOWN,
+							UP_DEVICE_KIND_LAST,
+							UP_DEVICE_KIND_UNKNOWN,
                                                         G_PARAM_READABLE));
 
     g_object_class_install_property (object_class,
@@ -710,8 +711,8 @@ xfpm_battery_init (XfpmBattery *battery)
     battery->priv->notify        = xfpm_notify_new ();
     battery->priv->device        = NULL;
     battery->priv->client        = NULL;
-    battery->priv->state         = XFPM_DEVICE_STATE_UNKNOWN;
-    battery->priv->type          = XFPM_DEVICE_TYPE_UNKNOWN;
+    battery->priv->state         = UP_DEVICE_STATE_UNKNOWN;
+    battery->priv->type          = UP_DEVICE_KIND_UNKNOWN;
     battery->priv->charge        = XFPM_BATTERY_CHARGE_UNKNOWN;
     battery->priv->icon_prefix   = NULL;
     battery->priv->time_to_full  = 0;
@@ -759,25 +760,25 @@ xfpm_battery_finalize (GObject *object)
 }
 
 static gchar *
-xfpm_battery_get_icon_prefix_device_enum_type (XfpmDeviceType type)
+xfpm_battery_get_icon_prefix_device_enum_type (UpDeviceKind type)
 {
-    if ( type == XFPM_DEVICE_TYPE_BATTERY )
+    if ( type == UP_DEVICE_KIND_BATTERY )
     {
 	return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
     }
-    else if ( type == XFPM_DEVICE_TYPE_UPS )
+    else if ( type == UP_DEVICE_KIND_UPS )
     {
 	return g_strdup (XFPM_UPS_ICON_PREFIX);
     }
-    else if ( type == XFPM_DEVICE_TYPE_MOUSE )
+    else if ( type == UP_DEVICE_KIND_MOUSE )
     {
 	return g_strdup (XFPM_MOUSE_ICON_PREFIX);
     }
-    else if ( type == XFPM_DEVICE_TYPE_KBD )
+    else if ( type == UP_DEVICE_KIND_KEYBOARD )
     {
 	return g_strdup (XFPM_KBD_ICON_PREFIX);
     }
-    else if ( type == XFPM_DEVICE_TYPE_PHONE )
+    else if ( type == UP_DEVICE_KIND_PHONE )
     {
 	return g_strdup (XFPM_PHONE_ICON_PREFIX);
     }
@@ -786,31 +787,31 @@ xfpm_battery_get_icon_prefix_device_enum_type (XfpmDeviceType type)
 }
 
 static const gchar *
-xfpm_battery_get_name (XfpmDeviceType type)
+xfpm_battery_get_name (UpDeviceKind type)
 {
     const gchar *name = NULL;
 
     switch (type)
     {
-	case XFPM_DEVICE_TYPE_BATTERY:
+	case UP_DEVICE_KIND_BATTERY:
 	    name = _("battery");
 	    break;
-	case XFPM_DEVICE_TYPE_UPS:
+	case UP_DEVICE_KIND_UPS:
 	    name = _("UPS");
 	    break;
-	case XFPM_DEVICE_TYPE_MONITOR:
+	case UP_DEVICE_KIND_MONITOR:
 	    name = _("monitor battery");
 	    break;
-	case XFPM_DEVICE_TYPE_MOUSE:
+	case UP_DEVICE_KIND_MOUSE:
 	    name = _("mouse battery");
 	    break;
-	case XFPM_DEVICE_TYPE_KBD:
+	case UP_DEVICE_KIND_KEYBOARD:
 	    name = _("keyboard battery");
 	    break;
-	case XFPM_DEVICE_TYPE_PDA:
+	case UP_DEVICE_KIND_PDA:
 	    name = _("PDA battery");
 	    break;
-	case XFPM_DEVICE_TYPE_PHONE:
+	case UP_DEVICE_KIND_PHONE:
 	    name = _("Phone battery");
 	    break;
 	default:
@@ -833,7 +834,7 @@ xfpm_battery_new (void)
 
 void xfpm_battery_monitor_device (XfpmBattery *battery,
 				  const char *object_path,
-				  XfpmDeviceType device_type)
+				  UpDeviceKind device_type)
 {
     UpDevice *device;
     battery->priv->type = device_type;
@@ -856,9 +857,9 @@ void xfpm_battery_monitor_device (XfpmBattery *battery,
     xfpm_battery_refresh (battery, device);
 }
 
-XfpmDeviceType xfpm_battery_get_device_type (XfpmBattery *battery)
+UpDeviceKind xfpm_battery_get_device_type (XfpmBattery *battery)
 {
-    g_return_val_if_fail (XFPM_IS_BATTERY (battery), XFPM_DEVICE_TYPE_UNKNOWN );
+    g_return_val_if_fail (XFPM_IS_BATTERY (battery), UP_DEVICE_KIND_UNKNOWN );
 
     return battery->priv->type;
 }

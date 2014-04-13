@@ -362,10 +362,7 @@ xfpm_info_add_device_view (XfpmInfo *info, UpDevice *device, const gchar *object
 		  "percentage", &percent,
 		  NULL);
 
-    if (type > XFPM_DEVICE_TYPE_PHONE)
-        type = XFPM_DEVICE_TYPE_UNKNOWN;
-
-    if (type != XFPM_DEVICE_TYPE_UNKNOWN)
+    if (type != UP_DEVICE_KIND_UNKNOWN)
     {
 	battery_type = xfpm_power_translate_device_type (type);
 	gtk_list_store_append (list_store, &iter);
@@ -383,7 +380,7 @@ xfpm_info_add_device_view (XfpmInfo *info, UpDevice *device, const gchar *object
 			-1);
     i++;
     
-    if ( type != XFPM_DEVICE_TYPE_LINE_POWER )
+    if ( type != UP_DEVICE_KIND_LINE_POWER )
     {
 	/*Model*/
 	if (model && strlen (model) > 0)
