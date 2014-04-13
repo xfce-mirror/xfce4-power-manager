@@ -202,22 +202,21 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
 		  SHOW_BRIGHTNESS_POPUP, &show_popup,
                   NULL);
     
-    if ( type == BUTTON_MON_BRIGHTNESS_UP )
+    if ( type != BUTTON_MON_BRIGHTNESS_UP && type != BUTTON_MON_BRIGHTNESS_DOWN )
+	return; /* sanity check, can this ever happen? */
+
+    backlight->priv->block = TRUE;
+    if ( !enable_brightness )
+	ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
+    else
     {
-	backlight->priv->block = TRUE;
-	if ( enable_brightness )
+	if ( type == BUTTON_MON_BRIGHTNESS_UP )
 	    ret = xfpm_brightness_up (backlight->priv->brightness, &level);
-	if ( ret && show_popup)
-	    xfpm_backlight_show (backlight, level);
-    }
-    else if ( type == BUTTON_MON_BRIGHTNESS_DOWN )
-    {
-	backlight->priv->block = TRUE;
-	if ( enable_brightness )
+	else
 	    ret = xfpm_brightness_down (backlight->priv->brightness, &level);
-	if ( ret && show_popup)
-	    xfpm_backlight_show (backlight, level);
     }
+    if ( ret && show_popup)
+	xfpm_backlight_show (backlight, level);
 }
 
 static void
