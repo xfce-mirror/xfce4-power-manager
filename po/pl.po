@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Piotr Sokół <psokol@jabster.pl>, 2011-2012
+# Piotr Sokół <psokol@jabster.pl>, 2011-2012,2014
 # Piotr Strębski <strebski@o2.pl>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-09 00:30+0200\n"
-"PO-Revision-Date: 2014-04-12 11:48+0000\n"
-"Last-Translator: Piotr Strębski <strebski@o2.pl>\n"
+"POT-Creation-Date: 2014-04-14 00:30+0200\n"
+"PO-Revision-Date: 2014-04-14 11:37+0000\n"
+"Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: Polish (http://www.transifex.com/projects/p/xfce/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -107,7 +107,7 @@ msgstr "Poziom:"
 msgid "<b>Brightness</b>"
 msgstr "<b>Jasność</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
+#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:54
 msgid "Monitor"
 msgstr "Ekran"
 
@@ -123,8 +123,8 @@ msgstr "Oszczędzanie energii w zamian za niższą wydajność"
 #: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:820
 #: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
 #: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:510
-#: ../src/xfpm-power.c:822
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:489
+#: ../src/xfpm-power.c:801
 msgid "Suspend"
 msgstr "Wstrzymanie"
 
@@ -132,8 +132,8 @@ msgstr "Wstrzymanie"
 #: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:826
 #: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1043
 #: ../settings/xfpm-settings.c:1220 ../settings/xfpm-settings.c:1277
-#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:495
-#: ../src/xfpm-power.c:809
+#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:474
+#: ../src/xfpm-power.c:788
 msgid "Hibernate"
 msgstr "Zahibernowanie"
 
@@ -207,7 +207,7 @@ msgid "Hibernate and suspend operations not permitted"
 msgstr "Brak uprawnień, aby wstrzymać lub zahibernować działanie komputera"
 
 #: ../settings/xfpm-settings.c:832 ../settings/xfpm-settings.c:1226
-#: ../src/xfpm-power.c:835
+#: ../src/xfpm-power.c:814
 msgid "Shutdown"
 msgstr "Wyłączenie"
 
@@ -295,7 +295,7 @@ msgid "SOCKET ID"
 msgstr "ID_GNIAZDA"
 
 #: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:374
-#: ../src/xfpm-power-info.c:973
+#: ../src/xfpm-power-info.c:910
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy."
@@ -322,9 +322,9 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Menedżer zasilania nie jest uruchomiony. Uruchomić go?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:311 ../src/xfpm-power.c:606 ../src/xfpm-power.c:751
-#: ../src/xfpm-power.c:796 ../src/xfpm-power.c:965 ../src/xfpm-power.c:989
-#: ../src/xfpm-battery.c:353 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-power.c:273 ../src/xfpm-power.c:585 ../src/xfpm-power.c:730
+#: ../src/xfpm-power.c:775 ../src/xfpm-power.c:944 ../src/xfpm-power.c:968
+#: ../src/xfpm-battery.c:355 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Menedżer zasilania"
 
@@ -334,36 +334,36 @@ msgstr "Konfiguruje ustawienia zasilania"
 
 #: ../common/xfpm-common.c:149
 msgid "translator-credits"
-msgstr "Piotr Sokół <psokol@jabster.pl>, 2011, 2012."
+msgstr "Piotr Sokół <psokol@jabster.pl>, 2011, 2012, 2014."
 
-#: ../src/xfpm-power.c:332
+#: ../src/xfpm-power.c:294
 msgid "_Hibernate"
 msgstr "_Zahibernuj"
 
-#: ../src/xfpm-power.c:333
+#: ../src/xfpm-power.c:295
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
 msgstr "Aktualnie uruchomiony program zapobiega automatycznemu wstrzymaniu działania komputera. Kontynuowanie może spowodować jego niewłaściwe działanie."
 
-#: ../src/xfpm-power.c:335
+#: ../src/xfpm-power.c:297
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Zahibernować działanie komputera?"
 
-#: ../src/xfpm-power.c:430
+#: ../src/xfpm-power.c:409
 msgid "Quit"
 msgstr "Zakończ"
 
-#: ../src/xfpm-power.c:431
+#: ../src/xfpm-power.c:410
 msgid "All running instances of the power manager will exit"
 msgstr "Wszystkie wystąpienia menedżera zasilania zostaną zakończone"
 
-#: ../src/xfpm-power.c:433
+#: ../src/xfpm-power.c:412
 msgid "Quit the power manager?"
 msgstr "Zakończyć działanie menedżera zasilania?"
 
 #. Power information
-#: ../src/xfpm-power.c:545 ../src/xfpm-power-info.c:845
+#: ../src/xfpm-power.c:524 ../src/xfpm-power-info.c:781
 msgid "Power Information"
 msgstr "O zasilaniu"
 
@@ -372,121 +372,129 @@ msgstr "O zasilaniu"
 #. *
 #. TRANSLATOR: Mode here is the power profile (presentation, power save,
 #. normal)
-#: ../src/xfpm-power.c:561
+#: ../src/xfpm-power.c:540
 msgid "Mode"
 msgstr "Tryb"
 
 #. Normal
-#: ../src/xfpm-power.c:572
+#: ../src/xfpm-power.c:551
 msgid "Normal"
 msgstr "Zwykły"
 
 #. Normal
-#: ../src/xfpm-power.c:582
+#: ../src/xfpm-power.c:561
 msgid "Presentation"
 msgstr "Prezentacji"
 
-#: ../src/xfpm-power.c:714
+#: ../src/xfpm-power.c:693
 msgid "Hibernate the system"
 msgstr "Zahibernuj działanie komputera"
 
-#: ../src/xfpm-power.c:725
+#: ../src/xfpm-power.c:704
 msgid "Suspend the system"
 msgstr "Wstrzymaj działanie komputera"
 
-#: ../src/xfpm-power.c:735
+#: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
 msgstr "Wyłącz komputer"
 
-#: ../src/xfpm-power.c:746 ../src/xfpm-power.c:793
+#: ../src/xfpm-power.c:725 ../src/xfpm-power.c:772
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Źródło zasilania jest bliskie rozładowania. Proszę zapisać bieżący stan pracy, w celu uniknięcia utraty danych."
 
-#: ../src/xfpm-power.c:966
+#: ../src/xfpm-power.c:945
 msgid "System is running on low power"
 msgstr "Źródło zasilania jest bliskie rozładowania"
 
-#: ../src/xfpm-power.c:985
+#: ../src/xfpm-power.c:964
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "%s zostanie wkrótce rozładowany.\nPrzewidywany czas zasilania: %s."
 
-#: ../src/xfpm-power.c:1189 ../src/xfpm-power.c:1194
+#: ../src/xfpm-power.c:1163 ../src/xfpm-power.c:1168
 msgid "Adaptor is offline"
 msgstr "Odłączono zasilacz sieciowy"
 
-#: ../src/xfpm-power.c:1190 ../src/xfpm-power.c:1195 ../src/xfpm-battery.c:415
+#: ../src/xfpm-power.c:1164 ../src/xfpm-power.c:1169 ../src/xfpm-battery.c:417
 #, c-format
 msgid "Adaptor is online"
 msgstr "Podłączono zasilacz sieciowy"
 
-#: ../src/xfpm-power.c:1667 ../src/xfpm-power.c:1700 ../src/xfpm-power.c:1719
-#: ../src/xfpm-power.c:1742
+#: ../src/xfpm-power.c:1601 ../src/xfpm-power.c:1634 ../src/xfpm-power.c:1653
+#: ../src/xfpm-power.c:1676
 #, c-format
 msgid "Permission denied"
 msgstr "Brak uprawnień"
 
-#: ../src/xfpm-power.c:1727 ../src/xfpm-power.c:1750
+#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
 msgstr "Wstrzymywanie pracy komputera jest nieobsługiwane"
 
-#: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
+#: ../src/xfpm-power-common.c:44 ../src/xfpm-power-common.c:67
 msgid "Battery"
 msgstr "Akumulator"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:851
+#: ../src/xfpm-power-common.c:46 ../src/xfpm-battery.c:802
 msgid "UPS"
 msgstr "Zasilacz awaryjny"
 
-#: ../src/xfpm-power-common.c:126
+#: ../src/xfpm-power-common.c:48
 msgid "Line power"
 msgstr "Zasilacz sieciowy"
 
-#: ../src/xfpm-power-common.c:128
+#: ../src/xfpm-power-common.c:50
 msgid "Mouse"
 msgstr "Mysz"
 
-#: ../src/xfpm-power-common.c:130
+#: ../src/xfpm-power-common.c:52
 msgid "Keyboard"
 msgstr "Klawiatura"
 
-#: ../src/xfpm-power-common.c:134
+#: ../src/xfpm-power-common.c:56
 msgid "PDA"
 msgstr "Palmtop"
 
-#: ../src/xfpm-power-common.c:136
+#: ../src/xfpm-power-common.c:58
 msgid "Phone"
 msgstr "Telefon"
 
-#: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:869
+#: ../src/xfpm-power-common.c:60
+msgid "Tablet"
+msgstr "Tablet"
+
+#: ../src/xfpm-power-common.c:62
+msgid "Computer"
+msgstr "Komputer"
+
+#: ../src/xfpm-power-common.c:64 ../src/xfpm-power-common.c:79
+#: ../src/xfpm-power-common.c:94 ../src/xfpm-battery.c:820
 msgid "Unknown"
 msgstr "Nieznana"
 
-#: ../src/xfpm-power-common.c:155
+#: ../src/xfpm-power-common.c:81
 msgid "Lithium ion"
 msgstr "Litowo-jonowy"
 
-#: ../src/xfpm-power-common.c:157
+#: ../src/xfpm-power-common.c:83
 msgid "Lithium polymer"
 msgstr "Litowo-polimerowy"
 
-#: ../src/xfpm-power-common.c:159
+#: ../src/xfpm-power-common.c:85
 msgid "Lithium iron phosphate"
 msgstr "Litowo-żelazowo-fosforanowy"
 
-#: ../src/xfpm-power-common.c:161
+#: ../src/xfpm-power-common.c:87
 msgid "Lead acid"
 msgstr "Kwasowo-ołowiowy"
 
-#: ../src/xfpm-power-common.c:163
+#: ../src/xfpm-power-common.c:89
 msgid "Nickel cadmium"
 msgstr "Niklowo-kadmowy"
 
-#: ../src/xfpm-power-common.c:165
+#: ../src/xfpm-power-common.c:91
 msgid "Nickel metal hybride"
 msgstr "Niklowo-metalowo-wodorkowy"
 
@@ -496,11 +504,11 @@ msgstr "Niklowo-metalowo-wodorkowy"
 msgid "Brightness: %.0f percent"
 msgstr "Jasność ekranu: %.0f procent"
 
-#: ../src/xfpm-battery.c:171
+#: ../src/xfpm-battery.c:173
 msgid "Unknown time"
 msgstr "Nieznany czas"
 
-#: ../src/xfpm-battery.c:177
+#: ../src/xfpm-battery.c:179
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
@@ -508,7 +516,7 @@ msgstr[0] "%i minuta"
 msgstr[1] "%i minuty"
 msgstr[2] "%i minut"
 
-#: ../src/xfpm-battery.c:188
+#: ../src/xfpm-battery.c:190
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -518,70 +526,70 @@ msgstr[2] "%i godzin"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../src/xfpm-battery.c:194
+#: ../src/xfpm-battery.c:196
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: ../src/xfpm-battery.c:195
+#: ../src/xfpm-battery.c:197
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "godzina"
 msgstr[1] "godziny"
 msgstr[2] "godzin"
 
-#: ../src/xfpm-battery.c:196
+#: ../src/xfpm-battery.c:198
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuta"
 msgstr[1] "minuty"
 msgstr[2] "minut"
 
-#: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
+#: ../src/xfpm-battery.c:213 ../src/xfpm-battery.c:264
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "%s został naładowany"
 
-#: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
+#: ../src/xfpm-battery.c:216 ../src/xfpm-battery.c:267
 #, c-format
 msgid "Your %s is charging"
 msgstr "%s jest ładowany"
 
-#: ../src/xfpm-battery.c:224
+#: ../src/xfpm-battery.c:226
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until it is fully charged."
 msgstr "%s (%i%%)\n%s do pełnego naładowania."
 
-#: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
+#: ../src/xfpm-battery.c:234 ../src/xfpm-battery.c:270
 #, c-format
 msgid "Your %s is discharging"
 msgstr "%s jest rozładowywany"
 
-#: ../src/xfpm-battery.c:234
+#: ../src/xfpm-battery.c:236
 #, c-format
 msgid "System is running on %s power"
 msgstr "%s jest używany jako bieżące źródło zasilania"
 
-#: ../src/xfpm-battery.c:244
+#: ../src/xfpm-battery.c:246
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr "%s (%i%%).\nPrzewidywany czas zasilania: %s."
 
-#: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
+#: ../src/xfpm-battery.c:252 ../src/xfpm-battery.c:273
 #, c-format
 msgid "Your %s is empty"
 msgstr "%s został rozładowany"
 
-#: ../src/xfpm-battery.c:415
+#: ../src/xfpm-battery.c:417
 #, c-format
 msgid "System is running on battery power"
 msgstr "Akumulator jest używany jako bieżące źródło zasilania"
 
-#: ../src/xfpm-battery.c:422
+#: ../src/xfpm-battery.c:424
 #, c-format
 msgid ""
 "%s\n"
@@ -589,14 +597,14 @@ msgid ""
 "Provides %s runtime"
 msgstr "%s\n%s został całkowicie naładowany (%i%%).\nPrzewidywany czas zasilania: %s."
 
-#: ../src/xfpm-battery.c:431
+#: ../src/xfpm-battery.c:433
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
 msgstr "%s\n%s został całkowicie naładowany (%i%%)."
 
-#: ../src/xfpm-battery.c:442
+#: ../src/xfpm-battery.c:444
 #, c-format
 msgid ""
 "%s\n"
@@ -604,14 +612,14 @@ msgid ""
 "%s until is fully charged."
 msgstr "%s\n%s jest ładowany (%i%%).\nPozostały czas ładowania: %s"
 
-#: ../src/xfpm-battery.c:451
+#: ../src/xfpm-battery.c:453
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
 msgstr "%s\n%s jest ładowany (%i%%)."
 
-#: ../src/xfpm-battery.c:462
+#: ../src/xfpm-battery.c:464
 #, c-format
 msgid ""
 "%s\n"
@@ -619,59 +627,59 @@ msgid ""
 "Estimated time left is %s."
 msgstr "%s\n%s jest rozładowywany (%i%%).\nPrzewidywany czas zasilania: %s."
 
-#: ../src/xfpm-battery.c:471
+#: ../src/xfpm-battery.c:473
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
 msgstr "%s\n%s jest rozładowywany (%i%%)."
 
-#: ../src/xfpm-battery.c:480
+#: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr "%s\n%s: oczekiwanie na rozładowanie (%i%%)"
 
-#: ../src/xfpm-battery.c:484
+#: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
 msgstr "%s\n%s: oczekiwanie na naładowanie (%i%%)"
 
-#: ../src/xfpm-battery.c:488
+#: ../src/xfpm-battery.c:490
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
 msgstr "%s\n%s został rozładowany."
 
-#: ../src/xfpm-battery.c:848
+#: ../src/xfpm-battery.c:799
 msgid "battery"
 msgstr "Akumulator"
 
-#: ../src/xfpm-battery.c:854
+#: ../src/xfpm-battery.c:805
 msgid "monitor battery"
 msgstr "Akumulator ekranu"
 
-#: ../src/xfpm-battery.c:857
+#: ../src/xfpm-battery.c:808
 msgid "mouse battery"
 msgstr "Akumulator myszy"
 
-#: ../src/xfpm-battery.c:860
+#: ../src/xfpm-battery.c:811
 msgid "keyboard battery"
 msgstr "Akumulator klawiatury"
 
-#: ../src/xfpm-battery.c:863
+#: ../src/xfpm-battery.c:814
 msgid "PDA battery"
 msgstr "Akumulator palmtopa"
 
-#: ../src/xfpm-battery.c:866
+#: ../src/xfpm-battery.c:817
 msgid "Phone battery"
 msgstr "Akumulator telefonu"
 
-#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
+#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:96
 #, c-format
 msgid ""
 "\n"
@@ -684,11 +692,11 @@ msgid ""
 "\n"
 msgstr "\nMenedżer zasilania Xfce %s\n\nCzęść projektu Xfce Goodies\nhttp://goodies.xfce.org\n\nWydany na licencji GNU GPL.\n\n"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:379
 msgid "True"
 msgstr "Prawda"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:379
 msgid "False"
 msgstr "Fałsz"
 
@@ -798,7 +806,7 @@ msgstr "Wyświetla okno konfiguracji programu"
 msgid "Quit any running xfce power manager"
 msgstr "Kończy działanie wszystkich wystąpień programu"
 
-#: ../src/xfpm-main.c:353 ../src/xfpm-power-info.c:960
+#: ../src/xfpm-main.c:353 ../src/xfpm-power-info.c:897
 msgid "Version information"
 msgstr "Wypisuje informacje o wersji"
 
@@ -826,209 +834,200 @@ msgid "Invalid cookie"
 msgstr "Nieprawidłowy plik cookie"
 
 #. TRANSLATORS: the command line was not provided
-#: ../src/xfpm-power-info.c:118
+#: ../src/xfpm-power-info.c:121
 msgid "No data"
 msgstr "Brak danych"
 
 #. TRANSLATORS: kernel module, usually a device driver
-#: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
+#: ../src/xfpm-power-info.c:128 ../src/xfpm-power-info.c:133
 msgid "Kernel module"
 msgstr "Moduł jądra"
 
 #. TRANSLATORS: kernel housekeeping
-#: ../src/xfpm-power-info.c:135
+#: ../src/xfpm-power-info.c:138
 msgid "Kernel core"
 msgstr "Jądro"
 
 #. TRANSLATORS: interrupt between processors
-#: ../src/xfpm-power-info.c:140
+#: ../src/xfpm-power-info.c:143
 msgid "Interprocessor interrupt"
 msgstr "Przerwanie międzyprocesorowe"
 
 #. TRANSLATORS: unknown interrupt
-#: ../src/xfpm-power-info.c:145
+#: ../src/xfpm-power-info.c:148
 msgid "Interrupt"
 msgstr "Przerwanie"
 
 #. TRANSLATORS: the keyboard and mouse device event
-#: ../src/xfpm-power-info.c:189
+#: ../src/xfpm-power-info.c:192
 msgid "PS/2 keyboard/mouse/touchpad"
 msgstr "Klawiatura/mysz/panel dotykowy PS/2"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
-#: ../src/xfpm-power-info.c:192
+#: ../src/xfpm-power-info.c:195
 msgid "ACPI"
 msgstr "ACPI"
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
-#: ../src/xfpm-power-info.c:195
+#: ../src/xfpm-power-info.c:198
 msgid "Serial ATA"
 msgstr "Kontroler Serial ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
-#: ../src/xfpm-power-info.c:198
+#: ../src/xfpm-power-info.c:201
 msgid "ATA host controller"
 msgstr "Kontroler ATA"
 
 #. TRANSLATORS: 802.11 wireless adaptor
-#: ../src/xfpm-power-info.c:201
+#: ../src/xfpm-power-info.c:204
 msgid "Intel wireless adaptor"
 msgstr "Moduł sieci bezprzewodowej Intel"
 
 #. TRANSLATORS: a timer is something that fires periodically
-#: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
-#: ../src/xfpm-power-info.c:212 ../src/xfpm-power-info.c:215
-#: ../src/xfpm-power-info.c:218
+#: ../src/xfpm-power-info.c:209 ../src/xfpm-power-info.c:212
+#: ../src/xfpm-power-info.c:215 ../src/xfpm-power-info.c:218
+#: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Timer %s"
 msgstr "Zegar %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
-#: ../src/xfpm-power-info.c:221
+#: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "Sleep %s"
 msgstr "Wstrzymanie %s"
 
 #. TRANSLATORS: this is a new realtime task
-#: ../src/xfpm-power-info.c:224
+#: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "New task %s"
 msgstr "Nowe zadanie %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
-#: ../src/xfpm-power-info.c:227
+#: ../src/xfpm-power-info.c:230
 #, c-format
 msgid "Wait %s"
 msgstr "Oczekiwanie %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
-#: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
+#: ../src/xfpm-power-info.c:233 ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Work queue %s"
 msgstr "Kolejka zadań %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
-#: ../src/xfpm-power-info.c:236
+#: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "Network route flush %s"
 msgstr "Czyszczenie trasy sieci %s"
 
 #. TRANSLATORS: activity on the USB bus
-#: ../src/xfpm-power-info.c:239
+#: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "USB activity %s"
 msgstr "Aktywność USB %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
-#: ../src/xfpm-power-info.c:242
+#: ../src/xfpm-power-info.c:245
 #, c-format
 msgid "Wakeup %s"
 msgstr "Wybudzenie %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
-#: ../src/xfpm-power-info.c:245
+#: ../src/xfpm-power-info.c:248
 msgid "Local interrupts"
 msgstr "Lokalne przerwania"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
-#: ../src/xfpm-power-info.c:248
+#: ../src/xfpm-power-info.c:251
 msgid "Rescheduling interrupts"
 msgstr "Przerwania ponownego planowania"
 
-#: ../src/xfpm-power-info.c:331
+#: ../src/xfpm-power-info.c:326
 msgid "Attribute"
 msgstr "Atrybut"
 
-#: ../src/xfpm-power-info.c:338
+#: ../src/xfpm-power-info.c:333
 msgid "Value"
 msgstr "Wartość"
 
-#: ../src/xfpm-power-info.c:348
+#: ../src/xfpm-power-info.c:343
 msgid "Device"
 msgstr "Urządzenie"
 
-#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:766
+#: ../src/xfpm-power-info.c:370 ../src/xfpm-power-info.c:702
 msgid "Type"
 msgstr "Typ"
 
-#: ../src/xfpm-power-info.c:375
+#: ../src/xfpm-power-info.c:378
 msgid "PowerSupply"
 msgstr "Źródło zasilania"
 
-#: ../src/xfpm-power-info.c:393
+#: ../src/xfpm-power-info.c:390
 msgid "Model"
 msgstr "Model"
 
-#: ../src/xfpm-power-info.c:407
+#: ../src/xfpm-power-info.c:398
 msgid "Technology"
 msgstr "Technologia"
 
-#: ../src/xfpm-power-info.c:420
+#: ../src/xfpm-power-info.c:409
 msgid "Energy percent"
 msgstr "Procent energii"
 
-#. TRANSLATORS: Unit here is What hour
-#: ../src/xfpm-power-info.c:428 ../src/xfpm-power-info.c:442
-#: ../src/xfpm-power-info.c:456
+#. TRANSLATORS: Unit here is Watt hour
+#: ../src/xfpm-power-info.c:419 ../src/xfpm-power-info.c:432
+#: ../src/xfpm-power-info.c:445
 msgid "Wh"
 msgstr "Wh"
 
-#: ../src/xfpm-power-info.c:434
+#: ../src/xfpm-power-info.c:422
 msgid "Energy full design"
 msgstr "Pojemność znamionowa"
 
-#: ../src/xfpm-power-info.c:448
+#: ../src/xfpm-power-info.c:435
 msgid "Energy full"
 msgstr "Pojemność rzeczywista"
 
-#: ../src/xfpm-power-info.c:462
+#: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
 msgstr "Wskazania po rozładowaniu"
 
-#. TRANSLATORS: Unit here is volt
-#: ../src/xfpm-power-info.c:470
+#. TRANSLATORS: Unit here is Volt
+#: ../src/xfpm-power-info.c:458
 msgid "V"
 msgstr "V"
 
-#: ../src/xfpm-power-info.c:475
+#: ../src/xfpm-power-info.c:461
 msgid "Voltage"
 msgstr "Napięcie"
 
-#. Percentage
-#: ../src/xfpm-power-info.c:483
-msgid "%"
-msgstr "%"
-
-#: ../src/xfpm-power-info.c:488
-msgid "Percentage"
-msgstr "Procentowość"
-
-#: ../src/xfpm-power-info.c:505
+#: ../src/xfpm-power-info.c:472
 msgid "Vendor"
 msgstr "Producent"
 
-#: ../src/xfpm-power-info.c:522
+#: ../src/xfpm-power-info.c:482
 msgid "Serial"
 msgstr "Numer seryjny"
 
-#: ../src/xfpm-power-info.c:758
+#: ../src/xfpm-power-info.c:694
 msgid "Processor"
 msgstr "Procesor"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
-#: ../src/xfpm-power-info.c:775
+#: ../src/xfpm-power-info.c:711
 msgid "PID"
 msgstr "Identyfikator"
 
-#: ../src/xfpm-power-info.c:781
+#: ../src/xfpm-power-info.c:717
 msgid "Wakeups"
 msgstr "Ilość wybudzeń"
 
-#: ../src/xfpm-power-info.c:787
+#: ../src/xfpm-power-info.c:723
 msgid "Command"
 msgstr "Polecenie"
 
-#: ../src/xfpm-power-info.c:793
+#: ../src/xfpm-power-info.c:729
 msgid "Details"
 msgstr "Szczegóły"
 
