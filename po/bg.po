@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-09 00:30+0200\n"
-"PO-Revision-Date: 2014-04-09 06:17+0000\n"
+"POT-Creation-Date: 2014-04-14 00:30+0200\n"
+"PO-Revision-Date: 2014-04-14 15:54+0000\n"
 "Last-Translator: cybercop <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xfce/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,7 @@ msgstr "Ниво:"
 msgid "<b>Brightness</b>"
 msgstr "<b>Яркост</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
+#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:54
 msgid "Monitor"
 msgstr "Монитор"
 
@@ -127,8 +127,8 @@ msgstr "Предпочитай съхраняване на енергията п
 #: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:820
 #: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
 #: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:510
-#: ../src/xfpm-power.c:822
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:489
+#: ../src/xfpm-power.c:801
 msgid "Suspend"
 msgstr "Приспиване"
 
@@ -136,8 +136,8 @@ msgstr "Приспиване"
 #: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:826
 #: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1043
 #: ../settings/xfpm-settings.c:1220 ../settings/xfpm-settings.c:1277
-#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:495
-#: ../src/xfpm-power.c:809
+#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:474
+#: ../src/xfpm-power.c:788
 msgid "Hibernate"
 msgstr "Дълбоко приспиване"
 
@@ -211,7 +211,7 @@ msgid "Hibernate and suspend operations not permitted"
 msgstr "Приспиване и Дълбоко приспиване не са разрешени"
 
 #: ../settings/xfpm-settings.c:832 ../settings/xfpm-settings.c:1226
-#: ../src/xfpm-power.c:835
+#: ../src/xfpm-power.c:814
 msgid "Shutdown"
 msgstr "Изключи"
 
@@ -299,7 +299,7 @@ msgid "SOCKET ID"
 msgstr "SOCKET ID"
 
 #: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:374
-#: ../src/xfpm-power-info.c:973
+#: ../src/xfpm-power-info.c:910
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Въведи '%s --help' за начин на употреба."
@@ -326,9 +326,9 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Управлението на захранването не работи, да го стартирам ли?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:311 ../src/xfpm-power.c:606 ../src/xfpm-power.c:751
-#: ../src/xfpm-power.c:796 ../src/xfpm-power.c:965 ../src/xfpm-power.c:989
-#: ../src/xfpm-battery.c:353 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-power.c:273 ../src/xfpm-power.c:585 ../src/xfpm-power.c:730
+#: ../src/xfpm-power.c:775 ../src/xfpm-power.c:944 ../src/xfpm-power.c:968
+#: ../src/xfpm-battery.c:355 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Управление на захранването"
 
@@ -340,34 +340,34 @@ msgstr "Настройки на Xfce управление на захранва�
 msgid "translator-credits"
 msgstr "Милен Милев <fanfolet@gmail.com>"
 
-#: ../src/xfpm-power.c:332
+#: ../src/xfpm-power.c:294
 msgid "_Hibernate"
 msgstr "Дълбоко приспиване"
 
-#: ../src/xfpm-power.c:333
+#: ../src/xfpm-power.c:295
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
 msgstr "Програма е изключила автоматичното приспиване. Изпълняването на това действие може да наруши работното състояние на програмата."
 
-#: ../src/xfpm-power.c:335
+#: ../src/xfpm-power.c:297
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Сигурен ли сте, че искате да приспите системата дълбоко?"
 
-#: ../src/xfpm-power.c:430
+#: ../src/xfpm-power.c:409
 msgid "Quit"
 msgstr "Изход"
 
-#: ../src/xfpm-power.c:431
+#: ../src/xfpm-power.c:410
 msgid "All running instances of the power manager will exit"
 msgstr "Всички работещи копия на управление на захранването ще се изключат"
 
-#: ../src/xfpm-power.c:433
+#: ../src/xfpm-power.c:412
 msgid "Quit the power manager?"
 msgstr "Изход от управление на захранването?"
 
 #. Power information
-#: ../src/xfpm-power.c:545 ../src/xfpm-power-info.c:845
+#: ../src/xfpm-power.c:524 ../src/xfpm-power-info.c:781
 msgid "Power Information"
 msgstr "Информация за захранването"
 
@@ -376,121 +376,129 @@ msgstr "Информация за захранването"
 #. *
 #. TRANSLATOR: Mode here is the power profile (presentation, power save,
 #. normal)
-#: ../src/xfpm-power.c:561
+#: ../src/xfpm-power.c:540
 msgid "Mode"
 msgstr "Режим"
 
 #. Normal
-#: ../src/xfpm-power.c:572
+#: ../src/xfpm-power.c:551
 msgid "Normal"
 msgstr "Нормален"
 
 #. Normal
-#: ../src/xfpm-power.c:582
+#: ../src/xfpm-power.c:561
 msgid "Presentation"
 msgstr "Презентация"
 
-#: ../src/xfpm-power.c:714
+#: ../src/xfpm-power.c:693
 msgid "Hibernate the system"
 msgstr "Дълбоко приспиване на системата"
 
-#: ../src/xfpm-power.c:725
+#: ../src/xfpm-power.c:704
 msgid "Suspend the system"
 msgstr "Приспиване на системата"
 
-#: ../src/xfpm-power.c:735
+#: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
 msgstr "Изключване на системата"
 
-#: ../src/xfpm-power.c:746 ../src/xfpm-power.c:793
+#: ../src/xfpm-power.c:725 ../src/xfpm-power.c:772
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Батерията е изтощена. Запазете своята работа за да избегнете загуби на данни."
 
-#: ../src/xfpm-power.c:966
+#: ../src/xfpm-power.c:945
 msgid "System is running on low power"
 msgstr "Батерията е изтощена"
 
-#: ../src/xfpm-power.c:985
+#: ../src/xfpm-power.c:964
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Нивото на батерията %s е ниско\nОставащо време %s"
 
-#: ../src/xfpm-power.c:1189 ../src/xfpm-power.c:1194
+#: ../src/xfpm-power.c:1163 ../src/xfpm-power.c:1168
 msgid "Adaptor is offline"
 msgstr "Захранването е изключено"
 
-#: ../src/xfpm-power.c:1190 ../src/xfpm-power.c:1195 ../src/xfpm-battery.c:415
+#: ../src/xfpm-power.c:1164 ../src/xfpm-power.c:1169 ../src/xfpm-battery.c:417
 #, c-format
 msgid "Adaptor is online"
 msgstr "Захранването е включено"
 
-#: ../src/xfpm-power.c:1667 ../src/xfpm-power.c:1700 ../src/xfpm-power.c:1719
-#: ../src/xfpm-power.c:1742
+#: ../src/xfpm-power.c:1601 ../src/xfpm-power.c:1634 ../src/xfpm-power.c:1653
+#: ../src/xfpm-power.c:1676
 #, c-format
 msgid "Permission denied"
 msgstr "Нямате права"
 
-#: ../src/xfpm-power.c:1727 ../src/xfpm-power.c:1750
+#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
 msgstr "Приспиването не се поддържа"
 
-#: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
+#: ../src/xfpm-power-common.c:44 ../src/xfpm-power-common.c:67
 msgid "Battery"
 msgstr "Батерия"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:851
+#: ../src/xfpm-power-common.c:46 ../src/xfpm-battery.c:802
 msgid "UPS"
 msgstr "UPS"
 
-#: ../src/xfpm-power-common.c:126
+#: ../src/xfpm-power-common.c:48
 msgid "Line power"
 msgstr "Ел. мрежа"
 
-#: ../src/xfpm-power-common.c:128
+#: ../src/xfpm-power-common.c:50
 msgid "Mouse"
 msgstr "Мишка"
 
-#: ../src/xfpm-power-common.c:130
+#: ../src/xfpm-power-common.c:52
 msgid "Keyboard"
 msgstr "Клавиатура"
 
-#: ../src/xfpm-power-common.c:134
+#: ../src/xfpm-power-common.c:56
 msgid "PDA"
 msgstr "PDA"
 
-#: ../src/xfpm-power-common.c:136
+#: ../src/xfpm-power-common.c:58
 msgid "Phone"
 msgstr "Телефон"
 
-#: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:869
+#: ../src/xfpm-power-common.c:60
+msgid "Tablet"
+msgstr "Таблет"
+
+#: ../src/xfpm-power-common.c:62
+msgid "Computer"
+msgstr "Компютър"
+
+#: ../src/xfpm-power-common.c:64 ../src/xfpm-power-common.c:79
+#: ../src/xfpm-power-common.c:94 ../src/xfpm-battery.c:820
 msgid "Unknown"
 msgstr "Непознат"
 
-#: ../src/xfpm-power-common.c:155
+#: ../src/xfpm-power-common.c:81
 msgid "Lithium ion"
 msgstr "Литиево-йонна"
 
-#: ../src/xfpm-power-common.c:157
+#: ../src/xfpm-power-common.c:83
 msgid "Lithium polymer"
 msgstr "Литиево-полимерна"
 
-#: ../src/xfpm-power-common.c:159
+#: ../src/xfpm-power-common.c:85
 msgid "Lithium iron phosphate"
 msgstr "Литиево-желязо-фосфатна"
 
-#: ../src/xfpm-power-common.c:161
+#: ../src/xfpm-power-common.c:87
 msgid "Lead acid"
 msgstr "Оловна"
 
-#: ../src/xfpm-power-common.c:163
+#: ../src/xfpm-power-common.c:89
 msgid "Nickel cadmium"
 msgstr "Никел-кадмиева"
 
-#: ../src/xfpm-power-common.c:165
+#: ../src/xfpm-power-common.c:91
 msgid "Nickel metal hybride"
 msgstr "Никел-метал-хидридна"
 
@@ -500,18 +508,18 @@ msgstr "Никел-метал-хидридна"
 msgid "Brightness: %.0f percent"
 msgstr "Яркост: %.0f процента"
 
-#: ../src/xfpm-battery.c:171
+#: ../src/xfpm-battery.c:173
 msgid "Unknown time"
 msgstr "Неустановено време"
 
-#: ../src/xfpm-battery.c:177
+#: ../src/xfpm-battery.c:179
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i минута"
 msgstr[1] "%i минути"
 
-#: ../src/xfpm-battery.c:188
+#: ../src/xfpm-battery.c:190
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -520,68 +528,68 @@ msgstr[1] "%i часа"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../src/xfpm-battery.c:194
+#: ../src/xfpm-battery.c:196
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: ../src/xfpm-battery.c:195
+#: ../src/xfpm-battery.c:197
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "час"
 msgstr[1] "часа"
 
-#: ../src/xfpm-battery.c:196
+#: ../src/xfpm-battery.c:198
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "минута"
 msgstr[1] "минути"
 
-#: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
+#: ../src/xfpm-battery.c:213 ../src/xfpm-battery.c:264
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "Вашата %s е напълно заредена"
 
-#: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
+#: ../src/xfpm-battery.c:216 ../src/xfpm-battery.c:267
 #, c-format
 msgid "Your %s is charging"
 msgstr "Вашата  %s се зарежда"
 
-#: ../src/xfpm-battery.c:224
+#: ../src/xfpm-battery.c:226
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until it is fully charged."
 msgstr "%s (%i%%)\n%s докато се зареди напълно."
 
-#: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
+#: ../src/xfpm-battery.c:234 ../src/xfpm-battery.c:270
 #, c-format
 msgid "Your %s is discharging"
 msgstr "Вашата %s се разрежда"
 
-#: ../src/xfpm-battery.c:234
+#: ../src/xfpm-battery.c:236
 #, c-format
 msgid "System is running on %s power"
 msgstr "Системата работи на %s"
 
-#: ../src/xfpm-battery.c:244
+#: ../src/xfpm-battery.c:246
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr "%s (%i%%)\nОставащо време %s."
 
-#: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
+#: ../src/xfpm-battery.c:252 ../src/xfpm-battery.c:273
 #, c-format
 msgid "Your %s is empty"
 msgstr "Вашата %s е изтощена"
 
-#: ../src/xfpm-battery.c:415
+#: ../src/xfpm-battery.c:417
 #, c-format
 msgid "System is running on battery power"
 msgstr "Системата работи на батерия"
 
-#: ../src/xfpm-battery.c:422
+#: ../src/xfpm-battery.c:424
 #, c-format
 msgid ""
 "%s\n"
@@ -589,14 +597,14 @@ msgid ""
 "Provides %s runtime"
 msgstr "%s\nВашата %s е напълно заредена (%i%%).\nРазполагате с %s време за работа."
 
-#: ../src/xfpm-battery.c:431
+#: ../src/xfpm-battery.c:433
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
 msgstr "%s\nВашата %s е напълно заредена (%i%%)."
 
-#: ../src/xfpm-battery.c:442
+#: ../src/xfpm-battery.c:444
 #, c-format
 msgid ""
 "%s\n"
@@ -604,14 +612,14 @@ msgid ""
 "%s until is fully charged."
 msgstr "%s\nВашата %s се зарежда (%i%%)\n%s до пълно зареждане."
 
-#: ../src/xfpm-battery.c:451
+#: ../src/xfpm-battery.c:453
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
 msgstr "%s\nВашата %s се зарежда (%i%%)."
 
-#: ../src/xfpm-battery.c:462
+#: ../src/xfpm-battery.c:464
 #, c-format
 msgid ""
 "%s\n"
@@ -619,59 +627,59 @@ msgid ""
 "Estimated time left is %s."
 msgstr "%s\nВашата %s се разрежда (%i%%)\nОставащо време %s."
 
-#: ../src/xfpm-battery.c:471
+#: ../src/xfpm-battery.c:473
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
 msgstr "%s\nВашата %s се разрежда (%i%%)."
 
-#: ../src/xfpm-battery.c:480
+#: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr "%s\n%s очаква разреждане (%i%%)."
 
-#: ../src/xfpm-battery.c:484
+#: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
 msgstr "%s\n%s очаква зареждане (%i%%)."
 
-#: ../src/xfpm-battery.c:488
+#: ../src/xfpm-battery.c:490
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
 msgstr "%s\nВашата %s е изтощена"
 
-#: ../src/xfpm-battery.c:848
+#: ../src/xfpm-battery.c:799
 msgid "battery"
 msgstr "батерия"
 
-#: ../src/xfpm-battery.c:854
+#: ../src/xfpm-battery.c:805
 msgid "monitor battery"
 msgstr "батерия на монитора"
 
-#: ../src/xfpm-battery.c:857
+#: ../src/xfpm-battery.c:808
 msgid "mouse battery"
 msgstr "батерия на мишката"
 
-#: ../src/xfpm-battery.c:860
+#: ../src/xfpm-battery.c:811
 msgid "keyboard battery"
 msgstr "батерия на клавиатурата"
 
-#: ../src/xfpm-battery.c:863
+#: ../src/xfpm-battery.c:814
 msgid "PDA battery"
 msgstr "батерия на PDA"
 
-#: ../src/xfpm-battery.c:866
+#: ../src/xfpm-battery.c:817
 msgid "Phone battery"
 msgstr "батерия на телефона"
 
-#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
+#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:96
 #, c-format
 msgid ""
 "\n"
@@ -684,11 +692,11 @@ msgid ""
 "\n"
 msgstr "\nXfce управление на захранването %s\n\nЧаст от Xfce Goodies Project\nhttp://goodies.xfce.org\n\nЛицензирано под GNU GPL.\n\n"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:379
 msgid "True"
 msgstr "Да"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:379
 msgid "False"
 msgstr "Не"
 
@@ -798,7 +806,7 @@ msgstr "Покажи диалога за настройки"
 msgid "Quit any running xfce power manager"
 msgstr "Изключи работещите xfce управления на захранването"
 
-#: ../src/xfpm-main.c:353 ../src/xfpm-power-info.c:960
+#: ../src/xfpm-main.c:353 ../src/xfpm-power-info.c:897
 msgid "Version information"
 msgstr "Инфо за версията"
 
@@ -826,209 +834,200 @@ msgid "Invalid cookie"
 msgstr "Невалидна бисквитка"
 
 #. TRANSLATORS: the command line was not provided
-#: ../src/xfpm-power-info.c:118
+#: ../src/xfpm-power-info.c:121
 msgid "No data"
 msgstr "Няма данни"
 
 #. TRANSLATORS: kernel module, usually a device driver
-#: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
+#: ../src/xfpm-power-info.c:128 ../src/xfpm-power-info.c:133
 msgid "Kernel module"
 msgstr "Кернел модул"
 
 #. TRANSLATORS: kernel housekeeping
-#: ../src/xfpm-power-info.c:135
+#: ../src/xfpm-power-info.c:138
 msgid "Kernel core"
 msgstr "Кернел ядро"
 
 #. TRANSLATORS: interrupt between processors
-#: ../src/xfpm-power-info.c:140
+#: ../src/xfpm-power-info.c:143
 msgid "Interprocessor interrupt"
 msgstr "Interprocessor interrupt"
 
 #. TRANSLATORS: unknown interrupt
-#: ../src/xfpm-power-info.c:145
+#: ../src/xfpm-power-info.c:148
 msgid "Interrupt"
 msgstr "Interrupt"
 
 #. TRANSLATORS: the keyboard and mouse device event
-#: ../src/xfpm-power-info.c:189
+#: ../src/xfpm-power-info.c:192
 msgid "PS/2 keyboard/mouse/touchpad"
 msgstr "PS/2 клавиатура/мишка/тъчпад"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
-#: ../src/xfpm-power-info.c:192
+#: ../src/xfpm-power-info.c:195
 msgid "ACPI"
 msgstr "ACPI"
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
-#: ../src/xfpm-power-info.c:195
+#: ../src/xfpm-power-info.c:198
 msgid "Serial ATA"
 msgstr "Serial ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
-#: ../src/xfpm-power-info.c:198
+#: ../src/xfpm-power-info.c:201
 msgid "ATA host controller"
 msgstr "ATA host controller"
 
 #. TRANSLATORS: 802.11 wireless adaptor
-#: ../src/xfpm-power-info.c:201
+#: ../src/xfpm-power-info.c:204
 msgid "Intel wireless adaptor"
 msgstr "Безжичен адаптор Intel"
 
 #. TRANSLATORS: a timer is something that fires periodically
-#: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
-#: ../src/xfpm-power-info.c:212 ../src/xfpm-power-info.c:215
-#: ../src/xfpm-power-info.c:218
+#: ../src/xfpm-power-info.c:209 ../src/xfpm-power-info.c:212
+#: ../src/xfpm-power-info.c:215 ../src/xfpm-power-info.c:218
+#: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Timer %s"
 msgstr "Timer %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
-#: ../src/xfpm-power-info.c:221
+#: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "Sleep %s"
 msgstr "Приспиване %s"
 
 #. TRANSLATORS: this is a new realtime task
-#: ../src/xfpm-power-info.c:224
+#: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "New task %s"
 msgstr "Нова задача %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
-#: ../src/xfpm-power-info.c:227
+#: ../src/xfpm-power-info.c:230
 #, c-format
 msgid "Wait %s"
 msgstr "Изчакай %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
-#: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
+#: ../src/xfpm-power-info.c:233 ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Work queue %s"
 msgstr "Работна опашка %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
-#: ../src/xfpm-power-info.c:236
+#: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "Network route flush %s"
 msgstr "Network route flush %s"
 
 #. TRANSLATORS: activity on the USB bus
-#: ../src/xfpm-power-info.c:239
+#: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "USB activity %s"
 msgstr "USB активност %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
-#: ../src/xfpm-power-info.c:242
+#: ../src/xfpm-power-info.c:245
 #, c-format
 msgid "Wakeup %s"
 msgstr "Събуди %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
-#: ../src/xfpm-power-info.c:245
+#: ../src/xfpm-power-info.c:248
 msgid "Local interrupts"
 msgstr "Local interrupts"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
-#: ../src/xfpm-power-info.c:248
+#: ../src/xfpm-power-info.c:251
 msgid "Rescheduling interrupts"
 msgstr "Rescheduling interrupts"
 
-#: ../src/xfpm-power-info.c:331
+#: ../src/xfpm-power-info.c:326
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: ../src/xfpm-power-info.c:338
+#: ../src/xfpm-power-info.c:333
 msgid "Value"
 msgstr "Стойност"
 
-#: ../src/xfpm-power-info.c:348
+#: ../src/xfpm-power-info.c:343
 msgid "Device"
 msgstr "Устройство"
 
-#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:766
+#: ../src/xfpm-power-info.c:370 ../src/xfpm-power-info.c:702
 msgid "Type"
 msgstr "Тип"
 
-#: ../src/xfpm-power-info.c:375
+#: ../src/xfpm-power-info.c:378
 msgid "PowerSupply"
 msgstr "Захранващ адаптор"
 
-#: ../src/xfpm-power-info.c:393
+#: ../src/xfpm-power-info.c:390
 msgid "Model"
 msgstr "Модел"
 
-#: ../src/xfpm-power-info.c:407
+#: ../src/xfpm-power-info.c:398
 msgid "Technology"
 msgstr "Технология"
 
-#: ../src/xfpm-power-info.c:420
+#: ../src/xfpm-power-info.c:409
 msgid "Energy percent"
 msgstr "Количество енергия"
 
-#. TRANSLATORS: Unit here is What hour
-#: ../src/xfpm-power-info.c:428 ../src/xfpm-power-info.c:442
-#: ../src/xfpm-power-info.c:456
+#. TRANSLATORS: Unit here is Watt hour
+#: ../src/xfpm-power-info.c:419 ../src/xfpm-power-info.c:432
+#: ../src/xfpm-power-info.c:445
 msgid "Wh"
 msgstr "Wh"
 
-#: ../src/xfpm-power-info.c:434
+#: ../src/xfpm-power-info.c:422
 msgid "Energy full design"
 msgstr "Проектна мощност"
 
-#: ../src/xfpm-power-info.c:448
+#: ../src/xfpm-power-info.c:435
 msgid "Energy full"
 msgstr "Пълна мощност"
 
-#: ../src/xfpm-power-info.c:462
+#: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
 msgstr "Мощност при изтощаване"
 
-#. TRANSLATORS: Unit here is volt
-#: ../src/xfpm-power-info.c:470
+#. TRANSLATORS: Unit here is Volt
+#: ../src/xfpm-power-info.c:458
 msgid "V"
 msgstr "V"
 
-#: ../src/xfpm-power-info.c:475
+#: ../src/xfpm-power-info.c:461
 msgid "Voltage"
 msgstr "Напрежение"
 
-#. Percentage
-#: ../src/xfpm-power-info.c:483
-msgid "%"
-msgstr "%"
-
-#: ../src/xfpm-power-info.c:488
-msgid "Percentage"
-msgstr "Количество"
-
-#: ../src/xfpm-power-info.c:505
+#: ../src/xfpm-power-info.c:472
 msgid "Vendor"
 msgstr "Производител"
 
-#: ../src/xfpm-power-info.c:522
+#: ../src/xfpm-power-info.c:482
 msgid "Serial"
 msgstr "Сериен номер"
 
-#: ../src/xfpm-power-info.c:758
+#: ../src/xfpm-power-info.c:694
 msgid "Processor"
 msgstr "Процесор"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
-#: ../src/xfpm-power-info.c:775
+#: ../src/xfpm-power-info.c:711
 msgid "PID"
 msgstr "PID"
 
-#: ../src/xfpm-power-info.c:781
+#: ../src/xfpm-power-info.c:717
 msgid "Wakeups"
 msgstr "Събуждания"
 
-#: ../src/xfpm-power-info.c:787
+#: ../src/xfpm-power-info.c:723
 msgid "Command"
 msgstr "Команда"
 
-#: ../src/xfpm-power-info.c:793
+#: ../src/xfpm-power-info.c:729
 msgid "Details"
 msgstr "Детайли"
 
