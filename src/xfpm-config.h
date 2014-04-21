@@ -82,6 +82,7 @@ G_BEGIN_DECLS
 #define         SPIN_DOWN_ON_AC_TIMEOUT		"spin-down-on-ac-timeout"
 #define         SPIN_DOWN_ON_BATTERY_TIMEOUT	"spin-down-on-battery-timeout"
 
+#define         NETWORK_MANAGER_SLEEP           "network-manager-sleep"
 G_END_DECLS
 
 #endif /* __XFPM_CONFIG_H */

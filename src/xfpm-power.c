@@ -285,6 +285,9 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 {
     GError *error = NULL;
     gboolean lock_screen;
+#ifdef WITH_NETWORK_MANAGER
+    gboolean network_manager_sleep;
+#endif
 
     if ( power->priv->inhibited && force == FALSE)
     {
@@ -301,7 +304,17 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
 
     g_signal_emit (G_OBJECT (power), signals [SLEEPING], 0);
-    xfpm_network_manager_sleep (TRUE);
+
+#ifdef WITH_NETWORK_MANAGER
+    g_object_get (G_OBJECT (power->priv->conf),
+                  NETWORK_MANAGER_SLEEP, &network_manager_sleep,
+                  NULL);
+
+    if ( network_manager_sleep )
+    {
+        xfpm_network_manager_sleep (TRUE);
+    }
+#endif
 
     g_object_get (G_OBJECT (power->priv->conf),
 		  LOCK_SCREEN_ON_SLEEP, &lock_screen,
@@ -354,7 +367,12 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
 
     g_signal_emit (G_OBJECT (power), signals [WAKING_UP], 0);
-    xfpm_network_manager_sleep (FALSE);
+#ifdef WITH_NETWORK_MANAGER
+    if ( network_manager_sleep )
+    {
+        xfpm_network_manager_sleep (FALSE);
+    }
+#endif
 }
 
 static void

@@ -84,6 +84,9 @@ enum
     PROP_SPIN_DOWN_DISK_ON_BATTERY,
     PROP_SPIN_DOWN_DISK_ON_AC_TIMEOUT,
     PROP_SPIN_DOWN_DISK_ON_BATTERY_TIMEOUT,
+#ifdef WITH_NETWORK_MANAGER
+    PROP_NETWORK_MANAGER_SLEEP,
+#endif
     N_PROPERTIES
 };
 
@@ -560,6 +563,18 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							G_MAXUINT,
 							120,
                                                         G_PARAM_READWRITE));
+
+#ifdef WITH_NETWORK_MANAGER
+    /**
+     * XfpmXfconf::network-manager-sleep
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_NETWORK_MANAGER_SLEEP,
+                                     g_param_spec_boolean (NETWORK_MANAGER_SLEEP,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+#endif
 
     g_type_class_add_private (klass, sizeof (XfpmXfconfPrivate));
 }
