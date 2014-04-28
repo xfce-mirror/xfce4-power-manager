@@ -221,7 +221,7 @@ xfpm_power_get_properties (XfpmPower *power)
     gboolean lid_is_present;
 
     /* TODO: newer versions of upower don't have that => logind handles it */
-#if !UP_CHECK_VERSION(0, 99, 0)
+#if !UP_CHECK_VERSION(0, 9, 0)
     power->priv->can_suspend = up_client_get_can_suspend(power->priv->upower);
     power->priv->can_hibernate = up_client_get_can_hibernate(power->priv->upower);
 #else
@@ -236,7 +236,7 @@ xfpm_power_get_properties (XfpmPower *power)
     }
     else
     {
-	g_warning("Error: using upower >= 0.99.0 but logind is not running");
+	g_warning("Error: using upower >= 0.9.0 but logind is not running");
 	g_warning("       suspend / hibernate will not work!");
     }
 #endif
@@ -332,7 +332,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
     else
     {
-#if !UP_CHECK_VERSION(0, 99, 0)
+#if !UP_CHECK_VERSION(0, 9, 0)
 	if (!g_strcmp0 (sleep_time, "Hibernate"))
 	{
 	    up_client_hibernate_sync(power->priv->upower, NULL, &error);
@@ -342,7 +342,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 	    up_client_suspend_sync(power->priv->upower, NULL, &error);
 	}
 #else
-	g_warning("Error: using upower >= 0.99.0 but logind is not running");
+	g_warning("Error: using upower >= 0.9.0 but logind is not running");
 	g_warning("       suspend / hibernate will not work!");
 #endif
     }
@@ -798,7 +798,8 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 
     content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
-    gtk_box_pack_start_defaults (GTK_BOX (content_area), gtk_label_new (message));
+    gtk_box_pack_start (GTK_BOX (content_area), gtk_label_new (message),
+		        TRUE, TRUE, 8);
 
     if ( power->priv->can_hibernate && power->priv->auth_hibernate )
     {
@@ -1113,12 +1114,6 @@ xfpm_power_device_removed_cb (UpClient *upower, UpDevice *device, XfpmPower *pow
     xfpm_power_remove_device (power, object_path);
 }
 #endif
-
-static void
-xfpm_power_device_changed_cb (DBusGProxy *proxy, const gchar *object_path, XfpmPower *power)
-{
-    xfpm_power_refresh_adaptor_visible (power);
-}
 
 #ifdef ENABLE_POLKIT
 static void

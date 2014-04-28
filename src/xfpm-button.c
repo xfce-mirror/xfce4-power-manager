@@ -127,7 +127,7 @@ xfpm_button_grab_keystring (XfpmButton *button, guint keycode)
     guint ret;
     guint modmask = AnyModifier;
     
-    display = GDK_DISPLAY ();
+    display = gdk_x11_get_default_xdisplay ();
     
     gdk_error_trap_push ();
 
@@ -162,7 +162,7 @@ xfpm_button_grab_keystring (XfpmButton *button, guint keycode)
 static gboolean
 xfpm_button_xevent_key (XfpmButton *button, guint keysym , XfpmButtonKey key)
 {
-    guint keycode = XKeysymToKeycode (GDK_DISPLAY(), keysym);
+    guint keycode = XKeysymToKeycode (gdk_x11_get_default_xdisplay(), keysym);
 
     if ( keycode == 0 )
     {

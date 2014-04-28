@@ -656,7 +656,7 @@ xfpm_info_update_wakeups_idle (gpointer data)
     
     info = (XfpmInfo*)data;
     
-    if ( GTK_WIDGET_VISIBLE (info->wakeups) ) 
+    if ( gtk_widget_get_visible (info->wakeups) )
         xfpm_info_update_wakeups (info);
     
     return TRUE;

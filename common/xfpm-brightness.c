@@ -67,7 +67,7 @@ xfpm_brightness_xrand_get_limit (XfpmBrightness *brightness, RROutput output, gi
     gboolean ret = TRUE;
 
     gdk_error_trap_push ();
-    info = XRRQueryOutputProperty (GDK_DISPLAY (), output, brightness->priv->backlight);
+    info = XRRQueryOutputProperty (gdk_x11_get_default_xdisplay (), output, brightness->priv->backlight);
     
     if (gdk_error_trap_pop () != 0
         || info == NULL)
@@ -102,7 +102,7 @@ xfpm_brightness_xrandr_get_level (XfpmBrightness *brightness, RROutput output, g
     gboolean ret = FALSE;
 
     gdk_error_trap_push ();
-    if (XRRGetOutputProperty (GDK_DISPLAY (), output, brightness->priv->backlight,
+    if (XRRGetOutputProperty (gdk_x11_get_default_xdisplay (), output, brightness->priv->backlight,
 			      0, 4, False, False, None,
 			      &actual_type, &actual_format,
 			      &nitems, &bytes_after, ((unsigned char **)&prop)) != Success
@@ -129,10 +129,10 @@ xfpm_brightness_xrandr_set_level (XfpmBrightness *brightness, RROutput output, g
     gboolean ret = TRUE;
 
     gdk_error_trap_push ();
-    XRRChangeOutputProperty (GDK_DISPLAY (), output, brightness->priv->backlight, XA_INTEGER, 32,
+    XRRChangeOutputProperty (gdk_x11_get_default_xdisplay (), output, brightness->priv->backlight, XA_INTEGER, 32,
 			     PropModeReplace, (unsigned char *) &level, 1);
 			     
-    XFlush (GDK_DISPLAY ());
+    XFlush (gdk_x11_get_default_xdisplay ());
     gdk_flush ();
     
     if ( gdk_error_trap_pop () ) 
@@ -157,8 +157,8 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     gint i;
     
     gdk_error_trap_push ();
-    if (!XRRQueryExtension (GDK_DISPLAY (), &event_base, &error_base) ||
-	!XRRQueryVersion (GDK_DISPLAY (), &major, &minor) )
+    if (!XRRQueryExtension (gdk_x11_get_default_xdisplay (), &event_base, &error_base) ||
+	!XRRQueryVersion (gdk_x11_get_default_xdisplay (), &major, &minor) )
     {
 	gdk_error_trap_pop ();
 	g_warning ("No XRANDR extension found");
@@ -173,10 +173,10 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     }
     
 #ifdef RR_PROPERTY_BACKLIGHT
-    brightness->priv->backlight = XInternAtom (GDK_DISPLAY (), RR_PROPERTY_BACKLIGHT, True);
+    brightness->priv->backlight = XInternAtom (gdk_x11_get_default_xdisplay (), RR_PROPERTY_BACKLIGHT, True);
     if (brightness->priv->backlight == None) /* fall back to deprecated name */
 #endif
-    brightness->priv->backlight = XInternAtom (GDK_DISPLAY (), "BACKLIGHT", True);
+    brightness->priv->backlight = XInternAtom (gdk_x11_get_default_xdisplay (), "BACKLIGHT", True);
     
     if (brightness->priv->backlight == None) 
     {
@@ -190,18 +190,18 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 
     gdk_error_trap_push ();
     
-    window = RootWindow (GDK_DISPLAY (), screen_num);
+    window = RootWindow (gdk_x11_get_default_xdisplay (), screen_num);
     
 #if (RANDR_MAJOR == 1 && RANDR_MINOR >=3 )
     if (major > 1 || minor >= 3)
-	brightness->priv->resource = XRRGetScreenResourcesCurrent (GDK_DISPLAY (), window);
+	brightness->priv->resource = XRRGetScreenResourcesCurrent (gdk_x11_get_default_xdisplay (), window);
     else
 #endif
-	brightness->priv->resource = XRRGetScreenResources (GDK_DISPLAY (), window);
+	brightness->priv->resource = XRRGetScreenResources (gdk_x11_get_default_xdisplay (), window);
 
     for ( i = 0; i < brightness->priv->resource->noutput; i++)
     {
-	info = XRRGetOutputInfo (GDK_DISPLAY (), brightness->priv->resource, brightness->priv->resource->outputs[i]);
+	info = XRRGetOutputInfo (gdk_x11_get_default_xdisplay (), brightness->priv->resource, brightness->priv->resource->outputs[i]);
 
 	if ( g_str_has_prefix (info->name, "LVDS") )
 	{

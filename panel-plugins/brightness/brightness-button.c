@@ -96,7 +96,7 @@ brightness_button_grab_notify (BrightnessButton *button, gboolean was_grabbed)
     if (was_grabbed != FALSE)
 	return;
 
-    if (!GTK_WIDGET_HAS_GRAB (button->priv->popup))
+    if (!gtk_widget_has_grab (button->priv->popup))
 	return;
 
     if (gtk_widget_is_ancestor (gtk_grab_get_current (), button->priv->popup))
@@ -143,7 +143,7 @@ brightness_button_release_grab (BrightnessButton *button, GdkEventButton *event)
     gtk_widget_hide (button->priv->popup);
 
     e = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
-    e->window = GTK_WIDGET (button)->window;
+    e->window = gtk_widget_get_window (GTK_WIDGET (button));
     e->type = GDK_BUTTON_RELEASE;
     gtk_widget_event (GTK_WIDGET (button), (GdkEvent *) e);
     e->window = event->window;
@@ -192,6 +192,7 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
     BrightnessButton *button;
     XfceScreenPosition pos;
     gboolean has_hw;
+    GtkAllocation widget_allocation, popup_allocation;
     
     button = BRIGHTNESS_BUTTON (widget);
     
@@ -209,7 +210,7 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
     
     gtk_grab_add (button->priv->popup);
 
-    if (gdk_pointer_grab (button->priv->popup->window, TRUE,
+    if (gdk_pointer_grab (gtk_widget_get_window (button->priv->popup), TRUE,
 			GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
 			GDK_POINTER_MOTION_MASK, NULL, NULL, ev_time)
 	  != GDK_GRAB_SUCCESS)
@@ -219,7 +220,7 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
 	return FALSE;
     }
 
-    if (gdk_keyboard_grab (button->priv->popup->window, TRUE, ev_time) != GDK_GRAB_SUCCESS)
+    if (gdk_keyboard_grab (gtk_widget_get_window (button->priv->popup), TRUE, ev_time) != GDK_GRAB_SUCCESS)
     {
 	gdk_display_pointer_ungrab (display, ev_time);
 	gtk_grab_remove (button->priv->popup);
@@ -231,69 +232,67 @@ brightness_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
     gtk_widget_grab_focus (button->priv->range);
     
     /* Position */
-    gdk_window_get_origin (widget->window, &x, &y);
+    gdk_window_get_origin (gtk_widget_get_window (widget), &x, &y);
 
     pos = xfce_panel_plugin_get_screen_position (button->priv->plugin);
-    
+
+    gtk_widget_get_allocation (widget, &widget_allocation);
+    gtk_widget_get_allocation (button->priv->popup, &popup_allocation);
+
     /* top */
     if ( pos == XFCE_SCREEN_POSITION_NW_H || 
 	 pos == XFCE_SCREEN_POSITION_N    ||
 	 pos == XFCE_SCREEN_POSITION_NE_H )
     {
-	x += widget->allocation.x
-		+ widget->allocation.width/2;
-	y += widget->allocation.height;
-	x -= button->priv->popup->allocation.width/2;
+	x += widget_allocation.x + widget_allocation.width/2;
+	y += widget_allocation.height;
+	x -= popup_allocation.width/2;
     }
     /* left */
     else if ( pos == XFCE_SCREEN_POSITION_NW_V ||
 	      pos == XFCE_SCREEN_POSITION_W    ||
 	      pos == XFCE_SCREEN_POSITION_SW_V )
     {
-	y += widget->allocation.y
-		+ widget->allocation.height/2;
-	x += widget->allocation.width;
-	y -= button->priv->popup->allocation.height/2;
+	y += widget_allocation.y + widget_allocation.height/2;
+	x += widget_allocation.width;
+	y -= popup_allocation.height/2;
     }
     /* right */
     else if ( pos == XFCE_SCREEN_POSITION_NE_V ||
 	      pos == XFCE_SCREEN_POSITION_E    ||
 	      pos == XFCE_SCREEN_POSITION_SE_V )
     {
-	y += widget->allocation.y
-		+ widget->allocation.height/2;
-	x -= button->priv->popup->allocation.width;
-	y -= button->priv->popup->allocation.height/2;
+	y += widget_allocation.y
+		+ widget_allocation.height/2;
+	x -= popup_allocation.width;
+	y -= popup_allocation.height/2;
     }
     /* bottom */
     else if ( pos == XFCE_SCREEN_POSITION_SW_H ||
 	      pos == XFCE_SCREEN_POSITION_S    ||
 	      pos == XFCE_SCREEN_POSITION_SE_H )
     {
-	x += widget->allocation.x
-		+ widget->allocation.width/2;
-	y -= button->priv->popup->allocation.height;
-	x -= button->priv->popup->allocation.width/2;
+	x += widget_allocation.x + widget_allocation.width/2;
+	y -= popup_allocation.height;
+	x -= popup_allocation.width/2;
     }
     else if ( pos == XFCE_SCREEN_POSITION_FLOATING_H )
     {
-	x += widget->allocation.x
-		+ widget->allocation.width/2;
-	x -= button->priv->popup->allocation.width/2;
-	if ( y > button->priv->popup->allocation.height )
-	    y -= button->priv->popup->allocation.height;
+	x += widget_allocation.x + widget_allocation.width/2;
+	x -= popup_allocation.width/2;
+	if ( y > popup_allocation.height )
+	    y -= popup_allocation.height;
 	else 
-	     y += widget->allocation.height;
+	     y += widget_allocation.height;
     }
     else if ( pos == XFCE_SCREEN_POSITION_FLOATING_V )
     {
-	y -= button->priv->popup->allocation.height/2;
-	y += widget->allocation.y
-		+ widget->allocation.height/2;
-	if ( x < button->priv->popup->allocation.width )
-	    x += widget->allocation.width;
+	y -= popup_allocation.height/2;
+	y += widget_allocation.y + widget_allocation.height/2;
+	if ( x < popup_allocation.width )
+	    x += widget_allocation.width;
 	else
-	    x -= button->priv->popup->allocation.width;
+	    x -= popup_allocation.width;
     }
     else
     {
@@ -579,8 +578,8 @@ brightness_button_set_icon (BrightnessButton *button, gint width)
 static gboolean
 brightness_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BrightnessButton *button)
 {
-    gint width = size -2 - 2* MAX(GTK_WIDGET(button)->style->xthickness,
-				  GTK_WIDGET(button)->style->xthickness);
+    gint width = size -2 - 2* MAX(gtk_widget_get_style(GTK_WIDGET(button))->xthickness,
+				  gtk_widget_get_style(GTK_WIDGET(button))->xthickness);
 				 
     gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
     return brightness_button_set_icon (button, width);

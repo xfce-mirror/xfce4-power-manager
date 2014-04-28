@@ -52,33 +52,6 @@ GtkBuilder *xfpm_builder_new_from_string (const gchar *ui, GError **error)
     return builder;
 }
 
-static void
-xfpm_link_browser (GtkAboutDialog *about, const gchar *linkto, gpointer data)
-{
-    gchar *cmd;
-    
-    cmd = g_strdup_printf ("%s %s","xdg-open", linkto);
-    
-    if ( !g_spawn_command_line_async (cmd, NULL) )
-    {
-	g_free (cmd);
-	cmd = g_strdup_printf ("%s %s","xfbrowser4", linkto);
-	g_spawn_command_line_async (cmd, NULL);
-    }
-    g_free (cmd);
-	
-}
-
-static void
-xfpm_link_mailto (GtkAboutDialog *about, const gchar *linkto, gpointer data)
-{
-    gchar *cmd = g_strdup_printf( "%s %s", "xdg-email", linkto);
-
-    g_spawn_command_line_async (cmd, NULL);
-    
-    g_free (cmd);
-}
-	
 void       
 xfpm_lock_screen (void)
 {
@@ -134,11 +107,7 @@ xfpm_about (GtkWidget *widget, gpointer data)
 	"Ali Abdallah <aliov@xfce.org>",
 	NULL,
     };
-    
 
-    gtk_about_dialog_set_url_hook (xfpm_link_browser, NULL, NULL);
-    gtk_about_dialog_set_email_hook (xfpm_link_mailto, NULL, NULL);
-    
     gtk_show_about_dialog (NULL,
 		     "authors", authors,
 		     "copyright", "Copyright \302\251 2008-2011 Ali Abdallah",

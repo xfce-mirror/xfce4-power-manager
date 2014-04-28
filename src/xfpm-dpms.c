@@ -67,12 +67,12 @@ xfpm_dpms_set_timeouts (XfpmDpms *dpms, guint16 standby, guint16 suspend, guint 
 {
     CARD16 x_standby = 0 , x_suspend = 0, x_off = 0;
     
-    DPMSGetTimeouts (GDK_DISPLAY(), &x_standby, &x_suspend, &x_off);
+    DPMSGetTimeouts (gdk_x11_get_default_xdisplay(), &x_standby, &x_suspend, &x_off);
     
     if ( standby != x_standby || suspend != x_suspend || off != x_off )
     {
 	XFPM_DEBUG ("Settings dpms: standby=%d suspend=%d off=%d\n", standby, suspend, off);
-	DPMSSetTimeouts (GDK_DISPLAY(), standby,
+	DPMSSetTimeouts (gdk_x11_get_default_xdisplay(), standby,
 					suspend,
 					off );
     }
@@ -87,11 +87,11 @@ xfpm_dpms_disable (XfpmDpms *dpms)
     BOOL state;
     CARD16 power_level;
     
-    if (!DPMSInfo (GDK_DISPLAY(), &power_level, &state) )
+    if (!DPMSInfo (gdk_x11_get_default_xdisplay(), &power_level, &state) )
 	g_warning ("Cannot get DPMSInfo");
 	
     if ( state )
-	DPMSDisable (GDK_DISPLAY());
+	DPMSDisable (gdk_x11_get_default_xdisplay());
 }
 
 /*
@@ -103,11 +103,11 @@ xfpm_dpms_enable (XfpmDpms *dpms)
     BOOL state;
     CARD16 power_level;
     
-    if (!DPMSInfo (GDK_DISPLAY(), &power_level, &state) )
+    if (!DPMSInfo (gdk_x11_get_default_xdisplay(), &power_level, &state) )
 	g_warning ("Cannot get DPMSInfo");
 	
     if ( !state )
-	DPMSEnable (GDK_DISPLAY());
+	DPMSEnable (gdk_x11_get_default_xdisplay());
 }
 
 static void
@@ -229,7 +229,7 @@ xfpm_dpms_init(XfpmDpms *dpms)
 {
     dpms->priv = XFPM_DPMS_GET_PRIVATE(dpms);
     
-    dpms->priv->dpms_capable = DPMSCapable (GDK_DISPLAY());
+    dpms->priv->dpms_capable = DPMSCapable (gdk_x11_get_default_xdisplay());
     dpms->priv->switch_off_timeout_id = 0;
     dpms->priv->switch_on_timeout_id = 0;
 
@@ -304,7 +304,7 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
     if ( !dpms->priv->dpms_capable )
 	goto out;
     
-    if ( G_UNLIKELY (!DPMSInfo (GDK_DISPLAY (), &current_level, &current_state)) )
+    if ( G_UNLIKELY (!DPMSInfo (gdk_x11_get_default_xdisplay (), &current_level, &current_state)) )
     {
 	g_warning ("Cannot get DPMSInfo");
 	goto out;
@@ -320,14 +320,14 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
     {
 	XFPM_DEBUG ("Forcing DPMS mode %d", level);
 	
-	if ( !DPMSForceLevel (GDK_DISPLAY (), level ) )
+	if ( !DPMSForceLevel (gdk_x11_get_default_xdisplay (), level ) )
 	{
 	    g_warning ("Cannot set Force DPMS level %d", level);
 	    goto out;
 	}
 	if ( level == DPMSModeOn )
-	    XResetScreenSaver (GDK_DISPLAY ());
-	XSync (GDK_DISPLAY (), FALSE);
+	    XResetScreenSaver (gdk_x11_get_default_xdisplay ());
+	XSync (gdk_x11_get_default_xdisplay (), FALSE);
     }
     else
     {

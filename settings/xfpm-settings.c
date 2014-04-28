@@ -943,7 +943,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
     else
     {
 	frame = GTK_WIDGET (gtk_builder_get_object (xml, "on-battery-brg-frame"));
-	gtk_widget_hide_all (frame);
+	gtk_widget_hide (frame);
     }
 #ifndef HAVE_DPMS
     if ( !has_lcd_brightness )
@@ -1092,7 +1092,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     else
     {
 	frame = GTK_WIDGET (gtk_builder_get_object (xml, "on-ac-brg-frame"));
-	gtk_widget_hide_all (frame);
+	gtk_widget_hide (frame);
     }
 #ifndef HAVE_DPMS
     if ( !has_lcd_brightness )
