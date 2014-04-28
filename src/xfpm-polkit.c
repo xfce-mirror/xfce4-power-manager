@@ -116,7 +116,7 @@ get_kinfo_proc (pid_t pid, struct kinfo_proc *p)
 static guint64
 get_start_time_for_pid (pid_t pid)
 {
-    guint64 start_time;
+    guint64 start_time = 0;
 #if defined(__linux)
     gchar *filename;
     gchar *contents;
