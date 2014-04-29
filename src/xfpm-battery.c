@@ -405,16 +405,25 @@ xfpm_battery_notify_state (XfpmBattery *battery)
 }
 
 /*
- * Refresh tooltip function for UPS and battery device only.
+ * Refresh tooltip function for devices with a battery.
  */
 static void
 xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
 {
-    gchar *tip;
+    gchar *tip = NULL;
     gchar *est_time_str = NULL;
     gchar *power_status = NULL;
 
-    power_status = g_strdup_printf (battery->priv->ac_online ? _("Adaptor is online") : _("System is running on battery power"));
+    if ( battery->priv->type == UP_DEVICE_KIND_BATTERY ||
+         battery->priv->type == UP_DEVICE_KIND_UPS )
+    {
+        power_status = g_strdup_printf (battery->priv->ac_online ? _("Adaptor is online") : _("System is running on battery power"));
+    }
+    else
+    {
+	/* Let the user know it's not a system battery being monitored */
+        power_status = g_strdup(_("Peripheral Device"));
+    }
 
     if ( battery->priv->state == UP_DEVICE_STATE_FULLY_CHARGED )
     {
@@ -488,6 +497,14 @@ xfpm_battery_set_tooltip_primary (XfpmBattery *battery, GtkTooltip *tooltip)
     else if ( battery->priv->state == UP_DEVICE_STATE_EMPTY )
     {
 	tip = g_strdup_printf (_("%s\nYour %s is empty"), power_status, battery->priv->battery_name);
+    }
+    else
+    {
+	/* unknown device state, just display the percentage */
+	tip = g_strdup_printf (_("%s\nYour %s is at (%i%%)."),
+				   power_status,
+				   battery->priv->battery_name,
+				   battery->priv->percentage);
     }
 
     gtk_tooltip_set_text (tooltip, tip);
@@ -592,14 +609,8 @@ xfpm_battery_query_tooltip (GtkStatusIcon *icon,
 
     battery = XFPM_BATTERY (icon);
 
-    if ( battery->priv->type == UP_DEVICE_KIND_BATTERY ||
-	 battery->priv->type == UP_DEVICE_KIND_UPS )
-    {
-	xfpm_battery_set_tooltip_primary (battery, tooltip);
-	return TRUE;
-    }
-
-    return FALSE;
+    xfpm_battery_set_tooltip_primary (battery, tooltip);
+    return TRUE;
 }
 
 static void
