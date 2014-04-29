@@ -322,8 +322,28 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 
     if ( lock_screen )
     {
-	g_usleep (2000000); /* 2 seconds */
-	xfpm_lock_screen ();
+#ifdef WITH_NETWORK_MANAGER
+        if ( network_manager_sleep )
+        {
+	    /* 2 seconds, to give network manager time to sleep */
+            g_usleep (2000000);
+	}
+#endif
+        if (!xfpm_lock_screen ())
+        {
+	    gboolean ret;
+
+	    ret = xfce_dialog_confirm (NULL,
+				       GTK_STOCK_OK, _("Continue"),
+			               _("None of the screen lock tools ran "
+				         "successfully, the screen will not "
+					 "be locked."),
+				       _("Do you still want to continue to "
+				         "suspend the system?"));
+
+	    if ( !ret )
+		return;
+        }
     }
 
     if ( LOGIND_RUNNING () )

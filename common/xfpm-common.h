@@ -40,7 +40,7 @@ gboolean        xfpm_string_to_bool     	(const gchar *string) G_GNUC_PURE;
 GtkBuilder     *xfpm_builder_new_from_string   	(const gchar *file,
 						 GError **error);
 
-void       	xfpm_lock_screen  		(void);
+gboolean   	xfpm_lock_screen  		(void);
 
 void       	xfpm_preferences		(void);
 

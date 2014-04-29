@@ -343,7 +343,15 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
 	else if ( action == LID_TRIGGER_LOCK_SCREEN )
 	{
 	    if ( !xfpm_is_multihead_connected () )
-		xfpm_lock_screen ();
+	    {
+		if (!xfpm_lock_screen ())
+		{
+		    xfce_dialog_show_error (NULL, NULL,
+					    _("None of the screen lock tools ran "
+					      "successfully, the screen will not "
+					      "be locked."));
+		}
+	    }
 	}
 	else
 	{
