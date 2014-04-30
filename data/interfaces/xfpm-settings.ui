@@ -174,7 +174,7 @@
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="notification">
-                    <property name="label" translatable="yes">Show notifications to notify about the battery state</property>
+                    <property name="label" translatable="yes">Show notifications</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -685,7 +685,7 @@
               <object class="GtkTable" id="advanced_table">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="n_rows">4</property>
+                <property name="n_rows">5</property>
                 <property name="n_columns">3</property>
                 <property name="row_spacing">6</property>
                 <property name="column_spacing">6</property>
@@ -804,19 +804,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="lock-screen-label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Lock screen when going for suspend/hibernate</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">4</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkCheckButton" id="lock-screen">
+                    <property name="label" translatable="yes">Lock screen when going for suspend/hibernate</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
@@ -824,8 +813,22 @@
                     <signal name="toggled" handler="lock_screen_toggled_cb"/>
                   </object>
                   <packing>
-                    <property name="left_attach">2</property>
+                    <property name="left_attach">1</property>
                     <property name="top_attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkCheckButton" id="network-manager-sleep">
+                    <property name="label" translatable="yes">Notify Network Manager of suspend/hibernate</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="draw_indicator">True</property>
+                    <property name="tooltip-text" translatable="yes">When enabled this signals to network manager that the system is going to suspend/hibernate so it can power down the network interfaces, saving power.</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">5</property>
                   </packing>
                 </child>
               </object>
