@@ -73,6 +73,8 @@ enum
     COL_ICON,
     COL_NAME,
     COL_OBJ_PATH,
+    COL_OBJ_DEVICE_POINTER,
+    COL_OBJ_SIGNAL_ID,
     NCOLS
 };
 
@@ -517,6 +519,7 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     guint type = 0;
     gchar *details;
     const gchar *object_path = up_device_get_object_path(device);
+    gulong signal_id;
 
     /* don't add the same device twice */
     device_iter = find_device_in_tree (button, object_path);
@@ -543,6 +546,12 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 
     DBG("device %s : %s", xfpm_power_get_icon_name (type), details);
 
+#if UP_CHECK_VERSION(0, 99, 0)
+    signal_id = g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), button);
+#else
+    signal_id = g_signal_connect (device, "changed", G_CALLBACK (device_changed_cb), button);
+#endif
+
     if ( type == UP_DEVICE_KIND_LINE_POWER )
     {
 	/* The PC's plugged in status shows up first */
@@ -556,13 +565,9 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 			COL_ICON, pix,
 			COL_NAME, details,
 			COL_OBJ_PATH, object_path,
+			COL_OBJ_SIGNAL_ID, signal_id,
+			COL_OBJ_DEVICE_POINTER, device,
 			-1);
-
-#if UP_CHECK_VERSION(0, 99, 0)
-    g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), button);
-#else
-    g_signal_connect (device, "changed", G_CALLBACK (device_changed_cb), button);
-#endif
 
     if ( pix )
 	g_object_unref (pix);
@@ -571,6 +576,31 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 static void
 battery_button_remove_device (BatteryButton *button, const gchar *object_path)
 {
+    GtkTreeIter *iter;
+    GtkListStore *list_store;
+    gulong signal_id;
+    UpDevice *device;
+
+    TRACE("entering for %s", object_path);
+
+    iter = find_device_in_tree (button, object_path);
+
+    if (iter == NULL)
+	return;
+
+    list_store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(button->priv->treeview)));
+
+    gtk_tree_model_get (GTK_TREE_MODEL(list_store), iter,
+			COL_OBJ_SIGNAL_ID, &signal_id,
+			COL_OBJ_DEVICE_POINTER, &device,
+			-1);
+
+    gtk_list_store_remove (list_store, iter);
+
+    gtk_tree_iter_free (iter);
+
+    if (device)
+	g_signal_handler_disconnect (device, signal_id);
 }
 
 static void
@@ -652,7 +682,7 @@ battery_button_create_popup (BatteryButton *button)
     gtk_container_add (GTK_CONTAINER (button->priv->popup), box);
 
     button->priv->treeview = gtk_tree_view_new ();
-    list_store = gtk_list_store_new (3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING);
+    list_store = gtk_list_store_new (5, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_ULONG, G_TYPE_POINTER);
 
     gtk_tree_view_set_model (GTK_TREE_VIEW (button->priv->treeview), GTK_TREE_MODEL (list_store));
 
@@ -724,6 +754,8 @@ battery_button_finalize (GObject *object)
 
     button = BATTERY_BUTTON (object);
 
+    g_signal_handlers_disconnect_by_data (button->priv->upower, button);
+
     g_object_unref (button->priv->plugin);
 
     G_OBJECT_CLASS (battery_button_parent_class)->finalize (object);
@@ -785,12 +817,6 @@ battery_button_free_data_cb (XfcePanelPlugin *plugin, BatteryButton *button)
 }
 
 static void
-battery_button_orientation_changed_cb (XfcePanelPlugin *plugin, GtkOrientation or, BatteryButton *button)
-{
-
-}
-
-static void
 help_cb (GtkMenuItem *menuitem, gpointer user_data)
 {
     BatteryButton *button = BATTERY_BUTTON (user_data);
@@ -824,12 +850,8 @@ void battery_button_show (BatteryButton *button)
 
     xfce_panel_plugin_menu_insert_item (button->priv->plugin, GTK_MENU_ITEM (mi));
 
-
     g_signal_connect (button->priv->plugin, "size-changed",
 		      G_CALLBACK (battery_button_size_changed_cb), button);
-
-    g_signal_connect (button->priv->plugin, "orientation_changed",
-		      G_CALLBACK (battery_button_orientation_changed_cb), button);
 
     g_signal_connect (button->priv->plugin, "free-data",
 		      G_CALLBACK (battery_button_free_data_cb), button);
