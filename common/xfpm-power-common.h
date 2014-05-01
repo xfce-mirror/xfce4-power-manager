@@ -47,8 +47,12 @@ const gchar	*xfpm_power_translate_technology	(guint value);
 
 const gchar	*xfpm_power_get_icon_name		(guint device_type);
 
-const gchar * G_GNUC_CONST xfpm_battery_get_icon_index (UpDeviceKind type, guint percent);
+const gchar *G_GNUC_CONST xfpm_battery_get_icon_index (UpDeviceKind type, guint percent);
 
-gchar * xfpm_battery_get_time_string (guint seconds);
+gchar *xfpm_battery_get_time_string (guint seconds);
+
+gchar *xfpm_battery_get_icon_prefix_device_enum_type (UpDeviceKind type);
+
+gchar *get_device_icon_name (UpClient *upower, UpDevice *device);
 
 #endif /* XFPM_UPOWER_COMMON */

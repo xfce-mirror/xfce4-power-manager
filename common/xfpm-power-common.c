@@ -197,3 +197,113 @@ xfpm_battery_get_time_string (guint seconds)
 			    minutes, ngettext ("minute", "minutes", minutes));
     return timestring;
 }
+
+gchar *
+xfpm_battery_get_icon_prefix_device_enum_type (UpDeviceKind type)
+{
+    if ( type == UP_DEVICE_KIND_BATTERY )
+    {
+	return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
+    }
+    else if ( type == UP_DEVICE_KIND_UPS )
+    {
+	return g_strdup (XFPM_UPS_ICON_PREFIX);
+    }
+    else if ( type == UP_DEVICE_KIND_MOUSE )
+    {
+	return g_strdup (XFPM_MOUSE_ICON_PREFIX);
+    }
+    else if ( type == UP_DEVICE_KIND_KEYBOARD )
+    {
+	return g_strdup (XFPM_KBD_ICON_PREFIX);
+    }
+    else if ( type == UP_DEVICE_KIND_PHONE )
+    {
+	return g_strdup (XFPM_PHONE_ICON_PREFIX);
+    }
+
+    return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
+}
+
+gchar*
+get_device_icon_name (UpClient *upower, UpDevice *device)
+{
+    gchar *icon_name = NULL, *icon_prefix;
+    guint type = 0, state = 0;
+    gboolean on_battery, battery_low = FALSE;
+    gboolean present;
+    gdouble percentage;
+
+    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
+    g_object_get (device,
+		  "kind", &type,
+		  "state", &state,
+		  "is-present", &present,
+		  "percentage", &percentage,
+		   NULL);
+
+    g_object_get (upower,
+                  "on-battery", &on_battery,
+#if UP_CHECK_VERSION(0, 99, 0)
+		  "OnLowBattery", &battery_low,
+#endif
+		  NULL);
+
+    icon_prefix = xfpm_battery_get_icon_prefix_device_enum_type (type);
+
+    if ( type == UP_DEVICE_KIND_LINE_POWER )
+    {
+	if ( !on_battery )
+	{
+	    icon_name = g_strdup_printf ("%s", XFPM_AC_ADAPTER_ICON);
+	}
+	else if ( battery_low )
+	{
+	    icon_name = g_strdup_printf ("%s100", icon_prefix);
+	}
+	else
+	{
+	    icon_name = g_strdup_printf ("%s100", icon_prefix);
+	}
+    }
+    else if ( type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS )
+    {
+	if (!present)
+	{
+	    icon_name = g_strdup_printf ("%s%s", icon_prefix, "missing");
+	}
+	else if (state == UP_DEVICE_STATE_FULLY_CHARGED )
+	{
+	    icon_name = g_strdup_printf ("%s%s", icon_prefix, on_battery ? "100" : "charged");
+	}
+	else if ( state == UP_DEVICE_STATE_CHARGING || state == UP_DEVICE_STATE_PENDING_CHARGE)
+	{
+	    icon_name = g_strdup_printf ("%s%s-%s", icon_prefix, xfpm_battery_get_icon_index (type, percentage), "charging");
+	}
+	else if ( state == UP_DEVICE_STATE_DISCHARGING || state == UP_DEVICE_STATE_PENDING_DISCHARGE)
+	{
+	    icon_name = g_strdup_printf ("%s%s", icon_prefix, xfpm_battery_get_icon_index (type, percentage));
+	}
+	else if ( state == UP_DEVICE_STATE_EMPTY)
+	{
+	    icon_name = g_strdup_printf ("%s%s", icon_prefix, on_battery ? "000" : "000-charging");
+	}
+    }
+    else
+    {
+	if ( !present || state == UP_DEVICE_STATE_EMPTY )
+	{
+	    icon_name = g_strdup_printf ("%s000", icon_prefix);
+	}
+	else if ( state == UP_DEVICE_STATE_FULLY_CHARGED )
+	{
+	    icon_name = g_strdup_printf ("%s100", icon_prefix);
+	}
+	else if ( state == UP_DEVICE_STATE_DISCHARGING || state == UP_DEVICE_STATE_CHARGING )
+	{
+	    icon_name = g_strdup_printf ("%s%s", icon_prefix, xfpm_battery_get_icon_index (type, percentage));
+	}
+    }
+
+    return icon_name;
+}

@@ -79,6 +79,7 @@ enum
 };
 
 static gchar* get_device_description (UpClient *upower, UpDevice *device);
+static GtkTreeIter* find_device_in_tree (BatteryButton *button, const gchar *object_path);
 
 G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_BUTTON)
 
@@ -340,7 +341,6 @@ get_device_description (UpClient *upower, UpDevice *device)
 {
     gchar *tip = NULL;
     gchar *est_time_str = NULL;
-    gchar *power_status = NULL;
     guint type = 0, state = 0;
     gchar *model = NULL, *vendor = NULL;
     gboolean on_battery;
@@ -458,7 +458,6 @@ get_device_description (UpClient *upower, UpDevice *device)
 			       percentage);
     }
 
-    g_free (power_status);
     return tip;
 }
 
@@ -492,7 +491,9 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 {
     GtkTreeIter *iter;
     const gchar *object_path = up_device_get_object_path(device);
-    gchar *details;
+    gchar *details, *icon_name;
+    GdkPixbuf *pix;
+    guint type;
 
     TRACE("entering for %s", object_path);
 
@@ -501,13 +502,45 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
     if (iter == NULL)
 	return;
 
+    icon_name = get_device_icon_name (button->priv->upower, device);
     details = get_device_description(button->priv->upower, device);
+
+    pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+				    icon_name,
+				    48,
+				    GTK_ICON_LOOKUP_USE_BUILTIN,
+				    NULL);
 
     gtk_list_store_set (GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(button->priv->treeview))), iter,
 			COL_NAME, details,
+			COL_ICON, pix,
 			-1);
 
     gtk_tree_iter_free (iter);
+
+    g_object_get (device,
+		  "kind", &type,
+		   NULL);
+
+    /* update the panel icon */
+    if (type == UP_DEVICE_KIND_LINE_POWER)
+    {
+	if ( g_strcmp0(icon_name, XFPM_AC_ADAPTER_ICON) == 0 )
+	{
+	    gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->image), pix);
+	}
+	else
+	{
+	    GdkPixbuf *tmp = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+						       XFPM_BATTERY_ICON,
+						       48,
+						       GTK_ICON_LOOKUP_USE_BUILTIN,
+						       NULL);
+
+	    gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->image), tmp);
+	    g_object_unref (tmp);
+	}
+    }
 }
 
 static void
@@ -517,7 +550,7 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     GtkTreeIter iter, *device_iter;
     GdkPixbuf *pix;
     guint type = 0;
-    gchar *details;
+    gchar *details, *icon_name;
     const gchar *object_path = up_device_get_object_path(device);
     gulong signal_id;
 
@@ -534,17 +567,16 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 		  "kind", &type,
 		   NULL);
 
+    icon_name = get_device_icon_name (button->priv->upower, device);
+    details = get_device_description(button->priv->upower, device);
+
     list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (button->priv->treeview)));
 
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-				    xfpm_power_get_icon_name (type),
+				    icon_name,
 				    48,
 				    GTK_ICON_LOOKUP_USE_BUILTIN,
 				    NULL);
-
-    details = get_device_description(button->priv->upower, device);
-
-    DBG("device %s : %s", xfpm_power_get_icon_name (type), details);
 
 #if UP_CHECK_VERSION(0, 99, 0)
     signal_id = g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), button);
@@ -556,6 +588,23 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     {
 	/* The PC's plugged in status shows up first */
 	gtk_list_store_prepend (list_store, &iter);
+
+	/* update the panel icon */
+	if ( g_strcmp0(icon_name, XFPM_AC_ADAPTER_ICON) == 0 )
+	{
+	    gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->image), pix);
+	}
+	else
+	{
+	    GdkPixbuf *tmp = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+						       XFPM_BATTERY_ICON,
+						       48,
+						       GTK_ICON_LOOKUP_USE_BUILTIN,
+						       NULL);
+
+	    gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->image), tmp);
+	    g_object_unref (tmp);
+	}
     }
     else
     {
@@ -777,36 +826,10 @@ destroy_popup (BatteryButton *button)
 }
 
 static gboolean
-battery_button_set_icon (BatteryButton *button, gint width)
-{
-    GdkPixbuf *pixbuf;
-    const gchar *icon_name;
-
-    icon_name = XFPM_AC_ADAPTER_ICON;
-
-    pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                       icon_name,
-                                       width,
-                                       GTK_ICON_LOOKUP_FORCE_SIZE,
-                                       NULL);
-
-    if ( pixbuf )
-    {
-        gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->image), pixbuf);
-        g_object_unref (pixbuf);
-        return TRUE;
-    }
-    return FALSE;
-}
-
-static gboolean
 battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButton *button)
 {
-    gint width = size -2 - 2* MAX(gtk_widget_get_style(GTK_WIDGET(button))->xthickness,
-				  gtk_widget_get_style(GTK_WIDGET(button))->xthickness);
-
     gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
-    return battery_button_set_icon (button, width);
+    return TRUE;
 }
 
 static void
@@ -826,6 +849,9 @@ help_cb (GtkMenuItem *menuitem, gpointer user_data)
 void battery_button_show (BatteryButton *button)
 {
     GtkWidget *mi;
+    GdkPixbuf *pix;
+    gboolean on_battery;
+    const gchar *icon_name;
 
     g_return_if_fail (BATTERY_IS_BUTTON (button));
 
@@ -833,6 +859,28 @@ void battery_button_show (BatteryButton *button)
 
     button->priv->image = gtk_image_new ();
     gtk_container_add (GTK_CONTAINER (button), button->priv->image);
+
+    g_object_get (button->priv->upower,
+                  "on-battery", &on_battery,
+		  NULL);
+
+    if ( on_battery )
+    {
+	icon_name = XFPM_BATTERY_ICON;
+    }
+    else
+    {
+	icon_name = XFPM_AC_ADAPTER_ICON;
+    }
+
+    pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+				    icon_name,
+				    48,
+				    GTK_ICON_LOOKUP_USE_BUILTIN,
+				    NULL);
+
+    gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->image), pix);
+    g_object_unref (pix);
 
     /* help dialog */
     mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_HELP, NULL);

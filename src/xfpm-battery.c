@@ -700,33 +700,6 @@ xfpm_battery_finalize (GObject *object)
     G_OBJECT_CLASS (xfpm_battery_parent_class)->finalize (object);
 }
 
-static gchar *
-xfpm_battery_get_icon_prefix_device_enum_type (UpDeviceKind type)
-{
-    if ( type == UP_DEVICE_KIND_BATTERY )
-    {
-	return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
-    }
-    else if ( type == UP_DEVICE_KIND_UPS )
-    {
-	return g_strdup (XFPM_UPS_ICON_PREFIX);
-    }
-    else if ( type == UP_DEVICE_KIND_MOUSE )
-    {
-	return g_strdup (XFPM_MOUSE_ICON_PREFIX);
-    }
-    else if ( type == UP_DEVICE_KIND_KEYBOARD )
-    {
-	return g_strdup (XFPM_KBD_ICON_PREFIX);
-    }
-    else if ( type == UP_DEVICE_KIND_PHONE )
-    {
-	return g_strdup (XFPM_PHONE_ICON_PREFIX);
-    }
-
-    return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
-}
-
 static const gchar *
 xfpm_battery_get_name (UpDeviceKind type)
 {
