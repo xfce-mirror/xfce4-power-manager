@@ -69,8 +69,6 @@ static void xfpm_power_get_property (GObject *object,
 static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
 
-static void xfpm_power_refresh_adaptor_visible (XfpmPower *power);
-
 static gboolean xfpm_power_prompt_password (XfpmPower *power);
 
 #define XFPM_POWER_GET_PRIVATE(o) \
@@ -89,7 +87,6 @@ struct XfpmPowerPrivate
     XfpmConsoleKit  *console;
     XfpmInhibit	    *inhibit;
     XfpmXfconf      *conf;
-    GtkStatusIcon   *adapter_icon;
 
     XfpmBatteryCharge overall_state;
     gboolean         critical_action_done;
@@ -435,18 +432,6 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 }
 
 static void
-xfpm_power_hibernate_cb (XfpmPower *power)
-{
-    xfpm_power_sleep (power, "Hibernate", FALSE);
-}
-
-static void
-xfpm_power_suspend_cb (XfpmPower *power)
-{
-    xfpm_power_sleep (power, "Suspend", FALSE);
-}
-
-static void
 xfpm_power_hibernate_clicked (XfpmPower *power)
 {
     gtk_widget_destroy (power->priv->dialog );
@@ -468,240 +453,6 @@ xfpm_power_shutdown_clicked (XfpmPower *power)
     gtk_widget_destroy (power->priv->dialog );
     power->priv->dialog = NULL;
     g_signal_emit (G_OBJECT (power), signals [SHUTDOWN], 0);
-}
-
-static void
-xfpm_power_power_info_cb (gpointer data)
-{
-    g_spawn_command_line_async ("xfce4-power-information", NULL);
-}
-
-static void
-xfpm_power_tray_exit_activated_cb (gpointer data)
-{
-    gboolean ret;
-
-    ret = xfce_dialog_confirm (NULL,
-			       GTK_STOCK_YES,
-			       _("Quit"),
-			       _("All running instances of the power manager will exit"),
-			       "%s",
-			        _("Quit the power manager?"));
-    if ( ret )
-    {
-	xfpm_quit ();
-    }
-}
-
-
-static void
-xfpm_power_change_mode (XfpmPower *power, XfpmPowerMode mode)
-{
-#ifdef HAVE_DPMS
-    XfpmDpms *dpms;
-
-    power->priv->power_mode = mode;
-
-    dpms = xfpm_dpms_new ();
-    xfpm_dpms_refresh (dpms);
-    g_object_unref (dpms);
-
-    if (mode == XFPM_POWER_MODE_NORMAL)
-    {
-	EggIdletime *idletime;
-	idletime = egg_idletime_new ();
-	egg_idletime_alarm_reset_all (idletime);
-
-	g_object_unref (idletime);
-    }
-#endif
-}
-
-static void
-xfpm_power_normal_mode_cb (XfpmPower *power)
-{
-    xfpm_power_change_mode (power, XFPM_POWER_MODE_NORMAL);
-}
-
-static void
-xfpm_power_presentation_mode_cb (XfpmPower *power)
-{
-    xfpm_power_change_mode (power, XFPM_POWER_MODE_PRESENTATION);
-}
-
-static void
-xfpm_power_help_cb (GtkMenuItem *menuitem, gpointer user_data)
-{
-    XfpmPower *power = XFPM_POWER (user_data);
-    xfce_dialog_show_help (GTK_WINDOW (power->priv->dialog), "xfce4-power-manager", "start", NULL);
-}
-
-static void
-xfpm_power_show_tray_menu (XfpmPower *power,
-			 GtkStatusIcon *icon,
-			 guint button,
-			 guint activate_time,
-			 gboolean show_info_item)
-{
-    GtkWidget *menu, *mi, *img, *subm;
-
-    menu = gtk_menu_new();
-
-    // Hibernate menu option
-    mi = gtk_image_menu_item_new_with_label (_("Hibernate"));
-    img = gtk_image_new_from_icon_name (XFPM_HIBERNATE_ICON, GTK_ICON_SIZE_MENU);
-    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mi), img);
-    gtk_widget_set_sensitive (mi, FALSE);
-
-    if ( power->priv->can_hibernate && power->priv->auth_hibernate)
-    {
-	gtk_widget_set_sensitive (mi, TRUE);
-	g_signal_connect_swapped (G_OBJECT (mi), "activate",
-				  G_CALLBACK (xfpm_power_hibernate_cb), power);
-    }
-    gtk_widget_show (mi);
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-
-    // Suspend menu option
-    mi = gtk_image_menu_item_new_with_label (_("Suspend"));
-    img = gtk_image_new_from_icon_name (XFPM_SUSPEND_ICON, GTK_ICON_SIZE_MENU);
-    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mi), img);
-
-    gtk_widget_set_sensitive (mi, FALSE);
-
-    if ( power->priv->can_suspend && power->priv->auth_suspend)
-    {
-	gtk_widget_set_sensitive (mi, TRUE);
-	g_signal_connect_swapped (mi, "activate",
-				  G_CALLBACK (xfpm_power_suspend_cb), power);
-    }
-
-    gtk_widget_show (mi);
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-/*
-    saver_inhibited = xfpm_screen_saver_get_inhibit (tray->priv->srv);
-    mi = gtk_check_menu_item_new_with_label (_("Monitor power control"));
-    gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (mi), !saver_inhibited);
-    gtk_widget_set_tooltip_text (mi, _("Disable or enable monitor power control, "\
-                                       "for example you could disable the screen power "\
-				       "control to avoid screen blanking when watching a movie."));
-
-    g_signal_connect (G_OBJECT (mi), "activate",
-		      G_CALLBACK (xfpm_tray_icon_inhibit_active_cb), tray);
-    gtk_widget_set_sensitive (mi, TRUE);
-    gtk_widget_show(mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu),mi);
-*/
-
-    mi = gtk_separator_menu_item_new ();
-    gtk_widget_show (mi);
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-
-    // Power information
-    mi = gtk_image_menu_item_new_with_label (_("Power Information"));
-    img = gtk_image_new_from_stock (GTK_STOCK_INFO, GTK_ICON_SIZE_MENU);
-    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mi), img);
-
-    gtk_widget_set_sensitive (mi,TRUE);
-
-    g_signal_connect_swapped (mi, "activate",
-			      G_CALLBACK (xfpm_power_power_info_cb), icon);
-
-    gtk_widget_show (mi);
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-
-    /**
-     * Power Mode
-     **/
-    /* TRANSLATOR: Mode here is the power profile (presentation, power save, normal) */
-    mi = gtk_image_menu_item_new_with_label (_("Mode"));
-    img = gtk_image_new_from_icon_name (XFPM_AC_ADAPTER_ICON, GTK_ICON_SIZE_MENU);
-    gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (mi), img);
-    gtk_widget_set_sensitive (mi,TRUE);
-    gtk_widget_show (mi);
-
-    subm = gtk_menu_new ();
-    gtk_menu_item_set_submenu (GTK_MENU_ITEM (mi), subm);
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-
-    /* Normal*/
-    mi = gtk_check_menu_item_new_with_label (_("Normal"));
-    gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (mi), power->priv->power_mode == XFPM_POWER_MODE_NORMAL);
-    gtk_widget_set_sensitive (mi,TRUE);
-
-    g_signal_connect_swapped (mi, "activate",
-			      G_CALLBACK (xfpm_power_normal_mode_cb), power);
-    gtk_widget_show (mi);
-    gtk_menu_shell_append (GTK_MENU_SHELL (subm), mi);
-
-    /* Normal*/
-    mi = gtk_check_menu_item_new_with_label (_("Presentation"));
-    gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (mi), power->priv->power_mode == XFPM_POWER_MODE_PRESENTATION);
-    gtk_widget_set_sensitive (mi, TRUE);
-
-    g_signal_connect_swapped (mi, "activate",
-			      G_CALLBACK (xfpm_power_presentation_mode_cb), power);
-    gtk_widget_show (mi);
-    gtk_menu_shell_append (GTK_MENU_SHELL (subm), mi);
-
-
-    mi = gtk_separator_menu_item_new ();
-    gtk_widget_show (mi);
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-
-    mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_HELP, NULL);
-    gtk_widget_set_sensitive (mi, TRUE);
-    gtk_widget_show (mi);
-    g_signal_connect (mi, "activate", G_CALLBACK (xfpm_power_help_cb), power);
-
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-
-    mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_ABOUT, NULL);
-    gtk_widget_set_sensitive (mi, TRUE);
-    gtk_widget_show (mi);
-    g_signal_connect (mi, "activate", G_CALLBACK (xfpm_about), _("Power Manager"));
-
-    gtk_menu_shell_append (GTK_MENU_SHELL(menu), mi);
-
-    mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_PREFERENCES, NULL);
-    gtk_widget_set_sensitive (mi, TRUE);
-    gtk_widget_show (mi);
-    g_signal_connect (mi, "activate",G_CALLBACK (xfpm_preferences), NULL);
-
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-
-    mi = gtk_separator_menu_item_new ();
-    gtk_widget_show (mi);
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-
-    mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_QUIT, NULL);
-    gtk_widget_set_sensitive (mi, TRUE);
-    gtk_widget_show (mi);
-    g_signal_connect_swapped (mi, "activate", G_CALLBACK (xfpm_power_tray_exit_activated_cb), NULL);
-    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
-
-    g_signal_connect (menu, "selection-done",
-		      G_CALLBACK (gtk_widget_destroy), NULL);
-
-    // Popup the menu
-    gtk_menu_popup(GTK_MENU(menu), NULL, NULL,
-		   gtk_status_icon_position_menu,
-		   icon, button, activate_time);
-
-}
-
-static void
-xfpm_power_show_tray_menu_battery (GtkStatusIcon *icon, guint button,
-			         guint activate_time, XfpmPower *power)
-{
-    xfpm_power_show_tray_menu (power, icon, button, activate_time, TRUE);
-}
-
-static void
-xfpm_power_show_tray_menu_adaptor (GtkStatusIcon *icon, guint button,
-			         guint activate_time, XfpmPower *power)
-{
-    xfpm_power_show_tray_menu (power, icon, button, activate_time, FALSE);
 }
 
 static XfpmBatteryCharge
@@ -1093,13 +844,9 @@ xfpm_power_add_device (UpDevice *device, XfpmPower *power)
 				     device_type);
 	g_hash_table_insert (power->priv->hash, g_strdup (object_path), battery);
 
-	g_signal_connect (battery, "popup-menu",
-			  G_CALLBACK (xfpm_power_show_tray_menu_battery), power);
-
 	g_signal_connect (battery, "battery-charge-changed",
 			  G_CALLBACK (xfpm_power_battery_charge_changed_cb), power);
 
-	xfpm_power_refresh_adaptor_visible (power);
     }
 }
 
@@ -1133,7 +880,6 @@ static void
 xfpm_power_remove_device (XfpmPower *power, const gchar *object_path)
 {
     g_hash_table_remove (power->priv->hash, object_path);
-    xfpm_power_refresh_adaptor_visible (power);
 }
 
 static void
@@ -1150,7 +896,6 @@ xfpm_power_changed_cb (UpClient *upower,
 		       XfpmPower *power)
 {
     xfpm_power_get_properties (power);
-    xfpm_power_refresh_adaptor_visible (power);
 }
 
 static void
@@ -1182,75 +927,6 @@ xfpm_power_polkit_auth_changed_cb (XfpmPower *power)
     xfpm_power_check_polkit_auth (power);
 }
 #endif
-
-static void
-xfpm_power_hide_adapter_icon (XfpmPower *power)
-{
-     XFPM_DEBUG ("Hide adaptor icon");
-
-    if ( power->priv->adapter_icon )
-    {
-        gtk_status_icon_set_visible (power->priv->adapter_icon, FALSE);
-        g_object_unref (power->priv->adapter_icon);
-        power->priv->adapter_icon = NULL;
-    }
-}
-
-static void
-xfpm_power_show_adapter_icon (XfpmPower *power)
-{
-    g_return_if_fail (power->priv->adapter_icon == NULL);
-
-    power->priv->adapter_icon = gtk_status_icon_new ();
-
-    XFPM_DEBUG ("Showing adaptor icon");
-
-    gtk_status_icon_set_from_icon_name (power->priv->adapter_icon, XFPM_AC_ADAPTER_ICON);
-
-    gtk_status_icon_set_visible (power->priv->adapter_icon, TRUE);
-
-    g_signal_connect (power->priv->adapter_icon, "popup-menu",
-		      G_CALLBACK (xfpm_power_show_tray_menu_adaptor), power);
-}
-
-static void
-xfpm_power_refresh_adaptor_visible (XfpmPower *power)
-{
-    XfpmShowIcon show_icon;
-
-    g_object_get (G_OBJECT (power->priv->conf),
-		  SHOW_TRAY_ICON_CFG, &show_icon,
-		  NULL);
-
-    XFPM_DEBUG_ENUM (show_icon, XFPM_TYPE_SHOW_ICON, "Tray icon configuration: ");
-
-    if ( show_icon == SHOW_ICON_ALWAYS )
-    {
-	if ( g_hash_table_size (power->priv->hash) == 0 )
-	{
-	    xfpm_power_show_adapter_icon (power);
-#if GTK_CHECK_VERSION (2, 16, 0)
-	    gtk_status_icon_set_tooltip_text (power->priv->adapter_icon,
-					      power->priv->on_battery ?
-					      _("Adaptor is offline") :
-					      _("Adaptor is online") );
-#else
-	    gtk_status_icon_set_tooltip (power->priv->adapter_icon,
-					 power->priv->on_battery ?
-					 _("Adaptor is offline") :
-					 _("Adaptor is online") );
-#endif
-	}
-	else
-	{
-	    xfpm_power_hide_adapter_icon (power);
-	}
-    }
-    else
-    {
-	xfpm_power_hide_adapter_icon (power);
-    }
-}
 
 static void
 xfpm_power_class_init (XfpmPowerClass *klass)
@@ -1396,7 +1072,6 @@ xfpm_power_init (XfpmPower *power)
     power->priv->auth_hibernate  = TRUE;
     power->priv->auth_suspend    = TRUE;
     power->priv->dialog          = NULL;
-    power->priv->adapter_icon    = NULL;
     power->priv->overall_state   = XFPM_BATTERY_CHARGE_OK;
     power->priv->critical_action_done = FALSE;
     power->priv->power_mode      = XFPM_POWER_MODE_NORMAL;
@@ -1413,9 +1088,6 @@ xfpm_power_init (XfpmPower *power)
         power->priv->systemd = xfpm_systemd_new ();
     else
 	power->priv->console = xfpm_console_kit_new ();
-
-    g_signal_connect_swapped (power->priv->conf, "notify::" SHOW_TRAY_ICON_CFG,
-			      G_CALLBACK (xfpm_power_refresh_adaptor_visible), power);
 
 #ifdef ENABLE_POLKIT
     power->priv->polkit  = xfpm_polkit_get ();
@@ -1449,8 +1121,6 @@ xfpm_power_init (XfpmPower *power)
 #endif
 
 out:
-    xfpm_power_refresh_adaptor_visible (power);
-
     xfpm_power_dbus_init (power);
 
     /*
@@ -1510,8 +1180,6 @@ xfpm_power_finalize (GObject *object)
         g_object_unref (power->priv->systemd);
     if ( power->priv->console != NULL )
         g_object_unref (power->priv->console);
-
-    xfpm_power_hide_adapter_icon (power);
 
     dbus_g_connection_unref (power->priv->bus);
 
