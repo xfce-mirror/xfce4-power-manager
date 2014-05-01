@@ -72,8 +72,11 @@ enum
 {
     COL_ICON,
     COL_NAME,
+    COL_OBJ_PATH,
     NCOLS
 };
+
+static gchar* get_device_description (UpClient *upower, UpDevice *device);
 
 G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_BUTTON)
 
@@ -330,12 +333,6 @@ battery_button_press_event (GtkWidget *widget, GdkEventButton *ev)
     return battery_button_popup_win (widget, (GdkEvent *) ev, ev->time);
 }
 
-static void
-device_changed_cb (BatteryButton *button)
-{
-    TRACE ("entering");
-}
-
 static gchar*
 get_device_description (UpClient *upower, UpDevice *device)
 {
@@ -463,14 +460,71 @@ get_device_description (UpClient *upower, UpDevice *device)
     return tip;
 }
 
+/* Call gtk_tree_iter_free when done with the tree iter */
+static GtkTreeIter*
+find_device_in_tree (BatteryButton *button, const gchar *object_path)
+{
+    GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(button->priv->treeview));
+    GtkTreeIter iter;
+
+    if(gtk_tree_model_get_iter_first(model, &iter)) {
+        do {
+            gchar *path = NULL;
+            gtk_tree_model_get(model, &iter, COL_OBJ_PATH, &path, -1);
+
+            if(g_strcmp0(path, object_path) == 0) {
+
+                g_free(path);
+                return gtk_tree_iter_copy(&iter);
+            }
+
+            g_free(path);
+        } while(gtk_tree_model_iter_next(model, &iter));
+    }
+
+    return NULL;
+}
+
+static void
+device_changed_cb (UpDevice *device, BatteryButton *button)
+{
+    GtkTreeIter *iter;
+    const gchar *object_path = up_device_get_object_path(device);
+    gchar *details;
+
+    TRACE("entering for %s", object_path);
+
+    iter = find_device_in_tree (button, object_path);
+
+    if (iter == NULL)
+	return;
+
+    details = get_device_description(button->priv->upower, device);
+
+    gtk_list_store_set (GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(button->priv->treeview))), iter,
+			COL_NAME, details,
+			-1);
+
+    gtk_tree_iter_free (iter);
+}
+
 static void
 battery_button_add_device (UpDevice *device, BatteryButton *button)
 {
     GtkListStore *list_store;
-    GtkTreeIter iter;
+    GtkTreeIter iter, *device_iter;
     GdkPixbuf *pix;
     guint type = 0;
     gchar *details;
+    const gchar *object_path = up_device_get_object_path(device);
+
+    /* don't add the same device twice */
+    device_iter = find_device_in_tree (button, object_path);
+    if (device_iter)
+    {
+	gtk_tree_iter_free (device_iter);
+	return;
+    }
 
     /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
     g_object_get (device,
@@ -489,16 +543,30 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 
     DBG("device %s : %s", xfpm_power_get_icon_name (type), details);
 
-    gtk_list_store_append (list_store, &iter);
+    if ( type == UP_DEVICE_KIND_LINE_POWER )
+    {
+	/* The PC's plugged in status shows up first */
+	gtk_list_store_prepend (list_store, &iter);
+    }
+    else
+    {
+	gtk_list_store_append (list_store, &iter);
+    }
     gtk_list_store_set (list_store, &iter,
 			COL_ICON, pix,
 			COL_NAME, details,
+			COL_OBJ_PATH, object_path,
 			-1);
+
+#if UP_CHECK_VERSION(0, 99, 0)
+    g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), button);
+#else
+    g_signal_connect (device, "changed", G_CALLBACK (device_changed_cb), button);
+#endif
 
     if ( pix )
 	g_object_unref (pix);
 }
-
 
 static void
 battery_button_remove_device (BatteryButton *button, const gchar *object_path)
@@ -584,7 +652,7 @@ battery_button_create_popup (BatteryButton *button)
     gtk_container_add (GTK_CONTAINER (button->priv->popup), box);
 
     button->priv->treeview = gtk_tree_view_new ();
-    list_store = gtk_list_store_new (2, GDK_TYPE_PIXBUF, G_TYPE_STRING);
+    list_store = gtk_list_store_new (3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING);
 
     gtk_tree_view_set_model (GTK_TREE_VIEW (button->priv->treeview), GTK_TREE_MODEL (list_store));
 
@@ -601,7 +669,7 @@ battery_button_create_popup (BatteryButton *button)
     gtk_tree_view_column_pack_start (col, renderer, FALSE);
     gtk_tree_view_column_set_attributes (col, renderer, "markup", 1, NULL);
 
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (button->priv->treeview), TRUE);
+    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (button->priv->treeview), FALSE);
     gtk_tree_view_append_column (GTK_TREE_VIEW (button->priv->treeview), col);
 
     gtk_box_pack_start (GTK_BOX (box), button->priv->treeview, TRUE, TRUE, 0);
@@ -647,11 +715,6 @@ battery_button_init (BatteryButton *button)
 
     g_signal_connect (button->priv->upower, "device-added", G_CALLBACK (device_added_cb), button);
     g_signal_connect (button->priv->upower, "device-removed", G_CALLBACK (device_removed_cb), button);
-#if UP_CHECK_VERSION(0, 99, 0)
-    g_signal_connect (button->priv->upower, "notify", G_CALLBACK (device_changed_cb), button);
-#else
-    g_signal_connect (button->priv->upower, "changed", G_CALLBACK (device_changed_cb), button);
-#endif
 }
 
 static void
