@@ -95,33 +95,6 @@ static guint signals [LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE (XfpmBattery, xfpm_battery, GTK_TYPE_STATUS_ICON)
 
-static const gchar * G_GNUC_CONST
-xfpm_battery_get_icon_index (UpDeviceKind type, guint percent)
-{
-    if (percent < 10)
-    {
-        return "000";
-    }
-    else if (percent < 30)
-    {
-        return ( (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS) ? "020" : "030");
-    }
-    else if (percent < 50)
-    {
-        return ( (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS ) ? "040" : "030");
-    }
-    else if (percent < 70)
-    {
-        return "060";
-    }
-    else if (percent < 90)
-    {
-        return ((type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS) ? "080" : "060");
-    }
-
-    return "100";
-}
-
 static void
 xfpm_battery_refresh_visible (XfpmBattery *battery)
 {
@@ -152,51 +125,6 @@ xfpm_battery_refresh_visible (XfpmBattery *battery)
     XFPM_DEBUG_ENUM (show_icon, XFPM_TYPE_SHOW_ICON, "visible=%s", xfpm_bool_to_string (visible));
 
     gtk_status_icon_set_visible (GTK_STATUS_ICON (battery), visible);
-}
-
-
-/*
- * Taken from gpm
- */
-static gchar *
-xfpm_battery_get_time_string (guint seconds)
-{
-    char* timestring = NULL;
-    gint  hours;
-    gint  minutes;
-
-    /* Add 0.5 to do rounding */
-    minutes = (int) ( ( seconds / 60.0 ) + 0.5 );
-
-    if (minutes == 0)
-    {
-	timestring = g_strdup (_("Unknown time"));
-	return timestring;
-    }
-
-    if (minutes < 60)
-    {
-	timestring = g_strdup_printf (ngettext ("%i minute",
-			              "%i minutes",
-				      minutes), minutes);
-	return timestring;
-    }
-
-    hours = minutes / 60;
-    minutes = minutes % 60;
-
-    if (minutes == 0)
-	timestring = g_strdup_printf (ngettext (
-			    "%i hour",
-			    "%i hours",
-			    hours), hours);
-    else
-	/* TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
-	 * Swap order with "%2$s %2$i %1$s %1$i if needed */
-	timestring = g_strdup_printf (_("%i %s %i %s"),
-			    hours, ngettext ("hour", "hours", hours),
-			    minutes, ngettext ("minute", "minutes", minutes));
-    return timestring;
 }
 
 static gchar *

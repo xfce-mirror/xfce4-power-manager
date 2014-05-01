@@ -29,13 +29,13 @@
 
 G_BEGIN_DECLS
 
-typedef enum 
+typedef enum
 {
     SYSTEM_LAPTOP,
     SYSTEM_DESKTOP,
     SYSTEM_SERVER,
     SYSTEM_UNKNOWN
-    
+
 } SystemFormFactor;
 
 typedef enum
@@ -57,7 +57,7 @@ typedef enum
     CPU_POWERSAVE	= (1 << 1),
     CPU_ONDEMAND	= (1 << 2),
     CPU_PERFORMANCE	= (1 << 3)
-    
+
 } XfpmCpuGovernor;
 
 G_END_DECLS

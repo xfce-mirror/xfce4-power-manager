@@ -10,7 +10,7 @@ SUBDIRS =        	\
 	common		\
 	src		\
 	settings	\
-	$(plugins_dir)	\
+	$(plugins_dir) \
 	po
 
 

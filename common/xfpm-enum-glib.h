@@ -36,7 +36,7 @@ typedef enum
     XFPM_BATTERY_CHARGE_CRITICAL,
     XFPM_BATTERY_CHARGE_LOW,
     XFPM_BATTERY_CHARGE_OK
-    
+
 } XfpmBatteryCharge;
 
 typedef enum
@@ -46,7 +46,7 @@ typedef enum
     XFPM_DO_HIBERNATE,
     XFPM_ASK,
     XFPM_DO_SHUTDOWN
-    
+
 } XfpmShutdownRequest;
 
 typedef enum
@@ -55,7 +55,7 @@ typedef enum
     LID_TRIGGER_SUSPEND,
     LID_TRIGGER_HIBERNATE,
     LID_TRIGGER_LOCK_SCREEN,
-    
+
 } XfpmLidTriggerAction;
 
 typedef enum
@@ -71,7 +71,7 @@ typedef enum
     BUTTON_KBD_BRIGHTNESS_UP,
     BUTTON_KBD_BRIGHTNESS_DOWN,
     NUMBER_OF_BUTTONS
-    
+
 } XfpmButtonKey;
 
 typedef enum
@@ -80,14 +80,14 @@ typedef enum
     SHOW_ICON_WHEN_BATTERY_PRESENT,
     SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING,
     NEVER_SHOW_ICON
-    
+
 } XfpmShowIcon;
 
 typedef enum
 {
     XFPM_POWER_MODE_NORMAL,
     XFPM_POWER_MODE_PRESENTATION
-    
+
 } XfpmPowerMode;
 
 G_END_DECLS

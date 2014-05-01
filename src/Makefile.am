@@ -1,18 +1,13 @@
 bin_PROGRAMS = xfce4-power-manager		\
-	       xfce4-power-information      \
 	       xfce4-pm-helper
 
 xfce4_power_manager_SOURCES =                   \
 	$(BUILT_SOURCES)			\
-	xfpm-enum.h				\
-	xfpm-enum-glib.h			\
 	xfpm-main.c				\
 	xfpm-manager.c				\
 	xfpm-manager.h				\
 	xfpm-power.c				\
 	xfpm-power.h				\
-	xfpm-power-common.c			\
-	xfpm-power-common.h			\
 	xfpm-battery.c				\
 	xfpm-battery.h				\
 	xfpm-xfconf.c				\
@@ -83,35 +78,6 @@ xfce4_power_manager_LDADD =                     \
 	$(XRANDR_LIBS)				\
 	$(DPMS_LIBS)
 
-xfce4_power_information_SOURCES =		\
-	xfpm-power-info.c			\
-	xfpm-power-common.c			\
-	xfpm-power-common.h
-
-xfce4_power_information_CFLAGS =		\
-	-I$(top_srcdir)                         \
-	-I$(top_srcdir)/common                  \
-	-I$(top_srcdir)/libdbus                 \
-	-DLOCALEDIR=\"$(localedir)\"            \
-	-DG_LOG_DOMAIN=\"xfce4-power-information\"\
-	$(GOBJECT_CFLAGS)                       \
-	$(DBUS_GLIB_CFLAGS)                     \
-	$(UPOWER_CFLAGS)                        \
-	$(LIBXFCE4UI_CFLAGS)			\
-	$(PLATFORM_CPPFLAGS)			\
-	$(PLATFORM_CFLAGS)
-
-xfce4_power_information_LDFLAGS =		\
-	-no-undefined				\
-	$(PLATFORM_LDFLAGS)
-
-xfce4_power_information_LDADD =			\
-	$(GOBJECT_LIBS)                         \
-	$(DBUS_GLIB_LIBS)                       \
-	$(UPOWER_LIBS)                          \
-	$(LIBXFCE4UI_LIBS)			\
-	$(top_builddir)/libdbus/libxfpmdbus.la
-
 xfce4_pm_helper_SOURCES =  \
 	xfpm-pm-helper.c
 
@@ -155,42 +121,15 @@ manpagedir = $(mandir)/man1
 
 manpage_DATA = xfce4-power-manager.1
 
-xfpm_glib_headers =                             \
-        $(srcdir)/xfpm-enum-glib.h
-
 BUILT_SOURCES =					\
 	xfce-power-manager-dbus-server.h	\
 	xfce-power-manager-dbus-client.h	\
-	xfpm-enum-types.c                       \
-	xfpm-enum-types.h			\
 	xfpm-marshal.c                          \
         xfpm-marshal.h				\
 	org.freedesktop.PowerManagement.h       \
 	org.freedesktop.PowerManagement.Inhibit.h
 
 if MAINTAINER_MODE
-
-xfpm-enum-types.h: $(xfpm_glib_headers)
-	( cd $(srcdir) && glib-mkenums \
-		--fhead "#ifndef _XFPM_ENUM_TYPES_H\n#define _XFPM_ENUM_TYPES_H\n#include <glib-object.h>\nG_BEGIN_DECLS\n" \
-		--fprod "/* enumerations from \"@filename@\" */\n" \
-		--vhead "GType @enum_name@_get_type (void);\n#define XFPM_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
-		--ftail "G_END_DECLS\n\n#endif /* _XFPM_ENUM_TYPES_H__ */" \
-		$(xfpm_glib_headers) ) >> xgen \
-	&& (cmp -s xgen xfpm-enum-types.h || cp xgen xfpm-enum-types.h ) \
-	&& rm -f xgen xgen~
-
-xfpm-enum-types.c: xfpm-enum-types.h
-	( cd $(srcdir) && glib-mkenums \
-		--fhead "#include <xfpm-enum-types.h>\n" \
-		--fhead "#include \"xfpm-enum-glib.h\"\n\n" \
-		--fprod "\n/* enumerations from \"@filename@\" */\n" \
-		--vhead "GType\n@enum_name@_get_type (void)\n{\n\tstatic GType type = 0;\n\tif (type == 0) {\n\tstatic const G@Type@Value values[] = {"\
-		--vprod "\t{ @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
-		--vtail "\t{ 0, NULL, NULL }\n\t};\n\ttype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n\treturn type;\n}\n" \
-		$(xfpm_glib_headers) ) > xgen \
-	&& cp xgen xfpm-enum-types.c  \
-	&& rm -f xgen xgen~
 
 xfpm-marshal.c: xfpm-marshal.list
 	echo "#include \"xfpm-marshal.h\"" > $@ && \
