@@ -13,841 +13,846 @@
       <object class="GtkVBox" id="dialog-vbox">
         <property name="visible">True</property>
         <child>
-          <object class="GtkNotebook" id="notebook1">
+          <object class="GtkVBox" id="plugged_box">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
             <child>
-              <object class="GtkVBox" id="vbox-general">
+              <object class="GtkNotebook" id="notebook1">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
-                <property name="border_width">12</property>
+                <property name="can_focus">True</property>
                 <child>
-                  <object class="GtkTable" id="table3">
+                  <object class="GtkVBox" id="vbox-general">
                     <property name="visible">True</property>
-                    <property name="n_rows">4</property>
-                    <property name="n_columns">2</property>
+                    <property name="orientation">vertical</property>
+                    <property name="border_width">12</property>
+                    <child>
+                      <object class="GtkTable" id="table3">
+                        <property name="visible">True</property>
+                        <property name="n_rows">4</property>
+                        <property name="n_columns">2</property>
+                        <property name="column_spacing">6</property>
+                        <child>
+                          <object class="GtkComboBox" id="power-combox">
+                            <property name="visible">True</property>
+                            <property name="model">model1</property>
+                            <signal name="changed" handler="button_power_changed_cb"/>
+                            <child>
+                              <object class="GtkCellRendererText" id="renderer1"/>
+                            <attributes>
+                              <attribute name="text">0</attribute>
+                            </attributes>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="y_padding">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBox" id="sleep-combox">
+                            <property name="visible">True</property>
+                            <property name="model">model4</property>
+                            <signal name="changed" handler="button_sleep_changed_cb"/>
+                            <child>
+                              <object class="GtkCellRendererText" id="renderer4"/>
+                              <attributes>
+                                <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">3</property>
+                            <property name="bottom_attach">4</property>
+                            <property name="y_padding">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="sleep-label">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">When sleep button is pressed</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">3</property>
+                            <property name="bottom_attach">4</property>
+                            <property name="x_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBox" id="hibernate-combox">
+                            <property name="visible">True</property>
+                            <property name="model">model3</property>
+                            <signal name="changed" handler="button_hibernate_changed_cb"/>
+                            <child>
+                              <object class="GtkCellRendererText" id="renderer3"/>
+                              <attributes>
+                                <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
+                            <property name="y_padding">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="hibernate-label">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">When hibernate button is pressed</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">2</property>
+                            <property name="bottom_attach">3</property>
+                            <property name="x_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="power-label">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">When power button is pressed</property>
+                          </object>
+                          <packing>
+                            <property name="top_attach">1</property>
+                            <property name="bottom_attach">2</property>
+                            <property name="x_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBox" id="tray-combox">
+                            <property name="visible">True</property>
+                            <signal name="changed" handler="set_show_tray_icon_cb"/>
+                            <child>
+                              <object class="GtkCellRendererText" id="renderer2"/>
+                              <attributes>
+                                <attribute name="text">0</attribute>
+                              </attributes>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
+                            <property name="right_attach">2</property>
+                            <property name="y_padding">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="label24">
+                            <property name="visible">True</property>
+                            <property name="xalign">0</property>
+                            <property name="label" translatable="yes">System tray icon</property>
+                          </object>
+                          <packing>
+                            <property name="x_options">GTK_FILL</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">3</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="enable-dpms">
+                        <property name="label" translatable="yes">Monitor power management control</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="dpms_toggled_cb"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">3</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="notification">
+                        <property name="label" translatable="yes">Show notifications</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="notify_toggled_cb"/>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">3</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="general">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">General</property>
+                  </object>
+                  <packing>
+                    <property name="position">0</property>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                <object class="GtkVBox" id="vbox-actions">
+                  <property name="visible">True</property>
+                  <property name="orientation">vertical</property>
+                  <property name="border_width">12</property>
+                  <child>
+                  <object class="GtkTable" id="actions_table">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="n_rows">6</property>
+                    <property name="n_columns">3</property>
+                    <property name="row_spacing">6</property>
                     <property name="column_spacing">6</property>
                     <child>
-                      <object class="GtkComboBox" id="power-combox">
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="actions_onbattery_label">
                         <property name="visible">True</property>
-                        <property name="model">model1</property>
-                        <signal name="changed" handler="button_power_changed_cb"/>
-                        <child>
-                          <object class="GtkCellRendererText" id="renderer1"/>
-                        <attributes>
-                          <attribute name="text">0</attribute>
-                        </attributes>
-                        </child>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;b&gt;On Battery&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
+                        <property name="left_attach">2</property>
                         <property name="top_attach">1</property>
-                        <property name="bottom_attach">2</property>
-                        <property name="y_padding">3</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="sleep-combox">
+                      <object class="GtkLabel" id="actions_onac_label">
                         <property name="visible">True</property>
-                        <property name="model">model4</property>
-                        <signal name="changed" handler="button_sleep_changed_cb"/>
-                        <child>
-                          <object class="GtkCellRendererText" id="renderer4"/>
-                          <attributes>
-                            <attribute name="text">0</attribute>
-                          </attributes>
-                        </child>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;b&gt;On AC&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
-                        <property name="y_padding">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="sleep-label">
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">When sleep button is pressed</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
-                        <property name="x_options">GTK_FILL</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkComboBox" id="hibernate-combox">
-                        <property name="visible">True</property>
-                        <property name="model">model3</property>
-                        <signal name="changed" handler="button_hibernate_changed_cb"/>
-                        <child>
-                          <object class="GtkCellRendererText" id="renderer3"/>
-                          <attributes>
-                            <attribute name="text">0</attribute>
-                          </attributes>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
-                        <property name="y_padding">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="hibernate-label">
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">When hibernate button is pressed</property>
-                      </object>
-                      <packing>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
-                        <property name="x_options">GTK_FILL</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="power-label">
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">When power button is pressed</property>
-                      </object>
-                      <packing>
+                        <property name="left_attach">3</property>
                         <property name="top_attach">1</property>
-                        <property name="bottom_attach">2</property>
-                        <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="tray-combox">
+                      <object class="GtkLabel" id="on-battery-lid-label">
                         <property name="visible">True</property>
-                        <signal name="changed" handler="set_show_tray_icon_cb"/>
-                        <child>
-                          <object class="GtkCellRendererText" id="renderer2"/>
-                          <attributes>
-                            <attribute name="text">0</attribute>
-                          </attributes>
-                        </child>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">When laptop lid is closed</property>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="y_padding">3</property>
+                        <property name="top_attach">2</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label24">
+                      <object class="GtkComboBox" id="on-battery-lid">
                         <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="label" translatable="yes">System tray icon</property>
+                        <property name="model">model6</property>
+                        <signal name="changed" handler="on_battery_lid_changed_cb"/>
+                        <child>
+                          <object class="GtkCellRendererText" id="renderer6"/>
+                            <attributes>
+                              <attribute name="text">0</attribute>
+                            </attributes>
+                        </child>
                       </object>
                       <packing>
-                        <property name="x_options">GTK_FILL</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">2</property>
+                        <property name="x_options">GTK_EXPAND</property>
+                        <property name="y_options">GTK_EXPAND</property>
                       </packing>
                     </child>
+                    <child>
+                      <object class="GtkComboBox" id="on-ac-lid">
+                        <property name="visible">True</property>
+                        <property name="model">model5</property>
+                        <signal name="changed" handler="on_ac_lid_changed_cb"/>
+                        <child>
+                          <object class="GtkCellRendererText" id="renderer5"/>
+                            <attributes>
+                              <attribute name="text">0</attribute>
+                            </attributes>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">2</property>
+                        <property name="x_options">GTK_EXPAND</property>
+                        <property name="y_options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label6">
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">Put the computer to sleep when inactive for</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkHScale" id="inactivity-on-battery">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="update_policy">discontinuous</property>
+                        <property name="adjustment">adjustment5</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                        <signal name="value_changed" handler="inactivity_on_battery_value_changed_cb"/>
+                        <signal name="format_value" handler="format_inactivity_value_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkHScale" id="inactivity-on-ac">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="update_policy">discontinuous</property>
+                        <property name="adjustment">adjustment1</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                        <signal name="value_changed" handler="inactivity_on_ac_value_changed_cb"/>
+                        <signal name="format_value" handler="format_inactivity_value_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label10">
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">Spin down hard disks</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="spin-down-on-battery">
+                         <property name="visible">True</property>
+                         <property name="can_focus">True</property>
+                         <property name="receives_default">False</property>
+                         <property name="draw_indicator">True</property>
+                         <signal name="toggled" handler="on_battery_spin_changed"/>
+                       </object>
+                       <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">4</property>
+                       </packing>
+                     </child>
+                     <child>
+                      <object class="GtkCheckButton" id="spin-down-on-ac">
+                         <property name="visible">True</property>
+                         <property name="can_focus">True</property>
+                         <property name="receives_default">False</property>
+                         <property name="draw_indicator">True</property>
+                         <signal name="toggled" handler="on_ac_spin_changed"/>
+                       </object>
+                       <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">4</property>
+                       </packing>
+                     </child>
+                     <child>
+                      <object class="GtkLabel" id="label34">
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">When battery power is critical</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkComboBox" id="battery-critical-combox">
+                        <property name="visible">True</property>
+                        <property name="model">model7</property>
+                        <signal name="changed" handler="battery_critical_changed_cb"/>
+                        <child>
+                          <object class="GtkCellRendererText" id="renderer7"/>
+                            <attributes>
+                              <attribute name="text">0</attribute>
+                            </attributes>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">5</property>
+                        <property name="x_options">GTK_EXPAND</property>
+                        <property name="y_options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label35">
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">Prefer power savings over performance</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="power-save">
+                         <property name="visible">True</property>
+                         <property name="can_focus">True</property>
+                         <property name="receives_default">False</property>
+                         <property name="draw_indicator">True</property>
+                         <signal name="toggled" handler="power_save_toggled_cb"/>
+                       </object>
+                       <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">6</property>
+                        <property name="x_options">GTK_EXPAND</property>
+                        <property name="y_options">GTK_EXPAND</property>
+                       </packing>
+                     </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="padding">3</property>
-                    <property name="position">0</property>
                   </packing>
+                  </child>
+                  </object>
                 </child>
-                <child>
-                  <object class="GtkCheckButton" id="enable-dpms">
-                    <property name="label" translatable="yes">Monitor power management control</property>
+                <child type="tab">
+                  <object class="GtkLabel" id="actions">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="dpms_toggled_cb"/>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Actions</property>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="padding">3</property>
                     <property name="position">1</property>
+                    <property name="tab_fill">False</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="notification">
-                    <property name="label" translatable="yes">Show notifications</property>
+                  <object class="GtkVBox" id="vbox-display">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="notify_toggled_cb"/>
+                    <property name="orientation">vertical</property>
+                    <property name="border_width">12</property>
+                  <child>
+                  <object class="GtkTable" id="display_table">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="n_rows">5</property>
+                    <property name="n_columns">3</property>
+                    <property name="row_spacing">6</property>
+                    <property name="column_spacing">6</property>
+                    <child>
+                      <object class="GtkLabel" id="display_onbattery_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;b&gt;On Battery&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="display_onac_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">&lt;b&gt;On AC&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label36">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Put display to sleep after</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkHScale" id="sleep-dpms-on-battery">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="update_policy">discontinuous</property>
+                        <property name="adjustment">adjustment6</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                        <signal name="value_changed" handler="sleep_on_battery_value_changed_cb"/>
+                        <signal name="format_value" handler="format_dpms_value_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkHScale" id="sleep-dpms-on-ac">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="update_policy">discontinuous</property>
+                        <property name="adjustment">adjustment2</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                        <signal name="value_changed" handler="sleep_on_ac_value_changed_cb"/>
+                        <signal name="format_value" handler="format_dpms_value_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label37">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Switch off display after</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkHScale" id="off-dpms-on-battery">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="update_policy">discontinuous</property>
+                        <property name="adjustment">adjustment7</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                        <signal name="value_changed" handler="off_on_battery_value_changed_cb"/>
+                        <signal name="format_value" handler="format_dpms_value_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkHScale" id="off-dpms-on-ac">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="update_policy">discontinuous</property>
+                        <property name="adjustment">adjustment3</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                        <signal name="value_changed" handler="off_on_ac_value_changed_cb"/>
+                        <signal name="format_value" handler="format_dpms_value_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label38">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Reduce brightness on inactivity</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkHScale" id="brg-on-battery">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="update_policy">discontinuous</property>
+                        <property name="adjustment">adjustment8</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                        <signal name="value_changed" handler="brightness_on_battery_value_changed_cb"/>
+                        <signal name="format_value" handler="format_brightness_value_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkHScale" id="brg-on-ac">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="update_policy">discontinuous</property>
+                        <property name="adjustment">adjustment4</property>
+                        <property name="digits">0</property>
+                        <property name="value_pos">bottom</property>
+                        <signal name="value_changed" handler="brightness_on_ac_value_changed_cb"/>
+                        <signal name="format_value" handler="format_brightness_value_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label39">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Reduce brightness to</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="brg-level-on-battery">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="invisible_char">&#x25CF;</property>
+                        <property name="adjustment">adjustment11</property>
+                        <property name="update_policy">if-valid</property>
+                        <signal name="value_changed" handler="brightness_level_on_battery"/>
+                        <signal name="output" handler="critical_spin_output_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">5</property>
+                        <property name="x_options">GTK_EXPAND</property>
+                        <property name="y_options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="brg-level-on-ac">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="invisible_char">&#x25CF;</property>
+                        <property name="adjustment">adjustment10</property>
+                        <property name="update_policy">if-valid</property>
+                        <signal name="value_changed" handler="brightness_level_on_ac"/>
+                        <signal name="output" handler="critical_spin_output_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">5</property>
+                        <property name="x_options">GTK_EXPAND</property>
+                        <property name="y_options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="padding">3</property>
+                  </packing>
+                  </child>
+                  </object>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="display">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Display</property>
+                  </object>
+                  <packing>
                     <property name="position">2</property>
+                    <property name="tab_fill">False</property>
                   </packing>
                 </child>
-              </object>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel" id="general">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">General</property>
-              </object>
-              <packing>
-                <property name="position">0</property>
-                <property name="tab_fill">False</property>
-              </packing>
-            </child>
-            <child>
-            <object class="GtkVBox" id="vbox-actions">
-              <property name="visible">True</property>
-              <property name="orientation">vertical</property>
-              <property name="border_width">12</property>
-              <child>
-              <object class="GtkTable" id="actions_table">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="n_rows">6</property>
-                <property name="n_columns">3</property>
-                <property name="row_spacing">6</property>
-                <property name="column_spacing">6</property>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="actions_onbattery_label">
+                  <object class="GtkVBox" id="vbox-advanced">
+                    <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
+                    <property name="border_width">12</property>
+                  <child>
+                  <object class="GtkTable" id="advanced_table">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;b&gt;On Battery&lt;/b&gt;</property>
-                    <property name="use_markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="actions_onac_label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;b&gt;On AC&lt;/b&gt;</property>
-                    <property name="use_markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="on-battery-lid-label">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="label" translatable="yes">When laptop lid is closed</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkComboBox" id="on-battery-lid">
-                    <property name="visible">True</property>
-                    <property name="model">model6</property>
-                    <signal name="changed" handler="on_battery_lid_changed_cb"/>
+                    <property name="n_rows">5</property>
+                    <property name="n_columns">3</property>
+                    <property name="row_spacing">6</property>
+                    <property name="column_spacing">6</property>
                     <child>
-                      <object class="GtkCellRendererText" id="renderer6"/>
-                        <attributes>
-                          <attribute name="text">0</attribute>
-                        </attributes>
+                      <object class="GtkLabel" id="advanced_sleepmode_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Computer sleep mode</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="inactivity-suspend">
+                        <property name="label" translatable="yes">Suspend</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="set_suspend_inactivity"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="inactivity-hibernate">
+                        <property name="label" translatable="yes">Hibernate</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw_indicator">True</property>
+                        <property name="group">inactivity-suspend</property>
+                        <signal name="toggled" handler="set_hibernate_inactivity"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="dpms-mode-label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Display sleep mode</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="sleep-dpms-mode">
+                        <property name="label" translatable="yes">Standby</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="set_dpms_standby_mode"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="suspend-dpms-mode">
+                        <property name="label" translatable="yes">Suspend</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw_indicator">True</property>
+                        <property name="group">sleep-dpms-mode</property>
+                        <signal name="toggled" handler="set_dpms_suspend_mode"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">3</property>
+                        <property name="top_attach">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="critical-level-label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Critical power level</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinButton" id="critical-spin">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="invisible_char">&#x25CF;</property>
+                        <property name="adjustment">adjustment9</property>
+                        <signal name="value_changed" handler="critical_level_value_changed_cb"/>
+                        <signal name="output" handler="critical_spin_output_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">3</property>
+                        <property name="x_options">GTK_EXPAND</property>
+                        <property name="y_options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="lock-screen">
+                        <property name="label" translatable="yes">Lock screen when going for suspend/hibernate</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="lock_screen_toggled_cb"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="network-manager-sleep">
+                        <property name="label" translatable="yes">Notify Network Manager of suspend/hibernate</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="draw_indicator">True</property>
+                        <property name="tooltip-text" translatable="yes">When enabled this signals to network manager that the system is going to suspend/hibernate so it can power down the network interfaces, saving power.</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">5</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">2</property>
-                    <property name="x_options">GTK_EXPAND</property>
-                    <property name="y_options">GTK_EXPAND</property>
+                    <property name="expand">False</property>
                   </packing>
-                </child>
-                <child>
-                  <object class="GtkComboBox" id="on-ac-lid">
-                    <property name="visible">True</property>
-                    <property name="model">model5</property>
-                    <signal name="changed" handler="on_ac_lid_changed_cb"/>
-                    <child>
-                      <object class="GtkCellRendererText" id="renderer5"/>
-                        <attributes>
-                          <attribute name="text">0</attribute>
-                        </attributes>
-                    </child>
+                  </child>
                   </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">2</property>
-                    <property name="x_options">GTK_EXPAND</property>
-                    <property name="y_options">GTK_EXPAND</property>
-                  </packing>
                 </child>
-                <child>
-                  <object class="GtkLabel" id="label6">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="label" translatable="yes">Put the computer to sleep when inactive for</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHScale" id="inactivity-on-battery">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="update_policy">discontinuous</property>
-                    <property name="adjustment">adjustment5</property>
-                    <property name="digits">0</property>
-                    <property name="value_pos">bottom</property>
-                    <signal name="value_changed" handler="inactivity_on_battery_value_changed_cb"/>
-                    <signal name="format_value" handler="format_inactivity_value_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHScale" id="inactivity-on-ac">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="update_policy">discontinuous</property>
-                    <property name="adjustment">adjustment1</property>
-                    <property name="digits">0</property>
-                    <property name="value_pos">bottom</property>
-                    <signal name="value_changed" handler="inactivity_on_ac_value_changed_cb"/>
-                    <signal name="format_value" handler="format_inactivity_value_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label10">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="label" translatable="yes">Spin down hard disks</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="spin-down-on-battery">
-                     <property name="visible">True</property>
-                     <property name="can_focus">True</property>
-                     <property name="receives_default">False</property>
-                     <property name="draw_indicator">True</property>
-                     <signal name="toggled" handler="on_battery_spin_changed"/>
-                   </object>
-                   <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">4</property>
-                   </packing>
-                 </child>
-                 <child>
-                  <object class="GtkCheckButton" id="spin-down-on-ac">
-                     <property name="visible">True</property>
-                     <property name="can_focus">True</property>
-                     <property name="receives_default">False</property>
-                     <property name="draw_indicator">True</property>
-                     <signal name="toggled" handler="on_ac_spin_changed"/>
-                   </object>
-                   <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">4</property>
-                   </packing>
-                 </child>
-                 <child>
-                  <object class="GtkLabel" id="label34">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="label" translatable="yes">When battery power is critical</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkComboBox" id="battery-critical-combox">
-                    <property name="visible">True</property>
-                    <property name="model">model7</property>
-                    <signal name="changed" handler="battery_critical_changed_cb"/>
-                    <child>
-                      <object class="GtkCellRendererText" id="renderer7"/>
-                        <attributes>
-                          <attribute name="text">0</attribute>
-                        </attributes>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">5</property>
-                    <property name="x_options">GTK_EXPAND</property>
-                    <property name="y_options">GTK_EXPAND</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label35">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="label" translatable="yes">Prefer power savings over performance</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">6</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="power-save">
-                     <property name="visible">True</property>
-                     <property name="can_focus">True</property>
-                     <property name="receives_default">False</property>
-                     <property name="draw_indicator">True</property>
-                     <signal name="toggled" handler="power_save_toggled_cb"/>
-                   </object>
-                   <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">6</property>
-                    <property name="x_options">GTK_EXPAND</property>
-                    <property name="y_options">GTK_EXPAND</property>
-                   </packing>
-                 </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-              </packing>
-              </child>
-              </object>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel" id="actions">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Actions</property>
-              </object>
-              <packing>
-                <property name="position">1</property>
-                <property name="tab_fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkVBox" id="vbox-display">
-                <property name="visible">True</property>
-                <property name="orientation">vertical</property>
-                <property name="border_width">12</property>
-              <child>
-              <object class="GtkTable" id="display_table">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="n_rows">5</property>
-                <property name="n_columns">3</property>
-                <property name="row_spacing">6</property>
-                <property name="column_spacing">6</property>
-                <child>
-                  <object class="GtkLabel" id="display_onbattery_label">
+                <child type="tab">
+                  <object class="GtkLabel" id="advanced">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;b&gt;On Battery&lt;/b&gt;</property>
-                    <property name="use_markup">True</property>
+                    <property name="label" translatable="yes">Advanced</property>
                   </object>
                   <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="display_onac_label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;b&gt;On AC&lt;/b&gt;</property>
-                    <property name="use_markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label36">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Put display to sleep after</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHScale" id="sleep-dpms-on-battery">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="update_policy">discontinuous</property>
-                    <property name="adjustment">adjustment6</property>
-                    <property name="digits">0</property>
-                    <property name="value_pos">bottom</property>
-                    <signal name="value_changed" handler="sleep_on_battery_value_changed_cb"/>
-                    <signal name="format_value" handler="format_dpms_value_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHScale" id="sleep-dpms-on-ac">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="update_policy">discontinuous</property>
-                    <property name="adjustment">adjustment2</property>
-                    <property name="digits">0</property>
-                    <property name="value_pos">bottom</property>
-                    <signal name="value_changed" handler="sleep_on_ac_value_changed_cb"/>
-                    <signal name="format_value" handler="format_dpms_value_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label37">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Switch off display after</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHScale" id="off-dpms-on-battery">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="update_policy">discontinuous</property>
-                    <property name="adjustment">adjustment7</property>
-                    <property name="digits">0</property>
-                    <property name="value_pos">bottom</property>
-                    <signal name="value_changed" handler="off_on_battery_value_changed_cb"/>
-                    <signal name="format_value" handler="format_dpms_value_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHScale" id="off-dpms-on-ac">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="update_policy">discontinuous</property>
-                    <property name="adjustment">adjustment3</property>
-                    <property name="digits">0</property>
-                    <property name="value_pos">bottom</property>
-                    <signal name="value_changed" handler="off_on_ac_value_changed_cb"/>
-                    <signal name="format_value" handler="format_dpms_value_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label38">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Reduce brightness on inactivity</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHScale" id="brg-on-battery">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="update_policy">discontinuous</property>
-                    <property name="adjustment">adjustment8</property>
-                    <property name="digits">0</property>
-                    <property name="value_pos">bottom</property>
-                    <signal name="value_changed" handler="brightness_on_battery_value_changed_cb"/>
-                    <signal name="format_value" handler="format_brightness_value_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHScale" id="brg-on-ac">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="update_policy">discontinuous</property>
-                    <property name="adjustment">adjustment4</property>
-                    <property name="digits">0</property>
-                    <property name="value_pos">bottom</property>
-                    <signal name="value_changed" handler="brightness_on_ac_value_changed_cb"/>
-                    <signal name="format_value" handler="format_brightness_value_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="label39">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Reduce brightness to</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">5</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkSpinButton" id="brg-level-on-battery">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">&#x25CF;</property>
-                    <property name="adjustment">adjustment11</property>
-                    <property name="update_policy">if-valid</property>
-                    <signal name="value_changed" handler="brightness_level_on_battery"/>
-                    <signal name="output" handler="critical_spin_output_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">5</property>
-                    <property name="x_options">GTK_EXPAND</property>
-                    <property name="y_options">GTK_EXPAND</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkSpinButton" id="brg-level-on-ac">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">&#x25CF;</property>
-                    <property name="adjustment">adjustment10</property>
-                    <property name="update_policy">if-valid</property>
-                    <signal name="value_changed" handler="brightness_level_on_ac"/>
-                    <signal name="output" handler="critical_spin_output_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">5</property>
-                    <property name="x_options">GTK_EXPAND</property>
-                    <property name="y_options">GTK_EXPAND</property>
+                    <property name="position">3</property>
+                    <property name="tab_fill">False</property>
                   </packing>
                 </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-              </packing>
-              </child>
-              </object>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel" id="display">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Display</property>
-              </object>
-              <packing>
-                <property name="position">2</property>
-                <property name="tab_fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkVBox" id="vbox-advanced">
-                <property name="visible">True</property>
-                <property name="orientation">vertical</property>
-                <property name="border_width">12</property>
-              <child>
-              <object class="GtkTable" id="advanced_table">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="n_rows">5</property>
-                <property name="n_columns">3</property>
-                <property name="row_spacing">6</property>
-                <property name="column_spacing">6</property>
-                <child>
-                  <object class="GtkLabel" id="advanced_sleepmode_label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Computer sleep mode</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="inactivity-suspend">
-                    <property name="label" translatable="yes">Suspend</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="set_suspend_inactivity"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="inactivity-hibernate">
-                    <property name="label" translatable="yes">Hibernate</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">inactivity-suspend</property>
-                    <signal name="toggled" handler="set_hibernate_inactivity"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="dpms-mode-label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Display sleep mode</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="sleep-dpms-mode">
-                    <property name="label" translatable="yes">Standby</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="set_dpms_standby_mode"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkRadioButton" id="suspend-dpms-mode">
-                    <property name="label" translatable="yes">Suspend</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="group">sleep-dpms-mode</property>
-                    <signal name="toggled" handler="set_dpms_suspend_mode"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">3</property>
-                    <property name="top_attach">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="critical-level-label">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Critical power level</property>
-                    <property name="xalign">0</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkSpinButton" id="critical-spin">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">&#x25CF;</property>
-                    <property name="adjustment">adjustment9</property>
-                    <signal name="value_changed" handler="critical_level_value_changed_cb"/>
-                    <signal name="output" handler="critical_spin_output_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">3</property>
-                    <property name="x_options">GTK_EXPAND</property>
-                    <property name="y_options">GTK_EXPAND</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="lock-screen">
-                    <property name="label" translatable="yes">Lock screen when going for suspend/hibernate</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="lock_screen_toggled_cb"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">4</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkCheckButton" id="network-manager-sleep">
-                    <property name="label" translatable="yes">Notify Network Manager of suspend/hibernate</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
-                    <property name="tooltip-text" translatable="yes">When enabled this signals to network manager that the system is going to suspend/hibernate so it can power down the network interfaces, saving power.</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">5</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-              </packing>
-              </child>
-              </object>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel" id="advanced">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Advanced</property>
-              </object>
-              <packing>
-                <property name="position">3</property>
-                <property name="tab_fill">False</property>
-              </packing>
             </child>
           </object>
         </child>

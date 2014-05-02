@@ -1667,7 +1667,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 {
     GtkWidget *plug;
     GtkWidget *dialog;
-    GtkWidget *allbox;
+    GtkWidget *plugged_box;
     GError *error = NULL;
 
     XFPM_DEBUG ("system_laptop=%s auth_hibernate=%s  auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s "\
@@ -1730,10 +1730,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     
     if ( id != 0 )
     {
-	allbox = GTK_WIDGET (gtk_builder_get_object (xml, "allbox"));
+	plugged_box = GTK_WIDGET (gtk_builder_get_object (xml, "plugged_box"));
 	plug = gtk_plug_new (id);
 	gtk_widget_show (plug);
-	gtk_widget_reparent (allbox, plug);
+	gtk_widget_reparent (plugged_box, plug);
 	g_signal_connect (plug, "delete-event", 
 			  G_CALLBACK (delete_event_cb), channel);
 	gdk_notify_startup_complete ();
