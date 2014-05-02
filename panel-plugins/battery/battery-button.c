@@ -342,7 +342,7 @@ get_device_description (UpClient *upower, UpDevice *device)
     gchar *est_time_str = NULL;
     guint type = 0, state = 0;
     gchar *model = NULL, *vendor = NULL;
-    gboolean on_battery;
+    gboolean online;
     gboolean present;
     gdouble percentage;
     guint64 time_to_empty, time_to_full;
@@ -357,20 +357,19 @@ get_device_description (UpClient *upower, UpDevice *device)
 		  "percentage", &percentage,
 		  "time-to-empty", &time_to_empty,
 		  "time-to-full", &time_to_full,
+		  "online", &online,
 		   NULL);
 
 
     if (type == UP_DEVICE_KIND_LINE_POWER)
     {
-	 on_battery = up_client_get_on_battery (upower);
-
-	if (on_battery)
+	if ( online )
 	{
-	    tip = g_strdup_printf(_("<b>On Battery</b>\t"));
+	    tip = g_strdup_printf(_("<b>Plugged In</b>\t"));
 	}
 	else
 	{
-	    tip = g_strdup_printf(_("<b>Plugged In</b>\t"));
+	    tip = g_strdup_printf(_("<b>On Battery</b>\t"));
 	}
 
 	return tip;
@@ -494,7 +493,6 @@ find_device_in_tree (BatteryButton *button, const gchar *object_path)
 
     return NULL;
 }
-
 
 static void
 #if UP_CHECK_VERSION(0, 99, 0)

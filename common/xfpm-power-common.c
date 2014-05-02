@@ -230,7 +230,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 {
     gchar *icon_name = NULL, *icon_prefix;
     guint type = 0, state = 0;
-    gboolean on_battery;
+    gboolean online;
     gboolean present;
     gdouble percentage;
 
@@ -240,15 +240,14 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 		  "state", &state,
 		  "is-present", &present,
 		  "percentage", &percentage,
+		  "online", &online,
 		   NULL);
-
-    on_battery = up_client_get_on_battery (upower);
 
     icon_prefix = xfpm_battery_get_icon_prefix_device_enum_type (type);
 
     if ( type == UP_DEVICE_KIND_LINE_POWER )
     {
-	if ( !on_battery )
+	if ( online )
 	{
 	    icon_name = g_strdup_printf ("%s", XFPM_AC_ADAPTER_ICON);
 	}
@@ -265,7 +264,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 	}
 	else if (state == UP_DEVICE_STATE_FULLY_CHARGED )
 	{
-	    icon_name = g_strdup_printf ("%s%s", icon_prefix, on_battery ? "100" : "charged");
+	    icon_name = g_strdup_printf ("%s%s", icon_prefix, online ? "charged" : "100");
 	}
 	else if ( state == UP_DEVICE_STATE_CHARGING || state == UP_DEVICE_STATE_PENDING_CHARGE)
 	{
@@ -277,7 +276,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 	}
 	else if ( state == UP_DEVICE_STATE_EMPTY)
 	{
-	    icon_name = g_strdup_printf ("%s%s", icon_prefix, on_battery ? "000" : "000-charging");
+	    icon_name = g_strdup_printf ("%s%s", icon_prefix, online ? "000-charging" : "000");
 	}
     }
     else
