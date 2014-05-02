@@ -698,7 +698,7 @@ static void
 battery_button_create_popup (BatteryButton *button)
 {
     GtkOrientation orientation;
-    GtkWidget *box;
+    GtkWidget *box, *option_button;
     GtkListStore *list_store;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
@@ -718,9 +718,9 @@ battery_button_create_popup (BatteryButton *button)
     orientation = xfce_panel_plugin_get_orientation (button->priv->plugin);
 
     if ( orientation == GTK_ORIENTATION_VERTICAL)
-	box = gtk_hbox_new (FALSE, 1);
+	box = gtk_hbox_new (FALSE, 2);
     else
-	box = gtk_vbox_new (FALSE, 1);
+	box = gtk_vbox_new (FALSE, 2);
 
     gtk_container_add (GTK_CONTAINER (button->priv->popup), box);
 
@@ -735,6 +735,7 @@ battery_button_create_popup (BatteryButton *button)
 
     renderer = gtk_cell_renderer_pixbuf_new ();
 
+    /* treeview contains an image and fancy text */
     gtk_tree_view_column_pack_start (col, renderer, FALSE);
     gtk_tree_view_column_set_attributes (col, renderer, "pixbuf", 0, NULL);
 
@@ -747,8 +748,16 @@ battery_button_create_popup (BatteryButton *button)
 
     gtk_box_pack_start (GTK_BOX (box), button->priv->treeview, TRUE, TRUE, 0);
 
+    /* Preferences option */
+    option_button = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
+    g_signal_connect (option_button, "clicked",G_CALLBACK (xfpm_preferences), NULL);
+
+    gtk_box_pack_start (GTK_BOX (box), option_button, TRUE, TRUE, 1);
+
+    /* no decorations */
     gtk_window_set_type_hint (GTK_WINDOW(button->priv->popup), GDK_WINDOW_TYPE_HINT_UTILITY );
 
+    /* populate the popup window with the devices already present on the system */
     battery_button_add_all_devices (button);
 
     gtk_widget_show_all (box);
@@ -850,7 +859,7 @@ static gboolean
 battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButton *button)
 {
     gint width = size -2 - 2* MAX(gtk_widget_get_style(GTK_WIDGET(button))->xthickness,
-                                  gtk_widget_get_style(GTK_WIDGET(button))->xthickness);
+                                  gtk_widget_get_style(GTK_WIDGET(button))->ythickness);
 
     gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
     button->priv->panel_icon_width = width;
@@ -888,14 +897,6 @@ void battery_button_show (BatteryButton *button)
     gtk_widget_set_sensitive (mi, TRUE);
     gtk_widget_show (mi);
     g_signal_connect (mi, "activate", G_CALLBACK (help_cb), button);
-
-    xfce_panel_plugin_menu_insert_item (button->priv->plugin, GTK_MENU_ITEM (mi));
-
-    /* preferences dialog */
-    mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_PREFERENCES, NULL);
-    gtk_widget_set_sensitive (mi, TRUE);
-    gtk_widget_show (mi);
-    g_signal_connect (mi, "activate",G_CALLBACK (xfpm_preferences), NULL);
 
     xfce_panel_plugin_menu_insert_item (button->priv->plugin, GTK_MENU_ITEM (mi));
 
