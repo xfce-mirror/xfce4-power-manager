@@ -812,7 +812,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
     gtk_combo_box_set_model (GTK_COMBO_BOX(battery_critical), GTK_TREE_MODEL(list_store));
     
     gtk_list_store_append(list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, XFPM_DO_NOTHING, -1);
+    gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
     
     if ( can_suspend && auth_suspend )
     {
@@ -1204,7 +1204,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
 	gtk_combo_box_set_model (GTK_COMBO_BOX(power), GTK_TREE_MODEL(list_store));
 
 	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, XFPM_DO_NOTHING, -1);
+	gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
 	
 	if ( can_suspend && auth_suspend)
 	{
@@ -1261,7 +1261,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
 	gtk_combo_box_set_model (GTK_COMBO_BOX(hibernate), GTK_TREE_MODEL(list_store));
 
 	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, XFPM_DO_NOTHING, -1);
+	gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
 	
 	if ( can_suspend && auth_suspend)
 	{
@@ -1313,7 +1313,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
 	gtk_combo_box_set_model (GTK_COMBO_BOX(sleep_w), GTK_TREE_MODEL(list_store));
 
 	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Nothing"), 1, XFPM_DO_NOTHING, -1);
+	gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
 	
 	if ( can_suspend && auth_suspend )
 	{

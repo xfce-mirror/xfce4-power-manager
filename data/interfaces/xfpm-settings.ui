@@ -222,8 +222,8 @@
                         <property name="use_markup">True</property>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">1</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
                         <property name="y_padding">6</property>
                       </packing>
                     </child>
@@ -231,12 +231,12 @@
                       <object class="GtkLabel" id="actions_onac_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;On AC&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Plugged In&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">1</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">0</property>
                         <property name="y_padding">6</property>
                       </packing>
                     </child>
@@ -247,8 +247,8 @@
                         <property name="label" translatable="yes">When laptop lid is closed</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">2</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">1</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -265,8 +265,8 @@
                         </child>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">2</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">1</property>
                         <property name="x_options">GTK_EXPAND</property>
                         <property name="y_options">GTK_EXPAND</property>
                       </packing>
@@ -284,8 +284,8 @@
                         </child>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">2</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">1</property>
                         <property name="x_options">GTK_EXPAND</property>
                         <property name="y_options">GTK_EXPAND</property>
                       </packing>
@@ -297,8 +297,8 @@
                         <property name="label" translatable="yes">Put the computer to sleep when inactive for</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">3</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">2</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -314,8 +314,8 @@
                         <signal name="format_value" handler="format_inactivity_value_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">3</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">2</property>
                       </packing>
                     </child>
                     <child>
@@ -330,8 +330,8 @@
                         <signal name="format_value" handler="format_inactivity_value_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">3</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">2</property>
                       </packing>
                     </child>
                     <child>
@@ -341,8 +341,8 @@
                         <property name="label" translatable="yes">Spin down hard disks</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">4</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">3</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -355,8 +355,8 @@
                          <signal name="toggled" handler="on_battery_spin_changed"/>
                        </object>
                        <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">4</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">3</property>
                         <property name="x_options">GTK_EXPAND</property>
                         <property name="y_options">GTK_EXPAND</property>
                        </packing>
@@ -370,8 +370,8 @@
                          <signal name="toggled" handler="on_ac_spin_changed"/>
                        </object>
                        <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">4</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">3</property>
                         <property name="x_options">GTK_EXPAND</property>
                         <property name="y_options">GTK_EXPAND</property>
                        </packing>
@@ -380,29 +380,57 @@
                       <object class="GtkLabel" id="label34">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">When battery power is critical</property>
+                        <property name="label" translatable="yes">When battery power is at</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">5</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">4</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="battery-critical-combox">
+                      <object class="GtkHBox" id="critical-box">
                         <property name="visible">True</property>
-                        <property name="model">model7</property>
-                        <signal name="changed" handler="battery_critical_changed_cb"/>
+                        <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkCellRendererText" id="renderer7"/>
-                            <attributes>
-                              <attribute name="text">0</attribute>
-                            </attributes>
+                          <object class="GtkSpinButton" id="critical-spin">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="invisible_char">&#x25CF;</property>
+                            <property name="adjustment">adjustment9</property>
+                            <signal name="value_changed" handler="critical_level_value_changed_cb"/>
+                            <signal name="output" handler="critical_spin_output_cb"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="padding">3</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBox" id="battery-critical-combox">
+                            <property name="visible">True</property>
+                            <property name="model">model7</property>
+                            <signal name="changed" handler="battery_critical_changed_cb"/>
+                            <child>
+                              <object class="GtkCellRendererText" id="renderer7"/>
+                                <attributes>
+                                  <attribute name="text">0</attribute>
+                                </attributes>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="padding">3</property>
+                            <property name="position">1</property>
+                          </packing>
                         </child>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">5</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">4</property>
                         <property name="x_options">GTK_EXPAND</property>
                         <property name="y_options">GTK_EXPAND</property>
                       </packing>
@@ -411,11 +439,11 @@
                       <object class="GtkLabel" id="label35">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
-                        <property name="label" translatable="yes">Prefer power savings over performance</property>
+                        <property name="label" translatable="yes">Prefer saving power over performance</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">6</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">5</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -428,8 +456,8 @@
                          <signal name="toggled" handler="power_save_toggled_cb"/>
                        </object>
                        <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">6</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">5</property>
                         <property name="x_options">GTK_EXPAND</property>
                         <property name="y_options">GTK_EXPAND</property>
                        </packing>
@@ -473,8 +501,8 @@
                         <property name="use_markup">True</property>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">1</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
                         <property name="y_padding">6</property>
                       </packing>
                     </child>
@@ -482,12 +510,12 @@
                       <object class="GtkLabel" id="display_onac_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">&lt;b&gt;On AC&lt;/b&gt;</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Plugged In&lt;/b&gt;</property>
                         <property name="use_markup">True</property>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">1</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">0</property>
                         <property name="y_padding">6</property>
                       </packing>
                     </child>
@@ -499,8 +527,8 @@
                         <property name="xalign">0</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">2</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">1</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -516,8 +544,8 @@
                         <signal name="format_value" handler="format_dpms_value_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">2</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">1</property>
                       </packing>
                     </child>
                     <child>
@@ -532,8 +560,8 @@
                         <signal name="format_value" handler="format_dpms_value_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">2</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">1</property>
                       </packing>
                     </child>
                     <child>
@@ -544,8 +572,8 @@
                         <property name="xalign">0</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">3</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">2</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -561,8 +589,8 @@
                         <signal name="format_value" handler="format_dpms_value_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">3</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">2</property>
                       </packing>
                     </child>
                     <child>
@@ -577,8 +605,8 @@
                         <signal name="format_value" handler="format_dpms_value_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">3</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">2</property>
                       </packing>
                     </child>
                     <child>
@@ -589,8 +617,8 @@
                         <property name="xalign">0</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">4</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">3</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -606,8 +634,8 @@
                         <signal name="format_value" handler="format_brightness_value_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">4</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">3</property>
                       </packing>
                     </child>
                     <child>
@@ -622,8 +650,8 @@
                         <signal name="format_value" handler="format_brightness_value_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">4</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">3</property>
                       </packing>
                     </child>
                     <child>
@@ -634,8 +662,8 @@
                         <property name="xalign">0</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">5</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">4</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -650,8 +678,8 @@
                         <signal name="output" handler="critical_spin_output_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">5</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">4</property>
                         <property name="x_options">GTK_EXPAND</property>
                         <property name="y_options">GTK_EXPAND</property>
                       </packing>
@@ -667,8 +695,8 @@
                         <signal name="output" handler="critical_spin_output_cb"/>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">5</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">4</property>
                         <property name="x_options">GTK_EXPAND</property>
                         <property name="y_options">GTK_EXPAND</property>
                       </packing>
@@ -712,8 +740,8 @@
                         <property name="xalign">0</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">1</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">0</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -728,8 +756,8 @@
                         <signal name="toggled" handler="set_suspend_inactivity"/>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">1</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">0</property>
                         <property name="x_options"></property>
                       </packing>
                     </child>
@@ -745,8 +773,8 @@
                         <signal name="toggled" handler="set_hibernate_inactivity"/>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">1</property>
+                        <property name="left_attach">2</property>
+                        <property name="top_attach">0</property>
                         <property name="x_options"></property>
                       </packing>
                     </child>
@@ -758,8 +786,8 @@
                         <property name="xalign">0</property>
                       </object>
                       <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">2</property>
+                        <property name="left_attach">0</property>
+                        <property name="top_attach">1</property>
                         <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
@@ -774,8 +802,8 @@
                         <signal name="toggled" handler="set_dpms_standby_mode"/>
                       </object>
                       <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">2</property>
+                        <property name="left_attach">1</property>
+                        <property name="top_attach">1</property>
                         <property name="x_options"></property>
                       </packing>
                     </child>
@@ -791,37 +819,9 @@
                         <signal name="toggled" handler="set_dpms_suspend_mode"/>
                       </object>
                       <packing>
-                        <property name="left_attach">3</property>
-                        <property name="top_attach">2</property>
-                        <property name="x_options">GTK_FILL</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="critical-level-label">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Critical power level</property>
-                        <property name="xalign">0</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="top_attach">3</property>
-                        <property name="x_options">GTK_FILL</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkSpinButton" id="critical-spin">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="invisible_char">&#x25CF;</property>
-                        <property name="adjustment">adjustment9</property>
-                        <signal name="value_changed" handler="critical_level_value_changed_cb"/>
-                        <signal name="output" handler="critical_spin_output_cb"/>
-                      </object>
-                      <packing>
                         <property name="left_attach">2</property>
-                        <property name="top_attach">3</property>
-                        <property name="x_options"></property>
+                        <property name="top_attach">1</property>
+                        <property name="x_options">GTK_FILL</property>
                       </packing>
                     </child>
                   </object>
