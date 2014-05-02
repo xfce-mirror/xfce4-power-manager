@@ -1188,8 +1188,6 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
     
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(dpms), val);
-    gtk_widget_set_tooltip_text (dpms, _("Disable Display Power Management Signaling (DPMS), "\
-				         "e.g don't attempt to switch off the display or put it in sleep mode."));
 #else
     gtk_widget_hide (dpms);
 #endif

@@ -167,6 +167,7 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">False</property>
                         <property name="draw_indicator">True</property>
+                        <property name="tooltip-text" translatable="yes">Disable Display Power Management Signaling (DPMS), e.g don't attempt to switch off the display or put it in sleep mode.</property>
                         <signal name="toggled" handler="dpms_toggled_cb"/>
                       </object>
                       <packing>
@@ -357,6 +358,8 @@
                        <packing>
                         <property name="left_attach">2</property>
                         <property name="top_attach">4</property>
+                        <property name="x_options">GTK_EXPAND</property>
+                        <property name="y_options">GTK_EXPAND</property>
                        </packing>
                      </child>
                      <child>
@@ -370,6 +373,8 @@
                        <packing>
                         <property name="left_attach">3</property>
                         <property name="top_attach">4</property>
+                        <property name="x_options">GTK_EXPAND</property>
+                        <property name="y_options">GTK_EXPAND</property>
                        </packing>
                      </child>
                      <child>
