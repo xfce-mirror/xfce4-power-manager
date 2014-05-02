@@ -543,6 +543,7 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
     if ( type == UP_DEVICE_KIND_LINE_POWER )
     {
 	/* Update the panel icon */
+	g_free(button->priv->panel_icon_name);
 	button->priv->panel_icon_name = icon_name;
 	battery_button_set_icon (button);
     }
@@ -599,6 +600,7 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 	gtk_list_store_prepend (list_store, &iter);
 
 	/* Update the panel icon */
+	g_free(button->priv->panel_icon_name);
 	button->priv->panel_icon_name = icon_name;
 	battery_button_set_icon (button);
     }
@@ -613,9 +615,6 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 			COL_OBJ_SIGNAL_ID, signal_id,
 			COL_OBJ_DEVICE_POINTER, device,
 			-1);
-
-    if ( pix )
-	g_object_unref (pix);
 }
 
 static void
@@ -786,6 +785,8 @@ battery_button_init (BatteryButton *button)
     gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
     button->priv->upower  = up_client_new ();
+    button->priv->panel_icon_name = g_strdup(XFPM_AC_ADAPTER_ICON);
+    button->priv->panel_icon_width = 24;
 
     g_signal_connect (button->priv->upower, "device-added", G_CALLBACK (device_added_cb), button);
     g_signal_connect (button->priv->upower, "device-removed", G_CALLBACK (device_removed_cb), button);
@@ -797,6 +798,8 @@ battery_button_finalize (GObject *object)
     BatteryButton *button;
 
     button = BATTERY_BUTTON (object);
+
+    g_free(button->priv->panel_icon_name);
 
     g_signal_handlers_disconnect_by_data (button->priv->upower, button);
 
@@ -817,6 +820,8 @@ static gboolean
 battery_button_set_icon (BatteryButton *button)
 {
     GdkPixbuf *pixbuf;
+
+    DBG("icon_width %d", button->priv->panel_icon_width);
 
     pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                        button->priv->panel_icon_name,
