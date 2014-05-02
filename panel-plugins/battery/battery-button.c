@@ -41,6 +41,7 @@
 static void battery_button_finalize   (GObject *object);
 static gchar* get_device_description (UpClient *upower, UpDevice *device);
 static GtkTreeIter* find_device_in_tree (BatteryButton *button, const gchar *object_path);
+static gboolean battery_button_set_icon (BatteryButton *button);
 
 #define BATTERY_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), BATTERY_TYPE_BUTTON, BatteryButtonPrivate))
@@ -55,6 +56,8 @@ struct BatteryButtonPrivate
     GtkWidget       *image;
     GtkWidget       *treeview;
     gboolean         popup_open;
+    gchar           *panel_icon_name;
+    gint             panel_icon_width;
 };
 
 enum
@@ -505,6 +508,7 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
     const gchar *object_path = up_device_get_object_path(device);
     gchar *details, *icon_name;
     GdkPixbuf *pix;
+    guint type = 0;
 
     TRACE("entering for %s", object_path);
 
@@ -514,6 +518,11 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 
     if (iter == NULL)
 	return;
+
+    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
+    g_object_get (device,
+		  "kind", &type,
+		   NULL);
 
     icon_name = get_device_icon_name (button->priv->upower, device);
     details = get_device_description(button->priv->upower, device);
@@ -530,6 +539,13 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 			-1);
 
     gtk_tree_iter_free (iter);
+
+    if ( type == UP_DEVICE_KIND_LINE_POWER )
+    {
+	/* Update the panel icon */
+	button->priv->panel_icon_name = icon_name;
+	battery_button_set_icon (button);
+    }
 }
 
 static void
@@ -581,6 +597,10 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     {
 	/* The PC's plugged in status shows up first */
 	gtk_list_store_prepend (list_store, &iter);
+
+	/* Update the panel icon */
+	button->priv->panel_icon_name = icon_name;
+	battery_button_set_icon (button);
     }
     else
     {
@@ -794,14 +814,13 @@ battery_button_new (XfcePanelPlugin *plugin)
 }
 
 static gboolean
-battery_button_set_icon (BatteryButton *button, gint width)
+battery_button_set_icon (BatteryButton *button)
 {
     GdkPixbuf *pixbuf;
-    const gchar *icon_name = "xfpm-primary-100-charging";
 
     pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                       icon_name,
-                                       width,
+                                       button->priv->panel_icon_name,
+                                       button->priv->panel_icon_width,
                                        GTK_ICON_LOOKUP_FORCE_SIZE,
                                        NULL);
 
@@ -829,7 +848,9 @@ battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButto
                                   gtk_widget_get_style(GTK_WIDGET(button))->xthickness);
 
     gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
-    return battery_button_set_icon (button, width);
+    button->priv->panel_icon_width = width;
+
+    return battery_button_set_icon (button);
 }
 
 static void
