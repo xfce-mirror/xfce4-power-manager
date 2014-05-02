@@ -660,6 +660,16 @@ device_removed_cb (UpClient *upower, UpDevice *device, BatteryButton *button)
 }
 #endif
 
+static void
+preferences_cb (GtkButton *gtkbutton, gpointer user_data)
+{
+    BatteryButton *button = BATTERY_BUTTON (user_data);
+
+    /* close the window and release any grabs */
+    battery_button_grab_notify (button, FALSE);
+
+    xfpm_preferences ();
+}
 
 static void
 battery_button_add_all_devices (BatteryButton *button)
@@ -740,7 +750,7 @@ battery_button_create_popup (BatteryButton *button)
 
     /* Preferences option */
     option_button = gtk_button_new_from_stock (GTK_STOCK_PREFERENCES);
-    g_signal_connect (option_button, "clicked",G_CALLBACK (xfpm_preferences), NULL);
+    g_signal_connect (option_button, "clicked",G_CALLBACK (preferences_cb), button);
 
     gtk_box_pack_start (GTK_BOX (box), option_button, TRUE, TRUE, 1);
 
