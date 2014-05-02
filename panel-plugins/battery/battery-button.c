@@ -52,11 +52,17 @@ struct BatteryButtonPrivate
 
     UpClient        *upower;
 
+    /* The popup dialog window */
     GtkWidget       *popup;
+    /* The actual panel icon image */
     GtkWidget       *image;
+    /* All devices are in the tree */
     GtkWidget       *treeview;
+    /* is the left-click popup window open? */
     gboolean         popup_open;
+    /* Keep track of icon name to redisplay during size changes */
     gchar           *panel_icon_name;
+    /* Keep track of the last icon size for use during updates */
     gint             panel_icon_width;
 };
 
@@ -68,18 +74,11 @@ enum
 
 enum
 {
-    DEVICE_INFO_NAME,
-    DEVICE_INFO_VALUE,
-    DEVICE_INFO_LAST
-};
-
-enum
-{
-    COL_ICON,
-    COL_NAME,
-    COL_OBJ_PATH,
-    COL_OBJ_DEVICE_POINTER,
-    COL_OBJ_SIGNAL_ID,
+    COL_ICON,                 /* Pixbuf */
+    COL_NAME,                 /* Description of the device + state */
+    COL_OBJ_PATH,             /* UpDevice object path */
+    COL_OBJ_DEVICE_POINTER,   /* Pointer to UpDevice for UPower 0.99 */
+    COL_OBJ_SIGNAL_ID,        /* device changed callback id */
     NCOLS
 };
 
@@ -175,13 +174,6 @@ battery_button_popup_button_press_event (GtkWidget *widget, GdkEventButton *ev, 
 	battery_button_release_grab (button, ev);
 	return TRUE;
     }
-    return FALSE;
-}
-
-static gboolean
-battery_button_popup_key_release_event (GtkWidget *widget, GdkEventKey *ev, gpointer data)
-{
-
     return FALSE;
 }
 
@@ -710,8 +702,6 @@ battery_button_create_popup (BatteryButton *button)
 		      G_CALLBACK (battery_button_popup_grab_notify), button);
     g_signal_connect (button->priv->popup, "grab-broken-event",
 		      G_CALLBACK (battery_button_popup_broken_event), button);
-    g_signal_connect (button->priv->popup, "key_release_event",
-		      G_CALLBACK (battery_button_popup_key_release_event), button);
     g_signal_connect (button->priv->popup , "button_press_event",
 		      G_CALLBACK (battery_button_popup_button_press_event), button);
 
@@ -794,6 +784,7 @@ battery_button_init (BatteryButton *button)
     gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
     button->priv->upower  = up_client_new ();
+    /* Sane defaults for the panel icon */
     button->priv->panel_icon_name = g_strdup(XFPM_AC_ADAPTER_ICON);
     button->priv->panel_icon_width = 24;
 
