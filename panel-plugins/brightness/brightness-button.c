@@ -579,7 +579,7 @@ static gboolean
 brightness_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BrightnessButton *button)
 {
     gint width = size -2 - 2* MAX(gtk_widget_get_style(GTK_WIDGET(button))->xthickness,
-				  gtk_widget_get_style(GTK_WIDGET(button))->xthickness);
+				  gtk_widget_get_style(GTK_WIDGET(button))->ythickness);
 				 
     gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
     return brightness_button_set_icon (button, width);
