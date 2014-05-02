@@ -39,6 +39,8 @@
 #include "battery-button.h"
 
 static void battery_button_finalize   (GObject *object);
+static gchar* get_device_description (UpClient *upower, UpDevice *device);
+static GtkTreeIter* find_device_in_tree (BatteryButton *button, const gchar *object_path);
 
 #define BATTERY_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), BATTERY_TYPE_BUTTON, BatteryButtonPrivate))
@@ -77,9 +79,6 @@ enum
     COL_OBJ_SIGNAL_ID,
     NCOLS
 };
-
-static gchar* get_device_description (UpClient *upower, UpDevice *device);
-static GtkTreeIter* find_device_in_tree (BatteryButton *button, const gchar *object_path);
 
 G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_BUTTON)
 
@@ -360,12 +359,11 @@ get_device_description (UpClient *upower, UpDevice *device)
 		  "time-to-full", &time_to_full,
 		   NULL);
 
-    g_object_get (upower,
-                  "on-battery", &on_battery,
-		  NULL);
 
     if (type == UP_DEVICE_KIND_LINE_POWER)
     {
+	 on_battery = up_client_get_on_battery (upower);
+
 	if (on_battery)
 	{
 	    tip = g_strdup_printf(_("<b>On Battery</b>\t"));
@@ -401,7 +399,7 @@ get_device_description (UpClient *upower, UpDevice *device)
 	if ( time_to_full != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (time_to_full);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%).\t\n%s until is fully charged.\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%).\t\n%s until fully charged.\t"),
 				   vendor, model,
 				   percentage,
 				   est_time_str);
@@ -465,8 +463,20 @@ get_device_description (UpClient *upower, UpDevice *device)
 static GtkTreeIter*
 find_device_in_tree (BatteryButton *button, const gchar *object_path)
 {
-    GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(button->priv->treeview));
+    GtkTreeModel *model;
     GtkTreeIter iter;
+
+    TRACE("entering");
+
+    g_return_val_if_fail ( BATTERY_IS_BUTTON(button), NULL );
+
+    if ( !button->priv->treeview )
+	return NULL;
+
+    model = gtk_tree_view_get_model(GTK_TREE_VIEW(button->priv->treeview));
+
+    if (!model)
+	return NULL;
 
     if(gtk_tree_model_get_iter_first(model, &iter)) {
         do {
@@ -474,7 +484,6 @@ find_device_in_tree (BatteryButton *button, const gchar *object_path)
             gtk_tree_model_get(model, &iter, COL_OBJ_PATH, &path, -1);
 
             if(g_strcmp0(path, object_path) == 0) {
-
                 g_free(path);
                 return gtk_tree_iter_copy(&iter);
             }
@@ -486,8 +495,13 @@ find_device_in_tree (BatteryButton *button, const gchar *object_path)
     return NULL;
 }
 
+
 static void
+#if UP_CHECK_VERSION(0, 99, 0)
+device_changed_cb (UpDevice *device, GParamSpec *pspec, BatteryButton *button)
+#else
 device_changed_cb (UpDevice *device, BatteryButton *button)
+#endif
 {
     GtkTreeIter *iter;
     const gchar *object_path = up_device_get_object_path(device);
@@ -495,6 +509,8 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
     GdkPixbuf *pix;
 
     TRACE("entering for %s", object_path);
+
+    g_return_if_fail ( BATTERY_IS_BUTTON (button) );
 
     iter = find_device_in_tree (button, object_path);
 
@@ -528,6 +544,10 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     gchar *details, *icon_name;
     const gchar *object_path = up_device_get_object_path(device);
     gulong signal_id;
+
+    TRACE("entering for %s", object_path);
+
+    g_return_if_fail ( BATTERY_IS_BUTTON (button ) );
 
     /* don't add the same device twice */
     device_iter = find_device_in_tree (button, object_path);
@@ -649,7 +669,6 @@ battery_button_add_all_devices (BatteryButton *button)
 	for ( i = 0; i < array->len; i++)
 	{
 	    UpDevice *device = g_ptr_array_index (array, i);
-	    const gchar *object_path = up_device_get_object_path(device);
 
 	    battery_button_add_device (device, button);
 	}

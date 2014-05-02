@@ -230,7 +230,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 {
     gchar *icon_name = NULL, *icon_prefix;
     guint type = 0, state = 0;
-    gboolean on_battery, battery_low = FALSE;
+    gboolean on_battery;
     gboolean present;
     gdouble percentage;
 
@@ -242,12 +242,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 		  "percentage", &percentage,
 		   NULL);
 
-    g_object_get (upower,
-                  "on-battery", &on_battery,
-#if UP_CHECK_VERSION(0, 99, 0)
-		  "OnLowBattery", &battery_low,
-#endif
-		  NULL);
+    on_battery = up_client_get_on_battery (upower);
 
     icon_prefix = xfpm_battery_get_icon_prefix_device_enum_type (type);
 
@@ -257,13 +252,9 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 	{
 	    icon_name = g_strdup_printf ("%s", XFPM_AC_ADAPTER_ICON);
 	}
-	else if ( battery_low )
-	{
-	    icon_name = g_strdup_printf ("%s100", icon_prefix);
-	}
 	else
 	{
-	    icon_name = g_strdup_printf ("%s100", icon_prefix);
+	    icon_name = g_strdup_printf ("%s060", XFPM_PRIMARY_ICON_PREFIX);
 	}
     }
     else if ( type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS )
