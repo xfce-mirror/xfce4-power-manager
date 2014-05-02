@@ -756,6 +756,7 @@ battery_button_create_popup (BatteryButton *button)
     option_button = gtk_button_new_with_mnemonic ("_Preferences...");
     gtk_button_set_relief (GTK_BUTTON(option_button), GTK_RELIEF_NONE);
     gtk_button_set_focus_on_click (GTK_BUTTON(option_button), FALSE);
+    gtk_button_set_alignment (GTK_BUTTON(option_button), 0.2f, 0.5f);
     g_signal_connect (option_button, "clicked",G_CALLBACK (preferences_cb), button);
 
     gtk_box_pack_start (GTK_BOX (box), option_button, TRUE, TRUE, 1);
