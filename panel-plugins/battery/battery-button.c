@@ -731,6 +731,10 @@ battery_button_create_popup (BatteryButton *button)
 
     /* turn off alternating row colors, themes will probably override this */
     gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (button->priv->treeview), FALSE);
+
+    /* selection follows mouse */
+    gtk_tree_view_set_hover_selection (GTK_TREE_VIEW (button->priv->treeview), TRUE);
+
     col = gtk_tree_view_column_new ();
 
     renderer = gtk_cell_renderer_pixbuf_new ();
