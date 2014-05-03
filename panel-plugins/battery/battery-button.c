@@ -40,7 +40,7 @@
 
 static void battery_button_finalize   (GObject *object);
 static gchar* get_device_description (UpClient *upower, UpDevice *device);
-static GtkTreeIter* find_device_in_tree (BatteryButton *button, const gchar *object_path);
+static GList* find_device_in_list (BatteryButton *button, const gchar *object_path);
 static gboolean battery_button_set_icon (BatteryButton *button);
 
 #define BATTERY_BUTTON_GET_PRIVATE(o) \
@@ -52,14 +52,11 @@ struct BatteryButtonPrivate
 
     UpClient        *upower;
 
-    /* The popup dialog window */
-    GtkWidget       *popup;
+    /* A list of BatteryDevices  */
+    GList           *devices;
+
     /* The actual panel icon image */
-    GtkWidget       *image;
-    /* All devices are in the tree */
-    GtkWidget       *treeview;
-    /* is the left-click popup window open? */
-    gboolean         popup_open;
+    GtkWidget       *panel_icon_image;
     /* Keep track of icon name to redisplay during size changes */
     gchar           *panel_icon_name;
     /* Keep track of the last icon size for use during updates */
@@ -72,15 +69,14 @@ enum
     PROP_PLUGIN
 };
 
-enum
+typedef struct
 {
-    COL_ICON,                 /* Pixbuf */
-    COL_NAME,                 /* Description of the device + state */
-    COL_OBJ_PATH,             /* UpDevice object path */
-    COL_OBJ_DEVICE_POINTER,   /* Pointer to UpDevice for UPower 0.99 */
-    COL_OBJ_SIGNAL_ID,        /* device changed callback id */
-    NCOLS
-};
+    GdkPixbuf   *pix;          /* Icon */
+    gchar       *details;      /* Description of the device + state */
+    gchar       *object_path;  /* UpDevice object path */
+    UpDevice    *device;       /* Pointer to the UpDevice */
+    gulong       signal_id;    /* device changed callback id */
+} BatteryDevice;
 
 G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_BUTTON)
 
@@ -102,232 +98,10 @@ battery_button_set_property (GObject *object,
     }
 }
 
-/*
- * The Code for handling grab/ungrab events are taken from GtkScaleButton.
- * GTK - The GIMP Toolkit
- * Copyright (C) 2005 Ronald S. Bultje
- * Copyright (C) 2006, 2007 Christian Persch
- * Copyright (C) 2006 Jan Arne Petersen
- * Copyright (C) 2005-2007 Red Hat, Inc.
- */
-static void
-battery_button_grab_notify (BatteryButton *button, gboolean was_grabbed)
-{
-    GdkDisplay *display;
-    if (was_grabbed != FALSE)
-	return;
-
-    if (!gtk_widget_has_grab (button->priv->popup))
-	return;
-
-    if (gtk_widget_is_ancestor (gtk_grab_get_current (), button->priv->popup))
-	return;
-
-    display = gtk_widget_get_display (button->priv->popup);
-    gdk_display_keyboard_ungrab (display, GDK_CURRENT_TIME);
-    gdk_display_pointer_ungrab (display, GDK_CURRENT_TIME);
-    gtk_grab_remove (button->priv->popup);
-    gtk_widget_hide (button->priv->popup);
-    button->priv->popup_open = FALSE;
-}
-
-static void
-battery_button_popup_grab_notify (GtkWidget *widget, gboolean was_grabbed, BatteryButton *button)
-{
-    battery_button_grab_notify (button, was_grabbed);
-}
-
-static gboolean
-battery_button_popup_broken_event (GtkWidget *widget, gboolean was_grabbed, BatteryButton *button)
-{
-    battery_button_grab_notify (button, FALSE);
-    return FALSE;
-}
-
-static void
-battery_button_release_grab (BatteryButton *button, GdkEventButton *event)
-{
-    GdkEventButton *e;
-    GdkDisplay *display;
-
-    display = gtk_widget_get_display (GTK_WIDGET (button));
-    gdk_display_keyboard_ungrab (display, event->time);
-    gdk_display_pointer_ungrab (display, event->time);
-    gtk_grab_remove (button->priv->popup);
-
-    gtk_widget_hide (button->priv->popup);
-
-    e = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
-    e->window = gtk_widget_get_window (GTK_WIDGET (button));
-    e->type = GDK_BUTTON_RELEASE;
-    gtk_widget_event (GTK_WIDGET (button), (GdkEvent *) e);
-    e->window = event->window;
-    gdk_event_free ((GdkEvent *) e);
-    button->priv->popup_open = FALSE;
-}
-
-static gboolean
-battery_button_popup_button_press_event (GtkWidget *widget, GdkEventButton *ev, BatteryButton *button)
-{
-    if ( ev->type == GDK_BUTTON_PRESS )
-    {
-	battery_button_release_grab (button, ev);
-	return TRUE;
-    }
-    return FALSE;
-}
-
 static void
 battery_button_set_tooltip (BatteryButton *button)
 {
     gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Display battery levels for attached devices"));
-}
-
-static gboolean
-battery_button_popup_win (GtkWidget *widget, GdkEvent *ev, guint32 ev_time)
-{
-    gint x, y;
-    GdkDisplay *display;
-    GdkScreen *screen;
-    BatteryButton *button;
-    XfceScreenPosition pos;
-    GtkAllocation widget_allocation, popup_allocation;
-
-    button = BATTERY_BUTTON (widget);
-
-    display = gtk_widget_get_display (widget);
-    screen = gtk_widget_get_screen (widget);
-
-    gtk_window_set_screen (GTK_WINDOW (button->priv->popup), screen);
-
-    gtk_widget_show_all (button->priv->popup);
-
-    gtk_grab_add (button->priv->popup);
-
-    if (gdk_pointer_grab (gtk_widget_get_window (button->priv->popup), TRUE,
-			GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
-			GDK_POINTER_MOTION_MASK, NULL, NULL, ev_time)
-	  != GDK_GRAB_SUCCESS)
-    {
-	gtk_grab_remove (button->priv->popup);
-	gtk_widget_hide (button->priv->popup);
-	return FALSE;
-    }
-
-    if (gdk_keyboard_grab (gtk_widget_get_window (button->priv->popup), TRUE, ev_time) != GDK_GRAB_SUCCESS)
-    {
-	gdk_display_pointer_ungrab (display, ev_time);
-	gtk_grab_remove (button->priv->popup);
-	gtk_widget_hide (button->priv->popup);
-	return FALSE;
-    }
-
-    gtk_widget_grab_focus (button->priv->popup);
-
-    /* Position */
-    gdk_window_get_origin (gtk_widget_get_window (widget), &x, &y);
-
-    pos = xfce_panel_plugin_get_screen_position (button->priv->plugin);
-
-    gtk_widget_get_allocation (widget, &widget_allocation);
-    gtk_widget_get_allocation (button->priv->popup, &popup_allocation);
-
-
-    if ( pos == XFCE_SCREEN_POSITION_N )
-    {
-	x += widget_allocation.x + widget_allocation.width/2;
-	y += widget_allocation.height;
-	x -= popup_allocation.width/2;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_NE_H )
-    {
-	x += widget_allocation.x + widget_allocation.width;
-	y += widget_allocation.height;
-	x -= popup_allocation.width;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_NW_H )
-    {
-	x += widget_allocation.x + widget_allocation.width/2;
-	y += widget_allocation.height;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_NW_V ||
-	      pos == XFCE_SCREEN_POSITION_W )
-    {
-	y += widget_allocation.y + widget_allocation.height/2;
-	x += widget_allocation.width;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_SW_V )
-    {
-	y += widget_allocation.y + widget_allocation.height/2;
-	x += widget_allocation.width;
-	y -= popup_allocation.height;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_NE_V )
-    {
-	x += widget_allocation.x + widget_allocation.width;
-	y += widget_allocation.height;
-	x -= popup_allocation.width;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_E    ||
-	      pos == XFCE_SCREEN_POSITION_SE_V )
-    {
-	y += widget_allocation.y
-		+ widget_allocation.height/2;
-	x -= popup_allocation.width;
-	y -= popup_allocation.height/2;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_SW_H )
-    {
-	x += widget_allocation.x + widget_allocation.width/2;
-	y -= popup_allocation.height;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_SE_H )
-    {
-	x += widget_allocation.x + widget_allocation.width;
-	y -= popup_allocation.height;
-	x -= popup_allocation.width;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_S )
-    {
-	x += widget_allocation.x + widget_allocation.width/2;
-	y -= popup_allocation.height;
-	x -= popup_allocation.width/2;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_FLOATING_H )
-    {
-	x += widget_allocation.x + widget_allocation.width/2;
-	x -= popup_allocation.width/2;
-	if ( y > popup_allocation.height )
-	    y -= popup_allocation.height;
-	else
-	     y += widget_allocation.height;
-    }
-    else if ( pos == XFCE_SCREEN_POSITION_FLOATING_V )
-    {
-	y -= popup_allocation.height/2;
-	y += widget_allocation.y + widget_allocation.height/2;
-	if ( x < popup_allocation.width )
-	    x += widget_allocation.width;
-	else
-	    x -= popup_allocation.width;
-    }
-    else
-    {
-	battery_button_release_grab (button, (GdkEventButton *)ev);
-	g_return_val_if_reached (FALSE);
-    }
-
-    gtk_window_move (GTK_WINDOW(button->priv->popup), x, y);
-    TRACE("Displaying window on x=%d y=%d", x, y);
-
-    button->priv->popup_open = TRUE;
-    return TRUE;
-}
-
-static gboolean
-battery_button_press_event (GtkWidget *widget, GdkEventButton *ev)
-{
-    return battery_button_popup_win (widget, (GdkEvent *) ev, ev->time);
 }
 
 static gchar*
@@ -453,37 +227,20 @@ get_device_description (UpClient *upower, UpDevice *device)
     return tip;
 }
 
-/* Call gtk_tree_iter_free when done with the tree iter */
-static GtkTreeIter*
-find_device_in_tree (BatteryButton *button, const gchar *object_path)
+static GList*
+find_device_in_list (BatteryButton *button, const gchar *object_path)
 {
-    GtkTreeModel *model;
-    GtkTreeIter iter;
+    GList *item = NULL;
 
     TRACE("entering");
 
     g_return_val_if_fail ( BATTERY_IS_BUTTON(button), NULL );
 
-    if ( !button->priv->treeview )
-	return NULL;
-
-    model = gtk_tree_view_get_model(GTK_TREE_VIEW(button->priv->treeview));
-
-    if (!model)
-	return NULL;
-
-    if(gtk_tree_model_get_iter_first(model, &iter)) {
-        do {
-            gchar *path = NULL;
-            gtk_tree_model_get(model, &iter, COL_OBJ_PATH, &path, -1);
-
-            if(g_strcmp0(path, object_path) == 0) {
-                g_free(path);
-                return gtk_tree_iter_copy(&iter);
-            }
-
-            g_free(path);
-        } while(gtk_tree_model_iter_next(model, &iter));
+    for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
+    {
+	BatteryDevice *battery_device = item->data;
+	if (g_strcmp0 (battery_device->object_path, object_path) == 0)
+	    return item;
     }
 
     return NULL;
@@ -496,7 +253,8 @@ device_changed_cb (UpDevice *device, GParamSpec *pspec, BatteryButton *button)
 device_changed_cb (UpDevice *device, BatteryButton *button)
 #endif
 {
-    GtkTreeIter *iter;
+    GList *item;
+    BatteryDevice *battery_device;
     const gchar *object_path = up_device_get_object_path(device);
     gchar *details, *icon_name;
     GdkPixbuf *pix;
@@ -506,10 +264,12 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 
     g_return_if_fail ( BATTERY_IS_BUTTON (button) );
 
-    iter = find_device_in_tree (button, object_path);
+    item = find_device_in_list (button, object_path);
 
-    if (iter == NULL)
+    if (item == NULL)
 	return;
+
+    battery_device = item->data;
 
     /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
     g_object_get (device,
@@ -525,12 +285,12 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 				    GTK_ICON_LOOKUP_USE_BUILTIN,
 				    NULL);
 
-    gtk_list_store_set (GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(button->priv->treeview))), iter,
-			COL_NAME, details,
-			COL_ICON, pix,
-			-1);
+    g_free(battery_device->details);
+    battery_device->details = details;
 
-    gtk_tree_iter_free (iter);
+    if (battery_device->pix)
+	g_object_unref (battery_device->pix);
+    battery_device->pix = pix;
 
     if ( type == UP_DEVICE_KIND_LINE_POWER )
     {
@@ -544,8 +304,7 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 static void
 battery_button_add_device (UpDevice *device, BatteryButton *button)
 {
-    GtkListStore *list_store;
-    GtkTreeIter iter, *device_iter;
+    BatteryDevice *battery_device;
     GdkPixbuf *pix;
     guint type = 0;
     gchar *details, *icon_name;
@@ -557,12 +316,10 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     g_return_if_fail ( BATTERY_IS_BUTTON (button ) );
 
     /* don't add the same device twice */
-    device_iter = find_device_in_tree (button, object_path);
-    if (device_iter)
-    {
-	gtk_tree_iter_free (device_iter);
+    if ( find_device_in_list (button, object_path) )
 	return;
-    }
+
+    battery_device = g_new0 (BatteryDevice, 1);
 
     /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
     g_object_get (device,
@@ -571,8 +328,6 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 
     icon_name = get_device_icon_name (button->priv->upower, device);
     details = get_device_description(button->priv->upower, device);
-
-    list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (button->priv->treeview)));
 
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
 				    icon_name,
@@ -586,10 +341,18 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     signal_id = g_signal_connect (device, "changed", G_CALLBACK (device_changed_cb), button);
 #endif
 
+    /* populate the struct */
+    battery_device->pix = pix;
+    battery_device->details = details;
+    battery_device->object_path = g_strdup (object_path);
+    battery_device->signal_id = signal_id;
+    battery_device->device = device;
+
+    /* add it to the list */
     if ( type == UP_DEVICE_KIND_LINE_POWER )
     {
 	/* The PC's plugged in status shows up first */
-	gtk_list_store_prepend (list_store, &iter);
+	button->priv->devices = g_list_prepend (button->priv->devices, battery_device);
 
 	/* Update the panel icon */
 	g_free(button->priv->panel_icon_name);
@@ -598,45 +361,40 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     }
     else
     {
-	gtk_list_store_append (list_store, &iter);
+	button->priv->devices = g_list_append (button->priv->devices, battery_device);
     }
-    gtk_list_store_set (list_store, &iter,
-			COL_ICON, pix,
-			COL_NAME, details,
-			COL_OBJ_PATH, object_path,
-			COL_OBJ_SIGNAL_ID, signal_id,
-			COL_OBJ_DEVICE_POINTER, device,
-			-1);
 }
 
 static void
 battery_button_remove_device (BatteryButton *button, const gchar *object_path)
 {
-    GtkTreeIter *iter;
-    GtkListStore *list_store;
-    gulong signal_id;
-    UpDevice *device;
+    GList *item;
+    BatteryDevice *battery_device;
 
     TRACE("entering for %s", object_path);
 
-    iter = find_device_in_tree (button, object_path);
+    item = find_device_in_list (button, object_path);
 
-    if (iter == NULL)
+    if (item == NULL)
 	return;
 
-    list_store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(button->priv->treeview)));
+    battery_device = item->data;
 
-    gtk_tree_model_get (GTK_TREE_MODEL(list_store), iter,
-			COL_OBJ_SIGNAL_ID, &signal_id,
-			COL_OBJ_DEVICE_POINTER, &device,
-			-1);
+    if (battery_device->pix)
+	g_object_unref (battery_device->pix);
 
-    gtk_list_store_remove (list_store, iter);
+    g_free(battery_device->details);
+    g_free(battery_device->object_path);
 
-    gtk_tree_iter_free (iter);
+    if (battery_device->device)
+    {
+	if (battery_device->signal_id)
+	    g_signal_handler_disconnect (battery_device->device, battery_device->signal_id);
+	g_object_unref (battery_device->device);
+    }
 
-    if (device)
-	g_signal_handler_disconnect (device, signal_id);
+    /* remove it item and free the battery device */
+    button->priv->devices = g_list_delete_link (button->priv->devices, item);
 }
 
 static void
@@ -659,17 +417,6 @@ device_removed_cb (UpClient *upower, UpDevice *device, BatteryButton *button)
     battery_button_remove_device (button, object_path);
 }
 #endif
-
-static void
-preferences_cb (GtkButton *gtkbutton, gpointer user_data)
-{
-    BatteryButton *button = BATTERY_BUTTON (user_data);
-
-    /* close the window and release any grabs */
-    battery_button_grab_notify (button, FALSE);
-
-    xfpm_preferences ();
-}
 
 static void
 battery_button_add_all_devices (BatteryButton *button)
@@ -697,89 +444,12 @@ battery_button_add_all_devices (BatteryButton *button)
 }
 
 static void
-battery_button_create_popup (BatteryButton *button)
-{
-    GtkOrientation orientation;
-    GtkWidget *box, *option_button;
-    GtkListStore *list_store;
-    GtkTreeViewColumn *col;
-    GtkCellRenderer *renderer;
-
-    button->priv->popup = gtk_window_new (GTK_WINDOW_POPUP);
-    gtk_window_set_decorated (GTK_WINDOW(button->priv->popup), FALSE);
-
-    g_signal_connect (button->priv->popup, "grab-notify",
-		      G_CALLBACK (battery_button_popup_grab_notify), button);
-    g_signal_connect (button->priv->popup, "grab-broken-event",
-		      G_CALLBACK (battery_button_popup_broken_event), button);
-    g_signal_connect (button->priv->popup , "button_press_event",
-		      G_CALLBACK (battery_button_popup_button_press_event), button);
-
-    orientation = xfce_panel_plugin_get_orientation (button->priv->plugin);
-
-    if ( orientation == GTK_ORIENTATION_VERTICAL)
-	box = gtk_hbox_new (FALSE, 2);
-    else
-	box = gtk_vbox_new (FALSE, 2);
-
-    gtk_container_add (GTK_CONTAINER (button->priv->popup), box);
-
-    button->priv->treeview = gtk_tree_view_new ();
-    list_store = gtk_list_store_new (5, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_ULONG, G_TYPE_POINTER);
-
-    gtk_tree_view_set_model (GTK_TREE_VIEW (button->priv->treeview), GTK_TREE_MODEL (list_store));
-
-    /* turn off alternating row colors, themes will probably override this */
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (button->priv->treeview), FALSE);
-
-    /* selection follows mouse */
-    gtk_tree_view_set_hover_selection (GTK_TREE_VIEW (button->priv->treeview), TRUE);
-
-    col = gtk_tree_view_column_new ();
-
-    renderer = gtk_cell_renderer_pixbuf_new ();
-
-    /* treeview contains an image and fancy text */
-    gtk_tree_view_column_pack_start (col, renderer, FALSE);
-    gtk_tree_view_column_set_attributes (col, renderer, "pixbuf", 0, NULL);
-
-    renderer = gtk_cell_renderer_text_new ();
-    gtk_tree_view_column_pack_start (col, renderer, FALSE);
-    gtk_tree_view_column_set_attributes (col, renderer, "markup", 1, NULL);
-
-    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (button->priv->treeview), FALSE);
-    gtk_tree_view_append_column (GTK_TREE_VIEW (button->priv->treeview), col);
-
-    gtk_box_pack_start (GTK_BOX (box), button->priv->treeview, TRUE, TRUE, 0);
-
-    /* Preferences option */
-    option_button = gtk_button_new_with_mnemonic ("_Preferences...");
-    gtk_button_set_relief (GTK_BUTTON(option_button), GTK_RELIEF_NONE);
-    gtk_button_set_focus_on_click (GTK_BUTTON(option_button), FALSE);
-    gtk_button_set_alignment (GTK_BUTTON(option_button), 0.2f, 0.5f);
-    g_signal_connect (option_button, "clicked",G_CALLBACK (preferences_cb), button);
-
-    gtk_box_pack_start (GTK_BOX (box), option_button, TRUE, TRUE, 1);
-
-    /* no decorations */
-    gtk_window_set_type_hint (GTK_WINDOW(button->priv->popup), GDK_WINDOW_TYPE_HINT_UTILITY );
-
-    /* populate the popup window with the devices already present on the system */
-    battery_button_add_all_devices (button);
-
-    gtk_widget_show_all (box);
-}
-
-static void
 battery_button_class_init (BatteryButtonClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
-    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
     object_class->finalize = battery_button_finalize;
     object_class->set_property = battery_button_set_property;
-
-    widget_class->button_press_event = battery_button_press_event;
 
     g_object_class_install_property (object_class,
 				     PROP_PLUGIN,
@@ -848,19 +518,12 @@ battery_button_set_icon (BatteryButton *button)
 
     if ( pixbuf )
     {
-        gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->image), pixbuf);
+        gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->panel_icon_image), pixbuf);
         g_object_unref (pixbuf);
         return TRUE;
     }
 
     return FALSE;
-}
-
-static void
-destroy_popup (BatteryButton *button)
-{
-    if ( GTK_IS_WIDGET (button->priv->popup) )
-	gtk_widget_destroy (button->priv->popup);
 }
 
 static gboolean
@@ -878,15 +541,13 @@ battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButto
 static void
 battery_button_free_data_cb (XfcePanelPlugin *plugin, BatteryButton *button)
 {
-    destroy_popup (button);
     gtk_widget_destroy (GTK_WIDGET (button));
 }
 
 static void
 help_cb (GtkMenuItem *menuitem, gpointer user_data)
 {
-    BatteryButton *button = BATTERY_BUTTON (user_data);
-    xfce_dialog_show_help (GTK_WINDOW (button->priv->popup), "xfce4-power-manager", "start", NULL);
+    xfce_dialog_show_help (NULL, "xfce4-power-manager", "start", NULL);
 }
 
 void battery_button_show (BatteryButton *button)
@@ -897,8 +558,8 @@ void battery_button_show (BatteryButton *button)
 
     xfce_panel_plugin_add_action_widget (button->priv->plugin, GTK_WIDGET (button));
 
-    button->priv->image = gtk_image_new ();
-    gtk_container_add (GTK_CONTAINER (button), button->priv->image);
+    button->priv->panel_icon_image = gtk_image_new ();
+    gtk_container_add (GTK_CONTAINER (button), button->priv->panel_icon_image);
 
     /* help dialog */
     mi = gtk_image_menu_item_new_from_stock (GTK_STOCK_HELP, NULL);
@@ -915,6 +576,8 @@ void battery_button_show (BatteryButton *button)
 		      G_CALLBACK (battery_button_free_data_cb), button);
 
     gtk_widget_show_all (GTK_WIDGET(button));
-    battery_button_create_popup (button);
     battery_button_set_tooltip (button);
+
+    /* Add all the devcies currently attached to the system */
+    battery_button_add_all_devices (button);
 }
