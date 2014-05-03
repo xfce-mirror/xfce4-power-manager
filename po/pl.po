@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-14 00:30+0200\n"
-"PO-Revision-Date: 2014-04-14 11:37+0000\n"
+"POT-Creation-Date: 2014-04-29 18:30+0200\n"
+"PO-Revision-Date: 2014-05-03 14:10+0000\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
-"Language-Team: Polish (http://www.transifex.com/projects/p/xfce/language/pl/)\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/xfce4-power-manager/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -123,8 +123,8 @@ msgstr "Oszczędzanie energii w zamian za niższą wydajność"
 #: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:820
 #: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
 #: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:489
-#: ../src/xfpm-power.c:801
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:527
+#: ../src/xfpm-power.c:840
 msgid "Suspend"
 msgstr "Wstrzymanie"
 
@@ -132,8 +132,8 @@ msgstr "Wstrzymanie"
 #: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:826
 #: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1043
 #: ../settings/xfpm-settings.c:1220 ../settings/xfpm-settings.c:1277
-#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:474
-#: ../src/xfpm-power.c:788
+#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:512
+#: ../src/xfpm-power.c:827
 msgid "Hibernate"
 msgstr "Zahibernowanie"
 
@@ -158,6 +158,16 @@ msgid "Lock screen when going for suspend/hibernate"
 msgstr "Blokowanie ekranu po wstrzymaniu lub zahibernowaniu działania komputera"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "Notify Network Manager of suspend/hibernate"
+msgstr "Powiadamianie menedżera sieci o wstrzymaniu lub zahibernowaniu"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid ""
+"When enabled this signals to network manager that the system is going to "
+"suspend/hibernate so it can power down the network interfaces, saving power."
+msgstr "Informuje menedżer sieci o zdarzeniu wstrzymania lub zahibernowania, dzięki czemu możliwe jest wyłączenie interfejsów sieciowych i oszczędzanie energii"
+
+#: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "<b>Advanced Options</b>"
 msgstr "<b>Zaawansowane</b>"
 
@@ -197,17 +207,17 @@ msgid "Seconds"
 msgstr "sekund"
 
 #: ../settings/xfpm-settings.c:798 ../settings/xfpm-settings.c:996
-#: ../settings/xfpm-settings.c:1476
+#: ../settings/xfpm-settings.c:1477
 msgid "Hibernate and suspend operations not supported"
 msgstr "Hibernowanie i wstrzymywanie pracy komputera nie jest obsługiwane"
 
 #: ../settings/xfpm-settings.c:803 ../settings/xfpm-settings.c:1001
-#: ../settings/xfpm-settings.c:1481
+#: ../settings/xfpm-settings.c:1482
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Brak uprawnień, aby wstrzymać lub zahibernować działanie komputera"
 
 #: ../settings/xfpm-settings.c:832 ../settings/xfpm-settings.c:1226
-#: ../src/xfpm-power.c:814
+#: ../src/xfpm-power.c:853
 msgid "Shutdown"
 msgstr "Wyłączenie"
 
@@ -246,43 +256,43 @@ msgid ""
 "switch off the display or put it in sleep mode."
 msgstr "Przełącza obsługę standardu DPMS (np. wyłączania lub wstrzymywania działania ekranu)."
 
-#: ../settings/xfpm-settings.c:1385
+#: ../settings/xfpm-settings.c:1386
 msgid "Suspend operation not supported"
 msgstr "Wstrzymywanie pracy komputera nie jest obsługiwane"
 
-#: ../settings/xfpm-settings.c:1391
+#: ../settings/xfpm-settings.c:1392
 msgid "Suspend operation not permitted"
 msgstr "Brak uprawnień, aby wstrzymać pracę komputera"
 
-#: ../settings/xfpm-settings.c:1397
+#: ../settings/xfpm-settings.c:1398
 msgid "Hibernate operation not supported"
 msgstr "Hibernowanie działania komputera nie jest obsługiwane"
 
-#: ../settings/xfpm-settings.c:1402
+#: ../settings/xfpm-settings.c:1403
 msgid "Hibernate operation not permitted"
 msgstr "Brak uprawnień, aby zahibernować działanie komputera"
 
-#: ../settings/xfpm-settings.c:1449
+#: ../settings/xfpm-settings.c:1450
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Określa poziom naładowania źródeł zasilania interpretowany jako bliski rozładowaniu"
 
-#: ../settings/xfpm-settings.c:1552 ../settings/xfpm-settings.c:1557
+#: ../settings/xfpm-settings.c:1569 ../settings/xfpm-settings.c:1574
 msgid "General"
 msgstr "Ogólne"
 
-#: ../settings/xfpm-settings.c:1566 ../settings/xfpm-settings.c:1571
+#: ../settings/xfpm-settings.c:1583 ../settings/xfpm-settings.c:1588
 msgid "On AC"
 msgstr "Zasilacz sieciowy"
 
-#: ../settings/xfpm-settings.c:1581 ../settings/xfpm-settings.c:1586
+#: ../settings/xfpm-settings.c:1598 ../settings/xfpm-settings.c:1603
 msgid "On Battery"
 msgstr "Akumulator"
 
-#: ../settings/xfpm-settings.c:1595 ../settings/xfpm-settings.c:1600
+#: ../settings/xfpm-settings.c:1612 ../settings/xfpm-settings.c:1617
 msgid "Extended"
 msgstr "Dodatkowe"
 
-#: ../settings/xfpm-settings.c:1669
+#: ../settings/xfpm-settings.c:1686
 msgid "Check your power manager installation"
 msgstr "Proszę sprawdzić poprawność instalacji programu menedżer zasilania"
 
@@ -322,8 +332,8 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Menedżer zasilania nie jest uruchomiony. Uruchomić go?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:273 ../src/xfpm-power.c:585 ../src/xfpm-power.c:730
-#: ../src/xfpm-power.c:775 ../src/xfpm-power.c:944 ../src/xfpm-power.c:968
+#: ../src/xfpm-power.c:273 ../src/xfpm-power.c:623 ../src/xfpm-power.c:768
+#: ../src/xfpm-power.c:813 ../src/xfpm-power.c:983 ../src/xfpm-power.c:1007
 #: ../src/xfpm-battery.c:355 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Menedżer zasilania"
@@ -332,38 +342,52 @@ msgstr "Menedżer zasilania"
 msgid "Settings for the Xfce Power Manager"
 msgstr "Konfiguruje ustawienia zasilania"
 
-#: ../common/xfpm-common.c:149
+#: ../common/xfpm-common.c:120
 msgid "translator-credits"
 msgstr "Piotr Sokół <psokol@jabster.pl>, 2011, 2012, 2014."
 
-#: ../src/xfpm-power.c:294
+#: ../src/xfpm-power.c:297
 msgid "_Hibernate"
 msgstr "_Zahibernuj"
 
-#: ../src/xfpm-power.c:295
+#: ../src/xfpm-power.c:298
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
 msgstr "Aktualnie uruchomiony program zapobiega automatycznemu wstrzymaniu działania komputera. Kontynuowanie może spowodować jego niewłaściwe działanie."
 
-#: ../src/xfpm-power.c:297
+#: ../src/xfpm-power.c:300
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Zahibernować działanie komputera?"
 
-#: ../src/xfpm-power.c:409
+#: ../src/xfpm-power.c:337
+msgid "Continue"
+msgstr "Kontynuuj"
+
+#: ../src/xfpm-power.c:338
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be "
+"locked."
+msgstr "Nie udało się uruchomić żadnego z narzędzi blokowania ekranu. Ekran nie zostanie zablokowany."
+
+#: ../src/xfpm-power.c:341
+msgid "Do you still want to continue to suspend the system?"
+msgstr "Kontynuować wstrzymywanie systemu?"
+
+#: ../src/xfpm-power.c:447
 msgid "Quit"
 msgstr "Zakończ"
 
-#: ../src/xfpm-power.c:410
+#: ../src/xfpm-power.c:448
 msgid "All running instances of the power manager will exit"
 msgstr "Wszystkie wystąpienia menedżera zasilania zostaną zakończone"
 
-#: ../src/xfpm-power.c:412
+#: ../src/xfpm-power.c:450
 msgid "Quit the power manager?"
 msgstr "Zakończyć działanie menedżera zasilania?"
 
 #. Power information
-#: ../src/xfpm-power.c:524 ../src/xfpm-power-info.c:781
+#: ../src/xfpm-power.c:562 ../src/xfpm-power-info.c:781
 msgid "Power Information"
 msgstr "O zasilaniu"
 
@@ -372,63 +396,63 @@ msgstr "O zasilaniu"
 #. *
 #. TRANSLATOR: Mode here is the power profile (presentation, power save,
 #. normal)
-#: ../src/xfpm-power.c:540
+#: ../src/xfpm-power.c:578
 msgid "Mode"
 msgstr "Tryb"
 
 #. Normal
-#: ../src/xfpm-power.c:551
+#: ../src/xfpm-power.c:589
 msgid "Normal"
 msgstr "Zwykły"
 
 #. Normal
-#: ../src/xfpm-power.c:561
+#: ../src/xfpm-power.c:599
 msgid "Presentation"
 msgstr "Prezentacji"
 
-#: ../src/xfpm-power.c:693
+#: ../src/xfpm-power.c:731
 msgid "Hibernate the system"
 msgstr "Zahibernuj działanie komputera"
 
-#: ../src/xfpm-power.c:704
+#: ../src/xfpm-power.c:742
 msgid "Suspend the system"
 msgstr "Wstrzymaj działanie komputera"
 
-#: ../src/xfpm-power.c:714
+#: ../src/xfpm-power.c:752
 msgid "Shutdown the system"
 msgstr "Wyłącz komputer"
 
-#: ../src/xfpm-power.c:725 ../src/xfpm-power.c:772
+#: ../src/xfpm-power.c:763 ../src/xfpm-power.c:810
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Źródło zasilania jest bliskie rozładowania. Proszę zapisać bieżący stan pracy, w celu uniknięcia utraty danych."
 
-#: ../src/xfpm-power.c:945
+#: ../src/xfpm-power.c:984
 msgid "System is running on low power"
 msgstr "Źródło zasilania jest bliskie rozładowania"
 
-#: ../src/xfpm-power.c:964
+#: ../src/xfpm-power.c:1003
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "%s zostanie wkrótce rozładowany.\nPrzewidywany czas zasilania: %s."
 
-#: ../src/xfpm-power.c:1163 ../src/xfpm-power.c:1168
+#: ../src/xfpm-power.c:1196 ../src/xfpm-power.c:1201
 msgid "Adaptor is offline"
 msgstr "Odłączono zasilacz sieciowy"
 
-#: ../src/xfpm-power.c:1164 ../src/xfpm-power.c:1169 ../src/xfpm-battery.c:417
+#: ../src/xfpm-power.c:1197 ../src/xfpm-power.c:1202 ../src/xfpm-battery.c:420
 #, c-format
 msgid "Adaptor is online"
 msgstr "Podłączono zasilacz sieciowy"
 
-#: ../src/xfpm-power.c:1601 ../src/xfpm-power.c:1634 ../src/xfpm-power.c:1653
-#: ../src/xfpm-power.c:1676
+#: ../src/xfpm-power.c:1634 ../src/xfpm-power.c:1667 ../src/xfpm-power.c:1686
+#: ../src/xfpm-power.c:1709
 #, c-format
 msgid "Permission denied"
 msgstr "Brak uprawnień"
 
-#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
+#: ../src/xfpm-power.c:1694 ../src/xfpm-power.c:1717
 #, c-format
 msgid "Suspend not supported"
 msgstr "Wstrzymywanie pracy komputera jest nieobsługiwane"
@@ -437,7 +461,7 @@ msgstr "Wstrzymywanie pracy komputera jest nieobsługiwane"
 msgid "Battery"
 msgstr "Akumulator"
 
-#: ../src/xfpm-power-common.c:46 ../src/xfpm-battery.c:802
+#: ../src/xfpm-power-common.c:46 ../src/xfpm-battery.c:813
 msgid "UPS"
 msgstr "Zasilacz awaryjny"
 
@@ -470,7 +494,7 @@ msgid "Computer"
 msgstr "Komputer"
 
 #: ../src/xfpm-power-common.c:64 ../src/xfpm-power-common.c:79
-#: ../src/xfpm-power-common.c:94 ../src/xfpm-battery.c:820
+#: ../src/xfpm-power-common.c:94 ../src/xfpm-battery.c:831
 msgid "Unknown"
 msgstr "Nieznana"
 
@@ -584,12 +608,17 @@ msgstr "%s (%i%%).\nPrzewidywany czas zasilania: %s."
 msgid "Your %s is empty"
 msgstr "%s został rozładowany"
 
-#: ../src/xfpm-battery.c:417
+#: ../src/xfpm-battery.c:420
 #, c-format
 msgid "System is running on battery power"
 msgstr "Akumulator jest używany jako bieżące źródło zasilania"
 
-#: ../src/xfpm-battery.c:424
+#. Let the user know it's not a system battery being monitored
+#: ../src/xfpm-battery.c:425
+msgid "Peripheral Device"
+msgstr ""
+
+#: ../src/xfpm-battery.c:433
 #, c-format
 msgid ""
 "%s\n"
@@ -597,14 +626,14 @@ msgid ""
 "Provides %s runtime"
 msgstr "%s\n%s został całkowicie naładowany (%i%%).\nPrzewidywany czas zasilania: %s."
 
-#: ../src/xfpm-battery.c:433
+#: ../src/xfpm-battery.c:442
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
 msgstr "%s\n%s został całkowicie naładowany (%i%%)."
 
-#: ../src/xfpm-battery.c:444
+#: ../src/xfpm-battery.c:453
 #, c-format
 msgid ""
 "%s\n"
@@ -612,14 +641,14 @@ msgid ""
 "%s until is fully charged."
 msgstr "%s\n%s jest ładowany (%i%%).\nPozostały czas ładowania: %s"
 
-#: ../src/xfpm-battery.c:453
+#: ../src/xfpm-battery.c:462
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
 msgstr "%s\n%s jest ładowany (%i%%)."
 
-#: ../src/xfpm-battery.c:464
+#: ../src/xfpm-battery.c:473
 #, c-format
 msgid ""
 "%s\n"
@@ -627,55 +656,63 @@ msgid ""
 "Estimated time left is %s."
 msgstr "%s\n%s jest rozładowywany (%i%%).\nPrzewidywany czas zasilania: %s."
 
-#: ../src/xfpm-battery.c:473
+#: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
 msgstr "%s\n%s jest rozładowywany (%i%%)."
 
-#: ../src/xfpm-battery.c:482
+#: ../src/xfpm-battery.c:491
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr "%s\n%s: oczekiwanie na rozładowanie (%i%%)"
 
-#: ../src/xfpm-battery.c:486
+#: ../src/xfpm-battery.c:495
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
 msgstr "%s\n%s: oczekiwanie na naładowanie (%i%%)"
 
-#: ../src/xfpm-battery.c:490
+#: ../src/xfpm-battery.c:499
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
 msgstr "%s\n%s został rozładowany."
 
-#: ../src/xfpm-battery.c:799
+#. unknown device state, just display the percentage
+#: ../src/xfpm-battery.c:504
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is at (%i%%)."
+msgstr ""
+
+#: ../src/xfpm-battery.c:810
 msgid "battery"
 msgstr "Akumulator"
 
-#: ../src/xfpm-battery.c:805
+#: ../src/xfpm-battery.c:816
 msgid "monitor battery"
 msgstr "Akumulator ekranu"
 
-#: ../src/xfpm-battery.c:808
+#: ../src/xfpm-battery.c:819
 msgid "mouse battery"
 msgstr "Akumulator myszy"
 
-#: ../src/xfpm-battery.c:811
+#: ../src/xfpm-battery.c:822
 msgid "keyboard battery"
 msgstr "Akumulator klawiatury"
 
-#: ../src/xfpm-battery.c:814
+#: ../src/xfpm-battery.c:825
 msgid "PDA battery"
 msgstr "Akumulator palmtopa"
 
-#: ../src/xfpm-battery.c:817
+#: ../src/xfpm-battery.c:828
 msgid "Phone battery"
 msgstr "Akumulator telefonu"
 
@@ -1044,7 +1081,7 @@ msgstr "Reguluje jasność ekranu LCD"
 msgid "No device found"
 msgstr "Nie odnaleziono urządzenia"
 
-#: ../panel-plugins/brightness/brightness-button.c:646
+#: ../panel-plugins/brightness/brightness-button.c:645
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Jasność ekranu"
