@@ -38,13 +38,6 @@
 
 #include "battery-button.h"
 
-static void battery_button_finalize   (GObject *object);
-static gchar* get_device_description (UpClient *upower, UpDevice *device);
-static GList* find_device_in_list (BatteryButton *button, const gchar *object_path);
-static gboolean battery_button_set_icon (BatteryButton *button);
-static void battery_button_clicked (GtkButton *b);
-static void battery_button_show_menu (BatteryButton *button);
-
 #define BATTERY_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), BATTERY_TYPE_BUTTON, BatteryButtonPrivate))
 
@@ -56,6 +49,9 @@ struct BatteryButtonPrivate
 
     /* A list of BatteryDevices  */
     GList           *devices;
+
+    /* The left-click popup menu, if one is being displayed */
+    GtkWidget       *menu;
 
     /* The actual panel icon image */
     GtkWidget       *panel_icon_image;
@@ -78,9 +74,19 @@ typedef struct
     gchar       *object_path;  /* UpDevice object path */
     UpDevice    *device;       /* Pointer to the UpDevice */
     gulong       signal_id;    /* device changed callback id */
+    GtkWidget   *menu_item;    /* The device's item on the menu (if shown) */
 } BatteryDevice;
 
 G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_BUTTON)
+
+static void battery_button_finalize   (GObject *object);
+static gchar* get_device_description (UpClient *upower, UpDevice *device);
+static GList* find_device_in_list (BatteryButton *button, const gchar *object_path);
+static gboolean battery_button_set_icon (BatteryButton *button);
+static void battery_button_clicked (GtkButton *b);
+static void battery_button_show_menu (BatteryButton *button);
+static void battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_device, gboolean append);
+
 
 static void
 battery_button_set_property (GObject *object,
@@ -301,6 +307,18 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 	button->priv->panel_icon_name = icon_name;
 	battery_button_set_icon (button);
     }
+
+    /* If the menu is being displayed, update it */
+    if (button->priv->menu && battery_device->menu_item)
+    {
+	GtkWidget *img;
+
+	gtk_menu_item_set_label (GTK_MENU_ITEM (battery_device->menu_item), details);
+
+        /* update the image */
+        img = gtk_image_new_from_pixbuf(battery_device->pix);
+        gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(battery_device->menu_item), img);
+    }
 }
 
 static void
@@ -365,6 +383,12 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     {
 	button->priv->devices = g_list_append (button->priv->devices, battery_device);
     }
+
+    /* If the menu is being shown, add this new device to it */
+    if (button->priv->menu)
+    {
+	battery_button_menu_add_device (button, battery_device, FALSE);
+    }
 }
 
 static void
@@ -381,6 +405,10 @@ battery_button_remove_device (BatteryButton *button, const gchar *object_path)
 	return;
 
     battery_device = item->data;
+
+    /* If it is being shown in the menu, remove it */
+    if(battery_device->menu_item && button->priv->menu)
+        gtk_container_remove(GTK_CONTAINER(button->priv->menu), battery_device->menu_item);
 
     if (battery_device->pix)
 	g_object_unref (battery_device->pix);
@@ -597,9 +625,64 @@ battery_button_show (BatteryButton *button)
 }
 
 static void
+menu_destroyed_cb(GtkWidget *object, gpointer user_data)
+{
+    BatteryButton *button = BATTERY_BUTTON (user_data);
+
+    button->priv->menu = NULL;
+}
+
+static void
+menu_item_destroyed_cb(GtkWidget *object, gpointer user_data)
+{
+    BatteryButton *button = BATTERY_BUTTON (user_data);
+    GList *item;
+
+    for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
+    {
+        BatteryDevice *battery_device = item->data;
+
+        if (battery_device->menu_item == object)
+        {
+            battery_device->menu_item = NULL;
+            return;
+        }
+    }
+}
+
+static void
+battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_device, gboolean append)
+{
+    GtkWidget *mi, *label, *img;
+
+    /* We need a menu to attach it to */
+    g_return_if_fail (button->priv->menu);
+
+    mi = gtk_image_menu_item_new_with_label(battery_device->details);
+    /* Make the menu item be bold and multi-line */
+    label = gtk_bin_get_child(GTK_BIN(mi));
+    gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
+
+    /* add the image */
+    img = gtk_image_new_from_pixbuf(battery_device->pix);
+    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
+
+    /* keep track of the menu item in the battery_device so we can update it */
+    battery_device->menu_item = mi;
+    g_signal_connect(G_OBJECT(mi), "destroy", G_CALLBACK(menu_item_destroyed_cb), button);
+
+    /* Add it to the menu */
+    gtk_widget_show(mi);
+    if (append)
+	gtk_menu_shell_append(GTK_MENU_SHELL(button->priv->menu), mi);
+    else
+	gtk_menu_shell_prepend(GTK_MENU_SHELL(button->priv->menu), mi);
+}
+
+static void
 battery_button_show_menu (BatteryButton *button)
 {
-    GtkWidget *menu, *mi, *label, *img;
+    GtkWidget *menu, *mi;
     GdkScreen *gscreen;
     GList *item;
 
@@ -610,23 +693,15 @@ battery_button_show_menu (BatteryButton *button)
 
     menu = gtk_menu_new ();
     gtk_menu_set_screen(GTK_MENU(menu), gscreen);
+    /* keep track of the menu while it's being displayed */
+    button->priv->menu = menu;
+    g_signal_connect(G_OBJECT(menu), "destroy", G_CALLBACK(menu_destroyed_cb), button);
 
     for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
     {
         BatteryDevice *battery_device = item->data;
 
-        mi = gtk_image_menu_item_new_with_label(battery_device->details);
-        /* Make the menu item be bold and multi-line */
-        label = gtk_bin_get_child(GTK_BIN(mi));
-        gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
-
-        /* add the image */
-        img = gtk_image_new_from_pixbuf(battery_device->pix);
-        gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
-
-        /* Add it to the menu */
-        gtk_widget_show(mi);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+        battery_button_menu_add_device (button, battery_device, TRUE);
     }
 
     /* separator */
