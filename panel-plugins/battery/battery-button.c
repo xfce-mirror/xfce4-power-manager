@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2009-2011 Ali <aliov@xfce.org>
+ * * Copyright (C) 2014 Eric Koegel <eric@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -42,6 +42,8 @@ static void battery_button_finalize   (GObject *object);
 static gchar* get_device_description (UpClient *upower, UpDevice *device);
 static GList* find_device_in_list (BatteryButton *button, const gchar *object_path);
 static gboolean battery_button_set_icon (BatteryButton *button);
+static void battery_button_clicked (GtkButton *b);
+static void battery_button_show_menu (BatteryButton *button);
 
 #define BATTERY_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), BATTERY_TYPE_BUTTON, BatteryButtonPrivate))
@@ -447,9 +449,12 @@ static void
 battery_button_class_init (BatteryButtonClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
+    GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
 
     object_class->finalize = battery_button_finalize;
     object_class->set_property = battery_button_set_property;
+
+    button_class->clicked = battery_button_clicked;
 
     g_object_class_install_property (object_class,
 				     PROP_PLUGIN,
@@ -526,6 +531,14 @@ battery_button_set_icon (BatteryButton *button)
     return FALSE;
 }
 
+static void
+battery_button_clicked (GtkButton *b)
+{
+    BatteryButton *button = BATTERY_BUTTON (b);
+
+    battery_button_show_menu (button);
+}
+
 static gboolean
 battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButton *button)
 {
@@ -550,7 +563,8 @@ help_cb (GtkMenuItem *menuitem, gpointer user_data)
     xfce_dialog_show_help (NULL, "xfce4-power-manager", "start", NULL);
 }
 
-void battery_button_show (BatteryButton *button)
+void
+battery_button_show (BatteryButton *button)
 {
     GtkWidget *mi;
 
@@ -580,4 +594,57 @@ void battery_button_show (BatteryButton *button)
 
     /* Add all the devcies currently attached to the system */
     battery_button_add_all_devices (button);
+}
+
+static void
+battery_button_show_menu (BatteryButton *button)
+{
+    GtkWidget *menu, *mi, *label, *img;
+    GdkScreen *gscreen;
+    GList *item;
+
+    if(gtk_widget_has_screen(GTK_WIDGET(button)))
+        gscreen = gtk_widget_get_screen(GTK_WIDGET(button));
+    else
+        gscreen = gdk_display_get_default_screen(gdk_display_get_default());
+
+    menu = gtk_menu_new ();
+    gtk_menu_set_screen(GTK_MENU(menu), gscreen);
+
+    for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
+    {
+        BatteryDevice *battery_device = item->data;
+
+        mi = gtk_image_menu_item_new_with_label(battery_device->details);
+        /* Make the menu item be bold and multi-line */
+        label = gtk_bin_get_child(GTK_BIN(mi));
+        gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
+
+        /* add the image */
+        img = gtk_image_new_from_pixbuf(battery_device->pix);
+        gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
+
+        /* Add it to the menu */
+        gtk_widget_show(mi);
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    }
+
+    /* separator */
+    mi = gtk_separator_menu_item_new();
+    gtk_widget_show(mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+
+    /* Preferences option */
+    mi = gtk_menu_item_new_with_mnemonic ("_Preferences...");
+    gtk_widget_show(mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    g_signal_connect(G_OBJECT(mi), "activate", G_CALLBACK(xfpm_preferences), NULL);
+
+    gtk_menu_popup (GTK_MENU (menu),
+                    NULL,
+		    NULL,
+		    xfce_panel_plugin_position_menu,
+		    button->priv->plugin,
+		    0,
+		    gtk_get_current_event_time ());
 }

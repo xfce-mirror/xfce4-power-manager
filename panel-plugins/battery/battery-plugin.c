@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2009-2011 Ali <aliov@xfce.org>
+ * * Copyright (C) 2014 Eric Koegel <eric@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *

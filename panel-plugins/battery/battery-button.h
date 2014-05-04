@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2009-2011 Ali <aliov@xfce.org>
+ * * Copyright (C) 2014 Eric Koegel <eric@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -35,14 +35,14 @@ typedef struct BatteryButtonPrivate BatteryButtonPrivate;
 
 typedef struct
 {
-    GtkButton         		 parent;
+    GtkButton                 parent;
     BatteryButtonPrivate     *priv;
 
 } BatteryButton;
 
 typedef struct
 {
-    GtkButtonClass 		 parent_class;
+    GtkButtonClass parent_class;
 
 } BatteryButtonClass;
 
