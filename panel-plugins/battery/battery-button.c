@@ -59,6 +59,10 @@ struct BatteryButtonPrivate
     gchar           *panel_icon_name;
     /* Keep track of the last icon size for use during updates */
     gint             panel_icon_width;
+
+    /* Upower 0.99 has a display device that can be used for the
+     * panel image and tooltip description */
+    UpDevice        *display_device;
 };
 
 enum
@@ -80,7 +84,7 @@ typedef struct
 G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_BUTTON)
 
 static void battery_button_finalize   (GObject *object);
-static gchar* get_device_description (UpClient *upower, UpDevice *device);
+static gchar* get_device_description (BatteryButton *button, UpDevice *device);
 static GList* find_device_in_list (BatteryButton *button, const gchar *object_path);
 static gboolean battery_button_set_icon (BatteryButton *button);
 static void battery_button_clicked (GtkButton *b);
@@ -109,11 +113,23 @@ battery_button_set_property (GObject *object,
 static void
 battery_button_set_tooltip (BatteryButton *button)
 {
+    if (button->priv->display_device)
+    {
+	GList *item = find_device_in_list (button, up_device_get_object_path (button->priv->display_device));
+	if (item)
+	{
+	    BatteryDevice *battery_device = item->data;
+	    gtk_widget_set_tooltip_markup (GTK_WIDGET (button), battery_device->details);
+
+	    return;
+	}
+    }
+
     gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Display battery levels for attached devices"));
 }
 
 static gchar*
-get_device_description (UpClient *upower, UpDevice *device)
+get_device_description (BatteryButton *button, UpDevice *device)
 {
     gchar *tip = NULL;
     gchar *est_time_str = NULL;
@@ -150,6 +166,11 @@ get_device_description (UpClient *upower, UpDevice *device)
 	}
 
 	return tip;
+    }
+
+    if (device == button->priv->display_device)
+    {
+	vendor = g_strdup (_("Computer"));
     }
 
     if ( state == UP_DEVICE_STATE_FULLY_CHARGED )
@@ -255,11 +276,7 @@ find_device_in_list (BatteryButton *button, const gchar *object_path)
 }
 
 static void
-#if UP_CHECK_VERSION(0, 99, 0)
-device_changed_cb (UpDevice *device, GParamSpec *pspec, BatteryButton *button)
-#else
-device_changed_cb (UpDevice *device, BatteryButton *button)
-#endif
+battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *device)
 {
     GList *item;
     BatteryDevice *battery_device;
@@ -285,7 +302,31 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 		   NULL);
 
     icon_name = get_device_icon_name (button->priv->upower, device);
-    details = get_device_description(button->priv->upower, device);
+    details = get_device_description(button, device);
+
+    /* Add AC power status to display device since it replaces the line
+     * power menu item in UPower 0.99 */
+    if (button->priv->display_device == device)
+    {
+	gboolean online;
+	gchar *tip;
+
+	g_object_get (device,
+		      "online", &online,
+		      NULL);
+
+	if ( online )
+	{
+	    tip = g_strdup_printf(_("<b>Plugged In</b>\t\n%s"), details);
+	}
+	else
+	{
+	    tip = g_strdup_printf(_("<b>On Battery</b>\t\n%s"), details);
+	}
+
+	g_free (details);
+	details = tip;
+    }
 
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
 				    icon_name,
@@ -293,19 +334,25 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 				    GTK_ICON_LOOKUP_USE_BUILTIN,
 				    NULL);
 
-    g_free(battery_device->details);
+    if (battery_device->details)
+	g_free(battery_device->details);
     battery_device->details = details;
 
     if (battery_device->pix)
 	g_object_unref (battery_device->pix);
     battery_device->pix = pix;
 
-    if ( type == UP_DEVICE_KIND_LINE_POWER )
+    if ( type == UP_DEVICE_KIND_LINE_POWER || device == button->priv->display_device)
     {
-	/* Update the panel icon */
-	g_free(button->priv->panel_icon_name);
-	button->priv->panel_icon_name = icon_name;
-	battery_button_set_icon (button);
+	/* Update the panel icon with priority to the display device */
+	if (!button->priv->display_device || device == button->priv->display_device)
+	{
+	    g_free(button->priv->panel_icon_name);
+	    button->priv->panel_icon_name = icon_name;
+	    battery_button_set_icon (button);
+	    /* update tooltip */
+	    battery_button_set_tooltip (button);
+	}
     }
 
     /* If the menu is being displayed, update it */
@@ -322,12 +369,20 @@ device_changed_cb (UpDevice *device, BatteryButton *button)
 }
 
 static void
+#if UP_CHECK_VERSION(0, 99, 0)
+device_changed_cb (UpDevice *device, GParamSpec *pspec, BatteryButton *button)
+#else
+device_changed_cb (UpDevice *device, BatteryButton *button)
+#endif
+{
+    battery_button_update_device_icon_and_details (button, device);
+}
+
+static void
 battery_button_add_device (UpDevice *device, BatteryButton *button)
 {
     BatteryDevice *battery_device;
-    GdkPixbuf *pix;
     guint type = 0;
-    gchar *details, *icon_name;
     const gchar *object_path = up_device_get_object_path(device);
     gulong signal_id;
 
@@ -346,14 +401,14 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 		  "kind", &type,
 		   NULL);
 
-    icon_name = get_device_icon_name (button->priv->upower, device);
-    details = get_device_description(button->priv->upower, device);
+    /* If there's a display device it will also show the power state so
+     * avoid adding a duplicate icon */
+    if (type == UP_DEVICE_KIND_LINE_POWER && button->priv->display_device)
+    {
+	g_free (battery_device);
+	return;
+    }
 
-    pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-				    icon_name,
-				    48,
-				    GTK_ICON_LOOKUP_USE_BUILTIN,
-				    NULL);
 
 #if UP_CHECK_VERSION(0, 99, 0)
     signal_id = g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), button);
@@ -362,27 +417,23 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 #endif
 
     /* populate the struct */
-    battery_device->pix = pix;
-    battery_device->details = details;
     battery_device->object_path = g_strdup (object_path);
     battery_device->signal_id = signal_id;
     battery_device->device = device;
 
     /* add it to the list */
-    if ( type == UP_DEVICE_KIND_LINE_POWER )
+    if ( type == UP_DEVICE_KIND_LINE_POWER || device == button->priv->display_device)
     {
-	/* The PC's plugged in status shows up first */
+	/* The PC's plugged in status and display device show up first */
 	button->priv->devices = g_list_prepend (button->priv->devices, battery_device);
-
-	/* Update the panel icon */
-	g_free(button->priv->panel_icon_name);
-	button->priv->panel_icon_name = icon_name;
-	battery_button_set_icon (button);
     }
     else
     {
 	button->priv->devices = g_list_append (button->priv->devices, battery_device);
     }
+
+    /* Add the icon and description for the device */
+    battery_button_update_device_icon_and_details (button, device);
 
     /* If the menu is being shown, add this new device to it */
     if (button->priv->menu)
@@ -457,6 +508,9 @@ battery_button_add_all_devices (BatteryButton *button)
 #else
     GPtrArray *array = NULL;
     guint i;
+
+    button->priv->display_device = up_client_get_display_device (button->priv->upower);
+    battery_button_add_device (button->priv->display_device, button);
 
     array = up_client_get_devices(button->priv->upower);
 
