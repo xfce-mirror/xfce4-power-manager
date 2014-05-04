@@ -4,8 +4,8 @@ settings/xfpm-settings.c
 settings/xfpm-settings-main.c
 settings/xfce4-power-manager-settings.desktop.in
 common/xfpm-common.c
+common/xfpm-power-common.c
 src/xfpm-power.c
-src/xfpm-power-common.c
 src/xfpm-backlight.c
 src/xfpm-battery.c
 src/xfpm-battery.c
@@ -13,10 +13,12 @@ src/xfpm-main.c
 src/xfpm-network-manager.c
 src/xfpm-dpms.c
 src/xfpm-inhibit.c
-src/xfpm-power-info.c
+src/xfpm-manager.c
 src/xfpm-pm-helper.c
 src/xfpm-suspend.c
 src/xfce4-power-manager.desktop.in
 src/org.xfce.power.policy.in2
 panel-plugins/brightness/brightness-button.c
 panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in
+panel-plugins/battery/battery-button.c
+panel-plugins/battery/xfce4-battery-plugin.desktop.in.in
