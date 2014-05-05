@@ -330,7 +330,7 @@ battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *
 
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
 				    icon_name,
-				    48,
+				    32,
 				    GTK_ICON_LOOKUP_USE_BUILTIN,
 				    NULL);
 
