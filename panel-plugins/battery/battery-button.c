@@ -178,7 +178,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 	if ( time_to_empty > 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (time_to_empty);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%).\t\nProvides %s runtime\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%, %s runtime).\t"),
 				   vendor, model,
 				   percentage,
 				   est_time_str);
@@ -196,7 +196,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 	if ( time_to_full != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (time_to_full);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%).\t\n%s until fully charged.\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%, %s).\t"),
 				   vendor, model,
 				   percentage,
 				   est_time_str);
@@ -214,7 +214,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 	if ( time_to_empty != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (time_to_empty);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%).\t\nEstimated time left is %s.\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%, %s).\t"),
 				   vendor, model,
 				   percentage,
 				   est_time_str);
