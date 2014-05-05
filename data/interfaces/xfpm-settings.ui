@@ -746,36 +746,22 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkRadioButton" id="inactivity-suspend">
-                        <property name="label" translatable="yes">Suspend</property>
+                      <object class="GtkComboBox" id="sleep-mode">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="active">True</property>
-                        <property name="draw_indicator">True</property>
-                        <signal name="toggled" handler="set_suspend_inactivity"/>
+                        <property name="model">model6</property>
+                        <signal name="changed" handler="on_sleep_mode_changed_cb"/>
+                        <child>
+                          <object class="GtkCellRendererText" id="renderer8"/>
+                            <attributes>
+                              <attribute name="text">0</attribute>
+                            </attributes>
+                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="top_attach">0</property>
-                        <property name="x_options"></property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkRadioButton" id="inactivity-hibernate">
-                        <property name="label" translatable="yes">Hibernate</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="active">True</property>
-                        <property name="draw_indicator">True</property>
-                        <property name="group">inactivity-suspend</property>
-                        <signal name="toggled" handler="set_hibernate_inactivity"/>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">0</property>
-                        <property name="x_options"></property>
+                        <property name="x_options">GTK_FILL</property>
+                        <property name="y_options">GTK_EXPAND</property>
                       </packing>
                     </child>
                     <child>
@@ -792,36 +778,22 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkRadioButton" id="sleep-dpms-mode">
-                        <property name="label" translatable="yes">Standby</property>
+                      <object class="GtkComboBox" id="sleep-dpms-mode">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="active">True</property>
-                        <property name="draw_indicator">True</property>
-                        <signal name="toggled" handler="set_dpms_standby_mode"/>
+                        <property name="model">model6</property>
+                        <signal name="changed" handler="on_sleep_dpms_mode_changed_cb"/>
+                        <child>
+                          <object class="GtkCellRendererText" id="renderer9"/>
+                            <attributes>
+                              <attribute name="text">0</attribute>
+                            </attributes>
+                        </child>
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="top_attach">1</property>
-                        <property name="x_options"></property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkRadioButton" id="suspend-dpms-mode">
-                        <property name="label" translatable="yes">Suspend</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="active">True</property>
-                        <property name="draw_indicator">True</property>
-                        <property name="group">sleep-dpms-mode</property>
-                        <signal name="toggled" handler="set_dpms_suspend_mode"/>
-                      </object>
-                      <packing>
-                        <property name="left_attach">2</property>
-                        <property name="top_attach">1</property>
                         <property name="x_options">GTK_FILL</property>
+                        <property name="y_options">GTK_EXPAND</property>
                       </packing>
                     </child>
                   </object>
@@ -1042,6 +1014,28 @@
     </data>
   </object>
   <object class="GtkListStore" id="model7">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model8">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model9">
     <columns>
       <!-- column-name gchararray -->
       <column type="gchararray"/>

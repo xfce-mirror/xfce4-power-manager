@@ -95,16 +95,10 @@ void        power_save_toggled_cb                  (GtkWidget *w,
 void        notify_toggled_cb                      (GtkWidget *w, 
 						    XfconfChannel *channel);
 
-void        set_hibernate_inactivity               (GtkWidget *w, 
+void        on_sleep_mode_changed_cb      (GtkWidget *w,
 						    XfconfChannel *channel);
 
-void        set_suspend_inactivity                 (GtkWidget *w, 
-						    XfconfChannel *channel);
-
-void        set_dpms_standby_mode                  (GtkWidget *w, 
-						    XfconfChannel *channel);
-
-void        set_dpms_suspend_mode                  (GtkWidget *w, 
+void        on_sleep_dpms_mode_changed_cb      (GtkWidget *w,
 						    XfconfChannel *channel);
 
 void        dpms_toggled_cb                        (GtkWidget *w, 
@@ -351,69 +345,51 @@ notify_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 }
 
 void
-set_hibernate_inactivity (GtkWidget *w, XfconfChannel *channel)
+on_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    gboolean active;
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gchar *value = "";
     
-    active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+	return;
+
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       0,
+                       &value,
+                       -1);
     
-    if ( active )
+    if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE, value) )
     {
-	if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE, "Hibernate") )
-	{
-	    g_critical ("Cannot set value hibernate for property %s", INACTIVITY_SLEEP_MODE);
-	}
+	g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE);
     }
 }
 
 void
-set_suspend_inactivity (GtkWidget *w, XfconfChannel *channel)
+on_sleep_dpms_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-    gboolean active;
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gchar *value = "";
     
-    active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
-    if ( active )
-    {
-	if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE, "Suspend") )
-	{
-	    g_critical ("Cannot set value suspend for property %s", INACTIVITY_SLEEP_MODE);
-	}
-    }
-}
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+	return;
 
-void
-set_dpms_standby_mode (GtkWidget *w, XfconfChannel *channel)
-{
-#ifdef HAVE_DPMS
-    gboolean active;
-    
-    active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
-    
-    if ( active )
-    {
-	if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX DPMS_SLEEP_MODE, "standby") )
-	{
-	    g_critical ("Cannot set value sleep for property %s\n", DPMS_SLEEP_MODE);
-	}
-    }
-#endif
-}
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
 
-void
-set_dpms_suspend_mode (GtkWidget *w, XfconfChannel *channel)
-{
-#ifdef HAVE_DPMS
-    gboolean active;
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       0,
+                       &value,
+                       -1);
     
-    active = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
-    if ( active )
+    if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX DPMS_SLEEP_MODE, value) )
     {
-	if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX DPMS_SLEEP_MODE, "suspend") )
-	{
-	    g_critical ("Cannot set value sleep for property %s\n", DPMS_SLEEP_MODE);
-	}
+	g_critical ("Cannot set value for property %s\n", DPMS_SLEEP_MODE);
     }
-#endif
 }
 
 void
@@ -1374,67 +1350,100 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
     GtkWidget *sleep_dpms_mode;
     GtkWidget *suspend_dpms_mode;
     GtkWidget *network_manager_sleep;
+    GtkWidget *sleep_mode;
+
+    gchar *list_str;
+    gboolean valid;
+    GtkListStore *list_store;
+    GtkTreeIter iter;
+
+    /*
+     * Computer sleep mode
+     */
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    sleep_mode = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-mode"));
+    label = GTK_WIDGET (gtk_builder_get_object (xml, "advanced_sleepmode_label"));
+    gtk_combo_box_set_model (GTK_COMBO_BOX(sleep_mode), GTK_TREE_MODEL(list_store));
     
-    GtkWidget *inact_suspend = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-suspend"));
-    GtkWidget *inact_hibernate = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-hibernate"));
-    
-    if ( !can_suspend )
+    if ( can_suspend )
     {
-	gtk_widget_set_sensitive (inact_suspend, FALSE);
-	gtk_widget_set_tooltip_text (inact_suspend, _("Suspend operation not supported"));
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Suspend"), -1);
     }
     else if ( !auth_suspend )
     {
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_hibernate), TRUE);
-	gtk_widget_set_sensitive (inact_suspend, FALSE);
-	gtk_widget_set_tooltip_text (inact_suspend, _("Suspend operation not permitted"));
+	gtk_widget_set_tooltip_text (sleep_mode, _("Suspend operation not permitted"));
+    }
+    else
+    {
+	gtk_widget_set_tooltip_text (sleep_mode, _("Suspend operation not supported"));
     }
     
-    if ( !can_hibernate )
+    if ( can_hibernate )
     {
-	gtk_widget_set_sensitive (inact_hibernate, FALSE);
-	gtk_widget_set_tooltip_text (inact_hibernate, _("Hibernate operation not supported"));
+	gtk_list_store_append (list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), -1);
     }
-    else if ( !auth_hibernate)
+    else if ( !auth_hibernate )
     {
-	gtk_widget_set_sensitive (inact_hibernate, FALSE);
-	gtk_widget_set_tooltip_text (inact_hibernate, _("Hibernate operation not permitted"));
+	gtk_widget_set_tooltip_text (sleep_mode, _("Hibernate operation not permitted"));
     }
-   
+    else
+    {
+	gtk_widget_set_tooltip_text (sleep_mode, _("Hibernate operation not supported"));
+    }
+
+    gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_mode), 0);
+
     str = xfconf_channel_get_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE, "Suspend");
-    if ( !g_strcmp0 (str, "Suspend") )
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_suspend), TRUE);
-    else if ( !g_strcmp0 (str, "Hibernate"))
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_hibernate), TRUE);
-    else 
+    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+	  valid;
+	  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
     {
-	g_warning ("Invalid value %s for property %s ", str, INACTIVITY_SLEEP_MODE);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (inact_suspend), TRUE);
+	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+			    0, &list_str, -1);
+	if ( g_strcmp0 (str, list_str) )
+	{
+	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep_mode), &iter);
+	    break;
+	}
     }
-   
     g_free (str);
 
+    /*
+     * Display sleep mode
+     */
     sleep_dpms_mode = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-mode"));
-    suspend_dpms_mode = GTK_WIDGET (gtk_builder_get_object (xml, "suspend-dpms-mode"));
-    
+
 #ifdef HAVE_DPMS
-    str = xfconf_channel_get_string (channel, PROPERTIES_PREFIX DPMS_SLEEP_MODE, "standby");
-    
-    if ( !g_strcmp0 (str, "standby" ) )
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sleep_dpms_mode), TRUE);
-    else if ( !g_strcmp0 (str, "suspend") )
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (suspend_dpms_mode), TRUE);
-    else 
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    gtk_combo_box_set_model (GTK_COMBO_BOX(sleep_dpms_mode), GTK_TREE_MODEL(list_store));
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), -1);
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Standby"), -1);
+
+    gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_dpms_mode), 0);
+
+    str = xfconf_channel_get_string (channel, PROPERTIES_PREFIX DPMS_SLEEP_MODE, "Standby");
+
+    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+	  valid;
+	  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
     {
-	g_critical ("Invalid value %s for property %s\n", str, PROPERTIES_PREFIX DPMS_SLEEP_MODE );
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sleep_dpms_mode), TRUE);
+	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+			    0, &list_str, -1);
+	if ( g_strcmp0 (str, list_str) )
+	{
+	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep_dpms_mode), &iter);
+	    break;
+	}
     }
-    
+
     g_free (str);
     
 #else
     gtk_widget_hide (sleep_dpms_mode);
-    gtk_widget_hide (suspend_dpms_mode);
     gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-mode-label")));
 #endif
 

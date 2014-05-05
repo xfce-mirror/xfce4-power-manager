@@ -127,7 +127,7 @@ xfpm_dpms_get_sleep_mode (XfpmDpms *dpms, gboolean *ret_standby_mode)
 		  DPMS_SLEEP_MODE, &sleep_mode,
 		  NULL);
     
-    if ( !g_strcmp0 (sleep_mode, "standby"))
+    if ( !g_strcmp0 (sleep_mode, "Standby"))
 	*ret_standby_mode = TRUE;
     else
 	*ret_standby_mode = FALSE;

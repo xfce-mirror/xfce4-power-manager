@@ -463,7 +463,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      PROP_DPMS_SLEEP_MODE,
                                      g_param_spec_string  (DPMS_SLEEP_MODE,
                                                            NULL, NULL,
-                                                           "standby",
+                                                           "Standby",
                                                            G_PARAM_READWRITE));
 #endif /* HAVE_DPMS */
 
