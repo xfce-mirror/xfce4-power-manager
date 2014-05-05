@@ -264,7 +264,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 	}
 	else if (state == UP_DEVICE_STATE_FULLY_CHARGED )
 	{
-	    icon_name = g_strdup_printf ("%s%s", icon_prefix, online ? "charged" : "100");
+	    icon_name = g_strdup_printf ("%s%s", icon_prefix, "charged");
 	}
 	else if ( state == UP_DEVICE_STATE_CHARGING || state == UP_DEVICE_STATE_PENDING_CHARGE)
 	{
@@ -276,7 +276,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 	}
 	else if ( state == UP_DEVICE_STATE_EMPTY)
 	{
-	    icon_name = g_strdup_printf ("%s%s", icon_prefix, online ? "000-charging" : "000");
+	    icon_name = g_strdup_printf ("%s%s", icon_prefix, "000");
 	}
     }
     else
