@@ -135,7 +135,6 @@ get_device_description (BatteryButton *button, UpDevice *device)
     gchar *est_time_str = NULL;
     guint type = 0, state = 0;
     gchar *model = NULL, *vendor = NULL;
-    gboolean online;
     gboolean present;
     gdouble percentage;
     guint64 time_to_empty, time_to_full;
@@ -150,23 +149,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 		  "percentage", &percentage,
 		  "time-to-empty", &time_to_empty,
 		  "time-to-full", &time_to_full,
-		  "online", &online,
 		   NULL);
-
-
-    if (type == UP_DEVICE_KIND_LINE_POWER)
-    {
-	if ( online )
-	{
-	    tip = g_strdup_printf(_("<b>Plugged In</b>\t"));
-	}
-	else
-	{
-	    tip = g_strdup_printf(_("<b>On Battery</b>\t"));
-	}
-
-	return tip;
-    }
 
     if (device == button->priv->display_device)
     {
@@ -304,30 +287,6 @@ battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *
     icon_name = get_device_icon_name (button->priv->upower, device);
     details = get_device_description(button, device);
 
-    /* Add AC power status to display device since it replaces the line
-     * power menu item in UPower 0.99 */
-    if (button->priv->display_device == device)
-    {
-	gboolean online;
-	gchar *tip;
-
-	g_object_get (device,
-		      "online", &online,
-		      NULL);
-
-	if ( online )
-	{
-	    tip = g_strdup_printf(_("<b>Plugged In</b>\t\n%s"), details);
-	}
-	else
-	{
-	    tip = g_strdup_printf(_("<b>On Battery</b>\t\n%s"), details);
-	}
-
-	g_free (details);
-	details = tip;
-    }
-
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
 				    icon_name,
 				    32,
@@ -401,14 +360,6 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 		  "kind", &type,
 		   NULL);
 
-    /* If there's a display device it will also show the power state so
-     * avoid adding a duplicate icon */
-    if (type == UP_DEVICE_KIND_LINE_POWER && button->priv->display_device)
-    {
-	g_free (battery_device);
-	return;
-    }
-
 
 #if UP_CHECK_VERSION(0, 99, 0)
     signal_id = g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), button);
@@ -422,15 +373,7 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     battery_device->device = device;
 
     /* add it to the list */
-    if ( type == UP_DEVICE_KIND_LINE_POWER || device == button->priv->display_device)
-    {
-	/* The PC's plugged in status and display device show up first */
-	button->priv->devices = g_list_prepend (button->priv->devices, battery_device);
-    }
-    else
-    {
-	button->priv->devices = g_list_append (button->priv->devices, battery_device);
-    }
+    button->priv->devices = g_list_append (button->priv->devices, battery_device);
 
     /* Add the icon and description for the device */
     battery_button_update_device_icon_and_details (button, device);
@@ -708,9 +651,18 @@ static void
 battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_device, gboolean append)
 {
     GtkWidget *mi, *label, *img;
+    guint type = 0;
 
     /* We need a menu to attach it to */
     g_return_if_fail (button->priv->menu);
+
+    g_object_get (battery_device->device,
+		  "kind", &type,
+		  NULL);
+
+    /* Don't add the display device or line power to the menu */
+    if (type == UP_DEVICE_KIND_LINE_POWER || battery_device->device == button->priv->display_device)
+	return;
 
     mi = gtk_image_menu_item_new_with_label(battery_device->details);
     /* Make the menu item be bold and multi-line */
