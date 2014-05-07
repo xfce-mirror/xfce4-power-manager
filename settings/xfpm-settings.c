@@ -71,9 +71,6 @@ void 	    brightness_level_on_battery 	   (GtkSpinButton *w,
 void	    battery_critical_changed_cb 	   (GtkWidget *w, 
 						    XfconfChannel *channel);
 
-void        set_show_tray_icon_cb                  (GtkWidget *w, 
-						    XfconfChannel *channel);
-
 void        inactivity_on_ac_value_changed_cb      (GtkWidget *widget, 
 						    XfconfChannel *channel);
 
@@ -201,30 +198,6 @@ battery_critical_changed_cb (GtkWidget *w, XfconfChannel *channel)
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX CRITICAL_BATT_ACTION_CFG, value) )
     {
 	g_critical ("Cannot set value for property %s\n", CRITICAL_BATT_ACTION_CFG);
-    }
-}
-
-void
-set_show_tray_icon_cb (GtkWidget *w, XfconfChannel *channel)
-{
-    GtkTreeModel     *model;
-    GtkTreeIter       selected_row;
-    gint value = 0;
-    
-    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
-	return;
-	
-    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
-   
-    gtk_tree_model_get(model,
-                       &selected_row,
-                       1,
-                       &value,
-                       -1);
-    
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG, value) )
-    {
-	g_critical ("Cannot set value for property %s\n", SHOW_TRAY_ICON_CFG);
     }
 }
 
@@ -402,6 +375,7 @@ dpms_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     
     gtk_widget_set_sensitive (on_ac_dpms_off, val);
     gtk_widget_set_sensitive (on_ac_dpms_sleep, val);
+    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-mode")), val);
     
     if ( GTK_IS_WIDGET (on_battery_dpms_off ) )
     {
@@ -1101,7 +1075,6 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
 		       gboolean has_sleep_button, gboolean has_hibernate_button,
 		       gboolean has_power_button)
 {
-    GtkWidget *tray;
     GtkWidget *power;
     GtkWidget *power_label;
     GtkWidget *hibernate;
@@ -1116,45 +1089,9 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
     gboolean val;
     
     GtkWidget *dpms;
-
-    /*
-     *  Tray icon settings
-     */
     GtkListStore *list_store;
     GtkTreeIter iter;
-    
-    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-    
-    tray = GTK_WIDGET (gtk_builder_get_object (xml, "tray-combox"));
-    gtk_combo_box_set_model (GTK_COMBO_BOX(tray), GTK_TREE_MODEL(list_store));
 
-    gtk_list_store_append(list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Always show icon"), 1, SHOW_ICON_ALWAYS, -1);
-
-    gtk_list_store_append(list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("When battery is present"), 1, SHOW_ICON_WHEN_BATTERY_PRESENT, -1);
-    
-    gtk_list_store_append(list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("When battery is charging or discharging"), 1, SHOW_ICON_WHEN_BATTERY_CHARGING_DISCHARGING, -1);
-    
-    gtk_list_store_append(list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Never show icon"), 1, NEVER_SHOW_ICON, -1);
-    
-    value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG, SHOW_ICON_WHEN_BATTERY_PRESENT);
-    
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-	  valid;
-	  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-    {
-	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-			    1, &list_value, -1);
-	if ( value == list_value )
-	{
-	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (tray), &iter);
-	    break;
-	}
-    } 
-		      
     dpms = GTK_WIDGET (gtk_builder_get_object (xml, "enable-dpms"));
 #ifdef HAVE_DPMS
     /*
@@ -1360,8 +1297,8 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
      * Computer sleep mode
      */
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-    sleep_mode = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-mode"));
-    label = GTK_WIDGET (gtk_builder_get_object (xml, "advanced_sleepmode_label"));
+    sleep_mode = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-mode"));
+    label = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleepmode-label"));
     gtk_combo_box_set_model (GTK_COMBO_BOX(sleep_mode), GTK_TREE_MODEL(list_store));
     
     if ( can_suspend )
@@ -1508,130 +1445,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
 #endif
 }
 
-void
-_cursor_changed_cb (GtkTreeView *view, gpointer data)
-{
-    GtkTreeSelection *sel;
-    GtkTreeModel     *model;
-    GtkTreeIter       selected_row;
-    gint int_data = 0;
-
-    sel = gtk_tree_view_get_selection (GTK_TREE_VIEW(view));
-
-    if ( !gtk_tree_selection_get_selected (sel, &model, &selected_row))
-	return;
-
-    gtk_tree_model_get(model,
-                       &selected_row,
-                       2,
-                       &int_data,
-                       -1);
-
-    if ( G_LIKELY (int_data >= 0 && int_data <= 3) )
-    {
-        gtk_notebook_set_current_page(GTK_NOTEBOOK(nt), int_data);
-    }
-}
-
-static void
-xfpm_settings_tree_view (XfconfChannel *channel, gboolean system_laptop)
-{
-    GtkWidget *view;
-    GdkPixbuf *pix;
-    GtkListStore *list_store;
-    GtkTreeIter iter;
-    GtkTreeViewColumn *col;
-    GtkCellRenderer *renderer;
-    GtkTreeSelection *sel;
-    GtkTreePath *path;
-    gint i = 0;
-    
-    view = GTK_WIDGET (gtk_builder_get_object (xml, "treeview"));
-    list_store = gtk_list_store_new(3, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT);
-
-    gtk_tree_view_set_model (GTK_TREE_VIEW(view), GTK_TREE_MODEL(list_store));
-    
-    gtk_tree_view_set_rules_hint(GTK_TREE_VIEW(view),TRUE);
-    col = gtk_tree_view_column_new();
-
-    renderer = gtk_cell_renderer_pixbuf_new();
-    
-    gtk_tree_view_column_pack_start(col, renderer, FALSE);
-    gtk_tree_view_column_set_attributes(col, renderer, "pixbuf", 0, NULL);
-
-    renderer = gtk_cell_renderer_text_new();
-    gtk_tree_view_column_pack_start (col, renderer, FALSE);
-    gtk_tree_view_column_set_attributes (col, renderer, "text", 1, NULL);
-    
-    gtk_tree_view_append_column(GTK_TREE_VIEW(view),col);
-    
-    /*General settings */
-    pix = xfpm_icon_load ("preferences-system", 48); 
-    
-    gtk_list_store_append(list_store, &iter);
-    
-    if ( pix )
-    {
-	    gtk_list_store_set (list_store, &iter, 0, pix, 1, _("General"), 2, i, -1);
-	    g_object_unref(pix);
-    }
-    else
-    {
-	    gtk_list_store_set (list_store, &iter, 1, _("General"), 2, i, -1);
-    }
-    i++;
-    
-    /* ON ac power */
-    pix = xfpm_icon_load (XFPM_AC_ADAPTER_ICON, 48); 
-    gtk_list_store_append(list_store, &iter);
-    if ( pix )
-    {
-	    gtk_list_store_set(list_store, &iter, 0, pix, 1, _("On AC"), 2, i, -1);
-	    g_object_unref(pix);
-    }
-    else
-    {
-	    gtk_list_store_set(list_store, &iter, 1, _("On AC"), 2, i, -1);
-    }
-    i++;
-    
-    if ( system_laptop )
-    {
-	pix = xfpm_icon_load (XFPM_BATTERY_ICON, 48); 
-	gtk_list_store_append(list_store, &iter);
-	if ( pix )
-	{
-		gtk_list_store_set(list_store, &iter, 0, pix, 1, _("On Battery"), 2, i, -1);
-		g_object_unref(pix);
-	}
-	else
-	{
-		gtk_list_store_set(list_store, &iter, 1, _("On Battery"), 2, i, -1);
-	}
-    }
-    i++;
-    
-    pix = xfpm_icon_load ("applications-other", 48); 
-    gtk_list_store_append(list_store, &iter);
-    if ( pix )
-    {
-	    gtk_list_store_set(list_store, &iter, 0, pix, 1, _("Extended"), 2, i, -1);
-	    g_object_unref(pix);
-    }
-    else
-    {
-	    gtk_list_store_set(list_store, &iter, 1, _("Extended"), 2, i, -1);
-    }
-
-    sel = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
-
-    path = gtk_tree_path_new_from_string("0");
-
-    gtk_tree_selection_select_path(sel, path);
-    gtk_tree_path_free(path);
-
-}
-
 static void
 settings_quit (GtkWidget *widget, XfconfChannel *channel)
 {
@@ -1726,8 +1539,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 				  has_lid,
 				  devkit_disk,
 				  can_spin_down);
-	
-    xfpm_settings_tree_view (channel, system_laptop);
     
     xfpm_settings_general   (channel, auth_hibernate, auth_suspend, can_shutdown, can_suspend, can_hibernate,
 			     has_sleep_button, has_hibernate_button, has_power_button );
@@ -1736,7 +1547,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     
     if ( id != 0 )
     {
-	plugged_box = GTK_WIDGET (gtk_builder_get_object (xml, "plugged_box"));
+	plugged_box = GTK_WIDGET (gtk_builder_get_object (xml, "plug-child"));
 	plug = gtk_plug_new (id);
 	gtk_widget_show (plug);
 	gtk_widget_reparent (plugged_box, plug);
