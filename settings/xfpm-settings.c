@@ -1348,7 +1348,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
     GtkWidget *lock;
     GtkWidget *label;
     GtkWidget *sleep_dpms_mode;
-    GtkWidget *suspend_dpms_mode;
     GtkWidget *network_manager_sleep;
     GtkWidget *sleep_mode;
 
