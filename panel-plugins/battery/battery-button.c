@@ -628,7 +628,7 @@ menu_destroyed_cb(GtkMenuShell *menu, gpointer user_data)
 {
     BatteryButton *button = BATTERY_BUTTON (user_data);
 
-    DBG("entering");
+    TRACE("entering");
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), FALSE);
     button->priv->menu = NULL;
