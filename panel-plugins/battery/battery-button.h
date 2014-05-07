@@ -35,14 +35,14 @@ typedef struct BatteryButtonPrivate BatteryButtonPrivate;
 
 typedef struct
 {
-    GtkButton                 parent;
+    GtkToggleButton           parent;
     BatteryButtonPrivate     *priv;
 
 } BatteryButton;
 
 typedef struct
 {
-    GtkButtonClass parent_class;
+    GtkToggleButtonClass parent_class;
 
 } BatteryButtonClass;
 

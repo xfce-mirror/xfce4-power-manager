@@ -81,13 +81,13 @@ typedef struct
     GtkWidget   *menu_item;    /* The device's item on the menu (if shown) */
 } BatteryDevice;
 
-G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_BUTTON)
+G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_TOGGLE_BUTTON)
 
 static void battery_button_finalize   (GObject *object);
 static gchar* get_device_description (BatteryButton *button, UpDevice *device);
 static GList* find_device_in_list (BatteryButton *button, const gchar *object_path);
 static gboolean battery_button_set_icon (BatteryButton *button);
-static void battery_button_clicked (GtkButton *b);
+static gboolean battery_button_press_event (GtkWidget *widget, GdkEventButton *event);
 static void battery_button_show_menu (BatteryButton *button);
 static void battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_device, gboolean append);
 
@@ -474,12 +474,12 @@ static void
 battery_button_class_init (BatteryButtonClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
-    GtkButtonClass *button_class = GTK_BUTTON_CLASS (klass);
+    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
     object_class->finalize = battery_button_finalize;
     object_class->set_property = battery_button_set_property;
 
-    button_class->clicked = battery_button_clicked;
+    widget_class->button_press_event = battery_button_press_event;
 
     g_object_class_install_property (object_class,
 				     PROP_PLUGIN,
@@ -556,12 +556,14 @@ battery_button_set_icon (BatteryButton *button)
     return FALSE;
 }
 
-static void
-battery_button_clicked (GtkButton *b)
+static gboolean
+battery_button_press_event (GtkWidget *widget, GdkEventButton *event)
 {
-    BatteryButton *button = BATTERY_BUTTON (b);
+    BatteryButton *button = BATTERY_BUTTON (widget);
 
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), TRUE);
     battery_button_show_menu (button);
+    return TRUE;
 }
 
 static gboolean
@@ -622,10 +624,13 @@ battery_button_show (BatteryButton *button)
 }
 
 static void
-menu_destroyed_cb(GtkWidget *object, gpointer user_data)
+menu_destroyed_cb(GtkMenuShell *menu, gpointer user_data)
 {
     BatteryButton *button = BATTERY_BUTTON (user_data);
 
+    DBG("entering");
+
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), FALSE);
     button->priv->menu = NULL;
 }
 
@@ -701,7 +706,7 @@ battery_button_show_menu (BatteryButton *button)
     gtk_menu_set_screen(GTK_MENU(menu), gscreen);
     /* keep track of the menu while it's being displayed */
     button->priv->menu = menu;
-    g_signal_connect(G_OBJECT(menu), "destroy", G_CALLBACK(menu_destroyed_cb), button);
+    g_signal_connect(GTK_MENU_SHELL(menu), "deactivate", G_CALLBACK(menu_destroyed_cb), button);
 
     for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
     {
