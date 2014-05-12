@@ -233,7 +233,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
     else
     {
 	/* unknown device state, just display the percentage */
-	tip = g_strdup_printf (_("<b>%s %s</b>\t\nis at (%0.0f%%).\t"),
+	tip = g_strdup_printf (_("<b>%s %s</b>\t\nUnknown state.\t"),
 			       vendor, model,
 			       percentage);
     }
