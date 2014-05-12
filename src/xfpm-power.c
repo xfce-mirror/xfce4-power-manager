@@ -66,6 +66,14 @@ static void xfpm_power_get_property (GObject *object,
 				     GValue *value,
 				     GParamSpec *pspec);
 
+static void xfpm_power_set_property (GObject *object,
+				     guint prop_id,
+				     const GValue *value,
+				     GParamSpec *pspec);
+
+static void xfpm_power_change_presentation_mode (XfpmPower *power,
+						 gboolean presentation_mode);
+
 static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
 
@@ -91,7 +99,7 @@ struct XfpmPowerPrivate
     XfpmBatteryCharge overall_state;
     gboolean         critical_action_done;
 
-    XfpmPowerMode    power_mode;
+    gboolean         presentation_mode;
     EggIdletime     *idletime;
 
     gboolean	     inhibited;
@@ -130,7 +138,9 @@ enum
     PROP_AUTH_HIBERNATE,
     PROP_CAN_SUSPEND,
     PROP_CAN_HIBERNATE,
-    PROP_HAS_LID
+    PROP_HAS_LID,
+    PROP_PRESENTATION_MODE,
+    N_PROPERTIES
 };
 
 enum
@@ -936,6 +946,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
     object_class->finalize = xfpm_power_finalize;
 
     object_class->get_property = xfpm_power_get_property;
+    object_class->set_property = xfpm_power_set_property;
 
     signals [ON_BATTERY_CHANGED] =
         g_signal_new ("on-battery-changed",
@@ -1000,6 +1011,12 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                       g_cclosure_marshal_VOID__VOID,
                       G_TYPE_NONE, 0, G_TYPE_NONE);
 
+#define XFPM_PARAM_FLAGS  (  G_PARAM_READWRITE \
+                           | G_PARAM_CONSTRUCT \
+                           | G_PARAM_STATIC_NAME \
+                           | G_PARAM_STATIC_NICK \
+                           | G_PARAM_STATIC_BLURB)
+
     g_object_class_install_property (object_class,
                                      PROP_ON_BATTERY,
                                      g_param_spec_boolean ("on-battery",
@@ -1049,6 +1066,14 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                           FALSE,
                                                           G_PARAM_READABLE));
 
+    g_object_class_install_property (object_class,
+                                     PROP_PRESENTATION_MODE,
+                                     g_param_spec_boolean (PRESENTATION_MODE,
+                                                          NULL, NULL,
+                                                          FALSE,
+                                                          XFPM_PARAM_FLAGS));
+#undef XFPM_PARAM_FLAGS
+
     g_type_class_add_private (klass, sizeof (XfpmPowerPrivate));
 
     xfpm_power_dbus_class_init (klass);
@@ -1074,7 +1099,7 @@ xfpm_power_init (XfpmPower *power)
     power->priv->dialog          = NULL;
     power->priv->overall_state   = XFPM_BATTERY_CHARGE_OK;
     power->priv->critical_action_done = FALSE;
-    power->priv->power_mode      = XFPM_POWER_MODE_NORMAL;
+    power->priv->presentation_mode    = FALSE;
     power->priv->suspend = xfpm_suspend_get ();
 
     power->priv->inhibit = xfpm_inhibit_new ();
@@ -1120,6 +1145,10 @@ xfpm_power_init (XfpmPower *power)
     xfpm_power_check_polkit_auth (power);
 #endif
 
+    xfconf_g_property_bind(xfpm_xfconf_get_channel(power->priv->conf),
+			   PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
+                           G_OBJECT(power), PRESENTATION_MODE);
+
 out:
     xfpm_power_dbus_init (power);
 
@@ -1156,6 +1185,27 @@ static void xfpm_power_get_property (GObject *object,
 	    break;
 	case PROP_HAS_LID:
 	    g_value_set_boolean (value, power->priv->lid_is_present);
+	    break;
+	case PROP_PRESENTATION_MODE:
+	    g_value_set_boolean (value, power->priv->presentation_mode);
+	    break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+            break;
+    }
+}
+
+static void xfpm_power_set_property (GObject *object,
+				     guint prop_id,
+				     const GValue *value,
+				     GParamSpec *pspec)
+{
+    XfpmPower *power = XFPM_POWER (object);
+
+    switch (prop_id)
+    {
+	case PROP_PRESENTATION_MODE:
+	    xfpm_power_change_presentation_mode (power, g_value_get_boolean (value));
 	    break;
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1247,11 +1297,43 @@ gboolean xfpm_power_has_battery (XfpmPower *power)
     return ret;
 }
 
-XfpmPowerMode  xfpm_power_get_mode (XfpmPower *power)
+static void
+xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mode)
 {
-    g_return_val_if_fail (XFPM_IS_POWER (power), XFPM_POWER_MODE_NORMAL);
+    #ifdef HAVE_DPMS
+    XfpmDpms *dpms;
 
-    return power->priv->power_mode;
+    /* no change, exit */
+    if (power->priv->presentation_mode == presentation_mode)
+        return;
+
+    XFPM_DEBUG ("presentation mode %s, changing to %s",
+                power->priv->presentation_mode ? "TRUE" : "FALSE",
+                presentation_mode ? "TRUE" : "FALSE");
+
+    power->priv->presentation_mode = presentation_mode;
+
+    dpms = xfpm_dpms_new ();
+    xfpm_dpms_refresh (dpms);
+    g_object_unref (dpms);
+
+    if (presentation_mode == FALSE)
+    {
+        EggIdletime *idletime;
+        idletime = egg_idletime_new ();
+        egg_idletime_alarm_reset_all (idletime);
+
+        g_object_unref (idletime);
+    }
+#endif
+}
+
+gboolean
+xfpm_power_is_in_presentation_mode (XfpmPower *power)
+{
+    g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
+
+    return power->priv->presentation_mode;
 }
 
 
@@ -1371,6 +1453,8 @@ static void
 xfpm_power_dbus_init (XfpmPower *power)
 {
     DBusGConnection *bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+
+    TRACE ("entering");
 
     dbus_g_connection_register_g_object (bus,
                                          "/org/freedesktop/PowerManagement",

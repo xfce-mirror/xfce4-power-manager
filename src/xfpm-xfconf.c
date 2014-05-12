@@ -188,6 +188,10 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     if ( !g_str_has_prefix (property, PROPERTIES_PREFIX) || strlen (property) <= strlen (PROPERTIES_PREFIX) )
 	return;
 
+    /* We handle presentation mode in xfpm-power directly */
+    if ( g_strcmp0 (property, "/xfce4-power-manager/presentation-mode") == 0 )
+        return;
+
     XFPM_DEBUG ("Property modified: %s\n", property);
     
     g_object_set_property (G_OBJECT (conf), property + strlen (PROPERTIES_PREFIX), value);

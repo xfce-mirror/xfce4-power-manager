@@ -402,7 +402,7 @@ xfpm_manager_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmM
 static void
 xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager)
 {
-    if (xfpm_power_get_mode (manager->priv->power) == XFPM_POWER_MODE_PRESENTATION)
+    if (xfpm_power_is_in_presentation_mode (manager->priv->power) == TRUE)
 	return;
 
     XFPM_DEBUG ("Alarm inactivity timeout id %d", id);

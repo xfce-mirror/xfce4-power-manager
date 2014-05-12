@@ -88,6 +88,9 @@ G_BEGIN_DECLS
 #define     LOGIND_HANDLE_SUSPEND_KEY   "logind-handle-suspend-key"
 #define     LOGIND_HANDLE_HIBERNATE_KEY "logind-handle-hibernate-key"
 #define     LOGIND_HANDLE_LID_SWITCH    "logind-handle-lid-switch"
+
+#define         PRESENTATION_MODE               "presentation-mode"
+
 G_END_DECLS
 
 #endif /* __XFPM_CONFIG_H */

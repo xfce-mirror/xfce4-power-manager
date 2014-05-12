@@ -25,6 +25,7 @@ libxfce4battery_la_CFLAGS =             \
 	$(LIBXFCE4PANEL_CFLAGS)         \
 	$(LIBXFCE4UTIL_CFLAGS)          \
 	$(LIBXFCE4UI_CFLAGS)            \
+	$(XFCONF_CFLAGS)                \
 	$(GTK_CFLAGS)                   \
 	$(GLIB_CFLAGS)                  \
 	$(PLATFORM_CPPFLAGS)            \
@@ -44,6 +45,7 @@ libxfce4battery_la_LIBADD =                     \
 	$(LIBXFCE4PANEL_LIBS)                   \
 	$(LIBXFCE4UI_LIBS)                      \
 	$(LIBXFCE4UTIL_LIBS)                    \
+	$(XFCONF_LIBS)                          \
 	$(GTK_LIBS)                             \
 	$(GLIB_LIBS)                            \
 	$(DBUS_GLIB_LIBS)                       \

@@ -31,6 +31,7 @@
 #include <libxfce4ui/libxfce4ui.h>
 #include <dbus/dbus-glib.h>
 #include <upower.h>
+#include <xfconf/xfconf.h>
 
 #include "common/xfpm-common.h"
 #include "common/xfpm-icons.h"
@@ -44,6 +45,7 @@
 struct BatteryButtonPrivate
 {
     XfcePanelPlugin *plugin;
+    XfconfChannel   *channel;
 
     UpClient        *upower;
 
@@ -496,11 +498,23 @@ battery_button_class_init (BatteryButtonClass *klass)
 static void
 battery_button_init (BatteryButton *button)
 {
+    GError *error = NULL;
+
     button->priv = BATTERY_BUTTON_GET_PRIVATE (button);
 
     gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
 
     button->priv->upower  = up_client_new ();
+    if ( !xfconf_init (&error) )
+    {
+        g_critical ("xfconf_init failed: %s\n", error->message);
+        g_error_free (error);
+    }
+    else
+    {
+	button->priv->channel = xfconf_channel_get ("xfce4-power-manager");
+    }
+
     /* Sane defaults for the panel icon */
     button->priv->panel_icon_name = g_strdup(XFPM_AC_ADAPTER_ICON);
     button->priv->panel_icon_width = 24;
@@ -588,6 +602,12 @@ static void
 help_cb (GtkMenuItem *menuitem, gpointer user_data)
 {
     xfce_dialog_show_help (NULL, "xfce4-power-manager", "start", NULL);
+}
+
+static void
+presentation_cb (GtkMenuItem *menuitem, gpointer user_data)
+{
+    DBG("toggled");
 }
 
 void
@@ -719,6 +739,15 @@ battery_button_show_menu (BatteryButton *button)
     mi = gtk_separator_menu_item_new();
     gtk_widget_show(mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+
+    /* Presentation mode checkbox */
+    mi = gtk_check_menu_item_new_with_mnemonic (_("Presentation _mode"));
+    gtk_widget_set_sensitive (mi, TRUE);
+    gtk_widget_show (mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    xfconf_g_property_bind(button->priv->channel,
+                           "/xfce4-power-manager/presentation-mode",
+                           G_TYPE_BOOLEAN, G_OBJECT(mi), "active");
 
     /* Preferences option */
     mi = gtk_menu_item_new_with_mnemonic ("_Preferences...");

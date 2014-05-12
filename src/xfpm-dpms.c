@@ -158,7 +158,7 @@ xfpm_dpms_refresh (XfpmDpms *dpms)
     gboolean sleep_mode;
     gboolean presentation_mode;
     
-    presentation_mode = (xfpm_power_get_mode (dpms->priv->power) == XFPM_POWER_MODE_PRESENTATION);
+    presentation_mode = (xfpm_power_is_in_presentation_mode (dpms->priv->power) == TRUE);
     
     if ( dpms->priv->inhibited || presentation_mode)
     {

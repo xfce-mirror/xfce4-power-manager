@@ -75,7 +75,7 @@ void			xfpm_power_hibernate       	(XfpmPower *power,
 
 gboolean		xfpm_power_has_battery		(XfpmPower *power);
 
-XfpmPowerMode           xfpm_power_get_mode		(XfpmPower *power);
+gboolean        xfpm_power_is_in_presentation_mode (XfpmPower *power);
 
 G_END_DECLS
 

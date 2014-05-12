@@ -77,7 +77,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 {
     gboolean ret;
     
-    if (xfpm_power_get_mode (backlight->priv->power) == XFPM_POWER_MODE_NORMAL )
+    if (xfpm_power_is_in_presentation_mode (backlight->priv->power) == FALSE )
     {
 	gint32 dim_level;
 	
