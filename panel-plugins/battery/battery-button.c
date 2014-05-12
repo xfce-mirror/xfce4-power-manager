@@ -112,22 +112,62 @@ battery_button_set_property (GObject *object,
     }
 }
 
-static void
-battery_button_set_tooltip (BatteryButton *button)
+static BatteryDevice*
+get_display_device (BatteryButton *button)
 {
+    GList *item = NULL;
+    gdouble highest_percentage = 0;
+    BatteryDevice *display_device = NULL;
+
     if (button->priv->display_device)
     {
-	GList *item = find_device_in_list (button, up_device_get_object_path (button->priv->display_device));
+	item = find_device_in_list (button, up_device_get_object_path (button->priv->display_device));
 	if (item)
-	{
-	    BatteryDevice *battery_device = item->data;
-	    gtk_widget_set_tooltip_markup (GTK_WIDGET (button), battery_device->details);
+	    return item->data;
+    }
 
-	    return;
+    /* We want to find the battery or ups device with the highest percentage
+     * and use that to get our tooltip from */
+    for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
+    {
+	BatteryDevice *battery_device = item->data;
+	guint type = 0;
+	gdouble percentage;
+
+	g_object_get (battery_device->device,
+		      "kind", &type,
+		      "percentage", &percentage,
+		      NULL);
+
+	if ( type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS)
+	{
+	    if ( highest_percentage < percentage )
+	    {
+		/* found something better */
+		display_device = battery_device;
+		highest_percentage = percentage;
+	    }
 	}
     }
 
-    gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Display battery levels for attached devices"));
+    return display_device;
+}
+
+static void
+battery_button_set_tooltip (BatteryButton *button)
+{
+    BatteryDevice *display_device = get_display_device (button);
+
+    if ( display_device )
+    {
+	/* if we have something, display it */
+	gtk_widget_set_tooltip_markup (GTK_WIDGET (button), display_device->details);
+    }
+    else
+    {
+	/* how did we get here? */
+	gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Display battery levels for attached devices"));
+    }
 }
 
 static gchar*
@@ -234,8 +274,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
     {
 	/* unknown device state, just display the percentage */
 	tip = g_strdup_printf (_("<b>%s %s</b>\t\nUnknown state.\t"),
-			       vendor, model,
-			       percentage);
+			       vendor, model);
     }
 
     return tip;
@@ -264,7 +303,7 @@ static void
 battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *device)
 {
     GList *item;
-    BatteryDevice *battery_device;
+    BatteryDevice *battery_device, *display_device;
     const gchar *object_path = up_device_get_object_path(device);
     gchar *details, *icon_name;
     GdkPixbuf *pix;
@@ -303,17 +342,17 @@ battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *
 	g_object_unref (battery_device->pix);
     battery_device->pix = pix;
 
-    if ( type == UP_DEVICE_KIND_LINE_POWER || device == button->priv->display_device)
+    /* Get the display device, which may now be this one */
+    display_device = get_display_device (button);
+    if ( battery_device == display_device)
     {
-	/* Update the panel icon with priority to the display device */
-	if (!button->priv->display_device || device == button->priv->display_device)
-	{
-	    g_free(button->priv->panel_icon_name);
-	    button->priv->panel_icon_name = icon_name;
-	    battery_button_set_icon (button);
-	    /* update tooltip */
-	    battery_button_set_tooltip (button);
-	}
+	DBG("this is the display device, updating");
+	/* it is! update the panel button */
+	g_free(button->priv->panel_icon_name);
+	button->priv->panel_icon_name = icon_name;
+	battery_button_set_icon (button);
+	/* update tooltip */
+	battery_button_set_tooltip (button);
     }
 
     /* If the menu is being displayed, update it */
@@ -602,12 +641,6 @@ static void
 help_cb (GtkMenuItem *menuitem, gpointer user_data)
 {
     xfce_dialog_show_help (NULL, "xfce4-power-manager", "start", NULL);
-}
-
-static void
-presentation_cb (GtkMenuItem *menuitem, gpointer user_data)
-{
-    DBG("toggled");
 }
 
 void
