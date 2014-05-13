@@ -203,7 +203,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 	if ( time_to_empty > 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (time_to_empty);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%, %s runtime).\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%, %s runtime)\t"),
 				   vendor, model,
 				   percentage,
 				   est_time_str);
@@ -211,7 +211,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 	}
 	else
 	{
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%).\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%)\t"),
 				   vendor, model,
 				   percentage);
 	}
@@ -221,7 +221,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 	if ( time_to_full != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (time_to_full);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%, %s).\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%, %s)\t"),
 				   vendor, model,
 				   percentage,
 				   est_time_str);
@@ -229,7 +229,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 	}
 	else
 	{
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%).\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%)\t"),
 				   vendor, model,
 				   percentage);
 	}
@@ -239,7 +239,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 	if ( time_to_empty != 0 )
 	{
 	    est_time_str = xfpm_battery_get_time_string (time_to_empty);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%, %s).\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%, %s)\t"),
 				   vendor, model,
 				   percentage,
 				   est_time_str);
@@ -247,7 +247,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
 	}
 	else
 	{
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%).\t"),
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%)\t"),
 				   vendor, model,
 				   percentage);
 	}
@@ -255,13 +255,13 @@ get_device_description (BatteryButton *button, UpDevice *device)
     }
     else if ( state == UP_DEVICE_STATE_PENDING_CHARGE )
     {
-	tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to discharge (%0.0f%%).\t"),
+	tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to discharge (%0.0f%%)\t"),
 			       vendor, model,
 			       percentage);
     }
     else if ( state == UP_DEVICE_STATE_PENDING_DISCHARGE )
     {
-	tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to charge (%0.0f%%).\t"),
+	tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to charge (%0.0f%%)\t"),
 	                       vendor, model,
 			       percentage);
     }
@@ -273,7 +273,7 @@ get_device_description (BatteryButton *button, UpDevice *device)
     else
     {
 	/* unknown device state, just display the percentage */
-	tip = g_strdup_printf (_("<b>%s %s</b>\t\nUnknown state.\t"),
+	tip = g_strdup_printf (_("<b>%s %s</b>\t\nUnknown state\t"),
 			       vendor, model);
     }
 
