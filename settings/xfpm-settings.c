@@ -732,11 +732,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
     GtkWidget *lid;
     GtkWidget *label;
     GtkWidget *brg;
-    GtkWidget *frame;
+    GtkWidget *brg_level;
     GtkWidget *spin_down;
-#ifdef HAVE_DPMS
-    GtkWidget *dpms_frame_on_battery;
-#endif
 
     battery_critical = GTK_WIDGET (gtk_builder_get_object (xml, "battery-critical-combox"));
     
@@ -809,14 +806,14 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
      * DPMS settings when running on battery power
      */
 #ifdef HAVE_DPMS
-    dpms_frame_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-on-battery-frame"));
-    gtk_widget_show (GTK_WIDGET(dpms_frame_on_battery));
-  
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_SLEEP, 5);
     gtk_range_set_value (GTK_RANGE(on_battery_dpms_sleep), val);
     
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_OFF, 10);
     gtk_range_set_value (GTK_RANGE(on_battery_dpms_off), val);
+#else
+    gtk_widget_set_sensitive (GTK_WIDGET(on_battery_dpms_sleep), FALSE);
+    gtk_widget_set_sensitive (GTK_WIDGET(on_battery_dpms_off), FALSE);
 #endif
 
      /*
@@ -876,15 +873,12 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
      * Brightness on battery power
      */
     brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery"));
+    brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery"));
     if ( has_lcd_brightness )
     {
-	GtkWidget *brg_level;
-	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
 	
 	gtk_range_set_value (GTK_RANGE(brg), val);
-	
-	brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery"));
 	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, 20);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (brg_level), val);
@@ -892,8 +886,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
     }
     else
     {
-	frame = GTK_WIDGET (gtk_builder_get_object (xml, "on-battery-brg-frame"));
-	gtk_widget_hide (frame);
+	gtk_widget_set_sensitive (GTK_WIDGET (brg), FALSE);
+	gtk_widget_set_sensitive (GTK_WIDGET (brg_level), FALSE);
     }
 #ifndef HAVE_DPMS
     if ( !has_lcd_brightness )
@@ -925,8 +919,8 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 {
     GtkWidget *inact;
     GtkWidget *lid;
-    GtkWidget *frame;
     GtkWidget *brg;
+    GtkWidget *brg_level;
     GtkWidget *spin_down;
     GtkListStore *list_store;
     GtkTreeIter iter;
@@ -934,10 +928,6 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     gboolean valid;
     guint list_value;
     
-#ifdef HAVE_DPMS
-    GtkWidget *dpms_frame_on_ac;
-#endif
-
     inact = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-on-ac"));
     
     if ( !can_suspend && !can_hibernate )
@@ -958,15 +948,15 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * DPMS settings when running on AC power 
      */
-    dpms_frame_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-on-ac-frame"));
-    gtk_widget_show (GTK_WIDGET(dpms_frame_on_ac));
     
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_SLEEP, 10);
     gtk_range_set_value (GTK_RANGE (on_ac_dpms_sleep), val);
     
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_OFF, 15);
     gtk_range_set_value (GTK_RANGE(on_ac_dpms_off), val);
-    
+#else
+    gtk_widget_set_sensitive (GTK_WIDGET(on_ac_dpms_sleep),FALSE);
+    gtk_widget_set_sensitive (GTK_WIDGET(on_ac_dpms_off),FALSE);
 #endif
     /*
      * Lid switch settings on AC power
@@ -1025,15 +1015,12 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
      * Brightness on AC power
      */
     brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-ac"));
+    brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-ac"));
     if ( has_lcd_brightness )
     {
-	GtkWidget *brg_level;
-	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
 	
 	gtk_range_set_value (GTK_RANGE(brg), val);
-	
-	brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-ac"));
 	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, 80);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (brg_level), val);
@@ -1041,8 +1028,8 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     }
     else
     {
-	frame = GTK_WIDGET (gtk_builder_get_object (xml, "on-ac-brg-frame"));
-	gtk_widget_hide (frame);
+	gtk_widget_set_sensitive (GTK_WIDGET (brg), FALSE);
+	gtk_widget_set_sensitive (GTK_WIDGET (brg_level), FALSE);
     }
 #ifndef HAVE_DPMS
     if ( !has_lcd_brightness )
