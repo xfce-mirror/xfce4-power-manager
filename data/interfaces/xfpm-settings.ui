@@ -658,35 +658,23 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkCheckButton" id="spin-down-on-battery">
-                                     <property name="visible">True</property>
-                                     <property name="can_focus">True</property>
-                                     <property name="receives_default">False</property>
-                                     <property name="label" translatable="yes">On battery</property>
-                                     <property name="draw_indicator">True</property>
-                                     <signal name="toggled" handler="on_battery_spin_changed"/>
-                                   </object>
-                                   <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                   </packing>
-                                 </child>
-                                 <child>
-                                  <object class="GtkCheckButton" id="spin-down-on-ac">
-                                     <property name="visible">True</property>
-                                     <property name="can_focus">True</property>
-                                     <property name="receives_default">False</property>
-                                     <property name="label" translatable="yes">Plugged in</property>
-                                     <property name="draw_indicator">True</property>
-                                     <signal name="toggled" handler="on_ac_spin_changed"/>
-                                   </object>
-                                   <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">2</property>
-                                   </packing>
-                                 </child>
+                                  <object class="GtkComboBox" id="spin-down-hdd">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <signal name="changed" handler="on_spindown_hdd_changed" swapped="no"/>
+                                    <child>
+                                      <object class="GtkCellRendererText" id="renderer10"/>
+                                      <attributes>
+                                        <attribute name="text">0</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                   <property name="expand">False</property>
+                                   <property name="fill">True</property>
+                                   <property name="position">1</property>
+                                  </packing>
+                                </child>
                               </object>
                             </child>
                           </object>
@@ -1294,6 +1282,17 @@
     </data>
   </object>
   <object class="GtkListStore" id="model9">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model10">
     <columns>
       <!-- column-name gchararray -->
       <column type="gchararray"/>

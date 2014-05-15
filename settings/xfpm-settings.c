@@ -144,10 +144,7 @@ void        critical_level_value_changed_cb        (GtkSpinButton *w,
 void        lock_screen_toggled_cb                 (GtkWidget *w, 
 						    XfconfChannel *channel);
 
-void        on_battery_spin_changed		   (GtkWidget *w,
-						    XfconfChannel *channel);
-
-void        on_ac_spin_changed		   	   (GtkWidget *w,
+void        on_spindown_hdd_changed		   (GtkWidget *w,
 						    XfconfChannel *channel);
 
 void        _cursor_changed_cb 			   (GtkTreeView *view, 
@@ -690,24 +687,26 @@ lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     }
 }
 
-void on_battery_spin_changed (GtkWidget *w,  XfconfChannel *channel)
+void on_spindown_hdd_changed	(GtkWidget *w, XfconfChannel *channel)
 {
-    gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint value = 0;
     
-    if ( !xfconf_channel_set_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_BATTERY, val) )
-    {
-	g_critical ("Unable to set value for property %s", SPIN_DOWN_ON_BATTERY);
-    }
-    
-}
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+	return;
 
-void on_ac_spin_changed	(GtkWidget *w, XfconfChannel *channel)
-{
-    gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       1,
+                       &value,
+                       -1);
     
-    if ( !xfconf_channel_set_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_AC, val) )
+    if ( !xfconf_channel_set_uint (channel, PROPERTIES_PREFIX SPIN_DOWN_HDD, value) )
     {
-	g_critical ("Unable to set value for property %s", SPIN_DOWN_ON_AC);
+	g_critical ("Unable to set value for property %s", SPIN_DOWN_HDD);
     }
 }
 
@@ -731,7 +730,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
     GtkWidget *label;
     GtkWidget *brg;
     GtkWidget *brg_level;
-    GtkWidget *spin_down;
+    GtkWidget *spin_down_hdd;
 
     battery_critical = GTK_WIDGET (gtk_builder_get_object (xml, "battery-critical-combox"));
     
@@ -894,18 +893,52 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
     }
 #endif
 
-    spin_down = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-on-battery"));
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (spin_down), 
-				  xfconf_channel_get_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_BATTERY, TRUE));
-    gtk_widget_set_sensitive (spin_down, can_spin_down);
+    spin_down_hdd = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-hdd"));
+
+    if ( can_spin_down && devkit_disk )
+    {
+	list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+
+	gtk_combo_box_set_model (GTK_COMBO_BOX(spin_down_hdd), GTK_TREE_MODEL(list_store));
+
+	gtk_list_store_append(list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Never"), 1, SPIN_DOWN_HDD_NEVER, -1);
+
+	gtk_list_store_append(list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("On battery"), 1, SPIN_DOWN_HDD_ON_BATTERY, -1);
+
+	gtk_list_store_append(list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Plugged in"), 1, SPIN_DOWN_HDD_PLUGGED_IN, -1);
+
+	gtk_list_store_append(list_store, &iter);
+	gtk_list_store_set (list_store, &iter, 0, _("Always"), 1, SPIN_DOWN_HDD_ALWAYS, -1);
+
+	gtk_combo_box_set_active (GTK_COMBO_BOX (spin_down_hdd), 0);
+
+	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX SPIN_DOWN_HDD, SPIN_DOWN_HDD_NEVER);
+
+	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+	      valid;
+	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	{
+	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+				1, &list_value, -1);
+	    if ( val == list_value )
+	    {
+		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (lid), &iter);
+		break;
+	    }
+	}
+    }
+    gtk_widget_set_sensitive (spin_down_hdd, can_spin_down);
     
     if ( !devkit_disk )
     {
-	gtk_widget_hide (spin_down);
+	gtk_widget_hide (spin_down_hdd);
     }
     else if ( !can_spin_down )
     {
-	gtk_widget_set_tooltip_text (spin_down, _("Spinning down hard disks permission denied"));
+	gtk_widget_set_tooltip_text (spin_down_hdd, _("Spinning down hard disks permission denied"));
     }
 }
 
@@ -919,7 +952,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *lid;
     GtkWidget *brg;
     GtkWidget *brg_level;
-    GtkWidget *spin_down;
+    GtkWidget *spin_down_hdd;
     GtkListStore *list_store;
     GtkTreeIter iter;
     guint val;
@@ -1036,19 +1069,20 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     }
 #endif
 
-    spin_down = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-on-ac"));
+    spin_down_hdd = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-hdd"));
+    /*
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (spin_down), 
-				  xfconf_channel_get_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_AC, FALSE));
+				  xfconf_channel_get_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_AC, FALSE)); */
 				  
-    gtk_widget_set_sensitive (spin_down, can_spin_down);
+    gtk_widget_set_sensitive (spin_down_hdd, can_spin_down);
     
     if ( !devkit_disk )
     {
-	gtk_widget_hide (spin_down);
+	gtk_widget_hide (spin_down_hdd);
     }
     else if ( !can_spin_down )
     {
-	gtk_widget_set_tooltip_text (spin_down, _("Spinning down hard disks permission denied"));
+	gtk_widget_set_tooltip_text (spin_down_hdd, _("Spinning down hard disks permission denied"));
     }
 
 }

@@ -80,8 +80,7 @@ enum
     PROP_IDLE_SLEEP_MODE,
     PROP_DIM_ON_AC_TIMEOUT,
     PROP_DIM_ON_BATTERY_TIMEOUT,
-    PROP_SPIN_DOWN_DISK_ON_AC,
-    PROP_SPIN_DOWN_DISK_ON_BATTERY,
+    PROP_SPIN_DOWN_DISK,
     PROP_SPIN_DOWN_DISK_ON_AC_TIMEOUT,
     PROP_SPIN_DOWN_DISK_ON_BATTERY_TIMEOUT,
 #ifdef WITH_NETWORK_MANAGER
@@ -529,23 +528,15 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         G_PARAM_READWRITE));
 
     /**
-     * XfpmXfconf::spin-down-on-ac
+     * XfpmXfconf::spin-down-hdd
      **/
     g_object_class_install_property (object_class,
-                                     PROP_SPIN_DOWN_DISK_ON_AC,
-                                     g_param_spec_boolean (SPIN_DOWN_ON_AC,
+                                     PROP_SPIN_DOWN_DISK,
+                                     g_param_spec_uint (SPIN_DOWN_HDD,
                                                            NULL, NULL,
-                                                           FALSE,
-                                                           G_PARAM_READWRITE));
-
-    /**
-     * XfpmXfconf::spin-down-on-battery
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_SPIN_DOWN_DISK_ON_BATTERY,
-                                     g_param_spec_boolean (SPIN_DOWN_ON_BATTERY,
-                                                           NULL, NULL,
-                                                           FALSE,
+							0,
+							G_MAXUINT16,
+							4,
                                                            G_PARAM_READWRITE));
 
     /**

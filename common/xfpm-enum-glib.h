@@ -75,6 +75,15 @@ typedef enum
 } XfpmButtonKey;
 
 typedef enum
+ {
+    SPIN_DOWN_HDD_NEVER,
+    SPIN_DOWN_HDD_ON_BATTERY,
+    SPIN_DOWN_HDD_PLUGGED_IN,
+    SPIN_DOWN_HDD_ALWAYS
+
+} XfpmSpindownRequest;
+
+typedef enum
 {
     SHOW_ICON_ALWAYS,
     SHOW_ICON_WHEN_BATTERY_PRESENT,

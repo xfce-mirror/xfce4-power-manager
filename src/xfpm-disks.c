@@ -118,9 +118,10 @@ xfpm_disks_enable_spin_down_timeouts (XfpmDisks *disks, gint timeout)
 static void
 xfpm_disks_set_spin_timeouts (XfpmDisks *disks)
 {
-    gboolean enabled;
+    gboolean enabled = FALSE;
     gboolean on_battery;
     gint timeout = 0;
+    gint value = 0;
     
     if (!disks->priv->can_spin )
 	return;
@@ -132,16 +133,24 @@ xfpm_disks_set_spin_timeouts (XfpmDisks *disks)
     if ( !on_battery )
     {
 	g_object_get (G_OBJECT (disks->priv->conf),
-		      SPIN_DOWN_ON_AC, &enabled,
+		      SPIN_DOWN_HDD, &value,
 		      SPIN_DOWN_ON_AC_TIMEOUT, &timeout,
 		      NULL);
+	if ( value == SPIN_DOWN_HDD_PLUGGED_IN || value == SPIN_DOWN_HDD_ALWAYS )
+	{
+		enabled = TRUE;
+	}
     }
     else
     {
 	g_object_get (G_OBJECT (disks->priv->conf),
-		      SPIN_DOWN_ON_BATTERY, &enabled,
+		      SPIN_DOWN_HDD, &value,
 		      SPIN_DOWN_ON_BATTERY_TIMEOUT, &timeout,
 		      NULL);
+	if ( value == SPIN_DOWN_HDD_ON_BATTERY || value == SPIN_DOWN_HDD_ALWAYS )
+	{
+		enabled = TRUE;
+	}
     }
     
     XFPM_DEBUG ("On Battery=%d spin_down_enabled=%d timeout=%d\n", on_battery, enabled, timeout);
@@ -213,13 +222,10 @@ xfpm_disks_init (XfpmDisks *disks)
     g_signal_connect_swapped (disks->priv->power, "on-battery-changed",
 			      G_CALLBACK (xfpm_disks_set_spin_timeouts), disks);
 
-    g_signal_connect_swapped (disks->priv->conf, "notify::" SPIN_DOWN_ON_AC,
+    g_signal_connect_swapped (disks->priv->conf, "notify::" SPIN_DOWN_HDD,
 			      G_CALLBACK (xfpm_disks_set_spin_timeouts), disks);
 			
     g_signal_connect_swapped (disks->priv->conf, "notify::" SPIN_DOWN_ON_AC_TIMEOUT,
-			      G_CALLBACK (xfpm_disks_set_spin_timeouts), disks);
-			      
-    g_signal_connect_swapped (disks->priv->conf, "notify::" SPIN_DOWN_ON_BATTERY,
 			      G_CALLBACK (xfpm_disks_set_spin_timeouts), disks);
     
     g_signal_connect_swapped (disks->priv->conf, "notify::" SPIN_DOWN_ON_BATTERY_TIMEOUT,
