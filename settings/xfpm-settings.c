@@ -50,12 +50,10 @@
 static 	GtkBuilder *xml 			= NULL;
 static  GtkWidget  *nt				= NULL;
 
-#ifdef HAVE_DPMS
 static  GtkWidget *on_battery_dpms_sleep 	= NULL;
 static  GtkWidget *on_battery_dpms_off  	= NULL;
 static  GtkWidget *on_ac_dpms_sleep 		= NULL;
 static  GtkWidget *on_ac_dpms_off 		= NULL;
-#endif
 
 static  gboolean  lcd_brightness = FALSE;
 
@@ -1495,12 +1493,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     
     lcd_brightness = has_lcd_brightness;
     
-#ifdef HAVE_DPMS
     on_battery_dpms_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-on-battery"));
     on_battery_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "off-dpms-on-battery"));
     on_ac_dpms_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-on-ac"));
     on_ac_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "off-dpms-on-ac"));
-#endif
 
     dialog = GTK_WIDGET (gtk_builder_get_object (xml, "xfpm-settings-dialog"));
     nt = GTK_WIDGET (gtk_builder_get_object (xml, "main-notebook"));
