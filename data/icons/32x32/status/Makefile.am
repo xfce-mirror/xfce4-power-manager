@@ -4,7 +4,6 @@ EXTRA_DIST =				\
 Datadir = $(datadir)/icons/hicolor/32x32/status
 
 Data_DATA =				\
-	xfpm-ac-adapter.png		\
 	xfpm-primary-000.png		\
 	xfpm-primary-020.png		\
 	xfpm-primary-040.png		\
@@ -18,6 +17,4 @@ Data_DATA =				\
 	xfpm-primary-080-charging.png	\
 	xfpm-primary-100-charging.png	\
 	xfpm-primary-charged.png		\
-	xfpm-primary-missing.png		\
-	xfpm-brightness-lcd-invalid.png	\
-	xfpm-brightness-lcd.png
+	xfpm-primary-missing.png
