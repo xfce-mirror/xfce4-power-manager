@@ -60,4 +60,6 @@ Data_DATA =				\
 	xfpm-ups-040.png		\
 	xfpm-ups-060.png		\
 	xfpm-ups-080.png		\
-	xfpm-ups-100.png
+	xfpm-ups-100.png		\
+	xfpm-brightness-lcd-invalid.png	\
+	xfpm-brightness-lcd.png
