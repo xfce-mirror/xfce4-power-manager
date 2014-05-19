@@ -5,12 +5,6 @@ Datadir = $(datadir)/icons/hicolor/32x32/status
 
 Data_DATA =				\
 	xfpm-ac-adapter.png		\
-	xfpm-computer-000.png		\
-	xfpm-computer-020.png		\
-	xfpm-computer-040.png		\
-	xfpm-computer-060.png		\
-	xfpm-computer-080.png		\
-	xfpm-computer-100.png		\
 	xfpm-keyboard-000.png		\
 	xfpm-keyboard-020.png		\
 	xfpm-keyboard-040.png		\
@@ -23,6 +17,12 @@ Data_DATA =				\
 	xfpm-mediaplayer-060.png		\
 	xfpm-mediaplayer-080.png		\
 	xfpm-mediaplayer-100.png		\
+	xfpm-monitor-000.png		\
+	xfpm-monitor-020.png		\
+	xfpm-monitor-040.png		\
+	xfpm-monitor-060.png		\
+	xfpm-monitor-080.png		\
+	xfpm-monitor-100.png		\
 	xfpm-mouse-000.png		\
 	xfpm-mouse-020.png		\
 	xfpm-mouse-040.png		\
