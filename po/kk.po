@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-09 00:30+0200\n"
-"PO-Revision-Date: 2014-04-09 08:44+0000\n"
+"POT-Creation-Date: 2014-04-29 18:30+0200\n"
+"PO-Revision-Date: 2014-05-19 11:33+0000\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
-"Language-Team: Kazakh (http://www.transifex.com/projects/p/xfce/language/kk/)\n"
+"Language-Team: Kazakh (http://www.transifex.com/projects/p/xfce4-power-manager/language/kk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -106,7 +106,7 @@ msgstr "Деңгей:"
 msgid "<b>Brightness</b>"
 msgstr "<b>Жарықтылығы</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
+#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:54
 msgid "Monitor"
 msgstr "Монитор"
 
@@ -122,8 +122,8 @@ msgstr "Қуаттылықтың орнына қорек сақтауды таң
 #: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:820
 #: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
 #: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:510
-#: ../src/xfpm-power.c:822
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:527
+#: ../src/xfpm-power.c:840
 msgid "Suspend"
 msgstr "Ұйықтату"
 
@@ -131,8 +131,8 @@ msgstr "Ұйықтату"
 #: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:826
 #: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1043
 #: ../settings/xfpm-settings.c:1220 ../settings/xfpm-settings.c:1277
-#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:495
-#: ../src/xfpm-power.c:809
+#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:512
+#: ../src/xfpm-power.c:827
 msgid "Hibernate"
 msgstr "Гибернация"
 
@@ -157,6 +157,16 @@ msgid "Lock screen when going for suspend/hibernate"
 msgstr "Гибернация/ұйықтатуға өткен кезде"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "Notify Network Manager of suspend/hibernate"
+msgstr "Гибернация/ұйықтатуға өткен кезде Network Manager ескерту"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid ""
+"When enabled this signals to network manager that the system is going to "
+"suspend/hibernate so it can power down the network interfaces, saving power."
+msgstr "Іске қосылған болса, гибернация/ұйықтатуға өткен кезде ол туралы желілік басқарушысын ескерту - ол желілік интерфейстер қорегін сөндіріп, қореқті сақтай алады."
+
+#: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "<b>Advanced Options</b>"
 msgstr "<b>Кеңейтілген баптаулары</b>"
 
@@ -196,17 +206,17 @@ msgid "Seconds"
 msgstr "Секунд"
 
 #: ../settings/xfpm-settings.c:798 ../settings/xfpm-settings.c:996
-#: ../settings/xfpm-settings.c:1476
+#: ../settings/xfpm-settings.c:1477
 msgid "Hibernate and suspend operations not supported"
 msgstr "Гибернация мен ұйықтату әрекеттеріне қолдау жоқ"
 
 #: ../settings/xfpm-settings.c:803 ../settings/xfpm-settings.c:1001
-#: ../settings/xfpm-settings.c:1481
+#: ../settings/xfpm-settings.c:1482
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Гибернация мен ұйықтату әрекеттеріне рұқсат жоқ"
 
 #: ../settings/xfpm-settings.c:832 ../settings/xfpm-settings.c:1226
-#: ../src/xfpm-power.c:835
+#: ../src/xfpm-power.c:853
 msgid "Shutdown"
 msgstr "Сөндіру"
 
@@ -245,43 +255,43 @@ msgid ""
 "switch off the display or put it in sleep mode."
 msgstr "Display Power Management Signaling (DPMS) сөндіру, яғни мониторды ұйықтату үшін оны сөндіруді талап етпеу."
 
-#: ../settings/xfpm-settings.c:1385
+#: ../settings/xfpm-settings.c:1386
 msgid "Suspend operation not supported"
 msgstr "Ұйықтату әрекетіне қолдау жоқ"
 
-#: ../settings/xfpm-settings.c:1391
+#: ../settings/xfpm-settings.c:1392
 msgid "Suspend operation not permitted"
 msgstr "Ұйықтату әрекетіне рұқсат жоқ"
 
-#: ../settings/xfpm-settings.c:1397
+#: ../settings/xfpm-settings.c:1398
 msgid "Hibernate operation not supported"
 msgstr "Гибернация әрекетіне қолдау жоқ"
 
-#: ../settings/xfpm-settings.c:1402
+#: ../settings/xfpm-settings.c:1403
 msgid "Hibernate operation not permitted"
 msgstr "Гибернация әрекетіне рұқсат жоқ"
 
-#: ../settings/xfpm-settings.c:1449
+#: ../settings/xfpm-settings.c:1450
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Компьютердің барлық қорек көздері осы зарядталу деңгейіне жетсе"
 
-#: ../settings/xfpm-settings.c:1552 ../settings/xfpm-settings.c:1557
+#: ../settings/xfpm-settings.c:1569 ../settings/xfpm-settings.c:1574
 msgid "General"
 msgstr "Жалпы"
 
-#: ../settings/xfpm-settings.c:1566 ../settings/xfpm-settings.c:1571
+#: ../settings/xfpm-settings.c:1583 ../settings/xfpm-settings.c:1588
 msgid "On AC"
 msgstr "Эл. желі"
 
-#: ../settings/xfpm-settings.c:1581 ../settings/xfpm-settings.c:1586
+#: ../settings/xfpm-settings.c:1598 ../settings/xfpm-settings.c:1603
 msgid "On Battery"
 msgstr "Батарея"
 
-#: ../settings/xfpm-settings.c:1595 ../settings/xfpm-settings.c:1600
+#: ../settings/xfpm-settings.c:1612 ../settings/xfpm-settings.c:1617
 msgid "Extended"
 msgstr "Кеңейтілген"
 
-#: ../settings/xfpm-settings.c:1669
+#: ../settings/xfpm-settings.c:1686
 msgid "Check your power manager installation"
 msgstr "Өзіңіздің power manager орнатуын тексеріңіз"
 
@@ -294,7 +304,7 @@ msgid "SOCKET ID"
 msgstr "СОКЕТ ID"
 
 #: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:374
-#: ../src/xfpm-power-info.c:973
+#: ../src/xfpm-power-info.c:910
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Көмек алу үшін '%s --help' енгізіңіз."
@@ -321,9 +331,9 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 Power Manager қосулы тұрған жоқ, оны қазір жөнелту керек пе?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:311 ../src/xfpm-power.c:606 ../src/xfpm-power.c:751
-#: ../src/xfpm-power.c:796 ../src/xfpm-power.c:965 ../src/xfpm-power.c:989
-#: ../src/xfpm-battery.c:353 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-power.c:273 ../src/xfpm-power.c:623 ../src/xfpm-power.c:768
+#: ../src/xfpm-power.c:813 ../src/xfpm-power.c:983 ../src/xfpm-power.c:1007
+#: ../src/xfpm-battery.c:355 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Электр қоректендіру басқарушысы"
 
@@ -331,38 +341,52 @@ msgstr "Электр қоректендіру басқарушысы"
 msgid "Settings for the Xfce Power Manager"
 msgstr "Xfce Power Manager баптаулары"
 
-#: ../common/xfpm-common.c:149
+#: ../common/xfpm-common.c:120
 msgid "translator-credits"
 msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com> 2010-2012"
 
-#: ../src/xfpm-power.c:332
+#: ../src/xfpm-power.c:297
 msgid "_Hibernate"
 msgstr "Г_ибернациялау"
 
-#: ../src/xfpm-power.c:333
+#: ../src/xfpm-power.c:298
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
 msgstr "Автоұйықтатуды қазір бір қолданба болдырмай тұр, ұйықтататын болсақ, ол қолданбаның жұмысына кедергі жасауымыз мүмкін, ұйықтатуды сонда да қалайсыз ба?"
 
-#: ../src/xfpm-power.c:335
+#: ../src/xfpm-power.c:300
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Жүйені гибернацияға жіберуді шынымен қалайсыз ба?"
 
-#: ../src/xfpm-power.c:430
+#: ../src/xfpm-power.c:337
+msgid "Continue"
+msgstr "Жалғастыру"
+
+#: ../src/xfpm-power.c:338
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be "
+"locked."
+msgstr "Экранды блоктау қолданбалардың ешбірі жөнелтіле алмады, экран блокталмайтын болады."
+
+#: ../src/xfpm-power.c:341
+msgid "Do you still want to continue to suspend the system?"
+msgstr "Сонда да жүйені ұйықтатуды жалғастыруды қалайсыз ба?"
+
+#: ../src/xfpm-power.c:447
 msgid "Quit"
 msgstr "Шығу"
 
-#: ../src/xfpm-power.c:431
+#: ../src/xfpm-power.c:448
 msgid "All running instances of the power manager will exit"
 msgstr "Барлық іске қосулы power manager көшірмелері өз жұмыстарын аяқтайды"
 
-#: ../src/xfpm-power.c:433
+#: ../src/xfpm-power.c:450
 msgid "Quit the power manager?"
 msgstr "Эл. қорегін басқарушысы өз жұмысын аяқтау керек пе?"
 
 #. Power information
-#: ../src/xfpm-power.c:545 ../src/xfpm-power-info.c:845
+#: ../src/xfpm-power.c:562 ../src/xfpm-power-info.c:781
 msgid "Power Information"
 msgstr "Қорек ақпараты"
 
@@ -371,121 +395,129 @@ msgstr "Қорек ақпараты"
 #. *
 #. TRANSLATOR: Mode here is the power profile (presentation, power save,
 #. normal)
-#: ../src/xfpm-power.c:561
+#: ../src/xfpm-power.c:578
 msgid "Mode"
 msgstr "Режим"
 
 #. Normal
-#: ../src/xfpm-power.c:572
+#: ../src/xfpm-power.c:589
 msgid "Normal"
 msgstr "Қалыпты"
 
 #. Normal
-#: ../src/xfpm-power.c:582
+#: ../src/xfpm-power.c:599
 msgid "Presentation"
 msgstr "Презентация"
 
-#: ../src/xfpm-power.c:714
+#: ../src/xfpm-power.c:731
 msgid "Hibernate the system"
 msgstr "Жүйені гибернациялау"
 
-#: ../src/xfpm-power.c:725
+#: ../src/xfpm-power.c:742
 msgid "Suspend the system"
 msgstr "Жүйені ұйықтату"
 
-#: ../src/xfpm-power.c:735
+#: ../src/xfpm-power.c:752
 msgid "Shutdown the system"
 msgstr "Жүйені сөндіру"
 
-#: ../src/xfpm-power.c:746 ../src/xfpm-power.c:793
+#: ../src/xfpm-power.c:763 ../src/xfpm-power.c:810
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Жүйе төмен зарядта жұмыс істеуде. Мәліметті жоғалтпау үшін жұмысыңызды сақтаңыз"
 
-#: ../src/xfpm-power.c:966
+#: ../src/xfpm-power.c:984
 msgid "System is running on low power"
 msgstr "Жүйе төмен зарядта жұмыс істеуде"
 
-#: ../src/xfpm-power.c:985
+#: ../src/xfpm-power.c:1003
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Сіздің %s зарядыңыз төмен\nШамалы қалған уақыты %s"
 
-#: ../src/xfpm-power.c:1189 ../src/xfpm-power.c:1194
+#: ../src/xfpm-power.c:1196 ../src/xfpm-power.c:1201
 msgid "Adaptor is offline"
 msgstr "Адаптер қосылмаған"
 
-#: ../src/xfpm-power.c:1190 ../src/xfpm-power.c:1195 ../src/xfpm-battery.c:415
+#: ../src/xfpm-power.c:1197 ../src/xfpm-power.c:1202 ../src/xfpm-battery.c:420
 #, c-format
 msgid "Adaptor is online"
 msgstr "Адаптер қосылған"
 
-#: ../src/xfpm-power.c:1667 ../src/xfpm-power.c:1700 ../src/xfpm-power.c:1719
-#: ../src/xfpm-power.c:1742
+#: ../src/xfpm-power.c:1634 ../src/xfpm-power.c:1667 ../src/xfpm-power.c:1686
+#: ../src/xfpm-power.c:1709
 #, c-format
 msgid "Permission denied"
 msgstr "Рұқсат етілмеген"
 
-#: ../src/xfpm-power.c:1727 ../src/xfpm-power.c:1750
+#: ../src/xfpm-power.c:1694 ../src/xfpm-power.c:1717
 #, c-format
 msgid "Suspend not supported"
 msgstr "Ұйықтатуға қолдау жоқ"
 
-#: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
+#: ../src/xfpm-power-common.c:44 ../src/xfpm-power-common.c:67
 msgid "Battery"
 msgstr "Батарея"
 
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:851
+#: ../src/xfpm-power-common.c:46 ../src/xfpm-battery.c:813
 msgid "UPS"
 msgstr "ҮҚК"
 
-#: ../src/xfpm-power-common.c:126
+#: ../src/xfpm-power-common.c:48
 msgid "Line power"
 msgstr "Электр желісі"
 
-#: ../src/xfpm-power-common.c:128
+#: ../src/xfpm-power-common.c:50
 msgid "Mouse"
 msgstr "Тышқан"
 
-#: ../src/xfpm-power-common.c:130
+#: ../src/xfpm-power-common.c:52
 msgid "Keyboard"
 msgstr "Пернетақта"
 
-#: ../src/xfpm-power-common.c:134
+#: ../src/xfpm-power-common.c:56
 msgid "PDA"
 msgstr "PDA"
 
-#: ../src/xfpm-power-common.c:136
+#: ../src/xfpm-power-common.c:58
 msgid "Phone"
 msgstr "Телефон"
 
-#: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:869
+#: ../src/xfpm-power-common.c:60
+msgid "Tablet"
+msgstr "Планшет"
+
+#: ../src/xfpm-power-common.c:62
+msgid "Computer"
+msgstr "Компьютер"
+
+#: ../src/xfpm-power-common.c:64 ../src/xfpm-power-common.c:79
+#: ../src/xfpm-power-common.c:94 ../src/xfpm-battery.c:831
 msgid "Unknown"
 msgstr "Белгісіз"
 
-#: ../src/xfpm-power-common.c:155
+#: ../src/xfpm-power-common.c:81
 msgid "Lithium ion"
 msgstr "Литий-иондық"
 
-#: ../src/xfpm-power-common.c:157
+#: ../src/xfpm-power-common.c:83
 msgid "Lithium polymer"
 msgstr "Литий-полимерлік"
 
-#: ../src/xfpm-power-common.c:159
+#: ../src/xfpm-power-common.c:85
 msgid "Lithium iron phosphate"
 msgstr "Литий-темір фосфатты"
 
-#: ../src/xfpm-power-common.c:161
+#: ../src/xfpm-power-common.c:87
 msgid "Lead acid"
 msgstr "Сілтілі-қышқылды"
 
-#: ../src/xfpm-power-common.c:163
+#: ../src/xfpm-power-common.c:89
 msgid "Nickel cadmium"
 msgstr "Никель-кадмийлік"
 
-#: ../src/xfpm-power-common.c:165
+#: ../src/xfpm-power-common.c:91
 msgid "Nickel metal hybride"
 msgstr "Никель-металгибридті"
 
@@ -495,17 +527,17 @@ msgstr "Никель-металгибридті"
 msgid "Brightness: %.0f percent"
 msgstr "Жарықтылығы: %.0f пайыз"
 
-#: ../src/xfpm-battery.c:171
+#: ../src/xfpm-battery.c:173
 msgid "Unknown time"
 msgstr "Уақыты белгісіз"
 
-#: ../src/xfpm-battery.c:177
+#: ../src/xfpm-battery.c:179
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i минут"
 
-#: ../src/xfpm-battery.c:188
+#: ../src/xfpm-battery.c:190
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -513,66 +545,71 @@ msgstr[0] "%i сағат"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../src/xfpm-battery.c:194
+#: ../src/xfpm-battery.c:196
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: ../src/xfpm-battery.c:195
+#: ../src/xfpm-battery.c:197
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "сағат"
 
-#: ../src/xfpm-battery.c:196
+#: ../src/xfpm-battery.c:198
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "минут"
 
-#: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
+#: ../src/xfpm-battery.c:213 ../src/xfpm-battery.c:264
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "Сіздің %s толығымен зарядталды"
 
-#: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
+#: ../src/xfpm-battery.c:216 ../src/xfpm-battery.c:267
 #, c-format
 msgid "Your %s is charging"
 msgstr "Сіздің %s зарядталуда"
 
-#: ../src/xfpm-battery.c:224
+#: ../src/xfpm-battery.c:226
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until it is fully charged."
 msgstr "%s (%i%%)\n%s толық зарядталуға дейін."
 
-#: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
+#: ../src/xfpm-battery.c:234 ../src/xfpm-battery.c:270
 #, c-format
 msgid "Your %s is discharging"
 msgstr "Сіздің %s өз зарядын беруде"
 
-#: ../src/xfpm-battery.c:234
+#: ../src/xfpm-battery.c:236
 #, c-format
 msgid "System is running on %s power"
 msgstr "Жүйе %s қорегінен жұмыс істеуде"
 
-#: ../src/xfpm-battery.c:244
+#: ../src/xfpm-battery.c:246
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr "%s (%i%%)\nҚалған уақыты шамамен %s."
 
-#: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
+#: ../src/xfpm-battery.c:252 ../src/xfpm-battery.c:273
 #, c-format
 msgid "Your %s is empty"
 msgstr "Сіздің %s бос болып тұр"
 
-#: ../src/xfpm-battery.c:415
+#: ../src/xfpm-battery.c:420
 #, c-format
 msgid "System is running on battery power"
 msgstr "Жүйеңіз батареядан жұмыс істеуде"
 
-#: ../src/xfpm-battery.c:422
+#. Let the user know it's not a system battery being monitored
+#: ../src/xfpm-battery.c:425
+msgid "Peripheral Device"
+msgstr "Қосымша құрылғылар"
+
+#: ../src/xfpm-battery.c:433
 #, c-format
 msgid ""
 "%s\n"
@@ -580,14 +617,14 @@ msgid ""
 "Provides %s runtime"
 msgstr "%s\nСіздің %s толығымен зарядталған (%i%%).\n%s бойы жұмысты қамтамасыз етеді"
 
-#: ../src/xfpm-battery.c:431
+#: ../src/xfpm-battery.c:442
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
 msgstr "%s\nСіздің %s толығымен зарядталған (%i%%)."
 
-#: ../src/xfpm-battery.c:442
+#: ../src/xfpm-battery.c:453
 #, c-format
 msgid ""
 "%s\n"
@@ -595,14 +632,14 @@ msgid ""
 "%s until is fully charged."
 msgstr "%s\nСіздің %s зарядталуда (%i%%).\nТолық зарядталуға дейін %s қалды."
 
-#: ../src/xfpm-battery.c:451
+#: ../src/xfpm-battery.c:462
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
 msgstr "%s\nСіздің %s зарядталуда (%i%%)."
 
-#: ../src/xfpm-battery.c:462
+#: ../src/xfpm-battery.c:473
 #, c-format
 msgid ""
 "%s\n"
@@ -610,59 +647,67 @@ msgid ""
 "Estimated time left is %s."
 msgstr "%s\nСіздің %s өз зарядын беруде (%i%%)\nҚалған уақыты шамамен %s."
 
-#: ../src/xfpm-battery.c:471
+#: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
 msgstr "%s\nСіздің %s зарядын беруде (%i%%)."
 
-#: ../src/xfpm-battery.c:480
+#: ../src/xfpm-battery.c:491
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
 msgstr "%s\n%s заряд беруді күтуде (%i%%)."
 
-#: ../src/xfpm-battery.c:484
+#: ../src/xfpm-battery.c:495
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
 msgstr "%s\n%s зарядталуды күтуде (%i%%)."
 
-#: ../src/xfpm-battery.c:488
+#: ../src/xfpm-battery.c:499
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
 msgstr "%s\nСіздің %s бос болып тұр"
 
-#: ../src/xfpm-battery.c:848
+#. unknown device state, just display the percentage
+#: ../src/xfpm-battery.c:504
+#, c-format
+msgid ""
+"%s\n"
+"Your %s is at (%i%%)."
+msgstr "%s\nСіздің %s (%i%%) болып тұр"
+
+#: ../src/xfpm-battery.c:810
 msgid "battery"
 msgstr "батарея"
 
-#: ../src/xfpm-battery.c:854
+#: ../src/xfpm-battery.c:816
 msgid "monitor battery"
 msgstr "монитор батареясы"
 
-#: ../src/xfpm-battery.c:857
+#: ../src/xfpm-battery.c:819
 msgid "mouse battery"
 msgstr "тышқан батареясы"
 
-#: ../src/xfpm-battery.c:860
+#: ../src/xfpm-battery.c:822
 msgid "keyboard battery"
 msgstr "пернетақта батареясы"
 
-#: ../src/xfpm-battery.c:863
+#: ../src/xfpm-battery.c:825
 msgid "PDA battery"
 msgstr "PDA батареясы"
 
-#: ../src/xfpm-battery.c:866
+#: ../src/xfpm-battery.c:828
 msgid "Phone battery"
 msgstr "Телефон батареясы"
 
-#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
+#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:96
 #, c-format
 msgid ""
 "\n"
@@ -675,11 +720,11 @@ msgid ""
 "\n"
 msgstr "\nXfce Power Manager %s\n\nXfce Goodies жобасының бөлігі\nhttp://goodies.xfce.org\n\nGNU GPL аясында таратылады.\n\n"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:379
 msgid "True"
 msgstr "Ақиқат"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
+#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:379
 msgid "False"
 msgstr "Жалған"
 
@@ -789,7 +834,7 @@ msgstr "Баптау сұхбатын көрсету"
 msgid "Quit any running xfce power manager"
 msgstr "Барлық қосулы xfce power manager көшірмелерін сөндіреді"
 
-#: ../src/xfpm-main.c:353 ../src/xfpm-power-info.c:960
+#: ../src/xfpm-main.c:353 ../src/xfpm-power-info.c:897
 msgid "Version information"
 msgstr "Нұсқа ақпараты"
 
@@ -817,209 +862,200 @@ msgid "Invalid cookie"
 msgstr "Қате cookie"
 
 #. TRANSLATORS: the command line was not provided
-#: ../src/xfpm-power-info.c:118
+#: ../src/xfpm-power-info.c:121
 msgid "No data"
 msgstr "Деректер жоқ"
 
 #. TRANSLATORS: kernel module, usually a device driver
-#: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
+#: ../src/xfpm-power-info.c:128 ../src/xfpm-power-info.c:133
 msgid "Kernel module"
 msgstr "Ядро модулі"
 
 #. TRANSLATORS: kernel housekeeping
-#: ../src/xfpm-power-info.c:135
+#: ../src/xfpm-power-info.c:138
 msgid "Kernel core"
 msgstr "Ядро өзегі"
 
 #. TRANSLATORS: interrupt between processors
-#: ../src/xfpm-power-info.c:140
+#: ../src/xfpm-power-info.c:143
 msgid "Interprocessor interrupt"
 msgstr "Үрдісаралық үзу"
 
 #. TRANSLATORS: unknown interrupt
-#: ../src/xfpm-power-info.c:145
+#: ../src/xfpm-power-info.c:148
 msgid "Interrupt"
 msgstr "Үзу"
 
 #. TRANSLATORS: the keyboard and mouse device event
-#: ../src/xfpm-power-info.c:189
+#: ../src/xfpm-power-info.c:192
 msgid "PS/2 keyboard/mouse/touchpad"
 msgstr "PS/2 пернетақта/тышқан/тачпад"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
-#: ../src/xfpm-power-info.c:192
+#: ../src/xfpm-power-info.c:195
 msgid "ACPI"
 msgstr "ACPI"
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
-#: ../src/xfpm-power-info.c:195
+#: ../src/xfpm-power-info.c:198
 msgid "Serial ATA"
 msgstr "Serial ATA"
 
 #. TRANSLATORS: this is the old-style ATA interface
-#: ../src/xfpm-power-info.c:198
+#: ../src/xfpm-power-info.c:201
 msgid "ATA host controller"
 msgstr "ATA host controller"
 
 #. TRANSLATORS: 802.11 wireless adaptor
-#: ../src/xfpm-power-info.c:201
+#: ../src/xfpm-power-info.c:204
 msgid "Intel wireless adaptor"
 msgstr "Intel сымсыз адапторы"
 
 #. TRANSLATORS: a timer is something that fires periodically
-#: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
-#: ../src/xfpm-power-info.c:212 ../src/xfpm-power-info.c:215
-#: ../src/xfpm-power-info.c:218
+#: ../src/xfpm-power-info.c:209 ../src/xfpm-power-info.c:212
+#: ../src/xfpm-power-info.c:215 ../src/xfpm-power-info.c:218
+#: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Timer %s"
 msgstr "Таймер %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
-#: ../src/xfpm-power-info.c:221
+#: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "Sleep %s"
 msgstr "Ұйықтау %s"
 
 #. TRANSLATORS: this is a new realtime task
-#: ../src/xfpm-power-info.c:224
+#: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "New task %s"
 msgstr "Жаңа тапсырма %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
-#: ../src/xfpm-power-info.c:227
+#: ../src/xfpm-power-info.c:230
 #, c-format
 msgid "Wait %s"
 msgstr "Күту %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
-#: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
+#: ../src/xfpm-power-info.c:233 ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Work queue %s"
 msgstr "Жұмыс кезегі %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
-#: ../src/xfpm-power-info.c:236
+#: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "Network route flush %s"
 msgstr "Желілік баптауларды тастау %s"
 
 #. TRANSLATORS: activity on the USB bus
-#: ../src/xfpm-power-info.c:239
+#: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "USB activity %s"
 msgstr "USB белсенділігі %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
-#: ../src/xfpm-power-info.c:242
+#: ../src/xfpm-power-info.c:245
 #, c-format
 msgid "Wakeup %s"
 msgstr "Оянулар %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
-#: ../src/xfpm-power-info.c:245
+#: ../src/xfpm-power-info.c:248
 msgid "Local interrupts"
 msgstr "Жергілікті үзулер"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
-#: ../src/xfpm-power-info.c:248
+#: ../src/xfpm-power-info.c:251
 msgid "Rescheduling interrupts"
 msgstr "Үзулерді қайта жоспарлау"
 
-#: ../src/xfpm-power-info.c:331
+#: ../src/xfpm-power-info.c:326
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: ../src/xfpm-power-info.c:338
+#: ../src/xfpm-power-info.c:333
 msgid "Value"
 msgstr "Мәні"
 
-#: ../src/xfpm-power-info.c:348
+#: ../src/xfpm-power-info.c:343
 msgid "Device"
 msgstr "Құрылғы"
 
-#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:766
+#: ../src/xfpm-power-info.c:370 ../src/xfpm-power-info.c:702
 msgid "Type"
 msgstr "Түрі"
 
-#: ../src/xfpm-power-info.c:375
+#: ../src/xfpm-power-info.c:378
 msgid "PowerSupply"
 msgstr "Қоректі беру"
 
-#: ../src/xfpm-power-info.c:393
+#: ../src/xfpm-power-info.c:390
 msgid "Model"
 msgstr "Модель"
 
-#: ../src/xfpm-power-info.c:407
+#: ../src/xfpm-power-info.c:398
 msgid "Technology"
 msgstr "Технология"
 
-#: ../src/xfpm-power-info.c:420
+#: ../src/xfpm-power-info.c:409
 msgid "Energy percent"
 msgstr "Энергия пайызы"
 
-#. TRANSLATORS: Unit here is What hour
-#: ../src/xfpm-power-info.c:428 ../src/xfpm-power-info.c:442
-#: ../src/xfpm-power-info.c:456
+#. TRANSLATORS: Unit here is Watt hour
+#: ../src/xfpm-power-info.c:419 ../src/xfpm-power-info.c:432
+#: ../src/xfpm-power-info.c:445
 msgid "Wh"
 msgstr "Вт*сағ"
 
-#: ../src/xfpm-power-info.c:434
+#: ../src/xfpm-power-info.c:422
 msgid "Energy full design"
 msgstr "Сыйымдылығы"
 
-#: ../src/xfpm-power-info.c:448
+#: ../src/xfpm-power-info.c:435
 msgid "Energy full"
 msgstr "Энергиясы толық"
 
-#: ../src/xfpm-power-info.c:462
+#: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
 msgstr "Энергиясы жоқ"
 
-#. TRANSLATORS: Unit here is volt
-#: ../src/xfpm-power-info.c:470
+#. TRANSLATORS: Unit here is Volt
+#: ../src/xfpm-power-info.c:458
 msgid "V"
 msgstr "V"
 
-#: ../src/xfpm-power-info.c:475
+#: ../src/xfpm-power-info.c:461
 msgid "Voltage"
 msgstr "Вольтаж"
 
-#. Percentage
-#: ../src/xfpm-power-info.c:483
-msgid "%"
-msgstr "%"
-
-#: ../src/xfpm-power-info.c:488
-msgid "Percentage"
-msgstr "Пайызы"
-
-#: ../src/xfpm-power-info.c:505
+#: ../src/xfpm-power-info.c:472
 msgid "Vendor"
 msgstr "Өндіруші"
 
-#: ../src/xfpm-power-info.c:522
+#: ../src/xfpm-power-info.c:482
 msgid "Serial"
 msgstr "Нөмірі"
 
-#: ../src/xfpm-power-info.c:758
+#: ../src/xfpm-power-info.c:694
 msgid "Processor"
 msgstr "Процессор"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
-#: ../src/xfpm-power-info.c:775
+#: ../src/xfpm-power-info.c:711
 msgid "PID"
 msgstr "PID"
 
-#: ../src/xfpm-power-info.c:781
+#: ../src/xfpm-power-info.c:717
 msgid "Wakeups"
 msgstr "Оянулар"
 
-#: ../src/xfpm-power-info.c:787
+#: ../src/xfpm-power-info.c:723
 msgid "Command"
 msgstr "Команда"
 
-#: ../src/xfpm-power-info.c:793
+#: ../src/xfpm-power-info.c:729
 msgid "Details"
 msgstr "Көбірек білу"
 
@@ -1036,7 +1072,7 @@ msgstr "LCD жарықтылығын басқару"
 msgid "No device found"
 msgstr "Құрылғы табылмады"
 
-#: ../panel-plugins/brightness/brightness-button.c:646
+#: ../panel-plugins/brightness/brightness-button.c:645
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
 msgstr "Жарықтылық плагині"
