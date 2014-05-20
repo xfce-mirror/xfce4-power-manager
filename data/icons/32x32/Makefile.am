@@ -55,6 +55,12 @@ Data_DATA =				\
 	xfpm-primary-100-charging.png	\
 	xfpm-primary-charged.png		\
 	xfpm-primary-missing.png		\
+	xfpm-tablet-000.png		\
+	xfpm-tablet-020.png		\
+	xfpm-tablet-040.png		\
+	xfpm-tablet-060.png		\
+	xfpm-tablet-080.png		\
+	xfpm-tablet-100.png		\
 	xfpm-ups-000.png		\
 	xfpm-ups-020.png		\
 	xfpm-ups-040.png		\
