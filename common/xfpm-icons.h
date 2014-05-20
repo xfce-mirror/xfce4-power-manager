@@ -38,15 +38,15 @@ G_BEGIN_DECLS
 #define XFPM_UPS_ICON_PREFIX			"xfpm-ups-"
 #define XFPM_MOUSE_ICON_PREFIX			"xfpm-mouse-"
 #define XFPM_KBD_ICON_PREFIX			"xfpm-keyboard-"
-#define XFPM_CAMERA_ICON_PREFIX			"xfpm-camera-"
 #define XFPM_PDA_ICON_PREFIX			"xfpm-pda-"
 #define XFPM_PHONE_ICON_PREFIX			"xfpm-phone-"
-#define XFPM_KBD_MOUSE_ICON_PREFIX		"xfpm-keyboard-mouse-"
+#define XFPM_MEDIA_PLAYER_PREFIX        "xfpm-mediaplayer-"
+#define XFPM_MONITOR_PREFIX             "xfpm-monitor-"
 
 #define XFPM_DISPLAY_BRIGHTNESS_ICON	        "xfpm-brightness-lcd"
-#define XFPM_DISPLAY_BRIGHTNESS_INVALID_ICON	"xfpm-brightness-lcd-invalid" /* When no hw found */
-#define XFPM_HIBERNATE_ICON			"xfpm-hibernate"
-#define XFPM_SUSPEND_ICON			"xfpm-suspend"
+#define XFPM_DISPLAY_BRIGHTNESS_INVALID_ICON	"xfpm-brightness-lcd-missing" /* When no hw found */
+#define XFPM_HIBERNATE_ICON                    "xfpm-hibernate"
+#define XFPM_SUSPEND_ICON                      "xfpm-suspend"
 
 G_END_DECLS
 

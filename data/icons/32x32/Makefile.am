@@ -61,5 +61,5 @@ Data_DATA =				\
 	xfpm-ups-060.png		\
 	xfpm-ups-080.png		\
 	xfpm-ups-100.png		\
-	xfpm-brightness-lcd-invalid.png	\
+	xfpm-brightness-lcd-missing.png	\
 	xfpm-brightness-lcd.png

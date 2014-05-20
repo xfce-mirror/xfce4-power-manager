@@ -31,101 +31,8 @@
 
 #include "xfpm-icons.h"
 
-/**
- * xfpm_power_translate_device_type:
- *
- **/
-const gchar *
-xfpm_power_translate_device_type (guint type)
-{
-    switch (type)
-    {
-        case UP_DEVICE_KIND_BATTERY:
-            return _("Battery");
-        case UP_DEVICE_KIND_UPS:
-            return _("UPS");
-        case UP_DEVICE_KIND_LINE_POWER:
-            return _("Line power");
-        case UP_DEVICE_KIND_MOUSE:
-            return _("Mouse");
-        case UP_DEVICE_KIND_KEYBOARD:
-            return _("Keyboard");
-	case UP_DEVICE_KIND_MONITOR:
-	    return _("Monitor");
-	case UP_DEVICE_KIND_PDA:
-	    return _("PDA");
-	case UP_DEVICE_KIND_PHONE:
-	    return _("Phone");
-	case UP_DEVICE_KIND_TABLET:
-	    return _("Tablet");
-	case UP_DEVICE_KIND_COMPUTER:
-	    return _("Computer");
-	case UP_DEVICE_KIND_UNKNOWN:
-	    return _("Unknown");
-    }
 
-    return _("Battery");
-}
 
-/**
- * xfpm_power_translate_technology:
- *
- **/
-const gchar *xfpm_power_translate_technology (guint value)
-{
-    switch (value)
-    {
-        case 0:
-            return _("Unknown");
-        case 1:
-            return _("Lithium ion");
-        case 2:
-            return _("Lithium polymer");
-        case 3:
-            return _("Lithium iron phosphate");
-        case 4:
-            return _("Lead acid");
-        case 5:
-            return _("Nickel cadmium");
-        case 6:
-            return _("Nickel metal hybride");
-    }
-
-    return _("Unknown");
-}
-
-const gchar *xfpm_power_get_icon_name (guint device_type)
-{
-    switch (device_type)
-    {
-        case UP_DEVICE_KIND_BATTERY:
-            return XFPM_BATTERY_ICON;
-        case UP_DEVICE_KIND_UPS:
-            return XFPM_UPS_ICON;
-        case UP_DEVICE_KIND_LINE_POWER:
-            return XFPM_AC_ADAPTER_ICON;
-        case UP_DEVICE_KIND_MOUSE:
-            return XFPM_MOUSE_ICON;
-        case UP_DEVICE_KIND_KEYBOARD:
-            return XFPM_KBD_ICON;
-	case UP_DEVICE_KIND_MONITOR:
-	    return "monitor";
-	case UP_DEVICE_KIND_COMPUTER:
-	    return "monitor";		/* fixme */
-	case UP_DEVICE_KIND_PDA:
-	    return XFPM_PDA_ICON;
-	case UP_DEVICE_KIND_PHONE:
-	    return XFPM_PHONE_ICON;
-	case UP_DEVICE_KIND_TABLET:
-	    return XFPM_PHONE_ICON;
-	case UP_DEVICE_KIND_MEDIA_PLAYER:
-	    return XFPM_PHONE_ICON;	/* fixme */
-	case UP_DEVICE_KIND_UNKNOWN:
-	    return XFPM_BATTERY_ICON;
-    }
-
-    return XFPM_BATTERY_ICON;
-}
 
 const gchar * G_GNUC_CONST
 xfpm_battery_get_icon_index (UpDeviceKind type, guint percent)
@@ -136,11 +43,11 @@ xfpm_battery_get_icon_index (UpDeviceKind type, guint percent)
     }
     else if (percent < 30)
     {
-        return ( (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS) ? "020" : "030");
+        return "020";
     }
     else if (percent < 50)
     {
-        return ( (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS ) ? "040" : "030");
+        return "040";
     }
     else if (percent < 70)
     {
@@ -148,7 +55,7 @@ xfpm_battery_get_icon_index (UpDeviceKind type, guint percent)
     }
     else if (percent < 90)
     {
-        return ((type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS) ? "080" : "060");
+        return "080";
     }
 
     return "100";
@@ -201,6 +108,9 @@ xfpm_battery_get_time_string (guint seconds)
 gchar *
 xfpm_battery_get_icon_prefix_device_enum_type (UpDeviceKind type)
 {
+    /* mapped from
+     * http://cgit.freedesktop.org/upower/tree/libupower-glib/up-types.h
+     */
     if ( type == UP_DEVICE_KIND_BATTERY )
     {
 	return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
@@ -220,6 +130,31 @@ xfpm_battery_get_icon_prefix_device_enum_type (UpDeviceKind type)
     else if ( type == UP_DEVICE_KIND_PHONE )
     {
 	return g_strdup (XFPM_PHONE_ICON_PREFIX);
+    }
+    else if ( type == UP_DEVICE_KIND_PDA )
+    {
+	return g_strdup (XFPM_PDA_ICON_PREFIX);
+    }
+    else if ( type == UP_DEVICE_KIND_MEDIA_PLAYER )
+    {
+	return g_strdup (XFPM_MEDIA_PLAYER_PREFIX);
+    }
+    else if ( type == UP_DEVICE_KIND_LINE_POWER )
+    {
+	return g_strdup (XFPM_AC_ADAPTER_ICON);
+    }
+    else if ( type == UP_DEVICE_KIND_MONITOR )
+    {
+	return g_strdup (XFPM_MONITOR_PREFIX);
+    }
+    else if ( type == UP_DEVICE_KIND_TABLET )
+    {
+	/* Tablet ... pda, same thing :) */
+	return g_strdup (XFPM_PDA_ICON_PREFIX);
+    }
+    else if ( type == UP_DEVICE_KIND_COMPUTER )
+    {
+	return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
     }
 
     return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
