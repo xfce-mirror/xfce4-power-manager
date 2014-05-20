@@ -5,6 +5,12 @@ Datadir = $(datadir)/icons/hicolor/32x32/status
 
 Data_DATA =				\
 	xfpm-ac-adapter.png		\
+	xfpm-computer-000.png \
+	xfpm-computer-020.png \
+	xfpm-computer-040.png \
+	xfpm-computer-060.png \
+	xfpm-computer-080.png \
+	xfpm-computer-100.png \
 	xfpm-keyboard-000.png		\
 	xfpm-keyboard-020.png		\
 	xfpm-keyboard-040.png		\
