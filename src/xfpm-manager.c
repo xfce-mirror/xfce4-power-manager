@@ -76,6 +76,7 @@ static gboolean xfpm_manager_quit (XfpmManager *manager);
 struct XfpmManagerPrivate
 {
     DBusGConnection    *session_bus;
+    DBusGConnection    *system_bus;
 
     XfceSMClient       *client;
 
@@ -98,6 +99,8 @@ struct XfpmManagerPrivate
 
     gboolean	        inhibited;
     gboolean	        session_managed;
+
+    gint                inhibit_fd;
 };
 
 G_DEFINE_TYPE (XfpmManager, xfpm_manager, G_TYPE_OBJECT)
@@ -131,6 +134,9 @@ xfpm_manager_finalize (GObject *object)
 
     if ( manager->priv->session_bus )
 	dbus_g_connection_unref (manager->priv->session_bus);
+
+	if ( manager->priv->system_bus )
+	dbus_g_connection_unref (manager->priv->system_bus);
 
     g_object_unref (manager->priv->power);
     g_object_unref (manager->priv->button);
@@ -174,6 +180,10 @@ xfpm_manager_quit (XfpmManager *manager)
     XFPM_DEBUG ("Exiting");
 
     xfpm_manager_release_names (manager);
+
+    if (manager->priv->inhibit_fd >= 0)
+        close (manager->priv->inhibit_fd);
+
     gtk_main_quit ();
     return TRUE;
 }
@@ -319,7 +329,17 @@ static void
 xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManager *manager)
 {
     XfpmLidTriggerAction action;
-    gboolean on_battery;
+    gboolean on_battery, logind_handle_lid_switch;
+
+    if ( LOGIND_RUNNING() )
+    {
+        g_object_get (G_OBJECT (manager->priv->conf),
+              LOGIND_HANDLE_LID_SWITCH, &logind_handle_lid_switch,
+              NULL);
+
+        if (!logind_handle_lid_switch)
+            return;
+    }
 
     g_object_get (G_OBJECT (power),
 		  "on-battery", &on_battery,
@@ -487,6 +507,124 @@ xfpm_manager_set_idle_alarm (XfpmManager *manager)
 
 }
 
+static gchar*
+xfpm_manager_get_systemd_events(XfpmManager *manager)
+{
+    GSList *events = NULL;
+    gchar *what = "";
+    gboolean handle_power_key, handle_suspend_key, handle_hibernate_key, handle_lid_switch;
+
+    g_object_get (G_OBJECT (manager->priv->conf),
+        LOGIND_HANDLE_POWER_KEY, &handle_power_key,
+        LOGIND_HANDLE_SUSPEND_KEY, &handle_suspend_key,
+        LOGIND_HANDLE_HIBERNATE_KEY, &handle_hibernate_key,
+        LOGIND_HANDLE_LID_SWITCH, &handle_lid_switch,
+        NULL);
+
+    if (handle_power_key)
+        events = g_slist_append(events, "handle-power-key");
+    if (handle_suspend_key)
+        events = g_slist_append(events, "handle-suspend-key");
+    if (handle_hibernate_key)
+        events = g_slist_append(events, "handle-hibernate-key");
+    if (handle_lid_switch)
+        events = g_slist_append(events, "handle-lid-switch");
+
+    while (events != NULL)
+    {
+        if ( g_strcmp0(what, "") == 0 )
+            what = g_strdup( (gchar *) events->data );
+        else
+            what = g_strconcat(what, ":", (gchar *) events->data, NULL);
+        events = g_slist_next(events);
+    }
+    g_slist_free(events);
+
+    return what;
+}
+
+static gint
+xfpm_manager_inhibit_sleep_systemd (XfpmManager *manager)
+{
+    DBusConnection *bus_connection;
+    DBusMessage *message = NULL, *reply = NULL;
+    DBusError error;
+    gint fd = -1;
+    const char *what = g_strdup(xfpm_manager_get_systemd_events(manager));
+    const char *who = "xfce4-power-manager";
+    const char *why = "xfce4-power-manager handles these events";
+    const char *mode = "block";
+
+    if (g_strcmp0(what, "") == 0)
+        return -1;
+
+    XFPM_DEBUG ("Inhibiting systemd sleep: %s", what);
+
+    bus_connection = dbus_g_connection_get_connection (manager->priv->system_bus);
+    if (!xfpm_dbus_name_has_owner (bus_connection, "org.freedesktop.login1"))
+        return -1;
+
+    dbus_error_init (&error);
+
+    message = dbus_message_new_method_call ("org.freedesktop.login1",
+                                            "/org/freedesktop/login1",
+                                            "org.freedesktop.login1.Manager",
+                                            "Inhibit");
+
+    if (!message)
+    {
+        g_warning ("Unable to call Inhibit()");
+        goto done;
+    }
+
+
+    if (!dbus_message_append_args (message,
+                            DBUS_TYPE_STRING, &what,
+                            DBUS_TYPE_STRING, &who,
+                            DBUS_TYPE_STRING, &why,
+                            DBUS_TYPE_STRING, &mode,
+                            DBUS_TYPE_INVALID))
+    {
+        g_warning ("Unable to call Inhibit()");
+        goto done;
+    }
+
+
+    reply = dbus_connection_send_with_reply_and_block (bus_connection, message, -1, &error);
+    if (!reply)
+    {
+        g_warning ("Unable to inhibit systemd sleep: %s", error.message);
+        goto done;
+    }
+
+    if (!dbus_message_get_args (reply, &error,
+                                DBUS_TYPE_UNIX_FD, &fd,
+                                DBUS_TYPE_INVALID))
+    {
+        g_warning ("Inhibit() reply parsing failed: %s", error.message);
+    }
+
+done:
+
+    if (message)
+        dbus_message_unref (message);
+    if (reply)
+        dbus_message_unref (reply);
+    dbus_error_free (&error);
+
+    return fd;
+}
+
+static void
+xfpm_manager_systemd_events_changed (XfpmManager *manager)
+{
+    if (manager->priv->inhibit_fd >= 0)
+        close (manager->priv->inhibit_fd);
+
+    if (manager->priv->system_bus)
+        manager->priv->inhibit_fd = xfpm_manager_inhibit_sleep_systemd (manager);
+}
+
 XfpmManager *
 xfpm_manager_new (DBusGConnection *bus, const gchar *client_id)
 {
@@ -536,6 +674,8 @@ xfpm_manager_new (DBusGConnection *bus, const gchar *client_id)
 
 void xfpm_manager_start (XfpmManager *manager)
 {
+    GError *error = NULL;
+
     if ( !xfpm_manager_reserve_names (manager) )
 	goto out;
 
@@ -559,6 +699,17 @@ void xfpm_manager_start (XfpmManager *manager)
     manager->priv->inhibit = xfpm_inhibit_new ();
     manager->priv->idle = egg_idletime_new ();
 
+    /* Don't allow systemd to handle power/suspend/hibernate buttons
+     * and lid-switch */
+    manager->priv->system_bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+    if (manager->priv->system_bus)
+        manager->priv->inhibit_fd = xfpm_manager_inhibit_sleep_systemd (manager);
+    else
+    {
+        g_warning ("Unable connect to system bus: %s", error->message);
+        g_clear_error (&error);
+    }
+
     g_signal_connect (manager->priv->idle, "alarm-expired",
 		      G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager);
 
@@ -567,6 +718,18 @@ void xfpm_manager_start (XfpmManager *manager)
 
     g_signal_connect_swapped (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
 			      G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager);
+
+    g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_POWER_KEY,
+			      G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
+
+    g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_SUSPEND_KEY,
+			      G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
+
+    g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_HIBERNATE_KEY,
+			      G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
+
+    g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
+			      G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
 
     xfpm_manager_set_idle_alarm (manager);
 

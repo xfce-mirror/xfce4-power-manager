@@ -40,9 +40,12 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
+#include <xfconf/xfconf.h>
+
 #include "xfpm-dbus.h"
 #include "xfpm-debug.h"
 #include "xfpm-common.h"
+#include "xfpm-config.h"
 
 #include "xfce-power-manager-dbus-client.h"
 #include "xfpm-manager.h"
@@ -194,95 +197,15 @@ xfpm_dump_remote (DBusGConnection *bus)
     g_hash_table_destroy (hash);
 }
 
-static gint
-xfpm_inhibit_sleep_systemd (DBusGConnection *bus)
-{
-    DBusConnection *bus_connection;
-    DBusMessage *message = NULL, *reply = NULL;
-    DBusError error;
-    gint fd = -1;
-    const char *what = "handle-power-key:handle-suspend-key:handle-hibernate-key:handle-lid-switch";
-    const char *who = "xfce4-power-manager";
-    const char *why = "xfce4-power-manager handles these events";
-    const char *mode = "block";
-
-    bus_connection = dbus_g_connection_get_connection (bus);
-    if (!xfpm_dbus_name_has_owner (bus_connection, "org.freedesktop.login1"))
-        return -1;
-
-    dbus_error_init (&error);
-
-    message = dbus_message_new_method_call ("org.freedesktop.login1",
-                                            "/org/freedesktop/login1",
-                                            "org.freedesktop.login1.Manager",
-                                            "Inhibit");
-
-    if (!message)
-    {
-        g_warning ("Unable to call Inhibit()");
-        goto done;
-    }
-
-
-    if (!dbus_message_append_args (message,
-                            DBUS_TYPE_STRING, &what,
-                            DBUS_TYPE_STRING, &who,
-                            DBUS_TYPE_STRING, &why,
-                            DBUS_TYPE_STRING, &mode,
-                            DBUS_TYPE_INVALID))
-    {
-        g_warning ("Unable to call Inhibit()");
-        goto done;
-    }
-
-
-    reply = dbus_connection_send_with_reply_and_block (bus_connection, message, -1, &error);
-    if (!reply)
-    {
-        g_warning ("Unable to inhibit systemd sleep: %s", error.message);
-        goto done;
-    }
-
-    if (!dbus_message_get_args (reply, &error,
-                                DBUS_TYPE_UNIX_FD, &fd,
-                                DBUS_TYPE_INVALID))
-    {
-        g_warning ("Inhibit() reply parsing failed: %s", error.message);
-    }
-
-done:
-
-    if (message)
-        dbus_message_unref (message);
-    if (reply)
-        dbus_message_unref (reply);
-    dbus_error_free (&error);
-
-    return fd;
-}
-
 static void G_GNUC_NORETURN
 xfpm_start (DBusGConnection *bus, const gchar *client_id, gboolean dump)
 {
-    DBusGConnection *system_bus;
     XfpmManager *manager;
     GError *error = NULL;
-    gint inhibit_fd = -1;
     
     XFPM_DEBUG ("Starting the power manager");
     
     manager = xfpm_manager_new (bus, client_id);
-
-    /* Don't allow systemd to handle power/suspend/hibernate buttons
-     * and lid-switch */
-    system_bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
-    if (system_bus)
-        inhibit_fd = xfpm_inhibit_sleep_systemd (system_bus);
-    else
-    {
-        g_warning ("Unable connect to system bus: %s", error->message);
-        g_clear_error (&error);
-    }
 
     if ( xfce_posix_signal_handler_init (&error)) 
     {
@@ -318,9 +241,6 @@ xfpm_start (DBusGConnection *bus, const gchar *client_id, gboolean dump)
     gtk_main ();
     
     g_object_unref (manager);
-
-    if (inhibit_fd >= 0)
-        close (inhibit_fd);
 
     exit (EXIT_SUCCESS);
 }

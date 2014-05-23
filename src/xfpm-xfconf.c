@@ -87,6 +87,10 @@ enum
 #ifdef WITH_NETWORK_MANAGER
     PROP_NETWORK_MANAGER_SLEEP,
 #endif
+    PROP_LOGIND_HANDLE_POWER_KEY,
+    PROP_LOGIND_HANDLE_SUSPEND_KEY,
+    PROP_LOGIND_HANDLE_HIBERNATE_KEY,
+    PROP_LOGIND_HANDLE_LID_SWITCH,
     N_PROPERTIES
 };
 
@@ -575,6 +579,46 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            TRUE,
                                                            G_PARAM_READWRITE));
 #endif
+
+    /**
+     * XfpmXfconf::logind-handle-power-key
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_LOGIND_HANDLE_POWER_KEY,
+                                     g_param_spec_boolean (LOGIND_HANDLE_POWER_KEY,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::logind-handle-suspend-key
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_LOGIND_HANDLE_SUSPEND_KEY,
+                                     g_param_spec_boolean (LOGIND_HANDLE_SUSPEND_KEY,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::logind-handle-hibernate-key
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_LOGIND_HANDLE_HIBERNATE_KEY,
+                                     g_param_spec_boolean (LOGIND_HANDLE_HIBERNATE_KEY,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::logind-handle-lid-switch
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_LOGIND_HANDLE_LID_SWITCH,
+                                     g_param_spec_boolean (LOGIND_HANDLE_LID_SWITCH,
+                                                           NULL, NULL,
+                                                           TRUE,
+                                                           G_PARAM_READWRITE));
 
     g_type_class_add_private (klass, sizeof (XfpmXfconfPrivate));
 }

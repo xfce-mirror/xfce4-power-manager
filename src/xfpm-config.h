@@ -83,6 +83,11 @@ G_BEGIN_DECLS
 #define         SPIN_DOWN_ON_BATTERY_TIMEOUT	"spin-down-on-battery-timeout"
 
 #define         NETWORK_MANAGER_SLEEP           "network-manager-sleep"
+
+#define     LOGIND_HANDLE_POWER_KEY     "logind-handle-power-key"
+#define     LOGIND_HANDLE_SUSPEND_KEY   "logind-handle-suspend-key"
+#define     LOGIND_HANDLE_HIBERNATE_KEY "logind-handle-hibernate-key"
+#define     LOGIND_HANDLE_LID_SWITCH    "logind-handle-lid-switch"
 G_END_DECLS
 
 #endif /* __XFPM_CONFIG_H */
