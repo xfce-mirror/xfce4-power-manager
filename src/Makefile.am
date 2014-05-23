@@ -1,5 +1,6 @@
 bin_PROGRAMS = xfce4-power-manager		\
-	       xfce4-power-information
+	       xfce4-power-information      \
+	       xfce4-pm-helper
 
 xfce4_power_manager_SOURCES =                   \
 	$(BUILT_SOURCES)			\
@@ -41,7 +42,9 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-polkit.c				\
 	xfpm-polkit.h				\
 	xfpm-errors.c				\
-	xfpm-errors.h
+	xfpm-errors.h				\
+	xfpm-suspend.c				\
+	xfpm-suspend.h
 
 xfce4_power_manager_CFLAGS =                    \
 	-I$(top_srcdir)                         \
@@ -50,6 +53,7 @@ xfce4_power_manager_CFLAGS =                    \
 	-DLOCALEDIR=\"$(localedir)\"            \
 	-DG_LOG_DOMAIN=\"xfce4-power-manager\"  \
 	-DSYSCONFDIR=\"$(sysconfdir)\"		\
+	-DXFPM_SUSPEND_HELPER_CMD=\"$(prefix)/bin/xfce4-pm-helper\" \
 	$(GOBJECT_CFLAGS)                       \
 	$(GTHREAD_CFLAGS)                       \
 	$(DBUS_GLIB_CFLAGS)                     \
@@ -107,6 +111,16 @@ xfce4_power_information_LDADD =			\
 	$(UPOWER_LIBS)                          \
 	$(LIBXFCE4UI_LIBS)			\
 	$(top_builddir)/libdbus/libxfpmdbus.la
+
+xfce4_pm_helper_SOURCES =  \
+	xfpm-pm-helper.c
+
+xfce4_pm_helper_CFLAGS =   \
+	-I$(top_srcdir)        \
+	$(LIBXFCE4UTIL_CFLAGS)
+
+xfce4_pm_helper_LDFLAGS = \
+	$(LIBXFCE4UTIL_LIBS)
 
 if ENABLE_POLKIT
 

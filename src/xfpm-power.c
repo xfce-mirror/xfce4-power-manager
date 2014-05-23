@@ -26,6 +26,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 #include <upower.h>
@@ -52,6 +56,7 @@
 #include "xfpm-enum-types.h"
 #include "egg-idletime.h"
 #include "xfpm-systemd.h"
+#include "xfpm-suspend.h"
 
 
 static void xfpm_power_finalize     (GObject *object);
@@ -65,6 +70,8 @@ static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
 
 static void xfpm_power_refresh_adaptor_visible (XfpmPower *power);
+
+static gboolean xfpm_power_prompt_password (XfpmPower *power);
 
 #define XFPM_POWER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_POWER, XfpmPowerPrivate))
@@ -98,6 +105,8 @@ struct XfpmPowerPrivate
 #endif
     gboolean	     auth_suspend;
     gboolean	     auth_hibernate;
+
+    XfpmSuspend     *suspend;
 
     /* Properties */
     gboolean	     on_low_battery;
@@ -220,8 +229,7 @@ xfpm_power_get_properties (XfpmPower *power)
     gboolean lid_is_closed;
     gboolean lid_is_present;
 
-    /* TODO: newer versions of upower don't have that => logind handles it */
-#if !UP_CHECK_VERSION(0, 9, 0)
+#if !UP_CHECK_VERSION(0, 99, 0)
     power->priv->can_suspend = up_client_get_can_suspend(power->priv->upower);
     power->priv->can_hibernate = up_client_get_can_hibernate(power->priv->upower);
 #else
@@ -236,8 +244,8 @@ xfpm_power_get_properties (XfpmPower *power)
     }
     else
     {
-	g_warning("Error: using upower >= 0.9.0 but logind is not running");
-	g_warning("       suspend / hibernate will not work!");
+	power->priv->can_suspend   = xfpm_suspend_can_suspend ();
+        power->priv->can_hibernate = xfpm_suspend_can_hibernate ();
     }
 #endif
     g_object_get (power->priv->upower,
@@ -303,6 +311,29 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 	    return;
     }
 
+/* Upower dropped support for doing anything power related */
+#if UP_CHECK_VERSION(0, 99, 0)
+    if ( !LOGIND_RUNNING () )
+    {
+	/* See if we require a password for sudo to call suspend */
+	if ( xfpm_suspend_password_required (power->priv->suspend) )
+	{
+	    if ( !xfpm_power_prompt_password (power) )
+	    {
+		const gchar *icon_name;
+		if ( !g_strcmp0 (sleep_time, "Hibernate") )
+		    icon_name = XFPM_HIBERNATE_ICON;
+		else
+		    icon_name = XFPM_SUSPEND_ICON;
+
+		xfpm_power_report_error (power, _("Incorrect password entered"), icon_name);
+
+		return;
+	    }
+	}
+    }
+#endif
+
     g_signal_emit (G_OBJECT (power), signals [SLEEPING], 0);
 
 #ifdef WITH_NETWORK_MANAGER
@@ -352,7 +383,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
     else
     {
-#if !UP_CHECK_VERSION(0, 9, 0)
+#if !UP_CHECK_VERSION(0, 99, 0)
 	if (!g_strcmp0 (sleep_time, "Hibernate"))
 	{
 	    up_client_hibernate_sync(power->priv->upower, NULL, &error);
@@ -362,8 +393,16 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 	    up_client_suspend_sync(power->priv->upower, NULL, &error);
 	}
 #else
-	g_warning("Error: using upower >= 0.9.0 but logind is not running");
-	g_warning("       suspend / hibernate will not work!");
+	if (!g_strcmp0 (sleep_time, "Hibernate"))
+        {
+            if (xfpm_suspend_sudo_get_state (power->priv->suspend) == SUDO_AVAILABLE)
+                xfpm_suspend_sudo_try_action (power->priv->suspend, XFPM_HIBERNATE, &error);
+        }
+        else
+        {
+            if (xfpm_suspend_sudo_get_state (power->priv->suspend) == SUDO_AVAILABLE)
+                xfpm_suspend_sudo_try_action (power->priv->suspend, XFPM_SUSPEND, &error);
+        }
 #endif
     }
 
@@ -1361,6 +1400,7 @@ xfpm_power_init (XfpmPower *power)
     power->priv->overall_state   = XFPM_BATTERY_CHARGE_OK;
     power->priv->critical_action_done = FALSE;
     power->priv->power_mode      = XFPM_POWER_MODE_NORMAL;
+    power->priv->suspend = xfpm_suspend_get ();
 
     power->priv->inhibit = xfpm_inhibit_new ();
     power->priv->notify  = xfpm_notify_new ();
@@ -1545,6 +1585,65 @@ XfpmPowerMode  xfpm_power_get_mode (XfpmPower *power)
 
     return power->priv->power_mode;
 }
+
+
+static gboolean
+xfpm_power_prompt_password (XfpmPower *power)
+{
+    GtkWidget *dialog = gtk_message_dialog_new (NULL,
+					        GTK_DIALOG_MODAL,
+						GTK_MESSAGE_OTHER,
+						GTK_BUTTONS_OK_CANCEL,
+						_("The requested operation requires elevated privileges.\t\n"
+						"Please enter your password."));
+    GtkWidget *content_area = gtk_dialog_get_content_area (GTK_DIALOG(dialog));
+    GtkWidget *password_entry = gtk_entry_new ();
+    GtkWidget *password_label, *hbox;
+    gint result;
+    XfpmPassState state = PASSWORD_FAILED;
+
+    /* Set the dialog's title */
+    gtk_window_set_title (GTK_WINDOW(dialog), _("xfce4-power-manager"));
+
+    /* setup password label */
+    password_label = gtk_label_new (_("Password:"));
+
+    /* Setup the password entry */
+    gtk_entry_set_visibility (GTK_ENTRY (password_entry), FALSE);
+    gtk_entry_set_max_length (GTK_ENTRY (password_entry), 1024);
+    gtk_entry_set_activates_default (GTK_ENTRY (password_entry), TRUE);
+
+    /* pack the password label and entry into an hbox */
+    hbox = gtk_hbox_new (FALSE, 4);
+    gtk_box_pack_start (GTK_BOX (hbox), password_label, FALSE, FALSE, 4);
+    gtk_box_pack_end   (GTK_BOX (hbox), password_entry, TRUE, TRUE, 4);
+
+    /* Add it to the dialog */
+    gtk_box_pack_end (GTK_BOX (content_area), hbox, TRUE, TRUE, 8);
+
+    /* show it */
+    gtk_widget_show (password_entry);
+    gtk_widget_show (password_label);
+    gtk_widget_show (hbox);
+
+    /* make enter default to ok */
+    gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+    /* Run the password prompt */
+    result = gtk_dialog_run (GTK_DIALOG(dialog));
+
+    if (result == GTK_RESPONSE_OK)
+    {
+	state = xfpm_suspend_sudo_send_password (power->priv->suspend, gtk_entry_get_text (GTK_ENTRY (password_entry)));
+	XFPM_DEBUG ("password state: %s", state == PASSWORD_FAILED ? "PASSWORD_FAILED" : "PASSWORD_SUCCEED");
+    }
+
+    gtk_widget_destroy (dialog);
+
+    return state == PASSWORD_FAILED ? FALSE : TRUE;
+}
+
+
 
 /*
  *

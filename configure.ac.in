@@ -35,9 +35,11 @@ LT_INIT([disable-static])
 #   Check for headers needed for standard interfaces   #
 # ==================================================== #
 AC_HEADER_STDC()
-AC_CHECK_HEADERS([errno.h signal.h stddef.h \
-                  string.h sys/stat.h sys/types.h sys/wait.h time.h \
-                  unistd.h])
+AC_CHECK_HEADERS([errno.h signal.h stddef.h sys/types.h memory.h stdlib.h \
+                  string.h sys/stat.h sys/types.h sys/wait.h time.h       \
+                  unistd.h sys/resource.h sys/socket.h sys/sysctl.h unistd.h])
+
+AC_CHECK_FUNCS([getpwuid setsid sigaction])
 
 # ===================================================== #
 # 		Check for libm	 			#
@@ -157,6 +159,34 @@ fi
 AM_CONDITIONAL([BUILD_PANEL_PLUGINS], [test "x$build_panel_plugins" = "xyes"])
 
 #=======================================================#
+#     Compile time default choice of backend            #
+#=======================================================#
+AC_ARG_WITH([backend],
+	    AS_HELP_STRING([--with-backend=<option>],
+			   [Default backend to use linux, freebsd, openbsd]))
+# default to a sane option
+AC_CANONICAL_HOST
+if test x$with_backend = x; then
+	AS_CASE([$host],
+		[*-linux*],   [with_backend=linux],
+		[*-*freebsd*], [with_backend=freebsd],
+		[*-openbsd*], [with_backend=openbsd])
+fi
+AC_DEFINE_UNQUOTED(BACKEND, "$with_backend", [backend])
+AC_SUBST(BACKEND, "$with_backend")
+
+if test x$with_backend = xlinux; then
+    AC_DEFINE(BACKEND_TYPE_LINUX, 1, [Linux suspend/hibernate backend])
+fi
+if test x$with_backend = xfreebsd; then
+    AC_DEFINE(BACKEND_TYPE_FREEBSD, 1, [FreeBSD suspend/hibernate backend])
+fi
+if test x$with_backend = xopenbsd; then
+    AC_DEFINE(BACKEND_TYPE_OPENBSD, 1, [OpenBSD suspend/hibernate backend])
+fi
+AC_MSG_RESULT([$ac_network_manager])
+
+#=======================================================#
 #              Check for debugging support              #
 #=======================================================#
 XDT_FEATURE_DEBUG
@@ -212,5 +242,6 @@ echo "POLKIT:			${polkit}"
 echo "DPMS:			${enable_dpms}"
 echo "Network manager:	${ac_network_manager}"
 echo "Build panel plugins:	${build_panel_plugins}"
+echo "Backend:		${with_backend}"
 echo "Debug:			${enable_debug}"
 echo "Configuration finished, type make to compile"
