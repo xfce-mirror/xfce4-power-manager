@@ -4,14 +4,16 @@
 # 
 # Translators:
 #  <abel.martin.ruiz@gmail.com>, 2009
+# Adolfo Jayme Barrientos <fitoschido@ubuntu.com>, 2014
+# Pablo Lezaeta <prflr88@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-02 23:12+0200\n"
-"PO-Revision-Date: 2013-11-19 14:35+0000\n"
-"Last-Translator: Nick <nick@xfce.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/projects/p/xfce/language/es/)\n"
+"PO-Revision-Date: 2014-05-23 17:52+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitoschido@ubuntu.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/projects/p/xfce4-power-manager/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -64,7 +66,7 @@ msgstr "<b>Opciones generales</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "When laptop lid is closed:"
-msgstr "Al cerrar la tapa del portátil:"
+msgstr "Al cerrar la tapa del equipo:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "Put the computer to sleep when inactive for:"
@@ -84,11 +86,11 @@ msgstr "Acciones"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
-msgstr "Poner la pantalla en reposo cuando el ordenador está inactivo por:"
+msgstr "Poner la pantalla en reposo cuando el equipo está inactivo por:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Switch off display when computer is inactive for:"
-msgstr "Apagar la pantalla cuando el ordenador está inactivo por:"
+msgstr "Apagar la pantalla cuando el equipo está inactivo por:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>Monitor</b>"
@@ -96,7 +98,7 @@ msgstr "<b>Monitor</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Reducir el brillo de la pantalla cuando el ordenador está inactivo por:"
+msgstr "Reducir el brillo de la pantalla cuando el equipo está inactivo por:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "Level:"
@@ -430,11 +432,11 @@ msgstr "Permiso denegado"
 #: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
-msgstr "Suspensión no está soportado"
+msgstr "No se admite la suspensión"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 msgid "Battery"
-msgstr "La batería"
+msgstr "Batería"
 
 #: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
 msgid "UPS"
@@ -638,27 +640,27 @@ msgstr "%s\nLa %s está vacía"
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
-msgstr "La batería"
+msgstr "batería"
 
 #: ../src/xfpm-battery.c:835
 msgid "monitor battery"
-msgstr "Con batería"
+msgstr "batería del monitor"
 
 #: ../src/xfpm-battery.c:838
 msgid "mouse battery"
-msgstr "Batería del ratón"
+msgstr "batería del ratón"
 
 #: ../src/xfpm-battery.c:841
 msgid "keyboard battery"
-msgstr "La batería del teclado"
+msgstr "batería del teclado"
 
 #: ../src/xfpm-battery.c:844
 msgid "PDA battery"
-msgstr "La batería del PDA"
+msgstr "batería del PDA"
 
 #: ../src/xfpm-battery.c:847
 msgid "Phone battery"
-msgstr "La batería del teléfono"
+msgstr "batería del teléfono"
 
 #: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
 #, c-format
@@ -822,12 +824,12 @@ msgstr "Sin datos"
 #. TRANSLATORS: kernel module, usually a device driver
 #: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
 msgid "Kernel module"
-msgstr "Módulo del kernel"
+msgstr "Módulo del núcleo"
 
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
-msgstr "Volcado del kernel"
+msgstr "Volcado del núcleo"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
@@ -852,7 +854,7 @@ msgstr "ACPI"
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
-msgstr "Serial ATA"
+msgstr "ATA en serie"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
@@ -1002,7 +1004,7 @@ msgstr "Encendidos automáticos"
 
 #: ../src/xfpm-power-info.c:760
 msgid "Command"
-msgstr "Comando"
+msgstr "Orden"
 
 #: ../src/xfpm-power-info.c:766
 msgid "Details"
@@ -1024,4 +1026,4 @@ msgstr "No se encontró ningún dispositivo"
 #: ../panel-plugins/brightness/brightness-button.c:649
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr "Complemente de brillo"
+msgstr "Complemento de brillo"
