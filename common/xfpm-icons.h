@@ -42,6 +42,8 @@ G_BEGIN_DECLS
 #define XFPM_PHONE_ICON_PREFIX			"xfpm-phone-"
 #define XFPM_MEDIA_PLAYER_PREFIX        "xfpm-mediaplayer-"
 #define XFPM_MONITOR_PREFIX             "xfpm-monitor-"
+#define XFPM_COMPUTER_ICON_PREFIX       "xfpm-computer-"
+#define XFPM_TABLET_ICON_PREFIX         "xfpm-tablet-"
 
 #define XFPM_DISPLAY_BRIGHTNESS_ICON	        "xfpm-brightness-lcd"
 #define XFPM_DISPLAY_BRIGHTNESS_INVALID_ICON	"xfpm-brightness-lcd-missing" /* When no hw found */

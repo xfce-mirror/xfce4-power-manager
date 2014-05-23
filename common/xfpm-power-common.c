@@ -175,48 +175,47 @@ xfpm_battery_get_icon_prefix_device_enum_type (UpDeviceKind type)
      */
     if ( type == UP_DEVICE_KIND_BATTERY )
     {
-	return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
+        return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
     }
     else if ( type == UP_DEVICE_KIND_UPS )
     {
-	return g_strdup (XFPM_UPS_ICON_PREFIX);
+        return g_strdup (XFPM_UPS_ICON_PREFIX);
     }
     else if ( type == UP_DEVICE_KIND_MOUSE )
     {
-	return g_strdup (XFPM_MOUSE_ICON_PREFIX);
+        return g_strdup (XFPM_MOUSE_ICON_PREFIX);
     }
     else if ( type == UP_DEVICE_KIND_KEYBOARD )
     {
-	return g_strdup (XFPM_KBD_ICON_PREFIX);
+        return g_strdup (XFPM_KBD_ICON_PREFIX);
     }
     else if ( type == UP_DEVICE_KIND_PHONE )
     {
-	return g_strdup (XFPM_PHONE_ICON_PREFIX);
+        return g_strdup (XFPM_PHONE_ICON_PREFIX);
     }
     else if ( type == UP_DEVICE_KIND_PDA )
     {
-	return g_strdup (XFPM_PDA_ICON_PREFIX);
+        return g_strdup (XFPM_PDA_ICON_PREFIX);
     }
     else if ( type == UP_DEVICE_KIND_MEDIA_PLAYER )
     {
-	return g_strdup (XFPM_MEDIA_PLAYER_PREFIX);
+        return g_strdup (XFPM_MEDIA_PLAYER_PREFIX);
     }
     else if ( type == UP_DEVICE_KIND_LINE_POWER )
     {
-	return g_strdup (XFPM_AC_ADAPTER_ICON);
+        return g_strdup (XFPM_AC_ADAPTER_ICON);
     }
     else if ( type == UP_DEVICE_KIND_MONITOR )
     {
-	return g_strdup (XFPM_MONITOR_PREFIX);
+        return g_strdup (XFPM_MONITOR_PREFIX);
     }
     else if ( type == UP_DEVICE_KIND_TABLET )
     {
-	/* Tablet ... pda, same thing :) */
-	return g_strdup (XFPM_PDA_ICON_PREFIX);
+        return g_strdup (XFPM_TABLET_ICON_PREFIX);
     }
     else if ( type == UP_DEVICE_KIND_COMPUTER )
     {
-	return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
+        return g_strdup (XFPM_COMPUTER_ICON_PREFIX);
     }
 
     return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
