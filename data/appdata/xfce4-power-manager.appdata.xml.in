@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2014 Eric Koegel <eric.koegel@gmail.com> and Simon Steinbeiß <simon@xfce.org> -->
+<component type="desktop">
+  <id>parole.desktop</id>
+  <metadata_license>CC-BY-3.0</metadata_license>
+  <project_license>GPL-2.0+</project_license>
+  <name>Xfce power manager</name>
+  <summary>Manage and reduce power consumption of computer and devices</summary>
+
+  <description>
+    <_p>Xfce power manager manages the power sources on the computer
+    and the devices that can be controlled to reduce their power
+    consumption (such as LCD brightness level, monitor sleep,
+    CPU frequency scaling).
+    </_p>
+    <_p>In addition, Xfce power manager provides a set of freedesktop-compliant
+    DBus interfaces to inform other applications about current power level
+    so that they can adjust their power consumption, and it provides the inhibit
+    interface which allows applications to prevent automatic sleep actions
+    via the power manager; as an example, the operating system’s package manager
+    should make use of this interface while it is performing update operations.
+    </_p>
+    <_p>Xfce power manager also provides two plugins for the Xfce panel,
+    one to control LCD brightness levels and a second plugin to monitor battery
+    and device charge levels.
+    </_p>
+  </description>
+
+  <screenshots>
+    <screenshot type="default">
+      <image></image>
+    </screenshot>
+    <screenshot>
+      <caption>Xfce power manager's settings dialog and panel plugin</caption>
+      <image></image>
+    </screenshot>
+  </screenshots>
+
+  <url type="homepage">http://www.xfce.org/</url>
+  <url type="bugtracker">https://bugzilla.xfce.org/</url>
+  <url type="help">http://http://http://docs.xfce.org/xfce/xfce4-power-manager/start</url>
+
+  <updatecontact>xfce4-dev@xfce.org</updatecontact>
+
+  <project_group>XFCE</project_group>
+
+  <provides>
+    <binary>xfce4-power-manager</binary>
+    <binary>xfce4-power-manager-settings</binary>
+  </provides>
+
+  <releases>
+    <release version="1.3.0" timestamp="">
+      <description>
+        <_p>This development release introduces a lot of new features, among them
+        suspending/hibernation without systemd and UPower>=0.99. It allows for
+        individual control of systemd-inhibition, a new panel plugin to monitor
+        battery and device charge levels replaces the trayicon. The settings dialog
+        has been completely restructured for better oversight and many open bugs
+        have been fixed and translations have been updated.
+        </_p>
+      </description>
+    </release>
+  
+    <release version="1.2.0" timestamp="1335645654">
+      <description>
+        <_p>This stable release fixes compilation problems, a memory leak and
+        a few other minor bugs. Furthermore it provides updated translations.
+        </_p>
+      </description>
+    </release>
+
+</component>
