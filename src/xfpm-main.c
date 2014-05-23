@@ -40,12 +40,9 @@
 #include <dbus/dbus-glib.h>
 #include <dbus/dbus-glib-lowlevel.h>
 
-#include <xfconf/xfconf.h>
-
 #include "xfpm-dbus.h"
 #include "xfpm-debug.h"
 #include "xfpm-common.h"
-#include "xfpm-config.h"
 
 #include "xfce-power-manager-dbus-client.h"
 #include "xfpm-manager.h"
