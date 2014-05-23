@@ -28,6 +28,7 @@
 
 #include <gtk/gtk.h>
 #include <glib.h>
+#include <upower.h>
 
 #include <xfconf/xfconf.h>
 
@@ -37,6 +38,7 @@
 #include "xfpm-common.h"
 #include "xfpm-icons.h"
 #include "xfpm-debug.h"
+#include "xfpm-power-common.h"
 
 #include "interfaces/xfpm-settings_ui.h"
 
@@ -54,8 +56,38 @@ static  GtkWidget *on_battery_dpms_sleep 	= NULL;
 static  GtkWidget *on_battery_dpms_off  	= NULL;
 static  GtkWidget *on_ac_dpms_sleep 		= NULL;
 static  GtkWidget *on_ac_dpms_off 		= NULL;
+static  GtkWidget *sideview                 = NULL; /*Sidebar tree view*/
+static  GtkWidget *device_details_notebook  = NULL; /* Displays the details of a deivce */
 
 static  gboolean  lcd_brightness = FALSE;
+
+static  UpClient *upower = NULL;
+
+/* A list of BatteryDevices  */
+static  GList    *devices;
+
+typedef struct
+{
+    gchar       *object_path;  /* UpDevice object path */
+    UpDevice    *device;       /* Pointer to the UpDevice */
+    gulong       signal_id;    /* device changed callback id */
+} BatteryDevice;
+
+enum
+{
+    COL_SIDEBAR_ICON,
+    COL_SIDEBAR_NAME,
+    COL_SIDEBAR_INT,
+    COL_SIDEBAR_BATTERY_DEVICE,
+    NCOLS_SIDEBAR
+};
+
+enum
+{
+    XFPM_DEVICE_INFO_NAME,
+    XFPM_DEVICE_INFO_VALUE,
+    XFPM_DEVICE_INFO_LAST
+};
 
 /*
  * GtkBuilder callbacks
@@ -1464,6 +1496,414 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
 #endif
 }
 
+static GList*
+find_device_in_list (const gchar *object_path)
+{
+    GList *item = NULL;
+
+    for (item = g_list_first (devices); item != NULL; item = g_list_next (item))
+    {
+        BatteryDevice *battery_device = item->data;
+        if (g_strcmp0 (battery_device->object_path, object_path) == 0)
+            return item;
+    }
+
+    return NULL;
+}
+
+static void
+add_sidebar_icon (const gchar *name, const gchar *icon_name)
+{
+    GtkListStore *list_store;
+    GtkTreeIter iter;
+    GdkPixbuf *pix;
+    guint index;
+
+    list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
+
+    index = gtk_notebook_get_n_pages (GTK_NOTEBOOK (device_details_notebook));
+
+    pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                    icon_name,
+                                    48,
+                                    GTK_ICON_LOOKUP_USE_BUILTIN,
+                                    NULL);
+
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter,
+                        COL_SIDEBAR_ICON, pix,
+                        COL_SIDEBAR_NAME, name,
+                        COL_SIDEBAR_INT, index,
+                        -1);
+
+    if ( pix )
+        g_object_unref (pix);
+}
+
+static gchar *
+xfpm_info_get_energy_property (gdouble energy, const gchar *unit)
+{
+    gchar *val = NULL;
+
+    val = g_strdup_printf ("%.1f %s", energy, unit);
+
+    return val;
+}
+
+static void
+update_device_details (UpDevice *device)
+{
+    GtkWidget *view;
+    GtkListStore *list_store;
+    GtkTreeIter iter;
+    GtkTreeViewColumn *col;
+    GtkCellRenderer *renderer;
+    gchar *str;
+    gint i = 0;
+    guint type = 0, tech = 0;
+    gdouble energy_full_design = -1.0, energy_full = -1.0, energy_empty = -1.0, voltage = -1.0, percent = -1.0;
+    gboolean p_supply = FALSE;
+    gchar *model = NULL, *vendor = NULL, *serial = NULL;
+    const gchar *battery_type = NULL;
+    const gchar *object_path = up_device_get_object_path(device);
+
+    view = gtk_tree_view_new ();
+
+    list_store = gtk_list_store_new (XFPM_DEVICE_INFO_LAST, G_TYPE_STRING, G_TYPE_STRING);
+
+    gtk_tree_view_set_model (GTK_TREE_VIEW (view), GTK_TREE_MODEL (list_store));
+
+    renderer = gtk_cell_renderer_text_new ();
+
+    /*Device Attribute*/
+    col = gtk_tree_view_column_new();
+    gtk_tree_view_column_pack_start (col, renderer, FALSE);
+    gtk_tree_view_column_set_attributes (col, renderer, "text", XFPM_DEVICE_INFO_NAME, NULL);
+    gtk_tree_view_column_set_title (col, _("Attribute"));
+    gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+
+    /*Device Attribute Value*/
+    col = gtk_tree_view_column_new();
+    gtk_tree_view_column_pack_start (col, renderer, FALSE);
+    gtk_tree_view_column_set_attributes (col, renderer, "text", XFPM_DEVICE_INFO_VALUE, NULL);
+    gtk_tree_view_column_set_title (col, _("Value"));
+
+    gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+
+    /**
+     * Add Device information:
+     **/
+    /*Device*/
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter,
+                        XFPM_DEVICE_INFO_NAME, _("Device"),
+                        XFPM_DEVICE_INFO_VALUE, g_str_has_prefix (object_path, UPOWER_PATH_DEVICE) ? object_path + strlen (UPOWER_PATH_DEVICE) : object_path,
+                        -1);
+    i++;
+
+    /*Type*/
+    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
+    g_object_get (device,
+                  "kind", &type,
+                  "power-supply", &p_supply,
+                  "model", &model,
+                  "vendor", &vendor,
+                  "serial", &serial,
+                  "technology", &tech,
+                  "energy-full-design", &energy_full_design,
+                  "energy-full", &energy_full,
+                  "energy-empty", &energy_empty,
+                  "voltage", &voltage,
+                  "percentage", &percent,
+                  NULL);
+
+    if (type != UP_DEVICE_KIND_UNKNOWN)
+    {
+        battery_type = xfpm_power_translate_device_type (type);
+        gtk_list_store_append (list_store, &iter);
+        gtk_list_store_set (list_store, &iter,
+                            XFPM_DEVICE_INFO_NAME, _("Type"),
+                            XFPM_DEVICE_INFO_VALUE, battery_type,
+                            -1);
+        i++;
+    }
+
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter,
+                        XFPM_DEVICE_INFO_NAME, _("PowerSupply"),
+                        XFPM_DEVICE_INFO_VALUE, p_supply == TRUE ? _("True") : _("False"),
+                        -1);
+    i++;
+
+    if ( type != UP_DEVICE_KIND_LINE_POWER )
+    {
+        /*Model*/
+        if (model && strlen (model) > 0)
+        {
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter,
+                                XFPM_DEVICE_INFO_NAME, _("Model"),
+                                XFPM_DEVICE_INFO_VALUE, model,
+                                -1);
+            i++;
+        }
+
+        gtk_list_store_append (list_store, &iter);
+        gtk_list_store_set (list_store, &iter,
+                            XFPM_DEVICE_INFO_NAME, _("Technology"),
+                            XFPM_DEVICE_INFO_VALUE, xfpm_power_translate_technology (tech),
+                            -1);
+        i++;
+
+        /*Percentage*/
+        if (percent >= 0)
+        {
+            str = g_strdup_printf("%d", (guint) percent);
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter,
+                                XFPM_DEVICE_INFO_NAME, _("Energy percent"),
+                                XFPM_DEVICE_INFO_VALUE, str,
+                                -1);
+            i++;
+            g_free(str);
+        }
+
+        if (energy_full_design > 0)
+        {
+            /* TRANSLATORS: Unit here is Watt hour*/
+            str = xfpm_info_get_energy_property (energy_full_design, _("Wh"));
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter,
+                                XFPM_DEVICE_INFO_NAME, _("Energy full design"),
+                                XFPM_DEVICE_INFO_VALUE, str,
+                                -1);
+            i++;
+            g_free (str);
+        }
+
+        if (energy_full > 0)
+        {
+            /* TRANSLATORS: Unit here is Watt hour*/
+            str = xfpm_info_get_energy_property (energy_full, _("Wh"));
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter,
+                                XFPM_DEVICE_INFO_NAME, _("Energy full"),
+                                XFPM_DEVICE_INFO_VALUE, str,
+                                -1);
+            i++;
+            g_free (str);
+        }
+
+        if (energy_empty > 0)
+        {
+            /* TRANSLATORS: Unit here is Watt hour*/
+            str = xfpm_info_get_energy_property (energy_empty, _("Wh"));
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter,
+                                XFPM_DEVICE_INFO_NAME, _("Energy empty"),
+                                XFPM_DEVICE_INFO_VALUE, str,
+                                -1);
+            i++;
+            g_free (str);
+        }
+
+        if (voltage > 0)
+        {
+            /* TRANSLATORS: Unit here is Volt*/
+            str = xfpm_info_get_energy_property (voltage, _("V"));
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter,
+                                XFPM_DEVICE_INFO_NAME, _("Voltage"),
+                                XFPM_DEVICE_INFO_VALUE, str,
+                                -1);
+            i++;
+            g_free (str);
+        }
+
+        if (vendor && strlen (vendor) > 0)
+        {
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter,
+                                XFPM_DEVICE_INFO_NAME, _("Vendor"),
+                                XFPM_DEVICE_INFO_VALUE, vendor,
+                                -1);
+            i++;
+        }
+
+        if (serial && strlen (serial) > 0)
+        {
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter,
+                                XFPM_DEVICE_INFO_NAME, _("Serial"),
+                                XFPM_DEVICE_INFO_VALUE, serial,
+                                -1);
+            i++;
+        }
+    }
+
+    add_sidebar_icon (battery_type, get_device_icon_name (upower, device));
+
+    gtk_notebook_append_page (GTK_NOTEBOOK (device_details_notebook), view, NULL);
+    gtk_widget_show (view);
+}
+
+static void
+#if UP_CHECK_VERSION(0, 99, 0)
+device_changed_cb (UpDevice *device, GParamSpec *pspec, gpointer user_data)
+#else
+device_changed_cb (UpDevice *device, gpointer user_data)
+#endif
+{
+    update_device_details (device);
+}
+
+static void
+add_device (UpDevice *device)
+{
+    BatteryDevice *battery_device;
+    guint type = 0;
+    const gchar *object_path = up_device_get_object_path(device);
+    gulong signal_id;
+
+    TRACE("entering for %s", object_path);
+
+    /* don't add the same device twice */
+    if ( find_device_in_list (object_path) )
+	return;
+
+    battery_device = g_new0 (BatteryDevice, 1);
+
+    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
+    g_object_get (device,
+		  "kind", &type,
+		   NULL);
+
+
+#if UP_CHECK_VERSION(0, 99, 0)
+    signal_id = g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), NULL);
+#else
+    signal_id = g_signal_connect (device, "changed", G_CALLBACK (device_changed_cb), NULL);
+#endif
+
+    /* populate the struct */
+    battery_device->object_path = g_strdup (object_path);
+    battery_device->signal_id = signal_id;
+    battery_device->device = device;
+
+    /* add it to the list */
+    devices = g_list_append (devices, battery_device);
+
+    /* Add the icon and description for the device */
+    update_device_details (device);
+}
+
+static void
+remove_device (const gchar *object_path)
+{
+    GList *item;
+    BatteryDevice *battery_device;
+
+    TRACE("entering for %s", object_path);
+
+    item = find_device_in_list (object_path);
+
+    if (item == NULL)
+	return;
+
+    battery_device = item->data;
+
+    g_free(battery_device->object_path);
+
+    if (battery_device->device)
+    {
+        if (battery_device->signal_id)
+            g_signal_handler_disconnect (battery_device->device, battery_device->signal_id);
+        g_object_unref (battery_device->device);
+    }
+
+    /* remove it item and free the battery device */
+    devices = g_list_delete_link (devices, item);
+}
+
+static void
+device_added_cb (UpClient *upclient, UpDevice *device, gpointer user_data)
+{
+    add_device (device);
+}
+
+#if UP_CHECK_VERSION(0, 99, 0)
+static void
+device_removed_cb (UpClient *upclient, const gchar *object_path, gpointer user_data)
+{
+    remove_device (object_path);
+}
+#else
+static void
+device_removed_cb (UpClient *upclient, UpDevice *device, gpointer user_data)
+{
+    const gchar *object_path = up_device_get_object_path(device);
+    remove_device (object_path);
+}
+#endif
+
+static void
+add_all_devices (void)
+{
+#if !UP_CHECK_VERSION(0, 99, 0)
+    /* the device-add callback is called for each device */
+    up_client_enumerate_devices_sync(upower, NULL, NULL);
+#else
+    GPtrArray *array = NULL;
+    guint i;
+
+    array = up_client_get_devices(upower);
+
+    if ( array )
+    {
+	for ( i = 0; i < array->len; i++)
+	{
+	    UpDevice *device = g_ptr_array_index (array, i);
+
+	    add_device (device);
+	}
+	g_ptr_array_free (array, TRUE);
+    }
+#endif
+}
+
+static void
+settings_create_devices_list (void)
+{
+    upower = up_client_new ();
+
+    g_signal_connect (upower, "device-added", G_CALLBACK (device_added_cb), NULL);
+    g_signal_connect (upower, "device-removed", G_CALLBACK (device_removed_cb), NULL);
+
+    add_all_devices ();
+}
+
+static void
+view_cursor_changed_cb (GtkTreeView *view, gpointer *user_data)
+{
+    GtkTreeSelection *sel;
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint int_data = 0;
+
+    sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+
+    if ( !gtk_tree_selection_get_selected (sel, &model, &selected_row))
+	return;
+
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       COL_SIDEBAR_INT,
+                       &int_data,
+                       -1);
+
+    gtk_notebook_set_current_page (GTK_NOTEBOOK (device_details_notebook), int_data);
+}
+
 static void
 settings_quit (GtkWidget *widget, XfconfChannel *channel)
 {
@@ -1475,7 +1915,6 @@ settings_quit (GtkWidget *widget, XfconfChannel *channel)
 
 static void dialog_response_cb (GtkDialog *dialog, gint response, XfconfChannel *channel)
 {
-    DBG("response %d", response);
     switch(response)
     {
 	case GTK_RESPONSE_HELP:
@@ -1506,6 +1945,12 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     GtkWidget *plug;
     GtkWidget *dialog;
     GtkWidget *plugged_box;
+    GtkWidget *devices_page;
+    GtkWidget *viewport;
+    GtkWidget *hbox;
+    GtkListStore *list_store;
+    GtkTreeViewColumn *col;
+    GtkCellRenderer *renderer;
     GError *error = NULL;
 
     XFPM_DEBUG ("system_laptop=%s auth_hibernate=%s  auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s "\
@@ -1534,7 +1979,62 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 
     dialog = GTK_WIDGET (gtk_builder_get_object (xml, "xfpm-settings-dialog"));
     nt = GTK_WIDGET (gtk_builder_get_object (xml, "main-notebook"));
+
+    /* Devices Tab */
+    devices_page = gtk_viewport_new (NULL, NULL);
+
+    viewport = gtk_viewport_new (NULL, NULL);
+
+    /* Sideview pane */
+    sideview = gtk_tree_view_new ();
+    list_store = gtk_list_store_new (4, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER);
+
+    gtk_tree_view_set_model (GTK_TREE_VIEW (sideview), GTK_TREE_MODEL (list_store));
     
+    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (sideview),TRUE);
+    col = gtk_tree_view_column_new ();
+
+    /* A device icon */
+    renderer = gtk_cell_renderer_pixbuf_new ();
+
+    gtk_tree_view_column_pack_start (col, renderer, FALSE);
+    gtk_tree_view_column_set_attributes (col, renderer, "pixbuf", 0, NULL);
+
+    /* The device label */
+    renderer = gtk_cell_renderer_text_new ();
+    gtk_tree_view_column_pack_start (col, renderer, FALSE);
+    gtk_tree_view_column_set_attributes (col, renderer, "markup", 1, NULL);
+
+    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (sideview), FALSE);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (sideview), col);
+
+    g_signal_connect (sideview, "cursor-changed", G_CALLBACK (view_cursor_changed_cb), NULL);
+
+    /* Device details notebook - Displays all the info on a deivce */
+    device_details_notebook = gtk_notebook_new ();
+
+    gtk_notebook_set_show_tabs (GTK_NOTEBOOK (device_details_notebook), FALSE);
+
+    hbox = gtk_hbox_new (FALSE, 4);
+
+    /* put the sideview in the viewport */
+    gtk_container_add (GTK_CONTAINER (viewport), sideview);
+    /* viewport then goes in the hbox */
+    gtk_box_pack_start (GTK_BOX (hbox), viewport, FALSE, FALSE, 0);
+    /* device details goes to the right of the sideview */
+    gtk_box_pack_start (GTK_BOX (hbox), device_details_notebook, TRUE, TRUE, 0);
+    /* hbox to the devices_page */
+    gtk_container_add (GTK_CONTAINER (devices_page), hbox);
+    /* devices page in the notebook */
+    gtk_notebook_append_page (GTK_NOTEBOOK (nt), devices_page, gtk_label_new (_("Devices")) );
+
+    gtk_widget_show_all (sideview);
+    gtk_widget_show_all (viewport);
+    gtk_widget_show_all (hbox);
+    gtk_widget_show_all (devices_page);
+
+    settings_create_devices_list ();
+
     xfpm_settings_on_ac (channel, 
 			 auth_hibernate, 
 			 auth_suspend, 

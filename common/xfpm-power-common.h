@@ -40,6 +40,11 @@
 #define POLKIT_AUTH_HIBERNATE_LOGIND	"org.freedesktop.login1.hibernate"
 
 
+
+const gchar *xfpm_power_translate_device_type (guint type);
+
+const gchar	*xfpm_power_translate_technology (guint value);
+
 const gchar *G_GNUC_CONST xfpm_battery_get_icon_index (UpDeviceKind type, guint percent);
 
 gchar *xfpm_battery_get_time_string (guint seconds);

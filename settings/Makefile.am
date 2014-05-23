@@ -27,7 +27,8 @@ xfce4_power_manager_settings_CFLAGS =				\
 	$(DBUS_GLIB_CFLAGS)					\
 	$(LIBXFCE4UI_CFLAGS)					\
 	$(LIBXFCE4UTIL_CFLAGS)					\
-	$(XFCONF_CFLAGS)
+	$(XFCONF_CFLAGS)					\
+	$(UPOWER_CFLAGS)
 
 xfce4_power_manager_settings_LDADD   =				\
 	$(top_builddir)/libdbus/libxfpmdbus.la  		\
@@ -40,7 +41,8 @@ xfce4_power_manager_settings_LDADD   =				\
 	$(DBUS_GLIB_LIBS)					\
 	$(LIBXFCE4UI_LIBS)					\
 	$(LIBXFCE4UTIL_LIBS)					\
-	$(XFCONF_LIBS)
+	$(XFCONF_LIBS)						\
+	$(UPOWER_LIBS)
 
 
 manpagedir = $(mandir)/man1

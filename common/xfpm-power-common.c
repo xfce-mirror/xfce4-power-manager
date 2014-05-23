@@ -32,7 +32,69 @@
 #include "xfpm-icons.h"
 
 
+/**
+ * xfpm_power_translate_device_type:
+ *
+ **/
+const gchar *
+xfpm_power_translate_device_type (guint type)
+{
+    switch (type)
+    {
+        case UP_DEVICE_KIND_BATTERY:
+            return _("Battery");
+        case UP_DEVICE_KIND_UPS:
+            return _("UPS");
+        case UP_DEVICE_KIND_LINE_POWER:
+            return _("Line power");
+        case UP_DEVICE_KIND_MOUSE:
+            return _("Mouse");
+        case UP_DEVICE_KIND_KEYBOARD:
+            return _("Keyboard");
+        case UP_DEVICE_KIND_MONITOR:
+            return _("Monitor");
+        case UP_DEVICE_KIND_PDA:
+            return _("PDA");
+        case UP_DEVICE_KIND_PHONE:
+            return _("Phone");
+        case UP_DEVICE_KIND_TABLET:
+            return _("Tablet");
+        case UP_DEVICE_KIND_COMPUTER:
+            return _("Computer");
+        case UP_DEVICE_KIND_UNKNOWN:
+            return _("Unknown");
+    }
 
+    return _("Battery");
+}
+
+/**
+ * xfpm_power_translate_technology:
+ *
+ **/
+const gchar *
+xfpm_power_translate_technology (guint value)
+{
+    switch (value)
+    {
+        case 0:
+            return _("Unknown");
+        case 1:
+            return _("Lithium ion");
+        case 2:
+            return _("Lithium polymer");
+        case 3:
+            return _("Lithium iron phosphate");
+        case 4:
+            return _("Lead acid");
+        case 5:
+            return _("Nickel cadmium");
+        case 6:
+            return _("Nickel metal hybride");
+    }
+
+    return _("Unknown");
+}
 
 const gchar * G_GNUC_CONST
 xfpm_battery_get_icon_index (UpDeviceKind type, guint percent)
