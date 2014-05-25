@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-29 18:30+0200\n"
-"PO-Revision-Date: 2014-04-30 21:13+0000\n"
+"POT-Creation-Date: 2014-05-23 18:30+0200\n"
+"PO-Revision-Date: 2014-05-25 11:07+0000\n"
 "Last-Translator: Pjotr123 <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/xfce4-power-manager/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgid "Nothing"
 msgstr "Niets doen"
 
 #: ../data/interfaces/xfpm-settings.ui.h:2
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:498
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:415
 msgid "Xfce Power Manager"
 msgstr "Xfce-energiebeheerder"
 
@@ -124,8 +124,8 @@ msgstr "Verkies energiebesparing boven prestaties"
 #: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:820
 #: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
 #: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:527
-#: ../src/xfpm-power.c:840
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:566
+#: ../src/xfpm-power.c:879
 msgid "Suspend"
 msgstr "Pauzestand"
 
@@ -133,8 +133,8 @@ msgstr "Pauzestand"
 #: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:826
 #: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1043
 #: ../settings/xfpm-settings.c:1220 ../settings/xfpm-settings.c:1277
-#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:512
-#: ../src/xfpm-power.c:827
+#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:551
+#: ../src/xfpm-power.c:866
 msgid "Hibernate"
 msgstr "Slaapstand"
 
@@ -218,7 +218,7 @@ msgid "Hibernate and suspend operations not permitted"
 msgstr "Slaapstand en pauzestand zijn niet toegestaan"
 
 #: ../settings/xfpm-settings.c:832 ../settings/xfpm-settings.c:1226
-#: ../src/xfpm-power.c:853
+#: ../src/xfpm-power.c:892
 msgid "Shutdown"
 msgstr "Afsluiten"
 
@@ -305,7 +305,7 @@ msgstr "Contactpunt voor instellingenbeheerder"
 msgid "SOCKET ID"
 msgstr "CONTACTPUNT ID"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:374
+#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:291
 #: ../src/xfpm-power-info.c:910
 #, c-format
 msgid "Type '%s --help' for usage."
@@ -319,7 +319,7 @@ msgstr "Kon configuratie van energiebeheerder niet laden, gebruikt standaardwaar
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Kon geen verbinding maken met Xfce-energiebeheerder"
 
-#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:414
+#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:331
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce-energiebeheerder draait niet"
@@ -333,8 +333,8 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4-energiebeheerder draait niet, wilt u hem nu starten?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:273 ../src/xfpm-power.c:623 ../src/xfpm-power.c:768
-#: ../src/xfpm-power.c:813 ../src/xfpm-power.c:983 ../src/xfpm-power.c:1007
+#: ../src/xfpm-power.c:281 ../src/xfpm-power.c:662 ../src/xfpm-power.c:807
+#: ../src/xfpm-power.c:852 ../src/xfpm-power.c:1022 ../src/xfpm-power.c:1046
 #: ../src/xfpm-battery.c:355 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Energiebeheerder"
@@ -347,48 +347,52 @@ msgstr "Instellingen voor de Xfce-energiebeheerder"
 msgid "translator-credits"
 msgstr "Vincent Tunru <projects@vinnl.nl>\nPjotr <pjotrvertaalt@gmail.com>"
 
-#: ../src/xfpm-power.c:297
+#: ../src/xfpm-power.c:305
 msgid "_Hibernate"
 msgstr "Slaapstand"
 
-#: ../src/xfpm-power.c:298
+#: ../src/xfpm-power.c:306
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
 msgstr "Een toepassing belemmert thans de automatische slaapstand, deze actie nu uitvoeren kan de toepassing in zijn werk schaden."
 
-#: ../src/xfpm-power.c:300
+#: ../src/xfpm-power.c:308
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Weet u zeker dat u het systeem in de slaapstand wil brengen?"
 
-#: ../src/xfpm-power.c:337
+#: ../src/xfpm-power.c:329
+msgid "Incorrect password entered"
+msgstr "Onjuist wachtwoord ingevoerd"
+
+#: ../src/xfpm-power.c:368
 msgid "Continue"
 msgstr "Doorgaan"
 
-#: ../src/xfpm-power.c:338
+#: ../src/xfpm-power.c:369
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
 msgstr "Geen van de hulpmiddelen voor schermvergrendeling had succes, het scherm zal niet worden vergrendeld."
 
-#: ../src/xfpm-power.c:341
+#: ../src/xfpm-power.c:372
 msgid "Do you still want to continue to suspend the system?"
 msgstr "Wilt u nog steeds doorgaan met het in pauzestand brengen van het systeem?"
 
-#: ../src/xfpm-power.c:447
+#: ../src/xfpm-power.c:486
 msgid "Quit"
 msgstr "Afsluiten"
 
-#: ../src/xfpm-power.c:448
+#: ../src/xfpm-power.c:487
 msgid "All running instances of the power manager will exit"
 msgstr "Alle draaiende functies van de energiebeheerder zullen afsluiten"
 
-#: ../src/xfpm-power.c:450
+#: ../src/xfpm-power.c:489
 msgid "Quit the power manager?"
 msgstr "Energiebeheerder sluiten?"
 
 #. Power information
-#: ../src/xfpm-power.c:562 ../src/xfpm-power-info.c:781
+#: ../src/xfpm-power.c:601 ../src/xfpm-power-info.c:781
 msgid "Power Information"
 msgstr "Energie-informatie"
 
@@ -397,63 +401,79 @@ msgstr "Energie-informatie"
 #. *
 #. TRANSLATOR: Mode here is the power profile (presentation, power save,
 #. normal)
-#: ../src/xfpm-power.c:578
+#: ../src/xfpm-power.c:617
 msgid "Mode"
 msgstr "Modus"
 
 #. Normal
-#: ../src/xfpm-power.c:589
+#: ../src/xfpm-power.c:628
 msgid "Normal"
 msgstr "Normaal"
 
 #. Normal
-#: ../src/xfpm-power.c:599
+#: ../src/xfpm-power.c:638
 msgid "Presentation"
 msgstr "Presentatie"
 
-#: ../src/xfpm-power.c:731
+#: ../src/xfpm-power.c:770
 msgid "Hibernate the system"
 msgstr "Breng het systeem in slaapstand"
 
-#: ../src/xfpm-power.c:742
+#: ../src/xfpm-power.c:781
 msgid "Suspend the system"
 msgstr "Breng het systeem in pauzestand"
 
-#: ../src/xfpm-power.c:752
+#: ../src/xfpm-power.c:791
 msgid "Shutdown the system"
 msgstr "Sluit het systeem af"
 
-#: ../src/xfpm-power.c:763 ../src/xfpm-power.c:810
+#: ../src/xfpm-power.c:802 ../src/xfpm-power.c:849
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Het systeem draait op lage acculading - sla uw werk op om gegevensverlies te voorkomen"
 
-#: ../src/xfpm-power.c:984
+#: ../src/xfpm-power.c:1023
 msgid "System is running on low power"
 msgstr "Systeem draait op lage acculading"
 
-#: ../src/xfpm-power.c:1003
+#: ../src/xfpm-power.c:1042
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Uw %s laadniveau is laag\nGeschatte restanttijd %s"
 
-#: ../src/xfpm-power.c:1196 ../src/xfpm-power.c:1201
+#: ../src/xfpm-power.c:1235 ../src/xfpm-power.c:1240
 msgid "Adaptor is offline"
 msgstr "Voedingsblok staat uit"
 
-#: ../src/xfpm-power.c:1197 ../src/xfpm-power.c:1202 ../src/xfpm-battery.c:420
+#: ../src/xfpm-power.c:1236 ../src/xfpm-power.c:1241 ../src/xfpm-battery.c:420
 #, c-format
 msgid "Adaptor is online"
 msgstr "Voedingsblok staat aan"
 
-#: ../src/xfpm-power.c:1634 ../src/xfpm-power.c:1667 ../src/xfpm-power.c:1686
-#: ../src/xfpm-power.c:1709
+#: ../src/xfpm-power.c:1597
+msgid ""
+"The requested operation requires elevated privileges.\t\n"
+"Please enter your password."
+msgstr "De aangevraagde bewerking vereist verhoogde rechten.\t\nVoer a.u.b. uw wachtwoord in."
+
+#. Set the dialog's title
+#: ../src/xfpm-power.c:1606
+msgid "xfce4-power-manager"
+msgstr "xfce4-power-manager"
+
+#. setup password label
+#: ../src/xfpm-power.c:1609
+msgid "Password:"
+msgstr "Wachtwoord:"
+
+#: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1766 ../src/xfpm-power.c:1785
+#: ../src/xfpm-power.c:1808
 #, c-format
 msgid "Permission denied"
 msgstr "Toestemming geweigerd"
 
-#: ../src/xfpm-power.c:1694 ../src/xfpm-power.c:1717
+#: ../src/xfpm-power.c:1793 ../src/xfpm-power.c:1816
 #, c-format
 msgid "Suspend not supported"
 msgstr "Pauzestand niet ondersteund"
@@ -816,43 +836,43 @@ msgstr "Heeft slaapknop"
 msgid "Has LID"
 msgstr "Heeft LID"
 
-#: ../src/xfpm-main.c:347
+#: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
 msgstr "Maak er geen achtergronddienst van"
 
-#: ../src/xfpm-main.c:348
+#: ../src/xfpm-main.c:265
 msgid "Enable debugging"
 msgstr "Schakel foutopsporing in"
 
-#: ../src/xfpm-main.c:349
+#: ../src/xfpm-main.c:266
 msgid "Dump all information"
 msgstr "Produceer alle informatie"
 
-#: ../src/xfpm-main.c:350
+#: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Herstart de draaiende functie van Xfce-energiebeheerder"
 
-#: ../src/xfpm-main.c:351
+#: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
 msgstr "Toon de configuratiedialoog"
 
-#: ../src/xfpm-main.c:352
+#: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
 msgstr "Sluit elke draaiende Xfce-energiebeheerdersfunctie"
 
-#: ../src/xfpm-main.c:353 ../src/xfpm-power-info.c:897
+#: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:897
 msgid "Version information"
 msgstr "Versie-informatie"
 
-#: ../src/xfpm-main.c:405
+#: ../src/xfpm-main.c:322
 msgid "Unable to get connection to the message bus session"
 msgstr "Kon geen verbinding krijgen met de boodschap-bus-sessie"
 
-#: ../src/xfpm-main.c:499
+#: ../src/xfpm-main.c:416
 msgid "Another power manager is already running"
 msgstr "Er draait al een andere energiebeheerder"
 
-#: ../src/xfpm-main.c:505
+#: ../src/xfpm-main.c:422
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce-energiebeheerder draait al"
@@ -1064,6 +1084,21 @@ msgstr "Opdracht"
 #: ../src/xfpm-power-info.c:729
 msgid "Details"
 msgstr "Details"
+
+#: ../src/xfpm-suspend.c:376
+#, c-format
+msgid "Error sending command to pm helper: %s"
+msgstr "Fout bij het verzenden van opdracht naar pm helper: %s"
+
+#: ../src/xfpm-suspend.c:389
+#, c-format
+msgid "Error receiving response from pm helper: %s"
+msgstr "Fout bij het ontvangen van een antwoord van pm helper: %s"
+
+#: ../src/xfpm-suspend.c:397
+#, c-format
+msgid "Sleep command failed"
+msgstr "Slaapopdracht is mislukt"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
