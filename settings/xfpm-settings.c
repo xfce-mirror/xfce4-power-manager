@@ -56,29 +56,21 @@ static  GtkWidget *on_battery_dpms_sleep 	= NULL;
 static  GtkWidget *on_battery_dpms_off  	= NULL;
 static  GtkWidget *on_ac_dpms_sleep 		= NULL;
 static  GtkWidget *on_ac_dpms_off 		= NULL;
-static  GtkWidget *sideview                 = NULL; /*Sidebar tree view*/
+static  GtkWidget *sideview                 = NULL; /* Sidebar tree view - all devices are in the sideview */
 static  GtkWidget *device_details_notebook  = NULL; /* Displays the details of a deivce */
 
 static  gboolean  lcd_brightness = FALSE;
 
 static  UpClient *upower = NULL;
 
-/* A list of BatteryDevices  */
-static  GList    *devices;
-
-typedef struct
-{
-    gchar       *object_path;  /* UpDevice object path */
-    UpDevice    *device;       /* Pointer to the UpDevice */
-    gulong       signal_id;    /* device changed callback id */
-} BatteryDevice;
-
 enum
 {
     COL_SIDEBAR_ICON,
     COL_SIDEBAR_NAME,
     COL_SIDEBAR_INT,
-    COL_SIDEBAR_BATTERY_DEVICE,
+    COL_SIDEBAR_BATTERY_DEVICE, /* Pointer to the UpDevice */
+    COL_SIDEBAR_OBJECT_PATH,    /* UpDevice object path */
+    COL_SIDEBAR_SIGNAL_ID,      /* device changed callback id */
     NCOLS_SIDEBAR
 };
 
@@ -1496,48 +1488,36 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
 #endif
 }
 
-static GList*
-find_device_in_list (const gchar *object_path)
+/* Call gtk_tree_iter_free when done with the tree iter */
+static GtkTreeIter*
+find_device_in_tree (const gchar *object_path)
 {
-    GList *item = NULL;
+    GtkTreeModel *model;
+    GtkTreeIter iter;
 
-    for (item = g_list_first (devices); item != NULL; item = g_list_next (item))
-    {
-        BatteryDevice *battery_device = item->data;
-        if (g_strcmp0 (battery_device->object_path, object_path) == 0)
-            return item;
+    if ( !sideview )
+        return NULL;
+
+    model = gtk_tree_view_get_model(GTK_TREE_VIEW(sideview));
+
+    if (!model)
+        return NULL;
+
+    if(gtk_tree_model_get_iter_first(model, &iter)) {
+        do {
+            gchar *path = NULL;
+            gtk_tree_model_get(model, &iter, COL_SIDEBAR_OBJECT_PATH, &path, -1);
+
+            if(g_strcmp0(path, object_path) == 0) {
+                g_free(path);
+                return gtk_tree_iter_copy(&iter);
+            }
+
+            g_free(path);
+        } while(gtk_tree_model_iter_next(model, &iter));
     }
 
     return NULL;
-}
-
-static void
-add_sidebar_icon (const gchar *name, const gchar *icon_name)
-{
-    GtkListStore *list_store;
-    GtkTreeIter iter;
-    GdkPixbuf *pix;
-    guint index;
-
-    list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
-
-    index = gtk_notebook_get_n_pages (GTK_NOTEBOOK (device_details_notebook));
-
-    pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                    icon_name,
-                                    48,
-                                    GTK_ICON_LOOKUP_USE_BUILTIN,
-                                    NULL);
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter,
-                        COL_SIDEBAR_ICON, pix,
-                        COL_SIDEBAR_NAME, name,
-                        COL_SIDEBAR_INT, index,
-                        -1);
-
-    if ( pix )
-        g_object_unref (pix);
 }
 
 static gchar *
@@ -1551,21 +1531,77 @@ xfpm_info_get_energy_property (gdouble energy, const gchar *unit)
 }
 
 static void
+update_sideview_icon (UpDevice *device)
+{
+    GtkListStore *list_store;
+    GtkTreeIter *iter;
+    GdkPixbuf *pix;
+    guint type;
+    const gchar *name;
+    gchar *icon_name;
+    const gchar *object_path = up_device_get_object_path(device);
+
+    list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
+
+    TRACE("entering for %s", object_path);
+
+    iter = find_device_in_tree (object_path);
+
+    /* quit if device doesn't exist in the sidebar */
+    if (!iter)
+        return;
+
+    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
+    g_object_get (device,
+                  "kind", &type,
+                  NULL);
+
+    name = xfpm_power_translate_device_type (type);
+    icon_name = get_device_icon_name (upower, device);
+
+    pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                    icon_name,
+                                    48,
+                                    GTK_ICON_LOOKUP_USE_BUILTIN,
+                                    NULL);
+
+    gtk_list_store_set (list_store, iter,
+                        COL_SIDEBAR_ICON, pix,
+                        COL_SIDEBAR_NAME, name,
+                        -1);
+
+    if ( pix )
+        g_object_unref (pix);
+
+    g_free (icon_name);
+
+    gtk_tree_iter_free (iter);
+}
+
+static void
 update_device_details (UpDevice *device)
 {
     GtkWidget *view;
-    GtkListStore *list_store;
-    GtkTreeIter iter;
+    GtkListStore *list_store, *sideview_liststore;
+    GtkTreeIter iter, *sideview_iter;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
     gchar *str;
-    gint i = 0;
+    gint i = 0, page_index, current_page;
     guint type = 0, tech = 0;
     gdouble energy_full_design = -1.0, energy_full = -1.0, energy_empty = -1.0, voltage = -1.0, percent = -1.0;
     gboolean p_supply = FALSE;
     gchar *model = NULL, *vendor = NULL, *serial = NULL;
     const gchar *battery_type = NULL;
     const gchar *object_path = up_device_get_object_path(device);
+
+    TRACE("entering for %s", object_path);
+
+    sideview_iter = find_device_in_tree (object_path);
+
+    /* quit if device doesn't exist in the sidebar */
+    if (sideview_iter == NULL)
+        return;
 
     view = gtk_tree_view_new ();
 
@@ -1741,10 +1777,28 @@ update_device_details (UpDevice *device)
         }
     }
 
-    add_sidebar_icon (battery_type, get_device_icon_name (upower, device));
+    update_sideview_icon (device);
 
-    gtk_notebook_append_page (GTK_NOTEBOOK (device_details_notebook), view, NULL);
+    sideview_liststore = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
+
+    gtk_tree_model_get (GTK_TREE_MODEL(sideview_liststore), sideview_iter,
+                        COL_SIDEBAR_INT, &page_index,
+                        -1);
+
+    /* Replace the old page with the new one, if the user is viewing that
+     * page we'll need to change back to it */
+    current_page = gtk_notebook_get_current_page (GTK_NOTEBOOK (device_details_notebook));
+    DBG("current page %d page_index %d", current_page, page_index);
+    gtk_notebook_remove_page (GTK_NOTEBOOK (device_details_notebook), page_index);
+    gtk_notebook_insert_page (GTK_NOTEBOOK (device_details_notebook), view, NULL, page_index);
+
     gtk_widget_show (view);
+
+    if (current_page - 1 == page_index)
+    {
+        DBG("current page == page index");
+        gtk_notebook_set_current_page (GTK_NOTEBOOK (device_details_notebook), page_index);
+    }
 }
 
 static void
@@ -1760,24 +1814,22 @@ device_changed_cb (UpDevice *device, gpointer user_data)
 static void
 add_device (UpDevice *device)
 {
-    BatteryDevice *battery_device;
-    guint type = 0;
+    GtkTreeIter iter, *device_iter;
+    GtkListStore *list_store;
+    GtkWidget *view;
     const gchar *object_path = up_device_get_object_path(device);
     gulong signal_id;
+    guint index;
 
     TRACE("entering for %s", object_path);
 
     /* don't add the same device twice */
-    if ( find_device_in_list (object_path) )
-	return;
-
-    battery_device = g_new0 (BatteryDevice, 1);
-
-    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
-    g_object_get (device,
-		  "kind", &type,
-		   NULL);
-
+    device_iter = find_device_in_tree (object_path);
+    if (device_iter)
+    {
+        gtk_tree_iter_free (device_iter);
+        return;
+    }
 
 #if UP_CHECK_VERSION(0, 99, 0)
     signal_id = g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), NULL);
@@ -1785,13 +1837,21 @@ add_device (UpDevice *device)
     signal_id = g_signal_connect (device, "changed", G_CALLBACK (device_changed_cb), NULL);
 #endif
 
-    /* populate the struct */
-    battery_device->object_path = g_strdup (object_path);
-    battery_device->signal_id = signal_id;
-    battery_device->device = device;
+    list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
 
-    /* add it to the list */
-    devices = g_list_append (devices, battery_device);
+    index = gtk_notebook_get_n_pages (GTK_NOTEBOOK (device_details_notebook));
+
+    /* Create the page that the update_device_details will update/replace */
+    view = gtk_tree_view_new ();
+    gtk_notebook_append_page (GTK_NOTEBOOK (device_details_notebook), view, NULL);
+
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter,
+                        COL_SIDEBAR_INT, index,
+                        COL_SIDEBAR_BATTERY_DEVICE, device,
+                        COL_SIDEBAR_OBJECT_PATH, object_path,
+                        COL_SIDEBAR_SIGNAL_ID, signal_id,
+                        -1);
 
     /* Add the icon and description for the device */
     update_device_details (device);
@@ -1800,29 +1860,29 @@ add_device (UpDevice *device)
 static void
 remove_device (const gchar *object_path)
 {
-    GList *item;
-    BatteryDevice *battery_device;
+    GtkTreeIter *iter;
+    GtkListStore *list_store;
+    gulong signal_id;
+    UpDevice *device;
 
     TRACE("entering for %s", object_path);
 
-    item = find_device_in_list (object_path);
+    iter = find_device_in_tree (object_path);
 
-    if (item == NULL)
-	return;
+    if (iter == NULL)
+        return;
 
-    battery_device = item->data;
+    list_store = GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(sideview)));
 
-    g_free(battery_device->object_path);
+    gtk_tree_model_get (GTK_TREE_MODEL(list_store), iter,
+                        COL_SIDEBAR_SIGNAL_ID, &signal_id,
+                        COL_SIDEBAR_BATTERY_DEVICE, &device,
+                        -1);
 
-    if (battery_device->device)
-    {
-        if (battery_device->signal_id)
-            g_signal_handler_disconnect (battery_device->device, battery_device->signal_id);
-        g_object_unref (battery_device->device);
-    }
+    gtk_list_store_remove (list_store, iter);
 
-    /* remove it item and free the battery device */
-    devices = g_list_delete_link (devices, item);
+    if (device)
+        g_signal_handler_disconnect (device, signal_id);
 }
 
 static void
@@ -1860,13 +1920,13 @@ add_all_devices (void)
 
     if ( array )
     {
-	for ( i = 0; i < array->len; i++)
-	{
-	    UpDevice *device = g_ptr_array_index (array, i);
+        for ( i = 0; i < array->len; i++)
+        {
+            UpDevice *device = g_ptr_array_index (array, i);
 
-	    add_device (device);
-	}
-	g_ptr_array_free (array, TRUE);
+            add_device (device);
+        }
+        g_ptr_array_free (array, TRUE);
     }
 #endif
 }
@@ -1987,7 +2047,14 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 
     /* Sideview pane */
     sideview = gtk_tree_view_new ();
-    list_store = gtk_list_store_new (4, GDK_TYPE_PIXBUF, G_TYPE_STRING, G_TYPE_INT, G_TYPE_POINTER);
+    list_store = gtk_list_store_new (NCOLS_SIDEBAR,
+                                     GDK_TYPE_PIXBUF, /* COL_SIDEBAR_ICON */
+                                     G_TYPE_STRING,   /* COL_SIDEBAR_NAME */
+                                     G_TYPE_INT,      /* COL_SIDEBAR_INT */
+                                     G_TYPE_POINTER,  /* COL_SIDEBAR_BATTERY_DEVICE */
+                                     G_TYPE_STRING,   /* COL_SIDEBAR_OBJECT_PATH */
+                                     G_TYPE_ULONG     /* COL_SIDEBAR_SIGNAL_ID */
+                                     );
 
     gtk_tree_view_set_model (GTK_TREE_VIEW (sideview), GTK_TREE_MODEL (list_store));
     
