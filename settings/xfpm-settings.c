@@ -2005,7 +2005,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     GtkWidget *plug;
     GtkWidget *dialog;
     GtkWidget *plugged_box;
-    GtkWidget *devices_page;
     GtkWidget *viewport;
     GtkWidget *hbox;
     GtkListStore *list_store;
@@ -2040,12 +2039,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
     dialog = GTK_WIDGET (gtk_builder_get_object (xml, "xfpm-settings-dialog"));
     nt = GTK_WIDGET (gtk_builder_get_object (xml, "main-notebook"));
 
-    /* Devices Tab */
-    devices_page = gtk_viewport_new (NULL, NULL);
-
-    viewport = gtk_viewport_new (NULL, NULL);
-
-    /* Sideview pane */
+    /* Devices listview */
     sideview = gtk_tree_view_new ();
     list_store = gtk_list_store_new (NCOLS_SIDEBAR,
                                      GDK_TYPE_PIXBUF, /* COL_SIDEBAR_ICON */
@@ -2057,11 +2051,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
                                      );
 
     gtk_tree_view_set_model (GTK_TREE_VIEW (sideview), GTK_TREE_MODEL (list_store));
-    
+
     gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (sideview),TRUE);
     col = gtk_tree_view_column_new ();
 
-    /* A device icon */
     renderer = gtk_cell_renderer_pixbuf_new ();
 
     gtk_tree_view_column_pack_start (col, renderer, FALSE);
@@ -2077,28 +2070,22 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 
     g_signal_connect (sideview, "cursor-changed", G_CALLBACK (view_cursor_changed_cb), NULL);
 
-    /* Device details notebook - Displays all the info on a deivce */
+    /* Pack the content of the devices tab */
     device_details_notebook = gtk_notebook_new ();
 
     gtk_notebook_set_show_tabs (GTK_NOTEBOOK (device_details_notebook), FALSE);
+    hbox = gtk_hbox_new (FALSE, 3);
 
-    hbox = gtk_hbox_new (FALSE, 4);
-
-    /* put the sideview in the viewport */
+    viewport = gtk_viewport_new (NULL, NULL);
     gtk_container_add (GTK_CONTAINER (viewport), sideview);
-    /* viewport then goes in the hbox */
     gtk_box_pack_start (GTK_BOX (hbox), viewport, FALSE, FALSE, 0);
-    /* device details goes to the right of the sideview */
     gtk_box_pack_start (GTK_BOX (hbox), device_details_notebook, TRUE, TRUE, 0);
-    /* hbox to the devices_page */
-    gtk_container_add (GTK_CONTAINER (devices_page), hbox);
-    /* devices page in the notebook */
-    gtk_notebook_append_page (GTK_NOTEBOOK (nt), devices_page, gtk_label_new (_("Devices")) );
+    gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+    gtk_notebook_append_page (GTK_NOTEBOOK (nt), hbox, gtk_label_new (_("Devices")) );
 
     gtk_widget_show_all (sideview);
     gtk_widget_show_all (viewport);
     gtk_widget_show_all (hbox);
-    gtk_widget_show_all (devices_page);
 
     settings_create_devices_list ();
 
