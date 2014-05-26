@@ -1536,9 +1536,8 @@ update_sideview_icon (UpDevice *device)
     GtkListStore *list_store;
     GtkTreeIter *iter;
     GdkPixbuf *pix;
-    guint type;
-    const gchar *name;
-    gchar *icon_name;
+    guint type = 0;
+    gchar *name = NULL, *icon_name = NULL, *model = NULL, *vendor = NULL;
     const gchar *object_path = up_device_get_object_path(device);
 
     list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
@@ -1554,9 +1553,18 @@ update_sideview_icon (UpDevice *device)
     /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
     g_object_get (device,
                   "kind", &type,
+                  "vendor", &vendor,
+                  "model", &model,
                   NULL);
 
-    name = xfpm_power_translate_device_type (type);
+    /* If we get a vendor or model we can use it, otherwise translate the
+     * device type into something readable (works for things like ac_power)
+     */
+    if (g_strcmp0(vendor, "") != 0 || g_strcmp0(model, "") != 0)
+        name = g_strdup_printf ("%s %s", vendor, model);
+    else
+        name = g_strdup_printf ("%s", xfpm_power_translate_device_type (type));
+
     icon_name = get_device_icon_name (upower, device);
 
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
@@ -1573,6 +1581,7 @@ update_sideview_icon (UpDevice *device)
     if ( pix )
         g_object_unref (pix);
 
+    g_free (name);
     g_free (icon_name);
 
     gtk_tree_iter_free (iter);
@@ -1794,7 +1803,10 @@ update_device_details (UpDevice *device)
 
     gtk_widget_show (view);
 
-    if (current_page - 1 == page_index)
+    /* Attempt to redisplay the current page (or display the first item
+     * on startup.
+     */
+    if (current_page - 1 == page_index || current_page == -1)
     {
         DBG("current page == page index");
         gtk_notebook_set_current_page (GTK_NOTEBOOK (device_details_notebook), page_index);
