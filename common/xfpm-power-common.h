@@ -53,4 +53,6 @@ gchar *xfpm_battery_get_icon_prefix_device_enum_type (UpDeviceKind type);
 
 gchar *get_device_icon_name (UpClient *upower, UpDevice *device);
 
+gchar *get_device_description (UpClient *upower, UpDevice *device);
+
 #endif /* XFPM_UPOWER_COMMON */

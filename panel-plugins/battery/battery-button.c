@@ -86,7 +86,6 @@ typedef struct
 G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_TOGGLE_BUTTON)
 
 static void battery_button_finalize   (GObject *object);
-static gchar* get_device_description (BatteryButton *button, UpDevice *device);
 static GList* find_device_in_list (BatteryButton *button, const gchar *object_path);
 static gboolean battery_button_set_icon (BatteryButton *button);
 static gboolean battery_button_press_event (GtkWidget *widget, GdkEventButton *event);
@@ -170,116 +169,6 @@ battery_button_set_tooltip (BatteryButton *button)
     }
 }
 
-static gchar*
-get_device_description (BatteryButton *button, UpDevice *device)
-{
-    gchar *tip = NULL;
-    gchar *est_time_str = NULL;
-    guint type = 0, state = 0;
-    gchar *model = NULL, *vendor = NULL;
-    gboolean present;
-    gdouble percentage;
-    guint64 time_to_empty, time_to_full;
-
-    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
-    g_object_get (device,
-		  "kind", &type,
-		  "vendor", &vendor,
-		  "model", &model,
-		  "state", &state,
-		  "is-present", &present,
-		  "percentage", &percentage,
-		  "time-to-empty", &time_to_empty,
-		  "time-to-full", &time_to_full,
-		   NULL);
-
-    if (device == button->priv->display_device)
-    {
-	vendor = g_strdup (_("Computer"));
-    }
-
-    if ( state == UP_DEVICE_STATE_FULLY_CHARGED )
-    {
-	if ( time_to_empty > 0 )
-	{
-	    est_time_str = xfpm_battery_get_time_string (time_to_empty);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%, %s runtime)\t"),
-				   vendor, model,
-				   percentage,
-				   est_time_str);
-	    g_free (est_time_str);
-	}
-	else
-	{
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%)\t"),
-				   vendor, model,
-				   percentage);
-	}
-    }
-    else if ( state == UP_DEVICE_STATE_CHARGING )
-    {
-	if ( time_to_full != 0 )
-	{
-	    est_time_str = xfpm_battery_get_time_string (time_to_full);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%, %s)\t"),
-				   vendor, model,
-				   percentage,
-				   est_time_str);
-	    g_free (est_time_str);
-	}
-	else
-	{
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%)\t"),
-				   vendor, model,
-				   percentage);
-	}
-    }
-    else if ( state == UP_DEVICE_STATE_DISCHARGING )
-    {
-	if ( time_to_empty != 0 )
-	{
-	    est_time_str = xfpm_battery_get_time_string (time_to_empty);
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%, %s)\t"),
-				   vendor, model,
-				   percentage,
-				   est_time_str);
-	    g_free (est_time_str);
-	}
-	else
-	{
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%)\t"),
-				   vendor, model,
-				   percentage);
-	}
-
-    }
-    else if ( state == UP_DEVICE_STATE_PENDING_CHARGE )
-    {
-	tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to discharge (%0.0f%%)\t"),
-			       vendor, model,
-			       percentage);
-    }
-    else if ( state == UP_DEVICE_STATE_PENDING_DISCHARGE )
-    {
-	tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to charge (%0.0f%%)\t"),
-	                       vendor, model,
-			       percentage);
-    }
-    else if ( state == UP_DEVICE_STATE_EMPTY )
-    {
-	tip = g_strdup_printf (_("<b>%s %s</b>\t\nis empty\t"),
-	                       vendor, model);
-    }
-    else
-    {
-	/* unknown device state, just display the percentage */
-	tip = g_strdup_printf (_("<b>%s %s</b>\t\nUnknown state\t"),
-			       vendor, model);
-    }
-
-    return tip;
-}
-
 static GList*
 find_device_in_list (BatteryButton *button, const gchar *object_path)
 {
@@ -326,7 +215,7 @@ battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *
 		   NULL);
 
     icon_name = get_device_icon_name (button->priv->upower, device);
-    details = get_device_description(button, device);
+    details = get_device_description(button->priv->upower, device);
 
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
 				    icon_name,

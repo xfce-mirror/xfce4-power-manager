@@ -1557,14 +1557,8 @@ update_sideview_icon (UpDevice *device)
                   "model", &model,
                   NULL);
 
-    /* If we get a vendor or model we can use it, otherwise translate the
-     * device type into something readable (works for things like ac_power)
-     */
-    if (g_strcmp0(vendor, "") != 0 || g_strcmp0(model, "") != 0)
-        name = g_strdup_printf ("%s %s", vendor, model);
-    else
-        name = g_strdup_printf ("%s", xfpm_power_translate_device_type (type));
 
+    name = get_device_description (upower, device);
     icon_name = get_device_icon_name (upower, device);
 
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),

@@ -293,3 +293,140 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 
     return icon_name;
 }
+
+gchar*
+get_device_description (UpClient *upower, UpDevice *device)
+{
+    UpDevice *display_device;
+    gchar *tip = NULL;
+    gchar *est_time_str = NULL;
+    guint type = 0, state = 0;
+    gchar *model = NULL, *vendor = NULL;
+    gboolean present, online;
+    gdouble percentage;
+    guint64 time_to_empty, time_to_full;
+
+    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
+    g_object_get (device,
+                  "kind", &type,
+                  "vendor", &vendor,
+                  "model", &model,
+                  "state", &state,
+                  "is-present", &present,
+                  "percentage", &percentage,
+                  "time-to-empty", &time_to_empty,
+                  "time-to-full", &time_to_full,
+                  "online", &online,
+                   NULL);
+
+    display_device = up_client_get_display_device (upower);
+
+    if (device == display_device)
+    {
+        g_free (vendor);
+        vendor = g_strdup (_("Computer"));
+
+        g_free (model);
+        model = NULL;
+    }
+
+    /* If we get a vendor or model we can use it, otherwise translate the
+     * device type into something readable (works for things like ac_power)
+     */
+    if (g_strcmp0(vendor, "") == 0 && g_strcmp0(model, "") == 0)
+        vendor = g_strdup_printf ("%s", xfpm_power_translate_device_type (type));
+
+    if ( state == UP_DEVICE_STATE_FULLY_CHARGED )
+    {
+        if ( time_to_empty > 0 )
+        {
+            est_time_str = xfpm_battery_get_time_string (time_to_empty);
+            tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%, %s runtime)\t"),
+                                   vendor, model,
+                                   percentage,
+                                   est_time_str);
+            g_free (est_time_str);
+        }
+        else
+        {
+            tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%)\t"),
+                                   vendor, model,
+                                   percentage);
+        }
+    }
+    else if ( state == UP_DEVICE_STATE_CHARGING )
+    {
+        if ( time_to_full != 0 )
+        {
+            est_time_str = xfpm_battery_get_time_string (time_to_full);
+            tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%, %s)\t"),
+                                   vendor, model,
+                                   percentage,
+                                   est_time_str);
+            g_free (est_time_str);
+        }
+        else
+        {
+            tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%)\t"),
+                                   vendor, model,
+                                   percentage);
+        }
+    }
+    else if ( state == UP_DEVICE_STATE_DISCHARGING )
+    {
+        if ( time_to_empty != 0 )
+        {
+            est_time_str = xfpm_battery_get_time_string (time_to_empty);
+            tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%, %s)\t"),
+                                   vendor, model,
+                                   percentage,
+                                   est_time_str);
+            g_free (est_time_str);
+        }
+        else
+        {
+            tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%)\t"),
+                                   vendor, model,
+                                   percentage);
+        }
+    }
+    else if ( state == UP_DEVICE_STATE_PENDING_CHARGE )
+    {
+        tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to discharge (%0.0f%%)\t"),
+                               vendor, model,
+                               percentage);
+    }
+    else if ( state == UP_DEVICE_STATE_PENDING_DISCHARGE )
+    {
+        tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to charge (%0.0f%%)\t"),
+                               vendor, model,
+                               percentage);
+    }
+    else if ( state == UP_DEVICE_STATE_EMPTY )
+    {
+        tip = g_strdup_printf (_("<b>%s %s</b>\t\nis empty\t"),
+                               vendor, model);
+    }
+    else
+    {
+        if (type == UP_DEVICE_KIND_LINE_POWER)
+        {
+            /* On the 2nd line we want to know if the power cord is plugged
+             * in or not */
+            tip = g_strdup_printf (_("<b>%s %s</b>\t\n%s\t"),
+                           vendor, model, online ? _("Plugged in") : _("Not plugged in"));
+        }
+        else
+        {
+            /* unknown device state, just display the percentage */
+            tip = g_strdup_printf (_("<b>%s %s</b>\t\nUnknown state\t"),
+                           vendor, model);
+        }
+    }
+
+    g_free(model);
+    g_free(vendor);
+    g_object_unref (display_device);
+
+    return tip;
+}
