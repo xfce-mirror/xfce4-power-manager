@@ -1800,7 +1800,7 @@ update_device_details (UpDevice *device)
     /* Attempt to redisplay the current page (or display the first item
      * on startup.
      */
-    if (current_page - 1 == page_index || current_page == -1)
+    if (current_page - 1 == page_index)
     {
         DBG("current page == page index");
         gtk_notebook_set_current_page (GTK_NOTEBOOK (device_details_notebook), page_index);

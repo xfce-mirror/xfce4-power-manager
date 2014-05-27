@@ -297,7 +297,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 gchar*
 get_device_description (UpClient *upower, UpDevice *device)
 {
-    UpDevice *display_device;
+    UpDevice *display_device = NULL;
     gchar *tip = NULL;
     gchar *est_time_str = NULL;
     guint type = 0, state = 0;
@@ -319,7 +319,9 @@ get_device_description (UpClient *upower, UpDevice *device)
                   "online", &online,
                    NULL);
 
+#if UP_CHECK_VERSION(0, 99, 0)
     display_device = up_client_get_display_device (upower);
+#endif
 
     if (device == display_device)
     {
