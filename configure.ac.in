@@ -137,7 +137,7 @@ fi
 AC_ARG_ENABLE([network-manager], AS_HELP_STRING([--disable-network-manager],[Disable network manager support]),
   [ac_network_manager=$enableval], [ac_network_manager=yes])
 AC_MSG_CHECKING([whether to build with network manager support.])
-if test "x$ac_network_manager = xyes"; then
+if test "x$ac_network_manager" = "xyes"; then
     AC_DEFINE(WITH_NETWORK_MANAGER, 1 , [Network Manager support])
 fi
 AC_MSG_RESULT([$ac_network_manager])
