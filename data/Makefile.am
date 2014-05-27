@@ -1,3 +1,4 @@
 SUBDIRS = 		\
 	icons		\
-	interfaces
+	interfaces	\
+	appdata
