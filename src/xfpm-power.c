@@ -327,14 +327,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 	{
 	    if ( !xfpm_power_prompt_password (power) )
 	    {
-		const gchar *icon_name;
-		if ( !g_strcmp0 (sleep_time, "Hibernate") )
-		    icon_name = XFPM_HIBERNATE_ICON;
-		else
-		    icon_name = XFPM_SUSPEND_ICON;
-
-		xfpm_power_report_error (power, _("Incorrect password entered"), icon_name);
-
+		xfpm_power_report_error (power, _("Incorrect password entered"), "dialog-error");
 		return;
 	    }
 	}
@@ -421,13 +414,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 	}
 	else
 	{
-	    const gchar *icon_name;
-	    if ( !g_strcmp0 (sleep_time, "Hibernate") )
-		icon_name = XFPM_HIBERNATE_ICON;
-	    else
-		icon_name = XFPM_SUSPEND_ICON;
-
-	    xfpm_power_report_error (power, error->message, icon_name);
+	    xfpm_power_report_error (power, error->message, "dialog-error");
 	    g_error_free (error);
 	}
     }
@@ -625,8 +612,6 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
     {
 	GtkWidget *hibernate;
 	hibernate = gtk_button_new_with_label (_("Hibernate"));
-	img = gtk_image_new_from_icon_name (XFPM_HIBERNATE_ICON, GTK_ICON_SIZE_BUTTON);
-	gtk_button_set_image (GTK_BUTTON (hibernate), img);
 	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), hibernate, GTK_RESPONSE_NONE);
 
 	g_signal_connect_swapped (hibernate, "clicked",
@@ -638,8 +623,6 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 	GtkWidget *suspend;
 
 	suspend = gtk_button_new_with_label (_("Suspend"));
-	img = gtk_image_new_from_icon_name (XFPM_SUSPEND_ICON, GTK_ICON_SIZE_BUTTON);
-	gtk_button_set_image (GTK_BUTTON (suspend), img);
 	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), suspend, GTK_RESPONSE_NONE);
 
 	g_signal_connect_swapped (suspend, "clicked",
@@ -651,8 +634,6 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 	GtkWidget *shutdown;
 
 	shutdown = gtk_button_new_with_label (_("Shutdown"));
-	img = gtk_image_new_from_icon_name (XFPM_SUSPEND_ICON, GTK_ICON_SIZE_BUTTON);
-	gtk_button_set_image (GTK_BUTTON (shutdown), img);
 	gtk_dialog_add_action_widget (GTK_DIALOG (dialog), shutdown, GTK_RESPONSE_NONE);
 
 	g_signal_connect_swapped (shutdown, "clicked",

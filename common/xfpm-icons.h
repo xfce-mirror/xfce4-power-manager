@@ -25,14 +25,11 @@ G_BEGIN_DECLS
 
 #define XFPM_AC_ADAPTER_ICON			"xfpm-ac-adapter"
 
-#define XFPM_BATTERY_ICON			"battery"
 #define XFPM_UPS_ICON				"xfpm-ups-100"
 #define XFPM_KBD_ICON				"xfpm-keyboard-100"
 #define XFPM_MOUSE_ICON				"xfpm-mouse-100"
 #define XFPM_PHONE_ICON				"xfpm-phone-100"
 #define XFPM_PDA_ICON				"xfpm-pda-100"
-
-#define XFPM_PROCESSOR_ICON			"processor"
 
 #define XFPM_PRIMARY_ICON_PREFIX		"xfpm-primary-"
 #define XFPM_UPS_ICON_PREFIX			"xfpm-ups-"
@@ -47,8 +44,6 @@ G_BEGIN_DECLS
 
 #define XFPM_DISPLAY_BRIGHTNESS_ICON	        "xfpm-brightness-lcd"
 #define XFPM_DISPLAY_BRIGHTNESS_INVALID_ICON	"xfpm-brightness-lcd-missing" /* When no hw found */
-#define XFPM_HIBERNATE_ICON                    "xfpm-hibernate"
-#define XFPM_SUSPEND_ICON                      "xfpm-suspend"
 
 G_END_DECLS
 
