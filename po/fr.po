@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-26 06:30+0200\n"
-"PO-Revision-Date: 2014-05-26 12:58+0000\n"
+"POT-Creation-Date: 2014-05-26 18:30+0200\n"
+"PO-Revision-Date: 2014-05-27 09:19+0000\n"
 "Last-Translator: SpiKe <leguen.yannick@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/xfce4-power-manager/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -86,7 +86,7 @@ msgstr "<b>Sur batterie</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "<b>Plugged in</b>"
-msgstr "<b>Sur secteur</b>"
+msgstr "<b>Branché</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "When laptop lid is closed"
@@ -244,9 +244,9 @@ msgstr "Verrouiller l'écran"
 msgid "On battery"
 msgstr "Sur batterie"
 
-#: ../settings/xfpm-settings.c:935
+#: ../settings/xfpm-settings.c:935 ../common/xfpm-power-common.c:417
 msgid "Plugged in"
-msgstr "Sur secteur"
+msgstr "Branché"
 
 #: ../settings/xfpm-settings.c:938
 msgid "Always"
@@ -280,86 +280,86 @@ msgstr "Arrêt"
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Lorsque toutes les sources d'alimentation de la machine atteignent ce niveau de charge"
 
-#: ../settings/xfpm-settings.c:1618
+#: ../settings/xfpm-settings.c:1621
 msgid "Attribute"
 msgstr "Attribut"
 
-#: ../settings/xfpm-settings.c:1625
+#: ../settings/xfpm-settings.c:1628
 msgid "Value"
 msgstr "Valeur"
 
-#: ../settings/xfpm-settings.c:1635
+#: ../settings/xfpm-settings.c:1638
 msgid "Device"
 msgstr "Périphérique"
 
-#: ../settings/xfpm-settings.c:1661
+#: ../settings/xfpm-settings.c:1664
 msgid "Type"
 msgstr "Type"
 
-#: ../settings/xfpm-settings.c:1669
+#: ../settings/xfpm-settings.c:1672
 msgid "PowerSupply"
 msgstr "Alimentation"
 
-#: ../settings/xfpm-settings.c:1670 ../src/xfpm-main.c:76
+#: ../settings/xfpm-settings.c:1673 ../src/xfpm-main.c:76
 msgid "True"
 msgstr "Vrai"
 
-#: ../settings/xfpm-settings.c:1670 ../src/xfpm-main.c:76
+#: ../settings/xfpm-settings.c:1673 ../src/xfpm-main.c:76
 msgid "False"
 msgstr "Faux"
 
-#: ../settings/xfpm-settings.c:1681
+#: ../settings/xfpm-settings.c:1684
 msgid "Model"
 msgstr "Modèle"
 
-#: ../settings/xfpm-settings.c:1689
+#: ../settings/xfpm-settings.c:1692
 msgid "Technology"
 msgstr "Technologie"
 
-#: ../settings/xfpm-settings.c:1700
+#: ../settings/xfpm-settings.c:1703
 msgid "Energy percent"
 msgstr "Pourcentage d’énergie"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1710 ../settings/xfpm-settings.c:1723
-#: ../settings/xfpm-settings.c:1736
+#: ../settings/xfpm-settings.c:1713 ../settings/xfpm-settings.c:1726
+#: ../settings/xfpm-settings.c:1739
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:1713
+#: ../settings/xfpm-settings.c:1716
 msgid "Energy full design"
 msgstr "Énergie à pleine charge nominale"
 
-#: ../settings/xfpm-settings.c:1726
+#: ../settings/xfpm-settings.c:1729
 msgid "Energy full"
 msgstr "Énergie à pleine charge"
 
-#: ../settings/xfpm-settings.c:1739
+#: ../settings/xfpm-settings.c:1742
 msgid "Energy empty"
 msgstr "Énergie à vide"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1749
+#: ../settings/xfpm-settings.c:1752
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:1752
+#: ../settings/xfpm-settings.c:1755
 msgid "Voltage"
 msgstr "Tension"
 
-#: ../settings/xfpm-settings.c:1763
+#: ../settings/xfpm-settings.c:1766
 msgid "Vendor"
 msgstr "Constructeur"
 
-#: ../settings/xfpm-settings.c:1773
+#: ../settings/xfpm-settings.c:1776
 msgid "Serial"
 msgstr "Numéro de série"
 
-#: ../settings/xfpm-settings.c:2028
+#: ../settings/xfpm-settings.c:2034
 msgid "Check your power manager installation"
 msgstr "Vérifiez votre installation du gestionnaire d'alimentation"
 
-#: ../settings/xfpm-settings.c:2084
+#: ../settings/xfpm-settings.c:2090
 msgid "Devices"
 msgstr "Périphériques"
 
@@ -448,8 +448,7 @@ msgstr "Téléphone"
 msgid "Tablet"
 msgstr "Tablette"
 
-#: ../common/xfpm-power-common.c:63
-#: ../panel-plugins/battery/battery-button.c:198
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:327
 msgid "Computer"
 msgstr "Ordinateur"
 
@@ -518,6 +517,90 @@ msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minute"
 msgstr[1] "minutes"
+
+#: ../common/xfpm-power-common.c:344
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Fully charged (%0.0f%%, %s runtime)\t"
+msgstr "<b>%s %s</b>\t\nComplètement chargée (%0.0f%%, durée %s)\t"
+
+#: ../common/xfpm-power-common.c:352
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Fully charged (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nComplètement chargée (%0.0f%%)\t"
+
+#: ../common/xfpm-power-common.c:362
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Charging (%0.0f%%, %s)\t"
+msgstr "<b>%s %s</b>\t\nEn charge (%0.0f%%, %s)\t"
+
+#: ../common/xfpm-power-common.c:370
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Charging (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nEn charge (%0.0f%%)\t"
+
+#: ../common/xfpm-power-common.c:380
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Discharging (%0.0f%%, %s)\t"
+msgstr "<b>%s %s</b>\t\nEn décharge (%0.0f%%, %s)\t"
+
+#: ../common/xfpm-power-common.c:388
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Discharging (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nEn décharge (%0.0f%%)\t"
+
+#: ../common/xfpm-power-common.c:395
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Waiting to discharge (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nEn attente de décharge (%0.0f%%)\t"
+
+#: ../common/xfpm-power-common.c:401
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Waiting to charge (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nEn attente de charge (%0.0f%%)\t"
+
+#: ../common/xfpm-power-common.c:407
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"is empty\t"
+msgstr "<b>%s %s</b>\t\nest vide\t"
+
+#. On the 2nd line we want to know if the power cord is plugged
+#. * in or not
+#: ../common/xfpm-power-common.c:416
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"%s\t"
+msgstr "<b>%s %s</b>\t\n%s\t"
+
+#: ../common/xfpm-power-common.c:417
+msgid "Not plugged in"
+msgstr "Non branché"
+
+#. unknown device state, just display the percentage
+#: ../common/xfpm-power-common.c:422
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Unknown state\t"
+msgstr "<b>%s %s</b>\t\nÉtat inconnu"
 
 #: ../src/xfpm-power.c:312
 msgid "_Hibernate"
@@ -854,83 +937,12 @@ msgid "Brightness plugin"
 msgstr "Greffon de luminosité"
 
 #. how did we get here?
-#: ../panel-plugins/battery/battery-button.c:169
+#: ../panel-plugins/battery/battery-button.c:168
 msgid "Display battery levels for attached devices"
 msgstr "Afficher les niveaux de batterie pour les périphériques connectés"
 
-#: ../panel-plugins/battery/battery-button.c:206
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%, %s runtime)\t"
-msgstr "<b>%s %s</b>\t\nComplètement chargée (%0.0f%%, durée %s)\t"
-
-#: ../panel-plugins/battery/battery-button.c:214
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nComplètement chargée (%0.0f%%)\t"
-
-#: ../panel-plugins/battery/battery-button.c:224
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\t\nEn charge (%0.0f%%, %s)\t"
-
-#: ../panel-plugins/battery/battery-button.c:232
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nEn charge (%0.0f%%)\t"
-
-#: ../panel-plugins/battery/battery-button.c:242
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\t\nEn décharge (%0.0f%%, %s)\t"
-
-#: ../panel-plugins/battery/battery-button.c:250
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nEn décharge (%0.0f%%)\t"
-
-#: ../panel-plugins/battery/battery-button.c:258
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to discharge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nEn attente de décharge (%0.0f%%)\t"
-
-#: ../panel-plugins/battery/battery-button.c:264
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to charge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nEn attente de charge (%0.0f%%)\t"
-
-#: ../panel-plugins/battery/battery-button.c:270
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"is empty\t"
-msgstr "<b>%s %s</b>\t\nest vide\t"
-
-#. unknown device state, just display the percentage
-#: ../panel-plugins/battery/battery-button.c:276
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Unknown state\t"
-msgstr "<b>%s %s</b>\t\nÉtat inconnu"
-
 #. Presentation mode checkbox
-#: ../panel-plugins/battery/battery-button.c:777
+#: ../panel-plugins/battery/battery-button.c:666
 msgid "Presentation _mode"
 msgstr "_Mode présentation"
 
