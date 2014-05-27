@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-26 06:30+0200\n"
-"PO-Revision-Date: 2014-05-26 15:27+0000\n"
+"POT-Creation-Date: 2014-05-26 18:30+0200\n"
+"PO-Revision-Date: 2014-05-27 05:57+0000\n"
 "Last-Translator: cybercop <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xfce4-power-manager/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -246,7 +246,7 @@ msgstr "Заключи екрана"
 msgid "On battery"
 msgstr "На батерия"
 
-#: ../settings/xfpm-settings.c:935
+#: ../settings/xfpm-settings.c:935 ../common/xfpm-power-common.c:417
 msgid "Plugged in"
 msgstr "Свързано"
 
@@ -282,86 +282,86 @@ msgstr "В готовност"
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Когато всички източници на захранване на компютъра достигнат до това ниво"
 
-#: ../settings/xfpm-settings.c:1618
+#: ../settings/xfpm-settings.c:1621
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: ../settings/xfpm-settings.c:1625
+#: ../settings/xfpm-settings.c:1628
 msgid "Value"
 msgstr "Стойност"
 
-#: ../settings/xfpm-settings.c:1635
+#: ../settings/xfpm-settings.c:1638
 msgid "Device"
 msgstr "Устройство"
 
-#: ../settings/xfpm-settings.c:1661
+#: ../settings/xfpm-settings.c:1664
 msgid "Type"
 msgstr "Тип"
 
-#: ../settings/xfpm-settings.c:1669
+#: ../settings/xfpm-settings.c:1672
 msgid "PowerSupply"
 msgstr "Захранващ адаптор"
 
-#: ../settings/xfpm-settings.c:1670 ../src/xfpm-main.c:76
+#: ../settings/xfpm-settings.c:1673 ../src/xfpm-main.c:76
 msgid "True"
 msgstr "Да"
 
-#: ../settings/xfpm-settings.c:1670 ../src/xfpm-main.c:76
+#: ../settings/xfpm-settings.c:1673 ../src/xfpm-main.c:76
 msgid "False"
 msgstr "Не"
 
-#: ../settings/xfpm-settings.c:1681
+#: ../settings/xfpm-settings.c:1684
 msgid "Model"
 msgstr "Модел"
 
-#: ../settings/xfpm-settings.c:1689
+#: ../settings/xfpm-settings.c:1692
 msgid "Technology"
 msgstr "Технология"
 
-#: ../settings/xfpm-settings.c:1700
+#: ../settings/xfpm-settings.c:1703
 msgid "Energy percent"
 msgstr "Количество енергия"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1710 ../settings/xfpm-settings.c:1723
-#: ../settings/xfpm-settings.c:1736
+#: ../settings/xfpm-settings.c:1713 ../settings/xfpm-settings.c:1726
+#: ../settings/xfpm-settings.c:1739
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:1713
+#: ../settings/xfpm-settings.c:1716
 msgid "Energy full design"
 msgstr "Проектна мощност"
 
-#: ../settings/xfpm-settings.c:1726
+#: ../settings/xfpm-settings.c:1729
 msgid "Energy full"
 msgstr "Пълна мощност"
 
-#: ../settings/xfpm-settings.c:1739
+#: ../settings/xfpm-settings.c:1742
 msgid "Energy empty"
 msgstr "Мощност при изтощаване"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1749
+#: ../settings/xfpm-settings.c:1752
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:1752
+#: ../settings/xfpm-settings.c:1755
 msgid "Voltage"
 msgstr "Напрежение"
 
-#: ../settings/xfpm-settings.c:1763
+#: ../settings/xfpm-settings.c:1766
 msgid "Vendor"
 msgstr "Производител"
 
-#: ../settings/xfpm-settings.c:1773
+#: ../settings/xfpm-settings.c:1776
 msgid "Serial"
 msgstr "Сериен номер"
 
-#: ../settings/xfpm-settings.c:2028
+#: ../settings/xfpm-settings.c:2034
 msgid "Check your power manager installation"
 msgstr "Проверете инсталацията на управлението на захранването"
 
-#: ../settings/xfpm-settings.c:2084
+#: ../settings/xfpm-settings.c:2090
 msgid "Devices"
 msgstr "Устройства"
 
@@ -450,8 +450,7 @@ msgstr "Телефон"
 msgid "Tablet"
 msgstr "Таблет"
 
-#: ../common/xfpm-power-common.c:63
-#: ../panel-plugins/battery/battery-button.c:198
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:327
 msgid "Computer"
 msgstr "Компютър"
 
@@ -520,6 +519,90 @@ msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "минута"
 msgstr[1] "минути"
+
+#: ../common/xfpm-power-common.c:344
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Fully charged (%0.0f%%, %s runtime)\t"
+msgstr "<b>%s %s</b>\nНапълно заредена (%0.0f%%, %s време за работа)"
+
+#: ../common/xfpm-power-common.c:352
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Fully charged (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\nНапълно заредена (%0.0f%%)"
+
+#: ../common/xfpm-power-common.c:362
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Charging (%0.0f%%, %s)\t"
+msgstr "<b>%s %s</b>\nЗареждане (%0.0f%%, %s)"
+
+#: ../common/xfpm-power-common.c:370
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Charging (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\nЗареждане (%0.0f%%)"
+
+#: ../common/xfpm-power-common.c:380
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Discharging (%0.0f%%, %s)\t"
+msgstr "<b>%s %s</b>\nРазреждане (%0.0f%%, %s)"
+
+#: ../common/xfpm-power-common.c:388
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Discharging (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\nРазреждане (%0.0f%%)"
+
+#: ../common/xfpm-power-common.c:395
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Waiting to discharge (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\nВреме до разреждане (%0.0f%%)"
+
+#: ../common/xfpm-power-common.c:401
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Waiting to charge (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\nВреме до зареждане (%0.0f%%)"
+
+#: ../common/xfpm-power-common.c:407
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"is empty\t"
+msgstr "<b>%s %s</b>\nе празна"
+
+#. On the 2nd line we want to know if the power cord is plugged
+#. * in or not
+#: ../common/xfpm-power-common.c:416
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"%s\t"
+msgstr "<b>%s %s</b> \n%s "
+
+#: ../common/xfpm-power-common.c:417
+msgid "Not plugged in"
+msgstr "Не е свързано"
+
+#. unknown device state, just display the percentage
+#: ../common/xfpm-power-common.c:422
+#, c-format
+msgid ""
+"<b>%s %s</b>\t\n"
+"Unknown state\t"
+msgstr "<b>%s %s</b>\nНеизвестно състояние"
 
 #: ../src/xfpm-power.c:312
 msgid "_Hibernate"
@@ -856,83 +939,12 @@ msgid "Brightness plugin"
 msgstr "Плъгин за яркостта"
 
 #. how did we get here?
-#: ../panel-plugins/battery/battery-button.c:169
+#: ../panel-plugins/battery/battery-button.c:168
 msgid "Display battery levels for attached devices"
 msgstr "Показване на нивото на зареждане на батерията за свързаните устройства"
 
-#: ../panel-plugins/battery/battery-button.c:206
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%, %s runtime)\t"
-msgstr "<b>%s %s</b>\nНапълно заредена (%0.0f%%, %s време за работа)"
-
-#: ../panel-plugins/battery/battery-button.c:214
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\nНапълно заредена (%0.0f%%)"
-
-#: ../panel-plugins/battery/battery-button.c:224
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\nЗареждане (%0.0f%%, %s)"
-
-#: ../panel-plugins/battery/battery-button.c:232
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\nЗареждане (%0.0f%%)"
-
-#: ../panel-plugins/battery/battery-button.c:242
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\nРазреждане (%0.0f%%, %s)"
-
-#: ../panel-plugins/battery/battery-button.c:250
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\nРазреждане (%0.0f%%)"
-
-#: ../panel-plugins/battery/battery-button.c:258
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to discharge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\nВреме до разреждане (%0.0f%%)"
-
-#: ../panel-plugins/battery/battery-button.c:264
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to charge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\nВреме до зареждане (%0.0f%%)"
-
-#: ../panel-plugins/battery/battery-button.c:270
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"is empty\t"
-msgstr "<b>%s %s</b>\nе празна"
-
-#. unknown device state, just display the percentage
-#: ../panel-plugins/battery/battery-button.c:276
-#, c-format
-msgid ""
-"<b>%s %s</b>\t\n"
-"Unknown state\t"
-msgstr "<b>%s %s</b>\nНеизвестно състояние"
-
 #. Presentation mode checkbox
-#: ../panel-plugins/battery/battery-button.c:777
+#: ../panel-plugins/battery/battery-button.c:666
 msgid "Presentation _mode"
 msgstr "Режим на представяне"
 
