@@ -576,7 +576,6 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 {
     GtkWidget *dialog;
     GtkWidget *content_area;
-    GtkWidget *img;
     GtkWidget *cancel;
     const gchar *message;
     gboolean can_shutdown;
