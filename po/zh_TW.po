@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-27 18:30+0200\n"
-"PO-Revision-Date: 2014-05-27 23:23+0000\n"
+"POT-Creation-Date: 2014-05-28 18:30+0200\n"
+"PO-Revision-Date: 2014-05-28 23:31+0000\n"
 "Last-Translator: 柏諺 黃 <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xfce4-power-manager/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -214,19 +214,19 @@ msgstr "無動作"
 #: ../settings/xfpm-settings.c:1032 ../settings/xfpm-settings.c:1168
 #: ../settings/xfpm-settings.c:1225 ../settings/xfpm-settings.c:1277
 #: ../settings/xfpm-settings.c:1350 ../settings/xfpm-settings.c:1401
-#: ../src/xfpm-power.c:625
+#: ../src/xfpm-power.c:624
 msgid "Suspend"
 msgstr "暫停"
 
 #: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:862
 #: ../settings/xfpm-settings.c:1038 ../settings/xfpm-settings.c:1174
 #: ../settings/xfpm-settings.c:1231 ../settings/xfpm-settings.c:1283
-#: ../settings/xfpm-settings.c:1364 ../src/xfpm-power.c:614
+#: ../settings/xfpm-settings.c:1364 ../src/xfpm-power.c:613
 msgid "Hibernate"
 msgstr "休眠"
 
 #: ../settings/xfpm-settings.c:800 ../settings/xfpm-settings.c:1180
-#: ../src/xfpm-power.c:636
+#: ../src/xfpm-power.c:635
 msgid "Shutdown"
 msgstr "關機"
 
@@ -397,8 +397,8 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 電源管理員未有執行，想要現在啟動嗎？"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:288 ../src/xfpm-power.c:555 ../src/xfpm-power.c:600
-#: ../src/xfpm-power.c:764 ../src/xfpm-power.c:788 ../src/xfpm-battery.c:252
+#: ../src/xfpm-power.c:288 ../src/xfpm-power.c:555 ../src/xfpm-power.c:599
+#: ../src/xfpm-power.c:763 ../src/xfpm-power.c:787 ../src/xfpm-battery.c:252
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "電源管理員"
@@ -641,44 +641,44 @@ msgstr "暫停系統"
 msgid "Shutdown the system"
 msgstr "關閉系統"
 
-#: ../src/xfpm-power.c:550 ../src/xfpm-power.c:597
+#: ../src/xfpm-power.c:550 ../src/xfpm-power.c:596
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "系統電量只餘下很少。請儲存您的工作以避免喪失資料"
 
-#: ../src/xfpm-power.c:765
+#: ../src/xfpm-power.c:764
 msgid "System is running on low power"
 msgstr "系統電量只餘下很少"
 
-#: ../src/xfpm-power.c:784
+#: ../src/xfpm-power.c:783
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "您的 %s 充電水平為低\n預估剩餘時間 %s"
 
-#: ../src/xfpm-power.c:1328
+#: ../src/xfpm-power.c:1327
 msgid ""
 "The requested operation requires elevated privileges.\t\n"
 "Please enter your password."
 msgstr "要求的動作需要提高權限。\t\n請輸入您的密碼。"
 
 #. Set the dialog's title
-#: ../src/xfpm-power.c:1337
+#: ../src/xfpm-power.c:1336
 msgid "xfce4-power-manager"
 msgstr "xfce4-power-manager"
 
 #. setup password label
-#: ../src/xfpm-power.c:1340
+#: ../src/xfpm-power.c:1339
 msgid "Password:"
 msgstr "密碼"
 
-#: ../src/xfpm-power.c:1466 ../src/xfpm-power.c:1499 ../src/xfpm-power.c:1518
-#: ../src/xfpm-power.c:1541
+#: ../src/xfpm-power.c:1465 ../src/xfpm-power.c:1498 ../src/xfpm-power.c:1517
+#: ../src/xfpm-power.c:1540
 #, c-format
 msgid "Permission denied"
 msgstr "許可被拒"
 
-#: ../src/xfpm-power.c:1526 ../src/xfpm-power.c:1549
+#: ../src/xfpm-power.c:1525 ../src/xfpm-power.c:1548
 #, c-format
 msgid "Suspend not supported"
 msgstr "不支援暫停"
@@ -940,6 +940,11 @@ msgstr "顯示附屬裝置的電池電力"
 #: ../panel-plugins/battery/battery-button.c:666
 msgid "Presentation _mode"
 msgstr "簡報模式(_M)"
+
+#. Preferences option
+#: ../panel-plugins/battery/battery-button.c:675
+msgid "_Preferences..."
+msgstr "偏好設定...(_P)"
 
 #: ../panel-plugins/battery/xfce4-battery-plugin.desktop.in.in.h:1
 msgid "Battery indicator plugin"
