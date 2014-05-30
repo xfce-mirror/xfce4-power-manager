@@ -66,6 +66,12 @@ void		xfpm_dpms_force_level	  (XfpmDpms *dpms, CARD16 level);
 
 void		xfpm_dpms_refresh 	  (XfpmDpms *dpms);
 
+void            xfpm_dpms_inhibit (XfpmDpms *dpms, gboolean inhibit);
+
+gboolean        xfpm_dpms_is_inhibited (XfpmDpms *dpms);
+
+void            xfpm_dpms_set_on_battery (XfpmDpms *dpms, gboolean on_battery);
+
 G_END_DECLS
 
 #endif /* HAVE_DPMS */

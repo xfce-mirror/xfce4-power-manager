@@ -34,7 +34,6 @@
 #include "xfpm-common.h"
 
 #include "xfpm-dpms.h"
-#include "xfpm-power.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
@@ -49,8 +48,7 @@ static void xfpm_dpms_finalize   (GObject *object);
 struct XfpmDpmsPrivate
 {
     XfpmXfconf      *conf;
-    XfpmPower       *power;
-    
+
     gboolean         dpms_capable;
     gboolean         inhibited;
     
@@ -156,22 +154,19 @@ xfpm_dpms_refresh (XfpmDpms *dpms)
     guint16 off_timeout;
     guint16 sleep_timeout;
     gboolean sleep_mode;
-    gboolean presentation_mode;
-    
-    presentation_mode = (xfpm_power_is_in_presentation_mode (dpms->priv->power) == TRUE);
-    
-    if ( dpms->priv->inhibited || presentation_mode)
+
+    if ( dpms->priv->inhibited)
     {
-	xfpm_dpms_disable (dpms);
-	return;
+        xfpm_dpms_disable (dpms);
+        return;
     }
     
     xfpm_dpms_get_enabled (dpms, &enabled);
     
     if ( !enabled )
     {
-	xfpm_dpms_disable (dpms);
-	return;
+        xfpm_dpms_disable (dpms);
+        return;
     }
 
     xfpm_dpms_enable (dpms);
@@ -205,13 +200,6 @@ xfpm_dpms_settings_changed_cb (GObject *obj, GParamSpec *spec, XfpmDpms *dpms)
 }
 
 static void
-xfpm_dpms_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmDpms *dpms)
-{
-    dpms->priv->on_battery = on_battery;
-    xfpm_dpms_refresh (dpms);
-}
-
-static void
 xfpm_dpms_class_init(XfpmDpmsClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
@@ -235,24 +223,16 @@ xfpm_dpms_init(XfpmDpms *dpms)
 
     if ( dpms->priv->dpms_capable )
     {
-	dpms->priv->power     = xfpm_power_get ();
-	dpms->priv->conf    = xfpm_xfconf_new  ();
-    
-	g_signal_connect (dpms->priv->power, "on-battery-changed",
-			  G_CALLBACK(xfpm_dpms_on_battery_changed_cb), dpms);
-			  
-	g_signal_connect (dpms->priv->conf, "notify",
-			  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
-			  
-	g_object_get (G_OBJECT (dpms->priv->power),
-		      "on-battery", &dpms->priv->on_battery,
-		      NULL);
-	
-	xfpm_dpms_refresh (dpms);
+        dpms->priv->conf    = xfpm_xfconf_new  ();
+
+        g_signal_connect (dpms->priv->conf, "notify",
+                  G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
+
+        xfpm_dpms_refresh (dpms);
     }
     else
     {
-	g_warning ("Monitor is not DPMS capable");
+        g_warning ("Monitor is not DPMS capable");
     }
 }
 
@@ -264,7 +244,6 @@ xfpm_dpms_finalize(GObject *object)
     dpms = XFPM_DPMS (object);
     
     g_object_unref (dpms->priv->conf);
-    g_object_unref (dpms->priv->power);
 
     G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }
@@ -336,6 +315,34 @@ void xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
     
     out:
 	;
+}
+
+gboolean
+xfpm_dpms_is_inhibited (XfpmDpms *dpms)
+{
+    return dpms->priv->inhibited;
+}
+
+void
+xfpm_dpms_inhibit (XfpmDpms *dpms, gboolean inhibit)
+{
+    if ( dpms->priv->inhibited == inhibit )
+        return;
+
+    dpms->priv->inhibited = inhibit;
+    xfpm_dpms_refresh (dpms);
+    XFPM_DEBUG ("dpms inhibited %s", inhibit ? "TURE" : "FALSE");
+}
+
+void
+xfpm_dpms_set_on_battery (XfpmDpms *dpms, gboolean on_battery)
+{
+    if ( dpms->priv->on_battery == on_battery )
+        return;
+
+    dpms->priv->on_battery = on_battery;
+    xfpm_dpms_refresh (dpms);
+    XFPM_DEBUG ("dpms on battery %s", on_battery ? "TURE" : "FALSE");
 }
 
 #endif /* HAVE_DPMS */
