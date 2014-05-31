@@ -60,6 +60,7 @@
 #include "egg-idletime.h"
 #include "xfpm-systemd.h"
 #include "xfpm-suspend.h"
+#include "xfpm-brightness.h"
 
 
 static void xfpm_power_finalize     (GObject *object);
@@ -312,6 +313,8 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 #ifdef WITH_NETWORK_MANAGER
     gboolean network_manager_sleep;
 #endif
+    XfpmBrightness *brightness;
+    gint32 brightness_level;
 
     if ( power->priv->inhibited && force == FALSE)
     {
@@ -344,6 +347,10 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 #endif
 
     g_signal_emit (G_OBJECT (power), signals [SLEEPING], 0);
+    /* Get the current brightness level so we can use it after we suspend */
+    brightness = xfpm_brightness_new();
+    xfpm_brightness_setup (brightness);
+    xfpm_brightness_get_level (brightness, &brightness_level);
 
 #ifdef WITH_NETWORK_MANAGER
     g_object_get (G_OBJECT (power->priv->conf),
@@ -429,6 +436,11 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
 
     g_signal_emit (G_OBJECT (power), signals [WAKING_UP], 0);
+    /* Check/update any changes while we slept */
+    xfpm_power_get_properties (power);
+    /* Restore the brightness level from before we suspended */
+    xfpm_brightness_set_level (brightness, brightness_level);
+
 #ifdef WITH_NETWORK_MANAGER
     if ( network_manager_sleep )
     {

@@ -382,7 +382,7 @@ xfpm_brightness_helper_get_level (XfpmBrightness *brg, gint32 *level)
 }
 
 static gboolean
-xfpm_brightness_helper_set_level (XfpmBrightness *brg, gint level)
+xfpm_brightness_helper_set_level (XfpmBrightness *brg, gint32 level)
 {
     gboolean ret;
     GError *error = NULL;
