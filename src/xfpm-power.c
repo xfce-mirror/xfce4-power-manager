@@ -194,7 +194,9 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
 	    GList *list;
 	    guint len, i;
 	    g_signal_emit (G_OBJECT (power), signals [ON_BATTERY_CHANGED], 0, on_battery);
+#ifdef HAVE_DPMS
         xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
+#endif
 	    power->priv->on_battery = on_battery;
 	    list = g_hash_table_get_values (power->priv->hash);
 	    len = g_list_length (list);
