@@ -1,125 +1,125 @@
-# Polish translation for xfce4-power-manager.
-# Copyright (C) 2011 xfce4-power-manager COPYRIGHT HOLDER
-# This file is distributed under the same license as the xfce4-power-manager package.
-# Piotr Sokół <psokol@jabster.pl>, 2011, 2012.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # 
+# Translators:
+# Piotr Sokół <psokol@jabster.pl>, 2011-2012
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce-power-manager 1.0.10\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-06 13:06+0000\n"
-"PO-Revision-Date: 2012-04-29 18:56+0200\n"
-"Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
-"Language-Team: polski <>\n"
+"POT-Creation-Date: 2013-07-02 23:12+0200\n"
+"PO-Revision-Date: 2014-06-01 22:30+0000\n"
+"Last-Translator: OSWorld <michal.olber@osworld.pl>\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/xfce4-power-manager/language/pl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bits\n"
+"Content-Transfer-Encoding: 8bit\n"
 "Language: pl\n"
-"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : ((n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2));\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1
-msgid "<b>Actions</b>"
-msgstr "<b>Czynności</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:2
-msgid "<b>Advanced Options</b>"
-msgstr "<b>Zaawansowane</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "<b>Brightness</b>"
-msgstr "<b>Jasność</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "<b>General Options</b>"
-msgstr "<b>Ogólne</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "<b>Monitor</b>"
-msgstr "<b>Ekran</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Actions"
-msgstr "Czynności"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "Consider the computer on low power at:"
-msgstr "Niski poziom naładowania akumulatora:"
-
-#. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:820
-#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
-#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
-#: ../src/xfpm-power.c:779
-msgid "Hibernate"
-msgstr "Zahibernowanie"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Level:"
-msgstr "Poziom:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "Lock screen when going for suspend/hibernate"
-msgstr ""
-"Blokowanie ekranu po wstrzymaniu lub zahibernowaniu działania komputera"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
-msgid "Monitor"
-msgstr "Ekran"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Monitor power management control"
-msgstr "Zarządzanie zasilaniem ekranu"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:809
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
 #: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1026
 #: ../settings/xfpm-settings.c:1203 ../settings/xfpm-settings.c:1260
 #: ../settings/xfpm-settings.c:1312
 msgid "Nothing"
 msgstr "Brak"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
+msgid "Xfce Power Manager"
+msgstr "Zasilanie"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "Power manager settings"
 msgstr "Konfiguruje ustawienia zasilania"
 
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When sleep button is pressed:"
+msgstr "Działanie przycisku uśpienia:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When hibernate button is pressed:"
+msgstr "Działanie przycisku hibernacji:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When power button is pressed:"
+msgstr "Działanie przycisku zasilania:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "System tray icon: "
+msgstr "Wyświetlanie ikony obszaru powiadamiania:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "Monitor power management control"
+msgstr "Zarządzanie zasilaniem ekranu"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "Show notifications to notify about the battery state"
+msgstr "Wyświetlanie powiadomień o stanie akumulatora"
+
+#: ../data/interfaces/xfpm-settings.ui.h:10
+msgid "<b>General Options</b>"
+msgstr "<b>Ogólne</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "When laptop lid is closed:"
+msgstr "Działanie zamknięcia pokrywy laptopa:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Put the computer to sleep when inactive for:"
+msgstr "Czas bezczynności wstrzymania działania komputera:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Spin down hard disks"
+msgstr "Wstrzymywanie pracy dysków twardych"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "<b>Actions</b>"
+msgstr "<b>Czynności</b>"
+
 #: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "Prefer power savings over performance"
-msgstr "Oszczędzanie energii w zamian za niższą wydajność"
+msgid "Actions"
+msgstr "Czynności"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
 msgstr "Czas bezczynności trybu niskiego poboru energii?"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "Put the computer to sleep when inactive for:"
-msgstr "Czas bezczynności wstrzymania działania komputera:"
+msgid "Switch off display when computer is inactive for:"
+msgstr "Czas bezczynności wygaszenia ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "<b>Monitor</b>"
+msgstr "<b>Ekran</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Reduce screen brightness when computer is inactive for:"
 msgstr "Czas bezczynności zmniejszenia jasności ekranu:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "Set computer inactivity sleep mode:"
-msgstr "Tryb niskiego poboru energii komputera:"
-
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "Set monitor sleep mode:"
-msgstr "Tryb niskiego poboru energii ekranu:"
+msgid "Level:"
+msgstr "Poziom:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "Show notifications to notify about the battery state"
-msgstr "Wyświetlanie powiadomień o stanie akumulatora"
+msgid "<b>Brightness</b>"
+msgstr "<b>Jasność</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Spin down hard disks"
-msgstr "Wstrzymywanie pracy dysków twardych"
+#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
+msgid "Monitor"
+msgstr "Ekran"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "Standby"
-msgstr "Czuwanie"
+msgid "When battery power is critical:"
+msgstr "Niski poziom naładowania akumulatora:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Prefer power savings over performance"
+msgstr "Oszczędzanie energii w zamian za niższą wydajność"
 
 #. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:814
+#: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:814
 #: ../settings/xfpm-settings.c:882 ../settings/xfpm-settings.c:1031
 #: ../settings/xfpm-settings.c:1208 ../settings/xfpm-settings.c:1265
 #: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
@@ -127,38 +127,38 @@ msgstr "Czuwanie"
 msgid "Suspend"
 msgstr "Wstrzymanie"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "Switch off display when computer is inactive for:"
-msgstr "Czas bezczynności wygaszenia ekranu:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:26
-msgid "System tray icon: "
-msgstr "Wyświetlanie ikony obszaru powiadamiania:"
+#. Hibernate menu option
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
+#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
+#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
+#: ../src/xfpm-power.c:779
+msgid "Hibernate"
+msgstr "Zahibernowanie"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "When battery power is critical:"
-msgstr "Niski poziom naładowania akumulatora:"
+msgid "Standby"
+msgstr "Czuwanie"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "When hibernate button is pressed:"
-msgstr "Działanie przycisku hibernacji:"
+msgid "Set computer inactivity sleep mode:"
+msgstr "Tryb niskiego poboru energii komputera:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "When laptop lid is closed:"
-msgstr "Działanie zamknięcia pokrywy laptopa:"
+msgid "Consider the computer on low power at:"
+msgstr "Niski poziom naładowania akumulatora:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "When power button is pressed:"
-msgstr "Działanie przycisku zasilania:"
+msgid "Set monitor sleep mode:"
+msgstr "Tryb niskiego poboru energii ekranu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "When sleep button is pressed:"
-msgstr "Działanie przycisku uśpienia:"
+msgid "Lock screen when going for suspend/hibernate"
+msgstr "Blokowanie ekranu po wstrzymaniu lub zahibernowaniu działania komputera"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
-msgid "Xfce Power Manager"
-msgstr "Zasilanie"
+msgid "<b>Advanced Options</b>"
+msgstr "<b>Zaawansowane</b>"
 
 #: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
 #: ../settings/xfpm-settings.c:609
@@ -243,9 +243,7 @@ msgstr "Nigdy"
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr ""
-"Przełącza obsługę standardu DPMS (np. wyłączania lub wstrzymywania działania "
-"ekranu)."
+msgstr "Przełącza obsługę standardu DPMS (np. wyłączania lub wstrzymywania działania ekranu)."
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -265,8 +263,7 @@ msgstr "Brak uprawnień, aby zahibernować pracę komputera"
 
 #: ../settings/xfpm-settings.c:1443
 msgid "When all the power sources of the computer reach this charge level"
-msgstr ""
-"Kiedy wszystkie źródła zasilania osiągną następujący poziom naładowania"
+msgstr "Kiedy wszystkie źródła zasilania osiągną następujący poziom naładowania"
 
 #: ../settings/xfpm-settings.c:1546 ../settings/xfpm-settings.c:1551
 msgid "General"
@@ -304,9 +301,7 @@ msgstr "Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
-"Nie udało się wczytać konfiguracji menedżera zasilania. Użyto ustawień "
-"domyślnych."
+msgstr "Nie udało się wczytać konfiguracji menedżera zasilania. Użyto ustawień domyślnych."
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
@@ -346,11 +341,9 @@ msgstr "_Zahibernuj"
 
 #: ../src/xfpm-power.c:329
 msgid ""
-"An application is currently disabling the automatic sleep. Doing this action "
-"now may damage the working state of this application."
-msgstr ""
-"Aktualnie uruchomiony program zapobiega automatycznemu wstrzymaniu działania "
-"komputera. Kontynuowanie może spowodować jego niewłaściwe działanie."
+"An application is currently disabling the automatic sleep. Doing this action"
+" now may damage the working state of this application."
+msgstr "Aktualnie uruchomiony program zapobiega automatycznemu wstrzymaniu działania komputera. Kontynuowanie może spowodować jego niewłaściwe działanie."
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
@@ -406,9 +399,7 @@ msgstr "Wyłącz komputer"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Źródło zasilania zostanie wkrótce rozładowane. Proszę zapisać bieżący stan "
-"pracy, w celu uniknięcia utraty danych."
+msgstr "Źródło zasilania zostanie wkrótce rozładowane. Proszę zapisać bieżący stan pracy, w celu uniknięcia utraty danych."
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -419,9 +410,7 @@ msgstr "Źródło zasilania zostanie wkrótce rozładowane."
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"%s zostanie wkrótce rozładowany.\n"
-"Przewidywany czas zasilania: %s."
+msgstr "%s zostanie wkrótce rozładowany.\nPrzewidywany czas zasilania: %s."
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -556,9 +545,7 @@ msgstr "%s jest ładowany"
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s (%i%%).\n"
-"Pozostały czas do całkowitego naładowania: %s"
+msgstr "%s (%i%%).\nPozostały czas do całkowitego naładowania: %s"
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -575,9 +562,7 @@ msgstr "%s jest używany jako bieżące źródło zasilania"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s (%i%%).\n"
-"Przewidywany czas zasilania: %s."
+msgstr "%s (%i%%).\nPrzewidywany czas zasilania: %s."
 
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
@@ -595,19 +580,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr ""
-"%s\n"
-"%s został całkowicie naładowany (%i%%).\n"
-"Przewidywany czas zasilania: %s."
+msgstr "%s\n%s został całkowicie naładowany (%i%%).\nPrzewidywany czas zasilania: %s."
 
 #: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
-"%s\n"
-"%s został całkowicie naładowany (%i%%)."
+msgstr "%s\n%s został całkowicie naładowany (%i%%)."
 
 #: ../src/xfpm-battery.c:440
 #, c-format
@@ -615,19 +595,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s\n"
-"%s jest ładowany (%i%%).\n"
-"Pozostały czas do całkowitego naładowania: %s"
+msgstr "%s\n%s jest ładowany (%i%%).\nPozostały czas do całkowitego naładowania: %s"
 
 #: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr ""
-"%s\n"
-"%s jest ładowany (%i%%)."
+msgstr "%s\n%s jest ładowany (%i%%)."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -635,46 +610,35 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s\n"
-"%s jest rozładowywany (%i%%).\n"
-"Przewidywany czas zasilania: %s."
+msgstr "%s\n%s jest rozładowywany (%i%%).\nPrzewidywany czas zasilania: %s."
 
 #: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr ""
-"%s\n"
-"%s jest rozładowywany (%i%%)."
+msgstr "%s\n%s jest rozładowywany (%i%%)."
 
 #: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr ""
-"%s\n"
-"%s: oczekiwanie na rozładowanie (%i%%)"
+msgstr "%s\n%s: oczekiwanie na rozładowanie (%i%%)"
 
 #: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr ""
-"%s\n"
-"%s: oczekiwanie na naładowanie (%i%%)"
+msgstr "%s\n%s: oczekiwanie na naładowanie (%i%%)"
 
 #: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr ""
-"%s\n"
-"%s został całkowicie rozładowany."
+msgstr "%s\n%s został całkowicie rozładowany."
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
@@ -711,15 +675,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Menedżer zasilania Xfce %s\n"
-"\n"
-"Element projektu Xfce Goodies\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Wydany na licencji GNU GPL.\n"
-"\n"
+msgstr "\nMenedżer zasilania Xfce %s\n\nElement projektu Xfce Goodies\nhttp://goodies.xfce.org\n\nWydany na licencji GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
