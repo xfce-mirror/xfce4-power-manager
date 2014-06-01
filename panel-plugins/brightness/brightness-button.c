@@ -396,13 +396,14 @@ brightness_button_create_popup (BrightnessButton *button)
     {
 	button->priv->range = gtk_hscale_new_with_range (0, max_level, 1);
 	gtk_widget_set_size_request (button->priv->range, 100, -1);
+        gtk_range_set_inverted (GTK_RANGE(button->priv->range), FALSE);
     }
     else
     {
 	button->priv->range = gtk_vscale_new_with_range (0, max_level, 1);
 	gtk_widget_set_size_request (button->priv->range, -1, 100);
+        gtk_range_set_inverted (GTK_RANGE(button->priv->range), TRUE);
     }
-    gtk_range_set_inverted (GTK_RANGE(button->priv->range), TRUE);
     gtk_scale_set_draw_value (GTK_SCALE(button->priv->range), FALSE);
     
     g_signal_connect (button->priv->range, "grab-notify",
@@ -415,10 +416,19 @@ brightness_button_create_popup (BrightnessButton *button)
     g_signal_connect (button->priv->plus, "clicked",
 		      G_CALLBACK (plus_clicked), button);
 
-    gtk_box_pack_start (GTK_BOX(box), button->priv->plus, FALSE, FALSE, 0);
-    gtk_box_pack_start (GTK_BOX(box), button->priv->range, TRUE, TRUE, 0);
-    gtk_box_pack_start (GTK_BOX(box), button->priv->minus, FALSE, FALSE, 0);
-    
+    if ( orientation == GTK_ORIENTATION_VERTICAL )
+    {
+        gtk_box_pack_start (GTK_BOX(box), button->priv->minus, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX(box), button->priv->range, TRUE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX(box), button->priv->plus, FALSE, FALSE, 0);
+    }
+    else
+    {
+        gtk_box_pack_start (GTK_BOX(box), button->priv->plus, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX(box), button->priv->range, TRUE, TRUE, 0);
+        gtk_box_pack_start (GTK_BOX(box), button->priv->minus, FALSE, FALSE, 0);
+    }
+
     gtk_window_set_type_hint (GTK_WINDOW(button->priv->popup), GDK_WINDOW_TYPE_HINT_UTILITY );
     
     gtk_container_add (GTK_CONTAINER(button->priv->popup), box);
