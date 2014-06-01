@@ -22,8 +22,12 @@
 #endif
 
 #include <stdio.h>
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
 #include <string.h>
+#endif
 #ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
 #endif
@@ -174,7 +178,9 @@ xfpm_suspend_sudo_init (XfpmSuspend *suspend,
                         GError   **error)
 {
     gchar  *cmd;
+#ifdef HAVE_SYS_RESOURCE_H
     struct  rlimit rlp;
+#endif
     gchar   buf[15];
     gint    parent_pipe[2];
     gint    child_pipe[2];
@@ -239,6 +245,7 @@ xfpm_suspend_sudo_init (XfpmSuspend *suspend,
         dup2 (parent_pipe[1], STDOUT_FILENO);
         dup2 (parent_pipe[1], STDERR_FILENO);
 
+#ifdef HAVE_SYS_RESOURCE_H
         /* close all other file handles */
         getrlimit (RLIMIT_NOFILE, &rlp);
         for (n = 0; n < (gint) rlp.rlim_cur; ++n)
@@ -246,6 +253,7 @@ xfpm_suspend_sudo_init (XfpmSuspend *suspend,
             if (n != STDIN_FILENO && n != STDOUT_FILENO && n != STDERR_FILENO)
                 close (n);
         }
+#endif
 
         /* execute sudo with the helper */
         execl (cmd, "sudo", "-H", "-S", "-p",

@@ -23,17 +23,28 @@
 #endif
 
 #include <stdio.h>
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
 #include <string.h>
-
+#endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
+#ifdef HAVE_SYS_TYPES_H
 #include <sys/types.h>
-#include <sys/param.h> 
+#endif
+#ifdef HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
+#ifdef HAVE_SYS_SYSCTL_H
 #include <sys/sysctl.h>
+#endif
+#ifdef HAVE_SYS_USER_H
 #include <sys/user.h>
+#endif
 
 #if defined(__FreeBSD__)
 #include <sys/stat.h>
@@ -42,7 +53,9 @@
 #include <procfs.h>
 #endif
 
+#ifdef HAVE_ERRNO_H
 #include <errno.h>
+#endif
 
 #include <dbus/dbus-glib.h>
 

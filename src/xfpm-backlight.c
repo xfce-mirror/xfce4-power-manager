@@ -23,10 +23,15 @@
 #endif
 
 #include <stdio.h>
+#ifdef HAVE_STDLIB_H
 #include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
 #include <string.h>
-
+#endif
+#ifdef HAVE_MATH_H
 #include <math.h>
+#endif
 
 #include <gtk/gtk.h>
 #include <libxfce4util/libxfce4util.h>
