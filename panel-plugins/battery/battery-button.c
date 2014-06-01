@@ -511,8 +511,14 @@ battery_button_press_event (GtkWidget *widget, GdkEventButton *event)
 static gboolean
 battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButton *button)
 {
-    gint width = size -2 - 2* MAX(gtk_widget_get_style(GTK_WIDGET(button))->xthickness,
-                                  gtk_widget_get_style(GTK_WIDGET(button))->ythickness);
+    gint width;
+
+    g_return_val_if_fail (BATTERY_IS_BUTTON (button), FALSE);
+    g_return_val_if_fail (XFCE_IS_PANEL_PLUGIN (plugin), FALSE);
+
+    size /= xfce_panel_plugin_get_nrows (plugin);
+    width = size -2 - 2* MAX(gtk_widget_get_style(GTK_WIDGET(button))->xthickness,
+                             gtk_widget_get_style(GTK_WIDGET(button))->ythickness);
 
     gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
     button->priv->panel_icon_width = width;
@@ -540,6 +546,7 @@ battery_button_show (BatteryButton *button)
     g_return_if_fail (BATTERY_IS_BUTTON (button));
 
     xfce_panel_plugin_add_action_widget (button->priv->plugin, GTK_WIDGET (button));
+    xfce_panel_plugin_set_small (button->priv->plugin, TRUE);
 
     button->priv->panel_icon_image = gtk_image_new ();
     gtk_container_add (GTK_CONTAINER (button), button->priv->panel_icon_image);
