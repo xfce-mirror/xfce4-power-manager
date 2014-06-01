@@ -1,3 +1,110 @@
+1.3.0
+=====
+[Please note that this is a development release.]
+
+Development release of xfce4-power-manager.
+Please report all problems at bugzilla.xfce.org.
+
+  This release has a large number of changes contributed by many
+developers and translators.
+
+  One of the most noticable changes to xfpm is a new panel plugin
+to monitor battery and device charge levels which replaces the
+trayicon. If anyone outside of Xfce was using xfce4-power-manager
+in a different panel, such as LXDE, and wants xfpm to continue to
+work there, request it in bugzilla and we'll work on it.
+
+  The settings dialog has been completely restructured for better
+oversight. Additionally, xfce4-power-information, a stand-alone
+application has now been embedded inside the settings dialog.
+
+  A new version of Upower, 0.99.0, breaks it's API compability
+and xfpm required quite a bit of work to provide the same
+functionality as previous versions of Upower. Concurrently,
+several developers added support for systemd-logind in xfpm.
+Xfce4-power-manager added a xfce4-pm-helper application to
+suspend/hibernate on systems using upower 0.99.0 and higher.
+
+  Jannis Pohlmann removed custom OSD brightness popup code and
+it now uses libnotify so they can appear with any installed
+notification daemon.
+
+  Simon Steinbeiss created new icons for xfpm (based on the
+Adwaita icon-theme) covering all the different device types
+supported as well as all their individual states.
+
+  Sonal Santan added support for keyboard backlight control.
+This feature is useful when the firmware does not handle the
+keyboard brightness control automatically.
+
+
+- Fix brightness level from glong to gint32 to match RandR property,
+  patch written by Martin Matuska.
+- Fix incorrect check for suspend permissions (bug #8438),
+  patch written by Lionel Le Folgoc
+- Port xfpm to libupower-glib / add support for upower-0.99.0 API
+  patch written by Stefan Seyfried
+- Add shutdown/reboot functionality for systemd (Bug 10167)
+  patch written by Andreas Müller and Guido Berhoerster
+- Don't allow systemd to handle suspend/hibernate events
+  patch written by Mikhail Efremov
+- Add support for logind suspend/resume (Bug 9963)
+- Allow individual inhibition of systemd events
+  patch written by Sean Davis
+- Get rid of XfpmDeviceState and XfpmDeviceType
+  patch written by Stefan Seyfried
+- xfpm_backlight_button_pressed_cb: fix popup display
+  patch written by Stefan Seyfried
+- Fix empty systray icon in some panels on battery removal and
+  addition, patch written by Henry Gebhardt
+- Display power percentage in the device details, patch written
+  by Pascal de Bruijn
+- Add current percentage of batteries to device details, patch
+  written by Stefan Seyfried
+- do not show an icon for HID devices, patch written by
+  Stefan Seyfried
+- Fix status icon for devices other than battery and ups (Bug 8188)
+  patch written by Daniel Schubert and Dean Montgomery
+- Add support for keyboard backlight control (Bug 10470)
+  patch written by Sonal Santan
+- Don't call g_thread_init on newer versions of glib.
+- Fix typo in xfpm-power.c, patch written by Benjamin Kerensa
+- Fix typo in error message, patch written by Ian
+- Updates from the pre-4.8 panel registration method for panel
+  plugins
+- Update xfce4-session lock-screen setting to by in sync with
+  xfce4-session
+- Point to the online docs for xfpm's help
+- Fix uninitialized variables
+- Add a option for network manager sleep (Bug 10702)
+- Warn when no lock tool succeeded (Bug 6413)
+- Add support for suspend/hibernate via an xfce4-pm-helper since
+  it was dropped in UPower 0.99. This way suspend/hibernate
+  continues to work for the user as expected.
+- Show the settings menu outside of XFCE
+  patch written by Julien Lavergne
+- Fix an untranslatable string in battery-indicator-plugin
+  patch written by Masato Hashimoto
+- Autotools updates, patch written by Nick Schermer
+- Remove custom OSD brightness popup, use libnotify instead
+  patch written by Jannis Pohlmann
+
+Translation updates: Arabic (ar), Asturian (ast), Basque (eu),
+ Bulgarian (bg), Catalan (ca), Chinese (China) (zh_CN),
+ Chinese (Hong Kong) (zh_HK), Chinese (Taiwan) (zh_TW),
+ Croatian (hr), Czech (cs), Danish (da), Dutch (Flemish) (nl),
+ English (Australia) (en_AU), English (United Kingdom) (en_GB),
+ Estonian (et), Finnish (fi), French (fr), Galician (gl),
+ German (de), Greek (el), Hebrew (he), Hungarian (hu),
+ Indonesian (id), Italian (it), Japanese (ja), Kazakh (kk),
+ Korean (ko), Lithuanian (lt), Malay (ms), Norwegian Bokmål (nb),
+ Norwegian Nynorsk (nn), Occitan (post 1500) (oc),
+ Panjabi (Punjabi) (pa), Polish (pl), Portuguese (pt),
+ Portuguese (Brazilian) (pt_BR), Romanian (ro), Russian (ru),
+ Serbian (sr), Sinhala (si), Slovak (sk), Slovenian (sl),
+ Swedish (sv), Spanish (Castilian) (es), Telugu (te), Thai (th),
+ Turkish (tr), Ukrainian (uk), Uyghur (ug), Vietnamese (vi)
+
 1.2.0
 =====
 - Fix compilation without dpms.

@@ -3,7 +3,7 @@ What is it?
 
 This software is a power manager for the Xfce desktop, Xfce power manager manages the power sources 
 on the computer and the devices that can be controlled to reduce their power consumption 
-(such as LCD brightness level, monitor sleep, CPU frequency scaling). 
+(such as LCD brightness level, monitor sleep). 
 In addition, xfce4-power-manager provides a set of freedesktop-compliant DBus interfaces to 
 inform other applications about current power level so that they can adjust their power consumption.
 
@@ -11,21 +11,21 @@ Required packages
 =================
 Xfce Power Manager depends on the following packages:
 
- - Gtk 2.16 or above.
- - Glib 2.16 or above.
- - DBus 0.60 or above.
- - DBus glib 0.70 or above.
- - libxfce4ui 4.7.0 or above.
- - libxfce4util 4.6.0 or above
+ - Gtk 2.24 or above.
+ - Glib 2.30 or above.
+ - DBus 1.1 or above.
+ - DBus glib 0.84 or above.
+ - libxfce4ui 4.10.0 or above.
+ - libxfce4util 4.10.0 or above
  - libnotify 0.4.1 or above.
- - xfconf 4.6.0 or above.
- - libxfce4panel 4.6.0 or above (for the panel plugins).
+ - xfconf 4.10.0 or above.
+ - libxfce4panel 4.10.0 or above (for the panel plugins).
  - Xrandr 1.2.0 or above.
  - Polkit 0.91 or above (optional but recommended).
  - Consolekit (optional but recommended).
- - DPMS X extension ( for DPMS support);
-
- - HAL daemon version 0.5.6 or above is needed.
+ - DPMS X extension ( for DPMS support).
+ - UPower 0.9.8 or above.
+ - UDisks 1.0.0 or above (optional).
 
 How to report bugs?
 ===================
@@ -33,4 +33,3 @@ How to report bugs?
 Bugs should be reported to the Xfce bug tracking system
 (http://bugzilla.xfce.org, product xfce4-power-manager). You will need to
 create an account for yourself.
-( Please attach the output of lshal )
