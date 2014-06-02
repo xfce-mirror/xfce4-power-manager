@@ -1341,7 +1341,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
      */
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     sleep_mode = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-mode"));
-    label = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleepmode-label"));
     gtk_combo_box_set_model (GTK_COMBO_BOX(sleep_mode), GTK_TREE_MODEL(list_store));
     
     if ( can_suspend )
