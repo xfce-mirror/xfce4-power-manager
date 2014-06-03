@@ -48,6 +48,7 @@ xfce4_power_manager_CFLAGS =                    \
 	-DLOCALEDIR=\"$(localedir)\"            \
 	-DG_LOG_DOMAIN=\"xfce4-power-manager\"  \
 	-DSYSCONFDIR=\"$(sysconfdir)\"		\
+	-DUPOWER_ENABLE_DEPRECATED              \
 	-DXFPM_SUSPEND_HELPER_CMD=\"$(prefix)/bin/xfce4-pm-helper\" \
 	$(GOBJECT_CFLAGS)                       \
 	$(GTHREAD_CFLAGS)                       \
