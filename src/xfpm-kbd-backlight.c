@@ -27,9 +27,11 @@
 #endif
 
 #include <dbus/dbus-glib.h>
+#include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-kbd-backlight.h"
 #include "xfpm-button.h"
+#include "xfpm-notify.h"
 #include "xfpm-power.h"
 
 #define XFPM_KBD_BACKLIGHT_GET_PRIVATE(o) \
@@ -50,6 +52,9 @@ struct XfpmKbdBacklightPrivate
     gint             max_level;
     gint             min_level;
     gint             step;
+
+    XfpmNotify      *notify;
+    NotifyNotification *n;
 };
 
 G_DEFINE_TYPE (XfpmKbdBacklight, xfpm_kbd_backlight, G_TYPE_OBJECT)
@@ -80,6 +85,35 @@ xfpm_kbd_backlight_init_max_level (XfpmKbdBacklight *backlight)
 }
 
 
+static void
+xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self, gfloat value)
+{
+    gchar *summary;
+
+    if ( self->priv->n == NULL )
+    {
+        self->priv->n = xfpm_notify_new_notification (self->priv->notify,
+                "",
+                "",
+                "xfpm-brightness-lcd",
+                0,
+                XFPM_NOTIFY_NORMAL,
+                NULL);
+    }
+
+    /* generate a human-readable summary for the notification */
+    summary = g_strdup_printf (_("Keyboard Brightness: %.0f percent"), value);
+    notify_notification_update (self->priv->n, summary, NULL, NULL);
+    g_free (summary);
+
+    /* add the brightness value to the notification */
+    notify_notification_set_hint_int32 (self->priv->n, "value", value);
+
+    /* show the notification */
+    notify_notification_show (self->priv->n, NULL);
+}
+
+
 static gint
 xfpm_kbd_backlight_get_level (XfpmKbdBacklight *backlight)
 {
@@ -103,6 +137,7 @@ static void
 xfpm_kbd_backlight_set_level (XfpmKbdBacklight *backlight, gint level)
 {
     GError *error = NULL;
+    gfloat percent;
 
     dbus_g_proxy_call (backlight->priv->proxy, "SetBrightness", &error,
                        G_TYPE_INT, level,
@@ -111,6 +146,11 @@ xfpm_kbd_backlight_set_level (XfpmKbdBacklight *backlight, gint level)
     {
         g_warning ("Failed to set keyboard brightness level : %s", error->message);
         g_error_free (error);
+    }
+    else
+    {
+        percent = 100.0 * ((gfloat)level / (gfloat)backlight->priv->max_level);
+        xfpm_kbd_backlight_show_notification (backlight, percent);
     }
 }
 
@@ -198,6 +238,8 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
     backlight->priv->on_battery = FALSE;
     backlight->priv->max_level = 0;
     backlight->priv->min_level = 0;
+    backlight->priv->notify = NULL;
+    backlight->priv->n = NULL;
 
     backlight->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
 
@@ -226,6 +268,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
     backlight->priv->step = backlight->priv->max_level / 5;
     backlight->priv->power = xfpm_power_get ();
     backlight->priv->button = xfpm_button_new ();
+    backlight->priv->notify = xfpm_notify_new ();
 
     g_signal_connect (backlight->priv->button, "button-pressed",
                       G_CALLBACK (xfpm_kbd_backlight_button_pressed_cb), backlight);
@@ -254,6 +297,12 @@ xfpm_kbd_backlight_finalize (GObject *object)
 
     if ( backlight->priv->button )
         g_object_unref (backlight->priv->button);
+
+    if ( backlight->priv->notify )
+        g_object_unref (backlight->priv->notify);
+
+    if ( backlight->priv->n )
+        g_object_unref (backlight->priv->n);
 
     if ( backlight->priv->proxy )
         g_object_unref (backlight->priv->proxy);
