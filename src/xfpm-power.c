@@ -81,7 +81,9 @@ static void xfpm_power_change_presentation_mode (XfpmPower *power,
 static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
 
+#if UP_CHECK_VERSION(0, 99, 0)
 static gboolean xfpm_power_prompt_password (XfpmPower *power);
+#endif
 
 #define XFPM_POWER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_POWER, XfpmPowerPrivate))
@@ -1341,7 +1343,8 @@ xfpm_power_is_in_presentation_mode (XfpmPower *power)
     return power->priv->presentation_mode;
 }
 
-
+/* ifdef this out to prevent an unused function warning */
+#if UP_CHECK_VERSION(0, 99, 0)
 static gboolean
 xfpm_power_prompt_password (XfpmPower *power)
 {
@@ -1397,7 +1400,7 @@ xfpm_power_prompt_password (XfpmPower *power)
 
     return state == PASSWORD_FAILED ? FALSE : TRUE;
 }
-
+#endif
 
 
 /*
