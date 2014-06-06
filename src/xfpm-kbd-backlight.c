@@ -60,6 +60,16 @@ struct XfpmKbdBacklightPrivate
 G_DEFINE_TYPE (XfpmKbdBacklight, xfpm_kbd_backlight, G_TYPE_OBJECT)
 
 
+static gint
+calculate_step( gint max_level )
+{
+    if ( max_level < 20 )
+        return 1;
+    else
+        return max_level / 20;
+}
+
+
 static void
 xfpm_kbd_backlight_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmKbdBacklight *backlight)
 {
@@ -265,7 +275,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
     if ( backlight->priv->max_level == 0 )
         goto out;
 
-    backlight->priv->step = backlight->priv->max_level / 5;
+    backlight->priv->step = calculate_step (backlight->priv->max_level);
     backlight->priv->power = xfpm_power_get ();
     backlight->priv->button = xfpm_button_new ();
     backlight->priv->notify = xfpm_notify_new ();
