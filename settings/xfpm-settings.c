@@ -71,6 +71,7 @@ enum
     COL_SIDEBAR_BATTERY_DEVICE, /* Pointer to the UpDevice */
     COL_SIDEBAR_OBJECT_PATH,    /* UpDevice object path */
     COL_SIDEBAR_SIGNAL_ID,      /* device changed callback id */
+    COL_SIDEBAR_VIEW,           /* Pointer to GtkTreeView of the devcie details */
     NCOLS_SIDEBAR
 };
 
@@ -1519,6 +1520,38 @@ find_device_in_tree (const gchar *object_path)
     return NULL;
 }
 
+/* Call gtk_tree_iter_free when done with the tree iter */
+static GtkTreeIter*
+find_device_info_name_in_tree (GtkTreeView *view, const gchar *device_info_name)
+{
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+
+    if ( !view )
+        return NULL;
+
+    model = gtk_tree_view_get_model(view);
+
+    if (!model)
+        return NULL;
+
+    if(gtk_tree_model_get_iter_first(model, &iter)) {
+        do {
+            gchar *name = NULL;
+            gtk_tree_model_get(model, &iter, XFPM_DEVICE_INFO_NAME, &name, -1);
+
+            if(g_strcmp0(name, device_info_name) == 0) {
+                g_free(name);
+                return gtk_tree_iter_copy(&iter);
+            }
+
+            g_free(name);
+        } while(gtk_tree_model_iter_next(model, &iter));
+    }
+
+    return NULL;
+}
+
 static gchar *
 xfpm_info_get_energy_property (gdouble energy, const gchar *unit)
 {
@@ -1527,6 +1560,46 @@ xfpm_info_get_energy_property (gdouble energy, const gchar *unit)
     val = g_strdup_printf ("%.1f %s", energy, unit);
 
     return val;
+}
+
+static void
+update_device_info_value_for_name (GtkTreeView *view,
+                                   GtkListStore *list_store,
+                                   const gchar *name,
+                                   const gchar *value)
+{
+    GtkTreeIter *iter;
+
+    g_return_if_fail (GTK_IS_TREE_VIEW(view));
+    g_return_if_fail (GTK_IS_LIST_STORE(list_store));
+    g_return_if_fail (name != NULL);
+    /* Value can be NULL */
+
+    DBG ("updating  name %s with value %s", name, value);
+
+    iter = find_device_info_name_in_tree (view, name);
+    if (iter == NULL)
+    {
+        /* The row doesn't exist yet, add it */
+        GtkTreeIter new_iter;
+        gtk_list_store_append (list_store, &new_iter);
+        iter = gtk_tree_iter_copy (&new_iter);
+    }
+
+    if (value != NULL)
+    {
+        gtk_list_store_set (list_store, iter,
+                            XFPM_DEVICE_INFO_NAME, name,
+                            XFPM_DEVICE_INFO_VALUE, value,
+                            -1);
+    }
+    else
+    {
+        /* The value no longer applies, remove the row */
+        gtk_list_store_remove (list_store, iter);
+    }
+
+    gtk_tree_iter_free (iter);
 }
 
 static void
@@ -1583,13 +1656,10 @@ update_sideview_icon (UpDevice *device)
 static void
 update_device_details (UpDevice *device)
 {
-    GtkWidget *view;
-    GtkListStore *list_store, *sideview_liststore;
-    GtkTreeIter iter, *sideview_iter;
-    GtkTreeViewColumn *col;
-    GtkCellRenderer *renderer;
+    GtkTreeView *view;
+    GtkListStore *list_store;
+    GtkTreeIter *sideview_iter;
     gchar *str;
-    gint i = 0, page_index, current_page;
     guint type = 0, tech = 0;
     gdouble energy_full_design = -1.0, energy_full = -1.0, energy_empty = -1.0, voltage = -1.0, percent = -1.0;
     gboolean p_supply = FALSE;
@@ -1605,39 +1675,20 @@ update_device_details (UpDevice *device)
     if (sideview_iter == NULL)
         return;
 
-    view = gtk_tree_view_new ();
+    gtk_tree_model_get (gtk_tree_view_get_model(GTK_TREE_VIEW(sideview)), sideview_iter,
+                        COL_SIDEBAR_VIEW, &view,
+                        -1);
 
-    list_store = gtk_list_store_new (XFPM_DEVICE_INFO_LAST, G_TYPE_STRING, G_TYPE_STRING);
-
-    gtk_tree_view_set_model (GTK_TREE_VIEW (view), GTK_TREE_MODEL (list_store));
-
-    renderer = gtk_cell_renderer_text_new ();
-
-    /*Device Attribute*/
-    col = gtk_tree_view_column_new();
-    gtk_tree_view_column_pack_start (col, renderer, FALSE);
-    gtk_tree_view_column_set_attributes (col, renderer, "text", XFPM_DEVICE_INFO_NAME, NULL);
-    gtk_tree_view_column_set_title (col, _("Attribute"));
-    gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
-
-    /*Device Attribute Value*/
-    col = gtk_tree_view_column_new();
-    gtk_tree_view_column_pack_start (col, renderer, FALSE);
-    gtk_tree_view_column_set_attributes (col, renderer, "text", XFPM_DEVICE_INFO_VALUE, NULL);
-    gtk_tree_view_column_set_title (col, _("Value"));
-
-    gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+    list_store = GTK_LIST_STORE (gtk_tree_view_get_model (view));
 
     /**
-     * Add Device information:
+     * Add/Update Device information:
      **/
     /*Device*/
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter,
-                        XFPM_DEVICE_INFO_NAME, _("Device"),
-                        XFPM_DEVICE_INFO_VALUE, g_str_has_prefix (object_path, UPOWER_PATH_DEVICE) ? object_path + strlen (UPOWER_PATH_DEVICE) : object_path,
-                        -1);
-    i++;
+    update_device_info_value_for_name (view,
+                                      list_store,
+                                      _("Device"),
+                                      g_str_has_prefix (object_path, UPOWER_PATH_DEVICE) ? object_path + strlen (UPOWER_PATH_DEVICE) : object_path);
 
     /*Type*/
     /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
@@ -1658,51 +1709,31 @@ update_device_details (UpDevice *device)
     if (type != UP_DEVICE_KIND_UNKNOWN)
     {
         battery_type = xfpm_power_translate_device_type (type);
-        gtk_list_store_append (list_store, &iter);
-        gtk_list_store_set (list_store, &iter,
-                            XFPM_DEVICE_INFO_NAME, _("Type"),
-                            XFPM_DEVICE_INFO_VALUE, battery_type,
-                            -1);
-        i++;
+        update_device_info_value_for_name (view, list_store, _("Type"), battery_type);
     }
 
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter,
-                        XFPM_DEVICE_INFO_NAME, _("PowerSupply"),
-                        XFPM_DEVICE_INFO_VALUE, p_supply == TRUE ? _("True") : _("False"),
-                        -1);
-    i++;
+    update_device_info_value_for_name (view,
+                                       list_store,
+                                       _("PowerSupply"),
+                                       p_supply == TRUE ? _("True") : _("False"));
 
     if ( type != UP_DEVICE_KIND_LINE_POWER )
     {
         /*Model*/
         if (model && strlen (model) > 0)
         {
-            gtk_list_store_append (list_store, &iter);
-            gtk_list_store_set (list_store, &iter,
-                                XFPM_DEVICE_INFO_NAME, _("Model"),
-                                XFPM_DEVICE_INFO_VALUE, model,
-                                -1);
-            i++;
+            update_device_info_value_for_name (view, list_store, _("Model"), model);
         }
 
-        gtk_list_store_append (list_store, &iter);
-        gtk_list_store_set (list_store, &iter,
-                            XFPM_DEVICE_INFO_NAME, _("Technology"),
-                            XFPM_DEVICE_INFO_VALUE, xfpm_power_translate_technology (tech),
-                            -1);
-        i++;
+        update_device_info_value_for_name (view, list_store, _("Technology"), xfpm_power_translate_technology (tech));
 
         /*Percentage*/
         if (percent >= 0)
         {
             str = g_strdup_printf("%d", (guint) percent);
-            gtk_list_store_append (list_store, &iter);
-            gtk_list_store_set (list_store, &iter,
-                                XFPM_DEVICE_INFO_NAME, _("Energy percent"),
-                                XFPM_DEVICE_INFO_VALUE, str,
-                                -1);
-            i++;
+
+            update_device_info_value_for_name (view, list_store, _("Energy percent"), str);
+
             g_free(str);
         }
 
@@ -1710,12 +1741,9 @@ update_device_details (UpDevice *device)
         {
             /* TRANSLATORS: Unit here is Watt hour*/
             str = xfpm_info_get_energy_property (energy_full_design, _("Wh"));
-            gtk_list_store_append (list_store, &iter);
-            gtk_list_store_set (list_store, &iter,
-                                XFPM_DEVICE_INFO_NAME, _("Energy full design"),
-                                XFPM_DEVICE_INFO_VALUE, str,
-                                -1);
-            i++;
+
+            update_device_info_value_for_name (view, list_store, _("Energy full design"), str);
+
             g_free (str);
         }
 
@@ -1723,12 +1751,9 @@ update_device_details (UpDevice *device)
         {
             /* TRANSLATORS: Unit here is Watt hour*/
             str = xfpm_info_get_energy_property (energy_full, _("Wh"));
-            gtk_list_store_append (list_store, &iter);
-            gtk_list_store_set (list_store, &iter,
-                                XFPM_DEVICE_INFO_NAME, _("Energy full"),
-                                XFPM_DEVICE_INFO_VALUE, str,
-                                -1);
-            i++;
+
+            update_device_info_value_for_name (view, list_store, _("Energy full"), str);
+
             g_free (str);
         }
 
@@ -1736,12 +1761,9 @@ update_device_details (UpDevice *device)
         {
             /* TRANSLATORS: Unit here is Watt hour*/
             str = xfpm_info_get_energy_property (energy_empty, _("Wh"));
-            gtk_list_store_append (list_store, &iter);
-            gtk_list_store_set (list_store, &iter,
-                                XFPM_DEVICE_INFO_NAME, _("Energy empty"),
-                                XFPM_DEVICE_INFO_VALUE, str,
-                                -1);
-            i++;
+
+            update_device_info_value_for_name (view, list_store, _("Energy empty"), str);
+
             g_free (str);
         }
 
@@ -1749,61 +1771,25 @@ update_device_details (UpDevice *device)
         {
             /* TRANSLATORS: Unit here is Volt*/
             str = xfpm_info_get_energy_property (voltage, _("V"));
-            gtk_list_store_append (list_store, &iter);
-            gtk_list_store_set (list_store, &iter,
-                                XFPM_DEVICE_INFO_NAME, _("Voltage"),
-                                XFPM_DEVICE_INFO_VALUE, str,
-                                -1);
-            i++;
+
+            update_device_info_value_for_name (view, list_store, _("Voltage"), str);
+
             g_free (str);
         }
 
         if (vendor && strlen (vendor) > 0)
         {
-            gtk_list_store_append (list_store, &iter);
-            gtk_list_store_set (list_store, &iter,
-                                XFPM_DEVICE_INFO_NAME, _("Vendor"),
-                                XFPM_DEVICE_INFO_VALUE, vendor,
-                                -1);
-            i++;
+            update_device_info_value_for_name (view, list_store, _("Vendor"), vendor);
         }
 
         if (serial && strlen (serial) > 0)
         {
-            gtk_list_store_append (list_store, &iter);
-            gtk_list_store_set (list_store, &iter,
-                                XFPM_DEVICE_INFO_NAME, _("Serial"),
-                                XFPM_DEVICE_INFO_VALUE, serial,
-                                -1);
-            i++;
+            update_device_info_value_for_name (view, list_store, _("Serial"), serial);
         }
     }
 
     update_sideview_icon (device);
-
-    sideview_liststore = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
-
-    gtk_tree_model_get (GTK_TREE_MODEL(sideview_liststore), sideview_iter,
-                        COL_SIDEBAR_INT, &page_index,
-                        -1);
-
-    /* Replace the old page with the new one, if the user is viewing that
-     * page we'll need to change back to it */
-    current_page = gtk_notebook_get_current_page (GTK_NOTEBOOK (device_details_notebook));
-    DBG("current page %d page_index %d", current_page, page_index);
-    gtk_notebook_remove_page (GTK_NOTEBOOK (device_details_notebook), page_index);
-    gtk_notebook_insert_page (GTK_NOTEBOOK (device_details_notebook), view, NULL, page_index);
-
-    gtk_widget_show (view);
-
-    /* Attempt to redisplay the current page (or display the first item
-     * on startup.
-     */
-    if (current_page - 1 == page_index)
-    {
-        DBG("current page == page index");
-        gtk_notebook_set_current_page (GTK_NOTEBOOK (device_details_notebook), page_index);
-    }
+    gtk_widget_show_all (GTK_WIDGET(view));
 }
 
 static void
@@ -1820,7 +1806,9 @@ static void
 add_device (UpDevice *device)
 {
     GtkTreeIter iter, *device_iter;
-    GtkListStore *list_store;
+    GtkListStore *sideview_store, *devices_store;
+    GtkTreeViewColumn *col;
+    GtkCellRenderer *renderer;
     GtkWidget *view;
     const gchar *object_path = up_device_get_object_path(device);
     gulong signal_id;
@@ -1842,7 +1830,7 @@ add_device (UpDevice *device)
     signal_id = g_signal_connect (device, "changed", G_CALLBACK (device_changed_cb), NULL);
 #endif
 
-    list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
+    sideview_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
 
     index = gtk_notebook_get_n_pages (GTK_NOTEBOOK (device_details_notebook));
 
@@ -1850,12 +1838,36 @@ add_device (UpDevice *device)
     view = gtk_tree_view_new ();
     gtk_notebook_append_page (GTK_NOTEBOOK (device_details_notebook), view, NULL);
 
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter,
+    /* Create the list store that the devices view will display */
+    devices_store = gtk_list_store_new (XFPM_DEVICE_INFO_LAST, G_TYPE_STRING, G_TYPE_STRING);
+    gtk_tree_view_set_model (GTK_TREE_VIEW (view), GTK_TREE_MODEL (devices_store));
+
+    /* Create the headers for this item in the device details tab */
+    renderer = gtk_cell_renderer_text_new ();
+
+    /*Device Attribute*/
+    col = gtk_tree_view_column_new();
+    gtk_tree_view_column_pack_start (col, renderer, FALSE);
+    gtk_tree_view_column_set_attributes (col, renderer, "text", XFPM_DEVICE_INFO_NAME, NULL);
+    gtk_tree_view_column_set_title (col, _("Attribute"));
+    gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+
+    /*Device Attribute Value*/
+    col = gtk_tree_view_column_new();
+    gtk_tree_view_column_pack_start (col, renderer, FALSE);
+    gtk_tree_view_column_set_attributes (col, renderer, "text", XFPM_DEVICE_INFO_VALUE, NULL);
+    gtk_tree_view_column_set_title (col, _("Value"));
+
+    gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
+
+    /* Add the new device to the sidebar */
+    gtk_list_store_append (sideview_store, &iter);
+    gtk_list_store_set (sideview_store, &iter,
                         COL_SIDEBAR_INT, index,
                         COL_SIDEBAR_BATTERY_DEVICE, device,
                         COL_SIDEBAR_OBJECT_PATH, object_path,
                         COL_SIDEBAR_SIGNAL_ID, signal_id,
+                        COL_SIDEBAR_VIEW, view,
                         -1);
 
     /* Add the icon and description for the device */
@@ -2052,7 +2064,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
                                      G_TYPE_INT,      /* COL_SIDEBAR_INT */
                                      G_TYPE_POINTER,  /* COL_SIDEBAR_BATTERY_DEVICE */
                                      G_TYPE_STRING,   /* COL_SIDEBAR_OBJECT_PATH */
-                                     G_TYPE_ULONG     /* COL_SIDEBAR_SIGNAL_ID */
+                                     G_TYPE_ULONG,    /* COL_SIDEBAR_SIGNAL_ID */
+                                     G_TYPE_POINTER   /* COL_SIDEBAR_VIEW */
                                      );
 
     gtk_tree_view_set_model (GTK_TREE_VIEW (sideview), GTK_TREE_MODEL (list_store));
