@@ -2130,14 +2130,14 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 				  can_spin_down);
     else
     {
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"label18")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"label19")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"label4")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display_onbattery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display_pluggedin")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"sleep-dpms-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"off-dpms-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"label3")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system_onbattery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system_pluggedin")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"inactivity-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"on-battery-lid")));
     }
