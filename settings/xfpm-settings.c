@@ -2118,7 +2118,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 			 can_spin_down);
     
     if ( system_laptop )
-	xfpm_settings_on_battery (channel, 
+	xfpm_settings_on_battery (channel,
 				  auth_hibernate, 
 				  auth_suspend, 
 				  can_shutdown, 
@@ -2128,6 +2128,19 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 				  has_lid,
 				  devkit_disk,
 				  can_spin_down);
+    else
+    {
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"label18")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"label19")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"label4")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"sleep-dpms-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"off-dpms-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"label3")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"inactivity-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"on-battery-lid")));
+    }
     
     xfpm_settings_general   (channel, auth_hibernate, auth_suspend, can_shutdown, can_suspend, can_hibernate,
 			     has_sleep_button, has_hibernate_button, has_power_button );
