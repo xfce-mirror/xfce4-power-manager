@@ -1478,22 +1478,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop,
     
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(lock), val);
-
-    /*
-     * Network Manager Sleep for suspend/hibernate
-     */
-    network_manager_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "network-manager-sleep"));
-
-#ifdef WITH_NETWORK_MANAGER
-    val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX NETWORK_MANAGER_SLEEP, TRUE);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(network_manager_sleep), val);
-
-    xfconf_g_property_bind(channel, PROPERTIES_PREFIX NETWORK_MANAGER_SLEEP,
-                           G_TYPE_BOOLEAN, G_OBJECT(network_manager_sleep),
-                           "active");
-#else
-    gtk_widget_hide (network_manager_sleep);
-#endif
 }
 
 /* Call gtk_tree_iter_free when done with the tree iter */
