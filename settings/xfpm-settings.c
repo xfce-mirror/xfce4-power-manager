@@ -85,10 +85,10 @@ enum
 /*
  * GtkBuilder callbacks
  */
-void	    brightness_level_on_ac		   (GtkSpinButton *w,
+void	    brightness_level_on_ac		   (GtkWidget *w,
 						    XfconfChannel *channel);
 
-void 	    brightness_level_on_battery 	   (GtkSpinButton *w,  
+void 	    brightness_level_on_battery 	   (GtkWidget *w,  
 						    XfconfChannel *channel);
 
 void	    battery_critical_changed_cb 	   (GtkWidget *w, 
@@ -148,6 +148,10 @@ gchar      *format_brightness_value_cb             (GtkScale *scale,
 						    gdouble value,
 						    gpointer data);
 
+gchar      *format_brightness_percentage_cb        (GtkScale *scale, 
+						    gdouble value,
+						    gpointer data);
+
 void        brightness_on_battery_value_changed_cb (GtkWidget *w, 
 						    XfconfChannel *channel);
 
@@ -177,9 +181,9 @@ void        _cursor_changed_cb 			   (GtkTreeView *view,
 
 
 
-void brightness_level_on_ac (GtkSpinButton *w,  XfconfChannel *channel)
+void brightness_level_on_ac (GtkWidget *w,  XfconfChannel *channel)
 {
-    guint val = (guint) gtk_spin_button_get_value (w);
+    guint val = (guint) gtk_range_get_value (GTK_RANGE (w));
     
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, val) )
     {
@@ -187,9 +191,9 @@ void brightness_level_on_ac (GtkSpinButton *w,  XfconfChannel *channel)
     }
 }
 
-void brightness_level_on_battery (GtkSpinButton *w,  XfconfChannel *channel)
+void brightness_level_on_battery (GtkWidget *w,  XfconfChannel *channel)
 {
-     guint val = (guint) gtk_spin_button_get_value (w);
+     guint val = (guint) gtk_range_get_value (GTK_RANGE (w));
     
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, val) )
     {
@@ -581,6 +585,12 @@ format_brightness_value_cb (GtkScale *scale, gdouble value, gpointer data)
     return g_strdup_printf ("%d %s", (int)value, _("Seconds"));
 }
 
+gchar *
+format_brightness_percentage_cb (GtkScale *scale, gdouble value, gpointer data)
+{
+    return g_strdup_printf ("%d %s", (int)value, _("%"));
+}
+
 void
 brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
@@ -899,11 +909,10 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
     if ( has_lcd_brightness )
     {
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
-	
 	gtk_range_set_value (GTK_RANGE(brg), val);
 	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, 20);
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (brg_level), val);
+	gtk_range_set_value (GTK_RANGE (brg_level), val);
 	
     }
     else
@@ -1075,11 +1084,10 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     if ( has_lcd_brightness )
     {
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
-	
-	gtk_range_set_value (GTK_RANGE(brg), val);
+	gtk_range_set_value (GTK_RANGE (brg), val);
 	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, 80);
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (brg_level), val);
+	gtk_range_set_value (GTK_RANGE (brg_level), val);
 	
     }
     else
