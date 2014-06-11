@@ -6,7 +6,7 @@
 # Christian Weiske, 2010
 # Christoph Wickert, 2010
 # Fabian Nowak <timystery@arcor.de>, 2008,2010
-# Harald Judt <h.judt@gmx.at>, 2013
+# Harald Judt <h.judt@gmx.at>, 2013-2014
 # Hubert Hesse, 2010
 # Johannes Lips <johannes.lips@gmail.com>, 2013-2014
 # Mark__T <mark@foresightlinux.org>, 2008
@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-04 18:30+0200\n"
-"PO-Revision-Date: 2014-06-05 11:20+0000\n"
-"Last-Translator: Tobias Bannert\n"
+"POT-Creation-Date: 2014-06-11 00:30+0200\n"
+"PO-Revision-Date: 2014-06-11 20:57+0000\n"
+"Last-Translator: Harald Judt <h.judt@gmx.at>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xfce4-power-manager/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,319 +52,309 @@ msgid "Lock screen when going for suspend/hibernate"
 msgstr "Bildschirm sperren bei Bereitschaft/Ruhezustand"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "Notify Network Manager of suspend/hibernate"
-msgstr "Die Netzwerkverwaltung  über Bereitschaft/Ruhezustand informieren"
-
-#: ../data/interfaces/xfpm-settings.ui.h:8
-msgid ""
-"When enabled this signals to network manager that the system is going to "
-"suspend/hibernate so it can power down the network interfaces, saving power."
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "<b>Default actions</b>"
 msgstr "<b>Standardaktionen</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10
+#: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "Show notifications"
 msgstr "Benachrichtigungen anzeigen"
 
-#: ../data/interfaces/xfpm-settings.ui.h:11
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "<b>Appearance</b>"
 msgstr "<b>Aussehen</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:12
+#: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "General"
 msgstr "Allgemein"
 
-#: ../data/interfaces/xfpm-settings.ui.h:13
+#: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "System sleep mode"
 msgstr "Schlafmodus des Systems"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "Prefer saving power over performance"
 msgstr "Stromsparen gegenüber Leistung bevorzugen"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "<b>On battery</b>"
-msgstr "<b>Akku wird entladen</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:16
-msgid "<b>Plugged in</b>"
-msgstr "<b>Strom angeschlossen</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "When laptop lid is closed"
-msgstr "Beim Schließen des Laptopdeckels:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:18
-msgid "Put system to sleep when inactive for"
-msgstr "System in den Schlafmodus versetzen, wenn es inaktiv ist für:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "<b>System power saving</b>"
-msgstr "<b>Stromsparen des Systems</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "Critical battery power level"
-msgstr "Kritischer Akkuladezustand"
-
-#: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "On critical battery power"
-msgstr "Kritischer Akkuladezustand erreicht"
-
-#: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "<b>Critical power</b>"
-msgstr "<b>Kritische Energie</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "Spin down hard disks"
-msgstr "Festplatte langsamer drehen lassen"
-
-#: ../data/interfaces/xfpm-settings.ui.h:24
-msgid "<b>Hard disks</b>"
-msgstr "<b>Festplatten</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "System"
-msgstr "System"
-
-#: ../data/interfaces/xfpm-settings.ui.h:26
-msgid "Handle display power management"
-msgstr "Energieverwaltung des Monitors übernehmen"
-
-#: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "Display sleep mode"
-msgstr "Schlafmodus des Bildschirms"
-
-#: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "Put display to sleep after"
-msgstr "Bildschirm in den Schlafmodus versetzen nach"
-
-#: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "Switch off display after"
-msgstr "Bildschirm ausschalten nach"
-
-#: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "Reduce brightness on inactivity"
-msgstr "Bildschirmhelligkeit bei Inaktivität reduzieren"
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "Reduce brightness to"
-msgstr "Reduktion der Helligkeit"
-
-#: ../data/interfaces/xfpm-settings.ui.h:32
-msgid "<b>Display power saving</b>"
-msgstr "<b>Stromsparen der Anzeige</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:33
-msgid "Display"
-msgstr "Anzeige"
-
-#: ../data/interfaces/xfpm-settings.ui.h:34 ../settings/xfpm-settings.c:851
-#: ../settings/xfpm-settings.c:1027
-msgid "Nothing"
-msgstr "Nichts"
-
-#: ../settings/xfpm-settings.c:536 ../settings/xfpm-settings.c:551
-#: ../settings/xfpm-settings.c:578 ../settings/xfpm-settings.c:929
-msgid "Never"
-msgstr "Nie"
-
-#: ../settings/xfpm-settings.c:539
-msgid "One minute"
-msgstr "Eine Minute"
-
-#: ../settings/xfpm-settings.c:541 ../settings/xfpm-settings.c:553
-msgid "Minutes"
-msgstr "Minuten"
-
-#: ../settings/xfpm-settings.c:555 ../settings/xfpm-settings.c:562
-#: ../settings/xfpm-settings.c:563 ../settings/xfpm-settings.c:564
-msgid "One hour"
-msgstr "Eine Stunde"
-
-#: ../settings/xfpm-settings.c:563 ../settings/xfpm-settings.c:567
-msgid "one minute"
-msgstr "eine Minute"
-
-#: ../settings/xfpm-settings.c:564 ../settings/xfpm-settings.c:568
-msgid "minutes"
-msgstr "Minuten"
-
-#: ../settings/xfpm-settings.c:566 ../settings/xfpm-settings.c:567
-#: ../settings/xfpm-settings.c:568
-msgid "hours"
-msgstr "Stunden"
-
-#: ../settings/xfpm-settings.c:580
-msgid "Seconds"
-msgstr "Sekunden"
-
-#: ../settings/xfpm-settings.c:766 ../settings/xfpm-settings.c:991
-#: ../settings/xfpm-settings.c:1462
-msgid "Hibernate and suspend operations not supported"
-msgstr "Ruhezustand- und Bereitschaftsvorgänge werden nicht unterstützt"
-
-#: ../settings/xfpm-settings.c:771 ../settings/xfpm-settings.c:996
-#: ../settings/xfpm-settings.c:1467
-msgid "Hibernate and suspend operations not permitted"
-msgstr "Ruhezustand- und Bereitschaftsvorgänge nicht erlaubt"
-
-#: ../settings/xfpm-settings.c:783 ../settings/xfpm-settings.c:1163
-#: ../settings/xfpm-settings.c:1220 ../settings/xfpm-settings.c:1272
-msgid "Do nothing"
-msgstr "Nichts unternehmen"
-
-#: ../settings/xfpm-settings.c:788 ../settings/xfpm-settings.c:856
-#: ../settings/xfpm-settings.c:1032 ../settings/xfpm-settings.c:1168
-#: ../settings/xfpm-settings.c:1225 ../settings/xfpm-settings.c:1277
-#: ../settings/xfpm-settings.c:1349 ../settings/xfpm-settings.c:1400
-#: ../src/xfpm-power.c:645
-msgid "Suspend"
-msgstr "Bereitschaft"
-
-#: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:862
-#: ../settings/xfpm-settings.c:1038 ../settings/xfpm-settings.c:1174
-#: ../settings/xfpm-settings.c:1231 ../settings/xfpm-settings.c:1283
-#: ../settings/xfpm-settings.c:1363 ../src/xfpm-power.c:634
-msgid "Hibernate"
-msgstr "Ruhezustand"
-
-#: ../settings/xfpm-settings.c:800 ../settings/xfpm-settings.c:1180
-#: ../src/xfpm-power.c:656
-msgid "Shutdown"
-msgstr "Herunterfahren"
-
-#: ../settings/xfpm-settings.c:804 ../settings/xfpm-settings.c:1184
-#: ../settings/xfpm-settings.c:1235 ../settings/xfpm-settings.c:1287
-msgid "Ask"
-msgstr "Fragen"
-
-#: ../settings/xfpm-settings.c:866 ../settings/xfpm-settings.c:1042
-msgid "Lock screen"
-msgstr "Bildschirm sperren"
-
-#: ../settings/xfpm-settings.c:932
+#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:942
 msgid "On battery"
 msgstr "Akku wird entladen"
 
-#: ../settings/xfpm-settings.c:935 ../common/xfpm-power-common.c:419
+#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:945
+#: ../common/xfpm-power-common.c:419
 msgid "Plugged in"
-msgstr "<b>Strom angeschlossen</b>"
+msgstr "Strom angeschlossen"
 
-#: ../settings/xfpm-settings.c:938
+#: ../data/interfaces/xfpm-settings.ui.h:15
+msgid "When laptop lid is closed"
+msgstr "Beim Schließen des Laptopdeckels:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:16
+msgid "Put system to sleep when inactive for"
+msgstr "System in den Schlafmodus versetzen, wenn es inaktiv ist für:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:17
+msgid "<b>System power saving</b>"
+msgstr "<b>Stromsparen des Systems</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "Critical battery power level"
+msgstr "Kritischer Akkuladezustand"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
+msgid "On critical battery power"
+msgstr "Kritischer Akkuladezustand erreicht"
+
+#: ../data/interfaces/xfpm-settings.ui.h:20
+msgid "<b>Critical power</b>"
+msgstr "<b>Kritische Energie</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:21
+msgid "Spin down hard disks"
+msgstr "Festplatte langsamer drehen lassen"
+
+#: ../data/interfaces/xfpm-settings.ui.h:22
+msgid "<b>Hard disks</b>"
+msgstr "<b>Festplatten</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:23
+msgid "System"
+msgstr "System"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "Handle display power management"
+msgstr "Energieverwaltung des Monitors übernehmen"
+
+#: ../data/interfaces/xfpm-settings.ui.h:25
+msgid "Display sleep mode"
+msgstr "Schlafmodus des Bildschirms"
+
+#: ../data/interfaces/xfpm-settings.ui.h:26
+msgid "Put display to sleep after"
+msgstr "Bildschirm in den Schlafmodus versetzen nach"
+
+#: ../data/interfaces/xfpm-settings.ui.h:27
+msgid "Switch off display after"
+msgstr "Bildschirm ausschalten nach"
+
+#: ../data/interfaces/xfpm-settings.ui.h:28
+msgid "Reduce brightness on inactivity"
+msgstr "Bildschirmhelligkeit bei Inaktivität reduzieren"
+
+#: ../data/interfaces/xfpm-settings.ui.h:29
+msgid "Reduce brightness to"
+msgstr "Reduktion der Helligkeit"
+
+#: ../data/interfaces/xfpm-settings.ui.h:30
+msgid "<b>Display power saving</b>"
+msgstr "<b>Stromsparen der Anzeige</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "Display"
+msgstr "Anzeige"
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "Nothing"
+msgstr "Nichts"
+
+#: ../settings/xfpm-settings.c:541 ../settings/xfpm-settings.c:556
+#: ../settings/xfpm-settings.c:583 ../settings/xfpm-settings.c:939
+msgid "Never"
+msgstr "Nie"
+
+#: ../settings/xfpm-settings.c:544
+msgid "One minute"
+msgstr "Eine Minute"
+
+#: ../settings/xfpm-settings.c:546 ../settings/xfpm-settings.c:558
+msgid "Minutes"
+msgstr "Minuten"
+
+#: ../settings/xfpm-settings.c:560 ../settings/xfpm-settings.c:567
+#: ../settings/xfpm-settings.c:568 ../settings/xfpm-settings.c:569
+msgid "One hour"
+msgstr "Eine Stunde"
+
+#: ../settings/xfpm-settings.c:568 ../settings/xfpm-settings.c:572
+msgid "one minute"
+msgstr "eine Minute"
+
+#: ../settings/xfpm-settings.c:569 ../settings/xfpm-settings.c:573
+msgid "minutes"
+msgstr "Minuten"
+
+#: ../settings/xfpm-settings.c:571 ../settings/xfpm-settings.c:572
+#: ../settings/xfpm-settings.c:573
+msgid "hours"
+msgstr "Stunden"
+
+#: ../settings/xfpm-settings.c:585
+msgid "Seconds"
+msgstr "Sekunden"
+
+#: ../settings/xfpm-settings.c:591
+msgid "%"
+msgstr "%"
+
+#: ../settings/xfpm-settings.c:777 ../settings/xfpm-settings.c:1001
+#: ../settings/xfpm-settings.c:1470
+msgid "Hibernate and suspend operations not supported"
+msgstr "Ruhezustand- und Bereitschaftsvorgänge werden nicht unterstützt"
+
+#: ../settings/xfpm-settings.c:782 ../settings/xfpm-settings.c:1006
+#: ../settings/xfpm-settings.c:1475
+msgid "Hibernate and suspend operations not permitted"
+msgstr "Ruhezustand und Bereitschaftsvorgänge sind nicht erlaubt"
+
+#: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:1172
+#: ../settings/xfpm-settings.c:1229 ../settings/xfpm-settings.c:1281
+msgid "Do nothing"
+msgstr "Nichts unternehmen"
+
+#: ../settings/xfpm-settings.c:799 ../settings/xfpm-settings.c:867
+#: ../settings/xfpm-settings.c:1042 ../settings/xfpm-settings.c:1177
+#: ../settings/xfpm-settings.c:1234 ../settings/xfpm-settings.c:1286
+#: ../settings/xfpm-settings.c:1357 ../settings/xfpm-settings.c:1408
+#: ../src/xfpm-power.c:647
+msgid "Suspend"
+msgstr "Bereitschaft"
+
+#: ../settings/xfpm-settings.c:805 ../settings/xfpm-settings.c:873
+#: ../settings/xfpm-settings.c:1048 ../settings/xfpm-settings.c:1183
+#: ../settings/xfpm-settings.c:1240 ../settings/xfpm-settings.c:1292
+#: ../settings/xfpm-settings.c:1371 ../src/xfpm-power.c:636
+msgid "Hibernate"
+msgstr "Ruhezustand"
+
+#: ../settings/xfpm-settings.c:811 ../settings/xfpm-settings.c:1189
+#: ../src/xfpm-power.c:658
+msgid "Shutdown"
+msgstr "Herunterfahren"
+
+#: ../settings/xfpm-settings.c:815 ../settings/xfpm-settings.c:1193
+#: ../settings/xfpm-settings.c:1244 ../settings/xfpm-settings.c:1296
+msgid "Ask"
+msgstr "Fragen"
+
+#: ../settings/xfpm-settings.c:862 ../settings/xfpm-settings.c:1037
+msgid "Switch off display"
+msgstr "Bildschirm ausschalten"
+
+#: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1052
+msgid "Lock screen"
+msgstr "Bildschirm sperren"
+
+#: ../settings/xfpm-settings.c:948
 msgid "Always"
 msgstr "Immer"
 
-#: ../settings/xfpm-settings.c:965 ../settings/xfpm-settings.c:1109
+#: ../settings/xfpm-settings.c:975 ../settings/xfpm-settings.c:1118
 msgid "Spinning down hard disks permission denied"
 msgstr "Keine Rechte für die Festplattenverlangsamung"
 
-#: ../settings/xfpm-settings.c:1353
+#: ../settings/xfpm-settings.c:1361
 msgid "Suspend operation not permitted"
 msgstr "Versetzen in den Bereitschaftsmodus ist nicht erlaubt"
 
-#: ../settings/xfpm-settings.c:1357
+#: ../settings/xfpm-settings.c:1365
 msgid "Suspend operation not supported"
 msgstr "Versetzen in den Bereitschaftsmodus wird nicht unterstützt"
 
-#: ../settings/xfpm-settings.c:1367
+#: ../settings/xfpm-settings.c:1375
 msgid "Hibernate operation not permitted"
 msgstr "Versetzen in den Ruhezustand ist nicht erlaubt"
 
-#: ../settings/xfpm-settings.c:1371
+#: ../settings/xfpm-settings.c:1379
 msgid "Hibernate operation not supported"
 msgstr "Ruhezustand wird nicht unterstützt"
 
-#: ../settings/xfpm-settings.c:1402
+#: ../settings/xfpm-settings.c:1410
 msgid "Standby"
-msgstr "Bereitschaft"
+msgstr "Schnelle Bereitschaft"
 
-#: ../settings/xfpm-settings.c:1435
+#: ../settings/xfpm-settings.c:1443
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Wenn alle Stromquellen des Rechners diese Stufe erreichen"
 
-#: ../settings/xfpm-settings.c:1620
-msgid "Attribute"
-msgstr "Attribut"
-
-#: ../settings/xfpm-settings.c:1627
-msgid "Value"
-msgstr "Wert"
-
-#: ../settings/xfpm-settings.c:1637
+#: ../settings/xfpm-settings.c:1681
 msgid "Device"
 msgstr "Gerät"
 
-#: ../settings/xfpm-settings.c:1663
+#: ../settings/xfpm-settings.c:1703
 msgid "Type"
 msgstr "Typ"
 
-#: ../settings/xfpm-settings.c:1671
+#: ../settings/xfpm-settings.c:1708
 msgid "PowerSupply"
 msgstr "Energieversorgung"
 
-#: ../settings/xfpm-settings.c:1672 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1709 ../src/xfpm-main.c:80
 msgid "True"
 msgstr "Ja"
 
-#: ../settings/xfpm-settings.c:1672 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1709 ../src/xfpm-main.c:80
 msgid "False"
 msgstr "Nein"
 
-#: ../settings/xfpm-settings.c:1683
+#: ../settings/xfpm-settings.c:1716
 msgid "Model"
 msgstr "Modell"
 
-#: ../settings/xfpm-settings.c:1691
+#: ../settings/xfpm-settings.c:1719
 msgid "Technology"
 msgstr "Technologie"
 
-#: ../settings/xfpm-settings.c:1702
+#: ../settings/xfpm-settings.c:1726
 msgid "Energy percent"
 msgstr "Prozentualer Füllstand"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1712 ../settings/xfpm-settings.c:1725
-#: ../settings/xfpm-settings.c:1738
+#: ../settings/xfpm-settings.c:1734 ../settings/xfpm-settings.c:1744
+#: ../settings/xfpm-settings.c:1754
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:1715
+#: ../settings/xfpm-settings.c:1736
 msgid "Energy full design"
 msgstr "Maximaler Füllstand"
 
-#: ../settings/xfpm-settings.c:1728
+#: ../settings/xfpm-settings.c:1746
 msgid "Energy full"
 msgstr "Letzter Füllstand"
 
-#: ../settings/xfpm-settings.c:1741
+#: ../settings/xfpm-settings.c:1756
 msgid "Energy empty"
 msgstr "Minimaler Füllstand"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1751
+#: ../settings/xfpm-settings.c:1764
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:1754
+#: ../settings/xfpm-settings.c:1766
 msgid "Voltage"
 msgstr "Spannung"
 
-#: ../settings/xfpm-settings.c:1765
+#: ../settings/xfpm-settings.c:1773
 msgid "Vendor"
 msgstr "Hersteller"
 
-#: ../settings/xfpm-settings.c:1775
+#: ../settings/xfpm-settings.c:1778
 msgid "Serial"
 msgstr "Seriell"
 
-#: ../settings/xfpm-settings.c:2033
+#: ../settings/xfpm-settings.c:1843
+msgid "Attribute"
+msgstr "Attribut"
+
+#: ../settings/xfpm-settings.c:1850
+msgid "Value"
+msgstr "Wert"
+
+#: ../settings/xfpm-settings.c:2036
 msgid "Check your power manager installation"
 msgstr "Überprüfen Sie die Installation der Energieverwaltung"
 
-#: ../settings/xfpm-settings.c:2089
+#: ../settings/xfpm-settings.c:2093
 msgid "Devices"
 msgstr "Geräte"
 
@@ -403,8 +393,8 @@ msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Die Energieverwaltung für Xfce läuft nicht. Möchten Sie sie jetzt starten?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:298 ../src/xfpm-power.c:576 ../src/xfpm-power.c:620
-#: ../src/xfpm-power.c:784 ../src/xfpm-power.c:808 ../src/xfpm-battery.c:256
+#: ../src/xfpm-power.c:300 ../src/xfpm-power.c:578 ../src/xfpm-power.c:622
+#: ../src/xfpm-power.c:786 ../src/xfpm-power.c:810 ../src/xfpm-battery.c:256
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Energieverwaltung"
@@ -607,88 +597,88 @@ msgid ""
 "Unknown state\t"
 msgstr "<b>%s %s</b>⇥\nUnbekannter Status⇥"
 
-#: ../src/xfpm-power.c:324
+#: ../src/xfpm-power.c:326
 msgid "_Hibernate"
 msgstr "Ru_hezustand"
 
-#: ../src/xfpm-power.c:325
+#: ../src/xfpm-power.c:327
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
 msgstr "Eine laufende Anwendung verhindert momentan das automatische Schlafen. Wenn Sie diese Aktion jetzt durchführen, kann der Zustand der Anwendung beschädigt werden."
 
-#: ../src/xfpm-power.c:327
+#: ../src/xfpm-power.c:329
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Möchten Sie das System wirklich in den Ruhezustand versetzen?"
 
-#: ../src/xfpm-power.c:342
+#: ../src/xfpm-power.c:344
 msgid "Incorrect password entered"
 msgstr "Falsches Passwort eingegeben"
 
-#: ../src/xfpm-power.c:384
+#: ../src/xfpm-power.c:386
 msgid "Continue"
 msgstr "Fortfahren"
 
-#: ../src/xfpm-power.c:385 ../src/xfpm-manager.c:374
+#: ../src/xfpm-power.c:387 ../src/xfpm-manager.c:374
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
 msgstr "Keines der Programme zum Sperren des Bildschirms lief erfolgreich, der Bildschirm wird nicht gesperrt."
 
-#: ../src/xfpm-power.c:388
+#: ../src/xfpm-power.c:390
 msgid "Do you still want to continue to suspend the system?"
 msgstr "Soll das System weiter in den Bereitschaftsmodus versetzt werden?"
 
-#: ../src/xfpm-power.c:539
+#: ../src/xfpm-power.c:541
 msgid "Hibernate the system"
 msgstr "Das System in den Ruhezustand versetzen"
 
-#: ../src/xfpm-power.c:550
+#: ../src/xfpm-power.c:552
 msgid "Suspend the system"
 msgstr "Das System in den Bereitschaftsmodus versetzen"
 
-#: ../src/xfpm-power.c:560
+#: ../src/xfpm-power.c:562
 msgid "Shutdown the system"
 msgstr "Das System herunterfahren"
 
-#: ../src/xfpm-power.c:571 ../src/xfpm-power.c:617
+#: ../src/xfpm-power.c:573 ../src/xfpm-power.c:619
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Ihre Batterie ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten verloren gehen"
 
-#: ../src/xfpm-power.c:785
+#: ../src/xfpm-power.c:787
 msgid "System is running on low power"
 msgstr "Das System befindet sich in einem niedrigen Energiezustand"
 
-#: ../src/xfpm-power.c:804
+#: ../src/xfpm-power.c:806
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Die Ladung von %s ist niedrig\nGeschätzte verbleibende Zeit: %s"
 
-#: ../src/xfpm-power.c:1352
+#: ../src/xfpm-power.c:1355
 msgid ""
 "The requested operation requires elevated privileges.\t\n"
 "Please enter your password."
 msgstr "Die durchzuführende Aktion benötigt erweiterte Rechte.\nBitte geben Sie Ihr Passwort ein."
 
 #. Set the dialog's title
-#: ../src/xfpm-power.c:1361
+#: ../src/xfpm-power.c:1364
 msgid "xfce4-power-manager"
 msgstr "xfce4-power-manager"
 
 #. setup password label
-#: ../src/xfpm-power.c:1364
+#: ../src/xfpm-power.c:1367
 msgid "Password:"
 msgstr "Passwort:"
 
-#: ../src/xfpm-power.c:1490 ../src/xfpm-power.c:1523 ../src/xfpm-power.c:1542
-#: ../src/xfpm-power.c:1565
+#: ../src/xfpm-power.c:1493 ../src/xfpm-power.c:1526 ../src/xfpm-power.c:1545
+#: ../src/xfpm-power.c:1568
 #, c-format
 msgid "Permission denied"
 msgstr "Erlaubnis verweigert"
 
-#: ../src/xfpm-power.c:1550 ../src/xfpm-power.c:1573
+#: ../src/xfpm-power.c:1553 ../src/xfpm-power.c:1576
 #, c-format
 msgid "Suspend not supported"
 msgstr "Der Bereitschaftsmodus wird nicht unterstützt"
@@ -908,17 +898,17 @@ msgstr "Ungültige Argumente"
 msgid "Invalid cookie"
 msgstr "Ungültiges Cookie"
 
-#: ../src/xfpm-suspend.c:384
+#: ../src/xfpm-suspend.c:387
 #, c-format
 msgid "Error sending command to pm helper: %s"
 msgstr "Fehler bei der Steuerung von pm helper: %s"
 
-#: ../src/xfpm-suspend.c:397
+#: ../src/xfpm-suspend.c:400
 #, c-format
 msgid "Error receiving response from pm helper: %s"
 msgstr "Fehler beim Empfang der Antwort von pm helper: %s"
 
-#: ../src/xfpm-suspend.c:405
+#: ../src/xfpm-suspend.c:408
 #, c-format
 msgid "Sleep command failed"
 msgstr "Schlafbefehl fehlgeschlagen"
@@ -969,7 +959,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
+msgstr "Die Xfce Energieverwaltung konfiguriert und überwacht die Energiequellen des Computers und gibt Kontrolle über die Energiesparoptionen der Geräte (wie zum Beispiel LCD-Helligkeit, Stromsparmodus des Bildschirms, CPU-Frequenzskalierung)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -979,14 +969,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
+msgstr "Zusätzlich stellt die Xfce Energieverwaltung einen Satz an Freedesktop-konformen DBus-Schnittstellen zur Verfügung, um andere Anwendungen über den aktuellen Energiestand zu informieren, sodass diese ihren Energieverbrauch anpassen bzw. das automatische Versetzen in den Bereitschaftsmodus oder Ruhezustand verhindern können; beispielsweise sollte der Paketmanager der Distribution diese Blockierungsschnittstelle während Aktualisierungsvorgängen verwenden."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides two plugins for the Xfce panel, one to "
 "control LCD brightness levels and a second plugin to monitor battery and "
 "device charge levels."
-msgstr ""
+msgstr "Die Xfce Energieverwaltung stellt zwei Plugins für die Xfce Leiste zur Verfügung, eines um die LCD-Helligkeit zu kontrollieren und ein weiteres, um den Ladezustand von Akkus und Geräten zu überwachen."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -996,10 +986,10 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr ""
+msgstr "Diese Entwicklungsversion bringt eine Menge neuer Funktionen, darunter Versetzen in den Bereitschaftsmodus/Ruhezustand ohne systemd und UPower>=0.99. Sie erlaubt individuelle Kontrolle von systemd-inhibition, und ein neues Plugin für die Leiste zur Überwachung des Ladezustands von Akkus und Geräten ersetzt das Symbol in der Benachrichtigungsfläche. Der Einstellungsdialog wurde zwecks besserer Übersicht komplett restrukturiert, viele offene Fehler wurden bereinigt und Übersetzungen überarbeitet."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr ""
+msgstr "Diese stabile Version korrigiert Kompilierungsprobleme, ein Speicherleck und einige kleinere Fehler. Überdies wurden die Übersetzungen überarbeitet."
