@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-11 00:30+0200\n"
-"PO-Revision-Date: 2014-06-11 10:31+0000\n"
+"POT-Creation-Date: 2014-06-12 12:30+0200\n"
+"PO-Revision-Date: 2014-06-13 19:09+0000\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/xfce4-power-manager/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -745,6 +745,12 @@ msgstr "PDA-accu"
 #: ../src/xfpm-battery.c:552
 msgid "Phone battery"
 msgstr "Telefoonaccu"
+
+#. generate a human-readable summary for the notification
+#: ../src/xfpm-kbd-backlight.c:105
+#, c-format
+msgid "Keyboard Brightness: %.0f percent"
+msgstr "Helderheid van toetsenbord: %.0f procent"
 
 #: ../src/xfpm-main.c:57
 #, c-format
