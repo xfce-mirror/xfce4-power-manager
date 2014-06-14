@@ -1036,13 +1036,13 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_list_store_append(list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Switch off display"), 1, LID_TRIGGER_NOTHING, -1);
 	
-	if ( can_suspend )
+	if ( can_suspend && auth_suspend )
 	{
 	    gtk_list_store_append(list_store, &iter);
 	    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, LID_TRIGGER_SUSPEND, -1);
 	}
 	
-	if ( can_hibernate )
+	if ( can_hibernate && auth_hibernate )
 	{
 	    gtk_list_store_append(list_store, &iter);
 	    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, LID_TRIGGER_HIBERNATE, -1);
