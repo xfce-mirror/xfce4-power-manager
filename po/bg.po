@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-11 00:30+0200\n"
-"PO-Revision-Date: 2014-06-11 13:17+0000\n"
+"POT-Creation-Date: 2014-06-12 12:30+0200\n"
+"PO-Revision-Date: 2014-06-16 07:08+0000\n"
 "Last-Translator: Kiril Kirilov <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xfce4-power-manager/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -748,6 +748,12 @@ msgstr "батерия на PDA"
 #: ../src/xfpm-battery.c:552
 msgid "Phone battery"
 msgstr "батерия на телефона"
+
+#. generate a human-readable summary for the notification
+#: ../src/xfpm-kbd-backlight.c:105
+#, c-format
+msgid "Keyboard Brightness: %.0f percent"
+msgstr "Яркост на клавиатурата: %.0f процента"
 
 #: ../src/xfpm-main.c:57
 #, c-format
