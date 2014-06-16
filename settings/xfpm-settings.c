@@ -2001,14 +2001,14 @@ delete_event_cb (GtkWidget *plug, GdkEvent *ev, XfconfChannel *channel)
 }
 
 GtkWidget *
-xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop, 
-			  gboolean auth_hibernate, gboolean auth_suspend, 
-			  gboolean can_shutdown, gboolean can_suspend, 
-			  gboolean can_hibernate, gboolean has_lcd_brightness, 
-			  gboolean has_lid, gboolean has_sleep_button, 
-			  gboolean has_hibernate_button, gboolean has_power_button,
-			  gboolean devkit_disk, gboolean can_spin_down, 
-			  GdkNativeWindow id)
+xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
+                          gboolean auth_hibernate, gboolean can_suspend,
+                          gboolean can_hibernate, gboolean can_shutdown,
+                          gboolean system_laptop, gboolean has_lcd_brightness,
+                          gboolean has_lid, gboolean has_sleep_button,
+                          gboolean has_hibernate_button, gboolean has_power_button,
+                          gboolean devkit_disk, gboolean can_spin_down,
+                          GdkNativeWindow id)
 {
     GtkWidget *plug;
     GtkWidget *dialog;

@@ -168,8 +168,8 @@ int main (int argc, char **argv)
 	    
 	    g_hash_table_destroy (config_hash);
 	    
-	    dialog = xfpm_settings_dialog_new (channel, has_battery, auth_hibernate, auth_suspend,
-					       can_shutdown, can_suspend, can_hibernate, has_lcd_brightness,
+	    dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
+					       can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
 					       has_lid, has_sleep_button, has_hibernate_button, has_power_button,
 					       devkit_disk, can_spin_down, socket_id);
 	    

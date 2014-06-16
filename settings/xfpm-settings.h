@@ -22,22 +22,20 @@
 #define __XFPM_SETTINGS_H
 
 
-GtkWidget      *xfpm_settings_dialog_new 	(XfconfChannel *channel,
-						 gboolean has_battery,
-						 gboolean auth_hibernate,
-						 gboolean auth_suspend,
-						 gboolean can_shutdown,
-					         gboolean can_suspend,
-					         gboolean can_hibernate,
-					         gboolean has_lcd_brightness,
-					         gboolean has_lid,
-						 gboolean has_sleep_button,
-						 gboolean has_hibernate_button,
-						 gboolean has_power_button,
-						 gboolean devkit_disk,
-						 gboolean can_spin_down,
-						 GdkNativeWindow id);
-
-
+GtkWidget *xfpm_settings_dialog_new (XfconfChannel *channel,
+                                     gboolean auth_suspend,
+                                     gboolean auth_hibernate,
+                                     gboolean can_suspend,
+                                     gboolean can_hibernate,
+                                     gboolean can_shutdown,
+                                     gboolean has_battery,
+                                     gboolean has_lcd_brightness,
+                                     gboolean has_lid,
+                                     gboolean has_sleep_button,
+                                     gboolean has_hibernate_button,
+                                     gboolean has_power_button,
+                                     gboolean devkit_disk,
+                                     gboolean can_spin_down,
+                                     GdkNativeWindow id);
 
 #endif /* __XFPM_SETTINGS_H */
