@@ -1329,7 +1329,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 static void
 xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
                         gboolean auth_hibernate, gboolean can_suspend,
-                        gboolean can_hibernate, gboolean system_laptop)
+                        gboolean can_hibernate, gboolean has_battery)
 {
     guint val;
     gchar *str;
@@ -1437,7 +1437,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
      * Critical battery level
      */
     critical_level = GTK_WIDGET (gtk_builder_get_object (xml, "critical-spin"));
-    if ( system_laptop )
+    if ( has_battery )
     {
 	gtk_widget_set_tooltip_text (critical_level, 
 				     _("When all the power sources of the computer reach this charge level"));
@@ -2004,7 +2004,7 @@ GtkWidget *
 xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                           gboolean auth_hibernate, gboolean can_suspend,
                           gboolean can_hibernate, gboolean can_shutdown,
-                          gboolean system_laptop, gboolean has_lcd_brightness,
+                          gboolean has_battery, gboolean has_lcd_brightness,
                           gboolean has_lid, gboolean has_sleep_button,
                           gboolean has_hibernate_button, gboolean has_power_button,
                           gboolean devkit_disk, gboolean can_spin_down,
@@ -2020,9 +2020,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     GtkCellRenderer *renderer;
     GError *error = NULL;
 
-    XFPM_DEBUG ("system_laptop=%s auth_hibernate=%s  auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s has_lcd_brightness=%s has_lid=%s "\
-           "has_sleep_button=%s has_hibernate_button=%s has_power_button=%s can_spin_down=%s",
-	  xfpm_bool_to_string (system_laptop), xfpm_bool_to_string (auth_hibernate), 
+    XFPM_DEBUG ("auth_hibernate=%s auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s " \
+                "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s " \
+                "has_hibernate_button=%s has_power_button=%s can_spin_down=%s",
+      xfpm_bool_to_string (has_battery), xfpm_bool_to_string (auth_hibernate),
 	  xfpm_bool_to_string (can_shutdown), xfpm_bool_to_string (auth_suspend),
 	  xfpm_bool_to_string (can_suspend), xfpm_bool_to_string (can_hibernate),
 	  xfpm_bool_to_string (has_lcd_brightness), xfpm_bool_to_string (has_lid),
@@ -2108,7 +2109,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                          devkit_disk,
                          can_spin_down);
 
-    if ( system_laptop )
+    if ( has_battery )
     xfpm_settings_on_battery (channel,
                               auth_suspend,
                               auth_hibernate,
@@ -2136,7 +2137,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     xfpm_settings_general (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, can_shutdown,
                            has_sleep_button, has_hibernate_button, has_power_button );
 
-    xfpm_settings_advanced (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, system_laptop);
+    xfpm_settings_advanced (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, has_battery);
 
     if ( id != 0 )
     {
