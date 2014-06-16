@@ -848,7 +848,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_set_sensitive (GTK_WIDGET(on_battery_dpms_off), FALSE);
 #endif
 
-     /*
+    /*
      * Lid switch settings on battery
      */
     lid = GTK_WIDGET (gtk_builder_get_object (xml, "on-battery-lid"));
@@ -876,7 +876,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_list_store_append(list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Lock screen"), 1, LID_TRIGGER_LOCK_SCREEN, -1);
 	
-	gtk_combo_box_set_active (GTK_COMBO_BOX (lid), XFPM_DO_NOTHING);
+	gtk_combo_box_set_active (GTK_COMBO_BOX (lid), 0);
 	
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, LID_TRIGGER_LOCK_SCREEN);
 	
@@ -899,9 +899,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (label);
 	gtk_widget_hide (lid);
     }
-    
+
     /*
-     * 
      * Brightness on battery power
      */
     brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery"));
@@ -927,6 +926,9 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     }
 #endif
 
+    /*
+     * Hard drive energy saving
+     */
     spin_down_hdd = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-hdd"));
 
     if ( can_spin_down && devkit_disk )
@@ -959,7 +961,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 				1, &list_value, -1);
 	    if ( val == list_value )
 	    {
-		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (lid), &iter);
+		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (spin_down_hdd), &iter);
 		break;
 	    }
 	}
