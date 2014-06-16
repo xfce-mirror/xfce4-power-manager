@@ -746,11 +746,11 @@ void on_spindown_hdd_changed	(GtkWidget *w, XfconfChannel *channel)
 }
 
 static void
-xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate, 
-			  gboolean auth_suspend, gboolean can_shutdown, 
-			  gboolean can_suspend, gboolean can_hibernate, 
-			  gboolean has_lcd_brightness, gboolean has_lid,
-			  gboolean devkit_disk, gboolean can_spin_down)
+xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
+                          gboolean auth_hibernate, gboolean can_suspend,
+                          gboolean can_hibernate, gboolean can_shutdown,
+                          gboolean has_lcd_brightness, gboolean has_lid,
+                          gboolean devkit_disk, gboolean can_spin_down)
 {
     gboolean valid;
     gint list_value;
@@ -977,10 +977,10 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_hibernate,
 }
 
 static void
-xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend, 
-		     gboolean auth_hibernate, gboolean can_suspend, 
-		     gboolean can_hibernate, gboolean has_lcd_brightness, 
-		     gboolean has_lid, gboolean devkit_disk, gboolean can_spin_down)
+xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
+                     gboolean auth_hibernate, gboolean can_suspend,
+                     gboolean can_hibernate, gboolean has_lcd_brightness,
+                     gboolean has_lid, gboolean devkit_disk, gboolean can_spin_down)
 {
     GtkWidget *inact;
     GtkWidget *lid;
@@ -1121,11 +1121,11 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 }
 
 static void
-xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate, 
-		       gboolean auth_suspend, gboolean can_shutdown,  
-		       gboolean can_suspend, gboolean can_hibernate,
-		       gboolean has_sleep_button, gboolean has_hibernate_button,
-		       gboolean has_power_button)
+xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
+                       gboolean auth_hibernate, gboolean can_suspend,
+                       gboolean can_hibernate, gboolean can_shutdown,
+                       gboolean has_sleep_button, gboolean has_hibernate_button,
+                       gboolean has_power_button)
 {
     GtkWidget *power;
     GtkWidget *power_label;
@@ -1327,9 +1327,9 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_hibernate,
 }
 
 static void
-xfpm_settings_advanced (XfconfChannel *channel, gboolean system_laptop, 
-		        gboolean auth_hibernate, gboolean auth_suspend,
-			gboolean can_suspend, gboolean can_hibernate)
+xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
+                        gboolean auth_hibernate, gboolean can_suspend,
+                        gboolean can_hibernate, gboolean system_laptop)
 {
     guint val;
     gchar *str;
@@ -2098,27 +2098,27 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 
     settings_create_devices_list ();
 
-    xfpm_settings_on_ac (channel, 
-			 auth_hibernate, 
-			 auth_suspend, 
-			 can_suspend, 
-			 can_hibernate, 
-			 has_lcd_brightness, 
-			 has_lid,
-			 devkit_disk,
-			 can_spin_down);
-    
+    xfpm_settings_on_ac (channel,
+                         auth_suspend,
+                         auth_hibernate,
+                         can_suspend,
+                         can_hibernate,
+                         has_lcd_brightness,
+                         has_lid,
+                         devkit_disk,
+                         can_spin_down);
+
     if ( system_laptop )
-	xfpm_settings_on_battery (channel,
-				  auth_hibernate, 
-				  auth_suspend, 
-				  can_shutdown, 
-				  can_suspend, 
-				  can_hibernate, 
-				  has_lcd_brightness, 
-				  has_lid,
-				  devkit_disk,
-				  can_spin_down);
+    xfpm_settings_on_battery (channel,
+                              auth_suspend,
+                              auth_hibernate,
+                              can_suspend,
+                              can_hibernate,
+                              can_shutdown,
+                              has_lcd_brightness,
+                              has_lid,
+                              devkit_disk,
+                              can_spin_down);
     else
     {
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display_onbattery")));
@@ -2133,11 +2133,11 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean system_laptop,
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"on-battery-lid")));
     }
     
-    xfpm_settings_general   (channel, auth_hibernate, auth_suspend, can_shutdown, can_suspend, can_hibernate,
-			     has_sleep_button, has_hibernate_button, has_power_button );
-			     
-    xfpm_settings_advanced  (channel, system_laptop, auth_hibernate, auth_suspend, can_suspend, can_hibernate);
-    
+    xfpm_settings_general (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, can_shutdown,
+                           has_sleep_button, has_hibernate_button, has_power_button );
+
+    xfpm_settings_advanced (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, system_laptop);
+
     if ( id != 0 )
     {
 	plugged_box = GTK_WIDGET (gtk_builder_get_object (xml, "plug-child"));
