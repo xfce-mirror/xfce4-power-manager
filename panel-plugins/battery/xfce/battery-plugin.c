@@ -28,11 +28,14 @@
 
 #include <gtk/gtk.h>
 #include <glib.h>
+#include <glib/gi18n-lib.h>
 
+#ifdef XFCE_PLUGIN
 #include <libxfce4panel/libxfce4panel.h>
 #include <libxfce4panel/xfce-panel-plugin.h>
+#endif
 
-#include "battery-button.h"
+#include "../battery-button.h"
 
 /* plugin structure */
 typedef struct
@@ -45,10 +48,9 @@ typedef struct
 }
 BatteryPlugin;
 
+
 /* prototypes */
 static void battery_plugin_construct (XfcePanelPlugin *plugin);
-
-
 /* register the plugin */
 XFCE_PANEL_PLUGIN_REGISTER (battery_plugin_construct);
 
@@ -60,9 +62,6 @@ battery_plugin_new (XfcePanelPlugin *plugin)
 
     /* allocate memory for the plugin structure */
     battery_plugin = panel_slice_new0 (BatteryPlugin);
-
-    /* pointer to plugin */
-    battery_plugin->plugin = plugin;
 
     /* pointer to plugin */
     battery_plugin->plugin = plugin;

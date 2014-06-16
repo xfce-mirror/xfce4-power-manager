@@ -44,7 +44,12 @@
 
 struct BatteryButtonPrivate
 {
+#ifdef XFCE_PLUGIN
     XfcePanelPlugin *plugin;
+#endif
+#ifdef LXDE_PLUGIN
+    Plugin *plugin;
+#endif
     XfconfChannel   *channel;
 
     UpClient        *upower;
@@ -67,12 +72,6 @@ struct BatteryButtonPrivate
     UpDevice        *display_device;
 };
 
-enum
-{
-    PROP_0,
-    PROP_PLUGIN
-};
-
 typedef struct
 {
     GdkPixbuf   *pix;          /* Icon */
@@ -92,24 +91,6 @@ static gboolean battery_button_press_event (GtkWidget *widget, GdkEventButton *e
 static void battery_button_show_menu (BatteryButton *button);
 static void battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_device, gboolean append);
 
-
-static void
-battery_button_set_property (GObject *object,
-				guint prop_id,
-				const GValue *value,
-				GParamSpec   *pspec)
-{
-    BatteryButton *button = BATTERY_BUTTON (object);
-    switch (prop_id)
-    {
-	case PROP_PLUGIN:
-	    button->priv->plugin = XFCE_PANEL_PLUGIN (g_object_ref (g_value_get_object (value)));
-	    break;
-	default:
-	    G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-	break;
-    }
-}
 
 static BatteryDevice*
 get_display_device (BatteryButton *button)
@@ -407,18 +388,8 @@ battery_button_class_init (BatteryButtonClass *klass)
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
     object_class->finalize = battery_button_finalize;
-    object_class->set_property = battery_button_set_property;
 
     widget_class->button_press_event = battery_button_press_event;
-
-    g_object_class_install_property (object_class,
-				     PROP_PLUGIN,
-				     g_param_spec_object ("plugin",
-							  NULL,
-							  NULL,
-							  XFCE_TYPE_PANEL_PLUGIN,
-							  G_PARAM_CONSTRUCT_ONLY |
-							  G_PARAM_WRITABLE));
 
     g_type_class_add_private (klass, sizeof (BatteryButtonPrivate));
 }
@@ -440,7 +411,7 @@ battery_button_init (BatteryButton *button)
     }
     else
     {
-	button->priv->channel = xfconf_channel_get ("xfce4-power-manager");
+        button->priv->channel = xfconf_channel_get ("xfce4-power-manager");
     }
 
     /* Sane defaults for the panel icon */
@@ -462,16 +433,31 @@ battery_button_finalize (GObject *object)
 
     g_signal_handlers_disconnect_by_data (button->priv->upower, button);
 
+#ifdef XFCE_PLUGIN
     g_object_unref (button->priv->plugin);
+#endif
 
     G_OBJECT_CLASS (battery_button_parent_class)->finalize (object);
 }
 
 GtkWidget *
+#ifdef XFCE_PLUGIN
 battery_button_new (XfcePanelPlugin *plugin)
+#endif
+#ifdef LXDE_PLUGIN
+battery_button_new (Plugin *plugin)
+#endif
 {
     BatteryButton *button = NULL;
-    button = g_object_new (BATTERY_TYPE_BUTTON, "plugin", plugin, NULL);
+    button = g_object_new (BATTERY_TYPE_BUTTON, NULL, NULL);
+
+#ifdef XFCE_PLUGIN
+    button->priv->plugin = XFCE_PANEL_PLUGIN (g_object_ref (plugin));
+#endif
+#ifdef LXDE_PLUGIN
+    button->priv->plugin = plugin;
+#endif
+
     return GTK_WIDGET (button);
 }
 
@@ -508,6 +494,7 @@ battery_button_press_event (GtkWidget *widget, GdkEventButton *event)
     return TRUE;
 }
 
+#ifdef XFCE_PLUGIN
 static gboolean
 battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButton *button)
 {
@@ -515,6 +502,7 @@ battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButto
 
     g_return_val_if_fail (BATTERY_IS_BUTTON (button), FALSE);
     g_return_val_if_fail (XFCE_IS_PANEL_PLUGIN (plugin), FALSE);
+
 
     size /= xfce_panel_plugin_get_nrows (plugin);
     width = size -2 - 2* MAX(gtk_widget_get_style(GTK_WIDGET(button))->xthickness,
@@ -531,6 +519,7 @@ battery_button_free_data_cb (XfcePanelPlugin *plugin, BatteryButton *button)
 {
     gtk_widget_destroy (GTK_WIDGET (button));
 }
+#endif
 
 static void
 help_cb (GtkMenuItem *menuitem, gpointer user_data)
@@ -545,8 +534,10 @@ battery_button_show (BatteryButton *button)
 
     g_return_if_fail (BATTERY_IS_BUTTON (button));
 
+#ifdef XFCE_PLUGIN
     xfce_panel_plugin_add_action_widget (button->priv->plugin, GTK_WIDGET (button));
     xfce_panel_plugin_set_small (button->priv->plugin, TRUE);
+#endif
 
     button->priv->panel_icon_image = gtk_image_new ();
     gtk_container_add (GTK_CONTAINER (button), button->priv->panel_icon_image);
@@ -557,13 +548,15 @@ battery_button_show (BatteryButton *button)
     gtk_widget_show (mi);
     g_signal_connect (mi, "activate", G_CALLBACK (help_cb), button);
 
+#ifdef XFCE_PLUGIN
     xfce_panel_plugin_menu_insert_item (button->priv->plugin, GTK_MENU_ITEM (mi));
 
     g_signal_connect (button->priv->plugin, "size-changed",
-		      G_CALLBACK (battery_button_size_changed_cb), button);
+                      G_CALLBACK (battery_button_size_changed_cb), button);
 
     g_signal_connect (button->priv->plugin, "free-data",
-		      G_CALLBACK (battery_button_free_data_cb), button);
+                      G_CALLBACK (battery_button_free_data_cb), button);
+#endif
 
     gtk_widget_show_all (GTK_WIDGET(button));
     battery_button_set_tooltip (button);
@@ -686,9 +679,13 @@ battery_button_show_menu (BatteryButton *button)
 
     gtk_menu_popup (GTK_MENU (menu),
                     NULL,
-		    NULL,
-		    xfce_panel_plugin_position_menu,
-		    button->priv->plugin,
-		    0,
-		    gtk_get_current_event_time ());
+                    NULL,
+#ifdef XFCE_PLUGIN
+                    xfce_panel_plugin_position_menu,
+#else
+                    NULL,
+#endif
+                    button->priv->plugin,
+                    0,
+                    gtk_get_current_event_time ());
 }

@@ -23,7 +23,12 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
+#ifdef XFCE_PLUGIN
 #include <libxfce4panel/xfce-panel-plugin.h>
+#endif
+#ifdef LXDE_PLUGIN
+#include <lxpanel/plugin.h>
+#endif
 
 G_BEGIN_DECLS
 
@@ -48,7 +53,12 @@ typedef struct
 
 GType        			 battery_button_get_type        (void) G_GNUC_CONST;
 
+#ifdef XFCE_PLUGIN
 GtkWidget       		*battery_button_new             (XfcePanelPlugin *plugin);
+#endif
+#ifdef LXDE_PLUGIN
+GtkWidget       		*battery_button_new             (Plugin *plugin);
+#endif
 
 void                             battery_button_show            (BatteryButton *button);
 
