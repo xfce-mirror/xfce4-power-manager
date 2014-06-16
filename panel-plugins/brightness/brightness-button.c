@@ -322,7 +322,7 @@ minus_clicked (GtkWidget *widget, BrightnessButton *button)
     
     level = (gint ) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
-    if ( level != 0 )
+    if ( level > 0 )
 	gtk_range_set_value (GTK_RANGE (button->priv->range), level - 1);
 }
 
@@ -334,7 +334,7 @@ plus_clicked (GtkWidget *widget, BrightnessButton *button)
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);
     level = (gint ) gtk_range_get_value (GTK_RANGE (button->priv->range));
     
-    if ( level != max_level )
+    if ( level < max_level )
 	gtk_range_set_value (GTK_RANGE (button->priv->range), level + 1);
 }
 
@@ -443,7 +443,7 @@ brightness_button_up (BrightnessButton *button)
     xfpm_brightness_get_level (button->priv->brightness, &level);
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);
     
-    if ( level != max_level )
+    if ( level < max_level )
     {
 	plus_clicked (NULL, button);
     }
@@ -455,7 +455,7 @@ brightness_button_down (BrightnessButton *button)
     gint32 level;
     xfpm_brightness_get_level (button->priv->brightness, &level);
     
-    if ( level != 0 )
+    if ( level > 0 )
     {
 	minus_clicked (NULL, button);
     }
