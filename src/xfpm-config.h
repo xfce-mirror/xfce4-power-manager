@@ -42,6 +42,9 @@ G_BEGIN_DECLS
 #define     	CPU_FREQ_CONTROL             	"enable-cpu-freq-control"
 #define     	LOCK_SCREEN_ON_SLEEP         	"lock-screen-suspend-hibernate"
 
+#define         ON_BATTERY_BLANK                "blank-on-battery"
+#define         ON_AC_BLANK                     "blank-on-ac"
+
 #define 	DPMS_ENABLED_CFG             	"dpms-enabled" 
 #define 	ON_AC_DPMS_SLEEP 	     	"dpms-on-ac-sleep"
 #define 	ON_AC_DPMS_OFF	     	     	"dpms-on-ac-off"

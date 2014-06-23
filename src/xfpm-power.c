@@ -78,6 +78,8 @@ static void xfpm_power_set_property (GObject *object,
 static void xfpm_power_change_presentation_mode (XfpmPower *power,
 						 gboolean presentation_mode);
 
+static void xfpm_update_blank_time (XfpmPower *power);
+
 static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
 
@@ -109,6 +111,8 @@ struct XfpmPowerPrivate
     XfpmDpms        *dpms;
 #endif
     gboolean         presentation_mode;
+    gint             on_ac_blank;
+    gint             on_battery_blank;
     EggIdletime     *idletime;
 
     gboolean	     inhibited;
@@ -149,6 +153,8 @@ enum
     PROP_CAN_HIBERNATE,
     PROP_HAS_LID,
     PROP_PRESENTATION_MODE,
+    PROP_ON_AC_BLANK,
+    PROP_ON_BATTERY_BLANK,
     N_PROPERTIES
 };
 
@@ -211,6 +217,7 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
 		g_object_set (G_OBJECT (g_list_nth_data (list, i)),
 			      "ac-online", !on_battery,
 			      NULL);
+        xfpm_update_blank_time (power);
 	    }
 	}
 }
@@ -1075,6 +1082,24 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                           NULL, NULL,
                                                           FALSE,
                                                           XFPM_PARAM_FLAGS));
+
+    g_object_class_install_property (object_class,
+                                     PROP_ON_AC_BLANK,
+                                     g_param_spec_int  (ON_AC_BLANK,
+                                                        NULL, NULL,
+                                                        0,
+                                                        G_MAXINT16,
+                                                        10,
+                                                        XFPM_PARAM_FLAGS));
+
+    g_object_class_install_property (object_class,
+                                     PROP_ON_BATTERY_BLANK,
+                                     g_param_spec_int  (ON_BATTERY_BLANK,
+                                                        NULL, NULL,
+                                                        0,
+                                                        G_MAXINT16,
+                                                        10,
+                                                        XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 
     g_type_class_add_private (klass, sizeof (XfpmPowerPrivate));
@@ -1106,6 +1131,8 @@ xfpm_power_init (XfpmPower *power)
     power->priv->dpms                 = xfpm_dpms_new ();
 #endif
     power->priv->presentation_mode    = FALSE;
+    power->priv->on_ac_blank          = 15;
+    power->priv->on_battery_blank     = 10;
     power->priv->suspend = xfpm_suspend_get ();
 
     power->priv->inhibit = xfpm_inhibit_new ();
@@ -1152,8 +1179,16 @@ xfpm_power_init (XfpmPower *power)
 #endif
 
     xfconf_g_property_bind(xfpm_xfconf_get_channel(power->priv->conf),
-			   PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
+                           PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
                            G_OBJECT(power), PRESENTATION_MODE);
+
+    xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
+                            PROPERTIES_PREFIX ON_BATTERY_BLANK, G_TYPE_INT,
+                            G_OBJECT (power), ON_BATTERY_BLANK);
+
+    xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
+                            PROPERTIES_PREFIX ON_AC_BLANK, G_TYPE_INT,
+                            G_OBJECT (power), ON_AC_BLANK);
 
 out:
     xfpm_power_dbus_init (power);
@@ -1195,6 +1230,12 @@ static void xfpm_power_get_property (GObject *object,
 	case PROP_PRESENTATION_MODE:
 	    g_value_set_boolean (value, power->priv->presentation_mode);
 	    break;
+    case PROP_ON_AC_BLANK:
+      g_value_set_int (value, power->priv->on_ac_blank);
+      break;
+    case PROP_ON_BATTERY_BLANK:
+      g_value_set_int (value, power->priv->on_battery_blank);
+      break;
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
             break;
@@ -1207,12 +1248,23 @@ static void xfpm_power_set_property (GObject *object,
 				     GParamSpec *pspec)
 {
     XfpmPower *power = XFPM_POWER (object);
+    gint on_ac_blank, on_battery_blank;
 
     switch (prop_id)
     {
 	case PROP_PRESENTATION_MODE:
 	    xfpm_power_change_presentation_mode (power, g_value_get_boolean (value));
 	    break;
+    case PROP_ON_AC_BLANK:
+          on_ac_blank = g_value_get_int (value);
+          power->priv->on_ac_blank = on_ac_blank;
+          xfpm_update_blank_time (power);
+          break;
+      case PROP_ON_BATTERY_BLANK:
+          on_battery_blank = g_value_get_int (value);
+          power->priv->on_battery_blank = on_battery_blank;
+          xfpm_update_blank_time (power);
+          break;
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
             break;
@@ -1305,6 +1357,21 @@ gboolean xfpm_power_has_battery (XfpmPower *power)
     }
 
     return ret;
+}
+
+static void
+xfpm_update_blank_time (XfpmPower *power)
+{
+    Display* display = gdk_x11_display_get_xdisplay(gdk_display_get_default ());
+    guint screensaver_timeout;
+
+    if (power->priv->on_battery)
+        screensaver_timeout = power->priv->on_battery_blank;
+    else
+        screensaver_timeout = power->priv->on_ac_blank;
+    XFPM_DEBUG ("Timeout: %d", screensaver_timeout);
+
+    XSetScreenSaver(display, screensaver_timeout * 60, 0, DefaultBlanking, DefaultExposures);
 }
 
 static void

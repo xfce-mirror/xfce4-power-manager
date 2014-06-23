@@ -39,6 +39,7 @@
 #include "xfpm-icons.h"
 #include "xfpm-debug.h"
 #include "xfpm-power-common.h"
+#include "xfpm-power.h"
 
 #include "interfaces/xfpm-settings_ui.h"
 
@@ -2017,10 +2018,12 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *plugged_box;
     GtkWidget *viewport;
     GtkWidget *hbox;
+    GtkWidget *on_battery_blank, *on_ac_blank;
     GtkListStore *list_store;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
     GError *error = NULL;
+    guint val;
 
     XFPM_DEBUG ("auth_hibernate=%s auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s " \
                 "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s " \
@@ -2046,6 +2049,18 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     on_battery_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "off-dpms-on-battery"));
     on_ac_dpms_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-on-ac"));
     on_ac_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "off-dpms-on-ac"));
+
+    on_battery_blank = GTK_WIDGET (gtk_builder_get_object (xml, "blank-on-battery"));
+    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATTERY_BLANK, 10);
+    gtk_range_set_value (GTK_RANGE (on_battery_blank), val);
+    xfconf_g_property_bind (channel, PROPERTIES_PREFIX ON_BATTERY_BLANK,
+                            G_TYPE_INT, gtk_range_get_adjustment (GTK_RANGE (on_battery_blank)),
+                            "value");
+
+    on_ac_blank = GTK_WIDGET (gtk_builder_get_object (xml, "blank-on-ac"));
+    xfconf_g_property_bind (channel, PROPERTIES_PREFIX ON_AC_BLANK,
+                            G_TYPE_INT, gtk_range_get_adjustment (GTK_RANGE (on_ac_blank)),
+                            "value");
 
     dialog = GTK_WIDGET (gtk_builder_get_object (xml, "xfpm-settings-dialog"));
     nt = GTK_WIDGET (gtk_builder_get_object (xml, "main-notebook"));
