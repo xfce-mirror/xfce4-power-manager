@@ -484,6 +484,16 @@ battery_button_set_icon (BatteryButton *button)
     return FALSE;
 }
 
+void
+battery_button_set_width (BatteryButton *button, gint width)
+{
+    g_return_if_fail (BATTERY_IS_BUTTON (button));
+
+    battery->priv->panel_icon_width = width;
+
+    battery_button_set_icon (button);
+}
+
 static gboolean
 battery_button_press_event (GtkWidget *widget, GdkEventButton *event)
 {

@@ -46,6 +46,7 @@ BatteryPlugin;
 
 /* prototypes */
 static int battery_plugin_construct (Plugin *p, char **fp);
+static void battery_plugin_configuration_changed(Plugin *p);
 
 PluginClass lxdebattery_plugin_class = {
     PLUGINCLASS_VERSIONING,
@@ -59,7 +60,7 @@ PluginClass lxdebattery_plugin_class = {
     destructor  : NULL,
     config : NULL,
     save : NULL,
-    panel_configuration_changed : NULL
+    panel_configuration_changed : battery_plugin_configuration_changed
 };
 
 
@@ -97,6 +98,26 @@ battery_plugin_construct (Plugin *plugin, char **fp)
 
     /* add the ebox to the panel */
     plugin->pwid = battery_plugin->ebox;
+    plugin->priv = battery_plugin;
 
     return 1;
+}
+
+static void
+battery_plugin_configuration_changed(Plugin *p)
+{
+    BatteryPlugin *battery_plugin = p->plugin;
+
+    /* Determine orientation and size */
+    GtkOrientation orientation = (p->panel->orientation == GTK_ORIENTATION_VERTICAL) ? GTK_ORIENTATION_VERTICAL : GTK_ORIENTATION_HORIZONTAL;
+
+    int size = (orientation == GTK_ORIENTATION_VERTICAL) ? p->panel->width : p->panel->height;
+
+    if ( orientation == GTK_ORIENTATION_HORIZONTAL )
+        gtk_widget_set_size_request (p->pwid, -1, size);
+    else
+        gtk_widget_set_size_request (p->pwid, size, -1);
+
+    /* update the button's width */
+    battery_button_set_width (battery_plugin->battery_button, p->panel->icon_size);
 }

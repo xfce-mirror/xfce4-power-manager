@@ -51,16 +51,18 @@ typedef struct
 
 } BatteryButtonClass;
 
-GType        			 battery_button_get_type        (void) G_GNUC_CONST;
+GType                    battery_button_get_type (void) G_GNUC_CONST;
 
 #ifdef XFCE_PLUGIN
-GtkWidget       		*battery_button_new             (XfcePanelPlugin *plugin);
+GtkWidget               *battery_button_new       (XfcePanelPlugin *plugin);
 #endif
 #ifdef LXDE_PLUGIN
-GtkWidget       		*battery_button_new             (Plugin *plugin);
+GtkWidget               *battery_button_new       (Plugin *plugin);
 #endif
 
-void                             battery_button_show            (BatteryButton *button);
+void                     battery_button_show      (BatteryButton *button);
+
+void                     battery_button_set_width (BatteryButton *button, gint width);
 
 G_END_DECLS
 
