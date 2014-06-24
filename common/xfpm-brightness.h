@@ -58,7 +58,7 @@ gboolean			xfpm_brightness_down		(XfpmBrightness *brightness,
 
 gboolean			xfpm_brightness_has_hw 		(XfpmBrightness *brightness);
 
-gint 				xfpm_brightness_get_max_level   (XfpmBrightness *brightness);
+gint32 			xfpm_brightness_get_max_level   (XfpmBrightness *brightness);
 
 gboolean			xfpm_brightness_get_level	(XfpmBrightness *brightness,
 								 gint32 *level);

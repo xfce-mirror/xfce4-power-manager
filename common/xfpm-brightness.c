@@ -52,10 +52,10 @@ struct XfpmBrightnessPrivate
     gboolean		xrandr_has_hw;
     gboolean		helper_has_hw;
     
-    gint		max_level;
-    gint		current_level;
-    gint		min_level;
-    gint		step;
+    gint32		max_level;
+    gint32		current_level;
+    gint32		min_level;
+    gint32		step;
 };
 
 G_DEFINE_TYPE (XfpmBrightness, xfpm_brightness, G_TYPE_OBJECT)
@@ -152,7 +152,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     Window window;
     gint major, minor, screen_num;
     int event_base, error_base;
-    gint min, max;
+    gint32 min, max;
     gboolean ret = FALSE;
     gint i;
     
@@ -344,9 +344,9 @@ out:
 static gboolean
 xfpm_brightness_setup_helper (XfpmBrightness *brightness)
 {
-    int ret;
+    gint32 ret;
 
-    ret = xfpm_brightness_helper_get_value ("get-max-brightness");
+    ret = (gint32) xfpm_brightness_helper_get_value ("get-max-brightness");
     g_debug ("xfpm_brightness_setup_helper: get-max-brightness returned %i", ret);
     if ( ret < 0 ) {
 	brightness->priv->helper_has_hw = FALSE;
@@ -363,12 +363,12 @@ xfpm_brightness_setup_helper (XfpmBrightness *brightness)
 static gboolean
 xfpm_brightness_helper_get_level (XfpmBrightness *brg, gint32 *level)
 {
-    int ret;
+    gint32 ret;
 
     if ( ! brg->priv->helper_has_hw )
 	return FALSE;
 
-    ret = xfpm_brightness_helper_get_value ("get-brightness");
+    ret = (gint32) xfpm_brightness_helper_get_value ("get-brightness");
 
     g_debug ("xfpm_brightness_helper_get_level: get-brightness returned %i", ret);
 
@@ -613,7 +613,7 @@ gboolean xfpm_brightness_has_hw (XfpmBrightness *brightness)
     return brightness->priv->xrandr_has_hw || brightness->priv->helper_has_hw;
 }
 
-gint xfpm_brightness_get_max_level (XfpmBrightness *brightness)
+gint32 xfpm_brightness_get_max_level (XfpmBrightness *brightness)
 {
     return brightness->priv->max_level;
 }
