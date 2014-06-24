@@ -417,7 +417,7 @@ xfpm_brightness_helper_up (XfpmBrightness *brightness, gint32 *new_level)
     if ( !ret )
 	return FALSE;
 
-    if ( hw_level == brightness->priv->max_level )
+    if ( hw_level >= brightness->priv->max_level )
     {
 	*new_level = brightness->priv->max_level;
 	return TRUE;
@@ -457,7 +457,7 @@ xfpm_brightness_helper_down (XfpmBrightness *brightness, gint32 *new_level)
     if ( !ret )
 	return FALSE;
     
-    if ( hw_level == brightness->priv->min_level )
+    if ( hw_level <= brightness->priv->min_level )
     {
 	*new_level = brightness->priv->min_level;
 	return TRUE;
