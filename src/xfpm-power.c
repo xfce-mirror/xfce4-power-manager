@@ -1377,6 +1377,11 @@ xfpm_update_blank_time (XfpmPower *power)
         screensaver_timeout = power->priv->on_battery_blank;
     else
         screensaver_timeout = power->priv->on_ac_blank;
+
+    /* Presentation mode disables blanking */
+    if (power->priv->presentation_mode)
+        screensaver_timeout = 0;
+
     XFPM_DEBUG ("Timeout: %d", screensaver_timeout);
 
     XSetScreenSaver(display, screensaver_timeout * 60, 0, DefaultBlanking, DefaultExposures);
@@ -1407,6 +1412,8 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
 
         g_object_unref (idletime);
     }
+
+    xfpm_update_blank_time (power);
 #endif
 }
 
