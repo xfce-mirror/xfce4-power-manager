@@ -189,11 +189,11 @@ static void xfpm_systemd_get_property (GObject *object,
 static void
 xfpm_systemd_finalize (GObject *object)
 {
+#ifdef ENABLE_POLKIT
     XfpmSystemd *systemd;
 
     systemd = XFPM_SYSTEMD (object);
 
-#ifdef ENABLE_POLKIT
     if(systemd->priv->polkit)
     {
         g_object_unref (G_OBJECT (systemd->priv->polkit));
