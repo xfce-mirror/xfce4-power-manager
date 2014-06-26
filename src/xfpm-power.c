@@ -1178,18 +1178,6 @@ xfpm_power_init (XfpmPower *power)
     xfpm_power_check_polkit_auth (power);
 #endif
 
-    xfconf_g_property_bind(xfpm_xfconf_get_channel(power->priv->conf),
-                           PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
-                           G_OBJECT(power), PRESENTATION_MODE);
-
-    xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
-                            PROPERTIES_PREFIX ON_BATTERY_BLANK, G_TYPE_INT,
-                            G_OBJECT (power), ON_BATTERY_BLANK);
-
-    xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
-                            PROPERTIES_PREFIX ON_AC_BLANK, G_TYPE_INT,
-                            G_OBJECT (power), ON_AC_BLANK);
-
 out:
     xfpm_power_dbus_init (power);
 
@@ -1304,6 +1292,26 @@ xfpm_power_finalize (GObject *object)
     G_OBJECT_CLASS (xfpm_power_parent_class)->finalize (object);
 }
 
+static XfpmPower*
+xfpm_power_new (void)
+{
+    XfpmPower *power = XFPM_POWER(g_object_new (XFPM_TYPE_POWER, NULL));
+
+    xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
+                            PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
+                            G_OBJECT(power), PRESENTATION_MODE);
+
+    xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
+                            PROPERTIES_PREFIX ON_BATTERY_BLANK, G_TYPE_INT,
+                            G_OBJECT (power), ON_BATTERY_BLANK);
+
+    xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
+                            PROPERTIES_PREFIX ON_AC_BLANK, G_TYPE_INT,
+                            G_OBJECT (power), ON_AC_BLANK);
+
+    return power;
+}
+
 XfpmPower *
 xfpm_power_get (void)
 {
@@ -1311,12 +1319,12 @@ xfpm_power_get (void)
 
     if ( G_LIKELY (xfpm_power_object != NULL ) )
     {
-	g_object_ref (xfpm_power_object);
+        g_object_ref (xfpm_power_object);
     }
     else
     {
-	xfpm_power_object = g_object_new (XFPM_TYPE_POWER, NULL);
-	g_object_add_weak_pointer (xfpm_power_object, &xfpm_power_object);
+        xfpm_power_object = xfpm_power_new ();
+        g_object_add_weak_pointer (xfpm_power_object, &xfpm_power_object);
     }
 
     return XFPM_POWER (xfpm_power_object);
