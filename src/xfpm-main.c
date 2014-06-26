@@ -251,6 +251,7 @@ int main (int argc, char **argv)
     DBusGConnection *bus;
     GError *error = NULL;
     DBusGProxy *proxy;
+    GOptionContext *octx;
      
     gboolean run        = FALSE;
     gboolean quit       = FALSE;
@@ -278,18 +279,46 @@ int main (int argc, char **argv)
 
 #if !GLIB_CHECK_VERSION (2, 32, 0)
     if ( !g_thread_supported () )
-	g_thread_init (NULL);
+        g_thread_init (NULL);
 #endif
 
+    /* Parse the options */
+    octx = g_option_context_new("");
+    g_option_context_set_ignore_unknown_options(octx, TRUE);
+    g_option_context_add_main_entries(octx, option_entries, NULL);
+    g_option_context_add_group(octx, xfce_sm_client_get_option_group(argc, argv));
+    /* We can't add the following command because it will invoke gtk_init
+       before we have a chance to fork.
+       g_option_context_add_group(octx, gtk_get_option_group(TRUE));
+     */
+
+    if(!g_option_context_parse(octx, &argc, &argv, &error)) {
+        g_printerr(_("Failed to parse arguments: %s\n"), error->message);
+        g_option_context_free(octx);
+        g_error_free(error);
+
+        return EXIT_FAILURE;
+    }
+
+    g_option_context_free(octx);
+
+    /* Fork if needed */
+    if ( dump == FALSE && debug == FALSE && no_daemon == FALSE && daemon(0,0) )
+    {
+        g_critical ("Could not daemonize");
+    }
+
+
+    /* Initialize */
     dbus_g_thread_init ();
 
     xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
-    
+
     g_set_application_name (PACKAGE_NAME);
-    
-    if (!gtk_init_with_args (&argc, &argv, (gchar *)"", option_entries, (gchar *)PACKAGE, &error)) 
+
+    if (!gtk_init_check (&argc, &argv))
     {
-        if (G_LIKELY (error)) 
+        if (G_LIKELY (error))
         {
             g_printerr ("%s: %s.\n", G_LOG_DOMAIN, error->message);
             g_printerr (_("Type '%s --help' for usage."), G_LOG_DOMAIN);
@@ -299,22 +328,17 @@ int main (int argc, char **argv)
         else
         {
             g_error ("Unable to open display.");
-	}
+        }
 
         return EXIT_FAILURE;
     }
-    
+
     if ( version )    
     {
-	show_version ();
+        show_version ();
     }
     
     xfpm_debug_init (debug);
-
-    if ( dump == FALSE && debug == FALSE && no_daemon == FALSE && daemon(0,0) )
-    {
-	g_critical ("Could not daemonize");
-    }
     
     bus = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
             
