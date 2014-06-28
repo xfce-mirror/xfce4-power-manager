@@ -75,7 +75,7 @@ struct XfpmPolkitPrivate
 
 #ifdef ENABLE_POLKIT
     DBusGProxy        *proxy;
-    GValueArray       *subject;
+    GArray            *subject;
     GHashTable        *details;
     GHashTable        *subject_hash;
 
@@ -253,9 +253,7 @@ xfpm_polkit_free_data (gpointer data)
     g_hash_table_destroy (polkit->priv->details);
     g_hash_table_destroy (polkit->priv->subject_hash);
 
-    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-    g_value_array_free   (polkit->priv->subject);
-    G_GNUC_END_IGNORE_DEPRECATIONS
+    g_array_unref (polkit->priv->subject);
     
     polkit->priv->details      = NULL;
     polkit->priv->subject_hash = NULL;
@@ -270,146 +268,70 @@ xfpm_polkit_free_data (gpointer data)
 static void
 xfpm_polkit_init_data (XfpmPolkit *polkit)
 {
-    //const gchar *consolekit_cookie;
     GValue hash_elem = { 0 };
-    //gboolean subject_created = FALSE;
+    gint pid;
+    guint64 start_time;
 
     if (polkit->priv->subject_valid)
-	return;
+        return;
     
-    /**
-     * This variable should be set by the session manager or by 
-     * the login manager (gdm?). under clean Xfce environment
-     * it is set by the session manager (4.8 and above)  
-     * since we don't have a login manager, yet!
-     **/
-     /*
-      *	
-      *	Disable for the moment
-      * 
-    consolekit_cookie = g_getenv ("XDG_SESSION_COOKIE");
-  
-    if ( consolekit_cookie )
-    {
-	DBusGProxy *proxy;
-	GError *error = NULL;
-	gboolean ret;
-	gchar *consolekit_session;
-	
-	proxy  = dbus_g_proxy_new_for_name_owner (polkit->priv->bus,
-						  "org.freedesktop.ConsoleKit",
-						  "/org/freedesktop/ConsoleKit/Manager",
-						  "org.freedesktop.ConsoleKit.Manager",
-						  NULL);
+    pid = getpid ();
 
-	if ( proxy )
-	{
-	    ret = dbus_g_proxy_call (proxy, "GetSessionForCookie", &error,
-				     G_TYPE_STRING, consolekit_cookie,
-				     G_TYPE_INVALID,
-				     DBUS_TYPE_G_OBJECT_PATH, &consolekit_session,
-				     G_TYPE_INVALID);
-	    
-	    if ( G_LIKELY (ret) )
-	    {
-		GValue val  = { 0 };
-		
-		polkit->priv->subject = g_value_array_new (2);
-		polkit->priv->subject_hash = g_hash_table_new_full (g_str_hash, 
-								    g_str_equal, 
-								    g_free, 
-								    NULL);
-		g_value_init (&val, G_TYPE_STRING);
-		g_value_set_string (&val, "unix-session");
-		g_value_array_append (polkit->priv->subject, &val);
-		
-		g_value_unset (&val);
-		g_value_init (&val, G_TYPE_STRING);
-		g_value_set_string (&val, consolekit_session);
-		
-		g_hash_table_insert (polkit->priv->subject_hash, 
-				     g_strdup ("session-id"), 
-				     &val);
-		
-		g_free (consolekit_session);
-		XFPM_DEBUG ("Using ConsoleKit session Polkit subject");
-		subject_created = TRUE;
-	    }
-	    g_object_unref (proxy);
-	}
-	else if (error)
-	{
-	    g_warning ("'GetSessionForCookie' failed : %s", error->message);
-	    g_error_free (error);
-	}
-	
-    }
-    */
-    
-    //if ( subject_created == FALSE )
-    {
-	gint pid;
-	guint64 start_time;
-    
-	pid = getpid ();
-	
-	start_time = get_start_time_for_pid (pid);
-	
-	if ( G_LIKELY (start_time != 0 ) )
-	{
-	    GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
+    start_time = get_start_time_for_pid (pid);
 
-	    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-	    polkit->priv->subject = g_value_array_new (2);
-	    G_GNUC_END_IGNORE_DEPRECATIONS
-	    polkit->priv->subject_hash = g_hash_table_new_full (g_str_hash, 
-								g_str_equal, 
-								g_free, 
-								NULL);
-	
-	    g_value_init (&val, G_TYPE_STRING);
-	    g_value_set_string (&val, "unix-process");
-	    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-	    g_value_array_append (polkit->priv->subject, &val);
-	    G_GNUC_END_IGNORE_DEPRECATIONS
-	    
-	    g_value_unset (&val);
-	    
-	    g_value_init (&pid_val, G_TYPE_UINT);
-	    g_value_set_uint (&pid_val, pid);
-	    g_hash_table_insert (polkit->priv->subject_hash, 
-				 g_strdup ("pid"), &pid_val);
-	    
-	    g_value_init (&start_time_val, G_TYPE_UINT64);
-	    g_value_set_uint64 (&start_time_val, start_time);
-	    g_hash_table_insert (polkit->priv->subject_hash, 
-				 g_strdup ("start-time"), &start_time_val);
-	    
-	    XFPM_DEBUG ("Using unix session polkit subject");
-	}
-	else
-	{
-	    g_warning ("Unable to create polkit subject");
-	}
+    if ( G_LIKELY (start_time != 0 ) )
+    {
+        GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
+
+        polkit->priv->subject = g_array_sized_new (FALSE, TRUE, sizeof (GValue), 2);
+        g_array_set_clear_func (polkit->priv->subject, (GDestroyNotify) g_value_unset);
+
+        polkit->priv->subject_hash = g_hash_table_new_full (g_str_hash,
+                                                            g_str_equal,
+                                                            g_free,
+                                                            NULL);
+
+        g_value_init (&val, G_TYPE_STRING);
+        g_value_set_string (&val, "unix-process");
+        g_array_append_val (polkit->priv->subject, val);
+
+        g_value_unset (&val);
+
+        g_value_init (&pid_val, G_TYPE_UINT);
+        g_value_set_uint (&pid_val, pid);
+        g_hash_table_insert (polkit->priv->subject_hash,
+                             g_strdup ("pid"), &pid_val);
+
+        g_value_init (&start_time_val, G_TYPE_UINT64);
+        g_value_set_uint64 (&start_time_val, start_time);
+        g_hash_table_insert (polkit->priv->subject_hash,
+                             g_strdup ("start-time"), &start_time_val);
+
+        XFPM_DEBUG ("Using unix session polkit subject");
     }
+    else
+    {
+        g_warning ("Unable to create polkit subject");
+    }
+
     
     g_value_init (&hash_elem, 
-		  dbus_g_type_get_map ("GHashTable", 
-				       G_TYPE_STRING, 
-				       G_TYPE_VALUE));
-    
+                  dbus_g_type_get_map ("GHashTable",
+                                       G_TYPE_STRING,
+                                       G_TYPE_VALUE));
+
     g_value_set_static_boxed (&hash_elem, polkit->priv->subject_hash);
-    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-    g_value_array_append (polkit->priv->subject, &hash_elem);
-    G_GNUC_END_IGNORE_DEPRECATIONS
-    
+
+    g_array_append_val (polkit->priv->subject, hash_elem);
+
+
     /**
      * Polkit details, will leave it empty.
      **/
-    polkit->priv->details = g_hash_table_new_full (g_str_hash, 
-						   g_str_equal, 
-						   g_free, 
-						   g_free);
+    polkit->priv->details = g_hash_table_new_full (g_str_hash,
+                                                   g_str_equal,
+                                                   g_free,
+                                                   g_free);
     
     /*Clean these data after 1 minute*/
     polkit->priv->destroy_id = 
@@ -423,7 +345,7 @@ static gboolean
 xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
 {
 #ifdef ENABLE_POLKIT
-    GValueArray *result;
+    GArray *result;
     GValue result_val = { 0 };
     GError *error = NULL;
     gboolean is_authorized = FALSE;
@@ -443,40 +365,37 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
     
     g_return_val_if_fail (polkit->priv->proxy != NULL, FALSE);
     g_return_val_if_fail (polkit->priv->subject_valid, FALSE);
-    
-    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-    result = g_value_array_new (0);
-    G_GNUC_END_IGNORE_DEPRECATIONS
+
+    result = g_array_sized_new (FALSE, TRUE, sizeof (GValue), 0);
+    g_array_set_clear_func (result, (GDestroyNotify) g_value_unset);
     
     ret = dbus_g_proxy_call (polkit->priv->proxy, "CheckAuthorization", &error,
-			     polkit->priv->subject_gtype, polkit->priv->subject,
-			     G_TYPE_STRING, action_id,
-			     polkit->priv->details_gtype, polkit->priv->details,
-			     G_TYPE_UINT, 0, 
-			     G_TYPE_STRING, NULL,
-			     G_TYPE_INVALID,
-			     polkit->priv->result_gtype, &result,
-			     G_TYPE_INVALID);
+                             polkit->priv->subject_gtype, polkit->priv->subject,
+                             G_TYPE_STRING, action_id,
+                             polkit->priv->details_gtype, polkit->priv->details,
+                             G_TYPE_UINT, 0,
+                             G_TYPE_STRING, NULL,
+                             G_TYPE_INVALID,
+                             polkit->priv->result_gtype, &result,
+                             G_TYPE_INVALID);
     
     if ( G_LIKELY (ret) )
     {
-	g_value_init (&result_val, polkit->priv->result_gtype);
-	g_value_set_static_boxed (&result_val, result);
-	
-	dbus_g_type_struct_get (&result_val,
-				0, &is_authorized,
-				G_MAXUINT);
-	g_value_unset (&result_val);
+        g_value_init (&result_val, polkit->priv->result_gtype);
+        g_value_set_static_boxed (&result_val, result);
+
+        dbus_g_type_struct_get (&result_val,
+                                0, &is_authorized,
+                                G_MAXUINT);
+        g_value_unset (&result_val);
     }
     else if ( error )
     {
-	g_warning ("'CheckAuthorization' failed with %s", error->message);
-	g_error_free (error);
+        g_warning ("'CheckAuthorization' failed with %s", error->message);
+        g_error_free (error);
     }
 
-    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-    g_value_array_free (result);
-    G_GNUC_END_IGNORE_DEPRECATIONS
+    g_array_unref (result);
     
     XFPM_DEBUG ("Action=%s is authorized=%s", action_id, xfpm_bool_to_string (is_authorized));
     
@@ -529,25 +448,25 @@ xfpm_polkit_init (XfpmPolkit *polkit)
     polkit->priv->subject_hash = NULL;
     
     polkit->priv->subject_gtype = 
-        dbus_g_type_get_struct ("GValueArray", 
-                                G_TYPE_STRING, 
-                                dbus_g_type_get_map ("GHashTable", 
-                                                     G_TYPE_STRING, 
+        dbus_g_type_get_struct ("GValueArray",
+                                G_TYPE_STRING,
+                                dbus_g_type_get_map ("GHashTable",
+                                                     G_TYPE_STRING,
                                                      G_TYPE_VALUE),
                                 G_TYPE_INVALID);
     
-    polkit->priv->details_gtype = dbus_g_type_get_map ("GHashTable", 
-						       G_TYPE_STRING, 
+    polkit->priv->details_gtype = dbus_g_type_get_map ("GHashTable",
+						       G_TYPE_STRING,
 						       G_TYPE_STRING);
     
     polkit->priv->result_gtype =
-	dbus_g_type_get_struct ("GValueArray", 
-				G_TYPE_BOOLEAN, 
-				G_TYPE_BOOLEAN, 
-				dbus_g_type_get_map ("GHashTable", 
-						     G_TYPE_STRING, 
-						     G_TYPE_STRING),
-				G_TYPE_INVALID);
+    dbus_g_type_get_struct ("GValueArray",
+                            G_TYPE_BOOLEAN,
+                            G_TYPE_BOOLEAN,
+                            dbus_g_type_get_map ("GHashTable",
+                                                 G_TYPE_STRING,
+                                                 G_TYPE_STRING),
+                            G_TYPE_INVALID);
 #endif /*ENABLE_POLKIT*/
     
     polkit->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
