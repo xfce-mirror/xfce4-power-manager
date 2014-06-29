@@ -166,8 +166,8 @@ XDT_CHECK_OPTIONAL_PACKAGE([LXDEPANEL], [lxpanel], [lxdepanel_minimum_version],
 [lxdepanel],[To build plugin support for LXDE's panel])
 
 AM_CONDITIONAL([BUILD_PANEL_PLUGINS], [test "x$build_panel_plugins" = "xyes"])
-AM_CONDITIONAL([BUILD_XFCE_PLUGINS], [test "x$LIBXFCE4PANEL_FOUND" = "xyes" && "x$build_panel_plugins" = "xyes"])
-AM_CONDITIONAL([BUILD_LXDE_PLUGINS], [test "x$LXDEPANEL_FOUND" = "xyes" && "x$build_panel_plugins" = "xyes"])
+AM_CONDITIONAL([BUILD_XFCE_PLUGINS], [test "x$LIBXFCE4PANEL_FOUND" = "xyes" && test "x$build_panel_plugins" = "xyes"])
+AM_CONDITIONAL([BUILD_LXDE_PLUGINS], [test "x$LXDEPANEL_FOUND" = "xyes" && test "x$build_panel_plugins" = "xyes"])
 
 
 #=======================================================#
