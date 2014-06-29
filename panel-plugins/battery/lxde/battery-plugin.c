@@ -106,7 +106,7 @@ battery_plugin_construct (Plugin *plugin, char **fp)
 static void
 battery_plugin_configuration_changed(Plugin *p)
 {
-    BatteryPlugin *battery_plugin = p->plugin;
+    BatteryPlugin *battery_plugin = p->priv;
 
     /* Determine orientation and size */
     GtkOrientation orientation = (p->panel->orientation == GTK_ORIENTATION_VERTICAL) ? GTK_ORIENTATION_VERTICAL : GTK_ORIENTATION_HORIZONTAL;
@@ -119,5 +119,5 @@ battery_plugin_configuration_changed(Plugin *p)
         gtk_widget_set_size_request (p->pwid, size, -1);
 
     /* update the button's width */
-    battery_button_set_width (battery_plugin->battery_button, p->panel->icon_size);
+    battery_button_set_width (BATTERY_BUTTON(battery_plugin->battery_button), p->panel->icon_size);
 }
