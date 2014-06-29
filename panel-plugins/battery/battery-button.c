@@ -489,7 +489,7 @@ battery_button_set_width (BatteryButton *button, gint width)
 {
     g_return_if_fail (BATTERY_IS_BUTTON (button));
 
-    battery->priv->panel_icon_width = width;
+    button->priv->panel_icon_width = width;
 
     battery_button_set_icon (button);
 }
