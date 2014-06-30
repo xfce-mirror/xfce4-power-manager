@@ -1728,9 +1728,9 @@ update_device_details (UpDevice *device)
         /*Percentage*/
         if (percent >= 0)
         {
-            str = g_strdup_printf("%d", (guint) percent);
+            str = g_strdup_printf("%d%%", (guint) percent);
 
-            update_device_info_value_for_name (view, list_store, _("Energy percent"), str);
+            update_device_info_value_for_name (view, list_store, _("Current charge"), str);
 
             g_free(str);
         }
@@ -1740,7 +1740,7 @@ update_device_details (UpDevice *device)
             /* TRANSLATORS: Unit here is Watt hour*/
             str = xfpm_info_get_energy_property (energy_full_design, _("Wh"));
 
-            update_device_info_value_for_name (view, list_store, _("Energy full design"), str);
+            update_device_info_value_for_name (view, list_store, _("Fully charged (design)"), str);
 
             g_free (str);
         }
@@ -1749,8 +1749,9 @@ update_device_details (UpDevice *device)
         {
             /* TRANSLATORS: Unit here is Watt hour*/
             str = xfpm_info_get_energy_property (energy_full, _("Wh"));
+            strcat (str, g_strdup_printf(" (%d%%)", (guint) (energy_full / energy_full_design *100)));
 
-            update_device_info_value_for_name (view, list_store, _("Energy full"), str);
+            update_device_info_value_for_name (view, list_store, _("Fully charged"), str);
 
             g_free (str);
         }
