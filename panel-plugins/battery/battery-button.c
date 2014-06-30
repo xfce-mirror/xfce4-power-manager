@@ -648,6 +648,7 @@ battery_button_show_menu (BatteryButton *button)
     GtkWidget *menu, *mi;
     GdkScreen *gscreen;
     GList *item;
+    gboolean show_separator_flag = FALSE;
 
     if(gtk_widget_has_screen(GTK_WIDGET(button)))
         gscreen = gtk_widget_get_screen(GTK_WIDGET(button));
@@ -665,12 +666,17 @@ battery_button_show_menu (BatteryButton *button)
         BatteryDevice *battery_device = item->data;
 
         battery_button_menu_add_device (button, battery_device, TRUE);
+        /* If we add an item to the menu, show the separator */
+        show_separator_flag = TRUE;
     }
 
-    /* separator */
-    mi = gtk_separator_menu_item_new();
-    gtk_widget_show(mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    if (show_separator_flag)
+    {
+        /* separator */
+        mi = gtk_separator_menu_item_new();
+        gtk_widget_show(mi);
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    }
 
     /* Presentation mode checkbox */
     mi = gtk_check_menu_item_new_with_mnemonic (_("Presentation _mode"));
