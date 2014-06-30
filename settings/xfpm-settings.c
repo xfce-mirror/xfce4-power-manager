@@ -401,6 +401,9 @@ dpms_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     gtk_widget_set_sensitive (on_ac_dpms_off, val);
     gtk_widget_set_sensitive (on_ac_dpms_sleep, val);
     gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-mode")), val);
+    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-mode-label")), val);
+    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "sleep-display-label")), val);
+    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "switch-off-display-label")), val);
     
     if ( GTK_IS_WIDGET (on_battery_dpms_off ) )
     {
@@ -1111,6 +1114,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 				  xfconf_channel_get_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_AC, FALSE)); */
 				  
     gtk_widget_set_sensitive (spin_down_hdd, can_spin_down);
+    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-hdd-label")), can_spin_down);
     
     if ( !devkit_disk )
     {
