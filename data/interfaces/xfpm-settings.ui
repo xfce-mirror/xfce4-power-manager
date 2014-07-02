@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires libxfce4ui 4.5 -->
-  <!-- interface-requires gtk+ 2.12 -->
+  <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy toplevel-contextual -->
   <object class="GtkAdjustment" id="adjustment1">
     <property name="lower">14</property>
@@ -585,6 +585,9 @@
                                 <child>
                                   <placeholder/>
                                 </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
                               </object>
                             </child>
                           </object>
@@ -1104,6 +1107,9 @@
                                 <child>
                                   <placeholder/>
                                 </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
                               </object>
                             </child>
                           </object>
@@ -1144,6 +1150,18 @@
                                 <property name="n_columns">3</property>
                                 <property name="column_spacing">12</property>
                                 <property name="row_spacing">3</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <placeholder/>
+                                </child>
                                 <child>
                                   <placeholder/>
                                 </child>
@@ -1260,6 +1278,9 @@
                                   <placeholder/>
                                 </child>
                                 <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
                                   <object class="GtkHScale" id="brg-level-on-ac">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -1277,6 +1298,9 @@
                                     <property name="bottom_attach">6</property>
                                     <property name="y_options">GTK_FILL</property>
                                   </packing>
+                                </child>
+                                <child>
+                                  <placeholder/>
                                 </child>
                                 <child>
                                   <placeholder/>
