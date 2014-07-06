@@ -366,7 +366,7 @@ get_device_description (UpClient *upower, UpDevice *device)
         if ( time_to_empty > 0 )
         {
             est_time_str = xfpm_battery_get_time_string (time_to_empty);
-            tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%, %s runtime)\t"),
+            tip = g_strdup_printf (_("<b>%s %s</b>\nFully charged (%0.0f%%, %s runtime)"),
                                    vendor, model,
                                    percentage,
                                    est_time_str);
@@ -374,7 +374,7 @@ get_device_description (UpClient *upower, UpDevice *device)
         }
         else
         {
-            tip = g_strdup_printf (_("<b>%s %s</b>\t\nFully charged (%0.0f%%)\t"),
+            tip = g_strdup_printf (_("<b>%s %s</b>\nFully charged (%0.0f%%)"),
                                    vendor, model,
                                    percentage);
         }
@@ -384,7 +384,7 @@ get_device_description (UpClient *upower, UpDevice *device)
         if ( time_to_full != 0 )
         {
             est_time_str = xfpm_battery_get_time_string (time_to_full);
-            tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%, %s)\t"),
+            tip = g_strdup_printf (_("<b>%s %s</b>\nCharging (%0.0f%%, %s)"),
                                    vendor, model,
                                    percentage,
                                    est_time_str);
@@ -392,7 +392,7 @@ get_device_description (UpClient *upower, UpDevice *device)
         }
         else
         {
-            tip = g_strdup_printf (_("<b>%s %s</b>\t\nCharging (%0.0f%%)\t"),
+            tip = g_strdup_printf (_("<b>%s %s</b>\nCharging (%0.0f%%)"),
                                    vendor, model,
                                    percentage);
         }
@@ -402,7 +402,7 @@ get_device_description (UpClient *upower, UpDevice *device)
         if ( time_to_empty != 0 )
         {
             est_time_str = xfpm_battery_get_time_string (time_to_empty);
-            tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%, %s)\t"),
+            tip = g_strdup_printf (_("<b>%s %s</b>\nDischarging (%0.0f%%, %s)"),
                                    vendor, model,
                                    percentage,
                                    est_time_str);
@@ -410,26 +410,26 @@ get_device_description (UpClient *upower, UpDevice *device)
         }
         else
         {
-            tip = g_strdup_printf (_("<b>%s %s</b>\t\nDischarging (%0.0f%%)\t"),
+            tip = g_strdup_printf (_("<b>%s %s</b>\nDischarging (%0.0f%%)"),
                                    vendor, model,
                                    percentage);
         }
     }
     else if ( state == UP_DEVICE_STATE_PENDING_CHARGE )
     {
-        tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to discharge (%0.0f%%)\t"),
+        tip = g_strdup_printf (_("<b>%s %s</b>\nWaiting to discharge (%0.0f%%)"),
                                vendor, model,
                                percentage);
     }
     else if ( state == UP_DEVICE_STATE_PENDING_DISCHARGE )
     {
-        tip = g_strdup_printf (_("<b>%s %s</b>\t\nWaiting to charge (%0.0f%%)\t"),
+        tip = g_strdup_printf (_("<b>%s %s</b>\nWaiting to charge (%0.0f%%)"),
                                vendor, model,
                                percentage);
     }
     else if ( state == UP_DEVICE_STATE_EMPTY )
     {
-        tip = g_strdup_printf (_("<b>%s %s</b>\t\nis empty\t"),
+        tip = g_strdup_printf (_("<b>%s %s</b>\nis empty"),
                                vendor, model);
     }
     else
@@ -438,14 +438,14 @@ get_device_description (UpClient *upower, UpDevice *device)
         {
             /* On the 2nd line we want to know if the power cord is plugged
              * in or not */
-            tip = g_strdup_printf (_("<b>%s %s</b>\t\n%s\t"),
+            tip = g_strdup_printf (_("<b>%s %s</b>\n%s"),
                            vendor, model, online ? _("Plugged in") : _("Not plugged in"));
         }
 	else if (is_display_device (upower, device))
 	{
 	    /* Desktop pc with no battery, just display the vendor and model,
 	     * which will probably just be Computer */
-	    tip = g_strdup_printf (_("<b>%s %s</b>\t"), vendor, model);
+	    tip = g_strdup_printf (_("<b>%s %s</b>"), vendor, model);
 	}
         else
         {
