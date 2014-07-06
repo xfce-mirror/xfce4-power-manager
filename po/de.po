@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-07-03 18:30+0200\n"
-"PO-Revision-Date: 2014-07-06 10:28+0000\n"
+"PO-Revision-Date: 2014-07-06 11:03+0000\n"
 "Last-Translator: Harald Judt <h.judt@gmx.at>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xfce4-power-manager/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -110,7 +110,7 @@ msgstr "<b>Kritische Energie</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "Spin down hard disks"
-msgstr "Festplatte langsamer drehen lassen"
+msgstr "Festplatten abschalten"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "<b>Hard disks</b>"
@@ -146,7 +146,7 @@ msgstr "<b>Energiesparen</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "On inactivity reduce to"
-msgstr "Bei inaktivität reduzieren zu"
+msgstr "Bei Inaktivität reduzieren auf"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Reduce after"
@@ -257,7 +257,7 @@ msgstr "Immer"
 
 #: ../settings/xfpm-settings.c:981 ../settings/xfpm-settings.c:1125
 msgid "Spinning down hard disks permission denied"
-msgstr "Keine Rechte für die Festplattenverlangsamung"
+msgstr "Keine Rechte für das Abschalten der Festplatten"
 
 #: ../settings/xfpm-settings.c:1368
 msgid "Suspend operation not permitted"
@@ -540,49 +540,49 @@ msgstr "<b>%s %s</b>\t\nVoll geladen (%0.0f%%)\t"
 msgid ""
 "<b>%s %s</b>\t\n"
 "Charging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>⇥\nWird aufgeladen (%0.0f%%, %s)⇥"
+msgstr "<b>%s %s</b>\t\nWird aufgeladen (%0.0f%%, %s)\t"
 
 #: ../common/xfpm-power-common.c:372
 #, c-format
 msgid ""
 "<b>%s %s</b>\t\n"
 "Charging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>⇥\nWird aufgeladen (%0.0f%%)⇥"
+msgstr "<b>%s %s</b>\t\nWird aufgeladen (%0.0f%%)\t"
 
 #: ../common/xfpm-power-common.c:382
 #, c-format
 msgid ""
 "<b>%s %s</b>\t\n"
 "Discharging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>⇥\nWird entladen (%0.0f%%, %s)⇥"
+msgstr "<b>%s %s</b>\t\nWird entladen (%0.0f%%, %s)\t"
 
 #: ../common/xfpm-power-common.c:390
 #, c-format
 msgid ""
 "<b>%s %s</b>\t\n"
 "Discharging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>⇥\nWird entladen (%0.0f%%)⇥"
+msgstr "<b>%s %s</b>\t\nWird entladen (%0.0f%%)\t"
 
 #: ../common/xfpm-power-common.c:397
 #, c-format
 msgid ""
 "<b>%s %s</b>\t\n"
 "Waiting to discharge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>⇥\nWarten auf Entladen (%0.0f%%)⇥"
+msgstr "<b>%s %s</b>\t\nWarten auf Entladen (%0.0f%%)\t"
 
 #: ../common/xfpm-power-common.c:403
 #, c-format
 msgid ""
 "<b>%s %s</b>\t\n"
 "Waiting to charge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>⇥\nWarten auf Entladen (%0.0f%%)⇥"
+msgstr "<b>%s %s</b>\t\nWarten auf Laden (%0.0f%%)\t"
 
 #: ../common/xfpm-power-common.c:409
 #, c-format
 msgid ""
 "<b>%s %s</b>\t\n"
 "is empty\t"
-msgstr "<b>%s %s</b>⇥\nist leer⇥"
+msgstr "<b>%s %s</b>\t\nist leer\t"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -591,7 +591,7 @@ msgstr "<b>%s %s</b>⇥\nist leer⇥"
 msgid ""
 "<b>%s %s</b>\t\n"
 "%s\t"
-msgstr "<b>%s %s</b>⇥\n%s⇥"
+msgstr "<b>%s %s</b>\t\n%s\t"
 
 #: ../common/xfpm-power-common.c:419
 msgid "Not plugged in"
@@ -603,7 +603,7 @@ msgstr "Nicht angeschlossen"
 msgid ""
 "<b>%s %s</b>\t\n"
 "Unknown state\t"
-msgstr "<b>%s %s</b>⇥\nUnbekannter Status⇥"
+msgstr "<b>%s %s</b>\t\nUnbekannter Status\t"
 
 #: ../src/xfpm-power.c:334
 msgid "_Hibernate"
@@ -819,7 +819,7 @@ msgstr "Kann in Ruhezustand versetzen"
 
 #: ../src/xfpm-main.c:149
 msgid "Can spin down hard disks"
-msgstr "Kann Festplatten herunterdrehen"
+msgstr "Kann Festplatten abschalten"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to suspend"
@@ -835,7 +835,7 @@ msgstr "Darf System herunterfahren"
 
 #: ../src/xfpm-main.c:157
 msgid "Authorized to spin down hard disks"
-msgstr "Darf Festplatten herunterdrehen"
+msgstr "Darf Festplatten abschalten"
 
 #: ../src/xfpm-main.c:159
 msgid "Has battery"
@@ -963,7 +963,7 @@ msgstr "Präsentations_modus"
 #. Power manager settings
 #: ../panel-plugins/battery/battery-button.c:691
 msgid "_Power manager..."
-msgstr "_Energieverwaltung …"
+msgstr "_Energieverwaltung…"
 
 #: ../panel-plugins/battery/lxde/battery-plugin.c:54
 #: ../panel-plugins/battery/xfce/xfce4-battery-plugin.desktop.in.in.h:1
