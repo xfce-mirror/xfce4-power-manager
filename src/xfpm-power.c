@@ -1435,7 +1435,7 @@ xfpm_power_prompt_password (XfpmPower *power)
 					        GTK_DIALOG_MODAL,
 						GTK_MESSAGE_OTHER,
 						GTK_BUTTONS_OK_CANCEL,
-						_("The requested operation requires elevated privileges.\t\n"
+						_("The requested operation requires elevated privileges.\n"
 						"Please enter your password."));
     GtkWidget *content_area = gtk_dialog_get_content_area (GTK_DIALOG(dialog));
     GtkWidget *password_entry = gtk_entry_new ();
