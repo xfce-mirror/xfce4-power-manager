@@ -221,6 +221,25 @@ xfpm_battery_get_icon_prefix_device_enum_type (UpDeviceKind type)
     return g_strdup (XFPM_PRIMARY_ICON_PREFIX);
 }
 
+static gboolean
+is_display_device (UpClient *upower, UpDevice *device)
+{
+    UpDevice *display_device = NULL;
+    gboolean ret = FALSE;
+
+#if UP_CHECK_VERSION(0, 99, 0)
+    display_device = up_client_get_display_device (upower);
+#else
+    return FALSE;
+#endif
+
+    ret = g_strcmp0(up_device_get_object_path(device), up_device_get_object_path(display_device)) == 0 ? TRUE : FALSE;
+
+    g_object_unref (display_device);
+
+    return ret;
+}
+
 gchar*
 get_device_icon_name (UpClient *upower, UpDevice *device)
 {
@@ -277,7 +296,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
     }
     else
     {
-	if ( !present || state == UP_DEVICE_STATE_EMPTY )
+	if ( state == UP_DEVICE_STATE_EMPTY )
 	{
 	    icon_name = g_strdup_printf ("%s000", icon_prefix);
 	}
@@ -289,6 +308,15 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 	{
 	    icon_name = g_strdup_printf ("%s%s", icon_prefix, xfpm_battery_get_icon_index (type, percentage));
 	}
+	else if (is_display_device (upower, device))
+	{
+	    /* Desktop system with no batteries */
+	    icon_name = g_strdup_printf ("%s", XFPM_AC_ADAPTER_ICON);
+	}
+	else
+	{
+	    icon_name = g_strdup_printf ("%smissing", icon_prefix);
+	}
     }
 
     return icon_name;
@@ -297,7 +325,6 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
 gchar*
 get_device_description (UpClient *upower, UpDevice *device)
 {
-    UpDevice *display_device = NULL;
     gchar *tip = NULL;
     gchar *est_time_str = NULL;
     guint type = 0, state = 0;
@@ -319,17 +346,13 @@ get_device_description (UpClient *upower, UpDevice *device)
                   "online", &online,
                    NULL);
 
-#if UP_CHECK_VERSION(0, 99, 0)
-    display_device = up_client_get_display_device (upower);
-#endif
-
-    if (device == display_device)
+    if (is_display_device (upower, device))
     {
         g_free (vendor);
         vendor = g_strdup (_("Computer"));
 
         g_free (model);
-        model = NULL;
+        model = g_strdup ("");
     }
 
     /* If we get a vendor or model we can use it, otherwise translate the
@@ -418,6 +441,12 @@ get_device_description (UpClient *upower, UpDevice *device)
             tip = g_strdup_printf (_("<b>%s %s</b>\t\n%s\t"),
                            vendor, model, online ? _("Plugged in") : _("Not plugged in"));
         }
+	else if (is_display_device (upower, device))
+	{
+	    /* Desktop pc with no battery, just display the vendor and model,
+	     * which will probably just be Computer */
+	    tip = g_strdup_printf (_("<b>%s %s</b>\t"), vendor, model);
+	}
         else
         {
             /* unknown device state, just display the percentage */
@@ -428,7 +457,6 @@ get_device_description (UpClient *upower, UpDevice *device)
 
     g_free(model);
     g_free(vendor);
-    g_object_unref (display_device);
 
     return tip;
 }
