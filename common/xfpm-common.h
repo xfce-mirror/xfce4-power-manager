@@ -44,6 +44,8 @@ gboolean   	xfpm_lock_screen  		(void);
 
 void       	xfpm_preferences		(void);
 
+void        xfpm_preferences_device_id (const gchar* object_path);
+
 void            xfpm_quit                       (void);
 
 void       	xfpm_about			(GtkWidget *widget, 

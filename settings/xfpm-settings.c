@@ -61,7 +61,7 @@ static  GtkWidget *sideview                 = NULL; /* Sidebar tree view - all d
 static  GtkWidget *device_details_notebook  = NULL; /* Displays the details of a deivce */
 
 static  gboolean  lcd_brightness = FALSE;
-
+static  gchar *starting_device_id = NULL;
 static  UpClient *upower = NULL;
 
 enum
@@ -177,8 +177,8 @@ void        lock_screen_toggled_cb                 (GtkWidget *w,
 void        on_spindown_hdd_changed		   (GtkWidget *w,
 						    XfconfChannel *channel);
 
-void        _cursor_changed_cb 			   (GtkTreeView *view, 
-						    gpointer data);
+static void view_cursor_changed_cb 		   (GtkTreeView *view,
+						    gpointer *user_data);
 
 
 
@@ -1857,6 +1857,19 @@ add_device (UpDevice *device)
 
     /* Add the icon and description for the device */
     update_device_details (device);
+
+    /* See if we're to select this device */
+    if (g_strcmp0 (object_path, starting_device_id) == 0)
+    {
+	GtkTreeSelection *selection;
+
+	DBG("object_path == starting_device_id, selecting device");
+
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (sideview));
+
+	gtk_tree_selection_select_iter (selection, &iter);
+	view_cursor_changed_cb (GTK_TREE_VIEW (sideview), NULL);
+    }
 }
 
 static void
@@ -2002,7 +2015,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                           gboolean has_lid, gboolean has_sleep_button,
                           gboolean has_hibernate_button, gboolean has_power_button,
                           gboolean devkit_disk, gboolean can_spin_down,
-                          GdkNativeWindow id)
+                          GdkNativeWindow id, gchar *device_id)
 {
     GtkWidget *plug;
     GtkWidget *dialog;
@@ -2035,6 +2048,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     }
     
     lcd_brightness = has_lcd_brightness;
+    starting_device_id = device_id;
     
     on_battery_dpms_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-on-battery"));
     on_battery_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "off-dpms-on-battery"));
@@ -2164,6 +2178,12 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     }
     
     gtk_builder_connect_signals (xml, channel);
-    
+
+    /* If we passed in a device to display, show the devices tab now */
+    if (device_id != NULL)
+    {
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (nt), 3);
+    }
+
     return dialog;
 }

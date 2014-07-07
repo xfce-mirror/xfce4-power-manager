@@ -88,6 +88,17 @@ xfpm_preferences (void)
 }
 
 void
+xfpm_preferences_device_id (const gchar* object_path)
+{
+    gchar *string = g_strdup_printf("xfce4-power-manager-settings -d %s", object_path);
+
+    if (string)
+	g_spawn_command_line_async (string, NULL);
+
+    g_free (string);
+}
+
+void
 xfpm_quit (void)
 {
     g_spawn_command_line_async ("xfce4-power-manager -q", NULL);

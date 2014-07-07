@@ -605,6 +605,25 @@ menu_item_destroyed_cb(GtkWidget *object, gpointer user_data)
 }
 
 static void
+menu_item_activate_cb(GtkWidget *object, gpointer user_data)
+{
+    BatteryButton *button = BATTERY_BUTTON (user_data);
+    GList *item;
+
+    for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
+    {
+        BatteryDevice *battery_device = item->data;
+
+        if (battery_device->menu_item == object)
+        {
+            /* Call xfpm settings with the device id */
+            xfpm_preferences_device_id (battery_device->object_path);
+            return;
+        }
+    }
+}
+
+static void
 battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_device, gboolean append)
 {
     GtkWidget *mi, *label, *img;
@@ -633,6 +652,9 @@ battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_de
     /* keep track of the menu item in the battery_device so we can update it */
     battery_device->menu_item = mi;
     g_signal_connect(G_OBJECT(mi), "destroy", G_CALLBACK(menu_item_destroyed_cb), button);
+
+    /* Active calls xfpm settings with the device's id to display details */
+    g_signal_connect(G_OBJECT(mi), "activate", G_CALLBACK(menu_item_activate_cb), button);
 
     /* Add it to the menu */
     gtk_widget_show(mi);

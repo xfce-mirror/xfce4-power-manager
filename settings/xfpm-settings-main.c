@@ -69,13 +69,15 @@ int main (int argc, char **argv)
     gboolean start_xfpm_if_not_running;
     
     GdkNativeWindow socket_id = 0;
-	
+    gchar *device_id = NULL;
+
     XfconfChannel *channel;
     DBusGProxy *proxy;
     
     GOptionEntry option_entries[] = 
     {
 	{ "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
+	{ "device-id", 'd', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING, &device_id, N_("Display a specific device by UpDevice object path"), N_("UpDevice object path") },
 	{ NULL, },
     };
 
@@ -171,7 +173,7 @@ int main (int argc, char **argv)
 	    dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
 					       can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
 					       has_lid, has_sleep_button, has_hibernate_button, has_power_button,
-					       devkit_disk, can_spin_down, socket_id);
+					       devkit_disk, can_spin_down, socket_id, device_id);
 	    
 	    g_signal_connect_swapped (unique, "ping-received",
 				      G_CALLBACK (gtk_window_present), dialog);

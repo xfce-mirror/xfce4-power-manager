@@ -36,6 +36,7 @@ GtkWidget *xfpm_settings_dialog_new (XfconfChannel *channel,
                                      gboolean has_power_button,
                                      gboolean devkit_disk,
                                      gboolean can_spin_down,
-                                     GdkNativeWindow id);
+                                     GdkNativeWindow id,
+                                     gchar    *device_id);
 
 #endif /* __XFPM_SETTINGS_H */
