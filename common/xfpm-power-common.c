@@ -450,7 +450,7 @@ get_device_description (UpClient *upower, UpDevice *device)
         else
         {
             /* unknown device state, just display the percentage */
-            tip = g_strdup_printf (_("<b>%s %s</b>\t\nUnknown state\t"),
+            tip = g_strdup_printf (_("<b>%s %s</b>\nUnknown state"),
                            vendor, model);
         }
     }
