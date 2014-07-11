@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-08 00:30+0200\n"
-"PO-Revision-Date: 2014-07-08 06:47+0000\n"
+"POT-Creation-Date: 2014-07-11 00:30+0200\n"
+"PO-Revision-Date: 2014-07-11 06:31+0000\n"
 "Last-Translator: Kiril Kirilov <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xfce4-power-manager/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -142,22 +142,38 @@ msgid "<b>Power saving</b>"
 msgstr "<b>Съхранение на енергията</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "On inactivity reduce to"
-msgstr "При неактивност, ограничаване до"
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "Reduce after"
-msgstr "Ограничаване след"
-
-#: ../data/interfaces/xfpm-settings.ui.h:32
-msgid "<b>Brightness</b>"
-msgstr "<b>Яркост</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Display"
 msgstr "Дисплей"
 
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "_Handle display brightness"
+msgstr "Управление на яркостта на дисплея"
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "_Register display brightness shortcut keys"
+msgstr "Регистър на яркостта на дисплея клавишни комбинации"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid "Change per s_tep:"
+msgstr "Стъпка на промяна:"
+
 #: ../data/interfaces/xfpm-settings.ui.h:34
+msgid "<b>Keys</b>"
+msgstr "<b>Клавиши</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:35
+msgid "On inactivity reduce to"
+msgstr "При неактивност, ограничаване до"
+
+#: ../data/interfaces/xfpm-settings.ui.h:36
+msgid "Reduce after"
+msgstr "Ограничаване след"
+
+#: ../data/interfaces/xfpm-settings.ui.h:37
+msgid "_Brightness"
+msgstr "Яркост"
+
+#: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Nothing"
 msgstr "Нищо"
 
@@ -521,64 +537,64 @@ msgstr[1] "минути"
 #: ../common/xfpm-power-common.c:369
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%, %s runtime)\t"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nНапълно заредена (%0.0f%%, %s време за работа)"
 
 #: ../common/xfpm-power-common.c:377
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nНапълно заредена (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:387
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nЗареждане (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:395
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nЗареждане (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nРазреждане (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:413
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nРазреждане (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to discharge (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nВреме до разреждане (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:426
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to charge (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nВреме до зареждане (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:432
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"is empty\t"
+"<b>%s %s</b>\n"
+"is empty"
 msgstr "<b>%s %s</b>\nе празна"
 
 #. On the 2nd line we want to know if the power cord is plugged
@@ -586,9 +602,9 @@ msgstr "<b>%s %s</b>\nе празна"
 #: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"%s\t"
-msgstr "<b>%s %s</b> \n%s "
+"<b>%s %s</b>\n"
+"%s"
+msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:442
 msgid "Not plugged in"
@@ -598,15 +614,15 @@ msgstr "Не е свързано"
 #. * which will probably just be Computer
 #: ../common/xfpm-power-common.c:448
 #, c-format
-msgid "<b>%s %s</b>\t"
-msgstr "<b>%s %s</b> "
+msgid "<b>%s %s</b>"
+msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
 #: ../common/xfpm-power-common.c:453
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Unknown state\t"
+"<b>%s %s</b>\n"
+"Unknown state"
 msgstr "<b>%s %s</b>\nНеизвестно състояние"
 
 #: ../src/xfpm-power.c:334
@@ -670,7 +686,7 @@ msgstr "Нивото на батерията %s е ниско\nОставащо 
 
 #: ../src/xfpm-power.c:1438
 msgid ""
-"The requested operation requires elevated privileges.\t\n"
+"The requested operation requires elevated privileges.\n"
 "Please enter your password."
 msgstr "Зададената операция изисква да имате съответните правомощия.\nМоля, въведете Вашата парола."
 
