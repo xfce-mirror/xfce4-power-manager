@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-08 00:30+0200\n"
-"PO-Revision-Date: 2014-07-09 12:46+0000\n"
+"POT-Creation-Date: 2014-07-11 00:30+0200\n"
+"PO-Revision-Date: 2014-07-11 11:34+0000\n"
 "Last-Translator: Masato HASHIMOTO <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/xfce4-power-manager/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -136,22 +136,38 @@ msgid "<b>Power saving</b>"
 msgstr "<b>省電力</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "On inactivity reduce to"
-msgstr "未使用時の輝度低下"
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "Reduce after"
-msgstr "輝度を下げるまでの時間"
-
-#: ../data/interfaces/xfpm-settings.ui.h:32
-msgid "<b>Brightness</b>"
-msgstr "<b>輝度</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Display"
 msgstr "ディスプレイ"
 
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "_Handle display brightness"
+msgstr "ディスプレイの輝度を調節する(_H)"
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "_Register display brightness shortcut keys"
+msgstr "ディスプレイの輝度のショートカットキーを登録する(_R)"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid "Change per s_tep:"
+msgstr "変更ステップ(_T)"
+
 #: ../data/interfaces/xfpm-settings.ui.h:34
+msgid "<b>Keys</b>"
+msgstr "<b>キー</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:35
+msgid "On inactivity reduce to"
+msgstr "未使用時の輝度低下"
+
+#: ../data/interfaces/xfpm-settings.ui.h:36
+msgid "Reduce after"
+msgstr "輝度を下げるまでの時間"
+
+#: ../data/interfaces/xfpm-settings.ui.h:37
+msgid "_Brightness"
+msgstr "輝度(_B)"
+
+#: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Nothing"
 msgstr "何もしない"
 
@@ -511,74 +527,74 @@ msgstr[0] "分"
 #: ../common/xfpm-power-common.c:369
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%, %s runtime)\t"
-msgstr "<b>%s %s</b>\t\nフル充電されています (%0.0f%%, バッテリ駆動時間 %s)\t"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%, %s runtime)"
+msgstr "<b>%s %s</b>\nフル充電されています (%0.0f%%, バッテリ駆動時間 %s)"
 
 #: ../common/xfpm-power-common.c:377
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nフル充電されています (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%)"
+msgstr "<b>%s %s</b>\nフル充電されています (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:387
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\t\n充電中です (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%, %s)"
+msgstr "<b>%s %s</b>\n充電中です (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:395
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\n充電中です (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%)"
+msgstr "<b>%s %s</b>\n充電中です (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\t\n使用中です (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%, %s)"
+msgstr "<b>%s %s</b>\n使用中です (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:413
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\n使用中です (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%)"
+msgstr "<b>%s %s</b>\n使用中です (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to discharge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\n使用中です (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Waiting to discharge (%0.0f%%)"
+msgstr "<b>%s %s</b>\n使用中です (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:426
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to charge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\n充電待ちです (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Waiting to charge (%0.0f%%)"
+msgstr "<b>%s %s</b>\n充電待ちです (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:432
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"is empty\t"
-msgstr "<b>%s %s</b>\t\n空です\t"
+"<b>%s %s</b>\n"
+"is empty"
+msgstr "<b>%s %s</b>\n空です"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
 #: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"%s\t"
-msgstr "<b>%s %s</b>\t\n%s\t"
+"<b>%s %s</b>\n"
+"%s"
+msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:442
 msgid "Not plugged in"
@@ -588,16 +604,16 @@ msgstr "AC 未接続"
 #. * which will probably just be Computer
 #: ../common/xfpm-power-common.c:448
 #, c-format
-msgid "<b>%s %s</b>\t"
-msgstr "<b>%s %s</b>\t"
+msgid "<b>%s %s</b>"
+msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
 #: ../common/xfpm-power-common.c:453
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Unknown state\t"
-msgstr "<b>%s %s</b>\t\n状態が不明です\t"
+"<b>%s %s</b>\n"
+"Unknown state"
+msgstr "<b>%s %s</b>\n状態が不明です"
 
 #: ../src/xfpm-power.c:334
 msgid "_Hibernate"
@@ -660,9 +676,9 @@ msgstr "%s の充電レベルが低くなっています\n予想駆動時間は�
 
 #: ../src/xfpm-power.c:1438
 msgid ""
-"The requested operation requires elevated privileges.\t\n"
+"The requested operation requires elevated privileges.\n"
 "Please enter your password."
-msgstr "処理を続行するには認証が必要です。\nパスワードを入力してください。"
+msgstr "処理を続行するには権限の昇格が必要です。\nあなたのパスワードを入力してください。"
 
 #. Set the dialog's title
 #: ../src/xfpm-power.c:1447
