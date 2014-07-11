@@ -905,32 +905,6 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     }
 
     /*
-     * Brightness on battery power
-     */
-    brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery"));
-    brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery"));
-    if ( has_lcd_brightness )
-    {
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
-	gtk_range_set_value (GTK_RANGE(brg), val);
-	
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, 20);
-	gtk_range_set_value (GTK_RANGE (brg_level), val);
-	
-    }
-    else
-    {
-	gtk_widget_set_sensitive (GTK_WIDGET (brg), FALSE);
-	gtk_widget_set_sensitive (GTK_WIDGET (brg_level), FALSE);
-    }
-#ifndef HAVE_DPMS
-    if ( !has_lcd_brightness )
-    {
-	gtk_notebook_remove_page (GTK_NOTEBOOK (nt), 1);
-    }
-#endif
-
-    /*
      * Hard drive energy saving
      */
     spin_down_hdd = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-hdd"));
@@ -980,6 +954,26 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     {
 	gtk_widget_set_tooltip_text (spin_down_hdd, _("Spinning down hard disks permission denied"));
     }
+
+    /*
+     * Brightness on battery
+     */
+    if ( has_lcd_brightness )
+    {
+    brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery"));
+    brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery"));
+    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
+    gtk_range_set_value (GTK_RANGE(brg), val);
+
+    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, 20);
+    gtk_range_set_value (GTK_RANGE (brg_level), val);
+
+    }
+    else
+    {
+    gtk_notebook_remove_page (GTK_NOTEBOOK (nt), 3);
+    }
+
 }
 
 static void
@@ -1081,33 +1075,6 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (lid);
     }
     
-    /*
-     * 
-     * Brightness on AC power
-     */
-    brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-ac"));
-    brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-ac"));
-    if ( has_lcd_brightness )
-    {
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
-	gtk_range_set_value (GTK_RANGE (brg), val);
-	
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, 80);
-	gtk_range_set_value (GTK_RANGE (brg_level), val);
-	
-    }
-    else
-    {
-	gtk_widget_set_sensitive (GTK_WIDGET (brg), FALSE);
-	gtk_widget_set_sensitive (GTK_WIDGET (brg_level), FALSE);
-    }
-#ifndef HAVE_DPMS
-    if ( !has_lcd_brightness )
-    {
-	gtk_notebook_remove_page (GTK_NOTEBOOK (GTK_WIDGET (gtk_builder_get_object (xml, "on-ac-notebook"))), 1);
-    }
-#endif
-
     spin_down_hdd = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-hdd"));
     /*
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (spin_down), 
@@ -1124,6 +1091,25 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     {
 	gtk_widget_set_tooltip_text (spin_down_hdd, _("Spinning down hard disks permission denied"));
     }
+
+	/*
+	 * Brightness on AC power
+	 */
+	if ( has_lcd_brightness )
+	{
+	brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-ac"));
+	brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-ac"));
+	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
+	gtk_range_set_value (GTK_RANGE(brg), val);
+
+	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, 80);
+	gtk_range_set_value (GTK_RANGE (brg_level), val);
+
+	}
+	else
+	{
+	gtk_notebook_remove_page (GTK_NOTEBOOK (nt), 3);
+	}
 
 }
 
