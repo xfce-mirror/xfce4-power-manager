@@ -11,9 +11,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-08 00:30+0200\n"
-"PO-Revision-Date: 2014-07-08 11:12+0000\n"
-"Last-Translator: gabrieltandil <gabriel.tandil@gmail.com>\n"
+"POT-Creation-Date: 2014-07-11 00:30+0200\n"
+"PO-Revision-Date: 2014-07-11 04:47+0000\n"
+"Last-Translator: Pablo Roberto Francisco Lezaeta Reyes <prflr88@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/xfce4-power-manager/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,22 +140,38 @@ msgid "<b>Power saving</b>"
 msgstr "<b>Ahoro de energía</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "On inactivity reduce to"
-msgstr "En actividad reducir a"
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "Reduce after"
-msgstr "Reducir después"
-
-#: ../data/interfaces/xfpm-settings.ui.h:32
-msgid "<b>Brightness</b>"
-msgstr "<b>Brillo</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Display"
 msgstr "Pantalla"
 
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "_Handle display brightness"
+msgstr "_Manejar la gestión de brillo"
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "_Register display brightness shortcut keys"
+msgstr "_Registrar los atajos de teclado para la gestión de brillo"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid "Change per s_tep:"
+msgstr "Cambio por p_aso:"
+
 #: ../data/interfaces/xfpm-settings.ui.h:34
+msgid "<b>Keys</b>"
+msgstr "<b>Teclas</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:35
+msgid "On inactivity reduce to"
+msgstr "En actividad reducir a"
+
+#: ../data/interfaces/xfpm-settings.ui.h:36
+msgid "Reduce after"
+msgstr "Reducir después"
+
+#: ../data/interfaces/xfpm-settings.ui.h:37
+msgid "_Brightness"
+msgstr "_Brillo"
+
+#: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Nothing"
 msgstr "Nada"
 
@@ -519,73 +535,73 @@ msgstr[1] "minutos"
 #: ../common/xfpm-power-common.c:369
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%, %s runtime)\t"
-msgstr "<b>%s %s</b>\nCarga completa (%0.0f %%, %s en ejecución)"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%, %s runtime)"
+msgstr "<b>%s %s</b>\nCompletamente cargada (%0.0f %%, %s tiempo de ejecución)"
 
 #: ../common/xfpm-power-common.c:377
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\nCarga completa (%0.0f %%)"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%)"
+msgstr "<b>%s %s</b>\nCompletamente cargada (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:387
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nCargando (%0.0f %%, %s)"
 
 #: ../common/xfpm-power-common.c:395
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nCargando (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nDescargando (%0.0f %%, %s)"
 
 #: ../common/xfpm-power-common.c:413
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nDescargando (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to discharge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\nEsperando a descargarse (%0.0f %%)"
+"<b>%s %s</b>\n"
+"Waiting to discharge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nEsperando a descargar (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:426
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to charge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\nEsperando a descargarse (%0.0f %%)"
+"<b>%s %s</b>\n"
+"Waiting to charge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nEsperando a cargar (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:432
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"is empty\t"
-msgstr "<b>%s %s</b>\nVacía"
+"<b>%s %s</b>\n"
+"is empty"
+msgstr "<b>%s %s</b>\nEstá vacía"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
 #: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"%s\t"
+"<b>%s %s</b>\n"
+"%s"
 msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:442
@@ -596,15 +612,15 @@ msgstr "Sin conectar"
 #. * which will probably just be Computer
 #: ../common/xfpm-power-common.c:448
 #, c-format
-msgid "<b>%s %s</b>\t"
-msgstr "<b>%s %s</b>\t"
+msgid "<b>%s %s</b>"
+msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
 #: ../common/xfpm-power-common.c:453
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Unknown state\t"
+"<b>%s %s</b>\n"
+"Unknown state"
 msgstr "<b>%s %s</b>\nEstado desconocido"
 
 #: ../src/xfpm-power.c:334
@@ -668,9 +684,9 @@ msgstr "El nivel de %s es bajo\nEl tiempo restante estimado es de %s."
 
 #: ../src/xfpm-power.c:1438
 msgid ""
-"The requested operation requires elevated privileges.\t\n"
+"The requested operation requires elevated privileges.\n"
 "Please enter your password."
-msgstr "La operación solicitada requiere privilegios administrativos.\t\nEscriba su contraseña."
+msgstr "La siguiente operación necesita permisos de administrador.\nIntroduzca su contraseña."
 
 #. Set the dialog's title
 #: ../src/xfpm-power.c:1447
