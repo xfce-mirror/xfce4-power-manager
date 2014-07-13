@@ -1733,13 +1733,16 @@ update_device_details (UpDevice *device)
 
         if (energy_full > 0)
         {
+            gchar *str2;
+
             /* TRANSLATORS: Unit here is Watt hour*/
             str = xfpm_info_get_energy_property (energy_full, _("Wh"));
-            strcat (str, g_strdup_printf(" (%d%%)", (guint) (energy_full / energy_full_design *100)));
+            str2 = g_strdup_printf ("%s (%d%%)", str, (guint) (energy_full / energy_full_design *100));
 
-            update_device_info_value_for_name (view, list_store, _("Fully charged"), str);
+            update_device_info_value_for_name (view, list_store, _("Fully charged"), str2);
 
             g_free (str);
+            g_free (str2);
         }
 
         if (energy_empty > 0)
