@@ -79,11 +79,6 @@ G_BEGIN_DECLS
 #define 	LID_SWITCH_ON_AC_CFG        	"lid-action-on-ac"
 #define 	LID_SWITCH_ON_BATTERY_CFG   	"lid-action-on-battery"
 
-#define         SPIN_DOWN_HDD			"spin-down-hdd"
-
-#define         SPIN_DOWN_ON_AC_TIMEOUT		"spin-down-on-ac-timeout"
-#define         SPIN_DOWN_ON_BATTERY_TIMEOUT	"spin-down-on-battery-timeout"
-
 #define         NETWORK_MANAGER_SLEEP           "network-manager-sleep"
 
 #define     LOGIND_HANDLE_POWER_KEY     "logind-handle-power-key"
