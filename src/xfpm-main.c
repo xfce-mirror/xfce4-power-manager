@@ -94,8 +94,6 @@ xfpm_dump (GHashTable *hash)
     gboolean has_hibernate_button;
     gboolean has_power_button;
     gboolean has_lid;
-    gboolean can_spin_down;
-    gboolean devkit_disk;
     
     has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
     has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
@@ -108,8 +106,6 @@ xfpm_dump (GHashTable *hash)
     has_power_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "power-button"));
     has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "hibernate-button"));
     can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
-    can_spin_down = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-spin"));
-    devkit_disk = xfpm_string_to_bool (g_hash_table_lookup (hash, "devkit-disk"));
 	
     g_print ("---------------------------------------------------\n");
     g_print ("       Xfce power manager version %s\n", VERSION);
@@ -139,23 +135,17 @@ xfpm_dump (GHashTable *hash)
 	      "%s: %s\n"
 	      "%s: %s\n"
 	      "%s: %s\n"
-	      "%s: %s\n"
-	      "%s: %s\n"
 	      "%s: %s\n",
 	     _("Can suspend"),
 	     xfpm_bool_to_local_string (can_suspend),
 	     _("Can hibernate"),
 	     xfpm_bool_to_local_string (can_hibernate),
-	     _("Can spin down hard disks"),
-	     xfpm_bool_to_local_string (devkit_disk),
 	     _("Authorized to suspend"),
 	     xfpm_bool_to_local_string (auth_suspend),
 	     _("Authorized to hibernate"),
 	     xfpm_bool_to_local_string (auth_hibernate),
 	     _("Authorized to shutdown"),
 	     xfpm_bool_to_local_string (can_shutdown),
-	     _("Authorized to spin down hard disks"),
-	     xfpm_bool_to_local_string (can_spin_down),
 	     _("Has battery"),
 	     xfpm_bool_to_local_string (has_battery),
 	     _("Has brightness panel"),

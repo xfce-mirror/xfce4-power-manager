@@ -84,9 +84,6 @@ enum
     PROP_IDLE_SLEEP_MODE,
     PROP_DIM_ON_AC_TIMEOUT,
     PROP_DIM_ON_BATTERY_TIMEOUT,
-    PROP_SPIN_DOWN_DISK,
-    PROP_SPIN_DOWN_DISK_ON_AC_TIMEOUT,
-    PROP_SPIN_DOWN_DISK_ON_BATTERY_TIMEOUT,
 #ifdef WITH_NETWORK_MANAGER
     PROP_NETWORK_MANAGER_SLEEP,
 #endif
@@ -533,41 +530,6 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							120,
                                                         G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::spin-down-hdd
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_SPIN_DOWN_DISK,
-                                     g_param_spec_uint (SPIN_DOWN_HDD,
-                                                           NULL, NULL,
-							0,
-							G_MAXUINT16,
-							4,
-                                                           G_PARAM_READWRITE));
-
-    /**
-     * XfpmXfconf::spin-down-on-ac-timeout
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_SPIN_DOWN_DISK_ON_AC_TIMEOUT,
-                                     g_param_spec_uint (SPIN_DOWN_ON_AC_TIMEOUT,
-                                                        NULL, NULL,
-							800,
-							G_MAXUINT,
-							800,
-                                                        G_PARAM_READWRITE));
-
-    /**
-     * XfpmXfconf::spin-down-on-battery-timeout
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_SPIN_DOWN_DISK_ON_BATTERY_TIMEOUT,
-                                     g_param_spec_uint (SPIN_DOWN_ON_BATTERY_TIMEOUT,
-                                                        NULL, NULL,
-							120,
-							G_MAXUINT,
-							120,
-                                                        G_PARAM_READWRITE));
 
 #ifdef WITH_NETWORK_MANAGER
     /**

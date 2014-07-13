@@ -174,9 +174,6 @@ void        critical_level_value_changed_cb        (GtkSpinButton *w,
 void        lock_screen_toggled_cb                 (GtkWidget *w, 
 						    XfconfChannel *channel);
 
-void        on_spindown_hdd_changed		   (GtkWidget *w,
-						    XfconfChannel *channel);
-
 static void view_cursor_changed_cb 		   (GtkTreeView *view,
 						    gpointer *user_data);
 
@@ -726,35 +723,11 @@ lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     }
 }
 
-void on_spindown_hdd_changed	(GtkWidget *w, XfconfChannel *channel)
-{
-    GtkTreeModel     *model;
-    GtkTreeIter       selected_row;
-    gint value = 0;
-    
-    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
-	return;
-
-    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
-
-    gtk_tree_model_get(model,
-                       &selected_row,
-                       1,
-                       &value,
-                       -1);
-    
-    if ( !xfconf_channel_set_uint (channel, PROPERTIES_PREFIX SPIN_DOWN_HDD, value) )
-    {
-	g_critical ("Unable to set value for property %s", SPIN_DOWN_HDD);
-    }
-}
-
 static void
 xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
                           gboolean auth_hibernate, gboolean can_suspend,
                           gboolean can_hibernate, gboolean can_shutdown,
-                          gboolean has_lcd_brightness, gboolean has_lid,
-                          gboolean devkit_disk, gboolean can_spin_down)
+                          gboolean has_lcd_brightness, gboolean has_lid)
 {
     gboolean valid;
     gint list_value;
@@ -769,7 +742,6 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *label;
     GtkWidget *brg;
     GtkWidget *brg_level;
-    GtkWidget *spin_down_hdd;
 
     battery_critical = GTK_WIDGET (gtk_builder_get_object (xml, "battery-critical-combox"));
     
@@ -905,57 +877,6 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     }
 
     /*
-     * Hard drive energy saving
-     */
-    spin_down_hdd = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-hdd"));
-
-    if ( can_spin_down && devkit_disk )
-    {
-	list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-
-	gtk_combo_box_set_model (GTK_COMBO_BOX(spin_down_hdd), GTK_TREE_MODEL(list_store));
-
-	gtk_list_store_append(list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Never"), 1, SPIN_DOWN_HDD_NEVER, -1);
-
-	gtk_list_store_append(list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("On battery"), 1, SPIN_DOWN_HDD_ON_BATTERY, -1);
-
-	gtk_list_store_append(list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Plugged in"), 1, SPIN_DOWN_HDD_PLUGGED_IN, -1);
-
-	gtk_list_store_append(list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Always"), 1, SPIN_DOWN_HDD_ALWAYS, -1);
-
-	gtk_combo_box_set_active (GTK_COMBO_BOX (spin_down_hdd), 0);
-
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX SPIN_DOWN_HDD, SPIN_DOWN_HDD_NEVER);
-
-	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-	      valid;
-	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-	{
-	    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-				1, &list_value, -1);
-	    if ( val == list_value )
-	    {
-		gtk_combo_box_set_active_iter (GTK_COMBO_BOX (spin_down_hdd), &iter);
-		break;
-	    }
-	}
-    }
-    gtk_widget_set_sensitive (spin_down_hdd, can_spin_down);
-    
-    if ( !devkit_disk )
-    {
-	gtk_widget_hide (spin_down_hdd);
-    }
-    else if ( !can_spin_down )
-    {
-	gtk_widget_set_tooltip_text (spin_down_hdd, _("Spinning down hard disks permission denied"));
-    }
-
-    /*
      * Brightness on battery
      */
     if ( has_lcd_brightness )
@@ -980,13 +901,12 @@ static void
 xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
                      gboolean auth_hibernate, gboolean can_suspend,
                      gboolean can_hibernate, gboolean has_lcd_brightness,
-                     gboolean has_lid, gboolean devkit_disk, gboolean can_spin_down)
+                     gboolean has_lid)
 {
     GtkWidget *inact;
     GtkWidget *lid;
     GtkWidget *brg;
     GtkWidget *brg_level;
-    GtkWidget *spin_down_hdd;
     GtkListStore *list_store;
     GtkTreeIter iter;
     guint val;
@@ -1075,23 +995,6 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (lid);
     }
     
-    spin_down_hdd = GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-hdd"));
-    /*
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (spin_down), 
-				  xfconf_channel_get_bool (channel, PROPERTIES_PREFIX SPIN_DOWN_ON_AC, FALSE)); */
-				  
-    gtk_widget_set_sensitive (spin_down_hdd, can_spin_down);
-    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "spin-down-hdd-label")), can_spin_down);
-    
-    if ( !devkit_disk )
-    {
-	gtk_widget_hide (spin_down_hdd);
-    }
-    else if ( !can_spin_down )
-    {
-	gtk_widget_set_tooltip_text (spin_down_hdd, _("Spinning down hard disks permission denied"));
-    }
-
 	/*
 	 * Brightness on AC power
 	 */
@@ -2022,7 +1925,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                           gboolean has_battery, gboolean has_lcd_brightness,
                           gboolean has_lid, gboolean has_sleep_button,
                           gboolean has_hibernate_button, gboolean has_power_button,
-                          gboolean devkit_disk, gboolean can_spin_down,
                           GdkNativeWindow id, gchar *device_id)
 {
     GtkWidget *plug;
@@ -2039,13 +1941,13 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 
     XFPM_DEBUG ("auth_hibernate=%s auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s " \
                 "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s " \
-                "has_hibernate_button=%s has_power_button=%s can_spin_down=%s",
+                "has_hibernate_button=%s has_power_button=%s",
       xfpm_bool_to_string (has_battery), xfpm_bool_to_string (auth_hibernate),
 	  xfpm_bool_to_string (can_shutdown), xfpm_bool_to_string (auth_suspend),
 	  xfpm_bool_to_string (can_suspend), xfpm_bool_to_string (can_hibernate),
 	  xfpm_bool_to_string (has_lcd_brightness), xfpm_bool_to_string (has_lid),
 	  xfpm_bool_to_string (has_sleep_button), xfpm_bool_to_string (has_hibernate_button),
-	  xfpm_bool_to_string (has_power_button), xfpm_bool_to_string (can_spin_down) );
+	  xfpm_bool_to_string (has_power_button));
 
     xml = xfpm_builder_new_from_string (xfpm_settings_ui, &error);
     
@@ -2135,9 +2037,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                          can_suspend,
                          can_hibernate,
                          has_lcd_brightness,
-                         has_lid,
-                         devkit_disk,
-                         can_spin_down);
+                         has_lid);
 
     if ( has_battery )
     xfpm_settings_on_battery (channel,
@@ -2147,9 +2047,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                               can_hibernate,
                               can_shutdown,
                               has_lcd_brightness,
-                              has_lid,
-                              devkit_disk,
-                              can_spin_down);
+                              has_lid);
     else
     {
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display_onbattery")));

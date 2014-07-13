@@ -44,7 +44,6 @@
 
 #include "xfpm-power.h"
 #include "xfpm-dbus.h"
-#include "xfpm-disks.h"
 #include "xfpm-dpms.h"
 #include "xfpm-manager.h"
 #include "xfpm-console-kit.h"
@@ -92,7 +91,6 @@ struct XfpmManagerPrivate
     XfpmConsoleKit     *console;
     XfpmSystemd        *systemd;
     XfpmDBusMonitor    *monitor;
-    XfpmDisks          *disks;
     XfpmInhibit        *inhibit;
     EggIdletime        *idle;
 #ifdef HAVE_DPMS
@@ -151,7 +149,6 @@ xfpm_manager_finalize (GObject *object)
     if ( manager->priv->console != NULL )
         g_object_unref (manager->priv->console);
     g_object_unref (manager->priv->monitor);
-    g_object_unref (manager->priv->disks);
     g_object_unref (manager->priv->inhibit);
     g_object_unref (manager->priv->idle);
 
@@ -699,7 +696,6 @@ void xfpm_manager_start (XfpmManager *manager)
         manager->priv->console = xfpm_console_kit_new ();
 
     manager->priv->monitor = xfpm_dbus_monitor_new ();
-    manager->priv->disks = xfpm_disks_new ();
     manager->priv->inhibit = xfpm_inhibit_new ();
     manager->priv->idle = egg_idletime_new ();
 
@@ -799,8 +795,6 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
     gboolean has_lcd_brightness = TRUE;
     gboolean can_shutdown = TRUE;
     gboolean has_lid = FALSE;
-    gboolean can_spin = FALSE;
-    gboolean devkit_disk = FALSE;
 
     hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
@@ -825,9 +819,6 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
 		  "has-lid", &has_lid,
 		  NULL);
 
-    can_spin = xfpm_disks_get_can_spin (manager->priv->disks);
-    devkit_disk = xfpm_disks_kit_is_running (manager->priv->disks);
-
     has_battery = xfpm_power_has_battery (manager->priv->power);
     has_lcd_brightness = xfpm_backlight_has_hw (manager->priv->backlight);
 
@@ -851,8 +842,6 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
 
     g_hash_table_insert (hash, g_strdup ("has-battery"), g_strdup (xfpm_bool_to_string (has_battery)));
     g_hash_table_insert (hash, g_strdup ("has-lid"), g_strdup (xfpm_bool_to_string (has_lid)));
-    g_hash_table_insert (hash, g_strdup ("can-spin"), g_strdup (xfpm_bool_to_string (can_spin)));
-    g_hash_table_insert (hash, g_strdup ("devkit-disk"), g_strdup (xfpm_bool_to_string (devkit_disk)));
 
     g_hash_table_insert (hash, g_strdup ("has-brightness"), g_strdup (xfpm_bool_to_string (has_lcd_brightness)));
 
