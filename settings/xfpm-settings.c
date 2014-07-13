@@ -1798,6 +1798,7 @@ add_device (UpDevice *device)
     const gchar *object_path = up_device_get_object_path(device);
     gulong signal_id;
     guint index;
+    static gboolean first_run = TRUE;
 
     TRACE("entering for %s", object_path);
 
@@ -1858,18 +1859,22 @@ add_device (UpDevice *device)
     /* Add the icon and description for the device */
     update_device_details (device);
 
-    /* See if we're to select this device */
-    if (g_strcmp0 (object_path, starting_device_id) == 0)
+    /* See if we're to select this device, for it to be selected,
+     * the starting_device_id must be unset and the this is the first
+     * time add_device is called (i.e. select the first device) or
+     * our current device matches starting_device_id. */
+    if ((starting_device_id == NULL && first_run == TRUE) ||
+        (g_strcmp0 (object_path, starting_device_id) == 0))
     {
 	GtkTreeSelection *selection;
-
-	DBG("object_path == starting_device_id, selecting device");
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (sideview));
 
 	gtk_tree_selection_select_iter (selection, &iter);
 	view_cursor_changed_cb (GTK_TREE_VIEW (sideview), NULL);
     }
+
+    first_run = FALSE;
 }
 
 static void
@@ -2182,7 +2187,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     /* If we passed in a device to display, show the devices tab now */
     if (device_id != NULL)
     {
-	gtk_notebook_set_current_page (GTK_NOTEBOOK (nt), 3);
+	/* Assuming the last page is the devices tab */
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (nt), gtk_notebook_get_n_pages (GTK_NOTEBOOK(nt)) - 1);
     }
 
     return dialog;
