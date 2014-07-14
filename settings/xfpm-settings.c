@@ -2039,6 +2039,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system_pluggedin")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"inactivity-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"on-battery-lid")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"blank-on-battery")));
     }
     
     xfpm_settings_general (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, can_shutdown,
