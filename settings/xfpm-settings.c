@@ -871,7 +871,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     }
     else
     {
-    gtk_notebook_remove_page (GTK_NOTEBOOK (nt), 3);
+    gtk_widget_hide (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), 3));
     }
 
 }
@@ -990,7 +990,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	}
 	else
 	{
-	gtk_notebook_remove_page (GTK_NOTEBOOK (nt), 3);
+	gtk_widget_hide (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), 3));
 	}
 
 }
@@ -2033,6 +2033,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display_pluggedin")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"sleep-dpms-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"off-dpms-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness_onbattery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness_pluggedin")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system_onbattery")));
