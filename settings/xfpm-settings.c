@@ -110,9 +110,6 @@ void        button_power_changed_cb                 (GtkWidget *w,
 void        button_hibernate_changed_cb            (GtkWidget *w, 
 						    XfconfChannel *channel);
 
-void        power_save_toggled_cb                  (GtkWidget *w, 
-						    XfconfChannel *channel);
-
 void        notify_toggled_cb                      (GtkWidget *w, 
 						    XfconfChannel *channel);
 
@@ -314,17 +311,6 @@ button_hibernate_changed_cb (GtkWidget *w, XfconfChannel *channel)
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, value ) )
     {
 	g_critical ("Cannot set value for property %s\n", HIBERNATE_SWITCH_CFG);
-    }
-}
-
-void
-power_save_toggled_cb (GtkWidget *w, XfconfChannel *channel)
-{
-    gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
-    
-    if (!xfconf_channel_set_bool (channel, PROPERTIES_PREFIX POWER_SAVE_ON_BATTERY, val) )
-    {
-	g_critical ("Cannot set value for property %s\n", POWER_SAVE_ON_BATTERY);
     }
 }
 
@@ -732,10 +718,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gboolean valid;
     gint list_value;
     gint val;
-    gboolean save_power;
     GtkListStore *list_store;
     GtkTreeIter iter;
-    GtkWidget *power_save;
     GtkWidget *inact;
     GtkWidget *battery_critical;
     GtkWidget *lid;
@@ -804,11 +788,6 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 	    break;
 	}
     }
-    
-    power_save = GTK_WIDGET (gtk_builder_get_object (xml, "power-save"));
-    save_power = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX POWER_SAVE_ON_BATTERY, TRUE);
-    
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(power_save), save_power);
     
     /*
      * DPMS settings when running on battery power

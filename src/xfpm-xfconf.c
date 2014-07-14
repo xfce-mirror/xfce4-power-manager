@@ -57,7 +57,6 @@ enum
     PROP_0,
     PROP_GENERAL_NOTIFICATION,
     PROP_LOCK_SCREEN_ON_SLEEP,
-    PROP_POWER_SAVE_ON_BATTERY,
     PROP_ENABLE_CPU_FREQ,
     PROP_CRITICAL_LEVEL,
     PROP_SHOW_BRIGHTNESS_POPUP,
@@ -253,15 +252,6 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            TRUE,
                                                            G_PARAM_READWRITE));
     
-    /**
-     * XfpmXfconf::power-save-on-battery
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_POWER_SAVE_ON_BATTERY,
-                                     g_param_spec_boolean (POWER_SAVE_ON_BATTERY,
-                                                           NULL, NULL,
-                                                           TRUE,
-                                                           G_PARAM_READWRITE));
     /**
      * XfpmXfconf::enable-cpu-freq-control
      **/

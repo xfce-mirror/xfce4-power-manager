@@ -1519,10 +1519,6 @@ static gboolean xfpm_power_dbus_can_suspend (XfpmPower * power,
 					   gboolean * OUT_can_suspend,
 					   GError ** error);
 
-static gboolean xfpm_power_dbus_get_power_save_status (XfpmPower * power,
-						     gboolean * OUT_save_power,
-						     GError ** error);
-
 static gboolean xfpm_power_dbus_get_on_battery (XfpmPower * power,
 					      gboolean * OUT_on_battery,
 					      GError ** error);
@@ -1721,14 +1717,6 @@ static gboolean xfpm_power_dbus_can_suspend (XfpmPower * power,
 {
     *OUT_can_suspend = power->priv->can_suspend;
 
-    return TRUE;
-}
-
-static gboolean xfpm_power_dbus_get_power_save_status (XfpmPower * power,
-						     gboolean * OUT_save_power,
-						     GError ** error)
-{
-    //FIXME
     return TRUE;
 }
 
