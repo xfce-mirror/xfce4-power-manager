@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-16 18:30+0200\n"
-"PO-Revision-Date: 2014-06-20 09:55+0000\n"
+"POT-Creation-Date: 2014-07-14 00:30+0200\n"
+"PO-Revision-Date: 2014-07-14 12:37+0000\n"
 "Last-Translator: Theppitak Karoonboonyanan <theppitak@gmail.com>\n"
 "Language-Team: Thai (http://www.transifex.com/projects/p/xfce4-power-manager/language/th/)\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:419
+#: ../settings/xfpm-settings-main.c:123 ../src/xfpm-main.c:443
 msgid "Xfce Power Manager"
 msgstr "ระบบจัดการพลังงานของ Xfce"
 
@@ -68,12 +68,12 @@ msgstr "โหมดการพักเครื่อง"
 msgid "Prefer saving power over performance"
 msgstr "เน้นประหยัดพลังงานมากกว่าประสิทธิภาพ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:944
+#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:922
 msgid "On battery"
 msgstr "ขณะใช้แบตเตอรี่"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:947
-#: ../common/xfpm-power-common.c:419
+#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:925
+#: ../common/xfpm-power-common.c:442
 msgid "Plugged in"
 msgstr "เสียบปลั๊ก"
 
@@ -118,276 +118,308 @@ msgid "Handle display power management"
 msgstr "จัดการการจัดการพลังงานของจอแสดงผล"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "Display sleep mode"
-msgstr "โหมดการหลับของจอแสดงผล"
+msgid "Sleep mode"
+msgstr "โหมดการหลับ"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
-msgid "Put display to sleep after"
-msgstr "ให้จอแสดงผลหลับหลังจาก"
+msgid "Blank after"
+msgstr "ดับจอหลังจาก"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "Switch off display after"
-msgstr "ปิดจอแสดงผลหลังจาก"
+msgid "Put to sleep after"
+msgstr "ให้จอหลับหลังจาก"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "Reduce brightness on inactivity"
-msgstr "ลดความสว่างลงเมื่อไม่มีการใช้งาน"
+msgid "Switch off after"
+msgstr "ปิดจอหลังจาก"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "Reduce brightness to"
-msgstr "ลดความสว่างลงเหลือ"
+msgid "<b>Power saving</b>"
+msgstr "<b>การประหยัดพลังงาน</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "<b>Display power saving</b>"
-msgstr "<b>การประหยัดพลังงานของจอแสดงผล</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Display"
 msgstr "จอแสดงผล"
 
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "_Handle display brightness"
+msgstr "_จัดการความสว่างของจอภาพ"
+
 #: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "_Register display brightness shortcut keys"
+msgstr "_กำหนดปุ่มลัดควบคุมความสว่างของจอภาพ"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid "Change per s_tep:"
+msgstr "เปลี่ยน_ขั้นละ:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:34
+msgid "<b>Keys</b>"
+msgstr "<b>ปุ่ม</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:35
+msgid "On inactivity reduce to"
+msgstr "เมื่อไม่ใช้งาน หรี่ลงเหลือ"
+
+#: ../data/interfaces/xfpm-settings.ui.h:36
+msgid "Reduce after"
+msgstr "หรี่หลังจาก"
+
+#: ../data/interfaces/xfpm-settings.ui.h:37
+msgid "_Brightness"
+msgstr "ความ_สว่าง"
+
+#: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Nothing"
 msgstr "ไม่ทำอะไร"
 
-#: ../settings/xfpm-settings.c:541 ../settings/xfpm-settings.c:556
-#: ../settings/xfpm-settings.c:583 ../settings/xfpm-settings.c:941
+#: ../settings/xfpm-settings.c:545 ../settings/xfpm-settings.c:560
+#: ../settings/xfpm-settings.c:587 ../settings/xfpm-settings.c:919
 msgid "Never"
 msgstr "ไม่เลย"
 
-#: ../settings/xfpm-settings.c:544
+#: ../settings/xfpm-settings.c:548
 msgid "One minute"
 msgstr "หนึ่งนาที"
 
-#: ../settings/xfpm-settings.c:546 ../settings/xfpm-settings.c:558
+#: ../settings/xfpm-settings.c:550 ../settings/xfpm-settings.c:562
 msgid "Minutes"
 msgstr "นาที"
 
-#: ../settings/xfpm-settings.c:560 ../settings/xfpm-settings.c:567
-#: ../settings/xfpm-settings.c:568 ../settings/xfpm-settings.c:569
+#: ../settings/xfpm-settings.c:564 ../settings/xfpm-settings.c:571
+#: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:573
 msgid "One hour"
 msgstr "หนึ่งชั่วโมง"
 
-#: ../settings/xfpm-settings.c:568 ../settings/xfpm-settings.c:572
+#: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:576
 msgid "one minute"
 msgstr "หนึ่งนาที"
 
-#: ../settings/xfpm-settings.c:569 ../settings/xfpm-settings.c:573
+#: ../settings/xfpm-settings.c:573 ../settings/xfpm-settings.c:577
 msgid "minutes"
 msgstr "นาที"
 
-#: ../settings/xfpm-settings.c:571 ../settings/xfpm-settings.c:572
-#: ../settings/xfpm-settings.c:573
+#: ../settings/xfpm-settings.c:575 ../settings/xfpm-settings.c:576
+#: ../settings/xfpm-settings.c:577
 msgid "hours"
 msgstr "ชั่วโมง"
 
-#: ../settings/xfpm-settings.c:585
+#: ../settings/xfpm-settings.c:589
 msgid "Seconds"
 msgstr "วินาที"
 
-#: ../settings/xfpm-settings.c:591
+#: ../settings/xfpm-settings.c:595
 msgid "%"
 msgstr "%"
 
-#: ../settings/xfpm-settings.c:777 ../settings/xfpm-settings.c:1003
-#: ../settings/xfpm-settings.c:1472
+#: ../settings/xfpm-settings.c:781 ../settings/xfpm-settings.c:1001
+#: ../settings/xfpm-settings.c:1463
 msgid "Hibernate and suspend operations not supported"
 msgstr "ไม่รองรับการจำศีลเครื่องและการพักเครื่อง"
 
-#: ../settings/xfpm-settings.c:782 ../settings/xfpm-settings.c:1008
-#: ../settings/xfpm-settings.c:1477
+#: ../settings/xfpm-settings.c:786 ../settings/xfpm-settings.c:1006
+#: ../settings/xfpm-settings.c:1468
 msgid "Hibernate and suspend operations not permitted"
 msgstr "ไม่ได้รับอนุญาตให้จำศีลเครื่องและพักเครื่อง"
 
-#: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:1174
-#: ../settings/xfpm-settings.c:1231 ../settings/xfpm-settings.c:1283
+#: ../settings/xfpm-settings.c:798 ../settings/xfpm-settings.c:1165
+#: ../settings/xfpm-settings.c:1222 ../settings/xfpm-settings.c:1274
 msgid "Do nothing"
 msgstr "ไม่ทำอะไร"
 
-#: ../settings/xfpm-settings.c:799 ../settings/xfpm-settings.c:867
-#: ../settings/xfpm-settings.c:1044 ../settings/xfpm-settings.c:1179
-#: ../settings/xfpm-settings.c:1236 ../settings/xfpm-settings.c:1288
-#: ../settings/xfpm-settings.c:1359 ../settings/xfpm-settings.c:1410
-#: ../src/xfpm-power.c:647
+#: ../settings/xfpm-settings.c:803 ../settings/xfpm-settings.c:871
+#: ../settings/xfpm-settings.c:1042 ../settings/xfpm-settings.c:1170
+#: ../settings/xfpm-settings.c:1227 ../settings/xfpm-settings.c:1279
+#: ../settings/xfpm-settings.c:1350 ../settings/xfpm-settings.c:1401
+#: ../src/xfpm-power.c:655
 msgid "Suspend"
 msgstr "พักเครื่อง"
 
-#: ../settings/xfpm-settings.c:805 ../settings/xfpm-settings.c:873
-#: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1185
-#: ../settings/xfpm-settings.c:1242 ../settings/xfpm-settings.c:1294
-#: ../settings/xfpm-settings.c:1373 ../src/xfpm-power.c:636
+#: ../settings/xfpm-settings.c:809 ../settings/xfpm-settings.c:877
+#: ../settings/xfpm-settings.c:1048 ../settings/xfpm-settings.c:1176
+#: ../settings/xfpm-settings.c:1233 ../settings/xfpm-settings.c:1285
+#: ../settings/xfpm-settings.c:1364 ../src/xfpm-power.c:644
 msgid "Hibernate"
 msgstr "จำศีลเครื่อง"
 
-#: ../settings/xfpm-settings.c:811 ../settings/xfpm-settings.c:1191
-#: ../src/xfpm-power.c:658
+#: ../settings/xfpm-settings.c:815 ../settings/xfpm-settings.c:1182
+#: ../src/xfpm-power.c:666
 msgid "Shutdown"
 msgstr "ปิดเครื่อง"
 
-#: ../settings/xfpm-settings.c:815 ../settings/xfpm-settings.c:1195
-#: ../settings/xfpm-settings.c:1246 ../settings/xfpm-settings.c:1298
+#: ../settings/xfpm-settings.c:819 ../settings/xfpm-settings.c:1186
+#: ../settings/xfpm-settings.c:1237 ../settings/xfpm-settings.c:1289
 msgid "Ask"
 msgstr "ถาม"
 
-#: ../settings/xfpm-settings.c:862 ../settings/xfpm-settings.c:1039
+#: ../settings/xfpm-settings.c:866 ../settings/xfpm-settings.c:1037
 msgid "Switch off display"
 msgstr "ปิดจอแสดงผล"
 
-#: ../settings/xfpm-settings.c:877 ../settings/xfpm-settings.c:1054
+#: ../settings/xfpm-settings.c:881 ../settings/xfpm-settings.c:1052
 msgid "Lock screen"
 msgstr "ล็อคหน้าจอ"
 
-#: ../settings/xfpm-settings.c:950
+#: ../settings/xfpm-settings.c:928
 msgid "Always"
 msgstr "เสมอ"
 
-#: ../settings/xfpm-settings.c:977 ../settings/xfpm-settings.c:1120
+#: ../settings/xfpm-settings.c:955 ../settings/xfpm-settings.c:1092
 msgid "Spinning down hard disks permission denied"
 msgstr "ไม่ได้รับอนุญาตให้ชะลอการหมุนของดิสก์"
 
-#: ../settings/xfpm-settings.c:1363
+#: ../settings/xfpm-settings.c:1354
 msgid "Suspend operation not permitted"
 msgstr "ไม่ได้รับอนุญาตให้พักเครื่อง"
 
-#: ../settings/xfpm-settings.c:1367
+#: ../settings/xfpm-settings.c:1358
 msgid "Suspend operation not supported"
 msgstr "ไม่รองรับการพักเครื่อง"
 
-#: ../settings/xfpm-settings.c:1377
+#: ../settings/xfpm-settings.c:1368
 msgid "Hibernate operation not permitted"
 msgstr "ไม่ได้รับอนุญาตให้จำศีลเครื่อง"
 
-#: ../settings/xfpm-settings.c:1381
+#: ../settings/xfpm-settings.c:1372
 msgid "Hibernate operation not supported"
 msgstr "ไม่รองรับการจำศีลเครื่อง"
 
-#: ../settings/xfpm-settings.c:1412
+#: ../settings/xfpm-settings.c:1403
 msgid "Standby"
 msgstr "พักคอย"
 
-#: ../settings/xfpm-settings.c:1445
+#: ../settings/xfpm-settings.c:1436
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "เมื่อแหล่งพลังงานทั้งหมดของคอมพิวเตอร์ลดต่ำลงถึงระดับนี้"
 
-#: ../settings/xfpm-settings.c:1683
+#: ../settings/xfpm-settings.c:1674
 msgid "Device"
 msgstr "อุปกรณ์"
 
-#: ../settings/xfpm-settings.c:1705
+#: ../settings/xfpm-settings.c:1696
 msgid "Type"
 msgstr "ชนิด"
 
-#: ../settings/xfpm-settings.c:1710
+#: ../settings/xfpm-settings.c:1701
 msgid "PowerSupply"
 msgstr "แหล่งจ่ายพลังงาน"
 
-#: ../settings/xfpm-settings.c:1711 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1702 ../src/xfpm-main.c:80
 msgid "True"
 msgstr "ใช่"
 
-#: ../settings/xfpm-settings.c:1711 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1702 ../src/xfpm-main.c:80
 msgid "False"
 msgstr "ไม่ใช่"
 
-#: ../settings/xfpm-settings.c:1718
+#: ../settings/xfpm-settings.c:1709
 msgid "Model"
 msgstr "รุ่น"
 
-#: ../settings/xfpm-settings.c:1721
+#: ../settings/xfpm-settings.c:1712
 msgid "Technology"
 msgstr "เทคโนโลยี"
 
-#: ../settings/xfpm-settings.c:1728
-msgid "Energy percent"
-msgstr "เปอร์เซ็นต์พลังงาน"
+#: ../settings/xfpm-settings.c:1719
+msgid "Current charge"
+msgstr "ประจุขณะนี้"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1736 ../settings/xfpm-settings.c:1746
-#: ../settings/xfpm-settings.c:1756
+#: ../settings/xfpm-settings.c:1727 ../settings/xfpm-settings.c:1739
+#: ../settings/xfpm-settings.c:1751
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:1738
-msgid "Energy full design"
-msgstr "พลังงานเต็มตามออกแบบ"
+#: ../settings/xfpm-settings.c:1729
+msgid "Fully charged (design)"
+msgstr "ประจุไฟเต็ม (ค่าที่ออกแบบไว้)"
 
-#: ../settings/xfpm-settings.c:1748
-msgid "Energy full"
-msgstr "พลังงานเต็ม"
+#: ../settings/xfpm-settings.c:1742
+msgid "Fully charged"
+msgstr "ประจุไฟเต็ม"
 
-#: ../settings/xfpm-settings.c:1758
+#: ../settings/xfpm-settings.c:1753
 msgid "Energy empty"
-msgstr "พลังงานว่างเปล่า"
+msgstr "ประจุไฟขณะว่างเปล่า"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1766
+#: ../settings/xfpm-settings.c:1761
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:1768
+#: ../settings/xfpm-settings.c:1763
 msgid "Voltage"
 msgstr "ความต่างศักย์"
 
-#: ../settings/xfpm-settings.c:1775
+#: ../settings/xfpm-settings.c:1770
 msgid "Vendor"
 msgstr "ผู้จำหน่าย"
 
-#: ../settings/xfpm-settings.c:1780
+#: ../settings/xfpm-settings.c:1775
 msgid "Serial"
 msgstr "เลขลำดับ"
 
-#: ../settings/xfpm-settings.c:1845
+#: ../settings/xfpm-settings.c:1841
 msgid "Attribute"
 msgstr "ข้อมูล"
 
-#: ../settings/xfpm-settings.c:1852
+#: ../settings/xfpm-settings.c:1848
 msgid "Value"
 msgstr "ค่า"
 
-#: ../settings/xfpm-settings.c:2039
+#: ../settings/xfpm-settings.c:2054
 msgid "Check your power manager installation"
 msgstr "กรุณาตรวจสอบการติดตั้งระบบจัดการพลังงานของคุณ"
 
-#: ../settings/xfpm-settings.c:2096
+#: ../settings/xfpm-settings.c:2124
 msgid "Devices"
 msgstr "อุปกรณ์"
 
-#: ../settings/xfpm-settings-main.c:78
+#: ../settings/xfpm-settings-main.c:79
 msgid "Settings manager socket"
 msgstr "ซ็อกเก็ตของโปรแกรมจัดการค่าตั้ง"
 
-#: ../settings/xfpm-settings-main.c:78
+#: ../settings/xfpm-settings-main.c:79
 msgid "SOCKET ID"
 msgstr "หมายเลขซ็อกเก็ต"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:295
+#: ../settings/xfpm-settings-main.c:80
+msgid "Display a specific device by UpDevice object path"
+msgstr "แสดงอุปกรณ์ที่ระบุด้วยพาธของออบเจกต์ UpDevice"
+
+#: ../settings/xfpm-settings-main.c:80
+msgid "UpDevice object path"
+msgstr "พาธของออบเจกต์ UpDevice"
+
+#: ../settings/xfpm-settings-main.c:91 ../src/xfpm-main.c:324
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "สั่ง \"%s --help\" เพื่อดูวิธีใช้"
 
-#: ../settings/xfpm-settings-main.c:123
+#: ../settings/xfpm-settings-main.c:125
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "โหลดค่าตั้งของระบบจัดการพลังงานไม่สำเร็จ จะใช้ค่าปริยาย"
 
-#: ../settings/xfpm-settings-main.c:150
+#: ../settings/xfpm-settings-main.c:152
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "ไม่สามารถเชื่อมต่อกับระบบจัดการพลังงานของ Xfce"
 
-#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:335
+#: ../settings/xfpm-settings-main.c:194 ../src/xfpm-main.c:359
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "ระบบจัดการพลังงานของ Xfce ไม่ได้ทำงานอยู่"
 
-#: ../settings/xfpm-settings-main.c:197
+#: ../settings/xfpm-settings-main.c:199
 msgid "Run"
 msgstr "เรียกทำงาน"
 
-#: ../settings/xfpm-settings-main.c:198
+#: ../settings/xfpm-settings-main.c:200
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "ระบบจัดการพลังงานของ Xfce ไม่ได้ทำงานอยู่ คุณต้องการเรียกทำงานเดี๋ยวนี้เลยหรือไม่?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:300 ../src/xfpm-power.c:578 ../src/xfpm-power.c:622
-#: ../src/xfpm-power.c:786 ../src/xfpm-power.c:810 ../src/xfpm-battery.c:256
+#: ../src/xfpm-power.c:308 ../src/xfpm-power.c:586 ../src/xfpm-power.c:630
+#: ../src/xfpm-power.c:794 ../src/xfpm-power.c:818 ../src/xfpm-battery.c:256
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "ระบบจัดการพลังงาน"
@@ -396,7 +428,7 @@ msgstr "ระบบจัดการพลังงาน"
 msgid "Settings for the Xfce Power Manager"
 msgstr "ตั้งค่าระบบจัดการพลังงานของ Xfce"
 
-#: ../common/xfpm-common.c:120
+#: ../common/xfpm-common.c:131
 msgid "translator-credits"
 msgstr "Theppitak Karoonboonyanan <theppitak@gmail.com>"
 
@@ -436,7 +468,7 @@ msgstr "โทรศัพท์"
 msgid "Tablet"
 msgstr "แทบเล็ต"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:329
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:352
 msgid "Computer"
 msgstr "คอมพิวเตอร์"
 
@@ -502,172 +534,179 @@ msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "นาที"
 
-#: ../common/xfpm-power-common.c:346
+#: ../common/xfpm-power-common.c:369
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%, %s runtime)\t"
-msgstr "<b>%s %s</b>\t\nประจุไฟเต็มแล้ว (%0.0f%%, จ่ายไฟได้ %s)\t"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%, %s runtime)"
+msgstr "<b>%s %s</b>\nประจุไฟเต็มแล้ว (%0.0f%%, จ่ายไฟได้ %s)"
 
-#: ../common/xfpm-power-common.c:354
+#: ../common/xfpm-power-common.c:377
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nประจุไฟเต็มแล้ว (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%)"
+msgstr "<b>%s %s</b>\nประจุไฟเต็มแล้ว (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:364
+#: ../common/xfpm-power-common.c:387
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\t\nกำลังประจุไฟ (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%, %s)"
+msgstr "<b>%s %s</b>\nกำลังประจุไฟ (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:372
+#: ../common/xfpm-power-common.c:395
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nกำลังประจุไฟ (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%)"
+msgstr "<b>%s %s</b>\nกำลังประจุไฟ (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:382
+#: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\t\nกำลังจ่ายไฟ (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%, %s)"
+msgstr "<b>%s %s</b>\nกำลังจ่ายไฟ (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:390
+#: ../common/xfpm-power-common.c:413
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nกำลังจ่ายไฟ (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%)"
+msgstr "<b>%s %s</b>\nกำลังจ่ายไฟ (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:397
+#: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to discharge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nกำลังรอจ่ายไฟ (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Waiting to discharge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nกำลังรอจ่ายไฟ (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:403
+#: ../common/xfpm-power-common.c:426
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to charge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nกำลังรอประจุไฟ (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Waiting to charge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nกำลังรอประจุไฟ (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:409
+#: ../common/xfpm-power-common.c:432
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"is empty\t"
-msgstr "<b>%s %s</b>\t\nไม่มีประจุไฟเหลือ\t"
+"<b>%s %s</b>\n"
+"is empty"
+msgstr "<b>%s %s</b>\nไม่มีประจุไฟเหลือ"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:418
+#: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"%s\t"
-msgstr "<b>%s %s</b>\t\n%s\t"
+"<b>%s %s</b>\n"
+"%s"
+msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:419
+#: ../common/xfpm-power-common.c:442
 msgid "Not plugged in"
 msgstr "ไม่ได้เสียบปลั๊ก"
 
+#. Desktop pc with no battery, just display the vendor and model,
+#. * which will probably just be Computer
+#: ../common/xfpm-power-common.c:448
+#, c-format
+msgid "<b>%s %s</b>"
+msgstr "<b>%s %s</b>"
+
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:424
+#: ../common/xfpm-power-common.c:453
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Unknown state\t"
-msgstr "<b>%s %s</b>\t\nไม่ทราบสถานะ\t"
+"<b>%s %s</b>\n"
+"Unknown state"
+msgstr "<b>%s %s</b>\nไม่ทราบสถานะ"
 
-#: ../src/xfpm-power.c:326
+#: ../src/xfpm-power.c:334
 msgid "_Hibernate"
 msgstr "_จำศีลเครื่อง"
 
-#: ../src/xfpm-power.c:327
+#: ../src/xfpm-power.c:335
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
 msgstr "มีบางโปรแกรมปิดการหลับอัตโนมัติไว้ การกระทำนี้จึงอาจทำให้สถานะการทำงานของโปรแกรมดังกล่าวเสียหายได้"
 
-#: ../src/xfpm-power.c:329
+#: ../src/xfpm-power.c:337
 msgid "Are you sure you want to hibernate the system?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการจำศีลเครื่อง?"
 
-#: ../src/xfpm-power.c:344
+#: ../src/xfpm-power.c:352
 msgid "Incorrect password entered"
 msgstr "ป้อนรหัสผ่านไม่ถูกต้อง"
 
-#: ../src/xfpm-power.c:386
+#: ../src/xfpm-power.c:394
 msgid "Continue"
 msgstr "ทำต่อไป"
 
-#: ../src/xfpm-power.c:387 ../src/xfpm-manager.c:374
+#: ../src/xfpm-power.c:395 ../src/xfpm-manager.c:374
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
 msgstr "ไม่มีเครื่องมือล็อคจอภาพใดทำงานได้สำเร็จ จอภาพจะไม่มีการล็อค"
 
-#: ../src/xfpm-power.c:390
+#: ../src/xfpm-power.c:398
 msgid "Do you still want to continue to suspend the system?"
 msgstr "คุณยังคงต้องการพักเครื่องต่อไปหรือไม่?"
 
-#: ../src/xfpm-power.c:541
+#: ../src/xfpm-power.c:549
 msgid "Hibernate the system"
 msgstr "จำศีลเครื่อง"
 
-#: ../src/xfpm-power.c:552
+#: ../src/xfpm-power.c:560
 msgid "Suspend the system"
 msgstr "พักเครื่อง"
 
-#: ../src/xfpm-power.c:562
+#: ../src/xfpm-power.c:570
 msgid "Shutdown the system"
 msgstr "ปิดเครื่อง"
 
-#: ../src/xfpm-power.c:573 ../src/xfpm-power.c:619
+#: ../src/xfpm-power.c:581 ../src/xfpm-power.c:627
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "ระบบเหลือพลังงานน้อย กรุณาบันทึกงานของคุณเพื่อป้องกันข้อมูลสูญหาย"
 
-#: ../src/xfpm-power.c:787
+#: ../src/xfpm-power.c:795
 msgid "System is running on low power"
 msgstr "ระบบเหลือพลังงานน้อย"
 
-#: ../src/xfpm-power.c:806
+#: ../src/xfpm-power.c:814
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "ระดับประจุไฟของ %s อยู่ในระดับต่ำ\nเหลือเวลาจ่ายไฟประมาณ %s"
 
-#: ../src/xfpm-power.c:1355
+#: ../src/xfpm-power.c:1438
 msgid ""
-"The requested operation requires elevated privileges.\t\n"
+"The requested operation requires elevated privileges.\n"
 "Please enter your password."
-msgstr "การกระทำที่ร้องขอต้องใช้สิทธิพิเศษที่สูงขึ้น\t\nกรุณาป้อนรหัสผ่านของคุณ"
+msgstr "การกระทำที่ร้องขอต้องใช้สิทธิพิเศษ\nกรุณาป้อนรหัสผ่านของคุณ"
 
 #. Set the dialog's title
-#: ../src/xfpm-power.c:1364
+#: ../src/xfpm-power.c:1447
 msgid "xfce4-power-manager"
 msgstr "xfce4-power-manager"
 
 #. setup password label
-#: ../src/xfpm-power.c:1367
+#: ../src/xfpm-power.c:1450
 msgid "Password:"
 msgstr "รหัสผ่าน:"
 
-#: ../src/xfpm-power.c:1493 ../src/xfpm-power.c:1526 ../src/xfpm-power.c:1545
-#: ../src/xfpm-power.c:1568
+#: ../src/xfpm-power.c:1576 ../src/xfpm-power.c:1609 ../src/xfpm-power.c:1628
+#: ../src/xfpm-power.c:1651
 #, c-format
 msgid "Permission denied"
 msgstr "ไม่ได้รับอนุญาต"
 
-#: ../src/xfpm-power.c:1553 ../src/xfpm-power.c:1576
+#: ../src/xfpm-power.c:1636 ../src/xfpm-power.c:1659
 #, c-format
 msgid "Suspend not supported"
 msgstr "ไม่รองรับการพักเครื่อง"
@@ -742,7 +781,7 @@ msgid "Phone battery"
 msgstr "แบตเตอรี่โทรศัพท์"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-kbd-backlight.c:105
+#: ../src/xfpm-kbd-backlight.c:115
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "ความสว่างของแป้นพิมพ์: %.0f เปอร์เซ็นต์"
@@ -842,43 +881,48 @@ msgstr "มีปุ่มหลับ"
 msgid "Has LID"
 msgstr "มีฝาแล็ปท็อป"
 
-#: ../src/xfpm-main.c:268
+#: ../src/xfpm-main.c:269
 msgid "Do not daemonize"
 msgstr "ไม่ต้องทำงานแบบดีมอน"
 
-#: ../src/xfpm-main.c:269
+#: ../src/xfpm-main.c:270
 msgid "Enable debugging"
 msgstr "เปิดใช้การดีบั๊ก"
 
-#: ../src/xfpm-main.c:270
+#: ../src/xfpm-main.c:271
 msgid "Dump all information"
 msgstr "แสดงข้อมูลทั้งหมด"
 
-#: ../src/xfpm-main.c:271
+#: ../src/xfpm-main.c:272
 msgid "Restart the running instance of Xfce power manager"
 msgstr "เริ่มการทำงานของระบบจัดการพลังงานของ Xfce ที่กำลังทำงานอยู่ใหม่"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:273
 msgid "Show the configuration dialog"
 msgstr "แสดงกล่องโต้ตอบตั้งค่า"
 
-#: ../src/xfpm-main.c:273
+#: ../src/xfpm-main.c:274
 msgid "Quit any running xfce power manager"
 msgstr "จบการทำงานของระบบจัดการพลังงานของ Xfce ใดๆ ที่กำลังทำงานอยู่"
 
-#: ../src/xfpm-main.c:274
+#: ../src/xfpm-main.c:275
 msgid "Version information"
 msgstr "แสดงข้อมูลรุ่น"
 
-#: ../src/xfpm-main.c:326
+#: ../src/xfpm-main.c:296
+#, c-format
+msgid "Failed to parse arguments: %s\n"
+msgstr "แจงอาร์กิวเมนต์ไม่สำเร็จ: %s\n"
+
+#: ../src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
 msgstr "ไม่สามารถเชื่อมต่อไปยังวาระของบัสข้อความได้"
 
-#: ../src/xfpm-main.c:420
+#: ../src/xfpm-main.c:444
 msgid "Another power manager is already running"
 msgstr "มีระบบจัดการพลังงานอีกระบบหนึ่งทำงานอยู่ก่อนแล้ว"
 
-#: ../src/xfpm-main.c:426
+#: ../src/xfpm-main.c:450
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "ระบบจัดการพลังงานของ Xfce ทำงานอยู่ก่อนแล้ว"
@@ -927,25 +971,27 @@ msgid "Brightness plugin"
 msgstr "ปลั๊กอินปรับความสว่าง"
 
 #. how did we get here?
-#: ../panel-plugins/battery/battery-button.c:168
+#: ../panel-plugins/battery/battery-button.c:149
 msgid "Display battery levels for attached devices"
 msgstr "แสดงระดับไฟแบตเตอรี่ของอุปกรณ์ที่เชื่อมต่อ"
 
 #. Presentation mode checkbox
-#: ../panel-plugins/battery/battery-button.c:673
+#: ../panel-plugins/battery/battery-button.c:704
 msgid "Presentation _mode"
 msgstr "โห_มดนำเสนอ"
 
 #. Power manager settings
-#: ../panel-plugins/battery/battery-button.c:682
+#: ../panel-plugins/battery/battery-button.c:713
 msgid "_Power manager..."
 msgstr "โปรแกรมจัดการ_พลังงาน..."
 
-#: ../panel-plugins/battery/xfce4-battery-plugin.desktop.in.in.h:1
+#: ../panel-plugins/battery/lxde/battery-plugin.c:54
+#: ../panel-plugins/battery/xfce/xfce4-battery-plugin.desktop.in.in.h:1
 msgid "Battery indicator plugin"
 msgstr "ปลั๊กอินบอกระดับไฟแบตเตอรี่"
 
-#: ../panel-plugins/battery/xfce4-battery-plugin.desktop.in.in.h:2
+#: ../panel-plugins/battery/lxde/battery-plugin.c:56
+#: ../panel-plugins/battery/xfce/xfce4-battery-plugin.desktop.in.in.h:2
 msgid "Display the battery levels of your devices"
 msgstr "แสดงระดับไฟแบตเตอรี่ของอุปกรณ์ต่างๆ ของคุณ"
 
