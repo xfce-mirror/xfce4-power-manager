@@ -2029,6 +2029,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                               has_lid);
     else
     {
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"frame-critical-power")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display_onbattery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display_pluggedin")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"sleep-dpms-on-battery")));
