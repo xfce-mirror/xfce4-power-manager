@@ -524,7 +524,7 @@ battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButto
     return battery_button_set_icon (button);
 }
 
-void
+static void
 battery_button_style_set_cb (XfcePanelPlugin *plugin, GtkStyle *prev_style, BatteryButton *button)
 {
     gtk_widget_reset_rc_styles (GTK_WIDGET (plugin));
