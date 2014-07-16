@@ -116,9 +116,6 @@ void        notify_toggled_cb                      (GtkWidget *w,
 void        on_sleep_mode_changed_cb      (GtkWidget *w,
 						    XfconfChannel *channel);
 
-void        on_sleep_dpms_mode_changed_cb      (GtkWidget *w,
-						    XfconfChannel *channel);
-
 void        dpms_toggled_cb                        (GtkWidget *w, 
 						    XfconfChannel *channel);
 
@@ -350,30 +347,6 @@ on_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 }
 
 void
-on_sleep_dpms_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
-{
-    GtkTreeModel     *model;
-    GtkTreeIter       selected_row;
-    gchar *value = "";
-    
-    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
-	return;
-
-    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
-
-    gtk_tree_model_get(model,
-                       &selected_row,
-                       0,
-                       &value,
-                       -1);
-    
-    if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX DPMS_SLEEP_MODE, value) )
-    {
-	g_critical ("Cannot set value for property %s\n", DPMS_SLEEP_MODE);
-    }
-}
-
-void
 dpms_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 {
 #ifdef HAVE_DPMS
@@ -383,8 +356,6 @@ dpms_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     
     gtk_widget_set_sensitive (on_ac_dpms_off, val);
     gtk_widget_set_sensitive (on_ac_dpms_sleep, val);
-    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-mode")), val);
-    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-mode-label")), val);
     gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "sleep-display-label")), val);
     gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "switch-off-display-label")), val);
     
@@ -1211,7 +1182,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *critical_level;
     GtkWidget *lock;
     GtkWidget *label;
-    GtkWidget *sleep_dpms_mode;
     GtkWidget *sleep_mode;
 
     gchar *list_str;
@@ -1270,43 +1240,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
 	}
     }
     g_free (str);
-
-    /*
-     * Display sleep mode
-     */
-    sleep_dpms_mode = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-mode"));
-
-#ifdef HAVE_DPMS
-    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-    gtk_combo_box_set_model (GTK_COMBO_BOX(sleep_dpms_mode), GTK_TREE_MODEL(list_store));
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), -1);
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Standby"), -1);
-
-    gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_dpms_mode), 0);
-
-    str = xfconf_channel_get_string (channel, PROPERTIES_PREFIX DPMS_SLEEP_MODE, "Standby");
-
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-	  valid;
-	  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-    {
-	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-			    0, &list_str, -1);
-	if ( g_strcmp0 (str, list_str) )
-	{
-	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep_dpms_mode), &iter);
-	    break;
-	}
-    }
-
-    g_free (str);
-    
-#else
-    gtk_widget_hide (sleep_dpms_mode);
-    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-mode-label")));
-#endif
 
     /*
      * Critical battery level
