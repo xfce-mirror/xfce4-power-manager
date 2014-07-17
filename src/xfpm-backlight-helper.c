@@ -44,9 +44,9 @@
 
 #define GCM_BACKLIGHT_HELPER_SYSFS_LOCATION			"/sys/class/backlight"
 
-/**
- * gcm_backlight_helper_get_best_backlight:
- **/
+/*
+ * Find best backlight using an ordered interface list
+ */
 static gchar *
 gcm_backlight_helper_get_best_backlight (void)
 {
@@ -107,9 +107,9 @@ out:
 	return filename;
 }
 
-/**
- * gcm_backlight_helper_write:
- **/
+/*
+ * Write a value to a sysfs entry
+ */
 static gboolean
 gcm_backlight_helper_write (const gchar *filename, gint value, GError **error)
 {
@@ -144,9 +144,9 @@ out:
 	return ret;
 }
 
-/**
- * main:
- **/
+/*
+ * Backlight helper main function
+ */
 gint
 main (gint argc, gchar *argv[])
 {
@@ -198,7 +198,7 @@ main (gint argc, gchar *argv[])
 		goto out;
 	}
 
-	/* GetBrightness */
+	/* get current brightness level */
 	if (get_brightness) {
 		filename_file = g_build_filename (filename, "brightness", NULL);
 		ret = g_file_get_contents (filename_file, &contents, NULL, &error);
@@ -215,7 +215,7 @@ main (gint argc, gchar *argv[])
 		goto out;
 	}
 
-	/* GetSteps */
+	/* get maximum brightness level */
 	if (get_max_brightness) {
 		filename_file = g_build_filename (filename, "max_brightness", NULL);
 		ret = g_file_get_contents (filename_file, &contents, NULL, &error);
@@ -249,7 +249,7 @@ main (gint argc, gchar *argv[])
 		goto out;
 	}
 
-	/* SetBrightness */
+	/* set the brightness level */
 	if (set_brightness != -1) {
 		filename_file = g_build_filename (filename, "brightness", NULL);
 		ret = gcm_backlight_helper_write (filename_file, set_brightness, &error);
