@@ -37,18 +37,18 @@
 #endif
 #include <stdio.h>
 
-#define GCM_BACKLIGHT_HELPER_EXIT_CODE_SUCCESS			0
-#define GCM_BACKLIGHT_HELPER_EXIT_CODE_FAILED			1
-#define GCM_BACKLIGHT_HELPER_EXIT_CODE_ARGUMENTS_INVALID	3
-#define GCM_BACKLIGHT_HELPER_EXIT_CODE_INVALID_USER		4
+#define EXIT_CODE_SUCCESS		0
+#define EXIT_CODE_FAILED		1
+#define EXIT_CODE_ARGUMENTS_INVALID	3
+#define EXIT_CODE_INVALID_USER		4
 
-#define GCM_BACKLIGHT_HELPER_SYSFS_LOCATION			"/sys/class/backlight"
+#define BACKLIGHT_SYSFS_LOCATION			"/sys/class/backlight"
 
 /*
  * Find best backlight using an ordered interface list
  */
 static gchar *
-gcm_backlight_helper_get_best_backlight (void)
+backlight_helper_get_best_backlight (void)
 {
 	gchar *filename;
 	guint i;
@@ -76,7 +76,7 @@ gcm_backlight_helper_get_best_backlight (void)
 
 	/* search each one */
 	for (i=0; backlight_interfaces[i] != NULL; i++) {
-		filename = g_build_filename (GCM_BACKLIGHT_HELPER_SYSFS_LOCATION,
+		filename = g_build_filename (BACKLIGHT_SYSFS_LOCATION,
 					     backlight_interfaces[i], NULL);
 		ret = g_file_test (filename, G_FILE_TEST_EXISTS);
 		if (ret)
@@ -88,7 +88,7 @@ gcm_backlight_helper_get_best_backlight (void)
 	filename = NULL;
 
 	/* find any random ones */
-	dir = g_dir_open (GCM_BACKLIGHT_HELPER_SYSFS_LOCATION, 0, &error);
+	dir = g_dir_open (BACKLIGHT_SYSFS_LOCATION, 0, &error);
 	if (dir == NULL) {
 		g_warning ("failed to find any devices: %s", error->message);
 		g_error_free (error);
@@ -98,7 +98,7 @@ gcm_backlight_helper_get_best_backlight (void)
 	/* get first device if any */
 	first_device = g_dir_read_name (dir);
 	if (first_device != NULL) {
-		filename = g_build_filename (GCM_BACKLIGHT_HELPER_SYSFS_LOCATION,
+		filename = g_build_filename (BACKLIGHT_SYSFS_LOCATION,
 					     first_device, NULL);
 	}
 out:
@@ -111,7 +111,7 @@ out:
  * Write a value to a sysfs entry
  */
 static gboolean
-gcm_backlight_helper_write (const gchar *filename, gint value, GError **error)
+backlight_helper_write (const gchar *filename, gint value, GError **error)
 {
 	gchar *text = NULL;
 	gint retval;
@@ -186,15 +186,15 @@ main (gint argc, gchar *argv[])
 	/* no input */
 	if (set_brightness == -1 && !get_brightness && !get_max_brightness) {
 		puts ("No valid option was specified");
-		retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_ARGUMENTS_INVALID;
+		retval = EXIT_CODE_ARGUMENTS_INVALID;
 		goto out;
 	}
 
 	/* find device */
-	filename = gcm_backlight_helper_get_best_backlight ();
+	filename = backlight_helper_get_best_backlight ();
 	if (filename == NULL) {
 		puts ("No backlights were found on your system");
-		retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_INVALID_USER;
+		retval = EXIT_CODE_INVALID_USER;
 		goto out;
 	}
 
@@ -205,13 +205,13 @@ main (gint argc, gchar *argv[])
 		if (!ret) {
 			g_print ("Could not get the value of the backlight: %s\n", error->message);
 			g_error_free (error);
-			retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_ARGUMENTS_INVALID;
+			retval = EXIT_CODE_ARGUMENTS_INVALID;
 			goto out;
 		}
 
 		/* just print the contents to stdout */
 		g_print ("%s", contents);
-		retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_SUCCESS;
+		retval = EXIT_CODE_SUCCESS;
 		goto out;
 	}
 
@@ -222,13 +222,13 @@ main (gint argc, gchar *argv[])
 		if (!ret) {
 			g_print ("Could not get the maximum value of the backlight: %s\n", error->message);
 			g_error_free (error);
-			retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_ARGUMENTS_INVALID;
+			retval = EXIT_CODE_ARGUMENTS_INVALID;
 			goto out;
 		}
 
 		/* just print the contents to stdout */
 		g_print ("%s", contents);
-		retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_SUCCESS;
+		retval = EXIT_CODE_SUCCESS;
 		goto out;
 	}
 
@@ -237,7 +237,7 @@ main (gint argc, gchar *argv[])
 	euid = geteuid ();
 	if (uid != 0 || euid != 0) {
 		puts ("This program can only be used by the root user");
-		retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_ARGUMENTS_INVALID;
+		retval = EXIT_CODE_ARGUMENTS_INVALID;
 		goto out;
 	}
 
@@ -245,24 +245,24 @@ main (gint argc, gchar *argv[])
 	pkexec_uid_str = g_getenv ("PKEXEC_UID");
 	if (pkexec_uid_str == NULL) {
 		puts ("This program must only be run through pkexec");
-		retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_INVALID_USER;
+		retval = EXIT_CODE_INVALID_USER;
 		goto out;
 	}
 
 	/* set the brightness level */
 	if (set_brightness != -1) {
 		filename_file = g_build_filename (filename, "brightness", NULL);
-		ret = gcm_backlight_helper_write (filename_file, set_brightness, &error);
+		ret = backlight_helper_write (filename_file, set_brightness, &error);
 		if (!ret) {
 			g_print ("Could not set the value of the backlight: %s\n", error->message);
 			g_error_free (error);
-			retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_ARGUMENTS_INVALID;
+			retval = EXIT_CODE_ARGUMENTS_INVALID;
 			goto out;
 		}
 	}
 
 	/* success */
-	retval = GCM_BACKLIGHT_HELPER_EXIT_CODE_SUCCESS;
+	retval = EXIT_CODE_SUCCESS;
 out:
 	g_free (filename);
 	g_free (filename_file);
