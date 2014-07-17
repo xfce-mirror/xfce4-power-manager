@@ -41,8 +41,11 @@
 #define EXIT_CODE_FAILED		1
 #define EXIT_CODE_ARGUMENTS_INVALID	3
 #define EXIT_CODE_INVALID_USER		4
+#define EXIT_CODE_NO_BRIGHTNESS_SWITCH	5
 
-#define BACKLIGHT_SYSFS_LOCATION			"/sys/class/backlight"
+#define BACKLIGHT_SYSFS_LOCATION	"/sys/class/backlight"
+#define BRIGHTNESS_SWITCH_LOCATION	"/sys/module/video/parameters/brightness_switch_enabled"
+
 
 /*
  * Find best backlight using an ordered interface list
@@ -160,6 +163,8 @@ main (gint argc, gchar *argv[])
 	gint set_brightness = -1;
 	gboolean get_brightness = FALSE;
 	gboolean get_max_brightness = FALSE;
+	gint set_brightness_switch = -1;
+	gboolean get_brightness_switch = FALSE;
 	gchar *filename = NULL;
 	gchar *filename_file = NULL;
 	gchar *contents = NULL;
@@ -174,7 +179,13 @@ main (gint argc, gchar *argv[])
 		{ "get-max-brightness", '\0', 0, G_OPTION_ARG_NONE, &get_max_brightness,
 		   /* command line argument */
 		  "Get the number of brightness levels supported", NULL },
-		{ NULL}
+		{ "set-brightness-switch", '\0', 0, G_OPTION_ARG_INT, &set_brightness_switch,
+                  /* command line argument */
+		  "Enable or disable ACPI video brightness switch handling", NULL },
+		{ "get-brightness-switch", '\0', 0, G_OPTION_ARG_NONE, &get_brightness_switch,
+                  /* command line argument */
+		  "Get the current setting of the ACPI video brightness switch handling", NULL },
+		{ NULL }
 	};
 
 	context = g_option_context_new (NULL);
@@ -184,17 +195,44 @@ main (gint argc, gchar *argv[])
 	g_option_context_free (context);
 
 	/* no input */
-	if (set_brightness == -1 && !get_brightness && !get_max_brightness) {
+	if (set_brightness == -1 && !get_brightness && !get_max_brightness &&
+	    set_brightness_switch == -1 && !get_brightness_switch) {
 		puts ("No valid option was specified");
 		retval = EXIT_CODE_ARGUMENTS_INVALID;
 		goto out;
 	}
 
-	/* find device */
-	filename = backlight_helper_get_best_backlight ();
-	if (filename == NULL) {
-		puts ("No backlights were found on your system");
-		retval = EXIT_CODE_INVALID_USER;
+	/* for brightness switch modifications, check for existence of the sysfs entry */
+	if (set_brightness_switch != -1 || get_brightness_switch) {
+		ret = g_file_test (BRIGHTNESS_SWITCH_LOCATION, G_FILE_TEST_EXISTS);
+		if (!ret) {
+			g_print ("Video brightness switch setting not available.\n");
+			retval = EXIT_CODE_NO_BRIGHTNESS_SWITCH;
+			goto out;
+		}
+	} else {  /* find backlight device */
+		filename = backlight_helper_get_best_backlight ();
+		if (filename == NULL) {
+			puts ("No backlights were found on your system");
+			retval = EXIT_CODE_INVALID_USER;
+			goto out;
+		}
+	}
+
+	/* get the current setting of the ACPI video brightness switch handling */
+	if (get_brightness_switch) {
+		ret = g_file_get_contents (BRIGHTNESS_SWITCH_LOCATION, &contents, NULL, &error);
+		if (!ret) {
+			g_print ("Could not get the value of the brightness switch: %s\n",
+				 error->message);
+			g_error_free (error);
+			retval = EXIT_CODE_ARGUMENTS_INVALID;
+			goto out;
+		}
+
+		/* just print the contents to stdout */
+		g_print ("%s", contents);
+		retval = EXIT_CODE_SUCCESS;
 		goto out;
 	}
 
@@ -255,6 +293,21 @@ main (gint argc, gchar *argv[])
 		ret = backlight_helper_write (filename_file, set_brightness, &error);
 		if (!ret) {
 			g_print ("Could not set the value of the backlight: %s\n", error->message);
+			g_error_free (error);
+			retval = EXIT_CODE_ARGUMENTS_INVALID;
+			goto out;
+		}
+		retval = EXIT_CODE_SUCCESS;
+		goto out;
+	}
+
+	/* enable or disable ACPI video brightness switch handling */
+	if (set_brightness_switch != -1) {
+		ret = backlight_helper_write (BRIGHTNESS_SWITCH_LOCATION,
+					      set_brightness_switch, &error);
+		if (!ret) {
+			g_print ("Could not set the value of the brightness switch: %s\n",
+				 error->message);
 			g_error_free (error);
 			retval = EXIT_CODE_ARGUMENTS_INVALID;
 			goto out;
