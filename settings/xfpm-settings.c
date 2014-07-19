@@ -147,6 +147,9 @@ gchar      *format_brightness_percentage_cb        (GtkScale *scale,
 						    gdouble value,
 						    gpointer data);
 
+void        brightness_handle_keys_toggled_cb      (GtkWidget *w,
+						    XfconfChannel *channel);
+
 void        brightness_on_battery_value_changed_cb (GtkWidget *w, 
 						    XfconfChannel *channel);
 
@@ -547,6 +550,17 @@ gchar *
 format_brightness_percentage_cb (GtkScale *scale, gdouble value, gpointer data)
 {
     return g_strdup_printf ("%d %s", (int)value, _("%"));
+}
+
+void
+brightness_handle_keys_toggled_cb (GtkWidget *w, XfconfChannel *channel)
+{
+    gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
+
+    if ( !xfconf_channel_set_bool (channel, PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS, val) )
+    {
+        g_critical ("Cannot set value for property %s\n", HANDLE_BRIGHTNESS_KEYS);
+    }
 }
 
 void
