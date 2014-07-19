@@ -65,7 +65,7 @@ G_BEGIN_DECLS
 
 #define     	CRITICAL_POWER_LEVEL        	"critical-power-level"
 #define     	SHOW_BRIGHTNESS_POPUP        	"show-brightness-popup"
-#define     	ENABLE_BRIGHTNESS_CONTROL       "change-brightness-on-key-events"
+#define     	HANDLE_BRIGHTNESS_KEYS          "handle-brightness-keys"
 
 #define 	SHOW_TRAY_ICON_CFG          	"show-tray-icon"
 #define 	CRITICAL_BATT_ACTION_CFG    	"critical-power-action"

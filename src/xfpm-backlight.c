@@ -200,19 +200,19 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
     gint32 level;
     gboolean ret = TRUE;
     
-    gboolean enable_brightness, show_popup;
+    gboolean handle_brightness_keys, show_popup;
     
     g_object_get (G_OBJECT (backlight->priv->conf),
-                  ENABLE_BRIGHTNESS_CONTROL, &enable_brightness,
-		  SHOW_BRIGHTNESS_POPUP, &show_popup,
+                  HANDLE_BRIGHTNESS_KEYS, &handle_brightness_keys,
+                  SHOW_BRIGHTNESS_POPUP, &show_popup,
                   NULL);
     
     if ( type != BUTTON_MON_BRIGHTNESS_UP && type != BUTTON_MON_BRIGHTNESS_DOWN )
 	return; /* sanity check, can this ever happen? */
 
     backlight->priv->block = TRUE;
-    if ( !enable_brightness )
-	ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
+    if ( !handle_brightness_keys )
+        ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
     else
     {
 	if ( type == BUTTON_MON_BRIGHTNESS_UP )

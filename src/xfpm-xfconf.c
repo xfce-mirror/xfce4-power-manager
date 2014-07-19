@@ -60,7 +60,7 @@ enum
     PROP_ENABLE_CPU_FREQ,
     PROP_CRITICAL_LEVEL,
     PROP_SHOW_BRIGHTNESS_POPUP,
-    PROP_ENABLE_BRIGHTNESS,
+    PROP_HANDLE_BRIGHTNESS_KEYS,
     PROP_TRAY_ICON,
     PROP_CRITICAL_BATTERY_ACTION,
     PROP_POWER_BUTTON,
@@ -284,11 +284,11 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            G_PARAM_READWRITE));
     
     /**
-     * XfpmXfconf::show-brightness-popup
+     * XfpmXfconf::handle-brightness-keys
      **/
     g_object_class_install_property (object_class,
-                                     PROP_ENABLE_BRIGHTNESS,
-                                     g_param_spec_boolean (ENABLE_BRIGHTNESS_CONTROL,
+                                     PROP_HANDLE_BRIGHTNESS_KEYS,
+                                     g_param_spec_boolean (HANDLE_BRIGHTNESS_KEYS,
                                                            NULL, NULL,
                                                            TRUE,
                                                            G_PARAM_READWRITE));
