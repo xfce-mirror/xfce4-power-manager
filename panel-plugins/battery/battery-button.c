@@ -832,7 +832,7 @@ range_show_cb (GtkWidget *widget, BatteryButton *button)
 static void
 battery_button_show_menu (BatteryButton *button)
 {
-    GtkWidget *menu, *mi, *hbox, *img = NULL;
+    GtkWidget *menu, *mi, *vbox, *hbox, *img = NULL, *label;
     GdkScreen *gscreen;
     GList *item;
     gboolean show_separator_flag = FALSE;
@@ -871,10 +871,6 @@ battery_button_show_menu (BatteryButton *button)
     {
         GdkPixbuf *pix;
 
-        mi = gtk_menu_item_new_with_label (_("Display Brightness"));
-        gtk_widget_show(mi);
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
-
         mi = gtk_image_menu_item_new ();
         /* attempt to load and display the brightness icon */
         pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
@@ -888,14 +884,19 @@ battery_button_show_menu (BatteryButton *button)
             gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM(mi), img);
         }
 
+        vbox = gtk_vbox_new (FALSE, 2);
         hbox = gtk_hbox_new (FALSE, 2);
-        gtk_container_add (GTK_CONTAINER (mi), hbox);
+
+        /* Make a display brightness label and place it above the
+         * brightness slider */
+        label = gtk_label_new (_("Display Brightness"));
+        /* align left */
+        gtk_misc_set_alignment (GTK_MISC(label), 0, 0);
 
         max_level = xfpm_brightness_get_max_level (button->priv->brightness);
 
         /* range slider */
         button->priv->range = gtk_hscale_new_with_range (0, max_level, 1);
-        g_object_ref_sink (button->priv->range);
         gtk_widget_set_size_request (button->priv->range, 100, -1);
         gtk_range_set_inverted (GTK_RANGE(button->priv->range), FALSE);
         gtk_scale_set_draw_value (GTK_SCALE(button->priv->range), FALSE);
@@ -908,8 +909,13 @@ battery_button_show_menu (BatteryButton *button)
         g_signal_connect (mi, "scroll-event", G_CALLBACK (range_scroll_cb), button);
         g_signal_connect (menu, "show", G_CALLBACK (range_show_cb), button);
 
-        /* pack the brightness slider into the menu */
+        /* pack the label and slider */
+        gtk_box_pack_start (GTK_BOX(vbox), label, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
+        /* pack in the brightness slider */
         gtk_box_pack_start (GTK_BOX(hbox), button->priv->range, TRUE, TRUE, 0);
+        /* add it to the menu */
+        gtk_container_add (GTK_CONTAINER (mi), vbox);
         gtk_widget_show_all (mi);
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
     }
