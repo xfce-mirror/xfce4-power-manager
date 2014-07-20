@@ -36,6 +36,7 @@
 #include "common/xfpm-common.h"
 #include "common/xfpm-icons.h"
 #include "common/xfpm-power-common.h"
+#include "common/xfpm-brightness.h"
 
 #include "battery-button.h"
 
@@ -70,6 +71,11 @@ struct BatteryButtonPrivate
     /* Upower 0.99 has a display device that can be used for the
      * panel image and tooltip description */
     UpDevice        *display_device;
+
+    XfpmBrightness  *brightness;
+
+    /* display brightness slider widget */
+    GtkWidget       *range;
 };
 
 typedef struct
@@ -90,6 +96,9 @@ static gboolean battery_button_set_icon (BatteryButton *button);
 static gboolean battery_button_press_event (GtkWidget *widget, GdkEventButton *event);
 static void battery_button_show_menu (BatteryButton *button);
 static void battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_device, gboolean append);
+static void increase_brightness (BatteryButton *button);
+static void decrease_brightness (BatteryButton *button);
+
 
 
 static BatteryDevice*
@@ -382,6 +391,59 @@ battery_button_add_all_devices (BatteryButton *button)
 }
 
 static void
+brightness_up (BatteryButton *button)
+{
+    gint32 level;
+    gint32 max_level;
+
+    xfpm_brightness_get_level (button->priv->brightness, &level);
+    max_level = xfpm_brightness_get_max_level (button->priv->brightness);
+
+    if ( level < max_level )
+    {
+        increase_brightness (button);
+    }
+}
+
+static void
+brightness_down (BatteryButton *button)
+{
+    gint32 level;
+    xfpm_brightness_get_level (button->priv->brightness, &level);
+
+    if ( level > 0 )
+    {
+        decrease_brightness (button);
+    }
+}
+
+static gboolean
+battery_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
+{
+    gboolean hw_found;
+    BatteryButton *button;
+
+    button = BATTERY_BUTTON (widget);
+
+    hw_found = xfpm_brightness_has_hw (button->priv->brightness);
+
+    if ( !hw_found )
+        return FALSE;
+
+    if ( ev->direction == GDK_SCROLL_UP )
+    {
+        brightness_up (button);
+        return TRUE;
+    }
+    else if ( ev->direction == GDK_SCROLL_DOWN )
+    {
+        brightness_down (button);
+        return TRUE;
+    }
+    return FALSE;
+}
+
+static void
 battery_button_class_init (BatteryButtonClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
@@ -390,6 +452,7 @@ battery_button_class_init (BatteryButtonClass *klass)
     object_class->finalize = battery_button_finalize;
 
     widget_class->button_press_event = battery_button_press_event;
+    widget_class->scroll_event = battery_button_scroll_event;
 
     g_type_class_add_private (klass, sizeof (BatteryButtonPrivate));
 }
@@ -402,6 +465,9 @@ battery_button_init (BatteryButton *button)
     button->priv = BATTERY_BUTTON_GET_PRIVATE (button);
 
     gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+
+    button->priv->brightness = xfpm_brightness_new ();
+    xfpm_brightness_setup (button->priv->brightness);
 
     button->priv->upower  = up_client_new ();
     if ( !xfconf_init (&error) )
@@ -592,7 +658,12 @@ menu_destroyed_cb(GtkMenuShell *menu, gpointer user_data)
 
     TRACE("entering");
 
+    /* menu destroyed, range slider is gone */
+    button->priv->range = NULL;
+
+    /* untoggle panel icon */
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), FALSE);
+
     button->priv->menu = NULL;
 }
 
@@ -675,12 +746,97 @@ battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_de
 }
 
 static void
+decrease_brightness (BatteryButton *button)
+{
+    gint32 level;
+
+    TRACE("entering");
+
+    if ( !xfpm_brightness_has_hw (button->priv->brightness) )
+        return;
+
+    xfpm_brightness_get_level (button->priv->brightness, &level);
+
+    if ( level > 0 )
+    {
+        xfpm_brightness_down (button->priv->brightness, &level);
+        if (button->priv->range)
+            gtk_range_set_value (GTK_RANGE (button->priv->range), level);
+    }
+}
+
+static void
+increase_brightness (BatteryButton *button)
+{
+    gint32 level, max_level;
+
+    TRACE("entering");
+
+    if ( !xfpm_brightness_has_hw (button->priv->brightness) )
+        return;
+
+    max_level = xfpm_brightness_get_max_level (button->priv->brightness);
+    xfpm_brightness_get_level (button->priv->brightness, &level);
+
+    if ( level < max_level )
+    {
+        xfpm_brightness_up (button->priv->brightness, &level);
+        if (button->priv->range)
+            gtk_range_set_value (GTK_RANGE (button->priv->range), level);
+    }
+}
+
+static void
+range_value_changed_cb (GtkWidget *widget, BatteryButton *button)
+{
+    gint32 range_level, hw_level;
+
+    TRACE("entering");
+
+    range_level = (gint32) gtk_range_get_value (GTK_RANGE (button->priv->range));
+
+    xfpm_brightness_get_level (button->priv->brightness, &hw_level);
+
+    if ( hw_level != range_level )
+    {
+        xfpm_brightness_set_level (button->priv->brightness, range_level);
+    }
+}
+
+static void
+range_scroll_cb (GtkWidget *widget, GdkEvent *event, BatteryButton *button)
+{
+    GdkEventScroll *scroll_event;
+
+    TRACE("entering");
+
+    scroll_event = (GdkEventScroll*)event;
+
+    if (scroll_event->direction == GDK_SCROLL_UP)
+        increase_brightness (button);
+    else if (scroll_event->direction == GDK_SCROLL_DOWN)
+        decrease_brightness (button);
+}
+
+static void
+range_show_cb (GtkWidget *widget, BatteryButton *button)
+{
+    TRACE("entering");
+    /* Release these grabs they will cause a lockup if pkexec is called
+     * for the brightness helper */
+    gdk_pointer_ungrab(GDK_CURRENT_TIME);
+    gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+    gtk_grab_remove(widget);
+}
+
+static void
 battery_button_show_menu (BatteryButton *button)
 {
-    GtkWidget *menu, *mi;
+    GtkWidget *menu, *mi, *hbox, *img = NULL;
     GdkScreen *gscreen;
     GList *item;
     gboolean show_separator_flag = FALSE;
+    gint32 max_level, current_level = 0;
 
     if(gtk_widget_has_screen(GTK_WIDGET(button)))
         gscreen = gtk_widget_get_screen(GTK_WIDGET(button));
@@ -707,6 +863,54 @@ battery_button_show_menu (BatteryButton *button)
         /* separator */
         mi = gtk_separator_menu_item_new();
         gtk_widget_show(mi);
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    }
+
+    /* Display brightness slider - show if there's hardware support for it */
+    if ( xfpm_brightness_has_hw (button->priv->brightness) )
+    {
+        GdkPixbuf *pix;
+
+        mi = gtk_menu_item_new_with_label (_("Display Brightness"));
+        gtk_widget_show(mi);
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+
+        mi = gtk_image_menu_item_new ();
+        /* attempt to load and display the brightness icon */
+        pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                       XFPM_DISPLAY_BRIGHTNESS_ICON,
+                                       button->priv->panel_icon_width,
+                                       GTK_ICON_LOOKUP_FORCE_SIZE,
+                                       NULL);
+        if (pix)
+        {
+            img = gtk_image_new_from_pixbuf (pix);
+            gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM(mi), img);
+        }
+
+        hbox = gtk_hbox_new (FALSE, 2);
+        gtk_container_add (GTK_CONTAINER (mi), hbox);
+
+        max_level = xfpm_brightness_get_max_level (button->priv->brightness);
+
+        /* range slider */
+        button->priv->range = gtk_hscale_new_with_range (0, max_level, 1);
+        g_object_ref_sink (button->priv->range);
+        gtk_widget_set_size_request (button->priv->range, 100, -1);
+        gtk_range_set_inverted (GTK_RANGE(button->priv->range), FALSE);
+        gtk_scale_set_draw_value (GTK_SCALE(button->priv->range), FALSE);
+        gtk_widget_set_can_focus (button->priv->range, TRUE);
+
+        /* update the slider to the current brightness level */
+        xfpm_brightness_get_level (button->priv->brightness, &current_level);
+        gtk_range_set_value (GTK_RANGE(button->priv->range), current_level);
+        g_signal_connect (button->priv->range, "value-changed", G_CALLBACK (range_value_changed_cb), button);
+        g_signal_connect (mi, "scroll-event", G_CALLBACK (range_scroll_cb), button);
+        g_signal_connect (menu, "show", G_CALLBACK (range_show_cb), button);
+
+        /* pack the brightness slider into the menu */
+        gtk_box_pack_start (GTK_BOX(hbox), button->priv->range, TRUE, TRUE, 0);
+        gtk_widget_show_all (mi);
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
     }
 
