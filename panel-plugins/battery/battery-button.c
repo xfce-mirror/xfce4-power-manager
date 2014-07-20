@@ -930,7 +930,7 @@ battery_button_show_menu (BatteryButton *button)
                            G_TYPE_BOOLEAN, G_OBJECT(mi), "active");
 
     /* Power manager settings */
-    mi = gtk_menu_item_new_with_mnemonic (_("_Power manager..."));
+    mi = gtk_menu_item_new_with_mnemonic (_("_Power manager settings"));
     gtk_widget_show(mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
     g_signal_connect(G_OBJECT(mi), "activate", G_CALLBACK(xfpm_preferences), NULL);
