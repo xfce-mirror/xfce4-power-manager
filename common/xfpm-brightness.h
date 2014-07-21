@@ -68,6 +68,12 @@ gboolean			xfpm_brightness_set_level	(XfpmBrightness *brightness,
 
 gboolean			xfpm_brightness_dim_down	(XfpmBrightness *brightness);
 
+gboolean			xfpm_brightness_get_switch	(XfpmBrightness *brightness,
+												 gint *brightness_switch);
+
+gboolean			xfpm_brightness_set_switch	(XfpmBrightness *brightness,
+												 gint brightness_switch);
+
 G_END_DECLS
 
 #endif /* __XFPM_BRIGHTNESS_H */

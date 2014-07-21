@@ -333,7 +333,12 @@ xfpm_brightness_helper_get_value (const gchar *argument)
     if ( exit_status != 0 )
 	goto out;
 
-    value = atoi (stdout_data);
+    if ( stdout_data[0] == 'N' )
+        value = 0;
+    else if ( stdout_data[0] == 'Y' )
+        value = 1;
+    else
+        value = atoi (stdout_data);
 
 out:
     g_free (command);
@@ -394,6 +399,46 @@ xfpm_brightness_helper_set_level (XfpmBrightness *brg, gint32 level)
     if ( !ret )
     {
 	g_warning ("xfpm_brightness_helper_set_level: failed to set value: %s", error->message);
+	g_error_free (error);
+	goto out;
+    }
+    g_debug ("executed %s; retval: %i", command, exit_status);
+    ret = (exit_status == 0);
+
+out:
+    g_free (command);
+    return ret;
+}
+
+static gboolean
+xfpm_brightness_helper_get_switch (XfpmBrightness *brg, gint *brightness_switch)
+{
+    gint ret;
+
+    ret = xfpm_brightness_helper_get_value ("get-brightness-switch");
+
+    if ( ret >= 0 )
+    {
+	*brightness_switch = ret;
+	return TRUE;
+    }
+
+    return FALSE;
+}
+
+static gboolean
+xfpm_brightness_helper_set_switch (XfpmBrightness *brg, gint brightness_switch)
+{
+    gboolean ret;
+    GError *error = NULL;
+    gint exit_status = 0;
+    gchar *command = NULL;
+
+    command = g_strdup_printf ("pkexec " SBINDIR "/xfpm-power-backlight-helper --set-brightness-switch %i", brightness_switch);
+    ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
+    if ( !ret )
+    {
+	g_warning ("xfpm_brightness_helper_set_switch: failed to set value: %s", error->message);
 	g_error_free (error);
 	goto out;
     }
@@ -657,5 +702,29 @@ gboolean xfpm_brightness_dim_down (XfpmBrightness *brightness)
 	ret = xfpm_brightness_helper_set_level (brightness, brightness->priv->min_level);
 #endif
     
+    return ret;
+}
+
+gboolean xfpm_brightness_get_switch (XfpmBrightness *brightness, gint *brightness_switch)
+{
+    gboolean ret = FALSE;
+
+#ifdef ENABLE_POLKIT
+    if ( brightness->priv->helper_has_hw )
+    ret = xfpm_brightness_helper_get_switch (brightness, brightness_switch);
+#endif
+
+    return ret;
+}
+
+gboolean xfpm_brightness_set_switch (XfpmBrightness *brightness, gint brightness_switch)
+{
+    gboolean ret = FALSE;
+
+#ifdef ENABLE_POLKIT
+    if ( brightness->priv->helper_has_hw )
+	ret = xfpm_brightness_helper_set_switch (brightness, brightness_switch);
+#endif
+
     return ret;
 }
