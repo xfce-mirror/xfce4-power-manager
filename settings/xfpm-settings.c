@@ -1202,6 +1202,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *lock;
     GtkWidget *label;
     GtkWidget *sleep_mode;
+    GtkWidget *brg_handle_keys;
 
     gchar *list_str;
     gboolean valid;
@@ -1304,6 +1305,13 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(lock), val);
+
+    /*
+     * Handle brightness keys
+     */
+    brg_handle_keys = GTK_WIDGET (gtk_builder_get_object (xml, "enable-brg-keys"));
+    val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS, TRUE);
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(brg_handle_keys), val);
 }
 
 /* Call gtk_tree_iter_free when done with the tree iter */
