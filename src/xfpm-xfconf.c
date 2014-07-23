@@ -193,6 +193,10 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
          g_strcmp0 (property, "/xfce4-power-manager/blank-on-battery") == 0)
         return;
 
+    /* We handle brightness switch in xfpm-backlight directly */
+    if ( g_strcmp0 (property, PROPERTIES_PREFIX BRIGHTNESS_SWITCH) == 0 )
+        return;
+
     XFPM_DEBUG ("Property modified: %s\n", property);
     
     g_object_set_property (G_OBJECT (conf), property + strlen (PROPERTIES_PREFIX), value);

@@ -67,6 +67,8 @@ G_BEGIN_DECLS
 #define     	SHOW_BRIGHTNESS_POPUP        	"show-brightness-popup"
 #define     	HANDLE_BRIGHTNESS_KEYS          "handle-brightness-keys"
 
+#define     	BRIGHTNESS_SWITCH        	"brightness-switch"
+
 #define 	SHOW_TRAY_ICON_CFG          	"show-tray-icon"
 #define 	CRITICAL_BATT_ACTION_CFG    	"critical-power-action"
 

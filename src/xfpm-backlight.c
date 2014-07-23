@@ -49,6 +49,16 @@
 
 static void xfpm_backlight_finalize     (GObject *object);
 
+static void xfpm_backlight_get_property (GObject *object,
+                                         guint prop_id,
+                                         GValue *value,
+                                         GParamSpec *pspec);
+
+static void xfpm_backlight_set_property (GObject *object,
+                                         guint prop_id,
+                                         const GValue *value,
+                                         GParamSpec *pspec);
+
 #define ALARM_DISABLED 9
 
 #define XFPM_BACKLIGHT_GET_PRIVATE(o) \
@@ -71,11 +81,21 @@ struct XfpmBacklightPrivate
     gint32          last_level;
     gint32 	    max_level;
     
+    gint            brightness_switch;
+
     gboolean        dimmed;
     gboolean	    block;
 };
 
+enum
+{
+    PROP_0,
+    PROP_BRIGHTNESS_SWITCH,
+    N_PROPERTIES
+};
+
 G_DEFINE_TYPE (XfpmBacklight, xfpm_backlight, G_TYPE_OBJECT)
+
 
 static void
 xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
@@ -285,7 +305,18 @@ xfpm_backlight_class_init (XfpmBacklightClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+    object_class->get_property = xfpm_backlight_get_property;
+    object_class->set_property = xfpm_backlight_set_property;
     object_class->finalize = xfpm_backlight_finalize;
+
+    g_object_class_install_property (object_class,
+                                     PROP_BRIGHTNESS_SWITCH,
+                                     g_param_spec_int (BRIGHTNESS_SWITCH,
+                                                       NULL, NULL,
+                                                       -1,
+                                                       1,
+                                                       -1,
+                                                       G_PARAM_READWRITE));
 
     g_type_class_add_private (klass, sizeof (XfpmBacklightPrivate));
 }
@@ -319,6 +350,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 	backlight->priv->power    = xfpm_power_get ();
 	backlight->priv->notify = xfpm_notify_new ();
 	backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
+
 	g_signal_connect (backlight->priv->idle, "alarm-expired",
                           G_CALLBACK (xfpm_backlight_alarm_timeout_cb), backlight);
         
@@ -341,6 +373,54 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 		      NULL);
 	xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
 	xfpm_backlight_set_timeouts (backlight);
+    }
+}
+
+static void
+xfpm_backlight_get_property (GObject *object,
+                             guint prop_id,
+                             GValue *value,
+                             GParamSpec *pspec)
+{
+    XfpmBacklight *backlight = XFPM_BACKLIGHT (object);
+
+    switch (prop_id)
+    {
+    case PROP_BRIGHTNESS_SWITCH:
+        g_value_set_int (value, backlight->priv->brightness_switch);
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+        break;
+    }
+}
+
+static void
+xfpm_backlight_set_property (GObject *object,
+                             guint prop_id,
+                             const GValue *value,
+                             GParamSpec *pspec)
+{
+    XfpmBacklight *backlight = XFPM_BACKLIGHT (object);
+    gboolean ret;
+
+    switch (prop_id)
+    {
+	case PROP_BRIGHTNESS_SWITCH:
+        backlight->priv->brightness_switch = g_value_get_int (value);
+        ret = xfpm_brightness_set_switch (backlight->priv->brightness,
+                                          backlight->priv->brightness_switch);
+        if (!ret)
+            g_warning ("Unable to set the kernel brightness switch parameter to %d.",
+                       backlight->priv->brightness_switch);
+        else
+            g_message ("Set kernel brightness switch to %d",
+                       backlight->priv->brightness_switch);
+
+	    break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+        break;
     }
 }
 
