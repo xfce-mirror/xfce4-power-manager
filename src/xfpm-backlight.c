@@ -357,12 +357,29 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     }
     else
     {
+	gboolean ret;
+
 	backlight->priv->idle   = egg_idletime_new ();
 	backlight->priv->conf   = xfpm_xfconf_new ();
 	backlight->priv->button = xfpm_button_new ();
 	backlight->priv->power    = xfpm_power_get ();
 	backlight->priv->notify = xfpm_notify_new ();
 	backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
+	backlight->priv->brightness_switch = -1;
+
+	xfconf_g_property_bind (xfpm_xfconf_get_channel(backlight->priv->conf),
+							PROPERTIES_PREFIX BRIGHTNESS_SWITCH, G_TYPE_INT,
+							G_OBJECT(backlight), BRIGHTNESS_SWITCH);
+
+	ret = xfpm_brightness_get_switch (backlight->priv->brightness,
+									  &backlight->priv->brightness_switch);
+
+	if (ret)
+	g_object_set (G_OBJECT (backlight),
+				  BRIGHTNESS_SWITCH,
+				  backlight->priv->brightness_switch,
+				  NULL);
+	backlight->priv->brightness_switch_initialized = TRUE;
 
 	g_signal_connect (backlight->priv->idle, "alarm-expired",
                           G_CALLBACK (xfpm_backlight_alarm_timeout_cb), backlight);
