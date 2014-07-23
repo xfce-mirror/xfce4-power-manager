@@ -83,6 +83,7 @@ struct XfpmBacklightPrivate
     
     gint            brightness_switch;
     gint            brightness_switch_save;
+    gboolean        brightness_switch_initialized;
 
     gboolean        dimmed;
     gboolean	    block;
@@ -347,6 +348,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->power    = NULL;
     backlight->priv->dimmed = FALSE;
     backlight->priv->block = FALSE;
+    backlight->priv->brightness_switch_initialized = FALSE;
     
     if ( !backlight->priv->has_hw )
     {
@@ -422,6 +424,8 @@ xfpm_backlight_set_property (GObject *object,
     {
 	case PROP_BRIGHTNESS_SWITCH:
         backlight->priv->brightness_switch = g_value_get_int (value);
+        if (!backlight->priv->brightness_switch_initialized)
+            break;
         ret = xfpm_brightness_set_switch (backlight->priv->brightness,
                                           backlight->priv->brightness_switch);
         if (!ret)
