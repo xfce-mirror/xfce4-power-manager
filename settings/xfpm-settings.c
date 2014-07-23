@@ -40,6 +40,7 @@
 #include "xfpm-debug.h"
 #include "xfpm-power-common.h"
 #include "xfpm-power.h"
+#include "xfpm-backlight.h"
 
 #include "interfaces/xfpm-settings_ui.h"
 
@@ -561,6 +562,10 @@ brightness_handle_keys_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     {
         g_critical ("Cannot set value for property %s\n", HANDLE_BRIGHTNESS_KEYS);
     }
+    if ( !xfconf_channel_set_int (channel, PROPERTIES_PREFIX BRIGHTNESS_SWITCH, !val) )
+    {
+        g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH);
+    }
 }
 
 void
@@ -847,12 +852,12 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     {
     brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery"));
     brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery"));
+
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
     gtk_range_set_value (GTK_RANGE(brg), val);
 
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, 20);
     gtk_range_set_value (GTK_RANGE (brg_level), val);
-
     }
     else
     {
