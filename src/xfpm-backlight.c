@@ -357,7 +357,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     }
     else
     {
-	gboolean ret;
+	gboolean ret, handle_keys;
 
 	backlight->priv->idle   = egg_idletime_new ();
 	backlight->priv->conf   = xfpm_xfconf_new ();
@@ -380,6 +380,16 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 				  backlight->priv->brightness_switch,
 				  NULL);
 	backlight->priv->brightness_switch_initialized = TRUE;
+
+    /* check whether to change the brightness switch */
+	handle_keys = xfconf_channel_get_bool (xfpm_xfconf_get_channel(backlight->priv->conf),
+										   PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
+										   TRUE);
+	backlight->priv->brightness_switch = handle_keys ? 0 : 1;
+	g_object_set (G_OBJECT (backlight),
+				  BRIGHTNESS_SWITCH,
+				  backlight->priv->brightness_switch,
+				  NULL);
 
 	g_signal_connect (backlight->priv->idle, "alarm-expired",
                           G_CALLBACK (xfpm_backlight_alarm_timeout_cb), backlight);
