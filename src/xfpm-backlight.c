@@ -381,6 +381,33 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 				  NULL);
 	backlight->priv->brightness_switch_initialized = TRUE;
 
+	/*
+	 * If power manager has crashed last time, the brightness switch
+	 * saved value will be set to the original value. In that case, we
+	 * will use this saved value instead of the one found at the
+	 * current startup so the setting is restored properly.
+	 */
+	backlight->priv->brightness_switch_save =
+		xfconf_channel_get_int (xfpm_xfconf_get_channel(backlight->priv->conf),
+								PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
+								-1);
+
+	if (backlight->priv->brightness_switch_save == -1)
+	{
+	if (!xfconf_channel_set_int (xfpm_xfconf_get_channel(backlight->priv->conf),
+								 PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
+								 backlight->priv->brightness_switch))
+	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH_SAVE);
+
+	backlight->priv->brightness_switch_save = backlight->priv->brightness_switch;
+	}
+	else
+	{
+	g_warning ("It seems the kernel brightness switch handling value was "
+			   "not restored properly on exit last time, xfce4-power-manager "
+			   "will try to restore it this time.");
+	}
+
     /* check whether to change the brightness switch */
 	handle_keys = xfconf_channel_get_bool (xfpm_xfconf_get_channel(backlight->priv->conf),
 										   PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
@@ -481,14 +508,37 @@ xfpm_backlight_finalize (GObject *object)
 
     xfpm_backlight_destroy_popup (backlight);
 
-    if ( backlight->priv->brightness )
-	g_object_unref (backlight->priv->brightness);
-
     if ( backlight->priv->idle )
 	g_object_unref (backlight->priv->idle);
 
     if ( backlight->priv->conf )
-	g_object_unref (backlight->priv->conf);
+    {
+    /* restore video module brightness switch setting */
+    if ( backlight->priv->brightness_switch_save != -1 )
+    {
+    gboolean ret =
+        xfpm_brightness_set_switch (backlight->priv->brightness,
+                                    backlight->priv->brightness_switch_save);
+    /* unset the xfconf saved value after the restore */
+    if (!xfconf_channel_set_int (xfpm_xfconf_get_channel(backlight->priv->conf),
+                                 PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE, -1))
+    g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH_SAVE);
+
+    if (ret)
+    {
+    backlight->priv->brightness_switch = backlight->priv->brightness_switch_save;
+    g_message ("Restored brightness switch value to: %d", backlight->priv->brightness_switch);
+    }
+    else
+    g_warning ("Unable to restore the kernel brightness switch parameter to its original value, "
+               "still resetting the saved value.");
+    }
+
+    g_object_unref (backlight->priv->conf);
+    }
+
+    if ( backlight->priv->brightness )
+	g_object_unref (backlight->priv->brightness);
 
     if ( backlight->priv->button )
 	g_object_unref (backlight->priv->button);
