@@ -82,6 +82,7 @@ struct XfpmBacklightPrivate
     gint32 	    max_level;
     
     gint            brightness_switch;
+    gint            brightness_switch_save;
 
     gboolean        dimmed;
     gboolean	    block;
@@ -91,6 +92,7 @@ enum
 {
     PROP_0,
     PROP_BRIGHTNESS_SWITCH,
+    PROP_BRIGHTNESS_SWITCH_SAVE,
     N_PROPERTIES
 };
 
@@ -318,6 +320,15 @@ xfpm_backlight_class_init (XfpmBacklightClass *klass)
                                                        -1,
                                                        G_PARAM_READWRITE));
 
+    g_object_class_install_property (object_class,
+                                     PROP_BRIGHTNESS_SWITCH_SAVE,
+                                     g_param_spec_int (BRIGHTNESS_SWITCH_SAVE,
+                                                       NULL, NULL,
+                                                       -1,
+                                                       1,
+                                                       -1,
+                                                       G_PARAM_READWRITE));
+
     g_type_class_add_private (klass, sizeof (XfpmBacklightPrivate));
 }
 
@@ -389,6 +400,9 @@ xfpm_backlight_get_property (GObject *object,
     case PROP_BRIGHTNESS_SWITCH:
         g_value_set_int (value, backlight->priv->brightness_switch);
         break;
+    case PROP_BRIGHTNESS_SWITCH_SAVE:
+        g_value_set_int (value, backlight->priv->brightness_switch_save);
+        break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
         break;
@@ -418,6 +432,9 @@ xfpm_backlight_set_property (GObject *object,
                        backlight->priv->brightness_switch);
 
 	    break;
+	case PROP_BRIGHTNESS_SWITCH_SAVE:
+        backlight->priv->brightness_switch_save = g_value_get_int (value);
+        break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
         break;

@@ -194,7 +194,8 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
         return;
 
     /* We handle brightness switch in xfpm-backlight directly */
-    if ( g_strcmp0 (property, PROPERTIES_PREFIX BRIGHTNESS_SWITCH) == 0 )
+    if ( g_strcmp0 (property, PROPERTIES_PREFIX BRIGHTNESS_SWITCH) == 0 ||
+         g_strcmp0 (property, PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE) == 0 )
         return;
 
     XFPM_DEBUG ("Property modified: %s\n", property);
