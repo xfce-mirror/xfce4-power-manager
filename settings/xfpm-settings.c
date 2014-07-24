@@ -796,7 +796,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Lid switch settings on battery
      */
-    lid = GTK_WIDGET (gtk_builder_get_object (xml, "on-battery-lid"));
+    lid = GTK_WIDGET (gtk_builder_get_object (xml, "lid-on-battery-combo"));
     if ( has_lid )
     {
 	list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
@@ -840,7 +840,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     }
     else
     {
-	label = GTK_WIDGET (gtk_builder_get_object (xml, "on-battery-lid-label"));
+	label = GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label"));
 	gtk_widget_hide (label);
 	gtk_widget_hide (lid);
     }
@@ -874,6 +874,8 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 {
     GtkWidget *inact;
     GtkWidget *lid;
+    GtkWidget *label;
+    GtkWidget *frame;
     GtkWidget *brg;
     GtkWidget *brg_level;
     GtkListStore *list_store;
@@ -915,7 +917,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Lid switch settings on AC power
      */
-    lid = GTK_WIDGET (gtk_builder_get_object (xml, "on-ac-lid"));
+    lid = GTK_WIDGET (gtk_builder_get_object (xml, "lid-on-ac-combo"));
     if ( has_lid )
     {
 	list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
@@ -958,10 +960,11 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     }
     else
     {
-	GtkWidget *label;
-	label = GTK_WIDGET (gtk_builder_get_object (xml, "on-ac-lid-label"));
+	label = GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label"));
+	frame = GTK_WIDGET (gtk_builder_get_object (xml, "frame-laptop-lid"));
 	gtk_widget_hide (label);
 	gtk_widget_hide (lid);
+	gtk_widget_hide (frame);
     }
     
 	/*
@@ -2001,8 +2004,9 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system_onbattery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system_pluggedin")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"inactivity-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"on-battery-lid")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"on-battery-lid-label")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-label")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-combo")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-ac-label")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"blank-on-battery")));
     }
     
