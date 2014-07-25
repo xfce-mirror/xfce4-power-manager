@@ -241,7 +241,7 @@
                                   <object class="GtkComboBox" id="system-sleep-mode-on-battery">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <signal name="changed" handler="on_sleep_mode_changed_cb" swapped="no"/>
+                                    <signal name="changed" handler="on_battery_sleep_mode_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer8"/>
                                       <attributes>
@@ -260,6 +260,7 @@
                                   <object class="GtkComboBox" id="system-sleep-mode-on-ac">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <signal name="changed" handler="on_ac_sleep_mode_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer2"/>
                                       <attributes>
