@@ -932,11 +932,10 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Brightness on battery
      */
-    if ( has_lcd_brightness )
-    {
     brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery"));
     brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery"));
-
+    if ( has_lcd_brightness )
+    {
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
     gtk_range_set_value (GTK_RANGE(brg), val);
 
@@ -945,7 +944,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     }
     else
     {
-    gtk_widget_hide (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), 3));
+    gtk_widget_hide (brg);
+    gtk_widget_hide (brg_level);
     }
 
 }
@@ -1111,10 +1111,10 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	/*
 	 * Brightness on AC power
 	 */
-	if ( has_lcd_brightness )
-	{
 	brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-ac"));
 	brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-ac"));
+	if ( has_lcd_brightness )
+	{
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
 	gtk_range_set_value (GTK_RANGE(brg), val);
 
@@ -1124,7 +1124,8 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	}
 	else
 	{
-	gtk_widget_hide (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), 3));
+	gtk_widget_hide (brg);
+	gtk_widget_hide (brg_level);
 	}
 
 }
@@ -1957,6 +1958,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *plugged_box;
     GtkWidget *viewport;
     GtkWidget *hbox;
+    GtkWidget *frame;
     GtkWidget *on_battery_blank, *on_ac_blank;
     GtkListStore *list_store;
     GtkTreeViewColumn *col;
@@ -2097,6 +2099,12 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                            has_sleep_button, has_hibernate_button, has_power_button );
 
     xfpm_settings_advanced (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, has_battery);
+
+    if ( !has_lcd_brightness )
+    {
+    frame = GTK_WIDGET (gtk_builder_get_object (xml, "frame-brightness"));
+    gtk_widget_hide (frame);
+    }
 
     if ( id != 0 )
     {
