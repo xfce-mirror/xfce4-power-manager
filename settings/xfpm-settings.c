@@ -331,7 +331,7 @@ on_ac_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
     GtkTreeModel     *model;
     GtkTreeIter       selected_row;
-    gchar *value = "";
+    guint value = 0;
 
     if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
     return;
@@ -340,13 +340,13 @@ on_ac_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
     gtk_tree_model_get(model,
                        &selected_row,
-                       0,
+                       1,
                        &value,
                        -1);
 
-    if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC, value) )
+    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC, value) )
     {
-    g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_AC);
+	g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_AC);
     }
 }
 
@@ -355,7 +355,7 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
     GtkTreeModel     *model;
     GtkTreeIter       selected_row;
-    gchar *value = "";
+    guint value = 0;
 
     if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
     return;
@@ -364,13 +364,13 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
     gtk_tree_model_get(model,
                        &selected_row,
-                       0,
+                       1,
                        &value,
                        -1);
 
-    if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY, value) )
+    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY, value) )
     {
-    g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_BATTERY);
+	g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_BATTERY);
     }
 }
 
@@ -732,8 +732,6 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gboolean valid;
     gint list_value;
     gint val;
-    gchar *str;
-    gchar *list_str;
     GtkListStore *list_store;
     GtkTreeIter iter;
     GtkWidget *inact_timeout, *inact_action;
@@ -753,7 +751,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     if ( can_suspend )
     {
     gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), -1);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
     }
     else if ( !auth_suspend )
     {
@@ -767,7 +765,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     if ( can_hibernate )
     {
     gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), -1);
+    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
     }
     else if ( !auth_hibernate )
     {
@@ -780,20 +778,22 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 
     gtk_combo_box_set_active (GTK_COMBO_BOX (inact_action), 0);
 
-    str = xfconf_channel_get_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY, "Hibernate");
+    val = xfconf_channel_get_uint (channel,
+                                   PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY,
+                                   XFPM_DO_HIBERNATE);
+
     for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-      valid;
-      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	  valid;
+	  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
     {
-    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-                0, &list_str, -1);
-    if ( g_strcmp0 (str, list_str) )
-    {
-        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (inact_action), &iter);
-        break;
+	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+			    1, &list_value, -1);
+	if ( val == list_value )
+	{
+	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (inact_action), &iter);
+	    break;
+	}
     }
-    }
-    g_free (str);
 
     /*
      * Inactivity timeout on battery
@@ -962,8 +962,6 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *frame;
     GtkWidget *brg;
     GtkWidget *brg_level;
-    gchar *str;
-    gchar *list_str;
     GtkListStore *list_store;
     GtkTreeIter iter;
     guint val;
@@ -980,7 +978,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     if ( can_suspend )
     {
     gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), -1);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
     }
     else if ( !auth_suspend )
     {
@@ -994,7 +992,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     if ( can_hibernate )
     {
     gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), -1);
+    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
     }
     else if ( !auth_hibernate )
     {
@@ -1007,20 +1005,22 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 
     gtk_combo_box_set_active (GTK_COMBO_BOX (inact_action), 0);
 
-    str = xfconf_channel_get_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC, "Suspend");
+    val = xfconf_channel_get_uint (channel,
+                                   PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC,
+                                   XFPM_DO_SUSPEND);
+
     for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-      valid;
-      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+	  valid;
+	  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
     {
-    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-                0, &list_str, -1);
-    if ( g_strcmp0 (str, list_str) )
-    {
-        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (inact_action), &iter);
-        break;
+	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+			    1, &list_value, -1);
+	if ( val == list_value )
+	{
+	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (inact_action), &iter);
+	    break;
+	}
     }
-    }
-    g_free (str);
 
     /*
      * Inactivity timeout on AC
