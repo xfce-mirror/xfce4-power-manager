@@ -327,14 +327,14 @@ notify_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 }
 
 void
-on_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
+on_ac_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
     GtkTreeModel     *model;
     GtkTreeIter       selected_row;
     gchar *value = "";
-    
+
     if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
-	return;
+    return;
 
     model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
 
@@ -343,10 +343,34 @@ on_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        0,
                        &value,
                        -1);
-    
-    if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE, value) )
+
+    if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC, value) )
     {
-	g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE);
+    g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_AC);
+    }
+}
+
+void
+on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
+{
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gchar *value = "";
+
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+    return;
+
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       0,
+                       &value,
+                       -1);
+
+    if (!xfconf_channel_set_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY, value) )
+    {
+    g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_BATTERY);
     }
 }
 
@@ -708,33 +732,93 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gboolean valid;
     gint list_value;
     gint val;
+    gchar *str;
+    gchar *list_str;
     GtkListStore *list_store;
     GtkTreeIter iter;
-    GtkWidget *inact;
+    GtkWidget *inact_timeout, *inact_action;
     GtkWidget *battery_critical;
     GtkWidget *lid;
     GtkWidget *label;
     GtkWidget *brg;
     GtkWidget *brg_level;
 
-    battery_critical = GTK_WIDGET (gtk_builder_get_object (xml, "battery-critical-combox"));
-    
-    inact = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-on-battery"));
-    
+    /*
+     * Inactivity sleep mode on battery
+     */
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    inact_action = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-mode-on-battery"));
+    gtk_combo_box_set_model (GTK_COMBO_BOX(inact_action), GTK_TREE_MODEL(list_store));
+
+    if ( can_suspend )
+    {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), -1);
+    }
+    else if ( !auth_suspend )
+    {
+    gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not permitted"));
+    }
+    else
+    {
+    gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not supported"));
+    }
+
+    if ( can_hibernate )
+    {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), -1);
+    }
+    else if ( !auth_hibernate )
+    {
+    gtk_widget_set_tooltip_text (inact_action, _("Hibernate operation not permitted"));
+    }
+    else
+    {
+    gtk_widget_set_tooltip_text (inact_action, _("Hibernate operation not supported"));
+    }
+
+    gtk_combo_box_set_active (GTK_COMBO_BOX (inact_action), 0);
+
+    str = xfconf_channel_get_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY, "Hibernate");
+    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+      valid;
+      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+    {
+    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+                0, &list_str, -1);
+    if ( g_strcmp0 (str, list_str) )
+    {
+        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (inact_action), &iter);
+        break;
+    }
+    }
+    g_free (str);
+
+    /*
+     * Inactivity timeout on battery
+     */
+    inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-on-battery"));
+
     if ( !can_suspend && !can_hibernate )
     {
-	gtk_widget_set_sensitive (inact, FALSE);
-	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not supported"));
+    gtk_widget_set_sensitive (inact_timeout, FALSE);
+    gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not supported"));
     }
-    else if ( !auth_suspend && !auth_hibernate )
+    else  if ( !auth_suspend && !auth_hibernate )
     {
-	gtk_widget_set_sensitive (inact, FALSE);
-	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not permitted"));
+    gtk_widget_set_sensitive (inact_timeout, FALSE);
+    gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not permitted"));
     }
-    
+
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, 14);
-    gtk_range_set_value (GTK_RANGE (inact), val);
-    
+    gtk_range_set_value (GTK_RANGE (inact_timeout), val);
+
+
+    /*
+     * Battery critical
+     */
+    battery_critical = GTK_WIDGET (gtk_builder_get_object (xml, "battery-critical-combox"));
     
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     
@@ -872,34 +956,91 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
                      gboolean can_hibernate, gboolean has_lcd_brightness,
                      gboolean has_lid)
 {
-    GtkWidget *inact;
+    GtkWidget *inact_timeout, *inact_action;
     GtkWidget *lid;
     GtkWidget *label;
     GtkWidget *frame;
     GtkWidget *brg;
     GtkWidget *brg_level;
+    gchar *str;
+    gchar *list_str;
     GtkListStore *list_store;
     GtkTreeIter iter;
     guint val;
     gboolean valid;
     guint list_value;
     
-    inact = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-on-ac"));
-    
+    /*
+     * Inactivity sleep mode on AC
+     */
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    inact_action = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-mode-on-ac"));
+    gtk_combo_box_set_model (GTK_COMBO_BOX(inact_action), GTK_TREE_MODEL(list_store));
+
+    if ( can_suspend )
+    {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), -1);
+    }
+    else if ( !auth_suspend )
+    {
+    gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not permitted"));
+    }
+    else
+    {
+    gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not supported"));
+    }
+
+    if ( can_hibernate )
+    {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), -1);
+    }
+    else if ( !auth_hibernate )
+    {
+    gtk_widget_set_tooltip_text (inact_action, _("Hibernate operation not permitted"));
+    }
+    else
+    {
+    gtk_widget_set_tooltip_text (inact_action, _("Hibernate operation not supported"));
+    }
+
+    gtk_combo_box_set_active (GTK_COMBO_BOX (inact_action), 0);
+
+    str = xfconf_channel_get_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC, "Suspend");
+    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+      valid;
+      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+    {
+    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+                0, &list_str, -1);
+    if ( g_strcmp0 (str, list_str) )
+    {
+        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (inact_action), &iter);
+        break;
+    }
+    }
+    g_free (str);
+
+    /*
+     * Inactivity timeout on AC
+     */
+    inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-on-ac"));
+
     if ( !can_suspend && !can_hibernate )
     {
-	gtk_widget_set_sensitive (inact, FALSE);
-	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not supported"));
+    gtk_widget_set_sensitive (inact_timeout, FALSE);
+    gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not supported"));
     }
     else  if ( !auth_suspend && !auth_hibernate )
     {
-	gtk_widget_set_sensitive (inact, FALSE);
-	gtk_widget_set_tooltip_text (inact, _("Hibernate and suspend operations not permitted"));
+    gtk_widget_set_sensitive (inact_timeout, FALSE);
+    gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not permitted"));
     }
-    
+
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, 14);
-    gtk_range_set_value (GTK_RANGE (inact), val);
-   
+    gtk_range_set_value (GTK_RANGE (inact_timeout), val);
+
 #ifdef HAVE_DPMS
     /*
      * DPMS settings when running on AC power 
@@ -1200,69 +1341,11 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
                         gboolean can_hibernate, gboolean has_battery)
 {
     guint val;
-    gchar *str;
     GtkWidget *critical_level;
     GtkWidget *lock;
     GtkWidget *label;
     GtkWidget *sleep_mode;
     GtkWidget *brg_handle_keys;
-
-    gchar *list_str;
-    gboolean valid;
-    GtkListStore *list_store;
-    GtkTreeIter iter;
-
-    /*
-     * Computer sleep mode
-     */
-    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-    sleep_mode = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-mode"));
-    gtk_combo_box_set_model (GTK_COMBO_BOX(sleep_mode), GTK_TREE_MODEL(list_store));
-    
-    if ( can_suspend )
-    {
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Suspend"), -1);
-    }
-    else if ( !auth_suspend )
-    {
-	gtk_widget_set_tooltip_text (sleep_mode, _("Suspend operation not permitted"));
-    }
-    else
-    {
-	gtk_widget_set_tooltip_text (sleep_mode, _("Suspend operation not supported"));
-    }
-    
-    if ( can_hibernate )
-    {
-	gtk_list_store_append (list_store, &iter);
-	gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), -1);
-    }
-    else if ( !auth_hibernate )
-    {
-	gtk_widget_set_tooltip_text (sleep_mode, _("Hibernate operation not permitted"));
-    }
-    else
-    {
-	gtk_widget_set_tooltip_text (sleep_mode, _("Hibernate operation not supported"));
-    }
-
-    gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_mode), 0);
-
-    str = xfconf_channel_get_string (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE, "Suspend");
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-	  valid;
-	  valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-    {
-	gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-			    0, &list_str, -1);
-	if ( g_strcmp0 (str, list_str) )
-	{
-	    gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep_mode), &iter);
-	    break;
-	}
-    }
-    g_free (str);
 
     /*
      * Critical battery level

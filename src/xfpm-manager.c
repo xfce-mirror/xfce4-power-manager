@@ -420,9 +420,14 @@ xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager
 	    return;
 	}
 
-	g_object_get (G_OBJECT (manager->priv->conf),
-		      INACTIVITY_SLEEP_MODE, &sleep_mode,
-		      NULL);
+    if ( id == TIMEOUT_INACTIVITY_ON_AC)
+        g_object_get (G_OBJECT (manager->priv->conf),
+                      INACTIVITY_SLEEP_MODE_ON_AC, &sleep_mode,
+                      NULL);
+    else
+        g_object_get (G_OBJECT (manager->priv->conf),
+                      INACTIVITY_SLEEP_MODE_ON_BATTERY, &sleep_mode,
+                      NULL);
 
 	g_object_get (G_OBJECT (manager->priv->power),
 		      "on-battery", &on_battery,
