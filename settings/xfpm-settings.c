@@ -1366,6 +1366,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
 	}
 	else
 	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), val);
+    critical_spin_output_cb (GTK_SPIN_BUTTON(critical_level), NULL);
     }
     else
     {
