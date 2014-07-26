@@ -42,6 +42,8 @@
 #include "scalemenuitem.h"
 
 
+#define SET_LEVEL_TIMEOUT (25)
+
 #define BATTERY_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), BATTERY_TYPE_BUTTON, BatteryButtonPrivate))
 
@@ -78,6 +80,9 @@ struct BatteryButtonPrivate
 
     /* display brightness slider widget */
     GtkWidget       *range;
+
+    /* filter range value changed events for snappier UI feedback */
+    guint            set_level_timeout;
 };
 
 typedef struct
@@ -470,6 +475,7 @@ battery_button_init (BatteryButton *button)
 
     button->priv->brightness = xfpm_brightness_new ();
     xfpm_brightness_setup (button->priv->brightness);
+    button->priv->set_level_timeout = 0;
 
     button->priv->upower  = up_client_new ();
     if ( !xfconf_init (&error) )
@@ -498,6 +504,12 @@ battery_button_finalize (GObject *object)
     button = BATTERY_BUTTON (object);
 
     g_free(button->priv->panel_icon_name);
+
+    if (button->priv->set_level_timeout)
+    {
+        g_source_remove(button->priv->set_level_timeout);
+        button->priv->set_level_timeout = 0;
+    }
 
     g_signal_handlers_disconnect_by_data (button->priv->upower, button);
 
@@ -788,8 +800,8 @@ increase_brightness (BatteryButton *button)
     }
 }
 
-static void
-range_value_changed_cb (GtkWidget *widget, BatteryButton *button)
+static gboolean
+brightness_set_level_with_timeout (BatteryButton *button)
 {
     gint32 range_level, hw_level;
 
@@ -803,6 +815,27 @@ range_value_changed_cb (GtkWidget *widget, BatteryButton *button)
     {
         xfpm_brightness_set_level (button->priv->brightness, range_level);
     }
+
+    if (button->priv->set_level_timeout)
+    {
+        g_source_remove(button->priv->set_level_timeout);
+        button->priv->set_level_timeout = 0;
+    }
+
+    return FALSE;
+}
+
+static void
+range_value_changed_cb (GtkWidget *widget, BatteryButton *button)
+{
+    TRACE("entering");
+
+    if (button->priv->set_level_timeout)
+        return;
+
+    button->priv->set_level_timeout =
+        g_timeout_add(SET_LEVEL_TIMEOUT,
+                      (GSourceFunc) brightness_set_level_with_timeout, button);
 }
 
 static void
