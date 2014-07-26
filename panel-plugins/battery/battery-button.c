@@ -922,7 +922,7 @@ battery_button_show_menu (BatteryButton *button)
             gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM(mi), img);
         }
 
-        scale_menu_item_set_description_label (SCALE_MENU_ITEM(mi), _("Display Brightness"));
+        scale_menu_item_set_description_label (SCALE_MENU_ITEM(mi), _("Display brightness"));
 
         /* range slider */
         button->priv->range = scale_menu_item_get_scale (SCALE_MENU_ITEM (mi));
