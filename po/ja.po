@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-14 18:30+0200\n"
-"PO-Revision-Date: 2014-07-15 16:08+0000\n"
+"POT-Creation-Date: 2014-07-24 00:30+0200\n"
+"PO-Revision-Date: 2014-07-26 07:14+0000\n"
 "Last-Translator: Masato HASHIMOTO <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese (http://www.transifex.com/projects/p/xfce4-power-manager/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -103,252 +103,239 @@ msgid "Handle display power management"
 msgstr "ディスプレイの電源管理を行う"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Sleep mode"
-msgstr "スリープモード"
-
-#: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "Blank after"
 msgstr "ブランク画面にするまでの時間"
 
-#: ../data/interfaces/xfpm-settings.ui.h:24
+#: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "Put to sleep after"
 msgstr "スリープするまでの時間"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
+#: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "Switch off after"
 msgstr "電源を切断するまでの時間"
 
-#: ../data/interfaces/xfpm-settings.ui.h:26
+#: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "<b>Power saving</b>"
 msgstr "<b>省電力</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:27
+#: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "Display"
 msgstr "ディスプレイ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:28
+#: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "_Handle display brightness"
 msgstr "ディスプレイの輝度を調節する(_H)"
 
+#: ../data/interfaces/xfpm-settings.ui.h:28
+msgid "Handle display brightness _keys"
+msgstr "ディスプレイの輝度キーを扱う(_K)"
+
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "_Register display brightness shortcut keys"
-msgstr "ディスプレイの輝度のショートカットキーを登録する(_R)"
-
-#: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "Change per s_tep:"
-msgstr "変更ステップ(_T)"
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "<b>Keys</b>"
 msgstr "<b>キー</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:32
+#: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "On inactivity reduce to"
 msgstr "未使用時の輝度低下"
 
-#: ../data/interfaces/xfpm-settings.ui.h:33
+#: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Reduce after"
 msgstr "輝度を下げるまでの時間"
 
-#: ../data/interfaces/xfpm-settings.ui.h:34
-msgid "_Brightness"
-msgstr "輝度(_B)"
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "_Backlight"
+msgstr "バックライト(_B)"
 
-#: ../data/interfaces/xfpm-settings.ui.h:35
+#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Nothing"
 msgstr "何もしない"
 
-#: ../settings/xfpm-settings.c:528 ../settings/xfpm-settings.c:543
-#: ../settings/xfpm-settings.c:570
+#: ../settings/xfpm-settings.c:503 ../settings/xfpm-settings.c:518
+#: ../settings/xfpm-settings.c:545
 msgid "Never"
 msgstr "しない"
 
-#: ../settings/xfpm-settings.c:531
+#: ../settings/xfpm-settings.c:506
 msgid "One minute"
 msgstr "1 分"
 
-#: ../settings/xfpm-settings.c:533 ../settings/xfpm-settings.c:545
+#: ../settings/xfpm-settings.c:508 ../settings/xfpm-settings.c:520
 msgid "Minutes"
 msgstr "分"
 
-#: ../settings/xfpm-settings.c:547 ../settings/xfpm-settings.c:554
-#: ../settings/xfpm-settings.c:555 ../settings/xfpm-settings.c:556
+#: ../settings/xfpm-settings.c:522 ../settings/xfpm-settings.c:529
+#: ../settings/xfpm-settings.c:530 ../settings/xfpm-settings.c:531
 msgid "One hour"
 msgstr "1 時間"
 
-#: ../settings/xfpm-settings.c:555 ../settings/xfpm-settings.c:559
+#: ../settings/xfpm-settings.c:530 ../settings/xfpm-settings.c:534
 msgid "one minute"
 msgstr "1 分"
 
-#: ../settings/xfpm-settings.c:556 ../settings/xfpm-settings.c:560
+#: ../settings/xfpm-settings.c:531 ../settings/xfpm-settings.c:535
 msgid "minutes"
 msgstr "分"
 
-#: ../settings/xfpm-settings.c:558 ../settings/xfpm-settings.c:559
-#: ../settings/xfpm-settings.c:560
+#: ../settings/xfpm-settings.c:533 ../settings/xfpm-settings.c:534
+#: ../settings/xfpm-settings.c:535
 msgid "hours"
 msgstr "時間"
 
-#: ../settings/xfpm-settings.c:572
+#: ../settings/xfpm-settings.c:547
 msgid "Seconds"
 msgstr "秒"
 
-#: ../settings/xfpm-settings.c:578
+#: ../settings/xfpm-settings.c:553
 msgid "%"
 msgstr "%"
 
-#: ../settings/xfpm-settings.c:737 ../settings/xfpm-settings.c:900
-#: ../settings/xfpm-settings.c:1345
+#: ../settings/xfpm-settings.c:727 ../settings/xfpm-settings.c:890
+#: ../settings/xfpm-settings.c:1298
 msgid "Hibernate and suspend operations not supported"
 msgstr "ハイバネートおよびサスペンド操作はサポートされていません。"
 
-#: ../settings/xfpm-settings.c:742 ../settings/xfpm-settings.c:905
-#: ../settings/xfpm-settings.c:1350
+#: ../settings/xfpm-settings.c:732 ../settings/xfpm-settings.c:895
+#: ../settings/xfpm-settings.c:1303
 msgid "Hibernate and suspend operations not permitted"
 msgstr "ハイバネートおよびサスペンド操作が許可されていません"
 
-#: ../settings/xfpm-settings.c:754 ../settings/xfpm-settings.c:1047
-#: ../settings/xfpm-settings.c:1104 ../settings/xfpm-settings.c:1156
+#: ../settings/xfpm-settings.c:744 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:1094 ../settings/xfpm-settings.c:1146
 msgid "Do nothing"
 msgstr "何もしない"
 
-#: ../settings/xfpm-settings.c:759 ../settings/xfpm-settings.c:822
-#: ../settings/xfpm-settings.c:941 ../settings/xfpm-settings.c:1052
-#: ../settings/xfpm-settings.c:1109 ../settings/xfpm-settings.c:1161
-#: ../settings/xfpm-settings.c:1232 ../settings/xfpm-settings.c:1283
-#: ../src/xfpm-power.c:655
+#: ../settings/xfpm-settings.c:749 ../settings/xfpm-settings.c:812
+#: ../settings/xfpm-settings.c:931 ../settings/xfpm-settings.c:1042
+#: ../settings/xfpm-settings.c:1099 ../settings/xfpm-settings.c:1151
+#: ../settings/xfpm-settings.c:1222 ../src/xfpm-power.c:655
 msgid "Suspend"
 msgstr "サスペンド"
 
-#: ../settings/xfpm-settings.c:765 ../settings/xfpm-settings.c:828
-#: ../settings/xfpm-settings.c:947 ../settings/xfpm-settings.c:1058
-#: ../settings/xfpm-settings.c:1115 ../settings/xfpm-settings.c:1167
-#: ../settings/xfpm-settings.c:1246 ../src/xfpm-power.c:644
+#: ../settings/xfpm-settings.c:755 ../settings/xfpm-settings.c:818
+#: ../settings/xfpm-settings.c:937 ../settings/xfpm-settings.c:1048
+#: ../settings/xfpm-settings.c:1105 ../settings/xfpm-settings.c:1157
+#: ../settings/xfpm-settings.c:1236 ../src/xfpm-power.c:644
 msgid "Hibernate"
 msgstr "ハイバネート"
 
-#: ../settings/xfpm-settings.c:771 ../settings/xfpm-settings.c:1064
+#: ../settings/xfpm-settings.c:761 ../settings/xfpm-settings.c:1054
 #: ../src/xfpm-power.c:666
 msgid "Shutdown"
 msgstr "シャットダウン"
 
-#: ../settings/xfpm-settings.c:775 ../settings/xfpm-settings.c:1068
-#: ../settings/xfpm-settings.c:1119 ../settings/xfpm-settings.c:1171
+#: ../settings/xfpm-settings.c:765 ../settings/xfpm-settings.c:1058
+#: ../settings/xfpm-settings.c:1109 ../settings/xfpm-settings.c:1161
 msgid "Ask"
 msgstr "問い合わせる"
 
-#: ../settings/xfpm-settings.c:817 ../settings/xfpm-settings.c:936
+#: ../settings/xfpm-settings.c:807 ../settings/xfpm-settings.c:926
 msgid "Switch off display"
 msgstr "ディスプレイの電源を切る"
 
-#: ../settings/xfpm-settings.c:832 ../settings/xfpm-settings.c:951
+#: ../settings/xfpm-settings.c:822 ../settings/xfpm-settings.c:941
 msgid "Lock screen"
 msgstr "画面をロック"
 
-#: ../settings/xfpm-settings.c:1236
+#: ../settings/xfpm-settings.c:1226
 msgid "Suspend operation not permitted"
 msgstr "サスペンド操作が許可されていません"
 
-#: ../settings/xfpm-settings.c:1240
+#: ../settings/xfpm-settings.c:1230
 msgid "Suspend operation not supported"
 msgstr "サスペンド操作はサポートされていません。"
 
-#: ../settings/xfpm-settings.c:1250
+#: ../settings/xfpm-settings.c:1240
 msgid "Hibernate operation not permitted"
 msgstr "ハイバネート操作が許可されていません"
 
-#: ../settings/xfpm-settings.c:1254
+#: ../settings/xfpm-settings.c:1244
 msgid "Hibernate operation not supported"
 msgstr "ハイバネート操作はサポートされていません。"
 
-#: ../settings/xfpm-settings.c:1285
-msgid "Standby"
-msgstr "スタンバイ"
-
-#: ../settings/xfpm-settings.c:1318
+#: ../settings/xfpm-settings.c:1271
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "コンピューターのすべての電源の充電レベルがこの値に達したときが対象となります"
 
-#: ../settings/xfpm-settings.c:1556
+#: ../settings/xfpm-settings.c:1516
 msgid "Device"
 msgstr "デバイス"
 
-#: ../settings/xfpm-settings.c:1578
+#: ../settings/xfpm-settings.c:1538
 msgid "Type"
 msgstr "タイプ"
 
-#: ../settings/xfpm-settings.c:1583
+#: ../settings/xfpm-settings.c:1543
 msgid "PowerSupply"
 msgstr "電源"
 
-#: ../settings/xfpm-settings.c:1584 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1544 ../src/xfpm-main.c:80
 msgid "True"
 msgstr "あり"
 
-#: ../settings/xfpm-settings.c:1584 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1544 ../src/xfpm-main.c:80
 msgid "False"
 msgstr "なし"
 
-#: ../settings/xfpm-settings.c:1591
+#: ../settings/xfpm-settings.c:1551
 msgid "Model"
 msgstr "モデル"
 
-#: ../settings/xfpm-settings.c:1594
+#: ../settings/xfpm-settings.c:1554
 msgid "Technology"
 msgstr "テクノロジ"
 
-#: ../settings/xfpm-settings.c:1601
+#: ../settings/xfpm-settings.c:1561
 msgid "Current charge"
 msgstr "現在の充電率"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1609 ../settings/xfpm-settings.c:1621
-#: ../settings/xfpm-settings.c:1633
+#: ../settings/xfpm-settings.c:1569 ../settings/xfpm-settings.c:1581
+#: ../settings/xfpm-settings.c:1593
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:1611
+#: ../settings/xfpm-settings.c:1571
 msgid "Fully charged (design)"
 msgstr "フル充電されています (設計値)"
 
-#: ../settings/xfpm-settings.c:1624
+#: ../settings/xfpm-settings.c:1584
 msgid "Fully charged"
 msgstr "フル充電されています"
 
-#: ../settings/xfpm-settings.c:1635
+#: ../settings/xfpm-settings.c:1595
 msgid "Energy empty"
 msgstr "最小エネルギー密度"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1643
+#: ../settings/xfpm-settings.c:1603
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:1645
+#: ../settings/xfpm-settings.c:1605
 msgid "Voltage"
 msgstr "電圧"
 
-#: ../settings/xfpm-settings.c:1652
+#: ../settings/xfpm-settings.c:1612
 msgid "Vendor"
 msgstr "ベンダー"
 
-#: ../settings/xfpm-settings.c:1657
+#: ../settings/xfpm-settings.c:1617
 msgid "Serial"
 msgstr "シリアル番号"
 
-#: ../settings/xfpm-settings.c:1723
+#: ../settings/xfpm-settings.c:1683
 msgid "Attribute"
 msgstr "属性"
 
-#: ../settings/xfpm-settings.c:1730
+#: ../settings/xfpm-settings.c:1690
 msgid "Value"
 msgstr "値"
 
-#: ../settings/xfpm-settings.c:1935
+#: ../settings/xfpm-settings.c:1895
 msgid "Check your power manager installation"
 msgstr "電源管理が正しくインストールされていることを確認してください"
 
-#: ../settings/xfpm-settings.c:2005
+#: ../settings/xfpm-settings.c:1965
 msgid "Devices"
 msgstr "デバイス"
 
@@ -689,7 +676,7 @@ msgid "Suspend not supported"
 msgstr "サスペンドはサポートされていません"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:149
+#: ../src/xfpm-backlight.c:172
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "輝度: %.0f %%"
@@ -945,12 +932,12 @@ msgid "Display battery levels for attached devices"
 msgstr "接続されたデバイスのバッテリレベルを表示します"
 
 #. Presentation mode checkbox
-#: ../panel-plugins/battery/battery-button.c:704
+#: ../panel-plugins/battery/battery-button.c:714
 msgid "Presentation _mode"
 msgstr "プレゼンテーションモード(_M)"
 
 #. Power manager settings
-#: ../panel-plugins/battery/battery-button.c:713
+#: ../panel-plugins/battery/battery-button.c:723
 msgid "_Power manager..."
 msgstr "電源管理(_P)..."
 
