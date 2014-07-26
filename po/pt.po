@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-17 00:30+0200\n"
-"PO-Revision-Date: 2014-07-19 14:27+0000\n"
+"POT-Creation-Date: 2014-07-24 00:30+0200\n"
+"PO-Revision-Date: 2014-07-26 03:08+0000\n"
 "Last-Translator: Alexandre Fidalgo <alexandremagnos15@gmail.com>\n"
 "Language-Team: Portuguese (http://www.transifex.com/projects/p/xfce4-power-manager/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -131,219 +131,215 @@ msgid "_Handle display brightness"
 msgstr "_Manusear o brilho do ecrã"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "_Register display brightness shortcut keys"
-msgstr "Teclas de atalho de _Registro do brilho do ecrã"
+msgid "Handle display brightness _keys"
+msgstr "_Chaves de manuseio do brilho do ecrã"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "Change per s_tep:"
-msgstr "Altere por e_tapa:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "<b>Keys</b>"
 msgstr "<b>Chaves</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:31
+#: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "On inactivity reduce to"
 msgstr "Se inactivo reduzir para"
 
-#: ../data/interfaces/xfpm-settings.ui.h:32
+#: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Reduce after"
 msgstr "Reduzir depois"
 
-#: ../data/interfaces/xfpm-settings.ui.h:33
-msgid "_Brightness"
-msgstr "_Brilho"
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "_Backlight"
+msgstr "_Luz de fundo"
 
-#: ../data/interfaces/xfpm-settings.ui.h:34
+#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Nothing"
 msgstr "Nada"
 
-#: ../settings/xfpm-settings.c:499 ../settings/xfpm-settings.c:514
-#: ../settings/xfpm-settings.c:541
+#: ../settings/xfpm-settings.c:503 ../settings/xfpm-settings.c:518
+#: ../settings/xfpm-settings.c:545
 msgid "Never"
 msgstr "Nunca"
 
-#: ../settings/xfpm-settings.c:502
+#: ../settings/xfpm-settings.c:506
 msgid "One minute"
 msgstr "Um minuto"
 
-#: ../settings/xfpm-settings.c:504 ../settings/xfpm-settings.c:516
+#: ../settings/xfpm-settings.c:508 ../settings/xfpm-settings.c:520
 msgid "Minutes"
 msgstr "Minutos"
 
-#: ../settings/xfpm-settings.c:518 ../settings/xfpm-settings.c:525
-#: ../settings/xfpm-settings.c:526 ../settings/xfpm-settings.c:527
+#: ../settings/xfpm-settings.c:522 ../settings/xfpm-settings.c:529
+#: ../settings/xfpm-settings.c:530 ../settings/xfpm-settings.c:531
 msgid "One hour"
 msgstr "Uma hora"
 
-#: ../settings/xfpm-settings.c:526 ../settings/xfpm-settings.c:530
+#: ../settings/xfpm-settings.c:530 ../settings/xfpm-settings.c:534
 msgid "one minute"
 msgstr "um minuto"
 
-#: ../settings/xfpm-settings.c:527 ../settings/xfpm-settings.c:531
+#: ../settings/xfpm-settings.c:531 ../settings/xfpm-settings.c:535
 msgid "minutes"
 msgstr "minutos"
 
-#: ../settings/xfpm-settings.c:529 ../settings/xfpm-settings.c:530
-#: ../settings/xfpm-settings.c:531
+#: ../settings/xfpm-settings.c:533 ../settings/xfpm-settings.c:534
+#: ../settings/xfpm-settings.c:535
 msgid "hours"
 msgstr "horas"
 
-#: ../settings/xfpm-settings.c:543
+#: ../settings/xfpm-settings.c:547
 msgid "Seconds"
 msgstr "Segundos"
 
-#: ../settings/xfpm-settings.c:549
+#: ../settings/xfpm-settings.c:553
 msgid "%"
 msgstr "%"
 
-#: ../settings/xfpm-settings.c:708 ../settings/xfpm-settings.c:871
-#: ../settings/xfpm-settings.c:1278
+#: ../settings/xfpm-settings.c:727 ../settings/xfpm-settings.c:890
+#: ../settings/xfpm-settings.c:1298
 msgid "Hibernate and suspend operations not supported"
 msgstr "As operações hibernar e suspender não são suportadas"
 
-#: ../settings/xfpm-settings.c:713 ../settings/xfpm-settings.c:876
-#: ../settings/xfpm-settings.c:1283
+#: ../settings/xfpm-settings.c:732 ../settings/xfpm-settings.c:895
+#: ../settings/xfpm-settings.c:1303
 msgid "Hibernate and suspend operations not permitted"
 msgstr "As operações hibernar e suspender não são permitidas"
 
-#: ../settings/xfpm-settings.c:725 ../settings/xfpm-settings.c:1018
-#: ../settings/xfpm-settings.c:1075 ../settings/xfpm-settings.c:1127
+#: ../settings/xfpm-settings.c:744 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:1094 ../settings/xfpm-settings.c:1146
 msgid "Do nothing"
 msgstr "Não fazer nada"
 
-#: ../settings/xfpm-settings.c:730 ../settings/xfpm-settings.c:793
-#: ../settings/xfpm-settings.c:912 ../settings/xfpm-settings.c:1023
-#: ../settings/xfpm-settings.c:1080 ../settings/xfpm-settings.c:1132
-#: ../settings/xfpm-settings.c:1202 ../src/xfpm-power.c:655
+#: ../settings/xfpm-settings.c:749 ../settings/xfpm-settings.c:812
+#: ../settings/xfpm-settings.c:931 ../settings/xfpm-settings.c:1042
+#: ../settings/xfpm-settings.c:1099 ../settings/xfpm-settings.c:1151
+#: ../settings/xfpm-settings.c:1222 ../src/xfpm-power.c:655
 msgid "Suspend"
 msgstr "Suspender"
 
-#: ../settings/xfpm-settings.c:736 ../settings/xfpm-settings.c:799
-#: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1029
-#: ../settings/xfpm-settings.c:1086 ../settings/xfpm-settings.c:1138
-#: ../settings/xfpm-settings.c:1216 ../src/xfpm-power.c:644
+#: ../settings/xfpm-settings.c:755 ../settings/xfpm-settings.c:818
+#: ../settings/xfpm-settings.c:937 ../settings/xfpm-settings.c:1048
+#: ../settings/xfpm-settings.c:1105 ../settings/xfpm-settings.c:1157
+#: ../settings/xfpm-settings.c:1236 ../src/xfpm-power.c:644
 msgid "Hibernate"
 msgstr "Hibernar"
 
-#: ../settings/xfpm-settings.c:742 ../settings/xfpm-settings.c:1035
+#: ../settings/xfpm-settings.c:761 ../settings/xfpm-settings.c:1054
 #: ../src/xfpm-power.c:666
 msgid "Shutdown"
 msgstr "Desligar"
 
-#: ../settings/xfpm-settings.c:746 ../settings/xfpm-settings.c:1039
-#: ../settings/xfpm-settings.c:1090 ../settings/xfpm-settings.c:1142
+#: ../settings/xfpm-settings.c:765 ../settings/xfpm-settings.c:1058
+#: ../settings/xfpm-settings.c:1109 ../settings/xfpm-settings.c:1161
 msgid "Ask"
 msgstr "Perguntar"
 
-#: ../settings/xfpm-settings.c:788 ../settings/xfpm-settings.c:907
+#: ../settings/xfpm-settings.c:807 ../settings/xfpm-settings.c:926
 msgid "Switch off display"
 msgstr "Desligar mostrador"
 
-#: ../settings/xfpm-settings.c:803 ../settings/xfpm-settings.c:922
+#: ../settings/xfpm-settings.c:822 ../settings/xfpm-settings.c:941
 msgid "Lock screen"
 msgstr "Bloquear ecrã"
 
-#: ../settings/xfpm-settings.c:1206
+#: ../settings/xfpm-settings.c:1226
 msgid "Suspend operation not permitted"
 msgstr "A operação suspender não é permitida"
 
-#: ../settings/xfpm-settings.c:1210
+#: ../settings/xfpm-settings.c:1230
 msgid "Suspend operation not supported"
 msgstr "A operação suspender não é suportada"
 
-#: ../settings/xfpm-settings.c:1220
+#: ../settings/xfpm-settings.c:1240
 msgid "Hibernate operation not permitted"
 msgstr "A operação hibernar não é permitida"
 
-#: ../settings/xfpm-settings.c:1224
+#: ../settings/xfpm-settings.c:1244
 msgid "Hibernate operation not supported"
 msgstr "A operação hibernar não é suportada"
 
-#: ../settings/xfpm-settings.c:1251
+#: ../settings/xfpm-settings.c:1271
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Se todas as fontes de energia do computador atingirem este nível de energia"
 
-#: ../settings/xfpm-settings.c:1489
+#: ../settings/xfpm-settings.c:1516
 msgid "Device"
 msgstr "Dispositivo"
 
-#: ../settings/xfpm-settings.c:1511
+#: ../settings/xfpm-settings.c:1538
 msgid "Type"
 msgstr "Tipo"
 
-#: ../settings/xfpm-settings.c:1516
+#: ../settings/xfpm-settings.c:1543
 msgid "PowerSupply"
 msgstr "Fonte de alimentação"
 
-#: ../settings/xfpm-settings.c:1517 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1544 ../src/xfpm-main.c:80
 msgid "True"
 msgstr "Verdade"
 
-#: ../settings/xfpm-settings.c:1517 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1544 ../src/xfpm-main.c:80
 msgid "False"
 msgstr "Falso"
 
-#: ../settings/xfpm-settings.c:1524
+#: ../settings/xfpm-settings.c:1551
 msgid "Model"
 msgstr "Modelo"
 
-#: ../settings/xfpm-settings.c:1527
+#: ../settings/xfpm-settings.c:1554
 msgid "Technology"
 msgstr "Tecnologia"
 
-#: ../settings/xfpm-settings.c:1534
+#: ../settings/xfpm-settings.c:1561
 msgid "Current charge"
 msgstr "Carga actual"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1542 ../settings/xfpm-settings.c:1554
-#: ../settings/xfpm-settings.c:1566
+#: ../settings/xfpm-settings.c:1569 ../settings/xfpm-settings.c:1581
+#: ../settings/xfpm-settings.c:1593
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:1544
+#: ../settings/xfpm-settings.c:1571
 msgid "Fully charged (design)"
 msgstr "Carga completa (design)"
 
-#: ../settings/xfpm-settings.c:1557
+#: ../settings/xfpm-settings.c:1584
 msgid "Fully charged"
 msgstr "Carga completa"
 
-#: ../settings/xfpm-settings.c:1568
+#: ../settings/xfpm-settings.c:1595
 msgid "Energy empty"
 msgstr "Sem energia"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1576
+#: ../settings/xfpm-settings.c:1603
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:1578
+#: ../settings/xfpm-settings.c:1605
 msgid "Voltage"
 msgstr "Voltagem"
 
-#: ../settings/xfpm-settings.c:1585
+#: ../settings/xfpm-settings.c:1612
 msgid "Vendor"
 msgstr "Fabricante"
 
-#: ../settings/xfpm-settings.c:1590
+#: ../settings/xfpm-settings.c:1617
 msgid "Serial"
 msgstr "Serial"
 
-#: ../settings/xfpm-settings.c:1656
+#: ../settings/xfpm-settings.c:1683
 msgid "Attribute"
 msgstr "Atributo"
 
-#: ../settings/xfpm-settings.c:1663
+#: ../settings/xfpm-settings.c:1690
 msgid "Value"
 msgstr "Valor"
 
-#: ../settings/xfpm-settings.c:1868
+#: ../settings/xfpm-settings.c:1895
 msgid "Check your power manager installation"
 msgstr "Verifique a instalação da gestão de energia"
 
-#: ../settings/xfpm-settings.c:1938
+#: ../settings/xfpm-settings.c:1965
 msgid "Devices"
 msgstr "Dispositivos"
 
@@ -688,7 +684,7 @@ msgid "Suspend not supported"
 msgstr "A suspensão não é suportada"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:149
+#: ../src/xfpm-backlight.c:172
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "Brilho: %.0f porcento"
