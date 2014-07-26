@@ -501,12 +501,14 @@ scale_menu_item_set_description_label (ScaleMenuItem *menuitem,
 
   if (priv->description_label && label)
     {
-      gtk_label_set_text (GTK_LABEL (priv->description_label), label);
+      gtk_label_set_markup (GTK_LABEL (priv->description_label), label);
     }
   else if(label)
     {
       /* create label */
-      priv->description_label = gtk_label_new (label);
+      priv->description_label = gtk_label_new (NULL);
+      gtk_label_set_markup (GTK_LABEL (priv->description_label), label);
+
       /* align left */
       gtk_misc_set_alignment (GTK_MISC(priv->description_label), 0, 0);
     }
