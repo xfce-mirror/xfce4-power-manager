@@ -174,7 +174,10 @@ void        lock_screen_toggled_cb                 (GtkWidget *w,
 
 static void view_cursor_changed_cb 		   (GtkTreeView *view,
 						    gpointer *user_data);
-
+void        on_ac_sleep_mode_changed_cb 	   (GtkWidget *w,
+						    XfconfChannel *channel);
+void        on_battery_sleep_mode_changed_cb	   (GtkWidget *w,
+						    XfconfChannel *channel);
 
 
 void brightness_level_on_ac (GtkWidget *w,  XfconfChannel *channel)
@@ -1345,7 +1348,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *critical_level;
     GtkWidget *lock;
     GtkWidget *label;
-    GtkWidget *sleep_mode;
     GtkWidget *brg_handle_keys;
 
     /*
