@@ -80,7 +80,8 @@ enum
 #endif
     PROP_IDLE_ON_AC,
     PROP_IDLE_ON_BATTERY,
-    PROP_IDLE_SLEEP_MODE,
+    PROP_IDLE_SLEEP_MODE_ON_AC,
+    PROP_IDLE_SLEEP_MODE_ON_BATTERY,
     PROP_DIM_ON_AC_TIMEOUT,
     PROP_DIM_ON_BATTERY_TIMEOUT,
 #ifdef WITH_NETWORK_MANAGER
@@ -492,15 +493,30 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							14,
                                                         G_PARAM_READWRITE));
 
-     /**
-     * XfpmXfconf::inactivity-sleep-mode
+    /**
+     * XfpmXfconf::inactivity-sleep-mode-on-battery
      **/
     g_object_class_install_property (object_class,
-                                     PROP_IDLE_SLEEP_MODE,
-                                     g_param_spec_string (INACTIVITY_SLEEP_MODE,
-                                                          NULL, NULL,
-							  "Suspend",
-                                                          G_PARAM_READWRITE));
+                                     PROP_IDLE_SLEEP_MODE_ON_BATTERY,
+                                     g_param_spec_uint (INACTIVITY_SLEEP_MODE_ON_BATTERY,
+                                                        NULL, NULL,
+                                                        XFPM_DO_SUSPEND,
+                                                        XFPM_DO_HIBERNATE,
+                                                        XFPM_DO_HIBERNATE,
+                                                        G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::inactivity-sleep-mode-on-ac
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_IDLE_SLEEP_MODE_ON_AC,
+                                     g_param_spec_uint (INACTIVITY_SLEEP_MODE_ON_AC,
+                                                        NULL, NULL,
+                                                        XFPM_DO_SUSPEND,
+                                                        XFPM_DO_HIBERNATE,
+                                                        XFPM_DO_SUSPEND,
+                                                        G_PARAM_READWRITE));
+
     /**
      * XfpmXfconf::brightness-on-ac
      **/

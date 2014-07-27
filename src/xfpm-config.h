@@ -54,7 +54,8 @@ G_BEGIN_DECLS
 
 #define     	ON_AC_INACTIVITY_TIMEOUT     	"inactivity-on-ac"
 #define     	ON_BATTERY_INACTIVITY_TIMEOUT 	"inactivity-on-battery"
-#define     	INACTIVITY_SLEEP_MODE        	"inactivity-sleep-mode"
+#define     	INACTIVITY_SLEEP_MODE_ON_AC   	"inactivity-sleep-mode-on-ac"
+#define     	INACTIVITY_SLEEP_MODE_ON_BATTERY   	"inactivity-sleep-mode-on-battery"
 
 #define     	BRIGHTNESS_ON_AC             	"brightness-on-ac"
 #define     	BRIGHTNESS_ON_BATTERY        	"brightness-on-battery"

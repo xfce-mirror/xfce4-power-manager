@@ -410,8 +410,7 @@ xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager
 
     if ( id == TIMEOUT_INACTIVITY_ON_AC || id == TIMEOUT_INACTIVITY_ON_BATTERY )
     {
-	XfpmShutdownRequest req = XFPM_DO_NOTHING;
-	gchar *sleep_mode;
+	XfpmShutdownRequest sleep_mode = XFPM_DO_NOTHING;
 	gboolean on_battery;
 
 	if ( manager->priv->inhibited )
@@ -420,25 +419,23 @@ xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager
 	    return;
 	}
 
-	g_object_get (G_OBJECT (manager->priv->conf),
-		      INACTIVITY_SLEEP_MODE, &sleep_mode,
-		      NULL);
+    if ( id == TIMEOUT_INACTIVITY_ON_AC)
+        g_object_get (G_OBJECT (manager->priv->conf),
+                      INACTIVITY_SLEEP_MODE_ON_AC, &sleep_mode,
+                      NULL);
+    else
+        g_object_get (G_OBJECT (manager->priv->conf),
+                      INACTIVITY_SLEEP_MODE_ON_BATTERY, &sleep_mode,
+                      NULL);
 
 	g_object_get (G_OBJECT (manager->priv->power),
 		      "on-battery", &on_battery,
 		      NULL);
 
-	if ( !g_strcmp0 (sleep_mode, "Suspend") )
-	    req = XFPM_DO_SUSPEND;
-	else
-	    req = XFPM_DO_HIBERNATE;
-
-	g_free (sleep_mode);
-
 	if ( id == TIMEOUT_INACTIVITY_ON_AC && on_battery == FALSE )
-	    xfpm_manager_sleep_request (manager, req, FALSE);
+	    xfpm_manager_sleep_request (manager, sleep_mode, FALSE);
 	else if ( id ==  TIMEOUT_INACTIVITY_ON_BATTERY && on_battery  )
-	    xfpm_manager_sleep_request (manager, req, FALSE);
+	    xfpm_manager_sleep_request (manager, sleep_mode, FALSE);
     }
 }
 
