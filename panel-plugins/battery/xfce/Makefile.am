@@ -16,7 +16,9 @@ plugindir = \
 libxfce4battery_la_SOURCES = \
 	battery-plugin.c         \
 	../battery-button.c      \
-	../battery-button.h
+	../battery-button.h      \
+	../scalemenuitem.c       \
+	../scalemenuitem.h
 
 libxfce4battery_la_CFLAGS =         \
 	-I$(top_srcdir)	                \
