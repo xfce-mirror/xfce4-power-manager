@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-14 00:30+0200\n"
-"PO-Revision-Date: 2014-07-14 06:48+0000\n"
+"POT-Creation-Date: 2014-07-27 18:30+0200\n"
+"PO-Revision-Date: 2014-07-28 02:25+0000\n"
 "Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xfce4-power-manager/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
-#: ../settings/xfpm-settings-main.c:123 ../src/xfpm-main.c:443
+#: ../settings/xfpm-settings-main.c:135 ../src/xfpm-main.c:433
 msgid "Xfce Power Manager"
 msgstr "Xfce 電源管理員"
 
@@ -30,349 +30,317 @@ msgid "Power manager settings"
 msgstr "電力管理設定"
 
 #: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "When power button is pressed"
-msgstr "按下電源按鈕時"
-
-#: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "When sleep button is pressed"
-msgstr "按下睡眠按鈕時"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "When hibernate button is pressed"
-msgstr "按下休眠按鈕時"
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Lock screen when going for suspend/hibernate"
-msgstr "當暫停或休眠時鎖上螢幕"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "<b>Default actions</b>"
-msgstr "<b>預設動作</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:8
-msgid "Show notifications"
-msgstr "顯示通知"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "<b>Appearance</b>"
-msgstr "<b>外觀</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "General"
-msgstr "一般"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "System sleep mode"
-msgstr "系統睡眠模式"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Prefer saving power over performance"
-msgstr "偏好省電更勝效能"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:922
 msgid "On battery"
 msgstr "使用電池"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:925
-#: ../common/xfpm-power-common.c:442
+#: ../data/interfaces/xfpm-settings.ui.h:4 ../common/xfpm-power-common.c:442
 msgid "Plugged in"
 msgstr "插入電源"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "When laptop lid is closed"
-msgstr "關閉筆電上蓋時"
-
-#: ../data/interfaces/xfpm-settings.ui.h:16
+#: ../data/interfaces/xfpm-settings.ui.h:5
 msgid "Put system to sleep when inactive for"
 msgstr "當系統不活動多久時切換為睡眠模式"
 
-#: ../data/interfaces/xfpm-settings.ui.h:17
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "System sleep mode"
+msgstr "系統睡眠模式"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "<b>System power saving</b>"
 msgstr "<b>系統省電</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:18
+#: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "Critical battery power level"
 msgstr "電池電力嚴重不足，目前容量"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "On critical battery power"
 msgstr "電池電力嚴重不足"
 
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "<b>Critical power</b>"
 msgstr "<b>電力嚴重不足</b>"
 
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "Lock screen when system is going for sleep"
+msgstr "當系統要睡眠時鎖定螢幕"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Show notifications"
+msgstr "顯示通知"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "<b>Security and notifications</b>"
+msgstr "<b>安全性與通知</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "General"
+msgstr "一般"
+
+#: ../data/interfaces/xfpm-settings.ui.h:15
+msgid "When power button is pressed"
+msgstr "按下電源按鈕時"
+
+#: ../data/interfaces/xfpm-settings.ui.h:16
+msgid "When sleep button is pressed"
+msgstr "按下睡眠按鈕時"
+
+#: ../data/interfaces/xfpm-settings.ui.h:17
+msgid "When hibernate button is pressed"
+msgstr "按下休眠按鈕時"
+
+#: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "<b>Buttons</b>"
+msgstr "<b>按鈕</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
+msgid "When laptop lid is closed"
+msgstr "關閉筆電上蓋時"
+
+#: ../data/interfaces/xfpm-settings.ui.h:20
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>筆記型電腦上蓋</b>"
+
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "Spin down hard disks"
-msgstr "關閉硬碟轉動"
+msgid "Handle display brightness _keys"
+msgstr "管理顯示器亮度調整按鍵(_K)"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "<b>Hard disks</b>"
-msgstr "<b>硬碟</b>"
+msgid "<b>Keys</b>"
+msgstr "<b>鍵</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "System"
-msgstr "系統"
+msgid "Controls"
+msgstr "控制"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "Handle display power management"
 msgstr "顯示電源管理"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "Sleep mode"
-msgstr "睡眠模式"
-
-#: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "Blank after"
 msgstr "變暗在多久之後"
 
-#: ../data/interfaces/xfpm-settings.ui.h:27
+#: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "Put to sleep after"
 msgstr "切換成睡眠在多久之後"
 
-#: ../data/interfaces/xfpm-settings.ui.h:28
+#: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "Switch off after"
 msgstr "關閉在多久之後"
 
+#: ../data/interfaces/xfpm-settings.ui.h:28
+msgid "<b>Display power management settings</b>"
+msgstr "<b>顯示電源管理設定</b>"
+
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "<b>Power saving</b>"
-msgstr "<b>省電</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "Display"
-msgstr "顯示"
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "_Handle display brightness"
-msgstr "管理顯示器亮度(_H)"
-
-#: ../data/interfaces/xfpm-settings.ui.h:32
-msgid "_Register display brightness shortcut keys"
-msgstr "註冊顯示器亮度的快捷鍵(_R)"
-
-#: ../data/interfaces/xfpm-settings.ui.h:33
-msgid "Change per s_tep:"
-msgstr "每等級的改變(_T)："
-
-#: ../data/interfaces/xfpm-settings.ui.h:34
-msgid "<b>Keys</b>"
-msgstr "<b>鍵</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "On inactivity reduce to"
 msgstr "在閒置時降低至"
 
-#: ../data/interfaces/xfpm-settings.ui.h:36
+#: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "Reduce after"
 msgstr "降低在多久之後"
 
-#: ../data/interfaces/xfpm-settings.ui.h:37
-msgid "_Brightness"
-msgstr "亮度(_B)"
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "<b>Brightness reduction</b>"
+msgstr "<b>亮度降低</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:38
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "Display"
+msgstr "顯示"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Nothing"
 msgstr "無動作"
 
-#: ../settings/xfpm-settings.c:545 ../settings/xfpm-settings.c:560
-#: ../settings/xfpm-settings.c:587 ../settings/xfpm-settings.c:919
+#: ../settings/xfpm-settings.c:530 ../settings/xfpm-settings.c:545
+#: ../settings/xfpm-settings.c:572
 msgid "Never"
 msgstr "永不"
 
-#: ../settings/xfpm-settings.c:548
+#: ../settings/xfpm-settings.c:533
 msgid "One minute"
 msgstr "1 分鐘"
 
-#: ../settings/xfpm-settings.c:550 ../settings/xfpm-settings.c:562
+#: ../settings/xfpm-settings.c:535 ../settings/xfpm-settings.c:547
 msgid "Minutes"
 msgstr "分鐘"
 
-#: ../settings/xfpm-settings.c:564 ../settings/xfpm-settings.c:571
-#: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:573
+#: ../settings/xfpm-settings.c:549 ../settings/xfpm-settings.c:556
+#: ../settings/xfpm-settings.c:557 ../settings/xfpm-settings.c:558
 msgid "One hour"
 msgstr "1 小時"
 
-#: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:576
+#: ../settings/xfpm-settings.c:557 ../settings/xfpm-settings.c:561
 msgid "one minute"
 msgstr "1 分鐘"
 
-#: ../settings/xfpm-settings.c:573 ../settings/xfpm-settings.c:577
+#: ../settings/xfpm-settings.c:558 ../settings/xfpm-settings.c:562
 msgid "minutes"
 msgstr "分鐘"
 
-#: ../settings/xfpm-settings.c:575 ../settings/xfpm-settings.c:576
-#: ../settings/xfpm-settings.c:577
+#: ../settings/xfpm-settings.c:560 ../settings/xfpm-settings.c:561
+#: ../settings/xfpm-settings.c:562
 msgid "hours"
 msgstr "小時"
 
-#: ../settings/xfpm-settings.c:589
+#: ../settings/xfpm-settings.c:574
 msgid "Seconds"
 msgstr "秒"
 
-#: ../settings/xfpm-settings.c:595
+#: ../settings/xfpm-settings.c:580
 msgid "%"
 msgstr "%"
 
-#: ../settings/xfpm-settings.c:781 ../settings/xfpm-settings.c:1001
-#: ../settings/xfpm-settings.c:1463
-msgid "Hibernate and suspend operations not supported"
-msgstr "不支援休眠與暫停"
-
-#: ../settings/xfpm-settings.c:786 ../settings/xfpm-settings.c:1006
-#: ../settings/xfpm-settings.c:1468
-msgid "Hibernate and suspend operations not permitted"
-msgstr "不許進行休眠與暫停"
-
-#: ../settings/xfpm-settings.c:798 ../settings/xfpm-settings.c:1165
-#: ../settings/xfpm-settings.c:1222 ../settings/xfpm-settings.c:1274
-msgid "Do nothing"
-msgstr "無動作"
-
-#: ../settings/xfpm-settings.c:803 ../settings/xfpm-settings.c:871
-#: ../settings/xfpm-settings.c:1042 ../settings/xfpm-settings.c:1170
-#: ../settings/xfpm-settings.c:1227 ../settings/xfpm-settings.c:1279
-#: ../settings/xfpm-settings.c:1350 ../settings/xfpm-settings.c:1401
+#: ../settings/xfpm-settings.c:757 ../settings/xfpm-settings.c:836
+#: ../settings/xfpm-settings.c:899 ../settings/xfpm-settings.c:984
+#: ../settings/xfpm-settings.c:1077 ../settings/xfpm-settings.c:1190
+#: ../settings/xfpm-settings.c:1247 ../settings/xfpm-settings.c:1299
 #: ../src/xfpm-power.c:655
 msgid "Suspend"
 msgstr "暫停"
 
-#: ../settings/xfpm-settings.c:809 ../settings/xfpm-settings.c:877
-#: ../settings/xfpm-settings.c:1048 ../settings/xfpm-settings.c:1176
-#: ../settings/xfpm-settings.c:1233 ../settings/xfpm-settings.c:1285
-#: ../settings/xfpm-settings.c:1364 ../src/xfpm-power.c:644
+#: ../settings/xfpm-settings.c:761 ../settings/xfpm-settings.c:988
+msgid "Suspend operation not permitted"
+msgstr "不許暫停"
+
+#: ../settings/xfpm-settings.c:765 ../settings/xfpm-settings.c:992
+msgid "Suspend operation not supported"
+msgstr "不支援暫停"
+
+#: ../settings/xfpm-settings.c:771 ../settings/xfpm-settings.c:842
+#: ../settings/xfpm-settings.c:905 ../settings/xfpm-settings.c:998
+#: ../settings/xfpm-settings.c:1083 ../settings/xfpm-settings.c:1196
+#: ../settings/xfpm-settings.c:1253 ../settings/xfpm-settings.c:1305
+#: ../src/xfpm-power.c:644
 msgid "Hibernate"
 msgstr "休眠"
 
-#: ../settings/xfpm-settings.c:815 ../settings/xfpm-settings.c:1182
+#: ../settings/xfpm-settings.c:775 ../settings/xfpm-settings.c:1002
+msgid "Hibernate operation not permitted"
+msgstr "不許休眠"
+
+#: ../settings/xfpm-settings.c:779 ../settings/xfpm-settings.c:1006
+msgid "Hibernate operation not supported"
+msgstr "不支援休眠"
+
+#: ../settings/xfpm-settings.c:809 ../settings/xfpm-settings.c:1036
+#: ../settings/xfpm-settings.c:1388
+msgid "Hibernate and suspend operations not supported"
+msgstr "不支援休眠與暫停"
+
+#: ../settings/xfpm-settings.c:814 ../settings/xfpm-settings.c:1041
+#: ../settings/xfpm-settings.c:1393
+msgid "Hibernate and suspend operations not permitted"
+msgstr "不許進行休眠與暫停"
+
+#: ../settings/xfpm-settings.c:831 ../settings/xfpm-settings.c:1185
+#: ../settings/xfpm-settings.c:1242 ../settings/xfpm-settings.c:1294
+msgid "Do nothing"
+msgstr "無動作"
+
+#: ../settings/xfpm-settings.c:848 ../settings/xfpm-settings.c:1202
 #: ../src/xfpm-power.c:666
 msgid "Shutdown"
 msgstr "關機"
 
-#: ../settings/xfpm-settings.c:819 ../settings/xfpm-settings.c:1186
-#: ../settings/xfpm-settings.c:1237 ../settings/xfpm-settings.c:1289
+#: ../settings/xfpm-settings.c:852 ../settings/xfpm-settings.c:1206
+#: ../settings/xfpm-settings.c:1257 ../settings/xfpm-settings.c:1309
 msgid "Ask"
 msgstr "詢問"
 
-#: ../settings/xfpm-settings.c:866 ../settings/xfpm-settings.c:1037
+#: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1072
 msgid "Switch off display"
 msgstr "關閉顯示器"
 
-#: ../settings/xfpm-settings.c:881 ../settings/xfpm-settings.c:1052
+#: ../settings/xfpm-settings.c:909 ../settings/xfpm-settings.c:1087
 msgid "Lock screen"
 msgstr "鎖上螢幕"
 
-#: ../settings/xfpm-settings.c:928
-msgid "Always"
-msgstr "總是"
-
-#: ../settings/xfpm-settings.c:955 ../settings/xfpm-settings.c:1092
-msgid "Spinning down hard disks permission denied"
-msgstr "不許關閉硬碟轉動"
-
-#: ../settings/xfpm-settings.c:1354
-msgid "Suspend operation not permitted"
-msgstr "不許暫停"
-
-#: ../settings/xfpm-settings.c:1358
-msgid "Suspend operation not supported"
-msgstr "不支援暫停"
-
-#: ../settings/xfpm-settings.c:1368
-msgid "Hibernate operation not permitted"
-msgstr "不許休眠"
-
-#: ../settings/xfpm-settings.c:1372
-msgid "Hibernate operation not supported"
-msgstr "不支援休眠"
-
-#: ../settings/xfpm-settings.c:1403
-msgid "Standby"
-msgstr "待機"
-
-#: ../settings/xfpm-settings.c:1436
+#: ../settings/xfpm-settings.c:1360
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "當電腦的所有電力來源達到此充電水平時"
 
-#: ../settings/xfpm-settings.c:1674
+#: ../settings/xfpm-settings.c:1606
 msgid "Device"
 msgstr "裝置"
 
-#: ../settings/xfpm-settings.c:1696
+#: ../settings/xfpm-settings.c:1628
 msgid "Type"
 msgstr "類型"
 
-#: ../settings/xfpm-settings.c:1701
+#: ../settings/xfpm-settings.c:1633
 msgid "PowerSupply"
 msgstr "電源供應"
 
-#: ../settings/xfpm-settings.c:1702 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1634 ../src/xfpm-main.c:80
 msgid "True"
 msgstr "真"
 
-#: ../settings/xfpm-settings.c:1702 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1634 ../src/xfpm-main.c:80
 msgid "False"
 msgstr "假"
 
-#: ../settings/xfpm-settings.c:1709
+#: ../settings/xfpm-settings.c:1641
 msgid "Model"
 msgstr "型號"
 
-#: ../settings/xfpm-settings.c:1712
+#: ../settings/xfpm-settings.c:1644
 msgid "Technology"
 msgstr "科技"
 
-#: ../settings/xfpm-settings.c:1719
+#: ../settings/xfpm-settings.c:1651
 msgid "Current charge"
 msgstr "目前電力"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1727 ../settings/xfpm-settings.c:1739
-#: ../settings/xfpm-settings.c:1751
+#: ../settings/xfpm-settings.c:1659 ../settings/xfpm-settings.c:1671
+#: ../settings/xfpm-settings.c:1683
 msgid "Wh"
 msgstr "瓦特小時"
 
-#: ../settings/xfpm-settings.c:1729
+#: ../settings/xfpm-settings.c:1661
 msgid "Fully charged (design)"
 msgstr "充飽電(設計)"
 
-#: ../settings/xfpm-settings.c:1742
+#: ../settings/xfpm-settings.c:1674
 msgid "Fully charged"
 msgstr "充飽電"
 
-#: ../settings/xfpm-settings.c:1753
+#: ../settings/xfpm-settings.c:1685
 msgid "Energy empty"
 msgstr "電量空"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1761
+#: ../settings/xfpm-settings.c:1693
 msgid "V"
 msgstr "伏特"
 
-#: ../settings/xfpm-settings.c:1763
+#: ../settings/xfpm-settings.c:1695
 msgid "Voltage"
 msgstr "電壓"
 
-#: ../settings/xfpm-settings.c:1770
+#: ../settings/xfpm-settings.c:1702
 msgid "Vendor"
 msgstr "廠商"
 
-#: ../settings/xfpm-settings.c:1775
+#: ../settings/xfpm-settings.c:1707
 msgid "Serial"
 msgstr "序號"
 
-#: ../settings/xfpm-settings.c:1841
+#: ../settings/xfpm-settings.c:1773
 msgid "Attribute"
 msgstr "屬性"
 
-#: ../settings/xfpm-settings.c:1848
+#: ../settings/xfpm-settings.c:1780
 msgid "Value"
 msgstr "值"
 
-#: ../settings/xfpm-settings.c:2054
+#: ../settings/xfpm-settings.c:1986
 msgid "Check your power manager installation"
 msgstr "請檢查您的電源管理員是否安裝妥當"
 
-#: ../settings/xfpm-settings.c:2124
+#: ../settings/xfpm-settings.c:2056
 msgid "Devices"
 msgstr "裝置"
 
@@ -392,31 +360,31 @@ msgstr "經由 UpDevice 物件路徑顯示指定的裝置"
 msgid "UpDevice object path"
 msgstr "UpDevice 物件路徑"
 
-#: ../settings/xfpm-settings-main.c:91 ../src/xfpm-main.c:324
+#: ../settings/xfpm-settings-main.c:91 ../src/xfpm-main.c:314
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "輸入 '%s --help' 以瞭解用法。"
 
-#: ../settings/xfpm-settings-main.c:125
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "無法載入電源管理員組態，改為使用預設值"
-
-#: ../settings/xfpm-settings-main.c:152
-msgid "Unable to connect to Xfce Power Manager"
-msgstr "無法連接至 Xfce 電源管理員"
-
-#: ../settings/xfpm-settings-main.c:194 ../src/xfpm-main.c:359
+#: ../settings/xfpm-settings-main.c:111 ../src/xfpm-main.c:349
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce 電源管理員未有執行"
 
-#: ../settings/xfpm-settings-main.c:199
+#: ../settings/xfpm-settings-main.c:116
 msgid "Run"
 msgstr "執行"
 
-#: ../settings/xfpm-settings-main.c:200
+#: ../settings/xfpm-settings-main.c:117
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 電源管理員未有執行，想要現在啟動嗎？"
+
+#: ../settings/xfpm-settings-main.c:137
+msgid "Failed to load power manager configuration, using defaults"
+msgstr "無法載入電源管理員組態，改為使用預設值"
+
+#: ../settings/xfpm-settings-main.c:164
+msgid "Unable to connect to Xfce Power Manager"
+msgstr "無法連接至 Xfce 電源管理員"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:308 ../src/xfpm-power.c:586 ../src/xfpm-power.c:630
@@ -648,7 +616,7 @@ msgstr "輸入的密碼不正確"
 msgid "Continue"
 msgstr "繼續"
 
-#: ../src/xfpm-power.c:395 ../src/xfpm-manager.c:374
+#: ../src/xfpm-power.c:395 ../src/xfpm-manager.c:371
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
@@ -701,19 +669,19 @@ msgstr "xfce4-power-manager"
 msgid "Password:"
 msgstr "密碼"
 
-#: ../src/xfpm-power.c:1576 ../src/xfpm-power.c:1609 ../src/xfpm-power.c:1628
-#: ../src/xfpm-power.c:1651
+#: ../src/xfpm-power.c:1572 ../src/xfpm-power.c:1605 ../src/xfpm-power.c:1624
+#: ../src/xfpm-power.c:1647
 #, c-format
 msgid "Permission denied"
 msgstr "許可被拒"
 
-#: ../src/xfpm-power.c:1636 ../src/xfpm-power.c:1659
+#: ../src/xfpm-power.c:1632 ../src/xfpm-power.c:1655
 #, c-format
 msgid "Suspend not supported"
 msgstr "不支援暫停"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:149
+#: ../src/xfpm-backlight.c:172
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "亮度 %.0f 百分比"
@@ -800,130 +768,122 @@ msgid ""
 "\n"
 msgstr "\nXfce 電源管理員 %s\n\nXfce 好物專案的一部分\nhttp://goodies.xfce.org\n\n基於 GNU GPL 條款授權。\n\n"
 
-#: ../src/xfpm-main.c:117
+#: ../src/xfpm-main.c:113
 #, c-format
 msgid "With policykit support\n"
 msgstr "有 policykit 支援\n"
 
-#: ../src/xfpm-main.c:119
+#: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without policykit support\n"
 msgstr "沒有 policykit 支援\n"
 
-#: ../src/xfpm-main.c:122
+#: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
 msgstr "有網路管理員支援\n"
 
-#: ../src/xfpm-main.c:124
+#: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
 msgstr "沒有網路管理員支援\n"
 
-#: ../src/xfpm-main.c:127
+#: ../src/xfpm-main.c:123
 #, c-format
 msgid "With DPMS support\n"
 msgstr "有 DPMS 支援\n"
 
-#: ../src/xfpm-main.c:129
+#: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without DPMS support\n"
 msgstr "沒有 DPMS 支援\n"
 
-#: ../src/xfpm-main.c:145
+#: ../src/xfpm-main.c:139
 msgid "Can suspend"
 msgstr "可以暫停"
 
-#: ../src/xfpm-main.c:147
+#: ../src/xfpm-main.c:141
 msgid "Can hibernate"
 msgstr "可以休眠"
 
-#: ../src/xfpm-main.c:149
-msgid "Can spin down hard disks"
-msgstr "可以關閉硬碟轉動"
-
-#: ../src/xfpm-main.c:151
+#: ../src/xfpm-main.c:143
 msgid "Authorized to suspend"
 msgstr "獲授權暫停"
 
-#: ../src/xfpm-main.c:153
+#: ../src/xfpm-main.c:145
 msgid "Authorized to hibernate"
 msgstr "獲授權休眠"
 
-#: ../src/xfpm-main.c:155
+#: ../src/xfpm-main.c:147
 msgid "Authorized to shutdown"
 msgstr "獲授權關機"
 
-#: ../src/xfpm-main.c:157
-msgid "Authorized to spin down hard disks"
-msgstr "獲授權關閉硬碟轉動"
-
-#: ../src/xfpm-main.c:159
+#: ../src/xfpm-main.c:149
 msgid "Has battery"
 msgstr "有電池"
 
-#: ../src/xfpm-main.c:161
+#: ../src/xfpm-main.c:151
 msgid "Has brightness panel"
 msgstr "有亮度面板"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:153
 msgid "Has power button"
 msgstr "有電源按鈕"
 
-#: ../src/xfpm-main.c:165
+#: ../src/xfpm-main.c:155
 msgid "Has hibernate button"
 msgstr "有休眠按鈕"
 
-#: ../src/xfpm-main.c:167
+#: ../src/xfpm-main.c:157
 msgid "Has sleep button"
 msgstr "有睡眠按鈕"
 
-#: ../src/xfpm-main.c:169
+#: ../src/xfpm-main.c:159
 msgid "Has LID"
 msgstr "有 LID"
 
-#: ../src/xfpm-main.c:269
+#: ../src/xfpm-main.c:259
 msgid "Do not daemonize"
 msgstr "不要變成幕後程式"
 
-#: ../src/xfpm-main.c:270
+#: ../src/xfpm-main.c:260
 msgid "Enable debugging"
 msgstr "啟用除錯功能"
 
-#: ../src/xfpm-main.c:271
+#: ../src/xfpm-main.c:261
 msgid "Dump all information"
 msgstr "傾印所有資訊"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:262
 msgid "Restart the running instance of Xfce power manager"
 msgstr "重新啟動 Xfce 電源管理員執行中的實體"
 
-#: ../src/xfpm-main.c:273
+#: ../src/xfpm-main.c:263
 msgid "Show the configuration dialog"
 msgstr "顯示組態對話視窗"
 
-#: ../src/xfpm-main.c:274
+#: ../src/xfpm-main.c:264
 msgid "Quit any running xfce power manager"
 msgstr "結束任何執行中的 Xfce 電源管理員"
 
-#: ../src/xfpm-main.c:275
+#: ../src/xfpm-main.c:265
 msgid "Version information"
 msgstr "版本資訊"
 
-#: ../src/xfpm-main.c:296
+#: ../src/xfpm-main.c:286
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "無法解析參數：%s\n"
 
-#: ../src/xfpm-main.c:350
+#: ../src/xfpm-main.c:340
 msgid "Unable to get connection to the message bus session"
 msgstr "無法取得訊息匯流排工作階段的連線"
 
-#: ../src/xfpm-main.c:444
+#: ../src/xfpm-main.c:434
 msgid "Another power manager is already running"
 msgstr "另一個電源管理員正在執行"
 
-#: ../src/xfpm-main.c:450
+#: ../src/xfpm-main.c:440
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce 電源管理員正在執行"
@@ -957,34 +917,24 @@ msgstr "睡眠指令失敗"
 msgid "Power management for the Xfce desktop"
 msgstr "Xfce 桌面的電力管理"
 
-#: ../panel-plugins/brightness/brightness-button.c:180
-#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
-msgid "Control your LCD brightness"
-msgstr "控制您的 LCD 亮度"
-
-#: ../panel-plugins/brightness/brightness-button.c:182
-msgid "No device found"
-msgstr "找不到裝置"
-
-#: ../panel-plugins/brightness/brightness-button.c:662
-#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
-msgid "Brightness plugin"
-msgstr "亮度插件"
-
 #. how did we get here?
-#: ../panel-plugins/battery/battery-button.c:149
+#: ../panel-plugins/battery/battery-button.c:165
 msgid "Display battery levels for attached devices"
 msgstr "顯示附屬裝置的電池電力"
 
+#: ../panel-plugins/battery/battery-button.c:925
+msgid "<b>Display brightness</b>"
+msgstr "<b>顯示亮度</b>"
+
 #. Presentation mode checkbox
-#: ../panel-plugins/battery/battery-button.c:704
+#: ../panel-plugins/battery/battery-button.c:942
 msgid "Presentation _mode"
 msgstr "簡報模式(_M)"
 
 #. Power manager settings
-#: ../panel-plugins/battery/battery-button.c:713
-msgid "_Power manager..."
-msgstr "電源管理員... (_P)"
+#: ../panel-plugins/battery/battery-button.c:951
+msgid "_Power manager settings..."
+msgstr "電源管理員設定... (_P)"
 
 #: ../panel-plugins/battery/lxde/battery-plugin.c:54
 #: ../panel-plugins/battery/xfce/xfce4-battery-plugin.desktop.in.in.h:1
