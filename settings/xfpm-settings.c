@@ -387,8 +387,8 @@ dpms_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     
     gtk_widget_set_sensitive (on_ac_dpms_off, val);
     gtk_widget_set_sensitive (on_ac_dpms_sleep, val);
-    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "sleep-display-label")), val);
-    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "switch-off-display-label")), val);
+    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-label")), val);
+    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-label")), val);
     
     if ( GTK_IS_WIDGET (on_battery_dpms_off ) )
     {
@@ -417,7 +417,7 @@ sleep_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     
     if ( lcd_brightness )
     {
-	brg = GTK_WIDGET (gtk_builder_get_object (xml, "brg-on-battery"));
+	brg = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-battery"));
 	brightness_value = (gint) gtk_range_get_value (GTK_RANGE (brg));
 	
 	if ( sleep_value * 60 <= brightness_value && brightness_value != BRIGHTNESS_DISABLED)
@@ -478,7 +478,7 @@ sleep_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
     if ( lcd_brightness )
     {
-	brg = GTK_WIDGET (gtk_builder_get_object (xml, "brg-on-ac"));
+	brg = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-ac"));
     
 	brightness_value = (gint) gtk_range_get_value (GTK_RANGE (brg));
 	
@@ -801,7 +801,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Inactivity timeout on battery
      */
-    inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-on-battery"));
+    inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-inactivity-on-battery"));
 
     if ( !can_suspend && !can_hibernate )
     {
@@ -821,7 +821,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Battery critical
      */
-    battery_critical = GTK_WIDGET (gtk_builder_get_object (xml, "battery-critical-combox"));
+    battery_critical = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-action-combo"));
     
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     
@@ -935,8 +935,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Brightness on battery
      */
-    brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery"));
-    brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery"));
+    brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-inactivity-on-battery"));
+    brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-level-on-battery"));
     if ( has_lcd_brightness )
     {
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
@@ -1028,7 +1028,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Inactivity timeout on AC
      */
-    inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, "inactivity-on-ac"));
+    inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-inactivity-on-ac"));
 
     if ( !can_suspend && !can_hibernate )
     {
@@ -1105,7 +1105,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     else
     {
 	label = GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label"));
-	frame = GTK_WIDGET (gtk_builder_get_object (xml, "frame-laptop-lid"));
+	frame = GTK_WIDGET (gtk_builder_get_object (xml, "laptop-lid-frame"));
 	gtk_widget_hide (label);
 	gtk_widget_hide (lid);
 	gtk_widget_hide (frame);
@@ -1114,8 +1114,8 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	/*
 	 * Brightness on AC power
 	 */
-	brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-ac"));
-	brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-ac"));
+	brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-inactivity-on-ac"));
+	brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-level-on-ac"));
 	if ( has_lcd_brightness )
 	{
 	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
@@ -1157,7 +1157,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     GtkListStore *list_store;
     GtkTreeIter iter;
 
-    dpms = GTK_WIDGET (gtk_builder_get_object (xml, "enable-dpms"));
+    dpms = GTK_WIDGET (gtk_builder_get_object (xml, "handle-dpms"));
 #ifdef HAVE_DPMS
     /*
      * Global dpms settings (enable/disable)
@@ -1174,8 +1174,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
      * Power button
      */
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-    power = GTK_WIDGET (gtk_builder_get_object (xml, "power-combox"));
-    power_label = GTK_WIDGET (gtk_builder_get_object (xml, "power-label"));
+    power = GTK_WIDGET (gtk_builder_get_object (xml, "button-power-combo"));
+    power_label = GTK_WIDGET (gtk_builder_get_object (xml, "button-power-label"));
     
     if ( has_power_button )
     {
@@ -1231,8 +1231,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
      * Hibernate button
      */
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-    hibernate = GTK_WIDGET (gtk_builder_get_object (xml, "hibernate-combox"));
-    hibernate_label = GTK_WIDGET (gtk_builder_get_object (xml, "hibernate-label"));
+    hibernate = GTK_WIDGET (gtk_builder_get_object (xml, "button-hibernate-combo"));
+    hibernate_label = GTK_WIDGET (gtk_builder_get_object (xml, "button-hibernate-label"));
     
     if (has_hibernate_button )
     {
@@ -1283,8 +1283,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
      * Sleep button 
      */
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-    sleep_w = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-combox"));
-    sleep_label = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-label"));
+    sleep_w = GTK_WIDGET (gtk_builder_get_object (xml, "button-sleep-combo"));
+    sleep_label = GTK_WIDGET (gtk_builder_get_object (xml, "button-sleep-label"));
     
     if ( has_sleep_button )
     {
@@ -1333,7 +1333,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
      * Enable/Disable Notification
      */
     
-    notify = GTK_WIDGET (gtk_builder_get_object (xml, "notification"));
+    notify = GTK_WIDGET (gtk_builder_get_object (xml, "show-notifications"));
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX GENERAL_NOTIFICATION_CFG, TRUE);
     
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(notify), val);
@@ -1353,7 +1353,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Critical battery level
      */
-    critical_level = GTK_WIDGET (gtk_builder_get_object (xml, "critical-spin"));
+    critical_level = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-level-spin"));
     if ( has_battery )
     {
 	gtk_widget_set_tooltip_text (critical_level, 
@@ -1372,7 +1372,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     }
     else
     {
-	label = GTK_WIDGET (gtk_builder_get_object (xml, "critical-level-label" ));
+	label = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-level-label" ));
 	gtk_widget_hide (critical_level);
 	gtk_widget_hide (label);
     }
@@ -1399,7 +1399,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Handle brightness keys
      */
-    brg_handle_keys = GTK_WIDGET (gtk_builder_get_object (xml, "enable-brg-keys"));
+    brg_handle_keys = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys"));
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS, TRUE);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(brg_handle_keys), val);
 }
@@ -1990,19 +1990,19 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     lcd_brightness = has_lcd_brightness;
     starting_device_id = device_id;
     
-    on_battery_dpms_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-on-battery"));
-    on_battery_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "off-dpms-on-battery"));
-    on_ac_dpms_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "sleep-dpms-on-ac"));
-    on_ac_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "off-dpms-on-ac"));
+    on_battery_dpms_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-on-battery"));
+    on_battery_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-on-battery"));
+    on_ac_dpms_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-on-ac"));
+    on_ac_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-on-ac"));
 
-    on_battery_blank = GTK_WIDGET (gtk_builder_get_object (xml, "blank-on-battery"));
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATTERY_BLANK, 10);
+    on_battery_blank = GTK_WIDGET (gtk_builder_get_object (xml, "display-blank-on-battery"));
+    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATTERY_BLANK, 1);
     gtk_range_set_value (GTK_RANGE (on_battery_blank), val);
     xfconf_g_property_bind (channel, PROPERTIES_PREFIX ON_BATTERY_BLANK,
                             G_TYPE_INT, gtk_range_get_adjustment (GTK_RANGE (on_battery_blank)),
                             "value");
 
-    on_ac_blank = GTK_WIDGET (gtk_builder_get_object (xml, "blank-on-ac"));
+    on_ac_blank = GTK_WIDGET (gtk_builder_get_object (xml, "display-blank-on-ac"));
     xfconf_g_property_bind (channel, PROPERTIES_PREFIX ON_AC_BLANK,
                             G_TYPE_INT, gtk_range_get_adjustment (GTK_RANGE (on_ac_blank)),
                             "value");
@@ -2080,22 +2080,22 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                               has_lid);
     else
     {
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"frame-critical-power")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display_onbattery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display_pluggedin")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"sleep-dpms-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"off-dpms-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness_onbattery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness_pluggedin")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brg-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brg-level-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system_onbattery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system_pluggedin")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"inactivity-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-label")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"critical-power-frame")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-on-battery-header")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-plugged-in-header")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-sleep-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-off-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-on-battery-header")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-plugged-in-header")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-level-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-inactivity-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-on-battery-header")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-plugged-in-header")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-inactivity-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-header")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-combo")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-ac-label")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"blank-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-plugged-in-header")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display-blank-on-battery")));
     }
     
     xfpm_settings_general (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, can_shutdown,
@@ -2105,7 +2105,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 
     if ( !has_lcd_brightness )
     {
-    frame = GTK_WIDGET (gtk_builder_get_object (xml, "frame-brightness"));
+    frame = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-frame"));
     gtk_widget_hide (frame);
     }
 

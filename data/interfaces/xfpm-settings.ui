@@ -3,76 +3,183 @@
   <!-- interface-requires libxfce4ui 4.5 -->
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy toplevel-contextual -->
-  <object class="GtkAdjustment" id="adjustment2">
-    <property name="upper">60</property>
-    <property name="value">17</property>
-    <property name="step_increment">1</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment3">
-    <property name="upper">60</property>
-    <property name="value">15</property>
-    <property name="step_increment">1</property>
-    <property name="page_size">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment4">
+  <object class="GtkAdjustment" id="brightness-inactivity-on-ac-adjustment">
     <property name="lower">9</property>
     <property name="upper">120</property>
-    <property name="value">10</property>
+    <property name="value">9</property>
     <property name="step_increment">1</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment5">
-    <property name="lower">14</property>
-    <property name="upper">360</property>
-    <property name="value">15</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
-    <property name="page_size">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment6">
-    <property name="upper">60</property>
-    <property name="value">5</property>
-    <property name="step_increment">1</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment7">
-    <property name="upper">60</property>
-    <property name="value">5</property>
-    <property name="step_increment">1</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment8">
+  <object class="GtkAdjustment" id="brightness-inactivity-on-battery-adjustment">
     <property name="lower">9</property>
     <property name="upper">120</property>
-    <property name="value">10</property>
+    <property name="value">30</property>
     <property name="step_increment">1</property>
   </object>
-  <object class="GtkAdjustment" id="adjustment9">
-    <property name="lower">1</property>
-    <property name="upper">20</property>
-    <property name="value">5</property>
-    <property name="step_increment">1</property>
-  </object>
-  <object class="GtkAdjustment" id="blank-on-ac-adjustment">
-    <property name="upper">60</property>
-    <property name="value">10</property>
-    <property name="step_increment">1</property>
-  </object>
-  <object class="GtkAdjustment" id="blank-on-battery-adjustment">
-    <property name="upper">60</property>
-    <property name="value">10</property>
-    <property name="step_increment">1</property>
-  </object>
-  <object class="GtkAdjustment" id="brg-level-on-ac-adjustment">
+  <object class="GtkAdjustment" id="brightness-level-on-ac-adjustment">
     <property name="lower">1</property>
     <property name="upper">100</property>
     <property name="value">80</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkAdjustment" id="brg-level-on-battery-adjustment">
+  <object class="GtkAdjustment" id="brightness-level-on-battery-adjustment">
     <property name="lower">1</property>
     <property name="upper">100</property>
     <property name="value">20</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="critical-power-level-spin-adjustment">
+    <property name="lower">1</property>
+    <property name="upper">20</property>
+    <property name="value">5</property>
+    <property name="step_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="display-blank-on-ac-adjustment">
+    <property name="upper">60</property>
+    <property name="value">10</property>
+    <property name="step_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="display-blank-on-battery-adjustment">
+    <property name="upper">60</property>
+    <property name="value">1</property>
+    <property name="step_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="dpms-off-on-ac-adjustment">
+    <property name="upper">60</property>
+    <property name="value">20</property>
+    <property name="step_increment">1</property>
+    <property name="page_size">10</property>
+  </object>
+  <object class="GtkAdjustment" id="dpms-off-on-battery-adjustment">
+    <property name="upper">60</property>
+    <property name="value">5</property>
+    <property name="step_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="dpms-sleep-on-ac-adjustment">
+    <property name="upper">60</property>
+    <property name="value">15</property>
+    <property name="step_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="dpms-sleep-on-battery-adjustment">
+    <property name="upper">60</property>
+    <property name="value">3</property>
+    <property name="step_increment">1</property>
+  </object>
+  <object class="GtkListStore" id="model1">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model10">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model3">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model4">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model5">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model6">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model7">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model8">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="model9">
+    <columns>
+      <!-- column-name gchararray -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Nothing</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkAdjustment" id="system-sleep-inactivity-on-ac-adjustment">
+    <property name="lower">14</property>
+    <property name="upper">360</property>
+    <property name="value">14</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+    <property name="page_size">10</property>
+  </object>
+  <object class="GtkAdjustment" id="system-sleep-inactivity-on-battery-adjustment">
+    <property name="lower">14</property>
+    <property name="upper">360</property>
+    <property name="value">15</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+    <property name="page_size">10</property>
   </object>
   <object class="XfceTitledDialog" id="xfpm-settings-dialog">
     <property name="can_focus">False</property>
@@ -140,7 +247,7 @@
                     <property name="border_width">12</property>
                     <property name="spacing">6</property>
                     <child>
-                      <object class="GtkFrame" id="frame5">
+                      <object class="GtkFrame" id="system-sleep-frame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
@@ -161,7 +268,7 @@
                                 <property name="column_spacing">18</property>
                                 <property name="row_spacing">6</property>
                                 <child>
-                                  <object class="GtkLabel" id="system_onbattery">
+                                  <object class="GtkLabel" id="system-sleep-on-battery-header">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">On battery</property>
@@ -173,7 +280,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="system_pluggedin">
+                                  <object class="GtkLabel" id="system-sleep-plugged-in-header">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Plugged in</property>
@@ -185,7 +292,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="label7">
+                                  <object class="GtkLabel" id="system-sleep-inactivity-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="xalign">0</property>
@@ -198,11 +305,11 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkHScale" id="inactivity-on-battery">
+                                  <object class="GtkHScale" id="system-sleep-inactivity-on-battery">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="update_policy">discontinuous</property>
-                                    <property name="adjustment">adjustment5</property>
+                                    <property name="adjustment">system-sleep-inactivity-on-battery-adjustment</property>
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="value_pos">bottom</property>
@@ -217,10 +324,11 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkHScale" id="inactivity-on-ac">
+                                  <object class="GtkHScale" id="system-sleep-inactivity-on-ac">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="update_policy">discontinuous</property>
+                                    <property name="adjustment">system-sleep-inactivity-on-ac-adjustment</property>
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="value_pos">bottom</property>
@@ -235,7 +343,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="system-sleepmode-label">
+                                  <object class="GtkLabel" id="system-sleep-mode-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="xalign">0</property>
@@ -319,7 +427,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkFrame" id="frame-critical-power">
+                      <object class="GtkFrame" id="critical-power-frame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
@@ -343,7 +451,7 @@
                                     <property name="can_focus">False</property>
                                     <property name="spacing">6</property>
                                     <child>
-                                      <object class="GtkLabel" id="critical-level-label">
+                                      <object class="GtkLabel" id="critical-power-level-label">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="xalign">0</property>
@@ -356,7 +464,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkSpinButton" id="critical-spin">
+                                      <object class="GtkSpinButton" id="critical-power-level-spin">
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="invisible_char">●</property>
@@ -365,7 +473,7 @@
                                         <property name="secondary_icon_activatable">False</property>
                                         <property name="primary_icon_sensitive">True</property>
                                         <property name="secondary_icon_sensitive">True</property>
-                                        <property name="adjustment">adjustment9</property>
+                                        <property name="adjustment">critical-power-level-spin-adjustment</property>
                                         <signal name="output" handler="critical_spin_output_cb" swapped="no"/>
                                         <signal name="value-changed" handler="critical_level_value_changed_cb" swapped="no"/>
                                       </object>
@@ -388,7 +496,7 @@
                                     <property name="can_focus">False</property>
                                     <property name="spacing">6</property>
                                     <child>
-                                      <object class="GtkLabel" id="battery-critical-label">
+                                      <object class="GtkLabel" id="critical-power-action-label">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="xalign">0</property>
@@ -401,7 +509,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkComboBox" id="battery-critical-combox">
+                                      <object class="GtkComboBox" id="critical-power-action-combo">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <signal name="changed" handler="battery_critical_changed_cb" swapped="no"/>
@@ -445,7 +553,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkFrame" id="frame2">
+                      <object class="GtkFrame" id="security-and-notifications-frame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
@@ -479,7 +587,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkCheckButton" id="notification">
+                                  <object class="GtkCheckButton" id="show-notifications">
                                     <property name="label" translatable="yes">Show notifications</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -531,7 +639,7 @@
                     <property name="border_width">12</property>
                     <property name="spacing">6</property>
                     <child>
-                      <object class="GtkFrame" id="frame1">
+                      <object class="GtkFrame" id="buttons-frame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
@@ -557,7 +665,7 @@
                                     <property name="column_spacing">6</property>
                                     <property name="row_spacing">6</property>
                                     <child>
-                                      <object class="GtkLabel" id="power-label">
+                                      <object class="GtkLabel" id="button-power-label">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="xalign">0</property>
@@ -568,7 +676,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkLabel" id="sleep-label">
+                                      <object class="GtkLabel" id="button-sleep-label">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="xalign">0</property>
@@ -581,7 +689,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkLabel" id="hibernate-label">
+                                      <object class="GtkLabel" id="button-hibernate-label">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="xalign">0</property>
@@ -594,7 +702,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkComboBox" id="power-combox">
+                                      <object class="GtkComboBox" id="button-power-combo">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <signal name="changed" handler="button_power_changed_cb" swapped="no"/>
@@ -611,7 +719,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkComboBox" id="sleep-combox">
+                                      <object class="GtkComboBox" id="button-sleep-combo">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <signal name="changed" handler="button_sleep_changed_cb" swapped="no"/>
@@ -630,7 +738,7 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkComboBox" id="hibernate-combox">
+                                      <object class="GtkComboBox" id="button-hibernate-combo">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <signal name="changed" handler="button_hibernate_changed_cb" swapped="no"/>
@@ -675,7 +783,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkFrame" id="frame-laptop-lid">
+                      <object class="GtkFrame" id="laptop-lid-frame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
@@ -695,7 +803,7 @@
                                 <property name="column_spacing">18</property>
                                 <property name="row_spacing">6</property>
                                 <child>
-                                  <object class="GtkLabel" id="lid-on-battery-label">
+                                  <object class="GtkLabel" id="lid-on-battery-header">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">On battery</property>
@@ -707,7 +815,7 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkLabel" id="lid-on-ac-label">
+                                  <object class="GtkLabel" id="lid-plugged-in-header">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">Plugged in</property>
@@ -810,7 +918,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkFrame" id="frame8">
+                      <object class="GtkFrame" id="keys-frame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
@@ -828,7 +936,7 @@
                                 <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
                                 <child>
-                                  <object class="GtkCheckButton" id="enable-brg-keys">
+                                  <object class="GtkCheckButton" id="handle-brightness-keys">
                                     <property name="label" translatable="yes">Handle display brightness _keys</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -890,7 +998,7 @@
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
                         <child>
-                          <object class="GtkCheckButton" id="enable-dpms">
+                          <object class="GtkCheckButton" id="handle-dpms">
                             <property name="label" translatable="yes">Handle display power management</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -913,7 +1021,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkFrame" id="frame4">
+                      <object class="GtkFrame" id="dpms-frame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
@@ -940,7 +1048,7 @@
                                         <property name="can_focus">False</property>
                                         <property name="homogeneous">True</property>
                                         <child>
-                                          <object class="GtkLabel" id="blank-display-label">
+                                          <object class="GtkLabel" id="display-blank-label">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="xalign">0</property>
@@ -953,7 +1061,7 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="sleep-display-label">
+                                          <object class="GtkLabel" id="dpms-sleep-label">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="xalign">0</property>
@@ -966,7 +1074,7 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="switch-off-display-label">
+                                          <object class="GtkLabel" id="dpms-off-label">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="xalign">0</property>
@@ -1000,7 +1108,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <child>
-                                                  <object class="GtkLabel" id="display_onbattery">
+                                                  <object class="GtkLabel" id="dpms-on-battery-header">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="yalign">1</property>
@@ -1014,11 +1122,11 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkHScale" id="blank-on-battery">
+                                                  <object class="GtkHScale" id="display-blank-on-battery">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="update_policy">discontinuous</property>
-                                                    <property name="adjustment">blank-on-battery-adjustment</property>
+                                                    <property name="adjustment">display-blank-on-battery-adjustment</property>
                                                     <property name="round_digits">0</property>
                                                     <property name="digits">0</property>
                                                     <property name="value_pos">bottom</property>
@@ -1042,7 +1150,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <child>
-                                                  <object class="GtkLabel" id="display_pluggedin">
+                                                  <object class="GtkLabel" id="dpms-plugged-in-header">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="yalign">1</property>
@@ -1056,11 +1164,11 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkHScale" id="blank-on-ac">
+                                                  <object class="GtkHScale" id="display-blank-on-ac">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="update_policy">discontinuous</property>
-                                                    <property name="adjustment">blank-on-ac-adjustment</property>
+                                                    <property name="adjustment">display-blank-on-ac-adjustment</property>
                                                     <property name="round_digits">0</property>
                                                     <property name="digits">0</property>
                                                     <property name="value_pos">bottom</property>
@@ -1092,11 +1200,11 @@
                                             <property name="can_focus">False</property>
                                             <property name="spacing">6</property>
                                             <child>
-                                              <object class="GtkHScale" id="sleep-dpms-on-battery">
+                                              <object class="GtkHScale" id="dpms-sleep-on-battery">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="update_policy">discontinuous</property>
-                                                <property name="adjustment">adjustment6</property>
+                                                <property name="adjustment">dpms-sleep-on-battery-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -1110,11 +1218,11 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkHScale" id="sleep-dpms-on-ac">
+                                              <object class="GtkHScale" id="dpms-sleep-on-ac">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="update_policy">discontinuous</property>
-                                                <property name="adjustment">adjustment2</property>
+                                                <property name="adjustment">dpms-sleep-on-ac-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -1140,11 +1248,11 @@
                                             <property name="can_focus">False</property>
                                             <property name="spacing">6</property>
                                             <child>
-                                              <object class="GtkHScale" id="off-dpms-on-battery">
+                                              <object class="GtkHScale" id="dpms-off-on-battery">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="update_policy">discontinuous</property>
-                                                <property name="adjustment">adjustment7</property>
+                                                <property name="adjustment">dpms-off-on-battery-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -1158,11 +1266,11 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkHScale" id="off-dpms-on-ac">
+                                              <object class="GtkHScale" id="dpms-off-on-ac">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="update_policy">discontinuous</property>
-                                                <property name="adjustment">adjustment3</property>
+                                                <property name="adjustment">dpms-off-on-ac-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -1216,7 +1324,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkFrame" id="frame-brightness">
+                      <object class="GtkFrame" id="brightness-frame">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
@@ -1242,7 +1350,7 @@
                                         <property name="can_focus">False</property>
                                         <property name="homogeneous">True</property>
                                         <child>
-                                          <object class="GtkLabel" id="reduce-brightness-label">
+                                          <object class="GtkLabel" id="brightness-level-label">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="xalign">0</property>
@@ -1255,7 +1363,7 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="reduce-brightness-to-label">
+                                          <object class="GtkLabel" id="brightness-inactivity-label">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="xalign">0</property>
@@ -1289,7 +1397,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <child>
-                                                  <object class="GtkLabel" id="brightness_onbattery">
+                                                  <object class="GtkLabel" id="brightness-on-battery-header">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="yalign">1</property>
@@ -1303,11 +1411,11 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkHScale" id="brg-level-on-battery">
+                                                  <object class="GtkHScale" id="brightness-level-on-battery">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="update_policy">discontinuous</property>
-                                                    <property name="adjustment">brg-level-on-battery-adjustment</property>
+                                                    <property name="adjustment">brightness-level-on-battery-adjustment</property>
                                                     <property name="round_digits">0</property>
                                                     <property name="digits">0</property>
                                                     <property name="value_pos">bottom</property>
@@ -1332,7 +1440,7 @@
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <child>
-                                                  <object class="GtkLabel" id="brightness_pluggedin">
+                                                  <object class="GtkLabel" id="brightness-plugged-in-header">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="yalign">1</property>
@@ -1346,11 +1454,11 @@
                                                   </packing>
                                                 </child>
                                                 <child>
-                                                  <object class="GtkHScale" id="brg-level-on-ac">
+                                                  <object class="GtkHScale" id="brightness-level-on-ac">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="update_policy">discontinuous</property>
-                                                    <property name="adjustment">brg-level-on-ac-adjustment</property>
+                                                    <property name="adjustment">brightness-level-on-ac-adjustment</property>
                                                     <property name="round_digits">0</property>
                                                     <property name="digits">0</property>
                                                     <property name="value_pos">bottom</property>
@@ -1383,11 +1491,11 @@
                                             <property name="can_focus">False</property>
                                             <property name="spacing">6</property>
                                             <child>
-                                              <object class="GtkHScale" id="brg-on-battery">
+                                              <object class="GtkHScale" id="brightness-inactivity-on-battery">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="update_policy">discontinuous</property>
-                                                <property name="adjustment">adjustment8</property>
+                                                <property name="adjustment">brightness-inactivity-on-battery-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -1401,11 +1509,11 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkHScale" id="brg-on-ac">
+                                              <object class="GtkHScale" id="brightness-inactivity-on-ac">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="update_policy">discontinuous</property>
-                                                <property name="adjustment">adjustment4</property>
+                                                <property name="adjustment">brightness-inactivity-on-ac-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
                                                 <property name="value_pos">bottom</property>
@@ -1495,126 +1603,27 @@
       <action-widget response="-3">close-button</action-widget>
     </action-widgets>
   </object>
+  <object class="GtkSizeGroup" id="sg-critical-power">
+    <widgets>
+      <widget name="critical-power-level-label"/>
+      <widget name="critical-power-action-label"/>
+    </widgets>
+  </object>
   <object class="GtkSizeGroup" id="sg-display-labels">
     <widgets>
-      <widget name="blank-display-label"/>
-      <widget name="sleep-display-label"/>
-      <widget name="switch-off-display-label"/>
-      <widget name="reduce-brightness-label"/>
-      <widget name="reduce-brightness-to-label"/>
+      <widget name="display-blank-label"/>
+      <widget name="dpms-sleep-label"/>
+      <widget name="dpms-off-label"/>
+      <widget name="brightness-level-label"/>
+      <widget name="brightness-inactivity-label"/>
     </widgets>
   </object>
   <object class="GtkSizeGroup" id="sg-display-sliders">
     <widgets>
-      <widget name="display_onbattery"/>
-      <widget name="display_pluggedin"/>
-      <widget name="brightness_onbattery"/>
-      <widget name="brightness_pluggedin"/>
+      <widget name="dpms-on-battery-header"/>
+      <widget name="dpms-plugged-in-header"/>
+      <widget name="brightness-on-battery-header"/>
+      <widget name="brightness-plugged-in-header"/>
     </widgets>
-  </object>
-  <object class="GtkSizeGroup" id="sg_critical_power">
-    <widgets>
-      <widget name="critical-level-label"/>
-      <widget name="battery-critical-label"/>
-    </widgets>
-  </object>
-  <object class="GtkListStore" id="model1">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nothing</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model10">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nothing</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model3">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nothing</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model4">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nothing</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model5">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nothing</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model6">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nothing</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model7">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nothing</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model8">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nothing</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="model9">
-    <columns>
-      <!-- column-name gchararray -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">Nothing</col>
-      </row>
-    </data>
   </object>
 </interface>
