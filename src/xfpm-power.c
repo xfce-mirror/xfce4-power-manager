@@ -1223,22 +1223,22 @@ static void xfpm_power_set_property (GObject *object,
 
     switch (prop_id)
     {
-	case PROP_PRESENTATION_MODE:
-	    xfpm_power_change_presentation_mode (power, g_value_get_boolean (value));
-	    break;
+    case PROP_PRESENTATION_MODE:
+        xfpm_power_change_presentation_mode (power, g_value_get_boolean (value));
+        break;
     case PROP_ON_AC_BLANK:
-          on_ac_blank = g_value_get_int (value);
-          power->priv->on_ac_blank = on_ac_blank;
-          xfpm_update_blank_time (power);
-          break;
-      case PROP_ON_BATTERY_BLANK:
-          on_battery_blank = g_value_get_int (value);
-          power->priv->on_battery_blank = on_battery_blank;
-          xfpm_update_blank_time (power);
-          break;
-        default:
-            G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-            break;
+        on_ac_blank = g_value_get_int (value);
+        power->priv->on_ac_blank = on_ac_blank;
+        xfpm_update_blank_time (power);
+        break;
+    case PROP_ON_BATTERY_BLANK:
+        on_battery_blank = g_value_get_int (value);
+        power->priv->on_battery_blank = on_battery_blank;
+        xfpm_update_blank_time (power);
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+        break;
     }
 }
 
