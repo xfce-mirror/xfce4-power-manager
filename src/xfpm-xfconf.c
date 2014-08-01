@@ -189,9 +189,9 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
 	return;
 
     /* We handle presentation mode and blank-times in xfpm-power directly */
-    if ( g_strcmp0 (property, "/xfce4-power-manager/presentation-mode") == 0 ||
-         g_strcmp0 (property, "/xfce4-power-manager/blank-on-ac") == 0 ||
-         g_strcmp0 (property, "/xfce4-power-manager/blank-on-battery") == 0)
+    if ( g_strcmp0 (property, PROPERTIES_PREFIX PRESENTATION_MODE) == 0 ||
+         g_strcmp0 (property, PROPERTIES_PREFIX ON_AC_BLANK) == 0 ||
+         g_strcmp0 (property, PROPERTIES_PREFIX ON_BATTERY_BLANK) == 0)
         return;
 
     /* We handle brightness switch in xfpm-backlight directly */
