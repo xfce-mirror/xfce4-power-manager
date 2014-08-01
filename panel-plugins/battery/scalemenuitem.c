@@ -299,7 +299,7 @@ scale_menu_item_button_release_event (GtkWidget *menuitem,
       g_signal_emit (menuitem, signals[SLIDER_RELEASED], 0);
     }
 
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
