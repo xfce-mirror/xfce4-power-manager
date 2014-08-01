@@ -1180,36 +1180,36 @@ static void xfpm_power_get_property (GObject *object,
 
     switch (prop_id)
     {
-	case PROP_ON_BATTERY:
-	    g_value_set_boolean (value, power->priv->on_battery);
-	    break;
-	case PROP_AUTH_HIBERNATE:
-	    g_value_set_boolean (value, power->priv->auth_hibernate);
-	    break;
-	case PROP_AUTH_SUSPEND:
-	    g_value_set_boolean (value, power->priv->auth_suspend);
-	    break;
-	case PROP_CAN_SUSPEND:
-	    g_value_set_boolean (value, power->priv->can_suspend);
-	    break;
-	case PROP_CAN_HIBERNATE:
-	    g_value_set_boolean (value, power->priv->can_hibernate);
-	    break;
-	case PROP_HAS_LID:
-	    g_value_set_boolean (value, power->priv->lid_is_present);
-	    break;
-	case PROP_PRESENTATION_MODE:
-	    g_value_set_boolean (value, power->priv->presentation_mode);
-	    break;
+    case PROP_ON_BATTERY:
+        g_value_set_boolean (value, power->priv->on_battery);
+        break;
+    case PROP_AUTH_HIBERNATE:
+        g_value_set_boolean (value, power->priv->auth_hibernate);
+        break;
+    case PROP_AUTH_SUSPEND:
+        g_value_set_boolean (value, power->priv->auth_suspend);
+        break;
+    case PROP_CAN_SUSPEND:
+        g_value_set_boolean (value, power->priv->can_suspend);
+        break;
+    case PROP_CAN_HIBERNATE:
+        g_value_set_boolean (value, power->priv->can_hibernate);
+        break;
+    case PROP_HAS_LID:
+        g_value_set_boolean (value, power->priv->lid_is_present);
+        break;
+    case PROP_PRESENTATION_MODE:
+        g_value_set_boolean (value, power->priv->presentation_mode);
+        break;
     case PROP_ON_AC_BLANK:
-      g_value_set_int (value, power->priv->on_ac_blank);
-      break;
+        g_value_set_int (value, power->priv->on_ac_blank);
+        break;
     case PROP_ON_BATTERY_BLANK:
-      g_value_set_int (value, power->priv->on_battery_blank);
-      break;
-        default:
-            G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-            break;
+        g_value_set_int (value, power->priv->on_battery_blank);
+        break;
+    default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+        break;
     }
 }
 
