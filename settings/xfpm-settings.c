@@ -2093,6 +2093,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-inactivity-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-on-battery-header")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-plugged-in-header")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-mode-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-inactivity-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-header")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-combo")));
