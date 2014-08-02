@@ -2083,6 +2083,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"critical-power-frame")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-on-battery-header")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-plugged-in-header")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display-blank-on-battery")));
+	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display-blank-on-battery-vbox")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-sleep-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-off-on-battery")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-on-battery-header")));
@@ -2095,7 +2097,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-header")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-combo")));
 	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-plugged-in-header")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display-blank-on-battery")));
     }
     
     xfpm_settings_general (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, can_shutdown,
