@@ -471,7 +471,10 @@ battery_button_init (BatteryButton *button)
 
     button->priv = BATTERY_BUTTON_GET_PRIVATE (button);
 
+    gtk_widget_set_can_default (GTK_WIDGET (button), FALSE);
+    gtk_widget_set_can_focus (GTK_WIDGET (button), FALSE);
     gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+    gtk_button_set_focus_on_click (GTK_BUTTON (button), FALSE);
 
     button->priv->brightness = xfpm_brightness_new ();
     xfpm_brightness_setup (button->priv->brightness);
@@ -551,7 +554,7 @@ battery_button_set_icon (BatteryButton *button)
     pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                        button->priv->panel_icon_name,
                                        button->priv->panel_icon_width,
-                                       GTK_ICON_LOOKUP_FORCE_SIZE,
+                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                        NULL);
 
     if ( pixbuf )
@@ -589,16 +592,18 @@ static gboolean
 battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButton *button)
 {
     gint width;
+    gint xthickness;
+    gint ythickness;
 
     g_return_val_if_fail (BATTERY_IS_BUTTON (button), FALSE);
     g_return_val_if_fail (XFCE_IS_PANEL_PLUGIN (plugin), FALSE);
 
-
+    xthickness = gtk_widget_get_style(GTK_WIDGET(button))->xthickness;
+    ythickness = gtk_widget_get_style(GTK_WIDGET(button))->ythickness;
     size /= xfce_panel_plugin_get_nrows (plugin);
-    width = size -2 - 2* MAX(gtk_widget_get_style(GTK_WIDGET(button))->xthickness,
-                             gtk_widget_get_style(GTK_WIDGET(button))->ythickness);
+    width = size - 2* MAX (xthickness, ythickness);
 
-    gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
+    gtk_widget_set_size_request (GTK_WIDGET(plugin), size + xthickness, size + ythickness);
     button->priv->panel_icon_width = width;
 
     return battery_button_set_icon (button);
