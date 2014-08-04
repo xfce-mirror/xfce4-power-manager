@@ -64,6 +64,8 @@ G_BEGIN_DECLS
 #define     	BRIGHTNESS_LEVEL_ON_AC          "brightness-level-on-ac"
 #define     	BRIGHTNESS_LEVEL_ON_BATTERY     "brightness-level-on-battery"
 
+#define     	BRIGHTNESS_SLIDER_MIN_LEVEL     "brightness-slider-min-level"
+
 #define     	CRITICAL_POWER_LEVEL        	"critical-power-level"
 #define     	SHOW_BRIGHTNESS_POPUP        	"show-brightness-popup"
 #define     	HANDLE_BRIGHTNESS_KEYS          "handle-brightness-keys"
