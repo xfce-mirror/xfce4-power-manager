@@ -34,6 +34,7 @@
 #include <xfconf/xfconf.h>
 
 #include "common/xfpm-common.h"
+#include "common/xfpm-config.h"
 #include "common/xfpm-icons.h"
 #include "common/xfpm-power-common.h"
 #include "common/xfpm-brightness.h"
@@ -916,7 +917,7 @@ battery_button_show_menu (BatteryButton *button)
 
         /* determine minimum value for slider */
         min_level = xfconf_channel_get_int (button->priv->channel,
-                                            "/xfce4-power-manager/brightness-slider-min-level",
+                                            PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL,
                                             -1);
         if (min_level == -1)
         {
@@ -929,7 +930,7 @@ battery_button_show_menu (BatteryButton *button)
              */
             min_level = (max_level > 100) ? SAFE_SLIDER_MIN_LEVEL : 0;
             xfconf_channel_set_int (button->priv->channel,
-                                    "/xfce4-power-manager/brightness-slider-min-level",
+                                    PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL,
                                     min_level);
         }
 
@@ -970,7 +971,7 @@ battery_button_show_menu (BatteryButton *button)
     gtk_widget_show (mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
     xfconf_g_property_bind(button->priv->channel,
-                           "/xfce4-power-manager/presentation-mode",
+                           PROPERTIES_PREFIX PRESENTATION_MODE,
                            G_TYPE_BOOLEAN, G_OBJECT(mi), "active");
 
     /* Power manager settings */
