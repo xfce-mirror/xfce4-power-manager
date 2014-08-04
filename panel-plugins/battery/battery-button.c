@@ -42,7 +42,7 @@
 #include "scalemenuitem.h"
 
 
-#define SET_LEVEL_TIMEOUT (25)
+#define SET_LEVEL_TIMEOUT (50)
 
 #define BATTERY_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), BATTERY_TYPE_BUTTON, BatteryButtonPrivate))
