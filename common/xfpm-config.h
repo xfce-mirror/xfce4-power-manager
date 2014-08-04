@@ -30,67 +30,53 @@
 
 G_BEGIN_DECLS
 
-#define 	XFPM_CHANNEL_CFG             	"xfce4-power-manager"
+#define XFPM_CHANNEL_CFG                     "xfce4-power-manager"
+#define PROPERTIES_PREFIX                    "/xfce4-power-manager/"
 
-/*
- * Backward compatibility with old version.
- */
-#define 	PROPERTIES_PREFIX		"/xfce4-power-manager/"
+#define ON_AC_INACTIVITY_TIMEOUT             "inactivity-on-ac"
+#define ON_BATTERY_INACTIVITY_TIMEOUT        "inactivity-on-battery"
+#define INACTIVITY_SLEEP_MODE_ON_AC          "inactivity-sleep-mode-on-ac"
+#define INACTIVITY_SLEEP_MODE_ON_BATTERY     "inactivity-sleep-mode-on-battery"
 
-#define     	CPU_FREQ_CONTROL             	"enable-cpu-freq-control"
-#define     	LOCK_SCREEN_ON_SLEEP         	"lock-screen-suspend-hibernate"
+#define CRITICAL_POWER_LEVEL                 "critical-power-level"
+#define CRITICAL_BATT_ACTION_CFG             "critical-power-action"
 
-#define         ON_BATTERY_BLANK                "blank-on-battery"
-#define         ON_AC_BLANK                     "blank-on-ac"
+#define DPMS_ENABLED_CFG                     "dpms-enabled"
+#define ON_BATTERY_BLANK                     "blank-on-battery"
+#define ON_AC_BLANK                          "blank-on-ac"
+#define ON_AC_DPMS_SLEEP                     "dpms-on-ac-sleep"
+#define ON_AC_DPMS_OFF                       "dpms-on-ac-off"
+#define ON_BATT_DPMS_SLEEP                   "dpms-on-battery-sleep"
+#define ON_BATT_DPMS_OFF                     "dpms-on-battery-off"
+#define DPMS_SLEEP_MODE                      "dpms-sleep-mode"
 
-#define 	DPMS_ENABLED_CFG             	"dpms-enabled" 
-#define 	ON_AC_DPMS_SLEEP 	     	"dpms-on-ac-sleep"
-#define 	ON_AC_DPMS_OFF	     	     	"dpms-on-ac-off"
-#define 	ON_BATT_DPMS_SLEEP 	     	"dpms-on-battery-sleep"
-#define 	ON_BATT_DPMS_OFF	     	"dpms-on-battery-off"
-#define     	DPMS_SLEEP_MODE		     	"dpms-sleep-mode"		
+#define LOCK_SCREEN_ON_SLEEP                 "lock-screen-suspend-hibernate"
+#define GENERAL_NOTIFICATION_CFG             "general-notification"
+#define PRESENTATION_MODE                    "presentation-mode"
+#define NETWORK_MANAGER_SLEEP                "network-manager-sleep"
+#define SHOW_TRAY_ICON_CFG                   "show-tray-icon"
+#define CPU_FREQ_CONTROL                     "enable-cpu-freq-control"
 
-#define 	GENERAL_NOTIFICATION_CFG     	"general-notification"
+#define POWER_SWITCH_CFG                     "power-button-action"
+#define HIBERNATE_SWITCH_CFG                 "hibernate-button-action"
+#define SLEEP_SWITCH_CFG                     "sleep-button-action"
+#define LID_SWITCH_ON_AC_CFG                 "lid-action-on-ac"
+#define LID_SWITCH_ON_BATTERY_CFG            "lid-action-on-battery"
 
-#define     	ON_AC_INACTIVITY_TIMEOUT     	"inactivity-on-ac"
-#define     	ON_BATTERY_INACTIVITY_TIMEOUT 	"inactivity-on-battery"
-#define     	INACTIVITY_SLEEP_MODE_ON_AC   	"inactivity-sleep-mode-on-ac"
-#define     	INACTIVITY_SLEEP_MODE_ON_BATTERY   	"inactivity-sleep-mode-on-battery"
+#define LOGIND_HANDLE_POWER_KEY              "logind-handle-power-key"
+#define LOGIND_HANDLE_SUSPEND_KEY            "logind-handle-suspend-key"
+#define LOGIND_HANDLE_HIBERNATE_KEY          "logind-handle-hibernate-key"
+#define LOGIND_HANDLE_LID_SWITCH             "logind-handle-lid-switch"
 
-#define     	BRIGHTNESS_ON_AC             	"brightness-on-ac"
-#define     	BRIGHTNESS_ON_BATTERY        	"brightness-on-battery"
-
-
-#define     	BRIGHTNESS_LEVEL_ON_AC          "brightness-level-on-ac"
-#define     	BRIGHTNESS_LEVEL_ON_BATTERY     "brightness-level-on-battery"
-
-#define     	BRIGHTNESS_SLIDER_MIN_LEVEL     "brightness-slider-min-level"
-
-#define     	CRITICAL_POWER_LEVEL        	"critical-power-level"
-#define     	SHOW_BRIGHTNESS_POPUP        	"show-brightness-popup"
-#define     	HANDLE_BRIGHTNESS_KEYS          "handle-brightness-keys"
-
-#define     	BRIGHTNESS_SWITCH        	"brightness-switch"
-#define     	BRIGHTNESS_SWITCH_SAVE  	"brightness-switch-restore-on-exit"
-
-#define 	SHOW_TRAY_ICON_CFG          	"show-tray-icon"
-#define 	CRITICAL_BATT_ACTION_CFG    	"critical-power-action"
-
-#define 	POWER_SWITCH_CFG            	"power-button-action"
-#define     	HIBERNATE_SWITCH_CFG        	"hibernate-button-action"
-#define 	SLEEP_SWITCH_CFG            	"sleep-button-action"
-
-#define 	LID_SWITCH_ON_AC_CFG        	"lid-action-on-ac"
-#define 	LID_SWITCH_ON_BATTERY_CFG   	"lid-action-on-battery"
-
-#define         NETWORK_MANAGER_SLEEP           "network-manager-sleep"
-
-#define     LOGIND_HANDLE_POWER_KEY     "logind-handle-power-key"
-#define     LOGIND_HANDLE_SUSPEND_KEY   "logind-handle-suspend-key"
-#define     LOGIND_HANDLE_HIBERNATE_KEY "logind-handle-hibernate-key"
-#define     LOGIND_HANDLE_LID_SWITCH    "logind-handle-lid-switch"
-
-#define         PRESENTATION_MODE               "presentation-mode"
+#define BRIGHTNESS_ON_AC                     "brightness-on-ac"
+#define BRIGHTNESS_ON_BATTERY                "brightness-on-battery"
+#define BRIGHTNESS_LEVEL_ON_AC               "brightness-level-on-ac"
+#define BRIGHTNESS_LEVEL_ON_BATTERY          "brightness-level-on-battery"
+#define BRIGHTNESS_SLIDER_MIN_LEVEL          "brightness-slider-min-level"
+#define BRIGHTNESS_SWITCH                    "brightness-switch"
+#define BRIGHTNESS_SWITCH_SAVE               "brightness-switch-restore-on-exit"
+#define HANDLE_BRIGHTNESS_KEYS               "handle-brightness-keys"
+#define SHOW_BRIGHTNESS_POPUP                "show-brightness-popup"
 
 G_END_DECLS
 
