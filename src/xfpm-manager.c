@@ -93,9 +93,8 @@ struct XfpmManagerPrivate
     XfpmDBusMonitor    *monitor;
     XfpmInhibit        *inhibit;
     EggIdletime        *idle;
-#ifdef HAVE_DPMS
+
     XfpmDpms           *dpms;
-#endif
 
     GTimer	       *timer;
 
@@ -154,9 +153,7 @@ xfpm_manager_finalize (GObject *object)
 
     g_timer_destroy (manager->priv->timer);
 
-#ifdef HAVE_DPMS
     g_object_unref (manager->priv->dpms);
-#endif
 
     g_object_unref (manager->priv->backlight);
 
@@ -356,10 +353,8 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
 
 	if ( action == LID_TRIGGER_NOTHING )
 	{
-#ifdef HAVE_DPMS
 	    if ( !xfpm_is_multihead_connected () )
 		xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOff);
-#endif
 	}
 	else if ( action == LID_TRIGGER_LOCK_SCREEN )
 	{
@@ -388,9 +383,8 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
     else
     {
 	XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID opened");
-#ifdef HAVE_DPMS
+
 	xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOn);
-#endif
     }
 }
 
@@ -740,9 +734,7 @@ void xfpm_manager_start (XfpmManager *manager)
 
     manager->priv->kbd_backlight = xfpm_kbd_backlight_new ();
 
-#ifdef HAVE_DPMS
     manager->priv->dpms = xfpm_dpms_new ();
-#endif
 
     g_signal_connect (manager->priv->button, "button_pressed",
 		      G_CALLBACK (xfpm_manager_button_pressed_cb), manager);

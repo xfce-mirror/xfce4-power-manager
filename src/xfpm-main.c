@@ -119,11 +119,6 @@ xfpm_dump (GHashTable *hash)
 #else
     g_print (_("Without network manager support\n"));
 #endif
-#ifdef HAVE_DPMS
-    g_print (_("With DPMS support\n"));
-#else
-    g_print (_("Without DPMS support\n"));
-#endif
     g_print ("---------------------------------------------------\n");
     g_print ( "%s: %s\n"
 	      "%s: %s\n"

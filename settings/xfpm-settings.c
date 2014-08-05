@@ -380,7 +380,6 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 void
 dpms_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 {
-#ifdef HAVE_DPMS
     gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
     
     xfconf_channel_set_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, val);
@@ -395,13 +394,11 @@ dpms_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 	gtk_widget_set_sensitive (on_battery_dpms_off, val);
     	gtk_widget_set_sensitive (on_battery_dpms_sleep, val);
     }
-#endif
 }
 
 void
 sleep_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-#ifdef HAVE_DPMS
     GtkWidget *brg;
     gint off_value    = (gint)gtk_range_get_value (GTK_RANGE (on_battery_dpms_off));
     gint sleep_value  = (gint)gtk_range_get_value (GTK_RANGE (w));
@@ -430,13 +427,11 @@ sleep_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", ON_BATT_DPMS_SLEEP);
     }
-#endif
 }
 
 void
 off_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-#ifdef HAVE_DPMS
     gint off_value    = (gint)gtk_range_get_value (GTK_RANGE(w));
     gint sleep_value  = (gint)gtk_range_get_value (GTK_RANGE(on_battery_dpms_sleep));
     
@@ -452,13 +447,11 @@ off_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", ON_BATT_DPMS_OFF);
     }
-#endif
 }
 
 void
 sleep_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-#ifdef HAVE_DPMS
     GtkWidget *brg;
 
     gint brightness_value;
@@ -492,13 +485,11 @@ sleep_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", ON_AC_DPMS_SLEEP);
     }
-#endif
 }
 
 void
 off_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-#ifdef HAVE_DPMS
     gint off_value    = (gint)gtk_range_get_value (GTK_RANGE(w));
     gint sleep_value  = (gint)gtk_range_get_value (GTK_RANGE(on_ac_dpms_sleep));
     
@@ -517,7 +508,6 @@ off_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", ON_AC_DPMS_OFF);
     }
-#endif
 }
 
 /*
@@ -599,7 +589,6 @@ void
 brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
     gint value    = (gint)gtk_range_get_value (GTK_RANGE (w));
-#ifdef HAVE_DPMS
     gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_battery_dpms_sleep) );
 
     if ( value != BRIGHTNESS_DISABLED )
@@ -609,7 +598,6 @@ brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	    gtk_range_set_value (GTK_RANGE (on_battery_dpms_sleep), (value / 60) + 1);
 	}
     }
-#endif
     
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, value))
     {
@@ -621,7 +609,6 @@ void
 brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
     gint value    = (gint)gtk_range_get_value (GTK_RANGE (w));
-#ifdef HAVE_DPMS
     gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_ac_dpms_sleep) );
 
     if ( value != BRIGHTNESS_DISABLED )
@@ -631,7 +618,7 @@ brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	    gtk_range_set_value (GTK_RANGE (on_ac_dpms_sleep), (value / 60) + 1);
 	}
     }
-#endif
+
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, value))
     {
 	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_AC);
@@ -869,16 +856,11 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * DPMS settings when running on battery power
      */
-#ifdef HAVE_DPMS
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_SLEEP, 5);
     gtk_range_set_value (GTK_RANGE(on_battery_dpms_sleep), val);
     
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_OFF, 10);
     gtk_range_set_value (GTK_RANGE(on_battery_dpms_off), val);
-#else
-    gtk_widget_set_sensitive (GTK_WIDGET(on_battery_dpms_sleep), FALSE);
-    gtk_widget_set_sensitive (GTK_WIDGET(on_battery_dpms_off), FALSE);
-#endif
 
     /*
      * Lid switch settings on battery
@@ -1044,20 +1026,15 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, 14);
     gtk_range_set_value (GTK_RANGE (inact_timeout), val);
 
-#ifdef HAVE_DPMS
     /*
      * DPMS settings when running on AC power 
      */
-    
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_SLEEP, 10);
     gtk_range_set_value (GTK_RANGE (on_ac_dpms_sleep), val);
     
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_OFF, 15);
     gtk_range_set_value (GTK_RANGE(on_ac_dpms_off), val);
-#else
-    gtk_widget_set_sensitive (GTK_WIDGET(on_ac_dpms_sleep),FALSE);
-    gtk_widget_set_sensitive (GTK_WIDGET(on_ac_dpms_off),FALSE);
-#endif
+
     /*
      * Lid switch settings on AC power
      */
@@ -1158,17 +1135,12 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     GtkTreeIter iter;
 
     dpms = GTK_WIDGET (gtk_builder_get_object (xml, "handle-dpms"));
-#ifdef HAVE_DPMS
+
     /*
      * Global dpms settings (enable/disable)
      */
-   
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
-    
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(dpms), val);
-#else
-    gtk_widget_hide (dpms);
-#endif
 
     /*
      * Power button

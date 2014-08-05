@@ -29,8 +29,6 @@
 
 #include <xfconf/xfconf.h>
 
-#ifdef HAVE_DPMS
-
 #include <gdk/gdkx.h>
 #include <X11/Xproto.h>
 #include <X11/extensions/dpms.h>
@@ -74,6 +72,5 @@ void            xfpm_dpms_set_on_battery (XfpmDpms *dpms, gboolean on_battery);
 
 G_END_DECLS
 
-#endif /* HAVE_DPMS */
 
 #endif /* __XFPM_DPMS_H */

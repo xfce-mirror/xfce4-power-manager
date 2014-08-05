@@ -110,15 +110,6 @@ AM_CONDITIONAL([ENABLE_POLKIT], [test "x$polkit" = "xyes"])
 #=======================================================#
 #           Check for DPMS support                      #
 #=======================================================#
-DPMS_LIBS=
-AC_ARG_ENABLE([dpms],
-AS_HELP_STRING([--enable-dpms],[use dpms extension])
-AS_HELP_STRING([--disable-dpms],[don't use dpms extension]),
-  [], [enable_dpms=yes])
-if test x"$enable_dpms" = x"yes"; then
-  AC_DEFINE([HAVE_DPMS], [1], [Define to enable dpms])
-fi
-
 AC_CHECK_LIB([Xext], [DPMSQueryExtension], [DPMS_LIBS=" -lXext -lX11"],[])
 AC_SUBST([DPMS_LIBS])
 
@@ -242,7 +233,6 @@ AC_OUTPUT
 echo "prefix:			${prefix}"
 echo "xdg autostart:		${sysconfdir}/xdg/autostart"
 echo "POLKIT:			${polkit}"
-echo "DPMS:			${enable_dpms}"
 echo "Network manager:	${ac_network_manager}"
 echo "Build panel plugins:	${build_panel_plugins}"
 if test "x$build_panel_plugins" = "xyes"; then

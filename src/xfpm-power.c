@@ -108,9 +108,7 @@ struct XfpmPowerPrivate
     XfpmBatteryCharge overall_state;
     gboolean         critical_action_done;
 
-#ifdef HAVE_DPMS
     XfpmDpms        *dpms;
-#endif
     gboolean         presentation_mode;
     gint             on_ac_blank;
     gint             on_battery_blank;
@@ -207,9 +205,9 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
 	    GList *list;
 	    guint len, i;
 	    g_signal_emit (G_OBJECT (power), signals [ON_BATTERY_CHANGED], 0, on_battery);
-#ifdef HAVE_DPMS
+
         xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
-#endif
+
 	    power->priv->on_battery = on_battery;
 	    list = g_hash_table_get_values (power->priv->hash);
 	    len = g_list_length (list);
@@ -1128,9 +1126,9 @@ xfpm_power_init (XfpmPower *power)
     power->priv->dialog          = NULL;
     power->priv->overall_state   = XFPM_BATTERY_CHARGE_OK;
     power->priv->critical_action_done = FALSE;
-#ifdef HAVE_DPMS
+
     power->priv->dpms                 = xfpm_dpms_new ();
-#endif
+
     power->priv->presentation_mode    = FALSE;
     power->priv->on_ac_blank          = 15;
     power->priv->on_battery_blank     = 10;
@@ -1286,9 +1284,7 @@ xfpm_power_finalize (GObject *object)
     g_object_unref (power->priv->polkit);
 #endif
 
-#ifdef HAVE_DPMS
     g_object_unref(power->priv->dpms);
-#endif
 
     G_OBJECT_CLASS (xfpm_power_parent_class)->finalize (object);
 }
@@ -1391,7 +1387,6 @@ xfpm_update_blank_time (XfpmPower *power)
 static void
 xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mode)
 {
-#ifdef HAVE_DPMS
     /* no change, exit */
     if (power->priv->presentation_mode == presentation_mode)
         return;
@@ -1415,7 +1410,6 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
     }
 
     xfpm_update_blank_time (power);
-#endif
 }
 
 gboolean

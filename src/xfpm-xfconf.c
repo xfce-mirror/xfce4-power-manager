@@ -71,14 +71,14 @@ enum
     PROP_BRIGHTNESS_LEVEL_ON_AC,
     PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
     PROP_BRIGHTNESS_SLIDER_MIN_LEVEL,
-#ifdef HAVE_DPMS
+
     PROP_ENABLE_DPMS,
     PROP_DPMS_SLEEP_ON_AC,
     PROP_DPMS_OFF_ON_AC,
     PROP_DPMS_SLEEP_ON_BATTERY,
     PROP_DPMS_OFF_ON_BATTERY,
     PROP_DPMS_SLEEP_MODE,
-#endif
+
     PROP_IDLE_ON_AC,
     PROP_IDLE_ON_BATTERY,
     PROP_IDLE_SLEEP_MODE_ON_AC,
@@ -405,7 +405,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							LID_TRIGGER_LOCK_SCREEN,
 							LID_TRIGGER_LOCK_SCREEN,
                                                         G_PARAM_READWRITE));
-#ifdef HAVE_DPMS
+
     /**
      * XfpmXfconf::dpms-enabled
      **/
@@ -468,7 +468,6 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            NULL, NULL,
                                                            "Standby",
                                                            G_PARAM_READWRITE));
-#endif /* HAVE_DPMS */
 
     /**
      * XfpmXfconf::inactivity-on-ac

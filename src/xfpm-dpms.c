@@ -42,7 +42,6 @@
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
 
-#ifdef HAVE_DPMS
 
 static void xfpm_dpms_finalize   (GObject *object);
 
@@ -348,5 +347,3 @@ xfpm_dpms_set_on_battery (XfpmDpms *dpms, gboolean on_battery)
     xfpm_dpms_refresh (dpms);
     XFPM_DEBUG ("dpms on battery %s", on_battery ? "TURE" : "FALSE");
 }
-
-#endif /* HAVE_DPMS */
