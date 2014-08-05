@@ -34,6 +34,7 @@
 #include <xfconf/xfconf.h>
 
 #include "common/xfpm-common.h"
+#include "common/xfpm-config.h"
 #include "common/xfpm-icons.h"
 #include "common/xfpm-power-common.h"
 #include "common/xfpm-brightness.h"
@@ -42,7 +43,8 @@
 #include "scalemenuitem.h"
 
 
-#define SET_LEVEL_TIMEOUT (25)
+#define SET_LEVEL_TIMEOUT (50)
+#define SAFE_SLIDER_MIN_LEVEL (5)
 
 #define BATTERY_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), BATTERY_TYPE_BUTTON, BatteryButtonPrivate))
@@ -876,7 +878,7 @@ battery_button_show_menu (BatteryButton *button)
     GdkScreen *gscreen;
     GList *item;
     gboolean show_separator_flag = FALSE;
-    gint32 max_level, current_level = 0;
+    gint32 min_level, max_level, current_level = 0;
 
     if(gtk_widget_has_screen(GTK_WIDGET(button)))
         gscreen = gtk_widget_get_screen(GTK_WIDGET(button));
@@ -913,7 +915,26 @@ battery_button_show_menu (BatteryButton *button)
 
         max_level = xfpm_brightness_get_max_level (button->priv->brightness);
 
-        mi = scale_menu_item_new_with_range (0, max_level, 1);
+        /* determine minimum value for slider */
+        min_level = xfconf_channel_get_int (button->priv->channel,
+                                            PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                            -1);
+        if (min_level == -1)
+        {
+            /* Some laptops (and mostly newer ones with intel graphics) can turn off the
+             * backlight completely. If the user is not careful and sets the brightness
+             * very low using the slider, he might not be able to see the screen contents
+             * anymore. Brightness keys do not work on every laptop, so it's better to use
+             * a safe default minimum level that the user can change via the settings
+             * editor if desired.
+             */
+            min_level = (max_level > 100) ? SAFE_SLIDER_MIN_LEVEL : 0;
+            xfconf_channel_set_int (button->priv->channel,
+                                    PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                    min_level);
+        }
+
+        mi = scale_menu_item_new_with_range (min_level, max_level, 1);
 
         /* attempt to load and display the brightness icon */
         pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
@@ -935,6 +956,7 @@ battery_button_show_menu (BatteryButton *button)
         /* update the slider to the current brightness level */
         xfpm_brightness_get_level (button->priv->brightness, &current_level);
         gtk_range_set_value (GTK_RANGE(button->priv->range), current_level);
+
         g_signal_connect (mi, "value-changed", G_CALLBACK (range_value_changed_cb), button);
         g_signal_connect (mi, "scroll-event", G_CALLBACK (range_scroll_cb), button);
         g_signal_connect (menu, "show", G_CALLBACK (range_show_cb), button);
@@ -949,7 +971,7 @@ battery_button_show_menu (BatteryButton *button)
     gtk_widget_show (mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
     xfconf_g_property_bind(button->priv->channel,
-                           "/xfce4-power-manager/presentation-mode",
+                           PROPERTIES_PREFIX PRESENTATION_MODE,
                            G_TYPE_BOOLEAN, G_OBJECT(mi), "active");
 
     /* Power manager settings */

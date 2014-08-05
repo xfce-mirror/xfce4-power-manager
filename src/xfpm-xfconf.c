@@ -70,6 +70,7 @@ enum
     PROP_LID_ACTION_ON_BATTERY,
     PROP_BRIGHTNESS_LEVEL_ON_AC,
     PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
+    PROP_BRIGHTNESS_SLIDER_MIN_LEVEL,
 #ifdef HAVE_DPMS
     PROP_ENABLE_DPMS,
     PROP_DPMS_SLEEP_ON_AC,
@@ -541,6 +542,18 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							120,
                                                         G_PARAM_READWRITE));
 
+
+    /**
+     * XfpmXfconf::brightness-slider-min-level
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                     g_param_spec_int (BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                                       NULL, NULL,
+                                                       -1,
+                                                       G_MAXINT32,
+                                                       -1,
+                                                       G_PARAM_READWRITE));
 
 #ifdef WITH_NETWORK_MANAGER
     /**
