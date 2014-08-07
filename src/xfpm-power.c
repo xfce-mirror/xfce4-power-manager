@@ -468,22 +468,25 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
 {
     GList *list;
     guint len, i;
+    gboolean power_supply;
     XfpmBatteryCharge max_charge_status = XFPM_BATTERY_CHARGE_UNKNOWN;
 
     list = g_hash_table_get_values (power->priv->hash);
     len = g_list_length (list);
 
-    for ( i = 0; i < len; i++)
+    for ( i = 0; i < len; i++ )
     {
 	XfpmBatteryCharge battery_charge;
 	UpDeviceKind type;
 
 	g_object_get (G_OBJECT (g_list_nth_data (list, i)),
-		      "charge-status", &battery_charge,
-		      "device-type", &type,
-		      NULL);
+                  "charge-status", &battery_charge,
+                  "device-type", &type,
+                  "power-supply", &power_supply,
+                  NULL);
 	if ( type != UP_DEVICE_KIND_BATTERY &&
-	     type != UP_DEVICE_KIND_UPS )
+	     type != UP_DEVICE_KIND_UPS &&
+	     power_supply != TRUE)
 	    continue;
 
 	max_charge_status = MAX (max_charge_status, battery_charge);
