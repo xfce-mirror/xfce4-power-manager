@@ -43,7 +43,7 @@
 #include "xfpm-settings.h"
 #include "xfpm-config.h"
 #include "xfpm-dbus.h"
-
+#include "xfpm-debug.h"
 #include "xfpm-unique.h"
 
 int main (int argc, char **argv)
@@ -67,7 +67,8 @@ int main (int argc, char **argv)
     gboolean has_power_button;
     gboolean has_lid;
     gboolean start_xfpm_if_not_running;
-    
+    gboolean debug = FALSE;
+
     GdkNativeWindow socket_id = 0;
     gchar *device_id = NULL;
 
@@ -78,6 +79,7 @@ int main (int argc, char **argv)
     {
 	{ "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
 	{ "device-id", 'd', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING, &device_id, N_("Display a specific device by UpDevice object path"), N_("UpDevice object path") },
+	{ "debug",    '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &debug, N_("Enable debugging"), NULL },
 	{ NULL, },
     };
 
@@ -165,6 +167,8 @@ int main (int argc, char **argv)
 	    g_error_free (error);
 	    return EXIT_FAILURE;
 	}
+
+	xfpm_debug_init (debug);
 
 	has_battery = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-battery"));
 	has_lid = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-lid"));
