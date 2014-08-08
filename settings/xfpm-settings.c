@@ -65,6 +65,9 @@ static  gboolean  lcd_brightness = FALSE;
 static  gchar *starting_device_id = NULL;
 static  UpClient *upower = NULL;
 
+static gint devices_page_num;
+
+
 enum
 {
     COL_SIDEBAR_ICON,
@@ -1717,6 +1720,9 @@ add_device (UpDevice *device)
         return;
     }
 
+    /* Make sure the devices tab is shown */
+    gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), devices_page_num));
+
 #if UP_CHECK_VERSION(0, 99, 0)
     signal_id = g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), NULL);
 #else
@@ -1810,6 +1816,10 @@ remove_device (const gchar *object_path)
 
     if (device)
         g_signal_handler_disconnect (device, signal_id);
+
+    /* If there are no devices left, hide the devices tab */
+    if(!gtk_tree_model_get_iter_first (GTK_TREE_MODEL(list_store), iter))
+        gtk_widget_hide (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), devices_page_num));
 }
 
 static void
@@ -2025,11 +2035,12 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     gtk_box_pack_start (GTK_BOX (hbox), viewport, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (hbox), device_details_notebook, TRUE, TRUE, 0);
     gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-    gtk_notebook_append_page (GTK_NOTEBOOK (nt), hbox, gtk_label_new (_("Devices")) );
+    devices_page_num = gtk_notebook_append_page (GTK_NOTEBOOK (nt), hbox, gtk_label_new (_("Devices")) );
 
     gtk_widget_show_all (sideview);
     gtk_widget_show_all (viewport);
     gtk_widget_show_all (hbox);
+    gtk_widget_hide (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), devices_page_num));
 
     settings_create_devices_list ();
 
@@ -2103,11 +2114,11 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     
     gtk_builder_connect_signals (xml, channel);
 
-    /* If we passed in a device to display, show the devices tab now */
+    /* If we passed in a device to display, show the devices tab now, otherwise hide it */
     if (device_id != NULL)
     {
-	/* Assuming the last page is the devices tab */
-	gtk_notebook_set_current_page (GTK_NOTEBOOK (nt), gtk_notebook_get_n_pages (GTK_NOTEBOOK(nt)) - 1);
+	gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), devices_page_num));
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (nt), devices_page_num);
     }
 
     return dialog;
