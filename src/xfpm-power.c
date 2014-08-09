@@ -84,9 +84,6 @@ static void xfpm_update_blank_time (XfpmPower *power);
 static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
 
-#if UP_CHECK_VERSION(0, 99, 0)
-static gboolean xfpm_power_prompt_password (XfpmPower *power);
-#endif
 
 #define XFPM_POWER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_POWER, XfpmPowerPrivate))
@@ -122,8 +119,6 @@ struct XfpmPowerPrivate
 #endif
     gboolean	     auth_suspend;
     gboolean	     auth_hibernate;
-
-    XfpmSuspend     *suspend;
 
     /* Properties */
     gboolean	     on_low_battery;
@@ -186,8 +181,13 @@ xfpm_power_check_polkit_auth (XfpmPower *power)
     }
     else
     {
+#if !UP_CHECK_VERSION(0, 99, 0)
 	suspend   = POLKIT_AUTH_SUSPEND_UPOWER;
 	hibernate = POLKIT_AUTH_HIBERNATE_UPOWER;
+#else
+	suspend   = POLKIT_AUTH_SUSPEND_XFPM;
+	hibernate = POLKIT_AUTH_HIBERNATE_XFPM;
+#endif
     }
     power->priv->auth_suspend = xfpm_polkit_check_auth (power->priv->polkit,
 							suspend);
@@ -338,22 +338,6 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 	    return;
     }
 
-/* Upower dropped support for doing anything power related */
-#if UP_CHECK_VERSION(0, 99, 0)
-    if ( !LOGIND_RUNNING () )
-    {
-	/* See if we require a password for sudo to call suspend */
-	if ( xfpm_suspend_password_required (power->priv->suspend) )
-	{
-	    if ( !xfpm_power_prompt_password (power) )
-	    {
-		xfpm_power_report_error (power, _("Incorrect password entered"), "dialog-error");
-		return;
-	    }
-	}
-    }
-#endif
-
     g_signal_emit (G_OBJECT (power), signals [SLEEPING], 0);
     /* Get the current brightness level so we can use it after we suspend */
     brightness = xfpm_brightness_new();
@@ -419,13 +403,11 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 #else
 	if (!g_strcmp0 (sleep_time, "Hibernate"))
         {
-            if (xfpm_suspend_sudo_get_state (power->priv->suspend) == SUDO_AVAILABLE)
-                xfpm_suspend_sudo_try_action (power->priv->suspend, XFPM_HIBERNATE, &error);
+                xfpm_suspend_try_action (XFPM_HIBERNATE);
         }
         else
         {
-            if (xfpm_suspend_sudo_get_state (power->priv->suspend) == SUDO_AVAILABLE)
-                xfpm_suspend_sudo_try_action (power->priv->suspend, XFPM_SUSPEND, &error);
+                xfpm_suspend_try_action (XFPM_SUSPEND);
         }
 #endif
     }
@@ -1132,7 +1114,6 @@ xfpm_power_init (XfpmPower *power)
     power->priv->presentation_mode    = FALSE;
     power->priv->on_ac_blank          = 15;
     power->priv->on_battery_blank     = 10;
-    power->priv->suspend = xfpm_suspend_get ();
 
     power->priv->inhibit = xfpm_inhibit_new ();
     power->priv->notify  = xfpm_notify_new ();
@@ -1419,65 +1400,6 @@ xfpm_power_is_in_presentation_mode (XfpmPower *power)
 
     return power->priv->presentation_mode;
 }
-
-/* ifdef this out to prevent an unused function warning */
-#if UP_CHECK_VERSION(0, 99, 0)
-static gboolean
-xfpm_power_prompt_password (XfpmPower *power)
-{
-    GtkWidget *dialog = gtk_message_dialog_new (NULL,
-					        GTK_DIALOG_MODAL,
-						GTK_MESSAGE_OTHER,
-						GTK_BUTTONS_OK_CANCEL,
-						_("The requested operation requires elevated privileges.\n"
-						"Please enter your password."));
-    GtkWidget *content_area = gtk_dialog_get_content_area (GTK_DIALOG(dialog));
-    GtkWidget *password_entry = gtk_entry_new ();
-    GtkWidget *password_label, *hbox;
-    gint result;
-    XfpmPassState state = PASSWORD_FAILED;
-
-    /* Set the dialog's title */
-    gtk_window_set_title (GTK_WINDOW(dialog), _("xfce4-power-manager"));
-
-    /* setup password label */
-    password_label = gtk_label_new (_("Password:"));
-
-    /* Setup the password entry */
-    gtk_entry_set_visibility (GTK_ENTRY (password_entry), FALSE);
-    gtk_entry_set_max_length (GTK_ENTRY (password_entry), 1024);
-    gtk_entry_set_activates_default (GTK_ENTRY (password_entry), TRUE);
-
-    /* pack the password label and entry into an hbox */
-    hbox = gtk_hbox_new (FALSE, 4);
-    gtk_box_pack_start (GTK_BOX (hbox), password_label, FALSE, FALSE, 4);
-    gtk_box_pack_end   (GTK_BOX (hbox), password_entry, TRUE, TRUE, 4);
-
-    /* Add it to the dialog */
-    gtk_box_pack_end (GTK_BOX (content_area), hbox, TRUE, TRUE, 8);
-
-    /* show it */
-    gtk_widget_show (password_entry);
-    gtk_widget_show (password_label);
-    gtk_widget_show (hbox);
-
-    /* make enter default to ok */
-    gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-
-    /* Run the password prompt */
-    result = gtk_dialog_run (GTK_DIALOG(dialog));
-
-    if (result == GTK_RESPONSE_OK)
-    {
-	state = xfpm_suspend_sudo_send_password (power->priv->suspend, gtk_entry_get_text (GTK_ENTRY (password_entry)));
-	XFPM_DEBUG ("password state: %s", state == PASSWORD_FAILED ? "PASSWORD_FAILED" : "PASSWORD_SUCCEED");
-    }
-
-    gtk_widget_destroy (dialog);
-
-    return state == PASSWORD_FAILED ? FALSE : TRUE;
-}
-#endif
 
 
 /*

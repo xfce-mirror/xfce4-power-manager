@@ -51,6 +51,12 @@
 #include <glib.h>
 
 /* XXX */
+#define EXIT_CODE_SUCCESS           0
+#define EXIT_CODE_FAILED            1
+#define EXIT_CODE_ARGUMENTS_INVALID 3
+#define EXIT_CODE_INVALID_USER      4
+
+
 #ifdef UP_BACKEND_SUSPEND_COMMAND
 #undef UP_BACKEND_SUSPEND_COMMAND
 #endif
@@ -60,7 +66,7 @@
 
 
 #ifdef BACKEND_TYPE_FREEBSD
-#define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/zzz"
+#define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/acpiconf -s 3"
 #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/acpiconf -s 4"
 #endif
 #ifdef BACKEND_TYPE_LINUX
@@ -69,7 +75,7 @@
 #endif
 #ifdef BACKEND_TYPE_OPENBSD
 #define UP_BACKEND_SUSPEND_COMMAND	"/usr/sbin/zzz"
-#define UP_BACKEND_HIBERNATE_COMMAND "/dev/null"
+#define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/ZZZ"
 #endif
 
 
@@ -125,34 +131,66 @@ run (const gchar *command)
 int
 main (int argc, char **argv)
 {
-  gboolean succeed = FALSE;
-  char action[1024];
+  GOptionContext *context;
+	gint uid;
+	gint euid;
+	const gchar *pkexec_uid_str;
+  gboolean suspend = FALSE;
+  gboolean hibernate = FALSE;
 
-  /* display banner */
-  fprintf (stdout, "XFPM_SUDO_DONE ");
-  fflush (stdout);
+	const GOptionEntry options[] = {
+		{ "suspend",   '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend, "Suspend the system", NULL },
+		{ "hibernate", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hibernate, "Hibernate the system", NULL },
+		{ NULL }
+	};
 
-  if (fgets (action, 1024, stdin) == NULL)
+	context = g_option_context_new (NULL);
+	g_option_context_set_summary (context, "XFCE Power Management Helper");
+	g_option_context_add_main_entries (context, options, NULL);
+	g_option_context_parse (context, &argc, &argv, NULL);
+	g_option_context_free (context);
+
+	/* no input */
+	if (!suspend && !hibernate) {
+		puts ("No valid option was specified");
+		return EXIT_CODE_ARGUMENTS_INVALID;
+	}
+
+	/* get calling process */
+	uid = getuid ();
+	euid = geteuid ();
+	if (uid != 0 || euid != 0) {
+		puts ("This program can only be used by the root user");
+		return EXIT_CODE_ARGUMENTS_INVALID;
+	}
+
+	/* check we're not being spoofed */
+	pkexec_uid_str = g_getenv ("PKEXEC_UID");
+	if (pkexec_uid_str == NULL) {
+		puts ("This program must only be run through pkexec");
+		return EXIT_CODE_INVALID_USER;
+	}
+
+  /* run the command */
+  if(suspend)
+  {
+    if (run (UP_BACKEND_SUSPEND_COMMAND))
     {
-      fprintf (stdout, "FAILED\n");
-      return EXIT_FAILURE;
+      return EXIT_CODE_SUCCESS;
+    } else {
+      return EXIT_CODE_FAILED;
     }
-
-  if (strncasecmp (action, "SUSPEND", 7) == 0)
+  }
+  else if (hibernate)
+  {
+    if(run (UP_BACKEND_HIBERNATE_COMMAND))
     {
-      succeed = run (UP_BACKEND_SUSPEND_COMMAND);
+      return EXIT_CODE_SUCCESS;
+    } else {
+      return EXIT_CODE_FAILED;
     }
-  else if (strncasecmp (action, "HIBERNATE", 9) == 0)
-    {
-      succeed = run (UP_BACKEND_HIBERNATE_COMMAND);
-    }
+  }
 
-  if (succeed)
-    {
-      fprintf (stdout, "SUCCEED\n");
-      return EXIT_SUCCESS;
-    }
-
-  fprintf (stdout, "FAILED\n");
-  return EXIT_FAILURE;
+	/* how did we get here? */
+	return EXIT_CODE_FAILED;
 }

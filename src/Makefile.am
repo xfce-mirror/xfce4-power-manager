@@ -1,5 +1,4 @@
-bin_PROGRAMS = xfce4-power-manager		\
-	       xfce4-pm-helper
+bin_PROGRAMS = xfce4-power-manager
 
 xfce4_power_manager_SOURCES =                   \
 	$(BUILT_SOURCES)			\
@@ -45,7 +44,8 @@ xfce4_power_manager_CFLAGS =                    \
 	-I$(top_srcdir)/libdbus                 \
 	-DLOCALEDIR=\"$(localedir)\"            \
 	-DG_LOG_DOMAIN=\"xfce4-power-manager\"  \
-	-DSYSCONFDIR=\"$(sysconfdir)\"		\
+	-DSYSCONFDIR=\"$(sysconfdir)\"          \
+	-DSBINDIR=\"$(sbindir)\"                \
 	-DUPOWER_ENABLE_DEPRECATED              \
 	-DXFPM_SUSPEND_HELPER_CMD=\"$(prefix)/bin/xfce4-pm-helper\" \
 	$(GOBJECT_CFLAGS)                       \
@@ -77,19 +77,10 @@ xfce4_power_manager_LDADD =                     \
 	$(XRANDR_LIBS)				\
 	$(DPMS_LIBS)
 
-xfce4_pm_helper_SOURCES =  \
-	xfpm-pm-helper.c
-
-xfce4_pm_helper_CFLAGS =   \
-	-I$(top_srcdir)        \
-	$(LIBXFCE4UTIL_CFLAGS)
-
-xfce4_pm_helper_LDFLAGS = \
-	$(LIBXFCE4UTIL_LIBS)
-
 if ENABLE_POLKIT
 
-sbin_PROGRAMS = xfpm-power-backlight-helper 
+sbin_PROGRAMS = xfpm-power-backlight-helper     \
+	   xfce4-pm-helper
 
 xfpm_power_backlight_helper_SOURCES =           \
        xfpm-backlight-helper.c
@@ -102,6 +93,20 @@ xfpm_power_backlight_helper_CFLAGS =            \
         $(GLIB_CFLAGS)                          \
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
+
+xfce4_pm_helper_SOURCES =  \
+	xfpm-pm-helper.c
+
+xfce4_pm_helper_CFLAGS =   \
+	-I$(top_srcdir)        \
+	$(GLIB_CFLAGS)         \
+	$(PLATFORM_CPPFLAGS)   \
+	$(PLATFORM_CFLAGS)     \
+	$(LIBXFCE4UTIL_CFLAGS)
+
+xfce4_pm_helper_LDFLAGS = \
+	$(LIBXFCE4UTIL_LIBS)  \
+	$(GLIB_LIBS)
 
 polkit_policydir = $(datadir)/polkit-1/actions
 polkit_policy_DATA =					\
