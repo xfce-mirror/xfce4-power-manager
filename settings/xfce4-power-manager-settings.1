@@ -1,4 +1,4 @@
-.TH XFCE4-POWER-MANAGER 1 "Version 0.8.0" "31 March 2009"
+.TH XFCE4-POWER-MANAGER 1 ""Version 1.3.1" "9 August 2014"
 
 .SH NAME
 xfce4-power-manager-settings \- Settings dialog for the Xfce 4 Power manager
@@ -9,34 +9,53 @@ xfce4-power-manager-settings \- Settings dialog for the Xfce 4 Power manager
 .br
 
 .SH DESCRIPTION
-\fBxfce4-power-manager-settings\fP is a utility that comes with the Xfce4 
-power manager to access/change its configuration.  It is a separate program 
-that uses xfconf to load/save settings according to the user's choices. 
-\fBxfce4-power-manager-settings\fP requires the Xfce4 power manager to be 
-running because it connects to it via DBus and gets information about which 
-settings should and should not be displayed; for  example,  the 
-\fBxfce4-power-manager-settings\fP utility will not show the LCD brightness 
-settings if no device was detected by the running instance of the Xfce4 power 
-manager. 
+\fBxfce4-power-manager-settings\fP is a utility that comes with the Xfce4
+power manager to access/change its configuration.  It is a separate program
+that uses xfconf to load/save settings according to the user's choices.
+\fBxfce4-power-manager-settings\fP requires the Xfce4 power manager to be
+running because it connects to it via DBus and gets information about which
+settings should and should not be displayed; for  example,  the
+\fBxfce4-power-manager-settings\fP utility will not show the LCD brightness
+settings if no device was detected by the running instance of the Xfce4 power
+manager.
 .br
 .br
- \fBxfce4-power-manager-settings\fP does not have any command line options.
+You can run \fBxfce4-power-manager-settings\fP from the command line without
+specifying any extra arguments.
+
+.SH OPTIONS
+.TP
+.B \--debug
+Have the power manager print debug messages to the console; useful
+if you have to send in a bug report.
+.TP
+.B \--socket-id=SOCKET ID
+Settings manager socket, used when \fBxfce4-power-manager-settings\fP is
+embedded in the settings manager.
+.TP
+.B \--device-id=UpDevice object path
+Display a specific device by a specific UPower UpDevice object path.
 
 .SH BUGS
-Please report bugs to
+Please report any bugs to
 .IR http://bugzilla.xfce.org/ .
 Development discussion should be conducted on the
-.IR goodies-dev@xfce.org
-mailing list.  Usage-related questions should be directed to the
+.IR xfce4-dev@xfce.org
+mailing list.  Usage related questions should be directed to the
 .IR xfce@xfce.org
-mailing list.
+mailing list. See:
+.IR https://mail.xfce.org/mailman/listinfo/
 
 .SH HOMEPAGE
 .I http://goodies.xfce.org/
 
 .SH AUTHOR
-Ali Abdallah <aliov@xfce.org>
+Ali Abdallah <aliov@xfce.org>,
+Eric Koegel <eric@gxfce.org>,
+Simon Steinbeiss <simon@xfce.org>,
+Harald Judt <h.judt@gmx.at>
 
 .SH MANPAGE AUTHORS
 Ali Abdallah <aliov@xfce.org>,
-Robby Workman <rworkman@slackware.com>.
+Robby Workman <rworkman@slackware.com>,
+Eric Koegel <eric@xfce.org>.

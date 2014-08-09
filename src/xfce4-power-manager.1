@@ -1,4 +1,4 @@
-.TH XFCE4-POWER-MANAGER 1 "Version 0.8.0" "31 March 2009"
+.TH XFCE4-POWER-MANAGER 1 "Version 1.3.1" "9 August 2014"
 
 .SH NAME
 xfce4-power-manager \- The Xfce 4 Power manager
@@ -9,15 +9,15 @@ xfce4-power-manager \- The Xfce 4 Power manager
 .br
 
 .SH DESCRIPTION
-\fBxfce4-power-manager\fP manages the power sources on the computer and the 
-devices that can be controlled to reduce their power consumption (such as LCD 
-brightness level, monitor sleep, CPU frequency scaling). In addition, 
-\fBxfce4-power-manager\fP provides a set of freedesktop-compliant DBus 
-interfaces to inform other applications about current power level so that 
-they can adjust their power consumption, and it provides the inhibit 
-interface which allows applications to prevent automatic sleep actions via 
-the power manager; as an example, the operating system's package manager
-should make use of this interface while it is performing update operations.
+\fBxfce4-power-manager\fP manages the power sources on the computer and the
+devices that can be controlled to reduce their power consumption (such as LCD
+brightness level, monitor sleep). In addition,  \fBxfce4-power-manager\fP
+provides a set of freedesktop-compliant DBus interfaces to inform other
+applications about current power level so that  they can adjust their power
+consumption, and it provides the inhibit  interface which allows applications
+to prevent automatic sleep actions via the power manager; as an example,
+the operating system's package manager should make use of this interface
+while it is performing update operations.
 .br
 .br
 You can run \fBxfce4-power-manager\fP from the command line without 
@@ -28,6 +28,13 @@ specifying any extra arguments.
 .B \--no-daemon
 Starts the power manager in non-daemon mode: useful for debugging.
 .TP
+.B \--debug
+Have the power manager print debug messages to the console; useful
+if you have to send in a bug report.
+.TP
+.B \--dump
+Have the power manager print the configuration information to the console.
+.TP
 .B \--restart
 Causes the running power manager to restart.
 .TP
@@ -36,22 +43,30 @@ Shows the configuration dialog.
 .TP
 .B \--quit
 Causes any running instance of \fBxfce4-power-manager\fP to exit.
+.TP
+.B \--version
+Show the version information.
 
 .SH BUGS
 Please report any bugs to
 .IR http://bugzilla.xfce.org/ .
 Development discussion should be conducted on the
-.IR goodies-dev@xfce.org
+.IR xfce4-dev@xfce.org
 mailing list.  Usage related questions should be directed to the
 .IR xfce@xfce.org
-mailing list.
+mailing list. See:
+.IR https://mail.xfce.org/mailman/listinfo/
 
 .SH HOMEPAGE
 .I http://goodies.xfce.org/
 
 .SH AUTHOR
-Ali Abdallah <aliov@xfce.org>
+Ali Abdallah <aliov@xfce.org>,
+Eric Koegel <eric@gxfce.org>,
+Simon Steinbeiss <simon@xfce.org>,
+Harald Judt <h.judt@gmx.at>
 
 .SH MANPAGE AUTHORS
 Ali Abdallah <aliov@xfce.org>,
-Robby Workman <rworkman@slackware.com>.
+Robby Workman <rworkman@slackware.com>,
+Eric Koegel <eric@xfce.org>.
