@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-06-30 18:30+0200\n"
-"PO-Revision-Date: 2014-07-01 06:29+0000\n"
+"POT-Creation-Date: 2014-08-10 00:30+0200\n"
+"PO-Revision-Date: 2014-08-10 05:31+0000\n"
 "Last-Translator: Michael Findlay <keltoiboy@gmail.com>\n"
 "Language-Team: English (Australia) (http://www.transifex.com/projects/p/xfce4-power-manager/language/en_AU/)\n"
 "MIME-Version: 1.0\n"
@@ -19,106 +19,105 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:443
+msgid "Nothing"
+msgstr "Nothing"
+
+#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../settings/xfpm-settings-main.c:137 ../src/xfpm-main.c:428
 msgid "Xfce Power Manager"
 msgstr "Xfce Power Manager"
 
-#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "Power manager settings"
 msgstr "Power manager settings"
 
-#: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "When power button is pressed"
-msgstr "When power button is pressed"
-
 #: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "When sleep button is pressed"
-msgstr "When sleep button is pressed"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "When hibernate button is pressed"
-msgstr "When hibernate button is pressed"
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Lock screen when going for suspend/hibernate"
-msgstr "Lock screen when going for suspend/hibernate"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "<b>Default actions</b>"
-msgstr "<b>Default actions</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:8
-msgid "Show notifications"
-msgstr "Show notifications"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "<b>Appearance</b>"
-msgstr "<b>Appearance</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "General"
-msgstr "General"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "System sleep mode"
-msgstr "System sleep mode"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Prefer saving power over performance"
-msgstr "Prefer saving power over performance"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:948
 msgid "On battery"
 msgstr "On battery"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14 ../settings/xfpm-settings.c:951
-#: ../common/xfpm-power-common.c:419
+#: ../data/interfaces/xfpm-settings.ui.h:5 ../common/xfpm-power-common.c:442
 msgid "Plugged in"
 msgstr "Plugged in"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "When laptop lid is closed"
-msgstr "When laptop lid is closed"
-
-#: ../data/interfaces/xfpm-settings.ui.h:16
+#: ../data/interfaces/xfpm-settings.ui.h:6
 msgid "Put system to sleep when inactive for"
 msgstr "Put system to sleep when inactive for"
 
-#: ../data/interfaces/xfpm-settings.ui.h:17
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "System sleep mode"
+msgstr "System sleep mode"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "<b>System power saving</b>"
 msgstr "<b>System power saving</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:18
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "Critical battery power level"
 msgstr "Critical battery power level"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
+#: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "On critical battery power"
 msgstr "On critical battery power"
 
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "<b>Critical power</b>"
 msgstr "<b>Critical power</b>"
 
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Lock screen when system is going for sleep"
+msgstr "Lock screen when system is going for sleep"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Show notifications"
+msgstr "Show notifications"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "<b>Security and notifications</b>"
+msgstr "<b>Security and notifications</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:15
+msgid "General"
+msgstr "General"
+
+#: ../data/interfaces/xfpm-settings.ui.h:16
+msgid "When power button is pressed"
+msgstr "When power button is pressed"
+
+#: ../data/interfaces/xfpm-settings.ui.h:17
+msgid "When sleep button is pressed"
+msgstr "When sleep button is pressed"
+
+#: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "When hibernate button is pressed"
+msgstr "When hibernate button is pressed"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
+msgid "<b>Buttons</b>"
+msgstr "<b>Buttons</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:20
+msgid "When laptop lid is closed"
+msgstr "When laptop lid is closed"
+
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "Spin down hard disks"
-msgstr "Spin down hard disks"
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>Laptop Lid</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "<b>Hard disks</b>"
-msgstr "<b>Hard disks</b>"
+msgid "Handle display brightness _keys"
+msgstr "Handle display brightness _keys"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "System"
-msgstr "System"
+msgid "<b>Keys</b>"
+msgstr "<b>Keys</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
-msgid "Handle display power management"
-msgstr "Handle display power management"
+msgid "Controls"
+msgstr "Controls"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "Sleep mode"
-msgstr "Sleep mode"
+msgid "Handle display power management"
+msgstr "Handle display power management"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "Blank after"
@@ -133,268 +132,265 @@ msgid "Switch off after"
 msgstr "Switch off after"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "<b>Power saving</b>"
-msgstr "<b>Power saving</b>"
+msgid "<b>Display power management settings</b>"
+msgstr "<b>Display power management settings</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "Reduce on inactivity"
-msgstr "Reduce on inactivity"
+msgid "On inactivity reduce to"
+msgstr "On inactivity reduce to"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "Reduce to"
-msgstr "Reduce to"
+msgid "Reduce after"
+msgstr "Reduce after"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
-msgid "<b>Brightness</b>"
-msgstr "<b>Brightness</b>"
+msgid "<b>Brightness reduction</b>"
+msgstr "<b>Brightness reduction</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Display"
 msgstr "Display"
 
-#: ../data/interfaces/xfpm-settings.ui.h:34
-msgid "Nothing"
-msgstr "Nothing"
-
-#: ../settings/xfpm-settings.c:545 ../settings/xfpm-settings.c:560
-#: ../settings/xfpm-settings.c:587 ../settings/xfpm-settings.c:945
+#: ../settings/xfpm-settings.c:523 ../settings/xfpm-settings.c:538
+#: ../settings/xfpm-settings.c:565
 msgid "Never"
 msgstr "Never"
 
-#: ../settings/xfpm-settings.c:548
+#: ../settings/xfpm-settings.c:526
 msgid "One minute"
 msgstr "One minute"
 
-#: ../settings/xfpm-settings.c:550 ../settings/xfpm-settings.c:562
+#: ../settings/xfpm-settings.c:528 ../settings/xfpm-settings.c:540
 msgid "Minutes"
 msgstr "Minutes"
 
-#: ../settings/xfpm-settings.c:564 ../settings/xfpm-settings.c:571
-#: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:573
+#: ../settings/xfpm-settings.c:542 ../settings/xfpm-settings.c:549
+#: ../settings/xfpm-settings.c:550 ../settings/xfpm-settings.c:551
 msgid "One hour"
 msgstr "One hour"
 
-#: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:576
+#: ../settings/xfpm-settings.c:550 ../settings/xfpm-settings.c:554
 msgid "one minute"
 msgstr "one minute"
 
-#: ../settings/xfpm-settings.c:573 ../settings/xfpm-settings.c:577
+#: ../settings/xfpm-settings.c:551 ../settings/xfpm-settings.c:555
 msgid "minutes"
 msgstr "minutes"
 
-#: ../settings/xfpm-settings.c:575 ../settings/xfpm-settings.c:576
-#: ../settings/xfpm-settings.c:577
+#: ../settings/xfpm-settings.c:553 ../settings/xfpm-settings.c:554
+#: ../settings/xfpm-settings.c:555
 msgid "hours"
 msgstr "hours"
 
-#: ../settings/xfpm-settings.c:589
+#: ../settings/xfpm-settings.c:567
 msgid "Seconds"
 msgstr "Seconds"
 
-#: ../settings/xfpm-settings.c:595
+#: ../settings/xfpm-settings.c:573
 msgid "%"
 msgstr "%"
 
-#: ../settings/xfpm-settings.c:781 ../settings/xfpm-settings.c:1007
-#: ../settings/xfpm-settings.c:1477
-msgid "Hibernate and suspend operations not supported"
-msgstr "Hibernate and suspend operations not supported"
-
-#: ../settings/xfpm-settings.c:786 ../settings/xfpm-settings.c:1012
-#: ../settings/xfpm-settings.c:1482
-msgid "Hibernate and suspend operations not permitted"
-msgstr "Hibernate and suspend operations not permitted"
-
-#: ../settings/xfpm-settings.c:798 ../settings/xfpm-settings.c:1179
-#: ../settings/xfpm-settings.c:1236 ../settings/xfpm-settings.c:1288
-msgid "Do nothing"
-msgstr "Do nothing"
-
-#: ../settings/xfpm-settings.c:803 ../settings/xfpm-settings.c:871
-#: ../settings/xfpm-settings.c:1048 ../settings/xfpm-settings.c:1184
-#: ../settings/xfpm-settings.c:1241 ../settings/xfpm-settings.c:1293
-#: ../settings/xfpm-settings.c:1364 ../settings/xfpm-settings.c:1415
-#: ../src/xfpm-power.c:655
+#: ../settings/xfpm-settings.c:747 ../settings/xfpm-settings.c:826
+#: ../settings/xfpm-settings.c:884 ../settings/xfpm-settings.c:969
+#: ../settings/xfpm-settings.c:1057 ../settings/xfpm-settings.c:1165
+#: ../settings/xfpm-settings.c:1222 ../settings/xfpm-settings.c:1274
+#: ../src/xfpm-power.c:635
 msgid "Suspend"
 msgstr "Suspend"
 
-#: ../settings/xfpm-settings.c:809 ../settings/xfpm-settings.c:877
-#: ../settings/xfpm-settings.c:1054 ../settings/xfpm-settings.c:1190
-#: ../settings/xfpm-settings.c:1247 ../settings/xfpm-settings.c:1299
-#: ../settings/xfpm-settings.c:1378 ../src/xfpm-power.c:644
-msgid "Hibernate"
-msgstr "Hibernate"
-
-#: ../settings/xfpm-settings.c:815 ../settings/xfpm-settings.c:1196
-#: ../src/xfpm-power.c:666
-msgid "Shutdown"
-msgstr "Shutdown"
-
-#: ../settings/xfpm-settings.c:819 ../settings/xfpm-settings.c:1200
-#: ../settings/xfpm-settings.c:1251 ../settings/xfpm-settings.c:1303
-msgid "Ask"
-msgstr "Ask"
-
-#: ../settings/xfpm-settings.c:866 ../settings/xfpm-settings.c:1043
-msgid "Switch off display"
-msgstr "Switch off display"
-
-#: ../settings/xfpm-settings.c:881 ../settings/xfpm-settings.c:1058
-msgid "Lock screen"
-msgstr "Lock screen"
-
-#: ../settings/xfpm-settings.c:954
-msgid "Always"
-msgstr "Always"
-
-#: ../settings/xfpm-settings.c:981 ../settings/xfpm-settings.c:1125
-msgid "Spinning down hard disks permission denied"
-msgstr "Spinning down hard disks permission denied"
-
-#: ../settings/xfpm-settings.c:1368
+#: ../settings/xfpm-settings.c:751 ../settings/xfpm-settings.c:973
 msgid "Suspend operation not permitted"
 msgstr "Suspend operation not permitted"
 
-#: ../settings/xfpm-settings.c:1372
+#: ../settings/xfpm-settings.c:755 ../settings/xfpm-settings.c:977
 msgid "Suspend operation not supported"
 msgstr "Suspend operation not supported"
 
-#: ../settings/xfpm-settings.c:1382
+#: ../settings/xfpm-settings.c:761 ../settings/xfpm-settings.c:832
+#: ../settings/xfpm-settings.c:890 ../settings/xfpm-settings.c:983
+#: ../settings/xfpm-settings.c:1063 ../settings/xfpm-settings.c:1171
+#: ../settings/xfpm-settings.c:1228 ../settings/xfpm-settings.c:1280
+#: ../src/xfpm-power.c:624
+msgid "Hibernate"
+msgstr "Hibernate"
+
+#: ../settings/xfpm-settings.c:765 ../settings/xfpm-settings.c:987
 msgid "Hibernate operation not permitted"
 msgstr "Hibernate operation not permitted"
 
-#: ../settings/xfpm-settings.c:1386
+#: ../settings/xfpm-settings.c:769 ../settings/xfpm-settings.c:991
 msgid "Hibernate operation not supported"
 msgstr "Hibernate operation not supported"
 
-#: ../settings/xfpm-settings.c:1417
-msgid "Standby"
-msgstr "Standby"
+#: ../settings/xfpm-settings.c:799 ../settings/xfpm-settings.c:1021
+#: ../settings/xfpm-settings.c:1363
+msgid "Hibernate and suspend operations not supported"
+msgstr "Hibernate and suspend operations not supported"
 
-#: ../settings/xfpm-settings.c:1450
+#: ../settings/xfpm-settings.c:804 ../settings/xfpm-settings.c:1026
+#: ../settings/xfpm-settings.c:1368
+msgid "Hibernate and suspend operations not permitted"
+msgstr "Hibernate and suspend operations not permitted"
+
+#: ../settings/xfpm-settings.c:821 ../settings/xfpm-settings.c:1160
+#: ../settings/xfpm-settings.c:1217 ../settings/xfpm-settings.c:1269
+msgid "Do nothing"
+msgstr "Do nothing"
+
+#: ../settings/xfpm-settings.c:838 ../settings/xfpm-settings.c:1177
+#: ../src/xfpm-power.c:646
+msgid "Shutdown"
+msgstr "Shutdown"
+
+#: ../settings/xfpm-settings.c:842 ../settings/xfpm-settings.c:1181
+#: ../settings/xfpm-settings.c:1232 ../settings/xfpm-settings.c:1284
+msgid "Ask"
+msgstr "Ask"
+
+#: ../settings/xfpm-settings.c:879 ../settings/xfpm-settings.c:1052
+msgid "Switch off display"
+msgstr "Switch off display"
+
+#: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1067
+msgid "Lock screen"
+msgstr "Lock screen"
+
+#: ../settings/xfpm-settings.c:1335
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "When all the power sources of the computer reach this charge level"
 
-#: ../settings/xfpm-settings.c:1688
+#: ../settings/xfpm-settings.c:1581
 msgid "Device"
 msgstr "Device"
 
-#: ../settings/xfpm-settings.c:1710
+#: ../settings/xfpm-settings.c:1603
 msgid "Type"
 msgstr "Type"
 
-#: ../settings/xfpm-settings.c:1715
+#: ../settings/xfpm-settings.c:1608
 msgid "PowerSupply"
 msgstr "PowerSupply"
 
-#: ../settings/xfpm-settings.c:1716 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1609 ../src/xfpm-main.c:80
 msgid "True"
 msgstr "True"
 
-#: ../settings/xfpm-settings.c:1716 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1609 ../src/xfpm-main.c:80
 msgid "False"
 msgstr "False"
 
-#: ../settings/xfpm-settings.c:1723
+#: ../settings/xfpm-settings.c:1616
 msgid "Model"
 msgstr "Model"
 
-#: ../settings/xfpm-settings.c:1726
+#: ../settings/xfpm-settings.c:1619
 msgid "Technology"
 msgstr "Technology"
 
-#: ../settings/xfpm-settings.c:1733
+#: ../settings/xfpm-settings.c:1626
 msgid "Current charge"
 msgstr "Current charge"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1741 ../settings/xfpm-settings.c:1751
-#: ../settings/xfpm-settings.c:1762
+#: ../settings/xfpm-settings.c:1634 ../settings/xfpm-settings.c:1646
+#: ../settings/xfpm-settings.c:1658
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:1743
+#: ../settings/xfpm-settings.c:1636
 msgid "Fully charged (design)"
 msgstr "Fully charged (design)"
 
-#: ../settings/xfpm-settings.c:1754
+#: ../settings/xfpm-settings.c:1649
 msgid "Fully charged"
 msgstr "Fully charged"
 
-#: ../settings/xfpm-settings.c:1764
+#: ../settings/xfpm-settings.c:1660
 msgid "Energy empty"
 msgstr "Energy empty"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1772
+#: ../settings/xfpm-settings.c:1668
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:1774
+#: ../settings/xfpm-settings.c:1670
 msgid "Voltage"
 msgstr "Voltage"
 
-#: ../settings/xfpm-settings.c:1781
+#: ../settings/xfpm-settings.c:1677
 msgid "Vendor"
 msgstr "Vendor"
 
-#: ../settings/xfpm-settings.c:1786
+#: ../settings/xfpm-settings.c:1682
 msgid "Serial"
 msgstr "Serial"
 
-#: ../settings/xfpm-settings.c:1851
+#: ../settings/xfpm-settings.c:1751
 msgid "Attribute"
 msgstr "Attribute"
 
-#: ../settings/xfpm-settings.c:1858
+#: ../settings/xfpm-settings.c:1758
 msgid "Value"
 msgstr "Value"
 
-#: ../settings/xfpm-settings.c:2047
+#: ../settings/xfpm-settings.c:1968
 msgid "Check your power manager installation"
 msgstr "Check your power manager installation"
 
-#: ../settings/xfpm-settings.c:2116
+#: ../settings/xfpm-settings.c:2038
 msgid "Devices"
 msgstr "Devices"
 
-#: ../settings/xfpm-settings-main.c:78
+#: ../settings/xfpm-settings-main.c:80
 msgid "Settings manager socket"
 msgstr "Settings manager socket"
 
-#: ../settings/xfpm-settings-main.c:78
+#: ../settings/xfpm-settings-main.c:80
 msgid "SOCKET ID"
 msgstr "SOCKET ID"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:324
+#: ../settings/xfpm-settings-main.c:81
+msgid "Display a specific device by UpDevice object path"
+msgstr "Display a specific device by UpDevice object path"
+
+#: ../settings/xfpm-settings-main.c:81
+msgid "UpDevice object path"
+msgstr "UpDevice object path"
+
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:255
+msgid "Enable debugging"
+msgstr "Enable debugging"
+
+#: ../settings/xfpm-settings-main.c:93 ../src/xfpm-main.c:309
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Type '%s --help' for usage."
 
-#: ../settings/xfpm-settings-main.c:123
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "Failed to load power manager configuration, using defaults"
-
-#: ../settings/xfpm-settings-main.c:150
-msgid "Unable to connect to Xfce Power Manager"
-msgstr "Unable to connect to Xfce Power Manager"
-
-#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:359
+#: ../settings/xfpm-settings-main.c:113 ../src/xfpm-main.c:344
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce power manager is not running"
 
-#: ../settings/xfpm-settings-main.c:197
+#: ../settings/xfpm-settings-main.c:118
 msgid "Run"
 msgstr "Run"
 
-#: ../settings/xfpm-settings-main.c:198
+#: ../settings/xfpm-settings-main.c:119
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 Power Manager is not running, do you want to launch it now?"
 
+#: ../settings/xfpm-settings-main.c:139
+msgid "Failed to load power manager configuration, using defaults"
+msgstr "Failed to load power manager configuration, using defaults"
+
+#: ../settings/xfpm-settings-main.c:166
+msgid "Unable to connect to Xfce Power Manager"
+msgstr "Unable to connect to Xfce Power Manager"
+
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:308 ../src/xfpm-power.c:586 ../src/xfpm-power.c:630
-#: ../src/xfpm-power.c:794 ../src/xfpm-power.c:818 ../src/xfpm-battery.c:256
+#: ../src/xfpm-power.c:306 ../src/xfpm-power.c:566 ../src/xfpm-power.c:610
+#: ../src/xfpm-power.c:774 ../src/xfpm-power.c:798 ../src/xfpm-battery.c:256
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Power Manager"
@@ -403,7 +399,7 @@ msgstr "Power Manager"
 msgid "Settings for the Xfce Power Manager"
 msgstr "Settings for the Xfce Power Manager"
 
-#: ../common/xfpm-common.c:120
+#: ../common/xfpm-common.c:131
 msgid "translator-credits"
 msgstr "translator-credits"
 
@@ -443,7 +439,7 @@ msgstr "Phone"
 msgid "Tablet"
 msgstr "Tablet"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:329
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:352
 msgid "Computer"
 msgstr "Computer"
 
@@ -513,178 +509,165 @@ msgid_plural "minutes"
 msgstr[0] "minute"
 msgstr[1] "minutes"
 
-#: ../common/xfpm-power-common.c:346
+#: ../common/xfpm-power-common.c:369
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%, %s runtime)\t"
-msgstr "<b>%s %s</b>\t\nFully charged (%0.0f%%, %s runtime)\t"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%, %s runtime)"
+msgstr "<b>%s %s</b>\nFully charged (%0.0f%%, %s runtime)"
 
-#: ../common/xfpm-power-common.c:354
+#: ../common/xfpm-power-common.c:377
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Fully charged (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nFully charged (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%)"
+msgstr "<b>%s %s</b>\nFully charged (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:364
+#: ../common/xfpm-power-common.c:387
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\t\nCharging (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%, %s)"
+msgstr "<b>%s %s</b>\nCharging (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:372
+#: ../common/xfpm-power-common.c:395
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Charging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nCharging (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%)"
+msgstr "<b>%s %s</b>\nCharging (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:382
+#: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%, %s)\t"
-msgstr "<b>%s %s</b>\t\nDischarging (%0.0f%%, %s)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%, %s)"
+msgstr "<b>%s %s</b>\nDischarging (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:390
+#: ../common/xfpm-power-common.c:413
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Discharging (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nDischarging (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%)"
+msgstr "<b>%s %s</b>\nDischarging (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:397
+#: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to discharge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nWaiting to discharge (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Waiting to discharge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nWaiting to discharge (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:403
+#: ../common/xfpm-power-common.c:426
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Waiting to charge (%0.0f%%)\t"
-msgstr "<b>%s %s</b>\t\nWaiting to charge (%0.0f%%)\t"
+"<b>%s %s</b>\n"
+"Waiting to charge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nWaiting to charge (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:409
+#: ../common/xfpm-power-common.c:432
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"is empty\t"
-msgstr "<b>%s %s</b>\t\nis empty\t"
+"<b>%s %s</b>\n"
+"is empty"
+msgstr "<b>%s %s</b>\nis empty"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:418
+#: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"%s\t"
-msgstr "<b>%s %s</b>\t\n%s\t"
+"<b>%s %s</b>\n"
+"%s"
+msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:419
+#: ../common/xfpm-power-common.c:442
 msgid "Not plugged in"
 msgstr "Not plugged in"
 
+#. Desktop pc with no battery, just display the vendor and model,
+#. * which will probably just be Computer
+#: ../common/xfpm-power-common.c:448
+#, c-format
+msgid "<b>%s %s</b>"
+msgstr "<b>%s %s</b>"
+
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:424
+#: ../common/xfpm-power-common.c:453
 #, c-format
 msgid ""
-"<b>%s %s</b>\t\n"
-"Unknown state\t"
-msgstr "<b>%s %s</b>\t\nUnknown state\t"
+"<b>%s %s</b>\n"
+"Unknown state"
+msgstr "<b>%s %s</b>\nUnknown state"
 
-#: ../src/xfpm-power.c:334
+#: ../src/xfpm-power.c:332
 msgid "_Hibernate"
 msgstr "_Hibernate"
 
-#: ../src/xfpm-power.c:335
+#: ../src/xfpm-power.c:333
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
 msgstr "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application."
 
-#: ../src/xfpm-power.c:337
+#: ../src/xfpm-power.c:335
 msgid "Are you sure you want to hibernate the system?"
 msgstr "Are you sure you want to hibernate the system?"
 
-#: ../src/xfpm-power.c:352
-msgid "Incorrect password entered"
-msgstr "Incorrect password entered"
-
-#: ../src/xfpm-power.c:394
+#: ../src/xfpm-power.c:376
 msgid "Continue"
 msgstr "Continue"
 
-#: ../src/xfpm-power.c:395 ../src/xfpm-manager.c:374
+#: ../src/xfpm-power.c:377 ../src/xfpm-manager.c:366
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
 msgstr "None of the screen lock tools ran successfully, the screen will not be locked."
 
-#: ../src/xfpm-power.c:398
+#: ../src/xfpm-power.c:380
 msgid "Do you still want to continue to suspend the system?"
 msgstr "Do you still want to continue to suspend the system?"
 
-#: ../src/xfpm-power.c:549
+#: ../src/xfpm-power.c:529
 msgid "Hibernate the system"
 msgstr "Hibernate the system"
 
-#: ../src/xfpm-power.c:560
+#: ../src/xfpm-power.c:540
 msgid "Suspend the system"
 msgstr "Suspend the system"
 
-#: ../src/xfpm-power.c:570
+#: ../src/xfpm-power.c:550
 msgid "Shutdown the system"
 msgstr "Shutdown the system"
 
-#: ../src/xfpm-power.c:581 ../src/xfpm-power.c:627
+#: ../src/xfpm-power.c:561 ../src/xfpm-power.c:607
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "System is running on low power. Save your work to avoid losing data"
 
-#: ../src/xfpm-power.c:795
+#: ../src/xfpm-power.c:775
 msgid "System is running on low power"
 msgstr "System is running on low power"
 
-#: ../src/xfpm-power.c:814
+#: ../src/xfpm-power.c:794
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Your %s charge level is low\nEstimated time left %s"
 
-#: ../src/xfpm-power.c:1438
-msgid ""
-"The requested operation requires elevated privileges.\t\n"
-"Please enter your password."
-msgstr "The requested operation requires elevated privileges.\t\nPlease enter your password."
-
-#. Set the dialog's title
-#: ../src/xfpm-power.c:1447
-msgid "xfce4-power-manager"
-msgstr "xfce4-power-manager"
-
-#. setup password label
-#: ../src/xfpm-power.c:1450
-msgid "Password:"
-msgstr "Password:"
-
-#: ../src/xfpm-power.c:1576 ../src/xfpm-power.c:1609 ../src/xfpm-power.c:1628
-#: ../src/xfpm-power.c:1651
+#: ../src/xfpm-power.c:1488 ../src/xfpm-power.c:1521 ../src/xfpm-power.c:1540
+#: ../src/xfpm-power.c:1563
 #, c-format
 msgid "Permission denied"
 msgstr "Permission denied"
 
-#: ../src/xfpm-power.c:1636 ../src/xfpm-power.c:1659
+#: ../src/xfpm-power.c:1548 ../src/xfpm-power.c:1571
 #, c-format
 msgid "Suspend not supported"
 msgstr "Suspend not supported"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:149
+#: ../src/xfpm-backlight.c:172
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "Brightness: %.0f percent"
@@ -771,130 +754,108 @@ msgid ""
 "\n"
 msgstr "\nXfce Power Manager %s\n\nPart of the Xfce Goodies Project\nhttp://goodies.xfce.org\n\nLicenced under the GNU GPL.\n\n"
 
-#: ../src/xfpm-main.c:117
+#: ../src/xfpm-main.c:113
 #, c-format
 msgid "With policykit support\n"
 msgstr "With policykit support\n"
 
-#: ../src/xfpm-main.c:119
+#: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without policykit support\n"
 msgstr "Without policykit support\n"
 
-#: ../src/xfpm-main.c:122
+#: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
 msgstr "With network manager support\n"
 
-#: ../src/xfpm-main.c:124
+#: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
 msgstr "Without network manager support\n"
 
-#: ../src/xfpm-main.c:127
-#, c-format
-msgid "With DPMS support\n"
-msgstr "With DPMS support\n"
-
-#: ../src/xfpm-main.c:129
-#, c-format
-msgid "Without DPMS support\n"
-msgstr "Without DPMS support\n"
-
-#: ../src/xfpm-main.c:145
+#: ../src/xfpm-main.c:134
 msgid "Can suspend"
 msgstr "Can suspend"
 
-#: ../src/xfpm-main.c:147
+#: ../src/xfpm-main.c:136
 msgid "Can hibernate"
 msgstr "Can hibernate"
 
-#: ../src/xfpm-main.c:149
-msgid "Can spin down hard disks"
-msgstr "Can spin down hard disks"
-
-#: ../src/xfpm-main.c:151
+#: ../src/xfpm-main.c:138
 msgid "Authorized to suspend"
 msgstr "Authorised to suspend"
 
-#: ../src/xfpm-main.c:153
+#: ../src/xfpm-main.c:140
 msgid "Authorized to hibernate"
 msgstr "Authorised to hibernate"
 
-#: ../src/xfpm-main.c:155
+#: ../src/xfpm-main.c:142
 msgid "Authorized to shutdown"
 msgstr "Authorised to shutdown"
 
-#: ../src/xfpm-main.c:157
-msgid "Authorized to spin down hard disks"
-msgstr "Authorised to spin down hard disks"
-
-#: ../src/xfpm-main.c:159
+#: ../src/xfpm-main.c:144
 msgid "Has battery"
 msgstr "Has battery"
 
-#: ../src/xfpm-main.c:161
+#: ../src/xfpm-main.c:146
 msgid "Has brightness panel"
 msgstr "Has brightness panel"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:148
 msgid "Has power button"
 msgstr "Has power button"
 
-#: ../src/xfpm-main.c:165
+#: ../src/xfpm-main.c:150
 msgid "Has hibernate button"
 msgstr "Has hibernate button"
 
-#: ../src/xfpm-main.c:167
+#: ../src/xfpm-main.c:152
 msgid "Has sleep button"
 msgstr "Has sleep button"
 
-#: ../src/xfpm-main.c:169
+#: ../src/xfpm-main.c:154
 msgid "Has LID"
 msgstr "Has LID"
 
-#: ../src/xfpm-main.c:269
+#: ../src/xfpm-main.c:254
 msgid "Do not daemonize"
 msgstr "Do not daemonise"
 
-#: ../src/xfpm-main.c:270
-msgid "Enable debugging"
-msgstr "Enable debugging"
-
-#: ../src/xfpm-main.c:271
+#: ../src/xfpm-main.c:256
 msgid "Dump all information"
 msgstr "Dump all information"
 
-#: ../src/xfpm-main.c:272
+#: ../src/xfpm-main.c:257
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Restart the running instance of Xfce power manager"
 
-#: ../src/xfpm-main.c:273
+#: ../src/xfpm-main.c:258
 msgid "Show the configuration dialog"
 msgstr "Show the configuration dialogue"
 
-#: ../src/xfpm-main.c:274
+#: ../src/xfpm-main.c:259
 msgid "Quit any running xfce power manager"
 msgstr "Quit any running xfce power manager"
 
-#: ../src/xfpm-main.c:275
+#: ../src/xfpm-main.c:260
 msgid "Version information"
 msgstr "Version information"
 
-#: ../src/xfpm-main.c:296
+#: ../src/xfpm-main.c:281
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Failed to parse arguments: %s\n"
 
-#: ../src/xfpm-main.c:350
+#: ../src/xfpm-main.c:335
 msgid "Unable to get connection to the message bus session"
 msgstr "Unable to get connection to the message bus session"
 
-#: ../src/xfpm-main.c:444
+#: ../src/xfpm-main.c:429
 msgid "Another power manager is already running"
 msgstr "Another power manager is already running"
 
-#: ../src/xfpm-main.c:450
+#: ../src/xfpm-main.c:435
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce power manager is already running"
@@ -909,53 +870,28 @@ msgstr "Invalid arguments"
 msgid "Invalid cookie"
 msgstr "Invalid cookie"
 
-#: ../src/xfpm-suspend.c:387
-#, c-format
-msgid "Error sending command to pm helper: %s"
-msgstr "Error sending command to pm helper: %s"
-
-#: ../src/xfpm-suspend.c:400
-#, c-format
-msgid "Error receiving response from pm helper: %s"
-msgstr "Error receiving response from pm helper: %s"
-
-#: ../src/xfpm-suspend.c:408
-#, c-format
-msgid "Sleep command failed"
-msgstr "Sleep command failed"
-
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
 msgstr "Power management for the Xfce desktop"
 
-#: ../panel-plugins/brightness/brightness-button.c:180
-#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
-msgid "Control your LCD brightness"
-msgstr "Control your LCD brightness"
-
-#: ../panel-plugins/brightness/brightness-button.c:182
-msgid "No device found"
-msgstr "No device found"
-
-#: ../panel-plugins/brightness/brightness-button.c:662
-#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
-msgid "Brightness plugin"
-msgstr "Brightness plugin"
-
 #. how did we get here?
-#: ../panel-plugins/battery/battery-button.c:149
+#: ../panel-plugins/battery/battery-button.c:167
 msgid "Display battery levels for attached devices"
 msgstr "Display battery levels for attached devices"
 
+#: ../panel-plugins/battery/battery-button.c:951
+msgid "<b>Display brightness</b>"
+msgstr "<b>Display brightness</b>"
+
 #. Presentation mode checkbox
-#: ../panel-plugins/battery/battery-button.c:682
+#: ../panel-plugins/battery/battery-button.c:969
 msgid "Presentation _mode"
 msgstr "Presentation _mode"
 
 #. Power manager settings
-#: ../panel-plugins/battery/battery-button.c:691
-msgid "_Power manager..."
-msgstr "_Power manager..."
+#: ../panel-plugins/battery/battery-button.c:978
+msgid "_Power manager settings..."
+msgstr "_Power manager settings..."
 
 #: ../panel-plugins/battery/lxde/battery-plugin.c:54
 #: ../panel-plugins/battery/xfce/xfce4-battery-plugin.desktop.in.in.h:1
