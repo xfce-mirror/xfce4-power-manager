@@ -1,3 +1,60 @@
+1.3.1
+=====
+[Please note that this is a development release.]
+
+Development release of xfce4-power-manager.
+Please report all problems at bugzilla.xfce.org.
+
+ Xfce4-power-manager has changed how the xfce4-pm-helper application
+is used. Now the pm-helper is called by pkexec (provided by polkit),
+which means for users of xfpm that have UPower 0.99 installed and
+aren't using LoginD everything will work as before. In 1.3.0 options
+in the settings dialogs were unavailable because xfpm was still
+looking for the old UPower authorization rules which get uninstalled
+on the upgrade to UPower 0.99.
+
+  Simon Steinbeiss and Harald Judt have contributed many improvements
+to the power manager settings dialog. Harald also added a minimum xfconf
+value setting for the brightness slider so that users whose display goes
+completely dark at 0 can exclude that value if they desire.
+
+  The battery plugin can now be built as an LXDE plugin (Bug 10929).
+
+  The brightness plugin has been merged into the battery indicator plugin.
+This allows for the removal of duplicated code, puts all those settings in
+one plugin, and allows us to easily provide that functionality to LXDE.
+
+  The disk spin down feature was removed. The default settings for it
+actually had it configured so that it would never work, it was using
+the old UDisks 1 API, and would be useless for SSD drives and non-Linux
+users.
+
+  Other Changes:
+
+ - Simon P fixed a memory corruption crash (Bug 11018).
+ - OnlyShowIn was changed to a NotShowIn for the .desktop files (Bug 11009)
+ - Selecting a device in the plugin brings up the details in the settings
+   dialog.
+ - Improve strings in devices tab and add percentage (Bug #6652)
+ - Fork before gtk/dbus init
+ - Andrzej Added support for multi-row panel layouts for the plugin
+ - Restore screen power after sleep (Bug 10535)
+ - Samuli Suominen fixed suspend/hibernate with UPower 0.9.23 (Bug 10931)
+ - Carl Simonson added a notification popup when changing keyboard brightness
+ - Minumum UPower requirement was lowere to 0.9.7 to support FreeBSD
+ - Devices tab flickers on update (Bug 10937)
+ - Improve lid-action strings (Bug #6515)
+ - Carl Simonson added a reasonable step value for keyboard brightness
+ - Let xfpm control X11's screensaver extension
+
+Translation updates: Arabic (ar), Asturian (ast), Bulgarian (bg),
+ Chinese (Taiwan) (zh_TW), Croatian (hr), Dutch (Flemish) (nl),
+ English (Australia) (en_AU), French (fr), German (de), Hungarian (hu),
+ Indonesian (id), Italian (it), Japanese (ja),  Korean (ko), Malay (ms),
+ Norwegian Bokmål (nb), Polish (pl), Portuguese (pt),
+ Portuguese (Brazilian) (pt_BR), Russian (ru), Swedish (sv),
+ Spanish (Castilian) (es), Thai (th), Ukrainian (uk).
+
 1.3.0
 =====
 [Please note that this is a development release.]
