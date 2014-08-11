@@ -833,7 +833,7 @@ brightness_set_level_with_timeout (BatteryButton *button)
 }
 
 static void
-range_value_changed_cb (GtkWidget *widget, BatteryButton *button)
+range_value_changed_cb (BatteryButton *button, GtkWidget *widget)
 {
     TRACE("entering");
 
@@ -957,7 +957,7 @@ battery_button_show_menu (BatteryButton *button)
         xfpm_brightness_get_level (button->priv->brightness, &current_level);
         gtk_range_set_value (GTK_RANGE(button->priv->range), current_level);
 
-        g_signal_connect (mi, "value-changed", G_CALLBACK (range_value_changed_cb), button);
+        g_signal_connect_swapped (mi, "value-changed", G_CALLBACK (range_value_changed_cb), button);
         g_signal_connect (mi, "scroll-event", G_CALLBACK (range_scroll_cb), button);
         g_signal_connect (menu, "show", G_CALLBACK (range_show_cb), button);
 
