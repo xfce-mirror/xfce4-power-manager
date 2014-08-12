@@ -18,5 +18,4 @@ Data_DATA =				\
 	xfpm-primary-080-charging.png	\
 	xfpm-primary-100-charging.png	\
 	xfpm-primary-charged.png		\
-	xfpm-primary-missing.png		\
-	xfpm-brightness-lcd.png
+	xfpm-primary-missing.png
