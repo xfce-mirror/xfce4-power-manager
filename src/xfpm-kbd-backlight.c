@@ -105,7 +105,7 @@ xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self, gfloat value)
         self->priv->n = xfpm_notify_new_notification (self->priv->notify,
                 "",
                 "",
-                "xfpm-brightness-lcd",
+                "xfpm-brightness-keyboard",
                 0,
                 XFPM_NOTIFY_NORMAL,
                 NULL);
