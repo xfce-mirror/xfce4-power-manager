@@ -939,8 +939,8 @@ battery_button_show_menu (BatteryButton *button)
         /* attempt to load and display the brightness icon */
         pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                        XFPM_DISPLAY_BRIGHTNESS_ICON,
-                                       button->priv->panel_icon_width,
-                                       GTK_ICON_LOOKUP_FORCE_SIZE,
+                                       32,
+                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
                                        NULL);
         if (pix)
         {
