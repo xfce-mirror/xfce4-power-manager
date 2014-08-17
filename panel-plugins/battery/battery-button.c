@@ -191,7 +191,7 @@ find_device_in_list (BatteryButton *button, const gchar *object_path)
 static gboolean
 battery_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpointer userdata)
 {
-    cairo_t *cr = gdk_cairo_create (img->window);
+    cairo_t *cr;
     UpDevice *device = UP_DEVICE(userdata);
     guint type = 0;
     gdouble percentage;
@@ -206,8 +206,9 @@ battery_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpoint
 
     /* Don't draw the progressbar for Battery and UPS */
     if (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS)
-        return;
+        return FALSE;
 
+    cr = gdk_cairo_create (img->window);
     width = img->allocation.width;
     height = img->allocation.height;
 
