@@ -287,12 +287,14 @@ int main (int argc, char **argv)
 
     g_option_context_free(octx);
 
+    if ( version )    
+        show_version ();
+
     /* Fork if needed */
     if ( dump == FALSE && debug == FALSE && no_daemon == FALSE && daemon(0,0) )
     {
         g_critical ("Could not daemonize");
     }
-
 
     /* Initialize */
     dbus_g_thread_init ();
@@ -316,11 +318,6 @@ int main (int argc, char **argv)
         }
 
         return EXIT_FAILURE;
-    }
-
-    if ( version )    
-    {
-        show_version ();
     }
     
     xfpm_debug_init (debug);
