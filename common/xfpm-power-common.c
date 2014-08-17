@@ -296,18 +296,10 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
     }
     else
     {
-	if ( state == UP_DEVICE_STATE_EMPTY )
-	{
-	    icon_name = g_strdup_printf ("%s000", icon_prefix);
-	}
-	else if ( state == UP_DEVICE_STATE_FULLY_CHARGED )
-	{
-	    icon_name = g_strdup_printf ("%s100", icon_prefix);
-	}
-	else if ( state == UP_DEVICE_STATE_DISCHARGING || state == UP_DEVICE_STATE_CHARGING )
-	{
-	    icon_name = g_strdup_printf ("%s%s", icon_prefix, xfpm_battery_get_icon_index (type, percentage));
-	}
+
+	if ( state == UP_DEVICE_STATE_EMPTY || state == UP_DEVICE_STATE_FULLY_CHARGED ||
+             state == UP_DEVICE_STATE_DISCHARGING || state == UP_DEVICE_STATE_CHARGING )
+            icon_name = icon_prefix;
 	else if (is_display_device (upower, device))
 	{
 	    /* Desktop system with no batteries */
