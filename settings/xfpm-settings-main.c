@@ -124,6 +124,11 @@ int main (int argc, char **argv)
 	    /* wait 2 seconds for xfpm to startup */
 	    g_usleep ( 2 * 1000000 );
 	}
+	else
+	{
+	    /* continue without starting xfpm, this will probably error out */
+	    break;
+	}
     }
 
     unique = xfpm_unique_new ("org.xfce.PowerManager.Config");
