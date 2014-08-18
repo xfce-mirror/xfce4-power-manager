@@ -270,129 +270,54 @@ xfpm_polkit_free_data (gpointer data)
 static void
 xfpm_polkit_init_data (XfpmPolkit *polkit)
 {
-    //const gchar *consolekit_cookie;
     GValue hash_elem = { 0 };
-    //gboolean subject_created = FALSE;
+    gint pid;
+    guint64 start_time;
 
     if (polkit->priv->subject_valid)
 	return;
-    
-    /**
-     * This variable should be set by the session manager or by 
-     * the login manager (gdm?). under clean Xfce environment
-     * it is set by the session manager (4.8 and above)  
-     * since we don't have a login manager, yet!
-     **/
-     /*
-      *	
-      *	Disable for the moment
-      * 
-    consolekit_cookie = g_getenv ("XDG_SESSION_COOKIE");
-  
-    if ( consolekit_cookie )
-    {
-	DBusGProxy *proxy;
-	GError *error = NULL;
-	gboolean ret;
-	gchar *consolekit_session;
-	
-	proxy  = dbus_g_proxy_new_for_name_owner (polkit->priv->bus,
-						  "org.freedesktop.ConsoleKit",
-						  "/org/freedesktop/ConsoleKit/Manager",
-						  "org.freedesktop.ConsoleKit.Manager",
-						  NULL);
 
-	if ( proxy )
-	{
-	    ret = dbus_g_proxy_call (proxy, "GetSessionForCookie", &error,
-				     G_TYPE_STRING, consolekit_cookie,
-				     G_TYPE_INVALID,
-				     DBUS_TYPE_G_OBJECT_PATH, &consolekit_session,
-				     G_TYPE_INVALID);
-	    
-	    if ( G_LIKELY (ret) )
-	    {
-		GValue val  = { 0 };
-		
-		polkit->priv->subject = g_value_array_new (2);
-		polkit->priv->subject_hash = g_hash_table_new_full (g_str_hash, 
-								    g_str_equal, 
-								    g_free, 
-								    NULL);
-		g_value_init (&val, G_TYPE_STRING);
-		g_value_set_string (&val, "unix-session");
-		g_value_array_append (polkit->priv->subject, &val);
-		
-		g_value_unset (&val);
-		g_value_init (&val, G_TYPE_STRING);
-		g_value_set_string (&val, consolekit_session);
-		
-		g_hash_table_insert (polkit->priv->subject_hash, 
-				     g_strdup ("session-id"), 
-				     &val);
-		
-		g_free (consolekit_session);
-		XFPM_DEBUG ("Using ConsoleKit session Polkit subject");
-		subject_created = TRUE;
-	    }
-	    g_object_unref (proxy);
-	}
-	else if (error)
-	{
-	    g_warning ("'GetSessionForCookie' failed : %s", error->message);
-	    g_error_free (error);
-	}
-	
-    }
-    */
-    
-    //if ( subject_created == FALSE )
-    {
-	gint pid;
-	guint64 start_time;
-    
-	pid = getpid ();
-	
-	start_time = get_start_time_for_pid (pid);
-	
-	if ( G_LIKELY (start_time != 0 ) )
-	{
-	    GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
+    pid = getpid ();
 
-	    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-	    polkit->priv->subject = g_value_array_new (2);
-	    G_GNUC_END_IGNORE_DEPRECATIONS
-	    polkit->priv->subject_hash = g_hash_table_new_full (g_str_hash, 
-								g_str_equal, 
-								g_free, 
-								NULL);
-	
-	    g_value_init (&val, G_TYPE_STRING);
-	    g_value_set_string (&val, "unix-process");
-	    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-	    g_value_array_append (polkit->priv->subject, &val);
-	    G_GNUC_END_IGNORE_DEPRECATIONS
-	    
-	    g_value_unset (&val);
-	    
-	    g_value_init (&pid_val, G_TYPE_UINT);
-	    g_value_set_uint (&pid_val, pid);
-	    g_hash_table_insert (polkit->priv->subject_hash, 
-				 g_strdup ("pid"), &pid_val);
-	    
-	    g_value_init (&start_time_val, G_TYPE_UINT64);
-	    g_value_set_uint64 (&start_time_val, start_time);
-	    g_hash_table_insert (polkit->priv->subject_hash, 
-				 g_strdup ("start-time"), &start_time_val);
-	    
-	    XFPM_DEBUG ("Using unix session polkit subject");
-	}
-	else
-	{
-	    g_warning ("Unable to create polkit subject");
-	}
+    start_time = get_start_time_for_pid (pid);
+
+    if ( G_LIKELY (start_time != 0 ) )
+    {
+	GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
+
+	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+	polkit->priv->subject = g_value_array_new (2);
+	G_GNUC_END_IGNORE_DEPRECATIONS
+	polkit->priv->subject_hash = g_hash_table_new_full (g_str_hash,
+							    g_str_equal,
+							    g_free,
+							    NULL);
+
+	g_value_init (&val, G_TYPE_STRING);
+	g_value_set_string (&val, "unix-process");
+	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+	g_value_array_append (polkit->priv->subject, &val);
+	G_GNUC_END_IGNORE_DEPRECATIONS
+
+	g_value_unset (&val);
+
+	g_value_init (&pid_val, G_TYPE_UINT);
+	g_value_set_uint (&pid_val, pid);
+	g_hash_table_insert (polkit->priv->subject_hash,
+			     g_strdup ("pid"), &pid_val);
+
+	g_value_init (&start_time_val, G_TYPE_UINT64);
+	g_value_set_uint64 (&start_time_val, start_time);
+	g_hash_table_insert (polkit->priv->subject_hash,
+			     g_strdup ("start-time"), &start_time_val);
+
+	XFPM_DEBUG ("Using unix session polkit subject");
     }
-    
+    else
+    {
+	g_warning ("Unable to create polkit subject");
+    }
+
     g_value_init (&hash_elem, 
 		  dbus_g_type_get_map ("GHashTable", 
 				       G_TYPE_STRING, 
