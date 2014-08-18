@@ -220,19 +220,15 @@ power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, 
     cairo_fill_preserve (cr);
     cairo_set_source_rgb (cr, 0.53, 0.54, 0.52);
     cairo_stroke (cr);
-    cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.95);
-    cairo_rectangle (cr, width - 2.5, img->allocation.y + 2.5, 3, height - 4);
-    cairo_stroke (cr);
 
     /* Draw the fill of the progressbar
        Use yellow for 20% and below, green for 100%, red for 5% and below and blue for the rest */
     cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
 
     if ((height * (percentage / 100)) > min_height)
-       min_height = (height - 4) * (percentage / 100);
+       min_height = (height - 3) * (percentage / 100);
 
-    cairo_rectangle (cr, width - 2, img->allocation.y + height - min_height - 2, 2, min_height);
-
+    cairo_rectangle (cr, width - 3, img->allocation.y + height - min_height - 1, 4, min_height);
     if (percentage > 5 && percentage < 20)
         cairo_set_source_rgb (cr, 0.93, 0.83, 0.0);
     else if (percentage > 20 && percentage < 100)
@@ -241,8 +237,11 @@ power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, 
         cairo_set_source_rgb (cr, 0.45, 0.82, 0.08);
     else
         cairo_set_source_rgb (cr, 0.94, 0.16, 0.16);
-
     cairo_fill (cr);
+
+    cairo_rectangle (cr, width - 2.5, img->allocation.y + 2.5, 3, height - 4);
+    cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.75);
+    cairo_stroke (cr);
 
     cairo_destroy (cr);
     return FALSE;
