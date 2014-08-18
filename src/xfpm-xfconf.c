@@ -57,7 +57,6 @@ enum
     PROP_0,
     PROP_GENERAL_NOTIFICATION,
     PROP_LOCK_SCREEN_ON_SLEEP,
-    PROP_ENABLE_CPU_FREQ,
     PROP_CRITICAL_LEVEL,
     PROP_SHOW_BRIGHTNESS_POPUP,
     PROP_HANDLE_BRIGHTNESS_KEYS,
@@ -258,16 +257,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            NULL, NULL,
                                                            TRUE,
                                                            G_PARAM_READWRITE));
-    
-    /**
-     * XfpmXfconf::enable-cpu-freq-control
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_ENABLE_CPU_FREQ,
-                                     g_param_spec_boolean (CPU_FREQ_CONTROL,
-                                                           NULL, NULL,
-                                                           TRUE,
-                                                           G_PARAM_READWRITE));
+
     /**
      * XfpmXfconf::critical-power-level
      **/

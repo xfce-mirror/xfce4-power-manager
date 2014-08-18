@@ -55,7 +55,6 @@ G_BEGIN_DECLS
 #define PRESENTATION_MODE                    "presentation-mode"
 #define NETWORK_MANAGER_SLEEP                "network-manager-sleep"
 #define SHOW_TRAY_ICON_CFG                   "show-tray-icon"
-#define CPU_FREQ_CONTROL                     "enable-cpu-freq-control"
 
 #define POWER_SWITCH_CFG                     "power-button-action"
 #define HIBERNATE_SWITCH_CFG                 "hibernate-button-action"
