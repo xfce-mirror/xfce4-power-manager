@@ -1,26 +1,28 @@
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
-	-DG_LOG_DOMAIN=\"lxde-battery-plugin\" \
+	-DG_LOG_DOMAIN=\"lxde-power-manager-plugin\" \
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\" \
 	$(PLATFORM_CPPFLAGS)
 
 
 #
-# lxde battery plugin
+# lxde power manager plugin
 #
 
 plugin_LTLIBRARIES =   \
-	lxdebattery.la
+	lxde_power_manager.la
 
 plugindir = \
 	$(libdir)/lxpanel/plugins
 
-lxdebattery_la_SOURCES =    \
-	battery-plugin.c        \
-	../battery-button.c     \
-	../battery-button.h
+lxde_power_manager_la_SOURCES =    \
+	lxde-power-manager-plugin.c   \
+	../power-manager-button.c     \
+	../power-manager-button.h     \
+	../scalemenuitem.c            \
+	../scalemenuitem.h
 
-lxdebattery_la_CFLAGS =             \
+lxde_power_manager_la_CFLAGS =             \
 	-I$(top_srcdir)	                \
 	-I$(top_srcdir)/src             \
 	-DLOCALEDIR=\"$(localedir)\"    \
@@ -36,13 +38,13 @@ lxdebattery_la_CFLAGS =             \
 	$(DBUS_GLIB_CFLAGS)             \
 	$(UPOWER_CFLAGS)
 
-lxdebattery_la_LDFLAGS = \
+lxde_power_manager_la_LDFLAGS = \
        -avoid-version \
        -module \
        -no-undefined \
        $(PLATFORM_LDFLAGS)
 
-lxdebattery_la_LIBADD =                     \
+lxde_power_manager_la_LIBADD =                     \
 	$(top_builddir)/common/libxfpmcommon.la \
 	$(LXDEPANEL_LIBS)                       \
 	$(LIBXFCE4UI_LIBS)                      \

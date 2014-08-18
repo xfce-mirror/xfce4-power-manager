@@ -35,7 +35,7 @@
 #include <libxfce4panel/xfce-panel-plugin.h>
 #endif
 
-#include "../battery-button.h"
+#include "../power-manager-button.h"
 
 /* plugin structure */
 typedef struct
@@ -44,49 +44,49 @@ typedef struct
 
     /* panel widgets */
     GtkWidget       *ebox;
-    GtkWidget       *battery_button;
+    GtkWidget       *power_manager_button;
 }
-BatteryPlugin;
+PowerManagerPlugin;
 
 
 /* prototypes */
-static void battery_plugin_construct (XfcePanelPlugin *plugin);
+static void power_manager_plugin_construct (XfcePanelPlugin *plugin);
 /* register the plugin */
-XFCE_PANEL_PLUGIN_REGISTER (battery_plugin_construct);
+XFCE_PANEL_PLUGIN_REGISTER (power_manager_plugin_construct);
 
 
-static BatteryPlugin *
-battery_plugin_new (XfcePanelPlugin *plugin)
+static PowerManagerPlugin *
+power_manager_plugin_new (XfcePanelPlugin *plugin)
 {
-    BatteryPlugin *battery_plugin;
+    PowerManagerPlugin *power_manager_plugin;
 
     /* allocate memory for the plugin structure */
-    battery_plugin = panel_slice_new0 (BatteryPlugin);
+    power_manager_plugin = panel_slice_new0 (PowerManagerPlugin);
 
     /* pointer to plugin */
-    battery_plugin->plugin = plugin;
+    power_manager_plugin->plugin = plugin;
 
     /* create some panel ebox */
-    battery_plugin->ebox = gtk_event_box_new ();
-    gtk_widget_show (battery_plugin->ebox);
-    gtk_event_box_set_visible_window (GTK_EVENT_BOX(battery_plugin->ebox), FALSE);
+    power_manager_plugin->ebox = gtk_event_box_new ();
+    gtk_widget_show (power_manager_plugin->ebox);
+    gtk_event_box_set_visible_window (GTK_EVENT_BOX(power_manager_plugin->ebox), FALSE);
 
-    battery_plugin->battery_button = battery_button_new (plugin);
-    battery_button_show(BATTERY_BUTTON(battery_plugin->battery_button));
-    gtk_container_add (GTK_CONTAINER (battery_plugin->ebox), battery_plugin->battery_button);
+    power_manager_plugin->power_manager_button = power_manager_button_new (plugin);
+    power_manager_button_show(POWER_MANAGER_BUTTON(power_manager_plugin->power_manager_button));
+    gtk_container_add (GTK_CONTAINER (power_manager_plugin->ebox), power_manager_plugin->power_manager_button);
 
-    return battery_plugin;
+    return power_manager_plugin;
 }
 
 
 static void
-battery_plugin_construct (XfcePanelPlugin *plugin)
+power_manager_plugin_construct (XfcePanelPlugin *plugin)
 {
-    BatteryPlugin *battery_plugin;
+    PowerManagerPlugin *power_manager_plugin;
 
     /* create the plugin */
-    battery_plugin = battery_plugin_new (plugin);
+    power_manager_plugin = power_manager_plugin_new (plugin);
 
     /* add the ebox to the panel */
-    gtk_container_add (GTK_CONTAINER (plugin), battery_plugin->ebox);
+    gtk_container_add (GTK_CONTAINER (plugin), power_manager_plugin->ebox);
 }

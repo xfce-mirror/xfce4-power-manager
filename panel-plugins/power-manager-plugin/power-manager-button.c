@@ -39,17 +39,17 @@
 #include "common/xfpm-power-common.h"
 #include "common/xfpm-brightness.h"
 
-#include "battery-button.h"
+#include "power-manager-button.h"
 #include "scalemenuitem.h"
 
 
 #define SET_LEVEL_TIMEOUT (50)
 #define SAFE_SLIDER_MIN_LEVEL (5)
 
-#define BATTERY_BUTTON_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), BATTERY_TYPE_BUTTON, BatteryButtonPrivate))
+#define POWER_MANAGER_BUTTON_GET_PRIVATE(o) \
+(G_TYPE_INSTANCE_GET_PRIVATE ((o), POWER_MANAGER_TYPE_BUTTON, PowerManagerButtonPrivate))
 
-struct BatteryButtonPrivate
+struct PowerManagerButtonPrivate
 {
 #ifdef XFCE_PLUGIN
     XfcePanelPlugin *plugin;
@@ -97,22 +97,22 @@ typedef struct
     GtkWidget   *menu_item;    /* The device's item on the menu (if shown) */
 } BatteryDevice;
 
-G_DEFINE_TYPE (BatteryButton, battery_button, GTK_TYPE_TOGGLE_BUTTON)
+G_DEFINE_TYPE (PowerManagerButton, power_manager_button, GTK_TYPE_TOGGLE_BUTTON)
 
-static void battery_button_finalize   (GObject *object);
-static GList* find_device_in_list (BatteryButton *button, const gchar *object_path);
-static gboolean battery_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpointer userdata);
-static gboolean battery_button_set_icon (BatteryButton *button);
-static gboolean battery_button_press_event (GtkWidget *widget, GdkEventButton *event);
-static void battery_button_show_menu (BatteryButton *button);
-static void battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_device, gboolean append);
-static void increase_brightness (BatteryButton *button);
-static void decrease_brightness (BatteryButton *button);
+static void power_manager_button_finalize   (GObject *object);
+static GList* find_device_in_list (PowerManagerButton *button, const gchar *object_path);
+static gboolean power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpointer userdata);
+static gboolean power_manager_button_set_icon (PowerManagerButton *button);
+static gboolean power_manager_button_press_event (GtkWidget *widget, GdkEventButton *event);
+static void power_manager_button_show_menu (PowerManagerButton *button);
+static void power_manager_button_menu_add_device (PowerManagerButton *button, BatteryDevice *battery_device, gboolean append);
+static void increase_brightness (PowerManagerButton *button);
+static void decrease_brightness (PowerManagerButton *button);
 
 
 
 static BatteryDevice*
-get_display_device (BatteryButton *button)
+get_display_device (PowerManagerButton *button)
 {
     GList *item = NULL;
     gdouble highest_percentage = 0;
@@ -153,7 +153,7 @@ get_display_device (BatteryButton *button)
 }
 
 static void
-battery_button_set_tooltip (BatteryButton *button)
+power_manager_button_set_tooltip (PowerManagerButton *button)
 {
     BatteryDevice *display_device = get_display_device (button);
 
@@ -170,13 +170,13 @@ battery_button_set_tooltip (BatteryButton *button)
 }
 
 static GList*
-find_device_in_list (BatteryButton *button, const gchar *object_path)
+find_device_in_list (PowerManagerButton *button, const gchar *object_path)
 {
     GList *item = NULL;
 
     TRACE("entering");
 
-    g_return_val_if_fail ( BATTERY_IS_BUTTON(button), NULL );
+    g_return_val_if_fail ( POWER_MANAGER_IS_BUTTON(button), NULL );
 
     for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
     {
@@ -189,7 +189,7 @@ find_device_in_list (BatteryButton *button, const gchar *object_path)
 }
 
 static gboolean
-battery_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpointer userdata)
+power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpointer userdata)
 {
     cairo_t *cr;
     UpDevice *device = UP_DEVICE(userdata);
@@ -250,7 +250,7 @@ battery_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpoint
 
 
 static void
-battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *device)
+power_manager_button_update_device_icon_and_details (PowerManagerButton *button, UpDevice *device)
 {
     GList *item;
     BatteryDevice *battery_device, *display_device;
@@ -261,7 +261,7 @@ battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *
 
     TRACE("entering for %s", object_path);
 
-    g_return_if_fail ( BATTERY_IS_BUTTON (button) );
+    g_return_if_fail ( POWER_MANAGER_IS_BUTTON (button) );
 
     item = find_device_in_list (button, object_path);
 
@@ -300,9 +300,9 @@ battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *
 	/* it is! update the panel button */
 	g_free(button->priv->panel_icon_name);
 	button->priv->panel_icon_name = icon_name;
-	battery_button_set_icon (button);
+	power_manager_button_set_icon (button);
 	/* update tooltip */
-	battery_button_set_tooltip (button);
+	power_manager_button_set_tooltip (button);
     }
 
     /* If the menu is being displayed, update it */
@@ -315,22 +315,22 @@ battery_button_update_device_icon_and_details (BatteryButton *button, UpDevice *
         /* update the image */
         img = gtk_image_new_from_pixbuf(battery_device->pix);
         gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(battery_device->menu_item), img);
-        g_signal_connect_after (G_OBJECT (img), "expose-event", G_CALLBACK (battery_button_device_icon_expose), device);
+        g_signal_connect_after (G_OBJECT (img), "expose-event", G_CALLBACK (power_manager_button_device_icon_expose), device);
     }
 }
 
 static void
 #if UP_CHECK_VERSION(0, 99, 0)
-device_changed_cb (UpDevice *device, GParamSpec *pspec, BatteryButton *button)
+device_changed_cb (UpDevice *device, GParamSpec *pspec, PowerManagerButton *button)
 #else
-device_changed_cb (UpDevice *device, BatteryButton *button)
+device_changed_cb (UpDevice *device, PowerManagerButton *button)
 #endif
 {
-    battery_button_update_device_icon_and_details (button, device);
+    power_manager_button_update_device_icon_and_details (button, device);
 }
 
 static void
-battery_button_add_device (UpDevice *device, BatteryButton *button)
+power_manager_button_add_device (UpDevice *device, PowerManagerButton *button)
 {
     BatteryDevice *battery_device;
     guint type = 0;
@@ -339,7 +339,7 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
 
     TRACE("entering for %s", object_path);
 
-    g_return_if_fail ( BATTERY_IS_BUTTON (button ) );
+    g_return_if_fail ( POWER_MANAGER_IS_BUTTON (button ) );
 
     /* don't add the same device twice */
     if ( find_device_in_list (button, object_path) )
@@ -368,17 +368,17 @@ battery_button_add_device (UpDevice *device, BatteryButton *button)
     button->priv->devices = g_list_append (button->priv->devices, battery_device);
 
     /* Add the icon and description for the device */
-    battery_button_update_device_icon_and_details (button, device);
+    power_manager_button_update_device_icon_and_details (button, device);
 
     /* If the menu is being shown, add this new device to it */
     if (button->priv->menu)
     {
-	battery_button_menu_add_device (button, battery_device, FALSE);
+	power_manager_button_menu_add_device (button, battery_device, FALSE);
     }
 }
 
 static void
-battery_button_remove_device (BatteryButton *button, const gchar *object_path)
+power_manager_button_remove_device (PowerManagerButton *button, const gchar *object_path)
 {
     GList *item;
     BatteryDevice *battery_device;
@@ -414,28 +414,28 @@ battery_button_remove_device (BatteryButton *button, const gchar *object_path)
 }
 
 static void
-device_added_cb (UpClient *upower, UpDevice *device, BatteryButton *button)
+device_added_cb (UpClient *upower, UpDevice *device, PowerManagerButton *button)
 {
-    battery_button_add_device (device, button);
+    power_manager_button_add_device (device, button);
 }
 
 #if UP_CHECK_VERSION(0, 99, 0)
 static void
-device_removed_cb (UpClient *upower, const gchar *object_path, BatteryButton *button)
+device_removed_cb (UpClient *upower, const gchar *object_path, PowerManagerButton *button)
 {
-    battery_button_remove_device (button, object_path);
+    power_manager_button_remove_device (button, object_path);
 }
 #else
 static void
-device_removed_cb (UpClient *upower, UpDevice *device, BatteryButton *button)
+device_removed_cb (UpClient *upower, UpDevice *device, PowerManagerButton *button)
 {
     const gchar *object_path = up_device_get_object_path(device);
-    battery_button_remove_device (button, object_path);
+    power_manager_button_remove_device (button, object_path);
 }
 #endif
 
 static void
-battery_button_add_all_devices (BatteryButton *button)
+power_manager_button_add_all_devices (PowerManagerButton *button)
 {
 #if !UP_CHECK_VERSION(0, 99, 0)
     /* the device-add callback is called for each device */
@@ -445,7 +445,7 @@ battery_button_add_all_devices (BatteryButton *button)
     guint i;
 
     button->priv->display_device = up_client_get_display_device (button->priv->upower);
-    battery_button_add_device (button->priv->display_device, button);
+    power_manager_button_add_device (button->priv->display_device, button);
 
     array = up_client_get_devices(button->priv->upower);
 
@@ -455,7 +455,7 @@ battery_button_add_all_devices (BatteryButton *button)
 	{
 	    UpDevice *device = g_ptr_array_index (array, i);
 
-	    battery_button_add_device (device, button);
+	    power_manager_button_add_device (device, button);
 	}
 	g_ptr_array_free (array, TRUE);
     }
@@ -463,7 +463,7 @@ battery_button_add_all_devices (BatteryButton *button)
 }
 
 static void
-brightness_up (BatteryButton *button)
+brightness_up (PowerManagerButton *button)
 {
     gint32 level;
     gint32 max_level;
@@ -478,7 +478,7 @@ brightness_up (BatteryButton *button)
 }
 
 static void
-brightness_down (BatteryButton *button)
+brightness_down (PowerManagerButton *button)
 {
     gint32 level;
     xfpm_brightness_get_level (button->priv->brightness, &level);
@@ -490,12 +490,12 @@ brightness_down (BatteryButton *button)
 }
 
 static gboolean
-battery_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
+power_manager_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
 {
     gboolean hw_found;
-    BatteryButton *button;
+    PowerManagerButton *button;
 
-    button = BATTERY_BUTTON (widget);
+    button = POWER_MANAGER_BUTTON (widget);
 
     hw_found = xfpm_brightness_has_hw (button->priv->brightness);
 
@@ -516,25 +516,25 @@ battery_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
 }
 
 static void
-battery_button_class_init (BatteryButtonClass *klass)
+power_manager_button_class_init (PowerManagerButtonClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-    object_class->finalize = battery_button_finalize;
+    object_class->finalize = power_manager_button_finalize;
 
-    widget_class->button_press_event = battery_button_press_event;
-    widget_class->scroll_event = battery_button_scroll_event;
+    widget_class->button_press_event = power_manager_button_press_event;
+    widget_class->scroll_event = power_manager_button_scroll_event;
 
-    g_type_class_add_private (klass, sizeof (BatteryButtonPrivate));
+    g_type_class_add_private (klass, sizeof (PowerManagerButtonPrivate));
 }
 
 static void
-battery_button_init (BatteryButton *button)
+power_manager_button_init (PowerManagerButton *button)
 {
     GError *error = NULL;
 
-    button->priv = BATTERY_BUTTON_GET_PRIVATE (button);
+    button->priv = POWER_MANAGER_BUTTON_GET_PRIVATE (button);
 
     gtk_widget_set_can_default (GTK_WIDGET (button), FALSE);
     gtk_widget_set_can_focus (GTK_WIDGET (button), FALSE);
@@ -565,11 +565,11 @@ battery_button_init (BatteryButton *button)
 }
 
 static void
-battery_button_finalize (GObject *object)
+power_manager_button_finalize (GObject *object)
 {
-    BatteryButton *button;
+    PowerManagerButton *button;
 
-    button = BATTERY_BUTTON (object);
+    button = POWER_MANAGER_BUTTON (object);
 
     g_free(button->priv->panel_icon_name);
 
@@ -585,19 +585,19 @@ battery_button_finalize (GObject *object)
     g_object_unref (button->priv->plugin);
 #endif
 
-    G_OBJECT_CLASS (battery_button_parent_class)->finalize (object);
+    G_OBJECT_CLASS (power_manager_button_parent_class)->finalize (object);
 }
 
 GtkWidget *
 #ifdef XFCE_PLUGIN
-battery_button_new (XfcePanelPlugin *plugin)
+power_manager_button_new (XfcePanelPlugin *plugin)
 #endif
 #ifdef LXDE_PLUGIN
-battery_button_new (Plugin *plugin)
+power_manager_button_new (Plugin *plugin)
 #endif
 {
-    BatteryButton *button = NULL;
-    button = g_object_new (BATTERY_TYPE_BUTTON, NULL, NULL);
+    PowerManagerButton *button = NULL;
+    button = g_object_new (POWER_MANAGER_TYPE_BUTTON, NULL, NULL);
 
 #ifdef XFCE_PLUGIN
     button->priv->plugin = XFCE_PANEL_PLUGIN (g_object_ref (plugin));
@@ -610,7 +610,7 @@ battery_button_new (Plugin *plugin)
 }
 
 static gboolean
-battery_button_set_icon (BatteryButton *button)
+power_manager_button_set_icon (PowerManagerButton *button)
 {
     GdkPixbuf *pixbuf;
 
@@ -633,34 +633,34 @@ battery_button_set_icon (BatteryButton *button)
 }
 
 void
-battery_button_set_width (BatteryButton *button, gint width)
+power_manager_button_set_width (PowerManagerButton *button, gint width)
 {
-    g_return_if_fail (BATTERY_IS_BUTTON (button));
+    g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
 
     button->priv->panel_icon_width = width;
 
-    battery_button_set_icon (button);
+    power_manager_button_set_icon (button);
 }
 
 static gboolean
-battery_button_press_event (GtkWidget *widget, GdkEventButton *event)
+power_manager_button_press_event (GtkWidget *widget, GdkEventButton *event)
 {
-    BatteryButton *button = BATTERY_BUTTON (widget);
+    PowerManagerButton *button = POWER_MANAGER_BUTTON (widget);
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), TRUE);
-    battery_button_show_menu (button);
+    power_manager_button_show_menu (button);
     return TRUE;
 }
 
 #ifdef XFCE_PLUGIN
 static gboolean
-battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButton *button)
+power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerManagerButton *button)
 {
     gint width;
     gint xthickness;
     gint ythickness;
 
-    g_return_val_if_fail (BATTERY_IS_BUTTON (button), FALSE);
+    g_return_val_if_fail (POWER_MANAGER_IS_BUTTON (button), FALSE);
     g_return_val_if_fail (XFCE_IS_PANEL_PLUGIN (plugin), FALSE);
 
     xthickness = gtk_widget_get_style(GTK_WIDGET(button))->xthickness;
@@ -671,18 +671,18 @@ battery_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, BatteryButto
     gtk_widget_set_size_request (GTK_WIDGET(plugin), size + xthickness, size + ythickness);
     button->priv->panel_icon_width = width;
 
-    return battery_button_set_icon (button);
+    return power_manager_button_set_icon (button);
 }
 
 static void
-battery_button_style_set_cb (XfcePanelPlugin *plugin, GtkStyle *prev_style, BatteryButton *button)
+power_manager_button_style_set_cb (XfcePanelPlugin *plugin, GtkStyle *prev_style, PowerManagerButton *button)
 {
     gtk_widget_reset_rc_styles (GTK_WIDGET (plugin));
-    battery_button_size_changed_cb (plugin, xfce_panel_plugin_get_size (plugin), button);
+    power_manager_button_size_changed_cb (plugin, xfce_panel_plugin_get_size (plugin), button);
 }
 
 static void
-battery_button_free_data_cb (XfcePanelPlugin *plugin, BatteryButton *button)
+power_manager_button_free_data_cb (XfcePanelPlugin *plugin, PowerManagerButton *button)
 {
     gtk_widget_destroy (GTK_WIDGET (button));
 }
@@ -695,11 +695,11 @@ help_cb (GtkMenuItem *menuitem, gpointer user_data)
 }
 
 void
-battery_button_show (BatteryButton *button)
+power_manager_button_show (PowerManagerButton *button)
 {
     GtkWidget *mi;
 
-    g_return_if_fail (BATTERY_IS_BUTTON (button));
+    g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
 
 #ifdef XFCE_PLUGIN
     xfce_panel_plugin_add_action_widget (button->priv->plugin, GTK_WIDGET (button));
@@ -719,26 +719,26 @@ battery_button_show (BatteryButton *button)
     xfce_panel_plugin_menu_insert_item (button->priv->plugin, GTK_MENU_ITEM (mi));
 
     g_signal_connect (button->priv->plugin, "size-changed",
-                      G_CALLBACK (battery_button_size_changed_cb), button);
+                      G_CALLBACK (power_manager_button_size_changed_cb), button);
 
     g_signal_connect (button->priv->plugin, "style-set",
-                      G_CALLBACK (battery_button_style_set_cb), button);
+                      G_CALLBACK (power_manager_button_style_set_cb), button);
 
     g_signal_connect (button->priv->plugin, "free-data",
-                      G_CALLBACK (battery_button_free_data_cb), button);
+                      G_CALLBACK (power_manager_button_free_data_cb), button);
 #endif
 
     gtk_widget_show_all (GTK_WIDGET(button));
-    battery_button_set_tooltip (button);
+    power_manager_button_set_tooltip (button);
 
     /* Add all the devcies currently attached to the system */
-    battery_button_add_all_devices (button);
+    power_manager_button_add_all_devices (button);
 }
 
 static void
 menu_destroyed_cb(GtkMenuShell *menu, gpointer user_data)
 {
-    BatteryButton *button = BATTERY_BUTTON (user_data);
+    PowerManagerButton *button = POWER_MANAGER_BUTTON (user_data);
 
     TRACE("entering");
 
@@ -754,7 +754,7 @@ menu_destroyed_cb(GtkMenuShell *menu, gpointer user_data)
 static void
 menu_item_destroyed_cb(GtkWidget *object, gpointer user_data)
 {
-    BatteryButton *button = BATTERY_BUTTON (user_data);
+    PowerManagerButton *button = POWER_MANAGER_BUTTON (user_data);
     GList *item;
 
     for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
@@ -772,7 +772,7 @@ menu_item_destroyed_cb(GtkWidget *object, gpointer user_data)
 static void
 menu_item_activate_cb(GtkWidget *object, gpointer user_data)
 {
-    BatteryButton *button = BATTERY_BUTTON (user_data);
+    PowerManagerButton *button = POWER_MANAGER_BUTTON (user_data);
     GList *item;
 
     for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
@@ -789,7 +789,7 @@ menu_item_activate_cb(GtkWidget *object, gpointer user_data)
 }
 
 static void
-battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_device, gboolean append)
+power_manager_button_menu_add_device (PowerManagerButton *button, BatteryDevice *battery_device, gboolean append)
 {
     GtkWidget *mi, *label, *img;
     guint type = 0;
@@ -817,7 +817,7 @@ battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_de
     /* keep track of the menu item in the battery_device so we can update it */
     battery_device->menu_item = mi;
     g_signal_connect(G_OBJECT(mi), "destroy", G_CALLBACK(menu_item_destroyed_cb), button);
-    g_signal_connect_after (G_OBJECT (img), "expose-event", G_CALLBACK (battery_button_device_icon_expose), battery_device->device);
+    g_signal_connect_after (G_OBJECT (img), "expose-event", G_CALLBACK (power_manager_button_device_icon_expose), battery_device->device);
 
     /* Active calls xfpm settings with the device's id to display details */
     g_signal_connect(G_OBJECT(mi), "activate", G_CALLBACK(menu_item_activate_cb), button);
@@ -831,7 +831,7 @@ battery_button_menu_add_device (BatteryButton *button, BatteryDevice *battery_de
 }
 
 static void
-decrease_brightness (BatteryButton *button)
+decrease_brightness (PowerManagerButton *button)
 {
     gint32 level;
 
@@ -851,7 +851,7 @@ decrease_brightness (BatteryButton *button)
 }
 
 static void
-increase_brightness (BatteryButton *button)
+increase_brightness (PowerManagerButton *button)
 {
     gint32 level, max_level;
 
@@ -872,7 +872,7 @@ increase_brightness (BatteryButton *button)
 }
 
 static gboolean
-brightness_set_level_with_timeout (BatteryButton *button)
+brightness_set_level_with_timeout (PowerManagerButton *button)
 {
     gint32 range_level, hw_level;
 
@@ -897,7 +897,7 @@ brightness_set_level_with_timeout (BatteryButton *button)
 }
 
 static void
-range_value_changed_cb (BatteryButton *button, GtkWidget *widget)
+range_value_changed_cb (PowerManagerButton *button, GtkWidget *widget)
 {
     TRACE("entering");
 
@@ -910,7 +910,7 @@ range_value_changed_cb (BatteryButton *button, GtkWidget *widget)
 }
 
 static void
-range_scroll_cb (GtkWidget *widget, GdkEvent *event, BatteryButton *button)
+range_scroll_cb (GtkWidget *widget, GdkEvent *event, PowerManagerButton *button)
 {
     GdkEventScroll *scroll_event;
 
@@ -925,7 +925,7 @@ range_scroll_cb (GtkWidget *widget, GdkEvent *event, BatteryButton *button)
 }
 
 static void
-range_show_cb (GtkWidget *widget, BatteryButton *button)
+range_show_cb (GtkWidget *widget, PowerManagerButton *button)
 {
     TRACE("entering");
     /* Release these grabs they will cause a lockup if pkexec is called
@@ -936,7 +936,7 @@ range_show_cb (GtkWidget *widget, BatteryButton *button)
 }
 
 static void
-battery_button_show_menu (BatteryButton *button)
+power_manager_button_show_menu (PowerManagerButton *button)
 {
     GtkWidget *menu, *mi, *img = NULL;
     GdkScreen *gscreen;
@@ -959,7 +959,7 @@ battery_button_show_menu (BatteryButton *button)
     {
         BatteryDevice *battery_device = item->data;
 
-        battery_button_menu_add_device (button, battery_device, TRUE);
+        power_manager_button_menu_add_device (button, battery_device, TRUE);
         /* If we add an item to the menu, show the separator */
         show_separator_flag = TRUE;
     }

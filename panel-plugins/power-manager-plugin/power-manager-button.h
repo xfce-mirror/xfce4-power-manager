@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __BATTERY_BUTTON_H
-#define __BATTERY_BUTTON_H
+#ifndef __POWER_MANAGER_BUTTON_H
+#define __POWER_MANAGER_BUTTON_H
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
@@ -32,38 +32,38 @@
 
 G_BEGIN_DECLS
 
-#define BATTERY_TYPE_BUTTON        (battery_button_get_type () )
-#define BATTERY_BUTTON(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), BATTERY_TYPE_BUTTON, BatteryButton))
-#define BATTERY_IS_BUTTON(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), BATTERY_TYPE_BUTTON))
+#define POWER_MANAGER_TYPE_BUTTON        (power_manager_button_get_type () )
+#define POWER_MANAGER_BUTTON(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), POWER_MANAGER_TYPE_BUTTON, PowerManagerButton))
+#define POWER_MANAGER_IS_BUTTON(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), POWER_MANAGER_TYPE_BUTTON))
 
-typedef struct BatteryButtonPrivate BatteryButtonPrivate;
+typedef struct PowerManagerButtonPrivate PowerManagerButtonPrivate;
 
 typedef struct
 {
-    GtkToggleButton           parent;
-    BatteryButtonPrivate     *priv;
+    GtkToggleButton            parent;
+    PowerManagerButtonPrivate *priv;
 
-} BatteryButton;
+} PowerManagerButton;
 
 typedef struct
 {
     GtkToggleButtonClass parent_class;
 
-} BatteryButtonClass;
+} PowerManagerButtonClass;
 
-GType                    battery_button_get_type (void) G_GNUC_CONST;
+GType                    power_manager_button_get_type (void) G_GNUC_CONST;
 
 #ifdef XFCE_PLUGIN
-GtkWidget               *battery_button_new       (XfcePanelPlugin *plugin);
+GtkWidget               *power_manager_button_new       (XfcePanelPlugin *plugin);
 #endif
 #ifdef LXDE_PLUGIN
-GtkWidget               *battery_button_new       (Plugin *plugin);
+GtkWidget               *power_manager_button_new       (Plugin *plugin);
 #endif
 
-void                     battery_button_show      (BatteryButton *button);
+void                     power_manager_button_show      (PowerManagerButton *button);
 
-void                     battery_button_set_width (BatteryButton *button, gint width);
+void                     power_manager_button_set_width (PowerManagerButton *button, gint width);
 
 G_END_DECLS
 
-#endif /* __BATTERY_BUTTON_H */
+#endif /* __POWER_MANAGER_BUTTON_H */

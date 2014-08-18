@@ -1,6 +1,6 @@
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
-	-DG_LOG_DOMAIN=\"xfce4-battery-plugin\" \
+	-DG_LOG_DOMAIN=\"xfce4-power-manager-plugin\" \
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\" \
 	$(PLATFORM_CPPFLAGS)
 
@@ -8,19 +8,19 @@ AM_CPPFLAGS = \
 # xfce4 battery plugin
 #
 plugin_LTLIBRARIES = \
-	libxfce4battery.la
+	libxfce4powermanager.la
 
 plugindir = \
 	$(libdir)/xfce4/panel/plugins
 
-libxfce4battery_la_SOURCES = \
-	battery-plugin.c         \
-	../battery-button.c      \
-	../battery-button.h      \
+libxfce4powermanager_la_SOURCES = \
+	xfce-power-manager-plugin.c         \
+	../power-manager-button.c      \
+	../power-manager-button.h      \
 	../scalemenuitem.c       \
 	../scalemenuitem.h
 
-libxfce4battery_la_CFLAGS =         \
+libxfce4powermanager_la_CFLAGS =         \
 	-I$(top_srcdir)	                \
 	-I$(top_srcdir)/src             \
 	-DLOCALEDIR=\"$(localedir)\"    \
@@ -36,14 +36,14 @@ libxfce4battery_la_CFLAGS =         \
 	$(DBUS_GLIB_CFLAGS)             \
 	$(UPOWER_CFLAGS)
 
-libxfce4battery_la_LDFLAGS = \
+libxfce4powermanager_la_LDFLAGS = \
        -avoid-version \
        -module \
        -no-undefined \
        -export-symbols-regex '^xfce_panel_module_(preinit|init|construct)' \
        $(PLATFORM_LDFLAGS)
 
-libxfce4battery_la_LIBADD =                     \
+libxfce4powermanager_la_LIBADD =                     \
 	$(top_builddir)/common/libxfpmcommon.la \
 	$(LIBXFCE4PANEL_LIBS)                   \
 	$(LIBXFCE4UI_LIBS)                      \
@@ -58,7 +58,7 @@ libxfce4battery_la_LIBADD =                     \
 # Desktop file
 #
 desktopdir = $(datadir)/xfce4/panel-plugins
-desktop_in_in_files = xfce4-battery-plugin.desktop.in.in
+desktop_in_in_files = power-manager-plugin.desktop.in.in
 desktop_in_files = $(desktop_in_in_files:.desktop.in.in=.desktop.in)
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@

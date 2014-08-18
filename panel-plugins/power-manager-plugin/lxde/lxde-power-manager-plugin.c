@@ -30,7 +30,7 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
-#include "../battery-button.h"
+#include "../power-manager-button.h"
 
 /* plugin structure */
 typedef struct
@@ -39,74 +39,74 @@ typedef struct
 
     /* panel widgets */
     GtkWidget       *ebox;
-    GtkWidget       *battery_button;
+    GtkWidget       *power_manager_button;
 }
-BatteryPlugin;
+PowerManagerPlugin;
 
 
 /* prototypes */
-static int battery_plugin_construct (Plugin *p, char **fp);
-static void battery_plugin_configuration_changed(Plugin *p);
+static int lxde_power_manager_plugin_construct (Plugin *p, char **fp);
+static void lxde_power_manager_plugin_configuration_changed(Plugin *p);
 
-PluginClass lxdebattery_plugin_class = {
+PluginClass lxde_power_manager_plugin_class = {
     PLUGINCLASS_VERSIONING,
-    type : "lxdebattery",
-    name : N_("Battery indicator plugin"),
+    type : "lxde_power_manager",
+    name : N_("Power Manager Plugin"),
     version: PACKAGE_VERSION,
-    description : N_("Display the battery levels of your devices"),
+    description : N_("Display the battery levels of your devices and control the brightness of your display"),
     one_per_system : FALSE,
     expand_available : FALSE,
-    constructor : battery_plugin_construct,
+    constructor : lxde_power_manager_plugin_construct,
     destructor  : NULL,
     config : NULL,
     save : NULL,
-    panel_configuration_changed : battery_plugin_configuration_changed
+    panel_configuration_changed : lxde_power_manager_plugin_configuration_changed
 };
 
 
-static BatteryPlugin *
-battery_plugin_new (Plugin *plugin)
+static PowerManagerPlugin *
+lxde_power_manager_plugin_new (Plugin *plugin)
 {
-    BatteryPlugin *battery_plugin;
+    PowerManagerPlugin *power_manager_plugin;
 
     /* allocate memory for the plugin structure */
-    battery_plugin = g_new0 (BatteryPlugin, 1);
+    power_manager_plugin = g_new0 (PowerManagerPlugin, 1);
 
     /* pointer to plugin */
-    battery_plugin->plugin = plugin;
+    power_manager_plugin->plugin = plugin;
 
     /* create some panel ebox */
-    battery_plugin->ebox = gtk_event_box_new ();
-    gtk_widget_show (battery_plugin->ebox);
-    gtk_event_box_set_visible_window (GTK_EVENT_BOX(battery_plugin->ebox), FALSE);
+    power_manager_plugin->ebox = gtk_event_box_new ();
+    gtk_widget_show (power_manager_plugin->ebox);
+    gtk_event_box_set_visible_window (GTK_EVENT_BOX(power_manager_plugin->ebox), FALSE);
 
-    battery_plugin->battery_button = battery_button_new (plugin);
-    battery_button_show(BATTERY_BUTTON(battery_plugin->battery_button));
-    gtk_container_add (GTK_CONTAINER (battery_plugin->ebox), battery_plugin->battery_button);
+    power_manager_plugin->power_manager_button = power_manager_button_new (plugin);
+    power_manager_button_show(POWER_MANAGER_BUTTON(power_manager_plugin->power_manager_button));
+    gtk_container_add (GTK_CONTAINER (power_manager_plugin->ebox), power_manager_plugin->power_manager_button);
 
-    return battery_plugin;
+    return power_manager_plugin;
 }
 
 
 static int
-battery_plugin_construct (Plugin *plugin, char **fp)
+lxde_power_manager_plugin_construct (Plugin *plugin, char **fp)
 {
-    BatteryPlugin *battery_plugin;
+    PowerManagerPlugin *power_manager_plugin;
 
     /* create the plugin */
-    battery_plugin = battery_plugin_new (plugin);
+    power_manager_plugin = lxde_power_manager_plugin_new (plugin);
 
     /* add the ebox to the panel */
-    plugin->pwid = battery_plugin->ebox;
-    plugin->priv = battery_plugin;
+    plugin->pwid = power_manager_plugin->ebox;
+    plugin->priv = power_manager_plugin;
 
     return 1;
 }
 
 static void
-battery_plugin_configuration_changed(Plugin *p)
+lxde_power_manager_plugin_configuration_changed(Plugin *p)
 {
-    BatteryPlugin *battery_plugin = p->priv;
+    PowerManagerPlugin *power_manager_plugin = p->priv;
 
     /* Determine orientation and size */
     GtkOrientation orientation = (p->panel->orientation == GTK_ORIENTATION_VERTICAL) ? GTK_ORIENTATION_VERTICAL : GTK_ORIENTATION_HORIZONTAL;
@@ -119,5 +119,5 @@ battery_plugin_configuration_changed(Plugin *p)
         gtk_widget_set_size_request (p->pwid, size, -1);
 
     /* update the button's width */
-    battery_button_set_width (BATTERY_BUTTON(battery_plugin->battery_button), p->panel->icon_size);
+    power_manager_button_set_width (POWER_MANAGER_BUTTON(power_manager_plugin->power_manager_button), p->panel->icon_size);
 }
