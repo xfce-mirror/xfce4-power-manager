@@ -1,3 +1,32 @@
+1.3.2
+=====
+[Please note that this is a development release.]
+
+Development release of xfce4-power-manager.
+Please report all problems at bugzilla.xfce.org.
+
+  Since there is only one panel plugin left it was renamed from "Battery
+Indicator Plugin" to "Power Manager Plugin", which is more fitting as it
+doesn't merely show the battery status.
+
+  Xfce4-power-manager does not rely on special device icons anymore
+that illustrate the load-status. Instead, the load-status is now drawn
+with cairo on top of normal device icons that follow the naming of the
+Adwaita icon-theme.
+
+  Other changes:
+
+ - Fix crash with slider on 32bit systems (Bug #11076)
+ - Fix version number output on the commandline
+ - Remove unused code
+ - Add dedicated icons for the keyboard brightness notifications
+ - Various icon improvements
+ - Reorder parts of the settings dialog
+
+Translation updates: Bulgarian (bg), Dutch (Flemish) (nl),
+ French (fr), German (de), Italian (it), Malay (ms), Polish (pl),
+ Portuguese (Brazilian) (pt_BR), Spanish (Castilian) (es).
+
 1.3.1
 =====
 [Please note that this is a development release.]
