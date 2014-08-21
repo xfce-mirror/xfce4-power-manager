@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-19 00:30+0200\n"
-"PO-Revision-Date: 2014-08-19 13:05+0000\n"
+"POT-Creation-Date: 2014-08-21 00:30+0200\n"
+"PO-Revision-Date: 2014-08-21 08:37+0000\n"
 "Last-Translator: Yannick Le Guen <leguen.yannick@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/xfce4-power-manager/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -36,88 +36,88 @@ msgid "Power manager settings"
 msgstr "Configuration du gestionnaire d'alimentation"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When power button is pressed"
+msgstr "Appui sur le bouton d'alimentation"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When sleep button is pressed"
+msgstr "Appui sur le bouton de mise en veille"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When hibernate button is pressed"
+msgstr "Appui sur le bouton de mise en veille prolongée"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "Handle display brightness _keys"
+msgstr "Gérer les _touches de luminosité de l'écran"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "<b>Buttons</b>"
+msgstr "<b>Bouttons</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "On battery"
 msgstr "Sur batterie"
 
-#: ../data/interfaces/xfpm-settings.ui.h:5 ../common/xfpm-power-common.c:434
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:434
 msgid "Plugged in"
 msgstr "Branché"
 
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Put system to sleep when inactive for"
-msgstr "Mettre le système en veille si inactif depuis"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "System sleep mode"
-msgstr "Mode de mise en veille du système"
-
-#: ../data/interfaces/xfpm-settings.ui.h:8
-msgid "<b>System power saving</b>"
-msgstr "<b>Économie d'énergie du système</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Critical battery power level"
-msgstr "Niveau de charge batterie critique"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "On critical battery power"
-msgstr "En cas de charge batterie critique"
-
 #: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "<b>Critical power</b>"
-msgstr "<b>Charge critique</b>"
+msgid "When laptop lid is closed"
+msgstr "Fermeture du couvercle du portable"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Lock screen when system is going for sleep"
-msgstr "Verrouiller l'écran quand le système se met en veille"
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>Couvercle du portable</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Show notifications"
 msgstr "Afficher les notifications"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
-msgid "<b>Security and notifications</b>"
-msgstr "<b>Sécurité et notifications</b>"
+msgid "<b>Appearance</b>"
+msgstr "<b>Apparence</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "General"
 msgstr "Général"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
-msgid "When power button is pressed"
-msgstr "Appui sur le bouton d'alimentation"
+msgid "Put system to sleep when inactive for"
+msgstr "Mettre le système en veille si inactif depuis"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "When sleep button is pressed"
-msgstr "Appui sur le bouton de mise en veille"
+msgid "System sleep mode"
+msgstr "Mode de mise en veille du système"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
-msgid "When hibernate button is pressed"
-msgstr "Appui sur le bouton de mise en veille prolongée"
+msgid "<b>System power saving</b>"
+msgstr "<b>Économie d'énergie du système</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "<b>Buttons</b>"
-msgstr "<b>Bouttons</b>"
+msgid "Critical battery power level"
+msgstr "Niveau de charge batterie critique"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "When laptop lid is closed"
-msgstr "Fermeture du couvercle du portable"
+msgid "On critical battery power"
+msgstr "En cas de charge batterie critique"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "<b>Laptop Lid</b>"
-msgstr "<b>Couvercle du portable</b>"
+msgid "<b>Critical power</b>"
+msgstr "<b>Charge critique</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Handle display brightness _keys"
-msgstr "Gérer les _touches de luminosité de l'écran"
+msgid "Lock screen when system is going for sleep"
+msgstr "Verrouiller l'écran quand le système se met en veille"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "<b>Keys</b>"
-msgstr "<b>Raccourcis</b>"
+msgid "<b>Security</b>"
+msgstr "<b>Sécurité</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
-msgid "Controls"
-msgstr "Contrôles"
+msgid "System"
+msgstr "Système"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Handle display power management"
@@ -935,6 +935,23 @@ msgstr "Le gestionnaire d'alimentation Xfce fournit également deux greffons pou
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
+"This development release mostly fixes bugs and introduces better support for"
+" icon-themes by reducing the device icons and using standard names for them."
+" It also features updated translations. The panel plugin has been renamed to"
+" Power Manager Plugin."
+msgstr "Cette version de développement corrige principalement des bogues et permet une meilleure prise en charge des thèmes d’icônes en réduisant les icônes de périphérique et en leur attribuant des noms standards. Le greffon du tableau de bord a été renommé en « Greffon du Gestionnaire d'Alimentation »."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
+msgid ""
+"This development release fixes bugs with suspend and hibernate. It also "
+"improves the panel-plugin, incorporating the functionality of the (now "
+"dropped) brightness panel-plugin. A new popup notification was added to "
+"account for keyboard brightness changes and the Power Manager now also "
+"controls the X11 blank times."
+msgstr "Cette version de développement corrige des bogues relatifs à la mise en veille et la mise en veille prolongée. Elle améliore également le greffon du tableau de bord, en incorporant les fonctionnalités du greffon de luminosité (maintenant obsolète). Une nouvelle notification contextuelle a été ajoutée pour rendre compte des changements de luminosité du clavier et le gestionnaire d’alimentation contrôle désormais les écrans vides X11."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
+msgid ""
 "This development release introduces a lot of new features, among them "
 "suspending/hibernation without systemd and UPower>=0.99. It allows for "
 "individual control of systemd-inhibition, a new panel plugin to monitor "
@@ -943,7 +960,7 @@ msgid ""
 "have been fixed and translations have been updated."
 msgstr "Cette version de développement introduit beaucoup de nouvelles fonctionnalités, parmi lesquelles la mise en veille prolongée sans systemd et UPower>=0.99. Un contrôle individuel de systemd-inhibition est possible, un nouveau greffon du tableau de bord pour surveiller les niveaux de charge de la batterie et des périphériques remplace l'icône de la zone de notification. La fenêtre des paramètres a été complètement restructurée pour une meilleure vue d'ensemble, beaucoup de bogues ouverts ont été corrigés et les traductions ont été mises à jour."
 
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
