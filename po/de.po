@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-19 00:30+0200\n"
-"PO-Revision-Date: 2014-08-20 15:23+0000\n"
+"POT-Creation-Date: 2014-08-21 12:30+0200\n"
+"PO-Revision-Date: 2014-08-23 13:00+0000\n"
 "Last-Translator: Tobias Bannert\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xfce4-power-manager/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -40,88 +40,88 @@ msgid "Power manager settings"
 msgstr "Einstellungen der Energieverwaltung"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When power button is pressed:"
+msgstr "Bei Betätigung der Ein-/Austaste:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When sleep button is pressed:"
+msgstr "Bei Betätigung der Taste für den Schlafmodus:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When hibernate button is pressed:"
+msgstr "Bei Betätigung der Taste für den Ruhezustand:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "Handle display brightness _keys"
+msgstr "_Bildschirmhelligkeitstasten steuern"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "<b>Buttons</b>"
+msgstr "<b>Knöpfe</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "On battery"
 msgstr "Akku wird entladen"
 
-#: ../data/interfaces/xfpm-settings.ui.h:5 ../common/xfpm-power-common.c:434
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:434
 msgid "Plugged in"
 msgstr "Strom angeschlossen"
 
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Put system to sleep when inactive for"
-msgstr "Bei Inaktivität von"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "System sleep mode"
-msgstr "Schlafmodus des Systems"
-
-#: ../data/interfaces/xfpm-settings.ui.h:8
-msgid "<b>System power saving</b>"
-msgstr "<b>Energiesparen des Systems</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Critical battery power level"
-msgstr "Kritischer Akkuladezustand"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "On critical battery power"
-msgstr "Kritischer Akkuladezustand erreicht"
-
 #: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "<b>Critical power</b>"
-msgstr "<b>Kritische Energie</b>"
+msgid "When laptop lid is closed:"
+msgstr "Beim Schließen der Bildschirmklappe:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Lock screen when system is going for sleep"
-msgstr "Bildschirm sperren, wenn das System in den Energiesparmodus versetzt wird"
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>Laptopbildschirm</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Show notifications"
 msgstr "Benachrichtigungen anzeigen"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
-msgid "<b>Security and notifications</b>"
-msgstr "<b>Sicherheit und Benachrichtigungen</b>"
+msgid "<b>Appearance</b>"
+msgstr "<b>Aussehen</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "General"
 msgstr "Allgemein"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
-msgid "When power button is pressed"
-msgstr "Bei Betätigung des Ein-/Aus-Schalters:"
+msgid "Put system to sleep when inactive for"
+msgstr "Bei Inaktivität von"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "When sleep button is pressed"
-msgstr "Bei Betätigung der Taste für den Schlafmodus:"
+msgid "System sleep mode:"
+msgstr "Systemschlafmodus:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
-msgid "When hibernate button is pressed"
-msgstr "Bei Betätigung der Taste für den Ruhezustand:"
+msgid "<b>System power saving</b>"
+msgstr "<b>Energiesparen des Systems</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "<b>Buttons</b>"
-msgstr "<b>Knöpfe</b>"
+msgid "Critical battery power level:"
+msgstr "Kritischer Akkuladezustand:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "When laptop lid is closed"
-msgstr "Beim Schließen des Laptopdeckels:"
+msgid "On critical battery power:"
+msgstr "Bei kritischer Akkuladung:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "<b>Laptop Lid</b>"
-msgstr "<b>Laptopbildschirm</b>"
+msgid "<b>Critical power</b>"
+msgstr "<b>Kritische Energie</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Handle display brightness _keys"
-msgstr "_Bildschirmhelligkeitstasten steuern"
+msgid "Lock screen when system is going for sleep"
+msgstr "Bildschirm sperren, wenn das System in den Energiesparmodus versetzt wird"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "<b>Keys</b>"
-msgstr "<b>Tastenkombination</b>"
+msgid "<b>Security</b>"
+msgstr "<b>Sicherheit</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
-msgid "Controls"
-msgstr "Steuerung"
+msgid "System"
+msgstr "System"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Handle display power management"
@@ -853,7 +853,7 @@ msgstr "Versionsinformation"
 #: ../src/xfpm-main.c:281
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr "Fehler beim analysieren der Argumente: %s\n"
+msgstr "Fehler beim Analysieren der Argumente: %s\n"
 
 #: ../src/xfpm-main.c:332
 msgid "Unable to get connection to the message bus session"
@@ -894,12 +894,12 @@ msgstr "<b>Bildschirmhelligkeit</b>"
 #. Presentation mode checkbox
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1032
 msgid "Presentation _mode"
-msgstr "Präsentations_modus"
+msgstr "_Präsentationsmodus"
 
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1041
 msgid "_Power manager settings..."
-msgstr "_Einstellungen der Energieverwaltung …"
+msgstr "_Energieverwaltungseinstellungen …"
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:54
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
@@ -939,6 +939,23 @@ msgstr "Die Xfce-Energieverwaltung stellt zwei Erweiterungen für die Xfce-Leist
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
+"This development release mostly fixes bugs and introduces better support for"
+" icon-themes by reducing the device icons and using standard names for them."
+" It also features updated translations. The panel plugin has been renamed to"
+" Power Manager Plugin."
+msgstr "Diese Entwicklungsversion behebt hauptsächlich Fehler und bringt bessere Unterstützung für Symbolthemen durch die Reduzierung der Gerätesymbole und unter Verwendung von Standardnamen für diese. Es verfügt auch über aktualisierte Übersetzungen. Die Leistenerweiterung wurde zu Energieverwaltungserweiterung umbenannt."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
+msgid ""
+"This development release fixes bugs with suspend and hibernate. It also "
+"improves the panel-plugin, incorporating the functionality of the (now "
+"dropped) brightness panel-plugin. A new popup notification was added to "
+"account for keyboard brightness changes and the Power Manager now also "
+"controls the X11 blank times."
+msgstr "Diese Entwicklungsversion behebt Fehler mit Bereitschaft und Ruhezustand. Es verbessert auch die Leistenerweiterung, unter Einbeziehung der Funktionalität der (jetzt fallengelassen) Helligkeitsleistenerweiterung. Eine neue Benachrichtigungsfunktion wurde hinzugefügt, um über Helligkeitsänderungen per Tastatur zu berichten und die Energieverwaltung steuert jetzt auch die X11 Leerlaufzeiten."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
+msgid ""
 "This development release introduces a lot of new features, among them "
 "suspending/hibernation without systemd and UPower>=0.99. It allows for "
 "individual control of systemd-inhibition, a new panel plugin to monitor "
@@ -947,7 +964,7 @@ msgid ""
 "have been fixed and translations have been updated."
 msgstr "Diese Entwicklungsversion bringt eine Menge neuer Funktionen, darunter das Versetzen in den Bereitschaftsmodus/Ruhezustand ohne systemd und UPower>=0.99. Sie erlaubt die individuelle Kontrolle von systemd-inhibition, eine neue Erweiterung für die Leiste, zur Überwachung des Ladezustandes von Akkus und Geräten, ersetzt das Symbol in der Benachrichtigungsfläche. Der Einstellungsdialog wurde zwecks besserer Übersicht komplett restrukturiert, viele offene Fehler wurden bereinigt und Übersetzungen überarbeitet."
 
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
