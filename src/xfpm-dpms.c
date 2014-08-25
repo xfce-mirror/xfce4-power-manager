@@ -334,7 +334,7 @@ xfpm_dpms_inhibit (XfpmDpms *dpms, gboolean inhibit)
 
     dpms->priv->inhibited = inhibit;
     xfpm_dpms_refresh (dpms);
-    XFPM_DEBUG ("dpms inhibited %s", inhibit ? "TURE" : "FALSE");
+    XFPM_DEBUG ("dpms inhibited %s", inhibit ? "TRUE" : "FALSE");
 }
 
 void
@@ -345,5 +345,5 @@ xfpm_dpms_set_on_battery (XfpmDpms *dpms, gboolean on_battery)
 
     dpms->priv->on_battery = on_battery;
     xfpm_dpms_refresh (dpms);
-    XFPM_DEBUG ("dpms on battery %s", on_battery ? "TURE" : "FALSE");
+    XFPM_DEBUG ("dpms on battery %s", on_battery ? "TRUE" : "FALSE");
 }
