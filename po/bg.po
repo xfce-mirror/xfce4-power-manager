@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-21 00:30+0200\n"
-"PO-Revision-Date: 2014-08-21 10:02+0000\n"
+"POT-Creation-Date: 2014-08-25 18:30+0200\n"
+"PO-Revision-Date: 2014-08-26 06:50+0000\n"
 "Last-Translator: Kiril Kirilov <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xfce4-power-manager/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -37,16 +37,16 @@ msgid "Power manager settings"
 msgstr "Настройки на управлението на захранването"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "When power button is pressed"
-msgstr "Когато бутона Power е натиснат"
+msgid "When power button is pressed:"
+msgstr "Когато бутона Power е натиснат:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "When sleep button is pressed"
-msgstr "Когато бутона Приспиване е натиснат"
+msgid "When sleep button is pressed:"
+msgstr "Когато бутона Приспиване е натиснат:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "When hibernate button is pressed"
-msgstr "Когато бутона Дълбоко приспиване е натиснат"
+msgid "When hibernate button is pressed:"
+msgstr "Когато бутона Дълбоко приспиване е натиснат:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "Handle display brightness _keys"
@@ -60,13 +60,13 @@ msgstr "<b>Бутони</b>"
 msgid "On battery"
 msgstr "На батерия"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:434
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:430
 msgid "Plugged in"
 msgstr "Свързано"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "When laptop lid is closed"
-msgstr "Когато капака на лаптопа е затворен"
+msgid "When laptop lid is closed:"
+msgstr "Когато е затворен капака на лаптопа:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "<b>Laptop Lid</b>"
@@ -89,20 +89,20 @@ msgid "Put system to sleep when inactive for"
 msgstr "Приспиване на системата при бездействие от"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "System sleep mode"
-msgstr "Системен режим на приспиване"
+msgid "System sleep mode:"
+msgstr "Системен режим на приспиване:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>System power saving</b>"
 msgstr "<b>Система за спестяване на енергия</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "Critical battery power level"
-msgstr "Критично ниво на заряда на батерията"
+msgid "Critical battery power level:"
+msgstr "Критично ниво на заряда на батерията:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "On critical battery power"
-msgstr "При критично ниво на заряда на батерията"
+msgid "On critical battery power:"
+msgstr "При критично ниво на заряда на батерията:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "<b>Critical power</b>"
@@ -444,7 +444,7 @@ msgstr "Телефон"
 msgid "Tablet"
 msgstr "Таблет"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:344
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:340
 msgid "Computer"
 msgstr "Компютър"
 
@@ -514,63 +514,63 @@ msgid_plural "minutes"
 msgstr[0] "минута"
 msgstr[1] "минути"
 
-#: ../common/xfpm-power-common.c:361
+#: ../common/xfpm-power-common.c:357
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nНапълно заредена (%0.0f%%, %s време за работа)"
 
-#: ../common/xfpm-power-common.c:369
+#: ../common/xfpm-power-common.c:365
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nНапълно заредена (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:379
+#: ../common/xfpm-power-common.c:375
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nЗареждане (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:387
+#: ../common/xfpm-power-common.c:383
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nЗареждане (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:397
+#: ../common/xfpm-power-common.c:393
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nРазреждане (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:405
+#: ../common/xfpm-power-common.c:401
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nРазреждане (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:412
+#: ../common/xfpm-power-common.c:408
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nВреме до разреждане (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:418
+#: ../common/xfpm-power-common.c:414
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nВреме до зареждане (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:424
+#: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -579,26 +579,26 @@ msgstr "<b>%s %s</b>\nе празна"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:433
+#: ../common/xfpm-power-common.c:429
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:434
+#: ../common/xfpm-power-common.c:430
 msgid "Not plugged in"
 msgstr "Не е свързано"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:440
+#: ../common/xfpm-power-common.c:436
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:445
+#: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -929,10 +929,10 @@ msgstr "В допълнение, Xfce Power Manager предоставя наб�
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
-"Xfce power manager also provides two plugins for the Xfce panel, one to "
-"control LCD brightness levels and a second plugin to monitor battery and "
-"device charge levels."
-msgstr "Xfce Power Manager също така включва и две добавки  за Xfce панела, едната от които контролират нивото на яркостта на LCD екрана, а другата контролира нивата на мощността на батерии и зарядни устройства."
+"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
+"control LCD brightness levels and to monitor battery and device charge "
+"levels."
+msgstr "Xfce Power Manager също така включва и добавка за панелите на Xfce и LXDE, за контрол на яркостта на LCD екрана и наблюдение на нивата на заряд на батерията и зарядните устройства."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
