@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Guillaume Laville <laville.guillaume@gmail.com>, 2014
 # jc1 <jc1.quebecos@gmail.com>, 2013
 # jc1 <jc1.quebecos@gmail.com>, 2013
 # Louis Moureaux <m_louis30@yahoo.com>, 2014
@@ -12,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-21 00:30+0200\n"
-"PO-Revision-Date: 2014-08-21 08:37+0000\n"
+"POT-Creation-Date: 2014-08-25 18:30+0200\n"
+"PO-Revision-Date: 2014-08-27 11:04+0000\n"
 "Last-Translator: Yannick Le Guen <leguen.yannick@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/xfce4-power-manager/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -36,16 +37,16 @@ msgid "Power manager settings"
 msgstr "Configuration du gestionnaire d'alimentation"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "When power button is pressed"
-msgstr "Appui sur le bouton d'alimentation"
+msgid "When power button is pressed:"
+msgstr "Appui sur le bouton d'alimentation :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "When sleep button is pressed"
-msgstr "Appui sur le bouton de mise en veille"
+msgid "When sleep button is pressed:"
+msgstr "Appui sur le bouton de mise en veille :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "When hibernate button is pressed"
-msgstr "Appui sur le bouton de mise en veille prolongée"
+msgid "When hibernate button is pressed:"
+msgstr "Appui sur le bouton de veille prolongée :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "Handle display brightness _keys"
@@ -59,13 +60,13 @@ msgstr "<b>Bouttons</b>"
 msgid "On battery"
 msgstr "Sur batterie"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:434
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:430
 msgid "Plugged in"
 msgstr "Branché"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "When laptop lid is closed"
-msgstr "Fermeture du couvercle du portable"
+msgid "When laptop lid is closed:"
+msgstr "Fermeture du couvercle du portable :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "<b>Laptop Lid</b>"
@@ -88,20 +89,20 @@ msgid "Put system to sleep when inactive for"
 msgstr "Mettre le système en veille si inactif depuis"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "System sleep mode"
-msgstr "Mode de mise en veille du système"
+msgid "System sleep mode:"
+msgstr "Mode de mise en veille du système :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>System power saving</b>"
 msgstr "<b>Économie d'énergie du système</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "Critical battery power level"
-msgstr "Niveau de charge batterie critique"
+msgid "Critical battery power level:"
+msgstr "Charge batterie critique :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "On critical battery power"
-msgstr "En cas de charge batterie critique"
+msgid "On critical battery power:"
+msgstr "En cas de charge batterie critique :"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "<b>Critical power</b>"
@@ -369,7 +370,7 @@ msgstr "Activer le débogage"
 #: ../settings/xfpm-settings-main.c:93 ../src/xfpm-main.c:311
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Taper '%s --help' pour l'usage."
+msgstr "Taper « %s --help » pour plus d'aide."
 
 #: ../settings/xfpm-settings-main.c:113 ../src/xfpm-main.c:341
 #, c-format
@@ -443,7 +444,7 @@ msgstr "Téléphone"
 msgid "Tablet"
 msgstr "Tablette"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:344
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:340
 msgid "Computer"
 msgstr "Ordinateur"
 
@@ -513,63 +514,63 @@ msgid_plural "minutes"
 msgstr[0] "minute"
 msgstr[1] "minutes"
 
-#: ../common/xfpm-power-common.c:361
+#: ../common/xfpm-power-common.c:357
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nComplètement chargée (%0.0f%%, durée %s)"
 
-#: ../common/xfpm-power-common.c:369
+#: ../common/xfpm-power-common.c:365
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nComplètement chargée (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:379
+#: ../common/xfpm-power-common.c:375
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nEn charge (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:387
+#: ../common/xfpm-power-common.c:383
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nEn charge (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:397
+#: ../common/xfpm-power-common.c:393
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nEn décharge (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:405
+#: ../common/xfpm-power-common.c:401
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nEn décharge (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:412
+#: ../common/xfpm-power-common.c:408
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nEn attente de décharge (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:418
+#: ../common/xfpm-power-common.c:414
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nEn attente de charge (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:424
+#: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -578,26 +579,26 @@ msgstr "<b>%s %s</b>\nest vide"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:433
+#: ../common/xfpm-power-common.c:429
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:434
+#: ../common/xfpm-power-common.c:430
 msgid "Not plugged in"
 msgstr "Non branché"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:440
+#: ../common/xfpm-power-common.c:436
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:445
+#: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -812,7 +813,7 @@ msgstr "A un bouton de mise en marche"
 
 #: ../src/xfpm-main.c:150
 msgid "Has hibernate button"
-msgstr "A un bouton de mise en veille prolongée"
+msgstr "À un bouton de mise en veille prolongée"
 
 #: ../src/xfpm-main.c:152
 msgid "Has sleep button"
@@ -928,10 +929,10 @@ msgstr "De plus, le gestionnaire d'alimentation Xfce fournit un ensemble d'inter
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
-"Xfce power manager also provides two plugins for the Xfce panel, one to "
-"control LCD brightness levels and a second plugin to monitor battery and "
-"device charge levels."
-msgstr "Le gestionnaire d'alimentation Xfce fournit également deux greffons pour le tableau de bord Xfce, un pour contrôler les niveaux de luminosité de l'écran LCD et un second greffon pour surveiller les niveaux de charge de la batterie et des périphériques. "
+"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
+"control LCD brightness levels and to monitor battery and device charge "
+"levels."
+msgstr "Le gestionnaire d’alimentation Xfce fournit également un greffon pour les tableaux de bord Xfce et LXDE afin de contrôler le niveau de luminosité de l’écran LCD et de surveiller les niveaux de charge de la batterie et des périphériques."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
