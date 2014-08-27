@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-10 00:30+0200\n"
-"PO-Revision-Date: 2014-08-10 05:31+0000\n"
+"POT-Creation-Date: 2014-08-25 18:30+0200\n"
+"PO-Revision-Date: 2014-08-27 06:06+0000\n"
 "Last-Translator: Michael Findlay <keltoiboy@gmail.com>\n"
 "Language-Team: English (Australia) (http://www.transifex.com/projects/p/xfce4-power-manager/language/en_AU/)\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgid "Nothing"
 msgstr "Nothing"
 
 #: ../data/interfaces/xfpm-settings.ui.h:2
-#: ../settings/xfpm-settings-main.c:137 ../src/xfpm-main.c:428
+#: ../settings/xfpm-settings-main.c:142 ../src/xfpm-main.c:425
 msgid "Xfce Power Manager"
 msgstr "Xfce Power Manager"
 
@@ -32,88 +32,88 @@ msgid "Power manager settings"
 msgstr "Power manager settings"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When power button is pressed:"
+msgstr "When power button is pressed:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When sleep button is pressed:"
+msgstr "When sleep button is pressed:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When hibernate button is pressed:"
+msgstr "When hibernate button is pressed:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "Handle display brightness _keys"
+msgstr "Handle display brightness _keys"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "<b>Buttons</b>"
+msgstr "<b>Buttons</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "On battery"
 msgstr "On battery"
 
-#: ../data/interfaces/xfpm-settings.ui.h:5 ../common/xfpm-power-common.c:442
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:430
 msgid "Plugged in"
 msgstr "Plugged in"
 
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Put system to sleep when inactive for"
-msgstr "Put system to sleep when inactive for"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "System sleep mode"
-msgstr "System sleep mode"
-
-#: ../data/interfaces/xfpm-settings.ui.h:8
-msgid "<b>System power saving</b>"
-msgstr "<b>System power saving</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Critical battery power level"
-msgstr "Critical battery power level"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "On critical battery power"
-msgstr "On critical battery power"
-
 #: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "<b>Critical power</b>"
-msgstr "<b>Critical power</b>"
+msgid "When laptop lid is closed:"
+msgstr "When laptop lid is closed:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Lock screen when system is going for sleep"
-msgstr "Lock screen when system is going for sleep"
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>Laptop Lid</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Show notifications"
 msgstr "Show notifications"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
-msgid "<b>Security and notifications</b>"
-msgstr "<b>Security and notifications</b>"
+msgid "<b>Appearance</b>"
+msgstr "<b>Appearance</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "General"
 msgstr "General"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
-msgid "When power button is pressed"
-msgstr "When power button is pressed"
+msgid "Put system to sleep when inactive for"
+msgstr "Put system to sleep when inactive for"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "When sleep button is pressed"
-msgstr "When sleep button is pressed"
+msgid "System sleep mode:"
+msgstr "System sleep mode:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
-msgid "When hibernate button is pressed"
-msgstr "When hibernate button is pressed"
+msgid "<b>System power saving</b>"
+msgstr "<b>System power saving</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "<b>Buttons</b>"
-msgstr "<b>Buttons</b>"
+msgid "Critical battery power level:"
+msgstr "Critical battery power level:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "When laptop lid is closed"
-msgstr "When laptop lid is closed"
+msgid "On critical battery power:"
+msgstr "On critical battery power:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "<b>Laptop Lid</b>"
-msgstr "<b>Laptop Lid</b>"
+msgid "<b>Critical power</b>"
+msgstr "<b>Critical power</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Handle display brightness _keys"
-msgstr "Handle display brightness _keys"
+msgid "Lock screen when system is going for sleep"
+msgstr "Lock screen when system is going for sleep"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "<b>Keys</b>"
-msgstr "<b>Keys</b>"
+msgid "<b>Security</b>"
+msgstr "<b>Security</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
-msgid "Controls"
-msgstr "Controls"
+msgid "System"
+msgstr "System"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Handle display power management"
@@ -362,12 +362,12 @@ msgstr "UpDevice object path"
 msgid "Enable debugging"
 msgstr "Enable debugging"
 
-#: ../settings/xfpm-settings-main.c:93 ../src/xfpm-main.c:309
+#: ../settings/xfpm-settings-main.c:93 ../src/xfpm-main.c:311
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Type '%s --help' for usage."
 
-#: ../settings/xfpm-settings-main.c:113 ../src/xfpm-main.c:344
+#: ../settings/xfpm-settings-main.c:113 ../src/xfpm-main.c:341
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce power manager is not running"
@@ -380,11 +380,11 @@ msgstr "Run"
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 Power Manager is not running, do you want to launch it now?"
 
-#: ../settings/xfpm-settings-main.c:139
+#: ../settings/xfpm-settings-main.c:144
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "Failed to load power manager configuration, using defaults"
 
-#: ../settings/xfpm-settings-main.c:166
+#: ../settings/xfpm-settings-main.c:171
 msgid "Unable to connect to Xfce Power Manager"
 msgstr "Unable to connect to Xfce Power Manager"
 
@@ -439,7 +439,7 @@ msgstr "Phone"
 msgid "Tablet"
 msgstr "Tablet"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:352
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:340
 msgid "Computer"
 msgstr "Computer"
 
@@ -509,63 +509,63 @@ msgid_plural "minutes"
 msgstr[0] "minute"
 msgstr[1] "minutes"
 
-#: ../common/xfpm-power-common.c:369
+#: ../common/xfpm-power-common.c:357
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nFully charged (%0.0f%%, %s runtime)"
 
-#: ../common/xfpm-power-common.c:377
+#: ../common/xfpm-power-common.c:365
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nFully charged (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:387
+#: ../common/xfpm-power-common.c:375
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nCharging (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:395
+#: ../common/xfpm-power-common.c:383
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nCharging (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:405
+#: ../common/xfpm-power-common.c:393
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nDischarging (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:413
+#: ../common/xfpm-power-common.c:401
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nDischarging (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:420
+#: ../common/xfpm-power-common.c:408
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nWaiting to discharge (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:426
+#: ../common/xfpm-power-common.c:414
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nWaiting to charge (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:432
+#: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -574,26 +574,26 @@ msgstr "<b>%s %s</b>\nis empty"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:441
+#: ../common/xfpm-power-common.c:429
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:442
+#: ../common/xfpm-power-common.c:430
 msgid "Not plugged in"
 msgstr "Not plugged in"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:448
+#: ../common/xfpm-power-common.c:436
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:453
+#: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -847,15 +847,15 @@ msgstr "Version information"
 msgid "Failed to parse arguments: %s\n"
 msgstr "Failed to parse arguments: %s\n"
 
-#: ../src/xfpm-main.c:335
+#: ../src/xfpm-main.c:332
 msgid "Unable to get connection to the message bus session"
 msgstr "Unable to get connection to the message bus session"
 
-#: ../src/xfpm-main.c:429
+#: ../src/xfpm-main.c:426
 msgid "Another power manager is already running"
 msgstr "Another power manager is already running"
 
-#: ../src/xfpm-main.c:435
+#: ../src/xfpm-main.c:432
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce power manager is already running"
@@ -875,33 +875,35 @@ msgid "Power management for the Xfce desktop"
 msgstr "Power management for the Xfce desktop"
 
 #. how did we get here?
-#: ../panel-plugins/battery/battery-button.c:167
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:168
 msgid "Display battery levels for attached devices"
 msgstr "Display battery levels for attached devices"
 
-#: ../panel-plugins/battery/battery-button.c:951
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1014
 msgid "<b>Display brightness</b>"
 msgstr "<b>Display brightness</b>"
 
 #. Presentation mode checkbox
-#: ../panel-plugins/battery/battery-button.c:969
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1032
 msgid "Presentation _mode"
 msgstr "Presentation _mode"
 
 #. Power manager settings
-#: ../panel-plugins/battery/battery-button.c:978
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1041
 msgid "_Power manager settings..."
 msgstr "_Power manager settings..."
 
-#: ../panel-plugins/battery/lxde/battery-plugin.c:54
-#: ../panel-plugins/battery/xfce/xfce4-battery-plugin.desktop.in.in.h:1
-msgid "Battery indicator plugin"
-msgstr "Battery indicator plugin"
+#: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:54
+#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
+msgid "Power Manager Plugin"
+msgstr "Power Manager Plugin"
 
-#: ../panel-plugins/battery/lxde/battery-plugin.c:56
-#: ../panel-plugins/battery/xfce/xfce4-battery-plugin.desktop.in.in.h:2
-msgid "Display the battery levels of your devices"
-msgstr "Display the battery levels of your devices"
+#: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:56
+#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
+msgid ""
+"Display the battery levels of your devices and control the brightness of "
+"your display"
+msgstr "Display the battery levels of your devices and control the brightness of your display"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
@@ -922,12 +924,29 @@ msgstr "In addition, Xfce power manager provides a set of freedesktop-compliant 
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
-"Xfce power manager also provides two plugins for the Xfce panel, one to "
-"control LCD brightness levels and a second plugin to monitor battery and "
-"device charge levels."
-msgstr "Xfce power manager also provides two plugins for the Xfce panel, one to control LCD brightness levels and a second plugin to monitor battery and device charge levels."
+"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
+"control LCD brightness levels and to monitor battery and device charge "
+"levels."
+msgstr "Xfce power manager also provides a plugin for the Xfce and LXDE panels to control LCD brightness levels and to monitor battery and device charge levels."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
+msgid ""
+"This development release mostly fixes bugs and introduces better support for"
+" icon-themes by reducing the device icons and using standard names for them."
+" It also features updated translations. The panel plugin has been renamed to"
+" Power Manager Plugin."
+msgstr "This development release mostly fixes bugs and introduces better support for icon-themes by reducing the device icons and using standard names for them. It also features updated translations. The panel plugin has been renamed to Power Manager Plugin."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
+msgid ""
+"This development release fixes bugs with suspend and hibernate. It also "
+"improves the panel-plugin, incorporating the functionality of the (now "
+"dropped) brightness panel-plugin. A new popup notification was added to "
+"account for keyboard brightness changes and the Power Manager now also "
+"controls the X11 blank times."
+msgstr "This development release fixes bugs with suspend and hibernate. It also improves the panel-plugin, incorporating the functionality of the (now dropped) brightness panel-plugin. A new popup notification was added to account for keyboard brightness changes and the Power Manager now also controls the X11 blank times."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
 "This development release introduces a lot of new features, among them "
 "suspending/hibernation without systemd and UPower>=0.99. It allows for "
@@ -937,7 +956,7 @@ msgid ""
 "have been fixed and translations have been updated."
 msgstr "This development release introduces a lot of new features, among them suspending/hibernation without systemd and UPower>=0.99. It allows for individual control of systemd-inhibition, a new panel plugin to monitor battery and device charge levels replaces the trayicon. The settings dialog has been completely restructured for better oversight and many open bugs have been fixed and translations have been updated."
 
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
