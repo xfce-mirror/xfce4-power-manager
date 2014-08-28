@@ -193,14 +193,17 @@ power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, 
 {
     cairo_t *cr;
     UpDevice *device = UP_DEVICE(userdata);
-    guint type = 0;
+    guint type = 0, state = 0;
     gdouble percentage;
     gint height, width;
     gdouble min_height = 2;
+    PangoLayout *layout;
+    PangoRectangle ink_extent, log_extent;
 
     TRACE("entering for %s", up_device_get_object_path(device));
     g_object_get (device,
                   "kind", &type,
+                  "state", &state,
                   "percentage", &percentage,
 		  NULL);
 
@@ -212,38 +215,61 @@ power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, 
     width = img->allocation.width;
     height = img->allocation.height;
 
-    /* Draw the trough of the progressbar */
-    cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
-    cairo_set_line_width (cr, 1.0);
-    cairo_rectangle (cr, width - 3.5, img->allocation.y + 1.5, 5, height - 2);
-    cairo_set_source_rgb (cr, 0.87, 0.87, 0.87);
-    cairo_fill_preserve (cr);
-    cairo_set_source_rgb (cr, 0.53, 0.54, 0.52);
-    cairo_stroke (cr);
+    if (state != UP_DEVICE_STATE_UNKNOWN)
+    {
+        /* Draw the trough of the progressbar */
+        cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+        cairo_set_line_width (cr, 1.0);
+        cairo_rectangle (cr, width - 3.5, img->allocation.y + 1.5, 5, height - 2);
+        cairo_set_source_rgb (cr, 0.87, 0.87, 0.87);
+        cairo_fill_preserve (cr);
+        cairo_set_source_rgb (cr, 0.53, 0.54, 0.52);
+        cairo_stroke (cr);
 
-    /* Draw the fill of the progressbar
-       Use yellow for 20% and below, green for 100%, red for 5% and below and blue for the rest */
-    cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
+        /* Draw the fill of the progressbar
+           Use yellow for 20% and below, green for 100%, red for 5% and below and blue for the rest */
+        cairo_set_operator (cr, CAIRO_OPERATOR_OVER);
 
-    if ((height * (percentage / 100)) > min_height)
-       min_height = (height - 3) * (percentage / 100);
+        if ((height * (percentage / 100)) > min_height)
+           min_height = (height - 3) * (percentage / 100);
 
-    cairo_rectangle (cr, width - 3, img->allocation.y + height - min_height - 1, 4, min_height);
-    if (percentage > 5 && percentage < 20)
-        cairo_set_source_rgb (cr, 0.93, 0.83, 0.0);
-    else if (percentage > 20 && percentage < 100)
-        cairo_set_source_rgb (cr, 0.2, 0.4, 0.64);
-    else if (percentage == 100)
-        cairo_set_source_rgb (cr, 0.45, 0.82, 0.08);
+        cairo_rectangle (cr, width - 3, img->allocation.y + height - min_height - 1, 4, min_height);
+        if (percentage > 5 && percentage < 20)
+            cairo_set_source_rgb (cr, 0.93, 0.83, 0.0);
+        else if (percentage > 20 && percentage < 100)
+            cairo_set_source_rgb (cr, 0.2, 0.4, 0.64);
+        else if (percentage == 100)
+            cairo_set_source_rgb (cr, 0.45, 0.82, 0.08);
+        else
+            cairo_set_source_rgb (cr, 0.94, 0.16, 0.16);
+        cairo_fill (cr);
+
+        cairo_rectangle (cr, width - 2.5, img->allocation.y + 2.5, 3, height - 4);
+        cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.75);
+        cairo_stroke (cr);
+    }
     else
-        cairo_set_source_rgb (cr, 0.94, 0.16, 0.16);
-    cairo_fill (cr);
+    {
+        /* Draw a bubble with a question mark for devices with unknown state */
+        cairo_set_operator (cr, CAIRO_OPERATOR_SOURCE);
+        cairo_set_line_width (cr, 1.0);
+        cairo_arc(cr, width - 4.5, img->allocation.y + 6.5, 6, 0, 2*3.14159);
+        cairo_set_source_rgb (cr, 0.2, 0.54, 0.9);
+        cairo_fill_preserve (cr);
+        cairo_set_source_rgb (cr, 0.1, 0.37, 0.6);
+        cairo_stroke (cr);
 
-    cairo_rectangle (cr, width - 2.5, img->allocation.y + 2.5, 3, height - 4);
-    cairo_set_source_rgba (cr, 1.0, 1.0, 1.0, 0.75);
-    cairo_stroke (cr);
+        layout = gtk_widget_create_pango_layout (GTK_WIDGET (img), "?");
+        pango_layout_set_font_description (layout, pango_font_description_from_string ("Sans Bold 9"));
+        pango_layout_get_pixel_extents (layout, &ink_extent, &log_extent);
+        cairo_move_to (cr, (width - 5.5) - (log_extent.width / 2), (img->allocation.y + 5.5) - (log_extent.height / 2));
+        cairo_set_source_rgb (cr, 1.0, 1.0, 1.0);
+        pango_cairo_show_layout (cr, layout);
+    }
 
     cairo_destroy (cr);
+    if (layout)
+        g_object_unref (layout);
     return FALSE;
 }
 
