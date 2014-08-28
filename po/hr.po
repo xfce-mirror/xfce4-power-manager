@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-21 12:30+0200\n"
-"PO-Revision-Date: 2014-08-23 10:41+0000\n"
+"POT-Creation-Date: 2014-08-25 18:30+0200\n"
+"PO-Revision-Date: 2014-08-27 23:22+0000\n"
 "Last-Translator: Edin Veskovic <edin.veskovic@openmailbox.org>\n"
 "Language-Team: Croatian (http://www.transifex.com/projects/p/xfce4-power-manager/language/hr/)\n"
 "MIME-Version: 1.0\n"
@@ -58,7 +58,7 @@ msgstr "<b>Dugmad</b>"
 msgid "On battery"
 msgstr "Na bateriji"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:434
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:430
 msgid "Plugged in"
 msgstr "Uključen"
 
@@ -442,7 +442,7 @@ msgstr "Telefon"
 msgid "Tablet"
 msgstr "Tablet"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:344
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:340
 msgid "Computer"
 msgstr "Računalo"
 
@@ -516,63 +516,63 @@ msgstr[0] "minuta"
 msgstr[1] "minuta"
 msgstr[2] "minute"
 
-#: ../common/xfpm-power-common.c:361
+#: ../common/xfpm-power-common.c:357
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nPotpuno napunjena (%0.0f%%, %s trajanja)"
 
-#: ../common/xfpm-power-common.c:369
+#: ../common/xfpm-power-common.c:365
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nPotpuno napunjena (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:379
+#: ../common/xfpm-power-common.c:375
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nPunjenje (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:387
+#: ../common/xfpm-power-common.c:383
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nPunjenje (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:397
+#: ../common/xfpm-power-common.c:393
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nPražnjenje (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:405
+#: ../common/xfpm-power-common.c:401
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nPražnjenje (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:412
+#: ../common/xfpm-power-common.c:408
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nČekanje ispražnjenja (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:418
+#: ../common/xfpm-power-common.c:414
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nČekanje punjenja (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:424
+#: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -581,26 +581,26 @@ msgstr "<b>%s %s</b>\nje prazna"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:433
+#: ../common/xfpm-power-common.c:429
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:434
+#: ../common/xfpm-power-common.c:430
 msgid "Not plugged in"
 msgstr "Neuključen"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:440
+#: ../common/xfpm-power-common.c:436
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:445
+#: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -931,10 +931,10 @@ msgstr "Uz to, Xfce upravitelj energijom pruža set DBus sučelja usklađenih s 
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
-"Xfce power manager also provides two plugins for the Xfce panel, one to "
-"control LCD brightness levels and a second plugin to monitor battery and "
-"device charge levels."
-msgstr "Xfce upravitelj energijom pruža dva dodatka za ploču, dodatak za upravljanje razinom svjetline LCD zaslona i dodatak za nadzor baterije te razine napunjenosti uređaja."
+"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
+"control LCD brightness levels and to monitor battery and device charge "
+"levels."
+msgstr "Xfce upravitelj energijom također pruža dodatke za Xfce i LXDE koji omogućavaju upravljanje svjetlinom LCD zaslona te praćenje korištenja i napunjenosti baterije uređaja."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
