@@ -82,6 +82,14 @@ struct PowerManagerButtonPrivate
 
     /* display brightness slider widget */
     GtkWidget       *range;
+    /* Some laptops (and mostly newer ones with intel graphics) can turn off the
+     * backlight completely. If the user is not careful and sets the brightness
+     * very low using the slider, he might not be able to see the screen contents
+     * anymore. Brightness keys do not work on every laptop, so it's better to use
+     * a safe default minimum level that the user can change via the settings
+     * editor if desired.
+     */
+    gint32           brightness_min_level;
 
     /* filter range value changed events for snappier UI feedback */
     guint            set_level_timeout;
@@ -96,6 +104,13 @@ typedef struct
     gulong       signal_id;    /* device changed callback id */
     GtkWidget   *menu_item;    /* The device's item on the menu (if shown) */
 } BatteryDevice;
+
+typedef enum
+{
+    PROP_0 = 0,
+    PROP_BRIGHTNESS_MIN_LEVEL,
+} POWER_MANAGER_BUTTON_PROPERTIES;
+
 
 G_DEFINE_TYPE (PowerManagerButton, power_manager_button, GTK_TYPE_TOGGLE_BUTTON)
 
@@ -508,7 +523,7 @@ brightness_down (PowerManagerButton *button)
     gint32 level;
     xfpm_brightness_get_level (button->priv->brightness, &level);
 
-    if ( level > 0 )
+    if ( level > button->priv->brightness_min_level )
     {
         decrease_brightness (button);
     }
@@ -541,17 +556,105 @@ power_manager_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
 }
 
 static void
+set_brightness_min_level(PowerManagerButton *button, gint32 new_brightness_level)
+{
+    gint32 max_level = xfpm_brightness_get_max_level (button->priv->brightness);
+
+    /* sanity check */
+    if (new_brightness_level > max_level)
+        new_brightness_level = -1;
+
+    /* -1 = auto, we set the step value to a hopefully sane default */
+    if (new_brightness_level == -1)
+    {
+        button->priv->brightness_min_level = (max_level > 100) ? SAFE_SLIDER_MIN_LEVEL : 0;
+    }
+    else
+    {
+        button->priv->brightness_min_level = new_brightness_level;
+    }
+
+    DBG("button->priv->brightness_min_level : %d", button->priv->brightness_min_level);
+
+    /* update the range if it's being shown */
+    if (button->priv->range)
+    {
+        gtk_range_set_range (GTK_RANGE(button->priv->range), button->priv->brightness_min_level, max_level);
+    }
+}
+
+static void
+power_manager_button_set_property(GObject *object,
+                                  guint property_id,
+                                  const GValue *value,
+                                  GParamSpec *pspec)
+{
+    PowerManagerButton *button;
+
+    button = POWER_MANAGER_BUTTON (object);
+
+    switch(property_id)
+    {
+        case PROP_BRIGHTNESS_MIN_LEVEL:
+            set_brightness_min_level (button, g_value_get_int(value));
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec);
+            break;
+    }
+}
+
+static void
+power_manager_button_get_property(GObject *object,
+                                  guint property_id,
+                                  GValue *value,
+                                  GParamSpec *pspec)
+{
+    PowerManagerButton *button;
+
+    button = POWER_MANAGER_BUTTON (object);
+
+    switch(property_id)
+    {
+        case PROP_BRIGHTNESS_MIN_LEVEL:
+            g_value_set_int(value, button->priv->brightness_min_level);
+            break;
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec);
+            break;
+    }
+}
+
+static void
 power_manager_button_class_init (PowerManagerButtonClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
     GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
     object_class->finalize = power_manager_button_finalize;
+    object_class->set_property = power_manager_button_set_property;
+    object_class->get_property = power_manager_button_get_property;
 
     widget_class->button_press_event = power_manager_button_press_event;
     widget_class->scroll_event = power_manager_button_scroll_event;
 
     g_type_class_add_private (klass, sizeof (PowerManagerButtonPrivate));
+
+#define XFPM_PARAM_FLAGS  (G_PARAM_READWRITE \
+                           | G_PARAM_CONSTRUCT \
+                           | G_PARAM_STATIC_NAME \
+                           | G_PARAM_STATIC_NICK \
+                           | G_PARAM_STATIC_BLURB)
+
+    /* We allow and default to -1 only so that we can automagically set a
+     * sane value if the user hasn't selected one already */
+    g_object_class_install_property(object_class, PROP_BRIGHTNESS_MIN_LEVEL,
+                                    g_param_spec_int(BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                                     BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                                     BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                                     -1, G_MAXINT32, -1,
+                                                     XFPM_PARAM_FLAGS));
+#undef XFPM_PARAM_FLAGS
 }
 
 static void
@@ -630,6 +733,10 @@ power_manager_button_new (Plugin *plugin)
 #ifdef LXDE_PLUGIN
     button->priv->plugin = plugin;
 #endif
+
+    xfconf_g_property_bind(button->priv->channel,
+                           PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL, G_TYPE_INT,
+                           G_OBJECT(button), BRIGHTNESS_SLIDER_MIN_LEVEL);
 
     return GTK_WIDGET (button);
 }
@@ -867,7 +974,7 @@ decrease_brightness (PowerManagerButton *button)
 
     xfpm_brightness_get_level (button->priv->brightness, &level);
 
-    if ( level > 0 )
+    if ( level > button->priv->brightness_min_level )
     {
         xfpm_brightness_down (button->priv->brightness, &level);
         if (button->priv->range)
@@ -967,7 +1074,7 @@ power_manager_button_show_menu (PowerManagerButton *button)
     GdkScreen *gscreen;
     GList *item;
     gboolean show_separator_flag = FALSE;
-    gint32 min_level, max_level, current_level = 0;
+    gint32 max_level, current_level = 0;
 
     if(gtk_widget_has_screen(GTK_WIDGET(button)))
         gscreen = gtk_widget_get_screen(GTK_WIDGET(button));
@@ -1004,26 +1111,7 @@ power_manager_button_show_menu (PowerManagerButton *button)
 
         max_level = xfpm_brightness_get_max_level (button->priv->brightness);
 
-        /* determine minimum value for slider */
-        min_level = xfconf_channel_get_int (button->priv->channel,
-                                            PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                            -1);
-        if (min_level == -1)
-        {
-            /* Some laptops (and mostly newer ones with intel graphics) can turn off the
-             * backlight completely. If the user is not careful and sets the brightness
-             * very low using the slider, he might not be able to see the screen contents
-             * anymore. Brightness keys do not work on every laptop, so it's better to use
-             * a safe default minimum level that the user can change via the settings
-             * editor if desired.
-             */
-            min_level = (max_level > 100) ? SAFE_SLIDER_MIN_LEVEL : 0;
-            xfconf_channel_set_int (button->priv->channel,
-                                    PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                    min_level);
-        }
-
-        mi = scale_menu_item_new_with_range (min_level, max_level, 1);
+        mi = scale_menu_item_new_with_range (button->priv->brightness_min_level, max_level, 1);
 
         /* attempt to load and display the brightness icon */
         pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
