@@ -212,7 +212,7 @@ power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, 
     gdouble percentage;
     gint height, width;
     gdouble min_height = 2;
-    PangoLayout *layout;
+    PangoLayout *layout = NULL;
     PangoRectangle ink_extent, log_extent;
 
     TRACE("entering for %s", up_device_get_object_path(device));
