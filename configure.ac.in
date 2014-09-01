@@ -64,7 +64,7 @@ m4_define([dbus_minimum_version], [1.1])
 m4_define([dbus_glib_minimum_version], [0.84])
 
 m4_define([xfconf_minimum_version], [4.10.0])
-m4_define([libxfce4ui_minimum_version],[4.10.0])
+m4_define([libxfce4ui_minimum_version],[4.11.1])
 m4_define([libxfce4util_minimum_version],[4.10.0])
 m4_define([libxfce4panel_minimum_version],[4.10.0])
 m4_define([lxdepanel_minimum_version],[0.5.6])
@@ -188,6 +188,16 @@ fi
 if test x$with_backend = xopenbsd; then
     AC_DEFINE(BACKEND_TYPE_OPENBSD, 1, [OpenBSD suspend/hibernate backend])
 fi
+
+dnl define a short version string for xfdesktop
+m4_append([xfpm_version_short], ["])
+m4_append([xfpm_version_short], [xfpm_version_major])
+m4_append([xfpm_version_short], [.])
+m4_append([xfpm_version_short], [xfpm_version_minor])
+m4_append([xfpm_version_short], ["])
+
+dnl define xfpm's short version (major.minor)
+AC_DEFINE([XFPM_VERSION_SHORT], [xfpm_version_short], [Short version string of xfce4-power-manager])
 
 #=======================================================#
 #              Check for debugging support              #
