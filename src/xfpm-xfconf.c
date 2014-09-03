@@ -563,7 +563,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      PROP_LOGIND_HANDLE_POWER_KEY,
                                      g_param_spec_boolean (LOGIND_HANDLE_POWER_KEY,
                                                            NULL, NULL,
-                                                           TRUE,
+                                                           FALSE,
                                                            G_PARAM_READWRITE));
 
     /**
@@ -573,7 +573,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      PROP_LOGIND_HANDLE_SUSPEND_KEY,
                                      g_param_spec_boolean (LOGIND_HANDLE_SUSPEND_KEY,
                                                            NULL, NULL,
-                                                           TRUE,
+                                                           FALSE,
                                                            G_PARAM_READWRITE));
 
     /**
@@ -583,7 +583,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      PROP_LOGIND_HANDLE_HIBERNATE_KEY,
                                      g_param_spec_boolean (LOGIND_HANDLE_HIBERNATE_KEY,
                                                            NULL, NULL,
-                                                           TRUE,
+                                                           FALSE,
                                                            G_PARAM_READWRITE));
 
     /**
@@ -593,7 +593,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      PROP_LOGIND_HANDLE_LID_SWITCH,
                                      g_param_spec_boolean (LOGIND_HANDLE_LID_SWITCH,
                                                            NULL, NULL,
-                                                           TRUE,
+                                                           FALSE,
                                                            G_PARAM_READWRITE));
 
     g_type_class_add_private (klass, sizeof (XfpmXfconfPrivate));

@@ -504,22 +504,22 @@ xfpm_manager_get_systemd_events(XfpmManager *manager)
 {
     GSList *events = NULL;
     gchar *what = "";
-    gboolean handle_power_key, handle_suspend_key, handle_hibernate_key, handle_lid_switch;
+    gboolean logind_handle_power_key, logind_handle_suspend_key, logind_handle_hibernate_key, logind_handle_lid_switch;
 
     g_object_get (G_OBJECT (manager->priv->conf),
-        LOGIND_HANDLE_POWER_KEY, &handle_power_key,
-        LOGIND_HANDLE_SUSPEND_KEY, &handle_suspend_key,
-        LOGIND_HANDLE_HIBERNATE_KEY, &handle_hibernate_key,
-        LOGIND_HANDLE_LID_SWITCH, &handle_lid_switch,
+        LOGIND_HANDLE_POWER_KEY, &logind_handle_power_key,
+        LOGIND_HANDLE_SUSPEND_KEY, &logind_handle_suspend_key,
+        LOGIND_HANDLE_HIBERNATE_KEY, &logind_handle_hibernate_key,
+        LOGIND_HANDLE_LID_SWITCH, &logind_handle_lid_switch,
         NULL);
 
-    if (handle_power_key)
+    if (!logind_handle_power_key)
         events = g_slist_append(events, "handle-power-key");
-    if (handle_suspend_key)
+    if (!logind_handle_suspend_key)
         events = g_slist_append(events, "handle-suspend-key");
-    if (handle_hibernate_key)
+    if (!logind_handle_hibernate_key)
         events = g_slist_append(events, "handle-hibernate-key");
-    if (handle_lid_switch)
+    if (!logind_handle_lid_switch)
         events = g_slist_append(events, "handle-lid-switch");
 
     while (events != NULL)
