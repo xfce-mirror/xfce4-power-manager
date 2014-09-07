@@ -57,7 +57,7 @@ GType                    power_manager_button_get_type (void) G_GNUC_CONST;
 GtkWidget               *power_manager_button_new       (XfcePanelPlugin *plugin);
 #endif
 #ifdef LXDE_PLUGIN
-GtkWidget               *power_manager_button_new       (Plugin *plugin);
+GtkWidget               *power_manager_button_new       (void);
 #endif
 
 void                     power_manager_button_show      (PowerManagerButton *button);

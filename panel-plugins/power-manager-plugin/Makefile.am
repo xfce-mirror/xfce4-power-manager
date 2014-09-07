@@ -1,12 +1,17 @@
 
-if BUILD_XFCE_PLUGINS
+if BUILD_XFCE_PLUGIN
 xfce_dir = xfce
 endif
 
-if BUILD_LXDE_PLUGINS
-lxde_dir = lxde
+if BUILD_LXDE_OLD_PLUGIN
+lxde_old_dir = lxde
 endif
 
-SUBDIRS =        \
-	$(xfce_dir)  \
-	$(lxde_dir)
+if BUILD_LXDE_NEW_PLUGIN
+lxde_new_dir = lxde-0.7
+endif
+
+SUBDIRS =           \
+	$(xfce_dir)     \
+	$(lxde_old_dir) \
+	$(lxde_new_dir)

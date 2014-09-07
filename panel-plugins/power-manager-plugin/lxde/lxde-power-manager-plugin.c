@@ -80,7 +80,7 @@ lxde_power_manager_plugin_new (Plugin *plugin)
     gtk_widget_show (power_manager_plugin->ebox);
     gtk_event_box_set_visible_window (GTK_EVENT_BOX(power_manager_plugin->ebox), FALSE);
 
-    power_manager_plugin->power_manager_button = power_manager_button_new (plugin);
+    power_manager_plugin->power_manager_button = power_manager_button_new ();
     power_manager_button_show(POWER_MANAGER_BUTTON(power_manager_plugin->power_manager_button));
     gtk_container_add (GTK_CONTAINER (power_manager_plugin->ebox), power_manager_plugin->power_manager_button);
 

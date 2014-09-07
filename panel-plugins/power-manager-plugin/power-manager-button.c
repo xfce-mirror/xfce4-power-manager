@@ -54,9 +54,7 @@ struct PowerManagerButtonPrivate
 #ifdef XFCE_PLUGIN
     XfcePanelPlugin *plugin;
 #endif
-#ifdef LXDE_PLUGIN
-    Plugin *plugin;
-#endif
+
     XfconfChannel   *channel;
 
     UpClient        *upower;
@@ -797,7 +795,7 @@ GtkWidget *
 power_manager_button_new (XfcePanelPlugin *plugin)
 #endif
 #ifdef LXDE_PLUGIN
-power_manager_button_new (Plugin *plugin)
+power_manager_button_new (void)
 #endif
 {
     PowerManagerButton *button = NULL;
@@ -805,9 +803,6 @@ power_manager_button_new (Plugin *plugin)
 
 #ifdef XFCE_PLUGIN
     button->priv->plugin = XFCE_PANEL_PLUGIN (g_object_ref (plugin));
-#endif
-#ifdef LXDE_PLUGIN
-    button->priv->plugin = plugin;
 #endif
 
     xfconf_g_property_bind(button->priv->channel,
@@ -1261,7 +1256,11 @@ power_manager_button_show_menu (PowerManagerButton *button)
 #else
                     NULL,
 #endif
+#ifdef XFCE_PLUGIN
                     button->priv->plugin,
+#else
+                    NULL,
+#endif
                     0,
                     gtk_get_current_event_time ());
 }
