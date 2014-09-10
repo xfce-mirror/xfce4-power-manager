@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-25 18:30+0200\n"
-"PO-Revision-Date: 2014-09-03 15:24+0000\n"
+"PO-Revision-Date: 2014-09-10 21:03+0000\n"
 "Last-Translator: Aleksandr Sorokin <equusa@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/xfce4-power-manager/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -37,11 +37,11 @@ msgstr "Настройки менеджера питания"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
 msgid "When power button is pressed:"
-msgstr ""
+msgstr "При нажатии кнопки питания:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
 msgid "When sleep button is pressed:"
-msgstr ""
+msgstr "При нажатии кнопки перехода в спящий режим:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
 msgid "When hibernate button is pressed:"
@@ -97,11 +97,11 @@ msgstr "<b>Системное энергосбережение</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Critical battery power level:"
-msgstr ""
+msgstr "Критический уровень заряда батареи:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "On critical battery power:"
-msgstr ""
+msgstr "При критическом заряде батареи"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "<b>Critical power</b>"
@@ -125,15 +125,15 @@ msgstr "Управление питанием монитора"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "Blank after"
-msgstr ""
+msgstr "Погасить экран через"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "Put to sleep after"
-msgstr ""
+msgstr "Перевести в ждущий режим через"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "Switch off after"
-msgstr ""
+msgstr "Выключить через"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "<b>Display power management settings</b>"
@@ -522,7 +522,7 @@ msgstr[2] "минут"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr ""
+msgstr "<b>%s %s</b>\nПолностью заряжен/а (%0.0f%%, %s до полного разряда)"
 
 #: ../common/xfpm-power-common.c:365
 #, c-format
@@ -578,7 +578,7 @@ msgstr "<b>%s %s</b>\nОжидает зарядки (%0.0f%%)"
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
+msgstr "<b>%s %s</b>\nразряжен/а"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
