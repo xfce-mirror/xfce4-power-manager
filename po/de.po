@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-21 12:30+0200\n"
-"PO-Revision-Date: 2014-08-23 13:00+0000\n"
-"Last-Translator: Tobias Bannert\n"
+"POT-Creation-Date: 2014-08-25 18:30+0200\n"
+"PO-Revision-Date: 2014-09-10 19:30+0000\n"
+"Last-Translator: Johannes Lips <johannes.lips@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xfce4-power-manager/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,13 +63,13 @@ msgstr "<b>Knöpfe</b>"
 msgid "On battery"
 msgstr "Akku wird entladen"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:434
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:430
 msgid "Plugged in"
 msgstr "Strom angeschlossen"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "When laptop lid is closed:"
-msgstr "Beim Schließen der Bildschirmklappe:"
+msgstr "Beim Schließen des Laptopbildschirms:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "<b>Laptop Lid</b>"
@@ -89,11 +89,11 @@ msgstr "Allgemein"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put system to sleep when inactive for"
-msgstr "Bei Inaktivität von"
+msgstr "Das System in den Energiesparmodus versetzen nach Inaktivität von"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "System sleep mode:"
-msgstr "Systemschlafmodus:"
+msgstr "Energiesparmodus:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>System power saving</b>"
@@ -133,7 +133,7 @@ msgstr "Schwarzer Bildschirm nach"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "Put to sleep after"
-msgstr "In den Schlafmodus versetzen nach"
+msgstr "In den Energiesparmodus versetzen nach"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "Switch off after"
@@ -208,7 +208,7 @@ msgstr "Bereitschaft"
 
 #: ../settings/xfpm-settings.c:751 ../settings/xfpm-settings.c:973
 msgid "Suspend operation not permitted"
-msgstr "Versetzen in den Bereitschaftsmodus ist nicht erlaubt"
+msgstr "Versetzen in den Energiesparmodus ist nicht erlaubt"
 
 #: ../settings/xfpm-settings.c:755 ../settings/xfpm-settings.c:977
 msgid "Suspend operation not supported"
@@ -253,7 +253,7 @@ msgstr "Herunterfahren"
 #: ../settings/xfpm-settings.c:842 ../settings/xfpm-settings.c:1181
 #: ../settings/xfpm-settings.c:1232 ../settings/xfpm-settings.c:1284
 msgid "Ask"
-msgstr "Fragen"
+msgstr "Nachfragen"
 
 #: ../settings/xfpm-settings.c:879 ../settings/xfpm-settings.c:1052
 msgid "Switch off display"
@@ -447,7 +447,7 @@ msgstr "Telefon"
 msgid "Tablet"
 msgstr "Tablet"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:344
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:340
 msgid "Computer"
 msgstr "Rechner"
 
@@ -517,63 +517,63 @@ msgid_plural "minutes"
 msgstr[0] "Minute"
 msgstr[1] "Minuten"
 
-#: ../common/xfpm-power-common.c:361
+#: ../common/xfpm-power-common.c:357
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nVollständig aufgeladen (%0.0f%%, %s Laufzeit)"
 
-#: ../common/xfpm-power-common.c:369
+#: ../common/xfpm-power-common.c:365
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nVollständig aufgeladen (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:379
+#: ../common/xfpm-power-common.c:375
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nWird aufgeladen (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:387
+#: ../common/xfpm-power-common.c:383
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nWird aufgeladen (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:397
+#: ../common/xfpm-power-common.c:393
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nWird entladen (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:405
+#: ../common/xfpm-power-common.c:401
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nWird entladen (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:412
+#: ../common/xfpm-power-common.c:408
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nAuf das Entladen wird gewartet (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:418
+#: ../common/xfpm-power-common.c:414
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nAuf das Laden wird gewartet (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:424
+#: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -582,26 +582,26 @@ msgstr "<b>%s %s</b>\nist leer"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:433
+#: ../common/xfpm-power-common.c:429
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:434
+#: ../common/xfpm-power-common.c:430
 msgid "Not plugged in"
 msgstr "Nicht angeschlossen"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:440
+#: ../common/xfpm-power-common.c:436
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:445
+#: ../common/xfpm-power-common.c:441
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -932,10 +932,10 @@ msgstr "Zusätzlich stellt die Xfce-Energieverwaltung einen Satz an Freedesktop-
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
-"Xfce power manager also provides two plugins for the Xfce panel, one to "
-"control LCD brightness levels and a second plugin to monitor battery and "
-"device charge levels."
-msgstr "Die Xfce-Energieverwaltung stellt zwei Erweiterungen für die Xfce-Leiste zur Verfügung, eines um die LCD-Helligkeit zu kontrollieren und ein weiteres, um den Ladezustand von Akkus und Geräten zu überwachen."
+"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
+"control LCD brightness levels and to monitor battery and device charge "
+"levels."
+msgstr "Die Xfce-Energieverwaltung stellt ebenfalls ein Erweiterung für die Xfce- und die LXDE-Leiste zur Verfügung, um die Bildschirmhelligkeit zu steuern und um die Akkuladung und die Geräteladung zu überwachen."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
