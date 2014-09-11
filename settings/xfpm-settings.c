@@ -1997,7 +1997,11 @@ static void dialog_response_cb (GtkDialog *dialog, gint response, XfconfChannel 
     switch(response)
     {
 	case GTK_RESPONSE_HELP:
-	    xfce_dialog_show_help_with_version (GTK_WINDOW (dialog), "xfce4-power-manager", "start", NULL, XFPM_VERSION_SHORT);
+#if LIBXFCE4UI_CHECK_VERSION(4, 11, 1)
+	    xfce_dialog_show_help_with_version (NULL, "xfce4-power-manager", "start", NULL, XFPM_VERSION_SHORT);
+#else
+	    xfce_dialog_show_help (NULL, "xfce4-power-manager", "start", NULL);
+#endif
 	    break;
 	default:
 	    settings_quit (GTK_WIDGET (dialog), channel);
