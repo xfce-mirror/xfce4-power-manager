@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-25 18:30+0200\n"
-"PO-Revision-Date: 2014-09-12 20:13+0000\n"
+"PO-Revision-Date: 2014-09-14 14:41+0000\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/xfce4-power-manager/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -41,15 +41,15 @@ msgstr "При нажатии кнопки питания:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
 msgid "When sleep button is pressed:"
-msgstr "При нажатии кнопки перехода в ждущий режим:"
+msgstr "При нажатии кнопки ждущего режима:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
 msgid "When hibernate button is pressed:"
-msgstr ""
+msgstr "Когда нажата кнопка спящего режима:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "Handle display brightness _keys"
-msgstr ""
+msgstr "Обрабатывать _кнопки яркости экрана"
 
 #: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "<b>Buttons</b>"
@@ -85,11 +85,11 @@ msgstr "Общие"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put system to sleep when inactive for"
-msgstr "Перейти в ждущий режим, если не активен в течение"
+msgstr "Перейти в ждущий режим,\nесли не активен в течение"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "System sleep mode:"
-msgstr ""
+msgstr "Ждущий режим:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>System power saving</b>"
@@ -117,7 +117,7 @@ msgstr "<b>Безопасность</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "System"
-msgstr ""
+msgstr "Система"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Handle display power management"
@@ -129,7 +129,7 @@ msgstr "Погасить экран через"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "Put to sleep after"
-msgstr "Перевести в ждущий режим через"
+msgstr "Ждущий режим через"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "Switch off after"
@@ -141,11 +141,11 @@ msgstr "<b>Настройки менеджера питания для экра�
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "On inactivity reduce to"
-msgstr ""
+msgstr "При бездействии\nснижать до"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Reduce after"
-msgstr ""
+msgstr "Уменьшать через"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "<b>Brightness reduction</b>"
@@ -356,7 +356,7 @@ msgstr "ID сокета"
 
 #: ../settings/xfpm-settings-main.c:81
 msgid "Display a specific device by UpDevice object path"
-msgstr ""
+msgstr "Отображать особое устройство по пути объекта UpDevice"
 
 #: ../settings/xfpm-settings-main.c:81
 msgid "UpDevice object path"
@@ -522,7 +522,7 @@ msgstr[2] "минут"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr "<b>%s %s</b>\nПолностью заряжен/а (%0.0f%%, %s до полного разряда)"
+msgstr "<b>%s %s</b>\nПолностью заряжено (%0.0f%%, %s до полного разряда)"
 
 #: ../common/xfpm-power-common.c:365
 #, c-format
@@ -578,7 +578,7 @@ msgstr "<b>%s %s</b>\nОжидает зарядки (%0.0f%%)"
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\nразряжен/а"
+msgstr "<b>%s %s</b>\nразряжено"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -899,7 +899,7 @@ msgstr "Режим _презентации"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1041
 msgid "_Power manager settings..."
-msgstr "Параметры менеджера _питания"
+msgstr "_Параметры менеджера питания"
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:54
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
@@ -943,7 +943,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr ""
+msgstr "Этот разрабатываемый выпуск содержит в основном исправления ошибок и улучшенную поддержку тем значков путём уменьшения знаков устройств и использования для них стандартных имён. Также обновлены переводы. Модуль панели был переименован в «Модуль менеджера питания»."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -952,7 +952,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr ""
+msgstr "Этот разрабатываемый выпуск содержит исправления ошибок ждущего и спящего режимов. Также улучшены модули панели, включая функциональность (теперь заброшенного) модуля яркости. Новое всплывающее уведомление было добавлено для изменения яркости с клавиатуры и «Менеджер питания» теперь управляет временем гашением экрана X11."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
