@@ -335,7 +335,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
               LOGIND_HANDLE_LID_SWITCH, &logind_handle_lid_switch,
               NULL);
 
-        if (!logind_handle_lid_switch)
+        if (logind_handle_lid_switch)
             return;
     }
 
