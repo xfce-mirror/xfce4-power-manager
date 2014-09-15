@@ -1,3 +1,36 @@
+1.4.0
+=====
+
+* Miscellaneous bug fixes:
+ - Conditionally use xfce_dialog_show_help_with_version
+ - Add support for lxpanel 0.7+ (Bug 11108)
+ - Yves-Alexis Perez fixed the logic of xfconf logind inhibition keys
+ - plugin: update desktop file install location
+ - plugin: Fix crash when devices (dis)connect
+ - Point to versioned help docs
+ - Add DragonflyBSD to host check
+ - Only use batteries for current charge state that are
+   used for power supply
+ - fix minor build warnings
+ - Sync the brightness slider with blank and DPMS settings
+ - plugin: Use the brightness-slider-min-level for the scroll wheel
+ - Draw a bubble with a question mark if the device state is unknown
+ - Keep blank and DPMS timeout settings in order
+ - Fix typos in debug messages
+ - Update AppData info about the panel plugins
+ - Never try to display the -missing icons
+ - Add timestamp for 1.3.2 release to AppData
+ - Add trailing colons in labels for Comboboxes and Spinbuttons
+
+Translation updates: Bulgarian (bg), Chinese (China) (zh_CN),
+ Chinese (Taiwan) (zh_TW), Croatian (hr), Czech (cs),
+ Dutch (Flemish) (nl), English (Australia) (en_AU),
+ Finnish (fi), French (fr), German (de), Indonesian (id),
+ Italian (it), Japanese (ja), Kazakh (kk), Malay (ms),
+ Norwegian Nynorsk (nn), Polish (pl),
+ Portuguese (Brazilian) (pt_BR), Russian (ru),
+ Serbian (sr), Thai (th), Ukrainian (uk)
+
 1.3.2
 =====
 [Please note that this is a development release.]
