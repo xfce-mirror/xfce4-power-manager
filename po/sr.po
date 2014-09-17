@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-08-25 18:30+0200\n"
-"PO-Revision-Date: 2014-09-13 05:47+0000\n"
+"PO-Revision-Date: 2014-09-17 17:28+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/projects/p/xfce4-power-manager/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "Ништа"
 #: ../data/interfaces/xfpm-settings.ui.h:2
 #: ../settings/xfpm-settings-main.c:142 ../src/xfpm-main.c:425
 msgid "Xfce Power Manager"
-msgstr "ИксФЦЕ управник потрошње"
+msgstr "Управник потрошње за ИскФЦЕ4"
 
 #: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "Power manager settings"
@@ -35,23 +35,23 @@ msgstr "Поставке управника потрошње"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
 msgid "When power button is pressed:"
-msgstr ""
+msgstr "Када је дугме за укључивање притиснуто:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
 msgid "When sleep button is pressed:"
-msgstr ""
+msgstr "Када је дугме за успављивање притиснуто:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
 msgid "When hibernate button is pressed:"
-msgstr ""
+msgstr "Када је дугме за замрзавање притиснуто:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "Handle display brightness _keys"
-msgstr ""
+msgstr "Дугмад за управљање осветљењем приказа"
 
 #: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "<b>Buttons</b>"
-msgstr ""
+msgstr "<b>Дугмад</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "On battery"
@@ -63,11 +63,11 @@ msgstr "Утакнут"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "When laptop lid is closed:"
-msgstr ""
+msgstr "Када се затвори поклопац преклопног рачунара:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "<b>Laptop Lid</b>"
-msgstr ""
+msgstr "<b>Поклопац преклопног рачунара</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Show notifications"
@@ -87,7 +87,7 @@ msgstr "Пошаљи систем у стање спавања ако мируј
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "System sleep mode:"
-msgstr ""
+msgstr "Начин рада спавања система:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>System power saving</b>"
@@ -95,23 +95,23 @@ msgstr "<b>Штедња напајања</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Critical battery power level:"
-msgstr ""
+msgstr "Низак ступањ попуњености батерије:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "On critical battery power:"
-msgstr ""
+msgstr "Када је напајање батеријом критично:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "<b>Critical power</b>"
-msgstr ""
+msgstr "<b>Критично напајање</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Lock screen when system is going for sleep"
-msgstr ""
+msgstr "Закључај екран при одласку у спавање"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "<b>Security</b>"
-msgstr ""
+msgstr "<b>Безбедност</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "System"
@@ -123,31 +123,31 @@ msgstr "Управљање потрошњом екрана"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "Blank after"
-msgstr ""
+msgstr "Зацрни након"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "Put to sleep after"
-msgstr ""
+msgstr "Успавај након"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "Switch off after"
-msgstr ""
+msgstr "Укључи након"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "<b>Display power management settings</b>"
-msgstr ""
+msgstr "<b>Поставке управљањем потрошњом екрана</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "On inactivity reduce to"
-msgstr ""
+msgstr "При мировању смањи на"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Reduce after"
-msgstr ""
+msgstr "Смањи након"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "<b>Brightness reduction</b>"
-msgstr ""
+msgstr "<b>Смањивање осветљења</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Display"
@@ -291,7 +291,7 @@ msgstr "Технологија"
 
 #: ../settings/xfpm-settings.c:1626
 msgid "Current charge"
-msgstr ""
+msgstr "Тренутна попуна"
 
 #. TRANSLATORS: Unit here is Watt hour
 #: ../settings/xfpm-settings.c:1634 ../settings/xfpm-settings.c:1646
@@ -301,11 +301,11 @@ msgstr "Wh"
 
 #: ../settings/xfpm-settings.c:1636
 msgid "Fully charged (design)"
-msgstr ""
+msgstr "Потпуно напуњена (обликовање)"
 
 #: ../settings/xfpm-settings.c:1649
 msgid "Fully charged"
-msgstr ""
+msgstr "Потпуно напуњена"
 
 #: ../settings/xfpm-settings.c:1660
 msgid "Energy empty"
@@ -354,11 +354,11 @@ msgstr "ИБ УТИЧНИЦЕ"
 
 #: ../settings/xfpm-settings-main.c:81
 msgid "Display a specific device by UpDevice object path"
-msgstr ""
+msgstr "Приказуј одређени уређај по путањи објекта UpDevice"
 
 #: ../settings/xfpm-settings-main.c:81
 msgid "UpDevice object path"
-msgstr ""
+msgstr "Путања објекта UpDevice"
 
 #: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:255
 msgid "Enable debugging"
@@ -520,63 +520,63 @@ msgstr[2] "минута"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nПотпуно напуњено (%0.0f%%, %s време рада)\t"
 
 #: ../common/xfpm-power-common.c:365
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nПотпуно напуњено (%0.0f%%)\t"
 
 #: ../common/xfpm-power-common.c:375
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nПуњење (%0.0f%%, %s)\t"
 
 #: ../common/xfpm-power-common.c:383
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nПуњење (%0.0f%%)\t"
 
 #: ../common/xfpm-power-common.c:393
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nПражњење (%0.0f%%, %s)\t"
 
 #: ../common/xfpm-power-common.c:401
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nПражњење (%0.0f%%)\t"
 
 #: ../common/xfpm-power-common.c:408
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nОчекивање отпражњења (%0.0f%%)\t"
 
 #: ../common/xfpm-power-common.c:414
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nОчекивање попуњења (%0.0f%%)\t"
 
 #: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nје празна\t"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -585,7 +585,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
+msgstr "<b>%s %s</b>\t\n%s\t"
 
 #: ../common/xfpm-power-common.c:430
 msgid "Not plugged in"
@@ -596,7 +596,7 @@ msgstr "Није утакнуто"
 #: ../common/xfpm-power-common.c:436
 #, c-format
 msgid "<b>%s %s</b>"
-msgstr ""
+msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
 #: ../common/xfpm-power-common.c:441
@@ -604,7 +604,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr ""
+msgstr "<b>%s %s</b>\t\nСтање није одређено\t"
 
 #: ../src/xfpm-power.c:332
 msgid "_Hibernate"
@@ -851,7 +851,7 @@ msgstr "Подаци о издању"
 #: ../src/xfpm-main.c:281
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr ""
+msgstr "Нисам успео да расчланим аргумент: %s\n"
 
 #: ../src/xfpm-main.c:332
 msgid "Unable to get connection to the message bus session"
@@ -887,7 +887,7 @@ msgstr "Приказуј ступањ попуњености батерије п
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1014
 msgid "<b>Display brightness</b>"
-msgstr ""
+msgstr "<b>Осветљење екрана</b>"
 
 #. Presentation mode checkbox
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1032
@@ -897,26 +897,26 @@ msgstr "Начин рада _излагање"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1041
 msgid "_Power manager settings..."
-msgstr ""
+msgstr "Поставке _Управника потрошње..."
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:54
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr ""
+msgstr "Прикључак управника потрошње"
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:56
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr ""
+msgstr "Приказује ступањ попуне батерије уређаја и управља осветљењем екрана"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
+msgstr "Управник потрошње ИксФЦЕ-а управља потрошачима на рачунару и уређајима којима може да се управља ради штедње (као што су ступањ осветљења ЛЦД-а, успављивање екрана, подешавање учесталости процесора)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -926,14 +926,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
+msgstr "Управник потрошње ИксФЦЕ-а има додатке сагласне са сучељима Д-сабирнице ради обавештавања других програма о тренутном ступњу напајања да би они смањили своју потрошњу, и омогућава сучеље које другим програмима омогућава да спрече радње самосталног успављивања преко управника потрошње; на пример,  управник пакета система би требао да користи ово сучеље при извршавању радњи надоградње."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
+msgstr "Управник потрошње ИксФЦЕ-а такође има прикључак за полице ИксФЦЕ-а и ЛИксДЕ-а за управање ступњем осветења и надзором батерије и пуњења."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -966,4 +966,4 @@ msgstr ""
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr ""
+msgstr "У стабилном издању су решене потешкоће са компиловањем, цурењем меморије и другим малим бубама. Преводи су надограђени."
