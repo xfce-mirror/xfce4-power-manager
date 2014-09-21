@@ -154,7 +154,7 @@ get_display_device (PowerManagerButton *button)
         guint type = 0;
         gdouble percentage;
 
-        if (!battery_device->device || !UP_IS_DEVICE(battery_device))
+        if (!battery_device->device || !UP_IS_DEVICE(battery_device->device))
         {
             continue;
         }
