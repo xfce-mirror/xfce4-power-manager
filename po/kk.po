@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-25 18:30+0200\n"
-"PO-Revision-Date: 2014-09-11 02:32+0000\n"
+"POT-Creation-Date: 2014-09-29 18:30+0200\n"
+"PO-Revision-Date: 2014-10-06 03:04+0000\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh (http://www.transifex.com/projects/p/xfce4-power-manager/language/kk/)\n"
 "MIME-Version: 1.0\n"
@@ -80,8 +80,8 @@ msgid "General"
 msgstr "Жалпы"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
-msgid "Put system to sleep when inactive for"
-msgstr "Компьютерді ұйықтату, егер белсенді емес уақыты:"
+msgid "When inactive for"
+msgstr "Белсенді емес уақыты келесідей"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "System sleep mode:"
@@ -151,194 +151,194 @@ msgstr "<b>Жарықтылықты азайту</b>"
 msgid "Display"
 msgstr "Экран"
 
-#: ../settings/xfpm-settings.c:523 ../settings/xfpm-settings.c:538
-#: ../settings/xfpm-settings.c:565
+#: ../settings/xfpm-settings.c:605 ../settings/xfpm-settings.c:620
+#: ../settings/xfpm-settings.c:647
 msgid "Never"
 msgstr "Ешқашан"
 
-#: ../settings/xfpm-settings.c:526
+#: ../settings/xfpm-settings.c:608
 msgid "One minute"
 msgstr "Бір минут"
 
-#: ../settings/xfpm-settings.c:528 ../settings/xfpm-settings.c:540
+#: ../settings/xfpm-settings.c:610 ../settings/xfpm-settings.c:622
 msgid "Minutes"
 msgstr "минут"
 
-#: ../settings/xfpm-settings.c:542 ../settings/xfpm-settings.c:549
-#: ../settings/xfpm-settings.c:550 ../settings/xfpm-settings.c:551
+#: ../settings/xfpm-settings.c:624 ../settings/xfpm-settings.c:631
+#: ../settings/xfpm-settings.c:632 ../settings/xfpm-settings.c:633
 msgid "One hour"
 msgstr "Бір сағат"
 
-#: ../settings/xfpm-settings.c:550 ../settings/xfpm-settings.c:554
+#: ../settings/xfpm-settings.c:632 ../settings/xfpm-settings.c:636
 msgid "one minute"
 msgstr "бір минут"
 
-#: ../settings/xfpm-settings.c:551 ../settings/xfpm-settings.c:555
+#: ../settings/xfpm-settings.c:633 ../settings/xfpm-settings.c:637
 msgid "minutes"
 msgstr "минут"
 
-#: ../settings/xfpm-settings.c:553 ../settings/xfpm-settings.c:554
-#: ../settings/xfpm-settings.c:555
+#: ../settings/xfpm-settings.c:635 ../settings/xfpm-settings.c:636
+#: ../settings/xfpm-settings.c:637
 msgid "hours"
 msgstr "сағат"
 
-#: ../settings/xfpm-settings.c:567
+#: ../settings/xfpm-settings.c:649
 msgid "Seconds"
 msgstr "Секунд"
 
-#: ../settings/xfpm-settings.c:573
+#: ../settings/xfpm-settings.c:655
 msgid "%"
 msgstr "%"
 
-#: ../settings/xfpm-settings.c:747 ../settings/xfpm-settings.c:826
-#: ../settings/xfpm-settings.c:884 ../settings/xfpm-settings.c:969
-#: ../settings/xfpm-settings.c:1057 ../settings/xfpm-settings.c:1165
-#: ../settings/xfpm-settings.c:1222 ../settings/xfpm-settings.c:1274
-#: ../src/xfpm-power.c:635
+#: ../settings/xfpm-settings.c:829 ../settings/xfpm-settings.c:908
+#: ../settings/xfpm-settings.c:966 ../settings/xfpm-settings.c:1051
+#: ../settings/xfpm-settings.c:1139 ../settings/xfpm-settings.c:1247
+#: ../settings/xfpm-settings.c:1304 ../settings/xfpm-settings.c:1356
+#: ../src/xfpm-power.c:638
 msgid "Suspend"
 msgstr "Ұйықтату"
 
-#: ../settings/xfpm-settings.c:751 ../settings/xfpm-settings.c:973
+#: ../settings/xfpm-settings.c:833 ../settings/xfpm-settings.c:1055
 msgid "Suspend operation not permitted"
 msgstr "Ұйықтату әрекетіне рұқсат жоқ"
 
-#: ../settings/xfpm-settings.c:755 ../settings/xfpm-settings.c:977
+#: ../settings/xfpm-settings.c:837 ../settings/xfpm-settings.c:1059
 msgid "Suspend operation not supported"
 msgstr "Ұйықтату әрекетіне қолдау жоқ"
 
-#: ../settings/xfpm-settings.c:761 ../settings/xfpm-settings.c:832
-#: ../settings/xfpm-settings.c:890 ../settings/xfpm-settings.c:983
-#: ../settings/xfpm-settings.c:1063 ../settings/xfpm-settings.c:1171
-#: ../settings/xfpm-settings.c:1228 ../settings/xfpm-settings.c:1280
-#: ../src/xfpm-power.c:624
+#: ../settings/xfpm-settings.c:843 ../settings/xfpm-settings.c:914
+#: ../settings/xfpm-settings.c:972 ../settings/xfpm-settings.c:1065
+#: ../settings/xfpm-settings.c:1145 ../settings/xfpm-settings.c:1253
+#: ../settings/xfpm-settings.c:1310 ../settings/xfpm-settings.c:1362
+#: ../src/xfpm-power.c:627
 msgid "Hibernate"
 msgstr "Гибернация"
 
-#: ../settings/xfpm-settings.c:765 ../settings/xfpm-settings.c:987
+#: ../settings/xfpm-settings.c:847 ../settings/xfpm-settings.c:1069
 msgid "Hibernate operation not permitted"
 msgstr "Гибернация әрекетіне рұқсат жоқ"
 
-#: ../settings/xfpm-settings.c:769 ../settings/xfpm-settings.c:991
+#: ../settings/xfpm-settings.c:851 ../settings/xfpm-settings.c:1073
 msgid "Hibernate operation not supported"
 msgstr "Гибернация әрекетіне қолдау жоқ"
 
-#: ../settings/xfpm-settings.c:799 ../settings/xfpm-settings.c:1021
-#: ../settings/xfpm-settings.c:1363
+#: ../settings/xfpm-settings.c:881 ../settings/xfpm-settings.c:1103
+#: ../settings/xfpm-settings.c:1445
 msgid "Hibernate and suspend operations not supported"
 msgstr "Гибернация мен ұйықтату әрекеттеріне қолдау жоқ"
 
-#: ../settings/xfpm-settings.c:804 ../settings/xfpm-settings.c:1026
-#: ../settings/xfpm-settings.c:1368
+#: ../settings/xfpm-settings.c:886 ../settings/xfpm-settings.c:1108
+#: ../settings/xfpm-settings.c:1450
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Гибернация мен ұйықтату әрекеттеріне рұқсат жоқ"
 
-#: ../settings/xfpm-settings.c:821 ../settings/xfpm-settings.c:1160
-#: ../settings/xfpm-settings.c:1217 ../settings/xfpm-settings.c:1269
+#: ../settings/xfpm-settings.c:903 ../settings/xfpm-settings.c:1242
+#: ../settings/xfpm-settings.c:1299 ../settings/xfpm-settings.c:1351
 msgid "Do nothing"
 msgstr "Ешнәрсе жасамау"
 
-#: ../settings/xfpm-settings.c:838 ../settings/xfpm-settings.c:1177
-#: ../src/xfpm-power.c:646
+#: ../settings/xfpm-settings.c:920 ../settings/xfpm-settings.c:1259
+#: ../src/xfpm-power.c:649
 msgid "Shutdown"
 msgstr "Сөндіру"
 
-#: ../settings/xfpm-settings.c:842 ../settings/xfpm-settings.c:1181
-#: ../settings/xfpm-settings.c:1232 ../settings/xfpm-settings.c:1284
+#: ../settings/xfpm-settings.c:924 ../settings/xfpm-settings.c:1263
+#: ../settings/xfpm-settings.c:1314 ../settings/xfpm-settings.c:1366
 msgid "Ask"
 msgstr "Сұрау"
 
-#: ../settings/xfpm-settings.c:879 ../settings/xfpm-settings.c:1052
+#: ../settings/xfpm-settings.c:961 ../settings/xfpm-settings.c:1134
 msgid "Switch off display"
 msgstr "Экранды сөндіру"
 
-#: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1067
+#: ../settings/xfpm-settings.c:976 ../settings/xfpm-settings.c:1149
 msgid "Lock screen"
 msgstr "Экранды бұғаттау"
 
-#: ../settings/xfpm-settings.c:1335
+#: ../settings/xfpm-settings.c:1417
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Компьютердің барлық қорек көздері осы зарядталу деңгейіне жетсе"
 
-#: ../settings/xfpm-settings.c:1581
+#: ../settings/xfpm-settings.c:1663
 msgid "Device"
 msgstr "Құрылғы"
 
-#: ../settings/xfpm-settings.c:1603
+#: ../settings/xfpm-settings.c:1685
 msgid "Type"
 msgstr "Түрі"
 
-#: ../settings/xfpm-settings.c:1608
+#: ../settings/xfpm-settings.c:1690
 msgid "PowerSupply"
 msgstr "Қоректі беру"
 
-#: ../settings/xfpm-settings.c:1609 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1691 ../src/xfpm-main.c:80
 msgid "True"
 msgstr "Ақиқат"
 
-#: ../settings/xfpm-settings.c:1609 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1691 ../src/xfpm-main.c:80
 msgid "False"
 msgstr "Жалған"
 
-#: ../settings/xfpm-settings.c:1616
+#: ../settings/xfpm-settings.c:1698
 msgid "Model"
 msgstr "Модель"
 
-#: ../settings/xfpm-settings.c:1619
+#: ../settings/xfpm-settings.c:1701
 msgid "Technology"
 msgstr "Технология"
 
-#: ../settings/xfpm-settings.c:1626
+#: ../settings/xfpm-settings.c:1708
 msgid "Current charge"
 msgstr "Ағымдағы заряд"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1634 ../settings/xfpm-settings.c:1646
-#: ../settings/xfpm-settings.c:1658
+#: ../settings/xfpm-settings.c:1716 ../settings/xfpm-settings.c:1728
+#: ../settings/xfpm-settings.c:1740
 msgid "Wh"
 msgstr "Вт*сағ"
 
-#: ../settings/xfpm-settings.c:1636
+#: ../settings/xfpm-settings.c:1718
 msgid "Fully charged (design)"
 msgstr "Толық зарядталған (дизайн)"
 
-#: ../settings/xfpm-settings.c:1649
+#: ../settings/xfpm-settings.c:1731
 msgid "Fully charged"
 msgstr "Толық зарядталған"
 
-#: ../settings/xfpm-settings.c:1660
+#: ../settings/xfpm-settings.c:1742
 msgid "Energy empty"
 msgstr "Энергиясы жоқ"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1668
+#: ../settings/xfpm-settings.c:1750
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:1670
+#: ../settings/xfpm-settings.c:1752
 msgid "Voltage"
 msgstr "Вольтаж"
 
-#: ../settings/xfpm-settings.c:1677
+#: ../settings/xfpm-settings.c:1759
 msgid "Vendor"
 msgstr "Өндіруші"
 
-#: ../settings/xfpm-settings.c:1682
+#: ../settings/xfpm-settings.c:1764
 msgid "Serial"
 msgstr "Нөмірі"
 
-#: ../settings/xfpm-settings.c:1751
+#: ../settings/xfpm-settings.c:1833
 msgid "Attribute"
 msgstr "Атрибут"
 
-#: ../settings/xfpm-settings.c:1758
+#: ../settings/xfpm-settings.c:1840
 msgid "Value"
 msgstr "Мәні"
 
-#: ../settings/xfpm-settings.c:1968
+#: ../settings/xfpm-settings.c:2053
 msgid "Check your power manager installation"
 msgstr "Өзіңіздің power manager орнатуын тексеріңіз"
 
-#: ../settings/xfpm-settings.c:2038
+#: ../settings/xfpm-settings.c:2123
 msgid "Devices"
 msgstr "Құрылғылар"
 
@@ -389,8 +389,8 @@ msgid "Unable to connect to Xfce Power Manager"
 msgstr "Xfce Power Manager үшін байланыс жоқ"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:306 ../src/xfpm-power.c:566 ../src/xfpm-power.c:610
-#: ../src/xfpm-power.c:774 ../src/xfpm-power.c:798 ../src/xfpm-battery.c:256
+#: ../src/xfpm-power.c:306 ../src/xfpm-power.c:569 ../src/xfpm-power.c:613
+#: ../src/xfpm-power.c:777 ../src/xfpm-power.c:801 ../src/xfpm-battery.c:256
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Электр қоректендіру басқарушысы"
@@ -624,40 +624,40 @@ msgstr "Экранды блоктау қолданбалардың ешбірі 
 msgid "Do you still want to continue to suspend the system?"
 msgstr "Сонда да жүйені ұйықтатуды жалғастыруды қалайсыз ба?"
 
-#: ../src/xfpm-power.c:529
+#: ../src/xfpm-power.c:532
 msgid "Hibernate the system"
 msgstr "Жүйені гибернациялау"
 
-#: ../src/xfpm-power.c:540
+#: ../src/xfpm-power.c:543
 msgid "Suspend the system"
 msgstr "Жүйені ұйықтату"
 
-#: ../src/xfpm-power.c:550
+#: ../src/xfpm-power.c:553
 msgid "Shutdown the system"
 msgstr "Жүйені сөндіру"
 
-#: ../src/xfpm-power.c:561 ../src/xfpm-power.c:607
+#: ../src/xfpm-power.c:564 ../src/xfpm-power.c:610
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Жүйе төмен зарядта жұмыс істеуде. Мәліметті жоғалтпау үшін жұмысыңызды сақтаңыз"
 
-#: ../src/xfpm-power.c:775
+#: ../src/xfpm-power.c:778
 msgid "System is running on low power"
 msgstr "Жүйе төмен зарядта жұмыс істеуде"
 
-#: ../src/xfpm-power.c:794
+#: ../src/xfpm-power.c:797
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Сіздің %s зарядыңыз төмен\nШамалы қалған уақыты %s"
 
-#: ../src/xfpm-power.c:1488 ../src/xfpm-power.c:1521 ../src/xfpm-power.c:1540
-#: ../src/xfpm-power.c:1563
+#: ../src/xfpm-power.c:1491 ../src/xfpm-power.c:1524 ../src/xfpm-power.c:1543
+#: ../src/xfpm-power.c:1566
 #, c-format
 msgid "Permission denied"
 msgstr "Рұқсат етілмеген"
 
-#: ../src/xfpm-power.c:1548 ../src/xfpm-power.c:1571
+#: ../src/xfpm-power.c:1551 ../src/xfpm-power.c:1574
 #, c-format
 msgid "Suspend not supported"
 msgstr "Ұйықтатуға қолдау жоқ"
@@ -870,31 +870,33 @@ msgstr "Қате cookie"
 msgid "Power management for the Xfce desktop"
 msgstr "Xfce жұмыс үстел ортасы үшін эл. қорегін басқару"
 
-#. how did we get here?
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:168
+#. Odds are this is a desktop without any batteries attached
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:204
 msgid "Display battery levels for attached devices"
 msgstr "Жалғанған құрылғылар үшін батарея зарядтарын көрсету"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1014
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1223
 msgid "<b>Display brightness</b>"
 msgstr "<b>Экран жарықтылығы</b>"
 
 #. Presentation mode checkbox
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1032
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1241
 msgid "Presentation _mode"
 msgstr "Презентация режи_мі"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1041
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1250
 msgid "_Power manager settings..."
 msgstr "Эл. қорегін ба_сқарушысың баптаулары..."
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:54
+#: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:56
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
 msgstr "Эл. қорегін басқарушысы плагині"
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:56
+#: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:57
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
@@ -906,7 +908,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
+msgstr "Xfce эл. қорегін басқарушысы компьютердің эл. қорек көздерін және қоректі тұтынуды баптауға болатын құрылғыларды (LCD экран жарықтылығы, мониторды ұйықтату, процессор жиілігін өзгерту сияқты) басқарады."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -916,14 +918,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
+msgstr "Сонымен қатар, Xfce эл. қорегін басқарушысы басқа қолданбаларға ағымдағы эл. қорек деңгейі туралы ақпаратты ұсынуға арналған freedesktop-үйлесімді DBus интерфейстерін қамтамасыз етеді. Оның көмегімен қолданбалар өздерінің қоректі тұтыну деңгейлерін баптап, ұйықтатуға жол бермеу мүмкіндігін пайдалана алады. Мысалы, жүйені жаңартатын дестелер басқарушысы өз жұмысын сәтті аяқтау үшін оны қолдана алады."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
+msgstr "Xfce эл. қорегін басқарушысы LCD экраны жарықтылығын басқару және батарея/құрылғылар заряд шамасын бақылау мүмкіндігін беретін Xfce және LXDE панельдері үшін плагинді ұсынады."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -956,4 +958,4 @@ msgstr ""
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr ""
+msgstr "Бұл тұрақты шығарылым компиляция мәселелерін, жадыны жоғалту және басқа ақаулықтарды түзейді. Сонымен қатар, жаңартылған аудармаларды ұсынады."
