@@ -804,7 +804,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
                           gboolean can_hibernate, gboolean can_shutdown,
                           gboolean has_lcd_brightness, gboolean has_lid)
 {
-    gboolean valid;
+    gboolean valid, handle_dpms;
     gint list_value;
     gint val;
     GtkListStore *list_store;
@@ -941,11 +941,15 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * DPMS settings when running on battery power
      */
+    handle_dpms = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
+
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_SLEEP, 5);
     gtk_range_set_value (GTK_RANGE(on_battery_dpms_sleep), val);
+    gtk_widget_set_sensitive (on_battery_dpms_sleep, handle_dpms);
     
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_OFF, 10);
     gtk_range_set_value (GTK_RANGE(on_battery_dpms_off), val);
+    gtk_widget_set_sensitive (on_battery_dpms_off, handle_dpms);
 
     /*
      * Lid switch settings on battery
@@ -1026,6 +1030,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
                      gboolean can_hibernate, gboolean has_lcd_brightness,
                      gboolean has_lid)
 {
+    gboolean valid, handle_dpms;
     GtkWidget *inact_timeout, *inact_action;
     GtkWidget *lid;
     GtkWidget *label;
@@ -1035,7 +1040,6 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     GtkListStore *list_store;
     GtkTreeIter iter;
     guint val;
-    gboolean valid;
     guint list_value;
     
     /*
@@ -1114,11 +1118,15 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * DPMS settings when running on AC power 
      */
+    handle_dpms = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
+
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_SLEEP, 10);
     gtk_range_set_value (GTK_RANGE (on_ac_dpms_sleep), val);
+    gtk_widget_set_sensitive (on_ac_dpms_sleep, handle_dpms);
     
     val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_OFF, 15);
     gtk_range_set_value (GTK_RANGE(on_ac_dpms_off), val);
+    gtk_widget_set_sensitive (on_ac_dpms_off, handle_dpms);
 
     /*
      * Lid switch settings on AC power
