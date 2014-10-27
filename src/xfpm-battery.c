@@ -395,7 +395,7 @@ static void xfpm_battery_get_property (GObject *object,
 	    g_value_set_boolean (value, battery->priv->ac_online);
 	    break;
 	case PROP_DEVICE_TYPE:
-	    g_value_set_enum (value, battery->priv->type);
+	    g_value_set_uint (value, battery->priv->type);
 	    break;
 	case PROP_CHARGE_STATUS:
 	    g_value_set_enum (value, battery->priv->charge);

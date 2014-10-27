@@ -482,7 +482,7 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
 	g_object_get (G_OBJECT (g_list_nth_data (list, i)),
                   "charge-status", &battery_charge,
                   "device-type", &type,
-                  "power-supply", &power_supply,
+                  "ac-online", &power_supply,
                   NULL);
 	if ( type != UP_DEVICE_KIND_BATTERY &&
 	     type != UP_DEVICE_KIND_UPS &&
