@@ -54,6 +54,12 @@ void				xfpm_console_kit_shutdown	 (XfpmConsoleKit *console,
 void				xfpm_console_kit_reboot		 (XfpmConsoleKit *console,
 								  GError **error);
 
+void                xfpm_console_kit_suspend     (XfpmConsoleKit *console,
+                                                  GError        **error);
+
+void                xfpm_console_kit_hibernate   (XfpmConsoleKit *console,
+                                                  GError        **error);
+
 G_END_DECLS
 
 #endif /* __XFPM_CONSOLE_KIT_H */

@@ -55,13 +55,17 @@ struct XfpmConsoleKitPrivate
     
     gboolean	     can_shutdown;
     gboolean	     can_restart;
+    gboolean         can_suspend;
+    gboolean         can_hibernate;
 };
 
 enum
 {
     PROP_0,
     PROP_CAN_RESTART,
-    PROP_CAN_SHUTDOWN
+    PROP_CAN_SHUTDOWN,
+    PROP_CAN_SUSPEND,
+    PROP_CAN_HIBERNATE
 };
 
 G_DEFINE_TYPE (XfpmConsoleKit, xfpm_console_kit, G_TYPE_OBJECT)
@@ -70,7 +74,8 @@ static void
 xfpm_console_kit_get_info (XfpmConsoleKit *console)
 {
     GError *error = NULL;
-    
+    gchar *tmp = NULL;
+
     dbus_g_proxy_call (console->priv->proxy, "CanStop", &error,
 		       G_TYPE_INVALID,
 		       G_TYPE_BOOLEAN, &console->priv->can_shutdown,
@@ -79,8 +84,7 @@ xfpm_console_kit_get_info (XfpmConsoleKit *console)
     if ( error )
     {
 	g_warning ("'CanStop' method failed : %s", error->message);
-	g_error_free (error);
-	error = NULL;
+	g_clear_error (&error);
     }
     
     dbus_g_proxy_call (console->priv->proxy, "CanRestart", &error,
@@ -91,10 +95,50 @@ xfpm_console_kit_get_info (XfpmConsoleKit *console)
     if ( error )
     {
 	g_warning ("'CanRestart' method failed : %s", error->message);
-	g_error_free (error);
-	error = NULL;
+	g_clear_error (&error);
     }
-    
+
+    /* start with FALSE */
+    console->priv->can_suspend = FALSE;
+
+    dbus_g_proxy_call (console->priv->proxy, "CanSuspend", &error,
+		       G_TYPE_INVALID,
+		       G_TYPE_STRING, &tmp,
+		       G_TYPE_INVALID);
+
+    if ( error )
+    {
+	g_debug ("'CanSuspend' method failed : %s", error->message);
+	g_clear_error (&error);
+    }
+    else
+    {
+	if (g_strcmp0 (tmp, "yes") == 0 || g_strcmp0 (tmp, "challenge") == 0)
+	{
+	    console->priv->can_suspend = TRUE;
+	}
+    }
+
+    /* start with FALSE */
+    console->priv->can_hibernate = FALSE;
+
+    dbus_g_proxy_call (console->priv->proxy, "CanHibernate", &error,
+		       G_TYPE_INVALID,
+		       G_TYPE_STRING, &tmp,
+		       G_TYPE_INVALID);
+
+    if ( error )
+    {
+	g_debug ("'CanHibernate' method failed : %s", error->message);
+	g_clear_error (&error);
+    }
+    else
+    {
+	if (g_strcmp0 (tmp, "yes") == 0 || g_strcmp0 (tmp, "challenge") == 0)
+	{
+	    console->priv->can_hibernate = TRUE;
+	}
+    }
 }
 
 static void
@@ -120,6 +164,20 @@ xfpm_console_kit_class_init (XfpmConsoleKitClass *klass)
                                                            FALSE,
                                                            G_PARAM_READABLE));
 
+    g_object_class_install_property (object_class,
+                                     PROP_CAN_SUSPEND,
+                                     g_param_spec_boolean ("can-suspend",
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READABLE));
+
+    g_object_class_install_property (object_class,
+                                     PROP_CAN_HIBERNATE,
+                                     g_param_spec_boolean ("can-hibernate",
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           G_PARAM_READABLE));
+
     g_type_class_add_private (klass, sizeof (XfpmConsoleKitPrivate));
 }
 
@@ -141,7 +199,7 @@ xfpm_console_kit_init (XfpmConsoleKit *console)
     {
 	g_critical ("Unable to get system bus connection : %s", error->message);
 	g_error_free (error);
-	goto out;
+	return;
     }
     
     console->priv->proxy = dbus_g_proxy_new_for_name_owner (console->priv->bus,
@@ -153,13 +211,10 @@ xfpm_console_kit_init (XfpmConsoleKit *console)
     if ( !console->priv->proxy )
     {
 	g_warning ("Unable to create proxy for 'org.freedesktop.ConsoleKit'");
-	goto out;
+	return;
     }
     
     xfpm_console_kit_get_info (console);
-    
-out:
-    ;
 }
 
 static void xfpm_console_kit_get_property (GObject *object,
@@ -177,6 +232,12 @@ static void xfpm_console_kit_get_property (GObject *object,
 	    break;
 	case PROP_CAN_RESTART:
 	    g_value_set_boolean (value, console->priv->can_restart);
+	    break;
+	case PROP_CAN_SUSPEND:
+	    g_value_set_boolean (value, console->priv->can_suspend);
+	    break;
+	case PROP_CAN_HIBERNATE:
+	    g_value_set_boolean (value, console->priv->can_hibernate);
 	    break;
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -237,4 +298,28 @@ void xfpm_console_kit_reboot (XfpmConsoleKit *console, GError **error)
 		       G_TYPE_BOOLEAN, &console->priv->can_shutdown,
 		       G_TYPE_INVALID);
     
+}
+
+void
+xfpm_console_kit_suspend (XfpmConsoleKit *console,
+                          GError        **error)
+{
+    g_return_if_fail (console->priv->proxy != NULL );
+
+    dbus_g_proxy_call (console->priv->proxy, "Suspend", error,
+		       G_TYPE_INVALID,
+		       G_TYPE_BOOLEAN, TRUE,
+		       G_TYPE_INVALID);
+}
+
+void
+xfpm_console_kit_hibernate (XfpmConsoleKit *console,
+                            GError        **error)
+{
+    g_return_if_fail (console->priv->proxy != NULL );
+
+    dbus_g_proxy_call (console->priv->proxy, "Hibernate", error,
+		       G_TYPE_INVALID,
+		       G_TYPE_BOOLEAN, TRUE,
+		       G_TYPE_INVALID);
 }

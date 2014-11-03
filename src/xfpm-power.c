@@ -169,6 +169,40 @@ static guint signals [LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE (XfpmPower, xfpm_power, G_TYPE_OBJECT)
 
+
+/* This checks if consolekit returns TRUE for either suspend or
+ * hibernate showing support. This means that ConsoleKit2 is running
+ * (and the system is capable of those actions).
+ */
+static gboolean
+check_for_consolekit2 (XfpmPower *power)
+{
+    XfpmConsoleKit *console;
+    gboolean can_suspend, can_hibernate;
+
+    g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
+
+    if (power->priv->console == NULL)
+	return FALSE;
+
+    console = power->priv->console;
+
+    g_object_get (G_OBJECT (console),
+		  "can-suspend", &can_suspend,
+		  NULL);
+    g_object_get (G_OBJECT (console),
+		  "can-hibernate", &can_hibernate,
+		  NULL);
+
+    /* ConsoleKit2 supports suspend and hibernate */
+    if (can_suspend || can_hibernate)
+    {
+	return TRUE;
+    }
+
+    return FALSE;
+}
+
 #ifdef ENABLE_POLKIT
 static void
 xfpm_power_check_polkit_auth (XfpmPower *power)
@@ -176,17 +210,33 @@ xfpm_power_check_polkit_auth (XfpmPower *power)
     const char *suspend, *hibernate;
     if (LOGIND_RUNNING())
     {
+	XFPM_DEBUG ("using logind suspend backend");
 	suspend   = POLKIT_AUTH_SUSPEND_LOGIND;
 	hibernate = POLKIT_AUTH_HIBERNATE_LOGIND;
     }
     else
     {
 #if !UP_CHECK_VERSION(0, 99, 0)
+	XFPM_DEBUG ("using upower suspend backend");
 	suspend   = POLKIT_AUTH_SUSPEND_UPOWER;
 	hibernate = POLKIT_AUTH_HIBERNATE_UPOWER;
 #else
-	suspend   = POLKIT_AUTH_SUSPEND_XFPM;
-	hibernate = POLKIT_AUTH_HIBERNATE_XFPM;
+	if (power->priv->console != NULL)
+	{
+	    /* ConsoleKit2 supports suspend and hibernate */
+	    if (check_for_consolekit2 (power))
+	    {
+		XFPM_DEBUG ("using consolekit2 suspend backend");
+		suspend   = POLKIT_AUTH_SUSPEND_CONSOLEKIT2;
+		hibernate = POLKIT_AUTH_HIBERNATE_CONSOLEKIT2;
+	    }
+	    else
+	    {
+		XFPM_DEBUG ("using xfpm internal suspend backend");
+		suspend   = POLKIT_AUTH_SUSPEND_XFPM;
+		hibernate = POLKIT_AUTH_HIBERNATE_XFPM;
+	    }
+	}
 #endif
     }
     power->priv->auth_suspend = xfpm_polkit_check_auth (power->priv->polkit,
@@ -269,8 +319,20 @@ xfpm_power_get_properties (XfpmPower *power)
     }
     else
     {
-	power->priv->can_suspend   = xfpm_suspend_can_suspend ();
-        power->priv->can_hibernate = xfpm_suspend_can_hibernate ();
+	if (check_for_consolekit2 (power))
+	{
+	    g_object_get (G_OBJECT (power->priv->console),
+			  "can-suspend", &power->priv->can_suspend,
+			  NULL);
+	    g_object_get (G_OBJECT (power->priv->console),
+			  "can-hibernate", &power->priv->can_hibernate,
+			  NULL);
+	}
+	else
+	{
+	    power->priv->can_suspend   = xfpm_suspend_can_suspend ();
+	    power->priv->can_hibernate = xfpm_suspend_can_hibernate ();
+	}
     }
 #endif
     g_object_get (power->priv->upower,
@@ -385,6 +447,12 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
         }
     }
 
+    /* This is fun, here's the order of operations:
+     * - if the Logind is running then use it
+     * - if UPower < 0.99.0 then use it (don't make changes on the user unless forced)
+     * - if ConsoleKit2 is running then use it
+     * - if everything else fails use our built-in fallback
+     */
     if ( LOGIND_RUNNING () )
     {
 	xfpm_systemd_sleep (power->priv->systemd, sleep_time, &error);
@@ -403,11 +471,25 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 #else
 	if (!g_strcmp0 (sleep_time, "Hibernate"))
         {
+	    if (check_for_consolekit2 (power))
+	    {
+		xfpm_console_kit_hibernate (power->priv->console, &error);
+	    }
+	    else
+	    {
                 xfpm_suspend_try_action (XFPM_HIBERNATE);
+	    }
         }
         else
         {
+	    if (check_for_consolekit2 (power))
+	    {
+		xfpm_console_kit_suspend (power->priv->console, &error);
+	    }
+	    else
+	    {
                 xfpm_suspend_try_action (XFPM_SUSPEND);
+	    }
         }
 #endif
     }

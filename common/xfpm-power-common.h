@@ -42,6 +42,8 @@
 #define POLKIT_AUTH_SUSPEND_XFPM	"org.xfce.power.xfce4-pm-helper"
 #define POLKIT_AUTH_HIBERNATE_XFPM	"org.xfce.power.xfce4-pm-helper"
 
+#define POLKIT_AUTH_SUSPEND_CONSOLEKIT2   "org.freedesktop.consolekit.system.suspend"
+#define POLKIT_AUTH_HIBERNATE_CONSOLEKIT2 "org.freedesktop.consolekit.system.hibernate"
 
 const gchar *xfpm_power_translate_device_type (guint type);
 
