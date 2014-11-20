@@ -203,7 +203,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     {
 	info = XRRGetOutputInfo (gdk_x11_get_default_xdisplay (), brightness->priv->resource, brightness->priv->resource->outputs[i]);
 
-	if ( g_str_has_prefix (info->name, "LVDS") )
+	if ( g_str_has_prefix (info->name, "LVDS") || g_str_has_prefix (info->name, "eDP") )
 	{
 	    
 	    if ( xfpm_brightness_xrand_get_limit (brightness, brightness->priv->resource->outputs[i], &min, &max) &&
