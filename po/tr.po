@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-09-29 18:30+0200\n"
-"PO-Revision-Date: 2014-12-03 23:30+0000\n"
+"PO-Revision-Date: 2014-12-03 23:36+0000\n"
 "Last-Translator: Necdet Yücel <necdetyucel@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/xfce4-power-manager/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -545,35 +545,35 @@ msgstr "<b>%s %s</b>\nŞarj oluyor (%0.0f%%)"
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\nBoşalıyor (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:401
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nBoşalıyor (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:408
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nBoşalması bekleniyor (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:414
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nŞarj bekleniyor (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:420
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
+msgstr "<b>%s %s</b>\nboş"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -582,18 +582,18 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
+msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:430
 msgid "Not plugged in"
-msgstr ""
+msgstr "Fişe takılı değil"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
 #: ../common/xfpm-power-common.c:436
 #, c-format
 msgid "<b>%s %s</b>"
-msgstr ""
+msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
 #: ../common/xfpm-power-common.c:441
@@ -601,7 +601,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr ""
+msgstr "<b>%s %s</b>\nBilinmeyen durum"
 
 #: ../src/xfpm-power.c:332
 msgid "_Hibernate"
@@ -619,17 +619,17 @@ msgstr "Sistemi hazırda beklet moduna almak istediğinizden emin misiniz?"
 
 #: ../src/xfpm-power.c:376
 msgid "Continue"
-msgstr ""
+msgstr "Devam et"
 
 #: ../src/xfpm-power.c:377 ../src/xfpm-manager.c:366
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr ""
+msgstr "Ekran kilitleme araçlarından hiç biri başarıyla çalışmadı, ekran kilitlenmeyecek."
 
 #: ../src/xfpm-power.c:380
 msgid "Do you still want to continue to suspend the system?"
-msgstr ""
+msgstr "Sistemi yine de askıya almak istiyor musunuz?"
 
 #: ../src/xfpm-power.c:532
 msgid "Hibernate the system"
@@ -673,7 +673,7 @@ msgstr "Askıya alma desteklenmiyor"
 #: ../src/xfpm-backlight.c:172
 #, c-format
 msgid "Brightness: %.0f percent"
-msgstr ""
+msgstr "Parlaklık: %.0f yüzde"
 
 #: ../src/xfpm-battery.c:114 ../src/xfpm-battery.c:165
 #, c-format
@@ -742,7 +742,7 @@ msgstr "Telefon pili"
 #: ../src/xfpm-kbd-backlight.c:115
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
-msgstr ""
+msgstr "Klavye Parlaklığı: %.0f yüzde"
 
 #: ../src/xfpm-main.c:57
 #, c-format
@@ -848,7 +848,7 @@ msgstr "Sürüm bilgisi"
 #: ../src/xfpm-main.c:281
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr ""
+msgstr "Argüman ayrıştırılamadı: %s\n"
 
 #: ../src/xfpm-main.c:332
 msgid "Unable to get connection to the message bus session"
@@ -880,27 +880,27 @@ msgstr "Xfce masaüstü için güç yönetimi"
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:204
 msgid "Display battery levels for attached devices"
-msgstr ""
+msgstr "Eklenen aygıtlar için pil düzeyini göster"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1223
 msgid "<b>Display brightness</b>"
-msgstr ""
+msgstr "<b>Parlaklığı göster</b>"
 
 #. Presentation mode checkbox
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1241
 msgid "Presentation _mode"
-msgstr ""
+msgstr "Sunum _kipi"
 
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1250
 msgid "_Power manager settings..."
-msgstr ""
+msgstr "_Güç yönetimi ayarları..."
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:54
 #: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:56
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr ""
+msgstr "Güç Yönetimi Eklentisi"
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:56
 #: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:57
