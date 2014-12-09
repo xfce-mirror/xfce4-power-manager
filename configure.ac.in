@@ -195,7 +195,7 @@ if test x$with_backend = xopenbsd; then
     AC_DEFINE(BACKEND_TYPE_OPENBSD, 1, [OpenBSD suspend/hibernate backend])
 fi
 
-dnl define a short version string for xfdesktop
+dnl define a short version string for xfce4-power-manager
 m4_append([xfpm_version_short], ["])
 m4_append([xfpm_version_short], [xfpm_version_major])
 m4_append([xfpm_version_short], [.])
