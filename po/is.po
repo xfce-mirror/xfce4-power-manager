@@ -1,692 +1,748 @@
-# translation of xfce4-power-manager.master.untitled.po to Icelandic
+# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
-# Sveinn í Felli <sveinki@nett.is>, 2011.
+# 
+# Translators:
+# Sveinn í Felli <sv1@fellsnet.is>, 2014
+# Sveinn í Felli <sveinki@nett.is>, 2011,2013-2014
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager.master.untitled\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-03 03:48+0000\n"
-"PO-Revision-Date: 2011-12-03 08:40+0000\n"
-"Last-Translator: Sveinn í Felli <sveinki@nett.is>\n"
-"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
-"Language: \n"
+"POT-Creation-Date: 2014-09-29 18:30+0200\n"
+"PO-Revision-Date: 2014-12-17 16:34+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic (http://www.transifex.com/projects/p/xfce4-power-manager/language/is/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: KBabel 1.11.4\n"
+"Language: is\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1
-msgid "<b>Actions</b>"
-msgstr "<b>Aðgerðir</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:2
-msgid "<b>Advanced Options</b>"
-msgstr "<b>Ítarlegri valkostir</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "<b>Brightness</b>"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "<b>General Options</b>"
-msgstr "<b>Almennir valmöguleikar</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "<b>Monitor</b>"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Actions"
-msgstr "Aðgerðir"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "Consider the computer on low power at:"
-msgstr ""
-
-#. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:8 ../settings/xfpm-settings.c:817
-#: ../settings/xfpm-settings.c:885 ../settings/xfpm-settings.c:1034
-#: ../settings/xfpm-settings.c:1211 ../settings/xfpm-settings.c:1268
-#: ../settings/xfpm-settings.c:1320 ../src/xfpm-power.c:484
-#: ../src/xfpm-power.c:779
-msgid "Hibernate"
-msgstr "Leggja í dvala"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-#, fuzzy
-msgid "Level:"
-msgstr "Styrkur:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "Lock screen when going for suspend/hibernate"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:11 ../src/xfpm-power-common.c:132
-msgid "Monitor"
-msgstr "Skjár"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Monitor power management control"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../settings/xfpm-settings.c:806
-#: ../settings/xfpm-settings.c:874 ../settings/xfpm-settings.c:1023
-#: ../settings/xfpm-settings.c:1200 ../settings/xfpm-settings.c:1257
-#: ../settings/xfpm-settings.c:1309
 msgid "Nothing"
 msgstr "Ekkert"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../settings/xfpm-settings-main.c:142 ../src/xfpm-main.c:425
+msgid "Xfce Power Manager"
+msgstr "XFCE orkustjórnun"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "Power manager settings"
-msgstr ""
+msgstr "Stillingar orkustjórnunar"
+
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "When power button is pressed:"
+msgstr "Þegar ýtt er á aflhnapp:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:5
+msgid "When sleep button is pressed:"
+msgstr "Þegar ýtt er á svæfingarhnapp:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "When hibernate button is pressed:"
+msgstr "Þegar ýtt er á dvalahnapp:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:7
+msgid "Handle display brightness _keys"
+msgstr "Meðhöndla birtustigsly_kla skjás"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "<b>Buttons</b>"
+msgstr "<b>Hnappar</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "On battery"
+msgstr "Á rafhlöðum"
+
+#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:430
+msgid "Plugged in"
+msgstr "Í sambandi"
+
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "When laptop lid is closed:"
+msgstr "Þegar lok tölvunnar er lagt niður:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>Fartölvulok</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Show notifications"
+msgstr "Birta tilkynningar"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "<b>Appearance</b>"
+msgstr "<b>Útlit</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "Prefer power savings over performance"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:16
-msgid "Put display to sleep when computer is inactive for:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "Put the computer to sleep when inactive for:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:18
-msgid "Reduce screen brightness when computer is inactive for:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "Set computer inactivity sleep mode:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "Set monitor sleep mode:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "Show notifications to notify about the battery state"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "Spin down hard disks"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "Standby"
-msgstr "Í viðbragðsstöðu"
-
-#. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:24 ../settings/xfpm-settings.c:811
-#: ../settings/xfpm-settings.c:879 ../settings/xfpm-settings.c:1028
-#: ../settings/xfpm-settings.c:1205 ../settings/xfpm-settings.c:1262
-#: ../settings/xfpm-settings.c:1314 ../src/xfpm-power.c:499
-#: ../src/xfpm-power.c:792
-msgid "Suspend"
-msgstr "Setja í bið"
-
-#: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "Switch off display when computer is inactive for:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:26
-msgid "System tray icon: "
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "When battery power is critical:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "When hibernate button is pressed:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "When laptop lid is closed:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "When power button is pressed:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "When sleep button is pressed:"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:32
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
-msgid "Xfce Power Manager"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
-#: ../settings/xfpm-settings.c:609
-msgid "Never"
-msgstr "Aldrei"
-
-#: ../settings/xfpm-settings.c:570
-msgid "One minute"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:584
-#, fuzzy
-msgid "Minutes"
-msgstr "Mínútur"
-
-#: ../settings/xfpm-settings.c:586 ../settings/xfpm-settings.c:593
-#: ../settings/xfpm-settings.c:594 ../settings/xfpm-settings.c:595
-msgid "One hour"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:594 ../settings/xfpm-settings.c:598
-msgid "one minute"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:595 ../settings/xfpm-settings.c:599
-#, fuzzy
-msgid "minutes"
-msgstr "mínútur"
-
-#: ../settings/xfpm-settings.c:597 ../settings/xfpm-settings.c:598
-#: ../settings/xfpm-settings.c:599
-#, fuzzy
-msgid "hours"
-msgstr "klukkustundir"
-
-#: ../settings/xfpm-settings.c:611
-#, fuzzy
-msgid "Seconds"
-msgstr "Sekúndur"
-
-#: ../settings/xfpm-settings.c:789 ../settings/xfpm-settings.c:987
-#: ../settings/xfpm-settings.c:1467
-msgid "Hibernate and suspend operations not supported"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:794 ../settings/xfpm-settings.c:992
-#: ../settings/xfpm-settings.c:1472
-msgid "Hibernate and suspend operations not permitted"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:823 ../settings/xfpm-settings.c:1217
-#: ../src/xfpm-power.c:805
-msgid "Shutdown"
-msgstr "Slökkva"
-
-#: ../settings/xfpm-settings.c:827 ../settings/xfpm-settings.c:1221
-#: ../settings/xfpm-settings.c:1272 ../settings/xfpm-settings.c:1324
-msgid "Ask"
-msgstr "Spyrja"
-
-#: ../settings/xfpm-settings.c:889 ../settings/xfpm-settings.c:1038
-msgid "Lock screen"
-msgstr "Læsa skjá"
-
-#: ../settings/xfpm-settings.c:957 ../settings/xfpm-settings.c:1107
-msgid "Spinning down hard disks permission denied"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1147
-msgid "Always show icon"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1150
-msgid "When battery is present"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1153
-msgid "When battery is charging or discharging"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1156
-msgid "Never show icon"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1182
-msgid ""
-"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
-"switch off the display or put it in sleep mode."
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1376
-msgid "Suspend operation not supported"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1382
-msgid "Suspend operation not permitted"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1388
-msgid "Hibernate operation not supported"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1393
-msgid "Hibernate operation not permitted"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1440
-msgid "When all the power sources of the computer reach this charge level"
-msgstr ""
-
-#: ../settings/xfpm-settings.c:1543 ../settings/xfpm-settings.c:1548
-#, fuzzy
 msgid "General"
 msgstr "Almennt"
 
-#: ../settings/xfpm-settings.c:1557 ../settings/xfpm-settings.c:1562
-msgid "On AC"
+#: ../data/interfaces/xfpm-settings.ui.h:16
+msgid "When inactive for"
+msgstr "Þegar vélin hefur verið óvirk í"
+
+#: ../data/interfaces/xfpm-settings.ui.h:17
+msgid "System sleep mode:"
+msgstr "Svefnhamur kerfis:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "<b>System power saving</b>"
+msgstr "<b>Orkusparnaður kerfis</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
+msgid "Critical battery power level:"
+msgstr "Stig hættulega lágrar hleðslu:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:20
+msgid "On critical battery power:"
+msgstr "Við hættulega lága hleðslu:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:21
+msgid "<b>Critical power</b>"
+msgstr "<b>Hættulega lág hleðsla</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:22
+msgid "Lock screen when system is going for sleep"
+msgstr "Læsa skjá fyrir svæfingu"
+
+#: ../data/interfaces/xfpm-settings.ui.h:23
+msgid "<b>Security</b>"
+msgstr "<b>Öryggi</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "System"
+msgstr "Kerfis"
+
+#: ../data/interfaces/xfpm-settings.ui.h:25
+msgid "Handle display power management"
+msgstr "Meðhöndla orkusparnað skjás"
+
+#: ../data/interfaces/xfpm-settings.ui.h:26
+msgid "Blank after"
+msgstr "Tæma eftir"
+
+#: ../data/interfaces/xfpm-settings.ui.h:27
+msgid "Put to sleep after"
+msgstr "Svæfa eftir"
+
+#: ../data/interfaces/xfpm-settings.ui.h:28
+msgid "Switch off after"
+msgstr "Slökkva á eftir"
+
+#: ../data/interfaces/xfpm-settings.ui.h:29
+msgid "<b>Display power management settings</b>"
+msgstr "<b>Birta stillingar orkustjórnunar</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:30
+msgid "On inactivity reduce to"
+msgstr "Við aðgerðaleysi minnka í"
+
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "Reduce after"
+msgstr "Minnka eftir"
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid "<b>Brightness reduction</b>"
+msgstr "<b>Minnkun á birtustigi</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid "Display"
+msgstr "Skjár"
+
+#: ../settings/xfpm-settings.c:605 ../settings/xfpm-settings.c:620
+#: ../settings/xfpm-settings.c:647
+msgid "Never"
+msgstr "Aldrei"
+
+#: ../settings/xfpm-settings.c:608
+msgid "One minute"
+msgstr "Ein mínúta"
+
+#: ../settings/xfpm-settings.c:610 ../settings/xfpm-settings.c:622
+msgid "Minutes"
+msgstr "Mínútur"
+
+#: ../settings/xfpm-settings.c:624 ../settings/xfpm-settings.c:631
+#: ../settings/xfpm-settings.c:632 ../settings/xfpm-settings.c:633
+msgid "One hour"
+msgstr "Ein klukkustund"
+
+#: ../settings/xfpm-settings.c:632 ../settings/xfpm-settings.c:636
+msgid "one minute"
+msgstr "ein mínúta"
+
+#: ../settings/xfpm-settings.c:633 ../settings/xfpm-settings.c:637
+msgid "minutes"
+msgstr "mínútur"
+
+#: ../settings/xfpm-settings.c:635 ../settings/xfpm-settings.c:636
+#: ../settings/xfpm-settings.c:637
+msgid "hours"
+msgstr "klukkustundir"
+
+#: ../settings/xfpm-settings.c:649
+msgid "Seconds"
+msgstr "Sekúndur"
+
+#: ../settings/xfpm-settings.c:655
+msgid "%"
+msgstr "%"
+
+#: ../settings/xfpm-settings.c:829 ../settings/xfpm-settings.c:908
+#: ../settings/xfpm-settings.c:966 ../settings/xfpm-settings.c:1051
+#: ../settings/xfpm-settings.c:1139 ../settings/xfpm-settings.c:1247
+#: ../settings/xfpm-settings.c:1304 ../settings/xfpm-settings.c:1356
+#: ../src/xfpm-power.c:638
+msgid "Suspend"
+msgstr "Setja í bið"
+
+#: ../settings/xfpm-settings.c:833 ../settings/xfpm-settings.c:1055
+msgid "Suspend operation not permitted"
+msgstr "'Setja í bið' aðgerð ekki leyfileg"
+
+#: ../settings/xfpm-settings.c:837 ../settings/xfpm-settings.c:1059
+msgid "Suspend operation not supported"
+msgstr "'Setja í bið' aðgerð ekki studd"
+
+#: ../settings/xfpm-settings.c:843 ../settings/xfpm-settings.c:914
+#: ../settings/xfpm-settings.c:972 ../settings/xfpm-settings.c:1065
+#: ../settings/xfpm-settings.c:1145 ../settings/xfpm-settings.c:1253
+#: ../settings/xfpm-settings.c:1310 ../settings/xfpm-settings.c:1362
+#: ../src/xfpm-power.c:627
+msgid "Hibernate"
+msgstr "Leggja í dvala"
+
+#: ../settings/xfpm-settings.c:847 ../settings/xfpm-settings.c:1069
+msgid "Hibernate operation not permitted"
+msgstr "'Leggja í dvala' aðgerð ekki leyfileg"
+
+#: ../settings/xfpm-settings.c:851 ../settings/xfpm-settings.c:1073
+msgid "Hibernate operation not supported"
+msgstr "'Leggja í dvala' aðgerð ekki studd"
+
+#: ../settings/xfpm-settings.c:881 ../settings/xfpm-settings.c:1103
+#: ../settings/xfpm-settings.c:1445
+msgid "Hibernate and suspend operations not supported"
+msgstr "'Leggja í dvala' og 'Setja í bið' aðgerðir ekki studdar"
+
+#: ../settings/xfpm-settings.c:886 ../settings/xfpm-settings.c:1108
+#: ../settings/xfpm-settings.c:1450
+msgid "Hibernate and suspend operations not permitted"
+msgstr "'Leggja í dvala' og 'Setja í bið' aðgerðir ekki leyfilegar"
+
+#: ../settings/xfpm-settings.c:903 ../settings/xfpm-settings.c:1242
+#: ../settings/xfpm-settings.c:1299 ../settings/xfpm-settings.c:1351
+msgid "Do nothing"
+msgstr "Gera ekkert"
+
+#: ../settings/xfpm-settings.c:920 ../settings/xfpm-settings.c:1259
+#: ../src/xfpm-power.c:649
+msgid "Shutdown"
+msgstr "Slökkva"
+
+#: ../settings/xfpm-settings.c:924 ../settings/xfpm-settings.c:1263
+#: ../settings/xfpm-settings.c:1314 ../settings/xfpm-settings.c:1366
+msgid "Ask"
+msgstr "Spyrja"
+
+#: ../settings/xfpm-settings.c:961 ../settings/xfpm-settings.c:1134
+msgid "Switch off display"
+msgstr "Slökkva á skjá"
+
+#: ../settings/xfpm-settings.c:976 ../settings/xfpm-settings.c:1149
+msgid "Lock screen"
+msgstr "Læsa skjá"
+
+#: ../settings/xfpm-settings.c:1417
+msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1572 ../settings/xfpm-settings.c:1577
-msgid "On Battery"
+#: ../settings/xfpm-settings.c:1663
+msgid "Device"
+msgstr "Tæki"
+
+#: ../settings/xfpm-settings.c:1685
+msgid "Type"
+msgstr "Tegund"
+
+#: ../settings/xfpm-settings.c:1690
+msgid "PowerSupply"
+msgstr "Aflgjafi"
+
+#: ../settings/xfpm-settings.c:1691 ../src/xfpm-main.c:80
+msgid "True"
+msgstr "Satt"
+
+#: ../settings/xfpm-settings.c:1691 ../src/xfpm-main.c:80
+msgid "False"
+msgstr "Rangt"
+
+#: ../settings/xfpm-settings.c:1698
+msgid "Model"
+msgstr "Tegund"
+
+#: ../settings/xfpm-settings.c:1701
+msgid "Technology"
+msgstr "Tækni"
+
+#: ../settings/xfpm-settings.c:1708
+msgid "Current charge"
+msgstr "Núverandi hleðsla"
+
+#. TRANSLATORS: Unit here is Watt hour
+#: ../settings/xfpm-settings.c:1716 ../settings/xfpm-settings.c:1728
+#: ../settings/xfpm-settings.c:1740
+msgid "Wh"
+msgstr "Wh"
+
+#: ../settings/xfpm-settings.c:1718
+msgid "Fully charged (design)"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1586 ../settings/xfpm-settings.c:1591
-#, fuzzy
-msgid "Extended"
-msgstr "Extended"
+#: ../settings/xfpm-settings.c:1731
+msgid "Fully charged"
+msgstr "Full hleðsla"
 
-#: ../settings/xfpm-settings.c:1659
+#: ../settings/xfpm-settings.c:1742
+msgid "Energy empty"
+msgstr "Orka búin"
+
+#. TRANSLATORS: Unit here is Volt
+#: ../settings/xfpm-settings.c:1750
+msgid "V"
+msgstr "V"
+
+#: ../settings/xfpm-settings.c:1752
+msgid "Voltage"
+msgstr "Spenna"
+
+#: ../settings/xfpm-settings.c:1759
+msgid "Vendor"
+msgstr "Framleiðandi"
+
+#: ../settings/xfpm-settings.c:1764
+msgid "Serial"
+msgstr "Raðnúmer"
+
+#: ../settings/xfpm-settings.c:1833
+msgid "Attribute"
+msgstr "Eigindi"
+
+#: ../settings/xfpm-settings.c:1840
+msgid "Value"
+msgstr "Gildi"
+
+#: ../settings/xfpm-settings.c:2053
 msgid "Check your power manager installation"
-msgstr ""
+msgstr "Athugaðu hvort það sé allt í lagi með uppsetningu orkustjórnunar"
 
-#: ../settings/xfpm-settings-main.c:78
+#: ../settings/xfpm-settings.c:2123
+msgid "Devices"
+msgstr "Tæki"
+
+#: ../settings/xfpm-settings-main.c:80
 msgid "Settings manager socket"
-msgstr ""
+msgstr "Sökkull stillingastjórnunar"
 
-#: ../settings/xfpm-settings-main.c:78
+#: ../settings/xfpm-settings-main.c:80
 msgid "SOCKET ID"
+msgstr "AUÐKENNI SÖKKULS - ID"
+
+#: ../settings/xfpm-settings-main.c:81
+msgid "Display a specific device by UpDevice object path"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:289
-#: ../src/xfpm-power-info.c:948
+#: ../settings/xfpm-settings-main.c:81
+msgid "UpDevice object path"
+msgstr ""
+
+#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:255
+msgid "Enable debugging"
+msgstr "Virkja afslúsun"
+
+#: ../settings/xfpm-settings-main.c:93 ../src/xfpm-main.c:311
 #, c-format
-#, fuzzy
 msgid "Type '%s --help' for usage."
 msgstr "Skrifaðu '%s --help' til að sjá hvernig á að nota þetta."
 
-#: ../settings/xfpm-settings-main.c:123
-msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
-
-#: ../settings/xfpm-settings-main.c:148
-msgid "Unable to connect to Xfce Power Manager"
-msgstr ""
-
-#: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
+#: ../settings/xfpm-settings-main.c:113 ../src/xfpm-main.c:341
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:195
-#, fuzzy
+#: ../settings/xfpm-settings-main.c:118
 msgid "Run"
 msgstr "Keyra"
 
-#: ../settings/xfpm-settings-main.c:196
+#: ../settings/xfpm-settings-main.c:119
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr ""
 
+#: ../settings/xfpm-settings-main.c:144
+msgid "Failed to load power manager configuration, using defaults"
+msgstr ""
+
+#: ../settings/xfpm-settings-main.c:171
+msgid "Unable to connect to Xfce Power Manager"
+msgstr ""
+
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
-#: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
-#: ../src/xfpm-battery.c:349 ../src/xfce4-power-manager.desktop.in.h:1
-#, fuzzy
+#: ../src/xfpm-power.c:306 ../src/xfpm-power.c:569 ../src/xfpm-power.c:613
+#: ../src/xfpm-power.c:777 ../src/xfpm-power.c:801 ../src/xfpm-battery.c:256
+#: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
-msgstr "Aflstjóri"
+msgstr "Aflstjórnun"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
 msgstr ""
 
-#: ../common/xfpm-common.c:155
-#, fuzzy
+#: ../common/xfpm-common.c:131
 msgid "translator-credits"
-msgstr ""
-"Launchpad Contributions:\n"
-"  Baldur https://launchpad.net/~baldurpet"
+msgstr "Sveinn í Felli, sv1@fellsnet.is"
 
-#: ../src/xfpm-power.c:330
+#: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
+msgid "Battery"
+msgstr "Rafhlaða"
+
+#: ../common/xfpm-power-common.c:47 ../src/xfpm-battery.c:537
+msgid "UPS"
+msgstr "Varaaflgjafi"
+
+#: ../common/xfpm-power-common.c:49
+msgid "Line power"
+msgstr "Rafkerfi"
+
+#: ../common/xfpm-power-common.c:51
+msgid "Mouse"
+msgstr "Mús"
+
+#: ../common/xfpm-power-common.c:53
+msgid "Keyboard"
+msgstr "Lyklaborð"
+
+#: ../common/xfpm-power-common.c:55
+msgid "Monitor"
+msgstr "Skjár"
+
+#: ../common/xfpm-power-common.c:57
+msgid "PDA"
+msgstr "PDA lófatölva"
+
+#: ../common/xfpm-power-common.c:59
+msgid "Phone"
+msgstr "Sími"
+
+#: ../common/xfpm-power-common.c:61
+msgid "Tablet"
+msgstr "Spjaldtölva"
+
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:340
+msgid "Computer"
+msgstr "Tölva"
+
+#: ../common/xfpm-power-common.c:65 ../common/xfpm-power-common.c:81
+#: ../common/xfpm-power-common.c:96 ../src/xfpm-battery.c:555
+msgid "Unknown"
+msgstr "Óþekkt"
+
+#: ../common/xfpm-power-common.c:83
+msgid "Lithium ion"
+msgstr "Liþíum-jóna"
+
+#: ../common/xfpm-power-common.c:85
+msgid "Lithium polymer"
+msgstr "Liþíum-pólýmer"
+
+#: ../common/xfpm-power-common.c:87
+msgid "Lithium iron phosphate"
+msgstr "Liþíum-járnfosfat"
+
+#: ../common/xfpm-power-common.c:89
+msgid "Lead acid"
+msgstr "Blýsýra"
+
+#: ../common/xfpm-power-common.c:91
+msgid "Nickel cadmium"
+msgstr "Nikkel-kadmíum"
+
+#: ../common/xfpm-power-common.c:93
+msgid "Nickel metal hybride"
+msgstr "Nikkel-járn-blendingur"
+
+#: ../common/xfpm-power-common.c:141
+msgid "Unknown time"
+msgstr "Óþekktur tími"
+
+#: ../common/xfpm-power-common.c:147
+#, c-format
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i mínúta"
+msgstr[1] "%i mínútur"
+
+#: ../common/xfpm-power-common.c:158
+#, c-format
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i klukkustund"
+msgstr[1] "%i klukkustundir"
+
+#. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
+#. * Swap order with "%2$s %2$i %1$s %1$i if needed
+#: ../common/xfpm-power-common.c:164
+#, c-format
+msgid "%i %s %i %s"
+msgstr "%i %s %i %s"
+
+#: ../common/xfpm-power-common.c:165
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "klukkustund"
+msgstr[1] "klukkustundir"
+
+#: ../common/xfpm-power-common.c:166
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "mínúta"
+msgstr[1] "mínútur"
+
+#: ../common/xfpm-power-common.c:357
+#, c-format
 msgid ""
-"An application is currently disabling the automatic sleep, doing this action "
-"now may damage the working state of this application, are you sure you want "
-"to hibernate the system?"
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%, %s runtime)"
 msgstr ""
 
-#: ../src/xfpm-power.c:428
-#, fuzzy
-msgid "Quit"
-msgstr "Hætta"
-
-#: ../src/xfpm-power.c:429
-msgid "All running instances of the power manager will exit"
+#: ../common/xfpm-power-common.c:365
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%)"
 msgstr ""
 
-#: ../src/xfpm-power.c:431
-msgid "Quit the power manager?"
+#: ../common/xfpm-power-common.c:375
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%, %s)"
 msgstr ""
 
-#. Power information
-#: ../src/xfpm-power.c:534 ../src/xfpm-power-info.c:818
-#, fuzzy
-msgid "Power Information"
-msgstr "Aflupplýsingar"
+#: ../common/xfpm-power-common.c:383
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%)"
+msgstr ""
 
-#. *
-#. * Power Mode
-#. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
-#: ../src/xfpm-power.c:550
-#, fuzzy
-msgid "Mode"
-msgstr "Hamur"
+#: ../common/xfpm-power-common.c:393
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%, %s)"
+msgstr ""
 
-#. Normal
-#: ../src/xfpm-power.c:561
-#, fuzzy
-msgid "Normal"
-msgstr "Venjulegt"
+#: ../common/xfpm-power-common.c:401
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%)"
+msgstr ""
 
-#. Normal
-#: ../src/xfpm-power.c:571
-#, fuzzy
-msgid "Presentation"
-msgstr "Kynning"
+#: ../common/xfpm-power-common.c:408
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Waiting to discharge (%0.0f%%)"
+msgstr ""
 
-#: ../src/xfpm-power.c:693
+#: ../common/xfpm-power-common.c:414
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Waiting to charge (%0.0f%%)"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:420
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"is empty"
+msgstr ""
+
+#. On the 2nd line we want to know if the power cord is plugged
+#. * in or not
+#: ../common/xfpm-power-common.c:429
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%s"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:430
+msgid "Not plugged in"
+msgstr "Ekki í sambandi"
+
+#. Desktop pc with no battery, just display the vendor and model,
+#. * which will probably just be Computer
+#: ../common/xfpm-power-common.c:436
+#, c-format
+msgid "<b>%s %s</b>"
+msgstr "<b>%s %s</b>"
+
+#. unknown device state, just display the percentage
+#: ../common/xfpm-power-common.c:441
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Unknown state"
+msgstr "<b>%s %s</b>\nÓþekkt staða"
+
+#: ../src/xfpm-power.c:332
+msgid "_Hibernate"
+msgstr "Le_ggja í dvala"
+
+#: ../src/xfpm-power.c:333
+msgid ""
+"An application is currently disabling the automatic sleep. Doing this action"
+" now may damage the working state of this application."
+msgstr ""
+
+#: ../src/xfpm-power.c:335
+msgid "Are you sure you want to hibernate the system?"
+msgstr ""
+
+#: ../src/xfpm-power.c:376
+msgid "Continue"
+msgstr "Áfram"
+
+#: ../src/xfpm-power.c:377 ../src/xfpm-manager.c:366
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be "
+"locked."
+msgstr ""
+
+#: ../src/xfpm-power.c:380
+msgid "Do you still want to continue to suspend the system?"
+msgstr ""
+
+#: ../src/xfpm-power.c:532
 msgid "Hibernate the system"
-msgstr ""
+msgstr "Leggja kerfi í dvala"
 
-#: ../src/xfpm-power.c:704
+#: ../src/xfpm-power.c:543
 msgid "Suspend the system"
-msgstr ""
+msgstr "Setja tölvuna í hvíld"
 
-#: ../src/xfpm-power.c:714
+#: ../src/xfpm-power.c:553
 msgid "Shutdown the system"
-msgstr ""
+msgstr "Slökkva á kerfinu"
 
-#: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
+#: ../src/xfpm-power.c:564 ../src/xfpm-power.c:610
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
 
-#: ../src/xfpm-power.c:936
+#: ../src/xfpm-power.c:778
 msgid "System is running on low power"
 msgstr ""
 
-#: ../src/xfpm-power.c:955
+#: ../src/xfpm-power.c:797
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr ""
 
-#: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
-msgid "Adaptor is offline"
-msgstr ""
-
-#: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:408
+#: ../src/xfpm-power.c:1491 ../src/xfpm-power.c:1524 ../src/xfpm-power.c:1543
+#: ../src/xfpm-power.c:1566
 #, c-format
-msgid "Adaptor is online"
-msgstr ""
-
-#: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
-#: ../src/xfpm-power.c:1676
-#, c-format
-#, fuzzy
 msgid "Permission denied"
 msgstr "Aðgangi hafnað"
 
-#: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
+#: ../src/xfpm-power.c:1551 ../src/xfpm-power.c:1574
 #, c-format
 msgid "Suspend not supported"
 msgstr ""
 
-#: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
-#, fuzzy
-msgid "Battery"
-msgstr "Rafhlaða"
-
-#: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:824
-#, fuzzy
-msgid "UPS"
-msgstr "Varaaflgjafi"
-
-#: ../src/xfpm-power-common.c:126
-msgid "Line power"
-msgstr ""
-
-#: ../src/xfpm-power-common.c:128
-#, fuzzy
-msgid "Mouse"
-msgstr "Mús"
-
-#: ../src/xfpm-power-common.c:130
-#, fuzzy
-msgid "Keyboard"
-msgstr "Lyklaborð"
-
-#: ../src/xfpm-power-common.c:134
-#, fuzzy
-msgid "PDA"
-msgstr "PDA"
-
-#: ../src/xfpm-power-common.c:136
-#, fuzzy
-msgid "Phone"
-msgstr "Sími"
-
-#: ../src/xfpm-power-common.c:138 ../src/xfpm-power-common.c:153
-#: ../src/xfpm-power-common.c:168 ../src/xfpm-battery.c:842
-#, fuzzy
-msgid "Unknown"
-msgstr "Óþekkt"
-
-#: ../src/xfpm-power-common.c:155
-msgid "Lithium ion"
-msgstr ""
-
-#: ../src/xfpm-power-common.c:157
-msgid "Lithium polymer"
-msgstr ""
-
-#: ../src/xfpm-power-common.c:159
-msgid "Lithium iron phosphate"
-msgstr ""
-
-#: ../src/xfpm-power-common.c:161
-#, fuzzy
-msgid "Lead acid"
-msgstr "Blýsýra"
-
-#: ../src/xfpm-power-common.c:163
-msgid "Nickel cadmium"
-msgstr ""
-
-#: ../src/xfpm-power-common.c:165
-msgid "Nickel metal hybride"
-msgstr ""
-
-#: ../src/xfpm-battery.c:169
-#, fuzzy
-msgid "Unknown time"
-msgstr "Óþekktur tími"
-
-#: ../src/xfpm-battery.c:175
+#. generate a human-readable summary for the notification
+#: ../src/xfpm-backlight.c:172
 #, c-format
-#, fuzzy
-msgid "%i minute"
-msgid_plural "%i minutes"
-msgstr[0] "%i mínúta"
-msgstr[1] "%i mínúta"
+msgid "Brightness: %.0f percent"
+msgstr ""
 
-#: ../src/xfpm-battery.c:186
-#, c-format
-#, fuzzy
-msgid "%i hour"
-msgid_plural "%i hours"
-msgstr[0] "%i klukkustund"
-msgstr[1] "%i klukkustund"
-
-#. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
-#. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../src/xfpm-battery.c:192
-#, c-format
-#, fuzzy
-msgid "%i %s %i %s"
-msgstr "%i %s %i %s"
-
-#: ../src/xfpm-battery.c:193
-#, fuzzy
-msgid "hour"
-msgid_plural "hours"
-msgstr[0] "klukkustund"
-msgstr[1] "klukkustund"
-
-#: ../src/xfpm-battery.c:194
-#, fuzzy
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "mínúta"
-msgstr[1] "mínúta"
-
-#: ../src/xfpm-battery.c:209 ../src/xfpm-battery.c:260
+#: ../src/xfpm-battery.c:114 ../src/xfpm-battery.c:165
 #, c-format
 msgid "Your %s is fully charged"
-msgstr ""
+msgstr "%s er fullhlaðið"
 
-#: ../src/xfpm-battery.c:212 ../src/xfpm-battery.c:263
+#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:168
 #, c-format
 msgid "Your %s is charging"
-msgstr ""
+msgstr "%s er í hleðslu"
 
-#: ../src/xfpm-battery.c:222
+#: ../src/xfpm-battery.c:127
 #, c-format
 msgid ""
 "%s (%i%%)\n"
-"%s until is fully charged."
-msgstr ""
+"%s until it is fully charged."
+msgstr "%s (%i%%)\n%s þar til fullhlaðið."
 
-#: ../src/xfpm-battery.c:230 ../src/xfpm-battery.c:266
+#: ../src/xfpm-battery.c:135 ../src/xfpm-battery.c:171
 #, c-format
 msgid "Your %s is discharging"
-msgstr ""
+msgstr "%s afhleðst"
 
-#: ../src/xfpm-battery.c:232
+#: ../src/xfpm-battery.c:137
 #, c-format
 msgid "System is running on %s power"
-msgstr ""
+msgstr "Kerfið er tengt við %s rafmagn"
 
-#: ../src/xfpm-battery.c:242
+#: ../src/xfpm-battery.c:147
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
+msgstr "%s (%i%%)\nÁætlaður tími eftir er %s."
 
-#: ../src/xfpm-battery.c:248 ../src/xfpm-battery.c:269
+#: ../src/xfpm-battery.c:153 ../src/xfpm-battery.c:174
 #, c-format
 msgid "Your %s is empty"
-msgstr ""
+msgstr "%s er tæmd"
 
-#: ../src/xfpm-battery.c:408
-#, c-format
-#, fuzzy
-msgid "System is running on battery power"
-msgstr "Kerfið notar nú rafhlöðu"
-
-#: ../src/xfpm-battery.c:415
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is fully charged (%i%%).\n"
-"Provides %s runtime"
-msgstr ""
-
-#: ../src/xfpm-battery.c:424
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is fully charged (%i%%)."
-msgstr ""
-
-#: ../src/xfpm-battery.c:435
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is charging (%i%%)\n"
-"%s until is fully charged."
-msgstr ""
-
-#: ../src/xfpm-battery.c:444
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is charging (%i%%)."
-msgstr ""
-
-#: ../src/xfpm-battery.c:455
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is discharging (%i%%)\n"
-"Estimated time left is %s."
-msgstr ""
-
-#: ../src/xfpm-battery.c:464
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is discharging (%i%%)."
-msgstr ""
-
-#: ../src/xfpm-battery.c:473
-#, c-format
-msgid ""
-"%s\n"
-"%s waiting to discharge (%i%%)."
-msgstr ""
-
-#: ../src/xfpm-battery.c:477
-#, c-format
-msgid ""
-"%s\n"
-"%s waiting to charge (%i%%)."
-msgstr ""
-
-#: ../src/xfpm-battery.c:481
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is empty"
-msgstr ""
-
-#: ../src/xfpm-battery.c:821
+#: ../src/xfpm-battery.c:534
 msgid "battery"
-msgstr ""
+msgstr "rafhlaða"
 
-#: ../src/xfpm-battery.c:827
+#: ../src/xfpm-battery.c:540
 msgid "monitor battery"
-msgstr ""
+msgstr "fylgjast með rafhlöðu"
 
-#: ../src/xfpm-battery.c:830
+#: ../src/xfpm-battery.c:543
 msgid "mouse battery"
-msgstr ""
+msgstr "músarrafhlaða"
 
-#: ../src/xfpm-battery.c:833
+#: ../src/xfpm-battery.c:546
 msgid "keyboard battery"
-msgstr ""
+msgstr "lyklaborðsrafhlaða"
 
-#: ../src/xfpm-battery.c:836
+#: ../src/xfpm-battery.c:549
 msgid "PDA battery"
-msgstr ""
+msgstr "lófatölvurafhlaða"
 
-#: ../src/xfpm-battery.c:839
+#: ../src/xfpm-battery.c:552
 msgid "Phone battery"
+msgstr "símarafhlaða"
+
+#. generate a human-readable summary for the notification
+#: ../src/xfpm-kbd-backlight.c:115
+#, c-format
+msgid "Keyboard Brightness: %.0f percent"
 msgstr ""
 
-#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:93
+#: ../src/xfpm-main.c:57
 #, c-format
 msgid ""
 "\n"
@@ -698,16 +754,6 @@ msgid ""
 "Licensed under the GNU GPL.\n"
 "\n"
 msgstr ""
-
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
-#, fuzzy
-msgid "True"
-msgstr "Satt"
-
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
-#, fuzzy
-msgid "False"
-msgstr "Ósatt"
 
 #: ../src/xfpm-main.c:113
 #, c-format
@@ -729,348 +775,192 @@ msgstr ""
 msgid "Without network manager support\n"
 msgstr ""
 
-#: ../src/xfpm-main.c:123
-#, c-format
-msgid "With DPMS support\n"
-msgstr ""
-
-#: ../src/xfpm-main.c:125
-#, c-format
-msgid "Without DPMS support\n"
-msgstr ""
-
-#: ../src/xfpm-main.c:141
+#: ../src/xfpm-main.c:134
 msgid "Can suspend"
 msgstr ""
 
-#: ../src/xfpm-main.c:143
+#: ../src/xfpm-main.c:136
 msgid "Can hibernate"
 msgstr ""
 
-#: ../src/xfpm-main.c:145
-msgid "Can spin down hard disks"
-msgstr ""
-
-#: ../src/xfpm-main.c:147
+#: ../src/xfpm-main.c:138
 msgid "Authorized to suspend"
 msgstr ""
 
-#: ../src/xfpm-main.c:149
+#: ../src/xfpm-main.c:140
 msgid "Authorized to hibernate"
 msgstr ""
 
-#: ../src/xfpm-main.c:151
+#: ../src/xfpm-main.c:142
 msgid "Authorized to shutdown"
 msgstr ""
 
-#: ../src/xfpm-main.c:153
-msgid "Authorized to spin down hard disks"
-msgstr ""
-
-#: ../src/xfpm-main.c:155
+#: ../src/xfpm-main.c:144
 msgid "Has battery"
-msgstr ""
+msgstr "Er með rafhlöðu"
 
-#: ../src/xfpm-main.c:157
+#: ../src/xfpm-main.c:146
 msgid "Has brightness panel"
 msgstr ""
 
-#: ../src/xfpm-main.c:159
+#: ../src/xfpm-main.c:148
 msgid "Has power button"
 msgstr ""
 
-#: ../src/xfpm-main.c:161
+#: ../src/xfpm-main.c:150
 msgid "Has hibernate button"
 msgstr ""
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:152
 msgid "Has sleep button"
 msgstr ""
 
-#: ../src/xfpm-main.c:165
+#: ../src/xfpm-main.c:154
 msgid "Has LID"
 msgstr ""
 
-#: ../src/xfpm-main.c:264
+#: ../src/xfpm-main.c:254
 msgid "Do not daemonize"
 msgstr ""
 
-#: ../src/xfpm-main.c:265
-msgid "Enable debugging"
-msgstr ""
-
-#: ../src/xfpm-main.c:266
+#: ../src/xfpm-main.c:256
 msgid "Dump all information"
 msgstr ""
 
-#: ../src/xfpm-main.c:267
+#: ../src/xfpm-main.c:257
 msgid "Restart the running instance of Xfce power manager"
 msgstr ""
 
-#: ../src/xfpm-main.c:268
+#: ../src/xfpm-main.c:258
 msgid "Show the configuration dialog"
 msgstr ""
 
-#: ../src/xfpm-main.c:269
+#: ../src/xfpm-main.c:259
 msgid "Quit any running xfce power manager"
 msgstr ""
 
-#: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:935
-#, fuzzy
+#: ../src/xfpm-main.c:260
 msgid "Version information"
 msgstr "Útgáfuupplýsingar"
 
-#: ../src/xfpm-main.c:320
+#: ../src/xfpm-main.c:281
+#, c-format
+msgid "Failed to parse arguments: %s\n"
+msgstr "Mistókst að þátta viðföng: %s\n"
+
+#: ../src/xfpm-main.c:332
 msgid "Unable to get connection to the message bus session"
 msgstr ""
 
-#: ../src/xfpm-main.c:414
+#: ../src/xfpm-main.c:426
 msgid "Another power manager is already running"
 msgstr ""
 
-#: ../src/xfpm-main.c:420
+#: ../src/xfpm-main.c:432
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr ""
 
-#: ../src/xfpm-inhibit.c:331
+#: ../src/xfpm-inhibit.c:335
 #, c-format
 msgid "Invalid arguments"
 msgstr ""
 
-#: ../src/xfpm-inhibit.c:357
+#: ../src/xfpm-inhibit.c:361
 #, c-format
 msgid "Invalid cookie"
 msgstr ""
-
-#. TRANSLATORS: the command line was not provided
-#: ../src/xfpm-power-info.c:118
-#, fuzzy
-msgid "No data"
-msgstr "Engin gögn"
-
-#. TRANSLATORS: kernel module, usually a device driver
-#: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
-#, fuzzy
-msgid "Kernel module"
-msgstr "Kjarnaeining"
-
-#. TRANSLATORS: kernel housekeeping
-#: ../src/xfpm-power-info.c:135
-msgid "Kernel core"
-msgstr ""
-
-#. TRANSLATORS: interrupt between processors
-#: ../src/xfpm-power-info.c:140
-msgid "Interprocessor interrupt"
-msgstr ""
-
-#. TRANSLATORS: unknown interrupt
-#: ../src/xfpm-power-info.c:145
-#, fuzzy
-msgid "Interrupt"
-msgstr "Ígrip"
-
-#. TRANSLATORS: the keyboard and mouse device event
-#: ../src/xfpm-power-info.c:189
-msgid "PS/2 keyboard/mouse/touchpad"
-msgstr ""
-
-#. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
-#: ../src/xfpm-power-info.c:192
-#, fuzzy
-msgid "ACPI"
-msgstr "ACPI"
-
-#. TRANSLATORS: serial ATA is a new style of hard disk interface
-#: ../src/xfpm-power-info.c:195
-msgid "Serial ATA"
-msgstr ""
-
-#. TRANSLATORS: this is the old-style ATA interface
-#: ../src/xfpm-power-info.c:198
-msgid "ATA host controller"
-msgstr ""
-
-#. TRANSLATORS: 802.11 wireless adaptor
-#: ../src/xfpm-power-info.c:201
-msgid "Intel wireless adaptor"
-msgstr ""
-
-#. TRANSLATORS: a timer is something that fires periodically
-#: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
-#: ../src/xfpm-power-info.c:212 ../src/xfpm-power-info.c:215
-#: ../src/xfpm-power-info.c:218
-#, c-format
-msgid "Timer %s"
-msgstr ""
-
-#. TRANSLATORS: this is a task that's woken up from sleeping
-#: ../src/xfpm-power-info.c:221
-#, c-format
-msgid "Sleep %s"
-msgstr ""
-
-#. TRANSLATORS: this is a new realtime task
-#: ../src/xfpm-power-info.c:224
-#, c-format
-msgid "New task %s"
-msgstr ""
-
-#. TRANSLATORS: this is a task thats woken to check state
-#: ../src/xfpm-power-info.c:227
-#, c-format
-msgid "Wait %s"
-msgstr ""
-
-#. TRANSLATORS: a work queue is a list of work that has to be done
-#: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
-#, c-format
-msgid "Work queue %s"
-msgstr ""
-
-#. TRANSLATORS: this is when the networking subsystem clears out old entries
-#: ../src/xfpm-power-info.c:236
-#, c-format
-msgid "Network route flush %s"
-msgstr ""
-
-#. TRANSLATORS: activity on the USB bus
-#: ../src/xfpm-power-info.c:239
-#, c-format
-msgid "USB activity %s"
-msgstr ""
-
-#. TRANSLATORS: we've timed out of an aligned timer
-#: ../src/xfpm-power-info.c:242
-#, c-format
-msgid "Wakeup %s"
-msgstr ""
-
-#. TRANSLATORS: interupts on the system required for basic operation
-#: ../src/xfpm-power-info.c:245
-msgid "Local interrupts"
-msgstr ""
-
-#. TRANSLATORS: interrupts when a task gets moved from one core to another
-#: ../src/xfpm-power-info.c:248
-msgid "Rescheduling interrupts"
-msgstr ""
-
-#: ../src/xfpm-power-info.c:331
-#, fuzzy
-msgid "Attribute"
-msgstr "Eiginleiki"
-
-#: ../src/xfpm-power-info.c:338
-#, fuzzy
-msgid "Value"
-msgstr "Gildi"
-
-#: ../src/xfpm-power-info.c:348
-#, fuzzy
-msgid "Device"
-msgstr "Tæki"
-
-#: ../src/xfpm-power-info.c:363 ../src/xfpm-power-info.c:739
-#, fuzzy
-msgid "Type"
-msgstr "Tegund"
-
-#: ../src/xfpm-power-info.c:375
-msgid "PowerSupply"
-msgstr ""
-
-#: ../src/xfpm-power-info.c:393
-#, fuzzy
-msgid "Model"
-msgstr "Tegund"
-
-#: ../src/xfpm-power-info.c:407
-#, fuzzy
-msgid "Technology"
-msgstr "Tækni"
-
-#. TRANSLATORS: Unit here is What hour
-#: ../src/xfpm-power-info.c:414 ../src/xfpm-power-info.c:428
-#: ../src/xfpm-power-info.c:442
-msgid "Wh"
-msgstr ""
-
-#: ../src/xfpm-power-info.c:420
-msgid "Energy full design"
-msgstr ""
-
-#: ../src/xfpm-power-info.c:434
-msgid "Energy full"
-msgstr ""
-
-#: ../src/xfpm-power-info.c:448
-msgid "Energy empty"
-msgstr ""
-
-#. TRANSLATORS: Unit here is volt
-#: ../src/xfpm-power-info.c:456
-#, fuzzy
-msgid "V"
-msgstr "V"
-
-#: ../src/xfpm-power-info.c:461
-#, fuzzy
-msgid "Voltage"
-msgstr "Spenna"
-
-#: ../src/xfpm-power-info.c:478
-#, fuzzy
-msgid "Vendor"
-msgstr "Framleiðandi"
-
-#: ../src/xfpm-power-info.c:495
-#, fuzzy
-msgid "Serial"
-msgstr "Raðtengi"
-
-#: ../src/xfpm-power-info.c:731
-#, fuzzy
-msgid "Processor"
-msgstr "Örgjörvi"
-
-#. TANSLATORS: PID, is the process id, e.g what ps x gives
-#: ../src/xfpm-power-info.c:748
-#, fuzzy
-msgid "PID"
-msgstr "PID"
-
-#: ../src/xfpm-power-info.c:754
-msgid "Wakeups"
-msgstr ""
-
-#: ../src/xfpm-power-info.c:760
-#, fuzzy
-msgid "Command"
-msgstr "Skipun"
-
-#: ../src/xfpm-power-info.c:766
-#, fuzzy
-msgid "Details"
-msgstr "Nánar"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
 msgstr ""
 
-#: ../panel-plugins/brightness/brightness-button.c:180
-#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
-msgid "Control your LCD brightness"
+#. Odds are this is a desktop without any batteries attached
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:204
+msgid "Display battery levels for attached devices"
 msgstr ""
 
-#: ../panel-plugins/brightness/brightness-button.c:182
-#, fuzzy
-msgid "No device found"
-msgstr "Fann enginn tæki"
-
-#: ../panel-plugins/brightness/brightness-button.c:649
-#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
-msgid "Brightness plugin"
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1223
+msgid "<b>Display brightness</b>"
 msgstr ""
 
+#. Presentation mode checkbox
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1241
+msgid "Presentation _mode"
+msgstr ""
+
+#. Power manager settings
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1250
+msgid "_Power manager settings..."
+msgstr ""
+
+#: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:54
+#: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:56
+#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
+msgid "Power Manager Plugin"
+msgstr "Orkustjórnunarviðbót"
+
+#: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:56
+#: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:57
+#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
+msgid ""
+"Display the battery levels of your devices and control the brightness of "
+"your display"
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
+msgid ""
+"Xfce power manager manages the power sources on the computer and the devices"
+" that can be controlled to reduce their power consumption (such as LCD "
+"brightness level, monitor sleep, CPU frequency scaling)."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
+msgid ""
+"In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
+" interfaces to inform other applications about current power level so that "
+"they can adjust their power consumption, and it provides the inhibit "
+"interface which allows applications to prevent automatic sleep actions via "
+"the power manager; as an example, the operating system’s package manager "
+"should make use of this interface while it is performing update operations."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
+msgid ""
+"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
+"control LCD brightness levels and to monitor battery and device charge "
+"levels."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
+msgid ""
+"This development release mostly fixes bugs and introduces better support for"
+" icon-themes by reducing the device icons and using standard names for them."
+" It also features updated translations. The panel plugin has been renamed to"
+" Power Manager Plugin."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
+msgid ""
+"This development release fixes bugs with suspend and hibernate. It also "
+"improves the panel-plugin, incorporating the functionality of the (now "
+"dropped) brightness panel-plugin. A new popup notification was added to "
+"account for keyboard brightness changes and the Power Manager now also "
+"controls the X11 blank times."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
+msgid ""
+"This development release introduces a lot of new features, among them "
+"suspending/hibernation without systemd and UPower>=0.99. It allows for "
+"individual control of systemd-inhibition, a new panel plugin to monitor "
+"battery and device charge levels replaces the trayicon. The settings dialog "
+"has been completely restructured for better oversight and many open bugs "
+"have been fixed and translations have been updated."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
+msgid ""
+"This stable release fixes compilation problems, a memory leak and a few "
+"other minor bugs. Furthermore it provides updated translations."
+msgstr ""
