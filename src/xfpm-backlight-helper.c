@@ -67,6 +67,7 @@ backlight_helper_get_best_backlight (void)
 		"toshiba",
 		"eeepc",
 		"thinkpad_screen",
+		"gmux_backlight",
 		"intel_backlight",
 		"acpi_video1",
 		"mbp_backlight",
