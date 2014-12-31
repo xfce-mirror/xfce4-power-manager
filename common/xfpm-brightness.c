@@ -333,12 +333,16 @@ xfpm_brightness_helper_get_value (const gchar *argument)
     if ( exit_status != 0 )
 	goto out;
 
+#if !defined(BACKEND_TYPE_FREEBSD)
     if ( stdout_data[0] == 'N' )
         value = 0;
     else if ( stdout_data[0] == 'Y' )
         value = 1;
     else
         value = atoi (stdout_data);
+#else
+    value = atoi (stdout_data);
+#endif
 
 out:
     g_free (command);
@@ -606,7 +610,11 @@ xfpm_brightness_setup (XfpmBrightness *brightness)
     else
     {
 	if ( xfpm_brightness_setup_helper (brightness) ) {
-	    g_debug ("xrandr not available, brightness controlled by sysfs helper; min_level=%d max_level=%d", 
+#if defined(BACKEND_TYPE_FREEBSD)
+	    g_debug ("xrandr not available, brightness controlled by sysctl helper; min_level=%d max_level=%d",
+#else
+	    g_debug ("xrandr not available, brightness controlled by sysfs helper; min_level=%d max_level=%d",
+#endif
 		     brightness->priv->min_level, 
 		     brightness->priv->max_level);
 	    return TRUE;
