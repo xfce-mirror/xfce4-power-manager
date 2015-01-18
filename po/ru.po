@@ -5,13 +5,14 @@
 # Translators:
 # Aleksandr Kudryavcev <registrare0@gmail.com>, 2014
 # Denis Koryavov <dkoryavov@yandex.ru>, 2009
+# Lowrider <pams@imail.ru>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-02 23:12+0200\n"
-"PO-Revision-Date: 2014-07-27 15:01+0000\n"
-"Last-Translator: Aleksandr Kudryavcev <registrare0@gmail.com>\n"
+"PO-Revision-Date: 2015-01-18 11:52+0000\n"
+"Last-Translator: Lowrider <pams@imail.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/xfce4-power-manager/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,11 +30,11 @@ msgstr "Ничего не делать"
 #: ../data/interfaces/xfpm-settings.ui.h:2
 #: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:413
 msgid "Xfce Power Manager"
-msgstr "Менеджер питания Xfce "
+msgstr "Управление питанием Xfce "
 
 #: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "Power manager settings"
-msgstr "Настройки менеджера питания "
+msgstr "Настройки диспетчера управления питанием"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
 msgid "When sleep button is pressed:"
@@ -49,7 +50,7 @@ msgstr "Когда нажата клавиша включения/выключе
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "System tray icon: "
-msgstr "Отображать значок в системном лотке:"
+msgstr "Отображать значок на системной панели:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "Monitor power management control"
@@ -284,7 +285,7 @@ msgstr "Расширенные"
 
 #: ../settings/xfpm-settings.c:1662
 msgid "Check your power manager installation"
-msgstr "Проверьте вашу установку менеджера питания"
+msgstr "Проверьте правильность установки диспетчера управления питанием"
 
 #: ../settings/xfpm-settings-main.c:78
 msgid "Settings manager socket"
@@ -306,12 +307,12 @@ msgstr "Не удалось загрузить настройки питания
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
-msgstr "Невозможно подключиться к менеджеру питания Xfce "
+msgstr "Невозможно подключиться к диспетчеру питания Xfce "
 
 #: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr "Менеджер питания Xfce не запущен "
+msgstr "Диспетчер питания Xfce не запущен "
 
 #: ../settings/xfpm-settings-main.c:195
 msgid "Run"
@@ -319,18 +320,18 @@ msgstr "Запустить "
 
 #: ../settings/xfpm-settings-main.c:196
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Менеджер питания Xfce не запущен, хотите запустить его сейчас? "
+msgstr "Диспетчер питания Xfce не запущен, хотите запустить его сейчас? "
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
 #: ../src/xfpm-power.c:766 ../src/xfpm-power.c:935 ../src/xfpm-power.c:959
 #: ../src/xfpm-battery.c:351 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
-msgstr "Менеджер питания "
+msgstr "Управление питанием"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
-msgstr "Настройки менеджера питания Xfce 4 "
+msgstr "Настройки диспетчера питания Xfce 4 "
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
@@ -360,7 +361,7 @@ msgstr "Все запущенные экземпляры программы бу
 
 #: ../src/xfpm-power.c:429
 msgid "Quit the power manager?"
-msgstr "Выйти из Менеджера питания?"
+msgstr "Выйти из управления питанием?"
 
 #. Power information
 #: ../src/xfpm-power.c:534 ../src/xfpm-power-info.c:818
@@ -676,7 +677,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nМенеджер питания Xfce %s\n\nРазрабатывается в рамках проекта Xfce Goodies\nhttp://goodies.xfce.org\n\nЛицензия GNU GPL.\n\n"
+msgstr "\nДиспетчер управления питанием Xfce %s\n\nРазрабатывается в рамках проекта Xfce Goodies\nhttp://goodies.xfce.org\n\nЛицензия GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
@@ -782,7 +783,7 @@ msgstr "Вся информация"
 
 #: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Перезапустить менеджер питания Xfce "
+msgstr "Перезапустить диспетчер управления питанием Xfce "
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
@@ -790,7 +791,7 @@ msgstr "Показать диалог настроек программы "
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
-msgstr "Завершить работу менеджера питания Xfce "
+msgstr "Завершить работу диспетчера управления питанием Xfce "
 
 #: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:933
 msgid "Version information"
@@ -802,12 +803,12 @@ msgstr "Невозможно соединиться с системной ком
 
 #: ../src/xfpm-main.c:414
 msgid "Another power manager is already running"
-msgstr "Другой менеджер питания уже запущен "
+msgstr "Другой диспетчер управления питанием уже запущен "
 
 #: ../src/xfpm-main.c:420
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "Менеджер питания Xfce уже запущен "
+msgstr "Диспетчер управления питанием Xfce уже запущен "
 
 #: ../src/xfpm-inhibit.c:331
 #, c-format
