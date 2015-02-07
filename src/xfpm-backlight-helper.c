@@ -201,15 +201,15 @@ backlight_helper_set_brightness (gchar *device, gint value)
 static gchar *
 backlight_helper_get_device (void)
 {
-	/* 'tv' device is also available */
-	gchar *types[] = { "lcd", "crt", "out", "ext", NULL };
+	/* devices in priority order */
+	gchar *types[] = { "lcd", "crt", "out", "ext", "tv", NULL };
 	gchar *device = NULL;
 	gint i;
 
 	device = (gchar *) g_malloc (sizeof (gchar));
 
 	for (i = 0; types[i] != NULL; i++) {
-		g_snprintf (device, 5, "%s0", types[i]);
+		g_snprintf (device, (gulong) strlen (types[i]), "%s0", types[i]);
 
 		/* stop, when first device is found */
 		if (acpi_video_is_enabled (device))
