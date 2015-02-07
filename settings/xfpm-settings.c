@@ -63,6 +63,14 @@ static  GtkWidget *on_ac_dpms_off 		= NULL;
 static  GtkWidget *sideview                 = NULL; /* Sidebar tree view - all devices are in the sideview */
 static  GtkWidget *device_details_notebook  = NULL; /* Displays the details of a deivce */
 
+/* Light Locker Integration */
+static  GtkWidget *light_locker_tab             = NULL;
+static  GtkWidget *light_locker_autolock        = NULL;
+static  GtkWidget *light_locker_delay           = NULL;
+static  GtkWidget *light_locker_sleep           = NULL;
+static  GSettings *light_locker_settings        = NULL;
+/* END Light Locker Integration */
+
 static  gboolean  lcd_brightness = FALSE;
 static  gchar *starting_device_id = NULL;
 static  UpClient *upower = NULL;
@@ -190,6 +198,19 @@ void        on_ac_sleep_mode_changed_cb 	   (GtkWidget *w,
 void        on_battery_sleep_mode_changed_cb	   (GtkWidget *w,
 						    XfconfChannel *channel);
 
+/* Light Locker Integration */
+gchar      *format_light_locker_value_cb           (GtkScale *scale,
+                                                    gdouble value,
+                                                    gpointer data);
+
+void        light_locker_late_locking_value_changed_cb (GtkWidget *w,
+                                                        XfconfChannel *channel);
+
+void        light_locker_automatic_locking_changed_cb (GtkWidget *w,
+                                                       XfconfChannel *channel);
+
+void        xfpm_update_logind_handle_lid_switch   (XfconfChannel *channel);
+/* END Light Locker Integration */
 
 void brightness_level_on_ac (GtkWidget *w,  XfconfChannel *channel)
 {
@@ -744,6 +765,7 @@ on_battery_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_BATTERY_CFG);
     }
+    xfpm_update_logind_handle_lid_switch (channel);
 }
 
 void
@@ -768,6 +790,7 @@ on_ac_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_AC_CFG);
     }
+    xfpm_update_logind_handle_lid_switch (channel);
 } 
 
 void
@@ -796,7 +819,33 @@ lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Unable to set value for property %s\n", LOCK_SCREEN_ON_SLEEP);
     }
+
+    /* Light Locker Integration */
+    if ( light_locker_settings )
+    {
+        GtkWidget *widget;
+        GVariant *variant;
+        variant = g_variant_new_boolean (val);
+        if (!g_settings_set_value (light_locker_settings, "lock-on-suspend", variant))
+            g_critical ("Cannot set value for property lock-on-suspend\n");
+
+	xfpm_update_logind_handle_lid_switch (channel);
+    }
+    /* END Light Locker Integration */
 }
+
+/* Light Locker Integration */
+void
+xfpm_update_logind_handle_lid_switch (XfconfChannel *channel)
+{
+    gboolean lock_on_suspend = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
+    guint lid_switch_on_ac = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, LID_TRIGGER_LOCK_SCREEN);
+    guint lid_switch_on_battery = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, LID_TRIGGER_LOCK_SCREEN);
+
+    // logind-handle-lid-switch = true when: lock_on_suspend == true and (lid_switch_on_ac == suspend or lid_switch_on_battery == suspend)
+    xfconf_channel_set_bool (channel, PROPERTIES_PREFIX LOGIND_HANDLE_LID_SWITCH, lock_on_suspend && (lid_switch_on_ac == 1 || lid_switch_on_battery == 1));
+}
+/* END Light Locker Integration */
 
 static void
 xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
@@ -1468,6 +1517,178 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS, TRUE);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(brg_handle_keys), val);
 }
+
+/* Light Locker Integration */
+static gchar*
+get_light_locker_path (void)
+{
+    gchar** paths = NULL;
+    gchar* path = NULL;
+    int i = 0;
+
+    /* Check if executable in path */
+    paths = g_strsplit(g_getenv("PATH"), ":", 0);
+    for (i = 0; i < g_strv_length(paths); i++) {
+        path = g_strdup(g_build_filename(paths[i], "light-locker", NULL));
+        if (g_file_test(path, G_FILE_TEST_EXISTS))
+        {
+            break;
+        }
+        g_free(path);
+        path = NULL;
+    }
+    g_strfreev(paths);
+
+    return path;
+}
+
+gchar *
+format_light_locker_value_cb (GtkScale *scale, gdouble value, gpointer data)
+{
+    gint h, min;
+
+    if ( (gint)value <= 0 )
+        return g_strdup (_("Never"));
+    else if ( (gint)value < 60 )
+        return g_strdup_printf ("%d %s", (gint)value, _("Seconds"));
+    else if ( (gint)value == 60)
+        return g_strdup (_("One Minute"));
+
+    /* value > 60 */
+    min = (gint)value - 60;
+
+    return g_strdup_printf ("%d %s", (gint)min, _("Minutes"));
+}
+
+void
+light_locker_late_locking_value_changed_cb (GtkWidget *widget, XfconfChannel *channel)
+{
+    GVariant *variant;
+    gint      value = (gint)gtk_range_get_value (GTK_RANGE (widget));
+
+    if (value > 60) {
+        value = (value - 60) * 60;
+    }
+
+    variant = g_variant_new_uint32 (value);
+
+    if (!g_settings_set_value (light_locker_settings, "lock-after-screensaver", variant))
+    {
+        g_critical ("Cannot set value for property lock-after-screensaver\n");
+    }
+}
+
+void
+light_locker_automatic_locking_changed_cb (GtkWidget *widget, XfconfChannel *channel)
+{
+    GVariant *variant;
+    gint      value;
+    gint      lock_after_screensaver;
+    gboolean  late_locking = FALSE;
+
+    value = gtk_combo_box_get_active (GTK_COMBO_BOX(widget));
+    gtk_widget_set_sensitive (light_locker_delay, value != 0);
+
+    if (value == 0)
+        lock_after_screensaver = 0;
+    else {
+        lock_after_screensaver = (gint)gtk_range_get_value (GTK_RANGE (light_locker_delay));
+        if (lock_after_screensaver > 60) {
+            lock_after_screensaver = (lock_after_screensaver - 60) * 60;
+        }
+    }
+
+    if (value == 2)
+        late_locking = TRUE;
+
+    variant = g_variant_new_uint32 (lock_after_screensaver);
+    if (!g_settings_set_value (light_locker_settings, "lock-after-screensaver", variant))
+        g_critical ("Cannot set value for property lock-after-screensaver\n");
+
+    variant = g_variant_new_boolean (late_locking);
+    if (!g_settings_set_value (light_locker_settings, "late-locking", variant))
+        g_critical ("Cannot set value for property late-locking\n");
+}
+
+static void xfpm_settings_light_locker (XfconfChannel *channel,
+                                        gboolean auth_suspend, gboolean auth_hibernate,
+                                        gboolean can_suspend, gboolean can_hibernate)
+{
+    GSettingsSchemaSource *schema_source;
+    GSettingsSchema       *schema;
+    GVariant              *variant;
+    gboolean               late_locking, lock_on_suspend, xfpm_lock_on_suspend;
+    guint32                lock_after_screensaver;
+    GtkWidget             *security_frame;
+
+    /* Collect the Light Locker widgets */
+    light_locker_tab = GTK_WIDGET (gtk_builder_get_object (xml, "light-locker-vbox1"));
+    light_locker_autolock = GTK_WIDGET (gtk_builder_get_object (xml, "light-locker-automatic-locking-combo"));
+    light_locker_delay = GTK_WIDGET (gtk_builder_get_object (xml, "light-locker-late-locking-scale"));
+    light_locker_sleep = GTK_WIDGET (gtk_builder_get_object (xml, "light-locker-suspend"));
+
+    if ( !can_suspend && !can_hibernate )
+    {
+        gtk_widget_set_sensitive (light_locker_sleep, FALSE);
+        gtk_widget_set_tooltip_text (light_locker_sleep, _("Hibernate and suspend operations not supported"));
+    }
+    else if ( !auth_hibernate && !auth_suspend)
+    {
+        gtk_widget_set_sensitive (light_locker_sleep, FALSE);
+        gtk_widget_set_tooltip_text (light_locker_sleep, _("Hibernate and suspend operations not permitted"));
+    }
+
+    schema_source = g_settings_schema_source_get_default();
+    schema = g_settings_schema_source_lookup (schema_source, "apps.light-locker", FALSE);
+
+    if (schema != NULL && get_light_locker_path() != NULL) {
+        security_frame = GTK_WIDGET (gtk_builder_get_object (xml, "security-frame"));
+        gtk_widget_hide(security_frame);
+        /* Load the settings (Light Locker compiled with GSettings backend required) */
+        light_locker_settings = g_settings_new ("apps.light-locker");
+
+        variant = g_settings_get_value (light_locker_settings, "late-locking");
+        late_locking = g_variant_get_boolean (variant);
+
+        variant = g_settings_get_value (light_locker_settings, "lock-on-suspend");
+        lock_on_suspend = g_variant_get_boolean (variant);
+        xfpm_lock_on_suspend = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
+        if (lock_on_suspend != xfpm_lock_on_suspend) {
+            variant = g_variant_new_boolean (xfpm_lock_on_suspend);
+            g_settings_set_value (light_locker_settings, "lock-on-suspend", variant);
+            lock_on_suspend = xfpm_lock_on_suspend;
+        }
+
+        variant = g_settings_get_value (light_locker_settings, "lock-after-screensaver");
+        lock_after_screensaver = g_variant_get_uint32 (variant);
+
+        gtk_widget_set_sensitive (light_locker_delay, lock_after_screensaver != 0);
+
+        if (lock_after_screensaver > 60) {
+            lock_after_screensaver = (lock_after_screensaver / 60) + 60;
+        }
+
+        /* Apply the settings */
+        if (lock_after_screensaver == 0) {
+            gtk_combo_box_set_active (GTK_COMBO_BOX(light_locker_autolock), 0);
+        } else {
+            if (!late_locking) {
+                gtk_combo_box_set_active (GTK_COMBO_BOX(light_locker_autolock), 1);
+            } else {
+                gtk_combo_box_set_active (GTK_COMBO_BOX(light_locker_autolock), 2);
+            }
+            gtk_range_set_value (GTK_RANGE(light_locker_delay), lock_after_screensaver);
+        }
+
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(light_locker_sleep), lock_on_suspend);
+
+        g_settings_schema_unref (schema);
+    } else {
+        g_warning("Schema \"apps.light-locker\" not found. Not configuring Light Locker.");
+        gtk_widget_hide (light_locker_tab);
+    }
+}
+/* END Light Locker Integration */
 
 /* Call gtk_tree_iter_free when done with the tree iter */
 static GtkTreeIter*
@@ -2180,6 +2401,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                            has_sleep_button, has_hibernate_button, has_power_button );
 
     xfpm_settings_advanced (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, has_battery);
+
+    /* Light Locker Integration */
+    xfpm_settings_light_locker (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate);
+    /* END Light Locker Integration */
 
     if ( !has_lcd_brightness )
     {
