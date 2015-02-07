@@ -823,7 +823,6 @@ lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     /* Light Locker Integration */
     if ( light_locker_settings )
     {
-        GtkWidget *widget;
         GVariant *variant;
         variant = g_variant_new_boolean (val);
         if (!g_settings_set_value (light_locker_settings, "lock-on-suspend", variant))
@@ -1524,7 +1523,7 @@ get_light_locker_path (void)
 {
     gchar** paths = NULL;
     gchar* path = NULL;
-    int i = 0;
+    unsigned int i = 0;
 
     /* Check if executable in path */
     paths = g_strsplit(g_getenv("PATH"), ":", 0);
@@ -1545,7 +1544,7 @@ get_light_locker_path (void)
 gchar *
 format_light_locker_value_cb (GtkScale *scale, gdouble value, gpointer data)
 {
-    gint h, min;
+    gint min;
 
     if ( (gint)value <= 0 )
         return g_strdup (_("Never"));
