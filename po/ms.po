@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# abuyop <abuyop@gmail.com>, 2014
+# abuyop <abuyop@gmail.com>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-29 18:30+0200\n"
-"PO-Revision-Date: 2014-10-02 09:07+0000\n"
+"POT-Creation-Date: 2015-02-07 12:30+0100\n"
+"PO-Revision-Date: 2015-02-09 14:46+0000\n"
 "Last-Translator: abuyop <abuyop@gmail.com>\n"
 "Language-Team: Malay (http://www.transifex.com/projects/p/xfce4-power-manager/language/ms/)\n"
 "MIME-Version: 1.0\n"
@@ -18,327 +18,357 @@ msgstr ""
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:626
+#: ../settings/xfpm-settings.c:641 ../settings/xfpm-settings.c:668
+#: ../settings/xfpm-settings.c:1551
+msgid "Never"
+msgstr "Jangan Sesekali"
+
+#: ../data/interfaces/xfpm-settings.ui.h:2
+msgid "When the screensaver is activated"
+msgstr "Bila penyelamat skrin aktif"
+
+#: ../data/interfaces/xfpm-settings.ui.h:3
+msgid "When the screensaver is deactivated"
+msgstr "Bila penyelamat skrin nyahaktif"
+
+#: ../data/interfaces/xfpm-settings.ui.h:4
 msgid "Nothing"
 msgstr "Tiada Apa-apa"
 
-#: ../data/interfaces/xfpm-settings.ui.h:2
+#: ../data/interfaces/xfpm-settings.ui.h:5
 #: ../settings/xfpm-settings-main.c:142 ../src/xfpm-main.c:425
 msgid "Xfce Power Manager"
 msgstr "Pengurus Kuasa Xfce"
 
-#: ../data/interfaces/xfpm-settings.ui.h:3
+#: ../data/interfaces/xfpm-settings.ui.h:6
 msgid "Power manager settings"
 msgstr "Tetapan pengurus kuasa"
 
-#: ../data/interfaces/xfpm-settings.ui.h:4
+#: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "When power button is pressed:"
 msgstr "Bila butang kuasa ditekan:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:5
+#: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "When sleep button is pressed:"
 msgstr "Bila butang tidur ditekan:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:6
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "When hibernate button is pressed:"
 msgstr "Bila butang hibernasi ditekan:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:7
+#: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "Handle display brightness _keys"
 msgstr "Kendali _kekunci kecerahan paparan"
 
-#: ../data/interfaces/xfpm-settings.ui.h:8
+#: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "<b>Buttons</b>"
 msgstr "<b>Butang</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:9
+#: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "On battery"
 msgstr "Guna bateri"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10 ../common/xfpm-power-common.c:430
+#: ../data/interfaces/xfpm-settings.ui.h:13 ../common/xfpm-power-common.c:444
 msgid "Plugged in"
 msgstr "Dipalam masuk"
 
-#: ../data/interfaces/xfpm-settings.ui.h:11
+#: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "When laptop lid is closed:"
 msgstr "Bila komputer riba ditutup:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:12
+#: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Penutup Komputer Riba</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:13
+#: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Show notifications"
 msgstr "Tunjuk pemberitahuan"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "<b>Appearance</b>"
 msgstr "<b>Penampilan</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
+#: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "General"
 msgstr "Am"
 
-#: ../data/interfaces/xfpm-settings.ui.h:16
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "When inactive for"
 msgstr "Bila tidak aktif selama"
 
-#: ../data/interfaces/xfpm-settings.ui.h:17
+#: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "System sleep mode:"
 msgstr "Mod tidur sistem:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:18
+#: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "<b>System power saving</b>"
 msgstr "<b>Penjimatan kuasa sistem</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
+#: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Critical battery power level:"
 msgstr "Aras kuasa bateri kritikal:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "On critical battery power:"
 msgstr "Bila kuasa bateri kritikal:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:21
+#: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "<b>Critical power</b>"
 msgstr "<b>Kuasa kritikal</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
+#: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Lock screen when system is going for sleep"
 msgstr "Kunci skrin bila sistem hendak tidur"
 
-#: ../data/interfaces/xfpm-settings.ui.h:23
+#: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "<b>Security</b>"
 msgstr "<b>Keselamatan</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:24
+#: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "System"
 msgstr "Sistem"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
+#: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "Handle display power management"
 msgstr "Kendali pengurusan kuasa paparan"
 
-#: ../data/interfaces/xfpm-settings.ui.h:26
+#: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "Blank after"
 msgstr "Gelapkan selepas"
 
-#: ../data/interfaces/xfpm-settings.ui.h:27
+#: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "Put to sleep after"
 msgstr "Tidurkan selepas"
 
-#: ../data/interfaces/xfpm-settings.ui.h:28
+#: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Switch off after"
 msgstr "Matikan selepas"
 
-#: ../data/interfaces/xfpm-settings.ui.h:29
+#: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "<b>Display power management settings</b>"
 msgstr "<b>Papar tetapan pengurusan kuasa</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:30
+#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "On inactivity reduce to"
 msgstr "Bila tidak aktif kurangkan sehingga"
 
-#: ../data/interfaces/xfpm-settings.ui.h:31
+#: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "Reduce after"
 msgstr "Kurangkan selepas"
 
-#: ../data/interfaces/xfpm-settings.ui.h:32
+#: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Pengurangan kecerahan</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:33
+#: ../data/interfaces/xfpm-settings.ui.h:36
 msgid "Display"
 msgstr "Paparan"
 
-#: ../settings/xfpm-settings.c:605 ../settings/xfpm-settings.c:620
-#: ../settings/xfpm-settings.c:647
-msgid "Never"
-msgstr "Jangan Sesekali"
+#: ../data/interfaces/xfpm-settings.ui.h:37
+msgid "Automatically lock the session:"
+msgstr "Kunci sesi secara automatik:"
 
-#: ../settings/xfpm-settings.c:608
+#: ../data/interfaces/xfpm-settings.ui.h:38
+msgid "Delay locking after screensaver for"
+msgstr "Lengah penguncian selepas penyelamat skrin"
+
+#: ../data/interfaces/xfpm-settings.ui.h:39
+msgid "<b>Light Locker</b>"
+msgstr "<b>Pengunci</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:40
+msgid "Security"
+msgstr "Keselamatan"
+
+#: ../settings/xfpm-settings.c:629
 msgid "One minute"
 msgstr "Satu minit"
 
-#: ../settings/xfpm-settings.c:610 ../settings/xfpm-settings.c:622
+#: ../settings/xfpm-settings.c:631 ../settings/xfpm-settings.c:643
+#: ../settings/xfpm-settings.c:1560
 msgid "Minutes"
 msgstr "Minit"
 
-#: ../settings/xfpm-settings.c:624 ../settings/xfpm-settings.c:631
-#: ../settings/xfpm-settings.c:632 ../settings/xfpm-settings.c:633
+#: ../settings/xfpm-settings.c:645 ../settings/xfpm-settings.c:652
+#: ../settings/xfpm-settings.c:653 ../settings/xfpm-settings.c:654
 msgid "One hour"
 msgstr "Satu jam"
 
-#: ../settings/xfpm-settings.c:632 ../settings/xfpm-settings.c:636
+#: ../settings/xfpm-settings.c:653 ../settings/xfpm-settings.c:657
 msgid "one minute"
 msgstr "satu minit"
 
-#: ../settings/xfpm-settings.c:633 ../settings/xfpm-settings.c:637
+#: ../settings/xfpm-settings.c:654 ../settings/xfpm-settings.c:658
 msgid "minutes"
 msgstr "minit"
 
-#: ../settings/xfpm-settings.c:635 ../settings/xfpm-settings.c:636
-#: ../settings/xfpm-settings.c:637
+#: ../settings/xfpm-settings.c:656 ../settings/xfpm-settings.c:657
+#: ../settings/xfpm-settings.c:658
 msgid "hours"
 msgstr "jam"
 
-#: ../settings/xfpm-settings.c:649
+#: ../settings/xfpm-settings.c:670 ../settings/xfpm-settings.c:1553
 msgid "Seconds"
 msgstr "Saat"
 
-#: ../settings/xfpm-settings.c:655
+#: ../settings/xfpm-settings.c:676
 msgid "%"
 msgstr "%"
 
-#: ../settings/xfpm-settings.c:829 ../settings/xfpm-settings.c:908
-#: ../settings/xfpm-settings.c:966 ../settings/xfpm-settings.c:1051
-#: ../settings/xfpm-settings.c:1139 ../settings/xfpm-settings.c:1247
-#: ../settings/xfpm-settings.c:1304 ../settings/xfpm-settings.c:1356
+#: ../settings/xfpm-settings.c:878 ../settings/xfpm-settings.c:957
+#: ../settings/xfpm-settings.c:1019 ../settings/xfpm-settings.c:1104
+#: ../settings/xfpm-settings.c:1196 ../settings/xfpm-settings.c:1304
+#: ../settings/xfpm-settings.c:1361 ../settings/xfpm-settings.c:1413
 #: ../src/xfpm-power.c:638
 msgid "Suspend"
 msgstr "Tangguh"
 
-#: ../settings/xfpm-settings.c:833 ../settings/xfpm-settings.c:1055
+#: ../settings/xfpm-settings.c:882 ../settings/xfpm-settings.c:1108
 msgid "Suspend operation not permitted"
 msgstr "Operasi tangguh tidak diizinkan"
 
-#: ../settings/xfpm-settings.c:837 ../settings/xfpm-settings.c:1059
+#: ../settings/xfpm-settings.c:886 ../settings/xfpm-settings.c:1112
 msgid "Suspend operation not supported"
 msgstr "Operasi tangguh tidak disokong"
 
-#: ../settings/xfpm-settings.c:843 ../settings/xfpm-settings.c:914
-#: ../settings/xfpm-settings.c:972 ../settings/xfpm-settings.c:1065
-#: ../settings/xfpm-settings.c:1145 ../settings/xfpm-settings.c:1253
-#: ../settings/xfpm-settings.c:1310 ../settings/xfpm-settings.c:1362
+#: ../settings/xfpm-settings.c:892 ../settings/xfpm-settings.c:963
+#: ../settings/xfpm-settings.c:1025 ../settings/xfpm-settings.c:1118
+#: ../settings/xfpm-settings.c:1202 ../settings/xfpm-settings.c:1310
+#: ../settings/xfpm-settings.c:1367 ../settings/xfpm-settings.c:1419
 #: ../src/xfpm-power.c:627
 msgid "Hibernate"
 msgstr "Hibernasi"
 
-#: ../settings/xfpm-settings.c:847 ../settings/xfpm-settings.c:1069
+#: ../settings/xfpm-settings.c:896 ../settings/xfpm-settings.c:1122
 msgid "Hibernate operation not permitted"
 msgstr "Operasi hibernasi tidak diizinkan"
 
-#: ../settings/xfpm-settings.c:851 ../settings/xfpm-settings.c:1073
+#: ../settings/xfpm-settings.c:900 ../settings/xfpm-settings.c:1126
 msgid "Hibernate operation not supported"
 msgstr "Operasi hibernasi tidak disokong"
 
-#: ../settings/xfpm-settings.c:881 ../settings/xfpm-settings.c:1103
-#: ../settings/xfpm-settings.c:1445
+#: ../settings/xfpm-settings.c:930 ../settings/xfpm-settings.c:1156
+#: ../settings/xfpm-settings.c:1502 ../settings/xfpm-settings.c:1633
 msgid "Hibernate and suspend operations not supported"
 msgstr "Operasi hibernasi dan tangguh tidak disokong"
 
-#: ../settings/xfpm-settings.c:886 ../settings/xfpm-settings.c:1108
-#: ../settings/xfpm-settings.c:1450
+#: ../settings/xfpm-settings.c:935 ../settings/xfpm-settings.c:1161
+#: ../settings/xfpm-settings.c:1507 ../settings/xfpm-settings.c:1638
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Operasi hibernasi dan tangguh tidak dibenarkan"
 
-#: ../settings/xfpm-settings.c:903 ../settings/xfpm-settings.c:1242
-#: ../settings/xfpm-settings.c:1299 ../settings/xfpm-settings.c:1351
+#: ../settings/xfpm-settings.c:952 ../settings/xfpm-settings.c:1299
+#: ../settings/xfpm-settings.c:1356 ../settings/xfpm-settings.c:1408
 msgid "Do nothing"
 msgstr "Tidak buat apa-apa"
 
-#: ../settings/xfpm-settings.c:920 ../settings/xfpm-settings.c:1259
+#: ../settings/xfpm-settings.c:969 ../settings/xfpm-settings.c:1316
 #: ../src/xfpm-power.c:649
 msgid "Shutdown"
 msgstr "Matikan"
 
-#: ../settings/xfpm-settings.c:924 ../settings/xfpm-settings.c:1263
-#: ../settings/xfpm-settings.c:1314 ../settings/xfpm-settings.c:1366
+#: ../settings/xfpm-settings.c:973 ../settings/xfpm-settings.c:1320
+#: ../settings/xfpm-settings.c:1371 ../settings/xfpm-settings.c:1423
 msgid "Ask"
 msgstr "Tanya"
 
-#: ../settings/xfpm-settings.c:961 ../settings/xfpm-settings.c:1134
+#: ../settings/xfpm-settings.c:1014 ../settings/xfpm-settings.c:1191
 msgid "Switch off display"
 msgstr "Matikan paparan"
 
-#: ../settings/xfpm-settings.c:976 ../settings/xfpm-settings.c:1149
+#: ../settings/xfpm-settings.c:1029 ../settings/xfpm-settings.c:1206
 msgid "Lock screen"
 msgstr "Kunci skrin"
 
-#: ../settings/xfpm-settings.c:1417
+#: ../settings/xfpm-settings.c:1474
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Bila semua sumber kuasa komputer telah mencapai aras cas ini"
 
-#: ../settings/xfpm-settings.c:1663
+#: ../settings/xfpm-settings.c:1555
+msgid "One Minute"
+msgstr "Satu Minit"
+
+#: ../settings/xfpm-settings.c:1892
 msgid "Device"
 msgstr "Peranti"
 
-#: ../settings/xfpm-settings.c:1685
+#: ../settings/xfpm-settings.c:1914
 msgid "Type"
 msgstr "Jenis"
 
-#: ../settings/xfpm-settings.c:1690
+#: ../settings/xfpm-settings.c:1919
 msgid "PowerSupply"
 msgstr "Bekalan Kuasa"
 
-#: ../settings/xfpm-settings.c:1691 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1920 ../src/xfpm-main.c:80
 msgid "True"
 msgstr "Benar"
 
-#: ../settings/xfpm-settings.c:1691 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1920 ../src/xfpm-main.c:80
 msgid "False"
 msgstr "Palsu"
 
-#: ../settings/xfpm-settings.c:1698
+#: ../settings/xfpm-settings.c:1927
 msgid "Model"
 msgstr "Model"
 
-#: ../settings/xfpm-settings.c:1701
+#: ../settings/xfpm-settings.c:1930
 msgid "Technology"
 msgstr "Teknologi"
 
-#: ../settings/xfpm-settings.c:1708
+#: ../settings/xfpm-settings.c:1937
 msgid "Current charge"
 msgstr "Cas semasa"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1716 ../settings/xfpm-settings.c:1728
-#: ../settings/xfpm-settings.c:1740
+#: ../settings/xfpm-settings.c:1945 ../settings/xfpm-settings.c:1957
+#: ../settings/xfpm-settings.c:1969
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:1718
+#: ../settings/xfpm-settings.c:1947
 msgid "Fully charged (design)"
 msgstr "Penuhnya dicas (reka)"
 
-#: ../settings/xfpm-settings.c:1731
+#: ../settings/xfpm-settings.c:1960
 msgid "Fully charged"
 msgstr "Sepenuhnya dicas"
 
-#: ../settings/xfpm-settings.c:1742
+#: ../settings/xfpm-settings.c:1971
 msgid "Energy empty"
 msgstr "Tenaga kosong"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:1750
+#: ../settings/xfpm-settings.c:1979
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:1752
+#: ../settings/xfpm-settings.c:1981
 msgid "Voltage"
 msgstr "Voltan"
 
-#: ../settings/xfpm-settings.c:1759
+#: ../settings/xfpm-settings.c:1988
 msgid "Vendor"
 msgstr "Vendor"
 
-#: ../settings/xfpm-settings.c:1764
+#: ../settings/xfpm-settings.c:1993
 msgid "Serial"
 msgstr "Siri"
 
-#: ../settings/xfpm-settings.c:1833
+#: ../settings/xfpm-settings.c:2062
 msgid "Attribute"
 msgstr "Atribut"
 
-#: ../settings/xfpm-settings.c:1840
+#: ../settings/xfpm-settings.c:2069
 msgid "Value"
 msgstr "Nilai"
 
-#: ../settings/xfpm-settings.c:2053
+#: ../settings/xfpm-settings.c:2282
 msgid "Check your power manager installation"
 msgstr "Periksa pemasangan pengurus kuasa anda"
 
-#: ../settings/xfpm-settings.c:2123
+#: ../settings/xfpm-settings.c:2352
 msgid "Devices"
 msgstr "Peranti"
 
@@ -505,63 +535,63 @@ msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minit"
 
-#: ../common/xfpm-power-common.c:357
+#: ../common/xfpm-power-common.c:371
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nSepenuhnya dicas (%0.0f%%, %s masa jalan)"
 
-#: ../common/xfpm-power-common.c:365
+#: ../common/xfpm-power-common.c:379
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nSepenuhnya dicas (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:375
+#: ../common/xfpm-power-common.c:389
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nMengecas (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:383
+#: ../common/xfpm-power-common.c:397
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nMengecas (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:393
+#: ../common/xfpm-power-common.c:407
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nMenyahcas (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:401
+#: ../common/xfpm-power-common.c:415
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nMenyahcas (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:408
+#: ../common/xfpm-power-common.c:422
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nMenunggu untuk dinyahcas (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:414
+#: ../common/xfpm-power-common.c:428
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nMenunggu untuk dicas (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:420
+#: ../common/xfpm-power-common.c:434
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -570,26 +600,26 @@ msgstr "<b>%s %s</b>\nadalah kosong"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:429
+#: ../common/xfpm-power-common.c:443
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:430
+#: ../common/xfpm-power-common.c:444
 msgid "Not plugged in"
 msgstr "Tidak dipalam masuk"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:436
+#: ../common/xfpm-power-common.c:450
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:441
+#: ../common/xfpm-power-common.c:455
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
