@@ -1537,7 +1537,7 @@ static gboolean xfpm_power_dbus_reboot   (XfpmPower *power,
 static gboolean xfpm_power_dbus_hibernate (XfpmPower * power,
 					 GError **error)
 {
-    if ( !power->priv->auth_suspend )
+    if ( !power->priv->auth_hibernate )
     {
 	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
                     _("Permission denied"));
