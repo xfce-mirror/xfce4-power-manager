@@ -486,6 +486,7 @@ battery_device_remove_pix (BatteryDevice *battery_device)
             g_object_unref (battery_device->img);
             battery_device->img = NULL;
         }
+        g_object_unref (battery_device->pix);
         battery_device->pix = NULL;
     }
 }
