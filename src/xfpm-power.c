@@ -207,7 +207,7 @@ check_for_consolekit2 (XfpmPower *power)
 static void
 xfpm_power_check_polkit_auth (XfpmPower *power)
 {
-    const char *suspend, *hibernate;
+    const char *suspend = NULL, *hibernate = NULL;
     if (LOGIND_RUNNING())
     {
 	XFPM_DEBUG ("using logind suspend backend");
