@@ -1654,7 +1654,9 @@ static void xfpm_settings_light_locker (XfconfChannel *channel,
         xfpm_lock_on_suspend = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
         if (lock_on_suspend != xfpm_lock_on_suspend) {
             variant = g_variant_new_boolean (xfpm_lock_on_suspend);
-            g_settings_set_value (light_locker_settings, "lock-on-suspend", variant);
+            if (!g_settings_set_value (light_locker_settings, "lock-on-suspend", variant)) {
+                g_critical ("Cannot set value for property lock-on-suspend\n");
+            }
             lock_on_suspend = xfpm_lock_on_suspend;
         }
 
