@@ -9,13 +9,14 @@
 # 玉堂白鹤 <yjwork@qq.com>, 2013-2014
 # 周潇波 <zhouxiaobo.500@gmail.com>, 2014-2015
 # 玉堂白鹤 <yjwork@qq.com>, 2015
+# 白铭骢 <jeffbaichina@members.fsf.org>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-07 12:30+0100\n"
-"PO-Revision-Date: 2015-02-11 06:35+0000\n"
-"Last-Translator: 玉堂白鹤 <yjwork@qq.com>\n"
+"PO-Revision-Date: 2015-02-20 23:30+0000\n"
+"Last-Translator: 白铭骢 <jeffbaichina@members.fsf.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/xfce4-power-manager/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -112,11 +113,11 @@ msgstr "<b>系统节电</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "Critical battery power level:"
-msgstr ""
+msgstr "紧急电量级别："
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "On critical battery power:"
-msgstr ""
+msgstr "当电池剩余电量达到紧急级别时："
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "<b>Critical power</b>"
@@ -180,7 +181,7 @@ msgstr "在屏保之后延迟锁定"
 
 #: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "<b>Light Locker</b>"
-msgstr ""
+msgstr "<b>Light Locker</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "Security"
@@ -387,11 +388,11 @@ msgstr "套接字 ID"
 
 #: ../settings/xfpm-settings-main.c:81
 msgid "Display a specific device by UpDevice object path"
-msgstr ""
+msgstr "使用 UpDevice 对象路径显示特定设备"
 
 #: ../settings/xfpm-settings-main.c:81
 msgid "UpDevice object path"
-msgstr ""
+msgstr "UpDevice 对象路径"
 
 #: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:255
 msgid "Enable debugging"
@@ -545,7 +546,7 @@ msgstr[0] "分钟"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr ""
+msgstr "<b>%s %s</b> \n电量已满 (%0.0f%%, %s 续航时长)"
 
 #: ../common/xfpm-power-common.c:379
 #, c-format
@@ -653,7 +654,7 @@ msgstr "继续"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr ""
+msgstr "嘿，所有锁屏工具都不能正常运行呢，所以我就无法锁定屏幕啦。"
 
 #: ../src/xfpm-power.c:380
 msgid "Do you still want to continue to suspend the system?"
@@ -936,7 +937,7 @@ msgstr "电量管理插件"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr ""
+msgstr "显示设备电量并控制屏幕亮度"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
@@ -953,14 +954,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
+msgstr "与此同时，Xfce 电源管理器提供了一组符合 freedesktop.org 规范的 DBus 接口，用于通知其他应用程序以当前的电量级别，让它们调整电量使用，同时提供用于阻止电源管理器睡眠动作的接口；软件更新管理器应该使用此接口来保障更新操作顺利完成。"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
+msgstr "Xfce 电源管理器还提供了一个用于 Xfce 和 LXDE 面板的插件，用于管理 LCD 亮度以及其他设备的电量级别。"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -968,7 +969,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr ""
+msgstr "这个开发版本主要修复了一些问题并改进（标准化）了图标主题支持。当然，软件翻译也更新了（成就感 UP）。此面板插件已更名为“电源管理器插件”。"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
