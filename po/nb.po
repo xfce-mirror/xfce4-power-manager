@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-02-07 12:30+0100\n"
-"PO-Revision-Date: 2015-02-20 20:41+0000\n"
+"PO-Revision-Date: 2015-02-21 15:14+0000\n"
 "Last-Translator: Allan Nordhøy <comradekingu@gmail.com>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/projects/p/xfce4-power-manager/language/nb/)\n"
 "MIME-Version: 1.0\n"
@@ -121,23 +121,23 @@ msgstr "<b>Kritisk batterinivå</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Lock screen when system is going for sleep"
-msgstr ""
+msgstr "Lås skjermen når systemet går i dvale"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "<b>Security</b>"
-msgstr ""
+msgstr "<b>Sikkerhet</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "System"
-msgstr ""
+msgstr "System"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "Handle display power management"
-msgstr "Behandling av effekt for skjerm"
+msgstr "Behandling av strømstyring for skjerm"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "Blank after"
-msgstr ""
+msgstr "Blank ut etter"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "Put to sleep after"
@@ -149,19 +149,19 @@ msgstr "Skru av etter"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "<b>Display power management settings</b>"
-msgstr ""
+msgstr "<b>Vis strømbehandlingsinnstillinger</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "On inactivity reduce to"
-msgstr ""
+msgstr "Ved inaktivitet, reduser til"
 
 #: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "Reduce after"
-msgstr ""
+msgstr "Reduser etter"
 
 #: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "<b>Brightness reduction</b>"
-msgstr ""
+msgstr "<b>Lysstyrkereduksjon</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:36
 msgid "Display"
@@ -169,15 +169,15 @@ msgstr "Skjerm"
 
 #: ../data/interfaces/xfpm-settings.ui.h:37
 msgid "Automatically lock the session:"
-msgstr ""
+msgstr "Automatisk lås økten:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Delay locking after screensaver for"
-msgstr ""
+msgstr "Utsett låsing etter skjermsparer i"
 
 #: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "<b>Light Locker</b>"
-msgstr ""
+msgstr "<b>Light Locker</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "Security"
@@ -331,7 +331,7 @@ msgstr "Wh"
 
 #: ../settings/xfpm-settings.c:1947
 msgid "Fully charged (design)"
-msgstr ""
+msgstr "Fullt oppladet (design)"
 
 #: ../settings/xfpm-settings.c:1960
 msgid "Fully charged"
@@ -368,7 +368,7 @@ msgstr "Verdi"
 
 #: ../settings/xfpm-settings.c:2282
 msgid "Check your power manager installation"
-msgstr "Sjekk installasjonen av din effektbehandler"
+msgstr "Sjekk installasjonen av din strømbehandler"
 
 #: ../settings/xfpm-settings.c:2352
 msgid "Devices"
@@ -384,11 +384,11 @@ msgstr "SOKKEL ID"
 
 #: ../settings/xfpm-settings-main.c:81
 msgid "Display a specific device by UpDevice object path"
-msgstr ""
+msgstr "Vis en gitt enhet sortert etter UpDevice objekt-sti"
 
 #: ../settings/xfpm-settings-main.c:81
 msgid "UpDevice object path"
-msgstr ""
+msgstr "UpDevice objekt-sti"
 
 #: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:255
 msgid "Enable debugging"
@@ -546,56 +546,56 @@ msgstr[1] "minutter"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr ""
+msgstr "<b>%s %s</b>\nFullt oppladet (%0.0f%%, %s kjøretid gjenstår)"
 
 #: ../common/xfpm-power-common.c:379
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nFullt oppladet (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:389
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\nLader (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:397
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nLader (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:407
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\nUtlader (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:415
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nUtlader (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:422
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nVenter på å lade ut (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:428
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nVenter på ladning (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:434
 #, c-format
@@ -877,7 +877,7 @@ msgstr "Versjonsinformasjon"
 #: ../src/xfpm-main.c:281
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr ""
+msgstr "Kunne ikke tolke argument: %s\n"
 
 #: ../src/xfpm-main.c:332
 msgid "Unable to get connection to the message bus session"
@@ -913,7 +913,7 @@ msgstr "Vis batterinivå for tilkoblede enheter"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1223
 msgid "<b>Display brightness</b>"
-msgstr ""
+msgstr "<b>Skjermlysstyrke</b>"
 
 #. Presentation mode checkbox
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1241
@@ -923,13 +923,13 @@ msgstr "Presentasjons-modus"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1250
 msgid "_Power manager settings..."
-msgstr ""
+msgstr "_strømbehandlingsinnstillinger..."
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:54
 #: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:56
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr ""
+msgstr "Strømbehandlingstillegg"
 
 #: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:56
 #: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:57
@@ -937,7 +937,7 @@ msgstr ""
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr ""
+msgstr "Vis batterinivået til dine enheter og kontroller lysstyrken til skjermen din"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
@@ -961,7 +961,7 @@ msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
+msgstr "Xfce strømbehandler tilbys også som et tillegg for Xfce og LXDE-paneler for å kontrollere LCD-lysstyrkenivå og oversikt over batteri og ladningsnivåer."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -969,7 +969,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr ""
+msgstr "Denne utviklingsutgivelsen er for det meste myntet på feilretting og tilbyr bedre støtter for ikonbaserte drakter ved å redusere enhetsikoner og å bruke standardnavn på dem. Den inneholder også oppdaterte oversettelser. Paneltillegget har byttet navn til effektbehandlingstiillegg."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -978,7 +978,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr ""
+msgstr "Denne utviklingsutgivelsen ordner opp i feil tilknyttet hvile og dvalemodus, den forbedrer også paneltillegget, ved å legge til funksjonalitet i (det nå forkastede) lysstyringspaneltillegget. En ny oppsprettsvarsling ble lagt til for å ta høyde for tastaturlysstyrkeendringer og effektbehandlerern styrer nå også utblankingstider for X11."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
