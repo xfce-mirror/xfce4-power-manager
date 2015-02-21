@@ -550,6 +550,9 @@ xfpm_manager_inhibit_sleep_systemd (XfpmManager *manager)
     if (g_strcmp0(what, "") == 0)
         return -1;
 
+    if (!(LOGIND_RUNNING()))
+        return -1;
+
     XFPM_DEBUG ("Inhibiting systemd sleep: %s", what);
 
     bus_connection = dbus_g_connection_get_connection (manager->priv->system_bus);
