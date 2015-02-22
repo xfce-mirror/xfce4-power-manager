@@ -49,6 +49,9 @@ typedef struct
 {
     GtkToggleButtonClass parent_class;
 
+    /*< Signals >*/
+    void (*tooltip_changed)  (PowerManagerButton *button);
+    void (*icon_name_changed)(PowerManagerButton *button);
 } PowerManagerButtonClass;
 
 GType                    power_manager_button_get_type (void) G_GNUC_CONST;
@@ -59,10 +62,18 @@ GtkWidget               *power_manager_button_new       (XfcePanelPlugin *plugin
 #ifdef LXDE_PLUGIN
 GtkWidget               *power_manager_button_new       (void);
 #endif
+#ifdef XFPM_SYSTRAY
+GtkWidget               *power_manager_button_new       (void);
+#endif
 
 void                     power_manager_button_show      (PowerManagerButton *button);
 
 void                     power_manager_button_set_width (PowerManagerButton *button, gint width);
+
+void                     power_manager_button_show_menu (PowerManagerButton *button);
+
+const gchar             *power_manager_button_get_icon_name (PowerManagerButton *button);
+const gchar             *power_manager_button_get_tooltip   (PowerManagerButton *button);
 
 G_END_DECLS
 

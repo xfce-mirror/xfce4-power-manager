@@ -62,14 +62,25 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-dbus-monitor.h"
 #include "xfpm-systemd.h"
-
+#include "../panel-plugins/power-manager-plugin/power-manager-button.h"
 
 static void xfpm_manager_finalize   (GObject *object);
+static void xfpm_manager_set_property(GObject *object,
+                                      guint property_id,
+                                      const GValue *value,
+                                      GParamSpec *pspec);
+static void xfpm_manager_get_property(GObject *object,
+                                      guint property_id,
+                                      GValue *value,
+                                      GParamSpec *pspec);
 
 static void xfpm_manager_dbus_class_init (XfpmManagerClass *klass);
 static void xfpm_manager_dbus_init	 (XfpmManager *manager);
 
 static gboolean xfpm_manager_quit (XfpmManager *manager);
+
+static void xfpm_manager_show_tray_icon (XfpmManager *manager);
+static void xfpm_manager_hide_tray_icon (XfpmManager *manager);
 
 #define XFPM_MANAGER_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_MANAGER, XfpmManagerPrivate))
@@ -93,6 +104,9 @@ struct XfpmManagerPrivate
     XfpmDBusMonitor    *monitor;
     XfpmInhibit        *inhibit;
     EggIdletime        *idle;
+    GtkStatusIcon      *adapter_icon;
+    GtkWidget          *power_button;
+    gint                show_tray_icon;
 
     XfpmDpms           *dpms;
 
@@ -104,6 +118,12 @@ struct XfpmManagerPrivate
     gint                inhibit_fd;
 };
 
+enum
+{
+    PROP_0 = 0,
+    PROP_SHOW_TRAY_ICON
+};
+
 G_DEFINE_TYPE (XfpmManager, xfpm_manager, G_TYPE_OBJECT)
 
 static void
@@ -112,8 +132,24 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
     object_class->finalize = xfpm_manager_finalize;
+    object_class->set_property = xfpm_manager_set_property;
+    object_class->get_property = xfpm_manager_get_property;
 
     g_type_class_add_private (klass, sizeof (XfpmManagerPrivate));
+
+#define XFPM_PARAM_FLAGS  (G_PARAM_READWRITE \
+                           | G_PARAM_CONSTRUCT \
+                           | G_PARAM_STATIC_NAME \
+                           | G_PARAM_STATIC_NICK \
+                           | G_PARAM_STATIC_BLURB)
+
+    g_object_class_install_property(object_class, PROP_SHOW_TRAY_ICON,
+                                    g_param_spec_int(SHOW_TRAY_ICON_CFG,
+                                                     SHOW_TRAY_ICON_CFG,
+                                                     SHOW_TRAY_ICON_CFG,
+                                                     0, 5, 0,
+                                                     XFPM_PARAM_FLAGS));
+#undef XFPM_PARAM_FLAGS
 }
 
 static void
@@ -160,6 +196,57 @@ xfpm_manager_finalize (GObject *object)
     g_object_unref (manager->priv->kbd_backlight);
 
     G_OBJECT_CLASS (xfpm_manager_parent_class)->finalize (object);
+}
+
+static void
+xfpm_manager_set_property(GObject *object,
+                          guint property_id,
+                          const GValue *value,
+                          GParamSpec *pspec)
+{
+    XfpmManager *manager = XFPM_MANAGER(object);
+    gint new_value;
+
+    switch(property_id) {
+        case PROP_SHOW_TRAY_ICON:
+            new_value = g_value_get_int (value);
+            if (new_value != manager->priv->show_tray_icon)
+            {
+                manager->priv->show_tray_icon = new_value;
+                if (new_value > 0)
+                {
+                    xfpm_manager_show_tray_icon (manager);
+                }
+                else
+                {
+                    xfpm_manager_hide_tray_icon (manager);
+                }
+            }
+            break;
+
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec);
+            break;
+    }
+}
+
+static void
+xfpm_manager_get_property(GObject *object,
+                          guint property_id,
+                          GValue *value,
+                          GParamSpec *pspec)
+{
+    XfpmManager *manager = XFPM_MANAGER(object);
+
+    switch(property_id) {
+        case PROP_SHOW_TRAY_ICON:
+            g_value_set_int (value, manager->priv->show_tray_icon);
+            break;
+
+        default:
+            G_OBJECT_WARN_INVALID_PROPERTY_ID(object, property_id, pspec);
+            break;
+    }
 }
 
 static void
@@ -620,6 +707,87 @@ xfpm_manager_systemd_events_changed (XfpmManager *manager)
         manager->priv->inhibit_fd = xfpm_manager_inhibit_sleep_systemd (manager);
 }
 
+static void
+xfpm_manager_tray_update_tooltip (PowerManagerButton *button, XfpmManager *manager)
+{
+    g_return_if_fail (XFPM_IS_MANAGER (manager));
+    g_return_if_fail (POWER_MANAGER_IS_BUTTON (manager->priv->power_button));
+    g_return_if_fail (GTK_IS_STATUS_ICON (manager->priv->adapter_icon));
+
+    XFPM_DEBUG ("updating tooltip");
+
+    if (power_manager_button_get_tooltip (POWER_MANAGER_BUTTON(manager->priv->power_button)) == NULL)
+        return;
+
+    gtk_status_icon_set_tooltip_markup (manager->priv->adapter_icon, power_manager_button_get_tooltip (POWER_MANAGER_BUTTON(manager->priv->power_button)));
+}
+
+static void
+xfpm_manager_tray_update_icon (PowerManagerButton *button, XfpmManager *manager)
+{
+    g_return_if_fail (XFPM_IS_MANAGER (manager));
+    g_return_if_fail (POWER_MANAGER_IS_BUTTON (manager->priv->power_button));
+
+    XFPM_DEBUG ("updating icon");
+
+    gtk_status_icon_set_from_icon_name (manager->priv->adapter_icon, power_manager_button_get_icon_name (POWER_MANAGER_BUTTON(manager->priv->power_button)));
+}
+
+static void
+xfpm_manager_show_tray_menu (GtkStatusIcon *icon, guint button, guint activate_time, XfpmManager *manager)
+{
+    power_manager_button_show_menu (POWER_MANAGER_BUTTON(manager->priv->power_button));
+}
+
+static void
+xfpm_manager_show_tray_icon (XfpmManager *manager)
+{
+    if (manager->priv->adapter_icon != NULL) {
+	XFPM_DEBUG ("tray icon already being shown");
+	return;
+    }
+
+    manager->priv->adapter_icon = gtk_status_icon_new ();
+    manager->priv->power_button = power_manager_button_new ();
+
+    XFPM_DEBUG ("Showing tray icon");
+
+    /* send a show event to startup the button */
+    power_manager_button_show (POWER_MANAGER_BUTTON(manager->priv->power_button));
+
+    /* initial update the tray icon + tooltip */
+    xfpm_manager_tray_update_icon (POWER_MANAGER_BUTTON(manager->priv->power_button), manager);
+    xfpm_manager_tray_update_tooltip (POWER_MANAGER_BUTTON(manager->priv->power_button), manager);
+
+    /* Listen to the tooltip and icon changes */
+    g_signal_connect (G_OBJECT(manager->priv->power_button), "tooltip-changed",   G_CALLBACK(xfpm_manager_tray_update_tooltip), manager);
+    g_signal_connect (G_OBJECT(manager->priv->power_button), "icon-name-changed", G_CALLBACK(xfpm_manager_tray_update_icon),    manager);
+
+    gtk_status_icon_set_visible (manager->priv->adapter_icon, TRUE);
+
+    g_signal_connect (manager->priv->adapter_icon, "popup-menu", G_CALLBACK (xfpm_manager_show_tray_menu), manager);
+}
+
+static void
+xfpm_manager_hide_tray_icon (XfpmManager *manager)
+{
+    if (manager->priv->adapter_icon == NULL)
+        return;
+
+    gtk_status_icon_set_visible (manager->priv->adapter_icon, FALSE);
+
+    /* disconnect from all the signals */
+    g_signal_handlers_disconnect_by_func (G_OBJECT(manager->priv->power_button), G_CALLBACK(xfpm_manager_tray_update_tooltip), manager);
+    g_signal_handlers_disconnect_by_func (G_OBJECT(manager->priv->power_button), G_CALLBACK(xfpm_manager_tray_update_icon),    manager);
+    g_signal_handlers_disconnect_by_func (G_OBJECT(manager->priv->adapter_icon), G_CALLBACK(xfpm_manager_show_tray_menu),      manager);
+
+    g_object_unref (manager->priv->power_button);
+    g_object_unref (manager->priv->adapter_icon);
+
+    manager->priv->power_button = NULL;
+    manager->priv->adapter_icon = NULL;
+}
+
 XfpmManager *
 xfpm_manager_new (DBusGConnection *bus, const gchar *client_id)
 {
@@ -760,6 +928,11 @@ void xfpm_manager_start (XfpmManager *manager)
     g_signal_connect_swapped (manager->priv->power, "shutdown",
 			      G_CALLBACK (xfpm_manager_shutdown), manager);
 
+    xfconf_g_property_bind(xfpm_xfconf_get_channel (manager->priv->conf),
+			   PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG,
+			   G_TYPE_INT,
+                           G_OBJECT(manager),
+			   SHOW_TRAY_ICON_CFG);
 out:
 	;
 }

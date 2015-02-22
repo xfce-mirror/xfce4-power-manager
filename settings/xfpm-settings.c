@@ -126,6 +126,8 @@ void        button_hibernate_changed_cb            (GtkWidget *w,
 
 void        notify_toggled_cb                      (GtkWidget *w, 
 						    XfconfChannel *channel);
+void        systray_toggled_cb                     (GtkWidget *w,
+						    XfconfChannel *channel);
 
 void        on_sleep_mode_changed_cb      (GtkWidget *w,
 						    XfconfChannel *channel);
@@ -360,6 +362,18 @@ notify_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 	g_critical ("Cannot set value for property %s\n", GENERAL_NOTIFICATION_CFG);
     }
 }
+
+void
+systray_toggled_cb (GtkWidget *w, XfconfChannel *channel)
+{
+    gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
+
+    if (!xfconf_channel_set_int (channel, PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG, (int)val) )
+    {
+	g_critical ("Cannot set value for property %s\n", SHOW_TRAY_ICON_CFG);
+    }
+}
+
 
 void
 on_ac_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
@@ -1265,11 +1279,13 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *sleep_w;
     GtkWidget *sleep_label;
     GtkWidget *notify;
+    GtkWidget *systray;
     
     guint  value;
     guint list_value;
     gboolean valid;
     gboolean val;
+    gint systray_val;
     
     GtkWidget *dpms;
     GtkListStore *list_store;
@@ -1450,6 +1466,12 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX GENERAL_NOTIFICATION_CFG, TRUE);
     
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(notify), val);
+
+    /* Enable/Disable systray icon */
+    systray = GTK_WIDGET (gtk_builder_get_object (xml, "show-systray"));
+    systray_val = xfconf_channel_get_int (channel, PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG, FALSE);
+
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(systray), systray_val);
 }
 
 static void

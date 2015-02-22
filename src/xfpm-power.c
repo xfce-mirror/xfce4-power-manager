@@ -63,7 +63,6 @@
 #include "xfpm-suspend.h"
 #include "xfpm-brightness.h"
 
-
 static void xfpm_power_finalize     (GObject *object);
 
 static void xfpm_power_get_property (GObject *object,
