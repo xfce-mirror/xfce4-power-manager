@@ -1,3 +1,33 @@
+1.4.3
+=====
+New stable release of xfce4-power-manager.
+
+* Miscellaneous bug fixes:
+ - Handle autotools m4 stuff properly
+ - Plug a memory leak (Bug #11538)
+ - Add support for ConsoleKit2
+ - Correctly check for hibernation
+   permissions (bug #11529)
+ - Use sysctl(3) to get or set brightness
+   level on FreeBSD and DragonFly systems
+ - Light Locker Integration (Bug #11488)
+ - Add gmux_backlight as supported
+   interface (bug #11406)
+ - Reformat code in xfpm_power_get_property
+ - Reformat code in xfpm_power_set_property
+
+* Translation updates:
+ Arabic (ar), Asturian (ast), Bulgarian (bg),
+ Czech (cs), Danish (da), German (de),
+ Spanish (Castilian) (es), Finnish (fi),
+ French (fr), Hebrew (he), Hungarian (hu),
+ Icelandic (is), Italian (it), Kazakh (kk),
+ Korean (ko), Malay (ms), Norwegian Bokmål (nb),
+ Dutch (Flemish) (nl), Polish (pl), Portuguese (pt),
+ Portuguese (Brazilian) (pt_BR), Russian (ru),
+ Slovak (sk), Slovenian (sl), Serbian (sr), Thai (th),
+ Turkish (tr), Ukrainian (uk), Chinese (China) (zh_CN).
+
 1.4.2
 =====
 New stable release of xfce4-power-manager.
