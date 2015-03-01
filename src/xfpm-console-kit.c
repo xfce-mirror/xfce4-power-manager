@@ -307,9 +307,8 @@ xfpm_console_kit_suspend (XfpmConsoleKit *console,
     g_return_if_fail (console->priv->proxy != NULL );
 
     dbus_g_proxy_call (console->priv->proxy, "Suspend", error,
-		       G_TYPE_INVALID,
 		       G_TYPE_BOOLEAN, TRUE,
-		       G_TYPE_INVALID);
+		       G_TYPE_INVALID, G_TYPE_INVALID);
 }
 
 void
@@ -319,7 +318,6 @@ xfpm_console_kit_hibernate (XfpmConsoleKit *console,
     g_return_if_fail (console->priv->proxy != NULL );
 
     dbus_g_proxy_call (console->priv->proxy, "Hibernate", error,
-		       G_TYPE_INVALID,
 		       G_TYPE_BOOLEAN, TRUE,
-		       G_TYPE_INVALID);
+		       G_TYPE_INVALID, G_TYPE_INVALID);
 }
