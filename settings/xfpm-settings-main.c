@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gtk/gtkx.h>
 #include <glib.h>
 
 #include <libxfce4util/libxfce4util.h>
@@ -69,7 +70,7 @@ int main (int argc, char **argv)
     gboolean start_xfpm_if_not_running;
     gboolean debug = FALSE;
 
-    GdkNativeWindow socket_id = 0;
+    Window socket_id = 0;
     gchar *device_id = NULL;
 
     XfconfChannel *channel;

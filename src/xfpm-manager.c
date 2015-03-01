@@ -719,7 +719,9 @@ xfpm_manager_tray_update_tooltip (PowerManagerButton *button, XfpmManager *manag
     if (power_manager_button_get_tooltip (POWER_MANAGER_BUTTON(manager->priv->power_button)) == NULL)
         return;
 
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     gtk_status_icon_set_tooltip_markup (manager->priv->adapter_icon, power_manager_button_get_tooltip (POWER_MANAGER_BUTTON(manager->priv->power_button)));
+G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 static void
@@ -730,7 +732,9 @@ xfpm_manager_tray_update_icon (PowerManagerButton *button, XfpmManager *manager)
 
     XFPM_DEBUG ("updating icon");
 
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     gtk_status_icon_set_from_icon_name (manager->priv->adapter_icon, power_manager_button_get_icon_name (POWER_MANAGER_BUTTON(manager->priv->power_button)));
+G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 static void
@@ -747,8 +751,10 @@ xfpm_manager_show_tray_icon (XfpmManager *manager)
 	return;
     }
 
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     manager->priv->adapter_icon = gtk_status_icon_new ();
     manager->priv->power_button = power_manager_button_new ();
+G_GNUC_END_IGNORE_DEPRECATIONS
 
     XFPM_DEBUG ("Showing tray icon");
 
@@ -763,7 +769,9 @@ xfpm_manager_show_tray_icon (XfpmManager *manager)
     g_signal_connect (G_OBJECT(manager->priv->power_button), "tooltip-changed",   G_CALLBACK(xfpm_manager_tray_update_tooltip), manager);
     g_signal_connect (G_OBJECT(manager->priv->power_button), "icon-name-changed", G_CALLBACK(xfpm_manager_tray_update_icon),    manager);
 
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     gtk_status_icon_set_visible (manager->priv->adapter_icon, TRUE);
+G_GNUC_END_IGNORE_DEPRECATIONS
 
     g_signal_connect (manager->priv->adapter_icon, "popup-menu", G_CALLBACK (xfpm_manager_show_tray_menu), manager);
 }
@@ -774,7 +782,9 @@ xfpm_manager_hide_tray_icon (XfpmManager *manager)
     if (manager->priv->adapter_icon == NULL)
         return;
 
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     gtk_status_icon_set_visible (manager->priv->adapter_icon, FALSE);
+G_GNUC_END_IGNORE_DEPRECATIONS
 
     /* disconnect from all the signals */
     g_signal_handlers_disconnect_by_func (G_OBJECT(manager->priv->power_button), G_CALLBACK(xfpm_manager_tray_update_tooltip), manager);

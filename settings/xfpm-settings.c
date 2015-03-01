@@ -2274,7 +2274,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                           gboolean has_battery, gboolean has_lcd_brightness,
                           gboolean has_lid, gboolean has_sleep_button,
                           gboolean has_hibernate_button, gboolean has_power_button,
-                          GdkNativeWindow id, gchar *device_id)
+                          Window id, gchar *device_id)
 {
     GtkWidget *plug;
     GtkWidget *dialog;
