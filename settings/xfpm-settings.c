@@ -2343,7 +2343,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 
     gtk_tree_view_set_model (GTK_TREE_VIEW (sideview), GTK_TREE_MODEL (list_store));
 
-    gtk_tree_view_set_rules_hint (GTK_TREE_VIEW (sideview),TRUE);
     col = gtk_tree_view_column_new ();
 
     renderer = gtk_cell_renderer_pixbuf_new ();
@@ -2365,7 +2364,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     device_details_notebook = gtk_notebook_new ();
 
     gtk_notebook_set_show_tabs (GTK_NOTEBOOK (device_details_notebook), FALSE);
-    hbox = gtk_hbox_new (FALSE, 3);
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
 
     viewport = gtk_viewport_new (NULL, NULL);
     gtk_container_add (GTK_CONTAINER (viewport), sideview);
