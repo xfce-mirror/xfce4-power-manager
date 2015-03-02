@@ -33,6 +33,7 @@
 #ifdef XFCE_PLUGIN
 #include <libxfce4panel/libxfce4panel.h>
 #include <libxfce4panel/xfce-panel-plugin.h>
+#include <libxfce4util/libxfce4util.h>
 #endif
 
 #include "../power-manager-button.h"
@@ -83,6 +84,8 @@ static void
 power_manager_plugin_construct (XfcePanelPlugin *plugin)
 {
     PowerManagerPlugin *power_manager_plugin;
+
+    xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
     /* create the plugin */
     power_manager_plugin = power_manager_plugin_new (plugin);
