@@ -169,7 +169,7 @@ GdkPixbuf *xfpm_icon_load (const gchar *icon_name, gint size)
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), 
 				    icon_name, 
 				    size,
-				    GTK_ICON_LOOKUP_USE_BUILTIN,
+				    GTK_ICON_LOOKUP_FORCE_SIZE,
 				    &error);
 				    
     if ( error )

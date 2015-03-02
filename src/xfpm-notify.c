@@ -200,8 +200,7 @@ xfpm_notify_set_notification_icon (NotifyNotification *n, const gchar *icon_name
     
     if ( pix )
     {
-	notify_notification_set_icon_from_pixbuf (n,
-						  pix);
+	notify_notification_set_image_from_pixbuf (n, pix);
 	g_object_unref ( G_OBJECT(pix));
     }
     
