@@ -2277,6 +2277,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                           Window id, gchar *device_id)
 {
     GtkWidget *plug;
+    GtkWidget *parent;
     GtkWidget *dialog;
     GtkWidget *plugged_box;
     GtkWidget *viewport;
@@ -2441,7 +2442,16 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 	plugged_box = GTK_WIDGET (gtk_builder_get_object (xml, "plug-child"));
 	plug = gtk_plug_new (id);
 	gtk_widget_show (plug);
-	gtk_widget_reparent (plugged_box, plug);
+
+    parent = gtk_widget_get_parent (plugged_box);
+    if (parent)
+    {
+        g_object_ref (plugged_box);
+        gtk_container_remove (GTK_CONTAINER (parent), plugged_box);
+        gtk_container_add (GTK_CONTAINER (plug), plugged_box);
+        g_object_unref (plugged_box);
+    }
+
 	g_signal_connect (plug, "delete-event", 
 			  G_CALLBACK (delete_event_cb), channel);
 	gdk_notify_startup_complete ();
