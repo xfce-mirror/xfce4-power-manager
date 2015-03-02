@@ -64,16 +64,14 @@ void             	  xfpm_notify_show_notification 	    (XfpmNotify *notify,
 								     const gchar *icon_name,
 								     gint timeout,
 								     gboolean simple,
-								     XfpmNotifyUrgency urgency,
-								     GtkStatusIcon *icon);
+								     XfpmNotifyUrgency urgency);
 
 NotifyNotification       *xfpm_notify_new_notification  	    (XfpmNotify *notify,
 								     const gchar *title,
 								     const gchar *text,
 								     const gchar *icon_name,
 								     guint timeout,
-								     XfpmNotifyUrgency urgency,
-								     GtkStatusIcon *icon) G_GNUC_MALLOC;
+								     XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
 
 void 			  xfpm_notify_add_action_to_notification    (XfpmNotify *notify, 
 								     NotifyNotification *n,

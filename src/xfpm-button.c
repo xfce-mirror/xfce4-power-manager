@@ -158,7 +158,7 @@ xfpm_button_grab_keystring (XfpmButton *button, guint keycode)
     }
 
     gdk_flush ();
-    gdk_error_trap_pop ();
+    gdk_error_trap_pop_ignored ();
     return TRUE;
 }
 

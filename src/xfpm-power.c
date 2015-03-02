@@ -369,8 +369,7 @@ xfpm_power_report_error (XfpmPower *power, const gchar *error, const gchar *icon
 				   icon_name,
 				   10000,
 				   FALSE,
-				   XFPM_NOTIFY_CRITICAL,
-				   battery);
+				   XFPM_NOTIFY_CRITICAL);
 
 }
 
@@ -387,13 +386,19 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 
     if ( power->priv->inhibited && force == FALSE)
     {
+	GtkWidget *dialog;
 	gboolean ret;
 
-	ret = xfce_dialog_confirm (NULL,
-				   GTK_STOCK_OK, _("_Hibernate"),
-				   _("An application is currently disabling the automatic sleep. "
-				     "Doing this action now may damage the working state of this application."),
-				   _("Are you sure you want to hibernate the system?"));
+	dialog = gtk_message_dialog_new (NULL,
+                                         GTK_DIALOG_MODAL,
+                                         GTK_MESSAGE_QUESTION,
+                                         GTK_BUTTONS_YES_NO,
+                                         _("An application is currently disabling the automatic sleep. "
+				           "Doing this action now may damage the working state of this application.\n"
+				           "Are you sure you want to hibernate the system?"));
+	ret = gtk_dialog_run (GTK_DIALOG (dialog));
+	gtk_widget_destroy (dialog);
+
 
 	if ( !ret )
 	    return;
@@ -431,15 +436,20 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 #endif
         if (!xfpm_lock_screen ())
         {
+	    GtkWidget *dialog;
 	    gboolean ret;
 
-	    ret = xfce_dialog_confirm (NULL,
-				       GTK_STOCK_OK, _("Continue"),
-			               _("None of the screen lock tools ran "
-				         "successfully, the screen will not "
-					 "be locked."),
-				       _("Do you still want to continue to "
-				         "suspend the system?"));
+	    dialog = gtk_message_dialog_new (NULL,
+				             GTK_DIALOG_MODAL,
+				             GTK_MESSAGE_QUESTION,
+				             GTK_BUTTONS_YES_NO,
+				             _("None of the screen lock tools ran "
+				               "successfully, the screen will not "
+				               "be locked.\n"
+				               "Do you still want to continue to "
+				               "suspend the system?"));
+	    ret = gtk_dialog_run (GTK_DIALOG (dialog));
+	    gtk_widget_destroy (dialog);
 
 	    if ( !ret )
 		return;
@@ -649,10 +659,9 @@ xfpm_power_show_critical_action_notification (XfpmPower *power, XfpmBattery *bat
 	xfpm_notify_new_notification (power->priv->notify,
 				      _("Power Manager"),
 				      message,
-				      gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
+				      xfpm_battery_get_icon_name (battery),
 				      20000,
-				      XFPM_NOTIFY_CRITICAL,
-				      GTK_STATUS_ICON (battery));
+				      XFPM_NOTIFY_CRITICAL);
 
     xfpm_power_add_actions_to_notification (power, n);
     xfpm_notify_critical (power->priv->notify, n);
@@ -692,7 +701,7 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
                "Save your work to avoid losing data");
 
     dialog = gtk_dialog_new_with_buttons (_("Power Manager"), NULL, GTK_DIALOG_MODAL,
-                                          NULL);
+                                          NULL, NULL);
 
     gtk_dialog_set_default_response (GTK_DIALOG (dialog),
                                      GTK_RESPONSE_CANCEL);
@@ -734,7 +743,7 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 			          G_CALLBACK (xfpm_power_shutdown_clicked), power);
     }
 
-    cancel = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+    cancel = gtk_button_new_with_label (_("_Cancel"));
     gtk_dialog_add_action_widget (GTK_DIALOG (dialog), cancel, GTK_RESPONSE_NONE);
 
     g_signal_connect_swapped (cancel, "clicked",
@@ -857,11 +866,10 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 		xfpm_notify_show_notification (power->priv->notify,
 					       _("Power Manager"),
 					       _("System is running on low power"),
-					       gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
+					       xfpm_battery_get_icon_name (battery),
 					       10000,
 					       FALSE,
-					       XFPM_NOTIFY_NORMAL,
-					       GTK_STATUS_ICON (battery));
+					       XFPM_NOTIFY_NORMAL);
 
 	}
 	else if ( battery_charge == XFPM_BATTERY_CHARGE_LOW )
@@ -881,11 +889,10 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 		xfpm_notify_show_notification (power->priv->notify,
 					       _("Power Manager"),
 					       msg,
-					       gtk_status_icon_get_icon_name (GTK_STATUS_ICON (battery)),
+					       xfpm_battery_get_icon_name (battery),
 					       10000,
 					       FALSE,
-					       XFPM_NOTIFY_NORMAL,
-					       GTK_STATUS_ICON (battery));
+					       XFPM_NOTIFY_NORMAL);
 		g_free (msg);
 		g_free (time_str);
 	    }
@@ -919,11 +926,11 @@ xfpm_power_add_device (UpDevice *device, XfpmPower *power)
 	 device_type == UP_DEVICE_KIND_KEYBOARD	||
 	 device_type == UP_DEVICE_KIND_PHONE)
     {
-	GtkStatusIcon *battery;
+	GtkWidget *battery;
 	XFPM_DEBUG( "Battery device type '%s' detected at: %s",
 		     up_device_kind_to_string(device_type), object_path);
 	battery = xfpm_battery_new ();
-	gtk_status_icon_set_visible (battery, FALSE);
+
 	xfpm_battery_monitor_device (XFPM_BATTERY (battery),
 				     object_path,
 				     device_type);

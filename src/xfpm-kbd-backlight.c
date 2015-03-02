@@ -107,8 +107,7 @@ xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self, gfloat value)
                 "",
                 "xfpm-brightness-keyboard",
                 0,
-                XFPM_NOTIFY_NORMAL,
-                NULL);
+                XFPM_NOTIFY_NORMAL);
     }
 
     /* generate a human-readable summary for the notification */
