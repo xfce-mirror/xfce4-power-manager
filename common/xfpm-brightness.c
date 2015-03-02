@@ -160,11 +160,11 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     if (!XRRQueryExtension (gdk_x11_get_default_xdisplay (), &event_base, &error_base) ||
 	!XRRQueryVersion (gdk_x11_get_default_xdisplay (), &major, &minor) )
     {
-	gdk_error_trap_pop ();
+	gdk_error_trap_pop_ignored ();
 	g_warning ("No XRANDR extension found");
 	return FALSE;
     }
-    gdk_error_trap_pop ();
+    gdk_error_trap_pop_ignored ();
 
     if (major == 1 && minor < 2)
     {
