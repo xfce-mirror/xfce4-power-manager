@@ -61,6 +61,7 @@ struct _ScaleMenuItemPrivate {
   GtkWidget            *percentage_label;
   GtkWidget            *vbox;
   GtkWidget            *hbox;
+  GtkWidget            *master_hbox;
   gboolean              grabbed;
   gboolean              ignore_value_changed;
 };
@@ -79,7 +80,7 @@ enum {
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE (ScaleMenuItem, scale_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
+G_DEFINE_TYPE (ScaleMenuItem, scale_menu_item, GTK_TYPE_MENU_ITEM)
 
 #define GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), TYPE_SCALE_MENU_ITEM, ScaleMenuItemPrivate))
 
@@ -176,21 +177,31 @@ static void
 update_packing (ScaleMenuItem *self)
 {
   ScaleMenuItemPrivate *priv = GET_PRIVATE (self);
-  GtkBox *hbox = GTK_BOX (gtk_hbox_new (FALSE, 0));
-  GtkBox *vbox = GTK_BOX (gtk_vbox_new (FALSE, 0));
+  GtkWidget *hbox; //= gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  GtkWidget *vbox; //= gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  GtkWidget *master_hbox;
 
   TRACE("entering");
+
+  master_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
   if(priv->hbox)
     remove_children (GTK_CONTAINER (priv->hbox));
   if(priv->vbox)
   {
     remove_children (GTK_CONTAINER (priv->vbox));
-    gtk_container_remove (GTK_CONTAINER (self), priv->vbox);
+  }
+  if(priv->master_hbox)
+  {
+    remove_children (GTK_CONTAINER (priv->master_hbox));
+    gtk_container_remove (GTK_CONTAINER (self), priv->master_hbox);
   }
 
-  priv->hbox = GTK_WIDGET(hbox);
-  priv->vbox = GTK_WIDGET(vbox);
+  priv->hbox = GTK_WIDGET (hbox);
+  priv->vbox = GTK_WIDGET (vbox);
+  priv->master_hbox = GTK_WIDGET (master_hbox);
 
   /* add the new layout */
   if (priv->description_label && priv->percentage_label)
@@ -198,39 +209,41 @@ update_packing (ScaleMenuItem *self)
       /* [IC]  Description
        * [ON]  <----slider----> [percentage]%
        */
-      gtk_box_pack_start (vbox, priv->description_label, FALSE, FALSE, 0);
-      gtk_box_pack_start (vbox, priv->hbox, TRUE, TRUE, 0);
-      gtk_box_pack_start (hbox, priv->scale, TRUE, TRUE, 0);
-      gtk_box_pack_start (hbox, priv->percentage_label, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), priv->description_label, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), priv->hbox, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), priv->scale, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), priv->percentage_label, FALSE, FALSE, 0);
   }
   else if (priv->description_label)
   {
       /* [IC]  Description
        * [ON]  <----slider---->
        */
-      gtk_box_pack_start (vbox, priv->description_label, FALSE, FALSE, 0);
-      gtk_box_pack_start (vbox, priv->hbox, TRUE, TRUE, 0);
-      gtk_box_pack_start (hbox, priv->scale, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), priv->description_label, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), priv->hbox, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), priv->scale, TRUE, TRUE, 0);
   }
   else if (priv->percentage_label)
   {
       /* [ICON]  <----slider----> [percentage]%  */
-      gtk_box_pack_start (vbox, priv->hbox, TRUE, TRUE, 0);
-      gtk_box_pack_start (hbox, priv->scale, TRUE, TRUE, 0);
-      gtk_box_pack_start (hbox, priv->percentage_label, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), priv->hbox, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), priv->scale, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), priv->percentage_label, FALSE, FALSE, 0);
   }
   else
   {
       /* [ICON]  <----slider---->  */
-      gtk_box_pack_start (vbox, priv->hbox, TRUE, TRUE, 0);
-      gtk_box_pack_start (hbox, priv->scale, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), priv->hbox, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), priv->scale, TRUE, TRUE, 0);
   }
 
+  gtk_box_pack_start (GTK_BOX (master_hbox), priv->vbox, TRUE, TRUE, 0);
 
   gtk_widget_show_all (priv->vbox);
   gtk_widget_show_all (priv->hbox);
+  gtk_widget_show_all (priv->master_hbox);
 
-  gtk_container_add (GTK_CONTAINER (self), priv->vbox);
+  gtk_container_add (GTK_CONTAINER (self), priv->master_hbox);
 }
 
 static void
@@ -396,9 +409,10 @@ scale_menu_item_new_with_range (gdouble           min,
 
   priv = GET_PRIVATE (scale_item);
 
-  priv->scale = gtk_hscale_new_with_range (min, max, step);
+  priv->scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, min, max, step);
   priv->vbox = NULL;
   priv->hbox = NULL;
+  priv->master_hbox = NULL;
 
   g_signal_connect (priv->scale, "value-changed", G_CALLBACK (scale_menu_item_scale_value_changed), scale_item);
   g_object_ref (priv->scale);
@@ -510,7 +524,7 @@ scale_menu_item_set_description_label (ScaleMenuItem *menuitem,
       gtk_label_set_markup (GTK_LABEL (priv->description_label), label);
 
       /* align left */
-      gtk_misc_set_alignment (GTK_MISC(priv->description_label), 0, 0);
+      gtk_widget_set_halign (GTK_WIDGET (priv->description_label), GTK_ALIGN_START);
     }
 
     update_packing (menuitem);
@@ -552,7 +566,7 @@ scale_menu_item_set_percentage_label (ScaleMenuItem *menuitem,
       /* create label */
       priv->percentage_label = gtk_label_new (label);
       /* align left */
-      gtk_misc_set_alignment (GTK_MISC(priv->percentage_label), 0, 0);
+      gtk_widget_set_halign (GTK_WIDGET (priv->percentage_label), GTK_ALIGN_START);
     }
 
     update_packing (menuitem);
