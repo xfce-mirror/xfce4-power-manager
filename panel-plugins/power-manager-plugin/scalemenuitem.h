@@ -46,14 +46,14 @@ typedef struct _ScaleMenuItemPrivate ScaleMenuItemPrivate;
 
 struct _ScaleMenuItem
 {
-  GtkMenuItem parent_instance;
+  GtkImageMenuItem parent_instance;
 
   ScaleMenuItemPrivate *priv;
 };
 
 struct _ScaleMenuItemClass
 {
-  GtkMenuItemClass parent_class;
+  GtkImageMenuItemClass parent_class;
 };
 
 
