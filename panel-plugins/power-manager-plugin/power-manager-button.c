@@ -1368,20 +1368,6 @@ power_manager_button_show_menu (PowerManagerButton *button)
 
         mi = scale_menu_item_new_with_range (button->priv->brightness_min_level, max_level, 1);
 
-        /* attempt to load and display the brightness icon */
-        pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                       XFPM_DISPLAY_BRIGHTNESS_ICON,
-                                       32,
-                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                       NULL);
-        if (pix)
-        {
-            /* Pack the image into the box inside the GtkMenuItem. */
-            box = gtk_bin_get_child (GTK_BIN (mi));
-            img = gtk_image_new_from_pixbuf (pix);
-            gtk_box_pack_start (GTK_BOX (box), img, FALSE, FALSE, 0);
-        }
-
         scale_menu_item_set_description_label (SCALE_MENU_ITEM (mi), _("<b>Display brightness</b>"));
 
         /* range slider */
@@ -1395,6 +1381,20 @@ power_manager_button_show_menu (PowerManagerButton *button)
         g_signal_connect (mi, "scroll-event", G_CALLBACK (range_scroll_cb), button);
         g_signal_connect (menu, "show", G_CALLBACK (range_show_cb), button);
 
+        /* load and display the brightness icon */
+        pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                       XFPM_DISPLAY_BRIGHTNESS_ICON,
+                                       32,
+                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
+                                       NULL);
+        if (pix)
+        {
+            /* Pack the image into the box inside the GtkMenuItem. */
+            box = gtk_bin_get_child (GTK_BIN (mi));
+            img = gtk_image_new_from_pixbuf (pix);
+            gtk_box_pack_start (GTK_BOX (box), img, FALSE, FALSE, 0);
+            gtk_box_reorder_child (GTK_BOX (box), img, 0);
+        }
         gtk_widget_show_all (mi);
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
     }
