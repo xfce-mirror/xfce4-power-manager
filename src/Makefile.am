@@ -173,7 +173,9 @@ EXTRA_DIST =                                    \
         $(manpage_DATA)
 
 DISTCLEANFILES =                                \
-        $(BUILT_SOURCES)                        \
         xfce4-power-manager.desktop             \
         org.xfce.power.policy                  \
         org.xfce.power.policy.in
+
+MAINTAINERCLEANFILES =                                \
+        $(BUILT_SOURCES)
