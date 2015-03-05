@@ -825,6 +825,7 @@ static void
 power_manager_button_init (PowerManagerButton *button)
 {
     GError *error = NULL;
+    GtkCssProvider *css_provider;
 
     button->priv = POWER_MANAGER_BUTTON_GET_PRIVATE (button);
 
@@ -832,6 +833,7 @@ power_manager_button_init (PowerManagerButton *button)
     gtk_widget_set_can_focus (GTK_WIDGET (button), FALSE);
     gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
     gtk_button_set_focus_on_click (GTK_BUTTON (button), FALSE);
+    gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
     button->priv->brightness = xfpm_brightness_new ();
     xfpm_brightness_setup (button->priv->brightness);
@@ -852,6 +854,21 @@ power_manager_button_init (PowerManagerButton *button)
     button->priv->panel_icon_name = g_strdup(XFPM_AC_ADAPTER_ICON);
     button->priv->panel_icon_width = 24;
 
+    /* Sane default Gtk style */
+    css_provider = gtk_css_provider_new ();
+    gtk_css_provider_load_from_data (css_provider,
+                                     "#xfce4-power-manager-plugin {"
+                                     "-GtkWidget-focus-padding: 0;"
+                                     "-GtkWidget-focus-line-width: 0;"
+                                     "-GtkButton-default-border: 0;"
+                                     "-GtkButton-inner-border: 0;"
+                                     "padding: 1px;"
+                                     "border-width: 1px;}",
+                                     -1, NULL);
+    gtk_style_context_add_provider (GTK_STYLE_CONTEXT (gtk_widget_get_style_context (GTK_WIDGET (button))),
+                                    GTK_STYLE_PROVIDER (css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    g_signal_connect (G_OBJECT (button), "style_updated", G_CALLBACK (power_manager_button_set_icon), button); 
     g_signal_connect (button->priv->upower, "device-added", G_CALLBACK (device_added_cb), button);
     g_signal_connect (button->priv->upower, "device-removed", G_CALLBACK (device_removed_cb), button);
 }
@@ -913,14 +930,20 @@ static gboolean
 power_manager_button_set_icon (PowerManagerButton *button)
 {
     GdkPixbuf *pixbuf;
+    GtkIconInfo *info;
+    GtkStyleContext *context;
+    gchar *icon_name;
 
     DBG("icon_width %d", button->priv->panel_icon_width);
 
-    pixbuf = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                       button->priv->panel_icon_name,
-                                       button->priv->panel_icon_width,
-                                       GTK_ICON_LOOKUP_GENERIC_FALLBACK,
-                                       NULL);
+    icon_name = g_strdup_printf ("%s-symbolic", button->priv->panel_icon_name);
+    g_warning ("width: %d, icon name: %s",button->priv->panel_icon_width, icon_name);
+
+    context = GTK_STYLE_CONTEXT (gtk_widget_get_style_context (GTK_WIDGET (gtk_widget_get_parent (GTK_WIDGET (button)))));
+
+    info = gtk_icon_theme_lookup_icon (gtk_icon_theme_get_default (), icon_name,
+                                       button->priv->panel_icon_width, GTK_ICON_LOOKUP_GENERIC_FALLBACK);
+    pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, NULL);
 
     if ( pixbuf )
     {
@@ -931,6 +954,7 @@ power_manager_button_set_icon (PowerManagerButton *button)
         return TRUE;
     }
 
+    g_free (icon_name);
     return FALSE;
 }
 
@@ -970,7 +994,7 @@ power_manager_button_press_event (GtkWidget *widget, GdkEventButton *event)
 static gboolean
 power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerManagerButton *button)
 {
-    GtkStyleContext *ctx;
+    GtkStyleContext *context;
     GtkBorder padding, border;
     gint width;
     gint xthickness;
@@ -978,18 +1002,33 @@ power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerM
 
     g_return_val_if_fail (POWER_MANAGER_IS_BUTTON (button), FALSE);
     g_return_val_if_fail (XFCE_IS_PANEL_PLUGIN (plugin), FALSE);
+    g_return_if_fail (size > 0);
 
-    ctx = gtk_widget_get_style_context (GTK_WIDGET (button));
-    gtk_style_context_get_padding (ctx, gtk_widget_get_state_flags (GTK_WIDGET (button)), &padding);
-    gtk_style_context_get_border (ctx, gtk_widget_get_state_flags (GTK_WIDGET (button)), &border);
+    size /= xfce_panel_plugin_get_nrows (plugin);
+
+    /* Calculate the size of the widget because the theme can override it */
+    context = gtk_widget_get_style_context (GTK_WIDGET (button));
+    gtk_style_context_get_padding (context, gtk_widget_get_state_flags (GTK_WIDGET (button)), &padding);
+    gtk_style_context_get_border (context, gtk_widget_get_state_flags (GTK_WIDGET (button)), &border);
     xthickness = padding.left+padding.right+border.left+border.right;
     ythickness = padding.top+padding.bottom+border.top+border.bottom;
 
-    size /= xfce_panel_plugin_get_nrows (plugin);
+    /* Calculate the size of the space left for the icon */
     width = size - 2* MAX (xthickness, ythickness);
 
-    gtk_widget_set_size_request (GTK_WIDGET(plugin), size + xthickness, size + ythickness);
-    button->priv->panel_icon_width = width;
+    /* Since symbolic icons are usually only provided in 16px we
+     * try to be clever and use size steps */
+    g_warning ("size: %d, width: %d", size, width);
+    if (width <= 21)
+        button->priv->panel_icon_width = 16;
+    else if (width >=22 && width <= 29)
+        button->priv->panel_icon_width = 24;
+    else if (width >= 30 && width <= 40)
+        button->priv->panel_icon_width = 32;
+    else
+        button->priv->panel_icon_width = width;
+
+    gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
 
     return power_manager_button_set_icon (button);
 }
