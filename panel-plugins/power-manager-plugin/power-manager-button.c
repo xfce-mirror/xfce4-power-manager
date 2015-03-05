@@ -937,10 +937,7 @@ power_manager_button_set_icon (PowerManagerButton *button)
     DBG("icon_width %d", button->priv->panel_icon_width);
 
     icon_name = g_strdup_printf ("%s-symbolic", button->priv->panel_icon_name);
-    g_warning ("width: %d, icon name: %s",button->priv->panel_icon_width, icon_name);
-
     context = GTK_STYLE_CONTEXT (gtk_widget_get_style_context (GTK_WIDGET (gtk_widget_get_parent (GTK_WIDGET (button)))));
-
     info = gtk_icon_theme_lookup_icon (gtk_icon_theme_get_default (), icon_name,
                                        button->priv->panel_icon_width, GTK_ICON_LOOKUP_GENERIC_FALLBACK);
     pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, NULL);
@@ -1018,7 +1015,6 @@ power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerM
 
     /* Since symbolic icons are usually only provided in 16px we
      * try to be clever and use size steps */
-    g_warning ("size: %d, width: %d", size, width);
     if (width <= 21)
         button->priv->panel_icon_width = 16;
     else if (width >=22 && width <= 29)
