@@ -46,8 +46,6 @@ static gboolean scale_menu_item_motion_notify_event     (GtkWidget          *men
                                                          GdkEventMotion     *event);
 static gboolean scale_menu_item_grab_broken             (GtkWidget          *menuitem,
                                                          GdkEventGrabBroken *event);
-static void     scale_menu_item_grab_notify             (GtkWidget          *menuitem,
-                                                         gboolean            was_grabbed);
 static void     scale_menu_item_parent_set              (GtkWidget          *item,
                                                          GtkWidget          *previous_parent);
 static void     update_packing                          (ScaleMenuItem  *    self);
@@ -110,7 +108,6 @@ scale_menu_item_class_init (ScaleMenuItemClass *item_class)
   widget_class->button_release_event = scale_menu_item_button_release_event;
   widget_class->motion_notify_event  = scale_menu_item_motion_notify_event;
   widget_class->grab_broken_event    = scale_menu_item_grab_broken;
-  widget_class->grab_notify          = scale_menu_item_grab_notify;
   widget_class->parent_set           = scale_menu_item_parent_set;
 
 
@@ -334,17 +331,6 @@ scale_menu_item_motion_notify_event (GtkWidget      *menuitem,
   gtk_widget_event (scale, (GdkEvent*)event);
 
   return TRUE;
-}
-
-static void
-scale_menu_item_grab_notify (GtkWidget *menuitem,
-                             gboolean was_grabbed)
-{
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (menuitem);
-
-  TRACE("entering");
-
-  GTK_WIDGET_GET_CLASS (priv->scale)->grab_notify (priv->scale, was_grabbed);
 }
 
 static gboolean

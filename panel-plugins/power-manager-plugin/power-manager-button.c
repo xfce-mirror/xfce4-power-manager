@@ -416,7 +416,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     if (button->priv->menu && battery_device->menu_item)
     {
         GList *children, *iter;
-        GtkWidget *box, *image;
+        GtkWidget *box;
         gtk_menu_item_set_label (GTK_MENU_ITEM (battery_device->menu_item), details);
 
         /* update the image, keep track of the signal ids and the img

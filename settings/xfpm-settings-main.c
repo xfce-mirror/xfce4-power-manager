@@ -111,13 +111,15 @@ int main (int argc, char **argv)
 
     while ( !xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(bus), "org.xfce.PowerManager") )
     {
-	g_print(_("Xfce power manager is not running"));
-	g_print("\n");
-	start_xfpm_if_not_running =
-	    xfce_dialog_confirm (NULL, 
-				 GTK_STOCK_EXECUTE,
-				 _("Run"), NULL,
-				 _("Xfce4 Power Manager is not running, do you want to launch it now?"));
+	GtkWidget *startw;
+
+	startw = gtk_message_dialog_new (NULL,
+                                         GTK_DIALOG_MODAL,
+                                         GTK_MESSAGE_QUESTION,
+                                         GTK_BUTTONS_YES_NO,
+                                         _("Xfce4 Power Manager is not running, do you want to launch it now?"));
+	start_xfpm_if_not_running = gtk_dialog_run (GTK_DIALOG (startw));
+	gtk_widget_destroy (startw);
 
 	if ( start_xfpm_if_not_running ) 
 	{
