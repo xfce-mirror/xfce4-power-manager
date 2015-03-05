@@ -248,40 +248,22 @@ scale_menu_item_init (ScaleMenuItem *self)
 {
 }
 
-
-static void
-scale_menu_item_get_scale_allocation (ScaleMenuItem *menuitem,
-                                      GtkAllocation    *allocation)
-{
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (menuitem);
-  GtkAllocation parent_allocation;
-
-  gtk_widget_get_allocation (GTK_WIDGET (menuitem), &parent_allocation);
-  gtk_widget_get_allocation (priv->scale, allocation);
-
-  allocation->x -= parent_allocation.x;
-  allocation->y -= parent_allocation.y;
-}
-
 static gboolean
 scale_menu_item_button_press_event (GtkWidget      *menuitem,
                                     GdkEventButton *event)
 {
   ScaleMenuItemPrivate *priv = GET_PRIVATE (menuitem);
   GtkAllocation alloc;
+  gint x, y;
 
   TRACE("entering");
 
-  scale_menu_item_get_scale_allocation (SCALE_MENU_ITEM (menuitem), &alloc);
+  gtk_widget_get_allocation (priv->scale, &alloc);
+  gtk_widget_translate_coordinates (menuitem, priv->scale, event->x, event->y, &x, &y);
 
-  event->x -= alloc.x;
-  event->y -= alloc.y;
-
-  event->x_root -= alloc.x;
-  event->y_root -= alloc.y;
-
-  gtk_widget_event (priv->scale,
-                    ((GdkEvent *)(void*)(event)));
+  if (x > 0 && x < alloc.width && y > 0 && y < alloc.height)
+    gtk_widget_event (priv->scale,
+                      ((GdkEvent *)(void*)(event)));
 
   if (!priv->grabbed)
     {
@@ -319,16 +301,14 @@ scale_menu_item_motion_notify_event (GtkWidget      *menuitem,
   ScaleMenuItemPrivate *priv = GET_PRIVATE (menuitem);
   GtkWidget *scale = priv->scale;
   GtkAllocation alloc;
+  gint x, y;
 
-  scale_menu_item_get_scale_allocation (SCALE_MENU_ITEM (menuitem), &alloc);
+  gtk_widget_get_allocation (priv->scale, &alloc);
+  gtk_widget_translate_coordinates (menuitem, priv->scale, event->x, event->y, &x, &y);
 
-  event->x -= alloc.x;
-  event->y -= alloc.y;
-
-  event->x_root -= alloc.x;
-  event->y_root -= alloc.y;
-
-  gtk_widget_event (scale, (GdkEvent*)event);
+  if (priv->grabbed ||
+      (x > 0 && x < alloc.width && y > 0 && y < alloc.height))
+    gtk_widget_event (scale, (GdkEvent*)event);
 
   return TRUE;
 }
