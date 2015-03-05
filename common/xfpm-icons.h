@@ -42,7 +42,7 @@ G_BEGIN_DECLS
 #define XFPM_COMPUTER_ICON_PREFIX       "computer"
 #define XFPM_TABLET_ICON_PREFIX         "tablet"
 
-#define XFPM_DISPLAY_BRIGHTNESS_ICON	        "xfpm-brightness-lcd"
+#define XFPM_DISPLAY_BRIGHTNESS_ICON	        "display-brightness-symbolic"
 #define XFPM_DISPLAY_BRIGHTNESS_INVALID_ICON	"xfpm-brightness-lcd-missing" /* When no hw found */
 
 G_END_DECLS
