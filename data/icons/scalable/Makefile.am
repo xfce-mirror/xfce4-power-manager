@@ -49,4 +49,4 @@ Data_DATA =				\
     xfpm-ups-060.svg		\
     xfpm-ups-080.svg		\
     xfpm-ups-100.svg		\
-    xfpm-brightness-keyboard.svg	\
+    xfpm-brightness-keyboard.svg
