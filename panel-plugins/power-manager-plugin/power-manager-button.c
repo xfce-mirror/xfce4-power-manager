@@ -866,6 +866,8 @@ power_manager_button_init (PowerManagerButton *button)
                                      -1, NULL);
     gtk_style_context_add_provider (GTK_STYLE_CONTEXT (gtk_widget_get_style_context (GTK_WIDGET (button))),
                                     GTK_STYLE_PROVIDER (css_provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    /* Intercept scroll events */
+    gtk_widget_add_events (GTK_WIDGET (button), GDK_SCROLL_MASK);
 
     g_signal_connect (G_OBJECT (button), "style_updated", G_CALLBACK (power_manager_button_set_icon), button); 
     g_signal_connect (button->priv->upower, "device-added", G_CALLBACK (device_added_cb), button);
