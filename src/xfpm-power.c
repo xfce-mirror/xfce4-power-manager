@@ -169,6 +169,7 @@ static guint signals [LAST_SIGNAL] = { 0 };
 G_DEFINE_TYPE (XfpmPower, xfpm_power, G_TYPE_OBJECT)
 
 
+#if UP_CHECK_VERSION(0, 99, 0)
 /* This checks if consolekit returns TRUE for either suspend or
  * hibernate showing support. This means that ConsoleKit2 is running
  * (and the system is capable of those actions).
@@ -201,6 +202,7 @@ check_for_consolekit2 (XfpmPower *power)
 
     return FALSE;
 }
+#endif
 
 #ifdef ENABLE_POLKIT
 static void
