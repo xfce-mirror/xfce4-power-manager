@@ -360,7 +360,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     GList *item;
     BatteryDevice *battery_device, *display_device;
     const gchar *object_path = up_device_get_object_path(device);
-    gchar *details, *icon_name;
+    gchar *details, *icon_name, *upower_icon;
     GdkPixbuf *pix;
     guint type = 0;
 
@@ -379,6 +379,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
     g_object_get (device,
                   "kind", &type,
+                  "icon-name", &upower_icon,
                   NULL);
 
     icon_name = get_device_icon_name (button->priv->upower, device);
@@ -406,7 +407,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
         DBG("this is the display device, updating");
         /* it is! update the panel button */
         g_free (button->priv->panel_icon_name);
-        button->priv->panel_icon_name = icon_name;
+        button->priv->panel_icon_name = upower_icon;
         power_manager_button_set_icon (button);
         /* update tooltip */
         power_manager_button_set_tooltip (button);
