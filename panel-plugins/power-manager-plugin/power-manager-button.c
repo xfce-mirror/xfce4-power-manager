@@ -851,7 +851,7 @@ power_manager_button_init (PowerManagerButton *button)
     }
 
     /* Sane defaults for the panel icon */
-    button->priv->panel_icon_name = g_strdup(XFPM_AC_ADAPTER_ICON);
+    button->priv->panel_icon_name = "battery-full-charged";
     button->priv->panel_icon_width = 24;
 
     /* Sane default Gtk style */

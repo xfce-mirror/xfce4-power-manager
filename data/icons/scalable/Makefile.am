@@ -26,7 +26,6 @@ Data_DATA =				                    \
     tablet.svg			                    \
     video-display.svg		                \
     xfpm-ac-adapter.svg		                \
-    xfpm-ac-adapter-symbolic.svg		    \
     xfpm-primary-000.svg		            \
     xfpm-primary-020.svg		            \
     xfpm-primary-040.svg		            \
