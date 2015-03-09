@@ -33,8 +33,6 @@
 #include <errno.h>
 #endif
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
 #include <upower.h>
 #include <gdk/gdkx.h>
 

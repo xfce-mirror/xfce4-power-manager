@@ -22,7 +22,6 @@
 #define __XFPM_MANAGER_H
 
 #include <glib-object.h>
-#include <dbus/dbus-glib.h>
 
 G_BEGIN_DECLS
 

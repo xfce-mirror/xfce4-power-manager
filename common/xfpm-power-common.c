@@ -23,7 +23,6 @@
 #endif
 
 #include <libxfce4util/libxfce4util.h>
-#include <dbus/dbus-glib-lowlevel.h>
 #include <upower.h>
 
 #include "xfpm-power-common.h"

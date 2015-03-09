@@ -23,7 +23,6 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
-#include <dbus/dbus-glib.h>
 #include <upower.h>
 
 #include "xfpm-enum-glib.h"

@@ -29,8 +29,6 @@
 #include "xfpm-unique.h"
 #include "xfpm-dbus.h"
 
-#include <dbus/dbus-glib-lowlevel.h>
-
 static void xfpm_unique_dbus_class_init 	(XfpmUniqueClass *klass);
 static void xfpm_unique_dbus_init		(XfpmUnique *unique);
 

@@ -21,8 +21,6 @@
 #ifndef XFPM_UPOWER_COMMON
 #define XFPM_UPOWER_COMMON
 
-#include <dbus/dbus-glib.h>
-
 #define UPOWER_NAME 	      "org.freedesktop.UPower"
 #define UPOWER_PATH 	      "/org/freedesktop/UPower"
 

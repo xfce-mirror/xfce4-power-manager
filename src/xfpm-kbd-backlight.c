@@ -26,7 +26,6 @@
 #include <string.h>
 #endif
 
-#include <dbus/dbus-glib.h>
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-kbd-backlight.h"

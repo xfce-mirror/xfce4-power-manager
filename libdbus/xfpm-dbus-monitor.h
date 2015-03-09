@@ -22,7 +22,6 @@
 #define __XFPM_DBUS_MONITOR_H
 
 #include <glib-object.h>
-#include <dbus/dbus.h>
 
 G_BEGIN_DECLS
 

@@ -30,8 +30,6 @@
 #include <string.h>
 #endif
 
-#include <dbus/dbus-glib.h>
-
 #include "xfpm-console-kit.h"
 #include "xfpm-dbus-monitor.h"
 

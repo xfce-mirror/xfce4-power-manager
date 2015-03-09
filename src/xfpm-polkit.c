@@ -57,8 +57,6 @@
 #include <errno.h>
 #endif
 
-#include <dbus/dbus-glib.h>
-
 #include "xfpm-polkit.h"
 #include "xfpm-debug.h"
 

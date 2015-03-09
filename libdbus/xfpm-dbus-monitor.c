@@ -27,10 +27,6 @@
 
 #include <glib.h>
 
-#include <dbus/dbus.h>
-#include <dbus/dbus-glib-lowlevel.h>
-#include <dbus/dbus-glib.h>
-
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-dbus.h"

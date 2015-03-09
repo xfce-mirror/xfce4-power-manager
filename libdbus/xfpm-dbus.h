@@ -22,8 +22,7 @@
 #define __XFPM_DBUS_H
 
 #include <glib.h>
-#include <dbus/dbus.h>
-#include <dbus/dbus-glib.h>
+#include <gio/gio.h>
 
 gboolean	xfpm_dbus_name_has_owner 	   (DBusConnection *bus,
 						    const gchar *name);

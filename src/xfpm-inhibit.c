@@ -32,9 +32,6 @@
 
 #include <glib.h>
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
-
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-inhibit.h"

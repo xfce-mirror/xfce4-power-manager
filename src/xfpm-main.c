@@ -41,9 +41,6 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
-
 #include "xfpm-dbus.h"
 #include "xfpm-debug.h"
 #include "xfpm-common.h"

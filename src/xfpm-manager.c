@@ -37,8 +37,7 @@
 #include <libxfce4ui/libxfce4ui.h>
 #include <xfconf/xfconf.h>
 
-#include <dbus/dbus-glib.h>
-#include <dbus/dbus-glib-lowlevel.h>
+#include <gio/gunixfdlist.h>
 
 #include <libnotify/notify.h>
 
