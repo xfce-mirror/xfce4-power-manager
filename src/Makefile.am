@@ -131,11 +131,13 @@ manpagedir = $(mandir)/man1
 manpage_DATA = xfce4-power-manager.1
 
 BUILT_SOURCES =					\
-	xfce-power-manager-dbus-server.h	\
-	xfce-power-manager-dbus-client.h	\
+	xfce-power-manager-dbus.c		\
+	xfce-power-manager-dbus.h		\
 	xfpm-marshal.c                          \
         xfpm-marshal.h				\
+	org.freedesktop.PowerManagement.c       \
 	org.freedesktop.PowerManagement.h       \
+	org.freedesktop.PowerManagement.Inhibit.c \
 	org.freedesktop.PowerManagement.Inhibit.h
 
 if MAINTAINER_MODE
@@ -147,17 +149,14 @@ xfpm-marshal.c: xfpm-marshal.list
 xfpm-marshal.h: xfpm-marshal.list
 	glib-genmarshal $< --prefix=_xfpm_marshal --header > $@
 
-xfce-power-manager-dbus-server.h: $(srcdir)/org.xfce.Power.Manager.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfpm_manager $< >$@
+xfce-power-manager-dbus.c xfce-power-manager-dbus.h: $(srcdir)/org.xfce.Power.Manager.xml
+	gdbus-codegen --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=xfce-power-manager-dbus $<
 
-xfce-power-manager-dbus-client.h: $(srcdir)/org.xfce.Power.Manager.xml
-	dbus-binding-tool --mode=glib-client --prefix=xfpm_manager $< >$@
+org.freedesktop.PowerManagement.c org.freedesktop.PowerManagement.h: $(srcdir)/org.freedesktop.PowerManagement.xml
+	gdbus-codegen --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement $<
 
-org.freedesktop.PowerManagement.h: $(srcdir)/org.freedesktop.PowerManagement.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfpm_power $< >$@
-
-org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfpm_inhibit $< >$@
+org.freedesktop.PowerManagement.Inhibit.c org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
+	gdbus-codegen --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement.Inhibit $<
 
 endif
 

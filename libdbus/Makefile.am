@@ -27,6 +27,7 @@ if MAINTAINER_MODE
 BUILT_SOURCES =				\
 	xfpm-dbus-marshal.c		\
 	xfpm-dbus-marshal.h		\
+	org.xfce.unique.c		\
 	org.xfce.unique.h
 
 xfpm-dbus-marshal.c: xfpm-dbus-marshal.list
@@ -36,8 +37,8 @@ xfpm-dbus-marshal.c: xfpm-dbus-marshal.list
 xfpm-dbus-marshal.h: xfpm-dbus-marshal.list
 	glib-genmarshal $< --prefix=_xfpm_dbus_marshal --header > $@
 
-org.xfce.unique.h: org.xfce.unique.xml
-	dbus-binding-tool --mode=glib-server --prefix=xfce_unique $< >$@
+org.xfce.unique.c org.xfce.unique.h: org.xfce.unique.xml
+	gdbus-codegen --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=org.xfce.unique $<
 
 endif
 
