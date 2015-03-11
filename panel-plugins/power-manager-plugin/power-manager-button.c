@@ -45,6 +45,7 @@
 
 #define SET_LEVEL_TIMEOUT (50)
 #define SAFE_SLIDER_MIN_LEVEL (5)
+#define PANEL_DEFAULT_ICON ("battery-full-charged")
 
 #define POWER_MANAGER_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), POWER_MANAGER_TYPE_BUTTON, PowerManagerButtonPrivate))
@@ -851,7 +852,7 @@ power_manager_button_init (PowerManagerButton *button)
     }
 
     /* Sane defaults for the panel icon */
-    button->priv->panel_icon_name = "battery-full-charged";
+    button->priv->panel_icon_name = g_strdup (PANEL_DEFAULT_ICON);
     button->priv->panel_icon_width = 24;
 
     /* Sane default Gtk style */
