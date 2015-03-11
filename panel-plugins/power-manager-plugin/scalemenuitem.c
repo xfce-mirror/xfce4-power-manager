@@ -306,6 +306,15 @@ scale_menu_item_motion_notify_event (GtkWidget      *menuitem,
   gtk_widget_get_allocation (priv->scale, &alloc);
   gtk_widget_translate_coordinates (menuitem, priv->scale, event->x, event->y, &x, &y);
 
+  /* don't translate coordinates when the scale has the "grab" -
+   * GtkRange expects coords relative to its event window in that case
+   */
+  if (!priv->grabbed)
+  {
+    event->x = x;
+    event->y = y;
+  }
+
   if (priv->grabbed ||
       (x > 0 && x < alloc.width && y > 0 && y < alloc.height))
     gtk_widget_event (scale, (GdkEvent*)event);
