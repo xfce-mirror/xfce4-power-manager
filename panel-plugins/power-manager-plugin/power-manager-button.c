@@ -279,8 +279,8 @@ power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, 
                       "percentage", &percentage,
                       NULL);
 
-        /* Don't draw the progressbar for Battery and UPS */
-        if (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS)
+        /* Don't draw the progressbar for Battery */
+        if (type == UP_DEVICE_KIND_BATTERY)
             return FALSE;
     }
     else

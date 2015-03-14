@@ -23,27 +23,17 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_AC_ADAPTER_ICON			"xfpm-ac-adapter"
-
-#define XFPM_UPS_ICON				"xfpm-ups-100"
-#define XFPM_KBD_ICON				"input-keyboard"
-#define XFPM_MOUSE_ICON				"input-mouse"
-#define XFPM_PHONE_ICON				"phone"
-#define XFPM_PDA_ICON				"pda"
-
-#define XFPM_PRIMARY_ICON_PREFIX		"xfpm-primary-"
-#define XFPM_UPS_ICON_PREFIX			"xfpm-ups-"
-#define XFPM_MOUSE_ICON_PREFIX			"input-mouse"
-#define XFPM_KBD_ICON_PREFIX			"input-keyboard"
-#define XFPM_PDA_ICON_PREFIX			"pda"
-#define XFPM_PHONE_ICON_PREFIX			"phone"
-#define XFPM_MEDIA_PLAYER_PREFIX        "multimedia-player"
-#define XFPM_MONITOR_PREFIX             "video-display"
-#define XFPM_COMPUTER_ICON_PREFIX       "computer"
-#define XFPM_TABLET_ICON_PREFIX         "tablet"
-
-#define XFPM_DISPLAY_BRIGHTNESS_ICON	        "display-brightness-symbolic"
-#define XFPM_DISPLAY_BRIGHTNESS_INVALID_ICON	"xfpm-brightness-lcd-missing" /* When no hw found */
+#define XFPM_AC_ADAPTER_ICON            "ac-adapter"
+#define XFPM_COMPUTER_ICON              "computer"
+#define XFPM_DISPLAY_BRIGHTNESS_ICON    "display-brightness-symbolic"
+#define XFPM_MOUSE_ICON                 "input-mouse"
+#define XFPM_KBD_ICON                   "input-keyboard"
+#define XFPM_MEDIA_PLAYER_ICON          "multimedia-player"
+#define XFPM_PDA_ICON                   "pda"
+#define XFPM_PHONE_ICON                 "phone"
+#define XFPM_TABLET_ICON                "tablet"
+#define XFPM_UPS_ICON                   "uninterruptible-power-supply"
+#define XFPM_MONITOR_ICON               "video-display"
 
 G_END_DECLS
 

@@ -61,8 +61,6 @@ struct XfpmBatteryPrivate
     UpDevice               *device;
     UpClient               *client;
 
-    gchar		   *icon_prefix;
-
     XfpmBatteryCharge       charge;
     UpDeviceState	    state;
     UpDeviceKind	    type;
@@ -420,7 +418,6 @@ xfpm_battery_init (XfpmBattery *battery)
     battery->priv->state         = UP_DEVICE_STATE_UNKNOWN;
     battery->priv->type          = UP_DEVICE_KIND_UNKNOWN;
     battery->priv->charge        = XFPM_BATTERY_CHARGE_UNKNOWN;
-    battery->priv->icon_prefix   = NULL;
     battery->priv->time_to_full  = 0;
     battery->priv->time_to_empty = 0;
     battery->priv->button        = xfpm_button_new ();
@@ -433,8 +430,6 @@ xfpm_battery_finalize (GObject *object)
     XfpmBattery *battery;
 
     battery = XFPM_BATTERY (object);
-
-    g_free (battery->priv->icon_prefix);
 
     if (battery->priv->notify_idle != 0)
         g_source_remove (battery->priv->notify_idle);
@@ -473,7 +468,6 @@ void xfpm_battery_monitor_device (XfpmBattery *battery,
     UpDevice *device;
     battery->priv->type = device_type;
     battery->priv->client = up_client_new();
-    battery->priv->icon_prefix = xfpm_battery_get_icon_prefix_device_enum_type (device_type);
     battery->priv->battery_name = xfpm_power_translate_device_type (device_type);
 
     device = up_device_new();
