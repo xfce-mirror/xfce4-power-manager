@@ -59,7 +59,6 @@ struct _ScaleMenuItemPrivate {
   GtkWidget            *percentage_label;
   GtkWidget            *vbox;
   GtkWidget            *hbox;
-  GtkWidget            *master_hbox;
   gboolean              grabbed;
   gboolean              ignore_value_changed;
 };
@@ -78,7 +77,9 @@ enum {
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE (ScaleMenuItem, scale_menu_item, GTK_TYPE_MENU_ITEM)
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+G_DEFINE_TYPE (ScaleMenuItem, scale_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
+G_GNUC_END_IGNORE_DEPRECATIONS
 
 #define GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), TYPE_SCALE_MENU_ITEM, ScaleMenuItemPrivate))
 
@@ -174,31 +175,24 @@ static void
 update_packing (ScaleMenuItem *self)
 {
   ScaleMenuItemPrivate *priv = GET_PRIVATE (self);
-  GtkWidget *hbox; //= gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  GtkWidget *vbox; //= gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-  GtkWidget *master_hbox;
+  GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  GtkWidget *vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
   TRACE("entering");
 
-  master_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+//  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+//  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
   if(priv->hbox)
     remove_children (GTK_CONTAINER (priv->hbox));
   if(priv->vbox)
   {
     remove_children (GTK_CONTAINER (priv->vbox));
-  }
-  if(priv->master_hbox)
-  {
-    remove_children (GTK_CONTAINER (priv->master_hbox));
-    gtk_container_remove (GTK_CONTAINER (self), priv->master_hbox);
+    gtk_container_remove (GTK_CONTAINER (self), priv->vbox);
   }
 
   priv->hbox = GTK_WIDGET (hbox);
   priv->vbox = GTK_WIDGET (vbox);
-  priv->master_hbox = GTK_WIDGET (master_hbox);
 
   /* add the new layout */
   if (priv->description_label && priv->percentage_label)
@@ -234,13 +228,10 @@ update_packing (ScaleMenuItem *self)
       gtk_box_pack_start (GTK_BOX (hbox), priv->scale, TRUE, TRUE, 0);
   }
 
-  gtk_box_pack_start (GTK_BOX (master_hbox), priv->vbox, TRUE, TRUE, 0);
-
   gtk_widget_show_all (priv->vbox);
   gtk_widget_show_all (priv->hbox);
-  gtk_widget_show_all (priv->master_hbox);
 
-  gtk_container_add (GTK_CONTAINER (self), priv->master_hbox);
+  gtk_container_add (GTK_CONTAINER (self), priv->vbox);
 }
 
 static void
@@ -387,7 +378,6 @@ scale_menu_item_new_with_range (gdouble           min,
   priv->scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, min, max, step);
   priv->vbox = NULL;
   priv->hbox = NULL;
-  priv->master_hbox = NULL;
 
   g_signal_connect (priv->scale, "value-changed", G_CALLBACK (scale_menu_item_scale_value_changed), scale_item);
   g_object_ref (priv->scale);

@@ -417,27 +417,15 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     /* If the menu is being displayed, update it */
     if (button->priv->menu && battery_device->menu_item)
     {
-        GList *children, *iter;
-        GtkWidget *box;
         gtk_menu_item_set_label (GTK_MENU_ITEM (battery_device->menu_item), details);
 
         /* update the image, keep track of the signal ids and the img
          * so we can disconnect it later */
         battery_device->img = gtk_image_new_from_pixbuf (battery_device->pix);
         g_object_ref (battery_device->img);
-
-        /* In order to refresh the icon, we get the box inside the menuitem, and then destroy the GtkImage
-         * inside it. Then we pack the new image in its place. */
-        box = gtk_bin_get_child (GTK_BIN (battery_device->menu_item));
-        children = gtk_container_get_children (GTK_CONTAINER (box));
-        for (iter = children; iter != NULL; iter = g_list_next (iter))
-        {
-            if (GTK_IS_IMAGE (GTK_WIDGET(iter->data)))
-                gtk_widget_destroy(GTK_WIDGET(iter->data));
-        }
-        g_list_free (children);
-        gtk_box_pack_start (GTK_BOX (box), battery_device->img, FALSE, FALSE, 0);
-
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+        gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(battery_device->menu_item), battery_device->img);
+G_GNUC_END_IGNORE_DEPRECATIONS
         battery_device->expose_signal_id = g_signal_connect_after (G_OBJECT (battery_device->img),
                                                                    "draw",
                                                                    G_CALLBACK (power_manager_button_device_icon_expose),
@@ -1153,7 +1141,7 @@ menu_item_activate_cb(GtkWidget *object, gpointer user_data)
 static gboolean
 power_manager_button_menu_add_device (PowerManagerButton *button, BatteryDevice *battery_device, gboolean append)
 {
-    GtkWidget *mi, *label, *box;
+    GtkWidget *mi, *label;
     guint type = 0;
 
     g_return_val_if_fail (POWER_MANAGER_IS_BUTTON (button), FALSE);
@@ -1174,21 +1162,17 @@ power_manager_button_menu_add_device (PowerManagerButton *button, BatteryDevice 
             return FALSE;
         }
     }
-
-    box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+    mi = gtk_image_menu_item_new_with_label(battery_device->details);
+G_GNUC_END_IGNORE_DEPRECATIONS
+    /* Make the menu item be bold and multi-line */
+    label = gtk_bin_get_child (GTK_BIN (mi));
+    gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
     /* add the image */
     battery_device->img = gtk_image_new_from_pixbuf (battery_device->pix);
-    g_object_ref (battery_device->img);
-
-    mi = gtk_menu_item_new ();
-    /* Make the menu item be bold and multi-line */
-    label = gtk_label_new (battery_device->details);
-    gtk_label_set_use_markup (GTK_LABEL(label), TRUE);
-
-    gtk_box_pack_start (GTK_BOX (box), GTK_WIDGET (battery_device->img), FALSE, FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
-    gtk_container_add (GTK_CONTAINER (mi), box);
-
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), battery_device->img);
+G_GNUC_END_IGNORE_DEPRECATIONS
     /* keep track of the menu item in the battery_device so we can update it */
     battery_device->menu_item = mi;
     g_signal_connect(G_OBJECT (mi), "destroy", G_CALLBACK (menu_item_destroyed_cb), button);
@@ -1201,7 +1185,7 @@ power_manager_button_menu_add_device (PowerManagerButton *button, BatteryDevice 
     g_signal_connect(G_OBJECT(mi), "activate", G_CALLBACK(menu_item_activate_cb), button);
 
     /* Add it to the menu */
-    gtk_widget_show_all (mi);
+    gtk_widget_show (mi);
     if (append)
         gtk_menu_shell_append (GTK_MENU_SHELL(button->priv->menu), mi);
     else
@@ -1365,7 +1349,6 @@ power_manager_button_show_menu (PowerManagerButton *button)
     if ( xfpm_brightness_has_hw (button->priv->brightness) )
     {
         GdkPixbuf *pix;
-        GtkWidget *box;
         GtkStyleContext *context;
         GtkIconInfo *info;
 
@@ -1393,11 +1376,10 @@ power_manager_button_show_menu (PowerManagerButton *button)
         pix = gtk_icon_info_load_symbolic_for_context (info, context, NULL, NULL);
         if (pix)
         {
-            /* Pack the image into the box inside the GtkMenuItem. */
-            box = gtk_bin_get_child (GTK_BIN (mi));
             img = gtk_image_new_from_pixbuf (pix);
-            gtk_box_pack_start (GTK_BOX (box), img, FALSE, FALSE, 0);
-            gtk_box_reorder_child (GTK_BOX (box), img, 0);
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+            gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM(mi), img);
+G_GNUC_END_IGNORE_DEPRECATIONS
         }
         gtk_widget_show_all (mi);
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
