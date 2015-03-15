@@ -2,10 +2,6 @@
 
 <node name="/org/xfce/PowerManager">
     <interface name="org.xfce.Power.Manager">
-        <annotation name="org.freedesktop.DBus.GLib.CSymbol"
-                    value="xfpm_manager_dbus"/>
-        <annotation name="org.freedesktop.DBus.GLib.ClientCSymbol"
-                    value="xfpm_manager_dbus_client"/>   
      
     <method name="Quit">
     </method>
