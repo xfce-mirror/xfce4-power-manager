@@ -2062,6 +2062,7 @@ add_device (UpDevice *device)
     /* Create the page that the update_device_details will update/replace */
     view = gtk_tree_view_new ();
     gtk_notebook_append_page (GTK_NOTEBOOK (device_details_notebook), view, NULL);
+    gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
 
     /* Create the list store that the devices view will display */
     devices_store = gtk_list_store_new (XFPM_DEVICE_INFO_LAST, G_TYPE_STRING, G_TYPE_STRING);
@@ -2074,14 +2075,12 @@ add_device (UpDevice *device)
     col = gtk_tree_view_column_new();
     gtk_tree_view_column_pack_start (col, renderer, FALSE);
     gtk_tree_view_column_set_attributes (col, renderer, "text", XFPM_DEVICE_INFO_NAME, NULL);
-    gtk_tree_view_column_set_title (col, _("Attribute"));
     gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
 
     /*Device Attribute Value*/
     col = gtk_tree_view_column_new();
     gtk_tree_view_column_pack_start (col, renderer, FALSE);
     gtk_tree_view_column_set_attributes (col, renderer, "text", XFPM_DEVICE_INFO_VALUE, NULL);
-    gtk_tree_view_column_set_title (col, _("Value"));
 
     gtk_tree_view_append_column (GTK_TREE_VIEW (view), col);
 
