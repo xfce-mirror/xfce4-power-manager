@@ -2022,11 +2022,7 @@ update_device_details (UpDevice *device)
 }
 
 static void
-#if UP_CHECK_VERSION(0, 99, 0)
 device_changed_cb (UpDevice *device, GParamSpec *pspec, gpointer user_data)
-#else
-device_changed_cb (UpDevice *device, gpointer user_data)
-#endif
 {
     update_device_details (device);
 }
@@ -2057,11 +2053,7 @@ add_device (UpDevice *device)
     /* Make sure the devices tab is shown */
     gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), devices_page_num));
 
-#if UP_CHECK_VERSION(0, 99, 0)
     signal_id = g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), NULL);
-#else
-    signal_id = g_signal_connect (device, "changed", G_CALLBACK (device_changed_cb), NULL);
-#endif
 
     sideview_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
 
@@ -2162,28 +2154,15 @@ device_added_cb (UpClient *upclient, UpDevice *device, gpointer user_data)
     add_device (device);
 }
 
-#if UP_CHECK_VERSION(0, 99, 0)
 static void
 device_removed_cb (UpClient *upclient, const gchar *object_path, gpointer user_data)
 {
     remove_device (object_path);
 }
-#else
-static void
-device_removed_cb (UpClient *upclient, UpDevice *device, gpointer user_data)
-{
-    const gchar *object_path = up_device_get_object_path(device);
-    remove_device (object_path);
-}
-#endif
 
 static void
 add_all_devices (void)
 {
-#if !UP_CHECK_VERSION(0, 99, 0)
-    /* the device-add callback is called for each device */
-    up_client_enumerate_devices_sync(upower, NULL, NULL);
-#else
     GPtrArray *array = NULL;
     guint i;
 
@@ -2199,7 +2178,6 @@ add_all_devices (void)
         }
         g_ptr_array_free (array, TRUE);
     }
-#endif
 }
 
 static void

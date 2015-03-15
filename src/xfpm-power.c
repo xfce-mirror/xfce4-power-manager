@@ -215,11 +215,6 @@ xfpm_power_check_polkit_auth (XfpmPower *power)
     }
     else
     {
-#if !UP_CHECK_VERSION(0, 99, 0)
-	XFPM_DEBUG ("using upower suspend backend");
-	suspend   = POLKIT_AUTH_SUSPEND_UPOWER;
-	hibernate = POLKIT_AUTH_HIBERNATE_UPOWER;
-#else
 	if (power->priv->console != NULL)
 	{
 	    /* ConsoleKit2 supports suspend and hibernate */
@@ -236,7 +231,6 @@ xfpm_power_check_polkit_auth (XfpmPower *power)
 		hibernate = POLKIT_AUTH_HIBERNATE_XFPM;
 	    }
 	}
-#endif
     }
     power->priv->auth_suspend = xfpm_polkit_check_auth (power->priv->polkit,
 							suspend);
@@ -303,10 +297,6 @@ xfpm_power_get_properties (XfpmPower *power)
     gboolean lid_is_closed;
     gboolean lid_is_present;
 
-#if !UP_CHECK_VERSION(0, 99, 0)
-    power->priv->can_suspend = up_client_get_can_suspend(power->priv->upower);
-    power->priv->can_hibernate = up_client_get_can_hibernate(power->priv->upower);
-#else
     if ( LOGIND_RUNNING () )
     {
         g_object_get (G_OBJECT (power->priv->systemd),
@@ -333,7 +323,7 @@ xfpm_power_get_properties (XfpmPower *power)
 	    power->priv->can_hibernate = xfpm_suspend_can_hibernate ();
 	}
     }
-#endif
+
     g_object_get (power->priv->upower,
                   "on-battery", &on_battery,
                   "lid-is-closed", &lid_is_closed,
@@ -468,16 +458,6 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
     else
     {
-#if !UP_CHECK_VERSION(0, 99, 0)
-	if (!g_strcmp0 (sleep_time, "Hibernate"))
-	{
-	    up_client_hibernate_sync(power->priv->upower, NULL, &error);
-	}
-	else
-	{
-	    up_client_suspend_sync(power->priv->upower, NULL, &error);
-	}
-#else
 	if (!g_strcmp0 (sleep_time, "Hibernate"))
         {
 	    if (check_for_consolekit2 (power))
@@ -500,7 +480,6 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
                 xfpm_suspend_try_action (XFPM_SUSPEND);
 	    }
         }
-#endif
     }
 
     if ( error )
@@ -945,10 +924,6 @@ xfpm_power_add_device (UpDevice *device, XfpmPower *power)
 static void
 xfpm_power_get_power_devices (XfpmPower *power)
 {
-#if !UP_CHECK_VERSION(0, 99, 0)
-    /* the device-add callback is called for each device */
-    up_client_enumerate_devices_sync(power->priv->upower, NULL, NULL);
-#else
     GPtrArray *array = NULL;
     guint i;
 
@@ -965,7 +940,6 @@ xfpm_power_get_power_devices (XfpmPower *power)
 	}
 	g_ptr_array_free (array, TRUE);
     }
-#endif
 }
 
 static void
@@ -982,9 +956,7 @@ xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPo
 
 static void
 xfpm_power_changed_cb (UpClient *upower,
-#if UP_CHECK_VERSION(0, 99, 0)
 		       GParamSpec *pspec,
-#endif
 		       XfpmPower *power)
 {
     xfpm_power_get_properties (power);
@@ -996,20 +968,11 @@ xfpm_power_device_added_cb (UpClient *upower, UpDevice *device, XfpmPower *power
     xfpm_power_add_device (device, power);
 }
 
-#if UP_CHECK_VERSION(0, 99, 0)
 static void
 xfpm_power_device_removed_cb (UpClient *upower, const gchar *object_path, XfpmPower *power)
 {
     xfpm_power_remove_device (power, object_path);
 }
-#else
-static void
-xfpm_power_device_removed_cb (UpClient *upower, UpDevice *device, XfpmPower *power)
-{
-    const gchar *object_path = up_device_get_object_path(device);
-    xfpm_power_remove_device (power, object_path);
-}
-#endif
 
 #ifdef ENABLE_POLKIT
 static void
@@ -1238,11 +1201,8 @@ xfpm_power_init (XfpmPower *power)
 
     g_signal_connect (power->priv->upower, "device-added", G_CALLBACK (xfpm_power_device_added_cb), power);
     g_signal_connect (power->priv->upower, "device-removed", G_CALLBACK (xfpm_power_device_removed_cb), power);
-#if UP_CHECK_VERSION(0, 99, 0)
     g_signal_connect (power->priv->upower, "notify", G_CALLBACK (xfpm_power_changed_cb), power);
-#else
-    g_signal_connect (power->priv->upower, "changed", G_CALLBACK (xfpm_power_changed_cb), power);
-#endif
+
     xfpm_power_get_power_devices (power);
     xfpm_power_get_properties (power);
 #ifdef ENABLE_POLKIT

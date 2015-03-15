@@ -434,11 +434,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 static void
-#if UP_CHECK_VERSION(0, 99, 0)
 device_changed_cb (UpDevice *device, GParamSpec *pspec, PowerManagerButton *button)
-#else
-device_changed_cb (UpDevice *device, PowerManagerButton *button)
-#endif
 {
     power_manager_button_update_device_icon_and_details (button, device);
 }
@@ -466,11 +462,7 @@ power_manager_button_add_device (UpDevice *device, PowerManagerButton *button)
 		  "kind", &type,
 		   NULL);
 
-#if UP_CHECK_VERSION(0, 99, 0)
     signal_id = g_signal_connect (device, "notify", G_CALLBACK (device_changed_cb), button);
-#else
-    signal_id = g_signal_connect (device, "changed", G_CALLBACK (device_changed_cb), button);
-#endif
 
     /* populate the struct */
     battery_device->object_path = g_strdup (object_path);
@@ -571,28 +563,16 @@ device_added_cb (UpClient *upower, UpDevice *device, PowerManagerButton *button)
     power_manager_button_add_device (device, button);
 }
 
-#if UP_CHECK_VERSION(0, 99, 0)
 static void
 device_removed_cb (UpClient *upower, const gchar *object_path, PowerManagerButton *button)
 {
     power_manager_button_remove_device (button, object_path);
 }
-#else
-static void
-device_removed_cb (UpClient *upower, UpDevice *device, PowerManagerButton *button)
-{
-    const gchar *object_path = up_device_get_object_path (device);
-    power_manager_button_remove_device (button, object_path);
-}
-#endif
+
 
 static void
 power_manager_button_add_all_devices (PowerManagerButton *button)
 {
-#if !UP_CHECK_VERSION(0, 99, 0)
-    /* the device-add callback is called for each device */
-    up_client_enumerate_devices_sync (button->priv->upower, NULL, NULL);
-#else
     GPtrArray *array = NULL;
     guint i;
 
@@ -603,15 +583,14 @@ power_manager_button_add_all_devices (PowerManagerButton *button)
 
     if (array)
     {
-	for (i = 0; i < array->len; i++)
-	{
-	    UpDevice *device = g_ptr_array_index (array, i);
+       for (i = 0; i < array->len; i++)
+       {
+           UpDevice *device = g_ptr_array_index (array, i);
 
-	    power_manager_button_add_device (device, button);
-	}
-	g_ptr_array_free (array, TRUE);
+           power_manager_button_add_device (device, button);
+       }
+       g_ptr_array_free (array, TRUE);
     }
-#endif
 }
 
 static void

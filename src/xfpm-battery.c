@@ -306,9 +306,7 @@ xfpm_battery_refresh (XfpmBattery *battery, UpDevice *device)
 
 static void
 xfpm_battery_changed_cb (UpDevice *device,
-#if UP_CHECK_VERSION(0, 99, 0)
 			 GParamSpec *pspec,
-#endif
 			 XfpmBattery *battery)
 {
     xfpm_battery_refresh (battery, device);
@@ -473,11 +471,8 @@ void xfpm_battery_monitor_device (XfpmBattery *battery,
     device = up_device_new();
     up_device_set_object_path_sync (device, object_path, NULL, NULL);
     battery->priv->device = device;
-#if UP_CHECK_VERSION(0, 99, 0)
     battery->priv->sig_up = g_signal_connect (battery->priv->device, "notify", G_CALLBACK (xfpm_battery_changed_cb), battery);
-#else
-    battery->priv->sig_up = g_signal_connect (battery->priv->device, "changed", G_CALLBACK (xfpm_battery_changed_cb), battery);
-#endif
+
     g_object_set (G_OBJECT (battery),
 		  "has-tooltip", TRUE,
 		  NULL);
