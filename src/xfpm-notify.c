@@ -173,7 +173,7 @@ xfpm_notify_init (XfpmNotify *notify)
     notify->priv->notify_id   = 0;
     
     notify->priv->monitor = xfpm_dbus_monitor_new ();
-    xfpm_dbus_monitor_add_service (notify->priv->monitor, DBUS_BUS_SESSION, "org.freedesktop.Notifications");
+    xfpm_dbus_monitor_add_service (notify->priv->monitor, G_BUS_TYPE_SESSION, "org.freedesktop.Notifications");
     g_signal_connect (notify->priv->monitor, "service-connection-changed",
 		      G_CALLBACK (xfpm_notify_check_server), notify);
     

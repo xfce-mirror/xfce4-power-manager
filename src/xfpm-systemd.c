@@ -229,18 +229,20 @@ xfpm_systemd_try_method (XfpmSystemd  *systemd,
 {
     GDBusConnection *bus;
     GError          *local_error = NULL;
+    GVariant        *var;
 
     bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, error);
     if (G_LIKELY (bus != NULL))
     {
-        g_dbus_connection_call_sync (bus,
-                                     SYSTEMD_DBUS_NAME,
-                                     SYSTEMD_DBUS_PATH,
-                                     SYSTEMD_DBUS_INTERFACE,
-                                     method,
-                                     g_variant_new ("(b)", TRUE),
-                                     NULL, 0, G_MAXINT, NULL,
-                                     &local_error);
+        var = g_dbus_connection_call_sync (bus,
+                                           SYSTEMD_DBUS_NAME,
+                                           SYSTEMD_DBUS_PATH,
+                                           SYSTEMD_DBUS_INTERFACE,
+                                           method,
+                                           g_variant_new ("(b)", TRUE),
+                                           G_VARIANT_TYPE ("()"), 0, G_MAXINT, NULL,
+                                           &local_error);
+        g_variant_unref (var);
         g_object_unref (G_OBJECT (bus));
 
         if (local_error != NULL)

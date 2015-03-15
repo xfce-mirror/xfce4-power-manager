@@ -69,17 +69,12 @@ static void xfpm_polkit_finalize   (GObject *object);
 
 struct XfpmPolkitPrivate
 {
-    DBusGConnection   *bus;
+    GDBusConnection   *bus;
 
 #ifdef ENABLE_POLKIT
-    DBusGProxy        *proxy;
-    GValueArray       *subject;
-    GHashTable        *details;
-    GHashTable        *subject_hash;
-
-    GType              subject_gtype;
-    GType              details_gtype;
-    GType              result_gtype;
+    GDBusProxy        *proxy;
+    GVariant          *subject;
+    GVariant          *details;
 
     gulong             destroy_id;
     gboolean           subject_valid;
@@ -248,15 +243,10 @@ xfpm_polkit_free_data (gpointer data)
 
     XFPM_DEBUG ("Destroying Polkit data");
 
-    g_hash_table_destroy (polkit->priv->details);
-    g_hash_table_destroy (polkit->priv->subject_hash);
-
-    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-    g_value_array_free   (polkit->priv->subject);
-    G_GNUC_END_IGNORE_DEPRECATIONS
+    g_variant_unref (polkit->priv->details);
+    g_variant_unref (polkit->priv->subject);
     
     polkit->priv->details      = NULL;
-    polkit->priv->subject_hash = NULL;
     polkit->priv->subject      = NULL;
 
     polkit->priv->destroy_id = 0;
@@ -268,12 +258,15 @@ xfpm_polkit_free_data (gpointer data)
 static void
 xfpm_polkit_init_data (XfpmPolkit *polkit)
 {
-    GValue hash_elem = { 0 };
     gint pid;
     guint64 start_time;
+    GVariantBuilder builder;
+    const gchar *subject_kind = NULL;
 
     if (polkit->priv->subject_valid)
 	return;
+
+    g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{sv}"));
 
     pid = getpid ();
 
@@ -281,33 +274,15 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 
     if ( G_LIKELY (start_time != 0 ) )
     {
-	GValue val = { 0 }, pid_val = { 0 }, start_time_val = { 0 };
+	GVariant *var;
 
-	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-	polkit->priv->subject = g_value_array_new (2);
-	G_GNUC_END_IGNORE_DEPRECATIONS
-	polkit->priv->subject_hash = g_hash_table_new_full (g_str_hash,
-							    g_str_equal,
-							    g_free,
-							    NULL);
+	subject_kind = "unix-process";
 
-	g_value_init (&val, G_TYPE_STRING);
-	g_value_set_string (&val, "unix-process");
-	G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-	g_value_array_append (polkit->priv->subject, &val);
-	G_GNUC_END_IGNORE_DEPRECATIONS
+        var = g_variant_new ("u", (guint32)pid);
+        g_variant_builder_add (&builder, "{sv}", "pid", var);
 
-	g_value_unset (&val);
-
-	g_value_init (&pid_val, G_TYPE_UINT);
-	g_value_set_uint (&pid_val, pid);
-	g_hash_table_insert (polkit->priv->subject_hash,
-			     g_strdup ("pid"), &pid_val);
-
-	g_value_init (&start_time_val, G_TYPE_UINT64);
-	g_value_set_uint64 (&start_time_val, start_time);
-	g_hash_table_insert (polkit->priv->subject_hash,
-			     g_strdup ("start-time"), &start_time_val);
+        var = g_variant_new ("t", start_time);
+        g_variant_builder_add (&builder, "{sv}", "start-time", var);
 
 	XFPM_DEBUG ("Using unix session polkit subject");
     }
@@ -316,23 +291,18 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 	g_warning ("Unable to create polkit subject");
     }
 
-    g_value_init (&hash_elem, 
-		  dbus_g_type_get_map ("GHashTable", 
-				       G_TYPE_STRING, 
-				       G_TYPE_VALUE));
-    
-    g_value_set_static_boxed (&hash_elem, polkit->priv->subject_hash);
-    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-    g_value_array_append (polkit->priv->subject, &hash_elem);
-    G_GNUC_END_IGNORE_DEPRECATIONS
+    polkit->priv->subject =
+	g_variant_ref_sink (g_variant_new ("(sa{sv})",
+					   subject_kind,
+					   &builder));
     
     /**
      * Polkit details, will leave it empty.
      **/
-    polkit->priv->details = g_hash_table_new_full (g_str_hash, 
-						   g_str_equal, 
-						   g_free, 
-						   g_free);
+    g_variant_builder_init (&builder, G_VARIANT_TYPE ("a{ss}"));
+    polkit->priv->details =
+	g_variant_ref_sink (g_variant_new ("a{ss}",
+					   &builder));
     
     /*Clean these data after 1 minute*/
     polkit->priv->destroy_id = 
@@ -346,11 +316,9 @@ static gboolean
 xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
 {
 #ifdef ENABLE_POLKIT
-    GValueArray *result;
-    GValue result_val = { 0 };
     GError *error = NULL;
     gboolean is_authorized = FALSE;
-    gboolean ret;
+    GVariant *var;
     
     /**
      * <method name="CheckAuthorization">      
@@ -367,29 +335,23 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
     g_return_val_if_fail (polkit->priv->proxy != NULL, FALSE);
     g_return_val_if_fail (polkit->priv->subject_valid, FALSE);
     
-    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-    result = g_value_array_new (0);
-    G_GNUC_END_IGNORE_DEPRECATIONS
+    var = g_variant_new ("(@(sa{sv})s@a{ss}us)",
+                         polkit->priv->subject,
+                         action_id,
+                         polkit->priv->details,
+                         0,
+                         NULL);
+
+    var = g_dbus_proxy_call_sync (polkit->priv->proxy, "CheckAuthorization",
+                                  var,
+                                  G_DBUS_CALL_FLAGS_NONE,
+                                  -1, NULL,
+                                  &error);
     
-    ret = dbus_g_proxy_call (polkit->priv->proxy, "CheckAuthorization", &error,
-			     polkit->priv->subject_gtype, polkit->priv->subject,
-			     G_TYPE_STRING, action_id,
-			     polkit->priv->details_gtype, polkit->priv->details,
-			     G_TYPE_UINT, 0, 
-			     G_TYPE_STRING, NULL,
-			     G_TYPE_INVALID,
-			     polkit->priv->result_gtype, &result,
-			     G_TYPE_INVALID);
-    
-    if ( G_LIKELY (ret) )
+    if ( G_LIKELY (var) )
     {
-	g_value_init (&result_val, polkit->priv->result_gtype);
-	g_value_set_static_boxed (&result_val, result);
-	
-	dbus_g_type_struct_get (&result_val,
-				0, &is_authorized,
-				G_MAXUINT);
-	g_value_unset (&result_val);
+	g_variant_get (var, "((bba{ss}))",
+		       &is_authorized, NULL, NULL);
     }
     else if ( error )
     {
@@ -397,9 +359,7 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
 	g_error_free (error);
     }
 
-    G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-    g_value_array_free (result);
-    G_GNUC_END_IGNORE_DEPRECATIONS
+    g_variant_unref (var);
     
     XFPM_DEBUG ("Action=%s is authorized=%s", action_id, xfpm_bool_to_string (is_authorized));
     
@@ -410,7 +370,7 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
 
 #ifdef ENABLE_POLKIT
 static void
-xfpm_polkit_changed_cb (DBusGProxy *proxy, XfpmPolkit *polkit)
+xfpm_polkit_changed_cb (GDBusProxy *proxy, XfpmPolkit *polkit)
 {
     XFPM_DEBUG ("Auth changed");
     g_signal_emit (G_OBJECT (polkit), signals [AUTH_CHANGED], 0);
@@ -449,31 +409,9 @@ xfpm_polkit_init (XfpmPolkit *polkit)
     polkit->priv->proxy        = NULL;
     polkit->priv->subject      = NULL;
     polkit->priv->details      = NULL;
-    polkit->priv->subject_hash = NULL;
-    
-    polkit->priv->subject_gtype = 
-        dbus_g_type_get_struct ("GValueArray", 
-                                G_TYPE_STRING, 
-                                dbus_g_type_get_map ("GHashTable", 
-                                                     G_TYPE_STRING, 
-                                                     G_TYPE_VALUE),
-                                G_TYPE_INVALID);
-    
-    polkit->priv->details_gtype = dbus_g_type_get_map ("GHashTable", 
-						       G_TYPE_STRING, 
-						       G_TYPE_STRING);
-    
-    polkit->priv->result_gtype =
-	dbus_g_type_get_struct ("GValueArray", 
-				G_TYPE_BOOLEAN, 
-				G_TYPE_BOOLEAN, 
-				dbus_g_type_get_map ("GHashTable", 
-						     G_TYPE_STRING, 
-						     G_TYPE_STRING),
-				G_TYPE_INVALID);
 #endif /*ENABLE_POLKIT*/
     
-    polkit->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+    polkit->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
     
     if ( error )
     {
@@ -484,16 +422,19 @@ xfpm_polkit_init (XfpmPolkit *polkit)
 
 #ifdef ENABLE_POLKIT
     polkit->priv->proxy = 
-	dbus_g_proxy_new_for_name (polkit->priv->bus,
-				   "org.freedesktop.PolicyKit1",
-				   "/org/freedesktop/PolicyKit1/Authority",
-				   "org.freedesktop.PolicyKit1.Authority");
+	g_dbus_proxy_new_sync (polkit->priv->bus,
+			       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
+			       NULL,
+			       "org.freedesktop.PolicyKit1",
+			       "/org/freedesktop/PolicyKit1/Authority",
+			       "org.freedesktop.PolicyKit1.Authority",
+			       NULL,
+			       NULL);
     
     if (G_LIKELY (polkit->priv->proxy) )
     {
-	dbus_g_proxy_add_signal (polkit->priv->proxy, "Changed", G_TYPE_INVALID);
-	dbus_g_proxy_connect_signal (polkit->priv->proxy, "Changed",
-				     G_CALLBACK (xfpm_polkit_changed_cb), polkit, NULL);
+	g_signal_connect (polkit->priv->proxy, "Changed",
+			  G_CALLBACK (xfpm_polkit_changed_cb), polkit);
     }
     else
     {
@@ -515,8 +456,8 @@ xfpm_polkit_finalize (GObject *object)
 #ifdef ENABLE_POLKIT
     if ( polkit->priv->proxy )
     {
-	dbus_g_proxy_disconnect_signal (polkit->priv->proxy, "Changed",
-					G_CALLBACK (xfpm_polkit_changed_cb), polkit);
+	g_signal_handlers_disconnect_by_func (polkit->priv->proxy,
+					     G_CALLBACK (xfpm_polkit_changed_cb), polkit);
 	g_object_unref (polkit->priv->proxy);
     }
 
@@ -530,7 +471,7 @@ xfpm_polkit_finalize (GObject *object)
 
 
     if ( polkit->priv->bus )
-	dbus_g_connection_unref (polkit->priv->bus);
+	g_object_unref (polkit->priv->bus);
 
     G_OBJECT_CLASS (xfpm_polkit_parent_class)->finalize (object);
 }

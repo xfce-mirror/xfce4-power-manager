@@ -23,6 +23,7 @@
 #endif
 
 #include <glib.h>
+#include <gio/gio.h>
 
 #include "xfpm-network-manager.h"
 
@@ -33,11 +34,11 @@ gboolean 	xfpm_network_manager_sleep  	(gboolean sleep)
 {
 #ifdef WITH_NETWORK_MANAGER
 
-    DBusGConnection *bus   = NULL;
-    DBusGProxy      *proxy = NULL;
+    GDBusConnection *bus   = NULL;
+    GDBusProxy      *proxy = NULL;
     GError          *error = NULL;
     
-    bus = dbus_g_bus_get ( DBUS_BUS_SYSTEM, &error);
+    bus = g_bus_get_sync ( G_BUS_TYPE_SYSTEM, NULL, &error);
     
     if ( error )
     {
@@ -46,10 +47,15 @@ gboolean 	xfpm_network_manager_sleep  	(gboolean sleep)
 	return FALSE;
     }
     
-    proxy = dbus_g_proxy_new_for_name (bus,
-				       "org.freedesktop.NetworkManager",
-				       "/org/freedesktop/NetworkManager",
-				       "org.freedesktop.NetworkManager");
+    proxy = g_dbus_proxy_new_sync (bus,
+				   G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
+				   G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
+				   NULL,
+				   "org.freedesktop.NetworkManager",
+				   "/org/freedesktop/NetworkManager",
+				   "org.freedesktop.NetworkManager",
+				   NULL,
+				   NULL);
 				       
     if (!proxy)
     {
@@ -57,9 +63,10 @@ gboolean 	xfpm_network_manager_sleep  	(gboolean sleep)
 	return FALSE;
     }
     
-    dbus_g_proxy_call_no_reply (proxy, "Sleep", G_TYPE_BOOLEAN, sleep, G_TYPE_INVALID);
+    g_dbus_proxy_call (proxy, "Sleep", g_variant_new("(b)", sleep),
+                       G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
     g_object_unref (G_OBJECT(proxy));
-    dbus_g_connection_unref (bus);
+    g_object_unref (bus);
     
     /* Sleep 0.5 second to allow the nm applet to disconnect*/
     g_usleep (500000);

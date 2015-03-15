@@ -87,7 +87,7 @@ static void xfpm_power_dbus_init (XfpmPower *power);
 
 struct XfpmPowerPrivate
 {
-    DBusGConnection *bus;
+    GDBusConnection *bus;
 
     UpClient        *upower;
 
@@ -482,7 +482,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 
     if ( error )
     {
-	if ( g_error_matches (error, DBUS_GERROR, DBUS_GERROR_NO_REPLY) )
+	if ( g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_NO_REPLY) )
 	{
 	    XFPM_DEBUG ("D-Bus time out, but should be harmless");
 	}
@@ -1188,7 +1188,7 @@ xfpm_power_init (XfpmPower *power)
     g_signal_connect (power->priv->inhibit, "has-inhibit-changed",
 		      G_CALLBACK (xfpm_power_inhibit_changed_cb), power);
 
-    power->priv->bus = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+    power->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
     if ( error )
     {
@@ -1306,7 +1306,7 @@ xfpm_power_finalize (GObject *object)
     if ( power->priv->console != NULL )
         g_object_unref (power->priv->console);
 
-    dbus_g_connection_unref (power->priv->bus);
+    g_object_unref (power->priv->bus);
 
     g_hash_table_destroy (power->priv->hash);
 
@@ -1457,65 +1457,113 @@ xfpm_power_is_in_presentation_mode (XfpmPower *power)
  *
  */
 static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
-				        GError **error);
+					  GDBusMethodInvocation *invocation,
+					  gpointer user_data);
 
 static gboolean xfpm_power_dbus_reboot   (XfpmPower *power,
-					GError **error);
+					  GDBusMethodInvocation *invocation,
+					  gpointer user_data);
 
 static gboolean xfpm_power_dbus_hibernate (XfpmPower * power,
-					 GError **error);
+					   GDBusMethodInvocation *invocation,
+					   gpointer user_data);
 
 static gboolean xfpm_power_dbus_suspend (XfpmPower * power,
-				       GError ** error);
+				         GDBusMethodInvocation *invocation,
+				         gpointer user_data);
 
 static gboolean xfpm_power_dbus_can_reboot (XfpmPower * power,
-					  gboolean * OUT_can_reboot,
-					  GError ** error);
+					    GDBusMethodInvocation *invocation,
+					    gpointer user_data);
 
 static gboolean xfpm_power_dbus_can_shutdown (XfpmPower * power,
-					    gboolean * OUT_can_reboot,
-					    GError ** error);
+					      GDBusMethodInvocation *invocation,
+					      gpointer user_data);
 
 static gboolean xfpm_power_dbus_can_hibernate (XfpmPower * power,
-					     gboolean * OUT_can_hibernate,
-					     GError ** error);
+					       GDBusMethodInvocation *invocation,
+					       gpointer user_data);
 
 static gboolean xfpm_power_dbus_can_suspend (XfpmPower * power,
-					   gboolean * OUT_can_suspend,
-					   GError ** error);
+					     GDBusMethodInvocation *invocation,
+					     gpointer user_data);
 
 static gboolean xfpm_power_dbus_get_on_battery (XfpmPower * power,
-					      gboolean * OUT_on_battery,
-					      GError ** error);
+					        GDBusMethodInvocation *invocation,
+					        gpointer user_data);
 
 static gboolean xfpm_power_dbus_get_low_battery (XfpmPower * power,
-					       gboolean * OUT_low_battery,
-					       GError ** error);
+					         GDBusMethodInvocation *invocation,
+					         gpointer user_data);
 
 #include "org.freedesktop.PowerManagement.h"
 
 static void
 xfpm_power_dbus_class_init (XfpmPowerClass * klass)
 {
-    dbus_g_object_type_install_info (G_TYPE_FROM_CLASS (klass),
-                                     &dbus_glib_xfpm_power_object_info);
 }
 
 static void
 xfpm_power_dbus_init (XfpmPower *power)
 {
-    DBusGConnection *bus = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+    GDBusConnection *bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
+    XfpmPowerManagement *power_dbus;
 
     TRACE ("entering");
 
-    dbus_g_connection_register_g_object (bus,
-                                         "/org/freedesktop/PowerManagement",
-                                         G_OBJECT (power));
+    power_dbus = xfpm_power_management_skeleton_new ();
+    g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (power_dbus),
+                                      bus,
+                                      "/org/freedesktop/PowerManagement",
+                                      NULL);
+
+    g_signal_connect_swapped (power_dbus,
+			      "handle-shutdown",
+			      G_CALLBACK (xfpm_power_dbus_shutdown),
+			      power);
+    g_signal_connect_swapped (power_dbus,
+			      "handle-reboot",
+			      G_CALLBACK (xfpm_power_dbus_reboot),
+			      power);
+    g_signal_connect_swapped (power_dbus,
+			      "handle-hibernate",
+			      G_CALLBACK (xfpm_power_dbus_hibernate),
+			      power);
+    g_signal_connect_swapped (power_dbus,
+			      "handle-suspend",
+			      G_CALLBACK (xfpm_power_dbus_suspend),
+			      power);
+    g_signal_connect_swapped (power_dbus,
+			      "handle-can-reboot",
+			      G_CALLBACK (xfpm_power_dbus_can_reboot),
+			      power);
+    g_signal_connect_swapped (power_dbus,
+			      "handle-can-shutdown",
+			      G_CALLBACK (xfpm_power_dbus_can_shutdown),
+			      power);
+    g_signal_connect_swapped (power_dbus,
+			      "handle-can-hibernate",
+			      G_CALLBACK (xfpm_power_dbus_can_hibernate),
+			      power);
+    g_signal_connect_swapped (power_dbus,
+			      "handle-can-suspend",
+			      G_CALLBACK (xfpm_power_dbus_can_suspend),
+			      power);
+    g_signal_connect_swapped (power_dbus,
+			      "handle-get-on-battery",
+			      G_CALLBACK (xfpm_power_dbus_get_on_battery),
+			      power);
+    g_signal_connect_swapped (power_dbus,
+			      "handle-get-low-battery",
+			      G_CALLBACK (xfpm_power_dbus_get_low_battery),
+			      power);
 }
 
 static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
-				        GError **error)
+					  GDBusMethodInvocation *invocation,
+					  gpointer user_data)
 {
+    GError *error = NULL;
     gboolean can_reboot;
 
     if ( LOGIND_RUNNING () )
@@ -1533,22 +1581,36 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
 
     if ( !can_reboot)
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
-                    _("Permission denied"));
-        return FALSE;
+	g_dbus_method_invocation_return_error (invocation,
+					       XFPM_ERROR,
+					       XFPM_ERROR_PERMISSION_DENIED,
+					       _("Permission denied"));
+        return TRUE;
     }
 
     if ( LOGIND_RUNNING () )
-        xfpm_systemd_shutdown (power->priv->systemd, error);
+        xfpm_systemd_shutdown (power->priv->systemd, &error);
     else
-	xfpm_console_kit_shutdown (power->priv->console, error);
+	xfpm_console_kit_shutdown (power->priv->console, &error);
+
+    if (error)
+    {
+	g_dbus_method_invocation_return_gerror (invocation, error);
+        g_error_free (error);
+    }
+    else
+    {
+	xfpm_power_management_complete_shutdown (user_data, invocation);
+    }
 
     return TRUE;
 }
 
 static gboolean xfpm_power_dbus_reboot   (XfpmPower *power,
-					GError **error)
+					  GDBusMethodInvocation *invocation,
+					  gpointer user_data)
 {
+    GError *error = NULL;
     gboolean can_reboot;
 
     if ( LOGIND_RUNNING () )
@@ -1566,139 +1628,180 @@ static gboolean xfpm_power_dbus_reboot   (XfpmPower *power,
 
     if ( !can_reboot)
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
-                    _("Permission denied"));
-        return FALSE;
+	g_dbus_method_invocation_return_error (invocation,
+					       XFPM_ERROR,
+					       XFPM_ERROR_PERMISSION_DENIED,
+					       _("Permission denied"));
+        return TRUE;
     }
 
-   if ( LOGIND_RUNNING () )
-        xfpm_systemd_reboot (power->priv->systemd, error);
+    if ( LOGIND_RUNNING () )
+        xfpm_systemd_reboot (power->priv->systemd, &error);
     else
-	xfpm_console_kit_reboot (power->priv->console, error);
+	xfpm_console_kit_reboot (power->priv->console, &error);
 
+    if (error)
+    {
+	g_dbus_method_invocation_return_gerror (invocation, error);
+        g_error_free (error);
+    }
+    else
+    {
+        xfpm_power_management_complete_reboot (user_data, invocation);
+    }
 
     return TRUE;
 }
 
 static gboolean xfpm_power_dbus_hibernate (XfpmPower * power,
-					 GError **error)
+					   GDBusMethodInvocation *invocation,
+					   gpointer user_data)
 {
     if ( !power->priv->auth_hibernate )
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
-                    _("Permission denied"));
-        return FALSE;
-
+	g_dbus_method_invocation_return_error (invocation,
+					       XFPM_ERROR,
+					       XFPM_ERROR_PERMISSION_DENIED,
+					       _("Permission denied"));
+        return TRUE;
     }
 
     if (!power->priv->can_hibernate )
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_NO_HARDWARE_SUPPORT,
-                    _("Suspend not supported"));
-        return FALSE;
+	g_dbus_method_invocation_return_error (invocation,
+					       XFPM_ERROR,
+					       XFPM_ERROR_NO_HARDWARE_SUPPORT,
+					       _("Suspend not supported"));
+        return TRUE;
     }
 
     xfpm_power_sleep (power, "Hibernate", FALSE);
+
+    xfpm_power_management_complete_hibernate (user_data, invocation);
 
     return TRUE;
 }
 
 static gboolean xfpm_power_dbus_suspend (XfpmPower * power,
-				       GError ** error)
+					 GDBusMethodInvocation *invocation,
+					 gpointer user_data)
 {
     if ( !power->priv->auth_suspend )
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_PERMISSION_DENIED,
-                    _("Permission denied"));
-        return FALSE;
-
+	g_dbus_method_invocation_return_error (invocation,
+					       XFPM_ERROR,
+					       XFPM_ERROR_PERMISSION_DENIED,
+					       _("Permission denied"));
+        return TRUE;
     }
 
     if (!power->priv->can_suspend )
     {
-	g_set_error (error, XFPM_ERROR, XFPM_ERROR_NO_HARDWARE_SUPPORT,
-                    _("Suspend not supported"));
-        return FALSE;
+	g_dbus_method_invocation_return_error (invocation,
+					       XFPM_ERROR,
+					       XFPM_ERROR_NO_HARDWARE_SUPPORT,
+					       _("Suspend not supported"));
+        return TRUE;
     }
 
     xfpm_power_sleep (power, "Suspend", FALSE);
+
+    xfpm_power_management_complete_suspend (user_data, invocation);
 
     return TRUE;
 }
 
 static gboolean xfpm_power_dbus_can_reboot (XfpmPower * power,
-					  gboolean * OUT_can_reboot,
-					  GError ** error)
+					    GDBusMethodInvocation *invocation,
+					    gpointer user_data)
 {
+    gboolean can_reboot;
 
     if ( LOGIND_RUNNING () )
     {
         g_object_get (G_OBJECT (power->priv->systemd),
-                      "can-reboot", OUT_can_reboot,
+                      "can-reboot", &can_reboot,
                       NULL);
     }
     else
     {
         g_object_get (G_OBJECT (power->priv->console),
-                      "can-reboot", OUT_can_reboot,
+                      "can-reboot", &can_reboot,
 		      NULL);
     }
+
+    xfpm_power_management_complete_can_reboot (user_data,
+                                               invocation,
+                                               can_reboot);
 
     return TRUE;
 }
 
 static gboolean xfpm_power_dbus_can_shutdown (XfpmPower * power,
-					    gboolean * OUT_can_shutdown,
-					    GError ** error)
+					      GDBusMethodInvocation *invocation,
+					      gpointer user_data)
 {
+    gboolean can_shutdown;
 
     if ( LOGIND_RUNNING () )
     {
         g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-shutdown", OUT_can_shutdown,
+                  "can-shutdown", &can_shutdown,
                   NULL);
     }
     else
     {
 	g_object_get (G_OBJECT (power->priv->console),
-		      "can-shutdown", OUT_can_shutdown,
+		      "can-shutdown", &can_shutdown,
 		      NULL);
     }
+
+    xfpm_power_management_complete_can_shutdown (user_data,
+                                                 invocation,
+                                                 can_shutdown);
 
     return TRUE;
 }
 
 static gboolean xfpm_power_dbus_can_hibernate (XfpmPower * power,
-					     gboolean * OUT_can_hibernate,
-					     GError ** error)
+					       GDBusMethodInvocation *invocation,
+					       gpointer user_data)
 {
-    *OUT_can_hibernate = power->priv->can_hibernate;
+    xfpm_power_management_complete_can_hibernate (user_data,
+                                                  invocation,
+                                                  power->priv->can_hibernate);
     return TRUE;
 }
 
 static gboolean xfpm_power_dbus_can_suspend (XfpmPower * power,
-					   gboolean * OUT_can_suspend,
-					   GError ** error)
+					     GDBusMethodInvocation *invocation,
+					     gpointer user_data)
 {
-    *OUT_can_suspend = power->priv->can_suspend;
+    xfpm_power_management_complete_can_suspend (user_data,
+                                                invocation,
+                                                power->priv->can_suspend);
 
     return TRUE;
 }
 
 static gboolean xfpm_power_dbus_get_on_battery (XfpmPower * power,
-					      gboolean * OUT_on_battery,
-					      GError ** error)
+					        GDBusMethodInvocation *invocation,
+					        gpointer user_data)
 {
-    *OUT_on_battery = power->priv->on_battery;
+    xfpm_power_management_complete_get_on_battery (user_data,
+                                                   invocation,
+                                                   power->priv->on_battery);
 
     return TRUE;
 }
 
 static gboolean xfpm_power_dbus_get_low_battery (XfpmPower * power,
-					       gboolean * OUT_low_battery,
-					       GError ** error)
+					         GDBusMethodInvocation *invocation,
+					         gpointer user_data)
 {
-    *OUT_low_battery = power->priv->on_low_battery;
+    xfpm_power_management_complete_get_low_battery (user_data,
+                                                    invocation,
+                                                    power->priv->on_low_battery);
 
     return TRUE;
 }
