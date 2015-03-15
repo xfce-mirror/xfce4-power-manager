@@ -837,7 +837,6 @@ power_manager_button_init (PowerManagerButton *button)
     /* Intercept scroll events */
     gtk_widget_add_events (GTK_WIDGET (button), GDK_SCROLL_MASK);
 
-    g_signal_connect (G_OBJECT (button), "style_updated", G_CALLBACK (power_manager_button_set_icon), button); 
     g_signal_connect (button->priv->upower, "device-added", G_CALLBACK (device_added_cb), button);
     g_signal_connect (button->priv->upower, "device-removed", G_CALLBACK (device_removed_cb), button);
 }
@@ -996,9 +995,10 @@ power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerM
 }
 
 static void
-power_manager_button_style_set_cb (XfcePanelPlugin *plugin, GtkStyle *prev_style, PowerManagerButton *button)
+power_manager_button_style_update_cb (XfcePanelPlugin *plugin, GtkStyle *prev_style, PowerManagerButton *button)
 {
     gtk_widget_reset_style (GTK_WIDGET (plugin));
+    power_manager_button_set_icon (button);
     power_manager_button_size_changed_cb (plugin, xfce_panel_plugin_get_size (plugin), button);
 }
 
@@ -1042,8 +1042,8 @@ power_manager_button_show (PowerManagerButton *button)
     g_signal_connect (button->priv->plugin, "size-changed",
                       G_CALLBACK (power_manager_button_size_changed_cb), button);
 
-    g_signal_connect (button->priv->plugin, "style-set",
-                      G_CALLBACK (power_manager_button_style_set_cb), button);
+    g_signal_connect (button->priv->plugin, "style-updated",
+                      G_CALLBACK (power_manager_button_style_update_cb), button);
 
     g_signal_connect (button->priv->plugin, "free-data",
                       G_CALLBACK (power_manager_button_free_data_cb), button);
