@@ -150,11 +150,6 @@ int main (int argc, char **argv)
 	    return EXIT_FAILURE;
 	}
 
-#if !GLIB_CHECK_VERSION (2, 32, 0)
-    if ( !g_thread_supported () )
-        g_thread_init (NULL);
-#endif
-
 	dbus_g_thread_init ();
 
 	channel = xfconf_channel_new(XFPM_CHANNEL_CFG);

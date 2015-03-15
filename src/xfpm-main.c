@@ -262,11 +262,6 @@ int main (int argc, char **argv)
 	{ NULL, },
     };
 
-#if !GLIB_CHECK_VERSION (2, 32, 0)
-    if ( !g_thread_supported () )
-        g_thread_init (NULL);
-#endif
-
     /* Parse the options */
     octx = g_option_context_new("");
     g_option_context_set_ignore_unknown_options(octx, TRUE);

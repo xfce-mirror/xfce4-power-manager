@@ -1034,11 +1034,7 @@ power_manager_button_free_data_cb (XfcePanelPlugin *plugin, PowerManagerButton *
 static void
 help_cb (GtkMenuItem *menuitem, gpointer user_data)
 {
-#if LIBXFCE4UI_CHECK_VERSION(4, 11, 1)
     xfce_dialog_show_help_with_version (NULL, "xfce4-power-manager", "start", NULL, XFPM_VERSION_SHORT);
-#else
-    xfce_dialog_show_help (NULL, "xfce4-power-manager", "start", NULL);
-#endif
 }
 
 void
