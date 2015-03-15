@@ -995,10 +995,9 @@ power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerM
 }
 
 static void
-power_manager_button_style_update_cb (XfcePanelPlugin *plugin, GtkStyle *prev_style, PowerManagerButton *button)
+power_manager_button_style_update_cb (XfcePanelPlugin *plugin, PowerManagerButton *button)
 {
     gtk_widget_reset_style (GTK_WIDGET (plugin));
-    power_manager_button_set_icon (button);
     power_manager_button_size_changed_cb (plugin, xfce_panel_plugin_get_size (plugin), button);
 }
 
