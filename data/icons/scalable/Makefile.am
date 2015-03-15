@@ -41,4 +41,5 @@ Data_DATA =                                 \
     phone.svg                               \
     tablet.svg                              \
     uninterruptible-power-supply.svg        \
-    video-display.svg
+    video-display.svg                       \
+    xfce4-power-manager-settings.svg
