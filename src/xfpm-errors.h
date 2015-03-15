@@ -25,7 +25,6 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_ERROR	(xfpm_error_get_type  ())
 #define XFPM_ERROR      (xfpm_get_error_quark ())
 
 
@@ -40,7 +39,6 @@ typedef enum
     
 } XfpmError;
 
-GType	xfpm_error_get_type  (void) G_GNUC_CONST;
 GQuark  xfpm_get_error_quark (void);
 
 

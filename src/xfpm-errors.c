@@ -22,38 +22,31 @@
 #include <config.h>
 #endif
 
-#include "xfpm-errors.h"
+#include <gio/gio.h>
 
-static GQuark xfpm_error_quark = 0;
+#include "xfpm-errors.h"
 
 GQuark
 xfpm_get_error_quark (void)
 {
+    static volatile gsize xfpm_error_quark = 0;
     if (xfpm_error_quark == 0)
-	xfpm_error_quark = g_quark_from_static_string ("xfpm-error-quark");
-	
-    return xfpm_error_quark;
-}
-
-GType
-xfpm_error_get_type (void)
-{
-    static GType type = 0;
-    
-    if (!type)
     {
-	static const GEnumValue values[] = 
+	static const GDBusErrorEntry values[] =
 	{
-	    { XFPM_ERROR_UNKNOWN, "XFPM_ERROR_UNKNOWN", "Unknown" },
-	    { XFPM_ERROR_PERMISSION_DENIED, "XFPM_ERROR_PERMISSION_DENIED", "PermissionDenied" },
-	    { XFPM_ERROR_NO_HARDWARE_SUPPORT, "XFPM_ERROR_HARDWARE_NOT_SUPPORT", "NoHardwareSupport" },
-	    { XFPM_ERROR_COOKIE_NOT_FOUND, "XFPM_ERROR_COOKIE_NOT_FOUND", "CookieNotFound" },
-	    { XFPM_ERROR_INVALID_ARGUMENTS, "XFPM_ERROR_INVALID_ARGUMENTS", "InvalidArguments" },
-	    { XFPM_ERROR_SLEEP_FAILED, "XFPM_ERROR_SLEEP_FAILED", "SleepFailed" },
-	    { 0, NULL, NULL }
+	    { XFPM_ERROR_UNKNOWN, "org.xfce.PowerManager.Error.Unknown" },
+	    { XFPM_ERROR_PERMISSION_DENIED, "org.xfce.PowerManager.Error.PermissionDenied" },
+	    { XFPM_ERROR_NO_HARDWARE_SUPPORT, "org.xfce.PowerManager.Error.NoHardwareSupport" },
+	    { XFPM_ERROR_COOKIE_NOT_FOUND, "org.xfce.PowerManager.Error.CookieNotFound" },
+	    { XFPM_ERROR_INVALID_ARGUMENTS, "org.xfce.PowerManager.Error.InvalidArguments" },
+	    { XFPM_ERROR_SLEEP_FAILED, "org.xfce.PowerManager.Error.SleepFailed" },
 	};
-	
-	type = g_enum_register_static ("XfpmError", values);
+
+        g_dbus_error_register_error_domain ("xfpm-error-quark",
+                                            &xfpm_error_quark,
+                                            values,
+                                            G_N_ELEMENTS (values));
     }
-    return type;
+
+    return (GQuark) xfpm_error_quark;
 }
