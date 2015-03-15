@@ -896,9 +896,6 @@ GtkWidget *
 #ifdef XFCE_PLUGIN
 power_manager_button_new (XfcePanelPlugin *plugin)
 #endif
-#ifdef LXDE_PLUGIN
-power_manager_button_new (void)
-#endif
 #ifdef XFPM_SYSTRAY
 power_manager_button_new (void)
 #endif
