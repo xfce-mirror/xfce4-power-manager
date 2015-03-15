@@ -22,6 +22,7 @@
 #define __XFPM_DBUS_MONITOR_H
 
 #include <glib-object.h>
+#include <gio/gio.h>
 
 G_BEGIN_DECLS
 
@@ -72,19 +73,19 @@ XfpmDBusMonitor        *xfpm_dbus_monitor_new             	(void);
 void			xfpm_dbus_monitor_watch_system_bus	(XfpmDBusMonitor *monitor);
 
 gboolean                xfpm_dbus_monitor_add_unique_name     	(XfpmDBusMonitor *monitor,
-								 DBusBusType bus_type,
+								 GBusType bus_type,
 								 const gchar *unique_name);
 								   
 void                    xfpm_dbus_monitor_remove_unique_name    (XfpmDBusMonitor *monitor,
-								 DBusBusType bus_type,
+								 GBusType bus_type,
 								 const gchar *unique_name);
 
 gboolean		xfpm_dbus_monitor_add_service	  	(XfpmDBusMonitor *monitor,
-								 DBusBusType bus_type,
+								 GBusType bus_type,
 								 const gchar *service_name);
 
 void			xfpm_dbus_monitor_remove_service  	(XfpmDBusMonitor *monitor,
-								 DBusBusType bus_type,
+								 GBusType bus_type,
 								 const gchar *service_name);
 G_END_DECLS
 
