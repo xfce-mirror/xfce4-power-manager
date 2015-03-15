@@ -243,9 +243,6 @@ if test "x$build_panel_plugins" = "xyes"; then
     if test "x$LIBXFCE4PANEL_FOUND" = "xyes"; then
         echo " Xfce plugins:          yes"
     fi
-    if test "x$LXDEPANEL_FOUND" = "xyes"; then
-        echo " LXDE plugins:          yes"
-    fi
 fi
 echo "Backend:		${with_backend}"
 echo "Debug:			${enable_debug}"
