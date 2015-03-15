@@ -21,46 +21,70 @@
 #include "xfpm-dbus.h"
 
 gboolean
-xfpm_dbus_name_has_owner (DBusConnection *connection, const gchar *name)
+xfpm_dbus_name_has_owner (GDBusConnection *connection, const gchar *name)
 {
-    DBusError error;
+    GError *error = NULL;
+    const gchar *owner;
     gboolean ret;
+    GVariant *var;
+
+    var = g_dbus_connection_call_sync (connection,
+                                       "org.freedesktop.DBus",  /* name */
+                                       "/org/freedesktop/DBus", /* object path */
+                                       "org.freedesktop.DBus",  /* interface */
+                                       "GetNameOwner",
+                                       g_variant_new ("(s)", name),
+                                       G_VARIANT_TYPE ("(s)"),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,           /* timeout */
+                                       NULL,
+                                       &error);
+    if (var)
+	g_variant_get (var, "(&s)", &owner);
+    ret = (owner != NULL);
+    g_variant_unref (var);
     
-    dbus_error_init (&error);
-    
-    ret = dbus_bus_name_has_owner(connection, name, &error);
-    
-    if ( dbus_error_is_set(&error) )
+    if ( error )
     {
-        g_warning("Failed to get name owner: %s\n",error.message);
-        dbus_error_free(&error);
+        g_warning("Failed to get name owner: %s\n",error->message);
+        g_error_free(error);
         return FALSE;
     }
     
     return ret;
 }
 
-gboolean xfpm_dbus_register_name(DBusConnection *connection, const gchar *name)
+gboolean xfpm_dbus_register_name(GDBusConnection *connection, const gchar *name)
 {
-    DBusError error;
-    int ret;
+    GError *error = NULL;
+    guint32 ret;
+    GVariant *var;
     
-    dbus_error_init(&error);
-    
-    ret =
-	dbus_bus_request_name(connection,
-			      name,
-			      DBUS_NAME_FLAG_DO_NOT_QUEUE,
-			      &error);
-	
-    if ( dbus_error_is_set(&error) )
+    var = g_dbus_connection_call_sync (connection,
+                                       "org.freedesktop.DBus",  /* bus name */
+                                       "/org/freedesktop/DBus", /* object path */
+                                       "org.freedesktop.DBus",  /* interface name */
+                                       "RequestName",           /* method name */
+                                       g_variant_new ("(su)",
+                                                      name,
+                                                      0x4),     /* DBUS_NAME_FLAG_DO_NOT_QUEUE */
+                                       G_VARIANT_TYPE ("(u)"),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,
+                                       NULL,
+                                       &error);
+
+    if (var)
+        g_variant_get (var, "(u)", &ret);
+    g_variant_unref (var);
+    if ( error )
     {
-	g_warning("Error: %s\n",error.message);
-	dbus_error_free(&error);
+	g_warning("Error: %s\n",error->message);
+	g_error_free(error);
 	return FALSE;
     }
     
-    if ( ret == DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER )
+    if ( ret == 1 ) /* DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER */
     {
 	return TRUE;
     }
@@ -68,26 +92,30 @@ gboolean xfpm_dbus_register_name(DBusConnection *connection, const gchar *name)
     return FALSE;
 }
 
-gboolean xfpm_dbus_release_name(DBusConnection *connection, const gchar *name)
+gboolean xfpm_dbus_release_name(GDBusConnection *connection, const gchar *name)
 {
-    DBusError error;
-    int ret;
+    GError *error = NULL;
+    GVariant *var;
     
-    dbus_error_init(&error);
+    var = g_dbus_connection_call_sync (connection,
+                                       "org.freedesktop.DBus",  /* bus name */
+                                       "/org/freedesktop/DBus", /* object path */
+                                       "org.freedesktop.DBus",  /* interface name */
+                                       "ReleaseName",           /* method name */
+                                       g_variant_new ("(s)", name),
+                                       G_VARIANT_TYPE ("(u)"),
+                                       G_DBUS_CALL_FLAGS_NONE,
+                                       -1,
+                                       NULL,
+                                       &error);
+    g_variant_unref (var);
     
-    ret =
-	dbus_bus_release_name(connection,
-			      name,
-			      &error);
-    
-    if ( dbus_error_is_set(&error) )
+    if ( error )
     {
-        g_warning("Error: %s\n",error.message);
-        dbus_error_free(&error);
+        g_warning("Error: %s\n",error->message);
+        g_error_free(error);
         return FALSE;
     }
-    
-    if ( ret == -1 ) return FALSE;
     
     return TRUE;
 }
