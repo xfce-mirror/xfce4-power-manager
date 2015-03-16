@@ -7,8 +7,7 @@ libxfpmdbus_la_SOURCES =		\
 	xfpm-dbus-monitor.c		\
 	xfpm-dbus-monitor.h		\
 	xfpm-dbus-marshal.c		\
-	xfpm-dbus-marshal.h		\
-	org.xfce.unique.h
+	xfpm-dbus-marshal.h
 	
 libxfpmdbus_la_CFLAGS =			\
 	$(GLIB_CFLAGS)			\
@@ -24,9 +23,7 @@ if MAINTAINER_MODE
 
 BUILT_SOURCES =				\
 	xfpm-dbus-marshal.c		\
-	xfpm-dbus-marshal.h		\
-	org.xfce.unique.c		\
-	org.xfce.unique.h
+	xfpm-dbus-marshal.h
 
 xfpm-dbus-marshal.c: xfpm-dbus-marshal.list
 	echo "#include \"xfpm-dbus-marshal.h\"" > $@ && \
@@ -34,9 +31,6 @@ xfpm-dbus-marshal.c: xfpm-dbus-marshal.list
 
 xfpm-dbus-marshal.h: xfpm-dbus-marshal.list
 	glib-genmarshal $< --prefix=_xfpm_dbus_marshal --header > $@
-
-org.xfce.unique.c org.xfce.unique.h: org.xfce.unique.xml
-	gdbus-codegen --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=org.xfce.unique $<
 
 endif
 
