@@ -124,16 +124,12 @@ void        button_power_changed_cb                 (GtkWidget *w,
 void        button_hibernate_changed_cb            (GtkWidget *w, 
 						    XfconfChannel *channel);
 
-void        notify_toggled_cb                      (GtkWidget *w, 
-						    XfconfChannel *channel);
-void        systray_toggled_cb                     (GtkWidget *w,
-						    XfconfChannel *channel);
-
 void        on_sleep_mode_changed_cb      (GtkWidget *w,
 						    XfconfChannel *channel);
 
-void        dpms_toggled_cb                        (GtkWidget *w, 
-						    XfconfChannel *channel);
+void        dpms_toggled_cb                        (GtkWidget *w,
+                                                    gboolean is_active,
+                                                    XfconfChannel *channel);
 
 void        sleep_on_battery_value_changed_cb      (GtkWidget *w, 
 						    XfconfChannel *channel);
@@ -168,9 +164,6 @@ gchar      *format_brightness_value_cb             (GtkScale *scale,
 gchar      *format_brightness_percentage_cb        (GtkScale *scale, 
 						    gdouble value,
 						    gpointer data);
-
-void        brightness_handle_keys_toggled_cb      (GtkWidget *w,
-						    XfconfChannel *channel);
 
 void        brightness_on_battery_value_changed_cb (GtkWidget *w, 
 						    XfconfChannel *channel);
@@ -353,29 +346,6 @@ button_hibernate_changed_cb (GtkWidget *w, XfconfChannel *channel)
 }
 
 void
-notify_toggled_cb (GtkWidget *w, XfconfChannel *channel)
-{
-    gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
-    
-    if (!xfconf_channel_set_bool (channel, PROPERTIES_PREFIX GENERAL_NOTIFICATION_CFG, val) )
-    {
-	g_critical ("Cannot set value for property %s\n", GENERAL_NOTIFICATION_CFG);
-    }
-}
-
-void
-systray_toggled_cb (GtkWidget *w, XfconfChannel *channel)
-{
-    gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
-
-    if (!xfconf_channel_set_int (channel, PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG, (int)val) )
-    {
-	g_critical ("Cannot set value for property %s\n", SHOW_TRAY_ICON_CFG);
-    }
-}
-
-
-void
 on_ac_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
     GtkTreeModel     *model;
@@ -424,21 +394,19 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 }
 
 void
-dpms_toggled_cb (GtkWidget *w, XfconfChannel *channel)
+dpms_toggled_cb (GtkWidget *w, gboolean is_active, XfconfChannel *channel)
 {
-    gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
+    xfconf_channel_set_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, is_active);
     
-    xfconf_channel_set_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, val);
-    
-    gtk_widget_set_sensitive (on_ac_dpms_off, val);
-    gtk_widget_set_sensitive (on_ac_dpms_sleep, val);
-    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-label")), val);
-    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-label")), val);
+    gtk_widget_set_sensitive (on_ac_dpms_off, is_active);
+    gtk_widget_set_sensitive (on_ac_dpms_sleep, is_active);
+    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-label")), is_active);
+    gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-label")), is_active);
     
     if ( GTK_IS_WIDGET (on_battery_dpms_off ) )
     {
-	gtk_widget_set_sensitive (on_battery_dpms_off, val);
-    	gtk_widget_set_sensitive (on_battery_dpms_sleep, val);
+        gtk_widget_set_sensitive (on_battery_dpms_off, is_active);
+        gtk_widget_set_sensitive (on_battery_dpms_sleep, is_active);
     }
 }
 
@@ -688,21 +656,6 @@ gchar *
 format_brightness_percentage_cb (GtkScale *scale, gdouble value, gpointer data)
 {
     return g_strdup_printf ("%d %s", (int)value, _("%"));
-}
-
-void
-brightness_handle_keys_toggled_cb (GtkWidget *w, XfconfChannel *channel)
-{
-    gboolean val = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
-
-    if ( !xfconf_channel_set_bool (channel, PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS, val) )
-    {
-        g_critical ("Cannot set value for property %s\n", HANDLE_BRIGHTNESS_KEYS);
-    }
-    if ( !xfconf_channel_set_int (channel, PROPERTIES_PREFIX BRIGHTNESS_SWITCH, !val) )
-    {
-        g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH);
-    }
 }
 
 void
@@ -1279,15 +1232,13 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *sleep_w;
     GtkWidget *sleep_label;
     GtkWidget *notify;
-    GtkWidget *systray;
-    
+    GtkWidget *dpms;
+
     guint  value;
     guint list_value;
     gboolean valid;
     gboolean val;
-    gint systray_val;
-    
-    GtkWidget *dpms;
+
     GtkListStore *list_store;
     GtkTreeIter iter;
 
@@ -1297,7 +1248,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
      * Global dpms settings (enable/disable)
      */
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(dpms), val);
+    gtk_switch_set_state (GTK_SWITCH (dpms), val);
 
     /*
      * Power button
@@ -1458,20 +1409,6 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (sleep_w);
 	gtk_widget_hide (sleep_label);
     }
-    /*
-     * Enable/Disable Notification
-     */
-    
-    notify = GTK_WIDGET (gtk_builder_get_object (xml, "show-notifications"));
-    val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX GENERAL_NOTIFICATION_CFG, TRUE);
-    
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(notify), val);
-
-    /* Enable/Disable systray icon */
-    systray = GTK_WIDGET (gtk_builder_get_object (xml, "show-systray"));
-    systray_val = xfconf_channel_get_int (channel, PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG, FALSE);
-
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(systray), systray_val);
 }
 
 static void
@@ -1530,13 +1467,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     
     val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(lock), val);
-
-    /*
-     * Handle brightness keys
-     */
-    brg_handle_keys = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys"));
-    val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS, TRUE);
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(brg_handle_keys), val);
 }
 
 /* Light Locker Integration */
@@ -2256,6 +2186,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *viewport;
     GtkWidget *hbox;
     GtkWidget *frame;
+    GtkWidget *switch_widget;
     GtkListStore *list_store;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
@@ -2299,6 +2230,18 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     xfconf_g_property_bind (channel, PROPERTIES_PREFIX ON_AC_BLANK,
                             G_TYPE_INT, gtk_range_get_adjustment (GTK_RANGE (on_ac_display_blank)),
                             "value");
+
+    switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys"));
+    xfconf_g_property_bind (channel, PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
+                            G_TYPE_BOOLEAN, switch_widget, "active");
+
+    switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "show-notifications"));
+    xfconf_g_property_bind (channel, PROPERTIES_PREFIX GENERAL_NOTIFICATION_CFG,
+                            G_TYPE_BOOLEAN, switch_widget, "active");
+
+    switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "show-systray"));
+    xfconf_g_property_bind (channel, PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG,
+                            G_TYPE_BOOLEAN, switch_widget, "active");
 
     dialog = GTK_WIDGET (gtk_builder_get_object (xml, "xfpm-settings-dialog"));
     nt = GTK_WIDGET (gtk_builder_get_object (xml, "main-notebook"));
