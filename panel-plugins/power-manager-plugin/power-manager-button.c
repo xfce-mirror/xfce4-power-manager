@@ -894,6 +894,7 @@ power_manager_button_new (void)
 static gboolean
 power_manager_button_set_icon (PowerManagerButton *button)
 {
+    GtkWidget *parent;
     GdkPixbuf *pixbuf;
     GtkIconInfo *info;
     GtkStyleContext *context;
@@ -902,7 +903,8 @@ power_manager_button_set_icon (PowerManagerButton *button)
     DBG("icon_width %d", button->priv->panel_icon_width);
 
     icon_name = g_strdup_printf ("%s-symbolic", button->priv->panel_icon_name);
-    context = GTK_STYLE_CONTEXT (gtk_widget_get_style_context (GTK_WIDGET (gtk_widget_get_parent (GTK_WIDGET (button)))));
+    parent = gtk_widget_get_parent (GTK_WIDGET (button));
+    context = GTK_STYLE_CONTEXT (gtk_widget_get_style_context (GTK_WIDGET (parent)));
     info = gtk_icon_theme_lookup_icon (gtk_icon_theme_get_default (), icon_name,
                                        button->priv->panel_icon_width, GTK_ICON_LOOKUP_GENERIC_FALLBACK);
     pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, NULL);
@@ -930,16 +932,6 @@ const gchar *
 power_manager_button_get_tooltip (PowerManagerButton *button)
 {
     return button->priv->tooltip;
-}
-
-void
-power_manager_button_set_width (PowerManagerButton *button, gint width)
-{
-    g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
-
-    button->priv->panel_icon_width = width;
-
-    power_manager_button_set_icon (button);
 }
 
 static gboolean
@@ -1318,10 +1310,6 @@ power_manager_button_show_menu (PowerManagerButton *button)
     /* Display brightness slider - show if there's hardware support for it */
     if ( xfpm_brightness_has_hw (button->priv->brightness) )
     {
-        GdkPixbuf *pix;
-        GtkStyleContext *context;
-        GtkIconInfo *info;
-
         max_level = xfpm_brightness_get_max_level (button->priv->brightness);
 
         mi = scale_menu_item_new_with_range (button->priv->brightness_min_level, max_level, 1);
@@ -1339,18 +1327,12 @@ power_manager_button_show_menu (PowerManagerButton *button)
         g_signal_connect (mi, "scroll-event", G_CALLBACK (range_scroll_cb), button);
         g_signal_connect (menu, "show", G_CALLBACK (range_show_cb), button);
 
-        /* load and display the brightness icon */
-        context = GTK_STYLE_CONTEXT (gtk_widget_get_style_context (GTK_WIDGET (menu)));
-        info = gtk_icon_theme_lookup_icon (gtk_icon_theme_get_default (), XFPM_DISPLAY_BRIGHTNESS_ICON,
-                                           32, GTK_ICON_LOOKUP_GENERIC_FALLBACK);
-        pix = gtk_icon_info_load_symbolic_for_context (info, context, NULL, NULL);
-        if (pix)
-        {
-            img = gtk_image_new_from_pixbuf (pix);
+        /* load and display the brightness icon and force it to 32px size */
+        img = gtk_image_new_from_icon_name (XFPM_DISPLAY_BRIGHTNESS_ICON, GTK_ICON_SIZE_DND);
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-            gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM(mi), img);
+        gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM(mi), img);
 G_GNUC_END_IGNORE_DEPRECATIONS
-        }
+        gtk_image_set_pixel_size (GTK_IMAGE (img), 32);
         gtk_widget_show_all (mi);
         gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
     }

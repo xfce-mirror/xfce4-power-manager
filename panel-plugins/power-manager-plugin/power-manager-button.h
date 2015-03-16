@@ -62,8 +62,6 @@ GtkWidget               *power_manager_button_new       (void);
 
 void                     power_manager_button_show      (PowerManagerButton *button);
 
-void                     power_manager_button_set_width (PowerManagerButton *button, gint width);
-
 void                     power_manager_button_show_menu (PowerManagerButton *button);
 
 const gchar             *power_manager_button_get_icon_name (PowerManagerButton *button);
