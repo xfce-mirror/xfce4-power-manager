@@ -22,6 +22,7 @@
 #define __XFPM_SETTINGS_H
 
 #include <gtk/gtkx.h>
+#include <xfconf/xfconf.h>
 
 GtkWidget *xfpm_settings_dialog_new (XfconfChannel *channel,
                                      gboolean auth_suspend,

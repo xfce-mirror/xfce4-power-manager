@@ -1,8 +1,11 @@
 bin_PROGRAMS = xfce4-power-manager-settings
 
 xfce4_power_manager_settings_SOURCES = 				\
-	xfce-power-manager-dbus-client.h			\
+	xfce-power-manager-dbus.h			\
+	xfce-power-manager-dbus.c			\
 	xfpm-settings-main.c					\
+	xfpm-settings-app.c					\
+	xfpm-settings-app.h					\
 	xfpm-settings.c						\
 	xfpm-settings.h						\
 	$(top_srcdir)/common/xfpm-config.h				\

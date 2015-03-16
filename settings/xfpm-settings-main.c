@@ -1,5 +1,6 @@
-/*
+/* -*- c-basic-offset: 4 -*- vi:set ts=4 sts=4 sw=4:
  * * Copyright (C) 2008-2011 Ali <aliov@xfce.org>
+ * * Copyright (C) 2015 Xfce Development Team <xfce4-dev@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -33,175 +34,12 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
-#include <xfconf/xfconf.h>
-
-#include "common/xfpm-common.h"
-
-#include "xfce-power-manager-dbus-client.h"
-#include "xfpm-settings.h"
-#include "xfpm-config.h"
-#include "xfpm-dbus.h"
-#include "xfpm-debug.h"
-#include "xfpm-unique.h"
+#include "xfpm-settings-app.h"
 
 int main (int argc, char **argv)
 {
-    GtkWidget *dialog;
-    XfpmUnique *unique;
-
-    GError *error = NULL;
-    DBusGConnection *bus;
-    GHashTable *config_hash;
-    
-    gboolean has_battery;
-    gboolean auth_suspend;
-    gboolean auth_hibernate;
-    gboolean can_suspend;
-    gboolean can_hibernate;
-    gboolean can_shutdown;
-    gboolean has_lcd_brightness;
-    gboolean has_sleep_button;
-    gboolean has_hibernate_button;
-    gboolean has_power_button;
-    gboolean has_lid;
-    gboolean start_xfpm_if_not_running;
-    gboolean debug = FALSE;
-
-    Window socket_id = 0;
-    gchar *device_id = NULL;
-
-    XfconfChannel *channel;
-    DBusGProxy *proxy;
-    
-    GOptionEntry option_entries[] = 
-    {
-	{ "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
-	{ "device-id", 'd', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING, &device_id, N_("Display a specific device by UpDevice object path"), N_("UpDevice object path") },
-	{ "debug",    '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &debug, N_("Enable debugging"), NULL },
-	{ NULL, },
-    };
 
     xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
-    
-    if( !gtk_init_with_args (&argc, &argv, (gchar *)"", option_entries, (gchar *)PACKAGE, &error)) 
-    {
-        if( error) 
-        {
-            g_printerr("%s: %s.\n", G_LOG_DOMAIN, error->message);
-            g_printerr(_("Type '%s --help' for usage."), G_LOG_DOMAIN);
-            g_printerr("\n");
-            g_error_free(error);
-        }
-        else
-        {
-            g_error("Unable to open display.");
-	}
-        return EXIT_FAILURE;
-    }
-    
-    bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
-    
-    if ( error )
-    {
-	g_error ("%s\n",error->message);
-    }
 
-    while ( !xfpm_dbus_name_has_owner (dbus_g_connection_get_connection(bus), "org.xfce.PowerManager") )
-    {
-	GtkWidget *startw;
-
-	startw = gtk_message_dialog_new (NULL,
-                                         GTK_DIALOG_MODAL,
-                                         GTK_MESSAGE_QUESTION,
-                                         GTK_BUTTONS_YES_NO,
-                                         _("Xfce4 Power Manager is not running, do you want to launch it now?"));
-	start_xfpm_if_not_running = gtk_dialog_run (GTK_DIALOG (startw));
-	gtk_widget_destroy (startw);
-
-	if ( start_xfpm_if_not_running ) 
-	{
-	    g_spawn_command_line_async("xfce4-power-manager",NULL);
-	    /* wait 2 seconds for xfpm to startup */
-	    g_usleep ( 2 * 1000000 );
-	}
-	else
-	{
-	    /* continue without starting xfpm, this will probably error out */
-	    break;
-	}
-    }
-
-    unique = xfpm_unique_new ("org.xfce.PowerManager.Config");
-
-    if ( !xfpm_unique_app_is_running (unique) )
-    {
-	if ( !xfconf_init(&error) )
-	{
-	    g_critical("xfconf init failed: %s using default settings\n", error->message);
-	    xfce_dialog_show_warning (NULL,
-				      _("Xfce Power Manager"),
-				      "%s",
-				      _("Failed to load power manager configuration, using defaults"));
-	    g_error_free (error);
-	    error = NULL;
-	    return EXIT_FAILURE;
-	}
-
-	dbus_g_thread_init ();
-
-	channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
-
-	proxy = dbus_g_proxy_new_for_name(bus,
-					   "org.xfce.PowerManager",
-					   "/org/xfce/PowerManager",
-					   "org.xfce.Power.Manager");
-
-	xfpm_manager_dbus_client_get_config (proxy,
-					     &config_hash,
-					     &error);
-
-	if ( error )
-	{
-	    g_critical ("Unable to get configuration information from xfce power manager: %s", error->message);
-	    xfce_dialog_show_error (NULL, error, "%s", _("Unable to connect to Xfce Power Manager"));
-	    g_error_free (error);
-	    return EXIT_FAILURE;
-	}
-
-	xfpm_debug_init (debug);
-
-	has_battery = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-battery"));
-	has_lid = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-lid"));
-	can_suspend = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-suspend"));
-	can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-hibernate"));
-	auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "auth-suspend"));
-	auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "auth-hibernate"));
-	has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "has-brightness"));
-	has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "sleep-button"));
-	has_power_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "power-button"));
-	has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "hibernate-button"));
-	can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (config_hash, "can-shutdown"));
-
-	g_hash_table_destroy (config_hash);
-
-	dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
-					   can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
-					   has_lid, has_sleep_button, has_hibernate_button, has_power_button,
-					   socket_id, device_id);
-
-	g_signal_connect_swapped (unique, "ping-received",
-				  G_CALLBACK (gtk_window_present), dialog);
-
-	gtk_main();
-
-	xfpm_dbus_release_name(dbus_g_connection_get_connection(bus), "org.xfce.PowerManager.Config");
-	dbus_g_connection_unref (bus);
-	g_object_unref (proxy);
-
-	g_object_unref (unique);
-
-	return EXIT_SUCCESS;
-    }
-    
-    return EXIT_SUCCESS;
+    return g_application_run (G_APPLICATION (xfpm_settings_app_new ()), argc, argv);
 }

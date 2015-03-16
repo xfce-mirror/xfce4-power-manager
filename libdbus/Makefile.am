@@ -6,8 +6,6 @@ libxfpmdbus_la_SOURCES =		\
 	xfpm-dbus.h			\
 	xfpm-dbus-monitor.c		\
 	xfpm-dbus-monitor.h		\
-	xfpm-unique.c			\
-	xfpm-unique.h			\
 	xfpm-dbus-marshal.c		\
 	xfpm-dbus-marshal.h		\
 	org.xfce.unique.h
