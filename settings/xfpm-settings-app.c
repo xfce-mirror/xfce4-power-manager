@@ -35,6 +35,7 @@
 #include "xfpm-settings.h"
 #include "xfpm-debug.h"
 #include "xfpm-config.h"
+#include "xfpm-common.h"
 
 
 struct _XfpmSettingsAppPrivate
@@ -46,8 +47,6 @@ struct _XfpmSettingsAppPrivate
     gchar            *device_id;
 };
 
-static void xfpm_settings_app_class_init (XfpmSettingsAppClass *class);
-static void xfpm_settings_app_init       (XfpmSettingsApp *app);
 static void xfpm_settings_app_activate   (GApplication *app);
 
 
@@ -197,7 +196,7 @@ xfpm_settings_app_class_init (XfpmSettingsAppClass *class)
 }
 
 XfpmSettingsApp *
-xfpm_settings_app_new ()
+xfpm_settings_app_new (void)
 {
     return g_object_new (XFPM_TYPE_SETTINGS_APP,
                          "application-id", "org.xfce.PowerManager.Settings",
