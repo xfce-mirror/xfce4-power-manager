@@ -391,6 +391,8 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
 				                    GTK_ICON_LOOKUP_USE_BUILTIN,
 				                    NULL);
 
+    g_free (icon_name);
+
     if (battery_device->details)
 	g_free (battery_device->details);
     battery_device->details = details;

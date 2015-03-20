@@ -629,7 +629,7 @@ xfpm_manager_inhibit_sleep_systemd (XfpmManager *manager)
     GError *error = NULL;
     GUnixFDList *fd_list = NULL;
     gint fd = -1;
-    const char *what = xfpm_manager_get_systemd_events(manager);
+    char *what = xfpm_manager_get_systemd_events(manager);
     const char *who = "xfce4-power-manager";
     const char *why = "xfce4-power-manager handles these events";
     const char *mode = "block";
@@ -679,6 +679,8 @@ xfpm_manager_inhibit_sleep_systemd (XfpmManager *manager)
     g_object_unref (fd_list);
 
     g_error_free (error);
+
+    g_free (what);
 
     return fd;
 }
