@@ -353,6 +353,6 @@ xfpm_settings_app_new (void)
 {
     return g_object_new (XFPM_TYPE_SETTINGS_APP,
                          "application-id", "org.xfce.PowerManager.Settings",
-                         "flags", G_APPLICATION_FLAGS_NONE,
+                         "flags", G_APPLICATION_NON_UNIQUE,
                          NULL);
 }
