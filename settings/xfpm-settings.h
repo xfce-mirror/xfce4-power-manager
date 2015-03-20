@@ -39,4 +39,6 @@ GtkWidget *xfpm_settings_dialog_new (XfconfChannel *channel,
                                      Window id,
                                      gchar *device_id);
 
+void     xfpm_settings_show_device_id (gchar *device_id);
+
 #endif /* __XFPM_SETTINGS_H */

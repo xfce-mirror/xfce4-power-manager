@@ -2387,3 +2387,31 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 
     return dialog;
 }
+
+void
+xfpm_settings_show_device_id (gchar *device_id)
+{
+    GtkTreeIter *device_iter;
+
+    if (device_id == NULL)
+	return;
+
+    gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), devices_page_num));
+    gtk_notebook_set_current_page (GTK_NOTEBOOK (nt), devices_page_num);
+
+    DBG("device_id %s", device_id);
+
+    device_iter = find_device_in_tree (device_id);
+    if (device_iter)
+    {
+        GtkTreeSelection *selection;
+
+	DBG("device found");
+
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (sideview));
+
+	gtk_tree_selection_select_iter (selection, device_iter);
+	view_cursor_changed_cb (GTK_TREE_VIEW (sideview), NULL);
+	gtk_tree_iter_free (device_iter);
+    }
+}
