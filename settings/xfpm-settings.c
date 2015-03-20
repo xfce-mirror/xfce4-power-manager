@@ -1231,7 +1231,6 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *hibernate_label;
     GtkWidget *sleep_w;
     GtkWidget *sleep_label;
-    GtkWidget *notify;
     GtkWidget *dpms;
 
     guint  value;
@@ -1420,7 +1419,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *critical_level;
     GtkWidget *lock;
     GtkWidget *label;
-    GtkWidget *brg_handle_keys;
 
     /*
      * Critical battery level
