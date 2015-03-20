@@ -56,7 +56,9 @@ static void activate_device              (GSimpleAction  *action,
 static void activate_debug               (GSimpleAction  *action,
                                           GVariant       *parameter,
                                           gpointer        data);
-
+static void activate_window              (GSimpleAction  *action,
+                                          GVariant       *parameter,
+                                          gpointer        data);
 
 G_DEFINE_TYPE(XfpmSettingsApp, xfpm_settings_app, GTK_TYPE_APPLICATION);
 
@@ -85,6 +87,7 @@ xfpm_settings_app_startup (GApplication *app)
       { "socket-id", activate_socket, "i"  },
       { "device-id", activate_device, "s"  },
       { "debug",     activate_debug,  NULL },
+      { "activate",  activate_window, NULL },
     };
 
     TRACE ("entering");
@@ -135,6 +138,12 @@ xfpm_settings_app_launch (GApplication *app)
     gboolean start_xfpm_if_not_running;
 
     TRACE ("entering");
+
+    if (gtk_application_get_windows (GTK_APPLICATION (app)))
+    {
+        DBG("window already opened, returning");
+        return;
+    }
 
     manager = xfpm_power_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
                                                          G_BUS_NAME_OWNER_FLAGS_NONE,
@@ -278,6 +287,18 @@ activate_debug (GSimpleAction  *action,
     xfpm_settings_app_launch (G_APPLICATION (app));
 }
 
+static void
+activate_window (GSimpleAction  *action,
+                 GVariant       *parameter,
+                 gpointer        data)
+{
+    XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
+
+    TRACE ("entering");
+
+    xfpm_settings_app_launch (G_APPLICATION (app));
+}
+
 static gboolean
 xfpm_settings_app_local_options (GApplication *g_application,
                                  GVariantDict *options)
@@ -331,7 +352,7 @@ xfpm_settings_app_local_options (GApplication *g_application,
 
 
     /* default action */
-    xfpm_settings_app_launch (g_application);
+    g_action_group_activate_action(G_ACTION_GROUP(g_application), "activate", NULL);
 
     return 0;
 }
@@ -353,6 +374,6 @@ xfpm_settings_app_new (void)
 {
     return g_object_new (XFPM_TYPE_SETTINGS_APP,
                          "application-id", "org.xfce.PowerManager.Settings",
-                         "flags", G_APPLICATION_NON_UNIQUE,
+                         "flags", G_APPLICATION_FLAGS_NONE,
                          NULL);
 }
