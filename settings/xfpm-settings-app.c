@@ -40,14 +40,22 @@
 
 struct _XfpmSettingsAppPrivate
 {
-    XfpmPowerManager *manager;
-    XfconfChannel    *channel;
     gboolean          debug;
     Window            socket_id;
     gchar            *device_id;
 };
 
-static void xfpm_settings_app_activate   (GApplication *app);
+static void xfpm_settings_app_launch     (GApplication *app);
+
+static void activate_socket              (GSimpleAction  *action,
+                                          GVariant       *parameter,
+                                          gpointer        data);
+static void activate_device              (GSimpleAction  *action,
+                                          GVariant       *parameter,
+                                          gpointer        data);
+static void activate_debug               (GSimpleAction  *action,
+                                          GVariant       *parameter,
+                                          gpointer        data);
 
 
 G_DEFINE_TYPE(XfpmSettingsApp, xfpm_settings_app, GTK_TYPE_APPLICATION);
@@ -59,12 +67,11 @@ G_DEFINE_TYPE(XfpmSettingsApp, xfpm_settings_app, GTK_TYPE_APPLICATION);
 static void
 xfpm_settings_app_init (XfpmSettingsApp *app)
 {
-    XfpmSettingsAppPrivate *priv = XFPM_SETTINGS_APP_GET_PRIVATE (app);
-
     const GOptionEntry option_entries[] = {
-      { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT, &priv->socket_id, N_("Settings manager socket"), N_("SOCKET ID") },
-      { "device-id", 'd', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING, &priv->device_id, N_("Display a specific device by UpDevice object path"), N_("UpDevice object path") },
-      { "debug",    '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &priv->debug, N_("Enable debugging"), NULL },
+      { "socket-id", 's', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_INT,    NULL, N_("Settings manager socket"), N_("SOCKET ID") },
+      { "device-id", 'd', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING, NULL, N_("Display a specific device by UpDevice object path"), N_("UpDevice object path") },
+      { "debug",    '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,   NULL, N_("Enable debugging"), NULL },
+      { "version",   'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,   NULL, N_("Display version information"), NULL },
       { NULL, },
     };
 
@@ -72,10 +79,41 @@ xfpm_settings_app_init (XfpmSettingsApp *app)
 }
 
 static void
+xfpm_settings_app_startup (GApplication *app)
+{
+    const GActionEntry action_entries[] = {
+      { "socket-id", activate_socket, "i"  },
+      { "device-id", activate_device, "s"  },
+      { "debug",     activate_debug,  NULL },
+    };
+
+    TRACE ("entering");
+
+    g_action_map_add_action_entries (G_ACTION_MAP (app),
+                                     action_entries,
+                                     G_N_ELEMENTS (action_entries),
+                                     app);
+
+    /* keep the app running until we've launched our window */
+    g_application_hold (app);
+
+    /* let the parent class do it's startup as well */
+    G_APPLICATION_CLASS(xfpm_settings_app_parent_class)->startup(app);
+}
+
+static void
 xfpm_settings_app_activate (GApplication *app)
+{
+    TRACE ("entering");
+}
+
+static void
+xfpm_settings_app_launch (GApplication *app)
 {
     XfpmSettingsAppPrivate *priv = XFPM_SETTINGS_APP_GET_PRIVATE (app);
 
+    XfpmPowerManager *manager;
+    XfconfChannel    *channel;
     GError           *error = NULL;
     GtkWidget        *dialog;
     GHashTable       *hash;
@@ -96,12 +134,14 @@ xfpm_settings_app_activate (GApplication *app)
     gboolean has_lid;
     gboolean start_xfpm_if_not_running;
 
-    priv->manager = xfpm_power_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
-                                                               G_BUS_NAME_OWNER_FLAGS_NONE,
-                                                               "org.xfce.PowerManager",
-                                                               "/org/xfce/PowerManager",
-                                                               NULL,
-                                                               &error);
+    TRACE ("entering");
+
+    manager = xfpm_power_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+                                                         G_BUS_NAME_OWNER_FLAGS_NONE,
+                                                         "org.xfce.PowerManager",
+                                                         "/org/xfce/PowerManager",
+                                                         NULL,
+                                                         &error);
 
     if (error != NULL)
     {
@@ -115,7 +155,7 @@ xfpm_settings_app_activate (GApplication *app)
     }
 
 
-    while ( !xfpm_power_manager_call_get_config_sync (priv->manager, &config, NULL, NULL) )
+    while ( !xfpm_power_manager_call_get_config_sync (manager, &config, NULL, NULL) )
     {
         GtkWidget *startw;
 
@@ -151,7 +191,7 @@ xfpm_settings_app_activate (GApplication *app)
     }
 
 
-    priv->channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
+    channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
 
     xfpm_debug_init (priv->debug);
 
@@ -177,7 +217,10 @@ xfpm_settings_app_activate (GApplication *app)
     has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "hibernate-button"));
     can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
 
-    dialog = xfpm_settings_dialog_new (priv->channel, auth_suspend, auth_hibernate,
+    DBG("socket_id %i", (int)priv->socket_id);
+    DBG("device id %s", priv->device_id);
+
+    dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
                                        can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
                                        has_lid, has_sleep_button, has_hibernate_button, has_power_button,
                                        priv->socket_id, priv->device_id);
@@ -185,12 +228,122 @@ xfpm_settings_app_activate (GApplication *app)
     g_hash_table_destroy (hash);
 
     gtk_application_add_window (GTK_APPLICATION (app), GTK_WINDOW (dialog));
+    g_application_release (app);
+
+    g_object_unref (manager);
+}
+
+static void
+activate_socket (GSimpleAction  *action,
+                 GVariant       *parameter,
+                 gpointer        data)
+{
+    XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
+    XfpmSettingsAppPrivate *priv = XFPM_SETTINGS_APP_GET_PRIVATE (app);
+
+    TRACE ("entering");
+
+    priv->socket_id = g_variant_get_int32 (parameter);
+
+    xfpm_settings_app_launch (G_APPLICATION (app));
+}
+
+static void
+activate_device (GSimpleAction  *action,
+                 GVariant       *parameter,
+                 gpointer        data)
+{
+    XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
+    XfpmSettingsAppPrivate *priv = XFPM_SETTINGS_APP_GET_PRIVATE (app);
+
+    TRACE ("entering");
+
+    priv->device_id = g_strdup(g_variant_get_string (parameter, NULL));
+
+    xfpm_settings_app_launch (G_APPLICATION (app));
+}
+
+static void
+activate_debug (GSimpleAction  *action,
+                GVariant       *parameter,
+                gpointer        data)
+{
+    XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
+    XfpmSettingsAppPrivate *priv = XFPM_SETTINGS_APP_GET_PRIVATE (app);
+
+    TRACE ("entering");
+
+    priv->debug = TRUE;
+
+    xfpm_settings_app_launch (G_APPLICATION (app));
+}
+
+static gboolean
+xfpm_settings_app_local_options (GApplication *g_application,
+                                 GVariantDict *options)
+{
+    TRACE ("entering");
+
+    /* --version */
+    if (g_variant_dict_contains (options, "version"))
+    {
+        g_print(_("This is %s version %s, running on Xfce %s.\n"), PACKAGE,
+                VERSION, xfce_version_string());
+        g_print(_("Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."),
+                GTK_MAJOR_VERSION,GTK_MINOR_VERSION, GTK_MICRO_VERSION,
+                gtk_major_version, gtk_minor_version, gtk_micro_version);
+        g_print("\n");
+
+        return 0;
+    }
+
+    /* This will call xfpm_settings_app_startup if it needs to */
+    g_application_register (g_application, NULL, NULL);
+
+    /* --debug */
+    if (g_variant_dict_contains (options, "debug"))
+    {
+        g_action_group_activate_action(G_ACTION_GROUP(g_application), "debug", NULL);
+        return 0;
+    }
+
+    /* --socket-id */
+    if (g_variant_dict_contains (options, "socket-id") || g_variant_dict_contains (options, "s"))
+    {
+        GVariant *var;
+
+        var = g_variant_dict_lookup_value (options, "socket-id", G_VARIANT_TYPE_INT32);
+
+        g_action_group_activate_action(G_ACTION_GROUP(g_application), "socket-id", var);
+        return 0;
+    }
+
+    /* --device-id */
+    if (g_variant_dict_contains (options, "device-id") || g_variant_dict_contains (options, "d"))
+    {
+        GVariant *var;
+
+        var = g_variant_dict_lookup_value (options, "device-id", G_VARIANT_TYPE_STRING);
+
+        g_action_group_activate_action(G_ACTION_GROUP(g_application), "device-id", var);
+        return 0;
+    }
+
+
+    /* default action */
+    xfpm_settings_app_launch (g_application);
+
+    return 0;
 }
 
 static void
 xfpm_settings_app_class_init (XfpmSettingsAppClass *class)
 {
-    G_APPLICATION_CLASS (class)->activate = xfpm_settings_app_activate;
+    GApplicationClass *gapplication_class = G_APPLICATION_CLASS (class);
+
+    gapplication_class->handle_local_options = xfpm_settings_app_local_options;
+    gapplication_class->startup              = xfpm_settings_app_startup;
+    gapplication_class->activate             = xfpm_settings_app_activate;
 
     g_type_class_add_private (class, sizeof (XfpmSettingsAppPrivate));
 }
