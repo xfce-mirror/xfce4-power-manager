@@ -123,6 +123,7 @@ xfpm_settings_app_launch (GApplication *app)
     GVariant         *config;
     GVariantIter     *iter;
     gchar            *key, *value;
+    GList            *windows;
 
     gboolean has_battery;
     gboolean auth_suspend;
@@ -139,9 +140,13 @@ xfpm_settings_app_launch (GApplication *app)
 
     TRACE ("entering");
 
-    if (gtk_application_get_windows (GTK_APPLICATION (app)))
+    windows = gtk_application_get_windows (GTK_APPLICATION (app));
+
+    if (windows != NULL)
     {
-        DBG("window already opened, returning");
+        DBG("window already opened, presenting it");
+        gtk_window_present (GTK_WINDOW (windows->data));
+        gdk_notify_startup_complete ();
         return;
     }
 
