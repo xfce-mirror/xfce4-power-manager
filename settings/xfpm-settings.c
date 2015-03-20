@@ -2146,7 +2146,6 @@ settings_quit (GtkWidget *widget, XfconfChannel *channel)
     g_object_unref (channel);
     xfconf_shutdown();
     gtk_widget_destroy (widget);
-    gtk_main_quit();
 }
 
 static void dialog_response_cb (GtkDialog *dialog, gint response, XfconfChannel *channel)
