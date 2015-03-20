@@ -1635,7 +1635,7 @@ static void xfpm_settings_light_locker (XfconfChannel *channel,
 
         g_settings_schema_unref (schema);
     } else {
-        g_warning("Schema \"apps.light-locker\" not found. Not configuring Light Locker.");
+        XFPM_DEBUG ("Schema \"apps.light-locker\" not found. Not configuring Light Locker.");
         gtk_widget_hide (light_locker_tab);
     }
 }
