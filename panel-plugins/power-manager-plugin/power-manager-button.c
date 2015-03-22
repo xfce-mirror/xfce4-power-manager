@@ -126,7 +126,7 @@ G_DEFINE_TYPE (PowerManagerButton, power_manager_button, GTK_TYPE_TOGGLE_BUTTON)
 static void power_manager_button_finalize   (GObject *object);
 static GList* find_device_in_list (PowerManagerButton *button, const gchar *object_path);
 static gboolean power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpointer userdata);
-static gboolean power_manager_button_set_icon (PowerManagerButton *button);
+static void power_manager_button_set_icon (PowerManagerButton *button);
 static gboolean power_manager_button_press_event (GtkWidget *widget, GdkEventButton *event);
 static gboolean power_manager_button_menu_add_device (PowerManagerButton *button, BatteryDevice *battery_device, gboolean append);
 static void increase_brightness (PowerManagerButton *button);
@@ -893,35 +893,15 @@ power_manager_button_new (void)
     return GTK_WIDGET (button);
 }
 
-static gboolean
+static void
 power_manager_button_set_icon (PowerManagerButton *button)
 {
-    GtkWidget *parent;
-    GdkPixbuf *pixbuf;
-    GtkIconInfo *info;
-    GtkStyleContext *context;
-    gchar *icon_name;
+    gtk_image_set_from_icon_name (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_name, GTK_ICON_SIZE_BUTTON);
+    gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_width);
 
-    DBG("icon_width %d", button->priv->panel_icon_width);
+    /* Notify others the icon name changed */
+    g_signal_emit (button, __signals[SIG_ICON_NAME_CHANGED], 0);
 
-    icon_name = g_strdup_printf ("%s-symbolic", button->priv->panel_icon_name);
-    parent = gtk_widget_get_parent (GTK_WIDGET (button));
-    context = GTK_STYLE_CONTEXT (gtk_widget_get_style_context (GTK_WIDGET (parent)));
-    info = gtk_icon_theme_lookup_icon (gtk_icon_theme_get_default (), icon_name,
-                                       button->priv->panel_icon_width, GTK_ICON_LOOKUP_GENERIC_FALLBACK);
-    pixbuf = gtk_icon_info_load_symbolic_for_context (info, context, NULL, NULL);
-
-    if (pixbuf)
-    {
-        gtk_image_set_from_pixbuf (GTK_IMAGE (button->priv->panel_icon_image), pixbuf);
-        /* Notify others the icon name changed */
-        g_signal_emit (button, __signals[SIG_ICON_NAME_CHANGED], 0);
-        g_object_unref (pixbuf);
-        return TRUE;
-    }
-
-    g_free (icon_name);
-    return FALSE;
 }
 
 const gchar *
@@ -947,7 +927,7 @@ power_manager_button_press_event (GtkWidget *widget, GdkEventButton *event)
 }
 
 #ifdef XFCE_PLUGIN
-static gboolean
+static void
 power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerManagerButton *button)
 {
     GtkStyleContext *context;
@@ -984,8 +964,7 @@ power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerM
         button->priv->panel_icon_width = width;
 
     gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
-
-    return power_manager_button_set_icon (button);
+    power_manager_button_set_icon (button);
 }
 
 static void
