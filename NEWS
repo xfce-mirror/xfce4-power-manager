@@ -1,3 +1,20 @@
+1.4.4
+=====
+New stable release of xfce4-power-manager.
+
+* Re-introduce the trayicon for better support of other DEs (Bug #11054)
+* Miscellaneous bug fixes:
+ - Fix dbus call for CK2 suspend (Bug #11610)
+ - Function check_for_consolekit2 is not used if !UP_CHECK_VERSION(0, 99, 0) (Bug #11657)
+ - Fix xfpm panel plugin crashes at startup when the locale is not UTF8
+ - The scalemenuitem is actually an imagemenuitem
+
+* Translation updates:
+ Bulgarian (bg), Chinese (China) (zh_CN), Croatian (hr),
+ Czech (cs), Dutch (nl), French (fr), German (de),
+ Italian (it), Korean (ko), Malay (ms), Russian (ru),
+ Spanish (es), Serbian (sr), Thai (th).
+
 1.4.3
 =====
 New stable release of xfce4-power-manager.
