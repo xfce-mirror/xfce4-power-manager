@@ -51,6 +51,7 @@
 
 #define BRIGHTNESS_DISABLED 	9
 
+static  GtkApplication *app			= NULL;
 static 	GtkBuilder *xml 			= NULL;
 static  GtkWidget  *nt				= NULL;
 
@@ -2146,6 +2147,8 @@ settings_quit (GtkWidget *widget, XfconfChannel *channel)
     g_object_unref (channel);
     xfconf_shutdown();
     gtk_widget_destroy (widget);
+    /* initiate the quit action on the application so it terminates */
+    g_action_group_activate_action(G_ACTION_GROUP(app), "quit", NULL);
 }
 
 static void dialog_response_cb (GtkDialog *dialog, gint response, XfconfChannel *channel)
@@ -2174,7 +2177,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                           gboolean has_battery, gboolean has_lcd_brightness,
                           gboolean has_lid, gboolean has_sleep_button,
                           gboolean has_hibernate_button, gboolean has_power_button,
-                          Window id, gchar *device_id)
+                          Window id, gchar *device_id, GtkApplication *gtk_app)
 {
     GtkWidget *plug;
     GtkWidget *parent;
@@ -2383,6 +2386,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), devices_page_num));
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (nt), devices_page_num);
     }
+
+    /* keep a pointer to the GtkApplication instance so we can signal a
+     * quit message */
+    app = gtk_app;
 
     return dialog;
 }

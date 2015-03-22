@@ -59,6 +59,9 @@ static void activate_debug               (GSimpleAction  *action,
 static void activate_window              (GSimpleAction  *action,
                                           GVariant       *parameter,
                                           gpointer        data);
+static void activate_quit                (GSimpleAction  *action,
+                                          GVariant       *parameter,
+                                          gpointer        data);
 
 G_DEFINE_TYPE(XfpmSettingsApp, xfpm_settings_app, GTK_TYPE_APPLICATION);
 
@@ -74,6 +77,7 @@ xfpm_settings_app_init (XfpmSettingsApp *app)
       { "device-id", 'd', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_STRING, NULL, N_("Display a specific device by UpDevice object path"), N_("UpDevice object path") },
       { "debug",    '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,   NULL, N_("Enable debugging"), NULL },
       { "version",   'V', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,   NULL, N_("Display version information"), NULL },
+      { "quit",      'q', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE,   NULL, N_("Cause xfce4-power-manager-settings to quit"), NULL },
       { NULL, },
     };
 
@@ -88,6 +92,7 @@ xfpm_settings_app_startup (GApplication *app)
       { "device-id", activate_device, "s"  },
       { "debug",     activate_debug,  NULL },
       { "activate",  activate_window, NULL },
+      { "quit",      activate_quit,   NULL },
     };
 
     TRACE ("entering");
@@ -243,7 +248,7 @@ xfpm_settings_app_launch (GApplication *app)
     dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
                                        can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
                                        has_lid, has_sleep_button, has_hibernate_button, has_power_button,
-                                       priv->socket_id, priv->device_id);
+                                       priv->socket_id, priv->device_id, GTK_APPLICATION (app));
 
     g_hash_table_destroy (hash);
 
@@ -310,6 +315,25 @@ activate_window (GSimpleAction  *action,
     xfpm_settings_app_launch (G_APPLICATION (app));
 }
 
+static void
+activate_quit (GSimpleAction  *action,
+               GVariant       *parameter,
+               gpointer        data)
+{
+    GtkApplication *app = GTK_APPLICATION (data);
+    GList *windows;
+
+    TRACE ("entering");
+
+    windows = gtk_application_get_windows (app);
+
+    if (windows)
+    {
+        /* Remove our window if we've attahced one */
+        gtk_application_remove_window (app, GTK_WINDOW (windows->data));
+    }
+}
+
 static gboolean
 xfpm_settings_app_local_options (GApplication *g_application,
                                  GVariantDict *options)
@@ -361,6 +385,12 @@ xfpm_settings_app_local_options (GApplication *g_application,
         return 0;
     }
 
+    /* --quit */
+    if (g_variant_dict_contains (options, "quit") || g_variant_dict_contains (options, "q"))
+    {
+        g_action_group_activate_action(G_ACTION_GROUP(g_application), "quit", NULL);
+        return 0;
+    }
 
     /* default action */
     g_action_group_activate_action(G_ACTION_GROUP(g_application), "activate", NULL);

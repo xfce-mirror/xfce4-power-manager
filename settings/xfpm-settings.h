@@ -37,7 +37,8 @@ GtkWidget *xfpm_settings_dialog_new (XfconfChannel *channel,
                                      gboolean has_hibernate_button,
                                      gboolean has_power_button,
                                      Window id,
-                                     gchar *device_id);
+                                     gchar *device_id,
+                                     GtkApplication *gtk_app);
 
 void     xfpm_settings_show_device_id (gchar *device_id);
 
