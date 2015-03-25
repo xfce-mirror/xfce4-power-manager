@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-22 18:30+0100\n"
-"PO-Revision-Date: 2015-03-24 17:41+0000\n"
+"PO-Revision-Date: 2015-03-25 02:03+0000\n"
 "Last-Translator: Tobias Bannert <tobannert@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xfce4-power-manager/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -249,7 +249,7 @@ msgstr "Bereitschaft"
 
 #: ../settings/xfpm-settings.c:849 ../settings/xfpm-settings.c:1075
 msgid "Suspend operation not permitted"
-msgstr "Versetzen in den Energiesparmodus ist nicht erlaubt"
+msgstr "Versetzen in den Bereitschaftsmodus ist nicht erlaubt"
 
 #: ../settings/xfpm-settings.c:853 ../settings/xfpm-settings.c:1079
 msgid "Suspend operation not supported"
@@ -360,7 +360,7 @@ msgstr "Vollständig geladen"
 
 #: ../settings/xfpm-settings.c:1923
 msgid "Energy empty"
-msgstr "Minimaler Füllstand"
+msgstr "Keine Energie"
 
 #. TRANSLATORS: Unit here is Volt
 #: ../settings/xfpm-settings.c:1931
@@ -413,7 +413,7 @@ msgstr "Bildschirmversionsinformation"
 
 #: ../settings/xfpm-settings-app.c:80
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr ""
+msgstr "Xfce-Energieeinstellungseinstellungen beenden"
 
 #: ../settings/xfpm-settings-app.c:177
 msgid "Failed to connect to power manager"
@@ -435,7 +435,7 @@ msgstr "Das ist %s Version %s und läuft auf Xfce %s.\n"
 #: ../settings/xfpm-settings-app.c:348
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr ""
+msgstr "Erstellt mit GTK+ %d.%d.%d, verknüpft mit GTK+ %d.%d.%d."
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:355 ../src/xfpm-power.c:637 ../src/xfpm-power.c:680
@@ -450,7 +450,7 @@ msgstr "Einstellungen für die Xfce-Energieverwaltung"
 
 #: ../common/xfpm-common.c:131
 msgid "translator-credits"
-msgstr "Fabian Nowak <timystery@arcor.de>\nMark Trompell <mark@foresightlinux.org>\nChristoph Wickert\nChristian Weiske\nHubert Hesse\nPaul Seyfert\nJohannes Lips"
+msgstr "Fabian Nowak\nMark Trompell\nChristoph Wickert\nChristian Weiske\nHubert Hesse\nPaul Seyfert\nJohannes Lips\nHarald Judt\nTobias Bannert"
 
 #: ../common/xfpm-power-common.c:44 ../common/xfpm-power-common.c:67
 msgid "Battery"
@@ -474,7 +474,7 @@ msgstr "Tastatur"
 
 #: ../common/xfpm-power-common.c:54
 msgid "Monitor"
-msgstr "Monitor"
+msgstr "Bildschirm"
 
 #: ../common/xfpm-power-common.c:56
 msgid "PDA"
@@ -653,13 +653,13 @@ msgstr "<b>%s %s</b>\nUnbekannter Zustand"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "Eine laufende Anwendung verhindert momentan den automatischen Energiesparmodus. Wenn Sie diese Aktion jetzt jedoch durchführen, kann der Zustand der Anwendung beschädigt werden.\nSind Sie sicher, dass Sie das System jetzt in den Ruhezustand versetzen wollen?"
 
 #: ../src/xfpm-power.c:434
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
+msgstr "Keines der Bildschirmsperrwerkzeuge läuft erfolgreich, der Bildschirm wird nicht gesperrt.\nWollen Sie immer noch damit fortfahren, das System in Bereitschaft zu versetzen?"
 
 #: ../src/xfpm-power.c:600
 msgid "Hibernate the system"
@@ -679,11 +679,11 @@ msgstr "Ihr Akku ist nahezu leer. Sichern Sie Ihre Arbeit, damit keine Daten ver
 
 #: ../src/xfpm-power.c:723
 msgid "_Cancel"
-msgstr ""
+msgstr "_Abbrechen"
 
 #: ../src/xfpm-power.c:845
 msgid "System is running on low power"
-msgstr "Das System befindet sich in einem niedrigen Energiezustand"
+msgstr "Das System läuft mit einem niedrigen Energiezustand"
 
 #: ../src/xfpm-power.c:863
 #, c-format
@@ -831,7 +831,7 @@ msgstr "Hat Klappe"
 
 #: ../src/xfpm-main.c:267
 msgid "Do not daemonize"
-msgstr "Nicht in den Dämonmodus gehen"
+msgstr "Nicht als Dienst ausführen"
 
 #: ../src/xfpm-main.c:269
 msgid "Dump all information"
@@ -887,7 +887,7 @@ msgstr "Ungültige Argumente"
 
 #: ../src/xfpm-inhibit.c:387
 msgid "Invalid cookie"
-msgstr "Ungültiges Cookie"
+msgstr "Ungültige Profildatei"
 
 #: ../src/xfpm-manager.c:452
 msgid ""
