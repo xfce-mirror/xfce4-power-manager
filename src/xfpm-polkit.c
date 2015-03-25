@@ -334,13 +334,15 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
     
     g_return_val_if_fail (polkit->priv->proxy != NULL, FALSE);
     g_return_val_if_fail (polkit->priv->subject_valid, FALSE);
-    
+
     var = g_variant_new ("(@(sa{sv})s@a{ss}us)",
                          polkit->priv->subject,
                          action_id,
                          polkit->priv->details,
                          0,
-                         NULL);
+                         "");
+
+    XFPM_DEBUG ("polkit request: %s", g_variant_print (var, TRUE));
 
     var = g_dbus_proxy_call_sync (polkit->priv->proxy, "CheckAuthorization",
                                   var,
@@ -352,14 +354,14 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
     {
 	g_variant_get (var, "((bba{ss}))",
 		       &is_authorized, NULL, NULL);
+
+	g_variant_unref (var);
     }
     else if ( error )
     {
 	g_warning ("'CheckAuthorization' failed with %s", error->message);
 	g_error_free (error);
     }
-
-    g_variant_unref (var);
     
     XFPM_DEBUG ("Action=%s is authorized=%s", action_id, xfpm_bool_to_string (is_authorized));
     

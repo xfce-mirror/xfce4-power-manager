@@ -89,10 +89,13 @@ xfpm_kbd_backlight_init_max_level (XfpmKbdBacklight *backlight)
                                   &error);
 
     if (var)
+    {
 	g_variant_get (var,
 		       "(i)",
 		       &backlight->priv->max_level);
-    g_variant_unref (var);
+	g_variant_unref (var);
+    }
+
     if ( error )
     {
         g_warning ("Failed to get keyboard max brightness level : %s", error->message);
@@ -142,10 +145,13 @@ xfpm_kbd_backlight_get_level (XfpmKbdBacklight *backlight)
                                   -1, NULL,
                                   &error);
     if (var)
+    {
 	g_variant_get (var,
 		       "(i)",
 		       &level);
-    g_variant_unref (var);
+	g_variant_unref (var);
+    }
+
     if ( error )
     {
         g_warning ("Failed to get keyboard brightness level : %s", error->message);
@@ -167,7 +173,10 @@ xfpm_kbd_backlight_set_level (XfpmKbdBacklight *backlight, gint32 level)
                                   G_DBUS_CALL_FLAGS_NONE,
                                   -1, NULL,
                                   &error);
-    g_variant_unref (var);
+
+    if (var)
+        g_variant_unref (var);
+
     if ( error )
     {
         g_warning ("Failed to set keyboard brightness level : %s", error->message);

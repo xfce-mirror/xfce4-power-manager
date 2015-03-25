@@ -40,9 +40,11 @@ xfpm_dbus_name_has_owner (GDBusConnection *connection, const gchar *name)
                                        NULL,
                                        &error);
     if (var)
-	g_variant_get (var, "(&s)", &owner);
+    {
+        g_variant_get (var, "(&s)", &owner);
+        g_variant_unref (var);
+    }
     ret = (owner != NULL);
-    g_variant_unref (var);
     
     if ( error )
     {
@@ -75,8 +77,11 @@ gboolean xfpm_dbus_register_name(GDBusConnection *connection, const gchar *name)
                                        &error);
 
     if (var)
+    {
         g_variant_get (var, "(u)", &ret);
-    g_variant_unref (var);
+        g_variant_unref (var);
+    }
+
     if ( error )
     {
 	g_warning("Error: %s\n",error->message);
@@ -108,7 +113,8 @@ gboolean xfpm_dbus_release_name(GDBusConnection *connection, const gchar *name)
                                        -1,
                                        NULL,
                                        &error);
-    g_variant_unref (var);
+    if (var)
+        g_variant_unref (var);
     
     if ( error )
     {

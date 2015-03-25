@@ -82,10 +82,13 @@ xfpm_console_kit_get_info (XfpmConsoleKit *console)
                                   &error);
 
     if (var)
+    {
 	g_variant_get (var,
 		       "(b)",
 		       &console->priv->can_shutdown);
-    g_variant_unref (var);
+	g_variant_unref (var);
+    }
+
     if ( error )
     {
 	g_warning ("'CanStop' method failed : %s", error->message);
@@ -99,10 +102,13 @@ xfpm_console_kit_get_info (XfpmConsoleKit *console)
                                   &error);
 
     if (var)
+    {
 	g_variant_get (var,
 		       "(b)",
 		       &console->priv->can_restart);
-    g_variant_unref (var);
+	g_variant_unref (var);
+    }
+
     if ( error )
     {
 	g_warning ("'CanRestart' method failed : %s", error->message);
@@ -316,7 +322,8 @@ void xfpm_console_kit_shutdown (XfpmConsoleKit *console, GError **error)
                                   -1, NULL,
                                   error);
 
-    g_variant_unref (var);
+    if (var)
+	g_variant_unref (var);
 }
 
 void xfpm_console_kit_reboot (XfpmConsoleKit *console, GError **error)
@@ -331,7 +338,8 @@ void xfpm_console_kit_reboot (XfpmConsoleKit *console, GError **error)
                                   -1, NULL,
                                   error);
 
-    g_variant_unref (var);
+    if (var)
+	g_variant_unref (var);
 }
 
 void
@@ -348,7 +356,8 @@ xfpm_console_kit_suspend (XfpmConsoleKit *console,
                                   -1, NULL,
                                   error);
 
-    g_variant_unref (var);
+    if (var)
+	g_variant_unref (var);
 }
 
 void
@@ -365,5 +374,6 @@ xfpm_console_kit_hibernate (XfpmConsoleKit *console,
                                   -1, NULL,
                                   error);
 
-    g_variant_unref (var);
+    if (var)
+	g_variant_unref (var);
 }
