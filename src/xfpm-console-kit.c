@@ -343,7 +343,7 @@ xfpm_console_kit_suspend (XfpmConsoleKit *console,
     g_return_if_fail (console->priv->proxy != NULL );
 
     var = g_dbus_proxy_call_sync (console->priv->proxy, "Suspend",
-                                  NULL,
+                                  g_variant_new ("(b)", TRUE),
                                   G_DBUS_CALL_FLAGS_NONE,
                                   -1, NULL,
                                   error);
@@ -360,7 +360,7 @@ xfpm_console_kit_hibernate (XfpmConsoleKit *console,
     g_return_if_fail (console->priv->proxy != NULL );
 
     var = g_dbus_proxy_call_sync (console->priv->proxy, "Hibernate",
-                                  NULL,
+                                  g_variant_new ("(b)", TRUE),
                                   G_DBUS_CALL_FLAGS_NONE,
                                   -1, NULL,
                                   error);
