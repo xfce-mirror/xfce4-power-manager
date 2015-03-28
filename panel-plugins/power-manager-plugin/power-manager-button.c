@@ -37,6 +37,7 @@
 #include "common/xfpm-icons.h"
 #include "common/xfpm-power-common.h"
 #include "common/xfpm-brightness.h"
+#include "common/xfpm-debug.h"
 
 #include "power-manager-button.h"
 #include "scalemenuitem.h"
@@ -361,10 +362,10 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     BatteryDevice *battery_device, *display_device;
     const gchar *object_path = up_device_get_object_path(device);
     gchar *details, *icon_name, *upower_icon;
-    GdkPixbuf *pix;
+    GdkPixbuf *pix = NULL;
     guint type = 0;
 
-    TRACE("entering for %s", object_path);
+    XFPM_DEBUG("entering for %s", object_path);
 
     if (!POWER_MANAGER_IS_BUTTON (button))
         return;
@@ -385,13 +386,15 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     icon_name = get_device_icon_name (button->priv->upower, device);
     details = get_device_description (button->priv->upower, device);
 
-    pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-				                    icon_name,
-				                    32,
-				                    GTK_ICON_LOOKUP_USE_BUILTIN,
-				                    NULL);
-
-    g_free (icon_name);
+    if (icon_name)
+    {
+        pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                        icon_name,
+                                        32,
+                                        GTK_ICON_LOOKUP_USE_BUILTIN,
+                                        NULL);
+        g_free (icon_name);
+    }
 
     if (battery_device->details)
 	g_free (battery_device->details);
@@ -448,7 +451,7 @@ power_manager_button_add_device (UpDevice *device, PowerManagerButton *button)
     const gchar *object_path = up_device_get_object_path(device);
     gulong signal_id;
 
-    TRACE("entering for %s", object_path);
+    XFPM_DEBUG("entering for %s", object_path);
 
     g_return_if_fail (POWER_MANAGER_IS_BUTTON (button ));
 

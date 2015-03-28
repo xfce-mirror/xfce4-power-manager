@@ -29,6 +29,7 @@
 #include "xfpm-enum-glib.h"
 
 #include "xfpm-icons.h"
+#include "xfpm-debug.h"
 
 
 /**
@@ -176,7 +177,17 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
     /* Strip away the symbolic suffix for the device icons for the devices tab
      * and the panel plugin's menu */
     icon_suffix = g_strrstr (upower_icon, "-symbolic");
-    icon_base_length = icon_suffix - upower_icon;
+    if (icon_suffix != NULL)
+    {
+        icon_base_length = icon_suffix - upower_icon;
+    }
+    else
+    {
+        icon_base_length = G_MAXINT;
+    }
+
+    XFPM_DEBUG ("icon_suffix %s, icon_base_length %ld, upower_icon %s",
+                icon_suffix, icon_base_length, upower_icon);
 
     /* mapped from
      * http://cgit.freedesktop.org/upower/tree/libupower-glib/up-types.h
@@ -202,7 +213,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
         icon_name = g_strdup (XFPM_TABLET_ICON);
     else if ( type == UP_DEVICE_KIND_COMPUTER )
         icon_name = g_strdup (XFPM_COMPUTER_ICON);
-    else
+    else if ( g_strcmp0 (upower_icon, "") != 0 )
         icon_name = g_strndup (upower_icon, icon_base_length);
 
     return icon_name;
