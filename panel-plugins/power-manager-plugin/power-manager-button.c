@@ -939,8 +939,8 @@ power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerM
     gint xthickness;
     gint ythickness;
 
-    g_return_if_fail (POWER_MANAGER_IS_BUTTON (button), FALSE);
-    g_return_if_fail (XFCE_IS_PANEL_PLUGIN (plugin), FALSE);
+    g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
+    g_return_if_fail (XFCE_IS_PANEL_PLUGIN (plugin));
     g_return_if_fail (size > 0);
 
     size /= xfce_panel_plugin_get_nrows (plugin);
