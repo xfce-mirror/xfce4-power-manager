@@ -52,6 +52,7 @@ xfce4_power_manager_CFLAGS =                    \
 	-DSBINDIR=\"$(sbindir)\"                \
 	-DUPOWER_ENABLE_DEPRECATED              \
 	-DXFPM_SUSPEND_HELPER_CMD=\"$(prefix)/bin/xfce4-pm-helper\" \
+	-UXFCE_PLUGIN                           \
 	-DXFPM_SYSTRAY							\
 	$(GOBJECT_CFLAGS)                       \
 	$(GTHREAD_CFLAGS)                       \
