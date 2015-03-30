@@ -9,13 +9,14 @@
 # Denis Koryavov <dkoryavov@yandex.ru>, 2009
 # Sergey Alyoshin <alyoshin.s@gmail.com>, 2013-2015
 # Vitaly Valerievich Borodin <026rus@gmail.com>, 2014
+# Yan  Pas, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-22 18:30+0100\n"
-"PO-Revision-Date: 2015-03-23 19:24+0000\n"
-"Last-Translator: Andrei Stepanov\n"
+"PO-Revision-Date: 2015-03-30 19:42+0000\n"
+"Last-Translator: Yan  Pas\n"
 "Language-Team: Russian (http://www.transifex.com/projects/p/xfce4-power-manager/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -155,7 +156,7 @@ msgstr "<b>Настройки питания для экрана</b>"
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr ""
+msgstr "Разрешить менеджеру питания управлять питанием дисплея (DPMS) вместо X11."
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Blank after"
@@ -410,7 +411,7 @@ msgstr "Показать информацию о версии"
 
 #: ../settings/xfpm-settings-app.c:80
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr ""
+msgstr "Приведёт к выходу из xfce4-power-manager-settings"
 
 #: ../settings/xfpm-settings-app.c:177
 msgid "Failed to connect to power manager"
@@ -455,7 +456,7 @@ msgstr "Батарея"
 
 #: ../common/xfpm-power-common.c:46
 msgid "Uninterruptible Power Supply"
-msgstr ""
+msgstr "Источник Бесперебойного Питания"
 
 #: ../common/xfpm-power-common.c:48
 msgid "Line power"
@@ -654,13 +655,13 @@ msgstr "<b>%s %s</b>\nНеизвестное состояние"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "Одно из запущенных приложений блокирует автоматический переход в режим пониженного энергопотребления, принудительный переход в спящий или ждущий режим может привести к нарушению работы этого приложения. Вы действительно желаете продолжить?"
 
 #: ../src/xfpm-power.c:434
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
+msgstr "Не удалось запустить ни один из блокировщиков экрана, экран не будет заблокирован. Всё равно перевести систему в ждущий режим?"
 
 #: ../src/xfpm-power.c:600
 msgid "Hibernate the system"
