@@ -24,7 +24,7 @@ gboolean
 xfpm_dbus_name_has_owner (GDBusConnection *connection, const gchar *name)
 {
     GError *error = NULL;
-    const gchar *owner;
+    const gchar *owner = NULL;
     gboolean ret;
     GVariant *var;
 
