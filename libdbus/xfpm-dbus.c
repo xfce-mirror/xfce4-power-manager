@@ -59,7 +59,7 @@ xfpm_dbus_name_has_owner (GDBusConnection *connection, const gchar *name)
 gboolean xfpm_dbus_register_name(GDBusConnection *connection, const gchar *name)
 {
     GError *error = NULL;
-    guint32 ret;
+    guint32 ret = 0;
     GVariant *var;
     
     var = g_dbus_connection_call_sync (connection,
