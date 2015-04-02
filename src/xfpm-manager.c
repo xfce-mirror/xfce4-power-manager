@@ -653,7 +653,7 @@ xfpm_manager_inhibit_sleep_systemd (XfpmManager *manager)
                                                            "Inhibit",
                                                            g_variant_new ("(ssss)",
                                                                           what, who, why, mode),
-                                                           G_VARIANT_TYPE ("()"),
+                                                           G_VARIANT_TYPE ("(h)"),
                                                            G_DBUS_CALL_FLAGS_NONE,
                                                            -1,
                                                            NULL,
