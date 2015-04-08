@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-22 18:30+0100\n"
-"PO-Revision-Date: 2015-04-02 17:37+0000\n"
+"PO-Revision-Date: 2015-04-08 21:52+0000\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian (http://www.transifex.com/projects/p/xfce4-power-manager/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr "Nieko"
 #: ../data/interfaces/xfpm-settings.ui.h:5 ../settings/xfpm-settings-app.c:175
 #: ../settings/xfpm-settings-app.c:212 ../src/xfpm-main.c:435
 msgid "Xfce Power Manager"
-msgstr "Xfce energijos tvarkyklė"
+msgstr "Xfce energijos tvarkytuvė"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
 msgid "Power manager settings"
@@ -151,7 +151,7 @@ msgstr "<b>Ekrano energijos valdymas</b>"
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr "Leisti energijos tvarkyklei vietoj X11 tvarkyti ekrano energijos valdymą (DPMS)"
+msgstr "Leisti energijos tvarkytuvei vietoj X11 tvarkyti ekrano energijos valdymą (DPMS)"
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Blank after"
@@ -382,7 +382,7 @@ msgstr "Įrenginiai"
 
 #: ../settings/xfpm-settings-app.c:76
 msgid "Settings manager socket"
-msgstr "Nustatymų tvarkyklės lizdas"
+msgstr "Nustatymų tvarkytuvės lizdas"
 
 #: ../settings/xfpm-settings-app.c:76
 msgid "SOCKET ID"
@@ -410,15 +410,15 @@ msgstr "Priversti xfce4-power-manager-settings baigti darbą"
 
 #: ../settings/xfpm-settings-app.c:177
 msgid "Failed to connect to power manager"
-msgstr "Nepavyko prisijungti prie energijos tvarkyklės"
+msgstr "Nepavyko prisijungti prie energijos tvarkytuvės"
 
 #: ../settings/xfpm-settings-app.c:191
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce energijos tvarkyklė neveikia, ar norite paleisti?"
+msgstr "Xfce4 Energijos Tvarkytuvė neveikia, ar norite paleisti?"
 
 #: ../settings/xfpm-settings-app.c:214
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Nepavyko įkelti energijos tvarkyklės konfigūracijos, naudojami numatytieji"
+msgstr "Nepavyko įkelti energijos tvarkytuvės konfigūracijos, naudojami numatytieji"
 
 #: ../settings/xfpm-settings-app.c:346
 #, c-format
@@ -435,11 +435,11 @@ msgstr "Sukurta su GTK+ %d.%d.%d, susieta su GTK+ %d.%d.%d."
 #: ../src/xfpm-power.c:844 ../src/xfpm-power.c:867 ../src/xfpm-battery.c:193
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
-msgstr "Energijos tvarkyklė"
+msgstr "Energijos tvarkytuvė"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
-msgstr "Xfce energijos tvarkyklės nustatymai"
+msgstr "Xfce energijos tvarkytuvės nustatymai"
 
 #: ../common/xfpm-common.c:131
 msgid "translator-credits"
@@ -760,7 +760,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nXfce energijos tvarkyklė %s\n\nXfce Goodies projekto dalis\nhttp://goodies.xfce.org\n\nPlatinama pagal GNU GPL.\n\n"
+msgstr "\nXfce energijos tvarkytuvė %s\n\nXfce Goodies projekto dalis\nhttp://goodies.xfce.org\n\nPlatinama pagal GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:110
 #, c-format
@@ -775,12 +775,12 @@ msgstr "Be policykit palaikymo\n"
 #: ../src/xfpm-main.c:115
 #, c-format
 msgid "With network manager support\n"
-msgstr "Su tinklo tvarkyklės palaikymu\n"
+msgstr "Su tinklo tvarkytuvės palaikymu\n"
 
 #: ../src/xfpm-main.c:117
 #, c-format
 msgid "Without network manager support\n"
-msgstr "Be tinklo tvarkyklės palaikymo\n"
+msgstr "Be tinklo tvarkytuvės palaikymo\n"
 
 #: ../src/xfpm-main.c:131
 msgid "Can suspend"
@@ -836,7 +836,7 @@ msgstr "Sumesti visą informaciją"
 
 #: ../src/xfpm-main.c:270
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Iš naujo paleisti veikiančią Xfce energijos tvarkyklės kopiją"
+msgstr "Iš naujo paleisti veikiančią Xfce energijos tvarkytuvės kopiją"
 
 #: ../src/xfpm-main.c:271
 msgid "Show the configuration dialog"
@@ -844,7 +844,7 @@ msgstr "Rodyti konfigūracijos dialogą"
 
 #: ../src/xfpm-main.c:272
 msgid "Quit any running xfce power manager"
-msgstr "Uždaryti visas veikiančias Xfce energijos tvarkykles"
+msgstr "Uždaryti visas veikiančias Xfce energijos tvarkytuves"
 
 #: ../src/xfpm-main.c:273
 msgid "Version information"
@@ -867,16 +867,16 @@ msgstr "Nepavyko gauti prisijungimo prie magistralės seanso, pranešimo"
 #: ../src/xfpm-main.c:346
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr "Xfce energijos tvarkyklė neveikia"
+msgstr "Xfce energijos tvarkytuvė neveikia"
 
 #: ../src/xfpm-main.c:436
 msgid "Another power manager is already running"
-msgstr "Kita energijos tvarkyklė jau veikia"
+msgstr "Kita energijos tvarkytuvė jau veikia"
 
 #: ../src/xfpm-main.c:441
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "Xfce energijos tvarkyklė jau veikia"
+msgstr "Xfce energijos tvarkytuvė jau veikia"
 
 #: ../src/xfpm-inhibit.c:354
 msgid "Invalid arguments"
@@ -894,7 +894,7 @@ msgstr "Nei vienam iš įrankių, nepavyko sėkmingai užrakinti ekrano, ekranas
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
-msgstr "Xfce darbastalio energijos tvarkyklė"
+msgstr "Xfce darbalaukio energijos tvarkytuvė"
 
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:221
@@ -913,11 +913,11 @@ msgstr "Pristatymo _veiksena"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1331
 msgid "_Power manager settings..."
-msgstr "_Energijos tvarkyklės nustatymai"
+msgstr "_Energijos tvarkytuvės nustatymai"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr "Energijos Tvarkyklės Įskiepis"
+msgstr "Energijos Tvarkytuvės Įskiepis"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
@@ -930,7 +930,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Xfce energijos tvarkyklė kompiuteryje valdo energijos šaltinius bei įrenginius, kurie gali būti valdomi, siekiant sumažinti jų energijos vartojimą (tokius kaip LCD ryškumo lygį, ekrano užmigdymą, procesoriaus dažnio keitimą)."
+msgstr "Xfce energijos tvarkytuvė kompiuteryje valdo energijos šaltinius bei įrenginius, kurie gali būti valdomi, siekiant sumažinti jų energijos vartojimą (tokius kaip LCD ryškumo lygį, ekrano užmigdymą, procesoriaus dažnio keitimą)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -947,7 +947,7 @@ msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Xfce energijos tvarkyklė taip pat parūpina įskiepį, skirtą Xfce ir LXDE skydeliams, kuris valdo LCD ryškumo lygius bei stebi baterijos ir įrenginio įkrovos lygius."
+msgstr "Xfce energijos tvarkytuvė taip pat parūpina įskiepį, skirtą Xfce ir LXDE skydeliams, kuris valdo LCD ryškumo lygius bei stebi baterijos ir įrenginio įkrovos lygius."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
