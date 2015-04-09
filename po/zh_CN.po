@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-03-22 18:30+0100\n"
-"PO-Revision-Date: 2015-03-23 01:47+0000\n"
+"PO-Revision-Date: 2015-04-09 12:11+0000\n"
 "Last-Translator: 玉堂白鹤 <yjwork@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/projects/p/xfce4-power-manager/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -99,11 +99,11 @@ msgstr "<b>笔记本盖</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "Status notifications"
-msgstr ""
+msgstr "状态通知"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "System tray icon"
-msgstr ""
+msgstr "系统托盘图标"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "<b>Appearance</b>"
@@ -151,12 +151,12 @@ msgstr "系统"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "<b>Display power management</b>"
-msgstr ""
+msgstr "<b>显示电源管理器</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr ""
+msgstr "让电源管理器处理显示器的电源管理 (DPMS)，而不是X11。"
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Blank after"
@@ -407,15 +407,15 @@ msgstr "启用调试"
 
 #: ../settings/xfpm-settings-app.c:79
 msgid "Display version information"
-msgstr ""
+msgstr "显示版本信息"
 
 #: ../settings/xfpm-settings-app.c:80
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr ""
+msgstr "导致 xfce4-power-manager-settings 退出"
 
 #: ../settings/xfpm-settings-app.c:177
 msgid "Failed to connect to power manager"
-msgstr ""
+msgstr "连接电源管理器失败"
 
 #: ../settings/xfpm-settings-app.c:191
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -428,12 +428,12 @@ msgstr "无法载入电源管理器配置，使用默认"
 #: ../settings/xfpm-settings-app.c:346
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr ""
+msgstr "此为 %s 版 %s，运行于 Xfce %s。\n"
 
 #: ../settings/xfpm-settings-app.c:348
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr ""
+msgstr "以 GTK+ %d.%d.%d 编译，与 GTK+ %d.%d.%d 链接。"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:355 ../src/xfpm-power.c:637 ../src/xfpm-power.c:680
@@ -456,7 +456,7 @@ msgstr "电池"
 
 #: ../common/xfpm-power-common.c:46
 msgid "Uninterruptible Power Supply"
-msgstr ""
+msgstr "不间断电源"
 
 #: ../common/xfpm-power-common.c:48
 msgid "Line power"
@@ -647,13 +647,13 @@ msgstr "<b>%s %s</b>\n未知状态"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "当前有应用程序禁用了自动睡眠。执行此动作可能会损坏此应用程序的工作状态。\n您确定要让系统休眠？"
 
 #: ../src/xfpm-power.c:434
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
+msgstr "嘿，所有锁屏工具都不能正常运行呢，所以我就无法锁定屏幕啦。\n您想继续挂起系统么？"
 
 #: ../src/xfpm-power.c:600
 msgid "Hibernate the system"
