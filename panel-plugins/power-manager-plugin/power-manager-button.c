@@ -402,11 +402,18 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
 
     /* Get the display device, which may now be this one */
     display_device = get_display_device (button);
-    if ( battery_device == display_device)
+    if (battery_device == display_device)
     {
         DBG("this is the display device, updating");
         /* it is! update the panel button */
         g_free (button->priv->panel_icon_name);
+#ifdef XFCE_PLUGIN
+        g_object_get (device,
+                      "icon-name", &icon_name,
+                      NULL);
+        if (icon_name == NULL)
+            icon_name = g_strdup (PANEL_DEFAULT_ICON);
+#endif
         button->priv->panel_icon_name = g_strdup (icon_name);
         power_manager_button_set_icon (button);
         /* update tooltip */
