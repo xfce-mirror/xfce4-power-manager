@@ -358,12 +358,13 @@ power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, 
 static void
 power_manager_button_update_device_icon_and_details (PowerManagerButton *button, UpDevice *device)
 {
-    GList *item;
-    BatteryDevice *battery_device, *display_device;
-    const gchar *object_path = up_device_get_object_path(device);
-    gchar *details, *icon_name, *upower_icon;
-    GdkPixbuf *pix = NULL;
-    guint type = 0;
+    GList          *item;
+    BatteryDevice  *battery_device;
+    BatteryDevice  *display_device;
+    const gchar    *object_path = up_device_get_object_path(device);
+    gchar          *details;
+    gchar          *icon_name;
+    GdkPixbuf      *pix = NULL;
 
     XFPM_DEBUG("entering for %s", object_path);
 
@@ -377,27 +378,21 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
 
     battery_device = item->data;
 
-    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
-    g_object_get (device,
-                  "kind", &type,
-                  "icon-name", &upower_icon,
-                  NULL);
-
     icon_name = get_device_icon_name (button->priv->upower, device);
     details = get_device_description (button->priv->upower, device);
 
-    if (icon_name)
-    {
-        pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                        icon_name,
-                                        32,
-                                        GTK_ICON_LOOKUP_USE_BUILTIN,
-                                        NULL);
-        g_free (icon_name);
-    }
+    /* If UPower doesn't give us an icon, just use the default */
+    if (icon_name == NULL)
+        icon_name = g_strdup (PANEL_DEFAULT_ICON);
+
+    pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                    icon_name,
+                                    32,
+                                    GTK_ICON_LOOKUP_USE_BUILTIN,
+                                    NULL);
 
     if (battery_device->details)
-	g_free (battery_device->details);
+        g_free (battery_device->details);
     battery_device->details = details;
 
     /* If we had an image before, remove it and the callback */
@@ -412,11 +407,12 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
         DBG("this is the display device, updating");
         /* it is! update the panel button */
         g_free (button->priv->panel_icon_name);
-        button->priv->panel_icon_name = upower_icon;
+        button->priv->panel_icon_name = g_strdup (icon_name);
         power_manager_button_set_icon (button);
         /* update tooltip */
         power_manager_button_set_tooltip (button);
     }
+    g_free (icon_name);
 
     /* If the menu is being displayed, update it */
     if (button->priv->menu && battery_device->menu_item)
