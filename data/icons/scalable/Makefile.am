@@ -5,6 +5,7 @@ Datadir = $(datadir)/icons/hicolor/scalable/status
 
 Data_DATA =                                 \
     ac-adapter.svg                          \
+    ac-adapter-symbolic.svg                 \
     battery-caution-charging.svg            \
     battery-caution.svg                     \
     battery-empty-charging.svg              \
