@@ -1589,7 +1589,7 @@ static void xfpm_settings_light_locker (XfconfChannel *channel,
     }
 
     schema_source = g_settings_schema_source_get_default();
-    schema = g_settings_schema_source_lookup (schema_source, "apps.light-locker", FALSE);
+    schema = g_settings_schema_source_lookup (schema_source, "apps.light-locker", TRUE);
 
     if (schema != NULL && get_light_locker_path() != NULL) {
         security_frame = GTK_WIDGET (gtk_builder_get_object (xml, "security-frame"));
