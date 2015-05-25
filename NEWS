@@ -1,3 +1,41 @@
+1.5.0
+=====
+New development release of xfce4-power-manager.
+This release marks the transition to several new 
+technologies.
+
+* Port to Gtk3 (Eric, Simon)
+* Port to gdbus (Peter)
+* Drop LXDE panel plugin
+* Bumped dependencies:
+ - UPower>= 0.99  
+ - Gtk3 >= 3.14
+ - libxfce4ui-2
+
+* Miscellaneous improvements:
+ - The settings dialog has been ported to GtkApplication
+ - The panel plugin now uses UPower's icon names
+   directly and is consequently compatible with all
+   major icon themes out of the box
+ - The panel plugin uses symbolic icons
+ - The systray icon uses colored icons
+ - The settings dialog now has a unique icon name
+   (xfce4-power-manager-settings)
+
+* And finally some bug fixes:
+ - Fix for panel icon on Desktop systems (Bug #11840)
+ - Never use symbolic icons for the systray (Bug #11756)
+ - Look up the schema for light-locker's settings recursively (Bug #11488)
+ - Don't crash when UPower returns "" for the icon-name (Bug #11756)
+
+* Translation updates:
+Asturian, Chinese (China), Chinese (Taiwan), Czech,
+French, German, Greek, Indonesian, Italian, Japanese,
+Kazakh, Korean, Lithuanian, Malay, Norwegian Bokmål,
+Polish, Portuguese, Portuguese (Brazilian), Russian,
+Serbian, Slovak, Slovenian, Spanish, Swedish, Thai,
+Ukrainian.
+
 1.4.3
 =====
 New stable release of xfce4-power-manager.
