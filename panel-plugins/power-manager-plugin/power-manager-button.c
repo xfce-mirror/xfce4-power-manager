@@ -1119,6 +1119,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
     gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
     /* add the image */
     battery_device->img = gtk_image_new_from_pixbuf (battery_device->pix);
+    g_object_ref (battery_device->img);
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), battery_device->img);
 G_GNUC_END_IGNORE_DEPRECATIONS
