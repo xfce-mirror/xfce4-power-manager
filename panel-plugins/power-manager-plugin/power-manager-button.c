@@ -46,6 +46,7 @@
 #define SET_LEVEL_TIMEOUT (50)
 #define SAFE_SLIDER_MIN_LEVEL (5)
 #define PANEL_DEFAULT_ICON ("battery-full-charged")
+#define PANEL_DEFAULT_ICON_SYMBOLIC ("battery-full-charged-symbolic")
 
 #define POWER_MANAGER_BUTTON_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), POWER_MANAGER_TYPE_BUTTON, PowerManagerButtonPrivate))
@@ -412,7 +413,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
                       "icon-name", &icon_name,
                       NULL);
         if (icon_name == NULL || g_strcmp0(icon_name, "") == 0)
-            icon_name = g_strdup (PANEL_DEFAULT_ICON);
+            icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
 #endif
         button->priv->panel_icon_name = g_strdup (icon_name);
         power_manager_button_set_icon (button);
@@ -825,8 +826,12 @@ power_manager_button_init (PowerManagerButton *button)
         button->priv->channel = xfconf_channel_get ("xfce4-power-manager");
     }
 
-    /* Sane defaults for the panel icon */
+    /* Sane defaults for the systray and panel icon */
+#ifdef XFCE_PLUGIN
+    button->priv->panel_icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
+#else
     button->priv->panel_icon_name = g_strdup (PANEL_DEFAULT_ICON);
+#endif
     button->priv->panel_icon_width = 24;
 
     /* Sane default Gtk style */
