@@ -957,11 +957,11 @@ power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerM
     context = gtk_widget_get_style_context (GTK_WIDGET (button));
     gtk_style_context_get_padding (context, gtk_widget_get_state_flags (GTK_WIDGET (button)), &padding);
     gtk_style_context_get_border (context, gtk_widget_get_state_flags (GTK_WIDGET (button)), &border);
-    xthickness = padding.left+padding.right+border.left+border.right;
-    ythickness = padding.top+padding.bottom+border.top+border.bottom;
+    xthickness = padding.left + padding.right + border.left + border.right;
+    ythickness = padding.top + padding.bottom + border.top + border.bottom;
 
     /* Calculate the size of the space left for the icon */
-    width = size - 2* MAX (xthickness, ythickness);
+    width = size - 2 * MAX (xthickness, ythickness);
 
     /* Since symbolic icons are usually only provided in 16px we
      * try to be clever and use size steps */
@@ -974,8 +974,12 @@ power_manager_button_size_changed_cb (XfcePanelPlugin *plugin, gint size, PowerM
     else
         button->priv->panel_icon_width = width;
 
-    gtk_widget_set_size_request (GTK_WIDGET(plugin), size, size);
+    /* resize the plugin */
+    gtk_widget_set_size_request (GTK_WIDGET (plugin), size, size);
     power_manager_button_set_icon (button);
+
+    /* resize the plugin button too */
+    gtk_widget_set_size_request (GTK_WIDGET (button), -1, -1);
 }
 
 static void
