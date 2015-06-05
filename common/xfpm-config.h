@@ -76,6 +76,7 @@ G_BEGIN_DECLS
 #define BRIGHTNESS_SWITCH_SAVE               "brightness-switch-restore-on-exit"
 #define HANDLE_BRIGHTNESS_KEYS               "handle-brightness-keys"
 #define SHOW_BRIGHTNESS_POPUP                "show-brightness-popup"
+#define SHOW_PANEL_LABEL                     "show-panel-label"
 
 G_END_DECLS
 

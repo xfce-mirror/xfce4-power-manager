@@ -69,6 +69,8 @@ struct PowerManagerButtonPrivate
 
     /* The actual panel icon image */
     GtkWidget       *panel_icon_image;
+    GtkWidget       *panel_label;
+    GtkWidget       *hbox;
     /* Keep track of icon name to redisplay during size changes */
     gchar           *panel_icon_name;
     /* Keep track of the last icon size for use during updates */
@@ -93,6 +95,8 @@ struct PowerManagerButtonPrivate
      */
     gint32           brightness_min_level;
 
+    gint             show_panel_label;
+
     /* filter range value changed events for snappier UI feedback */
     guint            set_level_timeout;
 };
@@ -113,6 +117,7 @@ typedef enum
 {
     PROP_0 = 0,
     PROP_BRIGHTNESS_MIN_LEVEL,
+    PROP_SHOW_PANEL_LABEL,
 } POWER_MANAGER_BUTTON_PROPERTIES;
 
 enum {
@@ -129,6 +134,8 @@ static void power_manager_button_finalize   (GObject *object);
 static GList* find_device_in_list (PowerManagerButton *button, const gchar *object_path);
 static gboolean power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpointer userdata);
 static void power_manager_button_set_icon (PowerManagerButton *button);
+static void power_manager_button_set_label (PowerManagerButton *button, gdouble percentage, guint64 time_to_empty_or_full);
+static void power_manager_button_update_label (PowerManagerButton *button, UpDevice *device);
 static gboolean power_manager_button_press_event (GtkWidget *widget, GdkEventButton *event);
 static gboolean power_manager_button_menu_add_device (PowerManagerButton *button, BatteryDevice *battery_device, gboolean append);
 static void increase_brightness (PowerManagerButton *button);
@@ -187,6 +194,42 @@ get_display_device (PowerManagerButton *button)
     return display_device;
 }
 
+static GList*
+find_device_in_list (PowerManagerButton *button, const gchar *object_path)
+{
+    GList *item = NULL;
+
+    TRACE("entering");
+
+    g_return_val_if_fail ( POWER_MANAGER_IS_BUTTON(button), NULL );
+
+    for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
+    {
+        BatteryDevice *battery_device = item->data;
+        if (battery_device == NULL)
+        {
+            DBG("!battery_device");
+            continue;
+        }
+
+        if (g_strcmp0 (battery_device->object_path, object_path) == 0)
+            return item;
+    }
+
+    return NULL;
+}
+
+static void
+power_manager_button_set_icon (PowerManagerButton *button)
+{
+    gtk_image_set_from_icon_name (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_name, GTK_ICON_SIZE_BUTTON);
+    gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_width);
+
+    /* Notify others the icon name changed */
+    g_signal_emit (button, __signals[SIG_ICON_NAME_CHANGED], 0);
+
+}
+
 static void
 power_manager_button_set_tooltip (PowerManagerButton *button)
 {
@@ -226,29 +269,57 @@ power_manager_button_set_tooltip (PowerManagerButton *button)
     g_signal_emit (button, __signals[SIG_TOOLTIP_CHANGED], 0);
 }
 
-static GList*
-find_device_in_list (PowerManagerButton *button, const gchar *object_path)
+const gchar *
+power_manager_button_get_icon_name (PowerManagerButton *button)
 {
-    GList *item = NULL;
+    return button->priv->panel_icon_name;
+}
 
-    TRACE("entering");
+const gchar *
+power_manager_button_get_tooltip (PowerManagerButton *button)
+{
+    return button->priv->tooltip;
+}
 
-    g_return_val_if_fail ( POWER_MANAGER_IS_BUTTON(button), NULL );
+static void
+power_manager_button_set_label (PowerManagerButton *button, gdouble percentage,
+                                guint64 time_to_empty_or_full)
+{
+    gchar *label_string;
+    gint   hours;
+    gint   minutes;
+    gchar *remaining_time = NULL;
 
-    for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
+    /* Create the short timestring in the format hh:mm */
+    minutes = (int) ( ( time_to_empty_or_full / 60.0 ) + 0.5 );
+    if (minutes < 60)
     {
-        BatteryDevice *battery_device = item->data;
-        if (battery_device == NULL)
-        {
-            DBG("!battery_device");
-            continue;
-        }
-
-        if (g_strcmp0 (battery_device->object_path, object_path) == 0)
-            return item;
+        if (minutes < 10)
+            remaining_time = g_strdup_printf ("0:0%d", minutes);
+        else
+            remaining_time = g_strdup_printf ("0:%d", minutes);
+    }
+    else
+    {
+        hours = minutes / 60;
+        minutes = minutes % 60;
+        if (minutes < 10)
+            remaining_time = g_strdup_printf ("%d:0%d", hours, minutes);
+        else
+            remaining_time = g_strdup_printf ("%d:%d", hours, minutes);
     }
 
-    return NULL;
+    /* Set the label accordingly or hide it if the battery is full */
+    if (button->priv->show_panel_label == 1)
+        label_string = g_strdup_printf ("%d%%", (int) percentage);
+    else if (button->priv->show_panel_label == 2)
+        label_string = g_strdup_printf ("%s", remaining_time);
+    else if (button->priv->show_panel_label == 3)
+        label_string = g_strdup_printf ("(%s, %d%%)", remaining_time, (int) percentage);
+
+    gtk_label_set_text (GTK_LABEL (button->priv->panel_label), label_string);
+
+    g_free (label_string);
 }
 
 static gboolean
@@ -406,7 +477,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     if (battery_device == display_device)
     {
         DBG("this is the display device, updating");
-        /* it is! update the panel button */
+        /* update the icon */
         g_free (button->priv->panel_icon_name);
 #ifdef XFCE_PLUGIN
         g_object_get (device,
@@ -417,8 +488,10 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
 #endif
         button->priv->panel_icon_name = g_strdup (icon_name);
         power_manager_button_set_icon (button);
-        /* update tooltip */
+        /* update the tooltip */
         power_manager_button_set_tooltip (button);
+        /* update the label */
+        power_manager_button_update_label (button, device);
     }
     g_free (icon_name);
 
@@ -720,6 +793,12 @@ power_manager_button_set_property (GObject *object,
         case PROP_BRIGHTNESS_MIN_LEVEL:
             set_brightness_min_level (button, g_value_get_int (value));
             break;
+#ifdef XFCE_PLUGIN
+        case PROP_SHOW_PANEL_LABEL:
+            button->priv->show_panel_label = g_value_get_int (value);
+            power_manager_button_update_label (button, button->priv->display_device);
+            break;
+#endif
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
             break;
@@ -741,6 +820,11 @@ power_manager_button_get_property(GObject *object,
         case PROP_BRIGHTNESS_MIN_LEVEL:
             g_value_set_int (value, button->priv->brightness_min_level);
             break;
+#ifdef XFCE_PLUGIN
+        case PROP_SHOW_PANEL_LABEL:
+            g_value_set_int (value, button->priv->show_panel_label);
+            break;
+#endif
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
             break;
@@ -794,6 +878,12 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
                                                      BRIGHTNESS_SLIDER_MIN_LEVEL,
                                                      -1, G_MAXINT32, -1,
                                                      XFPM_PARAM_FLAGS));
+
+    g_object_class_install_property (object_class, PROP_SHOW_PANEL_LABEL,
+                                     g_param_spec_int (SHOW_PANEL_LABEL,
+                                                       NULL, NULL,
+                                                       0, G_MAXINT16, 3,
+                                                       XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 }
 
@@ -900,31 +990,10 @@ power_manager_button_new (void)
     xfconf_g_property_bind (button->priv->channel,
                             PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL, G_TYPE_INT,
                             G_OBJECT (button), BRIGHTNESS_SLIDER_MIN_LEVEL);
+    xfconf_g_property_bind (button->priv->channel, PROPERTIES_PREFIX SHOW_PANEL_LABEL, G_TYPE_INT,
+                            G_OBJECT (button), SHOW_PANEL_LABEL);
 
     return GTK_WIDGET (button);
-}
-
-static void
-power_manager_button_set_icon (PowerManagerButton *button)
-{
-    gtk_image_set_from_icon_name (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_name, GTK_ICON_SIZE_BUTTON);
-    gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_width);
-
-    /* Notify others the icon name changed */
-    g_signal_emit (button, __signals[SIG_ICON_NAME_CHANGED], 0);
-
-}
-
-const gchar *
-power_manager_button_get_icon_name (PowerManagerButton *button)
-{
-    return button->priv->panel_icon_name;
-}
-
-const gchar *
-power_manager_button_get_tooltip (PowerManagerButton *button)
-{
-    return button->priv->tooltip;
 }
 
 static gboolean
@@ -1006,6 +1075,7 @@ void
 power_manager_button_show (PowerManagerButton *button)
 {
     GtkWidget *mi;
+    GtkWidget *hbox;
 
     g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
 
@@ -1015,7 +1085,12 @@ power_manager_button_show (PowerManagerButton *button)
 #endif
 
     button->priv->panel_icon_image = gtk_image_new ();
-    gtk_container_add (GTK_CONTAINER (button), button->priv->panel_icon_image);
+    button->priv->panel_label = gtk_label_new ("");
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (button->priv->panel_icon_image), TRUE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (button->priv->panel_label), TRUE, FALSE, 0);
+
+    gtk_container_add (GTK_CONTAINER (button), GTK_WIDGET (hbox));
 
     /* help dialog */
     mi = gtk_menu_item_new_with_mnemonic (_("_Help"));
@@ -1037,10 +1112,52 @@ power_manager_button_show (PowerManagerButton *button)
 #endif
 
     gtk_widget_show_all (GTK_WIDGET(button));
+
+    power_manager_button_update_label (button, button->priv->display_device);
     power_manager_button_set_tooltip (button);
 
     /* Add all the devcies currently attached to the system */
     power_manager_button_add_all_devices (button);
+}
+
+static void
+power_manager_button_update_label (PowerManagerButton *button, UpDevice *device)
+{
+    guint state;
+    gdouble percentage;
+    guint64 time_to_empty;
+    guint64 time_to_full;
+
+    if (!POWER_MANAGER_IS_BUTTON (button) || !UP_IS_DEVICE (device))
+        return;
+
+#ifdef XFCE_PLUGIN
+    if (button->priv->show_panel_label <= 0 || button->priv->show_panel_label >3)
+    {
+        gtk_widget_hide (GTK_WIDGET (button->priv->panel_label));
+        power_manager_button_size_changed_cb (button->priv->plugin,
+                                              xfce_panel_plugin_get_size (button->priv->plugin),
+                                              button);
+        return;
+    }
+    else
+        gtk_widget_show (GTK_WIDGET (button->priv->panel_label));
+#endif
+
+    g_object_get (device,
+                  "state", &state,
+                  "percentage", &percentage,
+                  "time-to-empty", &time_to_empty,
+                  "time-to-full", &time_to_full,
+                  NULL);
+
+    /* Hide the label if the battery is fully charged */
+    if (state == UP_DEVICE_STATE_CHARGING)
+        power_manager_button_set_label (button, percentage, time_to_full);
+    else if (state == UP_DEVICE_STATE_FULLY_CHARGED)
+        gtk_widget_hide (GTK_WIDGET (button->priv->panel_label));
+    else
+        power_manager_button_set_label (button, percentage, time_to_empty);
 }
 
 static void
