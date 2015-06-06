@@ -1,3 +1,23 @@
+1.5.1
+=====
+New development release of xfce4-power-manager.
+
+* New feature:
+ - Hidden option to show percentage and/or remaining time in the panel plugin
+   (Bug #4499)
+   To use it, create the property /xfce4-power-manager/show-panel-label as INT
+   in the channel xfce4-power-manager. The possible settings are 0 (don't show
+   label), 1 (percentage), 2 (remaining time) and 3 (remaining time and
+   percentage).
+
+* Bugfixes:
+ - Prevent a crash on device update (Bug #11932)
+ - Fix wrong panel plugin button size (bug #11898)
+ - Fix loading of icons for plugin and systray
+
+* Translation updates:
+Swedish, Turkish.
+
 1.5.0
 =====
 New development release of xfce4-power-manager.
