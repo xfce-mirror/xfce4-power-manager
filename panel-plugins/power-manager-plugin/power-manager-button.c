@@ -285,7 +285,7 @@ static void
 power_manager_button_set_label (PowerManagerButton *button, gdouble percentage,
                                 guint64 time_to_empty_or_full)
 {
-    gchar *label_string;
+    gchar *label_string = NULL;
     gint   hours;
     gint   minutes;
     gchar *remaining_time = NULL;
