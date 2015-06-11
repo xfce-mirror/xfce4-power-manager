@@ -41,7 +41,8 @@ AC_HEADER_STDC()
 AC_CHECK_HEADERS([errno.h signal.h stddef.h sys/types.h memory.h stdlib.h   \
                   string.h sys/stat.h sys/user.h sys/wait.h time.h math.h   \
                   unistd.h sys/resource.h sys/socket.h sys/sysctl.h fcntl.h \
-                  sys/param.h procfs.h])
+                  sys/param.h procfs.h X11/extensions/scrnsaver.h \
+                  X11/extensions/XTest.h])
 
 AC_CHECK_FUNCS([getpwuid setsid sigaction])
 
@@ -49,6 +50,16 @@ AC_CHECK_FUNCS([getpwuid setsid sigaction])
 # 		Check for libm	 			#
 # ===================================================== #
 AC_CHECK_LIB([m], [round])
+
+# ===================================================== #
+# 		Check for XScreenSaverSuspend		#
+# ===================================================== #
+AC_CHECK_LIB([Xss], [XScreenSaverSuspend])
+
+# ===================================================== #
+# 		Check for XTestFakeKeyEvent		#
+# ===================================================== #
+AC_CHECK_LIB([Xtst], [XTestFakeKeyEvent])
 
 # ===================================================== #
 # 		Check for i18n support 			#
