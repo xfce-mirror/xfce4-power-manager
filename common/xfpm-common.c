@@ -105,14 +105,14 @@ xfpm_quit (void)
 }
 
 void       
-xfpm_about (GtkWidget *widget, gpointer data)
+xfpm_about (gpointer data)
 {
     gchar *package = (gchar *)data;
     
-    const gchar* authors[3] = 
+    const gchar* authors[] =
     {
-	"Ali Abdallah <aliov@xfce.org>", 
-	 NULL
+	"Ali Abdallah <aliov@xfce.org>",
+	 NULL,
     };
 							    
     static const gchar *documenters[] =
@@ -121,16 +121,24 @@ xfpm_about (GtkWidget *widget, gpointer data)
 	NULL,
     };
 
+    static const gchar *artists[] =
+    {
+	"Simon Steinbeiß <simon@xfce.org>",
+	 NULL,
+    };
+
     gtk_show_about_dialog (NULL,
-		     "authors", authors,
-		     "copyright", "Copyright \302\251 2008-2011 Ali Abdallah",
+		     "copyright", "Copyright \302\251 2008-2011 Ali Abdallah\nCopyright \302\251 2011-2012 Nick Schermer\nCopyright \302\251 2013-2015 Eric Koegel, Harald Judt, Simon Steinbeiß",
 		     "destroy-with-parent", TRUE,
+		     "authors", authors,
+		     "artists", artists,
 		     "documenters", documenters,
 		     "license", XFCE_LICENSE_GPL,
 		     "program-name", package,
 		     "translator-credits", _("translator-credits"),
 		     "version", PACKAGE_VERSION,
-		     "website", "http://goodies.xfce.org/projects/applications/xfce4-power-manager",
+		     "website", "http://docs.xfce.org/xfce/xfce4-power-manager/1.4/start",
+		     "logo-icon-name", "xfce4-power-manager-settings",
 		     NULL);
 						 
 }

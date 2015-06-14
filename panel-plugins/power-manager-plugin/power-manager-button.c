@@ -1071,6 +1071,12 @@ help_cb (GtkMenuItem *menuitem, gpointer user_data)
     xfce_dialog_show_help_with_version (NULL, "xfce4-power-manager", "start", NULL, XFPM_VERSION_SHORT);
 }
 
+static void
+about_cb (GtkMenuItem *menuitem, gpointer user_data)
+{
+    xfpm_about ("xfce4-power-manager");
+}
+
 void
 power_manager_button_show (PowerManagerButton *button)
 {
@@ -1097,6 +1103,12 @@ power_manager_button_show (PowerManagerButton *button)
     gtk_widget_set_sensitive (mi, TRUE);
     gtk_widget_show (mi);
     g_signal_connect (mi, "activate", G_CALLBACK (help_cb), button);
+
+    /* about dialog */
+    mi = gtk_menu_item_new_with_mnemonic (_("_About"));
+    gtk_widget_set_sensitive (mi, TRUE);
+    gtk_widget_show (mi);
+    g_signal_connect (mi, "activate", G_CALLBACK (about_cb), button);
 
 #ifdef XFCE_PLUGIN
     xfce_panel_plugin_menu_insert_item (button->priv->plugin, GTK_MENU_ITEM (mi));

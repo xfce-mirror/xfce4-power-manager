@@ -48,8 +48,7 @@ void        xfpm_preferences_device_id (const gchar* object_path);
 
 void            xfpm_quit                       (void);
 
-void       	xfpm_about			(GtkWidget *widget, 
-						 gpointer data);
+void       	xfpm_about			(gpointer data);
 
 gboolean	xfpm_is_multihead_connected	(void);
 
