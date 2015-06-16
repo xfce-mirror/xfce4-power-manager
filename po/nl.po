@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-02 00:30+0100\n"
-"PO-Revision-Date: 2015-03-02 15:55+0000\n"
+"POT-Creation-Date: 2015-06-15 00:30+0200\n"
+"PO-Revision-Date: 2015-06-16 11:25+0000\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/projects/p/xfce4-power-manager/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -20,9 +20,9 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:640
-#: ../settings/xfpm-settings.c:655 ../settings/xfpm-settings.c:682
-#: ../settings/xfpm-settings.c:1572
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:609
+#: ../settings/xfpm-settings.c:624 ../settings/xfpm-settings.c:651
+#: ../settings/xfpm-settings.c:1501
 msgid "Never"
 msgstr "Nooit"
 
@@ -38,8 +38,8 @@ msgstr "Wanneer de schermbeveiliging is gedeactiveerd"
 msgid "Nothing"
 msgstr "Niets doen"
 
-#: ../data/interfaces/xfpm-settings.ui.h:5
-#: ../settings/xfpm-settings-main.c:142 ../src/xfpm-main.c:425
+#: ../data/interfaces/xfpm-settings.ui.h:5 ../settings/xfpm-settings-app.c:175
+#: ../settings/xfpm-settings-app.c:212 ../src/xfpm-main.c:435
 msgid "Xfce Power Manager"
 msgstr "Xfce-energiebeheerder"
 
@@ -47,386 +47,393 @@ msgstr "Xfce-energiebeheerder"
 msgid "Power manager settings"
 msgstr "Energiebeheer-instellingen"
 
+#. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1102
+msgid "_Help"
+msgstr "_Hulp"
+
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "_Close"
+msgstr "Sluiten"
+
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "When power button is pressed:"
 msgstr "Wanneer de aan/uit-knop wordt ingedrukt:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:8
+#: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "When sleep button is pressed:"
 msgstr "Wanneer de slaapknop wordt ingedrukt:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:9
+#: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "When hibernate button is pressed:"
 msgstr "Wanneer de slaapstandknop wordt ingedrukt:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10
+#: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "Handle display brightness _keys"
 msgstr "Reguleer toetsen voor schermhelderheid"
 
-#: ../data/interfaces/xfpm-settings.ui.h:11
+#: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "<b>Buttons</b>"
 msgstr "<b>Knoppen</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:12
+#: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "On battery"
 msgstr "Op accu"
 
-#: ../data/interfaces/xfpm-settings.ui.h:13 ../common/xfpm-power-common.c:444
+#: ../data/interfaces/xfpm-settings.ui.h:15 ../common/xfpm-power-common.c:353
 msgid "Plugged in"
 msgstr "Op netstroom"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "When laptop lid is closed:"
 msgstr "Wanneer het laptopdeksel wordt dichtgeklapt:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
+#: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Laptopdeksel</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:16
-msgid "Show notifications"
-msgstr "Meldingen tonen"
-
-#: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "Show system tray icon"
-msgstr "Systeemvakpictogram tonen"
-
 #: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "Status notifications"
+msgstr "Statusmeldingen"
+
+#: ../data/interfaces/xfpm-settings.ui.h:19
+msgid "System tray icon"
+msgstr "Systeemvakpictogram"
+
+#: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "<b>Appearance</b>"
 msgstr "<b>Uiterlijk</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
+#: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "General"
 msgstr "Algemeen"
 
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "When inactive for"
 msgstr "Wanneer inactief gedurende"
 
-#: ../data/interfaces/xfpm-settings.ui.h:21
+#: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "System sleep mode:"
 msgstr "Slaapmodus van systeem:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
+#: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "<b>System power saving</b>"
 msgstr "<b>Energiebesparing voor systeem</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:23
+#: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "Critical battery power level:"
 msgstr "Kritiek acculadingsniveau:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:24
+#: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "On critical battery power:"
 msgstr "Op kritieke acculading:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
+#: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "<b>Critical power</b>"
 msgstr "<b>Kritieke acculading</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:26
+#: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "Lock screen when system is going for sleep"
 msgstr "Scherm vergrendelen wanneer het systeem in slaap gaat"
 
-#: ../data/interfaces/xfpm-settings.ui.h:27
+#: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "<b>Security</b>"
 msgstr "<b>Veiligheid</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:28
+#: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "System"
 msgstr "Systeem"
 
-#: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "Handle display power management"
-msgstr "Reguleer energiebeheer van scherm"
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "<b>Display power management</b>"
+msgstr "<b>Energiebeheer voor het beeldscherm</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:30
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid ""
+"Let the power manager handle display power management (DPMS) instead of X11."
+msgstr "Laat de energiebeheerder het beeldschermenergiebeheer (DPMS) afhandelen in plaats van X11."
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Blank after"
 msgstr "Op zwart zetten na"
 
-#: ../data/interfaces/xfpm-settings.ui.h:31
+#: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "Put to sleep after"
 msgstr "In slaap brengen na"
 
-#: ../data/interfaces/xfpm-settings.ui.h:32
+#: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "Switch off after"
 msgstr "Uitschakelen na"
 
-#: ../data/interfaces/xfpm-settings.ui.h:33
-msgid "<b>Display power management settings</b>"
-msgstr "<b>Instellingen van energiebeheer voor beeldscherm</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:34
+#: ../data/interfaces/xfpm-settings.ui.h:36
 msgid "On inactivity reduce to"
 msgstr "Bij inactiviteit verminderen tot"
 
-#: ../data/interfaces/xfpm-settings.ui.h:35
+#: ../data/interfaces/xfpm-settings.ui.h:37
 msgid "Reduce after"
 msgstr "Verminderen na"
 
-#: ../data/interfaces/xfpm-settings.ui.h:36
+#: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Helderheidvermindering</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:37
+#: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "Display"
 msgstr "Scherm"
 
-#: ../data/interfaces/xfpm-settings.ui.h:38
+#: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "Automatically lock the session:"
 msgstr "Vergrendel de sessie automatisch:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:39
+#: ../data/interfaces/xfpm-settings.ui.h:41
 msgid "Delay locking after screensaver for"
 msgstr "Vergrendelen na schermbeveiliging uitstellen gedurende"
 
-#: ../data/interfaces/xfpm-settings.ui.h:40
+#: ../data/interfaces/xfpm-settings.ui.h:42
 msgid "<b>Light Locker</b>"
 msgstr "<b>Light Locker</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:41
+#: ../data/interfaces/xfpm-settings.ui.h:43
 msgid "Security"
 msgstr "Veiligheid"
 
-#: ../settings/xfpm-settings.c:643
+#: ../settings/xfpm-settings.c:612
 msgid "One minute"
 msgstr "Eén minuut"
 
-#: ../settings/xfpm-settings.c:645 ../settings/xfpm-settings.c:657
-#: ../settings/xfpm-settings.c:1581
+#: ../settings/xfpm-settings.c:614 ../settings/xfpm-settings.c:626
+#: ../settings/xfpm-settings.c:1510
 msgid "Minutes"
 msgstr "Minuten"
 
-#: ../settings/xfpm-settings.c:659 ../settings/xfpm-settings.c:666
-#: ../settings/xfpm-settings.c:667 ../settings/xfpm-settings.c:668
+#: ../settings/xfpm-settings.c:628 ../settings/xfpm-settings.c:635
+#: ../settings/xfpm-settings.c:636 ../settings/xfpm-settings.c:637
 msgid "One hour"
 msgstr "Eén uur"
 
-#: ../settings/xfpm-settings.c:667 ../settings/xfpm-settings.c:671
+#: ../settings/xfpm-settings.c:636 ../settings/xfpm-settings.c:640
 msgid "one minute"
 msgstr "één minuut"
 
-#: ../settings/xfpm-settings.c:668 ../settings/xfpm-settings.c:672
+#: ../settings/xfpm-settings.c:637 ../settings/xfpm-settings.c:641
 msgid "minutes"
 msgstr "minuten"
 
-#: ../settings/xfpm-settings.c:670 ../settings/xfpm-settings.c:671
-#: ../settings/xfpm-settings.c:672
+#: ../settings/xfpm-settings.c:639 ../settings/xfpm-settings.c:640
+#: ../settings/xfpm-settings.c:641
 msgid "hours"
 msgstr "uren"
 
-#: ../settings/xfpm-settings.c:684 ../settings/xfpm-settings.c:1574
+#: ../settings/xfpm-settings.c:653 ../settings/xfpm-settings.c:1503
 msgid "Seconds"
 msgstr "Seconden"
 
-#: ../settings/xfpm-settings.c:690
+#: ../settings/xfpm-settings.c:659
 msgid "%"
 msgstr "%"
 
-#: ../settings/xfpm-settings.c:891 ../settings/xfpm-settings.c:970
-#: ../settings/xfpm-settings.c:1032 ../settings/xfpm-settings.c:1117
-#: ../settings/xfpm-settings.c:1209 ../settings/xfpm-settings.c:1319
-#: ../settings/xfpm-settings.c:1376 ../settings/xfpm-settings.c:1428
-#: ../src/xfpm-power.c:719
+#: ../settings/xfpm-settings.c:845 ../settings/xfpm-settings.c:924
+#: ../settings/xfpm-settings.c:986 ../settings/xfpm-settings.c:1071
+#: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1270
+#: ../settings/xfpm-settings.c:1327 ../settings/xfpm-settings.c:1379
+#: ../src/xfpm-power.c:715
 msgid "Suspend"
 msgstr "Pauzestand"
 
-#: ../settings/xfpm-settings.c:895 ../settings/xfpm-settings.c:1121
+#: ../settings/xfpm-settings.c:849 ../settings/xfpm-settings.c:1075
 msgid "Suspend operation not permitted"
 msgstr "Pauzestand niet toegestaan"
 
-#: ../settings/xfpm-settings.c:899 ../settings/xfpm-settings.c:1125
+#: ../settings/xfpm-settings.c:853 ../settings/xfpm-settings.c:1079
 msgid "Suspend operation not supported"
 msgstr "Pauzestand wordt niet ondersteund"
 
-#: ../settings/xfpm-settings.c:905 ../settings/xfpm-settings.c:976
-#: ../settings/xfpm-settings.c:1038 ../settings/xfpm-settings.c:1131
-#: ../settings/xfpm-settings.c:1215 ../settings/xfpm-settings.c:1325
-#: ../settings/xfpm-settings.c:1382 ../settings/xfpm-settings.c:1434
-#: ../src/xfpm-power.c:708
+#: ../settings/xfpm-settings.c:859 ../settings/xfpm-settings.c:930
+#: ../settings/xfpm-settings.c:992 ../settings/xfpm-settings.c:1085
+#: ../settings/xfpm-settings.c:1169 ../settings/xfpm-settings.c:1276
+#: ../settings/xfpm-settings.c:1333 ../settings/xfpm-settings.c:1385
+#: ../src/xfpm-power.c:704
 msgid "Hibernate"
 msgstr "Slaapstand"
 
-#: ../settings/xfpm-settings.c:909 ../settings/xfpm-settings.c:1135
+#: ../settings/xfpm-settings.c:863 ../settings/xfpm-settings.c:1089
 msgid "Hibernate operation not permitted"
 msgstr "Slaapstand wordt niet toegestaan"
 
-#: ../settings/xfpm-settings.c:913 ../settings/xfpm-settings.c:1139
+#: ../settings/xfpm-settings.c:867 ../settings/xfpm-settings.c:1093
 msgid "Hibernate operation not supported"
 msgstr "Slaapstand wordt niet ondersteund"
 
-#: ../settings/xfpm-settings.c:943 ../settings/xfpm-settings.c:1169
-#: ../settings/xfpm-settings.c:1523 ../settings/xfpm-settings.c:1654
+#: ../settings/xfpm-settings.c:897 ../settings/xfpm-settings.c:1123
+#: ../settings/xfpm-settings.c:1459 ../settings/xfpm-settings.c:1583
 msgid "Hibernate and suspend operations not supported"
 msgstr "Slaapstand en pauzestand worden niet ondersteund"
 
-#: ../settings/xfpm-settings.c:948 ../settings/xfpm-settings.c:1174
-#: ../settings/xfpm-settings.c:1528 ../settings/xfpm-settings.c:1659
+#: ../settings/xfpm-settings.c:902 ../settings/xfpm-settings.c:1128
+#: ../settings/xfpm-settings.c:1464 ../settings/xfpm-settings.c:1588
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Slaapstand en pauzestand zijn niet toegestaan"
 
-#: ../settings/xfpm-settings.c:965 ../settings/xfpm-settings.c:1314
-#: ../settings/xfpm-settings.c:1371 ../settings/xfpm-settings.c:1423
+#: ../settings/xfpm-settings.c:919 ../settings/xfpm-settings.c:1265
+#: ../settings/xfpm-settings.c:1322 ../settings/xfpm-settings.c:1374
 msgid "Do nothing"
 msgstr "Niets doen"
 
-#: ../settings/xfpm-settings.c:982 ../settings/xfpm-settings.c:1331
-#: ../src/xfpm-power.c:730
+#: ../settings/xfpm-settings.c:936 ../settings/xfpm-settings.c:1282
+#: ../src/xfpm-power.c:726
 msgid "Shutdown"
 msgstr "Afsluiten"
 
-#: ../settings/xfpm-settings.c:986 ../settings/xfpm-settings.c:1335
-#: ../settings/xfpm-settings.c:1386 ../settings/xfpm-settings.c:1438
+#: ../settings/xfpm-settings.c:940 ../settings/xfpm-settings.c:1286
+#: ../settings/xfpm-settings.c:1337 ../settings/xfpm-settings.c:1389
 msgid "Ask"
 msgstr "Vragen"
 
-#: ../settings/xfpm-settings.c:1027 ../settings/xfpm-settings.c:1204
+#: ../settings/xfpm-settings.c:981 ../settings/xfpm-settings.c:1158
 msgid "Switch off display"
 msgstr "Beeldscherm uitschakelen"
 
-#: ../settings/xfpm-settings.c:1042 ../settings/xfpm-settings.c:1219
+#: ../settings/xfpm-settings.c:996 ../settings/xfpm-settings.c:1173
 msgid "Lock screen"
 msgstr "Scherm vergrendelen"
 
-#: ../settings/xfpm-settings.c:1495
+#: ../settings/xfpm-settings.c:1431
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Wanneer al de krachtbronnen van de computer dit ladingniveau bereiken"
 
-#: ../settings/xfpm-settings.c:1576
+#: ../settings/xfpm-settings.c:1505
 msgid "One Minute"
 msgstr "Eén minuut"
 
-#: ../settings/xfpm-settings.c:1915
+#: ../settings/xfpm-settings.c:1844
 msgid "Device"
 msgstr "Apparaat"
 
-#: ../settings/xfpm-settings.c:1937
+#: ../settings/xfpm-settings.c:1866
 msgid "Type"
 msgstr "Type"
 
-#: ../settings/xfpm-settings.c:1942
+#: ../settings/xfpm-settings.c:1871
 msgid "PowerSupply"
 msgstr "Electriciteitsvoorziening"
 
-#: ../settings/xfpm-settings.c:1943 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1872 ../src/xfpm-main.c:77
 msgid "True"
 msgstr "Waar"
 
-#: ../settings/xfpm-settings.c:1943 ../src/xfpm-main.c:80
+#: ../settings/xfpm-settings.c:1872 ../src/xfpm-main.c:77
 msgid "False"
 msgstr "Onwaar"
 
-#: ../settings/xfpm-settings.c:1950
+#: ../settings/xfpm-settings.c:1879
 msgid "Model"
 msgstr "Model"
 
-#: ../settings/xfpm-settings.c:1953
+#: ../settings/xfpm-settings.c:1882
 msgid "Technology"
 msgstr "Technologie"
 
-#: ../settings/xfpm-settings.c:1960
+#: ../settings/xfpm-settings.c:1889
 msgid "Current charge"
 msgstr "Huidige lading"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:1968 ../settings/xfpm-settings.c:1980
-#: ../settings/xfpm-settings.c:1992
+#: ../settings/xfpm-settings.c:1897 ../settings/xfpm-settings.c:1909
+#: ../settings/xfpm-settings.c:1921
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:1970
+#: ../settings/xfpm-settings.c:1899
 msgid "Fully charged (design)"
 msgstr "Volledig opgeladen (ontwerp)"
 
-#: ../settings/xfpm-settings.c:1983
+#: ../settings/xfpm-settings.c:1912
 msgid "Fully charged"
 msgstr "Volledig opgeladen"
 
-#: ../settings/xfpm-settings.c:1994
+#: ../settings/xfpm-settings.c:1923
 msgid "Energy empty"
 msgstr "Energie leeg"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:2002
+#: ../settings/xfpm-settings.c:1931
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:2004
+#: ../settings/xfpm-settings.c:1933
 msgid "Voltage"
 msgstr "Voltage"
 
-#: ../settings/xfpm-settings.c:2011
+#: ../settings/xfpm-settings.c:1940
 msgid "Vendor"
 msgstr "Verkoper"
 
-#: ../settings/xfpm-settings.c:2016
+#: ../settings/xfpm-settings.c:1945
 msgid "Serial"
 msgstr "Serienummer"
 
-#: ../settings/xfpm-settings.c:2085
-msgid "Attribute"
-msgstr "Attribuut"
-
-#: ../settings/xfpm-settings.c:2092
-msgid "Value"
-msgstr "Waarde"
-
-#: ../settings/xfpm-settings.c:2305
+#: ../settings/xfpm-settings.c:2210
 msgid "Check your power manager installation"
 msgstr "Controleer de installatie van uw energiebeheerder"
 
-#: ../settings/xfpm-settings.c:2375
+#: ../settings/xfpm-settings.c:2291
 msgid "Devices"
 msgstr "Apparaten"
 
-#: ../settings/xfpm-settings-main.c:80
+#: ../settings/xfpm-settings-app.c:76
 msgid "Settings manager socket"
 msgstr "Contactpunt voor instellingenbeheerder"
 
-#: ../settings/xfpm-settings-main.c:80
+#: ../settings/xfpm-settings-app.c:76
 msgid "SOCKET ID"
 msgstr "CONTACTPUNT ID"
 
-#: ../settings/xfpm-settings-main.c:81
+#: ../settings/xfpm-settings-app.c:77
 msgid "Display a specific device by UpDevice object path"
 msgstr "Toon een specifiek apparaat op UpDevice objectpad"
 
-#: ../settings/xfpm-settings-main.c:81
+#: ../settings/xfpm-settings-app.c:77
 msgid "UpDevice object path"
 msgstr "UpDevice objectpad"
 
-#: ../settings/xfpm-settings-main.c:82 ../src/xfpm-main.c:255
+#: ../settings/xfpm-settings-app.c:78 ../src/xfpm-main.c:268
 msgid "Enable debugging"
 msgstr "Schakel foutopsporing in"
 
-#: ../settings/xfpm-settings-main.c:93 ../src/xfpm-main.c:311
-#, c-format
-msgid "Type '%s --help' for usage."
-msgstr "Tik '%s --help' in voor een gebruiksaanwijzing."
+#: ../settings/xfpm-settings-app.c:79
+msgid "Display version information"
+msgstr "Versie-informatie tonen"
 
-#: ../settings/xfpm-settings-main.c:113 ../src/xfpm-main.c:341
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "Xfce-energiebeheerder is niet ingeschakeld"
+#: ../settings/xfpm-settings-app.c:80
+msgid "Cause xfce4-power-manager-settings to quit"
+msgstr "xfce4-power-manager-settings laten afsluiten"
 
-#: ../settings/xfpm-settings-main.c:118
-msgid "Run"
-msgstr "Uitvoeren"
+#: ../settings/xfpm-settings-app.c:177
+msgid "Failed to connect to power manager"
+msgstr "Kon niet verbinden met energiebeheerder"
 
-#: ../settings/xfpm-settings-main.c:119
+#: ../settings/xfpm-settings-app.c:191
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4-energiebeheerder draait niet; wilt u hem nu starten?"
 
-#: ../settings/xfpm-settings-main.c:144
+#: ../settings/xfpm-settings-app.c:214
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "Kon instellingen van energiebeheerder niet laden, gebruikt nu standaardwaarden"
 
-#: ../settings/xfpm-settings-main.c:171
-msgid "Unable to connect to Xfce Power Manager"
-msgstr "Kon geen verbinding maken met Xfce-energiebeheerder"
+#: ../settings/xfpm-settings-app.c:346
+#, c-format
+msgid "This is %s version %s, running on Xfce %s.\n"
+msgstr "Dit is %s versie %s, draaiend op Xfce %s.\n"
+
+#: ../settings/xfpm-settings-app.c:348
+#, c-format
+msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
+msgstr "Gebouwd met GTK+ %d.%d.%d, gekoppeld met GTK+ %d.%d.%d."
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:367 ../src/xfpm-power.c:650 ../src/xfpm-power.c:694
-#: ../src/xfpm-power.c:858 ../src/xfpm-power.c:882 ../src/xfpm-battery.c:256
+#: ../src/xfpm-power.c:365 ../src/xfpm-power.c:647 ../src/xfpm-power.c:690
+#: ../src/xfpm-power.c:854 ../src/xfpm-power.c:877 ../src/xfpm-battery.c:193
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Energiebeheerder"
@@ -435,7 +442,7 @@ msgstr "Energiebeheerder"
 msgid "Settings for the Xfce Power Manager"
 msgstr "Instellingen voor de Xfce-energiebeheerder"
 
-#: ../common/xfpm-common.c:131
+#: ../common/xfpm-common.c:138
 msgid "translator-credits"
 msgstr "Vincent Tunru <projects@vinnl.nl>\nPjotr <pjotrvertaalt@gmail.com>"
 
@@ -443,9 +450,9 @@ msgstr "Vincent Tunru <projects@vinnl.nl>\nPjotr <pjotrvertaalt@gmail.com>"
 msgid "Battery"
 msgstr "Accu"
 
-#: ../common/xfpm-power-common.c:47 ../src/xfpm-battery.c:537
-msgid "UPS"
-msgstr "UPS"
+#: ../common/xfpm-power-common.c:47
+msgid "Uninterruptible Power Supply"
+msgstr "Niet-onderbreekbare stroomvoorziening (UPS)"
 
 #: ../common/xfpm-power-common.c:49
 msgid "Line power"
@@ -475,12 +482,12 @@ msgstr "Telefoon"
 msgid "Tablet"
 msgstr "Tablet"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:340
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:249
 msgid "Computer"
 msgstr "Computer"
 
 #: ../common/xfpm-power-common.c:65 ../common/xfpm-power-common.c:81
-#: ../common/xfpm-power-common.c:96 ../src/xfpm-battery.c:555
+#: ../common/xfpm-power-common.c:96
 msgid "Unknown"
 msgstr "Onbekend"
 
@@ -508,18 +515,18 @@ msgstr "Nikkel-cadmium"
 msgid "Nickel metal hybride"
 msgstr "Nikkel-metaalhydride"
 
-#: ../common/xfpm-power-common.c:141
+#: ../common/xfpm-power-common.c:114
 msgid "Unknown time"
 msgstr "Onbekende tijd"
 
-#: ../common/xfpm-power-common.c:147
+#: ../common/xfpm-power-common.c:120
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i minuut"
 msgstr[1] "%i minuten"
 
-#: ../common/xfpm-power-common.c:158
+#: ../common/xfpm-power-common.c:131
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -528,80 +535,80 @@ msgstr[1] "%i uren"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../common/xfpm-power-common.c:164
+#: ../common/xfpm-power-common.c:137
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: ../common/xfpm-power-common.c:165
+#: ../common/xfpm-power-common.c:138
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "uur"
 msgstr[1] "uren"
 
-#: ../common/xfpm-power-common.c:166
+#: ../common/xfpm-power-common.c:139
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuut"
 msgstr[1] "minuten"
 
-#: ../common/xfpm-power-common.c:371
+#: ../common/xfpm-power-common.c:280
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nVolledig opgeladen (%0.0f%%, %s draaitijd)"
 
-#: ../common/xfpm-power-common.c:379
+#: ../common/xfpm-power-common.c:288
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nVolledig opgeladen (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:389
+#: ../common/xfpm-power-common.c:298
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nAan het opladen (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:397
+#: ../common/xfpm-power-common.c:306
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nAan het opladen (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:407
+#: ../common/xfpm-power-common.c:316
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nAan het ontladen (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:415
+#: ../common/xfpm-power-common.c:324
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nAan het ontladen (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:422
+#: ../common/xfpm-power-common.c:331
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nAan het wachten om te ontladen (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:428
+#: ../common/xfpm-power-common.c:337
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nAan het wachten om op te laden (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:434
+#: ../common/xfpm-power-common.c:343
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -610,174 +617,136 @@ msgstr "<b>%s %s</b>\nis leeg"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:443
+#: ../common/xfpm-power-common.c:352
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:444
+#: ../common/xfpm-power-common.c:353
 msgid "Not plugged in"
 msgstr "Niet aangesloten"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:450
+#: ../common/xfpm-power-common.c:359
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:455
+#: ../common/xfpm-power-common.c:364
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
 msgstr "<b>%s %s</b>\nOnbekende status"
 
-#: ../src/xfpm-power.c:393
-msgid "_Hibernate"
-msgstr "_Slaapstand"
-
 #: ../src/xfpm-power.c:394
 msgid ""
-"An application is currently disabling the automatic sleep. Doing this action"
-" now may damage the working state of this application."
-msgstr "Een toepassing belemmert thans de automatische slaapstand. Deze actie nu uitvoeren kan de toepassing in zijn werk schaden."
+"An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
+"Are you sure you want to hibernate the system?"
+msgstr "Een toepassing belemmert thans de automatische slaapstand. Deze actie nu uitvoeren kan die toepassing in zijn werk schaden.\nWeet u zeker dat u het systeem toch in slaapstand wil brengen?"
 
-#: ../src/xfpm-power.c:396
-msgid "Are you sure you want to hibernate the system?"
-msgstr "Weet u zeker dat u het systeem in de slaapstand wil brengen?"
-
-#: ../src/xfpm-power.c:437
-msgid "Continue"
-msgstr "Doorgaan"
-
-#: ../src/xfpm-power.c:438 ../src/xfpm-manager.c:453
+#: ../src/xfpm-power.c:444
 msgid ""
-"None of the screen lock tools ran successfully, the screen will not be "
-"locked."
-msgstr "Geen van de hulpmiddelen voor schermvergrendeling had succes, het scherm zal niet worden vergrendeld."
+"None of the screen lock tools ran successfully, the screen will not be locked.\n"
+"Do you still want to continue to suspend the system?"
+msgstr "Geen der schermvergrendelingsgereedschappen had succes, het scherm zal niet worden vergrendeld.\nWilt u nog steeds doorgaan met het in pauzestand brengen van het systeem?"
 
-#: ../src/xfpm-power.c:441
-msgid "Do you still want to continue to suspend the system?"
-msgstr "Wilt u nog steeds doorgaan met het in pauzestand brengen van het systeem?"
-
-#: ../src/xfpm-power.c:613
+#: ../src/xfpm-power.c:610
 msgid "Hibernate the system"
 msgstr "Breng het systeem in slaapstand"
 
-#: ../src/xfpm-power.c:624
+#: ../src/xfpm-power.c:621
 msgid "Suspend the system"
 msgstr "Breng het systeem in pauzestand"
 
-#: ../src/xfpm-power.c:634
+#: ../src/xfpm-power.c:631
 msgid "Shutdown the system"
 msgstr "Sluit het systeem af"
 
-#: ../src/xfpm-power.c:645 ../src/xfpm-power.c:691
+#: ../src/xfpm-power.c:642 ../src/xfpm-power.c:687
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Het systeem draait op lage acculading. Sla uw werk op om gegevensverlies te voorkomen!"
 
-#: ../src/xfpm-power.c:859
+#: ../src/xfpm-power.c:733
+msgid "_Cancel"
+msgstr "Annuleren"
+
+#: ../src/xfpm-power.c:855
 msgid "System is running on low power"
 msgstr "Systeem draait op lage acculading"
 
-#: ../src/xfpm-power.c:878
+#: ../src/xfpm-power.c:873
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Uw %s ladingsniveau is laag\nGeschatte restanttijd %s"
 
-#: ../src/xfpm-power.c:1572 ../src/xfpm-power.c:1605 ../src/xfpm-power.c:1624
-#: ../src/xfpm-power.c:1647
-#, c-format
+#: ../src/xfpm-power.c:1724 ../src/xfpm-power.c:1771 ../src/xfpm-power.c:1802
+#: ../src/xfpm-power.c:1831
 msgid "Permission denied"
 msgstr "Toestemming geweigerd"
 
-#: ../src/xfpm-power.c:1632 ../src/xfpm-power.c:1655
-#, c-format
+#: ../src/xfpm-power.c:1811 ../src/xfpm-power.c:1840
 msgid "Suspend not supported"
 msgstr "Pauzestand wordt niet ondersteund"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:172
+#: ../src/xfpm-backlight.c:171
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "Helderheid: %.0f procent"
 
-#: ../src/xfpm-battery.c:114 ../src/xfpm-battery.c:165
+#: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:163
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "Uw %s is volledig opgeladen"
 
-#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:168
+#: ../src/xfpm-battery.c:115 ../src/xfpm-battery.c:166
 #, c-format
 msgid "Your %s is charging"
 msgstr "Uw %s is aan het opladen"
 
-#: ../src/xfpm-battery.c:127
+#: ../src/xfpm-battery.c:125
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until it is fully charged."
 msgstr "%s (%i%%)\n%s totdat de accu volledig is opgeladen."
 
-#: ../src/xfpm-battery.c:135 ../src/xfpm-battery.c:171
+#: ../src/xfpm-battery.c:133 ../src/xfpm-battery.c:169
 #, c-format
 msgid "Your %s is discharging"
 msgstr "Uw %s is aan het ontladen"
 
-#: ../src/xfpm-battery.c:137
+#: ../src/xfpm-battery.c:135
 #, c-format
 msgid "System is running on %s power"
 msgstr "Systeem draait op %s stroom"
 
-#: ../src/xfpm-battery.c:147
+#: ../src/xfpm-battery.c:145
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr "%s (%i%%)\nGeschatte restanttijd is %s."
 
-#: ../src/xfpm-battery.c:153 ../src/xfpm-battery.c:174
+#: ../src/xfpm-battery.c:151 ../src/xfpm-battery.c:172
 #, c-format
 msgid "Your %s is empty"
 msgstr "Uw %s is leeg"
 
-#: ../src/xfpm-battery.c:534
-msgid "battery"
-msgstr "accu"
-
-#: ../src/xfpm-battery.c:540
-msgid "monitor battery"
-msgstr "beeldschermaccu"
-
-#: ../src/xfpm-battery.c:543
-msgid "mouse battery"
-msgstr "muisaccu"
-
-#: ../src/xfpm-battery.c:546
-msgid "keyboard battery"
-msgstr "toetsenbordaccu"
-
-#: ../src/xfpm-battery.c:549
-msgid "PDA battery"
-msgstr "PDA-accu"
-
-#: ../src/xfpm-battery.c:552
-msgid "Phone battery"
-msgstr "Telefoonaccu"
-
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-kbd-backlight.c:115
+#: ../src/xfpm-kbd-backlight.c:123
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Helderheid van toetsenbord: %.0f procent"
 
-#: ../src/xfpm-main.c:57
+#: ../src/xfpm-main.c:54
 #, c-format
 msgid ""
 "\n"
@@ -790,153 +759,168 @@ msgid ""
 "\n"
 msgstr "\nXfce-energiebeheerder %s\n\nOnderdeel van het Xfce Goodies Project\nhttp://goodies.xfce.org\n\nDe GNU GPL-licentie is van toepassing.\n\n"
 
-#: ../src/xfpm-main.c:113
+#: ../src/xfpm-main.c:110
 #, c-format
 msgid "With policykit support\n"
 msgstr "Met ondersteuning voor policykit\n"
 
-#: ../src/xfpm-main.c:115
+#: ../src/xfpm-main.c:112
 #, c-format
 msgid "Without policykit support\n"
 msgstr "Zonder ondersteuning voor policykit\n"
 
-#: ../src/xfpm-main.c:118
+#: ../src/xfpm-main.c:115
 #, c-format
 msgid "With network manager support\n"
 msgstr "Met ondersteuning voor netwerkbeheerder\n"
 
-#: ../src/xfpm-main.c:120
+#: ../src/xfpm-main.c:117
 #, c-format
 msgid "Without network manager support\n"
 msgstr "Zonder ondersteuning voor netwerkbeheerder\n"
 
-#: ../src/xfpm-main.c:134
+#: ../src/xfpm-main.c:131
 msgid "Can suspend"
 msgstr "Kan pauzestand toepassen"
 
-#: ../src/xfpm-main.c:136
+#: ../src/xfpm-main.c:133
 msgid "Can hibernate"
 msgstr "Kan slaapstand toepassen"
 
-#: ../src/xfpm-main.c:138
+#: ../src/xfpm-main.c:135
 msgid "Authorized to suspend"
 msgstr "Is gemachtigd tot toepassen van pauzestand"
 
-#: ../src/xfpm-main.c:140
+#: ../src/xfpm-main.c:137
 msgid "Authorized to hibernate"
 msgstr "Is gemachtigd tot toepassen van slaapstand"
 
-#: ../src/xfpm-main.c:142
+#: ../src/xfpm-main.c:139
 msgid "Authorized to shutdown"
 msgstr "Is gemachtigd tot afsluiten"
 
-#: ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:141
 msgid "Has battery"
 msgstr "Heeft accu"
 
-#: ../src/xfpm-main.c:146
+#: ../src/xfpm-main.c:143
 msgid "Has brightness panel"
 msgstr "Heeft helderheidwerkbalk"
 
-#: ../src/xfpm-main.c:148
+#: ../src/xfpm-main.c:145
 msgid "Has power button"
 msgstr "Heeft aan/uit-knop"
 
-#: ../src/xfpm-main.c:150
+#: ../src/xfpm-main.c:147
 msgid "Has hibernate button"
 msgstr "Heeft slaapstandknop"
 
-#: ../src/xfpm-main.c:152
+#: ../src/xfpm-main.c:149
 msgid "Has sleep button"
 msgstr "Heeft slaapknop"
 
-#: ../src/xfpm-main.c:154
+#: ../src/xfpm-main.c:151
 msgid "Has LID"
 msgstr "Heeft LID"
 
-#: ../src/xfpm-main.c:254
+#: ../src/xfpm-main.c:267
 msgid "Do not daemonize"
 msgstr "Maak er geen achtergronddienst van"
 
-#: ../src/xfpm-main.c:256
+#: ../src/xfpm-main.c:269
 msgid "Dump all information"
 msgstr "Produceer alle informatie"
 
-#: ../src/xfpm-main.c:257
+#: ../src/xfpm-main.c:270
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Herstart de draaiende functie van Xfce-energiebeheerder"
 
-#: ../src/xfpm-main.c:258
+#: ../src/xfpm-main.c:271
 msgid "Show the configuration dialog"
 msgstr "Toon de instellingendialoog"
 
-#: ../src/xfpm-main.c:259
+#: ../src/xfpm-main.c:272
 msgid "Quit any running xfce power manager"
 msgstr "Sluit elke draaiende Xfce-energiebeheerdersfunctie"
 
-#: ../src/xfpm-main.c:260
+#: ../src/xfpm-main.c:273
 msgid "Version information"
 msgstr "Versie-informatie"
 
-#: ../src/xfpm-main.c:281
+#: ../src/xfpm-main.c:289
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Kon argumenten niet lezen: %s\n"
 
-#: ../src/xfpm-main.c:332
+#: ../src/xfpm-main.c:317
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr "Tik '%s --help' in voor een gebruiksaanwijzing."
+
+#: ../src/xfpm-main.c:338
 msgid "Unable to get connection to the message bus session"
 msgstr "Kon geen verbinding krijgen met de boodschap-bus-sessie"
 
-#: ../src/xfpm-main.c:426
+#: ../src/xfpm-main.c:346
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Xfce-energiebeheerder is niet ingeschakeld"
+
+#: ../src/xfpm-main.c:436
 msgid "Another power manager is already running"
 msgstr "Er draait al een andere energiebeheerder"
 
-#: ../src/xfpm-main.c:432
+#: ../src/xfpm-main.c:441
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce-energiebeheerder draait al"
 
-#: ../src/xfpm-inhibit.c:335
-#, c-format
+#: ../src/xfpm-inhibit.c:354
 msgid "Invalid arguments"
 msgstr "Ongeldige argumenten"
 
-#: ../src/xfpm-inhibit.c:361
-#, c-format
+#: ../src/xfpm-inhibit.c:387
 msgid "Invalid cookie"
 msgstr "Ongeldig koekje"
+
+#: ../src/xfpm-manager.c:452
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be "
+"locked."
+msgstr "Geen van de hulpmiddelen voor schermvergrendeling had succes, het scherm zal niet worden vergrendeld."
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
 msgstr "Energiebeheer voor de Xfce-werkomgeving"
 
 #. Odds are this is a desktop without any batteries attached
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:221
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:266
 msgid "Display battery levels for attached devices"
 msgstr "Toon acculadingniveaus voor aangesloten apparaten"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1317
+#. about dialog
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1108
+msgid "_About"
+msgstr "_Over"
+
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1443
 msgid "<b>Display brightness</b>"
 msgstr "<b>Schermhelderheid</b>"
 
 #. Presentation mode checkbox
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1335
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1467
 msgid "Presentation _mode"
 msgstr "Presentatie_modus"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1344
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1476
 msgid "_Power manager settings..."
 msgstr "Instellingen van energiebeheerder..."
 
-#: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:54
-#: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:56
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
 msgstr "Invoegtoepassing voor energiebeheerder"
 
-#: ../panel-plugins/power-manager-plugin/lxde/lxde-power-manager-plugin.c:56
-#: ../panel-plugins/power-manager-plugin/lxde-0.7/lxde-power-manager-plugin.c:57
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
