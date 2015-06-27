@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-22 18:30+0100\n"
-"PO-Revision-Date: 2015-03-28 09:42+0000\n"
+"POT-Creation-Date: 2015-06-15 00:30+0200\n"
+"PO-Revision-Date: 2015-06-27 08:51+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/projects/p/xfce4-power-manager/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgstr "Nastavení správce napájení"
 
 #. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1006
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1102
 msgid "_Help"
 msgstr "_Nápověda"
 
@@ -81,7 +81,7 @@ msgstr "<b>Tlačítka</b>"
 msgid "On battery"
 msgstr "Napájení z baterie"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15 ../common/xfpm-power-common.c:342
+#: ../data/interfaces/xfpm-settings.ui.h:15 ../common/xfpm-power-common.c:353
 msgid "Plugged in"
 msgstr "Zapojeno"
 
@@ -237,7 +237,7 @@ msgstr "%"
 #: ../settings/xfpm-settings.c:986 ../settings/xfpm-settings.c:1071
 #: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1270
 #: ../settings/xfpm-settings.c:1327 ../settings/xfpm-settings.c:1379
-#: ../src/xfpm-power.c:705
+#: ../src/xfpm-power.c:715
 msgid "Suspend"
 msgstr "Režim spánku"
 
@@ -253,7 +253,7 @@ msgstr "Operace přechod do režimu spánku není podporována"
 #: ../settings/xfpm-settings.c:992 ../settings/xfpm-settings.c:1085
 #: ../settings/xfpm-settings.c:1169 ../settings/xfpm-settings.c:1276
 #: ../settings/xfpm-settings.c:1333 ../settings/xfpm-settings.c:1385
-#: ../src/xfpm-power.c:694
+#: ../src/xfpm-power.c:704
 msgid "Hibernate"
 msgstr "Hibernovat"
 
@@ -281,7 +281,7 @@ msgid "Do nothing"
 msgstr "Žádná akce"
 
 #: ../settings/xfpm-settings.c:936 ../settings/xfpm-settings.c:1282
-#: ../src/xfpm-power.c:716
+#: ../src/xfpm-power.c:726
 msgid "Shutdown"
 msgstr "Vypnout"
 
@@ -432,8 +432,8 @@ msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Sestaveno s GTK+ %d.%d.%d, slinkováno s GTK+ %d.%d.%d."
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:355 ../src/xfpm-power.c:637 ../src/xfpm-power.c:680
-#: ../src/xfpm-power.c:844 ../src/xfpm-power.c:867 ../src/xfpm-battery.c:193
+#: ../src/xfpm-power.c:365 ../src/xfpm-power.c:647 ../src/xfpm-power.c:690
+#: ../src/xfpm-power.c:854 ../src/xfpm-power.c:877 ../src/xfpm-battery.c:193
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Správce napájení"
@@ -442,84 +442,84 @@ msgstr "Správce napájení"
 msgid "Settings for the Xfce Power Manager"
 msgstr "Nastavení Správce napájení pro Xfce"
 
-#: ../common/xfpm-common.c:131
+#: ../common/xfpm-common.c:138
 msgid "translator-credits"
 msgstr "Michal Várady <miko.vaji@gmail.com>"
 
-#: ../common/xfpm-power-common.c:44 ../common/xfpm-power-common.c:67
+#: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
 msgstr "Baterie"
 
-#: ../common/xfpm-power-common.c:46
+#: ../common/xfpm-power-common.c:47
 msgid "Uninterruptible Power Supply"
 msgstr "Nepřerušitelný zdroj napájení"
 
-#: ../common/xfpm-power-common.c:48
+#: ../common/xfpm-power-common.c:49
 msgid "Line power"
 msgstr "Elektrická síť"
 
-#: ../common/xfpm-power-common.c:50
+#: ../common/xfpm-power-common.c:51
 msgid "Mouse"
 msgstr "Myš"
 
-#: ../common/xfpm-power-common.c:52
+#: ../common/xfpm-power-common.c:53
 msgid "Keyboard"
 msgstr "Klávesnice"
 
-#: ../common/xfpm-power-common.c:54
+#: ../common/xfpm-power-common.c:55
 msgid "Monitor"
 msgstr "Monitor"
 
-#: ../common/xfpm-power-common.c:56
+#: ../common/xfpm-power-common.c:57
 msgid "PDA"
 msgstr "PDA"
 
-#: ../common/xfpm-power-common.c:58
+#: ../common/xfpm-power-common.c:59
 msgid "Phone"
 msgstr "Telefon"
 
-#: ../common/xfpm-power-common.c:60
+#: ../common/xfpm-power-common.c:61
 msgid "Tablet"
 msgstr "Tablet"
 
-#: ../common/xfpm-power-common.c:62 ../common/xfpm-power-common.c:238
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:249
 msgid "Computer"
 msgstr "Počítač"
 
-#: ../common/xfpm-power-common.c:64 ../common/xfpm-power-common.c:80
-#: ../common/xfpm-power-common.c:95
+#: ../common/xfpm-power-common.c:65 ../common/xfpm-power-common.c:81
+#: ../common/xfpm-power-common.c:96
 msgid "Unknown"
 msgstr "Neznámý"
 
-#: ../common/xfpm-power-common.c:82
+#: ../common/xfpm-power-common.c:83
 msgid "Lithium ion"
 msgstr "Lithium ionové"
 
-#: ../common/xfpm-power-common.c:84
+#: ../common/xfpm-power-common.c:85
 msgid "Lithium polymer"
 msgstr "Lithium polymerové"
 
-#: ../common/xfpm-power-common.c:86
+#: ../common/xfpm-power-common.c:87
 msgid "Lithium iron phosphate"
 msgstr "Lithium-železo-fosfátový akumulátor"
 
-#: ../common/xfpm-power-common.c:88
+#: ../common/xfpm-power-common.c:89
 msgid "Lead acid"
 msgstr "Olověný akumulátor"
 
-#: ../common/xfpm-power-common.c:90
+#: ../common/xfpm-power-common.c:91
 msgid "Nickel cadmium"
 msgstr "Nikl-kadmiový"
 
-#: ../common/xfpm-power-common.c:92
+#: ../common/xfpm-power-common.c:93
 msgid "Nickel metal hybride"
 msgstr "Nikl-metal hydridový akumulátor"
 
-#: ../common/xfpm-power-common.c:113
+#: ../common/xfpm-power-common.c:114
 msgid "Unknown time"
 msgstr "Neznámý čas"
 
-#: ../common/xfpm-power-common.c:119
+#: ../common/xfpm-power-common.c:120
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
@@ -527,7 +527,7 @@ msgstr[0] "%i minuta"
 msgstr[1] "%i minuty"
 msgstr[2] "%i minut"
 
-#: ../common/xfpm-power-common.c:130
+#: ../common/xfpm-power-common.c:131
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -537,82 +537,82 @@ msgstr[2] "%i hodin"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../common/xfpm-power-common.c:136
+#: ../common/xfpm-power-common.c:137
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: ../common/xfpm-power-common.c:137
+#: ../common/xfpm-power-common.c:138
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "hodina"
 msgstr[1] "hodiny"
 msgstr[2] "hodin"
 
-#: ../common/xfpm-power-common.c:138
+#: ../common/xfpm-power-common.c:139
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuta"
 msgstr[1] "minuty"
 msgstr[2] "minut"
 
-#: ../common/xfpm-power-common.c:269
+#: ../common/xfpm-power-common.c:280
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nPlně nabito (%0.0f%%, odhadovaná výdrž: %s)"
 
-#: ../common/xfpm-power-common.c:277
+#: ../common/xfpm-power-common.c:288
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nPlně nabito (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:287
+#: ../common/xfpm-power-common.c:298
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nNabíjení (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:295
+#: ../common/xfpm-power-common.c:306
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nNabíjení (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:305
+#: ../common/xfpm-power-common.c:316
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nVybíjení (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:313
+#: ../common/xfpm-power-common.c:324
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nVybíjení (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:320
+#: ../common/xfpm-power-common.c:331
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nČekání na vybití (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:326
+#: ../common/xfpm-power-common.c:337
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nČekání na nabití (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:332
+#: ../common/xfpm-power-common.c:343
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -621,81 +621,81 @@ msgstr "<b>%s %s</b>\nje prázdný"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:341
+#: ../common/xfpm-power-common.c:352
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:342
+#: ../common/xfpm-power-common.c:353
 msgid "Not plugged in"
 msgstr "Nepřipojeni"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:348
+#: ../common/xfpm-power-common.c:359
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:353
+#: ../common/xfpm-power-common.c:364
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
 msgstr "<b>%s %s</b>\nNeznámý stav"
 
-#: ../src/xfpm-power.c:384
+#: ../src/xfpm-power.c:394
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Aplikace zakazuje funkci automatického přechodu do režimu spánku. Akce může poškodit pracovní stav této aplikace. Opravdu chcete systém uvést do stavu hibernace?"
 
-#: ../src/xfpm-power.c:434
+#: ../src/xfpm-power.c:444
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Žádný nástroj pro uzamknutí obrazovky se nespustit úspěšně, obrazovka nebude uzamknuta.\nChcete pokračovat s uspáním systému?"
 
-#: ../src/xfpm-power.c:600
+#: ../src/xfpm-power.c:610
 msgid "Hibernate the system"
 msgstr "Hibernovat systém"
 
-#: ../src/xfpm-power.c:611
+#: ../src/xfpm-power.c:621
 msgid "Suspend the system"
 msgstr "Přejít do režimu spánku"
 
-#: ../src/xfpm-power.c:621
+#: ../src/xfpm-power.c:631
 msgid "Shutdown the system"
 msgstr "Vypnout systém"
 
-#: ../src/xfpm-power.c:632 ../src/xfpm-power.c:677
+#: ../src/xfpm-power.c:642 ../src/xfpm-power.c:687
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Baterie je téměř vybitá. Uložte si svoji práci, abyste předešli ztrátě dat"
 
-#: ../src/xfpm-power.c:723
+#: ../src/xfpm-power.c:733
 msgid "_Cancel"
 msgstr "_Zrušit"
 
-#: ../src/xfpm-power.c:845
+#: ../src/xfpm-power.c:855
 msgid "System is running on low power"
 msgstr "Baterie je téměř vybitá"
 
-#: ../src/xfpm-power.c:863
+#: ../src/xfpm-power.c:873
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Zařízení \"%s\" se je téměř vybité\nPředpokládaná doba: %s"
 
-#: ../src/xfpm-power.c:1587 ../src/xfpm-power.c:1634 ../src/xfpm-power.c:1665
-#: ../src/xfpm-power.c:1694
+#: ../src/xfpm-power.c:1724 ../src/xfpm-power.c:1771 ../src/xfpm-power.c:1802
+#: ../src/xfpm-power.c:1831
 msgid "Permission denied"
 msgstr "Přístup zamítnut"
 
-#: ../src/xfpm-power.c:1674 ../src/xfpm-power.c:1703
+#: ../src/xfpm-power.c:1811 ../src/xfpm-power.c:1840
 msgid "Suspend not supported"
 msgstr "Režim spánku není podporován"
 
@@ -745,7 +745,7 @@ msgid "Your %s is empty"
 msgstr "Zařízení \"%s\" je vybité"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-kbd-backlight.c:120
+#: ../src/xfpm-kbd-backlight.c:123
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Jas klávesnice: %.0f procent"
@@ -898,21 +898,26 @@ msgid "Power management for the Xfce desktop"
 msgstr "Správa napájení pro prostředí Xfce"
 
 #. Odds are this is a desktop without any batteries attached
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:221
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:266
 msgid "Display battery levels for attached devices"
 msgstr "Zobrazit úrovně baterie pro připojená zařízení"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1298
+#. about dialog
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1108
+msgid "_About"
+msgstr "O _aplikaci"
+
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1443
 msgid "<b>Display brightness</b>"
 msgstr "<b>Jas displeje</b>"
 
 #. Presentation mode checkbox
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1322
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1467
 msgid "Presentation _mode"
 msgstr "_Režim prezentace"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1331
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1476
 msgid "_Power manager settings..."
 msgstr "_Nastavení správce napájení..."
 
