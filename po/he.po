@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-02 23:12+0200\n"
-"PO-Revision-Date: 2015-02-26 11:41+0000\n"
+"PO-Revision-Date: 2015-07-29 16:04+0000\n"
 "Last-Translator: GenghisKhan <genghiskhan@gmx.ca>\n"
 "Language-Team: Hebrew (http://www.transifex.com/projects/p/xfce4-power-manager/language/he/)\n"
 "MIME-Version: 1.0\n"
@@ -163,7 +163,7 @@ msgstr "<b>אפשרויות מתקדמות</b>"
 #: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
 #: ../settings/xfpm-settings.c:609
 msgid "Never"
-msgstr "לעולם לא"
+msgstr "אף פעם"
 
 #: ../settings/xfpm-settings.c:570
 msgid "One minute"
@@ -198,12 +198,12 @@ msgstr "שניות"
 #: ../settings/xfpm-settings.c:792 ../settings/xfpm-settings.c:990
 #: ../settings/xfpm-settings.c:1470
 msgid "Hibernate and suspend operations not supported"
-msgstr "הפעולות תרדמת והשהיה אינן נתמכות"
+msgstr "הפעולות תרדמת והשהיה לא נתמכות"
 
 #: ../settings/xfpm-settings.c:797 ../settings/xfpm-settings.c:995
 #: ../settings/xfpm-settings.c:1475
 msgid "Hibernate and suspend operations not permitted"
-msgstr "הפעולות תרדמת והשהיה אינן מורשות"
+msgstr "הפעולות תרדמת והשהיה לא מורשות"
 
 #: ../settings/xfpm-settings.c:826 ../settings/xfpm-settings.c:1220
 #: ../src/xfpm-power.c:805
@@ -217,7 +217,7 @@ msgstr "שאל"
 
 #: ../settings/xfpm-settings.c:892 ../settings/xfpm-settings.c:1041
 msgid "Lock screen"
-msgstr "נעילת המסך"
+msgstr "נעל מסך"
 
 #: ../settings/xfpm-settings.c:960 ../settings/xfpm-settings.c:1110
 msgid "Spinning down hard disks permission denied"
@@ -247,19 +247,19 @@ msgstr ""
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
-msgstr "פעולת השהיה אינה נתמכת"
+msgstr "פעולת השהיה לא נתמכת"
 
 #: ../settings/xfpm-settings.c:1385
 msgid "Suspend operation not permitted"
-msgstr "פעולת השהיה אינה מורשית"
+msgstr "פעולת השהיה לא מורשית"
 
 #: ../settings/xfpm-settings.c:1391
 msgid "Hibernate operation not supported"
-msgstr "פעולת תרדמת אינה נתמכת"
+msgstr "פעולת תרדמת לא נתמכת"
 
 #: ../settings/xfpm-settings.c:1396
 msgid "Hibernate operation not permitted"
-msgstr "פעולת תרדמת אינה מורשית"
+msgstr "פעולת תרדמת לא מורשית"
 
 #: ../settings/xfpm-settings.c:1443
 msgid "When all the power sources of the computer reach this charge level"
@@ -283,7 +283,7 @@ msgstr ""
 
 #: ../settings/xfpm-settings.c:1662
 msgid "Check your power manager installation"
-msgstr "אנא בדוק את התקנת מנהל צריכת חשמל שלך"
+msgstr "בדוק את התקנת מנהל צריכת חשמל שלך"
 
 #: ../settings/xfpm-settings-main.c:78
 msgid "Settings manager socket"
@@ -301,24 +301,24 @@ msgstr "Type '%s --help' for usage."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "טעינת תצורת ניהול צריכת חשמל נכשלה, משתמש בברירות מחדל"
+msgstr "Failed to load power manager configuration, using defaults"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
-msgstr "לא מסוגל להתחבר למנהל צריכת חשמל Xfce"
+msgstr "Unable to connect to Xfce Power Manager"
 
 #: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr ""
+msgstr "Xfce power manager is not running"
 
 #: ../settings/xfpm-settings-main.c:195
 msgid "Run"
-msgstr "הרץ"
+msgstr "Run"
 
 #: ../settings/xfpm-settings-main.c:196
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "מנהל צריכת חשמל Xfce4 אינו רץ, האם ברצונך לשגר אותו כעת?"
+msgstr "מנהל צריכת חשמל Xfce4 אינו מורץ, האם ברצונך לשגר אותו עכשיו?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
@@ -333,7 +333,7 @@ msgstr "הגדרות עבור מנהל צריכת חשמל Xfce"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
-msgstr "ירון שהרבני <sh.yaron@gmail.com>"
+msgstr "גינגס חאן וכנופייתו\nירון שהרבני <sh.yaron@gmail.com>"
 
 #: ../src/xfpm-power.c:328
 msgid "_Hibernate"
@@ -343,7 +343,7 @@ msgstr "ה_רדם"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action"
 " now may damage the working state of this application."
-msgstr "פועל כעת יישום המונע ביצוע של שינה אוטומטית. ביצוע פעולה זו עשוי לפגום במצב הפעולה של היישום."
+msgstr "ישנו יישום אשר כעת מונע את הביצוע של שינה אוטומטית. ביצוע עכשיווי של פעולה זו עלול לפגום במצב הפעולה של יישום זה."
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
@@ -387,30 +387,30 @@ msgstr ""
 
 #: ../src/xfpm-power.c:693
 msgid "Hibernate the system"
-msgstr "הרדמת המערכת"
+msgstr "הרדם את המערכת"
 
 #: ../src/xfpm-power.c:704
 msgid "Suspend the system"
-msgstr "השהיית המערכת"
+msgstr "השהה את המערכת"
 
 #: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
-msgstr "כיבוי המערכת"
+msgstr "כבה את המערכת"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "אספקת כח של המערכת אוזלת. נא לשמור את עבודתך כדי למנוע אבדן נתונים"
+msgstr "המערכת פועלת על אספקת כח נמוכה. שמור את העבודה שלך כדי להימנע מאבדן נתונים"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
-msgstr "אספקת כח של המערכת אוזלת"
+msgstr "המערכת פועלת על אספקת כח נמוכה"
 
 #: ../src/xfpm-power.c:955
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "רמת טעינת %s שלך נמוכה\nהערכת הזמן שנותר היא %s"
+msgstr "רמת טעינת %s שלך הינה נמוכה\nאומדן זמן נותר %s"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -430,7 +430,7 @@ msgstr "הרשאה נדחתה"
 #: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
-msgstr "אין תמיכה בהשהיה"
+msgstr "השהיה לא נתמכת"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 msgid "Battery"
@@ -438,11 +438,11 @@ msgstr "סוללה"
 
 #: ../src/xfpm-power-common.c:124 ../src/xfpm-battery.c:832
 msgid "UPS"
-msgstr "אל־פסק"
+msgstr "אל פסק"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
-msgstr "חיבור שקע"
+msgstr "כבל חשמל"
 
 #: ../src/xfpm-power-common.c:128
 msgid "Mouse"
@@ -529,12 +529,12 @@ msgstr[1] "דקות"
 #: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "%s שלך טעונה במלואה"
+msgstr "ה%s שלך כעת טעונה במלואה"
 
 #: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
 #, c-format
 msgid "Your %s is charging"
-msgstr "%s שלך נטענת"
+msgstr "ה%s שלך כעת נטענת"
 
 #: ../src/xfpm-battery.c:224
 #, c-format
@@ -546,24 +546,24 @@ msgstr ""
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
 msgid "Your %s is discharging"
-msgstr "%s שלך נפרקת"
+msgstr "ה%s שלך כעת נפרקת"
 
 #: ../src/xfpm-battery.c:234
 #, c-format
 msgid "System is running on %s power"
-msgstr "המערכת פועלת על %s"
+msgstr "המערכת פועלת על אספקת כח %s"
 
 #: ../src/xfpm-battery.c:244
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr "%s (%i%%)\nהזמן הנותר הוא %s."
+msgstr "%s (%i%%)\nאומדן זמן נותר הוא %s."
 
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
 msgid "Your %s is empty"
-msgstr "%s שלך ריקה"
+msgstr "ה%s שלך כעת ריקה"
 
 #: ../src/xfpm-battery.c:413
 #, c-format
@@ -689,7 +689,7 @@ msgstr "עם תמיכת policykit\n"
 #: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without policykit support\n"
-msgstr "ללא תמיכת policykit\n"
+msgstr "בלי תמיכת policykit\n"
 
 #: ../src/xfpm-main.c:118
 #, c-format
@@ -699,7 +699,7 @@ msgstr "עם תמיכת מנהל רשת\n"
 #: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
-msgstr "ללא תמיכת מנהל רשת\n"
+msgstr "בלי תמיכת מנהל רשת\n"
 
 #: ../src/xfpm-main.c:123
 #, c-format
@@ -713,11 +713,11 @@ msgstr ""
 
 #: ../src/xfpm-main.c:141
 msgid "Can suspend"
-msgstr "יש אפשרות להשהות"
+msgstr "מסוגל להשהות"
 
 #: ../src/xfpm-main.c:143
 msgid "Can hibernate"
-msgstr "יש אפשרות להרדים"
+msgstr "מסוגל להרדים"
 
 #: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
@@ -725,15 +725,15 @@ msgstr ""
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr "יש הרשאה להשהות"
+msgstr "מורשה להשהות"
 
 #: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
-msgstr "יש הרשאה להרדים"
+msgstr "מורשה להרדים"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to shutdown"
-msgstr "יש הרשאה לכבות"
+msgstr "מורשה לכבות"
 
 #: ../src/xfpm-main.c:153
 msgid "Authorized to spin down hard disks"
@@ -765,7 +765,7 @@ msgstr "יש מכסה"
 
 #: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
-msgstr "אל תהפוך לשדון"
+msgstr "Do not daemonize"
 
 #: ../src/xfpm-main.c:265
 msgid "Enable debugging"
@@ -773,19 +773,19 @@ msgstr "Enable debugging"
 
 #: ../src/xfpm-main.c:266
 msgid "Dump all information"
-msgstr "אריזת כל המידע"
+msgstr "Dump all information"
 
 #: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
-msgstr "הפעלת העותק הפעיל של מנהל צריכת חשמל Xfce מחדש"
+msgstr "Restart the running instance of Xfce power manager"
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
-msgstr "הצגת תיבת דו־שיח התצורה"
+msgstr "Show the configuration dialog"
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
-msgstr "יציאה מכל עותק פעיל של מנהל צריכת חשמל Xfce"
+msgstr "Quit any running xfce power manager"
 
 #: ../src/xfpm-main.c:270 ../src/xfpm-power-info.c:933
 msgid "Version information"
@@ -793,26 +793,26 @@ msgstr "Version information"
 
 #: ../src/xfpm-main.c:320
 msgid "Unable to get connection to the message bus session"
-msgstr "לא ניתן להתחבר להפעלת אפיק ההודעות"
+msgstr "Unable to get connection to the message bus session"
 
 #: ../src/xfpm-main.c:414
 msgid "Another power manager is already running"
-msgstr "ישנו כבר עותק פעיל אחר של מנהל צריכת חשמל"
+msgstr "Another power manager is already running"
 
 #: ../src/xfpm-main.c:420
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "מנהל צריכת חשמל Xfce כבר פעיל"
+msgstr "Xfce power manager is already running"
 
 #: ../src/xfpm-inhibit.c:331
 #, c-format
 msgid "Invalid arguments"
-msgstr "הארגומנטים שגויים"
+msgstr "Invalid arguments"
 
 #: ../src/xfpm-inhibit.c:357
 #, c-format
 msgid "Invalid cookie"
-msgstr "עוגייה שגויה"
+msgstr "Invalid cookie"
 
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
@@ -1010,7 +1010,7 @@ msgstr ""
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
-msgstr "ניהול צריכת חשמל לשולחן עבודה Xfce"
+msgstr "ניהול צריכת חשמל עבור שולחן עבודה Xfce"
 
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
