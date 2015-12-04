@@ -6,15 +6,15 @@
 # Denis Štogl <denisstogl@gmail.com>, 2013
 # Edin Veskovic <edin.veskovic@openmailbox.org>, 2014-2015
 # Edin Veskovic <edin.veskovic@openmailbox.org>, 2014
-# Ivica  Kolić <ikoli@yahoo.com>, 2013
+# Ivica  Kolić <ikoli@yahoo.com>, 2013,2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-15 00:30+0200\n"
-"PO-Revision-Date: 2015-06-15 07:55+0000\n"
-"Last-Translator: Edin Veskovic <edin.veskovic@openmailbox.org>\n"
-"Language-Team: Croatian (http://www.transifex.com/projects/p/xfce4-power-manager/language/hr/)\n"
+"PO-Revision-Date: 2015-12-04 09:41+0000\n"
+"Last-Translator: Ivica  Kolić <ikoli@yahoo.com>\n"
+"Language-Team: Croatian (http://www.transifex.com/xfce/xfce4-power-manager/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,11 +29,11 @@ msgstr "Nikada"
 
 #: ../data/interfaces/xfpm-settings.ui.h:2
 msgid "When the screensaver is activated"
-msgstr "Kada je čuvar ekrana aktivan"
+msgstr "Kada je čuvar zaslona aktivan"
 
 #: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "When the screensaver is deactivated"
-msgstr "Kada čuvar ekrana nije aktivan"
+msgstr "Kada čuvar zaslona nije aktivan"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
 msgid "Nothing"
@@ -60,7 +60,7 @@ msgstr "_Zatvori"
 
 #: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "When power button is pressed:"
-msgstr "Kada je tipka za paljenje pritisnuta:"
+msgstr "Kada je tipka za uključivanje pritisnuta:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "When sleep button is pressed:"
@@ -88,7 +88,7 @@ msgstr "Uključen u struju"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "When laptop lid is closed:"
-msgstr "Kada se prijenosno računalo zatvori:"
+msgstr "Kada je prijenosno računalo zatvoreno:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "<b>Laptop Lid</b>"
@@ -416,11 +416,11 @@ msgstr "Neuspjelo povezivanje s upraviteljem energije"
 
 #: ../settings/xfpm-settings-app.c:191
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce4 upravitelj energije ne radi,želite li ga sada pokrenuti?"
+msgstr "Xfce4 upravitelj energije ne radi, želite li ga sada pokrenuti?"
 
 #: ../settings/xfpm-settings-app.c:214
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Neuspjelo učitavanje konfiguracije upravitelja energijom,koristim zadano"
+msgstr "Neuspjelo učitavanje konfiguracije upravitelja energijom, koristim zadano"
 
 #: ../settings/xfpm-settings-app.c:346
 #, c-format
@@ -678,7 +678,7 @@ msgstr "Sustav radi na maloj snazi. Spremite svoj rad kako bi izbjegli gubitak p
 
 #: ../src/xfpm-power.c:733
 msgid "_Cancel"
-msgstr "_Odustani"
+msgstr "_Otkaži"
 
 #: ../src/xfpm-power.c:855
 msgid "System is running on low power"
@@ -906,7 +906,7 @@ msgstr "Pokazuj razine baterije za priključene uređaje"
 #. about dialog
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1108
 msgid "_About"
-msgstr "O progr_amu"
+msgstr "_O programu"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1443
 msgid "<b>Display brightness</b>"
@@ -924,7 +924,7 @@ msgstr "_Postavke upravitelja energijom..."
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr "Dodatak Upravitelja energijom"
+msgstr "Priključak upravitelja energijom"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
@@ -954,7 +954,7 @@ msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Xfce upravitelj energijom također pruža dodatke za Xfce i LXDE koji omogućavaju upravljanje svjetlinom LCD zaslona te praćenje korištenja i napunjenosti baterije uređaja."
+msgstr "Xfce upravitelj energijom također pruža priključke za Xfce i LXDE ploče koji omogućavaju upravljanje svjetlinom LCD zaslona te praćenje korištenja i napunjenosti baterije uređaja."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -962,7 +962,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr "Ova razvojna verzija ispravlja neke greške te nudi bolju podršku za različite teme ikona smanjajući veličinu ikona uređaja i koristeći standardna imena. Također donosi ažurirane prijevode. Dodatak za ploču je preimenovan u Dodatak Upravitelja energijom."
+msgstr "Ova razvojna verzija ispravlja neke greške te nudi bolju podršku za različite teme ikona smanjajući veličinu ikona uređaja i koristeći standardna imena. Također donosi ažurirane prijevode. Priključak ploče je preimenovan u Priključak upravitelja energijom."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
