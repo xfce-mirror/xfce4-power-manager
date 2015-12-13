@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-02 23:12+0200\n"
-"PO-Revision-Date: 2015-12-11 14:20+0000\n"
+"PO-Revision-Date: 2015-12-13 18:28+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic (http://www.transifex.com/xfce/xfce4-power-manager/language/is/)\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgstr "Skjár"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "When battery power is critical:"
-msgstr ""
+msgstr "Þegar hleðsla rafhlöðu er við hættumörk:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "Prefer power savings over performance"
@@ -155,7 +155,7 @@ msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Lock screen when going for suspend/hibernate"
-msgstr ""
+msgstr "Læsa skjá þegar tölvan er lögð í dvala/bið"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "<b>Advanced Options</b>"
@@ -226,7 +226,7 @@ msgstr ""
 
 #: ../settings/xfpm-settings.c:1150
 msgid "Always show icon"
-msgstr ""
+msgstr "Alltaf sýna táknmynd"
 
 #: ../settings/xfpm-settings.c:1153
 msgid "When battery is present"
@@ -234,11 +234,11 @@ msgstr "Þegar rafhlaða er til staðar"
 
 #: ../settings/xfpm-settings.c:1156
 msgid "When battery is charging or discharging"
-msgstr ""
+msgstr "Þegar rafhlaða er í hleðslu/notkun"
 
 #: ../settings/xfpm-settings.c:1159
 msgid "Never show icon"
-msgstr ""
+msgstr "Aldrei sýna táknmynd"
 
 #: ../settings/xfpm-settings.c:1185
 msgid ""
@@ -302,16 +302,16 @@ msgstr "Skrifaðu '%s --help' til að sjá hvernig á að nota þetta."
 
 #: ../settings/xfpm-settings-main.c:123
 msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
+msgstr "Mistókst að hlaða inn stillingum orkustýringar, nota sjálfgefnar"
 
 #: ../settings/xfpm-settings-main.c:148
 msgid "Unable to connect to Xfce Power Manager"
-msgstr ""
+msgstr "Mistókst að tengjast XFCE-orkustýringu"
 
 #: ../settings/xfpm-settings-main.c:190 ../src/xfpm-main.c:329
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr ""
+msgstr "XFCE orkustjórnun er ekki keyrandi"
 
 #: ../settings/xfpm-settings-main.c:195
 msgid "Run"
@@ -319,7 +319,7 @@ msgstr "Keyra"
 
 #: ../settings/xfpm-settings-main.c:196
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr ""
+msgstr "XFCE orkustjórnun er ekki keyrandi, viltu ræsa hana núna?"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:307 ../src/xfpm-power.c:595 ../src/xfpm-power.c:730
@@ -330,7 +330,7 @@ msgstr "Aflstjórnun"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
-msgstr ""
+msgstr "Stillingar fyrir XFCE aflstjórnun"
 
 #: ../common/xfpm-common.c:155
 msgid "translator-credits"
@@ -348,7 +348,7 @@ msgstr ""
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "Ertu viss um að þú viljir leggja vélina í dvala?"
 
 #: ../src/xfpm-power.c:426
 msgid "Quit"
@@ -360,7 +360,7 @@ msgstr ""
 
 #: ../src/xfpm-power.c:429
 msgid "Quit the power manager?"
-msgstr ""
+msgstr "Hætta í aflstjórnun?"
 
 #. Power information
 #: ../src/xfpm-power.c:534 ../src/xfpm-power-info.c:818
@@ -400,18 +400,18 @@ msgstr "Slökkva á kerfinu"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
+msgstr "Kerfið á lítið rafmagn eftir. Vistaðu skjölin þín svo að gögn tapist ekki"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
-msgstr ""
+msgstr "Kerfið á lítið rafmagn eftir"
 
 #: ../src/xfpm-power.c:955
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
+msgstr "Hleðsla á %s er lítil\nÁætlaður tími eftir %s"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -431,7 +431,7 @@ msgstr "Aðgangi hafnað"
 #: ../src/xfpm-power.c:1661 ../src/xfpm-power.c:1684
 #, c-format
 msgid "Suspend not supported"
-msgstr ""
+msgstr "'Setja í bið' ekki stutt"
 
 #: ../src/xfpm-power-common.c:122 ../src/xfpm-power-common.c:141
 msgid "Battery"
@@ -577,14 +577,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr ""
+msgstr "%s\n%s er fullhlaðið (%i%%).\nGefur u.þ.b. %s vinnslutíma"
 
 #: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
+msgstr "%s\n %s er fullhlaðið (%i%%)."
 
 #: ../src/xfpm-battery.c:440
 #, c-format
@@ -592,14 +592,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
+msgstr "%s\n%s er að hlaðast (%i%%)\n%s þar til fullhlaðin."
 
 #: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr ""
+msgstr "%s\n%s er í hleðslu (%i%%)."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -621,14 +621,14 @@ msgstr "%s\n%s þín afhleðst (%i%%)."
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr ""
+msgstr "%s\n%s bíður eftir að afhlaðast (%i%%)."
 
 #: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr ""
+msgstr "%s\n%s bíður eftir hleðslu (%i%%)."
 
 #: ../src/xfpm-battery.c:486
 #, c-format
@@ -672,7 +672,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
+msgstr "\nXFCE aflstjórnun %s\n\nHluti af Xfce Goodies verkefninu\nhttp://goodies.xfce.org\n\nGefið út með GNU GPL notkunarleyfi.\n\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
@@ -685,60 +685,60 @@ msgstr "Rangt"
 #: ../src/xfpm-main.c:113
 #, c-format
 msgid "With policykit support\n"
-msgstr ""
+msgstr "Með policykit stuðningi\n"
 
 #: ../src/xfpm-main.c:115
 #, c-format
 msgid "Without policykit support\n"
-msgstr ""
+msgstr "Án policykit stuðnings\n"
 
 #: ../src/xfpm-main.c:118
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "Með stuðningi við netstýringu\n"
 
 #: ../src/xfpm-main.c:120
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Án stuðnings við netstýringu\n"
 
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With DPMS support\n"
-msgstr ""
+msgstr "Með DPMS stuðningi\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without DPMS support\n"
-msgstr ""
+msgstr "Án DPMS stuðnings\n"
 
 #: ../src/xfpm-main.c:141
 msgid "Can suspend"
-msgstr ""
+msgstr "Getur sett í bið"
 
 #: ../src/xfpm-main.c:143
 msgid "Can hibernate"
-msgstr ""
+msgstr "Getur lagt í dvala"
 
 #: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "Getur hægt á hörðum diskum"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr ""
+msgstr "Hefur heimild til að setja í bið"
 
 #: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
-msgstr ""
+msgstr "Hefur heimild til að leggja í dvala"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to shutdown"
-msgstr ""
+msgstr "Hefur heimild til að slökkva á tölvu"
 
 #: ../src/xfpm-main.c:153
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "Hefur heimild til að hægja á hörðum diskum"
 
 #: ../src/xfpm-main.c:155
 msgid "Has battery"
@@ -746,19 +746,19 @@ msgstr "Er með rafhlöðu"
 
 #: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
-msgstr ""
+msgstr "Er með birtustigsstiku"
 
 #: ../src/xfpm-main.c:159
 msgid "Has power button"
-msgstr ""
+msgstr "Er með Kveikja/Slökkva-hnapp"
 
 #: ../src/xfpm-main.c:161
 msgid "Has hibernate button"
-msgstr ""
+msgstr "Er með 'Leggja í dvala'-hnapp"
 
 #: ../src/xfpm-main.c:163
 msgid "Has sleep button"
-msgstr ""
+msgstr "Er með svæfingarhnapp"
 
 #: ../src/xfpm-main.c:165
 msgid "Has LID"
@@ -778,11 +778,11 @@ msgstr ""
 
 #: ../src/xfpm-main.c:267
 msgid "Restart the running instance of Xfce power manager"
-msgstr ""
+msgstr "Endurræsa eintak XFCE-orkustýringarinnar sem er í gangi"
 
 #: ../src/xfpm-main.c:268
 msgid "Show the configuration dialog"
-msgstr ""
+msgstr "Birta stillingagluggann"
 
 #: ../src/xfpm-main.c:269
 msgid "Quit any running xfce power manager"
@@ -798,17 +798,17 @@ msgstr ""
 
 #: ../src/xfpm-main.c:414
 msgid "Another power manager is already running"
-msgstr ""
+msgstr "Önnur orkustýring er þegar í keyrslu"
 
 #: ../src/xfpm-main.c:420
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr ""
+msgstr "XFCE orkustjórnun er þegar keyrandi"
 
 #: ../src/xfpm-inhibit.c:331
 #, c-format
 msgid "Invalid arguments"
-msgstr ""
+msgstr "Ógildar breytur"
 
 #: ../src/xfpm-inhibit.c:357
 #, c-format
@@ -833,7 +833,7 @@ msgstr "Aðalkjarni"
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "Ígrip millikjarna"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
@@ -843,7 +843,7 @@ msgstr "Ígrip"
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
 msgid "PS/2 keyboard/mouse/touchpad"
-msgstr ""
+msgstr "PS/2 lyklaborð/mús/snertiplatti"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
@@ -999,7 +999,7 @@ msgstr "PID"
 
 #: ../src/xfpm-power-info.c:754
 msgid "Wakeups"
-msgstr ""
+msgstr "Vaknanir"
 
 #: ../src/xfpm-power-info.c:760
 msgid "Command"
@@ -1011,7 +1011,7 @@ msgstr "Nánar"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
-msgstr ""
+msgstr "Orkustýring fyrir XFCE-skjáborðsumhverfið"
 
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
@@ -1025,4 +1025,4 @@ msgstr "Fann engin tæki"
 #: ../panel-plugins/brightness/brightness-button.c:649
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr ""
+msgstr "Birtustigsviðbót"
