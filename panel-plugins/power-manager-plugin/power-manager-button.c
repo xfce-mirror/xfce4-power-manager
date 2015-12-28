@@ -320,6 +320,7 @@ power_manager_button_set_label (PowerManagerButton *button, gdouble percentage,
     gtk_label_set_text (GTK_LABEL (button->priv->panel_label), label_string);
 
     g_free (label_string);
+    g_free (remaining_time);
 }
 
 static gboolean
@@ -454,7 +455,14 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     details = get_device_description (button->priv->upower, device);
 
     /* If UPower doesn't give us an icon, just use the default */
-    if (icon_name == NULL || g_strcmp0(icon_name, "") == 0)
+    if (g_strcmp0(icon_name, "") == 0)
+    {
+        /* ignore empty icon names */
+        g_free (icon_name);
+        icon_name = NULL;
+    }
+
+    if (icon_name == NULL)
         icon_name = g_strdup (PANEL_DEFAULT_ICON);
 
     pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
@@ -483,7 +491,15 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
         g_object_get (device,
                       "icon-name", &icon_name,
                       NULL);
-        if (icon_name == NULL || g_strcmp0(icon_name, "") == 0)
+
+        /* ignore empty icon names */
+        if (g_strcmp0(icon_name, "") == 0)
+        {
+            g_free (icon_name);
+            icon_name = NULL;
+        }
+
+        if (icon_name == NULL)
             icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
 #endif
         button->priv->panel_icon_name = g_strdup (icon_name);
@@ -503,7 +519,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
         /* update the image, keep track of the signal ids and the img
          * so we can disconnect it later */
         battery_device->img = gtk_image_new_from_pixbuf (battery_device->pix);
-        g_object_ref (battery_device->img);
+
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
         gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(battery_device->menu_item), battery_device->img);
 G_GNUC_END_IGNORE_DEPRECATIONS
@@ -604,6 +620,8 @@ remove_battery_device (PowerManagerButton *button, BatteryDevice *battery_device
     g_free (battery_device->details);
     g_free (battery_device->object_path);
 
+    battery_device_remove_pix (battery_device);
+
     if (battery_device->device != NULL && UP_IS_DEVICE(battery_device->device))
     {
         /* disconnect the signal handler if we were using it */
@@ -614,6 +632,8 @@ remove_battery_device (PowerManagerButton *button, BatteryDevice *battery_device
         g_object_unref (battery_device->device);
         battery_device->device = NULL;
     }
+
+    g_free (battery_device);
 }
 
 static void
