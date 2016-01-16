@@ -3,14 +3,15 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
+# Elishai Eliyahu <e1907@mm.st>, 2016
 # Yaron Shahrabani <sh.yaron@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-02 23:12+0200\n"
-"PO-Revision-Date: 2016-01-16 15:59+0000\n"
-"Last-Translator: GenghisKhan <genghiskhan@gmx.ca>\n"
+"PO-Revision-Date: 2016-01-16 20:00+0000\n"
+"Last-Translator: Elishai Eliyahu <e1907@mm.st>\n"
 "Language-Team: Hebrew (http://www.transifex.com/xfce/xfce4-power-manager/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -56,7 +57,7 @@ msgstr "שליטה בצריכת החשמל של הצג"
 
 #: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "Show notifications to notify about the battery state"
-msgstr ""
+msgstr "הצג הודעות להודיע על מצב הסוללה"
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "<b>General Options</b>"
@@ -221,29 +222,29 @@ msgstr "נעל מסך"
 
 #: ../settings/xfpm-settings.c:960 ../settings/xfpm-settings.c:1110
 msgid "Spinning down hard disks permission denied"
-msgstr ""
+msgstr "רשות לסובב כוננים קשיחים נדחתה"
 
 #: ../settings/xfpm-settings.c:1150
 msgid "Always show icon"
-msgstr ""
+msgstr "תמיד הצג אייקון"
 
 #: ../settings/xfpm-settings.c:1153
 msgid "When battery is present"
-msgstr ""
+msgstr "כאשר סוללה קיימת"
 
 #: ../settings/xfpm-settings.c:1156
 msgid "When battery is charging or discharging"
-msgstr ""
+msgstr "כאשר סוללה נטענת או פורקת"
 
 #: ../settings/xfpm-settings.c:1159
 msgid "Never show icon"
-msgstr ""
+msgstr "לעולם אל תציג אייקון"
 
 #: ../settings/xfpm-settings.c:1185
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr ""
+msgstr "כבה איתות ניהול הספק מסך (אנהמ), לדוגמה אל תנסה לכבות את המסך או לשים אותו במצב שינה."
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -271,15 +272,15 @@ msgstr "כללי"
 
 #: ../settings/xfpm-settings.c:1560 ../settings/xfpm-settings.c:1565
 msgid "On AC"
-msgstr ""
+msgstr "על זרם חילופין"
 
 #: ../settings/xfpm-settings.c:1575 ../settings/xfpm-settings.c:1580
 msgid "On Battery"
-msgstr ""
+msgstr "על סוללה"
 
 #: ../settings/xfpm-settings.c:1589 ../settings/xfpm-settings.c:1594
 msgid "Extended"
-msgstr ""
+msgstr "הרחב"
 
 #: ../settings/xfpm-settings.c:1662
 msgid "Check your power manager installation"
@@ -351,20 +352,20 @@ msgstr "האם אתה בטוח כי ברצונך להכניס את המערכת 
 
 #: ../src/xfpm-power.c:426
 msgid "Quit"
-msgstr ""
+msgstr "צא"
 
 #: ../src/xfpm-power.c:427
 msgid "All running instances of the power manager will exit"
-msgstr ""
+msgstr "כל ניהולי ההספק הרצים יצאו"
 
 #: ../src/xfpm-power.c:429
 msgid "Quit the power manager?"
-msgstr ""
+msgstr "לצאת ממנהל ההספק?"
 
 #. Power information
 #: ../src/xfpm-power.c:534 ../src/xfpm-power-info.c:818
 msgid "Power Information"
-msgstr ""
+msgstr "מידע הספק"
 
 #. *
 #. * Power Mode
@@ -373,17 +374,17 @@ msgstr ""
 #. normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
-msgstr ""
+msgstr "מצב"
 
 #. Normal
 #: ../src/xfpm-power.c:561
 msgid "Normal"
-msgstr ""
+msgstr "נורמלי"
 
 #. Normal
 #: ../src/xfpm-power.c:571
 msgid "Presentation"
-msgstr ""
+msgstr "מצגת"
 
 #: ../src/xfpm-power.c:693
 msgid "Hibernate the system"
@@ -414,12 +415,12 @@ msgstr "רמת טעינת %s שלך הינה נמוכה\nאומדן זמן נו�
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
-msgstr ""
+msgstr "מתאם לא מחובר"
 
 #: ../src/xfpm-power.c:1159 ../src/xfpm-power.c:1164 ../src/xfpm-battery.c:413
 #, c-format
 msgid "Adaptor is online"
-msgstr ""
+msgstr "מתאם מחובר"
 
 #: ../src/xfpm-power.c:1617 ../src/xfpm-power.c:1638 ../src/xfpm-power.c:1653
 #: ../src/xfpm-power.c:1676
@@ -541,7 +542,7 @@ msgstr "ה%s שלך כעת נטענת"
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
+msgstr "%s (%i%%)\n%s עד להטענה מלאה."
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -568,7 +569,7 @@ msgstr "ה%s שלך כעת ריקה"
 #: ../src/xfpm-battery.c:413
 #, c-format
 msgid "System is running on battery power"
-msgstr ""
+msgstr "המערכת פועלת על הספק סוללה"
 
 #: ../src/xfpm-battery.c:420
 #, c-format
@@ -576,14 +577,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr ""
+msgstr "%s\nה %s שלך טעון במלואו (%i%%).\nמספק %s זמן עבודה"
 
 #: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
+msgstr "%s\nה %s שלך טעון במלואו (%i%%). "
 
 #: ../src/xfpm-battery.c:440
 #, c-format
@@ -591,14 +592,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
+msgstr "%s\nה %s שלך בטעינה (%i%%) \nיש %s עד להטענה מלאה."
 
 #: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr ""
+msgstr "%s\nה %s שלך בטעינה (%i%%)."
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -606,35 +607,35 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
+msgstr "%s\nה %s שלך בפריקה (%i%%)\nנשאר %s זמן משוער."
 
 #: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr ""
+msgstr "%s\nה %s שלך בפריקה (%i%%)."
 
 #: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr ""
+msgstr "%s\n%s מחכה לפריקה (%i%%)."
 
 #: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr ""
+msgstr "%s\n%s מחכה להטענה (%i%%)."
 
 #: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr ""
+msgstr "%s\nה %s שלך ריק"
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
@@ -704,12 +705,12 @@ msgstr "בלי תמיכת מנהל רשת\n"
 #: ../src/xfpm-main.c:123
 #, c-format
 msgid "With DPMS support\n"
-msgstr ""
+msgstr "עם תמיכת אנהמ\n"
 
 #: ../src/xfpm-main.c:125
 #, c-format
 msgid "Without DPMS support\n"
-msgstr ""
+msgstr "ללא תמיכת אנהמ\n"
 
 #: ../src/xfpm-main.c:141
 msgid "Can suspend"
@@ -721,7 +722,7 @@ msgstr "מסוגל להרדים"
 
 #: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
-msgstr ""
+msgstr "יכול לסובב כוננים קשיחים"
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
@@ -737,7 +738,7 @@ msgstr "מורשה לכבות"
 
 #: ../src/xfpm-main.c:153
 msgid "Authorized to spin down hard disks"
-msgstr ""
+msgstr "מורשה לסובב כוננים קשיחים"
 
 #: ../src/xfpm-main.c:155
 msgid "Has battery"
@@ -817,52 +818,52 @@ msgstr "Invalid cookie"
 #. TRANSLATORS: the command line was not provided
 #: ../src/xfpm-power-info.c:118
 msgid "No data"
-msgstr ""
+msgstr "אין מידע"
 
 #. TRANSLATORS: kernel module, usually a device driver
 #: ../src/xfpm-power-info.c:125 ../src/xfpm-power-info.c:130
 msgid "Kernel module"
-msgstr ""
+msgstr "מודול קרנל"
 
 #. TRANSLATORS: kernel housekeeping
 #: ../src/xfpm-power-info.c:135
 msgid "Kernel core"
-msgstr ""
+msgstr "ליבת קרנל"
 
 #. TRANSLATORS: interrupt between processors
 #: ../src/xfpm-power-info.c:140
 msgid "Interprocessor interrupt"
-msgstr ""
+msgstr "הפסקה בין מעבדית"
 
 #. TRANSLATORS: unknown interrupt
 #: ../src/xfpm-power-info.c:145
 msgid "Interrupt"
-msgstr ""
+msgstr "הפסקה"
 
 #. TRANSLATORS: the keyboard and mouse device event
 #: ../src/xfpm-power-info.c:189
 msgid "PS/2 keyboard/mouse/touchpad"
-msgstr ""
+msgstr "PS/2 מקלדת/עכבר/משטח מגע"
 
 #. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
 #: ../src/xfpm-power-info.c:192
 msgid "ACPI"
-msgstr ""
+msgstr "ACPI"
 
 #. TRANSLATORS: serial ATA is a new style of hard disk interface
 #: ../src/xfpm-power-info.c:195
 msgid "Serial ATA"
-msgstr ""
+msgstr "ATA טורי"
 
 #. TRANSLATORS: this is the old-style ATA interface
 #: ../src/xfpm-power-info.c:198
 msgid "ATA host controller"
-msgstr ""
+msgstr "בקר מנחה ATA"
 
 #. TRANSLATORS: 802.11 wireless adaptor
 #: ../src/xfpm-power-info.c:201
 msgid "Intel wireless adaptor"
-msgstr ""
+msgstr "מתאם אלחוטי של אינטל"
 
 #. TRANSLATORS: a timer is something that fires periodically
 #: ../src/xfpm-power-info.c:206 ../src/xfpm-power-info.c:209
@@ -870,59 +871,59 @@ msgstr ""
 #: ../src/xfpm-power-info.c:218
 #, c-format
 msgid "Timer %s"
-msgstr ""
+msgstr "טיימר %s"
 
 #. TRANSLATORS: this is a task that's woken up from sleeping
 #: ../src/xfpm-power-info.c:221
 #, c-format
 msgid "Sleep %s"
-msgstr ""
+msgstr "שינה %s"
 
 #. TRANSLATORS: this is a new realtime task
 #: ../src/xfpm-power-info.c:224
 #, c-format
 msgid "New task %s"
-msgstr ""
+msgstr "משימה חדשה %s"
 
 #. TRANSLATORS: this is a task thats woken to check state
 #: ../src/xfpm-power-info.c:227
 #, c-format
 msgid "Wait %s"
-msgstr ""
+msgstr "המתנה %s"
 
 #. TRANSLATORS: a work queue is a list of work that has to be done
 #: ../src/xfpm-power-info.c:230 ../src/xfpm-power-info.c:233
 #, c-format
 msgid "Work queue %s"
-msgstr ""
+msgstr "תור עבודה %s"
 
 #. TRANSLATORS: this is when the networking subsystem clears out old entries
 #: ../src/xfpm-power-info.c:236
 #, c-format
 msgid "Network route flush %s"
-msgstr ""
+msgstr "ניקוי נתיב רשת %s"
 
 #. TRANSLATORS: activity on the USB bus
 #: ../src/xfpm-power-info.c:239
 #, c-format
 msgid "USB activity %s"
-msgstr ""
+msgstr "פעילות USB %s"
 
 #. TRANSLATORS: we've timed out of an aligned timer
 #: ../src/xfpm-power-info.c:242
 #, c-format
 msgid "Wakeup %s"
-msgstr ""
+msgstr "התעוררות %s"
 
 #. TRANSLATORS: interupts on the system required for basic operation
 #: ../src/xfpm-power-info.c:245
 msgid "Local interrupts"
-msgstr ""
+msgstr "הפסקות מקומיות"
 
 #. TRANSLATORS: interrupts when a task gets moved from one core to another
 #: ../src/xfpm-power-info.c:248
 msgid "Rescheduling interrupts"
-msgstr ""
+msgstr "מתאם מחדש הפסקות"
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
@@ -960,11 +961,11 @@ msgstr "Wh"
 
 #: ../src/xfpm-power-info.c:420
 msgid "Energy full design"
-msgstr ""
+msgstr "תכנון אנרגיה מלא"
 
 #: ../src/xfpm-power-info.c:434
 msgid "Energy full"
-msgstr ""
+msgstr "אנרגיה מלאה"
 
 #: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
@@ -989,24 +990,24 @@ msgstr "סידורי"
 
 #: ../src/xfpm-power-info.c:731
 msgid "Processor"
-msgstr ""
+msgstr "מעבד"
 
 #. TANSLATORS: PID, is the process id, e.g what ps x gives
 #: ../src/xfpm-power-info.c:748
 msgid "PID"
-msgstr ""
+msgstr "PID"
 
 #: ../src/xfpm-power-info.c:754
 msgid "Wakeups"
-msgstr ""
+msgstr "התעוררויות"
 
 #: ../src/xfpm-power-info.c:760
 msgid "Command"
-msgstr ""
+msgstr "פקודה"
 
 #: ../src/xfpm-power-info.c:766
 msgid "Details"
-msgstr ""
+msgstr "פרטים"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
@@ -1015,13 +1016,13 @@ msgstr "ניהול צריכת חשמל עבור שולחן עבודה Xfce"
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
 msgid "Control your LCD brightness"
-msgstr ""
+msgstr "שלוט על בהירות ה LCD שלך"
 
 #: ../panel-plugins/brightness/brightness-button.c:182
 msgid "No device found"
-msgstr ""
+msgstr "לא נמצא התקן"
 
 #: ../panel-plugins/brightness/brightness-button.c:649
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr ""
+msgstr "תוסף בהירות"
