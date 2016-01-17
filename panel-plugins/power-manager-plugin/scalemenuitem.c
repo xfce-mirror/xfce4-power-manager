@@ -278,7 +278,6 @@ scale_menu_item_button_release_event (GtkWidget *menuitem,
   if (priv->grabbed)
     {
       priv->grabbed = FALSE;
-      scale_menu_item_grab_broken (menuitem, NULL);
       g_signal_emit (menuitem, signals[SLIDER_RELEASED], 0);
     }
 
