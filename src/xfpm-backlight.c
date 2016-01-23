@@ -162,7 +162,7 @@ xfpm_backlight_show_notification (XfpmBacklight *backlight, gfloat value)
 	backlight->priv->n = xfpm_notify_new_notification (backlight->priv->notify,
 							   "",
 							   "",
-							   "xfpm-brightness-lcd",
+							   "display-brightness",
 							   0,
 							   XFPM_NOTIFY_NORMAL);
     }
