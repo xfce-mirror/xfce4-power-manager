@@ -2187,6 +2187,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *hbox;
     GtkWidget *frame;
     GtkWidget *switch_widget;
+    GtkStyleContext *context;
     GtkListStore *list_store;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
@@ -2281,6 +2282,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     device_details_notebook = gtk_notebook_new ();
 
     gtk_notebook_set_show_tabs (GTK_NOTEBOOK (device_details_notebook), FALSE);
+    context = gtk_widget_get_style_context (GTK_WIDGET (device_details_notebook));
+    gtk_style_context_add_class (context, "frame");
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 3);
 
     viewport = gtk_viewport_new (NULL, NULL);
