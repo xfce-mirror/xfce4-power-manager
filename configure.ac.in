@@ -179,7 +179,7 @@ if test x$with_backend = x; then
 		[*-linux*],   [with_backend=linux],
 		[*-*freebsd*], [with_backend=freebsd],
 		[*-*dragonfly*], [with_backend=freebsd],
-		[*-openbsd*], [with_backend=openbsd])
+		[*-openbsd*|*-bitrig*], [with_backend=openbsd])
 fi
 AC_DEFINE_UNQUOTED(BACKEND, "$with_backend", [backend])
 AC_SUBST(BACKEND, "$with_backend")
