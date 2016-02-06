@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-06-15 00:30+0200\n"
-"PO-Revision-Date: 2016-02-04 22:33+0000\n"
+"PO-Revision-Date: 2016-02-06 15:51+0000\n"
 "Last-Translator: Apostolos Papadimitriu <apostolos.papadimitriu@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/xfce/xfce4-power-manager/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -64,7 +64,7 @@ msgstr "Όταν πατηθεί το κουμπί τερματισμού"
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "When sleep button is pressed:"
-msgstr "Όταν πατηθεί το κουμπί αναστολής"
+msgstr "Όταν πατηθεί το κουμπί αναστολής:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "When hibernate button is pressed:"
@@ -116,7 +116,7 @@ msgstr "Όταν είναι ανενεργό για"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "System sleep mode:"
-msgstr ""
+msgstr "Αναστολή/Αδρανοποίηση συστήματος:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "<b>System power saving</b>"
@@ -153,11 +153,11 @@ msgstr "<b>Εμφάνιση ρυθμίσεων διαχείρισης ενέργ
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr ""
+msgstr "Να επιτρέπεται στο διαχειριστή ρεύματος να ελέγχει τη διαχείριση ενέργειας (DPMS) αντί για το X11."
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Blank after"
-msgstr ""
+msgstr "Σβήσιμο μετά από"
 
 #: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "Put to sleep after"
@@ -169,7 +169,7 @@ msgstr "Κλείσιμο μετά από"
 
 #: ../data/interfaces/xfpm-settings.ui.h:36
 msgid "On inactivity reduce to"
-msgstr ""
+msgstr "Όταν είναι ανενεργό μείωση σε"
 
 #: ../data/interfaces/xfpm-settings.ui.h:37
 msgid "Reduce after"
@@ -347,7 +347,7 @@ msgstr "Wh"
 
 #: ../settings/xfpm-settings.c:1899
 msgid "Fully charged (design)"
-msgstr ""
+msgstr "Πλήρης φόρτιση (σχεδιασμός)"
 
 #: ../settings/xfpm-settings.c:1912
 msgid "Fully charged"
@@ -404,11 +404,11 @@ msgstr "Ενεργοποίηση αποσφαλμάτωσης"
 
 #: ../settings/xfpm-settings-app.c:79
 msgid "Display version information"
-msgstr ""
+msgstr "Εμφάνιση πληροφοριών έκδοσης"
 
 #: ../settings/xfpm-settings-app.c:80
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr ""
+msgstr "Προκαλεί τον τερματισμό του xfce4-power-settings"
 
 #: ../settings/xfpm-settings-app.c:177
 msgid "Failed to connect to power manager"
@@ -425,7 +425,7 @@ msgstr "Αποτυχία φόρτωσης των ρυθμίσεων του δι�
 #: ../settings/xfpm-settings-app.c:346
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr ""
+msgstr "Αυτό είναι το %s έκδοση %s, που τρέχει στο Xfce %s.\n"
 
 #: ../settings/xfpm-settings-app.c:348
 #, c-format
@@ -558,7 +558,7 @@ msgstr[1] "λεπτά"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr ""
+msgstr "<b>%s %s</b>\nΠλήρως φορτισμένο (%0.0f%%, %s runtime)"
 
 #: ../common/xfpm-power-common.c:288
 #, c-format
@@ -600,14 +600,14 @@ msgstr "<b>%s %s</b>\nΑποφόρτιση (%0.0f%%)"
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nΑναμονή αποφόρτισης (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:337
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nΑναμονή φόρτισης (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:343
 #, c-format
@@ -648,13 +648,13 @@ msgstr "<b>%s %s</b>\nΆγνωστη κατάσταση"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "Μία εφαρμογή κρατά απενεργοποιημένο το αυτόματο σβήσιμο. Με αυτή την ενέργεια ενδέχεται να πάψει να λειτουργεί αυτή η εφαρμογή.\nΕίστε σίγουροι πως θέλετε να μεταβείτε σε κατάσταση αδρανοποίησης;"
 
 #: ../src/xfpm-power.c:444
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
+msgstr "Κανένα από τα εργαλεία κλειδώματος οθόνης δεν έτρεξε επιτυχώς. Η οθόνη δεν θα κλειδωθεί.\nΕξακολουθείτε να θέλετε να μεταβεί το σύστημα σε κατάσταση αδρανοποίησης;"
 
 #: ../src/xfpm-power.c:610
 msgid "Hibernate the system"
@@ -745,7 +745,7 @@ msgstr "Η %s σας είναι άδεια"
 #: ../src/xfpm-kbd-backlight.c:123
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
-msgstr ""
+msgstr "Φωτεινότητα Πληκτρολογίου: %.0f percent"
 
 #: ../src/xfpm-main.c:54
 #, c-format
@@ -851,7 +851,7 @@ msgstr "Πληροφορίες έκδοσης"
 #: ../src/xfpm-main.c:289
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr ""
+msgstr "Αδυναμία ανάλυσης των παραμέτρων: %s\n"
 
 #: ../src/xfpm-main.c:317
 #, c-format
@@ -888,7 +888,7 @@ msgstr "Άκυρο cookie"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr ""
+msgstr "Κανένα από τα εργαλεία κλειδώματος οθόνης δεν έτρεξε επιτυχώς. Η οθόνη δεν θα κλειδωθεί."
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
@@ -926,14 +926,14 @@ msgstr "Πρόσθετο Διαχειριστή Ρεύματος"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr ""
+msgstr "Εμφάνιση του επιπέδου μπαταρίας των συσκευών σας και έλεγχος φωτεινότητας της οθόνης"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
+msgstr "O διαχειριστής ενέργειας Xfce διαχειρίζεται τις πηγές ρεύματος του υπολογιστή σας και των συσκευών που μπορούν να ελεγχθούν ώστε να μειωθεί η κατανάλωση ενέργειας (όπως το επίπεδο φωτεινότητας των οθονών, το σβήσιμο της οθόνης, η ρύθμιση της συχνότητας του επεξεργαστή)"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -950,7 +950,7 @@ msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
+msgstr "Ο διαχειριστής ενέργειας Xfce επίσης παρέχει ένα πρόσθετο για τα ταμπλό του Xfce και του LXDE για τον έλεγχο της φωτεινότητας, της μπαταρίας και του επιπέδου φόρτωσης των συσκευών."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
