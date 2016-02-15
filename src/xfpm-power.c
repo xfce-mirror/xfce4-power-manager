@@ -61,10 +61,6 @@
 #include "xfpm-suspend.h"
 #include "xfpm-brightness.h"
 
-#ifdef HAVE_LIBXTST
-#include "X11/extensions/XTest.h"
-#endif
-
 #ifdef HAVE_LIBXSS
 #include <X11/extensions/scrnsaver.h>
 #endif  /* HAVE_LIBXSS */
@@ -119,6 +115,9 @@ struct XfpmPowerPrivate
     gboolean	     inhibited;
     gboolean	     screensaver_inhibited;
     gulong	     screensaver_id;
+    GDBusProxy	    *screen_saver_proxy;
+    guint	     screen_saver_cookie;
+    gchar	    *heartbeat_command;
 
     XfpmNotify	    *notify;
 #ifdef ENABLE_POLKIT
@@ -965,22 +964,71 @@ idle_reset_screen_saver (XfpmPower *power)
 
     XResetScreenSaver (dpy);
 
-#ifdef HAVE_LIBXTST
-    /* keycode of 255 does not map to any actual key,
-     * this works for xscreensaver */
-    XTestFakeKeyEvent (dpy, 255, TRUE, 0);
-    XTestFakeKeyEvent (dpy, 255, FALSE, 0);
-#endif /* HAVE_LIBXTST */
-
     XFlush (dpy);
+
+    /* If we found an interface during the setup, use it */
+    if (power->priv->screen_saver_proxy)
+    {
+	GVariant *response = g_dbus_proxy_call_sync (power->priv->screen_saver_proxy,
+						     "SimulateUserActivity",
+						     NULL,
+						     G_DBUS_CALL_FLAGS_NONE,
+						     -1,
+						     NULL,
+						     NULL);
+	if (response)
+	{
+	    g_variant_unref (response);
+	}
+    } else if (power->priv->heartbeat_command)
+    {
+	g_spawn_command_line_async (power->priv->heartbeat_command, NULL);
+    }
 
     /* continue until we're removed */
     return TRUE;
 }
 
+static gboolean
+screen_saver_proxy_setup(XfpmPower *power,
+			 const gchar *name,
+			 const gchar *object_path,
+			 const gchar *interface)
+{
+    GDBusProxy *proxy;
+    /* Try to inhibit via the freedesktop dbus API */
+    proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
+					   G_DBUS_PROXY_FLAGS_NONE,
+					   NULL,
+					   name,
+					   object_path,
+					   interface,
+					   NULL,
+					   NULL);
+
+    if (proxy != NULL)
+    {
+	gchar *owner = NULL;
+	/* is there anyone actually providing a service? */
+	owner = g_dbus_proxy_get_name_owner (proxy);
+	if (owner != NULL)
+	{
+	    XFPM_DEBUG ("proxy owner: %s", owner);
+	    power->priv->screen_saver_proxy = proxy;
+	    g_free (owner);
+	    return TRUE;
+	}
+    }
+
+    return FALSE;
+}
+
 static void
 screen_saver_suspend(XfpmPower *power, gboolean suspend)
 {
+    GDBusProxy *proxy = NULL;
+    gboolean have_screensaver_interface = FALSE;
+
 #ifndef HAVE_LIBXSS
     TRACE("!HAVE_XSS");
 #else
@@ -1005,19 +1053,115 @@ screen_saver_suspend(XfpmPower *power, gboolean suspend)
     XScreenSaverSuspend(dpy, suspend);
 #endif /* HAVE_LIBXSS */
 
+
     if (power->priv->screensaver_id != 0)
     {
         g_source_remove (power->priv->screensaver_id);
         power->priv->screensaver_id = 0;
     }
 
-    if (suspend)
+    if (suspend == FALSE)
     {
-        /* Reset the screensaver timers every so often so they don't activate */
-        power->priv->screensaver_id = g_timeout_add_seconds (20,
-                                                             (GSourceFunc)idle_reset_screen_saver,
-                                                             power);
+	if (power->priv->screen_saver_proxy)
+	{
+	    g_object_unref (power->priv->screen_saver_proxy);
+	    power->priv->screen_saver_proxy = NULL;
+	}
+	if (power->priv->heartbeat_command)
+	{
+	    g_free (power->priv->heartbeat_command);
+	    power->priv->heartbeat_command = NULL;
+	}
     }
+
+    /* Try to inhibit via the freedesktop dbus API */
+    if (screen_saver_proxy_setup (power,
+				  "org.freedesktop.ScreenSaver",
+				  "/org/freedesktop/ScreenSaver",
+				  "org.freedesktop.ScreenSaver"))
+    {
+	GVariant *response = NULL;
+	XFPM_DEBUG ("found freedesktop screensaver daemon");
+	if (suspend)
+	{
+	    response = g_dbus_proxy_call_sync (power->priv->screen_saver_proxy,
+					       "Inhibit",
+					       g_variant_new ("(ss)",
+							      "xfce4-power-manager",
+							      ""),
+					       G_DBUS_CALL_FLAGS_NONE,
+					       -1,
+					       NULL,
+					       NULL);
+	    if (response != NULL)
+	    {
+		power->priv->screen_saver_cookie = g_variant_get_uint32 (response);
+		g_variant_unref (response);
+	    }
+	} else {
+	    response = g_dbus_proxy_call_sync (power->priv->screen_saver_proxy,
+					       "UnInhibit",
+					       g_variant_new ("(u)",
+							      power->priv->screen_saver_cookie),
+					       G_DBUS_CALL_FLAGS_NONE,
+					       -1,
+					       NULL,
+					       NULL);
+
+	    power->priv->screen_saver_cookie = 0;
+	    if (response != NULL)
+	    {
+		g_variant_unref (response);
+	    }
+	}
+	g_object_unref (power->priv->screen_saver_proxy);
+	power->priv->screen_saver_proxy = NULL;
+	return;
+    }
+
+    if (suspend == FALSE)
+	return;
+
+    /* So much for standards, let's try some random interfaces */
+    if (screen_saver_proxy_setup (power,
+				  "org.cinnamon.ScreenSaver",
+				  "/org/cinnamon/ScreenSaver",
+				  "org.cinnamon.ScreenSaver"))
+    {
+	XFPM_DEBUG ("found cinnamon screensaver daemon");
+	have_screensaver_interface = TRUE;
+    } else if (screen_saver_proxy_setup (power,
+					 "org.mate.ScreenSaver",
+					 "/org/mate/ScreenSaver",
+					 "org.mate.ScreenSaver"))
+    {
+	XFPM_DEBUG ("found mate screensaver daemon");
+	have_screensaver_interface = TRUE;
+    } else if (screen_saver_proxy_setup (power,
+					 "org.gnome.ScreenSaver",
+					 "/org/gnome/ScreenSaver",
+					 "org.gnome.ScreenSaver"))
+    {
+	XFPM_DEBUG ("found gnome screensaver daemon");
+	have_screensaver_interface = TRUE;
+    }
+    else
+    {
+	gchar *heartbeat_command = NULL;
+	g_object_get (G_OBJECT (power->priv->conf),
+		      HEARTBEAT_COMMAND, &heartbeat_command,
+		      NULL);
+	if (heartbeat_command != NULL)
+	{
+	    XFPM_DEBUG ("found heartbeat command %s", heartbeat_command);
+	    power->priv->heartbeat_command = heartbeat_command;
+	}
+    }
+
+    /* Reset the screensaver timers every so often so they don't activate */
+    power->priv->screensaver_id = g_timeout_add_seconds (20,
+							 (GSourceFunc)idle_reset_screen_saver,
+							 power);
 }
 
 static void

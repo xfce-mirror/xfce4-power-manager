@@ -91,6 +91,7 @@ enum
     PROP_LOGIND_HANDLE_SUSPEND_KEY,
     PROP_LOGIND_HANDLE_HIBERNATE_KEY,
     PROP_LOGIND_HANDLE_LID_SWITCH,
+    PROP_HEARTBEAT_COMMAND,
     N_PROPERTIES
 };
 
@@ -594,6 +595,16 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                      g_param_spec_boolean (LOGIND_HANDLE_LID_SWITCH,
                                                            NULL, NULL,
                                                            FALSE,
+                                                           G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::heartbeat-command
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_HEARTBEAT_COMMAND,
+                                     g_param_spec_string  (HEARTBEAT_COMMAND,
+                                                           NULL, NULL,
+                                                           NULL,
                                                            G_PARAM_READWRITE));
 
     g_type_class_add_private (klass, sizeof (XfpmXfconfPrivate));
