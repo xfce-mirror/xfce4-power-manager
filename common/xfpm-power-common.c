@@ -252,6 +252,11 @@ get_device_description (UpClient *upower, UpDevice *device)
         model = g_strdup ("");
     }
 
+    if (vendor == NULL)
+        vendor = g_strdup ("");
+    if (model == NULL)
+        model = g_strdup ("");
+
     /* If we get a vendor or model we can use it, otherwise translate the
      * device type into something readable (works for things like ac_power)
      */
