@@ -61,6 +61,8 @@ struct PowerManagerButtonPrivate
 
     UpClient        *upower;
 
+    GDBusProxy      *inhibit_proxy;
+
     /* A list of BatteryDevices  */
     GList           *devices;
 
@@ -936,6 +938,23 @@ power_manager_button_init (PowerManagerButton *button)
         button->priv->channel = xfconf_channel_get ("xfce4-power-manager");
     }
 
+    button->priv->inhibit_proxy = g_dbus_proxy_new_sync (g_bus_get_sync (G_BUS_TYPE_SESSION,
+                                                                         NULL,
+                                                                         NULL),
+                                                         G_DBUS_PROXY_FLAGS_NONE,
+                                                         NULL,
+                                                         "org.freedesktop.PowerManagement",
+                                                         "/org/freedesktop/PowerManagement/Inhibit",
+                                                         "org.freedesktop.PowerManagement.Inhibit",
+                                                         NULL,
+                                                         &error);
+
+    if (error != NULL)
+    {
+        g_warning ("error getting inhibit proxy: %s", error->message);
+        g_clear_error (&error);
+    }
+
     /* Sane defaults for the systray and panel icon */
 #ifdef XFCE_PLUGIN
     button->priv->panel_icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
@@ -1303,6 +1322,83 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 static void
+display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
+{
+    gboolean needs_seperator = FALSE;
+
+    g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
+    g_return_if_fail (GTK_IS_MENU (menu));
+
+    if (button->priv->inhibit_proxy)
+    {
+        GVariant *reply;
+        GError   *error = NULL;
+
+        reply = g_dbus_proxy_call_sync (button->priv->inhibit_proxy,
+                                        "GetInhibitors",
+                                        g_variant_new ("()"),
+                                        G_DBUS_CALL_FLAGS_NONE,
+                                        1000,
+                                        NULL,
+                                        &error);
+
+        if (reply != NULL)
+        {
+            GVariantIter *iter;
+            gchar        *value;
+            GtkWidget    *inhibit_mi;
+
+            g_variant_get (reply, "(as)", &iter);
+
+            if (g_variant_iter_n_children (iter) > 0)
+            {
+                needs_seperator = TRUE;
+            }
+
+            /* Add the list of programs to the menu */
+            while (g_variant_iter_next (iter, "s", &value))
+            {
+                GtkWidget *mi, *img;
+
+                /* Translators this is to display which app is inhibiting
+                 * power in the plugin menu. Example:
+                 * VLC is currently inhibiting power management
+                 */
+                gchar *label = g_strdup_printf (_("%s is currently inhibiting power management"), value);
+
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+                mi = gtk_image_menu_item_new_with_label(label);
+G_GNUC_END_IGNORE_DEPRECATIONS
+                /* add the image */
+                img = gtk_image_new_from_icon_name ("gtk-info", GTK_ICON_SIZE_MENU);
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+                gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
+G_GNUC_END_IGNORE_DEPRECATIONS
+
+                gtk_widget_set_can_focus (mi, FALSE);
+                gtk_widget_show (mi);
+                gtk_menu_shell_append (GTK_MENU_SHELL(button->priv->menu), mi);
+                g_free (label);
+            }
+            g_variant_iter_free (iter);
+            g_variant_unref (reply);
+
+        } else {
+            g_warning ("failed calling GetInhibitors: %s", error->message);
+            g_clear_error (&error);
+        }
+
+        if (needs_seperator)
+        {
+            /* add a separator */
+            GtkWidget * separator_mi = gtk_separator_menu_item_new ();
+            gtk_widget_show (separator_mi);
+            gtk_menu_shell_append (GTK_MENU_SHELL (menu), separator_mi);
+        }
+
+    }
+}
+static void
 decrease_brightness (PowerManagerButton *button)
 {
     gint32 level;
@@ -1491,6 +1587,9 @@ G_GNUC_END_IGNORE_DEPRECATIONS
     xfconf_g_property_bind(button->priv->channel,
                            PROPERTIES_PREFIX PRESENTATION_MODE,
                            G_TYPE_BOOLEAN, G_OBJECT(mi), "active");
+
+    /* Show any applications currently inhibiting now */
+    display_inhibitors (button, menu);
 
     /* Power manager settings */
     mi = gtk_menu_item_new_with_mnemonic (_("_Power manager settings..."));

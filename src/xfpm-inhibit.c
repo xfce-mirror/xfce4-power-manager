@@ -65,6 +65,7 @@ typedef struct
 enum
 {
     HAS_INHIBIT_CHANGED,
+    INHIBIT_LIST_CHANGED,
     LAST_SIGNAL
 };
 
@@ -99,7 +100,11 @@ xfpm_inhibit_has_inhibit_changed (XfpmInhibit *inhibit)
 	inhibit->priv->inhibited = TRUE;
 	g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
     }
-    
+
+    /* Always emite the INHIBIT_LIST_CHANGED for any change so the panel plugin
+     * stays in sync */
+    g_signal_emit (G_OBJECT(inhibit), signals[INHIBIT_LIST_CHANGED], 0, inhibit->priv->inhibited);
+
     return inhibit->priv->inhibited;
 }
 
@@ -214,6 +219,15 @@ xfpm_inhibit_class_init(XfpmInhibitClass *klass)
 			 XFPM_TYPE_INHIBIT,
 			 G_SIGNAL_RUN_LAST,
 			 G_STRUCT_OFFSET(XfpmInhibitClass, has_inhibit_changed),
+			 NULL, NULL,
+			 g_cclosure_marshal_VOID__BOOLEAN,
+			 G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+
+    signals[INHIBIT_LIST_CHANGED] =
+	    g_signal_new ("inhibitors-list-changed",
+			 XFPM_TYPE_INHIBIT,
+			 G_SIGNAL_RUN_LAST,
+			 G_STRUCT_OFFSET(XfpmInhibitClass, inhibitors_list_changed),
 			 NULL, NULL,
 			 g_cclosure_marshal_VOID__BOOLEAN,
 			 G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
