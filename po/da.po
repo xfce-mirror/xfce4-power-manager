@@ -3,16 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Aputsiaĸ Niels Janussen <aj@isit.gl>, 2013,2015
+# Aputsiaĸ Niels Janussen <aj@isit.gl>, 2013,2015-2016
 # Chris Darnell <chris@cedeel.com>, 2014
 # Morten Juhl-Johansen Zölde-Fejér <morten@writtenandread.net>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-15 00:30+0200\n"
-"PO-Revision-Date: 2015-11-09 20:58+0000\n"
-"Last-Translator: Morten Juhl-Johansen Zölde-Fejér <morten@writtenandread.net>\n"
+"POT-Creation-Date: 2016-02-26 18:30+0100\n"
+"PO-Revision-Date: 2016-03-12 14:04+0000\n"
+"Last-Translator: Aputsiaĸ Niels Janussen <aj@isit.gl>\n"
 "Language-Team: Danish (http://www.transifex.com/xfce/xfce4-power-manager/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,7 +49,7 @@ msgstr "Strømstyringsindstillinger"
 
 #. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1102
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1141
 msgid "_Help"
 msgstr "_Hjælp"
 
@@ -81,7 +81,7 @@ msgstr "<b>Knapper</b>"
 msgid "On battery"
 msgstr "På batteri"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15 ../common/xfpm-power-common.c:353
+#: ../data/interfaces/xfpm-settings.ui.h:15 ../common/xfpm-power-common.c:358
 msgid "Plugged in"
 msgstr "Sluttet til"
 
@@ -237,7 +237,7 @@ msgstr "%"
 #: ../settings/xfpm-settings.c:986 ../settings/xfpm-settings.c:1071
 #: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1270
 #: ../settings/xfpm-settings.c:1327 ../settings/xfpm-settings.c:1379
-#: ../src/xfpm-power.c:715
+#: ../src/xfpm-power.c:714
 msgid "Suspend"
 msgstr "Hviletilstand"
 
@@ -253,7 +253,7 @@ msgstr "Hvilehandling er ikke understøttet"
 #: ../settings/xfpm-settings.c:992 ../settings/xfpm-settings.c:1085
 #: ../settings/xfpm-settings.c:1169 ../settings/xfpm-settings.c:1276
 #: ../settings/xfpm-settings.c:1333 ../settings/xfpm-settings.c:1385
-#: ../src/xfpm-power.c:704
+#: ../src/xfpm-power.c:703
 msgid "Hibernate"
 msgstr "Dvaletilstand"
 
@@ -281,7 +281,7 @@ msgid "Do nothing"
 msgstr "Gør ingenting"
 
 #: ../settings/xfpm-settings.c:936 ../settings/xfpm-settings.c:1282
-#: ../src/xfpm-power.c:726
+#: ../src/xfpm-power.c:725
 msgid "Shutdown"
 msgstr "Luk ned"
 
@@ -373,11 +373,11 @@ msgstr "Leverandør"
 msgid "Serial"
 msgstr "Seriel"
 
-#: ../settings/xfpm-settings.c:2210
+#: ../settings/xfpm-settings.c:2211
 msgid "Check your power manager installation"
 msgstr "Kontrollér din installation af strømstyring"
 
-#: ../settings/xfpm-settings.c:2291
+#: ../settings/xfpm-settings.c:2294
 msgid "Devices"
 msgstr "Enheder"
 
@@ -432,8 +432,8 @@ msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Kompileret med GTK+ %d.%d.%d, lænket med GTK+ %d.%d.%d."
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:365 ../src/xfpm-power.c:647 ../src/xfpm-power.c:690
-#: ../src/xfpm-power.c:854 ../src/xfpm-power.c:877 ../src/xfpm-battery.c:193
+#: ../src/xfpm-power.c:364 ../src/xfpm-power.c:646 ../src/xfpm-power.c:689
+#: ../src/xfpm-power.c:853 ../src/xfpm-power.c:876 ../src/xfpm-battery.c:193
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Strømstyring"
@@ -552,63 +552,63 @@ msgid_plural "minutes"
 msgstr[0] "minut"
 msgstr[1] "minutter"
 
-#: ../common/xfpm-power-common.c:280
+#: ../common/xfpm-power-common.c:285
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nFuldt opladet (%0.0f%%, %s kørselstid)"
 
-#: ../common/xfpm-power-common.c:288
+#: ../common/xfpm-power-common.c:293
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nFuldt opladet (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:298
+#: ../common/xfpm-power-common.c:303
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nOplader (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:306
+#: ../common/xfpm-power-common.c:311
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nOplader (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:316
+#: ../common/xfpm-power-common.c:321
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nAflader (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:324
+#: ../common/xfpm-power-common.c:329
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nAflader (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:331
+#: ../common/xfpm-power-common.c:336
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nVenter på at aflade (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:337
+#: ../common/xfpm-power-common.c:342
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nVenter på at oplade (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:343
+#: ../common/xfpm-power-common.c:348
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -617,81 +617,81 @@ msgstr "<b>%s %s</b>\ner tomt"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:352
+#: ../common/xfpm-power-common.c:357
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:353
+#: ../common/xfpm-power-common.c:358
 msgid "Not plugged in"
 msgstr "Ikke sluttet til"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:359
+#: ../common/xfpm-power-common.c:364
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:364
+#: ../common/xfpm-power-common.c:369
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
 msgstr "<b>%s %s</b>\nUkendt tilstand"
 
-#: ../src/xfpm-power.c:394
+#: ../src/xfpm-power.c:393
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Et program har for øjeblikket slået den automatiske hviletilstand fra. Udførelse af denne handling nu kan ødelægge tilstanden af programmet. \nEr du sikker på, at du ønsker at bringe systemet i dvaletilstand?"
 
-#: ../src/xfpm-power.c:444
+#: ../src/xfpm-power.c:443
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Ingen af værktøjer til at låse skærmen kunne køres - skærmen vil ikke blive låst.\nVil du fortsat sætte systemet i hviletilstand?"
 
-#: ../src/xfpm-power.c:610
+#: ../src/xfpm-power.c:609
 msgid "Hibernate the system"
 msgstr "Sæt systemet i dvaletilstand"
 
-#: ../src/xfpm-power.c:621
+#: ../src/xfpm-power.c:620
 msgid "Suspend the system"
 msgstr "Sæt systemet i hviletilstand"
 
-#: ../src/xfpm-power.c:631
+#: ../src/xfpm-power.c:630
 msgid "Shutdown the system"
 msgstr "Luk systemet ned"
 
-#: ../src/xfpm-power.c:642 ../src/xfpm-power.c:687
+#: ../src/xfpm-power.c:641 ../src/xfpm-power.c:686
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Systemet kører på lavt strømniveau. Gem dine data for at undgå tab af data"
 
-#: ../src/xfpm-power.c:733
+#: ../src/xfpm-power.c:732
 msgid "_Cancel"
 msgstr "_Annullér"
 
-#: ../src/xfpm-power.c:855
+#: ../src/xfpm-power.c:854
 msgid "System is running on low power"
 msgstr "System kører med lavt strømniveau"
 
-#: ../src/xfpm-power.c:873
+#: ../src/xfpm-power.c:872
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Dit %s ladeniveau er lavt\nForventet tid tilbage %s."
 
-#: ../src/xfpm-power.c:1724 ../src/xfpm-power.c:1771 ../src/xfpm-power.c:1802
-#: ../src/xfpm-power.c:1831
+#: ../src/xfpm-power.c:1868 ../src/xfpm-power.c:1915 ../src/xfpm-power.c:1946
+#: ../src/xfpm-power.c:1975
 msgid "Permission denied"
 msgstr "Tilladelse afvist"
 
-#: ../src/xfpm-power.c:1811 ../src/xfpm-power.c:1840
+#: ../src/xfpm-power.c:1955 ../src/xfpm-power.c:1984
 msgid "Suspend not supported"
 msgstr "Dvaletilstand er ikke understøttet"
 
@@ -875,11 +875,11 @@ msgstr "En anden strømstyring kører allerede"
 msgid "Xfce power manager is already running"
 msgstr "Strømstyring til Xfce kører allerede"
 
-#: ../src/xfpm-inhibit.c:354
+#: ../src/xfpm-inhibit.c:368
 msgid "Invalid arguments"
 msgstr "Ugyldige argumenter"
 
-#: ../src/xfpm-inhibit.c:387
+#: ../src/xfpm-inhibit.c:401
 msgid "Invalid cookie"
 msgstr "Ugyldig cookie"
 
@@ -894,26 +894,34 @@ msgid "Power management for the Xfce desktop"
 msgstr "Strømstyring til skrivebordsmiljøet Xfce"
 
 #. Odds are this is a desktop without any batteries attached
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:266
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:268
 msgid "Display battery levels for attached devices"
 msgstr "Vis batteriniveauerne for tilkoblede enheder"
 
 #. about dialog
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1108
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1147
 msgid "_About"
 msgstr "_Om"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1443
+#. Translators this is to display which app is inhibiting
+#. * power in the plugin menu. Example:
+#. * VLC is currently inhibiting power management
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1367
+#, c-format
+msgid "%s is currently inhibiting power management"
+msgstr "%s hæmmer i øjeblikket strømstyringen"
+
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1559
 msgid "<b>Display brightness</b>"
 msgstr "<b>Lysstyrke for skærm</b>"
 
 #. Presentation mode checkbox
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1467
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1583
 msgid "Presentation _mode"
 msgstr "Præsentations_tilstand"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1476
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1595
 msgid "_Power manager settings..."
 msgstr "_Strømstyringsindstillinger ..."
 
