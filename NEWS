@@ -1,3 +1,23 @@
+1.6.0
+=====
+New stable release of xfce4-power-manager.
+
+* Bugfixes:
+ - plugin: Fix a couple memory leaks (Bug #12332)
+ - Fix a crash when the brightness slider is released
+ - Fix keyboard-brightness icon names (Bug #12292)
+ - Draw border around device details
+ - Add bitrig to backend detection (Bug #12242)
+ - Replace XTestFakeKeyEvent with inhibit/heartbeat (Bug #11083)
+   /xfce4-power-manager/heartbeat-command is the xfconf property.
+ - Fix a crash on logout (Bug #12465)
+ - Show inhibitors in the plugin menu (Bug #9090)
+
+* Translation updates:
+  ar, ca, cs, da, de, el, en_AU, eu, fi, fr, gl, he, hr,
+  is, it, ja, kk, ko, lt, ms, nb, nl, oc, pl, pt, pt_BR,
+  ru, sk, sl, sr, sv, th, tr, uk, zh_CN, and zh_TW
+
 1.5.2
 =====
 New development release of xfce4-power-manager.
