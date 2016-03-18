@@ -1026,9 +1026,6 @@ screen_saver_proxy_setup(XfpmPower *power,
 static void
 screen_saver_suspend(XfpmPower *power, gboolean suspend)
 {
-    GDBusProxy *proxy = NULL;
-    gboolean have_screensaver_interface = FALSE;
-
 #ifndef HAVE_LIBXSS
     TRACE("!HAVE_XSS");
 #else
@@ -1129,21 +1126,18 @@ screen_saver_suspend(XfpmPower *power, gboolean suspend)
 				  "org.cinnamon.ScreenSaver"))
     {
 	XFPM_DEBUG ("found cinnamon screensaver daemon");
-	have_screensaver_interface = TRUE;
     } else if (screen_saver_proxy_setup (power,
 					 "org.mate.ScreenSaver",
 					 "/org/mate/ScreenSaver",
 					 "org.mate.ScreenSaver"))
     {
 	XFPM_DEBUG ("found mate screensaver daemon");
-	have_screensaver_interface = TRUE;
     } else if (screen_saver_proxy_setup (power,
 					 "org.gnome.ScreenSaver",
 					 "/org/gnome/ScreenSaver",
 					 "org.gnome.ScreenSaver"))
     {
 	XFPM_DEBUG ("found gnome screensaver daemon");
-	have_screensaver_interface = TRUE;
     }
     else
     {

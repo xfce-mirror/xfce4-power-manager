@@ -1346,7 +1346,6 @@ display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
         {
             GVariantIter *iter;
             gchar        *value;
-            GtkWidget    *inhibit_mi;
 
             g_variant_get (reply, "(as)", &iter);
 
