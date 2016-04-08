@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Davidmp <medipas@gmail.com>, 2015
+# Davidmp <medipas@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-15 00:30+0200\n"
-"PO-Revision-Date: 2015-12-23 21:55+0000\n"
+"POT-Creation-Date: 2016-02-26 18:30+0100\n"
+"PO-Revision-Date: 2016-04-08 11:37+0000\n"
 "Last-Translator: Davidmp <medipas@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/xfce/xfce4-power-manager/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "Ajustament del gestor d'energia"
 
 #. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1102
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1141
 msgid "_Help"
 msgstr "A_juda"
 
@@ -79,7 +79,7 @@ msgstr "<b>Botons</b>"
 msgid "On battery"
 msgstr "Amb bateria"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15 ../common/xfpm-power-common.c:353
+#: ../data/interfaces/xfpm-settings.ui.h:15 ../common/xfpm-power-common.c:358
 msgid "Plugged in"
 msgstr "Connectat"
 
@@ -235,7 +235,7 @@ msgstr "%"
 #: ../settings/xfpm-settings.c:986 ../settings/xfpm-settings.c:1071
 #: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1270
 #: ../settings/xfpm-settings.c:1327 ../settings/xfpm-settings.c:1379
-#: ../src/xfpm-power.c:715
+#: ../src/xfpm-power.c:714
 msgid "Suspend"
 msgstr "Suspèn"
 
@@ -251,7 +251,7 @@ msgstr "L'acció de suspensió no és compatible"
 #: ../settings/xfpm-settings.c:992 ../settings/xfpm-settings.c:1085
 #: ../settings/xfpm-settings.c:1169 ../settings/xfpm-settings.c:1276
 #: ../settings/xfpm-settings.c:1333 ../settings/xfpm-settings.c:1385
-#: ../src/xfpm-power.c:704
+#: ../src/xfpm-power.c:703
 msgid "Hibernate"
 msgstr "Hiberna"
 
@@ -279,7 +279,7 @@ msgid "Do nothing"
 msgstr "No facis res"
 
 #: ../settings/xfpm-settings.c:936 ../settings/xfpm-settings.c:1282
-#: ../src/xfpm-power.c:726
+#: ../src/xfpm-power.c:725
 msgid "Shutdown"
 msgstr "Atura"
 
@@ -371,11 +371,11 @@ msgstr "Fabricant"
 msgid "Serial"
 msgstr "Número de sèrie"
 
-#: ../settings/xfpm-settings.c:2210
+#: ../settings/xfpm-settings.c:2211
 msgid "Check your power manager installation"
 msgstr "Comprova la instaŀlació del gestor d'energia"
 
-#: ../settings/xfpm-settings.c:2291
+#: ../settings/xfpm-settings.c:2294
 msgid "Devices"
 msgstr "dispositius"
 
@@ -430,8 +430,8 @@ msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Construit sobre GTK+ %d.%d.%d, enllaçat amb GTK+ %d.%d.%d."
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:365 ../src/xfpm-power.c:647 ../src/xfpm-power.c:690
-#: ../src/xfpm-power.c:854 ../src/xfpm-power.c:877 ../src/xfpm-battery.c:193
+#: ../src/xfpm-power.c:364 ../src/xfpm-power.c:646 ../src/xfpm-power.c:689
+#: ../src/xfpm-power.c:853 ../src/xfpm-power.c:876 ../src/xfpm-battery.c:193
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Gestor d'energia"
@@ -550,63 +550,63 @@ msgid_plural "minutes"
 msgstr[0] "minut"
 msgstr[1] "minuts"
 
-#: ../common/xfpm-power-common.c:280
+#: ../common/xfpm-power-common.c:285
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
 msgstr "<b>%s %s</b>\nCàrrega completa (%0.0f%%, %s de funcionament)"
 
-#: ../common/xfpm-power-common.c:288
+#: ../common/xfpm-power-common.c:293
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
 msgstr "<b>%s %s</b>\nCàrrega completa (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:298
+#: ../common/xfpm-power-common.c:303
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nS'està carregant (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:306
+#: ../common/xfpm-power-common.c:311
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nS'està carregant (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:316
+#: ../common/xfpm-power-common.c:321
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
 msgstr "<b>%s %s</b>\nS'està descarregant (%0.0f%%, %s)"
 
-#: ../common/xfpm-power-common.c:324
+#: ../common/xfpm-power-common.c:329
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
 msgstr "<b>%s %s</b>\nS'està descarregant (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:331
+#: ../common/xfpm-power-common.c:336
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nS'està esperant per descarregar (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:337
+#: ../common/xfpm-power-common.c:342
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nS'està esperant per carregar (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:343
+#: ../common/xfpm-power-common.c:348
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -615,81 +615,81 @@ msgstr "<b>%s %s</b>\nestà buida"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:352
+#: ../common/xfpm-power-common.c:357
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:353
+#: ../common/xfpm-power-common.c:358
 msgid "Not plugged in"
 msgstr "No endollat"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:359
+#: ../common/xfpm-power-common.c:364
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:364
+#: ../common/xfpm-power-common.c:369
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
 msgstr "<b>%s %s</b>\nEstat desconegut"
 
-#: ../src/xfpm-power.c:394
+#: ../src/xfpm-power.c:393
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Alguna aplicació no permet l'adormiment automàtic, fer-ho ara podria malmetre l'estat d'aquesta aplicació. \nEsteu segur que voleu fer hibernar el sistema?"
 
-#: ../src/xfpm-power.c:444
+#: ../src/xfpm-power.c:443
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Cap de les eines de bloqueig de la pantalla s'ha executat correctament. La pantalla no es bloquejarà. Encara voleu suspendre el sistema?"
 
-#: ../src/xfpm-power.c:610
+#: ../src/xfpm-power.c:609
 msgid "Hibernate the system"
 msgstr "Hiberna el sistema"
 
-#: ../src/xfpm-power.c:621
+#: ../src/xfpm-power.c:620
 msgid "Suspend the system"
 msgstr "Suspèn el sistema"
 
-#: ../src/xfpm-power.c:631
+#: ../src/xfpm-power.c:630
 msgid "Shutdown the system"
 msgstr "Apaga el sistema"
 
-#: ../src/xfpm-power.c:642 ../src/xfpm-power.c:687
+#: ../src/xfpm-power.c:641 ../src/xfpm-power.c:686
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "El sistema està funcionant amb un nivell de càrrega baix. Deseu el que estigueu fent per no perdre les dades"
 
-#: ../src/xfpm-power.c:733
+#: ../src/xfpm-power.c:732
 msgid "_Cancel"
 msgstr "_Canceŀla"
 
-#: ../src/xfpm-power.c:855
+#: ../src/xfpm-power.c:854
 msgid "System is running on low power"
 msgstr "El sistema està funcionant amb un nivell baix de càrrega"
 
-#: ../src/xfpm-power.c:873
+#: ../src/xfpm-power.c:872
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "%s: ll nivell de càrrega és baix\ntemps restant estimat %s"
 
-#: ../src/xfpm-power.c:1724 ../src/xfpm-power.c:1771 ../src/xfpm-power.c:1802
-#: ../src/xfpm-power.c:1831
+#: ../src/xfpm-power.c:1868 ../src/xfpm-power.c:1915 ../src/xfpm-power.c:1946
+#: ../src/xfpm-power.c:1975
 msgid "Permission denied"
 msgstr "S'ha denegat el permís"
 
-#: ../src/xfpm-power.c:1811 ../src/xfpm-power.c:1840
+#: ../src/xfpm-power.c:1955 ../src/xfpm-power.c:1984
 msgid "Suspend not supported"
 msgstr "La suspensió no és compatible"
 
@@ -873,11 +873,11 @@ msgstr "S'està executant un altre gestor d'energia"
 msgid "Xfce power manager is already running"
 msgstr "El gestor d'energia de Xfce ja s'està executant"
 
-#: ../src/xfpm-inhibit.c:354
+#: ../src/xfpm-inhibit.c:368
 msgid "Invalid arguments"
 msgstr "Arguments no vàlids"
 
-#: ../src/xfpm-inhibit.c:387
+#: ../src/xfpm-inhibit.c:401
 msgid "Invalid cookie"
 msgstr "La galeta no és vàlida"
 
@@ -892,26 +892,34 @@ msgid "Power management for the Xfce desktop"
 msgstr "Gestor d'energia per l'escriptori Xfce"
 
 #. Odds are this is a desktop without any batteries attached
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:266
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:268
 msgid "Display battery levels for attached devices"
 msgstr "Mostra el nivell de la bateria de dispositius connectats"
 
 #. about dialog
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1108
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1147
 msgid "_About"
 msgstr "_Quant a"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1443
+#. Translators this is to display which app is inhibiting
+#. * power in the plugin menu. Example:
+#. * VLC is currently inhibiting power management
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1367
+#, c-format
+msgid "%s is currently inhibiting power management"
+msgstr "%s està inhibint la gestió d'energia."
+
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1559
 msgid "<b>Display brightness</b>"
 msgstr "<b>Brillantor de la pantalla</b>"
 
 #. Presentation mode checkbox
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1467
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1583
 msgid "Presentation _mode"
 msgstr "_Mode de presentació"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1476
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1595
 msgid "_Power manager settings..."
 msgstr "Ajustament del gestor d'_energia…"
 
@@ -940,14 +948,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
+msgstr "A més, el gestor d'energia de l'Xfce proporciona un conjunt d'interfícies DBus compatibles amb freedesktop per informar altres aplicacions del nivell d'energia perquè en puguin ajustar el consum i proporciona la interfície d'inhibició que permet a les aplicacions evitar accions automàtiques d'inactivitat a través del gestor d'energia; per exemple, l'administrador de paquets del sistema operatiu hauria de fer ús d'aquesta interfície mentre s'estiguin portant a terme les operacions d'actualització."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
+msgstr "El gestor d'energia de l'Xfce també proporciona un connector per als plafons de l'Xfce per controlar els nivells de brillantor LCD i per monitorar els nivells de la bateria i de càrrega del dispositiu."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -955,7 +963,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr ""
+msgstr "Aquesta versió de desenvolupament sobretot corregeix errors i introdueix un millor suport per a temes d'incones mitjançant la reducció de les icones dels dispositius i l'ús de noms estàndard. També compta amb traduccions actualitzades. El connector del plafó s'ha rebatejat com a connector de gestió d'energia."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -964,7 +972,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr ""
+msgstr "Aquesta versió de desenvolupament corregeix errors de suspensió i hibernació. També millora el connector del plafó, que incorpora la funcionalitat de la  brillantor del panell-connector (ara abandonada). Es va afegir una nova notificació emergent per tenir en compte els canvis de brillantor del teclat i l'Administrador d'energia ara també controla els temps en blanc de l'X11."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -974,10 +982,10 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr ""
+msgstr "Aquesta versió de desenvolupament presenta una gran quantitat de característiques noves, entre les quals hi ha la suspensió / hibernació sense systemd i UPower>=0,99. Permet el control individual del systemd-inhibition, un nou connector de plafó per monitorar els nivells de càrrega de la bateria i del dispositiu que substitueix el trayicon. El diàleg de configuració ha estat completament renovat per a una millor supervisió. S'han corregit molts errors oberts i s'han actualitzat les traduccions."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr ""
+msgstr "Aquesta versió estable soluciona els problemes de compilació, una pèrdua de memòria i alguns altres errors menors. A més, ofereix traduccions actualitzades."
