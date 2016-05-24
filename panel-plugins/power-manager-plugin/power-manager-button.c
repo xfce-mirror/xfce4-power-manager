@@ -910,6 +910,22 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
 }
 
 static void
+inhibit_proxy_ready_cb (GObject *source_object,
+                        GAsyncResult *res,
+                        gpointer user_data)
+{
+    GError *error = NULL;
+    PowerManagerButton *button = POWER_MANAGER_BUTTON (user_data);
+
+    button->priv->inhibit_proxy = g_dbus_proxy_new_finish (res, &error);
+    if (error != NULL)
+    {
+        g_warning ("error getting inhibit proxy: %s", error->message);
+        g_clear_error (&error);
+    }
+}
+
+static void
 power_manager_button_init (PowerManagerButton *button)
 {
     GError *error = NULL;
@@ -938,22 +954,15 @@ power_manager_button_init (PowerManagerButton *button)
         button->priv->channel = xfconf_channel_get ("xfce4-power-manager");
     }
 
-    button->priv->inhibit_proxy = g_dbus_proxy_new_sync (g_bus_get_sync (G_BUS_TYPE_SESSION,
-                                                                         NULL,
-                                                                         NULL),
-                                                         G_DBUS_PROXY_FLAGS_NONE,
-                                                         NULL,
-                                                         "org.freedesktop.PowerManagement",
-                                                         "/org/freedesktop/PowerManagement/Inhibit",
-                                                         "org.freedesktop.PowerManagement.Inhibit",
-                                                         NULL,
-                                                         &error);
-
-    if (error != NULL)
-    {
-        g_warning ("error getting inhibit proxy: %s", error->message);
-        g_clear_error (&error);
-    }
+    g_dbus_proxy_new (g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL),
+                      G_DBUS_PROXY_FLAGS_NONE,
+                      NULL,
+                      "org.freedesktop.PowerManagement",
+                      "/org/freedesktop/PowerManagement/Inhibit",
+                      "org.freedesktop.PowerManagement.Inhibit",
+                      NULL,
+                      inhibit_proxy_ready_cb,
+                      button);
 
     /* Sane defaults for the systray and panel icon */
 #ifdef XFCE_PLUGIN
