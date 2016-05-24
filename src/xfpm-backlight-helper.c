@@ -368,68 +368,120 @@ out:
 	return retval;
 }
 #else
+typedef enum {
+	BACKLIGHT_TYPE_UNKNOWN,
+	BACKLIGHT_TYPE_FIRMWARE,
+	BACKLIGHT_TYPE_PLATFORM,
+	BACKLIGHT_TYPE_RAW
+} BacklightType;
+
+static BacklightType
+backlight_helper_get_type (const gchar *sysfs_path)
+{
+	gboolean ret;
+	gchar *filename = NULL;
+	GError *error = NULL;
+	gchar *type_tmp = NULL;
+	BacklightType type = BACKLIGHT_TYPE_UNKNOWN;
+
+	filename = g_build_filename (sysfs_path,
+				     "type", NULL);
+	ret = g_file_get_contents (filename,
+				   &type_tmp,
+				   NULL, &error);
+	if (!ret) {
+		g_warning ("failed to get type: %s", error->message);
+		g_error_free (error);
+		goto out;
+	}
+	if (g_str_has_prefix (type_tmp, "platform")) {
+		type = BACKLIGHT_TYPE_PLATFORM;
+		goto out;
+	}
+	if (g_str_has_prefix (type_tmp, "firmware")) {
+		type = BACKLIGHT_TYPE_FIRMWARE;
+		goto out;
+	}
+	if (g_str_has_prefix (type_tmp, "raw")) {
+		type = BACKLIGHT_TYPE_RAW;
+		goto out;
+	}
+out:
+	g_free (filename);
+	g_free (type_tmp);
+	return type;
+}
+
 /*
- * Find best backlight using an ordered interface list
+ * Find best backlight using the kernel-supplied backlight type
  */
 static gchar *
 backlight_helper_get_best_backlight (void)
 {
-	gchar *filename;
-	guint i;
-	gboolean ret;
+	const gchar *device_name;
+	const gchar *filename_tmp;
+	gchar *best_device = NULL;
+	gchar *filename = NULL;
 	GDir *dir = NULL;
 	GError *error = NULL;
-	const gchar *first_device;
+	GPtrArray *sysfs_paths = NULL;
+	BacklightType *backlight_types = NULL;
+	guint i;
 
-	/* available kernel interfaces in priority order */
-	static const gchar *backlight_interfaces[] = {
-		"nv_backlight",
-		"asus_laptop",
-		"toshiba",
-		"eeepc",
-		"thinkpad_screen",
-		"gmux_backlight",
-		"intel_backlight",
-		"acpi_video1",
-		"mbp_backlight",
-		"acpi_video0",
-		"fujitsu-laptop",
-		"sony",
-		"samsung",
-		NULL,
-	};
-
-	/* search each one */
-	for (i=0; backlight_interfaces[i] != NULL; i++) {
-		filename = g_build_filename (BACKLIGHT_SYSFS_LOCATION,
-					     backlight_interfaces[i], NULL);
-		ret = g_file_test (filename, G_FILE_TEST_EXISTS);
-		if (ret)
-			goto out;
-		g_free (filename);
-	}
-
-	/* nothing found in the ordered list */
-	filename = NULL;
-
-	/* find any random ones */
+	/* search the backlight devices and prefer the types:
+	 * firmware -> platform -> raw */
 	dir = g_dir_open (BACKLIGHT_SYSFS_LOCATION, 0, &error);
 	if (dir == NULL) {
 		g_warning ("failed to find any devices: %s", error->message);
 		g_error_free (error);
 		goto out;
 	}
-
-	/* get first device if any */
-	first_device = g_dir_read_name (dir);
-	if (first_device != NULL) {
+	sysfs_paths = g_ptr_array_new_with_free_func (g_free);
+	device_name = g_dir_read_name (dir);
+	while (device_name != NULL) {
 		filename = g_build_filename (BACKLIGHT_SYSFS_LOCATION,
-					     first_device, NULL);
+					     device_name, NULL);
+		g_ptr_array_add (sysfs_paths, filename);
+		device_name = g_dir_read_name (dir);
+	}
+
+	/* no backlights */
+	if (sysfs_paths->len == 0)
+		goto out;
+
+	/* find out the type of each backlight */
+	backlight_types = g_new0 (BacklightType, sysfs_paths->len);
+	for (i = 0; i < sysfs_paths->len; i++) {
+		filename_tmp = g_ptr_array_index (sysfs_paths, i);
+		backlight_types[i] = backlight_helper_get_type (filename_tmp);
+	}
+
+	/* any devices of type firmware -> platform -> raw? */
+	for (i = 0; i < sysfs_paths->len; i++) {
+		if (backlight_types[i] == BACKLIGHT_TYPE_FIRMWARE) {
+			best_device = g_strdup (g_ptr_array_index (sysfs_paths, i));
+			goto out;
+		}
+	}
+	for (i = 0; i < sysfs_paths->len; i++) {
+		if (backlight_types[i] == BACKLIGHT_TYPE_PLATFORM) {
+			best_device = g_strdup (g_ptr_array_index (sysfs_paths, i));
+			goto out;
+		}
+	}
+	for (i = 0; i < sysfs_paths->len; i++) {
+		if (backlight_types[i] == BACKLIGHT_TYPE_RAW) {
+			best_device = g_strdup (g_ptr_array_index (sysfs_paths, i));
+			goto out;
+		}
 	}
 out:
+	g_free (backlight_types);
+	if (sysfs_paths != NULL)
+		g_ptr_array_unref (sysfs_paths);
 	if (dir != NULL)
 		g_dir_close (dir);
-	return filename;
+	return best_device;
 }
 
 /*
