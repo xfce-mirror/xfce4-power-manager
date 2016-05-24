@@ -936,7 +936,11 @@ power_manager_button_init (PowerManagerButton *button)
     gtk_widget_set_can_default (GTK_WIDGET (button), FALSE);
     gtk_widget_set_can_focus (GTK_WIDGET (button), FALSE);
     gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
+#if !GTK_CHECK_VERSION (3, 20, 0)
     gtk_button_set_focus_on_click (GTK_BUTTON (button), FALSE);
+#else
+    gtk_widget_set_focus_on_click (GTK_WIDGET (button), FALSE);
+#endif
     gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
     button->priv->brightness = xfpm_brightness_new ();
@@ -1503,13 +1507,25 @@ range_scroll_cb (GtkWidget *widget, GdkEvent *event, PowerManagerButton *button)
 static void
 range_show_cb (GtkWidget *widget, PowerManagerButton *button)
 {
+#if !GTK_CHECK_VERSION (3, 20, 0)
     GdkDeviceManager* manager = gdk_display_get_device_manager (gdk_display_get_default());
     GdkDevice* pointer = gdk_device_manager_get_client_pointer (manager);
+#else
+    GdkSeat   *seat = gdk_display_get_default_seat (gdk_display_get_default());
+    GdkDevice *pointer = gdk_seat_get_pointer (seat);
+#endif
+
     TRACE("entering");
     /* Release these grabs as they will cause a lockup if pkexec is called
      * for the brightness helper */
     if (pointer)
+    {
+#if !GTK_CHECK_VERSION (3, 20, 0)
         gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
+#else
+        gdk_seat_ungrab (seat);
+#endif
+    }
 
     gtk_grab_remove (widget);
 }
