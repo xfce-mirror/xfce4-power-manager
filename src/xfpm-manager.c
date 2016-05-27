@@ -61,6 +61,7 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-dbus-monitor.h"
 #include "xfpm-systemd.h"
+#include "xfce-screensaver.h"
 #include "../panel-plugins/power-manager-plugin/power-manager-button.h"
 
 static void xfpm_manager_finalize   (GObject *object);
@@ -102,6 +103,7 @@ struct XfpmManagerPrivate
     XfpmSystemd        *systemd;
     XfpmDBusMonitor    *monitor;
     XfpmInhibit        *inhibit;
+    XfceScreenSaver    *screensaver;
     EggIdletime        *idle;
     GtkStatusIcon      *adapter_icon;
     GtkWidget          *power_button;
@@ -446,7 +448,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
 	{
 	    if ( !xfpm_is_multihead_connected () )
 	    {
-		if (!xfpm_lock_screen ())
+		if (!xfce_screensaver_lock (manager->priv->screensaver))
 		{
 		    xfce_dialog_show_error (NULL, NULL,
 					    _("None of the screen lock tools ran "
@@ -843,6 +845,7 @@ void xfpm_manager_start (XfpmManager *manager)
     manager->priv->power = xfpm_power_get ();
     manager->priv->button = xfpm_button_new ();
     manager->priv->conf = xfpm_xfconf_new ();
+    manager->priv->screensaver = xfce_screensaver_new ();
     manager->priv->console = NULL;
     manager->priv->systemd = NULL;
 

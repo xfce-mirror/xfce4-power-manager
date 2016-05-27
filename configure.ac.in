@@ -50,10 +50,6 @@ AC_CHECK_FUNCS([getpwuid setsid sigaction])
 # ===================================================== #
 AC_CHECK_LIB([m], [round])
 
-# ===================================================== #
-# 		Check for XScreenSaverSuspend		#
-# ===================================================== #
-AC_CHECK_LIB([Xss], [XScreenSaverSuspend])
 
 # ===================================================== #
 # 		Check for i18n support 			#

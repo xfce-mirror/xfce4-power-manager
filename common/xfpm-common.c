@@ -52,35 +52,6 @@ GtkBuilder *xfpm_builder_new_from_string (const gchar *ui, GError **error)
     return builder;
 }
 
-gboolean
-xfpm_lock_screen (void)
-{
-    gboolean ret = g_spawn_command_line_async ("xflock4", NULL);
-    
-    if ( !ret )
-    {
-        ret = g_spawn_command_line_async ("gnome-screensaver-command -l", NULL);
-    }
-    
-    if ( !ret )
-    {
-        /* this should be the default*/
-        ret = g_spawn_command_line_async ("xdg-screensaver lock", NULL);
-    }
-    
-    if ( !ret )
-    {
-        ret = g_spawn_command_line_async ("xscreensaver-command -lock", NULL);
-    }
-    
-    if ( !ret )
-    {
-        g_critical ("Connot lock screen\n");
-    }
-
-    return ret;
-}
-
 void       
 xfpm_preferences (void) 
 {
