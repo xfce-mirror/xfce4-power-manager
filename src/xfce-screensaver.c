@@ -125,7 +125,7 @@ xfce_screensaver_class_init (XfceScreenSaverClass *klass)
                                                         HEARTBEAT_COMMAND,
                                                         "Inhibit the screensaver from activating, "
                                                         "i.e. xscreensaver-command -deactivate",
-                                                        NULL,
+                                                        "xscreensaver-command -deactivate",
                                                         XFCE_PARAM_FLAGS));
 
     /* lock command - to lock the desktop, i.e. xscreensaver-command -lock */
@@ -134,7 +134,7 @@ xfce_screensaver_class_init (XfceScreenSaverClass *klass)
                                                         LOCK_COMMAND,
                                                         "Lock the desktop, i.e. "
                                                         "xscreensaver-command -lock",
-                                                        NULL,
+                                                        "xscreensaver-command -lock",
                                                         XFCE_PARAM_FLAGS));
 #undef XFCE_PARAM_FLAGS
 }
@@ -152,12 +152,14 @@ xfce_screensaver_set_property(GObject *object,
         {
             g_free (saver->priv->heartbeat_command);
             saver->priv->heartbeat_command = g_value_dup_string (value);
+            DBG ("saver->priv->heartbeat_command %s", saver->priv->heartbeat_command);
             break;
         }
         case PROP_LOCK_COMMAND:
         {
             g_free (saver->priv->lock_command);
             saver->priv->lock_command = g_value_dup_string (value);
+            DBG ("saver->priv->lock_command %s", saver->priv->lock_command);
             break;
         }
         default:
@@ -284,20 +286,9 @@ xfce_screensaver_init (XfceScreenSaver *saver)
     }
     else
     {
-        saver->priv->xfpm_channel = xfconf_channel_get (XFPM_CHANNEL);
-        saver->priv->xfsm_channel = xfconf_channel_get (XFSM_CHANNEL);
+            saver->priv->xfpm_channel = xfconf_channel_get (XFPM_CHANNEL);
+            saver->priv->xfsm_channel = xfconf_channel_get (XFSM_CHANNEL);
 
-        xfconf_g_property_bind (saver->priv->xfpm_channel,
-                                XFPM_PROPERTIES_PREFIX HEARTBEAT_COMMAND,
-                                G_TYPE_STRING,
-                                G_OBJECT(saver),
-                                HEARTBEAT_COMMAND);
-
-        xfconf_g_property_bind (saver->priv->xfsm_channel,
-                                XFSM_PROPERTIES_PREFIX LOCK_COMMAND,
-                                G_TYPE_STRING,
-                                G_OBJECT(saver),
-                                LOCK_COMMAND);
     }
 
     xfce_screensaver_setup (saver);
@@ -355,6 +346,18 @@ xfce_screensaver_new (void)
         saver = g_object_new (XFCE_TYPE_SCREENSAVER, NULL);
 
         g_object_add_weak_pointer (G_OBJECT (saver), (gpointer *) &saver);
+
+        xfconf_g_property_bind (XFCE_SCREENSAVER (saver)->priv->xfpm_channel,
+                                XFPM_PROPERTIES_PREFIX HEARTBEAT_COMMAND,
+                                G_TYPE_STRING,
+                                G_OBJECT(saver),
+                                HEARTBEAT_COMMAND);
+
+        xfconf_g_property_bind (XFCE_SCREENSAVER (saver)->priv->xfsm_channel,
+                                XFSM_PROPERTIES_PREFIX LOCK_COMMAND,
+                                G_TYPE_STRING,
+                                G_OBJECT(saver),
+                                LOCK_COMMAND);
     }
     
     return XFCE_SCREENSAVER (saver);
@@ -381,6 +384,7 @@ xfce_reset_screen_saver (XfceScreenSaver *saver)
         }
     } else if (saver->priv->heartbeat_command)
     {
+        DBG ("running heartbeat command: %s", saver->priv->heartbeat_command);
         g_spawn_command_line_async (saver->priv->heartbeat_command, NULL);
     }
 
@@ -526,12 +530,18 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
         }
         case SCREENSAVER_TYPE_OTHER:
         {
-            gboolean ret = g_spawn_command_line_async (saver->priv->lock_command, NULL);
+            gboolean ret = FALSE;
+
+            if (saver->priv->lock_command != NULL)
+            {
+                DBG ("running lock command: %s", saver->priv->lock_command);
+                ret = g_spawn_command_line_async (saver->priv->lock_command, NULL);
+            }
 
             if (!ret)
             {
                 g_error ("Screensaver lock command not set when attempting to lock the screen.\n"
-                         "Please set the xfconf property %s%s to the desired lock command",
+                         "Please set the xfconf property %s%s in xfce4-session to the desired lock command",
                          XFSM_PROPERTIES_PREFIX, LOCK_COMMAND);
 
                 /* Fall back to trying a couple others, using the xdg standard
