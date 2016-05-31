@@ -38,6 +38,9 @@
 #include "common/xfpm-power-common.h"
 #include "common/xfpm-brightness.h"
 #include "common/xfpm-debug.h"
+#ifdef XFPM_SYSTRAY
+#include "src/xfpm-inhibit.h"
+#endif
 
 #include "power-manager-button.h"
 #include "scalemenuitem.h"
@@ -55,13 +58,14 @@ struct PowerManagerButtonPrivate
 {
 #ifdef XFCE_PLUGIN
     XfcePanelPlugin *plugin;
+    GDBusProxy      *inhibit_proxy;
+#else
+    XfpmInhibit     *inhibit;
 #endif
 
     XfconfChannel   *channel;
 
     UpClient        *upower;
-
-    GDBusProxy      *inhibit_proxy;
 
     /* A list of BatteryDevices  */
     GList           *devices;
@@ -909,6 +913,7 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
 #undef XFPM_PARAM_FLAGS
 }
 
+#ifdef XFCE_PLUGIN
 static void
 inhibit_proxy_ready_cb (GObject *source_object,
                         GAsyncResult *res,
@@ -924,6 +929,7 @@ inhibit_proxy_ready_cb (GObject *source_object,
         g_clear_error (&error);
     }
 }
+#endif
 
 static void
 power_manager_button_init (PowerManagerButton *button)
@@ -958,6 +964,7 @@ power_manager_button_init (PowerManagerButton *button)
         button->priv->channel = xfconf_channel_get ("xfce4-power-manager");
     }
 
+#ifdef XFCE_PLUGIN
     g_dbus_proxy_new (g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL),
                       G_DBUS_PROXY_FLAGS_NONE,
                       NULL,
@@ -967,6 +974,9 @@ power_manager_button_init (PowerManagerButton *button)
                       NULL,
                       inhibit_proxy_ready_cb,
                       button);
+#else
+    button->priv->inhibit = xfpm_inhibit_new ();
+#endif
 
     /* Sane defaults for the systray and panel icon */
 #ifdef XFCE_PLUGIN
@@ -1335,6 +1345,33 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 static void
+add_inhibitor_to_menu (PowerManagerButton *button, const gchar *text)
+{
+    GtkWidget *mi, *img;
+
+    /* Translators this is to display which app is inhibiting
+     * power in the plugin menu. Example:
+     * VLC is currently inhibiting power management
+     */
+    gchar *label = g_strdup_printf (_("%s is currently inhibiting power management"), text);
+
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+    mi = gtk_image_menu_item_new_with_label(label);
+G_GNUC_END_IGNORE_DEPRECATIONS
+    /* add the image */
+    img = gtk_image_new_from_icon_name ("gtk-info", GTK_ICON_SIZE_MENU);
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
+G_GNUC_END_IGNORE_DEPRECATIONS
+
+    gtk_widget_set_can_focus (mi, FALSE);
+    gtk_widget_show (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL(button->priv->menu), mi);
+    g_free (label);
+}
+
+#ifdef XFCE_PLUGIN
+static void
 display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
 {
     gboolean needs_seperator = FALSE;
@@ -1370,27 +1407,7 @@ display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
             /* Add the list of programs to the menu */
             while (g_variant_iter_next (iter, "s", &value))
             {
-                GtkWidget *mi, *img;
-
-                /* Translators this is to display which app is inhibiting
-                 * power in the plugin menu. Example:
-                 * VLC is currently inhibiting power management
-                 */
-                gchar *label = g_strdup_printf (_("%s is currently inhibiting power management"), value);
-
-G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-                mi = gtk_image_menu_item_new_with_label(label);
-G_GNUC_END_IGNORE_DEPRECATIONS
-                /* add the image */
-                img = gtk_image_new_from_icon_name ("gtk-info", GTK_ICON_SIZE_MENU);
-G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-                gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
-G_GNUC_END_IGNORE_DEPRECATIONS
-
-                gtk_widget_set_can_focus (mi, FALSE);
-                gtk_widget_show (mi);
-                gtk_menu_shell_append (GTK_MENU_SHELL(button->priv->menu), mi);
-                g_free (label);
+                add_inhibitor_to_menu (button, value);
             }
             g_variant_iter_free (iter);
             g_variant_unref (reply);
@@ -1410,6 +1427,36 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 
     }
 }
+#else
+static void
+display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
+{
+    gboolean needs_seperator = FALSE;
+    const gchar **inhibitors;
+
+    g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
+    g_return_if_fail (GTK_IS_MENU (menu));
+
+    inhibitors = xfpm_inhibit_get_inhibit_list (button->priv->inhibit);
+    if (inhibitors != NULL && inhibitors[0] != NULL)
+    {
+        guint i;
+
+        for (i=0; inhibitors[i] != NULL; i++)
+        {
+            add_inhibitor_to_menu (button, inhibitors[i]);
+        }
+
+        /* add a separator */
+        GtkWidget * separator_mi = gtk_separator_menu_item_new ();
+        gtk_widget_show (separator_mi);
+        gtk_menu_shell_append (GTK_MENU_SHELL (menu), separator_mi);
+    }
+
+    g_free (inhibitors);
+}
+#endif
+
 static void
 decrease_brightness (PowerManagerButton *button)
 {

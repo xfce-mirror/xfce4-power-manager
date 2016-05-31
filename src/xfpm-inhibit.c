@@ -292,6 +292,35 @@ xfpm_inhibit_new(void)
     return XFPM_INHIBIT (xfpm_inhibit_object);
 }
 
+/***
+ * xfpm_inhibit_get_inhibit_list
+ * @inhibit: the XfpmInhibit object.
+ *
+ * Returns: An array of applications that are currently inhibiting xfpm.
+ *          Call g_free on the returned array when done using it.
+ */
+const gchar **
+xfpm_inhibit_get_inhibit_list (XfpmInhibit *inhibit)
+{
+    guint i;
+    Inhibitor *inhibitor;
+    const gchar **OUT_inhibitors;
+
+    XFPM_DEBUG ("entering xfpm_inhibit_get_inhibit_list");
+    
+    OUT_inhibitors = g_new (const gchar *, inhibit->priv->array->len + 1);
+    
+    for ( i = 0; i<inhibit->priv->array->len; i++)
+    {
+	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+	OUT_inhibitors[i] = inhibitor->app_name;
+    }
+    
+    OUT_inhibitors[inhibit->priv->array->len] = NULL;
+
+    return OUT_inhibitors;
+}
+
 /*
  * 
  * DBus server implementation for org.freedesktop.PowerManagement.Inhibit
@@ -426,21 +455,12 @@ static gboolean xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
 					     GDBusMethodInvocation *invocation,
 					     gpointer user_data)
 {
-    guint i;
-    Inhibitor *inhibitor;
     const gchar **OUT_inhibitors;
 
     XFPM_DEBUG ("Get Inhibitors message received");
     
-    OUT_inhibitors = g_new (const gchar *, inhibit->priv->array->len + 1);
-    
-    for ( i = 0; i<inhibit->priv->array->len; i++)
-    {
-	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
-	OUT_inhibitors[i] = inhibitor->app_name;
-    }
-    
-    OUT_inhibitors[inhibit->priv->array->len] = NULL;
+    OUT_inhibitors = xfpm_inhibit_get_inhibit_list (inhibit);
+
     xfpm_power_management_inhibit_complete_get_inhibitors (user_data,
 							   invocation,
 							   OUT_inhibitors);
