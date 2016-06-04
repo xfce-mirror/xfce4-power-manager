@@ -540,9 +540,9 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
 
             if (!ret)
             {
-                g_error ("Screensaver lock command not set when attempting to lock the screen.\n"
-                         "Please set the xfconf property %s%s in xfce4-session to the desired lock command",
-                         XFSM_PROPERTIES_PREFIX, LOCK_COMMAND);
+                g_warning ("Screensaver lock command not set when attempting to lock the screen.\n"
+                           "Please set the xfconf property %s%s in xfce4-session to the desired lock command",
+                           XFSM_PROPERTIES_PREFIX, LOCK_COMMAND);
 
                 /* Fall back to trying a couple others, using the xdg standard
                  * one first */
