@@ -544,14 +544,12 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
                            "Please set the xfconf property %s%s in xfce4-session to the desired lock command",
                            XFSM_PROPERTIES_PREFIX, LOCK_COMMAND);
 
-                /* Fall back to trying a couple others, using the xdg standard
-                 * one first */
-                ret = g_spawn_command_line_async ("xdg-screensaver lock", NULL);
+                ret = g_spawn_command_line_async ("xflock4", NULL);
             }
 
             if (!ret)
             {
-                ret = g_spawn_command_line_async ("xflock4", NULL);
+                ret = g_spawn_command_line_async ("xdg-screensaver lock", NULL);
             }
             
             if (!ret)
