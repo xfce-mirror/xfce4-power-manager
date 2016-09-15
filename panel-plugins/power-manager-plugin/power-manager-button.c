@@ -1231,10 +1231,12 @@ power_manager_button_update_label (PowerManagerButton *button, UpDevice *device)
                   "time-to-full", &time_to_full,
                   NULL);
 
-    /* Hide the label if the battery is fully charged */
+    /* Hide the label if the battery is fully charged
+     * or state unknown (no battery available) */
     if (state == UP_DEVICE_STATE_CHARGING)
         power_manager_button_set_label (button, percentage, time_to_full);
-    else if (state == UP_DEVICE_STATE_FULLY_CHARGED)
+    else if (state == UP_DEVICE_STATE_FULLY_CHARGED
+		    || state == UP_DEVICE_STATE_UNKNOWN)
         gtk_widget_hide (GTK_WIDGET (button->priv->panel_label));
     else
         power_manager_button_set_label (button, percentage, time_to_empty);
