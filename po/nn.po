@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-26 18:30+0100\n"
-"PO-Revision-Date: 2017-03-12 21:02+0000\n"
+"PO-Revision-Date: 2017-03-13 07:46+0000\n"
 "Last-Translator: Kevin Brubeck Unhammer <unhammer+dill@mm.st>\n"
 "Language-Team: Norwegian Nynorsk (http://www.transifex.com/xfce/xfce4-power-manager/language/nn/)\n"
 "MIME-Version: 1.0\n"
@@ -150,7 +150,7 @@ msgstr "<b>Skjermstraumsparing</b>"
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr "La desse strauminnstillingane handtera skjermstraumstyring (DPMS) i staden for X11."
+msgstr "La straumstyraren handtera skjermstraumstyring (DPMS) i staden for X11."
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Blank after"
@@ -405,11 +405,11 @@ msgstr "Vis utgåveinformasjon"
 
 #: ../settings/xfpm-settings-app.c:80
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr ""
+msgstr "Få xfce4-power-manager-settings til å avslutta"
 
 #: ../settings/xfpm-settings-app.c:177
 msgid "Failed to connect to power manager"
-msgstr ""
+msgstr "Klarte ikkje kopla til straumstyraren"
 
 #: ../settings/xfpm-settings-app.c:191
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -422,12 +422,12 @@ msgstr "Klarte ikkje lasta straumstyraroppsettet, bruker standardverdiane"
 #: ../settings/xfpm-settings-app.c:346
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr ""
+msgstr "Dette er %s utgåve %s, som køyrer på Xfce %s.\n"
 
 #: ../settings/xfpm-settings-app.c:348
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr ""
+msgstr "Bygd med GTK+-%d.%d.%d, lenka med GTK+-%d.%d.%d"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:364 ../src/xfpm-power.c:646 ../src/xfpm-power.c:689
@@ -450,7 +450,7 @@ msgstr "Batteri"
 
 #: ../common/xfpm-power-common.c:47
 msgid "Uninterruptible Power Supply"
-msgstr ""
+msgstr "Uavbrytbar straumforsyning (UPS)"
 
 #: ../common/xfpm-power-common.c:49
 msgid "Line power"
@@ -555,63 +555,63 @@ msgstr[1] "minutt"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr ""
+msgstr "<b>%s %s</b>\nFullada (%0.0f %%, %s køyretid)"
 
 #: ../common/xfpm-power-common.c:293
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nFullada (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:303
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\nLadar (%0.0f %%, %s)"
 
 #: ../common/xfpm-power-common.c:311
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nLadar (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:321
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\nLadar ut (%0.0f %%, %s)"
 
 #: ../common/xfpm-power-common.c:329
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nLadar ut (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:336
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nVentar på å lada ut (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:342
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nVentar på å lada (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:348
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
+msgstr "<b>%s %s</b>\ner tomt"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -620,18 +620,18 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
+msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:358
 msgid "Not plugged in"
-msgstr ""
+msgstr "Fråkopla"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
 #: ../common/xfpm-power-common.c:364
 #, c-format
 msgid "<b>%s %s</b>"
-msgstr ""
+msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
 #: ../common/xfpm-power-common.c:369
@@ -639,7 +639,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr ""
+msgstr "<b>%s %s</b>\nUkjend tilstand"
 
 #: ../src/xfpm-power.c:393
 msgid ""
@@ -671,7 +671,7 @@ msgstr "Det er lite batteri att. Lagra arbeidet ditt for å unngå å mista det.
 
 #: ../src/xfpm-power.c:732
 msgid "_Cancel"
-msgstr ""
+msgstr "Av_bryt"
 
 #: ../src/xfpm-power.c:854
 msgid "System is running on low power"
@@ -697,7 +697,7 @@ msgstr "Kvilemodus er ikkje støtta"
 #: ../src/xfpm-backlight.c:171
 #, c-format
 msgid "Brightness: %.0f percent"
-msgstr ""
+msgstr "Lysstyrke: %.0f prosent"
 
 #: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:163
 #, c-format
