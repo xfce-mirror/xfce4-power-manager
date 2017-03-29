@@ -77,6 +77,7 @@ struct XfpmBatteryPrivate
     gulong		    sig_up;
 
     guint                   notify_idle;
+    gint64                  notify_flap_time;
 };
 
 enum
@@ -108,7 +109,9 @@ xfpm_battery_get_message_from_battery_state (XfpmBattery *battery)
     {
 	switch (battery->priv->state)
 	{
-	    case UP_DEVICE_STATE_FULLY_CHARGED:
+	    //Flapping happens here!
+        //Fully charged and Charged states alternate ever second on my thinkpad.
+        case UP_DEVICE_STATE_FULLY_CHARGED:
 		msg = g_strdup_printf (_("Your %s is fully charged"), battery->priv->battery_name);
 		break;
 	    case UP_DEVICE_STATE_CHARGING:
@@ -188,8 +191,19 @@ xfpm_battery_notify (XfpmBattery *battery)
 
     if ( !message )
 	return;
-
-    xfpm_notify_show_notification (battery->priv->notify,
+    //Prevent flapping Here....
+    gint64 current_time = g_get_monotonic_time();
+    
+    //If the last notification was within the past 120 seconds, ignore it.
+    if (  (battery->priv->type == UP_DEVICE_KIND_BATTERY || battery->priv->type == UP_DEVICE_KIND_UPS)
+       && (battery->priv->state == UP_DEVICE_STATE_FULLY_CHARGED || 
+           battery->priv->state == UP_DEVICE_STATE_CHARGING ||
+           battery->priv->state == UP_DEVICE_STATE_DISCHARGING) ) {
+        
+        //Events beyond 120 seconds ago are displayed
+        if (current_time - battery->priv->notify_flap_time > 120000000)
+        {
+             xfpm_notify_show_notification (battery->priv->notify,
 				   _("Power Manager"),
 				   message,
 				   xfpm_battery_get_icon_name (battery),
@@ -197,6 +211,25 @@ xfpm_battery_notify (XfpmBattery *battery)
 				   FALSE,
 				   XFPM_NOTIFY_NORMAL);
 
+
+        }
+        //If the event was hidden due to flapping, 
+        //keep resetting the timer until things "settle down".
+        //Technically we could schedule a check to finally show the last state
+        //upon settling but for now this works for me.
+        battery->priv->notify_flap_time = current_time;
+    } else {
+        //Always notify for other states as usual.
+        xfpm_notify_show_notification (battery->priv->notify,
+				   _("Power Manager"),
+				   message,
+				   xfpm_battery_get_icon_name (battery),
+				   8000,
+				   FALSE,
+				   XFPM_NOTIFY_NORMAL);
+
+
+    }
     g_free (message);
 }
 
@@ -290,7 +323,8 @@ xfpm_battery_refresh (XfpmBattery *battery, UpDevice *device)
     if ( state != battery->priv->state )
     {
 	battery->priv->state = state;
-	xfpm_battery_notify_state (battery);
+    
+    xfpm_battery_notify_state (battery);
     }
     battery->priv->percentage = (guint) percentage;
 
