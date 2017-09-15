@@ -1253,6 +1253,8 @@ menu_destroyed_cb(GtkMenuShell *menu, gpointer user_data)
     /* untoggle panel icon */
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(button), FALSE);
 
+    gtk_menu_detach (GTK_MENU (button->priv->menu));
+
     button->priv->menu = NULL;
 }
 
@@ -1606,6 +1608,7 @@ power_manager_button_show_menu (PowerManagerButton *button)
     /* keep track of the menu while it's being displayed */
     button->priv->menu = menu;
     g_signal_connect(GTK_MENU_SHELL(menu), "deactivate", G_CALLBACK(menu_destroyed_cb), button);
+    gtk_menu_attach_to_widget (GTK_MENU (menu), GTK_WIDGET (button), NULL);
 
     for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
     {
