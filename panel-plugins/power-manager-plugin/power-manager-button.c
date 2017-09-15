@@ -1380,6 +1380,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 static void
 display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
 {
+    GtkWidget *separator_mi;
     gboolean needs_seperator = FALSE;
 
     g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
@@ -1426,7 +1427,7 @@ display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
         if (needs_seperator)
         {
             /* add a separator */
-            GtkWidget * separator_mi = gtk_separator_menu_item_new ();
+            separator_mi = gtk_separator_menu_item_new ();
             gtk_widget_show (separator_mi);
             gtk_menu_shell_append (GTK_MENU_SHELL (menu), separator_mi);
         }
@@ -1437,7 +1438,8 @@ display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
 static void
 display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
 {
-    gboolean needs_seperator = FALSE;
+    guint i;
+    GtkWidget *separator_mi;
     const gchar **inhibitors;
 
     g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
@@ -1446,15 +1448,13 @@ display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
     inhibitors = xfpm_inhibit_get_inhibit_list (button->priv->inhibit);
     if (inhibitors != NULL && inhibitors[0] != NULL)
     {
-        guint i;
-
         for (i=0; inhibitors[i] != NULL; i++)
         {
             add_inhibitor_to_menu (button, inhibitors[i]);
         }
 
         /* add a separator */
-        GtkWidget * separator_mi = gtk_separator_menu_item_new ();
+        separator_mi = gtk_separator_menu_item_new ();
         gtk_widget_show (separator_mi);
         gtk_menu_shell_append (GTK_MENU_SHELL (menu), separator_mi);
     }

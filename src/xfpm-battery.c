@@ -134,18 +134,18 @@ xfpm_battery_get_message_from_battery_state (XfpmBattery *battery)
 		else
 		    msg =  g_strdup_printf (_("System is running on %s power"), battery->priv->battery_name);
 
-		    if ( battery->priv->time_to_empty != 0 )
-		    {
-			gchar *tmp, *est_time_str;
-			tmp = g_strdup (msg);
-			g_free (msg);
+		if ( battery->priv->time_to_empty != 0 )
+		{
+		    gchar *tmp, *est_time_str;
+		    tmp = g_strdup (msg);
+		    g_free (msg);
 
-			est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
+		    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
 
-			msg = g_strdup_printf (_("%s (%i%%)\nEstimated time left is %s."), tmp, battery->priv->percentage, est_time_str);
-			g_free (tmp);
-			g_free (est_time_str);
-		    }
+		    msg = g_strdup_printf (_("%s (%i%%)\nEstimated time left is %s."), tmp, battery->priv->percentage, est_time_str);
+		    g_free (tmp);
+		    g_free (est_time_str);
+		}
 		break;
 	    case UP_DEVICE_STATE_EMPTY:
 		msg = g_strdup_printf (_("Your %s is empty"), battery->priv->battery_name);
