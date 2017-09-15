@@ -223,6 +223,7 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
     n = notify_notification_new (title, message, NULL, NULL);
 #endif
 
+    notify_notification_set_hint (n, "transient", g_variant_new_boolean (TRUE));
     
     if ( icon_name )
     	xfpm_notify_set_notification_icon (n, icon_name);
