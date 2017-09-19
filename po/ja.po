@@ -1,21 +1,20 @@
-# Japanese translations for xfce4-power-manager package
-# xfce4-power-manager パッケージに対する英訳.
-# Copyright (C) 2008-2012 THE xfce4-power-manager'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the xfce4-power-manager package.
-# Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2008-2012.
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager 0.6.0svn\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-21 13:24+0900\n"
-"PO-Revision-Date: 2012-04-21 13:24+0900\n"
-"Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
-"Language-Team: Japanese <xfce-users-jp@ml.fdiary.net>\n"
-"Language: ja\n"
+"POT-Creation-Date: 2013-07-02 23:12+0200\n"
+"PO-Revision-Date: 2017-09-19 18:03+0000\n"
+"Last-Translator: Nick Schermer <nick@xfce.org>\n"
+"Language-Team: Japanese (http://www.transifex.com/xfce/xfce4-power-manager/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:809
@@ -84,13 +83,11 @@ msgstr "アクション"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Put display to sleep when computer is inactive for:"
-msgstr ""
-"コンピューターを操作していない状態でディスプレイをスリープするまでの時間:"
+msgstr "コンピューターを操作していない状態でディスプレイをスリープするまでの時間:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "Switch off display when computer is inactive for:"
-msgstr ""
-"コンピューターを操作していない状態でディスプレイの電源をオフにするまでの時間:"
+msgstr "コンピューターを操作していない状態でディスプレイの電源をオフにするまでの時間:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>Monitor</b>"
@@ -245,9 +242,7 @@ msgstr "表示しない"
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr ""
-"DPMS (Display Power Management Signaling) を無効にすると、ディスプレイの電源"
-"オフやスリープモードへの移行を行いません。"
+msgstr "DPMS (Display Power Management Signaling) を無効にすると、ディスプレイの電源オフやスリープモードへの移行を行いません。"
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
@@ -267,8 +262,7 @@ msgstr "ハイバネート操作が許可されていません"
 
 #: ../settings/xfpm-settings.c:1443
 msgid "When all the power sources of the computer reach this charge level"
-msgstr ""
-"コンピューターのすべての電源の充電レベルがこの値に達した時が対象となります"
+msgstr "コンピューターのすべての電源の充電レベルがこの値に達した時が対象となります"
 
 #: ../settings/xfpm-settings.c:1546 ../settings/xfpm-settings.c:1551
 msgid "General"
@@ -346,11 +340,9 @@ msgstr "ハイバネート(_H)"
 
 #: ../src/xfpm-power.c:329
 msgid ""
-"An application is currently disabling the automatic sleep. Doing this action "
-"now may damage the working state of this application."
-msgstr ""
-"アプリケーションは現在自動スリープが無効になっているため、今ハイバネートを行"
-"うと、このアプリケーションの作業状態が破壊されるかもしれません。"
+"An application is currently disabling the automatic sleep. Doing this action"
+" now may damage the working state of this application."
+msgstr "アプリケーションは現在自動スリープが無効になっているため、今ハイバネートを行うと、このアプリケーションの作業状態が破壊されるかもしれません。"
 
 #: ../src/xfpm-power.c:331
 msgid "Are you sure you want to hibernate the system?"
@@ -376,7 +368,8 @@ msgstr "電源情報"
 #. *
 #. * Power Mode
 #. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save, normal)
+#. TRANSLATOR: Mode here is the power profile (presentation, power save,
+#. normal)
 #: ../src/xfpm-power.c:550
 msgid "Mode"
 msgstr "モード"
@@ -405,9 +398,7 @@ msgstr "システムをシャットダウンします"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"システムは低電力下で動作しています。作業中のデータを失ってしまわないよう保存"
-"してください。"
+msgstr "システムは低電力下で動作しています。作業中のデータを失ってしまわないよう保存してください。"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
@@ -418,9 +409,7 @@ msgstr "システムは低電力下で動作しています"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"%s の充電レベルが低くなっています\n"
-"予想駆動時間は残り %s です"
+msgstr "%s の充電レベルが低くなっています\n予想駆動時間は残り %s です"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -499,7 +488,6 @@ msgstr "ニッケルカドミウム"
 msgid "Nickel metal hybride"
 msgstr "ニッケルメタルハイブリッド"
 
-# Could not estimate provided battery runtime
 #: ../src/xfpm-battery.c:171
 msgid "Unknown time"
 msgstr "不明"
@@ -548,9 +536,7 @@ msgstr "%s は充電中です"
 msgid ""
 "%s (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s (%i%%)\n"
-"フル充電まで %s です"
+msgstr "%s (%i%%)\nフル充電まで %s です"
 
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
@@ -567,9 +553,7 @@ msgstr "システムは %s 電源で動作しています"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s (%i%%)\n"
-"予想駆動時間は残り %s です。"
+msgstr "%s (%i%%)\n予想駆動時間は残り %s です。"
 
 #: ../src/xfpm-battery.c:250 ../src/xfpm-battery.c:271
 #, c-format
@@ -587,19 +571,14 @@ msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%).\n"
 "Provides %s runtime"
-msgstr ""
-"%s\n"
-"%s はフル充電されています (%i%%)。\n"
-"バッテリ駆動時間は %s です。"
+msgstr "%s\n%s はフル充電されています (%i%%)。\nバッテリ駆動時間は %s です。"
 
 #: ../src/xfpm-battery.c:429
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is fully charged (%i%%)."
-msgstr ""
-"%s\n"
-"%s はフル充電されています (%i%%)。"
+msgstr "%s\n%s はフル充電されています (%i%%)。"
 
 #: ../src/xfpm-battery.c:440
 #, c-format
@@ -607,19 +586,14 @@ msgid ""
 "%s\n"
 "Your %s is charging (%i%%)\n"
 "%s until is fully charged."
-msgstr ""
-"%s\n"
-"%s は充電中です (%i%%)。\n"
-"フル充電まで %s です。"
+msgstr "%s\n%s は充電中です (%i%%)。\nフル充電まで %s です。"
 
 #: ../src/xfpm-battery.c:449
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is charging (%i%%)."
-msgstr ""
-"%s\n"
-"%s は充電中です (%i%%)。"
+msgstr "%s\n%s は充電中です (%i%%)。"
 
 #: ../src/xfpm-battery.c:460
 #, c-format
@@ -627,48 +601,35 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr ""
-"%s\n"
-"%s を使用しています (%i%%)\n"
-"予想駆動時間は残り %s です"
+msgstr "%s\n%s を使用しています (%i%%)\n予想駆動時間は残り %s です"
 
 #: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr ""
-"%s\n"
-"%s を使用しています (%i%%)。"
+msgstr "%s\n%s を使用しています (%i%%)。"
 
-# FIXME: Does it mean "under refreshing"?
 #: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr ""
-"%s\n"
-"%s は放電中です (%i%%)。"
+msgstr "%s\n%s は放電中です (%i%%)。"
 
-# FIXME: Does it mean "under refreshing"?
 #: ../src/xfpm-battery.c:482
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to charge (%i%%)."
-msgstr ""
-"%s\n"
-"%s は充電中です (%i%%)。"
+msgstr "%s\n%s は充電中です (%i%%)。"
 
 #: ../src/xfpm-battery.c:486
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is empty"
-msgstr ""
-"%s\n"
-"%s は空です。"
+msgstr "%s\n%s は空です。"
 
 #: ../src/xfpm-battery.c:829
 msgid "battery"
@@ -705,15 +666,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Xfce 電源管理 %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
+msgstr "\nXfce 電源管理 %s\n\nPart of the Xfce Goodies Project\nhttp://goodies.xfce.org\n\nLicensed under the GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:376
 msgid "True"
