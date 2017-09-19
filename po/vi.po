@@ -3,337 +3,436 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# truongap <truongap.ars@gmail.com>, 2014
+# Duy Truong Nguyen <truongap.ars@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-29 18:30+0200\n"
-"PO-Revision-Date: 2014-05-10 01:13+0000\n"
-"Last-Translator: truongap <truongap.ars@gmail.com>\n"
-"Language-Team: Vietnamese (http://www.transifex.com/projects/p/xfce4-power-manager/language/vi/)\n"
+"POT-Creation-Date: 2016-02-26 18:30+0100\n"
+"PO-Revision-Date: 2017-09-19 18:02+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"Language-Team: Vietnamese (http://www.transifex.com/xfce/xfce4-power-manager/language/vi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: vi\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:815
-#: ../settings/xfpm-settings.c:883 ../settings/xfpm-settings.c:1032
-#: ../settings/xfpm-settings.c:1209 ../settings/xfpm-settings.c:1266
-#: ../settings/xfpm-settings.c:1318
-msgid "Nothing"
-msgstr "Không làm gì cả"
-
-#: ../data/interfaces/xfpm-settings.ui.h:2
-#: ../settings/xfpm-settings-main.c:121 ../src/xfpm-main.c:498
-msgid "Xfce Power Manager"
-msgstr "Trình quản lý năng lượng của Xfce"
-
-#: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "Power manager settings"
-msgstr "Cài đặt quản lý năng lượng"
-
-#: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "When sleep button is pressed:"
-msgstr "Khi nút ngủ được nhấn:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-msgid "When hibernate button is pressed:"
-msgstr "Khi nút ngủ đông được nhấn:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "When power button is pressed:"
-msgstr "Khi nút nguồn được nhấn:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-msgid "System tray icon: "
-msgstr "Biểu tượng trên khay hệ thống:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:8
-msgid "Monitor power management control"
-msgstr "Điều khiển quản lý năng lượng cho màn hình"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "Show notifications to notify about the battery state"
-msgstr "Hiện thông báo cảnh báo về trình trạng pin"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "<b>General Options</b>"
-msgstr "<b>Tùy chọn chung</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "When laptop lid is closed:"
-msgstr "Khi đóng nắp laptop:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Put the computer to sleep when inactive for:"
-msgstr "Máy tính sẽ ngủ khi không hoạt động trong vòng:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13
-msgid "Spin down hard disks"
-msgstr "Tạm ngưng ổ cứng"
-
-#: ../data/interfaces/xfpm-settings.ui.h:14
-msgid "<b>Actions</b>"
-msgstr "<b>Hành động</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "Actions"
-msgstr "Hành động"
-
-#: ../data/interfaces/xfpm-settings.ui.h:16
-msgid "Put display to sleep when computer is inactive for:"
-msgstr "Màn hình sẽ ngủ khi máy tính không hoạt động trong vòng:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "Switch off display when computer is inactive for:"
-msgstr "Tắt màn hình khi máy không hoạt động trong vòng:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:18
-msgid "<b>Monitor</b>"
-msgstr "<b>Màn hình</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Giảm độ sáng màn hình khi máy không hoạt động trong vòng:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "Level:"
-msgstr "Mức:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "<b>Brightness</b>"
-msgstr "<b>Độ sáng</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:54
-msgid "Monitor"
-msgstr "Màn hình"
-
-#: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "When battery power is critical:"
-msgstr "Khi pin sắp cạn:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:24
-msgid "Prefer power savings over performance"
-msgstr "Ưu tiên tiết kiệm năng lượng hơn hiệu năng"
-
-#. Suspend menu option
-#: ../data/interfaces/xfpm-settings.ui.h:25 ../settings/xfpm-settings.c:820
-#: ../settings/xfpm-settings.c:888 ../settings/xfpm-settings.c:1037
-#: ../settings/xfpm-settings.c:1214 ../settings/xfpm-settings.c:1271
-#: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:527
-#: ../src/xfpm-power.c:840
-msgid "Suspend"
-msgstr "Tạm dừng"
-
-#. Hibernate menu option
-#: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:826
-#: ../settings/xfpm-settings.c:894 ../settings/xfpm-settings.c:1043
-#: ../settings/xfpm-settings.c:1220 ../settings/xfpm-settings.c:1277
-#: ../settings/xfpm-settings.c:1329 ../src/xfpm-power.c:512
-#: ../src/xfpm-power.c:827
-msgid "Hibernate"
-msgstr "Ngủ đông"
-
-#: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "Standby"
-msgstr "Chờ"
-
-#: ../data/interfaces/xfpm-settings.ui.h:28
-msgid "Set computer inactivity sleep mode:"
-msgstr "Đặt chế độ ngủ khi không hoạt động của máy tính:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "Consider the computer on low power at:"
-msgstr "Định nghĩa mức năng lượng thấp:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "Set monitor sleep mode:"
-msgstr "Đặt chế độ ngủ của màn hình:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "Lock screen when going for suspend/hibernate"
-msgstr "Khóa màn hình khi máy tạm dừng hay ngủ đông"
-
-#: ../data/interfaces/xfpm-settings.ui.h:32
-msgid "Notify Network Manager of suspend/hibernate"
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:33
-msgid ""
-"When enabled this signals to network manager that the system is going to "
-"suspend/hibernate so it can power down the network interfaces, saving power."
-msgstr ""
-
-#: ../data/interfaces/xfpm-settings.ui.h:34
-msgid "<b>Advanced Options</b>"
-msgstr "<b>Tùy chọn nâng cao</b>"
-
-#: ../settings/xfpm-settings.c:567 ../settings/xfpm-settings.c:582
-#: ../settings/xfpm-settings.c:609
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:609
+#: ../settings/xfpm-settings.c:624 ../settings/xfpm-settings.c:651
+#: ../settings/xfpm-settings.c:1501
 msgid "Never"
 msgstr "Không bao giờ"
 
-#: ../settings/xfpm-settings.c:570
-msgid "One minute"
-msgstr "1 phút"
+#: ../data/interfaces/xfpm-settings.ui.h:2
+msgid "When the screensaver is activated"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:572 ../settings/xfpm-settings.c:584
-msgid "Minutes"
-msgstr "Phút"
+#: ../data/interfaces/xfpm-settings.ui.h:3
+msgid "When the screensaver is deactivated"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:586 ../settings/xfpm-settings.c:593
-#: ../settings/xfpm-settings.c:594 ../settings/xfpm-settings.c:595
-msgid "One hour"
-msgstr "1 giờ"
+#: ../data/interfaces/xfpm-settings.ui.h:4
+msgid "Nothing"
+msgstr "Không làm gì cả"
 
-#: ../settings/xfpm-settings.c:594 ../settings/xfpm-settings.c:598
-msgid "one minute"
-msgstr "1 phút"
+#: ../data/interfaces/xfpm-settings.ui.h:5 ../settings/xfpm-settings-app.c:175
+#: ../settings/xfpm-settings-app.c:212 ../src/xfpm-main.c:435
+msgid "Xfce Power Manager"
+msgstr "Trình quản lý năng lượng của Xfce"
 
-#: ../settings/xfpm-settings.c:595 ../settings/xfpm-settings.c:599
-msgid "minutes"
-msgstr "phút"
+#: ../data/interfaces/xfpm-settings.ui.h:6
+msgid "Power manager settings"
+msgstr "Cài đặt quản lý năng lượng"
 
-#: ../settings/xfpm-settings.c:597 ../settings/xfpm-settings.c:598
-#: ../settings/xfpm-settings.c:599
-msgid "hours"
-msgstr "giờ"
+#. help dialog
+#: ../data/interfaces/xfpm-settings.ui.h:7
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1141
+msgid "_Help"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:611
-msgid "Seconds"
-msgstr "Giây"
+#: ../data/interfaces/xfpm-settings.ui.h:8
+msgid "_Close"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:798 ../settings/xfpm-settings.c:996
-#: ../settings/xfpm-settings.c:1477
-msgid "Hibernate and suspend operations not supported"
-msgstr "Chế độ ngủ đông và tạm dừng không được hỗ trợ"
+#: ../data/interfaces/xfpm-settings.ui.h:9
+msgid "When power button is pressed:"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:803 ../settings/xfpm-settings.c:1001
-#: ../settings/xfpm-settings.c:1482
-msgid "Hibernate and suspend operations not permitted"
-msgstr "Chế độ ngủ đông và tạm dừng không được cho phép"
+#: ../data/interfaces/xfpm-settings.ui.h:10
+msgid "When sleep button is pressed:"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:832 ../settings/xfpm-settings.c:1226
-#: ../src/xfpm-power.c:853
-msgid "Shutdown"
-msgstr "Tắt máy"
+#: ../data/interfaces/xfpm-settings.ui.h:11
+msgid "When hibernate button is pressed:"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:836 ../settings/xfpm-settings.c:1230
-#: ../settings/xfpm-settings.c:1281 ../settings/xfpm-settings.c:1333
-msgid "Ask"
-msgstr "Hỏi"
+#: ../data/interfaces/xfpm-settings.ui.h:12
+msgid "Handle display brightness _keys"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:898 ../settings/xfpm-settings.c:1047
-msgid "Lock screen"
-msgstr "Khóa màn hình"
+#: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "<b>Buttons</b>"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:966 ../settings/xfpm-settings.c:1116
-msgid "Spinning down hard disks permission denied"
-msgstr "Quyền tạm ngưng ổ cứng bị từ chối"
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "On battery"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1156
-msgid "Always show icon"
-msgstr "Luôn hiện biểu tượng"
+#: ../data/interfaces/xfpm-settings.ui.h:15 ../common/xfpm-power-common.c:358
+msgid "Plugged in"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1159
-msgid "When battery is present"
-msgstr "Khi pin đang sẵn sàng"
+#: ../data/interfaces/xfpm-settings.ui.h:16
+msgid "When laptop lid is closed:"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1162
-msgid "When battery is charging or discharging"
-msgstr "Khi pin đang sạc hoặc đang xả"
+#: ../data/interfaces/xfpm-settings.ui.h:17
+msgid "<b>Laptop Lid</b>"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1165
-msgid "Never show icon"
-msgstr "Không hiện biểu tượng"
+#: ../data/interfaces/xfpm-settings.ui.h:18
+msgid "Status notifications"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1191
-msgid ""
-"Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
-"switch off the display or put it in sleep mode."
-msgstr "Vô hiệu hóa Display Power Management Signaling (DPMS), ví dụ không nỗ lực để tắt màn hình hay đưa nó về chế độ ngủ"
+#: ../data/interfaces/xfpm-settings.ui.h:19
+msgid "System tray icon"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1386
-msgid "Suspend operation not supported"
-msgstr "Chế độ tạm dừng không được hỗ trợ"
+#: ../data/interfaces/xfpm-settings.ui.h:20
+msgid "<b>Appearance</b>"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1392
-msgid "Suspend operation not permitted"
-msgstr "Chế độ tạm dừng không được cho phép"
-
-#: ../settings/xfpm-settings.c:1398
-msgid "Hibernate operation not supported"
-msgstr "Chết độ ngủ đông không được hỗ trợ"
-
-#: ../settings/xfpm-settings.c:1403
-msgid "Hibernate operation not permitted"
-msgstr "Chế độ ngủ đông không được cho phép"
-
-#: ../settings/xfpm-settings.c:1450
-msgid "When all the power sources of the computer reach this charge level"
-msgstr "Khi tất cả các nguồn năng lượng của máy đạt đến mức sạc này"
-
-#: ../settings/xfpm-settings.c:1569 ../settings/xfpm-settings.c:1574
+#: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "General"
 msgstr "Chung"
 
-#: ../settings/xfpm-settings.c:1583 ../settings/xfpm-settings.c:1588
-msgid "On AC"
-msgstr "Dùng nguồn điện"
+#: ../data/interfaces/xfpm-settings.ui.h:22
+msgid "When inactive for"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1598 ../settings/xfpm-settings.c:1603
-msgid "On Battery"
-msgstr "Dùng pin"
+#: ../data/interfaces/xfpm-settings.ui.h:23
+msgid "System sleep mode:"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1612 ../settings/xfpm-settings.c:1617
-msgid "Extended"
-msgstr "Mở rộng"
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "<b>System power saving</b>"
+msgstr ""
 
-#: ../settings/xfpm-settings.c:1686
+#: ../data/interfaces/xfpm-settings.ui.h:25
+msgid "Critical battery power level:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:26
+msgid "On critical battery power:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:27
+msgid "<b>Critical power</b>"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:28
+msgid "Lock screen when system is going for sleep"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:29
+msgid "<b>Security</b>"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:30
+msgid "System"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:31
+msgid "<b>Display power management</b>"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:32
+msgid ""
+"Let the power manager handle display power management (DPMS) instead of X11."
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:33
+msgid "Blank after"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:34
+msgid "Put to sleep after"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:35
+msgid "Switch off after"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:36
+msgid "On inactivity reduce to"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:37
+msgid "Reduce after"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:38
+msgid "<b>Brightness reduction</b>"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:39
+msgid "Display"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:40
+msgid "Automatically lock the session:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:41
+msgid "Delay locking after screensaver for"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:42
+msgid "<b>Light Locker</b>"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:43
+msgid "Security"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:612
+msgid "One minute"
+msgstr "1 phút"
+
+#: ../settings/xfpm-settings.c:614 ../settings/xfpm-settings.c:626
+#: ../settings/xfpm-settings.c:1510
+msgid "Minutes"
+msgstr "Phút"
+
+#: ../settings/xfpm-settings.c:628 ../settings/xfpm-settings.c:635
+#: ../settings/xfpm-settings.c:636 ../settings/xfpm-settings.c:637
+msgid "One hour"
+msgstr "1 giờ"
+
+#: ../settings/xfpm-settings.c:636 ../settings/xfpm-settings.c:640
+msgid "one minute"
+msgstr "1 phút"
+
+#: ../settings/xfpm-settings.c:637 ../settings/xfpm-settings.c:641
+msgid "minutes"
+msgstr "phút"
+
+#: ../settings/xfpm-settings.c:639 ../settings/xfpm-settings.c:640
+#: ../settings/xfpm-settings.c:641
+msgid "hours"
+msgstr "giờ"
+
+#: ../settings/xfpm-settings.c:653 ../settings/xfpm-settings.c:1503
+msgid "Seconds"
+msgstr "Giây"
+
+#: ../settings/xfpm-settings.c:659
+msgid "%"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:845 ../settings/xfpm-settings.c:924
+#: ../settings/xfpm-settings.c:986 ../settings/xfpm-settings.c:1071
+#: ../settings/xfpm-settings.c:1163 ../settings/xfpm-settings.c:1270
+#: ../settings/xfpm-settings.c:1327 ../settings/xfpm-settings.c:1379
+#: ../src/xfpm-power.c:714
+msgid "Suspend"
+msgstr "Tạm dừng"
+
+#: ../settings/xfpm-settings.c:849 ../settings/xfpm-settings.c:1075
+msgid "Suspend operation not permitted"
+msgstr "Chế độ tạm dừng không được cho phép"
+
+#: ../settings/xfpm-settings.c:853 ../settings/xfpm-settings.c:1079
+msgid "Suspend operation not supported"
+msgstr "Chế độ tạm dừng không được hỗ trợ"
+
+#: ../settings/xfpm-settings.c:859 ../settings/xfpm-settings.c:930
+#: ../settings/xfpm-settings.c:992 ../settings/xfpm-settings.c:1085
+#: ../settings/xfpm-settings.c:1169 ../settings/xfpm-settings.c:1276
+#: ../settings/xfpm-settings.c:1333 ../settings/xfpm-settings.c:1385
+#: ../src/xfpm-power.c:703
+msgid "Hibernate"
+msgstr "Ngủ đông"
+
+#: ../settings/xfpm-settings.c:863 ../settings/xfpm-settings.c:1089
+msgid "Hibernate operation not permitted"
+msgstr "Chế độ ngủ đông không được cho phép"
+
+#: ../settings/xfpm-settings.c:867 ../settings/xfpm-settings.c:1093
+msgid "Hibernate operation not supported"
+msgstr "Chết độ ngủ đông không được hỗ trợ"
+
+#: ../settings/xfpm-settings.c:897 ../settings/xfpm-settings.c:1123
+#: ../settings/xfpm-settings.c:1459 ../settings/xfpm-settings.c:1583
+msgid "Hibernate and suspend operations not supported"
+msgstr "Chế độ ngủ đông và tạm dừng không được hỗ trợ"
+
+#: ../settings/xfpm-settings.c:902 ../settings/xfpm-settings.c:1128
+#: ../settings/xfpm-settings.c:1464 ../settings/xfpm-settings.c:1588
+msgid "Hibernate and suspend operations not permitted"
+msgstr "Chế độ ngủ đông và tạm dừng không được cho phép"
+
+#: ../settings/xfpm-settings.c:919 ../settings/xfpm-settings.c:1265
+#: ../settings/xfpm-settings.c:1322 ../settings/xfpm-settings.c:1374
+msgid "Do nothing"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:936 ../settings/xfpm-settings.c:1282
+#: ../src/xfpm-power.c:725
+msgid "Shutdown"
+msgstr "Tắt máy"
+
+#: ../settings/xfpm-settings.c:940 ../settings/xfpm-settings.c:1286
+#: ../settings/xfpm-settings.c:1337 ../settings/xfpm-settings.c:1389
+msgid "Ask"
+msgstr "Hỏi"
+
+#: ../settings/xfpm-settings.c:981 ../settings/xfpm-settings.c:1158
+msgid "Switch off display"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:996 ../settings/xfpm-settings.c:1173
+msgid "Lock screen"
+msgstr "Khóa màn hình"
+
+#: ../settings/xfpm-settings.c:1431
+msgid "When all the power sources of the computer reach this charge level"
+msgstr "Khi tất cả các nguồn năng lượng của máy đạt đến mức sạc này"
+
+#: ../settings/xfpm-settings.c:1505
+msgid "One Minute"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:1844
+msgid "Device"
+msgstr "Thiết bị"
+
+#: ../settings/xfpm-settings.c:1866
+msgid "Type"
+msgstr "Loại"
+
+#: ../settings/xfpm-settings.c:1871
+msgid "PowerSupply"
+msgstr "Nguồn cấp"
+
+#: ../settings/xfpm-settings.c:1872 ../src/xfpm-main.c:77
+msgid "True"
+msgstr "Đúng"
+
+#: ../settings/xfpm-settings.c:1872 ../src/xfpm-main.c:77
+msgid "False"
+msgstr "Sai"
+
+#: ../settings/xfpm-settings.c:1879
+msgid "Model"
+msgstr "Mẫu"
+
+#: ../settings/xfpm-settings.c:1882
+msgid "Technology"
+msgstr "Công nghệ"
+
+#: ../settings/xfpm-settings.c:1889
+msgid "Current charge"
+msgstr ""
+
+#. TRANSLATORS: Unit here is Watt hour
+#: ../settings/xfpm-settings.c:1897 ../settings/xfpm-settings.c:1909
+#: ../settings/xfpm-settings.c:1921
+msgid "Wh"
+msgstr "Wh"
+
+#: ../settings/xfpm-settings.c:1899
+msgid "Fully charged (design)"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:1912
+msgid "Fully charged"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:1923
+msgid "Energy empty"
+msgstr "Dung lượng trống"
+
+#. TRANSLATORS: Unit here is Volt
+#: ../settings/xfpm-settings.c:1931
+msgid "V"
+msgstr "V"
+
+#: ../settings/xfpm-settings.c:1933
+msgid "Voltage"
+msgstr "Điện áp"
+
+#: ../settings/xfpm-settings.c:1940
+msgid "Vendor"
+msgstr "Nhà phân phối"
+
+#: ../settings/xfpm-settings.c:1945
+msgid "Serial"
+msgstr "Số xê-ri"
+
+#: ../settings/xfpm-settings.c:2211
 msgid "Check your power manager installation"
 msgstr "Kiểm quá trình cài đặt trình quản lý năng lượng"
 
-#: ../settings/xfpm-settings-main.c:78
+#: ../settings/xfpm-settings.c:2294
+msgid "Devices"
+msgstr ""
+
+#: ../settings/xfpm-settings-app.c:76
 msgid "Settings manager socket"
 msgstr ""
 
-#: ../settings/xfpm-settings-main.c:78
+#: ../settings/xfpm-settings-app.c:76
 msgid "SOCKET ID"
 msgstr "SOCKET ID"
 
-#: ../settings/xfpm-settings-main.c:89 ../src/xfpm-main.c:374
-#: ../src/xfpm-power-info.c:910
-#, c-format
-msgid "Type '%s --help' for usage."
-msgstr "Gõ \"%s --help\" để xem cách dùng"
+#: ../settings/xfpm-settings-app.c:77
+msgid "Display a specific device by UpDevice object path"
+msgstr ""
 
-#: ../settings/xfpm-settings-main.c:123
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "Thất bại khi nạp thiết lập cho trình quản lý năng lượng, sử dụng mặc định"
+#: ../settings/xfpm-settings-app.c:77
+msgid "UpDevice object path"
+msgstr ""
 
-#: ../settings/xfpm-settings-main.c:150
-msgid "Unable to connect to Xfce Power Manager"
-msgstr "Không thể kết nối với Trình quản lý năng lượng Xfce"
+#: ../settings/xfpm-settings-app.c:78 ../src/xfpm-main.c:268
+msgid "Enable debugging"
+msgstr "Kích hoạt gỡ rối"
 
-#: ../settings/xfpm-settings-main.c:192 ../src/xfpm-main.c:414
-#, c-format
-msgid "Xfce power manager is not running"
-msgstr "Trình quản lý năng lượng Xfce không chạy"
+#: ../settings/xfpm-settings-app.c:79
+msgid "Display version information"
+msgstr ""
 
-#: ../settings/xfpm-settings-main.c:197
-msgid "Run"
-msgstr "Chạy"
+#: ../settings/xfpm-settings-app.c:80
+msgid "Cause xfce4-power-manager-settings to quit"
+msgstr ""
 
-#: ../settings/xfpm-settings-main.c:198
+#: ../settings/xfpm-settings-app.c:177
+msgid "Failed to connect to power manager"
+msgstr ""
+
+#: ../settings/xfpm-settings-app.c:191
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Trình quản lý năng lượng Xfce4 không chạy, bạn có muốn khởi chạy nó ngay bây giờ?"
 
+#: ../settings/xfpm-settings-app.c:214
+msgid "Failed to load power manager configuration, using defaults"
+msgstr "Thất bại khi nạp thiết lập cho trình quản lý năng lượng, sử dụng mặc định"
+
+#: ../settings/xfpm-settings-app.c:346
+#, c-format
+msgid "This is %s version %s, running on Xfce %s.\n"
+msgstr ""
+
+#: ../settings/xfpm-settings-app.c:348
+#, c-format
+msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
+msgstr ""
+
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:273 ../src/xfpm-power.c:623 ../src/xfpm-power.c:768
-#: ../src/xfpm-power.c:813 ../src/xfpm-power.c:983 ../src/xfpm-power.c:1007
-#: ../src/xfpm-battery.c:355 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-power.c:364 ../src/xfpm-power.c:646 ../src/xfpm-power.c:689
+#: ../src/xfpm-power.c:853 ../src/xfpm-power.c:876 ../src/xfpm-battery.c:193
+#: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Trình quản lý năng lượng"
 
@@ -341,203 +440,90 @@ msgstr "Trình quản lý năng lượng"
 msgid "Settings for the Xfce Power Manager"
 msgstr "Cài đặt cho Trình quản lý năng lượng Xfce"
 
-#: ../common/xfpm-common.c:120
+#: ../common/xfpm-common.c:138
 msgid "translator-credits"
 msgstr "Người dịch"
 
-#: ../src/xfpm-power.c:297
-msgid "_Hibernate"
-msgstr "_Ngủ đông"
-
-#: ../src/xfpm-power.c:298
-msgid ""
-"An application is currently disabling the automatic sleep. Doing this action"
-" now may damage the working state of this application."
-msgstr "Một chương trình hiện tại đang tắt chế độ ngủ tự động. Làm điều này ngay bây giờ có thể gây hại cho hoạt động của chương trình này."
-
-#: ../src/xfpm-power.c:300
-msgid "Are you sure you want to hibernate the system?"
-msgstr "Bạn có muốn cho hệ thống ngủ đông?"
-
-#: ../src/xfpm-power.c:337
-msgid "Continue"
-msgstr "Tiếp"
-
-#: ../src/xfpm-power.c:338
-msgid ""
-"None of the screen lock tools ran successfully, the screen will not be "
-"locked."
-msgstr "Không công cụ khóa màn hình nào chạy thành công, màn hình sẽ không bị khóa."
-
-#: ../src/xfpm-power.c:341
-msgid "Do you still want to continue to suspend the system?"
-msgstr "Bạn vẫn muốn tiếp tục tạm dừng hệ thống?"
-
-#: ../src/xfpm-power.c:447
-msgid "Quit"
-msgstr "Thoát"
-
-#: ../src/xfpm-power.c:448
-msgid "All running instances of the power manager will exit"
-msgstr "Mọi trình quản lý năng lượng đang chạy sẽ bị thoát"
-
-#: ../src/xfpm-power.c:450
-msgid "Quit the power manager?"
-msgstr "Thoát trình quản lý năng lượng?"
-
-#. Power information
-#: ../src/xfpm-power.c:562 ../src/xfpm-power-info.c:781
-msgid "Power Information"
-msgstr "Thông tin năng lượng"
-
-#. *
-#. * Power Mode
-#. *
-#. TRANSLATOR: Mode here is the power profile (presentation, power save,
-#. normal)
-#: ../src/xfpm-power.c:578
-msgid "Mode"
-msgstr "Chế độ"
-
-#. Normal
-#: ../src/xfpm-power.c:589
-msgid "Normal"
-msgstr "Bình thường"
-
-#. Normal
-#: ../src/xfpm-power.c:599
-msgid "Presentation"
-msgstr "Trình chiếu"
-
-#: ../src/xfpm-power.c:731
-msgid "Hibernate the system"
-msgstr "Ngủ đông hệ thống"
-
-#: ../src/xfpm-power.c:742
-msgid "Suspend the system"
-msgstr "Tạm dừng hệ thống"
-
-#: ../src/xfpm-power.c:752
-msgid "Shutdown the system"
-msgstr "Tắt hệ thống"
-
-#: ../src/xfpm-power.c:763 ../src/xfpm-power.c:810
-msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Hệ thống đang chạy trên mức năng lượng thấp. Lưu công việc của bạn để tránh mất mát dữ liệu"
-
-#: ../src/xfpm-power.c:984
-msgid "System is running on low power"
-msgstr "Máy đang chạy trên mức năng lượng thấp"
-
-#: ../src/xfpm-power.c:1003
-#, c-format
-msgid ""
-"Your %s charge level is low\n"
-"Estimated time left %s"
-msgstr "Dung lượng pin thấp %s\nThời gian còn lại là %s"
-
-#: ../src/xfpm-power.c:1196 ../src/xfpm-power.c:1201
-msgid "Adaptor is offline"
-msgstr "Bộ sạc không được cắm"
-
-#: ../src/xfpm-power.c:1197 ../src/xfpm-power.c:1202 ../src/xfpm-battery.c:420
-#, c-format
-msgid "Adaptor is online"
-msgstr "Bộ sạc đang được cắm"
-
-#: ../src/xfpm-power.c:1634 ../src/xfpm-power.c:1667 ../src/xfpm-power.c:1686
-#: ../src/xfpm-power.c:1709
-#, c-format
-msgid "Permission denied"
-msgstr "Không có quyền thao tác"
-
-#: ../src/xfpm-power.c:1694 ../src/xfpm-power.c:1717
-#, c-format
-msgid "Suspend not supported"
-msgstr "Tạm dừng không được hỗ trợ"
-
-#: ../src/xfpm-power-common.c:44 ../src/xfpm-power-common.c:67
+#: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
 msgstr "Pin"
 
-#: ../src/xfpm-power-common.c:46 ../src/xfpm-battery.c:813
-msgid "UPS"
-msgstr "UPS"
+#: ../common/xfpm-power-common.c:47
+msgid "Uninterruptible Power Supply"
+msgstr ""
 
-#: ../src/xfpm-power-common.c:48
+#: ../common/xfpm-power-common.c:49
 msgid "Line power"
 msgstr "Đường điện"
 
-#: ../src/xfpm-power-common.c:50
+#: ../common/xfpm-power-common.c:51
 msgid "Mouse"
 msgstr "Chuột"
 
-#: ../src/xfpm-power-common.c:52
+#: ../common/xfpm-power-common.c:53
 msgid "Keyboard"
 msgstr "Bàn phím"
 
-#: ../src/xfpm-power-common.c:56
+#: ../common/xfpm-power-common.c:55
+msgid "Monitor"
+msgstr "Màn hình"
+
+#: ../common/xfpm-power-common.c:57
 msgid "PDA"
 msgstr "PDA"
 
-#: ../src/xfpm-power-common.c:58
+#: ../common/xfpm-power-common.c:59
 msgid "Phone"
 msgstr "Điện thoại"
 
-#: ../src/xfpm-power-common.c:60
+#: ../common/xfpm-power-common.c:61
 msgid "Tablet"
 msgstr "Máy tính bảng"
 
-#: ../src/xfpm-power-common.c:62
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:249
 msgid "Computer"
 msgstr "Máy vi tính"
 
-#: ../src/xfpm-power-common.c:64 ../src/xfpm-power-common.c:79
-#: ../src/xfpm-power-common.c:94 ../src/xfpm-battery.c:831
+#: ../common/xfpm-power-common.c:65 ../common/xfpm-power-common.c:81
+#: ../common/xfpm-power-common.c:96
 msgid "Unknown"
 msgstr "Không rõ"
 
-#: ../src/xfpm-power-common.c:81
+#: ../common/xfpm-power-common.c:83
 msgid "Lithium ion"
 msgstr "Lithium ion"
 
-#: ../src/xfpm-power-common.c:83
+#: ../common/xfpm-power-common.c:85
 msgid "Lithium polymer"
 msgstr "Lithium polymer"
 
-#: ../src/xfpm-power-common.c:85
+#: ../common/xfpm-power-common.c:87
 msgid "Lithium iron phosphate"
 msgstr "Lithium iron phosphate"
 
-#: ../src/xfpm-power-common.c:87
+#: ../common/xfpm-power-common.c:89
 msgid "Lead acid"
 msgstr "Lead acid"
 
-#: ../src/xfpm-power-common.c:89
+#: ../common/xfpm-power-common.c:91
 msgid "Nickel cadmium"
 msgstr "Nickel cadmium"
 
-#: ../src/xfpm-power-common.c:91
+#: ../common/xfpm-power-common.c:93
 msgid "Nickel metal hybride"
 msgstr "Nickel metal hybride"
 
-#. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:144
-#, c-format
-msgid "Brightness: %.0f percent"
-msgstr "Độ sáng: %.0f percent"
-
-#: ../src/xfpm-battery.c:173
+#: ../common/xfpm-power-common.c:114
 msgid "Unknown time"
 msgstr "Không rõ thời gian"
 
-#: ../src/xfpm-battery.c:179
+#: ../common/xfpm-power-common.c:120
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i phút"
 
-#: ../src/xfpm-battery.c:190
+#: ../common/xfpm-power-common.c:131
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -545,169 +531,216 @@ msgstr[0] "%i giờ"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../src/xfpm-battery.c:196
+#: ../common/xfpm-power-common.c:137
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: ../src/xfpm-battery.c:197
+#: ../common/xfpm-power-common.c:138
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "giờ"
 
-#: ../src/xfpm-battery.c:198
+#: ../common/xfpm-power-common.c:139
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "phút"
 
-#: ../src/xfpm-battery.c:213 ../src/xfpm-battery.c:264
+#: ../common/xfpm-power-common.c:285
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%, %s runtime)"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:293
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Fully charged (%0.0f%%)"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:303
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%, %s)"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:311
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Charging (%0.0f%%)"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:321
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%, %s)"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:329
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Discharging (%0.0f%%)"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:336
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Waiting to discharge (%0.0f%%)"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:342
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Waiting to charge (%0.0f%%)"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:348
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"is empty"
+msgstr ""
+
+#. On the 2nd line we want to know if the power cord is plugged
+#. * in or not
+#: ../common/xfpm-power-common.c:357
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%s"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:358
+msgid "Not plugged in"
+msgstr ""
+
+#. Desktop pc with no battery, just display the vendor and model,
+#. * which will probably just be Computer
+#: ../common/xfpm-power-common.c:364
+#, c-format
+msgid "<b>%s %s</b>"
+msgstr ""
+
+#. unknown device state, just display the percentage
+#: ../common/xfpm-power-common.c:369
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Unknown state"
+msgstr ""
+
+#: ../src/xfpm-power.c:393
+msgid ""
+"An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
+"Are you sure you want to hibernate the system?"
+msgstr ""
+
+#: ../src/xfpm-power.c:443
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be locked.\n"
+"Do you still want to continue to suspend the system?"
+msgstr ""
+
+#: ../src/xfpm-power.c:609
+msgid "Hibernate the system"
+msgstr "Ngủ đông hệ thống"
+
+#: ../src/xfpm-power.c:620
+msgid "Suspend the system"
+msgstr "Tạm dừng hệ thống"
+
+#: ../src/xfpm-power.c:630
+msgid "Shutdown the system"
+msgstr "Tắt hệ thống"
+
+#: ../src/xfpm-power.c:641 ../src/xfpm-power.c:686
+msgid "System is running on low power. Save your work to avoid losing data"
+msgstr "Hệ thống đang chạy trên mức năng lượng thấp. Lưu công việc của bạn để tránh mất mát dữ liệu"
+
+#: ../src/xfpm-power.c:732
+msgid "_Cancel"
+msgstr ""
+
+#: ../src/xfpm-power.c:854
+msgid "System is running on low power"
+msgstr "Máy đang chạy trên mức năng lượng thấp"
+
+#: ../src/xfpm-power.c:872
+#, c-format
+msgid ""
+"Your %s charge level is low\n"
+"Estimated time left %s"
+msgstr "Dung lượng pin thấp %s\nThời gian còn lại là %s"
+
+#: ../src/xfpm-power.c:1868 ../src/xfpm-power.c:1915 ../src/xfpm-power.c:1946
+#: ../src/xfpm-power.c:1975
+msgid "Permission denied"
+msgstr "Không có quyền thao tác"
+
+#: ../src/xfpm-power.c:1955 ../src/xfpm-power.c:1984
+msgid "Suspend not supported"
+msgstr "Tạm dừng không được hỗ trợ"
+
+#. generate a human-readable summary for the notification
+#: ../src/xfpm-backlight.c:171
+#, c-format
+msgid "Brightness: %.0f percent"
+msgstr "Độ sáng: %.0f percent"
+
+#: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:163
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "Đã sạc đầy %s"
 
-#: ../src/xfpm-battery.c:216 ../src/xfpm-battery.c:267
+#: ../src/xfpm-battery.c:115 ../src/xfpm-battery.c:166
 #, c-format
 msgid "Your %s is charging"
 msgstr "Đang sạc %s"
 
-#: ../src/xfpm-battery.c:226
+#: ../src/xfpm-battery.c:125
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until it is fully charged."
 msgstr "%s (%i%%)\nCòn %s cho đến khi sạc đầy."
 
-#: ../src/xfpm-battery.c:234 ../src/xfpm-battery.c:270
+#: ../src/xfpm-battery.c:133 ../src/xfpm-battery.c:169
 #, c-format
 msgid "Your %s is discharging"
 msgstr "Đang dùng %s"
 
-#: ../src/xfpm-battery.c:236
+#: ../src/xfpm-battery.c:135
 #, c-format
 msgid "System is running on %s power"
 msgstr "Hệ thống đang chạy bằng %s"
 
-#: ../src/xfpm-battery.c:246
+#: ../src/xfpm-battery.c:145
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s."
 msgstr "%s (%i%%)\nThời gian còn lại là %s."
 
-#: ../src/xfpm-battery.c:252 ../src/xfpm-battery.c:273
+#: ../src/xfpm-battery.c:151 ../src/xfpm-battery.c:172
 #, c-format
 msgid "Your %s is empty"
 msgstr "%s đang trống"
 
-#: ../src/xfpm-battery.c:420
+#. generate a human-readable summary for the notification
+#: ../src/xfpm-kbd-backlight.c:123
 #, c-format
-msgid "System is running on battery power"
-msgstr "Hệ thống đang chạy bằng pin"
+msgid "Keyboard Brightness: %.0f percent"
+msgstr ""
 
-#. Let the user know it's not a system battery being monitored
-#: ../src/xfpm-battery.c:425
-msgid "Peripheral Device"
-msgstr "Thiết bị ngoại vi"
-
-#: ../src/xfpm-battery.c:433
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is fully charged (%i%%).\n"
-"Provides %s runtime"
-msgstr "%s\nĐã sạc đầy %s (%i%%).\nCó thể sử dụng trong khoảng %s"
-
-#: ../src/xfpm-battery.c:442
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is fully charged (%i%%)."
-msgstr "%s\nĐã sạc đầy %s (%i%%)."
-
-#: ../src/xfpm-battery.c:453
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is charging (%i%%)\n"
-"%s until is fully charged."
-msgstr "%s\nĐang sạc %s (%i%%)\nCòn %s cho đến khi đầy."
-
-#: ../src/xfpm-battery.c:462
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is charging (%i%%)."
-msgstr "%s\nĐang sạc pin %s (%i%%)"
-
-#: ../src/xfpm-battery.c:473
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is discharging (%i%%)\n"
-"Estimated time left is %s."
-msgstr "%s\nĐang dùng %s (%i%%)\nThời gian còn lại khoảng %s."
-
-#: ../src/xfpm-battery.c:482
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is discharging (%i%%)."
-msgstr "%s\nĐang dùng %s (%i%%)"
-
-#: ../src/xfpm-battery.c:491
-#, c-format
-msgid ""
-"%s\n"
-"%s waiting to discharge (%i%%)."
-msgstr "%s\nĐang đợi để xả %s (%i%%)."
-
-#: ../src/xfpm-battery.c:495
-#, c-format
-msgid ""
-"%s\n"
-"%s waiting to charge (%i%%)."
-msgstr "%s\nĐang đợi để sạc %s (%i%%)."
-
-#: ../src/xfpm-battery.c:499
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is empty"
-msgstr "%s\nHết %s"
-
-#. unknown device state, just display the percentage
-#: ../src/xfpm-battery.c:504
-#, c-format
-msgid ""
-"%s\n"
-"Your %s is at (%i%%)."
-msgstr "%s\nMức %s là (%i%%)"
-
-#: ../src/xfpm-battery.c:810
-msgid "battery"
-msgstr "pin"
-
-#: ../src/xfpm-battery.c:816
-msgid "monitor battery"
-msgstr "pin màn hình"
-
-#: ../src/xfpm-battery.c:819
-msgid "mouse battery"
-msgstr "pin chuột "
-
-#: ../src/xfpm-battery.c:822
-msgid "keyboard battery"
-msgstr "pin bàn phím"
-
-#: ../src/xfpm-battery.c:825
-msgid "PDA battery"
-msgstr "pin PDA"
-
-#: ../src/xfpm-battery.c:828
-msgid "Phone battery"
-msgstr "pin điện thoại"
-
-#: ../src/xfpm-main.c:53 ../src/xfpm-power-info.c:96
+#: ../src/xfpm-main.c:54
 #, c-format
 msgid ""
 "\n"
@@ -720,359 +753,235 @@ msgid ""
 "\n"
 msgstr "\nTrình quản lý năng lượng Xfce %s\n\nMột phần của Dự án tiện ích Xfce\nhttp://goodies.xfce.org\n\nGiấy phép của GNU GPL\n"
 
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:379
-msgid "True"
-msgstr "Đúng"
-
-#: ../src/xfpm-main.c:76 ../src/xfpm-power-info.c:379
-msgid "False"
-msgstr "Sai"
-
-#: ../src/xfpm-main.c:113
+#: ../src/xfpm-main.c:110
 #, c-format
 msgid "With policykit support\n"
 msgstr "Với hỗ trợ policykit\n"
 
-#: ../src/xfpm-main.c:115
+#: ../src/xfpm-main.c:112
 #, c-format
 msgid "Without policykit support\n"
 msgstr "Không hỗ trợ policy kit\n"
 
-#: ../src/xfpm-main.c:118
+#: ../src/xfpm-main.c:115
 #, c-format
 msgid "With network manager support\n"
 msgstr "Với hỗ trợ quản lý mạng\n"
 
-#: ../src/xfpm-main.c:120
+#: ../src/xfpm-main.c:117
 #, c-format
 msgid "Without network manager support\n"
 msgstr "Không hỗ trợ quản lý mạng\n"
 
-#: ../src/xfpm-main.c:123
-#, c-format
-msgid "With DPMS support\n"
-msgstr "Với hỗ trợ DPMS\n"
-
-#: ../src/xfpm-main.c:125
-#, c-format
-msgid "Without DPMS support\n"
-msgstr "Không hỗ trợ DPMS\n"
-
-#: ../src/xfpm-main.c:141
+#: ../src/xfpm-main.c:131
 msgid "Can suspend"
 msgstr "Có thể tạm dừng"
 
-#: ../src/xfpm-main.c:143
+#: ../src/xfpm-main.c:133
 msgid "Can hibernate"
 msgstr "Có thể ngủ đông"
 
-#: ../src/xfpm-main.c:145
-msgid "Can spin down hard disks"
-msgstr "Có thể tạm ngưng ổ cứng"
-
-#: ../src/xfpm-main.c:147
+#: ../src/xfpm-main.c:135
 msgid "Authorized to suspend"
 msgstr "Đã xác nhận để tạm dừng"
 
-#: ../src/xfpm-main.c:149
+#: ../src/xfpm-main.c:137
 msgid "Authorized to hibernate"
 msgstr "Đã xác nhận để ngủ đông"
 
-#: ../src/xfpm-main.c:151
+#: ../src/xfpm-main.c:139
 msgid "Authorized to shutdown"
 msgstr "Đã xác nhận để tắt máy"
 
-#: ../src/xfpm-main.c:153
-msgid "Authorized to spin down hard disks"
-msgstr "Xác nhận để tạm ngưng ổ cứng"
-
-#: ../src/xfpm-main.c:155
+#: ../src/xfpm-main.c:141
 msgid "Has battery"
 msgstr "Kèm pin"
 
-#: ../src/xfpm-main.c:157
+#: ../src/xfpm-main.c:143
 msgid "Has brightness panel"
 msgstr "Có khung điều chỉnh độ sáng"
 
-#: ../src/xfpm-main.c:159
+#: ../src/xfpm-main.c:145
 msgid "Has power button"
 msgstr "Có nút năng lượng"
 
-#: ../src/xfpm-main.c:161
+#: ../src/xfpm-main.c:147
 msgid "Has hibernate button"
 msgstr "Có nút ngủ đông"
 
-#: ../src/xfpm-main.c:163
+#: ../src/xfpm-main.c:149
 msgid "Has sleep button"
 msgstr "Có nút đi ngủ"
 
-#: ../src/xfpm-main.c:165
+#: ../src/xfpm-main.c:151
 msgid "Has LID"
 msgstr "Có nắp"
 
-#: ../src/xfpm-main.c:347
+#: ../src/xfpm-main.c:267
 msgid "Do not daemonize"
 msgstr ""
 
-#: ../src/xfpm-main.c:348
-msgid "Enable debugging"
-msgstr "Kích hoạt gỡ rối"
-
-#: ../src/xfpm-main.c:349
+#: ../src/xfpm-main.c:269
 msgid "Dump all information"
 msgstr "Loại bỏ mọi thông tin"
 
-#: ../src/xfpm-main.c:350
+#: ../src/xfpm-main.c:270
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Khởi động lại trình quản lý năng lượng Xfce"
 
-#: ../src/xfpm-main.c:351
+#: ../src/xfpm-main.c:271
 msgid "Show the configuration dialog"
 msgstr "Hiện hộp thoại thiết lập"
 
-#: ../src/xfpm-main.c:352
+#: ../src/xfpm-main.c:272
 msgid "Quit any running xfce power manager"
 msgstr "Thoát bất cứ trình quản lý năng lượng xfce nào đang chạy"
 
-#: ../src/xfpm-main.c:353 ../src/xfpm-power-info.c:897
+#: ../src/xfpm-main.c:273
 msgid "Version information"
 msgstr "Thông tin phiên bản"
 
-#: ../src/xfpm-main.c:405
+#: ../src/xfpm-main.c:289
+#, c-format
+msgid "Failed to parse arguments: %s\n"
+msgstr ""
+
+#: ../src/xfpm-main.c:317
+#, c-format
+msgid "Type '%s --help' for usage."
+msgstr "Gõ \"%s --help\" để xem cách dùng"
+
+#: ../src/xfpm-main.c:338
 msgid "Unable to get connection to the message bus session"
 msgstr ""
 
-#: ../src/xfpm-main.c:499
+#: ../src/xfpm-main.c:346
+#, c-format
+msgid "Xfce power manager is not running"
+msgstr "Trình quản lý năng lượng Xfce không chạy"
+
+#: ../src/xfpm-main.c:436
 msgid "Another power manager is already running"
 msgstr "Trình quản lý năng lượng khác đang chạy"
 
-#: ../src/xfpm-main.c:505
+#: ../src/xfpm-main.c:441
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Trình quản lý năng lượng Xfce đang chạy"
 
-#: ../src/xfpm-inhibit.c:331
-#, c-format
+#: ../src/xfpm-inhibit.c:368
 msgid "Invalid arguments"
 msgstr "Cấu trúc không phù hợp"
 
-#: ../src/xfpm-inhibit.c:357
-#, c-format
+#: ../src/xfpm-inhibit.c:401
 msgid "Invalid cookie"
 msgstr "Cookie không phù hợp"
 
-#. TRANSLATORS: the command line was not provided
-#: ../src/xfpm-power-info.c:121
-msgid "No data"
-msgstr "Không có dữ liệu"
-
-#. TRANSLATORS: kernel module, usually a device driver
-#: ../src/xfpm-power-info.c:128 ../src/xfpm-power-info.c:133
-msgid "Kernel module"
-msgstr "Module nhân"
-
-#. TRANSLATORS: kernel housekeeping
-#: ../src/xfpm-power-info.c:138
-msgid "Kernel core"
-msgstr "Lõi nhân"
-
-#. TRANSLATORS: interrupt between processors
-#: ../src/xfpm-power-info.c:143
-msgid "Interprocessor interrupt"
-msgstr ""
-
-#. TRANSLATORS: unknown interrupt
-#: ../src/xfpm-power-info.c:148
-msgid "Interrupt"
-msgstr "Gián đoạn"
-
-#. TRANSLATORS: the keyboard and mouse device event
-#: ../src/xfpm-power-info.c:192
-msgid "PS/2 keyboard/mouse/touchpad"
-msgstr "Bàn phím / chuột / bàn cảm ứng PS/2"
-
-#. TRANSLATORS: ACPI, the Intel power standard on laptops and desktops
-#: ../src/xfpm-power-info.c:195
-msgid "ACPI"
-msgstr "ACPI"
-
-#. TRANSLATORS: serial ATA is a new style of hard disk interface
-#: ../src/xfpm-power-info.c:198
-msgid "Serial ATA"
-msgstr "Serial ATA"
-
-#. TRANSLATORS: this is the old-style ATA interface
-#: ../src/xfpm-power-info.c:201
-msgid "ATA host controller"
-msgstr "Trình điều khiển chính ATA"
-
-#. TRANSLATORS: 802.11 wireless adaptor
-#: ../src/xfpm-power-info.c:204
-msgid "Intel wireless adaptor"
-msgstr "Bộ thu sóng không dây Intel"
-
-#. TRANSLATORS: a timer is something that fires periodically
-#: ../src/xfpm-power-info.c:209 ../src/xfpm-power-info.c:212
-#: ../src/xfpm-power-info.c:215 ../src/xfpm-power-info.c:218
-#: ../src/xfpm-power-info.c:221
-#, c-format
-msgid "Timer %s"
-msgstr "Trình đếm giờ %s"
-
-#. TRANSLATORS: this is a task that's woken up from sleeping
-#: ../src/xfpm-power-info.c:224
-#, c-format
-msgid "Sleep %s"
-msgstr "Ngủ %s"
-
-#. TRANSLATORS: this is a new realtime task
-#: ../src/xfpm-power-info.c:227
-#, c-format
-msgid "New task %s"
-msgstr "Thao tác mới %s"
-
-#. TRANSLATORS: this is a task thats woken to check state
-#: ../src/xfpm-power-info.c:230
-#, c-format
-msgid "Wait %s"
-msgstr "Đợi %s"
-
-#. TRANSLATORS: a work queue is a list of work that has to be done
-#: ../src/xfpm-power-info.c:233 ../src/xfpm-power-info.c:236
-#, c-format
-msgid "Work queue %s"
-msgstr ""
-
-#. TRANSLATORS: this is when the networking subsystem clears out old entries
-#: ../src/xfpm-power-info.c:239
-#, c-format
-msgid "Network route flush %s"
-msgstr ""
-
-#. TRANSLATORS: activity on the USB bus
-#: ../src/xfpm-power-info.c:242
-#, c-format
-msgid "USB activity %s"
-msgstr "Hoạt động USB %s"
-
-#. TRANSLATORS: we've timed out of an aligned timer
-#: ../src/xfpm-power-info.c:245
-#, c-format
-msgid "Wakeup %s"
-msgstr "Thức dậy %s"
-
-#. TRANSLATORS: interupts on the system required for basic operation
-#: ../src/xfpm-power-info.c:248
-msgid "Local interrupts"
-msgstr "Gián đoạn cục bộ"
-
-#. TRANSLATORS: interrupts when a task gets moved from one core to another
-#: ../src/xfpm-power-info.c:251
-msgid "Rescheduling interrupts"
-msgstr ""
-
-#: ../src/xfpm-power-info.c:326
-msgid "Attribute"
-msgstr ""
-
-#: ../src/xfpm-power-info.c:333
-msgid "Value"
-msgstr "Giá trị"
-
-#: ../src/xfpm-power-info.c:343
-msgid "Device"
-msgstr "Thiết bị"
-
-#: ../src/xfpm-power-info.c:370 ../src/xfpm-power-info.c:702
-msgid "Type"
-msgstr "Loại"
-
-#: ../src/xfpm-power-info.c:378
-msgid "PowerSupply"
-msgstr "Nguồn cấp"
-
-#: ../src/xfpm-power-info.c:390
-msgid "Model"
-msgstr "Mẫu"
-
-#: ../src/xfpm-power-info.c:398
-msgid "Technology"
-msgstr "Công nghệ"
-
-#: ../src/xfpm-power-info.c:409
-msgid "Energy percent"
-msgstr "Phần trăm năng lượng"
-
-#. TRANSLATORS: Unit here is Watt hour
-#: ../src/xfpm-power-info.c:419 ../src/xfpm-power-info.c:432
-#: ../src/xfpm-power-info.c:445
-msgid "Wh"
-msgstr "Wh"
-
-#: ../src/xfpm-power-info.c:422
-msgid "Energy full design"
-msgstr "Dung lượng thiết kế"
-
-#: ../src/xfpm-power-info.c:435
-msgid "Energy full"
-msgstr "Dung lượng khi đầy"
-
-#: ../src/xfpm-power-info.c:448
-msgid "Energy empty"
-msgstr "Dung lượng trống"
-
-#. TRANSLATORS: Unit here is Volt
-#: ../src/xfpm-power-info.c:458
-msgid "V"
-msgstr "V"
-
-#: ../src/xfpm-power-info.c:461
-msgid "Voltage"
-msgstr "Điện áp"
-
-#: ../src/xfpm-power-info.c:472
-msgid "Vendor"
-msgstr "Nhà phân phối"
-
-#: ../src/xfpm-power-info.c:482
-msgid "Serial"
-msgstr "Số xê-ri"
-
-#: ../src/xfpm-power-info.c:694
-msgid "Processor"
-msgstr "Bộ xử lý"
-
-#. TANSLATORS: PID, is the process id, e.g what ps x gives
-#: ../src/xfpm-power-info.c:711
-msgid "PID"
-msgstr "PID"
-
-#: ../src/xfpm-power-info.c:717
-msgid "Wakeups"
-msgstr "Thức dậy"
-
-#: ../src/xfpm-power-info.c:723
-msgid "Command"
-msgstr "Lệnh"
-
-#: ../src/xfpm-power-info.c:729
-msgid "Details"
-msgstr "Chi tiết"
+#: ../src/xfpm-manager.c:452
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be "
+"locked."
+msgstr "Không công cụ khóa màn hình nào chạy thành công, màn hình sẽ không bị khóa."
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
 msgstr "Quản lý năng lượng cho môi trường Xfce"
 
-#: ../panel-plugins/brightness/brightness-button.c:180
-#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
-msgid "Control your LCD brightness"
-msgstr "Điều khiển độ sáng màn LCD"
+#. Odds are this is a desktop without any batteries attached
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:268
+msgid "Display battery levels for attached devices"
+msgstr ""
 
-#: ../panel-plugins/brightness/brightness-button.c:182
-msgid "No device found"
-msgstr "Không tìm thấy thiết bị nào"
+#. about dialog
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1147
+msgid "_About"
+msgstr ""
 
-#: ../panel-plugins/brightness/brightness-button.c:645
-#: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
-msgid "Brightness plugin"
-msgstr "Phần mở rộng cho độ sáng"
+#. Translators this is to display which app is inhibiting
+#. * power in the plugin menu. Example:
+#. * VLC is currently inhibiting power management
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1367
+#, c-format
+msgid "%s is currently inhibiting power management"
+msgstr ""
+
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1559
+msgid "<b>Display brightness</b>"
+msgstr ""
+
+#. Presentation mode checkbox
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1583
+msgid "Presentation _mode"
+msgstr ""
+
+#. Power manager settings
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1595
+msgid "_Power manager settings..."
+msgstr ""
+
+#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
+msgid "Power Manager Plugin"
+msgstr ""
+
+#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
+msgid ""
+"Display the battery levels of your devices and control the brightness of "
+"your display"
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
+msgid ""
+"Xfce power manager manages the power sources on the computer and the devices"
+" that can be controlled to reduce their power consumption (such as LCD "
+"brightness level, monitor sleep, CPU frequency scaling)."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
+msgid ""
+"In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
+" interfaces to inform other applications about current power level so that "
+"they can adjust their power consumption, and it provides the inhibit "
+"interface which allows applications to prevent automatic sleep actions via "
+"the power manager; as an example, the operating system’s package manager "
+"should make use of this interface while it is performing update operations."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
+msgid ""
+"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
+"control LCD brightness levels and to monitor battery and device charge "
+"levels."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
+msgid ""
+"This development release mostly fixes bugs and introduces better support for"
+" icon-themes by reducing the device icons and using standard names for them."
+" It also features updated translations. The panel plugin has been renamed to"
+" Power Manager Plugin."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
+msgid ""
+"This development release fixes bugs with suspend and hibernate. It also "
+"improves the panel-plugin, incorporating the functionality of the (now "
+"dropped) brightness panel-plugin. A new popup notification was added to "
+"account for keyboard brightness changes and the Power Manager now also "
+"controls the X11 blank times."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
+msgid ""
+"This development release introduces a lot of new features, among them "
+"suspending/hibernation without systemd and UPower>=0.99. It allows for "
+"individual control of systemd-inhibition, a new panel plugin to monitor "
+"battery and device charge levels replaces the trayicon. The settings dialog "
+"has been completely restructured for better oversight and many open bugs "
+"have been fixed and translations have been updated."
+msgstr ""
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
+msgid ""
+"This stable release fixes compilation problems, a memory leak and a few "
+"other minor bugs. Furthermore it provides updated translations."
+msgstr ""
