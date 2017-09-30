@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-26 18:30+0100\n"
-"PO-Revision-Date: 2017-09-29 17:38+0000\n"
+"PO-Revision-Date: 2017-09-30 13:48+0000\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish (http://www.transifex.com/xfce/xfce4-power-manager/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -165,7 +165,7 @@ msgstr "Sæt i hviletilstand efter"
 
 #: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "Switch off after"
-msgstr "Slå fra efter"
+msgstr "Sluk efter"
 
 #: ../data/interfaces/xfpm-settings.ui.h:36
 msgid "On inactivity reduce to"
@@ -293,7 +293,7 @@ msgstr "Spørg"
 
 #: ../settings/xfpm-settings.c:981 ../settings/xfpm-settings.c:1158
 msgid "Switch off display"
-msgstr "Slå skærm fra"
+msgstr "Sluk skærm"
 
 #: ../settings/xfpm-settings.c:996 ../settings/xfpm-settings.c:1173
 msgid "Lock screen"
@@ -856,7 +856,7 @@ msgstr "Kunne ikke fortolke argumenter: %s\n"
 #: ../src/xfpm-main.c:317
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Tast '%s --help' for brug."
+msgstr "Skriv \"%s --help\" for anvendelse."
 
 #: ../src/xfpm-main.c:338
 msgid "Unable to get connection to the message bus session"
@@ -928,7 +928,7 @@ msgstr "_Strømstyringsindstillinger..."
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr "Strømstyringsudvidelsesmodul"
+msgstr "Strømstyrings-plugin"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
@@ -951,7 +951,7 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "I tillæg tilbyder Xfce-strømstyringen et sæt af freedesktop-kompatible DBus-grænseflader, der informerer andre programmer om det aktuel strømstyrkeniveau, så de kan tilpasse deres strømforbrug, samtidig som det tilbyder inhibit-grænsefladen, der gør det muligt for programmer, at forhindre automatiske hvilehandlinger via strømhåndteringen; som eksempel bør operativsystemets pakkehåndtering gøre brug denne grænseflade, mens den udfører opdateringshandlinger."
+msgstr "I tillæg tilbyder Xfce-strømstyringen et sæt af freedesktop-kompatible DBus-grænseflader, der informerer andre programmer om det nuværende strømstyrkeniveau, så de kan tilpasse deres strømforbrug, samtidig som det tilbyder inhibit-grænsefladen, der gør det muligt for programmer, at forhindre automatiske hvilehandlinger via strømhåndteringen; som eksempel bør operativsystemets pakkehåndtering gøre brug denne grænseflade, mens den udfører opdateringshandlinger."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
@@ -966,7 +966,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr "Denne udviklingsudgivelse rummer hovedsageligt fejlrettelser, og introducerer bedre understøttelse af ikontemaer gennem reduktion af enhedsikoner og brug af standardiserede navne for disse. Den indeholder også opdaterede oversættelser. Panelmodulet er blevet omdøbt til Strømstyringsudvidelsesmodul."
+msgstr "Denne udviklingsudgivelse rummer hovedsageligt fejlrettelser, og introducerer bedre understøttelse af ikontemaer gennem reduktion af enhedsikoner og brug af standardiserede navne for disse. Den indeholder også opdaterede oversættelser. Panelmodulet er blevet omdøbt til Strømstyrings-plugin."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -975,7 +975,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr "Denne udgivelse løser problemer med hvile- og dvaletilstanden. Den forbedrer også panel-udvidelsesmodulet ved at indbygge (det ikke længere vedligeholdte) lysstyrke-udvidelsesmodul. En ny pop op-notifikation er tilføjet til at redegøre for ændringer i lysstyrke på oplyste tastaturer, og strømstyring styrer nu også, hvornår X11 laver blank skærm."
+msgstr "Denne udgivelse løser problemer med hvile- og dvaletilstanden. Den forbedrer også panel-pluginet ved at indbygge (det ikke længere vedligeholdte) lysstyrke-plugin. En ny pop op-notifikation er tilføjet til at redegøre for ændringer i lysstyrke på oplyste tastaturer, og strømstyring styrer nu også, hvornår X11 laver blank skærm."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -985,7 +985,7 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr "Denne udgivelse introducerer en række nye funktioner, deriblandt hvile/dvale uden systemd og UPower>=0.99. Dette giver mulighed for individuel kontrol over systemd-inhibition, et nyt panel-udvidelsesmodul til at overvåge batteriets og enhedernes strømniveau erstatter panelikonet. Dialogen for Indstillinger er blevet omstruktureret totalt for bedre overblik, mange fejl er blevet rettet og oversættelser er blevet opdateret."
+msgstr "Denne udgivelse introducerer en række nye funktioner, deriblandt hvile/dvale uden systemd og UPower>=0.99. Dette giver mulighed for individuel kontrol over systemd-inhibition, et nyt panel-plugin til at overvåge batteriets og enhedernes strømniveau erstatter panelikonet. Dialogen for Indstillinger er blevet omstruktureret totalt for bedre overblik, mange fejl er blevet rettet og oversættelser er blevet opdateret."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
