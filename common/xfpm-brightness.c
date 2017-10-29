@@ -51,7 +51,7 @@ struct XfpmBrightnessPrivate
     gint 		output;
     gboolean		xrandr_has_hw;
     gboolean		helper_has_hw;
-    
+
     gint32		max_level;
     gint32		current_level;
     gint32		min_level;
@@ -68,24 +68,24 @@ xfpm_brightness_xrand_get_limit (XfpmBrightness *brightness, RROutput output, gi
 
     gdk_error_trap_push ();
     info = XRRQueryOutputProperty (gdk_x11_get_default_xdisplay (), output, brightness->priv->backlight);
-    
+
     if (gdk_error_trap_pop () != 0
         || info == NULL)
     {
 	g_warning ("could not get output property");
 	return FALSE;
     }
-    
-    if (!info->range || info->num_values != 2) 
+
+    if (!info->range || info->num_values != 2)
     {
 	g_warning ("no range found");
 	ret = FALSE;
 	goto out;
     }
-    
+
     *min = info->values[0];
     *max = info->values[1];
-    
+
 out:
     XFree (info);
     return ret;
@@ -111,15 +111,15 @@ xfpm_brightness_xrandr_get_level (XfpmBrightness *brightness, RROutput output, g
 	g_warning ("failed to get property");
 	return FALSE;
     }
-    
-    if (actual_type == XA_INTEGER && nitems == 1 && actual_format == 32) 
+
+    if (actual_type == XA_INTEGER && nitems == 1 && actual_format == 32)
     {
 	memcpy (current, prop, sizeof (*current));
 	ret = TRUE;
     }
-    
+
     XFree (prop);
-    
+
     return ret;
 }
 
@@ -131,16 +131,16 @@ xfpm_brightness_xrandr_set_level (XfpmBrightness *brightness, RROutput output, g
     gdk_error_trap_push ();
     XRRChangeOutputProperty (gdk_x11_get_default_xdisplay (), output, brightness->priv->backlight, XA_INTEGER, 32,
 			     PropModeReplace, (unsigned char *) &level, 1);
-			     
+
     XFlush (gdk_x11_get_default_xdisplay ());
     gdk_flush ();
-    
-    if ( gdk_error_trap_pop () ) 
+
+    if ( gdk_error_trap_pop () )
     {
 	    g_warning ("failed to XRRChangeOutputProperty for brightness %d", level);
 	    ret = FALSE;
     }
-    
+
     return ret;
 }
 
@@ -155,7 +155,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     gint32 min, max;
     gboolean ret = FALSE;
     gint i;
-    
+
     gdk_error_trap_push ();
     if (!XRRQueryExtension (gdk_x11_get_default_xdisplay (), &event_base, &error_base) ||
 	!XRRQueryVersion (gdk_x11_get_default_xdisplay (), &major, &minor) )
@@ -171,27 +171,27 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 	g_warning ("XRANDR version < 1.2");
 	return FALSE;
     }
-    
+
 #ifdef RR_PROPERTY_BACKLIGHT
     brightness->priv->backlight = XInternAtom (gdk_x11_get_default_xdisplay (), RR_PROPERTY_BACKLIGHT, True);
     if (brightness->priv->backlight == None) /* fall back to deprecated name */
 #endif
     brightness->priv->backlight = XInternAtom (gdk_x11_get_default_xdisplay (), "BACKLIGHT", True);
-    
-    if (brightness->priv->backlight == None) 
+
+    if (brightness->priv->backlight == None)
     {
 	g_warning ("No outputs have backlight property");
 	return FALSE;
     }
-	
+
     screen = gdk_display_get_default_screen (gdk_display_get_default ());
-    
-    screen_num = gdk_screen_get_number (screen);
+
+    screen_num = gdk_x11_screen_get_screen_number (screen);
 
     gdk_error_trap_push ();
-    
+
     window = RootWindow (gdk_x11_get_default_xdisplay (), screen_num);
-    
+
 #if (RANDR_MAJOR == 1 && RANDR_MINOR >=3 )
     if (major > 1 || minor >= 3)
 	brightness->priv->resource = XRRGetScreenResourcesCurrent (gdk_x11_get_default_xdisplay (), window);
@@ -205,7 +205,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 
 	if ( g_str_has_prefix (info->name, "LVDS") || g_str_has_prefix (info->name, "eDP") )
 	{
-	    
+
 	    if ( xfpm_brightness_xrand_get_limit (brightness, brightness->priv->resource->outputs[i], &min, &max) &&
 		 min != max )
 	    {
@@ -213,14 +213,14 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 		brightness->priv->output = brightness->priv->resource->outputs[i];
 		brightness->priv->step =  max <= 20 ? 1 : max / 10;
 	    }
-	    
+
 	}
 	XRRFreeOutputInfo (info);
     }
 
     if (gdk_error_trap_pop () != 0)
         g_critical ("Failed to get output/resource info");
-    
+
     return ret;
 }
 
@@ -230,9 +230,9 @@ xfpm_brightness_xrand_up (XfpmBrightness *brightness, gint32 *new_level)
     gint32 hw_level;
     gboolean ret = FALSE;
     gint32 set_level;
-    
+
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, &hw_level);
-    
+
     if ( !ret )
 	return FALSE;
 
@@ -241,26 +241,26 @@ xfpm_brightness_xrand_up (XfpmBrightness *brightness, gint32 *new_level)
 	*new_level = brightness->priv->max_level;
 	return TRUE;
     }
-	
+
     set_level = MIN (hw_level + brightness->priv->step, brightness->priv->max_level );
-	
+
     g_warn_if_fail (xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, set_level));
-	
+
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, new_level);
-    
+
     if ( !ret )
     {
 	g_warning ("xfpm_brightness_xrand_up failed for %d", set_level);
 	return FALSE;
     }
-	
+
     /* Nothing changed in the hardware*/
     if ( *new_level == hw_level )
     {
 	g_warning ("xfpm_brightness_xrand_up did not change the hw level to %d", set_level);
 	return FALSE;
     }
-    
+
     return TRUE;
 }
 
@@ -270,37 +270,37 @@ xfpm_brightness_xrand_down (XfpmBrightness *brightness, gint32 *new_level)
     gint32 hw_level;
     gboolean ret;
     gint32 set_level;
-    
+
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, &hw_level);
-    
+
     if ( !ret )
 	return FALSE;
-    
+
     if ( hw_level == brightness->priv->min_level )
     {
 	*new_level = brightness->priv->min_level;
 	return TRUE;
     }
-    
+
     set_level = MAX (hw_level - brightness->priv->step, brightness->priv->min_level);
-    
+
     g_warn_if_fail (xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, set_level));
-	
+
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, new_level);
-    
+
     if ( !ret )
     {
 	g_warning ("xfpm_brightness_xrand_down failed for %d", set_level);
 	return FALSE;
     }
-    
+
     /* Nothing changed in the hardware*/
     if ( *new_level == hw_level )
     {
 	g_warning ("xfpm_brightness_xrand_down did not change the hw level to %d", set_level);
 	return FALSE;
     }
-    
+
     return TRUE;
 }
 
@@ -460,9 +460,9 @@ xfpm_brightness_helper_up (XfpmBrightness *brightness, gint32 *new_level)
     gint32 hw_level;
     gboolean ret = FALSE;
     gint32 set_level;
-    
+
     ret = xfpm_brightness_helper_get_level (brightness, &hw_level);
-    
+
     if ( !ret )
 	return FALSE;
 
@@ -471,26 +471,26 @@ xfpm_brightness_helper_up (XfpmBrightness *brightness, gint32 *new_level)
 	*new_level = brightness->priv->max_level;
 	return TRUE;
     }
-	
+
     set_level = MIN (hw_level + brightness->priv->step, brightness->priv->max_level );
-	
+
     g_warn_if_fail (xfpm_brightness_helper_set_level (brightness, set_level));
-	
+
     ret = xfpm_brightness_helper_get_level (brightness, new_level);
-    
+
     if ( !ret )
     {
 	g_warning ("xfpm_brightness_helper_up failed for %d", set_level);
 	return FALSE;
     }
-	
+
     /* Nothing changed in the hardware*/
     if ( *new_level == hw_level )
     {
 	g_warning ("xfpm_brightness_helper_up did not change the hw level to %d", set_level);
 	return FALSE;
     }
-    
+
     return TRUE;
 }
 
@@ -500,37 +500,37 @@ xfpm_brightness_helper_down (XfpmBrightness *brightness, gint32 *new_level)
     gint32 hw_level;
     gboolean ret;
     gint32 set_level;
-    
+
     ret = xfpm_brightness_helper_get_level (brightness, &hw_level);
-    
+
     if ( !ret )
 	return FALSE;
-    
+
     if ( hw_level <= brightness->priv->min_level )
     {
 	*new_level = brightness->priv->min_level;
 	return TRUE;
     }
-    
+
     set_level = MAX (hw_level - brightness->priv->step, brightness->priv->min_level);
-    
+
     g_warn_if_fail (xfpm_brightness_helper_set_level (brightness, set_level));
-	
+
     ret = xfpm_brightness_helper_get_level (brightness, new_level);
-    
+
     if ( !ret )
     {
 	g_warning ("xfpm_brightness_helper_down failed for %d", set_level);
 	return FALSE;
     }
-    
+
     /* Nothing changed in the hardware*/
     if ( *new_level == hw_level )
     {
 	g_warning ("xfpm_brightness_helper_down did not change the hw level to %d", set_level);
 	return FALSE;
     }
-    
+
     return TRUE;
 }
 
@@ -550,7 +550,7 @@ static void
 xfpm_brightness_init (XfpmBrightness *brightness)
 {
     brightness->priv = XFPM_BRIGHTNESS_GET_PRIVATE (brightness);
-    
+
     brightness->priv->resource = NULL;
     brightness->priv->xrandr_has_hw = FALSE;
     brightness->priv->helper_has_hw = FALSE;
@@ -597,13 +597,13 @@ xfpm_brightness_setup (XfpmBrightness *brightness)
     if ( brightness->priv->xrandr_has_hw )
     {
 	xfpm_brightness_xrand_get_limit (brightness,
-					 brightness->priv->output, 
-					 &brightness->priv->min_level, 
+					 brightness->priv->output,
+					 &brightness->priv->min_level,
 					 &brightness->priv->max_level);
-	g_debug ("Brightness controlled by xrandr, min_level=%d max_level=%d", 
-		 brightness->priv->min_level, 
+	g_debug ("Brightness controlled by xrandr, min_level=%d max_level=%d",
+		 brightness->priv->min_level,
 		 brightness->priv->max_level);
-		 
+
 	return TRUE;
     }
 #ifdef ENABLE_POLKIT
@@ -615,7 +615,7 @@ xfpm_brightness_setup (XfpmBrightness *brightness)
 #else
 	    g_debug ("xrandr not available, brightness controlled by sysfs helper; min_level=%d max_level=%d",
 #endif
-		     brightness->priv->min_level, 
+		     brightness->priv->min_level,
 		     brightness->priv->max_level);
 	    return TRUE;
 	}
@@ -628,11 +628,11 @@ xfpm_brightness_setup (XfpmBrightness *brightness)
 gboolean xfpm_brightness_up (XfpmBrightness *brightness, gint32 *new_level)
 {
     gboolean ret = FALSE;
-    
+
     if ( brightness->priv->xrandr_has_hw )
     {
 	ret = xfpm_brightness_xrand_up (brightness, new_level);
-    }	
+    }
 #ifdef ENABLE_POLKIT
     else if ( brightness->priv->helper_has_hw )
     {
@@ -645,13 +645,13 @@ gboolean xfpm_brightness_up (XfpmBrightness *brightness, gint32 *new_level)
 gboolean xfpm_brightness_down (XfpmBrightness *brightness, gint32 *new_level)
 {
     gboolean ret = FALSE;
-    
+
     if ( brightness->priv->xrandr_has_hw )
     {
 	ret = xfpm_brightness_xrand_down (brightness, new_level);
 	if ( ret )
 	    ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, new_level);
-    }	
+    }
 #ifdef ENABLE_POLKIT
     else if ( brightness->priv->helper_has_hw )
     {
@@ -674,7 +674,7 @@ gint32 xfpm_brightness_get_max_level (XfpmBrightness *brightness)
 gboolean xfpm_brightness_get_level	(XfpmBrightness *brightness, gint32 *level)
 {
     gboolean ret = FALSE;
-    
+
     if ( brightness->priv->xrandr_has_hw )
 	ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, level);
 #ifdef ENABLE_POLKIT
@@ -688,28 +688,28 @@ gboolean xfpm_brightness_get_level	(XfpmBrightness *brightness, gint32 *level)
 gboolean xfpm_brightness_set_level (XfpmBrightness *brightness, gint32 level)
 {
     gboolean ret = FALSE;
-    
+
     if (brightness->priv->xrandr_has_hw )
 	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, level);
 #ifdef ENABLE_POLKIT
     else if ( brightness->priv->helper_has_hw )
 	ret = xfpm_brightness_helper_set_level (brightness, level);
 #endif
-    
+
     return ret;
 }
 
 gboolean xfpm_brightness_dim_down (XfpmBrightness *brightness)
 {
     gboolean ret = FALSE;
-    
+
     if (brightness->priv->xrandr_has_hw )
 	ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, brightness->priv->min_level);
 #ifdef ENABLE_POLKIT
     else if ( brightness->priv->helper_has_hw )
 	ret = xfpm_brightness_helper_set_level (brightness, brightness->priv->min_level);
 #endif
-    
+
     return ret;
 }
 
