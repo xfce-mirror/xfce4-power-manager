@@ -171,7 +171,7 @@ xfpm_backlight_show_notification (XfpmBacklight *backlight, gfloat value)
     }
 
     /* add the brightness value to the notification */
-    notify_notification_set_hint (backlight->priv->n, "value", g_variant_new_double (value));
+    notify_notification_set_hint (backlight->priv->n, "value", g_variant_new_int32 (value));
 
     /* show the notification */
     notify_notification_show (backlight->priv->n, NULL);
