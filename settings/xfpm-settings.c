@@ -607,11 +607,11 @@ format_dpms_value_cb (GtkScale *scale, gdouble value, gpointer data)
 {
     if ( (gint)value == 0 )
     	return g_strdup (_("Never"));
-    
+
     if ( (int)value == 1 )
 	return g_strdup (_("One minute"));
 
-    return g_strdup_printf ("%d %s", (int)value, _("Minutes"));
+    return g_strdup_printf ("%d %s", (int)value, _("minutes"));
 }
 
 
@@ -619,23 +619,23 @@ gchar *
 format_inactivity_value_cb (GtkScale *scale, gdouble value, gpointer data)
 {
     gint h, min;
-    
+
     if ( (gint)value <= 14 )
 	return g_strdup (_("Never"));
     else if ( (gint)value < 60 )
-	return g_strdup_printf ("%d %s", (gint)value, _("Minutes"));
+	return g_strdup_printf ("%d %s", (gint)value, _("minutes"));
     else if ( (gint)value == 60)
 	return g_strdup (_("One hour"));
 
     /* value > 60 */
     h = (gint)value/60;
     min = (gint)value%60;
-    
+
     if ( h <= 1 )
 	if ( min == 0 )      return g_strdup_printf ("%s", _("One hour"));
 	else if ( min == 1 ) return g_strdup_printf ("%s %s", _("One hour"),  _("one minute"));
 	else                 return g_strdup_printf ("%s %d %s", _("One hour"), min, _("minutes"));
-    else 
+    else
 	if ( min == 0 )      return g_strdup_printf ("%d %s", h, _("hours"));
 	else if ( min == 1 ) return g_strdup_printf ("%d %s %s", h, _("hours"), _("one minute"));
 	else                 return g_strdup_printf ("%d %s %d %s", h, _("hours"), min, _("minutes"));
@@ -649,8 +649,8 @@ format_brightness_value_cb (GtkScale *scale, gdouble value, gpointer data)
 {
     if ( (gint)value <= 9 )
     	return g_strdup (_("Never"));
-        
-    return g_strdup_printf ("%d %s", (int)value, _("Seconds"));
+
+    return g_strdup_printf ("%d %s", (int)value, _("seconds"));
 }
 
 gchar *
@@ -1500,14 +1500,14 @@ format_light_locker_value_cb (GtkScale *scale, gdouble value, gpointer data)
     if ( (gint)value <= 0 )
         return g_strdup (_("Never"));
     else if ( value <= 59.0 )
-        return g_strdup_printf ("%d %s", (gint)value, _("Seconds"));
+        return g_strdup_printf ("%d %s", (gint)value, _("seconds"));
     else if ( value >= 60.0)
     {
         min = (gint)value - 60;
         if (min == 0)
-            return g_strdup_printf ("%d %s", (gint)min + 1, _("Minute"));
+            return g_strdup_printf ("%d %s", (gint)min + 1, _("minute"));
         else
-            return g_strdup_printf ("%d %s", (gint)min + 1, _("Minutes"));
+            return g_strdup_printf ("%d %s", (gint)min + 1, _("minutes"));
     }
 }
 
