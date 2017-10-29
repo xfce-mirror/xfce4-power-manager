@@ -122,7 +122,7 @@ xfpm_battery_get_message_from_battery_state (XfpmBattery *battery)
 
 		    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_full);
 
-		    msg = g_strdup_printf (_("%s (%i%%)\n%s until it is fully charged."), tmp, battery->priv->percentage, est_time_str);
+		    msg = g_strdup_printf (_("%s (%i%%)\n%s until it is fully charged"), tmp, battery->priv->percentage, est_time_str);
 		    g_free (est_time_str);
 		    g_free (tmp);
 		}
@@ -142,7 +142,7 @@ xfpm_battery_get_message_from_battery_state (XfpmBattery *battery)
 
 		    est_time_str = xfpm_battery_get_time_string (battery->priv->time_to_empty);
 
-		    msg = g_strdup_printf (_("%s (%i%%)\nEstimated time left is %s."), tmp, battery->priv->percentage, est_time_str);
+		    msg = g_strdup_printf (_("%s (%i%%)\nEstimated time left is %s"), tmp, battery->priv->percentage, est_time_str);
 		    g_free (tmp);
 		    g_free (est_time_str);
 		}
