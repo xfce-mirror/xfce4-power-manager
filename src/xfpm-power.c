@@ -359,7 +359,6 @@ xfpm_power_report_error (XfpmPower *power, const gchar *error, const gchar *icon
 				   error,
 				   icon_name,
 				   10000,
-				   FALSE,
 				   XFPM_NOTIFY_CRITICAL);
 
 }
@@ -848,7 +847,6 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 					       _("System is running on low power"),
 					       xfpm_battery_get_icon_name (battery),
 					       10000,
-					       FALSE,
 					       XFPM_NOTIFY_NORMAL);
 
 	}
@@ -871,7 +869,6 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 					       msg,
 					       xfpm_battery_get_icon_name (battery),
 					       10000,
-					       FALSE,
 					       XFPM_NOTIFY_NORMAL);
 		g_free (msg);
 		g_free (time_str);

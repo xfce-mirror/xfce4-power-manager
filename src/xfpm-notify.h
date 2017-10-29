@@ -32,12 +32,12 @@ G_BEGIN_DECLS
 #define XFPM_NOTIFY(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_NOTIFY, XfpmNotify))
 #define XFPM_IS_NOTIFY(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_NOTIFY))
 
-typedef enum 
+typedef enum
 {
     XFPM_NOTIFY_LOW = 0,
     XFPM_NOTIFY_NORMAL,
     XFPM_NOTIFY_CRITICAL
-    
+
 } XfpmNotifyUrgency;
 
 typedef struct XfpmNotifyPrivate XfpmNotifyPrivate;
@@ -46,13 +46,13 @@ typedef struct
 {
     GObject		  parent;
     XfpmNotifyPrivate	 *priv;
-    
+
 } XfpmNotify;
 
 typedef struct
 {
     GObjectClass          parent_class;
-    
+
 } XfpmNotifyClass;
 
 GType        	 	  xfpm_notify_get_type          	    (void) G_GNUC_CONST;
@@ -63,7 +63,6 @@ void             	  xfpm_notify_show_notification 	    (XfpmNotify *notify,
 								     const gchar *text,
 								     const gchar *icon_name,
 								     gint timeout,
-								     gboolean simple,
 								     XfpmNotifyUrgency urgency);
 
 NotifyNotification       *xfpm_notify_new_notification  	    (XfpmNotify *notify,
@@ -73,17 +72,16 @@ NotifyNotification       *xfpm_notify_new_notification  	    (XfpmNotify *notify
 								     guint timeout,
 								     XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
 
-void 			  xfpm_notify_add_action_to_notification    (XfpmNotify *notify, 
+void 			  xfpm_notify_add_action_to_notification    (XfpmNotify *notify,
 								     NotifyNotification *n,
-								     const gchar *id, 
+								     const gchar *id,
 								     const gchar *action_label,
-								     NotifyActionCallback callback, 
+								     NotifyActionCallback callback,
 								     gpointer data);
-								     
-void 			  xfpm_notify_present_notification 	    (XfpmNotify *notify, 
-								     NotifyNotification *n,
-								     gboolean simple);
-								     
+
+void 			  xfpm_notify_present_notification 	    (XfpmNotify *notify,
+								     NotifyNotification *n);
+
 void                      xfpm_notify_critical                      (XfpmNotify *notify,
 								     NotifyNotification *n);
 

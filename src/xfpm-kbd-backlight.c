@@ -111,21 +111,19 @@ xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self, gfloat value)
 
     if ( self->priv->n == NULL )
     {
+        /* generate a human-readable summary for the notification */
+        summary = g_strdup_printf (_("Keyboard Brightness: %.0f percent"), value);
         self->priv->n = xfpm_notify_new_notification (self->priv->notify,
-                "",
-                "",
+                _("Power Manager"),
+                summary,
                 "keyboard-brightness",
                 0,
                 XFPM_NOTIFY_NORMAL);
+        g_free (summary);
     }
 
-    /* generate a human-readable summary for the notification */
-    summary = g_strdup_printf (_("Keyboard Brightness: %.0f percent"), value);
-    notify_notification_update (self->priv->n, summary, NULL, NULL);
-    g_free (summary);
-
     /* add the brightness value to the notification */
-    notify_notification_set_hint_int32 (self->priv->n, "value", value);
+    notify_notification_set_hint (self->priv->n, "value", value);
 
     /* show the notification */
     notify_notification_show (self->priv->n, NULL);
