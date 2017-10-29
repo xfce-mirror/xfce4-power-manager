@@ -123,7 +123,7 @@ xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self, gfloat value)
     }
 
     /* add the brightness value to the notification */
-    notify_notification_set_hint (self->priv->n, "value", value);
+    notify_notification_set_hint (self->priv->n, "value", g_variant_new_double (value));
 
     /* show the notification */
     notify_notification_show (self->priv->n, NULL);

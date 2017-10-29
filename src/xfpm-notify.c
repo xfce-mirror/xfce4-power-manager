@@ -212,7 +212,7 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
 
 		/* Only set transient hint on non-critical notifications, so that the critical
 			 ones also end up in the notification server's log */
-		if (!notify->priv->critical)
+		if (urgency != XFPM_NOTIFY_CRITICAL)
 				notify_notification_set_hint (n, "transient", g_variant_new_boolean (FALSE));
 		notify_notification_set_hint (n, "image-path", g_variant_new_string (icon_name));
 
@@ -312,6 +312,13 @@ void xfpm_notify_add_action_to_notification (XfpmNotify *notify, NotifyNotificat
 				   (NotifyActionCallback)callback,
 				    data, NULL);
 
+}
+
+static void
+xfpm_notify_closed_cb (NotifyNotification *n, XfpmNotify *notify)
+{
+    notify->priv->notification = NULL;
+    g_object_unref (G_OBJECT (n));
 }
 
 void xfpm_notify_present_notification (XfpmNotify *notify, NotifyNotification *n)
