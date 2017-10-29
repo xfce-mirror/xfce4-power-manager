@@ -138,7 +138,7 @@ G_DEFINE_TYPE (PowerManagerButton, power_manager_button, GTK_TYPE_TOGGLE_BUTTON)
 
 static void power_manager_button_finalize   (GObject *object);
 static GList* find_device_in_list (PowerManagerButton *button, const gchar *object_path);
-static gboolean power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpointer userdata);
+static gboolean power_manager_button_device_icon_draw (GtkWidget *img, cairo_t *cr, gpointer userdata);
 static void power_manager_button_set_icon (PowerManagerButton *button);
 static void power_manager_button_set_label (PowerManagerButton *button, gdouble percentage, guint64 time_to_empty_or_full);
 static void power_manager_button_update_label (PowerManagerButton *button, UpDevice *device);
@@ -330,9 +330,8 @@ power_manager_button_set_label (PowerManagerButton *button, gdouble percentage,
 }
 
 static gboolean
-power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, gpointer userdata)
+power_manager_button_device_icon_draw (GtkWidget *img, cairo_t *cr, gpointer userdata)
 {
-    cairo_t *cr;
     UpDevice *device = NULL;
     guint type = 0, state = 0;
     gdouble percentage;
@@ -371,7 +370,6 @@ power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, 
 
     gtk_widget_get_allocation (img, &allocation);
 
-    cr = gdk_cairo_create (gtk_widget_get_window (img));
     width = allocation.width;
     height = allocation.height;
 
@@ -427,7 +425,6 @@ power_manager_button_device_icon_expose (GtkWidget *img, GdkEventExpose *event, 
         pango_cairo_show_layout (cr, layout);
     }
 
-    cairo_destroy (cr);
     if (layout)
         g_object_unref (layout);
     return FALSE;
@@ -531,7 +528,7 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
 G_GNUC_END_IGNORE_DEPRECATIONS
         battery_device->expose_signal_id = g_signal_connect_after (G_OBJECT (battery_device->img),
                                                                    "draw",
-                                                                   G_CALLBACK (power_manager_button_device_icon_expose),
+                                                                   G_CALLBACK (power_manager_button_device_icon_draw),
                                                                    device);
     }
 }
@@ -1338,7 +1335,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
     g_signal_connect(G_OBJECT (mi), "destroy", G_CALLBACK (menu_item_destroyed_cb), button);
     battery_device->expose_signal_id = g_signal_connect_after (G_OBJECT (battery_device->img),
                                                                "draw",
-                                                               G_CALLBACK (power_manager_button_device_icon_expose),
+                                                               G_CALLBACK (power_manager_button_device_icon_draw),
                                                                battery_device->device);
 
     /* Active calls xfpm settings with the device's id to display details */
