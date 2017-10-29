@@ -85,7 +85,7 @@ power_manager_plugin_configure_response (GtkWidget    *dialog,
     }
 }
 
-/* Update xfconf property if combobox selection is changed */
+/* Update combo if property in channel changes */
 static void
 power_manager_plugin_panel_label_changed (XfconfChannel *channel,
                                           const gchar *property,
@@ -99,6 +99,10 @@ power_manager_plugin_panel_label_changed (XfconfChannel *channel,
 
   list_store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo)));
   current_setting = g_value_get_int (value);
+  /* If the value set in xfconf is invalid, treat it like 0 aka "None" */
+  if (current_setting < 0 ||
+      current_setting > 3)
+      current_setting = 0;
 
   for (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
         gtk_list_store_iter_is_valid (list_store, &iter);
@@ -111,7 +115,7 @@ power_manager_plugin_panel_label_changed (XfconfChannel *channel,
     }
 }
 
-/* Update combo if property in channel changes */
+/* Update xfconf property if combobox selection is changed */
 static void
 power_manager_plugin_combo_changed (GtkComboBox *combo,
                                     gpointer user_data)
@@ -121,13 +125,13 @@ power_manager_plugin_combo_changed (GtkComboBox *combo,
   GtkTreeIter iter;
   int show_panel_label;
 
-  if(!gtk_combo_box_get_active_iter(combo, &iter))
+  if (!gtk_combo_box_get_active_iter (combo, &iter))
     return;
 
   model = gtk_combo_box_get_model (combo);
 
   gtk_tree_model_get (model, &iter, 0, &show_panel_label, -1);
-  xfconf_channel_set_int(channel, PROPERTIES_PREFIX SHOW_PANEL_LABEL, show_panel_label);
+  xfconf_channel_set_int (channel, PROPERTIES_PREFIX SHOW_PANEL_LABEL, show_panel_label);
 }
 
 void
