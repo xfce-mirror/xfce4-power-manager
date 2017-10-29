@@ -1499,15 +1499,16 @@ format_light_locker_value_cb (GtkScale *scale, gdouble value, gpointer data)
 
     if ( (gint)value <= 0 )
         return g_strdup (_("Never"));
-    else if ( (gint)value < 60 )
+    else if ( value <= 59.0 )
         return g_strdup_printf ("%d %s", (gint)value, _("Seconds"));
-    else if ( (gint)value == 60)
-        return g_strdup (_("One Minute"));
-
-    /* value > 60 */
-    min = (gint)value - 60;
-
-    return g_strdup_printf ("%d %s", (gint)min, _("Minutes"));
+    else if ( value >= 60.0)
+    {
+        min = (gint)value - 60;
+        if (min == 0)
+            return g_strdup_printf ("%d %s", (gint)min + 1, _("Minute"));
+        else
+            return g_strdup_printf ("%d %s", (gint)min + 1, _("Minutes"));
+    }
 }
 
 void
@@ -1517,7 +1518,7 @@ light_locker_late_locking_value_changed_cb (GtkWidget *widget, XfconfChannel *ch
     gint      value = (gint)gtk_range_get_value (GTK_RANGE (widget));
 
     if (value > 60) {
-        value = (value - 60) * 60;
+        value = ((value - 60) + 1) * 60;
     }
 
     variant = g_variant_new_uint32 (value);
