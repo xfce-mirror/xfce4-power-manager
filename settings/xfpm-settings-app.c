@@ -141,7 +141,7 @@ xfpm_settings_app_launch (GApplication *app)
     gboolean has_hibernate_button;
     gboolean has_power_button;
     gboolean has_lid;
-    gboolean start_xfpm_if_not_running;
+    gint     start_xfpm_if_not_running;
 
     TRACE ("entering");
 
@@ -192,16 +192,26 @@ xfpm_settings_app_launch (GApplication *app)
         start_xfpm_if_not_running = gtk_dialog_run (GTK_DIALOG (startw));
         gtk_widget_destroy (startw);
 
-        if ( start_xfpm_if_not_running ) 
+        if (start_xfpm_if_not_running == GTK_RESPONSE_YES)
         {
-            g_spawn_command_line_async("xfce4-power-manager",NULL);
+            GAppInfo *app_info;
+            GError   *error = NULL;
+
+            app_info = g_app_info_create_from_commandline ("xfce4-power-manager", "Xfce4 Power Manager",
+                                                           G_APP_INFO_CREATE_SUPPORTS_STARTUP_NOTIFICATION, NULL);
+            if (!g_app_info_launch (app_info, NULL, NULL, &error)) {
+                if (error != NULL) {
+                  g_warning ("xfce4-power-manager could not be launched. %s", error->message);
+                  g_error_free (error);
+                }
+            }
             /* wait 2 seconds for xfpm to startup */
             g_usleep ( 2 * 1000000 );
         }
         else
         {
-            /* continue without starting xfpm, this will probably error out */
-            break;
+            /* exit without starting xfpm */
+            return;
         }
     }
 
