@@ -28,7 +28,7 @@ libxfpmcommon_la_LIBADD =           \
 	$(GTK_LIBS)                     \
 	$(GLIB_LIBS)                    \
 	$(XRANDR_LIBS)                  \
-	$(X11_LIBS)                     \
+	$(LIBX11_LIBS)                     \
 	$(DBUS_GLIB_LIBS)               \
 	$(UPOWER_LIBS)
 
