@@ -1676,6 +1676,20 @@ G_GNUC_END_IGNORE_DEPRECATIONS
     gtk_menu_shell_append (GTK_MENU_SHELL(menu), mi);
     g_signal_connect (G_OBJECT(mi), "activate", G_CALLBACK(xfpm_preferences), NULL);
 
+#if GTK_CHECK_VERSION (3, 22, 0)
+    gtk_menu_popup_at_widget (GTK_MENU (menu),
+                              GTK_WIDGET (button),
+#ifdef XFCE_PLUGIN
+                              xfce_panel_plugin_get_orientation (button->priv->plugin) == GTK_ORIENTATION_VERTICAL
+                              ? GDK_GRAVITY_WEST : GDK_GRAVITY_NORTH,
+                              xfce_panel_plugin_get_orientation (button->priv->plugin) == GTK_ORIENTATION_VERTICAL
+                              ? GDK_GRAVITY_EAST : GDK_GRAVITY_SOUTH,
+#else
+                              GDK_GRAVITY_NORTH,
+                              GDK_GRAVITY_SOUTH,
+#endif
+                              NULL);
+#else
     gtk_menu_popup (GTK_MENU (menu),
                     NULL,
                     NULL,
@@ -1691,4 +1705,5 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 #endif
                     0,
                     gtk_get_current_event_time ());
+#endif
 }
