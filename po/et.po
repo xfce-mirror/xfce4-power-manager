@@ -5,13 +5,14 @@
 # Translators:
 # aquastus <aquastus@gmail.com>, 2011
 # Kristjan Siimson <kristjan.siimson@gmail.com>, 2009
+# Kalur, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-02 23:12+0200\n"
-"PO-Revision-Date: 2017-09-19 18:03+0000\n"
-"Last-Translator: Nick Schermer <nick@xfce.org>\n"
+"PO-Revision-Date: 2017-11-13 22:24+0000\n"
+"Last-Translator: Kalur\n"
 "Language-Team: Estonian (http://www.transifex.com/xfce/xfce4-power-manager/language/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,15 +38,15 @@ msgstr "Vooluhalduri sätted"
 
 #: ../data/interfaces/xfpm-settings.ui.h:4
 msgid "When sleep button is pressed:"
-msgstr "Kui RAM-ile talletamise nuppu vajutatakse:"
+msgstr "Kui vajutatakse unenuppu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
 msgid "When hibernate button is pressed:"
-msgstr "Kui kettale talletamise nuppu vajutatakse:"
+msgstr "Kui vajutatakse talveunenuppu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
 msgid "When power button is pressed:"
-msgstr "Kui toitenuppu vajutatakse:"
+msgstr "Kui vajutatakse toitenuppu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 msgid "System tray icon: "
@@ -97,7 +98,7 @@ msgstr "<b>Kuvar</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Reduce screen brightness when computer is inactive for:"
-msgstr "Tumenda kuvarit, kui arvuti on tegevusetu:"
+msgstr "Vähenda kuvari heledust, kui arvuti on tegevusetu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "Level:"
@@ -105,7 +106,7 @@ msgstr "Tase:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "<b>Brightness</b>"
-msgstr "<b>Eredus</b>"
+msgstr "<b>Heledus</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22 ../src/xfpm-power-common.c:132
 msgid "Monitor"
@@ -126,7 +127,7 @@ msgstr "Eelista voolusäästmist jõudlusele"
 #: ../settings/xfpm-settings.c:1317 ../src/xfpm-power.c:499
 #: ../src/xfpm-power.c:792
 msgid "Suspend"
-msgstr "Seisata"
+msgstr "Tee uinak"
 
 #. Hibernate menu option
 #: ../data/interfaces/xfpm-settings.ui.h:26 ../settings/xfpm-settings.c:820
@@ -135,7 +136,7 @@ msgstr "Seisata"
 #: ../settings/xfpm-settings.c:1323 ../src/xfpm-power.c:484
 #: ../src/xfpm-power.c:779
 msgid "Hibernate"
-msgstr "Puhkeseisund"
+msgstr "Mine talveunne"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "Standby"
@@ -155,7 +156,7 @@ msgstr "Vali kuvari uinumisviis:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "Lock screen when going for suspend/hibernate"
-msgstr "Lukusta ekraan, kui talletatakse kettale või RAM-ile"
+msgstr "Lukusta ekraan, kui minnakse uinaku- või talveunerežiimi"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "<b>Advanced Options</b>"
@@ -194,22 +195,22 @@ msgstr "tundi"
 
 #: ../settings/xfpm-settings.c:611
 msgid "Seconds"
-msgstr "Sekundit"
+msgstr "sekundit"
 
 #: ../settings/xfpm-settings.c:792 ../settings/xfpm-settings.c:990
 #: ../settings/xfpm-settings.c:1470
 msgid "Hibernate and suspend operations not supported"
-msgstr "RAM-ile ja kettale talletamist ei toetata"
+msgstr "Talveund ega uinakut ei toetata"
 
 #: ../settings/xfpm-settings.c:797 ../settings/xfpm-settings.c:995
 #: ../settings/xfpm-settings.c:1475
 msgid "Hibernate and suspend operations not permitted"
-msgstr "RAM-ile ja kettale talletamist ei toetata"
+msgstr "Talveuni ega uinak pole lubatud"
 
 #: ../settings/xfpm-settings.c:826 ../settings/xfpm-settings.c:1220
 #: ../src/xfpm-power.c:805
 msgid "Shutdown"
-msgstr "Sulge"
+msgstr "Lülita välja"
 
 #: ../settings/xfpm-settings.c:830 ../settings/xfpm-settings.c:1224
 #: ../settings/xfpm-settings.c:1275 ../settings/xfpm-settings.c:1327
@@ -244,23 +245,23 @@ msgstr "Ära kunagi näita ikooni"
 msgid ""
 "Disable Display Power Management Signaling (DPMS), e.g don't attempt to "
 "switch off the display or put it in sleep mode."
-msgstr "Lülita välja Kuvari Vooluhaldussignaalid (DPMS), ehk ära ürita kuvarit välja lülitada ega seda uinuma panna."
+msgstr "Keela DPMS-süsteem ehk ära ürita kuvarit välja lülitada ega seda uinuma panna."
 
 #: ../settings/xfpm-settings.c:1379
 msgid "Suspend operation not supported"
-msgstr "RAM-i talletamine pole lubatud"
+msgstr "Uinakut ei toetata"
 
 #: ../settings/xfpm-settings.c:1385
 msgid "Suspend operation not permitted"
-msgstr "RAM-i talletamine pole lubatud"
+msgstr "Uinak pole lubatud"
 
 #: ../settings/xfpm-settings.c:1391
 msgid "Hibernate operation not supported"
-msgstr "Kettale talletamine pole lubatud"
+msgstr "Talveund ei toetata"
 
 #: ../settings/xfpm-settings.c:1396
 msgid "Hibernate operation not permitted"
-msgstr "Kettale talletamine pole lubatud"
+msgstr "Talveuni pole lubatud"
 
 #: ../settings/xfpm-settings.c:1443
 msgid "When all the power sources of the computer reach this charge level"
@@ -388,7 +389,7 @@ msgstr "Esitlus"
 
 #: ../src/xfpm-power.c:693
 msgid "Hibernate the system"
-msgstr "Arvuti puhkeseisundisse"
+msgstr "Vii arvuti talveunne"
 
 #: ../src/xfpm-power.c:704
 msgid "Suspend the system"
@@ -396,7 +397,7 @@ msgstr ""
 
 #: ../src/xfpm-power.c:714
 msgid "Shutdown the system"
-msgstr "Sulge arvuti"
+msgstr "Lülita arvuti välja"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
@@ -443,7 +444,7 @@ msgstr "UPS"
 
 #: ../src/xfpm-power-common.c:126
 msgid "Line power"
-msgstr ""
+msgstr "Võrgutoide"
 
 #: ../src/xfpm-power-common.c:128
 msgid "Mouse"
@@ -714,11 +715,11 @@ msgstr "DPMS toeta\n"
 
 #: ../src/xfpm-main.c:141
 msgid "Can suspend"
-msgstr "Saab seisatada"
+msgstr "Saab uinakusse minna"
 
 #: ../src/xfpm-main.c:143
 msgid "Can hibernate"
-msgstr "Saab talletada kettale"
+msgstr "Saab talveunne minna"
 
 #: ../src/xfpm-main.c:145
 msgid "Can spin down hard disks"
@@ -726,11 +727,11 @@ msgstr ""
 
 #: ../src/xfpm-main.c:147
 msgid "Authorized to suspend"
-msgstr "Lubatud seisatada"
+msgstr "Uinak volitatud"
 
 #: ../src/xfpm-main.c:149
 msgid "Authorized to hibernate"
-msgstr "Lubatud talletada kettale"
+msgstr "Talveuni volitatud"
 
 #: ../src/xfpm-main.c:151
 msgid "Authorized to shutdown"
@@ -742,27 +743,27 @@ msgstr ""
 
 #: ../src/xfpm-main.c:155
 msgid "Has battery"
-msgstr "On aku"
+msgstr "Olemas aku"
 
 #: ../src/xfpm-main.c:157
 msgid "Has brightness panel"
-msgstr "On ereduse riba"
+msgstr "Olemas heleduse riba"
 
 #: ../src/xfpm-main.c:159
 msgid "Has power button"
-msgstr "On toitenupp"
+msgstr "Olemas toitenupp"
 
 #: ../src/xfpm-main.c:161
 msgid "Has hibernate button"
-msgstr "On kettale talletamise nupp"
+msgstr "Olemas talveunenupp"
 
 #: ../src/xfpm-main.c:163
 msgid "Has sleep button"
-msgstr "On RAM-ile talletamise nupp"
+msgstr "Olemas unenupp"
 
 #: ../src/xfpm-main.c:165
 msgid "Has LID"
-msgstr "On LID"
+msgstr "Olemas LID"
 
 #: ../src/xfpm-main.c:264
 msgid "Do not daemonize"
@@ -927,7 +928,7 @@ msgstr ""
 
 #: ../src/xfpm-power-info.c:331
 msgid "Attribute"
-msgstr ""
+msgstr "Atribuut"
 
 #: ../src/xfpm-power-info.c:338
 msgid "Value"
@@ -978,7 +979,7 @@ msgstr "V"
 
 #: ../src/xfpm-power-info.c:461
 msgid "Voltage"
-msgstr ""
+msgstr "Pinge"
 
 #: ../src/xfpm-power-info.c:478
 msgid "Vendor"
@@ -986,7 +987,7 @@ msgstr "Tarnija"
 
 #: ../src/xfpm-power-info.c:495
 msgid "Serial"
-msgstr ""
+msgstr "Järjenumber"
 
 #: ../src/xfpm-power-info.c:731
 msgid "Processor"
@@ -1016,7 +1017,7 @@ msgstr "Xfce töölaua vooluhaldur"
 #: ../panel-plugins/brightness/brightness-button.c:180
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:2
 msgid "Control your LCD brightness"
-msgstr "Juhi LCD ekraani eredust"
+msgstr "Juhi LCD-kuvari eredust"
 
 #: ../panel-plugins/brightness/brightness-button.c:182
 msgid "No device found"
@@ -1025,4 +1026,4 @@ msgstr "Seadmeid ei leitud"
 #: ../panel-plugins/brightness/brightness-button.c:649
 #: ../panel-plugins/brightness/xfce4-brightness-plugin.desktop.in.in.h:1
 msgid "Brightness plugin"
-msgstr "Ereduse plugin"
+msgstr "Heleduse lisamoodul"
