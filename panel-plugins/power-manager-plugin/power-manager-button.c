@@ -1695,4 +1695,9 @@ G_GNUC_END_IGNORE_DEPRECATIONS
                     0,
                     gtk_get_current_event_time ());
 #endif
+
+#ifdef XFCE_PLUGIN
+    xfce_panel_plugin_register_menu (button->priv->plugin,
+                                     GTK_MENU (menu));
+#endif
 }
