@@ -213,6 +213,12 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
         icon_name = g_strdup (XFPM_TABLET_ICON);
     else if ( type == UP_DEVICE_KIND_COMPUTER )
         icon_name = g_strdup (XFPM_COMPUTER_ICON);
+    /* As UPower does not tell us whether a system is a desktop or a laptop we
+       decide this based on whether there is a battery and/or a a lid */
+    else if (!up_client_get_lid_is_present (upower) &&
+             !up_client_get_on_battery (upower) &&
+             g_strcmp0 (upower_icon, "battery-missing-symbolic") == 0)
+        icon_name = g_strdup (XFPM_AC_ADAPTER_ICON);
     else if ( g_strcmp0 (upower_icon, "") != 0 )
         icon_name = g_strndup (upower_icon, icon_base_length);
 

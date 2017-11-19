@@ -491,21 +491,10 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
         /* update the icon */
         g_free (button->priv->panel_icon_name);
 #ifdef XFCE_PLUGIN
-        g_object_get (device,
-                      "icon-name", &icon_name,
-                      NULL);
-
-        /* ignore empty icon names */
-        if (g_strcmp0(icon_name, "") == 0)
-        {
-            g_free (icon_name);
-            icon_name = NULL;
-        }
-
-        if (icon_name == NULL)
-            icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
-#endif
+        button->priv->panel_icon_name = g_strdup_printf ("%s-%s", icon_name, "symbolic");
+#else
         button->priv->panel_icon_name = g_strdup (icon_name);
+#endif
         power_manager_button_set_icon (button);
         /* update the tooltip */
         power_manager_button_set_tooltip (button);
