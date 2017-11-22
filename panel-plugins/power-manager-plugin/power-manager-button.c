@@ -1213,12 +1213,14 @@ power_manager_button_update_label (PowerManagerButton *button, UpDevice *device)
                   "time-to-full", &time_to_full,
                   NULL);
 
-    /* Hide the label if the battery is fully charged
-     * or state unknown (no battery available) */
+    /* Hide the label if the battery is fully charged,
+     * if the state is unknown (no battery available)
+       or if it's a desktop system */
     if (state == UP_DEVICE_STATE_CHARGING)
         power_manager_button_set_label (button, percentage, time_to_full);
     else if (state == UP_DEVICE_STATE_FULLY_CHARGED
-		    || state == UP_DEVICE_STATE_UNKNOWN)
+             || state == UP_DEVICE_STATE_UNKNOWN
+             || g_strcmp0 (button->priv->panel_icon_name, "ac-adapter-symbolic") == 0)
         gtk_widget_hide (GTK_WIDGET (button->priv->panel_label));
     else
         power_manager_button_set_label (button, percentage, time_to_empty);
