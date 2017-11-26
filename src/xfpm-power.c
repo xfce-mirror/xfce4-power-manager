@@ -390,7 +390,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 	gtk_widget_destroy (dialog);
 
 
-	if ( !ret )
+	if ( !ret || ret == GTK_RESPONSE_NO)
 	    return;
     }
 
@@ -441,7 +441,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 	    ret = gtk_dialog_run (GTK_DIALOG (dialog));
 	    gtk_widget_destroy (dialog);
 
-	    if ( !ret )
+	    if ( !ret || ret == GTK_RESPONSE_NO)
 		return;
         }
     }
