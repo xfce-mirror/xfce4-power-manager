@@ -140,6 +140,7 @@ xfpm_settings_app_launch (GApplication *app)
     gboolean has_sleep_button;
     gboolean has_hibernate_button;
     gboolean has_power_button;
+    gboolean has_battery_button;
     gboolean has_lid;
     gint     start_xfpm_if_not_running;
 
@@ -250,6 +251,7 @@ xfpm_settings_app_launch (GApplication *app)
     has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "sleep-button"));
     has_power_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "power-button"));
     has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "hibernate-button"));
+    has_battery_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "battery-button"));
     can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
 
     DBG("socket_id %i", (int)priv->socket_id);
@@ -257,7 +259,7 @@ xfpm_settings_app_launch (GApplication *app)
 
     dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
                                        can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
-                                       has_lid, has_sleep_button, has_hibernate_button, has_power_button,
+                                       has_lid, has_sleep_button, has_hibernate_button, has_power_button, has_battery_button,
                                        priv->socket_id, priv->device_id, GTK_APPLICATION (app));
 
     g_hash_table_destroy (hash);

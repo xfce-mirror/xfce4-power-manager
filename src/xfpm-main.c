@@ -90,6 +90,7 @@ xfpm_dump (GHashTable *hash)
     gboolean has_sleep_button;
     gboolean has_hibernate_button;
     gboolean has_power_button;
+    gboolean has_battery_button;
     gboolean has_lid;
     
     has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
@@ -102,6 +103,7 @@ xfpm_dump (GHashTable *hash)
     has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "sleep-button"));
     has_power_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "power-button"));
     has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "hibernate-button"));
+    has_battery_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "battery-button"));
     can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
 	
     g_print ("---------------------------------------------------\n");
@@ -148,6 +150,8 @@ xfpm_dump (GHashTable *hash)
 	     xfpm_bool_to_local_string (has_hibernate_button),
 	     _("Has sleep button"),
 	      xfpm_bool_to_local_string (has_sleep_button),
+             _("Has battery button"),
+              xfpm_bool_to_local_string (has_battery_button),
 	     _("Has LID"),
 	      xfpm_bool_to_local_string (has_lid));
 }

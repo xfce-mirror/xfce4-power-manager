@@ -125,6 +125,9 @@ void        button_power_changed_cb                 (GtkWidget *w,
 void        button_hibernate_changed_cb            (GtkWidget *w, 
 						    XfconfChannel *channel);
 
+void        button_battery_changed_cb              (GtkWidget *w,
+                                                    XfconfChannel *channel);
+
 void        on_sleep_mode_changed_cb      (GtkWidget *w,
 						    XfconfChannel *channel);
 
@@ -343,6 +346,30 @@ button_hibernate_changed_cb (GtkWidget *w, XfconfChannel *channel)
     if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, value ) )
     {
 	g_critical ("Cannot set value for property %s\n", HIBERNATE_SWITCH_CFG);
+    }
+}
+
+void
+button_battery_changed_cb (GtkWidget *w, XfconfChannel *channel)
+{
+    GtkTreeModel     *model;
+    GtkTreeIter       selected_row;
+    gint value = 0;
+
+    if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+        return;
+
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX(w));
+
+    gtk_tree_model_get(model,
+                       &selected_row,
+                       1,
+                       &value,
+                       -1);
+
+    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BATTERY_SWITCH_CFG, value ) )
+    {
+        g_critical ("Cannot set value for property %s\n", BATTERY_SWITCH_CFG);
     }
 }
 
@@ -1224,7 +1251,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
                        gboolean auth_hibernate, gboolean can_suspend,
                        gboolean can_hibernate, gboolean can_shutdown,
                        gboolean has_sleep_button, gboolean has_hibernate_button,
-                       gboolean has_power_button)
+                       gboolean has_power_button, gboolean has_battery_button)
 {
     GtkWidget *power;
     GtkWidget *power_label;
@@ -1232,6 +1259,8 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *hibernate_label;
     GtkWidget *sleep_w;
     GtkWidget *sleep_label;
+    GtkWidget *battery_w;
+    GtkWidget *battery_label;
     GtkWidget *dpms;
 
     guint  value;
@@ -1408,6 +1437,57 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     {
 	gtk_widget_hide (sleep_w);
 	gtk_widget_hide (sleep_label);
+    }
+
+    /*
+     * Battery button
+     */
+    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+    battery_w = GTK_WIDGET (gtk_builder_get_object (xml, "button-battery-combo"));
+    battery_label = GTK_WIDGET (gtk_builder_get_object (xml, "button-battery-label"));
+
+    if ( has_battery_button )
+    {
+        gtk_combo_box_set_model (GTK_COMBO_BOX(battery_w), GTK_TREE_MODEL(list_store));
+
+        gtk_list_store_append (list_store, &iter);
+        gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
+
+        if ( can_suspend && auth_suspend )
+        {
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
+        }
+
+        if ( can_hibernate && auth_hibernate)
+        {
+            gtk_list_store_append (list_store, &iter);
+            gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
+        }
+
+        gtk_list_store_append (list_store, &iter);
+        gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
+
+        gtk_combo_box_set_active (GTK_COMBO_BOX (battery_w), 0);
+
+        value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BATTERY_SWITCH_CFG, XFPM_DO_NOTHING);
+        for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+              valid;
+              valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+        {
+            gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+                                1, &list_value, -1);
+            if ( value == list_value )
+            {
+                gtk_combo_box_set_active_iter (GTK_COMBO_BOX (battery_w), &iter);
+                break;
+            }
+        }
+    }
+    else
+    {
+        gtk_widget_hide (battery_w);
+        gtk_widget_hide (battery_label);
     }
 }
 
@@ -2178,7 +2258,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                           gboolean has_battery, gboolean has_lcd_brightness,
                           gboolean has_lid, gboolean has_sleep_button,
                           gboolean has_hibernate_button, gboolean has_power_button,
-                          Window id, gchar *device_id, GtkApplication *gtk_app)
+                          gboolean has_battery_button,  Window id, gchar *device_id,
+                          GtkApplication *gtk_app)
 {
     GtkWidget *plug;
     GtkWidget *parent;
@@ -2197,13 +2278,13 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 
     XFPM_DEBUG ("auth_hibernate=%s auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s " \
                 "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s " \
-                "has_hibernate_button=%s has_power_button=%s",
+                "has_hibernate_button=%s has_power_button=%s has_battery_button=%s",
       xfpm_bool_to_string (has_battery), xfpm_bool_to_string (auth_hibernate),
 	  xfpm_bool_to_string (can_shutdown), xfpm_bool_to_string (auth_suspend),
 	  xfpm_bool_to_string (can_suspend), xfpm_bool_to_string (can_hibernate),
 	  xfpm_bool_to_string (has_lcd_brightness), xfpm_bool_to_string (has_lid),
 	  xfpm_bool_to_string (has_sleep_button), xfpm_bool_to_string (has_hibernate_button),
-	  xfpm_bool_to_string (has_power_button));
+	  xfpm_bool_to_string (has_power_button), xfpm_bool_to_string (has_battery_button));
 
     xml = xfpm_builder_new_from_string (xfpm_settings_ui, &error);
     
@@ -2341,7 +2422,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     }
     
     xfpm_settings_general (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, can_shutdown,
-                           has_sleep_button, has_hibernate_button, has_power_button );
+                           has_sleep_button, has_hibernate_button, has_power_button, has_battery_button);
 
     xfpm_settings_advanced (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, has_battery);
 

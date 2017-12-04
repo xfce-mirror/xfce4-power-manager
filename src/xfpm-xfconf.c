@@ -65,6 +65,7 @@ enum
     PROP_POWER_BUTTON,
     PROP_HIBERNATE_BUTTON,
     PROP_SLEEP_BUTTON,
+    PROP_BATTERY_BUTTON,
     PROP_LID_ACTION_ON_AC,
     PROP_LID_ACTION_ON_BATTERY,
     PROP_BRIGHTNESS_LEVEL_ON_AC,
@@ -347,6 +348,18 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							XFPM_DO_NOTHING,
 							XFPM_DO_SHUTDOWN,
 							XFPM_DO_NOTHING,
+                                                        G_PARAM_READWRITE));
+
+    /**
+     * XfpmXfconf::battery-switch-action
+     **/
+    g_object_class_install_property (object_class,
+                                     PROP_BATTERY_BUTTON,
+                                     g_param_spec_uint (BATTERY_SWITCH_CFG,
+                                                        NULL, NULL,
+                                                        XFPM_DO_NOTHING,
+                                                        XFPM_DO_SHUTDOWN,
+                                                        XFPM_DO_NOTHING,
                                                         G_PARAM_READWRITE));
     
     /**

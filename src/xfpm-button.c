@@ -68,7 +68,7 @@ struct XfpmButtonPrivate
     GdkScreen	*screen;
     GdkWindow   *window;
     
-    guint8       mapped_buttons;
+    guint16      mapped_buttons;
 };
 
 enum
@@ -216,7 +216,8 @@ xfpm_button_setup (XfpmButton *button)
     if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN) )
 	button->priv->mapped_buttons |= BRIGHTNESS_KEY_DOWN;
 	
-    xfpm_button_xevent_key (button, XF86XK_Battery, BUTTON_BATTERY);
+    if (xfpm_button_xevent_key (button, XF86XK_Battery, BUTTON_BATTERY))
+        button->priv->mapped_buttons |= BATTERY_KEY;
 
     if ( xfpm_button_xevent_key (button, XF86XK_KbdBrightnessUp, BUTTON_KBD_BRIGHTNESS_UP) )
 	button->priv->mapped_buttons |= KBD_BRIGHTNESS_KEY_UP;
@@ -283,7 +284,7 @@ xfpm_button_new (void)
     return XFPM_BUTTON (xfpm_button_object);
 }
 
-guint8 xfpm_button_get_mapped (XfpmButton *button)
+guint16 xfpm_button_get_mapped (XfpmButton *button)
 {
     g_return_val_if_fail (XFPM_IS_BUTTON (button), 0);
     

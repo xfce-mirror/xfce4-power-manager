@@ -60,6 +60,7 @@ G_BEGIN_DECLS
 #define POWER_SWITCH_CFG                     "power-button-action"
 #define HIBERNATE_SWITCH_CFG                 "hibernate-button-action"
 #define SLEEP_SWITCH_CFG                     "sleep-button-action"
+#define BATTERY_SWITCH_CFG                   "battery-button-action"
 #define LID_SWITCH_ON_AC_CFG                 "lid-action-on-ac"
 #define LID_SWITCH_ON_BATTERY_CFG            "lid-action-on-battery"
 

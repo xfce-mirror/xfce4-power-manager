@@ -392,6 +392,12 @@ xfpm_manager_button_pressed_cb (XfpmButton *bt, XfpmButtonKey type, XfpmManager 
                       HIBERNATE_SWITCH_CFG, &req,
                       NULL);
     }
+    else if ( type == BUTTON_BATTERY )
+    {
+        g_object_get (G_OBJECT (manager->priv->conf),
+                      BATTERY_SWITCH_CFG, &req,
+                      NULL);
+    }
     else
     {
         g_return_if_reached ();
@@ -945,7 +951,7 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
 {
     GHashTable *hash;
 
-    guint8 mapped_buttons;
+    guint16 mapped_buttons;
     gboolean auth_hibernate = FALSE;
     gboolean auth_suspend = FALSE;
     gboolean can_suspend = FALSE;
@@ -953,6 +959,7 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
     gboolean has_sleep_button = FALSE;
     gboolean has_hibernate_button = FALSE;
     gboolean has_power_button = FALSE;
+    gboolean has_battery_button = FALSE;
     gboolean has_battery = TRUE;
     gboolean has_lcd_brightness = TRUE;
     gboolean can_shutdown = TRUE;
@@ -992,10 +999,13 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
         has_hibernate_button = TRUE;
     if ( mapped_buttons & POWER_KEY )
         has_power_button = TRUE;
+    if ( mapped_buttons & BATTERY_KEY )
+        has_battery_button = TRUE;
 
     g_hash_table_insert (hash, g_strdup ("sleep-button"), g_strdup (xfpm_bool_to_string (has_sleep_button)));
     g_hash_table_insert (hash, g_strdup ("power-button"), g_strdup (xfpm_bool_to_string (has_power_button)));
     g_hash_table_insert (hash, g_strdup ("hibernate-button"), g_strdup (xfpm_bool_to_string (has_hibernate_button)));
+    g_hash_table_insert (hash, g_strdup ("battery-button"), g_strdup (xfpm_bool_to_string (has_battery_button)));
     g_hash_table_insert (hash, g_strdup ("auth-suspend"), g_strdup (xfpm_bool_to_string (auth_suspend)));
     g_hash_table_insert (hash, g_strdup ("auth-hibernate"), g_strdup (xfpm_bool_to_string (auth_hibernate)));
     g_hash_table_insert (hash, g_strdup ("can-suspend"), g_strdup (xfpm_bool_to_string (can_suspend)));
