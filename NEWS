@@ -1,3 +1,43 @@
+1.6.1
+=====
+New stable release of xfce4-power-manager.
+
+* Bugfixes:
+ - plugin:
+   - Use libxfce4panel function to obtain desired icon size
+   - Fix menu leak, attach menu to button (Bug #13466)
+   - Hide label in unknown state (Bug #12851)
+   - Add properties dialog (Bug #13270)
+   - Set ac-adapter icon for desktop systems (Bug #13959)
+   - Hide label by default on desktop systems
+   - Block panel autohide if the menu is open
+   - Drop deprecated CSS styles
+ - Fix xfpm startup dialog ignoring response (Bug #13700)
+ - Fix handling of dialog responses for suspend and hibernate (Bug #13405)
+ - Set the transient hint for notifications
+ - Fix scale description and values for light-locker (Bug #13303)
+ - Drop period at end of all tooltip texts (Bug #12342)
+ - Make tooltip more concise (Bug #12342)
+ - When locking fallback to xflock4 first (Bug #12603)
+ - Fix a crash when warning about the screenlocker (Bug #12603)
+ - Fix showing inhibits in the systray (Bug #12605)
+ - Fix the g_object_bindings in xfce-screensaver
+ - Handle screensaver activity with it's own class (Bug #12603)
+ - Fix the 3.20 deprecation warnings
+ - Use the kernel-supplied backlight type rather than a whitelist (Bug #12553)
+ - Fix build on FreeBSD and DragonFlyBSD (Bug #13984)
+ - Add MATE to NotShowIn list (Bug #12506)
+
+* Translation updates:
+  Arabic, Asturian, Basque, Bulgarian, Catalan, Chinese (China),
+  Chinese (Hong Kong), Chinese (Taiwan), Croatian, Czech, Danish,
+  Dutch (Flemish), English (Australia), English (Great Britain),
+  Estonian, Finnish, French, Galician, German, Greek, Hebrew, Hungarian,
+  Icelandic, Indonesian, Italian, Japanese, Kazakh, Korean, Lithuanian,
+  Malay, Norwegian Bokmål, Norwegian Nynorsk, Occitan, Polish, Portuguese,
+  Portuguese (Brazilian), Romanian, Russian, Serbian, Slovak, Slovenian,
+  Spanish, Swedish, Thai, Turkish, Ukrainian, Uyghur, Vietnamese
+
 1.6.0
 =====
 New stable release of xfce4-power-manager.
