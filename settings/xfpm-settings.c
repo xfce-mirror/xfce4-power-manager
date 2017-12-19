@@ -1579,9 +1579,9 @@ format_light_locker_value_cb (GtkScale *scale, gdouble value, gpointer data)
 
     if ( (gint)value <= 0 )
         return g_strdup (_("Never"));
-    else if ( value <= 59.0 )
+    else if ( value < 60.0 )
         return g_strdup_printf ("%d %s", (gint)value, _("seconds"));
-    else if ( value >= 60.0)
+    else
     {
         min = (gint)value - 60;
         if (min == 0)
