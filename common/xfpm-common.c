@@ -117,24 +117,30 @@ xfpm_about (gpointer data)
 gboolean xfpm_is_multihead_connected (void)
 {
     GdkDisplay *dpy;
+#if !GTK_CHECK_VERSION (3, 22, 0)
     GdkScreen *screen;
+#endif
     gint nmonitor;
     
     dpy = gdk_display_get_default ();
 
+#if !GTK_CHECK_VERSION (3, 22, 0)
+    nmonitor = 1;
     screen = gdk_display_get_screen (dpy, 0);
     if ( screen )
-    {
 	nmonitor = gdk_screen_get_n_monitors (screen);
-	if ( nmonitor > 1 )
-	{
-	    g_debug ("Multiple monitor connected");
-	    return TRUE;
-	}
-	else
-	{
-	    return FALSE;
-	}
+#else
+    nmonitor = gdk_display_get_n_monitors (dpy);
+#endif
+
+    if ( nmonitor > 1 )
+    {
+        g_debug ("Multiple monitor connected");
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
     }
     
     return FALSE;

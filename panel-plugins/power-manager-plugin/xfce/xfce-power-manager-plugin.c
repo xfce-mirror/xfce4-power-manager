@@ -134,17 +134,15 @@ power_manager_plugin_combo_changed (GtkComboBox *combo,
   xfconf_channel_set_int (channel, PROPERTIES_PREFIX SHOW_PANEL_LABEL, show_panel_label);
 }
 
-void
+static void
 power_manager_plugin_configure (XfcePanelPlugin      *plugin,
                                 PowerManagerPlugin   *power_manager_plugin)
 {
   GtkWidget *dialog;
-  GtkWidget *grid, *combo, *label, *check;
-  GtkAdjustment *adjustment;
+  GtkWidget *grid, *combo, *label;
   gint show_panel_label;
   XfconfChannel   *channel;
   GtkListStore *list_store;
-  GtkTreePath *path;
   GtkTreeIter iter, active_iter;
   GtkCellRenderer *cell;
   gint i;

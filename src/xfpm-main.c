@@ -129,6 +129,7 @@ xfpm_dump (GHashTable *hash)
 	      "%s: %s\n"
 	      "%s: %s\n"
 	      "%s: %s\n"
+	      "%s: %s\n"
 	      "%s: %s\n",
 	     _("Can suspend"),
 	     xfpm_bool_to_local_string (can_suspend),
