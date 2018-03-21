@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-02 23:12+0200\n"
-"PO-Revision-Date: 2018-03-19 19:39+0000\n"
+"PO-Revision-Date: 2018-03-21 18:35+0000\n"
 "Last-Translator: Zmicer Turok <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian (http://www.transifex.com/xfce/xfce4-power-manager/language/be/)\n"
 "MIME-Version: 1.0\n"
@@ -112,7 +112,7 @@ msgstr "Манітор"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "When battery power is critical:"
-msgstr "Калі ўзровень батарэі крытычны:"
+msgstr "Калі ўзровень зараду батарэі крытычны:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "Prefer power savings over performance"
@@ -146,7 +146,7 @@ msgstr "Пры адсутнасці актыўнасці пераходзіць 
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "Consider the computer on low power at:"
-msgstr "Лічыць узровень насілкоўвання нізкім пры:"
+msgstr "Лічыць узровень зараду нізкім пры:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "Set monitor sleep mode:"
@@ -233,7 +233,7 @@ msgstr "Калі ёсць батарэя"
 
 #: ../settings/xfpm-settings.c:1156
 msgid "When battery is charging or discharging"
-msgstr "Калі батарэя насілкоўваецца альбо разсілкоўваецца"
+msgstr "Калі батарэя насілкоўваецца альбо разраджаецца"
 
 #: ../settings/xfpm-settings.c:1159
 msgid "Never show icon"
@@ -263,7 +263,7 @@ msgstr "Усыпленне забаронена"
 
 #: ../settings/xfpm-settings.c:1443
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Калі ўзровень насілкоўвання ўсіх крыніц падобны зададзенаму"
+msgstr "Калі ўзровень зараду ўсіх крыніц падобны зададзенаму"
 
 #: ../settings/xfpm-settings.c:1546 ../settings/xfpm-settings.c:1551
 msgid "General"
@@ -399,18 +399,18 @@ msgstr "Выключыць сістэму"
 
 #: ../src/xfpm-power.c:725 ../src/xfpm-power.c:763
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Сістэма запушчана на батарэі з нізкім узроўнем. Захавайце працу каб пазбегнуць страты даных"
+msgstr "Сістэма запушчана на батарэі з нізкім узроўнем зараду. Захавайце працу каб пазбегнуць страты даных"
 
 #: ../src/xfpm-power.c:936
 msgid "System is running on low power"
-msgstr "Сістэма запушчана на батарэі з нізкім узроўнем"
+msgstr "Сістэма запушчана на батарэі з нізкім узроўнем зараду"
 
 #: ../src/xfpm-power.c:955
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "Прылада %s амаль разсілкована\nЗасталося часу %s"
+msgstr "Прылада %s амаль разраджана\nЗасталося часу %s"
 
 #: ../src/xfpm-power.c:1158 ../src/xfpm-power.c:1163
 msgid "Adaptor is offline"
@@ -537,7 +537,7 @@ msgstr[3] "хвілін"
 #: ../src/xfpm-battery.c:211 ../src/xfpm-battery.c:262
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "Вашая прылада %s цалкам насілкована"
+msgstr "Вашая прылада %s поўнасцю насілкована"
 
 #: ../src/xfpm-battery.c:214 ../src/xfpm-battery.c:265
 #, c-format
@@ -554,7 +554,7 @@ msgstr "%s (%i%%)\n%s да поўнага насілкоўвання."
 #: ../src/xfpm-battery.c:232 ../src/xfpm-battery.c:268
 #, c-format
 msgid "Your %s is discharging"
-msgstr "Вашая прылада %s разсілкоўваецца"
+msgstr "Вашая прылада %s разраджаецца"
 
 #: ../src/xfpm-battery.c:234
 #, c-format
@@ -614,21 +614,21 @@ msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)\n"
 "Estimated time left is %s."
-msgstr "%s\nВашая прылада %s разсілкоўваецца (%i%%)\n%s да выключэння."
+msgstr "%s\nВашая прылада %s разраджаецца (%i%%)\n%s да выключэння."
 
 #: ../src/xfpm-battery.c:469
 #, c-format
 msgid ""
 "%s\n"
 "Your %s is discharging (%i%%)."
-msgstr "%s\nВашая прылада %s разсілкоўваецца (%i%%)."
+msgstr "%s\nВашая прылада %s разраджаецца (%i%%)."
 
 #: ../src/xfpm-battery.c:478
 #, c-format
 msgid ""
 "%s\n"
 "%s waiting to discharge (%i%%)."
-msgstr "%s\n%s чакае разсілкавання (%i%%)."
+msgstr "%s\n%s чакае разрадкі (%i%%)."
 
 #: ../src/xfpm-battery.c:482
 #, c-format
@@ -976,7 +976,7 @@ msgstr "Цалкам насілкована"
 
 #: ../src/xfpm-power-info.c:448
 msgid "Energy empty"
-msgstr "Разсілкована"
+msgstr "Разраджана"
 
 #. TRANSLATORS: Unit here is volt
 #: ../src/xfpm-power-info.c:456
