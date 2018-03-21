@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 06:31+0100\n"
-"PO-Revision-Date: 2018-03-19 19:39+0000\n"
+"PO-Revision-Date: 2018-03-21 18:35+0000\n"
 "Last-Translator: Zmicer Turok <zmicerturok@gmail.com>\n"
 "Language-Team: Belarusian (http://www.transifex.com/xfce/xfce4-power-manager/language/be/)\n"
 "MIME-Version: 1.0\n"
@@ -125,11 +125,11 @@ msgstr "<b>Сістэмнае захаванне энергіі</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "Critical battery power level:"
-msgstr "Крытычны ўзровень батарэі:"
+msgstr "Крытычны ўзровень зараду батарэі:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "On critical battery power:"
-msgstr "Крытычны ўзровень батарэі:"
+msgstr "Крытычны ўзровень зараду батарэі:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "<b>Critical power</b>"
@@ -301,7 +301,7 @@ msgstr "Заблакаваць экран"
 
 #: ../settings/xfpm-settings.c:1511
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Калі ўзровень насілкоўвання ўсіх крыніц падобны зададзенаму"
+msgstr "Калі ўзровень зараду ўсіх крыніц падобны зададзенаму"
 
 #: ../settings/xfpm-settings.c:1588 ../common/xfpm-power-common.c:139
 msgid "minute"
@@ -341,7 +341,7 @@ msgstr "Тэхналогія"
 
 #: ../settings/xfpm-settings.c:1970
 msgid "Current charge"
-msgstr "Бягучы ўзровень батарэі"
+msgstr "Бягучы ўзровень зараду батарэі"
 
 #. TRANSLATORS: Unit here is Watt hour
 #: ../settings/xfpm-settings.c:1978 ../settings/xfpm-settings.c:1990
@@ -351,15 +351,15 @@ msgstr "Wh"
 
 #: ../settings/xfpm-settings.c:1980
 msgid "Fully charged (design)"
-msgstr "Цалкам насілкована (намінальна)"
+msgstr "Поўнасцю насілкована (намінальна)"
 
 #: ../settings/xfpm-settings.c:1993
 msgid "Fully charged"
-msgstr "Цалкам насілкована"
+msgstr "Поўнасцю насілкована"
 
 #: ../settings/xfpm-settings.c:2004
 msgid "Energy empty"
-msgstr "Разсілкована"
+msgstr "Разраджана"
 
 #. TRANSLATORS: Unit here is Volt
 #: ../settings/xfpm-settings.c:2012
@@ -563,14 +563,14 @@ msgstr[3] "гадзін"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr "<b>%s %s</b>\nЦалкам насілкована (%0.0f%%, %s засталося)"
+msgstr "<b>%s %s</b>\nПоўнасцю насілкована (%0.0f%%, %s засталося)"
 
 #: ../common/xfpm-power-common.c:299
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr "<b>%s %s</b>\nЦалкам насілкована (%0.0f%%)"
+msgstr "<b>%s %s</b>\nПоўнасцю насілкована (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:309
 #, c-format
@@ -591,35 +591,35 @@ msgstr "<b>%s %s</b>\nНасілкоўваецца (%0.0f%%)"
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
-msgstr "<b>%s %s</b>\nРазсілкоўваецца (%0.0f%%, %s)"
+msgstr "<b>%s %s</b>\nРазраджаецца (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:335
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
-msgstr "<b>%s %s</b>\nРазсілкоўваецца (%0.0f%%)"
+msgstr "<b>%s %s</b>\nРазраджаецца (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:342
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nЧакае разсілкоўвання (%0.0f%%)"
+msgstr "<b>%s %s</b>\nЧакае разрадкі (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:348
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nЧакае насілкоўвання (%0.0f%%)"
+msgstr "<b>%s %s</b>\nЧакае зарадкі (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:354
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\nразсілкована"
+msgstr "<b>%s %s</b>\nразраджана"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -675,7 +675,7 @@ msgstr "Выключыць сістэму"
 
 #: ../src/xfpm-power.c:634 ../src/xfpm-power.c:679
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Сістэма запушчана на батарэі з нізкім узроўнем. Захавайце працу каб пазбегнуць страты даных"
+msgstr "Сістэма запушчана на батарэі з нізкім узроўнем зараду. Захавайце працу каб пазбегнуць страты даных"
 
 #: ../src/xfpm-power.c:725
 msgid "_Cancel"
@@ -683,14 +683,14 @@ msgstr "_Скасаваць"
 
 #: ../src/xfpm-power.c:847
 msgid "System is running on low power"
-msgstr "Сістэма запушчана на батарэі з нізкім узроўнем"
+msgstr "Сістэма запушчана на батарэі з нізкім узроўнем зараду"
 
 #: ../src/xfpm-power.c:864
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "Прылада %s амаль разсілкована\nЗасталося часу %s"
+msgstr "Прылада %s амаль разраджана\nЗасталося часу %s"
 
 #: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1723
 #: ../src/xfpm-power.c:1752
@@ -727,7 +727,7 @@ msgstr "%s (%i%%)\n%s да поўнага насілкоўвання"
 #: ../src/xfpm-battery.c:133 ../src/xfpm-battery.c:169
 #, c-format
 msgid "Your %s is discharging"
-msgstr "Вашая прылада %s разсілкоўваецца"
+msgstr "Вашая прылада %s разраджаецца"
 
 #: ../src/xfpm-battery.c:135
 #, c-format
@@ -974,7 +974,7 @@ msgstr "Убудова кіраўніка сілкавання"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr "Паказвае ўзровень насілкоўвання вашых прылад і рэгулюе яркасць экрану"
+msgstr "Паказвае ўзровень зараду вашых прылад і рэгулюе яркасць экрану"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
@@ -991,14 +991,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Дадаткова кіраўнік сілкавання Xfce задае інтэрфейсы для DBus,сумяшчальныя з freedesktop, для апавяшчэння праграм аб бягучым узроўні батарэі для магчымасці змены імі выкарыстання энэргіі. Таксама ёсць інтэрфейс прадухіляючы аўтаматычны пераход у рэжым сну ў кіраўніку сілкавання. Напрыклад, кіраўнік пакункаў мусіць выкарыстоўваць гэты інтэрфейс падчас абнаўлення."
+msgstr "Дадаткова кіраўнік сілкавання Xfce задае інтэрфейсы для DBus,сумяшчальныя з freedesktop, для апавяшчэння праграм аб бягучым узроўні зараду батарэі для магчымасці змены імі выкарыстання энэргіі. Таксама ёсць інтэрфейс прадухіляючы аўтаматычны пераход у рэжым сну ў кіраўніку сілкавання. Напрыклад, кіраўнік пакункаў мусіць выкарыстоўваць гэты інтэрфейс падчас абнаўлення."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Кіраўнік сілкавання таксама прапануе ўбудову панэляў Xfce і LXDE для кіравання яркасцю LCD-дысплеяў і кіраваннем узроўнем насілкоўвання батарэі і прылад."
+msgstr "Кіраўнік сілкавання таксама прапануе ўбудову панэляў Xfce і LXDE для кіравання яркасцю LCD-дысплеяў і кіраваннем узроўнем зараду батарэі і прылад."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
