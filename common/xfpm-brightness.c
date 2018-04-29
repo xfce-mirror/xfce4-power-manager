@@ -44,6 +44,8 @@ static void xfpm_brightness_finalize   (GObject *object);
 #define XFPM_BRIGHTNESS_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_BRIGHTNESS, XfpmBrightnessPrivate))
 
+#define NUMBER_OF_STEPS 25
+
 struct XfpmBrightnessPrivate
 {
     XRRScreenResources *resource;
@@ -211,7 +213,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 	    {
 		ret = TRUE;
 		brightness->priv->output = brightness->priv->resource->outputs[i];
-		brightness->priv->step =  max <= 20 ? 1 : max / 10;
+		brightness->priv->step =  max <= 20 ? 1 : max / NUMBER_OF_STEPS;
 	    }
 
 	}
@@ -363,7 +365,7 @@ xfpm_brightness_setup_helper (XfpmBrightness *brightness)
 	brightness->priv->helper_has_hw = TRUE;
 	brightness->priv->min_level = 0;
 	brightness->priv->max_level = ret;
-	brightness->priv->step =  ret <= 20 ? 1 : ret / 10;
+	brightness->priv->step =  ret <= 20 ? 1 : ret / NUMBER_OF_STEPS;
     }
 
     return brightness->priv->helper_has_hw;
