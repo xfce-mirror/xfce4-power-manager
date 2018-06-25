@@ -5,13 +5,13 @@
 # Translators:
 # Daniel Muñiz Fontoira <dani@damufo.com>, 2018
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2006,2008-2009
-# Xosé <xosecalvo@gmail.com>, 2015
+# Xosé, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 06:31+0100\n"
-"PO-Revision-Date: 2018-06-16 23:35+0000\n"
+"PO-Revision-Date: 2018-06-25 08:36+0000\n"
 "Last-Translator: Daniel Muñiz Fontoira <dani@damufo.com>\n"
 "Language-Team: Galician (http://www.transifex.com/xfce/xfce4-power-manager/language/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -396,11 +396,11 @@ msgstr "ID CONECTADOR"
 
 #: ../settings/xfpm-settings-app.c:77
 msgid "Display a specific device by UpDevice object path"
-msgstr ""
+msgstr "Amosa un dispositivo específico polo camiño do obxecto «UpDevice»"
 
 #: ../settings/xfpm-settings-app.c:77
 msgid "UpDevice object path"
-msgstr ""
+msgstr " Camiño do obxecto «UpDevice»"
 
 #: ../settings/xfpm-settings-app.c:78 ../src/xfpm-main.c:272
 msgid "Enable debugging"
@@ -412,7 +412,7 @@ msgstr "Mostrar a información da versión"
 
 #: ../settings/xfpm-settings-app.c:80
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr ""
+msgstr "Provoca a saída das opcións do Xestor de Enerxía do Xfce4"
 
 #: ../settings/xfpm-settings-app.c:178
 msgid "Failed to connect to power manager"
@@ -557,63 +557,63 @@ msgstr[1] "horas"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr ""
+msgstr "<b>%s %s</b>\nCarga completa (%0.0f%%, %s de funcionamento)"
 
 #: ../common/xfpm-power-common.c:299
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nCarga completa (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:309
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\nCargando (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:317
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nCargando (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:327
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\nDescargando (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:335
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nDescargando (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:342
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nAgardando para a descarga (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:348
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nAgardando par a carga (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:354
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
+msgstr "<b>%s %s</b>\nestá baldeira"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -622,7 +622,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
+msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:364
 msgid "Not plugged in"
@@ -647,13 +647,13 @@ msgstr "<b>%s %s</b>\nSituación descoñecida"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "Actualmente a suspensión automática está desactivada por un aplicativo. Facer esta acción agora pode danar o estado de traballo deste aplicativo.\nSeguro de que quere suspender o sistema?"
 
 #: ../src/xfpm-power.c:436
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
+msgstr "Non funcionou ningunha das ferramentas de bloqueo da pantalla, a mesma non será bloqueada.\nQuere continuar coa suspensión do sistema?"
 
 #: ../src/xfpm-power.c:602
 msgid "Hibernate the system"
@@ -684,7 +684,7 @@ msgstr "A batería case está descargada"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
+msgstr "O nivel de carga da %s é baixo\nA duración estimada é %s"
 
 #: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1723
 #: ../src/xfpm-power.c:1752
@@ -704,19 +704,19 @@ msgstr "Brillo: %.0f percent"
 #: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:163
 #, c-format
 msgid "Your %s is fully charged"
-msgstr ""
+msgstr "A %s está totalmente cargada"
 
 #: ../src/xfpm-battery.c:115 ../src/xfpm-battery.c:166
 #, c-format
 msgid "Your %s is charging"
-msgstr ""
+msgstr "A %s estase a cargar"
 
 #: ../src/xfpm-battery.c:125
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr ""
+msgstr "%s (%i%%)\n%s até a carga completa"
 
 #: ../src/xfpm-battery.c:133 ../src/xfpm-battery.c:169
 #, c-format
