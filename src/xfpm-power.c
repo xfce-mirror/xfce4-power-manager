@@ -1431,6 +1431,7 @@ gboolean xfpm_power_has_battery (XfpmPower *power)
 static void
 xfpm_update_blank_time (XfpmPower *power)
 {
+    int prev_timeout, prev_interval, prev_prefer_blanking, prev_allow_exposures;
     Display* display = gdk_x11_display_get_xdisplay(gdk_display_get_default ());
     guint screensaver_timeout;
 
@@ -1445,7 +1446,8 @@ xfpm_update_blank_time (XfpmPower *power)
 
     XFPM_DEBUG ("Timeout: %d", screensaver_timeout);
 
-    XSetScreenSaver(display, screensaver_timeout * 60, 0, DefaultBlanking, DefaultExposures);
+    XGetScreenSaver(display, &prev_timeout, &prev_interval, &prev_prefer_blanking, &prev_allow_exposures);
+    XSetScreenSaver(display, screensaver_timeout * 60, prev_interval, prev_prefer_blanking, prev_allow_exposures);
 }
 
 static void
