@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-19 06:31+0100\n"
-"PO-Revision-Date: 2019-02-04 05:47+0000\n"
+"PO-Revision-Date: 2019-02-10 08:16+0000\n"
 "Last-Translator: vaba <vaba@riseup.net>\n"
 "Language-Team: Estonian (http://www.transifex.com/xfce/xfce4-power-manager/language/et/)\n"
 "MIME-Version: 1.0\n"
@@ -229,7 +229,7 @@ msgstr "tundi"
 
 #: ../settings/xfpm-settings.c:680 ../settings/xfpm-settings.c:1583
 msgid "seconds"
-msgstr ""
+msgstr "sekundit"
 
 #: ../settings/xfpm-settings.c:686
 msgid "%"
@@ -417,7 +417,7 @@ msgstr ""
 
 #: ../settings/xfpm-settings-app.c:178
 msgid "Failed to connect to power manager"
-msgstr ""
+msgstr "Võrguhalduriga ühenduse loomine ebaõnnestus"
 
 #: ../settings/xfpm-settings-app.c:192
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -558,21 +558,21 @@ msgstr[1] "tundi"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr ""
+msgstr "<b>%sTäislaetud%s</b> (%0.0f%%, %s töös)"
 
 #: ../common/xfpm-power-common.c:299
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nTäislaetud (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:309
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\nLaeb (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:317
 #, c-format
@@ -586,7 +586,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
-msgstr ""
+msgstr "<b>%s %s</b>\nTühjeneb (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:335
 #, c-format
@@ -614,7 +614,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
+msgstr "<b>%s %s</b>\non tühi"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
