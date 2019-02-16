@@ -6,15 +6,15 @@
 # Alois Nešpor <info@aloisnespor.info>, 2013-2015
 # Daniel Kubat <dan.kubat@gmail.com>, 2017
 # Alois Nešpor <info@aloisnespor.info>, 2014
-# Michal Várady <miko.vaji@gmail.com>, 2014-2015,2017
+# Michal Várady <miko.vaji@gmail.com>, 2014-2015,2017,2019
 # Pavel Borecki <pavel.borecki@gmail.com>, 2018
 # Petr Šimáček <petr.simacek@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-19 06:31+0100\n"
-"PO-Revision-Date: 2019-01-01 23:09+0000\n"
+"POT-Creation-Date: 2019-02-16 06:31+0100\n"
+"PO-Revision-Date: 2019-02-16 14:03+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/xfce/xfce4-power-manager/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgid "Nothing"
 msgstr "Nic"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5 ../settings/xfpm-settings-app.c:176
-#: ../settings/xfpm-settings-app.c:223 ../src/xfpm-main.c:439
+#: ../settings/xfpm-settings-app.c:223 ../src/xfpm-main.c:440
 msgid "Xfce Power Manager"
 msgstr "Správa napájení pro Xfce"
 
@@ -141,8 +141,8 @@ msgid "<b>Critical power</b>"
 msgstr "<b>Kritická hodnota</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "Lock screen when system is going for sleep"
-msgstr "Při přechodu do režimu spánku uzamknout obrazovku"
+msgid "Lock screen when system is going to sleep"
+msgstr "Uzamknout obrazovku při přechodu systému do režimu spánku"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "<b>Security</b>"
@@ -407,7 +407,7 @@ msgstr "Zobrazit specifické zařízení pomocí cesty objektu UpDevice"
 msgid "UpDevice object path"
 msgstr "Popis umístění objektu UpDevice"
 
-#: ../settings/xfpm-settings-app.c:78 ../src/xfpm-main.c:272
+#: ../settings/xfpm-settings-app.c:78 ../src/xfpm-main.c:273
 msgid "Enable debugging"
 msgstr "Povolit ladění"
 
@@ -697,12 +697,12 @@ msgid ""
 "Estimated time left %s"
 msgstr "Zařízení \"%s\" se je téměř vybité\nPředpokládaná doba: %s"
 
-#: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1723
-#: ../src/xfpm-power.c:1752
+#: ../src/xfpm-power.c:1647 ../src/xfpm-power.c:1694 ../src/xfpm-power.c:1725
+#: ../src/xfpm-power.c:1754
 msgid "Permission denied"
 msgstr "Přístup zamítnut"
 
-#: ../src/xfpm-power.c:1732 ../src/xfpm-power.c:1761
+#: ../src/xfpm-power.c:1734 ../src/xfpm-power.c:1763
 msgid "Suspend not supported"
 msgstr "Režim spánku není podporován"
 
@@ -790,102 +790,102 @@ msgstr "S podporou správce sítě\n"
 msgid "Without network manager support\n"
 msgstr "Bez podpory správce sítě\n"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Can suspend"
 msgstr "Je možné prejít do režimu spánku"
 
-#: ../src/xfpm-main.c:135
+#: ../src/xfpm-main.c:136
 msgid "Can hibernate"
 msgstr "Je možné hibernovat systém"
 
-#: ../src/xfpm-main.c:137
+#: ../src/xfpm-main.c:138
 msgid "Authorized to suspend"
 msgstr "Oprávněn k přechodu do režimu spánku"
 
-#: ../src/xfpm-main.c:139
+#: ../src/xfpm-main.c:140
 msgid "Authorized to hibernate"
 msgstr "Oprávněn k hibernaci"
 
-#: ../src/xfpm-main.c:141
+#: ../src/xfpm-main.c:142
 msgid "Authorized to shutdown"
 msgstr "Oprávněn k vypnutí"
 
-#: ../src/xfpm-main.c:143
+#: ../src/xfpm-main.c:144
 msgid "Has battery"
 msgstr "Disponuje baterií"
 
-#: ../src/xfpm-main.c:145
+#: ../src/xfpm-main.c:146
 msgid "Has brightness panel"
 msgstr "Disponuje panelem nastavení jasu"
 
-#: ../src/xfpm-main.c:147
+#: ../src/xfpm-main.c:148
 msgid "Has power button"
 msgstr "Disponuje tlačítkem napájení"
 
-#: ../src/xfpm-main.c:149
+#: ../src/xfpm-main.c:150
 msgid "Has hibernate button"
 msgstr "Disponuje tlačítkem hibernace"
 
-#: ../src/xfpm-main.c:151
+#: ../src/xfpm-main.c:152
 msgid "Has sleep button"
 msgstr "Disponuje tlačitkem režim spánku"
 
-#: ../src/xfpm-main.c:153
+#: ../src/xfpm-main.c:154
 msgid "Has battery button"
 msgstr "Disponuje tlačitkem baterie"
 
-#: ../src/xfpm-main.c:155
+#: ../src/xfpm-main.c:156
 msgid "Has LID"
 msgstr "Disponuje funkcí LID"
 
-#: ../src/xfpm-main.c:271
+#: ../src/xfpm-main.c:272
 msgid "Do not daemonize"
 msgstr "Nepřecházet do režimu procesu služby"
 
-#: ../src/xfpm-main.c:273
+#: ../src/xfpm-main.c:274
 msgid "Dump all information"
 msgstr "Výpis veškerých informací"
 
-#: ../src/xfpm-main.c:274
+#: ../src/xfpm-main.c:275
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Restartovat všechny spuštěné instance Správy napájení pro Xfce"
 
-#: ../src/xfpm-main.c:275
+#: ../src/xfpm-main.c:276
 msgid "Show the configuration dialog"
 msgstr "Zobrazit dialogové okno s nastaveními"
 
-#: ../src/xfpm-main.c:276
+#: ../src/xfpm-main.c:277
 msgid "Quit any running xfce power manager"
 msgstr "Ukončit všechny spuštěné správy napájení"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 msgid "Version information"
 msgstr "Informace o verzi"
 
-#: ../src/xfpm-main.c:293
+#: ../src/xfpm-main.c:294
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Zpracování parametrů se nezdařilo: %s\n"
 
-#: ../src/xfpm-main.c:321
+#: ../src/xfpm-main.c:322
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Informace o použití získáte příkazem „%s --help“."
 
-#: ../src/xfpm-main.c:342
+#: ../src/xfpm-main.c:343
 msgid "Unable to get connection to the message bus session"
 msgstr "Spojení se sezením sběrnice zpráv se nepodařilo navázat"
 
-#: ../src/xfpm-main.c:350
+#: ../src/xfpm-main.c:351
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Správa napájení pro Xfce není spuštěná"
 
-#: ../src/xfpm-main.c:440
+#: ../src/xfpm-main.c:441
 msgid "Another power manager is already running"
 msgstr "Už je spuštěná jiná správa napájení"
 
-#: ../src/xfpm-main.c:445
+#: ../src/xfpm-main.c:446
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Správa napájení pro Xfce je už spuštěná"
@@ -945,29 +945,29 @@ msgstr "Nastavení s_právy napájení…"
 msgid "Unable to open the following url: %s"
 msgstr "Toto umístění URL nelze otevřít: %s"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
 msgstr "Žádný"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage"
 msgstr "Procenta"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Remaining time"
 msgstr "Zbývající čas"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage and remaining time"
 msgstr "Procenta a zbývající čas"
 
 #. create the dialog
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:159
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
 msgid "Power Manager Plugin Settings"
 msgstr "Nastavení zásuvného modulu Správce napájení"
 
 #. show-panel-label setting
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:179
 msgid "Show label:"
 msgstr "Zobrazit popisek:"
 
