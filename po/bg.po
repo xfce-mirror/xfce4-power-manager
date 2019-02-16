@@ -5,7 +5,7 @@
 # Translators:
 # Kiril Kirilov <cybercop_montana@abv.bg>, 2012
 # Kiril Kirilov <cybercop_montana@abv.bg>, 2012
-# Kiril Kirilov <cybercop_montana@abv.bg>, 2014-2017
+# Kiril Kirilov <cybercop_montana@abv.bg>, 2014-2017,2019
 # Любомир Василев, 2015
 # Милен Милев <fanfolet@gmail.com>, 2009
 # Yasen Pramatarov <yasen@lindeas.com>, 2013
@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-19 06:31+0100\n"
-"PO-Revision-Date: 2018-09-14 00:18+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2019-02-16 06:31+0100\n"
+"PO-Revision-Date: 2019-02-16 06:45+0000\n"
+"Last-Translator: Kiril Kirilov <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/xfce/xfce4-power-manager/language/bg/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,7 +43,7 @@ msgid "Nothing"
 msgstr "Нищо"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5 ../settings/xfpm-settings-app.c:176
-#: ../settings/xfpm-settings-app.c:223 ../src/xfpm-main.c:439
+#: ../settings/xfpm-settings-app.c:223 ../src/xfpm-main.c:440
 msgid "Xfce Power Manager"
 msgstr "Управление на захранването на Xfce"
 
@@ -142,8 +142,8 @@ msgid "<b>Critical power</b>"
 msgstr "<b>Критичен заряд</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "Lock screen when system is going for sleep"
-msgstr "Заключи екрана при приспиване"
+msgid "Lock screen when system is going to sleep"
+msgstr "Заключване на екрана при приспиване на системата"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "<b>Security</b>"
@@ -406,7 +406,7 @@ msgstr "Показване на конкретно устройство от UpD
 msgid "UpDevice object path"
 msgstr "UpDevice обектов път"
 
-#: ../settings/xfpm-settings-app.c:78 ../src/xfpm-main.c:272
+#: ../settings/xfpm-settings-app.c:78 ../src/xfpm-main.c:273
 msgid "Enable debugging"
 msgstr "Разреши дебъгване"
 
@@ -690,12 +690,12 @@ msgid ""
 "Estimated time left %s"
 msgstr "Нивото на батерията %s е ниско\nОставащо време %s"
 
-#: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1723
-#: ../src/xfpm-power.c:1752
+#: ../src/xfpm-power.c:1647 ../src/xfpm-power.c:1694 ../src/xfpm-power.c:1725
+#: ../src/xfpm-power.c:1754
 msgid "Permission denied"
 msgstr "Нямате права"
 
-#: ../src/xfpm-power.c:1732 ../src/xfpm-power.c:1761
+#: ../src/xfpm-power.c:1734 ../src/xfpm-power.c:1763
 msgid "Suspend not supported"
 msgstr "Приспиването не се поддържа"
 
@@ -783,102 +783,102 @@ msgstr "С поддръжка на управление на мрежи\n"
 msgid "Without network manager support\n"
 msgstr "Без поддръжка на управление на мрежи\n"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Can suspend"
 msgstr "Приспиването е възможно"
 
-#: ../src/xfpm-main.c:135
+#: ../src/xfpm-main.c:136
 msgid "Can hibernate"
 msgstr "Дълбокото приспиване е възможно"
 
-#: ../src/xfpm-main.c:137
+#: ../src/xfpm-main.c:138
 msgid "Authorized to suspend"
 msgstr "Упълномощен за приспиване"
 
-#: ../src/xfpm-main.c:139
+#: ../src/xfpm-main.c:140
 msgid "Authorized to hibernate"
 msgstr "Упълномощен за дълбоко приспиване"
 
-#: ../src/xfpm-main.c:141
+#: ../src/xfpm-main.c:142
 msgid "Authorized to shutdown"
 msgstr "Упълномощен за изключване"
 
-#: ../src/xfpm-main.c:143
+#: ../src/xfpm-main.c:144
 msgid "Has battery"
 msgstr "Има батерия"
 
-#: ../src/xfpm-main.c:145
+#: ../src/xfpm-main.c:146
 msgid "Has brightness panel"
 msgstr "Има панел за яркостта"
 
-#: ../src/xfpm-main.c:147
+#: ../src/xfpm-main.c:148
 msgid "Has power button"
 msgstr "Има бутон за включване"
 
-#: ../src/xfpm-main.c:149
+#: ../src/xfpm-main.c:150
 msgid "Has hibernate button"
 msgstr "Има бутон за дълбоко приспиване"
 
-#: ../src/xfpm-main.c:151
+#: ../src/xfpm-main.c:152
 msgid "Has sleep button"
 msgstr "Има бутон за приспиване"
 
-#: ../src/xfpm-main.c:153
+#: ../src/xfpm-main.c:154
 msgid "Has battery button"
 msgstr "Има бутон за батерия"
 
-#: ../src/xfpm-main.c:155
+#: ../src/xfpm-main.c:156
 msgid "Has LID"
 msgstr "Има капак"
 
-#: ../src/xfpm-main.c:271
+#: ../src/xfpm-main.c:272
 msgid "Do not daemonize"
 msgstr "Не стартирай като демон"
 
-#: ../src/xfpm-main.c:273
+#: ../src/xfpm-main.c:274
 msgid "Dump all information"
 msgstr "Запиши цялата информация"
 
-#: ../src/xfpm-main.c:274
+#: ../src/xfpm-main.c:275
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Рестартирай управлението на захранването"
 
-#: ../src/xfpm-main.c:275
+#: ../src/xfpm-main.c:276
 msgid "Show the configuration dialog"
 msgstr "Покажи диалога за настройки"
 
-#: ../src/xfpm-main.c:276
+#: ../src/xfpm-main.c:277
 msgid "Quit any running xfce power manager"
 msgstr "Изключи работещите xfce управления на захранването"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 msgid "Version information"
 msgstr "Информация за версията"
 
-#: ../src/xfpm-main.c:293
+#: ../src/xfpm-main.c:294
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Грешка при анализ на аргументи: %s\n"
 
-#: ../src/xfpm-main.c:321
+#: ../src/xfpm-main.c:322
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Въведете „%s --help“ за показване на информацията за употреба."
 
-#: ../src/xfpm-main.c:342
+#: ../src/xfpm-main.c:343
 msgid "Unable to get connection to the message bus session"
 msgstr "Не може да се свърже с системата за съобщения"
 
-#: ../src/xfpm-main.c:350
+#: ../src/xfpm-main.c:351
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Управлението на захранването не работи"
 
-#: ../src/xfpm-main.c:440
+#: ../src/xfpm-main.c:441
 msgid "Another power manager is already running"
 msgstr "Друго управление на захранването работи"
 
-#: ../src/xfpm-main.c:445
+#: ../src/xfpm-main.c:446
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Управлението на захранването вече работи"
@@ -938,29 +938,29 @@ msgstr "Настройки на Управление на захранванет
 msgid "Unable to open the following url: %s"
 msgstr "Не може да бъде отворен следният URL адрес: %s"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
 msgstr "Нищо"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage"
 msgstr "Проценти"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Remaining time"
 msgstr "Оставащо време"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage and remaining time"
 msgstr "Проценти и оставащо време"
 
 #. create the dialog
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:159
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
 msgid "Power Manager Plugin Settings"
 msgstr "Настройки на добавката за Управление на захранването"
 
 #. show-panel-label setting
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:179
 msgid "Show label:"
 msgstr "Показване на етикет:"
 
