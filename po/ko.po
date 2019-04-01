@@ -5,14 +5,14 @@
 # Translators:
 # 박정규(Jung-Kyu Park) <bagjunggyu@gmail.com>, 2017
 # lego37yoon <lego37yoon@outlook.com>, 2014
-# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2015
-# Sungjin Kang <potopro@gmail.com>, 2014,2016
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2015,2019
+# Thomas Sungjin Kang <potopro@gmail.com>, 2014,2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-19 06:31+0100\n"
-"PO-Revision-Date: 2018-09-14 00:18+0000\n"
+"POT-Creation-Date: 2019-02-16 06:31+0100\n"
+"PO-Revision-Date: 2019-04-01 03:06+0000\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/xfce/xfce4-power-manager/language/ko/)\n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgid "Nothing"
 msgstr "아무것도 안 함"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5 ../settings/xfpm-settings-app.c:176
-#: ../settings/xfpm-settings-app.c:223 ../src/xfpm-main.c:439
+#: ../settings/xfpm-settings-app.c:223 ../src/xfpm-main.c:440
 msgid "Xfce Power Manager"
 msgstr "Xfce 전원 관리자"
 
@@ -139,7 +139,7 @@ msgid "<b>Critical power</b>"
 msgstr "<b>치명적인 전력</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
-msgid "Lock screen when system is going for sleep"
+msgid "Lock screen when system is going to sleep"
 msgstr "시스템이 대기 상태에 진입할 때 화면 잠금"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
@@ -402,7 +402,7 @@ msgstr "상위 장치 객체 경로로 지정 장치 표시"
 msgid "UpDevice object path"
 msgstr "상위 장치 객체 경로"
 
-#: ../settings/xfpm-settings-app.c:78 ../src/xfpm-main.c:272
+#: ../settings/xfpm-settings-app.c:78 ../src/xfpm-main.c:273
 msgid "Enable debugging"
 msgstr "디버깅 활성화"
 
@@ -654,15 +654,15 @@ msgstr "제대로 실행한 화면 잠금 도구가 없어 화면을 잠그지 �
 
 #: ../src/xfpm-power.c:602
 msgid "Hibernate the system"
-msgstr "시스템을 최대 절전"
+msgstr "시스템 최대 절전"
 
 #: ../src/xfpm-power.c:613
 msgid "Suspend the system"
-msgstr "시스템을 절전"
+msgstr "시스템 절전"
 
 #: ../src/xfpm-power.c:623
 msgid "Shutdown the system"
-msgstr "시스템을 종료"
+msgstr "시스템 종료"
 
 #: ../src/xfpm-power.c:634 ../src/xfpm-power.c:679
 msgid "System is running on low power. Save your work to avoid losing data"
@@ -683,12 +683,12 @@ msgid ""
 "Estimated time left %s"
 msgstr "%s 충전 수준이 낮습니다\n예상 시간이 %s 남았습니다"
 
-#: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1723
-#: ../src/xfpm-power.c:1752
+#: ../src/xfpm-power.c:1647 ../src/xfpm-power.c:1694 ../src/xfpm-power.c:1725
+#: ../src/xfpm-power.c:1754
 msgid "Permission denied"
 msgstr "권한을 거부함"
 
-#: ../src/xfpm-power.c:1732 ../src/xfpm-power.c:1761
+#: ../src/xfpm-power.c:1734 ../src/xfpm-power.c:1763
 msgid "Suspend not supported"
 msgstr "절전을 지원하지 않음"
 
@@ -754,7 +754,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nXfce 전원 관리자 %s\n\nPart of the Xfce Goodies Project\nhttp://goodies.xfce.org\n\nLicensed under the GNU GPL.\n\n"
+msgstr "\nXfce 전원 관리자 %s\n\nXfce 구디스 프로젝트의 일부입니다\nhttp://goodies.xfce.org\n\nGNU 일반 공중 사용허가서에 따라\n사용을 허가합니다.\n\n"
 
 #: ../src/xfpm-main.c:112
 #, c-format
@@ -776,102 +776,102 @@ msgstr "네트워크 관리자 지원 포함\n"
 msgid "Without network manager support\n"
 msgstr "네트워크 관리자 지원 제외\n"
 
-#: ../src/xfpm-main.c:133
+#: ../src/xfpm-main.c:134
 msgid "Can suspend"
 msgstr "절전 가능"
 
-#: ../src/xfpm-main.c:135
+#: ../src/xfpm-main.c:136
 msgid "Can hibernate"
 msgstr "최대 절전 가능"
 
-#: ../src/xfpm-main.c:137
+#: ../src/xfpm-main.c:138
 msgid "Authorized to suspend"
 msgstr "절전을 승인함"
 
-#: ../src/xfpm-main.c:139
+#: ../src/xfpm-main.c:140
 msgid "Authorized to hibernate"
 msgstr "최대 절전을 승인함"
 
-#: ../src/xfpm-main.c:141
+#: ../src/xfpm-main.c:142
 msgid "Authorized to shutdown"
 msgstr "시스템 종료를 승인함"
 
-#: ../src/xfpm-main.c:143
+#: ../src/xfpm-main.c:144
 msgid "Has battery"
 msgstr "배터리 있음"
 
-#: ../src/xfpm-main.c:145
+#: ../src/xfpm-main.c:146
 msgid "Has brightness panel"
 msgstr "밝기조절 패널 있음"
 
-#: ../src/xfpm-main.c:147
+#: ../src/xfpm-main.c:148
 msgid "Has power button"
 msgstr "전원 단추 있음"
 
-#: ../src/xfpm-main.c:149
+#: ../src/xfpm-main.c:150
 msgid "Has hibernate button"
 msgstr "최대 절전 단추 있음"
 
-#: ../src/xfpm-main.c:151
+#: ../src/xfpm-main.c:152
 msgid "Has sleep button"
 msgstr "일시중지 단추 있음"
 
-#: ../src/xfpm-main.c:153
+#: ../src/xfpm-main.c:154
 msgid "Has battery button"
 msgstr "배터리 버튼 있음"
 
-#: ../src/xfpm-main.c:155
+#: ../src/xfpm-main.c:156
 msgid "Has LID"
 msgstr "LID 있음"
 
-#: ../src/xfpm-main.c:271
+#: ../src/xfpm-main.c:272
 msgid "Do not daemonize"
 msgstr "데몬화 하지 않음"
 
-#: ../src/xfpm-main.c:273
+#: ../src/xfpm-main.c:274
 msgid "Dump all information"
 msgstr "모든 정보 덤프"
 
-#: ../src/xfpm-main.c:274
+#: ../src/xfpm-main.c:275
 msgid "Restart the running instance of Xfce power manager"
 msgstr "실행 중인 Xfce 전원 관리자의 인스턴스를 다시 시작"
 
-#: ../src/xfpm-main.c:275
+#: ../src/xfpm-main.c:276
 msgid "Show the configuration dialog"
 msgstr "설정 대화상자 보기"
 
-#: ../src/xfpm-main.c:276
+#: ../src/xfpm-main.c:277
 msgid "Quit any running xfce power manager"
 msgstr "실행 중인 Xfce 전원 관리자를 빠져 나가기"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:278
 msgid "Version information"
 msgstr "버전 정보"
 
-#: ../src/xfpm-main.c:293
+#: ../src/xfpm-main.c:294
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "인자 해석에 실패했습니다: %s\n"
 
-#: ../src/xfpm-main.c:321
+#: ../src/xfpm-main.c:322
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "사용 방법을 보려면 '%s --help'를 입력합니다."
 
-#: ../src/xfpm-main.c:342
+#: ../src/xfpm-main.c:343
 msgid "Unable to get connection to the message bus session"
 msgstr "메시지 버스 세션에서 연결을 가져올 수 없습니다"
 
-#: ../src/xfpm-main.c:350
+#: ../src/xfpm-main.c:351
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce 전원 관리자가 실행중이 아닙니다"
 
-#: ../src/xfpm-main.c:440
+#: ../src/xfpm-main.c:441
 msgid "Another power manager is already running"
 msgstr "다른 전원 관리자가 이미 실행중입니다"
 
-#: ../src/xfpm-main.c:445
+#: ../src/xfpm-main.c:446
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce 전원 관리자가 이미 실행중입니다"
@@ -931,29 +931,29 @@ msgstr "전원 관리자 설정(_P)..."
 msgid "Unable to open the following url: %s"
 msgstr "다음 url을 열 수 없습니다: %s"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
 msgstr "없음"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage"
 msgstr "퍼센트"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Remaining time"
 msgstr "남은 시간"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage and remaining time"
 msgstr "퍼센트 및 남은 시간"
 
 #. create the dialog
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:159
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
 msgid "Power Manager Plugin Settings"
 msgstr "전원 관리자 플러그인 설정"
 
 #. show-panel-label setting
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:179
 msgid "Show label:"
 msgstr "레이블 표시:"
 
