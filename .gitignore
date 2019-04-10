@@ -6,6 +6,9 @@ libdbus/xfpm-dbus-marshal.c
 libdbus/xfpm-dbus-marshal.h
 src/panel-plugins/brightness/xfce4-brightness-plugin
 po/Makefile.in.in
+po/.intltool-merge-cache
+po/POTFILES
+po/stamp-*
 po/xfce4-power-manager.pot
 settings/xfce-power-manager-dbus-client.h
 settings/xfce4-power-manager-settings
@@ -32,6 +35,27 @@ src/org.freedesktop.PowerManagement.c
 src/xfce-power-manager-dbus.c
 src/xfce-power-manager-dbus.h
 
+INSTALL
+Makefile
+aclocal.m4
+autom4te.cache
+compile
+config.guess
+config.h
+config.log
+config.status
+config.sub
+configure
+configure.ac
+depcomp
+install-sh
+libtool
+ltmain.sh
+missing
+stamp-h1
+.libs
+.deps
+
 *~
 *.o
 *.gmo
@@ -41,3 +65,5 @@ src/xfce-power-manager-dbus.h
 *.in
 *.Po
 *.Plo
+*.desktop
+*.desktop.in
