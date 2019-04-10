@@ -64,6 +64,20 @@ static  GtkWidget *on_ac_dpms_off 		= NULL;
 static  GtkWidget *sideview                 = NULL; /* Sidebar tree view - all devices are in the sideview */
 static  GtkWidget *device_details_notebook  = NULL; /* Displays the details of a deivce */
 
+static  GtkWidget *label_inactivity_on_ac                       = NULL;
+static  GtkWidget *label_inactivity_on_battery                  = NULL;
+static  GtkWidget *label_display_blank_on_battery               = NULL;
+static  GtkWidget *label_display_blank_on_ac                    = NULL;
+static  GtkWidget *label_dpms_sleep_on_battery                  = NULL;
+static  GtkWidget *label_dpms_sleep_on_ac                       = NULL;
+static  GtkWidget *label_dpms_off_on_battery                    = NULL;
+static  GtkWidget *label_dpms_off_on_ac                         = NULL;
+static  GtkWidget *label_brightness_level_on_battery            = NULL;
+static  GtkWidget *label_brightness_level_on_ac                 = NULL;
+static  GtkWidget *label_brightness_inactivity_on_battery       = NULL;
+static  GtkWidget *label_brightness_inactivity_on_ac            = NULL;
+static  GtkWidget *label_light_locker_late_locking_scale        = NULL;
+
 /* Light Locker Integration */
 static  GtkWidget *light_locker_tab             = NULL;
 static  GtkWidget *light_locker_autolock        = NULL;
@@ -153,21 +167,13 @@ void        sleep_on_ac_value_changed_cb           (GtkWidget *w,
 void        off_on_ac_value_changed_cb             (GtkWidget *w, 
 						    XfconfChannel *channel);
 
-gchar      *format_dpms_value_cb                   (GtkScale *scale, 
-						    gdouble value,
-						    gpointer data);
+gchar      *format_dpms_value_cb                   (gint value);
 
-gchar      *format_inactivity_value_cb             (GtkScale *scale, 
-						    gdouble value,
-						    gpointer data);
+gchar      *format_inactivity_value_cb             (gint value);
 
-gchar      *format_brightness_value_cb             (GtkScale *scale, 
-						    gdouble value,
-						    gpointer data);
+gchar      *format_brightness_value_cb             (gint value);
 
-gchar      *format_brightness_percentage_cb        (GtkScale *scale, 
-						    gdouble value,
-						    gpointer data);
+gchar      *format_brightness_percentage_cb        (gint value);
 
 void        brightness_on_battery_value_changed_cb (GtkWidget *w, 
 						    XfconfChannel *channel);
@@ -198,9 +204,7 @@ void        on_battery_sleep_mode_changed_cb	   (GtkWidget *w,
 						    XfconfChannel *channel);
 
 /* Light Locker Integration */
-gchar      *format_light_locker_value_cb           (GtkScale *scale,
-                                                    gdouble value,
-                                                    gpointer data);
+gchar      *format_light_locker_value_cb           (gint value);
 
 void        light_locker_late_locking_value_changed_cb (GtkWidget *w,
                                                         XfconfChannel *channel);
@@ -211,6 +215,16 @@ void        light_locker_automatic_locking_changed_cb (GtkWidget *w,
 void        xfpm_update_logind_handle_lid_switch   (XfconfChannel *channel);
 /* END Light Locker Integration */
 
+static void
+update_label (GtkWidget *label, GtkWidget *scale, gchar* (*format)(gint))
+{
+    gint value = (gint) gtk_range_get_value (GTK_RANGE (scale));
+
+    gchar *formatted_value = format (value);
+    gtk_label_set_text (GTK_LABEL (label), formatted_value);
+    g_free (formatted_value);
+}
+
 void brightness_level_on_ac (GtkWidget *w,  XfconfChannel *channel)
 {
     guint val = (guint) gtk_range_get_value (GTK_RANGE (w));
@@ -219,6 +233,8 @@ void brightness_level_on_ac (GtkWidget *w,  XfconfChannel *channel)
     {
 	g_critical ("Unable to set value %u for property %s\n", val, BRIGHTNESS_LEVEL_ON_AC);
     }
+
+    update_label (label_brightness_level_on_ac, w, format_brightness_percentage_cb);
 }
 
 void brightness_level_on_battery (GtkWidget *w,  XfconfChannel *channel)
@@ -229,6 +245,8 @@ void brightness_level_on_battery (GtkWidget *w,  XfconfChannel *channel)
     {
 	g_critical ("Unable to set value %u for property %s\n", val, BRIGHTNESS_LEVEL_ON_BATTERY);
     }
+
+    update_label (label_brightness_level_on_battery, w, format_brightness_percentage_cb);
 }
 
 void
@@ -264,6 +282,8 @@ inactivity_on_ac_value_changed_cb (GtkWidget *widget, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", ON_AC_INACTIVITY_TIMEOUT);
     }
+
+    update_label (label_inactivity_on_ac, widget, format_inactivity_value_cb);
 }
 
 void
@@ -275,6 +295,8 @@ inactivity_on_battery_value_changed_cb (GtkWidget *widget, XfconfChannel *channe
     {
 	g_critical ("Cannot set value for property %s\n", ON_BATTERY_INACTIVITY_TIMEOUT);
     }
+
+    update_label (label_inactivity_on_battery, widget, format_inactivity_value_cb);
 }
 
 void
@@ -464,6 +486,8 @@ display_blank_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	    gtk_range_set_value (GTK_RANGE (brg), BRIGHTNESS_DISABLED);
 	}
     }
+
+    update_label (label_display_blank_on_battery, w, format_dpms_value_cb);
 }
 
 void
@@ -506,6 +530,8 @@ sleep_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", ON_BATT_DPMS_SLEEP);
     }
+
+    update_label (label_dpms_sleep_on_battery, w, format_dpms_value_cb);
 }
 
 void
@@ -526,6 +552,8 @@ off_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", ON_BATT_DPMS_OFF);
     }
+
+    update_label (label_dpms_off_on_battery, w, format_dpms_value_cb);
 }
 
 void
@@ -554,6 +582,8 @@ display_blank_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	    gtk_range_set_value (GTK_RANGE (brg), BRIGHTNESS_DISABLED);
 	}
     }
+
+    update_label (label_display_blank_on_ac, w, format_dpms_value_cb);
 }
 
 void
@@ -601,6 +631,8 @@ sleep_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", ON_AC_DPMS_SLEEP);
     }
+
+    update_label (label_dpms_sleep_on_ac, w, format_dpms_value_cb);
 }
 
 void
@@ -624,39 +656,41 @@ off_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", ON_AC_DPMS_OFF);
     }
+
+    update_label (label_dpms_off_on_ac, w, format_dpms_value_cb);
 }
 
 /*
  * Format value of GtkRange used with DPMS
  */
 gchar *
-format_dpms_value_cb (GtkScale *scale, gdouble value, gpointer data)
+format_dpms_value_cb (gint value)
 {
-    if ( (gint)value == 0 )
-    	return g_strdup (_("Never"));
+    if ( value == 0 )
+        return g_strdup (_("Never"));
 
-    if ( (int)value == 1 )
-	return g_strdup (_("One minute"));
+    if ( value == 1 )
+        return g_strdup (_("One minute"));
 
-    return g_strdup_printf ("%d %s", (int)value, _("minutes"));
+    return g_strdup_printf ("%d %s", value, _("minutes"));
 }
 
 
 gchar *
-format_inactivity_value_cb (GtkScale *scale, gdouble value, gpointer data)
+format_inactivity_value_cb (gint value)
 {
     gint h, min;
 
-    if ( (gint)value <= 14 )
-	return g_strdup (_("Never"));
-    else if ( (gint)value < 60 )
-	return g_strdup_printf ("%d %s", (gint)value, _("minutes"));
-    else if ( (gint)value == 60)
-	return g_strdup (_("One hour"));
+    if ( value <= 14 )
+        return g_strdup (_("Never"));
+    else if ( value < 60 )
+        return g_strdup_printf ("%d %s", value, _("minutes"));
+    else if ( value == 60 )
+        return g_strdup (_("One hour"));
 
     /* value > 60 */
-    h = (gint)value/60;
-    min = (gint)value%60;
+    h = value/60;
+    min = value%60;
 
     if ( h <= 1 )
 	if ( min == 0 )      return g_strdup_printf ("%s", _("One hour"));
@@ -672,18 +706,18 @@ format_inactivity_value_cb (GtkScale *scale, gdouble value, gpointer data)
  * Format value of GtkRange used with Brightness
  */
 gchar *
-format_brightness_value_cb (GtkScale *scale, gdouble value, gpointer data)
+format_brightness_value_cb (gint value)
 {
-    if ( (gint)value <= 9 )
-    	return g_strdup (_("Never"));
+    if ( value <= 9 )
+        return g_strdup (_("Never"));
 
-    return g_strdup_printf ("%d %s", (int)value, _("seconds"));
+    return g_strdup_printf ("%d %s", value, _("seconds"));
 }
 
 gchar *
-format_brightness_percentage_cb (GtkScale *scale, gdouble value, gpointer data)
+format_brightness_percentage_cb (gint value)
 {
-    return g_strdup_printf ("%d %s", (int)value, _("%"));
+    return g_strdup_printf ("%d %s", value, _("%"));
 }
 
 void
@@ -704,6 +738,8 @@ brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_BATTERY);
     }
+
+    update_label (label_brightness_inactivity_on_battery, w, format_brightness_value_cb);
 }
 
 void
@@ -724,6 +760,8 @@ brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     {
 	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_AC);
     }
+
+    update_label (label_brightness_inactivity_on_ac, w, format_brightness_value_cb);
 }
 
 gboolean
@@ -1065,6 +1103,19 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_hide (brg_level);
     }
 
+    label_inactivity_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-inactivity-on-battery-label"));
+    label_display_blank_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "display-blank-on-battery-label"));
+    label_dpms_sleep_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-on-battery-label"));
+    label_dpms_off_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-on-battery-label"));
+    label_brightness_level_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-on-battery-label"));
+    label_brightness_inactivity_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-battery-label"));
+
+    update_label (label_inactivity_on_battery, inact_timeout, format_inactivity_value_cb);
+    update_label (label_display_blank_on_battery, on_battery_display_blank, format_dpms_value_cb);
+    update_label (label_dpms_sleep_on_battery, on_battery_dpms_sleep, format_dpms_value_cb);
+    update_label (label_dpms_off_on_battery, on_battery_dpms_off, format_dpms_value_cb);
+    update_label (label_brightness_level_on_battery, brg_level, format_brightness_percentage_cb);
+    update_label (label_brightness_inactivity_on_battery, brg, format_brightness_value_cb);
 }
 
 static void
@@ -1244,6 +1295,19 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_hide (brg_level);
 	}
 
+    label_inactivity_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-inactivity-on-ac-label"));
+    label_display_blank_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "display-blank-on-ac-label"));
+    label_dpms_sleep_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-on-ac-label"));
+    label_dpms_off_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-on-ac-label"));
+    label_brightness_level_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-on-ac-label"));
+    label_brightness_inactivity_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-ac-label"));
+
+    update_label (label_inactivity_on_ac, inact_timeout, format_inactivity_value_cb);
+    update_label (label_display_blank_on_ac, on_ac_display_blank, format_dpms_value_cb);
+    update_label (label_dpms_sleep_on_ac, on_ac_dpms_sleep, format_dpms_value_cb);
+    update_label (label_dpms_off_on_ac, on_ac_dpms_off, format_dpms_value_cb);
+    update_label (label_brightness_level_on_ac, brg_level, format_brightness_percentage_cb);
+    update_label (label_brightness_inactivity_on_ac, brg, format_brightness_value_cb);
 }
 
 static void
@@ -1573,21 +1637,21 @@ get_light_locker_path (void)
 }
 
 gchar *
-format_light_locker_value_cb (GtkScale *scale, gdouble value, gpointer data)
+format_light_locker_value_cb (gint value)
 {
     gint min;
 
-    if ( (gint)value <= 0 )
+    if ( value <= 0 )
         return g_strdup (_("Never"));
-    else if ( value < 60.0 )
-        return g_strdup_printf ("%d %s", (gint)value, _("seconds"));
+    else if ( value < 60 )
+        return g_strdup_printf ("%d %s", value, _("seconds"));
     else
     {
-        min = (gint)value - 60;
+        min = value - 60;
         if (min == 0)
-            return g_strdup_printf ("%d %s", (gint)min + 1, _("minute"));
+            return g_strdup_printf ("%d %s", min + 1, _("minute"));
         else
-            return g_strdup_printf ("%d %s", (gint)min + 1, _("minutes"));
+            return g_strdup_printf ("%d %s", min + 1, _("minutes"));
     }
 }
 
@@ -1607,6 +1671,8 @@ light_locker_late_locking_value_changed_cb (GtkWidget *widget, XfconfChannel *ch
     {
         g_critical ("Cannot set value for property lock-after-screensaver\n");
     }
+
+    update_label (label_light_locker_late_locking_scale, widget, format_light_locker_value_cb);
 }
 
 void
@@ -1720,6 +1786,9 @@ static void xfpm_settings_light_locker (XfconfChannel *channel,
         XFPM_DEBUG ("Schema \"apps.light-locker\" not found. Not configuring Light Locker.");
         gtk_widget_hide (light_locker_tab);
     }
+
+    label_light_locker_late_locking_scale = GTK_WIDGET (gtk_builder_get_object (xml, "light-locker-late-locking-scale-label"));
+    update_label (label_light_locker_late_locking_scale, light_locker_delay, format_light_locker_value_cb);
 }
 /* END Light Locker Integration */
 
@@ -2275,6 +2344,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     GtkCellRenderer *renderer;
     GError *error = NULL;
     guint val;
+    GtkCssProvider *css_provider;
 
     XFPM_DEBUG ("auth_hibernate=%s auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s " \
                 "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s " \
@@ -2328,6 +2398,16 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 
     dialog = GTK_WIDGET (gtk_builder_get_object (xml, "xfpm-settings-dialog"));
     nt = GTK_WIDGET (gtk_builder_get_object (xml, "main-notebook"));
+
+    /* Set Gtk style */
+    css_provider = gtk_css_provider_new ();
+    gtk_css_provider_load_from_data (css_provider,
+                                     ".xfce4-scale-label { padding-bottom: 0; }",
+                                     -1, NULL);
+    gtk_style_context_add_provider_for_screen (gdk_screen_get_default(),
+                                               GTK_STYLE_PROVIDER(css_provider),
+                                               GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_object_unref (css_provider);
 
     /* Devices listview */
     sideview = gtk_tree_view_new ();

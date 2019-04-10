@@ -8,12 +8,14 @@
     <property name="upper">120</property>
     <property name="value">9</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="brightness-inactivity-on-battery-adjustment">
     <property name="lower">9</property>
     <property name="upper">120</property>
     <property name="value">30</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="brightness-level-on-ac-adjustment">
     <property name="lower">1</property>
@@ -34,42 +36,50 @@
     <property name="upper">20</property>
     <property name="value">5</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="display-blank-on-ac-adjustment">
     <property name="upper">60</property>
     <property name="value">10</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="display-blank-on-battery-adjustment">
     <property name="upper">60</property>
     <property name="value">1</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="dpms-off-on-ac-adjustment">
     <property name="upper">60</property>
     <property name="value">20</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="dpms-off-on-battery-adjustment">
     <property name="upper">60</property>
     <property name="value">5</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="dpms-sleep-on-ac-adjustment">
     <property name="upper">60</property>
     <property name="value">15</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="dpms-sleep-on-battery-adjustment">
     <property name="upper">60</property>
     <property name="value">3</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="light-locker-late-locking-adjustment">
     <property name="lower">1</property>
     <property name="upper">120</property>
     <property name="value">1</property>
     <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkListStore" id="liststore1">
     <columns>
@@ -730,6 +740,7 @@
                             <property name="margin_top">6</property>
                             <property name="margin_bottom">6</property>
                             <property name="margin_start">18</property>
+                            <property name="column-homogeneous">True</property>
                             <child>
                               <object class="GtkLabel" id="system-sleep-on-battery-header">
                                 <property name="visible">True</property>
@@ -767,15 +778,32 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkScale" id="system-sleep-inactivity-on-battery">
+                              <object class="GtkBox">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="adjustment">system-sleep-inactivity-on-battery-adjustment</property>
-                                <property name="round_digits">0</property>
-                                <property name="digits">0</property>
-                                <property name="value_pos">bottom</property>
-                                <signal name="format-value" handler="format_inactivity_value_cb" swapped="no"/>
-                                <signal name="value-changed" handler="inactivity_on_battery_value_changed_cb" swapped="no"/>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkScale" id="system-sleep-inactivity-on-battery">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="adjustment">system-sleep-inactivity-on-battery-adjustment</property>
+                                    <property name="round_digits">0</property>
+                                    <property name="digits">0</property>
+                                    <property name="draw-value">False</property>
+                                    <signal name="value-changed" handler="inactivity_on_battery_value_changed_cb" swapped="no"/>
+                                    <style>
+                                      <class name="xfce4-scale-label"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="system-sleep-inactivity-on-battery-label">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="sensitive">False</property>
+                                    <property name="xalign">0.5</property>
+                                  </object>
+                                </child>
                               </object>
                               <packing>
                                 <property name="left_attach">1</property>
@@ -783,15 +811,36 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkScale" id="system-sleep-inactivity-on-ac">
+                              <object class="GtkBox">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="adjustment">system-sleep-inactivity-on-ac-adjustment</property>
-                                <property name="round_digits">0</property>
-                                <property name="digits">0</property>
-                                <property name="value_pos">bottom</property>
-                                <signal name="format-value" handler="format_inactivity_value_cb" swapped="no"/>
-                                <signal name="value-changed" handler="inactivity_on_ac_value_changed_cb" swapped="no"/>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkScale" id="system-sleep-inactivity-on-ac">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="adjustment">system-sleep-inactivity-on-ac-adjustment</property>
+                                    <property name="round_digits">0</property>
+                                    <property name="digits">0</property>
+                                    <property name="draw-value">False</property>
+                                    <signal name="value-changed" handler="inactivity_on_ac_value_changed_cb" swapped="no"/>
+                                    <style>
+                                      <class name="xfce4-scale-label"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="system-sleep-inactivity-on-ac-label">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="sensitive">False</property>
+                                    <property name="xalign">0.5</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                  </packing>
+                                </child>
                               </object>
                               <packing>
                                 <property name="left_attach">2</property>
@@ -907,6 +956,7 @@
                                     <property name="primary_icon_activatable">False</property>
                                     <property name="secondary_icon_activatable">False</property>
                                     <property name="adjustment">critical-power-level-spin-adjustment</property>
+                                    <property name="width-request">100</property>
                                     <signal name="output" handler="critical_spin_output_cb" swapped="no"/>
                                     <signal name="value-changed" handler="critical_level_value_changed_cb" swapped="no"/>
                                   </object>
@@ -1167,6 +1217,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="spacing">6</property>
+                                    <property name="homogeneous">True</property>
                                     <child>
                                       <object class="GtkBox" id="display-blank-on-battery-vbox">
                                         <property name="visible">True</property>
@@ -1187,15 +1238,32 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkScale" id="display-blank-on-battery">
+                                          <object class="GtkBox">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="adjustment">display-blank-on-battery-adjustment</property>
-                                            <property name="round_digits">0</property>
-                                            <property name="digits">0</property>
-                                            <property name="value_pos">bottom</property>
-                                            <signal name="format-value" handler="format_dpms_value_cb" swapped="no"/>
-                                            <signal name="value-changed" handler="display_blank_on_battery_value_changed_cb" swapped="no"/>
+                                            <property name="can_focus">False</property>
+                                            <property name="orientation">vertical</property>
+                                            <child>
+                                              <object class="GtkScale" id="display-blank-on-battery">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="adjustment">display-blank-on-battery-adjustment</property>
+                                                <property name="round_digits">0</property>
+                                                <property name="digits">0</property>
+                                                <property name="draw-value">False</property>
+                                                <signal name="value-changed" handler="display_blank_on_battery_value_changed_cb" swapped="no"/>
+                                                <style>
+                                                  <class name="xfce4-scale-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="display-blank-on-battery-label">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="sensitive">False</property>
+                                                <property name="xalign">0.5</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1230,15 +1298,32 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkScale" id="display-blank-on-ac">
+                                          <object class="GtkBox">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="adjustment">display-blank-on-ac-adjustment</property>
-                                            <property name="round_digits">0</property>
-                                            <property name="digits">0</property>
-                                            <property name="value_pos">bottom</property>
-                                            <signal name="format-value" handler="format_dpms_value_cb" swapped="no"/>
-                                            <signal name="value-changed" handler="display_blank_on_ac_value_changed_cb" swapped="no"/>
+                                            <property name="can_focus">False</property>
+                                            <property name="orientation">vertical</property>
+                                            <child>
+                                              <object class="GtkScale" id="display-blank-on-ac">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="adjustment">display-blank-on-ac-adjustment</property>
+                                                <property name="round_digits">0</property>
+                                                <property name="digits">0</property>
+                                                <property name="draw-value">False</property>
+                                                <signal name="value-changed" handler="display_blank_on_ac_value_changed_cb" swapped="no"/>
+                                                <style>
+                                                  <class name="xfce4-scale-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="display-blank-on-ac-label">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="sensitive">False</property>
+                                                <property name="xalign">0.5</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1265,16 +1350,35 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="spacing">6</property>
+                                    <property name="homogeneous">True</property>
+                                    <property name="valign">center</property>
                                     <child>
-                                      <object class="GtkScale" id="dpms-sleep-on-battery">
+                                      <object class="GtkBox">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="adjustment">dpms-sleep-on-battery-adjustment</property>
-                                        <property name="round_digits">0</property>
-                                        <property name="digits">0</property>
-                                        <property name="value_pos">bottom</property>
-                                        <signal name="format-value" handler="format_dpms_value_cb" swapped="no"/>
-                                        <signal name="value-changed" handler="sleep_on_battery_value_changed_cb" swapped="no"/>
+                                        <property name="can_focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkScale" id="dpms-sleep-on-battery">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="adjustment">dpms-sleep-on-battery-adjustment</property>
+                                            <property name="round_digits">0</property>
+                                            <property name="digits">0</property>
+                                            <property name="draw-value">False</property>
+                                            <signal name="value-changed" handler="sleep_on_battery_value_changed_cb" swapped="no"/>
+                                            <style>
+                                              <class name="xfce4-scale-label"/>
+                                            </style>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="dpms-sleep-on-battery-label">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="sensitive">False</property>
+                                            <property name="xalign">0.5</property>
+                                          </object>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1283,15 +1387,32 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkScale" id="dpms-sleep-on-ac">
+                                      <object class="GtkBox">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="adjustment">dpms-sleep-on-ac-adjustment</property>
-                                        <property name="round_digits">0</property>
-                                        <property name="digits">0</property>
-                                        <property name="value_pos">bottom</property>
-                                        <signal name="format-value" handler="format_dpms_value_cb" swapped="no"/>
-                                        <signal name="value-changed" handler="sleep_on_ac_value_changed_cb" swapped="no"/>
+                                        <property name="can_focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkScale" id="dpms-sleep-on-ac">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="adjustment">dpms-sleep-on-ac-adjustment</property>
+                                            <property name="round_digits">0</property>
+                                            <property name="digits">0</property>
+                                            <property name="draw-value">False</property>
+                                            <signal name="value-changed" handler="sleep_on_ac_value_changed_cb" swapped="no"/>
+                                            <style>
+                                              <class name="xfce4-scale-label"/>
+                                            </style>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="dpms-sleep-on-ac-label">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="sensitive">False</property>
+                                            <property name="xalign">0.5</property>
+                                          </object>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1311,16 +1432,35 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="spacing">6</property>
+                                    <property name="homogeneous">True</property>
+                                    <property name="valign">center</property>
                                     <child>
-                                      <object class="GtkScale" id="dpms-off-on-battery">
+                                      <object class="GtkBox">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="adjustment">dpms-off-on-battery-adjustment</property>
-                                        <property name="round_digits">0</property>
-                                        <property name="digits">0</property>
-                                        <property name="value_pos">bottom</property>
-                                        <signal name="format-value" handler="format_dpms_value_cb" swapped="no"/>
-                                        <signal name="value-changed" handler="off_on_battery_value_changed_cb" swapped="no"/>
+                                        <property name="can_focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkScale" id="dpms-off-on-battery">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="adjustment">dpms-off-on-battery-adjustment</property>
+                                            <property name="round_digits">0</property>
+                                            <property name="digits">0</property>
+                                            <property name="draw-value">False</property>
+                                            <signal name="value-changed" handler="off_on_battery_value_changed_cb" swapped="no"/>
+                                            <style>
+                                              <class name="xfce4-scale-label"/>
+                                            </style>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="dpms-off-on-battery-label">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="sensitive">False</property>
+                                            <property name="xalign">0.5</property>
+                                          </object>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1329,15 +1469,32 @@
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkScale" id="dpms-off-on-ac">
+                                      <object class="GtkBox">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="adjustment">dpms-off-on-ac-adjustment</property>
-                                        <property name="round_digits">0</property>
-                                        <property name="digits">0</property>
-                                        <property name="value_pos">bottom</property>
-                                        <signal name="format-value" handler="format_dpms_value_cb" swapped="no"/>
-                                        <signal name="value-changed" handler="off_on_ac_value_changed_cb" swapped="no"/>
+                                        <property name="can_focus">False</property>
+                                        <property name="orientation">vertical</property>
+                                        <child>
+                                          <object class="GtkScale" id="dpms-off-on-ac">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="adjustment">dpms-off-on-ac-adjustment</property>
+                                            <property name="round_digits">0</property>
+                                            <property name="digits">0</property>
+                                            <property name="draw-value">False</property>
+                                            <signal name="value-changed" handler="off_on_ac_value_changed_cb" swapped="no"/>
+                                            <style>
+                                              <class name="xfce4-scale-label"/>
+                                            </style>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="dpms-off-on-ac-label">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="sensitive">False</property>
+                                            <property name="xalign">0.5</property>
+                                          </object>
+                                        </child>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1441,6 +1598,8 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="spacing">6</property>
+                                        <property name="homogeneous">True</property>
+                                        <property name="valign">center</property>
                                         <child>
                                           <object class="GtkBox" id="vbox18">
                                             <property name="visible">True</property>
@@ -1461,15 +1620,32 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkScale" id="brightness-level-on-battery">
+                                              <object class="GtkBox">
                                                 <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="adjustment">brightness-level-on-battery-adjustment</property>
-                                                <property name="round_digits">0</property>
-                                                <property name="digits">0</property>
-                                                <property name="value_pos">bottom</property>
-                                                <signal name="format-value" handler="format_brightness_percentage_cb" swapped="no"/>
-                                                <signal name="value-changed" handler="brightness_level_on_battery" swapped="no"/>
+                                                <property name="can_focus">False</property>
+                                                <property name="orientation">vertical</property>
+                                                <child>
+                                                  <object class="GtkScale" id="brightness-level-on-battery">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="adjustment">brightness-level-on-battery-adjustment</property>
+                                                    <property name="round_digits">0</property>
+                                                    <property name="digits">0</property>
+                                                    <property name="draw-value">False</property>
+                                                    <signal name="value-changed" handler="brightness_level_on_battery" swapped="no"/>
+                                                    <style>
+                                                      <class name="xfce4-scale-label"/>
+                                                    </style>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel" id="brightness-level-on-battery-label">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="sensitive">False</property>
+                                                    <property name="xalign">0.5</property>
+                                                  </object>
+                                                </child>
                                               </object>
                                               <packing>
                                                 <property name="expand">True</property>
@@ -1504,15 +1680,32 @@
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkScale" id="brightness-level-on-ac">
+                                              <object class="GtkBox">
                                                 <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="adjustment">brightness-level-on-ac-adjustment</property>
-                                                <property name="round_digits">0</property>
-                                                <property name="digits">0</property>
-                                                <property name="value_pos">bottom</property>
-                                                <signal name="format-value" handler="format_brightness_percentage_cb" swapped="no"/>
-                                                <signal name="value-changed" handler="brightness_level_on_ac" swapped="no"/>
+                                                <property name="can_focus">False</property>
+                                                <property name="orientation">vertical</property>
+                                                <child>
+                                                  <object class="GtkScale" id="brightness-level-on-ac">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="adjustment">brightness-level-on-ac-adjustment</property>
+                                                    <property name="round_digits">0</property>
+                                                    <property name="digits">0</property>
+                                                    <property name="draw-value">False</property>
+                                                    <signal name="value-changed" handler="brightness_level_on_ac" swapped="no"/>
+                                                    <style>
+                                                      <class name="xfce4-scale-label"/>
+                                                    </style>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel" id="brightness-level-on-ac-label">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="sensitive">False</property>
+                                                    <property name="xalign">0.5</property>
+                                                  </object>
+                                                </child>
                                               </object>
                                               <packing>
                                                 <property name="expand">True</property>
@@ -1539,16 +1732,35 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="spacing">6</property>
+                                        <property name="homogeneous">True</property>
+                                        <property name="valign">center</property>
                                         <child>
-                                          <object class="GtkScale" id="brightness-inactivity-on-battery">
+                                          <object class="GtkBox">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="adjustment">brightness-inactivity-on-battery-adjustment</property>
-                                            <property name="round_digits">0</property>
-                                            <property name="digits">0</property>
-                                            <property name="value_pos">bottom</property>
-                                            <signal name="format-value" handler="format_brightness_value_cb" swapped="no"/>
-                                            <signal name="value-changed" handler="brightness_on_battery_value_changed_cb" swapped="no"/>
+                                            <property name="can_focus">False</property>
+                                            <property name="orientation">vertical</property>
+                                            <child>
+                                                <object class="GtkScale" id="brightness-inactivity-on-battery">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="adjustment">brightness-inactivity-on-battery-adjustment</property>
+                                                <property name="round_digits">0</property>
+                                                <property name="digits">0</property>
+                                                <property name="draw-value">False</property>
+                                                <signal name="value-changed" handler="brightness_on_battery_value_changed_cb" swapped="no"/>
+                                                <style>
+                                                  <class name="xfce4-scale-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="brightness-inactivity-on-battery-label">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="sensitive">False</property>
+                                                <property name="xalign">0.5</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1557,15 +1769,32 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkScale" id="brightness-inactivity-on-ac">
+                                          <object class="GtkBox">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="adjustment">brightness-inactivity-on-ac-adjustment</property>
-                                            <property name="round_digits">0</property>
-                                            <property name="digits">0</property>
-                                            <property name="value_pos">bottom</property>
-                                            <signal name="format-value" handler="format_brightness_value_cb" swapped="no"/>
-                                            <signal name="value-changed" handler="brightness_on_ac_value_changed_cb" swapped="no"/>
+                                            <property name="can_focus">False</property>
+                                            <property name="orientation">vertical</property>
+                                            <child>
+                                              <object class="GtkScale" id="brightness-inactivity-on-ac">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="adjustment">brightness-inactivity-on-ac-adjustment</property>
+                                                <property name="round_digits">0</property>
+                                                <property name="digits">0</property>
+                                                <property name="draw-value">False</property>
+                                                <signal name="value-changed" handler="brightness_on_ac_value_changed_cb" swapped="no"/>
+                                                <style>
+                                                  <class name="xfce4-scale-label"/>
+                                                </style>
+                                              </object>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="brightness-inactivity-on-ac-label">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="sensitive">False</property>
+                                                <property name="xalign">0.5</property>
+                                              </object>
+                                            </child>
                                           </object>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1699,15 +1928,32 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkScale" id="light-locker-late-locking-scale">
+                                  <object class="GtkBox">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="adjustment">light-locker-late-locking-adjustment</property>
-                                    <property name="round_digits">0</property>
-                                    <property name="digits">0</property>
-                                    <property name="value_pos">bottom</property>
-                                    <signal name="format-value" handler="format_light_locker_value_cb" swapped="no"/>
-                                    <signal name="value-changed" handler="light_locker_late_locking_value_changed_cb" swapped="no"/>
+                                    <property name="can_focus">False</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                        <object class="GtkScale" id="light-locker-late-locking-scale">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="adjustment">light-locker-late-locking-adjustment</property>
+                                        <property name="round_digits">0</property>
+                                        <property name="digits">0</property>
+                                        <property name="draw-value">False</property>
+                                        <signal name="value-changed" handler="light_locker_late_locking_value_changed_cb" swapped="no"/>
+                                        <style>
+                                          <class name="xfce4-scale-label"/>
+                                        </style>
+                                      </object>
+                                    </child>
+                                    <child>
+                                      <object class="GtkLabel" id="light-locker-late-locking-scale-label">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="sensitive">False</property>
+                                        <property name="xalign">0.5</property>
+                                      </object>
+                                    </child>
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
