@@ -36,13 +36,13 @@ typedef struct
 {
     GObject		  parent;
     XfpmXfconfPrivate    *priv;
-    
+
 } XfpmXfconf;
 
 typedef struct
 {
     GObjectClass	  parent_class;
-    
+
 } XfpmXfconfClass;
 
 GType        		  xfpm_xfconf_get_type           	(void) G_GNUC_CONST;

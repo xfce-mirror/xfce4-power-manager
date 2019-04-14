@@ -45,9 +45,9 @@ struct XfpmConsoleKitPrivate
 {
     GDBusConnection *bus;
     GDBusProxy      *proxy;
-    
+
     XfpmDBusMonitor *monitor;
-    
+
     gboolean	     can_shutdown;
     gboolean	     can_restart;
     gboolean         can_suspend;
@@ -91,7 +91,7 @@ xfpm_console_kit_get_info (XfpmConsoleKit *console)
 	g_warning ("'CanStop' method failed : %s", error->message);
 	g_clear_error (&error);
     }
-    
+
     var = g_dbus_proxy_call_sync (console->priv->proxy, "CanRestart",
                                   NULL,
                                   G_DBUS_CALL_FLAGS_NONE,
@@ -173,7 +173,7 @@ xfpm_console_kit_class_init (XfpmConsoleKitClass *klass)
     object_class->finalize = xfpm_console_kit_finalize;
 
     object_class->get_property = xfpm_console_kit_get_property;
-    
+
     g_object_class_install_property (object_class,
                                      PROP_CAN_RESTART,
                                      g_param_spec_boolean ("can-restart",
@@ -207,23 +207,23 @@ static void
 xfpm_console_kit_init (XfpmConsoleKit *console)
 {
     GError *error = NULL;
-    
+
     console->priv = xfpm_console_kit_get_instance_private (console);
     console->priv->can_shutdown = FALSE;
     console->priv->can_restart  = FALSE;
-    
+
     console->priv->bus   = NULL;
     console->priv->proxy = NULL;
-    
+
     console->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
-    
+
     if ( error )
     {
 	g_critical ("Unable to get system bus connection : %s", error->message);
 	g_error_free (error);
 	return;
     }
-    
+
     console->priv->proxy = g_dbus_proxy_new_sync (console->priv->bus,
 						  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
 						  G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
@@ -239,7 +239,7 @@ xfpm_console_kit_init (XfpmConsoleKit *console)
 	g_warning ("Unable to create proxy for 'org.freedesktop.ConsoleKit'");
 	return;
     }
-    
+
     xfpm_console_kit_get_info (console);
 }
 
@@ -277,10 +277,10 @@ xfpm_console_kit_finalize (GObject *object)
     XfpmConsoleKit *console;
 
     console = XFPM_CONSOLE_KIT (object);
-    
+
     if ( console->priv->bus )
 	g_object_unref (console->priv->bus);
-	
+
     if ( console->priv->proxy )
 	g_object_unref (console->priv->proxy);
 
@@ -291,7 +291,7 @@ XfpmConsoleKit *
 xfpm_console_kit_new (void)
 {
     static gpointer console_obj = NULL;
-    
+
     if ( G_LIKELY (console_obj != NULL ) )
     {
 	g_object_ref (console_obj);
@@ -301,7 +301,7 @@ xfpm_console_kit_new (void)
 	console_obj = g_object_new (XFPM_TYPE_CONSOLE_KIT, NULL);
 	g_object_add_weak_pointer (console_obj, &console_obj);
     }
-    
+
     return XFPM_CONSOLE_KIT (console_obj);
 }
 
@@ -310,7 +310,7 @@ void xfpm_console_kit_shutdown (XfpmConsoleKit *console, GError **error)
     GVariant *var;
 
     g_return_if_fail (console->priv->proxy != NULL );
-    
+
     var = g_dbus_proxy_call_sync (console->priv->proxy, "Stop",
                                   NULL,
                                   G_DBUS_CALL_FLAGS_NONE,
@@ -326,7 +326,7 @@ void xfpm_console_kit_reboot (XfpmConsoleKit *console, GError **error)
     GVariant *var;
 
     g_return_if_fail (console->priv->proxy != NULL );
-    
+
     var = g_dbus_proxy_call_sync (console->priv->proxy, "Restart",
                                   NULL,
                                   G_DBUS_CALL_FLAGS_NONE,

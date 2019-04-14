@@ -352,7 +352,7 @@ xfce_screensaver_new (void)
                                 G_OBJECT(saver),
                                 LOCK_COMMAND);
     }
-    
+
     return XFCE_SCREENSAVER (saver);
 }
 
@@ -393,7 +393,7 @@ xfce_reset_screen_saver (XfceScreenSaver *saver)
  * Calling this function with inhibit as TRUE will prevent the user's
  * screensaver from activating. This is useful when the user is watching
  * a movie or giving a presentation.
- * 
+ *
  * Calling this function with inhibit as FALSE will remove any current
  * screensaver inhibit the XfceScreenSaver object has.
  *
@@ -544,7 +544,7 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
             {
                 ret = g_spawn_command_line_async ("xdg-screensaver lock", NULL);
             }
-            
+
             if (!ret)
             {
                 ret = g_spawn_command_line_async ("xscreensaver-command -lock", NULL);

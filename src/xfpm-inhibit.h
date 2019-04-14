@@ -35,7 +35,7 @@ typedef struct
 {
     GObject		  parent;
     XfpmInhibitPrivate	 *priv;
-	
+
 } XfpmInhibit;
 
 typedef struct
@@ -47,7 +47,7 @@ typedef struct
 							gboolean is_inhibit);
     void                  (*inhibitors_list_changed)   (XfpmInhibit *inhibit,
 							gboolean is_inhibit);
-    
+
 } XfpmInhibitClass;
 
 GType        		  xfpm_inhibit_get_type        (void) G_GNUC_CONST;

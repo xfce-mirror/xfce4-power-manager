@@ -35,13 +35,13 @@ typedef struct
 {
     GObject         		parent;
     XfpmConsoleKitPrivate      *priv;
-    
+
 } XfpmConsoleKit;
 
 typedef struct
 {
     GObjectClass 		parent_class;
-    
+
 } XfpmConsoleKitClass;
 
 GType        			xfpm_console_kit_get_type        (void) G_GNUC_CONST;

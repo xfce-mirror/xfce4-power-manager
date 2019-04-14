@@ -45,13 +45,13 @@ typedef struct
 {
     GObject		  parent;
     XfpmDpmsPrivate	 *priv;
-    
+
 } XfpmDpms;
 
 typedef struct
 {
     GObjectClass 	  parent_class;
-    
+
 } XfpmDpmsClass;
 
 GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;

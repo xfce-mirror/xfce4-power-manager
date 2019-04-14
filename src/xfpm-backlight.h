@@ -35,13 +35,13 @@ typedef struct
 {
     GObject         		parent;
     XfpmBacklightPrivate       *priv;
-    
+
 } XfpmBacklight;
 
 typedef struct
 {
     GObjectClass 		parent_class;
-    
+
 } XfpmBacklightClass;
 
 GType        			xfpm_backlight_get_type         (void) G_GNUC_CONST;

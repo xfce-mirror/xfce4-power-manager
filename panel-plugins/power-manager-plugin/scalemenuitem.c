@@ -114,7 +114,7 @@ scale_menu_item_class_init (ScaleMenuItemClass *item_class)
    * ScaleMenuItem::slider-grabbed:
    * @menuitem: The #ScaleMenuItem emitting the signal.
    *
-   * The ::slider-grabbed signal is emitted when the pointer selects the slider. 
+   * The ::slider-grabbed signal is emitted when the pointer selects the slider.
    */
   signals[SLIDER_GRABBED] = g_signal_new ("slider-grabbed",
                                           G_OBJECT_CLASS_TYPE (gobject_class),

@@ -64,9 +64,9 @@ static void
 xfpm_quit_signal (gint sig, gpointer data)
 {
     XfpmManager *manager = (XfpmManager *) data;
-    
+
     XFPM_DEBUG ("sig %d", sig);
-    
+
     if ( sig != SIGHUP )
 	xfpm_manager_stop (manager);
 }
@@ -92,7 +92,7 @@ xfpm_dump (GHashTable *hash)
     gboolean has_power_button;
     gboolean has_battery_button;
     gboolean has_lid;
-    
+
     has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
     has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
     can_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-suspend"));
@@ -105,7 +105,7 @@ xfpm_dump (GHashTable *hash)
     has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "hibernate-button"));
     has_battery_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "battery-button"));
     can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
-	
+
     g_print ("---------------------------------------------------\n");
     g_print ("       Xfce power manager version %s\n", VERSION);
 #ifdef ENABLE_POLKIT
@@ -166,7 +166,7 @@ xfpm_dump_remote (GDBusConnection *bus)
     GVariantIter *iter;
     GHashTable *hash;
     gchar *key, *value;
-    
+
     proxy = xfpm_power_manager_proxy_new_sync (bus,
 					       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
 					       G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
@@ -174,14 +174,14 @@ xfpm_dump_remote (GDBusConnection *bus)
 					       "/org/xfce/PowerManager",
 					       NULL,
 					       NULL);
-	
+
     xfpm_power_manager_call_get_config_sync (proxy,
 					     &config,
 					     NULL,
 					     &error);
-					     
+
     g_object_unref (proxy);
-    
+
     if ( error )
     {
 	g_error ("%s", error->message);
@@ -196,7 +196,7 @@ xfpm_dump_remote (GDBusConnection *bus)
     }
     g_variant_iter_free (iter);
     g_variant_unref (config);
-    
+
     xfpm_dump (hash);
     g_hash_table_destroy (hash);
 }
@@ -206,12 +206,12 @@ xfpm_start (GDBusConnection *bus, const gchar *client_id, gboolean dump)
 {
     XfpmManager *manager;
     GError *error = NULL;
-    
+
     XFPM_DEBUG ("Starting the power manager");
-    
+
     manager = xfpm_manager_new (bus, client_id);
 
-    if ( xfce_posix_signal_handler_init (&error)) 
+    if ( xfce_posix_signal_handler_init (&error))
     {
         xfce_posix_signal_handler_set_handler (SIGHUP,
                                                xfpm_quit_signal,
@@ -224,15 +224,15 @@ xfpm_start (GDBusConnection *bus, const gchar *client_id, gboolean dump)
         xfce_posix_signal_handler_set_handler (SIGTERM,
                                                xfpm_quit_signal,
                                                manager, NULL);
-    } 
-    else 
+    }
+    else
     {
         g_warning ("Unable to set up POSIX signal handlers: %s", error->message);
         g_error_free (error);
     }
 
     xfpm_manager_start (manager);
-    
+
     if ( dump )
     {
 	GHashTable *hash;
@@ -241,9 +241,9 @@ xfpm_start (GDBusConnection *bus, const gchar *client_id, gboolean dump)
 	g_hash_table_destroy (hash);
     }
 
-    
+
     gtk_main ();
-    
+
     g_object_unref (manager);
 
     exit (EXIT_SUCCESS);
@@ -255,7 +255,7 @@ int main (int argc, char **argv)
     GError *error = NULL;
     XfpmPowerManager *proxy;
     GOptionContext *octx;
-     
+
     gboolean run        = FALSE;
     gboolean quit       = FALSE;
     gboolean config     = FALSE;
@@ -265,8 +265,8 @@ int main (int argc, char **argv)
     gboolean debug      = FALSE;
     gboolean dump       = FALSE;
     gchar   *client_id  = NULL;
-    
-    GOptionEntry option_entries[] = 
+
+    GOptionEntry option_entries[] =
     {
 	{ "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &run, NULL, NULL },
 	{ "no-daemon",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &no_daemon, N_("Do not daemonize"), NULL },
@@ -300,7 +300,7 @@ int main (int argc, char **argv)
 
     g_option_context_free(octx);
 
-    if ( version )    
+    if ( version )
         show_version ();
 
     /* Fork if needed */
@@ -330,20 +330,20 @@ int main (int argc, char **argv)
 
         return EXIT_FAILURE;
     }
-    
+
     xfpm_debug_init (debug);
-    
+
     bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
-            
+
     if ( error )
     {
-	xfce_dialog_show_error (NULL, 
-				error, 
+	xfce_dialog_show_error (NULL,
+				error,
 				"%s",
 				_("Unable to get connection to the message bus session"));
 	g_error ("%s: \n", error->message);
     }
-    
+
     if ( quit )
     {
 	if (!xfpm_dbus_name_has_owner (bus, "org.xfce.PowerManager") )
@@ -361,7 +361,7 @@ int main (int argc, char **argv)
 						       "/org/xfce/PowerManager",
 						       NULL,
 						       NULL);
-	    if ( !proxy ) 
+	    if ( !proxy )
 	    {
 		g_critical ("Failed to get proxy");
 		g_object_unref(bus);
@@ -369,7 +369,7 @@ int main (int argc, char **argv)
 	    }
 	    xfpm_power_manager_call_quit_sync (proxy, NULL, &error);
 	    g_object_unref (proxy);
-	    
+
 	    if ( error)
 	    {
 		g_critical ("Failed to send quit message %s:\n", error->message);
@@ -378,11 +378,11 @@ int main (int argc, char **argv)
 	}
 	return EXIT_SUCCESS;
     }
-    
+
     if ( config )
     {
 	g_spawn_command_line_async ("xfce4-power-manager-settings", &error);
-	
+
 	if ( error )
 	{
 	    g_critical ("Failed to execute xfce4-power-manager-settings: %s", error->message);
@@ -391,7 +391,7 @@ int main (int argc, char **argv)
 	}
 	return EXIT_SUCCESS;
     }
-    
+
     if ( reload )
     {
 	if (!xfpm_dbus_name_has_owner (bus, "org.xfce.PowerManager") &&
@@ -400,7 +400,7 @@ int main (int argc, char **argv)
 	    g_print ("Xfce power manager is not running\n");
 	    xfpm_start (bus, client_id, dump);
 	}
-	
+
 	proxy = xfpm_power_manager_proxy_new_sync (bus,
 						   G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
 						   G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
@@ -408,13 +408,13 @@ int main (int argc, char **argv)
 						   "/org/xfce/PowerManager",
 						   NULL,
 						   NULL);
-	if ( !proxy ) 
+	if ( !proxy )
 	{
 	    g_critical ("Failed to get proxy");
 	    g_object_unref (bus);
 	    return EXIT_FAILURE;
 	}
-	    
+
 	if ( !xfpm_power_manager_call_restart_sync (proxy, NULL, NULL) )
 	{
 	    g_critical ("Unable to send reload message");
@@ -424,7 +424,7 @@ int main (int argc, char **argv)
 	}
 	return EXIT_SUCCESS;
     }
-    
+
     if (dump)
     {
 	if (xfpm_dbus_name_has_owner (bus, "org.xfce.PowerManager"))
@@ -433,13 +433,13 @@ int main (int argc, char **argv)
 	    return EXIT_SUCCESS;
 	}
     }
-    
+
     if (xfpm_dbus_name_has_owner (bus, "org.freedesktop.PowerManagement") )
     {
-	g_print ("%s: %s\n", 
+	g_print ("%s: %s\n",
 		 _("Xfce Power Manager"),
 		 _("Another power manager is already running"));
-		  
+
     }
     else if (xfpm_dbus_name_has_owner (bus, "org.xfce.PowerManager"))
     {
@@ -448,9 +448,9 @@ int main (int argc, char **argv)
     	return EXIT_SUCCESS;
     }
     else
-    {	
+    {
 	xfpm_start (bus, client_id, dump);
     }
-    
+
     return EXIT_SUCCESS;
 }

@@ -96,7 +96,7 @@ enum
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmXfconf, xfpm_xfconf, G_TYPE_OBJECT)
 
-static void 
+static void
 xfpm_xfconf_set_property (GObject *object,
 			  guint prop_id,
 			  const GValue *value,
@@ -104,17 +104,17 @@ xfpm_xfconf_set_property (GObject *object,
 {
     XfpmXfconf *conf;
     GValue *dst;
-    
+
     conf = XFPM_XFCONF (object);
-    
+
     dst = conf->priv->values + prop_id;
-    
+
     if ( !G_IS_VALUE (dst) )
     {
 	g_value_init (dst, pspec->value_type);
 	g_param_value_set_default (pspec, dst);
     }
-    
+
     if ( g_param_values_cmp (pspec, value, dst) != 0)
     {
 	g_value_copy (value, dst);
@@ -122,7 +122,7 @@ xfpm_xfconf_set_property (GObject *object,
     }
 }
 
-static void 
+static void
 xfpm_xfconf_get_property (GObject *object,
 			  guint prop_id,
 			  GValue *value,
@@ -130,9 +130,9 @@ xfpm_xfconf_get_property (GObject *object,
 {
     XfpmXfconf *conf;
     GValue *src;
-    
+
     conf = XFPM_XFCONF (object);
-    
+
     src = conf->priv->values + prop_id;
 
     if ( G_VALUE_HOLDS (src, pspec->value_type) )
@@ -148,15 +148,15 @@ xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
     GValue value = { 0, };
     guint nspecs;
     guint i;
-    
+
     specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (conf), &nspecs);
-    
+
     for ( i = 0; i < nspecs; i++)
     {
 	gchar *prop_name;
 	prop_name = g_strdup_printf ("%s%s", XFPM_PROPERTIES_PREFIX, specs[i]->name);
 	g_value_init (&value, specs[i]->value_type);
-	
+
 	if (channel_valid)
 	{
 	    if ( !xfconf_channel_get_property (conf->priv->channel, prop_name, &value) )
@@ -200,7 +200,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
         return;
 
     XFPM_DEBUG ("Property modified: %s\n", property);
-    
+
     g_object_set_property (G_OBJECT (conf), property + strlen (XFPM_PROPERTIES_PREFIX), value);
 }
 
@@ -233,12 +233,12 @@ static void
 xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 {
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
-    
+
     object_class->set_property = xfpm_xfconf_set_property;
     object_class->get_property = xfpm_xfconf_get_property;
-    
+
     object_class->finalize = xfpm_xfconf_finalize;
-    
+
     /**
      * XfpmXfconf::general-notification
      **/
@@ -269,7 +269,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							20,
 							5,
                                                         G_PARAM_READWRITE));
-	
+
     /**
      * XfpmXfconf::show-brightness-popup
      **/
@@ -279,7 +279,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            NULL, NULL,
                                                            TRUE,
                                                            G_PARAM_READWRITE));
-    
+
     /**
      * XfpmXfconf::handle-brightness-keys
      **/
@@ -300,7 +300,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							NEVER_SHOW_ICON,
 							SHOW_ICON_WHEN_BATTERY_PRESENT,
                                                         G_PARAM_READWRITE));
-							
+
     /**
      * XfpmXfconf::critical-battery-action
      **/
@@ -323,7 +323,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							XFPM_DO_SHUTDOWN,
 							XFPM_DO_NOTHING,
                                                         G_PARAM_READWRITE));
-							
+
     /**
      * XfpmXfconf::sleep-switch-action
      **/
@@ -335,7 +335,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							XFPM_DO_SHUTDOWN,
 							XFPM_DO_NOTHING,
                                                         G_PARAM_READWRITE));
-							
+
     /**
      * XfpmXfconf::hibernate-switch-action
      **/
@@ -359,7 +359,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                         XFPM_DO_SHUTDOWN,
                                                         XFPM_DO_NOTHING,
                                                         G_PARAM_READWRITE));
-    
+
     /**
      * XfpmXfconf::lid-action-on-ac
      **/
@@ -371,7 +371,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							LID_TRIGGER_LOCK_SCREEN,
 							LID_TRIGGER_LOCK_SCREEN,
                                                         G_PARAM_READWRITE));
-    
+
      /**
      * XfpmXfconf::brightness-level-on-ac
      **/
@@ -383,7 +383,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							100,
 							80,
                                                         G_PARAM_READWRITE));
-							
+
     /**
      * XfpmXfconf::brightness-level-on-battery
      **/
@@ -395,7 +395,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 							100,
 							20,
                                                         G_PARAM_READWRITE));
-    
+
     /**
      * XfpmXfconf::lid-action-on-battery
      **/
@@ -625,17 +625,17 @@ xfpm_xfconf_init (XfpmXfconf *conf)
     GError *error = NULL;
     gboolean channel_valid;
     gboolean lock_screen;
-      
+
     conf->priv = xfpm_xfconf_get_instance_private (conf);
-    
+
     conf->priv->values = g_new0 (GValue, N_PROPERTIES);
-    
+
     if ( !xfconf_init (&error) )
     {
     	g_critical ("xfconf_init failed: %s\n", error->message);
        	g_error_free (error);
 	channel_valid = FALSE;
-    }	
+    }
     else
     {
     conf->priv->channel = xfconf_channel_get (XFPM_CHANNEL);
@@ -670,15 +670,15 @@ xfpm_xfconf_finalize(GObject *object)
 {
     XfpmXfconf *conf;
     guint i;
-    
+
     conf = XFPM_XFCONF(object);
-    
+
     for ( i = 0; i < N_PROPERTIES; i++)
     {
 	if ( G_IS_VALUE (conf->priv->values + i) )
 	    g_value_unset (conf->priv->values + i);
     }
-    
+
     g_free (conf->priv->values);
 
     G_OBJECT_CLASS(xfpm_xfconf_parent_class)->finalize(object);
@@ -688,11 +688,11 @@ XfpmXfconf *
 xfpm_xfconf_new (void)
 {
     static gpointer xfpm_xfconf_object = NULL;
-    
+
     if ( G_LIKELY (xfpm_xfconf_object != NULL) )
     {
 	g_object_ref (xfpm_xfconf_object);
-    } 
+    }
     else
     {
 	xfpm_xfconf_object = g_object_new (XFPM_TYPE_XFCONF, NULL);

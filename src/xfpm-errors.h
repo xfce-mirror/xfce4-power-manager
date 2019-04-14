@@ -36,7 +36,7 @@ typedef enum
     XFPM_ERROR_COOKIE_NOT_FOUND,
     XFPM_ERROR_INVALID_ARGUMENTS,
     XFPM_ERROR_SLEEP_FAILED
-    
+
 } XfpmError;
 
 GQuark  xfpm_get_error_quark (void);

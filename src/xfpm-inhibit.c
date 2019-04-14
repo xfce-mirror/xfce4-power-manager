@@ -56,7 +56,7 @@ typedef struct
     gchar *app_name;
     gchar *unique_name;
     guint  cookie;
-    
+
 } Inhibitor;
 
 enum
@@ -74,9 +74,9 @@ static void
 xfpm_inhibit_free_inhibitor (XfpmInhibit *inhibit, Inhibitor *inhibitor)
 {
     g_return_if_fail (inhibitor != NULL );
-    
+
     g_ptr_array_remove (inhibit->priv->array, inhibitor);
-    
+
     g_free (inhibitor->app_name);
     g_free (inhibitor->unique_name);
     g_free (inhibitor);
@@ -111,7 +111,7 @@ xfpm_inhibit_get_cookie (XfpmInhibit *inhibit)
     guint max = 0;
     guint i;
     Inhibitor *inhibitor;
-    
+
     for ( i = 0; i<inhibit->priv->array->len; i++)
     {
 	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
@@ -125,17 +125,17 @@ xfpm_inhibit_add_application (XfpmInhibit *inhibit, const gchar *app_name, const
 {
     guint cookie;
     Inhibitor *inhibitor;
-    
+
     inhibitor = g_new0 (Inhibitor, 1);
-    
+
     cookie = xfpm_inhibit_get_cookie (inhibit);
-    
+
     inhibitor->cookie      = cookie;
     inhibitor->app_name    = g_strdup (app_name);
     inhibitor->unique_name = g_strdup (unique_name);
-    
+
     g_ptr_array_add (inhibit->priv->array, inhibitor);
-    
+
     return cookie;
 }
 
@@ -175,9 +175,9 @@ static gboolean
 xfpm_inhibit_remove_application_by_cookie (XfpmInhibit *inhibit, guint cookie)
 {
     Inhibitor *inhibitor;
-    
+
     inhibitor = xfpm_inhibit_find_application_by_cookie (inhibit, cookie);
-    
+
     if ( inhibitor )
     {
 	xfpm_dbus_monitor_remove_unique_name (inhibit->priv->monitor, G_BUS_TYPE_SESSION, inhibitor->unique_name);
@@ -188,16 +188,16 @@ xfpm_inhibit_remove_application_by_cookie (XfpmInhibit *inhibit, guint cookie)
 }
 
 static void
-xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor, gchar *unique_name, 
+xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor, gchar *unique_name,
 				 gboolean on_session, XfpmInhibit *inhibit)
 {
     Inhibitor *inhibitor;
-    
+
     if ( !on_session)
 	return;
-    
+
     inhibitor = xfpm_inhibit_find_application_by_unique_connection_name (inhibit, unique_name );
-    
+
     if ( inhibitor )
     {
 	XFPM_DEBUG ("Application=%s with unique connection name=%s disconnected", inhibitor->app_name, inhibitor->unique_name);
@@ -230,7 +230,7 @@ xfpm_inhibit_class_init(XfpmInhibitClass *klass)
 			 G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
     object_class->finalize = xfpm_inhibit_finalize;
-    
+
     xfpm_inhibit_dbus_class_init (klass);
 }
 
@@ -238,13 +238,13 @@ static void
 xfpm_inhibit_init (XfpmInhibit *inhibit)
 {
     inhibit->priv = xfpm_inhibit_get_instance_private (inhibit);
-    
+
     inhibit->priv->array   = g_ptr_array_new ();
     inhibit->priv->monitor = xfpm_dbus_monitor_new ();
-    
+
     g_signal_connect (inhibit->priv->monitor, "unique-name-lost",
 		      G_CALLBACK (xfpm_inhibit_connection_lost_cb), inhibit);
-		      
+
     xfpm_inhibit_dbus_init (inhibit);
 }
 
@@ -256,15 +256,15 @@ xfpm_inhibit_finalize (GObject *object)
     guint i;
 
     inhibit = XFPM_INHIBIT(object);
-    
+
     g_object_unref (inhibit->priv->monitor);
-    
+
     for ( i = 0; i<inhibit->priv->array->len; i++)
     {
 	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
 	xfpm_inhibit_free_inhibitor (inhibit, inhibitor);
     }
-    
+
     g_ptr_array_free (inhibit->priv->array, TRUE);
 
     G_OBJECT_CLASS(xfpm_inhibit_parent_class)->finalize(object);
@@ -274,7 +274,7 @@ XfpmInhibit *
 xfpm_inhibit_new(void)
 {
     static gpointer xfpm_inhibit_object = NULL;
-    
+
     if ( G_LIKELY (xfpm_inhibit_object != NULL) )
     {
 	g_object_ref (xfpm_inhibit_object);
@@ -302,24 +302,24 @@ xfpm_inhibit_get_inhibit_list (XfpmInhibit *inhibit)
     const gchar **OUT_inhibitors;
 
     XFPM_DEBUG ("entering xfpm_inhibit_get_inhibit_list");
-    
+
     OUT_inhibitors = g_new (const gchar *, inhibit->priv->array->len + 1);
-    
+
     for ( i = 0; i<inhibit->priv->array->len; i++)
     {
 	inhibitor = g_ptr_array_index (inhibit->priv->array, i);
 	OUT_inhibitors[i] = inhibitor->app_name;
     }
-    
+
     OUT_inhibitors[inhibit->priv->array->len] = NULL;
 
     return OUT_inhibitors;
 }
 
 /*
- * 
+ *
  * DBus server implementation for org.freedesktop.PowerManagement.Inhibit
- * 
+ *
  */
 static gboolean xfpm_inhibit_inhibit  	(XfpmInhibit *inhibit,
 					 GDBusMethodInvocation *invocation,
@@ -383,7 +383,7 @@ static gboolean xfpm_inhibit_inhibit  	(XfpmInhibit *inhibit,
 {
     const gchar *sender;
     guint cookie;
-    
+
     if ( IN_appname == NULL || IN_reason == NULL )
     {
 	g_dbus_method_invocation_return_error (invocation,
@@ -396,13 +396,13 @@ static gboolean xfpm_inhibit_inhibit  	(XfpmInhibit *inhibit,
 
     sender = g_dbus_method_invocation_get_sender (invocation);
     cookie = xfpm_inhibit_add_application (inhibit, IN_appname, sender);
-     
+
     XFPM_DEBUG("Inhibit send application name=%s reason=%s sender=%s", IN_appname, IN_reason ,sender);
-    
+
     xfpm_inhibit_has_inhibit_changed (inhibit);
-    
+
     xfpm_dbus_monitor_add_unique_name (inhibit->priv->monitor, G_BUS_TYPE_SESSION, sender);
-    
+
     xfpm_power_management_inhibit_complete_inhibit (user_data,
                                                     invocation,
                                                     cookie);
@@ -425,9 +425,9 @@ static gboolean xfpm_inhibit_un_inhibit    (XfpmInhibit *inhibit,
 					       _("Invalid cookie"));
 	return TRUE;
     }
-    
+
     xfpm_inhibit_has_inhibit_changed (inhibit);
-   
+
     xfpm_power_management_inhibit_complete_un_inhibit (user_data, invocation);
 
     return TRUE;
@@ -453,7 +453,7 @@ static gboolean xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
     const gchar **OUT_inhibitors;
 
     XFPM_DEBUG ("Get Inhibitors message received");
-    
+
     OUT_inhibitors = xfpm_inhibit_get_inhibit_list (inhibit);
 
     xfpm_power_management_inhibit_complete_get_inhibitors (user_data,
@@ -461,6 +461,6 @@ static gboolean xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
 							   OUT_inhibitors);
 
     g_free (OUT_inhibitors);
-    
+
     return TRUE;
 }

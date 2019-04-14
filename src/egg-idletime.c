@@ -685,4 +685,3 @@ egg_idletime_test (gpointer data)
 }
 
 #endif
-

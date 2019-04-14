@@ -102,13 +102,13 @@ get_kinfo_proc (pid_t pid, struct kinfo_proc *p)
 {
     int mib[4];
     size_t len;
-    
+
     len = 4;
     sysctlnametomib ("kern.proc.pid", mib, &len);
-    
+
     len = sizeof (struct kinfo_proc);
     mib[3] = pid;
-    
+
     if (sysctl (mib, 4, p, &len, NULL, 0) == -1)
 	return FALSE;
 
@@ -128,12 +128,12 @@ get_start_time_for_pid (pid_t pid)
     guint num_tokens;
     gchar *p;
     gchar *endp;
-  
+
     start_time = 0;
     contents = NULL;
-    
+
     filename = g_strdup_printf ("/proc/%d/stat", pid);
-    
+
     if (!g_file_get_contents (filename, &contents, &length, NULL))
 	goto out;
 
@@ -146,7 +146,7 @@ get_start_time_for_pid (pid_t pid)
     {
 	goto out;
     }
-    
+
     p += 2; /* skip ') ' */
 
     if (p - contents >= (int) length)
@@ -154,11 +154,11 @@ get_start_time_for_pid (pid_t pid)
 	g_warning ("Error parsing file %s", filename);
 	goto out;
     }
-    
+
     tokens = g_strsplit (p, " ", 0);
-    
+
     num_tokens = g_strv_length (tokens);
-    
+
     if (num_tokens < 20)
     {
 	g_warning ("Error parsing file %s", filename);
@@ -176,11 +176,11 @@ get_start_time_for_pid (pid_t pid)
  out:
     g_free (filename);
     g_free (contents);
-    
+
 #elif defined(__FreeBSD__)
 
     struct kinfo_proc p;
-    
+
     start_time = 0;
 
     if (! get_kinfo_proc (pid, &p))
@@ -192,7 +192,7 @@ get_start_time_for_pid (pid_t pid)
     }
 
     start_time = (guint64) p.ki_start.tv_sec;
-    
+
 out:
 #elif defined(__SVR4) && defined(__sun)
 
@@ -222,7 +222,7 @@ out:
 out:
     g_free (filename);
 #endif
-    
+
     return start_time;
 }
 #endif /*ENABLE_POLKIT*/
@@ -233,7 +233,7 @@ static gboolean
 xfpm_polkit_free_data (gpointer data)
 {
     XfpmPolkit *polkit;
-    
+
     polkit = XFPM_POLKIT (data);
 
     g_assert (polkit->priv->subject_valid);
@@ -242,13 +242,13 @@ xfpm_polkit_free_data (gpointer data)
 
     g_variant_unref (polkit->priv->details);
     g_variant_unref (polkit->priv->subject);
-    
+
     polkit->priv->details      = NULL;
     polkit->priv->subject      = NULL;
 
     polkit->priv->destroy_id = 0;
     polkit->priv->subject_valid = FALSE;
-    
+
     return FALSE;
 }
 
@@ -292,7 +292,7 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 	g_variant_ref_sink (g_variant_new ("(sa{sv})",
 					   subject_kind,
 					   &builder));
-    
+
     /**
      * Polkit details, will leave it empty.
      **/
@@ -300,11 +300,11 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
     polkit->priv->details =
 	g_variant_ref_sink (g_variant_new ("a{ss}",
 					   &builder));
-    
+
     /*Clean these data after 1 minute*/
-    polkit->priv->destroy_id = 
+    polkit->priv->destroy_id =
 	g_timeout_add_seconds (60, (GSourceFunc) xfpm_polkit_free_data, polkit);
-    
+
     polkit->priv->subject_valid = TRUE;
 }
 #endif /*ENABLE_POLKIT*/
@@ -316,19 +316,19 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
     GError *error = NULL;
     gboolean is_authorized = FALSE;
     GVariant *var;
-    
+
     /**
-     * <method name="CheckAuthorization">      
-     *   <arg type="(sa{sv})" name="subject" direction="in"/>      
-     *   <arg type="s" name="action_id" direction="in"/>           
-     *   <arg type="a{ss}" name="details" direction="in"/>         
-     *   <arg type="u" name="flags" direction="in"/>               
-     *   <arg type="s" name="cancellation_id" direction="in"/>     
-     *   <arg type="(bba{ss})" name="result" direction="out"/>     
+     * <method name="CheckAuthorization">
+     *   <arg type="(sa{sv})" name="subject" direction="in"/>
+     *   <arg type="s" name="action_id" direction="in"/>
+     *   <arg type="a{ss}" name="details" direction="in"/>
+     *   <arg type="u" name="flags" direction="in"/>
+     *   <arg type="s" name="cancellation_id" direction="in"/>
+     *   <arg type="(bba{ss})" name="result" direction="out"/>
      * </method>
      *
      **/
-    
+
     g_return_val_if_fail (polkit->priv->proxy != NULL, FALSE);
     g_return_val_if_fail (polkit->priv->subject_valid, FALSE);
 
@@ -346,7 +346,7 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
                                   G_DBUS_CALL_FLAGS_NONE,
                                   -1, NULL,
                                   &error);
-    
+
     if ( G_LIKELY (var) )
     {
 	g_variant_get (var, "((bba{ss}))",
@@ -359,9 +359,9 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
 	g_warning ("'CheckAuthorization' failed with %s", error->message);
 	g_error_free (error);
     }
-    
+
     XFPM_DEBUG ("Action=%s is authorized=%s", action_id, xfpm_bool_to_string (is_authorized));
-    
+
     return is_authorized;
 #endif /*ENABLE_POLKIT*/
     return TRUE;
@@ -383,7 +383,7 @@ xfpm_polkit_class_init (XfpmPolkitClass *klass)
 
     object_class->finalize = xfpm_polkit_finalize;
 
-    signals [AUTH_CHANGED] = 
+    signals [AUTH_CHANGED] =
         g_signal_new ("auth-changed",
                       XFPM_TYPE_POLKIT,
                       G_SIGNAL_RUN_LAST,
@@ -397,7 +397,7 @@ static void
 xfpm_polkit_init (XfpmPolkit *polkit)
 {
     GError *error = NULL;
-    
+
     polkit->priv = xfpm_polkit_get_instance_private (polkit);
 
 #ifdef ENABLE_POLKIT
@@ -407,9 +407,9 @@ xfpm_polkit_init (XfpmPolkit *polkit)
     polkit->priv->subject      = NULL;
     polkit->priv->details      = NULL;
 #endif /*ENABLE_POLKIT*/
-    
+
     polkit->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
-    
+
     if ( error )
     {
 	g_critical ("Error getting system bus connection : %s", error->message);
@@ -418,7 +418,7 @@ xfpm_polkit_init (XfpmPolkit *polkit)
     }
 
 #ifdef ENABLE_POLKIT
-    polkit->priv->proxy = 
+    polkit->priv->proxy =
 	g_dbus_proxy_new_sync (polkit->priv->bus,
 			       G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
 			       NULL,
@@ -427,7 +427,7 @@ xfpm_polkit_init (XfpmPolkit *polkit)
 			       "org.freedesktop.PolicyKit1.Authority",
 			       NULL,
 			       NULL);
-    
+
     if (G_LIKELY (polkit->priv->proxy) )
     {
 	g_signal_connect (polkit->priv->proxy, "Changed",
@@ -477,7 +477,7 @@ XfpmPolkit *
 xfpm_polkit_get (void)
 {
     static gpointer xfpm_polkit_obj = NULL;
-    
+
     if ( G_LIKELY (xfpm_polkit_obj) )
     {
 	g_object_ref (xfpm_polkit_obj);
@@ -487,7 +487,7 @@ xfpm_polkit_get (void)
 	xfpm_polkit_obj = g_object_new (XFPM_TYPE_POLKIT, NULL);
 	g_object_add_weak_pointer (xfpm_polkit_obj, &xfpm_polkit_obj);
     }
-    
+
     return XFPM_POLKIT (xfpm_polkit_obj);
 }
 

@@ -35,15 +35,15 @@ typedef struct
 {
     GObject         	   parent;
     XfpmPolkitPrivate     *priv;
-    
+
 } XfpmPolkit;
 
 typedef struct
 {
     GObjectClass 	   parent_class;
-    
+
     void		  (*auth_changed)		(XfpmPolkit *polkit);
-    
+
 } XfpmPolkitClass;
 
 GType        		   xfpm_polkit_get_type        	(void) G_GNUC_CONST;

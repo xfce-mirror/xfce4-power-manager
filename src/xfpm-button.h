@@ -37,16 +37,16 @@ typedef struct
 {
     GObject		  	parent;
     XfpmButtonPrivate          *priv;
-    
+
 } XfpmButton;
 
 typedef struct
 {
     GObjectClass 		parent_class;
-     
+
     void                 	(*button_pressed)		        (XfpmButton *button,
 								         XfpmButtonKey type);
-    
+
 } XfpmButtonClass;
 
 GType                 		xfpm_button_get_type               	(void) G_GNUC_CONST;
