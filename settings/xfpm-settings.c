@@ -2114,7 +2114,7 @@ add_device (UpDevice *device)
     GtkListStore *sideview_store, *devices_store;
     GtkTreeViewColumn *col;
     GtkCellRenderer *renderer;
-    GtkWidget *view;
+    GtkWidget *frame, *view;
     const gchar *object_path = up_device_get_object_path(device);
     gulong signal_id;
     guint index;
@@ -2140,8 +2140,11 @@ add_device (UpDevice *device)
     index = gtk_notebook_get_n_pages (GTK_NOTEBOOK (device_details_notebook));
 
     /* Create the page that the update_device_details will update/replace */
+    frame = gtk_frame_new (NULL);
     view = gtk_tree_view_new ();
-    gtk_notebook_append_page (GTK_NOTEBOOK (device_details_notebook), view, NULL);
+    gtk_container_add (GTK_CONTAINER (frame), view);
+    gtk_widget_show_all (frame);
+    gtk_notebook_append_page (GTK_NOTEBOOK (device_details_notebook), frame, NULL);
     gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
 
     /* Create the list store that the devices view will display */
