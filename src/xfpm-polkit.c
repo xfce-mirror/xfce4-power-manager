@@ -64,9 +64,6 @@
 
 static void xfpm_polkit_finalize   (GObject *object);
 
-#define XFPM_POLKIT_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_POLKIT, XfpmPolkitPrivate))
-
 struct XfpmPolkitPrivate
 {
     GDBusConnection   *bus;
@@ -89,7 +86,7 @@ enum
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE (XfpmPolkit, xfpm_polkit, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmPolkit, xfpm_polkit, G_TYPE_OBJECT)
 
 #ifdef ENABLE_POLKIT
 #if defined(__FreeBSD__)
@@ -394,8 +391,6 @@ xfpm_polkit_class_init (XfpmPolkitClass *klass)
                       NULL, NULL,
                       g_cclosure_marshal_VOID__VOID,
                       G_TYPE_NONE, 0, G_TYPE_NONE);
-
-    g_type_class_add_private (klass, sizeof (XfpmPolkitPrivate));
 }
 
 static void
@@ -403,7 +398,7 @@ xfpm_polkit_init (XfpmPolkit *polkit)
 {
     GError *error = NULL;
     
-    polkit->priv = XFPM_POLKIT_GET_PRIVATE (polkit);
+    polkit->priv = xfpm_polkit_get_instance_private (polkit);
 
 #ifdef ENABLE_POLKIT
     polkit->priv->destroy_id   = 0;

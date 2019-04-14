@@ -44,9 +44,6 @@ static void xfpm_inhibit_finalize   (GObject *object);
 static void xfpm_inhibit_dbus_class_init  (XfpmInhibitClass *klass);
 static void xfpm_inhibit_dbus_init	  (XfpmInhibit *inhibit);
 
-#define XFPM_INHIBIT_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_INHIBIT, XfpmInhibitPrivate))
-
 struct XfpmInhibitPrivate
 {
     XfpmDBusMonitor *monitor;
@@ -71,7 +68,7 @@ enum
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE (XfpmInhibit, xfpm_inhibit, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmInhibit, xfpm_inhibit, G_TYPE_OBJECT)
 
 static void
 xfpm_inhibit_free_inhibitor (XfpmInhibit *inhibit, Inhibitor *inhibitor)
@@ -233,8 +230,6 @@ xfpm_inhibit_class_init(XfpmInhibitClass *klass)
 			 G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
     object_class->finalize = xfpm_inhibit_finalize;
-
-    g_type_class_add_private (klass, sizeof (XfpmInhibitPrivate));
     
     xfpm_inhibit_dbus_class_init (klass);
 }
@@ -242,7 +237,7 @@ xfpm_inhibit_class_init(XfpmInhibitClass *klass)
 static void
 xfpm_inhibit_init (XfpmInhibit *inhibit)
 {
-    inhibit->priv = XFPM_INHIBIT_GET_PRIVATE(inhibit);
+    inhibit->priv = xfpm_inhibit_get_instance_private (inhibit);
     
     inhibit->priv->array   = g_ptr_array_new ();
     inhibit->priv->monitor = xfpm_dbus_monitor_new ();

@@ -83,9 +83,6 @@ static gboolean xfpm_manager_quit (XfpmManager *manager);
 static void xfpm_manager_show_tray_icon (XfpmManager *manager);
 static void xfpm_manager_hide_tray_icon (XfpmManager *manager);
 
-#define XFPM_MANAGER_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_MANAGER, XfpmManagerPrivate))
-
 #define SLEEP_KEY_TIMEOUT 6.0f
 
 struct XfpmManagerPrivate
@@ -126,7 +123,7 @@ enum
     PROP_SHOW_TRAY_ICON
 };
 
-G_DEFINE_TYPE (XfpmManager, xfpm_manager, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmManager, xfpm_manager, G_TYPE_OBJECT)
 
 static void
 xfpm_manager_class_init (XfpmManagerClass *klass)
@@ -136,8 +133,6 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
     object_class->finalize = xfpm_manager_finalize;
     object_class->set_property = xfpm_manager_set_property;
     object_class->get_property = xfpm_manager_get_property;
-
-    g_type_class_add_private (klass, sizeof (XfpmManagerPrivate));
 
 #define XFPM_PARAM_FLAGS  (G_PARAM_READWRITE \
                            | G_PARAM_CONSTRUCT \
@@ -157,7 +152,7 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
 static void
 xfpm_manager_init (XfpmManager *manager)
 {
-    manager->priv = XFPM_MANAGER_GET_PRIVATE (manager);
+    manager->priv = xfpm_manager_get_instance_private (manager);
 
     manager->priv->timer = g_timer_new ();
 

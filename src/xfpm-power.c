@@ -83,10 +83,6 @@ static void xfpm_update_blank_time (XfpmPower *power);
 static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
 
-
-#define XFPM_POWER_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_POWER, XfpmPowerPrivate))
-
 struct XfpmPowerPrivate
 {
     GDBusConnection *bus;
@@ -168,7 +164,7 @@ enum
 static guint signals [LAST_SIGNAL] = { 0 };
 
 
-G_DEFINE_TYPE (XfpmPower, xfpm_power, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmPower, xfpm_power, G_TYPE_OBJECT)
 
 
 /* This checks if consolekit returns TRUE for either suspend or
@@ -1168,8 +1164,6 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                         XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 
-    g_type_class_add_private (klass, sizeof (XfpmPowerPrivate));
-
     xfpm_power_dbus_class_init (klass);
 }
 
@@ -1178,7 +1172,7 @@ xfpm_power_init (XfpmPower *power)
 {
     GError *error = NULL;
 
-    power->priv = XFPM_POWER_GET_PRIVATE (power);
+    power->priv = xfpm_power_get_instance_private (power);
 
     power->priv->hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
     power->priv->lid_is_present  = FALSE;

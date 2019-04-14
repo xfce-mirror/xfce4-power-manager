@@ -41,9 +41,6 @@
 
 static void xfpm_brightness_finalize   (GObject *object);
 
-#define XFPM_BRIGHTNESS_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_BRIGHTNESS, XfpmBrightnessPrivate))
-
 struct XfpmBrightnessPrivate
 {
     XRRScreenResources *resource;
@@ -58,7 +55,7 @@ struct XfpmBrightnessPrivate
     gint32		step;
 };
 
-G_DEFINE_TYPE (XfpmBrightness, xfpm_brightness, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmBrightness, xfpm_brightness, G_TYPE_OBJECT)
 
 static gboolean
 xfpm_brightness_xrand_get_limit (XfpmBrightness *brightness, RROutput output, gint *min, gint *max)
@@ -542,14 +539,12 @@ xfpm_brightness_class_init (XfpmBrightnessClass *klass)
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
     object_class->finalize = xfpm_brightness_finalize;
-
-    g_type_class_add_private (klass, sizeof (XfpmBrightnessPrivate));
 }
 
 static void
 xfpm_brightness_init (XfpmBrightness *brightness)
 {
-    brightness->priv = XFPM_BRIGHTNESS_GET_PRIVATE (brightness);
+    brightness->priv = xfpm_brightness_get_instance_private (brightness);
 
     brightness->priv->resource = NULL;
     brightness->priv->xrandr_has_hw = FALSE;

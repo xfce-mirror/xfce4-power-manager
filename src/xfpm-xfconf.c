@@ -43,9 +43,6 @@
 
 static void xfpm_xfconf_finalize   (GObject *object);
 
-#define XFPM_XFCONF_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_XFCONF, XfpmXfconfPrivate ))
-
 struct XfpmXfconfPrivate
 {
     XfconfChannel 	*channel;
@@ -97,7 +94,7 @@ enum
     N_PROPERTIES
 };
 
-G_DEFINE_TYPE(XfpmXfconf, xfpm_xfconf, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmXfconf, xfpm_xfconf, G_TYPE_OBJECT)
 
 static void 
 xfpm_xfconf_set_property (GObject *object,
@@ -620,8 +617,6 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                            NULL, NULL,
                                                            NULL,
                                                            G_PARAM_READWRITE));
-
-    g_type_class_add_private (klass, sizeof (XfpmXfconfPrivate));
 }
 
 static void
@@ -631,7 +626,7 @@ xfpm_xfconf_init (XfpmXfconf *conf)
     gboolean channel_valid;
     gboolean lock_screen;
       
-    conf->priv = XFPM_XFCONF_GET_PRIVATE (conf);
+    conf->priv = xfpm_xfconf_get_instance_private (conf);
     
     conf->priv->values = g_new0 (GValue, N_PROPERTIES);
     

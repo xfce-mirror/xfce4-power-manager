@@ -52,9 +52,6 @@
 #define PANEL_DEFAULT_ICON ("battery-full-charged")
 #define PANEL_DEFAULT_ICON_SYMBOLIC ("battery-full-charged-symbolic")
 
-#define POWER_MANAGER_BUTTON_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), POWER_MANAGER_TYPE_BUTTON, PowerManagerButtonPrivate))
-
 struct PowerManagerButtonPrivate
 {
 #ifdef XFCE_PLUGIN
@@ -135,7 +132,7 @@ enum {
 
 static guint __signals[SIG_N_SIGNALS] = { 0, };
 
-G_DEFINE_TYPE (PowerManagerButton, power_manager_button, GTK_TYPE_TOGGLE_BUTTON)
+G_DEFINE_TYPE_WITH_PRIVATE (PowerManagerButton, power_manager_button, GTK_TYPE_TOGGLE_BUTTON)
 
 static void power_manager_button_finalize   (GObject *object);
 static GList* find_device_in_list (PowerManagerButton *button, const gchar *object_path);
@@ -857,8 +854,6 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
     widget_class->button_press_event = power_manager_button_press_event;
     widget_class->scroll_event = power_manager_button_scroll_event;
 
-    g_type_class_add_private (klass, sizeof (PowerManagerButtonPrivate));
-
     __signals[SIG_TOOLTIP_CHANGED] = g_signal_new ("tooltip-changed",
                                                    POWER_MANAGER_TYPE_BUTTON,
                                                    G_SIGNAL_RUN_LAST,
@@ -924,7 +919,7 @@ power_manager_button_init (PowerManagerButton *button)
     GError *error = NULL;
     GtkCssProvider *css_provider;
 
-    button->priv = POWER_MANAGER_BUTTON_GET_PRIVATE (button);
+    button->priv = power_manager_button_get_instance_private (button);
 
     gtk_widget_set_can_default (GTK_WIDGET (button), FALSE);
     gtk_widget_set_can_focus (GTK_WIDGET (button), FALSE);

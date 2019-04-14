@@ -62,9 +62,6 @@ static void xfpm_backlight_set_property (GObject *object,
 
 #define ALARM_DISABLED 9
 
-#define XFPM_BACKLIGHT_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_BACKLIGHT, XfpmBacklightPrivate))
-
 struct XfpmBacklightPrivate
 {
     XfpmBrightness *brightness;
@@ -98,7 +95,7 @@ enum
     N_PROPERTIES
 };
 
-G_DEFINE_TYPE (XfpmBacklight, xfpm_backlight, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmBacklight, xfpm_backlight, G_TYPE_OBJECT)
 
 
 static void
@@ -327,14 +324,12 @@ xfpm_backlight_class_init (XfpmBacklightClass *klass)
                                                        1,
                                                        -1,
                                                        G_PARAM_READWRITE));
-
-    g_type_class_add_private (klass, sizeof (XfpmBacklightPrivate));
 }
 
 static void
 xfpm_backlight_init (XfpmBacklight *backlight)
 {
-    backlight->priv = XFPM_BACKLIGHT_GET_PRIVATE (backlight);
+    backlight->priv = xfpm_backlight_get_instance_private (backlight);
 
     backlight->priv->brightness = xfpm_brightness_new ();
     backlight->priv->has_hw     = xfpm_brightness_setup (backlight->priv->brightness);

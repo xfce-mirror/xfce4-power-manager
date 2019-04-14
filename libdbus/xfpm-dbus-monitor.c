@@ -68,7 +68,7 @@ enum
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE (XfpmDBusMonitor, xfpm_dbus_monitor, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmDBusMonitor, xfpm_dbus_monitor, G_TYPE_OBJECT)
 
 static void
 xfpm_dbus_monitor_free_watch_data (XfpmWatchData *data)
@@ -248,14 +248,12 @@ xfpm_dbus_monitor_class_init (XfpmDBusMonitorClass *klass)
 		      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 		     
     object_class->finalize = xfpm_dbus_monitor_finalize;
-
-    g_type_class_add_private (klass, sizeof (XfpmDBusMonitorPrivate));
 }
 
 static void
 xfpm_dbus_monitor_init (XfpmDBusMonitor *monitor)
 {
-    monitor->priv = XFPM_DBUS_MONITOR_GET_PRIVATE (monitor);
+    monitor->priv = xfpm_dbus_monitor_get_instance_private (monitor);
     
     monitor->priv->names_array = g_ptr_array_new ();
     monitor->priv->services_array = g_ptr_array_new ();

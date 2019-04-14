@@ -40,9 +40,6 @@ static void xfpm_console_kit_get_property (GObject *object,
 					   guint prop_id,
 					   GValue *value,
 					   GParamSpec *pspec);
-	    
-#define XFPM_CONSOLE_KIT_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_CONSOLE_KIT, XfpmConsoleKitPrivate))
 
 struct XfpmConsoleKitPrivate
 {
@@ -66,7 +63,7 @@ enum
     PROP_CAN_HIBERNATE
 };
 
-G_DEFINE_TYPE (XfpmConsoleKit, xfpm_console_kit, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmConsoleKit, xfpm_console_kit, G_TYPE_OBJECT)
 
 static void
 xfpm_console_kit_get_info (XfpmConsoleKit *console)
@@ -204,8 +201,6 @@ xfpm_console_kit_class_init (XfpmConsoleKitClass *klass)
                                                            NULL, NULL,
                                                            FALSE,
                                                            G_PARAM_READABLE));
-
-    g_type_class_add_private (klass, sizeof (XfpmConsoleKitPrivate));
 }
 
 static void
@@ -213,7 +208,7 @@ xfpm_console_kit_init (XfpmConsoleKit *console)
 {
     GError *error = NULL;
     
-    console->priv = XFPM_CONSOLE_KIT_GET_PRIVATE (console);
+    console->priv = xfpm_console_kit_get_instance_private (console);
     console->priv->can_shutdown = FALSE;
     console->priv->can_restart  = FALSE;
     

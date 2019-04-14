@@ -54,9 +54,6 @@
 
 static void xfpm_button_finalize   (GObject *object);
 
-#define XFPM_BUTTON_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_BUTTON, XfpmButtonPrivate))
-
 static struct
 {
     XfpmButtonKey    key;
@@ -81,7 +78,7 @@ enum
 
 static guint signals[LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE(XfpmButton, xfpm_button, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmButton, xfpm_button, G_TYPE_OBJECT)
 
 static guint
 xfpm_button_get_key (unsigned int keycode)
@@ -244,14 +241,12 @@ xfpm_button_class_init(XfpmButtonClass *klass)
                       G_TYPE_NONE, 1, XFPM_TYPE_BUTTON_KEY);
 
     object_class->finalize = xfpm_button_finalize;
-
-    g_type_class_add_private (klass, sizeof (XfpmButtonPrivate));
 }
 
 static void
 xfpm_button_init (XfpmButton *button)
 {
-    button->priv = XFPM_BUTTON_GET_PRIVATE (button);
+    button->priv = xfpm_button_get_instance_private (button);
     
     button->priv->mapped_buttons = 0;
     button->priv->screen = NULL;

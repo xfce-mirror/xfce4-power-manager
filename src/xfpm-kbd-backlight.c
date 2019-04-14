@@ -33,9 +33,6 @@
 #include "xfpm-notify.h"
 #include "xfpm-power.h"
 
-#define XFPM_KBD_BACKLIGHT_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_KBD_BACKLIGHT, XfpmKbdBacklightPrivate))
-
 static void xfpm_kbd_backlight_finalize     (GObject *object);
 
 struct XfpmKbdBacklightPrivate
@@ -56,7 +53,7 @@ struct XfpmKbdBacklightPrivate
     NotifyNotification *n;
 };
 
-G_DEFINE_TYPE (XfpmKbdBacklight, xfpm_kbd_backlight, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmKbdBacklight, xfpm_kbd_backlight, G_TYPE_OBJECT)
 
 
 static gint
@@ -251,8 +248,6 @@ xfpm_kbd_backlight_class_init (XfpmKbdBacklightClass *klass)
     GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
     object_class->finalize = xfpm_kbd_backlight_finalize;
-
-    g_type_class_add_private (klass, sizeof (XfpmKbdBacklightPrivate));
 }
 
 
@@ -261,7 +256,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
 {
     GError *error = NULL;
 
-    backlight->priv = XFPM_KBD_BACKLIGHT_GET_PRIVATE (backlight);
+    backlight->priv = xfpm_kbd_backlight_get_instance_private (backlight);
 
     backlight->priv->bus = NULL;
     backlight->priv->proxy = NULL;

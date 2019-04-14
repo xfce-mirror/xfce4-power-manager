@@ -63,10 +63,8 @@ static void activate_quit                (GSimpleAction  *action,
                                           GVariant       *parameter,
                                           gpointer        data);
 
-G_DEFINE_TYPE(XfpmSettingsApp, xfpm_settings_app, GTK_TYPE_APPLICATION);
+G_DEFINE_TYPE_WITH_PRIVATE(XfpmSettingsApp, xfpm_settings_app, GTK_TYPE_APPLICATION);
 
-
-#define XFPM_SETTINGS_APP_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_SETTINGS_APP, XfpmSettingsAppPrivate))
 
 
 static void
@@ -118,7 +116,7 @@ xfpm_settings_app_activate (GApplication *app)
 static void
 xfpm_settings_app_launch (GApplication *app)
 {
-    XfpmSettingsAppPrivate *priv = XFPM_SETTINGS_APP_GET_PRIVATE (app);
+    XfpmSettingsAppPrivate *priv = xfpm_settings_app_get_instance_private (XFPM_SETTINGS_APP (app));
 
     XfpmPowerManager *manager;
     XfconfChannel    *channel;
@@ -276,7 +274,7 @@ activate_socket (GSimpleAction  *action,
                  gpointer        data)
 {
     XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
-    XfpmSettingsAppPrivate *priv = XFPM_SETTINGS_APP_GET_PRIVATE (app);
+    XfpmSettingsAppPrivate *priv = xfpm_settings_app_get_instance_private (app);
 
     TRACE ("entering");
 
@@ -291,7 +289,7 @@ activate_device (GSimpleAction  *action,
                  gpointer        data)
 {
     XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
-    XfpmSettingsAppPrivate *priv = XFPM_SETTINGS_APP_GET_PRIVATE (app);
+    XfpmSettingsAppPrivate *priv = xfpm_settings_app_get_instance_private (app);
 
     TRACE ("entering");
 
@@ -306,7 +304,7 @@ activate_debug (GSimpleAction  *action,
                 gpointer        data)
 {
     XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
-    XfpmSettingsAppPrivate *priv = XFPM_SETTINGS_APP_GET_PRIVATE (app);
+    XfpmSettingsAppPrivate *priv = xfpm_settings_app_get_instance_private (app);
 
     TRACE ("entering");
 
@@ -418,8 +416,6 @@ xfpm_settings_app_class_init (XfpmSettingsAppClass *class)
     gapplication_class->handle_local_options = xfpm_settings_app_local_options;
     gapplication_class->startup              = xfpm_settings_app_startup;
     gapplication_class->activate             = xfpm_settings_app_activate;
-
-    g_type_class_add_private (class, sizeof (XfpmSettingsAppPrivate));
 }
 
 XfpmSettingsApp *

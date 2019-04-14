@@ -78,10 +78,8 @@ enum {
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-G_DEFINE_TYPE (ScaleMenuItem, scale_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
+G_DEFINE_TYPE_WITH_PRIVATE (ScaleMenuItem, scale_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
 G_GNUC_END_IGNORE_DEPRECATIONS
-
-#define GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), TYPE_SCALE_MENU_ITEM, ScaleMenuItemPrivate))
 
 
 
@@ -90,7 +88,7 @@ scale_menu_item_scale_value_changed (GtkRange *range,
                                      gpointer  user_data)
 {
   ScaleMenuItem *self = user_data;
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (self);
+  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (self);
 
   /* The signal is not sent when it was set through
    * scale_menu_item_set_value().  */
@@ -156,9 +154,6 @@ scale_menu_item_class_init (ScaleMenuItemClass *item_class)
                                          g_cclosure_marshal_VOID__DOUBLE,
                                          G_TYPE_NONE,
                                          1, G_TYPE_DOUBLE);
-
-
-  g_type_class_add_private (item_class, sizeof (ScaleMenuItemPrivate));
 }
 
 static void
@@ -174,7 +169,7 @@ remove_children (GtkContainer *container)
 static void
 update_packing (ScaleMenuItem *self)
 {
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (self);
+  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (self);
   GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   GtkWidget *vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
@@ -243,7 +238,7 @@ static gboolean
 scale_menu_item_button_press_event (GtkWidget      *menuitem,
                                     GdkEventButton *event)
 {
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (menuitem);
+  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
   GtkAllocation alloc;
   gint x, y;
 
@@ -269,7 +264,7 @@ static gboolean
 scale_menu_item_button_release_event (GtkWidget *menuitem,
                                       GdkEventButton *event)
 {
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (menuitem);
+  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
 
   TRACE("entering");
 
@@ -288,7 +283,7 @@ static gboolean
 scale_menu_item_motion_notify_event (GtkWidget      *menuitem,
                                      GdkEventMotion *event)
 {
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (menuitem);
+  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
   GtkWidget *scale = priv->scale;
   GtkAllocation alloc;
   gint x, y;
@@ -316,7 +311,7 @@ static gboolean
 scale_menu_item_grab_broken (GtkWidget *menuitem,
                              GdkEventGrabBroken *event)
 {
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (menuitem);
+  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
 
   TRACE("entering");
 
@@ -329,7 +324,7 @@ static void
 menu_hidden (GtkWidget        *menu,
              ScaleMenuItem *scale)
 {
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (scale);
+  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (scale);
 
   if (priv->grabbed)
     {
@@ -372,7 +367,7 @@ scale_menu_item_new_with_range (gdouble           min,
 
   scale_item = SCALE_MENU_ITEM (g_object_new (TYPE_SCALE_MENU_ITEM, NULL));
 
-  priv = GET_PRIVATE (scale_item);
+  priv = scale_menu_item_get_instance_private (scale_item);
 
   priv->scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, min, max, step);
   priv->vbox = NULL;
@@ -406,7 +401,7 @@ scale_menu_item_get_scale (ScaleMenuItem *menuitem)
 
   g_return_val_if_fail (IS_SCALE_MENU_ITEM (menuitem), NULL);
 
-  priv = GET_PRIVATE (menuitem);
+  priv = scale_menu_item_get_instance_private (menuitem);
 
   return priv->scale;
 }
@@ -426,7 +421,7 @@ scale_menu_item_get_description_label (ScaleMenuItem *menuitem)
 
   g_return_val_if_fail (IS_SCALE_MENU_ITEM (menuitem), NULL);
 
-  priv = GET_PRIVATE (menuitem);
+  priv = scale_menu_item_get_instance_private (menuitem);
 
   return gtk_label_get_text (GTK_LABEL (priv->description_label));
 }
@@ -446,7 +441,7 @@ scale_menu_item_get_percentage_label (ScaleMenuItem *menuitem)
 
   g_return_val_if_fail (IS_SCALE_MENU_ITEM (menuitem), NULL);
 
-  priv = GET_PRIVATE (menuitem);
+  priv = scale_menu_item_get_instance_private (menuitem);
 
   return gtk_label_get_text (GTK_LABEL (priv->percentage_label));
 }
@@ -467,7 +462,7 @@ scale_menu_item_set_description_label (ScaleMenuItem *menuitem,
 
   g_return_if_fail (IS_SCALE_MENU_ITEM (menuitem));
 
-  priv = GET_PRIVATE (menuitem);
+  priv = scale_menu_item_get_instance_private (menuitem);
 
   if (label == NULL && priv->description_label)
     {
@@ -511,7 +506,7 @@ scale_menu_item_set_percentage_label (ScaleMenuItem *menuitem,
 
   g_return_if_fail (IS_SCALE_MENU_ITEM (menuitem));
 
-  priv = GET_PRIVATE (menuitem);
+  priv = scale_menu_item_get_instance_private (menuitem);
 
   if (label == NULL && priv->percentage_label)
     {
@@ -547,7 +542,7 @@ void
 scale_menu_item_set_value (ScaleMenuItem *item,
                            gdouble        value)
 {
-  ScaleMenuItemPrivate *priv = GET_PRIVATE (item);
+  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (item);
 
   /* set ignore_value_changed to signify to the scale menu item that it
    * should not emit its own value-changed signal, as that should only

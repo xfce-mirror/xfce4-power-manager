@@ -50,9 +50,6 @@
 
 static void xfpm_battery_finalize   (GObject *object);
 
-#define XFPM_BATTERY_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_BATTERY, XfpmBatteryPrivate))
-
 struct XfpmBatteryPrivate
 {
     XfpmXfconf             *conf;
@@ -95,7 +92,7 @@ enum
 
 static guint signals [LAST_SIGNAL] = { 0 };
 
-G_DEFINE_TYPE (XfpmBattery, xfpm_battery, GTK_TYPE_WIDGET)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmBattery, xfpm_battery, GTK_TYPE_WIDGET)
 
 
 static gchar *
@@ -399,14 +396,12 @@ xfpm_battery_class_init (XfpmBatteryClass *klass)
 							XFPM_TYPE_BATTERY_CHARGE,
 							XFPM_BATTERY_CHARGE_UNKNOWN,
                                                         G_PARAM_READABLE));
-
-    g_type_class_add_private (klass, sizeof (XfpmBatteryPrivate));
 }
 
 static void
 xfpm_battery_init (XfpmBattery *battery)
 {
-    battery->priv = XFPM_BATTERY_GET_PRIVATE (battery);
+    battery->priv = xfpm_battery_get_instance_private (battery);
 
     battery->priv->conf          = xfpm_xfconf_new ();
     battery->priv->notify        = xfpm_notify_new ();

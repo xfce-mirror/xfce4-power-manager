@@ -45,9 +45,6 @@
 
 static void xfpm_dpms_finalize   (GObject *object);
 
-#define XFPM_DPMS_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_DPMS, XfpmDpmsPrivate))
-
 struct XfpmDpmsPrivate
 {
     XfpmXfconf      *conf;
@@ -61,7 +58,7 @@ struct XfpmDpmsPrivate
     gulong	     switch_on_timeout_id;
 };
 
-G_DEFINE_TYPE (XfpmDpms, xfpm_dpms, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmDpms, xfpm_dpms, G_TYPE_OBJECT)
 
 static void
 xfpm_dpms_set_timeouts (XfpmDpms *dpms, guint16 standby, guint16 suspend, guint off)
@@ -208,8 +205,6 @@ xfpm_dpms_class_init(XfpmDpmsClass *klass)
     GObjectClass *object_class = G_OBJECT_CLASS(klass);
     
     object_class->finalize = xfpm_dpms_finalize;
-
-    g_type_class_add_private(klass,sizeof(XfpmDpmsPrivate));
 }
 
 /*
@@ -218,7 +213,7 @@ xfpm_dpms_class_init(XfpmDpmsClass *klass)
 static void
 xfpm_dpms_init(XfpmDpms *dpms)
 {
-    dpms->priv = XFPM_DPMS_GET_PRIVATE(dpms);
+    dpms->priv = xfpm_dpms_get_instance_private(dpms);
     
     dpms->priv->dpms_capable = DPMSCapable (gdk_x11_get_default_xdisplay());
     dpms->priv->switch_off_timeout_id = 0;

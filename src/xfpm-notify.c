@@ -54,9 +54,6 @@ static NotifyNotification * xfpm_notify_new_notification_internal (const gchar *
 								   guint timeout,
 								   XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
 
-#define XFPM_NOTIFY_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE((o), XFPM_TYPE_NOTIFY, XfpmNotifyPrivate))
-
 struct XfpmNotifyPrivate
 {
     XfpmDBusMonitor    *monitor;
@@ -78,7 +75,7 @@ enum
     PROP_SYNC
 };
 
-G_DEFINE_TYPE(XfpmNotify, xfpm_notify, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmNotify, xfpm_notify, G_TYPE_OBJECT)
 
 static void
 xfpm_notify_get_server_caps (XfpmNotify *notify)
@@ -157,14 +154,12 @@ xfpm_notify_class_init (XfpmNotifyClass *klass)
                                                            NULL, NULL,
                                                            FALSE,
                                                            G_PARAM_READABLE));
-
-    g_type_class_add_private (klass, sizeof (XfpmNotifyPrivate));
 }
 
 static void
 xfpm_notify_init (XfpmNotify *notify)
 {
-    notify->priv = XFPM_NOTIFY_GET_PRIVATE (notify);
+    notify->priv = xfpm_notify_get_instance_private (notify);
 
     notify->priv->notification = NULL;
     notify->priv->critical = NULL;

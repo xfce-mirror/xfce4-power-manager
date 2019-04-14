@@ -43,9 +43,6 @@ static void xfpm_systemd_get_property (GObject *object,
                                        GValue *value,
                                        GParamSpec *pspec);
 
-#define XFPM_SYSTEMD_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_SYSTEMD, XfpmSystemdPrivate))
-
 struct XfpmSystemdPrivate
 {
     gboolean         can_shutdown;
@@ -66,7 +63,7 @@ enum
     PROP_CAN_HIBERNATE,
 };
 
-G_DEFINE_TYPE (XfpmSystemd, xfpm_systemd, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE (XfpmSystemd, xfpm_systemd, G_TYPE_OBJECT)
 
 #define SYSTEMD_DBUS_NAME               "org.freedesktop.login1"
 #define SYSTEMD_DBUS_PATH               "/org/freedesktop/login1"
@@ -114,8 +111,6 @@ xfpm_systemd_class_init (XfpmSystemdClass *klass)
                                                            NULL, NULL,
                                                            FALSE,
                                                            G_PARAM_READABLE));
-
-    g_type_class_add_private (klass, sizeof (XfpmSystemdPrivate));
 }
 
 static gboolean
@@ -137,7 +132,7 @@ xfpm_systemd_can_method (XfpmSystemd  *systemd,
 static void
 xfpm_systemd_init (XfpmSystemd *systemd)
 {
-    systemd->priv = XFPM_SYSTEMD_GET_PRIVATE (systemd);
+    systemd->priv = xfpm_systemd_get_instance_private (systemd);
     systemd->priv->can_shutdown = FALSE;
     systemd->priv->can_restart  = FALSE;
 #ifdef ENABLE_POLKIT
