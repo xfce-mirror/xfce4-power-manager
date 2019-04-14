@@ -643,8 +643,8 @@ xfpm_xfconf_init (XfpmXfconf *conf)
     }	
     else
     {
-	conf->priv->channel = xfconf_channel_new ("xfce4-power-manager");
-    conf->priv->session_channel = xfconf_channel_new ("xfce4-session");
+    conf->priv->channel = xfconf_channel_get (XFPM_CHANNEL);
+    conf->priv->session_channel = xfconf_channel_get ("xfce4-session");
 
     /* if xfce4-session is around, sync to it on startup */
     if ( xfconf_channel_has_property (conf->priv->session_channel, "/shutdown/LockScreen") )
@@ -685,12 +685,6 @@ xfpm_xfconf_finalize(GObject *object)
     }
     
     g_free (conf->priv->values);
-    
-    if (conf->priv->channel )
-	g_object_unref (conf->priv->channel);
-
-    if (conf->priv->session_channel )
-        g_object_unref (conf->priv->session_channel);
 
     G_OBJECT_CLASS(xfpm_xfconf_parent_class)->finalize(object);
 }
