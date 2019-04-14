@@ -125,12 +125,14 @@ static gboolean
 xfpm_button_grab_keystring (XfpmButton *button, guint keycode)
 {
     Display *display;
+    GdkDisplay *gdisplay;
     guint ret;
     guint modmask = AnyModifier;
-    
+
     display = gdk_x11_get_default_xdisplay ();
+    gdisplay = gdk_display_get_default ();
     
-    gdk_error_trap_push ();
+    gdk_x11_display_error_trap_push (gdisplay);
 
     ret = XGrabKey (display, keycode, modmask,
 		    GDK_WINDOW_XID (button->priv->window), True,
@@ -154,8 +156,8 @@ xfpm_button_grab_keystring (XfpmButton *button, guint keycode)
 	return FALSE;
     }
 
-    gdk_flush ();
-    gdk_error_trap_pop_ignored ();
+    gdk_display_flush (gdisplay);
+    gdk_x11_display_error_trap_pop_ignored (gdisplay);
     return TRUE;
 }
 

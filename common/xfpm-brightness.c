@@ -62,11 +62,14 @@ xfpm_brightness_xrand_get_limit (XfpmBrightness *brightness, RROutput output, gi
 {
     XRRPropertyInfo *info;
     gboolean ret = TRUE;
+    GdkDisplay *gdisplay;
 
-    gdk_error_trap_push ();
+    gdisplay = gdk_display_get_default ();
+
+    gdk_x11_display_error_trap_push (gdisplay);
     info = XRRQueryOutputProperty (gdk_x11_get_default_xdisplay (), output, brightness->priv->backlight);
 
-    if (gdk_error_trap_pop () != 0
+    if (gdk_x11_display_error_trap_pop (gdisplay) != 0
         || info == NULL)
     {
 	g_warning ("could not get output property");
@@ -97,13 +100,16 @@ xfpm_brightness_xrandr_get_level (XfpmBrightness *brightness, RROutput output, g
     Atom actual_type;
     int actual_format;
     gboolean ret = FALSE;
+    GdkDisplay *gdisplay;
 
-    gdk_error_trap_push ();
+    gdisplay = gdk_display_get_default ();
+
+    gdk_x11_display_error_trap_push (gdisplay);
     if (XRRGetOutputProperty (gdk_x11_get_default_xdisplay (), output, brightness->priv->backlight,
 			      0, 4, False, False, None,
 			      &actual_type, &actual_format,
 			      &nitems, &bytes_after, ((unsigned char **)&prop)) != Success
-	|| gdk_error_trap_pop () != 0)
+	|| gdk_x11_display_error_trap_pop (gdisplay) != 0)
     {
 	g_warning ("failed to get property");
 	return FALSE;
@@ -124,15 +130,20 @@ static gboolean
 xfpm_brightness_xrandr_set_level (XfpmBrightness *brightness, RROutput output, gint32 level)
 {
     gboolean ret = TRUE;
+    Display *display;
+    GdkDisplay *gdisplay;
 
-    gdk_error_trap_push ();
-    XRRChangeOutputProperty (gdk_x11_get_default_xdisplay (), output, brightness->priv->backlight, XA_INTEGER, 32,
+    display = gdk_x11_get_default_xdisplay ();
+    gdisplay = gdk_display_get_default ();
+
+    gdk_x11_display_error_trap_push (gdisplay);
+    XRRChangeOutputProperty (display, output, brightness->priv->backlight, XA_INTEGER, 32,
 			     PropModeReplace, (unsigned char *) &level, 1);
 
-    XFlush (gdk_x11_get_default_xdisplay ());
-    gdk_flush ();
+    XFlush (display);
+    gdk_display_flush (gdisplay);
 
-    if ( gdk_error_trap_pop () )
+    if ( gdk_x11_display_error_trap_pop (gdisplay) )
     {
 	    g_warning ("failed to XRRChangeOutputProperty for brightness %d", level);
 	    ret = FALSE;
@@ -145,6 +156,7 @@ static gboolean
 xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 {
     GdkScreen *screen;
+    GdkDisplay *gdisplay;
     XRROutputInfo *info;
     Window window;
     gint major, minor, screen_num;
@@ -153,15 +165,17 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
     gboolean ret = FALSE;
     gint i;
 
-    gdk_error_trap_push ();
+    gdisplay = gdk_display_get_default ();
+
+    gdk_x11_display_error_trap_push (gdisplay);
     if (!XRRQueryExtension (gdk_x11_get_default_xdisplay (), &event_base, &error_base) ||
 	!XRRQueryVersion (gdk_x11_get_default_xdisplay (), &major, &minor) )
     {
-	gdk_error_trap_pop_ignored ();
+	gdk_x11_display_error_trap_pop_ignored (gdisplay);
 	g_warning ("No XRANDR extension found");
 	return FALSE;
     }
-    gdk_error_trap_pop_ignored ();
+    gdk_x11_display_error_trap_pop_ignored (gdisplay);
 
     if (major == 1 && minor < 2)
     {
@@ -181,11 +195,11 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 	return FALSE;
     }
 
-    screen = gdk_display_get_default_screen (gdk_display_get_default ());
+    screen = gdk_display_get_default_screen (gdisplay);
 
     screen_num = gdk_x11_screen_get_screen_number (screen);
 
-    gdk_error_trap_push ();
+    gdk_x11_display_error_trap_push (gdisplay);
 
     window = RootWindow (gdk_x11_get_default_xdisplay (), screen_num);
 
@@ -215,7 +229,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 	XRRFreeOutputInfo (info);
     }
 
-    if (gdk_error_trap_pop () != 0)
+    if (gdk_x11_display_error_trap_pop (gdisplay) != 0)
         g_critical ("Failed to get output/resource info");
 
     return ret;
