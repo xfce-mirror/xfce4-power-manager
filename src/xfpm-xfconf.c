@@ -1,5 +1,6 @@
 /*
  * * Copyright (C) 2009-2011 Ali <aliov@xfce.org>
+ * * Copyright (C) 2019 Kacper Piwiński
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -156,7 +157,7 @@ xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
     for ( i = 0; i < nspecs; i++)
     {
 	gchar *prop_name;
-	prop_name = g_strdup_printf ("%s%s", PROPERTIES_PREFIX, specs[i]->name);
+	prop_name = g_strdup_printf ("%s%s", XFPM_PROPERTIES_PREFIX, specs[i]->name);
 	g_value_init (&value, specs[i]->value_type);
 	
 	if (channel_valid)
@@ -187,23 +188,23 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
     if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
         return;
 
-    if ( !g_str_has_prefix (property, PROPERTIES_PREFIX) || strlen (property) <= strlen (PROPERTIES_PREFIX) )
+    if ( !g_str_has_prefix (property, XFPM_PROPERTIES_PREFIX) || strlen (property) <= strlen (XFPM_PROPERTIES_PREFIX) )
 	return;
 
     /* We handle presentation mode and blank-times in xfpm-power directly */
-    if ( g_strcmp0 (property, PROPERTIES_PREFIX PRESENTATION_MODE) == 0 ||
-         g_strcmp0 (property, PROPERTIES_PREFIX ON_AC_BLANK) == 0 ||
-         g_strcmp0 (property, PROPERTIES_PREFIX ON_BATTERY_BLANK) == 0)
+    if ( g_strcmp0 (property, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE) == 0 ||
+         g_strcmp0 (property, XFPM_PROPERTIES_PREFIX ON_AC_BLANK) == 0 ||
+         g_strcmp0 (property, XFPM_PROPERTIES_PREFIX ON_BATTERY_BLANK) == 0)
         return;
 
     /* We handle brightness switch in xfpm-backlight directly */
-    if ( g_strcmp0 (property, PROPERTIES_PREFIX BRIGHTNESS_SWITCH) == 0 ||
-         g_strcmp0 (property, PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE) == 0 )
+    if ( g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH) == 0 ||
+         g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE) == 0 )
         return;
 
     XFPM_DEBUG ("Property modified: %s\n", property);
     
-    g_object_set_property (G_OBJECT (conf), property + strlen (PROPERTIES_PREFIX), value);
+    g_object_set_property (G_OBJECT (conf), property + strlen (XFPM_PROPERTIES_PREFIX), value);
 }
 
 static void
@@ -227,7 +228,7 @@ xfpm_xfsession_property_changed_cb (XfconfChannel *channel, gchar *property,
 
     /* update xfconf which will update xfpm and keep things in sync */
     xfconf_channel_set_bool (conf->priv->channel,
-                             PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP,
+                             XFPM_PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP,
                              g_value_get_boolean(value));
 }
 

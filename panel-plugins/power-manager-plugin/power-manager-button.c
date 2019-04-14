@@ -1,5 +1,6 @@
 /*
  * * Copyright (C) 2014 Eric Koegel <eric@xfce.org>
+ * * Copyright (C) 2019 Kacper Piwiński
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -947,7 +948,7 @@ power_manager_button_init (PowerManagerButton *button)
     }
     else
     {
-        button->priv->channel = xfconf_channel_get ("xfce4-power-manager");
+        button->priv->channel = xfconf_channel_get (XFPM_CHANNEL);
     }
 
 #ifdef XFCE_PLUGIN
@@ -1032,9 +1033,9 @@ power_manager_button_new (void)
 #endif
 
     xfconf_g_property_bind (button->priv->channel,
-                            PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL, G_TYPE_INT,
+                            XFPM_PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL, G_TYPE_INT,
                             G_OBJECT (button), BRIGHTNESS_SLIDER_MIN_LEVEL);
-    xfconf_g_property_bind (button->priv->channel, PROPERTIES_PREFIX SHOW_PANEL_LABEL, G_TYPE_INT,
+    xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, G_TYPE_INT,
                             G_OBJECT (button), SHOW_PANEL_LABEL);
 
     return GTK_WIDGET (button);
@@ -1651,7 +1652,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
     gtk_widget_show (mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
     xfconf_g_property_bind(button->priv->channel,
-                           PROPERTIES_PREFIX PRESENTATION_MODE,
+                           XFPM_PROPERTIES_PREFIX PRESENTATION_MODE,
                            G_TYPE_BOOLEAN, G_OBJECT(mi), "active");
 
     /* Show any applications currently inhibiting now */

@@ -1,5 +1,6 @@
 /*
  * * Copyright (C) 2009-2011 Ali <aliov@xfce.org>
+ * * Copyright (C) 2019 Kacper Piwiński
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -1359,15 +1360,15 @@ xfpm_power_new (void)
     XfpmPower *power = XFPM_POWER(g_object_new (XFPM_TYPE_POWER, NULL));
 
     xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
-                            PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
+                            XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
                             G_OBJECT(power), PRESENTATION_MODE);
 
     xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
-                            PROPERTIES_PREFIX ON_BATTERY_BLANK, G_TYPE_INT,
+                            XFPM_PROPERTIES_PREFIX ON_BATTERY_BLANK, G_TYPE_INT,
                             G_OBJECT (power), ON_BATTERY_BLANK);
 
     xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
-                            PROPERTIES_PREFIX ON_AC_BLANK, G_TYPE_INT,
+                            XFPM_PROPERTIES_PREFIX ON_AC_BLANK, G_TYPE_INT,
                             G_OBJECT (power), ON_AC_BLANK);
 
     return power;

@@ -1,5 +1,6 @@
 /*
  * * Copyright (C) 2008-2011 Ali <aliov@xfce.org>
+ * * Copyright (C) 2019 Kacper Piwiński
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -932,7 +933,7 @@ void xfpm_manager_start (XfpmManager *manager)
 			      G_CALLBACK (xfpm_manager_shutdown), manager);
 
     xfconf_g_property_bind(xfpm_xfconf_get_channel (manager->priv->conf),
-			   PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG,
+			   XFPM_PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG,
 			   G_TYPE_INT,
                            G_OBJECT(manager),
 			   SHOW_TRAY_ICON_CFG);

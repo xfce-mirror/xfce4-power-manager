@@ -1,5 +1,6 @@
 /*
  * * Copyright (C) 2016 Eric Koegel <eric@xfce.org>
+ * * Copyright (C) 2019 Kacper Piwiński
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -41,13 +42,10 @@
 #include <libxfce4util/libxfce4util.h>
 #include <xfconf/xfconf.h>
 
+#include "xfpm-config.h"
 #include "xfce-screensaver.h"
 
 
-#define HEARTBEAT_COMMAND       "heartbeat-command"
-#define LOCK_COMMAND            "LockCommand"
-#define XFPM_CHANNEL            "xfce4-power-manager"
-#define XFPM_PROPERTIES_PREFIX  "/xfce4-power-manager/"
 #define XFSM_CHANNEL            "xfce4-session"
 #define XFSM_PROPERTIES_PREFIX  "/general/"
 

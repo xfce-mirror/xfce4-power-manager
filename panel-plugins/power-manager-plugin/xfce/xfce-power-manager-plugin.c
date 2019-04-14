@@ -1,5 +1,6 @@
 /*
  * * Copyright (C) 2014 Eric Koegel <eric@xfce.org>
+ * * Copyright (C) 2019 Kacper Piwiński
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -131,7 +132,7 @@ power_manager_plugin_combo_changed (GtkComboBox *combo,
   model = gtk_combo_box_get_model (combo);
 
   gtk_tree_model_get (model, &iter, 0, &show_panel_label, -1);
-  xfconf_channel_set_int (channel, PROPERTIES_PREFIX SHOW_PANEL_LABEL, show_panel_label);
+  xfconf_channel_set_int (channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, show_panel_label);
 }
 
 static void
@@ -148,7 +149,7 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   gint i;
   gchar *options[] = { _("None"), _("Percentage"), _("Remaining time"), _("Percentage and remaining time") };
 
-  channel = xfconf_channel_get ("xfce4-power-manager");
+  channel = xfconf_channel_get (XFPM_CHANNEL);
 
   /* block the plugin menu */
   xfce_panel_plugin_block_menu (plugin);
@@ -179,7 +180,7 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   label = gtk_label_new (_("Show label:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET (label), 0, 0, 1, 1);
-  show_panel_label = xfconf_channel_get_int (channel, PROPERTIES_PREFIX SHOW_PANEL_LABEL, -1);
+  show_panel_label = xfconf_channel_get_int (channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, -1);
 
   list_store = gtk_list_store_new (N_COLUMNS,
                                    G_TYPE_INT,
@@ -204,7 +205,7 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   g_signal_connect (G_OBJECT (combo), "changed",
                     G_CALLBACK (power_manager_plugin_combo_changed),
                     channel);
-  g_signal_connect (G_OBJECT (channel), "property-changed::" PROPERTIES_PREFIX SHOW_PANEL_LABEL,
+  g_signal_connect (G_OBJECT (channel), "property-changed::" XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL,
                     G_CALLBACK (power_manager_plugin_panel_label_changed),
                     combo);
 

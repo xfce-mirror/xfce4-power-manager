@@ -1,5 +1,6 @@
 /*
  * * Copyright (C) 2008-2011 Ali <aliov@xfce.org>
+ * * Copyright (C) 2019 Kacper Piwiński
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -229,7 +230,7 @@ void brightness_level_on_ac (GtkWidget *w,  XfconfChannel *channel)
 {
     guint val = (guint) gtk_range_get_value (GTK_RANGE (w));
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, val) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, val) )
     {
 	g_critical ("Unable to set value %u for property %s\n", val, BRIGHTNESS_LEVEL_ON_AC);
     }
@@ -241,7 +242,7 @@ void brightness_level_on_battery (GtkWidget *w,  XfconfChannel *channel)
 {
      guint val = (guint) gtk_range_get_value (GTK_RANGE (w));
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, val) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, val) )
     {
 	g_critical ("Unable to set value %u for property %s\n", val, BRIGHTNESS_LEVEL_ON_BATTERY);
     }
@@ -267,7 +268,7 @@ battery_critical_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        &value,
                        -1);
 		       
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX CRITICAL_BATT_ACTION_CFG, value) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_BATT_ACTION_CFG, value) )
     {
 	g_critical ("Cannot set value for property %s\n", CRITICAL_BATT_ACTION_CFG);
     }
@@ -278,7 +279,7 @@ inactivity_on_ac_value_changed_cb (GtkWidget *widget, XfconfChannel *channel)
 {
     gint value    = (gint)gtk_range_get_value (GTK_RANGE (widget));
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, value))
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, value))
     {
 	g_critical ("Cannot set value for property %s\n", ON_AC_INACTIVITY_TIMEOUT);
     }
@@ -291,7 +292,7 @@ inactivity_on_battery_value_changed_cb (GtkWidget *widget, XfconfChannel *channe
 {
     gint value    = (gint)gtk_range_get_value (GTK_RANGE (widget));
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, value))
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, value))
     {
 	g_critical ("Cannot set value for property %s\n", ON_BATTERY_INACTIVITY_TIMEOUT);
     }
@@ -317,7 +318,7 @@ button_sleep_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        &value,
                        -1);
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX SLEEP_SWITCH_CFG, value ) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX SLEEP_SWITCH_CFG, value ) )
     {
 	g_critical ("Cannot set value for property %s\n", SLEEP_SWITCH_CFG);
     }
@@ -341,7 +342,7 @@ button_power_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        &value,
                        -1);
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX POWER_SWITCH_CFG, value) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX POWER_SWITCH_CFG, value) )
     {
 	g_critical ("Cannot set value for property %s\n", POWER_SWITCH_CFG);
     }
@@ -365,7 +366,7 @@ button_hibernate_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        &value,
                        -1);
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, value ) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, value ) )
     {
 	g_critical ("Cannot set value for property %s\n", HIBERNATE_SWITCH_CFG);
     }
@@ -389,7 +390,7 @@ button_battery_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        &value,
                        -1);
 
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BATTERY_SWITCH_CFG, value ) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BATTERY_SWITCH_CFG, value ) )
     {
         g_critical ("Cannot set value for property %s\n", BATTERY_SWITCH_CFG);
     }
@@ -413,7 +414,7 @@ on_ac_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        &value,
                        -1);
 
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC, value) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC, value) )
     {
 	g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_AC);
     }
@@ -437,7 +438,7 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        &value,
                        -1);
 
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY, value) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY, value) )
     {
 	g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_BATTERY);
     }
@@ -446,7 +447,7 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 void
 dpms_toggled_cb (GtkWidget *w, gboolean is_active, XfconfChannel *channel)
 {
-    xfconf_channel_set_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, is_active);
+    xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED_CFG, is_active);
     
     gtk_widget_set_sensitive (on_ac_dpms_off, is_active);
     gtk_widget_set_sensitive (on_ac_dpms_sleep, is_active);
@@ -526,7 +527,7 @@ sleep_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	}
     }
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_SLEEP, sleep_value))
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATT_DPMS_SLEEP, sleep_value))
     {
 	g_critical ("Cannot set value for property %s\n", ON_BATT_DPMS_SLEEP);
     }
@@ -548,7 +549,7 @@ off_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	}
     }
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_OFF, off_value))
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATT_DPMS_OFF, off_value))
     {
 	g_critical ("Cannot set value for property %s\n", ON_BATT_DPMS_OFF);
     }
@@ -627,7 +628,7 @@ sleep_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	}
     }
 
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_SLEEP, sleep_value))
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_DPMS_SLEEP, sleep_value))
     {
 	g_critical ("Cannot set value for property %s\n", ON_AC_DPMS_SLEEP);
     }
@@ -652,7 +653,7 @@ off_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	}
     }
 
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_OFF, off_value))
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_DPMS_OFF, off_value))
     {
 	g_critical ("Cannot set value for property %s\n", ON_AC_DPMS_OFF);
     }
@@ -734,7 +735,7 @@ brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	}
     }
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, value))
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, value))
     {
 	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_BATTERY);
     }
@@ -756,7 +757,7 @@ brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 	}
     }
 
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, value))
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_AC, value))
     {
 	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_AC);
     }
@@ -794,7 +795,7 @@ on_battery_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        &value,
                        -1);
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, value) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, value) )
     {
 	g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_BATTERY_CFG);
     }
@@ -819,7 +820,7 @@ on_ac_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
                        &value,
                        -1);
 		       
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, value) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, value) )
     {
 	g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_AC_CFG);
     }
@@ -831,7 +832,7 @@ critical_level_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
 {
     guint val = (guint) gtk_spin_button_get_value (w);
     
-    if (!xfconf_channel_set_uint (channel, PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, val) )
+    if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, val) )
     {
 	g_critical ("Unable to set value %d for property %s\n", val, CRITICAL_POWER_LEVEL);
     }
@@ -848,7 +849,7 @@ lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 	g_critical ("Unable to set value for property %s\n", LOCK_SCREEN_ON_SLEEP);
     }
 
-    if ( !xfconf_channel_set_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, val) )
+    if ( !xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, val) )
     {
 	g_critical ("Unable to set value for property %s\n", LOCK_SCREEN_ON_SLEEP);
     }
@@ -870,12 +871,12 @@ lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 void
 xfpm_update_logind_handle_lid_switch (XfconfChannel *channel)
 {
-    gboolean lock_on_suspend = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
-    guint lid_switch_on_ac = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, LID_TRIGGER_LOCK_SCREEN);
-    guint lid_switch_on_battery = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, LID_TRIGGER_LOCK_SCREEN);
+    gboolean lock_on_suspend = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
+    guint lid_switch_on_ac = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, LID_TRIGGER_LOCK_SCREEN);
+    guint lid_switch_on_battery = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, LID_TRIGGER_LOCK_SCREEN);
 
     // logind-handle-lid-switch = true when: lock_on_suspend == true and (lid_switch_on_ac == suspend or lid_switch_on_battery == suspend)
-    xfconf_channel_set_bool (channel, PROPERTIES_PREFIX LOGIND_HANDLE_LID_SWITCH, lock_on_suspend && (lid_switch_on_ac == 1 || lid_switch_on_battery == 1));
+    xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX LOGIND_HANDLE_LID_SWITCH, lock_on_suspend && (lid_switch_on_ac == 1 || lid_switch_on_battery == 1));
 }
 /* END Light Locker Integration */
 
@@ -935,7 +936,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gtk_combo_box_set_active (GTK_COMBO_BOX (inact_action), 0);
 
     val = xfconf_channel_get_uint (channel,
-                                   PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY,
+                                   XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY,
                                    XFPM_DO_HIBERNATE);
 
     for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
@@ -967,7 +968,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not permitted"));
     }
 
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, 14);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, 14);
     gtk_range_set_value (GTK_RANGE (inact_timeout), val);
 
 
@@ -1004,7 +1005,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gtk_list_store_append(list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
     
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX CRITICAL_BATT_ACTION_CFG, XFPM_DO_NOTHING);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_BATT_ACTION_CFG, XFPM_DO_NOTHING);
     
     for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
 	  valid;
@@ -1022,13 +1023,13 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * DPMS settings when running on battery power
      */
-    handle_dpms = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
+    handle_dpms = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
 
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_SLEEP, 5);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATT_DPMS_SLEEP, 5);
     gtk_range_set_value (GTK_RANGE(on_battery_dpms_sleep), val);
     gtk_widget_set_sensitive (on_battery_dpms_sleep, handle_dpms);
     
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATT_DPMS_OFF, 10);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATT_DPMS_OFF, 10);
     gtk_range_set_value (GTK_RANGE(on_battery_dpms_off), val);
     gtk_widget_set_sensitive (on_battery_dpms_off, handle_dpms);
 
@@ -1062,7 +1063,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 	
 	gtk_combo_box_set_active (GTK_COMBO_BOX (lid), 0);
 	
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, LID_TRIGGER_LOCK_SCREEN);
+	val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, LID_TRIGGER_LOCK_SCREEN);
 	
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
 	      valid;
@@ -1091,10 +1092,10 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-level-on-battery"));
     if ( has_lcd_brightness )
     {
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
     gtk_range_set_value (GTK_RANGE(brg), val);
 
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, 20);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, 20);
     gtk_range_set_value (GTK_RANGE (brg_level), val);
     }
     else
@@ -1174,7 +1175,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     gtk_combo_box_set_active (GTK_COMBO_BOX (inact_action), 0);
 
     val = xfconf_channel_get_uint (channel,
-                                   PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC,
+                                   XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC,
                                    XFPM_DO_SUSPEND);
 
     for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
@@ -1206,19 +1207,19 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not permitted"));
     }
 
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, 14);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, 14);
     gtk_range_set_value (GTK_RANGE (inact_timeout), val);
 
     /*
      * DPMS settings when running on AC power 
      */
-    handle_dpms = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
+    handle_dpms = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
 
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_SLEEP, 10);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_DPMS_SLEEP, 10);
     gtk_range_set_value (GTK_RANGE (on_ac_dpms_sleep), val);
     gtk_widget_set_sensitive (on_ac_dpms_sleep, handle_dpms);
     
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_AC_DPMS_OFF, 15);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_DPMS_OFF, 15);
     gtk_range_set_value (GTK_RANGE(on_ac_dpms_off), val);
     gtk_widget_set_sensitive (on_ac_dpms_off, handle_dpms);
 
@@ -1252,7 +1253,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	
 	gtk_combo_box_set_active (GTK_COMBO_BOX (lid), 0);
 	
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, LID_TRIGGER_LOCK_SCREEN);
+	val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, LID_TRIGGER_LOCK_SCREEN);
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
 	      valid;
 	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
@@ -1282,10 +1283,10 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 	brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-level-on-ac"));
 	if ( has_lcd_brightness )
 	{
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
+	val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
 	gtk_range_set_value (GTK_RANGE(brg), val);
 
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, 80);
+	val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, 80);
 	gtk_range_set_value (GTK_RANGE (brg_level), val);
 
 	}
@@ -1340,7 +1341,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     /*
      * Global dpms settings (enable/disable)
      */
-    val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
+    val = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED_CFG, TRUE);
     gtk_switch_set_state (GTK_SWITCH (dpms), val);
 
     /*
@@ -1380,7 +1381,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 	
 	gtk_combo_box_set_active (GTK_COMBO_BOX (power), 0);
 	
-	value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX POWER_SWITCH_CFG, XFPM_DO_NOTHING);
+	value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX POWER_SWITCH_CFG, XFPM_DO_NOTHING);
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
 	      valid;
 	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
@@ -1429,7 +1430,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_list_store_append (list_store, &iter);
 	gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
 	
-	value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, XFPM_DO_NOTHING);
+	value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, XFPM_DO_NOTHING);
 	
 	gtk_combo_box_set_active (GTK_COMBO_BOX (hibernate), 0);
 	
@@ -1483,7 +1484,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 	
 	gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_w), 0);
 	
-	value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX SLEEP_SWITCH_CFG, XFPM_DO_NOTHING);
+	value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX SLEEP_SWITCH_CFG, XFPM_DO_NOTHING);
 	for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
 	      valid;
 	      valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
@@ -1534,7 +1535,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 
         gtk_combo_box_set_active (GTK_COMBO_BOX (battery_w), 0);
 
-        value = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX BATTERY_SWITCH_CFG, XFPM_DO_NOTHING);
+        value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BATTERY_SWITCH_CFG, XFPM_DO_NOTHING);
         for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
               valid;
               valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
@@ -1574,7 +1575,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_set_tooltip_text (critical_level, 
 				     _("When all the power sources of the computer reach this charge level"));
     
-	val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, 10);
+	val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, 10);
 
 	if ( val > 20 || val < 1)
 	{
@@ -1608,7 +1609,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
 	gtk_widget_set_tooltip_text (lock, _("Hibernate and suspend operations not permitted"));
     }
     
-    val = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
+    val = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(lock), val);
 }
 
@@ -1749,7 +1750,7 @@ static void xfpm_settings_light_locker (XfconfChannel *channel,
 
         variant = g_settings_get_value (light_locker_settings, "lock-on-suspend");
         lock_on_suspend = g_variant_get_boolean (variant);
-        xfpm_lock_on_suspend = xfconf_channel_get_bool (channel, PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
+        xfpm_lock_on_suspend = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, TRUE);
         if (lock_on_suspend != xfpm_lock_on_suspend) {
             variant = g_variant_new_boolean (xfpm_lock_on_suspend);
             if (!g_settings_set_value (light_locker_settings, "lock-on-suspend", variant)) {
@@ -2373,27 +2374,27 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     on_ac_dpms_off = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-on-ac"));
 
     on_battery_display_blank = GTK_WIDGET (gtk_builder_get_object (xml, "display-blank-on-battery"));
-    val = xfconf_channel_get_uint (channel, PROPERTIES_PREFIX ON_BATTERY_BLANK, 1);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATTERY_BLANK, 1);
     gtk_range_set_value (GTK_RANGE (on_battery_display_blank), val);
-    xfconf_g_property_bind (channel, PROPERTIES_PREFIX ON_BATTERY_BLANK,
+    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX ON_BATTERY_BLANK,
                             G_TYPE_INT, gtk_range_get_adjustment (GTK_RANGE (on_battery_display_blank)),
                             "value");
 
     on_ac_display_blank = GTK_WIDGET (gtk_builder_get_object (xml, "display-blank-on-ac"));
-    xfconf_g_property_bind (channel, PROPERTIES_PREFIX ON_AC_BLANK,
+    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX ON_AC_BLANK,
                             G_TYPE_INT, gtk_range_get_adjustment (GTK_RANGE (on_ac_display_blank)),
                             "value");
 
     switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys"));
-    xfconf_g_property_bind (channel, PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
+    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
                             G_TYPE_BOOLEAN, switch_widget, "active");
 
     switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "show-notifications"));
-    xfconf_g_property_bind (channel, PROPERTIES_PREFIX GENERAL_NOTIFICATION_CFG,
+    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX GENERAL_NOTIFICATION_CFG,
                             G_TYPE_BOOLEAN, switch_widget, "active");
 
     switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "show-systray"));
-    xfconf_g_property_bind (channel, PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG,
+    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG,
                             G_TYPE_BOOLEAN, switch_widget, "active");
 
     dialog = GTK_WIDGET (gtk_builder_get_object (xml, "xfpm-settings-dialog"));

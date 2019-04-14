@@ -1,5 +1,6 @@
 /*
  * * Copyright (C) 2009-2011 Ali <aliov@xfce.org>
+ * * Copyright (C) 2019 Kacper Piwiński
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -365,7 +366,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 	backlight->priv->brightness_switch = -1;
 
 	xfconf_g_property_bind (xfpm_xfconf_get_channel(backlight->priv->conf),
-							PROPERTIES_PREFIX BRIGHTNESS_SWITCH, G_TYPE_INT,
+							XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH, G_TYPE_INT,
 							G_OBJECT(backlight), BRIGHTNESS_SWITCH);
 
 	ret = xfpm_brightness_get_switch (backlight->priv->brightness,
@@ -386,13 +387,13 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 	 */
 	backlight->priv->brightness_switch_save =
 		xfconf_channel_get_int (xfpm_xfconf_get_channel(backlight->priv->conf),
-								PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
+								XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
 								-1);
 
 	if (backlight->priv->brightness_switch_save == -1)
 	{
 	if (!xfconf_channel_set_int (xfpm_xfconf_get_channel(backlight->priv->conf),
-								 PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
+								 XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
 								 backlight->priv->brightness_switch))
 	g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH_SAVE);
 
@@ -407,7 +408,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 
     /* check whether to change the brightness switch */
 	handle_keys = xfconf_channel_get_bool (xfpm_xfconf_get_channel(backlight->priv->conf),
-										   PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
+										   XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
 										   TRUE);
 	backlight->priv->brightness_switch = handle_keys ? 0 : 1;
 	g_object_set (G_OBJECT (backlight),
@@ -518,7 +519,7 @@ xfpm_backlight_finalize (GObject *object)
                                     backlight->priv->brightness_switch_save);
     /* unset the xfconf saved value after the restore */
     if (!xfconf_channel_set_int (xfpm_xfconf_get_channel(backlight->priv->conf),
-                                 PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE, -1))
+                                 XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE, -1))
     g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH_SAVE);
 
     if (ret)

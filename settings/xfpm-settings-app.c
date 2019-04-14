@@ -227,7 +227,7 @@ xfpm_settings_app_launch (GApplication *app)
     }
 
 
-    channel = xfconf_channel_new(XFPM_CHANNEL_CFG);
+    channel = xfconf_channel_new(XFPM_CHANNEL);
 
     xfpm_debug_init (priv->debug);
 
