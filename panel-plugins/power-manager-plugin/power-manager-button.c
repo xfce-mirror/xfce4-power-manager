@@ -670,7 +670,11 @@ power_manager_button_add_all_devices (PowerManagerButton *button)
     button->priv->display_device = up_client_get_display_device (button->priv->upower);
     power_manager_button_add_device (button->priv->display_device, button);
 
+#if UP_CHECK_VERSION(0, 99, 8)
+    array = up_client_get_devices2 (button->priv->upower);
+#else
     array = up_client_get_devices (button->priv->upower);
+#endif
 
     if (array)
     {

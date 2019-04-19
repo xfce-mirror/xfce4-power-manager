@@ -2248,7 +2248,11 @@ add_all_devices (void)
     GPtrArray *array = NULL;
     guint i;
 
-    array = up_client_get_devices(upower);
+#if UP_CHECK_VERSION(0, 99, 8)
+    array = up_client_get_devices2 (upower);
+#else
+    array = up_client_get_devices (upower);
+#endif
 
     if ( array )
     {
