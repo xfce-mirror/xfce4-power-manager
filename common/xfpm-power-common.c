@@ -260,8 +260,12 @@ get_device_description (UpClient *upower, UpDevice *device)
 
     if (vendor == NULL)
         vendor = g_strdup ("");
+    else
+        vendor = g_strstrip (vendor);
     if (model == NULL)
         model = g_strdup ("");
+    else
+        model = g_strstrip (model);
 
     /* If we get a vendor or model we can use it, otherwise translate the
      * device type into something readable (works for things like ac_power)
@@ -353,6 +357,12 @@ get_device_description (UpClient *upower, UpDevice *device)
     {
         tip = g_strdup_printf (_("<b>%s %s</b>\nis empty"),
                                vendor, model);
+    }
+    else if ( state == UP_DEVICE_STATE_UNKNOWN && percentage != 0.0 )
+    {
+        tip = g_strdup_printf (_("<b>%s %s</b>\nCurrent charge: %0.0f%%"),
+                               vendor, model,
+                               percentage);
     }
     else
     {
