@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-25 18:31+0200\n"
-"PO-Revision-Date: 2019-05-14 22:51+0000\n"
+"PO-Revision-Date: 2019-05-15 18:11+0000\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish (http://www.transifex.com/xfce/xfce4-power-manager/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -245,11 +245,11 @@ msgstr "Hvile"
 
 #: ../settings/xfpm-settings.c:915 ../settings/xfpm-settings.c:1154
 msgid "Suspend operation not permitted"
-msgstr "Hvilehandlinger er ikke tilladte"
+msgstr "Hvilehandling er ikke tilladt"
 
 #: ../settings/xfpm-settings.c:919 ../settings/xfpm-settings.c:1158
 msgid "Suspend operation not supported"
-msgstr "Hvilehandling er ikke understøttet"
+msgstr "Hvilehandling understøttes ikke"
 
 #: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:996
 #: ../settings/xfpm-settings.c:1058 ../settings/xfpm-settings.c:1164
@@ -261,21 +261,21 @@ msgstr "Dvale"
 
 #: ../settings/xfpm-settings.c:929 ../settings/xfpm-settings.c:1168
 msgid "Hibernate operation not permitted"
-msgstr "Dvalehandlinger er ikke tilladte"
+msgstr "Dvalehandling er ikke tilladt"
 
 #: ../settings/xfpm-settings.c:933 ../settings/xfpm-settings.c:1172
 msgid "Hibernate operation not supported"
-msgstr "Dvalehandling er ikke understøttet"
+msgstr "Dvalehandling understøttes ikke"
 
 #: ../settings/xfpm-settings.c:963 ../settings/xfpm-settings.c:1202
 #: ../settings/xfpm-settings.c:1604 ../settings/xfpm-settings.c:1731
 msgid "Hibernate and suspend operations not supported"
-msgstr "Handlinger dvale og hvile er ikke understøttet"
+msgstr "Dvale- og hvilehandlinger understøttes ikke"
 
 #: ../settings/xfpm-settings.c:968 ../settings/xfpm-settings.c:1207
 #: ../settings/xfpm-settings.c:1609 ../settings/xfpm-settings.c:1736
 msgid "Hibernate and suspend operations not permitted"
-msgstr "Handlinger dvale og hvile er ikke tilladte"
+msgstr "Dvale- og hvilehandlinger er ikke tilladte"
 
 #: ../settings/xfpm-settings.c:985 ../settings/xfpm-settings.c:1359
 #: ../settings/xfpm-settings.c:1416 ../settings/xfpm-settings.c:1468
@@ -421,7 +421,7 @@ msgstr "Kunne ikke forbinde til strømstyringen"
 
 #: ../settings/xfpm-settings-app.c:190
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Strømstyring til Xfce4 kører ikke, ønsker du at starte den nu?"
+msgstr "Strømstyring til Xfce4 kører ikke, vil du starte den nu?"
 
 #: ../settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
@@ -655,7 +655,7 @@ msgstr "<b>%s %s</b>\nUkendt tilstand"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Et program har for øjeblikket deaktiveret den automatiske hvile. Udførelse af denne handling nu kan ødelægge tilstanden af programmet. \nEr du sikker på, at du ønsker at bringe systemet i dvale?"
+msgstr "Et program har for øjeblikket deaktiveret den automatiske hvile. Udførelse af denne handling nu kan ødelægge tilstanden af programmet. \nEr du sikker på, at du vil bringe systemet i dvale?"
 
 #: ../src/xfpm-power.c:433
 msgid ""
@@ -993,7 +993,7 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "I tillæg tilbyder Xfce-strømstyringen et sæt af freedesktop-kompatible DBus-grænseflader, der informerer andre programmer om det nuværende strømstyrkeniveau, så de kan tilpasse deres strømforbrug, samtidig som det tilbyder inhibit-grænsefladen, der gør det muligt for programmer, at forhindre automatiske hvilehandlinger via strømstyring; som eksempel bør operativsystemets pakkehåndtering gøre brug denne grænseflade, mens den udfører opdateringshandlinger."
+msgstr "I tillæg tilbyder Xfce-strømstyringen et sæt af freedesktop-kompatible DBus-grænseflader, der informerer andre programmer om det nuværende strømstyrkeniveau, så de kan tilpasse deres strømforbrug, samtidig som det tilbyder inhibit-grænsefladen, der gør det muligt for programmer, at forhindre automatiske hvilehandlinger via strømstyring; som eksempel bør styresystemets pakkehåndtering gøre brug denne grænseflade, mens den udfører opdateringshandlinger."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
