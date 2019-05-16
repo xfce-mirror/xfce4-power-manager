@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-25 18:31+0200\n"
-"PO-Revision-Date: 2019-05-15 23:09+0000\n"
+"PO-Revision-Date: 2019-05-16 15:36+0000\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish (http://www.transifex.com/xfce/xfce4-power-manager/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr "Når der trykkes på batteriknappen:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Handle display brightness _keys"
-msgstr "Tilpas _taster for skærmens lysstyrke"
+msgstr "Håndter _taster til skærmens lysstyrke"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "<b>Buttons</b>"
@@ -88,7 +88,7 @@ msgstr "På batteri"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16 ../common/xfpm-power-common.c:374
 msgid "Plugged in"
-msgstr "Sluttet til"
+msgstr "Tilsluttet"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "When laptop lid is closed:"
@@ -128,15 +128,15 @@ msgstr "<b>Strømbesparelse for systemet</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "Critical battery power level:"
-msgstr "Kritisk niveau for batteristyrken:"
+msgstr "Kritisk niveau for batteristrøm:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "On critical battery power:"
-msgstr "Ved kritisk batteristyrke:"
+msgstr "Ved kritisk batteristrøm:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "<b>Critical power</b>"
-msgstr "<b>Kritisk styrke</b>"
+msgstr "<b>Kritisk strøm</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "Lock screen when system is going to sleep"
@@ -373,11 +373,11 @@ msgstr "Spænding"
 
 #: ../settings/xfpm-settings.c:2091
 msgid "Vendor"
-msgstr "Leverandør"
+msgstr "Producent"
 
 #: ../settings/xfpm-settings.c:2096
 msgid "Serial"
-msgstr "Seriel"
+msgstr "Serienummer"
 
 #: ../settings/xfpm-settings.c:2371
 msgid "Check your power manager installation"
@@ -634,7 +634,7 @@ msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:374
 msgid "Not plugged in"
-msgstr "Ikke sluttet til"
+msgstr "Ikke tilsluttet"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
@@ -853,7 +853,7 @@ msgstr "Vis indstillingsvindue"
 
 #: ../src/xfpm-main.c:277
 msgid "Quit any running xfce power manager"
-msgstr "Afslut enhver kørende strømstyring til Xfce"
+msgstr "Afslut enhver kørende Xfce-strømstyring"
 
 #: ../src/xfpm-main.c:278
 msgid "Version information"
@@ -993,14 +993,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "I tillæg tilbyder Xfce-strømstyringen et sæt af freedesktop-kompatible DBus-grænseflader, der informerer andre programmer om det nuværende strømstyrkeniveau, så de kan tilpasse deres strømforbrug, samtidig som det tilbyder inhibit-grænsefladen, der gør det muligt for programmer, at forhindre automatiske hvilehandlinger via strømstyring; som eksempel bør styresystemets pakkehåndtering gøre brug denne grænseflade, mens den udfører opdateringshandlinger."
+msgstr "I tillæg tilbyder Xfce-strømstyringen et sæt af freedesktop-kompatible DBus-grænseflader, der informerer andre programmer om det nuværende strømniveau, så de kan tilpasse deres strømforbrug, samtidig som det tilbyder inhibit-grænsefladen, der gør det muligt for programmer, at forhindre automatiske hvilehandlinger via strømstyring; som eksempel bør styresystemets pakkehåndtering gøre brug denne grænseflade, mens den udfører opdateringshandlinger."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Xfce-strømstyringen tilbyder også et plugin til Xfce- og LXDE-panelerne, der kontrollerer niveauet for LCD-lysstyrken, samt overvåger batteri og status for opladning af enheden."
+msgstr "Xfce-strømstyringen tilbyder også et plugin til Xfce- og LXDE-panelerne, til at styre niveauet for LCD-lysstyrken, samt overvåger batteri og enhedernes ladeniveauer."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -1027,7 +1027,7 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr "Denne udgivelse introducerer en række nye funktioner, deriblandt hvile/dvale uden systemd og UPower>=0.99. Dette giver mulighed for individuel kontrol over systemd-inhibition, et nyt panel-plugin til at overvåge batteriets og enhedernes strømniveau erstatter panelikonet. Dialogen for Indstillinger er blevet omstruktureret totalt for bedre overblik, mange fejl er blevet rettet og oversættelser er blevet opdateret."
+msgstr "Denne udgivelse introducerer en række nye funktioner, deriblandt hvile/dvale uden systemd og UPower>=0.99. Dette giver mulighed for individuel kontrol over systemd-inhibition, et nyt panel-plugin til at overvåge batteriet og enhedernes ladeniveau erstatter panelikonet. Dialogen for Indstillinger er blevet omstruktureret totalt for bedre overblik, mange fejl er blevet rettet og oversættelser er blevet opdateret."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
