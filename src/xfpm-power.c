@@ -1506,7 +1506,7 @@ xfpm_power_is_in_presentation_mode (XfpmPower *power)
 {
     g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
 
-    return power->priv->presentation_mode;
+    return power->priv->presentation_mode || power->priv->inhibited;
 }
 
 
