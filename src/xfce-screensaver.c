@@ -69,6 +69,7 @@ typedef enum
     SCREENSAVER_TYPE_CINNAMON,
     SCREENSAVER_TYPE_MATE,
     SCREENSAVER_TYPE_GNOME,
+    SCREENSAVER_TYPE_XFCE,
     SCREENSAVER_TYPE_OTHER,
     N_SCREENSAVER_TYPE
 } ScreenSaverType;
@@ -257,6 +258,13 @@ xfce_screensaver_setup(XfceScreenSaver *saver)
     {
         DBG ("using gnome screensaver daemon");
         saver->priv->screensaver_type = SCREENSAVER_TYPE_GNOME;
+    } else if (screen_saver_proxy_setup (saver,
+                                         "org.xfce.ScreenSaver",
+                                         "/org.xfce/ScreenSaver",
+                                         "org.xfce.ScreenSaver"))
+    {
+        DBG ("using Xfce screensaver daemon");
+        saver->priv->screensaver_type = SCREENSAVER_TYPE_XFCE;
     }
     else
     {
@@ -402,63 +410,77 @@ void
 xfce_screensaver_inhibit (XfceScreenSaver *saver,
                           gboolean inhibit)
 {
-    if (saver->priv->screensaver_type != SCREENSAVER_TYPE_FREEDESKTOP &&
-        saver->priv->screensaver_type != SCREENSAVER_TYPE_MATE)
-    {
-        /* remove any existing keepalive */
-        if (saver->priv->screensaver_id != 0)
-        {
-            g_source_remove (saver->priv->screensaver_id);
-            saver->priv->screensaver_id = 0;
-        }
-
-        if (inhibit)
-        {
-            /* Reset the screensaver timers every so often so they don't activate */
-            saver->priv->screensaver_id = g_timeout_add_seconds (20,
-                                                                 (GSourceFunc)xfce_reset_screen_saver,
-                                                                 saver);
-        }
-        return;
-    }
-
-    /* SCREENSAVER_TYPE_FREEDESKTOP & SCREENSAVER_TYPE_MATE
+    /* SCREENSAVER_TYPE_FREEDESKTOP, SCREENSAVER_TYPE_MATE,
+     * SCREENSAVER_TYPE_GNOME and SCREENSAVER_TYPE_XFCE
      * don't need a periodic timer because they have an actual
      * inhibit/uninhibit setup */
-    if (inhibit)
-    {
-        GVariant *response = NULL;
-        response = g_dbus_proxy_call_sync (saver->priv->proxy,
-                                           "Inhibit",
-                                           g_variant_new ("(ss)",
-                                                          PACKAGE_NAME,
-                                                          "Inhibit requested"),
-                                           G_DBUS_CALL_FLAGS_NONE,
-                                           -1,
-                                           NULL,
-                                           NULL);
-        if (response != NULL)
+    switch (saver->priv->screensaver_type) {
+        case SCREENSAVER_TYPE_FREEDESKTOP:
+        case SCREENSAVER_TYPE_MATE:
+        case SCREENSAVER_TYPE_GNOME:
+        case SCREENSAVER_TYPE_XFCE:
         {
-            g_variant_get (response, "(u)", &saver->priv->cookie);
-            g_variant_unref (response);
-        }
-    }
-    else
-    {
-        GVariant *response = NULL;
-        response = g_dbus_proxy_call_sync (saver->priv->proxy,
-                                           "UnInhibit",
-                                           g_variant_new ("(u)",
-                                                          saver->priv->cookie),
-                                           G_DBUS_CALL_FLAGS_NONE,
-                                           -1,
-                                           NULL,
-                                           NULL);
+            if (inhibit)
+            {
+                GVariant *response = NULL;
+                response = g_dbus_proxy_call_sync (saver->priv->proxy,
+                                                   "Inhibit",
+                                                   g_variant_new ("(ss)",
+                                                                  PACKAGE_NAME,
+                                                                  "Inhibit requested"),
+                                                   G_DBUS_CALL_FLAGS_NONE,
+                                                   -1,
+                                                   NULL, NULL);
+                if (response != NULL)
+                {
+                    g_variant_get (response, "(u)",
+                                   &saver->priv->cookie);
+                    g_variant_unref (response);
+                }
+            }
+            else
+            {
+                GVariant *response = NULL;
+                response = g_dbus_proxy_call_sync (saver->priv->proxy,
+                                                   "UnInhibit",
+                                                   g_variant_new ("(u)",
+                                                                  saver->priv->cookie),
+                                                   G_DBUS_CALL_FLAGS_NONE,
+                                                   -1,
+                                                   NULL, NULL);
 
-        saver->priv->cookie = 0;
-        if (response != NULL)
+                saver->priv->cookie = 0;
+                if (response != NULL)
+                {
+                    g_variant_unref (response);
+                }
+            }
+            break;
+        }
+        case SCREENSAVER_TYPE_OTHER:
+        case SCREENSAVER_TYPE_CINNAMON:
         {
-            g_variant_unref (response);
+            /* remove any existing keepalive */
+            if (saver->priv->screensaver_id != 0)
+            {
+                g_source_remove (saver->priv->screensaver_id);
+                saver->priv->screensaver_id = 0;
+            }
+
+            if (inhibit)
+            {
+                /* Reset the screensaver timers every so often
+                 * so they don't activate */
+                saver->priv->screensaver_id = g_timeout_add_seconds (20,
+                                                                     (GSourceFunc)xfce_reset_screen_saver,
+                                                                     saver);
+            }
+            break;
+        }
+        default:
+        {
+            g_warning("Not able to inhibit or uninhibit screensaver");
+            break;
         }
     }
 }
@@ -480,6 +502,7 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
         case SCREENSAVER_TYPE_FREEDESKTOP:
         case SCREENSAVER_TYPE_MATE:
         case SCREENSAVER_TYPE_GNOME:
+        case SCREENSAVER_TYPE_XFCE:
         {
             GVariant *response = NULL;
             response = g_dbus_proxy_call_sync (saver->priv->proxy,
