@@ -1,7 +1,6 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*-
  *
  * Copyright (C) 2010 Richard Hughes <richard@hughsie.com>
- * Copyright (C) 2019 Kacper Piwiński
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -613,7 +612,7 @@ main (gint argc, gchar *argv[])
 
 	/* get current brightness level */
 	if (get_brightness) {
-		filename_file = g_build_filename (filename, "actual_brightness", NULL);
+		filename_file = g_build_filename (filename, "brightness", NULL);
 		ret = g_file_get_contents (filename_file, &contents, NULL, &error);
 		if (!ret) {
 			g_print ("Could not get the value of the backlight: %s\n", error->message);
