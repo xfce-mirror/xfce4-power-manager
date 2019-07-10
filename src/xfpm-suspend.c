@@ -114,7 +114,7 @@ linux_supports_sleep_state (const gchar *state)
 
     /* run script from pm-utils */
     command = g_strdup_printf ("/usr/bin/pm-is-supported --%s", state);
-    g_debug ("excuting command: %s", command);
+    g_debug ("executing command: %s", command);
     ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
     if (!ret) {
         g_warning ("failed to run script: %s", error->message);
