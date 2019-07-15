@@ -223,6 +223,7 @@ static PowerManagerPlugin *
 power_manager_plugin_new (XfcePanelPlugin *plugin)
 {
     PowerManagerPlugin *power_manager_plugin;
+    XfconfChannel *channel;
 
     /* allocate memory for the plugin structure */
     power_manager_plugin = panel_slice_new0 (PowerManagerPlugin);
@@ -237,7 +238,14 @@ power_manager_plugin_new (XfcePanelPlugin *plugin)
 
     power_manager_plugin->power_manager_button = power_manager_button_new (plugin);
     gtk_container_add (GTK_CONTAINER (power_manager_plugin->ebox), power_manager_plugin->power_manager_button);
-    power_manager_button_show(POWER_MANAGER_BUTTON(power_manager_plugin->power_manager_button));
+    power_manager_button_show (POWER_MANAGER_BUTTON (power_manager_plugin->power_manager_button));
+
+    /* disable the systray item when the plugin is started, allowing the user to
+    later manually enable it, e.g. for testing purposes. */
+    channel = xfconf_channel_get (XFPM_CHANNEL);
+    if (xfconf_channel_get_bool (channel, "/xfce4-power-manager/show-tray-icon", TRUE))
+        g_warning ("Xfce4-power-manager: The panel plugin is present, so the tray icon gets disabled.");
+    xfconf_channel_set_bool (channel, "/xfce4-power-manager/show-tray-icon", FALSE);
 
     return power_manager_plugin;
 }
