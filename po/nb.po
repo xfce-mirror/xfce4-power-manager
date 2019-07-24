@@ -6,14 +6,15 @@
 # Allan Nordhøy <epost@anotheragency.no>, 2014-2015
 # Allan Nordhøy <epost@anotheragency.no>, 2015-2017
 # Harald H. <haarektrans@gmail.com>, 2014-2015
+# Kjell Cato Heskjestad <cato@heskjestad.xyz>, 2019
 # Terje Uriansrud <terje@uriansrud.net>, 2009
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-25 18:31+0200\n"
-"PO-Revision-Date: 2019-04-25 16:31+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"PO-Revision-Date: 2019-07-24 04:55+0000\n"
+"Last-Translator: Kjell Cato Heskjestad <cato@heskjestad.xyz>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/xfce/xfce4-power-manager/language/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -140,7 +141,7 @@ msgstr "<b>Kritisk batterinivå</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:29
 msgid "Lock screen when system is going to sleep"
-msgstr ""
+msgstr "Lås skjermen når systemet går i dvale"
 
 #: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "<b>Security</b>"
@@ -421,7 +422,7 @@ msgstr "Klarte ikke å koble til strømbehandler"
 
 #: ../settings/xfpm-settings-app.c:190
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce strlmstyring er ikke startet, ønsker du å starte den?"
+msgstr "Xfce-strømstyring er ikke startet, ønsker du å starte den?"
 
 #: ../settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
@@ -621,7 +622,7 @@ msgstr "<b>%s %s</b>\ner tom"
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr ""
+msgstr "<b>%s %s</b>\nEr nå ladet til: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -845,7 +846,7 @@ msgstr "Spar all informasjon"
 
 #: ../src/xfpm-main.c:275
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Omstart av kjørende Xfce strømbehandler"
+msgstr "Omstart av kjørende Xfce-strømbehandler"
 
 #: ../src/xfpm-main.c:276
 msgid "Show the configuration dialog"
@@ -853,7 +854,7 @@ msgstr "Vis innstillinger"
 
 #: ../src/xfpm-main.c:277
 msgid "Quit any running xfce power manager"
-msgstr "Avslutt Xfce strømstyring"
+msgstr "Avslutt Xfce-strømstyring"
 
 #: ../src/xfpm-main.c:278
 msgid "Version information"
@@ -876,7 +877,7 @@ msgstr "Fikk ikke gjort tilkobling til meldingsbuss-økta"
 #: ../src/xfpm-main.c:351
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr "Xfce strømstyring er ikke startet"
+msgstr "Xfce-strømstyring er ikke startet"
 
 #: ../src/xfpm-main.c:441
 msgid "Another power manager is already running"
@@ -885,7 +886,7 @@ msgstr "En annen strømbehandler kjører allerede"
 #: ../src/xfpm-main.c:446
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "Xfce strømstyring"
+msgstr "Xfce-strømstyring kjører allerede"
 
 #: ../src/xfpm-inhibit.c:392
 msgid "Invalid arguments"
@@ -935,7 +936,7 @@ msgstr "Presentasjons-modus"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1661
 msgid "_Power manager settings..."
-msgstr "_strømbehandlingsinnstillinger..."
+msgstr "_Strømstyringsinnstillinger ..."
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:79
 #, c-format
@@ -983,7 +984,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Xfce effektbehanlder tar hånd om effektkildene på maskinen og enhetene som kan kontrolleres for å redusere deres effektforbruk (som lysnivå på LCD-skjerm, søvn for monitor, og skalering av prosessor)."
+msgstr "Xfce-strømstyringen tar hånd om strømkildene på maskinen og enhetene som kan kontrolleres for å redusere deres strømforbruk (som lysnivå på LCD-skjerm, søvn for monitor, og justering av prosessorfrekvens)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -993,14 +994,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "I tillegg vil har Xfce effektbehandler et knippe freedesktop-støttede DBus-grensesnitt for å informere programmer om gjeldende effektnivå så de kan regulere sitt effektforbruk, og det hindrer dvalgang, hvilket lar programmer hindre automatisk dvalemodus gjort av effektbehandleren; som et eksempel gjør pakkebehandleren bruk av dette grensesnittet når den utfører oppdateringer."
+msgstr "I tillegg har Xfce-strømstyring et knippe freedesktop-støttede DBus-grensesnitt for å informere programmer om gjeldende strømnivå så de kan regulere sine strømforbruk. Grensesnittet tillater også programmer å midlertidig hindre dvalgang. Som et eksempel bruker pakkebehandleren dette grensesnittet når den utfører oppdateringer."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Xfce strømbehandler tilbys også som et tillegg for Xfce og LXDE-paneler for å kontrollere LCD-lysstyrkenivå og oversikt over batteri og ladningsnivåer."
+msgstr "Xfce-strømstyring tilbys også som et tillegg for Xfce- og LXDE-paneler for å kontrollere LCD-lysstyrkenivå og gi oversikt over ladningsnivå til batteri og ladningsnivåer."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
