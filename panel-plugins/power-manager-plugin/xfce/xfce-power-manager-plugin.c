@@ -155,12 +155,13 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   xfce_panel_plugin_block_menu (plugin);
 
   /* create the dialog */
-  dialog = xfce_titled_dialog_new_with_buttons (_("Power Manager Plugin Settings"),
-                                                GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
-                                                GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                "gtk-help", GTK_RESPONSE_HELP,
-                                                "gtk-close", GTK_RESPONSE_OK,
-                                                NULL);
+  dialog = xfce_titled_dialog_new_with_mixed_buttons (_("Power Manager Plugin Settings"),
+    GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
+    GTK_DIALOG_DESTROY_WITH_PARENT,
+    "help-browser", _("_Help"), GTK_RESPONSE_HELP,
+    "window-close", _("_Close"), GTK_RESPONSE_OK,
+    NULL);
+
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_icon_name (GTK_WINDOW (dialog), "xfce4-power-manager-settings");
   gtk_widget_show (dialog);
