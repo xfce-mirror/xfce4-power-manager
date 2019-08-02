@@ -1353,7 +1353,7 @@ G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     mi = gtk_image_menu_item_new_with_label(label);
 G_GNUC_END_IGNORE_DEPRECATIONS
     /* add the image */
-    img = gtk_image_new_from_icon_name ("gtk-info", GTK_ICON_SIZE_MENU);
+    img = gtk_image_new_from_icon_name ("dialog-information", GTK_ICON_SIZE_MENU);
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
 G_GNUC_END_IGNORE_DEPRECATIONS
