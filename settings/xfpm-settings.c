@@ -2524,6 +2524,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_hide (frame);
     frame = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys"));
     gtk_widget_hide (frame);
+    frame = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys-label"));
+    gtk_widget_hide (frame);
     }
 
     if ( id != 0 )
