@@ -968,6 +968,7 @@
                                     <property name="primary_icon_activatable">False</property>
                                     <property name="secondary_icon_activatable">False</property>
                                     <property name="adjustment">critical-power-level-spin-adjustment</property>
+                                    <property name="width-chars">6</property>
                                     <property name="width-request">100</property>
                                     <signal name="output" handler="critical_spin_output_cb" swapped="no"/>
                                     <signal name="value-changed" handler="critical_level_value_changed_cb" swapped="no"/>
