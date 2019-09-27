@@ -296,8 +296,8 @@
           <object class="GtkBox" id="plug-child">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="orientation">vertical</property>
             <property name="border_width">6</property>
+            <property name="orientation">vertical</property>
             <child>
               <object class="GtkNotebook" id="main-notebook">
                 <property name="visible">True</property>
@@ -319,9 +319,9 @@
                           <object class="GtkBox" id="vbox2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="margin_start">18</property>
                             <property name="margin_top">6</property>
                             <property name="margin_bottom">18</property>
-                            <property name="margin_start">18</property>
                             <property name="orientation">vertical</property>
                             <property name="spacing">5</property>
                             <child>
@@ -334,8 +334,8 @@
                                   <object class="GtkLabel" id="button-power-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">When power button is pressed:</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -346,8 +346,8 @@
                                   <object class="GtkLabel" id="button-sleep-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">When sleep button is pressed:</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -358,8 +358,8 @@
                                   <object class="GtkLabel" id="button-hibernate-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">When hibernate button is pressed:</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -370,8 +370,8 @@
                                   <object class="GtkLabel" id="button-battery-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">When battery button is pressed:</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -465,10 +465,10 @@
                                   <object class="GtkLabel" id="handle-brightness-keys-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Handle display brightness _keys</property>
                                     <property name="use_underline">True</property>
                                     <property name="ellipsize">end</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -509,10 +509,10 @@
                           <object class="GtkGrid" id="table5">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="row_spacing">6</property>
+                            <property name="margin_start">18</property>
                             <property name="margin_top">3</property>
                             <property name="margin_bottom">18</property>
-                            <property name="margin_start">18</property>
+                            <property name="row_spacing">6</property>
                             <property name="column_spacing">18</property>
                             <child>
                               <object class="GtkLabel" id="lid-on-battery-header">
@@ -542,8 +542,8 @@
                               <object class="GtkLabel" id="lid-action-label">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">When laptop lid is closed:</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -616,15 +616,30 @@
                           <object class="GtkBox" id="vbox10">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="orientation">vertical</property>
+                            <property name="margin_start">18</property>
                             <property name="margin_top">6</property>
                             <property name="margin_bottom">18</property>
-                            <property name="margin_start">18</property>
+                            <property name="orientation">vertical</property>
                             <property name="spacing">6</property>
                             <child>
                               <object class="GtkBox" id="hbox20">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkLabel" id="show-notifications-label">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Status notifications</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="ellipsize">end</property>
+                                    <property name="xalign">0</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
                                 <child>
                                   <object class="GtkSwitch" id="show-notifications">
                                     <property name="visible">True</property>
@@ -635,21 +650,6 @@
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="show-notifications-label">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">Status notifications</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="ellipsize">end</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
                                   </packing>
                                 </child>
                               </object>
@@ -664,6 +664,21 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <child>
+                                  <object class="GtkLabel" id="show-systray-label">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">System tray icon</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="ellipsize">end</property>
+                                    <property name="xalign">0</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
                                   <object class="GtkSwitch" id="show-systray">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
@@ -673,21 +688,6 @@
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="show-systray-label">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
-                                    <property name="label" translatable="yes">System tray icon</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="ellipsize">end</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">True</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">0</property>
                                   </packing>
                                 </child>
                               </object>
@@ -747,12 +747,12 @@
                           <object class="GtkGrid" id="table2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="row_spacing">6</property>
-                            <property name="column_spacing">18</property>
+                            <property name="margin_start">18</property>
                             <property name="margin_top">6</property>
                             <property name="margin_bottom">6</property>
-                            <property name="margin_start">18</property>
-                            <property name="column-homogeneous">True</property>
+                            <property name="row_spacing">6</property>
+                            <property name="column_spacing">18</property>
+                            <property name="column_homogeneous">True</property>
                             <child>
                               <object class="GtkLabel" id="system-sleep-on-battery-header">
                                 <property name="visible">True</property>
@@ -781,8 +781,8 @@
                               <object class="GtkLabel" id="system-sleep-inactivity-label">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">When inactive for</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -801,20 +801,30 @@
                                     <property name="adjustment">system-sleep-inactivity-on-battery-adjustment</property>
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
-                                    <property name="draw-value">False</property>
+                                    <property name="draw_value">False</property>
                                     <signal name="value-changed" handler="inactivity_on_battery_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
                                   </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
                                 </child>
                                 <child>
                                   <object class="GtkLabel" id="system-sleep-inactivity-on-battery-label">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
                                     <property name="sensitive">False</property>
+                                    <property name="can_focus">False</property>
                                     <property name="xalign">0.5</property>
                                   </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
                                 </child>
                               </object>
                               <packing>
@@ -834,23 +844,29 @@
                                     <property name="adjustment">system-sleep-inactivity-on-ac-adjustment</property>
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
-                                    <property name="draw-value">False</property>
+                                    <property name="draw_value">False</property>
                                     <signal name="value-changed" handler="inactivity_on_ac_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
                                   </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
                                 </child>
                                 <child>
                                   <object class="GtkLabel" id="system-sleep-inactivity-on-ac-label">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
                                     <property name="sensitive">False</property>
+                                    <property name="can_focus">False</property>
                                     <property name="xalign">0.5</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
                                     <property name="fill">True</property>
+                                    <property name="position">1</property>
                                   </packing>
                                 </child>
                               </object>
@@ -863,8 +879,8 @@
                               <object class="GtkLabel" id="system-sleep-mode-label">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xalign">0</property>
                                 <property name="label" translatable="yes">System sleep mode:</property>
+                                <property name="xalign">0</property>
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
@@ -937,11 +953,11 @@
                           <object class="GtkBox" id="vbox4">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">3</property>
+                            <property name="margin_start">18</property>
                             <property name="margin_top">6</property>
                             <property name="margin_bottom">12</property>
-                            <property name="margin_start">18</property>
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">3</property>
                             <child>
                               <object class="GtkBox" id="hbox2">
                                 <property name="visible">True</property>
@@ -951,8 +967,8 @@
                                   <object class="GtkLabel" id="critical-power-level-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Critical battery power level:</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -962,21 +978,32 @@
                                 </child>
                                 <child>
                                   <object class="GtkSpinButton" id="critical-power-level-spin">
+                                    <property name="width_request">100</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="invisible_char">●</property>
+                                    <property name="width_chars">6</property>
                                     <property name="primary_icon_activatable">False</property>
                                     <property name="secondary_icon_activatable">False</property>
                                     <property name="adjustment">critical-power-level-spin-adjustment</property>
-                                    <property name="width-chars">6</property>
-                                    <property name="width-request">100</property>
-                                    <signal name="output" handler="critical_spin_output_cb" swapped="no"/>
                                     <signal name="value-changed" handler="critical_level_value_changed_cb" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">%</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">2</property>
                                   </packing>
                                 </child>
                               </object>
@@ -995,8 +1022,8 @@
                                   <object class="GtkLabel" id="critical-power-action-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">On critical battery power:</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1056,11 +1083,11 @@
                           <object class="GtkBox" id="vbox11">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">6</property>
+                            <property name="margin_start">6</property>
                             <property name="margin_top">6</property>
                             <property name="margin_bottom">12</property>
-                            <property name="margin_start">6</property>
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">6</property>
                             <child>
                               <object class="GtkCheckButton" id="lock-screen">
                                 <property name="label" translatable="yes">Lock screen when system is going to sleep</property>
@@ -1163,10 +1190,10 @@
                           <object class="GtkBox" id="hbox7">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="spacing">6</property>
+                            <property name="margin_start">18</property>
                             <property name="margin_top">12</property>
                             <property name="margin_bottom">12</property>
-                            <property name="margin_start">18</property>
+                            <property name="spacing">6</property>
                             <child>
                               <object class="GtkBox" id="vbox13">
                                 <property name="visible">True</property>
@@ -1177,8 +1204,8 @@
                                   <object class="GtkLabel" id="display-blank-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Blank after</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -1190,8 +1217,8 @@
                                   <object class="GtkLabel" id="dpms-sleep-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Put to sleep after</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -1203,8 +1230,8 @@
                                   <object class="GtkLabel" id="dpms-off-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Switch off after</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -1240,9 +1267,9 @@
                                           <object class="GtkLabel" id="dpms-on-battery-header">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="yalign">1</property>
                                             <property name="label" translatable="yes">On battery</property>
                                             <property name="use_markup">True</property>
+                                            <property name="yalign">1</property>
                                           </object>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1262,20 +1289,30 @@
                                                 <property name="adjustment">display-blank-on-battery-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
-                                                <property name="draw-value">False</property>
+                                                <property name="draw_value">False</property>
                                                 <signal name="value-changed" handler="display_blank_on_battery_value_changed_cb" swapped="no"/>
                                                 <style>
                                                   <class name="xfce4-scale-label"/>
                                                 </style>
                                               </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
                                             </child>
                                             <child>
                                               <object class="GtkLabel" id="display-blank-on-battery-label">
                                                 <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
                                                 <property name="sensitive">False</property>
+                                                <property name="can_focus">False</property>
                                                 <property name="xalign">0.5</property>
                                               </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
                                             </child>
                                           </object>
                                           <packing>
@@ -1300,9 +1337,9 @@
                                           <object class="GtkLabel" id="dpms-plugged-in-header">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="yalign">1</property>
                                             <property name="label" translatable="yes">Plugged in</property>
                                             <property name="use_markup">True</property>
+                                            <property name="yalign">1</property>
                                           </object>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1322,20 +1359,30 @@
                                                 <property name="adjustment">display-blank-on-ac-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
-                                                <property name="draw-value">False</property>
+                                                <property name="draw_value">False</property>
                                                 <signal name="value-changed" handler="display_blank_on_ac_value_changed_cb" swapped="no"/>
                                                 <style>
                                                   <class name="xfce4-scale-label"/>
                                                 </style>
                                               </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
                                             </child>
                                             <child>
                                               <object class="GtkLabel" id="display-blank-on-ac-label">
                                                 <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
                                                 <property name="sensitive">False</property>
+                                                <property name="can_focus">False</property>
                                                 <property name="xalign">0.5</property>
                                               </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
                                             </child>
                                           </object>
                                           <packing>
@@ -1362,9 +1409,9 @@
                                   <object class="GtkBox" id="hbox10">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="valign">center</property>
                                     <property name="spacing">6</property>
                                     <property name="homogeneous">True</property>
-                                    <property name="valign">center</property>
                                     <child>
                                       <object class="GtkBox">
                                         <property name="visible">True</property>
@@ -1377,20 +1424,30 @@
                                             <property name="adjustment">dpms-sleep-on-battery-adjustment</property>
                                             <property name="round_digits">0</property>
                                             <property name="digits">0</property>
-                                            <property name="draw-value">False</property>
+                                            <property name="draw_value">False</property>
                                             <signal name="value-changed" handler="sleep_on_battery_value_changed_cb" swapped="no"/>
                                             <style>
                                               <class name="xfce4-scale-label"/>
                                             </style>
                                           </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
                                         </child>
                                         <child>
                                           <object class="GtkLabel" id="dpms-sleep-on-battery-label">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
                                             <property name="sensitive">False</property>
+                                            <property name="can_focus">False</property>
                                             <property name="xalign">0.5</property>
                                           </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
                                         </child>
                                       </object>
                                       <packing>
@@ -1411,20 +1468,30 @@
                                             <property name="adjustment">dpms-sleep-on-ac-adjustment</property>
                                             <property name="round_digits">0</property>
                                             <property name="digits">0</property>
-                                            <property name="draw-value">False</property>
+                                            <property name="draw_value">False</property>
                                             <signal name="value-changed" handler="sleep_on_ac_value_changed_cb" swapped="no"/>
                                             <style>
                                               <class name="xfce4-scale-label"/>
                                             </style>
                                           </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
                                         </child>
                                         <child>
                                           <object class="GtkLabel" id="dpms-sleep-on-ac-label">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
                                             <property name="sensitive">False</property>
+                                            <property name="can_focus">False</property>
                                             <property name="xalign">0.5</property>
                                           </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
                                         </child>
                                       </object>
                                       <packing>
@@ -1444,9 +1511,9 @@
                                   <object class="GtkBox" id="hbox11">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="valign">center</property>
                                     <property name="spacing">6</property>
                                     <property name="homogeneous">True</property>
-                                    <property name="valign">center</property>
                                     <child>
                                       <object class="GtkBox">
                                         <property name="visible">True</property>
@@ -1459,20 +1526,30 @@
                                             <property name="adjustment">dpms-off-on-battery-adjustment</property>
                                             <property name="round_digits">0</property>
                                             <property name="digits">0</property>
-                                            <property name="draw-value">False</property>
+                                            <property name="draw_value">False</property>
                                             <signal name="value-changed" handler="off_on_battery_value_changed_cb" swapped="no"/>
                                             <style>
                                               <class name="xfce4-scale-label"/>
                                             </style>
                                           </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
                                         </child>
                                         <child>
                                           <object class="GtkLabel" id="dpms-off-on-battery-label">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
                                             <property name="sensitive">False</property>
+                                            <property name="can_focus">False</property>
                                             <property name="xalign">0.5</property>
                                           </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
                                         </child>
                                       </object>
                                       <packing>
@@ -1493,20 +1570,30 @@
                                             <property name="adjustment">dpms-off-on-ac-adjustment</property>
                                             <property name="round_digits">0</property>
                                             <property name="digits">0</property>
-                                            <property name="draw-value">False</property>
+                                            <property name="draw_value">False</property>
                                             <signal name="value-changed" handler="off_on_ac_value_changed_cb" swapped="no"/>
                                             <style>
                                               <class name="xfce4-scale-label"/>
                                             </style>
                                           </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
                                         </child>
                                         <child>
                                           <object class="GtkLabel" id="dpms-off-on-ac-label">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
                                             <property name="sensitive">False</property>
+                                            <property name="can_focus">False</property>
                                             <property name="xalign">0.5</property>
                                           </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
                                         </child>
                                       </object>
                                       <packing>
@@ -1553,9 +1640,9 @@
                           <object class="GtkBox" id="vbox5">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="orientation">vertical</property>
-                            <property name="margin_bottom">12</property>
                             <property name="margin_start">18</property>
+                            <property name="margin_bottom">12</property>
+                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkBox" id="hbox1">
                                 <property name="visible">True</property>
@@ -1571,8 +1658,8 @@
                                       <object class="GtkLabel" id="brightness-level-label">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="xalign">0</property>
                                         <property name="label" translatable="yes">On inactivity reduce to</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1584,8 +1671,8 @@
                                       <object class="GtkLabel" id="brightness-inactivity-label">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="xalign">0</property>
                                         <property name="label" translatable="yes">Reduce after</property>
+                                        <property name="xalign">0</property>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1610,9 +1697,9 @@
                                       <object class="GtkBox" id="hbox5">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
+                                        <property name="valign">center</property>
                                         <property name="spacing">6</property>
                                         <property name="homogeneous">True</property>
-                                        <property name="valign">center</property>
                                         <child>
                                           <object class="GtkBox" id="vbox18">
                                             <property name="visible">True</property>
@@ -1622,9 +1709,9 @@
                                               <object class="GtkLabel" id="brightness-on-battery-header">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
-                                                <property name="yalign">1</property>
                                                 <property name="label" translatable="yes">On battery</property>
                                                 <property name="use_markup">True</property>
+                                                <property name="yalign">1</property>
                                               </object>
                                               <packing>
                                                 <property name="expand">True</property>
@@ -1644,20 +1731,30 @@
                                                     <property name="adjustment">brightness-level-on-battery-adjustment</property>
                                                     <property name="round_digits">0</property>
                                                     <property name="digits">0</property>
-                                                    <property name="draw-value">False</property>
+                                                    <property name="draw_value">False</property>
                                                     <signal name="value-changed" handler="brightness_level_on_battery" swapped="no"/>
                                                     <style>
                                                       <class name="xfce4-scale-label"/>
                                                     </style>
                                                   </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
                                                 </child>
                                                 <child>
                                                   <object class="GtkLabel" id="brightness-level-on-battery-label">
                                                     <property name="visible">True</property>
-                                                    <property name="can_focus">False</property>
                                                     <property name="sensitive">False</property>
+                                                    <property name="can_focus">False</property>
                                                     <property name="xalign">0.5</property>
                                                   </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
                                                 </child>
                                               </object>
                                               <packing>
@@ -1682,9 +1779,9 @@
                                               <object class="GtkLabel" id="brightness-plugged-in-header">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
-                                                <property name="yalign">1</property>
                                                 <property name="label" translatable="yes">Plugged in</property>
                                                 <property name="use_markup">True</property>
+                                                <property name="yalign">1</property>
                                               </object>
                                               <packing>
                                                 <property name="expand">True</property>
@@ -1704,20 +1801,30 @@
                                                     <property name="adjustment">brightness-level-on-ac-adjustment</property>
                                                     <property name="round_digits">0</property>
                                                     <property name="digits">0</property>
-                                                    <property name="draw-value">False</property>
+                                                    <property name="draw_value">False</property>
                                                     <signal name="value-changed" handler="brightness_level_on_ac" swapped="no"/>
                                                     <style>
                                                       <class name="xfce4-scale-label"/>
                                                     </style>
                                                   </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
                                                 </child>
                                                 <child>
                                                   <object class="GtkLabel" id="brightness-level-on-ac-label">
                                                     <property name="visible">True</property>
-                                                    <property name="can_focus">False</property>
                                                     <property name="sensitive">False</property>
+                                                    <property name="can_focus">False</property>
                                                     <property name="xalign">0.5</property>
                                                   </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
                                                 </child>
                                               </object>
                                               <packing>
@@ -1744,35 +1851,45 @@
                                       <object class="GtkBox" id="hbox6">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
+                                        <property name="valign">center</property>
                                         <property name="spacing">6</property>
                                         <property name="homogeneous">True</property>
-                                        <property name="valign">center</property>
                                         <child>
                                           <object class="GtkBox">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="orientation">vertical</property>
                                             <child>
-                                                <object class="GtkScale" id="brightness-inactivity-on-battery">
+                                              <object class="GtkScale" id="brightness-inactivity-on-battery">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
                                                 <property name="adjustment">brightness-inactivity-on-battery-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
-                                                <property name="draw-value">False</property>
+                                                <property name="draw_value">False</property>
                                                 <signal name="value-changed" handler="brightness_on_battery_value_changed_cb" swapped="no"/>
                                                 <style>
                                                   <class name="xfce4-scale-label"/>
                                                 </style>
                                               </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
                                             </child>
                                             <child>
                                               <object class="GtkLabel" id="brightness-inactivity-on-battery-label">
                                                 <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
                                                 <property name="sensitive">False</property>
+                                                <property name="can_focus">False</property>
                                                 <property name="xalign">0.5</property>
                                               </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
                                             </child>
                                           </object>
                                           <packing>
@@ -1793,20 +1910,30 @@
                                                 <property name="adjustment">brightness-inactivity-on-ac-adjustment</property>
                                                 <property name="round_digits">0</property>
                                                 <property name="digits">0</property>
-                                                <property name="draw-value">False</property>
+                                                <property name="draw_value">False</property>
                                                 <signal name="value-changed" handler="brightness_on_ac_value_changed_cb" swapped="no"/>
                                                 <style>
                                                   <class name="xfce4-scale-label"/>
                                                 </style>
                                               </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
                                             </child>
                                             <child>
                                               <object class="GtkLabel" id="brightness-inactivity-on-ac-label">
                                                 <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
                                                 <property name="sensitive">False</property>
+                                                <property name="can_focus">False</property>
                                                 <property name="xalign">0.5</property>
                                               </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
                                             </child>
                                           </object>
                                           <packing>
@@ -1886,10 +2013,10 @@
                           <object class="GtkBox" id="light-locker-vbox2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="orientation">vertical</property>
+                            <property name="margin_start">18</property>
                             <property name="margin_top">6</property>
                             <property name="margin_bottom">18</property>
-                            <property name="margin_start">18</property>
+                            <property name="orientation">vertical</property>
                             <property name="spacing">5</property>
                             <child>
                               <object class="GtkGrid" id="light-locker-table">
@@ -1901,8 +2028,8 @@
                                   <object class="GtkLabel" id="light-locker-automatic-locking-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Automatically lock the session:</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -1932,8 +2059,8 @@
                                   <object class="GtkLabel" id="light-locker-late-locking-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">Delay locking after screensaver for</property>
+                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="left_attach">0</property>
@@ -1946,26 +2073,36 @@
                                     <property name="can_focus">False</property>
                                     <property name="orientation">vertical</property>
                                     <child>
-                                        <object class="GtkScale" id="light-locker-late-locking-scale">
+                                      <object class="GtkScale" id="light-locker-late-locking-scale">
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="adjustment">light-locker-late-locking-adjustment</property>
                                         <property name="round_digits">0</property>
                                         <property name="digits">0</property>
-                                        <property name="draw-value">False</property>
+                                        <property name="draw_value">False</property>
                                         <signal name="value-changed" handler="light_locker_late_locking_value_changed_cb" swapped="no"/>
                                         <style>
                                           <class name="xfce4-scale-label"/>
                                         </style>
                                       </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
                                     </child>
                                     <child>
                                       <object class="GtkLabel" id="light-locker-late-locking-scale-label">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
                                         <property name="sensitive">False</property>
+                                        <property name="can_focus">False</property>
                                         <property name="xalign">0.5</property>
                                       </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">1</property>
+                                      </packing>
                                     </child>
                                   </object>
                                   <packing>
