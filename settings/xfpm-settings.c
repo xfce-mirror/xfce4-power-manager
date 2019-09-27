@@ -182,9 +182,6 @@ void        brightness_on_battery_value_changed_cb (GtkWidget *w,
 void        brightness_on_ac_value_changed_cb      (GtkWidget *w,
 						    XfconfChannel *channel);
 
-gboolean    critical_spin_output_cb                (GtkSpinButton *w,
-						    gpointer data);
-
 void        on_battery_lid_changed_cb              (GtkWidget *w,
 						    XfconfChannel *channel);
 
@@ -763,18 +760,6 @@ brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
     }
 
     update_label (label_brightness_inactivity_on_ac, w, format_brightness_value_cb);
-}
-
-gboolean
-critical_spin_output_cb (GtkSpinButton *w, gpointer data)
-{
-    gint val = (gint) gtk_spin_button_get_value (w);
-    gchar *text = g_strdup_printf ("%d %%", val);
-
-    gtk_entry_set_text (GTK_ENTRY(w), text);
-    g_free (text);
-
-    return TRUE;
 }
 
 void
@@ -1584,7 +1569,6 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
 	}
 	else
 	    gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), val);
-    critical_spin_output_cb (GTK_SPIN_BUTTON(critical_level), NULL);
     }
     else
     {
