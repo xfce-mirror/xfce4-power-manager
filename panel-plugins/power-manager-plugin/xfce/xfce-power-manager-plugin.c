@@ -227,7 +227,7 @@ power_manager_plugin_new (XfcePanelPlugin *plugin)
     XfconfChannel *channel;
 
     /* allocate memory for the plugin structure */
-    power_manager_plugin = panel_slice_new0 (PowerManagerPlugin);
+    power_manager_plugin = g_slice_new0 (PowerManagerPlugin);
 
     /* pointer to plugin */
     power_manager_plugin->plugin = plugin;
