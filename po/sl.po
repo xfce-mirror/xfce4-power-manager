@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-25 18:31+0200\n"
-"PO-Revision-Date: 2019-10-24 20:07+0000\n"
+"PO-Revision-Date: 2019-11-01 11:30+0000\n"
 "Last-Translator: Arnold Marko <arnold.marko@gmail.com>\n"
 "Language-Team: Slovenian (http://www.transifex.com/xfce/xfce4-power-manager/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -417,7 +417,7 @@ msgstr "Pokaži informacijo o različici"
 
 #: ../settings/xfpm-settings-app.c:78
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr "Naj se xfce4-power-manager-settings zaustavi"
+msgstr "Povzroči zaustavitev xfce4-power-manager-settings"
 
 #: ../settings/xfpm-settings-app.c:176
 msgid "Failed to connect to power manager"
@@ -1003,14 +1003,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
+msgstr "Poleg tega Xfce upravljalnik energije ponuja nabor freedesktop ustreznih DBus vmesnikov, ki druge aplikacije obveščajo o trenutnem stanu nivojev energije, tako da lahko te prilagodijo svojo porabo. Poleg tega ponuja vmesnik za onemogočanje, ki dovoljuje programom, da preprečijo samodejno spanje preko upravljalnika porabe energije. Primer za to je sistemski program za namestitev paketov, ki bi moral uporabljati ta vmesnik, ko izvaja posodobitve."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
+msgstr "Xfce upravljanik porabe energije ponuja tudi vtičnik za Xfce in LXDE pulte za upravljanje svetlobe LCD zaslonov in za nadzor nivojev baterije in naprave."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -1018,7 +1018,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr ""
+msgstr "Ta razvojna različica odpravlja večino hroščev in uvaja boljšo podporo za teme ikon, tako da jih zmanjša in za njih uporablja standardna imena. Vsebuje tudi posodobljene prevode. Vtičnik za pulte je bil preimenovan z Vtičnik za upravljanje porabe energije."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -1027,7 +1027,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr ""
+msgstr "Ta razvojna različica odpravlja hrošče pri hibernaciji in stanju pripravljenosti. Izboljšan je tudi vtičnik za pulte, ki sedaj vsebuje funkcionalnost opuščenega svetlobnega vtičnika za pult. Dodano je bilo nova pojavno obvestilo, ki obvešča o spremembah svetlobe s tipkovnico, upravljalnik porabe energije pa sedaj nadzira zatemnitveni čas X11."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -1037,10 +1037,10 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr ""
+msgstr "Ta razvojna različica prinaša številne novosti, med njimi tudi prehod v stanje pripravljenosti/hibernacijo brez systemd in UPower>=0.99. Omogoča individualni nadzor nad systemd-inhibition, nov vtičnik za pult za nadzor nivojev baterije in naprave, ki nadomešča ikono v pultu. Nastavitveni dialog je bil povsem na novo zastavljen in omogoča boljšo preglednost, poleg tega pa so bili odpravljeni številni hrošči, posodobljeni pa so bili tudi prevodi."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr ""
+msgstr "Ta stabilna izdaja odpravlja težave s kompilacijo, puščanjem pomnilnika in z drugimi manjšimi hrošči. Poleg tega ponuja posodobljene prevode."
