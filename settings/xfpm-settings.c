@@ -879,7 +879,6 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *inact_timeout, *inact_action;
     GtkWidget *battery_critical;
     GtkWidget *lid;
-    GtkWidget *label;
     GtkWidget *brg;
     GtkWidget *brg_level;
 
@@ -1065,9 +1064,9 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     }
     else
     {
-	label = GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label"));
-	gtk_widget_hide (label);
-	gtk_widget_hide (lid);
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label")));
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-on-battery-header")));
+      gtk_widget_hide (lid);
     }
 
     /*
@@ -1113,8 +1112,6 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     gboolean valid, handle_dpms;
     GtkWidget *inact_timeout, *inact_action;
     GtkWidget *lid;
-    GtkWidget *label;
-    GtkWidget *frame;
     GtkWidget *brg;
     GtkWidget *brg_level;
     GtkListStore *list_store;
@@ -1254,11 +1251,9 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     }
     else
     {
-	label = GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label"));
-	frame = GTK_WIDGET (gtk_builder_get_object (xml, "laptop-lid-frame"));
-	gtk_widget_hide (label);
-	gtk_widget_hide (lid);
-	gtk_widget_hide (frame);
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label1")));
+      gtk_widget_hide (lid);
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-plugged-in-header")));
     }
 
 	/*
@@ -2330,6 +2325,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     GtkWidget *hbox;
     GtkWidget *frame;
     GtkWidget *switch_widget;
+    GtkWidget *stack;
     GtkStyleContext *context;
     GtkListStore *list_store;
     GtkTreeViewColumn *col;
@@ -2473,24 +2469,13 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                               has_lid);
     else
     {
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"critical-power-frame")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-on-battery-header")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-plugged-in-header")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display-blank-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display-blank-on-battery-vbox")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-sleep-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"dpms-off-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-on-battery-header")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-plugged-in-header")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-level-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-inactivity-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-on-battery-header")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-plugged-in-header")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-mode-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-sleep-inactivity-on-battery")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-header")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-on-battery-combo")));
-	gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"lid-plugged-in-header")));
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"critical-power-frame")));
+      stack = GTK_WIDGET (gtk_builder_get_object (xml ,"system-stack"));
+      gtk_widget_hide (gtk_stack_get_child_by_name (GTK_STACK (stack), "page0"));
+      stack = GTK_WIDGET (gtk_builder_get_object (xml ,"display-stack"));
+      gtk_widget_hide (gtk_stack_get_child_by_name (GTK_STACK (stack), "page0"));
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"system-stack-switcher")));
+      gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml ,"display-stack-switcher")));
     }
 
     xfpm_settings_general (channel, auth_suspend, auth_hibernate, can_suspend, can_hibernate, can_shutdown,
