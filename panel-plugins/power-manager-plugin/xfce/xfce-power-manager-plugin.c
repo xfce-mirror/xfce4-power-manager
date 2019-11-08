@@ -139,8 +139,9 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
                                 PowerManagerPlugin   *power_manager_plugin)
 {
   GtkWidget *dialog;
-  GtkWidget *grid, *combo, *label;
+  GtkWidget *grid, *combo, *label, *gtkswitch;
   gint show_panel_label;
+  gboolean show_presentation_indicator;
   XfconfChannel   *channel;
   GtkListStore *list_store;
   GtkTreeIter iter, active_iter;
@@ -208,6 +209,19 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   g_signal_connect (G_OBJECT (channel), "property-changed::" XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL,
                     G_CALLBACK (power_manager_plugin_panel_label_changed),
                     combo);
+
+  label = gtk_label_new (_("Show 'Presentation mode' indicator:"));
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET (label), 0, 1, 1, 1);
+  show_presentation_indicator = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX SHOW_PRESENTATION_INDICATOR, -1);
+
+  gtkswitch = gtk_switch_new ();
+  gtk_widget_set_halign (gtkswitch, GTK_ALIGN_END);
+  gtk_widget_set_valign (gtkswitch, GTK_ALIGN_CENTER);
+
+  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX SHOW_PRESENTATION_INDICATOR, G_TYPE_BOOLEAN,
+                          G_OBJECT (gtkswitch), "active");
+  gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET (gtkswitch), 1, 1, 1, 1);
 
   /* link the dialog to the plugin, so we can destroy it when the plugin
    * is closed, but the dialog is still open */

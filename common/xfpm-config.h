@@ -81,6 +81,7 @@ G_BEGIN_DECLS
 #define HANDLE_BRIGHTNESS_KEYS               "handle-brightness-keys"
 #define SHOW_BRIGHTNESS_POPUP                "show-brightness-popup"
 #define SHOW_PANEL_LABEL                     "show-panel-label"
+#define SHOW_PRESENTATION_INDICATOR          "show-presentation-indicator"
 
 G_END_DECLS
 

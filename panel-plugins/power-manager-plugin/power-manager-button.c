@@ -51,6 +51,7 @@
 #define SAFE_SLIDER_MIN_LEVEL (5)
 #define PANEL_DEFAULT_ICON ("battery-full-charged")
 #define PANEL_DEFAULT_ICON_SYMBOLIC ("battery-full-charged-symbolic")
+#define PRESENTATION_MODE_ICON ("x-office-presentation-symbolic")
 
 struct PowerManagerButtonPrivate
 {
@@ -73,6 +74,7 @@ struct PowerManagerButtonPrivate
 
     /* The actual panel icon image */
     GtkWidget       *panel_icon_image;
+    GtkWidget       *panel_presentation_mode;
     GtkWidget       *panel_label;
     GtkWidget       *hbox;
     /* Keep track of icon name to redisplay during size changes */
@@ -100,6 +102,8 @@ struct PowerManagerButtonPrivate
     gint32           brightness_min_level;
 
     gint             show_panel_label;
+    gboolean         presentation_mode;
+    gboolean         show_presentation_indicator;
 
     /* filter range value changed events for snappier UI feedback */
     guint            set_level_timeout;
@@ -122,6 +126,8 @@ typedef enum
     PROP_0 = 0,
     PROP_BRIGHTNESS_MIN_LEVEL,
     PROP_SHOW_PANEL_LABEL,
+    PROP_PRESENTATION_MODE,
+    PROP_SHOW_PRESENTATION_INDICATOR,
 } POWER_MANAGER_BUTTON_PROPERTIES;
 
 enum {
@@ -139,6 +145,7 @@ static GList* find_device_in_list (PowerManagerButton *button, const gchar *obje
 static gboolean power_manager_button_device_icon_draw (GtkWidget *img, cairo_t *cr, gpointer userdata);
 static void power_manager_button_set_icon (PowerManagerButton *button);
 static void power_manager_button_set_label (PowerManagerButton *button, gdouble percentage, guint64 time_to_empty_or_full);
+static void power_manager_button_update_presentation_indicator (PowerManagerButton *button);
 static void power_manager_button_update_label (PowerManagerButton *button, UpDevice *device);
 static gboolean power_manager_button_press_event (GtkWidget *widget, GdkEventButton *event);
 static gboolean power_manager_button_menu_add_device (PowerManagerButton *button, BatteryDevice *battery_device, gboolean append);
@@ -226,8 +233,12 @@ find_device_in_list (PowerManagerButton *button, const gchar *object_path)
 static void
 power_manager_button_set_icon (PowerManagerButton *button)
 {
+    g_return_if_fail (GTK_IS_WIDGET (button->priv->panel_presentation_mode));
+
     gtk_image_set_from_icon_name (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_name, GTK_ICON_SIZE_BUTTON);
     gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_width);
+
+    gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_presentation_mode), button->priv->panel_icon_width);
 
     /* Notify others the icon name changed */
     g_signal_emit (button, __signals[SIG_ICON_NAME_CHANGED], 0);
@@ -812,6 +823,16 @@ power_manager_button_set_property (GObject *object,
             button->priv->show_panel_label = g_value_get_int (value);
             power_manager_button_update_label (button, button->priv->display_device);
             break;
+        case PROP_PRESENTATION_MODE:
+            button->priv->presentation_mode = g_value_get_boolean (value);
+            if (GTK_IS_WIDGET (button->priv->panel_presentation_mode))
+                power_manager_button_update_presentation_indicator (button);
+            break;
+        case PROP_SHOW_PRESENTATION_INDICATOR:
+            button->priv->show_presentation_indicator = g_value_get_boolean (value);
+            if (GTK_IS_WIDGET (button->priv->panel_presentation_mode))
+                power_manager_button_update_presentation_indicator (button);
+            break;
 #endif
         default:
             G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -837,6 +858,12 @@ power_manager_button_get_property(GObject *object,
 #ifdef XFCE_PLUGIN
         case PROP_SHOW_PANEL_LABEL:
             g_value_set_int (value, button->priv->show_panel_label);
+            break;
+        case PROP_PRESENTATION_MODE:
+            g_value_set_boolean (value, button->priv->presentation_mode);
+            break;
+        case PROP_SHOW_PRESENTATION_INDICATOR:
+            g_value_set_boolean (value, button->priv->show_presentation_indicator);
             break;
 #endif
         default:
@@ -884,18 +911,30 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
 
     /* We allow and default to -1 only so that we can automagically set a
      * sane value if the user hasn't selected one already */
-    g_object_class_install_property(object_class, PROP_BRIGHTNESS_MIN_LEVEL,
-                                    g_param_spec_int(BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                                     BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                                     BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                                     -1, G_MAXINT32, -1,
-                                                     XFPM_PARAM_FLAGS));
+    g_object_class_install_property (object_class, PROP_BRIGHTNESS_MIN_LEVEL,
+                                     g_param_spec_int(BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                                      BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                                      BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                                      -1, G_MAXINT32, -1,
+                                                      XFPM_PARAM_FLAGS));
 
     g_object_class_install_property (object_class, PROP_SHOW_PANEL_LABEL,
                                      g_param_spec_int (SHOW_PANEL_LABEL,
                                                        NULL, NULL,
                                                        0, G_MAXINT16, 3,
                                                        XFPM_PARAM_FLAGS));
+
+    g_object_class_install_property (object_class, PROP_PRESENTATION_MODE,
+                                     g_param_spec_boolean (PRESENTATION_MODE,
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           XFPM_PARAM_FLAGS));
+
+    g_object_class_install_property (object_class, PROP_SHOW_PRESENTATION_INDICATOR,
+                                     g_param_spec_boolean (SHOW_PRESENTATION_INDICATOR,
+                                                           NULL, NULL,
+                                                           FALSE,
+                                                           XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 }
 
@@ -1036,7 +1075,10 @@ power_manager_button_new (void)
                             G_OBJECT (button), BRIGHTNESS_SLIDER_MIN_LEVEL);
     xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, G_TYPE_INT,
                             G_OBJECT (button), SHOW_PANEL_LABEL);
-
+    xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
+                            G_OBJECT (button), PRESENTATION_MODE);
+    xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX SHOW_PRESENTATION_INDICATOR, G_TYPE_BOOLEAN,
+                            G_OBJECT (button), SHOW_PRESENTATION_INDICATOR);
     return GTK_WIDGET (button);
 }
 
@@ -1141,8 +1183,11 @@ power_manager_button_show (PowerManagerButton *button)
 #endif
 
     button->priv->panel_icon_image = gtk_image_new ();
+    button->priv->panel_presentation_mode = gtk_image_new_from_icon_name (PRESENTATION_MODE_ICON, GTK_ICON_SIZE_BUTTON);
+    gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_presentation_mode), button->priv->panel_icon_width);
     button->priv->panel_label = gtk_label_new ("");
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (button->priv->panel_presentation_mode), TRUE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (button->priv->panel_icon_image), TRUE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (button->priv->panel_label), TRUE, FALSE, 0);
 
@@ -1175,11 +1220,22 @@ power_manager_button_show (PowerManagerButton *button)
 
     gtk_widget_show_all (GTK_WIDGET(button));
 
+    gtk_widget_set_visible (button->priv->panel_presentation_mode, button->priv->presentation_mode &&
+                                                                   button->priv->show_presentation_indicator);
     power_manager_button_update_label (button, button->priv->display_device);
     power_manager_button_set_tooltip (button);
 
     /* Add all the devcies currently attached to the system */
     power_manager_button_add_all_devices (button);
+}
+
+static void
+power_manager_button_update_presentation_indicator (PowerManagerButton *button)
+{
+    gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_presentation_mode), button->priv->panel_icon_width);
+
+    gtk_widget_set_visible (button->priv->panel_presentation_mode, button->priv->presentation_mode &&
+                                                                   button->priv->show_presentation_indicator);
 }
 
 static void
@@ -1650,9 +1706,9 @@ G_GNUC_END_IGNORE_DEPRECATIONS
     gtk_widget_set_sensitive (mi, TRUE);
     gtk_widget_show (mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
-    xfconf_g_property_bind(button->priv->channel,
-                           XFPM_PROPERTIES_PREFIX PRESENTATION_MODE,
-                           G_TYPE_BOOLEAN, G_OBJECT(mi), "active");
+    g_object_bind_property (G_OBJECT (button), PRESENTATION_MODE,
+                            G_OBJECT (mi), "active",
+                            G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
 
     /* Show any applications currently inhibiting now */
     display_inhibitors (button, menu);
