@@ -345,8 +345,9 @@ void xfpm_notify_critical (XfpmNotify *notify, NotifyNotification *n)
 
 void xfpm_notify_close_critical (XfpmNotify *notify)
 {
-    g_return_if_fail (XFPM_IS_NOTIFY (notify));
+	GError *error = NULL;
 
+	g_return_if_fail (XFPM_IS_NOTIFY (notify));
 
     if (notify->priv->critical_id != 0)
     {
@@ -356,8 +357,11 @@ void xfpm_notify_close_critical (XfpmNotify *notify)
 
     if ( notify->priv->critical )
     {
-    	if (!notify_notification_close (notify->priv->critical, NULL))
-	    g_warning ("Failed to close notification\n");
+			if (!notify_notification_close (notify->priv->critical, &error))
+			{
+				g_warning ("Failed to close critical notification: %s", error->message);
+				g_error_free (error);
+			}
 
 	g_object_unref (G_OBJECT(notify->priv->critical) );
 	notify->priv->critical  = NULL;
