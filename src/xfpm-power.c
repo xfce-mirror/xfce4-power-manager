@@ -249,6 +249,9 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
 
         xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
 
+				/* Dismiss critical notifications on battery state changes */
+				xfpm_notify_close_critical (power->priv->notify);
+
 	    power->priv->on_battery = on_battery;
 	    list = g_hash_table_get_values (power->priv->hash);
 	    len = g_list_length (list);
