@@ -1628,9 +1628,19 @@ range_show_cb (GtkWidget *widget, PowerManagerButton *button)
 }
 
 void
+power_manager_button_toggle_presentation_mode (GtkMenuItem *mi, GtkSwitch *sw)
+{
+  g_return_if_fail (GTK_IS_SWITCH (sw));
+
+  gtk_switch_set_active (sw, !gtk_switch_get_active (sw));
+}
+
+
+void
 power_manager_button_show_menu (PowerManagerButton *button)
 {
     GtkWidget *menu, *mi, *img = NULL;
+    GtkWidget *box, *label, *sw;
     GdkScreen *gscreen;
     GList *item;
     gboolean show_separator_flag = FALSE;
@@ -1702,12 +1712,19 @@ G_GNUC_END_IGNORE_DEPRECATIONS
     }
 
     /* Presentation mode checkbox */
-    mi = gtk_check_menu_item_new_with_mnemonic (_("Presentation _mode"));
-    gtk_widget_set_sensitive (mi, TRUE);
-    gtk_widget_show (mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
+    mi = gtk_menu_item_new ();
+    box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+    label = gtk_label_new_with_mnemonic (_("Presentation _mode"));
+    gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+    sw = gtk_switch_new ();
+    gtk_box_pack_start (GTK_BOX (box), label, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (box), sw, FALSE, FALSE, 0);
+    gtk_container_add (GTK_CONTAINER (mi), box);
+    gtk_widget_show_all (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+    g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (power_manager_button_toggle_presentation_mode), sw);
     g_object_bind_property (G_OBJECT (button), PRESENTATION_MODE,
-                            G_OBJECT (mi), "active",
+                            G_OBJECT (sw), "active",
                             G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
 
     /* Show any applications currently inhibiting now */
