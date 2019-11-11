@@ -33,22 +33,19 @@ typedef struct XfceScreenSaverPrivate XfceScreenSaverPrivate;
 
 typedef struct
 {
-    GObject                 parent;
-    XfceScreenSaverPrivate *priv;
+  GObject                 parent;
+  XfceScreenSaverPrivate *priv;
 } XfceScreenSaver;
 
 typedef struct
 {
-    GObjectClass parent_class;
+  GObjectClass parent_class;
 } XfceScreenSaverClass;
 
 GType            xfce_screensaver_get_type      (void) G_GNUC_CONST;
-
 XfceScreenSaver *xfce_screensaver_new           (void);
-
 void             xfce_screensaver_inhibit       (XfceScreenSaver *saver,
                                                  gboolean suspend);
-
 gboolean         xfce_screensaver_lock          (XfceScreenSaver *saver);
 
 

@@ -49,30 +49,30 @@
 static void xfpm_notify_finalize   (GObject *object);
 
 static NotifyNotification * xfpm_notify_new_notification_internal (const gchar *title,
-								   const gchar *message,
-								   const gchar *icon_name,
-								   guint timeout,
-								   XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
+                                                                   const gchar *message,
+                                                                   const gchar *icon_name,
+                                                                   guint timeout,
+                                                                   XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
 
 struct XfpmNotifyPrivate
 {
-    XfpmDBusMonitor    *monitor;
+  XfpmDBusMonitor    *monitor;
 
-    NotifyNotification *notification;
-    NotifyNotification *critical;
+  NotifyNotification *notification;
+  NotifyNotification *critical;
 
-    gulong		critical_id;
-    gulong		notify_id;
+  gulong              critical_id;
+  gulong              notify_id;
 
-    gboolean	        supports_actions;
-    gboolean		supports_sync; /* For x-canonical-private-synchronous */
+  gboolean            supports_actions;
+  gboolean            supports_sync; /* For x-canonical-private-synchronous */
 };
 
 enum
 {
-    PROP_0,
-    PROP_ACTIONS,
-    PROP_SYNC
+  PROP_0,
+  PROP_ACTIONS,
+  PROP_SYNC
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmNotify, xfpm_notify, G_TYPE_OBJECT)
@@ -80,297 +80,304 @@ G_DEFINE_TYPE_WITH_PRIVATE (XfpmNotify, xfpm_notify, G_TYPE_OBJECT)
 static void
 xfpm_notify_get_server_caps (XfpmNotify *notify)
 {
-    GList *caps = NULL;
-    notify->priv->supports_actions = FALSE;
-    notify->priv->supports_sync    = FALSE;
+  GList *caps = NULL;
+  notify->priv->supports_actions = FALSE;
+  notify->priv->supports_sync    = FALSE;
 
-    caps = notify_get_server_caps ();
+  caps = notify_get_server_caps ();
 
-    if (caps != NULL)
-    {
-	if (g_list_find_custom (caps, "x-canonical-private-synchronous", (GCompareFunc) g_strcmp0) != NULL)
-	    notify->priv->supports_sync = TRUE;
+  if (caps != NULL)
+  {
+    if (g_list_find_custom (caps, "x-canonical-private-synchronous", (GCompareFunc) g_strcmp0) != NULL)
+      notify->priv->supports_sync = TRUE;
 
-	if (g_list_find_custom (caps, "actions", (GCompareFunc) g_strcmp0) != NULL)
-	    notify->priv->supports_actions = TRUE;
+    if (g_list_find_custom (caps, "actions", (GCompareFunc) g_strcmp0) != NULL)
+      notify->priv->supports_actions = TRUE;
 
-	g_list_foreach(caps, (GFunc)g_free, NULL);
-	g_list_free(caps);
-    }
+    g_list_foreach (caps, (GFunc) g_free, NULL);
+    g_list_free (caps);
+  }
 }
 
 static void
 xfpm_notify_check_server (XfpmDBusMonitor *monitor,
-			  gchar *service_name,
-			  gboolean connected,
-			  gboolean on_session,
-			  XfpmNotify *notify)
+                          gchar *service_name,
+                          gboolean connected,
+                          gboolean on_session,
+                          XfpmNotify *notify)
 {
-    if ( !g_strcmp0 (service_name, "org.freedesktop.Notifications") && on_session && connected )
-	xfpm_notify_get_server_caps (notify);
+  if ( !g_strcmp0 (service_name, "org.freedesktop.Notifications") && on_session && connected )
+    xfpm_notify_get_server_caps (notify);
 }
 
 static void xfpm_notify_get_property (GObject *object,
-				      guint prop_id,
-				      GValue *value,
-				      GParamSpec *pspec)
+                                      guint prop_id,
+                                      GValue *value,
+                                      GParamSpec *pspec)
 {
-    XfpmNotify *notify;
+  XfpmNotify *notify;
 
-    notify = XFPM_NOTIFY (object);
+  notify = XFPM_NOTIFY (object);
 
-    switch (prop_id)
-    {
-	case PROP_ACTIONS:
-	    g_value_set_boolean (value, notify->priv->supports_actions);
-	    break;
-	case PROP_SYNC:
-	    g_value_set_boolean (value, notify->priv->supports_sync);
-	    break;
-	default:
-            G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
-            break;
-    }
+  switch (prop_id)
+  {
+    case PROP_ACTIONS:
+      g_value_set_boolean (value, notify->priv->supports_actions);
+      break;
+    case PROP_SYNC:
+      g_value_set_boolean (value, notify->priv->supports_sync);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+      break;
+  }
 }
 
 static void
 xfpm_notify_class_init (XfpmNotifyClass *klass)
 {
-    GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-    object_class->finalize = xfpm_notify_finalize;
-    object_class->get_property = xfpm_notify_get_property;
+  object_class->finalize = xfpm_notify_finalize;
+  object_class->get_property = xfpm_notify_get_property;
 
-    g_object_class_install_property (object_class,
-                                     PROP_ACTIONS,
-                                     g_param_spec_boolean ("actions",
-                                                           NULL, NULL,
-                                                           FALSE,
-                                                           G_PARAM_READABLE));
+  g_object_class_install_property (object_class,
+                                   PROP_ACTIONS,
+                                   g_param_spec_boolean ("actions",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
 
-    g_object_class_install_property (object_class,
-                                     PROP_SYNC,
-                                     g_param_spec_boolean ("sync",
-                                                           NULL, NULL,
-                                                           FALSE,
-                                                           G_PARAM_READABLE));
+  g_object_class_install_property (object_class,
+                                   PROP_SYNC,
+                                   g_param_spec_boolean ("sync",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
 }
 
 static void
 xfpm_notify_init (XfpmNotify *notify)
 {
-    notify->priv = xfpm_notify_get_instance_private (notify);
+  notify->priv = xfpm_notify_get_instance_private (notify);
 
-    notify->priv->notification = NULL;
-    notify->priv->critical = NULL;
+  notify->priv->notification = NULL;
+  notify->priv->critical = NULL;
 
-    notify->priv->critical_id = 0;
-    notify->priv->notify_id   = 0;
+  notify->priv->critical_id = 0;
+  notify->priv->notify_id   = 0;
 
-    notify->priv->monitor = xfpm_dbus_monitor_new ();
-    xfpm_dbus_monitor_add_service (notify->priv->monitor, G_BUS_TYPE_SESSION, "org.freedesktop.Notifications");
-    g_signal_connect (notify->priv->monitor, "service-connection-changed",
-		      G_CALLBACK (xfpm_notify_check_server), notify);
+  notify->priv->monitor = xfpm_dbus_monitor_new ();
+  xfpm_dbus_monitor_add_service (notify->priv->monitor, G_BUS_TYPE_SESSION, "org.freedesktop.Notifications");
+  g_signal_connect (notify->priv->monitor, "service-connection-changed",
+                    G_CALLBACK (xfpm_notify_check_server), notify);
 
-    xfpm_notify_get_server_caps (notify);
+  xfpm_notify_get_server_caps (notify);
 }
 
 static void
 xfpm_notify_finalize (GObject *object)
 {
-    XfpmNotify *notify;
+  XfpmNotify *notify;
 
-    notify = XFPM_NOTIFY (object);
+  notify = XFPM_NOTIFY (object);
 
-    xfpm_notify_close_normal (notify);
-    xfpm_notify_close_critical (notify);
+  xfpm_notify_close_normal (notify);
+  xfpm_notify_close_critical (notify);
 
-    G_OBJECT_CLASS (xfpm_notify_parent_class)->finalize(object);
+  G_OBJECT_CLASS (xfpm_notify_parent_class)->finalize(object);
 }
 
 static NotifyNotification *
 xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
-				       const gchar *icon_name, guint timeout,
-				       XfpmNotifyUrgency urgency)
+                                       const gchar *icon_name, guint timeout,
+                                       XfpmNotifyUrgency urgency)
 {
-    NotifyNotification *n;
+  NotifyNotification *n;
 
 #ifdef NOTIFY_CHECK_VERSION
 #if NOTIFY_CHECK_VERSION (0, 7, 0)
-    n = notify_notification_new (title, message, icon_name);
+  n = notify_notification_new (title, message, icon_name);
 #else
-    n = notify_notification_new (title, message, icon_name, NULL);
+  n = notify_notification_new (title, message, icon_name, NULL);
 #endif
 #else
-    n = notify_notification_new (title, message, icon_name, NULL);
+  n = notify_notification_new (title, message, icon_name, NULL);
 #endif
 
-		/* Only set transient hint on non-critical notifications, so that the critical
-			 ones also end up in the notification server's log */
-		if (urgency != XFPM_NOTIFY_CRITICAL)
-				notify_notification_set_hint (n, "transient", g_variant_new_boolean (FALSE));
-		notify_notification_set_hint (n, "image-path", g_variant_new_string (icon_name));
+  /* Only set transient hint on non-critical notifications, so that the critical
+     ones also end up in the notification server's log */
+  if (urgency != XFPM_NOTIFY_CRITICAL)
+    notify_notification_set_hint (n, "transient", g_variant_new_boolean (FALSE));
+  notify_notification_set_hint (n, "image-path", g_variant_new_string (icon_name));
 
-    notify_notification_set_urgency (n, (NotifyUrgency)urgency);
+  notify_notification_set_urgency (n, (NotifyUrgency)urgency);
 
-    if (timeout != 0)
-				notify_notification_set_timeout (n, timeout);
+  if (timeout != 0)
+    notify_notification_set_timeout (n, timeout);
 
-    return n;
+  return n;
 }
 
 static void
 xfpm_notify_close_critical_cb (NotifyNotification *n, XfpmNotify *notify)
 {
-    notify->priv->critical = NULL;
-    g_object_unref (G_OBJECT (n));
+  notify->priv->critical = NULL;
+  g_object_unref (G_OBJECT (n));
 }
 
 static gboolean
 xfpm_notify_show (NotifyNotification *n)
 {
-    notify_notification_show (n, NULL);
-    return FALSE;
+  notify_notification_show (n, NULL);
+
+  return FALSE;
 }
 
 static void
 xfpm_notify_close_notification (XfpmNotify *notify )
 {
-    if (notify->priv->notify_id != 0)
-    {
-	g_source_remove (notify->priv->notify_id);
-	notify->priv->notify_id = 0;
-    }
+  if (notify->priv->notify_id != 0)
+  {
+    g_source_remove (notify->priv->notify_id);
+    notify->priv->notify_id = 0;
+  }
 
-    if ( notify->priv->notification )
-    {
-    	if (!notify_notification_close (notify->priv->notification, NULL))
-	    g_warning ("Failed to close notification\n");
+  if ( notify->priv->notification )
+  {
+    if (!notify_notification_close (notify->priv->notification, NULL))
+      g_warning ("Failed to close notification\n");
 
-	g_object_unref (G_OBJECT(notify->priv->notification) );
-	notify->priv->notification  = NULL;
-    }
+    g_object_unref (G_OBJECT(notify->priv->notification) );
+    notify->priv->notification  = NULL;
+  }
 }
 
 XfpmNotify *
 xfpm_notify_new (void)
 {
-    static gpointer xfpm_notify_object = NULL;
+  static gpointer xfpm_notify_object = NULL;
 
-    if ( xfpm_notify_object != NULL )
-    {
-	g_object_ref (xfpm_notify_object);
-    }
-    else
-    {
-	xfpm_notify_object = g_object_new (XFPM_TYPE_NOTIFY, NULL);
-	g_object_add_weak_pointer (xfpm_notify_object, &xfpm_notify_object);
-    }
-    return XFPM_NOTIFY (xfpm_notify_object);
+  if ( xfpm_notify_object != NULL )
+  {
+    g_object_ref (xfpm_notify_object);
+  }
+  else
+  {
+    xfpm_notify_object = g_object_new (XFPM_TYPE_NOTIFY, NULL);
+    g_object_add_weak_pointer (xfpm_notify_object, &xfpm_notify_object);
+  }
+  return XFPM_NOTIFY (xfpm_notify_object);
 }
 
-void xfpm_notify_show_notification (XfpmNotify *notify, const gchar *title,
-				    const gchar *text,  const gchar *icon_name,
-				    gint timeout, XfpmNotifyUrgency urgency)
+void
+xfpm_notify_show_notification (XfpmNotify *notify, const gchar *title,
+                              const gchar *text,  const gchar *icon_name,
+                              gint timeout, XfpmNotifyUrgency urgency)
 {
-    NotifyNotification *n;
+  NotifyNotification *n;
 
-    xfpm_notify_close_notification (notify);
+  xfpm_notify_close_notification (notify);
 
-    n = xfpm_notify_new_notification_internal (title,
-				               text, icon_name,
-					       timeout, urgency);
+  n = xfpm_notify_new_notification_internal (title,
+                                             text, icon_name,
+                                             timeout, urgency);
 
-    xfpm_notify_present_notification (notify, n);
+  xfpm_notify_present_notification (notify, n);
 }
 
-NotifyNotification *xfpm_notify_new_notification (XfpmNotify *notify,
-						  const gchar *title,
-						  const gchar *text,
-						  const gchar *icon_name,
-						  guint timeout,
-						  XfpmNotifyUrgency urgency)
+NotifyNotification *
+xfpm_notify_new_notification (XfpmNotify *notify,
+                              const gchar *title,
+                              const gchar *text,
+                              const gchar *icon_name,
+                              guint timeout,
+                              XfpmNotifyUrgency urgency)
 {
-    NotifyNotification *n = xfpm_notify_new_notification_internal (title,
-							           text, icon_name,
-								   timeout, urgency);
-    return n;
+  NotifyNotification *n = xfpm_notify_new_notification_internal (title,
+                                                                 text, icon_name,
+                                                                 timeout, urgency);
+  return n;
 }
 
-void xfpm_notify_add_action_to_notification (XfpmNotify *notify, NotifyNotification *n,
-					    const gchar *id, const gchar *action_label,
-					    NotifyActionCallback callback, gpointer data)
+void
+xfpm_notify_add_action_to_notification (XfpmNotify *notify, NotifyNotification *n,
+                                        const gchar *id, const gchar *action_label,
+                                        NotifyActionCallback callback, gpointer data)
 {
-    g_return_if_fail (XFPM_IS_NOTIFY(notify));
+  g_return_if_fail (XFPM_IS_NOTIFY(notify));
 
-    notify_notification_add_action (n, id, action_label,
-				   (NotifyActionCallback)callback,
-				    data, NULL);
-
+  notify_notification_add_action (n, id, action_label,
+         (NotifyActionCallback)callback,
+          data, NULL);
 }
 
 static void
 xfpm_notify_closed_cb (NotifyNotification *n, XfpmNotify *notify)
 {
-    notify->priv->notification = NULL;
-    g_object_unref (G_OBJECT (n));
+  notify->priv->notification = NULL;
+  g_object_unref (G_OBJECT (n));
 }
 
-void xfpm_notify_present_notification (XfpmNotify *notify, NotifyNotification *n)
+void
+xfpm_notify_present_notification (XfpmNotify *notify, NotifyNotification *n)
 {
-    g_return_if_fail (XFPM_IS_NOTIFY(notify));
+  g_return_if_fail (XFPM_IS_NOTIFY(notify));
 
-    xfpm_notify_close_notification (notify);
+  xfpm_notify_close_notification (notify);
 
-    g_signal_connect (G_OBJECT(n),"closed",
-											G_CALLBACK(xfpm_notify_closed_cb), notify);
-											notify->priv->notification = n;
+  g_signal_connect (G_OBJECT(n),"closed",
+                    G_CALLBACK(xfpm_notify_closed_cb), notify);
+                    notify->priv->notification = n;
 
-    notify->priv->notify_id = g_idle_add ((GSourceFunc) xfpm_notify_show, n);
+  notify->priv->notify_id = g_idle_add ((GSourceFunc) xfpm_notify_show, n);
 }
 
-void xfpm_notify_critical (XfpmNotify *notify, NotifyNotification *n)
+void
+xfpm_notify_critical (XfpmNotify *notify, NotifyNotification *n)
 {
-    g_return_if_fail (XFPM_IS_NOTIFY (notify));
+  g_return_if_fail (XFPM_IS_NOTIFY (notify));
 
-    xfpm_notify_close_critical (notify);
+  xfpm_notify_close_critical (notify);
 
-    notify->priv->critical = n;
+  notify->priv->critical = n;
 
-    g_signal_connect (G_OBJECT (n), "closed",
-		      G_CALLBACK (xfpm_notify_close_critical_cb), notify);
+  g_signal_connect (G_OBJECT (n), "closed",
+                    G_CALLBACK (xfpm_notify_close_critical_cb), notify);
 
-    notify->priv->critical_id = g_idle_add ((GSourceFunc) xfpm_notify_show, n);
+  notify->priv->critical_id = g_idle_add ((GSourceFunc) xfpm_notify_show, n);
 }
 
-void xfpm_notify_close_critical (XfpmNotify *notify)
+void
+xfpm_notify_close_critical (XfpmNotify *notify)
 {
-	GError *error = NULL;
+  GError *error = NULL;
 
-	g_return_if_fail (XFPM_IS_NOTIFY (notify));
+  g_return_if_fail (XFPM_IS_NOTIFY (notify));
 
-    if (notify->priv->critical_id != 0)
+  if (notify->priv->critical_id != 0)
+  {
+    g_source_remove (notify->priv->critical_id);
+    notify->priv->critical_id = 0;
+  }
+
+  if ( notify->priv->critical )
+  {
+    if (!notify_notification_close (notify->priv->critical, &error))
     {
-	g_source_remove (notify->priv->critical_id);
-	notify->priv->critical_id = 0;
+      g_warning ("Failed to close critical notification: %s", error->message);
+      g_error_free (error);
     }
 
-    if ( notify->priv->critical )
-    {
-			if (!notify_notification_close (notify->priv->critical, &error))
-			{
-				g_warning ("Failed to close critical notification: %s", error->message);
-				g_error_free (error);
-			}
-
-	g_object_unref (G_OBJECT(notify->priv->critical) );
-	notify->priv->critical  = NULL;
-    }
+    g_object_unref (G_OBJECT(notify->priv->critical) );
+    notify->priv->critical  = NULL;
+  }
 }
 
-void xfpm_notify_close_normal  (XfpmNotify *notify)
+void
+xfpm_notify_close_normal (XfpmNotify *notify)
 {
-    g_return_if_fail (XFPM_IS_NOTIFY (notify));
+  g_return_if_fail (XFPM_IS_NOTIFY (notify));
 
-    xfpm_notify_close_notification (notify);
+  xfpm_notify_close_notification (notify);
 }

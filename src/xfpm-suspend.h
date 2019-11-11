@@ -24,14 +24,13 @@
 
 typedef enum
 {
- XFPM_ASK_0 = 0,
- XFPM_SUSPEND,
- XFPM_HIBERNATE,
+  XFPM_ASK_0 = 0,
+  XFPM_SUSPEND,
+  XFPM_HIBERNATE,
 } XfpmActionType;
 
 gboolean xfpm_suspend_can_suspend   (void);
 gboolean xfpm_suspend_can_hibernate (void);
-
-gboolean xfpm_suspend_try_action (XfpmActionType     type);
+gboolean xfpm_suspend_try_action    (XfpmActionType     type);
 
 #endif /* __XFPM_SUSPEND_H */

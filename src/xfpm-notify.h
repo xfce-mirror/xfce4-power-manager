@@ -34,60 +34,50 @@ G_BEGIN_DECLS
 
 typedef enum
 {
-    XFPM_NOTIFY_LOW = 0,
-    XFPM_NOTIFY_NORMAL,
-    XFPM_NOTIFY_CRITICAL
-
+  XFPM_NOTIFY_LOW = 0,
+  XFPM_NOTIFY_NORMAL,
+  XFPM_NOTIFY_CRITICAL
 } XfpmNotifyUrgency;
 
 typedef struct XfpmNotifyPrivate XfpmNotifyPrivate;
 
 typedef struct
 {
-    GObject		  parent;
-    XfpmNotifyPrivate	 *priv;
-
+  GObject              parent;
+  XfpmNotifyPrivate   *priv;
 } XfpmNotify;
 
 typedef struct
 {
     GObjectClass          parent_class;
-
 } XfpmNotifyClass;
 
-GType        	 	  xfpm_notify_get_type          	    (void) G_GNUC_CONST;
-XfpmNotify      	 *xfpm_notify_new                           (void);
-
-void             	  xfpm_notify_show_notification 	    (XfpmNotify *notify,
-								     const gchar *title,
-								     const gchar *text,
-								     const gchar *icon_name,
-								     gint timeout,
-								     XfpmNotifyUrgency urgency);
-
-NotifyNotification       *xfpm_notify_new_notification  	    (XfpmNotify *notify,
-								     const gchar *title,
-								     const gchar *text,
-								     const gchar *icon_name,
-								     guint timeout,
-								     XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
-
-void 			  xfpm_notify_add_action_to_notification    (XfpmNotify *notify,
-								     NotifyNotification *n,
-								     const gchar *id,
-								     const gchar *action_label,
-								     NotifyActionCallback callback,
-								     gpointer data);
-
-void 			  xfpm_notify_present_notification 	    (XfpmNotify *notify,
-								     NotifyNotification *n);
-
-void                      xfpm_notify_critical                      (XfpmNotify *notify,
-								     NotifyNotification *n);
-
-void                      xfpm_notify_close_critical                (XfpmNotify *notify);
-
-void			  xfpm_notify_close_normal		    (XfpmNotify *notify);
+GType               xfpm_notify_get_type                      (void) G_GNUC_CONST;
+XfpmNotify         *xfpm_notify_new                           (void);
+void                xfpm_notify_show_notification             (XfpmNotify *notify,
+                                                               const gchar *title,
+                                                               const gchar *text,
+                                                               const gchar *icon_name,
+                                                               gint timeout,
+                                                               XfpmNotifyUrgency urgency);
+NotifyNotification *xfpm_notify_new_notification              (XfpmNotify *notify,
+                                                               const gchar *title,
+                                                               const gchar *text,
+                                                               const gchar *icon_name,
+                                                               guint timeout,
+                                                               XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
+void                xfpm_notify_add_action_to_notification    (XfpmNotify *notify,
+                                                               NotifyNotification *n,
+                                                               const gchar *id,
+                                                               const gchar *action_label,
+                                                               NotifyActionCallback callback,
+                                                               gpointer data);
+void                xfpm_notify_present_notification          (XfpmNotify *notify,
+                                                               NotifyNotification *n);
+void                xfpm_notify_critical                      (XfpmNotify *notify,
+                                                               NotifyNotification *n);
+void                xfpm_notify_close_critical                (XfpmNotify *notify);
+void                xfpm_notify_close_normal                  (XfpmNotify *notify);
 
 G_END_DECLS
 

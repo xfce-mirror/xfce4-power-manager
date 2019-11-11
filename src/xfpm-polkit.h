@@ -33,25 +33,21 @@ typedef struct XfpmPolkitPrivate XfpmPolkitPrivate;
 
 typedef struct
 {
-    GObject         	   parent;
-    XfpmPolkitPrivate     *priv;
-
+  GObject              parent;
+  XfpmPolkitPrivate   *priv;
 } XfpmPolkit;
 
 typedef struct
 {
-    GObjectClass 	   parent_class;
-
-    void		  (*auth_changed)		(XfpmPolkit *polkit);
+  GObjectClass      parent_class;
+  void            (*auth_changed)    (XfpmPolkit *polkit);
 
 } XfpmPolkitClass;
 
-GType        		   xfpm_polkit_get_type        	(void) G_GNUC_CONST;
-
-XfpmPolkit                *xfpm_polkit_get             	(void);
-
-gboolean		   xfpm_polkit_check_auth	(XfpmPolkit *polkit,
-							 const gchar *action_id);
+GType               xfpm_polkit_get_type          (void) G_GNUC_CONST;
+XfpmPolkit         *xfpm_polkit_get               (void);
+gboolean            xfpm_polkit_check_auth        (XfpmPolkit *polkit,
+                                                   const gchar *action_id);
 
 G_END_DECLS
 

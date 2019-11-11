@@ -33,30 +33,26 @@ typedef struct XfpmInhibitPrivate XfpmInhibitPrivate;
 
 typedef struct
 {
-    GObject		  parent;
-    XfpmInhibitPrivate	 *priv;
-
+    GObject               parent;
+    XfpmInhibitPrivate   *priv;
 } XfpmInhibit;
 
 typedef struct
 {
-    GObjectClass 	  parent_class;
+    GObjectClass     parent_class;
 
     /* signals */
-    void                  (*has_inhibit_changed)       (XfpmInhibit *inhibit,
-							gboolean is_inhibit);
-    void                  (*inhibitors_list_changed)   (XfpmInhibit *inhibit,
-							gboolean is_inhibit);
-
+    void            (*has_inhibit_changed)       (XfpmInhibit *inhibit,
+                                                  gboolean is_inhibit);
+    void            (*inhibitors_list_changed)   (XfpmInhibit *inhibit,
+                                                  gboolean is_inhibit);
 } XfpmInhibitClass;
 
-GType        		  xfpm_inhibit_get_type        (void) G_GNUC_CONST;
-GType                     xfpm_inhibit_error_get_type  (void) G_GNUC_CONST;
-GQuark                    xfpm_inhibit_get_error_quark ();
-
-XfpmInhibit              *xfpm_inhibit_new             (void);
-
-const gchar            **xfpm_inhibit_get_inhibit_list (XfpmInhibit *inhibit);
+GType              xfpm_inhibit_get_type         (void) G_GNUC_CONST;
+GType              xfpm_inhibit_error_get_type   (void) G_GNUC_CONST;
+GQuark             xfpm_inhibit_get_error_quark  ();
+XfpmInhibit       *xfpm_inhibit_new              (void);
+const gchar      **xfpm_inhibit_get_inhibit_list (XfpmInhibit *inhibit);
 
 G_END_DECLS
 

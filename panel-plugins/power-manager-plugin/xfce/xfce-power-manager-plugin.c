@@ -44,11 +44,11 @@
 /* plugin structure */
 typedef struct
 {
-    XfcePanelPlugin *plugin;
+  XfcePanelPlugin *plugin;
 
-    /* panel widgets */
-    GtkWidget       *ebox;
-    GtkWidget       *power_manager_button;
+  /* panel widgets */
+  GtkWidget       *ebox;
+  GtkWidget       *power_manager_button;
 }
 PowerManagerPlugin;
 
@@ -71,18 +71,18 @@ power_manager_plugin_configure_response (GtkWidget    *dialog,
   gboolean result;
 
   if (response == GTK_RESPONSE_HELP)
-    {
-      result = g_spawn_command_line_async ("exo-open --launch WebBrowser " "http://docs.xfce.org/xfce/xfce4-power-manager/1.6/start", NULL);
+  {
+    result = g_spawn_command_line_async ("exo-open --launch WebBrowser " "http://docs.xfce.org/xfce/xfce4-power-manager/1.6/start", NULL);
 
-      if (G_UNLIKELY (result == FALSE))
-        g_warning (_("Unable to open the following url: %s"), "http://docs.xfce.org/xfce/xfce4-power-manager/1.6/start");
-    }
+    if (G_UNLIKELY (result == FALSE))
+      g_warning (_("Unable to open the following url: %s"), "http://docs.xfce.org/xfce/xfce4-power-manager/1.6/start");
+  }
   else
-    {
-      g_object_set_data (G_OBJECT (power_manager_plugin->plugin), "dialog", NULL);
-      xfce_panel_plugin_unblock_menu (power_manager_plugin->plugin);
-      gtk_widget_destroy (dialog);
-    }
+  {
+    g_object_set_data (G_OBJECT (power_manager_plugin->plugin), "dialog", NULL);
+    xfce_panel_plugin_unblock_menu (power_manager_plugin->plugin);
+    gtk_widget_destroy (dialog);
+  }
 }
 
 /* Update combo if property in channel changes */
@@ -107,12 +107,12 @@ power_manager_plugin_panel_label_changed (XfconfChannel *channel,
   for (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
         gtk_list_store_iter_is_valid (list_store, &iter);
         gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter))
-    {
-      gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter, 0, &show_panel_label, -1);
-      if (show_panel_label == current_setting)
-        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo),
-                                       &iter);
-    }
+  {
+    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter, 0, &show_panel_label, -1);
+    if (show_panel_label == current_setting)
+      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo),
+                                     &iter);
+  }
 }
 
 /* Update xfconf property if combobox selection is changed */
@@ -156,11 +156,11 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
 
   /* create the dialog */
   dialog = xfce_titled_dialog_new_with_mixed_buttons (_("Power Manager Plugin Settings"),
-    GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
-    GTK_DIALOG_DESTROY_WITH_PARENT,
-    "help-browser", _("_Help"), GTK_RESPONSE_HELP,
-    "window-close-symbolic", _("_Close"), GTK_RESPONSE_OK,
-    NULL);
+                                                      GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
+                                                      GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                      "help-browser", _("_Help"), GTK_RESPONSE_HELP,
+                                                      "window-close-symbolic", _("_Close"), GTK_RESPONSE_OK,
+                                                      NULL);
 
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
   gtk_window_set_icon_name (GTK_WINDOW (dialog), "xfce4-power-manager-settings");
@@ -175,7 +175,7 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   gtk_widget_set_margin_top (grid, 12);
   gtk_widget_set_margin_bottom (grid, 12);
   gtk_container_add_with_properties (GTK_CONTAINER (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-						                         grid, "expand", TRUE, "fill", TRUE, NULL);
+                                     grid, "expand", TRUE, "fill", TRUE, NULL);
 
   /* show-panel-label setting */
   label = gtk_label_new (_("Show label:"));
@@ -187,7 +187,8 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
                                    G_TYPE_INT,
                                    G_TYPE_STRING);
 
-  for (i = 0; i < 4; i++) {
+  for (i = 0; i < 4; i++)
+  {
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter,
                         COLUMN_INT, i,
@@ -236,50 +237,50 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
 static PowerManagerPlugin *
 power_manager_plugin_new (XfcePanelPlugin *plugin)
 {
-    PowerManagerPlugin *power_manager_plugin;
-    XfconfChannel *channel;
+  PowerManagerPlugin *power_manager_plugin;
+  XfconfChannel *channel;
 
-    /* allocate memory for the plugin structure */
-    power_manager_plugin = g_slice_new0 (PowerManagerPlugin);
+  /* allocate memory for the plugin structure */
+  power_manager_plugin = g_slice_new0 (PowerManagerPlugin);
 
-    /* pointer to plugin */
-    power_manager_plugin->plugin = plugin;
+  /* pointer to plugin */
+  power_manager_plugin->plugin = plugin;
 
-    /* create some panel ebox */
-    power_manager_plugin->ebox = gtk_event_box_new ();
-    gtk_widget_show (power_manager_plugin->ebox);
-    gtk_event_box_set_visible_window (GTK_EVENT_BOX(power_manager_plugin->ebox), FALSE);
+  /* create some panel ebox */
+  power_manager_plugin->ebox = gtk_event_box_new ();
+  gtk_widget_show (power_manager_plugin->ebox);
+  gtk_event_box_set_visible_window (GTK_EVENT_BOX(power_manager_plugin->ebox), FALSE);
 
-    power_manager_plugin->power_manager_button = power_manager_button_new (plugin);
-    gtk_container_add (GTK_CONTAINER (power_manager_plugin->ebox), power_manager_plugin->power_manager_button);
-    power_manager_button_show (POWER_MANAGER_BUTTON (power_manager_plugin->power_manager_button));
+  power_manager_plugin->power_manager_button = power_manager_button_new (plugin);
+  gtk_container_add (GTK_CONTAINER (power_manager_plugin->ebox), power_manager_plugin->power_manager_button);
+  power_manager_button_show (POWER_MANAGER_BUTTON (power_manager_plugin->power_manager_button));
 
-    /* disable the systray item when the plugin is started, allowing the user to
-    later manually enable it, e.g. for testing purposes. */
-    channel = xfconf_channel_get (XFPM_CHANNEL);
-    if (xfconf_channel_get_bool (channel, "/xfce4-power-manager/show-tray-icon", TRUE))
-        g_warning ("Xfce4-power-manager: The panel plugin is present, so the tray icon gets disabled.");
-    xfconf_channel_set_bool (channel, "/xfce4-power-manager/show-tray-icon", FALSE);
+  /* disable the systray item when the plugin is started, allowing the user to
+  later manually enable it, e.g. for testing purposes. */
+  channel = xfconf_channel_get (XFPM_CHANNEL);
+  if (xfconf_channel_get_bool (channel, "/xfce4-power-manager/show-tray-icon", TRUE))
+    g_warning ("Xfce4-power-manager: The panel plugin is present, so the tray icon gets disabled.");
+  xfconf_channel_set_bool (channel, "/xfce4-power-manager/show-tray-icon", FALSE);
 
-    return power_manager_plugin;
+  return power_manager_plugin;
 }
 
 
 static void
 power_manager_plugin_construct (XfcePanelPlugin *plugin)
 {
-    PowerManagerPlugin *power_manager_plugin;
+  PowerManagerPlugin *power_manager_plugin;
 
-    xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+  xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
-    /* create the plugin */
-    power_manager_plugin = power_manager_plugin_new (plugin);
+  /* create the plugin */
+  power_manager_plugin = power_manager_plugin_new (plugin);
 
-    /* show the configure menu item and connect signal */
-    xfce_panel_plugin_menu_show_configure (plugin);
-    g_signal_connect (G_OBJECT (plugin), "configure-plugin",
-                      G_CALLBACK (power_manager_plugin_configure), power_manager_plugin);
+  /* show the configure menu item and connect signal */
+  xfce_panel_plugin_menu_show_configure (plugin);
+  g_signal_connect (G_OBJECT (plugin), "configure-plugin",
+                    G_CALLBACK (power_manager_plugin_configure), power_manager_plugin);
 
-    /* add the ebox to the panel */
-    gtk_container_add (GTK_CONTAINER (plugin), power_manager_plugin->ebox);
+  /* add the ebox to the panel */
+  gtk_container_add (GTK_CONTAINER (plugin), power_manager_plugin->ebox);
 }

@@ -30,47 +30,48 @@
 /*
  * Inform the Network Manager when we do suspend/hibernate
  */
-gboolean 	xfpm_network_manager_sleep  	(gboolean sleep)
+gboolean
+xfpm_network_manager_sleep (gboolean sleep)
 {
 #ifdef WITH_NETWORK_MANAGER
 
-    GDBusConnection *bus   = NULL;
-    GDBusProxy      *proxy = NULL;
-    GError          *error = NULL;
+  GDBusConnection *bus   = NULL;
+  GDBusProxy      *proxy = NULL;
+  GError          *error = NULL;
 
-    bus = g_bus_get_sync ( G_BUS_TYPE_SYSTEM, NULL, &error);
+  bus = g_bus_get_sync ( G_BUS_TYPE_SYSTEM, NULL, &error);
 
-    if ( error )
-    {
-	g_warning("%s", error->message);
-	g_error_free (error);
-	return FALSE;
-    }
+  if ( error )
+  {
+    g_warning ("%s", error->message);
+    g_error_free (error);
+    return FALSE;
+  }
 
-    proxy = g_dbus_proxy_new_sync (bus,
-				   G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
-				   G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
-				   NULL,
-				   "org.freedesktop.NetworkManager",
-				   "/org/freedesktop/NetworkManager",
-				   "org.freedesktop.NetworkManager",
-				   NULL,
-				   NULL);
+  proxy = g_dbus_proxy_new_sync (bus,
+                                 G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
+                                 G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
+                                 NULL,
+                                 "org.freedesktop.NetworkManager",
+                                 "/org/freedesktop/NetworkManager",
+                                 "org.freedesktop.NetworkManager",
+                                 NULL,
+                                 NULL);
 
-    if (!proxy)
-    {
-	g_warning ("Failed to create proxy for Network Manager interface");
-	return FALSE;
-    }
+  if (!proxy)
+  {
+    g_warning ("Failed to create proxy for Network Manager interface");
+    return FALSE;
+  }
 
-    g_dbus_proxy_call (proxy, "Sleep", g_variant_new("(b)", sleep),
-                       G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
-    g_object_unref (G_OBJECT(proxy));
-    g_object_unref (bus);
+  g_dbus_proxy_call (proxy, "Sleep", g_variant_new("(b)", sleep),
+                     G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
+  g_object_unref (G_OBJECT(proxy));
+  g_object_unref (bus);
 
-    /* Sleep 0.5 second to allow the nm applet to disconnect*/
-    g_usleep (500000);
+  /* Sleep 0.5 second to allow the nm applet to disconnect*/
+  g_usleep (500000);
 
 #endif /* WITH_NETWORK_MANAGER */
-    return TRUE;
+  return TRUE;
 }

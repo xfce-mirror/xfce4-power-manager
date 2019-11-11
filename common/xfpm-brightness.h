@@ -33,46 +33,35 @@ typedef struct XfpmBrightnessPrivate XfpmBrightnessPrivate;
 
 typedef struct
 {
-    GObject         		parent;
-    XfpmBrightnessPrivate      *priv;
-    
+  GObject                     parent;
+  XfpmBrightnessPrivate      *priv;
+
 } XfpmBrightness;
 
 typedef struct
 {
-    GObjectClass 		parent_class;
-    
+  GObjectClass 		parent_class;
+
 } XfpmBrightnessClass;
 
-GType        			xfpm_brightness_get_type        (void) G_GNUC_CONST;
-
-XfpmBrightness       	       *xfpm_brightness_new             (void);
-
-gboolean			xfpm_brightness_setup 		(XfpmBrightness *brightness);
-
-gboolean			xfpm_brightness_up		(XfpmBrightness *brightness,
-								 gint32 *new_level);
-
-gboolean			xfpm_brightness_down		(XfpmBrightness *brightness,
-								 gint32 *new_level);
-
-gboolean			xfpm_brightness_has_hw 		(XfpmBrightness *brightness);
-
-gint32 			xfpm_brightness_get_max_level   (XfpmBrightness *brightness);
-
-gboolean			xfpm_brightness_get_level	(XfpmBrightness *brightness,
-								 gint32 *level);
-
-gboolean			xfpm_brightness_set_level	(XfpmBrightness *brightness,
-								 gint32 level);
-
-gboolean			xfpm_brightness_dim_down	(XfpmBrightness *brightness);
-
-gboolean			xfpm_brightness_get_switch	(XfpmBrightness *brightness,
-												 gint *brightness_switch);
-
-gboolean			xfpm_brightness_set_switch	(XfpmBrightness *brightness,
-												 gint brightness_switch);
+GType             xfpm_brightness_get_type        (void) G_GNUC_CONST;
+XfpmBrightness   *xfpm_brightness_new             (void);
+gboolean          xfpm_brightness_setup           (XfpmBrightness *brightness);
+gboolean          xfpm_brightness_up              (XfpmBrightness *brightness,
+                                                   gint32         *new_level);
+gboolean          xfpm_brightness_down            (XfpmBrightness *brightness,
+                                                   gint32         *new_level);
+gboolean          xfpm_brightness_has_hw          (XfpmBrightness *brightness);
+gint32            xfpm_brightness_get_max_level   (XfpmBrightness *brightness);
+gboolean          xfpm_brightness_get_level       (XfpmBrightness *brightness,
+                                                   gint32         *level);
+gboolean          xfpm_brightness_set_level       (XfpmBrightness *brightness,
+                                                   gint32          level);
+gboolean          xfpm_brightness_dim_down        (XfpmBrightness *brightness);
+gboolean          xfpm_brightness_get_switch      (XfpmBrightness *brightness,
+                                                   gint           *brightness_switch);
+gboolean          xfpm_brightness_set_switch      (XfpmBrightness *brightness,
+                                                   gint            brightness_switch);
 
 G_END_DECLS
 

@@ -33,22 +33,18 @@ typedef struct XfpmBacklightPrivate XfpmBacklightPrivate;
 
 typedef struct
 {
-    GObject         		parent;
-    XfpmBacklightPrivate       *priv;
-
+  GObject             parent;
+  XfpmBacklightPrivate       *priv;
 } XfpmBacklight;
 
 typedef struct
 {
-    GObjectClass 		parent_class;
-
+  GObjectClass     parent_class;
 } XfpmBacklightClass;
 
-GType        			xfpm_backlight_get_type         (void) G_GNUC_CONST;
-
-XfpmBacklight       	       *xfpm_backlight_new              (void);
-
-gboolean			xfpm_backlight_has_hw		(XfpmBacklight *backlight);
+GType              xfpm_backlight_get_type         (void) G_GNUC_CONST;
+XfpmBacklight     *xfpm_backlight_new              (void);
+gboolean           xfpm_backlight_has_hw           (XfpmBacklight *backlight);
 
 G_END_DECLS
 

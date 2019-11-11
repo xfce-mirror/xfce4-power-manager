@@ -31,34 +31,31 @@ G_BEGIN_DECLS
 
 typedef enum
 {
-    SYSTEM_LAPTOP,
-    SYSTEM_DESKTOP,
-    SYSTEM_SERVER,
-    SYSTEM_UNKNOWN
-
+  SYSTEM_LAPTOP,
+  SYSTEM_DESKTOP,
+  SYSTEM_SERVER,
+  SYSTEM_UNKNOWN
 } SystemFormFactor;
 
 typedef enum
 {
-    LID_KEY   	        	= (1 << 0),
-    BRIGHTNESS_KEY_UP   	= (1 << 1),
-    BRIGHTNESS_KEY_DOWN  	= (1 << 2),
-    SLEEP_KEY 	        	= (1 << 3),
-    HIBERNATE_KEY	        = (1 << 4),
-    POWER_KEY 	        	= (1 << 5),
-    KBD_BRIGHTNESS_KEY_UP	= (1 << 6),
-    KBD_BRIGHTNESS_KEY_DOWN	= (1 << 7),
-    BATTERY_KEY                 = (1 << 8)
-
+  LID_KEY   	        	= (1 << 0),
+  BRIGHTNESS_KEY_UP   	= (1 << 1),
+  BRIGHTNESS_KEY_DOWN  	= (1 << 2),
+  SLEEP_KEY 	        	= (1 << 3),
+  HIBERNATE_KEY	        = (1 << 4),
+  POWER_KEY 	        	= (1 << 5),
+  KBD_BRIGHTNESS_KEY_UP	= (1 << 6),
+  KBD_BRIGHTNESS_KEY_DOWN	= (1 << 7),
+  BATTERY_KEY                 = (1 << 8)
 } XfpmKeys;
 
 typedef enum
 {
-    CPU_UNKNOWN         = (1 << 0),
-    CPU_POWERSAVE	= (1 << 1),
-    CPU_ONDEMAND	= (1 << 2),
-    CPU_PERFORMANCE	= (1 << 3)
-
+  CPU_UNKNOWN         = (1 << 0),
+  CPU_POWERSAVE	= (1 << 1),
+  CPU_ONDEMAND	= (1 << 2),
+  CPU_PERFORMANCE	= (1 << 3)
 } XfpmCpuGovernor;
 
 G_END_DECLS

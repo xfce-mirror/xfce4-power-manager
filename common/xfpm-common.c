@@ -24,145 +24,152 @@
 
 #include "xfpm-common.h"
 
-const gchar *xfpm_bool_to_string (gboolean value)
+const gchar
+*xfpm_bool_to_string (gboolean value)
 {
-    if ( value == TRUE ) return "TRUE";
-    else 		 return "FALSE";
+  if ( value == TRUE )
+    return "TRUE";
+  else
+    return "FALSE";
 }
 
-gboolean xfpm_string_to_bool (const gchar *string)
+gboolean
+xfpm_string_to_bool (const gchar *string)
 {
-    if ( !g_strcmp0 (string, "TRUE") ) return TRUE;
-    else if ( !g_strcmp0 (string, "FALSE") ) return FALSE;
-    
+  if ( !g_strcmp0 (string, "TRUE") )
+    return TRUE;
+  else if ( !g_strcmp0 (string, "FALSE") )
     return FALSE;
+
+  return FALSE;
 }
 
-GtkBuilder *xfpm_builder_new_from_string (const gchar *ui, GError **error)
+GtkBuilder
+*xfpm_builder_new_from_string (const gchar *ui, GError **error)
 {
-    GtkBuilder *builder;
+  GtkBuilder *builder;
 
-    builder = gtk_builder_new ();
-    
-    gtk_builder_add_from_string (GTK_BUILDER (builder),
-                                 ui,
-                                 -1,
-                                 error);
-    
-    return builder;
+  builder = gtk_builder_new ();
+
+  gtk_builder_add_from_string (GTK_BUILDER (builder),
+                               ui,
+                               -1,
+                               error);
+
+  return builder;
 }
 
-void       
-xfpm_preferences (void) 
+void
+xfpm_preferences (void)
 {
-    g_spawn_command_line_async ("xfce4-power-manager-settings", NULL);
+  g_spawn_command_line_async ("xfce4-power-manager-settings", NULL);
 }
 
 void
 xfpm_preferences_device_id (const gchar* object_path)
 {
-    gchar *string = g_strdup_printf("xfce4-power-manager-settings -d %s", object_path);
+  gchar *string = g_strdup_printf("xfce4-power-manager-settings -d %s", object_path);
 
-    if (string)
-	g_spawn_command_line_async (string, NULL);
+  if (string)
+    g_spawn_command_line_async (string, NULL);
 
-    g_free (string);
+  g_free (string);
 }
 
 void
 xfpm_quit (void)
 {
-    g_spawn_command_line_async ("xfce4-power-manager -q", NULL);
+  g_spawn_command_line_async ("xfce4-power-manager -q", NULL);
 }
 
-void       
+void
 xfpm_about (gpointer data)
 {
-    gchar *package = (gchar *)data;
-    
-    const gchar* authors[] =
-    {
-	"Ali Abdallah <aliov@xfce.org>",
-	 NULL,
-    };
-							    
-    static const gchar *documenters[] =
-    {
-	"Ali Abdallah <aliov@xfce.org>",
-	NULL,
-    };
+  gchar *package = (gchar *)data;
 
-    static const gchar *artists[] =
-    {
-	"Simon Steinbeiß <simon@xfce.org>",
-	 NULL,
-    };
+  const gchar* authors[] =
+  {
+    "Ali Abdallah <aliov@xfce.org>",
+     NULL,
+  };
 
-    gtk_show_about_dialog (NULL,
-		     "copyright", "Copyright \302\251 2008-2011 Ali Abdallah\nCopyright \302\251 2011-2012 Nick Schermer\nCopyright \302\251 2013-2015 Eric Koegel, Harald Judt, Simon Steinbeiß",
-		     "destroy-with-parent", TRUE,
-		     "authors", authors,
-		     "artists", artists,
-		     "documenters", documenters,
-		     "license", XFCE_LICENSE_GPL,
-		     "program-name", package,
-		     "translator-credits", _("translator-credits"),
-		     "version", PACKAGE_VERSION,
-		     "website", "http://docs.xfce.org/xfce/xfce4-power-manager/1.4/start",
-		     "logo-icon-name", "xfce4-power-manager-settings",
-		     NULL);
-						 
+  static const gchar *documenters[] =
+  {
+    "Ali Abdallah <aliov@xfce.org>",
+    NULL,
+  };
+
+  static const gchar *artists[] =
+  {
+    "Simon Steinbeiß <simon@xfce.org>",
+     NULL,
+  };
+
+  gtk_show_about_dialog (NULL,
+       "copyright", "Copyright \302\251 2008-2011 Ali Abdallah\nCopyright \302\251 2011-2012 Nick Schermer\nCopyright \302\251 2013-2015 Eric Koegel, Harald Judt, Simon Steinbeiß",
+       "destroy-with-parent", TRUE,
+       "authors", authors,
+       "artists", artists,
+       "documenters", documenters,
+       "license", XFCE_LICENSE_GPL,
+       "program-name", package,
+       "translator-credits", _("translator-credits"),
+       "version", PACKAGE_VERSION,
+       "website", "http://docs.xfce.org/xfce/xfce4-power-manager/1.4/start",
+       "logo-icon-name", "xfce4-power-manager-settings",
+       NULL);
 }
 
-gboolean xfpm_is_multihead_connected (void)
+gboolean
+xfpm_is_multihead_connected (void)
 {
-    GdkDisplay *dpy;
+  GdkDisplay *dpy;
 #if !GTK_CHECK_VERSION (3, 22, 0)
-    GdkScreen *screen;
+  GdkScreen *screen;
 #endif
-    gint nmonitor;
-    
-    dpy = gdk_display_get_default ();
+  gint nmonitor;
+
+  dpy = gdk_display_get_default ();
 
 #if !GTK_CHECK_VERSION (3, 22, 0)
-    nmonitor = 1;
-    screen = gdk_display_get_screen (dpy, 0);
-    if ( screen )
-	nmonitor = gdk_screen_get_n_monitors (screen);
+  nmonitor = 1;
+  screen = gdk_display_get_screen (dpy, 0);
+  if ( screen )
+    nmonitor = gdk_screen_get_n_monitors (screen);
 #else
-    nmonitor = gdk_display_get_n_monitors (dpy);
+  nmonitor = gdk_display_get_n_monitors (dpy);
 #endif
 
-    if ( nmonitor > 1 )
-    {
-        g_debug ("Multiple monitor connected");
-        return TRUE;
-    }
-    else
-    {
-        return FALSE;
-    }
-    
+  if ( nmonitor > 1 )
+  {
+    g_debug ("Multiple monitors connected");
+    return TRUE;
+  }
+  else
+  {
     return FALSE;
+  }
+
+  return FALSE;
 }
 
-GdkPixbuf *xfpm_icon_load (const gchar *icon_name, gint size)
+GdkPixbuf *
+xfpm_icon_load (const gchar *icon_name, gint size)
 {
-    GdkPixbuf *pix = NULL;
-    GError *error = NULL;
-    
-    pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), 
-				    icon_name, 
-				    size,
-				    GTK_ICON_LOOKUP_FORCE_SIZE,
-				    &error);
-				    
-    if ( error )
-    {
-	g_warning ("Unable to load icon : %s : %s", icon_name, error->message);
-	g_error_free (error);
-    }
-    
-    return pix;
-}
+  GdkPixbuf *pix = NULL;
+  GError *error = NULL;
 
+  pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
+                                  icon_name,
+                                  size,
+                                  GTK_ICON_LOOKUP_FORCE_SIZE,
+                                  &error);
+
+  if ( error )
+  {
+    g_warning ("Unable to load icon : %s : %s", icon_name, error->message);
+    g_error_free (error);
+  }
+
+  return pix;
+}

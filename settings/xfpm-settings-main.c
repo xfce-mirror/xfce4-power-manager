@@ -38,8 +38,7 @@
 
 int main (int argc, char **argv)
 {
+  xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
-    xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
-
-    return g_application_run (G_APPLICATION (xfpm_settings_app_new ()), argc, argv);
+  return g_application_run (G_APPLICATION (xfpm_settings_app_new ()), argc, argv);
 }

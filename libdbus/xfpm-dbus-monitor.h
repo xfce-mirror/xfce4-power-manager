@@ -1,4 +1,4 @@
-/* * 
+/* *
  *  Copyright (C) 2009-2011 Ali <aliov@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
@@ -34,59 +34,50 @@ typedef struct XfpmDBusMonitorPrivate XfpmDBusMonitorPrivate;
 
 typedef struct
 {
-    GObject        	 	parent;
-    XfpmDBusMonitorPrivate     *priv;
-    
+  GObject                 parent;
+  XfpmDBusMonitorPrivate *priv;
+
 } XfpmDBusMonitor;
 
 typedef struct
 {
-    GObjectClass 	parent_class;
-    
-    /*
-     * Unique name connection lost.
-     */
-    void                (*unique_name_lost)			(XfpmDBusMonitor *monitor,
-								 gchar *unique_name,
-								 gboolean on_session);
-								 
-    /*
-     * A Service connection changed.
-     */
-    void                (*service_connection_changed)		(XfpmDBusMonitor *monitor,
-								 gchar *service_name,
-							         gboolean connected,
-								 gboolean on_session);
-								 
-    /*
-     * DBus: system bus disconnected
-     */
-    void		(*system_bus_connection_changed)  	(XfpmDBusMonitor *monitor,
-								 gboolean connected);
-    
+  GObjectClass 	parent_class;
+
+  /*
+   * Unique name connection lost.
+   */
+  void                (*unique_name_lost)              (XfpmDBusMonitor *monitor,
+                                                        gchar *unique_name,
+                                                        gboolean on_session);
+  /*
+   * A Service connection changed.
+   */
+  void                (*service_connection_changed)    (XfpmDBusMonitor *monitor,
+                                                        gchar *service_name,
+                                                        gboolean connected,
+                                                        gboolean on_session);
+  /*
+   * DBus: system bus disconnected
+   */
+  void                (*system_bus_connection_changed) (XfpmDBusMonitor *monitor,
+                                                        gboolean connected);
 } XfpmDBusMonitorClass;
 
-GType        		xfpm_dbus_monitor_get_type        	(void) G_GNUC_CONST;
-
-XfpmDBusMonitor        *xfpm_dbus_monitor_new             	(void);
-
-void			xfpm_dbus_monitor_watch_system_bus	(XfpmDBusMonitor *monitor);
-
-gboolean                xfpm_dbus_monitor_add_unique_name     	(XfpmDBusMonitor *monitor,
-								 GBusType bus_type,
-								 const gchar *unique_name);
-								   
-void                    xfpm_dbus_monitor_remove_unique_name    (XfpmDBusMonitor *monitor,
-								 GBusType bus_type,
-								 const gchar *unique_name);
-
-gboolean		xfpm_dbus_monitor_add_service	  	(XfpmDBusMonitor *monitor,
-								 GBusType bus_type,
-								 const gchar *service_name);
-
-void			xfpm_dbus_monitor_remove_service  	(XfpmDBusMonitor *monitor,
-								 GBusType bus_type,
-								 const gchar *service_name);
+GType             xfpm_dbus_monitor_get_type           (void) G_GNUC_CONST;
+XfpmDBusMonitor  *xfpm_dbus_monitor_new                (void);
+void              xfpm_dbus_monitor_watch_system_bus   (XfpmDBusMonitor *monitor);
+gboolean          xfpm_dbus_monitor_add_unique_name    (XfpmDBusMonitor *monitor,
+                                                        GBusType         bus_type,
+                                                        const gchar     *unique_name);
+void              xfpm_dbus_monitor_remove_unique_name (XfpmDBusMonitor *monitor,
+                                                        GBusType         bus_type,
+                                                        const gchar     *unique_name);
+gboolean          xfpm_dbus_monitor_add_service        (XfpmDBusMonitor *monitor,
+                                                        GBusType         bus_type,
+                                                        const gchar     *service_name);
+void              xfpm_dbus_monitor_remove_service     (XfpmDBusMonitor *monitor,
+                                                        GBusType         bus_type,
+                                                        const gchar     *service_name);
 G_END_DECLS
 
 #endif /* __XFPM_DBUS_MONITOR_H */

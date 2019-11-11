@@ -33,32 +33,25 @@ typedef struct XfpmConsoleKitPrivate XfpmConsoleKitPrivate;
 
 typedef struct
 {
-    GObject         		parent;
-    XfpmConsoleKitPrivate      *priv;
-
+  GObject                     parent;
+  XfpmConsoleKitPrivate      *priv;
 } XfpmConsoleKit;
 
 typedef struct
 {
-    GObjectClass 		parent_class;
-
+  GObjectClass                parent_class;
 } XfpmConsoleKitClass;
 
-GType        			xfpm_console_kit_get_type        (void) G_GNUC_CONST;
-
-XfpmConsoleKit       	       *xfpm_console_kit_new             (void);
-
-void				xfpm_console_kit_shutdown	 (XfpmConsoleKit *console,
-								  GError **error);
-
-void				xfpm_console_kit_reboot		 (XfpmConsoleKit *console,
-								  GError **error);
-
-void                xfpm_console_kit_suspend     (XfpmConsoleKit *console,
-                                                  GError        **error);
-
-void                xfpm_console_kit_hibernate   (XfpmConsoleKit *console,
-                                                  GError        **error);
+GType              xfpm_console_kit_get_type        (void) G_GNUC_CONST;
+XfpmConsoleKit    *xfpm_console_kit_new             (void);
+void               xfpm_console_kit_shutdown        (XfpmConsoleKit *console,
+                                                     GError **error);
+void               xfpm_console_kit_reboot          (XfpmConsoleKit *console,
+                                                     GError **error);
+void               xfpm_console_kit_suspend         (XfpmConsoleKit *console,
+                                                     GError        **error);
+void               xfpm_console_kit_hibernate       (XfpmConsoleKit *console,
+                                                     GError        **error);
 
 G_END_DECLS
 

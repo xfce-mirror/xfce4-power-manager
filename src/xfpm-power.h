@@ -34,48 +34,34 @@ typedef struct XfpmPowerPrivate XfpmPowerPrivate;
 
 typedef struct
 {
-    GObject         	parent;
-
+    GObject               parent;
     XfpmPowerPrivate     *priv;
-
 } XfpmPower;
 
 typedef struct
 {
-    GObjectClass 	parent_class;
-
-    void                (*on_battery_changed)         	(XfpmPower *power,
-						         gboolean on_battery);
-
-    void                (*low_battery_changed)        	(XfpmPower *power,
-							 gboolean low_battery);
-
-    void		(*lid_changed)			(XfpmPower *power,
-							 gboolean lid_is_closed);
-
-    void		(*waking_up)			(XfpmPower *power);
-
-    void		(*sleeping)			(XfpmPower *power);
-
-    void		(*ask_shutdown)			(XfpmPower *power);
-
-    void		(*shutdown)			(XfpmPower *power);
+    GObjectClass   parent_class;
+    void         (*on_battery_changed)           (XfpmPower *power,
+                                                  gboolean on_battery);
+    void         (*low_battery_changed)          (XfpmPower *power,
+                                                  gboolean low_battery);
+    void         (*lid_changed)                  (XfpmPower *power,
+                                                  gboolean lid_is_closed);
+    void         (*waking_up)                    (XfpmPower *power);
+    void         (*sleeping)                     (XfpmPower *power);
+    void         (*ask_shutdown)                 (XfpmPower *power);
+    void         (*shutdown)                     (XfpmPower *power);
 
 } XfpmPowerClass;
 
-GType        		xfpm_power_get_type        	(void) G_GNUC_CONST;
-
-XfpmPower       	       *xfpm_power_get             	(void);
-
-void			xfpm_power_suspend         	(XfpmPower *power,
-							 gboolean force);
-
-void			xfpm_power_hibernate       	(XfpmPower *power,
-							 gboolean force);
-
-gboolean		xfpm_power_has_battery		(XfpmPower *power);
-
-gboolean        xfpm_power_is_in_presentation_mode (XfpmPower *power);
+GType       xfpm_power_get_type                 (void) G_GNUC_CONST;
+XfpmPower  *xfpm_power_get                      (void);
+void        xfpm_power_suspend                  (XfpmPower *power,
+                                                 gboolean force);
+void        xfpm_power_hibernate                (XfpmPower *power,
+                                                 gboolean force);
+gboolean    xfpm_power_has_battery              (XfpmPower *power);
+gboolean    xfpm_power_is_in_presentation_mode  (XfpmPower *power);
 
 G_END_DECLS
 

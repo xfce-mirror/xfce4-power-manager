@@ -41,18 +41,17 @@ typedef struct _XfpmSettingsAppPrivate  XfpmSettingsAppPrivate;
 
 struct _XfpmSettingsApp
 {
-    GtkApplication               parent;
-    XfpmSettingsAppPrivate      *priv;
+  GtkApplication               parent;
+  XfpmSettingsAppPrivate      *priv;
 };
 
 struct _XfpmSettingsAppClass
 {
-    GtkApplicationClass    parent_class;
+  GtkApplicationClass    parent_class;
 };
 
 
 GType                xfpm_settings_app_get_type        (void) G_GNUC_CONST;
-
 XfpmSettingsApp     *xfpm_settings_app_new             (void);
 
 

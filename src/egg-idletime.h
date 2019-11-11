@@ -26,52 +26,51 @@
 
 G_BEGIN_DECLS
 
-#define EGG_IDLETIME_TYPE		(egg_idletime_get_type ())
-#define EGG_IDLETIME(o)			(G_TYPE_CHECK_INSTANCE_CAST ((o), EGG_IDLETIME_TYPE, EggIdletime))
-#define EGG_IDLETIME_CLASS(k)		(G_TYPE_CHECK_CLASS_CAST((k), EGG_IDLETIME_TYPE, EggIdletimeClass))
-#define EGG_IS_IDLETIME(o)		(G_TYPE_CHECK_INSTANCE_TYPE ((o), EGG_IDLETIME_TYPE))
-#define EGG_IS_IDLETIME_CLASS(k)	(G_TYPE_CHECK_CLASS_TYPE ((k), EGG_IDLETIME_TYPE))
-#define EGG_IDLETIME_GET_CLASS(o)	(G_TYPE_INSTANCE_GET_CLASS ((o), EGG_IDLETIME_TYPE, EggIdletimeClass))
+#define EGG_IDLETIME_TYPE    (egg_idletime_get_type ())
+#define EGG_IDLETIME(o)      (G_TYPE_CHECK_INSTANCE_CAST ((o), EGG_IDLETIME_TYPE, EggIdletime))
+#define EGG_IDLETIME_CLASS(k)    (G_TYPE_CHECK_CLASS_CAST((k), EGG_IDLETIME_TYPE, EggIdletimeClass))
+#define EGG_IS_IDLETIME(o)    (G_TYPE_CHECK_INSTANCE_TYPE ((o), EGG_IDLETIME_TYPE))
+#define EGG_IS_IDLETIME_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), EGG_IDLETIME_TYPE))
+#define EGG_IDLETIME_GET_CLASS(o)  (G_TYPE_INSTANCE_GET_CLASS ((o), EGG_IDLETIME_TYPE, EggIdletimeClass))
 
 enum
 {
-    TIMEOUT_INPUT = 0,
-    TIMEOUT_BRIGHTNESS_ON_AC,
-    TIMEOUT_BRIGHTNESS_ON_BATTERY,
-    TIMEOUT_INACTIVITY_ON_AC,
-    TIMEOUT_INACTIVITY_ON_BATTERY
+  TIMEOUT_INPUT = 0,
+  TIMEOUT_BRIGHTNESS_ON_AC,
+  TIMEOUT_BRIGHTNESS_ON_BATTERY,
+  TIMEOUT_INACTIVITY_ON_AC,
+  TIMEOUT_INACTIVITY_ON_BATTERY
 };
 
 typedef struct EggIdletimePrivate EggIdletimePrivate;
 
 typedef struct
 {
-	GObject			 parent;
-	EggIdletimePrivate	*priv;
+  GObject       parent;
+  EggIdletimePrivate  *priv;
 } EggIdletime;
 
 typedef struct
 {
-	GObjectClass	parent_class;
-	void		(* alarm_expired)		(EggIdletime	*idletime,
-							 guint		 timer_id);
-	void		(* reset)			(EggIdletime	*idletime);
+  GObjectClass  parent_class;
+  void       (* alarm_expired)    (EggIdletime  *idletime,
+                                   guint         timer_id);
+  void       (* reset)            (EggIdletime  *idletime);
 } EggIdletimeClass;
 
-GType		 egg_idletime_get_type			(void);
-EggIdletime	*egg_idletime_new			(void);
-
-void		 egg_idletime_alarm_reset_all		(EggIdletime	*idletime);
-gboolean	 egg_idletime_alarm_set			(EggIdletime	*idletime,
-							 guint		 alarm_id,
-							 guint		 timeout);
-gboolean	 egg_idletime_alarm_remove		(EggIdletime	*idletime,
-							 guint		 alarm_id);
-gint64		 egg_idletime_get_time			(EggIdletime	*idletime);
+GType         egg_idletime_get_type           (void);
+EggIdletime  *egg_idletime_new                (void);
+void          egg_idletime_alarm_reset_all    (EggIdletime  *idletime);
+gboolean      egg_idletime_alarm_set          (EggIdletime  *idletime,
+                                               guint     alarm_id,
+                                               guint     timeout);
+gboolean      egg_idletime_alarm_remove       (EggIdletime  *idletime,
+                                               guint     alarm_id);
+gint64        egg_idletime_get_time           (EggIdletime  *idletime);
 #ifdef EGG_TEST
-void		 egg_idletime_test			(gpointer	 data);
+void          egg_idletime_test               (gpointer   data);
 #endif
 
 G_END_DECLS
 
-#endif	/* __EGG_IDLETIME_H */
+#endif  /* __EGG_IDLETIME_H */

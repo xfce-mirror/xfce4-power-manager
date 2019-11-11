@@ -45,663 +45,665 @@ static void xfpm_xfconf_finalize   (GObject *object);
 
 struct XfpmXfconfPrivate
 {
-    XfconfChannel 	*channel;
-    XfconfChannel   *session_channel;
-    GValue              *values;
+  XfconfChannel   *channel;
+  XfconfChannel   *session_channel;
+  GValue          *values;
 };
 
 enum
 {
-    PROP_0,
-    PROP_GENERAL_NOTIFICATION,
-    PROP_LOCK_SCREEN_ON_SLEEP,
-    PROP_CRITICAL_LEVEL,
-    PROP_SHOW_BRIGHTNESS_POPUP,
-    PROP_HANDLE_BRIGHTNESS_KEYS,
-    PROP_TRAY_ICON,
-    PROP_CRITICAL_BATTERY_ACTION,
-    PROP_POWER_BUTTON,
-    PROP_HIBERNATE_BUTTON,
-    PROP_SLEEP_BUTTON,
-    PROP_BATTERY_BUTTON,
-    PROP_LID_ACTION_ON_AC,
-    PROP_LID_ACTION_ON_BATTERY,
-    PROP_BRIGHTNESS_LEVEL_ON_AC,
-    PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
-    PROP_BRIGHTNESS_SLIDER_MIN_LEVEL,
+  PROP_0,
+  PROP_GENERAL_NOTIFICATION,
+  PROP_LOCK_SCREEN_ON_SLEEP,
+  PROP_CRITICAL_LEVEL,
+  PROP_SHOW_BRIGHTNESS_POPUP,
+  PROP_HANDLE_BRIGHTNESS_KEYS,
+  PROP_TRAY_ICON,
+  PROP_CRITICAL_BATTERY_ACTION,
+  PROP_POWER_BUTTON,
+  PROP_HIBERNATE_BUTTON,
+  PROP_SLEEP_BUTTON,
+  PROP_BATTERY_BUTTON,
+  PROP_LID_ACTION_ON_AC,
+  PROP_LID_ACTION_ON_BATTERY,
+  PROP_BRIGHTNESS_LEVEL_ON_AC,
+  PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
+  PROP_BRIGHTNESS_SLIDER_MIN_LEVEL,
 
-    PROP_ENABLE_DPMS,
-    PROP_DPMS_SLEEP_ON_AC,
-    PROP_DPMS_OFF_ON_AC,
-    PROP_DPMS_SLEEP_ON_BATTERY,
-    PROP_DPMS_OFF_ON_BATTERY,
-    PROP_DPMS_SLEEP_MODE,
+  PROP_ENABLE_DPMS,
+  PROP_DPMS_SLEEP_ON_AC,
+  PROP_DPMS_OFF_ON_AC,
+  PROP_DPMS_SLEEP_ON_BATTERY,
+  PROP_DPMS_OFF_ON_BATTERY,
+  PROP_DPMS_SLEEP_MODE,
 
-    PROP_IDLE_ON_AC,
-    PROP_IDLE_ON_BATTERY,
-    PROP_IDLE_SLEEP_MODE_ON_AC,
-    PROP_IDLE_SLEEP_MODE_ON_BATTERY,
-    PROP_DIM_ON_AC_TIMEOUT,
-    PROP_DIM_ON_BATTERY_TIMEOUT,
+  PROP_IDLE_ON_AC,
+  PROP_IDLE_ON_BATTERY,
+  PROP_IDLE_SLEEP_MODE_ON_AC,
+  PROP_IDLE_SLEEP_MODE_ON_BATTERY,
+  PROP_DIM_ON_AC_TIMEOUT,
+  PROP_DIM_ON_BATTERY_TIMEOUT,
 #ifdef WITH_NETWORK_MANAGER
-    PROP_NETWORK_MANAGER_SLEEP,
+  PROP_NETWORK_MANAGER_SLEEP,
 #endif
-    PROP_LOGIND_HANDLE_POWER_KEY,
-    PROP_LOGIND_HANDLE_SUSPEND_KEY,
-    PROP_LOGIND_HANDLE_HIBERNATE_KEY,
-    PROP_LOGIND_HANDLE_LID_SWITCH,
-    PROP_HEARTBEAT_COMMAND,
-    N_PROPERTIES
+  PROP_LOGIND_HANDLE_POWER_KEY,
+  PROP_LOGIND_HANDLE_SUSPEND_KEY,
+  PROP_LOGIND_HANDLE_HIBERNATE_KEY,
+  PROP_LOGIND_HANDLE_LID_SWITCH,
+  PROP_HEARTBEAT_COMMAND,
+  N_PROPERTIES
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmXfconf, xfpm_xfconf, G_TYPE_OBJECT)
 
 static void
 xfpm_xfconf_set_property (GObject *object,
-			  guint prop_id,
-			  const GValue *value,
-			  GParamSpec *pspec)
+                          guint prop_id,
+                          const GValue *value,
+                          GParamSpec *pspec)
 {
-    XfpmXfconf *conf;
-    GValue *dst;
+  XfpmXfconf *conf;
+  GValue *dst;
 
-    conf = XFPM_XFCONF (object);
+  conf = XFPM_XFCONF (object);
 
-    dst = conf->priv->values + prop_id;
+  dst = conf->priv->values + prop_id;
 
-    if ( !G_IS_VALUE (dst) )
-    {
-	g_value_init (dst, pspec->value_type);
-	g_param_value_set_default (pspec, dst);
-    }
+  if ( !G_IS_VALUE (dst) )
+  {
+    g_value_init (dst, pspec->value_type);
+    g_param_value_set_default (pspec, dst);
+  }
 
-    if ( g_param_values_cmp (pspec, value, dst) != 0)
-    {
-	g_value_copy (value, dst);
-	g_object_notify (object, pspec->name);
-    }
+  if ( g_param_values_cmp (pspec, value, dst) != 0)
+  {
+    g_value_copy (value, dst);
+    g_object_notify (object, pspec->name);
+  }
 }
 
 static void
 xfpm_xfconf_get_property (GObject *object,
-			  guint prop_id,
-			  GValue *value,
-			  GParamSpec *pspec)
+                          guint prop_id,
+                          GValue *value,
+                          GParamSpec *pspec)
 {
-    XfpmXfconf *conf;
-    GValue *src;
+  XfpmXfconf *conf;
+  GValue *src;
 
-    conf = XFPM_XFCONF (object);
+  conf = XFPM_XFCONF (object);
 
-    src = conf->priv->values + prop_id;
+  src = conf->priv->values + prop_id;
 
-    if ( G_VALUE_HOLDS (src, pspec->value_type) )
-	g_value_copy (src, value);
-    else
-	g_param_value_set_default (pspec, value);
+  if ( G_VALUE_HOLDS (src, pspec->value_type) )
+    g_value_copy (src, value);
+  else
+    g_param_value_set_default (pspec, value);
 }
 
 static void
 xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
 {
-    GParamSpec **specs;
-    GValue value = { 0, };
-    guint nspecs;
-    guint i;
+  GParamSpec **specs;
+  GValue value = { 0, };
+  guint nspecs;
+  guint i;
 
-    specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (conf), &nspecs);
+  specs = g_object_class_list_properties (G_OBJECT_GET_CLASS (conf), &nspecs);
 
-    for ( i = 0; i < nspecs; i++)
+  for ( i = 0; i < nspecs; i++)
+  {
+    gchar *prop_name;
+    prop_name = g_strdup_printf ("%s%s", XFPM_PROPERTIES_PREFIX, specs[i]->name);
+    g_value_init (&value, specs[i]->value_type);
+
+    if (channel_valid)
     {
-	gchar *prop_name;
-	prop_name = g_strdup_printf ("%s%s", XFPM_PROPERTIES_PREFIX, specs[i]->name);
-	g_value_init (&value, specs[i]->value_type);
-
-	if (channel_valid)
-	{
-	    if ( !xfconf_channel_get_property (conf->priv->channel, prop_name, &value) )
-	    {
-		XFPM_DEBUG ("Using default configuration for %s", specs[i]->name);
-		g_param_value_set_default (specs[i], &value);
-	    }
-	}
-	else
-	{
-	    XFPM_DEBUG ("Using default configuration for %s", specs[i]->name);
-	    g_param_value_set_default (specs[i], &value);
-	}
-	g_free (prop_name);
-	g_object_set_property (G_OBJECT (conf), specs[i]->name, &value);
-	g_value_unset (&value);
+      if ( !xfconf_channel_get_property (conf->priv->channel, prop_name, &value) )
+      {
+        XFPM_DEBUG ("Using default configuration for %s", specs[i]->name);
+        g_param_value_set_default (specs[i], &value);
+      }
     }
-    g_free (specs);
+    else
+    {
+      XFPM_DEBUG ("Using default configuration for %s", specs[i]->name);
+      g_param_value_set_default (specs[i], &value);
+    }
+    g_free (prop_name);
+    g_object_set_property (G_OBJECT (conf), specs[i]->name, &value);
+    g_value_unset (&value);
+  }
+  g_free (specs);
 }
 
 static void
 xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
-				 GValue *value, XfpmXfconf *conf)
+         GValue *value, XfpmXfconf *conf)
 {
-    /*FIXME: Set default for this key*/
-    if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
-        return;
+  /*FIXME: Set default for this key*/
+  if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
+    return;
 
-    if ( !g_str_has_prefix (property, XFPM_PROPERTIES_PREFIX) || strlen (property) <= strlen (XFPM_PROPERTIES_PREFIX) )
-	return;
+  if ( !g_str_has_prefix (property, XFPM_PROPERTIES_PREFIX) || strlen (property) <= strlen (XFPM_PROPERTIES_PREFIX) )
+    return;
 
-    /* We handle presentation mode and blank-times in xfpm-power directly */
-    if ( g_strcmp0 (property, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE) == 0 ||
-         g_strcmp0 (property, XFPM_PROPERTIES_PREFIX ON_AC_BLANK) == 0 ||
-         g_strcmp0 (property, XFPM_PROPERTIES_PREFIX ON_BATTERY_BLANK) == 0)
-        return;
+  /* We handle presentation mode and blank-times in xfpm-power directly */
+  if ( g_strcmp0 (property, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE) == 0 ||
+       g_strcmp0 (property, XFPM_PROPERTIES_PREFIX ON_AC_BLANK) == 0 ||
+       g_strcmp0 (property, XFPM_PROPERTIES_PREFIX ON_BATTERY_BLANK) == 0)
+    return;
 
-    /* We handle brightness switch in xfpm-backlight directly */
-    if ( g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH) == 0 ||
-         g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE) == 0 )
-        return;
+  /* We handle brightness switch in xfpm-backlight directly */
+  if ( g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH) == 0 ||
+       g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE) == 0 )
+    return;
 
-    XFPM_DEBUG ("Property modified: %s\n", property);
+  XFPM_DEBUG ("Property modified: %s\n", property);
 
-    g_object_set_property (G_OBJECT (conf), property + strlen (XFPM_PROPERTIES_PREFIX), value);
+  g_object_set_property (G_OBJECT (conf), property + strlen (XFPM_PROPERTIES_PREFIX), value);
 }
 
 static void
 xfpm_xfsession_property_changed_cb (XfconfChannel *channel, gchar *property,
-				 GValue *value, XfpmXfconf *conf)
+         GValue *value, XfpmXfconf *conf)
 {
-    /*FIXME: Set default for this key*/
-    if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
-        return;
+  /*FIXME: Set default for this key*/
+  if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
+    return;
 
-    XFPM_DEBUG ("property %s\n", property);
+  XFPM_DEBUG ("property %s\n", property);
 
-    if ( g_strcmp0 (property, "/shutdown/LockScreen") != 0)
-        return;
+  if ( g_strcmp0 (property, "/shutdown/LockScreen") != 0)
+    return;
 
-    /* sanity check */
-    if ( !G_VALUE_HOLDS (value, G_TYPE_BOOLEAN) )
-        return;
+  /* sanity check */
+  if ( !G_VALUE_HOLDS (value, G_TYPE_BOOLEAN) )
+    return;
 
-    XFPM_DEBUG ("Property modified: %s\n", property);
+  XFPM_DEBUG ("Property modified: %s\n", property);
 
-    /* update xfconf which will update xfpm and keep things in sync */
-    xfconf_channel_set_bool (conf->priv->channel,
-                             XFPM_PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP,
-                             g_value_get_boolean(value));
+  /* update xfconf which will update xfpm and keep things in sync */
+  xfconf_channel_set_bool (conf->priv->channel,
+                           XFPM_PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP,
+                           g_value_get_boolean(value));
 }
 
 static void
 xfpm_xfconf_class_init (XfpmXfconfClass *klass)
 {
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+  GObjectClass *object_class = G_OBJECT_CLASS(klass);
 
-    object_class->set_property = xfpm_xfconf_set_property;
-    object_class->get_property = xfpm_xfconf_get_property;
+  object_class->set_property = xfpm_xfconf_set_property;
+  object_class->get_property = xfpm_xfconf_get_property;
 
-    object_class->finalize = xfpm_xfconf_finalize;
+  object_class->finalize = xfpm_xfconf_finalize;
 
-    /**
-     * XfpmXfconf::general-notification
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_GENERAL_NOTIFICATION,
-                                     g_param_spec_boolean (GENERAL_NOTIFICATION_CFG,
-                                                           NULL, NULL,
-                                                           TRUE,
-                                                           G_PARAM_READWRITE));
-    /**
-     * XfpmXfconf::lock-screen-suspend-hibernate
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_LOCK_SCREEN_ON_SLEEP,
-                                     g_param_spec_boolean (LOCK_SCREEN_ON_SLEEP,
-                                                           NULL, NULL,
-                                                           TRUE,
-                                                           G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::general-notification
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_GENERAL_NOTIFICATION,
+                                   g_param_spec_boolean (GENERAL_NOTIFICATION_CFG,
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::lock-screen-suspend-hibernate
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_LOCK_SCREEN_ON_SLEEP,
+                                   g_param_spec_boolean (LOCK_SCREEN_ON_SLEEP,
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::critical-power-level
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_CRITICAL_LEVEL,
-                                     g_param_spec_uint (CRITICAL_POWER_LEVEL,
-                                                        NULL, NULL,
-							1,
-							20,
-							5,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::critical-power-level
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_CRITICAL_LEVEL,
+                                   g_param_spec_uint (CRITICAL_POWER_LEVEL,
+                                                      NULL, NULL,
+                                                      1,
+                                                      20,
+                                                      5,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::show-brightness-popup
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_SHOW_BRIGHTNESS_POPUP,
-                                     g_param_spec_boolean (SHOW_BRIGHTNESS_POPUP,
-                                                           NULL, NULL,
-                                                           TRUE,
-                                                           G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::show-brightness-popup
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_SHOW_BRIGHTNESS_POPUP,
+                                   g_param_spec_boolean (SHOW_BRIGHTNESS_POPUP,
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::handle-brightness-keys
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_HANDLE_BRIGHTNESS_KEYS,
-                                     g_param_spec_boolean (HANDLE_BRIGHTNESS_KEYS,
-                                                           NULL, NULL,
-                                                           TRUE,
-                                                           G_PARAM_READWRITE));
-    /**
-     * XfpmXfconf::show-tray-icon
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_TRAY_ICON,
-                                     g_param_spec_uint (SHOW_TRAY_ICON_CFG,
-                                                        NULL, NULL,
-							SHOW_ICON_ALWAYS,
-							NEVER_SHOW_ICON,
-							SHOW_ICON_WHEN_BATTERY_PRESENT,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::handle-brightness-keys
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_HANDLE_BRIGHTNESS_KEYS,
+                                   g_param_spec_boolean (HANDLE_BRIGHTNESS_KEYS,
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::show-tray-icon
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_TRAY_ICON,
+                                   g_param_spec_uint (SHOW_TRAY_ICON_CFG,
+                                                      NULL, NULL,
+                                                      SHOW_ICON_ALWAYS,
+                                                      NEVER_SHOW_ICON,
+                                                      SHOW_ICON_WHEN_BATTERY_PRESENT,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::critical-battery-action
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_CRITICAL_BATTERY_ACTION,
-                                     g_param_spec_uint (CRITICAL_BATT_ACTION_CFG,
-                                                        NULL, NULL,
-							XFPM_DO_NOTHING,
-							XFPM_DO_SHUTDOWN,
-							XFPM_DO_NOTHING,
-                                                        G_PARAM_READWRITE));
-    /**
-     * XfpmXfconf::power-switch-action
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_POWER_BUTTON,
-                                     g_param_spec_uint (POWER_SWITCH_CFG,
-                                                        NULL, NULL,
-							XFPM_DO_NOTHING,
-							XFPM_DO_SHUTDOWN,
-							XFPM_DO_NOTHING,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::critical-battery-action
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_CRITICAL_BATTERY_ACTION,
+                                   g_param_spec_uint (CRITICAL_BATT_ACTION_CFG,
+                                                      NULL, NULL,
+                                                      XFPM_DO_NOTHING,
+                                                      XFPM_DO_SHUTDOWN,
+                                                      XFPM_DO_NOTHING,
+                                                      G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::power-switch-action
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_POWER_BUTTON,
+                                   g_param_spec_uint (POWER_SWITCH_CFG,
+                                                      NULL, NULL,
+                                                      XFPM_DO_NOTHING,
+                                                      XFPM_DO_SHUTDOWN,
+                                                      XFPM_DO_NOTHING,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::sleep-switch-action
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_SLEEP_BUTTON,
-                                     g_param_spec_uint (SLEEP_SWITCH_CFG,
-                                                        NULL, NULL,
-							XFPM_DO_NOTHING,
-							XFPM_DO_SHUTDOWN,
-							XFPM_DO_NOTHING,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::sleep-switch-action
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_SLEEP_BUTTON,
+                                   g_param_spec_uint (SLEEP_SWITCH_CFG,
+                                                      NULL, NULL,
+                                                      XFPM_DO_NOTHING,
+                                                      XFPM_DO_SHUTDOWN,
+                                                      XFPM_DO_NOTHING,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::hibernate-switch-action
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_HIBERNATE_BUTTON,
-                                     g_param_spec_uint (HIBERNATE_SWITCH_CFG,
-                                                        NULL, NULL,
-							XFPM_DO_NOTHING,
-							XFPM_DO_SHUTDOWN,
-							XFPM_DO_NOTHING,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::hibernate-switch-action
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_HIBERNATE_BUTTON,
+                                   g_param_spec_uint (HIBERNATE_SWITCH_CFG,
+                                                      NULL, NULL,
+                                                      XFPM_DO_NOTHING,
+                                                      XFPM_DO_SHUTDOWN,
+                                                      XFPM_DO_NOTHING,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::battery-switch-action
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_BATTERY_BUTTON,
-                                     g_param_spec_uint (BATTERY_SWITCH_CFG,
-                                                        NULL, NULL,
-                                                        XFPM_DO_NOTHING,
-                                                        XFPM_DO_SHUTDOWN,
-                                                        XFPM_DO_NOTHING,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::battery-switch-action
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_BATTERY_BUTTON,
+                                   g_param_spec_uint (BATTERY_SWITCH_CFG,
+                                                      NULL, NULL,
+                                                      XFPM_DO_NOTHING,
+                                                      XFPM_DO_SHUTDOWN,
+                                                      XFPM_DO_NOTHING,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::lid-action-on-ac
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_LID_ACTION_ON_AC,
-                                     g_param_spec_uint (LID_SWITCH_ON_AC_CFG,
-                                                        NULL, NULL,
-							LID_TRIGGER_NOTHING,
-							LID_TRIGGER_LOCK_SCREEN,
-							LID_TRIGGER_LOCK_SCREEN,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::lid-action-on-ac
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_LID_ACTION_ON_AC,
+                                   g_param_spec_uint (LID_SWITCH_ON_AC_CFG,
+                                                      NULL, NULL,
+                                                      LID_TRIGGER_NOTHING,
+                                                      LID_TRIGGER_LOCK_SCREEN,
+                                                      LID_TRIGGER_LOCK_SCREEN,
+                                                      G_PARAM_READWRITE));
 
-     /**
-     * XfpmXfconf::brightness-level-on-ac
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_BRIGHTNESS_LEVEL_ON_AC,
-                                     g_param_spec_uint  (BRIGHTNESS_LEVEL_ON_AC,
-                                                        NULL, NULL,
-							1,
-							100,
-							80,
-                                                        G_PARAM_READWRITE));
+   /**
+   * XfpmXfconf::brightness-level-on-ac
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_BRIGHTNESS_LEVEL_ON_AC,
+                                   g_param_spec_uint  (BRIGHTNESS_LEVEL_ON_AC,
+                                                      NULL, NULL,
+                                                      1,
+                                                      100,
+                                                      80,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::brightness-level-on-battery
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
-                                     g_param_spec_uint  (BRIGHTNESS_LEVEL_ON_BATTERY,
-                                                        NULL, NULL,
-							1,
-							100,
-							20,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::brightness-level-on-battery
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
+                                   g_param_spec_uint  (BRIGHTNESS_LEVEL_ON_BATTERY,
+                                                      NULL, NULL,
+                                                      1,
+                                                      100,
+                                                      20,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::lid-action-on-battery
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_LID_ACTION_ON_BATTERY,
-                                     g_param_spec_uint (LID_SWITCH_ON_BATTERY_CFG,
-                                                        NULL, NULL,
-							LID_TRIGGER_NOTHING,
-							LID_TRIGGER_LOCK_SCREEN,
-							LID_TRIGGER_LOCK_SCREEN,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::lid-action-on-battery
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_LID_ACTION_ON_BATTERY,
+                                   g_param_spec_uint (LID_SWITCH_ON_BATTERY_CFG,
+                                                      NULL, NULL,
+                                                      LID_TRIGGER_NOTHING,
+                                                      LID_TRIGGER_LOCK_SCREEN,
+                                                      LID_TRIGGER_LOCK_SCREEN,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::dpms-enabled
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_ENABLE_DPMS,
-                                     g_param_spec_boolean (DPMS_ENABLED_CFG,
-                                                           NULL, NULL,
-                                                           TRUE,
-                                                           G_PARAM_READWRITE));
-    /**
-     * XfpmXfconf::dpms-on-ac-sleep
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_DPMS_SLEEP_ON_AC,
-                                     g_param_spec_uint (ON_AC_DPMS_SLEEP,
-                                                        NULL, NULL,
-							0,
-							G_MAXUINT16,
-							10,
-                                                        G_PARAM_READWRITE));
-    /**
-     * XfpmXfconf::dpms-on-ac-off
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_DPMS_OFF_ON_AC,
-                                     g_param_spec_uint (ON_AC_DPMS_OFF,
-                                                        NULL, NULL,
-							0,
-							G_MAXUINT16,
-							15,
-                                                        G_PARAM_READWRITE));
-    /**
-     * XfpmXfconf::dpms-on-battery-sleep
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_DPMS_SLEEP_ON_BATTERY,
-                                     g_param_spec_uint (ON_BATT_DPMS_SLEEP,
-                                                        NULL, NULL,
-							0,
-							G_MAXUINT16,
-							5,
-                                                        G_PARAM_READWRITE));
-    /**
-     * XfpmXfconf::dpms-on-battery-off
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_DPMS_OFF_ON_BATTERY,
-                                     g_param_spec_uint (ON_BATT_DPMS_OFF,
-                                                        NULL, NULL,
-							0,
-							G_MAXUINT16,
-							10,
-                                                        G_PARAM_READWRITE));
-    /**
-     * XfpmXfconf::dpms-sleep-mode
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_DPMS_SLEEP_MODE,
-                                     g_param_spec_string  (DPMS_SLEEP_MODE,
-                                                           NULL, NULL,
-                                                           "Standby",
-                                                           G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::dpms-enabled
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_ENABLE_DPMS,
+                                   g_param_spec_boolean (DPMS_ENABLED_CFG,
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::dpms-on-ac-sleep
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_DPMS_SLEEP_ON_AC,
+                                   g_param_spec_uint (ON_AC_DPMS_SLEEP,
+                                                      NULL, NULL,
+                                                      0,
+                                                      G_MAXUINT16,
+                                                      10,
+                                                      G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::dpms-on-ac-off
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_DPMS_OFF_ON_AC,
+                                   g_param_spec_uint (ON_AC_DPMS_OFF,
+                                                      NULL, NULL,
+                                                      0,
+                                                      G_MAXUINT16,
+                                                      15,
+                                                      G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::dpms-on-battery-sleep
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_DPMS_SLEEP_ON_BATTERY,
+                                   g_param_spec_uint (ON_BATT_DPMS_SLEEP,
+                                                      NULL, NULL,
+                                                      0,
+                                                      G_MAXUINT16,
+                                                      5,
+                                                      G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::dpms-on-battery-off
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_DPMS_OFF_ON_BATTERY,
+                                   g_param_spec_uint (ON_BATT_DPMS_OFF,
+                                                      NULL, NULL,
+                                                      0,
+                                                      G_MAXUINT16,
+                                                      10,
+                                                      G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::dpms-sleep-mode
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_DPMS_SLEEP_MODE,
+                                   g_param_spec_string  (DPMS_SLEEP_MODE,
+                                                         NULL, NULL,
+                                                         "Standby",
+                                                         G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::inactivity-on-ac
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_IDLE_ON_AC,
-                                     g_param_spec_uint (ON_AC_INACTIVITY_TIMEOUT,
-                                                        NULL, NULL,
-							0,
-							G_MAXUINT,
-							14,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::inactivity-on-ac
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_IDLE_ON_AC,
+                                   g_param_spec_uint (ON_AC_INACTIVITY_TIMEOUT,
+                                                      NULL, NULL,
+                                                      0,
+                                                      G_MAXUINT,
+                                                      14,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::inactivity-on-battery
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_IDLE_ON_BATTERY,
-                                     g_param_spec_uint (ON_BATTERY_INACTIVITY_TIMEOUT,
-                                                        NULL, NULL,
-							0,
-							G_MAXUINT,
-							14,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::inactivity-on-battery
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_IDLE_ON_BATTERY,
+                                   g_param_spec_uint (ON_BATTERY_INACTIVITY_TIMEOUT,
+                                                      NULL, NULL,
+                                                      0,
+                                                      G_MAXUINT,
+                                                      14,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::inactivity-sleep-mode-on-battery
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_IDLE_SLEEP_MODE_ON_BATTERY,
-                                     g_param_spec_uint (INACTIVITY_SLEEP_MODE_ON_BATTERY,
-                                                        NULL, NULL,
-                                                        XFPM_DO_SUSPEND,
-                                                        XFPM_DO_HIBERNATE,
-                                                        XFPM_DO_HIBERNATE,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::inactivity-sleep-mode-on-battery
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_IDLE_SLEEP_MODE_ON_BATTERY,
+                                   g_param_spec_uint (INACTIVITY_SLEEP_MODE_ON_BATTERY,
+                                                      NULL, NULL,
+                                                      XFPM_DO_SUSPEND,
+                                                      XFPM_DO_HIBERNATE,
+                                                      XFPM_DO_HIBERNATE,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::inactivity-sleep-mode-on-ac
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_IDLE_SLEEP_MODE_ON_AC,
-                                     g_param_spec_uint (INACTIVITY_SLEEP_MODE_ON_AC,
-                                                        NULL, NULL,
-                                                        XFPM_DO_SUSPEND,
-                                                        XFPM_DO_HIBERNATE,
-                                                        XFPM_DO_SUSPEND,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::inactivity-sleep-mode-on-ac
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_IDLE_SLEEP_MODE_ON_AC,
+                                   g_param_spec_uint (INACTIVITY_SLEEP_MODE_ON_AC,
+                                                      NULL, NULL,
+                                                      XFPM_DO_SUSPEND,
+                                                      XFPM_DO_HIBERNATE,
+                                                      XFPM_DO_SUSPEND,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::brightness-on-ac
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_DIM_ON_AC_TIMEOUT,
-                                     g_param_spec_uint (BRIGHTNESS_ON_AC,
-                                                        NULL, NULL,
-							9,
-							G_MAXUINT,
-							9,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::brightness-on-ac
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_DIM_ON_AC_TIMEOUT,
+                                   g_param_spec_uint (BRIGHTNESS_ON_AC,
+                                                      NULL, NULL,
+                                                      9,
+                                                      G_MAXUINT,
+                                                      9,
+                                                      G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::brightness-on-battery
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_DIM_ON_BATTERY_TIMEOUT,
-                                     g_param_spec_uint (BRIGHTNESS_ON_BATTERY,
-                                                        NULL, NULL,
-							9,
-							G_MAXUINT,
-							120,
-                                                        G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::brightness-on-battery
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_DIM_ON_BATTERY_TIMEOUT,
+                                   g_param_spec_uint (BRIGHTNESS_ON_BATTERY,
+                                                      NULL, NULL,
+                                                      9,
+                                                      G_MAXUINT,
+                                                      120,
+                                                      G_PARAM_READWRITE));
 
 
-    /**
-     * XfpmXfconf::brightness-slider-min-level
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                     g_param_spec_int (BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                                       NULL, NULL,
-                                                       -1,
-                                                       G_MAXINT32,
-                                                       -1,
-                                                       G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::brightness-slider-min-level
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                   g_param_spec_int (BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                                     NULL, NULL,
+                                                     -1,
+                                                     G_MAXINT32,
+                                                     -1,
+                                                     G_PARAM_READWRITE));
 
 #ifdef WITH_NETWORK_MANAGER
-    /**
-     * XfpmXfconf::network-manager-sleep
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_NETWORK_MANAGER_SLEEP,
-                                     g_param_spec_boolean (NETWORK_MANAGER_SLEEP,
-                                                           NULL, NULL,
-                                                           TRUE,
-                                                           G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::network-manager-sleep
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_NETWORK_MANAGER_SLEEP,
+                                   g_param_spec_boolean (NETWORK_MANAGER_SLEEP,
+                                                         NULL, NULL,
+                                                         TRUE,
+                                                         G_PARAM_READWRITE));
 #endif
 
-    /**
-     * XfpmXfconf::logind-handle-power-key
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_LOGIND_HANDLE_POWER_KEY,
-                                     g_param_spec_boolean (LOGIND_HANDLE_POWER_KEY,
-                                                           NULL, NULL,
-                                                           FALSE,
-                                                           G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::logind-handle-power-key
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_LOGIND_HANDLE_POWER_KEY,
+                                   g_param_spec_boolean (LOGIND_HANDLE_POWER_KEY,
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::logind-handle-suspend-key
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_LOGIND_HANDLE_SUSPEND_KEY,
-                                     g_param_spec_boolean (LOGIND_HANDLE_SUSPEND_KEY,
-                                                           NULL, NULL,
-                                                           FALSE,
-                                                           G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::logind-handle-suspend-key
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_LOGIND_HANDLE_SUSPEND_KEY,
+                                   g_param_spec_boolean (LOGIND_HANDLE_SUSPEND_KEY,
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::logind-handle-hibernate-key
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_LOGIND_HANDLE_HIBERNATE_KEY,
-                                     g_param_spec_boolean (LOGIND_HANDLE_HIBERNATE_KEY,
-                                                           NULL, NULL,
-                                                           FALSE,
-                                                           G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::logind-handle-hibernate-key
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_LOGIND_HANDLE_HIBERNATE_KEY,
+                                   g_param_spec_boolean (LOGIND_HANDLE_HIBERNATE_KEY,
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::logind-handle-lid-switch
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_LOGIND_HANDLE_LID_SWITCH,
-                                     g_param_spec_boolean (LOGIND_HANDLE_LID_SWITCH,
-                                                           NULL, NULL,
-                                                           FALSE,
-                                                           G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::logind-handle-lid-switch
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_LOGIND_HANDLE_LID_SWITCH,
+                                   g_param_spec_boolean (LOGIND_HANDLE_LID_SWITCH,
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
 
-    /**
-     * XfpmXfconf::heartbeat-command
-     **/
-    g_object_class_install_property (object_class,
-                                     PROP_HEARTBEAT_COMMAND,
-                                     g_param_spec_string  (HEARTBEAT_COMMAND,
-                                                           NULL, NULL,
-                                                           NULL,
-                                                           G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::heartbeat-command
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_HEARTBEAT_COMMAND,
+                                   g_param_spec_string  (HEARTBEAT_COMMAND,
+                                                         NULL, NULL,
+                                                         NULL,
+                                                         G_PARAM_READWRITE));
 }
 
 static void
 xfpm_xfconf_init (XfpmXfconf *conf)
 {
-    GError *error = NULL;
-    gboolean channel_valid;
-    gboolean lock_screen;
+  GError *error = NULL;
+  gboolean channel_valid;
+  gboolean lock_screen;
 
-    conf->priv = xfpm_xfconf_get_instance_private (conf);
+  conf->priv = xfpm_xfconf_get_instance_private (conf);
 
-    conf->priv->values = g_new0 (GValue, N_PROPERTIES);
+  conf->priv->values = g_new0 (GValue, N_PROPERTIES);
 
-    if ( !xfconf_init (&error) )
-    {
-    	g_critical ("xfconf_init failed: %s\n", error->message);
-       	g_error_free (error);
-	channel_valid = FALSE;
-    }
-    else
-    {
+  if ( !xfconf_init (&error) )
+  {
+    g_critical ("xfconf_init failed: %s\n", error->message);
+    g_error_free (error);
+    channel_valid = FALSE;
+  }
+  else
+  {
     conf->priv->channel = xfconf_channel_get (XFPM_CHANNEL);
     conf->priv->session_channel = xfconf_channel_get ("xfce4-session");
 
     /* if xfce4-session is around, sync to it on startup */
     if ( xfconf_channel_has_property (conf->priv->session_channel, "/shutdown/LockScreen") )
     {
-        lock_screen = xfconf_channel_get_bool (conf->priv->session_channel,
-                                               "/shutdown/LockScreen",
-                                               TRUE);
+      lock_screen = xfconf_channel_get_bool (conf->priv->session_channel,
+                                             "/shutdown/LockScreen",
+                                             TRUE);
 
-        XFPM_DEBUG("lock screen %s", lock_screen ? "TRUE" : "FALSE");
+      XFPM_DEBUG("lock screen %s", lock_screen ? "TRUE" : "FALSE");
 
-        g_object_set (G_OBJECT (conf), LOCK_SCREEN_ON_SLEEP, lock_screen, NULL);
+      g_object_set (G_OBJECT (conf), LOCK_SCREEN_ON_SLEEP, lock_screen, NULL);
     }
 
-	g_signal_connect (conf->priv->channel, "property-changed",
-			  G_CALLBACK (xfpm_xfconf_property_changed_cb), conf);
+    g_signal_connect (conf->priv->channel, "property-changed",
+                      G_CALLBACK (xfpm_xfconf_property_changed_cb), conf);
 
     /* watch for session's property change so we can stay in sync */
     g_signal_connect (conf->priv->session_channel, "property-changed",
-              G_CALLBACK (xfpm_xfsession_property_changed_cb), conf);
+                      G_CALLBACK (xfpm_xfsession_property_changed_cb), conf);
 
-	channel_valid = TRUE;
-    }
-    xfpm_xfconf_load (conf, channel_valid);
+    channel_valid = TRUE;
+  }
+  xfpm_xfconf_load (conf, channel_valid);
 }
 
 static void
 xfpm_xfconf_finalize(GObject *object)
 {
-    XfpmXfconf *conf;
-    guint i;
+  XfpmXfconf *conf;
+  guint i;
 
-    conf = XFPM_XFCONF(object);
+  conf = XFPM_XFCONF (object);
 
-    for ( i = 0; i < N_PROPERTIES; i++)
-    {
-	if ( G_IS_VALUE (conf->priv->values + i) )
-	    g_value_unset (conf->priv->values + i);
-    }
+  for ( i = 0; i < N_PROPERTIES; i++)
+  {
+    if ( G_IS_VALUE (conf->priv->values + i) )
+      g_value_unset (conf->priv->values + i);
+  }
 
-    g_free (conf->priv->values);
+  g_free (conf->priv->values);
 
-    G_OBJECT_CLASS(xfpm_xfconf_parent_class)->finalize(object);
+  G_OBJECT_CLASS (xfpm_xfconf_parent_class)->finalize(object);
 }
 
 XfpmXfconf *
 xfpm_xfconf_new (void)
 {
-    static gpointer xfpm_xfconf_object = NULL;
+  static gpointer xfpm_xfconf_object = NULL;
 
-    if ( G_LIKELY (xfpm_xfconf_object != NULL) )
-    {
-	g_object_ref (xfpm_xfconf_object);
-    }
-    else
-    {
-	xfpm_xfconf_object = g_object_new (XFPM_TYPE_XFCONF, NULL);
-	g_object_add_weak_pointer (xfpm_xfconf_object, &xfpm_xfconf_object);
-    }
-    return XFPM_XFCONF (xfpm_xfconf_object);
+  if ( G_LIKELY (xfpm_xfconf_object != NULL) )
+  {
+    g_object_ref (xfpm_xfconf_object);
+  }
+  else
+  {
+    xfpm_xfconf_object = g_object_new (XFPM_TYPE_XFCONF, NULL);
+    g_object_add_weak_pointer (xfpm_xfconf_object, &xfpm_xfconf_object);
+  }
+
+  return XFPM_XFCONF (xfpm_xfconf_object);
 }
 
-XfconfChannel *xfpm_xfconf_get_channel (XfpmXfconf *conf)
+XfconfChannel *
+xfpm_xfconf_get_channel (XfpmXfconf *conf)
 {
-    return conf->priv->channel;
+  return conf->priv->channel;
 }
