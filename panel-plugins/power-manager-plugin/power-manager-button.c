@@ -1087,9 +1087,23 @@ power_manager_button_press_event (GtkWidget *widget, GdkEventButton *event)
 {
     PowerManagerButton *button = POWER_MANAGER_BUTTON (widget);
 
-    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
-    power_manager_button_show_menu (button);
-    return TRUE;
+    if (event->button == 1 && !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
+      power_manager_button_show_menu (button);
+      return TRUE;
+    }
+
+    if (event->button == 2)
+    {
+      gboolean state;
+
+      state = xfconf_channel_get_bool (button->priv->channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, FALSE);
+      xfconf_channel_set_bool (button->priv->channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, !state);
+      return TRUE;
+    }
+
+    return FALSE;
 }
 
 #ifdef XFCE_PLUGIN
