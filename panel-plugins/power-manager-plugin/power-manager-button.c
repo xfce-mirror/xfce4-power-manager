@@ -1174,6 +1174,8 @@ power_manager_button_show (PowerManagerButton *button)
 {
     GtkWidget *mi;
     GtkWidget *hbox;
+    GtkStyleContext *context;
+    GtkCssProvider *css_provider;
 
     g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
 
@@ -1185,6 +1187,16 @@ power_manager_button_show (PowerManagerButton *button)
     button->priv->panel_icon_image = gtk_image_new ();
     button->priv->panel_presentation_mode = gtk_image_new_from_icon_name (PRESENTATION_MODE_ICON, GTK_ICON_SIZE_BUTTON);
     gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_presentation_mode), button->priv->panel_icon_width);
+    context = gtk_widget_get_style_context (button->priv->panel_presentation_mode);
+    css_provider = gtk_css_provider_new ();
+    gtk_css_provider_load_from_data (css_provider,
+                                     ".presentation-mode { color: @warning_color; }",
+                                     -1, NULL);
+    gtk_style_context_add_provider (context,
+                                    GTK_STYLE_PROVIDER (css_provider),
+                                    GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_object_unref (css_provider);
+    gtk_style_context_add_class (context, "presentation-mode");
     button->priv->panel_label = gtk_label_new ("");
     hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET (button->priv->panel_presentation_mode), TRUE, FALSE, 0);
