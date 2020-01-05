@@ -72,8 +72,8 @@ xfpm_brightness_xrand_get_limit (XfpmBrightness *brightness, RROutput output, gi
   if (gdk_x11_display_error_trap_pop (gdisplay) != 0
       || info == NULL)
   {
-  g_warning ("could not get output property");
-  return FALSE;
+    g_warning ("could not get output property");
+    return FALSE;
   }
 
   if (!info->range || info->num_values != 2)
