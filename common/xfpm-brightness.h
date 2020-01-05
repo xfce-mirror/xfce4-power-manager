@@ -57,6 +57,9 @@ gboolean          xfpm_brightness_get_level       (XfpmBrightness *brightness,
                                                    gint32         *level);
 gboolean          xfpm_brightness_set_level       (XfpmBrightness *brightness,
                                                    gint32          level);
+gboolean          xfpm_brightness_set_step_count  (XfpmBrightness *brightness,
+                                                   guint32         count,
+                                                   gboolean        exponential);
 gboolean          xfpm_brightness_dim_down        (XfpmBrightness *brightness);
 gboolean          xfpm_brightness_get_switch      (XfpmBrightness *brightness,
                                                    gint           *brightness_switch);

@@ -58,6 +58,8 @@ enum
   PROP_CRITICAL_LEVEL,
   PROP_SHOW_BRIGHTNESS_POPUP,
   PROP_HANDLE_BRIGHTNESS_KEYS,
+  PROP_BRIGHTNESS_STEP_COUNT,
+  PROP_BRIGHTNESS_EXPONENTIAL,
   PROP_TRAY_ICON,
   PROP_CRITICAL_BATTERY_ACTION,
   PROP_POWER_BUTTON,
@@ -289,6 +291,29 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                          NULL, NULL,
                                                          TRUE,
                                                          G_PARAM_READWRITE));
+
+  /**
+   * XfpmXfconf::brightness-step-count
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_BRIGHTNESS_STEP_COUNT,
+                                   g_param_spec_uint (BRIGHTNESS_STEP_COUNT,
+                                                      NULL, NULL,
+                                                      2,
+                                                      100,
+                                                      10,
+                                                      G_PARAM_READWRITE));
+
+  /**
+   * XfpmXfconf::brightness-exponential
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_BRIGHTNESS_EXPONENTIAL,
+                                   g_param_spec_boolean (BRIGHTNESS_EXPONENTIAL,
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
   /**
    * XfpmXfconf::show-tray-icon
    **/

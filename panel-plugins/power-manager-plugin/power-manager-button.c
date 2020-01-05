@@ -1721,6 +1721,19 @@ power_manager_button_show_menu (PowerManagerButton *button)
   {
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);
 
+    /* Setup brightness steps */
+    guint brightness_step_count =
+      xfconf_channel_get_uint (button->priv->channel,
+                               XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
+                               10);
+    gboolean brightness_exponential =
+      xfconf_channel_get_bool (button->priv->channel,
+                               XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
+                               FALSE);
+    xfpm_brightness_set_step_count (button->priv->brightness,
+                                    brightness_step_count,
+                                    brightness_exponential);
+
     mi = scale_menu_item_new_with_range (button->priv->brightness_min_level, max_level, 1);
 
     scale_menu_item_set_description_label (SCALE_MENU_ITEM (mi), _("<b>Display brightness</b>"));

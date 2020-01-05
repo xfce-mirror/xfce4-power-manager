@@ -64,6 +64,8 @@ static  GtkWidget *on_ac_dpms_sleep     = NULL;
 static  GtkWidget *on_ac_dpms_off     = NULL;
 static  GtkWidget *sideview                 = NULL; /* Sidebar tree view - all devices are in the sideview */
 static  GtkWidget *device_details_notebook  = NULL; /* Displays the details of a deivce */
+static  GtkWidget *brightness_step_count    = NULL;
+static  GtkWidget *brightness_exponential   = NULL;
 
 static  GtkWidget *label_inactivity_on_ac                       = NULL;
 static  GtkWidget *label_inactivity_on_battery                  = NULL;
@@ -172,6 +174,13 @@ static void view_cursor_changed_cb                     (GtkTreeView *view,
 void        on_ac_sleep_mode_changed_cb                (GtkWidget *w,
                                                         XfconfChannel *channel);
 void        on_battery_sleep_mode_changed_cb           (GtkWidget *w,
+                                                        XfconfChannel *channel);
+void        handle_brightness_keys_toggled_cb          (GtkWidget *w,
+                                                        gboolean is_active,
+                                                        XfconfChannel *channel);
+void        brightness_step_count_value_changed_cb     (GtkSpinButton *w,
+                                                        XfconfChannel *channel);
+void        brightness_exponential_toggled_cb          (GtkWidget *w,
                                                         XfconfChannel *channel);
 /* Light Locker Integration */
 gchar      *format_light_locker_value_cb               (gint value);
@@ -789,6 +798,36 @@ critical_level_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, val) )
   {
     g_critical ("Unable to set value %d for property %s\n", val, CRITICAL_POWER_LEVEL);
+  }
+}
+
+void
+handle_brightness_keys_toggled_cb (GtkWidget *w, gboolean is_active, XfconfChannel *channel)
+{
+  gtk_widget_set_sensitive (brightness_step_count, is_active);
+  gtk_widget_set_sensitive (brightness_exponential, is_active);
+  gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "brightness-step-count-label")), is_active);
+}
+
+void
+brightness_step_count_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
+{
+  guint val = (guint) gtk_spin_button_get_value (w);
+
+  if ( !xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT, val) )
+  {
+    g_critical ("Unable to set value %d for property %s\n", val, BRIGHTNESS_STEP_COUNT);
+  }
+}
+
+void
+brightness_exponential_toggled_cb (GtkWidget *w, XfconfChannel *channel)
+{
+  gboolean val = (gint) gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON(w));
+
+  if ( !xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL, val) )
+  {
+    g_critical ("Unable to set value for property %s\n", BRIGHTNESS_EXPONENTIAL);
   }
 }
 
@@ -1503,6 +1542,33 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_hide (battery_w);
     gtk_widget_hide (battery_label);
   }
+
+  /*
+   * Brightness step count
+   */
+  brightness_step_count = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-step-count-spin"));
+  gtk_widget_set_tooltip_text (brightness_step_count,
+      _("Number of brightness steps available using keys"));
+  val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT, 10);
+  if ( val > 100 || val < 2)
+  {
+    g_critical ("Value %d if out of range for property %s\n", val, BRIGHTNESS_STEP_COUNT);
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON(brightness_step_count), 10);
+  }
+  else
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON(brightness_step_count), val);
+
+  /*
+   * Exponential brightness
+   */
+  brightness_exponential = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-exponential"));
+  val = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL, FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(brightness_exponential), val);
+
+  valid = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS, TRUE);
+  gtk_widget_set_sensitive (brightness_step_count, valid);
+  gtk_widget_set_sensitive (brightness_exponential, valid);
+  gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "brightness-step-count-label")), valid);
 }
 
 static void
@@ -2477,6 +2543,10 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     frame = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys"));
     gtk_widget_hide (frame);
     frame = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys-label"));
+    gtk_widget_hide (frame);
+    frame = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-step-count"));
+    gtk_widget_hide (frame);
+    frame = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-exponential"));
     gtk_widget_hide (frame);
   }
 

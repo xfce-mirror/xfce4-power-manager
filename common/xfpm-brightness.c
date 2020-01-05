@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
@@ -48,14 +49,42 @@ struct XfpmBrightnessPrivate
   gint    output;
   gboolean    xrandr_has_hw;
   gboolean    helper_has_hw;
+  gboolean    use_exp_step;
 
   gint32    max_level;
   gint32    current_level;
   gint32    min_level;
   gint32    step;
+  gfloat    exp_step;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmBrightness, xfpm_brightness, G_TYPE_OBJECT)
+
+static gint32
+xfpm_brightness_inc (XfpmBrightness *brightness, gint32 level)
+{
+  if (brightness->priv->use_exp_step)
+  {
+    gint32 new_level = roundf (level * brightness->priv->exp_step);
+    if (new_level == level)  ++new_level;
+    return new_level;
+  }
+  else
+    return level + brightness->priv->step;
+}
+
+static gint32
+xfpm_brightness_dec (XfpmBrightness *brightness, gint32 level)
+{
+  if (brightness->priv->use_exp_step)
+  {
+    gint32 new_level = roundf (level / brightness->priv->exp_step);
+    if (new_level == level)  --new_level;
+    return new_level;
+  }
+  else
+    return level - brightness->priv->step;
+}
 
 static gboolean
 xfpm_brightness_xrand_get_limit (XfpmBrightness *brightness, RROutput output, gint *min, gint *max)
@@ -222,6 +251,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
         ret = TRUE;
         brightness->priv->output = brightness->priv->resource->outputs[i];
         brightness->priv->step =  max <= 20 ? 1 : max / 10;
+        brightness->priv->exp_step = 2;
       }
     }
 
@@ -252,7 +282,7 @@ xfpm_brightness_xrand_up (XfpmBrightness *brightness, gint32 *new_level)
     return TRUE;
   }
 
-  set_level = MIN (hw_level + brightness->priv->step, brightness->priv->max_level );
+  set_level = MIN (xfpm_brightness_inc (brightness, hw_level), brightness->priv->max_level);
 
   g_warn_if_fail (xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, set_level));
 
@@ -292,7 +322,7 @@ xfpm_brightness_xrand_down (XfpmBrightness *brightness, gint32 *new_level)
     return TRUE;
   }
 
-  set_level = MAX (hw_level - brightness->priv->step, brightness->priv->min_level);
+  set_level = MAX (xfpm_brightness_dec (brightness, hw_level), brightness->priv->min_level);
 
   g_warn_if_fail (xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, set_level));
 
@@ -378,6 +408,7 @@ xfpm_brightness_setup_helper (XfpmBrightness *brightness)
     brightness->priv->min_level = 0;
     brightness->priv->max_level = ret;
     brightness->priv->step =  ret <= 20 ? 1 : ret / 10;
+    brightness->priv->exp_step = 2;
   }
 
   return brightness->priv->helper_has_hw;
@@ -486,7 +517,7 @@ xfpm_brightness_helper_up (XfpmBrightness *brightness, gint32 *new_level)
     return TRUE;
   }
 
-  set_level = MIN (hw_level + brightness->priv->step, brightness->priv->max_level );
+  set_level = MIN (xfpm_brightness_inc (brightness, hw_level), brightness->priv->max_level);
 
   g_warn_if_fail (xfpm_brightness_helper_set_level (brightness, set_level));
 
@@ -526,7 +557,7 @@ xfpm_brightness_helper_down (XfpmBrightness *brightness, gint32 *new_level)
     return TRUE;
   }
 
-  set_level = MAX (hw_level - brightness->priv->step, brightness->priv->min_level);
+  set_level = MAX (xfpm_brightness_dec (brightness, hw_level), brightness->priv->min_level);
 
   g_warn_if_fail (xfpm_brightness_helper_set_level (brightness, set_level));
 
@@ -566,11 +597,13 @@ xfpm_brightness_init (XfpmBrightness *brightness)
   brightness->priv->resource = NULL;
   brightness->priv->xrandr_has_hw = FALSE;
   brightness->priv->helper_has_hw = FALSE;
+  brightness->priv->use_exp_step = FALSE;
   brightness->priv->max_level = 0;
   brightness->priv->min_level = 0;
   brightness->priv->current_level = 0;
   brightness->priv->output = 0;
   brightness->priv->step = 0;
+  brightness->priv->exp_step = 1;
 }
 
 static void
@@ -707,6 +740,25 @@ gboolean xfpm_brightness_set_level (XfpmBrightness *brightness, gint32 level)
   else if ( brightness->priv->helper_has_hw )
     ret = xfpm_brightness_helper_set_level (brightness, level);
 #endif
+
+  return ret;
+}
+
+gboolean xfpm_brightness_set_step_count (XfpmBrightness *brightness, guint32 count, gboolean exponential)
+{
+  gboolean ret = FALSE;
+
+  if ( xfpm_brightness_has_hw (brightness) ) {
+    gint32 delta;
+
+    if ( count < 2 )
+      count = 2;
+    delta = brightness->priv->max_level - brightness->priv->min_level;
+    brightness->priv->use_exp_step = exponential;
+    brightness->priv->step = (delta < (count * 2)) ? 1 : (delta / count);
+    brightness->priv->exp_step = powf (delta, 1.0 / count);
+    ret = TRUE;
+  }
 
   return ret;
 }

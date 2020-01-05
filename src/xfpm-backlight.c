@@ -79,6 +79,9 @@ struct XfpmBacklightPrivate
   gint32          last_level;
   gint32      max_level;
 
+  guint           brightness_step_count;
+  gboolean        brightness_exponential;
+
   gint            brightness_switch;
   gint            brightness_switch_save;
   gboolean        brightness_switch_initialized;
@@ -215,14 +218,17 @@ xfpm_backlight_reset_cb (EggIdletime *idle, XfpmBacklight *backlight)
 static void
 xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBacklight *backlight)
 {
-  gint32 level;
+  gint32   level;
   gboolean ret = TRUE;
-
   gboolean handle_brightness_keys, show_popup;
+  guint    brightness_step_count;
+  gboolean brightness_exponential;
 
   g_object_get (G_OBJECT (backlight->priv->conf),
                 HANDLE_BRIGHTNESS_KEYS, &handle_brightness_keys,
                 SHOW_BRIGHTNESS_POPUP, &show_popup,
+                BRIGHTNESS_STEP_COUNT, &brightness_step_count,
+                BRIGHTNESS_EXPONENTIAL, &brightness_exponential,
                 NULL);
 
   if ( type != BUTTON_MON_BRIGHTNESS_UP && type != BUTTON_MON_BRIGHTNESS_DOWN )
@@ -233,6 +239,9 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
     ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
   else
   {
+    xfpm_brightness_set_step_count(backlight->priv->brightness,
+                                   brightness_step_count,
+                                   brightness_exponential);
     if ( type == BUTTON_MON_BRIGHTNESS_UP )
       ret = xfpm_brightness_up (backlight->priv->brightness, &level);
     else
@@ -341,6 +350,8 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv->power    = NULL;
   backlight->priv->dimmed = FALSE;
   backlight->priv->block = FALSE;
+  backlight->priv->brightness_step_count = 10;
+  backlight->priv->brightness_exponential = FALSE;
   backlight->priv->brightness_switch_initialized = FALSE;
 
   if ( !backlight->priv->has_hw )
@@ -429,6 +440,16 @@ xfpm_backlight_init (XfpmBacklight *backlight)
                   NULL);
     xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
     xfpm_backlight_set_timeouts (backlight);
+
+    /* setup step count */
+    backlight->priv->brightness_step_count =
+        xfconf_channel_get_int (xfpm_xfconf_get_channel(backlight->priv->conf),
+                                XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
+                                10);
+    backlight->priv->brightness_exponential =
+        xfconf_channel_get_bool (xfpm_xfconf_get_channel(backlight->priv->conf),
+                                 XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
+                                 FALSE);
   }
 }
 
