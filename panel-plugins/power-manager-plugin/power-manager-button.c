@@ -1760,6 +1760,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   }
 
   /* Presentation mode checkbox */
+#ifdef XFCE_PLUGIN
   mi = gtk_menu_item_new ();
   box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   label = gtk_label_new_with_mnemonic (_("Presentation _mode"));
@@ -1768,12 +1769,19 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   gtk_box_pack_start (GTK_BOX (box), label, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (box), sw, FALSE, FALSE, 0);
   gtk_container_add (GTK_CONTAINER (mi), box);
-  gtk_widget_show_all (mi);
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
   g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (power_manager_button_toggle_presentation_mode), sw);
   g_object_bind_property (G_OBJECT (button), PRESENTATION_MODE,
                           G_OBJECT (sw), "active",
                           G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+#else
+  mi = gtk_check_menu_item_new_with_mnemonic (_("Presentation _mode"));
+  gtk_widget_set_sensitive (mi, TRUE);
+  xfconf_g_property_bind (button->priv->channel,
+                          XFPM_PROPERTIES_PREFIX PRESENTATION_MODE,
+                          G_TYPE_BOOLEAN, G_OBJECT (mi), "active");
+#endif
+  gtk_widget_show_all (mi);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
 
   /* Show any applications currently inhibiting now */
   display_inhibitors (button, menu);
