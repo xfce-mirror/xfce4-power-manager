@@ -260,7 +260,7 @@ xfce_screensaver_setup(XfceScreenSaver *saver)
         saver->priv->screensaver_type = SCREENSAVER_TYPE_GNOME;
     } else if (screen_saver_proxy_setup (saver,
                                          "org.xfce.ScreenSaver",
-                                         "/org.xfce/ScreenSaver",
+                                         "/org/xfce/ScreenSaver",
                                          "org.xfce.ScreenSaver"))
     {
         DBG ("using Xfce screensaver daemon");
