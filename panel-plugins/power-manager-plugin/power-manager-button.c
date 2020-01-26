@@ -1179,6 +1179,12 @@ power_manager_button_free_data_cb (XfcePanelPlugin *plugin, PowerManagerButton *
 {
   gtk_widget_destroy (GTK_WIDGET (button));
 }
+
+static void
+about_cb (GtkMenuItem *menuitem, gpointer user_data)
+{
+  xfpm_about ("xfce4-power-manager");
+}
 #endif
 
 void
@@ -1219,6 +1225,7 @@ power_manager_button_show (PowerManagerButton *button)
 
 #ifdef XFCE_PLUGIN
   xfce_panel_plugin_menu_show_about (button->priv->plugin);
+  g_signal_connect (button->priv->plugin, "about", G_CALLBACK (about_cb), NULL);
 
   g_signal_connect (button->priv->plugin, "size-changed",
                     G_CALLBACK (power_manager_button_size_changed_cb), button);
