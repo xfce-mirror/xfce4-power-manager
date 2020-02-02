@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# Elishai Eliyahu <e1907@mm.st>, 2016-2017,2019
+# Elishai Eliyahu <e1907@mm.st>, 2016-2017,2019-2020
 # GenghisKhan <genghiskhan@gmx.ca>, 2015-2016
 # Yaron Shahrabani <sh.yaron@gmail.com>, 2013-2014
 # Yaron Shahrabani <sh.yaron@gmail.com>, 2012
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-25 18:31+0200\n"
-"PO-Revision-Date: 2019-05-03 12:03+0000\n"
+"POT-Creation-Date: 2020-01-27 00:30+0100\n"
+"PO-Revision-Date: 2020-02-02 19:04+0000\n"
 "Last-Translator: Elishai Eliyahu <e1907@mm.st>\n"
 "Language-Team: Hebrew (http://www.transifex.com/xfce/xfce4-power-manager/language/he/)\n"
 "MIME-Version: 1.0\n"
@@ -21,9 +21,9 @@ msgstr ""
 "Language: he\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:671
-#: ../settings/xfpm-settings.c:686 ../settings/xfpm-settings.c:713
-#: ../settings/xfpm-settings.c:1646
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:646
+#: ../settings/xfpm-settings.c:661 ../settings/xfpm-settings.c:688
+#: ../settings/xfpm-settings.c:1660
 msgid "Never"
 msgstr "אף פעם"
 
@@ -40,7 +40,7 @@ msgid "Nothing"
 msgstr "שום דבר"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5 ../settings/xfpm-settings-app.c:174
-#: ../settings/xfpm-settings-app.c:221 ../src/xfpm-main.c:440
+#: ../settings/xfpm-settings-app.c:221 ../src/xfpm-main.c:441
 msgid "Xfce Power Manager"
 msgstr "מנהל צריכת חשמל Xfce"
 
@@ -48,13 +48,13 @@ msgstr "מנהל צריכת חשמל Xfce"
 msgid "Power manager settings"
 msgstr "הגדרות מנהל צריכת חשמל"
 
-#. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1152
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Help"
 msgstr "_עזרה"
 
 #: ../data/interfaces/xfpm-settings.ui.h:8
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:162
 msgid "_Close"
 msgstr "_סגור"
 
@@ -75,238 +75,251 @@ msgid "When battery button is pressed:"
 msgstr "כאשר לחצן סוללה מופעל:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Exponential"
+msgstr "אקספוננציאלי"
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "Brightness step count:"
+msgstr "ספירת צעד בהירות:"
+
+#: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Handle display brightness _keys"
 msgstr "טפל בלחצני ה_בהירות תצוגה"
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "<b>Buttons</b>"
 msgstr "<b>לחצנים</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "On battery"
-msgstr "על סוללה"
-
-#: ../data/interfaces/xfpm-settings.ui.h:16 ../common/xfpm-power-common.c:374
-msgid "Plugged in"
-msgstr "מחובר לחשמל"
-
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "When laptop lid is closed:"
-msgstr "כאשר מכסה מחשב נייד נסגר:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:18
-msgid "<b>Laptop Lid</b>"
-msgstr "<b>מכסה מחשב נייד</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Status notifications"
 msgstr "התרעות מצב"
 
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "System tray icon"
 msgstr "סמל מגש מערכת"
 
-#: ../data/interfaces/xfpm-settings.ui.h:21
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "<b>Appearance</b>"
 msgstr "<b>מראה</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
+#: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "General"
 msgstr "כללי"
 
-#: ../data/interfaces/xfpm-settings.ui.h:23
+#: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "When inactive for"
 msgstr "כאשר לא פעיל למשך"
 
-#: ../data/interfaces/xfpm-settings.ui.h:24
+#: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "System sleep mode:"
 msgstr "מצב שינת מערכת:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
+#: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "<b>System power saving</b>"
 msgstr "<b>חסכון חשמל מערכת</b>"
 
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>מכסה מחשב נייד</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:25
+msgid "When laptop lid is closed:"
+msgstr "כאשר מכסה מחשב נייד נסגר:"
+
 #: ../data/interfaces/xfpm-settings.ui.h:26
+msgid "On battery"
+msgstr "על סוללה"
+
+#: ../data/interfaces/xfpm-settings.ui.h:27 ../common/xfpm-power-common.c:374
+msgid "Plugged in"
+msgstr "מחובר לחשמל"
+
+#: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "Critical battery power level:"
 msgstr "רמת אנרגיית סוללה קריטית:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:27
+#: ../data/interfaces/xfpm-settings.ui.h:30 ../settings/xfpm-settings.c:696
+#, no-c-format
+msgid "%"
+msgstr "%"
+
+#: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "On critical battery power:"
 msgstr "כאשר אנרגיית סוללה קריטית:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:28
+#: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "<b>Critical power</b>"
 msgstr "<b>חשמל קריטי</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:29
+#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Lock screen when system is going to sleep"
 msgstr "נעל מסך כאשר המערכת נכנסת לשינה"
 
-#: ../data/interfaces/xfpm-settings.ui.h:30
+#: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "<b>Security</b>"
 msgstr "<b>אבטחה</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:31
+#: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "System"
 msgstr "מערכת"
 
-#: ../data/interfaces/xfpm-settings.ui.h:32
+#: ../data/interfaces/xfpm-settings.ui.h:36
 msgid "<b>Display power management</b>"
 msgstr "<b>ניהול צריכת חשמל תצוגה</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:33
+#: ../data/interfaces/xfpm-settings.ui.h:37
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
 msgstr "התר למנהל צריכת חשמל לטפל בניהול צריכת חשמל תצוגה (DPMS) במקום בזה של X11."
 
-#: ../data/interfaces/xfpm-settings.ui.h:34
+#: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Blank after"
 msgstr "החשך בחלוף"
 
-#: ../data/interfaces/xfpm-settings.ui.h:35
+#: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "Put to sleep after"
 msgstr "הכנס למצב שינה לאחר"
 
-#: ../data/interfaces/xfpm-settings.ui.h:36
+#: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "Switch off after"
 msgstr "כבה לאחר"
 
-#: ../data/interfaces/xfpm-settings.ui.h:37
+#: ../data/interfaces/xfpm-settings.ui.h:41
 msgid "On inactivity reduce to"
 msgstr "בעת חוסר פעילות הפחת לכדי"
 
-#: ../data/interfaces/xfpm-settings.ui.h:38
+#: ../data/interfaces/xfpm-settings.ui.h:42
 msgid "Reduce after"
 msgstr "הפחת לאחר"
 
-#: ../data/interfaces/xfpm-settings.ui.h:39
+#: ../data/interfaces/xfpm-settings.ui.h:43
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>הפחתת בהירות</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:40
+#: ../data/interfaces/xfpm-settings.ui.h:44
 msgid "Display"
 msgstr "תצוגה"
 
-#: ../data/interfaces/xfpm-settings.ui.h:41
+#: ../data/interfaces/xfpm-settings.ui.h:45
 msgid "Automatically lock the session:"
 msgstr "נעל את הסשן אוטומטית:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:42
+#: ../data/interfaces/xfpm-settings.ui.h:46
 msgid "Delay locking after screensaver for"
 msgstr "דחה נעילה בחלוף שומר מסך למשך"
 
-#: ../data/interfaces/xfpm-settings.ui.h:43
+#: ../data/interfaces/xfpm-settings.ui.h:47
 msgid "<b>Light Locker</b>"
 msgstr "<b>נועל מאור</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:44
+#: ../data/interfaces/xfpm-settings.ui.h:48
 msgid "Security"
 msgstr "אבטחה"
 
-#: ../settings/xfpm-settings.c:674
+#: ../settings/xfpm-settings.c:649
 msgid "One minute"
 msgstr "דקה אחת"
 
-#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:688
-#: ../settings/xfpm-settings.c:699 ../settings/xfpm-settings.c:703
-#: ../settings/xfpm-settings.c:1655
+#: ../settings/xfpm-settings.c:651 ../settings/xfpm-settings.c:663
+#: ../settings/xfpm-settings.c:674 ../settings/xfpm-settings.c:678
+#: ../settings/xfpm-settings.c:1669
 msgid "minutes"
 msgstr "דקות"
 
-#: ../settings/xfpm-settings.c:690 ../settings/xfpm-settings.c:697
-#: ../settings/xfpm-settings.c:698 ../settings/xfpm-settings.c:699
+#: ../settings/xfpm-settings.c:665 ../settings/xfpm-settings.c:672
+#: ../settings/xfpm-settings.c:673 ../settings/xfpm-settings.c:674
 msgid "One hour"
 msgstr "שעה אחת"
 
-#: ../settings/xfpm-settings.c:698 ../settings/xfpm-settings.c:702
+#: ../settings/xfpm-settings.c:673 ../settings/xfpm-settings.c:677
 msgid "one minute"
 msgstr "דקה אחת"
 
-#: ../settings/xfpm-settings.c:701 ../settings/xfpm-settings.c:702
-#: ../settings/xfpm-settings.c:703
+#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:677
+#: ../settings/xfpm-settings.c:678
 msgid "hours"
 msgstr "שעות"
 
-#: ../settings/xfpm-settings.c:715 ../settings/xfpm-settings.c:1648
+#: ../settings/xfpm-settings.c:690 ../settings/xfpm-settings.c:1662
 msgid "seconds"
 msgstr "שניות"
 
-#: ../settings/xfpm-settings.c:721
-msgid "%"
-msgstr "%"
-
-#: ../settings/xfpm-settings.c:911 ../settings/xfpm-settings.c:990
-#: ../settings/xfpm-settings.c:1052 ../settings/xfpm-settings.c:1150
-#: ../settings/xfpm-settings.c:1242 ../settings/xfpm-settings.c:1364
-#: ../settings/xfpm-settings.c:1421 ../settings/xfpm-settings.c:1473
-#: ../settings/xfpm-settings.c:1524 ../src/xfpm-power.c:704
+#: ../settings/xfpm-settings.c:903 ../settings/xfpm-settings.c:982
+#: ../settings/xfpm-settings.c:1044 ../settings/xfpm-settings.c:1140
+#: ../settings/xfpm-settings.c:1232 ../settings/xfpm-settings.c:1351
+#: ../settings/xfpm-settings.c:1409 ../settings/xfpm-settings.c:1461
+#: ../settings/xfpm-settings.c:1512 ../src/xfpm-power.c:703
 msgid "Suspend"
 msgstr "השהה"
 
-#: ../settings/xfpm-settings.c:915 ../settings/xfpm-settings.c:1154
+#: ../settings/xfpm-settings.c:907 ../settings/xfpm-settings.c:1144
 msgid "Suspend operation not permitted"
 msgstr "פעולת השהיה לא מורשית"
 
-#: ../settings/xfpm-settings.c:919 ../settings/xfpm-settings.c:1158
+#: ../settings/xfpm-settings.c:911 ../settings/xfpm-settings.c:1148
 msgid "Suspend operation not supported"
 msgstr "פעולת השהיה לא נתמכת"
 
-#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:996
-#: ../settings/xfpm-settings.c:1058 ../settings/xfpm-settings.c:1164
-#: ../settings/xfpm-settings.c:1248 ../settings/xfpm-settings.c:1370
-#: ../settings/xfpm-settings.c:1427 ../settings/xfpm-settings.c:1479
-#: ../settings/xfpm-settings.c:1530 ../src/xfpm-power.c:693
+#: ../settings/xfpm-settings.c:917 ../settings/xfpm-settings.c:988
+#: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1154
+#: ../settings/xfpm-settings.c:1238 ../settings/xfpm-settings.c:1357
+#: ../settings/xfpm-settings.c:1415 ../settings/xfpm-settings.c:1467
+#: ../settings/xfpm-settings.c:1518 ../src/xfpm-power.c:692
 msgid "Hibernate"
 msgstr "הרדם"
 
-#: ../settings/xfpm-settings.c:929 ../settings/xfpm-settings.c:1168
+#: ../settings/xfpm-settings.c:921 ../settings/xfpm-settings.c:1158
 msgid "Hibernate operation not permitted"
 msgstr "פעולת תרדמת לא מורשית"
 
-#: ../settings/xfpm-settings.c:933 ../settings/xfpm-settings.c:1172
+#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:1162
 msgid "Hibernate operation not supported"
 msgstr "פעולת תרדמת לא נתמכת"
 
-#: ../settings/xfpm-settings.c:963 ../settings/xfpm-settings.c:1202
-#: ../settings/xfpm-settings.c:1604 ../settings/xfpm-settings.c:1731
+#: ../settings/xfpm-settings.c:955 ../settings/xfpm-settings.c:1192
+#: ../settings/xfpm-settings.c:1618 ../settings/xfpm-settings.c:1745
 msgid "Hibernate and suspend operations not supported"
 msgstr "הפעולות תרדמת והשהיה לא נתמכות"
 
-#: ../settings/xfpm-settings.c:968 ../settings/xfpm-settings.c:1207
-#: ../settings/xfpm-settings.c:1609 ../settings/xfpm-settings.c:1736
+#: ../settings/xfpm-settings.c:960 ../settings/xfpm-settings.c:1197
+#: ../settings/xfpm-settings.c:1623 ../settings/xfpm-settings.c:1750
 msgid "Hibernate and suspend operations not permitted"
 msgstr "הפעולות תרדמת והשהיה לא מורשות"
 
-#: ../settings/xfpm-settings.c:985 ../settings/xfpm-settings.c:1359
-#: ../settings/xfpm-settings.c:1416 ../settings/xfpm-settings.c:1468
-#: ../settings/xfpm-settings.c:1519
+#: ../settings/xfpm-settings.c:977 ../settings/xfpm-settings.c:1346
+#: ../settings/xfpm-settings.c:1404 ../settings/xfpm-settings.c:1456
+#: ../settings/xfpm-settings.c:1507
 msgid "Do nothing"
 msgstr "אל תעשה דבר"
 
-#: ../settings/xfpm-settings.c:1002 ../settings/xfpm-settings.c:1376
-#: ../src/xfpm-power.c:715
+#: ../settings/xfpm-settings.c:994 ../settings/xfpm-settings.c:1363
+#: ../src/xfpm-power.c:714
 msgid "Shutdown"
 msgstr "כבה"
 
-#: ../settings/xfpm-settings.c:1006 ../settings/xfpm-settings.c:1380
-#: ../settings/xfpm-settings.c:1431 ../settings/xfpm-settings.c:1483
-#: ../settings/xfpm-settings.c:1534
+#: ../settings/xfpm-settings.c:998 ../settings/xfpm-settings.c:1367
+#: ../settings/xfpm-settings.c:1419 ../settings/xfpm-settings.c:1471
+#: ../settings/xfpm-settings.c:1522
 msgid "Ask"
 msgstr "שאל"
 
-#: ../settings/xfpm-settings.c:1047 ../settings/xfpm-settings.c:1237
+#: ../settings/xfpm-settings.c:1039 ../settings/xfpm-settings.c:1227
 msgid "Switch off display"
 msgstr "כבה תצוגה"
 
-#: ../settings/xfpm-settings.c:1062 ../settings/xfpm-settings.c:1252
+#: ../settings/xfpm-settings.c:1054 ../settings/xfpm-settings.c:1242
 msgid "Lock screen"
 msgstr "נעל מסך"
 
-#: ../settings/xfpm-settings.c:1576
+#: ../settings/xfpm-settings.c:1551
+msgid "Number of brightness steps available using keys"
+msgstr "מספר צעדי בהירות זמינים בעזרת מקשים"
+
+#: ../settings/xfpm-settings.c:1591
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "כאשר כל מקורות החשמל של המחשב מגיעים לרמת טעינה זו"
 
-#: ../settings/xfpm-settings.c:1653 ../common/xfpm-power-common.c:139
+#: ../settings/xfpm-settings.c:1667 ../common/xfpm-power-common.c:139
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "דקה"
@@ -314,78 +327,78 @@ msgstr[1] "דקות"
 msgstr[2] "דקות"
 msgstr[3] "דקות"
 
-#: ../settings/xfpm-settings.c:1995
+#: ../settings/xfpm-settings.c:2023
 msgid "Device"
 msgstr "התקן"
 
-#: ../settings/xfpm-settings.c:2017
+#: ../settings/xfpm-settings.c:2045
 msgid "Type"
 msgstr "טיפוס"
 
-#: ../settings/xfpm-settings.c:2022
+#: ../settings/xfpm-settings.c:2050
 msgid "PowerSupply"
 msgstr "ספיקת כח"
 
-#: ../settings/xfpm-settings.c:2023 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2051 ../src/xfpm-main.c:77
 msgid "True"
 msgstr "אמת"
 
-#: ../settings/xfpm-settings.c:2023 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2051 ../src/xfpm-main.c:77
 msgid "False"
 msgstr "שקר"
 
-#: ../settings/xfpm-settings.c:2030
+#: ../settings/xfpm-settings.c:2058
 msgid "Model"
 msgstr "דגם"
 
-#: ../settings/xfpm-settings.c:2033
+#: ../settings/xfpm-settings.c:2061
 msgid "Technology"
 msgstr "טכנולוגיה"
 
-#: ../settings/xfpm-settings.c:2040
+#: ../settings/xfpm-settings.c:2068
 msgid "Current charge"
 msgstr "טעינה נוכחית"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:2048 ../settings/xfpm-settings.c:2060
-#: ../settings/xfpm-settings.c:2072
+#: ../settings/xfpm-settings.c:2076 ../settings/xfpm-settings.c:2088
+#: ../settings/xfpm-settings.c:2100
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:2050
+#: ../settings/xfpm-settings.c:2078
 msgid "Fully charged (design)"
 msgstr "טעונה במלואה (עיצוב)"
 
-#: ../settings/xfpm-settings.c:2063
+#: ../settings/xfpm-settings.c:2091
 msgid "Fully charged"
 msgstr "טעונה במלואה"
 
-#: ../settings/xfpm-settings.c:2074
+#: ../settings/xfpm-settings.c:2102
 msgid "Energy empty"
 msgstr "עצמה ריקה"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:2082
+#: ../settings/xfpm-settings.c:2110
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:2084
+#: ../settings/xfpm-settings.c:2112
 msgid "Voltage"
 msgstr "מתח"
 
-#: ../settings/xfpm-settings.c:2091
+#: ../settings/xfpm-settings.c:2119
 msgid "Vendor"
 msgstr "יצרן"
 
-#: ../settings/xfpm-settings.c:2096
+#: ../settings/xfpm-settings.c:2124
 msgid "Serial"
 msgstr "סידורי"
 
-#: ../settings/xfpm-settings.c:2371
+#: ../settings/xfpm-settings.c:2400
 msgid "Check your power manager installation"
 msgstr "בדוק את התקנת מנהל צריכת חשמל שלך"
 
-#: ../settings/xfpm-settings.c:2464
+#: ../settings/xfpm-settings.c:2493
 msgid "Devices"
 msgstr "התקנים"
 
@@ -440,8 +453,8 @@ msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "נבנה עם GTK+ %d.%d.%d, מקושר עם GTK+ %d.%d.%d. "
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:355 ../src/xfpm-power.c:636 ../src/xfpm-power.c:679
-#: ../src/xfpm-power.c:843 ../src/xfpm-power.c:865 ../src/xfpm-backlight.c:163
+#: ../src/xfpm-power.c:358 ../src/xfpm-power.c:635 ../src/xfpm-power.c:678
+#: ../src/xfpm-power.c:841 ../src/xfpm-power.c:863 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-battery.c:190 ../src/xfpm-kbd-backlight.c:114
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
@@ -451,7 +464,7 @@ msgstr "מנהל צריכת חשמל"
 msgid "Settings for the Xfce Power Manager"
 msgstr "הגדרות עבור מנהל צריכת חשמל Xfce"
 
-#: ../common/xfpm-common.c:109
+#: ../common/xfpm-common.c:116
 msgid "translator-credits"
 msgstr "גינגס חאן וכנופייתו\nירון שהרבני <sh.yaron@gmail.com>"
 
@@ -659,13 +672,13 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nמצב לא ידוע"
 
-#: ../src/xfpm-power.c:383
+#: ../src/xfpm-power.c:385
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "פועל כעת יישום המונע ביצוע של שינה אוטומטית. ביצוע פעולה זו עשוי לפגום במצב הפעולה של היישום.\nהאם אתה בטוח כי ברצונך להרדים את המערכת?"
 
-#: ../src/xfpm-power.c:433
+#: ../src/xfpm-power.c:434
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
@@ -679,40 +692,40 @@ msgstr "הרדם את המערכת"
 msgid "Suspend the system"
 msgstr "השהה את המערכת"
 
-#: ../src/xfpm-power.c:620
+#: ../src/xfpm-power.c:619
 msgid "Shutdown the system"
 msgstr "כבה את המערכת"
 
-#: ../src/xfpm-power.c:631 ../src/xfpm-power.c:676
+#: ../src/xfpm-power.c:630 ../src/xfpm-power.c:675
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "המערכת פועלת על אספקת כח נמוכה. שמור את העבודה שלך כדי להימנע מאבדן נתונים"
 
-#: ../src/xfpm-power.c:722
+#: ../src/xfpm-power.c:721
 msgid "_Cancel"
 msgstr "_ביטול"
 
-#: ../src/xfpm-power.c:844
+#: ../src/xfpm-power.c:842
 msgid "System is running on low power"
 msgstr "המערכת פועלת על אספקת כח נמוכה"
 
-#: ../src/xfpm-power.c:861
+#: ../src/xfpm-power.c:859
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "רמת טעינת %s שלך הינה נמוכה\nאומדן זמן נותר %s"
 
-#: ../src/xfpm-power.c:1646 ../src/xfpm-power.c:1693 ../src/xfpm-power.c:1724
-#: ../src/xfpm-power.c:1753
+#: ../src/xfpm-power.c:1644 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1724
+#: ../src/xfpm-power.c:1754
 msgid "Permission denied"
 msgstr "הרשאה נדחתה"
 
-#: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1762
+#: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1763
 msgid "Suspend not supported"
 msgstr "השהיה לא נתמכת"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:161
+#: ../src/xfpm-backlight.c:164
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "בהירות: %.0f אחוז"
@@ -867,26 +880,26 @@ msgstr "Quit any running xfce power manager"
 msgid "Version information"
 msgstr "Version information"
 
-#: ../src/xfpm-main.c:294
+#: ../src/xfpm-main.c:295
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Failed to parse arguments: %s\n"
 
-#: ../src/xfpm-main.c:322
+#: ../src/xfpm-main.c:323
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Type '%s --help' for usage."
 
-#: ../src/xfpm-main.c:343
+#: ../src/xfpm-main.c:344
 msgid "Unable to get connection to the message bus session"
 msgstr "Unable to get connection to the message bus session"
 
-#: ../src/xfpm-main.c:351
+#: ../src/xfpm-main.c:352
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce power manager is not running"
 
-#: ../src/xfpm-main.c:441
+#: ../src/xfpm-main.c:442
 msgid "Another power manager is already running"
 msgstr "Another power manager is already running"
 
@@ -895,11 +908,11 @@ msgstr "Another power manager is already running"
 msgid "Xfce power manager is already running"
 msgstr "Xfce power manager is already running"
 
-#: ../src/xfpm-inhibit.c:392
+#: ../src/xfpm-inhibit.c:396
 msgid "Invalid arguments"
 msgstr "Invalid arguments"
 
-#: ../src/xfpm-inhibit.c:425
+#: ../src/xfpm-inhibit.c:430
 msgid "Invalid cookie"
 msgstr "Invalid cookie"
 
@@ -914,38 +927,33 @@ msgid "Power management for the Xfce desktop"
 msgstr "ניהול צריכת חשמל עבור שולחן עבודה Xfce"
 
 #. Odds are this is a desktop without any batteries attached
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:270
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:289
 msgid "Display battery levels for attached devices"
 msgstr "הצג רמות סוללה עבור התקנים מחוברים"
-
-#. about dialog
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1158
-msgid "_About"
-msgstr "_אודות"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1350
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "‏%s מעכב כעת ניהול הספק"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1625
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
 msgid "<b>Display brightness</b>"
 msgstr "<b>בהירות תצוגה</b>"
 
-#. Presentation mode checkbox
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1649
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1749
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1760
 msgid "Presentation _mode"
 msgstr "מצב ה_צגה"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1661
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
 msgid "_Power manager settings..."
 msgstr "ה_גדרות מנהל צריכת חשמל…"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:79
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "לא יכול לפתוח את הכתובת הבאה: %s"
@@ -972,9 +980,13 @@ msgid "Power Manager Plugin Settings"
 msgstr "הגדרות תוסף מנהל הספק"
 
 #. show-panel-label setting
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:180
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
 msgid "Show label:"
 msgstr "הצג תוית:"
+
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:214
+msgid "Show 'Presentation mode' indicator:"
+msgstr "הצג אינדיקטור \"מצב מצגת\":"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
