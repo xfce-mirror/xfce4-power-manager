@@ -1127,6 +1127,12 @@ power_manager_button_free_data_cb (XfcePanelPlugin *plugin, PowerManagerButton *
 {
     gtk_widget_destroy (GTK_WIDGET (button));
 }
+
+static void
+about_cb (GtkMenuItem *menuitem, gpointer user_data)
+{
+  xfpm_about ("xfce4-power-manager");
+}
 #endif
 
 void
