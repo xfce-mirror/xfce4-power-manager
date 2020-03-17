@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-06 06:31+0100\n"
-"PO-Revision-Date: 2020-01-20 02:06+0000\n"
+"POT-Creation-Date: 2020-01-27 00:30+0100\n"
+"PO-Revision-Date: 2020-03-17 02:47+0000\n"
 "Last-Translator: 玉堂白鹤 <yjwork@qq.com>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/xfce/xfce4-power-manager/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -53,9 +53,7 @@ msgstr "Xfce 电源管理器"
 msgid "Power manager settings"
 msgstr "电源管理器设置"
 
-#. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1233
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Help"
 msgstr "帮助(_H)"
@@ -87,7 +85,7 @@ msgstr "指数"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Brightness step count:"
-msgstr "亮度步数:"
+msgstr "亮度级数:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Handle display brightness _keys"
@@ -320,7 +318,7 @@ msgstr "锁屏"
 
 #: ../settings/xfpm-settings.c:1551
 msgid "Number of brightness steps available using keys"
-msgstr ""
+msgstr "使用按键可设置的亮度级数"
 
 #: ../settings/xfpm-settings.c:1591
 msgid "When all the power sources of the computer reach this charge level"
@@ -470,7 +468,7 @@ msgstr "Xfce 电源管理器设置"
 
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
-msgstr "Chipong Luo <chipong.luo@yahoo.com>, 2011, 2012."
+msgstr ".Chipong Luo <chipong.luo@yahoo.com>, 2011, 2012.\n玉堂白鹤 <yjwork@qq.com>,2020."
 
 #: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
@@ -926,29 +924,25 @@ msgstr "Xfce 桌面的电源管理"
 msgid "Display battery levels for attached devices"
 msgstr "显示连接设备的剩余电量"
 
-#. about dialog
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1239
-msgid "_About"
-msgstr "关于(_A)"
-
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1442
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s 正在阻止电源管理"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1739
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
 msgid "<b>Display brightness</b>"
 msgstr "<b>显示亮度</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1765
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1749
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1760
 msgid "Presentation _mode"
 msgstr "演示模式(_M)"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1782
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
 msgid "_Power manager settings..."
 msgstr "电源管理器设置（_P)..."
 
