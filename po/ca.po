@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-06 06:31+0100\n"
-"PO-Revision-Date: 2020-01-06 16:42+0000\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-04-01 07:48+0000\n"
 "Last-Translator: Robert Antoni Buj Gelonch <rbuj@fedoraproject.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/xfce/xfce4-power-manager/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -47,9 +47,7 @@ msgstr "Gestor d'energia de Xfce"
 msgid "Power manager settings"
 msgstr "Ajusts del gestor d'energia"
 
-#. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1233
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Help"
 msgstr "A_juda"
@@ -462,6 +460,12 @@ msgstr "Gestor d'energia"
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
 msgstr "Ajusts per al gestor d'energia de Xfce"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
+msgid ""
+"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
+" lid;lock screen;plugged in;saving;critical;"
+msgstr "ajusts;preferències;botons;repòs;hibernació;bateria;suspensió;apagada;brillantor;portàtil;tapa;bloqueig de pantalla;endollat;estalvi;crític;"
 
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
@@ -924,29 +928,25 @@ msgstr "Gestor d'energia per l'escriptori Xfce"
 msgid "Display battery levels for attached devices"
 msgstr "Mostra el nivell de la bateria de dispositius connectats"
 
-#. about dialog
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1239
-msgid "_About"
-msgstr "_Quant a"
-
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1442
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s està inhibint la gestió d'energia."
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1739
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
 msgid "<b>Display brightness</b>"
 msgstr "<b>Brillantor de la pantalla</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1765
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1749
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1760
 msgid "Presentation _mode"
 msgstr "_Mode de presentació"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1782
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
 msgid "_Power manager settings..."
 msgstr "Ajusts del gestor d'_energia..."
 
