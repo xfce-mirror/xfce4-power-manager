@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-06 06:31+0100\n"
-"PO-Revision-Date: 2020-01-07 06:42+0000\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-04-01 06:51+0000\n"
 "Last-Translator: Daniel Muñiz Fontoira <dani@damufo.com>\n"
 "Language-Team: Galician (http://www.transifex.com/xfce/xfce4-power-manager/language/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -47,9 +47,7 @@ msgstr "Xestor de enerxía de Xfce"
 msgid "Power manager settings"
 msgstr "Configuración do xestor de enerxía"
 
-#. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1233
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Help"
 msgstr "_Axuda"
@@ -462,6 +460,12 @@ msgstr "Xestor de enerxía"
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
 msgstr "Configuración do Xestor de enerxía de Xfce"
+
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
+msgid ""
+"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
+" lid;lock screen;plugged in;saving;critical;"
+msgstr "configuracións;preferencias;botóns;suspensión;hibernado;batería;suspender;apagado;brillo de pantalla;pantalla do portátil;bloqueado de pantalla;enchufado;protección;crítica;"
 
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
@@ -924,29 +928,25 @@ msgstr "Xestión de enerxía para o escritorio Xfce"
 msgid "Display battery levels for attached devices"
 msgstr "Amosa os niveis de carga dos dispositivos conectados"
 
-#. about dialog
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1239
-msgid "_About"
-msgstr "_Sobre"
-
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1442
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s está a inhibir a xestión de enerxía"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1739
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
 msgid "<b>Display brightness</b>"
 msgstr "<b>Brillo da pantalla</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1765
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1749
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1760
 msgid "Presentation _mode"
 msgstr "_Modo de presentación"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1782
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
 msgid "_Power manager settings..."
 msgstr "_Configuración do xestor de enerxía..."
 
