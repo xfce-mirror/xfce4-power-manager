@@ -16,8 +16,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-06 06:31+0100\n"
-"PO-Revision-Date: 2020-01-21 13:50+0000\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-04-05 14:55+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>\n"
 "Language-Team: Serbian (http://www.transifex.com/xfce/xfce4-power-manager/language/sr/)\n"
 "MIME-Version: 1.0\n"
@@ -53,9 +53,7 @@ msgstr "Управник потрошње Искфце-а 4"
 msgid "Power manager settings"
 msgstr "Поставке управника потрошње"
 
-#. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1233
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Help"
 msgstr "_Помоћ"
@@ -240,7 +238,7 @@ msgstr "Један сат"
 
 #: ../settings/xfpm-settings.c:673 ../settings/xfpm-settings.c:677
 msgid "one minute"
-msgstr "Један минут"
+msgstr "jедан минут"
 
 #: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:677
 #: ../settings/xfpm-settings.c:678
@@ -470,6 +468,12 @@ msgstr "Управник потрошње"
 msgid "Settings for the Xfce Power Manager"
 msgstr "Поставке управника потрошње за Иксфце4"
 
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
+msgid ""
+"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
+" lid;lock screen;plugged in;saving;critical;"
+msgstr "поставке;подешавања;дугмад;спавање;замрзавање;батерија;обустави;искључи;светлина;поклопац лаптопа;закључавање екрана;прикључено;чување;критично;"
+
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
 msgstr "Саша Петровић salepetronije@gmail.com"
@@ -582,63 +586,63 @@ msgstr[2] "сати"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr "<b>%s %s</b>\t\nПотпуно напуњено (%0.0f%%, %s време рада)\t"
+msgstr "<b>%s %s</b>\t\nПотпуно напуњено (%0.0f%%, %s време рада)"
 
 #: ../common/xfpm-power-common.c:303
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr "<b>%s %s</b>\t\nПотпуно напуњено (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nПотпуно напуњено (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:313
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
-msgstr "<b>%s %s</b>\t\nПуњење (%0.0f%%, %s)\t"
+msgstr "<b>%s %s</b>\t\nПуњење (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:321
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
-msgstr "<b>%s %s</b>\t\nПуњење (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nПуњење (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:331
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%, %s)"
-msgstr "<b>%s %s</b>\t\nПражњење (%0.0f%%, %s)\t"
+msgstr "<b>%s %s</b>\t\nПражњење (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:339
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
-msgstr "<b>%s %s</b>\t\nПражњење (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nПражњење (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\t\nОчекивање отпражњења (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nОчекивање отпражњења (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:352
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\t\nОчекивање попуњења (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\nОчекивање попуњења (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:358
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\t\nје празна\t"
+msgstr "<b>%s %s</b>\t\nје празна"
 
 #: ../common/xfpm-power-common.c:363
 #, c-format
@@ -654,7 +658,7 @@ msgstr "<b>%s %s</b>\nТренутна попуна: %0.0f%%"
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr "<b>%s %s</b>\t\n%s\t"
+msgstr "<b>%s %s</b>\t\n%s"
 
 #: ../common/xfpm-power-common.c:374
 msgid "Not plugged in"
@@ -673,7 +677,7 @@ msgstr "<b>%s %s</b>"
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr "<b>%s %s</b>\t\nСтање није одређено\t"
+msgstr "<b>%s %s</b>\t\nСтање није одређено"
 
 #: ../src/xfpm-power.c:385
 msgid ""
@@ -934,29 +938,25 @@ msgstr "Управник потрошње за ИксФЦЕ радно окру�
 msgid "Display battery levels for attached devices"
 msgstr "Приказуј ступањ попуњености батерије прикачених уређаја"
 
-#. about dialog
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1239
-msgid "_About"
-msgstr "_О програму"
-
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1442
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s тренутно онемогућава управљање напајањем"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1739
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
 msgid "<b>Display brightness</b>"
 msgstr "<b>Осветљење екрана</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1765
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1749
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1760
 msgid "Presentation _mode"
 msgstr "Начин рада _излагање"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1782
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
 msgid "_Power manager settings..."
 msgstr "Поставке _Управника потрошње..."
 
@@ -989,7 +989,7 @@ msgstr "Поставке прикључка управника потрошње"
 #. show-panel-label setting
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
 msgid "Show label:"
-msgstr "Приказуј натпис"
+msgstr "Приказуј натпис:"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:214
 msgid "Show 'Presentation mode' indicator:"
