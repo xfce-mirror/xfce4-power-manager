@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-25 18:31+0200\n"
-"PO-Revision-Date: 2019-04-25 16:31+0000\n"
+"POT-Creation-Date: 2020-04-01 00:31+0200\n"
+"PO-Revision-Date: 2020-03-31 22:31+0000\n"
 "Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Kannada (http://www.transifex.com/xfce/xfce4-power-manager/language/kn/)\n"
 "MIME-Version: 1.0\n"
@@ -19,9 +19,9 @@ msgstr ""
 "Language: kn\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:671
-#: ../settings/xfpm-settings.c:686 ../settings/xfpm-settings.c:713
-#: ../settings/xfpm-settings.c:1646
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:646
+#: ../settings/xfpm-settings.c:661 ../settings/xfpm-settings.c:688
+#: ../settings/xfpm-settings.c:1660
 msgid "Never"
 msgstr "ಎಂದಿಗೂ ಇಲ್ಲ"
 
@@ -38,7 +38,7 @@ msgid "Nothing"
 msgstr "ಏನೂ ಇಲ್ಲ"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5 ../settings/xfpm-settings-app.c:174
-#: ../settings/xfpm-settings-app.c:221 ../src/xfpm-main.c:440
+#: ../settings/xfpm-settings-app.c:221 ../src/xfpm-main.c:441
 msgid "Xfce Power Manager"
 msgstr "Xfce ಪವರ್ ಮ್ಯಾನೇಜರ್"
 
@@ -46,13 +46,13 @@ msgstr "Xfce ಪವರ್ ಮ್ಯಾನೇಜರ್"
 msgid "Power manager settings"
 msgstr "ಪವರ್ ಮ್ಯಾನೇಜರ್ ನಿಲುವುಗಳು "
 
-#. help dialog
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1152
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Help"
 msgstr "_ಸಹಾಯ"
 
 #: ../data/interfaces/xfpm-settings.ui.h:8
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:162
 msgid "_Close"
 msgstr "_ಮುಚ್ಚು "
 
@@ -73,315 +73,328 @@ msgid "When battery button is pressed:"
 msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
+msgid "Exponential"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:14
+msgid "Brightness step count:"
+msgstr ""
+
+#: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Handle display brightness _keys"
 msgstr "ಪರದೆಯ ಹೊಳಪನ್ನು ನಿರ್ವಹಿಸುವ ಕೀಲಿಗಳು "
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "<b>Buttons</b>"
 msgstr "<b>ಬಟನ್ಗಳು</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "On battery"
-msgstr "ಬ್ಯಾಟರಿ ಚಲಾಯಿಸು"
-
-#: ../data/interfaces/xfpm-settings.ui.h:16 ../common/xfpm-power-common.c:374
-msgid "Plugged in"
-msgstr "ಪ್ಲಗ್ ಸಿಲುಕಿಸಿದೆ "
-
 #: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "When laptop lid is closed:"
-msgstr "ಲ್ಯಾಪ್ಟಾಪ್ ಮುಚ್ಚಳವನ್ನು ಮುಚ್ಚಿದಾಗ:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:18
-msgid "<b>Laptop Lid</b>"
-msgstr "<b>ಲ್ಯಾಪ್ಟಾಪ್ ಮುಚ್ಚಳ</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "Status notifications"
 msgstr "ಸ್ಥಿತಿ ಅಧಿಸೂಚನೆ  "
 
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "System tray icon"
 msgstr "ಸಿಸ್ಟಂ ಟ್ರೇ ಐಕಾನ್"
 
-#: ../data/interfaces/xfpm-settings.ui.h:21
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "<b>Appearance</b>"
 msgstr "<b>ತೋರಿಕೆ</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
+#: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "General"
 msgstr "ಸಾಮಾನ್ಯ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:23
+#: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "When inactive for"
 msgstr " ನಿಷ್ಕ್ರಿಯವಾದಾಗ "
 
-#: ../data/interfaces/xfpm-settings.ui.h:24
+#: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "System sleep mode:"
 msgstr "ಸಿಸ್ಟಮ್ ನಿದ್ರೆಯ ಕ್ರಮ "
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
+#: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "<b>System power saving</b>"
 msgstr "<b> ಸಿಸ್ಟಮ್ ಪವರ್ ಉಳಿತಾಯ </b>"
 
+#: ../data/interfaces/xfpm-settings.ui.h:24
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>ಲ್ಯಾಪ್ಟಾಪ್ ಮುಚ್ಚಳ</b>"
+
+#: ../data/interfaces/xfpm-settings.ui.h:25
+msgid "When laptop lid is closed:"
+msgstr "ಲ್ಯಾಪ್ಟಾಪ್ ಮುಚ್ಚಳವನ್ನು ಮುಚ್ಚಿದಾಗ:"
+
 #: ../data/interfaces/xfpm-settings.ui.h:26
+msgid "On battery"
+msgstr "ಬ್ಯಾಟರಿ ಚಲಾಯಿಸು"
+
+#: ../data/interfaces/xfpm-settings.ui.h:27 ../common/xfpm-power-common.c:374
+msgid "Plugged in"
+msgstr "ಪ್ಲಗ್ ಸಿಲುಕಿಸಿದೆ "
+
+#: ../data/interfaces/xfpm-settings.ui.h:28
 msgid "Critical battery power level:"
 msgstr "ನಿರ್ಣಾಯಕ ಬ್ಯಾಟರಿ ಮಟ್ಟದ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:27
+#: ../data/interfaces/xfpm-settings.ui.h:30 ../settings/xfpm-settings.c:696
+#, no-c-format
+msgid "%"
+msgstr "%"
+
+#: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "On critical battery power:"
 msgstr "ನಿರ್ಣಾಯಕ ಬ್ಯಾಟರಿ ಪವರ್ನಲ್ಲಿ:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:28
+#: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "<b>Critical power</b>"
 msgstr "<b>ನಿರ್ಣಾಯಕ ಪವರ್ </b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:29
+#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Lock screen when system is going to sleep"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:30
+#: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "<b>Security</b>"
 msgstr "<b>ಭದ್ರತೆ </b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:31
+#: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "System"
 msgstr "ಸಿಸ್ಟಮ್"
 
-#: ../data/interfaces/xfpm-settings.ui.h:32
+#: ../data/interfaces/xfpm-settings.ui.h:36
 msgid "<b>Display power management</b>"
 msgstr "<b>ಪರದೆಯ ಪವರ್ ನಿರ್ವಹಣೆ </b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:33
+#: ../data/interfaces/xfpm-settings.ui.h:37
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
 msgstr " ಪರದೆಯ ಪವರ್ ನಿರ್ವಹಣೆಯನ್ನು X11 ನ ಬದಲು  ಪವರ್ ಮ್ಯಾನೇಜರ್ ನಿರ್ವಹಿಸಲಿ ."
 
-#: ../data/interfaces/xfpm-settings.ui.h:34
+#: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Blank after"
 msgstr "ಖಾಲಿಯ ನಂತರ "
 
-#: ../data/interfaces/xfpm-settings.ui.h:35
+#: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "Put to sleep after"
 msgstr "ನಂತರ ಮಲಗಲು ಹಾಕಿ "
 
-#: ../data/interfaces/xfpm-settings.ui.h:36
+#: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "Switch off after"
 msgstr "ನಂತರ ಸ್ವಿಚ್ ಆಫ್"
 
-#: ../data/interfaces/xfpm-settings.ui.h:37
+#: ../data/interfaces/xfpm-settings.ui.h:41
 msgid "On inactivity reduce to"
 msgstr "ನಿಷ್ಕ್ರಿಯತೆಯ ಮೇಲೆ ಕಡಿಮೆ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:38
+#: ../data/interfaces/xfpm-settings.ui.h:42
 msgid "Reduce after"
 msgstr "ನಂತರ ಕಡಿಮೆ ಮಾಡಿ "
 
-#: ../data/interfaces/xfpm-settings.ui.h:39
+#: ../data/interfaces/xfpm-settings.ui.h:43
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>ಹೊಳಪು ಕಡಿಮೆ ಮಾಡುವಿಕೆ</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:40
+#: ../data/interfaces/xfpm-settings.ui.h:44
 msgid "Display"
 msgstr "ಪರದೆ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:41
+#: ../data/interfaces/xfpm-settings.ui.h:45
 msgid "Automatically lock the session:"
 msgstr "ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಅಧಿವೇಶನವನ್ನು ಲಾಕ್ ಮಾಡಿ :"
 
-#: ../data/interfaces/xfpm-settings.ui.h:42
+#: ../data/interfaces/xfpm-settings.ui.h:46
 msgid "Delay locking after screensaver for"
 msgstr "ಸ್ಕ್ರೀನ್ ಸೇವರ್  ನಂತರ ಲಾಕ್ ಮಾಡುವುದಕ್ಕೆ ವಿಳಂಬ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:43
+#: ../data/interfaces/xfpm-settings.ui.h:47
 msgid "<b>Light Locker</b>"
 msgstr "<b>ಬೆಳಕಿನ ಲಾಕರ್</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:44
+#: ../data/interfaces/xfpm-settings.ui.h:48
 msgid "Security"
 msgstr "ಭದ್ರತೆ "
 
-#: ../settings/xfpm-settings.c:674
+#: ../settings/xfpm-settings.c:649
 msgid "One minute"
 msgstr "ಒಂದು ನಿಮಿಷ "
 
-#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:688
-#: ../settings/xfpm-settings.c:699 ../settings/xfpm-settings.c:703
-#: ../settings/xfpm-settings.c:1655
+#: ../settings/xfpm-settings.c:651 ../settings/xfpm-settings.c:663
+#: ../settings/xfpm-settings.c:674 ../settings/xfpm-settings.c:678
+#: ../settings/xfpm-settings.c:1669
 msgid "minutes"
 msgstr " ನಿಮಿಷಗಳು "
 
-#: ../settings/xfpm-settings.c:690 ../settings/xfpm-settings.c:697
-#: ../settings/xfpm-settings.c:698 ../settings/xfpm-settings.c:699
+#: ../settings/xfpm-settings.c:665 ../settings/xfpm-settings.c:672
+#: ../settings/xfpm-settings.c:673 ../settings/xfpm-settings.c:674
 msgid "One hour"
 msgstr "ಒಂದು ಗಂಟೆ "
 
-#: ../settings/xfpm-settings.c:698 ../settings/xfpm-settings.c:702
+#: ../settings/xfpm-settings.c:673 ../settings/xfpm-settings.c:677
 msgid "one minute"
 msgstr "ಒಂದು ನಿಮಿಷ "
 
-#: ../settings/xfpm-settings.c:701 ../settings/xfpm-settings.c:702
-#: ../settings/xfpm-settings.c:703
+#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:677
+#: ../settings/xfpm-settings.c:678
 msgid "hours"
 msgstr "ಗಂಟೆಗಳು "
 
-#: ../settings/xfpm-settings.c:715 ../settings/xfpm-settings.c:1648
+#: ../settings/xfpm-settings.c:690 ../settings/xfpm-settings.c:1662
 msgid "seconds"
 msgstr "ಸೆಕೆಂಡುಗಳು"
 
-#: ../settings/xfpm-settings.c:721
-msgid "%"
-msgstr "%"
-
-#: ../settings/xfpm-settings.c:911 ../settings/xfpm-settings.c:990
-#: ../settings/xfpm-settings.c:1052 ../settings/xfpm-settings.c:1150
-#: ../settings/xfpm-settings.c:1242 ../settings/xfpm-settings.c:1364
-#: ../settings/xfpm-settings.c:1421 ../settings/xfpm-settings.c:1473
-#: ../settings/xfpm-settings.c:1524 ../src/xfpm-power.c:704
+#: ../settings/xfpm-settings.c:903 ../settings/xfpm-settings.c:982
+#: ../settings/xfpm-settings.c:1044 ../settings/xfpm-settings.c:1140
+#: ../settings/xfpm-settings.c:1232 ../settings/xfpm-settings.c:1351
+#: ../settings/xfpm-settings.c:1409 ../settings/xfpm-settings.c:1461
+#: ../settings/xfpm-settings.c:1512 ../src/xfpm-power.c:703
 msgid "Suspend"
 msgstr "ಅಮಾನತು"
 
-#: ../settings/xfpm-settings.c:915 ../settings/xfpm-settings.c:1154
+#: ../settings/xfpm-settings.c:907 ../settings/xfpm-settings.c:1144
 msgid "Suspend operation not permitted"
 msgstr "ಅಮಾನತು ಕ್ರಿಯೆಗೆ ಅನುಮತಿ ಇಲ್ಲ "
 
-#: ../settings/xfpm-settings.c:919 ../settings/xfpm-settings.c:1158
+#: ../settings/xfpm-settings.c:911 ../settings/xfpm-settings.c:1148
 msgid "Suspend operation not supported"
 msgstr " ಅಮಾನತು ಕ್ರಿಯೆಗೆ ಬೆಂಬಲ  ಇಲ್ಲ "
 
-#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:996
-#: ../settings/xfpm-settings.c:1058 ../settings/xfpm-settings.c:1164
-#: ../settings/xfpm-settings.c:1248 ../settings/xfpm-settings.c:1370
-#: ../settings/xfpm-settings.c:1427 ../settings/xfpm-settings.c:1479
-#: ../settings/xfpm-settings.c:1530 ../src/xfpm-power.c:693
+#: ../settings/xfpm-settings.c:917 ../settings/xfpm-settings.c:988
+#: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1154
+#: ../settings/xfpm-settings.c:1238 ../settings/xfpm-settings.c:1357
+#: ../settings/xfpm-settings.c:1415 ../settings/xfpm-settings.c:1467
+#: ../settings/xfpm-settings.c:1518 ../src/xfpm-power.c:692
 msgid "Hibernate"
 msgstr "ಹೈಬರ್ನೇಟ್ "
 
-#: ../settings/xfpm-settings.c:929 ../settings/xfpm-settings.c:1168
+#: ../settings/xfpm-settings.c:921 ../settings/xfpm-settings.c:1158
 msgid "Hibernate operation not permitted"
 msgstr "ಹೈಬರ್ನೇಟ್ ಕ್ರಿಯೆಗೆ ಅನುಮತಿ ಇಲ್ಲ "
 
-#: ../settings/xfpm-settings.c:933 ../settings/xfpm-settings.c:1172
+#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:1162
 msgid "Hibernate operation not supported"
 msgstr "ಹೈಬರ್ನೇಟ್ ಕ್ರಿಯೆಗೆ ಬೆಂಬಲ  ಇಲ್ಲ "
 
-#: ../settings/xfpm-settings.c:963 ../settings/xfpm-settings.c:1202
-#: ../settings/xfpm-settings.c:1604 ../settings/xfpm-settings.c:1731
+#: ../settings/xfpm-settings.c:955 ../settings/xfpm-settings.c:1192
+#: ../settings/xfpm-settings.c:1618 ../settings/xfpm-settings.c:1745
 msgid "Hibernate and suspend operations not supported"
 msgstr "ಹೈಬರ್ನೇಟ್ ಮತ್ತು ಅಮಾನತು ಕ್ರಿಯೆಗಳಿಗೆ ಬೆಂಬಲವಿಲ್ಲ "
 
-#: ../settings/xfpm-settings.c:968 ../settings/xfpm-settings.c:1207
-#: ../settings/xfpm-settings.c:1609 ../settings/xfpm-settings.c:1736
+#: ../settings/xfpm-settings.c:960 ../settings/xfpm-settings.c:1197
+#: ../settings/xfpm-settings.c:1623 ../settings/xfpm-settings.c:1750
 msgid "Hibernate and suspend operations not permitted"
 msgstr "ಹೈಬರ್ನೇಟ್ ಮತ್ತು ಅಮಾನತು ಕ್ರಿಯೆಗಳಿಗೆ ಅನುಮತಿಯಿಲ್ಲ "
 
-#: ../settings/xfpm-settings.c:985 ../settings/xfpm-settings.c:1359
-#: ../settings/xfpm-settings.c:1416 ../settings/xfpm-settings.c:1468
-#: ../settings/xfpm-settings.c:1519
+#: ../settings/xfpm-settings.c:977 ../settings/xfpm-settings.c:1346
+#: ../settings/xfpm-settings.c:1404 ../settings/xfpm-settings.c:1456
+#: ../settings/xfpm-settings.c:1507
 msgid "Do nothing"
 msgstr "ಏನೂ ಮಾಡದಿರಿ "
 
-#: ../settings/xfpm-settings.c:1002 ../settings/xfpm-settings.c:1376
-#: ../src/xfpm-power.c:715
+#: ../settings/xfpm-settings.c:994 ../settings/xfpm-settings.c:1363
+#: ../src/xfpm-power.c:714
 msgid "Shutdown"
 msgstr "ಮುಚ್ಚುವುದು"
 
-#: ../settings/xfpm-settings.c:1006 ../settings/xfpm-settings.c:1380
-#: ../settings/xfpm-settings.c:1431 ../settings/xfpm-settings.c:1483
-#: ../settings/xfpm-settings.c:1534
+#: ../settings/xfpm-settings.c:998 ../settings/xfpm-settings.c:1367
+#: ../settings/xfpm-settings.c:1419 ../settings/xfpm-settings.c:1471
+#: ../settings/xfpm-settings.c:1522
 msgid "Ask"
 msgstr "ಕೇಳು "
 
-#: ../settings/xfpm-settings.c:1047 ../settings/xfpm-settings.c:1237
+#: ../settings/xfpm-settings.c:1039 ../settings/xfpm-settings.c:1227
 msgid "Switch off display"
 msgstr "ಪರದೆಯನ್ನು ಮುಚ್ಚಿ ಹಾಕಿ "
 
-#: ../settings/xfpm-settings.c:1062 ../settings/xfpm-settings.c:1252
+#: ../settings/xfpm-settings.c:1054 ../settings/xfpm-settings.c:1242
 msgid "Lock screen"
 msgstr "ಪರದೆಯನ್ನು ಲಾಕ್ ಮಾಡಿ "
 
-#: ../settings/xfpm-settings.c:1576
+#: ../settings/xfpm-settings.c:1551
+msgid "Number of brightness steps available using keys"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:1591
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "ಕಂಪ್ಯೂಟರ್ನ ಎಲ್ಲ ಪವರ್ ಮೂಲಗಳು ಈ ಚಾರ್ಜ್ ಮಟ್ಟವನ್ನು ತಲುಪಿದಾಗ "
 
-#: ../settings/xfpm-settings.c:1653 ../common/xfpm-power-common.c:139
+#: ../settings/xfpm-settings.c:1667 ../common/xfpm-power-common.c:139
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "ನಿಮಿಷ "
 msgstr[1] "ನಿಮಿಷ "
 
-#: ../settings/xfpm-settings.c:1995
+#: ../settings/xfpm-settings.c:2023
 msgid "Device"
 msgstr "ಸಾಧನ"
 
-#: ../settings/xfpm-settings.c:2017
+#: ../settings/xfpm-settings.c:2045
 msgid "Type"
 msgstr "ವಿಧ"
 
-#: ../settings/xfpm-settings.c:2022
+#: ../settings/xfpm-settings.c:2050
 msgid "PowerSupply"
 msgstr "ಪವರ್ ಪೂರೈಕೆ "
 
-#: ../settings/xfpm-settings.c:2023 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2051 ../src/xfpm-main.c:77
 msgid "True"
 msgstr "ನಿಜ"
 
-#: ../settings/xfpm-settings.c:2023 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2051 ../src/xfpm-main.c:77
 msgid "False"
 msgstr "ಸುಳ್ಳು "
 
-#: ../settings/xfpm-settings.c:2030
+#: ../settings/xfpm-settings.c:2058
 msgid "Model"
 msgstr "ಮಾದರಿ"
 
-#: ../settings/xfpm-settings.c:2033
+#: ../settings/xfpm-settings.c:2061
 msgid "Technology"
 msgstr "ತಂತ್ರಜ್ಞಾನ"
 
-#: ../settings/xfpm-settings.c:2040
+#: ../settings/xfpm-settings.c:2068
 msgid "Current charge"
 msgstr "ಪ್ರಸ್ತುತ ಚಾರ್ಜ್"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:2048 ../settings/xfpm-settings.c:2060
-#: ../settings/xfpm-settings.c:2072
+#: ../settings/xfpm-settings.c:2076 ../settings/xfpm-settings.c:2088
+#: ../settings/xfpm-settings.c:2100
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:2050
+#: ../settings/xfpm-settings.c:2078
 msgid "Fully charged (design)"
 msgstr "ಸಂಪೂರ್ಣವಾಗಿ ಚಾರ್ಜ್ ಆಗಿದೆ (ವಿನ್ಯಾಸ)"
 
-#: ../settings/xfpm-settings.c:2063
+#: ../settings/xfpm-settings.c:2091
 msgid "Fully charged"
 msgstr "ಸಂಪೂರ್ಣವಾಗಿ ಚಾರ್ಜ್ ಆಗಿದೆ "
 
-#: ../settings/xfpm-settings.c:2074
+#: ../settings/xfpm-settings.c:2102
 msgid "Energy empty"
 msgstr "ಶಕ್ತಿ ಖಾಲಿಯಾಗಿದೆ "
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:2082
+#: ../settings/xfpm-settings.c:2110
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:2084
+#: ../settings/xfpm-settings.c:2112
 msgid "Voltage"
 msgstr "ವೋಲ್ಟೇಜ್"
 
-#: ../settings/xfpm-settings.c:2091
+#: ../settings/xfpm-settings.c:2119
 msgid "Vendor"
 msgstr "ಮಾರಾಟಗಾರರ"
 
-#: ../settings/xfpm-settings.c:2096
+#: ../settings/xfpm-settings.c:2124
 msgid "Serial"
 msgstr "ಸರಣಿ "
 
-#: ../settings/xfpm-settings.c:2371
+#: ../settings/xfpm-settings.c:2400
 msgid "Check your power manager installation"
 msgstr "ಪವರ್ ನಿರ್ವಹಣೆಯ ಅನುಸ್ಥಾಪವನ್ನು ಪರಿಶೀಲಿಸಿ "
 
-#: ../settings/xfpm-settings.c:2464
+#: ../settings/xfpm-settings.c:2493
 msgid "Devices"
 msgstr "ಸಾಧನಗಳು"
 
@@ -436,8 +449,8 @@ msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "GTK+ ನಿಂದ ಕಟ್ಟಲ್ಪಟ್ಟಿದೆ %d.%d.%d, GTK+ ನೊಂದಿಗೆ ಅಂಟಿಕೊಂಡಿದೆ %d.%d.%d. "
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:355 ../src/xfpm-power.c:636 ../src/xfpm-power.c:679
-#: ../src/xfpm-power.c:843 ../src/xfpm-power.c:865 ../src/xfpm-backlight.c:163
+#: ../src/xfpm-power.c:358 ../src/xfpm-power.c:635 ../src/xfpm-power.c:678
+#: ../src/xfpm-power.c:841 ../src/xfpm-power.c:863 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-battery.c:190 ../src/xfpm-kbd-backlight.c:114
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
@@ -447,7 +460,13 @@ msgstr "ಪವರ್ ಮ್ಯಾನೇಜರ್"
 msgid "Settings for the Xfce Power Manager"
 msgstr "ಪವರ್ ಮ್ಯಾನೇಜರ್ ಗೆ  ನಿಲುವುಗಳು "
 
-#: ../common/xfpm-common.c:109
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
+msgid ""
+"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
+" lid;lock screen;plugged in;saving;critical;"
+msgstr ""
+
+#: ../common/xfpm-common.c:116
 msgid "translator-credits"
 msgstr "ಅನುವಾದಕ-ಖಾತ್ರಿಗಳು "
 
@@ -649,13 +668,13 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nಅಪರಿಚಿತ ಸ್ಥಿತಿ "
 
-#: ../src/xfpm-power.c:383
+#: ../src/xfpm-power.c:385
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "ಅಪ್ಲಿಕೇಶನ್ ಸದ್ಯಕ್ಕೆ ಸ್ವಯಂಚಾಲಿತ ನಿದ್ರೆಯನ್ನು  ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಿದೆ. ಈಗ ಈ ಕ್ರಮ ಕೈಗೊಳ್ಳುವುದು ಈ ಅಪ್ಲಿಕೇಶನ್ ನ ಕಾರ್ಯಸ್ಥಿಥಿ ಗೆ ಹಾನಿಯುಂಟುಮಾಡಬಹುದು.\nನೀವು ಈ ಸಿಸ್ಟಮ್ ಅನ್ನು ಹೈಬರ್ನೇಟ್ ಮಾಡ ಬಯಸುವುದು  ಖಚಿತವೇ? "
 
-#: ../src/xfpm-power.c:433
+#: ../src/xfpm-power.c:434
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
@@ -669,40 +688,40 @@ msgstr "ಅಪ್ಲಿಕೇಶನ್ ಸದ್ಯಕ್ಕೆ ಸ್ವಯ�
 msgid "Suspend the system"
 msgstr "ಸಿಸ್ಟಮ್  ವಜಾಗೊಳಿಸು"
 
-#: ../src/xfpm-power.c:620
+#: ../src/xfpm-power.c:619
 msgid "Shutdown the system"
 msgstr "ಸಿಸ್ಟಮ್ ಅನ್ನು ಸ್ಥಗಿತಗೊಳಿಸಿ"
 
-#: ../src/xfpm-power.c:631 ../src/xfpm-power.c:676
+#: ../src/xfpm-power.c:630 ../src/xfpm-power.c:675
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "ಕಡಿಮೆ ಶಕ್ತಿಯ ಮೇಲೆ ಸಿಸ್ಟಮ್ ಚಾಲನೆಯಾಗುತ್ತಿದೆ. ಡೇಟಾ ಕಳೆದುಕೊಳ್ಳುವುದನ್ನು ತಪ್ಪಿಸಲು ನಿಮ್ಮ ಕೆಲಸವನ್ನು ಉಳಿಸಿ"
 
-#: ../src/xfpm-power.c:722
+#: ../src/xfpm-power.c:721
 msgid "_Cancel"
 msgstr "_Cancel"
 
-#: ../src/xfpm-power.c:844
+#: ../src/xfpm-power.c:842
 msgid "System is running on low power"
 msgstr "ಕಡಿಮೆ ಶಕ್ತಿಯ ಮೇಲೆ ಸಿಸ್ಟಮ್ ಚಾಲನೆಯಾಗುತ್ತಿದೆ"
 
-#: ../src/xfpm-power.c:861
+#: ../src/xfpm-power.c:859
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "ನಿಮ್ಮ %s ಚಾರ್ಜ್ ಲೆವೆಲ್ ಕಡಿಮೆಯಾಗಿದೆ\nಅಂದಾಜು ಮಾಡಿದ ಸಮಯ %s ಅನ್ನು ಬಿಟ್ಟಿದೆ"
 
-#: ../src/xfpm-power.c:1646 ../src/xfpm-power.c:1693 ../src/xfpm-power.c:1724
-#: ../src/xfpm-power.c:1753
+#: ../src/xfpm-power.c:1644 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1724
+#: ../src/xfpm-power.c:1754
 msgid "Permission denied"
 msgstr "ಅವಕಾಶ ನೀಡಲಾಗಿಲ್ಲ"
 
-#: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1762
+#: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1763
 msgid "Suspend not supported"
 msgstr "ಸಸ್ಪೆಂಡ್ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:161
+#: ../src/xfpm-backlight.c:164
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "ಪ್ರಕಾಶಮಾನ: %.0f ಶೇಕಡಾ"
@@ -857,26 +876,26 @@ msgstr "ಚಾಲನೆಯಲ್ಲಿರುವ xfce ಪವರ್ ಮ್ಯಾ�
 msgid "Version information"
 msgstr "ಆವೃತ್ತಿ ಮಾಹಿತಿ"
 
-#: ../src/xfpm-main.c:294
+#: ../src/xfpm-main.c:295
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "ಆರ್ಗ್ಯುಮೆಂಟ್ಗಳನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ: %s\n"
 
-#: ../src/xfpm-main.c:322
+#: ../src/xfpm-main.c:323
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "ಬಳಕೆಗಾಗಿ '% s --help' ಎಂದು ಟೈಪ್ ಮಾಡಿ."
 
-#: ../src/xfpm-main.c:343
+#: ../src/xfpm-main.c:344
 msgid "Unable to get connection to the message bus session"
 msgstr "ಸಂದೇಶ ಬಸ್ ಅಧಿವೇಶನಕ್ಕೆ ಸಂಪರ್ಕವನ್ನು ಪಡೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ"
 
-#: ../src/xfpm-main.c:351
+#: ../src/xfpm-main.c:352
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce ಪವರ್ ಮ್ಯಾನೇಜರ್ ಚಾಲನೆಯಲ್ಲಿಲ್ಲ"
 
-#: ../src/xfpm-main.c:441
+#: ../src/xfpm-main.c:442
 msgid "Another power manager is already running"
 msgstr "ಮತ್ತೊಂದು ಪವರ್ ಮ್ಯಾನೇಜರ್ ಈಗಾಗಲೇ ಚಾಲನೆಯಲ್ಲಿದೆ"
 
@@ -885,11 +904,11 @@ msgstr "ಮತ್ತೊಂದು ಪವರ್ ಮ್ಯಾನೇಜರ್ 
 msgid "Xfce power manager is already running"
 msgstr "Xfce ಪವರ್ ಮ್ಯಾನೇಜರ್ ಈಗಾಗಲೇ ಚಾಲನೆಯಲ್ಲಿದೆ"
 
-#: ../src/xfpm-inhibit.c:392
+#: ../src/xfpm-inhibit.c:396
 msgid "Invalid arguments"
 msgstr "ಅಮಾನ್ಯವಾದ ವಾದಗಳು"
 
-#: ../src/xfpm-inhibit.c:425
+#: ../src/xfpm-inhibit.c:430
 msgid "Invalid cookie"
 msgstr "ಅಮಾನ್ಯ ಕುಕೀ"
 
@@ -904,38 +923,33 @@ msgid "Power management for the Xfce desktop"
 msgstr "Xfce ಡೆಸ್ಕ್ಟಾಪ್ಗಾಗಿ ಪವರ್ ನಿರ್ವಹಣೆ"
 
 #. Odds are this is a desktop without any batteries attached
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:270
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:289
 msgid "Display battery levels for attached devices"
 msgstr "ಲಗತ್ತಿಸಲಾದ ಸಾಧನಗಳಿಗೆ ಬ್ಯಾಟರಿ ಮಟ್ಟವನ್ನು ಪ್ರದರ್ಶಿಸಿ"
-
-#. about dialog
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1158
-msgid "_About"
-msgstr "_About"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1350
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s ಪ್ರಸ್ತುತ ಪ್ರತಿಬಂಧಿಸುವ ವಿದ್ಯುತ್ ನಿರ್ವಹಣೆಯಾಗಿದೆ"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1625
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
 msgid "<b>Display brightness</b>"
 msgstr "<b> ಪ್ರಕಾಶಮಾನತೆಯನ್ನು ಪ್ರದರ್ಶಿಸು </ b>"
 
-#. Presentation mode checkbox
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1649
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1749
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1760
 msgid "Presentation _mode"
 msgstr "ಪ್ರಸ್ತುತಿ _mode"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1661
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
 msgid "_Power manager settings..."
 msgstr "_ಪವರ್ ಮ್ಯಾನೇಜರ್ ಸೆಟ್ಟಿಂಗ್ಗಳು ..."
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:79
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "ಈ ವಿಳಾಸವನ್ನು ತೆರೆಯಲು ಆಗುತ್ತಿಲ್ಲ: %s"
@@ -962,9 +976,13 @@ msgid "Power Manager Plugin Settings"
 msgstr "ಪವರ್ ಮ್ಯಾನೇಜರ್ ಪ್ಲಗಿನ್ ಸಿದ್ದತೆಗಳು"
 
 #. show-panel-label setting
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:180
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
 msgid "Show label:"
 msgstr "ಫಲಕವನ್ನು ತೋರಿಸು:"
+
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:214
+msgid "Show 'Presentation mode' indicator:"
+msgstr ""
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
