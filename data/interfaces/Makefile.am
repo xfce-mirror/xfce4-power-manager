@@ -9,7 +9,7 @@ if MAINTAINER_MODE
 BUILT_SOURCES = $(interfaces_h)
 
 xfpm-settings_ui.h: xfpm-settings.ui
-	exo-csource --static --strip-comments --strip-content --name=xfpm_settings_ui $< > $@
+	xdt-csource --static --strip-comments --strip-content --name=xfpm_settings_ui $< > $@
 
 endif
 
