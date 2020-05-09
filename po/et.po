@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-01 00:31+0200\n"
-"PO-Revision-Date: 2020-04-23 11:01+0000\n"
+"PO-Revision-Date: 2020-05-09 08:06+0000\n"
 "Last-Translator: Priit Jõerüüt <transifex@joeruut.com>\n"
 "Language-Team: Estonian (http://www.transifex.com/xfce/xfce4-power-manager/language/et/)\n"
 "MIME-Version: 1.0\n"
@@ -362,7 +362,7 @@ msgstr "Praegune täitumus"
 #: ../settings/xfpm-settings.c:2076 ../settings/xfpm-settings.c:2088
 #: ../settings/xfpm-settings.c:2100
 msgid "Wh"
-msgstr ""
+msgstr "Wh"
 
 #: ../settings/xfpm-settings.c:2078
 msgid "Fully charged (design)"
@@ -419,7 +419,7 @@ msgstr ""
 
 #: ../settings/xfpm-settings-app.c:76 ../src/xfpm-main.c:273
 msgid "Enable debugging"
-msgstr ""
+msgstr "Luba silumine"
 
 #: ../settings/xfpm-settings-app.c:77
 msgid "Display version information"
@@ -479,7 +479,7 @@ msgstr "Aku"
 
 #: ../common/xfpm-power-common.c:47
 msgid "Uninterruptible Power Supply"
-msgstr ""
+msgstr "Katkematu toiteallikas"
 
 #: ../common/xfpm-power-common.c:49
 msgid "Line power"
@@ -507,7 +507,7 @@ msgstr "Telefon"
 
 #: ../common/xfpm-power-common.c:61
 msgid "Tablet"
-msgstr ""
+msgstr "Tahvelarvuti"
 
 #: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:255
 msgid "Computer"
@@ -599,7 +599,7 @@ msgstr "<b>%s %s</b>\nLaeb (%0.0f%%, %s)"
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nLaeb (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:331
 #, c-format
@@ -613,21 +613,21 @@ msgstr "<b>%s %s</b>\nTühjeneb (%0.0f%%, %s)"
 msgid ""
 "<b>%s %s</b>\n"
 "Discharging (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nTühjeneb (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nOotab tühjenemist (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:352
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nOotab laadimist (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:358
 #, c-format
@@ -641,7 +641,7 @@ msgstr "<b>%s %s</b>\non tühi"
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr ""
+msgstr "<b>%s %s</b>\nPraegune akutase: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -650,7 +650,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
+msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:374
 msgid "Not plugged in"
@@ -661,7 +661,7 @@ msgstr "Ühendamata"
 #: ../common/xfpm-power-common.c:380
 #, c-format
 msgid "<b>%s %s</b>"
-msgstr ""
+msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
 #: ../common/xfpm-power-common.c:385
@@ -669,7 +669,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr ""
+msgstr "<b>%s %s</b>\nTeadmata olek"
 
 #: ../src/xfpm-power.c:385
 msgid ""
@@ -727,7 +727,7 @@ msgstr ""
 #: ../src/xfpm-backlight.c:164
 #, c-format
 msgid "Brightness: %.0f percent"
-msgstr ""
+msgstr "Eredus: %.0f protsenti"
 
 #: ../src/xfpm-battery.c:109 ../src/xfpm-battery.c:160
 #, c-format
@@ -744,7 +744,7 @@ msgstr "%s laeb"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr ""
+msgstr "%s (%i%%)\n%s kuni on täis laetud"
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
@@ -761,7 +761,7 @@ msgstr "Süsteemi toidab %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr ""
+msgstr "%s (%i%%)\nHinnanguliselt aega jäänud %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
@@ -772,7 +772,7 @@ msgstr "%s on tühi"
 #: ../src/xfpm-kbd-backlight.c:112
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
-msgstr ""
+msgstr "Klaviatuuri eredus: %.0f protsenti"
 
 #: ../src/xfpm-main.c:54
 #, c-format
@@ -849,7 +849,7 @@ msgstr "Olemas unenupp"
 
 #: ../src/xfpm-main.c:154
 msgid "Has battery button"
-msgstr ""
+msgstr "Olemas akunupp"
 
 #: ../src/xfpm-main.c:156
 msgid "Has LID"
@@ -865,7 +865,7 @@ msgstr ""
 
 #: ../src/xfpm-main.c:275
 msgid "Restart the running instance of Xfce power manager"
-msgstr ""
+msgstr "Taaskäivita hetkel töötav Xfce vooluhaldur"
 
 #: ../src/xfpm-main.c:276
 msgid "Show the configuration dialog"
@@ -887,7 +887,7 @@ msgstr "Argumentide sõelumine ebaõnnestus: „%s“\n"
 #: ../src/xfpm-main.c:323
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Kirjuta '%s --help' kasutamise kohta teabe saamiseks"
+msgstr "Trüki „%s --help” kasutusjuhise saamiseks"
 
 #: ../src/xfpm-main.c:344
 msgid "Unable to get connection to the message bus session"
@@ -936,7 +936,7 @@ msgstr ""
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
-msgstr ""
+msgstr "Hetkel keelab vooluhalduse kasutuse %s"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
 msgid "<b>Display brightness</b>"
@@ -955,7 +955,7 @@ msgstr "_Vooluhalduri sätted..."
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
 msgid "Unable to open the following url: %s"
-msgstr ""
+msgstr "Ei õnnestu avada järgnevat aadressi: %s"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "None"
@@ -995,7 +995,7 @@ msgstr ""
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr ""
+msgstr "Näita oma seadmete akutaset ning kontrolli ekraani ja klaviatuuri eredust"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
