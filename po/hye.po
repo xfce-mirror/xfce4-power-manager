@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-04-01 00:31+0200\n"
-"PO-Revision-Date: 2020-05-21 10:43+0000\n"
+"PO-Revision-Date: 2020-05-21 12:45+0000\n"
 "Last-Translator: Samvel Harutyunyan <samvel@ehayq.am>\n"
 "Language-Team: Eastern Armenian (http://www.transifex.com/xfce/xfce4-power-manager/language/hye/)\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgstr "Երբ հանգստի կոճակը սեղմուած է."
 
 #: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "When hibernate button is pressed:"
-msgstr ""
+msgstr "Երբ սառեցման կոճակը սեղմուած է."
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "When battery button is pressed:"
@@ -105,7 +105,7 @@ msgstr "Ընդհանուր"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "When inactive for"
-msgstr ""
+msgstr "Երբ անգործ է"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "System sleep mode:"
@@ -117,11 +117,11 @@ msgstr "<b>Համակարգի էներգախնայողութիւն</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "<b>Laptop Lid</b>"
-msgstr ""
+msgstr "<b>Ծալովի համակարգիչ</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "When laptop lid is closed:"
-msgstr ""
+msgstr "Երբ ծալովի համակարգչի կափարիչը փակ է"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26
 msgid "On battery"
@@ -319,8 +319,8 @@ msgstr "Երբ համակարգչի բոլոր էներգիայի աղբիւրն
 #: ../settings/xfpm-settings.c:1667 ../common/xfpm-power-common.c:139
 msgid "minute"
 msgid_plural "minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "րոպէներ"
+msgstr[1] "րոպէներ"
 
 #: ../settings/xfpm-settings.c:2023
 msgid "Device"
@@ -358,7 +358,7 @@ msgstr "Ընթացիկ լիցք"
 #: ../settings/xfpm-settings.c:2076 ../settings/xfpm-settings.c:2088
 #: ../settings/xfpm-settings.c:2100
 msgid "Wh"
-msgstr ""
+msgstr "Վ/ժ"
 
 #: ../settings/xfpm-settings.c:2078
 msgid "Fully charged (design)"
@@ -375,7 +375,7 @@ msgstr "Էներգիան դատարկ է"
 #. TRANSLATORS: Unit here is Volt
 #: ../settings/xfpm-settings.c:2110
 msgid "V"
-msgstr ""
+msgstr "Վ  "
 
 #: ../settings/xfpm-settings.c:2112
 msgid "Voltage"
@@ -495,7 +495,7 @@ msgstr "Ցուցասարք "
 
 #: ../common/xfpm-power-common.c:57
 msgid "PDA"
-msgstr ""
+msgstr "Գրպանի համակարգիչ"
 
 #: ../common/xfpm-power-common.c:59
 msgid "Phone"
@@ -546,15 +546,15 @@ msgstr "Անյայտ ժամանակ"
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i րոպէ"
+msgstr[1] "%i րոպէներ"
 
 #: ../common/xfpm-power-common.c:131
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%i ժամեր"
+msgstr[1] "%i ժամեր"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
@@ -566,8 +566,8 @@ msgstr "%i%s%i%s"
 #: ../common/xfpm-power-common.c:138
 msgid "hour"
 msgid_plural "hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "դ"
+msgstr[1] "ժամեր"
 
 #: ../common/xfpm-power-common.c:295
 #, c-format
@@ -781,7 +781,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
+msgstr "\nXfce  Էներգիայի կառաւարիչ%s\nXfce Goodies նախագծի մաս\nhttp://goodies.xfce.org\n\nԱրտոնագրուած է GNU GPL- ի ներքոյ.\n\n"
 
 #: ../src/xfpm-main.c:112
 #, c-format
@@ -796,135 +796,135 @@ msgstr "Առանց քաղաքականութեան աւգնութեան\n"
 #: ../src/xfpm-main.c:117
 #, c-format
 msgid "With network manager support\n"
-msgstr ""
+msgstr "Կապել ցանցի հետ կառաւարչի աջակցութեամբ\n"
 
 #: ../src/xfpm-main.c:119
 #, c-format
 msgid "Without network manager support\n"
-msgstr ""
+msgstr "Առանց ցանցի կառաւարչի աջակցութեան\n"
 
 #: ../src/xfpm-main.c:134
 msgid "Can suspend"
-msgstr ""
+msgstr "Կարող է կասեցնել"
 
 #: ../src/xfpm-main.c:136
 msgid "Can hibernate"
-msgstr ""
+msgstr "Կարող է սառեցնել"
 
 #: ../src/xfpm-main.c:138
 msgid "Authorized to suspend"
-msgstr ""
+msgstr "Իրաւասու է կասեցնել"
 
 #: ../src/xfpm-main.c:140
 msgid "Authorized to hibernate"
-msgstr ""
+msgstr "Իրաւասու է սառեցնել"
 
 #: ../src/xfpm-main.c:142
 msgid "Authorized to shutdown"
-msgstr ""
+msgstr "Իրաւասու է անջատել"
 
 #: ../src/xfpm-main.c:144
 msgid "Has battery"
-msgstr ""
+msgstr "Ունի մարտկոց"
 
 #: ../src/xfpm-main.c:146
 msgid "Has brightness panel"
-msgstr ""
+msgstr "Ունի պայծառութեան ընտրացանակ"
 
 #: ../src/xfpm-main.c:148
 msgid "Has power button"
-msgstr ""
+msgstr "Ունի հոսանքի կոճակ"
 
 #: ../src/xfpm-main.c:150
 msgid "Has hibernate button"
-msgstr ""
+msgstr "Ունի սառեցման կոճակ"
 
 #: ../src/xfpm-main.c:152
 msgid "Has sleep button"
-msgstr ""
+msgstr "Ունի հանգստի կոճակ"
 
 #: ../src/xfpm-main.c:154
 msgid "Has battery button"
-msgstr ""
+msgstr "Ունի մարտկոցի կոճակ"
 
 #: ../src/xfpm-main.c:156
 msgid "Has LID"
-msgstr ""
+msgstr "Ունի ԿԱՓԱՐԻՉ"
 
 #: ../src/xfpm-main.c:272
 msgid "Do not daemonize"
-msgstr ""
+msgstr "Չդիտել աւժանդակ ծրագիր"
 
 #: ../src/xfpm-main.c:274
 msgid "Dump all information"
-msgstr ""
+msgstr "Նետել բոլոր տեղեկութիւնները"
 
 #: ../src/xfpm-main.c:275
 msgid "Restart the running instance of Xfce power manager"
-msgstr ""
+msgstr "Վերագործարկէ՛ք Xfce- ի էներգիայի կառաւարչի գործարկման աւրինակը"
 
 #: ../src/xfpm-main.c:276
 msgid "Show the configuration dialog"
-msgstr ""
+msgstr "Ցոյց տալ կազմաձեւման երկխաւսութիւնը"
 
 #: ../src/xfpm-main.c:277
 msgid "Quit any running xfce power manager"
-msgstr ""
+msgstr "Դադարեցնել ցանկացած գործարկուող xfce- ի էներգիայի կառաւարչին"
 
 #: ../src/xfpm-main.c:278
 msgid "Version information"
-msgstr ""
+msgstr "Տեղեկատուութեան տարբերակ"
 
 #: ../src/xfpm-main.c:295
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr ""
+msgstr "Չհաջողուեց վերլուծել փաստարկները.%s\n"
 
 #: ../src/xfpm-main.c:323
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr ""
+msgstr "Կիրառման համար մուտքագրեք «%s --աւգնութիւն»:"
 
 #: ../src/xfpm-main.c:344
 msgid "Unable to get connection to the message bus session"
-msgstr ""
+msgstr "Անհնար է կապ հաստատել հաղորդագրութեան փոխատրիչի նստաշրջանին"
 
 #: ../src/xfpm-main.c:352
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr ""
+msgstr "Xfce- ի էներգիայի կառաւարիչը չի գործում"
 
 #: ../src/xfpm-main.c:442
 msgid "Another power manager is already running"
-msgstr ""
+msgstr "Էլեկտրաէներգիայի մեկ այլ կառաւարիչ արդէն աշխատում է"
 
 #: ../src/xfpm-main.c:446
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr ""
+msgstr "Xfce- ի էներգիայի կառաւարիչն արդէն աշխատում է"
 
 #: ../src/xfpm-inhibit.c:396
 msgid "Invalid arguments"
-msgstr ""
+msgstr "Անվաւեր փաստարկներ"
 
 #: ../src/xfpm-inhibit.c:430
 msgid "Invalid cookie"
-msgstr ""
+msgstr "Անւաւեր նշոցիկ"
 
 #: ../src/xfpm-manager.c:456
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr ""
+msgstr "Էկրանի կողպման գործիքներից ոչ մեկը չաշխատեց, էկրանը չի կողպուուելու:"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
-msgstr ""
+msgstr "Էլեկտրաէներգիայի կառաւարումը Xfce աշխատասեղանի համար է"
 
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:289
 msgid "Display battery levels for attached devices"
-msgstr ""
+msgstr "Ցուցադրել մարտկոցի մակարդակը` կցուած սարքերի համար"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
@@ -932,73 +932,73 @@ msgstr ""
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
-msgstr ""
+msgstr "%s- ը ներկայումս խանգարում է էներգիայի կառաւարմանը  "
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
 msgid "<b>Display brightness</b>"
-msgstr ""
+msgstr "<b>Ցուցադրել պայծառութիւնը</b>"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1749
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1760
 msgid "Presentation _mode"
-msgstr ""
+msgstr "Ներկայացման _եղանակ"
 
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
 msgid "_Power manager settings..."
-msgstr ""
+msgstr "_Էներգիայի կառաւարչի կարգաւորումները..."
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
 msgid "Unable to open the following url: %s"
-msgstr ""
+msgstr "Անհնար է բացել հետեւեալ յղումը. %s"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "None"
-msgstr ""
+msgstr "Ոչ ոք"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "Percentage"
-msgstr ""
+msgstr "Տոկոս"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "Remaining time"
-msgstr ""
+msgstr "Մնացած ժամանակը"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "Percentage and remaining time"
-msgstr ""
+msgstr "Տոկոսը եւ մնացած ժամանակը"
 
 #. create the dialog
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:158
 msgid "Power Manager Plugin Settings"
-msgstr ""
+msgstr "Էլեկտրաէներգիայի կառաւարչի ընդլայնիչ կարգավորումներ"
 
 #. show-panel-label setting
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
 msgid "Show label:"
-msgstr ""
+msgstr "Ցուցադրել պիտակը."
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:214
 msgid "Show 'Presentation mode' indicator:"
-msgstr ""
+msgstr "Ցոյց տալ «Ներկայացման ռեժիմը» ցուցիչը."
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr ""
+msgstr "Էլեկտրաէներգիայի կառաւարչի ներդիր"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr ""
+msgstr "Ցուցադրէ՛ք Ձեր սարքերի մարտկոցների մակարդակը եւ վերահսկէ՛ք Ձեր էկրանի պայծառութիւնը"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
+msgstr "Xfce- ի էներգիայի կառաւարիչը կառաւարում է էլեկտրական էներգիայի աղբեւրները համակարգչում եւ սարքերում, որոնք հնարաւոր է վերահսկել՝ իրենց էներգիայի սպառումը նուազեցնելու համար (աւրինակ՝ LCD՝ պայծառութեան մակարդակը, վերահսկում է հանգիստը, CPU- ն՝ յաճախականութեան չափասանդղակը):"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -1008,14 +1008,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
+msgstr "Բացի այդ, Xfce- ի էներգիայի կառաւարիչը տրամադրում է մի շարք ազատուած համակարգիչներով աշխատող DBus միջերեսներ` ներկայիս էլեկտրաէներգիայի մակարդակի վերաբերեալ այլ ծրագրեր տեղեկացնելու համար, որպէսզի նրանք կարողանան կարգաւորել իրենց էներգիայի սպառումը, այն ապահովում է խոչընդոտող միջերեսը, որը թոյլ է տալիս ծրագրերին կանխել ինքնաշխատ հանգստի գործողութիւնները էներգիայի կառաւարչի միջոցով, որպէս աւրինակ՝ գործառնական համակարգի փաթեթների կառաւարիչը պետք է աւգտագործի այս միջերեսը, մինչ այն կատարում է թարմացման գործողութիւններ:"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
+msgstr "Xfce էներգիայի կառաւարիչը նաեւ ներդիր է տրամադրում Xfce եւ LXDE վահանակներին՝ LCD պայծառութեան մակարդակը վերահսկելու եւ՛ մարտկոցի եւ՛ սարքի լիցքաւորման  համար:"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -1023,7 +1023,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr ""
+msgstr "Մշակման այս թողարկումը հիմնականում շտկում է սխալները եւ աւելի լաւ աջակցութիւն է ցուցաբերում պատկերների թեմաներին՝ կրճատելով սարքի պատկերները եւ դրանց համար աւգտագործելով սովորական անուններ: Այն պարունակում է նաեւ նորացուած թարգմանութիւններ: Լրացուցիչ վահանակը վերանուանուել է Power Manager Plugin- ի:"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -1032,7 +1032,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr ""
+msgstr "Մշակման այս թողարկումը շտկում է սխալները կասեցնելու եւ սառեցնելու միջոցով: Այն նաեւ բարելաւում է վահանակ-ներդիրը՝ ներառելով (ներկայիս նուազած) պայծառութեան ընտրացանկի ներդիրի գործունակութիւնը: Ստեղնաշարի պայծառութեան փոփոխութիւնների համար հաշուի է առնուել նոր թռուցիկ ծանուցում, եւ Էներգիայի Կառաւարիչն այժմ նաեւ վերահսկում է X11 դատարկ ժամանակները:"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -1042,10 +1042,10 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr ""
+msgstr "Զարգացման այս թողարկումը մտցնում է շատ նոր հնարավորութիւններ, որոնց թուում են՝ կասեցնելը / սառեցնելը առանց համակարգի եւ UPower> = 0.99: Այն թոյլ է տալիս համակարգային խանգարումների անհատական հսկողութիւն իրականացնել, մարտկոցի եւ սարքի լիցքաւորման մակարդակը դիտարկելու համար նոր վահանակային ներդիրը փոխարինում է սկուտեղին: Կարգաւորումների երկխոսութիւնն ամբողջութեամբ վերակազմաւորուել է աւելի լաւ վերահսկողութւան համար, եւ շատ բաց վրիպակներ ամրագրուել են, եւ թարգմանութիւնները թարմացուել են:"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr ""
+msgstr "Այս հաստատուն թողարկումը շտկում է հաւաքման հետ կապուած խնդիրները, յիշողութեան արտահոսքը եւ մի քանի այլ փոքր սխալներ: Աւելին, այն տրամադրում է նորացուած թարգմանութիւններ:"
