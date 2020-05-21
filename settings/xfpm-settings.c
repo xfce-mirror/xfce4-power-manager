@@ -868,8 +868,8 @@ xfpm_update_logind_handle_lid_switch (XfconfChannel *channel)
   guint lid_switch_on_ac = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, LID_TRIGGER_LOCK_SCREEN);
   guint lid_switch_on_battery = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, LID_TRIGGER_LOCK_SCREEN);
 
-  // logind-handle-lid-switch = true when: lock_on_suspend == true and (lid_switch_on_ac == suspend or lid_switch_on_battery == suspend)
-  xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX LOGIND_HANDLE_LID_SWITCH, lock_on_suspend && (lid_switch_on_ac == 1 || lid_switch_on_battery == 1));
+  // logind-handle-lid-switch = true when: lock_on_suspend == true and (lid_switch_on_ac == suspend and lid_switch_on_battery == suspend)
+  xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX LOGIND_HANDLE_LID_SWITCH, lock_on_suspend && (lid_switch_on_ac == 1 && lid_switch_on_battery == 1));
 }
 /* END Light Locker Integration */
 
