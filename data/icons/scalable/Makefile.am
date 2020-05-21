@@ -1,9 +1,9 @@
-EXTRA_DIST =            \
-    $(Data_DATA)
+appicondir = $(datadir)/icons/hicolor/scalable/apps
+appicon_DATA =								\
+    org.xfce.powermanager.svg
 
-Datadir = $(datadir)/icons/hicolor/scalable/status
-
-Data_DATA =                                 \
+statusiconsdir = $(datadir)/icons/hicolor/scalable/status
+statusicons_DATA =                                 \
     ac-adapter.svg                          \
     ac-adapter-symbolic.svg                 \
     battery-caution-charging.svg            \
@@ -42,5 +42,6 @@ Data_DATA =                                 \
     phone.svg                               \
     tablet.svg                              \
     uninterruptible-power-supply.svg        \
-    video-display.svg                       \
-    xfce4-power-manager-settings.svg
+    video-display.svg
+
+EXTRA_DIST = $(appicon_DATA) $(statusicons_DATA)

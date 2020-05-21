@@ -163,7 +163,7 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
                                                       NULL);
 
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
-  gtk_window_set_icon_name (GTK_WINDOW (dialog), "xfce4-power-manager-settings");
+  gtk_window_set_icon_name (GTK_WINDOW (dialog), "org.xfce.powermanager");
   gtk_widget_show (dialog);
 
   /* Set up the main grid for all settings */
