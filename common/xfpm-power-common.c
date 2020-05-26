@@ -90,7 +90,7 @@ xfpm_power_translate_technology (guint value)
     case 5:
       return _("Nickel cadmium");
     case 6:
-      return _("Nickel metal hybride");
+      return _("Nickel metal hydride");
   }
 
   return _("Unknown");
