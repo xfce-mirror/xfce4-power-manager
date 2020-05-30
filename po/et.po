@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 00:31+0200\n"
-"PO-Revision-Date: 2020-05-24 10:06+0000\n"
+"POT-Creation-Date: 2020-05-27 12:47+0200\n"
+"PO-Revision-Date: 2020-05-30 08:51+0000\n"
 "Last-Translator: Priit Jõerüüt <transifex@joeruut.com>\n"
 "Language-Team: Estonian (http://www.transifex.com/xfce/xfce4-power-manager/language/et/)\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "Xfce vooluhaldur"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
 msgid "Power manager settings"
-msgstr "Vooluhalduri sätted"
+msgstr "Vooluhalduri seadistused"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
@@ -77,7 +77,7 @@ msgstr "Kui vajutate aku nuppu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Exponential"
-msgstr ""
+msgstr "Eksponentsiaalne"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Brightness step count:"
@@ -171,7 +171,7 @@ msgstr "<b>Toitehalduskuva</b>"
 #: ../data/interfaces/xfpm-settings.ui.h:37
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr ""
+msgstr "Luba vooluhalduril X11 asemel hallata monitori toiteseadistusi (DPMS)"
 
 #: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Blank after"
@@ -427,7 +427,7 @@ msgstr "Kuva versiooniteave"
 
 #: ../settings/xfpm-settings-app.c:78
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr ""
+msgstr "Sulge Xfce4 vooluhalduri seadistuste aken"
 
 #: ../settings/xfpm-settings-app.c:176
 msgid "Failed to connect to power manager"
@@ -461,13 +461,13 @@ msgstr "Vooluhaldur"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
-msgstr "Xfce vooluhalduri sätted"
+msgstr "Xfce vooluhalduri seadistused"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:3
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr ""
+msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop lid;lock screen;plugged in;saving;critical;seadistused;sätted;eelistused;nupp;nupud;uinak;aku;eredus;sülearvuti;sülearvuti kaas;ekraaniliukustus;vooluvõrgus;kriitiline;"
 
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
@@ -539,7 +539,7 @@ msgid "Nickel cadmium"
 msgstr "Nikkel kaadmium"
 
 #: ../common/xfpm-power-common.c:93
-msgid "Nickel metal hybride"
+msgid "Nickel metal hydride"
 msgstr "Nikkel metallhübriid"
 
 #: ../common/xfpm-power-common.c:114
@@ -689,7 +689,7 @@ msgstr "Vii arvuti talveunne"
 
 #: ../src/xfpm-power.c:610
 msgid "Suspend the system"
-msgstr ""
+msgstr "Jäta arvuti uinakusse"
 
 #: ../src/xfpm-power.c:619
 msgid "Shutdown the system"
@@ -712,7 +712,7 @@ msgstr "Süsteem töötab väikese võimsusega"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
+msgstr "Sinu %s akutäituvuse tase on madal\nHinnanguliselt on jäänud aega %s"
 
 #: ../src/xfpm-power.c:1644 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1724
 #: ../src/xfpm-power.c:1754
@@ -721,7 +721,7 @@ msgstr "Ligipääs keelatud"
 
 #: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1763
 msgid "Suspend not supported"
-msgstr ""
+msgstr "Uinakut ei toetata"
 
 #. generate a human-readable summary for the notification
 #: ../src/xfpm-backlight.c:164
@@ -861,7 +861,7 @@ msgstr "Ära muuda taustprotsessiks"
 
 #: ../src/xfpm-main.c:274
 msgid "Dump all information"
-msgstr ""
+msgstr "Tõmmista kõik andmed"
 
 #: ../src/xfpm-main.c:275
 msgid "Restart the running instance of Xfce power manager"
@@ -891,7 +891,7 @@ msgstr "Trüki „%s --help” kasutusjuhise saamiseks"
 
 #: ../src/xfpm-main.c:344
 msgid "Unable to get connection to the message bus session"
-msgstr ""
+msgstr "Ei saa ühenduste D-Bus sõnumisiini sessiooniga"
 
 #: ../src/xfpm-main.c:352
 #, c-format
@@ -919,7 +919,7 @@ msgstr "Vigane küpsis"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr ""
+msgstr "Mitte ükski ekraanilukustusvahend ei toimi ja seega ekraan ei ole lukustatud"
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
@@ -950,7 +950,7 @@ msgstr "Esitlus_režiim"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
 msgid "_Power manager settings..."
-msgstr "_Vooluhalduri sätted..."
+msgstr "_Vooluhalduri seadistused..."
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
@@ -976,20 +976,20 @@ msgstr "Protsent ja järelejäänud aeg"
 #. create the dialog
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:158
 msgid "Power Manager Plugin Settings"
-msgstr ""
+msgstr "Vooluhalduri pistikprogrammi seadistused"
 
 #. show-panel-label setting
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
 msgid "Show label:"
-msgstr ""
+msgstr "Näita silt:"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:214
 msgid "Show 'Presentation mode' indicator:"
-msgstr ""
+msgstr "Kuva esitlusrežiimi näidikut:"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr ""
+msgstr "Vooluhalduri pistikprogramm"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
