@@ -58,13 +58,11 @@ void                xfpm_notify_show_notification             (XfpmNotify *notif
                                                                const gchar *title,
                                                                const gchar *text,
                                                                const gchar *icon_name,
-                                                               gint timeout,
                                                                XfpmNotifyUrgency urgency);
 NotifyNotification *xfpm_notify_new_notification              (XfpmNotify *notify,
                                                                const gchar *title,
                                                                const gchar *text,
                                                                const gchar *icon_name,
-                                                               guint timeout,
                                                                XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
 void                xfpm_notify_add_action_to_notification    (XfpmNotify *notify,
                                                                NotifyNotification *n,

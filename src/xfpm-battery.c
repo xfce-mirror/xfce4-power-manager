@@ -190,7 +190,6 @@ xfpm_battery_notify (XfpmBattery *battery)
                                  _("Power Manager"),
                                  message,
                                  xfpm_battery_get_icon_name (battery),
-                                 8000,
                                  XFPM_NOTIFY_NORMAL);
 
   g_free (message);

@@ -114,7 +114,6 @@ xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self, gfloat value)
                                                   _("Power Manager"),
                                                   summary,
                                                   "keyboard-brightness",
-                                                  0,
                                                   XFPM_NOTIFY_NORMAL);
     g_free (summary);
   }

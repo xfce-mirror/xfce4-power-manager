@@ -51,7 +51,6 @@ static void xfpm_notify_finalize   (GObject *object);
 static NotifyNotification * xfpm_notify_new_notification_internal (const gchar *title,
                                                                    const gchar *message,
                                                                    const gchar *icon_name,
-                                                                   guint timeout,
                                                                    XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
 
 struct XfpmNotifyPrivate
@@ -190,7 +189,7 @@ xfpm_notify_finalize (GObject *object)
 
 static NotifyNotification *
 xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
-                                       const gchar *icon_name, guint timeout,
+                                       const gchar *icon_name,
                                        XfpmNotifyUrgency urgency)
 {
   NotifyNotification *n;
@@ -212,9 +211,6 @@ xfpm_notify_new_notification_internal (const gchar *title, const gchar *message,
   notify_notification_set_hint (n, "image-path", g_variant_new_string (icon_name));
 
   notify_notification_set_urgency (n, (NotifyUrgency)urgency);
-
-  if (timeout != 0)
-    notify_notification_set_timeout (n, timeout);
 
   return n;
 }
@@ -273,15 +269,13 @@ xfpm_notify_new (void)
 void
 xfpm_notify_show_notification (XfpmNotify *notify, const gchar *title,
                               const gchar *text,  const gchar *icon_name,
-                              gint timeout, XfpmNotifyUrgency urgency)
+                              XfpmNotifyUrgency urgency)
 {
   NotifyNotification *n;
 
   xfpm_notify_close_notification (notify);
 
-  n = xfpm_notify_new_notification_internal (title,
-                                             text, icon_name,
-                                             timeout, urgency);
+  n = xfpm_notify_new_notification_internal (title, text, icon_name, urgency);
 
   xfpm_notify_present_notification (notify, n);
 }
@@ -291,12 +285,11 @@ xfpm_notify_new_notification (XfpmNotify *notify,
                               const gchar *title,
                               const gchar *text,
                               const gchar *icon_name,
-                              guint timeout,
                               XfpmNotifyUrgency urgency)
 {
   NotifyNotification *n = xfpm_notify_new_notification_internal (title,
                                                                  text, icon_name,
-                                                                 timeout, urgency);
+                                                                 urgency);
   return n;
 }
 

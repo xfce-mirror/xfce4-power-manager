@@ -166,7 +166,6 @@ xfpm_backlight_show_notification (XfpmBacklight *backlight, gfloat value)
                                                        _("Power Manager"),
                                                        summary,
                                                        XFPM_DISPLAY_BRIGHTNESS_ICON,
-                                                       0,
                                                        XFPM_NOTIFY_NORMAL);
     g_free (summary);
   }
