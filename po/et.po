@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-27 12:47+0200\n"
-"PO-Revision-Date: 2020-06-13 21:01+0000\n"
+"PO-Revision-Date: 2020-06-28 10:18+0000\n"
 "Last-Translator: Priit Jõerüüt <transifex@joeruut.com>\n"
 "Language-Team: Estonian (http://www.transifex.com/xfce/xfce4-power-manager/language/et/)\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 #: ../settings/xfpm-settings.c:661 ../settings/xfpm-settings.c:688
 #: ../settings/xfpm-settings.c:1660
 msgid "Never"
-msgstr "Eikunagi"
+msgstr "Mitte kunagi"
 
 #: ../data/interfaces/xfpm-settings.ui.h:2
 msgid "When the screensaver is activated"
@@ -61,15 +61,15 @@ msgstr "_Sulge"
 
 #: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "When power button is pressed:"
-msgstr "Kui vajutatakse toitenuppu:"
+msgstr "Kui vajutate toitenuppu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "When sleep button is pressed:"
-msgstr "Kui vajutatakse unenuppu:"
+msgstr "Kui vajutate unenuppu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "When hibernate button is pressed:"
-msgstr "Kui vajutatakse talveunenuppu:"
+msgstr "Kui vajutate talveunenuppu:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "When battery button is pressed:"
@@ -81,7 +81,7 @@ msgstr "Eksponentsiaalne"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Brightness step count:"
-msgstr ""
+msgstr "Ereduse sammude arv:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Handle display brightness _keys"
@@ -314,7 +314,7 @@ msgstr "Lukusta ekraan"
 
 #: ../settings/xfpm-settings.c:1551
 msgid "Number of brightness steps available using keys"
-msgstr ""
+msgstr "Sammude arv, mille alusel saab klaviatuurilt ekraani eredust sättida"
 
 #: ../settings/xfpm-settings.c:1591
 msgid "When all the power sources of the computer reach this charge level"
@@ -675,7 +675,7 @@ msgstr "<b>%s %s</b>\nTeadmata olek"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
+msgstr "Üks rakendus on parasjagu blokeerinud automaatse talveune. Selle tegevusega jätkamine võib kahjustada nimetatud rakenduse olekut.\nKas sa kindlasti soovid viia arvuti talveunne?"
 
 #: ../src/xfpm-power.c:434
 msgid ""
@@ -1002,7 +1002,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
+msgstr "Xfce toitehaldur haldab arvuti toiteallikaid ning erinevate seadmete voolutarvet (näiteks LCD ekraani eredus, monitori väljalülitamine ning protsessori taktsageduse automaatne muutmine)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -1012,7 +1012,7 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
+msgstr "Lisaks pakub Xfce vooluhaldur teistele rakendustele freedesktop-spetsifikatsiooni järgset DBus liidest, mille abil nad  saavad oma voolutarvet kohendada või blokeerida arvuti jäämise unne. Näiteks operatsioonisüsteemi paketihaldur võib kasutada viimatinimetatud funktsionaalsust süsteemi uuendamise ajal."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
@@ -1027,7 +1027,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr ""
+msgstr "See arendusjärk eelkõige parandab vigu ning parandab ikooni-teemade tuge (vähendades seadmete ikoone ning kasutades standardsemaid nimesid). Lisaks on uuendatud tõlkeid ja ribal kasutatav pistikprogramm on saanud uue nime (Power Manager Plugin)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -1036,7 +1036,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr ""
+msgstr "See arendusjärk parandab uinaku ja talveunega seotud vigu. Lisaks on uuendatud ribal kasutatavat pistikprogrammi (kaasates funktsionaalsuse tänaseks kasutusel eemaldatud ereduspluginast). Lisatud on uus teavitus klaviatuuri ereduse muutuste kohta ning toitehaldur kontrollib nüüd X11 poolt käivitatud ekraani pimendamise ajastust."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -1046,10 +1046,10 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr ""
+msgstr "Selle arendusjärguga oleme lisanud mitu uut funktsionaalsust, nende hulgas uinaku ja talveune halduse ilma systemd'ta ja UPower'i versiooniga >=0.99. Nüüd on võimalik detailsem kontroll systemd kasutuse üle. Uus pistikprogramm ribal asendab senise süsteemisalve ikooni, millega sai jälgida akude laetust. Parema ülevaate saamiseks on seadistuste dialoog tervikuna ümber kujundatud, paljud seni lahendamata vead on parandatud ning tõlkeid on uuendatud."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr ""
+msgstr "See stabiilne väljalase parandab mõned kompileerimise probleemid, mälulekke ning paar muud väiksemat viga. Lisaks on uuendatud tõlkeid."
