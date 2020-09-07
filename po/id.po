@@ -8,13 +8,14 @@
 # se7entime <se7entime@disroot.org>, 2014
 # se7entime <se7entime@disroot.org>, 2013
 # se7entime <se7entime@disroot.org>, 2013-2014
+# se7entime <se7entime@disroot.org>, 2013-2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 00:31+0200\n"
-"PO-Revision-Date: 2020-03-31 22:31+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2020-05-27 12:47+0200\n"
+"PO-Revision-Date: 2020-09-07 07:47+0000\n"
+"Last-Translator: Triyan W. Nugroho <triyan.wn@gmail.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/xfce/xfce4-power-manager/language/id/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,15 +74,15 @@ msgstr "Ketika tombol hibernasi ditekan:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "When battery button is pressed:"
-msgstr ""
+msgstr "Ketika tombol baterai ditekan:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Exponential"
-msgstr ""
+msgstr "Eksponensial"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Brightness step count:"
-msgstr ""
+msgstr "Jumlah langkah tingkat kecerahan:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "Handle display brightness _keys"
@@ -154,7 +155,7 @@ msgstr "<b>Batas daya kritis</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Lock screen when system is going to sleep"
-msgstr ""
+msgstr "Kunci layar ketika sistem akan tidur"
 
 #: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "<b>Security</b>"
@@ -171,7 +172,7 @@ msgstr "<b>Manajemen daya tampilan</b>"
 #: ../data/interfaces/xfpm-settings.ui.h:37
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr "Biarkan pengaturan daya menangani display power management (DPMS) alih-alih X11."
+msgstr "Biarkan manajer daya menangani display power management (DPMS) alih-alih X11."
 
 #: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Blank after"
@@ -179,19 +180,19 @@ msgstr "Kosongkan layar setelah"
 
 #: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "Put to sleep after"
-msgstr "Tidurkan komputer setelah ..."
+msgstr "Tidurkan komputer setelah"
 
 #: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "Switch off after"
-msgstr "Keluarkan pengguna setelah ..."
+msgstr "Matikan setelah"
 
 #: ../data/interfaces/xfpm-settings.ui.h:41
 msgid "On inactivity reduce to"
-msgstr "Saat tidak dipakai, kurangi ke ..."
+msgstr "Saat tidak dipakai, kurangi ke"
 
 #: ../data/interfaces/xfpm-settings.ui.h:42
 msgid "Reduce after"
-msgstr "Kurangi setelah ..."
+msgstr "Kurangi setelah"
 
 #: ../data/interfaces/xfpm-settings.ui.h:43
 msgid "<b>Brightness reduction</b>"
@@ -243,7 +244,7 @@ msgstr "jam"
 
 #: ../settings/xfpm-settings.c:690 ../settings/xfpm-settings.c:1662
 msgid "seconds"
-msgstr ""
+msgstr "detik"
 
 #: ../settings/xfpm-settings.c:903 ../settings/xfpm-settings.c:982
 #: ../settings/xfpm-settings.c:1044 ../settings/xfpm-settings.c:1140
@@ -314,7 +315,7 @@ msgstr "Kunci layar"
 
 #: ../settings/xfpm-settings.c:1551
 msgid "Number of brightness steps available using keys"
-msgstr ""
+msgstr "Jumlah langkah kecerahan yang tersedia menggunakan tombol"
 
 #: ../settings/xfpm-settings.c:1591
 msgid "When all the power sources of the computer reach this charge level"
@@ -327,7 +328,7 @@ msgstr[0] "menit"
 
 #: ../settings/xfpm-settings.c:2023
 msgid "Device"
-msgstr "Divais"
+msgstr "Perangkat"
 
 #: ../settings/xfpm-settings.c:2045
 msgid "Type"
@@ -355,7 +356,7 @@ msgstr "Teknologi"
 
 #: ../settings/xfpm-settings.c:2068
 msgid "Current charge"
-msgstr "Daya terisi ..."
+msgstr "Daya terisi"
 
 #. TRANSLATORS: Unit here is Watt hour
 #: ../settings/xfpm-settings.c:2076 ../settings/xfpm-settings.c:2088
@@ -365,11 +366,11 @@ msgstr "Wh"
 
 #: ../settings/xfpm-settings.c:2078
 msgid "Fully charged (design)"
-msgstr "Posisi cas penuh (desain)"
+msgstr "Daya terisi penuh (desain)"
 
 #: ../settings/xfpm-settings.c:2091
 msgid "Fully charged"
-msgstr "Posisi cas penuh"
+msgstr "Daya terisi penuh"
 
 #: ../settings/xfpm-settings.c:2102
 msgid "Energy empty"
@@ -394,11 +395,11 @@ msgstr "Serial"
 
 #: ../settings/xfpm-settings.c:2400
 msgid "Check your power manager installation"
-msgstr "Cek instalasi manajer daya anda"
+msgstr "Cek instalasi manajer daya Anda"
 
 #: ../settings/xfpm-settings.c:2493
 msgid "Devices"
-msgstr "Divais"
+msgstr "Perangkat"
 
 #: ../settings/xfpm-settings-app.c:74
 msgid "Settings manager socket"
@@ -410,7 +411,7 @@ msgstr "ID SOKET"
 
 #: ../settings/xfpm-settings-app.c:75
 msgid "Display a specific device by UpDevice object path"
-msgstr "Menampilkan divais tertentu berdasarkan lokasi obyek UpDevice"
+msgstr "Menampilkan perangkat tertentu berdasarkan lokasi obyek UpDevice"
 
 #: ../settings/xfpm-settings-app.c:75
 msgid "UpDevice object path"
@@ -426,7 +427,7 @@ msgstr "Informasi versi tampilan"
 
 #: ../settings/xfpm-settings-app.c:78
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr "Penyebab xfce4-power-manager-settings berhenti"
+msgstr "Menyebabkan xfce4-power-manager-settings berhenti"
 
 #: ../settings/xfpm-settings-app.c:176
 msgid "Failed to connect to power manager"
@@ -434,7 +435,7 @@ msgstr "Gagal terhubung ke manajer daya"
 
 #: ../settings/xfpm-settings-app.c:190
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Manajer Daya Xfce4 tak berjalan, anda ingin meluncurkannya sekarang?"
+msgstr "Manajer Daya Xfce4 tak berjalan, Anda ingin meluncurkannya sekarang?"
 
 #: ../settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
@@ -443,7 +444,7 @@ msgstr "Gagal memuat konfigurasi manajer daya, menggunakan standar"
 #: ../settings/xfpm-settings-app.c:356
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr "Ini adalah %s versi %s, yang berjalan pada Xfce %s\n.\n"
+msgstr "Ini adalah %s versi %s, yang berjalan pada Xfce %s.\n"
 
 #: ../settings/xfpm-settings-app.c:358
 #, c-format
@@ -466,11 +467,11 @@ msgstr "Pengaturan untuk Manajer Daya Xfce"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr ""
+msgstr "pengaturan;preferensi;tombol;tidur;hibernasi;baterai;suspensi;matikan;kecerahan;tutup laptop;kunci layar;terhubung daya;menghemat;kritis;"
 
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
-msgstr "Andhika Padmawan <andhika.padmawan@gmail.com>, 2009."
+msgstr "Andhika Padmawan <andhika.padmawan@gmail.com>, 2009.\nTriyan W. Nugroho <triyan.wn@gmail.com>, 2020."
 
 #: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
@@ -478,11 +479,11 @@ msgstr "Baterai"
 
 #: ../common/xfpm-power-common.c:47
 msgid "Uninterruptible Power Supply"
-msgstr "Sumber Daya Tanpa Hambatan"
+msgstr "Sumber Daya Tanpa Hambatan (UPS)"
 
 #: ../common/xfpm-power-common.c:49
 msgid "Line power"
-msgstr "Daya jalur"
+msgstr "Saluran listrik"
 
 #: ../common/xfpm-power-common.c:51
 msgid "Mouse"
@@ -527,19 +528,19 @@ msgstr "Lithium polimer"
 
 #: ../common/xfpm-power-common.c:87
 msgid "Lithium iron phosphate"
-msgstr "Litium besi fostat"
+msgstr "Litium besi fosfat"
 
 #: ../common/xfpm-power-common.c:89
 msgid "Lead acid"
-msgstr "Asam timbel"
+msgstr "Asam timbal"
 
 #: ../common/xfpm-power-common.c:91
 msgid "Nickel cadmium"
 msgstr "Nikel kadmium"
 
 #: ../common/xfpm-power-common.c:93
-msgid "Nickel metal hybride"
-msgstr "Nikel metal hibrida"
+msgid "Nickel metal hydride"
+msgstr "Hidrida logam nikel"
 
 #: ../common/xfpm-power-common.c:114
 msgid "Unknown time"
@@ -574,28 +575,28 @@ msgstr[0] "jam"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr "<b>%s %s</b>\nTercas penuh (%0.0f%%, %s waktu operasi)"
+msgstr "<b>%s %s</b>\nTerisi penuh (%0.0f%%, %s waktu operasi)"
 
 #: ../common/xfpm-power-common.c:303
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr "<b>%s %s</b>\nTercas penuh (%0.0f%%)"
+msgstr "<b>%s %s</b>\nTerisi penuh (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:313
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%, %s)"
-msgstr "<b>%s %s</b>\nSedang mencas (%0.0f%%, %s)"
+msgstr "<b>%s %s</b>\nSedang mengisi (%0.0f%%, %s)"
 
 #: ../common/xfpm-power-common.c:321
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Charging (%0.0f%%)"
-msgstr "<b>%s %s</b>\nSedang mencas (%0.0f%%)"
+msgstr "<b>%s %s</b>\nSedang mengisi (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:331
 #, c-format
@@ -616,28 +617,28 @@ msgstr "<b>%s %s</b>\nMemakai tenaga baterai (%0.0f%%)"
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nPeralihan ke tenaga baterai (%0.0f%%)"
+msgstr "<b>%s %s</b>\nMenunggu pemakaian tenaga baterai (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:352
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nPeralihan untuk mencas (%0.0f%%)"
+msgstr "<b>%s %s</b>\nMenunggu pengisian (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:358
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\nKosong"
+msgstr "<b>%s %s</b>\nkosong"
 
 #: ../common/xfpm-power-common.c:363
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr ""
+msgstr "<b>%s %s</b>\nDaya terisi: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -650,7 +651,7 @@ msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:374
 msgid "Not plugged in"
-msgstr "Tercabut dari listrik"
+msgstr "Tercabut dari saluran listrik"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
@@ -671,13 +672,13 @@ msgstr "<b>%s %s</b>\nKondisi tidak diketahui"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Sebuah aplikasi yang sedang menonaktifkan tidur otomatis. Melakukan tindakan ini sekarang dapat merusak keadaan kerja aplikasi ini.\nApakah Anda yakin ingin hibernasi sistem?"
+msgstr "Sebuah aplikasi sedang menonaktifkan tidur otomatis. Melakukan tindakan ini sekarang dapat merusak keadaan kerja aplikasi ini.\nApakah Anda yakin ingin hibernasi sistem?"
 
 #: ../src/xfpm-power.c:434
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Tak satu pun dari alat kunci layar berjalan berhasil, layar tidak akan terkunci.\nApakah Anda masih ingin melanjutkan suspensi sistem?"
+msgstr "Tak satu pun dari alat kunci layar berhasil berjalan, layar tidak akan terkunci.\nApakah Anda masih ingin melanjutkan suspensi sistem?"
 
 #: ../src/xfpm-power.c:599
 msgid "Hibernate the system"
@@ -693,7 +694,7 @@ msgstr "Matikan sistem"
 
 #: ../src/xfpm-power.c:630 ../src/xfpm-power.c:675
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Sistem berjalan pada daya yang rendah. Simpan pekerjaan anda untuk menghindari hilangnya data"
+msgstr "Sistem berjalan pada daya yang rendah. Simpan pekerjaan Anda untuk menghindari hilangnya data"
 
 #: ../src/xfpm-power.c:721
 msgid "_Cancel"
@@ -708,7 +709,7 @@ msgstr "Sistem berjalan pada daya rendah"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "Level pengisian %s anda rendah\nWaktu yang tersisa %s"
+msgstr "Level pengisian %s Anda rendah\nWaktu yang tersisa %s"
 
 #: ../src/xfpm-power.c:1644 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1724
 #: ../src/xfpm-power.c:1754
@@ -717,7 +718,7 @@ msgstr "Hak akses ditolak"
 
 #: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1763
 msgid "Suspend not supported"
-msgstr "Suspensi tak disokong"
+msgstr "Suspensi tak didukung"
 
 #. generate a human-readable summary for the notification
 #: ../src/xfpm-backlight.c:164
@@ -728,24 +729,24 @@ msgstr "Kecerahan: %.0f persen"
 #: ../src/xfpm-battery.c:109 ../src/xfpm-battery.c:160
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "%s anda penuh terisi"
+msgstr "%s Anda terisi penuh"
 
 #: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:163
 #, c-format
 msgid "Your %s is charging"
-msgstr "%s anda sedang mengisi"
+msgstr "%s Anda sedang mengisi"
 
 #: ../src/xfpm-battery.c:122
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr ""
+msgstr "%s (%i%%)\n%s sampai terisi penuh"
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
 msgid "Your %s is discharging"
-msgstr "%s anda tidak diisi"
+msgstr "%s Anda tidak diisi"
 
 #: ../src/xfpm-battery.c:132
 #, c-format
@@ -757,12 +758,12 @@ msgstr "Sistem berjalan pada daya %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr ""
+msgstr "%s (%i%%)\nPerkiraan waktu tersisa %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
 msgid "Your %s is empty"
-msgstr "%s anda telah kosong"
+msgstr "%s Anda telah kosong"
 
 #. generate a human-readable summary for the notification
 #: ../src/xfpm-kbd-backlight.c:112
@@ -845,7 +846,7 @@ msgstr "Punya tombol tidur"
 
 #: ../src/xfpm-main.c:154
 msgid "Has battery button"
-msgstr ""
+msgstr "Punya tombol baterai"
 
 #: ../src/xfpm-main.c:156
 msgid "Has LID"
@@ -861,7 +862,7 @@ msgstr "Buang semua informasi"
 
 #: ../src/xfpm-main.c:275
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Start ulang instansi manajer daya Xfce yang berjalan"
+msgstr "Mulai ulang instansi manajer daya Xfce yang berjalan"
 
 #: ../src/xfpm-main.c:276
 msgid "Show the configuration dialog"
@@ -924,7 +925,7 @@ msgstr "Manajemen daya untuk desktop Xfce"
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:289
 msgid "Display battery levels for attached devices"
-msgstr "Tampilkan batas baterai pada divais terpasang"
+msgstr "Tampilkan level baterai pada perangkat terpasang"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
@@ -951,7 +952,7 @@ msgstr "_Pengaturan manajer daya..."
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
 msgid "Unable to open the following url: %s"
-msgstr ""
+msgstr "Tak dapat membuka url berikut: %s"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "None"
@@ -959,29 +960,29 @@ msgstr "Tak ada"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "Percentage"
-msgstr ""
+msgstr "Persentase"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "Remaining time"
-msgstr ""
+msgstr "Sisa waktu"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "Percentage and remaining time"
-msgstr ""
+msgstr "Persentase dan sisa waktu"
 
 #. create the dialog
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:158
 msgid "Power Manager Plugin Settings"
-msgstr ""
+msgstr "Pengaturan Plugin Manajer Daya"
 
 #. show-panel-label setting
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
 msgid "Show label:"
-msgstr ""
+msgstr "Tampilkan label:"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:214
 msgid "Show 'Presentation mode' indicator:"
-msgstr ""
+msgstr "Tampilkan indikator 'Mode presentasi':"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
@@ -1015,7 +1016,7 @@ msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Manajer daya Xfce juga menyediakan plugin pada panel Xfce dan LXDE untuk mengontrol kecerahan layar dan memonitor sisa tenaga baterai dan kadar cas baterai."
+msgstr "Manajer daya Xfce juga menyediakan plugin pada panel Xfce dan LXDE untuk mengontrol kecerahan layar dan memonitor sisa tenaga baterai dan level pengisian baterai."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
