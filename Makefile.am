@@ -18,6 +18,7 @@ SUBDIRS =        	\
 
 EXTRA_DIST = 			\
 	TODO			\
+	README.md        \
 	intltool-extract.in 	\
 	intltool-merge.in 	\
 	intltool-update.in
