@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-01 00:31+0200\n"
-"PO-Revision-Date: 2020-03-31 22:31+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2020-05-27 12:47+0200\n"
+"PO-Revision-Date: 2020-09-14 15:31+0000\n"
+"Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Occitan (post 1500) (http://www.transifex.com/xfce/xfce4-power-manager/language/oc/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,7 +75,7 @@ msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Exponential"
-msgstr ""
+msgstr "Exponencial"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Brightness step count:"
@@ -115,11 +115,11 @@ msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "<b>System power saving</b>"
-msgstr ""
+msgstr "<b>Estalvi d’energia</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "<b>Laptop Lid</b>"
-msgstr ""
+msgstr "<b>Acaptador del portable</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "When laptop lid is closed:"
@@ -152,7 +152,7 @@ msgstr "<b>Carga critica</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "Lock screen when system is going to sleep"
-msgstr ""
+msgstr "Verrolhar l’ecran quand lo sistèma se met en velha"
 
 #: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "<b>Security</b>"
@@ -177,7 +177,7 @@ msgstr "Ecran void aprèp"
 
 #: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "Put to sleep after"
-msgstr ""
+msgstr "Mesa en velha aprp"
 
 #: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "Switch off after"
@@ -209,7 +209,7 @@ msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:47
 msgid "<b>Light Locker</b>"
-msgstr ""
+msgstr "<b>Verrolhatge lum</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:48
 msgid "Security"
@@ -241,7 +241,7 @@ msgstr "oras"
 
 #: ../settings/xfpm-settings.c:690 ../settings/xfpm-settings.c:1662
 msgid "seconds"
-msgstr ""
+msgstr "segondas"
 
 #: ../settings/xfpm-settings.c:903 ../settings/xfpm-settings.c:982
 #: ../settings/xfpm-settings.c:1044 ../settings/xfpm-settings.c:1140
@@ -364,7 +364,7 @@ msgstr "Wh"
 
 #: ../settings/xfpm-settings.c:2078
 msgid "Fully charged (design)"
-msgstr ""
+msgstr "Batariá completament cargada"
 
 #: ../settings/xfpm-settings.c:2091
 msgid "Fully charged"
@@ -465,7 +465,7 @@ msgstr "Paramètres del gestionari d'alimentacion Xfce"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr ""
+msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop lid;lock screen;plugged in;saving;critical;ecran;estalvi;energia;electricitat;carga;bataria;bateria;velha;ivernar;atudar;botons;preferencias;"
 
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
@@ -537,8 +537,8 @@ msgid "Nickel cadmium"
 msgstr "Nickel cadmi"
 
 #: ../common/xfpm-power-common.c:93
-msgid "Nickel metal hybride"
-msgstr "Ibrid nickèl-metal"
+msgid "Nickel metal hydride"
+msgstr "Niquèl metal idrur"
 
 #: ../common/xfpm-power-common.c:114
 msgid "Unknown time"
@@ -576,14 +576,14 @@ msgstr[1] "oras"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr ""
+msgstr "<b>%s %s</b>\nBatariá plena (%0.0f%%, %s en execucion)"
 
 #: ../common/xfpm-power-common.c:303
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nBatariá plena (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:313
 #, c-format
@@ -618,14 +618,14 @@ msgstr "<b>%s %s</b>\nEn descarga (%0.0f%%)"
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nEn espèra de descargament (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:352
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
+msgstr "<b>%s %s</b>\nEn espèra de cargament (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:358
 #, c-format
@@ -639,7 +639,7 @@ msgstr "<b>%s %s</b>\nes void"
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr ""
+msgstr "<b>%s %s</b>\nCarga actuala : %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -725,7 +725,7 @@ msgstr "Mesa en velha pas presa en carga"
 #: ../src/xfpm-backlight.c:164
 #, c-format
 msgid "Brightness: %.0f percent"
-msgstr ""
+msgstr "Luminositat : %.0f percent"
 
 #: ../src/xfpm-battery.c:109 ../src/xfpm-battery.c:160
 #, c-format
@@ -742,7 +742,7 @@ msgstr "Vòstra %s se carga"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr ""
+msgstr "%s (%i%%)\n%s abans cargament complet"
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
@@ -759,7 +759,7 @@ msgstr "Lo sistèma fonciona sus %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr ""
+msgstr "%s (%i%%)\nTemps restant estimat de %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
@@ -770,7 +770,7 @@ msgstr "Vòstra %s es voida"
 #: ../src/xfpm-kbd-backlight.c:112
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
-msgstr ""
+msgstr "Luminositat clavir : %.0f percent"
 
 #: ../src/xfpm-main.c:54
 #, c-format
@@ -948,7 +948,7 @@ msgstr "_Mòde presentacion"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
 msgid "_Power manager settings..."
-msgstr ""
+msgstr "_Paramètres gestion d’alimentacion..."
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
@@ -961,15 +961,15 @@ msgstr "Pas cap"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "Percentage"
-msgstr ""
+msgstr "Percentatge"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "Remaining time"
-msgstr ""
+msgstr "Temps que demòra"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "Percentage and remaining time"
-msgstr ""
+msgstr "Percentatge e temps restant"
 
 #. create the dialog
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:158
