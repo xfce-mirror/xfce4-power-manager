@@ -1,8 +1,8 @@
-[![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://gitlab.xfce.org/xfce/xfce4-power-manager/COPYING)
+[![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://gitlab.xfce.org/xfce/xfce4-power-manager/-/blob/master/COPYING)
 
 # xfce4-power-manager
 
-xfce4-power-manager manages the power sources of the computer and connected 
+Xfce4-power-manager manages the power sources of the computer and connected 
 devices (wireless mice, keyboards, media players etc.). It also allows users 
 to control the display backlight brightness and set power-saving modes for 
 displays and monitors.
@@ -14,7 +14,7 @@ they can adjust their power consumption.
 
 ### Homepage
 
-[xfce4-power-manager documentation](https://docs.xfce.org/xfce/xfce4-power-manager/start)
+[Xfce4-power-manager documentation](https://docs.xfce.org/xfce/xfce4-power-manager/start)
 
 ### Changelog
 
@@ -22,13 +22,13 @@ See [NEWS](https://gitlab.xfce.org/xfce/xfce4-power-manager/-/blob/master/NEWS) 
 
 ### Source Code Repository
 
-[xfce4-power-manager source code](https://gitlab.xfce.org/xfce/xfce4-power-manager)
+[Xfce4-power-manager source code](https://gitlab.xfce.org/xfce/xfce4-power-manager)
 
-### Download A Release Tarball
+### Download a Release Tarball
 
-[xfce4-power-manager archive](https://archive.xfce.org/src/xfce/xfce4-power-manager)
+[Xfce4-power-manager archive](https://archive.xfce.org/src/xfce/xfce4-power-manager)
     or
-[xfce4-power-manager tags](https://gitlab.xfce.org/xfce/xfce4-power-manager/-/tags)
+[Xfce4-power-manager tags](https://gitlab.xfce.org/xfce/xfce4-power-manager/-/tags)
 
 ### Installation
 
