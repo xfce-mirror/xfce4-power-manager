@@ -138,7 +138,7 @@ void        button_battery_changed_cb                  (GtkWidget *w,
                                                         XfconfChannel *channel);
 void        on_sleep_mode_changed_cb                   (GtkWidget *w,
                                                         XfconfChannel *channel);
-void        dpms_toggled_cb                            (GtkWidget *w,
+gboolean    dpms_toggled_cb                            (GtkWidget *w,
                                                         gboolean is_active,
                                                         XfconfChannel *channel);
 void        sleep_on_battery_value_changed_cb          (GtkWidget *w,
@@ -175,7 +175,7 @@ void        on_ac_sleep_mode_changed_cb                (GtkWidget *w,
                                                         XfconfChannel *channel);
 void        on_battery_sleep_mode_changed_cb           (GtkWidget *w,
                                                         XfconfChannel *channel);
-void        handle_brightness_keys_toggled_cb          (GtkWidget *w,
+gboolean    handle_brightness_keys_toggled_cb          (GtkWidget *w,
                                                         gboolean is_active,
                                                         XfconfChannel *channel);
 void        brightness_step_count_value_changed_cb     (GtkSpinButton *w,
@@ -419,7 +419,7 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
   }
 }
 
-void
+gboolean
 dpms_toggled_cb (GtkWidget *w, gboolean is_active, XfconfChannel *channel)
 {
   xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED_CFG, is_active);
@@ -434,6 +434,8 @@ dpms_toggled_cb (GtkWidget *w, gboolean is_active, XfconfChannel *channel)
     gtk_widget_set_sensitive (on_battery_dpms_off, is_active);
     gtk_widget_set_sensitive (on_battery_dpms_sleep, is_active);
   }
+
+  return FALSE;
 }
 
 void
@@ -801,12 +803,14 @@ critical_level_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
   }
 }
 
-void
+gboolean
 handle_brightness_keys_toggled_cb (GtkWidget *w, gboolean is_active, XfconfChannel *channel)
 {
   gtk_widget_set_sensitive (brightness_step_count, is_active);
   gtk_widget_set_sensitive (brightness_exponential, is_active);
   gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "brightness-step-count-label")), is_active);
+
+  return FALSE;
 }
 
 void
