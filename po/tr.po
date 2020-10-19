@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Demiray Muhterem <mdemiray@msn.com>, 2019-2020
-# Emin Tufan <etcetin@gmail.com>, 2017
+# Emin Tufan <etcetin@gmail.com>, 2017,2020
 # Fatih ERDEM <93.fatiherdem@gmail.com>, 2013
 # Hüseyin Fahri Uzun <mail@fahriuzun.com>, 2019
 # Natavan Mirzayeva <mirzayevanatavan@gmail.com>, 2014-2015
@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-27 12:47+0200\n"
-"PO-Revision-Date: 2020-05-29 11:14+0000\n"
-"Last-Translator: Serdar Sağlam <teknomobil@msn.com>\n"
+"PO-Revision-Date: 2020-10-19 00:53+0000\n"
+"Last-Translator: Emin Tufan <etcetin@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/xfce/xfce4-power-manager/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +34,7 @@ msgstr "Asla"
 
 #: ../data/interfaces/xfpm-settings.ui.h:2
 msgid "When the screensaver is activated"
-msgstr "Ekran koruyucu aktive edildiginde "
+msgstr "Ekran koruyucu aktifleştirildiğinde "
 
 #: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "When the screensaver is deactivated"
@@ -179,23 +179,23 @@ msgstr "Güç yönetimini X11 yerine görüntüleme güç yönetiminin (DPMS) ya
 
 #: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Blank after"
-msgstr "Ardından boşluk"
+msgstr "Şundan sonra karart"
 
 #: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "Put to sleep after"
-msgstr "Ardından uyku moduna alın"
+msgstr "Şundan sonra uyku kipine al"
 
 #: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "Switch off after"
-msgstr "Ardından kapatın"
+msgstr "Şundan sonra kapat"
 
 #: ../data/interfaces/xfpm-settings.ui.h:41
 msgid "On inactivity reduce to"
-msgstr "Azaltmak için etkin değildir"
+msgstr "Etkileşimsizken şuna düşür"
 
 #: ../data/interfaces/xfpm-settings.ui.h:42
 msgid "Reduce after"
-msgstr "Ardından azaltın"
+msgstr "Şundan sonra düşür"
 
 #: ../data/interfaces/xfpm-settings.ui.h:43
 msgid "<b>Brightness reduction</b>"
@@ -207,7 +207,7 @@ msgstr "Ekran"
 
 #: ../data/interfaces/xfpm-settings.ui.h:45
 msgid "Automatically lock the session:"
-msgstr "Otomatik oturum kilitleme:"
+msgstr "Oturumu kendiliğinden kilitle:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:46
 msgid "Delay locking after screensaver for"
@@ -271,7 +271,7 @@ msgstr "Askıya alma işlemi desteklenmiyor"
 #: ../settings/xfpm-settings.c:1415 ../settings/xfpm-settings.c:1467
 #: ../settings/xfpm-settings.c:1518 ../src/xfpm-power.c:692
 msgid "Hibernate"
-msgstr "Uyku"
+msgstr "Hazırda Beklet"
 
 #: ../settings/xfpm-settings.c:921 ../settings/xfpm-settings.c:1158
 msgid "Hibernate operation not permitted"
@@ -318,11 +318,11 @@ msgstr "Ekranı kilitle"
 
 #: ../settings/xfpm-settings.c:1551
 msgid "Number of brightness steps available using keys"
-msgstr "Tuşları kullanarak mevcut parlaklık adımı sayısı"
+msgstr "Tuş kullanılabilecek var olan parlaklık adımı sayısı"
 
 #: ../settings/xfpm-settings.c:1591
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Bilgisayarın şarj seviyesi şu seviye yüzdesine geldiğinde"
+msgstr "Bilgisayarın tüm güç kaynakları şu şarj düzeyine geldiğinde"
 
 #: ../settings/xfpm-settings.c:1667 ../common/xfpm-power-common.c:139
 msgid "minute"
@@ -340,7 +340,7 @@ msgstr "Tür"
 
 #: ../settings/xfpm-settings.c:2050
 msgid "PowerSupply"
-msgstr "GüçKaynağı"
+msgstr "Güç Kaynağı"
 
 #: ../settings/xfpm-settings.c:2051 ../src/xfpm-main.c:77
 msgid "True"
@@ -360,7 +360,7 @@ msgstr "Teknoloji"
 
 #: ../settings/xfpm-settings.c:2068
 msgid "Current charge"
-msgstr "Güncel şarj"
+msgstr "Şu anki şarj"
 
 #. TRANSLATORS: Unit here is Watt hour
 #: ../settings/xfpm-settings.c:2076 ../settings/xfpm-settings.c:2088
@@ -370,11 +370,11 @@ msgstr "Wh"
 
 #: ../settings/xfpm-settings.c:2078
 msgid "Fully charged (design)"
-msgstr "Tam dolu (tasarım)"
+msgstr "Tümüyle dolu (tasarım)"
 
 #: ../settings/xfpm-settings.c:2091
 msgid "Fully charged"
-msgstr "Tam dolu"
+msgstr "Tümüyle dolu"
 
 #: ../settings/xfpm-settings.c:2102
 msgid "Energy empty"
@@ -399,11 +399,11 @@ msgstr "Seri"
 
 #: ../settings/xfpm-settings.c:2400
 msgid "Check your power manager installation"
-msgstr "Güç yöneticisi kurulumunu kontrol edin"
+msgstr "Güç yöneticisi kurulumunuzu gözden geçirin"
 
 #: ../settings/xfpm-settings.c:2493
 msgid "Devices"
-msgstr "Cihazlar"
+msgstr "Aygıtlar"
 
 #: ../settings/xfpm-settings-app.c:74
 msgid "Settings manager socket"
@@ -415,7 +415,7 @@ msgstr "SOKET ID"
 
 #: ../settings/xfpm-settings-app.c:75
 msgid "Display a specific device by UpDevice object path"
-msgstr "UpDevice  nesne yoluya belirli bir cihazı göster"
+msgstr "UpDevice nesne yoluya belirli aygıtı göster"
 
 #: ../settings/xfpm-settings-app.c:75
 msgid "UpDevice object path"
@@ -453,7 +453,7 @@ msgstr "Bu %s sürümü %s, Xfce %s masaüstünde çalışıyor.\n"
 #: ../settings/xfpm-settings-app.c:358
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr "GTK+ %d.%d.%d ile oluşturulmuş, GTK+ %d.%d.%d ile linklenmiş"
+msgstr "GTK+ %d.%d.%d ile inşa edildi, GTK+ %d.%d.%d ile bağlantılı"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:358 ../src/xfpm-power.c:635 ../src/xfpm-power.c:678
@@ -475,7 +475,7 @@ msgstr "ayarlar;tercihler;düğmeler;uyku;hazırda bekletme;pil;askıya alma;kap
 
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
-msgstr "çevirmenler"
+msgstr "Emin Tufan Çetin <etcetin@gmail.com>"
 
 #: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
@@ -524,19 +524,19 @@ msgstr "Bilinmeyen"
 
 #: ../common/xfpm-power-common.c:83
 msgid "Lithium ion"
-msgstr "Lithium iyon"
+msgstr "Lityum iyon"
 
 #: ../common/xfpm-power-common.c:85
 msgid "Lithium polymer"
-msgstr "Lithium polimer"
+msgstr "Lityum polimer"
 
 #: ../common/xfpm-power-common.c:87
 msgid "Lithium iron phosphate"
-msgstr "Lithium iron phosphate"
+msgstr "Lityum demir fosfat"
 
 #: ../common/xfpm-power-common.c:89
 msgid "Lead acid"
-msgstr "Lead acid"
+msgstr "Kurşun asidi"
 
 #: ../common/xfpm-power-common.c:91
 msgid "Nickel cadmium"
@@ -582,14 +582,14 @@ msgstr[1] "saat"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%, %s runtime)"
-msgstr "<b>%s %s</b>\nTam dolu (%0.0f%%, %s çalışma zamanı)"
+msgstr "<b>%s %s</b>\ntümüyle dolu (%0.0f%%, %s çalışma zamanı)"
 
 #: ../common/xfpm-power-common.c:303
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged (%0.0f%%)"
-msgstr "<b>%s %s</b>\nTam dolu (%0.0f%%)"
+msgstr "<b>%s %s</b>\nTümüyle dolu (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:313
 #, c-format
@@ -645,7 +645,7 @@ msgstr "<b>%s %s</b>\nboş"
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr "<b>%s %s</b>\nMevcut Şarj: %0.0f%%"
+msgstr "<b>%s %s</b>\nŞu anki şarj: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -679,7 +679,7 @@ msgstr "<b>%s %s</b>\nBilinmeyen durum"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Bir uygulama otomatik askıya alma işlemini devre dışı bırakıyor. Bu işlemi şu an gerçekleştirirseniz çalışan uygulamaya zarar verebilirsiniz.\nSistemi hazırda bekletmek istediğinizden emin misiniz?"
+msgstr "Bir uygulama kendiliğinden askıya alma işlemini devre dışı bırakıyor. Bu işlemi şu an gerçekleştirirseniz çalışan uygulamaya zarar verebilirsiniz.\nSistemi hazırda bekletmek istediğinizden emin misiniz?"
 
 #: ../src/xfpm-power.c:434
 msgid ""
@@ -689,7 +689,7 @@ msgstr "Ekran kilitleme araçlarından hiçbiri başarılı çalışmadı, ekran
 
 #: ../src/xfpm-power.c:599
 msgid "Hibernate the system"
-msgstr "Sistemi hazırda beklet moduna al"
+msgstr "Sistemi hazırda beklet"
 
 #: ../src/xfpm-power.c:610
 msgid "Suspend the system"
@@ -716,7 +716,7 @@ msgstr "Sistem düşük pilde çalışıyor"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "%s şarj seviyesi düşük\n%s dakika kaldı"
+msgstr "%s şarj düzeyiniz düşük\n%s dakika kaldı"
 
 #: ../src/xfpm-power.c:1644 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1724
 #: ../src/xfpm-power.c:1754
@@ -731,12 +731,12 @@ msgstr "Askıya alma desteklenmiyor"
 #: ../src/xfpm-backlight.c:164
 #, c-format
 msgid "Brightness: %.0f percent"
-msgstr "Parlaklık: %.0f yüzde"
+msgstr "Parlaklık: yüzde %.0f"
 
 #: ../src/xfpm-battery.c:109 ../src/xfpm-battery.c:160
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "%s tamamen doldu"
+msgstr "%s tümüyle doldu"
 
 #: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:163
 #, c-format
@@ -748,7 +748,7 @@ msgstr "%s aygıtı şarj ediliyor"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr "%s (%i%%)\ntamamen şarj olması için gerekli süre%s"
+msgstr "%s (%i%%)\nTümüyle şarj olana dek %s"
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
@@ -765,7 +765,7 @@ msgstr "Sistem, %s gücüyle çalışıyor."
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr "%s (%i%%)\nTahmini kalan süre %s"
+msgstr "%s (%i%%)\n%s kaldı"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
@@ -776,7 +776,7 @@ msgstr "%s aygıtı boş"
 #: ../src/xfpm-kbd-backlight.c:112
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
-msgstr "Klavye Parlaklığı: %.0f yüzde"
+msgstr "Klavye Parlaklığı: yüzde %.0f"
 
 #: ../src/xfpm-main.c:54
 #, c-format
@@ -789,7 +789,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nXfce Güç Yöneticisi %s⏎\n\nXfce ek bileşenlerinden biridir⏎\nhttp://goodies.xfce.org⏎\n\nGNU GPL ile lisanslanmıştır.⏎\n\n"
+msgstr "\nXfce Güç Yöneticisi %s\n\nXfce ek bileşenlerinden biridir\nhttp://goodies.xfce.org\n\nGNU GPL ile lisanslanmıştır.\n\n"
 
 #: ../src/xfpm-main.c:112
 #, c-format
@@ -861,7 +861,7 @@ msgstr "LID var"
 
 #: ../src/xfpm-main.c:272
 msgid "Do not daemonize"
-msgstr "Muhafaza etmeyin"
+msgstr "Art alana atmayın"
 
 #: ../src/xfpm-main.c:274
 msgid "Dump all information"
@@ -904,7 +904,7 @@ msgstr "Xfce güç yöneticisi çalışmıyor"
 
 #: ../src/xfpm-main.c:442
 msgid "Another power manager is already running"
-msgstr "Başka bir güç yöneticisi halen çalışıyor"
+msgstr "Başka güç yöneticisi halen çalışıyor"
 
 #: ../src/xfpm-main.c:446
 #, c-format
@@ -923,7 +923,7 @@ msgstr "Geçersiz çerez"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr "Ekran kilitleme araçlarından hiç biri başarıyla çalışmadı, ekran kilitlenmeyecek."
+msgstr "Ekran kilitleme araçlarından hiçbiri başarıyla çalışmadı, ekran kilitlenmeyecek."
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
@@ -940,7 +940,7 @@ msgstr "Eklenen aygıtlar için pil düzeyini göster"
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
-msgstr "%s güç yönetimini engelliyor"
+msgstr "%s, güç yönetimini engelliyor"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
 msgid "<b>Display brightness</b>"
@@ -959,7 +959,7 @@ msgstr "_Güç yönetimi ayarları..."
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
 msgid "Unable to open the following url: %s"
-msgstr "Aşağıdaki adres açılamadı: %s"
+msgstr "Şu adres açılamadı: %s"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "None"
@@ -999,14 +999,14 @@ msgstr "Güç Yönetimi Eklentisi"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr "Cihazlarınızın  pil seviyelerini görüntüleyin ve ekranınızın parlaklılığını kontrol edin"
+msgstr "Aygıtlarınızın pil düzeylerini görüntüleyin ve ekranınızın parlaklılığını denetleyin"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Xfce güç yöneticisi bilgisayarda ve kendi güç tüketimini azaltmak için(LCD parlaklık seviyesi, monitör uyku modu, MİB frekans ölçekleme gibi)  kontrol edilebilir cihazlarda  güç kaynaklarını yönetir. "
+msgstr "Xfce güç yöneticisi, bilgisayardaki güç kaynaklarını ve güç tüketimlerini azaltmak için denetlenebilen aygıtları (LCD parlaklık düzeyi, monitör uyku kipi, MİB frekans ölçekleme gibi) yönetir."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -1016,14 +1016,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Ek olarak,Xfce güç kaynağı geçerli güç düzeyi hakkında diğer uygulamaları bilgilendirmek için ücretsiz masaüstü uyumlu DBus arayüzleri dizisini sağlar,böylece onlar kendi güç tüketimini ayarlayabilirler,ve bu güç kaynağı üzerinden otomatik uyku eylemini engellemek amaçlı uygulamalar sağlar;örnek olarak,işletim sisteminin paket yöneticisi  güncelleme işlemleri gerçekleştirilirken bu arayüzü kullanması gerekir."
+msgstr "Xfce güç yöneticisi, ek olarak, şu anki güç düzeyiyle ilgili diğer uygulamaları bilgilendirerek güç tüketimlerini ayarlamak için freedesktop uyumlu DBus arayüz takımı ve güç yöneticisi aracılığıyla uygulamaların, kendiliğinden uyku eylemlerini önlemelerini sağlayan engelleyici arayüzü sağlar. Örneğin, işletim sisteminin paket yöneticisi, güncelleme işlemlerini gerçekleştirirken bu arayüzü kullanabilir."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Ayrıca Xfce güç yöneticisi LCD parlaklığı seviyelerini,pil ve cihaz şarj seviyelerini izlemek için Xfce ve LXDE panelleri için eklenti sağlar."
+msgstr "Xfce güç yöneticisi; LCD parlaklığı düzeylerini, pil ve aygıt şarj düzeylerini izlemek için Xfce ve LXDE panel eklentilerini sağlar."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -1031,7 +1031,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr "Bu geliştirme sürümü çoğunlukla hataları giderir ve onlar için standart isimler kullanarak ve cihaz simgelerini azaltarak simge temaları için daha iyi destek sunar.Ayrıca güncellenmiş çeviriler bulunmaktadır.Panel eklentisi Güç Yöneticisi Eklentisi olarak yeniden adlandırıldı."
+msgstr "Bu geliştirme sürümü çoğunlukla hataları gidermiştir, aygıt simgelerini azaltarak ve standart adlar kullanarak simge temaları için daha iyi destek sağlamıştır. Panel eklentisi Güç Yönetici Eklentisi olarak yeniden adlandırılmıştır."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -1040,7 +1040,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr "Bu geliştirme sürümü suspend ve hibernate ile hataları giderir. Aynı zamanda (now dropped) parlaklık panel eklentisi işlevselliğini birleştiren,panel eklentisi geliştirir.Yeni açılan bildirim klavye parlaklık değişiklikleri  için hesaba eklendi ve ayrıca şimdi Güç Yöneticisi X11  boş zamanlarda kontrol ediliyor."
+msgstr "Bu geliştirme sürümü, askıya alma ve hazırda beklet hatalarını giderir. Ayrıca, panel eklentisini iyileştirir, (şimdi terk edilmiş) parlaklık panel eklentisinin işlevselliğini barındırır. Klavyeyle parlaklık değişimi için yeni açılır pencere bildirimi eklendi ve Güç Yöneticisi artık X11 karartı zamanlarını denetleyebiliyor."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -1050,10 +1050,10 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr "Bu geliştirme sürümü aralarında systemd ve Upower>=0.99 olmadan suspending/hibernation olduğu gibi bir çok yeni özellik tanıttı .Bu surüm systemd-inhibition kontrolünü sağlar, pili izlemek için yeni panel eklentisini verir ve sistemden cihazının şarj seviyelerini değiştirir. İletişim ayarları daha iyi gözetim için tamamen yeniden yapılandırıldı ve bir çok açık hatalar düzeltildi ve çeviriler güncellendi."
+msgstr "Bu geliştirme sürümü, systemd ve UPower>=0.99 olmaksızın askıya alma ve hazırda bekletme gibi birçok yeni özelliği barındırıyor. Bu sürüm, systemd hazırda bekletmesinin tekil denetimini sağlıyor, pili gözlemlemek için yeni panel eklentisi barındırıyor ve aygıt şarj düzeyleri tepsi simgesininin yerini alıyor. Ayarlar penceresi daha iyi gözetim için tümüyle yeniden yapılandırıldı ve birçok açık hata giderildi ve çeviriler güncellendi."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr "Bu kararlı sürüm derleme sorunları, bellek sızıntısı ve diğer küçük hataları giderir. Ayrıca güncelleştirilmiş çevirileri sağlar."
+msgstr "Bu kararlı sürüm; derleme sorunlarını, bellek sızıntısını ve birkaç diğer küçük hatayı gideriyor. Ayrıca güncellenmiş çevirileri sağlıyor."
