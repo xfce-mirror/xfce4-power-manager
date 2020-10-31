@@ -9,12 +9,13 @@
 # se7entime <se7entime@disroot.org>, 2013
 # se7entime <se7entime@disroot.org>, 2013-2014
 # se7entime <se7entime@disroot.org>, 2013-2014
+# Triyan W. Nugroho <triyan.wn@gmail.com>, 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-27 12:47+0200\n"
-"PO-Revision-Date: 2020-09-07 07:47+0000\n"
+"POT-Creation-Date: 2020-10-28 00:45+0100\n"
+"PO-Revision-Date: 2020-10-31 07:27+0000\n"
 "Last-Translator: Triyan W. Nugroho <triyan.wn@gmail.com>\n"
 "Language-Team: Indonesian (http://www.transifex.com/xfce/xfce4-power-manager/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -250,7 +251,7 @@ msgstr "detik"
 #: ../settings/xfpm-settings.c:1044 ../settings/xfpm-settings.c:1140
 #: ../settings/xfpm-settings.c:1232 ../settings/xfpm-settings.c:1351
 #: ../settings/xfpm-settings.c:1409 ../settings/xfpm-settings.c:1461
-#: ../settings/xfpm-settings.c:1512 ../src/xfpm-power.c:703
+#: ../settings/xfpm-settings.c:1512 ../src/xfpm-power.c:701
 msgid "Suspend"
 msgstr "Suspensi"
 
@@ -266,7 +267,7 @@ msgstr "Operasi suspensi tidak didukung"
 #: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1154
 #: ../settings/xfpm-settings.c:1238 ../settings/xfpm-settings.c:1357
 #: ../settings/xfpm-settings.c:1415 ../settings/xfpm-settings.c:1467
-#: ../settings/xfpm-settings.c:1518 ../src/xfpm-power.c:692
+#: ../settings/xfpm-settings.c:1518 ../src/xfpm-power.c:690
 msgid "Hibernate"
 msgstr "Hibernasi"
 
@@ -295,7 +296,7 @@ msgid "Do nothing"
 msgstr "Abaikan"
 
 #: ../settings/xfpm-settings.c:994 ../settings/xfpm-settings.c:1363
-#: ../src/xfpm-power.c:714
+#: ../src/xfpm-power.c:712
 msgid "Shutdown"
 msgstr "Matikan"
 
@@ -452,8 +453,8 @@ msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Dibangun dengan GTK+ %d.%d.%d, ditautkan dengan GTK+ %d.%d.%d."
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:358 ../src/xfpm-power.c:635 ../src/xfpm-power.c:678
-#: ../src/xfpm-power.c:841 ../src/xfpm-power.c:863 ../src/xfpm-backlight.c:166
+#: ../src/xfpm-power.c:358 ../src/xfpm-power.c:634 ../src/xfpm-power.c:676
+#: ../src/xfpm-power.c:839 ../src/xfpm-power.c:860 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-battery.c:190 ../src/xfpm-kbd-backlight.c:114
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
@@ -668,55 +669,55 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nKondisi tidak diketahui"
 
-#: ../src/xfpm-power.c:385
+#: ../src/xfpm-power.c:384
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Sebuah aplikasi sedang menonaktifkan tidur otomatis. Melakukan tindakan ini sekarang dapat merusak keadaan kerja aplikasi ini.\nApakah Anda yakin ingin hibernasi sistem?"
 
-#: ../src/xfpm-power.c:434
+#: ../src/xfpm-power.c:433
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Tak satu pun dari alat kunci layar berhasil berjalan, layar tidak akan terkunci.\nApakah Anda masih ingin melanjutkan suspensi sistem?"
 
-#: ../src/xfpm-power.c:599
+#: ../src/xfpm-power.c:598
 msgid "Hibernate the system"
 msgstr "Hibernasi sistem"
 
-#: ../src/xfpm-power.c:610
+#: ../src/xfpm-power.c:609
 msgid "Suspend the system"
 msgstr "Suspensi sistem"
 
-#: ../src/xfpm-power.c:619
+#: ../src/xfpm-power.c:618
 msgid "Shutdown the system"
 msgstr "Matikan sistem"
 
-#: ../src/xfpm-power.c:630 ../src/xfpm-power.c:675
+#: ../src/xfpm-power.c:629 ../src/xfpm-power.c:673
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Sistem berjalan pada daya yang rendah. Simpan pekerjaan Anda untuk menghindari hilangnya data"
 
-#: ../src/xfpm-power.c:721
+#: ../src/xfpm-power.c:719
 msgid "_Cancel"
 msgstr "_Batal"
 
-#: ../src/xfpm-power.c:842
+#: ../src/xfpm-power.c:840
 msgid "System is running on low power"
 msgstr "Sistem berjalan pada daya rendah"
 
-#: ../src/xfpm-power.c:859
+#: ../src/xfpm-power.c:856
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Level pengisian %s Anda rendah\nWaktu yang tersisa %s"
 
-#: ../src/xfpm-power.c:1644 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1724
-#: ../src/xfpm-power.c:1754
+#: ../src/xfpm-power.c:1640 ../src/xfpm-power.c:1688 ../src/xfpm-power.c:1720
+#: ../src/xfpm-power.c:1750
 msgid "Permission denied"
 msgstr "Hak akses ditolak"
 
-#: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1763
+#: ../src/xfpm-power.c:1729 ../src/xfpm-power.c:1759
 msgid "Suspend not supported"
 msgstr "Suspensi tak didukung"
 
@@ -853,8 +854,8 @@ msgid "Has LID"
 msgstr "Punya LID"
 
 #: ../src/xfpm-main.c:272
-msgid "Do not daemonize"
-msgstr "Jangan jurikkan"
+msgid "Daemonize"
+msgstr "Jurikkan"
 
 #: ../src/xfpm-main.c:274
 msgid "Dump all information"
