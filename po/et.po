@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-27 12:47+0200\n"
-"PO-Revision-Date: 2020-06-28 10:18+0000\n"
+"POT-Creation-Date: 2020-10-28 00:45+0100\n"
+"PO-Revision-Date: 2020-11-01 07:39+0000\n"
 "Last-Translator: Priit Jõerüüt <transifex@joeruut.com>\n"
 "Language-Team: Estonian (http://www.transifex.com/xfce/xfce4-power-manager/language/et/)\n"
 "MIME-Version: 1.0\n"
@@ -249,7 +249,7 @@ msgstr "sekundit"
 #: ../settings/xfpm-settings.c:1044 ../settings/xfpm-settings.c:1140
 #: ../settings/xfpm-settings.c:1232 ../settings/xfpm-settings.c:1351
 #: ../settings/xfpm-settings.c:1409 ../settings/xfpm-settings.c:1461
-#: ../settings/xfpm-settings.c:1512 ../src/xfpm-power.c:703
+#: ../settings/xfpm-settings.c:1512 ../src/xfpm-power.c:701
 msgid "Suspend"
 msgstr "Tee uinak"
 
@@ -265,7 +265,7 @@ msgstr "Uinakut ei toetata"
 #: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1154
 #: ../settings/xfpm-settings.c:1238 ../settings/xfpm-settings.c:1357
 #: ../settings/xfpm-settings.c:1415 ../settings/xfpm-settings.c:1467
-#: ../settings/xfpm-settings.c:1518 ../src/xfpm-power.c:692
+#: ../settings/xfpm-settings.c:1518 ../src/xfpm-power.c:690
 msgid "Hibernate"
 msgstr "Mine talveunne"
 
@@ -294,7 +294,7 @@ msgid "Do nothing"
 msgstr "Ära tee midagi"
 
 #: ../settings/xfpm-settings.c:994 ../settings/xfpm-settings.c:1363
-#: ../src/xfpm-power.c:714
+#: ../src/xfpm-power.c:712
 msgid "Shutdown"
 msgstr "Lülita välja"
 
@@ -452,8 +452,8 @@ msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Kompileeritud kasutades GTK+ %d.%d.%d, parajasti GTK+ %d.%d.%d."
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:358 ../src/xfpm-power.c:635 ../src/xfpm-power.c:678
-#: ../src/xfpm-power.c:841 ../src/xfpm-power.c:863 ../src/xfpm-backlight.c:166
+#: ../src/xfpm-power.c:358 ../src/xfpm-power.c:634 ../src/xfpm-power.c:676
+#: ../src/xfpm-power.c:839 ../src/xfpm-power.c:860 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-battery.c:190 ../src/xfpm-kbd-backlight.c:114
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
@@ -671,55 +671,55 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nTeadmata olek"
 
-#: ../src/xfpm-power.c:385
+#: ../src/xfpm-power.c:384
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Üks rakendus on parasjagu blokeerinud automaatse talveune. Selle tegevusega jätkamine võib kahjustada nimetatud rakenduse olekut.\nKas sa kindlasti soovid viia arvuti talveunne?"
 
-#: ../src/xfpm-power.c:434
+#: ../src/xfpm-power.c:433
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Mitte ainsamgi ekraanilukustuse tarvik ei toiminud ja seega ekraan ei ole lukustatud.\nKas sa jätkuvalt arvuti seada uinakusse?"
 
-#: ../src/xfpm-power.c:599
+#: ../src/xfpm-power.c:598
 msgid "Hibernate the system"
 msgstr "Vii arvuti talveunne"
 
-#: ../src/xfpm-power.c:610
+#: ../src/xfpm-power.c:609
 msgid "Suspend the system"
 msgstr "Jäta arvuti uinakusse"
 
-#: ../src/xfpm-power.c:619
+#: ../src/xfpm-power.c:618
 msgid "Shutdown the system"
 msgstr "Lülita arvuti välja"
 
-#: ../src/xfpm-power.c:630 ../src/xfpm-power.c:675
+#: ../src/xfpm-power.c:629 ../src/xfpm-power.c:673
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Süsteem töötab väikese võimsusega. Andmete kadumise vältimiseks salvestage oma töö"
 
-#: ../src/xfpm-power.c:721
+#: ../src/xfpm-power.c:719
 msgid "_Cancel"
 msgstr "_Loobu"
 
-#: ../src/xfpm-power.c:842
+#: ../src/xfpm-power.c:840
 msgid "System is running on low power"
 msgstr "Süsteem töötab väikese võimsusega"
 
-#: ../src/xfpm-power.c:859
+#: ../src/xfpm-power.c:856
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Sinu %s akutäituvuse tase on madal\nHinnanguliselt on jäänud aega %s"
 
-#: ../src/xfpm-power.c:1644 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1724
-#: ../src/xfpm-power.c:1754
+#: ../src/xfpm-power.c:1640 ../src/xfpm-power.c:1688 ../src/xfpm-power.c:1720
+#: ../src/xfpm-power.c:1750
 msgid "Permission denied"
 msgstr "Ligipääs keelatud"
 
-#: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1763
+#: ../src/xfpm-power.c:1729 ../src/xfpm-power.c:1759
 msgid "Suspend not supported"
 msgstr "Uinakut ei toetata"
 
@@ -856,8 +856,8 @@ msgid "Has LID"
 msgstr "Olemas LID"
 
 #: ../src/xfpm-main.c:272
-msgid "Do not daemonize"
-msgstr "Ära muuda taustprotsessiks"
+msgid "Daemonize"
+msgstr "Käivita taustaprogrammina"
 
 #: ../src/xfpm-main.c:274
 msgid "Dump all information"
