@@ -35,6 +35,9 @@ G_BEGIN_DECLS
 #define XFPM_TABLET_ICON                "tablet"
 #define XFPM_UPS_ICON                   "uninterruptible-power-supply"
 #define XFPM_MONITOR_ICON               "video-display"
+#define PANEL_DEFAULT_ICON              "battery-full-charged"
+#define PANEL_DEFAULT_ICON_SYMBOLIC     "battery-full-charged-symbolic"
+#define PRESENTATION_MODE_ICON          "x-office-presentation-symbolic"
 
 G_END_DECLS
 
