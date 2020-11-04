@@ -24,6 +24,7 @@
 G_BEGIN_DECLS
 
 #define XFPM_AC_ADAPTER_ICON            "ac-adapter"
+#define XFPM_BATTERY_LEVEL_ICON         "battery-level"
 #define XFPM_COMPUTER_ICON              "computer"
 #define XFPM_DISPLAY_BRIGHTNESS_ICON    "display-brightness-symbolic"
 #define XFPM_MOUSE_ICON                 "input-mouse"
