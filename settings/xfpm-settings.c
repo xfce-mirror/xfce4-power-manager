@@ -1968,7 +1968,7 @@ update_sideview_icon (UpDevice *device)
 
 
   name = get_device_description (upower, device);
-  icon_name = get_device_icon_name (upower, device);
+  icon_name = get_device_icon_name (upower, device, FALSE);
 
   pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
                                   icon_name,
