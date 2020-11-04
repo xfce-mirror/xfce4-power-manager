@@ -229,42 +229,46 @@ screen_saver_proxy_setup(XfceScreenSaver *saver,
 static void
 xfce_screensaver_setup(XfceScreenSaver *saver)
 {
-  /* Try to use the freedesktop dbus API */
   if (screen_saver_proxy_setup (saver,
-                                "org.freedesktop.ScreenSaver",
-                                "/org/freedesktop/ScreenSaver",
-                                "org.freedesktop.ScreenSaver"))
+                                "org.xfce.ScreenSaver",
+                                "/org/xfce/ScreenSaver",
+                                "org.xfce.ScreenSaver"))
+  {
+    DBG ("using Xfce screensaver daemon");
+    saver->priv->screensaver_type = SCREENSAVER_TYPE_XFCE;
+  }
+  /* Try to use the freedesktop dbus API */
+  else if (screen_saver_proxy_setup (saver,
+                                     "org.freedesktop.ScreenSaver",
+                                     "/org/freedesktop/ScreenSaver",
+                                     "org.freedesktop.ScreenSaver"))
   {
     DBG ("using freedesktop compliant screensaver daemon");
     saver->priv->screensaver_type = SCREENSAVER_TYPE_FREEDESKTOP;
-  } else if (screen_saver_proxy_setup (saver,
-                                       "org.cinnamon.ScreenSaver",
-                                       "/org/cinnamon/ScreenSaver",
-                                       "org.cinnamon.ScreenSaver"))
+  }
+  else if (screen_saver_proxy_setup (saver,
+                                     "org.cinnamon.ScreenSaver",
+                                     "/org/cinnamon/ScreenSaver",
+                                     "org.cinnamon.ScreenSaver"))
   {
     DBG ("using cinnamon screensaver daemon");
     saver->priv->screensaver_type = SCREENSAVER_TYPE_CINNAMON;
-  } else if (screen_saver_proxy_setup (saver,
+  }
+  else if (screen_saver_proxy_setup (saver,
                                      "org.mate.ScreenSaver",
                                      "/org/mate/ScreenSaver",
                                      "org.mate.ScreenSaver"))
   {
-      DBG ("using mate screensaver daemon");
-      saver->priv->screensaver_type = SCREENSAVER_TYPE_MATE;
-  } else if (screen_saver_proxy_setup (saver,
+    DBG ("using mate screensaver daemon");
+    saver->priv->screensaver_type = SCREENSAVER_TYPE_MATE;
+  }
+  else if (screen_saver_proxy_setup (saver,
                                      "org.gnome.ScreenSaver",
                                      "/org/gnome/ScreenSaver",
                                      "org.gnome.ScreenSaver"))
   {
-      DBG ("using gnome screensaver daemon");
-      saver->priv->screensaver_type = SCREENSAVER_TYPE_GNOME;
-  } else if (screen_saver_proxy_setup (saver,
-                                     "org.xfce.ScreenSaver",
-                                     "/org/xfce/ScreenSaver",
-                                     "org.xfce.ScreenSaver"))
-  {
-    DBG ("using Xfce screensaver daemon");
-    saver->priv->screensaver_type = SCREENSAVER_TYPE_XFCE;
+    DBG ("using gnome screensaver daemon");
+    saver->priv->screensaver_type = SCREENSAVER_TYPE_GNOME;
   }
   else
   {
