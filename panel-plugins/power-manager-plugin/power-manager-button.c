@@ -150,7 +150,11 @@ static void       power_manager_button_set_icon                         (PowerMa
 static void       power_manager_button_set_label                        (PowerManagerButton *button,
                                                                          gdouble percentage,
                                                                          guint64 time_to_empty_or_full);
+#ifdef XFCE_PLUGIN
+static void       power_manager_button_toggle_presentation_mode         (GtkMenuItem *mi,
+                                                                         GtkSwitch *sw);
 static void       power_manager_button_update_presentation_indicator    (PowerManagerButton *button);
+#endif
 static void       power_manager_button_update_label                     (PowerManagerButton *button,
                                                                          UpDevice *device);
 static gboolean   power_manager_button_press_event                      (GtkWidget *widget,
@@ -1193,7 +1197,6 @@ about_cb (GtkMenuItem *menuitem, gpointer user_data)
 void
 power_manager_button_show (PowerManagerButton *button)
 {
-  GtkWidget *mi;
   GtkWidget *hbox;
   GtkStyleContext *context;
   GtkCssProvider *css_provider;
@@ -1251,6 +1254,7 @@ power_manager_button_show (PowerManagerButton *button)
   power_manager_button_add_all_devices (button);
 }
 
+#ifdef XFCE_PLUGIN
 static void
 power_manager_button_update_presentation_indicator (PowerManagerButton *button)
 {
@@ -1259,6 +1263,7 @@ power_manager_button_update_presentation_indicator (PowerManagerButton *button)
   gtk_widget_set_visible (button->priv->panel_presentation_mode, button->priv->presentation_mode &&
                                                                  button->priv->show_presentation_indicator);
 }
+#endif
 
 static void
 power_manager_button_update_label (PowerManagerButton *button, UpDevice *device)
@@ -1648,20 +1653,24 @@ range_show_cb (GtkWidget *widget, PowerManagerButton *button)
   gtk_grab_remove (widget);
 }
 
-void
+#ifdef XFCE_PLUGIN
+static void
 power_manager_button_toggle_presentation_mode (GtkMenuItem *mi, GtkSwitch *sw)
 {
   g_return_if_fail (GTK_IS_SWITCH (sw));
 
   gtk_switch_set_active (sw, !gtk_switch_get_active (sw));
 }
+#endif
 
 
 void
 power_manager_button_show_menu (PowerManagerButton *button)
 {
   GtkWidget *menu, *mi, *img = NULL;
+#ifdef XFCE_PLUGIN
   GtkWidget *box, *label, *sw;
+#endif
   GdkScreen *gscreen;
   GList *item;
   gboolean show_separator_flag = FALSE;
@@ -1705,14 +1714,17 @@ power_manager_button_show_menu (PowerManagerButton *button)
   /* Display brightness slider - show if there's hardware support for it */
   if ( xfpm_brightness_has_hw (button->priv->brightness) )
   {
+    guint brightness_step_count;
+    gboolean brightness_exponential;
+
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);
 
     /* Setup brightness steps */
-    guint brightness_step_count =
+    brightness_step_count =
       xfconf_channel_get_uint (button->priv->channel,
                                XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
                                10);
-    gboolean brightness_exponential =
+    brightness_exponential =
       xfconf_channel_get_bool (button->priv->channel,
                                XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
                                FALSE);
