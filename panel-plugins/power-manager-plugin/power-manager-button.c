@@ -1773,7 +1773,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   display_inhibitors (button, menu);
 
   /* Power manager settings */
-  mi = gtk_menu_item_new_with_mnemonic (_("_Power manager settings..."));
+  mi = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
   gtk_widget_show (mi);
   gtk_menu_shell_append (GTK_MENU_SHELL(menu), mi);
   g_signal_connect (G_OBJECT(mi), "activate", G_CALLBACK(xfpm_preferences), NULL);
