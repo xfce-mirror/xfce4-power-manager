@@ -227,8 +227,11 @@ xfpm_start (GDBusConnection *bus, const gchar *client_id, gboolean dump)
   }
   else
   {
-    g_warning ("Unable to set up POSIX signal handlers: %s", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_warning ("Unable to set up POSIX signal handlers: %s", error->message);
+      g_error_free (error);
+    }
   }
 
   xfpm_manager_start (manager);
@@ -292,9 +295,12 @@ int main (int argc, char **argv)
 
   if (!g_option_context_parse(octx, &argc, &argv, &error))
   {
-    g_printerr(_("Failed to parse arguments: %s\n"), error->message);
+    if (error)
+    {
+      g_printerr(_("Failed to parse arguments: %s\n"), error->message);
+      g_error_free(error);
+    }
     g_option_context_free(octx);
-    g_error_free(error);
 
     return EXIT_FAILURE;
   }

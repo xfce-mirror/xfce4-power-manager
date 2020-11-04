@@ -657,8 +657,11 @@ xfpm_xfconf_init (XfpmXfconf *conf)
 
   if ( !xfconf_init (&error) )
   {
-    g_critical ("xfconf_init failed: %s\n", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_critical ("xfconf_init failed: %s\n", error->message);
+      g_error_free (error);
+    }
     channel_valid = FALSE;
   }
   else

@@ -390,8 +390,11 @@ backlight_helper_get_type (const gchar *sysfs_path)
            &type_tmp,
            NULL, &error);
   if (!ret) {
-    g_warning ("failed to get type: %s", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_warning ("failed to get type: %s", error->message);
+      g_error_free (error);
+    }
     goto out;
   }
   if (g_str_has_prefix (type_tmp, "platform")) {
@@ -432,8 +435,11 @@ backlight_helper_get_best_backlight (void)
    * firmware -> platform -> raw */
   dir = g_dir_open (BACKLIGHT_SYSFS_LOCATION, 0, &error);
   if (dir == NULL) {
-    g_warning ("failed to find any devices: %s", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_warning ("failed to find any devices: %s", error->message);
+      g_error_free (error);
+    }
     goto out;
   }
   sysfs_paths = g_ptr_array_new_with_free_func (g_free);
@@ -597,9 +603,11 @@ main (gint argc, gchar *argv[])
   if (get_brightness_switch) {
     ret = g_file_get_contents (BRIGHTNESS_SWITCH_LOCATION, &contents, NULL, &error);
     if (!ret) {
-      g_print ("Could not get the value of the brightness switch: %s\n",
-         error->message);
-      g_error_free (error);
+      if (error)
+      {
+        g_print ("Could not get the value of the brightness switch: %s\n", error->message);
+        g_error_free (error);
+      }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
       goto out;
     }
@@ -615,8 +623,11 @@ main (gint argc, gchar *argv[])
     filename_file = g_build_filename (filename, "brightness", NULL);
     ret = g_file_get_contents (filename_file, &contents, NULL, &error);
     if (!ret) {
-      g_print ("Could not get the value of the backlight: %s\n", error->message);
-      g_error_free (error);
+      if (error)
+      {
+        g_print ("Could not get the value of the backlight: %s\n", error->message);
+        g_error_free (error);
+      }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
       goto out;
     }
@@ -632,8 +643,11 @@ main (gint argc, gchar *argv[])
     filename_file = g_build_filename (filename, "max_brightness", NULL);
     ret = g_file_get_contents (filename_file, &contents, NULL, &error);
     if (!ret) {
-      g_print ("Could not get the maximum value of the backlight: %s\n", error->message);
-      g_error_free (error);
+      if (error)
+      {
+        g_print ("Could not get the maximum value of the backlight: %s\n", error->message);
+        g_error_free (error);
+      }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
       goto out;
     }
@@ -666,8 +680,11 @@ main (gint argc, gchar *argv[])
     filename_file = g_build_filename (filename, "brightness", NULL);
     ret = backlight_helper_write (filename_file, set_brightness, &error);
     if (!ret) {
-      g_print ("Could not set the value of the backlight: %s\n", error->message);
-      g_error_free (error);
+      if (error)
+      {
+        g_print ("Could not set the value of the backlight: %s\n", error->message);
+        g_error_free (error);
+      }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
       goto out;
     }
@@ -680,9 +697,11 @@ main (gint argc, gchar *argv[])
     ret = backlight_helper_write (BRIGHTNESS_SWITCH_LOCATION,
                 set_brightness_switch, &error);
     if (!ret) {
-      g_print ("Could not set the value of the brightness switch: %s\n",
-         error->message);
-      g_error_free (error);
+      if (error)
+      {
+        g_print ("Could not set the value of the brightness switch: %s\n", error->message);
+        g_error_free (error);
+      }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
       goto out;
     }

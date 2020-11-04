@@ -665,8 +665,11 @@ xfpm_manager_inhibit_sleep_systemd (XfpmManager *manager)
 
   if (!reply)
   {
-    g_warning ("Unable to inhibit systemd sleep: %s", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_warning ("Unable to inhibit systemd sleep: %s", error->message);
+      g_error_free (error);
+    }
     return -1;
   }
 
@@ -680,7 +683,8 @@ xfpm_manager_inhibit_sleep_systemd (XfpmManager *manager)
 
   g_object_unref (fd_list);
 
-  g_error_free (error);
+  if (error)
+    g_error_free (error);
 
   g_free (what);
 

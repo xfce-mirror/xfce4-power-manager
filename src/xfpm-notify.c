@@ -366,8 +366,11 @@ xfpm_notify_close_critical (XfpmNotify *notify)
   {
     if (!notify_notification_close (notify->priv->critical, &error))
     {
-      g_warning ("Failed to close critical notification: %s", error->message);
-      g_error_free (error);
+      if (error)
+      {
+        g_warning ("Failed to close critical notification: %s", error->message);
+        g_error_free (error);
+      }
     }
 
     g_object_unref (G_OBJECT(notify->priv->critical) );

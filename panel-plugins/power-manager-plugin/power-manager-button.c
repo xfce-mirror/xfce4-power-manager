@@ -991,8 +991,11 @@ power_manager_button_init (PowerManagerButton *button)
   button->priv->upower  = up_client_new ();
   if ( !xfconf_init (&error) )
   {
-    g_critical ("xfconf_init failed: %s\n", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_critical ("xfconf_init failed: %s\n", error->message);
+      g_error_free (error);
+    }
   }
   else
   {

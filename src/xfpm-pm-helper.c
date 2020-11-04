@@ -120,7 +120,8 @@ run (const gchar *command)
 
   if (!result)
     {
-      g_error_free (err);
+      if (err)
+        g_error_free (err);
       return FALSE;
     }
 

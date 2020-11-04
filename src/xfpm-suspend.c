@@ -122,8 +122,11 @@ linux_supports_sleep_state (const gchar *state)
   ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
 
   if (!ret) {
-    g_warning ("failed to run script: %s", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_warning ("failed to run script: %s", error->message);
+      g_error_free (error);
+    }
     goto out;
   }
   ret = (WIFEXITED(exit_status) && (WEXITSTATUS(exit_status) == EXIT_SUCCESS));
@@ -193,8 +196,11 @@ xfpm_suspend_try_action (XfpmActionType type)
 
   if ( !ret )
   {
-    g_warning ("xfce4-pm-helper: failed to suspend/hibernate: %s", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_warning ("xfce4-pm-helper: failed to suspend/hibernate: %s", error->message);
+      g_error_free (error);
+    }
   }
   else
   {

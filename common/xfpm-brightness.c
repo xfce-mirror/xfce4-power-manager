@@ -365,8 +365,11 @@ xfpm_brightness_helper_get_value (const gchar *argument)
                                    &stdout_data, NULL, &exit_status, &error);
   if ( !ret )
   {
-    g_warning ("failed to get value: %s", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_warning ("failed to get value: %s", error->message);
+      g_error_free (error);
+    }
     goto out;
   }
   g_debug ("executed %s; retval: %i", command, exit_status);
@@ -447,8 +450,11 @@ xfpm_brightness_helper_set_level (XfpmBrightness *brg, gint32 level)
   ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
   if ( !ret )
   {
-    g_warning ("xfpm_brightness_helper_set_level: failed to set value: %s", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_warning ("xfpm_brightness_helper_set_level: failed to set value: %s", error->message);
+      g_error_free (error);
+    }
     goto out;
   }
   g_debug ("executed %s; retval: %i", command, exit_status);
@@ -487,8 +493,11 @@ xfpm_brightness_helper_set_switch (XfpmBrightness *brg, gint brightness_switch)
   ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
   if ( !ret )
   {
-    g_warning ("xfpm_brightness_helper_set_switch: failed to set value: %s", error->message);
-    g_error_free (error);
+    if (error)
+    {
+      g_warning ("xfpm_brightness_helper_set_switch: failed to set value: %s", error->message);
+      g_error_free (error);
+    }
     goto out;
   }
   g_debug ("executed %s; retval: %i", command, exit_status);
