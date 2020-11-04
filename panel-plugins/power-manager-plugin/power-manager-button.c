@@ -49,9 +49,6 @@
 
 #define SET_LEVEL_TIMEOUT (50)
 #define SAFE_SLIDER_MIN_LEVEL (5)
-#define PANEL_DEFAULT_ICON ("battery-full-charged")
-#define PANEL_DEFAULT_ICON_SYMBOLIC ("battery-full-charged-symbolic")
-#define PRESENTATION_MODE_ICON ("x-office-presentation-symbolic")
 
 struct PowerManagerButtonPrivate
 {
