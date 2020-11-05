@@ -96,28 +96,28 @@ xfpm_power_translate_technology (guint value)
   return _("Unknown");
 }
 
-const gchar * G_GNUC_CONST
-xfpm_battery_get_icon_index (UpDeviceKind type, guint percent)
+const gchar *
+xfpm_battery_get_icon_index (guint percent)
 {
   if (percent < 10)
     return "0";
-  else if (percent < 20)
+  if (percent < 20)
     return "10";
-  else if (percent < 30)
+  if (percent < 30)
     return "20";
-  else if (percent < 40)
+  if (percent < 40)
     return "30";
-  else if (percent < 50)
+  if (percent < 50)
     return "40";
-  else if (percent < 60)
+  if (percent < 60)
     return "50";
-  else if (percent < 70)
+  if (percent < 70)
     return "60";
-  else if (percent < 80)
+  if (percent < 80)
     return "70";
-  else if (percent < 90)
+  if (percent < 90)
     return "80";
-  else if (percent < 100)
+  if (percent < 100)
     return "90";
   else
     return "100";
@@ -233,9 +233,9 @@ get_device_icon_name (UpClient *upower, UpDevice *device, gboolean is_panel)
   if ( type == UP_DEVICE_KIND_BATTERY && is_panel )
   {
     if ( state == UP_DEVICE_STATE_CHARGING || state == UP_DEVICE_STATE_PENDING_CHARGE)
-      icon_name = g_strdup_printf ("%s-%s-%s", XFPM_BATTERY_LEVEL_ICON, xfpm_battery_get_icon_index (type, percentage), "charging-symbolic");
+      icon_name = g_strdup_printf ("%s-%s-%s", XFPM_BATTERY_LEVEL_ICON, xfpm_battery_get_icon_index (percentage), "charging-symbolic");
     else if ( state == UP_DEVICE_STATE_DISCHARGING || state == UP_DEVICE_STATE_PENDING_DISCHARGE)
-      icon_name = g_strdup_printf ("%s-%s-%s", XFPM_BATTERY_LEVEL_ICON, xfpm_battery_get_icon_index (type, percentage), "symbolic");
+      icon_name = g_strdup_printf ("%s-%s-%s", XFPM_BATTERY_LEVEL_ICON, xfpm_battery_get_icon_index (percentage), "symbolic");
     else if ( state == UP_DEVICE_STATE_FULLY_CHARGED)
       icon_name = g_strdup_printf ("%s-%s", XFPM_BATTERY_LEVEL_ICON, "100-charged-symbolic");
     else
