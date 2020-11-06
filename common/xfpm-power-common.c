@@ -96,6 +96,33 @@ xfpm_power_translate_technology (guint value)
   return _("Unknown");
 }
 
+const gchar *
+xfpm_battery_get_icon_index (guint percent)
+{
+  if (percent < 10)
+    return "0";
+  if (percent < 20)
+    return "10";
+  if (percent < 30)
+    return "20";
+  if (percent < 40)
+    return "30";
+  if (percent < 50)
+    return "40";
+  if (percent < 60)
+    return "50";
+  if (percent < 70)
+    return "60";
+  if (percent < 80)
+    return "70";
+  if (percent < 90)
+    return "80";
+  if (percent < 100)
+    return "90";
+  else
+    return "100";
+}
+
 /*
  * Taken from gpm
  */
@@ -160,18 +187,28 @@ is_display_device (UpClient *upower, UpDevice *device)
 }
 
 gchar*
-get_device_icon_name (UpClient *upower, UpDevice *device)
+get_device_panel_icon_name (UpClient *upower, UpDevice *device)
+{
+  return get_device_icon_name (upower, device, TRUE);
+}
+
+
+gchar*
+get_device_icon_name (UpClient *upower, UpDevice *device, gboolean is_panel)
 {
   gchar *icon_name = NULL;
   gchar *icon_suffix;
   gsize icon_base_length;
   gchar *upower_icon;
-  guint type = 0;
+  guint type = 0, state = 0;
+  gdouble percentage;
 
   /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
   g_object_get (device,
                 "kind", &type,
+                "state", &state,
                 "icon-name", &upower_icon,
+                "percentage", &percentage,
                 NULL);
 
   /* Strip away the symbolic suffix for the device icons for the devices tab
@@ -193,7 +230,18 @@ get_device_icon_name (UpClient *upower, UpDevice *device)
    * http://cgit.freedesktop.org/upower/tree/libupower-glib/up-types.h
    * because UPower doesn't return device-specific icon-names
    */
-  if ( type == UP_DEVICE_KIND_UPS )
+  if ( type == UP_DEVICE_KIND_BATTERY && is_panel )
+  {
+    if ( state == UP_DEVICE_STATE_CHARGING || state == UP_DEVICE_STATE_PENDING_CHARGE)
+      icon_name = g_strdup_printf ("%s-%s-%s", XFPM_BATTERY_LEVEL_ICON, xfpm_battery_get_icon_index (percentage), "charging-symbolic");
+    else if ( state == UP_DEVICE_STATE_DISCHARGING || state == UP_DEVICE_STATE_PENDING_DISCHARGE)
+      icon_name = g_strdup_printf ("%s-%s-%s", XFPM_BATTERY_LEVEL_ICON, xfpm_battery_get_icon_index (percentage), "symbolic");
+    else if ( state == UP_DEVICE_STATE_FULLY_CHARGED)
+      icon_name = g_strdup_printf ("%s-%s", XFPM_BATTERY_LEVEL_ICON, "100-charged-symbolic");
+    else
+      icon_name = g_strdup ("battery-missing-symbolic");
+  }
+  else if ( type == UP_DEVICE_KIND_UPS )
     icon_name = g_strdup (XFPM_UPS_ICON);
   else if ( type == UP_DEVICE_KIND_MOUSE )
     icon_name = g_strdup (XFPM_MOUSE_ICON);

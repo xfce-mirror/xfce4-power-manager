@@ -24,6 +24,7 @@
 G_BEGIN_DECLS
 
 #define XFPM_AC_ADAPTER_ICON            "ac-adapter"
+#define XFPM_BATTERY_LEVEL_ICON         "battery-level"
 #define XFPM_COMPUTER_ICON              "computer"
 #define XFPM_DISPLAY_BRIGHTNESS_ICON    "display-brightness-symbolic"
 #define XFPM_MOUSE_ICON                 "input-mouse"
@@ -34,6 +35,9 @@ G_BEGIN_DECLS
 #define XFPM_TABLET_ICON                "tablet"
 #define XFPM_UPS_ICON                   "uninterruptible-power-supply"
 #define XFPM_MONITOR_ICON               "video-display"
+#define PANEL_DEFAULT_ICON              "battery-full-charged"
+#define PANEL_DEFAULT_ICON_SYMBOLIC     "battery-full-charged-symbolic"
+#define PRESENTATION_MODE_ICON          "x-office-presentation-symbolic"
 
 G_END_DECLS
 
