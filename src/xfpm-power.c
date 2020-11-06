@@ -1285,10 +1285,11 @@ xfpm_power_get_property (GObject *object,
   }
 }
 
-static void xfpm_power_set_property (GObject *object,
-             guint prop_id,
-             const GValue *value,
-             GParamSpec *pspec)
+static void
+xfpm_power_set_property (GObject *object,
+                         guint prop_id,
+                         const GValue *value,
+                         GParamSpec *pspec)
 {
   XfpmPower *power = XFPM_POWER (object);
   gint on_ac_blank, on_battery_blank;
@@ -1301,12 +1302,14 @@ static void xfpm_power_set_property (GObject *object,
     case PROP_ON_AC_BLANK:
       on_ac_blank = g_value_get_int (value);
       power->priv->on_ac_blank = on_ac_blank;
-      xfpm_update_blank_time (power);
+      if (!power->priv->on_battery)
+        xfpm_update_blank_time (power);
       break;
     case PROP_ON_BATTERY_BLANK:
       on_battery_blank = g_value_get_int (value);
       power->priv->on_battery_blank = on_battery_blank;
-      xfpm_update_blank_time (power);
+      if (power->priv->on_battery)
+        xfpm_update_blank_time (power);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
