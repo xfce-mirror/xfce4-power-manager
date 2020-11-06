@@ -1440,10 +1440,12 @@ xfpm_update_blank_time (XfpmPower *power)
   if (power->priv->presentation_mode)
     screensaver_timeout = 0;
 
-  XFPM_DEBUG ("Timeout: %d", screensaver_timeout);
+  screensaver_timeout = screensaver_timeout * 60;
 
   XGetScreenSaver(display, &prev_timeout, &prev_interval, &prev_prefer_blanking, &prev_allow_exposures);
-  XSetScreenSaver(display, screensaver_timeout * 60, prev_interval, prev_prefer_blanking, prev_allow_exposures);
+  XFPM_DEBUG ("Prev Timeout: %d / New Timeout: %d", prev_timeout, screensaver_timeout);
+  XSetScreenSaver(display, screensaver_timeout, prev_interval, prev_prefer_blanking, prev_allow_exposures);
+  XSync (display, FALSE);
 }
 
 static void
