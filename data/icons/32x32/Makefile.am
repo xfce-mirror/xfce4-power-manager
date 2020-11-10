@@ -1,5 +1,6 @@
-EXTRA_DIST =                            \
-    $(Data_DATA)
+appicondir = $(datadir)/icons/hicolor/32x32/apps
+appicon_DATA =								\
+    org.xfce.powermanager.png
 
 Datadir = $(datadir)/icons/hicolor/32x32/status
 
