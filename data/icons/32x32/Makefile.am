@@ -27,3 +27,5 @@ Data_DATA =                             \
     tablet.png                          \
     uninterruptible-power-supply.png    \
     video-display.png
+    
+EXTRA_DIST = $(appicon_DATA) $(statusicons_DATA)
