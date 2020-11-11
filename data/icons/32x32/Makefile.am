@@ -1,9 +1,9 @@
-EXTRA_DIST =                            \
-    $(Data_DATA)
+appicondir = $(datadir)/icons/hicolor/48x48/apps
+appicon_DATA =								\
+    org.xfce.powermanager.png
 
-Datadir = $(datadir)/icons/hicolor/32x32/status
-
-Data_DATA =                             \
+statusiconsdir = $(datadir)/icons/hicolor/48x48/status
+statusicons_DATA =                             \
     ac-adapter.png                      \
     battery-caution-charging.png        \
     battery-caution.png                 \
@@ -26,3 +26,7 @@ Data_DATA =                             \
     tablet.png                          \
     uninterruptible-power-supply.png    \
     video-display.png
+
+
+EXTRA_DIST = $(appicon_DATA) $(statusicons_DATA)
+
