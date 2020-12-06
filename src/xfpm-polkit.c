@@ -229,13 +229,9 @@ out:
 
 
 #ifdef ENABLE_POLKIT
-static gboolean
-xfpm_polkit_free_data (gpointer data)
+static void
+xfpm_polkit_free_data (XfpmPolkit *polkit)
 {
-  XfpmPolkit *polkit;
-
-  polkit = XFPM_POLKIT (data);
-
   g_assert (polkit->priv->subject_valid);
 
   XFPM_DEBUG ("Destroying Polkit data");
@@ -248,6 +244,15 @@ xfpm_polkit_free_data (gpointer data)
 
   polkit->priv->destroy_id = 0;
   polkit->priv->subject_valid = FALSE;
+}
+
+static gboolean
+xfpm_polkit_free_data_cb (gpointer user_data)
+{
+  XfpmPolkit *polkit;
+
+  polkit = XFPM_POLKIT (user_data);
+  xfpm_polkit_free_data (polkit);
 
   return FALSE;
 }
@@ -301,9 +306,7 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
                                               &builder));
 
   /*Clean these data after 1 minute*/
-  polkit->priv->destroy_id = g_timeout_add_seconds (60,
-                                                    (GSourceFunc) xfpm_polkit_free_data,
-                                                    polkit);
+  polkit->priv->destroy_id = g_timeout_add_seconds (60, xfpm_polkit_free_data, polkit);
 
   polkit->priv->subject_valid = TRUE;
 }
