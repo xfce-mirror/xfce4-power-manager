@@ -368,8 +368,9 @@ xfce_screensaver_new (void)
 }
 
 static gboolean
-xfce_reset_screen_saver (XfceScreenSaver *saver)
+xfce_reset_screen_saver (gpointer user_data)
 {
+  XfceScreenSaver *saver = user_data;
   TRACE("entering");
 
   /* If we found an interface during the setup, use it */
@@ -476,7 +477,7 @@ xfce_screensaver_inhibit (XfceScreenSaver *saver,
         /* Reset the screensaver timers every so often
          * so they don't activate */
         saver->priv->screensaver_id = g_timeout_add_seconds (20,
-                                                             (GSourceFunc)xfce_reset_screen_saver,
+                                                             xfce_reset_screen_saver,
                                                              saver);
       }
       break;
