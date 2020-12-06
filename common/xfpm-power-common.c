@@ -254,7 +254,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device, gboolean is_panel)
   else if ( type == UP_DEVICE_KIND_MEDIA_PLAYER )
     icon_name = g_strdup (XFPM_MEDIA_PLAYER_ICON);
   else if ( type == UP_DEVICE_KIND_LINE_POWER )
-    icon_name = g_strdup_printf (is_panel ? "%s-%s", XFPM_AC_ADAPTER_ICON, "-symbolic" : "%s", XFPM_AC_ADAPTER_ICON);
+    icon_name = g_strdup_printf ("%s%s", XFPM_AC_ADAPTER_ICON, is_panel ? "-symbolic" : "");
   else if ( type == UP_DEVICE_KIND_MONITOR )
     icon_name = g_strdup (XFPM_MONITOR_ICON);
   else if ( type == UP_DEVICE_KIND_TABLET )
@@ -266,7 +266,7 @@ get_device_icon_name (UpClient *upower, UpDevice *device, gboolean is_panel)
   else if (!up_client_get_lid_is_present (upower) &&
            !up_client_get_on_battery (upower) &&
            g_strcmp0 (upower_icon, "battery-missing-symbolic") == 0)
-    icon_name = g_strdup_printf (is_panel ? "%s-%s", XFPM_AC_ADAPTER_ICON, "-symbolic" : "%s", XFPM_AC_ADAPTER_ICON);
+    icon_name = g_strdup_printf ("%s%s", XFPM_AC_ADAPTER_ICON, is_panel ? "-symbolic" : "");
   else if ( g_strcmp0 (upower_icon, "") != 0 )
     icon_name = g_strndup (upower_icon, icon_base_length);
 
