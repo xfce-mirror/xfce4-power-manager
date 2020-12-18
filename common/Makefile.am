@@ -25,6 +25,7 @@ libxfpmcommon_la_CFLAGS =           \
 	$(UPOWER_CFLAGS)
 
 libxfpmcommon_la_LIBADD =           \
+	-lm                             \
 	$(GTK_LIBS)                     \
 	$(GLIB_LIBS)                    \
 	$(XRANDR_LIBS)                  \
