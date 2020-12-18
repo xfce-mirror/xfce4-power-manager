@@ -96,7 +96,7 @@ xfpm_power_translate_technology (guint value)
   return _("Unknown");
 }
 
-const gchar *
+static const gchar *
 xfpm_battery_get_icon_index (guint percent)
 {
   if (percent < 10)
