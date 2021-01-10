@@ -6,7 +6,7 @@
 # Alois Nešpor <info@aloisnespor.info>, 2013-2015
 # Daniel Kubat <dan.kubat@gmail.com>, 2017
 # Alois Nešpor <info@aloisnespor.info>, 2014
-# Michal Várady <miko.vaji@gmail.com>, 2014-2015,2017,2019-2020
+# Michal Várady <miko.vaji@gmail.com>, 2014-2015,2017,2019-2021
 # Pavel Borecki <pavel.borecki@gmail.com>, 2018
 # Petr Šimáček <petr.simacek@gmail.com>, 2016
 # Programy1 Programy1 <programy1.borec.cz@gmail.com>, 2019
@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-05 00:46+0100\n"
-"PO-Revision-Date: 2020-12-30 02:04+0000\n"
+"PO-Revision-Date: 2021-01-10 13:32+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech (http://www.transifex.com/xfce/xfce4-power-manager/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgstr "Nic"
 #: ../src/xfpm-battery.c:190 ../src/xfpm-kbd-backlight.c:114
 #: ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
-msgstr "Správa napájení"
+msgstr "Správce napájení"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
@@ -111,7 +111,7 @@ msgstr "Obecné"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "When inactive for"
-msgstr "Když neaktivní po dobu"
+msgstr "Když je neaktivní"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "System sleep mode:"
@@ -123,19 +123,19 @@ msgstr "<b>Úspora napájení systému</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "<b>Laptop Lid</b>"
-msgstr "<b>Víko notebooku</b>"
+msgstr "<b>Víko přenosného počítače</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "When laptop lid is closed:"
-msgstr "Při zavření víka notebooku:"
+msgstr "Při zavření víka přenosného počítače:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "On battery"
-msgstr "Při napájení z akumulátoru"
+msgstr "Napájení z akumulátoru"
 
 #: ../data/interfaces/xfpm-settings.ui.h:26 ../common/xfpm-power-common.c:374
 msgid "Plugged in"
-msgstr "Při napájení ze zásuvky"
+msgstr "Napájení ze sítě"
 
 #: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "Critical battery power level:"
@@ -173,7 +173,7 @@ msgstr "<b>Správa napájení displeje</b>"
 #: ../data/interfaces/xfpm-settings.ui.h:36
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr "Přenechat správu napájení displeje (DPMS) správě napájení namísto grafickému serveru X11."
+msgstr "Přenechat správu napájení displeje (DPMS) správci napájení namísto grafickému serveru X11."
 
 #: ../data/interfaces/xfpm-settings.ui.h:37
 msgid "Blank after"
@@ -407,7 +407,7 @@ msgstr "Zařízení"
 
 #: ../settings/xfpm-settings-app.c:74
 msgid "Settings manager socket"
-msgstr "Soket správy nastavení"
+msgstr "Soket správce nastavení"
 
 #: ../settings/xfpm-settings-app.c:74
 msgid "SOCKET ID"
@@ -436,19 +436,19 @@ msgstr "Ukončí xfce4-power-manager-settings"
 #: ../settings/xfpm-settings-app.c:174 ../settings/xfpm-settings-app.c:221
 #: ../src/xfpm-main.c:447
 msgid "Xfce Power Manager"
-msgstr "Správa napájení pro Xfce"
+msgstr "Správce napájení pro Xfce"
 
 #: ../settings/xfpm-settings-app.c:176
 msgid "Failed to connect to power manager"
-msgstr "Připojení ke správě napájení se nezdařilo"
+msgstr "Připojení ke správci napájení se nezdařilo"
 
 #: ../settings/xfpm-settings-app.c:190
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Správa napájení pro Xfce není spuštěná – chcete jí spustit?"
+msgstr "Správce napájení pro Xfce není spuštěn, chcete jej nyní spustit?"
 
 #: ../settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Nastavení správy napájení se nepodařilo načíst, náhradně budou použita výchozí nastavení"
+msgstr "Nastavení konfigurace správce napájení se nepodařilo načíst, bude použito výchozí nastavení"
 
 #: ../settings/xfpm-settings-app.c:356
 #, c-format
@@ -462,13 +462,13 @@ msgstr "Sestaveno s GTK+ %d.%d.%d, slinkováno s GTK+ %d.%d.%d."
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
-msgstr "Nastavení Správy napájení pro Xfce"
+msgstr "Nastavení Správce napájení pro Xfce"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:3
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr "nastavení;předvolby;tlačítka;spánek;uspat;hibernace;hibernovat;baterie;vypnout;jas;víko;uzamykací obrazovka;zapojeno;ukládání;kritické;"
+msgstr "nastavení;předvolby;tlačítka;spánek;uspat;hibernace;hibernovat;baterie;vypnout;jas;víko přenosného počítače;uzamykací obrazovka;zapojeno;ukládání;kritické;"
 
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
@@ -480,7 +480,7 @@ msgstr "Akumulátor"
 
 #: ../common/xfpm-power-common.c:47
 msgid "Uninterruptible Power Supply"
-msgstr "Zdroj nepřerušovaného napájení"
+msgstr "Nepřerušitelný zdroj napájení"
 
 #: ../common/xfpm-power-common.c:49
 msgid "Line power"
@@ -708,7 +708,7 @@ msgstr "Baterie je téměř vybitá. Uložte si svoji práci, abyste předešli 
 
 #: ../src/xfpm-power.c:719
 msgid "_Cancel"
-msgstr "_Storno"
+msgstr "_Zrušit"
 
 #: ../src/xfpm-power.c:840
 msgid "System is running on low power"
@@ -872,15 +872,15 @@ msgstr "Výpis veškerých informací"
 
 #: ../src/xfpm-main.c:278
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Restartovat všechny spuštěné instance Správy napájení pro Xfce"
+msgstr "Restartovat všechny spuštěné instance Správce napájení pro Xfce"
 
 #: ../src/xfpm-main.c:279
 msgid "Show the configuration dialog"
-msgstr "Zobrazit dialogové okno s nastaveními"
+msgstr "Zobrazit konfigurační dialogové okno"
 
 #: ../src/xfpm-main.c:280
 msgid "Quit any running xfce power manager"
-msgstr "Ukončit všechny spuštěné správy napájení"
+msgstr "Ukončit všechny spuštěné správce napájení Xfce"
 
 #: ../src/xfpm-main.c:281
 msgid "Version information"
@@ -898,21 +898,21 @@ msgstr "Informace o použití získáte příkazem „%s --help“."
 
 #: ../src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
-msgstr "Spojení se sezením sběrnice zpráv se nepodařilo navázat"
+msgstr "Spojení s relací sběrnice zpráv se nepodařilo navázat"
 
 #: ../src/xfpm-main.c:358
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr "Správa napájení pro Xfce není spuštěná"
+msgstr "Správce napájení pro Xfce není spuštěn"
 
 #: ../src/xfpm-main.c:448
 msgid "Another power manager is already running"
-msgstr "Už je spuštěná jiná správa napájení"
+msgstr "Již je spuštěn jiný správce napájení"
 
 #: ../src/xfpm-main.c:452
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "Správa napájení pro Xfce je už spuštěná"
+msgstr "Správce napájení pro Xfce je již spuštěn"
 
 #: ../src/xfpm-inhibit.c:396
 msgid "Invalid arguments"
@@ -1009,7 +1009,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Správa napájení pro Xfce spravuje zdroje napájení počítače a zařízení, která lze ovládat za účelem snížení spotřeby energie (např. úroveň jasu LCD displeje, uspání monitoru, nastavení frekvence procesoru)."
+msgstr "Správce napájení pro Xfce spravuje zdroje napájení počítače a zařízení, která lze ovládat, za účelem snížení spotřeby energie (např. úroveň jasu LCD displeje, uspání monitoru, nastavení frekvence procesoru)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
