@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-27 12:47+0200\n"
-"PO-Revision-Date: 2020-05-27 10:47+0000\n"
+"POT-Creation-Date: 2020-11-05 00:46+0100\n"
+"PO-Revision-Date: 2020-11-04 23:46+0000\n"
 "Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Armenian (Armenia) (http://www.transifex.com/xfce/xfce4-power-manager/language/hy_AM/)\n"
 "MIME-Version: 1.0\n"
@@ -19,9 +19,9 @@ msgstr ""
 "Language: hy_AM\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:646
-#: ../settings/xfpm-settings.c:661 ../settings/xfpm-settings.c:688
-#: ../settings/xfpm-settings.c:1660
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:648
+#: ../settings/xfpm-settings.c:663 ../settings/xfpm-settings.c:690
+#: ../settings/xfpm-settings.c:1664
 msgid "Never"
 msgstr "Երբեք"
 
@@ -37,364 +37,364 @@ msgstr "Երբ էկրանապահը չի գործում"
 msgid "Nothing"
 msgstr "Ոչինչ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:5 ../settings/xfpm-settings-app.c:174
-#: ../settings/xfpm-settings-app.c:221 ../src/xfpm-main.c:441
-msgid "Xfce Power Manager"
-msgstr "Xfce լիցքի կառավարիչ"
+#: ../data/interfaces/xfpm-settings.ui.h:5
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
+#: ../src/xfpm-power.c:358 ../src/xfpm-power.c:634 ../src/xfpm-power.c:676
+#: ../src/xfpm-power.c:839 ../src/xfpm-power.c:860 ../src/xfpm-backlight.c:166
+#: ../src/xfpm-battery.c:190 ../src/xfpm-kbd-backlight.c:114
+#: ../src/xfce4-power-manager.desktop.in.h:1
+msgid "Power Manager"
+msgstr "Լիցք"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
-msgid "Power manager settings"
-msgstr "Լիցքի կառավարչի կարգաւորումներ"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Help"
 msgstr "_Աջակցութիւն"
 
-#: ../data/interfaces/xfpm-settings.ui.h:8
+#: ../data/interfaces/xfpm-settings.ui.h:7
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:162
 msgid "_Close"
 msgstr "_Փակել"
 
-#: ../data/interfaces/xfpm-settings.ui.h:9
+#: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "When power button is pressed:"
 msgstr "Երբ միացման կոճակը սեղմուած է․"
 
-#: ../data/interfaces/xfpm-settings.ui.h:10
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "When sleep button is pressed:"
 msgstr "Երբ հանգստի կոճակը սեղմուած է․"
 
-#: ../data/interfaces/xfpm-settings.ui.h:11
+#: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "When hibernate button is pressed:"
 msgstr "Երբ քնի կոճակը սեղմուած է․"
 
-#: ../data/interfaces/xfpm-settings.ui.h:12
+#: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "When battery button is pressed:"
 msgstr "Երբ միացման կոճակը սեղմուած է․"
 
-#: ../data/interfaces/xfpm-settings.ui.h:13
+#: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "Exponential"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:14
+#: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Brightness step count:"
 msgstr ""
 
-#: ../data/interfaces/xfpm-settings.ui.h:15
+#: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Handle display brightness _keys"
 msgstr "Գործածել ցուցադրիչի պայծառութեան _կոճակները"
 
-#: ../data/interfaces/xfpm-settings.ui.h:16
+#: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "<b>Buttons</b>"
 msgstr "<b>Կոճակներ</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:17
+#: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Status notifications"
 msgstr "Ցուցադրել աշխատավիճակի ծանուցումները"
 
-#: ../data/interfaces/xfpm-settings.ui.h:18
+#: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "System tray icon"
 msgstr "Ցուցադրել պատկերակները ծանուցումների գաւտում"
 
-#: ../data/interfaces/xfpm-settings.ui.h:19
+#: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>Appearance</b>"
 msgstr "<b>Արտաքին տեսք</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:20
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "General"
 msgstr "Ընդհանուր"
 
-#: ../data/interfaces/xfpm-settings.ui.h:21
+#: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "When inactive for"
 msgstr "Երբ չի գործում"
 
-#: ../data/interfaces/xfpm-settings.ui.h:22
+#: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "System sleep mode:"
 msgstr "Հանգստի վիճակում․"
 
-#: ../data/interfaces/xfpm-settings.ui.h:23
+#: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "<b>System power saving</b>"
 msgstr "<b>Մարտկոցի լիցքի խնայում</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:24
+#: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Ծնկադիր</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:25
+#: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "When laptop lid is closed:"
 msgstr "Երբ ծնկադիրը փակ է․"
 
-#: ../data/interfaces/xfpm-settings.ui.h:26
+#: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "On battery"
 msgstr "Մարտկոցով աշխատելիս"
 
-#: ../data/interfaces/xfpm-settings.ui.h:27 ../common/xfpm-power-common.c:374
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../common/xfpm-power-common.c:374
 msgid "Plugged in"
 msgstr "Լիցքաւորուելիս"
 
-#: ../data/interfaces/xfpm-settings.ui.h:28
+#: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "Critical battery power level:"
 msgstr "Մարտկոցի լիցքի նուազագոյն մակարդակ․"
 
-#: ../data/interfaces/xfpm-settings.ui.h:30 ../settings/xfpm-settings.c:696
+#: ../data/interfaces/xfpm-settings.ui.h:29 ../settings/xfpm-settings.c:698
 #, no-c-format
 msgid "%"
 msgstr "%"
 
-#: ../data/interfaces/xfpm-settings.ui.h:31
+#: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "On critical battery power:"
 msgstr "Մարտկոցի նուազագոյն լիցքի դէպքում․"
 
-#: ../data/interfaces/xfpm-settings.ui.h:32
+#: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "<b>Critical power</b>"
 msgstr "<b>Մարտկոցի նուազագույն մակարդակ</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:33
+#: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "Lock screen when system is going to sleep"
 msgstr "Կողպել ցուցադրիչը երբ համակարգը քնում է"
 
-#: ../data/interfaces/xfpm-settings.ui.h:34
+#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "<b>Security</b>"
 msgstr "<b>Պաշտպանութիւն</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:35
+#: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "System"
 msgstr "Համակարգ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:36
+#: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "<b>Display power management</b>"
 msgstr "<b>Ցուցադրիչի լիցքի կառավարում</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:37
+#: ../data/interfaces/xfpm-settings.ui.h:36
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
 msgstr "Թոյլատրել լիցքի կառավարիչին, գործածել ցուցադրիչի լիցքի կառավարումը (DPMS)՝ X11֊ի "
 
-#: ../data/interfaces/xfpm-settings.ui.h:38
+#: ../data/interfaces/xfpm-settings.ui.h:37
 msgid "Blank after"
 msgstr "Դատարկել"
 
-#: ../data/interfaces/xfpm-settings.ui.h:39
+#: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Put to sleep after"
 msgstr "Ուղարկել հանգստի"
 
-#: ../data/interfaces/xfpm-settings.ui.h:40
+#: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "Switch off after"
 msgstr "Անջատել"
 
-#: ../data/interfaces/xfpm-settings.ui.h:41
+#: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "On inactivity reduce to"
 msgstr "Երբ չի գործում իջեցնել մինչեւ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:42
+#: ../data/interfaces/xfpm-settings.ui.h:41
 msgid "Reduce after"
 msgstr "Իջեցնել"
 
-#: ../data/interfaces/xfpm-settings.ui.h:43
+#: ../data/interfaces/xfpm-settings.ui.h:42
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Պայծառութեան կառավարում</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:44
+#: ../data/interfaces/xfpm-settings.ui.h:43
 msgid "Display"
 msgstr "Ցուցադրիչ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:45
+#: ../data/interfaces/xfpm-settings.ui.h:44
 msgid "Automatically lock the session:"
 msgstr "Ինքնաշխատաւրէն կողպել նիստը․"
 
-#: ../data/interfaces/xfpm-settings.ui.h:46
+#: ../data/interfaces/xfpm-settings.ui.h:45
 msgid "Delay locking after screensaver for"
 msgstr "Հետաձգել կողպումն էկրանապահից յետոյ"
 
-#: ../data/interfaces/xfpm-settings.ui.h:47
+#: ../data/interfaces/xfpm-settings.ui.h:46
 msgid "<b>Light Locker</b>"
 msgstr "<b>Light Locker</b>"
 
-#: ../data/interfaces/xfpm-settings.ui.h:48
+#: ../data/interfaces/xfpm-settings.ui.h:47
 msgid "Security"
 msgstr "Պաշտպանութիւն"
 
-#: ../settings/xfpm-settings.c:649
+#: ../settings/xfpm-settings.c:651
 msgid "One minute"
 msgstr "Մեկ րոպէ յետոյ"
 
-#: ../settings/xfpm-settings.c:651 ../settings/xfpm-settings.c:663
-#: ../settings/xfpm-settings.c:674 ../settings/xfpm-settings.c:678
-#: ../settings/xfpm-settings.c:1669
+#: ../settings/xfpm-settings.c:653 ../settings/xfpm-settings.c:665
+#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:680
+#: ../settings/xfpm-settings.c:1673
 msgid "minutes"
 msgstr "րոպէ յետոյ"
 
-#: ../settings/xfpm-settings.c:665 ../settings/xfpm-settings.c:672
-#: ../settings/xfpm-settings.c:673 ../settings/xfpm-settings.c:674
+#: ../settings/xfpm-settings.c:667 ../settings/xfpm-settings.c:674
+#: ../settings/xfpm-settings.c:675 ../settings/xfpm-settings.c:676
 msgid "One hour"
 msgstr "Մեկ ժամ"
 
-#: ../settings/xfpm-settings.c:673 ../settings/xfpm-settings.c:677
+#: ../settings/xfpm-settings.c:675 ../settings/xfpm-settings.c:679
 msgid "one minute"
 msgstr "մեկ րոպէ"
 
-#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:677
-#: ../settings/xfpm-settings.c:678
+#: ../settings/xfpm-settings.c:678 ../settings/xfpm-settings.c:679
+#: ../settings/xfpm-settings.c:680
 msgid "hours"
 msgstr "ժամեր"
 
-#: ../settings/xfpm-settings.c:690 ../settings/xfpm-settings.c:1662
+#: ../settings/xfpm-settings.c:692 ../settings/xfpm-settings.c:1666
 msgid "seconds"
 msgstr "վայրկեան յետոյ"
 
-#: ../settings/xfpm-settings.c:903 ../settings/xfpm-settings.c:982
-#: ../settings/xfpm-settings.c:1044 ../settings/xfpm-settings.c:1140
-#: ../settings/xfpm-settings.c:1232 ../settings/xfpm-settings.c:1351
-#: ../settings/xfpm-settings.c:1409 ../settings/xfpm-settings.c:1461
-#: ../settings/xfpm-settings.c:1512 ../src/xfpm-power.c:703
+#: ../settings/xfpm-settings.c:907 ../settings/xfpm-settings.c:986
+#: ../settings/xfpm-settings.c:1048 ../settings/xfpm-settings.c:1144
+#: ../settings/xfpm-settings.c:1236 ../settings/xfpm-settings.c:1355
+#: ../settings/xfpm-settings.c:1413 ../settings/xfpm-settings.c:1465
+#: ../settings/xfpm-settings.c:1516 ../src/xfpm-power.c:701
 msgid "Suspend"
 msgstr "Նիրհել"
 
-#: ../settings/xfpm-settings.c:907 ../settings/xfpm-settings.c:1144
+#: ../settings/xfpm-settings.c:911 ../settings/xfpm-settings.c:1148
 msgid "Suspend operation not permitted"
 msgstr "Նիրհումը թոյլատրուած չէ"
 
-#: ../settings/xfpm-settings.c:911 ../settings/xfpm-settings.c:1148
+#: ../settings/xfpm-settings.c:915 ../settings/xfpm-settings.c:1152
 msgid "Suspend operation not supported"
 msgstr "Նիրհումը թոյլատրուած չէ"
 
-#: ../settings/xfpm-settings.c:917 ../settings/xfpm-settings.c:988
-#: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1154
-#: ../settings/xfpm-settings.c:1238 ../settings/xfpm-settings.c:1357
-#: ../settings/xfpm-settings.c:1415 ../settings/xfpm-settings.c:1467
-#: ../settings/xfpm-settings.c:1518 ../src/xfpm-power.c:692
+#: ../settings/xfpm-settings.c:921 ../settings/xfpm-settings.c:992
+#: ../settings/xfpm-settings.c:1054 ../settings/xfpm-settings.c:1158
+#: ../settings/xfpm-settings.c:1242 ../settings/xfpm-settings.c:1361
+#: ../settings/xfpm-settings.c:1419 ../settings/xfpm-settings.c:1471
+#: ../settings/xfpm-settings.c:1522 ../src/xfpm-power.c:690
 msgid "Hibernate"
 msgstr "Քնել"
 
-#: ../settings/xfpm-settings.c:921 ../settings/xfpm-settings.c:1158
+#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:1162
 msgid "Hibernate operation not permitted"
 msgstr "Քունը թույլատրուած չէ"
 
-#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:1162
+#: ../settings/xfpm-settings.c:929 ../settings/xfpm-settings.c:1166
 msgid "Hibernate operation not supported"
 msgstr "Քունը չի սատարուում"
 
-#: ../settings/xfpm-settings.c:955 ../settings/xfpm-settings.c:1192
-#: ../settings/xfpm-settings.c:1618 ../settings/xfpm-settings.c:1745
+#: ../settings/xfpm-settings.c:959 ../settings/xfpm-settings.c:1196
+#: ../settings/xfpm-settings.c:1622 ../settings/xfpm-settings.c:1749
 msgid "Hibernate and suspend operations not supported"
 msgstr "Քուն եւ նիրհում գործողութիւնները չեն սատարուում"
 
-#: ../settings/xfpm-settings.c:960 ../settings/xfpm-settings.c:1197
-#: ../settings/xfpm-settings.c:1623 ../settings/xfpm-settings.c:1750
+#: ../settings/xfpm-settings.c:964 ../settings/xfpm-settings.c:1201
+#: ../settings/xfpm-settings.c:1627 ../settings/xfpm-settings.c:1754
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Քուն եւ նիրհում գործողութիւնները չեն սատարուում"
 
-#: ../settings/xfpm-settings.c:977 ../settings/xfpm-settings.c:1346
-#: ../settings/xfpm-settings.c:1404 ../settings/xfpm-settings.c:1456
-#: ../settings/xfpm-settings.c:1507
+#: ../settings/xfpm-settings.c:981 ../settings/xfpm-settings.c:1350
+#: ../settings/xfpm-settings.c:1408 ../settings/xfpm-settings.c:1460
+#: ../settings/xfpm-settings.c:1511
 msgid "Do nothing"
 msgstr "Ոչինչ չանել"
 
-#: ../settings/xfpm-settings.c:994 ../settings/xfpm-settings.c:1363
-#: ../src/xfpm-power.c:714
+#: ../settings/xfpm-settings.c:998 ../settings/xfpm-settings.c:1367
+#: ../src/xfpm-power.c:712
 msgid "Shutdown"
 msgstr "Անջատել"
 
-#: ../settings/xfpm-settings.c:998 ../settings/xfpm-settings.c:1367
-#: ../settings/xfpm-settings.c:1419 ../settings/xfpm-settings.c:1471
-#: ../settings/xfpm-settings.c:1522
+#: ../settings/xfpm-settings.c:1002 ../settings/xfpm-settings.c:1371
+#: ../settings/xfpm-settings.c:1423 ../settings/xfpm-settings.c:1475
+#: ../settings/xfpm-settings.c:1526
 msgid "Ask"
 msgstr "Զգուշացնել"
 
-#: ../settings/xfpm-settings.c:1039 ../settings/xfpm-settings.c:1227
+#: ../settings/xfpm-settings.c:1043 ../settings/xfpm-settings.c:1231
 msgid "Switch off display"
 msgstr "Անջատել ցուցադրիչը"
 
-#: ../settings/xfpm-settings.c:1054 ../settings/xfpm-settings.c:1242
+#: ../settings/xfpm-settings.c:1058 ../settings/xfpm-settings.c:1246
 msgid "Lock screen"
 msgstr "Կողպել ցուցադրիչը"
 
-#: ../settings/xfpm-settings.c:1551
+#: ../settings/xfpm-settings.c:1555
 msgid "Number of brightness steps available using keys"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1591
+#: ../settings/xfpm-settings.c:1595
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Երբ համակարգչի բոլոր հոսանքի աղբյուրները հասնում են լիցքաւորման այս մակարդակին"
 
-#: ../settings/xfpm-settings.c:1667 ../common/xfpm-power-common.c:139
+#: ../settings/xfpm-settings.c:1671 ../common/xfpm-power-common.c:139
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "րոպե"
 msgstr[1] "րոպե"
 
-#: ../settings/xfpm-settings.c:2023
+#: ../settings/xfpm-settings.c:2027
 msgid "Device"
 msgstr "Սարք"
 
-#: ../settings/xfpm-settings.c:2045
+#: ../settings/xfpm-settings.c:2049
 msgid "Type"
 msgstr "Տեսակ"
 
-#: ../settings/xfpm-settings.c:2050
+#: ../settings/xfpm-settings.c:2054
 msgid "PowerSupply"
 msgstr "Լարման աղբիւր"
 
-#: ../settings/xfpm-settings.c:2051 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2055 ../src/xfpm-main.c:77
 msgid "True"
 msgstr "Ճշգրիտ"
 
-#: ../settings/xfpm-settings.c:2051 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2055 ../src/xfpm-main.c:77
 msgid "False"
 msgstr "Սխալ"
 
-#: ../settings/xfpm-settings.c:2058
+#: ../settings/xfpm-settings.c:2062
 msgid "Model"
 msgstr "Տիպար"
 
-#: ../settings/xfpm-settings.c:2061
+#: ../settings/xfpm-settings.c:2065
 msgid "Technology"
 msgstr "Մարտկոց"
 
-#: ../settings/xfpm-settings.c:2068
+#: ../settings/xfpm-settings.c:2072
 msgid "Current charge"
 msgstr "Ներկայիս լիցքը"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:2076 ../settings/xfpm-settings.c:2088
-#: ../settings/xfpm-settings.c:2100
+#: ../settings/xfpm-settings.c:2080 ../settings/xfpm-settings.c:2092
+#: ../settings/xfpm-settings.c:2104
 msgid "Wh"
 msgstr "Վտ/ժ"
 
-#: ../settings/xfpm-settings.c:2078
+#: ../settings/xfpm-settings.c:2082
 msgid "Fully charged (design)"
 msgstr "Ամբողջական լիցքաւորում (տեսական)"
 
-#: ../settings/xfpm-settings.c:2091
+#: ../settings/xfpm-settings.c:2095
 msgid "Fully charged"
 msgstr "Ամբողջական լիցքաւորում"
 
-#: ../settings/xfpm-settings.c:2102
+#: ../settings/xfpm-settings.c:2106
 msgid "Energy empty"
 msgstr "Լիցք չկայ"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:2110
+#: ../settings/xfpm-settings.c:2114
 msgid "V"
 msgstr "Վ"
 
-#: ../settings/xfpm-settings.c:2112
+#: ../settings/xfpm-settings.c:2116
 msgid "Voltage"
 msgstr "Լարում"
 
-#: ../settings/xfpm-settings.c:2119
+#: ../settings/xfpm-settings.c:2123
 msgid "Vendor"
 msgstr "Մատակարար"
 
-#: ../settings/xfpm-settings.c:2124
+#: ../settings/xfpm-settings.c:2128
 msgid "Serial"
 msgstr "Հերթական համար"
 
-#: ../settings/xfpm-settings.c:2400
+#: ../settings/xfpm-settings.c:2404
 msgid "Check your power manager installation"
 msgstr "Ստուգել լիցքի կառավարչի տեղակայումը"
 
-#: ../settings/xfpm-settings.c:2493
+#: ../settings/xfpm-settings.c:2497
 msgid "Devices"
 msgstr "Սարք"
 
@@ -414,7 +414,7 @@ msgstr "Ցուցադրել յատուկ սարքեր UpDevice առարկայի �
 msgid "UpDevice object path"
 msgstr "UpDevice առարկայի ուղի"
 
-#: ../settings/xfpm-settings-app.c:76 ../src/xfpm-main.c:273
+#: ../settings/xfpm-settings-app.c:76 ../src/xfpm-main.c:276
 msgid "Enable debugging"
 msgstr "Թոյլատրել վրիպազերծումը"
 
@@ -425,6 +425,11 @@ msgstr "Ցուցադրել տարբերակի վերաբերեալ տեղեկո�
 #: ../settings/xfpm-settings-app.c:78
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "xfce4-power-manager-settings՝ դուրս գալու համար"
+
+#: ../settings/xfpm-settings-app.c:174 ../settings/xfpm-settings-app.c:221
+#: ../src/xfpm-main.c:447
+msgid "Xfce Power Manager"
+msgstr "Xfce լիցքի կառավարիչ"
 
 #: ../settings/xfpm-settings-app.c:176
 msgid "Failed to connect to power manager"
@@ -447,14 +452,6 @@ msgstr "Սա %s֊ի, %s տարբերակն է, գործարկուող՝ Xfce %s�
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Կառուցուած է՝ GTK+ %d.%d.%d֊ով, յղուած՝ GTK+ %d.%d.%d֊ին։"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:358 ../src/xfpm-power.c:635 ../src/xfpm-power.c:678
-#: ../src/xfpm-power.c:841 ../src/xfpm-power.c:863 ../src/xfpm-backlight.c:166
-#: ../src/xfpm-battery.c:190 ../src/xfpm-kbd-backlight.c:114
-#: ../src/xfce4-power-manager.desktop.in.h:1
-msgid "Power Manager"
-msgstr "Լիցք"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
@@ -668,55 +665,55 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nԱնյայտ վիճակ"
 
-#: ../src/xfpm-power.c:385
+#: ../src/xfpm-power.c:384
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Ծրագիրը ներկայումս անջատում է ինքաշխատ հանգստի հնարաւորութիւնը։ Այս գործողութեան կիրառումը կարող է վնասել այս ծրագրի աշխատանքային վիճակը։ Քնեցնե՞լ համակարգը։"
 
-#: ../src/xfpm-power.c:434
+#: ../src/xfpm-power.c:433
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Ցուցադրիչի կողպման ոչ մի գործիք չի գործարկուում, այն չի կողպուի: Շարունակե՞լ համակարգի նիրհեցումը։"
 
-#: ../src/xfpm-power.c:599
+#: ../src/xfpm-power.c:598
 msgid "Hibernate the system"
 msgstr "Քնել"
 
-#: ../src/xfpm-power.c:610
+#: ../src/xfpm-power.c:609
 msgid "Suspend the system"
 msgstr "Նիրհել"
 
-#: ../src/xfpm-power.c:619
+#: ../src/xfpm-power.c:618
 msgid "Shutdown the system"
 msgstr "Անջատել համակարգը"
 
-#: ../src/xfpm-power.c:630 ../src/xfpm-power.c:675
+#: ../src/xfpm-power.c:629 ../src/xfpm-power.c:673
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Համակարգն աշխատում է լիցքի ցածր մակարդակով։ Պահէք աշխատանքը, տուեալների կորստից խուսափելու համար։"
 
-#: ../src/xfpm-power.c:721
+#: ../src/xfpm-power.c:719
 msgid "_Cancel"
 msgstr "_Չեղարկել"
 
-#: ../src/xfpm-power.c:842
+#: ../src/xfpm-power.c:840
 msgid "System is running on low power"
 msgstr "Համակարգն աշխատում է ցածր լիցքով"
 
-#: ../src/xfpm-power.c:859
+#: ../src/xfpm-power.c:856
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "(%s) սարքի լիցքի մակարդակը ցածր է\nՄնացած մոտաւոր ժամանակը՝ %s:"
 
-#: ../src/xfpm-power.c:1644 ../src/xfpm-power.c:1692 ../src/xfpm-power.c:1724
-#: ../src/xfpm-power.c:1754
+#: ../src/xfpm-power.c:1640 ../src/xfpm-power.c:1688 ../src/xfpm-power.c:1720
+#: ../src/xfpm-power.c:1750
 msgid "Permission denied"
 msgstr "Հարցումը մերժուել է"
 
-#: ../src/xfpm-power.c:1733 ../src/xfpm-power.c:1763
+#: ../src/xfpm-power.c:1729 ../src/xfpm-power.c:1759
 msgid "Suspend not supported"
 msgstr "Նիրհումը չի սատարուում"
 
@@ -852,54 +849,54 @@ msgstr "Կայ մարտկոցի կոճակ"
 msgid "Has LID"
 msgstr "Կայ կափարիչ"
 
-#: ../src/xfpm-main.c:272
-msgid "Do not daemonize"
-msgstr "Չաւգտագործել աւժանդակ ծրագիրը"
+#: ../src/xfpm-main.c:275
+msgid "Daemonize"
+msgstr ""
 
-#: ../src/xfpm-main.c:274
+#: ../src/xfpm-main.c:277
 msgid "Dump all information"
 msgstr "Պահեստաւորել ամբողջ տեղեկոյթը"
 
-#: ../src/xfpm-main.c:275
+#: ../src/xfpm-main.c:278
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Xfce լիցքի կառավարչի վերագործարկում"
 
-#: ../src/xfpm-main.c:276
+#: ../src/xfpm-main.c:279
 msgid "Show the configuration dialog"
 msgstr "Ցուցադրել կազմաձեւման երկխաւսութիւնը"
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:280
 msgid "Quit any running xfce power manager"
 msgstr "Փակել բոլոր Xfce լիցքի կառավարիչները "
 
-#: ../src/xfpm-main.c:278
+#: ../src/xfpm-main.c:281
 msgid "Version information"
 msgstr "Տարբերակի վերաբերեալ տեղեկոյթ"
 
-#: ../src/xfpm-main.c:295
+#: ../src/xfpm-main.c:300
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Յենարկների վերլուծման ձախողում․ %s\n"
 
-#: ../src/xfpm-main.c:323
+#: ../src/xfpm-main.c:329
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Մուտքագրէք '%s --help' աջակցութեան համար։"
 
-#: ../src/xfpm-main.c:344
+#: ../src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
 msgstr "Հնարաւոր չէ կապակցուել DBus֊ի հետ"
 
-#: ../src/xfpm-main.c:352
+#: ../src/xfpm-main.c:358
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce լիցքի կառավարիչը անջատուած է"
 
-#: ../src/xfpm-main.c:442
+#: ../src/xfpm-main.c:448
 msgid "Another power manager is already running"
 msgstr "Գործարկուում է լիցքի այլ կառավարիչ"
 
-#: ../src/xfpm-main.c:446
+#: ../src/xfpm-main.c:452
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce լիցքի կառավարիչն արդէն գործում է"
@@ -923,31 +920,31 @@ msgid "Power management for the Xfce desktop"
 msgstr "Xfce աշխատասեղանի լիցքի կառավարիչ"
 
 #. Odds are this is a desktop without any batteries attached
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:289
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:293
 msgid "Display battery levels for attached devices"
 msgstr "Ցուցադրել մարտկոցների լիցքի մակարդակները կցուած սարքերի համար"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1433
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s֊ը ներկայումս արգելում է լարման կառավարումը"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1722
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1737
 msgid "<b>Display brightness</b>"
 msgstr "<b>Ցուցադրիչի պայծառութիւն</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1749
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1760
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1764
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1775
 msgid "Presentation _mode"
 msgstr "_Տեսասահիկի եղանակ"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1773
-msgid "_Power manager settings..."
-msgstr "_Լիցքի կառավարչի կարգաւորումներ․․․"
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1788
+msgid "_Settings..."
+msgstr ""
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
