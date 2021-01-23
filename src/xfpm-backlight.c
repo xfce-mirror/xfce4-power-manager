@@ -156,19 +156,26 @@ static void
 xfpm_backlight_show_notification (XfpmBacklight *backlight, gfloat value)
 {
   gchar *summary;
+  /* generate a human-readable summary for the notification */
+  summary = g_strdup_printf (_("Brightness: %.0f percent"), value);
 
   /* create the notification on demand */
   if ( backlight->priv->n == NULL )
   {
-    /* generate a human-readable summary for the notification */
-    summary = g_strdup_printf (_("Brightness: %.0f percent"), value);
     backlight->priv->n = xfpm_notify_new_notification (backlight->priv->notify,
                                                        _("Power Manager"),
                                                        summary,
                                                        XFPM_DISPLAY_BRIGHTNESS_ICON,
                                                        XFPM_NOTIFY_NORMAL);
-    g_free (summary);
   }
+  else
+  {
+    notify_notification_update (backlight->priv->n,
+                                _("Power Manager"),
+                                summary,
+                                XFPM_DISPLAY_BRIGHTNESS_ICON);
+  }
+  g_free (summary);
 
   /* add the brightness value to the notification */
   notify_notification_set_hint (backlight->priv->n, "value", g_variant_new_int32 (value));
