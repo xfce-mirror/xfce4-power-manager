@@ -70,10 +70,12 @@ static guint signals [LAST_SIGNAL] = { 0 };
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmDBusMonitor, xfpm_dbus_monitor, G_TYPE_OBJECT)
 
 static void
-xfpm_dbus_monitor_free_watch_data (XfpmWatchData *data)
+xfpm_dbus_monitor_free_watch_data (gpointer data)
 {
-  g_free (data->name);
-  g_free (data);
+  XfpmWatchData *watch_data = data;
+
+  g_free (watch_data->name);
+  g_free (watch_data);
 }
 
 static XfpmWatchData *
@@ -254,8 +256,8 @@ xfpm_dbus_monitor_init (XfpmDBusMonitor *monitor)
 {
   monitor->priv = xfpm_dbus_monitor_get_instance_private (monitor);
 
-  monitor->priv->names_array = g_ptr_array_new ();
-  monitor->priv->services_array = g_ptr_array_new ();
+  monitor->priv->names_array = g_ptr_array_new_with_free_func (xfpm_dbus_monitor_free_watch_data);
+  monitor->priv->services_array = g_ptr_array_new_with_free_func (xfpm_dbus_monitor_free_watch_data);
 
   monitor->priv->session_bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
   monitor->priv->system_bus  = g_bus_get_sync (G_BUS_TYPE_SYSTEM,  NULL, NULL);
@@ -277,9 +279,6 @@ xfpm_dbus_monitor_finalize (GObject *object)
 
   g_object_unref (monitor->priv->system_bus);
   g_object_unref (monitor->priv->session_bus);
-
-  g_ptr_array_foreach (monitor->priv->names_array, (GFunc) xfpm_dbus_monitor_free_watch_data, NULL);
-  g_ptr_array_foreach (monitor->priv->services_array, (GFunc) xfpm_dbus_monitor_free_watch_data, NULL);
 
   g_ptr_array_free (monitor->priv->names_array, TRUE);
   g_ptr_array_free (monitor->priv->services_array, TRUE);

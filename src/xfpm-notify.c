@@ -93,8 +93,7 @@ xfpm_notify_get_server_caps (XfpmNotify *notify)
     if (g_list_find_custom (caps, "actions", (GCompareFunc) g_strcmp0) != NULL)
       notify->priv->supports_actions = TRUE;
 
-    g_list_foreach (caps, (GFunc) g_free, NULL);
-    g_list_free (caps);
+    g_list_free_full (caps, g_free);
   }
 }
 
