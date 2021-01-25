@@ -466,7 +466,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
        * user for confirmation in case of an application is inhibiting
        * the power manager.
        */
-      xfpm_manager_sleep_request (manager, action, TRUE);
+      xfpm_manager_sleep_request (manager, (XfpmShutdownRequest) action, TRUE);
     }
   }
   else
