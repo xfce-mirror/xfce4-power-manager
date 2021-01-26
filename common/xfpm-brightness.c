@@ -758,7 +758,7 @@ gboolean xfpm_brightness_set_step_count (XfpmBrightness *brightness, guint32 cou
   gboolean ret = FALSE;
 
   if ( xfpm_brightness_has_hw (brightness) ) {
-    gint32 delta;
+    guint32 delta;
 
     if ( count < 2 )
       count = 2;

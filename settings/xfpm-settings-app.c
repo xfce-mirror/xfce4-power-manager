@@ -161,7 +161,7 @@ xfpm_settings_app_launch (GApplication *app)
   }
 
   manager = xfpm_power_manager_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
-                                                       G_BUS_NAME_OWNER_FLAGS_NONE,
+                                                       G_DBUS_PROXY_FLAGS_NONE,
                                                        "org.xfce.PowerManager",
                                                        "/org/xfce/PowerManager",
                                                        NULL,

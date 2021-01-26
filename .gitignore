@@ -4,9 +4,9 @@ data/interfaces/xfpm-settings_ui.h
 libdbus/org.xfce.unique.h
 libdbus/xfpm-dbus-marshal.c
 libdbus/xfpm-dbus-marshal.h
-src/panel-plugins/brightness/xfce4-brightness-plugin
+panel-plugins/power-manager-plugin/.dirstamp
 po/Makefile.in.in
-po/.intltool-merge-cache
+po/.intltool-merge-cache*
 po/POTFILES
 po/stamp-*
 po/xfce4-power-manager.pot
@@ -15,6 +15,7 @@ settings/xfce4-power-manager-settings
 src/org.freedesktop.PowerManagement.Inhibit.h
 src/org.freedesktop.PowerManagement.h
 src/org.xfce.power.policy
+src/panel-plugins/brightness/xfce4-brightness-plugin
 src/xfce-power-manager-dbus-client.h
 src/xfce-power-manager-dbus-server.h
 src/xfce4-power-information
@@ -37,11 +38,14 @@ src/xfce-power-manager-dbus.h
 
 INSTALL
 Makefile
+Makefile.in
 aclocal.m4
 autom4te.cache
+ChangeLog
 compile
 config.guess
 config.h
+config.h.in
 config.log
 config.status
 config.sub
@@ -49,6 +53,9 @@ configure
 configure.ac
 depcomp
 install-sh
+intltool-extract.in
+intltool-merge.in
+intltool-update.in
 libtool
 ltmain.sh
 missing
