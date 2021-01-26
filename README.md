@@ -49,4 +49,4 @@ From release tarball:
 
 ### Reporting Bugs
 
-Visit the [reporting bugs](https://docs.xfce.org/xfce/xfce4-power-manager/bugs) page to view currently open bug reports and instructions on reporting new bugs or submitting bugfixes.
+Visit the [reporting bugs](https://gitlab.xfce.org/xfce/xfce4-power-manager/-/issues) page to view currently open bug reports and instructions on reporting new bugs or submitting bugfixes.
