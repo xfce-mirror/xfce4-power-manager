@@ -659,7 +659,7 @@ format_inactivity_value_cb (gint value)
 {
   gint h, min;
 
-  if ( value <= 4 )
+  if ( value <= 14 )
     return g_strdup (_("Never"));
   else if ( value < 60 )
     return g_strdup_printf ("%d %s", value, _("minutes"));
