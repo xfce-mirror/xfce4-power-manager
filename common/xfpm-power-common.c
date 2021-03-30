@@ -358,7 +358,7 @@ get_device_description (UpClient *upower, UpDevice *device)
     if ( time_to_full != 0 )
     {
       est_time_str = xfpm_battery_get_time_string (time_to_full);
-      tip = g_strdup_printf (_("<b>%s %s</b>\nCharging (%0.0f%%, %s)"),
+      tip = g_strdup_printf (_("<b>%s %s</b>\nCharging (%0.0f%%, %s until fully charged)"),
                              vendor, model,
                              percentage,
                              est_time_str);
@@ -366,7 +366,7 @@ get_device_description (UpClient *upower, UpDevice *device)
     }
     else
     {
-      tip = g_strdup_printf (_("<b>%s %s</b>\nCharging (%0.0f%%)"),
+      tip = g_strdup_printf (_("<b>%s %s</b>\nCharging (%0.0f%% until fully charged)"),
                              vendor, model,
                              percentage);
     }
