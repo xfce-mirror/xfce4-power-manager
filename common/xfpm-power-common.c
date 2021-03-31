@@ -340,7 +340,7 @@ get_device_description (UpClient *upower, UpDevice *device)
     if ( time_to_empty > 0 )
     {
       est_time_str = xfpm_battery_get_time_string (time_to_empty);
-      tip = g_strdup_printf (_("<b>%s %s</b>\nFully charged (%0.0f%%, %s runtime)"),
+      tip = g_strdup_printf (_("<b>%s %s</b>\n%0.0f%%, %s remaining"),
                              vendor, model,
                              percentage,
                              est_time_str);
@@ -348,7 +348,7 @@ get_device_description (UpClient *upower, UpDevice *device)
     }
     else
     {
-      tip = g_strdup_printf (_("<b>%s %s</b>\nFully charged (%0.0f%%)"),
+      tip = g_strdup_printf (_("<b>%s %s</b>\n%0.0f%%"),
                              vendor, model,
                              percentage);
     }
@@ -358,7 +358,7 @@ get_device_description (UpClient *upower, UpDevice *device)
     if ( time_to_full != 0 )
     {
       est_time_str = xfpm_battery_get_time_string (time_to_full);
-      tip = g_strdup_printf (_("<b>%s %s</b>\nCharging (%0.0f%%, %s)"),
+      tip = g_strdup_printf (_("<b>%s %s</b>\n%0.0f%%, %s until full"),
                              vendor, model,
                              percentage,
                              est_time_str);
@@ -366,7 +366,7 @@ get_device_description (UpClient *upower, UpDevice *device)
     }
     else
     {
-      tip = g_strdup_printf (_("<b>%s %s</b>\nCharging (%0.0f%%)"),
+      tip = g_strdup_printf (_("<b>%s %s</b>\n%0.0f%%"),
                              vendor, model,
                              percentage);
     }
@@ -376,7 +376,7 @@ get_device_description (UpClient *upower, UpDevice *device)
     if ( time_to_empty != 0 )
     {
       est_time_str = xfpm_battery_get_time_string (time_to_empty);
-      tip = g_strdup_printf (_("<b>%s %s</b>\nDischarging (%0.0f%%, %s)"),
+      tip = g_strdup_printf (_("<b>%s %s</b>\n%0.0f%%, %s remaining"),
                              vendor, model,
                              percentage,
                              est_time_str);
@@ -384,7 +384,7 @@ get_device_description (UpClient *upower, UpDevice *device)
     }
     else
     {
-      tip = g_strdup_printf (_("<b>%s %s</b>\nDischarging (%0.0f%%)"),
+      tip = g_strdup_printf (_("<b>%s %s</b>\n%0.0f%%"),
                              vendor, model,
                              percentage);
     }
