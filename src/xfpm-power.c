@@ -897,7 +897,7 @@ xfpm_power_add_device (UpDevice *device, XfpmPower *power)
     GtkWidget *battery;
     XFPM_DEBUG( "Battery device type '%s' detected at: %s",
                 up_device_kind_to_string(device_type), object_path);
-    battery = xfpm_battery_new ();
+    battery = g_object_ref_sink (xfpm_battery_new ());
 
     xfpm_battery_monitor_device (XFPM_BATTERY (battery),
                                  object_path,

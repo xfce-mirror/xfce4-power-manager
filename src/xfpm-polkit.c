@@ -372,10 +372,17 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
 
 #ifdef ENABLE_POLKIT
 static void
-xfpm_polkit_changed_cb (GDBusProxy *proxy, XfpmPolkit *polkit)
+xfpm_polkit_changed_cb (GDBusProxy *proxy,
+                        gchar      *sender_name,
+                        gchar      *signal_name,
+                        GVariant   *parameters,
+                        XfpmPolkit *polkit)
 {
-  XFPM_DEBUG ("Auth changed");
-  g_signal_emit (G_OBJECT (polkit), signals [AUTH_CHANGED], 0);
+  if (g_strcmp0 (signal_name, "Changed") == 0)
+  {
+    XFPM_DEBUG ("Auth changed");
+    g_signal_emit (G_OBJECT (polkit), signals [AUTH_CHANGED], 0);
+  }
 }
 #endif
 
@@ -433,7 +440,7 @@ xfpm_polkit_init (XfpmPolkit *polkit)
 
   if (G_LIKELY (polkit->priv->proxy) )
   {
-    g_signal_connect (polkit->priv->proxy, "Changed",
+    g_signal_connect (polkit->priv->proxy, "g-signal",
     G_CALLBACK (xfpm_polkit_changed_cb), polkit);
   }
   else
