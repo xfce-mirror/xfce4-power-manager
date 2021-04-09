@@ -108,7 +108,6 @@ xfpm_dbus_monitor_unique_connection_name_lost (XfpmDBusMonitor *monitor, GBusTyp
       g_signal_emit (G_OBJECT(monitor), signals [UNIQUE_NAME_LOST], 0,
          watch->name, bus_type == G_BUS_TYPE_SESSION ? TRUE : FALSE);
       g_ptr_array_remove (monitor->priv->names_array, watch);
-      xfpm_dbus_monitor_free_watch_data (watch);
     }
   }
 }
@@ -334,7 +333,6 @@ void xfpm_dbus_monitor_remove_unique_name (XfpmDBusMonitor *monitor, GBusType bu
   if ( watch )
   {
     g_ptr_array_remove (monitor->priv->names_array, watch);
-    xfpm_dbus_monitor_free_watch_data (watch);
   }
 }
 
@@ -367,6 +365,5 @@ void xfpm_dbus_monitor_remove_service (XfpmDBusMonitor *monitor, GBusType bus_ty
   if ( watch )
   {
     g_ptr_array_remove (monitor->priv->services_array, watch);
-    xfpm_dbus_monitor_free_watch_data (watch);
   }
 }
