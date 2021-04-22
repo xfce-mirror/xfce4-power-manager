@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-20 00:46+0200\n"
-"PO-Revision-Date: 2021-04-21 23:35+0000\n"
+"PO-Revision-Date: 2021-04-22 20:17+0000\n"
 "Last-Translator: Toni Estévez <toni.estevez@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/xfce/xfce4-power-manager/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -671,13 +671,13 @@ msgstr "<b>%s %s</b>\nEstado desconocido"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Una aplicación ha desactivado la suspensión automática. Realizar esta acción ahora puede dañar el funcionamiento de esta aplicación.\n¿Seguro que quiere hibernar el sistema?"
+msgstr "Una aplicación ha desactivado la suspensión automática. Ejecutar esta acción ahora puede afectar al funcionamiento de esta aplicación.\n¿Seguro que quiere hibernar el sistema?"
 
 #: ../src/xfpm-power.c:433
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Ninguna aplicación de bloqueo de pantalla se ha ejecutado correctamente, la pantalla no se bloqueará.\n¿Aún quiere suspender el sistema?"
+msgstr "No se ha ejecutado correctamente ninguna de las aplicaciones de bloqueo de la pantalla. La pantalla no se bloqueará.\n¿Aún quiere suspender el sistema?"
 
 #: ../src/xfpm-power.c:598
 msgid "Hibernate the system"
@@ -813,35 +813,35 @@ msgstr "Se puede hibernar"
 
 #: ../src/xfpm-main.c:138
 msgid "Authorized to suspend"
-msgstr "Autorizado para suspender"
+msgstr "Con autorización para suspender"
 
 #: ../src/xfpm-main.c:140
 msgid "Authorized to hibernate"
-msgstr "Autorizado para hibernar"
+msgstr "Con autorización para hibernar"
 
 #: ../src/xfpm-main.c:142
 msgid "Authorized to shutdown"
-msgstr "Autorizado para apagar"
+msgstr "Con autorización para apagar"
 
 #: ../src/xfpm-main.c:144
 msgid "Has battery"
-msgstr "Tiene batería"
+msgstr "Tiene una batería"
 
 #: ../src/xfpm-main.c:146
 msgid "Has brightness panel"
-msgstr "Tiene panel de brillo"
+msgstr "Tiene un panel de brillo"
 
 #: ../src/xfpm-main.c:148
 msgid "Has power button"
-msgstr "Tiene botón de encendido"
+msgstr "Tiene un botón de encendido"
 
 #: ../src/xfpm-main.c:150
 msgid "Has hibernate button"
-msgstr "Tiene botón de hibernación"
+msgstr "Tiene un botón de hibernación"
 
 #: ../src/xfpm-main.c:152
 msgid "Has sleep button"
-msgstr "Tiene botón de suspensión"
+msgstr "Tiene un botón de suspensión"
 
 #: ../src/xfpm-main.c:154
 msgid "Has battery button"
@@ -849,11 +849,11 @@ msgstr "Tiene un botón de batería"
 
 #: ../src/xfpm-main.c:156
 msgid "Has LID"
-msgstr "Tiene tapa"
+msgstr "Tiene una tapa"
 
 #: ../src/xfpm-main.c:275
 msgid "Daemonize"
-msgstr "Demonizar"
+msgstr "Ejecutar como servicio"
 
 #: ../src/xfpm-main.c:277
 msgid "Dump all information"
@@ -861,7 +861,7 @@ msgstr "Volcar toda la información"
 
 #: ../src/xfpm-main.c:278
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Reiniciar la instancia en ejecución del administrador de energía de Xfce"
+msgstr "Reiniciar la instancia en ejecución del gestor de energía de Xfce"
 
 #: ../src/xfpm-main.c:279
 msgid "Show the configuration dialog"
@@ -869,39 +869,39 @@ msgstr "Mostrar el diálogo de configuración"
 
 #: ../src/xfpm-main.c:280
 msgid "Quit any running xfce power manager"
-msgstr "Cerrar cualquier administrador de energía de Xfce en ejecución"
+msgstr "Cerrar todas las instancias del gestor de energía de Xfce en ejecución"
 
 #: ../src/xfpm-main.c:281
 msgid "Version information"
-msgstr "Información de versión"
+msgstr "Información de la versión"
 
 #: ../src/xfpm-main.c:300
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr "No se pudieron procesar argumentos: %s\n"
+msgstr "No se han podido analizar los argumentos: %s\n"
 
 #: ../src/xfpm-main.c:329
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Escriba «%s --help» para opciones de uso."
+msgstr "Escriba «%s --help» para su uso."
 
 #: ../src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
-msgstr "No se puede obtener conexión con el bus de mensajes de sesiones"
+msgstr "No se puede establecer conexión con la sesión del bus de mensajes"
 
 #: ../src/xfpm-main.c:358
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr "El administrador de energía de Xfce no se está ejecutando"
+msgstr "No se está ejecutando el gestor de energía de Xfce"
 
 #: ../src/xfpm-main.c:448
 msgid "Another power manager is already running"
-msgstr "Otro administrador de energía ya está ejecutándose"
+msgstr "Ya se está ejecutando otro gestor de energía"
 
 #: ../src/xfpm-main.c:452
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "El administrador de energía de Xfce ya está ejecutándose"
+msgstr "Ya se está ejecutando el gestor de energía Xfce"
 
 #: ../src/xfpm-inhibit.c:396
 msgid "Invalid arguments"
@@ -909,22 +909,22 @@ msgstr "Argumentos no válidos"
 
 #: ../src/xfpm-inhibit.c:430
 msgid "Invalid cookie"
-msgstr "Huella no válida"
+msgstr "Cookie no válida"
 
 #: ../src/xfpm-manager.c:456
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr "No se pudo ejecutar ninguna aplicación para bloquear la pantalla. La pantalla no se bloqueará."
+msgstr "No se ha ejecutado correctamente ninguna de las aplicaciones de bloqueo de la pantalla. La pantalla no se bloqueará."
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
-msgstr "Administrador de energía para el escritorio Xfce"
+msgstr "Gestor de energía para el escritorio Xfce"
 
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:294
 msgid "Display battery levels for attached devices"
-msgstr "Mostrar niveles de carga de dispositivos extraíbles"
+msgstr "Mostrar los niveles de batería de los dispositivos conectados"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
@@ -932,11 +932,11 @@ msgstr "Mostrar niveles de carga de dispositivos extraíbles"
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1443
 #, c-format
 msgid "%s is currently inhibiting power management"
-msgstr "%s está impidiendo el uso del administrador de energía."
+msgstr "%s está inhibiendo la gestión de energía"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1747
 msgid "<b>Display brightness</b>"
-msgstr "<b>Brillo de pantalla</b>"
+msgstr "<b>Brillo de la pantalla</b>"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1774
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1785
@@ -951,11 +951,11 @@ msgstr "_Configuracion..."
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
 msgid "Unable to open the following url: %s"
-msgstr "Fallo al abrir la siguiente dirección: %s"
+msgstr "No se puede abrir la URL siguiente: %s"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
-msgstr "Ninguno"
+msgstr "Desactivarq"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage"
@@ -972,20 +972,20 @@ msgstr "Porcentaje y tiempo restante"
 #. create the dialog
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
 msgid "Power Manager Plugin Settings"
-msgstr "Configuración del complemento de administración de energía"
+msgstr "Configuración del complemento de gestión de energía"
 
 #. show-panel-label setting
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:180
 msgid "Show label:"
-msgstr "Mostrar etiqueta:"
+msgstr "Mostrar la etiqueta:"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:213
 msgid "Show 'Presentation mode' indicator:"
-msgstr "Mostrar el indicador 'Modo presentación':"
+msgstr "Mostrar el indicador del modo de presentación:"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr "Complemento de administración de energía"
+msgstr "Complemento de gestión de energía"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
@@ -998,7 +998,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "El Administrador de energía de Xfce gestiona las fuentes de alimentación del equipo y de los dispositivos que puedan controlarse para reducir su consumo de energía (por ejemplo, nivel de brillo del LCD, apagar el monitor, escalado de frecuencia del procesador)."
+msgstr "El gestor de energía de Xfce gestiona las fuentes de energía del equipo y de los dispositivos que pueden controlarse para reducir su consumo de energía (como el nivel de brillo de la pantalla, la suspensión del monitor o el escalado de la frecuencia del procesador)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -1008,14 +1008,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Además, el Administrador de energía de Xfce proporciona un conjunto de interfaces «D-Bus» utilizando las especificaciones de «freedesktop» para informar a otras aplicaciones sobre el nivel de energía actual para que puedan ajustar su consumo, y proporciona una interfaz de inhibición que permite a las aplicaciones evitar acciones automáticas de suspensión a través del administrador de energía; como por ejemplo, el gestor de paquetes del sistema operativo debe hacer uso de esta interfaz mientras se está llevando a cabo operaciones de actualización."
+msgstr "Además, el gestor de energía de Xfce proporciona un conjunto de interfaces D-Bus compatibles con Freedesktop para informar a otras aplicaciones de los niveles energía, de modo que puedan ajustar su consumo, y proporciona una interfaz de inhibición que permite a las aplicaciones impedir que se ejecuten acciones automáticas de suspensión a través del gestor de energía; ejemplo, el gestor de paquetes del sistema debería usar esta interfaz al ejecutar operaciones de actualización."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "El administrador de energía de Xfce también provee un complemento para el panel de Xfce y LXDE para controlar los niveles de brillo de los LCD y monitorizar los niveles de carga y batería de los dispositivos."
+msgstr "El gestor de energía de Xfce también proporciona un complemento para los paneles de Xfce y LXDE que permite controlar los niveles de brillo de la pantalla y monitorear los niveles de carga de la batería y del dispositivo."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -1023,7 +1023,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr "Esta versión de desarrollo corrige errores e introduce mejor soporte para temas de iconos mediante la reducción de los iconos de los dispositivos y el uso de nombres estándares para ellos. También cuenta con traducciones actualizadas. El nombre del complemento del panel se ha cambiado a «Complemento de administración de energía»."
+msgstr "Esta versión de desarrollo corrige errores e introduce una mejor compatibilidad con los temas de iconos al reducir los iconos de los dispositivos y usar nombres estándar. También incluye traducciones actualizadas. El complemento del panel ha pasado a llamarse complemento del gestor de energía."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -1032,7 +1032,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr "Esta versión de desarrollo corrige errores con suspensión e hibernación. También mejora el complemento del panel que incorpora la funcionalidad del (ahora abandonado) Complemento de brillo del panel. Una nueva notificación emergente se añadió para dar cuenta de los cambios de brillo del teclado y el Administrador de energía ahora también controla los tiempos de pantalla en blanco de X11."
+msgstr "Esta versión de desarrollo corrige errores con la suspensión y la hibernación. También mejora el complemento del panel, que incorpora la funcionalidad del complemento del brillo (ahora abandonado). Se ha añadido una nueva notificación emergente para dar cuenta de los cambios de brillo del teclado y el gestor de energía ahora también controla los tiempos de inactividad de X11."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -1042,10 +1042,10 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr "Esta versión de desarrollo introduce un montón de nuevas características, entre ellas la suspensión/hibernación sin «systemd» y «UPower» >= 0.99. Permite el control individual de  «systemd-inhibition», un nuevo complemento del panel para monitorizar la batería y los niveles de carga del dispositivo el cual sustituye al icono de la bandeja de notificación. El diálogo de configuración ha sido completamente restructurado para una mejor supervisión y muchos errores han sido corregidos y las traducciones han sido actualizadas."
+msgstr "Esta versión de desarrollo introduce un montón de nuevas características, entre ellas la suspensión/hibernación sin systemd y UPower>=0.99. Permite el control individual de la inhibición de systemd y un nuevo complemento del panel para monitorear los niveles de carga de la batería y del dispositivo reemplaza al icono del área de notificación. Se ha reestructurado completamente el diálogo de configuración para una mejor supervisión. Se han corregido muchos errores y se han actualizado las traducciones."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr "Esta versión estable corrige problemas de compilación, una pérdida de memoria y algunos errores menores. Además, ofrece traducciones actualizadas."
+msgstr "Esta versión estable corrige problemas de compilación, una fuga de memoria y algunos otros errores menores. Además, proporciona traducciones actualizadas."
