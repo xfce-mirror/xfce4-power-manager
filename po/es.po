@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-20 00:46+0200\n"
-"PO-Revision-Date: 2021-04-21 22:45+0000\n"
+"PO-Revision-Date: 2021-04-21 23:35+0000\n"
 "Last-Translator: Toni Estévez <toni.estevez@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/xfce/xfce4-power-manager/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -519,7 +519,7 @@ msgstr "Equipo"
 #: ../common/xfpm-power-common.c:65 ../common/xfpm-power-common.c:81
 #: ../common/xfpm-power-common.c:96
 msgid "Unknown"
-msgstr "Desconocido"
+msgstr "Desconocida"
 
 #: ../common/xfpm-power-common.c:83
 msgid "Lithium ion"
@@ -531,7 +531,7 @@ msgstr "Polímero de litio"
 
 #: ../common/xfpm-power-common.c:87
 msgid "Lithium iron phosphate"
-msgstr "Fosfato de hierro y litio"
+msgstr "Litio-ferrofosfato"
 
 #: ../common/xfpm-power-common.c:89
 msgid "Lead acid"
@@ -539,15 +539,15 @@ msgstr "Plomo y ácido"
 
 #: ../common/xfpm-power-common.c:91
 msgid "Nickel cadmium"
-msgstr "Níquel cadmio"
+msgstr "Níquel-cadmio"
 
 #: ../common/xfpm-power-common.c:93
 msgid "Nickel metal hydride"
-msgstr "Hidruro metálico de níquel"
+msgstr "Níquel-metalhidruro"
 
 #: ../common/xfpm-power-common.c:141
 msgid "Unknown time"
-msgstr "Hora desconocida:"
+msgstr "Tiempo desconocido"
 
 #: ../common/xfpm-power-common.c:147
 #, c-format
@@ -616,21 +616,21 @@ msgstr "<b>%s%s</b>\n%0.0f%% - %s restante"
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nEsperando a descargar (%0.0f %%)"
+msgstr "<b>%s %s</b>\nEsperando para descargar (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:398
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nEsperando a cargar (%0.0f %%)"
+msgstr "<b>%s %s</b>\nEsperando para cargar (%0.0f %%)"
 
 #: ../common/xfpm-power-common.c:404
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\nEstá vacía"
+msgstr "<b>%s %s</b>\nSin carga"
 
 #: ../common/xfpm-power-common.c:409
 #, c-format
@@ -650,7 +650,7 @@ msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:420
 msgid "Not plugged in"
-msgstr "Sin conectar"
+msgstr "No conectado"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
@@ -671,13 +671,13 @@ msgstr "<b>%s %s</b>\nEstado desconocido"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Una aplicación está desactivando actualmente la suspensión automática. Seguir adelante puede dañar la tarea de dicha aplicación.\n¿Seguro que desea hibernar el sistema?"
+msgstr "Una aplicación ha desactivado la suspensión automática. Realizar esta acción ahora puede dañar el funcionamiento de esta aplicación.\n¿Seguro que quiere hibernar el sistema?"
 
 #: ../src/xfpm-power.c:433
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Ninguna de las herramientas de bloqueo de pantalla ha funcionado, esta no será bloqueada.\n¿Aún desea continuar la suspensión del sistema?"
+msgstr "Ninguna aplicación de bloqueo de pantalla se ha ejecutado correctamente, la pantalla no se bloqueará.\n¿Aún quiere suspender el sistema?"
 
 #: ../src/xfpm-power.c:598
 msgid "Hibernate the system"
@@ -693,7 +693,7 @@ msgstr "Apagar el sistema"
 
 #: ../src/xfpm-power.c:629 ../src/xfpm-power.c:673
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "El equipo está funcionando con nivel de energía bajo. Guarde su trabajo para evitar la pérdida de datos"
+msgstr "El sistema funciona con la batería baja. Guarde su trabajo para evitar la pérdida de datos"
 
 #: ../src/xfpm-power.c:719
 msgid "_Cancel"
@@ -701,14 +701,14 @@ msgstr "_Cancelar"
 
 #: ../src/xfpm-power.c:840
 msgid "System is running on low power"
-msgstr "El equipo está funcionando con nivel de energía bajo"
+msgstr "El sistema funciona con la batería baja"
 
 #: ../src/xfpm-power.c:856
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "El nivel de %s es bajo\nEl tiempo restante estimado es de %s."
+msgstr "%s: nivel de carga bajo\nTiempo restante estimado: %s"
 
 #: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1693 ../src/xfpm-power.c:1725
 #: ../src/xfpm-power.c:1755
@@ -717,7 +717,7 @@ msgstr "Permiso denegado"
 
 #: ../src/xfpm-power.c:1734 ../src/xfpm-power.c:1764
 msgid "Suspend not supported"
-msgstr "La suspensión no se admite"
+msgstr "No se admite la suspensión"
 
 #. generate a human-readable summary for the notification
 #: ../src/xfpm-backlight.c:160
@@ -728,41 +728,41 @@ msgstr "Brillo: %.0f por ciento"
 #: ../src/xfpm-battery.c:109 ../src/xfpm-battery.c:160
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "La %s está completamente cargada"
+msgstr "%s: carga completa"
 
 #: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:163
 #, c-format
 msgid "Your %s is charging"
-msgstr "%s se está cargando"
+msgstr "%s: se está cargando"
 
 #: ../src/xfpm-battery.c:122
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr "%s (%i%%)\n%s hasta que esté completamente cargada"
+msgstr "%s (%i%%)\n%s hasta la carga completa"
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
 msgid "Your %s is discharging"
-msgstr "%s se está descargando"
+msgstr "%s: se está descargando"
 
 #: ../src/xfpm-battery.c:132
 #, c-format
 msgid "System is running on %s power"
-msgstr "El equipo está funcionando con %s"
+msgstr "El equipo funciona con %s"
 
 #: ../src/xfpm-battery.c:142
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr "%s (%i%%)\nEl tiempo restante estimado es %s"
+msgstr "%s (%i%%)\nTiempo restante estimado: %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
 msgid "Your %s is empty"
-msgstr "La %s está vacía"
+msgstr "%s: sin carga"
 
 #. generate a human-readable summary for the notification
 #: ../src/xfpm-kbd-backlight.c:112
@@ -781,27 +781,27 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nAdministrador de energía de Xfce %s\n\nParte del proyecto Xfce Goodies\nhttp://goodies.xfce.org\n\nCon licencia GNU GPL.\n\n"
+msgstr "\nGestor de energía de Xfce %s\n\nParte del proyecto Goodies de Xfce\nhttp://goodies.xfce.org\n\nCon licencia GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:112
 #, c-format
 msgid "With policykit support\n"
-msgstr "Compatible con policykit\n"
+msgstr "Con compatibilidad con PolicyKit\n"
 
 #: ../src/xfpm-main.c:114
 #, c-format
 msgid "Without policykit support\n"
-msgstr "No compatible con policykit\n"
+msgstr "Sin compatibilidad con Policykit\n"
 
 #: ../src/xfpm-main.c:117
 #, c-format
 msgid "With network manager support\n"
-msgstr "Compatible con el Gestor de la red\n"
+msgstr "Con compatibilidad con el gestor de red\n"
 
 #: ../src/xfpm-main.c:119
 #, c-format
 msgid "Without network manager support\n"
-msgstr "No compatible con el Gestor de la red\n"
+msgstr "Sin compatibilidad con el gestor de red\n"
 
 #: ../src/xfpm-main.c:134
 msgid "Can suspend"
