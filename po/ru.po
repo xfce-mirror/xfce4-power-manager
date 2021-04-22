@@ -17,9 +17,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-05 00:46+0100\n"
-"PO-Revision-Date: 2020-11-19 15:37+0000\n"
-"Last-Translator: AlexanderFilev <avfill@outlook.com>\n"
+"POT-Creation-Date: 2021-04-20 00:46+0200\n"
+"PO-Revision-Date: 2021-04-19 22:46+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Russian (http://www.transifex.com/xfce/xfce4-power-manager/language/ru/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,18 +49,18 @@ msgstr "Ничего не делать"
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:358 ../src/xfpm-power.c:634 ../src/xfpm-power.c:676
 #: ../src/xfpm-power.c:839 ../src/xfpm-power.c:860 ../src/xfpm-backlight.c:166
-#: ../src/xfpm-battery.c:190 ../src/xfpm-kbd-backlight.c:114
-#: ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
+#: ../src/xfpm-kbd-backlight.c:114 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Менеджер питания"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:160
 msgid "_Help"
 msgstr "_Справка"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:162
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Close"
 msgstr "_Закрыть"
 
@@ -136,7 +136,7 @@ msgstr "При закрытии крышки ноутбука:"
 msgid "On battery"
 msgstr "От батареи"
 
-#: ../data/interfaces/xfpm-settings.ui.h:26 ../common/xfpm-power-common.c:374
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../common/xfpm-power-common.c:420
 msgid "Plugged in"
 msgstr "Подключён к сети"
 
@@ -325,7 +325,7 @@ msgstr "Количество шагов яркости, доступное пр�
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Считать заряд батареи низким, когда заряд всех источников питания компьютера достигает указанного уровня"
 
-#: ../settings/xfpm-settings.c:1671 ../common/xfpm-power-common.c:139
+#: ../settings/xfpm-settings.c:1671 ../common/xfpm-power-common.c:166
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "минута"
@@ -513,7 +513,7 @@ msgstr "Телефон"
 msgid "Tablet"
 msgstr "Планшет"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:255
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:303
 msgid "Computer"
 msgstr "Компьютер"
 
@@ -546,11 +546,11 @@ msgstr "Никель-кадмиевая"
 msgid "Nickel metal hydride"
 msgstr "Никель-металлогидридный"
 
-#: ../common/xfpm-power-common.c:114
+#: ../common/xfpm-power-common.c:141
 msgid "Unknown time"
 msgstr "Время неизвестно"
 
-#: ../common/xfpm-power-common.c:120
+#: ../common/xfpm-power-common.c:147
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
@@ -559,7 +559,7 @@ msgstr[1] "%i минуты"
 msgstr[2] "%i минут"
 msgstr[3] "%i минут"
 
-#: ../common/xfpm-power-common.c:131
+#: ../common/xfpm-power-common.c:158
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -570,12 +570,12 @@ msgstr[3] "%i часов"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: ../common/xfpm-power-common.c:137
+#: ../common/xfpm-power-common.c:164
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: ../common/xfpm-power-common.c:138
+#: ../common/xfpm-power-common.c:165
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "час"
@@ -583,70 +583,63 @@ msgstr[1] "часа"
 msgstr[2] "часов"
 msgstr[3] "часов"
 
-#: ../common/xfpm-power-common.c:295
+#: ../common/xfpm-power-common.c:343
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Fully charged (%0.0f%%, %s runtime)"
-msgstr "<b>%s %s</b>\nПолностью заряжено (%0.0f%%, %s до полного разряда)"
+"Fully charged - %s remaining"
+msgstr ""
 
-#: ../common/xfpm-power-common.c:303
+#: ../common/xfpm-power-common.c:350
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Fully charged (%0.0f%%)"
-msgstr "<b>%s %s</b>\nПолностью заряжено (%0.0f%%)"
+"Fully charged"
+msgstr ""
 
-#: ../common/xfpm-power-common.c:313
+#: ../common/xfpm-power-common.c:359
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Charging (%0.0f%%, %s)"
-msgstr "<b>%s %s</b>\nЗаряжается (%0.0f%%, %s)"
+"%0.0f%% - %s until full"
+msgstr ""
 
-#: ../common/xfpm-power-common.c:321
+#: ../common/xfpm-power-common.c:367 ../common/xfpm-power-common.c:385
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Charging (%0.0f%%)"
-msgstr "<b>%s %s</b>\nЗаряжается (%0.0f%%)"
+"%0.0f%%"
+msgstr ""
 
-#: ../common/xfpm-power-common.c:331
+#: ../common/xfpm-power-common.c:377
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Discharging (%0.0f%%, %s)"
-msgstr "<b>%s %s</b>\nРазряжается (%0.0f%%, %s)"
+"%0.0f%% - %s remaining"
+msgstr ""
 
-#: ../common/xfpm-power-common.c:339
-#, c-format
-msgid ""
-"<b>%s %s</b>\n"
-"Discharging (%0.0f%%)"
-msgstr "<b>%s %s</b>\nРазряжается (%0.0f%%)"
-
-#: ../common/xfpm-power-common.c:346
+#: ../common/xfpm-power-common.c:392
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nОжидает разрядки (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:352
+#: ../common/xfpm-power-common.c:398
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nОжидает зарядки (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:358
+#: ../common/xfpm-power-common.c:404
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
 msgstr "<b>%s %s</b>\nразряжено"
 
-#: ../common/xfpm-power-common.c:363
+#: ../common/xfpm-power-common.c:409
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -655,26 +648,26 @@ msgstr "<b>%s %s</b>\nЗаряд: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:373
+#: ../common/xfpm-power-common.c:419
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: ../common/xfpm-power-common.c:374
+#: ../common/xfpm-power-common.c:420
 msgid "Not plugged in"
 msgstr "Отключен от сети"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:380
+#: ../common/xfpm-power-common.c:426
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:385
+#: ../common/xfpm-power-common.c:431
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -724,17 +717,17 @@ msgid ""
 "Estimated time left %s"
 msgstr "Устройство (%s) почти разряжено\nОставшееся время работы: %s."
 
-#: ../src/xfpm-power.c:1640 ../src/xfpm-power.c:1688 ../src/xfpm-power.c:1720
-#: ../src/xfpm-power.c:1750
+#: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1693 ../src/xfpm-power.c:1725
+#: ../src/xfpm-power.c:1755
 msgid "Permission denied"
 msgstr "Доступ запрещён"
 
-#: ../src/xfpm-power.c:1729 ../src/xfpm-power.c:1759
+#: ../src/xfpm-power.c:1734 ../src/xfpm-power.c:1764
 msgid "Suspend not supported"
 msgstr "Ждущий режим не поддерживается"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:164
+#: ../src/xfpm-backlight.c:160
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "Яркость: %.0f %%"
@@ -936,29 +929,29 @@ msgid "Power management for the Xfce desktop"
 msgstr "Управление питанием для окружения рабочего стола Xfce"
 
 #. Odds are this is a desktop without any batteries attached
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:293
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:294
 msgid "Display battery levels for attached devices"
 msgstr "Показать уровень батареи для подключённых устройств"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1433
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1443
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s в настоящее время сдерживает управление питанием"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1737
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1747
 msgid "<b>Display brightness</b>"
 msgstr "<b>Яркость экрана</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1764
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1775
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1774
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1785
 msgid "Presentation _mode"
 msgstr "Режим _презентации"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1788
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1798
 msgid "_Settings..."
 msgstr "_Настройки..."
 
@@ -967,33 +960,33 @@ msgstr "_Настройки..."
 msgid "Unable to open the following url: %s"
 msgstr "Не удалось открыть URL: %s"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
 msgstr "Ничего"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage"
 msgstr "Процент"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Remaining time"
 msgstr "Оставшееся время"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage and remaining time"
 msgstr "Процент и оставшееся время"
 
 #. create the dialog
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:158
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
 msgid "Power Manager Plugin Settings"
 msgstr "Настройки модуля менеджера питания"
 
 #. show-panel-label setting
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:181
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:180
 msgid "Show label:"
 msgstr "Показывать метку:"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:214
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:213
 msgid "Show 'Presentation mode' indicator:"
 msgstr "Показывать индикатор \"Режима презентации\":"
 
