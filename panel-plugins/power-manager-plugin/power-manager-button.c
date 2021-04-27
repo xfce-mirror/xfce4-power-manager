@@ -343,7 +343,7 @@ power_manager_button_set_label (PowerManagerButton *button, gdouble percentage,
   else if (button->priv->show_panel_label == 2)
     label_string = g_strdup_printf ("%s", remaining_time);
   else if (button->priv->show_panel_label == 3)
-    label_string = g_strdup_printf ("(%s, %d%%)", remaining_time, (int) percentage);
+    label_string = g_strdup_printf ("%d%% - %s", (int) percentage, remaining_time);
 
   gtk_label_set_text (GTK_LABEL (button->priv->panel_label), label_string);
 
