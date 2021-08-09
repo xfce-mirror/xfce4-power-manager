@@ -591,7 +591,7 @@ static gchar*
 xfpm_manager_get_systemd_events(XfpmManager *manager)
 {
   GSList *events = NULL;
-  gchar *what = "";
+  gchar *what = g_strdup ("");
   gboolean logind_handle_power_key, logind_handle_suspend_key, logind_handle_hibernate_key, logind_handle_lid_switch;
 
   g_object_get (G_OBJECT (manager->priv->conf),
