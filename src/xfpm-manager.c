@@ -590,7 +590,7 @@ xfpm_manager_set_idle_alarm (XfpmManager *manager)
 static gchar*
 xfpm_manager_get_systemd_events(XfpmManager *manager)
 {
-  GSList *events = NULL;
+  GSList *events = NULL, *tmp;
   gchar *what = g_strdup ("");
   gboolean logind_handle_power_key, logind_handle_suspend_key, logind_handle_hibernate_key, logind_handle_lid_switch;
 
@@ -610,15 +610,15 @@ xfpm_manager_get_systemd_events(XfpmManager *manager)
   if (!logind_handle_lid_switch)
     events = g_slist_append(events, "handle-lid-switch");
 
-  while (events != NULL)
+  if (events != NULL)
   {
-    if ( g_strcmp0 (what, "") == 0 )
-      what = g_strdup ( (gchar *) events->data );
-    else
-      what = g_strconcat (what, ":", (gchar *) events->data, NULL);
-    events = g_slist_next (events);
+    tmp = events;
+    what = g_strdup ( (gchar *) tmp->data );
+    while ((tmp = g_slist_next (tmp)))
+      what = g_strconcat (what, ":", (gchar *) tmp->data, NULL);
+
+    g_slist_free(events);
   }
-  g_slist_free(events);
 
   return what;
 }
