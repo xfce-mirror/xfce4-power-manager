@@ -742,33 +742,6 @@ power_manager_button_remove_all_devices (PowerManagerButton *button)
   }
 }
 
-static void
-brightness_up (PowerManagerButton *button)
-{
-  gint32 level;
-  gint32 max_level;
-
-  xfpm_brightness_get_level (button->priv->brightness, &level);
-  max_level = xfpm_brightness_get_max_level (button->priv->brightness);
-
-  if ( level < max_level )
-  {
-    increase_brightness (button);
-  }
-}
-
-static void
-brightness_down (PowerManagerButton *button)
-{
-  gint32 level;
-  xfpm_brightness_get_level (button->priv->brightness, &level);
-
-  if ( level > button->priv->brightness_min_level )
-  {
-    decrease_brightness (button);
-  }
-}
-
 static gboolean
 power_manager_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
 {
@@ -784,12 +757,12 @@ power_manager_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
 
   if (ev->direction == GDK_SCROLL_UP)
   {
-    brightness_up (button);
+    increase_brightness (button);
     return TRUE;
   }
   else if (ev->direction == GDK_SCROLL_DOWN)
   {
-    brightness_down (button);
+    decrease_brightness (button);
     return TRUE;
   }
   return FALSE;
@@ -1546,7 +1519,8 @@ display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
 static void
 decrease_brightness (PowerManagerButton *button)
 {
-  gint32 level;
+  gint32 level, next_level;
+
 
   TRACE("entering");
 
@@ -1554,19 +1528,20 @@ decrease_brightness (PowerManagerButton *button)
     return;
 
   xfpm_brightness_get_level (button->priv->brightness, &level);
+  next_level = xfpm_brightness_dec(button->priv->brightness, level);
 
-  if ( level > button->priv->brightness_min_level )
-  {
-    xfpm_brightness_down (button->priv->brightness, &level);
-    if (button->priv->range)
-      gtk_range_set_value (GTK_RANGE (button->priv->range), level);
-  }
+  if ( next_level <= button->priv->brightness_min_level )
+    next_level = button->priv->brightness_min_level;
+
+  xfpm_brightness_set_level(button->priv->brightness, next_level);
+  if (button->priv->range)
+    gtk_range_set_value (GTK_RANGE (button->priv->range), next_level);
 }
 
 static void
 increase_brightness (PowerManagerButton *button)
 {
-  gint32 level, max_level;
+  gint32 level, max_level, next_level;
 
   TRACE("entering");
 
@@ -1575,13 +1550,14 @@ increase_brightness (PowerManagerButton *button)
 
   max_level = xfpm_brightness_get_max_level (button->priv->brightness);
   xfpm_brightness_get_level (button->priv->brightness, &level);
+  next_level = xfpm_brightness_inc(button->priv->brightness, level);
 
-  if (level < max_level)
-  {
-    xfpm_brightness_up (button->priv->brightness, &level);
-    if (button->priv->range)
-      gtk_range_set_value (GTK_RANGE (button->priv->range), level);
-  }
+  if (next_level >= max_level)
+    next_level = max_level;
+
+  xfpm_brightness_set_level (button->priv->brightness, next_level);
+  if (button->priv->range)
+      gtk_range_set_value (GTK_RANGE (button->priv->range), next_level);
 }
 
 static gboolean
