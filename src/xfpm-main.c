@@ -30,9 +30,6 @@
 #include <string.h>
 #endif
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 #include <signal.h>
 
 #include <gtk/gtk.h>
@@ -264,7 +261,6 @@ int main (int argc, char **argv)
   gboolean config     = FALSE;
   gboolean version    = FALSE;
   gboolean reload     = FALSE;
-  gboolean daemonize  = FALSE;
   gboolean debug      = FALSE;
   gboolean dump       = FALSE;
   gchar   *client_id  = NULL;
@@ -272,7 +268,6 @@ int main (int argc, char **argv)
   GOptionEntry option_entries[] =
   {
     { "run",'r', G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_NONE, &run, NULL, NULL },
-    { "daemon",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &daemonize, N_("Daemonize"), NULL },
     { "debug",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &debug, N_("Enable debugging"), NULL },
     { "dump",'\0' , G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &dump, N_("Dump all information"), NULL },
     { "restart", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &reload, N_("Restart the running instance of Xfce power manager"), NULL},
@@ -309,12 +304,6 @@ int main (int argc, char **argv)
 
   if ( version )
     show_version ();
-
-  /* Fork if needed */
-  if ( dump == FALSE && debug == FALSE && daemonize == TRUE && daemon(0,0) )
-  {
-    g_critical ("Could not daemonize");
-  }
 
   /* Initialize */
   xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
