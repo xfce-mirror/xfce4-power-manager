@@ -952,7 +952,7 @@ xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPo
                 power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
                 power->priv->presentation_mode ? "TRUE" : "FALSE");
 
-    xfpm_dpms_inhibit(power->priv->dpms, is_inhibit);
+    xfpm_dpms_inhibit (power->priv->dpms, is_inhibit);
 
     /* If we are inhibited make sure we inhibit the screensaver too */
     if (is_inhibit)
@@ -979,7 +979,7 @@ xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPo
   power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
   power->priv->presentation_mode ? "TRUE" : "FALSE");
 
-  xfpm_update_blank_time(power);
+  xfpm_update_blank_time (power);
 }
 
 static void
