@@ -20,7 +20,6 @@ xfce4_power_manager_settings_CFLAGS =				\
 	-I$(top_srcdir)/libdbus                 		\
 	-DLOCALEDIR=\"$(localedir)\"				\
 	-DG_LOG_DOMAIN=\"xfce4-power-manager-settings\" 	\
-	-export-dynamic						\
 	$(MODULE_FLAGS)						\
 	$(GTK_CFLAGS)						\
 	$(GLIB_CFLAGS)						\
@@ -32,6 +31,8 @@ xfce4_power_manager_settings_CFLAGS =				\
 	$(LIBXFCE4UTIL_CFLAGS)					\
 	$(XFCONF_CFLAGS)					\
 	$(UPOWER_CFLAGS)
+
+xfce4_power_manager_settings_LDFLAGS = -export-dynamic
 
 xfce4_power_manager_settings_LDADD   =				\
 	$(top_builddir)/libdbus/libxfpmdbus.la  		\
