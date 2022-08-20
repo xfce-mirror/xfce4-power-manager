@@ -523,10 +523,6 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
         g_variant_unref (response);
         return TRUE;
       }
-      else
-      {
-        return FALSE;
-      }
       break;
     }
     case SCREENSAVER_TYPE_CINNAMON:
@@ -544,52 +540,48 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
         g_variant_unref (response);
         return TRUE;
       }
-      else
-      {
-        return FALSE;
-      }
       break;
     }
     case SCREENSAVER_TYPE_OTHER:
     {
-      gboolean ret = FALSE;
-
-      if (saver->priv->lock_command != NULL)
-      {
-        DBG ("running lock command: %s", saver->priv->lock_command);
-        ret = g_spawn_command_line_async (saver->priv->lock_command, NULL);
-      }
-
-      if (!ret)
-      {
-        g_warning ("Screensaver lock command not set when attempting to lock the screen.\n"
-                   "Please set the xfconf property %s%s in xfce4-session to the desired lock command",
-                   XFSM_PROPERTIES_PREFIX, LOCK_COMMAND);
-
-        ret = g_spawn_command_line_async ("xflock4", NULL);
-      }
-
-      if (!ret)
-      {
-        ret = g_spawn_command_line_async ("xdg-screensaver lock", NULL);
-      }
-
-      if (!ret)
-      {
-        ret = g_spawn_command_line_async ("xscreensaver-command -lock", NULL);
-      }
-
-      return ret;
-      /* obviously we don't need this break statement but I'm sure some
-       * compiler or static analysis tool will complain */
+      /* Will be handled after the switch statement. */
       break;
     }
     default:
     {
+      /* FIXME: Impossible to reach? */
       g_warning ("Unknown screensaver type set when calling xfce_screensaver_lock");
       break;
     }
   }
 
-  return FALSE;
+  /* Fallback: either no dbus interface set up or it didn't Lock(). */
+  gboolean ret = FALSE;
+
+  if (saver->priv->lock_command != NULL)
+  {
+    DBG ("running lock command: %s", saver->priv->lock_command);
+    ret = g_spawn_command_line_async (saver->priv->lock_command, NULL);
+  }
+
+  if (!ret)
+  {
+    g_warning ("Screensaver lock command not set when attempting to lock the screen.\n"
+               "Please set the xfconf property %s%s in xfce4-session to the desired lock command",
+               XFSM_PROPERTIES_PREFIX, LOCK_COMMAND);
+
+    ret = g_spawn_command_line_async ("xflock4", NULL);
+  }
+
+  if (!ret)
+  {
+    ret = g_spawn_command_line_async ("xdg-screensaver lock", NULL);
+  }
+
+  if (!ret)
+  {
+    ret = g_spawn_command_line_async ("xscreensaver-command -lock", NULL);
+  }
+
+  return ret;
 }
