@@ -5,7 +5,7 @@
 # Translators:
 # Alexandre Fidalgo <alexandremagnos15@gmail.com>, 2014
 # Alexandre Fidalgo <alexandremagnos15@gmail.com>, 2014
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2019-2021
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2019-2022
 # José Vieira <jvieira33@sapo.pt>, 2018,2020
 # Nuno Miguel <nunomgue@gmail.com>, 2014-2017,2019
 # Sérgio Marques <smarquespt@gmail.com>, 2013-2014
@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-20 00:46+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2019-2021\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2019-2022\n"
 "Language-Team: Portuguese (http://www.transifex.com/xfce/xfce4-power-manager/language/pt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -82,11 +82,11 @@ msgstr "Exponencial"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Brightness step count:"
-msgstr "Incrementos de brilho:"
+msgstr "Contagem de incrementos de luminosidade:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Handle display brightness _keys"
-msgstr "_Chaves de manuseio do brilho do ecrã"
+msgstr "Teclas de luminosidade do ecrã"
 
 #: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "<b>Buttons</b>"
@@ -118,7 +118,7 @@ msgstr "Modo de suspensão do sistema:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "<b>System power saving</b>"
-msgstr "<b>Sistema de economia de energia</b>"
+msgstr "<b>Sistema de poupança de energia</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "<b>Laptop Lid</b>"
@@ -176,7 +176,7 @@ msgstr "Deixar o gestor de energia gerir a energia do monitor (DPMS) em vez do X
 
 #: ../data/interfaces/xfpm-settings.ui.h:37
 msgid "Blank after"
-msgstr "Ecrã vazio após"
+msgstr "Ecrã em branco após"
 
 #: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Put to sleep after"
@@ -188,7 +188,7 @@ msgstr "Desligar após"
 
 #: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "On inactivity reduce to"
-msgstr "Se inactivo reduzir para"
+msgstr "Se inativo reduzir para"
 
 #: ../data/interfaces/xfpm-settings.ui.h:41
 msgid "Reduce after"
@@ -196,7 +196,7 @@ msgstr "Reduzir após"
 
 #: ../data/interfaces/xfpm-settings.ui.h:42
 msgid "<b>Brightness reduction</b>"
-msgstr "<b>Redução do brilho</b>"
+msgstr "<b>Redução do luminosidade</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:43
 msgid "Display"
@@ -315,7 +315,7 @@ msgstr "Bloquear ecrã"
 
 #: ../settings/xfpm-settings.c:1555
 msgid "Number of brightness steps available using keys"
-msgstr "Número de incrementos de brilho disponíveis usando as teclas"
+msgstr "Número de incrementos de luminosidade disponíveis usando as teclas"
 
 #: ../settings/xfpm-settings.c:1595
 msgid "When all the power sources of the computer reach this charge level"
@@ -358,7 +358,7 @@ msgstr "Tecnologia"
 
 #: ../settings/xfpm-settings.c:2072
 msgid "Current charge"
-msgstr "Carga actual"
+msgstr "Carga atual"
 
 #. TRANSLATORS: Unit here is Watt hour
 #: ../settings/xfpm-settings.c:2080 ../settings/xfpm-settings.c:2092
@@ -466,7 +466,7 @@ msgstr "Definições para o gestor de energia do Xfce4"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr "definições;preferências;botões;suspender;hibernar;bateria;suspender;desligar;brilho;tampa do portátil;bloquear ecrã;acoplado;guardando;crítico;"
+msgstr "definições;preferências;botões;retomar;hibernar;bateria;suspender;encerrar;desligar;luminosidade;brilho;tampa do portátil;bloquear ecrã;acoplado;poupança;crítico;"
 
 #: ../common/xfpm-common.c:116
 msgid "translator-credits"
@@ -580,21 +580,21 @@ msgstr[2] "horas"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr "<b>%s %s</b>\nTotalmente carregado - %s restante"
+msgstr "<b>%s %s</b>\nTotalmente carregada - %s restante"
 
 #: ../common/xfpm-power-common.c:350
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr "<b>%s %s</b>\nTotalmente carregado"
+msgstr "<b>%s %s</b>\nTotalmente carregada"
 
 #: ../common/xfpm-power-common.c:359
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr "<b>%s %s</b>\n%0.0f%% - %s até estar carregado"
+msgstr "<b>%s %s</b>\n%0.0f%% - %s até estar carregada"
 
 #: ../common/xfpm-power-common.c:367 ../common/xfpm-power-common.c:385
 #, c-format
@@ -615,21 +615,21 @@ msgstr "<b>%s %s</b>\n%0.0f%% - %s restante"
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nEsperando até descarga (%0.0f%%)"
+msgstr "<b>%s %s</b>\nAguardando até descarregar (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:398
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nEsperando até carga (%0.0f%%)"
+msgstr "<b>%s %s</b>\nAguardando até carregar (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:404
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\nestá vazio"
+msgstr "<b>%s %s</b>\nestá sem carga"
 
 #: ../common/xfpm-power-common.c:409
 #, c-format
@@ -722,7 +722,7 @@ msgstr "A suspensão não é suportada"
 #: ../src/xfpm-backlight.c:160
 #, c-format
 msgid "Brightness: %.0f percent"
-msgstr "Brilho: %.0f porcento"
+msgstr "Luminosidade: %.0f porcento"
 
 #: ../src/xfpm-battery.c:109 ../src/xfpm-battery.c:160
 #, c-format
@@ -767,7 +767,7 @@ msgstr "A %s está descarregada"
 #: ../src/xfpm-kbd-backlight.c:112
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
-msgstr "Brilho do teclado: %.0f porcento"
+msgstr "Luminosidade do teclado: %.0f porcento"
 
 #: ../src/xfpm-main.c:54
 #, c-format
@@ -828,7 +828,7 @@ msgstr "Tem bateria"
 
 #: ../src/xfpm-main.c:146
 msgid "Has brightness panel"
-msgstr "Tem painel de brilho"
+msgstr "Tem painel de luminosidade"
 
 #: ../src/xfpm-main.c:148
 msgid "Has power button"
@@ -935,7 +935,7 @@ msgstr "%s está a inibir a gestão de energia"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1747
 msgid "<b>Display brightness</b>"
-msgstr "<b>Brilho do ecrã</b>"
+msgstr "<b>Luminosidade do ecrã</b>"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1774
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1785
@@ -990,7 +990,7 @@ msgstr "Plugin Gestor de Energia"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr "Mostrar os níveis de carga das baterias dos dispositivos e controlar o brilho do ecrã"
+msgstr "Mostrar os níveis de carga das baterias dos dispositivos e controlar a luminosidade do ecrã"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
@@ -1014,7 +1014,7 @@ msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "O gestor de energia do Xfce também providencia um plugin de controlo do brilho do LCD e de visualização dos níveis de carga da bateria e dos dispositivos, para os painéis do Xfce e do LXDE."
+msgstr "O gestor de energia do Xfce também providencia um plugin de controlo da luminosidade do LCD e de visualização dos níveis de carga da bateria e dos dispositivos, para os painéis do Xfce e do LXDE."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -1031,7 +1031,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr "Esta versão corrige erros da suspensão e hibernação. Também melhora o plugin do painel, incorporando a funcionalidade do (agora arrastável) plugin de brilho. Uma nova janela de notificação foi adicionada para o brilho do teclado; e o Gestor de Energia agora também controla a função de ecrã vazio do X11."
+msgstr "Esta versão corrige erros da suspensão e hibernação. Também melhora o plugin do painel, incorporando a funcionalidade do (agora abandonado) plugin de luminosidade. Uma nova janela de notificação foi adicionada para a luminosidade do teclado e o Gestor de Energia agora também controla a função de ecrã em branco do X11."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
