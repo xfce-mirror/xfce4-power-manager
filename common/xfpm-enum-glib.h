@@ -21,10 +21,6 @@
 #ifndef __XFPM_ENUM_GLIB_H
 #define __XFPM_ENUM_GLIB_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 G_BEGIN_DECLS
 
 /*

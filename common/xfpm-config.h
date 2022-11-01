@@ -23,10 +23,6 @@
 #ifndef __XFPM_CONFIG_H
 #define __XFPM_CONFIG_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <glib.h>
 
 G_BEGIN_DECLS
