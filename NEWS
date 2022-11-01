@@ -1,3 +1,43 @@
+4.17.0 (2022-11-01)
+======
+- settings: Revert type hint change
+- Fix intltool lock file bug in make distcheck
+- `-export-dynamic` is a linker flag
+- Free `eggalarm` after its last use
+- Fix memory leak and make `while` more efficient
+- Allocate dynamic memory to `what` so that it can be `g_free`d later
+- Inhibit DPMS when getting power inhibit request.
+- Fix icon name in autostart launcher
+- panel-plugin: Switch percentage and time
+- Charging ... until full, discharging ... remaining
+- Fix memory corruption due to incorrect g_ptr_array usage
+- Remove a floating reference
+- Connect to polkit signal via GDBusProxy generic signal
+- Do not log a warning about expected behavior
+- Revert "Lower minimum inactivity to 5 minutes"
+- Increase sleep timeout to 6hrs (Fixes #80)
+- Lower minimum inactivity to 5 minutes
+- Fix compilation warnings
+- automake: Enable subdir-objects
+- Update `.gitignore`
+- backlight: always update notification
+- Fix missing-prototypes
+- remove unused variable show_presentation_indicator
+- link xfpm-brightness.c with -lm
+- Fix va_args usage in get_device_icon_name
+- Remove GSourceFunc casts
+- Translation Updates:
+  Albanian, Arabic, Armenian (Armenia), Basque, Belarusian, Bulgarian,
+  Catalan, Chinese (China), Chinese (Hong Kong), Chinese (Taiwan),
+  Croatian, Czech, Danish, Dutch, Eastern Armenian, English
+  (Australia), English (Canada), English (United Kingdom), Estonian,
+  Finnish, French, Galician, German, Greek, Hebrew, Hungarian,
+  Icelandic, Indonesian, Interlingue, Italian, Japanese, Kannada,
+  Kazakh, Korean, Lithuanian, Malay, Norwegian Bokmål, Norwegian
+  Nynorsk, Occitan (post 1500), Polish, Portuguese, Portuguese
+  (Brazil), Romanian, Russian, Serbian, Slovak, Slovenian, Spanish,
+  Swedish, Telugu, Thai, Turkish, Ukrainian, Uyghur, Vietnamese
+
 4.16.0
 ======
 - bump glib (and gio, gthread, etc) minimum to 2.50.0
