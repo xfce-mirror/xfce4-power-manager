@@ -21,10 +21,6 @@
 #ifndef __XFPM_ENUM_H
 #define __XFPM_ENUM_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
