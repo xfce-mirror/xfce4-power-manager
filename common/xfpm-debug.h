@@ -21,10 +21,6 @@
 #ifndef __XFPM_DEBUG_H
 #define __XFPM_DEBUG_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <stdarg.h>
 #include <glib.h>
 
