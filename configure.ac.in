@@ -8,7 +8,7 @@ m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_versio
 
 AC_INIT([xfce4-power-manager],[xfpm_version],[http://bugzilla.xfce.org/])
 AC_PREREQ([2.60])
-AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_MACRO_DIRS([m4])
 
 # subdir-objects is currently broken, see
 # http://debbugs.gnu.org/cgi/bugreport.cgi?bug=13928
