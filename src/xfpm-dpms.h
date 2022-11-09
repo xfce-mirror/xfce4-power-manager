@@ -21,10 +21,6 @@
 #ifndef __XFPM_DPMS_H
 #define __XFPM_DPMS_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <glib-object.h>
 
 #include <xfconf/xfconf.h>
