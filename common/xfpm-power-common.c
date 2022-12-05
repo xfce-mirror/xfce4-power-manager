@@ -173,11 +173,7 @@ is_display_device (UpClient *upower, UpDevice *device)
   UpDevice *display_device = NULL;
   gboolean ret = FALSE;
 
-#if UP_CHECK_VERSION(0, 99, 0)
   display_device = up_client_get_display_device (upower);
-#else
-  return FALSE;
-#endif
 
   ret = g_strcmp0 (up_device_get_object_path(device), up_device_get_object_path(display_device)) == 0 ? TRUE : FALSE;
 
