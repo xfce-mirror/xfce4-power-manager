@@ -987,11 +987,7 @@ power_manager_button_init (PowerManagerButton *button)
   gtk_widget_set_can_default (GTK_WIDGET (button), FALSE);
   gtk_widget_set_can_focus (GTK_WIDGET (button), FALSE);
   gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-#if !GTK_CHECK_VERSION (3, 20, 0)
-  gtk_button_set_focus_on_click (GTK_BUTTON (button), FALSE);
-#else
   gtk_widget_set_focus_on_click (GTK_WIDGET (button), FALSE);
-#endif
   gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
   button->priv->brightness = xfpm_brightness_new ();
@@ -1640,24 +1636,15 @@ range_scroll_cb (GtkWidget *widget, GdkEvent *event, PowerManagerButton *button)
 static void
 range_show_cb (GtkWidget *widget, PowerManagerButton *button)
 {
-#if !GTK_CHECK_VERSION (3, 20, 0)
-  GdkDeviceManager* manager = gdk_display_get_device_manager (gdk_display_get_default());
-  GdkDevice* pointer = gdk_device_manager_get_client_pointer (manager);
-#else
   GdkSeat   *seat = gdk_display_get_default_seat (gdk_display_get_default());
   GdkDevice *pointer = gdk_seat_get_pointer (seat);
-#endif
 
   TRACE("entering");
   /* Release these grabs as they will cause a lockup if pkexec is called
    * for the brightness helper */
   if (pointer)
   {
-#if !GTK_CHECK_VERSION (3, 20, 0)
-    gdk_device_ungrab (pointer, GDK_CURRENT_TIME);
-#else
     gdk_seat_ungrab (seat);
-#endif
   }
 
   gtk_grab_remove (widget);
@@ -1800,7 +1787,6 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   gtk_menu_shell_append (GTK_MENU_SHELL(menu), mi);
   g_signal_connect (G_OBJECT(mi), "activate", G_CALLBACK(xfpm_preferences), NULL);
 
-#if GTK_CHECK_VERSION (3, 22, 0)
   gtk_menu_popup_at_widget (GTK_MENU (menu),
                             GTK_WIDGET (button),
 #ifdef XFCE_PLUGIN
@@ -1813,23 +1799,6 @@ G_GNUC_END_IGNORE_DEPRECATIONS
                             GDK_GRAVITY_SOUTH,
 #endif
                             NULL);
-#else
-  gtk_menu_popup (GTK_MENU (menu),
-                  NULL,
-                  NULL,
-#ifdef XFCE_PLUGIN
-                  xfce_panel_plugin_position_menu,
-#else
-                  NULL,
-#endif
-#ifdef XFCE_PLUGIN
-                  button->priv->plugin,
-#else
-                  NULL,
-#endif
-                  0,
-                  gtk_get_current_event_time ());
-#endif
 
 #ifdef XFCE_PLUGIN
   xfce_panel_plugin_register_menu (button->priv->plugin,
