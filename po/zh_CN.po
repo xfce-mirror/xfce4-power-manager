@@ -8,17 +8,17 @@
 # Hunt Xu <huntxu@live.cn>, 2008-2011
 # SamHX <samzh@outlook.com>, 2017
 # 玉堂白鹤 <yjwork@qq.com>, 2013-2014
-# Xiaobo Zhou <zhouxiaobo.500@gmail.com>, 2014-2015
-# 玉堂白鹤 <yjwork@qq.com>, 2015,2017,2019-2021
+# Cally Mal <zhouxiaobo.500@gmail.com>, 2014-2015
+# 玉堂白鹤 <yjwork@qq.com>, 2015,2017,2019-2022
 # Mingcong Bai <jeffbai@aosc.xyz>, 2016
 # Mingcong Bai <jeffbai@aosc.xyz>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-20 00:46+0200\n"
-"PO-Revision-Date: 2021-04-20 02:31+0000\n"
-"Last-Translator: 玉堂白鹤 <yjwork@qq.com>\n"
+"POT-Creation-Date: 2022-11-28 15:00+0100\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: 玉堂白鹤 <yjwork@qq.com>, 2015,2017,2019-2022\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/xfce/xfce4-power-manager/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,7 +49,7 @@ msgstr "无"
 #: ../src/xfpm-power.c:358 ../src/xfpm-power.c:634 ../src/xfpm-power.c:676
 #: ../src/xfpm-power.c:839 ../src/xfpm-power.c:860 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
-#: ../src/xfpm-kbd-backlight.c:114 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "电源管理器"
 
@@ -109,7 +109,7 @@ msgstr "<b>外观</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "General"
-msgstr "一般"
+msgstr "常规"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "When inactive for"
@@ -469,7 +469,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop lid;lock screen;plugged in;saving;critical;设置;首选项;按钮;睡眠;休眠;电池;挂起;关机;亮度;笔记本电脑盖;锁屏;插入;节能;紧急;"
 
-#: ../common/xfpm-common.c:116
+#: ../common/xfpm-common.c:120
 msgid "translator-credits"
 msgstr ".Chipong Luo <chipong.luo@yahoo.com>, 2011, 2012.\n玉堂白鹤 <yjwork@qq.com>,2020."
 
@@ -704,12 +704,12 @@ msgid ""
 "Estimated time left %s"
 msgstr "您的 %s 电量低\n预计剩余时间 %s"
 
-#: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1693 ../src/xfpm-power.c:1725
-#: ../src/xfpm-power.c:1755
+#: ../src/xfpm-power.c:1649 ../src/xfpm-power.c:1697 ../src/xfpm-power.c:1729
+#: ../src/xfpm-power.c:1759
 msgid "Permission denied"
 msgstr "无权限"
 
-#: ../src/xfpm-power.c:1734 ../src/xfpm-power.c:1764
+#: ../src/xfpm-power.c:1738 ../src/xfpm-power.c:1768
 msgid "Suspend not supported"
 msgstr "不支持挂起"
 
@@ -759,7 +759,7 @@ msgid "Your %s is empty"
 msgstr "您的 %s 没电"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-kbd-backlight.c:112
+#: ../src/xfpm-kbd-backlight.c:116
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "键盘亮度: %.0f 百分比"
