@@ -686,10 +686,25 @@ format_inactivity_value_cb (gint value)
 gchar *
 format_brightness_value_cb (gint value)
 {
+  gint min, sec;
+
   if ( value <= 9 )
     return g_strdup (_("Never"));
 
-  return g_strdup_printf ("%d %s", value, _("seconds"));
+  /* value > 60 */
+  min = value/60;
+  sec = value%60;
+
+  if ( min == 0 )
+    return g_strdup_printf ("%d %s", sec, _("seconds"));
+  else if ( min == 1 )
+    if ( sec == 0 )      return g_strdup_printf ("%s", _("One minute"));
+    else if ( sec == 1 ) return g_strdup_printf ("%s %s", _("One minute"),  _("one second"));
+    else                 return g_strdup_printf ("%s %d %s", _("One minute"), sec, _("seconds"));
+  else
+    if ( sec == 0 )      return g_strdup_printf ("%d %s", min, _("minutes"));
+    else if ( sec == 1 ) return g_strdup_printf ("%d %s %s", min, _("minutes"), _("one second"));
+    else                 return g_strdup_printf ("%d %s %d %s", min, _("minutes"), sec, _("seconds"));
 }
 
 gchar *
