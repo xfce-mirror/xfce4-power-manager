@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
-# 박정규(Jung-Kyu Park) <bagjunggyu@gmail.com>, 2017
+# 1763f4a4329a2376c933c5e919a36cbc_341ca53 <1f851310383599d03339229d772e1290_119292>, 2017
 # lego37yoon <lego37yoon@outlook.com>, 2014
-# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2015,2019-2020
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2015,2019-2020,2022
 # Thomas Sungjin Kang <potopro@gmail.com>, 2014,2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-20 00:46+0200\n"
-"PO-Revision-Date: 2021-04-19 22:46+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2022-11-28 15:00+0100\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2015,2019-2020,2022\n"
 "Language-Team: Korean (http://www.transifex.com/xfce/xfce4-power-manager/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,7 +44,7 @@ msgstr "아무것도 안 함"
 #: ../src/xfpm-power.c:358 ../src/xfpm-power.c:634 ../src/xfpm-power.c:676
 #: ../src/xfpm-power.c:839 ../src/xfpm-power.c:860 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
-#: ../src/xfpm-kbd-backlight.c:114 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "전원 관리자"
 
@@ -464,7 +464,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr "settings;설정;preferences;기본설정;기본 설정;buttons;버튼;보턴;단추;sleep;대기;hibernate;최대절전;최대 절전;battery;바떼리;밧데리;배터리;suspend;대기;shutdown;시스템종료;시스템 종료;시스템끄기;시스템 끄기;전원끄기;전원 끄기;brightness;밝기;laptop lid;랩톱뚜껑;랩톱 뚜껑;랩톱덮개;랩톱 덮개;lock screen;화면잠금;화면 잠금;plugged in;연결함;saving;절약;critical;치명;부족;"
 
-#: ../common/xfpm-common.c:116
+#: ../common/xfpm-common.c:120
 msgid "translator-credits"
 msgstr "Seong-ho Cho <darkcircle.0426@gmail.com>"
 
@@ -570,35 +570,35 @@ msgstr[0] "시간\t"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr ""
+msgstr "<b>%s %s</b>\n완충 - %s 남음"
 
 #: ../common/xfpm-power-common.c:350
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr ""
+msgstr "<b>%s %s</b>\n완충"
 
 #: ../common/xfpm-power-common.c:359
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr ""
+msgstr "<b>%s %s</b>\n%0.0f%% - %s 남음"
 
 #: ../common/xfpm-power-common.c:367 ../common/xfpm-power-common.c:385
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr ""
+msgstr "<b>%s %s</b>\n%0.0f%%"
 
 #: ../common/xfpm-power-common.c:377
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr ""
+msgstr "<b>%s %s</b>\n%0.0f%% - %s 남음"
 
 #: ../common/xfpm-power-common.c:392
 #, c-format
@@ -699,12 +699,12 @@ msgid ""
 "Estimated time left %s"
 msgstr "%s 충전 수준이 낮습니다\n예상 시간이 %s 남았습니다"
 
-#: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1693 ../src/xfpm-power.c:1725
-#: ../src/xfpm-power.c:1755
+#: ../src/xfpm-power.c:1649 ../src/xfpm-power.c:1697 ../src/xfpm-power.c:1729
+#: ../src/xfpm-power.c:1759
 msgid "Permission denied"
 msgstr "권한을 거부함"
 
-#: ../src/xfpm-power.c:1734 ../src/xfpm-power.c:1764
+#: ../src/xfpm-power.c:1738 ../src/xfpm-power.c:1768
 msgid "Suspend not supported"
 msgstr "절전을 지원하지 않음"
 
@@ -754,7 +754,7 @@ msgid "Your %s is empty"
 msgstr "%s이(가) 비어 있습니다"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-kbd-backlight.c:112
+#: ../src/xfpm-kbd-backlight.c:116
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "키보드 밝기: %.0f 퍼센트"
@@ -842,7 +842,7 @@ msgstr "LID 있음"
 
 #: ../src/xfpm-main.c:275
 msgid "Daemonize"
-msgstr ""
+msgstr "데몬으로 실행"
 
 #: ../src/xfpm-main.c:277
 msgid "Dump all information"
@@ -935,7 +935,7 @@ msgstr "프리젠테이션 모드(_M)"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1798
 msgid "_Settings..."
-msgstr ""
+msgstr "설정(_S)..."
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
