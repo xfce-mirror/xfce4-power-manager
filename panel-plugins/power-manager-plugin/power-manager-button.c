@@ -109,14 +109,14 @@ struct PowerManagerButtonPrivate
 
 typedef struct
 {
-  GdkPixbuf   *pix;               /* Icon */
-  GtkWidget   *img;               /* Icon image in the menu */
-  gchar       *details;           /* Description of the device + state */
-  gchar       *object_path;       /* UpDevice object path */
-  UpDevice    *device;            /* Pointer to the UpDevice */
-  gulong       changed_signal_id; /* device changed callback id */
-  gulong       expose_signal_id;  /* expose-event callback id */
-  GtkWidget   *menu_item;         /* The device's item on the menu (if shown) */
+  cairo_surface_t *surface;           /* Icon */
+  GtkWidget       *img;               /* Icon image in the menu */
+  gchar           *details;           /* Description of the device + state */
+  gchar           *object_path;       /* UpDevice object path */
+  UpDevice        *device;            /* Pointer to the UpDevice */
+  gulong           changed_signal_id; /* device changed callback id */
+  gulong           expose_signal_id;  /* expose-event callback id */
+  GtkWidget       *menu_item;         /* The device's item on the menu (if shown) */
 } BatteryDevice;
 
 typedef enum
@@ -162,7 +162,7 @@ static gboolean   power_manager_button_menu_add_device                  (PowerMa
                                                                          gboolean append);
 static void       increase_brightness                                   (PowerManagerButton *button);
 static void       decrease_brightness                                   (PowerManagerButton *button);
-static void       battery_device_remove_pix                             (BatteryDevice *battery_device);
+static void       battery_device_remove_surface                         (BatteryDevice *battery_device);
 
 
 static BatteryDevice*
@@ -457,14 +457,16 @@ power_manager_button_device_icon_draw (GtkWidget *img, cairo_t *cr, gpointer use
 static void
 power_manager_button_update_device_icon_and_details (PowerManagerButton *button, UpDevice *device)
 {
-  GList          *item;
-  BatteryDevice  *battery_device;
-  BatteryDevice  *display_device;
-  const gchar    *object_path = up_device_get_object_path(device);
-  gchar          *details;
-  gchar          *icon_name;
-  gchar          *menu_icon_name;
-  GdkPixbuf      *pix = NULL;
+  GList           *item;
+  BatteryDevice   *battery_device;
+  BatteryDevice   *display_device;
+  const gchar     *object_path = up_device_get_object_path(device);
+  gchar           *details;
+  gchar           *icon_name;
+  gchar           *menu_icon_name;
+  gint             scale_factor;
+  GdkPixbuf       *pix;
+  cairo_surface_t *surface = NULL;
 
   XFPM_DEBUG("entering for %s", object_path);
 
@@ -493,11 +495,22 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
   if (menu_icon_name == NULL)
     menu_icon_name = g_strdup (PANEL_DEFAULT_ICON);
 
-  pix = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (),
-                                  menu_icon_name,
-                                  32,
-                                  GTK_ICON_LOOKUP_USE_BUILTIN,
-                                  NULL);
+  scale_factor = gtk_widget_get_scale_factor (GTK_WIDGET (button));
+  pix = gtk_icon_theme_load_icon_for_scale (gtk_icon_theme_get_default (),
+                                            menu_icon_name,
+                                            32,
+                                            scale_factor,
+                                            GTK_ICON_LOOKUP_USE_BUILTIN
+                                            | GTK_ICON_LOOKUP_FORCE_SIZE,
+                                            NULL);
+  if (G_LIKELY (pix != NULL))
+  {
+    surface = gdk_cairo_surface_create_from_pixbuf (pix,
+                                                    scale_factor,
+                                                    gtk_widget_get_window (GTK_WIDGET (button)));
+    g_object_unref (pix);
+    pix = NULL;
+  }
 
   if (battery_device->details)
     g_free (battery_device->details);
@@ -505,9 +518,9 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
   battery_device->details = details;
 
   /* If we had an image before, remove it and the callback */
-  battery_device_remove_pix(battery_device);
+  battery_device_remove_surface(battery_device);
 
-  battery_device->pix = pix;
+  battery_device->surface = surface;
 
   /* Get the display device, which may now be this one */
   display_device = get_display_device (button);
@@ -539,7 +552,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
 
     /* update the image, keep track of the signal ids and the img
      * so we can disconnect it later */
-    battery_device->img = gtk_image_new_from_pixbuf (battery_device->pix);
+    battery_device->img = gtk_image_new_from_surface (battery_device->surface);
 
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(battery_device->menu_item), battery_device->img);
@@ -604,14 +617,14 @@ power_manager_button_add_device (UpDevice *device, PowerManagerButton *button)
  * disconnects the expose-event callback on the img.
  */
 static void
-battery_device_remove_pix (BatteryDevice *battery_device)
+battery_device_remove_surface (BatteryDevice *battery_device)
 {
   TRACE("entering");
 
   if (battery_device == NULL)
     return;
 
-  if (G_IS_OBJECT (battery_device->pix))
+  if (battery_device->surface != NULL)
   {
     if (GTK_IS_WIDGET (battery_device->img))
     {
@@ -623,8 +636,8 @@ battery_device_remove_pix (BatteryDevice *battery_device)
       g_object_unref (battery_device->img);
       battery_device->img = NULL;
     }
-    g_object_unref (battery_device->pix);
-    battery_device->pix = NULL;
+    cairo_surface_destroy (battery_device->surface);
+    battery_device->surface = NULL;
   }
 }
 
@@ -641,7 +654,7 @@ remove_battery_device (PowerManagerButton *button, BatteryDevice *battery_device
   g_free (battery_device->details);
   g_free (battery_device->object_path);
 
-  battery_device_remove_pix (battery_device);
+  battery_device_remove_surface (battery_device);
 
   if (battery_device->device != NULL && UP_IS_DEVICE(battery_device->device))
   {
@@ -1401,7 +1414,7 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   label = gtk_bin_get_child (GTK_BIN (mi));
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
   /* add the image */
-  battery_device->img = gtk_image_new_from_pixbuf (battery_device->pix);
+  battery_device->img = gtk_image_new_from_surface (battery_device->surface);
   g_object_ref (battery_device->img);
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), battery_device->img);

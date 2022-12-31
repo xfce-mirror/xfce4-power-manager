@@ -27,7 +27,8 @@
 G_BEGIN_DECLS
 
 GdkPixbuf      *xfpm_icon_load                  (const gchar *icon_name,
-                                                 gint         size);
+                                                 gint         size,
+                                                 gint         scale_factor);
 const gchar    *xfpm_bool_to_string             (gboolean     value) G_GNUC_PURE;
 gboolean        xfpm_string_to_bool             (const gchar *string) G_GNUC_PURE;
 GtkBuilder     *xfpm_builder_new_from_string    (const gchar *file,
