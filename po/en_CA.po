@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Steve Harris <steve@jbs.ca>, 2020
+# Steve Harris <steve@jbs.ca>, 2023
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-20 00:46+0200\n"
-"PO-Revision-Date: 2021-04-19 22:46+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2022-11-28 15:00+0100\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: Steve Harris <steve@jbs.ca>, 2023\n"
 "Language-Team: English (Canada) (http://www.transifex.com/xfce/xfce4-power-manager/language/en_CA/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,7 +42,7 @@ msgstr "Nothing"
 #: ../src/xfpm-power.c:358 ../src/xfpm-power.c:634 ../src/xfpm-power.c:676
 #: ../src/xfpm-power.c:839 ../src/xfpm-power.c:860 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
-#: ../src/xfpm-kbd-backlight.c:114 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Power Manager"
 
@@ -462,7 +463,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop lid;lock screen;plugged in;saving;critical;"
 
-#: ../common/xfpm-common.c:116
+#: ../common/xfpm-common.c:120
 msgid "translator-credits"
 msgstr "translator-credits"
 
@@ -571,35 +572,35 @@ msgstr[1] "hours"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr ""
+msgstr "<b>%s %s</b>\nFully charged - %s remaining"
 
 #: ../common/xfpm-power-common.c:350
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr ""
+msgstr "<b>%s %s</b>\nFully charged"
 
 #: ../common/xfpm-power-common.c:359
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr ""
+msgstr "<b>%s %s</b>\n%0.0f%% - %s until full"
 
 #: ../common/xfpm-power-common.c:367 ../common/xfpm-power-common.c:385
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr ""
+msgstr "<b>%s %s</b>\n%0.0f%%"
 
 #: ../common/xfpm-power-common.c:377
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr ""
+msgstr "<b>%s %s</b>\n%0.0f%% - %s remaining"
 
 #: ../common/xfpm-power-common.c:392
 #, c-format
@@ -700,12 +701,12 @@ msgid ""
 "Estimated time left %s"
 msgstr "Your %s charge level is low\nEstimated time left %s"
 
-#: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1693 ../src/xfpm-power.c:1725
-#: ../src/xfpm-power.c:1755
+#: ../src/xfpm-power.c:1649 ../src/xfpm-power.c:1697 ../src/xfpm-power.c:1729
+#: ../src/xfpm-power.c:1759
 msgid "Permission denied"
 msgstr "Permission denied"
 
-#: ../src/xfpm-power.c:1734 ../src/xfpm-power.c:1764
+#: ../src/xfpm-power.c:1738 ../src/xfpm-power.c:1768
 msgid "Suspend not supported"
 msgstr "Suspend not supported"
 
@@ -755,7 +756,7 @@ msgid "Your %s is empty"
 msgstr "Your %s is empty"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-kbd-backlight.c:112
+#: ../src/xfpm-kbd-backlight.c:116
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Keyboard Brightness: %.0f percent"
@@ -843,7 +844,7 @@ msgstr "Has LID"
 
 #: ../src/xfpm-main.c:275
 msgid "Daemonize"
-msgstr ""
+msgstr "Daemonize"
 
 #: ../src/xfpm-main.c:277
 msgid "Dump all information"
@@ -936,7 +937,7 @@ msgstr "Presentation _mode"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1798
 msgid "_Settings..."
-msgstr ""
+msgstr "_Settings..."
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
