@@ -224,10 +224,21 @@ xfpm_notify_close_critical_cb (NotifyNotification *n,
 }
 
 static gboolean
-xfpm_notify_show (gpointer user_data)
+xfpm_notify_show_notify (gpointer user_data)
 {
-  NotifyNotification *n = user_data;
-  notify_notification_show (n, NULL);
+  XfpmNotify *notify = user_data;
+  notify_notification_show (notify->priv->notification, NULL);
+  notify->priv->notify_id = 0;
+
+  return FALSE;
+}
+
+static gboolean
+xfpm_notify_show_critical (gpointer user_data)
+{
+  XfpmNotify *notify = user_data;
+  notify_notification_show (notify->priv->critical, NULL);
+  notify->priv->critical_id = 0;
 
   return FALSE;
 }
@@ -328,9 +339,9 @@ xfpm_notify_present_notification (XfpmNotify         *notify,
 
   g_signal_connect (G_OBJECT (n),"closed",
                     G_CALLBACK (xfpm_notify_closed_cb), notify);
-                    notify->priv->notification = n;
+  notify->priv->notification = n;
 
-  notify->priv->notify_id = g_idle_add (xfpm_notify_show, n);
+  notify->priv->notify_id = g_idle_add (xfpm_notify_show_notify, notify);
 }
 
 void
@@ -346,7 +357,7 @@ xfpm_notify_critical (XfpmNotify         *notify,
   g_signal_connect (G_OBJECT (n), "closed",
                     G_CALLBACK (xfpm_notify_close_critical_cb), notify);
 
-  notify->priv->critical_id = g_idle_add (xfpm_notify_show, n);
+  notify->priv->critical_id = g_idle_add (xfpm_notify_show_critical, notify);
 }
 
 void
