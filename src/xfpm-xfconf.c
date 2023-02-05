@@ -565,7 +565,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                       NULL, NULL,
                                                       9,
                                                       G_MAXUINT,
-                                                      120,
+                                                      300,
                                                       G_PARAM_READWRITE));
 
 
