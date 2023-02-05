@@ -206,9 +206,9 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   g_signal_connect (G_OBJECT (combo), "changed",
                     G_CALLBACK (power_manager_plugin_combo_changed),
                     channel);
-  g_signal_connect (G_OBJECT (channel), "property-changed::" XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL,
-                    G_CALLBACK (power_manager_plugin_panel_label_changed),
-                    combo);
+  g_signal_connect_object (G_OBJECT (channel), "property-changed::" XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL,
+                           G_CALLBACK (power_manager_plugin_panel_label_changed),
+                           combo, 0);
 
   label = gtk_label_new (_("Show 'Presentation mode' indicator:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
