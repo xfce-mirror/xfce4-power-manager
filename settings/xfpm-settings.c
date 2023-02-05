@@ -689,22 +689,20 @@ format_brightness_value_cb (gint value)
 {
   gint min, sec;
 
-  if ( value <= 9 )
+  if ( value < 1 )
     return g_strdup (_("Never"));
 
-  /* value > 60 */
-  min = value/60;
-  sec = value%60;
+  /* value > 6 */
+  min = value/6;
+  sec = 10*(value%6);
 
   if ( min == 0 )
     return g_strdup_printf ("%d %s", sec, _("seconds"));
   else if ( min == 1 )
     if ( sec == 0 )      return g_strdup_printf ("%s", _("One minute"));
-    else if ( sec == 1 ) return g_strdup_printf ("%s %s", _("One minute"),  _("one second"));
     else                 return g_strdup_printf ("%s %d %s", _("One minute"), sec, _("seconds"));
   else
     if ( sec == 0 )      return g_strdup_printf ("%d %s", min, _("minutes"));
-    else if ( sec == 1 ) return g_strdup_printf ("%d %s %s", min, _("minutes"), _("one second"));
     else                 return g_strdup_printf ("%d %s %d %s", min, _("minutes"), sec, _("seconds"));
 }
 
@@ -717,7 +715,7 @@ format_brightness_percentage_cb (gint value)
 void
 brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-  gint value    = (gint)gtk_range_get_value (GTK_RANGE (w));
+  gint value    = MAX (BRIGHTNESS_DISABLED, 10 * (gint)gtk_range_get_value (GTK_RANGE (w)));
   gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_battery_dpms_sleep) );
 
   if ( value != BRIGHTNESS_DISABLED )
