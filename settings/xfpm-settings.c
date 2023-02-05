@@ -458,11 +458,11 @@ display_blank_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
   if ( lcd_brightness )
   {
     brg = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-battery"));
-    brightness_value = (gint) gtk_range_get_value (GTK_RANGE (brg));
+    brightness_value = MAX (BRIGHTNESS_DISABLED, 10 * (gint) gtk_range_get_value (GTK_RANGE (brg)));
 
     if ( blank_value * 60 <= brightness_value && brightness_value != BRIGHTNESS_DISABLED)
     {
-      gtk_range_set_value (GTK_RANGE (brg), BRIGHTNESS_DISABLED);
+      gtk_range_set_value (GTK_RANGE (brg), 0);
     }
   }
 
@@ -497,11 +497,11 @@ sleep_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
   if ( lcd_brightness )
   {
     brg = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-battery"));
-    brightness_value = (gint) gtk_range_get_value (GTK_RANGE (brg));
+    brightness_value = MAX (BRIGHTNESS_DISABLED, 10 * (gint) gtk_range_get_value (GTK_RANGE (brg)));
 
     if ( sleep_value * 60 <= brightness_value && brightness_value != BRIGHTNESS_DISABLED)
     {
-        gtk_range_set_value (GTK_RANGE (brg), BRIGHTNESS_DISABLED);
+        gtk_range_set_value (GTK_RANGE (brg), 0);
     }
   }
 
@@ -554,11 +554,11 @@ display_blank_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
   if ( lcd_brightness )
   {
     brg = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-ac"));
-    brightness_value = (gint) gtk_range_get_value (GTK_RANGE (brg));
+    brightness_value = MAX (BRIGHTNESS_DISABLED, 10 * (gint) gtk_range_get_value (GTK_RANGE (brg)));
 
     if ( blank_value * 60 <= brightness_value && brightness_value != BRIGHTNESS_DISABLED)
     {
-      gtk_range_set_value (GTK_RANGE (brg), BRIGHTNESS_DISABLED);
+      gtk_range_set_value (GTK_RANGE (brg), 0);
     }
   }
 
@@ -598,11 +598,11 @@ sleep_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
   {
     brg = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-ac"));
 
-    brightness_value = (gint) gtk_range_get_value (GTK_RANGE (brg));
+    brightness_value = MAX (BRIGHTNESS_DISABLED, 10 * (gint) gtk_range_get_value (GTK_RANGE (brg)));
 
     if ( sleep_value * 60 <= brightness_value && brightness_value != BRIGHTNESS_DISABLED)
     {
-      gtk_range_set_value (GTK_RANGE (brg), BRIGHTNESS_DISABLED);
+      gtk_range_set_value (GTK_RANGE (brg), 0);
     }
   }
 
@@ -689,22 +689,20 @@ format_brightness_value_cb (gint value)
 {
   gint min, sec;
 
-  if ( value <= 9 )
+  if ( value < 1 )
     return g_strdup (_("Never"));
 
-  /* value > 60 */
-  min = value/60;
-  sec = value%60;
+  /* value > 6 */
+  min = value/6;
+  sec = 10*(value%6);
 
   if ( min == 0 )
     return g_strdup_printf ("%d %s", sec, _("seconds"));
   else if ( min == 1 )
     if ( sec == 0 )      return g_strdup_printf ("%s", _("One minute"));
-    else if ( sec == 1 ) return g_strdup_printf ("%s %s", _("One minute"),  _("one second"));
     else                 return g_strdup_printf ("%s %d %s", _("One minute"), sec, _("seconds"));
   else
     if ( sec == 0 )      return g_strdup_printf ("%d %s", min, _("minutes"));
-    else if ( sec == 1 ) return g_strdup_printf ("%d %s %s", min, _("minutes"), _("one second"));
     else                 return g_strdup_printf ("%d %s %d %s", min, _("minutes"), sec, _("seconds"));
 }
 
@@ -717,7 +715,7 @@ format_brightness_percentage_cb (gint value)
 void
 brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-  gint value    = (gint)gtk_range_get_value (GTK_RANGE (w));
+  gint value    = MAX (BRIGHTNESS_DISABLED, 10 * (gint)gtk_range_get_value (GTK_RANGE (w)));
   gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_battery_dpms_sleep) );
 
   if ( value != BRIGHTNESS_DISABLED )
@@ -739,7 +737,7 @@ brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 void
 brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-  gint value    = (gint)gtk_range_get_value (GTK_RANGE (w));
+  gint value    = MAX (BRIGHTNESS_DISABLED, 10 * (gint)gtk_range_get_value (GTK_RANGE (w)));
   gint dpms_sleep = (gint) gtk_range_get_value (GTK_RANGE (on_ac_dpms_sleep) );
 
   if ( value != BRIGHTNESS_DISABLED )
@@ -1104,8 +1102,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
   brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-level-on-battery"));
   if ( has_lcd_brightness )
   {
-    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 120);
-    gtk_range_set_value (GTK_RANGE(brg), val);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, 300);
+    gtk_range_set_value (GTK_RANGE(brg), val / 10);
 
     val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, 20);
     gtk_range_set_value (GTK_RANGE (brg_level), val);
@@ -1291,8 +1289,8 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
   brg_level = GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-level-on-ac"));
   if ( has_lcd_brightness )
   {
-    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_AC, 9);
-    gtk_range_set_value (GTK_RANGE(brg), val);
+    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_AC, BRIGHTNESS_DISABLED);
+    gtk_range_set_value (GTK_RANGE(brg), val / 10);
 
     val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, 80);
     gtk_range_set_value (GTK_RANGE (brg_level), val);
