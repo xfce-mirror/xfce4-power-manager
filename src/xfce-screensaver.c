@@ -507,7 +507,6 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
 
   switch (saver->priv->screensaver_type)
   {
-    case SCREENSAVER_TYPE_FREEDESKTOP:
     case SCREENSAVER_TYPE_MATE:
     case SCREENSAVER_TYPE_GNOME:
     case SCREENSAVER_TYPE_XFCE:
@@ -544,6 +543,7 @@ xfce_screensaver_lock (XfceScreenSaver *saver)
       }
       break;
     }
+    case SCREENSAVER_TYPE_FREEDESKTOP:
     case SCREENSAVER_TYPE_OTHER:
     {
       /* Will be handled after the switch statement. */
