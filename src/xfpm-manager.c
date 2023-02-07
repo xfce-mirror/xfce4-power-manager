@@ -62,7 +62,6 @@
 #include "xfpm-enum-types.h"
 #include "xfpm-dbus-monitor.h"
 #include "xfpm-systemd.h"
-#include "xfce-screensaver.h"
 #include "../panel-plugins/power-manager-plugin/power-manager-button.h"
 
 static void xfpm_manager_finalize   (GObject *object);
@@ -101,7 +100,7 @@ struct XfpmManagerPrivate
   XfpmSystemd        *systemd;
   XfpmDBusMonitor    *monitor;
   XfpmInhibit        *inhibit;
-  XfceScreenSaver    *screensaver;
+  XfceScreensaver    *screensaver;
   EggIdletime        *idle;
   GtkStatusIcon      *adapter_icon;
   GtkWidget          *power_button;
