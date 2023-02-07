@@ -1449,13 +1449,25 @@ add_inhibitor_to_menu (PowerManagerButton *button, const gchar *text)
    * power in the plugin menu. Example:
    * VLC is currently inhibiting power management
    */
-  gchar *label = g_strdup_printf (_("%s is currently inhibiting power management"), text);
+
+  gchar *label, *app_name, *app_icon;
+
+  app_name = xfce_get_from_desktop_file (text, G_KEY_FILE_DESKTOP_KEY_NAME);
+  app_icon = xfce_get_from_desktop_file (text, G_KEY_FILE_DESKTOP_KEY_ICON);
+
+  if (app_name)
+    label = g_strdup_printf (_("%s is currently inhibiting power management"), app_name);
+  else
+    label = g_strdup_printf (_("%s is currently inhibiting power management"), text);
 
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   mi = gtk_image_menu_item_new_with_label(label);
 G_GNUC_END_IGNORE_DEPRECATIONS
   /* add the image */
-  img = gtk_image_new_from_icon_name ("dialog-information", GTK_ICON_SIZE_MENU);
+  if (app_icon)
+    img = gtk_image_new_from_icon_name (app_icon, GTK_ICON_SIZE_MENU);
+  else
+    img = gtk_image_new_from_icon_name ("dialog-information", GTK_ICON_SIZE_MENU);
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi), img);
 G_GNUC_END_IGNORE_DEPRECATIONS
@@ -1463,6 +1475,8 @@ G_GNUC_END_IGNORE_DEPRECATIONS
   gtk_widget_set_can_focus (mi, FALSE);
   gtk_widget_show (mi);
   gtk_menu_shell_append (GTK_MENU_SHELL(button->priv->menu), mi);
+  g_free (app_name);
+  g_free (app_icon);
   g_free (label);
 }
 
