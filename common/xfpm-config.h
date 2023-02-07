@@ -52,7 +52,6 @@ G_BEGIN_DECLS
 #define PRESENTATION_MODE                    "presentation-mode"
 #define NETWORK_MANAGER_SLEEP                "network-manager-sleep"
 #define HEARTBEAT_COMMAND                    "heartbeat-command"
-#define LOCK_COMMAND                         "LockCommand"
 #define SHOW_TRAY_ICON_CFG                   "show-tray-icon"
 
 #define POWER_SWITCH_CFG                     "power-button-action"
