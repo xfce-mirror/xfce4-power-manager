@@ -110,7 +110,7 @@ xfpm_about (gpointer data)
   };
 
   gtk_show_about_dialog (NULL,
-       "copyright", "Copyright \302\251 2008-2011 Ali Abdallah\nCopyright \302\251 2011-2012 Nick Schermer\nCopyright \302\251 2013-2015 Eric Koegel, Harald Judt, Simon Steinbeiß",
+       "copyright", "Copyright \302\251 2008-2011 Ali Abdallah\nCopyright \302\251 2011-2012 Nick Schermer\nCopyright \302\251 2013-2015 Eric Koegel, Harald Judt, Simon Steinbeiß\nCopyright \302\251 2016-2023 The Xfce development team",
        "destroy-with-parent", TRUE,
        "authors", authors,
        "artists", artists,
