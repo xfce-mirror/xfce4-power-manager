@@ -61,7 +61,6 @@
 #include "xfpm-systemd.h"
 #include "xfpm-suspend.h"
 #include "xfpm-brightness.h"
-#include "xfce-screensaver.h"
 
 static void xfpm_power_finalize     (GObject *object);
 
@@ -108,7 +107,7 @@ struct XfpmPowerPrivate
 
   gboolean          inhibited;
   gboolean          screensaver_inhibited;
-  XfceScreenSaver  *screensaver;
+  XfceScreensaver  *screensaver;
 
   XfpmNotify       *notify;
 #ifdef ENABLE_POLKIT
