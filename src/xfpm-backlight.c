@@ -249,9 +249,9 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
                                    brightness_step_count,
                                    brightness_exponential);
     if ( type == BUTTON_MON_BRIGHTNESS_UP )
-      ret = xfpm_brightness_up (backlight->priv->brightness, &level);
+      ret = xfpm_brightness_set_level (backlight->priv->brightness, xfpm_brightness_inc(backlight->priv->brightness,level));
     else
-      ret = xfpm_brightness_down (backlight->priv->brightness, &level);
+      ret = xfpm_brightness_set_level (backlight->priv->brightness, xfpm_brightness_dec(backlight->priv->brightness,level));
   }
   if ( ret && show_popup)
     xfpm_backlight_show (backlight, level);
