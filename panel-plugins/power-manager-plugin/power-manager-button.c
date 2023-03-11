@@ -1537,10 +1537,8 @@ decrease_brightness (PowerManagerButton *button)
     return;
 
   xfpm_brightness_get_level (button->priv->brightness, &level);
-  next_level = xfpm_brightness_dec(button->priv->brightness, level);
-
-  if ( next_level <= button->priv->brightness_min_level )
-    next_level = button->priv->brightness_min_level;
+  next_level = MAX (button->priv->brightness_min_level,
+                    xfpm_brightness_dec (button->priv->brightness, level));
 
   xfpm_brightness_set_level(button->priv->brightness, next_level);
   if (button->priv->range)
@@ -1550,19 +1548,16 @@ decrease_brightness (PowerManagerButton *button)
 static void
 increase_brightness (PowerManagerButton *button)
 {
-  gint32 level, max_level, next_level;
+  gint32 level, next_level;
 
   TRACE("entering");
 
   if (!xfpm_brightness_has_hw (button->priv->brightness))
     return;
 
-  max_level = xfpm_brightness_get_max_level (button->priv->brightness);
   xfpm_brightness_get_level (button->priv->brightness, &level);
-  next_level = xfpm_brightness_inc(button->priv->brightness, level);
-
-  if (next_level >= max_level)
-    next_level = max_level;
+  next_level = MIN (xfpm_brightness_get_max_level (button->priv->brightness),
+                    xfpm_brightness_inc (button->priv->brightness, level));
 
   xfpm_brightness_set_level (button->priv->brightness, next_level);
   if (button->priv->range)

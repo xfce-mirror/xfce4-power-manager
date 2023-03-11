@@ -549,11 +549,8 @@ gboolean xfpm_brightness_set_level (XfpmBrightness *brightness, gint32 level)
 {
   gboolean ret = FALSE;
 
-  if ( level < brightness->priv->min_level )
+  if ( level < brightness->priv->min_level || level > brightness->priv->max_level )
     return ret;
-  else if ( level > brightness->priv->max_level )
-    return ret;
-
 
   if (brightness->priv->xrandr_has_hw )
     ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, level);
