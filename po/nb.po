@@ -1,31 +1,33 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Allan Nordhøy <epost@anotheragency.no>, 2014-2015
-# Allan Nordhøy <epost@anotheragency.no>, 2015-2017
-# heskjestad <cato@heskjestad.xyz>, 2021
-# Harald H. <haarektrans@gmail.com>, 2014-2015
-# heskjestad <cato@heskjestad.xyz>, 2019-2020
-# Terje Uriansrud <terje@uriansrud.net>, 2009
+# Xfce Bot <transifex@xfce.org>, 2023
+# heskjestad <cato@heskjestad.xyz>, 2023
+# Harald H. <haarektrans@gmail.com>, 2023
+# Allan Nordhøy <epost@anotheragency.no>, 2023
+# Nick Schermer <nick@xfce.org>, 2023
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-power-manager\n"
+"Project-Id-Version: xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-20 00:46+0200\n"
-"PO-Revision-Date: 2021-04-22 16:05+0000\n"
-"Last-Translator: heskjestad <cato@heskjestad.xyz>\n"
-"Language-Team: Norwegian Bokmål (http://www.transifex.com/xfce/xfce4-power-manager/language/nb/)\n"
+"POT-Creation-Date: 2023-02-20 12:54+0100\n"
+"PO-Revision-Date: 2023-02-20 11:54+0000\n"
+"Last-Translator: Nick Schermer <nick@xfce.org>, 2023\n"
+"Language-Team: Norwegian Bokmål (https://www.transifex.com/xfce/teams/16840/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: nb\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:648
-#: ../settings/xfpm-settings.c:663 ../settings/xfpm-settings.c:690
-#: ../settings/xfpm-settings.c:1664
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:649
+#: ../settings/xfpm-settings.c:664 ../settings/xfpm-settings.c:693
+#: ../settings/xfpm-settings.c:1678
 msgid "Never"
 msgstr "Aldri"
 
@@ -43,10 +45,10 @@ msgstr "Ingenting"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:358 ../src/xfpm-power.c:634 ../src/xfpm-power.c:676
-#: ../src/xfpm-power.c:839 ../src/xfpm-power.c:860 ../src/xfpm-backlight.c:166
+#: ../src/xfpm-power.c:357 ../src/xfpm-power.c:633 ../src/xfpm-power.c:675
+#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
-#: ../src/xfpm-kbd-backlight.c:114 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Strømstyring"
 
@@ -132,7 +134,7 @@ msgstr "Når lokket til den bærbare datamaskinen er lukket:"
 msgid "On battery"
 msgstr "På batteri"
 
-#: ../data/interfaces/xfpm-settings.ui.h:26 ../common/xfpm-power-common.c:420
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../common/xfpm-power-common.c:416
 msgid "Plugged in"
 msgstr "Tilkoblet"
 
@@ -140,7 +142,7 @@ msgstr "Tilkoblet"
 msgid "Critical battery power level:"
 msgstr "Kritisk batterinivå:"
 
-#: ../data/interfaces/xfpm-settings.ui.h:29 ../settings/xfpm-settings.c:698
+#: ../data/interfaces/xfpm-settings.ui.h:29 ../settings/xfpm-settings.c:712
 #, no-c-format
 msgid "%"
 msgstr "%"
@@ -218,197 +220,200 @@ msgstr "<b>Light Locker</b>"
 msgid "Security"
 msgstr "Sikkerhet"
 
-#: ../settings/xfpm-settings.c:651
+#: ../settings/xfpm-settings.c:652 ../settings/xfpm-settings.c:702
+#: ../settings/xfpm-settings.c:703
 msgid "One minute"
 msgstr "Ett minutt"
 
-#: ../settings/xfpm-settings.c:653 ../settings/xfpm-settings.c:665
-#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:680
-#: ../settings/xfpm-settings.c:1673
+#: ../settings/xfpm-settings.c:654 ../settings/xfpm-settings.c:666
+#: ../settings/xfpm-settings.c:677 ../settings/xfpm-settings.c:681
+#: ../settings/xfpm-settings.c:705 ../settings/xfpm-settings.c:706
+#: ../settings/xfpm-settings.c:1687
 msgid "minutes"
 msgstr "minutter"
 
-#: ../settings/xfpm-settings.c:667 ../settings/xfpm-settings.c:674
-#: ../settings/xfpm-settings.c:675 ../settings/xfpm-settings.c:676
+#: ../settings/xfpm-settings.c:668 ../settings/xfpm-settings.c:675
+#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:677
 msgid "One hour"
 msgstr "En time"
 
-#: ../settings/xfpm-settings.c:675 ../settings/xfpm-settings.c:679
+#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:680
 msgid "one minute"
 msgstr "ett minutt"
 
-#: ../settings/xfpm-settings.c:678 ../settings/xfpm-settings.c:679
-#: ../settings/xfpm-settings.c:680
+#: ../settings/xfpm-settings.c:679 ../settings/xfpm-settings.c:680
+#: ../settings/xfpm-settings.c:681
 msgid "hours"
 msgstr "timer"
 
-#: ../settings/xfpm-settings.c:692 ../settings/xfpm-settings.c:1666
+#: ../settings/xfpm-settings.c:700 ../settings/xfpm-settings.c:703
+#: ../settings/xfpm-settings.c:706 ../settings/xfpm-settings.c:1680
 msgid "seconds"
 msgstr "sekunder"
 
-#: ../settings/xfpm-settings.c:907 ../settings/xfpm-settings.c:986
-#: ../settings/xfpm-settings.c:1048 ../settings/xfpm-settings.c:1144
-#: ../settings/xfpm-settings.c:1236 ../settings/xfpm-settings.c:1355
-#: ../settings/xfpm-settings.c:1413 ../settings/xfpm-settings.c:1465
-#: ../settings/xfpm-settings.c:1516 ../src/xfpm-power.c:701
+#: ../settings/xfpm-settings.c:921 ../settings/xfpm-settings.c:1000
+#: ../settings/xfpm-settings.c:1062 ../settings/xfpm-settings.c:1158
+#: ../settings/xfpm-settings.c:1250 ../settings/xfpm-settings.c:1369
+#: ../settings/xfpm-settings.c:1427 ../settings/xfpm-settings.c:1479
+#: ../settings/xfpm-settings.c:1530 ../src/xfpm-power.c:700
 msgid "Suspend"
 msgstr "Hvilemodus"
 
-#: ../settings/xfpm-settings.c:911 ../settings/xfpm-settings.c:1148
+#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:1162
 msgid "Suspend operation not permitted"
 msgstr "Hvile ikke tillatt"
 
-#: ../settings/xfpm-settings.c:915 ../settings/xfpm-settings.c:1152
+#: ../settings/xfpm-settings.c:929 ../settings/xfpm-settings.c:1166
 msgid "Suspend operation not supported"
 msgstr "Hvile ikke støttet"
 
-#: ../settings/xfpm-settings.c:921 ../settings/xfpm-settings.c:992
-#: ../settings/xfpm-settings.c:1054 ../settings/xfpm-settings.c:1158
-#: ../settings/xfpm-settings.c:1242 ../settings/xfpm-settings.c:1361
-#: ../settings/xfpm-settings.c:1419 ../settings/xfpm-settings.c:1471
-#: ../settings/xfpm-settings.c:1522 ../src/xfpm-power.c:690
+#: ../settings/xfpm-settings.c:935 ../settings/xfpm-settings.c:1006
+#: ../settings/xfpm-settings.c:1068 ../settings/xfpm-settings.c:1172
+#: ../settings/xfpm-settings.c:1256 ../settings/xfpm-settings.c:1375
+#: ../settings/xfpm-settings.c:1433 ../settings/xfpm-settings.c:1485
+#: ../settings/xfpm-settings.c:1536 ../src/xfpm-power.c:689
 msgid "Hibernate"
-msgstr "Dvale"
+msgstr "Dvalemodus"
 
-#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:1162
+#: ../settings/xfpm-settings.c:939 ../settings/xfpm-settings.c:1176
 msgid "Hibernate operation not permitted"
 msgstr "Dvalgang ikke tillatt"
 
-#: ../settings/xfpm-settings.c:929 ../settings/xfpm-settings.c:1166
+#: ../settings/xfpm-settings.c:943 ../settings/xfpm-settings.c:1180
 msgid "Hibernate operation not supported"
 msgstr "Dvalgang ikke støttet"
 
-#: ../settings/xfpm-settings.c:959 ../settings/xfpm-settings.c:1196
-#: ../settings/xfpm-settings.c:1622 ../settings/xfpm-settings.c:1749
+#: ../settings/xfpm-settings.c:973 ../settings/xfpm-settings.c:1210
+#: ../settings/xfpm-settings.c:1636 ../settings/xfpm-settings.c:1763
 msgid "Hibernate and suspend operations not supported"
 msgstr "Dvalgang og hvile ikke støttet"
 
-#: ../settings/xfpm-settings.c:964 ../settings/xfpm-settings.c:1201
-#: ../settings/xfpm-settings.c:1627 ../settings/xfpm-settings.c:1754
+#: ../settings/xfpm-settings.c:978 ../settings/xfpm-settings.c:1215
+#: ../settings/xfpm-settings.c:1641 ../settings/xfpm-settings.c:1768
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Dvalgang og hvile ikke støttet"
 
-#: ../settings/xfpm-settings.c:981 ../settings/xfpm-settings.c:1350
-#: ../settings/xfpm-settings.c:1408 ../settings/xfpm-settings.c:1460
-#: ../settings/xfpm-settings.c:1511
+#: ../settings/xfpm-settings.c:995 ../settings/xfpm-settings.c:1364
+#: ../settings/xfpm-settings.c:1422 ../settings/xfpm-settings.c:1474
+#: ../settings/xfpm-settings.c:1525
 msgid "Do nothing"
 msgstr "Gjør ingenting"
 
-#: ../settings/xfpm-settings.c:998 ../settings/xfpm-settings.c:1367
-#: ../src/xfpm-power.c:712
+#: ../settings/xfpm-settings.c:1012 ../settings/xfpm-settings.c:1381
+#: ../src/xfpm-power.c:711
 msgid "Shutdown"
 msgstr "Avslutt"
 
-#: ../settings/xfpm-settings.c:1002 ../settings/xfpm-settings.c:1371
-#: ../settings/xfpm-settings.c:1423 ../settings/xfpm-settings.c:1475
-#: ../settings/xfpm-settings.c:1526
+#: ../settings/xfpm-settings.c:1016 ../settings/xfpm-settings.c:1385
+#: ../settings/xfpm-settings.c:1437 ../settings/xfpm-settings.c:1489
+#: ../settings/xfpm-settings.c:1540
 msgid "Ask"
 msgstr "Spør"
 
-#: ../settings/xfpm-settings.c:1043 ../settings/xfpm-settings.c:1231
+#: ../settings/xfpm-settings.c:1057 ../settings/xfpm-settings.c:1245
 msgid "Switch off display"
 msgstr "Slå av skjerm"
 
-#: ../settings/xfpm-settings.c:1058 ../settings/xfpm-settings.c:1246
+#: ../settings/xfpm-settings.c:1072 ../settings/xfpm-settings.c:1260
 msgid "Lock screen"
 msgstr "Lås skjerm"
 
-#: ../settings/xfpm-settings.c:1555
+#: ../settings/xfpm-settings.c:1569
 msgid "Number of brightness steps available using keys"
 msgstr "Antall trinn lysstyrke som er tilgjengelig med taster"
 
-#: ../settings/xfpm-settings.c:1595
+#: ../settings/xfpm-settings.c:1609
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Når alle effektressursene på maskinen når dette ladningsnivået"
 
-#: ../settings/xfpm-settings.c:1671 ../common/xfpm-power-common.c:166
+#: ../settings/xfpm-settings.c:1685 ../common/xfpm-power-common.c:166
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minutt"
 msgstr[1] "minutter"
 
-#: ../settings/xfpm-settings.c:2027
+#: ../settings/xfpm-settings.c:2052
 msgid "Device"
 msgstr "Enhet"
 
-#: ../settings/xfpm-settings.c:2049
+#: ../settings/xfpm-settings.c:2074
 msgid "Type"
 msgstr "Type"
 
-#: ../settings/xfpm-settings.c:2054
+#: ../settings/xfpm-settings.c:2079
 msgid "PowerSupply"
 msgstr "Strømforsyning"
 
-#: ../settings/xfpm-settings.c:2055 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2080 ../src/xfpm-main.c:77
 msgid "True"
 msgstr "Sant"
 
-#: ../settings/xfpm-settings.c:2055 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2080 ../src/xfpm-main.c:77
 msgid "False"
 msgstr "Usant"
 
-#: ../settings/xfpm-settings.c:2062
+#: ../settings/xfpm-settings.c:2087
 msgid "Model"
 msgstr "Modell"
 
-#: ../settings/xfpm-settings.c:2065
+#: ../settings/xfpm-settings.c:2090
 msgid "Technology"
 msgstr "Teknologi"
 
-#: ../settings/xfpm-settings.c:2072
+#: ../settings/xfpm-settings.c:2097
 msgid "Current charge"
 msgstr "Gjeldende batterinivå"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:2080 ../settings/xfpm-settings.c:2092
-#: ../settings/xfpm-settings.c:2104
+#: ../settings/xfpm-settings.c:2105 ../settings/xfpm-settings.c:2117
+#: ../settings/xfpm-settings.c:2129
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:2082
+#: ../settings/xfpm-settings.c:2107
 msgid "Fully charged (design)"
 msgstr "Fullt oppladet (design)"
 
-#: ../settings/xfpm-settings.c:2095
+#: ../settings/xfpm-settings.c:2120
 msgid "Fully charged"
 msgstr "Fulladet"
 
-#: ../settings/xfpm-settings.c:2106
+#: ../settings/xfpm-settings.c:2131
 msgid "Energy empty"
 msgstr "Energinivå tomt"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:2114
+#: ../settings/xfpm-settings.c:2139
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:2116
+#: ../settings/xfpm-settings.c:2141
 msgid "Voltage"
 msgstr "Spenning"
 
-#: ../settings/xfpm-settings.c:2123
+#: ../settings/xfpm-settings.c:2148
 msgid "Vendor"
 msgstr "Leverandør"
 
-#: ../settings/xfpm-settings.c:2128
+#: ../settings/xfpm-settings.c:2153
 msgid "Serial"
 msgstr "Serienummer"
 
-#: ../settings/xfpm-settings.c:2404
+#: ../settings/xfpm-settings.c:2429
 msgid "Check your power manager installation"
 msgstr "Sjekk installasjonen av din strømbehandler"
 
-#: ../settings/xfpm-settings.c:2497
+#: ../settings/xfpm-settings.c:2522
 msgid "Devices"
 msgstr "Enheter"
 
 #: ../settings/xfpm-settings-app.c:74
 msgid "Settings manager socket"
-msgstr "Innstillingsbehandler sokkel"
+msgstr "Innstillingsbehandlersokkel"
 
 #: ../settings/xfpm-settings-app.c:74
 msgid "SOCKET ID"
-msgstr "SOKKEL ID"
+msgstr "SOKKEL-ID"
 
 #: ../settings/xfpm-settings-app.c:75
 msgid "Display a specific device by UpDevice object path"
@@ -465,11 +470,16 @@ msgstr "Innstillinger for Xfce-strømstyring"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr "oppsett;innstillinger;knapper;hvilemodus;dvale;batteri;strømsparing;lysstyrke;lokk;skjermlås;strømnett;lagre;kritisk;"
+msgstr ""
+"oppsett;innstillinger;knapper;hvilemodus;dvale;batteri;strømsparing;lysstyrke;lokk;skjermlås;strømnett;lagre;kritisk;"
 
-#: ../common/xfpm-common.c:116
+#: ../common/xfpm-common.c:120
 msgid "translator-credits"
-msgstr "haarek - Harald <https://www.transifex.com/accounts/profile/haarek/>\nkingu - Allan Nordhøy <https://www.transifex.com/accounts/profile/kingu/>\npapparonny - Ronny K. M. Olufsen <https://www.transifex.com/accounts/profile/papparonny/>\nTerje Uriansrud <terje@uriansrud.net>"
+msgstr ""
+"haarek - Harald <https://www.transifex.com/accounts/profile/haarek/>\n"
+"kingu - Allan Nordhøy <https://www.transifex.com/accounts/profile/kingu/>\n"
+"papparonny - Ronny K. M. Olufsen <https://www.transifex.com/accounts/profile/papparonny/>\n"
+"Terje Uriansrud<terje@uriansrud.net>"
 
 #: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
@@ -493,7 +503,7 @@ msgstr "Tastatur"
 
 #: ../common/xfpm-power-common.c:55
 msgid "Monitor"
-msgstr "Monitor"
+msgstr "Skjerm"
 
 #: ../common/xfpm-power-common.c:57
 msgid "PDA"
@@ -507,7 +517,7 @@ msgstr "Telefon"
 msgid "Tablet"
 msgstr "Nettbrett"
 
-#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:303
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:299
 msgid "Computer"
 msgstr "Datamaskin"
 
@@ -571,146 +581,174 @@ msgid_plural "hours"
 msgstr[0] "time"
 msgstr[1] "timer"
 
-#: ../common/xfpm-power-common.c:343
+#: ../common/xfpm-power-common.c:339
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr "<b>%s %s</b>\nFullt oppladet - %s gjenstår"
+msgstr ""
+"<b>%s %s</b>\n"
+"Fullt oppladet - %s gjenstår"
 
-#: ../common/xfpm-power-common.c:350
+#: ../common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr "<b>%s %s</b>\nFullt oppladet"
+msgstr ""
+"<b>%s %s</b>\n"
+"Fullt oppladet"
 
-#: ../common/xfpm-power-common.c:359
+#: ../common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr "<b>%s %s</b>\n%0.0f%% - %s gjenstår til fullt oppladet"
+msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s gjenstår til fullt oppladet"
 
-#: ../common/xfpm-power-common.c:367 ../common/xfpm-power-common.c:385
+#: ../common/xfpm-power-common.c:363 ../common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr "<b>%s %s</b>\n%0.0f%%"
+msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%%"
 
-#: ../common/xfpm-power-common.c:377
+#: ../common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr "<b>%s %s</b>\n%0.0f%% - %s gjenstår"
+msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s gjenstår"
 
-#: ../common/xfpm-power-common.c:392
+#: ../common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nVenter på å lade ut (%0.0f%%)"
+msgstr ""
+"<b>%s %s</b>\n"
+"Venter på å lade ut (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:398
+#: ../common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nVenter på ladning (%0.0f%%)"
+msgstr ""
+"<b>%s %s</b>\n"
+"Venter på ladning (%0.0f%%)"
 
-#: ../common/xfpm-power-common.c:404
+#: ../common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\ner tom"
+msgstr ""
+"<b>%s %s</b>\n"
+"er tom"
 
-#: ../common/xfpm-power-common.c:409
+#: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr "<b>%s %s</b>\nEr nå ladet til: %0.0f%%"
+msgstr ""
+"<b>%s %s</b>\n"
+"Er nå ladet til: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: ../common/xfpm-power-common.c:419
+#: ../common/xfpm-power-common.c:415
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr "<b>%s %s</b>\n%s"
+msgstr ""
+"<b>%s %s</b>\n"
+"%s"
 
-#: ../common/xfpm-power-common.c:420
+#: ../common/xfpm-power-common.c:416
 msgid "Not plugged in"
 msgstr "Ikke tilkoblet"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: ../common/xfpm-power-common.c:426
+#: ../common/xfpm-power-common.c:422
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: ../common/xfpm-power-common.c:431
+#: ../common/xfpm-power-common.c:427
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr "<b>%s %s</b>\t\nUkjent tilstand\t"
+msgstr ""
+"<b>%s %s</b>\t\n"
+"Ukjent tilstand\t"
 
-#: ../src/xfpm-power.c:384
+#: ../src/xfpm-power.c:383
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Et program forhindrer foreløpig automatisk hvile. Ved å gjøre dette nå kan programmets innhold slutte å fungere.\nEr du sikker på at du vil la systemet gå i dvale?"
+msgstr ""
+"Et program forhindrer foreløpig automatisk hvile. Ved å gjøre dette nå kan programmets innhold slutte å fungere.\n"
+"Er du sikker på at du vil la systemet gå i dvale?"
 
-#: ../src/xfpm-power.c:433
+#: ../src/xfpm-power.c:432
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Ingen av skjermlås-verktøyene fungerte, skjermen vil ikke bli låst.\nVil du fortsette med å la systemet gå i hvile."
+msgstr ""
+"Ingen av skjermlås-verktøyene fungerte, skjermen vil ikke bli låst.\n"
+"Vil du fortsette med å la systemet gå i hvile."
 
-#: ../src/xfpm-power.c:598
+#: ../src/xfpm-power.c:597
 msgid "Hibernate the system"
 msgstr "Sett systemet i dvalemodus"
 
-#: ../src/xfpm-power.c:609
+#: ../src/xfpm-power.c:608
 msgid "Suspend the system"
 msgstr "Hvil systemet"
 
-#: ../src/xfpm-power.c:618
+#: ../src/xfpm-power.c:617
 msgid "Shutdown the system"
 msgstr "Avslutt systemet"
 
-#: ../src/xfpm-power.c:629 ../src/xfpm-power.c:673
+#: ../src/xfpm-power.c:628 ../src/xfpm-power.c:672
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Batteriet er snart tomt. Lagre arbeidet ditt for å unngå datatap"
 
-#: ../src/xfpm-power.c:719
+#: ../src/xfpm-power.c:718
 msgid "_Cancel"
 msgstr "_Avbryt"
 
-#: ../src/xfpm-power.c:840
+#: ../src/xfpm-power.c:839
 msgid "System is running on low power"
 msgstr "Batteriet er snart tomt"
 
-#: ../src/xfpm-power.c:856
+#: ../src/xfpm-power.c:855
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "Din %s ladenivå er lavt\nEstimert gjenstående tid %s"
+msgstr ""
+"Din %s ladenivå er lavt\n"
+"Estimert gjenstående tid %s"
 
-#: ../src/xfpm-power.c:1645 ../src/xfpm-power.c:1693 ../src/xfpm-power.c:1725
-#: ../src/xfpm-power.c:1755
+#: ../src/xfpm-power.c:1648 ../src/xfpm-power.c:1696 ../src/xfpm-power.c:1728
+#: ../src/xfpm-power.c:1758
 msgid "Permission denied"
-msgstr "Nektet tilgang"
+msgstr "Tilgang nektet"
 
-#: ../src/xfpm-power.c:1734 ../src/xfpm-power.c:1764
+#: ../src/xfpm-power.c:1737 ../src/xfpm-power.c:1767
 msgid "Suspend not supported"
 msgstr "Hvilemodus ikke støttet"
 
@@ -735,7 +773,9 @@ msgstr "Ditt %s lader"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr "%s (%i%%).\n%s til full opplading."
+msgstr ""
+"%s (%i%%).\n"
+"%s til full opplading."
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
@@ -752,7 +792,9 @@ msgstr "System kjører på %s forsyning"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr "%s (%i%%)\nEstimert gjenstående tid %s"
+msgstr ""
+"%s (%i%%)\n"
+"Estimert gjenstående tid %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
@@ -760,7 +802,7 @@ msgid "Your %s is empty"
 msgstr "Ditt %s er tomt"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-kbd-backlight.c:112
+#: ../src/xfpm-kbd-backlight.c:116
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Bakgrunnsbelysning på tastatur: %.0f prosent"
@@ -776,7 +818,15 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nXfce-strømstyring %s\n\nDel av Xfce Goodies-prosjektet\nhttp://goodies.xfce.org\n\nLisensiert under GNU GPL.\n\n"
+msgstr ""
+"\n"
+"Xfce-strømstyring %s\n"
+"\n"
+"Del av Xfce Goodies-prosjektet\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Lisensiert under GNU GPL.\n"
+"\n"
 
 #: ../src/xfpm-main.c:112
 #, c-format
@@ -873,12 +923,12 @@ msgstr "Versjonsinformasjon"
 #: ../src/xfpm-main.c:300
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr "Klarte ikke tolke argument: %s\n"
+msgstr "Klarte ikke å tolke argumentene: %s\n"
 
 #: ../src/xfpm-main.c:329
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Skriv '%s --help' for instruksjoner."
+msgstr "Skriv '%s --help' for bruksinstruksjoner."
 
 #: ../src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
@@ -906,7 +956,7 @@ msgstr "Ugyldige argument"
 msgid "Invalid cookie"
 msgstr "Ugyldig informasjonskapsel"
 
-#: ../src/xfpm-manager.c:456
+#: ../src/xfpm-manager.c:455
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
@@ -924,7 +974,7 @@ msgstr "Vis batterinivå for tilkoblede enheter"
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1443
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1452
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s forhindrer for tiden strømstyring"
@@ -986,14 +1036,18 @@ msgstr "Strømstyringstillegg"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr "Vis batterinivået til dine enheter og kontroller lysstyrken til skjermen din"
+msgstr ""
+"Vis batterinivået til dine enheter og kontroller lysstyrken til skjermen din"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Xfce-strømstyringen tar hånd om strømkildene på maskinen og enhetene som kan kontrolleres for å redusere deres strømforbruk (som lysnivå på LCD-skjerm, søvn for monitor, og justering av prosessorfrekvens)."
+msgstr ""
+"Xfce-strømstyringen tar hånd om strømkildene på maskinen og enhetene som kan"
+" kontrolleres for å redusere deres strømforbruk (som lysnivå på LCD-skjerm, "
+"søvn for monitor, og justering av prosessorfrekvens)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -1003,14 +1057,22 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "I tillegg har Xfce-strømstyring et knippe freedesktop-støttede DBus-grensesnitt for å informere programmer om gjeldende strømnivå så de kan regulere sine strømforbruk. Grensesnittet tillater også programmer å midlertidig hindre dvalgang. Som et eksempel bruker pakkebehandleren dette grensesnittet når den utfører oppdateringer."
+msgstr ""
+"I tillegg har Xfce-strømstyring et knippe freedesktop-støttede DBus-"
+"grensesnitt for å informere programmer om gjeldende strømnivå så de kan "
+"regulere sine strømforbruk. Grensesnittet tillater også programmer å "
+"midlertidig hindre dvalgang. Som et eksempel bruker pakkebehandleren dette "
+"grensesnittet når den utfører oppdateringer."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Xfce-strømstyring tilbys også som et tillegg for Xfce- og LXDE-paneler for å kontrollere LCD-lysstyrkenivå og gi oversikt over ladningsnivå til batteri og ladningsnivåer."
+msgstr ""
+"Xfce-strømstyring tilbys også som et tillegg for Xfce- og LXDE-paneler for å"
+" kontrollere LCD-lysstyrkenivå og gi oversikt over ladningsnivå til batteri "
+"og ladningsnivåer."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -1018,7 +1080,11 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr "Denne utviklingsutgivelsen er for det meste myntet på feilretting og tilbyr bedre støtter for ikonbaserte drakter ved å redusere enhetsikoner og å bruke standardnavn på dem. Den inneholder også oppdaterte oversettelser. Paneltillegget har byttet navn til effektbehandlingstiillegg."
+msgstr ""
+"Denne utviklingsutgivelsen er for det meste myntet på feilretting og tilbyr "
+"bedre støtter for ikonbaserte drakter ved å redusere enhetsikoner og å bruke"
+" standardnavn på dem. Den inneholder også oppdaterte oversettelser. "
+"Paneltillegget har byttet navn til effektbehandlingstiillegg."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -1027,7 +1093,12 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr "Denne utviklingsutgivelsen ordner opp i feil tilknyttet hvile og dvalemodus, den forbedrer også paneltillegget, ved å legge til funksjonalitet i (det nå forkastede) lysstyringspaneltillegget. En ny oppsprettsvarsling ble lagt til for å ta høyde for tastaturlysstyrkeendringer og effektbehandlerern styrer nå også utblankingstider for X11."
+msgstr ""
+"Denne utviklingsutgivelsen ordner opp i feil tilknyttet hvile og dvalemodus,"
+" den forbedrer også paneltillegget, ved å legge til funksjonalitet i (det nå"
+" forkastede) lysstyringspaneltillegget. En ny oppsprettsvarsling ble lagt "
+"til for å ta høyde for tastaturlysstyrkeendringer og effektbehandlerern "
+"styrer nå også utblankingstider for X11."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -1037,10 +1108,18 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr "Denne utviklingsversjonen har mange nye trekkplaster, blandt dem hvile/dvalemodus uten systemd og UPower>=0.99. Individuell kontroll av systemd-inngripen, et nytt programtillegg for panelet for batterioversikt med ladningsnivå, som erstatter ikonet i systemkurven. Innstillingspanelet har blitt ombygd for bedre oversikt, oversettelser har blitt oppdatert og mange feil har blitt rettet."
+msgstr ""
+"Denne utviklingsversjonen har mange nye trekkplaster, blandt dem "
+"hvile/dvalemodus uten systemd og UPower>=0.99. Individuell kontroll av "
+"systemd-inngripen, et nytt programtillegg for panelet for batterioversikt "
+"med ladningsnivå, som erstatter ikonet i systemkurven. Innstillingspanelet "
+"har blitt ombygd for bedre oversikt, oversettelser har blitt oppdatert og "
+"mange feil har blitt rettet."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr "Denne stabile utgaven fikser kompileringsproblemer, en minnelekkasje og flere andre småfeil. Også nye oversettelser har kommet med."
+msgstr ""
+"Denne stabile utgaven fikser kompileringsproblemer, en minnelekkasje og "
+"flere andre småfeil. Også nye oversettelser har kommet med."
