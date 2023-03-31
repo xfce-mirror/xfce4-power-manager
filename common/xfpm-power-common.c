@@ -99,25 +99,25 @@ xfpm_power_translate_technology (guint value)
 static const gchar *
 xfpm_battery_get_icon_index (guint percent)
 {
-  if (percent < 10)
+  if (percent <= 1)
     return "0";
-  if (percent < 20)
+  if (percent <= 10)
     return "10";
-  if (percent < 30)
+  if (percent <= 20)
     return "20";
-  if (percent < 40)
+  if (percent <= 30)
     return "30";
-  if (percent < 50)
+  if (percent <= 40)
     return "40";
-  if (percent < 60)
+  if (percent <= 50)
     return "50";
-  if (percent < 70)
+  if (percent <= 60)
     return "60";
-  if (percent < 80)
+  if (percent <= 70)
     return "70";
-  if (percent < 90)
+  if (percent <= 80)
     return "80";
-  if (percent < 100)
+  if (percent <= 90)
     return "90";
   else
     return "100";
