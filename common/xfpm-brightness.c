@@ -60,30 +60,50 @@ struct XfpmBrightnessPrivate
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmBrightness, xfpm_brightness, G_TYPE_OBJECT)
 
+/**
+ * Returns the next increment in screen brightness, given the current level. If
+ * the increment would be above the maximum brightness, the maximum brightness
+ * is returned.
+ */
 gint32
 xfpm_brightness_inc (XfpmBrightness *brightness, gint32 level)
 {
-  if (brightness->priv->use_exp_step)
+  gint32 new_level;
+  if ( brightness->priv->use_exp_step )
   {
-    gint32 new_level = roundf (level * brightness->priv->exp_step);
-    if (new_level == level)  ++new_level;
-    return new_level;
+    new_level = roundf (level * brightness->priv->exp_step);
+    if (new_level == level) ++new_level;
   }
   else
-    return level + brightness->priv->step;
+  {
+    new_level = level + brightness->priv->step;
+  }
+
+  return MIN (xfpm_brightness_get_max_level (brightness), new_level);
 }
 
+/**
+ * Returns the next decrement in screen brightness, given the current level. If
+ * the decrement would be below 0, then 0 is returned instead. Note that it is
+ * left to callers to define their own lower limits; for an example, see
+ * decrease_brightness in power-manager-button, which clamps the value above 0
+ * to avoid errant mouse scroll events from blanking the display panel entirely.
+ */
 gint32
 xfpm_brightness_dec (XfpmBrightness *brightness, gint32 level)
 {
+  gint32 new_level;
   if (brightness->priv->use_exp_step)
   {
-    gint32 new_level = roundf (level / brightness->priv->exp_step);
+    new_level = roundf (level / brightness->priv->exp_step);
     if (new_level == level)  --new_level;
-    return new_level;
   }
   else
-    return level - brightness->priv->step;
+  {
+    new_level = level - brightness->priv->step;
+  }
+
+  return MAX (0, new_level);
 }
 
 static gboolean
