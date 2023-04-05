@@ -47,6 +47,7 @@
 #include "xfpm-brightness.h"
 #include "xfpm-debug.h"
 #include "xfpm-icons.h"
+#include "xfpm-enum-types.h"
 
 static void xfpm_backlight_finalize     (GObject *object);
 
@@ -230,6 +231,20 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
   guint    brightness_step_count;
   gboolean brightness_exponential;
 
+  XFPM_DEBUG_ENUM(type, XFPM_TYPE_BUTTON_KEY, "Received button press event");
+
+  /* this check is required as other plugins handled e.g. keyboard brightness */
+  if (type != BUTTON_MON_BRIGHTNESS_UP && type != BUTTON_MON_BRIGHTNESS_DOWN)
+    return;
+
+  /**
+   * this callback can be configured to do two things: (a) change the brightness
+   * in response to the key press; (b) display a popup showing the current
+   * brightness in response to the key press. it is possible for a user to
+   * enable (b) without enabling (a); this could be desirable if for example
+   * they have another tool configured to change the brightness which does not
+   * provide any visual feedback.
+   **/
   g_object_get (G_OBJECT (backlight->priv->conf),
                 HANDLE_BRIGHTNESS_KEYS, &handle_brightness_keys,
                 SHOW_BRIGHTNESS_POPUP, &show_popup,
@@ -237,24 +252,28 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
                 BRIGHTNESS_EXPONENTIAL, &brightness_exponential,
                 NULL);
 
-  if ( type != BUTTON_MON_BRIGHTNESS_UP && type != BUTTON_MON_BRIGHTNESS_DOWN )
-    return; /* sanity check, can this ever happen? */
-
   backlight->priv->block = TRUE;
-  if ( !handle_brightness_keys )
-    ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
-  else
-  {
+
+  /* get the current brightness level */
+  ret = xfpm_brightness_get_level(backlight->priv->brightness, &level);
+
+  /* optionally, handle updating the level and setting the screen brightness */
+  if (handle_brightness_keys) {
     xfpm_brightness_set_step_count(backlight->priv->brightness,
                                    brightness_step_count,
                                    brightness_exponential);
-    if ( type == BUTTON_MON_BRIGHTNESS_UP )
-      ret = xfpm_brightness_set_level (backlight->priv->brightness, xfpm_brightness_inc(backlight->priv->brightness,level));
-    else
-      ret = xfpm_brightness_set_level (backlight->priv->brightness, xfpm_brightness_dec(backlight->priv->brightness,level));
+    if (type == BUTTON_MON_BRIGHTNESS_UP) {
+      level = xfpm_brightness_inc(backlight->priv->brightness, level);
+    } else {
+      level = xfpm_brightness_dec(backlight->priv->brightness, level);
+    }
+    ret = xfpm_brightness_set_level(backlight->priv->brightness, level);
   }
-  if ( ret && show_popup)
-    xfpm_backlight_show (backlight, level);
+
+  /* optionally, show the result in a popup (even if it did not change) */
+  if (ret && show_popup) {
+    xfpm_backlight_show(backlight, level);
+  }
 }
 
 static void
