@@ -264,19 +264,23 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
   /* optionally, handle updating the level and setting the screen brightness */
   if ( handle_brightness_keys )
   {
-    xfpm_brightness_set_step_count(backlight->priv->brightness,
-                                   brightness_step_count,
-                                   brightness_exponential);
+    xfpm_brightness_set_step_count (backlight->priv->brightness,
+                                    brightness_step_count,
+                                    brightness_exponential);
     if ( type == BUTTON_MON_BRIGHTNESS_UP )
-      level = xfpm_brightness_inc(backlight->priv->brightness,level);
+    {
+      level = xfpm_brightness_inc (backlight->priv->brightness, level);
+    }
     else
-      level = xfpm_brightness_dec(backlight->priv->brightness,level);
+    {
+      level = xfpm_brightness_dec (backlight->priv->brightness, level);
+    }
 
     ret = xfpm_brightness_set_level (backlight->priv->brightness, level);
   }
 
   /* optionally, show the result in a popup (even if it did not change) */
-  if ( ret && show_popup)
+  if ( ret && show_popup )
     xfpm_backlight_show (backlight, level);
 }
 
