@@ -263,7 +263,11 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
                                    brightness_step_count,
                                    brightness_exponential);
     if (type == BUTTON_MON_BRIGHTNESS_UP) {
-      level = xfpm_brightness_inc(backlight->priv->brightness, level);
+      /* We must ensure the new level is capped at the maximum level */
+      level = MIN(
+        xfpm_brightness_get_max_level(backlight->priv->brightness),
+        xfpm_brightness_inc(backlight->priv->brightness, level)
+      );
     } else {
       level = xfpm_brightness_dec(backlight->priv->brightness, level);
     }
