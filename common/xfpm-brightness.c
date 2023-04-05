@@ -69,13 +69,15 @@ gint32
 xfpm_brightness_inc (XfpmBrightness *brightness, gint32 level)
 {
   gint32 new_level;
-  if (brightness->priv->use_exp_step)
+  if ( brightness->priv->use_exp_step )
   {
     new_level = roundf (level * brightness->priv->exp_step);
-    if (new_level == level)  ++new_level;
+    if (new_level == level) ++new_level;
   }
   else
+  {
     new_level = level + brightness->priv->step;
+  }
 
   return MIN (xfpm_brightness_get_max_level (brightness), new_level);
 }
@@ -94,10 +96,12 @@ xfpm_brightness_dec (XfpmBrightness *brightness, gint32 level)
   if (brightness->priv->use_exp_step)
   {
     new_level = roundf (level / brightness->priv->exp_step);
-    if (new_level == level)  --new_level;
+    if (new_level == level) --new_level;
   }
   else
+  {
     new_level = level - brightness->priv->step;
+  }
 
   return MAX (0, new_level);
 }
