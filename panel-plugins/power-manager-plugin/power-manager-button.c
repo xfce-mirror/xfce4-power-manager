@@ -1556,8 +1556,7 @@ increase_brightness (PowerManagerButton *button)
     return;
 
   xfpm_brightness_get_level (button->priv->brightness, &level);
-  next_level = MIN (xfpm_brightness_get_max_level (button->priv->brightness),
-                    xfpm_brightness_inc (button->priv->brightness, level));
+  next_level = xfpm_brightness_inc (button->priv->brightness, level);
 
   xfpm_brightness_set_level (button->priv->brightness, next_level);
   if (button->priv->range)
