@@ -244,17 +244,17 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
 
   XFPM_DEBUG_ENUM (type, XFPM_TYPE_BUTTON_KEY, "Received button press event");
 
+  /* this check is required; we are notified about keys used by other functions
+   * e.g. keyboard brightness, sleep key. */
+  if ( type != BUTTON_MON_BRIGHTNESS_UP && type != BUTTON_MON_BRIGHTNESS_DOWN )
+    return;
+
   g_object_get (G_OBJECT (backlight->priv->conf),
                 HANDLE_BRIGHTNESS_KEYS, &handle_brightness_keys,
                 SHOW_BRIGHTNESS_POPUP, &show_popup,
                 BRIGHTNESS_STEP_COUNT, &brightness_step_count,
                 BRIGHTNESS_EXPONENTIAL, &brightness_exponential,
                 NULL);
-
-  /* this check is required; we are notified about keys used by other functions
-   * e.g. keyboard brightness, sleep key. */
-  if ( type != BUTTON_MON_BRIGHTNESS_UP && type != BUTTON_MON_BRIGHTNESS_DOWN )
-    return;
 
   backlight->priv->block = TRUE;
 
