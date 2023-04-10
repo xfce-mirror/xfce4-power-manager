@@ -86,14 +86,14 @@ xfce4_power_manager_LDADD =                     \
 if ENABLE_POLKIT
 
 sbin_PROGRAMS = xfpm-power-backlight-helper     \
-	   xfce4-pm-helper
+	xfce4-pm-helper
 
 xfpm_power_backlight_helper_SOURCES =           \
-       xfpm-backlight-helper.c
+	xfpm-backlight-helper.c
 
 xfpm_power_backlight_helper_LDADD =             \
-       $(GLIB_LIBS)                             \
-       -lm
+	$(GLIB_LIBS)                             \
+	-lm
 
 xfpm_power_backlight_helper_CFLAGS =            \
         $(GLIB_CFLAGS)                          \
@@ -122,7 +122,7 @@ polkit_policy_DATA =					\
 # http://bugzilla.gnome.org/show_bug.cgi?id=462312
 @INTLTOOL_POLICY_RULE@
 
-.in2.in:
+%.policy.in: %.policy.in.in
 	sed "s|[@]sbindir@|${sbindir}|" $< > $@
 
 endif
@@ -135,7 +135,7 @@ BUILT_SOURCES =					\
 	xfce-power-manager-dbus.c		\
 	xfce-power-manager-dbus.h		\
 	xfpm-marshal.c                          \
-        xfpm-marshal.h				\
+	xfpm-marshal.h				\
 	org.freedesktop.PowerManagement.c       \
 	org.freedesktop.PowerManagement.h       \
 	org.freedesktop.PowerManagement.Inhibit.c \
@@ -168,14 +168,14 @@ autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST =                                    \
 	xfpm-marshal.list			\
-        $(autostart_in_files)                   \
-        org.xfce.power.policy.in2              \
-        $(manpage_DATA)
+	$(autostart_in_files)                   \
+	org.xfce.power.policy.in.in              \
+	$(manpage_DATA)
 
 DISTCLEANFILES =                                \
-        xfce4-power-manager.desktop             \
-        org.xfce.power.policy                  \
-        org.xfce.power.policy.in
+	xfce4-power-manager.desktop             \
+	org.xfce.power.policy                  \
+	org.xfce.power.policy.in
 
 MAINTAINERCLEANFILES =                                \
-        $(BUILT_SOURCES)
+	$(BUILT_SOURCES)

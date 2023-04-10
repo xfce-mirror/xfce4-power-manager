@@ -37,11 +37,11 @@ libxfce4powermanager_la_CFLAGS =         \
 	$(UPOWER_CFLAGS)
 
 libxfce4powermanager_la_LDFLAGS = \
-       -avoid-version \
-       -module \
-       -no-undefined \
-       -export-symbols-regex '^xfce_panel_module_(preinit|init|construct)' \
-       $(PLATFORM_LDFLAGS)
+	-avoid-version \
+	-module \
+	-no-undefined \
+	-export-symbols-regex '^xfce_panel_module_(preinit|init|construct)' \
+	$(PLATFORM_LDFLAGS)
 
 libxfce4powermanager_la_LIBADD =                     \
 	$(top_builddir)/common/libxfpmcommon.la \
@@ -64,11 +64,11 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 EXTRA_DIST =                                                            \
-        $(desktop_in_in_files)
+	$(desktop_in_in_files)
 
 CLEANFILES =                                                            \
-        $(desktop_in_files)                                             \
-        $(desktop_DATA)
+	$(desktop_in_files)                                             \
+	$(desktop_DATA)
 
 %.desktop.in: %.desktop.in.in
 	sed -e "s,\@libdir\@,$(libdir),g" < $< > $@
