@@ -1,13 +1,9 @@
-m4_define([xfpm_version_major], [4])
-m4_define([xfpm_version_minor], [18])
-m4_define([xfpm_version_micro], [0])
-m4_define([xfpm_version_build], [@REVISION@])
-m4_define([xfpm_version_tag], [git])
-m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_version_micro()ifelse(xfpm_version_tag(), [git], [xfpm_version_tag()-xfpm_version_build()], [xfpm_version_tag()])])
+XDT_VERSION_INIT([4.18.0], [git])
 
 AC_COPYRIGHT([Copyright (c) 2008-2023 The Xfce development team. All rights reserved.])
-AC_INIT([xfce4-power-manager],[xfpm_version],[https://gitlab.xfce.org/xfce/xfce4-power-manager])
-AC_PREREQ([2.60])
+AC_INIT([xfce4-power-manager],[xdt_version],[https://gitlab.xfce.org/xfce/xfce4-power-manager])
+AC_PREREQ([2.69])
+AC_REVISION([xdt_version_build])
 AC_CONFIG_MACRO_DIRS([m4])
 
 # subdir-objects is currently broken, see
@@ -190,9 +186,9 @@ fi
 
 dnl define a short version string for xfce4-power-manager
 m4_append([xfpm_version_short], ["])
-m4_append([xfpm_version_short], [xfpm_version_major])
+m4_append([xfpm_version_short], [xdt_version_major])
 m4_append([xfpm_version_short], [.])
-m4_append([xfpm_version_short], [xfpm_version_minor])
+m4_append([xfpm_version_short], [xdt_version_minor])
 m4_append([xfpm_version_short], ["])
 
 dnl define xfpm's short version (major.minor)
@@ -201,7 +197,7 @@ AC_DEFINE([XFPM_VERSION_SHORT], [xfpm_version_short], [Short version string of x
 #=======================================================#
 #              Check for debugging support              #
 #=======================================================#
-XDT_FEATURE_DEBUG
+XDT_FEATURE_DEBUG([xdt_debug_default])
 
 #=======================================================#
 #              Substitute platform flags                #
