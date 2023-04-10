@@ -393,7 +393,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_uint (LID_SWITCH_ON_AC_CFG,
                                                       NULL, NULL,
                                                       LID_TRIGGER_NOTHING,
-                                                      LID_TRIGGER_LOCK_SCREEN,
+                                                      LID_TRIGGER_IGNORE,
                                                       LID_TRIGGER_LOCK_SCREEN,
                                                       G_PARAM_READWRITE));
 
@@ -429,7 +429,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_uint (LID_SWITCH_ON_BATTERY_CFG,
                                                       NULL, NULL,
                                                       LID_TRIGGER_NOTHING,
-                                                      LID_TRIGGER_LOCK_SCREEN,
+                                                      LID_TRIGGER_IGNORE,
                                                       LID_TRIGGER_LOCK_SCREEN,
                                                       G_PARAM_READWRITE));
 

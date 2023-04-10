@@ -458,7 +458,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
         }
       }
     }
-    else
+    else if ( action != LID_TRIGGER_IGNORE )
     {
       /*
        * Force sleep here as lid is closed and no point of asking the
