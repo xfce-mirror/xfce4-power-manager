@@ -122,7 +122,7 @@ polkit_policy_DATA =					\
 # http://bugzilla.gnome.org/show_bug.cgi?id=462312
 @INTLTOOL_POLICY_RULE@
 
-.in2.in:
+%.policy.in: %.policy.in.in
 	sed "s|[@]sbindir@|${sbindir}|" $< > $@
 
 endif
@@ -169,7 +169,7 @@ autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 EXTRA_DIST =                                    \
 	xfpm-marshal.list			\
 	$(autostart_in_files)                   \
-	org.xfce.power.policy.in2              \
+	org.xfce.power.policy.in.in              \
 	$(manpage_DATA)
 
 DISTCLEANFILES =                                \
