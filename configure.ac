@@ -54,11 +54,6 @@ AC_SUBST([GETTEXT_PACKAGE])
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19.8])
 
-# ===================================================== #
-# 		Check for X11 support 			#
-# ===================================================== #
-XDT_CHECK_LIBX11_REQUIRE()
-
 #==================================================== #
 #          Check for required packages 		      #
 #=====================================================#
@@ -73,6 +68,7 @@ m4_define([libxfce4panel_minimum_version],[4.12.0])
 m4_define([libnotify_minimum_version], [0.4.1])
 m4_define([upower_minimum_version], [0.99.0])
 m4_define([xrandr_minimum_version], [1.2.0])
+m4_define([x11_minimum_version], [1.6.7])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
@@ -86,6 +82,9 @@ XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_versi
 XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
 XDT_CHECK_PACKAGE([UPOWER],[upower-glib], [upower_minimum_version])
 XDT_CHECK_PACKAGE([XRANDR],[xrandr], [xrandr_minimum_version])
+XDT_CHECK_PACKAGE([LIBX11], [x11], [x11_minimum_version])
+
+XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
 
 #=======================================================#
 #              Polkit?			                #
