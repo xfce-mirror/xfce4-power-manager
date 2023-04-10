@@ -49,6 +49,7 @@ typedef enum
   LID_TRIGGER_SUSPEND,
   LID_TRIGGER_HIBERNATE,
   LID_TRIGGER_LOCK_SCREEN,
+  LID_TRIGGER_IGNORE,
 } XfpmLidTriggerAction;
 
 typedef enum
