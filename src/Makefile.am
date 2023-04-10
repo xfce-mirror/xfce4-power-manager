@@ -118,9 +118,8 @@ polkit_policydir = $(datadir)/polkit-1/actions
 polkit_policy_DATA =					\
 	org.xfce.power.policy
 
-# You will need a recent intltool or the patch from this bug
-# http://bugzilla.gnome.org/show_bug.cgi?id=462312
-@INTLTOOL_POLICY_RULE@
+%.policy: %.policy.in
+	$(AM_V_GEN) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
 %.policy.in: %.policy.in.in
 	sed "s|[@]sbindir@|${sbindir}|" $< > $@
@@ -151,17 +150,19 @@ xfpm-marshal.h: xfpm-marshal.list
 	glib-genmarshal $< --prefix=_xfpm_marshal --header > $@
 
 xfce-power-manager-dbus.c xfce-power-manager-dbus.h: $(srcdir)/org.xfce.Power.Manager.xml
-	gdbus-codegen --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=xfce-power-manager-dbus $<
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=xfce-power-manager-dbus $<
 
 org.freedesktop.PowerManagement.c org.freedesktop.PowerManagement.h: $(srcdir)/org.freedesktop.PowerManagement.xml
-	gdbus-codegen --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement $<
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement $<
 
 org.freedesktop.PowerManagement.Inhibit.c org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
-	gdbus-codegen --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement.Inhibit $<
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement.Inhibit $<
 
 endif
 
-@INTLTOOL_DESKTOP_RULE@
+%.desktop: %.desktop.in
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
+
 autostartdir = $(sysconfdir)/xdg/autostart
 autostart_in_files = xfce4-power-manager.desktop.in
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
