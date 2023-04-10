@@ -17,8 +17,6 @@ SUBDIRS =        	\
 
 
 EXTRA_DIST = 			\
-	TODO			\
-	README.md        \
 	intltool-extract.in 	\
 	intltool-merge.in 	\
 	intltool-update.in
@@ -44,19 +42,3 @@ dist-hook: ChangeLog
 
 distclean-local:
 	rm -rf *.cache
-
-dist-bz2: dist
-	zcat $(PACKAGE)-$(VERSION).tar.gz | \
-	bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
-
-distcheck-bz2: distcheck
-	zcat $(PACKAGE)-$(VERSION).tar.gz | \
-	bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
-         
-snapshot: dist
-	mv $(PACKAGE)-$(VERSION).tar.gz \
-	$(PACKAGE)-$(VERSION)-r@REVISION@.tar.gz
-
-snapshot-bz2: dist-bz2
-	mv $(PACKAGE)-$(VERSION).tar.bz2 \
-	$(PACKAGE)-$(VERSION)-r@REVISION@.tar.bz2
