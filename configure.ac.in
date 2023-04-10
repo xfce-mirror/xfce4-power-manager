@@ -1,4 +1,3 @@
-m4_define([intltool_minimum_version], [0.31])
 m4_define([xfpm_version_major], [4])
 m4_define([xfpm_version_minor], [18])
 m4_define([xfpm_version_micro], [0])
@@ -27,7 +26,6 @@ AC_PROG_CC()
 AM_PROG_CC_C_O()
 LT_PATH_LD([])
 AC_PROG_INSTALL()
-IT_PROG_INTLTOOL([intltool_minimum_version],[no-xml])
 
 # ===================================================== #
 #               Initialize libtool                      #
@@ -54,8 +52,11 @@ AC_CHECK_LIB([m], [round])
 # ===================================================== #
 # 		Check for i18n support 			#
 # ===================================================== #
-
-XDT_I18N([@LINGUAS@])
+GETTEXT_PACKAGE="$PACKAGE"
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Name of default gettext domain])
+AC_SUBST([GETTEXT_PACKAGE])
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.8])
 
 # ===================================================== #
 # 		Check for X11 support 			#

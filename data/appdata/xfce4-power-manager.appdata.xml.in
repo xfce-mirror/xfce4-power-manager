@@ -8,22 +8,22 @@
   <summary>Manage and reduce power consumption of computer and devices</summary>
 
   <description>
-    <_p>Xfce power manager manages the power sources on the computer
+    <p>Xfce power manager manages the power sources on the computer
     and the devices that can be controlled to reduce their power
     consumption (such as LCD brightness level, monitor sleep,
     CPU frequency scaling).
-    </_p>
-    <_p>In addition, Xfce power manager provides a set of freedesktop-compliant
+    </p>
+    <p>In addition, Xfce power manager provides a set of freedesktop-compliant
     DBus interfaces to inform other applications about current power level
     so that they can adjust their power consumption, and it provides the inhibit
     interface which allows applications to prevent automatic sleep actions
     via the power manager; as an example, the operating system’s package manager
     should make use of this interface while it is performing update operations.
-    </_p>
-    <_p>Xfce power manager also provides a plugin for the Xfce and LXDE panels
+    </p>
+    <p>Xfce power manager also provides a plugin for the Xfce and LXDE panels
     to control LCD brightness levels and to monitor battery and device charge
     levels.
-    </_p>
+    </p>
   </description>
 
   <screenshots>
@@ -48,42 +48,42 @@
   <releases>
     <release version="1.3.2" timestamp="1408573857">
       <description>
-        <_p>This development release mostly fixes bugs and introduces better support
+        <p>This development release mostly fixes bugs and introduces better support
         for icon-themes by reducing the device icons and using standard names for
         them. It also features updated translations. The panel plugin has been
         renamed to Power Manager Plugin.
-        </_p>
+        </p>
       </description>
     </release>
 
     <release version="1.3.1" timestamp="1407741245">
       <description>
-        <_p>This development release fixes bugs with suspend and hibernate. It also
+        <p>This development release fixes bugs with suspend and hibernate. It also
         improves the panel-plugin, incorporating the functionality of the (now
         dropped) brightness panel-plugin. A new popup notification was added to
         account for keyboard brightness changes and the Power Manager now also
         controls the X11 blank times.
-        </_p>
+        </p>
       </description>
     </release>
 
     <release version="1.3.0" timestamp="1401646266">
       <description>
-        <_p>This development release introduces a lot of new features, among them
+        <p>This development release introduces a lot of new features, among them
         suspending/hibernation without systemd and UPower>=0.99. It allows for
         individual control of systemd-inhibition, a new panel plugin to monitor
         battery and device charge levels replaces the trayicon. The settings dialog
         has been completely restructured for better oversight and many open bugs
         have been fixed and translations have been updated.
-        </_p>
+        </p>
       </description>
     </release>
   
     <release version="1.2.0" timestamp="1335645654">
       <description>
-        <_p>This stable release fixes compilation problems, a memory leak and
+        <p>This stable release fixes compilation problems, a memory leak and
         a few other minor bugs. Furthermore it provides updated translations.
-        </_p>
+        </p>
       </description>
     </release>
   </releases>
