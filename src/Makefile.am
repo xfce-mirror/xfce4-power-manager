@@ -86,14 +86,14 @@ xfce4_power_manager_LDADD =                     \
 if ENABLE_POLKIT
 
 sbin_PROGRAMS = xfpm-power-backlight-helper     \
-	   xfce4-pm-helper
+	xfce4-pm-helper
 
 xfpm_power_backlight_helper_SOURCES =           \
-       xfpm-backlight-helper.c
+	xfpm-backlight-helper.c
 
 xfpm_power_backlight_helper_LDADD =             \
-       $(GLIB_LIBS)                             \
-       -lm
+	$(GLIB_LIBS)                             \
+	-lm
 
 xfpm_power_backlight_helper_CFLAGS =            \
         $(GLIB_CFLAGS)                          \
@@ -118,11 +118,10 @@ polkit_policydir = $(datadir)/polkit-1/actions
 polkit_policy_DATA =					\
 	org.xfce.power.policy
 
-# You will need a recent intltool or the patch from this bug
-# http://bugzilla.gnome.org/show_bug.cgi?id=462312
-@INTLTOOL_POLICY_RULE@
+%.policy: %.policy.in
+	$(AM_V_GEN) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
-.in2.in:
+%.policy.in: %.policy.in.in
 	sed "s|[@]sbindir@|${sbindir}|" $< > $@
 
 endif
@@ -135,7 +134,7 @@ BUILT_SOURCES =					\
 	xfce-power-manager-dbus.c		\
 	xfce-power-manager-dbus.h		\
 	xfpm-marshal.c                          \
-        xfpm-marshal.h				\
+	xfpm-marshal.h				\
 	org.freedesktop.PowerManagement.c       \
 	org.freedesktop.PowerManagement.h       \
 	org.freedesktop.PowerManagement.Inhibit.c \
@@ -151,31 +150,33 @@ xfpm-marshal.h: xfpm-marshal.list
 	glib-genmarshal $< --prefix=_xfpm_marshal --header > $@
 
 xfce-power-manager-dbus.c xfce-power-manager-dbus.h: $(srcdir)/org.xfce.Power.Manager.xml
-	gdbus-codegen --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=xfce-power-manager-dbus $<
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=xfce-power-manager-dbus $<
 
 org.freedesktop.PowerManagement.c org.freedesktop.PowerManagement.h: $(srcdir)/org.freedesktop.PowerManagement.xml
-	gdbus-codegen --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement $<
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement $<
 
 org.freedesktop.PowerManagement.Inhibit.c org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
-	gdbus-codegen --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement.Inhibit $<
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement.Inhibit $<
 
 endif
 
-@INTLTOOL_DESKTOP_RULE@
+%.desktop: %.desktop.in
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
+
 autostartdir = $(sysconfdir)/xdg/autostart
 autostart_in_files = xfce4-power-manager.desktop.in
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST =                                    \
 	xfpm-marshal.list			\
-        $(autostart_in_files)                   \
-        org.xfce.power.policy.in2              \
-        $(manpage_DATA)
+	$(autostart_in_files)                   \
+	org.xfce.power.policy.in.in              \
+	$(manpage_DATA)
 
 DISTCLEANFILES =                                \
-        xfce4-power-manager.desktop             \
-        org.xfce.power.policy                  \
-        org.xfce.power.policy.in
+	xfce4-power-manager.desktop             \
+	org.xfce.power.policy                  \
+	org.xfce.power.policy.in
 
 MAINTAINERCLEANFILES =                                \
-        $(BUILT_SOURCES)
+	$(BUILT_SOURCES)

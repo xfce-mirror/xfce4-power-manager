@@ -1,14 +1,9 @@
-m4_define([intltool_minimum_version], [0.31])
-m4_define([xfpm_version_major], [4])
-m4_define([xfpm_version_minor], [18])
-m4_define([xfpm_version_micro], [0])
-m4_define([xfpm_version_build], [@REVISION@])
-m4_define([xfpm_version_tag], [git])
-m4_define([xfpm_version], [xfpm_version_major().xfpm_version_minor().xfpm_version_micro()ifelse(xfpm_version_tag(), [git], [xfpm_version_tag()-xfpm_version_build()], [xfpm_version_tag()])])
+XDT_VERSION_INIT([4.18.0], [git])
 
 AC_COPYRIGHT([Copyright (c) 2008-2023 The Xfce development team. All rights reserved.])
-AC_INIT([xfce4-power-manager],[xfpm_version],[https://gitlab.xfce.org/xfce/xfce4-power-manager])
-AC_PREREQ([2.60])
+AC_INIT([xfce4-power-manager],[xdt_version],[https://gitlab.xfce.org/xfce/xfce4-power-manager])
+AC_PREREQ([2.69])
+AC_REVISION([xdt_version_build])
 AC_CONFIG_MACRO_DIRS([m4])
 
 # subdir-objects is currently broken, see
@@ -27,7 +22,6 @@ AC_PROG_CC()
 AM_PROG_CC_C_O()
 LT_PATH_LD([])
 AC_PROG_INSTALL()
-IT_PROG_INTLTOOL([intltool_minimum_version],[no-xml])
 
 # ===================================================== #
 #               Initialize libtool                      #
@@ -54,13 +48,11 @@ AC_CHECK_LIB([m], [round])
 # ===================================================== #
 # 		Check for i18n support 			#
 # ===================================================== #
-
-XDT_I18N([@LINGUAS@])
-
-# ===================================================== #
-# 		Check for X11 support 			#
-# ===================================================== #
-XDT_CHECK_LIBX11_REQUIRE()
+GETTEXT_PACKAGE="$PACKAGE"
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Name of default gettext domain])
+AC_SUBST([GETTEXT_PACKAGE])
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.8])
 
 #==================================================== #
 #          Check for required packages 		      #
@@ -76,6 +68,7 @@ m4_define([libxfce4panel_minimum_version],[4.12.0])
 m4_define([libnotify_minimum_version], [0.4.1])
 m4_define([upower_minimum_version], [0.99.0])
 m4_define([xrandr_minimum_version], [1.2.0])
+m4_define([x11_minimum_version], [1.6.7])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
@@ -89,6 +82,9 @@ XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_versi
 XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
 XDT_CHECK_PACKAGE([UPOWER],[upower-glib], [upower_minimum_version])
 XDT_CHECK_PACKAGE([XRANDR],[xrandr], [xrandr_minimum_version])
+XDT_CHECK_PACKAGE([LIBX11], [x11], [x11_minimum_version])
+
+XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
 
 #=======================================================#
 #              Polkit?			                #
@@ -189,9 +185,9 @@ fi
 
 dnl define a short version string for xfce4-power-manager
 m4_append([xfpm_version_short], ["])
-m4_append([xfpm_version_short], [xfpm_version_major])
+m4_append([xfpm_version_short], [xdt_version_major])
 m4_append([xfpm_version_short], [.])
-m4_append([xfpm_version_short], [xfpm_version_minor])
+m4_append([xfpm_version_short], [xdt_version_minor])
 m4_append([xfpm_version_short], ["])
 
 dnl define xfpm's short version (major.minor)
@@ -200,7 +196,7 @@ AC_DEFINE([XFPM_VERSION_SHORT], [xfpm_version_short], [Short version string of x
 #=======================================================#
 #              Check for debugging support              #
 #=======================================================#
-XDT_FEATURE_DEBUG
+XDT_FEATURE_DEBUG([xdt_debug_default])
 
 #=======================================================#
 #              Substitute platform flags                #
