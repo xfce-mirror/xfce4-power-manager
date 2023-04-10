@@ -118,9 +118,8 @@ polkit_policydir = $(datadir)/polkit-1/actions
 polkit_policy_DATA =					\
 	org.xfce.power.policy
 
-# You will need a recent intltool or the patch from this bug
-# http://bugzilla.gnome.org/show_bug.cgi?id=462312
-@INTLTOOL_POLICY_RULE@
+%.policy: %.policy.in
+	$(AM_V_GEN) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
 
 %.policy.in: %.policy.in.in
 	sed "s|[@]sbindir@|${sbindir}|" $< > $@
@@ -161,7 +160,9 @@ org.freedesktop.PowerManagement.Inhibit.c org.freedesktop.PowerManagement.Inhibi
 
 endif
 
-@INTLTOOL_DESKTOP_RULE@
+%.desktop: %.desktop.in
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
+
 autostartdir = $(sysconfdir)/xdg/autostart
 autostart_in_files = xfce4-power-manager.desktop.in
 autostart_DATA = $(autostart_in_files:.desktop.in=.desktop)

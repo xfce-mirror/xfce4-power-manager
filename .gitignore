@@ -6,9 +6,17 @@ libdbus/xfpm-dbus-marshal.c
 libdbus/xfpm-dbus-marshal.h
 panel-plugins/power-manager-plugin/.dirstamp
 po/Makefile.in.in
-po/.intltool-merge-cache*
 po/POTFILES
 po/stamp-*
+po/Makevars.template
+po/Rules-quot
+po/boldquot.sed
+po/en@boldquot.header
+po/en@quot.header
+po/insert-header.sin
+po/quot.sed
+po/remove-potcdate.sed
+po/remove-potcdate.sin
 po/xfce4-power-manager.pot
 settings/xfce-power-manager-dbus-client.h
 settings/xfce4-power-manager-settings
@@ -36,6 +44,7 @@ src/org.freedesktop.PowerManagement.c
 src/xfce-power-manager-dbus.c
 src/xfce-power-manager-dbus.h
 
+ABOUT-NLS
 INSTALL
 Makefile
 Makefile.in
@@ -47,15 +56,13 @@ config.guess
 config.h
 config.h.in
 config.log
+config.rpath
 config.status
 config.sub
 configure
 configure.ac
 depcomp
 install-sh
-intltool-extract.in
-intltool-merge.in
-intltool-update.in
 libtool
 ltmain.sh
 missing
