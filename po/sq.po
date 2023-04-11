@@ -1,22 +1,19 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Nick Schermer <nick@xfce.org>, 2023
-# Xfce Bot <transifex@xfce.org>, 2023
-# Besnik Bleta <besnik@programeshqip.org>, 2023
-# 
-#, fuzzy
+# Besnik Bleta <besnik@programeshqip.org>, 2020
+# Besnik Bleta <besnik@programeshqip.org>, 2020-2021,2023
+# Besnik Bleta <besnik@programeshqip.org>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-20 12:54+0100\n"
-"PO-Revision-Date: 2023-02-20 11:54+0000\n"
-"Last-Translator: Besnik Bleta <besnik@programeshqip.org>, 2023\n"
-"Language-Team: Albanian (https://www.transifex.com/xfce/teams/16840/sq/)\n"
+"POT-Creation-Date: 2023-04-11 00:46+0200\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>, 2020-2021,2023\n"
+"Language-Team: Albanian (http://app.transifex.com/xfce/xfce4-power-manager/language/sq/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -44,8 +41,8 @@ msgstr "Asgjë"
 #: ../data/interfaces/xfpm-settings.ui.h:5
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:357 ../src/xfpm-power.c:633 ../src/xfpm-power.c:675
-#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:166
-#: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
+#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:167
+#: ../src/xfpm-backlight.c:175 ../src/xfpm-battery.c:190
 #: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Përgjegjës Energjie"
@@ -172,9 +169,7 @@ msgstr "<b>Shfaq administrim energjie</b>"
 #: ../data/interfaces/xfpm-settings.ui.h:36
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr ""
-"Lejoje përgjegjësin e energjisë të merret me administrim energjie ekrani "
-"(DPMS), në vend se X11-a."
+msgstr "Lejoje përgjegjësin e energjisë të merret me administrim energjie ekrani (DPMS), në vend se X11-a."
 
 #: ../data/interfaces/xfpm-settings.ui.h:37
 msgid "Blank after"
@@ -214,7 +209,7 @@ msgstr "Vonoje kyçjen pas ekrankursyesit për"
 
 #: ../data/interfaces/xfpm-settings.ui.h:46
 msgid "<b>Light Locker</b>"
-msgstr ""
+msgstr "<b>Kyçës Ndriçimi</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:47
 msgid "Security"
@@ -261,7 +256,7 @@ msgstr "Pezulloje"
 
 #: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:1162
 msgid "Suspend operation not permitted"
-msgstr "Nuk lejohen veprime plogështimi dhe pezullimi"
+msgstr "Nuk lejohet veprim pezullimi"
 
 #: ../settings/xfpm-settings.c:929 ../settings/xfpm-settings.c:1166
 msgid "Suspend operation not supported"
@@ -450,9 +445,7 @@ msgstr "Përgjegjësi Xfce4 i Energjisë nuk po xhiron, doni të niset tani?"
 
 #: ../settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
-"S’u arrit të ngarkohej formësim përgjegjësi energjie, po përdoren "
-"parazgjedhjet"
+msgstr "S’u arrit të ngarkohej formësim përgjegjësi energjie, po përdoren parazgjedhjet"
 
 #: ../settings/xfpm-settings-app.c:356
 #, c-format
@@ -472,9 +465,7 @@ msgstr "Rregullime për Përgjegjësin Xfce të Energjisë"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr ""
-"rregullime;parapëlqime;butona;fjetje;plogështoje;bateri;pezulloje;fike;ndriçim;kapak"
-" laptopi;kyç ekranin;në rrymë;kursim;kritik;"
+msgstr "rregullime;parapëlqime;butona;fjetje;plogështoje;bateri;pezulloje;fike;ndriçim;kapak laptopi;kyç ekranin;në rrymë;kursim;kritik;"
 
 #: ../common/xfpm-common.c:120
 msgid "translator-credits"
@@ -585,81 +576,63 @@ msgstr[1] "orë"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"Plotësisht e ngarkuar - Edhe %s"
+msgstr "<b>%s %s</b>\nPlotësisht e ngarkuar - Edhe %s"
 
 #: ../common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr ""
-"<b>%s %s</b>\n"
-"Plotësisht e ngarkuar"
+msgstr "<b>%s %s</b>\nPlotësisht e ngarkuar"
 
 #: ../common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - %s deri sa të jetë plot"
+msgstr "<b>%s %s</b>\n%0.0f%% - %s deri sa të jetë plot"
 
 #: ../common/xfpm-power-common.c:363 ../common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%%"
+msgstr "<b>%s %s</b>\n%0.0f%%"
 
 #: ../common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - Edhe %s"
+msgstr "<b>%s %s</b>\n%0.0f%% - Edhe %s"
 
 #: ../common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\n"
-"Po pritet të shkarkohet (%0.0f%%)"
+msgstr "<b>%s %s</b>\nPo pritet të shkarkohet (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\n"
-"Po pritet të ngarkohet (%0.0f%%)"
+msgstr "<b>%s %s</b>\nPo pritet të ngarkohet (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
-"<b>%s %s</b>\n"
-"është e zbrazët"
+msgstr "<b>%s %s</b>\nështë e zbrazët"
 
 #: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"Nivel i tanishëm ngarkimi: %0.0f%%"
+msgstr "<b>%s %s</b>\nNivel i tanishëm ngarkimi: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -668,9 +641,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
-"<b>%s %s</b>\n"
-"%s"
+msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:416
 msgid "Not plugged in"
@@ -689,25 +660,19 @@ msgstr "<b>%s %s</b>"
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr ""
-"<b>%s %s</b>\n"
-"Gjendje e panjohur"
+msgstr "<b>%s %s</b>\nGjendje e panjohur"
 
 #: ../src/xfpm-power.c:383
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
-"Fjetjen e vetvetishme e pengon aktualisht një aplikacion. Kryerja e këtij veprimi tani mund të dëmtojë gjendjen e funksionimit të këtij aplikacioni.\n"
-"Jeni i sigurt se doni të plogështohet sistemi?"
+msgstr "Fjetjen e vetvetishme e pengon aktualisht një aplikacion. Kryerja e këtij veprimi tani mund të dëmtojë gjendjen e funksionimit të këtij aplikacioni.\nJeni i sigurt se doni të plogështohet sistemi?"
 
 #: ../src/xfpm-power.c:432
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
-"Asnjë prej mjeteve të kyçjes së ekranit nuk xhiroi me sukses, ekrani nuk do të kyçet.\n"
-"Doni ende të vazhdohet të pezullohet sistemi?"
+msgstr "Asnjë prej mjeteve të kyçjes së ekranit nuk xhiroi me sukses, ekrani nuk do të kyçet.\nDoni ende të vazhdohet të pezullohet sistemi?"
 
 #: ../src/xfpm-power.c:597
 msgid "Hibernate the system"
@@ -723,9 +688,7 @@ msgstr "Fike sistemin"
 
 #: ../src/xfpm-power.c:628 ../src/xfpm-power.c:672
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"Sistemi po xhiron nën energji të pakët. Që të shmangni humbje të dhënash, "
-"ruani punën tuaj"
+msgstr "Sistemi po xhiron nën energji të pakët. Që të shmangni humbje të dhënash, ruani punën tuaj"
 
 #: ../src/xfpm-power.c:718
 msgid "_Cancel"
@@ -740,9 +703,7 @@ msgstr "Sistemi po xhiron nën energji të pakët"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"Shkalla juaj e ngarkimit për %s është e ulët\n"
-"Kohë e mbetur, përafërsisht, %s"
+msgstr "Shkalla juaj e ngarkimit për %s është e ulët\nKohë e mbetur, përafërsisht, %s"
 
 #: ../src/xfpm-power.c:1648 ../src/xfpm-power.c:1696 ../src/xfpm-power.c:1728
 #: ../src/xfpm-power.c:1758
@@ -751,10 +712,10 @@ msgstr "Leje e mohuar"
 
 #: ../src/xfpm-power.c:1737 ../src/xfpm-power.c:1767
 msgid "Suspend not supported"
-msgstr "Nuk mbulohet pezullimi"
+msgstr "Pezullimi nuk mbulohet"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:160
+#: ../src/xfpm-backlight.c:161
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "Ndriçim: %.0f përqind"
@@ -774,9 +735,7 @@ msgstr "%s juaj po ngarkohet"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr ""
-"%s (%i%%)\n"
-"%s deri në ngarkim të plotë"
+msgstr "%s (%i%%)\n%s deri në ngarkim të plotë"
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
@@ -793,9 +752,7 @@ msgstr "Sistemi po xhiron me %s energji"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr ""
-"%s (%i%%)\n"
-"Koha e mbetur është përafërsisht %s"
+msgstr "%s (%i%%)\nKoha e mbetur është përafërsisht %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
@@ -819,15 +776,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Përgjegjës Xfce Energjie %s\n"
-"\n"
-"Pjesë e Projektit Xfce Goodies\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licencuar sipas GNU GPL.\n"
-"\n"
+msgstr "\nPërgjegjës Xfce Energjie %s\n\nPjesë e Projektit Xfce Goodies\nhttp://goodies.xfce.org\n\nLicencuar sipas GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:112
 #, c-format
@@ -851,7 +800,7 @@ msgstr "Pa mbulim përgjegjësi rrjeti\n"
 
 #: ../src/xfpm-main.c:134
 msgid "Can suspend"
-msgstr "Mund të kryhet pezullim"
+msgstr "Mund të pezullohet"
 
 #: ../src/xfpm-main.c:136
 msgid "Can hibernate"
@@ -961,12 +910,34 @@ msgstr "Cookie e pavlefshme"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr ""
-"Asnjë nga mjetet për kyçje ekrani nuk pati sukses, ekrani nuk do të kyçet."
+msgstr "Asnjë nga mjetet për kyçje ekrani nuk pati sukses, ekrani nuk do të kyçet."
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
 msgstr "Administrim energjie për desktopin Xfce"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to change the backlight brightness.
+#: ../src/org.xfce.power.policy.in.in.h:5
+msgid "Modify the laptop display brightness"
+msgstr "Ndryshoni ndriçimin e ekranit të portativit"
+
+#: ../src/org.xfce.power.policy.in.in.h:6
+msgid "Authentication is required to modify the laptop display brightness"
+msgstr "Që të ndryshoni ndriçimin e ekranit të portativit, lypset të bëni mirëfilltësimin"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: ../src/org.xfce.power.policy.in.in.h:11
+msgid "Suspend or hibernate the system"
+msgstr "Pezulloni, ose plogështoni sistemin"
+
+#: ../src/org.xfce.power.policy.in.in.h:12
+msgid ""
+"Authentication is required to place the system in suspend or hibernate mode"
+msgstr "Që të kaloni sistemin nën mënyrën pezullim, ose plogështim, duhet të bëni mirëfilltësimin"
 
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:294
@@ -976,22 +947,22 @@ msgstr "Shfaq nivel baterish për pajisjet e bashkëngjitura"
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1452
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s është duke penguar aktualisht administrim energjie"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1747
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1717
 msgid "<b>Display brightness</b>"
 msgstr "<b>Ndriçim ekrani</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1774
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1785
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1744
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1755
 msgid "Presentation _mode"
 msgstr "_Mënyrë Paraqitjeje"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1798
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1768
 msgid "_Settings..."
 msgstr "_Rregullime…"
 
@@ -1038,20 +1009,14 @@ msgstr "Shtojcë Përgjegjës Energjie"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr ""
-"Shfaq nivele baterie të pajisjeve tuaja dhe kontrolloni ndriçimin e ekranit "
-"tuaj"
+msgstr "Shfaq nivele baterie të pajisjeve tuaja dhe kontrolloni ndriçimin e ekranit tuaj"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
-"Përgjegjësi Xfce i energjisë administron burime energjie te kompjuteri dhe "
-"pajisjet që mund të kontrollohet, për të zvogëluar konsumin e energjisë prej"
-" tyre (të tilla si shkallë ndriçimi LCD, fjetje ekrani, përshkallëzim "
-"frekuencash CPU-je)."
+msgstr "Përgjegjësi Xfce i energjisë administron burime energjie te kompjuteri dhe pajisjet që mund të kontrollohet, për të zvogëluar konsumin e energjisë prej tyre (të tilla si shkallë ndriçimi LCD, fjetje ekrani, përshkallëzim frekuencash CPU-je)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -1061,25 +1026,14 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
-"Veç kësaj, përgjegjësi Xfce i energjisë furnizon një grup ndërfaqesh DBus të"
-" përputhshme me freedesktop-in për të informuar aplikacione të tjera mbi "
-"nivele energjie, që kështu ato të mund të ujdisin konsumin e energjisë nga "
-"ana e tyre, dhe furnizon ndërfaqen e pengimeve e cila u lejon aplikacioneve "
-"të parandalojnë veprime kalimi automatik në fjetje përmes përgjegjësi të "
-"energjisë; si një shembull, përgjegjësi i paketave të sistemit operativ do "
-"të duhej të shfrytëzonte këtë ndërfaqe, teksa është duke kryer veprime "
-"përditësimi."
+msgstr "Veç kësaj, përgjegjësi Xfce i energjisë furnizon një grup ndërfaqesh DBus të përputhshme me freedesktop-in për të informuar aplikacione të tjera mbi nivele energjie, që kështu ato të mund të ujdisin konsumin e energjisë nga ana e tyre, dhe furnizon ndërfaqen e pengimeve e cila u lejon aplikacioneve të parandalojnë veprime kalimi automatik në fjetje përmes përgjegjësi të energjisë; si një shembull, përgjegjësi i paketave të sistemit operativ do të duhej të shfrytëzonte këtë ndërfaqe, teksa është duke kryer veprime përditësimi."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
-"Përgjegjësi Xfce i energjisë furnizon gjithashtu një shtojcë për panele Xfce"
-" dhe LXDE që të kontrollohen shkallë ndriçimi LCD-je dhe të mbikëqyren "
-"shkallë ngarkimi të baterisë dhe pajisjes."
+msgstr "Përgjegjësi Xfce i energjisë furnizon gjithashtu një shtojcë për panele Xfce dhe LXDE që të kontrollohen shkallë ndriçimi LCD-je dhe të mbikëqyren shkallë ngarkimi të baterisë dhe pajisjes."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
@@ -1087,11 +1041,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr ""
-"Kjo hedhje në qarkullim kryesisht ndreq të meta dhe sjell për herë të parë "
-"mbulim më të mirë për tema ikonash duke reduktuar ikona pajisjeje dhe duke "
-"përdorur për to emra standardë. Përmban edhe përkthime të përditësuara. "
-"Shtojca panel është riemërtuar Shtojcë Përgjegjësi Energjie."
+msgstr "Kjo hedhje në qarkullim kryesisht ndreq të meta dhe sjell për herë të parë mbulim më të mirë për tema ikonash duke reduktuar ikona pajisjeje dhe duke përdorur për to emra standardë. Përmban edhe përkthime të përditësuara. Shtojca panel është riemërtuar Shtojcë Përgjegjësi Energjie."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -1100,12 +1050,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr ""
-"Kjo hedhje në qarkullim ndreq të meta me kalimin në gjendje pezull dhe "
-"fjetjen. Përmirëson gjithashtu shtojcën panel, duke trupëzuar funksionin e "
-"(tashmë të lënë pas) shtojcës së panelit për ndriçimin. Është shtuar një "
-"njoftim i ri flluskë lidhur me ndryshime ndriçim i tastiere dhe tani "
-"Përgjegjësi i Energjisë kontrollon kohët e zbardhjes së ekranit nga X11."
+msgstr "Kjo hedhje në qarkullim ndreq të meta me kalimin në gjendje pezull dhe fjetjen. Përmirëson gjithashtu shtojcën panel, duke trupëzuar funksionin e (tashmë të lënë pas) shtojcës së panelit për ndriçimin. Është shtuar një njoftim i ri flluskë lidhur me ndryshime ndriçim i tastiere dhe tani Përgjegjësi i Energjisë kontrollon kohët e zbardhjes së ekranit nga X11."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -1115,20 +1060,10 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr ""
-"Kjo hedhje në qarkullim sjell për herë të parë një numër veçorish të reja, "
-"mes tyre kalimin në gjendje pezull/fjetje pa systemd dhe UPower>=0.99. Çka "
-"lejon për kontroll individual të systemd-inhibition. Një shtojcë e re paneli"
-" për mbikëqyrje shkalle ngarkimi baterie dhe pajisje zëvendëson ikonën te "
-"shtylla. Dialogu i rregullimeve është ristrukturuar plotësisht për kontroll "
-"më të mirë dhe mjaft të meta të hapura janë ndrequr, si dhe janë përditësuar"
-" përkthime."
+msgstr "Kjo hedhje në qarkullim sjell për herë të parë një numër veçorish të reja, mes tyre kalimin në gjendje pezull/fjetje pa systemd dhe UPower>=0.99. Çka lejon për kontroll individual të systemd-inhibition. Një shtojcë e re paneli për mbikëqyrje shkalle ngarkimi baterie dhe pajisje zëvendëson ikonën te shtylla. Dialogu i rregullimeve është ristrukturuar plotësisht për kontroll më të mirë dhe mjaft të meta të hapura janë ndrequr, si dhe janë përditësuar përkthime."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
 "This stable release fixes compilation problems, a memory leak and a few "
 "other minor bugs. Furthermore it provides updated translations."
-msgstr ""
-"Kjo hedhje e qëndrueshme në qarkullim ndreq probleme përpilimi, një të çarë "
-"kujtese dhe pak të meta të tjera të vockla. Më tej, furnizon përkthime të "
-"përditësuara."
+msgstr "Kjo hedhje e qëndrueshme në qarkullim ndreq probleme përpilimi, një të çarë kujtese dhe pak të meta të tjera të vockla. Më tej, furnizon përkthime të përditësuara."
