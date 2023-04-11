@@ -144,7 +144,7 @@ xfpm_xfconf_get_property (GObject *object,
 }
 
 static void
-xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
+xfpm_xfconf_load (XfpmXfconf *conf)
 {
   GParamSpec **specs;
   GValue value = { 0, };
@@ -159,7 +159,7 @@ xfpm_xfconf_load (XfpmXfconf *conf, gboolean channel_valid)
     prop_name = g_strdup_printf ("%s%s", XFPM_PROPERTIES_PREFIX, specs[i]->name);
     g_value_init (&value, specs[i]->value_type);
 
-    if (channel_valid)
+    if (conf->priv->channel != NULL)
     {
       if ( !xfconf_channel_get_property (conf->priv->channel, prop_name, &value) )
       {
@@ -648,7 +648,6 @@ static void
 xfpm_xfconf_init (XfpmXfconf *conf)
 {
   GError *error = NULL;
-  gboolean channel_valid;
   gboolean lock_screen;
 
   conf->priv = xfpm_xfconf_get_instance_private (conf);
@@ -662,7 +661,6 @@ xfpm_xfconf_init (XfpmXfconf *conf)
       g_critical ("xfconf_init failed: %s\n", error->message);
       g_error_free (error);
     }
-    channel_valid = FALSE;
   }
   else
   {
@@ -687,10 +685,8 @@ xfpm_xfconf_init (XfpmXfconf *conf)
     /* watch for session's property change so we can stay in sync */
     g_signal_connect (conf->priv->session_channel, "property-changed",
                       G_CALLBACK (xfpm_xfsession_property_changed_cb), conf);
-
-    channel_valid = TRUE;
   }
-  xfpm_xfconf_load (conf, channel_valid);
+  xfpm_xfconf_load (conf);
 }
 
 static void
@@ -708,6 +704,9 @@ xfpm_xfconf_finalize(GObject *object)
   }
 
   g_free (conf->priv->values);
+
+  if (conf->priv->channel != NULL)
+    xfconf_shutdown ();
 
   G_OBJECT_CLASS (xfpm_xfconf_parent_class)->finalize(object);
 }
