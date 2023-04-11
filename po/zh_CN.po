@@ -1,25 +1,25 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Xfce Bot <transifex@xfce.org>, 2023
-# Mingcong Bai <jeffbai@aosc.xyz>, 2023
-# SamHX <samzh@outlook.com>, 2023
-# Cally Mal <zhouxiaobo.500@gmail.com>, 2023
-# Nick Schermer <nick@xfce.org>, 2023
-# 玉堂白鹤 <yjwork@qq.com>, 2023
-# 
-#, fuzzy
+# Chipong Luo <chipong.luo@yahoo.com>, 2011-2012
+# Chris K. Zhang <plutino@gmail.com>, 2009
+# Hunt Xu <huntxu@live.cn>, 2008-2011
+# SamHX <samzh@outlook.com>, 2017
+# 玉堂白鹤 <yjwork@qq.com>, 2013-2014
+# Cally Mal <zhouxiaobo.500@gmail.com>, 2014-2015
+# 玉堂白鹤 <yjwork@qq.com>, 2015,2017,2019-2023
+# Mingcong Bai <jeffbai@aosc.xyz>, 2016
+# Mingcong Bai <jeffbai@aosc.xyz>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-20 12:54+0100\n"
-"PO-Revision-Date: 2023-02-20 11:54+0000\n"
-"Last-Translator: 玉堂白鹤 <yjwork@qq.com>, 2023\n"
-"Language-Team: Chinese (China) (https://www.transifex.com/xfce/teams/16840/zh_CN/)\n"
+"POT-Creation-Date: 2023-04-11 00:46+0200\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: 玉堂白鹤 <yjwork@qq.com>, 2015,2017,2019-2023\n"
+"Language-Team: Chinese (China) (http://app.transifex.com/xfce/xfce4-power-manager/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -47,8 +47,8 @@ msgstr "无"
 #: ../data/interfaces/xfpm-settings.ui.h:5
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
 #: ../src/xfpm-power.c:357 ../src/xfpm-power.c:633 ../src/xfpm-power.c:675
-#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:166
-#: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
+#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:167
+#: ../src/xfpm-backlight.c:175 ../src/xfpm-battery.c:190
 #: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "电源管理器"
@@ -158,7 +158,7 @@ msgstr "<b>电量不足</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "Lock screen when system is going to sleep"
-msgstr "当系统休眠时锁定屏幕"
+msgstr "当系统进入睡眠状态时锁定屏幕"
 
 #: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "<b>Security</b>"
@@ -455,12 +455,12 @@ msgstr "无法载入电源管理器配置，使用默认"
 #: ../settings/xfpm-settings-app.c:356
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr "此是 %s 版 %s，运行于 Xfce %s。\n"
+msgstr "此为 %s 版 %s，运行于 Xfce %s。\n"
 
 #: ../settings/xfpm-settings-app.c:358
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr "在 GTK+ %d.%d.%d 下编译，链接到 GTK+ %d.%d.%d"
+msgstr "以 GTK+ %d.%d.%d 编译，与 GTK+ %d.%d.%d 链接。"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
@@ -470,23 +470,11 @@ msgstr "Xfce 电源管理器设置"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr ""
-"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
-" lid;lock screen;plugged "
-"in;saving;critical;设置;首选项;按钮;睡眠;休眠;电池;挂起;关机;亮度;笔记本电脑盖;锁屏;插入;节能;紧急;"
+msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop lid;lock screen;plugged in;saving;critical;设置;首选项;按钮;睡眠;休眠;电池;挂起;关机;亮度;笔记本电脑盖;锁屏;插入;节能;紧急;"
 
 #: ../common/xfpm-common.c:120
 msgid "translator-credits"
-msgstr ""
-"Yongtao Yang <yongtao.yang@telia.com>, 2004.\n"
-"Huang Huan <unicon221@gmail.com>, 2006.\n"
-"Jick Nan <jick.nan@gmail.com>, 2006.\n"
-"wuli <wurisky@gmail.com>, 2007, 2008.\n"
-"Hunt Xu <huntxu@live.cn>, 2008, 2009, 2010.\n"
-"Chris K. Zhang <plutino@gmail.com>, 2009.\n"
-"Aron Xu <aronmalache@163.com>, 2009.\n"
-"玉堂白鹤 <yjwork@qq.com>, 2010,2020, 2021, 2022.\n"
-"Chipong Luo <chipong.luo@yahoo.com>, 2011, 2012."
+msgstr ".Chipong Luo <chipong.luo@yahoo.com>, 2011, 2012.\n玉堂白鹤 <yjwork@qq.com>,2020."
 
 #: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
@@ -531,7 +519,7 @@ msgstr "计算机"
 #: ../common/xfpm-power-common.c:65 ../common/xfpm-power-common.c:81
 #: ../common/xfpm-power-common.c:96
 msgid "Unknown"
-msgstr "未知的"
+msgstr "未知"
 
 #: ../common/xfpm-power-common.c:83
 msgid "Lithium ion"
@@ -590,81 +578,63 @@ msgstr[0] "小时"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"电量已满 - %s 剩余"
+msgstr "<b>%s %s</b>\n电量已满 - %s 剩余"
 
 #: ../common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr ""
-"<b>%s %s</b>\n"
-"电量已满"
+msgstr "<b>%s %s</b>\n电量已满"
 
 #: ../common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - %s 直到充满"
+msgstr "<b>%s %s</b>\n%0.0f%% - %s 直到充满"
 
 #: ../common/xfpm-power-common.c:363 ../common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%%"
+msgstr "<b>%s %s</b>\n%0.0f%%"
 
 #: ../common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - %s 剩余"
+msgstr "<b>%s %s</b>\n%0.0f%% - %s 剩余"
 
 #: ../common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\n"
-"等待拔出电源 (%0.0f%%)"
+msgstr "<b>%s %s</b>\n等待拔出电源 (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\n"
-"等待充电 (%0.0f%%)"
+msgstr "<b>%s %s</b>\n等待充电 (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
-"<b>%s %s</b>\n"
-"为空"
+msgstr "<b>%s %s</b>\n为空"
 
 #: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"当前电量: %0.0f%%"
+msgstr "<b>%s %s</b>\n当前电量: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -673,9 +643,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
-"<b>%s %s</b>\n"
-"%s"
+msgstr "<b>%s %s</b>\n%s"
 
 #: ../common/xfpm-power-common.c:416
 msgid "Not plugged in"
@@ -694,25 +662,19 @@ msgstr "<b>%s %s</b>"
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr ""
-"<b>%s %s</b>\n"
-"未知状态"
+msgstr "<b>%s %s</b>\n未知状态"
 
 #: ../src/xfpm-power.c:383
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
-"当前有应用程序禁用了自动睡眠。执行此动作可能会损坏此应用程序的工作状态。\n"
-"您确定要让系统休眠？"
+msgstr "当前有应用程序禁用了自动睡眠。执行此动作可能会损坏此应用程序的工作状态。\n您确定要让系统休眠？"
 
 #: ../src/xfpm-power.c:432
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
-"嘿，所有锁屏工具都不能正常运行呢，所以我就无法锁定屏幕啦。\n"
-"您想继续挂起系统么？"
+msgstr "嘿，所有锁屏工具都不能正常运行呢，所以我就无法锁定屏幕啦。\n您想继续挂起系统么？"
 
 #: ../src/xfpm-power.c:597
 msgid "Hibernate the system"
@@ -743,21 +705,19 @@ msgstr "系统正在低电量下运行"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"您的 %s 电量低\n"
-"预计剩余时间 %s"
+msgstr "您的 %s 电量低\n预计剩余时间 %s"
 
 #: ../src/xfpm-power.c:1648 ../src/xfpm-power.c:1696 ../src/xfpm-power.c:1728
 #: ../src/xfpm-power.c:1758
 msgid "Permission denied"
-msgstr "权限不足"
+msgstr "无权限"
 
 #: ../src/xfpm-power.c:1737 ../src/xfpm-power.c:1767
 msgid "Suspend not supported"
 msgstr "不支持挂起"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:160
+#: ../src/xfpm-backlight.c:161
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "亮度: %.0f 百分比"
@@ -777,9 +737,7 @@ msgstr "您的 %s 正在充电"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr ""
-"%s(%i%%)\n"
-"离充完电还有 %s"
+msgstr "%s(%i%%)\n离充完电还有 %s"
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
@@ -796,9 +754,7 @@ msgstr "系统正在使用 %s 电源"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr ""
-"%s(%i%%)\n"
-"预计剩余时间是 %s"
+msgstr "%s(%i%%)\n预计剩余时间是 %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
@@ -822,15 +778,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Xfce 电源管理器 %s\n"
-"\n"
-"Xfce 珍品项目的一部分\n"
-"http://goodies.xfce.org\n"
-"\n"
-"以 GNU GPL 授权。\n"
-"\n"
+msgstr "\nXfce 电源管理器 %s\n\nXfce 珍品项目的一部分\nhttp://goodies.xfce.org\n\n以 GNU GPL 授权。\n\n"
 
 #: ../src/xfpm-main.c:112
 #, c-format
@@ -970,6 +918,29 @@ msgstr "嘿，所有锁屏工具都不能正常运行呢，所以我就无法锁
 msgid "Power management for the Xfce desktop"
 msgstr "Xfce 桌面的电源管理"
 
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to change the backlight brightness.
+#: ../src/org.xfce.power.policy.in.in.h:5
+msgid "Modify the laptop display brightness"
+msgstr "修改笔记本电脑显示器亮度"
+
+#: ../src/org.xfce.power.policy.in.in.h:6
+msgid "Authentication is required to modify the laptop display brightness"
+msgstr "修改笔记本电脑显示器亮度需要进行身份验证"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: ../src/org.xfce.power.policy.in.in.h:11
+msgid "Suspend or hibernate the system"
+msgstr "挂起或休眠系统"
+
+#: ../src/org.xfce.power.policy.in.in.h:12
+msgid ""
+"Authentication is required to place the system in suspend or hibernate mode"
+msgstr "需要身份验证才能将系统置于挂起或休眠模式"
+
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:294
 msgid "Display battery levels for attached devices"
@@ -978,22 +949,22 @@ msgstr "显示连接设备的剩余电量"
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1452
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1425
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s 正在阻止电源管理"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1747
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1717
 msgid "<b>Display brightness</b>"
 msgstr "<b>显示亮度</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1774
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1785
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1744
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1755
 msgid "Presentation _mode"
 msgstr "演示模式(_M)"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1798
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1768
 msgid "_Settings..."
 msgstr "设置(_S)..."
 
@@ -1057,9 +1028,7 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
-"与此同时，Xfce 电源管理器提供了一组符合 freedesktop.org 规范的 DBus "
-"接口，用于通知其他应用程序以当前的电量级别，让它们调整电量使用，同时提供用于阻止电源管理器睡眠动作的接口；软件更新管理器应该使用此接口来保障更新操作顺利完成。"
+msgstr "与此同时，Xfce 电源管理器提供了一组符合 freedesktop.org 规范的 DBus 接口，用于通知其他应用程序以当前的电量级别，让它们调整电量使用，同时提供用于阻止电源管理器睡眠动作的接口；软件更新管理器应该使用此接口来保障更新操作顺利完成。"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
@@ -1074,8 +1043,7 @@ msgid ""
 " icon-themes by reducing the device icons and using standard names for them."
 " It also features updated translations. The panel plugin has been renamed to"
 " Power Manager Plugin."
-msgstr ""
-"这个开发版本主要修复了一些问题并改进（标准化）了图标主题支持。当然，软件翻译也更新了（成就感 UP）。此面板插件已更名为“电源管理器插件”。"
+msgstr "这个开发版本主要修复了一些问题并改进（标准化）了图标主题支持。当然，软件翻译也更新了（成就感 UP）。此面板插件已更名为“电源管理器插件”。"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
 msgid ""
@@ -1084,9 +1052,7 @@ msgid ""
 "dropped) brightness panel-plugin. A new popup notification was added to "
 "account for keyboard brightness changes and the Power Manager now also "
 "controls the X11 blank times."
-msgstr ""
-"此开发版本修复了待机和休眠动作的一些问题。同时改进了面板插件，并包含了（已被弃用的）亮度控制插件。添加了键盘背光亮度的弹出通知，电源管理器现在还控制着 "
-"X11 清屏时间。"
+msgstr "此开发版本修复了待机和休眠动作的一些问题。同时改进了面板插件，并包含了（已被弃用的）亮度控制插件。添加了键盘背光亮度的弹出通知，电源管理器现在还控制着 X11 清屏时间。"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
 msgid ""
@@ -1096,9 +1062,7 @@ msgid ""
 "battery and device charge levels replaces the trayicon. The settings dialog "
 "has been completely restructured for better oversight and many open bugs "
 "have been fixed and translations have been updated."
-msgstr ""
-"此开发版本带来了许多新特性，其中包括不需要 systemd 即可休眠和待机，以及 UPower >= 0.99。此版本允许单一控制 systemd-"
-"inhibition，以及一个用于监控设备电量的插件。设置对话框也被完全重新设计以提供更好的体验，许多问题也被修复了。当然，翻译也被更新。"
+msgstr "此开发版本带来了许多新特性，其中包括不需要 systemd 即可休眠和待机，以及 UPower >= 0.99。此版本允许单一控制 systemd-inhibition，以及一个用于监控设备电量的插件。设置对话框也被完全重新设计以提供更好的体验，许多问题也被修复了。当然，翻译也被更新。"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
 msgid ""
