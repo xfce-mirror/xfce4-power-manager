@@ -60,7 +60,7 @@ BUILT_SOURCES = 			\
 	xfce-power-manager-dbus.h
 
 xfce-power-manager-dbus.c xfce-power-manager-dbus.h: $(top_srcdir)/src/org.xfce.Power.Manager.xml
-	gdbus-codegen --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=xfce-power-manager-dbus $<
+	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=xfce-power-manager-dbus $<
 
 endif
 
@@ -71,7 +71,8 @@ desktop_in_files = xfce4-power-manager-settings.desktop.in
 desktopdir = $(datadir)/applications
 desktop_DATA =	$(desktop_in_files:.desktop.in=.desktop)
 
-@INTLTOOL_DESKTOP_RULE@
+%.desktop: %.desktop.in
+	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 EXTRA_DIST = 					\
 	$(desktop_in_files)			\
