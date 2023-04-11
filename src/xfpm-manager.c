@@ -440,7 +440,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
   {
     XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID close event");
 
-    if ( action == LID_TRIGGER_NOTHING )
+    if ( action == LID_TRIGGER_DPMS )
     {
       if ( !xfpm_is_multihead_connected () )
         xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOff);
@@ -458,7 +458,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
         }
       }
     }
-    else
+    else if ( action != LID_TRIGGER_NOTHING )
     {
       /*
        * Force sleep here as lid is closed and no point of asking the
@@ -472,7 +472,8 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
   {
     XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID opened");
 
-    xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOn);
+    if ( action != LID_TRIGGER_NOTHING )
+      xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOn);
   }
 }
 

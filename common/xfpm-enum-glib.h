@@ -45,10 +45,11 @@ typedef enum
 
 typedef enum
 {
-  LID_TRIGGER_NOTHING,
+  LID_TRIGGER_DPMS,
   LID_TRIGGER_SUSPEND,
   LID_TRIGGER_HIBERNATE,
   LID_TRIGGER_LOCK_SCREEN,
+  LID_TRIGGER_NOTHING,
 } XfpmLidTriggerAction;
 
 typedef enum

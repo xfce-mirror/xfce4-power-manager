@@ -1054,7 +1054,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gtk_combo_box_set_model (GTK_COMBO_BOX(lid), GTK_TREE_MODEL(list_store));
 
     gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Switch off display"), 1, LID_TRIGGER_NOTHING, -1);
+    gtk_list_store_set (list_store, &iter, 0, _("Switch off display"), 1, LID_TRIGGER_DPMS, -1);
 
     if ( can_suspend && auth_suspend )
     {
@@ -1070,6 +1070,9 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 
     gtk_list_store_append(list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Lock screen"), 1, LID_TRIGGER_LOCK_SCREEN, -1);
+
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, LID_TRIGGER_NOTHING, -1);
 
     gtk_combo_box_set_active (GTK_COMBO_BOX (lid), 0);
 
@@ -1242,7 +1245,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     gtk_combo_box_set_model (GTK_COMBO_BOX(lid), GTK_TREE_MODEL(list_store));
 
     gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Switch off display"), 1, LID_TRIGGER_NOTHING, -1);
+    gtk_list_store_set (list_store, &iter, 0, _("Switch off display"), 1, LID_TRIGGER_DPMS, -1);
 
     if ( can_suspend && auth_suspend )
     {
@@ -1258,6 +1261,9 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
 
     gtk_list_store_append(list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Lock screen"), 1, LID_TRIGGER_LOCK_SCREEN, -1);
+
+    gtk_list_store_append(list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, LID_TRIGGER_NOTHING, -1);
 
     gtk_combo_box_set_active (GTK_COMBO_BOX (lid), 0);
 
