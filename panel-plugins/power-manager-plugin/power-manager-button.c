@@ -1060,6 +1060,9 @@ power_manager_button_finalize (GObject *object)
   g_object_unref (button->priv->plugin);
 #endif
 
+  if (button->priv->channel != NULL)
+    xfconf_shutdown ();
+
   G_OBJECT_CLASS (power_manager_button_parent_class)->finalize (object);
 }
 
