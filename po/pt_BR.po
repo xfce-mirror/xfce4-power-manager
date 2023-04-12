@@ -1,228 +1,38 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Giálisson Rocha, 2023
-# Michael Martins <michaelfm21@gmail.com>, 2023
-# Wellington Almeida <wsalmeida6@gmail.com>, 2023
-# Xfce Bot <transifex@xfce.org>, 2023
-# Rafael Fontenelle <rffontenelle@gmail.com>, 2023
-# The Cat, 2023
-# Andre Miranda <andre42m@gmail.com>, 2023
-# Nick Schermer <nick@xfce.org>, 2023
-# 
-#, fuzzy
+# Andre Miranda <andre42m@gmail.com>, 2017,2019-2020
+# Andre Miranda <andre42m@gmail.com>, 2014-2016
+# C. E., 2020
+# Helder, 2015
+# Henrique P Machado <zehrique@xfce.org>, 2008,2011
+# Michael Martins <michaelfm21@gmail.com>, 2014
+# Michael Martins <michaelfm21@gmail.com>, 2018-2020
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2012-2014
+# Rafael Fontenelle <rffontenelle@gmail.com>, 2019
+# The Cat, 2021
+# Vladimir Melo <vmelo@gnome.org>, 2008
+# Wellington Almeida <wsalmeida6@gmail.com>, 2020
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-20 12:54+0100\n"
-"PO-Revision-Date: 2023-02-20 11:54+0000\n"
-"Last-Translator: Nick Schermer <nick@xfce.org>, 2023\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/xfce/teams/16840/pt_BR/)\n"
+"POT-Creation-Date: 2023-04-12 00:58+0200\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: The Cat, 2021\n"
+"Language-Team: Portuguese (Brazil) (http://app.transifex.com/xfce/xfce4-power-manager/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:649
-#: ../settings/xfpm-settings.c:664 ../settings/xfpm-settings.c:693
-#: ../settings/xfpm-settings.c:1678
+#: ../settings/xfpm-settings.c:649 ../settings/xfpm-settings.c:664
+#: ../settings/xfpm-settings.c:693 ../settings/xfpm-settings.c:1684
 msgid "Never"
 msgstr "Nunca"
-
-#: ../data/interfaces/xfpm-settings.ui.h:2
-msgid "When the screensaver is activated"
-msgstr "Quando o protetor de tela estiver ativo"
-
-#: ../data/interfaces/xfpm-settings.ui.h:3
-msgid "When the screensaver is deactivated"
-msgstr "Quando o protetor de tela estiver inativo"
-
-#: ../data/interfaces/xfpm-settings.ui.h:4
-msgid "Nothing"
-msgstr "Nada"
-
-#: ../data/interfaces/xfpm-settings.ui.h:5
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:357 ../src/xfpm-power.c:633 ../src/xfpm-power.c:675
-#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:166
-#: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
-#: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
-msgid "Power Manager"
-msgstr "Gerenciador de Energia"
-
-#: ../data/interfaces/xfpm-settings.ui.h:6
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:160
-msgid "_Help"
-msgstr "Aj_uda"
-
-#: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
-msgid "_Close"
-msgstr "_Fechar"
-
-#: ../data/interfaces/xfpm-settings.ui.h:8
-msgid "When power button is pressed:"
-msgstr "Quando o botão desligar for pressionado:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:9
-msgid "When sleep button is pressed:"
-msgstr "Quando o botão suspender for pressionado:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:10
-msgid "When hibernate button is pressed:"
-msgstr "Quando o botão hibernar for pressionado:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:11
-msgid "When battery button is pressed:"
-msgstr "Quando o botão bateria for pressionado:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:12
-msgid "Exponential"
-msgstr "Exponencial"
-
-#: ../data/interfaces/xfpm-settings.ui.h:13
-msgid "Brightness step count:"
-msgstr "Contagem do nível do brilho:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:14
-msgid "Handle display brightness _keys"
-msgstr "Manipular teclas de brilho da tela"
-
-#: ../data/interfaces/xfpm-settings.ui.h:15
-msgid "<b>Buttons</b>"
-msgstr "<b>Botões</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:16
-msgid "Status notifications"
-msgstr "Notificações de status"
-
-#: ../data/interfaces/xfpm-settings.ui.h:17
-msgid "System tray icon"
-msgstr "Ícone da bandeja do sistema"
-
-#: ../data/interfaces/xfpm-settings.ui.h:18
-msgid "<b>Appearance</b>"
-msgstr "<b>Aparência</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:19
-msgid "General"
-msgstr "Geral"
-
-#: ../data/interfaces/xfpm-settings.ui.h:20
-msgid "When inactive for"
-msgstr "Quando inativo por"
-
-#: ../data/interfaces/xfpm-settings.ui.h:21
-msgid "System sleep mode:"
-msgstr "Modo de suspensão do sistema:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:22
-msgid "<b>System power saving</b>"
-msgstr "<b>Economia de energia do sistema</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:23
-msgid "<b>Laptop Lid</b>"
-msgstr "<b>Tampa do Laptop</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:24
-msgid "When laptop lid is closed:"
-msgstr "Quando a tampa do laptop for fechada:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:25
-msgid "On battery"
-msgstr "Usando a bateria"
-
-#: ../data/interfaces/xfpm-settings.ui.h:26 ../common/xfpm-power-common.c:416
-msgid "Plugged in"
-msgstr "Conectado"
-
-#: ../data/interfaces/xfpm-settings.ui.h:27
-msgid "Critical battery power level:"
-msgstr "Nível crítico de energia da bateria:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:29 ../settings/xfpm-settings.c:712
-#, no-c-format
-msgid "%"
-msgstr "%"
-
-#: ../data/interfaces/xfpm-settings.ui.h:30
-msgid "On critical battery power:"
-msgstr "Com a energia da bateria em nível crítico:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:31
-msgid "<b>Critical power</b>"
-msgstr "<b>Energia crítica</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:32
-msgid "Lock screen when system is going to sleep"
-msgstr "Bloquear a tela quando o sistema for suspenso"
-
-#: ../data/interfaces/xfpm-settings.ui.h:33
-msgid "<b>Security</b>"
-msgstr "<b>Segurança</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:34
-msgid "System"
-msgstr "Sistema"
-
-#: ../data/interfaces/xfpm-settings.ui.h:35
-msgid "<b>Display power management</b>"
-msgstr "Gerenciamento de energia da tela"
-
-#: ../data/interfaces/xfpm-settings.ui.h:36
-msgid ""
-"Let the power manager handle display power management (DPMS) instead of X11."
-msgstr ""
-"Permitir que o gerenciador de energia gerencie a tela (DPMS) em vez do X11."
-
-#: ../data/interfaces/xfpm-settings.ui.h:37
-msgid "Blank after"
-msgstr "Em branco após"
-
-#: ../data/interfaces/xfpm-settings.ui.h:38
-msgid "Put to sleep after"
-msgstr "Colocar em suspensão após"
-
-#: ../data/interfaces/xfpm-settings.ui.h:39
-msgid "Switch off after"
-msgstr "Desligar após"
-
-#: ../data/interfaces/xfpm-settings.ui.h:40
-msgid "On inactivity reduce to"
-msgstr "Em inatividade reduzir para"
-
-#: ../data/interfaces/xfpm-settings.ui.h:41
-msgid "Reduce after"
-msgstr "Reduzir após"
-
-#: ../data/interfaces/xfpm-settings.ui.h:42
-msgid "<b>Brightness reduction</b>"
-msgstr "<b>Redução de brilho</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:43
-msgid "Display"
-msgstr "Monitor"
-
-#: ../data/interfaces/xfpm-settings.ui.h:44
-msgid "Automatically lock the session:"
-msgstr "Automaticamente bloquear a sessão:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:45
-msgid "Delay locking after screensaver for"
-msgstr "Atrasar o bloqueio após o protetor de tela por:"
-
-#: ../data/interfaces/xfpm-settings.ui.h:46
-msgid "<b>Light Locker</b>"
-msgstr "<b>Light Locker</b>"
-
-#: ../data/interfaces/xfpm-settings.ui.h:47
-msgid "Security"
-msgstr "Segurança"
 
 #: ../settings/xfpm-settings.c:652 ../settings/xfpm-settings.c:702
 #: ../settings/xfpm-settings.c:703
@@ -232,7 +42,7 @@ msgstr "Um minuto"
 #: ../settings/xfpm-settings.c:654 ../settings/xfpm-settings.c:666
 #: ../settings/xfpm-settings.c:677 ../settings/xfpm-settings.c:681
 #: ../settings/xfpm-settings.c:705 ../settings/xfpm-settings.c:706
-#: ../settings/xfpm-settings.c:1687
+#: ../settings/xfpm-settings.c:1693
 msgid "minutes"
 msgstr "minutos"
 
@@ -251,164 +61,169 @@ msgid "hours"
 msgstr "horas"
 
 #: ../settings/xfpm-settings.c:700 ../settings/xfpm-settings.c:703
-#: ../settings/xfpm-settings.c:706 ../settings/xfpm-settings.c:1680
+#: ../settings/xfpm-settings.c:706 ../settings/xfpm-settings.c:1686
 msgid "seconds"
 msgstr "segundos"
 
+#: ../settings/xfpm-settings.c:712
+msgid "%"
+msgstr "%"
+
 #: ../settings/xfpm-settings.c:921 ../settings/xfpm-settings.c:1000
-#: ../settings/xfpm-settings.c:1062 ../settings/xfpm-settings.c:1158
-#: ../settings/xfpm-settings.c:1250 ../settings/xfpm-settings.c:1369
-#: ../settings/xfpm-settings.c:1427 ../settings/xfpm-settings.c:1479
-#: ../settings/xfpm-settings.c:1530 ../src/xfpm-power.c:700
+#: ../settings/xfpm-settings.c:1062 ../settings/xfpm-settings.c:1161
+#: ../settings/xfpm-settings.c:1253 ../settings/xfpm-settings.c:1375
+#: ../settings/xfpm-settings.c:1433 ../settings/xfpm-settings.c:1485
+#: ../settings/xfpm-settings.c:1536 ../src/xfpm-power.c:700
 msgid "Suspend"
 msgstr "Suspender"
 
-#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:1162
+#: ../settings/xfpm-settings.c:925 ../settings/xfpm-settings.c:1165
 msgid "Suspend operation not permitted"
 msgstr "Operação de suspensão não permitida"
 
-#: ../settings/xfpm-settings.c:929 ../settings/xfpm-settings.c:1166
+#: ../settings/xfpm-settings.c:929 ../settings/xfpm-settings.c:1169
 msgid "Suspend operation not supported"
 msgstr "Operação de suspensão não suportada"
 
 #: ../settings/xfpm-settings.c:935 ../settings/xfpm-settings.c:1006
-#: ../settings/xfpm-settings.c:1068 ../settings/xfpm-settings.c:1172
-#: ../settings/xfpm-settings.c:1256 ../settings/xfpm-settings.c:1375
-#: ../settings/xfpm-settings.c:1433 ../settings/xfpm-settings.c:1485
-#: ../settings/xfpm-settings.c:1536 ../src/xfpm-power.c:689
+#: ../settings/xfpm-settings.c:1068 ../settings/xfpm-settings.c:1175
+#: ../settings/xfpm-settings.c:1259 ../settings/xfpm-settings.c:1381
+#: ../settings/xfpm-settings.c:1439 ../settings/xfpm-settings.c:1491
+#: ../settings/xfpm-settings.c:1542 ../src/xfpm-power.c:689
 msgid "Hibernate"
 msgstr "Hibernar"
 
-#: ../settings/xfpm-settings.c:939 ../settings/xfpm-settings.c:1176
+#: ../settings/xfpm-settings.c:939 ../settings/xfpm-settings.c:1179
 msgid "Hibernate operation not permitted"
 msgstr "Operação de hibernação não permitida"
 
-#: ../settings/xfpm-settings.c:943 ../settings/xfpm-settings.c:1180
+#: ../settings/xfpm-settings.c:943 ../settings/xfpm-settings.c:1183
 msgid "Hibernate operation not supported"
 msgstr "Operação de hibernação não suportada"
 
-#: ../settings/xfpm-settings.c:973 ../settings/xfpm-settings.c:1210
-#: ../settings/xfpm-settings.c:1636 ../settings/xfpm-settings.c:1763
+#: ../settings/xfpm-settings.c:973 ../settings/xfpm-settings.c:1213
+#: ../settings/xfpm-settings.c:1642 ../settings/xfpm-settings.c:1769
 msgid "Hibernate and suspend operations not supported"
 msgstr "Não há suporte a hibernação e suspensão de operações"
 
-#: ../settings/xfpm-settings.c:978 ../settings/xfpm-settings.c:1215
-#: ../settings/xfpm-settings.c:1641 ../settings/xfpm-settings.c:1768
+#: ../settings/xfpm-settings.c:978 ../settings/xfpm-settings.c:1218
+#: ../settings/xfpm-settings.c:1647 ../settings/xfpm-settings.c:1774
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Hibernação e suspensão de operações não permitidas"
 
-#: ../settings/xfpm-settings.c:995 ../settings/xfpm-settings.c:1364
-#: ../settings/xfpm-settings.c:1422 ../settings/xfpm-settings.c:1474
-#: ../settings/xfpm-settings.c:1525
+#: ../settings/xfpm-settings.c:995 ../settings/xfpm-settings.c:1075
+#: ../settings/xfpm-settings.c:1266 ../settings/xfpm-settings.c:1370
+#: ../settings/xfpm-settings.c:1428 ../settings/xfpm-settings.c:1480
+#: ../settings/xfpm-settings.c:1531
 msgid "Do nothing"
 msgstr "Não fazer nada"
 
-#: ../settings/xfpm-settings.c:1012 ../settings/xfpm-settings.c:1381
+#: ../settings/xfpm-settings.c:1012 ../settings/xfpm-settings.c:1387
 #: ../src/xfpm-power.c:711
 msgid "Shutdown"
 msgstr "Desligar"
 
-#: ../settings/xfpm-settings.c:1016 ../settings/xfpm-settings.c:1385
-#: ../settings/xfpm-settings.c:1437 ../settings/xfpm-settings.c:1489
-#: ../settings/xfpm-settings.c:1540
+#: ../settings/xfpm-settings.c:1016 ../settings/xfpm-settings.c:1391
+#: ../settings/xfpm-settings.c:1443 ../settings/xfpm-settings.c:1495
+#: ../settings/xfpm-settings.c:1546
 msgid "Ask"
 msgstr "Perguntar"
 
-#: ../settings/xfpm-settings.c:1057 ../settings/xfpm-settings.c:1245
+#: ../settings/xfpm-settings.c:1057 ../settings/xfpm-settings.c:1248
 msgid "Switch off display"
 msgstr "Desligar a tela"
 
-#: ../settings/xfpm-settings.c:1072 ../settings/xfpm-settings.c:1260
+#: ../settings/xfpm-settings.c:1072 ../settings/xfpm-settings.c:1263
 msgid "Lock screen"
 msgstr "Bloquear tela"
 
-#: ../settings/xfpm-settings.c:1569
+#: ../settings/xfpm-settings.c:1575
 msgid "Number of brightness steps available using keys"
 msgstr "Número do nível do brilho disponível usando as teclas"
 
-#: ../settings/xfpm-settings.c:1609
+#: ../settings/xfpm-settings.c:1615
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Quando todas as fontes de energia do computador atingirem este nível"
 
-#: ../settings/xfpm-settings.c:1685 ../common/xfpm-power-common.c:166
+#: ../settings/xfpm-settings.c:1691 ../common/xfpm-power-common.c:166
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuto"
 msgstr[1] "minutos"
 msgstr[2] "minutos"
 
-#: ../settings/xfpm-settings.c:2052
+#: ../settings/xfpm-settings.c:2058
 msgid "Device"
 msgstr "Dispositivo"
 
-#: ../settings/xfpm-settings.c:2074
+#: ../settings/xfpm-settings.c:2080
 msgid "Type"
 msgstr "Tipo"
 
-#: ../settings/xfpm-settings.c:2079
+#: ../settings/xfpm-settings.c:2085
 msgid "PowerSupply"
 msgstr "Energia"
 
-#: ../settings/xfpm-settings.c:2080 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2086 ../src/xfpm-main.c:77
 msgid "True"
 msgstr "Verdadeiro"
 
-#: ../settings/xfpm-settings.c:2080 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2086 ../src/xfpm-main.c:77
 msgid "False"
 msgstr "Falso"
 
-#: ../settings/xfpm-settings.c:2087
+#: ../settings/xfpm-settings.c:2093
 msgid "Model"
 msgstr "Modelo"
 
-#: ../settings/xfpm-settings.c:2090
+#: ../settings/xfpm-settings.c:2096
 msgid "Technology"
 msgstr "Tecnologia"
 
-#: ../settings/xfpm-settings.c:2097
+#: ../settings/xfpm-settings.c:2103
 msgid "Current charge"
 msgstr "Carga atual"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:2105 ../settings/xfpm-settings.c:2117
-#: ../settings/xfpm-settings.c:2129
+#: ../settings/xfpm-settings.c:2111 ../settings/xfpm-settings.c:2123
+#: ../settings/xfpm-settings.c:2135
 msgid "Wh"
 msgstr "W/h"
 
-#: ../settings/xfpm-settings.c:2107
+#: ../settings/xfpm-settings.c:2113
 msgid "Fully charged (design)"
 msgstr "Totalmente carregado (design)"
 
-#: ../settings/xfpm-settings.c:2120
+#: ../settings/xfpm-settings.c:2126
 msgid "Fully charged"
 msgstr "Totalmente carregado"
 
-#: ../settings/xfpm-settings.c:2131
+#: ../settings/xfpm-settings.c:2137
 msgid "Energy empty"
 msgstr "Energia esgotada"
 
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:2139
+#: ../settings/xfpm-settings.c:2145
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:2141
+#: ../settings/xfpm-settings.c:2147
 msgid "Voltage"
 msgstr "Tensão"
 
-#: ../settings/xfpm-settings.c:2148
+#: ../settings/xfpm-settings.c:2154
 msgid "Vendor"
 msgstr "Distribuidor"
 
-#: ../settings/xfpm-settings.c:2153
+#: ../settings/xfpm-settings.c:2159
 msgid "Serial"
 msgstr "Série"
 
-#: ../settings/xfpm-settings.c:2429
+#: ../settings/xfpm-settings.c:2435
 msgid "Check your power manager installation"
 msgstr "Veja a instalação de seu gerenciador de energia"
 
-#: ../settings/xfpm-settings.c:2522
+#: ../settings/xfpm-settings.c:2528
 msgid "Devices"
 msgstr "Dispositivos"
 
@@ -434,7 +249,7 @@ msgstr "Habilitar depuração"
 
 #: ../settings/xfpm-settings-app.c:77
 msgid "Display version information"
-msgstr "Exibir informação da versão"
+msgstr "Exibe informação da versão"
 
 #: ../settings/xfpm-settings-app.c:78
 msgid "Cause xfce4-power-manager-settings to quit"
@@ -451,48 +266,25 @@ msgstr "Falha ao connectar ao gerenciador de energia"
 
 #: ../settings/xfpm-settings-app.c:190
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr ""
-"O Gerenciador de Energia Xfce4 não está em execução, você deseja lançá-lo "
-"agora?"
+msgstr "O Gerenciador de Energia Xfce4 não está em execução, você deseja lançá-lo agora?"
 
 #: ../settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
-msgstr ""
-"Falha ao carregar a configuração do gerenciador de energia, usando os "
-"padrões"
+msgstr "Falha ao carregar a configuração do gerenciador de energia, usando os padrões"
 
 #: ../settings/xfpm-settings-app.c:356
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr "Este é a %s versão %s, executando no Xfce %s.\n"
+msgstr "Este é o %s na versão %s, executando no Xfce %s.\n"
 
 #: ../settings/xfpm-settings-app.c:358
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr "Compilado com GTK+ %d.%d.%d, linkado com GTK+ %d.%d.%d."
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:2
-msgid "Settings for the Xfce Power Manager"
-msgstr "Configurações para o Gerenciador de Energia do Xfce"
-
-#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
-msgid ""
-"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
-" lid;lock screen;plugged in;saving;critical;"
-msgstr ""
-"configurações;preferências;botões;dormir;hibernar;bateria;suspender;desligar;brilho;tampa"
-" do notebook;bloquear tela;conectado;salvar;crítico;"
+msgstr "Compilado com GTK+ %d.%d.%d, ligado com GTK+ %d.%d.%d."
 
 #: ../common/xfpm-common.c:120
 msgid "translator-credits"
-msgstr ""
-"Rodrigo Coacci <rcoacci@gmail.com>, 2004.\n"
-"Adriano Winter Bess <awbess@gmail.com>, 2006.\n"
-"Og Maciel <ogmaciel@gnome.org>, 2008.\n"
-"Fábio Nogueira <deb-user-ba@ubuntu.com>, 2008.\n"
-"Henrique P. Machado <hpmachado@gnome.org>, 2009-2010.\n"
-"Sérgio Cipolla <secipolla@gmail.com>, 2011.\n"
-"André Miranda <andreldm@xfce.org>, 2017."
+msgstr "Vladimir Melo <vmelo@gnome.org>\nOg Maciel <ogmaciel@gnome.org>\nHenrique P Machado <hpmachado@gnome.org>"
 
 #: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
@@ -602,81 +394,63 @@ msgstr[2] "horas"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"Carga Completa - %s restante"
+msgstr "<b>%s %s</b>\nCarga Completa - %s restante"
 
 #: ../common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr ""
-"<b>%s %s</b>\n"
-"Carga Completa"
+msgstr "<b>%s %s</b>\nCarga Completa"
 
 #: ../common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - %s até a carga completa"
+msgstr "<b>%s %s</b>\n%0.0f%% - %s até a carga completa"
 
 #: ../common/xfpm-power-common.c:363 ../common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%%"
+msgstr "<b>%s %s</b>\n%0.0f%%"
 
 #: ../common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - %s restante"
+msgstr "<b>%s %s</b>\n%0.0f%% - %s restante"
 
 #: ../common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\n"
-"Aguardando descarregar (%0.0f%%)"
+msgstr "<b>%s %s</b>\nAguardando descarregar (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\n"
-"Aguardando carregar (%0.0f%%)"
+msgstr "<b>%s %s</b>\nAguardando carregar (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
-"<b>%s %s</b>\n"
-"está vazio(a) "
+msgstr "<b>%s %s</b>\nestá vazio(a) "
 
 #: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"Carga atual: %0.0f%%"
+msgstr "<b>%s %s</b>\nCarga atual: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -685,9 +459,11 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
-"<b>%s %s</b>\n"
-"%s"
+msgstr "<b>%s %s</b>\n%s"
+
+#: ../common/xfpm-power-common.c:416
+msgid "Plugged in"
+msgstr "Conectado"
 
 #: ../common/xfpm-power-common.c:416
 msgid "Not plugged in"
@@ -706,25 +482,26 @@ msgstr "<b>%s %s</b>"
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr ""
-"<b>%s %s</b>\n"
-"Estado desconhecido"
+msgstr "<b>%s %s</b>\nEstado desconhecido"
+
+#: ../src/xfpm-power.c:357 ../src/xfpm-power.c:633 ../src/xfpm-power.c:675
+#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:167
+#: ../src/xfpm-backlight.c:175 ../src/xfpm-battery.c:190
+#: ../src/xfpm-kbd-backlight.c:118
+msgid "Power Manager"
+msgstr "Gerenciador de Energia"
 
 #: ../src/xfpm-power.c:383
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
-"Um aplicativo está atualmente desabilitando o modo de suspensão automático. Ao executar esta ação agora, poderá danificar o estado de trabalho atual deste aplicativo.\n"
-"Você tem certeza que deseja hibernar o sistema?"
+msgstr "Um aplicativo está atualmente desabilitando o modo de suspensão automático. Ao executar esta ação agora, poderá danificar o estado de trabalho atual deste aplicativo.\nVocê tem certeza que deseja hibernar o sistema?"
 
 #: ../src/xfpm-power.c:432
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
-"Nenhuma das ferramentas de bloqueio de tela funcionaram, a mesma não será bloqueada. \n"
-"Você ainda deseja continuar com a suspensão do sistema?"
+msgstr "Nenhuma das ferramentas de bloqueio de tela funcionaram, a mesma não será bloqueada. \nVocê ainda deseja continuar com a suspensão do sistema?"
 
 #: ../src/xfpm-power.c:597
 msgid "Hibernate the system"
@@ -740,9 +517,7 @@ msgstr "Desligar o sistema"
 
 #: ../src/xfpm-power.c:628 ../src/xfpm-power.c:672
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr ""
-"O sistema está executando com pouca energia. Grave o seu trabalho para "
-"evitar perda de dados"
+msgstr "O sistema está executando com pouca energia. Grave o seu trabalho para evitar perda de dados"
 
 #: ../src/xfpm-power.c:718
 msgid "_Cancel"
@@ -757,9 +532,7 @@ msgstr "Sistema executando com pouca energia"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"O nível de carga de %s está baixo\n"
-"Tempo restante estimado: %s"
+msgstr "O nível de carga de %s está baixo\nTempo restante estimado: %s"
 
 #: ../src/xfpm-power.c:1648 ../src/xfpm-power.c:1696 ../src/xfpm-power.c:1728
 #: ../src/xfpm-power.c:1758
@@ -771,7 +544,7 @@ msgid "Suspend not supported"
 msgstr "Suspensão não suportada"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-backlight.c:160
+#: ../src/xfpm-backlight.c:161
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "Brilho: %.0f porcento"
@@ -791,9 +564,7 @@ msgstr "Sua %s está carregando"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr ""
-"%s (%i%%)\n"
-"%s até estar totalmente carregada"
+msgstr "%s (%i%%)\n%s até estar totalmente carregada"
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
@@ -810,9 +581,7 @@ msgstr "O sistema está executando na energia de %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr ""
-"%s (%i%%)\n"
-"Tempo restante estimado é %s"
+msgstr "%s (%i%%)\nTempo restante estimado é %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
@@ -836,15 +605,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Gerenciador de Energia do Xfce %s\n"
-"\n"
-"Parte do Projeto Xfce Goodies\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licenciado sob a GNU GPL.\n"
-"\n"
+msgstr "\nGerenciador de Energia do Xfce %s\n\nParte do Projeto Xfce Goodies\nhttp://goodies.xfce.org\n\nLicenciado sob a GNU GPL.\n\n"
 
 #: ../src/xfpm-main.c:112
 #, c-format
@@ -978,13 +739,7 @@ msgstr "Cookie inválido"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr ""
-"Nenhuma das ferramentas de bloqueio de tela foi executada com êxito, a tela "
-"não será bloqueada."
-
-#: ../src/xfce4-power-manager.desktop.in.h:2
-msgid "Power management for the Xfce desktop"
-msgstr "Gerenciamento de energia para o Xfce desktop"
+msgstr "Nenhuma das ferramentas de bloqueio de tela foi executada com êxito, a tela não será bloqueada."
 
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:294
@@ -994,22 +749,22 @@ msgstr "Exibe níveis de bateria de dispositivos conectados"
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1452
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1428
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s está atualmente impedindo o gerenciamento de energia"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1747
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1720
 msgid "<b>Display brightness</b>"
 msgstr "<b>Brilho da tela</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1774
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1785
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1747
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1758
 msgid "Presentation _mode"
 msgstr "_Modo de apresentação"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1798
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1771
 msgid "_Settings..."
 msgstr "_Configurações..."
 
@@ -1020,7 +775,7 @@ msgstr "Não foi possível abrir a seguinte URL: %s"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
-msgstr "Nenhuma"
+msgstr "Nenhum"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage"
@@ -1039,6 +794,14 @@ msgstr "Porcentagem e tempo restante"
 msgid "Power Manager Plugin Settings"
 msgstr "Opções do Plug-in do Gerenciador de Energia"
 
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:160
+msgid "_Help"
+msgstr "Aj_uda"
+
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
+msgid "_Close"
+msgstr "Fe_char"
+
 #. show-panel-label setting
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:180
 msgid "Show label:"
@@ -1047,106 +810,3 @@ msgstr "Mostrar rótulo:"
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:213
 msgid "Show 'Presentation mode' indicator:"
 msgstr "Mostrar indicador 'Modo de apresentação':"
-
-#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
-msgid "Power Manager Plugin"
-msgstr "Plug-in Gerenciador de energia"
-
-#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
-msgid ""
-"Display the battery levels of your devices and control the brightness of "
-"your display"
-msgstr ""
-"Exibe os níveis de bateria dos seus dispositivos e controla o brilho do seu "
-"monitor"
-
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
-msgid ""
-"Xfce power manager manages the power sources on the computer and the devices"
-" that can be controlled to reduce their power consumption (such as LCD "
-"brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
-"O gerenciador de energia do Xfce gerencia as fontes de energia no computador"
-" e os dispositivos que podem ser controlados para reduzir o seu consumo de "
-"energia (como o nível de brilho do LCD, monitorar suspensão, escalonamento "
-"da frequência do CPU)."
-
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
-msgid ""
-"In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
-" interfaces to inform other applications about current power level so that "
-"they can adjust their power consumption, and it provides the inhibit "
-"interface which allows applications to prevent automatic sleep actions via "
-"the power manager; as an example, the operating system’s package manager "
-"should make use of this interface while it is performing update operations."
-msgstr ""
-"Além disso, o gerenciador de energia do Xfce fornece um conjunto de "
-"interfaces DBus compatíveis com o freedesktop para informar outros "
-"aplicativos sobre o nível de energia atual, para que possam ajustar seu "
-"consumo de energia, e fornece a interface de inibição, que permite que os "
-"aplicativos evitem ações automáticas de suspensão através do gerenciador de "
-"energia; por exemplo, o gerenciador de pacotes do sistema operacional deve "
-"fazer uso dessa interface, enquanto ele estiver executando operações de "
-"atualização."
-
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
-msgid ""
-"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
-"control LCD brightness levels and to monitor battery and device charge "
-"levels."
-msgstr ""
-"O gerenciador de energia do Xfce também fornece um plug-in para os paineis "
-"do Xfce e LXDE para controlar os níveis de brilho do LCD e para monitorar os"
-" níveis de bateria e carga do dispositivo."
-
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
-msgid ""
-"This development release mostly fixes bugs and introduces better support for"
-" icon-themes by reducing the device icons and using standard names for them."
-" It also features updated translations. The panel plugin has been renamed to"
-" Power Manager Plugin."
-msgstr ""
-"Esta versão de desenvolvimento corrige principalmente erros e melhor suporte"
-" para temas de ícone, reduzindo os ícones de dispositivos e usando nomes "
-"padronizados. Também apresenta traduções atualizadas. O plug-in do painel "
-"foi renomeado para Plug-in Gerenciador de Energia."
-
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
-msgid ""
-"This development release fixes bugs with suspend and hibernate. It also "
-"improves the panel-plugin, incorporating the functionality of the (now "
-"dropped) brightness panel-plugin. A new popup notification was added to "
-"account for keyboard brightness changes and the Power Manager now also "
-"controls the X11 blank times."
-msgstr ""
-"Esta versão de desenvolvimento corrige erros relacionados a suspensão e "
-"hibernação. Também melhora o plug-in do painel, incorporando a "
-"funcionalidade do (agora extinto) plug-in do painel de brilho. Uma nova "
-"notificação pop-up foi adicionada para apresentar as mudanças do brilho do "
-"teclado e o Gerenciador de Energia agora controla os tempos do monitor em "
-"branco do X11."
-
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
-msgid ""
-"This development release introduces a lot of new features, among them "
-"suspending/hibernation without systemd and UPower>=0.99. It allows for "
-"individual control of systemd-inhibition, a new panel plugin to monitor "
-"battery and device charge levels replaces the trayicon. The settings dialog "
-"has been completely restructured for better oversight and many open bugs "
-"have been fixed and translations have been updated."
-msgstr ""
-"Esta versão de desenvolvimento introduz uma série de novas funcionalidades, "
-"entre elas a suspensão/hibernação sem systemd e UPower>=0.99. Permite o "
-"controle individual do systemd-inhibition, um novo plug-in do painel para "
-"monitorar a bateria e os níveis de carga do dispositivo o qual substitui o "
-"ícone da bandeija. O diálogo de configurações foi completamente "
-"reestruturado para melhor supervisão, muitos erros foram corrigidos e as "
-"traduções foram atualizadas."
-
-#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
-msgid ""
-"This stable release fixes compilation problems, a memory leak and a few "
-"other minor bugs. Furthermore it provides updated translations."
-msgstr ""
-"Esta versão estável corrige problemas de compilação, um vazamento de memória"
-" e alguns outros pequenos bugs. Além disso, fornece traduções atualizadas."
