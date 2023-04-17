@@ -35,7 +35,7 @@ LT_INIT([disable-static])
 AC_CHECK_HEADERS([errno.h signal.h stddef.h sys/types.h memory.h stdlib.h   \
                   string.h sys/stat.h sys/user.h sys/wait.h time.h math.h   \
                   unistd.h sys/resource.h sys/socket.h sys/sysctl.h fcntl.h \
-                  sys/param.h procfs.h X11/extensions/scrnsaver.h ])
+                  sys/param.h procfs.h ])
 
 AC_CHECK_FUNCS([getpwuid setsid sigaction])
 
