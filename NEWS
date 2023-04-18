@@ -1,3 +1,43 @@
+4.19.0 (2023-04-18)
+======
+- configure.ac: not check X11/extensions/scrnsaver.h
+- build: autogen.sh cleanup
+- build: Use XDT_CHECK_PACKAGE_BINARY and replace XDT_CHECK_LIBX11
+- build: Use XDT_VERSION_INIT and get rid of configure.ac.in
+- build: Switch from intltool to gettext
+- Fix Xfconf memory management
+- Add "Do nothing" option for lid closed action
+- build: Fix untranslated policykit file
+- build: Remove TODO and useless Makefile.am statements
+- backlight: Adjust some spacing for consistency / readability
+- backlight: Return earlier when brightness key event should not be 
+handled
+- backlight: fix "handle display brightness keys" setting
+- Improve battery icon levels
+- Simplify brightness level management (Fixes #139)
+- Update bug report address
+- Update copyright year
+- Use XfceScreensaver from Libxfce4ui
+- screensaver: Fall back on lock command if D-Bus call failed
+- settings: Increase brightness reduction after
+- panel-plugin: Properly disconnect signal handler
+- build: Fix autotools warnings
+- Fix management of source ids
+- panel-plugin: Add missing ref on image
+- Fix blurriness in icons when UI scale factor > 1
+- Translation Updates:
+  Albanian, Arabic, Armenian (Armenia), Asturian, Basque, Belarusian,
+  Bulgarian, Catalan, Chinese (China), Chinese (Hong Kong), Chinese
+  (Taiwan), Croatian, Czech, Danish, Dutch, Eastern Armenian, English
+  (Australia), English (Canada), English (United Kingdom), Estonian,
+  Finnish, French, Galician, German, Greek, Hebrew, Hungarian,
+  Icelandic, Indonesian, Interlingue, Italian, Japanese, Kannada,
+  Kazakh, Korean, Lithuanian, Malay, Norwegian Bokmål, Norwegian
+  Nynorsk, Occitan (post 1500), Panjabi (Punjabi), Polish, Portuguese,
+  Portuguese (Brazil), Romanian, Russian, Serbian, Sinhala, Slovak,
+  Slovenian, Spanish, Swedish, Telugu, Thai, Turkish, Ukrainian,
+  Uyghur, Vietnamese
+
 4.18.0 (2022-12-15)
 ======
 - build: Bump requirements for Xfce 4.18
