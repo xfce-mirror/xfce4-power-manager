@@ -11,10 +11,6 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-battery.h				\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
-	xfpm-console-kit.c			\
-	xfpm-console-kit.h			\
-	xfpm-systemd.c				\
-	xfpm-systemd.h				\
 	egg-idletime.c				\
 	egg-idletime.h				\
 	xfpm-backlight.c			\
@@ -58,6 +54,7 @@ xfce4_power_manager_CFLAGS =                    \
 	$(GTHREAD_CFLAGS)                       \
 	$(DBUS_GLIB_CFLAGS)                     \
 	$(LIBXFCE4UI_CFLAGS)                    \
+	$(LIBXFCE4UTIL_CFLAGS)                    \
 	$(XFCONF_CFLAGS)                        \
 	$(LIBNOTIFY_CFLAGS)                     \
 	$(UPOWER_CFLAGS)                        \
@@ -77,6 +74,7 @@ xfce4_power_manager_LDADD =                     \
 	$(GTHREAD_LIBS)                         \
 	$(DBUS_GLIB_LIBS)                       \
 	$(LIBXFCE4UI_LIBS)                      \
+	$(LIBXFCE4UTIL_LIBS)                      \
 	$(XFCONF_LIBS)                          \
 	$(LIBNOTIFY_LIBS)                       \
 	$(UPOWER_LIBS)                          \
