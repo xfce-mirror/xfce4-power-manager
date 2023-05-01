@@ -47,7 +47,6 @@
 #include "xfpm-xfconf.h"
 #include "xfpm-notify.h"
 #include "xfpm-errors.h"
-#include "xfpm-console-kit.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-polkit.h"
 #include "xfpm-network-manager.h"
@@ -58,7 +57,6 @@
 #include "xfpm-debug.h"
 #include "xfpm-enum-types.h"
 #include "egg-idletime.h"
-#include "xfpm-systemd.h"
 #include "xfpm-suspend.h"
 #include "xfpm-brightness.h"
 
@@ -91,8 +89,8 @@ struct XfpmPowerPrivate
   GHashTable       *hash;
 
 
-  XfpmSystemd      *systemd;
-  XfpmConsoleKit   *console;
+  XfceSystemd      *systemd;
+  XfceConsolekit   *console;
   XfpmInhibit      *inhibit;
   XfpmXfconf       *conf;
 
@@ -173,7 +171,7 @@ G_DEFINE_TYPE_WITH_PRIVATE (XfpmPower, xfpm_power, G_TYPE_OBJECT)
 static gboolean
 check_for_consolekit2 (XfpmPower *power)
 {
-  XfpmConsoleKit *console;
+  XfceConsolekit *console;
   gboolean can_suspend, can_hibernate;
 
   g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
@@ -182,13 +180,8 @@ check_for_consolekit2 (XfpmPower *power)
     return FALSE;
 
   console = power->priv->console;
-
-  g_object_get (G_OBJECT (console),
-                "can-suspend", &can_suspend,
-                NULL);
-  g_object_get (G_OBJECT (console),
-                "can-hibernate", &can_hibernate,
-                NULL);
+  xfce_consolekit_can_suspend (console, &can_suspend, NULL, NULL);
+  xfce_consolekit_can_hibernate (console, &can_hibernate, NULL, NULL);
 
     /* ConsoleKit2 supports suspend and hibernate */
   if (can_suspend || can_hibernate)
@@ -299,24 +292,16 @@ xfpm_power_get_properties (XfpmPower *power)
 
   if ( LOGIND_RUNNING () )
   {
-    g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-suspend", &power->priv->can_suspend,
-                  NULL);
-    g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-hibernate", &power->priv->can_hibernate,
-                  NULL);
+    xfce_systemd_can_suspend (power->priv->systemd, &power->priv->can_suspend, NULL, NULL);
+    xfce_systemd_can_hibernate (power->priv->systemd, &power->priv->can_hibernate, NULL, NULL);
   }
   else
   {
     if (check_for_consolekit2 (power))
     {
-      g_object_get (G_OBJECT (power->priv->console),
-        "can-suspend", &power->priv->can_suspend,
-        NULL);
-      g_object_get (G_OBJECT (power->priv->console),
-        "can-hibernate", &power->priv->can_hibernate,
-        NULL);
-      }
+      xfce_consolekit_can_suspend (power->priv->console, &power->priv->can_suspend, NULL, NULL);
+      xfce_consolekit_can_hibernate (power->priv->console, &power->priv->can_hibernate, NULL, NULL);
+    }
     else
     {
       power->priv->can_suspend   = xfpm_suspend_can_suspend ();
@@ -442,39 +427,40 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
       }
     }
 
-    /* This is fun, here's the order of operations:
-     * - if the Logind is running then use it
-     * - if UPower < 0.99.0 then use it (don't make changes on the user unless forced)
-     * - if ConsoleKit2 is running then use it
-     * - if everything else fails use our built-in fallback
-     */
-  if ( LOGIND_RUNNING () )
+  /* This is fun, here's the order of operations:
+   * - if the Logind is running then use it
+   * - if UPower < 0.99.0 then use it (don't make changes on the user unless forced)
+   * - if ConsoleKit2 is running then use it
+   * - if everything else fails use our built-in fallback
+   */
+  if (!g_strcmp0 (sleep_time, "Hibernate"))
   {
-    xfpm_systemd_sleep (power->priv->systemd, sleep_time, &error);
-  }
-  else
-  {
-    if (!g_strcmp0 (sleep_time, "Hibernate"))
+    if (LOGIND_RUNNING ())
     {
-      if (check_for_consolekit2 (power))
-      {
-        xfpm_console_kit_hibernate (power->priv->console, &error);
-      }
-      else
-      {
-        xfpm_suspend_try_action (XFPM_HIBERNATE);
-      }
+      xfce_systemd_try_hibernate (power->priv->systemd, &error);
+    }
+    else if (check_for_consolekit2 (power))
+    {
+      xfce_consolekit_try_hibernate (power->priv->console, &error);
     }
     else
     {
-      if (check_for_consolekit2 (power))
-      {
-        xfpm_console_kit_suspend (power->priv->console, &error);
-      }
-      else
-      {
-        xfpm_suspend_try_action (XFPM_SUSPEND);
-      }
+      xfpm_suspend_try_action (XFPM_HIBERNATE);
+    }
+  }
+  else
+  {
+    if (LOGIND_RUNNING ())
+    {
+      xfce_systemd_try_suspend (power->priv->systemd, &error);
+    }
+    else if (check_for_consolekit2 (power))
+    {
+      xfce_consolekit_try_suspend (power->priv->console, &error);
+    }
+    else
+    {
+      xfpm_suspend_try_action (XFPM_SUSPEND);
     }
   }
 
@@ -577,15 +563,11 @@ xfpm_power_add_actions_to_notification (XfpmPower *power, NotifyNotification *n)
 
   if ( LOGIND_RUNNING () )
   {
-    g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-shutdown", &can_shutdown,
-                  NULL);
+    xfce_systemd_can_shutdown (power->priv->systemd, &can_shutdown, NULL);
   }
   else
   {
-    g_object_get (G_OBJECT (power->priv->console),
-                  "can-shutdown", &can_shutdown,
-                  NULL);
+    xfce_consolekit_can_shutdown (power->priv->console, &can_shutdown, NULL);
   }
 
   if ( power->priv->can_hibernate && power->priv->auth_hibernate )
@@ -658,15 +640,11 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 
   if ( LOGIND_RUNNING () )
   {
-    g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-shutdown", &can_shutdown,
-                  NULL);
+    xfce_systemd_can_shutdown (power->priv->systemd, &can_shutdown, NULL);
   }
   else
   {
-    g_object_get (G_OBJECT (power->priv->console),
-                  "can-shutdown", &can_shutdown,
-                  NULL);
+    xfce_consolekit_can_shutdown (power->priv->console, &can_shutdown, NULL);
   }
 
   message = _("System is running on low power. "\
@@ -1203,9 +1181,9 @@ xfpm_power_init (XfpmPower *power)
   power->priv->systemd = NULL;
   power->priv->console = NULL;
   if ( LOGIND_RUNNING () )
-    power->priv->systemd = xfpm_systemd_new ();
+    power->priv->systemd = xfce_systemd_get ();
   else
-    power->priv->console = xfpm_console_kit_new ();
+    power->priv->console = xfce_consolekit_get ();
 
 #ifdef HAVE_POLKIT
   power->priv->polkit  = xfpm_polkit_get ();
@@ -1629,15 +1607,11 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
 
   if ( LOGIND_RUNNING () )
   {
-    g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-shutdown", &can_reboot,
-                  NULL);
+    xfce_systemd_can_restart (power->priv->systemd, &can_reboot, NULL);
   }
   else
   {
-    g_object_get (G_OBJECT (power->priv->console),
-                  "can-shutdown", &can_reboot,
-                  NULL);
+    xfce_consolekit_can_restart (power->priv->console, &can_reboot, NULL);
   }
 
   if ( !can_reboot)
@@ -1650,9 +1624,9 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
   }
 
   if ( LOGIND_RUNNING () )
-    xfpm_systemd_shutdown (power->priv->systemd, &error);
+    xfce_systemd_try_shutdown (power->priv->systemd, &error);
   else
-    xfpm_console_kit_shutdown (power->priv->console, &error);
+    xfce_consolekit_try_shutdown (power->priv->console, &error);
 
   if (error)
   {
@@ -1677,15 +1651,11 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
 
   if ( LOGIND_RUNNING () )
   {
-    g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-restart", &can_reboot,
-                  NULL);
+    xfce_systemd_can_restart (power->priv->systemd, &can_reboot, NULL);
   }
   else
   {
-    g_object_get (G_OBJECT (power->priv->console),
-                  "can-restart", &can_reboot,
-                  NULL);
+    xfce_consolekit_can_restart (power->priv->console, &can_reboot, NULL);
   }
 
   if ( !can_reboot)
@@ -1698,9 +1668,9 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
   }
 
   if ( LOGIND_RUNNING () )
-    xfpm_systemd_reboot (power->priv->systemd, &error);
+    xfce_systemd_try_restart (power->priv->systemd, &error);
   else
-    xfpm_console_kit_reboot (power->priv->console, &error);
+    xfce_consolekit_try_restart (power->priv->console, &error);
 
   if (error)
   {
@@ -1784,15 +1754,11 @@ xfpm_power_dbus_can_reboot (XfpmPower * power,
 
   if ( LOGIND_RUNNING () )
   {
-    g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-reboot", &can_reboot,
-                  NULL);
+    xfce_systemd_can_restart (power->priv->systemd, &can_reboot, NULL);
   }
   else
   {
-    g_object_get (G_OBJECT (power->priv->console),
-                  "can-reboot", &can_reboot,
-                  NULL);
+    xfce_consolekit_can_restart (power->priv->console, &can_reboot, NULL);
   }
 
   xfpm_power_management_complete_can_reboot (user_data,
@@ -1811,15 +1777,11 @@ xfpm_power_dbus_can_shutdown (XfpmPower * power,
 
   if ( LOGIND_RUNNING () )
   {
-    g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-shutdown", &can_shutdown,
-                  NULL);
+    xfce_systemd_can_shutdown (power->priv->systemd, &can_shutdown, NULL);
   }
   else
   {
-    g_object_get (G_OBJECT (power->priv->console),
-                  "can-shutdown", &can_shutdown,
-                  NULL);
+    xfce_consolekit_can_shutdown (power->priv->console, &can_shutdown, NULL);
   }
 
   xfpm_power_management_complete_can_shutdown (user_data,
