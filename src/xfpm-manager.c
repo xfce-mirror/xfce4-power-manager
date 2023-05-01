@@ -46,7 +46,6 @@
 #include "xfpm-dbus.h"
 #include "xfpm-dpms.h"
 #include "xfpm-manager.h"
-#include "xfpm-console-kit.h"
 #include "xfpm-button.h"
 #include "xfpm-backlight.h"
 #include "xfpm-kbd-backlight.h"
@@ -61,7 +60,6 @@
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-dbus-monitor.h"
-#include "xfpm-systemd.h"
 #include "../panel-plugins/power-manager-plugin/power-manager-button.h"
 
 static void xfpm_manager_finalize   (GObject *object);
@@ -96,8 +94,8 @@ struct XfpmManagerPrivate
   XfpmXfconf         *conf;
   XfpmBacklight      *backlight;
   XfpmKbdBacklight   *kbd_backlight;
-  XfpmConsoleKit     *console;
-  XfpmSystemd        *systemd;
+  XfceConsolekit     *console;
+  XfceSystemd        *systemd;
   XfpmDBusMonitor    *monitor;
   XfpmInhibit        *inhibit;
   XfceScreensaver    *screensaver;
@@ -304,9 +302,9 @@ xfpm_manager_shutdown (XfpmManager *manager)
   GError *error = NULL;
 
   if ( LOGIND_RUNNING () )
-    xfpm_systemd_shutdown (manager->priv->systemd, &error );
+    xfce_systemd_try_shutdown (manager->priv->systemd, &error);
   else
-    xfpm_console_kit_shutdown (manager->priv->console, &error );
+    xfce_consolekit_try_shutdown (manager->priv->console, &error);
 
   if ( error )
   {
@@ -861,9 +859,9 @@ void xfpm_manager_start (XfpmManager *manager)
   manager->priv->systemd = NULL;
 
   if ( LOGIND_RUNNING () )
-    manager->priv->systemd = xfpm_systemd_new ();
+    manager->priv->systemd = xfce_systemd_get ();
   else
-    manager->priv->console = xfpm_console_kit_new ();
+    manager->priv->console = xfce_consolekit_get ();
 
   manager->priv->monitor = xfpm_dbus_monitor_new ();
   manager->priv->inhibit = xfpm_inhibit_new ();
@@ -967,15 +965,11 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
 
   if ( LOGIND_RUNNING () )
   {
-    g_object_get (G_OBJECT (manager->priv->systemd),
-                  "can-shutdown", &can_shutdown,
-                  NULL);
+    xfce_systemd_can_shutdown (manager->priv->systemd, &can_shutdown, NULL);
   }
   else
   {
-    g_object_get (G_OBJECT (manager->priv->console),
-                  "can-shutdown", &can_shutdown,
-                  NULL);
+    xfce_consolekit_can_shutdown (manager->priv->console, &can_shutdown, NULL);
   }
 
   g_object_get (G_OBJECT (manager->priv->power),
