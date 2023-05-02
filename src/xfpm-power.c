@@ -197,7 +197,7 @@ static void
 xfpm_power_check_polkit_auth (XfpmPower *power)
 {
   const char *suspend = NULL, *hibernate = NULL;
-  if (LOGIND_RUNNING())
+  if (power->priv->systemd != NULL)
   {
     XFPM_DEBUG ("using logind suspend backend");
     suspend   = POLKIT_AUTH_SUSPEND_LOGIND;
@@ -290,7 +290,7 @@ xfpm_power_get_properties (XfpmPower *power)
   gboolean lid_is_closed;
   gboolean lid_is_present;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     xfce_systemd_can_suspend (power->priv->systemd, &power->priv->can_suspend, NULL, NULL);
     xfce_systemd_can_hibernate (power->priv->systemd, &power->priv->can_hibernate, NULL, NULL);
@@ -435,7 +435,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
    */
   if (!g_strcmp0 (sleep_time, "Hibernate"))
   {
-    if (LOGIND_RUNNING ())
+    if (power->priv->systemd != NULL)
     {
       xfce_systemd_try_hibernate (power->priv->systemd, &error);
     }
@@ -450,7 +450,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   }
   else
   {
-    if (LOGIND_RUNNING ())
+    if (power->priv->systemd != NULL)
     {
       xfce_systemd_try_suspend (power->priv->systemd, &error);
     }
@@ -561,7 +561,7 @@ xfpm_power_add_actions_to_notification (XfpmPower *power, NotifyNotification *n)
 {
   gboolean can_shutdown;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     xfce_systemd_can_shutdown (power->priv->systemd, &can_shutdown, NULL);
   }
@@ -638,7 +638,7 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
   const gchar *message;
   gboolean can_shutdown;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     xfce_systemd_can_shutdown (power->priv->systemd, &can_shutdown, NULL);
   }
@@ -1605,7 +1605,7 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
   GError *error = NULL;
   gboolean can_reboot;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     xfce_systemd_can_restart (power->priv->systemd, &can_reboot, NULL);
   }
@@ -1623,7 +1623,7 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
     return TRUE;
   }
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
     xfce_systemd_try_shutdown (power->priv->systemd, &error);
   else
     xfce_consolekit_try_shutdown (power->priv->console, &error);
@@ -1649,7 +1649,7 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
   GError *error = NULL;
   gboolean can_reboot;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     xfce_systemd_can_restart (power->priv->systemd, &can_reboot, NULL);
   }
@@ -1667,7 +1667,7 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
     return TRUE;
   }
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
     xfce_systemd_try_restart (power->priv->systemd, &error);
   else
     xfce_consolekit_try_restart (power->priv->console, &error);
@@ -1752,7 +1752,7 @@ xfpm_power_dbus_can_reboot (XfpmPower * power,
 {
   gboolean can_reboot;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     xfce_systemd_can_restart (power->priv->systemd, &can_reboot, NULL);
   }
@@ -1775,7 +1775,7 @@ xfpm_power_dbus_can_shutdown (XfpmPower * power,
 {
   gboolean can_shutdown;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     xfce_systemd_can_shutdown (power->priv->systemd, &can_shutdown, NULL);
   }
