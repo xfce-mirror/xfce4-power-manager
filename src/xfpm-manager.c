@@ -301,7 +301,7 @@ xfpm_manager_shutdown (XfpmManager *manager)
 {
   GError *error = NULL;
 
-  if ( LOGIND_RUNNING () )
+  if (manager->priv->systemd != NULL)
     xfce_systemd_try_shutdown (manager->priv->systemd, &error);
   else
     xfce_consolekit_try_shutdown (manager->priv->console, &error);
@@ -416,7 +416,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
   XfpmLidTriggerAction action;
   gboolean on_battery, logind_handle_lid_switch;
 
-  if ( LOGIND_RUNNING() )
+  if (manager->priv->systemd != NULL)
   {
     g_object_get (G_OBJECT (manager->priv->conf),
                   LOGIND_HANDLE_LID_SWITCH, &logind_handle_lid_switch,
@@ -640,10 +640,10 @@ xfpm_manager_inhibit_sleep_systemd (XfpmManager *manager)
   const char *why = "xfce4-power-manager handles these events";
   const char *mode = "block";
 
-  if (g_strcmp0(what, "") == 0)
+  if (manager->priv->systemd == NULL)
     return -1;
 
-  if (!(LOGIND_RUNNING()))
+  if (g_strcmp0 (what, "") == 0)
     return -1;
 
   XFPM_DEBUG ("Inhibiting systemd sleep: %s", what);
@@ -963,7 +963,7 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
 
   hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
-  if ( LOGIND_RUNNING () )
+  if (manager->priv->systemd != NULL)
   {
     xfce_systemd_can_shutdown (manager->priv->systemd, &can_shutdown, NULL);
   }
