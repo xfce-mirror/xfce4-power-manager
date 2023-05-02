@@ -204,7 +204,7 @@ static void
 xfpm_power_check_polkit_auth (XfpmPower *power)
 {
   const char *suspend = NULL, *hibernate = NULL;
-  if (LOGIND_RUNNING())
+  if (power->priv->systemd != NULL)
   {
     XFPM_DEBUG ("using logind suspend backend");
     suspend   = POLKIT_AUTH_SUSPEND_LOGIND;
@@ -297,7 +297,7 @@ xfpm_power_get_properties (XfpmPower *power)
   gboolean lid_is_closed;
   gboolean lid_is_present;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     g_object_get (G_OBJECT (power->priv->systemd),
                   "can-suspend", &power->priv->can_suspend,
@@ -448,7 +448,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
      * - if ConsoleKit2 is running then use it
      * - if everything else fails use our built-in fallback
      */
-  if ( LOGIND_RUNNING () )
+  if (manager->priv->systemd != NULL)
   {
     xfpm_systemd_sleep (power->priv->systemd, sleep_time, &error);
   }
@@ -575,7 +575,7 @@ xfpm_power_add_actions_to_notification (XfpmPower *power, NotifyNotification *n)
 {
   gboolean can_shutdown;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     g_object_get (G_OBJECT (power->priv->systemd),
                   "can-shutdown", &can_shutdown,
@@ -656,7 +656,7 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
   const gchar *message;
   gboolean can_shutdown;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     g_object_get (G_OBJECT (power->priv->systemd),
                   "can-shutdown", &can_shutdown,
@@ -1627,7 +1627,7 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
   GError *error = NULL;
   gboolean can_reboot;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     g_object_get (G_OBJECT (power->priv->systemd),
                   "can-shutdown", &can_reboot,
@@ -1649,7 +1649,7 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
     return TRUE;
   }
 
-  if ( LOGIND_RUNNING () )
+  if (manager->priv->systemd != NULL)
     xfpm_systemd_shutdown (power->priv->systemd, &error);
   else
     xfpm_console_kit_shutdown (power->priv->console, &error);
@@ -1675,7 +1675,7 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
   GError *error = NULL;
   gboolean can_reboot;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     g_object_get (G_OBJECT (power->priv->systemd),
                   "can-restart", &can_reboot,
@@ -1697,7 +1697,7 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
     return TRUE;
   }
 
-  if ( LOGIND_RUNNING () )
+  if (manager->priv->systemd != NULL)
     xfpm_systemd_reboot (power->priv->systemd, &error);
   else
     xfpm_console_kit_reboot (power->priv->console, &error);
@@ -1782,7 +1782,7 @@ xfpm_power_dbus_can_reboot (XfpmPower * power,
 {
   gboolean can_reboot;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     g_object_get (G_OBJECT (power->priv->systemd),
                   "can-reboot", &can_reboot,
@@ -1809,7 +1809,7 @@ xfpm_power_dbus_can_shutdown (XfpmPower * power,
 {
   gboolean can_shutdown;
 
-  if ( LOGIND_RUNNING () )
+  if (power->priv->systemd != NULL)
   {
     g_object_get (G_OBJECT (power->priv->systemd),
                   "can-shutdown", &can_shutdown,
