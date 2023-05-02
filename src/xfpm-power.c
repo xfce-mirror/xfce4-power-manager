@@ -79,6 +79,10 @@ static void xfpm_update_blank_time (XfpmPower *power);
 
 static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
+static gboolean xfpm_power_can_suspend (XfpmPower *power);
+static gboolean xfpm_power_can_hibernate (XfpmPower *power);
+static gboolean xfpm_power_auth_suspend (XfpmPower *power);
+static gboolean xfpm_power_auth_hibernate (XfpmPower *power);
 
 struct XfpmPowerPrivate
 {
@@ -111,8 +115,6 @@ struct XfpmPowerPrivate
 #ifdef HAVE_POLKIT
   XfpmPolkit       *polkit;
 #endif
-  gboolean          auth_suspend;
-  gboolean          auth_hibernate;
 
   /* Properties */
   gboolean          on_low_battery;
@@ -120,8 +122,6 @@ struct XfpmPowerPrivate
   gboolean          lid_is_closed;
   gboolean          on_battery;
   gchar            *daemon_version;
-  gboolean          can_suspend;
-  gboolean          can_hibernate;
 
   /**
    * Warning dialog to use when notification daemon
@@ -163,72 +163,6 @@ static guint signals [LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmPower, xfpm_power, G_TYPE_OBJECT)
 
-
-/* This checks if consolekit returns TRUE for either suspend or
- * hibernate showing support. This means that ConsoleKit2 is running
- * (and the system is capable of those actions).
- */
-static gboolean
-check_for_consolekit2 (XfpmPower *power)
-{
-  XfceConsolekit *console;
-  gboolean can_suspend, can_hibernate;
-
-  g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
-
-  if (power->priv->console == NULL)
-    return FALSE;
-
-  console = power->priv->console;
-  xfce_consolekit_can_suspend (console, &can_suspend, NULL, NULL);
-  xfce_consolekit_can_hibernate (console, &can_hibernate, NULL, NULL);
-
-    /* ConsoleKit2 supports suspend and hibernate */
-  if (can_suspend || can_hibernate)
-  {
-    return TRUE;
-  }
-
-  return FALSE;
-}
-
-#ifdef HAVE_POLKIT
-static void
-xfpm_power_check_polkit_auth (XfpmPower *power)
-{
-  const char *suspend = NULL, *hibernate = NULL;
-  if (power->priv->systemd != NULL)
-  {
-    XFPM_DEBUG ("using logind suspend backend");
-    suspend   = POLKIT_AUTH_SUSPEND_LOGIND;
-    hibernate = POLKIT_AUTH_HIBERNATE_LOGIND;
-  }
-  else
-  {
-    if (power->priv->console != NULL)
-    {
-      /* ConsoleKit2 supports suspend and hibernate */
-      if (check_for_consolekit2 (power))
-      {
-        XFPM_DEBUG ("using consolekit2 suspend backend");
-        suspend   = POLKIT_AUTH_SUSPEND_CONSOLEKIT2;
-        hibernate = POLKIT_AUTH_HIBERNATE_CONSOLEKIT2;
-      }
-      else
-      {
-        XFPM_DEBUG ("using xfpm internal suspend backend");
-        suspend   = POLKIT_AUTH_SUSPEND_XFPM;
-        hibernate = POLKIT_AUTH_HIBERNATE_XFPM;
-      }
-    }
-  }
-  power->priv->auth_suspend = xfpm_polkit_check_auth (power->priv->polkit,
-                                                      suspend);
-
-  power->priv->auth_hibernate = xfpm_polkit_check_auth (power->priv->polkit,
-                                                        hibernate);
-}
-#endif
 
 static void
 xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
@@ -289,25 +223,6 @@ xfpm_power_get_properties (XfpmPower *power)
   gboolean on_battery;
   gboolean lid_is_closed;
   gboolean lid_is_present;
-
-  if (power->priv->systemd != NULL)
-  {
-    xfce_systemd_can_suspend (power->priv->systemd, &power->priv->can_suspend, NULL, NULL);
-    xfce_systemd_can_hibernate (power->priv->systemd, &power->priv->can_hibernate, NULL, NULL);
-  }
-  else
-  {
-    if (check_for_consolekit2 (power))
-    {
-      xfce_consolekit_can_suspend (power->priv->console, &power->priv->can_suspend, NULL, NULL);
-      xfce_consolekit_can_hibernate (power->priv->console, &power->priv->can_hibernate, NULL, NULL);
-    }
-    else
-    {
-      power->priv->can_suspend   = xfpm_suspend_can_suspend ();
-      power->priv->can_hibernate = xfpm_suspend_can_hibernate ();
-    }
-  }
 
   g_object_get (power->priv->upower,
                 "on-battery", &on_battery,
@@ -437,31 +352,39 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   {
     if (power->priv->systemd != NULL)
     {
-      xfce_systemd_try_hibernate (power->priv->systemd, &error);
+      if (xfce_systemd_can_hibernate (power->priv->systemd, NULL, NULL, NULL)
+          && !xfce_systemd_try_hibernate (power->priv->systemd, &error))
+      {
+        g_warning ("Failed to hibernate via systemd: %s", error->message);
+      }
     }
-    else if (check_for_consolekit2 (power))
+    else if (xfce_consolekit_can_hibernate (power->priv->console, NULL, NULL, NULL)
+             && !xfce_consolekit_try_hibernate (power->priv->console, &error))
     {
-      xfce_consolekit_try_hibernate (power->priv->console, &error);
+      g_warning ("Failed to hibernate via ConsoleKit: %s", error->message);
     }
-    else
-    {
-      xfpm_suspend_try_action (XFPM_HIBERNATE);
-    }
+
+    if (error != NULL && xfpm_suspend_try_action (XFPM_HIBERNATE))
+      g_clear_error (&error);
   }
   else
   {
     if (power->priv->systemd != NULL)
     {
-      xfce_systemd_try_suspend (power->priv->systemd, &error);
+      if (xfce_systemd_can_suspend (power->priv->systemd, NULL, NULL, NULL)
+          && !xfce_systemd_try_suspend (power->priv->systemd, &error))
+      {
+        g_warning ("Failed to suspend via systemd: %s", error->message);
+      }
     }
-    else if (check_for_consolekit2 (power))
+    else if (xfce_consolekit_can_suspend (power->priv->console, NULL, NULL, NULL)
+             && !xfce_consolekit_try_suspend (power->priv->console, &error))
     {
-      xfce_consolekit_try_suspend (power->priv->console, &error);
+      g_warning ("Failed to suspend via ConsoleKit: %s", error->message);
     }
-    else
-    {
-      xfpm_suspend_try_action (XFPM_SUSPEND);
-    }
+
+    if (error != NULL && xfpm_suspend_try_action (XFPM_SUSPEND))
+      g_clear_error (&error);
   }
 
   if ( error )
@@ -570,7 +493,7 @@ xfpm_power_add_actions_to_notification (XfpmPower *power, NotifyNotification *n)
     xfce_consolekit_can_shutdown (power->priv->console, &can_shutdown, NULL);
   }
 
-  if ( power->priv->can_hibernate && power->priv->auth_hibernate )
+  if (xfpm_power_can_hibernate (power) && xfpm_power_auth_hibernate (power))
   {
     xfpm_notify_add_action_to_notification(
          power->priv->notify,
@@ -581,7 +504,7 @@ xfpm_power_add_actions_to_notification (XfpmPower *power, NotifyNotification *n)
          power);
   }
 
-  if ( power->priv->can_suspend && power->priv->auth_suspend )
+  if (xfpm_power_can_suspend (power) && xfpm_power_auth_suspend (power))
   {
     xfpm_notify_add_action_to_notification(
          power->priv->notify,
@@ -661,7 +584,7 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
   gtk_box_pack_start (GTK_BOX (content_area), gtk_label_new (message),
                       TRUE, TRUE, 8);
 
-  if ( power->priv->can_hibernate && power->priv->auth_hibernate )
+  if (xfpm_power_can_hibernate (power) && xfpm_power_auth_hibernate (power))
   {
     GtkWidget *hibernate;
     hibernate = gtk_button_new_with_label (_("Hibernate"));
@@ -671,7 +594,7 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
                               G_CALLBACK (xfpm_power_hibernate_clicked), power);
   }
 
-  if ( power->priv->can_suspend && power->priv->auth_suspend )
+  if (xfpm_power_can_suspend (power) && xfpm_power_auth_suspend (power))
   {
     GtkWidget *suspend;
 
@@ -979,15 +902,6 @@ xfpm_power_device_removed_cb (UpClient *upower, const gchar *object_path, XfpmPo
   xfpm_power_remove_device (power, object_path);
 }
 
-#ifdef HAVE_POLKIT
-static void
-xfpm_power_polkit_auth_changed_cb (XfpmPower *power)
-{
-  XFPM_DEBUG ("Auth configuration changed");
-  xfpm_power_check_polkit_auth (power);
-}
-#endif
-
 static void
 xfpm_power_class_init (XfpmPowerClass *klass)
 {
@@ -1158,10 +1072,6 @@ xfpm_power_init (XfpmPower *power)
   power->priv->on_battery      = FALSE;
   power->priv->on_low_battery  = FALSE;
   power->priv->daemon_version  = NULL;
-  power->priv->can_suspend     = FALSE;
-  power->priv->can_hibernate   = FALSE;
-  power->priv->auth_hibernate  = TRUE;
-  power->priv->auth_suspend    = TRUE;
   power->priv->dialog          = NULL;
   power->priv->overall_state   = XFPM_BATTERY_CHARGE_OK;
   power->priv->critical_action_done = FALSE;
@@ -1187,8 +1097,6 @@ xfpm_power_init (XfpmPower *power)
 
 #ifdef HAVE_POLKIT
   power->priv->polkit  = xfpm_polkit_get ();
-  g_signal_connect_swapped (power->priv->polkit, "auth-changed",
-                            G_CALLBACK (xfpm_power_polkit_auth_changed_cb), power);
 #endif
 
   g_signal_connect (power->priv->inhibit, "has-inhibit-changed",
@@ -1209,9 +1117,6 @@ xfpm_power_init (XfpmPower *power)
 
   xfpm_power_get_power_devices (power);
   xfpm_power_get_properties (power);
-#ifdef HAVE_POLKIT
-  xfpm_power_check_polkit_auth (power);
-#endif
 
 out:
   xfpm_power_dbus_init (power);
@@ -1237,16 +1142,16 @@ xfpm_power_get_property (GObject *object,
       g_value_set_boolean (value, power->priv->on_battery);
       break;
     case PROP_AUTH_HIBERNATE:
-      g_value_set_boolean (value, power->priv->auth_hibernate);
+      g_value_set_boolean (value, xfpm_power_auth_hibernate (power));
       break;
     case PROP_AUTH_SUSPEND:
-      g_value_set_boolean (value, power->priv->auth_suspend);
+      g_value_set_boolean (value, xfpm_power_auth_suspend (power));
       break;
     case PROP_CAN_SUSPEND:
-      g_value_set_boolean (value, power->priv->can_suspend);
+      g_value_set_boolean (value, xfpm_power_can_suspend (power));
       break;
     case PROP_CAN_HIBERNATE:
-      g_value_set_boolean (value, power->priv->can_hibernate);
+      g_value_set_boolean (value, xfpm_power_can_hibernate (power));
       break;
     case PROP_HAS_LID:
       g_value_set_boolean (value, power->priv->lid_is_present);
@@ -1690,7 +1595,7 @@ xfpm_power_dbus_hibernate (XfpmPower * power,
                            GDBusMethodInvocation *invocation,
                            gpointer user_data)
 {
-  if ( !power->priv->auth_hibernate )
+  if (!xfpm_power_auth_hibernate (power))
   {
     g_dbus_method_invocation_return_error (invocation,
                                            XFPM_ERROR,
@@ -1699,7 +1604,7 @@ xfpm_power_dbus_hibernate (XfpmPower * power,
     return TRUE;
   }
 
-  if (!power->priv->can_hibernate )
+  if (!xfpm_power_can_hibernate (power))
   {
     g_dbus_method_invocation_return_error (invocation,
                                            XFPM_ERROR,
@@ -1720,7 +1625,7 @@ xfpm_power_dbus_suspend (XfpmPower * power,
                          GDBusMethodInvocation *invocation,
                          gpointer user_data)
 {
-  if ( !power->priv->auth_suspend )
+  if (!xfpm_power_auth_suspend (power))
   {
     g_dbus_method_invocation_return_error (invocation,
                                            XFPM_ERROR,
@@ -1729,7 +1634,7 @@ xfpm_power_dbus_suspend (XfpmPower * power,
     return TRUE;
   }
 
-  if (!power->priv->can_suspend )
+  if (!xfpm_power_can_suspend (power))
   {
     g_dbus_method_invocation_return_error (invocation,
                                            XFPM_ERROR,
@@ -1798,7 +1703,7 @@ xfpm_power_dbus_can_hibernate (XfpmPower * power,
 {
   xfpm_power_management_complete_can_hibernate (user_data,
                                                 invocation,
-                                                power->priv->can_hibernate);
+                                                xfpm_power_can_hibernate (power));
   return TRUE;
 }
 
@@ -1809,7 +1714,7 @@ xfpm_power_dbus_can_suspend (XfpmPower * power,
 {
   xfpm_power_management_complete_can_suspend (user_data,
                                               invocation,
-                                              power->priv->can_suspend);
+                                              xfpm_power_can_suspend (power));
 
   return TRUE;
 }
@@ -1834,6 +1739,86 @@ xfpm_power_dbus_get_low_battery (XfpmPower * power,
   xfpm_power_management_complete_get_low_battery (user_data,
                                                   invocation,
                                                   power->priv->on_low_battery);
+
+  return TRUE;
+}
+
+static gboolean
+xfpm_power_can_suspend (XfpmPower *power)
+{
+  gboolean can_suspend;
+
+  if (power->priv->systemd != NULL)
+  {
+    if (xfce_systemd_can_suspend (power->priv->systemd, &can_suspend, NULL, NULL))
+      return can_suspend;
+  }
+  else if (xfce_consolekit_can_suspend (power->priv->console, &can_suspend, NULL, NULL))
+  {
+    return can_suspend;
+  }
+
+  return xfpm_suspend_can_suspend ();
+}
+
+static gboolean
+xfpm_power_can_hibernate (XfpmPower *power)
+{
+  gboolean can_hibernate;
+
+  if (power->priv->systemd != NULL)
+  {
+    if (xfce_systemd_can_hibernate (power->priv->systemd, &can_hibernate, NULL, NULL))
+      return can_hibernate;
+  }
+  else if (xfce_consolekit_can_hibernate (power->priv->console, &can_hibernate, NULL, NULL))
+  {
+    return can_hibernate;
+  }
+
+  return xfpm_suspend_can_hibernate ();
+}
+
+static gboolean
+xfpm_power_auth_suspend (XfpmPower *power)
+{
+#ifdef ENABLE_POLKIT
+  const char *suspend = POLKIT_AUTH_SUSPEND_XFPM;
+
+  if (power->priv->systemd != NULL)
+  {
+    if (xfce_systemd_can_suspend (power->priv->systemd, NULL, NULL, NULL))
+      suspend = POLKIT_AUTH_SUSPEND_LOGIND;
+  }
+  else if (xfce_consolekit_can_suspend (power->priv->console, NULL, NULL, NULL))
+  {
+    suspend = POLKIT_AUTH_SUSPEND_CONSOLEKIT2;
+  }
+
+  return xfpm_polkit_check_auth (power->priv->polkit, suspend);
+#endif
+
+  return TRUE;
+}
+
+static gboolean
+xfpm_power_auth_hibernate (XfpmPower *power)
+{
+#ifdef ENABLE_POLKIT
+  const char *hibernate = POLKIT_AUTH_HIBERNATE_XFPM;
+
+  if (power->priv->systemd != NULL)
+  {
+    if (xfce_systemd_can_hibernate (power->priv->systemd, NULL, NULL, NULL))
+      hibernate = POLKIT_AUTH_HIBERNATE_LOGIND;
+  }
+  else if (xfce_consolekit_can_hibernate (power->priv->console, NULL, NULL, NULL))
+  {
+    hibernate = POLKIT_AUTH_HIBERNATE_CONSOLEKIT2;
+  }
+
+  return xfpm_polkit_check_auth (power->priv->polkit, hibernate);
+#endif
 
   return TRUE;
 }
