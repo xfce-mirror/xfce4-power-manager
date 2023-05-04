@@ -68,7 +68,7 @@ struct XfpmPolkitPrivate
 {
   GDBusConnection   *bus;
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   GDBusProxy        *proxy;
   GVariant          *subject;
   GVariant          *details;
@@ -88,7 +88,7 @@ static guint signals [LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmPolkit, xfpm_polkit, G_TYPE_OBJECT)
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
 #if defined(__FreeBSD__)
 /**
  * Taken from polkitunixprocess.c code to get process start
@@ -225,10 +225,10 @@ out:
 
   return start_time;
 }
-#endif /*ENABLE_POLKIT*/
+#endif /*HAVE_POLKIT*/
 
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
 static void
 xfpm_polkit_free_data (XfpmPolkit *polkit)
 {
@@ -310,12 +310,12 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 
   polkit->priv->subject_valid = TRUE;
 }
-#endif /*ENABLE_POLKIT*/
+#endif /*HAVE_POLKIT*/
 
 static gboolean
 xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
 {
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   GError *error = NULL;
   gboolean is_authorized = FALSE;
   GVariant *var;
@@ -366,11 +366,11 @@ xfpm_polkit_check_auth_intern (XfpmPolkit *polkit, const gchar *action_id)
   XFPM_DEBUG ("Action=%s is authorized=%s", action_id, xfpm_bool_to_string (is_authorized));
 
   return is_authorized;
-#endif /*ENABLE_POLKIT*/
+#endif /*HAVE_POLKIT*/
   return TRUE;
 }
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
 static void
 xfpm_polkit_changed_cb (GDBusProxy *proxy,
                         gchar      *sender_name,
@@ -410,13 +410,13 @@ xfpm_polkit_init (XfpmPolkit *polkit)
 
   polkit->priv = xfpm_polkit_get_instance_private (polkit);
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   polkit->priv->destroy_id   = 0;
   polkit->priv->subject_valid   = FALSE;
   polkit->priv->proxy        = NULL;
   polkit->priv->subject      = NULL;
   polkit->priv->details      = NULL;
-#endif /*ENABLE_POLKIT*/
+#endif /*HAVE_POLKIT*/
 
   polkit->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
@@ -427,7 +427,7 @@ xfpm_polkit_init (XfpmPolkit *polkit)
     goto out;
   }
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   polkit->priv->proxy =
   g_dbus_proxy_new_sync (polkit->priv->bus,
                          G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES,
@@ -447,7 +447,7 @@ xfpm_polkit_init (XfpmPolkit *polkit)
   {
     g_warning ("Failed to create proxy for 'org.freedesktop.PolicyKit1'");
   }
-#endif /*ENABLE_POLKIT*/
+#endif /*HAVE_POLKIT*/
 
 out:
   ;
@@ -460,7 +460,7 @@ xfpm_polkit_finalize (GObject *object)
 
   polkit = XFPM_POLKIT (object);
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   if ( polkit->priv->proxy )
   {
     g_signal_handlers_disconnect_by_func (polkit->priv->proxy,
@@ -474,7 +474,7 @@ xfpm_polkit_finalize (GObject *object)
     if (polkit->priv->destroy_id != 0 )
       g_source_remove (polkit->priv->destroy_id);
   }
-#endif /*ENABLE_POLKIT*/
+#endif /*HAVE_POLKIT*/
 
 
   if ( polkit->priv->bus )
@@ -504,7 +504,7 @@ xfpm_polkit_get (void)
 gboolean
 xfpm_polkit_check_auth (XfpmPolkit *polkit, const gchar *action_id)
 {
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   xfpm_polkit_init_data (polkit);
 #endif
   return xfpm_polkit_check_auth_intern (polkit, action_id);

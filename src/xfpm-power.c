@@ -110,7 +110,7 @@ struct XfpmPowerPrivate
   XfceScreensaver  *screensaver;
 
   XfpmNotify       *notify;
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   XfpmPolkit       *polkit;
 #endif
   gboolean          auth_suspend;
@@ -199,7 +199,7 @@ check_for_consolekit2 (XfpmPower *power)
   return FALSE;
 }
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
 static void
 xfpm_power_check_polkit_auth (XfpmPower *power)
 {
@@ -1001,7 +1001,7 @@ xfpm_power_device_removed_cb (UpClient *upower, const gchar *object_path, XfpmPo
   xfpm_power_remove_device (power, object_path);
 }
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
 static void
 xfpm_power_polkit_auth_changed_cb (XfpmPower *power)
 {
@@ -1207,7 +1207,7 @@ xfpm_power_init (XfpmPower *power)
   else
     power->priv->console = xfpm_console_kit_new ();
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   power->priv->polkit  = xfpm_polkit_get ();
   g_signal_connect_swapped (power->priv->polkit, "auth-changed",
                             G_CALLBACK (xfpm_power_polkit_auth_changed_cb), power);
@@ -1231,7 +1231,7 @@ xfpm_power_init (XfpmPower *power)
 
   xfpm_power_get_power_devices (power);
   xfpm_power_get_properties (power);
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   xfpm_power_check_polkit_auth (power);
 #endif
 
@@ -1343,7 +1343,7 @@ xfpm_power_finalize (GObject *object)
 
   g_hash_table_destroy (power->priv->hash);
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   g_object_unref (power->priv->polkit);
 #endif
 

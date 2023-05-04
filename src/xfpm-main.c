@@ -108,7 +108,7 @@ xfpm_dump (GHashTable *hash)
 
   g_print ("---------------------------------------------------\n");
   g_print ("       Xfce power manager version %s\n", VERSION);
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   g_print (_("With policykit support\n"));
 #else
   g_print (_("Without policykit support\n"));
