@@ -49,7 +49,7 @@ struct XfpmSystemdPrivate
     gboolean         can_restart;
     gboolean         can_suspend;
     gboolean         can_hibernate;
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
     XfpmPolkit      *polkit;
 #endif
 };
@@ -120,7 +120,7 @@ xfpm_systemd_can_method (XfpmSystemd  *systemd,
 {
     *can_method = FALSE;
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
     *can_method = xfpm_polkit_check_auth(systemd->priv->polkit, method);
 
     return TRUE;
@@ -135,7 +135,7 @@ xfpm_systemd_init (XfpmSystemd *systemd)
     systemd->priv = xfpm_systemd_get_instance_private (systemd);
     systemd->priv->can_shutdown = FALSE;
     systemd->priv->can_restart  = FALSE;
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
     systemd->priv->polkit = xfpm_polkit_get();
 #endif
 
@@ -184,7 +184,7 @@ static void xfpm_systemd_get_property (GObject *object,
 static void
 xfpm_systemd_finalize (GObject *object)
 {
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
     XfpmSystemd *systemd;
 
     systemd = XFPM_SYSTEMD (object);

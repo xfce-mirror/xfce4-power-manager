@@ -69,6 +69,7 @@ m4_define([libnotify_minimum_version], [0.4.1])
 m4_define([upower_minimum_version], [0.99.0])
 m4_define([xrandr_minimum_version], [1.2.0])
 m4_define([x11_minimum_version], [1.6.7])
+m4_define([polkit_minimum_version], [0.102])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
@@ -89,20 +90,7 @@ XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-cod
 #=======================================================#
 #              Polkit?			                #
 #=======================================================#
-AC_ARG_ENABLE([polkit],
-        [AS_HELP_STRING([--disable-polkit],[Do not enable PolicyKit support (default=enabled)])],
-        [ac_cv_enable_polkit=$enableval],
-        [ac_cv_enable_polkit=polkit])
-    AC_MSG_CHECKING([whether to build with polkit support])
-if test "x$ac_cv_enable_polkit" = "xno"; then
-    AC_MSG_RESULT([no])
-    polkit="no"
-else
-    AC_MSG_RESULT([yes])
-    AC_DEFINE(ENABLE_POLKIT, 1 , [PolicyKit support])
-    polkit="yes"
-fi
-AM_CONDITIONAL([ENABLE_POLKIT], [test "x$polkit" = "xyes"])
+XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [polkit_minimum_version], [polkit], [Polkit support])
 
 #=======================================================#
 #           Check for DPMS support                      #
@@ -236,7 +224,7 @@ AC_OUTPUT
 
 echo "prefix:			${prefix}"
 echo "xdg autostart:		${sysconfdir}/xdg/autostart"
-echo "POLKIT:			${polkit}"
+echo "POLKIT:			${POLKIT_FOUND:-no}"
 echo "Network manager:	${ac_network_manager}"
 echo "Build panel plugins:	${build_panel_plugins}"
 if test "x$build_panel_plugins" = "xyes"; then
