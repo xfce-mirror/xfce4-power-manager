@@ -290,7 +290,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
  * Non-XRandR fallback using xfpm-backlight-helper
  */
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
 
 static gint
 xfpm_brightness_helper_get_value (const gchar *argument)
@@ -522,7 +522,7 @@ xfpm_brightness_setup (XfpmBrightness *brightness)
 
     return TRUE;
   }
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   else
   {
     if ( xfpm_brightness_setup_helper (brightness) ) {
@@ -557,7 +557,7 @@ gboolean xfpm_brightness_get_level  (XfpmBrightness *brightness, gint32 *level)
 
   if ( brightness->priv->xrandr_has_hw )
     ret = xfpm_brightness_xrandr_get_level (brightness, brightness->priv->output, level);
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   else if ( brightness->priv->helper_has_hw )
     ret = xfpm_brightness_helper_get_level (brightness, level);
 #endif
@@ -574,7 +574,7 @@ gboolean xfpm_brightness_set_level (XfpmBrightness *brightness, gint32 level)
 
   if (brightness->priv->xrandr_has_hw )
     ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, level);
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   else if ( brightness->priv->helper_has_hw )
     ret = xfpm_brightness_helper_set_level (brightness, level);
 #endif
@@ -607,7 +607,7 @@ gboolean xfpm_brightness_dim_down (XfpmBrightness *brightness)
 
   if (brightness->priv->xrandr_has_hw )
     ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, brightness->priv->min_level);
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   else if ( brightness->priv->helper_has_hw )
     ret = xfpm_brightness_helper_set_level (brightness, brightness->priv->min_level);
 #endif
@@ -619,7 +619,7 @@ gboolean xfpm_brightness_get_switch (XfpmBrightness *brightness, gint *brightnes
 {
   gboolean ret = FALSE;
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   if ( brightness->priv->helper_has_hw )
     ret = xfpm_brightness_helper_get_switch (brightness, brightness_switch);
 #endif
@@ -631,7 +631,7 @@ gboolean xfpm_brightness_set_switch (XfpmBrightness *brightness, gint brightness
 {
   gboolean ret = FALSE;
 
-#ifdef ENABLE_POLKIT
+#ifdef HAVE_POLKIT
   if ( brightness->priv->helper_has_hw )
     ret = xfpm_brightness_helper_set_switch (brightness, brightness_switch);
 #endif

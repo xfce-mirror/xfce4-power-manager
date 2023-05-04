@@ -83,7 +83,7 @@ xfce4_power_manager_LDADD =                     \
 	$(XRANDR_LIBS)				\
 	$(DPMS_LIBS)
 
-if ENABLE_POLKIT
+if HAVE_POLKIT
 
 sbin_PROGRAMS = xfpm-power-backlight-helper     \
 	xfce4-pm-helper
