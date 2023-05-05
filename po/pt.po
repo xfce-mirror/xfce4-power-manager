@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:48+0200\n"
+"POT-Creation-Date: 2023-05-05 10:44+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>, 2019-2023\n"
 "Language-Team: Portuguese (http://app.transifex.com/xfce/xfce4-power-manager/language/pt/)\n"
@@ -471,12 +471,6 @@ msgstr "Criado com GTK+ %d.%d.%d, vinculado ao GTK+ %d.%d.%d."
 msgid "Settings for the Xfce Power Manager"
 msgstr "Definições para o gestor de energia do Xfce4"
 
-#: settings/xfce4-power-manager-settings.desktop.in:8
-#: src/xfce4-power-manager.desktop.in:5
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:6
-msgid "org.xfce.powermanager"
-msgstr "org.xfce.powermanager"
-
 #: settings/xfce4-power-manager-settings.desktop.in:12
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
@@ -928,6 +922,29 @@ msgstr "Nenhuma das ferramentas de bloqueio do ecrã foi executada com êxito; o
 #: src/xfce4-power-manager.desktop.in:4
 msgid "Power management for the Xfce desktop"
 msgstr "Gestão de energia para o Xfce"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to change the backlight brightness.
+#: src/org.xfce.power.policy.in.in:21
+msgid "Modify the laptop display brightness"
+msgstr "Modificar a luminosidade do ecrã do portátil"
+
+#: src/org.xfce.power.policy.in.in:22
+msgid "Authentication is required to modify the laptop display brightness"
+msgstr "A autenticação é necessária para modificar a luminosidade do ecrã do computador portátil"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: src/org.xfce.power.policy.in.in:36
+msgid "Suspend or hibernate the system"
+msgstr "Suspender ou hibernar o sistema"
+
+#: src/org.xfce.power.policy.in.in:37
+msgid ""
+"Authentication is required to place the system in suspend or hibernate mode"
+msgstr "A autenticação é necessária para colocar o sistema em modo suspenso ou em hibernação"
 
 #. Odds are this is a desktop without any batteries attached
 #: panel-plugins/power-manager-plugin/power-manager-button.c:294
