@@ -23,6 +23,8 @@ xfce4_power_manager_settings_CFLAGS =				\
 	$(MODULE_FLAGS)						\
 	$(GTK_CFLAGS)						\
 	$(GLIB_CFLAGS)						\
+	$(GIO_CFLAGS)						\
+	$(GIO_UNIX_CFLAGS)						\
 	$(GTHREAD_CFLAGS)					\
 	$(GMODULE_CFLAGS)					\
 	$(DBUS_CFLAGS)						\
@@ -39,6 +41,8 @@ xfce4_power_manager_settings_LDADD   =				\
 	$(top_builddir)/common/libxfpmcommon.la			\
 	$(GTK_LIBS)						\
 	$(GLIB_LIBS)						\
+	$(GIO_LIBS)						\
+	$(GIO_UNIX_LIBS)						\
 	$(GTHREAD_LIBS)						\
 	$(GMODULE_LIBS)						\
 	$(DBUS_LIBS)						\

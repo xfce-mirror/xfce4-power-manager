@@ -54,6 +54,8 @@ xfce4_power_manager_CFLAGS =                    \
 	-DXFPM_SUSPEND_HELPER_CMD=\"$(prefix)/bin/xfce4-pm-helper\" \
 	-UXFCE_PLUGIN                           \
 	-DXFPM_SYSTRAY							\
+	$(GIO_CFLAGS)                           \
+	$(GIO_UNIX_CFLAGS)                      \
 	$(GOBJECT_CFLAGS)                       \
 	$(GTHREAD_CFLAGS)                       \
 	$(DBUS_GLIB_CFLAGS)                     \
@@ -73,6 +75,8 @@ xfce4_power_manager_LDFLAGS =			\
 xfce4_power_manager_LDADD =                     \
 	$(top_builddir)/common/libxfpmcommon.la \
 	$(top_builddir)/libdbus/libxfpmdbus.la  \
+	$(GIO_LIBS)                             \
+	$(GIO_UNIX_LIBS)                        \
 	$(GOBJECT_LIBS)                         \
 	$(GTHREAD_LIBS)                         \
 	$(DBUS_GLIB_LIBS)                       \
