@@ -1,25 +1,23 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-power-manager.master package.
+# This file is distributed under the same license as the xfce4-power-manager.xfce-4-18 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Knez <vladimirknezev@gmail.com>, 2019
-# Knez <vladimirknezev@gmail.com>, 2019
-# Саша Петровић <salepetronije@gmail.com>, 2012-2013
-# Knez <vladimirknezev@gmail.com>, 2019
-# Саша Петровић <salepetronije@gmail.com>, 2013-2015,2017
-# Саша Петровић <salepetronije@gmail.com>, 2014-2015
-# Саша Петровић <salepetronije@gmail.com>, 2015
-# Саша Петровић <salepetronije@gmail.com>, 2015,2017
-# Саша Петровић <salepetronije@gmail.com>, 2015,2019-2020
+# Nick Schermer <nick@xfce.org>, 2023
+# Knez <vladimirknezev@gmail.com>, 2023
+# Xfce Bot <transifex@xfce.org>, 2023
+# Саша Петровић <salepetronije@gmail.com>, 2023
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-power-manager\n"
+"Project-Id-Version: xfce4-power-manager.xfce-4-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-05 10:44+0200\n"
-"PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Саша Петровић <salepetronije@gmail.com>, 2013-2015,2017\n"
-"Language-Team: Serbian (http://app.transifex.com/xfce/xfce4-power-manager/language/sr/)\n"
+"POT-Creation-Date: 2023-05-05 10:51+0200\n"
+"PO-Revision-Date: 2023-02-20 11:54+0000\n"
+"Last-Translator: Саша Петровић <salepetronije@gmail.com>, 2023\n"
+"Language-Team: Serbian (https://app.transifex.com/xfce/teams/16840/sr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,7 +28,7 @@ msgstr ""
 #: settings/xfpm-settings.c:664 settings/xfpm-settings.c:693
 #: settings/xfpm-settings.c:1684
 msgid "Never"
-msgstr "Никад"
+msgstr "Никада"
 
 #: data/interfaces/xfpm-settings.ui:114
 msgid "When the screensaver is activated"
@@ -250,7 +248,7 @@ msgstr "jедан минут"
 #: settings/xfpm-settings.c:679 settings/xfpm-settings.c:680
 #: settings/xfpm-settings.c:681
 msgid "hours"
-msgstr "сати"
+msgstr "сата"
 
 #: settings/xfpm-settings.c:700 settings/xfpm-settings.c:703
 #: settings/xfpm-settings.c:706 settings/xfpm-settings.c:1686
@@ -417,11 +415,11 @@ msgstr "Уређаји"
 
 #: settings/xfpm-settings-app.c:74
 msgid "Settings manager socket"
-msgstr "Управник подешавања утичнице"
+msgstr "Поставке управника утичнице"
 
 #: settings/xfpm-settings-app.c:74
 msgid "SOCKET ID"
-msgstr "ИБ УТИЧНИЦЕ"
+msgstr "ЛБ УТИЧНИЦЕ"
 
 #: settings/xfpm-settings-app.c:75
 msgid "Display a specific device by UpDevice object path"
@@ -454,7 +452,9 @@ msgstr "Нисам успео да се повежем са управником
 
 #: settings/xfpm-settings-app.c:190
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Управник потрошње за Иксфце4 није покренут, да ли желите да га покренете сада?"
+msgstr ""
+"Управник потрошње за Иксфце4 није покренут, да ли желите да га покренете "
+"сада?"
 
 #: settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
@@ -478,11 +478,13 @@ msgstr "Поставке управника потрошње за Иксфце4"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr "поставке;подешавања;дугмад;спавање;замрзавање;батерија;обустави;искључи;светлина;поклопац лаптопа;закључавање екрана;прикључено;чување;критично;"
+msgstr ""
+"поставке;подешавања;дугмад;спавање;замрзавање;батерија;обустави;искључи;светлина;поклопац"
+" лаптопа;закључавање екрана;прикључено;чување;критично;"
 
 #: common/xfpm-common.c:120
 msgid "translator-credits"
-msgstr "Саша Петровић salepetronije@gmail.com"
+msgstr "Саша Петровић <salepetronije@gmail.com>"
 
 #: common/xfpm-power-common.c:45 common/xfpm-power-common.c:68
 msgid "Battery"
@@ -592,63 +594,81 @@ msgstr[2] "сати"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr "<b>%s %s</b>\nНапуњено - %s преостаје"
+msgstr ""
+"<b>%s %s</b>\n"
+"Напуњено - %s преостаје"
 
 #: common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr "<b>%s %s</b>\nНапуњено"
+msgstr ""
+"<b>%s %s</b>\n"
+"Напуњено"
 
 #: common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr "<b>%s %s</b>\n%0.0f%% - %s до попуне"
+msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s до попуне"
 
 #: common/xfpm-power-common.c:363 common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr "<b>%s %s</b>\n%0.0f%%"
+msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%%"
 
 #: common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr "<b>%s %s</b>\n%0.0f%% - %s преостаје"
+msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s преостаје"
 
 #: common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\t\nОчекивање отпражњења (%0.0f%%)"
+msgstr ""
+"<b>%s %s</b>\t\n"
+"Очекивање отпражњења (%0.0f%%)"
 
 #: common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\t\nОчекивање попуњења (%0.0f%%)"
+msgstr ""
+"<b>%s %s</b>\t\n"
+"Очекивање попуњења (%0.0f%%)"
 
 #: common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\t\nје празна"
+msgstr ""
+"<b>%s %s</b>\t\n"
+"је празна"
 
 #: common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr "<b>%s %s</b>\nТренутна попуна: %0.0f%%"
+msgstr ""
+"<b>%s %s</b>\n"
+"Тренутна попуна: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -657,7 +677,9 @@ msgstr "<b>%s %s</b>\nТренутна попуна: %0.0f%%"
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr "<b>%s %s</b>\t\n%s"
+msgstr ""
+"<b>%s %s</b>\t\n"
+"%s"
 
 #: common/xfpm-power-common.c:416
 msgid "Not plugged in"
@@ -676,19 +698,25 @@ msgstr "<b>%s %s</b>"
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr "<b>%s %s</b>\t\nСтање није одређено"
+msgstr ""
+"<b>%s %s</b>\t\n"
+"Стање није одређено"
 
 #: src/xfpm-power.c:383
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Програм тренутно онемогућава самостално успављивање. Применом ове радње се може оштетити радно стање програма.\nДа ли сте сигурни да желите да замрзнете систем?"
+msgstr ""
+"Програм тренутно онемогућава самостално успављивање. Применом ове радње се може оштетити радно стање програма.\n"
+"Да ли сте сигурни да желите да замрзнете систем?"
 
 #: src/xfpm-power.c:432
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Ни један прибор за закључавање екрана се не извршава успешно, екран се неће закључати.\nДа ли и даље желите да обуставите систем?"
+msgstr ""
+"Ни један прибор за закључавање екрана се не извршава успешно, екран се неће закључати.\n"
+"Да ли и даље желите да обуставите систем?"
 
 #: src/xfpm-power.c:597
 msgid "Hibernate the system"
@@ -704,7 +732,9 @@ msgstr "Искључи систем"
 
 #: src/xfpm-power.c:628 src/xfpm-power.c:672
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Систем ради са напајањем на истеку. Сачувајте свој рад да би избегли губитак података"
+msgstr ""
+"Систем ради са напајањем на истеку. Сачувајте свој рад да би избегли губитак"
+" података"
 
 #: src/xfpm-power.c:718
 msgid "_Cancel"
@@ -719,12 +749,14 @@ msgstr "Систем ради са напајањем на истеку"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "Пуњење %s је ниско\nпроцењено преостало време је %s"
+msgstr ""
+"Пуњење %s је ниско\n"
+"процењено преостало време је %s"
 
 #: src/xfpm-power.c:1648 src/xfpm-power.c:1696 src/xfpm-power.c:1728
 #: src/xfpm-power.c:1758
 msgid "Permission denied"
-msgstr "Дозвола је одбијена"
+msgstr "Приступ одбијен"
 
 #: src/xfpm-power.c:1737 src/xfpm-power.c:1767
 msgid "Suspend not supported"
@@ -751,7 +783,9 @@ msgstr "%s се пуни"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr "%s (%i%%)\n%s до потпуне попуне"
+msgstr ""
+"%s (%i%%)\n"
+"%s до потпуне попуне"
 
 #: src/xfpm-battery.c:130 src/xfpm-battery.c:166
 #, c-format
@@ -768,7 +802,9 @@ msgstr "Систем ради на %s снаге"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr "%s (%i%%)\nПредвиђено преостало време је %s"
+msgstr ""
+"%s (%i%%)\n"
+"Предвиђено преостало време је %s"
 
 #: src/xfpm-battery.c:148 src/xfpm-battery.c:169
 #, c-format
@@ -792,7 +828,14 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nУправник потрошње за Иксфце4 %s\nДео пројекта Иксфце добара\nhttp://goodies.xfce.org\n\nОбјавњен под лиценцом ГНУ ОЈЛ.\n\n"
+msgstr ""
+"\n"
+"Управник потрошње за Иксфце4 %s\n"
+"Део пројекта Иксфце добара\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Објавњен под лиценцом ГНУ ОЈЛ.\n"
+"\n"
 
 #: src/xfpm-main.c:112
 msgid "With policykit support\n"
@@ -816,7 +859,7 @@ msgstr "Могу у обуставу"
 
 #: src/xfpm-main.c:136
 msgid "Can hibernate"
-msgstr "Могу у замрзнутост"
+msgstr "Могу у мировање"
 
 #: src/xfpm-main.c:138
 msgid "Authorized to suspend"
@@ -824,7 +867,7 @@ msgstr "Овлашћен за обуставу"
 
 #: src/xfpm-main.c:140
 msgid "Authorized to hibernate"
-msgstr "Овлашћен за замрзавање"
+msgstr "Овлашћен за неактивност"
 
 #: src/xfpm-main.c:142
 msgid "Authorized to shutdown"
@@ -872,7 +915,7 @@ msgstr "Поново покрени све текуће примерке Икс�
 
 #: src/xfpm-main.c:279
 msgid "Show the configuration dialog"
-msgstr "Прикажи прозорче подешавања"
+msgstr "Прикажи дијалог подешавања"
 
 #: src/xfpm-main.c:280
 msgid "Quit any running xfce power manager"
@@ -885,12 +928,12 @@ msgstr "Подаци о издању"
 #: src/xfpm-main.c:300
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr "Нисам успео да расчланим аргумент: %s\n"
+msgstr "Нисам успео да рашчланим аргумент:%s\n"
 
 #: src/xfpm-main.c:329
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Упишите „%s --help“ за употребу."
+msgstr "Упишите „%s --help“ за коришћење."
 
 #: src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
@@ -920,7 +963,9 @@ msgstr "Неважећи колачић"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr "Ни један од алата за закључавање екрана није успешно покренут, па екран неће бити закључан."
+msgstr ""
+"Ни један од алата за закључавање екрана није успешно покренут, па екран неће"
+" бити закључан."
 
 #: src/xfce4-power-manager.desktop.in:4
 msgid "Power management for the Xfce desktop"
@@ -1034,7 +1079,10 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Управник потрошње Иксфце-а управља потрошачима на рачунару и уређајима којима може да се управља ради штедње (као што су ступањ осветљења ЛЦД-а, успављивање екрана, подешавање учесталости процесора)."
+msgstr ""
+"Управник потрошње Иксфце-а управља потрошачима на рачунару и уређајима "
+"којима може да се управља ради штедње (као што су ступањ осветљења ЛЦД-а, "
+"успављивање екрана, подешавање учесталости процесора)."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:16
 msgid ""
@@ -1044,11 +1092,19 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Управник потрошње ИксФЦЕ-а има додатке сагласне са сучељима Д-сабирнице ради обавештавања других програма о тренутном ступњу напајања да би они смањили своју потрошњу, и омогућава сучеље које другим програмима омогућава да спрече радње самосталног успављивања преко управника потрошње; на пример,  управник пакета система би требао да користи ово сучеље при извршавању радњи надоградње."
+msgstr ""
+"Управник потрошње ИксФЦЕ-а има додатке сагласне са сучељима Д-сабирнице ради"
+" обавештавања других програма о тренутном ступњу напајања да би они смањили "
+"своју потрошњу, и омогућава сучеље које другим програмима омогућава да "
+"спрече радње самосталног успављивања преко управника потрошње; на пример,  "
+"управник пакета система би требао да користи ово сучеље при извршавању радњи"
+" надоградње."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Управник потрошње Иксфце-а такође има прикључак за полице Иксфце-а и Ликсде-а за управљање ступњем осветљења и надзором батерије и пуњења."
+msgstr ""
+"Управник потрошње Иксфце-а такође има прикључак за полице Иксфце-а и "
+"Ликсде-а за управљање ступњем осветљења и надзором батерије и пуњења."
