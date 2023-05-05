@@ -1,22 +1,25 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-power-manager.master package.
+# This file is distributed under the same license as the xfce4-power-manager.xfce-4-18 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Anders Jonsson <transifex@norsjovallen.se>, 2021
-# Arve Eriksson <031299870@telia.com>, 2017
-# Daniel Nylander <po@danielnylander.se>, 2008-2009
-# Fredrik Nyqvist <fredrik@nyqvist.biz>, 2015
-# Luna Jernberg <bittin@cafe8bitar.se>, 2020-2021
-# Påvel Nicklasson <pavel2@frimix.se>, 2014-2015
+# Erik Lundin, 2023
+# Arve Eriksson <031299870@telia.com>, 2023
+# Nick Schermer <nick@xfce.org>, 2023
+# Xfce Bot <transifex@xfce.org>, 2023
+# Påvel Nicklasson <pavel2@frimix.se>, 2023
+# Luna Jernberg <bittin@cafe8bitar.se>, 2023
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-power-manager\n"
+"Project-Id-Version: xfce4-power-manager.xfce-4-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-05 10:44+0200\n"
-"PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Anders Jonsson <transifex@norsjovallen.se>, 2021\n"
-"Language-Team: Swedish (http://app.transifex.com/xfce/xfce4-power-manager/language/sv/)\n"
+"POT-Creation-Date: 2023-05-05 10:51+0200\n"
+"PO-Revision-Date: 2023-02-20 11:54+0000\n"
+"Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>, 2023\n"
+"Language-Team: Swedish (https://app.transifex.com/xfce/teams/16840/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -63,7 +66,7 @@ msgstr "_Hjälp"
 #: data/interfaces/xfpm-settings.ui:280
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Close"
-msgstr "S_täng"
+msgstr "_Stäng"
 
 #: data/interfaces/xfpm-settings.ui:342
 msgid "When power button is pressed:"
@@ -177,7 +180,8 @@ msgstr "<b>Skärmenergihantering</b>"
 #: data/interfaces/xfpm-settings.ui:1279
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr "Låt strömhanteraren handha skärmenergihantering (DPMS) istället för X11."
+msgstr ""
+"Låt strömhanteraren handha skärmenergihantering (DPMS) istället för X11."
 
 #: data/interfaces/xfpm-settings.ui:1312 data/interfaces/xfpm-settings.ui:1669
 msgid "Blank after"
@@ -205,7 +209,7 @@ msgstr "<b>Reduktion av ljusstyrka</b>"
 
 #: data/interfaces/xfpm-settings.ui:1945
 msgid "Display"
-msgstr "Skärm"
+msgstr "Bildskärm"
 
 #: data/interfaces/xfpm-settings.ui:1984
 msgid "Automatically lock the session:"
@@ -454,17 +458,19 @@ msgstr "Strömhanterare för Xfce4 är inte igång. Vill du starta den nu?"
 
 #: settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Misslyckades med att läsa in konfiguration för strömhantering, använder standardvärden"
+msgstr ""
+"Misslyckades med att läsa in konfiguration för strömhantering, använder "
+"standardvärden"
 
 #: settings/xfpm-settings-app.c:356
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr "Detta är %s version %s, som körs på Xfce %s.\n"
+msgstr "Detta är %s version %s, som körs i Xfce %s.\n"
 
 #: settings/xfpm-settings-app.c:358
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr "Byggd med GTK+ %d.%d.%d, länkad till GTK+ %d.%d.%d."
+msgstr "Byggt med GTK+ %d.%d.%d, länkat med GTK+ %d.%d,%d"
 
 #: settings/xfce4-power-manager-settings.desktop.in:6
 msgid "Settings for the Xfce Power Manager"
@@ -474,11 +480,18 @@ msgstr "Inställningar för Strömhanterare för Xfce"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr "inställningar; inställningar; knappar; sömn; viloläge; batteri; vila; avstängning; ljusstyrka; laptoplock; låsskärm; inkopplad; sparar; kritisk;"
+msgstr ""
+"inställningar; inställningar; knappar; sömn; viloläge; batteri; vila; "
+"avstängning; ljusstyrka; laptoplock; låsskärm; inkopplad; sparar; kritisk;"
 
 #: common/xfpm-common.c:120
 msgid "translator-credits"
-msgstr "Daniel Nylander <po@danielnylander.se>\n\nSkicka synpunkter på översättningen till\n<tp-sv@listor.tp-sv.se>"
+msgstr ""
+"Daniel Nylander <po@danielnylander.se>\n"
+"Påvel Nicklasson <pavel@frimix.se>\n"
+"\n"
+"Skicka synpunkter på översättningen till\n"
+"<tp-sv@listor.tp-sv.se>."
 
 #: common/xfpm-power-common.c:45 common/xfpm-power-common.c:68
 msgid "Battery"
@@ -502,7 +515,7 @@ msgstr "Tangentbord"
 
 #: common/xfpm-power-common.c:55
 msgid "Monitor"
-msgstr "Skärm"
+msgstr "Monitor"
 
 #: common/xfpm-power-common.c:57
 msgid "PDA"
@@ -585,63 +598,81 @@ msgstr[1] "timmar"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr "<b>%s%s</b>\nFulladdat - %s återstående"
+msgstr ""
+"<b>%s%s</b>\n"
+"Fulladdat - %s återstående"
 
 #: common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr "<b>%s%s</b>\nFulladdat"
+msgstr ""
+"<b>%s%s</b>\n"
+"Fulladdat"
 
 #: common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr "<b>%s%s</b>\n%0.0f%% -%s tills fulladdat"
+msgstr ""
+"<b>%s%s</b>\n"
+"%0.0f%% -%s tills fulladdat"
 
 #: common/xfpm-power-common.c:363 common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr "<b>%s%s</b>\n%0.0f%%"
+msgstr ""
+"<b>%s%s</b>\n"
+"%0.0f%%"
 
 #: common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr "<b>%s%s</b>\n%0.0f%% -%s återstående"
+msgstr ""
+"<b>%s%s</b>\n"
+"%0.0f%% -%s återstående"
 
 #: common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nVäntar på att ladda ur (%0.0f%%)"
+msgstr ""
+"<b>%s %s</b>\n"
+"Väntar på att ladda ur (%0.0f%%)"
 
 #: common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nVäntar på att ladda (%0.0f%%)"
+msgstr ""
+"<b>%s %s</b>\n"
+"Väntar på att ladda (%0.0f%%)"
 
 #: common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\när tomt"
+msgstr ""
+"<b>%s %s</b>\n"
+"är tomt"
 
 #: common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr "<b>%s%s</b>\nNuvarande laddning: %0.0f%%"
+msgstr ""
+"<b>%s%s</b>\n"
+"Nuvarande laddning: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -650,7 +681,9 @@ msgstr "<b>%s%s</b>\nNuvarande laddning: %0.0f%%"
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr "<b>%s %s</b>\n%s"
+msgstr ""
+"<b>%s %s</b>\n"
+"%s"
 
 #: common/xfpm-power-common.c:416
 msgid "Not plugged in"
@@ -669,19 +702,25 @@ msgstr "<b>%s %s</b>"
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr "<b>%s %s</b>\nTillstånd okänt"
+msgstr ""
+"<b>%s %s</b>\n"
+"Tillstånd okänt"
 
 #: src/xfpm-power.c:383
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Ett program inaktiverar för närvarande automatiskt vänteläge. Att utföra denna åtgärd nu kan skada körningen av detta program.\nÄr du säker på att du vill försätta systemet i viloläge?"
+msgstr ""
+"Ett program inaktiverar för närvarande automatiskt vänteläge. Att utföra denna åtgärd nu kan skada körningen av detta program.\n"
+"Är du säker på att du vill försätta systemet i viloläge?"
 
 #: src/xfpm-power.c:432
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Inget av skärmlåsverktygen kördes framgångsrikt, skärmen kommer inte låsas.\nVill du ändå fortsätta med att avbryta systemet?"
+msgstr ""
+"Inget av skärmlåsverktygen kördes framgångsrikt, skärmen kommer inte låsas.\n"
+"Vill du ändå fortsätta med att avbryta systemet?"
 
 #: src/xfpm-power.c:597
 msgid "Hibernate the system"
@@ -697,7 +736,9 @@ msgstr "Stäng av systemet"
 
 #: src/xfpm-power.c:628 src/xfpm-power.c:672
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Systemet börjar få slut på ström. Spara ditt arbete för att förhindra att data förloras"
+msgstr ""
+"Systemet börjar få slut på ström. Spara ditt arbete för att förhindra att "
+"data förloras"
 
 #: src/xfpm-power.c:718
 msgid "_Cancel"
@@ -712,12 +753,14 @@ msgstr "Systemet kör på låg strömnivå"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "Din %s batterinivå är låg\nUngefärlig tid kvar %s"
+msgstr ""
+"Laddningsnivån i ditt %s är låg\n"
+"Ungefärlig tid kvar %s"
 
 #: src/xfpm-power.c:1648 src/xfpm-power.c:1696 src/xfpm-power.c:1728
 #: src/xfpm-power.c:1758
 msgid "Permission denied"
-msgstr "Åtkomst nekas"
+msgstr "Tillstånd nekades"
 
 #: src/xfpm-power.c:1737 src/xfpm-power.c:1767
 msgid "Suspend not supported"
@@ -732,7 +775,7 @@ msgstr "Ljusstyrka: %.0f procent"
 #: src/xfpm-battery.c:109 src/xfpm-battery.c:160
 #, c-format
 msgid "Your %s is fully charged"
-msgstr "Ditt %s är fullständigt uppladdat"
+msgstr "Din %s är fulladdad"
 
 #: src/xfpm-battery.c:112 src/xfpm-battery.c:163
 #, c-format
@@ -744,7 +787,9 @@ msgstr "Ditt %s laddas upp"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr "%s (%i%%)\n%s tills fulladdat"
+msgstr ""
+"%s (%i%%)\n"
+"%s tills fulladdat"
 
 #: src/xfpm-battery.c:130 src/xfpm-battery.c:166
 #, c-format
@@ -761,7 +806,9 @@ msgstr "Systemet kör på %s-ström"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr "%s (%i%%)\nUppskattad återstående tid är %s"
+msgstr ""
+"%s (%i%%)\n"
+"Uppskattad återstående tid är %s"
 
 #: src/xfpm-battery.c:148 src/xfpm-battery.c:169
 #, c-format
@@ -785,7 +832,15 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nStrömhanterare för Xfce %s\n\nEn del av Xfce Goodies-projektet\nhttp://goodies.xfce.org\n\nLicensierad under GNU GPL.\n\n"
+msgstr ""
+"\n"
+"Strömhanterare för Xfce %s\n"
+"\n"
+"En del av Xfce Goodies-projektet\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Licensierad under GNU GPL.\n"
+"\n"
 
 #: src/xfpm-main.c:112
 msgid "With policykit support\n"
@@ -878,7 +933,7 @@ msgstr "Versionsinformation"
 #: src/xfpm-main.c:300
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr "Misslyckades med att analysera argument: %s\n"
+msgstr "Misslyckades med att tolka argument: %s\n"
 
 #: src/xfpm-main.c:329
 #, c-format
@@ -913,7 +968,8 @@ msgstr "Ogiltig kaka"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr "Inget av skärmlåsverktygen kördes framgångsrikt, skärmen kommer inte låsas."
+msgstr ""
+"Inget av skärmlåsverktygen kördes framgångsrikt, skärmen kommer inte låsas."
 
 #: src/xfce4-power-manager.desktop.in:4
 msgid "Power management for the Xfce desktop"
@@ -1012,7 +1068,8 @@ msgstr "Tillägg för strömhantering"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr "Visa batterinivåer för dina enheter och kontrollera skärmens ljusstyrka"
+msgstr ""
+"Visa batterinivåer för dina enheter och kontrollera skärmens ljusstyrka"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:7
 msgid "Xfce power manager"
@@ -1027,7 +1084,10 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Xfce strömhanterare handhar datorns kraftkällor och enheterna som kan kontrolleras för att reducera deras konsumtion av ström (som till exempel LCD-ljusnivå, skärmsömn, CPU-frekvensskalning)."
+msgstr ""
+"Xfce strömhanterare handhar datorns kraftkällor och enheterna som kan "
+"kontrolleras för att reducera deras konsumtion av ström (som till exempel "
+"LCD-ljusnivå, skärmsömn, CPU-frekvensskalning)."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:16
 msgid ""
@@ -1037,11 +1097,21 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Utöver det, tillhandahåller Xfce-strömhanteraren en uppsättning freedesktop-compliant DBus-gränssnitt för att informera andra program om aktuell energinivå så att de kan justera sin energikonsumtion, och den tillhandahåller spärrgränssnitt som tillåter program att förhindra automatiska vilolägesåtgärder via energisparhanteraren; som ett exempel, bör operativsystemets pakethanterare utnyttja detta gränssnitt medan det utför uppdateringsoperationer."
+msgstr ""
+"Utöver det, tillhandahåller Xfce-strömhanteraren en uppsättning freedesktop-"
+"compliant DBus-gränssnitt för att informera andra program om aktuell "
+"energinivå så att de kan justera sin energikonsumtion, och den "
+"tillhandahåller spärrgränssnitt som tillåter program att förhindra "
+"automatiska vilolägesåtgärder via energisparhanteraren; som ett exempel, bör"
+" operativsystemets pakethanterare utnyttja detta gränssnitt medan det utför "
+"uppdateringsoperationer."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Xfce-strömhanteraren tillhandahåller också tillägg för Xfce- och LXDE-paneler för att kontrollera LCD-ljusstyrka och övervaka batteri och enheters laddningsnivåer."
+msgstr ""
+"Xfce-strömhanteraren tillhandahåller också tillägg för Xfce- och LXDE-"
+"paneler för att kontrollera LCD-ljusstyrka och övervaka batteri och enheters"
+" laddningsnivåer."
