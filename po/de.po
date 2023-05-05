@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:48+0200\n"
+"POT-Creation-Date: 2023-05-05 10:44+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Andreas Eitel <github-aneitel@online.de>, 2019-2021,2023\n"
 "Language-Team: German (http://app.transifex.com/xfce/xfce4-power-manager/language/de/)\n"
@@ -477,12 +477,6 @@ msgstr "Erstellt mit GTK+ %d.%d.%d, verknüpft mit GTK+ %d.%d.%d."
 msgid "Settings for the Xfce Power Manager"
 msgstr "Einstellungen für die Xfce-Energieverwaltung"
 
-#: settings/xfce4-power-manager-settings.desktop.in:8
-#: src/xfce4-power-manager.desktop.in:5
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:6
-msgid "org.xfce.powermanager"
-msgstr "org.xfce.powermanager"
-
 #: settings/xfce4-power-manager-settings.desktop.in:12
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
@@ -931,6 +925,29 @@ msgstr "Keines der Programme zum Sperren des Bildschirms lief erfolgreich, der B
 #: src/xfce4-power-manager.desktop.in:4
 msgid "Power management for the Xfce desktop"
 msgstr "Energieverwaltung für die Xfce-Arbeitsumgebung"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to change the backlight brightness.
+#: src/org.xfce.power.policy.in.in:21
+msgid "Modify the laptop display brightness"
+msgstr "Ändern der Helligkeit des Laptop-Bildschirms"
+
+#: src/org.xfce.power.policy.in.in:22
+msgid "Authentication is required to modify the laptop display brightness"
+msgstr "Um die Helligkeit des Laptop-Bildschirms zu ändern, ist eine Authentifizierung erforderlich."
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: src/org.xfce.power.policy.in.in:36
+msgid "Suspend or hibernate the system"
+msgstr "Das System in Bereitschaft oder in den Ruhezustand versetzen"
+
+#: src/org.xfce.power.policy.in.in:37
+msgid ""
+"Authentication is required to place the system in suspend or hibernate mode"
+msgstr "Um das System in Bereitschaft oder in den Ruhezustand zu versetzen, ist eine Authentifizierung erforderlich."
 
 #. Odds are this is a desktop without any batteries attached
 #: panel-plugins/power-manager-plugin/power-manager-button.c:294
