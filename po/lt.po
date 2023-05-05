@@ -1,19 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-power-manager.master package.
+# This file is distributed under the same license as the xfce4-power-manager.xfce-4-18 package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Algimantas Margevičius <margevicius.algimantas@gmail.com>, 2012
-# Moo, 2015-2022
+# Nick Schermer <nick@xfce.org>, 2023
+# Xfce Bot <transifex@xfce.org>, 2023
 # Moo, 2023
+# 
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Xfce4-power-manager\n"
+"Project-Id-Version: xfce4-power-manager.xfce-4-18\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-05 10:44+0200\n"
-"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"POT-Creation-Date: 2023-05-05 10:51+0200\n"
+"PO-Revision-Date: 2023-02-20 11:54+0000\n"
 "Last-Translator: Moo, 2023\n"
-"Language-Team: Lithuanian (http://app.transifex.com/xfce/xfce4-power-manager/language/lt/)\n"
+"Language-Team: Lithuanian (https://app.transifex.com/xfce/teams/16840/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -40,7 +43,7 @@ msgstr "Kai yra išjungiama ekrano užsklanda"
 #: data/interfaces/xfpm-settings.ui:195 data/interfaces/xfpm-settings.ui:206
 #: data/interfaces/xfpm-settings.ui:217 data/interfaces/xfpm-settings.ui:228
 msgid "Nothing"
-msgstr "Jokio"
+msgstr "Joks"
 
 #: data/interfaces/xfpm-settings.ui:250
 #: settings/xfce4-power-manager-settings.desktop.in:4
@@ -55,7 +58,7 @@ msgstr "Maitinimo tvarkytuvė"
 #: data/interfaces/xfpm-settings.ui:265
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:160
 msgid "_Help"
-msgstr "_Žinynas"
+msgstr "Ž_inynas"
 
 #: data/interfaces/xfpm-settings.ui:280
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
@@ -174,7 +177,9 @@ msgstr "<b>Ekrano maitinimo valdymas</b>"
 #: data/interfaces/xfpm-settings.ui:1279
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr "Leisti maitinimo tvarkytuvei, vietoj X11, tvarkyti ekrano maitinimo valdymą (DPMS)"
+msgstr ""
+"Leisti maitinimo tvarkytuvei, vietoj X11, tvarkyti ekrano maitinimo valdymą "
+"(DPMS)"
 
 #: data/interfaces/xfpm-settings.ui:1312 data/interfaces/xfpm-settings.ui:1669
 msgid "Blank after"
@@ -453,12 +458,14 @@ msgstr "Xfce4 maitinimo tvarkytuvė neveikia, ar norite ją paleisti dabar?"
 
 #: settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Nepavyko įkelti maitinimo tvarkytuvės konfigūracijos, naudojami numatytieji nustatymai"
+msgstr ""
+"Nepavyko įkelti maitinimo tvarkytuvės konfigūracijos, naudojami numatytieji "
+"nustatymai"
 
 #: settings/xfpm-settings-app.c:356
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr "Tai yra %s versija %s, veikia Xfce %s.\n"
+msgstr "Tai yra %s versija %s, veikia Xfce %s dėka.\n"
 
 #: settings/xfpm-settings-app.c:358
 #, c-format
@@ -473,11 +480,17 @@ msgstr "Xfce maitinimo tvarkytuvės nustatymai"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr "nustatymai;nuostatos;mygtukai;pristabdyti;užmigdyti;uzmigdyti;baterija;akumuliatorius;miegas;išjungti;isjungti;ryškumas;ryskumas;nešiojamojo kompiuterio dangtis;nesiojamojo kompiuterio dangtis;užrakinti ekraną;uzrakinti ekrana;prijungtas;taupymas;kritinis;"
+msgstr ""
+"nustatymai;nuostatos;mygtukai;pristabdyti;užmigdyti;uzmigdyti;baterija;akumuliatorius;miegas;išjungti;isjungti;ryškumas;ryskumas;nešiojamojo"
+" kompiuterio dangtis;nesiojamojo kompiuterio dangtis;užrakinti "
+"ekraną;uzrakinti ekrana;prijungtas;taupymas;kritinis;"
 
 #: common/xfpm-common.c:120
 msgid "translator-credits"
-msgstr "Algimantas Margevičius <margevicius.algimantas@gmail.com>\nMoo"
+msgstr ""
+"Mantas Zapolskas <mantaz@users.sf.net>\n"
+"Algimantas Margevičius <margevicius.algimantas@gmail.com>\n"
+"Moo"
 
 #: common/xfpm-power-common.c:45 common/xfpm-power-common.c:68
 msgid "Battery"
@@ -501,7 +514,7 @@ msgstr "Klaviatūra"
 
 #: common/xfpm-power-common.c:55
 msgid "Monitor"
-msgstr "Prižiūryklė"
+msgstr "Monitorius"
 
 #: common/xfpm-power-common.c:57
 msgid "PDA"
@@ -590,63 +603,81 @@ msgstr[3] "valandų"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr "<b>%s %s</b>\nPilnai įkrautas - liko %s"
+msgstr ""
+"<b>%s %s</b>\n"
+"Pilnai įkrautas - liko %s"
 
 #: common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr "<b>%s %s</b>\nPilnai įkrautas"
+msgstr ""
+"<b>%s %s</b>\n"
+"Pilnai įkrautas"
 
 #: common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr "<b>%s %s</b>\n%0.0f%% - %s iki pilno"
+msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s iki pilno"
 
 #: common/xfpm-power-common.c:363 common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr "<b>%s %s</b>\n%0.0f%%"
+msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%%"
 
 #: common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr "<b>%s %s</b>\n%0.0f%% - liko %s"
+msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%% - liko %s"
 
 #: common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nLaukiama, kol išsikraus (%0.0f%%)"
+msgstr ""
+"<b>%s %s</b>\n"
+"Laukiama, kol išsikraus (%0.0f%%)"
 
 #: common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nLaukiama, kol bus įkrautas (%0.0f%%)"
+msgstr ""
+"<b>%s %s</b>\n"
+"Laukiama, kol bus įkrautas (%0.0f%%)"
 
 #: common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr "<b>%s %s</b>\nyra tuščia"
+msgstr ""
+"<b>%s %s</b>\n"
+"yra tuščia"
 
 #: common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr "<b>%s %s</b>\nDabartinė įkrova: %0.0f%%"
+msgstr ""
+"<b>%s %s</b>\n"
+"Dabartinė įkrova: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -655,7 +686,9 @@ msgstr "<b>%s %s</b>\nDabartinė įkrova: %0.0f%%"
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr "<b>%s %s</b>\n%s"
+msgstr ""
+"<b>%s %s</b>\n"
+"%s"
 
 #: common/xfpm-power-common.c:416
 msgid "Not plugged in"
@@ -674,19 +707,25 @@ msgstr "<b>%s %s</b>"
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr "<b>%s %s</b>\nNežinoma būsena"
+msgstr ""
+"<b>%s %s</b>\n"
+"Nežinoma būsena"
 
 #: src/xfpm-power.c:383
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Šiuo metu programa išjungia automatinį pristabdymą, darant šį veiksmą dabar, gali būti pažeista darbinė šios programos būsena.\nAr tikrai norite užmigdyti sistemą?"
+msgstr ""
+"Šiuo metu programa išjungia automatinį pristabdymą, darant šį veiksmą dabar, gali būti pažeista darbinė šios programos būsena.\n"
+"Ar tikrai norite užmigdyti sistemą?"
 
 #: src/xfpm-power.c:432
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Nei vienam iš įrankių, nepavyko sėkmingai užrakinti ekrano, ekranas nebus užrakintas.\nAr vis dar norite tęsti sistemos pristabdymą?"
+msgstr ""
+"Nei vienam iš įrankių, nepavyko sėkmingai užrakinti ekrano, ekranas nebus užrakintas.\n"
+"Ar vis dar norite tęsti sistemos pristabdymą?"
 
 #: src/xfpm-power.c:597
 msgid "Hibernate the system"
@@ -702,7 +741,9 @@ msgstr "Išjungti sistemą"
 
 #: src/xfpm-power.c:628 src/xfpm-power.c:672
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Sistemai liko mažai energijos. Įrašykite darbą, nes kitaip galite prarasti duomenis"
+msgstr ""
+"Sistemai liko mažai energijos. Įrašykite darbą, nes kitaip galite prarasti "
+"duomenis"
 
 #: src/xfpm-power.c:718
 msgid "_Cancel"
@@ -717,7 +758,9 @@ msgstr "Sistemai liko mažai energijos"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "Žemas jūsų %s įkrovos lygis\nLiko laiko %s"
+msgstr ""
+"Žemas jūsų %s įkrovos lygis\n"
+"Liko laiko %s"
 
 #: src/xfpm-power.c:1648 src/xfpm-power.c:1696 src/xfpm-power.c:1728
 #: src/xfpm-power.c:1758
@@ -749,7 +792,9 @@ msgstr "%s yra įkraunamas"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr "%s (%i%%)\n%s iki pilno įkrovimo"
+msgstr ""
+"%s (%i%%)\n"
+"%s iki pilno įkrovimo"
 
 #: src/xfpm-battery.c:130 src/xfpm-battery.c:166
 #, c-format
@@ -766,7 +811,9 @@ msgstr "Sistema naudoja maitinimą, kurį teikia %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr "%s (%i%%)\nLiko laiko %s"
+msgstr ""
+"%s (%i%%)\n"
+"Liko laiko %s"
 
 #: src/xfpm-battery.c:148 src/xfpm-battery.c:169
 #, c-format
@@ -790,7 +837,15 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nXfce maitinimo tvarkytuvė %s\n\nXfce Goodies projekto dalis\nhttp://goodies.xfce.org\n\nPlatinama pagal GNU GPL.\n\n"
+msgstr ""
+"\n"
+"Xfce maitinimo tvarkytuvė %s\n"
+"\n"
+"Xfce Goodies projekto dalis\n"
+"http://goodies.xfce.org\n"
+"\n"
+"Platinama pagal GNU GPL.\n"
+"\n"
 
 #: src/xfpm-main.c:112
 msgid "With policykit support\n"
@@ -878,7 +933,7 @@ msgstr "Baigti visų veikiančių Xfce maitinimo tvarkytuvių darbą"
 
 #: src/xfpm-main.c:281
 msgid "Version information"
-msgstr "Versija"
+msgstr "Versijos infomacija"
 
 #: src/xfpm-main.c:300
 #, c-format
@@ -888,7 +943,7 @@ msgstr "Nepavyko apdoroti argumentų: %s\n"
 #: src/xfpm-main.c:329
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Bandykite „%s --help“, jei norite išsamesnės informacijos."
+msgstr "Bandykite „%s –help“, jei norite išsamesnės informacijos."
 
 #: src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
@@ -918,7 +973,9 @@ msgstr "Neteisingas slapukas"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr "Nei vienam iš įrankių, nepavyko sėkmingai užrakinti ekrano, ekranas nebus užrakintas."
+msgstr ""
+"Nei vienam iš įrankių, nepavyko sėkmingai užrakinti ekrano, ekranas nebus "
+"užrakintas."
 
 #: src/xfce4-power-manager.desktop.in:4
 msgid "Power management for the Xfce desktop"
@@ -933,7 +990,8 @@ msgstr "Keisti nešiojamojo kompiuterio ryškumą"
 
 #: src/org.xfce.power.policy.in.in:22
 msgid "Authentication is required to modify the laptop display brightness"
-msgstr "Norint keisti nešiojamojo kompiuterio ryškumą, reikia nustatyti tapatybę"
+msgstr ""
+"Norint keisti nešiojamojo kompiuterio ryškumą, reikia nustatyti tapatybę"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
@@ -1017,7 +1075,8 @@ msgstr "Maitinimo tvarkytuvės įskiepis"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr "Rodyti jūsų įrenginių akumuliatoriaus lygius ir valdyti jūsų ekrano ryškumą"
+msgstr ""
+"Rodyti jūsų įrenginių akumuliatoriaus lygius ir valdyti jūsų ekrano ryškumą"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:7
 msgid "Xfce power manager"
@@ -1032,7 +1091,11 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Xfce maitinimo tvarkytuvė kompiuteryje valdo maitinimo šaltinius bei įrenginius, kurie gali būti valdomi, siekiant sumažinti jų energijos vartojimą (tokius kaip LCD ryškumo lygį, monitoriaus užmigdymą, procesoriaus dažnio keitimą)."
+msgstr ""
+"Xfce maitinimo tvarkytuvė kompiuteryje valdo maitinimo šaltinius bei "
+"įrenginius, kurie gali būti valdomi, siekiant sumažinti jų energijos "
+"vartojimą (tokius kaip LCD ryškumo lygį, monitoriaus užmigdymą, procesoriaus"
+" dažnio keitimą)."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:16
 msgid ""
@@ -1042,11 +1105,20 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Be to, Xfce maitinimo tvarkytuvė parūpina su freedesktop suderinamą DBus sąsajų rinkinį, skirtą informuoti kitas programas apie esamą energijos lygį, suteikiantį programoms galimybę reguliuoti savo energijos vartojimą ir draudimo sąsają, leidžiančią programoms, per maitinimo tvarkytuvę neleisti užmigdymo veiksmų; pavyzdžiui, sistemos paketų tvarkytuvė, atlikdama atnaujinimo operacijas, turėtų pasinaudoti šia sąsaja."
+msgstr ""
+"Be to, Xfce maitinimo tvarkytuvė parūpina su freedesktop suderinamą DBus "
+"sąsajų rinkinį, skirtą informuoti kitas programas apie esamą energijos lygį,"
+" suteikiantį programoms galimybę reguliuoti savo energijos vartojimą ir "
+"draudimo sąsają, leidžiančią programoms, per maitinimo tvarkytuvę neleisti "
+"užmigdymo veiksmų; pavyzdžiui, sistemos paketų tvarkytuvė, atlikdama "
+"atnaujinimo operacijas, turėtų pasinaudoti šia sąsaja."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Xfce maitinimo tvarkytuvė taip pat parūpina įskiepį, kuris skirtas Xfce ir LXDE skydeliams, ir kuris valdo LCD ryškumo lygius bei stebi akumuliatoriaus ir įrenginio įkrovos lygius."
+msgstr ""
+"Xfce maitinimo tvarkytuvė taip pat parūpina įskiepį, kuris skirtas Xfce ir "
+"LXDE skydeliams, ir kuris valdo LCD ryškumo lygius bei stebi akumuliatoriaus"
+" ir įrenginio įkrovos lygius."
