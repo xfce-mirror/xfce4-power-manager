@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:48+0200\n"
+"POT-Creation-Date: 2023-05-05 10:44+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Kiril Kirilov <cybercop_montana@abv.bg>, 2014-2017,2019-2021,2023\n"
 "Language-Team: Bulgarian (http://app.transifex.com/xfce/xfce4-power-manager/language/bg/)\n"
@@ -472,12 +472,6 @@ msgstr "Създадена с GTK+ %d.%d.%d, обвързана с GTK+ %d.%d.%d
 msgid "Settings for the Xfce Power Manager"
 msgstr "Настройки на Управление на захранването на Xfce"
 
-#: settings/xfce4-power-manager-settings.desktop.in:8
-#: src/xfce4-power-manager.desktop.in:5
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:6
-msgid "org.xfce.powermanager"
-msgstr "org.xfce.powermanager"
-
 #: settings/xfce4-power-manager-settings.desktop.in:12
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
@@ -926,6 +920,29 @@ msgstr "Никое от средствата за заключване не бе
 #: src/xfce4-power-manager.desktop.in:4
 msgid "Power management for the Xfce desktop"
 msgstr "Управление на захранването за Xfce среда"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to change the backlight brightness.
+#: src/org.xfce.power.policy.in.in:21
+msgid "Modify the laptop display brightness"
+msgstr "Промяна на яркостта на дисплея на лаптопа"
+
+#: src/org.xfce.power.policy.in.in:22
+msgid "Authentication is required to modify the laptop display brightness"
+msgstr "Изисква се удостоверяване, за да промените яркостта на дисплея на лаптопа"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: src/org.xfce.power.policy.in.in:36
+msgid "Suspend or hibernate the system"
+msgstr "Приспиване или хибернация на системата"
+
+#: src/org.xfce.power.policy.in.in:37
+msgid ""
+"Authentication is required to place the system in suspend or hibernate mode"
+msgstr "Изисква се удостоверяване, за да въведете системата в режим на приспиване или хибернация"
 
 #. Odds are this is a desktop without any batteries attached
 #: panel-plugins/power-manager-plugin/power-manager-button.c:294
