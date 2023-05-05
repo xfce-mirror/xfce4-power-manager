@@ -2264,10 +2264,13 @@ remove_device (const gchar *object_path)
                       COL_SIDEBAR_BATTERY_DEVICE, &device,
                       -1);
 
-  gtk_list_store_remove (list_store, iter);
-
   if (device)
+  {
     g_signal_handler_disconnect (device, signal_id);
+    g_object_unref (device);
+  }
+
+  gtk_list_store_remove (list_store, iter);
 
   /* If there are no devices left, hide the devices tab */
   if(!gtk_tree_model_get_iter_first (GTK_TREE_MODEL(list_store), iter))
@@ -2468,7 +2471,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                                    CAIRO_GOBJECT_TYPE_SURFACE, /* COL_SIDEBAR_ICON */
                                    G_TYPE_STRING,   /* COL_SIDEBAR_NAME */
                                    G_TYPE_INT,      /* COL_SIDEBAR_INT */
-                                   G_TYPE_POINTER,  /* COL_SIDEBAR_BATTERY_DEVICE */
+                                   G_TYPE_OBJECT,   /* COL_SIDEBAR_BATTERY_DEVICE */
                                    G_TYPE_STRING,   /* COL_SIDEBAR_OBJECT_PATH */
                                    G_TYPE_ULONG,    /* COL_SIDEBAR_SIGNAL_ID */
                                    G_TYPE_POINTER   /* COL_SIDEBAR_VIEW */
