@@ -155,6 +155,9 @@ xfpm_dpms_refresh (XfpmDpms *dpms)
   guint16 sleep_timeout;
   gboolean sleep_mode;
 
+  if (!dpms->priv->dpms_capable)
+    return;
+
   if ( dpms->priv->inhibited)
   {
     xfpm_dpms_disable (dpms);
@@ -241,7 +244,8 @@ xfpm_dpms_finalize(GObject *object)
 
   dpms = XFPM_DPMS (object);
 
-  g_object_unref (dpms->priv->conf);
+  if (dpms->priv->conf != NULL)
+    g_object_unref (dpms->priv->conf);
 
   G_OBJECT_CLASS(xfpm_dpms_parent_class)->finalize(object);
 }
