@@ -494,7 +494,6 @@ gpm_alarm_expired_cb (EggIdletime *idletime, guint alarm, gpointer data)
 {
   last_alarm = alarm;
   event_time = g_timer_elapsed (timer, NULL) * (gfloat) 1000.0f;
-//  g_print ("[evt %i in %ims]\n", alarm, event_time);
 }
 
 static void
