@@ -404,7 +404,8 @@ int main (int argc, char **argv)
     if (!xfpm_dbus_name_has_owner (bus, "org.xfce.PowerManager") &&
         !xfpm_dbus_name_has_owner (bus, "org.freedesktop.PowerManagement"))
     {
-      g_print ("Xfce power manager is not running\n");
+      g_print (_("Xfce power manager is not running"));
+      g_print ("\n");
       xfpm_start (bus, client_id, dump);
     }
 

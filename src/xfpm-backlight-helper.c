@@ -267,7 +267,7 @@ main (gint argc, gchar *argv[])
   /* no input */
   if (set_brightness == -1 && !get_brightness && !get_max_brightness &&
       set_brightness_switch == -1 && !get_brightness_switch) {
-    g_print ("No valid option was specifiedi\n");
+    g_printerr ("No valid option was specified\n");
     retval = EXIT_CODE_ARGUMENTS_INVALID;
     goto out;
   }
@@ -280,11 +280,16 @@ main (gint argc, gchar *argv[])
     if (get_brightness_switch) {
       ret = backlight_helper_get_switch (device);
       /* just print result to stdout */
-      g_print ("%d", ret);
       if (ret == -1)
+      {
+        g_printerr ("%d", ret);
         retval = EXIT_CODE_FAILED;
+      }
       else
+      {
+        g_print ("%d", ret);
         retval = EXIT_CODE_SUCCESS;
+      }
       goto out;
     }
 
@@ -292,11 +297,16 @@ main (gint argc, gchar *argv[])
     if (get_brightness) {
       ret = backlight_helper_get_brightness (device);
       /* just print result to stdout */
-      g_print ("%d", ret);
       if (ret == -1)
+      {
+        g_printerr ("%d", ret);
         retval = EXIT_CODE_FAILED;
+      }
       else
+      {
+        g_print ("%d", ret);
         retval = EXIT_CODE_SUCCESS;
+      }
       goto out;
     }
 
@@ -311,7 +321,7 @@ main (gint argc, gchar *argv[])
         goto out;
       }
       else {
-        g_print ("Could not get the maximum value of the backlight\n");
+        g_printerr ("Could not get the maximum value of the backlight\n");
         retval = EXIT_CODE_FAILED;
         goto out;
       }
@@ -321,7 +331,7 @@ main (gint argc, gchar *argv[])
     uid = getuid ();
     euid = geteuid ();
     if (uid != 0 || euid != 0) {
-      g_print ("This program can only be used by the root user\n");
+      g_printerr ("This program can only be used by the root user\n");
       retval = EXIT_CODE_ARGUMENTS_INVALID;
       goto out;
     }
@@ -329,7 +339,7 @@ main (gint argc, gchar *argv[])
     /* check we're not being spoofed */
     pkexec_uid_str = g_getenv ("PKEXEC_UID");
     if (pkexec_uid_str == NULL) {
-      g_print ("This program must only be run through pkexec\n");
+      g_printerr ("This program must only be run through pkexec\n");
       retval = EXIT_CODE_INVALID_USER;
       goto out;
     }
@@ -341,7 +351,7 @@ main (gint argc, gchar *argv[])
         goto out;
       }
       else {
-        g_print ("Could not set the value of the backlight\n");
+        g_printerr ("Could not set the value of the backlight\n");
         retval = EXIT_CODE_FAILED;
         goto out;
       }
@@ -354,7 +364,7 @@ main (gint argc, gchar *argv[])
         goto out;
       }
       else {
-        g_print ("Could not set the value of the brightness switch\n");
+        g_printerr ("Could not set the value of the brightness switch\n");
         retval = EXIT_CODE_FAILED;
         goto out;
       }
@@ -586,7 +596,7 @@ main (gint argc, gchar *argv[])
   if (set_brightness_switch != -1 || get_brightness_switch) {
     ret = g_file_test (BRIGHTNESS_SWITCH_LOCATION, G_FILE_TEST_EXISTS);
     if (!ret) {
-      g_print ("Video brightness switch setting not available.\n");
+      g_printerr ("Video brightness switch setting not available.\n");
       retval = EXIT_CODE_NO_BRIGHTNESS_SWITCH;
       goto out;
     }
@@ -605,7 +615,7 @@ main (gint argc, gchar *argv[])
     if (!ret) {
       if (error)
       {
-        g_print ("Could not get the value of the brightness switch: %s\n", error->message);
+        g_printerr ("Could not get the value of the brightness switch: %s\n", error->message);
         g_error_free (error);
       }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
@@ -625,7 +635,7 @@ main (gint argc, gchar *argv[])
     if (!ret) {
       if (error)
       {
-        g_print ("Could not get the value of the backlight: %s\n", error->message);
+        g_printerr ("Could not get the value of the backlight: %s\n", error->message);
         g_error_free (error);
       }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
@@ -645,7 +655,7 @@ main (gint argc, gchar *argv[])
     if (!ret) {
       if (error)
       {
-        g_print ("Could not get the maximum value of the backlight: %s\n", error->message);
+        g_printerr ("Could not get the maximum value of the backlight: %s\n", error->message);
         g_error_free (error);
       }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
@@ -682,7 +692,7 @@ main (gint argc, gchar *argv[])
     if (!ret) {
       if (error)
       {
-        g_print ("Could not set the value of the backlight: %s\n", error->message);
+        g_printerr ("Could not set the value of the backlight: %s\n", error->message);
         g_error_free (error);
       }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
@@ -699,7 +709,7 @@ main (gint argc, gchar *argv[])
     if (!ret) {
       if (error)
       {
-        g_print ("Could not set the value of the brightness switch: %s\n", error->message);
+        g_printerr ("Could not set the value of the brightness switch: %s\n", error->message);
         g_error_free (error);
       }
       retval = EXIT_CODE_ARGUMENTS_INVALID;
