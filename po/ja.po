@@ -1,24 +1,20 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-power-manager.xfce-4-18 package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This file is distributed under the same license as the xfce4-power-manager.master package.
 # 
 # Translators:
-# Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2023
-# Nick Schermer <nick@xfce.org>, 2023
-# Xfce Bot <transifex@xfce.org>, 2023
-# Masato HASHIMOTO <cabezon.hashimoto@gmail.com>, 2023
-# UTUMI Hirosi <utuhiro78@yahoo.co.jp>, 2023
-# 
-#, fuzzy
+# Masato HASHIMOTO <cabezon.hashimoto@gmail.com>, 2017
+# Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2015-2016
+# Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2017-2020,2023
+# UTUMI Hirosi <utuhiro78@yahoo.co.jp>, 2020-2021,2023
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager.xfce-4-18\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-05 10:51+0200\n"
-"PO-Revision-Date: 2023-02-20 11:54+0000\n"
-"Last-Translator: UTUMI Hirosi <utuhiro78@yahoo.co.jp>, 2023\n"
-"Language-Team: Japanese (https://app.transifex.com/xfce/teams/16840/ja/)\n"
+"POT-Creation-Date: 2023-05-05 10:44+0200\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2017-2020,2023\n"
+"Language-Team: Japanese (http://app.transifex.com/xfce/xfce4-power-manager/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -207,7 +203,7 @@ msgstr "<b>輝度低下</b>"
 
 #: data/interfaces/xfpm-settings.ui:1945
 msgid "Display"
-msgstr "表示"
+msgstr "ディスプレイ"
 
 #: data/interfaces/xfpm-settings.ui:1984
 msgid "Automatically lock the session:"
@@ -451,7 +447,7 @@ msgstr "Xfce 電源管理への接続に失敗しました"
 
 #: settings/xfpm-settings-app.c:190
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce4 電源管理は動作していません。今起動しますか？"
+msgstr "Xfce4 電源管理は動作していません。今起動しますか?"
 
 #: settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
@@ -460,12 +456,12 @@ msgstr "電源管理設定の読み込みに失敗しました。デフォルト
 #: settings/xfpm-settings-app.c:356
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr "%s バージョン %s, Xfce %s で実行されています。\n"
+msgstr "これは %s バージョン %s です。Xfce %s 上で動作しています。\n"
 
 #: settings/xfpm-settings-app.c:358
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr "Gtk+ %d.%d.%d でビルド、Gtk+ %d.%d.%d で実行しています。"
+msgstr "GTK+ %d.%d.%d でビルドされ、GTK+ %d.%d.%d とリンクしています。"
 
 #: settings/xfce4-power-manager-settings.desktop.in:6
 msgid "Settings for the Xfce Power Manager"
@@ -475,15 +471,11 @@ msgstr "Xfce 電源管理を設定します"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr ""
-"設定;環境設定;ボタン;スリープ;休止状態;バッテリー;一時停止;シャットダウン;明るさ;ノートパソコンの蓋;ロック画面;プラグイン;保存;重要;"
+msgstr "設定;環境設定;ボタン;スリープ;休止状態;バッテリー;一時停止;シャットダウン;明るさ;ノートパソコンの蓋;ロック画面;プラグイン;保存;重要;"
 
 #: common/xfpm-common.c:120
 msgid "translator-credits"
-msgstr ""
-"Daichi Kawahata <daichi@xfce.org>\n"
-"Nobuhiro Iwamatsu <iwamatsu@nigauri.org>\n"
-"Masato Hashimoto <hashimo@xfce.org>"
+msgstr "Masato Hashimoto <hashimo@xfce.org>"
 
 #: common/xfpm-power-common.c:45 common/xfpm-power-common.c:68
 msgid "Battery"
@@ -587,81 +579,63 @@ msgstr[0] "時間"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"フル充電済み - 残り %s"
+msgstr "<b>%s %s</b>\nフル充電済み - 残り %s"
 
 #: common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr ""
-"<b>%s %s</b>\n"
-"フル充電済み"
+msgstr "<b>%s %s</b>\nフル充電済み"
 
 #: common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - フル充電まで残り %s"
+msgstr "<b>%s %s</b>\n%0.0f%% - フル充電まで残り %s"
 
 #: common/xfpm-power-common.c:363 common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%%"
+msgstr "<b>%s %s</b>\n%0.0f%%"
 
 #: common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - 残り %s"
+msgstr "<b>%s %s</b>\n%0.0f%% - 残り %s"
 
 #: common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\n"
-"使用中です (%0.0f%%)"
+msgstr "<b>%s %s</b>\n使用中です (%0.0f%%)"
 
 #: common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\n"
-"充電待ちです (%0.0f%%)"
+msgstr "<b>%s %s</b>\n充電待ちです (%0.0f%%)"
 
 #: common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
-"<b>%s %s</b>\n"
-"空です"
+msgstr "<b>%s %s</b>\n空です"
 
 #: common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"現在の充電率: %0.0f%%"
+msgstr "<b>%s %s</b>\n現在の充電率: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -670,9 +644,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
-"<b>%s %s</b>\n"
-"%s"
+msgstr "<b>%s %s</b>\n%s"
 
 #: common/xfpm-power-common.c:416
 msgid "Not plugged in"
@@ -691,25 +663,19 @@ msgstr "<b>%s %s</b>"
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr ""
-"<b>%s %s</b>\n"
-"状態が不明です"
+msgstr "<b>%s %s</b>\n状態が不明です"
 
 #: src/xfpm-power.c:383
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
-"アプリケーションは現在自動スリープが無効になっています。今ハイバネートを行うと、このアプリケーションの作業状態が破壊されるかもしれません。\n"
-"本当にハイバネートしますか?"
+msgstr "アプリケーションは現在自動スリープが無効になっています。今ハイバネートを行うと、このアプリケーションの作業状態が破壊されるかもしれません。\n本当にハイバネートしますか?"
 
 #: src/xfpm-power.c:432
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
-"スクリーンをロックするツールの起動に失敗したため、スクリーンはロックされません。\n"
-"サスペンドを続行しますか?"
+msgstr "スクリーンをロックするツールの起動に失敗したため、スクリーンはロックされません。\nサスペンドを続行しますか?"
 
 #: src/xfpm-power.c:597
 msgid "Hibernate the system"
@@ -740,14 +706,12 @@ msgstr "システムは低電力下で動作しています"
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"%s の充電レベルが低くなっています\n"
-"予想駆動時間は残り %s です"
+msgstr "%s の充電レベルが低くなっています\n予想駆動時間は残り %s です"
 
 #: src/xfpm-power.c:1648 src/xfpm-power.c:1696 src/xfpm-power.c:1728
 #: src/xfpm-power.c:1758
 msgid "Permission denied"
-msgstr "アクセス拒否"
+msgstr "許可がありません"
 
 #: src/xfpm-power.c:1737 src/xfpm-power.c:1767
 msgid "Suspend not supported"
@@ -774,9 +738,7 @@ msgstr "%s は充電中です"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr ""
-"%s (%i%%)\n"
-"フル充電まで %s です"
+msgstr "%s (%i%%)\nフル充電まで %s です"
 
 #: src/xfpm-battery.c:130 src/xfpm-battery.c:166
 #, c-format
@@ -793,9 +755,7 @@ msgstr "システムは %s 電源で動作しています"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr ""
-"%s (%i%%)\n"
-"推定残り時間は %s です"
+msgstr "%s (%i%%)\n推定残り時間は %s です"
 
 #: src/xfpm-battery.c:148 src/xfpm-battery.c:169
 #, c-format
@@ -819,15 +779,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Xfce 電源管理 %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
+msgstr "\nXfce 電源管理 %s\n\nPart of the Xfce Goodies Project\nhttp://goodies.xfce.org\n\nLicensed under the GNU GPL.\n\n"
 
 #: src/xfpm-main.c:112
 msgid "With policykit support\n"
@@ -915,7 +867,7 @@ msgstr "動作中の Xfce 電源管理を終了する"
 
 #: src/xfpm-main.c:281
 msgid "Version information"
-msgstr "バージョン情報を表示する"
+msgstr "バージョン情報"
 
 #: src/xfpm-main.c:300
 #, c-format
@@ -925,7 +877,7 @@ msgstr "引数の解析に失敗しました: %s\n"
 #: src/xfpm-main.c:329
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "'%s --help' と入力すると使用方法が表示されます。"
+msgstr "'%s --help' で使用方法を表示します。"
 
 #: src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
@@ -966,23 +918,23 @@ msgstr "Xfce デスクトップ用電源管理"
 #. to change the backlight brightness.
 #: src/org.xfce.power.policy.in.in:21
 msgid "Modify the laptop display brightness"
-msgstr ""
+msgstr "ラップトップディスプレイの明るさを変更します"
 
 #: src/org.xfce.power.policy.in.in:22
 msgid "Authentication is required to modify the laptop display brightness"
-msgstr ""
+msgstr "ラップトップディスプレイの明るさを変更するには認証が必要です"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
 #. to suspend or hibernate their system.
 #: src/org.xfce.power.policy.in.in:36
 msgid "Suspend or hibernate the system"
-msgstr ""
+msgstr "システムをサスペンドまたはハイバネートします"
 
 #: src/org.xfce.power.policy.in.in:37
 msgid ""
 "Authentication is required to place the system in suspend or hibernate mode"
-msgstr ""
+msgstr "システムをサスペンドまたはハイバネートするには認証が必要です"
 
 #. Odds are this is a desktop without any batteries attached
 #: panel-plugins/power-manager-plugin/power-manager-button.c:294
@@ -1018,7 +970,7 @@ msgstr "以下の URL を開くことができません: %s"
 
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
-msgstr "無し"
+msgstr "なし"
 
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage"
@@ -1069,9 +1021,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
-"Xfce 電源管理はコンピューターおよび消費電力を制御可能なデバイス (LCD の輝度レベル、モニターのスリープ、CPU の動作周波数など) "
-"の電源を管理します。"
+msgstr "Xfce 電源管理はコンピューターおよび消費電力を制御可能なデバイス (LCD の輝度レベル、モニターのスリープ、CPU の動作周波数など) の電源を管理します。"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:16
 msgid ""
@@ -1081,15 +1031,11 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
-"さらに、Xfce 電源管理はほかのアプリケーションに現在の電源レベルなどを提供するための freedesktop.org 準拠の DBus "
-"インターフェイスも用意しています。これを利用してアプリケーションから消費電力の調整が行えます。ほかに、電源制御が自動で行うスリープの一時的な抑止もできます。例えば、オペレーティングシステムのパッケージ管理がアップデート処理を行っている間などにこの機能を使用するといいでしょう。"
+msgstr "さらに、Xfce 電源管理はほかのアプリケーションに現在の電源レベルなどを提供するための freedesktop.org 準拠の DBus インターフェイスも用意しています。これを利用してアプリケーションから消費電力の調整が行えます。ほかに、電源制御が自動で行うスリープの一時的な抑止もできます。例えば、オペレーティングシステムのパッケージ管理がアップデート処理を行っている間などにこの機能を使用するといいでしょう。"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr ""
-"また、Xfce パネル用と LXDE パネル用のプラグインも 2 種類提供しています。一つは LCD "
-"の輝度レベルを調整するもの、もう一つはバッテリやデバイスの充電レベルを監視するものです。"
+msgstr "また、Xfce パネル用と LXDE パネル用のプラグインも 2 種類提供しています。一つは LCD の輝度レベルを調整するもの、もう一つはバッテリやデバイスの充電レベルを監視するものです。"
