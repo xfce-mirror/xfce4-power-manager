@@ -1508,18 +1508,18 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
             gpointer user_data)
 {
   GError *error = NULL;
-  gboolean can_reboot;
+  gboolean can_shutdown;
 
   if (power->priv->systemd != NULL)
   {
-    xfce_systemd_can_reboot (power->priv->systemd, &can_reboot, NULL, NULL);
+    xfce_systemd_can_power_off (power->priv->systemd, &can_shutdown, NULL, NULL);
   }
   else
   {
-    xfce_consolekit_can_reboot (power->priv->console, &can_reboot, NULL, NULL);
+    xfce_consolekit_can_power_off (power->priv->console, &can_shutdown, NULL, NULL);
   }
 
-  if ( !can_reboot)
+  if (!can_shutdown)
   {
     g_dbus_method_invocation_return_error (invocation,
                                            XFPM_ERROR,
