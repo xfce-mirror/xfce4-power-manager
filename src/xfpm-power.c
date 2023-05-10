@@ -1625,22 +1625,22 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
             gpointer user_data)
 {
   GError *error = NULL;
-  gboolean can_reboot;
+  gboolean can_shutdown;
 
   if (power->priv->systemd != NULL)
   {
     g_object_get (G_OBJECT (power->priv->systemd),
-                  "can-shutdown", &can_reboot,
+                  "can-shutdown", &can_shutdown,
                   NULL);
   }
   else
   {
     g_object_get (G_OBJECT (power->priv->console),
-                  "can-shutdown", &can_reboot,
+                  "can-shutdown", &can_shutdown,
                   NULL);
   }
 
-  if ( !can_reboot)
+  if (!can_shutdown)
   {
     g_dbus_method_invocation_return_error (invocation,
                                            XFPM_ERROR,
