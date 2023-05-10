@@ -353,13 +353,13 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     if (power->priv->systemd != NULL)
     {
       if (xfce_systemd_can_hibernate (power->priv->systemd, NULL, NULL, NULL)
-          && !xfce_systemd_try_hibernate (power->priv->systemd, &error))
+          && !xfce_systemd_hibernate (power->priv->systemd, &error))
       {
         g_warning ("Failed to hibernate via systemd: %s", error->message);
       }
     }
     else if (xfce_consolekit_can_hibernate (power->priv->console, NULL, NULL, NULL)
-             && !xfce_consolekit_try_hibernate (power->priv->console, &error))
+             && !xfce_consolekit_hibernate (power->priv->console, &error))
     {
       g_warning ("Failed to hibernate via ConsoleKit: %s", error->message);
     }
@@ -372,13 +372,13 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     if (power->priv->systemd != NULL)
     {
       if (xfce_systemd_can_suspend (power->priv->systemd, NULL, NULL, NULL)
-          && !xfce_systemd_try_suspend (power->priv->systemd, &error))
+          && !xfce_systemd_suspend (power->priv->systemd, &error))
       {
         g_warning ("Failed to suspend via systemd: %s", error->message);
       }
     }
     else if (xfce_consolekit_can_suspend (power->priv->console, NULL, NULL, NULL)
-             && !xfce_consolekit_try_suspend (power->priv->console, &error))
+             && !xfce_consolekit_suspend (power->priv->console, &error))
     {
       g_warning ("Failed to suspend via ConsoleKit: %s", error->message);
     }
@@ -486,11 +486,11 @@ xfpm_power_add_actions_to_notification (XfpmPower *power, NotifyNotification *n)
 
   if (power->priv->systemd != NULL)
   {
-    xfce_systemd_can_shutdown (power->priv->systemd, &can_shutdown, NULL);
+    xfce_systemd_can_power_off (power->priv->systemd, &can_shutdown, NULL, NULL);
   }
   else
   {
-    xfce_consolekit_can_shutdown (power->priv->console, &can_shutdown, NULL);
+    xfce_consolekit_can_power_off (power->priv->console, &can_shutdown, NULL, NULL);
   }
 
   if (xfpm_power_can_hibernate (power) && xfpm_power_auth_hibernate (power))
@@ -563,11 +563,11 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 
   if (power->priv->systemd != NULL)
   {
-    xfce_systemd_can_shutdown (power->priv->systemd, &can_shutdown, NULL);
+    xfce_systemd_can_power_off (power->priv->systemd, &can_shutdown, NULL, NULL);
   }
   else
   {
-    xfce_consolekit_can_shutdown (power->priv->console, &can_shutdown, NULL);
+    xfce_consolekit_can_power_off (power->priv->console, &can_shutdown, NULL, NULL);
   }
 
   message = _("System is running on low power. "\
@@ -1512,11 +1512,11 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
 
   if (power->priv->systemd != NULL)
   {
-    xfce_systemd_can_restart (power->priv->systemd, &can_reboot, NULL);
+    xfce_systemd_can_reboot (power->priv->systemd, &can_reboot, NULL, NULL);
   }
   else
   {
-    xfce_consolekit_can_restart (power->priv->console, &can_reboot, NULL);
+    xfce_consolekit_can_reboot (power->priv->console, &can_reboot, NULL, NULL);
   }
 
   if ( !can_reboot)
@@ -1529,9 +1529,9 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
   }
 
   if (power->priv->systemd != NULL)
-    xfce_systemd_try_shutdown (power->priv->systemd, &error);
+    xfce_systemd_power_off (power->priv->systemd, &error);
   else
-    xfce_consolekit_try_shutdown (power->priv->console, &error);
+    xfce_consolekit_power_off (power->priv->console, &error);
 
   if (error)
   {
@@ -1556,11 +1556,11 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
 
   if (power->priv->systemd != NULL)
   {
-    xfce_systemd_can_restart (power->priv->systemd, &can_reboot, NULL);
+    xfce_systemd_can_reboot (power->priv->systemd, &can_reboot, NULL, NULL);
   }
   else
   {
-    xfce_consolekit_can_restart (power->priv->console, &can_reboot, NULL);
+    xfce_consolekit_can_reboot (power->priv->console, &can_reboot, NULL, NULL);
   }
 
   if ( !can_reboot)
@@ -1573,9 +1573,9 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
   }
 
   if (power->priv->systemd != NULL)
-    xfce_systemd_try_restart (power->priv->systemd, &error);
+    xfce_systemd_reboot (power->priv->systemd, &error);
   else
-    xfce_consolekit_try_restart (power->priv->console, &error);
+    xfce_consolekit_reboot (power->priv->console, &error);
 
   if (error)
   {
@@ -1659,11 +1659,11 @@ xfpm_power_dbus_can_reboot (XfpmPower * power,
 
   if (power->priv->systemd != NULL)
   {
-    xfce_systemd_can_restart (power->priv->systemd, &can_reboot, NULL);
+    xfce_systemd_can_reboot (power->priv->systemd, &can_reboot, NULL, NULL);
   }
   else
   {
-    xfce_consolekit_can_restart (power->priv->console, &can_reboot, NULL);
+    xfce_consolekit_can_reboot (power->priv->console, &can_reboot, NULL, NULL);
   }
 
   xfpm_power_management_complete_can_reboot (user_data,
@@ -1682,11 +1682,11 @@ xfpm_power_dbus_can_shutdown (XfpmPower * power,
 
   if (power->priv->systemd != NULL)
   {
-    xfce_systemd_can_shutdown (power->priv->systemd, &can_shutdown, NULL);
+    xfce_systemd_can_power_off (power->priv->systemd, &can_shutdown, NULL, NULL);
   }
   else
   {
-    xfce_consolekit_can_shutdown (power->priv->console, &can_shutdown, NULL);
+    xfce_consolekit_can_power_off (power->priv->console, &can_shutdown, NULL, NULL);
   }
 
   xfpm_power_management_complete_can_shutdown (user_data,

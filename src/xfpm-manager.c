@@ -302,9 +302,9 @@ xfpm_manager_shutdown (XfpmManager *manager)
   GError *error = NULL;
 
   if (manager->priv->systemd != NULL)
-    xfce_systemd_try_shutdown (manager->priv->systemd, &error);
+    xfce_systemd_power_off (manager->priv->systemd, &error);
   else
-    xfce_consolekit_try_shutdown (manager->priv->console, &error);
+    xfce_consolekit_power_off (manager->priv->console, &error);
 
   if ( error )
   {
@@ -965,11 +965,11 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
 
   if (manager->priv->systemd != NULL)
   {
-    xfce_systemd_can_shutdown (manager->priv->systemd, &can_shutdown, NULL);
+    xfce_systemd_can_power_off (manager->priv->systemd, &can_shutdown, NULL, NULL);
   }
   else
   {
-    xfce_consolekit_can_shutdown (manager->priv->console, &can_shutdown, NULL);
+    xfce_consolekit_can_power_off (manager->priv->console, &can_shutdown, NULL, NULL);
   }
 
   g_object_get (G_OBJECT (manager->priv->power),
