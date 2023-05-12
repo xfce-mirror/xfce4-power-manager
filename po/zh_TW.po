@@ -1,25 +1,22 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-power-manager.xfce-4-18 package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# This file is distributed under the same license as the xfce4-power-manager.master package.
 # 
 # Translators:
-# Hsiu-Ming Chang <cges30901@gmail.com>, 2023
-# Cheng-Chia Tseng <pswo10680@gmail.com>, 2023
-# Walter Cheuk <wwycheuk@gmail.com>, 2023
-# Nick Schermer <nick@xfce.org>, 2023
-# Xfce Bot <transifex@xfce.org>, 2023
-# 黃柏諺 <s8321414@gmail.com>, 2023
-# 
-#, fuzzy
+# Cheng-Chia Tseng <pswo10680@gmail.com>, 2017
+# Hsiu-Ming Chang <cges30901@gmail.com>, 2017
+# 黃柏諺 <s8321414@gmail.com>, 2014-2017,2019
+# Walter Cheuk <wwycheuk@gmail.com>, 2013,2019
+# 黃柏諺 <s8321414@gmail.com>, 2014
+# 黃柏諺 <s8321414@gmail.com>, 2019-2021,2023
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager.xfce-4-18\n"
+"Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-05 10:51+0200\n"
-"PO-Revision-Date: 2023-02-20 11:54+0000\n"
-"Last-Translator: 黃柏諺 <s8321414@gmail.com>, 2023\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/xfce/teams/16840/zh_TW/)\n"
+"POT-Creation-Date: 2023-05-12 00:47+0200\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: 黃柏諺 <s8321414@gmail.com>, 2019-2021,2023\n"
+"Language-Team: Chinese (Taiwan) (http://app.transifex.com/xfce/xfce4-power-manager/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -46,13 +43,13 @@ msgstr "當螢幕保護程式關閉時"
 #: data/interfaces/xfpm-settings.ui:195 data/interfaces/xfpm-settings.ui:206
 #: data/interfaces/xfpm-settings.ui:217 data/interfaces/xfpm-settings.ui:228
 msgid "Nothing"
-msgstr "不動作"
+msgstr "無動作"
 
 #: data/interfaces/xfpm-settings.ui:250
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:357
-#: src/xfpm-power.c:633 src/xfpm-power.c:675 src/xfpm-power.c:838
-#: src/xfpm-power.c:859 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
+#: src/xfpm-power.c:546 src/xfpm-power.c:575 src/xfpm-power.c:749
+#: src/xfpm-power.c:770 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
 #: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -261,7 +258,7 @@ msgstr "秒"
 #: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1161
 #: settings/xfpm-settings.c:1253 settings/xfpm-settings.c:1375
 #: settings/xfpm-settings.c:1433 settings/xfpm-settings.c:1485
-#: settings/xfpm-settings.c:1536 src/xfpm-power.c:700
+#: settings/xfpm-settings.c:1536 src/xfpm-power.c:602
 msgid "Suspend"
 msgstr "暫停"
 
@@ -271,13 +268,13 @@ msgstr "不允許暫停"
 
 #: settings/xfpm-settings.c:929 settings/xfpm-settings.c:1169
 msgid "Suspend operation not supported"
-msgstr "不支援暫停操作"
+msgstr "不支援暫停"
 
 #: settings/xfpm-settings.c:935 settings/xfpm-settings.c:1006
 #: settings/xfpm-settings.c:1068 settings/xfpm-settings.c:1175
 #: settings/xfpm-settings.c:1259 settings/xfpm-settings.c:1381
 #: settings/xfpm-settings.c:1439 settings/xfpm-settings.c:1491
-#: settings/xfpm-settings.c:1542 src/xfpm-power.c:689
+#: settings/xfpm-settings.c:1542 src/xfpm-power.c:590
 msgid "Hibernate"
 msgstr "休眠"
 
@@ -287,12 +284,12 @@ msgstr "不允許休眠"
 
 #: settings/xfpm-settings.c:943 settings/xfpm-settings.c:1183
 msgid "Hibernate operation not supported"
-msgstr "不支援休眠操作"
+msgstr "不支援休眠"
 
 #: settings/xfpm-settings.c:973 settings/xfpm-settings.c:1213
 #: settings/xfpm-settings.c:1642 settings/xfpm-settings.c:1769
 msgid "Hibernate and suspend operations not supported"
-msgstr "不支援休眠與暫停操作"
+msgstr "不支援休眠與暫停"
 
 #: settings/xfpm-settings.c:978 settings/xfpm-settings.c:1218
 #: settings/xfpm-settings.c:1647 settings/xfpm-settings.c:1774
@@ -307,7 +304,7 @@ msgid "Do nothing"
 msgstr "無動作"
 
 #: settings/xfpm-settings.c:1012 settings/xfpm-settings.c:1387
-#: src/xfpm-power.c:711
+#: src/xfpm-power.c:622
 msgid "Shutdown"
 msgstr "關機"
 
@@ -391,7 +388,7 @@ msgstr "電量空"
 #. TRANSLATORS: Unit here is Volt
 #: settings/xfpm-settings.c:2145
 msgid "V"
-msgstr "V"
+msgstr "伏特"
 
 #: settings/xfpm-settings.c:2147
 msgid "Voltage"
@@ -405,17 +402,17 @@ msgstr "廠商"
 msgid "Serial"
 msgstr "序號"
 
-#: settings/xfpm-settings.c:2435
+#: settings/xfpm-settings.c:2438
 msgid "Check your power manager installation"
 msgstr "請檢查電源管理員是否安裝妥當"
 
-#: settings/xfpm-settings.c:2528
+#: settings/xfpm-settings.c:2531
 msgid "Devices"
 msgstr "裝置"
 
 #: settings/xfpm-settings-app.c:74
 msgid "Settings manager socket"
-msgstr "設定管理員 socket"
+msgstr "設定值管理員 socket"
 
 #: settings/xfpm-settings-app.c:74
 msgid "SOCKET ID"
@@ -442,7 +439,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "造成 xfce4-power-manager-settings 結束"
 
 #: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
-#: src/xfpm-main.c:447
+#: src/xfpm-main.c:448
 msgid "Xfce Power Manager"
 msgstr "Xfce 電源管理員"
 
@@ -461,12 +458,12 @@ msgstr "無法載入電源管理員組態，改為使用預設值"
 #: settings/xfpm-settings-app.c:356
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr "這是 %s 版本 %s，運行於 Xfce %s。\n"
+msgstr "這是 %s 版本 %s，執行於 Xfce %s。\n"
 
 #: settings/xfpm-settings-app.c:358
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr "依 GTK+ %d.%d.%d 建置，以 GTK+ %d.%d.%d 連結。"
+msgstr "使用 GTK+ %d.%d.%d 編譯，連結至 GTK+ %d.%d.%d。"
 
 #: settings/xfce4-power-manager-settings.desktop.in:6
 msgid "Settings for the Xfce Power Manager"
@@ -476,19 +473,15 @@ msgstr "Xfce 電源管理員設定值"
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr ""
-"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
-" lid;lock screen;plugged in;saving;critical;"
+msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop lid;lock screen;plugged in;saving;critical;"
 
 #: common/xfpm-common.c:120
 msgid "translator-credits"
-msgstr ""
-"Cheng-Chia Tseng <pswo10680@gmail.com>, 2010.\n"
-"Ｗalter Cheuk <wwycheuk@gmail.com>, 2019."
+msgstr "Cheng-Chia Tseng <pswo10680@gmail.com>, 2011.\nWalter Cheuk <wwycheuk@gmail.com>, 2019."
 
 #: common/xfpm-power-common.c:45 common/xfpm-power-common.c:68
 msgid "Battery"
-msgstr "電源"
+msgstr "電池"
 
 #: common/xfpm-power-common.c:47
 msgid "Uninterruptible Power Supply"
@@ -512,7 +505,7 @@ msgstr "螢幕"
 
 #: common/xfpm-power-common.c:57
 msgid "PDA"
-msgstr "PDA"
+msgstr "電子手帳 PDA"
 
 #: common/xfpm-power-common.c:59
 msgid "Phone"
@@ -529,7 +522,7 @@ msgstr "電腦"
 #: common/xfpm-power-common.c:65 common/xfpm-power-common.c:81
 #: common/xfpm-power-common.c:96
 msgid "Unknown"
-msgstr "未知的"
+msgstr "不詳"
 
 #: common/xfpm-power-common.c:83
 msgid "Lithium ion"
@@ -545,7 +538,7 @@ msgstr "磷酸鋰鐵"
 
 #: common/xfpm-power-common.c:89
 msgid "Lead acid"
-msgstr "鉛蓄"
+msgstr "鉛酸"
 
 #: common/xfpm-power-common.c:91
 msgid "Nickel cadmium"
@@ -588,81 +581,63 @@ msgstr[0] "小時"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"已充飽 - 剩餘 %s"
+msgstr "<b>%s %s</b>\n已充飽 - 剩餘 %s"
 
 #: common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr ""
-"<b>%s %s</b>\n"
-"已充飽"
+msgstr "<b>%s %s</b>\n已充飽"
 
 #: common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - 還有 %s 才會充飽"
+msgstr "<b>%s %s</b>\n%0.0f%% - 還有 %s 才會充飽"
 
 #: common/xfpm-power-common.c:363 common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%%"
+msgstr "<b>%s %s</b>\n%0.0f%%"
 
 #: common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr ""
-"<b>%s %s</b>\n"
-"%0.0f%% - 剩餘 %s"
+msgstr "<b>%s %s</b>\n%0.0f%% - 剩餘 %s"
 
 #: common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\t\n"
-"正在等候放電 (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\t\n正在等候放電 (%0.0f%%)\t"
 
 #: common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
-msgstr ""
-"<b>%s %s</b>\n"
-"正在等候放電 (%0.0f%%)\t"
+msgstr "<b>%s %s</b>\n正在等候放電 (%0.0f%%)\t"
 
 #: common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
-msgstr ""
-"<b>%s %s</b>\t\n"
-"為空\t"
+msgstr "<b>%s %s</b>\t\n為空\t"
 
 #: common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
-msgstr ""
-"<b>%s %s</b>\n"
-"目前充電： %0.0f%%"
+msgstr "<b>%s %s</b>\n目前充電： %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -671,9 +646,7 @@ msgstr ""
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
-msgstr ""
-"<b>%s %s</b>\n"
-"%s"
+msgstr "<b>%s %s</b>\n%s"
 
 #: common/xfpm-power-common.c:416
 msgid "Not plugged in"
@@ -692,65 +665,61 @@ msgstr "<b>%s %s</b>"
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
-msgstr ""
-"<b>%s %s</b>\t\n"
-"未知狀態\t"
+msgstr "<b>%s %s</b>\t\n未知狀態\t"
 
-#: src/xfpm-power.c:383
+#: src/xfpm-power.c:285
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr ""
-"有個應用程式目前讓自動睡眠停用。若現在執行此動作可能會損壞這個應用程式的工作狀態。\n"
-"您確定您想要讓此系統休眠嗎？"
+msgstr "有個應用程式目前讓自動睡眠停用。若現在執行此動作可能會損壞這個應用程式的工作狀態。\n您確定您想要讓此系統休眠嗎？"
 
-#: src/xfpm-power.c:432
+#: src/xfpm-power.c:334
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr ""
-"沒有螢幕鎖定工具執行成功，螢幕將不會被鎖定。\n"
-"您仍要繼續暫停此系統嗎？"
+msgstr "沒有螢幕鎖定工具執行成功，螢幕將不會被鎖定。\n您仍要繼續暫停此系統嗎？"
 
-#: src/xfpm-power.c:597
+#: src/xfpm-power.c:496
 msgid "Hibernate the system"
 msgstr "休眠系統"
 
-#: src/xfpm-power.c:608
+#: src/xfpm-power.c:508
 msgid "Suspend the system"
 msgstr "暫停系統"
 
-#: src/xfpm-power.c:617
+#: src/xfpm-power.c:528
 msgid "Shutdown the system"
 msgstr "關閉系統"
 
-#: src/xfpm-power.c:628 src/xfpm-power.c:672
+#: src/xfpm-power.c:541 src/xfpm-power.c:572
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "系統正以低電量執行。請儲存您的工作以避免喪失資料"
+msgstr "系統電量只餘下很少。請儲存您的工作以避免喪失資料"
 
-#: src/xfpm-power.c:718
+#: src/xfpm-power.c:629
 msgid "_Cancel"
 msgstr "取消(_C)"
 
-#: src/xfpm-power.c:839
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
-msgstr "系統正以低電量執行"
+msgstr "系統電量只餘下很少"
 
-#: src/xfpm-power.c:855
+#: src/xfpm-power.c:766
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr ""
-"您的 %s 充電水平為低\n"
-"預估剩餘時間 %s"
+msgstr "您的 %s 充電水平為低\n預估剩餘時間 %s"
 
-#: src/xfpm-power.c:1648 src/xfpm-power.c:1696 src/xfpm-power.c:1728
-#: src/xfpm-power.c:1758
+#: src/xfpm-power.c:1541 src/xfpm-power.c:1585 src/xfpm-power.c:1621
+#: src/xfpm-power.c:1655
 msgid "Permission denied"
-msgstr "權限不足"
+msgstr "許可被拒"
 
-#: src/xfpm-power.c:1737 src/xfpm-power.c:1767
+#: src/xfpm-power.c:1630
+msgid "Hibernate not supported"
+msgstr "不支援休眠"
+
+#: src/xfpm-power.c:1664
 msgid "Suspend not supported"
 msgstr "不支援暫停"
 
@@ -775,9 +744,7 @@ msgstr "您的 %s 正在充電"
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
-msgstr ""
-"%s (%i%%)\n"
-"還要 %s 才能充飽電"
+msgstr "%s (%i%%)\n還要 %s 才能充飽電"
 
 #: src/xfpm-battery.c:130 src/xfpm-battery.c:166
 #, c-format
@@ -787,16 +754,14 @@ msgstr "您的 %s 正在放電"
 #: src/xfpm-battery.c:132
 #, c-format
 msgid "System is running on %s power"
-msgstr "系統正在執行 %s 電源"
+msgstr "系統正使用 %s 電源"
 
 #: src/xfpm-battery.c:142
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr ""
-"%s (%i%%)\n"
-"預估剩餘時間 %s"
+msgstr "%s (%i%%)\n預估剩餘時間 %s"
 
 #: src/xfpm-battery.c:148 src/xfpm-battery.c:169
 #, c-format
@@ -820,15 +785,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr ""
-"\n"
-"Xfce 電源管理員 %s\n"
-"\n"
-"Xfce 好物專案的一部分\n"
-"http://goodies.xfce.org\n"
-"\n"
-"基於 GNU GPL 條款授權。\n"
-"\n"
+msgstr "\nXfce 電源管理員 %s\n\nXfce 好物專案的一部分\nhttp://goodies.xfce.org\n\n基於 GNU GPL 條款授權。\n\n"
 
 #: src/xfpm-main.c:112
 msgid "With policykit support\n"
@@ -921,28 +878,28 @@ msgstr "版本資訊"
 #: src/xfpm-main.c:300
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr "無法解析引數：%s\n"
+msgstr "無法解析參數：%s\n"
 
 #: src/xfpm-main.c:329
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "輸入 '%s --help' 以了解用法。"
+msgstr "輸入 '%s --help' 以瞭解用法。"
 
 #: src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
 msgstr "無法取得訊息匯流排工作階段的連線"
 
-#: src/xfpm-main.c:358
+#: src/xfpm-main.c:358 src/xfpm-main.c:407
 msgid "Xfce power manager is not running"
 msgstr "Xfce 電源管理員未有執行"
 
-#: src/xfpm-main.c:448
+#: src/xfpm-main.c:449
 msgid "Another power manager is already running"
-msgstr "另一個電源管理員正在執行中"
+msgstr "另一個電源管理員正在執行"
 
-#: src/xfpm-main.c:452
+#: src/xfpm-main.c:453
 msgid "Xfce power manager is already running"
-msgstr "Xfce 電源管理員正在執行中"
+msgstr "Xfce 電源管理員正在執行"
 
 #: src/xfpm-inhibit.c:396
 msgid "Invalid arguments"
@@ -952,7 +909,7 @@ msgstr "引數無效"
 msgid "Invalid cookie"
 msgstr "cookie 無效"
 
-#: src/xfpm-manager.c:455
+#: src/xfpm-manager.c:453
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
@@ -1063,7 +1020,7 @@ msgstr "Xfce 電源管理程式"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
-msgstr "管理並減少電腦與裝置的店員消耗"
+msgstr "管理並減少電腦與裝置的電源消耗"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:11
 msgid ""
@@ -1080,9 +1037,7 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr ""
-"另外，Xfce 電源管理員提供了一組相容於 freedesktop 的 DBus "
-"介面，以通知其他應用程式目前的電力狀態，這樣它們就可以調整電力消耗，它也提供了抑制介面，讓應用程式可以避免電源管理員自動進入睡眠；例如，作業系統的軟體包管理員需要在它執行升級動作時使用這個介面。"
+msgstr "另外，Xfce 電源管理員提供了一組相容於 freedesktop 的 DBus 介面，以通知其他應用程式目前的電力狀態，這樣它們就可以調整電力消耗，它也提供了抑制介面，讓應用程式可以避免電源管理員自動進入睡眠；例如，作業系統的軟體包管理員需要在它執行升級動作時使用這個介面。"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:23
 msgid ""
