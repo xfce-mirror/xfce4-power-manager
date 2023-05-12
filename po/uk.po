@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-05 10:44+0200\n"
+"POT-Creation-Date: 2023-05-12 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Gordon Freeman, 2023\n"
 "Language-Team: Ukrainian (http://app.transifex.com/xfce/xfce4-power-manager/language/uk/)\n"
@@ -47,9 +47,9 @@ msgstr "Нічого"
 
 #: data/interfaces/xfpm-settings.ui:250
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:357
-#: src/xfpm-power.c:633 src/xfpm-power.c:675 src/xfpm-power.c:838
-#: src/xfpm-power.c:859 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
+#: src/xfpm-power.c:546 src/xfpm-power.c:575 src/xfpm-power.c:749
+#: src/xfpm-power.c:770 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
 #: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -258,23 +258,23 @@ msgstr "секунд"
 #: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1161
 #: settings/xfpm-settings.c:1253 settings/xfpm-settings.c:1375
 #: settings/xfpm-settings.c:1433 settings/xfpm-settings.c:1485
-#: settings/xfpm-settings.c:1536 src/xfpm-power.c:700
+#: settings/xfpm-settings.c:1536 src/xfpm-power.c:602
 msgid "Suspend"
 msgstr "Призупинити"
 
 #: settings/xfpm-settings.c:925 settings/xfpm-settings.c:1165
 msgid "Suspend operation not permitted"
-msgstr "Операції сплячки недоступні"
+msgstr "Операція призупинення недоступна"
 
 #: settings/xfpm-settings.c:929 settings/xfpm-settings.c:1169
 msgid "Suspend operation not supported"
-msgstr "Переведення системи в сплячку не підтримується"
+msgstr "Переведення системи в режим очікування не підтримується"
 
 #: settings/xfpm-settings.c:935 settings/xfpm-settings.c:1006
 #: settings/xfpm-settings.c:1068 settings/xfpm-settings.c:1175
 #: settings/xfpm-settings.c:1259 settings/xfpm-settings.c:1381
 #: settings/xfpm-settings.c:1439 settings/xfpm-settings.c:1491
-#: settings/xfpm-settings.c:1542 src/xfpm-power.c:689
+#: settings/xfpm-settings.c:1542 src/xfpm-power.c:590
 msgid "Hibernate"
 msgstr "Сплячка"
 
@@ -289,12 +289,12 @@ msgstr "Присипляння системи не підтримується"
 #: settings/xfpm-settings.c:973 settings/xfpm-settings.c:1213
 #: settings/xfpm-settings.c:1642 settings/xfpm-settings.c:1769
 msgid "Hibernate and suspend operations not supported"
-msgstr "Операції сплячки і присипання не підтримуються"
+msgstr "Операції сплячки і призупинення не підтримуються"
 
 #: settings/xfpm-settings.c:978 settings/xfpm-settings.c:1218
 #: settings/xfpm-settings.c:1647 settings/xfpm-settings.c:1774
 msgid "Hibernate and suspend operations not permitted"
-msgstr "Операції сплячки і присипання недоступні"
+msgstr "Операції сплячки і призупинення недоступні"
 
 #: settings/xfpm-settings.c:995 settings/xfpm-settings.c:1075
 #: settings/xfpm-settings.c:1266 settings/xfpm-settings.c:1370
@@ -304,7 +304,7 @@ msgid "Do nothing"
 msgstr "Нічого не робити"
 
 #: settings/xfpm-settings.c:1012 settings/xfpm-settings.c:1387
-#: src/xfpm-power.c:711
+#: src/xfpm-power.c:622
 msgid "Shutdown"
 msgstr "Вимкнути"
 
@@ -405,11 +405,11 @@ msgstr "Виробник"
 msgid "Serial"
 msgstr "Серійний номер"
 
-#: settings/xfpm-settings.c:2435
+#: settings/xfpm-settings.c:2438
 msgid "Check your power manager installation"
 msgstr "Перевірте правильність встановлення менеджера живлення"
 
-#: settings/xfpm-settings.c:2528
+#: settings/xfpm-settings.c:2531
 msgid "Devices"
 msgstr "Пристрої"
 
@@ -442,7 +442,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Спричинити вихід з xfce4-power-manager-settings"
 
 #: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
-#: src/xfpm-main.c:447
+#: src/xfpm-main.c:448
 msgid "Xfce Power Manager"
 msgstr "Менеджер живлення Xfce"
 
@@ -476,7 +476,7 @@ msgstr "Налаштування для менеджера живлення Xfce
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr "налаштування;властивості;кнопки;сон;сплячка;батарея;призупинити;вимкнути;яскравість;кришка ноутбука;замикач екрана;під'єднано;збереження;критично;"
+msgstr "налаштування;властивості;кнопки;сон;очікування;батарея;призупинити;вимкнути;яскравість;кришка ноутбука;замикач екрана;під'єднано;збереження;критично;"
 
 #: common/xfpm-common.c:120
 msgid "translator-credits"
@@ -679,57 +679,61 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nНевідомий стан"
 
-#: src/xfpm-power.c:383
+#: src/xfpm-power.c:285
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Зараз програма блокує автоматичний перехід до сну. Якщо зробити це зараз, то може порушитись її робота. \nВи дійсно бажаєте перевести систему до сну?"
 
-#: src/xfpm-power.c:432
+#: src/xfpm-power.c:334
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Не вдалося запустити жодну з системних програм замикання екрану, екран не буде замкнено.\nВи все ще бажаєте продовжувати призупиняти систему?"
 
-#: src/xfpm-power.c:597
+#: src/xfpm-power.c:496
 msgid "Hibernate the system"
 msgstr "Перевести систему в сплячку"
 
-#: src/xfpm-power.c:608
+#: src/xfpm-power.c:508
 msgid "Suspend the system"
-msgstr "Приспати систему"
+msgstr "Призупинити систему"
 
-#: src/xfpm-power.c:617
+#: src/xfpm-power.c:528
 msgid "Shutdown the system"
 msgstr "Вимкнути систему"
 
-#: src/xfpm-power.c:628 src/xfpm-power.c:672
+#: src/xfpm-power.c:541 src/xfpm-power.c:572
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Система працює на слабкому заряді. Збережіть Вашу роботу щоб не допустити втрати даних"
 
-#: src/xfpm-power.c:718
+#: src/xfpm-power.c:629
 msgid "_Cancel"
 msgstr "_Скасувати"
 
-#: src/xfpm-power.c:839
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "Система працює на слабкому заряді"
 
-#: src/xfpm-power.c:855
+#: src/xfpm-power.c:766
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Ваша %s має слабкий заряд\nПриблизно залишилось %s"
 
-#: src/xfpm-power.c:1648 src/xfpm-power.c:1696 src/xfpm-power.c:1728
-#: src/xfpm-power.c:1758
+#: src/xfpm-power.c:1541 src/xfpm-power.c:1585 src/xfpm-power.c:1621
+#: src/xfpm-power.c:1655
 msgid "Permission denied"
 msgstr "Доступ заборонено"
 
-#: src/xfpm-power.c:1737 src/xfpm-power.c:1767
-msgid "Suspend not supported"
+#: src/xfpm-power.c:1630
+msgid "Hibernate not supported"
 msgstr "Сплячка не підтримується"
+
+#: src/xfpm-power.c:1664
+msgid "Suspend not supported"
+msgstr "Призупинка не підтримується"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:161
@@ -813,7 +817,7 @@ msgstr "Без підтримки network manager\n"
 
 #: src/xfpm-main.c:134
 msgid "Can suspend"
-msgstr "Можна приспати"
+msgstr "Можна призупинити"
 
 #: src/xfpm-main.c:136
 msgid "Can hibernate"
@@ -897,15 +901,15 @@ msgstr "Наберіть '%s --help' для використання."
 msgid "Unable to get connection to the message bus session"
 msgstr "Не можливо з'єднатись з сесією DBus"
 
-#: src/xfpm-main.c:358
+#: src/xfpm-main.c:358 src/xfpm-main.c:407
 msgid "Xfce power manager is not running"
 msgstr "Менеджер живлення Xfce не працює"
 
-#: src/xfpm-main.c:448
+#: src/xfpm-main.c:449
 msgid "Another power manager is already running"
 msgstr "Інший менеджер живлення вже працює"
 
-#: src/xfpm-main.c:452
+#: src/xfpm-main.c:453
 msgid "Xfce power manager is already running"
 msgstr "Менеджер живлення Xfce вже працює"
 
@@ -917,7 +921,7 @@ msgstr "Неправильні параметри"
 msgid "Invalid cookie"
 msgstr "Неправильні коржики"
 
-#: src/xfpm-manager.c:455
+#: src/xfpm-manager.c:453
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
