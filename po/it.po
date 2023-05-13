@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-05 10:44+0200\n"
+"POT-Creation-Date: 2023-05-12 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Emanuele Petriglia <transifex@emanuelepetriglia.com>, 2019-2021,2023\n"
 "Language-Team: Italian (http://app.transifex.com/xfce/xfce4-power-manager/language/it/)\n"
@@ -49,9 +49,9 @@ msgstr "Non fare niente"
 
 #: data/interfaces/xfpm-settings.ui:250
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:357
-#: src/xfpm-power.c:633 src/xfpm-power.c:675 src/xfpm-power.c:838
-#: src/xfpm-power.c:859 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
+#: src/xfpm-power.c:546 src/xfpm-power.c:575 src/xfpm-power.c:749
+#: src/xfpm-power.c:770 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
 #: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -260,7 +260,7 @@ msgstr "secondi"
 #: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1161
 #: settings/xfpm-settings.c:1253 settings/xfpm-settings.c:1375
 #: settings/xfpm-settings.c:1433 settings/xfpm-settings.c:1485
-#: settings/xfpm-settings.c:1536 src/xfpm-power.c:700
+#: settings/xfpm-settings.c:1536 src/xfpm-power.c:602
 msgid "Suspend"
 msgstr "Sospendi"
 
@@ -276,7 +276,7 @@ msgstr "Operazione di sospensione non supportata"
 #: settings/xfpm-settings.c:1068 settings/xfpm-settings.c:1175
 #: settings/xfpm-settings.c:1259 settings/xfpm-settings.c:1381
 #: settings/xfpm-settings.c:1439 settings/xfpm-settings.c:1491
-#: settings/xfpm-settings.c:1542 src/xfpm-power.c:689
+#: settings/xfpm-settings.c:1542 src/xfpm-power.c:590
 msgid "Hibernate"
 msgstr "Iberna"
 
@@ -306,7 +306,7 @@ msgid "Do nothing"
 msgstr "Non fare niente"
 
 #: settings/xfpm-settings.c:1012 settings/xfpm-settings.c:1387
-#: src/xfpm-power.c:711
+#: src/xfpm-power.c:622
 msgid "Shutdown"
 msgstr "Spegni"
 
@@ -406,11 +406,11 @@ msgstr "Fornitore"
 msgid "Serial"
 msgstr "Seriale"
 
-#: settings/xfpm-settings.c:2435
+#: settings/xfpm-settings.c:2438
 msgid "Check your power manager installation"
 msgstr "Controllare l'installazione del gestore dell'energia"
 
-#: settings/xfpm-settings.c:2528
+#: settings/xfpm-settings.c:2531
 msgid "Devices"
 msgstr "Dispositivi"
 
@@ -443,7 +443,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Fa uscire xfce4-power-manager-settings"
 
 #: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
-#: src/xfpm-main.c:447
+#: src/xfpm-main.c:448
 msgid "Xfce Power Manager"
 msgstr "Gestore dell'energia di Xfce"
 
@@ -677,55 +677,59 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nStato sconosciuto"
 
-#: src/xfpm-power.c:383
+#: src/xfpm-power.c:285
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Un'applicazione sta inibendo l'addormentamento automatico; continuando si potrebbe danneggiare lo stato dell'applicazione.\nSospendere davvero il sistema?"
 
-#: src/xfpm-power.c:432
+#: src/xfpm-power.c:334
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Nessuno degli strumenti per il blocco dello schermo ha funzionato, lo schermo non verrà bloccato.\nContinuare con la sospensione del sistema?"
 
-#: src/xfpm-power.c:597
+#: src/xfpm-power.c:496
 msgid "Hibernate the system"
 msgstr "Iberna il sistema"
 
-#: src/xfpm-power.c:608
+#: src/xfpm-power.c:508
 msgid "Suspend the system"
 msgstr "Sospendi il sistema"
 
-#: src/xfpm-power.c:617
+#: src/xfpm-power.c:528
 msgid "Shutdown the system"
 msgstr "Spegni il sistema"
 
-#: src/xfpm-power.c:628 src/xfpm-power.c:672
+#: src/xfpm-power.c:541 src/xfpm-power.c:572
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "La carica del sistema è bassa. Salvare il proprio lavoro per evitare la perdita di dati"
 
-#: src/xfpm-power.c:718
+#: src/xfpm-power.c:629
 msgid "_Cancel"
 msgstr "A_nnulla"
 
-#: src/xfpm-power.c:839
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "Il sistema ha poca carica"
 
-#: src/xfpm-power.c:855
+#: src/xfpm-power.c:766
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "La %s è in scaricamento\nTempo restante stimato: %s"
 
-#: src/xfpm-power.c:1648 src/xfpm-power.c:1696 src/xfpm-power.c:1728
-#: src/xfpm-power.c:1758
+#: src/xfpm-power.c:1541 src/xfpm-power.c:1585 src/xfpm-power.c:1621
+#: src/xfpm-power.c:1655
 msgid "Permission denied"
 msgstr "Permesso negato"
 
-#: src/xfpm-power.c:1737 src/xfpm-power.c:1767
+#: src/xfpm-power.c:1630
+msgid "Hibernate not supported"
+msgstr "Ibernazione non supportata"
+
+#: src/xfpm-power.c:1664
 msgid "Suspend not supported"
 msgstr "Sospensione non supportata"
 
@@ -895,15 +899,15 @@ msgstr "Digitare \"%s --help\" per le informazioni d'uso."
 msgid "Unable to get connection to the message bus session"
 msgstr "Impossibile connettersi alla sessione di messaggi del bus"
 
-#: src/xfpm-main.c:358
+#: src/xfpm-main.c:358 src/xfpm-main.c:407
 msgid "Xfce power manager is not running"
 msgstr "Il gestore dell'energia di Xfce non è in esecuzione"
 
-#: src/xfpm-main.c:448
+#: src/xfpm-main.c:449
 msgid "Another power manager is already running"
 msgstr "È in esecuzione un altro gestore dell'energia"
 
-#: src/xfpm-main.c:452
+#: src/xfpm-main.c:453
 msgid "Xfce power manager is already running"
 msgstr "Il gestore dell'energia di Xfce è già in esecuzione"
 
@@ -915,7 +919,7 @@ msgstr "Argomenti non validi"
 msgid "Invalid cookie"
 msgstr "Cookie non valido"
 
-#: src/xfpm-manager.c:455
+#: src/xfpm-manager.c:453
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
