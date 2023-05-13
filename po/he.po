@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Elishai Eliyahu <elishai@mailfence.com>, 2016-2017,2019-2020
-# Elishai Eliyahu <elishai@mailfence.com>, 2020-2021
+# Elishai Eliyahu <elishai@mailfence.com>, 2020-2021,2023
 # gk <genghiskhan@gmx.ca>, 2015-2016
 # 63f334ffc0709ba0fc2361b80bf3c0f0_00ffd1e <ab96c93ca0ac55ba7fa06385427e60dd_878890>, 2021-2022
 # 63f334ffc0709ba0fc2361b80bf3c0f0_00ffd1e <ab96c93ca0ac55ba7fa06385427e60dd_878890>, 2020
@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-04-12 12:48+0200\n"
+"POT-Creation-Date: 2023-05-12 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: 63f334ffc0709ba0fc2361b80bf3c0f0_00ffd1e <ab96c93ca0ac55ba7fa06385427e60dd_878890>, 2021-2022\n"
+"Last-Translator: Elishai Eliyahu <elishai@mailfence.com>, 2020-2021,2023\n"
 "Language-Team: Hebrew (http://app.transifex.com/xfce/xfce4-power-manager/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,9 +49,9 @@ msgstr "שום דבר"
 
 #: data/interfaces/xfpm-settings.ui:250
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:357
-#: src/xfpm-power.c:633 src/xfpm-power.c:675 src/xfpm-power.c:838
-#: src/xfpm-power.c:859 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
+#: src/xfpm-power.c:546 src/xfpm-power.c:575 src/xfpm-power.c:749
+#: src/xfpm-power.c:770 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
 #: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -260,7 +260,7 @@ msgstr "שניות"
 #: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1161
 #: settings/xfpm-settings.c:1253 settings/xfpm-settings.c:1375
 #: settings/xfpm-settings.c:1433 settings/xfpm-settings.c:1485
-#: settings/xfpm-settings.c:1536 src/xfpm-power.c:700
+#: settings/xfpm-settings.c:1536 src/xfpm-power.c:602
 msgid "Suspend"
 msgstr "השהה"
 
@@ -276,7 +276,7 @@ msgstr "פעולת השהיה לא נתמכת"
 #: settings/xfpm-settings.c:1068 settings/xfpm-settings.c:1175
 #: settings/xfpm-settings.c:1259 settings/xfpm-settings.c:1381
 #: settings/xfpm-settings.c:1439 settings/xfpm-settings.c:1491
-#: settings/xfpm-settings.c:1542 src/xfpm-power.c:689
+#: settings/xfpm-settings.c:1542 src/xfpm-power.c:590
 msgid "Hibernate"
 msgstr "הרדם"
 
@@ -306,7 +306,7 @@ msgid "Do nothing"
 msgstr "אל תעשה דבר"
 
 #: settings/xfpm-settings.c:1012 settings/xfpm-settings.c:1387
-#: src/xfpm-power.c:711
+#: src/xfpm-power.c:622
 msgid "Shutdown"
 msgstr "כבה"
 
@@ -407,11 +407,11 @@ msgstr "יצרן"
 msgid "Serial"
 msgstr "סידורי"
 
-#: settings/xfpm-settings.c:2435
+#: settings/xfpm-settings.c:2438
 msgid "Check your power manager installation"
 msgstr "בדוק את התקנת מנהל צריכת חשמל שלך"
 
-#: settings/xfpm-settings.c:2528
+#: settings/xfpm-settings.c:2531
 msgid "Devices"
 msgstr "התקנים"
 
@@ -444,7 +444,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "אלץ את xfce4-power-manager-settings להפסיק"
 
 #: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
-#: src/xfpm-main.c:447
+#: src/xfpm-main.c:448
 msgid "Xfce Power Manager"
 msgstr "מנהל צריכת חשמל Xfce"
 
@@ -473,12 +473,6 @@ msgstr "נבנה עם GTK+ %d.%d.%d, מקושר עם GTK+ %d.%d.%d. "
 #: settings/xfce4-power-manager-settings.desktop.in:6
 msgid "Settings for the Xfce Power Manager"
 msgstr "הגדרות עבור מנהל צריכת חשמל Xfce"
-
-#: settings/xfce4-power-manager-settings.desktop.in:8
-#: src/xfce4-power-manager.desktop.in:5
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:6
-msgid "org.xfce.powermanager"
-msgstr ""
 
 #: settings/xfce4-power-manager-settings.desktop.in:12
 msgid ""
@@ -687,55 +681,59 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nמצב לא ידוע"
 
-#: src/xfpm-power.c:383
+#: src/xfpm-power.c:285
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "פועל כעת יישום המונע ביצוע של שינה אוטומטית. ביצוע פעולה זו עשוי לפגום במצב הפעולה של היישום.\nהאם אתה בטוח כי ברצונך להרדים את המערכת?"
 
-#: src/xfpm-power.c:432
+#: src/xfpm-power.c:334
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "אף כלי לנעילת מסך לא פעל בהצלחה, המסך לא יינעל.\nהאם עדיין ברצונך להשהות את המערכת?"
 
-#: src/xfpm-power.c:597
+#: src/xfpm-power.c:496
 msgid "Hibernate the system"
 msgstr "הרדם את המערכת"
 
-#: src/xfpm-power.c:608
+#: src/xfpm-power.c:508
 msgid "Suspend the system"
 msgstr "השהה את המערכת"
 
-#: src/xfpm-power.c:617
+#: src/xfpm-power.c:528
 msgid "Shutdown the system"
 msgstr "כבה את המערכת"
 
-#: src/xfpm-power.c:628 src/xfpm-power.c:672
+#: src/xfpm-power.c:541 src/xfpm-power.c:572
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "המערכת פועלת על אספקת כח נמוכה. שמור את העבודה שלך כדי להימנע מאבדן נתונים"
 
-#: src/xfpm-power.c:718
+#: src/xfpm-power.c:629
 msgid "_Cancel"
 msgstr "_ביטול"
 
-#: src/xfpm-power.c:839
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "המערכת פועלת על אספקת כח נמוכה"
 
-#: src/xfpm-power.c:855
+#: src/xfpm-power.c:766
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "רמת טעינת %s שלך הינה נמוכה\nאומדן זמן נותר %s"
 
-#: src/xfpm-power.c:1648 src/xfpm-power.c:1696 src/xfpm-power.c:1728
-#: src/xfpm-power.c:1758
+#: src/xfpm-power.c:1541 src/xfpm-power.c:1585 src/xfpm-power.c:1621
+#: src/xfpm-power.c:1655
 msgid "Permission denied"
 msgstr "הרשאה נדחתה"
 
-#: src/xfpm-power.c:1737 src/xfpm-power.c:1767
+#: src/xfpm-power.c:1630
+msgid "Hibernate not supported"
+msgstr "מצב שינה לא נתמך"
+
+#: src/xfpm-power.c:1664
 msgid "Suspend not supported"
 msgstr "השהיה לא נתמכת"
 
@@ -905,15 +903,15 @@ msgstr "Type '%s --help' for usage."
 msgid "Unable to get connection to the message bus session"
 msgstr "Unable to get connection to the message bus session"
 
-#: src/xfpm-main.c:358
+#: src/xfpm-main.c:358 src/xfpm-main.c:407
 msgid "Xfce power manager is not running"
 msgstr "Xfce power manager is not running"
 
-#: src/xfpm-main.c:448
+#: src/xfpm-main.c:449
 msgid "Another power manager is already running"
 msgstr "Another power manager is already running"
 
-#: src/xfpm-main.c:452
+#: src/xfpm-main.c:453
 msgid "Xfce power manager is already running"
 msgstr "Xfce power manager is already running"
 
@@ -925,7 +923,7 @@ msgstr "Invalid arguments"
 msgid "Invalid cookie"
 msgstr "Invalid cookie"
 
-#: src/xfpm-manager.c:455
+#: src/xfpm-manager.c:453
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
@@ -934,6 +932,29 @@ msgstr "שום מכלי נעילת המסך לא הצליח לפעול בהצל�
 #: src/xfce4-power-manager.desktop.in:4
 msgid "Power management for the Xfce desktop"
 msgstr "ניהול צריכת חשמל עבור שולחן עבודה Xfce"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to change the backlight brightness.
+#: src/org.xfce.power.policy.in.in:21
+msgid "Modify the laptop display brightness"
+msgstr "שנה את בהירות תצוגת הלפטופ"
+
+#: src/org.xfce.power.policy.in.in:22
+msgid "Authentication is required to modify the laptop display brightness"
+msgstr "נדרש אימות לשינוי בהירות תצוגת הלפטופ"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: src/org.xfce.power.policy.in.in:36
+msgid "Suspend or hibernate the system"
+msgstr "השהה או הכנס למצב שינה את המערכת"
+
+#: src/org.xfce.power.policy.in.in:37
+msgid ""
+"Authentication is required to place the system in suspend or hibernate mode"
+msgstr "נדרש אימות להכנסת המערכת להשהיה או למצב שינה"
 
 #. Odds are this is a desktop without any batteries attached
 #: panel-plugins/power-manager-plugin/power-manager-button.c:294
@@ -1009,11 +1030,11 @@ msgstr "הצג רמות סוללה של ההתקנים שלך ושלוט על ה
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:7
 msgid "Xfce power manager"
-msgstr ""
+msgstr "מנהל צריכת חשמל Xfce"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
-msgstr ""
+msgstr "נהל והפחת צריכת חשמל של מחשב והתקנים"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:11
 msgid ""
