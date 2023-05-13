@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-05 10:44+0200\n"
+"POT-Creation-Date: 2023-05-12 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Саша Петровић <salepetronije@gmail.com>, 2013-2015,2017\n"
 "Language-Team: Serbian (http://app.transifex.com/xfce/xfce4-power-manager/language/sr/)\n"
@@ -50,9 +50,9 @@ msgstr "Ништа"
 
 #: data/interfaces/xfpm-settings.ui:250
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:357
-#: src/xfpm-power.c:633 src/xfpm-power.c:675 src/xfpm-power.c:838
-#: src/xfpm-power.c:859 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
+#: src/xfpm-power.c:546 src/xfpm-power.c:575 src/xfpm-power.c:749
+#: src/xfpm-power.c:770 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
 #: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -261,7 +261,7 @@ msgstr "секунди"
 #: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1161
 #: settings/xfpm-settings.c:1253 settings/xfpm-settings.c:1375
 #: settings/xfpm-settings.c:1433 settings/xfpm-settings.c:1485
-#: settings/xfpm-settings.c:1536 src/xfpm-power.c:700
+#: settings/xfpm-settings.c:1536 src/xfpm-power.c:602
 msgid "Suspend"
 msgstr "Обустави"
 
@@ -277,7 +277,7 @@ msgstr "Операција обуставе није подржана"
 #: settings/xfpm-settings.c:1068 settings/xfpm-settings.c:1175
 #: settings/xfpm-settings.c:1259 settings/xfpm-settings.c:1381
 #: settings/xfpm-settings.c:1439 settings/xfpm-settings.c:1491
-#: settings/xfpm-settings.c:1542 src/xfpm-power.c:689
+#: settings/xfpm-settings.c:1542 src/xfpm-power.c:590
 msgid "Hibernate"
 msgstr "Замрзни"
 
@@ -307,7 +307,7 @@ msgid "Do nothing"
 msgstr "Не ради ништа"
 
 #: settings/xfpm-settings.c:1012 settings/xfpm-settings.c:1387
-#: src/xfpm-power.c:711
+#: src/xfpm-power.c:622
 msgid "Shutdown"
 msgstr "Искључи"
 
@@ -407,11 +407,11 @@ msgstr "Испоручилац"
 msgid "Serial"
 msgstr "Серијски"
 
-#: settings/xfpm-settings.c:2435
+#: settings/xfpm-settings.c:2438
 msgid "Check your power manager installation"
 msgstr "Проверите уградњу управника потрошње"
 
-#: settings/xfpm-settings.c:2528
+#: settings/xfpm-settings.c:2531
 msgid "Devices"
 msgstr "Уређаји"
 
@@ -444,7 +444,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Нека се поставке управника потрошње иксфце-а затворе"
 
 #: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
-#: src/xfpm-main.c:447
+#: src/xfpm-main.c:448
 msgid "Xfce Power Manager"
 msgstr "Управник потрошње Искфце-а 4"
 
@@ -678,55 +678,59 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\t\nСтање није одређено"
 
-#: src/xfpm-power.c:383
+#: src/xfpm-power.c:285
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Програм тренутно онемогућава самостално успављивање. Применом ове радње се може оштетити радно стање програма.\nДа ли сте сигурни да желите да замрзнете систем?"
 
-#: src/xfpm-power.c:432
+#: src/xfpm-power.c:334
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Ни један прибор за закључавање екрана се не извршава успешно, екран се неће закључати.\nДа ли и даље желите да обуставите систем?"
 
-#: src/xfpm-power.c:597
+#: src/xfpm-power.c:496
 msgid "Hibernate the system"
 msgstr "Замрзни систем"
 
-#: src/xfpm-power.c:608
+#: src/xfpm-power.c:508
 msgid "Suspend the system"
 msgstr "Обустави систем"
 
-#: src/xfpm-power.c:617
+#: src/xfpm-power.c:528
 msgid "Shutdown the system"
 msgstr "Искључи систем"
 
-#: src/xfpm-power.c:628 src/xfpm-power.c:672
+#: src/xfpm-power.c:541 src/xfpm-power.c:572
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Систем ради са напајањем на истеку. Сачувајте свој рад да би избегли губитак података"
 
-#: src/xfpm-power.c:718
+#: src/xfpm-power.c:629
 msgid "_Cancel"
 msgstr "_Откажи"
 
-#: src/xfpm-power.c:839
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "Систем ради са напајањем на истеку"
 
-#: src/xfpm-power.c:855
+#: src/xfpm-power.c:766
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Пуњење %s је ниско\nпроцењено преостало време је %s"
 
-#: src/xfpm-power.c:1648 src/xfpm-power.c:1696 src/xfpm-power.c:1728
-#: src/xfpm-power.c:1758
+#: src/xfpm-power.c:1541 src/xfpm-power.c:1585 src/xfpm-power.c:1621
+#: src/xfpm-power.c:1655
 msgid "Permission denied"
 msgstr "Дозвола је одбијена"
 
-#: src/xfpm-power.c:1737 src/xfpm-power.c:1767
+#: src/xfpm-power.c:1630
+msgid "Hibernate not supported"
+msgstr "Успављивање није подржано"
+
+#: src/xfpm-power.c:1664
 msgid "Suspend not supported"
 msgstr "Обустава није подржана"
 
@@ -896,15 +900,15 @@ msgstr "Упишите „%s --help“ за употребу."
 msgid "Unable to get connection to the message bus session"
 msgstr "Нисам успео да добавим везу до седнице сабирнице порука"
 
-#: src/xfpm-main.c:358
+#: src/xfpm-main.c:358 src/xfpm-main.c:407
 msgid "Xfce power manager is not running"
 msgstr "ИксФЦЕ управник потрошње није покренут"
 
-#: src/xfpm-main.c:448
+#: src/xfpm-main.c:449
 msgid "Another power manager is already running"
 msgstr "Неки други управник потрошње је у погону"
 
-#: src/xfpm-main.c:452
+#: src/xfpm-main.c:453
 msgid "Xfce power manager is already running"
 msgstr "ИксФЦЕ управник потрошње је већ у употреби"
 
@@ -916,7 +920,7 @@ msgstr "Неисправни аргументи"
 msgid "Invalid cookie"
 msgstr "Неважећи колачић"
 
-#: src/xfpm-manager.c:455
+#: src/xfpm-manager.c:453
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
