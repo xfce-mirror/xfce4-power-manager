@@ -46,7 +46,6 @@ static void xfpm_xfconf_finalize   (GObject *object);
 struct XfpmXfconfPrivate
 {
   XfconfChannel   *channel;
-  XfconfChannel   *session_channel;
   GValue          *values;
 };
 
@@ -204,31 +203,6 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
   XFPM_DEBUG ("Property modified: %s\n", property);
 
   g_object_set_property (G_OBJECT (conf), property + strlen (XFPM_PROPERTIES_PREFIX), value);
-}
-
-static void
-xfpm_xfsession_property_changed_cb (XfconfChannel *channel, gchar *property,
-         GValue *value, XfpmXfconf *conf)
-{
-  /*FIXME: Set default for this key*/
-  if ( G_VALUE_TYPE(value) == G_TYPE_INVALID )
-    return;
-
-  XFPM_DEBUG ("property %s\n", property);
-
-  if ( g_strcmp0 (property, "/shutdown/LockScreen") != 0)
-    return;
-
-  /* sanity check */
-  if ( !G_VALUE_HOLDS (value, G_TYPE_BOOLEAN) )
-    return;
-
-  XFPM_DEBUG ("Property modified: %s\n", property);
-
-  /* update xfconf which will update xfpm and keep things in sync */
-  xfconf_channel_set_bool (conf->priv->channel,
-                           XFPM_PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP,
-                           g_value_get_boolean(value));
 }
 
 static void
@@ -648,7 +622,6 @@ static void
 xfpm_xfconf_init (XfpmXfconf *conf)
 {
   GError *error = NULL;
-  gboolean lock_screen;
 
   conf->priv = xfpm_xfconf_get_instance_private (conf);
 
@@ -665,26 +638,8 @@ xfpm_xfconf_init (XfpmXfconf *conf)
   else
   {
     conf->priv->channel = xfconf_channel_get (XFPM_CHANNEL);
-    conf->priv->session_channel = xfconf_channel_get ("xfce4-session");
-
-    /* if xfce4-session is around, sync to it on startup */
-    if ( xfconf_channel_has_property (conf->priv->session_channel, "/shutdown/LockScreen") )
-    {
-      lock_screen = xfconf_channel_get_bool (conf->priv->session_channel,
-                                             "/shutdown/LockScreen",
-                                             TRUE);
-
-      XFPM_DEBUG("lock screen %s", lock_screen ? "TRUE" : "FALSE");
-
-      g_object_set (G_OBJECT (conf), LOCK_SCREEN_ON_SLEEP, lock_screen, NULL);
-    }
-
     g_signal_connect (conf->priv->channel, "property-changed",
                       G_CALLBACK (xfpm_xfconf_property_changed_cb), conf);
-
-    /* watch for session's property change so we can stay in sync */
-    g_signal_connect (conf->priv->session_channel, "property-changed",
-                      G_CALLBACK (xfpm_xfsession_property_changed_cb), conf);
   }
   xfpm_xfconf_load (conf);
 }
