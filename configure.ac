@@ -61,7 +61,7 @@ m4_define([gtk_minimum_version], [3.24.0])
 m4_define([glib_minimum_version], [2.66.0])
 
 m4_define([xfconf_minimum_version], [4.12.0])
-m4_define([libxfce4ui_minimum_version],[4.18.2])
+m4_define([libxfce4ui_minimum_version],[4.18.4])
 m4_define([libxfce4util_minimum_version],[4.19.2])
 m4_define([libxfce4panel_minimum_version],[4.12.0])
 
