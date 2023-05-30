@@ -448,7 +448,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
      * - if ConsoleKit2 is running then use it
      * - if everything else fails use our built-in fallback
      */
-  if (manager->priv->systemd != NULL)
+  if (power->priv->systemd != NULL)
   {
     xfpm_systemd_sleep (power->priv->systemd, sleep_time, &error);
   }
@@ -1649,7 +1649,7 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
     return TRUE;
   }
 
-  if (manager->priv->systemd != NULL)
+  if (power->priv->systemd != NULL)
     xfpm_systemd_shutdown (power->priv->systemd, &error);
   else
     xfpm_console_kit_shutdown (power->priv->console, &error);
@@ -1697,7 +1697,7 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
     return TRUE;
   }
 
-  if (manager->priv->systemd != NULL)
+  if (power->priv->systemd != NULL)
     xfpm_systemd_reboot (power->priv->systemd, &error);
   else
     xfpm_console_kit_reboot (power->priv->console, &error);
