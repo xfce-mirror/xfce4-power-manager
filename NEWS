@@ -1,3 +1,25 @@
+4.19.1 (2023-05-30)
+======
+- Keep "lock-on-sleep" in sync with other components via XfceScreensaver
+- Use authorization info from systemd/ConsoleKit
+- power: Fix old typo
+- Use updated session management API
+- power: Do not cache sleep capacities
+- Do not check repeatedly for logind running
+- Use XfceConsolekit and XfceSystemd from libxfce4util
+- Write on stderr when appropriate
+- build: Require gio-unix-2.0
+- settings: Keep a ref on device to avoid use-after-free (Fixes #56)
+- dpms: Add missing sanity checks (Fixes #163)
+- I18n: Update po/LINGUAS list
+- I18n: Update po/LINGUAS list
+- build: Use XDT_CHECK_OPTIONAL_PACKAGE for polkit
+- Translation Updates:
+  Albanian, Bulgarian, Chinese (China), Chinese (Taiwan), Dutch,
+  English (United Kingdom), French, German, Hebrew, Italian, Japanese,
+  Korean, Lithuanian, Norwegian Bokmål, Polish, Portuguese, Portuguese
+  (Brazil), Russian, Serbian, Slovenian, Swedish, Turkish, Ukrainian
+
 4.19.0 (2023-04-18)
 ======
 - configure.ac: not check X11/extensions/scrnsaver.h
