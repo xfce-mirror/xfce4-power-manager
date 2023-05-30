@@ -1,6 +1,6 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-power-manager.xfce-4-18 package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
@@ -14,9 +14,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-power-manager.xfce-4-18\n"
-"Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-29 11:56+0200\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-30 00:48+0200\n"
 "PO-Revision-Date: 2023-02-20 11:54+0000\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>, 2023\n"
 "Language-Team: Korean (https://app.transifex.com/xfce/teams/16840/ko/)\n"
@@ -26,453 +26,444 @@ msgstr ""
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: data/interfaces/xfpm-settings.ui:110 settings/xfpm-settings.c:649
-#: settings/xfpm-settings.c:664 settings/xfpm-settings.c:693
-#: settings/xfpm-settings.c:1678
+#: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:649
+#: ../settings/xfpm-settings.c:664 ../settings/xfpm-settings.c:691
+#: ../settings/xfpm-settings.c:1659
 msgid "Never"
 msgstr "안함"
 
-#: data/interfaces/xfpm-settings.ui:114
+#: ../data/interfaces/xfpm-settings.ui.h:2
 msgid "When the screensaver is activated"
 msgstr "화면 보호기를 활성화 할 때"
 
-#: data/interfaces/xfpm-settings.ui:118
+#: ../data/interfaces/xfpm-settings.ui.h:3
 msgid "When the screensaver is deactivated"
 msgstr "화면 보호기를 비활성화 할 때"
 
-#: data/interfaces/xfpm-settings.ui:129 data/interfaces/xfpm-settings.ui:140
-#: data/interfaces/xfpm-settings.ui:151 data/interfaces/xfpm-settings.ui:162
-#: data/interfaces/xfpm-settings.ui:173 data/interfaces/xfpm-settings.ui:184
-#: data/interfaces/xfpm-settings.ui:195 data/interfaces/xfpm-settings.ui:206
-#: data/interfaces/xfpm-settings.ui:217 data/interfaces/xfpm-settings.ui:228
+#: ../data/interfaces/xfpm-settings.ui.h:4
 msgid "Nothing"
 msgstr "아무것도 안 함"
 
-#: data/interfaces/xfpm-settings.ui:250
-#: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
-#: src/xfpm-power.c:546 src/xfpm-power.c:575 src/xfpm-power.c:749
-#: src/xfpm-power.c:770 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
-#: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
-#: src/xfce4-power-manager.desktop.in:3
+#: ../data/interfaces/xfpm-settings.ui.h:5
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:1
+#: ../src/xfpm-power.c:357 ../src/xfpm-power.c:633 ../src/xfpm-power.c:675
+#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:166
+#: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
+#: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "전원 관리자"
 
-#: data/interfaces/xfpm-settings.ui:265
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:160
+#: ../data/interfaces/xfpm-settings.ui.h:6
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:160
 msgid "_Help"
 msgstr "도움말(_H)"
 
-#: data/interfaces/xfpm-settings.ui:280
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
+#: ../data/interfaces/xfpm-settings.ui.h:7
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
 msgid "_Close"
 msgstr "닫기(_C)"
 
-#: data/interfaces/xfpm-settings.ui:342
+#: ../data/interfaces/xfpm-settings.ui.h:8
 msgid "When power button is pressed:"
 msgstr "전원 단추를 눌렀을 때:"
 
-#: data/interfaces/xfpm-settings.ui:354
+#: ../data/interfaces/xfpm-settings.ui.h:9
 msgid "When sleep button is pressed:"
 msgstr "대기 단추를 눌렀을 때:"
 
-#: data/interfaces/xfpm-settings.ui:366
+#: ../data/interfaces/xfpm-settings.ui.h:10
 msgid "When hibernate button is pressed:"
 msgstr "최대 절전 단추를 눌렀을 때:"
 
-#: data/interfaces/xfpm-settings.ui:378
+#: ../data/interfaces/xfpm-settings.ui.h:11
 msgid "When battery button is pressed:"
 msgstr "배터리 버튼을 누른 경우:"
 
-#: data/interfaces/xfpm-settings.ui:493
+#: ../data/interfaces/xfpm-settings.ui.h:12
 msgid "Exponential"
 msgstr "지수 증가"
 
-#: data/interfaces/xfpm-settings.ui:516
+#: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Brightness step count:"
 msgstr "밝기 조절 단계 수:"
 
-#: data/interfaces/xfpm-settings.ui:527
+#: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Handle display brightness _keys"
 msgstr "화면 밝기 단추 조정(_K)"
 
-#: data/interfaces/xfpm-settings.ui:550
+#: ../data/interfaces/xfpm-settings.ui.h:15
 msgid "<b>Buttons</b>"
 msgstr "<b>단추</b>"
 
-#: data/interfaces/xfpm-settings.ui:584
+#: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Status notifications"
 msgstr "상태 알림"
 
-#: data/interfaces/xfpm-settings.ui:622
+#: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "System tray icon"
 msgstr "시스템 트레이 아이콘"
 
-#: data/interfaces/xfpm-settings.ui:658
+#: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>Appearance</b>"
 msgstr "<b>모양새</b>"
 
-#: data/interfaces/xfpm-settings.ui:678
+#: ../data/interfaces/xfpm-settings.ui.h:19
 msgid "General"
 msgstr "일반"
 
-#: data/interfaces/xfpm-settings.ui:723 data/interfaces/xfpm-settings.ui:928
+#: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "When inactive for"
 msgstr "사용하지 않을때에 대한"
 
-#: data/interfaces/xfpm-settings.ui:797 data/interfaces/xfpm-settings.ui:1002
+#: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "System sleep mode:"
 msgstr "시스템 대기 상태:"
 
-#: data/interfaces/xfpm-settings.ui:809 data/interfaces/xfpm-settings.ui:1014
+#: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "<b>System power saving</b>"
 msgstr "<b>시스템 절전</b>"
 
-#: data/interfaces/xfpm-settings.ui:824 data/interfaces/xfpm-settings.ui:913
+#: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>랩톱 뚜껑</b>"
 
-#: data/interfaces/xfpm-settings.ui:839 data/interfaces/xfpm-settings.ui:882
+#: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "When laptop lid is closed:"
 msgstr "랩톱 뚜껑을 닫았을 때:"
 
-#: data/interfaces/xfpm-settings.ui:868 data/interfaces/xfpm-settings.ui:1611
+#: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "On battery"
 msgstr "배터리 동작 상태"
 
-#: data/interfaces/xfpm-settings.ui:1027 data/interfaces/xfpm-settings.ui:1925
-#: common/xfpm-power-common.c:416
+#: ../data/interfaces/xfpm-settings.ui.h:26 ../common/xfpm-power-common.c:416
 msgid "Plugged in"
 msgstr "전원 연결됨"
 
-#: data/interfaces/xfpm-settings.ui:1063
+#: ../data/interfaces/xfpm-settings.ui.h:27
 msgid "Critical battery power level:"
 msgstr "치명적인 배터리 전원 수준:"
 
-#: data/interfaces/xfpm-settings.ui:1094 settings/xfpm-settings.c:712
+#: ../data/interfaces/xfpm-settings.ui.h:29 ../settings/xfpm-settings.c:699
+#, no-c-format
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1118
+#: ../data/interfaces/xfpm-settings.ui.h:30
 msgid "On critical battery power:"
 msgstr "치명적 배터리 전원 상태시:"
 
-#: data/interfaces/xfpm-settings.ui:1158
+#: ../data/interfaces/xfpm-settings.ui.h:31
 msgid "<b>Critical power</b>"
 msgstr "<b>치명적인 전력</b>"
 
-#: data/interfaces/xfpm-settings.ui:1187 data/interfaces/xfpm-settings.ui:2068
+#: ../data/interfaces/xfpm-settings.ui.h:32
 msgid "Lock screen when system is going to sleep"
 msgstr "시스템이 대기 상태에 진입할 때 화면 잠금"
 
-#: data/interfaces/xfpm-settings.ui:1207
+#: ../data/interfaces/xfpm-settings.ui.h:33
 msgid "<b>Security</b>"
 msgstr "<b>보안</b>"
 
-#: data/interfaces/xfpm-settings.ui:1227
+#: ../data/interfaces/xfpm-settings.ui.h:34
 msgid "System"
 msgstr "시스템"
 
-#: data/interfaces/xfpm-settings.ui:1266
+#: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "<b>Display power management</b>"
 msgstr "<b>디스플레이 전원 관리자</b>"
 
-#: data/interfaces/xfpm-settings.ui:1279
+#: ../data/interfaces/xfpm-settings.ui.h:36
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
 msgstr "전원 관리자가 X11 대신 디스플레이 전원 관리(DPMS)를 처리하도록 합니다."
 
-#: data/interfaces/xfpm-settings.ui:1312 data/interfaces/xfpm-settings.ui:1669
+#: ../data/interfaces/xfpm-settings.ui.h:37
 msgid "Blank after"
 msgstr "다음 시간 후 화면 비우기"
 
-#: data/interfaces/xfpm-settings.ui:1413 data/interfaces/xfpm-settings.ui:1682
+#: ../data/interfaces/xfpm-settings.ui.h:38
 msgid "Put to sleep after"
 msgstr "다음 시간 후 대기"
 
-#: data/interfaces/xfpm-settings.ui:1426 data/interfaces/xfpm-settings.ui:1695
+#: ../data/interfaces/xfpm-settings.ui.h:39
 msgid "Switch off after"
 msgstr "다음 시간 후 전원 끄기"
 
-#: data/interfaces/xfpm-settings.ui:1484 data/interfaces/xfpm-settings.ui:1724
+#: ../data/interfaces/xfpm-settings.ui.h:40
 msgid "On inactivity reduce to"
 msgstr "동작이 없으면 다음 값만큼 밝기 감소"
 
-#: data/interfaces/xfpm-settings.ui:1497 data/interfaces/xfpm-settings.ui:1737
+#: ../data/interfaces/xfpm-settings.ui.h:41
 msgid "Reduce after"
 msgstr "다음 시간 후 밝기 감소"
 
-#: data/interfaces/xfpm-settings.ui:1598 data/interfaces/xfpm-settings.ui:1708
+#: ../data/interfaces/xfpm-settings.ui.h:42
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>밝기 감소</b>"
 
-#: data/interfaces/xfpm-settings.ui:1945
+#: ../data/interfaces/xfpm-settings.ui.h:43
 msgid "Display"
 msgstr "디스플레이"
 
-#: data/interfaces/xfpm-settings.ui:1984
+#: ../data/interfaces/xfpm-settings.ui.h:44
 msgid "Automatically lock the session:"
 msgstr "세션 자동 잠금:"
 
-#: data/interfaces/xfpm-settings.ui:2015
+#: ../data/interfaces/xfpm-settings.ui.h:45
 msgid "Delay locking after screensaver for"
 msgstr "화면 보호기 구동 후 다음 시간동안 잠금 지연"
 
-#: data/interfaces/xfpm-settings.ui:2096
+#: ../data/interfaces/xfpm-settings.ui.h:46
 msgid "<b>Light Locker</b>"
 msgstr "<b>라이트 잠금</b>"
 
-#: data/interfaces/xfpm-settings.ui:2116
+#: ../data/interfaces/xfpm-settings.ui.h:47
 msgid "Security"
 msgstr "보안"
 
-#: settings/xfpm-settings.c:652 settings/xfpm-settings.c:702
-#: settings/xfpm-settings.c:703
+#: ../settings/xfpm-settings.c:652
 msgid "One minute"
 msgstr "1분"
 
-#: settings/xfpm-settings.c:654 settings/xfpm-settings.c:666
-#: settings/xfpm-settings.c:677 settings/xfpm-settings.c:681
-#: settings/xfpm-settings.c:705 settings/xfpm-settings.c:706
-#: settings/xfpm-settings.c:1687
+#: ../settings/xfpm-settings.c:654 ../settings/xfpm-settings.c:666
+#: ../settings/xfpm-settings.c:677 ../settings/xfpm-settings.c:681
+#: ../settings/xfpm-settings.c:1668
 msgid "minutes"
 msgstr "분"
 
-#: settings/xfpm-settings.c:668 settings/xfpm-settings.c:675
-#: settings/xfpm-settings.c:676 settings/xfpm-settings.c:677
+#: ../settings/xfpm-settings.c:668 ../settings/xfpm-settings.c:675
+#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:677
 msgid "One hour"
 msgstr "1시간"
 
-#: settings/xfpm-settings.c:676 settings/xfpm-settings.c:680
+#: ../settings/xfpm-settings.c:676 ../settings/xfpm-settings.c:680
 msgid "one minute"
 msgstr "1분"
 
-#: settings/xfpm-settings.c:679 settings/xfpm-settings.c:680
-#: settings/xfpm-settings.c:681
+#: ../settings/xfpm-settings.c:679 ../settings/xfpm-settings.c:680
+#: ../settings/xfpm-settings.c:681
 msgid "hours"
 msgstr "시간"
 
-#: settings/xfpm-settings.c:700 settings/xfpm-settings.c:703
-#: settings/xfpm-settings.c:706 settings/xfpm-settings.c:1680
+#: ../settings/xfpm-settings.c:693 ../settings/xfpm-settings.c:1661
 msgid "seconds"
 msgstr "초"
 
-#: settings/xfpm-settings.c:915 settings/xfpm-settings.c:994
-#: settings/xfpm-settings.c:1056 settings/xfpm-settings.c:1155
-#: settings/xfpm-settings.c:1247 settings/xfpm-settings.c:1369
-#: settings/xfpm-settings.c:1427 settings/xfpm-settings.c:1479
-#: settings/xfpm-settings.c:1530 src/xfpm-power.c:602
+#: ../settings/xfpm-settings.c:902 ../settings/xfpm-settings.c:981
+#: ../settings/xfpm-settings.c:1043 ../settings/xfpm-settings.c:1139
+#: ../settings/xfpm-settings.c:1231 ../settings/xfpm-settings.c:1350
+#: ../settings/xfpm-settings.c:1408 ../settings/xfpm-settings.c:1460
+#: ../settings/xfpm-settings.c:1511 ../src/xfpm-power.c:700
 msgid "Suspend"
 msgstr "대기"
 
-#: settings/xfpm-settings.c:919 settings/xfpm-settings.c:1159
+#: ../settings/xfpm-settings.c:906 ../settings/xfpm-settings.c:1143
 msgid "Suspend operation not permitted"
 msgstr "절전 동작을 수행하지 않았습니다"
 
-#: settings/xfpm-settings.c:923 settings/xfpm-settings.c:1163
+#: ../settings/xfpm-settings.c:910 ../settings/xfpm-settings.c:1147
 msgid "Suspend operation not supported"
 msgstr "절전 동작을 지원하지 않습니다"
 
-#: settings/xfpm-settings.c:929 settings/xfpm-settings.c:1000
-#: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1169
-#: settings/xfpm-settings.c:1253 settings/xfpm-settings.c:1375
-#: settings/xfpm-settings.c:1433 settings/xfpm-settings.c:1485
-#: settings/xfpm-settings.c:1536 src/xfpm-power.c:590
+#: ../settings/xfpm-settings.c:916 ../settings/xfpm-settings.c:987
+#: ../settings/xfpm-settings.c:1049 ../settings/xfpm-settings.c:1153
+#: ../settings/xfpm-settings.c:1237 ../settings/xfpm-settings.c:1356
+#: ../settings/xfpm-settings.c:1414 ../settings/xfpm-settings.c:1466
+#: ../settings/xfpm-settings.c:1517 ../src/xfpm-power.c:689
 msgid "Hibernate"
 msgstr "최대 절전"
 
-#: settings/xfpm-settings.c:933 settings/xfpm-settings.c:1173
+#: ../settings/xfpm-settings.c:920 ../settings/xfpm-settings.c:1157
 msgid "Hibernate operation not permitted"
 msgstr "최대 절전 동작을 수행하지 않았습니다"
 
-#: settings/xfpm-settings.c:937 settings/xfpm-settings.c:1177
+#: ../settings/xfpm-settings.c:924 ../settings/xfpm-settings.c:1161
 msgid "Hibernate operation not supported"
 msgstr "최대 절전 동작을 지원하지 않습니다"
 
-#: settings/xfpm-settings.c:967 settings/xfpm-settings.c:1207
-#: settings/xfpm-settings.c:1636 settings/xfpm-settings.c:1763
+#: ../settings/xfpm-settings.c:954 ../settings/xfpm-settings.c:1191
+#: ../settings/xfpm-settings.c:1617 ../settings/xfpm-settings.c:1744
 msgid "Hibernate and suspend operations not supported"
 msgstr "최대 절전과 절전 동작을 지원하지 않습니다"
 
-#: settings/xfpm-settings.c:972 settings/xfpm-settings.c:1212
-#: settings/xfpm-settings.c:1641 settings/xfpm-settings.c:1768
+#: ../settings/xfpm-settings.c:959 ../settings/xfpm-settings.c:1196
+#: ../settings/xfpm-settings.c:1622 ../settings/xfpm-settings.c:1749
 msgid "Hibernate and suspend operations not permitted"
 msgstr "최대 절전과 절전 동작을 허용하지 않습니다"
 
-#: settings/xfpm-settings.c:989 settings/xfpm-settings.c:1069
-#: settings/xfpm-settings.c:1260 settings/xfpm-settings.c:1364
-#: settings/xfpm-settings.c:1422 settings/xfpm-settings.c:1474
-#: settings/xfpm-settings.c:1525
+#: ../settings/xfpm-settings.c:976 ../settings/xfpm-settings.c:1345
+#: ../settings/xfpm-settings.c:1403 ../settings/xfpm-settings.c:1455
+#: ../settings/xfpm-settings.c:1506
 msgid "Do nothing"
 msgstr "아무것도 안함"
 
-#: settings/xfpm-settings.c:1006 settings/xfpm-settings.c:1381
-#: src/xfpm-power.c:622
+#: ../settings/xfpm-settings.c:993 ../settings/xfpm-settings.c:1362
+#: ../src/xfpm-power.c:711
 msgid "Shutdown"
 msgstr "시스템 종료"
 
-#: settings/xfpm-settings.c:1010 settings/xfpm-settings.c:1385
-#: settings/xfpm-settings.c:1437 settings/xfpm-settings.c:1489
-#: settings/xfpm-settings.c:1540
+#: ../settings/xfpm-settings.c:997 ../settings/xfpm-settings.c:1366
+#: ../settings/xfpm-settings.c:1418 ../settings/xfpm-settings.c:1470
+#: ../settings/xfpm-settings.c:1521
 msgid "Ask"
 msgstr "질문"
 
-#: settings/xfpm-settings.c:1051 settings/xfpm-settings.c:1242
+#: ../settings/xfpm-settings.c:1038 ../settings/xfpm-settings.c:1226
 msgid "Switch off display"
 msgstr "화면 끄기"
 
-#: settings/xfpm-settings.c:1066 settings/xfpm-settings.c:1257
+#: ../settings/xfpm-settings.c:1053 ../settings/xfpm-settings.c:1241
 msgid "Lock screen"
 msgstr "화면 잠금"
 
-#: settings/xfpm-settings.c:1569
+#: ../settings/xfpm-settings.c:1550
 msgid "Number of brightness steps available using keys"
 msgstr "키로 조절할 수 있는 밝기 조절 단계 수"
 
-#: settings/xfpm-settings.c:1609
+#: ../settings/xfpm-settings.c:1590
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "컴퓨터의 모든 전원 자원이 이 충전 수준에 도달하였을 때"
 
-#: settings/xfpm-settings.c:1685 common/xfpm-power-common.c:166
+#: ../settings/xfpm-settings.c:1666 ../common/xfpm-power-common.c:166
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "분\t"
 
-#: settings/xfpm-settings.c:2052
+#: ../settings/xfpm-settings.c:2033
 msgid "Device"
 msgstr "장치"
 
-#: settings/xfpm-settings.c:2074
+#: ../settings/xfpm-settings.c:2055
 msgid "Type"
 msgstr "형식"
 
-#: settings/xfpm-settings.c:2079
+#: ../settings/xfpm-settings.c:2060
 msgid "PowerSupply"
 msgstr "전원공급장치"
 
-#: settings/xfpm-settings.c:2080 src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2061 ../src/xfpm-main.c:77
 msgid "True"
 msgstr "참"
 
-#: settings/xfpm-settings.c:2080 src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2061 ../src/xfpm-main.c:77
 msgid "False"
 msgstr "거짓"
 
-#: settings/xfpm-settings.c:2087
+#: ../settings/xfpm-settings.c:2068
 msgid "Model"
 msgstr "모델"
 
-#: settings/xfpm-settings.c:2090
+#: ../settings/xfpm-settings.c:2071
 msgid "Technology"
 msgstr "기술"
 
-#: settings/xfpm-settings.c:2097
+#: ../settings/xfpm-settings.c:2078
 msgid "Current charge"
 msgstr "현재 충전 상태"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:2105 settings/xfpm-settings.c:2117
-#: settings/xfpm-settings.c:2129
+#: ../settings/xfpm-settings.c:2086 ../settings/xfpm-settings.c:2098
+#: ../settings/xfpm-settings.c:2110
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:2107
+#: ../settings/xfpm-settings.c:2088
 msgid "Fully charged (design)"
 msgstr "완충 (설계)"
 
-#: settings/xfpm-settings.c:2120
+#: ../settings/xfpm-settings.c:2101
 msgid "Fully charged"
 msgstr "완충함"
 
-#: settings/xfpm-settings.c:2131
+#: ../settings/xfpm-settings.c:2112
 msgid "Energy empty"
 msgstr "에너지 없음"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:2139
+#: ../settings/xfpm-settings.c:2120
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:2141
+#: ../settings/xfpm-settings.c:2122
 msgid "Voltage"
 msgstr "전압"
 
-#: settings/xfpm-settings.c:2148
+#: ../settings/xfpm-settings.c:2129
 msgid "Vendor"
 msgstr "제조업체"
 
-#: settings/xfpm-settings.c:2153
+#: ../settings/xfpm-settings.c:2134
 msgid "Serial"
 msgstr "시리얼"
 
-#: settings/xfpm-settings.c:2432
+#: ../settings/xfpm-settings.c:2413
 msgid "Check your power manager installation"
 msgstr "전원 관리자 설치를 확인합니다"
 
-#: settings/xfpm-settings.c:2525
+#: ../settings/xfpm-settings.c:2506
 msgid "Devices"
 msgstr "장치"
 
-#: settings/xfpm-settings-app.c:74
+#: ../settings/xfpm-settings-app.c:74
 msgid "Settings manager socket"
 msgstr "설정 관리자 소켓"
 
-#: settings/xfpm-settings-app.c:74
+#: ../settings/xfpm-settings-app.c:74
 msgid "SOCKET ID"
 msgstr "소켓 ID"
 
-#: settings/xfpm-settings-app.c:75
+#: ../settings/xfpm-settings-app.c:75
 msgid "Display a specific device by UpDevice object path"
 msgstr "상위 장치 객체 경로로 지정 장치 표시"
 
-#: settings/xfpm-settings-app.c:75
+#: ../settings/xfpm-settings-app.c:75
 msgid "UpDevice object path"
 msgstr "상위 장치 객체 경로"
 
-#: settings/xfpm-settings-app.c:76 src/xfpm-main.c:276
+#: ../settings/xfpm-settings-app.c:76 ../src/xfpm-main.c:276
 msgid "Enable debugging"
 msgstr "디버깅 활성화"
 
-#: settings/xfpm-settings-app.c:77
+#: ../settings/xfpm-settings-app.c:77
 msgid "Display version information"
 msgstr "버전 정보를 표시합니다"
 
-#: settings/xfpm-settings-app.c:78
+#: ../settings/xfpm-settings-app.c:78
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "xfce4-power-manager-settings를 나가게 합니다"
 
-#: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
-#: src/xfpm-main.c:448
+#: ../settings/xfpm-settings-app.c:174 ../settings/xfpm-settings-app.c:221
+#: ../src/xfpm-main.c:448
 msgid "Xfce Power Manager"
 msgstr "Xfce 전원 관리자"
 
-#: settings/xfpm-settings-app.c:176
+#: ../settings/xfpm-settings-app.c:176
 msgid "Failed to connect to power manager"
 msgstr "전원 관리자 연결에 실패했습니다"
 
-#: settings/xfpm-settings-app.c:190
+#: ../settings/xfpm-settings-app.c:190
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 전원 관리자가 실행중이 아닙니다. 실행 하시렵니까?"
 
-#: settings/xfpm-settings-app.c:223
+#: ../settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
 msgstr "전원 관리자 설정을 불러오는데 실패했습니다. 기본값을 사용합니다."
 
-#: settings/xfpm-settings-app.c:356
+#: ../settings/xfpm-settings-app.c:356
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "%s 버전 %s 입니다. xfce %s에서 실행 중입니다.\n"
 
-#: settings/xfpm-settings-app.c:358
+#: ../settings/xfpm-settings-app.c:358
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "GTK+ %d.%d.%d에서 빌드하고 GTK+ %d.%d.%d에 연결했습니다."
 
-#: settings/xfce4-power-manager-settings.desktop.in:6
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
 msgstr "Xfce 전원 관리자를 설정합니다"
 
-#: settings/xfce4-power-manager-settings.desktop.in:12
+#: ../settings/xfce4-power-manager-settings.desktop.in.h:3
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
@@ -483,93 +474,93 @@ msgstr ""
 " 끄기;brightness;밝기;laptop lid;랩톱뚜껑;랩톱 뚜껑;랩톱덮개;랩톱 덮개;lock screen;화면잠금;화면 "
 "잠금;plugged in;연결함;saving;절약;critical;치명;부족;"
 
-#: common/xfpm-common.c:120
+#: ../common/xfpm-common.c:120
 msgid "translator-credits"
 msgstr ""
 "ByungHyun Choi<byunghyun.choi@gmail.com>\n"
 "Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Junggyu Park <bagjunggyu@gmail.com>"
 
-#: common/xfpm-power-common.c:45 common/xfpm-power-common.c:68
+#: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
 msgstr "배터리"
 
-#: common/xfpm-power-common.c:47
+#: ../common/xfpm-power-common.c:47
 msgid "Uninterruptible Power Supply"
 msgstr "무정전 전원 장치"
 
-#: common/xfpm-power-common.c:49
+#: ../common/xfpm-power-common.c:49
 msgid "Line power"
 msgstr "유선 전원"
 
-#: common/xfpm-power-common.c:51
+#: ../common/xfpm-power-common.c:51
 msgid "Mouse"
 msgstr "마우스"
 
-#: common/xfpm-power-common.c:53
+#: ../common/xfpm-power-common.c:53
 msgid "Keyboard"
 msgstr "키보드"
 
-#: common/xfpm-power-common.c:55
+#: ../common/xfpm-power-common.c:55
 msgid "Monitor"
 msgstr "모니터"
 
-#: common/xfpm-power-common.c:57
+#: ../common/xfpm-power-common.c:57
 msgid "PDA"
 msgstr "PDA"
 
-#: common/xfpm-power-common.c:59
+#: ../common/xfpm-power-common.c:59
 msgid "Phone"
 msgstr "전화"
 
-#: common/xfpm-power-common.c:61
+#: ../common/xfpm-power-common.c:61
 msgid "Tablet"
 msgstr "태블릿"
 
-#: common/xfpm-power-common.c:63 common/xfpm-power-common.c:299
+#: ../common/xfpm-power-common.c:63 ../common/xfpm-power-common.c:299
 msgid "Computer"
 msgstr "컴퓨터"
 
-#: common/xfpm-power-common.c:65 common/xfpm-power-common.c:81
-#: common/xfpm-power-common.c:96
+#: ../common/xfpm-power-common.c:65 ../common/xfpm-power-common.c:81
+#: ../common/xfpm-power-common.c:96
 msgid "Unknown"
 msgstr "모름"
 
-#: common/xfpm-power-common.c:83
+#: ../common/xfpm-power-common.c:83
 msgid "Lithium ion"
 msgstr "리튬 이온"
 
-#: common/xfpm-power-common.c:85
+#: ../common/xfpm-power-common.c:85
 msgid "Lithium polymer"
 msgstr "리튬 폴리머"
 
-#: common/xfpm-power-common.c:87
+#: ../common/xfpm-power-common.c:87
 msgid "Lithium iron phosphate"
 msgstr "리튬 이온 인산염"
 
-#: common/xfpm-power-common.c:89
+#: ../common/xfpm-power-common.c:89
 msgid "Lead acid"
 msgstr "산화 납"
 
-#: common/xfpm-power-common.c:91
+#: ../common/xfpm-power-common.c:91
 msgid "Nickel cadmium"
 msgstr "니켈 카드뮴"
 
-#: common/xfpm-power-common.c:93
+#: ../common/xfpm-power-common.c:93
 msgid "Nickel metal hydride"
 msgstr "니켈 금속 화합물"
 
-#: common/xfpm-power-common.c:141
+#: ../common/xfpm-power-common.c:141
 msgid "Unknown time"
 msgstr "알 수 없는 시간"
 
-#: common/xfpm-power-common.c:147
+#: ../common/xfpm-power-common.c:147
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i 분"
 
-#: common/xfpm-power-common.c:158
+#: ../common/xfpm-power-common.c:158
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -577,17 +568,17 @@ msgstr[0] "%i 시"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: common/xfpm-power-common.c:164
+#: ../common/xfpm-power-common.c:164
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: common/xfpm-power-common.c:165
+#: ../common/xfpm-power-common.c:165
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "시간\t"
 
-#: common/xfpm-power-common.c:339
+#: ../common/xfpm-power-common.c:339
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -596,7 +587,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "완충 - %s 남음"
 
-#: common/xfpm-power-common.c:346
+#: ../common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -605,7 +596,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "완충"
 
-#: common/xfpm-power-common.c:355
+#: ../common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -614,7 +605,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s 남음"
 
-#: common/xfpm-power-common.c:363 common/xfpm-power-common.c:381
+#: ../common/xfpm-power-common.c:363 ../common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -623,7 +614,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
 
-#: common/xfpm-power-common.c:373
+#: ../common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -632,7 +623,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s 남음"
 
-#: common/xfpm-power-common.c:388
+#: ../common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -641,7 +632,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "방전 대기중 (%0.0f%%)"
 
-#: common/xfpm-power-common.c:394
+#: ../common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -650,7 +641,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "충전 대기중 (%0.0f%%)"
 
-#: common/xfpm-power-common.c:400
+#: ../common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -659,7 +650,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "이 비어있음"
 
-#: common/xfpm-power-common.c:405
+#: ../common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -670,7 +661,7 @@ msgstr ""
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: common/xfpm-power-common.c:415
+#: ../common/xfpm-power-common.c:415
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -679,19 +670,19 @@ msgstr ""
 "<b>%s %s</b>\n"
 "%s"
 
-#: common/xfpm-power-common.c:416
+#: ../common/xfpm-power-common.c:416
 msgid "Not plugged in"
 msgstr "연결하지 않음"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: common/xfpm-power-common.c:422
+#: ../common/xfpm-power-common.c:422
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: common/xfpm-power-common.c:427
+#: ../common/xfpm-power-common.c:427
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -700,7 +691,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "알 수 없는 상태"
 
-#: src/xfpm-power.c:285
+#: ../src/xfpm-power.c:383
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
@@ -708,7 +699,7 @@ msgstr ""
 "현재 프로그램은 자동 대기 모드 비활성화중에 있습니다. 이 동작을 실행하면 이 프로그램의 동작 상태에 치명적인 영향을 줄 수 있습니다.\n"
 "정말로 시스템을 최대 절전 모드로 설정하시겠습니까?"
 
-#: src/xfpm-power.c:334
+#: ../src/xfpm-power.c:432
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
@@ -716,31 +707,31 @@ msgstr ""
 "제대로 실행한 화면 잠금 도구가 없어 화면을 잠그지 않습니다.\n"
 "그래도 시스템을 대기 상태로 설정하시겠습니까?"
 
-#: src/xfpm-power.c:496
+#: ../src/xfpm-power.c:597
 msgid "Hibernate the system"
 msgstr "시스템 최대 절전"
 
-#: src/xfpm-power.c:508
+#: ../src/xfpm-power.c:608
 msgid "Suspend the system"
 msgstr "시스템 절전"
 
-#: src/xfpm-power.c:528
+#: ../src/xfpm-power.c:617
 msgid "Shutdown the system"
 msgstr "시스템 종료"
 
-#: src/xfpm-power.c:541 src/xfpm-power.c:572
+#: ../src/xfpm-power.c:628 ../src/xfpm-power.c:672
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "전원이 부족한 상태에서 시스템이 동작중입니다. 데이터 유실을 방지하려면 작업을 저장합니다"
 
-#: src/xfpm-power.c:629
+#: ../src/xfpm-power.c:718
 msgid "_Cancel"
 msgstr "취소(_C)"
 
-#: src/xfpm-power.c:750
+#: ../src/xfpm-power.c:839
 msgid "System is running on low power"
 msgstr "전원이 부족한 상태에서 시스템이 동작중입니다"
 
-#: src/xfpm-power.c:766
+#: ../src/xfpm-power.c:855
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
@@ -749,36 +740,32 @@ msgstr ""
 "%s 충전 수준이 낮습니다\n"
 "예상 시간이 %s 남았습니다"
 
-#: src/xfpm-power.c:1541 src/xfpm-power.c:1585 src/xfpm-power.c:1621
-#: src/xfpm-power.c:1655
+#: ../src/xfpm-power.c:1648 ../src/xfpm-power.c:1696 ../src/xfpm-power.c:1728
+#: ../src/xfpm-power.c:1758
 msgid "Permission denied"
 msgstr "권한이 거부되었습니다"
 
-#: src/xfpm-power.c:1630
-msgid "Hibernate not supported"
-msgstr ""
-
-#: src/xfpm-power.c:1664
+#: ../src/xfpm-power.c:1737 ../src/xfpm-power.c:1767
 msgid "Suspend not supported"
 msgstr "절전을 지원하지 않음"
 
 #. generate a human-readable summary for the notification
-#: src/xfpm-backlight.c:161
+#: ../src/xfpm-backlight.c:160
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "밝기: %.0f 퍼센트"
 
-#: src/xfpm-battery.c:109 src/xfpm-battery.c:160
+#: ../src/xfpm-battery.c:109 ../src/xfpm-battery.c:160
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "%s을(를) 완전히 충전했습니다"
 
-#: src/xfpm-battery.c:112 src/xfpm-battery.c:163
+#: ../src/xfpm-battery.c:112 ../src/xfpm-battery.c:163
 #, c-format
 msgid "Your %s is charging"
 msgstr "%s이(가) 충전중입니다"
 
-#: src/xfpm-battery.c:122
+#: ../src/xfpm-battery.c:122
 #, c-format
 msgid ""
 "%s (%i%%)\n"
@@ -787,17 +774,17 @@ msgstr ""
 "%s (%i%%)\n"
 "완충 까지 %s 남음"
 
-#: src/xfpm-battery.c:130 src/xfpm-battery.c:166
+#: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
 msgid "Your %s is discharging"
 msgstr "%s이(가) 방전중입니다"
 
-#: src/xfpm-battery.c:132
+#: ../src/xfpm-battery.c:132
 #, c-format
 msgid "System is running on %s power"
 msgstr "시스템이 %s 전원과 함께 동작중입니다"
 
-#: src/xfpm-battery.c:142
+#: ../src/xfpm-battery.c:142
 #, c-format
 msgid ""
 "%s (%i%%)\n"
@@ -806,18 +793,18 @@ msgstr ""
 "%s (%i%%)\n"
 "남은 예상 시간 %s"
 
-#: src/xfpm-battery.c:148 src/xfpm-battery.c:169
+#: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
 msgid "Your %s is empty"
 msgstr "%s이(가) 비어 있습니다"
 
 #. generate a human-readable summary for the notification
-#: src/xfpm-kbd-backlight.c:116
+#: ../src/xfpm-kbd-backlight.c:116
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "키보드 밝기: %.0f 퍼센트"
 
-#: src/xfpm-main.c:54
+#: ../src/xfpm-main.c:54
 #, c-format
 msgid ""
 "\n"
@@ -839,242 +826,217 @@ msgstr ""
 "사용을 허가합니다.\n"
 "\n"
 
-#: src/xfpm-main.c:112
+#: ../src/xfpm-main.c:112
+#, c-format
 msgid "With policykit support\n"
 msgstr "policykit 지원 포함\n"
 
-#: src/xfpm-main.c:114
+#: ../src/xfpm-main.c:114
+#, c-format
 msgid "Without policykit support\n"
 msgstr "policykit 지원 제외\n"
 
-#: src/xfpm-main.c:117
+#: ../src/xfpm-main.c:117
+#, c-format
 msgid "With network manager support\n"
 msgstr "네트워크 관리자 지원 포함\n"
 
-#: src/xfpm-main.c:119
+#: ../src/xfpm-main.c:119
+#, c-format
 msgid "Without network manager support\n"
 msgstr "네트워크 관리자 지원 제외\n"
 
-#: src/xfpm-main.c:134
+#: ../src/xfpm-main.c:134
 msgid "Can suspend"
 msgstr "절전 가능"
 
-#: src/xfpm-main.c:136
+#: ../src/xfpm-main.c:136
 msgid "Can hibernate"
 msgstr "최대 절전 가능"
 
-#: src/xfpm-main.c:138
+#: ../src/xfpm-main.c:138
 msgid "Authorized to suspend"
 msgstr "절전을 승인함"
 
-#: src/xfpm-main.c:140
+#: ../src/xfpm-main.c:140
 msgid "Authorized to hibernate"
 msgstr "최대 절전을 승인함"
 
-#: src/xfpm-main.c:142
+#: ../src/xfpm-main.c:142
 msgid "Authorized to shutdown"
 msgstr "시스템 종료를 승인함"
 
-#: src/xfpm-main.c:144
+#: ../src/xfpm-main.c:144
 msgid "Has battery"
 msgstr "배터리 있음"
 
-#: src/xfpm-main.c:146
+#: ../src/xfpm-main.c:146
 msgid "Has brightness panel"
 msgstr "밝기조절 패널 있음"
 
-#: src/xfpm-main.c:148
+#: ../src/xfpm-main.c:148
 msgid "Has power button"
 msgstr "전원 단추 있음"
 
-#: src/xfpm-main.c:150
+#: ../src/xfpm-main.c:150
 msgid "Has hibernate button"
 msgstr "최대 절전 단추 있음"
 
-#: src/xfpm-main.c:152
+#: ../src/xfpm-main.c:152
 msgid "Has sleep button"
 msgstr "일시중지 단추 있음"
 
-#: src/xfpm-main.c:154
+#: ../src/xfpm-main.c:154
 msgid "Has battery button"
 msgstr "배터리 버튼 있음"
 
-#: src/xfpm-main.c:156
+#: ../src/xfpm-main.c:156
 msgid "Has LID"
 msgstr "LID 있음"
 
-#: src/xfpm-main.c:275
+#: ../src/xfpm-main.c:275
 msgid "Daemonize"
 msgstr "데몬으로 실행"
 
-#: src/xfpm-main.c:277
+#: ../src/xfpm-main.c:277
 msgid "Dump all information"
 msgstr "모든 정보 덤프"
 
-#: src/xfpm-main.c:278
+#: ../src/xfpm-main.c:278
 msgid "Restart the running instance of Xfce power manager"
 msgstr "실행 중인 Xfce 전원 관리자의 인스턴스를 다시 시작"
 
-#: src/xfpm-main.c:279
+#: ../src/xfpm-main.c:279
 msgid "Show the configuration dialog"
 msgstr "설정 대화상자 보기"
 
-#: src/xfpm-main.c:280
+#: ../src/xfpm-main.c:280
 msgid "Quit any running xfce power manager"
 msgstr "실행 중인 Xfce 전원 관리자를 빠져 나가기"
 
-#: src/xfpm-main.c:281
+#: ../src/xfpm-main.c:281
 msgid "Version information"
 msgstr "버전 정보"
 
-#: src/xfpm-main.c:300
+#: ../src/xfpm-main.c:300
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "인자 해석에 실패했습니다: %s\n"
 
-#: src/xfpm-main.c:329
+#: ../src/xfpm-main.c:329
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "사용 방법을 보려면 '%s --help'를 입력하십시오."
 
-#: src/xfpm-main.c:350
+#: ../src/xfpm-main.c:350
 msgid "Unable to get connection to the message bus session"
 msgstr "메시지 버스 세션에서 연결을 가져올 수 없습니다"
 
-#: src/xfpm-main.c:358 src/xfpm-main.c:407
+#: ../src/xfpm-main.c:358 ../src/xfpm-main.c:407
+#, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce 전원 관리자가 실행중이 아닙니다"
 
-#: src/xfpm-main.c:449
+#: ../src/xfpm-main.c:449
 msgid "Another power manager is already running"
 msgstr "다른 전원 관리자가 이미 실행중입니다"
 
-#: src/xfpm-main.c:453
+#: ../src/xfpm-main.c:453
+#, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce 전원 관리자가 이미 실행중입니다"
 
-#: src/xfpm-inhibit.c:396
+#: ../src/xfpm-inhibit.c:396
 msgid "Invalid arguments"
 msgstr "잘못된 인자"
 
-#: src/xfpm-inhibit.c:430
+#: ../src/xfpm-inhibit.c:430
 msgid "Invalid cookie"
 msgstr "잘못된 쿠키"
 
-#: src/xfpm-manager.c:453
+#: ../src/xfpm-manager.c:455
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
 msgstr "성공적으로 실행한 화면 잠금 도구가 없습니다. 화면을 잠그지 않겠습니다."
 
-#: src/xfce4-power-manager.desktop.in:4
+#: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
 msgstr "Xfce 데스크톱의 전원 관리자"
 
-#. SECURITY:
-#. - A normal active user on the local machine does not need permission
-#. to change the backlight brightness.
-#: src/org.xfce.power.policy.in.in:21
-msgid "Modify the laptop display brightness"
-msgstr "랩톱 화면 밝기를 조절합니다"
-
-#: src/org.xfce.power.policy.in.in:22
-msgid "Authentication is required to modify the laptop display brightness"
-msgstr "랩톱 화면 밝기를 조절하려면 인증이 필요합니다"
-
-#. SECURITY:
-#. - A normal active user on the local machine does not need permission
-#. to suspend or hibernate their system.
-#: src/org.xfce.power.policy.in.in:36
-msgid "Suspend or hibernate the system"
-msgstr "시스템 대기 또는 최대 절전"
-
-#: src/org.xfce.power.policy.in.in:37
-msgid ""
-"Authentication is required to place the system in suspend or hibernate mode"
-msgstr "시스템을 대기 또는 최대 절전 모드에 두려면 인증이 필요합니다"
-
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugins/power-manager-plugin/power-manager-button.c:294
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:294
 msgid "Display battery levels for attached devices"
 msgstr "부착한 장치의 배터리 남은 양 표시"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1428
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1455
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s는 현재 전력 관리 억제중"
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1720
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1750
 msgid "<b>Display brightness</b>"
 msgstr "<b>화면 밝기</b>"
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1747
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1758
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1777
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1788
 msgid "Presentation _mode"
 msgstr "프리젠테이션 모드(_M)"
 
 #. Power manager settings
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1771
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1801
 msgid "_Settings..."
 msgstr "설정(_S)..."
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "다음 url을 열 수 없습니다: %s"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
 msgstr "없음"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage"
 msgstr "퍼센트"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Remaining time"
 msgstr "남은 시간"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "Percentage and remaining time"
 msgstr "퍼센트 및 남은 시간"
 
 #. create the dialog
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
 msgid "Power Manager Plugin Settings"
 msgstr "전원 관리자 플러그인 설정"
 
 #. show-panel-label setting
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:180
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:180
 msgid "Show label:"
 msgstr "레이블 표시:"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:213
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:213
 msgid "Show 'Presentation mode' indicator:"
 msgstr "'프리젠테이션 모드' 표시 나타내기:"
 
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:4
+#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
 msgstr "전원 관리자 플러그인"
 
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:5
+#: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
 msgstr "장치 배터리 수준을 표시하고 디스플레이 밝기를 조절합니다"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:7
-msgid "Xfce power manager"
-msgstr "xfce 전원 관리자"
-
-#: data/appdata/xfce4-power-manager.appdata.xml.in:8
-msgid "Manage and reduce power consumption of computer and devices"
-msgstr "컴퓨터와 장치의 전력 소비량을 관리하고 줄입니다"
-
-#: data/appdata/xfce4-power-manager.appdata.xml.in:11
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
@@ -1083,7 +1045,7 @@ msgstr ""
 "Xfce 전원 관리자는 컴퓨터와 전력 소모 감소를 제어(LCD 밝기, 모니터 대기 상태, CPU 주파수 조정)할 수 있는 장치에 붙은 "
 "전원을 관리합니다."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:16
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
 "In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
 " interfaces to inform other applications about current power level so that "
@@ -1096,10 +1058,51 @@ msgstr ""
 "전력 소모를 줄일 수 있고, 전원 관리자가 자동으로 대기상태로 진입하는 동작을 다른 프로그램이 막을 수 있게 하는 억제 인터페이스를 "
 "제공합니다. 예를 들자면 운영체제 꾸러미 관리자에서는 업데이트 동작을 수행하는 동안 이 인터페이스를 활용합니다."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:23
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
 msgstr ""
 "Xfce 전원 관리자에서는 LCD 밝기를 조절하고 배터리와 장치 충전 상태를 감시하는 Xfce 및 LXDE용 플러그인도 제공합니다."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
+msgid ""
+"This development release mostly fixes bugs and introduces better support for"
+" icon-themes by reducing the device icons and using standard names for them."
+" It also features updated translations. The panel plugin has been renamed to"
+" Power Manager Plugin."
+msgstr ""
+"개발 릴리즈는 대부분 버그를 수정하고 장치 아이콘을 줄이고 아이콘에 대한 표준 이름을 사용하여 아이콘 테마에 대한 개선 기능을 "
+"도입했습니다. 또한 번역도 업데이트했습니다. 패널 플러그인은 전원 관리자 플러그인으로 개명했습니다."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:5
+msgid ""
+"This development release fixes bugs with suspend and hibernate. It also "
+"improves the panel-plugin, incorporating the functionality of the (now "
+"dropped) brightness panel-plugin. A new popup notification was added to "
+"account for keyboard brightness changes and the Power Manager now also "
+"controls the X11 blank times."
+msgstr ""
+"이 개발 릴리즈는 대기 및 최대 절전 기능으 버그를 수정했습니다. 패널 플러그인을 개선했으며, (이제는 버린) 밝기 조절 패널 플러그인의"
+" 기능을 통합했습니다. 새 풍선 도움말 알림을 추가하여 키보드 밝기 변화를 잡았으며, 전원 관리자는 이제 X11 화면 공백처리에 필요한 "
+"시간을 조절할 수 있습니다."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:6
+msgid ""
+"This development release introduces a lot of new features, among them "
+"suspending/hibernation without systemd and UPower>=0.99. It allows for "
+"individual control of systemd-inhibition, a new panel plugin to monitor "
+"battery and device charge levels replaces the trayicon. The settings dialog "
+"has been completely restructured for better oversight and many open bugs "
+"have been fixed and translations have been updated."
+msgstr ""
+"이 개발 릴리스에서는 여러가지 새 기능을 도입했는데 systemd와 UPower>=0.99를 뺀 절전/최대 절전 기능이 여기에 포함되어 "
+"있습니다. systemd-inhibition의 개별 제어가 가능하며, 배터리와 장치 충전 상태를 표시줄 아이콘으로 나타내는 새 패널 "
+"플러그인을 제공합니다. 설정 대화상자는 더 나은 모습을 보여드리기 위해 재구성했으며, 수많은 버그를 수정하고, 번역을 새로 올렸습니다."
+
+#: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:7
+msgid ""
+"This stable release fixes compilation problems, a memory leak and a few "
+"other minor bugs. Furthermore it provides updated translations."
+msgstr "이 안정 릴리스에서는, 메모리 누수와 기타 자잘한 버그 등의 복잡한 문제를 수정했습니다. 게다가 새로 올린 번역도 있습니다."
