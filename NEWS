@@ -1,3 +1,27 @@
+4.18.2 (2023-05-30)
+======
+- Fix typos in previous backported commit
+- Keep "lock-on-sleep" in sync with other components via XfceScreensaver
+- power: Fix old typo
+- Do not check repeatedly for logind running
+- Write on stderr when appropriate
+- build: Require gio-unix-2.0
+- settings: Keep a ref on device to avoid use-after-free (Fixes #56)
+- dpms: Add missing sanity checks (Fixes #163)
+- Fix Xfconf memory management
+- Update bug report address
+- Translation Updates:
+  Albanian, Arabic, Armenian (Armenia), Asturian, Basque, Belarusian,
+  Bulgarian, Catalan, Chinese (China), Chinese (Hong Kong), Chinese
+  (Taiwan), Croatian, Czech, Danish, Dutch, Eastern Armenian, English
+  (Australia), English (Canada), English (United Kingdom), Estonian,
+  Finnish, French, Galician, German, Greek, Hebrew, Hungarian,
+  Icelandic, Indonesian, Interlingue, Italian, Japanese, Kannada,
+  Kazakh, Korean, Lithuanian, Malay, Norwegian Bokmål, Norwegian
+  Nynorsk, Occitan (post 1500), Polish, Portuguese, Portuguese
+  (Brazil), Romanian, Russian, Serbian, Slovak, Slovenian, Spanish,
+  Swedish, Telugu, Thai, Turkish, Ukrainian, Vietnamese
+
 4.18.1 (2023-02-10)
 ======
 - Update copyright year
