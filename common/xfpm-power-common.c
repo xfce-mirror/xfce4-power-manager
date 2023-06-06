@@ -385,13 +385,13 @@ get_device_description (UpClient *upower, UpDevice *device)
   }
   else if ( state == UP_DEVICE_STATE_PENDING_CHARGE )
   {
-    tip = g_strdup_printf (_("<b>%s %s</b>\nWaiting to discharge (%0.0f%%)"),
+    tip = g_strdup_printf (_("<b>%s %s</b>\nWaiting to charge (%0.0f%%)"),
                            vendor, model,
                            percentage);
   }
   else if ( state == UP_DEVICE_STATE_PENDING_DISCHARGE )
   {
-    tip = g_strdup_printf (_("<b>%s %s</b>\nWaiting to charge (%0.0f%%)"),
+    tip = g_strdup_printf (_("<b>%s %s</b>\nWaiting to discharge (%0.0f%%)"),
                            vendor, model,
                            percentage);
   }
