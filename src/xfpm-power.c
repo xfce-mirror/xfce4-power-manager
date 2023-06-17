@@ -315,13 +315,6 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 
   if ( lock_screen )
   {
-#ifdef WITH_NETWORK_MANAGER
-    if ( network_manager_sleep )
-    {
-  /* 2 seconds, to give network manager time to sleep */
-      g_usleep (2000000);
-    }
-#endif
     if (!xfce_screensaver_lock (power->priv->screensaver))
     {
       GtkWidget *dialog;
