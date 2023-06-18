@@ -49,7 +49,6 @@
 #include "xfpm-errors.h"
 #include "xfpm-inhibit.h"
 #include "xfpm-polkit.h"
-#include "xfpm-network-manager.h"
 #include "xfpm-icons.h"
 #include "xfpm-common.h"
 #include "xfpm-power-common.h"
@@ -267,9 +266,6 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 {
   GError *error = NULL;
   gboolean lock_screen;
-#ifdef WITH_NETWORK_MANAGER
-  gboolean network_manager_sleep;
-#endif
   XfpmBrightness *brightness;
   gint32 brightness_level;
 
@@ -298,30 +294,12 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   xfpm_brightness_setup (brightness);
   xfpm_brightness_get_level (brightness, &brightness_level);
 
-#ifdef WITH_NETWORK_MANAGER
-  g_object_get (G_OBJECT (power->priv->conf),
-                NETWORK_MANAGER_SLEEP, &network_manager_sleep,
-                NULL);
-
-  if ( network_manager_sleep )
-  {
-    xfpm_network_manager_sleep (TRUE);
-  }
-#endif
-
   g_object_get (G_OBJECT (power->priv->conf),
                 LOCK_SCREEN_ON_SLEEP, &lock_screen,
                 NULL);
 
   if ( lock_screen )
   {
-#ifdef WITH_NETWORK_MANAGER
-    if ( network_manager_sleep )
-    {
-  /* 2 seconds, to give network manager time to sleep */
-      g_usleep (2000000);
-    }
-#endif
     if (!xfce_screensaver_lock (power->priv->screensaver))
     {
       GtkWidget *dialog;
@@ -407,13 +385,6 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   xfpm_power_get_properties (power);
     /* Restore the brightness level from before we suspended */
   xfpm_brightness_set_level (brightness, brightness_level);
-
-#ifdef WITH_NETWORK_MANAGER
-  if ( network_manager_sleep )
-  {
-    xfpm_network_manager_sleep (FALSE);
-  }
-#endif
 }
 
 static void
