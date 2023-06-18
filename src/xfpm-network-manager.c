@@ -28,24 +28,21 @@
 #include "xfpm-network-manager.h"
 
 /*
- * Inform the Network Manager when we do suspend/hibernate
+ * Inform NetworkManager when we do suspend/hibernate
  */
-gboolean
+void
 xfpm_network_manager_sleep (gboolean sleep)
 {
 #ifdef WITH_NETWORK_MANAGER
 
-  GDBusConnection *bus   = NULL;
-  GDBusProxy      *proxy = NULL;
-  GError          *error = NULL;
+  GDBusConnection *bus;
+  GDBusProxy      *proxy;
+  GVariant        *reply;
 
-  bus = g_bus_get_sync ( G_BUS_TYPE_SYSTEM, NULL, &error);
-
-  if ( error )
+  bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, NULL);
+  if (!bus)
   {
-    g_warning ("%s", error->message);
-    g_error_free (error);
-    return FALSE;
+    return;
   }
 
   proxy = g_dbus_proxy_new_sync (bus,
@@ -57,21 +54,22 @@ xfpm_network_manager_sleep (gboolean sleep)
                                  "org.freedesktop.NetworkManager",
                                  NULL,
                                  NULL);
-
   if (!proxy)
   {
-    g_warning ("Failed to create proxy for Network Manager interface");
-    return FALSE;
+    g_object_unref (G_OBJECT (bus));
+    return;
   }
 
-  g_dbus_proxy_call (proxy, "Sleep", g_variant_new("(b)", sleep),
-                     G_DBUS_CALL_FLAGS_NONE, -1, NULL, NULL, NULL);
-  g_object_unref (G_OBJECT(proxy));
-  g_object_unref (bus);
-
-  /* Sleep 0.5 second to allow the nm applet to disconnect*/
-  g_usleep (500000);
+  /* 3s timeout, usually it does not take more than 500ms to deactivate.
+   * Activation can take a bit more time. */
+  reply = g_dbus_proxy_call_sync (proxy, "Sleep", g_variant_new ("(b)", sleep),
+                                  G_DBUS_CALL_FLAGS_NONE, 3000, NULL, NULL);
+  if (reply)
+  {
+    g_variant_unref (reply);
+  }
+  g_object_unref (G_OBJECT (proxy));
+  g_object_unref (G_OBJECT (bus));
 
 #endif /* WITH_NETWORK_MANAGER */
-  return TRUE;
 }

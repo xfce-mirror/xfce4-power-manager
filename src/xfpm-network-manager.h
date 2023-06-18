@@ -23,7 +23,7 @@
 
 G_BEGIN_DECLS
 
-gboolean   xfpm_network_manager_sleep   (gboolean sleep);
+void   xfpm_network_manager_sleep   (gboolean sleep);
 
 G_END_DECLS
 
