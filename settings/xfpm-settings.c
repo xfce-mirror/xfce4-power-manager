@@ -2016,7 +2016,7 @@ update_device_details (UpDevice *device)
   GtkTreeIter *sideview_iter;
   gchar *str;
   guint type = 0, tech = 0;
-  gdouble energy_full_design = -1.0, energy_full = -1.0, energy_empty = -1.0, voltage = -1.0, percent = -1.0;
+  gdouble energy_full_design = -1.0, energy_full = -1.0, energy_empty = -1.0, energy_rate = -1.0, voltage = -1.0, percent = -1.0;
   gboolean p_supply = FALSE;
   gchar *model = NULL, *vendor = NULL, *serial = NULL;
   const gchar *battery_type = NULL;
@@ -2057,6 +2057,7 @@ update_device_details (UpDevice *device)
                 "energy-full-design", &energy_full_design,
                 "energy-full", &energy_full,
                 "energy-empty", &energy_empty,
+                "energy-rate", &energy_rate,
                 "voltage", &voltage,
                 "percentage", &percent,
                 NULL);
@@ -2122,6 +2123,16 @@ update_device_details (UpDevice *device)
       str = xfpm_info_get_energy_property (energy_empty, _("Wh"));
 
       update_device_info_value_for_name (view, list_store, _("Energy empty"), str);
+
+      g_free (str);
+    }
+
+    if (energy_rate > 0)
+    {
+      /* TRANSLATORS: Unit here is Watt*/
+      str = xfpm_info_get_energy_property (energy_rate, _("W"));
+
+      update_device_info_value_for_name (view, list_store, _("Energy rate"), str);
 
       g_free (str);
     }
