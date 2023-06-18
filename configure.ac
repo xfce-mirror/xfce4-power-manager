@@ -113,17 +113,6 @@ if test "x${ac_cv_have_decl_XF86XK_Hibernate}" != "xno"; then
 fi
 
 #=======================================================#
-#              Network Manager support                  #
-#=======================================================#
-AC_ARG_ENABLE([network-manager], AS_HELP_STRING([--disable-network-manager],[Disable network manager support]),
-  [ac_network_manager=$enableval], [ac_network_manager=yes])
-AC_MSG_CHECKING([whether to build with network manager support.])
-if test "x$ac_network_manager" = "xyes"; then
-    AC_DEFINE(WITH_NETWORK_MANAGER, 1 , [Network Manager support])
-fi
-AC_MSG_RESULT([$ac_network_manager])
-
-#=======================================================#
 #                 Panel plugins ?                       #
 #=======================================================#
 AC_ARG_ENABLE([panel_plugins],
@@ -228,7 +217,6 @@ AC_OUTPUT
 echo "prefix:			${prefix}"
 echo "xdg autostart:		${sysconfdir}/xdg/autostart"
 echo "POLKIT:			${POLKIT_FOUND:-no}"
-echo "Network manager:	${ac_network_manager}"
 echo "Build panel plugins:	${build_panel_plugins}"
 if test "x$build_panel_plugins" = "xyes"; then
     if test "x$LIBXFCE4PANEL_FOUND" = "xyes"; then

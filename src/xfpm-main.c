@@ -113,11 +113,6 @@ xfpm_dump (GHashTable *hash)
 #else
   g_print (_("Without policykit support\n"));
 #endif
-#ifdef WITH_NETWORK_MANAGER
-  g_print (_("With network manager support\n"));
-#else
-  g_print (_("Without network manager support\n"));
-#endif
   g_print ("---------------------------------------------------\n");
   g_print ( "%s: %s\n"
             "%s: %s\n"

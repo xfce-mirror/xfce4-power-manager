@@ -50,7 +50,6 @@ G_BEGIN_DECLS
 #define LOCK_SCREEN_ON_SLEEP                 "lock-screen-suspend-hibernate"
 #define GENERAL_NOTIFICATION_CFG             "general-notification"
 #define PRESENTATION_MODE                    "presentation-mode"
-#define NETWORK_MANAGER_SLEEP                "network-manager-sleep"
 #define HEARTBEAT_COMMAND                    "heartbeat-command"
 #define SHOW_TRAY_ICON_CFG                   "show-tray-icon"
 
