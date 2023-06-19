@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-06-19 00:46+0200\n"
+"POT-Creation-Date: 2023-06-19 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>, 2023\n"
 "Language-Team: English (United Kingdom) (http://app.transifex.com/xfce/xfce4-power-manager/language/en_GB/)\n"
@@ -45,9 +45,9 @@ msgstr "Nothing"
 
 #: data/interfaces/xfpm-settings.ui:250
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
-#: src/xfpm-power.c:546 src/xfpm-power.c:575 src/xfpm-power.c:749
-#: src/xfpm-power.c:770 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:258
+#: src/xfpm-power.c:517 src/xfpm-power.c:546 src/xfpm-power.c:720
+#: src/xfpm-power.c:741 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
 #: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -256,7 +256,7 @@ msgstr "seconds"
 #: settings/xfpm-settings.c:1056 settings/xfpm-settings.c:1155
 #: settings/xfpm-settings.c:1247 settings/xfpm-settings.c:1369
 #: settings/xfpm-settings.c:1427 settings/xfpm-settings.c:1479
-#: settings/xfpm-settings.c:1530 src/xfpm-power.c:602
+#: settings/xfpm-settings.c:1530 src/xfpm-power.c:573
 msgid "Suspend"
 msgstr "Suspend"
 
@@ -272,7 +272,7 @@ msgstr "Suspend operation not supported"
 #: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1169
 #: settings/xfpm-settings.c:1253 settings/xfpm-settings.c:1375
 #: settings/xfpm-settings.c:1433 settings/xfpm-settings.c:1485
-#: settings/xfpm-settings.c:1536 src/xfpm-power.c:590
+#: settings/xfpm-settings.c:1536 src/xfpm-power.c:561
 msgid "Hibernate"
 msgstr "Hibernate"
 
@@ -302,7 +302,7 @@ msgid "Do nothing"
 msgstr "Do nothing"
 
 #: settings/xfpm-settings.c:1006 settings/xfpm-settings.c:1381
-#: src/xfpm-power.c:622
+#: src/xfpm-power.c:593
 msgid "Shutdown"
 msgstr "Shutdown"
 
@@ -434,7 +434,7 @@ msgstr "Display a specific device by UpDevice object path"
 msgid "UpDevice object path"
 msgstr "UpDevice object path"
 
-#: settings/xfpm-settings-app.c:76 src/xfpm-main.c:276
+#: settings/xfpm-settings-app.c:76 src/xfpm-main.c:271
 msgid "Enable debugging"
 msgstr "Enable debugging"
 
@@ -447,7 +447,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Cause xfce4-power-manager-settings to quit"
 
 #: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
-#: src/xfpm-main.c:448
+#: src/xfpm-main.c:443
 msgid "Xfce Power Manager"
 msgstr "Xfce Power Manager"
 
@@ -678,59 +678,59 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nUnknown state"
 
-#: src/xfpm-power.c:285
+#: src/xfpm-power.c:281
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\nAre you sure you want to hibernate the system?"
 
-#: src/xfpm-power.c:334
+#: src/xfpm-power.c:312
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "None of the screen lock tools ran successfully, the screen will not be locked.\nDo you still want to continue to suspend the system?"
 
-#: src/xfpm-power.c:496
+#: src/xfpm-power.c:467
 msgid "Hibernate the system"
 msgstr "Hibernate the system"
 
-#: src/xfpm-power.c:508
+#: src/xfpm-power.c:479
 msgid "Suspend the system"
 msgstr "Suspend the system"
 
-#: src/xfpm-power.c:528
+#: src/xfpm-power.c:499
 msgid "Shutdown the system"
 msgstr "Shutdown the system"
 
-#: src/xfpm-power.c:541 src/xfpm-power.c:572
+#: src/xfpm-power.c:512 src/xfpm-power.c:543
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "System is running on low power. Save your work to avoid losing data"
 
-#: src/xfpm-power.c:629
+#: src/xfpm-power.c:600
 msgid "_Cancel"
 msgstr "_Cancel"
 
-#: src/xfpm-power.c:750
+#: src/xfpm-power.c:721
 msgid "System is running on low power"
 msgstr "System is running on low power"
 
-#: src/xfpm-power.c:766
+#: src/xfpm-power.c:737
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Your %s charge level is low\nEstimated time left %s"
 
-#: src/xfpm-power.c:1541 src/xfpm-power.c:1585 src/xfpm-power.c:1621
-#: src/xfpm-power.c:1655
+#: src/xfpm-power.c:1512 src/xfpm-power.c:1556 src/xfpm-power.c:1592
+#: src/xfpm-power.c:1626
 msgid "Permission denied"
 msgstr "Permission denied"
 
-#: src/xfpm-power.c:1630
+#: src/xfpm-power.c:1601
 msgid "Hibernate not supported"
 msgstr "Hibernate not supported"
 
-#: src/xfpm-power.c:1664
+#: src/xfpm-power.c:1635
 msgid "Suspend not supported"
 msgstr "Suspend not supported"
 
@@ -806,109 +806,101 @@ msgstr "With policykit support\n"
 msgid "Without policykit support\n"
 msgstr "Without policykit support\n"
 
-#: src/xfpm-main.c:117
-msgid "With network manager support\n"
-msgstr "With network manager support\n"
-
-#: src/xfpm-main.c:119
-msgid "Without network manager support\n"
-msgstr "Without network manager support\n"
-
-#: src/xfpm-main.c:134
+#: src/xfpm-main.c:129
 msgid "Can suspend"
 msgstr "Can suspend"
 
-#: src/xfpm-main.c:136
+#: src/xfpm-main.c:131
 msgid "Can hibernate"
 msgstr "Can hibernate"
 
-#: src/xfpm-main.c:138
+#: src/xfpm-main.c:133
 msgid "Authorized to suspend"
 msgstr "Authorised to suspend"
 
-#: src/xfpm-main.c:140
+#: src/xfpm-main.c:135
 msgid "Authorized to hibernate"
 msgstr "Authorised to hibernate"
 
-#: src/xfpm-main.c:142
+#: src/xfpm-main.c:137
 msgid "Authorized to shutdown"
 msgstr "Authorised to shutdown"
 
-#: src/xfpm-main.c:144
+#: src/xfpm-main.c:139
 msgid "Has battery"
 msgstr "Has battery"
 
-#: src/xfpm-main.c:146
+#: src/xfpm-main.c:141
 msgid "Has brightness panel"
 msgstr "Has brightness panel"
 
-#: src/xfpm-main.c:148
+#: src/xfpm-main.c:143
 msgid "Has power button"
 msgstr "Has power button"
 
-#: src/xfpm-main.c:150
+#: src/xfpm-main.c:145
 msgid "Has hibernate button"
 msgstr "Has hibernate button"
 
-#: src/xfpm-main.c:152
+#: src/xfpm-main.c:147
 msgid "Has sleep button"
 msgstr "Has sleep button"
 
-#: src/xfpm-main.c:154
+#: src/xfpm-main.c:149
 msgid "Has battery button"
 msgstr "Has battery button"
 
-#: src/xfpm-main.c:156
+#: src/xfpm-main.c:151
 msgid "Has LID"
 msgstr "Has LID"
 
-#: src/xfpm-main.c:275
+#: src/xfpm-main.c:270
 msgid "Daemonize"
 msgstr "Daemonise"
 
-#: src/xfpm-main.c:277
+#: src/xfpm-main.c:272
 msgid "Dump all information"
 msgstr "Dump all information"
 
-#: src/xfpm-main.c:278
+#: src/xfpm-main.c:273
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Restart the running instance of Xfce power manager"
 
-#: src/xfpm-main.c:279
+#: src/xfpm-main.c:274
 msgid "Show the configuration dialog"
 msgstr "Show the configuration dialogue"
 
-#: src/xfpm-main.c:280
+#: src/xfpm-main.c:275
 msgid "Quit any running xfce power manager"
 msgstr "Quit any running xfce power manager"
 
-#: src/xfpm-main.c:281
+#: src/xfpm-main.c:276
 msgid "Version information"
 msgstr "Version information"
 
-#: src/xfpm-main.c:300
+#: src/xfpm-main.c:295
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Failed to parse arguments: %s\n"
 
-#: src/xfpm-main.c:329
+#: src/xfpm-main.c:324
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Type '%s --help' for usage."
 
-#: src/xfpm-main.c:350
+#: src/xfpm-main.c:345
 msgid "Unable to get connection to the message bus session"
 msgstr "Unable to get connection to the message bus session"
 
-#: src/xfpm-main.c:358 src/xfpm-main.c:407
+#: src/xfpm-main.c:353 src/xfpm-main.c:402
 msgid "Xfce power manager is not running"
 msgstr "Xfce power manager is not running"
 
-#: src/xfpm-main.c:449
+#: src/xfpm-main.c:444
 msgid "Another power manager is already running"
 msgstr "Another power manager is already running"
 
-#: src/xfpm-main.c:453
+#: src/xfpm-main.c:448
 msgid "Xfce power manager is already running"
 msgstr "Xfce power manager is already running"
 
