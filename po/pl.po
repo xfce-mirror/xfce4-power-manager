@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-06-19 00:46+0200\n"
+"POT-Creation-Date: 2023-06-19 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Marek Adamski, 2023\n"
 "Language-Team: Polish (http://app.transifex.com/xfce/xfce4-power-manager/language/pl/)\n"
@@ -54,9 +54,9 @@ msgstr "Brak"
 
 #: data/interfaces/xfpm-settings.ui:250
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
-#: src/xfpm-power.c:546 src/xfpm-power.c:575 src/xfpm-power.c:749
-#: src/xfpm-power.c:770 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:258
+#: src/xfpm-power.c:517 src/xfpm-power.c:546 src/xfpm-power.c:720
+#: src/xfpm-power.c:741 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
 #: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -265,7 +265,7 @@ msgstr "sekund"
 #: settings/xfpm-settings.c:1056 settings/xfpm-settings.c:1155
 #: settings/xfpm-settings.c:1247 settings/xfpm-settings.c:1369
 #: settings/xfpm-settings.c:1427 settings/xfpm-settings.c:1479
-#: settings/xfpm-settings.c:1530 src/xfpm-power.c:602
+#: settings/xfpm-settings.c:1530 src/xfpm-power.c:573
 msgid "Suspend"
 msgstr "Wstrzymanie"
 
@@ -281,7 +281,7 @@ msgstr "Wstrzymywanie działania komputera nie jest obsługiwane"
 #: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1169
 #: settings/xfpm-settings.c:1253 settings/xfpm-settings.c:1375
 #: settings/xfpm-settings.c:1433 settings/xfpm-settings.c:1485
-#: settings/xfpm-settings.c:1536 src/xfpm-power.c:590
+#: settings/xfpm-settings.c:1536 src/xfpm-power.c:561
 msgid "Hibernate"
 msgstr "Zahibernowanie"
 
@@ -311,7 +311,7 @@ msgid "Do nothing"
 msgstr "Brak"
 
 #: settings/xfpm-settings.c:1006 settings/xfpm-settings.c:1381
-#: src/xfpm-power.c:622
+#: src/xfpm-power.c:593
 msgid "Shutdown"
 msgstr "Wyłączenie"
 
@@ -445,7 +445,7 @@ msgstr "Wyświetla określone urządzenie przy użyciu ścieżki obiektu UpDevic
 msgid "UpDevice object path"
 msgstr "Ścieżka obiektu UpDevice"
 
-#: settings/xfpm-settings-app.c:76 src/xfpm-main.c:276
+#: settings/xfpm-settings-app.c:76 src/xfpm-main.c:271
 msgid "Enable debugging"
 msgstr "Włącza diagnozowanie błędów"
 
@@ -458,7 +458,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Powoduje zakończenie xfce4-power-manager-settings"
 
 #: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
-#: src/xfpm-main.c:448
+#: src/xfpm-main.c:443
 msgid "Xfce Power Manager"
 msgstr "Zasilanie"
 
@@ -695,59 +695,59 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nNieznany stan"
 
-#: src/xfpm-power.c:285
+#: src/xfpm-power.c:281
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Aktualnie uruchomiony program zapobiega automatycznemu wstrzymaniu działania komputera. Kontynuowanie może spowodować jego niewłaściwe działanie.\nCzy chcesz wprowadzić system w stan uśpienia?"
 
-#: src/xfpm-power.c:334
+#: src/xfpm-power.c:312
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Nie udało się uruchomić żadnego z narzędzi blokowania ekranu. Ekran nie zostanie zablokowany.\nCzy wciąż kontynuować wstrzymanie systemu?"
 
-#: src/xfpm-power.c:496
+#: src/xfpm-power.c:467
 msgid "Hibernate the system"
 msgstr "Zahibernuj działanie komputera"
 
-#: src/xfpm-power.c:508
+#: src/xfpm-power.c:479
 msgid "Suspend the system"
 msgstr "Wstrzymaj działanie komputera"
 
-#: src/xfpm-power.c:528
+#: src/xfpm-power.c:499
 msgid "Shutdown the system"
 msgstr "Wyłącz komputer"
 
-#: src/xfpm-power.c:541 src/xfpm-power.c:572
+#: src/xfpm-power.c:512 src/xfpm-power.c:543
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Źródło zasilania jest bliskie rozładowania. Proszę zapisać bieżący stan pracy, w celu uniknięcia utraty danych."
 
-#: src/xfpm-power.c:629
+#: src/xfpm-power.c:600
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: src/xfpm-power.c:750
+#: src/xfpm-power.c:721
 msgid "System is running on low power"
 msgstr "Źródło zasilania jest bliskie rozładowania"
 
-#: src/xfpm-power.c:766
+#: src/xfpm-power.c:737
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "%s zostanie wkrótce rozładowany.\nPrzewidywany czas zasilania: %s."
 
-#: src/xfpm-power.c:1541 src/xfpm-power.c:1585 src/xfpm-power.c:1621
-#: src/xfpm-power.c:1655
+#: src/xfpm-power.c:1512 src/xfpm-power.c:1556 src/xfpm-power.c:1592
+#: src/xfpm-power.c:1626
 msgid "Permission denied"
 msgstr "Brak uprawnień"
 
-#: src/xfpm-power.c:1630
+#: src/xfpm-power.c:1601
 msgid "Hibernate not supported"
 msgstr "Hibernowanie nie jest obsługiwane"
 
-#: src/xfpm-power.c:1664
+#: src/xfpm-power.c:1635
 msgid "Suspend not supported"
 msgstr "Wstrzymywanie pracy komputera jest nieobsługiwane"
 
@@ -823,109 +823,101 @@ msgstr "Obsługuje narzędzia PolicyKit\n"
 msgid "Without policykit support\n"
 msgstr "Nie obsługuje narzędzia PolicyKit\n"
 
-#: src/xfpm-main.c:117
-msgid "With network manager support\n"
-msgstr "Obsługuje menedżera sieci\n"
-
-#: src/xfpm-main.c:119
-msgid "Without network manager support\n"
-msgstr "Nie obsługuje menedżera sieci\n"
-
-#: src/xfpm-main.c:134
+#: src/xfpm-main.c:129
 msgid "Can suspend"
 msgstr "Potrafi wstrzymać działanie komputera"
 
-#: src/xfpm-main.c:136
+#: src/xfpm-main.c:131
 msgid "Can hibernate"
 msgstr "Potrafi zahibernować działanie komputera"
 
-#: src/xfpm-main.c:138
+#: src/xfpm-main.c:133
 msgid "Authorized to suspend"
 msgstr "Uprawniony do wstrzymywania"
 
-#: src/xfpm-main.c:140
+#: src/xfpm-main.c:135
 msgid "Authorized to hibernate"
 msgstr "Uprawniony do hibernowania"
 
-#: src/xfpm-main.c:142
+#: src/xfpm-main.c:137
 msgid "Authorized to shutdown"
 msgstr "Uprawniony do wyłączania"
 
-#: src/xfpm-main.c:144
+#: src/xfpm-main.c:139
 msgid "Has battery"
 msgstr "Posiada akumulator"
 
-#: src/xfpm-main.c:146
+#: src/xfpm-main.c:141
 msgid "Has brightness panel"
 msgstr "Posiada panel jasności"
 
-#: src/xfpm-main.c:148
+#: src/xfpm-main.c:143
 msgid "Has power button"
 msgstr "Posiada przycisk zasilania"
 
-#: src/xfpm-main.c:150
+#: src/xfpm-main.c:145
 msgid "Has hibernate button"
 msgstr "Posiada przycisk zahibernowania"
 
-#: src/xfpm-main.c:152
+#: src/xfpm-main.c:147
 msgid "Has sleep button"
 msgstr "Posiada przycisk wstrzymania"
 
-#: src/xfpm-main.c:154
+#: src/xfpm-main.c:149
 msgid "Has battery button"
 msgstr "Posiada przycisk baterii"
 
-#: src/xfpm-main.c:156
+#: src/xfpm-main.c:151
 msgid "Has LID"
 msgstr "Posiada pokrywę ekranu"
 
-#: src/xfpm-main.c:275
+#: src/xfpm-main.c:270
 msgid "Daemonize"
 msgstr "Uruchamia w trybie demona"
 
-#: src/xfpm-main.c:277
+#: src/xfpm-main.c:272
 msgid "Dump all information"
 msgstr "Wypisuje szczegółowe informacje"
 
-#: src/xfpm-main.c:278
+#: src/xfpm-main.c:273
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Uruchamia ponownie bieżące wystąpienie programu"
 
-#: src/xfpm-main.c:279
+#: src/xfpm-main.c:274
 msgid "Show the configuration dialog"
 msgstr "Wyświetla okno konfiguracji programu"
 
-#: src/xfpm-main.c:280
+#: src/xfpm-main.c:275
 msgid "Quit any running xfce power manager"
 msgstr "Kończy działanie wszystkich wystąpień programu"
 
-#: src/xfpm-main.c:281
+#: src/xfpm-main.c:276
 msgid "Version information"
 msgstr "Wypisuje informacje o wersji"
 
-#: src/xfpm-main.c:300
+#: src/xfpm-main.c:295
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Nie udało się przetworzyć argumentów: %s\n"
 
-#: src/xfpm-main.c:329
+#: src/xfpm-main.c:324
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Proszę wprowadzić „%s --help”, aby wypisać komunikat pomocy."
 
-#: src/xfpm-main.c:350
+#: src/xfpm-main.c:345
 msgid "Unable to get connection to the message bus session"
 msgstr "Nie można połączyć z sesją systemu komunikacji"
 
-#: src/xfpm-main.c:358 src/xfpm-main.c:407
+#: src/xfpm-main.c:353 src/xfpm-main.c:402
 msgid "Xfce power manager is not running"
 msgstr "Menedżer zasilania nie jest uruchomiony"
 
-#: src/xfpm-main.c:449
+#: src/xfpm-main.c:444
 msgid "Another power manager is already running"
 msgstr "Inny menedżer zasilania jest już uruchomiony"
 
-#: src/xfpm-main.c:453
+#: src/xfpm-main.c:448
 msgid "Xfce power manager is already running"
 msgstr "Menedżer zasilania jest już uruchomiony"
 
