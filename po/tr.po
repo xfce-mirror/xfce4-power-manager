@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-05-30 00:48+0200\n"
+"POT-Creation-Date: 2023-06-19 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Demiray Muhterem <mdemiray@msn.com>, 2019-2020,2023\n"
 "Language-Team: Turkish (http://app.transifex.com/xfce/xfce4-power-manager/language/tr/)\n"
@@ -52,9 +52,9 @@ msgstr "Hiçbiri"
 
 #: data/interfaces/xfpm-settings.ui:250
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
-#: src/xfpm-power.c:546 src/xfpm-power.c:575 src/xfpm-power.c:749
-#: src/xfpm-power.c:770 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:258
+#: src/xfpm-power.c:517 src/xfpm-power.c:546 src/xfpm-power.c:720
+#: src/xfpm-power.c:741 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
 #: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -263,7 +263,7 @@ msgstr "saniye"
 #: settings/xfpm-settings.c:1056 settings/xfpm-settings.c:1155
 #: settings/xfpm-settings.c:1247 settings/xfpm-settings.c:1369
 #: settings/xfpm-settings.c:1427 settings/xfpm-settings.c:1479
-#: settings/xfpm-settings.c:1530 src/xfpm-power.c:602
+#: settings/xfpm-settings.c:1530 src/xfpm-power.c:573
 msgid "Suspend"
 msgstr "Askıya Al"
 
@@ -279,7 +279,7 @@ msgstr "Askıya alma işlemi desteklenmiyor"
 #: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1169
 #: settings/xfpm-settings.c:1253 settings/xfpm-settings.c:1375
 #: settings/xfpm-settings.c:1433 settings/xfpm-settings.c:1485
-#: settings/xfpm-settings.c:1536 src/xfpm-power.c:590
+#: settings/xfpm-settings.c:1536 src/xfpm-power.c:561
 msgid "Hibernate"
 msgstr "Hazırda Beklet"
 
@@ -309,7 +309,7 @@ msgid "Do nothing"
 msgstr "Hiçbir şey yapma"
 
 #: settings/xfpm-settings.c:1006 settings/xfpm-settings.c:1381
-#: src/xfpm-power.c:622
+#: src/xfpm-power.c:593
 msgid "Shutdown"
 msgstr "Kapat"
 
@@ -345,74 +345,83 @@ msgstr[1] "dakika"
 msgid "Device"
 msgstr "Aygıt"
 
-#: settings/xfpm-settings.c:2074
+#: settings/xfpm-settings.c:2075
 msgid "Type"
 msgstr "Tür"
 
-#: settings/xfpm-settings.c:2079
+#: settings/xfpm-settings.c:2080
 msgid "PowerSupply"
 msgstr "Güç Kaynağı"
 
-#: settings/xfpm-settings.c:2080 src/xfpm-main.c:77
+#: settings/xfpm-settings.c:2081 src/xfpm-main.c:77
 msgid "True"
 msgstr "Doğru"
 
-#: settings/xfpm-settings.c:2080 src/xfpm-main.c:77
+#: settings/xfpm-settings.c:2081 src/xfpm-main.c:77
 msgid "False"
 msgstr "Yanlış"
 
-#: settings/xfpm-settings.c:2087
+#: settings/xfpm-settings.c:2088
 msgid "Model"
 msgstr "Model"
 
-#: settings/xfpm-settings.c:2090
+#: settings/xfpm-settings.c:2091
 msgid "Technology"
 msgstr "Teknoloji"
 
-#: settings/xfpm-settings.c:2097
+#: settings/xfpm-settings.c:2098
 msgid "Current charge"
 msgstr "Şu anki şarj"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:2105 settings/xfpm-settings.c:2117
-#: settings/xfpm-settings.c:2129
+#: settings/xfpm-settings.c:2106 settings/xfpm-settings.c:2118
+#: settings/xfpm-settings.c:2130
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:2107
+#: settings/xfpm-settings.c:2108
 msgid "Fully charged (design)"
 msgstr "Tümüyle dolu (tasarım)"
 
-#: settings/xfpm-settings.c:2120
+#: settings/xfpm-settings.c:2121
 msgid "Fully charged"
 msgstr "Tümüyle dolu"
 
-#: settings/xfpm-settings.c:2131
+#: settings/xfpm-settings.c:2132
 msgid "Energy empty"
 msgstr "Enerji boş"
 
+#. TRANSLATORS: Unit here is Watt
+#: settings/xfpm-settings.c:2140
+msgid "W"
+msgstr ""
+
+#: settings/xfpm-settings.c:2142
+msgid "Energy rate"
+msgstr ""
+
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:2139
+#: settings/xfpm-settings.c:2150
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:2141
+#: settings/xfpm-settings.c:2152
 msgid "Voltage"
 msgstr "Voltaj"
 
-#: settings/xfpm-settings.c:2148
+#: settings/xfpm-settings.c:2159
 msgid "Vendor"
 msgstr "Üretici"
 
-#: settings/xfpm-settings.c:2153
+#: settings/xfpm-settings.c:2164
 msgid "Serial"
 msgstr "Seri"
 
-#: settings/xfpm-settings.c:2432
+#: settings/xfpm-settings.c:2443
 msgid "Check your power manager installation"
 msgstr "Güç yöneticisi kurulumunuzu gözden geçirin"
 
-#: settings/xfpm-settings.c:2525
+#: settings/xfpm-settings.c:2536
 msgid "Devices"
 msgstr "Aygıtlar"
 
@@ -432,7 +441,7 @@ msgstr "UpDevice nesne yoluya belirli aygıtı göster"
 msgid "UpDevice object path"
 msgstr "UpDevice nesne yolu"
 
-#: settings/xfpm-settings-app.c:76 src/xfpm-main.c:276
+#: settings/xfpm-settings-app.c:76 src/xfpm-main.c:271
 msgid "Enable debugging"
 msgstr "Hata ayıklama açık"
 
@@ -445,7 +454,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "xfce4-power-manager-settings kapandı"
 
 #: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
-#: src/xfpm-main.c:448
+#: src/xfpm-main.c:443
 msgid "Xfce Power Manager"
 msgstr "Xfce Güç Yöneticisi"
 
@@ -624,15 +633,15 @@ msgstr "<b>%s%s</b>\n%%%0.0f - %s kaldı"
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Waiting to discharge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nBoşalması bekleniyor (%%%0.0f)"
+"Waiting to charge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nŞarj bekleniyor (%%%0.0f)"
 
 #: common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Waiting to charge (%0.0f%%)"
-msgstr "<b>%s %s</b>\nŞarj bekleniyor (%%%0.0f)"
+"Waiting to discharge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nBoşalması bekleniyor (%%%0.0f)"
 
 #: common/xfpm-power-common.c:400
 #, c-format
@@ -676,59 +685,59 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nBilinmeyen durum"
 
-#: src/xfpm-power.c:285
+#: src/xfpm-power.c:281
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Bir uygulama kendiliğinden askıya alma işlemini devre dışı bırakıyor. Bu işlemi şu an gerçekleştirirseniz çalışan uygulamaya zarar verebilirsiniz.\nSistemi hazırda bekletmek istediğinizden emin misiniz?"
 
-#: src/xfpm-power.c:334
+#: src/xfpm-power.c:312
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Ekran kilitleme araçlarından hiçbiri başarılı çalışmadı, ekran kilitlenmeyecek.\nSistemi askıya almak istediğinizden emin misiniz?"
 
-#: src/xfpm-power.c:496
+#: src/xfpm-power.c:467
 msgid "Hibernate the system"
 msgstr "Sistemi hazırda beklet"
 
-#: src/xfpm-power.c:508
+#: src/xfpm-power.c:479
 msgid "Suspend the system"
 msgstr "Sistemi askıya al"
 
-#: src/xfpm-power.c:528
+#: src/xfpm-power.c:499
 msgid "Shutdown the system"
 msgstr "Sistemi kapat"
 
-#: src/xfpm-power.c:541 src/xfpm-power.c:572
+#: src/xfpm-power.c:512 src/xfpm-power.c:543
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Sistem düşük pilde çalışıyor. Veri kaybetmemek için çalışmanızı kaydedin"
 
-#: src/xfpm-power.c:629
+#: src/xfpm-power.c:600
 msgid "_Cancel"
 msgstr "_İptal"
 
-#: src/xfpm-power.c:750
+#: src/xfpm-power.c:721
 msgid "System is running on low power"
 msgstr "Sistem düşük pilde çalışıyor"
 
-#: src/xfpm-power.c:766
+#: src/xfpm-power.c:737
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "%s şarj düzeyiniz düşük\n%s dakika kaldı"
 
-#: src/xfpm-power.c:1541 src/xfpm-power.c:1585 src/xfpm-power.c:1621
-#: src/xfpm-power.c:1655
+#: src/xfpm-power.c:1512 src/xfpm-power.c:1556 src/xfpm-power.c:1592
+#: src/xfpm-power.c:1626
 msgid "Permission denied"
 msgstr "İzin reddedildi"
 
-#: src/xfpm-power.c:1630
+#: src/xfpm-power.c:1601
 msgid "Hibernate not supported"
 msgstr "Hazırda bekletme desteklenmiyor"
 
-#: src/xfpm-power.c:1664
+#: src/xfpm-power.c:1635
 msgid "Suspend not supported"
 msgstr "Askıya alma desteklenmiyor"
 
@@ -804,109 +813,101 @@ msgstr "Policykit desteğiyle\n"
 msgid "Without policykit support\n"
 msgstr "Policykit desteksiz\n"
 
-#: src/xfpm-main.c:117
-msgid "With network manager support\n"
-msgstr "Ağ yönetici desteği ile\n"
-
-#: src/xfpm-main.c:119
-msgid "Without network manager support\n"
-msgstr "Ağ yönetici desteksiz\n"
-
-#: src/xfpm-main.c:134
+#: src/xfpm-main.c:129
 msgid "Can suspend"
 msgstr "Askıya alınabilir"
 
-#: src/xfpm-main.c:136
+#: src/xfpm-main.c:131
 msgid "Can hibernate"
 msgstr "Hazırda bekletilebilir"
 
-#: src/xfpm-main.c:138
+#: src/xfpm-main.c:133
 msgid "Authorized to suspend"
 msgstr "Askıya almaya yetkilendirilmiş"
 
-#: src/xfpm-main.c:140
+#: src/xfpm-main.c:135
 msgid "Authorized to hibernate"
 msgstr "Hazırda bekletmeye yetkilendirilmiş"
 
-#: src/xfpm-main.c:142
+#: src/xfpm-main.c:137
 msgid "Authorized to shutdown"
 msgstr "Kapatmaya yetkili"
 
-#: src/xfpm-main.c:144
+#: src/xfpm-main.c:139
 msgid "Has battery"
 msgstr "Pil takılı"
 
-#: src/xfpm-main.c:146
+#: src/xfpm-main.c:141
 msgid "Has brightness panel"
 msgstr "Parlaklık paneli"
 
-#: src/xfpm-main.c:148
+#: src/xfpm-main.c:143
 msgid "Has power button"
 msgstr "Güç düğmesi var"
 
-#: src/xfpm-main.c:150
+#: src/xfpm-main.c:145
 msgid "Has hibernate button"
 msgstr "Hazırda bekletme düğmesi"
 
-#: src/xfpm-main.c:152
+#: src/xfpm-main.c:147
 msgid "Has sleep button"
 msgstr "Uyku düğmesi var"
 
-#: src/xfpm-main.c:154
+#: src/xfpm-main.c:149
 msgid "Has battery button"
 msgstr "Pil düğmesi var"
 
-#: src/xfpm-main.c:156
+#: src/xfpm-main.c:151
 msgid "Has LID"
 msgstr "LID var"
 
-#: src/xfpm-main.c:275
+#: src/xfpm-main.c:270
 msgid "Daemonize"
 msgstr "Art alanda"
 
-#: src/xfpm-main.c:277
+#: src/xfpm-main.c:272
 msgid "Dump all information"
 msgstr "Tüm bilgiyi al"
 
-#: src/xfpm-main.c:278
+#: src/xfpm-main.c:273
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Çalışan tüm Xfce güç yöneticisi uygulamalarını yeniden başlat"
 
-#: src/xfpm-main.c:279
+#: src/xfpm-main.c:274
 msgid "Show the configuration dialog"
 msgstr "Yapılandırma penceresini göster"
 
-#: src/xfpm-main.c:280
+#: src/xfpm-main.c:275
 msgid "Quit any running xfce power manager"
 msgstr "Çalışan tüm xfce güç yöneticisi uygulamalarını kapat"
 
-#: src/xfpm-main.c:281
+#: src/xfpm-main.c:276
 msgid "Version information"
 msgstr "Sürüm bilgisi"
 
-#: src/xfpm-main.c:300
+#: src/xfpm-main.c:295
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Argüman ayrıştırılamadı: %s\n"
 
-#: src/xfpm-main.c:329
+#: src/xfpm-main.c:324
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Kullanım bilgisi için '%s --help' yazın."
 
-#: src/xfpm-main.c:350
+#: src/xfpm-main.c:345
 msgid "Unable to get connection to the message bus session"
 msgstr "DBUS oturumu ile iletişim kurulamadı"
 
-#: src/xfpm-main.c:358 src/xfpm-main.c:407
+#: src/xfpm-main.c:353 src/xfpm-main.c:402
 msgid "Xfce power manager is not running"
 msgstr "Xfce güç yöneticisi çalışmıyor"
 
-#: src/xfpm-main.c:449
+#: src/xfpm-main.c:444
 msgid "Another power manager is already running"
 msgstr "Başka güç yöneticisi halen çalışıyor"
 
-#: src/xfpm-main.c:453
+#: src/xfpm-main.c:448
 msgid "Xfce power manager is already running"
 msgstr "Xfce güç yöneticisi zaten çalışıyor"
 
