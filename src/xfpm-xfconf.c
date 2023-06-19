@@ -84,9 +84,6 @@ enum
   PROP_IDLE_SLEEP_MODE_ON_BATTERY,
   PROP_DIM_ON_AC_TIMEOUT,
   PROP_DIM_ON_BATTERY_TIMEOUT,
-#ifdef WITH_NETWORK_MANAGER
-  PROP_NETWORK_MANAGER_SLEEP,
-#endif
   PROP_LOGIND_HANDLE_POWER_KEY,
   PROP_LOGIND_HANDLE_SUSPEND_KEY,
   PROP_LOGIND_HANDLE_HIBERNATE_KEY,
@@ -554,18 +551,6 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                      G_MAXINT32,
                                                      -1,
                                                      G_PARAM_READWRITE));
-
-#ifdef WITH_NETWORK_MANAGER
-  /**
-   * XfpmXfconf::network-manager-sleep
-   **/
-  g_object_class_install_property (object_class,
-                                   PROP_NETWORK_MANAGER_SLEEP,
-                                   g_param_spec_boolean (NETWORK_MANAGER_SLEEP,
-                                                         NULL, NULL,
-                                                         TRUE,
-                                                         G_PARAM_READWRITE));
-#endif
 
   /**
    * XfpmXfconf::logind-handle-power-key

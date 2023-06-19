@@ -21,8 +21,6 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-dpms.h				\
 	xfpm-button.c				\
 	xfpm-button.h				\
-	xfpm-network-manager.c			\
-	xfpm-network-manager.h			\
 	xfpm-inhibit.c				\
 	xfpm-inhibit.h				\
 	xfpm-notify.c				\
