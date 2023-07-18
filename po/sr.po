@@ -56,7 +56,7 @@ msgstr "Ништа"
 #: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
-msgstr "Управник потрошње"
+msgstr "Управник напајања"
 
 #: data/interfaces/xfpm-settings.ui:265
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:160
@@ -155,15 +155,15 @@ msgstr "%"
 
 #: data/interfaces/xfpm-settings.ui:1118
 msgid "On critical battery power:"
-msgstr "Када је напајање батеријом критично:"
+msgstr "Када је напајање батеријом ниско:"
 
 #: data/interfaces/xfpm-settings.ui:1158
 msgid "<b>Critical power</b>"
-msgstr "<b>Критично напајање</b>"
+msgstr "<b>Ниско напајање</b>"
 
 #: data/interfaces/xfpm-settings.ui:1187 data/interfaces/xfpm-settings.ui:2068
 msgid "Lock screen when system is going to sleep"
-msgstr "Закључај екран када се систем успава"
+msgstr "Закључај заслон када се систем успава"
 
 #: data/interfaces/xfpm-settings.ui:1207
 msgid "<b>Security</b>"
@@ -175,12 +175,12 @@ msgstr "Систем"
 
 #: data/interfaces/xfpm-settings.ui:1266
 msgid "<b>Display power management</b>"
-msgstr "<b>Управник потрошње приказа</b>"
+msgstr "<b>Управник напајања приказа</b>"
 
 #: data/interfaces/xfpm-settings.ui:1279
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
-msgstr "Нека управник потрошње управља напајањем приказа (ДПМС) уместо икс11."
+msgstr "Нека управник напајања управља напајањем приказа (ДПМС) уместо икс11."
 
 #: data/interfaces/xfpm-settings.ui:1312 data/interfaces/xfpm-settings.ui:1669
 msgid "Blank after"
@@ -216,7 +216,7 @@ msgstr "Самостално закључај седницу:"
 
 #: data/interfaces/xfpm-settings.ui:2015
 msgid "Delay locking after screensaver for"
-msgstr "Одгоди закључавање за чуварем екрана на"
+msgstr "Одгоди закључавање за чуварем приказа на"
 
 #: data/interfaces/xfpm-settings.ui:2096
 msgid "<b>Light Locker</b>"
@@ -267,11 +267,11 @@ msgstr "Обустави"
 
 #: settings/xfpm-settings.c:919 settings/xfpm-settings.c:1159
 msgid "Suspend operation not permitted"
-msgstr "Операција обуставе није дозвољена"
+msgstr "Радња обуставе није дозвољена"
 
 #: settings/xfpm-settings.c:923 settings/xfpm-settings.c:1163
 msgid "Suspend operation not supported"
-msgstr "Операција обуставе није подржана"
+msgstr "Радња обуставе није подржана"
 
 #: settings/xfpm-settings.c:929 settings/xfpm-settings.c:1000
 #: settings/xfpm-settings.c:1062 settings/xfpm-settings.c:1169
@@ -319,11 +319,11 @@ msgstr "Питај"
 
 #: settings/xfpm-settings.c:1051 settings/xfpm-settings.c:1242
 msgid "Switch off display"
-msgstr "Искључи екран"
+msgstr "Искључи заслон"
 
 #: settings/xfpm-settings.c:1066 settings/xfpm-settings.c:1257
 msgid "Lock screen"
-msgstr "Закључај екран"
+msgstr "Закључај заслон"
 
 #: settings/xfpm-settings.c:1569
 msgid "Number of brightness steps available using keys"
@@ -331,7 +331,7 @@ msgstr "Вредност постепеног осветљавања корис�
 
 #: settings/xfpm-settings.c:1609
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Када сви извори енергије рачунара достигну овај ниво пуњења"
+msgstr "Када сви извори напајања рачунара достигну овај ступањ пуњења"
 
 #: settings/xfpm-settings.c:1685 common/xfpm-power-common.c:166
 msgid "minute"
@@ -388,16 +388,16 @@ msgstr "Потпуно напуњена"
 
 #: settings/xfpm-settings.c:2132
 msgid "Energy empty"
-msgstr "Напајање је празно"
+msgstr "Празна је"
 
 #. TRANSLATORS: Unit here is Watt
 #: settings/xfpm-settings.c:2140
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: settings/xfpm-settings.c:2142
 msgid "Energy rate"
-msgstr ""
+msgstr "Стопа попуне"
 
 #. TRANSLATORS: Unit here is Volt
 #: settings/xfpm-settings.c:2150
@@ -414,11 +414,11 @@ msgstr "Испоручилац"
 
 #: settings/xfpm-settings.c:2164
 msgid "Serial"
-msgstr "Серијски"
+msgstr "Број производа"
 
 #: settings/xfpm-settings.c:2443
 msgid "Check your power manager installation"
-msgstr "Проверите уградњу управника потрошње"
+msgstr "Проверите уградњу управника напајања"
 
 #: settings/xfpm-settings.c:2536
 msgid "Devices"
@@ -430,19 +430,19 @@ msgstr "Управник подешавања утичнице"
 
 #: settings/xfpm-settings-app.c:74
 msgid "SOCKET ID"
-msgstr "ИБ УТИЧНИЦЕ"
+msgstr "ЛБ УТИЧНИЦЕ"
 
 #: settings/xfpm-settings-app.c:75
 msgid "Display a specific device by UpDevice object path"
-msgstr "Приказуј одређени уређај по путањи објекта UpDevice"
+msgstr "Приказуј одређени уређај по путањи предмета UpDevice"
 
 #: settings/xfpm-settings-app.c:75
 msgid "UpDevice object path"
-msgstr "Путања објекта UpDevice"
+msgstr "Путања предмета UpDevice"
 
 #: settings/xfpm-settings-app.c:76 src/xfpm-main.c:271
 msgid "Enable debugging"
-msgstr "Укључује уклањање грешака"
+msgstr "Омогући уклањање грешака"
 
 #: settings/xfpm-settings-app.c:77
 msgid "Display version information"
@@ -450,24 +450,24 @@ msgstr "Прикажи податке о издању"
 
 #: settings/xfpm-settings-app.c:78
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr "Нека се поставке управника потрошње иксфце-а затворе"
+msgstr "Нека се поставке управника напајања иксфце-а затворе"
 
 #: settings/xfpm-settings-app.c:174 settings/xfpm-settings-app.c:221
 #: src/xfpm-main.c:443
 msgid "Xfce Power Manager"
-msgstr "Управник потрошње Искфце-а 4"
+msgstr "Управник напајања Искфце-а 4"
 
 #: settings/xfpm-settings-app.c:176
 msgid "Failed to connect to power manager"
-msgstr "Нисам успео да се повежем са управником потрошње"
+msgstr "Нисам успео да се повежем са управником напајања"
 
 #: settings/xfpm-settings-app.c:190
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Управник потрошње за Иксфце4 није покренут, да ли желите да га покренете сада?"
+msgstr "Управник напајања за Иксфце4 није покренут, да ли желите да га покренете сада?"
 
 #: settings/xfpm-settings-app.c:223
 msgid "Failed to load power manager configuration, using defaults"
-msgstr "Нисам успео да учитам поставке управника потрошње, користим задато"
+msgstr "Нисам успео да учитам поставке управника напајања, користим подразумевано"
 
 #: settings/xfpm-settings-app.c:356
 #, c-format
@@ -481,7 +481,7 @@ msgstr "Изграђено је уз помоћ ГТК+ %d.%d.%d, са везо�
 
 #: settings/xfce4-power-manager-settings.desktop.in:6
 msgid "Settings for the Xfce Power Manager"
-msgstr "Поставке управника потрошње за Иксфце4"
+msgstr "Поставке управника напајања за Иксфце4"
 
 #: settings/xfce4-power-manager-settings.desktop.in:12
 msgid ""
@@ -503,7 +503,7 @@ msgstr "Непрекидан извор напајања"
 
 #: common/xfpm-power-common.c:49
 msgid "Line power"
-msgstr "Линијско напајање"
+msgstr "Мрежно напајање"
 
 #: common/xfpm-power-common.c:51
 msgid "Mouse"
@@ -515,7 +515,7 @@ msgstr "Тастатура"
 
 #: common/xfpm-power-common.c:55
 msgid "Monitor"
-msgstr "Екран"
+msgstr "Заслон"
 
 #: common/xfpm-power-common.c:57
 msgid "PDA"
@@ -697,7 +697,7 @@ msgstr "Програм тренутно онемогућава самостал�
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Ни један прибор за закључавање екрана се не извршава успешно, екран се неће закључати.\nДа ли и даље желите да обуставите систем?"
+msgstr "Ни један прибор за закључавање заслона се не извршава успешно, заслон се неће закључати.\nДа ли и даље желите да обуставите систем?"
 
 #: src/xfpm-power.c:467
 msgid "Hibernate the system"
@@ -805,7 +805,7 @@ msgid ""
 "\n"
 "Licensed under the GNU GPL.\n"
 "\n"
-msgstr "\nУправник потрошње за Иксфце4 %s\nДео пројекта Иксфце добара\nhttp://goodies.xfce.org\n\nОбјавњен под лиценцом ГНУ ОЈЛ.\n\n"
+msgstr "\nУправник напајања за Иксфце4 %s\nДео пројекта Иксфце добара\nhttp://goodies.xfce.org\n\nОбјавњен под лиценцом ГНУ ОЈЛ.\n\n"
 
 #: src/xfpm-main.c:112
 msgid "With policykit support\n"
@@ -817,11 +817,11 @@ msgstr "Без подршке безбедносног скупа\n"
 
 #: src/xfpm-main.c:129
 msgid "Can suspend"
-msgstr "Могу у обуставу"
+msgstr "Може у обуставу"
 
 #: src/xfpm-main.c:131
 msgid "Can hibernate"
-msgstr "Могу у замрзнутост"
+msgstr "Може у замрзнутост"
 
 #: src/xfpm-main.c:133
 msgid "Authorized to suspend"
@@ -833,7 +833,7 @@ msgstr "Овлашћен за замрзавање"
 
 #: src/xfpm-main.c:137
 msgid "Authorized to shutdown"
-msgstr "Овлашћен за гашење"
+msgstr "Овлашћен за искључивање"
 
 #: src/xfpm-main.c:139
 msgid "Has battery"
@@ -849,7 +849,7 @@ msgstr "Има дугме напајања"
 
 #: src/xfpm-main.c:145
 msgid "Has hibernate button"
-msgstr "Има дугме неактивности"
+msgstr "Има дугме замрзавања"
 
 #: src/xfpm-main.c:147
 msgid "Has sleep button"
@@ -861,7 +861,7 @@ msgstr "Има дугме батерије"
 
 #: src/xfpm-main.c:151
 msgid "Has LID"
-msgstr "Има преклопни екран"
+msgstr "Има преклопни заслон"
 
 #: src/xfpm-main.c:270
 msgid "Daemonize"
@@ -873,7 +873,7 @@ msgstr "Истреса све податке"
 
 #: src/xfpm-main.c:273
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Поново покрени све текуће примерке ИксФЦЕ управника потрошње"
+msgstr "Поново покрени све текуће примерке управника напајањаИксФЦЕ-а"
 
 #: src/xfpm-main.c:274
 msgid "Show the configuration dialog"
@@ -881,7 +881,7 @@ msgstr "Прикажи прозорче подешавања"
 
 #: src/xfpm-main.c:275
 msgid "Quit any running xfce power manager"
-msgstr "Искључи било којег покренутог ИксФЦЕ управника потрошњом"
+msgstr "Искључи било којег покренутог управника напајања ИксФЦЕ-а"
 
 #: src/xfpm-main.c:276
 msgid "Version information"
@@ -903,15 +903,15 @@ msgstr "Нисам успео да добавим везу до седнице �
 
 #: src/xfpm-main.c:353 src/xfpm-main.c:402
 msgid "Xfce power manager is not running"
-msgstr "ИксФЦЕ управник потрошње није покренут"
+msgstr "ИксФЦЕ-ов управник напајања није покренут"
 
 #: src/xfpm-main.c:444
 msgid "Another power manager is already running"
-msgstr "Неки други управник потрошње је у погону"
+msgstr "Неки други управник напајања је у погону"
 
 #: src/xfpm-main.c:448
 msgid "Xfce power manager is already running"
-msgstr "ИксФЦЕ управник потрошње је већ у употреби"
+msgstr "ИксФЦЕ-ов  управник напајања је већ у употреби"
 
 #: src/xfpm-inhibit.c:396
 msgid "Invalid arguments"
@@ -925,11 +925,11 @@ msgstr "Неважећи колачић"
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr "Ни један од алата за закључавање екрана није успешно покренут, па екран неће бити закључан."
+msgstr "Ни један од алата за закључавање заслона није успешно покренут, па заслон неће бити закључан."
 
 #: src/xfce4-power-manager.desktop.in:4
 msgid "Power management for the Xfce desktop"
-msgstr "Управник потрошње за ИксФЦЕ радно окружење"
+msgstr "Управник напајања за ИксФЦЕ-ово радно окружење"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
@@ -969,7 +969,7 @@ msgstr "%s тренутно онемогућава управљање напај
 
 #: panel-plugins/power-manager-plugin/power-manager-button.c:1720
 msgid "<b>Display brightness</b>"
-msgstr "<b>Осветљење екрана</b>"
+msgstr "<b>Осветљење заслона</b>"
 
 #: panel-plugins/power-manager-plugin/power-manager-button.c:1747
 #: panel-plugins/power-manager-plugin/power-manager-button.c:1758
@@ -1005,7 +1005,7 @@ msgstr "Постотак и преостало време"
 #. create the dialog
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
 msgid "Power Manager Plugin Settings"
-msgstr "Поставке прикључка управника потрошње"
+msgstr "Поставке прикључка управника напајања"
 
 #. show-panel-label setting
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:180
@@ -1018,17 +1018,17 @@ msgstr "Приказуј указивач „Начин рада излагањ�
 
 #: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:4
 msgid "Power Manager Plugin"
-msgstr "Прикључак управника потрошње"
+msgstr "Прикључак управника напајања"
 
 #: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:5
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr "Приказује ступањ попуне батерије уређаја и управља осветљењем екрана"
+msgstr "Приказује ступањ попуне батерије уређаја и управља осветљењем заслона"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:7
 msgid "Xfce power manager"
-msgstr "Управник потрошње ИксФЦЕ-а"
+msgstr "Управник напајања ИксФЦЕ-а"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
@@ -1039,7 +1039,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Управник потрошње Иксфце-а управља потрошачима на рачунару и уређајима којима може да се управља ради штедње (као што су ступањ осветљења ЛЦД-а, успављивање екрана, подешавање учесталости процесора)."
+msgstr "Управник напајања Иксфце-а управља потрошачима на рачунару и уређајима којима може да се управља ради штедње (као што су ступањ осветљења ЛЦД-а, успављивање заслона, подешавање учесталости процесора)."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:16
 msgid ""
@@ -1049,11 +1049,11 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Управник потрошње ИксФЦЕ-а има додатке сагласне са сучељима Д-сабирнице ради обавештавања других програма о тренутном ступњу напајања да би они смањили своју потрошњу, и омогућава сучеље које другим програмима омогућава да спрече радње самосталног успављивања преко управника потрошње; на пример,  управник пакета система би требао да користи ово сучеље при извршавању радњи надоградње."
+msgstr "Управник напајања ИксФЦЕ-а има додатке сагласне са сучељима Д-сабирнице ради обавештавања других програма о тренутном ступњу напајања да би они смањили своју потрошњу, и омогућава сучеље које другим програмима омогућава да спрече радње самосталног успављивања преко управника напајања; на пример, управник пакета система би требао да користи ово сучеље при извршавању радњи надградње."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Управник потрошње Иксфце-а такође има прикључак за полице Иксфце-а и Ликсде-а за управљање ступњем осветљења и надзором батерије и пуњења."
+msgstr "Управник напајања Иксфце-а такође има прикључак за полице Иксфце-а и Ликсде-а за управљање ступњем осветљења и надзором батерије и пуњења."
