@@ -778,7 +778,13 @@ on_battery_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
   {
     g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_BATTERY_CFG);
   }
-  xfpm_update_logind_handle_lid_switch (channel);
+
+  /* Light Locker Integration */
+  if ( light_locker_settings )
+  {
+    xfpm_update_logind_handle_lid_switch (channel);
+  }
+  /* END Light Locker Integration */
 }
 
 void
@@ -803,7 +809,13 @@ on_ac_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
   {
     g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_AC_CFG);
   }
-  xfpm_update_logind_handle_lid_switch (channel);
+
+  /* Light Locker Integration */
+  if ( light_locker_settings )
+  {
+    xfpm_update_logind_handle_lid_switch (channel);
+  }
+  /* END Light Locker Integration */
 }
 
 void
