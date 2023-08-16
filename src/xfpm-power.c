@@ -74,7 +74,7 @@ static void xfpm_power_set_property (GObject *object,
 static void xfpm_power_change_presentation_mode (XfpmPower *power,
                                                  gboolean presentation_mode);
 
-static void xfpm_update_blank_time (XfpmPower *power);
+static void xfpm_power_toggle_screensaver (XfpmPower *power);
 
 static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
 static void xfpm_power_dbus_init (XfpmPower *power);
@@ -104,8 +104,6 @@ struct XfpmPowerPrivate
 
   XfpmDpms         *dpms;
   gboolean          presentation_mode;
-  gint              on_ac_blank;
-  gint              on_battery_blank;
   EggIdletime      *idletime;
 
   gboolean          inhibited;
@@ -142,8 +140,6 @@ enum
   PROP_CAN_HIBERNATE,
   PROP_HAS_LID,
   PROP_PRESENTATION_MODE,
-  PROP_ON_AC_BLANK,
-  PROP_ON_BATTERY_BLANK,
   N_PROPERTIES
 };
 
@@ -186,7 +182,6 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
       g_object_set (G_OBJECT (lp->data),
                     "ac-online", !on_battery,
                     NULL);
-      xfpm_update_blank_time (power);
     }
     g_list_free (list);
   }
@@ -841,7 +836,7 @@ xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPo
   power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
   power->priv->presentation_mode ? "TRUE" : "FALSE");
 
-  xfpm_update_blank_time (power);
+  xfpm_power_toggle_screensaver (power);
 }
 
 static void
@@ -998,24 +993,6 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                          NULL, NULL,
                                                          FALSE,
                                                          XFPM_PARAM_FLAGS));
-
-  g_object_class_install_property (object_class,
-                                   PROP_ON_AC_BLANK,
-                                   g_param_spec_int (ON_AC_BLANK,
-                                                    NULL, NULL,
-                                                    0,
-                                                    G_MAXINT16,
-                                                    10,
-                                                    XFPM_PARAM_FLAGS));
-
-  g_object_class_install_property (object_class,
-                                   PROP_ON_BATTERY_BLANK,
-                                   g_param_spec_int (ON_BATTERY_BLANK,
-                                                    NULL, NULL,
-                                                    0,
-                                                    G_MAXINT16,
-                                                    10,
-                                                    XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 
   xfpm_power_dbus_class_init (klass);
@@ -1041,8 +1018,6 @@ xfpm_power_init (XfpmPower *power)
   power->priv->dpms                 = xfpm_dpms_new ();
 
   power->priv->presentation_mode    = FALSE;
-  power->priv->on_ac_blank          = 15;
-  power->priv->on_battery_blank     = 10;
 
   power->priv->inhibit = xfpm_inhibit_new ();
   power->priv->notify  = xfpm_notify_new ();
@@ -1125,12 +1100,6 @@ xfpm_power_get_property (GObject *object,
     case PROP_PRESENTATION_MODE:
       g_value_set_boolean (value, power->priv->presentation_mode);
       break;
-    case PROP_ON_AC_BLANK:
-      g_value_set_int (value, power->priv->on_ac_blank);
-      break;
-    case PROP_ON_BATTERY_BLANK:
-      g_value_set_int (value, power->priv->on_battery_blank);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -1144,24 +1113,11 @@ xfpm_power_set_property (GObject *object,
                          GParamSpec *pspec)
 {
   XfpmPower *power = XFPM_POWER (object);
-  gint on_ac_blank, on_battery_blank;
 
   switch (prop_id)
   {
     case PROP_PRESENTATION_MODE:
       xfpm_power_change_presentation_mode (power, g_value_get_boolean (value));
-      break;
-    case PROP_ON_AC_BLANK:
-      on_ac_blank = g_value_get_int (value);
-      power->priv->on_ac_blank = on_ac_blank;
-      if (!power->priv->on_battery)
-        xfpm_update_blank_time (power);
-      break;
-    case PROP_ON_BATTERY_BLANK:
-      on_battery_blank = g_value_get_int (value);
-      power->priv->on_battery_blank = on_battery_blank;
-      if (power->priv->on_battery)
-        xfpm_update_blank_time (power);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1209,14 +1165,6 @@ xfpm_power_new (void)
   xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
                           XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
                           G_OBJECT(power), PRESENTATION_MODE);
-
-  xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
-                          XFPM_PROPERTIES_PREFIX ON_BATTERY_BLANK, G_TYPE_INT,
-                          G_OBJECT (power), ON_BATTERY_BLANK);
-
-  xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
-                          XFPM_PROPERTIES_PREFIX ON_AC_BLANK, G_TYPE_INT,
-                          G_OBJECT (power), ON_AC_BLANK);
 
   return power;
 }
@@ -1272,27 +1220,28 @@ gboolean xfpm_power_has_battery (XfpmPower *power)
 }
 
 static void
-xfpm_update_blank_time (XfpmPower *power)
+xfpm_power_toggle_screensaver (XfpmPower *power)
 {
-  int prev_timeout, prev_interval, prev_prefer_blanking, prev_allow_exposures;
   Display* display = gdk_x11_display_get_xdisplay(gdk_display_get_default ());
-  guint screensaver_timeout;
+  static int timeout = -2, interval, prefer_blanking, allow_exposures;
 
-  if (power->priv->on_battery)
-    screensaver_timeout = power->priv->on_battery_blank;
-  else
-    screensaver_timeout = power->priv->on_ac_blank;
-
-    /* Presentation mode or inhibited disables blanking */
+  /* Presentation mode or inhibited disables blanking */
   if (power->priv->presentation_mode || power->priv->inhibited)
-    screensaver_timeout = 0;
+  {
+    if (timeout == -2)
+      XGetScreenSaver(display, &timeout, &interval, &prefer_blanking, &allow_exposures);
 
-  screensaver_timeout = screensaver_timeout * 60;
-
-  XGetScreenSaver(display, &prev_timeout, &prev_interval, &prev_prefer_blanking, &prev_allow_exposures);
-  XFPM_DEBUG ("Prev Timeout: %d / New Timeout: %d", prev_timeout, screensaver_timeout);
-  XSetScreenSaver(display, screensaver_timeout, prev_interval, prev_prefer_blanking, prev_allow_exposures);
-  XSync (display, FALSE);
+    XFPM_DEBUG ("Disabling screensaver, timeout stored: %d", timeout);
+    XSetScreenSaver(display, 0, interval, prefer_blanking, allow_exposures);
+    XSync (display, FALSE);
+  }
+  else if (timeout != -2)
+  {
+    XFPM_DEBUG ("Enabling screensaver, timeout restored: %d", timeout);
+    XSetScreenSaver(display, timeout, interval, prefer_blanking, allow_exposures);
+    XSync (display, FALSE);
+    timeout = -2;
+  }
 }
 
 static void
@@ -1344,7 +1293,7 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
   power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
   power->priv->presentation_mode ? "TRUE" : "FALSE");
 
-  xfpm_update_blank_time (power);
+  xfpm_power_toggle_screensaver (power);
 }
 
 gboolean
