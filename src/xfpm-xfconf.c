@@ -186,10 +186,8 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel, gchar *property,
   if ( !g_str_has_prefix (property, XFPM_PROPERTIES_PREFIX) || strlen (property) <= strlen (XFPM_PROPERTIES_PREFIX) )
     return;
 
-  /* We handle presentation mode and blank-times in xfpm-power directly */
-  if ( g_strcmp0 (property, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE) == 0 ||
-       g_strcmp0 (property, XFPM_PROPERTIES_PREFIX ON_AC_BLANK) == 0 ||
-       g_strcmp0 (property, XFPM_PROPERTIES_PREFIX ON_BATTERY_BLANK) == 0)
+  /* We handle presentation mode in xfpm-power directly */
+  if ( g_strcmp0 (property, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE) == 0 )
     return;
 
   /* We handle brightness switch in xfpm-backlight directly */
