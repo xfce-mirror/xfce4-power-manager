@@ -171,7 +171,7 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
   if (on_battery != power->priv->on_battery )
   {
     GList *list;
-    guint len, i;
+
     g_signal_emit (G_OBJECT (power), signals [ON_BATTERY_CHANGED], 0, on_battery);
 
     xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
@@ -181,14 +181,14 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
 
     power->priv->on_battery = on_battery;
     list = g_hash_table_get_values (power->priv->hash);
-    len = g_list_length (list);
-    for ( i = 0; i < len; i++)
+    for (GList *lp = list; lp != NULL; lp = lp->next)
     {
-      g_object_set (G_OBJECT (g_list_nth_data (list, i)),
+      g_object_set (G_OBJECT (lp->data),
                     "ac-online", !on_battery,
                     NULL);
       xfpm_update_blank_time (power);
     }
+    g_list_free (list);
   }
 }
 
@@ -237,23 +237,6 @@ xfpm_power_get_properties (XfpmPower *power)
 static void
 xfpm_power_report_error (XfpmPower *power, const gchar *error, const gchar *icon_name)
 {
-  GtkStatusIcon *battery = NULL;
-  guint i, len;
-  GList *list;
-
-  list = g_hash_table_get_values (power->priv->hash);
-  len = g_list_length (list);
-
-  for ( i = 0; i < len; i++)
-  {
-    UpDeviceKind type;
-    battery = g_list_nth_data (list, i);
-    type = xfpm_battery_get_device_type (XFPM_BATTERY (battery));
-    if ( type == UP_DEVICE_KIND_BATTERY ||
-         type == UP_DEVICE_KIND_UPS )
-      break;
-  }
-
   xfpm_notify_show_notification (power->priv->notify,
                                  _("Power Manager"),
                                  error,
@@ -415,19 +398,16 @@ static XfpmBatteryCharge
 xfpm_power_get_current_charge_state (XfpmPower *power)
 {
   GList *list;
-  guint len, i;
-  gboolean power_supply;
   XfpmBatteryCharge max_charge_status = XFPM_BATTERY_CHARGE_UNKNOWN;
 
   list = g_hash_table_get_values (power->priv->hash);
-  len = g_list_length (list);
-
-  for ( i = 0; i < len; i++ )
+  for (GList *lp = list; lp != NULL; lp = lp->next)
   {
     XfpmBatteryCharge battery_charge;
     UpDeviceKind type;
+    gboolean power_supply;
 
-    g_object_get (G_OBJECT (g_list_nth_data (list, i)),
+    g_object_get (G_OBJECT (lp->data),
                     "charge-status", &battery_charge,
                     "device-type", &type,
                     "ac-online", &power_supply,
@@ -439,6 +419,7 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
 
     max_charge_status = MAX (max_charge_status, battery_charge);
   }
+  g_list_free (list);
 
   return max_charge_status;
 }
@@ -1270,20 +1251,14 @@ void xfpm_power_hibernate (XfpmPower *power, gboolean force)
 
 gboolean xfpm_power_has_battery (XfpmPower *power)
 {
-  GtkStatusIcon *battery = NULL;
-  guint i, len;
   GList *list;
-
   gboolean ret = FALSE;
 
   list = g_hash_table_get_values (power->priv->hash);
-  len = g_list_length (list);
-
-  for ( i = 0; i < len; i++)
+  for (GList *lp = list; lp != NULL; lp = lp->next)
   {
     UpDeviceKind type;
-    battery = g_list_nth_data (list, i);
-    type = xfpm_battery_get_device_type (XFPM_BATTERY (battery));
+    type = xfpm_battery_get_device_type (XFPM_BATTERY (lp->data));
     if ( type == UP_DEVICE_KIND_BATTERY ||
          type == UP_DEVICE_KIND_UPS )
     {
@@ -1291,6 +1266,7 @@ gboolean xfpm_power_has_battery (XfpmPower *power)
       break;
     }
   }
+  g_list_free (list);
 
   return ret;
 }
