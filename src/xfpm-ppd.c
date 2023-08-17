@@ -176,11 +176,13 @@ xfpm_ppd_set_property (GObject *object,
   switch (prop_id)
   {
     case PROP_PROFILE_ON_AC:
+      g_free (ppd->profile_on_ac);
       ppd->profile_on_ac = g_strdup (g_value_get_string (value));
       if (!on_battery)
         xfpm_ppd_set_active_profile (ppd, ppd->profile_on_ac);
       break;
     case PROP_PROFILE_ON_BATTERY:
+      g_free (ppd->profile_on_ac);
       ppd->profile_on_battery = g_strdup (g_value_get_string (value));
       if (on_battery)
         xfpm_ppd_set_active_profile (ppd, ppd->profile_on_battery);
@@ -206,6 +208,12 @@ xfpm_ppd_finalize (GObject *object)
 
   if (ppd->proxy != NULL)
     g_object_unref (ppd->proxy);
+
+  if (ppd->profile_on_ac != NULL)
+    g_free (ppd->profile_on_ac);
+
+  if (ppd->profile_on_battery != NULL)
+    g_free (ppd->profile_on_battery);
 
   G_OBJECT_CLASS (xfpm_ppd_parent_class)->finalize (object);
 }

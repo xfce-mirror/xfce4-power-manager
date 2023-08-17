@@ -2805,7 +2805,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
    * quit message */
   app = gtk_app;
 
-  g_object_unref (profiles_proxy);
+  if (profiles_proxy != NULL)
+    g_object_unref (profiles_proxy);
 
   return dialog;
 }
