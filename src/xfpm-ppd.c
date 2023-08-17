@@ -74,7 +74,7 @@ xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
                                 G_DBUS_CALL_FLAGS_NONE,
                                 -1, NULL, NULL);
 
-  if ( var != NULL )
+  if (var != NULL)
     g_variant_unref (var);
 }
 
@@ -118,7 +118,7 @@ static void xfpm_ppd_init (XfpmPPD *ppd)
 
   ppd->priv->proxy = xfpm_ppd_g_dbus_proxy_new ();
 
-  if ( ppd->priv->proxy == NULL )
+  if (ppd->priv->proxy == NULL)
   {
     g_warning ("Unable to get the interface, net.hadess.PowerProfiles");
     return;
@@ -174,12 +174,12 @@ xfpm_ppd_set_property (GObject *object,
   {
     case PROP_PROFILE_ON_AC:
       ppd->priv->profile_on_ac = g_strdup (g_value_get_string (value));
-      if ( !on_battery )
+      if (!on_battery)
         xfpm_ppd_set_active_profile (ppd, ppd->priv->profile_on_ac);
       break;
     case PROP_PROFILE_ON_BATTERY:
       ppd->priv->profile_on_battery = g_strdup (g_value_get_string (value));
-      if ( on_battery )
+      if (on_battery)
         xfpm_ppd_set_active_profile (ppd, ppd->priv->profile_on_battery);
       break;
     default:
@@ -195,13 +195,13 @@ xfpm_ppd_finalize (GObject *object)
 
   ppd = XFPM_PPD (object);
 
-  if ( ppd->priv->conf != NULL )
+  if (ppd->priv->conf != NULL)
     g_object_unref (ppd->priv->conf);
 
-  if ( ppd->priv->power != NULL )
+  if (ppd->priv->power != NULL)
     g_object_unref (ppd->priv->power);
 
-  if ( ppd->priv->proxy != NULL )
+  if (ppd->priv->proxy != NULL)
     g_object_unref (ppd->priv->proxy);
 
   G_OBJECT_CLASS (xfpm_ppd_parent_class)->finalize (object);
