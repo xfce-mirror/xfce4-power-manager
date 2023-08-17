@@ -25,26 +25,9 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_PPD        ( xfpm_ppd_get_type () )
-#define XFPM_PPD(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_PPD, XfpmPPD))
-#define XFPM_IS_PPD(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_PPD))
+#define XFPM_TYPE_PPD (xfpm_ppd_get_type ())
+G_DECLARE_FINAL_TYPE (XfpmPPD, xfpm_ppd, XFPM, PPD, GObject)
 
-typedef struct XfpmPPDPrivate XfpmPPDPrivate;
-
-typedef struct
-{
-  GObject                parent;
-  XfpmPPDPrivate        *priv;
-
-} XfpmPPD;
-
-typedef struct
-{
-  GObjectClass                parent_class;
-
-} XfpmPPDClass;
-
-GType                  xfpm_ppd_get_type           (void) G_GNUC_CONST;
 XfpmPPD               *xfpm_ppd_new                (void);
 
 G_END_DECLS
