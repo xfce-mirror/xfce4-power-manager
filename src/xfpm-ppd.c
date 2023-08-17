@@ -63,6 +63,7 @@ static void
 xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
 {
   GVariant *var = NULL;
+  GError *error = NULL;
 
   g_return_if_fail (XFPM_IS_PPD (ppd));
   g_return_if_fail (profile != NULL);
@@ -72,10 +73,16 @@ xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
                                 g_variant_new ("(ssv)", "net.hadess.PowerProfiles", "ActiveProfile",
                                                g_variant_new_string (profile)),
                                 G_DBUS_CALL_FLAGS_NONE,
-                                -1, NULL, NULL);
+                                -1, NULL, &error);
 
   if (var != NULL)
     g_variant_unref (var);
+
+  if (error != NULL)
+  {
+    g_warning ("Failed to set active power profile : %s", error->message);
+    g_error_free (error);
+  }
 }
 
 static void
@@ -116,13 +123,8 @@ static void xfpm_ppd_init (XfpmPPD *ppd)
   ppd->priv->conf = xfpm_xfconf_new ();
   ppd->priv->power = xfpm_power_get ();
 
-  ppd->priv->proxy = xfpm_ppd_g_dbus_proxy_new ();
-
-  if (ppd->priv->proxy == NULL)
-  {
-    g_warning ("Unable to get the interface, net.hadess.PowerProfiles");
+  if ((ppd->priv->proxy = xfpm_ppd_g_dbus_proxy_new ()) == NULL)
     return;
-  }
 
   xfconf_g_property_bind (xfpm_xfconf_get_channel (ppd->priv->conf),
                           XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, G_TYPE_STRING,
@@ -210,7 +212,5 @@ xfpm_ppd_finalize (GObject *object)
 XfpmPPD *
 xfpm_ppd_new (void)
 {
-  XfpmPPD *ppd = NULL;
-  ppd = g_object_new (XFPM_TYPE_PPD, NULL);
   return g_object_new (XFPM_TYPE_PPD, NULL);
 }
