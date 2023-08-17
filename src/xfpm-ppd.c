@@ -38,7 +38,7 @@ static void xfpm_ppd_set_property (GObject *object,
                                    const GValue *value,
                                    GParamSpec *pspec);
 
-struct XfpmPPDPrivate
+struct _XfpmPPD
 {
   XfpmXfconf *conf;
   XfpmPower *power;
@@ -57,7 +57,7 @@ enum
   N_PROPERTIES
 };
 
-G_DEFINE_TYPE_WITH_PRIVATE (XfpmPPD, xfpm_ppd, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (XfpmPPD, xfpm_ppd, G_TYPE_OBJECT)
 
 static void
 xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
@@ -68,7 +68,7 @@ xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
   g_return_if_fail (XFPM_IS_PPD (ppd));
   g_return_if_fail (profile != NULL);
 
-  var = g_dbus_proxy_call_sync (ppd->priv->proxy,
+  var = g_dbus_proxy_call_sync (ppd->proxy,
                                 "org.freedesktop.DBus.Properties.Set",
                                 g_variant_new ("(ssv)", "net.hadess.PowerProfiles", "ActiveProfile",
                                                g_variant_new_string (profile)),
@@ -88,7 +88,7 @@ xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
 static void
 xfpm_ppd_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmPPD *ppd)
 {
-  xfpm_ppd_set_active_profile (ppd, on_battery ? ppd->priv->profile_on_battery : ppd->priv->profile_on_ac);
+  xfpm_ppd_set_active_profile (ppd, on_battery ? ppd->profile_on_battery : ppd->profile_on_ac);
 }
 
 static void
@@ -116,26 +116,24 @@ xfpm_ppd_class_init (XfpmPPDClass *klass)
                                                         G_PARAM_READWRITE));
 }
 
-static void 
+static void
 xfpm_ppd_init (XfpmPPD *ppd)
 {
-  ppd->priv = xfpm_ppd_get_instance_private (ppd);
+  ppd->conf = xfpm_xfconf_new ();
+  ppd->power = xfpm_power_get ();
 
-  ppd->priv->conf = xfpm_xfconf_new ();
-  ppd->priv->power = xfpm_power_get ();
-
-  if ((ppd->priv->proxy = xfpm_ppd_g_dbus_proxy_new ()) == NULL)
+  if ((ppd->proxy = xfpm_ppd_g_dbus_proxy_new ()) == NULL)
     return;
 
-  xfconf_g_property_bind (xfpm_xfconf_get_channel (ppd->priv->conf),
+  xfconf_g_property_bind (xfpm_xfconf_get_channel (ppd->conf),
                           XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, G_TYPE_STRING,
                           G_OBJECT (ppd), PROFILE_ON_AC);
 
-  xfconf_g_property_bind (xfpm_xfconf_get_channel (ppd->priv->conf),
+  xfconf_g_property_bind (xfpm_xfconf_get_channel (ppd->conf),
                           XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY, G_TYPE_STRING,
                           G_OBJECT (ppd), PROFILE_ON_BATTERY);
 
-  g_signal_connect (ppd->priv->power, "on-battery-changed",
+  g_signal_connect (ppd->power, "on-battery-changed",
                     G_CALLBACK (xfpm_ppd_on_battery_changed_cb), ppd);
 }
 
@@ -150,10 +148,10 @@ xfpm_ppd_get_property (GObject *object,
   switch (prop_id)
   {
     case PROP_PROFILE_ON_AC:
-      g_value_set_string (value, ppd->priv->profile_on_ac);
+      g_value_set_string (value, ppd->profile_on_ac);
       break;
     case PROP_PROFILE_ON_BATTERY:
-      g_value_set_string (value, ppd->priv->profile_on_battery);
+      g_value_set_string (value, ppd->profile_on_battery);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -171,19 +169,19 @@ xfpm_ppd_set_property (GObject *object,
   gboolean on_battery;
 
   /* Modify property and apply profile if necessary */
-  g_object_get (ppd->priv->power, "on-battery", &on_battery, NULL);
+  g_object_get (ppd->power, "on-battery", &on_battery, NULL);
 
   switch (prop_id)
   {
     case PROP_PROFILE_ON_AC:
-      ppd->priv->profile_on_ac = g_strdup (g_value_get_string (value));
+      ppd->profile_on_ac = g_strdup (g_value_get_string (value));
       if (!on_battery)
-        xfpm_ppd_set_active_profile (ppd, ppd->priv->profile_on_ac);
+        xfpm_ppd_set_active_profile (ppd, ppd->profile_on_ac);
       break;
     case PROP_PROFILE_ON_BATTERY:
-      ppd->priv->profile_on_battery = g_strdup (g_value_get_string (value));
+      ppd->profile_on_battery = g_strdup (g_value_get_string (value));
       if (on_battery)
-        xfpm_ppd_set_active_profile (ppd, ppd->priv->profile_on_battery);
+        xfpm_ppd_set_active_profile (ppd, ppd->profile_on_battery);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -198,14 +196,14 @@ xfpm_ppd_finalize (GObject *object)
 
   ppd = XFPM_PPD (object);
 
-  if (ppd->priv->conf != NULL)
-    g_object_unref (ppd->priv->conf);
+  if (ppd->conf != NULL)
+    g_object_unref (ppd->conf);
 
-  if (ppd->priv->power != NULL)
-    g_object_unref (ppd->priv->power);
+  if (ppd->power != NULL)
+    g_object_unref (ppd->power);
 
-  if (ppd->priv->proxy != NULL)
-    g_object_unref (ppd->priv->proxy);
+  if (ppd->proxy != NULL)
+    g_object_unref (ppd->proxy);
 
   G_OBJECT_CLASS (xfpm_ppd_parent_class)->finalize (object);
 }
