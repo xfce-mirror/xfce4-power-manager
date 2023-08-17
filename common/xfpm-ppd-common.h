@@ -26,7 +26,7 @@
 G_BEGIN_DECLS
 
 GDBusProxy            *xfpm_ppd_g_dbus_proxy_new   (void);
-GSList                *xfpm_ppd_get_profiles       (void);
+GSList                *xfpm_ppd_get_profiles       (GDBusProxy *proxy);
 
 G_END_DECLS
 

@@ -36,36 +36,32 @@ xfpm_ppd_g_dbus_proxy_new (void)
 }
 
 GSList *
-xfpm_ppd_get_profiles (void)
+xfpm_ppd_get_profiles (GDBusProxy *proxy)
 {
-  GDBusProxy *proxy = NULL;
   GVariant *var  = NULL;
   GSList *names = NULL;
 
-  proxy = xfpm_ppd_g_dbus_proxy_new ();
   g_return_val_if_fail (proxy != NULL, NULL);
 
   var = g_dbus_proxy_get_cached_property (proxy, "Profiles");
 
-  if ( var != NULL )
+  if (var != NULL)
   {
     GVariantIter iter;
     GVariant *profile;
 
     /* Iternate over the profile dictionary */
     g_variant_iter_init (&iter, var);
-    while ( (profile = g_variant_iter_next_value (&iter)) != NULL )
+    while ((profile = g_variant_iter_next_value (&iter)) != NULL)
     {
       gchar *name;
 
       /* Get the profile name */
-      if ( g_variant_lookup (profile, "Profile", "s", &name) )
+      if (g_variant_lookup (profile, "Profile", "s", &name))
         names = g_slist_append (names, name);
-
-      g_variant_unref (profile);
     }
 
-    g_object_unref (proxy);
+    g_variant_unref (profile);
     g_variant_unref (var);
   }
 
