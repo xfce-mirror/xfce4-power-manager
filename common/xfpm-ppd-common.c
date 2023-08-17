@@ -25,14 +25,24 @@
 GDBusProxy *
 xfpm_ppd_g_dbus_proxy_new (void)
 {
+  GError *error = NULL;
+
   /* Helper function to create a dbus proxy for the power profiles daemon*/
-  return g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
-                                        G_DBUS_PROXY_FLAGS_NONE,
-                                        NULL,
-                                        "net.hadess.PowerProfiles",
-                                        "/net/hadess/PowerProfiles",
-                                        "net.hadess.PowerProfiles",
-                                        NULL, NULL);
+  GDBusProxy *proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SYSTEM,
+                                                     G_DBUS_PROXY_FLAGS_NONE,
+                                                     NULL,
+                                                     "net.hadess.PowerProfiles",
+                                                     "/net/hadess/PowerProfiles",
+                                                     "net.hadess.PowerProfiles",
+                                                     NULL, &error);
+
+  if (error != NULL)
+  {
+    g_warning ("Unable to get the interface, net.hadess.PowerProfiles : %s", error->message);
+    g_error_free (error);
+  }
+
+  return proxy;
 }
 
 GSList *
@@ -64,6 +74,8 @@ xfpm_ppd_get_profiles (GDBusProxy *proxy)
     g_variant_unref (profile);
     g_variant_unref (var);
   }
+  else
+    g_warning ("Failed to get power profiles");
 
   return names;
 }
