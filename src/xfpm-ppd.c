@@ -43,7 +43,7 @@ struct XfpmPPDPrivate
   XfpmXfconf *conf;
   XfpmPower *power;
 
-  GDBusProxy      *proxy;
+  GDBusProxy *proxy;
 
   gchar *profile_on_ac;
   gchar *profile_on_battery;
@@ -133,7 +133,7 @@ static void xfpm_ppd_init (XfpmPPD *ppd)
                           G_OBJECT (ppd), PROFILE_ON_BATTERY);
 
   g_signal_connect (ppd->priv->power, "on-battery-changed",
-                      G_CALLBACK (xfpm_ppd_on_battery_changed_cb), ppd);
+                    G_CALLBACK (xfpm_ppd_on_battery_changed_cb), ppd);
 }
 
 static void
@@ -212,5 +212,5 @@ xfpm_ppd_new (void)
 {
   XfpmPPD *ppd = NULL;
   ppd = g_object_new (XFPM_TYPE_PPD, NULL);
-  return ppd;
+  return g_object_new (XFPM_TYPE_PPD, NULL);
 }
