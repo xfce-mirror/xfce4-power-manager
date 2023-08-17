@@ -428,9 +428,9 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 void
 on_ac_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-  GtkTreeModel     *model;
-  GtkTreeIter       selected_row;
-  gchar            *profile = NULL;
+  GtkTreeModel *model;
+  GtkTreeIter selected_row;
+  gchar *profile = NULL;
 
   if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
     return;
@@ -454,9 +454,9 @@ on_ac_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
 void
 on_battery_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-  GtkTreeModel     *model;
-  GtkTreeIter       selected_row;
-  gchar            *profile = NULL;
+  GtkTreeModel *model;
+  GtkTreeIter selected_row;
+  gchar *profile = NULL;
 
   if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
     return;
