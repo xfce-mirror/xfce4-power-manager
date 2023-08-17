@@ -42,6 +42,7 @@
 #include "xfpm-debug.h"
 #include "xfpm-power-common.h"
 #include "xfpm-power.h"
+#include "xfpm-ppd-common.h"
 #include "xfpm-backlight.h"
 
 #include "interfaces/xfpm-settings_ui.h"
@@ -175,6 +176,10 @@ static void view_cursor_changed_cb                     (GtkTreeView *view,
 void        on_ac_sleep_mode_changed_cb                (GtkWidget *w,
                                                         XfconfChannel *channel);
 void        on_battery_sleep_mode_changed_cb           (GtkWidget *w,
+                                                        XfconfChannel *channel);
+void        on_ac_power_profile_changed_cb             (GtkWidget *w,
+                                                        XfconfChannel *channel);
+void        on_battery_power_profile_changed_cb        (GtkWidget *w,
                                                         XfconfChannel *channel);
 gboolean    handle_brightness_keys_toggled_cb          (GtkWidget *w,
                                                         gboolean is_active,
@@ -419,6 +424,59 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
     g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_BATTERY);
   }
 }
+
+void
+on_ac_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
+{
+  GtkTreeModel     *model;
+  GtkTreeIter       selected_row;
+  gchar            *profile = NULL;
+
+  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+    return;
+
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (w));
+
+  gtk_tree_model_get(model,
+                     &selected_row,
+                     0,
+                     &profile,
+                     -1);
+
+  if (!xfconf_channel_set_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, profile))
+  {
+    g_critical ("Cannot set value for property %s\n", PROFILE_ON_AC);
+  }
+
+  g_free (profile);
+}
+
+void
+on_battery_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
+{
+  GtkTreeModel     *model;
+  GtkTreeIter       selected_row;
+  gchar            *profile = NULL;
+
+  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+    return;
+
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (w));
+
+  gtk_tree_model_get(model,
+                     &selected_row,
+                     0,
+                     &profile,
+                     -1);
+
+  if (!xfconf_channel_set_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY, profile))
+  {
+    g_critical ("Cannot set value for property %s\n", PROFILE_ON_BATTERY);
+  }
+
+  g_free (profile);
+}
+
 
 gboolean
 dpms_toggled_cb (GtkWidget *w, gboolean is_active, XfconfChannel *channel)
@@ -898,10 +956,11 @@ xfpm_update_logind_handle_lid_switch (XfconfChannel *channel)
 /* END Light Locker Integration */
 
 static void
-xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
-                          gboolean auth_hibernate, gboolean can_suspend,
-                          gboolean can_hibernate, gboolean can_shutdown,
-                          gboolean has_lcd_brightness, gboolean has_lid)
+xfpm_settings_on_battery (XfconfChannel *channel, GDBusProxy *profiles_proxy,
+                          gboolean auth_suspend, gboolean auth_hibernate,
+                          gboolean can_suspend, gboolean can_hibernate,
+                          gboolean can_shutdown, gboolean has_lcd_brightness,
+                          gboolean has_lid)
 {
   gboolean valid, handle_dpms;
   gint list_value;
@@ -913,6 +972,8 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
   GtkWidget *lid;
   GtkWidget *brg;
   GtkWidget *brg_level;
+  GtkWidget *power_profile;
+  GSList *profiles;
 
   /*
    * Inactivity sleep mode on battery
@@ -1105,6 +1166,55 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
   }
 
   /*
+   * Power profile on battery
+   */
+  power_profile = GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-on-battery"));
+  if (profiles_proxy != NULL && (profiles = xfpm_ppd_get_profiles (profiles_proxy)) != NULL)
+  {
+    gchar *enabled_profile;
+
+    list_store = gtk_list_store_new (1, G_TYPE_STRING);
+    gtk_combo_box_set_model (GTK_COMBO_BOX (power_profile), GTK_TREE_MODEL (list_store));
+
+    for (GSList *l = profiles; l != NULL; l = l->next)
+    {
+      gchar *profile = l->data;
+
+      gtk_list_store_append (list_store, &iter);
+      gtk_list_store_set (list_store, &iter, 0, profile, -1);
+    }
+
+    enabled_profile = xfconf_channel_get_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY, "balanced");
+
+    for (valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+         valid;
+         valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter))
+    {
+      gchar *profile_value;
+
+      gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+                          0, &profile_value, -1);
+      if (g_strcmp0 (profile_value, enabled_profile) == 0)
+      {
+        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power_profile), &iter);
+        break;
+      }
+
+      g_free (profile_value);
+    }
+
+    g_free (enabled_profile);
+    g_slist_free (profiles);
+  }
+  else
+  {
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-label-on-battery")));
+    gtk_widget_hide (power_profile);
+  }
+
+
+
+  /*
    * Brightness on battery
    */
   brg = GTK_WIDGET (gtk_builder_get_object (xml ,"brightness-inactivity-on-battery"));
@@ -1139,20 +1249,22 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 }
 
 static void
-xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
-                     gboolean auth_hibernate, gboolean can_suspend,
-                     gboolean can_hibernate, gboolean has_lcd_brightness,
-                     gboolean has_lid)
+xfpm_settings_on_ac (XfconfChannel *channel, GDBusProxy *profiles_proxy,
+                     gboolean auth_suspend, gboolean auth_hibernate,
+                     gboolean can_suspend, gboolean can_hibernate,
+                     gboolean has_lcd_brightness, gboolean has_lid)
 {
   gboolean valid, handle_dpms;
   GtkWidget *inact_timeout, *inact_action;
   GtkWidget *lid;
   GtkWidget *brg;
   GtkWidget *brg_level;
+  GtkWidget *power_profile;
   GtkListStore *list_store;
   GtkTreeIter iter;
   guint val;
   guint list_value;
+  GSList *profiles;
 
   /*
    * Inactivity sleep mode on AC
@@ -1292,6 +1404,53 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label1")));
     gtk_widget_hide (lid);
     gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-plugged-in-header")));
+  }
+
+  /*
+   * Power profile on AC power
+   */
+  power_profile = GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-on-ac"));
+  if (profiles_proxy != NULL && (profiles = xfpm_ppd_get_profiles (profiles_proxy)) != NULL)
+  {
+    gchar *enabled_profile;
+
+    list_store = gtk_list_store_new (1, G_TYPE_STRING);
+    gtk_combo_box_set_model (GTK_COMBO_BOX (power_profile), GTK_TREE_MODEL (list_store));
+
+    for (GSList *l = profiles; l != NULL; l = l->next)
+    {
+      gchar *profile = l->data;
+
+      gtk_list_store_append (list_store, &iter);
+      gtk_list_store_set (list_store, &iter, 0, profile, -1);
+    }
+
+    enabled_profile = xfconf_channel_get_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, "balanced");
+
+    for (valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+         valid;
+         valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter))
+    {
+      gchar *profile_value;
+
+      gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+                          0, &profile_value, -1);
+      if (g_strcmp0 (profile_value, enabled_profile) == 0)
+      {
+        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power_profile), &iter);
+        break;
+      }
+
+      g_free (profile_value);
+    }
+
+    g_free (enabled_profile);
+    g_slist_free (profiles);
+  }
+  else
+  {
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-label-on-ac")));
+    gtk_widget_hide (power_profile);
   }
 
   /*
@@ -2437,6 +2596,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
   GError *error = NULL;
   guint val;
   GtkCssProvider *css_provider;
+  GDBusProxy *profiles_proxy = xfpm_ppd_g_dbus_proxy_new ();
 
   XFPM_DEBUG ("auth_hibernate=%s auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s " \
               "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s " \
@@ -2555,6 +2715,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
   settings_create_devices_list ();
 
   xfpm_settings_on_ac (channel,
+                       profiles_proxy,
                        auth_suspend,
                        auth_hibernate,
                        can_suspend,
@@ -2562,8 +2723,9 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                        has_lcd_brightness,
                        has_lid);
 
-  if ( has_battery )
+  if (has_battery)
   xfpm_settings_on_battery (channel,
+                            profiles_proxy,
                             auth_suspend,
                             auth_hibernate,
                             can_suspend,
@@ -2642,6 +2804,9 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
   /* keep a pointer to the GtkApplication instance so we can signal a
    * quit message */
   app = gtk_app;
+
+  if (profiles_proxy != NULL)
+    g_object_unref (profiles_proxy);
 
   return dialog;
 }
