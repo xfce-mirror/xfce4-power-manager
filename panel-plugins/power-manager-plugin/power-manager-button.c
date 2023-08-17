@@ -1055,6 +1055,7 @@ power_manager_button_finalize (GObject *object)
   g_signal_handlers_disconnect_by_data (button->priv->upower, button);
 
   power_manager_button_remove_all_devices (button);
+  g_list_free (button->priv->devices);
 
 #ifdef XFCE_PLUGIN
   g_object_unref (button->priv->plugin);
