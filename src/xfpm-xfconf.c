@@ -89,6 +89,10 @@ enum
   PROP_LOGIND_HANDLE_HIBERNATE_KEY,
   PROP_LOGIND_HANDLE_LID_SWITCH,
   PROP_HEARTBEAT_COMMAND,
+
+  PROP_PROFILE_ON_AC,
+  PROP_PROFILE_ON_BATTERY,
+
   N_PROPERTIES
 };
 
@@ -538,6 +542,25 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                       G_MAXUINT,
                                                       300,
                                                       G_PARAM_READWRITE));
+
+  /**
+   * XfpmXfconf::profile-on-ac
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_PROFILE_ON_AC,
+                                   g_param_spec_string  (PROFILE_ON_AC,
+                                                         NULL, NULL,
+                                                         NULL,
+                                                         G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::profile-on-ac
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_PROFILE_ON_BATTERY,
+                                   g_param_spec_string  (PROFILE_ON_BATTERY,
+                                                         NULL, NULL,
+                                                         NULL,
+                                                         G_PARAM_READWRITE));
 
 
   /**
