@@ -210,7 +210,5 @@ xfpm_ppd_finalize (GObject *object)
 XfpmPPD *
 xfpm_ppd_new (void)
 {
-  XfpmPPD *ppd = NULL;
-  ppd = g_object_new (XFPM_TYPE_PPD, NULL);
   return g_object_new (XFPM_TYPE_PPD, NULL);
 }
