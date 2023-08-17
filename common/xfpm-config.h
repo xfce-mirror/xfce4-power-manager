@@ -47,6 +47,9 @@ G_BEGIN_DECLS
 #define ON_BATT_DPMS_OFF                     "dpms-on-battery-off"
 #define DPMS_SLEEP_MODE                      "dpms-sleep-mode"
 
+#define PROFILE_ON_AC                        "profile-on-ac"
+#define PROFILE_ON_BATTERY                   "profile-on-battery"
+
 #define LOCK_SCREEN_ON_SLEEP                 "lock-screen-suspend-hibernate"
 #define GENERAL_NOTIFICATION_CFG             "general-notification"
 #define PRESENTATION_MODE                    "presentation-mode"
