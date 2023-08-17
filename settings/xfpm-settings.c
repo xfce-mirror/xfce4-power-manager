@@ -956,10 +956,11 @@ xfpm_update_logind_handle_lid_switch (XfconfChannel *channel)
 /* END Light Locker Integration */
 
 static void
-xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
-                          gboolean auth_hibernate, gboolean can_suspend,
-                          gboolean can_hibernate, gboolean can_shutdown,
-                          gboolean has_lcd_brightness, gboolean has_lid)
+xfpm_settings_on_battery (XfconfChannel *channel, GDBusProxy *profiles_proxy,
+                          gboolean auth_suspend, gboolean auth_hibernate,
+                          gboolean can_suspend, gboolean can_hibernate,
+                          gboolean can_shutdown, gboolean has_lcd_brightness,
+                          gboolean has_lid)
 {
   gboolean valid, handle_dpms;
   gint list_value;
@@ -1168,9 +1169,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
    * Power profile on battery
    */
   power_profile = GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-on-battery"));
-  profiles = xfpm_ppd_get_profiles ();
-
-  if ( profiles != NULL )
+  if (profiles_proxy != NULL && (profiles = xfpm_ppd_get_profiles (profiles_proxy)) != NULL)
   {
     gchar *enabled_profile;
 
@@ -1250,10 +1249,10 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
 }
 
 static void
-xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
-                     gboolean auth_hibernate, gboolean can_suspend,
-                     gboolean can_hibernate, gboolean has_lcd_brightness,
-                     gboolean has_lid)
+xfpm_settings_on_ac (XfconfChannel *channel, GDBusProxy *profiles_proxy,
+                     gboolean auth_suspend, gboolean auth_hibernate,
+                     gboolean can_suspend, gboolean can_hibernate,
+                     gboolean has_lcd_brightness, gboolean has_lid)
 {
   gboolean valid, handle_dpms;
   GtkWidget *inact_timeout, *inact_action;
@@ -1411,9 +1410,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
    * Power profile on AC power
    */
   power_profile = GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-on-ac"));
-  profiles = xfpm_ppd_get_profiles ();
-
-  if ( profiles != NULL )
+  if (profiles_proxy != NULL && (profiles = xfpm_ppd_get_profiles (profiles_proxy)) != NULL)
   {
     gchar *enabled_profile;
 
@@ -2599,6 +2596,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
   GError *error = NULL;
   guint val;
   GtkCssProvider *css_provider;
+  GDBusProxy *profiles_proxy = xfpm_ppd_g_dbus_proxy_new ();
 
   XFPM_DEBUG ("auth_hibernate=%s auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s " \
               "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s " \
@@ -2717,6 +2715,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
   settings_create_devices_list ();
 
   xfpm_settings_on_ac (channel,
+                       profiles_proxy,
                        auth_suspend,
                        auth_hibernate,
                        can_suspend,
@@ -2724,8 +2723,9 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                        has_lcd_brightness,
                        has_lid);
 
-  if ( has_battery )
+  if (has_battery)
   xfpm_settings_on_battery (channel,
+                            profiles_proxy,
                             auth_suspend,
                             auth_hibernate,
                             can_suspend,
@@ -2804,6 +2804,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
   /* keep a pointer to the GtkApplication instance so we can signal a
    * quit message */
   app = gtk_app;
+
+  g_object_unref (profiles_proxy);
 
   return dialog;
 }
