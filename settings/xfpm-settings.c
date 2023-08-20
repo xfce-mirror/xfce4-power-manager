@@ -1204,7 +1204,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, GDBusProxy *profiles_proxy,
     }
 
     g_free (enabled_profile);
-    g_slist_free (profiles);
+    g_slist_free_full (profiles);
   }
   else
   {
@@ -1445,7 +1445,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, GDBusProxy *profiles_proxy,
     }
 
     g_free (enabled_profile);
-    g_slist_free (profiles);
+    g_slist_free_full (profiles);
   }
   else
   {
