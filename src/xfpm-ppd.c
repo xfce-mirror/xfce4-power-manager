@@ -49,6 +49,8 @@ struct _XfpmPPD
 
   gchar *profile_on_ac;
   gchar *profile_on_battery;
+
+  gint battery_changed_handler;
 };
 
 enum
@@ -88,7 +90,7 @@ xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
 }
 
 static void
-xfpm_ppd_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmPPD *ppd)
+xfpm_ppd_on_battery_changed_handler_cb (XfpmPower *power, gboolean on_battery, XfpmPPD *ppd)
 {
   xfpm_ppd_set_active_profile (ppd, on_battery ? ppd->profile_on_battery : ppd->profile_on_ac);
 }
@@ -135,8 +137,9 @@ xfpm_ppd_init (XfpmPPD *ppd)
                           XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY, G_TYPE_STRING,
                           G_OBJECT (ppd), PROFILE_ON_BATTERY);
 
-  g_signal_connect (ppd->power, "on-battery-changed",
-                    G_CALLBACK (xfpm_ppd_on_battery_changed_cb), ppd);
+  ppd->battery_changed_handler = g_signal_connect (ppd->power, "on-battery-changed",
+                                                   G_CALLBACK (xfpm_ppd_on_battery_changed_handler_cb),
+                                                   ppd);
 }
 
 static void
@@ -177,13 +180,13 @@ xfpm_ppd_set_property (GObject *object,
   {
     case PROP_PROFILE_ON_AC:
       g_free (ppd->profile_on_ac);
-      ppd->profile_on_ac = g_strdup (g_value_get_string (value));
+      ppd->profile_on_ac = g_value_dup_string (value);
       if (!on_battery)
         xfpm_ppd_set_active_profile (ppd, ppd->profile_on_ac);
       break;
     case PROP_PROFILE_ON_BATTERY:
       g_free (ppd->profile_on_ac);
-      ppd->profile_on_battery = g_strdup (g_value_get_string (value));
+      ppd->profile_on_battery = g_value_dup_string (value);
       if (on_battery)
         xfpm_ppd_set_active_profile (ppd, ppd->profile_on_battery);
       break;
@@ -209,11 +212,10 @@ xfpm_ppd_finalize (GObject *object)
   if (ppd->proxy != NULL)
     g_object_unref (ppd->proxy);
 
-  if (ppd->profile_on_ac != NULL)
-    g_free (ppd->profile_on_ac);
+  g_free (ppd->profile_on_ac);
+  g_free (ppd->profile_on_battery);
 
-  if (ppd->profile_on_battery != NULL)
-    g_free (ppd->profile_on_battery);
+  g_signal_handler_disconnect (ppd, ppd->battery_changed_handler);
 
   G_OBJECT_CLASS (xfpm_ppd_parent_class)->finalize (object);
 }
