@@ -60,6 +60,7 @@
 #include "xfpm-enum-glib.h"
 #include "xfpm-enum-types.h"
 #include "xfpm-dbus-monitor.h"
+#include "xfpm-ppd.h"
 #include "../panel-plugins/power-manager-plugin/power-manager-button.h"
 
 static void xfpm_manager_finalize   (GObject *object);
@@ -98,6 +99,7 @@ struct XfpmManagerPrivate
   XfceSystemd        *systemd;
   XfpmDBusMonitor    *monitor;
   XfpmInhibit        *inhibit;
+  XfpmPPD            *ppd;
   XfceScreensaver    *screensaver;
   EggIdletime        *idle;
   GtkStatusIcon      *adapter_icon;
@@ -179,6 +181,7 @@ xfpm_manager_finalize (GObject *object)
     g_object_unref (manager->priv->console);
   g_object_unref (manager->priv->monitor);
   g_object_unref (manager->priv->inhibit);
+  g_object_unref (manager->priv->ppd);
   g_object_unref (manager->priv->idle);
 
   g_timer_destroy (manager->priv->timer);
@@ -865,6 +868,7 @@ void xfpm_manager_start (XfpmManager *manager)
 
   manager->priv->monitor = xfpm_dbus_monitor_new ();
   manager->priv->inhibit = xfpm_inhibit_new ();
+  manager->priv->ppd = xfpm_ppd_new ();
   manager->priv->idle = egg_idletime_new ();
 
     /* Don't allow systemd to handle power/suspend/hibernate buttons
