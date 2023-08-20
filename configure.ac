@@ -58,7 +58,7 @@ AM_GNU_GETTEXT_VERSION([0.19.8])
 #          Check for required packages 		      #
 #=====================================================#
 m4_define([gtk_minimum_version], [3.24.0])
-m4_define([glib_minimum_version], [2.66.0])
+m4_define([glib_minimum_version], [2.70.0])
 
 m4_define([xfconf_minimum_version], [4.12.0])
 m4_define([libxfce4ui_minimum_version],[4.18.4])

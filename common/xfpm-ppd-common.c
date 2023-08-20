@@ -68,10 +68,7 @@ xfpm_ppd_get_profiles (GDBusProxy *proxy)
 
       /* Get the profile name */
       if (g_variant_lookup (profile, "Profile", "s", &name))
-        {
-          names = g_slist_append (names, name);
-          g_free (name);
-        }
+        names = g_slist_append (names, name);
 
       g_variant_unref (profile);
     }
