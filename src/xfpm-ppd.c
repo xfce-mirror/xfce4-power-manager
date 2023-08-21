@@ -25,6 +25,7 @@
 #include "xfpm-power.h"
 #include "xfpm-ppd-common.h"
 #include "xfpm-ppd.h"
+#include "xfpm-debug.h"
 
 static void xfpm_ppd_finalize (GObject *object);
 
@@ -82,7 +83,7 @@ xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
 
   if (error != NULL)
   {
-    g_warning ("Failed to set active power profile : %s", error->message);
+    XFPM_DEBUG ("Failed to set active power profile : %s", error->message);
     g_error_free (error);
   }
 }
