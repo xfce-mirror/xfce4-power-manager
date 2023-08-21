@@ -75,8 +75,6 @@ xfpm_ppd_get_profiles (GDBusProxy *proxy)
 
     g_variant_unref (var);
   }
-  else
-    g_warning ("Failed to get power profiles");
 
   return names;
 }
