@@ -12,6 +12,8 @@ libxfpmcommon_la_SOURCES =  \
 	xfpm-icons.h            \
 	xfpm-power-common.c     \
 	xfpm-power-common.h     \
+	xfpm-ppd-common.c       \
+	xfpm-ppd-common.h       \
 	xfpm-enum.h             \
 	xfpm-enum-glib.h
 
