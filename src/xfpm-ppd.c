@@ -181,7 +181,7 @@ xfpm_ppd_set_property (GObject *object,
         xfpm_ppd_set_active_profile (ppd, ppd->profile_on_ac);
       break;
     case PROP_PROFILE_ON_BATTERY:
-      g_free (ppd->profile_on_ac);
+      g_free (ppd->profile_on_battery);
       ppd->profile_on_battery = g_value_dup_string (value);
       if (on_battery)
         xfpm_ppd_set_active_profile (ppd, ppd->profile_on_battery);
