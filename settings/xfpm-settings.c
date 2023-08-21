@@ -428,9 +428,9 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 void
 on_ac_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-  GtkTreeModel     *model;
-  GtkTreeIter       selected_row;
-  gchar            *profile = NULL;
+  GtkTreeModel *model;
+  GtkTreeIter selected_row;
+  gchar *profile = NULL;
 
   if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
     return;
@@ -443,7 +443,7 @@ on_ac_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
                      &profile,
                      -1);
 
-  if (!xfconf_channel_set_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, profile) )
+  if (!xfconf_channel_set_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, profile))
   {
     g_critical ("Cannot set value for property %s\n", PROFILE_ON_AC);
   }
@@ -454,9 +454,9 @@ on_ac_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
 void
 on_battery_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
 {
-  GtkTreeModel     *model;
-  GtkTreeIter       selected_row;
-  gchar            *profile = NULL;
+  GtkTreeModel *model;
+  GtkTreeIter selected_row;
+  gchar *profile = NULL;
 
   if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
     return;
@@ -469,7 +469,7 @@ on_battery_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
                      &profile,
                      -1);
 
-  if (!xfconf_channel_set_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY, profile) )
+  if (!xfconf_channel_set_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY, profile))
   {
     g_critical ("Cannot set value for property %s\n", PROFILE_ON_BATTERY);
   }
@@ -1186,15 +1186,15 @@ xfpm_settings_on_battery (XfconfChannel *channel, GDBusProxy *profiles_proxy,
 
     enabled_profile = xfconf_channel_get_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY, "balanced");
 
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-          valid;
-          valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+    for (valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+         valid;
+         valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter))
     {
       gchar *profile_value;
 
       gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
                           0, &profile_value, -1);
-      if ( g_strcmp0 (profile_value, enabled_profile) == 0 )
+      if (g_strcmp0 (profile_value, enabled_profile) == 0)
       {
         gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power_profile), &iter);
         break;
@@ -1427,15 +1427,15 @@ xfpm_settings_on_ac (XfconfChannel *channel, GDBusProxy *profiles_proxy,
 
     enabled_profile = xfconf_channel_get_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, "balanced");
 
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-          valid;
-          valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+    for (valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+         valid;
+         valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter))
     {
       gchar *profile_value;
 
       gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
                           0, &profile_value, -1);
-      if ( g_strcmp0 (profile_value, enabled_profile) == 0 )
+      if (g_strcmp0 (profile_value, enabled_profile) == 0)
       {
         gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power_profile), &iter);
         break;

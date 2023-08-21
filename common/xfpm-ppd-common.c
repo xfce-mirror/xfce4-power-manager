@@ -60,7 +60,7 @@ xfpm_ppd_get_profiles (GDBusProxy *proxy)
     GVariantIter iter;
     GVariant *profile;
 
-    /* Iternate over the profile dictionary */
+    /* Iterate over the profile dictionary */
     g_variant_iter_init (&iter, var);
     while ((profile = g_variant_iter_next_value (&iter)) != NULL)
     {
