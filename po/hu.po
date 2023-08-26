@@ -7,6 +7,7 @@
 # Benedek Imre <nucleo@indamail.hu>, 2013
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2009-2010,2012
 # Gábor P., 2019-2020
+# Egyember, 2023
 # gyeben <gyonkibendeguz@gmail.com>, 2016
 # gyeben <gyonkibendeguz@gmail.com>, 2014
 # Nagy Gábor <jackson.gabor@gmail.com>, 2014-2015
@@ -17,7 +18,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2023-08-22 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Robert Huszar, 2022\n"
+"Last-Translator: Egyember, 2023\n"
 "Language-Team: Hungarian (http://app.transifex.com/xfce/xfce4-power-manager/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -137,7 +138,7 @@ msgstr "A noteszgép fedelének lehajtásakor:"
 
 #: data/interfaces/xfpm-settings.ui:857 data/interfaces/xfpm-settings.ui:1049
 msgid "<b>Power profile</b>"
-msgstr ""
+msgstr "<b>Energia profil</b>"
 
 #: data/interfaces/xfpm-settings.ui:889 data/interfaces/xfpm-settings.ui:1608
 msgid "On battery"
@@ -391,7 +392,7 @@ msgstr "Üres energiaszint"
 #. TRANSLATORS: Unit here is Watt
 #: settings/xfpm-settings.c:2221
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: settings/xfpm-settings.c:2223
 msgid "Energy rate"
@@ -596,7 +597,7 @@ msgstr[1] "óra"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr ""
+msgstr "<b>%s%s</b>\nTeljesen feltöltve - %s van hátra"
 
 #: common/xfpm-power-common.c:346
 #, c-format
@@ -610,7 +611,7 @@ msgstr "<b>%s %s</b>\nTeljesen feltöltve"
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
-msgstr ""
+msgstr "<b>%s %s</b>\n%0.0f%% - %s a teljes töltöttségig"
 
 #: common/xfpm-power-common.c:363 common/xfpm-power-common.c:381
 #, c-format
@@ -624,7 +625,7 @@ msgstr "<b>%s %s</b>\n%0.0f%%"
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
-msgstr ""
+msgstr "<b>%s%s</b>\n%0.0f%% - %s van hátra"
 
 #: common/xfpm-power-common.c:388
 #, c-format
@@ -732,7 +733,7 @@ msgstr "Hozzáférés megtagadva"
 
 #: src/xfpm-power.c:1526
 msgid "Hibernate not supported"
-msgstr ""
+msgstr "A hibernálás nem támogatott"
 
 #: src/xfpm-power.c:1560
 msgid "Suspend not supported"
@@ -931,7 +932,7 @@ msgstr "Energiagazdálkodás az Xfce környezethez"
 #. to change the backlight brightness.
 #: src/org.xfce.power.policy.in.in:21
 msgid "Modify the laptop display brightness"
-msgstr ""
+msgstr "Módosítsa a laptop képernyőjének fényerejét"
 
 #: src/org.xfce.power.policy.in.in:22
 msgid "Authentication is required to modify the laptop display brightness"
@@ -942,7 +943,7 @@ msgstr ""
 #. to suspend or hibernate their system.
 #: src/org.xfce.power.policy.in.in:36
 msgid "Suspend or hibernate the system"
-msgstr ""
+msgstr "Felfüggesztse vagy hibernálja a rendszert "
 
 #: src/org.xfce.power.policy.in.in:37
 msgid ""
@@ -1023,7 +1024,7 @@ msgstr "Az eszközök akkumulátorszintjének megjelenítése, és a kijelző f�
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:7
 msgid "Xfce power manager"
-msgstr ""
+msgstr "Xfce energiakezelő"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
