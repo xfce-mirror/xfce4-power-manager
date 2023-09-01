@@ -187,6 +187,8 @@ void        on_battery_power_profile_changed_cb        (GtkWidget *w,
 gboolean    handle_brightness_keys_toggled_cb          (GtkWidget *w,
                                                         gboolean is_active,
                                                         XfconfChannel *channel);
+void        brightness_step_count_update_from_property (GtkSpinButton *spin_button,
+                                                        guint new_property_value);
 void        brightness_step_count_value_changed_cb     (GtkSpinButton *w,
                                                         XfconfChannel *channel);
 void        brightness_step_count_property_changed_cb  (XfconfChannel *channel,
@@ -402,11 +404,11 @@ void set_combo_box_active_entry (guint new_value, GtkComboBox *combo_box)
 
   list_store = gtk_combo_box_get_model (combo_box);
 
-  for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
+  for ( valid = gtk_tree_model_get_iter_first (list_store, &iter);
         valid;
-        valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
+        valid = gtk_tree_model_iter_next (list_store, &iter) )
   {
-    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
+    gtk_tree_model_get (list_store, &iter,
                         1, &list_value, -1);
     if ( new_value == list_value )
     {
@@ -859,6 +861,18 @@ handle_brightness_keys_toggled_cb (GtkWidget *w, gboolean is_active, XfconfChann
 }
 
 void
+brightness_step_count_update_from_property (GtkSpinButton *spin_button, guint new_property_value)
+{
+  if ( new_property_value > 100 || new_property_value < 2)
+  {
+    g_critical ("Value %d if out of range for property %s\n", new_property_value, BRIGHTNESS_STEP_COUNT);
+    gtk_spin_button_set_value (spin_button, 10);
+  }
+  else
+    gtk_spin_button_set_value (spin_button, new_property_value);
+}
+
+void
 brightness_step_count_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
 {
   guint val = (guint) gtk_spin_button_get_value (w);
@@ -873,13 +887,7 @@ void brightness_step_count_property_changed_cb (XfconfChannel *channel, char *pr
                                                 GValue *value, GtkWidget *spin_button)
 {
   guint new_value = g_value_get_uint (value);
-  if ( new_value > 100 || new_value < 2)
-  {
-    g_critical ("Value %d if out of range for property %s\n", new_value, BRIGHTNESS_STEP_COUNT);
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON(brightness_step_count), 10);
-  }
-  else
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON(brightness_step_count), new_value);
+  brightness_step_count_update_from_property (GTK_SPIN_BUTTON (spin_button), new_value);
 }
 
 void
@@ -1680,17 +1688,11 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
   gtk_widget_set_tooltip_text (brightness_step_count,
       _("Number of brightness steps available using keys"));
   val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT, 10);
-  if ( val > 100 || val < 2)
-  {
-    g_critical ("Value %d if out of range for property %s\n", val, BRIGHTNESS_STEP_COUNT);
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON(brightness_step_count), 10);
-  }
-  else
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON(brightness_step_count), val);
+  brightness_step_count_update_from_property (GTK_SPIN_BUTTON (brightness_step_count), val);
 
   g_signal_connect (channel,
                     "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
-                    G_CALLBACK (brightness_step_count_property_changed_cb), power);
+                    G_CALLBACK (brightness_step_count_property_changed_cb), brightness_step_count);
 
   /*
    * Exponential brightness
