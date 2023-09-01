@@ -139,7 +139,7 @@ void        button_hibernate_changed_cb                (GtkWidget *w,
                                                         XfconfChannel *channel);
 void        button_battery_changed_cb                  (GtkWidget *w,
                                                         XfconfChannel *channel);
-void        button_action_xfconf_property_changed_cb   (XfconfChannel *channel,
+void        combo_box_xfconf_property_changed_cb       (XfconfChannel *channel,
                                                         char *property,
                                                         GValue *value,
                                                         GtkWidget *combo_box);
@@ -387,7 +387,7 @@ button_battery_changed_cb (GtkWidget *w, XfconfChannel *channel)
 }
 
 void
-button_action_xfconf_property_changed_cb (XfconfChannel *channel, char *property,
+combo_box_xfconf_property_changed_cb (XfconfChannel *channel, char *property,
                                           GValue *value, GtkWidget *combo_box)
 {
   guint new_value;
@@ -1540,7 +1540,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX POWER_SWITCH_CFG,
-                      G_CALLBACK (button_action_xfconf_property_changed_cb), power);
+                      G_CALLBACK (combo_box_xfconf_property_changed_cb), power);
   }
   else
   {
@@ -1585,7 +1585,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG,
-                      G_CALLBACK (button_action_xfconf_property_changed_cb), hibernate);
+                      G_CALLBACK (combo_box_xfconf_property_changed_cb), hibernate);
   }
   else
   {
@@ -1629,7 +1629,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX SLEEP_SWITCH_CFG,
-                      G_CALLBACK (button_action_xfconf_property_changed_cb), sleep_w);
+                      G_CALLBACK (combo_box_xfconf_property_changed_cb), sleep_w);
   }
   else
   {
@@ -1673,7 +1673,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX BATTERY_SWITCH_CFG,
-                      G_CALLBACK (button_action_xfconf_property_changed_cb), battery_w);
+                      G_CALLBACK (combo_box_xfconf_property_changed_cb), battery_w);
   }
   else
   {
