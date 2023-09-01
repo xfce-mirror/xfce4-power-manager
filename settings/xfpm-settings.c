@@ -134,6 +134,12 @@ void        button_hibernate_changed_cb                (GtkWidget *w,
                                                         XfconfChannel *channel);
 void        button_battery_changed_cb                  (GtkWidget *w,
                                                         XfconfChannel *channel);
+void        button_action_xfconf_property_changed_cb   (XfconfChannel *channel,
+                                                        char *property,
+                                                        GValue *value,
+                                                        GtkWidget *combo_box);
+void        set_combo_box_active_entry                 (guint new_value,
+                                                        GtkComboBox *combo_box);
 void        on_sleep_mode_changed_cb                   (GtkWidget *w,
                                                         XfconfChannel *channel);
 gboolean    dpms_toggled_cb                            (GtkWidget *w,
@@ -176,8 +182,14 @@ void        on_battery_power_profile_changed_cb        (GtkWidget *w,
 gboolean    handle_brightness_keys_toggled_cb          (GtkWidget *w,
                                                         gboolean is_active,
                                                         XfconfChannel *channel);
+void        brightness_step_count_update_from_property (GtkSpinButton *spin_button,
+                                                        guint new_property_value);
 void        brightness_step_count_value_changed_cb     (GtkSpinButton *w,
                                                         XfconfChannel *channel);
+void        brightness_step_count_property_changed_cb  (XfconfChannel *channel,
+                                                        char *property,
+                                                        GValue *value,
+                                                        GtkWidget *spin_button);
 void        brightness_exponential_toggled_cb          (GtkWidget *w,
                                                         XfconfChannel *channel);
 /* Light Locker Integration */
@@ -366,6 +378,38 @@ button_battery_changed_cb (GtkWidget *w, XfconfChannel *channel)
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BATTERY_SWITCH_CFG, value ) )
   {
     g_critical ("Cannot set value for property %s\n", BATTERY_SWITCH_CFG);
+  }
+}
+
+void
+button_action_xfconf_property_changed_cb (XfconfChannel *channel, char *property,
+                                          GValue *value, GtkWidget *combo_box)
+{
+  guint new_value;
+  new_value = g_value_get_uint (value);
+  set_combo_box_active_entry (new_value, GTK_COMBO_BOX (combo_box));
+}
+
+void set_combo_box_active_entry (guint new_value, GtkComboBox *combo_box)
+{
+  GtkTreeModel *list_store;
+  GtkTreeIter iter;
+  gboolean valid;
+  guint list_value;
+
+  list_store = gtk_combo_box_get_model (combo_box);
+
+  for ( valid = gtk_tree_model_get_iter_first (list_store, &iter);
+        valid;
+        valid = gtk_tree_model_iter_next (list_store, &iter) )
+  {
+    gtk_tree_model_get (list_store, &iter,
+                        1, &list_value, -1);
+    if ( new_value == list_value )
+    {
+      gtk_combo_box_set_active_iter (combo_box, &iter);
+      break;
+    }
   }
 }
 
@@ -812,6 +856,18 @@ handle_brightness_keys_toggled_cb (GtkWidget *w, gboolean is_active, XfconfChann
 }
 
 void
+brightness_step_count_update_from_property (GtkSpinButton *spin_button, guint new_property_value)
+{
+  if ( new_property_value > 100 || new_property_value < 2)
+  {
+    g_critical ("Value %d if out of range for property %s\n", new_property_value, BRIGHTNESS_STEP_COUNT);
+    gtk_spin_button_set_value (spin_button, 10);
+  }
+  else
+    gtk_spin_button_set_value (spin_button, new_property_value);
+}
+
+void
 brightness_step_count_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
 {
   guint val = (guint) gtk_spin_button_get_value (w);
@@ -820,6 +876,13 @@ brightness_step_count_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel
   {
     g_critical ("Unable to set value %d for property %s\n", val, BRIGHTNESS_STEP_COUNT);
   }
+}
+
+void brightness_step_count_property_changed_cb (XfconfChannel *channel, char *property,
+                                                GValue *value, GtkWidget *spin_button)
+{
+  guint new_value = g_value_get_uint (value);
+  brightness_step_count_update_from_property (GTK_SPIN_BUTTON (spin_button), new_value);
 }
 
 void
@@ -1415,7 +1478,6 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
   GtkWidget *dpms;
 
   guint  value;
-  guint list_value;
   gboolean valid;
   gboolean val;
 
@@ -1469,18 +1531,11 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 
     value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX POWER_SWITCH_CFG, XFPM_DO_NOTHING);
 
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-          valid;
-          valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-    {
-      gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-                          1, &list_value, -1);
-      if ( value == list_value )
-      {
-        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power), &iter);
-        break;
-      }
-    }
+    set_combo_box_active_entry (value, GTK_COMBO_BOX (power));
+
+    g_signal_connect (channel,
+                      "property-changed::" XFPM_PROPERTIES_PREFIX POWER_SWITCH_CFG,
+                      G_CALLBACK (button_action_xfconf_property_changed_cb), power);
   }
   else
   {
@@ -1521,18 +1576,11 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
 
     gtk_combo_box_set_active (GTK_COMBO_BOX (hibernate), 0);
 
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-          valid;
-          valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-    {
-      gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-                          1, &list_value, -1);
-      if ( value == list_value )
-      {
-        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (hibernate), &iter);
-        break;
-      }
-    }
+    set_combo_box_active_entry (value, GTK_COMBO_BOX (hibernate));
+
+    g_signal_connect (channel,
+                      "property-changed::" XFPM_PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG,
+                      G_CALLBACK (button_action_xfconf_property_changed_cb), hibernate);
   }
   else
   {
@@ -1572,18 +1620,11 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_w), 0);
 
     value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX SLEEP_SWITCH_CFG, XFPM_DO_NOTHING);
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-          valid;
-          valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-    {
-      gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-                          1, &list_value, -1);
-      if ( value == list_value )
-      {
-        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (sleep_w), &iter);
-        break;
-      }
-    }
+    set_combo_box_active_entry (value, GTK_COMBO_BOX (sleep_w));
+
+    g_signal_connect (channel,
+                      "property-changed::" XFPM_PROPERTIES_PREFIX SLEEP_SWITCH_CFG,
+                      G_CALLBACK (button_action_xfconf_property_changed_cb), sleep_w);
   }
   else
   {
@@ -1623,18 +1664,11 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     gtk_combo_box_set_active (GTK_COMBO_BOX (battery_w), 0);
 
     value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BATTERY_SWITCH_CFG, XFPM_DO_NOTHING);
-    for ( valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-          valid;
-          valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter) )
-    {
-      gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter,
-                          1, &list_value, -1);
-      if ( value == list_value )
-      {
-        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (battery_w), &iter);
-        break;
-      }
-    }
+    set_combo_box_active_entry (value, GTK_COMBO_BOX (battery_w));
+
+    g_signal_connect (channel,
+                      "property-changed::" XFPM_PROPERTIES_PREFIX BATTERY_SWITCH_CFG,
+                      G_CALLBACK (button_action_xfconf_property_changed_cb), battery_w);
   }
   else
   {
@@ -1649,20 +1683,19 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
   gtk_widget_set_tooltip_text (brightness_step_count,
       _("Number of brightness steps available using keys"));
   val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT, 10);
-  if ( val > 100 || val < 2)
-  {
-    g_critical ("Value %d if out of range for property %s\n", val, BRIGHTNESS_STEP_COUNT);
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON(brightness_step_count), 10);
-  }
-  else
-    gtk_spin_button_set_value (GTK_SPIN_BUTTON(brightness_step_count), val);
+  brightness_step_count_update_from_property (GTK_SPIN_BUTTON (brightness_step_count), val);
+
+  g_signal_connect (channel,
+                    "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
+                    G_CALLBACK (brightness_step_count_property_changed_cb), brightness_step_count);
 
   /*
    * Exponential brightness
    */
   brightness_exponential = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-exponential"));
-  val = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL, FALSE);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(brightness_exponential), val);
+
+  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
+                          G_TYPE_BOOLEAN, brightness_exponential, "active");
 
   valid = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS, TRUE);
   gtk_widget_set_sensitive (brightness_step_count, valid);
