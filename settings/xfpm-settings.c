@@ -384,6 +384,8 @@ combo_box_xfconf_property_changed_cb (XfconfChannel *channel, char *property,
   if (G_VALUE_HOLDS_UINT (value)) {
     new_value = g_value_get_uint (value);
     set_combo_box_active_entry (new_value, GTK_COMBO_BOX (combo_box));
+  } else {
+    g_critical ("Invalid type for property %s\n", property);
   }
 }
 
@@ -1639,7 +1641,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
   gtk_widget_set_tooltip_text (brightness_step_count,
       _("Number of brightness steps available using keys"));
   val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT, 10);
-  
+
   xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
                           G_TYPE_UINT, brightness_step_count, "value");
 
