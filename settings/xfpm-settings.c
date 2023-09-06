@@ -378,11 +378,13 @@ button_battery_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
 void
 combo_box_xfconf_property_changed_cb (XfconfChannel *channel, char *property,
-                                          GValue *value, GtkWidget *combo_box)
+                                      GValue *value, GtkWidget *combo_box)
 {
   guint new_value;
-  new_value = g_value_get_uint (value);
-  set_combo_box_active_entry (new_value, GTK_COMBO_BOX (combo_box));
+  if (G_VALUE_TYPE (value) == G_TYPE_UINT) {
+    new_value = g_value_get_uint (value);
+    set_combo_box_active_entry (new_value, GTK_COMBO_BOX (combo_box));
+  }
 }
 
 void set_combo_box_active_entry (guint new_value, GtkComboBox *combo_box)
