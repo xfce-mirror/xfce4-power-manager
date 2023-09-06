@@ -376,7 +376,7 @@ combo_box_xfconf_property_changed_cb (XfconfChannel *channel, char *property,
                                       GValue *value, GtkWidget *combo_box)
 {
   guint new_value;
-  if (G_VALUE_TYPE (value) == G_TYPE_UINT) {
+  if (G_VALUE_HOLDS_UINT (value)) {
     new_value = g_value_get_uint (value);
     set_combo_box_active_entry (new_value, GTK_COMBO_BOX (combo_box));
   }
