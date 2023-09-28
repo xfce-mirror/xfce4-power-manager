@@ -278,7 +278,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 
   if ( lock_screen )
   {
-    if (!xfce_screensaver_lock (power->priv->screensaver))
+    if (!xfce_screensaver_lock (power->priv->screensaver) && !force)
     {
       GtkWidget *dialog;
       gboolean ret;
