@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-30 00:48+0200\n"
+"POT-Creation-Date: 2023-09-29 00:47+0200\n"
 "PO-Revision-Date: 2023-02-20 11:54+0000\n"
 "Last-Translator: Arnold Marko <arnold.marko@gmail.com>, 2023\n"
 "Language-Team: Slovenian (https://app.transifex.com/xfce/teams/16840/sl/)\n"
@@ -28,7 +28,7 @@ msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:649
 #: ../settings/xfpm-settings.c:664 ../settings/xfpm-settings.c:691
-#: ../settings/xfpm-settings.c:1659
+#: ../settings/xfpm-settings.c:1671
 msgid "Never"
 msgstr "Nikoli"
 
@@ -46,8 +46,8 @@ msgstr "Nič"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:357 ../src/xfpm-power.c:633 ../src/xfpm-power.c:675
-#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:166
+#: ../src/xfpm-power.c:340 ../src/xfpm-power.c:614 ../src/xfpm-power.c:656
+#: ../src/xfpm-power.c:819 ../src/xfpm-power.c:840 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
 #: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
@@ -229,7 +229,7 @@ msgstr "1 minuta"
 
 #: ../settings/xfpm-settings.c:654 ../settings/xfpm-settings.c:666
 #: ../settings/xfpm-settings.c:677 ../settings/xfpm-settings.c:681
-#: ../settings/xfpm-settings.c:1668
+#: ../settings/xfpm-settings.c:1680
 msgid "minutes"
 msgstr "minute"
 
@@ -247,88 +247,88 @@ msgstr "1 minuta"
 msgid "hours"
 msgstr "ure"
 
-#: ../settings/xfpm-settings.c:693 ../settings/xfpm-settings.c:1661
+#: ../settings/xfpm-settings.c:693 ../settings/xfpm-settings.c:1673
 msgid "seconds"
 msgstr "sekund"
 
-#: ../settings/xfpm-settings.c:902 ../settings/xfpm-settings.c:981
-#: ../settings/xfpm-settings.c:1043 ../settings/xfpm-settings.c:1139
-#: ../settings/xfpm-settings.c:1231 ../settings/xfpm-settings.c:1350
-#: ../settings/xfpm-settings.c:1408 ../settings/xfpm-settings.c:1460
-#: ../settings/xfpm-settings.c:1511 ../src/xfpm-power.c:700
+#: ../settings/xfpm-settings.c:914 ../settings/xfpm-settings.c:993
+#: ../settings/xfpm-settings.c:1055 ../settings/xfpm-settings.c:1151
+#: ../settings/xfpm-settings.c:1243 ../settings/xfpm-settings.c:1362
+#: ../settings/xfpm-settings.c:1420 ../settings/xfpm-settings.c:1472
+#: ../settings/xfpm-settings.c:1523 ../src/xfpm-power.c:681
 msgid "Suspend"
 msgstr "V pripravljenost"
 
-#: ../settings/xfpm-settings.c:906 ../settings/xfpm-settings.c:1143
+#: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1155
 msgid "Suspend operation not permitted"
 msgstr "Prehod v stanje pripravljenosti ni dovoljen"
 
-#: ../settings/xfpm-settings.c:910 ../settings/xfpm-settings.c:1147
+#: ../settings/xfpm-settings.c:922 ../settings/xfpm-settings.c:1159
 msgid "Suspend operation not supported"
 msgstr "Prehod v stanje pripravljenosti ni podprt"
 
-#: ../settings/xfpm-settings.c:916 ../settings/xfpm-settings.c:987
-#: ../settings/xfpm-settings.c:1049 ../settings/xfpm-settings.c:1153
-#: ../settings/xfpm-settings.c:1237 ../settings/xfpm-settings.c:1356
-#: ../settings/xfpm-settings.c:1414 ../settings/xfpm-settings.c:1466
-#: ../settings/xfpm-settings.c:1517 ../src/xfpm-power.c:689
+#: ../settings/xfpm-settings.c:928 ../settings/xfpm-settings.c:999
+#: ../settings/xfpm-settings.c:1061 ../settings/xfpm-settings.c:1165
+#: ../settings/xfpm-settings.c:1249 ../settings/xfpm-settings.c:1368
+#: ../settings/xfpm-settings.c:1426 ../settings/xfpm-settings.c:1478
+#: ../settings/xfpm-settings.c:1529 ../src/xfpm-power.c:670
 msgid "Hibernate"
 msgstr "Mirovanje"
 
-#: ../settings/xfpm-settings.c:920 ../settings/xfpm-settings.c:1157
+#: ../settings/xfpm-settings.c:932 ../settings/xfpm-settings.c:1169
 msgid "Hibernate operation not permitted"
 msgstr "Prehod v mirovanje ni dovoljen"
 
-#: ../settings/xfpm-settings.c:924 ../settings/xfpm-settings.c:1161
+#: ../settings/xfpm-settings.c:936 ../settings/xfpm-settings.c:1173
 msgid "Hibernate operation not supported"
 msgstr "Prehod v mirovanje ni podprt"
 
-#: ../settings/xfpm-settings.c:954 ../settings/xfpm-settings.c:1191
-#: ../settings/xfpm-settings.c:1617 ../settings/xfpm-settings.c:1744
+#: ../settings/xfpm-settings.c:966 ../settings/xfpm-settings.c:1203
+#: ../settings/xfpm-settings.c:1629 ../settings/xfpm-settings.c:1756
 msgid "Hibernate and suspend operations not supported"
 msgstr "Prehoda v mirovanje in pripravljenost nista podprta"
 
-#: ../settings/xfpm-settings.c:959 ../settings/xfpm-settings.c:1196
-#: ../settings/xfpm-settings.c:1622 ../settings/xfpm-settings.c:1749
+#: ../settings/xfpm-settings.c:971 ../settings/xfpm-settings.c:1208
+#: ../settings/xfpm-settings.c:1634 ../settings/xfpm-settings.c:1761
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Prehoda v mirovanje in pripravljenost nista dovoljena"
 
-#: ../settings/xfpm-settings.c:976 ../settings/xfpm-settings.c:1345
-#: ../settings/xfpm-settings.c:1403 ../settings/xfpm-settings.c:1455
-#: ../settings/xfpm-settings.c:1506
+#: ../settings/xfpm-settings.c:988 ../settings/xfpm-settings.c:1357
+#: ../settings/xfpm-settings.c:1415 ../settings/xfpm-settings.c:1467
+#: ../settings/xfpm-settings.c:1518
 msgid "Do nothing"
 msgstr "Ne naredi ničesar"
 
-#: ../settings/xfpm-settings.c:993 ../settings/xfpm-settings.c:1362
-#: ../src/xfpm-power.c:711
+#: ../settings/xfpm-settings.c:1005 ../settings/xfpm-settings.c:1374
+#: ../src/xfpm-power.c:692
 msgid "Shutdown"
 msgstr "Izklopi"
 
-#: ../settings/xfpm-settings.c:997 ../settings/xfpm-settings.c:1366
-#: ../settings/xfpm-settings.c:1418 ../settings/xfpm-settings.c:1470
-#: ../settings/xfpm-settings.c:1521
+#: ../settings/xfpm-settings.c:1009 ../settings/xfpm-settings.c:1378
+#: ../settings/xfpm-settings.c:1430 ../settings/xfpm-settings.c:1482
+#: ../settings/xfpm-settings.c:1533
 msgid "Ask"
 msgstr "Vprašaj"
 
-#: ../settings/xfpm-settings.c:1038 ../settings/xfpm-settings.c:1226
+#: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1238
 msgid "Switch off display"
 msgstr "Ugasni zaslon"
 
-#: ../settings/xfpm-settings.c:1053 ../settings/xfpm-settings.c:1241
+#: ../settings/xfpm-settings.c:1065 ../settings/xfpm-settings.c:1253
 msgid "Lock screen"
 msgstr "Zakleni zaslon"
 
-#: ../settings/xfpm-settings.c:1550
+#: ../settings/xfpm-settings.c:1562
 msgid "Number of brightness steps available using keys"
 msgstr "Število korakov osvetljenosti, ki so na voljo ob uporabi tipk"
 
-#: ../settings/xfpm-settings.c:1590
+#: ../settings/xfpm-settings.c:1602
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
 "Stopnja, pri kateri je stanje računalnika kritično in nujno potrebuje vir "
 "napajanja"
 
-#: ../settings/xfpm-settings.c:1666 ../common/xfpm-power-common.c:166
+#: ../settings/xfpm-settings.c:1678 ../common/xfpm-power-common.c:166
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuta"
@@ -336,78 +336,87 @@ msgstr[1] "minuti"
 msgstr[2] "minute"
 msgstr[3] "minut"
 
-#: ../settings/xfpm-settings.c:2033
+#: ../settings/xfpm-settings.c:2045
 msgid "Device"
 msgstr "Naprava"
 
-#: ../settings/xfpm-settings.c:2055
+#: ../settings/xfpm-settings.c:2068
 msgid "Type"
 msgstr "Vrsta"
 
-#: ../settings/xfpm-settings.c:2060
+#: ../settings/xfpm-settings.c:2073
 msgid "PowerSupply"
 msgstr "Vir napajanja"
 
-#: ../settings/xfpm-settings.c:2061 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2074 ../src/xfpm-main.c:77
 msgid "True"
 msgstr "Da"
 
-#: ../settings/xfpm-settings.c:2061 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2074 ../src/xfpm-main.c:77
 msgid "False"
 msgstr "Ne"
 
-#: ../settings/xfpm-settings.c:2068
+#: ../settings/xfpm-settings.c:2081
 msgid "Model"
 msgstr "Model"
 
-#: ../settings/xfpm-settings.c:2071
+#: ../settings/xfpm-settings.c:2084
 msgid "Technology"
 msgstr "Tehnologija"
 
-#: ../settings/xfpm-settings.c:2078
+#: ../settings/xfpm-settings.c:2091
 msgid "Current charge"
 msgstr "Trenutni naboj"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:2086 ../settings/xfpm-settings.c:2098
-#: ../settings/xfpm-settings.c:2110
+#: ../settings/xfpm-settings.c:2099 ../settings/xfpm-settings.c:2111
+#: ../settings/xfpm-settings.c:2123
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:2088
+#: ../settings/xfpm-settings.c:2101
 msgid "Fully charged (design)"
 msgstr "Polni naboj (proizvodno)"
 
-#: ../settings/xfpm-settings.c:2101
+#: ../settings/xfpm-settings.c:2114
 msgid "Fully charged"
 msgstr "Polno nabito"
 
-#: ../settings/xfpm-settings.c:2112
+#: ../settings/xfpm-settings.c:2125
 msgid "Energy empty"
 msgstr "Energija prazne baterije"
 
+#. TRANSLATORS: Unit here is Watt
+#: ../settings/xfpm-settings.c:2133
+msgid "W"
+msgstr "W"
+
+#: ../settings/xfpm-settings.c:2135
+msgid "Energy rate"
+msgstr "Količina energije"
+
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:2120
+#: ../settings/xfpm-settings.c:2143
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:2122
+#: ../settings/xfpm-settings.c:2145
 msgid "Voltage"
 msgstr "Napetost"
 
-#: ../settings/xfpm-settings.c:2129
+#: ../settings/xfpm-settings.c:2152
 msgid "Vendor"
 msgstr "Proizvajalec"
 
-#: ../settings/xfpm-settings.c:2134
+#: ../settings/xfpm-settings.c:2157
 msgid "Serial"
 msgstr "Zaporedna številka"
 
-#: ../settings/xfpm-settings.c:2413
+#: ../settings/xfpm-settings.c:2436
 msgid "Check your power manager installation"
 msgstr "Prosimo, preverite namestitev upravljalnika porabe energije"
 
-#: ../settings/xfpm-settings.c:2506
+#: ../settings/xfpm-settings.c:2529
 msgid "Devices"
 msgstr "Naprave"
 
@@ -639,19 +648,19 @@ msgstr ""
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Waiting to discharge (%0.0f%%)"
+"Waiting to charge (%0.0f%%)"
 msgstr ""
 "<b>%s %s</b>\n"
-"Čakanje na praznjenje (%0.0f%%)"
+"Čakanje na polnjenje (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Waiting to charge (%0.0f%%)"
+"Waiting to discharge (%0.0f%%)"
 msgstr ""
 "<b>%s %s</b>\n"
-"Čakanje na polnjenje (%0.0f%%)"
+"Čakanje na praznjenje (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:400
 #, c-format
@@ -703,7 +712,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "Stanje ni znano"
 
-#: ../src/xfpm-power.c:383
+#: ../src/xfpm-power.c:366
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
@@ -712,7 +721,7 @@ msgstr ""
 "Nadaljevanje s to akcijo lahko pokvari delovanje tega programa. Ali ste "
 "prepričani, da želite sistem hibernirati?"
 
-#: ../src/xfpm-power.c:432
+#: ../src/xfpm-power.c:415
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
@@ -720,33 +729,33 @@ msgstr ""
 "Nobeno od orodij za zaklepanje sistema se ni uspešno zagnalo, zato sistem ne bo zaklenjen.\n"
 "Ali ste prepričani, da želi sistem spraviti v mirovanje?"
 
-#: ../src/xfpm-power.c:597
+#: ../src/xfpm-power.c:578
 msgid "Hibernate the system"
 msgstr "Prehod v stanje mirovanja"
 
-#: ../src/xfpm-power.c:608
+#: ../src/xfpm-power.c:589
 msgid "Suspend the system"
 msgstr "Prehod v stanje pripravljenosti"
 
-#: ../src/xfpm-power.c:617
+#: ../src/xfpm-power.c:598
 msgid "Shutdown the system"
 msgstr "Izklop računalnika"
 
-#: ../src/xfpm-power.c:628 ../src/xfpm-power.c:672
+#: ../src/xfpm-power.c:609 ../src/xfpm-power.c:653
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
 "Baterija je skoraj prazna. Da bi preprečili izgubo podatkov, shranite svoje "
 "delo"
 
-#: ../src/xfpm-power.c:718
+#: ../src/xfpm-power.c:699
 msgid "_Cancel"
 msgstr "_Prekliči"
 
-#: ../src/xfpm-power.c:839
+#: ../src/xfpm-power.c:820
 msgid "System is running on low power"
 msgstr "Baterija je skoraj prazna"
 
-#: ../src/xfpm-power.c:855
+#: ../src/xfpm-power.c:836
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
@@ -755,12 +764,12 @@ msgstr ""
 "%s je skoraj prazna\n"
 "Preostali čas: %s"
 
-#: ../src/xfpm-power.c:1648 ../src/xfpm-power.c:1696 ../src/xfpm-power.c:1728
-#: ../src/xfpm-power.c:1758
+#: ../src/xfpm-power.c:1624 ../src/xfpm-power.c:1672 ../src/xfpm-power.c:1704
+#: ../src/xfpm-power.c:1734
 msgid "Permission denied"
 msgstr "Dostop zavrnjen"
 
-#: ../src/xfpm-power.c:1737 ../src/xfpm-power.c:1767
+#: ../src/xfpm-power.c:1713 ../src/xfpm-power.c:1743
 msgid "Suspend not supported"
 msgstr "Stanje pripravljenosti ni podprto"
 
