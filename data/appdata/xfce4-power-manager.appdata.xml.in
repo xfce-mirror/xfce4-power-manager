@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Eric Koegel <eric.koegel@gmail.com> and Simon Steinbeiß <simon@xfce.org> -->
 <component type="desktop">
-  <id>xfce4-power-manager.desktop</id>
+  <id>org.xfce.powermanager.desktop</id>
   <metadata_license>CC-BY-3.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Xfce power manager</name>
@@ -26,15 +26,19 @@
     </p>
   </description>
 
+  <launchable type="desktop-id">xfce4-power-manager-settings.desktop</launchable>
+
   <screenshots>
     <screenshot type="default">
-      <image width="624" height="351">http://git.xfce.org/xfce/xfce4-power-manager/plain/data/appdata/xfce4-power-manager-default.png</image>
+      <image width="624" height="351">https://git.xfce.org/xfce/xfce4-power-manager/plain/data/appdata/xfce4-power-manager-default.png</image>
+      <caption>Screenshot of the XFCE Power Manager User Interface</caption>
     </screenshot>
   </screenshots>
 
-  <url type="homepage">http://www.xfce.org/</url>
+  <url type="homepage">https://www.xfce.org/</url>
   <url type="bugtracker">https://gitlab.xfce.org/xfce/xfce4-power-manager</url>
-  <url type="help">http://docs.xfce.org/xfce/xfce4-power-manager/start</url>
+  <url type="help">https://docs.xfce.org/xfce/xfce4-power-manager/start</url>
+  <url type="contact">https://docs.xfce.org/contribute/dev/start#communication_with_the_xfce_development_team</url>
 
   <update_contact>xfce4-dev@xfce.org</update_contact>
   <translation type="gettext">xfce4-power-manager</translation>
@@ -87,5 +91,36 @@
       </description>
     </release>
   </releases>
+
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-cartoon">none</content_attribute>
+    <content_attribute id="violence-fantasy">none</content_attribute>
+    <content_attribute id="violence-realistic">none</content_attribute>
+    <content_attribute id="violence-bloodshed">none</content_attribute>
+    <content_attribute id="violence-sexual">none</content_attribute>
+    <content_attribute id="violence-desecration">none</content_attribute>
+    <content_attribute id="violence-slavery">none</content_attribute>
+    <content_attribute id="violence-worship">none</content_attribute>
+    <content_attribute id="drugs-alcohol">none</content_attribute>
+    <content_attribute id="drugs-narcotics">none</content_attribute>
+    <content_attribute id="drugs-tobacco">none</content_attribute>
+    <content_attribute id="sex-nudity">none</content_attribute>
+    <content_attribute id="sex-themes">none</content_attribute>
+    <content_attribute id="sex-homosexuality">none</content_attribute>
+    <content_attribute id="sex-prostitution">none</content_attribute>
+    <content_attribute id="sex-adultery">none</content_attribute>
+    <content_attribute id="sex-appearance">none</content_attribute>
+    <content_attribute id="language-profanity">none</content_attribute>
+    <content_attribute id="language-humor">none</content_attribute>
+    <content_attribute id="language-discrimination">none</content_attribute>
+    <content_attribute id="social-chat">none</content_attribute>
+    <content_attribute id="social-info">none</content_attribute>
+    <content_attribute id="social-audio">none</content_attribute>
+    <content_attribute id="social-location">none</content_attribute>
+    <content_attribute id="social-contacts">none</content_attribute>
+    <content_attribute id="money-purchasing">none</content_attribute>
+    <content_attribute id="money-gambling">none</content_attribute>
+  </content_rating>
+
 
 </component>
