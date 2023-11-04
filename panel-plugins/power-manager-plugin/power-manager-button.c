@@ -839,6 +839,11 @@ power_manager_button_set_property (GObject *object,
       if (GTK_IS_WIDGET (button->priv->panel_presentation_mode))
           power_manager_button_update_presentation_indicator (button);
       break;
+#else
+    case PROP_SHOW_PANEL_LABEL:
+    case PROP_PRESENTATION_MODE:
+    case PROP_SHOW_PRESENTATION_INDICATOR:
+      break;
 #endif
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -870,6 +875,11 @@ power_manager_button_get_property(GObject *object,
       break;
     case PROP_SHOW_PRESENTATION_INDICATOR:
       g_value_set_boolean (value, button->priv->show_presentation_indicator);
+      break;
+#else
+    case PROP_SHOW_PANEL_LABEL:
+    case PROP_PRESENTATION_MODE:
+    case PROP_SHOW_PRESENTATION_INDICATOR:
       break;
 #endif
     default:
