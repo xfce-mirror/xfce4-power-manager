@@ -1976,8 +1976,11 @@ update_sideview_icon (UpDevice *device,
                 NULL);
 
 
-  name = get_device_description (upower, device);
-  icon_name = get_device_icon_name (upower, device, FALSE);
+  if (upower != NULL)
+  {
+    name = get_device_description (upower, device);
+    icon_name = get_device_icon_name (upower, device, FALSE);
+  }
 
   pix = gtk_icon_theme_load_icon_for_scale (gtk_icon_theme_get_default (),
                                             icon_name,
@@ -2335,10 +2338,12 @@ settings_create_devices_list (void)
 {
   upower = up_client_new ();
 
-  g_signal_connect (upower, "device-added", G_CALLBACK (device_added_cb), NULL);
-  g_signal_connect (upower, "device-removed", G_CALLBACK (device_removed_cb), NULL);
-
-  add_all_devices ();
+  if (upower != NULL)
+  {
+    g_signal_connect (upower, "device-added", G_CALLBACK (device_added_cb), NULL);
+    g_signal_connect (upower, "device-removed", G_CALLBACK (device_removed_cb), NULL);
+    add_all_devices ();
+  }
 }
 
 static void
@@ -2369,6 +2374,9 @@ settings_quit (GtkWidget *widget, XfconfChannel *channel)
   g_object_unref (channel);
   xfconf_shutdown ();
   gtk_widget_destroy (widget);
+  if (upower != NULL)
+    g_object_unref (upower);
+
   /* initiate the quit action on the application so it terminates */
   g_action_group_activate_action (G_ACTION_GROUP(app), "quit", NULL);
 }
