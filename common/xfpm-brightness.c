@@ -314,7 +314,7 @@ xfpm_brightness_helper_get_value (const gchar *argument)
     }
     goto out;
   }
-  g_debug ("executed %s; retval: %i", command, exit_status);
+  XFPM_DEBUG ("executed %s; retval: %i", command, exit_status);
 
   if ( exit_status != 0 )
     goto out;
@@ -342,7 +342,7 @@ xfpm_brightness_setup_helper (XfpmBrightness *brightness)
   gint32 ret;
 
   ret = (gint32) xfpm_brightness_helper_get_value ("get-max-brightness");
-  g_debug ("xfpm_brightness_setup_helper: get-max-brightness returned %i", ret);
+  XFPM_DEBUG ("xfpm_brightness_setup_helper: get-max-brightness returned %i", ret);
   if ( ret < 0 )
   {
     brightness->priv->helper_has_hw = FALSE;
@@ -369,7 +369,7 @@ xfpm_brightness_helper_get_level (XfpmBrightness *brg, gint32 *level)
 
   ret = (gint32) xfpm_brightness_helper_get_value ("get-brightness");
 
-  g_debug ("xfpm_brightness_helper_get_level: get-brightness returned %i", ret);
+  XFPM_DEBUG ("xfpm_brightness_helper_get_level: get-brightness returned %i", ret);
 
   if ( ret >= 0 )
   {
@@ -399,7 +399,7 @@ xfpm_brightness_helper_set_level (XfpmBrightness *brg, gint32 level)
     }
     goto out;
   }
-  g_debug ("executed %s; retval: %i", command, exit_status);
+  XFPM_DEBUG ("executed %s; retval: %i", command, exit_status);
   ret = (exit_status == 0);
 
 out:
@@ -442,7 +442,7 @@ xfpm_brightness_helper_set_switch (XfpmBrightness *brg, gint brightness_switch)
     }
     goto out;
   }
-  g_debug ("executed %s; retval: %i", command, exit_status);
+  XFPM_DEBUG ("executed %s; retval: %i", command, exit_status);
   ret = (exit_status == 0);
 
 out:
@@ -516,9 +516,9 @@ xfpm_brightness_setup (XfpmBrightness *brightness)
                                      brightness->priv->output,
                                      &brightness->priv->min_level,
                                      &brightness->priv->max_level);
-    g_debug ("Brightness controlled by xrandr, min_level=%d max_level=%d",
-             brightness->priv->min_level,
-             brightness->priv->max_level);
+    XFPM_DEBUG ("Brightness controlled by xrandr, min_level=%d max_level=%d",
+                brightness->priv->min_level,
+                brightness->priv->max_level);
 
     return TRUE;
   }
@@ -527,17 +527,17 @@ xfpm_brightness_setup (XfpmBrightness *brightness)
   {
     if ( xfpm_brightness_setup_helper (brightness) ) {
 #if defined(BACKEND_TYPE_FREEBSD)
-      g_debug ("xrandr not available, brightness controlled by sysctl helper; min_level=%d max_level=%d",
+      XFPM_DEBUG ("xrandr not available, brightness controlled by sysctl helper; min_level=%d max_level=%d",
 #else
-      g_debug ("xrandr not available, brightness controlled by sysfs helper; min_level=%d max_level=%d",
+      XFPM_DEBUG ("xrandr not available, brightness controlled by sysfs helper; min_level=%d max_level=%d",
 #endif
-               brightness->priv->min_level,
-               brightness->priv->max_level);
+                  brightness->priv->min_level,
+                  brightness->priv->max_level);
       return TRUE;
     }
   }
 #endif
-  g_debug ("no brightness controls available");
+  XFPM_DEBUG ("no brightness controls available");
   return FALSE;
 }
 

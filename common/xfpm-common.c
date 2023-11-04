@@ -27,6 +27,7 @@
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-common.h"
+#include "xfpm-debug.h"
 
 const gchar
 *xfpm_bool_to_string (gboolean value)
@@ -136,7 +137,7 @@ xfpm_is_multihead_connected (void)
 
   if ( nmonitor > 1 )
   {
-    g_debug ("Multiple monitors connected");
+    XFPM_DEBUG ("Multiple monitors connected");
     return TRUE;
   }
   else
