@@ -1083,6 +1083,7 @@ power_manager_button_finalize (GObject *object)
   g_free (button->priv->panel_icon_name);
   g_free (button->priv->panel_fallback_icon_name);
 
+  g_object_unref (button->priv->brightness);
   if (button->priv->set_level_timeout)
   {
     g_source_remove(button->priv->set_level_timeout);
@@ -1090,11 +1091,16 @@ power_manager_button_finalize (GObject *object)
   }
 
   g_signal_handlers_disconnect_by_data (button->priv->upower, button);
+  g_object_unref (button->priv->upower);
 
   power_manager_button_remove_all_devices (button);
 
 #ifdef XFCE_PLUGIN
   g_object_unref (button->priv->plugin);
+  if (button->priv->inhibit_proxy != NULL)
+    g_object_unref (button->priv->inhibit_proxy);
+#else
+  g_object_unref (button->priv->inhibit);
 #endif
 
   if (button->priv->channel != NULL)
