@@ -240,7 +240,7 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 
   if (brightness->priv->backlight == None)
   {
-    g_warning ("No outputs have backlight property");
+    XFPM_DEBUG ("No outputs have backlight property");
     return FALSE;
   }
 

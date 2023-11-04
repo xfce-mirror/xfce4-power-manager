@@ -440,9 +440,9 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     }
     else
     {
-      g_warning ("It seems the kernel brightness switch handling value was "
-                 "not restored properly on exit last time, xfce4-power-manager "
-                 "will try to restore it this time.");
+      XFPM_DEBUG ("It seems the kernel brightness switch handling value was "
+                  "not restored properly on exit last time, xfce4-power-manager "
+                  "will try to restore it this time.");
     }
 
       /* check whether to change the brightness switch */
@@ -529,8 +529,8 @@ xfpm_backlight_set_property (GObject *object,
           g_warning ("Unable to set the kernel brightness switch parameter to %d.",
                      backlight->priv->brightness_switch);
       else
-          g_message ("Set kernel brightness switch to %d",
-                     backlight->priv->brightness_switch);
+          XFPM_DEBUG ("Set kernel brightness switch to %d",
+                      backlight->priv->brightness_switch);
 
       break;
     case PROP_BRIGHTNESS_SWITCH_SAVE:
@@ -570,7 +570,7 @@ xfpm_backlight_finalize (GObject *object)
     if (ret)
     {
       backlight->priv->brightness_switch = backlight->priv->brightness_switch_save;
-      g_message ("Restored brightness switch value to: %d", backlight->priv->brightness_switch);
+      XFPM_DEBUG ("Restored brightness switch value to: %d", backlight->priv->brightness_switch);
     }
     else
       g_warning ("Unable to restore the kernel brightness switch parameter to its original value, "

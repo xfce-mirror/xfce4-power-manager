@@ -167,7 +167,7 @@ xfpm_button_xevent_key (XfpmButton *button, guint keysym , XfpmButtonKey key)
 
   if ( keycode == 0 )
   {
-    g_warning ("could not map keysym %x to keycode\n", keysym);
+    XFPM_DEBUG ("could not map keysym %x to keycode\n", keysym);
     return FALSE;
   }
 
