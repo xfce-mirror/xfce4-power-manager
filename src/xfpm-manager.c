@@ -753,7 +753,7 @@ xfpm_manager_show_tray_icon (XfpmManager *manager)
 
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
   manager->priv->adapter_icon = gtk_status_icon_new ();
-  manager->priv->power_button = power_manager_button_new ();
+  manager->priv->power_button = g_object_ref_sink (power_manager_button_new ());
 G_GNUC_END_IGNORE_DEPRECATIONS
 
   XFPM_DEBUG ("Showing tray icon");
