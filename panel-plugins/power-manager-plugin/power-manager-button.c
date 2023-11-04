@@ -461,9 +461,9 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
   BatteryDevice   *battery_device;
   BatteryDevice   *display_device;
   const gchar     *object_path = up_device_get_object_path(device);
-  gchar           *details;
-  gchar           *icon_name;
-  gchar           *menu_icon_name;
+  gchar           *details = NULL;
+  gchar           *icon_name = NULL;
+  gchar           *menu_icon_name = NULL;
   gint             scale_factor;
   GdkPixbuf       *pix;
   cairo_surface_t *surface = NULL;
@@ -480,9 +480,12 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
 
   battery_device = item->data;
 
-  icon_name = get_device_icon_name (button->priv->upower, device, TRUE);
-  menu_icon_name = get_device_icon_name (button->priv->upower, device, FALSE);
-  details = get_device_description (button->priv->upower, device);
+  if (button->priv->upower != NULL)
+  {
+    icon_name = get_device_icon_name (button->priv->upower, device, TRUE);
+    menu_icon_name = get_device_icon_name (button->priv->upower, device, FALSE);
+    details = get_device_description (button->priv->upower, device);
+  }
 
   /* If UPower doesn't give us an icon, just use the default */
   if (g_strcmp0(menu_icon_name, "") == 0)
@@ -711,14 +714,17 @@ power_manager_button_add_all_devices (PowerManagerButton *button)
   GPtrArray *array = NULL;
   guint i;
 
-  button->priv->display_device = up_client_get_display_device (button->priv->upower);
-  power_manager_button_add_device (button->priv->display_device, button);
+  if (button->priv->upower != NULL)
+  {
+    button->priv->display_device = up_client_get_display_device (button->priv->upower);
+    power_manager_button_add_device (button->priv->display_device, button);
 
 #if UP_CHECK_VERSION(0, 99, 8)
-  array = up_client_get_devices2 (button->priv->upower);
+    array = up_client_get_devices2 (button->priv->upower);
 #else
-  array = up_client_get_devices (button->priv->upower);
+    array = up_client_get_devices (button->priv->upower);
 #endif
+  }
 
   if (array)
   {
@@ -1040,8 +1046,11 @@ power_manager_button_init (PowerManagerButton *button)
   /* Intercept scroll events */
   gtk_widget_add_events (GTK_WIDGET (button), GDK_SCROLL_MASK);
 
-  g_signal_connect (button->priv->upower, "device-added", G_CALLBACK (device_added_cb), button);
-  g_signal_connect (button->priv->upower, "device-removed", G_CALLBACK (device_removed_cb), button);
+  if (button->priv->upower != NULL)
+  {
+    g_signal_connect (button->priv->upower, "device-added", G_CALLBACK (device_added_cb), button);
+    g_signal_connect (button->priv->upower, "device-removed", G_CALLBACK (device_removed_cb), button);
+  }
 }
 
 static void
@@ -1063,8 +1072,11 @@ power_manager_button_finalize (GObject *object)
     button->priv->set_level_timeout = 0;
   }
 
-  g_signal_handlers_disconnect_by_data (button->priv->upower, button);
-  g_object_unref (button->priv->upower);
+  if (button->priv->upower != NULL)
+  {
+    g_signal_handlers_disconnect_by_data (button->priv->upower, button);
+    g_object_unref (button->priv->upower);
+  }
 
   power_manager_button_remove_all_devices (button);
   g_list_free (button->priv->devices);

@@ -216,15 +216,17 @@ xfpm_power_check_lid (XfpmPower *power, gboolean present, gboolean closed)
 static void
 xfpm_power_get_properties (XfpmPower *power)
 {
-  gboolean on_battery;
-  gboolean lid_is_closed;
-  gboolean lid_is_present;
+  gboolean on_battery = FALSE;
+  gboolean lid_is_closed = FALSE;
+  gboolean lid_is_present = FALSE;
 
-  g_object_get (power->priv->upower,
-                "on-battery", &on_battery,
-                "lid-is-closed", &lid_is_closed,
-                "lid-is-present", &lid_is_present,
-                NULL);
+  if (power->priv->upower != NULL)
+    g_object_get (power->priv->upower,
+                  "on-battery", &on_battery,
+                  "lid-is-closed", &lid_is_closed,
+                  "lid-is-present", &lid_is_present,
+                  NULL);
+
   xfpm_power_check_lid (power, lid_is_present, lid_is_closed);
   xfpm_power_check_power (power, on_battery);
 }
@@ -1048,11 +1050,14 @@ xfpm_power_init (XfpmPower *power)
     goto out;
   }
 
-  g_signal_connect (power->priv->upower, "device-added", G_CALLBACK (xfpm_power_device_added_cb), power);
-  g_signal_connect (power->priv->upower, "device-removed", G_CALLBACK (xfpm_power_device_removed_cb), power);
-  g_signal_connect (power->priv->upower, "notify", G_CALLBACK (xfpm_power_changed_cb), power);
+  if (power->priv->upower != NULL)
+  {
+    g_signal_connect (power->priv->upower, "device-added", G_CALLBACK (xfpm_power_device_added_cb), power);
+    g_signal_connect (power->priv->upower, "device-removed", G_CALLBACK (xfpm_power_device_removed_cb), power);
+    g_signal_connect (power->priv->upower, "notify", G_CALLBACK (xfpm_power_changed_cb), power);
+    xfpm_power_get_power_devices (power);
+  }
 
-  xfpm_power_get_power_devices (power);
   xfpm_power_get_properties (power);
 
 out:
@@ -1138,6 +1143,8 @@ xfpm_power_finalize (GObject *object)
   g_object_unref (power->priv->notify);
   g_object_unref (power->priv->conf);
   g_object_unref (power->priv->screensaver);
+  if (power->priv->upower != NULL)
+    g_object_unref (power->priv->upower);
 
   if ( power->priv->systemd != NULL )
     g_object_unref (power->priv->systemd);

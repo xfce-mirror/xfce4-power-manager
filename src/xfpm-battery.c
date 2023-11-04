@@ -441,6 +441,8 @@ xfpm_battery_finalize (GObject *object)
   g_object_unref (battery->priv->conf);
   g_object_unref (battery->priv->notify);
   g_object_unref (battery->priv->button);
+  if (battery->priv->client != NULL)
+    g_object_unref (battery->priv->client);
 
   G_OBJECT_CLASS (xfpm_battery_parent_class)->finalize (object);
 }
@@ -512,7 +514,12 @@ xfpm_battery_get_time_left (XfpmBattery *battery)
 const gchar*
 xfpm_battery_get_icon_name (XfpmBattery *battery)
 {
+  const gchar *icon_name = NULL;
+
   g_return_val_if_fail (XFPM_IS_BATTERY (battery), NULL);
 
-  return get_device_icon_name (battery->priv->client, battery->priv->device, TRUE);
+  if (battery->priv->client != NULL)
+    icon_name = get_device_icon_name (battery->priv->client, battery->priv->device, TRUE);
+
+  return icon_name;
 }
