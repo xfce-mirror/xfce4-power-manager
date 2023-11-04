@@ -36,6 +36,7 @@
 #include "xfpm-button.h"
 #include "xfpm-notify.h"
 #include "xfpm-power.h"
+#include "xfpm-debug.h"
 
 static void xfpm_kbd_backlight_finalize     (GObject *object);
 
@@ -99,7 +100,7 @@ xfpm_kbd_backlight_init_max_level (XfpmKbdBacklight *backlight)
 
   if ( error )
   {
-    g_warning ("Failed to get keyboard max brightness level : %s", error->message);
+    XFPM_DEBUG ("Failed to get keyboard max brightness level : %s", error->message);
     g_error_free (error);
   }
 }
