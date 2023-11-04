@@ -367,7 +367,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   }
   else
   {
-    gboolean ret, handle_keys;
+    gboolean handle_keys;
 
     backlight->priv->idle   = egg_idletime_new ();
     backlight->priv->conf   = xfpm_xfconf_new ();
@@ -381,14 +381,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
                             XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH, G_TYPE_INT,
                             G_OBJECT (backlight), BRIGHTNESS_SWITCH);
 
-    ret = xfpm_brightness_get_switch (backlight->priv->brightness,
-                      &backlight->priv->brightness_switch);
-
-    if (ret)
-      g_object_set (G_OBJECT (backlight),
-                    BRIGHTNESS_SWITCH,
-                    backlight->priv->brightness_switch,
-                    NULL);
+    xfpm_brightness_get_switch (backlight->priv->brightness, &backlight->priv->brightness_switch);
     backlight->priv->brightness_switch_initialized = TRUE;
 
     /*
