@@ -1,5 +1,5 @@
 noinst_LTLIBRARIES =        \
-        libxfpmcommon.la
+	libxfpmcommon.la
 
 libxfpmcommon_la_SOURCES =  \
 	$(BUILT_SOURCES)        \
@@ -23,7 +23,6 @@ libxfpmcommon_la_CFLAGS =           \
 	$(GTK_CFLAGS)                   \
 	$(GLIB_CFLAGS)                  \
 	$(LIBXFCE4UTIL_CFLAGS)          \
-	$(DBUS_GLIB_CFLAGS)             \
 	$(UPOWER_CFLAGS)
 
 libxfpmcommon_la_LIBADD =           \
@@ -32,11 +31,11 @@ libxfpmcommon_la_LIBADD =           \
 	$(GLIB_LIBS)                    \
 	$(XRANDR_LIBS)                  \
 	$(LIBX11_LIBS)                     \
-	$(DBUS_GLIB_LIBS)               \
+	$(LIBXFCE4UTIL_LIBS)          \
 	$(UPOWER_LIBS)
 
 xfpm_glib_headers =                \
-        $(srcdir)/xfpm-enum-glib.h
+	$(srcdir)/xfpm-enum-glib.h
 
 BUILT_SOURCES =       \
 	xfpm-enum-types.c \
