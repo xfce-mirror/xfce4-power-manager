@@ -37,13 +37,12 @@
 #include <string.h>
 #endif
 
+#ifdef ENABLE_X11
 #include <X11/X.h>
 #include <X11/XF86keysym.h>
-
 #include <gdk/gdkx.h>
+#endif
 #include <gtk/gtk.h>
-
-#include <glib.h>
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -54,11 +53,13 @@
 
 static void xfpm_button_finalize   (GObject *object);
 
+#ifdef ENABLE_X11
 static struct
 {
   XfpmButtonKey    key;
   guint            key_code;
 } xfpm_key_map [NUMBER_OF_BUTTONS] = { {0, 0}, };
+#endif
 
 struct XfpmButtonPrivate
 {
@@ -78,6 +79,8 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmButton, xfpm_button, G_TYPE_OBJECT)
+
+#ifdef ENABLE_X11
 
 static guint
 xfpm_button_get_key (unsigned int keycode)
@@ -225,6 +228,8 @@ xfpm_button_setup (XfpmButton *button)
   gdk_window_add_filter (button->priv->window, xfpm_button_filter_x_events, button);
 }
 
+#endif /* ENABLE_X11 */
+
 static void
 xfpm_button_class_init(XfpmButtonClass *klass)
 {
@@ -251,7 +256,10 @@ xfpm_button_init (XfpmButton *button)
   button->priv->screen = NULL;
   button->priv->window = NULL;
 
-  xfpm_button_setup (button);
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    xfpm_button_setup (button);
+#endif
 }
 
 static void
