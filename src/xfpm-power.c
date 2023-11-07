@@ -422,9 +422,12 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
       gtk_widget_destroy (dialog);
 
       if ( !ret || ret == GTK_RESPONSE_NO)
+      {
+        g_object_unref (brightness);
         return;
       }
     }
+  }
 
     /* This is fun, here's the order of operations:
      * - if the Logind is running then use it
@@ -480,6 +483,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   xfpm_power_get_properties (power);
     /* Restore the brightness level from before we suspended */
   xfpm_brightness_set_level (brightness, brightness_level);
+  g_object_unref (brightness);
 
 #ifdef WITH_NETWORK_MANAGER
   if ( network_manager_sleep )
