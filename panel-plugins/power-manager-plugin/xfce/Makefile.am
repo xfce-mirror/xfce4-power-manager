@@ -25,6 +25,7 @@ libxfce4powermanager_la_CFLAGS =         \
 	-I$(top_srcdir)/src             \
 	-DLOCALEDIR=\"$(localedir)\"    \
 	-DXFCE_PLUGIN                   \
+	-UXFPM_SYSTRAY                  \
 	$(LIBXFCE4PANEL_CFLAGS)         \
 	$(LIBXFCE4UTIL_CFLAGS)          \
 	$(LIBXFCE4UI_CFLAGS)            \
@@ -33,7 +34,6 @@ libxfce4powermanager_la_CFLAGS =         \
 	$(GLIB_CFLAGS)                  \
 	$(PLATFORM_CPPFLAGS)            \
 	$(PLATFORM_CFLAGS)              \
-	$(DBUS_GLIB_CFLAGS)             \
 	$(UPOWER_CFLAGS)
 
 libxfce4powermanager_la_LDFLAGS = \
@@ -51,7 +51,6 @@ libxfce4powermanager_la_LIBADD =                     \
 	$(XFCONF_LIBS)                          \
 	$(GTK_LIBS)                             \
 	$(GLIB_LIBS)                            \
-	$(DBUS_GLIB_LIBS)                       \
 	$(UPOWER_LIBS)
 
 #
