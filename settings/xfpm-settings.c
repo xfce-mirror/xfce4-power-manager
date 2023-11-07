@@ -2416,7 +2416,6 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
   GtkWidget *plugged_box;
   GtkWidget *viewport;
   GtkWidget *hbox;
-  GtkWidget *frame;
   GtkWidget *switch_widget;
   GtkWidget *stack;
   GtkStyleContext *context;
@@ -2582,16 +2581,34 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
 
   if ( !has_lcd_brightness )
   {
-    frame = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-frame"));
-    gtk_widget_hide (frame);
-    frame = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys"));
-    gtk_widget_hide (frame);
-    frame = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys-label"));
-    gtk_widget_hide (frame);
-    frame = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-step-count"));
-    gtk_widget_hide (frame);
-    frame = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-exponential"));
-    gtk_widget_hide (frame);
+    GtkWidget *widget = GTK_WIDGET (gtk_builder_get_object (xml, "label4"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-label"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-label"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-vbox"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-vbox"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "label6"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-label1"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-label1"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-vbox1"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-vbox1"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys-label"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "hbox4"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-step-count-label"));
+    gtk_widget_hide (widget);
   }
 
   if ( id != 0 )
