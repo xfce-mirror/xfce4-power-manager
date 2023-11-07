@@ -58,9 +58,7 @@
 #include "xfpm-enum-types.h"
 #include "egg-idletime.h"
 #include "xfpm-suspend.h"
-#ifdef ENABLE_X11
 #include "xfpm-brightness.h"
-#endif
 
 static void xfpm_power_finalize     (GObject *object);
 
@@ -253,10 +251,8 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 {
   GError *error = NULL;
   gboolean lock_screen;
-#ifdef ENABLE_X11
   XfpmBrightness *brightness;
   gint32 brightness_level = 0;
-#endif
 
   if ( power->priv->inhibited && force == FALSE)
   {
@@ -278,12 +274,10 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   }
 
   g_signal_emit (G_OBJECT (power), signals [SLEEPING], 0);
-#ifdef ENABLE_X11
     /* Get the current brightness level so we can use it after we suspend */
   brightness = xfpm_brightness_new();
   if (brightness != NULL)
     xfpm_brightness_get_level (brightness, &brightness_level);
-#endif
 
   g_object_get (G_OBJECT (power->priv->conf),
                 LOCK_SCREEN_ON_SLEEP, &lock_screen,
@@ -310,10 +304,8 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 
       if ( !ret || ret == GTK_RESPONSE_NO)
       {
-#ifdef ENABLE_X11
         if (brightness != NULL)
           g_object_unref (brightness);
-#endif
         return;
       }
     }
@@ -380,14 +372,12 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   g_signal_emit (G_OBJECT (power), signals [WAKING_UP], 0);
     /* Check/update any changes while we slept */
   xfpm_power_get_properties (power);
-#ifdef ENABLE_X11
     /* Restore the brightness level from before we suspended */
   if (brightness != NULL)
   {
     xfpm_brightness_set_level (brightness, brightness_level);
     g_object_unref (brightness);
   }
-#endif
 }
 
 static void

@@ -37,9 +37,7 @@
 #include "common/xfpm-config.h"
 #include "common/xfpm-icons.h"
 #include "common/xfpm-power-common.h"
-#ifdef ENABLE_X11
 #include "common/xfpm-brightness.h"
-#endif
 #include "common/xfpm-debug.h"
 #ifdef XFPM_SYSTRAY
 #include "src/xfpm-inhibit.h"
@@ -88,7 +86,6 @@ struct PowerManagerButtonPrivate
    * panel image and tooltip description */
   UpDevice        *display_device;
 
-#ifdef ENABLE_X11
   XfpmBrightness  *brightness;
 
   /* display brightness slider widget */
@@ -104,7 +101,6 @@ struct PowerManagerButtonPrivate
 
   /* filter range value changed events for snappier UI feedback */
   guint            set_level_timeout;
-#endif
 
   gint             show_panel_label;
   gboolean         presentation_mode;
@@ -164,10 +160,8 @@ static gboolean   power_manager_button_press_event                      (GtkWidg
 static gboolean   power_manager_button_menu_add_device                  (PowerManagerButton *button,
                                                                          BatteryDevice *battery_device,
                                                                          gboolean append);
-#ifdef ENABLE_X11
 static void       increase_brightness                                   (PowerManagerButton *button);
 static void       decrease_brightness                                   (PowerManagerButton *button);
-#endif
 static void       battery_device_remove_surface                         (BatteryDevice *battery_device);
 
 
@@ -767,7 +761,6 @@ power_manager_button_remove_all_devices (PowerManagerButton *button)
   }
 }
 
-#ifdef ENABLE_X11
 static gboolean
 power_manager_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
 {
@@ -816,7 +809,6 @@ set_brightness_min_level (PowerManagerButton *button, gint32 new_brightness_leve
     gtk_range_set_range (GTK_RANGE (button->priv->range), button->priv->brightness_min_level, max_level);
   }
 }
-#endif
 
 static void
 power_manager_button_set_property (GObject *object,
@@ -831,10 +823,8 @@ power_manager_button_set_property (GObject *object,
   switch (property_id)
   {
     case PROP_BRIGHTNESS_MIN_LEVEL:
-#ifdef ENABLE_X11
       if (button->priv->brightness != NULL)
         set_brightness_min_level (button, g_value_get_int (value));
-#endif
       break;
 #ifdef XFCE_PLUGIN
     case PROP_SHOW_PANEL_LABEL:
@@ -876,9 +866,7 @@ power_manager_button_get_property(GObject *object,
   switch(property_id)
   {
     case PROP_BRIGHTNESS_MIN_LEVEL:
-#ifdef ENABLE_X11
       g_value_set_int (value, button->priv->brightness_min_level);
-#endif
       break;
 #ifdef XFCE_PLUGIN
     case PROP_SHOW_PANEL_LABEL:
@@ -913,9 +901,7 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
   object_class->get_property = power_manager_button_get_property;
 
   widget_class->button_press_event = power_manager_button_press_event;
-#ifdef ENABLE_X11
   widget_class->scroll_event = power_manager_button_scroll_event;
-#endif
 
   __signals[SIG_TOOLTIP_CHANGED] = g_signal_new ("tooltip-changed",
                                                  POWER_MANAGER_TYPE_BUTTON,
@@ -1002,10 +988,8 @@ power_manager_button_init (PowerManagerButton *button)
   gtk_widget_set_focus_on_click (GTK_WIDGET (button), FALSE);
   gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
-#ifdef ENABLE_X11
   button->priv->brightness = xfpm_brightness_new ();
   button->priv->set_level_timeout = 0;
-#endif
 
   button->priv->upower  = up_client_new ();
   if ( !xfconf_init (&error) )
@@ -1076,7 +1060,6 @@ power_manager_button_finalize (GObject *object)
   g_free (button->priv->panel_icon_name);
   g_free (button->priv->panel_fallback_icon_name);
 
-#ifdef ENABLE_X11
   if (button->priv->brightness != NULL)
     g_object_unref (button->priv->brightness);
   if (button->priv->set_level_timeout)
@@ -1084,7 +1067,6 @@ power_manager_button_finalize (GObject *object)
     g_source_remove(button->priv->set_level_timeout);
     button->priv->set_level_timeout = 0;
   }
-#endif
 
   if (button->priv->upower != NULL)
   {
@@ -1354,10 +1336,8 @@ menu_destroyed_cb(GtkMenuShell *menu, gpointer user_data)
 
   TRACE("entering");
 
-#ifdef ENABLE_X11
   /* menu destroyed, range slider is gone */
   button->priv->range = NULL;
-#endif
 
   /* untoggle panel icon */
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(button), FALSE);
@@ -1573,7 +1553,6 @@ display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
 }
 #endif
 
-#ifdef ENABLE_X11
 static void
 decrease_brightness (PowerManagerButton *button)
 {
@@ -1659,7 +1638,6 @@ range_show_cb (GtkWidget *widget, PowerManagerButton *button)
 
   gtk_grab_remove (widget);
 }
-#endif /* ENABLE_X11 */
 
 #ifdef XFCE_PLUGIN
 static void
@@ -1718,7 +1696,6 @@ power_manager_button_show_menu (PowerManagerButton *button)
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
   }
 
-#ifdef ENABLE_X11
   /* Display brightness slider - show if there's hardware support for it */
   if (button->priv->brightness != NULL)
   {
@@ -1766,7 +1743,6 @@ G_GNUC_END_IGNORE_DEPRECATIONS
     gtk_widget_show_all (mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menu), mi);
   }
-#endif
 
   /* Presentation mode checkbox */
 #ifdef XFCE_PLUGIN
