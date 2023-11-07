@@ -54,7 +54,6 @@ xfce4_power_manager_CFLAGS =                    \
 	$(GIO_UNIX_CFLAGS)                      \
 	$(GOBJECT_CFLAGS)                       \
 	$(GTHREAD_CFLAGS)                       \
-	$(DBUS_GLIB_CFLAGS)                     \
 	$(LIBXFCE4UI_CFLAGS)                    \
 	$(LIBXFCE4UTIL_CFLAGS)                    \
 	$(XFCONF_CFLAGS)                        \
@@ -76,7 +75,6 @@ xfce4_power_manager_LDADD =                     \
 	$(GIO_UNIX_LIBS)                        \
 	$(GOBJECT_LIBS)                         \
 	$(GTHREAD_LIBS)                         \
-	$(DBUS_GLIB_LIBS)                       \
 	$(LIBXFCE4UI_LIBS)                      \
 	$(LIBXFCE4UTIL_LIBS)                      \
 	$(XFCONF_LIBS)                          \
@@ -98,7 +96,7 @@ xfpm_power_backlight_helper_LDADD =             \
 	-lm
 
 xfpm_power_backlight_helper_CFLAGS =            \
-        $(GLIB_CFLAGS)                          \
+	$(GLIB_CFLAGS)                          \
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
 
