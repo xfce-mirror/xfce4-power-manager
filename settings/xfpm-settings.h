@@ -21,7 +21,9 @@
 #ifndef __XFPM_SETTINGS_H
 #define __XFPM_SETTINGS_H
 
+#ifdef ENABLE_X11
 #include <gtk/gtkx.h>
+#endif
 #include <xfconf/xfconf.h>
 
 GtkWidget *xfpm_settings_dialog_new   (XfconfChannel *channel,
@@ -37,7 +39,9 @@ GtkWidget *xfpm_settings_dialog_new   (XfconfChannel *channel,
                                        gboolean has_hibernate_button,
                                        gboolean has_power_button,
                                        gboolean has_battery_button,
+#ifdef ENABLE_X11
                                        Window id,
+#endif
                                        gchar *device_id,
                                        GtkApplication *gtk_app);
 void     xfpm_settings_show_device_id (gchar *device_id);
