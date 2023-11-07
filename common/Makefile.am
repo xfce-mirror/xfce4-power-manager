@@ -5,6 +5,8 @@ libxfpmcommon_la_SOURCES =  \
 	$(BUILT_SOURCES)        \
 	xfpm-common.c           \
 	xfpm-common.h           \
+	xfpm-brightness.c       \
+	xfpm-brightness.h       \
 	xfpm-debug.c            \
 	xfpm-debug.h            \
 	xfpm-icons.h            \
@@ -32,8 +34,8 @@ libxfpmcommon_la_LIBADD =           \
 
 if ENABLE_X11
 libxfpmcommon_la_SOURCES += \
-	xfpm-brightness.c \
-	xfpm-brightness.h
+	xfpm-brightness-x11.c \
+	xfpm-brightness-x11.h
 
 libxfpmcommon_la_CFLAGS += \
 	$(LIBX11_CFLAGS) \
@@ -42,6 +44,18 @@ libxfpmcommon_la_CFLAGS += \
 libxfpmcommon_la_LIBADD += \
 	$(LIBX11_LIBS) \
 	$(XRANDR_LIBS)
+endif
+
+if HAVE_POLKIT
+libxfpmcommon_la_SOURCES += \
+	xfpm-brightness-polkit.c \
+	xfpm-brightness-polkit.h
+
+libxfpmcommon_la_CFLAGS += \
+	$(POLKIT_CFLAGS)
+
+libxfpmcommon_la_LIBADD += \
+	$(POLKIT_LIBS)
 endif
 
 xfpm_glib_headers =                \
