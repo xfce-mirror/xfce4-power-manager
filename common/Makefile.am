@@ -5,8 +5,6 @@ libxfpmcommon_la_SOURCES =  \
 	$(BUILT_SOURCES)        \
 	xfpm-common.c           \
 	xfpm-common.h           \
-	xfpm-brightness.c       \
-	xfpm-brightness.h       \
 	xfpm-debug.c            \
 	xfpm-debug.h            \
 	xfpm-icons.h            \
@@ -29,10 +27,22 @@ libxfpmcommon_la_LIBADD =           \
 	-lm                             \
 	$(GTK_LIBS)                     \
 	$(GLIB_LIBS)                    \
-	$(XRANDR_LIBS)                  \
-	$(LIBX11_LIBS)                     \
 	$(LIBXFCE4UTIL_LIBS)          \
 	$(UPOWER_LIBS)
+
+if ENABLE_X11
+libxfpmcommon_la_SOURCES += \
+	xfpm-brightness.c \
+	xfpm-brightness.h
+
+libxfpmcommon_la_CFLAGS += \
+	$(LIBX11_CFLAGS) \
+	$(XRANDR_CFLAGS)
+
+libxfpmcommon_la_LIBADD += \
+	$(LIBX11_LIBS) \
+	$(XRANDR_LIBS)
+endif
 
 xfpm_glib_headers =                \
 	$(srcdir)/xfpm-enum-glib.h
