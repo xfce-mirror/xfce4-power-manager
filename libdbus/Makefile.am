@@ -11,13 +11,11 @@ libxfpmdbus_la_SOURCES =		\
 	
 libxfpmdbus_la_CFLAGS =			\
 	$(GLIB_CFLAGS)			\
-	$(LIBXFCE4UTIL_CFLAGS)		\
-	$(DBUS_GLIB_CFLAGS)
+	$(LIBXFCE4UTIL_CFLAGS)
 
 libxfpmdbus_la_LIBADD =			\
 	$(GLIB_LIBS)			\
-	$(DBUS_GLIB_LIBS)		\
-	$(DBUS_LIBS)
+	$(LIBXFCE4UTIL_LIBS)
 
 if MAINTAINER_MODE
 

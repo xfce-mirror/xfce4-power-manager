@@ -27,8 +27,6 @@ xfce4_power_manager_settings_CFLAGS =				\
 	$(GIO_UNIX_CFLAGS)						\
 	$(GTHREAD_CFLAGS)					\
 	$(GMODULE_CFLAGS)					\
-	$(DBUS_CFLAGS)						\
-	$(DBUS_GLIB_CFLAGS)					\
 	$(LIBXFCE4UI_CFLAGS)					\
 	$(LIBXFCE4UTIL_CFLAGS)					\
 	$(XFCONF_CFLAGS)					\
@@ -45,8 +43,6 @@ xfce4_power_manager_settings_LDADD   =				\
 	$(GIO_UNIX_LIBS)						\
 	$(GTHREAD_LIBS)						\
 	$(GMODULE_LIBS)						\
-	$(DBUS_LIBS)						\
-	$(DBUS_GLIB_LIBS)					\
 	$(LIBXFCE4UI_LIBS)					\
 	$(LIBXFCE4UTIL_LIBS)					\
 	$(XFCONF_LIBS)						\
