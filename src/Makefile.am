@@ -11,14 +11,10 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-battery.h				\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
-	egg-idletime.c				\
-	egg-idletime.h				\
 	xfpm-backlight.c			\
 	xfpm-backlight.h			\
 	xfpm-kbd-backlight.c			\
 	xfpm-kbd-backlight.h			\
-	xfpm-dpms.c				\
-	xfpm-dpms.h				\
 	xfpm-button.c				\
 	xfpm-button.h				\
 	xfpm-inhibit.c				\
@@ -59,8 +55,6 @@ xfce4_power_manager_CFLAGS =                    \
 	$(XFCONF_CFLAGS)                        \
 	$(LIBNOTIFY_CFLAGS)                     \
 	$(UPOWER_CFLAGS)                        \
-	$(XRANDR_CFLAGS)			\
-	$(DPMS_CFLAGS)           		\
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
 
@@ -79,9 +73,25 @@ xfce4_power_manager_LDADD =                     \
 	$(LIBXFCE4UTIL_LIBS)                      \
 	$(XFCONF_LIBS)                          \
 	$(LIBNOTIFY_LIBS)                       \
-	$(UPOWER_LIBS)                          \
-	$(XRANDR_LIBS)				\
-	$(DPMS_LIBS)
+	$(UPOWER_LIBS)
+
+if ENABLE_X11
+xfce4_power_manager_SOURCES += \
+	egg-idletime.c \
+	egg-idletime.h \
+	xfpm-dpms.c \
+	xfpm-dpms.h
+
+xfce4_power_manager_CFLAGS += \
+	$(LIBX11_CFLAGS) \
+	$(XRANDR_CFLAGS) \
+	$(LIBXEXT_CFLAGS)
+
+xfce4_power_manager_LDADD += \
+	$(LIBX11_LIBS) \
+	$(XRANDR_LIBS) \
+	$(LIBXEXT_LIBS)
+endif
 
 if HAVE_POLKIT
 
