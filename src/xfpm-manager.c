@@ -188,7 +188,8 @@ xfpm_manager_finalize (GObject *object)
 
   g_object_unref (manager->priv->dpms);
 
-  g_object_unref (manager->priv->backlight);
+  if (manager->priv->backlight != NULL)
+    g_object_unref (manager->priv->backlight);
 
   g_object_unref (manager->priv->kbd_backlight);
 
@@ -961,7 +962,7 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
   gboolean has_power_button = FALSE;
   gboolean has_battery_button = FALSE;
   gboolean has_battery = TRUE;
-  gboolean has_lcd_brightness = TRUE;
+  gboolean has_lcd_brightness = manager->priv->backlight != NULL;
   gboolean can_shutdown = TRUE;
   gboolean auth_shutdown = TRUE;
   gboolean has_lid = FALSE;
@@ -986,8 +987,6 @@ GHashTable *xfpm_manager_get_config (XfpmManager *manager)
                 NULL);
 
   has_battery = xfpm_power_has_battery (manager->priv->power);
-  has_lcd_brightness = xfpm_backlight_has_hw (manager->priv->backlight);
-
   mapped_buttons = xfpm_button_get_mapped (manager->priv->button);
 
   if ( mapped_buttons & SLEEP_KEY )
