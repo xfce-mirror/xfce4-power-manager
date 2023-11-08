@@ -475,15 +475,7 @@ xfpm_brightness_finalize (GObject *object)
   G_OBJECT_CLASS (xfpm_brightness_parent_class)->finalize (object);
 }
 
-XfpmBrightness *
-xfpm_brightness_new (void)
-{
-  XfpmBrightness *brightness = NULL;
-  brightness = g_object_new (XFPM_TYPE_BRIGHTNESS, NULL);
-  return brightness;
-}
-
-gboolean
+static gboolean
 xfpm_brightness_setup (XfpmBrightness *brightness)
 {
   xfpm_brightness_free_data (brightness);
@@ -520,9 +512,17 @@ xfpm_brightness_setup (XfpmBrightness *brightness)
   return FALSE;
 }
 
-gboolean xfpm_brightness_has_hw (XfpmBrightness *brightness)
+XfpmBrightness *
+xfpm_brightness_new (void)
 {
-  return brightness->priv->xrandr_has_hw || brightness->priv->helper_has_hw;
+  XfpmBrightness *brightness = g_object_new (XFPM_TYPE_BRIGHTNESS, NULL);
+  if (!xfpm_brightness_setup (brightness))
+  {
+    g_object_unref (brightness);
+    return NULL;
+  }
+
+  return brightness;
 }
 
 gint32 xfpm_brightness_get_max_level (XfpmBrightness *brightness)
@@ -561,37 +561,17 @@ gboolean xfpm_brightness_set_level (XfpmBrightness *brightness, gint32 level)
   return ret;
 }
 
-gboolean xfpm_brightness_set_step_count (XfpmBrightness *brightness, guint32 count, gboolean exponential)
+void xfpm_brightness_set_step_count (XfpmBrightness *brightness, guint32 count, gboolean exponential)
 {
-  gboolean ret = FALSE;
+  guint32 delta;
 
-  if ( xfpm_brightness_has_hw (brightness) ) {
-    guint32 delta;
+  if (count < 2)
+    count = 2;
 
-    if ( count < 2 )
-      count = 2;
-    delta = brightness->priv->max_level - brightness->priv->min_level;
-    brightness->priv->use_exp_step = exponential;
-    brightness->priv->step = (delta < (count * 2)) ? 1 : (delta / count);
-    brightness->priv->exp_step = powf (delta, 1.0 / count);
-    ret = TRUE;
-  }
-
-  return ret;
-}
-
-gboolean xfpm_brightness_dim_down (XfpmBrightness *brightness)
-{
-  gboolean ret = FALSE;
-
-  if (brightness->priv->xrandr_has_hw )
-    ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, brightness->priv->min_level);
-#ifdef ENABLE_POLKIT
-  else if ( brightness->priv->helper_has_hw )
-    ret = xfpm_brightness_helper_set_level (brightness, brightness->priv->min_level);
-#endif
-
-  return ret;
+  delta = brightness->priv->max_level - brightness->priv->min_level;
+  brightness->priv->use_exp_step = exponential;
+  brightness->priv->step = (delta < (count * 2)) ? 1 : (delta / count);
+  brightness->priv->exp_step = powf (delta, 1.0 / count);
 }
 
 gboolean xfpm_brightness_get_switch (XfpmBrightness *brightness, gint *brightness_switch)
