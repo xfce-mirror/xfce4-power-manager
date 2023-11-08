@@ -46,17 +46,14 @@ typedef struct
 
 GType             xfpm_brightness_get_type        (void) G_GNUC_CONST;
 XfpmBrightness   *xfpm_brightness_new             (void);
-gboolean          xfpm_brightness_setup           (XfpmBrightness *brightness);
-gboolean          xfpm_brightness_has_hw          (XfpmBrightness *brightness);
 gint32            xfpm_brightness_get_max_level   (XfpmBrightness *brightness);
 gboolean          xfpm_brightness_get_level       (XfpmBrightness *brightness,
                                                    gint32         *level);
 gboolean          xfpm_brightness_set_level       (XfpmBrightness *brightness,
                                                    gint32          level);
-gboolean          xfpm_brightness_set_step_count  (XfpmBrightness *brightness,
+void              xfpm_brightness_set_step_count  (XfpmBrightness *brightness,
                                                    guint32         count,
                                                    gboolean        exponential);
-gboolean          xfpm_brightness_dim_down        (XfpmBrightness *brightness);
 gboolean          xfpm_brightness_get_switch      (XfpmBrightness *brightness,
                                                    gint           *brightness_switch);
 gboolean          xfpm_brightness_set_switch      (XfpmBrightness *brightness,

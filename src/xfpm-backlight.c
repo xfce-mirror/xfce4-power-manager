@@ -74,7 +74,6 @@ struct XfpmBacklightPrivate
 
   NotifyNotification *n;
 
-  gboolean      has_hw;
   gboolean      on_battery;
 
   gint32          last_level;
@@ -374,7 +373,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv = xfpm_backlight_get_instance_private (backlight);
 
   backlight->priv->brightness = xfpm_brightness_new ();
-  backlight->priv->has_hw     = xfpm_brightness_setup (backlight->priv->brightness);
 
   backlight->priv->notify = NULL;
   backlight->priv->idle   = NULL;
@@ -387,12 +385,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv->brightness_exponential = FALSE;
   backlight->priv->brightness_switch_initialized = FALSE;
 
-  if ( !backlight->priv->has_hw )
-  {
-    g_object_unref (backlight->priv->brightness);
-    backlight->priv->brightness = NULL;
-  }
-  else
+  if (backlight->priv->brightness != NULL)
   {
     gboolean handle_keys;
 
@@ -590,12 +583,12 @@ xfpm_backlight_finalize (GObject *object)
 XfpmBacklight *
 xfpm_backlight_new (void)
 {
-  XfpmBacklight *backlight = NULL;
-  backlight = g_object_new (XFPM_TYPE_BACKLIGHT, NULL);
-  return backlight;
-}
+  XfpmBacklight *backlight = g_object_new (XFPM_TYPE_BACKLIGHT, NULL);
+  if (backlight->priv->brightness == NULL)
+  {
+    g_object_unref (backlight);
+    return NULL;
+  }
 
-gboolean xfpm_backlight_has_hw (XfpmBacklight *backlight)
-{
-  return backlight->priv->has_hw;
+  return backlight;
 }
