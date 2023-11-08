@@ -44,7 +44,6 @@ typedef struct
 
 GType              xfpm_backlight_get_type         (void) G_GNUC_CONST;
 XfpmBacklight     *xfpm_backlight_new              (void);
-gboolean           xfpm_backlight_has_hw           (XfpmBacklight *backlight);
 
 G_END_DECLS
 

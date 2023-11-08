@@ -247,7 +247,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   GError *error = NULL;
   gboolean lock_screen;
   XfpmBrightness *brightness;
-  gint32 brightness_level;
+  gint32 brightness_level = 0;
 
   if ( power->priv->inhibited && force == FALSE)
   {
@@ -271,8 +271,8 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   g_signal_emit (G_OBJECT (power), signals [SLEEPING], 0);
     /* Get the current brightness level so we can use it after we suspend */
   brightness = xfpm_brightness_new();
-  xfpm_brightness_setup (brightness);
-  xfpm_brightness_get_level (brightness, &brightness_level);
+  if (brightness != NULL)
+    xfpm_brightness_get_level (brightness, &brightness_level);
 
   g_object_get (G_OBJECT (power->priv->conf),
                 LOCK_SCREEN_ON_SLEEP, &lock_screen,
@@ -299,7 +299,8 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 
       if ( !ret || ret == GTK_RESPONSE_NO)
       {
-        g_object_unref (brightness);
+        if (brightness != NULL)
+          g_object_unref (brightness);
         return;
       }
     }
@@ -367,8 +368,11 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     /* Check/update any changes while we slept */
   xfpm_power_get_properties (power);
     /* Restore the brightness level from before we suspended */
-  xfpm_brightness_set_level (brightness, brightness_level);
-  g_object_unref (brightness);
+  if (brightness != NULL)
+  {
+    xfpm_brightness_set_level (brightness, brightness_level);
+    g_object_unref (brightness);
+  }
 }
 
 static void
