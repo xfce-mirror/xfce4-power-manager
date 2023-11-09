@@ -380,7 +380,7 @@ xfpm_brightness_helper_set_level (XfpmBrightness *brg, gint32 level)
 
   XFPM_DEBUG ("Executing command: %s", command);
   if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
-      || g_spawn_check_wait_status (status, &error))
+      || !g_spawn_check_wait_status (status, &error))
   {
     g_warning ("Failed to set value: %s", error->message);
     g_error_free (error);
