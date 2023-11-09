@@ -11,6 +11,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-battery.h				\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
+	xfpm-idle.c				\
+	xfpm-idle.h				\
 	xfpm-backlight.c			\
 	xfpm-backlight.h			\
 	xfpm-kbd-backlight.c			\
@@ -77,8 +79,8 @@ xfce4_power_manager_LDADD =                     \
 
 if ENABLE_X11
 xfce4_power_manager_SOURCES += \
-	egg-idletime.c \
-	egg-idletime.h \
+	xfpm-idle-x11.c \
+	xfpm-idle-x11.h \
 	xfpm-dpms.c \
 	xfpm-dpms.h
 
