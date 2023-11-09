@@ -566,8 +566,8 @@ xfpm_backlight_finalize (GObject *object)
       XFPM_DEBUG ("Restored brightness switch value to: %d", backlight->priv->brightness_switch);
     }
     else
-      g_warning ("Unable to restore the kernel brightness switch parameter to its original value, "
-                 "still resetting the saved value.");
+      XFPM_DEBUG ("Unable to restore the kernel brightness switch parameter to its original value, "
+                  "still resetting the saved value.");
     }
     g_object_unref (backlight->priv->conf);
   }

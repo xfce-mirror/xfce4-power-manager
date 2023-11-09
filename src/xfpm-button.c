@@ -172,10 +172,7 @@ xfpm_button_xevent_key (XfpmButton *button, guint keysym , XfpmButtonKey key)
   }
 
   if ( !xfpm_button_grab_keystring(button, keycode))
-  {
-    g_warning ("Failed to grab %i\n", keycode);
     return FALSE;
-  }
 
   XFPM_DEBUG_ENUM (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key %li ", (long int) keycode);
 
