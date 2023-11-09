@@ -59,17 +59,18 @@ AM_GNU_GETTEXT_VERSION([0.19.8])
 #=====================================================#
 m4_define([gtk_minimum_version], [3.24.0])
 m4_define([glib_minimum_version], [2.70.0])
-
 m4_define([xfconf_minimum_version], [4.12.0])
 m4_define([libxfce4ui_minimum_version],[4.18.4])
 m4_define([libxfce4util_minimum_version],[4.19.2])
-m4_define([libxfce4panel_minimum_version],[4.12.0])
-
 m4_define([libnotify_minimum_version], [0.4.1])
 m4_define([upower_minimum_version], [0.99.0])
-m4_define([xrandr_minimum_version], [1.2.0])
+
 m4_define([x11_minimum_version], [1.6.7])
+m4_define([xrandr_minimum_version], [1.2.0])
+m4_define([xext_minimum_version], [1.0.0])
+
 m4_define([polkit_minimum_version], [0.102])
+m4_define([libxfce4panel_minimum_version],[4.12.0])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
@@ -83,34 +84,47 @@ XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2],[libxfce4ui_minimum_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_version])
 XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
 XDT_CHECK_PACKAGE([UPOWER],[upower-glib], [upower_minimum_version])
-XDT_CHECK_PACKAGE([XRANDR],[xrandr], [xrandr_minimum_version])
-XDT_CHECK_PACKAGE([LIBX11], [x11], [x11_minimum_version])
 
 XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
+
+#==================================================== #
+#          Check for optional packages 		      #
+#=====================================================#
+XDT_CHECK_OPTIONAL_FEATURE([X11],
+                           [x11],
+                           [
+                             XDT_FEATURE_DEPENDENCY([GDK_X11], [gdk-x11-3.0], [gtk_minimum_version])
+                             XDT_FEATURE_DEPENDENCY([LIBX11], [x11], [x11_minimum_version])
+                             XDT_FEATURE_DEPENDENCY([XRANDR], [xrandr], [xrandr_minimum_version])
+                             XDT_FEATURE_DEPENDENCY([LIBXEXT], [xext], [xext_minimum_version])
+                           ],
+                           [the X11 windowing system])
+XDT_CHECK_OPTIONAL_FEATURE([WAYLAND],
+                           [wayland],
+                           [
+                             XDT_FEATURE_DEPENDENCY([GDK_WAYLAND], [gdk-wayland-3.0], [gtk_minimum_version])
+                           ],
+                           [the Wayland windowing system])
+if test x"$ENABLE_X11" != x"yes" -a x"$ENABLE_WAYLAND" != x"yes"; then
+  AC_MSG_ERROR([Either both X11 and Wayland support was disabled, or required dependencies are missing. One of the two must be enabled.])
+fi
+
+if test x"$ENABLE_X11" = x"yes"; then
+  AC_CHECK_DECL(XF86XK_Suspend, have_XF86XK_Suspend=1, have_XF86XK_Suspend=0, [#include <X11/XF86keysym.h>])
+  if test x"${ac_cv_have_decl_XF86XK_Suspend}" = x"yes"; then
+    AC_DEFINE(HAVE_XF86XK_SUSPEND, 1, [Define if XF86XK_Suspend is available])
+  fi
+  AC_CHECK_DECL(XF86XK_Hibernate, have_XF86XK_Hibernate=1, have_XF86XK_Hibernate=0, [#include <X11/XF86keysym.h>])
+  if test x"${ac_cv_have_decl_XF86XK_Hibernate}" = x"yes"; then
+    AC_DEFINE(HAVE_XF86XK_HIBERNATE, 1, [Define if XF86XK_Hibernate is available])
+  fi
+fi
+
 
 #=======================================================#
 #              Polkit?			                #
 #=======================================================#
 XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [polkit_minimum_version], [polkit], [Polkit support])
-
-#=======================================================#
-#           Check for DPMS support                      #
-#=======================================================#
-AC_CHECK_LIB([Xext], [DPMSQueryExtension], [DPMS_LIBS=" -lXext -lX11"],[], [$LIBX11_CFLAGS $LIBX11_LDFLAGS $LIBX11_LIBS])
-AC_SUBST([DPMS_LIBS])
-
-#=======================================================#
-#      Check for XF86_XK_Suspend && Hibernate           #
-#=======================================================#
-
-AC_CHECK_DECL(XF86XK_Suspend,have_XF86XK_Suspend=1,have_XF86XK_Suspend=0,[#include <X11/XF86keysym.h>])
-if test "x${ac_cv_have_decl_XF86XK_Suspend}" != "xno"; then
-  AC_DEFINE(HAVE_XF86XK_SUSPEND, 1, [Define if XF86XK_Suspend is available])
-fi
-AC_CHECK_DECL(XF86XK_Hibernate,have_XF86XK_Hibernate=1,have_XF86XK_Hibernate=0,[#include <X11/XF86keysym.h>])
-if test "x${ac_cv_have_decl_XF86XK_Hibernate}" != "xno"; then
-  AC_DEFINE(HAVE_XF86XK_HIBERNATE, 1, [Define if XF86XK_Hibernate is available])
-fi
 
 #=======================================================#
 #                 Panel plugins ?                       #
@@ -214,15 +228,15 @@ po/Makefile.in
 ])
 AC_OUTPUT
 
-echo "prefix:			${prefix}"
-echo "xdg autostart:		${sysconfdir}/xdg/autostart"
-echo "POLKIT:			${POLKIT_FOUND:-no}"
-echo "Build panel plugins:	${build_panel_plugins}"
-if test "x$build_panel_plugins" = "xyes"; then
-    if test "x$LIBXFCE4PANEL_FOUND" = "xyes"; then
-        echo " Xfce plugins:          yes"
-    fi
+echo "prefix:               ${prefix}"
+echo "xdg autostart:        ${sysconfdir}/xdg/autostart"
+echo "X11 Support:          ${ENABLE_X11:-no}"
+echo "Wayland Support:      ${ENABLE_WAYLAND:-no}"
+echo "POLKIT:               ${POLKIT_FOUND:-no}"
+echo "Build panel plugins:  ${build_panel_plugins}"
+if test x"$build_panel_plugins" = x"yes"; then
+echo "  Xfce plugins:       ${LIBXFCE4PANEL_FOUND:-no}"
 fi
-echo "Backend:		${with_backend}"
-echo "Debug:			${enable_debug}"
-echo "Configuration finished, type make to compile"
+echo "Backend:              ${with_backend}"
+echo "Debug:                ${enable_debug}"
+echo

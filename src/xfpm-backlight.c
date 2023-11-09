@@ -38,7 +38,9 @@
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-backlight.h"
+#ifdef ENABLE_X11
 #include "egg-idletime.h"
+#endif
 #include "xfpm-notify.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-power.h"
@@ -67,14 +69,15 @@ struct XfpmBacklightPrivate
 {
   XfpmBrightness *brightness;
   XfpmPower      *power;
+#ifdef ENABLE_X11
   EggIdletime    *idle;
+#endif
   XfpmXfconf     *conf;
   XfpmButton     *button;
   XfpmNotify     *notify;
 
   NotifyNotification *n;
 
-  gboolean      has_hw;
   gboolean      on_battery;
 
   gint32          last_level;
@@ -102,6 +105,7 @@ enum
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmBacklight, xfpm_backlight, G_TYPE_OBJECT)
 
 
+#ifdef ENABLE_X11
 static void
 xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 {
@@ -136,6 +140,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
     }
   }
 }
+#endif
 
 static gboolean
 xfpm_backlight_destroy_popup (gpointer data)
@@ -197,6 +202,7 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 }
 
 
+#ifdef ENABLE_X11
 static void
 xfpm_backlight_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmBacklight *backlight)
 {
@@ -221,6 +227,7 @@ xfpm_backlight_reset_cb (EggIdletime *idle, XfpmBacklight *backlight)
     backlight->priv->dimmed = FALSE;
   }
 }
+#endif
 
 /**
  * This callback is responsible for two functionalities in response to a user
@@ -295,6 +302,7 @@ xfpm_backlight_brightness_on_ac_settings_changed (XfpmBacklight *backlight)
 
   XFPM_DEBUG ("Alarm on ac timeout changed %u", timeout_on_ac);
 
+#ifdef ENABLE_X11
   if ( timeout_on_ac == ALARM_DISABLED )
   {
     egg_idletime_alarm_remove (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC );
@@ -303,6 +311,7 @@ xfpm_backlight_brightness_on_ac_settings_changed (XfpmBacklight *backlight)
   {
     egg_idletime_alarm_set (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC, timeout_on_ac * 1000);
   }
+#endif
 }
 
 static void
@@ -316,6 +325,7 @@ xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
 
   XFPM_DEBUG ("Alarm on battery timeout changed %u", timeout_on_battery);
 
+#ifdef ENABLE_X11
   if ( timeout_on_battery == ALARM_DISABLED )
   {
     egg_idletime_alarm_remove (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY );
@@ -324,6 +334,7 @@ xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
   {
     egg_idletime_alarm_set (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY, timeout_on_battery * 1000);
   }
+#endif
 }
 
 
@@ -374,10 +385,11 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv = xfpm_backlight_get_instance_private (backlight);
 
   backlight->priv->brightness = xfpm_brightness_new ();
-  backlight->priv->has_hw     = xfpm_brightness_setup (backlight->priv->brightness);
 
   backlight->priv->notify = NULL;
+#ifdef ENABLE_X11
   backlight->priv->idle   = NULL;
+#endif
   backlight->priv->conf   = NULL;
   backlight->priv->button = NULL;
   backlight->priv->power    = NULL;
@@ -387,16 +399,13 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv->brightness_exponential = FALSE;
   backlight->priv->brightness_switch_initialized = FALSE;
 
-  if ( !backlight->priv->has_hw )
-  {
-    g_object_unref (backlight->priv->brightness);
-    backlight->priv->brightness = NULL;
-  }
-  else
+  if (backlight->priv->brightness != NULL)
   {
     gboolean handle_keys;
 
+#ifdef ENABLE_X11
     backlight->priv->idle   = egg_idletime_new ();
+#endif
     backlight->priv->conf   = xfpm_xfconf_new ();
     backlight->priv->button = xfpm_button_new ();
     backlight->priv->power    = xfpm_power_get ();
@@ -448,10 +457,12 @@ xfpm_backlight_init (XfpmBacklight *backlight)
             backlight->priv->brightness_switch,
             NULL);
 
+#ifdef ENABLE_X11
     g_signal_connect (backlight->priv->idle, "alarm-expired",
                       G_CALLBACK (xfpm_backlight_alarm_timeout_cb), backlight);
     g_signal_connect (backlight->priv->idle, "reset",
                       G_CALLBACK(xfpm_backlight_reset_cb), backlight);
+#endif
     g_signal_connect (backlight->priv->button, "button-pressed",
                       G_CALLBACK (xfpm_backlight_button_pressed_cb), backlight);
     g_signal_connect_swapped (backlight->priv->conf, "notify::" BRIGHTNESS_ON_AC,
@@ -544,8 +555,10 @@ xfpm_backlight_finalize (GObject *object)
 
   xfpm_backlight_destroy_popup (backlight);
 
+#ifdef ENABLE_X11
   if ( backlight->priv->idle )
     g_object_unref (backlight->priv->idle);
+#endif
 
   if ( backlight->priv->conf )
   {
@@ -590,12 +603,12 @@ xfpm_backlight_finalize (GObject *object)
 XfpmBacklight *
 xfpm_backlight_new (void)
 {
-  XfpmBacklight *backlight = NULL;
-  backlight = g_object_new (XFPM_TYPE_BACKLIGHT, NULL);
-  return backlight;
-}
+  XfpmBacklight *backlight = g_object_new (XFPM_TYPE_BACKLIGHT, NULL);
+  if (backlight->priv->brightness == NULL)
+  {
+    g_object_unref (backlight);
+    return NULL;
+  }
 
-gboolean xfpm_backlight_has_hw (XfpmBacklight *backlight)
-{
-  return backlight->priv->has_hw;
+  return backlight;
 }

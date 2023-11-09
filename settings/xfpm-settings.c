@@ -27,8 +27,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef ENABLE_X11
+#include <gdk/gdkx.h>
+#define WINDOWING_IS_X11() GDK_IS_X11_DISPLAY (gdk_display_get_default ())
+#else
+#define WINDOWING_IS_X11() FALSE
+#endif
 #include <gtk/gtk.h>
-#include <glib.h>
 #include <cairo-gobject.h>
 #include <upower.h>
 
@@ -2482,11 +2487,13 @@ static void dialog_response_cb (GtkDialog *dialog, gint response, XfconfChannel 
   }
 }
 
+#ifdef ENABLE_X11
 static void
 delete_event_cb (GtkWidget *plug, GdkEvent *ev, XfconfChannel *channel)
 {
   settings_quit (plug, channel);
 }
+#endif
 
 GtkWidget *
 xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
@@ -2495,13 +2502,14 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
                           gboolean has_battery, gboolean has_lcd_brightness,
                           gboolean has_lid, gboolean has_sleep_button,
                           gboolean has_hibernate_button, gboolean has_power_button,
-                          gboolean has_battery_button,  Window id, gchar *device_id,
+                          gboolean has_battery_button,
+#ifdef ENABLE_X11
+                          Window id,
+#endif
+                          gchar *device_id,
                           GtkApplication *gtk_app)
 {
-  GtkWidget *plug;
-  GtkWidget *parent;
   GtkWidget *dialog;
-  GtkWidget *plugged_box;
   GtkWidget *viewport;
   GtkWidget *hbox;
   GtkWidget *switch_widget;
@@ -2689,13 +2697,22 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_hide (widget);
   }
 
-  if ( id != 0 )
+  if (!WINDOWING_IS_X11 ())
   {
-    plugged_box = GTK_WIDGET (gtk_builder_get_object (xml, "plug-child"));
-    plug = gtk_plug_new (id);
-    gtk_widget_show (plug);
+    GtkWidget *widget = GTK_WIDGET (gtk_builder_get_object (xml, "buttons-frame"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "hbox21"));
+    gtk_widget_hide (widget);
+  }
 
-    parent = gtk_widget_get_parent (plugged_box);
+#ifdef ENABLE_X11
+  if (id != 0 && WINDOWING_IS_X11 ())
+  {
+    GtkWidget *plugged_box = GTK_WIDGET (gtk_builder_get_object (xml, "plug-child"));
+    GtkWidget *parent = gtk_widget_get_parent (plugged_box);
+    GtkWidget *plug = gtk_plug_new (id);
+
+    gtk_widget_show (plug);
     if (parent)
     {
       g_object_ref (plugged_box);
@@ -2709,6 +2726,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     gdk_notify_startup_complete ();
   }
   else
+#endif
   {
     g_signal_connect (dialog, "response", G_CALLBACK (dialog_response_cb), channel);
     gtk_widget_show (dialog);
