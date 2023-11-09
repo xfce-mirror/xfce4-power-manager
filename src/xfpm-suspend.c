@@ -109,32 +109,27 @@ freebsd_supports_sleep_state (const gchar *state)
 static gboolean
 linux_supports_sleep_state (const gchar *state)
 {
-  gboolean ret = FALSE;
   gchar *command;
   GError *error = NULL;
-  gint exit_status;
+  gint status;
 
   XFPM_DEBUG("entering");
 
   /* run script from pm-utils */
   command = g_strdup_printf ("/usr/bin/pm-is-supported --%s", state);
-  XFPM_DEBUG ("executing command: %s", command);
-  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
+  XFPM_DEBUG ("Executing command: %s", command);
 
-  if (!ret) {
-    if (error)
-    {
-      g_warning ("failed to run script: %s", error->message);
-      g_error_free (error);
-    }
-    goto out;
+  if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
+      || g_spawn_check_exit_status (status, &error))
+  {
+    g_warning ("Failed to run script: %s", error->message);
+    g_error_free (error);
+    g_free (command);
+    return FALSE;
   }
-  ret = (WIFEXITED(exit_status) && (WEXITSTATUS(exit_status) == EXIT_SUCCESS));
 
-out:
   g_free (command);
-
-  return ret;
+  return TRUE;
 }
 #endif
 
@@ -177,9 +172,8 @@ gboolean
 xfpm_suspend_try_action (XfpmActionType type)
 {
   const gchar *action;
-  gboolean ret;
   GError *error = NULL;
-  gint exit_status = 0;
+  gint status;
   gchar *command = NULL;
 
   TRACE("entering");
@@ -192,22 +186,17 @@ xfpm_suspend_try_action (XfpmActionType type)
     return FALSE;
 
   command = g_strdup_printf ("pkexec " SBINDIR "/xfce4-pm-helper --%s", action);
-  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
+  XFPM_DEBUG ("Executing command: %s", command);
 
-  if ( !ret )
+  if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
+      || !g_spawn_check_exit_status (status, &error))
   {
-    if (error)
-    {
-      g_warning ("xfce4-pm-helper: failed to suspend/hibernate: %s", error->message);
-      g_error_free (error);
-    }
-  }
-  else
-  {
-    XFPM_DEBUG ("executed %s; retval: %i", command, exit_status);
-    ret = (exit_status == 0);
+    g_warning ("Failed to suspend/hibernate: %s", error->message);
+    g_error_free (error);
+    g_free (command);
+    return FALSE;
   }
 
   g_free (command);
-  return ret;
+  return TRUE;
 }
