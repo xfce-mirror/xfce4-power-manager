@@ -308,7 +308,7 @@ xfpm_brightness_helper_get_value (const gchar *argument)
     g_warning ("Failed to get value: %s", error->message);
     g_error_free (error);
     g_free (command);
-    return FALSE;
+    return value;
   }
 
 #if !defined(BACKEND_TYPE_FREEBSD)
@@ -389,7 +389,7 @@ xfpm_brightness_helper_set_level (XfpmBrightness *brg, gint32 level)
   }
 
   g_free (command);
-  return FALSE;
+  return TRUE;
 }
 
 static gboolean
