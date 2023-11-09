@@ -426,28 +426,21 @@ xfpm_brightness_helper_get_switch (XfpmBrightness *brg, gint *brightness_switch)
 static gboolean
 xfpm_brightness_helper_set_switch (XfpmBrightness *brg, gint brightness_switch)
 {
-  gboolean ret;
   GError *error = NULL;
-  gint exit_status = 0;
-  gchar *command = NULL;
+  gint status;
+  gchar *command = g_strdup_printf ("pkexec " SBINDIR "/xfpm-power-backlight-helper --set-brightness-switch %i", brightness_switch);
 
-  command = g_strdup_printf ("pkexec " SBINDIR "/xfpm-power-backlight-helper --set-brightness-switch %i", brightness_switch);
-  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
-  if ( !ret )
+  if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
+      || !g_spawn_check_wait_status (status, &error))
   {
-    if (error)
-    {
-      g_warning ("xfpm_brightness_helper_set_switch: failed to set value: %s", error->message);
-      g_error_free (error);
-    }
-    goto out;
+    g_warning ("Failed to set brightness switch value: %s", error->message);
+    g_error_free (error);
+    g_free (command);
+    return FALSE;
   }
-  XFPM_DEBUG ("executed %s; retval: %i", command, exit_status);
-  ret = (exit_status == 0);
 
-out:
   g_free (command);
-  return ret;
+  return TRUE;
 }
 
 #endif
