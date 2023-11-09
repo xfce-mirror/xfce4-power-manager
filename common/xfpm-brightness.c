@@ -295,29 +295,21 @@ xfpm_brightness_setup_xrandr (XfpmBrightness *brightness)
 static gint
 xfpm_brightness_helper_get_value (const gchar *argument)
 {
-  gboolean ret;
   GError *error = NULL;
   gchar *stdout_data = NULL;
-  gint exit_status = 0;
+  gint status;
   gint value = -1;
-  gchar *command = NULL;
+  gchar *command = g_strdup_printf (SBINDIR "/xfpm-power-backlight-helper --%s", argument);
 
-  command = g_strdup_printf (SBINDIR "/xfpm-power-backlight-helper --%s", argument);
-  ret = g_spawn_command_line_sync (command,
-                                   &stdout_data, NULL, &exit_status, &error);
-  if ( !ret )
+  XFPM_DEBUG ("Executing command: %s", command);
+  if (!g_spawn_command_line_sync (command, &stdout_data, NULL, &status, &error)
+      || !g_spawn_check_wait_status (status, &error))
   {
-    if (error)
-    {
-      g_warning ("failed to get value: %s", error->message);
-      g_error_free (error);
-    }
-    goto out;
+    g_warning ("Failed to get value: %s", error->message);
+    g_error_free (error);
+    g_free (command);
+    return FALSE;
   }
-  XFPM_DEBUG ("executed %s; retval: %i", command, exit_status);
-
-  if ( exit_status != 0 )
-    goto out;
 
 #if !defined(BACKEND_TYPE_FREEBSD)
   if ( stdout_data[0] == 'N' )
@@ -330,7 +322,6 @@ xfpm_brightness_helper_get_value (const gchar *argument)
   value = atoi (stdout_data);
 #endif
 
-out:
   g_free (command);
   g_free (stdout_data);
   return value;
@@ -383,28 +374,22 @@ xfpm_brightness_helper_get_level (XfpmBrightness *brg, gint32 *level)
 static gboolean
 xfpm_brightness_helper_set_level (XfpmBrightness *brg, gint32 level)
 {
-  gboolean ret;
   GError *error = NULL;
-  gint exit_status = 0;
-  gchar *command = NULL;
+  gint status;
+  gchar *command = g_strdup_printf ("pkexec " SBINDIR "/xfpm-power-backlight-helper --set-brightness %i", level);
 
-  command = g_strdup_printf ("pkexec " SBINDIR "/xfpm-power-backlight-helper --set-brightness %i", level);
-  ret = g_spawn_command_line_sync (command, NULL, NULL, &exit_status, &error);
-  if ( !ret )
+  XFPM_DEBUG ("Executing command: %s", command);
+  if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
+      || g_spawn_check_wait_status (status, &error))
   {
-    if (error)
-    {
-      g_warning ("xfpm_brightness_helper_set_level: failed to set value: %s", error->message);
-      g_error_free (error);
-    }
-    goto out;
+    g_warning ("Failed to set value: %s", error->message);
+    g_error_free (error);
+    g_free (command);
+    return FALSE;
   }
-  XFPM_DEBUG ("executed %s; retval: %i", command, exit_status);
-  ret = (exit_status == 0);
 
-out:
   g_free (command);
-  return ret;
+  return FALSE;
 }
 
 static gboolean
@@ -430,6 +415,7 @@ xfpm_brightness_helper_set_switch (XfpmBrightness *brg, gint brightness_switch)
   gint status;
   gchar *command = g_strdup_printf ("pkexec " SBINDIR "/xfpm-power-backlight-helper --set-brightness-switch %i", brightness_switch);
 
+  XFPM_DEBUG ("Executing command: %s", command);
   if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
       || !g_spawn_check_wait_status (status, &error))
   {
