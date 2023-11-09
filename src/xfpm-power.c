@@ -56,9 +56,7 @@
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
 #include "xfpm-enum-types.h"
-#ifdef ENABLE_X11
-#include "egg-idletime.h"
-#endif
+#include "xfpm-idle.h"
 #include "xfpm-suspend.h"
 #include "xfpm-brightness.h"
 
@@ -1308,9 +1306,7 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
   }
   else
   {
-#ifdef ENABLE_X11
-    EggIdletime *idletime;
-#endif
+    XfpmIdle *idle;
 
     /* make sure we remove the screensaver inhibit */
     if (power->priv->screensaver_inhibited && !power->priv->inhibited)
@@ -1319,13 +1315,10 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
       power->priv->screensaver_inhibited = FALSE;
     }
 
-#ifdef ENABLE_X11
     /* reset the timers */
-    idletime = egg_idletime_new ();
-    egg_idletime_alarm_reset_all (idletime);
-
-    g_object_unref (idletime);
-#endif
+    idle = xfpm_idle_new ();
+    xfpm_idle_alarm_reset_all (idle);
+    g_object_unref (idle);
   }
 
   XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
