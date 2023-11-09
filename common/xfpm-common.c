@@ -120,7 +120,7 @@ xfpm_about (gpointer data)
        "program-name", package,
        "translator-credits", _("translator-credits"),
        "version", PACKAGE_VERSION,
-       "website", "http://docs.xfce.org/xfce/xfce4-power-manager/1.4/start",
+       "website", "https://docs.xfce.org/xfce/xfce4-power-manager/start",
        "logo-icon-name", "org.xfce.powermanager",
        NULL);
 }
