@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-30 00:48+0200\n"
+"POT-Creation-Date: 2023-11-09 12:47+0100\n"
 "PO-Revision-Date: 2023-02-20 11:54+0000\n"
 "Last-Translator: Dabid Martinez <dabid@laborategia.eus>, 2023\n"
 "Language-Team: Basque (https://app.transifex.com/xfce/teams/16840/eu/)\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:649
 #: ../settings/xfpm-settings.c:664 ../settings/xfpm-settings.c:691
-#: ../settings/xfpm-settings.c:1659
+#: ../settings/xfpm-settings.c:1671
 msgid "Never"
 msgstr "Inoiz"
 
@@ -44,10 +44,10 @@ msgstr "Ezer ez"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:357 ../src/xfpm-power.c:633 ../src/xfpm-power.c:675
-#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:166
+#: ../src/xfpm-power.c:341 ../src/xfpm-power.c:619 ../src/xfpm-power.c:661
+#: ../src/xfpm-power.c:824 ../src/xfpm-power.c:845 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
-#: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-kbd-backlight.c:119 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Energia kudeatzailea"
 
@@ -227,7 +227,7 @@ msgstr "Minutu bat"
 
 #: ../settings/xfpm-settings.c:654 ../settings/xfpm-settings.c:666
 #: ../settings/xfpm-settings.c:677 ../settings/xfpm-settings.c:681
-#: ../settings/xfpm-settings.c:1668
+#: ../settings/xfpm-settings.c:1680
 msgid "minutes"
 msgstr "minutu"
 
@@ -245,163 +245,172 @@ msgstr "minutu bat"
 msgid "hours"
 msgstr "ordu"
 
-#: ../settings/xfpm-settings.c:693 ../settings/xfpm-settings.c:1661
+#: ../settings/xfpm-settings.c:693 ../settings/xfpm-settings.c:1673
 msgid "seconds"
 msgstr "segundo"
 
-#: ../settings/xfpm-settings.c:902 ../settings/xfpm-settings.c:981
-#: ../settings/xfpm-settings.c:1043 ../settings/xfpm-settings.c:1139
-#: ../settings/xfpm-settings.c:1231 ../settings/xfpm-settings.c:1350
-#: ../settings/xfpm-settings.c:1408 ../settings/xfpm-settings.c:1460
-#: ../settings/xfpm-settings.c:1511 ../src/xfpm-power.c:700
+#: ../settings/xfpm-settings.c:914 ../settings/xfpm-settings.c:993
+#: ../settings/xfpm-settings.c:1055 ../settings/xfpm-settings.c:1151
+#: ../settings/xfpm-settings.c:1243 ../settings/xfpm-settings.c:1362
+#: ../settings/xfpm-settings.c:1420 ../settings/xfpm-settings.c:1472
+#: ../settings/xfpm-settings.c:1523 ../src/xfpm-power.c:686
 msgid "Suspend"
 msgstr "Eseki"
 
-#: ../settings/xfpm-settings.c:906 ../settings/xfpm-settings.c:1143
+#: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1155
 msgid "Suspend operation not permitted"
 msgstr "Eseki ekintza ez dago baimendurik"
 
-#: ../settings/xfpm-settings.c:910 ../settings/xfpm-settings.c:1147
+#: ../settings/xfpm-settings.c:922 ../settings/xfpm-settings.c:1159
 msgid "Suspend operation not supported"
 msgstr "Eseki ekintza ez dago baimendurik"
 
-#: ../settings/xfpm-settings.c:916 ../settings/xfpm-settings.c:987
-#: ../settings/xfpm-settings.c:1049 ../settings/xfpm-settings.c:1153
-#: ../settings/xfpm-settings.c:1237 ../settings/xfpm-settings.c:1356
-#: ../settings/xfpm-settings.c:1414 ../settings/xfpm-settings.c:1466
-#: ../settings/xfpm-settings.c:1517 ../src/xfpm-power.c:689
+#: ../settings/xfpm-settings.c:928 ../settings/xfpm-settings.c:999
+#: ../settings/xfpm-settings.c:1061 ../settings/xfpm-settings.c:1165
+#: ../settings/xfpm-settings.c:1249 ../settings/xfpm-settings.c:1368
+#: ../settings/xfpm-settings.c:1426 ../settings/xfpm-settings.c:1478
+#: ../settings/xfpm-settings.c:1529 ../src/xfpm-power.c:675
 msgid "Hibernate"
 msgstr "Hibernatu"
 
-#: ../settings/xfpm-settings.c:920 ../settings/xfpm-settings.c:1157
+#: ../settings/xfpm-settings.c:932 ../settings/xfpm-settings.c:1169
 msgid "Hibernate operation not permitted"
 msgstr "Hibernatze ekintza ez dago baimendurik"
 
-#: ../settings/xfpm-settings.c:924 ../settings/xfpm-settings.c:1161
+#: ../settings/xfpm-settings.c:936 ../settings/xfpm-settings.c:1173
 msgid "Hibernate operation not supported"
 msgstr "Hibernatze ekintza ez dago baimendurik"
 
-#: ../settings/xfpm-settings.c:954 ../settings/xfpm-settings.c:1191
-#: ../settings/xfpm-settings.c:1617 ../settings/xfpm-settings.c:1744
+#: ../settings/xfpm-settings.c:966 ../settings/xfpm-settings.c:1203
+#: ../settings/xfpm-settings.c:1629 ../settings/xfpm-settings.c:1756
 msgid "Hibernate and suspend operations not supported"
 msgstr "Hibernatu eta eseki ekintzak ez daude baimendurik"
 
-#: ../settings/xfpm-settings.c:959 ../settings/xfpm-settings.c:1196
-#: ../settings/xfpm-settings.c:1622 ../settings/xfpm-settings.c:1749
+#: ../settings/xfpm-settings.c:971 ../settings/xfpm-settings.c:1208
+#: ../settings/xfpm-settings.c:1634 ../settings/xfpm-settings.c:1761
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Hibernatu eta eseki ekintzak ez daude baimendurik"
 
-#: ../settings/xfpm-settings.c:976 ../settings/xfpm-settings.c:1345
-#: ../settings/xfpm-settings.c:1403 ../settings/xfpm-settings.c:1455
-#: ../settings/xfpm-settings.c:1506
+#: ../settings/xfpm-settings.c:988 ../settings/xfpm-settings.c:1357
+#: ../settings/xfpm-settings.c:1415 ../settings/xfpm-settings.c:1467
+#: ../settings/xfpm-settings.c:1518
 msgid "Do nothing"
 msgstr "Ez egin ezer"
 
-#: ../settings/xfpm-settings.c:993 ../settings/xfpm-settings.c:1362
-#: ../src/xfpm-power.c:711
+#: ../settings/xfpm-settings.c:1005 ../settings/xfpm-settings.c:1374
+#: ../src/xfpm-power.c:697
 msgid "Shutdown"
 msgstr "Itzali"
 
-#: ../settings/xfpm-settings.c:997 ../settings/xfpm-settings.c:1366
-#: ../settings/xfpm-settings.c:1418 ../settings/xfpm-settings.c:1470
-#: ../settings/xfpm-settings.c:1521
+#: ../settings/xfpm-settings.c:1009 ../settings/xfpm-settings.c:1378
+#: ../settings/xfpm-settings.c:1430 ../settings/xfpm-settings.c:1482
+#: ../settings/xfpm-settings.c:1533
 msgid "Ask"
 msgstr "Galdetu"
 
-#: ../settings/xfpm-settings.c:1038 ../settings/xfpm-settings.c:1226
+#: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1238
 msgid "Switch off display"
 msgstr "Itzali pantaila"
 
-#: ../settings/xfpm-settings.c:1053 ../settings/xfpm-settings.c:1241
+#: ../settings/xfpm-settings.c:1065 ../settings/xfpm-settings.c:1253
 msgid "Lock screen"
 msgstr "Blokeatu pantaila"
 
-#: ../settings/xfpm-settings.c:1550
+#: ../settings/xfpm-settings.c:1562
 msgid "Number of brightness steps available using keys"
 msgstr "Distira pausu erabilgarriak teklak erabiliz"
 
-#: ../settings/xfpm-settings.c:1590
+#: ../settings/xfpm-settings.c:1602
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Ordenagailu honen energia jatorri guztiek maila hau izatean"
 
-#: ../settings/xfpm-settings.c:1666 ../common/xfpm-power-common.c:166
+#: ../settings/xfpm-settings.c:1678 ../common/xfpm-power-common.c:166
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minutu"
 msgstr[1] "minutu"
 
-#: ../settings/xfpm-settings.c:2033
+#: ../settings/xfpm-settings.c:2048
 msgid "Device"
 msgstr "Gailua"
 
-#: ../settings/xfpm-settings.c:2055
+#: ../settings/xfpm-settings.c:2071
 msgid "Type"
 msgstr "Mota"
 
-#: ../settings/xfpm-settings.c:2060
+#: ../settings/xfpm-settings.c:2076
 msgid "PowerSupply"
 msgstr "EnergiHornitzea"
 
-#: ../settings/xfpm-settings.c:2061 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2077 ../src/xfpm-main.c:77
 msgid "True"
 msgstr "Zuzena"
 
-#: ../settings/xfpm-settings.c:2061 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2077 ../src/xfpm-main.c:77
 msgid "False"
 msgstr "Okerra"
 
-#: ../settings/xfpm-settings.c:2068
+#: ../settings/xfpm-settings.c:2084
 msgid "Model"
 msgstr "Modeloa"
 
-#: ../settings/xfpm-settings.c:2071
+#: ../settings/xfpm-settings.c:2087
 msgid "Technology"
 msgstr "Teknologia"
 
-#: ../settings/xfpm-settings.c:2078
+#: ../settings/xfpm-settings.c:2094
 msgid "Current charge"
 msgstr "Uneko karga"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:2086 ../settings/xfpm-settings.c:2098
-#: ../settings/xfpm-settings.c:2110
+#: ../settings/xfpm-settings.c:2102 ../settings/xfpm-settings.c:2114
+#: ../settings/xfpm-settings.c:2126
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:2088
+#: ../settings/xfpm-settings.c:2104
 msgid "Fully charged (design)"
 msgstr "Gustiz kargatuta (diseinua)"
 
-#: ../settings/xfpm-settings.c:2101
+#: ../settings/xfpm-settings.c:2117
 msgid "Fully charged"
 msgstr "Guztiz kargaturik"
 
-#: ../settings/xfpm-settings.c:2112
+#: ../settings/xfpm-settings.c:2128
 msgid "Energy empty"
 msgstr "Energia hutsik"
 
+#. TRANSLATORS: Unit here is Watt
+#: ../settings/xfpm-settings.c:2136
+msgid "W"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:2138
+msgid "Energy rate"
+msgstr ""
+
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:2120
+#: ../settings/xfpm-settings.c:2146
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:2122
+#: ../settings/xfpm-settings.c:2148
 msgid "Voltage"
 msgstr "Tensioa"
 
-#: ../settings/xfpm-settings.c:2129
+#: ../settings/xfpm-settings.c:2155
 msgid "Vendor"
 msgstr "Saltzailea"
 
-#: ../settings/xfpm-settings.c:2134
+#: ../settings/xfpm-settings.c:2160
 msgid "Serial"
 msgstr "Seriekoa"
 
-#: ../settings/xfpm-settings.c:2413
+#: ../settings/xfpm-settings.c:2443
 msgid "Check your power manager installation"
 msgstr "Arakatu zure energia kudeaketa instalazioa"
 
-#: ../settings/xfpm-settings.c:2506
+#: ../settings/xfpm-settings.c:2536
 msgid "Devices"
 msgstr "Gailuak"
 
@@ -476,7 +485,7 @@ msgstr ""
 "hartu;hibernatu;bateria;eseki;itzali;distira;ordenagailu eramangarriaren "
 "tapa; blokeo pantaila; konektatuta; gordetzen;kritikoa;"
 
-#: ../common/xfpm-common.c:120
+#: ../common/xfpm-common.c:121
 msgid "translator-credits"
 msgstr "Piarres Beobide"
 
@@ -629,19 +638,19 @@ msgstr ""
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Waiting to discharge (%0.0f%%)"
+"Waiting to charge (%0.0f%%)"
 msgstr ""
 "<b>%s %s</b>\n"
-"Deskargatzeko itxaroten (%0.0f%%)"
+"Kargatzeko itxaroten (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Waiting to charge (%0.0f%%)"
+"Waiting to discharge (%0.0f%%)"
 msgstr ""
 "<b>%s %s</b>\n"
-"Kargatzeko itxaroten (%0.0f%%)"
+"Deskargatzeko itxaroten (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:400
 #, c-format
@@ -693,7 +702,7 @@ msgstr ""
 "<b>%s %s</b>\n"
 "Egoera ezezaguna"
 
-#: ../src/xfpm-power.c:383
+#: ../src/xfpm-power.c:367
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
@@ -701,7 +710,7 @@ msgstr ""
 "Aplikazio batek lokartze automatikoa desgaiturik du, ekintza hau aurrera eramatean aplikazio horren funtzionamendu egoera kaltetu dezake.\n"
 "Ziur zaude sistema hibernatu nahi duzula?"
 
-#: ../src/xfpm-power.c:432
+#: ../src/xfpm-power.c:416
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
@@ -709,32 +718,32 @@ msgstr ""
 "Pantaila blokeatzeko tresnek ez dute behar bezala funtzionatu, pantaila ez da blokeatuko.\n"
 "Sistema esekitzen jarraitu nahi duzu?"
 
-#: ../src/xfpm-power.c:597
+#: ../src/xfpm-power.c:583
 msgid "Hibernate the system"
 msgstr "Hibernatu sistema"
 
-#: ../src/xfpm-power.c:608
+#: ../src/xfpm-power.c:594
 msgid "Suspend the system"
 msgstr "Eseki sistema"
 
-#: ../src/xfpm-power.c:617
+#: ../src/xfpm-power.c:603
 msgid "Shutdown the system"
 msgstr "Itzali sistema"
 
-#: ../src/xfpm-power.c:628 ../src/xfpm-power.c:672
+#: ../src/xfpm-power.c:614 ../src/xfpm-power.c:658
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
 "Zure bateria nahiko hutsik dago. Gorde zure lana datu galerak saihesteko"
 
-#: ../src/xfpm-power.c:718
+#: ../src/xfpm-power.c:704
 msgid "_Cancel"
 msgstr "_Utzi"
 
-#: ../src/xfpm-power.c:839
+#: ../src/xfpm-power.c:825
 msgid "System is running on low power"
 msgstr "Sistema karga baxuan funtzionatzen ari da"
 
-#: ../src/xfpm-power.c:855
+#: ../src/xfpm-power.c:841
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
@@ -743,12 +752,12 @@ msgstr ""
 "Zure %s maila baxua da\n"
 "%s denbora geratzen dela estimatu da"
 
-#: ../src/xfpm-power.c:1648 ../src/xfpm-power.c:1696 ../src/xfpm-power.c:1728
-#: ../src/xfpm-power.c:1758
+#: ../src/xfpm-power.c:1634 ../src/xfpm-power.c:1682 ../src/xfpm-power.c:1714
+#: ../src/xfpm-power.c:1744
 msgid "Permission denied"
 msgstr "Baimena ukatua"
 
-#: ../src/xfpm-power.c:1737 ../src/xfpm-power.c:1767
+#: ../src/xfpm-power.c:1723 ../src/xfpm-power.c:1753
 msgid "Suspend not supported"
 msgstr "Eskegitzea ez da onartze"
 
@@ -802,7 +811,7 @@ msgid "Your %s is empty"
 msgstr "Zure %s hutsik dago"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-kbd-backlight.c:116
+#: ../src/xfpm-kbd-backlight.c:117
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Teklatuaren distira: %.0f ehuneko"
@@ -976,29 +985,24 @@ msgstr "Konektatutako gailuen bateria-mailak erakutsi"
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1455
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1483
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s une honetan energiaren kudeaketa inhibitzen du"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1750
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1778
 msgid "<b>Display brightness</b>"
 msgstr "<b>Pantailaren distira</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1777
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1788
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1805
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1816
 msgid "Presentation _mode"
 msgstr "Aurkezpen _modua"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1801
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1829
 msgid "_Settings..."
 msgstr "_Ezarpenak..."
-
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "Ezin da url hau ireki: %s"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
