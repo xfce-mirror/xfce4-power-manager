@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2023-08-22 00:47+0200\n"
+"POT-Creation-Date: 2023-11-09 12:47+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Wallon Wallon, 2023\n"
 "Language-Team: French (http://app.transifex.com/xfce/xfce4-power-manager/language/fr/)\n"
@@ -51,10 +51,10 @@ msgstr "Rien"
 
 #: data/interfaces/xfpm-settings.ui:238
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:236
-#: src/xfpm-power.c:493 src/xfpm-power.c:522 src/xfpm-power.c:696
-#: src/xfpm-power.c:717 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
-#: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:118
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:238
+#: src/xfpm-power.c:499 src/xfpm-power.c:528 src/xfpm-power.c:702
+#: src/xfpm-power.c:723 src/xfpm-backlight.c:167 src/xfpm-backlight.c:175
+#: src/xfpm-battery.c:190 src/xfpm-kbd-backlight.c:119
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
 msgstr "Gestionnaire d’alimentation"
@@ -262,7 +262,7 @@ msgstr "secondes"
 #: settings/xfpm-settings.c:1043 settings/xfpm-settings.c:1191
 #: settings/xfpm-settings.c:1283 settings/xfpm-settings.c:1450
 #: settings/xfpm-settings.c:1508 settings/xfpm-settings.c:1560
-#: settings/xfpm-settings.c:1611 src/xfpm-power.c:549
+#: settings/xfpm-settings.c:1611 src/xfpm-power.c:555
 msgid "Suspend"
 msgstr "Mettre en veille"
 
@@ -278,7 +278,7 @@ msgstr "Opération de mise en veille non prise en charge"
 #: settings/xfpm-settings.c:1049 settings/xfpm-settings.c:1205
 #: settings/xfpm-settings.c:1289 settings/xfpm-settings.c:1456
 #: settings/xfpm-settings.c:1514 settings/xfpm-settings.c:1566
-#: settings/xfpm-settings.c:1617 src/xfpm-power.c:537
+#: settings/xfpm-settings.c:1617 src/xfpm-power.c:543
 msgid "Hibernate"
 msgstr "Mettre en veille prolongée"
 
@@ -308,7 +308,7 @@ msgid "Do nothing"
 msgstr "Ne rien faire"
 
 #: settings/xfpm-settings.c:993 settings/xfpm-settings.c:1462
-#: src/xfpm-power.c:569
+#: src/xfpm-power.c:575
 msgid "Shutdown"
 msgstr "Éteindre"
 
@@ -341,87 +341,87 @@ msgstr[0] "minute"
 msgstr[1] "minutes"
 msgstr[2] "minutes"
 
-#: settings/xfpm-settings.c:2133
+#: settings/xfpm-settings.c:2136
 msgid "Device"
 msgstr "Périphérique"
 
-#: settings/xfpm-settings.c:2156
+#: settings/xfpm-settings.c:2159
 msgid "Type"
 msgstr "Type"
 
-#: settings/xfpm-settings.c:2161
+#: settings/xfpm-settings.c:2164
 msgid "PowerSupply"
 msgstr "Alimentation"
 
-#: settings/xfpm-settings.c:2162 src/xfpm-main.c:77
+#: settings/xfpm-settings.c:2165 src/xfpm-main.c:77
 msgid "True"
 msgstr "Vrai"
 
-#: settings/xfpm-settings.c:2162 src/xfpm-main.c:77
+#: settings/xfpm-settings.c:2165 src/xfpm-main.c:77
 msgid "False"
 msgstr "Faux"
 
-#: settings/xfpm-settings.c:2169
+#: settings/xfpm-settings.c:2172
 msgid "Model"
 msgstr "Modèle"
 
-#: settings/xfpm-settings.c:2172
+#: settings/xfpm-settings.c:2175
 msgid "Technology"
 msgstr "Technologie"
 
-#: settings/xfpm-settings.c:2179
+#: settings/xfpm-settings.c:2182
 msgid "Current charge"
 msgstr "Charge actuelle"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:2187 settings/xfpm-settings.c:2199
-#: settings/xfpm-settings.c:2211
+#: settings/xfpm-settings.c:2190 settings/xfpm-settings.c:2202
+#: settings/xfpm-settings.c:2214
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:2189
+#: settings/xfpm-settings.c:2192
 msgid "Fully charged (design)"
 msgstr "Complètement chargée (selon conception)"
 
-#: settings/xfpm-settings.c:2202
+#: settings/xfpm-settings.c:2205
 msgid "Fully charged"
 msgstr "Complètement chargée"
 
-#: settings/xfpm-settings.c:2213
+#: settings/xfpm-settings.c:2216
 msgid "Energy empty"
 msgstr "Énergie à vide"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:2221
+#: settings/xfpm-settings.c:2224
 msgid "W"
 msgstr "W"
 
-#: settings/xfpm-settings.c:2223
+#: settings/xfpm-settings.c:2226
 msgid "Energy rate"
 msgstr "Taux d’énergie"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:2231
+#: settings/xfpm-settings.c:2234
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:2233
+#: settings/xfpm-settings.c:2236
 msgid "Voltage"
 msgstr "Tension"
 
-#: settings/xfpm-settings.c:2240
+#: settings/xfpm-settings.c:2243
 msgid "Vendor"
 msgstr "Constructeur"
 
-#: settings/xfpm-settings.c:2245
+#: settings/xfpm-settings.c:2248
 msgid "Serial"
 msgstr "Numéro de série"
 
-#: settings/xfpm-settings.c:2524
+#: settings/xfpm-settings.c:2531
 msgid "Check your power manager installation"
 msgstr "Vérifiez votre installation du gestionnaire d’alimentation"
 
-#: settings/xfpm-settings.c:2605
+#: settings/xfpm-settings.c:2612
 msgid "Devices"
 msgstr "Périphériques"
 
@@ -490,7 +490,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr "paramètres;préférences;boutons;veille;hiberner;batterie;suspendre;arrêt;luminosité;couvercle de portable;verrouillage;branché;économie;critique;"
 
-#: common/xfpm-common.c:120
+#: common/xfpm-common.c:121
 msgid "translator-credits"
 msgstr "L’équipe de traduction francophone de Xfce"
 
@@ -688,59 +688,59 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nÉtat inconnu"
 
-#: src/xfpm-power.c:259
+#: src/xfpm-power.c:261
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Une application inhibe actuellement la mise en veille automatique. Si elle est exécutée maintenant, cette action est susceptible d’endommager l’état de fonctionnement de cette application.\nÊtes-vous sûr de vouloir mettre le système en veille prolongée ?"
 
-#: src/xfpm-power.c:290
+#: src/xfpm-power.c:292
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Aucun des outils de verrouillage d’écran n’a pu être exécuté correctement, l’écran ne sera pas verrouillé.\nVoulez-vous poursuivre la mise en veille du système ?"
 
-#: src/xfpm-power.c:443
+#: src/xfpm-power.c:449
 msgid "Hibernate the system"
 msgstr "Mettre le système en veille prolongée"
 
-#: src/xfpm-power.c:455
+#: src/xfpm-power.c:461
 msgid "Suspend the system"
 msgstr "Mettre en veille le système"
 
-#: src/xfpm-power.c:475
+#: src/xfpm-power.c:481
 msgid "Shutdown the system"
 msgstr "Éteindre le système"
 
-#: src/xfpm-power.c:488 src/xfpm-power.c:519
+#: src/xfpm-power.c:494 src/xfpm-power.c:525
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Le niveau de la batterie est critique. Enregistrez votre travail pour éviter des pertes de données"
 
-#: src/xfpm-power.c:576
+#: src/xfpm-power.c:582
 msgid "_Cancel"
 msgstr "_Annuler"
 
-#: src/xfpm-power.c:697
+#: src/xfpm-power.c:703
 msgid "System is running on low power"
 msgstr "Le système fonctionne sur faible puissance"
 
-#: src/xfpm-power.c:713
+#: src/xfpm-power.c:719
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Le niveau de charge de votre %s est faible\nTemps restant estimé à %s"
 
-#: src/xfpm-power.c:1437 src/xfpm-power.c:1481 src/xfpm-power.c:1517
-#: src/xfpm-power.c:1551
+#: src/xfpm-power.c:1448 src/xfpm-power.c:1492 src/xfpm-power.c:1528
+#: src/xfpm-power.c:1562
 msgid "Permission denied"
 msgstr "Permission refusée"
 
-#: src/xfpm-power.c:1526
+#: src/xfpm-power.c:1537
 msgid "Hibernate not supported"
 msgstr "La mise en veille prolongée n’est pas prise en charge"
 
-#: src/xfpm-power.c:1560
+#: src/xfpm-power.c:1571
 msgid "Suspend not supported"
 msgstr "Mise en veille non prise en charge"
 
@@ -790,7 +790,7 @@ msgid "Your %s is empty"
 msgstr "Votre %s est vide"
 
 #. generate a human-readable summary for the notification
-#: src/xfpm-kbd-backlight.c:116
+#: src/xfpm-kbd-backlight.c:117
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Luminosité du clavier : %.0f pour cent"
@@ -963,29 +963,24 @@ msgstr "Afficher les niveaux de batterie pour les périphériques connectés"
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1429
+#: panel-plugins/power-manager-plugin/power-manager-button.c:1457
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s inhibe actuellement la gestion de l’alimentation"
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1721
+#: panel-plugins/power-manager-plugin/power-manager-button.c:1749
 msgid "<b>Display brightness</b>"
 msgstr "<b>Luminosité de l’écran</b>"
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1748
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1759
+#: panel-plugins/power-manager-plugin/power-manager-button.c:1776
+#: panel-plugins/power-manager-plugin/power-manager-button.c:1787
 msgid "Presentation _mode"
 msgstr "_Mode présentation"
 
 #. Power manager settings
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1772
+#: panel-plugins/power-manager-plugin/power-manager-button.c:1800
 msgid "_Settings..."
 msgstr "_Paramètres…"
-
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "Impossible d’ouvrir l’url suivante : %s"
 
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "None"
