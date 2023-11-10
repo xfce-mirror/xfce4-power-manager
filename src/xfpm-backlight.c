@@ -119,7 +119,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 
     if ( !ret )
     {
-      g_warning ("Unable to get current brightness level");
+      XFPM_DEBUG ("Unable to get current brightness level");
       return;
     }
 
@@ -519,8 +519,8 @@ xfpm_backlight_set_property (GObject *object,
       ret = xfpm_brightness_set_switch (backlight->priv->brightness,
                                         backlight->priv->brightness_switch);
       if (!ret)
-          g_warning ("Unable to set the kernel brightness switch parameter to %d.",
-                     backlight->priv->brightness_switch);
+          XFPM_DEBUG ("Unable to set the kernel brightness switch parameter to %d.",
+                      backlight->priv->brightness_switch);
       else
           XFPM_DEBUG ("Set kernel brightness switch to %d",
                       backlight->priv->brightness_switch);
