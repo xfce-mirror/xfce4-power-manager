@@ -93,8 +93,6 @@ xfpm_settings_app_startup (GApplication *app)
     { "quit",      activate_quit,   NULL },
   };
 
-  TRACE ("entering");
-
   g_action_map_add_action_entries (G_ACTION_MAP (app),
                                    action_entries,
                                    G_N_ELEMENTS (action_entries),
@@ -110,7 +108,6 @@ xfpm_settings_app_startup (GApplication *app)
 static void
 xfpm_settings_app_activate (GApplication *app)
 {
-  TRACE ("entering");
 }
 
 static void
@@ -141,8 +138,6 @@ xfpm_settings_app_launch (GApplication *app)
   gboolean has_battery_button;
   gboolean has_lid;
   gint     start_xfpm_if_not_running;
-
-  TRACE ("entering");
 
   windows = gtk_application_get_windows (GTK_APPLICATION (app));
 
@@ -252,8 +247,8 @@ xfpm_settings_app_launch (GApplication *app)
   has_battery_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "battery-button"));
   can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
 
-  DBG("socket_id %i", (int)priv->socket_id);
-  DBG("device id %s", priv->device_id);
+  XFPM_DEBUG ("socket_id %i", (int)priv->socket_id);
+  XFPM_DEBUG ("device id %s", priv->device_id);
 
   dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
                                      can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
@@ -276,8 +271,6 @@ activate_socket (GSimpleAction  *action,
   XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
   XfpmSettingsAppPrivate *priv = xfpm_settings_app_get_instance_private (app);
 
-  TRACE ("entering");
-
   priv->socket_id = g_variant_get_int32 (parameter);
 
   xfpm_settings_app_launch (G_APPLICATION (app));
@@ -290,8 +283,6 @@ activate_device (GSimpleAction  *action,
 {
   XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
   XfpmSettingsAppPrivate *priv = xfpm_settings_app_get_instance_private (app);
-
-  TRACE ("entering");
 
   priv->device_id = g_strdup(g_variant_get_string (parameter, NULL));
 
@@ -306,8 +297,6 @@ activate_debug (GSimpleAction  *action,
   XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
   XfpmSettingsAppPrivate *priv = xfpm_settings_app_get_instance_private (app);
 
-  TRACE ("entering");
-
   priv->debug = TRUE;
 
   xfpm_settings_app_launch (G_APPLICATION (app));
@@ -320,8 +309,6 @@ activate_window (GSimpleAction  *action,
 {
   XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
 
-  TRACE ("entering");
-
   xfpm_settings_app_launch (G_APPLICATION (app));
 }
 
@@ -332,8 +319,6 @@ activate_quit (GSimpleAction  *action,
 {
   GtkApplication *app = GTK_APPLICATION (data);
   GList *windows;
-
-  TRACE ("entering");
 
   windows = gtk_application_get_windows (app);
 
@@ -348,8 +333,6 @@ static gboolean
 xfpm_settings_app_local_options (GApplication *g_application,
                                  GVariantDict *options)
 {
-  TRACE ("entering");
-
   /* --version */
   if (g_variant_dict_contains (options, "version"))
   {

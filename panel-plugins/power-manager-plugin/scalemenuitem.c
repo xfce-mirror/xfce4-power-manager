@@ -33,9 +33,6 @@
 #include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 
-/* for DBG/TRACE */
-#include <libxfce4util/libxfce4util.h>
-
 
 
 static gboolean scale_menu_item_button_press_event      (GtkWidget          *menuitem,
@@ -173,11 +170,6 @@ update_packing (ScaleMenuItem *self)
   GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   GtkWidget *vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
-  TRACE("entering");
-
-//  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-//  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-
   if(priv->hbox)
     remove_children (GTK_CONTAINER (priv->hbox));
   if(priv->vbox)
@@ -242,8 +234,6 @@ scale_menu_item_button_press_event (GtkWidget      *menuitem,
   GtkAllocation alloc;
   gint x, y;
 
-  TRACE("entering");
-
   gtk_widget_get_allocation (priv->scale, &alloc);
   gtk_widget_translate_coordinates (menuitem, priv->scale, event->x, event->y, &x, &y);
 
@@ -265,8 +255,6 @@ scale_menu_item_button_release_event (GtkWidget *menuitem,
                                       GdkEventButton *event)
 {
   ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
-
-  TRACE("entering");
 
   gtk_widget_event (priv->scale, (GdkEvent*)event);
 
@@ -312,8 +300,6 @@ scale_menu_item_grab_broken (GtkWidget *menuitem,
                              GdkEventGrabBroken *event)
 {
   ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
-
-  TRACE("entering");
 
   GTK_WIDGET_GET_CLASS (priv->scale)->grab_broken_event (priv->scale, event);
 
@@ -362,8 +348,6 @@ scale_menu_item_new_with_range (gdouble           min,
 {
   ScaleMenuItem *scale_item;
   ScaleMenuItemPrivate *priv;
-
-  TRACE("entering");
 
   scale_item = SCALE_MENU_ITEM (g_object_new (TYPE_SCALE_MENU_ITEM, NULL));
 

@@ -2007,7 +2007,7 @@ update_device_info_value_for_name (GtkTreeView *view,
   g_return_if_fail (name != NULL);
   /* Value can be NULL */
 
-  DBG ("updating  name %s with value %s", name, value);
+  XFPM_DEBUG ("updating  name %s with value %s", name, value);
 
   iter = find_device_info_name_in_tree (view, name);
   if (iter == NULL)
@@ -2047,8 +2047,6 @@ update_sideview_icon (UpDevice *device,
   const gchar *object_path = up_device_get_object_path(device);
 
   list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
-
-  TRACE("entering for %s", object_path);
 
   iter = find_device_in_tree (object_path);
 
@@ -2112,8 +2110,6 @@ update_device_details (UpDevice *device)
   gchar *model = NULL, *vendor = NULL, *serial = NULL;
   const gchar *battery_type = NULL;
   const gchar *object_path = up_device_get_object_path(device);
-
-  TRACE("entering for %s", object_path);
 
   sideview_iter = find_device_in_tree (object_path);
 
@@ -2272,8 +2268,6 @@ add_device (UpDevice *device)
   guint index;
   static gboolean first_run = TRUE;
 
-  TRACE("entering for %s", object_path);
-
   /* don't add the same device twice */
   device_iter = find_device_in_tree (object_path);
   if (device_iter)
@@ -2357,8 +2351,6 @@ remove_device (const gchar *object_path)
   GtkListStore *list_store;
   gulong signal_id;
   UpDevice *device;
-
-  TRACE("entering for %s", object_path);
 
   iter = find_device_in_tree (object_path);
 
@@ -2744,14 +2736,14 @@ xfpm_settings_show_device_id (gchar *device_id)
   gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), devices_page_num));
   gtk_notebook_set_current_page (GTK_NOTEBOOK (nt), devices_page_num);
 
-  DBG("device_id %s", device_id);
+  XFPM_DEBUG ("device_id %s", device_id);
 
   device_iter = find_device_in_tree (device_id);
   if (device_iter)
   {
     GtkTreeSelection *selection;
 
-    DBG("device found");
+    XFPM_DEBUG ("device found");
 
     selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (sideview));
 

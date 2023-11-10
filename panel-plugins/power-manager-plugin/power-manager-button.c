@@ -172,8 +172,6 @@ get_display_device (PowerManagerButton *button)
   gdouble highest_percentage = 0;
   BatteryDevice *display_device = NULL;
 
-  TRACE("entering");
-
   g_return_val_if_fail (POWER_MANAGER_IS_BUTTON(button), NULL);
 
   if (button->priv->display_device)
@@ -221,8 +219,6 @@ find_device_in_list (PowerManagerButton *button, const gchar *object_path)
 {
   GList *item = NULL;
 
-  TRACE("entering");
-
   g_return_val_if_fail ( POWER_MANAGER_IS_BUTTON(button), NULL );
 
   for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
@@ -230,7 +226,7 @@ find_device_in_list (PowerManagerButton *button, const gchar *object_path)
     BatteryDevice *battery_device = item->data;
     if (battery_device == NULL)
     {
-      DBG("!battery_device");
+      XFPM_DEBUG ("!battery_device");
       continue;
     }
 
@@ -262,8 +258,6 @@ static void
 power_manager_button_set_tooltip (PowerManagerButton *button)
 {
   BatteryDevice *display_device = get_display_device (button);
-
-  TRACE("entering");
 
   if (!GTK_IS_WIDGET (button))
   {
@@ -362,8 +356,6 @@ power_manager_button_device_icon_draw (GtkWidget *img, cairo_t *cr, gpointer use
   PangoLayout *layout = NULL;
   PangoRectangle ink_extent, log_extent;
   GtkAllocation allocation;
-
-  TRACE("entering");
 
   /* sanity checks */
   if (!img || !GTK_IS_WIDGET (img))
@@ -528,7 +520,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
   display_device = get_display_device (button);
   if (battery_device == display_device)
   {
-    DBG("this is the display device, updating");
+    XFPM_DEBUG ("this is the display device, updating");
     /* update the icon */
     g_free (button->priv->panel_icon_name);
 #ifdef XFCE_PLUGIN
@@ -622,8 +614,6 @@ power_manager_button_add_device (UpDevice *device, PowerManagerButton *button)
 static void
 battery_device_remove_surface (BatteryDevice *battery_device)
 {
-  TRACE("entering");
-
   if (battery_device == NULL)
     return;
 
@@ -678,8 +668,6 @@ power_manager_button_remove_device (PowerManagerButton *button, const gchar *obj
 {
   GList *item;
   BatteryDevice *battery_device;
-
-  TRACE("entering for %s", object_path);
 
   item = find_device_in_list (button, object_path);
 
@@ -743,8 +731,6 @@ power_manager_button_remove_all_devices (PowerManagerButton *button)
 {
   GList *item = NULL;
 
-  TRACE("entering");
-
   g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
 
   for (item = g_list_first (button->priv->devices); item != NULL; item = g_list_next (item))
@@ -752,7 +738,7 @@ power_manager_button_remove_all_devices (PowerManagerButton *button)
     BatteryDevice *battery_device = item->data;
     if (battery_device == NULL)
     {
-      DBG("!battery_device");
+      XFPM_DEBUG ("!battery_device");
       continue;
     }
 
@@ -806,7 +792,7 @@ set_brightness_min_level (PowerManagerButton *button, gint32 new_brightness_leve
     button->priv->brightness_min_level = new_brightness_level;
   }
 
-  DBG("button->priv->brightness_min_level : %d", button->priv->brightness_min_level);
+  XFPM_DEBUG ("button->priv->brightness_min_level : %d", button->priv->brightness_min_level);
 
   /* update the range if it's being shown */
   if (button->priv->range)
@@ -1057,8 +1043,6 @@ static void
 power_manager_button_finalize (GObject *object)
 {
   PowerManagerButton *button;
-
-  DBG("entering");
 
   button = POWER_MANAGER_BUTTON (object);
 
@@ -1338,8 +1322,6 @@ menu_destroyed_cb(GtkMenuShell *menu, gpointer user_data)
 {
   PowerManagerButton *button = POWER_MANAGER_BUTTON (user_data);
 
-  TRACE("entering");
-
   /* menu destroyed, range slider is gone */
   button->priv->range = NULL;
 
@@ -1408,7 +1390,7 @@ power_manager_button_menu_add_device (PowerManagerButton *button, BatteryDevice 
     /* Don't add the display device or line power to the menu */
     if (type == UP_DEVICE_KIND_LINE_POWER || battery_device->device == button->priv->display_device)
     {
-      DBG("filtering device from menu (display or line power device)");
+      XFPM_DEBUG ("filtering device from menu (display or line power device)");
       return FALSE;
     }
   }
@@ -1562,9 +1544,6 @@ decrease_brightness (PowerManagerButton *button)
 {
   gint32 level, next_level;
 
-
-  TRACE("entering");
-
   if ( !xfpm_brightness_has_hw (button->priv->brightness) )
     return;
 
@@ -1582,8 +1561,6 @@ increase_brightness (PowerManagerButton *button)
 {
   gint32 level, next_level;
 
-  TRACE("entering");
-
   if (!xfpm_brightness_has_hw (button->priv->brightness))
     return;
 
@@ -1599,8 +1576,6 @@ static gboolean
 brightness_set_level_with_timeout (PowerManagerButton *button)
 {
   gint32 range_level, hw_level;
-
-  TRACE("entering");
 
   range_level = (gint32) gtk_range_get_value (GTK_RANGE (button->priv->range));
 
@@ -1623,8 +1598,6 @@ brightness_set_level_with_timeout (PowerManagerButton *button)
 static void
 range_value_changed_cb (PowerManagerButton *button, GtkWidget *widget)
 {
-  TRACE("entering");
-
   if (button->priv->set_level_timeout)
     return;
 
@@ -1637,8 +1610,6 @@ static void
 range_scroll_cb (GtkWidget *widget, GdkEvent *event, PowerManagerButton *button)
 {
   GdkEventScroll *scroll_event;
-
-  TRACE("entering");
 
   scroll_event = (GdkEventScroll*)event;
 
@@ -1654,7 +1625,6 @@ range_show_cb (GtkWidget *widget, PowerManagerButton *button)
   GdkSeat   *seat = gdk_display_get_default_seat (gdk_display_get_default());
   GdkDevice *pointer = gdk_seat_get_pointer (seat);
 
-  TRACE("entering");
   /* Release these grabs as they will cause a lockup if pkexec is called
    * for the brightness helper */
   if (pointer)
@@ -1687,8 +1657,6 @@ power_manager_button_show_menu (PowerManagerButton *button)
   GList *item;
   gboolean show_separator_flag = FALSE;
   gint32 max_level, current_level = 0;
-
-  TRACE("entering");
 
   g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
 

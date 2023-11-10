@@ -176,8 +176,6 @@ xfpm_suspend_try_action (XfpmActionType type)
   gint status;
   gchar *command = NULL;
 
-  TRACE("entering");
-
   if (type == XFPM_SUSPEND)
     action = "suspend";
   else if (type == XFPM_HIBERNATE)
