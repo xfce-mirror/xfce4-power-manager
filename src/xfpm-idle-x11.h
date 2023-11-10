@@ -1,5 +1,5 @@
 /*
- * * Copyright (C) 2009-2011 Ali <aliov@xfce.org>
+ * Copyright (C) 2023 Gaël Bonithon <gael@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -18,33 +18,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_BACKLIGHT_H
-#define __XFPM_BACKLIGHT_H
+#ifndef __XFPM_IDLE_X11_H__
+#define __XFPM_IDLE_X11_H__
 
-#include <glib-object.h>
+#include "xfpm-idle.h"
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_BACKLIGHT        (xfpm_backlight_get_type () )
-#define XFPM_BACKLIGHT(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_BACKLIGHT, XfpmBacklight))
-#define XFPM_IS_BACKLIGHT(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_BACKLIGHT))
-
-typedef struct XfpmBacklightPrivate XfpmBacklightPrivate;
-
-typedef struct
-{
-  GObject             parent;
-  XfpmBacklightPrivate       *priv;
-} XfpmBacklight;
-
-typedef struct
-{
-  GObjectClass     parent_class;
-} XfpmBacklightClass;
-
-GType              xfpm_backlight_get_type         (void) G_GNUC_CONST;
-XfpmBacklight     *xfpm_backlight_new              (void);
+#define XFPM_TYPE_IDLE_X11 (xfpm_idle_x11_get_type ())
+G_DECLARE_FINAL_TYPE (XfpmIdleX11, xfpm_idle_x11, XFPM, IDLE_X11, XfpmIdle)
 
 G_END_DECLS
 
-#endif /* __XFPM_BACKLIGHT_H */
+#endif /* __XFPM_IDLE_X11_H__ */

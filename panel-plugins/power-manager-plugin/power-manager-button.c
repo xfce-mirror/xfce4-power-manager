@@ -99,12 +99,12 @@ struct PowerManagerButtonPrivate
    */
   gint32           brightness_min_level;
 
+  /* filter range value changed events for snappier UI feedback */
+  guint            set_level_timeout;
+
   gint             show_panel_label;
   gboolean         presentation_mode;
   gboolean         show_presentation_indicator;
-
-  /* filter range value changed events for snappier UI feedback */
-  guint            set_level_timeout;
 };
 
 typedef struct
@@ -764,14 +764,9 @@ power_manager_button_remove_all_devices (PowerManagerButton *button)
 static gboolean
 power_manager_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
 {
-  gboolean hw_found;
-  PowerManagerButton *button;
+  PowerManagerButton *button = POWER_MANAGER_BUTTON (widget);
 
-  button = POWER_MANAGER_BUTTON (widget);
-
-  hw_found = xfpm_brightness_has_hw (button->priv->brightness);
-
-  if (!hw_found)
+  if (button->priv->brightness == NULL)
     return FALSE;
 
   if (ev->direction == GDK_SCROLL_UP)
@@ -828,7 +823,8 @@ power_manager_button_set_property (GObject *object,
   switch (property_id)
   {
     case PROP_BRIGHTNESS_MIN_LEVEL:
-      set_brightness_min_level (button, g_value_get_int (value));
+      if (button->priv->brightness != NULL)
+        set_brightness_min_level (button, g_value_get_int (value));
       break;
 #ifdef XFCE_PLUGIN
     case PROP_SHOW_PANEL_LABEL:
@@ -993,7 +989,6 @@ power_manager_button_init (PowerManagerButton *button)
   gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
   button->priv->brightness = xfpm_brightness_new ();
-  xfpm_brightness_setup (button->priv->brightness);
   button->priv->set_level_timeout = 0;
 
   button->priv->upower  = up_client_new ();
@@ -1065,7 +1060,8 @@ power_manager_button_finalize (GObject *object)
   g_free (button->priv->panel_icon_name);
   g_free (button->priv->panel_fallback_icon_name);
 
-  g_object_unref (button->priv->brightness);
+  if (button->priv->brightness != NULL)
+    g_object_unref (button->priv->brightness);
   if (button->priv->set_level_timeout)
   {
     g_source_remove(button->priv->set_level_timeout);
@@ -1562,11 +1558,7 @@ decrease_brightness (PowerManagerButton *button)
 {
   gint32 level, next_level;
 
-
   TRACE("entering");
-
-  if ( !xfpm_brightness_has_hw (button->priv->brightness) )
-    return;
 
   xfpm_brightness_get_level (button->priv->brightness, &level);
   next_level = MAX (button->priv->brightness_min_level,
@@ -1583,9 +1575,6 @@ increase_brightness (PowerManagerButton *button)
   gint32 level, next_level;
 
   TRACE("entering");
-
-  if (!xfpm_brightness_has_hw (button->priv->brightness))
-    return;
 
   xfpm_brightness_get_level (button->priv->brightness, &level);
   next_level = xfpm_brightness_inc (button->priv->brightness, level);
@@ -1634,21 +1623,6 @@ range_value_changed_cb (PowerManagerButton *button, GtkWidget *widget)
 }
 
 static void
-range_scroll_cb (GtkWidget *widget, GdkEvent *event, PowerManagerButton *button)
-{
-  GdkEventScroll *scroll_event;
-
-  TRACE("entering");
-
-  scroll_event = (GdkEventScroll*)event;
-
-  if (scroll_event->direction == GDK_SCROLL_UP)
-    increase_brightness (button);
-  else if (scroll_event->direction == GDK_SCROLL_DOWN)
-    decrease_brightness (button);
-}
-
-static void
 range_show_cb (GtkWidget *widget, PowerManagerButton *button)
 {
   GdkSeat   *seat = gdk_display_get_default_seat (gdk_display_get_default());
@@ -1679,14 +1653,13 @@ power_manager_button_toggle_presentation_mode (GtkMenuItem *mi, GtkSwitch *sw)
 void
 power_manager_button_show_menu (PowerManagerButton *button)
 {
-  GtkWidget *menu, *mi, *img = NULL;
+  GtkWidget *menu, *mi;
 #ifdef XFCE_PLUGIN
   GtkWidget *box, *label, *sw;
 #endif
   GdkScreen *gscreen;
   GList *item;
   gboolean show_separator_flag = FALSE;
-  gint32 max_level, current_level = 0;
 
   TRACE("entering");
 
@@ -1724,10 +1697,12 @@ power_manager_button_show_menu (PowerManagerButton *button)
   }
 
   /* Display brightness slider - show if there's hardware support for it */
-  if ( xfpm_brightness_has_hw (button->priv->brightness) )
+  if (button->priv->brightness != NULL)
   {
+    GtkWidget *img = NULL;
     guint brightness_step_count;
     gboolean brightness_exponential;
+    gint32 max_level, current_level = 0;
 
     max_level = xfpm_brightness_get_max_level (button->priv->brightness);
 
@@ -1756,7 +1731,7 @@ power_manager_button_show_menu (PowerManagerButton *button)
     gtk_range_set_value (GTK_RANGE (button->priv->range), current_level);
 
     g_signal_connect_swapped (mi, "value-changed", G_CALLBACK (range_value_changed_cb), button);
-    g_signal_connect (mi, "scroll-event", G_CALLBACK (range_scroll_cb), button);
+    g_signal_connect_swapped (mi, "scroll-event", G_CALLBACK (power_manager_button_scroll_event), button);
     g_signal_connect (menu, "show", G_CALLBACK (range_show_cb), button);
 
     /* load and display the brightness icon and force it to 32px size */

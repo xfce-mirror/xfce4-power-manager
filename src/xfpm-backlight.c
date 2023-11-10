@@ -38,7 +38,7 @@
 #include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-backlight.h"
-#include "egg-idletime.h"
+#include "xfpm-idle.h"
 #include "xfpm-notify.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-power.h"
@@ -67,14 +67,13 @@ struct XfpmBacklightPrivate
 {
   XfpmBrightness *brightness;
   XfpmPower      *power;
-  EggIdletime    *idle;
+  XfpmIdle       *idle;
   XfpmXfconf     *conf;
   XfpmButton     *button;
   XfpmNotify     *notify;
 
   NotifyNotification *n;
 
-  gboolean      has_hw;
   gboolean      on_battery;
 
   gint32          last_level;
@@ -198,18 +197,18 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 
 
 static void
-xfpm_backlight_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmBacklight *backlight)
+xfpm_backlight_alarm_timeout_cb (XfpmIdle *idle, XfpmAlarmId id, XfpmBacklight *backlight)
 {
   backlight->priv->block = FALSE;
 
-  if ( id == TIMEOUT_BRIGHTNESS_ON_AC && !backlight->priv->on_battery)
+  if (id == XFPM_ALARM_ID_BRIGHTNESS_ON_AC && !backlight->priv->on_battery)
     xfpm_backlight_dim_brightness (backlight);
-  else if ( id == TIMEOUT_BRIGHTNESS_ON_BATTERY && backlight->priv->on_battery)
+  else if (id == XFPM_ALARM_ID_BRIGHTNESS_ON_BATTERY && backlight->priv->on_battery)
     xfpm_backlight_dim_brightness (backlight);
 }
 
 static void
-xfpm_backlight_reset_cb (EggIdletime *idle, XfpmBacklight *backlight)
+xfpm_backlight_reset_cb (XfpmIdle *idle, XfpmBacklight *backlight)
 {
   if ( backlight->priv->dimmed)
   {
@@ -297,11 +296,11 @@ xfpm_backlight_brightness_on_ac_settings_changed (XfpmBacklight *backlight)
 
   if ( timeout_on_ac == ALARM_DISABLED )
   {
-    egg_idletime_alarm_remove (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC );
+    xfpm_idle_alarm_remove (backlight->priv->idle, XFPM_ALARM_ID_BRIGHTNESS_ON_AC);
   }
   else
   {
-    egg_idletime_alarm_set (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_AC, timeout_on_ac * 1000);
+    xfpm_idle_alarm_add (backlight->priv->idle, XFPM_ALARM_ID_BRIGHTNESS_ON_AC, timeout_on_ac * 1000);
   }
 }
 
@@ -318,11 +317,11 @@ xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
 
   if ( timeout_on_battery == ALARM_DISABLED )
   {
-    egg_idletime_alarm_remove (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY );
+    xfpm_idle_alarm_remove (backlight->priv->idle, XFPM_ALARM_ID_BRIGHTNESS_ON_BATTERY);
   }
   else
   {
-    egg_idletime_alarm_set (backlight->priv->idle, TIMEOUT_BRIGHTNESS_ON_BATTERY, timeout_on_battery * 1000);
+    xfpm_idle_alarm_add (backlight->priv->idle, XFPM_ALARM_ID_BRIGHTNESS_ON_BATTERY, timeout_on_battery * 1000);
   }
 }
 
@@ -374,7 +373,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv = xfpm_backlight_get_instance_private (backlight);
 
   backlight->priv->brightness = xfpm_brightness_new ();
-  backlight->priv->has_hw     = xfpm_brightness_setup (backlight->priv->brightness);
 
   backlight->priv->notify = NULL;
   backlight->priv->idle   = NULL;
@@ -387,16 +385,11 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv->brightness_exponential = FALSE;
   backlight->priv->brightness_switch_initialized = FALSE;
 
-  if ( !backlight->priv->has_hw )
-  {
-    g_object_unref (backlight->priv->brightness);
-    backlight->priv->brightness = NULL;
-  }
-  else
+  if (backlight->priv->brightness != NULL)
   {
     gboolean handle_keys;
 
-    backlight->priv->idle   = egg_idletime_new ();
+    backlight->priv->idle   = xfpm_idle_new ();
     backlight->priv->conf   = xfpm_xfconf_new ();
     backlight->priv->button = xfpm_button_new ();
     backlight->priv->power    = xfpm_power_get ();
@@ -590,12 +583,12 @@ xfpm_backlight_finalize (GObject *object)
 XfpmBacklight *
 xfpm_backlight_new (void)
 {
-  XfpmBacklight *backlight = NULL;
-  backlight = g_object_new (XFPM_TYPE_BACKLIGHT, NULL);
-  return backlight;
-}
+  XfpmBacklight *backlight = g_object_new (XFPM_TYPE_BACKLIGHT, NULL);
+  if (backlight->priv->brightness == NULL)
+  {
+    g_object_unref (backlight);
+    return NULL;
+  }
 
-gboolean xfpm_backlight_has_hw (XfpmBacklight *backlight)
-{
-  return backlight->priv->has_hw;
+  return backlight;
 }
