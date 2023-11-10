@@ -363,7 +363,7 @@ xfpm_brightness_helper_get_value (const gchar *argument)
   if (!g_spawn_command_line_sync (command, &stdout_data, NULL, &status, &error)
       || !g_spawn_check_exit_status (status, &error))
   {
-    g_warning ("Failed to get value: %s", error->message);
+    XFPM_DEBUG ("Failed to get value: %s", error->message);
     g_error_free (error);
     g_free (command);
     return value;
@@ -440,7 +440,7 @@ xfpm_brightness_helper_set_level (XfpmBrightness *brg, gint32 level)
   if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
       || !g_spawn_check_exit_status (status, &error))
   {
-    g_warning ("Failed to set value: %s", error->message);
+    XFPM_DEBUG ("Failed to set value: %s", error->message);
     g_error_free (error);
     g_free (command);
     return FALSE;
@@ -477,7 +477,7 @@ xfpm_brightness_helper_set_switch (XfpmBrightness *brg, gint brightness_switch)
   if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
       || !g_spawn_check_exit_status (status, &error))
   {
-    g_warning ("Failed to set brightness switch value: %s", error->message);
+    XFPM_DEBUG ("Failed to set brightness switch value: %s", error->message);
     g_error_free (error);
     g_free (command);
     return FALSE;
