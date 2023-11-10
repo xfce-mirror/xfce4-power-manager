@@ -92,6 +92,10 @@ enum
   PROP_LOGIND_HANDLE_HIBERNATE_KEY,
   PROP_LOGIND_HANDLE_LID_SWITCH,
   PROP_HEARTBEAT_COMMAND,
+
+  PROP_SHOW_PANEL_LABEL,
+  PROP_SHOW_PRESENTATION_INDICATOR,
+
   N_PROPERTIES
 };
 
@@ -615,6 +619,28 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_string  (HEARTBEAT_COMMAND,
                                                          NULL, NULL,
                                                          NULL,
+                                                         G_PARAM_READWRITE));
+
+  /**
+   * XfpmXfconf::show-panel-label
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_SHOW_PANEL_LABEL,
+                                   g_param_spec_int (SHOW_PANEL_LABEL,
+                                                     NULL, NULL,
+                                                     PANEL_LABEL_NONE,
+                                                     PANEL_LABEL_PERCENTAGE_AND_TIME,
+                                                     PANEL_LABEL_PERCENTAGE,
+                                                     G_PARAM_READWRITE));
+
+  /**
+   * XfpmXfconf::show-presentation-indicator
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_SHOW_PRESENTATION_INDICATOR,
+                                   g_param_spec_boolean (SHOW_PRESENTATION_INDICATOR,
+                                                         NULL, NULL,
+                                                         FALSE,
                                                          G_PARAM_READWRITE));
 }
 

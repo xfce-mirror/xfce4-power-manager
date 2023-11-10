@@ -82,6 +82,15 @@ typedef enum
   NEVER_SHOW_ICON
 } XfpmShowIcon;
 
+typedef enum
+{
+  PANEL_LABEL_NONE,
+  PANEL_LABEL_PERCENTAGE,
+  PANEL_LABEL_TIME,
+  PANEL_LABEL_PERCENTAGE_AND_TIME,
+  N_PANEL_LABELS
+} XfpmPanelLabel;
+
 G_END_DECLS
 
 #endif /* __XFPM_ENUM_GLIB_H */
