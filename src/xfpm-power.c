@@ -1556,8 +1556,6 @@ xfpm_power_dbus_init (XfpmPower *power)
   GDBusConnection *bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
   XfpmPowerManagement *power_dbus;
 
-  TRACE ("entering");
-
   power_dbus = xfpm_power_management_skeleton_new ();
   g_dbus_interface_skeleton_export (G_DBUS_INTERFACE_SKELETON (power_dbus),
                                     bus,
