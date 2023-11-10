@@ -40,6 +40,7 @@
 
 #include "../power-manager-button.h"
 #include "common/xfpm-config.h"
+#include "common/xfpm-enum-glib.h"
 
 /* plugin structure */
 typedef struct
@@ -99,10 +100,6 @@ power_manager_plugin_panel_label_changed (XfconfChannel *channel,
 
   list_store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo)));
   current_setting = g_value_get_int (value);
-  /* If the value set in xfconf is invalid, treat it like 0 aka "None" */
-  if (current_setting < 0 ||
-      current_setting > 3)
-      current_setting = 0;
 
   for (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
         gtk_list_store_iter_is_valid (list_store, &iter);
@@ -180,13 +177,13 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   label = gtk_label_new (_("Show label:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET (label), 0, 0, 1, 1);
-  show_panel_label = xfconf_channel_get_int (channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, -1);
+  show_panel_label = xfconf_channel_get_int (channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, PANEL_LABEL_PERCENTAGE);
 
   list_store = gtk_list_store_new (N_COLUMNS,
                                    G_TYPE_INT,
                                    G_TYPE_STRING);
 
-  for (i = 0; i < 4; i++)
+  for (i = PANEL_LABEL_NONE; i < N_PANEL_LABELS; i++)
   {
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter,

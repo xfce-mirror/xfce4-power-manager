@@ -39,6 +39,7 @@
 #include "common/xfpm-power-common.h"
 #include "common/xfpm-brightness.h"
 #include "common/xfpm-debug.h"
+#include "common/xfpm-enum-glib.h"
 #ifdef XFPM_SYSTRAY
 #include "src/xfpm-inhibit.h"
 #endif
@@ -332,11 +333,11 @@ power_manager_button_set_label (PowerManagerButton *button, gdouble percentage,
   }
 
   /* Set the label accordingly or hide it if the battery is full */
-  if (button->priv->show_panel_label == 1)
+  if (button->priv->show_panel_label == PANEL_LABEL_PERCENTAGE)
     label_string = g_strdup_printf ("%d%%", (int) percentage);
-  else if (button->priv->show_panel_label == 2)
+  else if (button->priv->show_panel_label == PANEL_LABEL_TIME)
     label_string = g_strdup_printf ("%s", remaining_time);
-  else if (button->priv->show_panel_label == 3)
+  else if (button->priv->show_panel_label == PANEL_LABEL_PERCENTAGE_AND_TIME)
     label_string = g_strdup_printf ("%d%% - %s", (int) percentage, remaining_time);
 
   gtk_label_set_text (GTK_LABEL (button->priv->panel_label), label_string);
@@ -929,7 +930,7 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
   g_object_class_install_property (object_class, PROP_SHOW_PANEL_LABEL,
                                    g_param_spec_int (SHOW_PANEL_LABEL,
                                                      NULL, NULL,
-                                                     0, G_MAXINT16, 3,
+                                                     PANEL_LABEL_NONE, PANEL_LABEL_PERCENTAGE_AND_TIME, PANEL_LABEL_PERCENTAGE,
                                                      XFPM_PARAM_FLAGS));
 
   g_object_class_install_property (object_class, PROP_PRESENTATION_MODE,
@@ -1284,7 +1285,7 @@ power_manager_button_update_label (PowerManagerButton *button, UpDevice *device)
       return;
 
 #ifdef XFCE_PLUGIN
-  if (button->priv->show_panel_label <= 0 || button->priv->show_panel_label >3)
+  if (button->priv->show_panel_label == PANEL_LABEL_NONE)
   {
     gtk_widget_hide (GTK_WIDGET (button->priv->panel_label));
     power_manager_button_size_changed_cb (button->priv->plugin,
