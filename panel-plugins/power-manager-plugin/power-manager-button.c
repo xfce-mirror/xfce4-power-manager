@@ -461,8 +461,6 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
   GdkPixbuf       *pix;
   cairo_surface_t *surface = NULL;
 
-  XFPM_DEBUG("entering for %s", object_path);
-
   if (!POWER_MANAGER_IS_BUTTON (button))
     return;
 
@@ -573,8 +571,6 @@ power_manager_button_add_device (UpDevice *device, PowerManagerButton *button)
   guint type = 0;
   const gchar *object_path = up_device_get_object_path(device);
   gulong signal_id;
-
-  XFPM_DEBUG("entering for %s", object_path);
 
   g_return_if_fail (POWER_MANAGER_IS_BUTTON (button ));
 

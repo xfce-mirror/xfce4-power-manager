@@ -302,8 +302,6 @@ xfpm_inhibit_get_inhibit_list (XfpmInhibit *inhibit)
   Inhibitor *inhibitor;
   const gchar **OUT_inhibitors;
 
-  XFPM_DEBUG ("entering xfpm_inhibit_get_inhibit_list");
-
   OUT_inhibitors = g_new (const gchar *, inhibit->priv->array->len + 1);
 
   for ( i = 0; i<inhibit->priv->array->len; i++)
