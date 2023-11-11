@@ -49,7 +49,6 @@
 
 
 #define SET_LEVEL_TIMEOUT (50)
-#define SAFE_SLIDER_MIN_LEVEL (5)
 
 struct PowerManagerButtonPrivate
 {
@@ -91,15 +90,6 @@ struct PowerManagerButtonPrivate
 
   /* display brightness slider widget */
   GtkWidget       *range;
-  /* Some laptops (and mostly newer ones with intel graphics) can turn off the
-   * backlight completely. If the user is not careful and sets the brightness
-   * very low using the slider, he might not be able to see the screen contents
-   * anymore. Brightness keys do not work on every laptop, so it's better to use
-   * a safe default minimum level that the user can change via the settings
-   * editor if desired.
-   */
-  gint32           brightness_min_level;
-
   gint             show_panel_label;
   gboolean         presentation_mode;
   gboolean         show_presentation_indicator;
@@ -123,7 +113,6 @@ typedef struct
 typedef enum
 {
   PROP_0 = 0,
-  PROP_BRIGHTNESS_MIN_LEVEL,
   PROP_SHOW_PANEL_LABEL,
   PROP_PRESENTATION_MODE,
   PROP_SHOW_PRESENTATION_INDICATOR,
@@ -161,8 +150,6 @@ static gboolean   power_manager_button_press_event                      (GtkWidg
 static gboolean   power_manager_button_menu_add_device                  (PowerManagerButton *button,
                                                                          BatteryDevice *battery_device,
                                                                          gboolean append);
-static void       increase_brightness                                   (PowerManagerButton *button);
-static void       decrease_brightness                                   (PowerManagerButton *button);
 static void       battery_device_remove_surface                         (BatteryDevice *battery_device);
 
 
@@ -752,45 +739,20 @@ power_manager_button_scroll_event (GtkWidget *widget, GdkEventScroll *ev)
   if (button->priv->brightness == NULL)
     return FALSE;
 
-  if (ev->direction == GDK_SCROLL_UP)
+  if (ev->direction == GDK_SCROLL_UP || ev->direction == GDK_SCROLL_DOWN)
   {
-    increase_brightness (button);
+    gboolean (*scroll_brightness) (XfpmBrightness *) =
+      ev->direction == GDK_SCROLL_UP ? xfpm_brightness_increase : xfpm_brightness_decrease;
+    if (scroll_brightness (button->priv->brightness) && button->priv->range != NULL)
+    {
+      gint32 level;
+      if (xfpm_brightness_get_level (button->priv->brightness, &level))
+        gtk_range_set_value (GTK_RANGE (button->priv->range), level);
+    }
     return TRUE;
   }
-  else if (ev->direction == GDK_SCROLL_DOWN)
-  {
-    decrease_brightness (button);
-    return TRUE;
-  }
+
   return FALSE;
-}
-
-static void
-set_brightness_min_level (PowerManagerButton *button, gint32 new_brightness_level)
-{
-  gint32 max_level = xfpm_brightness_get_max_level (button->priv->brightness);
-
-  /* sanity check */
-  if (new_brightness_level > max_level)
-    new_brightness_level = -1;
-
-  /* -1 = auto, we set the step value to a hopefully sane default */
-  if (new_brightness_level == -1)
-  {
-    button->priv->brightness_min_level = (max_level > 100) ? SAFE_SLIDER_MIN_LEVEL : 0;
-  }
-  else
-  {
-    button->priv->brightness_min_level = new_brightness_level;
-  }
-
-  XFPM_DEBUG ("button->priv->brightness_min_level : %d", button->priv->brightness_min_level);
-
-  /* update the range if it's being shown */
-  if (button->priv->range)
-  {
-    gtk_range_set_range (GTK_RANGE (button->priv->range), button->priv->brightness_min_level, max_level);
-  }
 }
 
 static void
@@ -799,16 +761,12 @@ power_manager_button_set_property (GObject *object,
                                    const GValue *value,
                                    GParamSpec *pspec)
 {
-  PowerManagerButton *button;
-
-  button = POWER_MANAGER_BUTTON (object);
+#ifdef XFCE_PLUGIN
+  PowerManagerButton *button = POWER_MANAGER_BUTTON (object);
+#endif
 
   switch (property_id)
   {
-    case PROP_BRIGHTNESS_MIN_LEVEL:
-      if (button->priv->brightness != NULL)
-        set_brightness_min_level (button, g_value_get_int (value));
-      break;
 #ifdef XFCE_PLUGIN
     case PROP_SHOW_PANEL_LABEL:
       button->priv->show_panel_label = g_value_get_int (value);
@@ -842,15 +800,12 @@ power_manager_button_get_property(GObject *object,
                                   GValue *value,
                                   GParamSpec *pspec)
 {
-  PowerManagerButton *button;
-
-  button = POWER_MANAGER_BUTTON (object);
+#ifdef XFCE_PLUGIN
+  PowerManagerButton *button = POWER_MANAGER_BUTTON (object);
+#endif
 
   switch(property_id)
   {
-    case PROP_BRIGHTNESS_MIN_LEVEL:
-      g_value_set_int (value, button->priv->brightness_min_level);
-      break;
 #ifdef XFCE_PLUGIN
     case PROP_SHOW_PANEL_LABEL:
       g_value_set_int (value, button->priv->show_panel_label);
@@ -871,6 +826,22 @@ power_manager_button_get_property(GObject *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
   }
+}
+
+static void
+set_brightness_properties (PowerManagerButton *button)
+{
+  gint32 level = xfconf_channel_get_int (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL, -1);
+  guint step_count = xfconf_channel_get_uint (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT, 10);
+  gboolean exponential = xfconf_channel_get_bool (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL, FALSE);
+
+  /* order accounts: default min level depends on step count */
+  xfpm_brightness_set_step_count (button->priv->brightness, step_count, exponential);
+  xfpm_brightness_set_min_level (button->priv->brightness, level);
+  if (button->priv->range != NULL)
+    gtk_range_set_range (GTK_RANGE (button->priv->range),
+                         xfpm_brightness_get_min_level (button->priv->brightness),
+                         xfpm_brightness_get_max_level (button->priv->brightness));
 }
 
 static void
@@ -909,15 +880,6 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
                            | G_PARAM_STATIC_NAME \
                            | G_PARAM_STATIC_NICK \
                            | G_PARAM_STATIC_BLURB)
-
-  /* We allow and default to -1 only so that we can automagically set a
-   * sane value if the user hasn't selected one already */
-  g_object_class_install_property (object_class, PROP_BRIGHTNESS_MIN_LEVEL,
-                                   g_param_spec_int(BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                                    BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                                    BRIGHTNESS_SLIDER_MIN_LEVEL,
-                                                    -1, G_MAXINT32, -1,
-                                                    XFPM_PARAM_FLAGS));
 
   g_object_class_install_property (object_class, PROP_SHOW_PANEL_LABEL,
                                    g_param_spec_int (SHOW_PANEL_LABEL,
@@ -986,6 +948,14 @@ power_manager_button_init (PowerManagerButton *button)
   else
   {
     button->priv->channel = xfconf_channel_get (XFPM_CHANNEL);
+    if (button->priv->brightness != NULL)
+    {
+      set_brightness_properties (button);
+      g_signal_connect_object (button->priv->channel, "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL,
+                               G_CALLBACK (set_brightness_properties), button, G_CONNECT_SWAPPED);
+      g_signal_connect_object (button->priv->channel, "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
+                               G_CALLBACK (set_brightness_properties), button, G_CONNECT_SWAPPED);
+    }
   }
 
 #ifdef XFCE_PLUGIN
@@ -1085,17 +1055,14 @@ power_manager_button_new (void)
 
 #ifdef XFCE_PLUGIN
   button->priv->plugin = XFCE_PANEL_PLUGIN (g_object_ref (plugin));
-#endif
-
-  xfconf_g_property_bind (button->priv->channel,
-                          XFPM_PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL, G_TYPE_INT,
-                          G_OBJECT (button), BRIGHTNESS_SLIDER_MIN_LEVEL);
   xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, G_TYPE_INT,
                           G_OBJECT (button), SHOW_PANEL_LABEL);
   xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
                           G_OBJECT (button), PRESENTATION_MODE);
   xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX SHOW_PRESENTATION_INDICATOR, G_TYPE_BOOLEAN,
                           G_OBJECT (button), SHOW_PRESENTATION_INDICATOR);
+#endif
+
   return GTK_WIDGET (button);
 }
 
@@ -1532,33 +1499,6 @@ display_inhibitors (PowerManagerButton *button, GtkWidget *menu)
 }
 #endif
 
-static void
-decrease_brightness (PowerManagerButton *button)
-{
-  gint32 level, next_level;
-
-  xfpm_brightness_get_level (button->priv->brightness, &level);
-  next_level = MAX (button->priv->brightness_min_level,
-                    xfpm_brightness_dec (button->priv->brightness, level));
-
-  xfpm_brightness_set_level(button->priv->brightness, next_level);
-  if (button->priv->range)
-    gtk_range_set_value (GTK_RANGE (button->priv->range), next_level);
-}
-
-static void
-increase_brightness (PowerManagerButton *button)
-{
-  gint32 level, next_level;
-
-  xfpm_brightness_get_level (button->priv->brightness, &level);
-  next_level = xfpm_brightness_inc (button->priv->brightness, level);
-
-  xfpm_brightness_set_level (button->priv->brightness, next_level);
-  if (button->priv->range)
-      gtk_range_set_value (GTK_RANGE (button->priv->range), next_level);
-}
-
 static gboolean
 brightness_set_level_with_timeout (PowerManagerButton *button)
 {
@@ -1630,7 +1570,7 @@ power_manager_button_show_menu (PowerManagerButton *button)
   GdkScreen *gscreen;
   GList *item;
   gboolean show_separator_flag = FALSE;
-  gint32 max_level, current_level = 0;
+  gint32 current_level = 0;
 
   g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
 
@@ -1668,25 +1608,9 @@ power_manager_button_show_menu (PowerManagerButton *button)
   /* Display brightness slider - show if there's hardware support for it */
   if (button->priv->brightness != NULL)
   {
-    guint brightness_step_count;
-    gboolean brightness_exponential;
-
-    max_level = xfpm_brightness_get_max_level (button->priv->brightness);
-
-    /* Setup brightness steps */
-    brightness_step_count =
-      xfconf_channel_get_uint (button->priv->channel,
-                               XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
-                               10);
-    brightness_exponential =
-      xfconf_channel_get_bool (button->priv->channel,
-                               XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
-                               FALSE);
-    xfpm_brightness_set_step_count (button->priv->brightness,
-                                    brightness_step_count,
-                                    brightness_exponential);
-
-    mi = scale_menu_item_new_with_range (button->priv->brightness_min_level, max_level, 1);
+    mi = scale_menu_item_new_with_range (xfpm_brightness_get_min_level (button->priv->brightness),
+                                         xfpm_brightness_get_max_level (button->priv->brightness),
+                                         1);
 
     scale_menu_item_set_description_label (SCALE_MENU_ITEM (mi), _("<b>Display brightness</b>"));
 

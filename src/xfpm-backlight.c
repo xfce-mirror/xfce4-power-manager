@@ -257,9 +257,6 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
 
   backlight->priv->block = TRUE;
 
-  /* get the current brightness level */
-  ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
-
   /* optionally, handle updating the level and setting the screen brightness */
   if ( handle_brightness_keys )
   {
@@ -268,15 +265,16 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
                                     brightness_exponential);
     if ( type == BUTTON_MON_BRIGHTNESS_UP )
     {
-      level = xfpm_brightness_inc (backlight->priv->brightness, level);
+      xfpm_brightness_increase (backlight->priv->brightness);
     }
     else
     {
-      level = xfpm_brightness_dec (backlight->priv->brightness, level);
+      xfpm_brightness_decrease (backlight->priv->brightness);
     }
-
-    ret = xfpm_brightness_set_level (backlight->priv->brightness, level);
   }
+
+  /* get the current brightness level */
+  ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
 
   /* optionally, show the result in a popup (even if it did not change) */
   if ( ret && show_popup )
