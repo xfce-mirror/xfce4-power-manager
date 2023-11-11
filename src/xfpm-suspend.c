@@ -90,8 +90,6 @@ freebsd_supports_sleep_state (const gchar *state)
   gboolean ret = FALSE;
   gchar *sleep_states;
 
-  XFPM_DEBUG("entering");
-
   sleep_states = get_string_sysctl (NULL, "hw.acpi.supported_sleep_state");
 
   if (sleep_states != NULL) {
@@ -112,8 +110,6 @@ linux_supports_sleep_state (const gchar *state)
   gchar *command;
   GError *error = NULL;
   gint status;
-
-  XFPM_DEBUG("entering");
 
   /* run script from pm-utils */
   command = g_strdup_printf ("/usr/bin/pm-is-supported --%s", state);
@@ -137,7 +133,6 @@ linux_supports_sleep_state (const gchar *state)
 gboolean
 xfpm_suspend_can_suspend (void)
 {
-  XFPM_DEBUG("entering");
 #ifdef BACKEND_TYPE_FREEBSD
   return freebsd_supports_sleep_state ("S3");
 #endif
@@ -154,7 +149,6 @@ xfpm_suspend_can_suspend (void)
 gboolean
 xfpm_suspend_can_hibernate (void)
 {
-  XFPM_DEBUG("entering");
 #ifdef BACKEND_TYPE_FREEBSD
   return freebsd_supports_sleep_state ("S4");
 #endif
