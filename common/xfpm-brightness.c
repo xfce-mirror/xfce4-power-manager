@@ -53,6 +53,7 @@ struct XfpmBrightnessPrivate
 
   gint32    max_level;
   gint32    current_level;
+  gint32    hw_min_level;
   gint32    min_level;
   gint32    step;
   gfloat    exp_step;
@@ -60,15 +61,14 @@ struct XfpmBrightnessPrivate
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmBrightness, xfpm_brightness, G_TYPE_OBJECT)
 
-/**
- * Returns the next increment in screen brightness, given the current level. If
- * the increment would be above the maximum brightness, the maximum brightness
- * is returned.
- */
-gint32
-xfpm_brightness_inc (XfpmBrightness *brightness, gint32 level)
+gboolean
+xfpm_brightness_increase (XfpmBrightness *brightness)
 {
-  gint32 new_level;
+  gint32 level, new_level;
+
+  if (!xfpm_brightness_get_level (brightness, &level))
+    return FALSE;
+
   if ( brightness->priv->use_exp_step )
   {
     new_level = roundf (level * brightness->priv->exp_step);
@@ -79,20 +79,17 @@ xfpm_brightness_inc (XfpmBrightness *brightness, gint32 level)
     new_level = level + brightness->priv->step;
   }
 
-  return MIN (xfpm_brightness_get_max_level (brightness), new_level);
+  return xfpm_brightness_set_level (brightness, new_level);
 }
 
-/**
- * Returns the next decrement in screen brightness, given the current level. If
- * the decrement would be below 0, then 0 is returned instead. Note that it is
- * left to callers to define their own lower limits; for an example, see
- * decrease_brightness in power-manager-button, which clamps the value above 0
- * to avoid errant mouse scroll events from blanking the display panel entirely.
- */
-gint32
-xfpm_brightness_dec (XfpmBrightness *brightness, gint32 level)
+gboolean
+xfpm_brightness_decrease (XfpmBrightness *brightness)
 {
-  gint32 new_level;
+  gint32 level, new_level;
+
+  if (!xfpm_brightness_get_level (brightness, &level))
+    return FALSE;
+
   if (brightness->priv->use_exp_step)
   {
     new_level = roundf (level / brightness->priv->exp_step);
@@ -103,7 +100,7 @@ xfpm_brightness_dec (XfpmBrightness *brightness, gint32 level)
     new_level = level - brightness->priv->step;
   }
 
-  return MAX (0, new_level);
+  return xfpm_brightness_set_level (brightness, new_level);
 }
 
 static gboolean
@@ -522,7 +519,50 @@ xfpm_brightness_new (void)
     return NULL;
   }
 
+  brightness->priv->hw_min_level = brightness->priv->min_level;
+
   return brightness;
+}
+
+gint32 xfpm_brightness_get_min_level (XfpmBrightness *brightness)
+{
+  return brightness->priv->min_level;
+}
+
+/*
+ * Some laptops (and mostly newer ones with intel graphics) can turn off the
+ * backlight completely. If the user is not careful and sets the brightness
+ * very low using the slider, he might not be able to see the screen contents
+ * anymore. Brightness keys do not work on every laptop, so it's better to use
+ * a safe default minimum level that the user can change via the settings
+ * editor if desired.
+ */
+void
+xfpm_brightness_set_min_level (XfpmBrightness *brightness,
+                               gint32 level)
+{
+  gint32 max_min = brightness->priv->max_level - brightness->priv->step;
+
+  /* -1 = auto, we set the minimum as 10% of delta */
+  if (level == -1)
+  {
+    brightness->priv->min_level = brightness->priv->hw_min_level
+      + MAX (brightness->priv->step, (brightness->priv->max_level - brightness->priv->hw_min_level) / 10);
+    XFPM_DEBUG ("Setting default min brightness (%d) above hardware min (%d)",
+                brightness->priv->min_level, brightness->priv->hw_min_level);
+    return;
+  }
+
+  if (level < brightness->priv->hw_min_level || level > max_min)
+  {
+    XFPM_DEBUG ("Set min brightness (%d) clamped to admissible values [%d, %d]",
+                level, brightness->priv->hw_min_level, max_min);
+    brightness->priv->min_level = CLAMP (level, brightness->priv->hw_min_level, max_min);
+    return;
+  }
+
+  XFPM_DEBUG ("Setting min brightness at %d", level);
+  brightness->priv->min_level = level;
 }
 
 gint32 xfpm_brightness_get_max_level (XfpmBrightness *brightness)
@@ -548,8 +588,12 @@ gboolean xfpm_brightness_set_level (XfpmBrightness *brightness, gint32 level)
 {
   gboolean ret = FALSE;
 
-  if ( level < brightness->priv->min_level || level > brightness->priv->max_level )
-    return ret;
+  if (level < brightness->priv->min_level || level > brightness->priv->max_level)
+  {
+    XFPM_DEBUG ("Set brightness (%d) clamped to admissible values [%d, %d]",
+                level, brightness->priv->min_level, brightness->priv->max_level);
+    level = CLAMP (level, brightness->priv->min_level, brightness->priv->max_level);
+  }
 
   if (brightness->priv->xrandr_has_hw )
     ret = xfpm_brightness_xrandr_set_level (brightness, brightness->priv->output, level);
@@ -568,7 +612,7 @@ void xfpm_brightness_set_step_count (XfpmBrightness *brightness, guint32 count, 
   if (count < 2)
     count = 2;
 
-  delta = brightness->priv->max_level - brightness->priv->min_level;
+  delta = brightness->priv->max_level - brightness->priv->hw_min_level;
   brightness->priv->use_exp_step = exponential;
   brightness->priv->step = (delta < (count * 2)) ? 1 : (delta / count);
   brightness->priv->exp_step = powf (delta, 1.0 / count);
