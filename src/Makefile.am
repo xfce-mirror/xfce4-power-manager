@@ -95,6 +95,19 @@ xfce4_power_manager_LDADD += \
 	$(LIBXEXT_LIBS)
 endif
 
+if ENABLE_WAYLAND
+xfce4_power_manager_SOURCES += \
+	xfpm-idle-wayland.c \
+	xfpm-idle-wayland.h
+
+xfce4_power_manager_CFLAGS += \
+	$(WAYLAND_CLIENT_CFLAGS)
+
+xfce4_power_manager_LDADD += \
+	$(top_builddir)/protocols/libprotocols.la \
+	$(WAYLAND_CLIENT_LIBS)
+endif
+
 if HAVE_POLKIT
 
 sbin_PROGRAMS = xfpm-power-backlight-helper     \
