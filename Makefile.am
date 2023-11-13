@@ -7,6 +7,7 @@ plugins_dir = panel-plugins
 endif
 
 SUBDIRS =        	\
+	protocols		\
 	data		\
 	libdbus		\
 	common		\
