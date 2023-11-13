@@ -211,3 +211,19 @@ notification_resumed (void *data,
   Alarm *alarm = data;
   g_signal_emit_by_name (alarm->idle, "reset");
 }
+
+
+
+
+XfpmIdle *
+xfpm_idle_wayland_new (void)
+{
+  XfpmIdle *idle = g_object_new (XFPM_TYPE_IDLE_WAYLAND, NULL);
+  if (XFPM_IDLE_WAYLAND (idle)->wl_notifier == NULL)
+  {
+    g_object_unref (idle);
+    return NULL;
+  }
+
+  return idle;
+}

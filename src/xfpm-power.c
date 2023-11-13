@@ -1312,8 +1312,11 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
 
     /* reset the timers */
     idle = xfpm_idle_new ();
-    xfpm_idle_alarm_reset_all (idle);
-    g_object_unref (idle);
+    if (idle != NULL)
+    {
+      xfpm_idle_alarm_reset_all (idle);
+      g_object_unref (idle);
+    }
   }
 
   XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
