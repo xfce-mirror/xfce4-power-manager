@@ -30,6 +30,10 @@
 #include <gdk/gdkx.h>
 #include "xfpm-idle-x11.h"
 #endif
+#ifdef ENABLE_WAYLAND
+#include <gdk/gdkwayland.h>
+#include "xfpm-idle-wayland.h"
+#endif
 
 #define get_instance_private(instance) ((XfpmIdlePrivate *) \
   xfpm_idle_get_instance_private (XFPM_IDLE (instance)))
@@ -93,6 +97,10 @@ xfpm_idle_new (void)
     if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
       singleton = g_object_new (XFPM_TYPE_IDLE_X11, NULL);
 #endif
+#ifdef ENABLE_WAYLAND
+    if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+      singleton = g_object_new (XFPM_TYPE_IDLE_WAYLAND, NULL);
+#endif
     if (singleton != NULL)
       g_object_add_weak_pointer (singleton, &singleton);
     else
@@ -125,12 +133,12 @@ xfpm_idle_alarm_add (XfpmIdle *idle,
 
   if (!(priv->added_alarm_ids & id))
   {
-    XFPM_DEBUG ("Adding alarm id %d", id);
+    XFPM_DEBUG ("Adding alarm id %d with timeout %d", id, timeout);
     priv->added_alarm_ids |= id;
   }
   else
   {
-    XFPM_DEBUG ("Updating alarm id %d", id);
+    XFPM_DEBUG ("Updating alarm id %d with timeout %d", id, timeout);
   }
 
   XFPM_IDLE_GET_CLASS (idle)->alarm_add (idle, id, timeout);

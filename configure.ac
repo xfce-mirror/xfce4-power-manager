@@ -69,6 +69,9 @@ m4_define([x11_minimum_version], [1.6.7])
 m4_define([xrandr_minimum_version], [1.2.0])
 m4_define([xext_minimum_version], [1.0.0])
 
+m4_define([wayland_minimum_version], [1.15])
+m4_define([wayland_protocols_minimum_version], [1.20])
+
 m4_define([polkit_minimum_version], [0.102])
 m4_define([libxfce4panel_minimum_version],[4.12.0])
 
@@ -103,6 +106,9 @@ XDT_CHECK_OPTIONAL_FEATURE([WAYLAND],
                            [wayland],
                            [
                              XDT_FEATURE_DEPENDENCY([GDK_WAYLAND], [gdk-wayland-3.0], [gtk_minimum_version])
+                             XDT_FEATURE_DEPENDENCY([WAYLAND_CLIENT], [wayland-client], [wayland_minimum_version])
+                             XDT_FEATURE_DEPENDENCY([WAYLAND_SCANNER], [wayland-scanner], [wayland_minimum_version])
+                             XDT_FEATURE_DEPENDENCY([WAYLAND_PROTOCOLS], [wayland-protocols], [wayland_protocols_minimum_version])
                            ],
                            [the Wayland windowing system])
 if test x"$ENABLE_X11" != x"yes" -a x"$ENABLE_WAYLAND" != x"yes"; then
@@ -120,6 +126,13 @@ if test x"$ENABLE_X11" = x"yes"; then
   fi
 fi
 
+if test x"$ENABLE_WAYLAND" = x"yes"; then
+  WAYLAND_PROTOCOLS_PKGDATADIR=`$PKG_CONFIG --variable=pkgdatadir wayland-protocols`
+  AC_SUBST([WAYLAND_PROTOCOLS_PKGDATADIR])
+fi
+dnl FIXME: Bump wayland_protocols_minimum_version to 1.27 when it is an acceptable requirement,
+dnl and remove this and protocols/ext-idle-notify-v1.xml
+AM_CONDITIONAL([HAVE_IDLE_NOTIFY], [test -f "$WAYLAND_PROTOCOLS_PKGDATADIR/staging/ext-idle-notify/ext-idle-notify-v1.xml"])
 
 #=======================================================#
 #              Polkit?			                #
@@ -205,6 +218,7 @@ AC_SUBST([PLATFORM_LDFLAGS])
 
 AC_CONFIG_FILES([
 Makefile
+protocols/Makefile
 libdbus/Makefile
 common/Makefile
 src/Makefile
