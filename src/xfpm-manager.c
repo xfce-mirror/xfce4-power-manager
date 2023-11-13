@@ -191,7 +191,8 @@ xfpm_manager_finalize (GObject *object)
   g_object_unref (manager->priv->monitor);
   g_object_unref (manager->priv->inhibit);
   g_object_unref (manager->priv->ppd);
-  g_object_unref (manager->priv->idle);
+  if (manager->priv->idle != NULL)
+    g_object_unref (manager->priv->idle);
 
   g_timer_destroy (manager->priv->timer);
 
@@ -594,13 +595,6 @@ xfpm_manager_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmM
   xfpm_idle_alarm_reset_all (manager->priv->idle);
 }
 
-static void
-xfpm_manager_set_idle_alarm (XfpmManager *manager)
-{
-  xfpm_manager_set_idle_alarm_on_ac (manager);
-  xfpm_manager_set_idle_alarm_on_battery (manager);
-}
-
 static gchar*
 xfpm_manager_get_systemd_events(XfpmManager *manager)
 {
@@ -895,12 +889,17 @@ void xfpm_manager_start (XfpmManager *manager)
     g_clear_error (&error);
   }
 
-  g_signal_connect_object (manager->priv->idle, "alarm-expired",
-                           G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager, 0);
-  g_signal_connect_object (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
-                           G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
-                           G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager, G_CONNECT_SWAPPED);
+  if (manager->priv->idle != NULL)
+  {
+    g_signal_connect_object (manager->priv->idle, "alarm-expired",
+                             G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager, 0);
+    g_signal_connect_object (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
+                             G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager, G_CONNECT_SWAPPED);
+    g_signal_connect_object (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
+                             G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager, G_CONNECT_SWAPPED);
+    xfpm_manager_set_idle_alarm_on_ac (manager);
+    xfpm_manager_set_idle_alarm_on_battery (manager);
+  }
   g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_POWER_KEY,
                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
   g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_SUSPEND_KEY,
@@ -909,8 +908,6 @@ void xfpm_manager_start (XfpmManager *manager)
                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
   g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
-
-  xfpm_manager_set_idle_alarm (manager);
 
   g_signal_connect_object (manager->priv->inhibit, "has-inhibit-changed",
                            G_CALLBACK (xfpm_manager_inhibit_changed_cb), manager, 0);
