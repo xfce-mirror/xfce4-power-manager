@@ -28,6 +28,8 @@ G_BEGIN_DECLS
 #define XFPM_TYPE_IDLE_X11 (xfpm_idle_x11_get_type ())
 G_DECLARE_FINAL_TYPE (XfpmIdleX11, xfpm_idle_x11, XFPM, IDLE_X11, XfpmIdle)
 
+XfpmIdle *xfpm_idle_x11_new (void);
+
 G_END_DECLS
 
 #endif /* __XFPM_IDLE_X11_H__ */
