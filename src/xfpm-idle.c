@@ -86,25 +86,37 @@ XfpmIdle *
 xfpm_idle_new (void)
 {
   static gpointer singleton = NULL;
+  static gboolean tried = FALSE;
 
   if (singleton != NULL)
   {
     g_object_ref (singleton);
   }
-  else
+  else if (!tried)
   {
 #ifdef ENABLE_X11
     if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-      singleton = g_object_new (XFPM_TYPE_IDLE_X11, NULL);
+    {
+      singleton = xfpm_idle_x11_new ();
+      tried = TRUE;
+    }
 #endif
 #ifdef ENABLE_WAYLAND
     if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-      singleton = g_object_new (XFPM_TYPE_IDLE_WAYLAND, NULL);
+    {
+      singleton = xfpm_idle_wayland_new ();
+      tried = TRUE;
+    }
 #endif
     if (singleton != NULL)
+    {
       g_object_add_weak_pointer (singleton, &singleton);
-    else
+    }
+    else if (!tried)
+    {
       g_critical ("Idle status monitoring is not supported on this windowing environment");
+      tried = TRUE;
+    }
   }
 
   return singleton;
