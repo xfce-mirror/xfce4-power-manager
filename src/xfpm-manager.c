@@ -31,8 +31,13 @@
 #include <string.h>
 #endif
 
+#ifdef ENABLE_X11
+#include <gdk/gdkx.h>
+#define WINDOWING_IS_X11() GDK_IS_X11_DISPLAY (gdk_display_get_default ())
+#else
+#define WINDOWING_IS_X11() FALSE
+#endif
 #include <gtk/gtk.h>
-#include <glib.h>
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -44,13 +49,15 @@
 
 #include "xfpm-power.h"
 #include "xfpm-dbus.h"
+#ifdef ENABLE_X11
 #include "xfpm-dpms.h"
+#endif
 #include "xfpm-manager.h"
 #include "xfpm-button.h"
 #include "xfpm-backlight.h"
 #include "xfpm-kbd-backlight.h"
 #include "xfpm-inhibit.h"
-#include "egg-idletime.h"
+#include "xfpm-idle.h"
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
 #include "xfpm-xfconf.h"
@@ -101,12 +108,14 @@ struct XfpmManagerPrivate
   XfpmInhibit        *inhibit;
   XfpmPPD            *ppd;
   XfceScreensaver    *screensaver;
-  EggIdletime        *idle;
+  XfpmIdle           *idle;
   GtkStatusIcon      *adapter_icon;
   GtkWidget          *power_button;
   gint                show_tray_icon;
 
+#ifdef ENABLE_X11
   XfpmDpms           *dpms;
+#endif
 
   GTimer         *timer;
 
@@ -182,11 +191,14 @@ xfpm_manager_finalize (GObject *object)
   g_object_unref (manager->priv->monitor);
   g_object_unref (manager->priv->inhibit);
   g_object_unref (manager->priv->ppd);
-  g_object_unref (manager->priv->idle);
+  if (manager->priv->idle != NULL)
+    g_object_unref (manager->priv->idle);
 
   g_timer_destroy (manager->priv->timer);
 
+#ifdef ENABLE_X11
   g_object_unref (manager->priv->dpms);
+#endif
 
   if (manager->priv->backlight != NULL)
     g_object_unref (manager->priv->backlight);
@@ -213,11 +225,13 @@ xfpm_manager_set_property (GObject *object,
         manager->priv->show_tray_icon = new_value;
         if (new_value > 0)
         {
-          xfpm_manager_show_tray_icon (manager);
+          if (WINDOWING_IS_X11 ())
+            xfpm_manager_show_tray_icon (manager);
         }
         else
         {
-          xfpm_manager_hide_tray_icon (manager);
+          if (WINDOWING_IS_X11 ())
+            xfpm_manager_hide_tray_icon (manager);
         }
       }
       break;
@@ -444,8 +458,10 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
 
     if ( action == LID_TRIGGER_DPMS )
     {
+#ifdef ENABLE_X11
       if ( !xfpm_is_multihead_connected () )
         xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOff);
+#endif
     }
     else if ( action == LID_TRIGGER_LOCK_SCREEN )
     {
@@ -474,8 +490,10 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
   {
     XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID opened");
 
+#ifdef ENABLE_X11
     if ( action != LID_TRIGGER_NOTHING )
       xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOn);
+#endif
   }
 }
 
@@ -486,14 +504,14 @@ xfpm_manager_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmM
 }
 
 static void
-xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager)
+xfpm_manager_alarm_timeout_cb (XfpmIdle *idle, XfpmAlarmId id, XfpmManager *manager)
 {
   if (xfpm_power_is_in_presentation_mode (manager->priv->power) == TRUE)
     return;
 
   XFPM_DEBUG ("Alarm inactivity timeout id %d", id);
 
-  if ( id == TIMEOUT_INACTIVITY_ON_AC || id == TIMEOUT_INACTIVITY_ON_BATTERY )
+  if (id == XFPM_ALARM_ID_INACTIVITY_ON_AC || id == XFPM_ALARM_ID_INACTIVITY_ON_BATTERY)
   {
     XfpmShutdownRequest sleep_mode = XFPM_DO_NOTHING;
     gboolean on_battery;
@@ -504,7 +522,7 @@ xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager
       return;
     }
 
-    if ( id == TIMEOUT_INACTIVITY_ON_AC)
+    if (id == XFPM_ALARM_ID_INACTIVITY_ON_AC)
       g_object_get (G_OBJECT (manager->priv->conf),
                     INACTIVITY_SLEEP_MODE_ON_AC, &sleep_mode,
                     NULL);
@@ -517,9 +535,8 @@ xfpm_manager_alarm_timeout_cb (EggIdletime *idle, guint id, XfpmManager *manager
                   "on-battery", &on_battery,
                   NULL);
 
-    if ( id == TIMEOUT_INACTIVITY_ON_AC && on_battery == FALSE )
-      xfpm_manager_sleep_request (manager, sleep_mode, FALSE);
-    else if ( id ==  TIMEOUT_INACTIVITY_ON_BATTERY && on_battery )
+    if ((id == XFPM_ALARM_ID_INACTIVITY_ON_AC && !on_battery)
+        || (id ==  XFPM_ALARM_ID_INACTIVITY_ON_BATTERY && on_battery))
       xfpm_manager_sleep_request (manager, sleep_mode, FALSE);
   }
 }
@@ -540,11 +557,11 @@ xfpm_manager_set_idle_alarm_on_ac (XfpmManager *manager)
 
   if ( on_ac == 14 )
   {
-    egg_idletime_alarm_remove (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC );
+    xfpm_idle_alarm_remove (manager->priv->idle, XFPM_ALARM_ID_INACTIVITY_ON_AC);
   }
   else
   {
-    egg_idletime_alarm_set (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC, on_ac * 1000 * 60);
+    xfpm_idle_alarm_add (manager->priv->idle, XFPM_ALARM_ID_INACTIVITY_ON_AC, on_ac * 1000 * 60);
   }
 }
 
@@ -564,25 +581,18 @@ xfpm_manager_set_idle_alarm_on_battery (XfpmManager *manager)
 
   if ( on_battery == 14 )
   {
-    egg_idletime_alarm_remove (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY );
+    xfpm_idle_alarm_remove (manager->priv->idle, XFPM_ALARM_ID_INACTIVITY_ON_BATTERY);
   }
   else
   {
-    egg_idletime_alarm_set (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY, on_battery * 1000 * 60);
+    xfpm_idle_alarm_add (manager->priv->idle, XFPM_ALARM_ID_INACTIVITY_ON_BATTERY, on_battery * 1000 * 60);
   }
 }
 
 static void
 xfpm_manager_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmManager *manager)
 {
-  egg_idletime_alarm_reset_all (manager->priv->idle);
-}
-
-static void
-xfpm_manager_set_idle_alarm (XfpmManager *manager)
-{
-  xfpm_manager_set_idle_alarm_on_ac (manager);
-  xfpm_manager_set_idle_alarm_on_battery (manager);
+  xfpm_idle_alarm_reset_all (manager->priv->idle);
 }
 
 static gchar*
@@ -866,7 +876,7 @@ void xfpm_manager_start (XfpmManager *manager)
   manager->priv->monitor = xfpm_dbus_monitor_new ();
   manager->priv->inhibit = xfpm_inhibit_new ();
   manager->priv->ppd = xfpm_ppd_new ();
-  manager->priv->idle = egg_idletime_new ();
+  manager->priv->idle = xfpm_idle_new ();
 
     /* Don't allow systemd to handle power/suspend/hibernate buttons
      * and lid-switch */
@@ -879,12 +889,17 @@ void xfpm_manager_start (XfpmManager *manager)
     g_clear_error (&error);
   }
 
-  g_signal_connect (manager->priv->idle, "alarm-expired",
-                    G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager);
-  g_signal_connect_swapped (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
-                            G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager);
-  g_signal_connect_swapped (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
-                            G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager);
+  if (manager->priv->idle != NULL)
+  {
+    g_signal_connect (manager->priv->idle, "alarm-expired",
+                      G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager);
+    g_signal_connect_swapped (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
+                              G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager);
+    g_signal_connect_swapped (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
+                              G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager);
+    xfpm_manager_set_idle_alarm_on_ac (manager);
+    xfpm_manager_set_idle_alarm_on_battery (manager);
+  }
   g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_POWER_KEY,
                             G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
   g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_SUSPEND_KEY,
@@ -893,8 +908,6 @@ void xfpm_manager_start (XfpmManager *manager)
                             G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
   g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
                             G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
-
-  xfpm_manager_set_idle_alarm (manager);
 
   g_signal_connect (manager->priv->inhibit, "has-inhibit-changed",
                     G_CALLBACK (xfpm_manager_inhibit_changed_cb), manager);
@@ -905,7 +918,9 @@ void xfpm_manager_start (XfpmManager *manager)
 
   manager->priv->kbd_backlight = xfpm_kbd_backlight_new ();
 
+#ifdef ENABLE_X11
   manager->priv->dpms = xfpm_dpms_new ();
+#endif
 
   g_signal_connect (manager->priv->button, "button_pressed",
                     G_CALLBACK (xfpm_manager_button_pressed_cb), manager);
