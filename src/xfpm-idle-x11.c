@@ -251,8 +251,6 @@ xfpm_idle_x11_init (XfpmIdleX11 *idle)
   int sync_error;
   int ncounters;
 
-  idle->alarms = g_ptr_array_new_with_free_func (alarm_free);
-
   idle->reset_set = FALSE;
   idle->idle_counter = None;
   idle->sync_event = 0;
@@ -284,6 +282,7 @@ xfpm_idle_x11_init (XfpmIdleX11 *idle)
   gdk_window_add_filter (NULL, event_filter_cb, idle);
 
   /* create a reset alarm */
+  idle->alarms = g_ptr_array_new_with_free_func (alarm_free);
   alarm = alarm_new (idle, 0);
   g_ptr_array_add (idle->alarms, alarm);
 }
@@ -294,7 +293,8 @@ xfpm_idle_x11_finalize (GObject *object)
   XfpmIdleX11 *idle = XFPM_IDLE_X11 (object);
 
   /* free all counters, including reset counter */
-  g_ptr_array_free (idle->alarms, TRUE);
+  if (idle->alarms != NULL)
+    g_ptr_array_free (idle->alarms, TRUE);
 
   G_OBJECT_CLASS (xfpm_idle_x11_parent_class)->finalize (object);
 }
@@ -355,4 +355,19 @@ xfpm_idle_x11_alarm_remove (XfpmIdle *_idle,
     return;
 
   g_ptr_array_remove (idle->alarms, alarm);
+}
+
+
+
+XfpmIdle *
+xfpm_idle_x11_new (void)
+{
+  XfpmIdle *idle = g_object_new (XFPM_TYPE_IDLE_X11, NULL);
+  if (XFPM_IDLE_X11 (idle)->alarms == NULL)
+  {
+    g_object_unref (idle);
+    return NULL;
+  }
+
+  return idle;
 }
