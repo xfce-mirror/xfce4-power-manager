@@ -1,5 +1,6 @@
 /*
- * * Copyright (C) 2008-2011 Ali <aliov@xfce.org>
+ * Copyright (C) 2008-2011 Ali <aliov@xfce.org>
+ * Copyright (C) 2023 Gaël Bonithon <gael@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -18,43 +19,47 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef __XFPM_DPMS_H
-#define __XFPM_DPMS_H
+#ifndef __XFPM_DPMS_H__
+#define __XFPM_DPMS_H__
 
 #include <glib-object.h>
 
-#include <xfconf/xfconf.h>
-
-#include <gdk/gdkx.h>
-#include <X11/Xproto.h>
-#include <X11/extensions/dpms.h>
-
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_DPMS        (xfpm_dpms_get_type () )
-#define XFPM_DPMS(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_DPMS, XfpmDpms))
-#define XFPM_IS_DPMS(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_DPMS))
+#define XFPM_TYPE_DPMS (xfpm_dpms_get_type ())
+G_DECLARE_DERIVABLE_TYPE (XfpmDpms, xfpm_dpms, XFPM, DPMS, GObject)
 
-typedef struct XfpmDpmsPrivate XfpmDpmsPrivate;
-
-typedef struct
+typedef enum _XfpmDpmsMode
 {
-  GObject            parent;
-  XfpmDpmsPrivate   *priv;
-} XfpmDpms;
+  XFPM_DPMS_MODE_OFF,
+  XFPM_DPMS_MODE_SUSPEND,
+  XFPM_DPMS_MODE_STANDBY,
+  XFPM_DPMS_MODE_ON,
+} XfpmDpmsMode;
 
-typedef struct
+struct _XfpmDpmsClass
 {
-  GObjectClass       parent_class;
-} XfpmDpmsClass;
+  GObjectClass parent_class;
 
-GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
-XfpmDpms       *xfpm_dpms_new             (void);
-void            xfpm_dpms_force_level     (XfpmDpms *dpms, CARD16 level);
-void            xfpm_dpms_inhibit         (XfpmDpms *dpms, gboolean inhibit);
-void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms, gboolean on_battery);
+  void        (*set_mode)            (XfpmDpms         *dpms,
+                                      XfpmDpmsMode      mode);
+  void        (*set_enabled)         (XfpmDpms         *dpms,
+                                      gboolean          enabled);
+  void        (*set_timeouts)        (XfpmDpms         *dpms,
+                                      gboolean          standby,
+                                      guint             sleep_timeout,
+                                      guint             off_timeout);
+};
+
+XfpmDpms       *xfpm_dpms_new                 (void);
+void            xfpm_dpms_set_inhibited       (XfpmDpms         *dpms,
+                                               gboolean          inhibited);
+void            xfpm_dpms_set_on_battery      (XfpmDpms         *dpms,
+                                               gboolean          on_battery);
+
+void            xfpm_dpms_set_mode            (XfpmDpms         *dpms,
+                                               XfpmDpmsMode      mode);
 
 G_END_DECLS
 
-
-#endif /* __XFPM_DPMS_H */
+#endif /* __XFPM_DPMS_H__ */
