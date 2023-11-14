@@ -22,10 +22,10 @@
 #include <config.h>
 #endif
 
-#include <gtk/gtk.h>
+#ifdef ENABLE_X11
 #include <gtk/gtkx.h>
-#include <glib.h>
-#include <gio/gio.h>
+#endif
+#include <gtk/gtk.h>
 
 #include <xfconf/xfconf.h>
 #include <libxfce4util/libxfce4util.h>
@@ -41,7 +41,9 @@
 struct _XfpmSettingsAppPrivate
 {
   gboolean          debug;
+#ifdef ENABLE_X11
   Window            socket_id;
+#endif
   gchar            *device_id;
 };
 
@@ -247,13 +249,18 @@ xfpm_settings_app_launch (GApplication *app)
   has_battery_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "battery-button"));
   can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
 
+#ifdef ENABLE_X11
   XFPM_DEBUG ("socket_id %i", (int)priv->socket_id);
+#endif
   XFPM_DEBUG ("device id %s", priv->device_id);
 
   dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
                                      can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
                                      has_lid, has_sleep_button, has_hibernate_button, has_power_button, has_battery_button,
-                                     priv->socket_id, priv->device_id, GTK_APPLICATION (app));
+#ifdef ENABLE_X11
+                                     priv->socket_id,
+#endif
+                                     priv->device_id, GTK_APPLICATION (app));
 
   g_hash_table_destroy (hash);
 
@@ -269,9 +276,10 @@ activate_socket (GSimpleAction  *action,
                  gpointer        data)
 {
   XfpmSettingsApp *app = XFPM_SETTINGS_APP (data);
+#ifdef ENABLE_X11
   XfpmSettingsAppPrivate *priv = xfpm_settings_app_get_instance_private (app);
-
   priv->socket_id = g_variant_get_int32 (parameter);
+#endif
 
   xfpm_settings_app_launch (G_APPLICATION (app));
 }
