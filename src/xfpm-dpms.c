@@ -49,13 +49,9 @@ struct XfpmDpmsPrivate
 {
   XfpmXfconf      *conf;
 
-  gboolean         dpms_capable;
   gboolean         inhibited;
 
   gboolean         on_battery;
-
-  gulong           switch_off_timeout_id;
-  gulong           switch_on_timeout_id;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmDpms, xfpm_dpms, G_TYPE_OBJECT)
@@ -147,16 +143,13 @@ xfpm_dpms_get_configuration_timeouts (XfpmDpms *dpms, guint16 *ret_sleep, guint1
   *ret_off =  off_time * 60;
 }
 
-void
+static void
 xfpm_dpms_refresh (XfpmDpms *dpms)
 {
   gboolean enabled;
   guint16 off_timeout;
   guint16 sleep_timeout;
   gboolean sleep_mode;
-
-  if (!dpms->priv->dpms_capable)
-    return;
 
   if ( dpms->priv->inhibited)
   {
@@ -218,11 +211,7 @@ xfpm_dpms_init(XfpmDpms *dpms)
 {
   dpms->priv = xfpm_dpms_get_instance_private(dpms);
 
-  dpms->priv->dpms_capable = DPMSCapable (gdk_x11_get_default_xdisplay());
-  dpms->priv->switch_off_timeout_id = 0;
-  dpms->priv->switch_on_timeout_id = 0;
-
-  if ( dpms->priv->dpms_capable )
+  if (DPMSCapable (gdk_x11_get_default_xdisplay ()))
   {
     dpms->priv->conf    = xfpm_xfconf_new  ();
 
@@ -233,7 +222,7 @@ xfpm_dpms_init(XfpmDpms *dpms)
   }
   else
   {
-    g_warning ("Monitor is not DPMS capable");
+    g_warning ("Display is not DPMS capable");
   }
 }
 
@@ -254,26 +243,28 @@ XfpmDpms *
 xfpm_dpms_new (void)
 {
   static gpointer xfpm_dpms_object = NULL;
+  static gboolean tried = FALSE;
 
   if ( G_LIKELY (xfpm_dpms_object != NULL ) )
   {
     g_object_ref (xfpm_dpms_object);
   }
-  else
+  else if (!tried)
   {
+    tried = TRUE;
     xfpm_dpms_object = g_object_new (XFPM_TYPE_DPMS, NULL);
-    g_object_add_weak_pointer (xfpm_dpms_object, &xfpm_dpms_object);
+    if (XFPM_DPMS (xfpm_dpms_object)->priv->conf != NULL)
+    {
+      g_object_add_weak_pointer (xfpm_dpms_object, &xfpm_dpms_object);
+    }
+    else
+    {
+      g_object_unref (xfpm_dpms_object);
+      xfpm_dpms_object = NULL;
+    }
   }
 
   return XFPM_DPMS (xfpm_dpms_object);
-}
-
-gboolean
-xfpm_dpms_capable (XfpmDpms *dpms)
-{
-  g_return_val_if_fail (XFPM_IS_DPMS(dpms), FALSE);
-
-  return dpms->priv->dpms_capable;
 }
 
 void
@@ -283,9 +274,6 @@ xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
   BOOL current_state;
 
   XFPM_DEBUG ("start");
-
-  if ( !dpms->priv->dpms_capable )
-    goto out;
 
   if ( G_UNLIKELY (!DPMSInfo (gdk_x11_get_default_xdisplay (), &current_level, &current_state)) )
   {
@@ -321,12 +309,6 @@ xfpm_dpms_force_level (XfpmDpms *dpms, CARD16 level)
 
   out:
     ;
-}
-
-gboolean
-xfpm_dpms_is_inhibited (XfpmDpms *dpms)
-{
-  return dpms->priv->inhibited;
 }
 
 void

@@ -173,7 +173,8 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
     g_signal_emit (G_OBJECT (power), signals [ON_BATTERY_CHANGED], 0, on_battery);
 
 #ifdef ENABLE_X11
-    xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
+    if (power->priv->dpms != NULL)
+      xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
 #endif
 
       /* Dismiss critical notifications on battery state changes */
@@ -824,7 +825,8 @@ xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPo
                 power->priv->presentation_mode ? "TRUE" : "FALSE");
 
 #ifdef ENABLE_X11
-    xfpm_dpms_inhibit (power->priv->dpms, is_inhibit);
+    if (power->priv->dpms != NULL)
+      xfpm_dpms_inhibit (power->priv->dpms, is_inhibit);
 #endif
 
     /* If we are inhibited make sure we inhibit the screensaver too */
@@ -1176,7 +1178,8 @@ xfpm_power_finalize (GObject *object)
 #endif
 
 #ifdef ENABLE_X11
-  g_object_unref(power->priv->dpms);
+  if (power->priv->dpms != NULL)
+    g_object_unref(power->priv->dpms);
 #endif
 
   G_OBJECT_CLASS (xfpm_power_parent_class)->finalize (object);
@@ -1287,7 +1290,8 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
 
 #ifdef ENABLE_X11
   /* presentation mode inhibits dpms */
-  xfpm_dpms_inhibit (power->priv->dpms, presentation_mode);
+  if (power->priv->dpms != NULL)
+    xfpm_dpms_inhibit (power->priv->dpms, presentation_mode);
 #endif
 
   XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
