@@ -10,7 +10,9 @@ noinst_LTLIBRARIES = \
 
 libprotocols_built_sources = \
 	ext-idle-notify-v1.c \
-	ext-idle-notify-v1-client.h
+	ext-idle-notify-v1-client.h \
+	wlr-output-power-management-unstable-v1.c \
+	wlr-output-power-management-unstable-v1-client.h
 
 nodist_libprotocols_la_SOURCES = \
 	$(libprotocols_built_sources)
@@ -40,6 +42,12 @@ else
 	$(AM_V_GEN) wayland-scanner client-header $< $@
 endif
 
+%.c: $(WLR_PROTOCOLS_PKGDATADIR)/unstable/%.xml
+	$(AM_V_GEN) wayland-scanner private-code $< $@
+
+%-client.h: $(WLR_PROTOCOLS_PKGDATADIR)/unstable/%.xml
+	$(AM_V_GEN) wayland-scanner client-header $< $@
+
 DISTCLEANFILES = \
 	$(libprotocols_built_sources)
 
@@ -54,3 +62,6 @@ if ! HAVE_IDLE_NOTIFY
 EXTRA_DIST += \
 	ext-idle-notify-v1.xml
 endif
+
+EXTRA_DIST += \
+	wlr-protocols/unstable/wlr-output-power-management-unstable-v1.xml
