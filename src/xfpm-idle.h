@@ -36,6 +36,7 @@ typedef enum _XfpmAlarmId
   XFPM_ALARM_ID_BRIGHTNESS_ON_BATTERY = 1 << 1,
   XFPM_ALARM_ID_INACTIVITY_ON_AC      = 1 << 2,
   XFPM_ALARM_ID_INACTIVITY_ON_BATTERY = 1 << 3,
+  XFPM_ALARM_ID_DPMS                  = 1 << 4,
 } XfpmAlarmId;
 
 struct _XfpmIdleClass

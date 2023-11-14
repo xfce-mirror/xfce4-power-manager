@@ -32,6 +32,10 @@
 #include <gdk/gdkx.h>
 #include "xfpm-dpms-x11.h"
 #endif
+#ifdef ENABLE_WAYLAND
+#include <gdk/gdkwayland.h>
+#include "xfpm-dpms-wayland.h"
+#endif
 
 #define get_instance_private(instance) ((XfpmDpmsPrivate *) \
   xfpm_dpms_get_instance_private (XFPM_DPMS (instance)))
@@ -139,6 +143,13 @@ xfpm_dpms_new (void)
     if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
     {
       singleton = xfpm_dpms_x11_new ();
+      tried = TRUE;
+    }
+#endif
+#ifdef ENABLE_WAYLAND
+    if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+    {
+      singleton = xfpm_dpms_wayland_new ();
       tried = TRUE;
     }
 #endif

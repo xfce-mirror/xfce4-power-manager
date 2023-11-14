@@ -100,7 +100,9 @@ endif
 if ENABLE_WAYLAND
 xfce4_power_manager_SOURCES += \
 	xfpm-idle-wayland.c \
-	xfpm-idle-wayland.h
+	xfpm-idle-wayland.h \
+	xfpm-dpms-wayland.c \
+	xfpm-dpms-wayland.h
 
 xfce4_power_manager_CFLAGS += \
 	$(WAYLAND_CLIENT_CFLAGS)
