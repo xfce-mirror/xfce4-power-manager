@@ -90,12 +90,13 @@ struct PowerManagerButtonPrivate
 
   /* display brightness slider widget */
   GtkWidget       *range;
-  gint             show_panel_label;
-  gboolean         presentation_mode;
-  gboolean         show_presentation_indicator;
 
   /* filter range value changed events for snappier UI feedback */
   guint            set_level_timeout;
+
+  gint             show_panel_label;
+  gboolean         presentation_mode;
+  gboolean         show_presentation_indicator;
 };
 
 typedef struct
@@ -1563,14 +1564,13 @@ power_manager_button_toggle_presentation_mode (GtkMenuItem *mi, GtkSwitch *sw)
 void
 power_manager_button_show_menu (PowerManagerButton *button)
 {
-  GtkWidget *menu, *mi, *img = NULL;
+  GtkWidget *menu, *mi;
 #ifdef XFCE_PLUGIN
   GtkWidget *box, *label, *sw;
 #endif
   GdkScreen *gscreen;
   GList *item;
   gboolean show_separator_flag = FALSE;
-  gint32 current_level = 0;
 
   g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
 
@@ -1608,6 +1608,9 @@ power_manager_button_show_menu (PowerManagerButton *button)
   /* Display brightness slider - show if there's hardware support for it */
   if (button->priv->brightness != NULL)
   {
+    GtkWidget *img;
+    gint32 current_level = 0;
+
     mi = scale_menu_item_new_with_range (xfpm_brightness_get_min_level (button->priv->brightness),
                                          xfpm_brightness_get_max_level (button->priv->brightness),
                                          1);

@@ -11,8 +11,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-battery.h				\
 	xfpm-xfconf.c				\
 	xfpm-xfconf.h				\
-	egg-idletime.c				\
-	egg-idletime.h				\
+	xfpm-idle.c				\
+	xfpm-idle.h				\
 	xfpm-backlight.c			\
 	xfpm-backlight.h			\
 	xfpm-kbd-backlight.c			\
@@ -54,14 +54,11 @@ xfce4_power_manager_CFLAGS =                    \
 	$(GIO_UNIX_CFLAGS)                      \
 	$(GOBJECT_CFLAGS)                       \
 	$(GTHREAD_CFLAGS)                       \
-	$(DBUS_GLIB_CFLAGS)                     \
 	$(LIBXFCE4UI_CFLAGS)                    \
 	$(LIBXFCE4UTIL_CFLAGS)                    \
 	$(XFCONF_CFLAGS)                        \
 	$(LIBNOTIFY_CFLAGS)                     \
 	$(UPOWER_CFLAGS)                        \
-	$(XRANDR_CFLAGS)			\
-	$(DPMS_CFLAGS)           		\
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
 
@@ -76,14 +73,44 @@ xfce4_power_manager_LDADD =                     \
 	$(GIO_UNIX_LIBS)                        \
 	$(GOBJECT_LIBS)                         \
 	$(GTHREAD_LIBS)                         \
-	$(DBUS_GLIB_LIBS)                       \
 	$(LIBXFCE4UI_LIBS)                      \
 	$(LIBXFCE4UTIL_LIBS)                      \
 	$(XFCONF_LIBS)                          \
 	$(LIBNOTIFY_LIBS)                       \
-	$(UPOWER_LIBS)                          \
-	$(XRANDR_LIBS)				\
-	$(DPMS_LIBS)
+	$(UPOWER_LIBS)
+
+if ENABLE_X11
+xfce4_power_manager_SOURCES += \
+	xfpm-idle-x11.c \
+	xfpm-idle-x11.h \
+	xfpm-dpms-x11.c \
+	xfpm-dpms-x11.h
+
+xfce4_power_manager_CFLAGS += \
+	$(LIBX11_CFLAGS) \
+	$(XRANDR_CFLAGS) \
+	$(LIBXEXT_CFLAGS)
+
+xfce4_power_manager_LDADD += \
+	$(LIBX11_LIBS) \
+	$(XRANDR_LIBS) \
+	$(LIBXEXT_LIBS)
+endif
+
+if ENABLE_WAYLAND
+xfce4_power_manager_SOURCES += \
+	xfpm-idle-wayland.c \
+	xfpm-idle-wayland.h \
+	xfpm-dpms-wayland.c \
+	xfpm-dpms-wayland.h
+
+xfce4_power_manager_CFLAGS += \
+	$(WAYLAND_CLIENT_CFLAGS)
+
+xfce4_power_manager_LDADD += \
+	$(top_builddir)/protocols/libprotocols.la \
+	$(WAYLAND_CLIENT_LIBS)
+endif
 
 if HAVE_POLKIT
 
@@ -98,7 +125,7 @@ xfpm_power_backlight_helper_LDADD =             \
 	-lm
 
 xfpm_power_backlight_helper_CFLAGS =            \
-        $(GLIB_CFLAGS)                          \
+	$(GLIB_CFLAGS)                          \
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
 

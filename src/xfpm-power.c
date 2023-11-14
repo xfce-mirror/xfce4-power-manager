@@ -34,9 +34,10 @@
 #include <errno.h>
 #endif
 
-#include <upower.h>
+#ifdef ENABLE_X11
 #include <gdk/gdkx.h>
-
+#endif
+#include <upower.h>
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
@@ -55,7 +56,7 @@
 #include "xfpm-config.h"
 #include "xfpm-debug.h"
 #include "xfpm-enum-types.h"
-#include "egg-idletime.h"
+#include "xfpm-idle.h"
 #include "xfpm-suspend.h"
 #include "xfpm-brightness.h"
 
@@ -104,7 +105,6 @@ struct XfpmPowerPrivate
 
   XfpmDpms         *dpms;
   gboolean          presentation_mode;
-  EggIdletime      *idletime;
 
   gboolean          inhibited;
   gboolean          screensaver_inhibited;
@@ -170,7 +170,8 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
 
     g_signal_emit (G_OBJECT (power), signals [ON_BATTERY_CHANGED], 0, on_battery);
 
-    xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
+    if (power->priv->dpms != NULL)
+      xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
 
       /* Dismiss critical notifications on battery state changes */
     xfpm_notify_close_critical (power->priv->notify);
@@ -819,7 +820,8 @@ xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPo
                 power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
                 power->priv->presentation_mode ? "TRUE" : "FALSE");
 
-    xfpm_dpms_inhibit (power->priv->dpms, is_inhibit);
+    if (power->priv->dpms != NULL)
+      xfpm_dpms_set_inhibited (power->priv->dpms, is_inhibit);
 
     /* If we are inhibited make sure we inhibit the screensaver too */
     if (is_inhibit)
@@ -1167,7 +1169,8 @@ xfpm_power_finalize (GObject *object)
   g_object_unref (power->priv->polkit);
 #endif
 
-  g_object_unref(power->priv->dpms);
+  if (power->priv->dpms != NULL)
+    g_object_unref(power->priv->dpms);
 
   G_OBJECT_CLASS (xfpm_power_parent_class)->finalize (object);
 }
@@ -1237,8 +1240,14 @@ gboolean xfpm_power_has_battery (XfpmPower *power)
 static void
 xfpm_power_toggle_screensaver (XfpmPower *power)
 {
-  Display* display = gdk_x11_display_get_xdisplay(gdk_display_get_default ());
+#ifdef ENABLE_X11
+  Display* display;
   static int timeout = -2, interval, prefer_blanking, allow_exposures;
+
+  if (!GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    return;
+
+  display = gdk_x11_get_default_xdisplay ();
 
   /* Presentation mode or inhibited disables blanking */
   if (power->priv->presentation_mode || power->priv->inhibited)
@@ -1257,6 +1266,7 @@ xfpm_power_toggle_screensaver (XfpmPower *power)
     XSync (display, FALSE);
     timeout = -2;
   }
+#endif
 }
 
 static void
@@ -1269,7 +1279,8 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
   power->priv->presentation_mode = presentation_mode;
 
   /* presentation mode inhibits dpms */
-  xfpm_dpms_inhibit (power->priv->dpms, presentation_mode);
+  if (power->priv->dpms != NULL)
+    xfpm_dpms_set_inhibited (power->priv->dpms, presentation_mode);
 
   XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
   power->priv->inhibited ? "TRUE" : "FALSE",
@@ -1287,7 +1298,7 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
   }
   else
   {
-    EggIdletime *idletime;
+    XfpmIdle *idle;
 
     /* make sure we remove the screensaver inhibit */
     if (power->priv->screensaver_inhibited && !power->priv->inhibited)
@@ -1297,10 +1308,12 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
     }
 
     /* reset the timers */
-    idletime = egg_idletime_new ();
-    egg_idletime_alarm_reset_all (idletime);
-
-    g_object_unref (idletime);
+    idle = xfpm_idle_new ();
+    if (idle != NULL)
+    {
+      xfpm_idle_alarm_reset_all (idle);
+      g_object_unref (idle);
+    }
   }
 
   XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
