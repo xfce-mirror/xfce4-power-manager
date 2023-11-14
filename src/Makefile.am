@@ -17,6 +17,8 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-backlight.h			\
 	xfpm-kbd-backlight.c			\
 	xfpm-kbd-backlight.h			\
+	xfpm-dpms.c				\
+	xfpm-dpms.h				\
 	xfpm-button.c				\
 	xfpm-button.h				\
 	xfpm-inhibit.c				\
@@ -81,8 +83,8 @@ if ENABLE_X11
 xfce4_power_manager_SOURCES += \
 	xfpm-idle-x11.c \
 	xfpm-idle-x11.h \
-	xfpm-dpms.c \
-	xfpm-dpms.h
+	xfpm-dpms-x11.c \
+	xfpm-dpms-x11.h
 
 xfce4_power_manager_CFLAGS += \
 	$(LIBX11_CFLAGS) \

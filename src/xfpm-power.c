@@ -34,16 +34,16 @@
 #include <errno.h>
 #endif
 
+#ifdef ENABLE_X11
+#include <gdk/gdkx.h>
+#endif
 #include <upower.h>
-
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
 #include "xfpm-power.h"
 #include "xfpm-dbus.h"
-#ifdef ENABLE_X11
 #include "xfpm-dpms.h"
-#endif
 #include "xfpm-battery.h"
 #include "xfpm-xfconf.h"
 #include "xfpm-notify.h"
@@ -103,9 +103,7 @@ struct XfpmPowerPrivate
   XfpmBatteryCharge overall_state;
   gboolean          critical_action_done;
 
-#ifdef ENABLE_X11
   XfpmDpms         *dpms;
-#endif
   gboolean          presentation_mode;
 
   gboolean          inhibited;
@@ -172,10 +170,8 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
 
     g_signal_emit (G_OBJECT (power), signals [ON_BATTERY_CHANGED], 0, on_battery);
 
-#ifdef ENABLE_X11
     if (power->priv->dpms != NULL)
       xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
-#endif
 
       /* Dismiss critical notifications on battery state changes */
     xfpm_notify_close_critical (power->priv->notify);
@@ -824,10 +820,8 @@ xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPo
                 power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
                 power->priv->presentation_mode ? "TRUE" : "FALSE");
 
-#ifdef ENABLE_X11
     if (power->priv->dpms != NULL)
-      xfpm_dpms_inhibit (power->priv->dpms, is_inhibit);
-#endif
+      xfpm_dpms_set_inhibited (power->priv->dpms, is_inhibit);
 
     /* If we are inhibited make sure we inhibit the screensaver too */
     if (is_inhibit)
@@ -1033,9 +1027,7 @@ xfpm_power_init (XfpmPower *power)
   power->priv->overall_state   = XFPM_BATTERY_CHARGE_OK;
   power->priv->critical_action_done = FALSE;
 
-#ifdef ENABLE_X11
   power->priv->dpms                 = xfpm_dpms_new ();
-#endif
 
   power->priv->presentation_mode    = FALSE;
 
@@ -1177,10 +1169,8 @@ xfpm_power_finalize (GObject *object)
   g_object_unref (power->priv->polkit);
 #endif
 
-#ifdef ENABLE_X11
   if (power->priv->dpms != NULL)
     g_object_unref(power->priv->dpms);
-#endif
 
   G_OBJECT_CLASS (xfpm_power_parent_class)->finalize (object);
 }
@@ -1288,11 +1278,9 @@ xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mod
 
   power->priv->presentation_mode = presentation_mode;
 
-#ifdef ENABLE_X11
   /* presentation mode inhibits dpms */
   if (power->priv->dpms != NULL)
-    xfpm_dpms_inhibit (power->priv->dpms, presentation_mode);
-#endif
+    xfpm_dpms_set_inhibited (power->priv->dpms, presentation_mode);
 
   XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
   power->priv->inhibited ? "TRUE" : "FALSE",
