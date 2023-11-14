@@ -50,11 +50,8 @@ typedef struct
 
 GType           xfpm_dpms_get_type        (void) G_GNUC_CONST;
 XfpmDpms       *xfpm_dpms_new             (void);
-gboolean        xfpm_dpms_capable         (XfpmDpms *dpms) G_GNUC_PURE;
 void            xfpm_dpms_force_level     (XfpmDpms *dpms, CARD16 level);
-void            xfpm_dpms_refresh         (XfpmDpms *dpms);
 void            xfpm_dpms_inhibit         (XfpmDpms *dpms, gboolean inhibit);
-gboolean        xfpm_dpms_is_inhibited    (XfpmDpms *dpms);
 void            xfpm_dpms_set_on_battery  (XfpmDpms *dpms, gboolean on_battery);
 
 G_END_DECLS

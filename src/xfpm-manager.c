@@ -197,7 +197,8 @@ xfpm_manager_finalize (GObject *object)
   g_timer_destroy (manager->priv->timer);
 
 #ifdef ENABLE_X11
-  g_object_unref (manager->priv->dpms);
+  if (manager->priv->dpms != NULL)
+    g_object_unref (manager->priv->dpms);
 #endif
 
   if (manager->priv->backlight != NULL)
@@ -459,7 +460,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
     if ( action == LID_TRIGGER_DPMS )
     {
 #ifdef ENABLE_X11
-      if ( !xfpm_is_multihead_connected () )
+      if (manager->priv->dpms != NULL && !xfpm_is_multihead_connected ())
         xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOff);
 #endif
     }
@@ -491,7 +492,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
     XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID opened");
 
 #ifdef ENABLE_X11
-    if ( action != LID_TRIGGER_NOTHING )
+    if (manager->priv->dpms != NULL && action != LID_TRIGGER_NOTHING)
       xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOn);
 #endif
   }
