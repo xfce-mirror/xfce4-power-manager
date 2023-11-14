@@ -2695,6 +2695,14 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_hide (widget);
     widget = GTK_WIDGET (gtk_builder_get_object (xml, "hbox21"));
     gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-label"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-box"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-label1"));
+    gtk_widget_hide (widget);
+    widget = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-box1"));
+    gtk_widget_hide (widget);
   }
 
 #ifdef ENABLE_X11
