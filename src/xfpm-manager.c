@@ -49,9 +49,7 @@
 
 #include "xfpm-power.h"
 #include "xfpm-dbus.h"
-#ifdef ENABLE_X11
 #include "xfpm-dpms.h"
-#endif
 #include "xfpm-manager.h"
 #include "xfpm-button.h"
 #include "xfpm-backlight.h"
@@ -113,9 +111,7 @@ struct XfpmManagerPrivate
   GtkWidget          *power_button;
   gint                show_tray_icon;
 
-#ifdef ENABLE_X11
   XfpmDpms           *dpms;
-#endif
 
   GTimer         *timer;
 
@@ -196,10 +192,8 @@ xfpm_manager_finalize (GObject *object)
 
   g_timer_destroy (manager->priv->timer);
 
-#ifdef ENABLE_X11
   if (manager->priv->dpms != NULL)
     g_object_unref (manager->priv->dpms);
-#endif
 
   if (manager->priv->backlight != NULL)
     g_object_unref (manager->priv->backlight);
@@ -459,10 +453,8 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
 
     if ( action == LID_TRIGGER_DPMS )
     {
-#ifdef ENABLE_X11
       if (manager->priv->dpms != NULL && !xfpm_is_multihead_connected ())
-        xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOff);
-#endif
+        xfpm_dpms_set_mode (manager->priv->dpms, XFPM_DPMS_MODE_OFF);
     }
     else if ( action == LID_TRIGGER_LOCK_SCREEN )
     {
@@ -491,10 +483,8 @@ xfpm_manager_lid_changed_cb (XfpmPower *power, gboolean lid_is_closed, XfpmManag
   {
     XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID opened");
 
-#ifdef ENABLE_X11
     if (manager->priv->dpms != NULL && action != LID_TRIGGER_NOTHING)
-      xfpm_dpms_force_level (manager->priv->dpms, DPMSModeOn);
-#endif
+      xfpm_dpms_set_mode (manager->priv->dpms, XFPM_DPMS_MODE_ON);
   }
 }
 
@@ -919,9 +909,7 @@ void xfpm_manager_start (XfpmManager *manager)
 
   manager->priv->kbd_backlight = xfpm_kbd_backlight_new ();
 
-#ifdef ENABLE_X11
   manager->priv->dpms = xfpm_dpms_new ();
-#endif
 
   g_signal_connect_object (manager->priv->button, "button_pressed",
                            G_CALLBACK (xfpm_manager_button_pressed_cb), manager, 0);
