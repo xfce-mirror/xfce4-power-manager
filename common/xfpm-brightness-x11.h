@@ -1,6 +1,5 @@
-/* -*- c-basic-offset: 4 -*- vi:set ts=4 sts=4 sw=4:
- * * Copyright (C) 2008-2011 Ali <aliov@xfce.org>
- * * Copyright (C) 2015 Xfce Development Team <xfce4-dev@xfce.org>
+/*
+ * Copyright (C) 2023 Gaël Bonithon <gael@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -19,17 +18,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
+#ifndef __XFPM_BRIGHTNESS_X11_H__
+#define __XFPM_BRIGHTNESS_X11_H__
 
-#include <libxfce4util/libxfce4util.h>
+#include "xfpm-brightness.h"
 
-#include "xfpm-settings-app.h"
+G_BEGIN_DECLS
 
-int main (int argc, char **argv)
-{
-  xfce_textdomain(GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
+#define XFPM_TYPE_BRIGHTNESS_X11 (xfpm_brightness_x11_get_type ())
+G_DECLARE_FINAL_TYPE (XfpmBrightnessX11, xfpm_brightness_x11, XFPM, BRIGHTNESS_X11, XfpmBrightness)
 
-  return g_application_run (G_APPLICATION (xfpm_settings_app_new ()), argc, argv);
-}
+G_END_DECLS
+
+#endif /* __XFPM_BRIGHTNESS_X11_H__ */
