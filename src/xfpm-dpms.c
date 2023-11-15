@@ -226,8 +226,8 @@ xfpm_dpms_init(XfpmDpms *dpms)
   {
     dpms->priv->conf    = xfpm_xfconf_new  ();
 
-    g_signal_connect (dpms->priv->conf, "notify",
-                      G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms);
+    g_signal_connect_object (dpms->priv->conf, "notify",
+                             G_CALLBACK (xfpm_dpms_settings_changed_cb), dpms, 0);
 
     xfpm_dpms_refresh (dpms);
   }
