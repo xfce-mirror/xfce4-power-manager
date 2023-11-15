@@ -547,8 +547,8 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
     hibernate = gtk_button_new_with_label (_("Hibernate"));
     gtk_dialog_add_action_widget (GTK_DIALOG (dialog), hibernate, GTK_RESPONSE_NONE);
 
-    g_signal_connect_swapped (hibernate, "clicked",
-                              G_CALLBACK (xfpm_power_hibernate_clicked), power);
+    g_signal_connect_object (hibernate, "clicked",
+                             G_CALLBACK (xfpm_power_hibernate_clicked), power, G_CONNECT_SWAPPED);
   }
 
   xfpm_power_can_suspend (power, &can_method, &auth_method);
@@ -559,8 +559,8 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
     suspend = gtk_button_new_with_label (_("Suspend"));
     gtk_dialog_add_action_widget (GTK_DIALOG (dialog), suspend, GTK_RESPONSE_NONE);
 
-    g_signal_connect_swapped (suspend, "clicked",
-                              G_CALLBACK (xfpm_power_suspend_clicked), power);
+    g_signal_connect_object (suspend, "clicked",
+                             G_CALLBACK (xfpm_power_suspend_clicked), power, G_CONNECT_SWAPPED);
   }
 
   if (power->priv->systemd != NULL)
@@ -579,18 +579,18 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
     shutdown = gtk_button_new_with_label (_("Shutdown"));
     gtk_dialog_add_action_widget (GTK_DIALOG (dialog), shutdown, GTK_RESPONSE_NONE);
 
-    g_signal_connect_swapped (shutdown, "clicked",
-                              G_CALLBACK (xfpm_power_shutdown_clicked), power);
+    g_signal_connect_object (shutdown, "clicked",
+                             G_CALLBACK (xfpm_power_shutdown_clicked), power, G_CONNECT_SWAPPED);
   }
 
   cancel = gtk_button_new_with_label (_("_Cancel"));
   gtk_dialog_add_action_widget (GTK_DIALOG (dialog), cancel, GTK_RESPONSE_NONE);
 
-  g_signal_connect_swapped (cancel, "clicked",
-                            G_CALLBACK (xfpm_power_close_critical_dialog), power);
+  g_signal_connect_object (cancel, "clicked",
+                           G_CALLBACK (xfpm_power_close_critical_dialog), power, G_CONNECT_SWAPPED);
 
-  g_signal_connect_swapped (dialog, "destroy",
-                            G_CALLBACK (xfpm_power_close_critical_dialog), power);
+  g_signal_connect_object (dialog, "destroy",
+                           G_CALLBACK (xfpm_power_close_critical_dialog), power, G_CONNECT_SWAPPED);
   if ( power->priv->dialog )
   {
     gtk_widget_destroy (power->priv->dialog);
@@ -771,8 +771,8 @@ xfpm_power_add_device (UpDevice *device, XfpmPower *power)
                                  device_type);
     g_hash_table_insert (power->priv->hash, g_strdup (object_path), battery);
 
-    g_signal_connect (battery, "battery-charge-changed",
-                      G_CALLBACK (xfpm_power_battery_charge_changed_cb), power);
+    g_signal_connect_object (battery, "battery-charge-changed",
+                             G_CALLBACK (xfpm_power_battery_charge_changed_cb), power, 0);
   }
 }
 
@@ -1046,8 +1046,8 @@ xfpm_power_init (XfpmPower *power)
   power->priv->polkit  = xfpm_polkit_get ();
 #endif
 
-  g_signal_connect (power->priv->inhibit, "has-inhibit-changed",
-                    G_CALLBACK (xfpm_power_inhibit_changed_cb), power);
+  g_signal_connect_object (power->priv->inhibit, "has-inhibit-changed",
+                           G_CALLBACK (xfpm_power_inhibit_changed_cb), power, 0);
 
   power->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
@@ -1060,9 +1060,9 @@ xfpm_power_init (XfpmPower *power)
 
   if (power->priv->upower != NULL)
   {
-    g_signal_connect (power->priv->upower, "device-added", G_CALLBACK (xfpm_power_device_added_cb), power);
-    g_signal_connect (power->priv->upower, "device-removed", G_CALLBACK (xfpm_power_device_removed_cb), power);
-    g_signal_connect (power->priv->upower, "notify", G_CALLBACK (xfpm_power_changed_cb), power);
+    g_signal_connect_object (power->priv->upower, "device-added", G_CALLBACK (xfpm_power_device_added_cb), power, 0);
+    g_signal_connect_object (power->priv->upower, "device-removed", G_CALLBACK (xfpm_power_device_removed_cb), power, 0);
+    g_signal_connect_object (power->priv->upower, "notify", G_CALLBACK (xfpm_power_changed_cb), power, 0);
     xfpm_power_get_power_devices (power);
   }
 
@@ -1384,46 +1384,46 @@ xfpm_power_dbus_init (XfpmPower *power)
                                     "/org/freedesktop/PowerManagement",
                                     NULL);
 
-  g_signal_connect_swapped (power_dbus,
-                            "handle-shutdown",
-                            G_CALLBACK (xfpm_power_dbus_shutdown),
-                            power);
-  g_signal_connect_swapped (power_dbus,
-                            "handle-reboot",
-                            G_CALLBACK (xfpm_power_dbus_reboot),
-                            power);
-  g_signal_connect_swapped (power_dbus,
-                            "handle-hibernate",
-                            G_CALLBACK (xfpm_power_dbus_hibernate),
-                            power);
-  g_signal_connect_swapped (power_dbus,
-                            "handle-suspend",
-                            G_CALLBACK (xfpm_power_dbus_suspend),
-                            power);
-  g_signal_connect_swapped (power_dbus,
-                            "handle-can-reboot",
-                            G_CALLBACK (xfpm_power_dbus_can_reboot),
-                            power);
-  g_signal_connect_swapped (power_dbus,
-                            "handle-can-shutdown",
-                            G_CALLBACK (xfpm_power_dbus_can_shutdown),
-                            power);
-  g_signal_connect_swapped (power_dbus,
-                            "handle-can-hibernate",
-                            G_CALLBACK (xfpm_power_dbus_can_hibernate),
-                            power);
-  g_signal_connect_swapped (power_dbus,
-                            "handle-can-suspend",
-                            G_CALLBACK (xfpm_power_dbus_can_suspend),
-                            power);
-  g_signal_connect_swapped (power_dbus,
-                            "handle-get-on-battery",
-                            G_CALLBACK (xfpm_power_dbus_get_on_battery),
-                            power);
-  g_signal_connect_swapped (power_dbus,
-                            "handle-get-low-battery",
-                            G_CALLBACK (xfpm_power_dbus_get_low_battery),
-                            power);
+  g_signal_connect_object (power_dbus,
+                           "handle-shutdown",
+                           G_CALLBACK (xfpm_power_dbus_shutdown),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-reboot",
+                           G_CALLBACK (xfpm_power_dbus_reboot),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-hibernate",
+                           G_CALLBACK (xfpm_power_dbus_hibernate),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-suspend",
+                           G_CALLBACK (xfpm_power_dbus_suspend),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-can-reboot",
+                           G_CALLBACK (xfpm_power_dbus_can_reboot),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-can-shutdown",
+                           G_CALLBACK (xfpm_power_dbus_can_shutdown),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-can-hibernate",
+                           G_CALLBACK (xfpm_power_dbus_can_hibernate),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-can-suspend",
+                           G_CALLBACK (xfpm_power_dbus_can_suspend),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-get-on-battery",
+                           G_CALLBACK (xfpm_power_dbus_get_on_battery),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-get-low-battery",
+                           G_CALLBACK (xfpm_power_dbus_get_low_battery),
+                           power, G_CONNECT_SWAPPED);
 }
 
 static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,

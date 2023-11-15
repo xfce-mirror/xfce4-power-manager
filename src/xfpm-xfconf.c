@@ -669,8 +669,8 @@ xfpm_xfconf_init (XfpmXfconf *conf)
   else
   {
     conf->priv->channel = xfconf_channel_get (XFPM_CHANNEL);
-    g_signal_connect (conf->priv->channel, "property-changed",
-                      G_CALLBACK (xfpm_xfconf_property_changed_cb), conf);
+    g_signal_connect_object (conf->priv->channel, "property-changed",
+                             G_CALLBACK (xfpm_xfconf_property_changed_cb), conf, 0);
   }
   xfpm_xfconf_load (conf);
 }

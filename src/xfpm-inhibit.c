@@ -243,8 +243,8 @@ xfpm_inhibit_init (XfpmInhibit *inhibit)
   inhibit->priv->array   = g_ptr_array_new ();
   inhibit->priv->monitor = xfpm_dbus_monitor_new ();
 
-  g_signal_connect (inhibit->priv->monitor, "unique-name-lost",
-                    G_CALLBACK (xfpm_inhibit_connection_lost_cb), inhibit);
+  g_signal_connect_object (inhibit->priv->monitor, "unique-name-lost",
+                           G_CALLBACK (xfpm_inhibit_connection_lost_cb), inhibit, 0);
 
   xfpm_inhibit_dbus_init (inhibit);
 }
@@ -358,22 +358,22 @@ xfpm_inhibit_dbus_init (XfpmInhibit *inhibit)
                                     "/org/freedesktop/PowerManagement/Inhibit",
                                     NULL);
 
-  g_signal_connect_swapped (inhibit_dbus,
-                            "handle-inhibit",
-                            G_CALLBACK (xfpm_inhibit_inhibit),
-                            inhibit);
-  g_signal_connect_swapped (inhibit_dbus,
-                            "handle-un-inhibit",
-                            G_CALLBACK (xfpm_inhibit_un_inhibit),
-                            inhibit);
-  g_signal_connect_swapped (inhibit_dbus,
-                            "handle-has-inhibit",
-                            G_CALLBACK (xfpm_inhibit_has_inhibit),
-                            inhibit);
-  g_signal_connect_swapped (inhibit_dbus,
-                            "handle-get-inhibitors",
-                            G_CALLBACK (xfpm_inhibit_get_inhibitors),
-                            inhibit);
+  g_signal_connect_object (inhibit_dbus,
+                           "handle-inhibit",
+                           G_CALLBACK (xfpm_inhibit_inhibit),
+                           inhibit, G_CONNECT_SWAPPED);
+  g_signal_connect_object (inhibit_dbus,
+                          "handle-un-inhibit",
+                           G_CALLBACK (xfpm_inhibit_un_inhibit),
+                           inhibit, G_CONNECT_SWAPPED);
+  g_signal_connect_object (inhibit_dbus,
+                           "handle-has-inhibit",
+                           G_CALLBACK (xfpm_inhibit_has_inhibit),
+                           inhibit, G_CONNECT_SWAPPED);
+  g_signal_connect_object (inhibit_dbus,
+                           "handle-get-inhibitors",
+                           G_CALLBACK (xfpm_inhibit_get_inhibitors),
+                           inhibit, G_CONNECT_SWAPPED);
 }
 
 static gboolean

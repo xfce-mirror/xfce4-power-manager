@@ -834,8 +834,8 @@ xfpm_manager_new (GDBusConnection *bus, const gchar *client_id)
   }
   else
   {
-    g_signal_connect_swapped (manager->priv->client, "quit",
-                              G_CALLBACK (xfpm_manager_quit), manager);
+    g_signal_connect_object (manager->priv->client, "quit",
+                             G_CALLBACK (xfpm_manager_quit), manager, G_CONNECT_SWAPPED);
   }
 
   xfpm_manager_dbus_class_init (XFPM_MANAGER_GET_CLASS (manager));
@@ -879,27 +879,27 @@ void xfpm_manager_start (XfpmManager *manager)
     g_clear_error (&error);
   }
 
-  g_signal_connect (manager->priv->idle, "alarm-expired",
-                    G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager);
-  g_signal_connect_swapped (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
-                            G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager);
-  g_signal_connect_swapped (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
-                            G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager);
-  g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_POWER_KEY,
-                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
-  g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_SUSPEND_KEY,
-                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
-  g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_HIBERNATE_KEY,
-                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
-  g_signal_connect_swapped (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
-                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager);
+  g_signal_connect_object (manager->priv->idle, "alarm-expired",
+                           G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager, 0);
+  g_signal_connect_object (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
+                           G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
+                           G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_POWER_KEY,
+                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_SUSPEND_KEY,
+                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_HIBERNATE_KEY,
+                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
+                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
 
   xfpm_manager_set_idle_alarm (manager);
 
-  g_signal_connect (manager->priv->inhibit, "has-inhibit-changed",
-                    G_CALLBACK (xfpm_manager_inhibit_changed_cb), manager);
-  g_signal_connect (manager->priv->monitor, "system-bus-connection-changed",
-                    G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager);
+  g_signal_connect_object (manager->priv->inhibit, "has-inhibit-changed",
+                           G_CALLBACK (xfpm_manager_inhibit_changed_cb), manager, 0);
+  g_signal_connect_object (manager->priv->monitor, "system-bus-connection-changed",
+                           G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager, 0);
 
   manager->priv->backlight = xfpm_backlight_new ();
 
@@ -907,26 +907,26 @@ void xfpm_manager_start (XfpmManager *manager)
 
   manager->priv->dpms = xfpm_dpms_new ();
 
-  g_signal_connect (manager->priv->button, "button_pressed",
-                    G_CALLBACK (xfpm_manager_button_pressed_cb), manager);
+  g_signal_connect_object (manager->priv->button, "button_pressed",
+                           G_CALLBACK (xfpm_manager_button_pressed_cb), manager, 0);
 
-  g_signal_connect (manager->priv->power, "lid-changed",
-                    G_CALLBACK (xfpm_manager_lid_changed_cb), manager);
+  g_signal_connect_object (manager->priv->power, "lid-changed",
+                           G_CALLBACK (xfpm_manager_lid_changed_cb), manager, 0);
 
-  g_signal_connect (manager->priv->power, "on-battery-changed",
-                    G_CALLBACK (xfpm_manager_on_battery_changed_cb), manager);
+  g_signal_connect_object (manager->priv->power, "on-battery-changed",
+                           G_CALLBACK (xfpm_manager_on_battery_changed_cb), manager, 0);
 
-  g_signal_connect_swapped (manager->priv->power, "waking-up",
-                            G_CALLBACK (xfpm_manager_reset_sleep_timer), manager);
+  g_signal_connect_object (manager->priv->power, "waking-up",
+                           G_CALLBACK (xfpm_manager_reset_sleep_timer), manager, G_CONNECT_SWAPPED);
 
-  g_signal_connect_swapped (manager->priv->power, "sleeping",
-                            G_CALLBACK (xfpm_manager_reset_sleep_timer), manager);
+  g_signal_connect_object (manager->priv->power, "sleeping",
+                           G_CALLBACK (xfpm_manager_reset_sleep_timer), manager, G_CONNECT_SWAPPED);
 
-  g_signal_connect_swapped (manager->priv->power, "ask-shutdown",
-                            G_CALLBACK (xfpm_manager_ask_shutdown), manager);
+  g_signal_connect_object (manager->priv->power, "ask-shutdown",
+                           G_CALLBACK (xfpm_manager_ask_shutdown), manager, G_CONNECT_SWAPPED);
 
-  g_signal_connect_swapped (manager->priv->power, "shutdown",
-                            G_CALLBACK (xfpm_manager_shutdown), manager);
+  g_signal_connect_object (manager->priv->power, "shutdown",
+                           G_CALLBACK (xfpm_manager_shutdown), manager, G_CONNECT_SWAPPED);
 
   xfconf_g_property_bind (xfpm_xfconf_get_channel (manager->priv->conf),
                                                    XFPM_PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG,
@@ -1050,22 +1050,22 @@ xfpm_manager_dbus_init (XfpmManager *manager)
                                     "/org/xfce/PowerManager",
                                     NULL);
 
-  g_signal_connect_swapped (manager_dbus,
-                            "handle-quit",
-                            G_CALLBACK (xfpm_manager_dbus_quit),
-                            manager);
-  g_signal_connect_swapped (manager_dbus,
-                            "handle-restart",
-                            G_CALLBACK (xfpm_manager_dbus_restart),
-                            manager);
-  g_signal_connect_swapped (manager_dbus,
-                            "handle-get-config",
-                            G_CALLBACK (xfpm_manager_dbus_get_config),
-                            manager);
-  g_signal_connect_swapped (manager_dbus,
-                            "handle-get-info",
-                            G_CALLBACK (xfpm_manager_dbus_get_info),
-                            manager);
+  g_signal_connect_object (manager_dbus,
+                           "handle-quit",
+                           G_CALLBACK (xfpm_manager_dbus_quit),
+                           manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager_dbus,
+                           "handle-restart",
+                           G_CALLBACK (xfpm_manager_dbus_restart),
+                           manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager_dbus,
+                           "handle-get-config",
+                           G_CALLBACK (xfpm_manager_dbus_get_config),
+                           manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager_dbus,
+                           "handle-get-info",
+                           G_CALLBACK (xfpm_manager_dbus_get_info),
+                           manager, G_CONNECT_SWAPPED);
 }
 
 static gboolean
