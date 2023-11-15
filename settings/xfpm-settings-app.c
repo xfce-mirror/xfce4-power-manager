@@ -142,6 +142,7 @@ xfpm_settings_app_launch (GApplication *app)
   {
     XFPM_DEBUG ("window already opened");
 
+    gtk_window_present (windows->data);
     gdk_notify_startup_complete ();
 
     if (priv->device_id != NULL)
