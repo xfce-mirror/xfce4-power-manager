@@ -98,9 +98,6 @@ xfpm_settings_app_startup (GApplication *app)
                                    G_N_ELEMENTS (action_entries),
                                    app);
 
-  /* keep the app running until we've launched our window */
-  g_application_hold (app);
-
   /* let the parent class do it's startup as well */
   G_APPLICATION_CLASS(xfpm_settings_app_parent_class)->startup(app);
 }
@@ -258,7 +255,6 @@ xfpm_settings_app_launch (GApplication *app)
   g_hash_table_destroy (hash);
 
   gtk_application_add_window (GTK_APPLICATION (app), GTK_WINDOW (dialog));
-  g_application_release (app);
 
   g_object_unref (manager);
 }
