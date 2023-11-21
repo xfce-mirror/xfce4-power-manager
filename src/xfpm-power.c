@@ -104,11 +104,9 @@ struct XfpmPowerPrivate
   gboolean          critical_action_done;
 
   XfpmDpms         *dpms;
-  gboolean          presentation_mode;
-
-  gboolean          inhibited;
-  gboolean          screensaver_inhibited;
   XfceScreensaver  *screensaver;
+  gboolean          presentation_mode;
+  gboolean          inhibited;
 
   XfpmNotify       *notify;
 #ifdef HAVE_POLKIT
@@ -811,44 +809,24 @@ xfpm_power_remove_device (XfpmPower *power, const gchar *object_path)
 static void
 xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPower *power)
 {
+  /* no change, exit */
   if (power->priv->inhibited != is_inhibit)
-  {
-    power->priv->inhibited = is_inhibit;
+    return;
 
-    XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
-                power->priv->inhibited ? "TRUE" : "FALSE",
-                power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
-                power->priv->presentation_mode ? "TRUE" : "FALSE");
+  power->priv->inhibited = is_inhibit;
 
-    if (power->priv->dpms != NULL)
-      xfpm_dpms_set_inhibited (power->priv->dpms, is_inhibit);
+  XFPM_DEBUG ("inhibited %s, presentation_mode %s",
+              power->priv->inhibited ? "TRUE" : "FALSE",
+              power->priv->presentation_mode ? "TRUE" : "FALSE");
 
-    /* If we are inhibited make sure we inhibit the screensaver too */
-    if (is_inhibit)
-    {
-      if (!power->priv->screensaver_inhibited)
-      {
-        xfce_screensaver_inhibit (power->priv->screensaver, TRUE);
-        power->priv->screensaver_inhibited = TRUE;
-      }
-    }
-    else
-    {
-      /* Or make sure we remove the screensaver inhibit */
-      if (power->priv->screensaver_inhibited && !power->priv->presentation_mode)
-      {
-        xfce_screensaver_inhibit (power->priv->screensaver, FALSE);
-        power->priv->screensaver_inhibited = FALSE;
-      }
-    }
-  }
+  /* either inhibition already occurred, or we don't want to remove it yet */
+  if (power->priv->presentation_mode)
+    return;
 
-  XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
-  power->priv->inhibited ? "TRUE" : "FALSE",
-  power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
-  power->priv->presentation_mode ? "TRUE" : "FALSE");
-
+  xfce_screensaver_inhibit (power->priv->screensaver, is_inhibit);
   xfpm_power_toggle_screensaver (power);
+  if (power->priv->dpms != NULL)
+    xfpm_dpms_set_inhibited (power->priv->dpms, is_inhibit);
 }
 
 static void
@@ -1272,56 +1250,24 @@ xfpm_power_toggle_screensaver (XfpmPower *power)
 static void
 xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mode)
 {
-    /* no change, exit */
+  /* no change, exit */
   if (power->priv->presentation_mode == presentation_mode)
     return;
 
   power->priv->presentation_mode = presentation_mode;
 
-  /* presentation mode inhibits dpms */
+  XFPM_DEBUG ("inhibited %s, presentation_mode %s",
+              power->priv->inhibited ? "TRUE" : "FALSE",
+              power->priv->presentation_mode ? "TRUE" : "FALSE");
+
+  /* either inhibition already occurred, or we don't want to remove it yet */
+  if (power->priv->inhibited)
+    return;
+
+  xfce_screensaver_inhibit (power->priv->screensaver, presentation_mode);
+  xfpm_power_toggle_screensaver (power);
   if (power->priv->dpms != NULL)
     xfpm_dpms_set_inhibited (power->priv->dpms, presentation_mode);
-
-  XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
-  power->priv->inhibited ? "TRUE" : "FALSE",
-  power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
-  power->priv->presentation_mode ? "TRUE" : "FALSE");
-
-  if (presentation_mode)
-  {
-  /* presentation mode inhibits the screensaver */
-    if (!power->priv->screensaver_inhibited)
-    {
-      xfce_screensaver_inhibit (power->priv->screensaver, TRUE);
-      power->priv->screensaver_inhibited = TRUE;
-    }
-  }
-  else
-  {
-    XfpmIdle *idle;
-
-    /* make sure we remove the screensaver inhibit */
-    if (power->priv->screensaver_inhibited && !power->priv->inhibited)
-    {
-      xfce_screensaver_inhibit (power->priv->screensaver, FALSE);
-      power->priv->screensaver_inhibited = FALSE;
-    }
-
-    /* reset the timers */
-    idle = xfpm_idle_new ();
-    if (idle != NULL)
-    {
-      xfpm_idle_alarm_reset_all (idle);
-      g_object_unref (idle);
-    }
-  }
-
-  XFPM_DEBUG ("is_inhibit %s, screensaver_inhibited %s, presentation_mode %s",
-  power->priv->inhibited ? "TRUE" : "FALSE",
-  power->priv->screensaver_inhibited ? "TRUE" : "FALSE",
-  power->priv->presentation_mode ? "TRUE" : "FALSE");
-
-  xfpm_power_toggle_screensaver (power);
 }
 
 gboolean
