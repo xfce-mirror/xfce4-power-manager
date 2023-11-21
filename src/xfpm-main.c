@@ -36,7 +36,9 @@
 #include <signal.h>
 
 #include <gtk/gtk.h>
-#include <glib.h>
+#ifdef ENABLE_X11
+#include <gdk/gdkx.h>
+#endif
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -282,7 +284,10 @@ int main (int argc, char **argv)
   octx = g_option_context_new("");
   g_option_context_set_ignore_unknown_options(octx, TRUE);
   g_option_context_add_main_entries(octx, option_entries, NULL);
-  g_option_context_add_group(octx, xfce_sm_client_get_option_group(argc, argv));
+#ifdef ENABLE_X11
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    g_option_context_add_group(octx, xfce_sm_client_get_option_group(argc, argv));
+#endif
   /* We can't add the following command because it will invoke gtk_init
      before we have a chance to fork.
      g_option_context_add_group(octx, gtk_get_option_group(TRUE));

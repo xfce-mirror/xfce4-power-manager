@@ -93,7 +93,10 @@ struct XfpmManagerPrivate
   GDBusConnection    *session_bus;
   GDBusConnection    *system_bus;
 
+#ifdef ENABLE_X11
   XfceSMClient       *client;
+  gboolean            session_managed;
+#endif
 
   XfpmPower          *power;
   XfpmButton         *button;
@@ -116,7 +119,6 @@ struct XfpmManagerPrivate
   GTimer         *timer;
 
   gboolean          inhibited;
-  gboolean          session_managed;
 
   gint                inhibit_fd;
 };
@@ -179,7 +181,10 @@ xfpm_manager_finalize (GObject *object)
   g_object_unref (manager->priv->power);
   g_object_unref (manager->priv->button);
   g_object_unref (manager->priv->conf);
-  g_object_unref (manager->priv->client);
+#ifdef ENABLE_X11
+  if (manager->priv->client != NULL)
+    g_object_unref (manager->priv->client);
+#endif
   if ( manager->priv->systemd != NULL )
     g_object_unref (manager->priv->systemd);
   if ( manager->priv->console != NULL )
@@ -324,16 +329,20 @@ xfpm_manager_shutdown (XfpmManager *manager)
     g_warning ("Failed to shutdown the system : %s", error->message);
     g_error_free (error);
     /* Try with the session then */
+#ifdef ENABLE_X11
     if ( manager->priv->session_managed )
       xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_HALT);
+#endif
   }
 }
 
 static void
 xfpm_manager_ask_shutdown (XfpmManager *manager)
 {
+#ifdef ENABLE_X11
   if ( manager->priv->session_managed )
-  xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_ASK);
+    xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_ASK);
+#endif
 }
 
 static void
@@ -802,42 +811,43 @@ XfpmManager *
 xfpm_manager_new (GDBusConnection *bus, const gchar *client_id)
 {
   XfpmManager *manager = NULL;
-  GError *error = NULL;
-  gchar *current_dir;
-
-  const gchar *restart_command[] =
-  {
-    "xfce4-power-manager",
-    "--restart",
-    NULL
-  };
 
   manager = g_object_new (XFPM_TYPE_MANAGER, NULL);
 
   manager->priv->session_bus = bus;
 
-  current_dir = g_get_current_dir ();
-  manager->priv->client = xfce_sm_client_get_full (XFCE_SM_CLIENT_RESTART_NORMAL,
-                                                   XFCE_SM_CLIENT_PRIORITY_DEFAULT,
-                                                   client_id,
-                                                   current_dir,
-                                                   restart_command,
-                                                   SYSCONFDIR "/xdg/autostart/" PACKAGE_NAME ".desktop");
-
-  g_free (current_dir);
-
-  manager->priv->session_managed = xfce_sm_client_connect (manager->priv->client, &error);
-
-  if ( error )
+#ifdef ENABLE_X11
+  if (WINDOWING_IS_X11 ())
   {
-    g_warning ("Unable to connect to session manager : %s", error->message);
-    g_error_free (error);
+    GError *error = NULL;
+    gchar *current_dir = g_get_current_dir ();
+    const gchar *restart_command[] =
+    {
+      "xfce4-power-manager",
+      "--restart",
+      NULL
+    };
+    manager->priv->client = xfce_sm_client_get_full (XFCE_SM_CLIENT_RESTART_NORMAL,
+                                                     XFCE_SM_CLIENT_PRIORITY_DEFAULT,
+                                                     client_id,
+                                                     current_dir,
+                                                     restart_command,
+                                                     SYSCONFDIR "/xdg/autostart/" PACKAGE_NAME ".desktop");
+    g_free (current_dir);
+
+    manager->priv->session_managed = xfce_sm_client_connect (manager->priv->client, &error);
+    if (error != NULL)
+    {
+      g_warning ("Unable to connect to session manager : %s", error->message);
+      g_error_free (error);
+    }
+    else
+    {
+      g_signal_connect_object (manager->priv->client, "quit",
+                               G_CALLBACK (xfpm_manager_quit), manager, G_CONNECT_SWAPPED);
+    }
   }
-  else
-  {
-    g_signal_connect_object (manager->priv->client, "quit",
-                             G_CALLBACK (xfpm_manager_quit), manager, G_CONNECT_SWAPPED);
-  }
+#endif
 
   xfpm_manager_dbus_class_init (XFPM_MANAGER_GET_CLASS (manager));
   xfpm_manager_dbus_init (manager);
