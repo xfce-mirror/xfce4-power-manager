@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Eric Koegel <eric.koegel@gmail.com> and Simon Steinbeiß <simon@xfce.org> -->
 <component type="desktop">
-  <id>xfce4-power-manager.desktop</id>
+  <id>org.xfce.powermanager</id>
   <metadata_license>CC-BY-3.0</metadata_license>
   <project_license>GPL-2.0+</project_license>
   <name>Xfce power manager</name>
@@ -26,15 +26,19 @@
     </p>
   </description>
 
+  <launchable type="desktop-id">xfce4-power-manager-settings.desktop</launchable>
+
   <screenshots>
     <screenshot type="default">
-      <image width="624" height="351">http://git.xfce.org/xfce/xfce4-power-manager/plain/data/appdata/xfce4-power-manager-default.png</image>
+      <image width="624" height="351">https://docs.xfce.org/_media/xfce/xfce4-power-manager/xfpm-general.png</image>
+      <caption>Screenshot of the XFCE Power Manager User Interface</caption>
     </screenshot>
   </screenshots>
 
-  <url type="homepage">http://www.xfce.org/</url>
+  <url type="homepage">https://www.xfce.org/</url>
   <url type="bugtracker">https://gitlab.xfce.org/xfce/xfce4-power-manager</url>
   <url type="help">https://docs.xfce.org/xfce/xfce4-power-manager/start</url>
+  <url type="contact">https://docs.xfce.org/contribute/dev/start#communication_with_the_xfce_development_team</url>
 
   <update_contact>xfce4-dev@xfce.org</update_contact>
   <translation type="gettext">xfce4-power-manager</translation>
@@ -87,5 +91,7 @@
       </description>
     </release>
   </releases>
+
+  <content_rating type="oars-1.1"/>
 
 </component>
