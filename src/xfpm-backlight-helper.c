@@ -259,7 +259,7 @@ main (gint argc, gchar *argv[])
   };
 
   context = g_option_context_new (NULL);
-  g_option_context_set_summary (context, "XFCE Power Manager Backlight Helper");
+  g_option_context_set_summary (context, "Xfce Power Manager Backlight Helper");
   g_option_context_add_main_entries (context, options, NULL);
   g_option_context_parse (context, &argc, &argv, NULL);
   g_option_context_free (context);
@@ -579,7 +579,7 @@ main (gint argc, gchar *argv[])
   };
 
   context = g_option_context_new (NULL);
-  g_option_context_set_summary (context, "XFCE Power Manager Backlight Helper");
+  g_option_context_set_summary (context, "Xfce Power Manager Backlight Helper");
   g_option_context_add_main_entries (context, options, NULL);
   g_option_context_parse (context, &argc, &argv, NULL);
   g_option_context_free (context);
