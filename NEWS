@@ -1,3 +1,65 @@
+4.19.2 (2023-11-30)
+======
+- Change XFCE to Xfce
+- data/appdata: Refresh appstream metainfo
+- power: Fix inhibition management
+- build: Restrict XfceSMClient to X11
+- dpms: Add Wayland impl
+- Make XfpmDpms abstract and add X11 impl
+- dpms: Make constructor failable and remove dead code
+- idle: Make constructor failable
+- idle: Add Wayland impl
+- Make XfpmIdle abstract and add X11 impl
+- Make XfpmBrightness abstract and add X11 and Polkit impls
+- build: Properly distinguish X11/Wayland code paths
+- build: Cleanup old flags in Makefiles
+- settings: Present window to the user when already opened
+- settings: Remove useless g_application_hold/release()
+- A review of signal handlers disconnection
+- Remove #ifdefs DEBUG
+- brightness: Rework min level management
+- Refactor XfpmBrightness
+- Remove useless logs
+- Add missing properties for panel plugin settings
+- Use same debug function everywhere (V2)
+- brightness: Silence more warnings
+- Fix previous commit (again)
+- Fix previous commit
+- Fix g_spawn*_sync() wait status management
+- brightness: Fix g_spawn() wait status management
+- Silence some more warnings
+- Update docs url
+- power: Fix memory leak
+- settings: Fix hidden widgets when !has_lcd_brightness
+- backlight: Fix xfconf warning about cancelled operation
+- Lower some warning levels
+- Use same debug function everywhere
+- Fix upower object management
+- plugin: Fix non unreffed objects on finalize
+- systray-icon: Fix "floating object" warning on finalize
+- systray-icon: Fix "invalid property" warnings
+- Suspend system if lock screen fails on lid close (Fixes #209)
+- Remove screensaver timeout management
+- Add support for power profiles daemon
+- panel-plugin: Fix memory leak
+- power: Fix use of g_hash_table_get_values()
+- Fix light locker integration (Fixes #201)
+- Remove NetworkManager related code
+- Add energy rate into device details
+- Add app icon at 64px, 96px, clean up SVG metadata
+- Fix description for pending states.
+- Translation Updates:
+  Albanian, Arabic, Armenian (Armenia), Asturian, Basque, Belarusian,
+  Bulgarian, Catalan, Chinese (China), Chinese (Hong Kong), Chinese
+  (Taiwan), Croatian, Czech, Danish, Dutch, Eastern Armenian, English
+  (Australia), English (Canada), English (United Kingdom), Estonian,
+  Finnish, French, Galician, German, Greek, Hebrew, Hungarian,
+  Icelandic, Indonesian, Interlingue, Italian, Japanese, Kannada,
+  Kazakh, Korean, Lithuanian, Malay, Norwegian Bokmål, Norwegian
+  Nynorsk, Occitan (post 1500), Polish, Portuguese, Portuguese
+  (Brazil), Romanian, Russian, Serbian, Slovak, Slovenian, Spanish,
+  Swedish, Telugu, Thai, Turkish, Ukrainian, Uyghur, Vietnamese
+
 4.19.1 (2023-05-30)
 ======
 - Keep "lock-on-sleep" in sync with other components via XfceScreensaver
