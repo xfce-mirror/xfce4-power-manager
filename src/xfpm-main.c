@@ -285,8 +285,7 @@ int main (int argc, char **argv)
   g_option_context_set_ignore_unknown_options(octx, TRUE);
   g_option_context_add_main_entries(octx, option_entries, NULL);
 #ifdef ENABLE_X11
-  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
-    g_option_context_add_group(octx, xfce_sm_client_get_option_group(argc, argv));
+  g_option_context_add_group(octx, xfce_sm_client_get_option_group(argc, argv));
 #endif
   /* We can't add the following command because it will invoke gtk_init
      before we have a chance to fork.
