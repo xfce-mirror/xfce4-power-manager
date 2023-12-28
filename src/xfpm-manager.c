@@ -607,15 +607,15 @@ xfpm_manager_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmM
 
     if ( lid_is_closed )
     {
-      if (action != LID_TRIGGER_NOTHING &&
-          action != LID_TRIGGER_LOCK_SCREEN)
+      if (action == LID_TRIGGER_SUSPEND ||
+          action == LID_TRIGGER_HIBERNATE)
       {
         /*
          * Force sleep here as lid is closed and no point of asking the
          * user for confirmation in case of an application is inhibiting
          * the power manager.
          */
-        xfpm_manager_sleep_request (manager, action, TRUE);
+        xfpm_manager_sleep_request (manager, (XfpmShutdownRequest) action, TRUE);
       }
     }
   }
