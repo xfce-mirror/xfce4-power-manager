@@ -143,7 +143,7 @@ void        combo_box_xfconf_property_changed_cb       (XfconfChannel *channel,
                                                         char *property,
                                                         GValue *value,
                                                         GtkWidget *combo_box);
-void        set_combo_box_active_entry                 (guint new_value,
+void        set_combo_box_active_by_value              (guint new_value,
                                                         GtkComboBox *combo_box);
 void        on_sleep_mode_changed_cb                   (GtkWidget *w,
                                                         XfconfChannel *channel);
@@ -381,13 +381,12 @@ combo_box_xfconf_property_changed_cb (XfconfChannel *channel, char *property,
                                       GValue *value, GtkWidget *combo_box)
 {
   if (G_VALUE_TYPE (value) == G_TYPE_INVALID)
-    set_combo_box_active_entry (XFPM_DO_NOTHING, GTK_COMBO_BOX (combo_box));
+    set_combo_box_active_by_value (XFPM_DO_NOTHING, GTK_COMBO_BOX (combo_box));
   else
-    set_combo_box_active_entry (g_value_get_uint (value), GTK_COMBO_BOX (combo_box));
-
+    set_combo_box_active_by_value (g_value_get_uint (value), GTK_COMBO_BOX (combo_box));
 }
 
-void set_combo_box_active_entry (guint new_value, GtkComboBox *combo_box)
+void set_combo_box_active_by_value (guint new_value, GtkComboBox *combo_box)
 {
   GtkTreeModel *list_store;
   GtkTreeIter iter;
@@ -1486,8 +1485,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     gtk_combo_box_set_active (GTK_COMBO_BOX (power), 0);
 
     value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX POWER_SWITCH_CFG, XFPM_DO_NOTHING);
-
-    set_combo_box_active_entry (value, GTK_COMBO_BOX (power));
+    set_combo_box_active_by_value (value, GTK_COMBO_BOX (power));
 
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX POWER_SWITCH_CFG,
@@ -1528,11 +1526,10 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
 
-    value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, XFPM_DO_NOTHING);
-
     gtk_combo_box_set_active (GTK_COMBO_BOX (hibernate), 0);
 
-    set_combo_box_active_entry (value, GTK_COMBO_BOX (hibernate));
+    value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, XFPM_DO_NOTHING);
+    set_combo_box_active_by_value (value, GTK_COMBO_BOX (hibernate));
 
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG,
@@ -1576,7 +1573,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_w), 0);
 
     value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX SLEEP_SWITCH_CFG, XFPM_DO_NOTHING);
-    set_combo_box_active_entry (value, GTK_COMBO_BOX (sleep_w));
+    set_combo_box_active_by_value (value, GTK_COMBO_BOX (sleep_w));
 
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX SLEEP_SWITCH_CFG,
@@ -1620,7 +1617,7 @@ xfpm_settings_general (XfconfChannel *channel, gboolean auth_suspend,
     gtk_combo_box_set_active (GTK_COMBO_BOX (battery_w), 0);
 
     value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BATTERY_SWITCH_CFG, XFPM_DO_NOTHING);
-    set_combo_box_active_entry (value, GTK_COMBO_BOX (battery_w));
+    set_combo_box_active_by_value (value, GTK_COMBO_BOX (battery_w));
 
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX BATTERY_SWITCH_CFG,
