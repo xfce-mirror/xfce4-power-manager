@@ -592,6 +592,34 @@ xfpm_manager_set_idle_alarm_on_battery (XfpmManager *manager)
 static void
 xfpm_manager_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmManager *manager)
 {
+  if ( on_battery )
+  {
+    XfpmLidTriggerAction action;
+    gboolean lid_is_closed;
+
+    g_object_get (G_OBJECT (power),
+                  "lid-is-closed", &lid_is_closed,
+                  NULL);
+
+    g_object_get (G_OBJECT (manager->priv->conf),
+                  LID_SWITCH_ON_BATTERY_CFG, &action,
+                  NULL);
+
+    if ( lid_is_closed )
+    {
+      if (action == LID_TRIGGER_SUSPEND ||
+          action == LID_TRIGGER_HIBERNATE)
+      {
+        /*
+         * Force sleep here as lid is closed and no point of asking the
+         * user for confirmation in case of an application is inhibiting
+         * the power manager.
+         */
+        xfpm_manager_sleep_request (manager, (XfpmShutdownRequest) action, TRUE);
+      }
+    }
+  }
+
   xfpm_idle_alarm_reset_all (manager->priv->idle);
 }
 
