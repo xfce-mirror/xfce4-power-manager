@@ -166,6 +166,8 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
   {
     GList *list;
 
+    power->priv->on_battery = on_battery;
+
     g_signal_emit (G_OBJECT (power), signals [ON_BATTERY_CHANGED], 0, on_battery);
 
     if (power->priv->dpms != NULL)
@@ -174,7 +176,6 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
       /* Dismiss critical notifications on battery state changes */
     xfpm_notify_close_critical (power->priv->notify);
 
-    power->priv->on_battery = on_battery;
     list = g_hash_table_get_values (power->priv->hash);
     for (GList *lp = list; lp != NULL; lp = lp->next)
     {
