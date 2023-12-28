@@ -137,6 +137,7 @@ enum
   PROP_CAN_SUSPEND,
   PROP_CAN_HIBERNATE,
   PROP_HAS_LID,
+  PROP_LID_IS_CLOSED,
   PROP_PRESENTATION_MODE,
   N_PROPERTIES
 };
@@ -979,6 +980,13 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                          G_PARAM_READABLE));
 
   g_object_class_install_property (object_class,
+                                   PROP_LID_IS_CLOSED,
+                                   g_param_spec_boolean ("lid-is-closed",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class,
                                    PROP_PRESENTATION_MODE,
                                    g_param_spec_boolean (PRESENTATION_MODE,
                                                          NULL, NULL,
@@ -1090,6 +1098,9 @@ xfpm_power_get_property (GObject *object,
       break;
     case PROP_HAS_LID:
       g_value_set_boolean (value, power->priv->lid_is_present);
+      break;
+    case PROP_LID_IS_CLOSED:
+      g_value_set_boolean (value, power->priv->lid_is_closed);
       break;
     case PROP_PRESENTATION_MODE:
       g_value_set_boolean (value, power->priv->presentation_mode);
