@@ -469,7 +469,6 @@
                                         <property name="primary_icon_activatable">False</property>
                                         <property name="secondary_icon_activatable">False</property>
                                         <property name="adjustment">brightness-step-count-spin-adjustment</property>
-                                        <signal name="value-changed" handler="brightness_step_count_value_changed_cb" swapped="no"/>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
@@ -483,7 +482,6 @@
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">False</property>
                                         <property name="draw_indicator">True</property>
-                                        <signal name="toggled" handler="brightness_exponential_toggled_cb" swapped="no"/>
                                       </object>
                                       <packing>
                                         <property name="expand">False</property>
