@@ -531,17 +531,14 @@ xfpm_manager_set_idle_alarm_on_ac (XfpmManager *manager)
                 ON_AC_INACTIVITY_TIMEOUT, &on_ac,
                 NULL);
 
-  if ( on_ac == 14 )
-    XFPM_DEBUG ("setting inactivity sleep timeout on ac to never");
-  else
-    XFPM_DEBUG ("setting inactivity sleep timeout on ac to %d", on_ac);
-
-  if ( on_ac == 14 )
+  if (on_ac == 0)
   {
+    XFPM_DEBUG ("setting inactivity sleep timeout on ac to never");
     egg_idletime_alarm_remove (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC );
   }
   else
   {
+    XFPM_DEBUG ("setting inactivity sleep timeout on ac to %d", on_ac);
     egg_idletime_alarm_set (manager->priv->idle, TIMEOUT_INACTIVITY_ON_AC, on_ac * 1000 * 60);
   }
 }
@@ -555,17 +552,14 @@ xfpm_manager_set_idle_alarm_on_battery (XfpmManager *manager)
                 ON_BATTERY_INACTIVITY_TIMEOUT, &on_battery,
                 NULL);
 
-  if ( on_battery == 14 )
-    XFPM_DEBUG ("setting inactivity sleep timeout on battery to never");
-  else
-    XFPM_DEBUG ("setting inactivity sleep timeout on battery to %d", on_battery);
-
-  if ( on_battery == 14 )
+  if (on_battery == 0)
   {
+    XFPM_DEBUG ("setting inactivity sleep timeout on battery to never");
     egg_idletime_alarm_remove (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY );
   }
   else
   {
+    XFPM_DEBUG ("setting inactivity sleep timeout on battery to %d", on_battery);
     egg_idletime_alarm_set (manager->priv->idle, TIMEOUT_INACTIVITY_ON_BATTERY, on_battery * 1000 * 60);
   }
 }

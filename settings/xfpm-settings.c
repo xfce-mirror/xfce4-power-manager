@@ -660,7 +660,7 @@ format_inactivity_value_cb (gint value)
 {
   gint h, min;
 
-  if ( value <= 14 )
+  if ( value == 0 )
     return g_strdup (_("Never"));
   else if ( value < 60 )
     return g_strdup_printf ("%d %s", value, _("minutes"));
@@ -971,7 +971,7 @@ xfpm_settings_on_battery (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not permitted"));
   }
 
-  val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, 14);
+  val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, 0);
   gtk_range_set_value (GTK_RANGE (inact_timeout), val);
 
 
@@ -1208,7 +1208,7 @@ xfpm_settings_on_ac (XfconfChannel *channel, gboolean auth_suspend,
     gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not permitted"));
   }
 
-  val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, 14);
+  val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, 0);
   gtk_range_set_value (GTK_RANGE (inact_timeout), val);
 
   /*
