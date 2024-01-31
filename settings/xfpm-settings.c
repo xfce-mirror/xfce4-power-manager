@@ -2543,6 +2543,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel, gboolean auth_suspend,
   switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "handle-brightness-keys"));
   xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
                           G_TYPE_BOOLEAN, switch_widget, "active");
+  gtk_switch_set_state (GTK_SWITCH (switch_widget),
+                        xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS, TRUE));
 
   switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "show-notifications"));
   xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX GENERAL_NOTIFICATION_CFG,
