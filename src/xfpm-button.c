@@ -335,15 +335,16 @@ xfpm_button_set_handle_brightness_keys (XfpmButton *button,
 {
   g_return_if_fail (XFPM_IS_BUTTON (button));
 
-  if (button->priv->handle_brightness_keys != handle_brightness_keys) {
+  if (button->priv->handle_brightness_keys != handle_brightness_keys)
+  {
     button->priv->handle_brightness_keys = handle_brightness_keys;
 
     if (handle_brightness_keys)
     {
-      if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP) )
+      if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP))
         button->priv->mapped_buttons |= BRIGHTNESS_KEY_UP;
 
-      if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN) )
+      if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN))
         button->priv->mapped_buttons |= BRIGHTNESS_KEY_DOWN;
     }
     else
@@ -360,6 +361,5 @@ xfpm_button_set_handle_brightness_keys (XfpmButton *button,
         button->priv->mapped_buttons &= ~(BRIGHTNESS_KEY_DOWN);
       }
     }
-
   }
 }
