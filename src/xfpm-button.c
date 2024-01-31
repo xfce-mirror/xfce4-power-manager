@@ -64,6 +64,7 @@ struct XfpmButtonPrivate
 {
   GdkScreen   *screen;
   GdkWindow   *window;
+  gboolean     handle_brightness_keys;
   guint16      mapped_buttons;
 };
 
@@ -183,6 +184,39 @@ xfpm_button_xevent_key (XfpmButton *button, guint keysym , XfpmButtonKey key)
 }
 
 static void
+xfpm_button_ungrab (XfpmButton *button, guint keysym, XfpmButtonKey key)
+{
+  Display *display;
+  GdkDisplay *gdisplay;
+  guint modmask = AnyModifier;
+  guint keycode = XKeysymToKeycode (gdk_x11_get_default_xdisplay(), keysym);
+
+  if (keycode == 0)
+  {
+    XFPM_DEBUG ("could not map keysym %x to keycode\n", keysym);
+    return;
+  }
+
+  display = gdk_x11_get_default_xdisplay ();
+  gdisplay = gdk_display_get_default ();
+
+  gdk_x11_display_error_trap_push (gdisplay);
+
+  XUngrabKey (display, keycode, modmask,
+              GDK_WINDOW_XID (button->priv->window));
+  XUngrabKey (display, keycode, LockMask | modmask,
+              GDK_WINDOW_XID (button->priv->window));
+
+  gdk_display_flush (gdisplay);
+  gdk_x11_display_error_trap_pop_ignored (gdisplay);
+
+  XFPM_DEBUG_ENUM (key, XFPM_TYPE_BUTTON_KEY, "Ungrabbed key %li ", (long int) keycode);
+
+  xfpm_key_map [key].key_code = 0;
+  xfpm_key_map [key].key = 0;
+}
+
+static void
 xfpm_button_setup (XfpmButton *button)
 {
   button->priv->screen = gdk_screen_get_default ();
@@ -204,11 +238,14 @@ xfpm_button_setup (XfpmButton *button)
   if ( xfpm_button_xevent_key (button, XF86XK_Sleep, BUTTON_SLEEP) )
     button->priv->mapped_buttons |= SLEEP_KEY;
 
-  if ( xfpm_button_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP) )
-    button->priv->mapped_buttons |= BRIGHTNESS_KEY_UP;
+  if (button->priv->handle_brightness_keys)
+  {
+    if ( xfpm_button_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP) )
+      button->priv->mapped_buttons |= BRIGHTNESS_KEY_UP;
 
-  if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN) )
-    button->priv->mapped_buttons |= BRIGHTNESS_KEY_DOWN;
+    if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN) )
+      button->priv->mapped_buttons |= BRIGHTNESS_KEY_DOWN;
+  }
 
   if (xfpm_button_xevent_key (button, XF86XK_Battery, BUTTON_BATTERY))
     button->priv->mapped_buttons |= BATTERY_KEY;
@@ -244,6 +281,7 @@ xfpm_button_init (XfpmButton *button)
 {
   button->priv = xfpm_button_get_instance_private (button);
 
+  button->priv->handle_brightness_keys = FALSE;
   button->priv->mapped_buttons = 0;
   button->priv->screen = NULL;
   button->priv->window = NULL;
@@ -281,4 +319,39 @@ xfpm_button_get_mapped (XfpmButton *button)
   g_return_val_if_fail (XFPM_IS_BUTTON (button), 0);
 
   return button->priv->mapped_buttons;
+}
+
+void
+xfpm_button_set_handle_brightness_keys (XfpmButton *button,
+                                        gboolean handle_brightness_keys)
+{
+  g_return_if_fail (XFPM_IS_BUTTON (button));
+
+  if (button->priv->handle_brightness_keys != handle_brightness_keys)
+  {
+    button->priv->handle_brightness_keys = handle_brightness_keys;
+
+    if (handle_brightness_keys)
+    {
+      if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP))
+        button->priv->mapped_buttons |= BRIGHTNESS_KEY_UP;
+
+      if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN))
+        button->priv->mapped_buttons |= BRIGHTNESS_KEY_DOWN;
+    }
+    else
+    {
+      if ((button->priv->mapped_buttons & BRIGHTNESS_KEY_UP) != 0)
+      {
+        xfpm_button_ungrab (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP);
+        button->priv->mapped_buttons &= ~(BRIGHTNESS_KEY_UP);
+      }
+
+      if ((button->priv->mapped_buttons & BRIGHTNESS_KEY_DOWN) != 0)
+      {
+        xfpm_button_ungrab (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN);
+        button->priv->mapped_buttons &= ~(BRIGHTNESS_KEY_DOWN);
+      }
+    }
+  }
 }
