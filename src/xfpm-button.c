@@ -335,31 +335,36 @@ xfpm_button_set_handle_brightness_keys (XfpmButton *button,
 {
   g_return_if_fail (XFPM_IS_BUTTON (button));
 
-  if (button->priv->handle_brightness_keys != handle_brightness_keys) {
+  if (button->priv->handle_brightness_keys != handle_brightness_keys)
+  {
     button->priv->handle_brightness_keys = handle_brightness_keys;
 
-    if (handle_brightness_keys)
+#ifdef ENABLE_X11
+    if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
     {
-      if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP) )
-        button->priv->mapped_buttons |= BRIGHTNESS_KEY_UP;
-
-      if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN) )
-        button->priv->mapped_buttons |= BRIGHTNESS_KEY_DOWN;
-    }
-    else
-    {
-      if ((button->priv->mapped_buttons & BRIGHTNESS_KEY_UP) != 0)
+      if (handle_brightness_keys)
       {
-        xfpm_button_ungrab (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP);
-        button->priv->mapped_buttons &= ~(BRIGHTNESS_KEY_UP);
-      }
+        if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP))
+          button->priv->mapped_buttons |= BRIGHTNESS_KEY_UP;
 
-      if ((button->priv->mapped_buttons & BRIGHTNESS_KEY_DOWN) != 0)
+        if (xfpm_button_xevent_key (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN))
+          button->priv->mapped_buttons |= BRIGHTNESS_KEY_DOWN;
+      }
+      else
       {
-        xfpm_button_ungrab (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN);
-        button->priv->mapped_buttons &= ~(BRIGHTNESS_KEY_DOWN);
+        if ((button->priv->mapped_buttons & BRIGHTNESS_KEY_UP) != 0)
+        {
+          xfpm_button_ungrab (button, XF86XK_MonBrightnessUp, BUTTON_MON_BRIGHTNESS_UP);
+          button->priv->mapped_buttons &= ~(BRIGHTNESS_KEY_UP);
+        }
+
+        if ((button->priv->mapped_buttons & BRIGHTNESS_KEY_DOWN) != 0)
+        {
+          xfpm_button_ungrab (button, XF86XK_MonBrightnessDown, BUTTON_MON_BRIGHTNESS_DOWN);
+          button->priv->mapped_buttons &= ~(BRIGHTNESS_KEY_DOWN);
+        }
       }
     }
-
+#endif
   }
 }
