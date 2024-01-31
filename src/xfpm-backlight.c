@@ -282,6 +282,20 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
 }
 
 static void
+xfpm_backlight_handle_brightness_keys_changed (XfpmBacklight *backlight)
+{
+  gboolean handle_keys = FALSE;
+
+  g_object_get (G_OBJECT (backlight->priv->conf),
+                HANDLE_BRIGHTNESS_KEYS, &handle_keys,
+                NULL);
+
+  XFPM_DEBUG ("handle_brightness_keys changed to %s", handle_keys ? "TRUE" : "FALSE");
+
+  xfpm_button_set_handle_brightness_keys (backlight->priv->button, handle_keys);
+}
+
+static void
 xfpm_backlight_brightness_on_ac_settings_changed (XfpmBacklight *backlight)
 {
   guint timeout_on_ac;
@@ -431,6 +445,9 @@ xfpm_backlight_init (XfpmBacklight *backlight)
             BRIGHTNESS_SWITCH,
             backlight->priv->brightness_switch,
             NULL);
+    xfpm_button_set_handle_brightness_keys (backlight->priv->button, handle_keys);
+    g_signal_connect_swapped (backlight->priv->conf, "notify::" HANDLE_BRIGHTNESS_KEYS,
+                             G_CALLBACK (xfpm_backlight_handle_brightness_keys_changed), backlight);
 
     if (backlight->priv->idle != NULL)
     {
