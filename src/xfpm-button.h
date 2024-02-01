@@ -50,6 +50,9 @@ GType                     xfpm_button_get_type             (void) G_GNUC_CONST;
 XfpmButton               *xfpm_button_new                  (void);
 guint16                   xfpm_button_get_mapped           (XfpmButton *button) G_GNUC_PURE;
 
+void                      xfpm_button_set_handle_brightness_keys (XfpmButton *button,
+                                                                  gboolean handle_brightness_keys);
+
 G_END_DECLS
 
 #endif /* __XFPM_BUTTON_H */
