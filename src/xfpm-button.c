@@ -259,6 +259,9 @@ xfpm_button_setup (XfpmButton *button)
   if (xfpm_button_xevent_key (button, XF86XK_KbdBrightnessDown, BUTTON_KBD_BRIGHTNESS_DOWN) )
     button->priv->mapped_buttons |= KBD_BRIGHTNESS_KEY_DOWN;
 
+  if (xfpm_button_xevent_key (button, XF86XK_KbdLightOnOff, BUTTON_KBD_BRIGHTNESS_CYCLE) )
+    button->priv->mapped_buttons |= KBD_BRIGHTNESS_CYCLE;
+
   gdk_window_add_filter (button->priv->window, xfpm_button_filter_x_events, button);
 }
 

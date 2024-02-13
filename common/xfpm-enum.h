@@ -43,7 +43,8 @@ typedef enum
   POWER_KEY 	        	= (1 << 5),
   KBD_BRIGHTNESS_KEY_UP	= (1 << 6),
   KBD_BRIGHTNESS_KEY_DOWN	= (1 << 7),
-  BATTERY_KEY                 = (1 << 8)
+  KBD_BRIGHTNESS_CYCLE	= (1 << 8),
+  BATTERY_KEY                 = (1 << 9)
 } XfpmKeys;
 
 typedef enum
