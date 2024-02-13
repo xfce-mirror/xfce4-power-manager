@@ -231,6 +231,26 @@ xfpm_kbd_backlight_down (XfpmKbdBacklight *backlight)
   xfpm_kbd_backlight_set_level (backlight, level);
 }
 
+static void
+xfpm_kbd_backlight_cycle (XfpmKbdBacklight *backlight)
+{
+  gint level;
+
+  level = xfpm_kbd_backlight_get_level (backlight);
+
+  if ( level == -1)
+    return;
+
+  if ( level >= backlight->priv->max_level )
+    level = backlight->priv->min_level;
+  else
+    level += backlight->priv->step;
+
+  if ( level > backlight->priv->max_level )
+    level = backlight->priv->max_level;
+
+  xfpm_kbd_backlight_set_level (backlight, level);
+}
 
 static void
 xfpm_kbd_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmKbdBacklight *backlight)
@@ -242,6 +262,10 @@ xfpm_kbd_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, Xf
   else if ( type == BUTTON_KBD_BRIGHTNESS_DOWN )
   {
     xfpm_kbd_backlight_down (backlight);
+  }
+  else if ( type == BUTTON_KBD_BRIGHTNESS_CYCLE )
+  {
+    xfpm_kbd_backlight_cycle (backlight);
   }
 }
 
