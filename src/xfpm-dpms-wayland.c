@@ -236,6 +236,9 @@ xfpm_dpms_wayland_set_enabled (XfpmDpms *_dpms,
                                gboolean enabled)
 {
   XfpmDpmsWayland *dpms = XFPM_DPMS_WAYLAND (_dpms);
+  if (dpms->idle == NULL)
+    return;
+
   if (!enabled)
     xfpm_idle_alarm_remove (dpms->idle, XFPM_ALARM_ID_DPMS);
 }
@@ -247,6 +250,9 @@ xfpm_dpms_wayland_set_timeouts (XfpmDpms *_dpms,
                                 guint off_timeout)
 {
   XfpmDpmsWayland *dpms = XFPM_DPMS_WAYLAND (_dpms);
+  if (dpms->idle == NULL)
+    return;
+
   if (off_timeout == 0)
     xfpm_idle_alarm_remove (dpms->idle, XFPM_ALARM_ID_DPMS);
   else

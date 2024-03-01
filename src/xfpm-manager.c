@@ -586,7 +586,8 @@ xfpm_manager_set_idle_alarm_on_battery (XfpmManager *manager)
 static void
 xfpm_manager_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmManager *manager)
 {
-  xfpm_idle_alarm_reset_all (manager->priv->idle);
+  if (manager->priv->idle != NULL)
+    xfpm_idle_alarm_reset_all (manager->priv->idle);
 }
 
 static gchar*
