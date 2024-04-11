@@ -1758,19 +1758,14 @@ get_light_locker_path (void)
 gchar *
 format_light_locker_value_cb (gint value)
 {
-  gint min;
-
   if ( value <= 0 )
     return g_strdup (_("Never"));
   else if ( value < 60 )
     return g_strdup_printf ("%d %s", value, _("seconds"));
   else
   {
-    min = value - 60;
-    if (min == 0)
-      return g_strdup_printf ("%d %s", min + 1, _("minute"));
-    else
-      return g_strdup_printf ("%d %s", min + 1, _("minutes"));
+    gint min = value - 60;
+    return g_strdup_printf ("%d %s", min + 1, ngettext ("minute", "minutes", min + 1));
   }
 }
 
