@@ -30,15 +30,15 @@
 
 G_BEGIN_DECLS
 
-#define POWER_MANAGER_TYPE_BUTTON        (power_manager_button_get_type () )
-#define POWER_MANAGER_BUTTON(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), POWER_MANAGER_TYPE_BUTTON, PowerManagerButton))
-#define POWER_MANAGER_IS_BUTTON(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), POWER_MANAGER_TYPE_BUTTON))
+#define POWER_MANAGER_TYPE_BUTTON (power_manager_button_get_type ())
+#define POWER_MANAGER_BUTTON(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), POWER_MANAGER_TYPE_BUTTON, PowerManagerButton))
+#define POWER_MANAGER_IS_BUTTON(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), POWER_MANAGER_TYPE_BUTTON))
 
 typedef struct PowerManagerButtonPrivate PowerManagerButtonPrivate;
 
 typedef struct
 {
-  GtkToggleButton            parent;
+  GtkToggleButton parent;
   PowerManagerButtonPrivate *priv;
 
 } PowerManagerButton;
@@ -48,21 +48,28 @@ typedef struct
   GtkToggleButtonClass parent_class;
 
   /*< Signals >*/
-  void (*tooltip_changed)  (PowerManagerButton *button);
-  void (*icon_name_changed)(PowerManagerButton *button);
+  void (*tooltip_changed) (PowerManagerButton *button);
+  void (*icon_name_changed) (PowerManagerButton *button);
 } PowerManagerButtonClass;
 
-GType                    power_manager_button_get_type      (void) G_GNUC_CONST;
+GType
+power_manager_button_get_type (void) G_GNUC_CONST;
 #ifdef XFCE_PLUGIN
-GtkWidget               *power_manager_button_new           (XfcePanelPlugin *plugin);
+GtkWidget *
+power_manager_button_new (XfcePanelPlugin *plugin);
 #endif
 #ifdef XFPM_SYSTRAY
-GtkWidget               *power_manager_button_new           (void);
+GtkWidget *
+power_manager_button_new (void);
 #endif
-void                     power_manager_button_show          (PowerManagerButton *button);
-void                     power_manager_button_show_menu     (PowerManagerButton *button);
-const gchar             *power_manager_button_get_icon_name (PowerManagerButton *button);
-const gchar             *power_manager_button_get_tooltip   (PowerManagerButton *button);
+void
+power_manager_button_show (PowerManagerButton *button);
+void
+power_manager_button_show_menu (PowerManagerButton *button);
+const gchar *
+power_manager_button_get_icon_name (PowerManagerButton *button);
+const gchar *
+power_manager_button_get_tooltip (PowerManagerButton *button);
 
 G_END_DECLS
 

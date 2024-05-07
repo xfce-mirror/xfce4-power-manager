@@ -27,23 +27,23 @@
 #include <glib-object.h>
 #include <stdio.h>
 
-#if defined(BACKEND_TYPE_FREEBSD)
+#ifdef BACKEND_TYPE_FREEBSD
 #include <sys/sysctl.h>
 #endif
 
-#define EXIT_CODE_SUCCESS   0
-#define EXIT_CODE_FAILED    1
+#define EXIT_CODE_SUCCESS 0
+#define EXIT_CODE_FAILED 1
 #define EXIT_CODE_ARGUMENTS_INVALID 3
-#define EXIT_CODE_INVALID_USER    4
-#define EXIT_CODE_NO_BRIGHTNESS_SWITCH  5
+#define EXIT_CODE_INVALID_USER 4
+#define EXIT_CODE_NO_BRIGHTNESS_SWITCH 5
 
-#if !defined(BACKEND_TYPE_FREEBSD)
-#define BACKLIGHT_SYSFS_LOCATION  "/sys/class/backlight"
-#define BRIGHTNESS_SWITCH_LOCATION  "/sys/module/video/parameters/brightness_switch_enabled"
+#ifndef BACKEND_TYPE_FREEBSD
+#define BACKLIGHT_SYSFS_LOCATION "/sys/class/backlight"
+#define BRIGHTNESS_SWITCH_LOCATION "/sys/module/video/parameters/brightness_switch_enabled"
 #endif
 
 
-#if defined(BACKEND_TYPE_FREEBSD)
+#ifdef BACKEND_TYPE_FREEBSD
 gboolean
 acpi_video_is_enabled (gchar *device)
 {
@@ -105,15 +105,16 @@ backlight_helper_get_levels (gchar *device)
   sysctlbyname (name, NULL, &size, NULL, 0);
   levels = (int *) malloc (size);
 
-  if (sysctlbyname (name, levels, &size, NULL, 0) == 0) {
+  if (sysctlbyname (name, levels, &size, NULL, 0) == 0)
+  {
     nlevels = size / sizeof (gint);
 
-    for (i = 0; i < nlevels; i++) {
+    for (i = 0; i < nlevels; i++)
+    {
       /* no duplicate item */
       item = g_list_find (list, GINT_TO_POINTER (levels[i]));
       if (item == NULL)
-        list = g_list_append (list,
-                  GINT_TO_POINTER (levels[i]));
+        list = g_list_append (list, GINT_TO_POINTER (levels[i]));
     }
   }
 
@@ -138,12 +139,14 @@ backlight_helper_set_switch (gchar *device, gint value)
   name = g_strdup_printf ("hw.acpi.video.%s.active", device);
 
   res = backlight_helper_get_switch (device);
-  if (res != -1) {
+  if (res != -1)
+  {
     old_buf = res;
     size = sizeof (buf);
 
     /* we change value and check if it's really different */
-    if (sysctlbyname (name, &buf, &size, &value, sizeof (value)) == 0) {
+    if (sysctlbyname (name, &buf, &size, &value, sizeof (value)) == 0)
+    {
       res = backlight_helper_get_switch (device);
       if (res != -1 && res != old_buf)
         result = TRUE;
@@ -166,12 +169,14 @@ backlight_helper_set_brightness (gchar *device, gint value)
   name = g_strdup_printf ("hw.acpi.video.%s.brightness", device);
 
   res = backlight_helper_get_brightness (device);
-  if (res != -1) {
+  if (res != -1)
+  {
     old_buf = res;
     size = sizeof (buf);
 
     /* we change value, and check if it's really different */
-    if (sysctlbyname (name, &buf, &size, &value, sizeof (value)) == 0) {
+    if (sysctlbyname (name, &buf, &size, &value, sizeof (value)) == 0)
+    {
       res = backlight_helper_get_brightness (device);
       if (res != -1 && res != old_buf)
         result = TRUE;
@@ -196,7 +201,8 @@ backlight_helper_get_device (void)
 
   device = (gchar *) g_malloc (sizeof (gchar));
 
-  for (i = 0; types[i] != NULL; i++) {
+  for (i = 0; types[i] != NULL; i++)
+  {
     g_snprintf (device, (gulong) strlen (types[i]), "%s0", types[i]);
 
     /* stop, when first device is found */
@@ -229,19 +235,19 @@ main (gint argc, gchar *argv[])
 
   const GOptionEntry options[] = {
     { "set-brightness", '\0', 0, G_OPTION_ARG_INT, &set_brightness,
-       /* command line argument */
+      /* command line argument */
       "Set the current brightness", NULL },
     { "get-brightness", '\0', 0, G_OPTION_ARG_NONE, &get_brightness,
-       /* command line argument */
+      /* command line argument */
       "Get the current brightness", NULL },
     { "get-max-brightness", '\0', 0, G_OPTION_ARG_NONE, &get_max_brightness,
-       /* command line argument */
+      /* command line argument */
       "Get the number of brightness levels supported", NULL },
     { "set-brightness-switch", '\0', 0, G_OPTION_ARG_INT, &set_brightness_switch,
-                  /* command line argument */
+      /* command line argument */
       "Enable or disable ACPI video brightness switch handling", NULL },
     { "get-brightness-switch", '\0', 0, G_OPTION_ARG_NONE, &get_brightness_switch,
-                  /* command line argument */
+      /* command line argument */
       "Get the current setting of the ACPI video brightness switch handling", NULL },
     { NULL }
   };
@@ -253,8 +259,9 @@ main (gint argc, gchar *argv[])
   g_option_context_free (context);
 
   /* no input */
-  if (set_brightness == -1 && !get_brightness && !get_max_brightness &&
-      set_brightness_switch == -1 && !get_brightness_switch) {
+  if (set_brightness == -1 && !get_brightness && !get_max_brightness
+      && set_brightness_switch == -1 && !get_brightness_switch)
+  {
     g_printerr ("No valid option was specified\n");
     retval = EXIT_CODE_ARGUMENTS_INVALID;
     goto out;
@@ -263,9 +270,11 @@ main (gint argc, gchar *argv[])
   /* find backlight device */
   device = backlight_helper_get_device ();
 
-  if (device != NULL) {
+  if (device != NULL)
+  {
     /* get the current setting of the ACPI video brightness switch handling */
-    if (get_brightness_switch) {
+    if (get_brightness_switch)
+    {
       ret = backlight_helper_get_switch (device);
       /* just print result to stdout */
       if (ret == -1)
@@ -282,7 +291,8 @@ main (gint argc, gchar *argv[])
     }
 
     /* get current brightness level */
-    if (get_brightness) {
+    if (get_brightness)
+    {
       ret = backlight_helper_get_brightness (device);
       /* just print result to stdout */
       if (ret == -1)
@@ -299,16 +309,19 @@ main (gint argc, gchar *argv[])
     }
 
     /* get maximum brightness level */
-    if (get_max_brightness) {
+    if (get_max_brightness)
+    {
       list = backlight_helper_get_levels (device);
-      if (list != NULL) {
+      if (list != NULL)
+      {
         /* just print result to stdout */
         g_print ("%d", (gint) g_list_last (list)->data);
         g_list_free (list);
         retval = EXIT_CODE_SUCCESS;
         goto out;
       }
-      else {
+      else
+      {
         g_printerr ("Could not get the maximum value of the backlight\n");
         retval = EXIT_CODE_FAILED;
         goto out;
@@ -318,7 +331,8 @@ main (gint argc, gchar *argv[])
     /* get calling process */
     uid = getuid ();
     euid = geteuid ();
-    if (uid != 0 || euid != 0) {
+    if (uid != 0 || euid != 0)
+    {
       g_printerr ("This program can only be used by the root user\n");
       retval = EXIT_CODE_ARGUMENTS_INVALID;
       goto out;
@@ -326,19 +340,23 @@ main (gint argc, gchar *argv[])
 
     /* check we're not being spoofed */
     pkexec_uid_str = g_getenv ("PKEXEC_UID");
-    if (pkexec_uid_str == NULL) {
+    if (pkexec_uid_str == NULL)
+    {
       g_printerr ("This program must only be run through pkexec\n");
       retval = EXIT_CODE_INVALID_USER;
       goto out;
     }
 
     /* set the brightness level */
-    if (set_brightness != -1) {
-      if (backlight_helper_set_brightness (device, set_brightness)) {
+    if (set_brightness != -1)
+    {
+      if (backlight_helper_set_brightness (device, set_brightness))
+      {
         retval = EXIT_CODE_SUCCESS;
         goto out;
       }
-      else {
+      else
+      {
         g_printerr ("Could not set the value of the backlight\n");
         retval = EXIT_CODE_FAILED;
         goto out;
@@ -346,27 +364,34 @@ main (gint argc, gchar *argv[])
     }
 
     /* enable or disable ACPI video brightness switch handling */
-    if (set_brightness_switch != -1) {
-      if (backlight_helper_set_switch (device, set_brightness_switch)) {
+    if (set_brightness_switch != -1)
+    {
+      if (backlight_helper_set_switch (device, set_brightness_switch))
+      {
         retval = EXIT_CODE_SUCCESS;
         goto out;
       }
-      else {
+      else
+      {
         g_printerr ("Could not set the value of the brightness switch\n");
         retval = EXIT_CODE_FAILED;
         goto out;
       }
     }
   }
-  else {
+  else
+  {
     retval = ret;
     goto out;
   }
 out:
   return retval;
 }
-#else
-typedef enum {
+
+#else /* !BACKEND_TYPE_FREEBSD */
+
+typedef enum
+{
   BACKLIGHT_TYPE_UNKNOWN,
   BACKLIGHT_TYPE_FIRMWARE,
   BACKLIGHT_TYPE_PLATFORM,
@@ -382,12 +407,10 @@ backlight_helper_get_type (const gchar *sysfs_path)
   gchar *type_tmp = NULL;
   BacklightType type = BACKLIGHT_TYPE_UNKNOWN;
 
-  filename = g_build_filename (sysfs_path,
-             "type", NULL);
-  ret = g_file_get_contents (filename,
-           &type_tmp,
-           NULL, &error);
-  if (!ret) {
+  filename = g_build_filename (sysfs_path, "type", NULL);
+  ret = g_file_get_contents (filename, &type_tmp, NULL, &error);
+  if (!ret)
+  {
     if (error)
     {
       g_warning ("failed to get type: %s", error->message);
@@ -395,15 +418,18 @@ backlight_helper_get_type (const gchar *sysfs_path)
     }
     goto out;
   }
-  if (g_str_has_prefix (type_tmp, "platform")) {
+  if (g_str_has_prefix (type_tmp, "platform"))
+  {
     type = BACKLIGHT_TYPE_PLATFORM;
     goto out;
   }
-  if (g_str_has_prefix (type_tmp, "firmware")) {
+  if (g_str_has_prefix (type_tmp, "firmware"))
+  {
     type = BACKLIGHT_TYPE_FIRMWARE;
     goto out;
   }
-  if (g_str_has_prefix (type_tmp, "raw")) {
+  if (g_str_has_prefix (type_tmp, "raw"))
+  {
     type = BACKLIGHT_TYPE_RAW;
     goto out;
   }
@@ -432,7 +458,8 @@ backlight_helper_get_best_backlight (void)
   /* search the backlight devices and prefer the types:
    * firmware -> platform -> raw */
   dir = g_dir_open (BACKLIGHT_SYSFS_LOCATION, 0, &error);
-  if (dir == NULL) {
+  if (dir == NULL)
+  {
     if (error)
     {
       g_warning ("failed to find any devices: %s", error->message);
@@ -442,9 +469,9 @@ backlight_helper_get_best_backlight (void)
   }
   sysfs_paths = g_ptr_array_new_with_free_func (g_free);
   device_name = g_dir_read_name (dir);
-  while (device_name != NULL) {
-    filename = g_build_filename (BACKLIGHT_SYSFS_LOCATION,
-               device_name, NULL);
+  while (device_name != NULL)
+  {
+    filename = g_build_filename (BACKLIGHT_SYSFS_LOCATION, device_name, NULL);
     g_ptr_array_add (sysfs_paths, filename);
     device_name = g_dir_read_name (dir);
   }
@@ -455,26 +482,33 @@ backlight_helper_get_best_backlight (void)
 
   /* find out the type of each backlight */
   backlight_types = g_new0 (BacklightType, sysfs_paths->len);
-  for (i = 0; i < sysfs_paths->len; i++) {
+  for (i = 0; i < sysfs_paths->len; i++)
+  {
     filename_tmp = g_ptr_array_index (sysfs_paths, i);
     backlight_types[i] = backlight_helper_get_type (filename_tmp);
   }
 
   /* any devices of type firmware -> platform -> raw? */
-  for (i = 0; i < sysfs_paths->len; i++) {
-    if (backlight_types[i] == BACKLIGHT_TYPE_FIRMWARE) {
+  for (i = 0; i < sysfs_paths->len; i++)
+  {
+    if (backlight_types[i] == BACKLIGHT_TYPE_FIRMWARE)
+    {
       best_device = g_strdup (g_ptr_array_index (sysfs_paths, i));
       goto out;
     }
   }
-  for (i = 0; i < sysfs_paths->len; i++) {
-    if (backlight_types[i] == BACKLIGHT_TYPE_PLATFORM) {
+  for (i = 0; i < sysfs_paths->len; i++)
+  {
+    if (backlight_types[i] == BACKLIGHT_TYPE_PLATFORM)
+    {
       best_device = g_strdup (g_ptr_array_index (sysfs_paths, i));
       goto out;
     }
   }
-  for (i = 0; i < sysfs_paths->len; i++) {
-    if (backlight_types[i] == BACKLIGHT_TYPE_RAW) {
+  for (i = 0; i < sysfs_paths->len; i++)
+  {
+    if (backlight_types[i] == BACKLIGHT_TYPE_RAW)
+    {
       best_device = g_strdup (g_ptr_array_index (sysfs_paths, i));
       goto out;
     }
@@ -501,7 +535,8 @@ backlight_helper_write (const gchar *filename, gint value, GError **error)
   gboolean ret = TRUE;
 
   fd = open (filename, O_WRONLY);
-  if (fd < 0) {
+  if (fd < 0)
+  {
     ret = FALSE;
     g_set_error (error, 1, 0, "failed to open filename: %s", filename);
     goto out;
@@ -513,7 +548,8 @@ backlight_helper_write (const gchar *filename, gint value, GError **error)
 
   /* write to device file */
   retval = write (fd, text, length);
-  if (retval != length) {
+  if (retval != length)
+  {
     ret = FALSE;
     g_set_error (error, 1, 0, "writing '%s' to %s failed", text, filename);
     goto out;
@@ -549,19 +585,19 @@ main (gint argc, gchar *argv[])
 
   const GOptionEntry options[] = {
     { "set-brightness", '\0', 0, G_OPTION_ARG_INT, &set_brightness,
-       /* command line argument */
+      /* command line argument */
       "Set the current brightness", NULL },
     { "get-brightness", '\0', 0, G_OPTION_ARG_NONE, &get_brightness,
-       /* command line argument */
+      /* command line argument */
       "Get the current brightness", NULL },
     { "get-max-brightness", '\0', 0, G_OPTION_ARG_NONE, &get_max_brightness,
-       /* command line argument */
+      /* command line argument */
       "Get the number of brightness levels supported", NULL },
     { "set-brightness-switch", '\0', 0, G_OPTION_ARG_INT, &set_brightness_switch,
-                  /* command line argument */
+      /* command line argument */
       "Enable or disable ACPI video brightness switch handling", NULL },
     { "get-brightness-switch", '\0', 0, G_OPTION_ARG_NONE, &get_brightness_switch,
-                  /* command line argument */
+      /* command line argument */
       "Get the current setting of the ACPI video brightness switch handling", NULL },
     { NULL }
   };
@@ -573,24 +609,30 @@ main (gint argc, gchar *argv[])
   g_option_context_free (context);
 
   /* no input */
-  if (set_brightness == -1 && !get_brightness && !get_max_brightness &&
-      set_brightness_switch == -1 && !get_brightness_switch) {
+  if (set_brightness == -1 && !get_brightness && !get_max_brightness
+      && set_brightness_switch == -1 && !get_brightness_switch)
+  {
     puts ("No valid option was specified");
     retval = EXIT_CODE_ARGUMENTS_INVALID;
     goto out;
   }
 
   /* for brightness switch modifications, check for existence of the sysfs entry */
-  if (set_brightness_switch != -1 || get_brightness_switch) {
+  if (set_brightness_switch != -1 || get_brightness_switch)
+  {
     ret = g_file_test (BRIGHTNESS_SWITCH_LOCATION, G_FILE_TEST_EXISTS);
-    if (!ret) {
+    if (!ret)
+    {
       g_printerr ("Video brightness switch setting not available.\n");
       retval = EXIT_CODE_NO_BRIGHTNESS_SWITCH;
       goto out;
     }
-  } else {  /* find backlight device */
+  }
+  else
+  { /* find backlight device */
     filename = backlight_helper_get_best_backlight ();
-    if (filename == NULL) {
+    if (filename == NULL)
+    {
       puts ("No backlights were found on your system");
       retval = EXIT_CODE_INVALID_USER;
       goto out;
@@ -598,9 +640,11 @@ main (gint argc, gchar *argv[])
   }
 
   /* get the current setting of the ACPI video brightness switch handling */
-  if (get_brightness_switch) {
+  if (get_brightness_switch)
+  {
     ret = g_file_get_contents (BRIGHTNESS_SWITCH_LOCATION, &contents, NULL, &error);
-    if (!ret) {
+    if (!ret)
+    {
       if (error)
       {
         g_printerr ("Could not get the value of the brightness switch: %s\n", error->message);
@@ -617,10 +661,12 @@ main (gint argc, gchar *argv[])
   }
 
   /* get current brightness level */
-  if (get_brightness) {
+  if (get_brightness)
+  {
     filename_file = g_build_filename (filename, "brightness", NULL);
     ret = g_file_get_contents (filename_file, &contents, NULL, &error);
-    if (!ret) {
+    if (!ret)
+    {
       if (error)
       {
         g_printerr ("Could not get the value of the backlight: %s\n", error->message);
@@ -637,10 +683,12 @@ main (gint argc, gchar *argv[])
   }
 
   /* get maximum brightness level */
-  if (get_max_brightness) {
+  if (get_max_brightness)
+  {
     filename_file = g_build_filename (filename, "max_brightness", NULL);
     ret = g_file_get_contents (filename_file, &contents, NULL, &error);
-    if (!ret) {
+    if (!ret)
+    {
       if (error)
       {
         g_printerr ("Could not get the maximum value of the backlight: %s\n", error->message);
@@ -659,7 +707,8 @@ main (gint argc, gchar *argv[])
   /* get calling process */
   uid = getuid ();
   euid = geteuid ();
-  if (uid != 0 || euid != 0) {
+  if (uid != 0 || euid != 0)
+  {
     puts ("This program can only be used by the root user");
     retval = EXIT_CODE_ARGUMENTS_INVALID;
     goto out;
@@ -667,17 +716,20 @@ main (gint argc, gchar *argv[])
 
   /* check we're not being spoofed */
   pkexec_uid_str = g_getenv ("PKEXEC_UID");
-  if (pkexec_uid_str == NULL) {
+  if (pkexec_uid_str == NULL)
+  {
     puts ("This program must only be run through pkexec");
     retval = EXIT_CODE_INVALID_USER;
     goto out;
   }
 
   /* set the brightness level */
-  if (set_brightness != -1) {
+  if (set_brightness != -1)
+  {
     filename_file = g_build_filename (filename, "brightness", NULL);
     ret = backlight_helper_write (filename_file, set_brightness, &error);
-    if (!ret) {
+    if (!ret)
+    {
       if (error)
       {
         g_printerr ("Could not set the value of the backlight: %s\n", error->message);
@@ -691,10 +743,11 @@ main (gint argc, gchar *argv[])
   }
 
   /* enable or disable ACPI video brightness switch handling */
-  if (set_brightness_switch != -1) {
-    ret = backlight_helper_write (BRIGHTNESS_SWITCH_LOCATION,
-                set_brightness_switch, &error);
-    if (!ret) {
+  if (set_brightness_switch != -1)
+  {
+    ret = backlight_helper_write (BRIGHTNESS_SWITCH_LOCATION, set_brightness_switch, &error);
+    if (!ret)
+    {
       if (error)
       {
         g_printerr ("Could not set the value of the brightness switch: %s\n", error->message);
@@ -713,4 +766,4 @@ out:
   g_free (contents);
   return retval;
 }
-#endif
+#endif /* !BACKEND_TYPE_FREEBSD */

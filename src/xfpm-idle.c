@@ -37,8 +37,8 @@
 #include <gdk/gdkwayland.h>
 #endif
 
-#define get_instance_private(instance) ((XfpmIdlePrivate *) \
-  xfpm_idle_get_instance_private (XFPM_IDLE (instance)))
+#define get_instance_private(instance) \
+  ((XfpmIdlePrivate *) xfpm_idle_get_instance_private (XFPM_IDLE (instance)))
 
 typedef struct _XfpmIdlePrivate
 {
@@ -63,18 +63,16 @@ G_DEFINE_ABSTRACT_TYPE_WITH_PRIVATE (XfpmIdle, xfpm_idle, G_TYPE_OBJECT)
 static void
 xfpm_idle_class_init (XfpmIdleClass *klass)
 {
-  signals[SIGNAL_ALARM_EXPIRED] =
-    g_signal_new ("alarm-expired",
-            G_TYPE_FROM_CLASS (klass),
-            G_SIGNAL_RUN_LAST,
-            0, NULL, NULL, g_cclosure_marshal_VOID__UINT,
-            G_TYPE_NONE, 1, G_TYPE_UINT);
-  signals[SIGNAL_RESET] =
-    g_signal_new ("reset",
-            G_TYPE_FROM_CLASS (klass),
-            G_SIGNAL_RUN_LAST,
-            0, NULL, NULL, g_cclosure_marshal_VOID__VOID,
-            G_TYPE_NONE, 0);
+  signals[SIGNAL_ALARM_EXPIRED] = g_signal_new ("alarm-expired",
+                                                G_TYPE_FROM_CLASS (klass),
+                                                G_SIGNAL_RUN_LAST,
+                                                0, NULL, NULL, g_cclosure_marshal_VOID__UINT,
+                                                G_TYPE_NONE, 1, G_TYPE_UINT);
+  signals[SIGNAL_RESET] = g_signal_new ("reset",
+                                        G_TYPE_FROM_CLASS (klass),
+                                        G_SIGNAL_RUN_LAST,
+                                        0, NULL, NULL, g_cclosure_marshal_VOID__VOID,
+                                        G_TYPE_NONE, 0);
 }
 
 static void

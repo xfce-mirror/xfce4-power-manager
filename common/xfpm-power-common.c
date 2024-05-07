@@ -127,12 +127,12 @@ xfpm_battery_get_icon_index (guint percent)
 gchar *
 xfpm_battery_get_time_string (guint seconds)
 {
-  char* timestring = NULL;
-  gint  hours;
-  gint  minutes;
+  char *timestring = NULL;
+  gint hours;
+  gint minutes;
 
   /* Add 0.5 to do rounding */
-  minutes = (int) ( ( seconds / 60.0 ) + 0.5 );
+  minutes = (int) ((seconds / 60.0) + 0.5);
 
   if (minutes == 0)
   {
@@ -142,9 +142,7 @@ xfpm_battery_get_time_string (guint seconds)
 
   if (minutes < 60)
   {
-    timestring = g_strdup_printf (ngettext ("%i minute",
-                      "%i minutes",
-                minutes), minutes);
+    timestring = g_strdup_printf (ngettext ("%i minute", "%i minutes", minutes), minutes);
     return timestring;
   }
 
@@ -152,21 +150,19 @@ xfpm_battery_get_time_string (guint seconds)
   minutes = minutes % 60;
 
   if (minutes == 0)
-    timestring = g_strdup_printf (ngettext (
-                                  "%i hour",
-                                  "%i hours",
-                                  hours), hours);
+    timestring = g_strdup_printf (ngettext ("%i hour", "%i hours", hours), hours);
   else
-  /* TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
-   * Swap order with "%2$s %2$i %1$s %1$i if needed */
-  timestring = g_strdup_printf (_("%i %s %i %s"),
-                                hours, ngettext ("hour", "hours", hours),
-                                minutes, ngettext ("minute", "minutes", minutes));
+    /* TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
+     * Swap order with "%2$s %2$i %1$s %1$i if needed */
+    timestring = g_strdup_printf (_("%i %s %i %s"),
+                                  hours, ngettext ("hour", "hours", hours),
+                                  minutes, ngettext ("minute", "minutes", minutes));
   return timestring;
 }
 
 static gboolean
-is_display_device (UpClient *upower, UpDevice *device)
+is_display_device (UpClient *upower,
+                   UpDevice *device)
 {
   UpDevice *display_device = NULL;
   gboolean ret = FALSE;
@@ -180,15 +176,18 @@ is_display_device (UpClient *upower, UpDevice *device)
   return ret;
 }
 
-gchar*
-get_device_panel_icon_name (UpClient *upower, UpDevice *device)
+gchar *
+get_device_panel_icon_name (UpClient *upower,
+                            UpDevice *device)
 {
   return get_device_icon_name (upower, device, TRUE);
 }
 
 
-gchar*
-get_device_icon_name (UpClient *upower, UpDevice *device, gboolean is_panel)
+gchar *
+get_device_icon_name (UpClient *upower,
+                      UpDevice *device,
+                      gboolean is_panel)
 {
   gchar *icon_name = NULL;
   gchar *icon_suffix;
@@ -224,51 +223,52 @@ get_device_icon_name (UpClient *upower, UpDevice *device, gboolean is_panel)
    * http://cgit.freedesktop.org/upower/tree/libupower-glib/up-types.h
    * because UPower doesn't return device-specific icon-names
    */
-  if ( type == UP_DEVICE_KIND_BATTERY && is_panel )
+  if (type == UP_DEVICE_KIND_BATTERY && is_panel)
   {
-    if ( state == UP_DEVICE_STATE_CHARGING || state == UP_DEVICE_STATE_PENDING_CHARGE)
+    if (state == UP_DEVICE_STATE_CHARGING || state == UP_DEVICE_STATE_PENDING_CHARGE)
       icon_name = g_strdup_printf ("%s-%s-%s", XFPM_BATTERY_LEVEL_ICON, xfpm_battery_get_icon_index (percentage), "charging-symbolic");
-    else if ( state == UP_DEVICE_STATE_DISCHARGING || state == UP_DEVICE_STATE_PENDING_DISCHARGE)
+    else if (state == UP_DEVICE_STATE_DISCHARGING || state == UP_DEVICE_STATE_PENDING_DISCHARGE)
       icon_name = g_strdup_printf ("%s-%s-%s", XFPM_BATTERY_LEVEL_ICON, xfpm_battery_get_icon_index (percentage), "symbolic");
-    else if ( state == UP_DEVICE_STATE_FULLY_CHARGED)
+    else if (state == UP_DEVICE_STATE_FULLY_CHARGED)
       icon_name = g_strdup_printf ("%s-%s", XFPM_BATTERY_LEVEL_ICON, "100-charged-symbolic");
     else
       icon_name = g_strdup ("battery-missing-symbolic");
   }
-  else if ( type == UP_DEVICE_KIND_UPS )
+  else if (type == UP_DEVICE_KIND_UPS)
     icon_name = g_strdup (XFPM_UPS_ICON);
-  else if ( type == UP_DEVICE_KIND_MOUSE )
+  else if (type == UP_DEVICE_KIND_MOUSE)
     icon_name = g_strdup (XFPM_MOUSE_ICON);
-  else if ( type == UP_DEVICE_KIND_KEYBOARD )
+  else if (type == UP_DEVICE_KIND_KEYBOARD)
     icon_name = g_strdup (XFPM_KBD_ICON);
-  else if ( type == UP_DEVICE_KIND_PHONE )
+  else if (type == UP_DEVICE_KIND_PHONE)
     icon_name = g_strdup (XFPM_PHONE_ICON);
-  else if ( type == UP_DEVICE_KIND_PDA )
+  else if (type == UP_DEVICE_KIND_PDA)
     icon_name = g_strdup (XFPM_PDA_ICON);
-  else if ( type == UP_DEVICE_KIND_MEDIA_PLAYER )
+  else if (type == UP_DEVICE_KIND_MEDIA_PLAYER)
     icon_name = g_strdup (XFPM_MEDIA_PLAYER_ICON);
-  else if ( type == UP_DEVICE_KIND_LINE_POWER )
+  else if (type == UP_DEVICE_KIND_LINE_POWER)
     icon_name = g_strdup_printf ("%s%s", XFPM_AC_ADAPTER_ICON, is_panel ? "-symbolic" : "");
-  else if ( type == UP_DEVICE_KIND_MONITOR )
+  else if (type == UP_DEVICE_KIND_MONITOR)
     icon_name = g_strdup (XFPM_MONITOR_ICON);
-  else if ( type == UP_DEVICE_KIND_TABLET )
+  else if (type == UP_DEVICE_KIND_TABLET)
     icon_name = g_strdup (XFPM_TABLET_ICON);
-  else if ( type == UP_DEVICE_KIND_COMPUTER )
+  else if (type == UP_DEVICE_KIND_COMPUTER)
     icon_name = g_strdup (XFPM_COMPUTER_ICON);
   /* As UPower does not tell us whether a system is a desktop or a laptop we
      decide this based on whether there is a battery and/or a a lid */
-  else if (!up_client_get_lid_is_present (upower) &&
-           !up_client_get_on_battery (upower) &&
-           g_strcmp0 (upower_icon, "battery-missing-symbolic") == 0)
+  else if (!up_client_get_lid_is_present (upower)
+           && !up_client_get_on_battery (upower)
+           && g_strcmp0 (upower_icon, "battery-missing-symbolic") == 0)
     icon_name = g_strdup_printf ("%s%s", XFPM_AC_ADAPTER_ICON, is_panel ? "-symbolic" : "");
-  else if ( g_strcmp0 (upower_icon, "") != 0 )
+  else if (g_strcmp0 (upower_icon, "") != 0)
     icon_name = g_strndup (upower_icon, icon_base_length);
 
   return icon_name;
 }
 
-gchar*
-get_device_description (UpClient *upower, UpDevice *device)
+gchar *
+get_device_description (UpClient *upower,
+                        UpDevice *device)
 {
   gchar *tip = NULL;
   gchar *est_time_str = NULL;
@@ -289,7 +289,7 @@ get_device_description (UpClient *upower, UpDevice *device)
                 "time-to-empty", &time_to_empty,
                 "time-to-full", &time_to_full,
                 "online", &online,
-                 NULL);
+                NULL);
 
   if (is_display_device (upower, device))
   {
@@ -312,7 +312,7 @@ get_device_description (UpClient *upower, UpDevice *device)
   /* If we get a vendor or model we can use it, otherwise translate the
    * device type into something readable (works for things like ac_power)
    */
-  if (g_strcmp0(vendor, "") == 0 && g_strcmp0(model, "") == 0)
+  if (g_strcmp0 (vendor, "") == 0 && g_strcmp0 (model, "") == 0)
     vendor = g_strdup_printf ("%s", xfpm_power_translate_device_type (type));
 
   /* If the device is unknown to the kernel (maybe no-name stuff or
@@ -321,17 +321,17 @@ get_device_description (UpClient *upower, UpDevice *device)
    * useful nor human-readable, so translate and use the device
    * type instead of the hex IDs (see bug #11217).
    */
-  else if (strlen(vendor) == 31 && strlen(model) == 31)
+  else if (strlen (vendor) == 31 && strlen (model) == 31)
   {
     g_free (vendor);
     g_free (model);
     vendor = g_strdup_printf ("%s", xfpm_power_translate_device_type (type));
-    model = g_strdup("");
+    model = g_strdup ("");
   }
 
-  if ( state == UP_DEVICE_STATE_FULLY_CHARGED )
+  if (state == UP_DEVICE_STATE_FULLY_CHARGED)
   {
-    if ( time_to_empty > 0 )
+    if (time_to_empty > 0)
     {
       est_time_str = xfpm_battery_get_time_string (time_to_empty);
       tip = g_strdup_printf (_("<b>%s %s</b>\nFully charged - %s remaining"),
@@ -345,9 +345,9 @@ get_device_description (UpClient *upower, UpDevice *device)
                              vendor, model);
     }
   }
-  else if ( state == UP_DEVICE_STATE_CHARGING )
+  else if (state == UP_DEVICE_STATE_CHARGING)
   {
-    if ( time_to_full != 0 )
+    if (time_to_full != 0)
     {
       est_time_str = xfpm_battery_get_time_string (time_to_full);
       tip = g_strdup_printf (_("<b>%s %s</b>\n%0.0f%% - %s until full"),
@@ -363,9 +363,9 @@ get_device_description (UpClient *upower, UpDevice *device)
                              percentage);
     }
   }
-  else if ( state == UP_DEVICE_STATE_DISCHARGING )
+  else if (state == UP_DEVICE_STATE_DISCHARGING)
   {
-    if ( time_to_empty != 0 )
+    if (time_to_empty != 0)
     {
       est_time_str = xfpm_battery_get_time_string (time_to_empty);
       tip = g_strdup_printf (_("<b>%s %s</b>\n%0.0f%% - %s remaining"),
@@ -381,24 +381,24 @@ get_device_description (UpClient *upower, UpDevice *device)
                              percentage);
     }
   }
-  else if ( state == UP_DEVICE_STATE_PENDING_CHARGE )
+  else if (state == UP_DEVICE_STATE_PENDING_CHARGE)
   {
     tip = g_strdup_printf (_("<b>%s %s</b>\nWaiting to charge (%0.0f%%)"),
                            vendor, model,
                            percentage);
   }
-  else if ( state == UP_DEVICE_STATE_PENDING_DISCHARGE )
+  else if (state == UP_DEVICE_STATE_PENDING_DISCHARGE)
   {
     tip = g_strdup_printf (_("<b>%s %s</b>\nWaiting to discharge (%0.0f%%)"),
                            vendor, model,
                            percentage);
   }
-  else if ( state == UP_DEVICE_STATE_EMPTY )
+  else if (state == UP_DEVICE_STATE_EMPTY)
   {
     tip = g_strdup_printf (_("<b>%s %s</b>\nis empty"),
                            vendor, model);
   }
-  else if ( state == UP_DEVICE_STATE_UNKNOWN && percentage != 0.0 )
+  else if (state == UP_DEVICE_STATE_UNKNOWN && percentage != 0.0)
   {
     tip = g_strdup_printf (_("<b>%s %s</b>\nCurrent charge: %0.0f%%"),
                            vendor, model,
@@ -411,7 +411,7 @@ get_device_description (UpClient *upower, UpDevice *device)
       /* On the 2nd line we want to know if the power cord is plugged
        * in or not */
       tip = g_strdup_printf (_("<b>%s %s</b>\n%s"),
-                     vendor, model, online ? _("Plugged in") : _("Not plugged in"));
+                             vendor, model, online ? _("Plugged in") : _("Not plugged in"));
     }
     else if (is_display_device (upower, device))
     {
@@ -422,13 +422,12 @@ get_device_description (UpClient *upower, UpDevice *device)
     else
     {
       /* unknown device state, just display the percentage */
-      tip = g_strdup_printf (_("<b>%s %s</b>\nUnknown state"),
-                     vendor, model);
+      tip = g_strdup_printf (_("<b>%s %s</b>\nUnknown state"), vendor, model);
     }
   }
 
-  g_free(model);
-  g_free(vendor);
+  g_free (model);
+  g_free (vendor);
 
   return tip;
 }

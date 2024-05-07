@@ -31,10 +31,10 @@
 #include <stdio.h>
 
 /* XXX */
-#define EXIT_CODE_SUCCESS           0
-#define EXIT_CODE_FAILED            1
+#define EXIT_CODE_SUCCESS 0
+#define EXIT_CODE_FAILED 1
 #define EXIT_CODE_ARGUMENTS_INVALID 3
-#define EXIT_CODE_INVALID_USER      4
+#define EXIT_CODE_INVALID_USER 4
 
 
 #ifdef UP_BACKEND_SUSPEND_COMMAND
@@ -54,7 +54,7 @@
 #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/pm-hibernate"
 #endif
 #ifdef BACKEND_TYPE_OPENBSD
-#define UP_BACKEND_SUSPEND_COMMAND  "/usr/sbin/zzz"
+#define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/zzz"
 #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/ZZZ"
 #endif
 
@@ -76,7 +76,7 @@ run (const gchar *command)
   setsid ();
 #endif
 
-#if defined (HAVE_SIGPROCMASK)
+#if defined(HAVE_SIGPROCMASK)
   sigemptyset (&sigset);
   sigaddset (&sigset, SIGHUP);
   sigaddset (&sigset, SIGINT);
@@ -86,31 +86,31 @@ run (const gchar *command)
   result = g_shell_parse_argv (command, &argc, &argv, &err);
 
   if (result)
-    {
-      envp = g_new0 (gchar *, 1);
+  {
+    envp = g_new0 (gchar *, 1);
 
-      result = g_spawn_sync (NULL, argv, envp,
-                             G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL |
-                             G_SPAWN_STDERR_TO_DEV_NULL,
-                             NULL, NULL, NULL, NULL, &status, &err);
+    result = g_spawn_sync (NULL, argv, envp,
+                           G_SPAWN_SEARCH_PATH | G_SPAWN_STDOUT_TO_DEV_NULL | G_SPAWN_STDERR_TO_DEV_NULL,
+                           NULL, NULL, NULL, NULL, &status, &err);
 
-      g_strfreev (envp);
-      g_strfreev (argv);
-    }
+    g_strfreev (envp);
+    g_strfreev (argv);
+  }
 
   if (!result)
-    {
-      if (err)
-        g_error_free (err);
-      return FALSE;
-    }
+  {
+    if (err)
+      g_error_free (err);
+    return FALSE;
+  }
 
   return (WIFEXITED (status) && WEXITSTATUS (status) == 0);
 }
 
 
 int
-main (int argc, char **argv)
+main (int argc,
+      char **argv)
 {
   GOptionContext *context;
   gint uid;
@@ -120,7 +120,7 @@ main (int argc, char **argv)
   gboolean hibernate = FALSE;
 
   const GOptionEntry options[] = {
-    { "suspend",   '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend, "Suspend the system", NULL },
+    { "suspend", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend, "Suspend the system", NULL },
     { "hibernate", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hibernate, "Hibernate the system", NULL },
     { NULL }
   };
@@ -156,7 +156,7 @@ main (int argc, char **argv)
   }
 
   /* run the command */
-  if(suspend)
+  if (suspend)
   {
     if (run (UP_BACKEND_SUSPEND_COMMAND))
     {
@@ -169,7 +169,7 @@ main (int argc, char **argv)
   }
   else if (hibernate)
   {
-    if(run (UP_BACKEND_HIBERNATE_COMMAND))
+    if (run (UP_BACKEND_HIBERNATE_COMMAND))
     {
       return EXIT_CODE_SUCCESS;
     }

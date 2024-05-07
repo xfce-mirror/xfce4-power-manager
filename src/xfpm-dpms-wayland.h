@@ -28,7 +28,8 @@ G_BEGIN_DECLS
 #define XFPM_TYPE_DPMS_WAYLAND (xfpm_dpms_wayland_get_type ())
 G_DECLARE_FINAL_TYPE (XfpmDpmsWayland, xfpm_dpms_wayland, XFPM, DPMS_WAYLAND, XfpmDpms)
 
-XfpmDpms *xfpm_dpms_wayland_new (void);
+XfpmDpms *
+xfpm_dpms_wayland_new (void);
 
 G_END_DECLS
 

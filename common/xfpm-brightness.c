@@ -37,8 +37,8 @@
 
 #include <math.h>
 
-#define get_instance_private(instance) ((XfpmBrightnessPrivate *) \
-  xfpm_brightness_get_instance_private (XFPM_BRIGHTNESS (instance)))
+#define get_instance_private(instance) \
+  ((XfpmBrightnessPrivate *) xfpm_brightness_get_instance_private (XFPM_BRIGHTNESS (instance)))
 
 typedef struct _XfpmBrightnessPrivate
 {

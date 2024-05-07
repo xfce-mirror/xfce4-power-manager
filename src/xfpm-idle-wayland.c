@@ -28,18 +28,26 @@
 
 #include <gdk/gdkwayland.h>
 
-static void     xfpm_idle_wayland_finalize           (GObject        *object);
-static void     xfpm_idle_wayland_alarm_reset_all    (XfpmIdle       *idle);
-static void     xfpm_idle_wayland_alarm_add          (XfpmIdle       *idle,
-                                                      XfpmAlarmId     id,
-                                                      guint           timeout);
-static void     xfpm_idle_wayland_alarm_remove       (XfpmIdle       *idle,
-                                                      XfpmAlarmId     id);
+static void
+xfpm_idle_wayland_finalize (GObject *object);
+static void
+xfpm_idle_wayland_alarm_reset_all (XfpmIdle *idle);
+static void
+xfpm_idle_wayland_alarm_add (XfpmIdle *idle,
+                             XfpmAlarmId id,
+                             guint timeout);
+static void
+xfpm_idle_wayland_alarm_remove (XfpmIdle *idle,
+                                XfpmAlarmId id);
 
-static void registry_global (void *data, struct wl_registry *registry, uint32_t id, const char *interface, uint32_t version);
-static void registry_global_remove (void *data, struct wl_registry *registry, uint32_t id);
-static void notification_idled (void *data, struct ext_idle_notification_v1 *notification);
-static void notification_resumed (void *data, struct ext_idle_notification_v1 *notification);
+static void
+registry_global (void *data, struct wl_registry *registry, uint32_t id, const char *interface, uint32_t version);
+static void
+registry_global_remove (void *data, struct wl_registry *registry, uint32_t id);
+static void
+notification_idled (void *data, struct ext_idle_notification_v1 *notification);
+static void
+notification_resumed (void *data, struct ext_idle_notification_v1 *notification);
 
 struct _XfpmIdleWayland
 {
@@ -58,14 +66,12 @@ typedef struct _Alarm
   guint timeout;
 } Alarm;
 
-static const struct wl_registry_listener registry_listener =
-{
+static const struct wl_registry_listener registry_listener = {
   .global = registry_global,
   .global_remove = registry_global_remove,
 };
 
-static const struct ext_idle_notification_v1_listener notification_listener =
-{
+static const struct ext_idle_notification_v1_listener notification_listener = {
   .idled = notification_idled,
   .resumed = notification_resumed,
 };
@@ -212,7 +218,6 @@ notification_resumed (void *data,
   Alarm *alarm = data;
   g_signal_emit_by_name (alarm->idle, "reset");
 }
-
 
 
 
