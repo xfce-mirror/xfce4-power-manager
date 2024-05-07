@@ -19,32 +19,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+#include "xfpm-polkit.h"
 
-#ifdef HAVE_SYS_TYPES_H
-#include <sys/types.h>
-#endif
-#ifdef HAVE_SYS_PARAM_H
-#include <sys/param.h>
-#endif
-#ifdef HAVE_SYS_SYSCTL_H
-#include <sys/sysctl.h>
-#endif
-#ifdef HAVE_SYS_USER_H
-#include <sys/user.h>
-#endif
+#include "common/xfpm-common.h"
+#include "common/xfpm-debug.h"
 
 #if defined(__FreeBSD__)
 #include <sys/stat.h>
@@ -52,15 +33,6 @@
 #include <fcntl.h>
 #include <procfs.h>
 #endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
-
-#include "xfpm-polkit.h"
-#include "xfpm-debug.h"
-
-#include "xfpm-common.h"
 
 static void xfpm_polkit_finalize   (GObject *object);
 

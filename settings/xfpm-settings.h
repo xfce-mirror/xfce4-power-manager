@@ -21,10 +21,12 @@
 #ifndef __XFPM_SETTINGS_H
 #define __XFPM_SETTINGS_H
 
+#include <gtk/gtk.h>
+#include <xfconf/xfconf.h>
+
 #ifdef ENABLE_X11
 #include <gtk/gtkx.h>
 #endif
-#include <xfconf/xfconf.h>
 
 GtkWidget *xfpm_settings_dialog_new   (XfconfChannel *channel,
                                        gboolean auth_suspend,

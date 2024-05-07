@@ -21,8 +21,9 @@
 #ifndef __XFPM_POWER_H
 #define __XFPM_POWER_H
 
+#include "common/xfpm-enum-glib.h"
+
 #include <glib-object.h>
-#include "xfpm-enum-glib.h"
 
 G_BEGIN_DECLS
 

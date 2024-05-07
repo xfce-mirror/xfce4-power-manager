@@ -19,15 +19,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
-
-#include <gdk/gdkwayland.h>
 
 #include "xfpm-dpms-wayland.h"
 #include "xfpm-idle.h"
+
 #include "common/xfpm-debug.h"
 #include "protocols/wlr-output-power-management-unstable-v1-client.h"
+
+#include <gdk/gdkwayland.h>
 
 static void       xfpm_dpms_wayland_finalize            (GObject          *object);
 static void       xfpm_dpms_wayland_set_mode            (XfpmDpms         *dpms,

@@ -23,7 +23,6 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
-
 #include <libnotify/notify.h>
 
 G_BEGIN_DECLS

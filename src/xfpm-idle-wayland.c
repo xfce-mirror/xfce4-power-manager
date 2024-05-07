@@ -19,13 +19,14 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <gdk/gdkwayland.h>
-
 #include "xfpm-idle-wayland.h"
+
 #include "protocols/ext-idle-notify-v1-client.h"
+
+#include <gdk/gdkwayland.h>
 
 static void     xfpm_idle_wayland_finalize           (GObject        *object);
 static void     xfpm_idle_wayland_alarm_reset_all    (XfpmIdle       *idle);

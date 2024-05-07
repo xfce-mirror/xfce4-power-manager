@@ -18,34 +18,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_SYS_WAIT_H
-#include <sys/wait.h>
-#endif
-#ifdef HAVE_SYS_RESOURCE_H
-#include <sys/resource.h>
-#endif
-#ifdef HAVE_SYS_SYSCTL_H
-#include <sys/sysctl.h>
-#endif
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
+#include "xfpm-suspend.h"
+
+#include "common/xfpm-common.h"
+#include "common/xfpm-debug.h"
 
 #include <libxfce4util/libxfce4util.h>
-
-#include "xfpm-common.h"
-#include "xfpm-debug.h"
-#include "xfpm-suspend.h"
 
 
 

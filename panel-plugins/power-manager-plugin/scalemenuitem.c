@@ -25,12 +25,11 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #include "scalemenuitem.h"
 
-#include <gdk/gdk.h>
 #include <gdk/gdkkeysyms.h>
 
 

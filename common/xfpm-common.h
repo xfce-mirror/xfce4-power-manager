@@ -21,7 +21,6 @@
 #ifndef __XFPM_COMMON_H
 #define __XFPM_COMMON_H
 
-#include <glib.h>
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS

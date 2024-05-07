@@ -20,14 +20,14 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
+
+#include "xfpm-idle-x11.h"
 
 #include <X11/Xlib.h>
 #include <X11/extensions/sync.h>
 #include <gdk/gdkx.h>
-
-#include "xfpm-idle-x11.h"
 
 /* undef and use the function instead of the macro as the macro is buggy */
 #ifdef XSyncValueAdd

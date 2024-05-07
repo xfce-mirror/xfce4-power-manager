@@ -20,45 +20,36 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
+#include "xfpm-battery.h"
+#include "xfpm-dpms.h"
+#include "xfpm-errors.h"
+#include "xfpm-idle.h"
+#include "xfpm-inhibit.h"
+#include "xfpm-notify.h"
+#include "xfpm-polkit.h"
+#include "xfpm-power.h"
+#include "xfpm-suspend.h"
+#include "xfpm-xfconf.h"
+
+#include "common/xfpm-brightness.h"
+#include "common/xfpm-common.h"
+#include "common/xfpm-config.h"
+#include "common/xfpm-debug.h"
+#include "common/xfpm-enum-types.h"
+#include "common/xfpm-icons.h"
+#include "common/xfpm-power-common.h"
+#include "libdbus/xfpm-dbus.h"
+
+#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
+#include <upower.h>
 
 #ifdef ENABLE_X11
 #include <gdk/gdkx.h>
 #endif
-#include <upower.h>
-#include <libxfce4util/libxfce4util.h>
-#include <libxfce4ui/libxfce4ui.h>
-
-#include "xfpm-power.h"
-#include "xfpm-dbus.h"
-#include "xfpm-dpms.h"
-#include "xfpm-battery.h"
-#include "xfpm-xfconf.h"
-#include "xfpm-notify.h"
-#include "xfpm-errors.h"
-#include "xfpm-inhibit.h"
-#include "xfpm-polkit.h"
-#include "xfpm-icons.h"
-#include "xfpm-common.h"
-#include "xfpm-power-common.h"
-#include "xfpm-config.h"
-#include "xfpm-debug.h"
-#include "xfpm-enum-types.h"
-#include "xfpm-idle.h"
-#include "xfpm-suspend.h"
-#include "xfpm-brightness.h"
 
 static void xfpm_power_finalize     (GObject *object);
 

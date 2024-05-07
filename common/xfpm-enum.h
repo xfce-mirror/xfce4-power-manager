@@ -21,7 +21,7 @@
 #ifndef __XFPM_ENUM_H
 #define __XFPM_ENUM_H
 
-#include <gtk/gtk.h>
+#include <glib.h>
 
 G_BEGIN_DECLS
 

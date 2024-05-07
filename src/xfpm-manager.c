@@ -20,16 +20,37 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
+#include "xfpm-backlight.h"
+#include "xfpm-button.h"
+#include "xfpm-dpms.h"
+#include "xfpm-errors.h"
+#include "xfpm-idle.h"
+#include "xfpm-inhibit.h"
+#include "xfpm-kbd-backlight.h"
+#include "xfpm-manager.h"
+#include "xfpm-power.h"
+#include "xfpm-ppd.h"
+#include "xfpm-xfconf.h"
+
+#include "common/xfpm-common.h"
+#include "common/xfpm-config.h"
+#include "common/xfpm-debug.h"
+#include "common/xfpm-enum-glib.h"
+#include "common/xfpm-enum-types.h"
+#include "common/xfpm-enum.h"
+#include "libdbus/xfpm-dbus-monitor.h"
+#include "libdbus/xfpm-dbus.h"
+#include "panel-plugins/power-manager-plugin/power-manager-button.h"
+
+#include <gio/gunixfdlist.h>
+#include <gtk/gtk.h>
+#include <libnotify/notify.h>
+#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 
 #ifdef ENABLE_X11
 #include <gdk/gdkx.h>
@@ -37,36 +58,6 @@
 #else
 #define WINDOWING_IS_X11() FALSE
 #endif
-#include <gtk/gtk.h>
-
-#include <libxfce4util/libxfce4util.h>
-#include <libxfce4ui/libxfce4ui.h>
-#include <xfconf/xfconf.h>
-
-#include <gio/gunixfdlist.h>
-
-#include <libnotify/notify.h>
-
-#include "xfpm-power.h"
-#include "xfpm-dbus.h"
-#include "xfpm-dpms.h"
-#include "xfpm-manager.h"
-#include "xfpm-button.h"
-#include "xfpm-backlight.h"
-#include "xfpm-kbd-backlight.h"
-#include "xfpm-inhibit.h"
-#include "xfpm-idle.h"
-#include "xfpm-config.h"
-#include "xfpm-debug.h"
-#include "xfpm-xfconf.h"
-#include "xfpm-errors.h"
-#include "xfpm-common.h"
-#include "xfpm-enum.h"
-#include "xfpm-enum-glib.h"
-#include "xfpm-enum-types.h"
-#include "xfpm-dbus-monitor.h"
-#include "xfpm-ppd.h"
-#include "../panel-plugins/power-manager-plugin/power-manager-button.h"
 
 static void xfpm_manager_finalize   (GObject *object);
 static void xfpm_manager_set_property(GObject *object,

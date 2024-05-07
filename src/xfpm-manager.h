@@ -21,6 +21,7 @@
 #ifndef __XFPM_MANAGER_H
 #define __XFPM_MANAGER_H
 
+#include <gio/gio.h>
 #include <glib-object.h>
 
 G_BEGIN_DECLS

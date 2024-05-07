@@ -19,12 +19,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <gio/gio.h>
-
 #include "xfpm-errors.h"
+
+#include <gio/gio.h>
 
 GQuark
 xfpm_get_error_quark (void)

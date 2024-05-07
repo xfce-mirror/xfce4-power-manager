@@ -20,34 +20,24 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_MATH_H
-#include <math.h>
-#endif
+#include "xfpm-backlight.h"
+#include "xfpm-button.h"
+#include "xfpm-idle.h"
+#include "xfpm-notify.h"
+#include "xfpm-power.h"
+#include "xfpm-xfconf.h"
+
+#include "common/xfpm-brightness.h"
+#include "common/xfpm-config.h"
+#include "common/xfpm-debug.h"
+#include "common/xfpm-enum-types.h"
+#include "common/xfpm-icons.h"
 
 #include <gtk/gtk.h>
 #include <libxfce4util/libxfce4util.h>
-
-#include "xfpm-backlight.h"
-#include "xfpm-idle.h"
-#include "xfpm-notify.h"
-#include "xfpm-xfconf.h"
-#include "xfpm-power.h"
-#include "xfpm-config.h"
-#include "xfpm-button.h"
-#include "xfpm-brightness.h"
-#include "xfpm-debug.h"
-#include "xfpm-icons.h"
-#include "xfpm-enum-types.h"
 
 static void xfpm_backlight_finalize     (GObject *object);
 

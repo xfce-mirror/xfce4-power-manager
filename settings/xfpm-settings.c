@@ -20,12 +20,29 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "xfpm-settings.h"
+
+#include "common/xfpm-common.h"
+#include "common/xfpm-config.h"
+#include "common/xfpm-debug.h"
+#include "common/xfpm-enum-glib.h"
+#include "common/xfpm-enum.h"
+#include "common/xfpm-icons.h"
+#include "common/xfpm-power-common.h"
+#include "common/xfpm-ppd-common.h"
+#include "data/interfaces/xfpm-settings_ui.h"
+#include "src/xfpm-backlight.h"
+#include "src/xfpm-power.h"
+
+#include <cairo-gobject.h>
+#include <gtk/gtk.h>
+#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
+#include <upower.h>
+#include <xfconf/xfconf.h>
 
 #ifdef ENABLE_X11
 #include <gdk/gdkx.h>
@@ -33,29 +50,6 @@
 #else
 #define WINDOWING_IS_X11() FALSE
 #endif
-#include <gtk/gtk.h>
-#include <cairo-gobject.h>
-#include <upower.h>
-
-#include <xfconf/xfconf.h>
-
-#include <libxfce4util/libxfce4util.h>
-#include <libxfce4ui/libxfce4ui.h>
-
-#include "xfpm-common.h"
-#include "xfpm-icons.h"
-#include "xfpm-debug.h"
-#include "xfpm-power-common.h"
-#include "xfpm-power.h"
-#include "xfpm-ppd-common.h"
-#include "xfpm-backlight.h"
-
-#include "interfaces/xfpm-settings_ui.h"
-
-#include "xfpm-settings.h"
-#include "xfpm-config.h"
-#include "xfpm-enum-glib.h"
-#include "xfpm-enum.h"
 
 #define BRIGHTNESS_DISABLED   9
 

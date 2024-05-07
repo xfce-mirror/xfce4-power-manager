@@ -20,16 +20,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <gtk/gtk.h>
-#include <glib.h>
-#include <glib/gi18n-lib.h>
+#include "../power-manager-button.h"
+#include "common/xfpm-config.h"
+#include "common/xfpm-enum-glib.h"
 
 #ifdef XFCE_PLUGIN
 #include <libxfce4panel/libxfce4panel.h>
@@ -38,9 +34,7 @@
 #include <xfconf/xfconf.h>
 #endif
 
-#include "../power-manager-button.h"
-#include "common/xfpm-config.h"
-#include "common/xfpm-enum-glib.h"
+#include <gtk/gtk.h>
 
 /* plugin structure */
 typedef struct

@@ -21,11 +21,11 @@
 #ifndef __XFPM_BATTERY_H
 #define __XFPM_BATTERY_H
 
+#include "common/xfpm-enum-glib.h"
+
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <upower.h>
-
-#include "xfpm-enum-glib.h"
 
 G_BEGIN_DECLS
 

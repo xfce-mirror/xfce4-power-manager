@@ -19,25 +19,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
+#include "xfpm-errors.h"
+#include "xfpm-inhibit.h"
 
-#include <glib.h>
+#include "common/xfpm-debug.h"
+#include "libdbus/xfpm-dbus-monitor.h"
 
 #include <libxfce4util/libxfce4util.h>
-
-#include "xfpm-inhibit.h"
-#include "xfpm-dbus-monitor.h"
-#include "xfpm-errors.h"
-#include "xfpm-debug.h"
 
 static void xfpm_inhibit_finalize         (GObject *object);
 static void xfpm_inhibit_dbus_class_init  (XfpmInhibitClass *klass);
