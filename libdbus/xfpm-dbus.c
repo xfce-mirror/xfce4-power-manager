@@ -25,7 +25,8 @@
 #include "xfpm-dbus.h"
 
 gboolean
-xfpm_dbus_name_has_owner (GDBusConnection *connection, const gchar *name)
+xfpm_dbus_name_has_owner (GDBusConnection *connection,
+                          const gchar *name)
 {
   GError *error = NULL;
   const gchar *owner = NULL;
@@ -47,16 +48,18 @@ xfpm_dbus_name_has_owner (GDBusConnection *connection, const gchar *name)
   }
   else
   {
-    if (! g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_NAME_HAS_NO_OWNER))
-      g_warning("Failed to get name owner: %s\n", error->message);
+    if (!g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_NAME_HAS_NO_OWNER))
+      g_warning ("Failed to get name owner: %s\n", error->message);
 
-    g_error_free(error);
+    g_error_free (error);
   }
 
   return owner != NULL;
 }
 
-gboolean xfpm_dbus_register_name(GDBusConnection *connection, const gchar *name)
+gboolean
+xfpm_dbus_register_name (GDBusConnection *connection,
+                         const gchar *name)
 {
   GError *error = NULL;
   guint32 ret = 0;
@@ -80,14 +83,16 @@ gboolean xfpm_dbus_register_name(GDBusConnection *connection, const gchar *name)
   }
   else
   {
-    g_warning("Error: %s",error->message);
-    g_error_free(error);
+    g_warning ("Error: %s", error->message);
+    g_error_free (error);
   }
 
   return ret == 1; /* DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER */
 }
 
-gboolean xfpm_dbus_release_name(GDBusConnection *connection, const gchar *name)
+gboolean
+xfpm_dbus_release_name (GDBusConnection *connection,
+                        const gchar *name)
 {
   GError *error = NULL;
   GVariant *var = g_dbus_connection_call_sync (connection,
@@ -107,8 +112,8 @@ gboolean xfpm_dbus_release_name(GDBusConnection *connection, const gchar *name)
   }
   else
   {
-    g_warning("Error: %s",error->message);
-    g_error_free(error);
+    g_warning ("Error: %s", error->message);
+    g_error_free (error);
   }
 
   return var != NULL;

@@ -32,14 +32,16 @@
 
 #ifdef BACKEND_TYPE_FREEBSD
 static gchar *
-get_string_sysctl (GError **err, const gchar *format, ...)
+get_string_sysctl (GError **err,
+                   const gchar *format,
+                   ...)
 {
   va_list args;
   gchar *name;
   size_t value_len;
   gchar *str = NULL;
 
-  g_return_val_if_fail(format != NULL, FALSE);
+  g_return_val_if_fail (format != NULL, FALSE);
 
   va_start (args, format);
   name = g_strdup_vprintf (format, args);
@@ -51,16 +53,17 @@ get_string_sysctl (GError **err, const gchar *format, ...)
 
     if (sysctlbyname (name, str, &value_len, NULL, 0) == 0)
       str[value_len] = 0;
-    else {
+    else
+    {
       g_free (str);
       str = NULL;
     }
   }
 
   if (!str)
-    g_set_error (err, 0, 0, "%s", g_strerror(errno));
+    g_set_error (err, 0, 0, "%s", g_strerror (errno));
 
-  g_free(name);
+  g_free (name);
 
   return str;
 }
@@ -69,11 +72,10 @@ static gboolean
 freebsd_supports_sleep_state (const gchar *state)
 {
   gboolean ret = FALSE;
-  gchar *sleep_states;
+  gchar *sleep_states = get_string_sysctl (NULL, "hw.acpi.supported_sleep_state");
 
-  sleep_states = get_string_sysctl (NULL, "hw.acpi.supported_sleep_state");
-
-  if (sleep_states != NULL) {
+  if (sleep_states != NULL)
+  {
     if (strstr (sleep_states, state) != NULL)
       ret = TRUE;
   }

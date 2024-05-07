@@ -42,26 +42,27 @@ typedef struct
   XfcePanelPlugin *plugin;
 
   /* panel widgets */
-  GtkWidget       *ebox;
-  GtkWidget       *power_manager_button;
-}
-PowerManagerPlugin;
+  GtkWidget *ebox;
+  GtkWidget *power_manager_button;
+} PowerManagerPlugin;
 
-enum {
+enum
+{
   COLUMN_INT,
   COLUMN_STRING,
   N_COLUMNS
 };
 
 /* prototypes */
-static void power_manager_plugin_construct (XfcePanelPlugin *plugin);
+static void
+power_manager_plugin_construct (XfcePanelPlugin *plugin);
 /* register the plugin */
 XFCE_PANEL_PLUGIN_REGISTER (power_manager_plugin_construct);
 
 static void
-power_manager_plugin_configure_response (GtkWidget    *dialog,
-                           gint          response,
-                           PowerManagerPlugin *power_manager_plugin)
+power_manager_plugin_configure_response (GtkWidget *dialog,
+                                         gint response,
+                                         PowerManagerPlugin *power_manager_plugin)
 {
   if (response == GTK_RESPONSE_HELP)
   {
@@ -95,13 +96,12 @@ power_manager_plugin_panel_label_changed (XfconfChannel *channel,
   current_setting = g_value_get_int (value);
 
   for (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-        gtk_list_store_iter_is_valid (list_store, &iter);
-        gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter))
+       gtk_list_store_iter_is_valid (list_store, &iter);
+       gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter))
   {
     gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter, 0, &show_panel_label, -1);
     if (show_panel_label == current_setting)
-      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo),
-                                     &iter);
+      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
   }
 }
 
@@ -125,13 +125,13 @@ power_manager_plugin_combo_changed (GtkComboBox *combo,
 }
 
 static void
-power_manager_plugin_configure (XfcePanelPlugin      *plugin,
-                                PowerManagerPlugin   *power_manager_plugin)
+power_manager_plugin_configure (XfcePanelPlugin *plugin,
+                                PowerManagerPlugin *power_manager_plugin)
 {
   GtkWidget *dialog;
   GtkWidget *grid, *combo, *label, *gtkswitch;
   gint show_panel_label;
-  XfconfChannel   *channel;
+  XfconfChannel *channel;
   GtkListStore *list_store;
   GtkTreeIter iter, active_iter;
   GtkCellRenderer *cell;
@@ -188,7 +188,7 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   }
   combo = gtk_combo_box_new_with_model (GTK_TREE_MODEL (list_store));
   cell = gtk_cell_renderer_text_new ();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE );
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE);
   gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), cell, "text", COLUMN_STRING, NULL);
   gtk_combo_box_set_id_column (GTK_COMBO_BOX (combo), COLUMN_STRING);
   gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &active_iter);
@@ -217,7 +217,7 @@ power_manager_plugin_configure (XfcePanelPlugin      *plugin,
   g_object_set_data (G_OBJECT (plugin), "dialog", dialog);
 
   g_signal_connect (G_OBJECT (dialog), "response",
-                    G_CALLBACK(power_manager_plugin_configure_response), power_manager_plugin);
+                    G_CALLBACK (power_manager_plugin_configure_response), power_manager_plugin);
   gtk_widget_show_all (grid);
 }
 
@@ -237,7 +237,7 @@ power_manager_plugin_new (XfcePanelPlugin *plugin)
   /* create some panel ebox */
   power_manager_plugin->ebox = gtk_event_box_new ();
   gtk_widget_show (power_manager_plugin->ebox);
-  gtk_event_box_set_visible_window (GTK_EVENT_BOX(power_manager_plugin->ebox), FALSE);
+  gtk_event_box_set_visible_window (GTK_EVENT_BOX (power_manager_plugin->ebox), FALSE);
 
   power_manager_plugin->power_manager_button = power_manager_button_new (plugin);
   gtk_container_add (GTK_CONTAINER (power_manager_plugin->ebox), power_manager_plugin->power_manager_button);

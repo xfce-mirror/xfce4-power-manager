@@ -29,25 +29,27 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-static void xfpm_notify_finalize   (GObject *object);
+static void
+xfpm_notify_finalize (GObject *object);
 
-static NotifyNotification * xfpm_notify_new_notification_internal (const gchar *title,
-                                                                   const gchar *message,
-                                                                   const gchar *icon_name,
-                                                                   XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
+static NotifyNotification *
+xfpm_notify_new_notification_internal (const gchar *title,
+                                       const gchar *message,
+                                       const gchar *icon_name,
+                                       XfpmNotifyUrgency urgency) G_GNUC_MALLOC;
 
 struct XfpmNotifyPrivate
 {
-  XfpmDBusMonitor    *monitor;
+  XfpmDBusMonitor *monitor;
 
   NotifyNotification *notification;
   NotifyNotification *critical;
 
-  gulong              critical_id;
-  gulong              notify_id;
+  gulong critical_id;
+  gulong notify_id;
 
-  gboolean            supports_actions;
-  gboolean            supports_sync; /* For x-canonical-private-synchronous */
+  gboolean supports_actions;
+  gboolean supports_sync; /* For x-canonical-private-synchronous */
 };
 
 enum
@@ -62,11 +64,9 @@ G_DEFINE_TYPE_WITH_PRIVATE (XfpmNotify, xfpm_notify, G_TYPE_OBJECT)
 static void
 xfpm_notify_get_server_caps (XfpmNotify *notify)
 {
-  GList *caps = NULL;
+  GList *caps = notify_get_server_caps ();
   notify->priv->supports_actions = FALSE;
-  notify->priv->supports_sync    = FALSE;
-
-  caps = notify_get_server_caps ();
+  notify->priv->supports_sync = FALSE;
 
   if (caps != NULL)
   {
@@ -91,10 +91,11 @@ xfpm_notify_check_server (XfpmDBusMonitor *monitor,
     xfpm_notify_get_server_caps (notify);
 }
 
-static void xfpm_notify_get_property (GObject *object,
-                                      guint prop_id,
-                                      GValue *value,
-                                      GParamSpec *pspec)
+static void
+xfpm_notify_get_property (GObject *object,
+                          guint prop_id,
+                          GValue *value,
+                          GParamSpec *pspec)
 {
   XfpmNotify *notify;
 
@@ -144,9 +145,8 @@ xfpm_notify_init (XfpmNotify *notify)
 
   notify->priv->notification = NULL;
   notify->priv->critical = NULL;
-
   notify->priv->critical_id = 0;
-  notify->priv->notify_id   = 0;
+  notify->priv->notify_id = 0;
 
   notify->priv->monitor = xfpm_dbus_monitor_new ();
   xfpm_dbus_monitor_add_service (notify->priv->monitor, G_BUS_TYPE_SESSION, "org.freedesktop.Notifications");
@@ -159,21 +159,19 @@ xfpm_notify_init (XfpmNotify *notify)
 static void
 xfpm_notify_finalize (GObject *object)
 {
-  XfpmNotify *notify;
-
-  notify = XFPM_NOTIFY (object);
+  XfpmNotify *notify = XFPM_NOTIFY (object);
 
   xfpm_notify_close_normal (notify);
   xfpm_notify_close_critical (notify);
 
-  G_OBJECT_CLASS (xfpm_notify_parent_class)->finalize(object);
+  G_OBJECT_CLASS (xfpm_notify_parent_class)->finalize (object);
 }
 
 static NotifyNotification *
-xfpm_notify_new_notification_internal (const gchar       *title,
-                                       const gchar       *message,
-                                       const gchar       *icon_name,
-                                       XfpmNotifyUrgency  urgency)
+xfpm_notify_new_notification_internal (const gchar *title,
+                                       const gchar *message,
+                                       const gchar *icon_name,
+                                       XfpmNotifyUrgency urgency)
 {
   NotifyNotification *n = notify_notification_new (title, message, icon_name);
 
@@ -183,14 +181,14 @@ xfpm_notify_new_notification_internal (const gchar       *title,
     notify_notification_set_hint (n, "transient", g_variant_new_boolean (FALSE));
 
   notify_notification_set_hint (n, "image-path", g_variant_new_string (icon_name));
-  notify_notification_set_urgency (n, (NotifyUrgency)urgency);
+  notify_notification_set_urgency (n, (NotifyUrgency) urgency);
 
   return n;
 }
 
 static void
 xfpm_notify_close_critical_cb (NotifyNotification *n,
-                               XfpmNotify         *notify)
+                               XfpmNotify *notify)
 {
   notify->priv->critical = NULL;
   g_object_unref (G_OBJECT (n));
@@ -225,13 +223,13 @@ xfpm_notify_close_notification (XfpmNotify *notify)
     notify->priv->notify_id = 0;
   }
 
-  if ( notify->priv->notification )
+  if (notify->priv->notification)
   {
     if (!notify_notification_close (notify->priv->notification, NULL))
       g_warning ("Failed to close notification");
 
-    g_object_unref (G_OBJECT(notify->priv->notification) );
-    notify->priv->notification  = NULL;
+    g_object_unref (G_OBJECT (notify->priv->notification));
+    notify->priv->notification = NULL;
   }
 }
 
@@ -240,7 +238,7 @@ xfpm_notify_new (void)
 {
   static gpointer xfpm_notify_object = NULL;
 
-  if ( xfpm_notify_object != NULL )
+  if (xfpm_notify_object != NULL)
   {
     g_object_ref (xfpm_notify_object);
   }
@@ -254,11 +252,11 @@ xfpm_notify_new (void)
 }
 
 void
-xfpm_notify_show_notification (XfpmNotify        *notify,
-                               const gchar       *title,
-                               const gchar       *text,
-                               const gchar       *icon_name,
-                               XfpmNotifyUrgency  urgency)
+xfpm_notify_show_notification (XfpmNotify *notify,
+                               const gchar *title,
+                               const gchar *text,
+                               const gchar *icon_name,
+                               XfpmNotifyUrgency urgency)
 {
   NotifyNotification *n;
 
@@ -268,49 +266,48 @@ xfpm_notify_show_notification (XfpmNotify        *notify,
 }
 
 NotifyNotification *
-xfpm_notify_new_notification (XfpmNotify        *notify,
-                              const gchar       *title,
-                              const gchar       *text,
-                              const gchar       *icon_name,
-                              XfpmNotifyUrgency  urgency)
+xfpm_notify_new_notification (XfpmNotify *notify,
+                              const gchar *title,
+                              const gchar *text,
+                              const gchar *icon_name,
+                              XfpmNotifyUrgency urgency)
 {
-  NotifyNotification *n = xfpm_notify_new_notification_internal (title,
-                                                                 text, icon_name,
-                                                                 urgency);
+  NotifyNotification *n = xfpm_notify_new_notification_internal (title, text, icon_name, urgency);
   return n;
 }
 
 void
-xfpm_notify_add_action_to_notification (XfpmNotify           *notify,
-                                        NotifyNotification   *n,
-                                        const gchar          *id,
-                                        const gchar          *action_label,
-                                        NotifyActionCallback  callback,
-                                        gpointer              data)
+xfpm_notify_add_action_to_notification (XfpmNotify *notify,
+                                        NotifyNotification *n,
+                                        const gchar *id,
+                                        const gchar *action_label,
+                                        NotifyActionCallback callback,
+                                        gpointer data)
 {
-  g_return_if_fail (XFPM_IS_NOTIFY(notify));
+  g_return_if_fail (XFPM_IS_NOTIFY (notify));
 
   notify_notification_add_action (n, id, action_label,
-                                  (NotifyActionCallback)callback,
+                                  (NotifyActionCallback) callback,
                                   data, NULL);
 }
 
 static void
-xfpm_notify_closed_cb (NotifyNotification *n, XfpmNotify *notify)
+xfpm_notify_closed_cb (NotifyNotification *n,
+                       XfpmNotify *notify)
 {
   notify->priv->notification = NULL;
   g_object_unref (G_OBJECT (n));
 }
 
 void
-xfpm_notify_present_notification (XfpmNotify         *notify,
+xfpm_notify_present_notification (XfpmNotify *notify,
                                   NotifyNotification *n)
 {
-  g_return_if_fail (XFPM_IS_NOTIFY(notify));
+  g_return_if_fail (XFPM_IS_NOTIFY (notify));
 
   xfpm_notify_close_notification (notify);
 
-  g_signal_connect_object (G_OBJECT (n),"closed",
+  g_signal_connect_object (G_OBJECT (n), "closed",
                            G_CALLBACK (xfpm_notify_closed_cb), notify, 0);
   notify->priv->notification = n;
 
@@ -318,7 +315,7 @@ xfpm_notify_present_notification (XfpmNotify         *notify,
 }
 
 void
-xfpm_notify_critical (XfpmNotify         *notify,
+xfpm_notify_critical (XfpmNotify *notify,
                       NotifyNotification *n)
 {
   g_return_if_fail (XFPM_IS_NOTIFY (notify));
@@ -346,7 +343,7 @@ xfpm_notify_close_critical (XfpmNotify *notify)
     notify->priv->critical_id = 0;
   }
 
-  if ( notify->priv->critical )
+  if (notify->priv->critical)
   {
     if (!notify_notification_close (notify->priv->critical, &error))
     {
@@ -357,8 +354,8 @@ xfpm_notify_close_critical (XfpmNotify *notify)
       }
     }
 
-    g_object_unref (G_OBJECT(notify->priv->critical) );
-    notify->priv->critical  = NULL;
+    g_object_unref (G_OBJECT (notify->priv->critical));
+    notify->priv->critical = NULL;
   }
 }
 

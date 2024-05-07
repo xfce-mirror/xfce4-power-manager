@@ -46,7 +46,7 @@ xfpm_ppd_g_dbus_proxy_new (void)
 GSList *
 xfpm_ppd_get_profiles (GDBusProxy *proxy)
 {
-  GVariant *var  = NULL;
+  GVariant *var = NULL;
   GSList *names = NULL;
 
   g_return_val_if_fail (proxy != NULL, NULL);

@@ -31,11 +31,15 @@ static gboolean enable_debug = FALSE;
 #if defined(G_HAVE_ISO_VARARGS)
 
 void
-xfpm_debug (const char *func, const char *file, int line, const char *format, ...)
+xfpm_debug (const char *func,
+            const char *file,
+            int line,
+            const char *format,
+            ...)
 {
   va_list args;
 
-  if ( !enable_debug )
+  if (!enable_debug)
     return;
 
   va_start (args, format);
@@ -48,16 +52,20 @@ xfpm_debug (const char *func, const char *file, int line, const char *format, ..
 }
 
 void
-xfpm_warn (const char *func, const char *file, int line, const char *format, ...)
+xfpm_warn (const char *func,
+           const char *file,
+           int line,
+           const char *format,
+           ...)
 {
   va_list args;
 
-  if ( !enable_debug )
+  if (!enable_debug)
     return;
 
   va_start (args, format);
 
-  fprintf(stdout, "TRACE[%s:%d] %s(): ", file, line, func);
+  fprintf (stdout, "TRACE[%s:%d] %s(): ", file, line, func);
   fprintf (stdout, "***WARNING***: ");
   vfprintf (stdout, format, args);
   fprintf (stdout, "\n");
@@ -65,8 +73,13 @@ xfpm_warn (const char *func, const char *file, int line, const char *format, ...
 }
 
 void
-xfpm_debug_enum (const gchar *func, const gchar *file, gint line,
-                 gint v_enum, GType type, const gchar *format, ...)
+xfpm_debug_enum (const gchar *func,
+                 const gchar *file,
+                 gint line,
+                 gint v_enum,
+                 GType type,
+                 const gchar *format,
+                 ...)
 {
   va_list args;
   gchar *buffer;
@@ -74,7 +87,7 @@ xfpm_debug_enum (const gchar *func, const gchar *file, gint line,
   gchar *content = NULL;
   GValue __value__ = G_VALUE_INIT;
 
-  if ( !enable_debug )
+  if (!enable_debug)
     return;
 
   g_value_init (&__value__, type);
@@ -86,9 +99,9 @@ xfpm_debug_enum (const gchar *func, const gchar *file, gint line,
   g_vasprintf (&buffer, format, args);
   va_end (args);
 
-  fprintf(stdout, "TRACE[%s:%d] %s(): ", file, line, func);
-  fprintf(stdout, "%s: %s", buffer, content);
-  fprintf(stdout, "\n");
+  fprintf (stdout, "TRACE[%s:%d] %s(): ", file, line, func);
+  fprintf (stdout, "%s: %s", buffer, content);
+  fprintf (stdout, "\n");
 
   g_value_unset (&__value__);
   g_free (content);
@@ -100,5 +113,5 @@ xfpm_debug_enum (const gchar *func, const gchar *file, gint line,
 void
 xfpm_debug_init (gboolean debug)
 {
-    enable_debug = debug;
+  enable_debug = debug;
 }

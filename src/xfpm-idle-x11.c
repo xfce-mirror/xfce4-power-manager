@@ -34,13 +34,17 @@
 #undef XSyncValueAdd
 #endif
 
-static void     xfpm_idle_x11_finalize           (GObject        *object);
-static void     xfpm_idle_x11_alarm_reset_all    (XfpmIdle       *idle);
-static void     xfpm_idle_x11_alarm_add          (XfpmIdle       *idle,
-                                                  XfpmAlarmId     id,
-                                                  guint           timeout);
-static void     xfpm_idle_x11_alarm_remove       (XfpmIdle       *idle,
-                                                  XfpmAlarmId     id);
+static void
+xfpm_idle_x11_finalize (GObject *object);
+static void
+xfpm_idle_x11_alarm_reset_all (XfpmIdle *idle);
+static void
+xfpm_idle_x11_alarm_add (XfpmIdle *idle,
+                         XfpmAlarmId id,
+                         guint timeout);
+static void
+xfpm_idle_x11_alarm_remove (XfpmIdle *idle,
+                            XfpmAlarmId id);
 
 struct _XfpmIdleX11
 {

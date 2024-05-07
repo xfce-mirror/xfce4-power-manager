@@ -41,24 +41,28 @@ struct _XfpmDpmsClass
 {
   GObjectClass parent_class;
 
-  void        (*set_mode)            (XfpmDpms         *dpms,
-                                      XfpmDpmsMode      mode);
-  void        (*set_enabled)         (XfpmDpms         *dpms,
-                                      gboolean          enabled);
-  void        (*set_timeouts)        (XfpmDpms         *dpms,
-                                      gboolean          standby,
-                                      guint             sleep_timeout,
-                                      guint             off_timeout);
+  void (*set_mode) (XfpmDpms *dpms,
+                    XfpmDpmsMode mode);
+  void (*set_enabled) (XfpmDpms *dpms,
+                       gboolean enabled);
+  void (*set_timeouts) (XfpmDpms *dpms,
+                        gboolean standby,
+                        guint sleep_timeout,
+                        guint off_timeout);
 };
 
-XfpmDpms       *xfpm_dpms_new                 (void);
-void            xfpm_dpms_set_inhibited       (XfpmDpms         *dpms,
-                                               gboolean          inhibited);
-void            xfpm_dpms_set_on_battery      (XfpmDpms         *dpms,
-                                               gboolean          on_battery);
+XfpmDpms *
+xfpm_dpms_new (void);
+void
+xfpm_dpms_set_inhibited (XfpmDpms *dpms,
+                         gboolean inhibited);
+void
+xfpm_dpms_set_on_battery (XfpmDpms *dpms,
+                          gboolean on_battery);
 
-void            xfpm_dpms_set_mode            (XfpmDpms         *dpms,
-                                               XfpmDpmsMode      mode);
+void
+xfpm_dpms_set_mode (XfpmDpms *dpms,
+                    XfpmDpmsMode mode);
 
 G_END_DECLS
 

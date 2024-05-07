@@ -30,20 +30,28 @@
 
 #include <gdk/gdkwayland.h>
 
-static void       xfpm_dpms_wayland_finalize            (GObject          *object);
-static void       xfpm_dpms_wayland_set_mode            (XfpmDpms         *dpms,
-                                                         XfpmDpmsMode      mode);
-static void       xfpm_dpms_wayland_set_enabled         (XfpmDpms         *dpms,
-                                                         gboolean          enabled);
-static void       xfpm_dpms_wayland_set_timeouts        (XfpmDpms         *dpms,
-                                                         gboolean          standby,
-                                                         guint             sleep_timemout,
-                                                         guint             off_timemout);
+static void
+xfpm_dpms_wayland_finalize (GObject *object);
+static void
+xfpm_dpms_wayland_set_mode (XfpmDpms *dpms,
+                            XfpmDpmsMode mode);
+static void
+xfpm_dpms_wayland_set_enabled (XfpmDpms *dpms,
+                               gboolean enabled);
+static void
+xfpm_dpms_wayland_set_timeouts (XfpmDpms *dpms,
+                                gboolean standby,
+                                guint sleep_timemout,
+                                guint off_timemout);
 
-static void registry_global (void *data, struct wl_registry *registry, uint32_t id, const char *interface, uint32_t version);
-static void registry_global_remove (void *data, struct wl_registry *registry, uint32_t id);
-static void power_mode (void *data, struct zwlr_output_power_v1 *wl_power, uint32_t wl_mode);
-static void power_failed (void *data, struct zwlr_output_power_v1 *wl_power);
+static void
+registry_global (void *data, struct wl_registry *registry, uint32_t id, const char *interface, uint32_t version);
+static void
+registry_global_remove (void *data, struct wl_registry *registry, uint32_t id);
+static void
+power_mode (void *data, struct zwlr_output_power_v1 *wl_power, uint32_t wl_mode);
+static void
+power_failed (void *data, struct zwlr_output_power_v1 *wl_power);
 
 struct _XfpmDpmsWayland
 {
@@ -63,14 +71,12 @@ typedef struct _Power
   gchar *model;
 } Power;
 
-static const struct wl_registry_listener registry_listener =
-{
+static const struct wl_registry_listener registry_listener = {
   .global = registry_global,
   .global_remove = registry_global_remove,
 };
 
-static const struct zwlr_output_power_v1_listener power_listener =
-{
+static const struct zwlr_output_power_v1_listener power_listener = {
   .mode = power_mode,
   .failed = power_failed,
 };

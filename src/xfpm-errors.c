@@ -32,8 +32,7 @@ xfpm_get_error_quark (void)
   static volatile gsize xfpm_error_quark = 0;
   if (xfpm_error_quark == 0)
   {
-    static const GDBusErrorEntry values[] =
-    {
+    static const GDBusErrorEntry values[] = {
       { XFPM_ERROR_UNKNOWN, "org.xfce.PowerManager.Error.Unknown" },
       { XFPM_ERROR_PERMISSION_DENIED, "org.xfce.PowerManager.Error.PermissionDenied" },
       { XFPM_ERROR_NO_HARDWARE_SUPPORT, "org.xfce.PowerManager.Error.NoHardwareSupport" },

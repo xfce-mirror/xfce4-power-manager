@@ -32,16 +32,16 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_SCALE_MENU_ITEM         (scale_menu_item_get_type ())
-#define SCALE_MENU_ITEM(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), TYPE_SCALE_MENU_ITEM, ScaleMenuItem))
-#define SCALE_MENU_ITEM_CLASS(c)     (G_TYPE_CHECK_CLASS_CAST ((c), TYPE_SCALE_MENU_ITEM, ScaleMenuItemClass))
-#define IS_SCALE_MENU_ITEM(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), TYPE_SCALE_MENU_ITEM))
-#define IS_SCALE_MENU_ITEM_CLASS(c)  (G_TYPE_CHECK_CLASS_TYPE ((c), TYPE_SCALE_MENU_ITEM))
+#define TYPE_SCALE_MENU_ITEM (scale_menu_item_get_type ())
+#define SCALE_MENU_ITEM(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), TYPE_SCALE_MENU_ITEM, ScaleMenuItem))
+#define SCALE_MENU_ITEM_CLASS(c) (G_TYPE_CHECK_CLASS_CAST ((c), TYPE_SCALE_MENU_ITEM, ScaleMenuItemClass))
+#define IS_SCALE_MENU_ITEM(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), TYPE_SCALE_MENU_ITEM))
+#define IS_SCALE_MENU_ITEM_CLASS(c) (G_TYPE_CHECK_CLASS_TYPE ((c), TYPE_SCALE_MENU_ITEM))
 #define SCALE_MENU_ITEM_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), TYPE_SCALE_MENU_ITEM, ScaleMenuItemClass))
 
 
-typedef struct _ScaleMenuItem        ScaleMenuItem;
-typedef struct _ScaleMenuItemClass   ScaleMenuItemClass;
+typedef struct _ScaleMenuItem ScaleMenuItem;
+typedef struct _ScaleMenuItemClass ScaleMenuItemClass;
 typedef struct _ScaleMenuItemPrivate ScaleMenuItemPrivate;
 
 struct _ScaleMenuItem
@@ -57,20 +57,27 @@ struct _ScaleMenuItemClass
 };
 
 
-GType        scale_menu_item_get_type              (void) G_GNUC_CONST;
-GtkWidget   *scale_menu_item_new_with_range        (gdouble           min,
-                                                    gdouble           max,
-                                                    gdouble           step);
-GtkWidget   *scale_menu_item_get_scale             (ScaleMenuItem *menuitem);
-const gchar *scale_menu_item_get_description_label (ScaleMenuItem *menuitem);
-const gchar *scale_menu_item_get_percentage_label  (ScaleMenuItem *menuitem);
-void         scale_menu_item_set_description_label (ScaleMenuItem *menuitem,
-                                                    const gchar      *label);
-void         scale_menu_item_set_percentage_label  (ScaleMenuItem *menuitem,
-                                                    const gchar      *label);
-void        scale_menu_item_set_value              (ScaleMenuItem *item,
-                                                    gdouble        value);
-
+GType
+scale_menu_item_get_type (void) G_GNUC_CONST;
+GtkWidget *
+scale_menu_item_new_with_range (gdouble min,
+                                gdouble max,
+                                gdouble step);
+GtkWidget *
+scale_menu_item_get_scale (ScaleMenuItem *menuitem);
+const gchar *
+scale_menu_item_get_description_label (ScaleMenuItem *menuitem);
+const gchar *
+scale_menu_item_get_percentage_label (ScaleMenuItem *menuitem);
+void
+scale_menu_item_set_description_label (ScaleMenuItem *menuitem,
+                                       const gchar *label);
+void
+scale_menu_item_set_percentage_label (ScaleMenuItem *menuitem,
+                                      const gchar *label);
+void
+scale_menu_item_set_value (ScaleMenuItem *item,
+                           gdouble value);
 
 G_END_DECLS
 

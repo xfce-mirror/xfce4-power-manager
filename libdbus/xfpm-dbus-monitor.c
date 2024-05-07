@@ -27,27 +27,28 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-static void xfpm_dbus_monitor_finalize   (GObject *object);
+static void
+xfpm_dbus_monitor_finalize (GObject *object);
 
 #define XFPM_DBUS_MONITOR_GET_PRIVATE(o) \
-(G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_DBUS_MONITOR, XfpmDBusMonitorPrivate))
+  (G_TYPE_INSTANCE_GET_PRIVATE ((o), XFPM_TYPE_DBUS_MONITOR, XfpmDBusMonitorPrivate))
 
 struct XfpmDBusMonitorPrivate
 {
   GDBusConnection *system_bus;
   GDBusConnection *session_bus;
 
-  guint            system_signal;
-  guint            session_signal;
+  guint system_signal;
+  guint session_signal;
 
-  GPtrArray       *names_array;
-  GPtrArray       *services_array;
+  GPtrArray *names_array;
+  GPtrArray *services_array;
 };
 
 typedef struct
 {
-  gchar   *name;
-  GBusType     bus_type;
+  gchar *name;
+  GBusType bus_type;
 } XfpmWatchData;
 
 enum
@@ -58,7 +59,7 @@ enum
   LAST_SIGNAL
 };
 
-static guint signals [LAST_SIGNAL] = { 0 };
+static guint signals[LAST_SIGNAL] = { 0 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmDBusMonitor, xfpm_dbus_monitor, G_TYPE_OBJECT)
 
@@ -72,12 +73,14 @@ xfpm_dbus_monitor_free_watch_data (gpointer data)
 }
 
 static XfpmWatchData *
-xfpm_dbus_monitor_get_watch_data (GPtrArray *array, const gchar *name, GBusType bus_type)
+xfpm_dbus_monitor_get_watch_data (GPtrArray *array,
+                                  const gchar *name,
+                                  GBusType bus_type)
 {
   XfpmWatchData *data;
   guint i;
 
-  for ( i = 0; i < array->len; i++)
+  for (i = 0; i < array->len; i++)
   {
     data = g_ptr_array_index (array, i);
     if (g_strcmp0 (data->name, name) == 0 && data->bus_type == bus_type)
@@ -87,123 +90,126 @@ xfpm_dbus_monitor_get_watch_data (GPtrArray *array, const gchar *name, GBusType 
 }
 
 static void
-xfpm_dbus_monitor_unique_connection_name_lost (XfpmDBusMonitor *monitor, GBusType bus_type, const gchar *name)
+xfpm_dbus_monitor_unique_connection_name_lost (XfpmDBusMonitor *monitor,
+                                               GBusType bus_type,
+                                               const gchar *name)
 {
   XfpmWatchData *watch;
   guint i = 0;
 
-  for ( i = 0; i < monitor->priv->names_array->len; i++ )
+  for (i = 0; i < monitor->priv->names_array->len; i++)
   {
     watch = g_ptr_array_index (monitor->priv->names_array, i);
 
     if (g_strcmp0 (watch->name, name) == 0 && bus_type == watch->bus_type)
     {
-      g_signal_emit (G_OBJECT(monitor), signals [UNIQUE_NAME_LOST], 0,
-         watch->name, bus_type == G_BUS_TYPE_SESSION);
+      g_signal_emit (G_OBJECT (monitor), signals[UNIQUE_NAME_LOST], 0,
+                     watch->name, bus_type == G_BUS_TYPE_SESSION);
       g_ptr_array_remove (monitor->priv->names_array, watch);
     }
   }
 }
 
 static void
-xfpm_dbus_monitor_service_connection_changed (XfpmDBusMonitor *monitor, GBusType bus_type,
-                                              const gchar *name, gboolean connected)
+xfpm_dbus_monitor_service_connection_changed (XfpmDBusMonitor *monitor,
+                                              GBusType bus_type,
+                                              const gchar *name,
+                                              gboolean connected)
 {
   XfpmWatchData *watch;
   guint i;
 
-  for ( i = 0; i < monitor->priv->services_array->len; i++)
+  for (i = 0; i < monitor->priv->services_array->len; i++)
   {
     watch = g_ptr_array_index (monitor->priv->services_array, i);
 
     if (g_strcmp0 (watch->name, name) == 0 && watch->bus_type == bus_type)
     {
-      g_signal_emit (G_OBJECT (monitor), signals [SERVICE_CONNECTION_CHANGED], 0,
+      g_signal_emit (G_OBJECT (monitor), signals[SERVICE_CONNECTION_CHANGED], 0,
                      name, connected, bus_type == G_BUS_TYPE_SESSION);
     }
   }
 }
 
 static void
-xfpm_dbus_monitor_name_owner_changed (XfpmDBusMonitor *monitor, const gchar *name,
-                                      const gchar *prev, const gchar *new, GBusType bus_type)
+xfpm_dbus_monitor_name_owner_changed (XfpmDBusMonitor *monitor,
+                                      const gchar *name,
+                                      const gchar *prev,
+                                      const gchar *new,
+                                      GBusType bus_type)
 {
-  if ( strlen (prev) != 0 )
+  if (strlen (prev) != 0)
   {
     xfpm_dbus_monitor_unique_connection_name_lost (monitor, bus_type, prev);
 
     /* Connection has name */
-    if ( strlen (name) != 0 )
+    if (strlen (name) != 0)
       xfpm_dbus_monitor_service_connection_changed (monitor, bus_type, name, FALSE);
   }
-  else if ( strlen (name) != 0 && strlen (new) != 0)
+  else if (strlen (name) != 0 && strlen (new) != 0)
   {
     xfpm_dbus_monitor_service_connection_changed (monitor, bus_type, name, TRUE);
   }
 }
 
 static void
-xfpm_dbus_monitor_session_name_owner_changed_cb (GDBusConnection *connection, const gchar *sender,
-                                                 const gchar *object_path, const gchar *interface_name,
-                                                 const gchar *signal_name, GVariant *parameters,
+xfpm_dbus_monitor_session_name_owner_changed_cb (GDBusConnection *connection,
+                                                 const gchar *sender,
+                                                 const gchar *object_path,
+                                                 const gchar *interface_name,
+                                                 const gchar *signal_name,
+                                                 GVariant *parameters,
                                                  gpointer monitor)
 {
-    const gchar *name, *prev, *new;
+  const gchar *name, *prev, *new;
 
-    g_variant_get (parameters,
-                   "(&s&s&s)",
-                   &name,
-                   &prev,
-                   &new);
+  g_variant_get (parameters, "(&s&s&s)", &name, &prev, &new);
 
-    xfpm_dbus_monitor_name_owner_changed (monitor, name, prev, new, G_BUS_TYPE_SESSION);
+  xfpm_dbus_monitor_name_owner_changed (monitor, name, prev, new, G_BUS_TYPE_SESSION);
 }
 
 static void
-xfpm_dbus_monitor_system_name_owner_changed_cb  (GDBusConnection *connection, const gchar *sender,
-             const gchar *object_path, const gchar *interface_name,
-             const gchar *signal_name, GVariant *parameters,
-             gpointer monitor)
+xfpm_dbus_monitor_system_name_owner_changed_cb (GDBusConnection *connection,
+                                                const gchar *sender,
+                                                const gchar *object_path,
+                                                const gchar *interface_name,
+                                                const gchar *signal_name,
+                                                GVariant *parameters,
+                                                gpointer monitor)
 {
-    const gchar *name, *prev, *new;
+  const gchar *name, *prev, *new;
 
-    g_variant_get (parameters,
-                   "(&s&s&s)",
-                   &name,
-                   &prev,
-                   &new);
+  g_variant_get (parameters, "(&s&s&s)", &name, &prev, &new);
 
-    xfpm_dbus_monitor_name_owner_changed (monitor, name, prev, new, G_BUS_TYPE_SYSTEM);
+  xfpm_dbus_monitor_name_owner_changed (monitor, name, prev, new, G_BUS_TYPE_SYSTEM);
 }
 
 static void
 xfpm_dbus_monitor_session (XfpmDBusMonitor *monitor)
 {
-    monitor->priv->session_signal =
-        g_dbus_connection_signal_subscribe (monitor->priv->session_bus,
-              "org.freedesktop.DBus",
-              "org.freedesktop.DBus",
-                                            "NameOwnerChanged",
-              "/org/freedesktop/DBus",
-              NULL,
-              G_DBUS_SIGNAL_FLAGS_NONE,
-              xfpm_dbus_monitor_session_name_owner_changed_cb,
-              monitor, NULL);
+  monitor->priv->session_signal = g_dbus_connection_signal_subscribe (monitor->priv->session_bus,
+                                                                      "org.freedesktop.DBus",
+                                                                      "org.freedesktop.DBus",
+                                                                      "NameOwnerChanged",
+                                                                      "/org/freedesktop/DBus",
+                                                                      NULL,
+                                                                      G_DBUS_SIGNAL_FLAGS_NONE,
+                                                                      xfpm_dbus_monitor_session_name_owner_changed_cb,
+                                                                      monitor, NULL);
 }
 
 static void
 xfpm_dbus_monitor_system (XfpmDBusMonitor *monitor)
 {
-    monitor->priv->system_signal =
-        g_dbus_connection_signal_subscribe (monitor->priv->system_bus,
-              "org.freedesktop.DBus",
-              "org.freedesktop.DBus",
-                                            "NameOwnerChanged",
-              "/org/freedesktop/DBus",
-              NULL,
-              G_DBUS_SIGNAL_FLAGS_NONE,
-              xfpm_dbus_monitor_system_name_owner_changed_cb,
-              monitor, NULL);
+  monitor->priv->system_signal = g_dbus_connection_signal_subscribe (monitor->priv->system_bus,
+                                                                     "org.freedesktop.DBus",
+                                                                     "org.freedesktop.DBus",
+                                                                     "NameOwnerChanged",
+                                                                     "/org/freedesktop/DBus",
+                                                                     NULL,
+                                                                     G_DBUS_SIGNAL_FLAGS_NONE,
+                                                                     xfpm_dbus_monitor_system_name_owner_changed_cb,
+                                                                     monitor, NULL);
 }
 
 static void
@@ -211,34 +217,29 @@ xfpm_dbus_monitor_class_init (XfpmDBusMonitorClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  signals [UNIQUE_NAME_LOST] =
-    g_signal_new ("unique-name-lost",
-                  XFPM_TYPE_DBUS_MONITOR,
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (XfpmDBusMonitorClass, unique_name_lost),
-                  NULL, NULL,
-                  _xfpm_dbus_marshal_VOID__STRING_BOOLEAN,
-                  G_TYPE_NONE, 2,
-                  G_TYPE_STRING, G_TYPE_BOOLEAN);
+  signals[UNIQUE_NAME_LOST] = g_signal_new ("unique-name-lost",
+                                            XFPM_TYPE_DBUS_MONITOR,
+                                            G_SIGNAL_RUN_LAST,
+                                            G_STRUCT_OFFSET (XfpmDBusMonitorClass, unique_name_lost),
+                                            NULL, NULL,
+                                            _xfpm_dbus_marshal_VOID__STRING_BOOLEAN,
+                                            G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_BOOLEAN);
 
-  signals [SERVICE_CONNECTION_CHANGED] =
-    g_signal_new ("service-connection-changed",
-                  XFPM_TYPE_DBUS_MONITOR,
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (XfpmDBusMonitorClass, service_connection_changed),
-                  NULL, NULL,
-                  _xfpm_dbus_marshal_VOID__STRING_BOOLEAN_BOOLEAN,
-                  G_TYPE_NONE, 3, G_TYPE_STRING,
-                  G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
+  signals[SERVICE_CONNECTION_CHANGED] = g_signal_new ("service-connection-changed",
+                                                      XFPM_TYPE_DBUS_MONITOR,
+                                                      G_SIGNAL_RUN_LAST,
+                                                      G_STRUCT_OFFSET (XfpmDBusMonitorClass, service_connection_changed),
+                                                      NULL, NULL,
+                                                      _xfpm_dbus_marshal_VOID__STRING_BOOLEAN_BOOLEAN,
+                                                      G_TYPE_NONE, 3, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN);
 
-  signals [SYSTEM_BUS_CONNECTION_CHANGED] =
-    g_signal_new ("system-bus-connection-changed",
-                  XFPM_TYPE_DBUS_MONITOR,
-                  G_SIGNAL_RUN_LAST,
-                  G_STRUCT_OFFSET (XfpmDBusMonitorClass, system_bus_connection_changed),
-                  NULL, NULL,
-                  g_cclosure_marshal_VOID__BOOLEAN,
-                  G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+  signals[SYSTEM_BUS_CONNECTION_CHANGED] = g_signal_new ("system-bus-connection-changed",
+                                                         XFPM_TYPE_DBUS_MONITOR,
+                                                         G_SIGNAL_RUN_LAST,
+                                                         G_STRUCT_OFFSET (XfpmDBusMonitorClass, system_bus_connection_changed),
+                                                         NULL, NULL,
+                                                         g_cclosure_marshal_VOID__BOOLEAN,
+                                                         G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
   object_class->finalize = xfpm_dbus_monitor_finalize;
 }
@@ -252,10 +253,10 @@ xfpm_dbus_monitor_init (XfpmDBusMonitor *monitor)
   monitor->priv->services_array = g_ptr_array_new_with_free_func (xfpm_dbus_monitor_free_watch_data);
 
   monitor->priv->session_bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, NULL);
-  monitor->priv->system_bus  = g_bus_get_sync (G_BUS_TYPE_SYSTEM,  NULL, NULL);
+  monitor->priv->system_bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, NULL);
 
   xfpm_dbus_monitor_session (monitor);
-  xfpm_dbus_monitor_system  (monitor);
+  xfpm_dbus_monitor_system (monitor);
 }
 
 static void
@@ -283,7 +284,7 @@ xfpm_dbus_monitor_new (void)
 {
   static gpointer xfpm_dbus_monitor_object = NULL;
 
-  if ( G_LIKELY (xfpm_dbus_monitor_object != NULL) )
+  if (G_LIKELY (xfpm_dbus_monitor_object != NULL))
   {
     g_object_ref (xfpm_dbus_monitor_object);
   }
@@ -296,7 +297,10 @@ xfpm_dbus_monitor_new (void)
   return XFPM_DBUS_MONITOR (xfpm_dbus_monitor_object);
 }
 
-gboolean xfpm_dbus_monitor_add_unique_name (XfpmDBusMonitor *monitor, GBusType bus_type, const gchar *unique_name)
+gboolean
+xfpm_dbus_monitor_add_unique_name (XfpmDBusMonitor *monitor,
+                                   GBusType bus_type,
+                                   const gchar *unique_name)
 {
   XfpmWatchData *watch;
 
@@ -304,10 +308,10 @@ gboolean xfpm_dbus_monitor_add_unique_name (XfpmDBusMonitor *monitor, GBusType b
   g_return_val_if_fail (unique_name != NULL, FALSE);
 
   /* We have it already */
-  if ( xfpm_dbus_monitor_get_watch_data (monitor->priv->names_array, unique_name, bus_type) )
+  if (xfpm_dbus_monitor_get_watch_data (monitor->priv->names_array, unique_name, bus_type))
     return FALSE;
 
-  watch = g_new0 (XfpmWatchData , 1);
+  watch = g_new0 (XfpmWatchData, 1);
   watch->name = g_strdup (unique_name);
   watch->bus_type = bus_type;
 
@@ -315,7 +319,10 @@ gboolean xfpm_dbus_monitor_add_unique_name (XfpmDBusMonitor *monitor, GBusType b
   return TRUE;
 }
 
-void xfpm_dbus_monitor_remove_unique_name (XfpmDBusMonitor *monitor, GBusType bus_type, const gchar *unique_name)
+void
+xfpm_dbus_monitor_remove_unique_name (XfpmDBusMonitor *monitor,
+                                      GBusType bus_type,
+                                      const gchar *unique_name)
 {
   XfpmWatchData *watch;
 
@@ -323,22 +330,25 @@ void xfpm_dbus_monitor_remove_unique_name (XfpmDBusMonitor *monitor, GBusType bu
 
   watch = xfpm_dbus_monitor_get_watch_data (monitor->priv->names_array, unique_name, bus_type);
 
-  if ( watch )
+  if (watch)
   {
     g_ptr_array_remove (monitor->priv->names_array, watch);
   }
 }
 
-gboolean xfpm_dbus_monitor_add_service (XfpmDBusMonitor *monitor, GBusType bus_type, const gchar *service_name)
+gboolean
+xfpm_dbus_monitor_add_service (XfpmDBusMonitor *monitor,
+                               GBusType bus_type,
+                               const gchar *service_name)
 {
   XfpmWatchData *watch;
 
   g_return_val_if_fail (XFPM_IS_DBUS_MONITOR (monitor), FALSE);
 
-  if ( xfpm_dbus_monitor_get_watch_data (monitor->priv->services_array, service_name, bus_type ) )
+  if (xfpm_dbus_monitor_get_watch_data (monitor->priv->services_array, service_name, bus_type))
     return FALSE;
 
-  watch = g_new0 (XfpmWatchData , 1);
+  watch = g_new0 (XfpmWatchData, 1);
   watch->name = g_strdup (service_name);
   watch->bus_type = bus_type;
 
@@ -347,7 +357,10 @@ gboolean xfpm_dbus_monitor_add_service (XfpmDBusMonitor *monitor, GBusType bus_t
   return TRUE;
 }
 
-void xfpm_dbus_monitor_remove_service (XfpmDBusMonitor *monitor, GBusType bus_type, const gchar *service_name)
+void
+xfpm_dbus_monitor_remove_service (XfpmDBusMonitor *monitor,
+                                  GBusType bus_type,
+                                  const gchar *service_name)
 {
   XfpmWatchData *watch;
 
@@ -355,7 +368,7 @@ void xfpm_dbus_monitor_remove_service (XfpmDBusMonitor *monitor, GBusType bus_ty
 
   watch = xfpm_dbus_monitor_get_watch_data (monitor->priv->services_array, service_name, bus_type);
 
-  if ( watch )
+  if (watch)
   {
     g_ptr_array_remove (monitor->priv->services_array, watch);
   }

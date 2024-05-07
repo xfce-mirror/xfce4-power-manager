@@ -31,23 +31,24 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-static void xfpm_kbd_backlight_finalize     (GObject *object);
+static void
+xfpm_kbd_backlight_finalize (GObject *object);
 
 struct XfpmKbdBacklightPrivate
 {
-  XfpmPower          *power;
-  XfpmButton         *button;
+  XfpmPower *power;
+  XfpmButton *button;
 
-  GDBusConnection    *bus;
-  GDBusProxy         *proxy;
+  GDBusConnection *bus;
+  GDBusProxy *proxy;
 
-  gboolean            dimmed;
-  gboolean            on_battery;
-  gint32              max_level;
-  gint                min_level;
-  gint                step;
+  gboolean dimmed;
+  gboolean on_battery;
+  gint32 max_level;
+  gint min_level;
+  gint step;
 
-  XfpmNotify         *notify;
+  XfpmNotify *notify;
   NotifyNotification *n;
 };
 
@@ -55,9 +56,9 @@ G_DEFINE_TYPE_WITH_PRIVATE (XfpmKbdBacklight, xfpm_kbd_backlight, G_TYPE_OBJECT)
 
 
 static gint
-calculate_step( gint max_level )
+calculate_step (gint max_level)
 {
-  if ( max_level < 20 )
+  if (max_level < 20)
     return 1;
   else
     return max_level / 20;
@@ -65,7 +66,9 @@ calculate_step( gint max_level )
 
 
 static void
-xfpm_kbd_backlight_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmKbdBacklight *backlight)
+xfpm_kbd_backlight_on_battery_changed_cb (XfpmPower *power,
+                                          gboolean on_battery,
+                                          XfpmKbdBacklight *backlight)
 {
   backlight->priv->on_battery = on_battery;
 }
@@ -94,9 +97,10 @@ xfpm_kbd_backlight_init_max_level (XfpmKbdBacklight *backlight)
 
 
 static void
-xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self, gfloat value)
+xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self,
+                                      gfloat value)
 {
-  if ( self->priv->n == NULL )
+  if (self->priv->n == NULL)
   {
     /* generate a human-readable summary for the notification */
     gchar *summary = g_strdup_printf (_("Keyboard Brightness: %.0f percent"), value);
@@ -142,7 +146,8 @@ xfpm_kbd_backlight_get_level (XfpmKbdBacklight *backlight)
 
 
 static void
-xfpm_kbd_backlight_set_level (XfpmKbdBacklight *backlight, gint32 level)
+xfpm_kbd_backlight_set_level (XfpmKbdBacklight *backlight,
+                              gint32 level)
 {
   GError *error = NULL;
   GVariant *var = g_dbus_proxy_call_sync (backlight->priv->proxy, "SetBrightness",
@@ -168,15 +173,15 @@ xfpm_kbd_backlight_up (XfpmKbdBacklight *backlight)
 {
   gint level = xfpm_kbd_backlight_get_level (backlight);
 
-  if ( level == -1)
+  if (level == -1)
     return;
 
-  if ( level == backlight->priv->max_level )
+  if (level == backlight->priv->max_level)
     return;
 
   level += backlight->priv->step;
 
-  if ( level > backlight->priv->max_level )
+  if (level > backlight->priv->max_level)
     level = backlight->priv->max_level;
 
   xfpm_kbd_backlight_set_level (backlight, level);
@@ -188,15 +193,15 @@ xfpm_kbd_backlight_down (XfpmKbdBacklight *backlight)
 {
   gint level = xfpm_kbd_backlight_get_level (backlight);
 
-  if ( level == -1)
+  if (level == -1)
     return;
 
-  if ( level == backlight->priv->min_level )
+  if (level == backlight->priv->min_level)
     return;
 
   level -= backlight->priv->step;
 
-  if ( level < backlight->priv->min_level )
+  if (level < backlight->priv->min_level)
     level = backlight->priv->min_level;
 
   xfpm_kbd_backlight_set_level (backlight, level);
@@ -207,32 +212,34 @@ xfpm_kbd_backlight_cycle (XfpmKbdBacklight *backlight)
 {
   gint level = xfpm_kbd_backlight_get_level (backlight);
 
-  if ( level == -1)
+  if (level == -1)
     return;
 
-  if ( level >= backlight->priv->max_level )
+  if (level >= backlight->priv->max_level)
     level = backlight->priv->min_level;
   else
     level += backlight->priv->step;
 
-  if ( level > backlight->priv->max_level )
+  if (level > backlight->priv->max_level)
     level = backlight->priv->max_level;
 
   xfpm_kbd_backlight_set_level (backlight, level);
 }
 
 static void
-xfpm_kbd_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmKbdBacklight *backlight)
+xfpm_kbd_backlight_button_pressed_cb (XfpmButton *button,
+                                      XfpmButtonKey type,
+                                      XfpmKbdBacklight *backlight)
 {
-  if ( type == BUTTON_KBD_BRIGHTNESS_UP )
+  if (type == BUTTON_KBD_BRIGHTNESS_UP)
   {
     xfpm_kbd_backlight_up (backlight);
   }
-  else if ( type == BUTTON_KBD_BRIGHTNESS_DOWN )
+  else if (type == BUTTON_KBD_BRIGHTNESS_DOWN)
   {
     xfpm_kbd_backlight_down (backlight);
   }
-  else if ( type == BUTTON_KBD_BRIGHTNESS_CYCLE )
+  else if (type == BUTTON_KBD_BRIGHTNESS_CYCLE)
   {
     xfpm_kbd_backlight_cycle (backlight);
   }
@@ -268,7 +275,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
 
   backlight->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
-  if ( error )
+  if (error)
   {
     g_critical ("Unable to get system bus connection : %s", error->message);
     g_error_free (error);
@@ -276,15 +283,15 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
   }
 
   backlight->priv->proxy = g_dbus_proxy_new_sync (backlight->priv->bus,
-                                                  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
-                                                  G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
+                                                  G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES
+                                                    | G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
                                                   NULL,
                                                   "org.freedesktop.UPower",
                                                   "/org/freedesktop/UPower/KbdBacklight",
                                                   "org.freedesktop.UPower.KbdBacklight",
                                                   NULL,
                                                   NULL);
-  if ( backlight->priv->proxy == NULL )
+  if (backlight->priv->proxy == NULL)
   {
     g_warning ("Unable to get the interface, org.freedesktop.UPower.KbdBacklight");
     goto out;
@@ -292,7 +299,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
 
   xfpm_kbd_backlight_init_max_level (backlight);
 
-  if ( backlight->priv->max_level == 0 )
+  if (backlight->priv->max_level == 0)
     goto out;
 
   backlight->priv->step = calculate_step (backlight->priv->max_level);
@@ -310,8 +317,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
                 "on-battery", &backlight->priv->on_battery,
                 NULL);
 
-out:
-  ;
+out:;
 }
 
 
@@ -320,22 +326,22 @@ xfpm_kbd_backlight_finalize (GObject *object)
 {
   XfpmKbdBacklight *backlight = XFPM_KBD_BACKLIGHT (object);
 
-  if ( backlight->priv->power )
-    g_object_unref (backlight->priv->power );
+  if (backlight->priv->power)
+    g_object_unref (backlight->priv->power);
 
-  if ( backlight->priv->button )
+  if (backlight->priv->button)
     g_object_unref (backlight->priv->button);
 
-  if ( backlight->priv->notify )
+  if (backlight->priv->notify)
     g_object_unref (backlight->priv->notify);
 
-  if ( backlight->priv->n )
+  if (backlight->priv->n)
     g_object_unref (backlight->priv->n);
 
-  if ( backlight->priv->proxy )
+  if (backlight->priv->proxy)
     g_object_unref (backlight->priv->proxy);
 
-  if ( backlight->priv->bus )
+  if (backlight->priv->bus)
     g_object_unref (backlight->priv->bus);
 
   G_OBJECT_CLASS (xfpm_kbd_backlight_parent_class)->finalize (object);
@@ -349,7 +355,8 @@ xfpm_kbd_backlight_new (void)
 }
 
 
-gboolean xfpm_kbd_backlight_has_hw (XfpmKbdBacklight *backlight)
+gboolean
+xfpm_kbd_backlight_has_hw (XfpmKbdBacklight *backlight)
 {
   return backlight->priv->proxy != NULL;
 }

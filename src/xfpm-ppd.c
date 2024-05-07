@@ -32,17 +32,20 @@
 
 #include <gio/gio.h>
 
-static void xfpm_ppd_finalize (GObject *object);
+static void
+xfpm_ppd_finalize (GObject *object);
 
-static void xfpm_ppd_get_property (GObject *object,
-                                   guint prop_id,
-                                   GValue *value,
-                                   GParamSpec *pspec);
+static void
+xfpm_ppd_get_property (GObject *object,
+                       guint prop_id,
+                       GValue *value,
+                       GParamSpec *pspec);
 
-static void xfpm_ppd_set_property (GObject *object,
-                                   guint prop_id,
-                                   const GValue *value,
-                                   GParamSpec *pspec);
+static void
+xfpm_ppd_set_property (GObject *object,
+                       guint prop_id,
+                       const GValue *value,
+                       GParamSpec *pspec);
 
 struct _XfpmPPD
 {
@@ -68,7 +71,8 @@ enum
 G_DEFINE_FINAL_TYPE (XfpmPPD, xfpm_ppd, G_TYPE_OBJECT)
 
 static void
-xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
+xfpm_ppd_set_active_profile (XfpmPPD *ppd,
+                             const gchar *profile)
 {
   GVariant *var = NULL;
   GError *error = NULL;
@@ -94,7 +98,9 @@ xfpm_ppd_set_active_profile (XfpmPPD *ppd, const gchar *profile)
 }
 
 static void
-xfpm_ppd_on_battery_changed (XfpmPower *power, gboolean on_battery, XfpmPPD *ppd)
+xfpm_ppd_on_battery_changed (XfpmPower *power,
+                             gboolean on_battery,
+                             XfpmPPD *ppd)
 {
   xfpm_ppd_set_active_profile (ppd, on_battery ? ppd->profile_on_battery : ppd->profile_on_ac);
 }
@@ -105,7 +111,6 @@ xfpm_ppd_class_init (XfpmPPDClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = xfpm_ppd_finalize;
-
   object_class->get_property = xfpm_ppd_get_property;
   object_class->set_property = xfpm_ppd_set_property;
 
@@ -157,9 +162,11 @@ xfpm_ppd_get_property (GObject *object,
     case PROP_PROFILE_ON_AC:
       g_value_set_string (value, ppd->profile_on_ac);
       break;
+
     case PROP_PROFILE_ON_BATTERY:
       g_value_set_string (value, ppd->profile_on_battery);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -186,12 +193,14 @@ xfpm_ppd_set_property (GObject *object,
       if (!on_battery)
         xfpm_ppd_set_active_profile (ppd, ppd->profile_on_ac);
       break;
+
     case PROP_PROFILE_ON_BATTERY:
       g_free (ppd->profile_on_battery);
       ppd->profile_on_battery = g_value_dup_string (value);
       if (on_battery)
         xfpm_ppd_set_active_profile (ppd, ppd->profile_on_battery);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;

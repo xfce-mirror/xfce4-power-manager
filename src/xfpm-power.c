@@ -51,71 +51,80 @@
 #include <gdk/gdkx.h>
 #endif
 
-static void xfpm_power_finalize     (GObject *object);
+static void
+xfpm_power_finalize (GObject *object);
 
-static void xfpm_power_get_property (GObject *object,
-                                     guint prop_id,
-                                     GValue *value,
-                                     GParamSpec *pspec);
+static void
+xfpm_power_get_property (GObject *object,
+                         guint prop_id,
+                         GValue *value,
+                         GParamSpec *pspec);
 
-static void xfpm_power_set_property (GObject *object,
-                                     guint prop_id,
-                                     const GValue *value,
-                                     GParamSpec *pspec);
+static void
+xfpm_power_set_property (GObject *object,
+                         guint prop_id,
+                         const GValue *value,
+                         GParamSpec *pspec);
 
-static void xfpm_power_change_presentation_mode (XfpmPower *power,
-                                                 gboolean presentation_mode);
+static void
+xfpm_power_change_presentation_mode (XfpmPower *power,
+                                     gboolean presentation_mode);
 
-static void xfpm_power_toggle_screensaver (XfpmPower *power);
+static void
+xfpm_power_toggle_screensaver (XfpmPower *power);
 
-static void xfpm_power_dbus_class_init (XfpmPowerClass * klass);
-static void xfpm_power_dbus_init (XfpmPower *power);
-static void xfpm_power_can_suspend (XfpmPower *power,
-                                    gboolean *can_suspend,
-                                    gboolean *auth_suspend);
-static void xfpm_power_can_hibernate (XfpmPower *power,
-                                      gboolean *can_hibernate,
-                                      gboolean *auth_hibernate);
+static void
+xfpm_power_dbus_class_init (XfpmPowerClass *klass);
+static void
+xfpm_power_dbus_init (XfpmPower *power);
+static void
+xfpm_power_can_suspend (XfpmPower *power,
+                        gboolean *can_suspend,
+                        gboolean *auth_suspend);
+static void
+xfpm_power_can_hibernate (XfpmPower *power,
+                          gboolean *can_hibernate,
+                          gboolean *auth_hibernate);
 
 struct XfpmPowerPrivate
 {
-  GDBusConnection  *bus;
+  GDBusConnection *bus;
 
-  UpClient         *upower;
+  UpClient *upower;
 
-  GHashTable       *hash;
+  GHashTable *hash;
 
 
-  XfceSystemd      *systemd;
-  XfceConsolekit   *console;
-  XfpmInhibit      *inhibit;
-  XfpmXfconf       *conf;
+  XfceSystemd *systemd;
+  XfceConsolekit *console;
+  XfpmInhibit *inhibit;
+  XfpmXfconf *conf;
 
   XfpmBatteryCharge overall_state;
-  gboolean          critical_action_done;
+  gboolean critical_action_done;
 
-  XfpmDpms         *dpms;
-  XfceScreensaver  *screensaver;
-  gboolean          presentation_mode;
-  gboolean          inhibited;
+  XfpmDpms *dpms;
+  XfceScreensaver *screensaver;
+  gboolean presentation_mode;
+  gboolean inhibited;
 
-  XfpmNotify       *notify;
+  XfpmNotify *notify;
 #ifdef HAVE_POLKIT
-  XfpmPolkit       *polkit;
+  XfpmPolkit *polkit;
 #endif
 
   /* Properties */
-  gboolean          on_low_battery;
-  gboolean          lid_is_present;
-  gboolean          lid_is_closed;
-  gboolean          on_battery;
-  gchar            *daemon_version;
+  gboolean on_low_battery;
+  gboolean lid_is_present;
+  gboolean lid_is_closed;
+  gboolean on_battery;
+  gchar *daemon_version;
 
   /**
    * Warning dialog to use when notification daemon
    * doesn't support actions.
    **/
-  GtkWidget        *dialog;
+  GtkWidget *dialog;
 };
 
 enum
@@ -144,25 +153,26 @@ enum
   LAST_SIGNAL
 };
 
-static guint signals [LAST_SIGNAL] = { 0 };
+static guint signals[LAST_SIGNAL] = { 0 };
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmPower, xfpm_power, G_TYPE_OBJECT)
 
 
 static void
-xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
+xfpm_power_check_power (XfpmPower *power,
+                        gboolean on_battery)
 {
-  if (on_battery != power->priv->on_battery )
+  if (on_battery != power->priv->on_battery)
   {
     GList *list;
 
-    g_signal_emit (G_OBJECT (power), signals [ON_BATTERY_CHANGED], 0, on_battery);
+    g_signal_emit (G_OBJECT (power), signals[ON_BATTERY_CHANGED], 0, on_battery);
 
     if (power->priv->dpms != NULL)
       xfpm_dpms_set_on_battery (power->priv->dpms, on_battery);
 
-      /* Dismiss critical notifications on battery state changes */
+    /* Dismiss critical notifications on battery state changes */
     xfpm_notify_close_critical (power->priv->notify);
 
     power->priv->on_battery = on_battery;
@@ -178,16 +188,18 @@ xfpm_power_check_power (XfpmPower *power, gboolean on_battery)
 }
 
 static void
-xfpm_power_check_lid (XfpmPower *power, gboolean present, gboolean closed)
+xfpm_power_check_lid (XfpmPower *power,
+                      gboolean present,
+                      gboolean closed)
 {
   power->priv->lid_is_present = present;
 
   if (power->priv->lid_is_present)
   {
-    if (closed != power->priv->lid_is_closed )
+    if (closed != power->priv->lid_is_closed)
     {
       power->priv->lid_is_closed = closed;
-      g_signal_emit (G_OBJECT (power), signals [LID_CHANGED], 0, power->priv->lid_is_closed);
+      g_signal_emit (G_OBJECT (power), signals[LID_CHANGED], 0, power->priv->lid_is_closed);
     }
   }
 }
@@ -222,7 +234,9 @@ xfpm_power_get_properties (XfpmPower *power)
 }
 
 static void
-xfpm_power_report_error (XfpmPower *power, const gchar *error, const gchar *icon_name)
+xfpm_power_report_error (XfpmPower *power,
+                         const gchar *error,
+                         const gchar *icon_name)
 {
   xfpm_notify_show_notification (power->priv->notify,
                                  _("Power Manager"),
@@ -232,7 +246,9 @@ xfpm_power_report_error (XfpmPower *power, const gchar *error, const gchar *icon
 }
 
 static void
-xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
+xfpm_power_sleep (XfpmPower *power,
+                  const gchar *sleep_time,
+                  gboolean force)
 {
   GError *error = NULL;
   gboolean lock_screen;
@@ -251,16 +267,17 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
                                      _("An application is currently disabling the automatic sleep. "
                                        "Doing this action now may damage the working state of this application.\n"
                                        "Are you sure you want to hibernate the system?"));
-  ret = gtk_dialog_run (GTK_DIALOG (dialog));
-  gtk_widget_destroy (dialog);
+    ret = gtk_dialog_run (GTK_DIALOG (dialog));
+    gtk_widget_destroy (dialog);
 
-  if ( !ret || ret == GTK_RESPONSE_NO)
-    return;
+    if (!ret || ret == GTK_RESPONSE_NO)
+      return;
   }
 
-  g_signal_emit (G_OBJECT (power), signals [SLEEPING], 0);
-    /* Get the current brightness level so we can use it after we suspend */
-  brightness = xfpm_brightness_new();
+  g_signal_emit (G_OBJECT (power), signals[SLEEPING], 0);
+
+  /* Get the current brightness level so we can use it after we suspend */
+  brightness = xfpm_brightness_new ();
   if (brightness != NULL)
     xfpm_brightness_get_level (brightness, &brightness_level);
 
@@ -268,7 +285,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
                 LOCK_SCREEN_ON_SLEEP, &lock_screen,
                 NULL);
 
-  if ( lock_screen )
+  if (lock_screen)
   {
     if (!xfce_screensaver_lock (power->priv->screensaver) && !force)
     {
@@ -287,7 +304,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
       ret = gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);
 
-      if ( !ret || ret == GTK_RESPONSE_NO)
+      if (!ret || ret == GTK_RESPONSE_NO)
       {
         if (brightness != NULL)
           g_object_unref (brightness);
@@ -341,9 +358,9 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
       g_clear_error (&error);
   }
 
-  if ( error )
+  if (error)
   {
-    if ( g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_NO_REPLY) )
+    if (g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_NO_REPLY))
     {
       XFPM_DEBUG ("D-Bus time out, but should be harmless");
     }
@@ -354,10 +371,12 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
     }
   }
 
-  g_signal_emit (G_OBJECT (power), signals [WAKING_UP], 0);
-    /* Check/update any changes while we slept */
+  g_signal_emit (G_OBJECT (power), signals[WAKING_UP], 0);
+
+  /* Check/update any changes while we slept */
   xfpm_power_get_properties (power);
-    /* Restore the brightness level from before we suspended */
+
+  /* Restore the brightness level from before we suspended */
   if (brightness != NULL)
   {
     xfpm_brightness_set_level (brightness, brightness_level);
@@ -368,7 +387,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
 static void
 xfpm_power_hibernate_clicked (XfpmPower *power)
 {
-  gtk_widget_destroy (power->priv->dialog );
+  gtk_widget_destroy (power->priv->dialog);
   power->priv->dialog = NULL;
   xfpm_power_sleep (power, "Hibernate", TRUE);
 }
@@ -376,7 +395,7 @@ xfpm_power_hibernate_clicked (XfpmPower *power)
 static void
 xfpm_power_suspend_clicked (XfpmPower *power)
 {
-  gtk_widget_destroy (power->priv->dialog );
+  gtk_widget_destroy (power->priv->dialog);
   power->priv->dialog = NULL;
   xfpm_power_sleep (power, "Suspend", TRUE);
 }
@@ -384,9 +403,9 @@ xfpm_power_suspend_clicked (XfpmPower *power)
 static void
 xfpm_power_shutdown_clicked (XfpmPower *power)
 {
-  gtk_widget_destroy (power->priv->dialog );
+  gtk_widget_destroy (power->priv->dialog);
   power->priv->dialog = NULL;
-  g_signal_emit (G_OBJECT (power), signals [SHUTDOWN], 0);
+  g_signal_emit (G_OBJECT (power), signals[SHUTDOWN], 0);
 }
 
 static XfpmBatteryCharge
@@ -403,13 +422,11 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
     gboolean power_supply;
 
     g_object_get (G_OBJECT (lp->data),
-                    "charge-status", &battery_charge,
-                    "device-type", &type,
-                    "ac-online", &power_supply,
-                    NULL);
-    if ( type != UP_DEVICE_KIND_BATTERY &&
-         type != UP_DEVICE_KIND_UPS &&
-         power_supply != TRUE)
+                  "charge-status", &battery_charge,
+                  "device-type", &type,
+                  "ac-online", &power_supply,
+                  NULL);
+    if (type != UP_DEVICE_KIND_BATTERY && type != UP_DEVICE_KIND_UPS && power_supply != TRUE)
       continue;
 
     max_charge_status = MAX (max_charge_status, battery_charge);
@@ -420,41 +437,44 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
 }
 
 static void
-xfpm_power_notify_action_callback (NotifyNotification *n, gchar *action, XfpmPower *power)
+xfpm_power_notify_action_callback (NotifyNotification *n,
+                                   gchar *action,
+                                   XfpmPower *power)
 {
   if (g_strcmp0 (action, "Shutdown") == 0)
-    g_signal_emit (G_OBJECT (power), signals [SHUTDOWN], 0);
+    g_signal_emit (G_OBJECT (power), signals[SHUTDOWN], 0);
   else
     xfpm_power_sleep (power, action, TRUE);
 }
 
 static void
-xfpm_power_add_actions_to_notification (XfpmPower *power, NotifyNotification *n)
+xfpm_power_add_actions_to_notification (XfpmPower *power,
+                                        NotifyNotification *n)
 {
   gboolean can_method, auth_method;
 
   xfpm_power_can_hibernate (power, &can_method, &auth_method);
   if (can_method && auth_method)
   {
-    xfpm_notify_add_action_to_notification(
-         power->priv->notify,
-         n,
-         "Hibernate",
-         _("Hibernate the system"),
-         (NotifyActionCallback)xfpm_power_notify_action_callback,
-         power);
+    xfpm_notify_add_action_to_notification (
+      power->priv->notify,
+      n,
+      "Hibernate",
+      _("Hibernate the system"),
+      (NotifyActionCallback) xfpm_power_notify_action_callback,
+      power);
   }
 
   xfpm_power_can_suspend (power, &can_method, &auth_method);
   if (can_method && auth_method)
   {
-    xfpm_notify_add_action_to_notification(
-         power->priv->notify,
-         n,
-         "Suspend",
-         _("Suspend the system"),
-         (NotifyActionCallback)xfpm_power_notify_action_callback,
-         power);
+    xfpm_notify_add_action_to_notification (
+      power->priv->notify,
+      n,
+      "Suspend",
+      _("Suspend the system"),
+      (NotifyActionCallback) xfpm_power_notify_action_callback,
+      power);
   }
 
   if (power->priv->systemd != NULL)
@@ -469,18 +489,18 @@ xfpm_power_add_actions_to_notification (XfpmPower *power, NotifyNotification *n)
   if (can_method && auth_method)
   {
     xfpm_notify_add_action_to_notification (
-        power->priv->notify,
-        n,
-        "Shutdown",
-        _("Shutdown the system"),
-        (NotifyActionCallback)xfpm_power_notify_action_callback,
-        power);
+      power->priv->notify,
+      n,
+      "Shutdown",
+      _("Shutdown the system"),
+      (NotifyActionCallback) xfpm_power_notify_action_callback,
+      power);
   }
-
 }
 
 static void
-xfpm_power_show_critical_action_notification (XfpmPower *power, XfpmBattery *battery)
+xfpm_power_show_critical_action_notification (XfpmPower *power,
+                                              XfpmBattery *battery)
 {
   const gchar *message;
   NotifyNotification *n;
@@ -488,16 +508,14 @@ xfpm_power_show_critical_action_notification (XfpmPower *power, XfpmBattery *bat
   message = _("System is running on low power. "\
                "Save your work to avoid losing data");
 
-  n =
-  xfpm_notify_new_notification (power->priv->notify,
-                                _("Power Manager"),
-                                message,
-                                xfpm_battery_get_icon_name (battery),
-                                XFPM_NOTIFY_CRITICAL);
+  n = xfpm_notify_new_notification (power->priv->notify,
+                                    _("Power Manager"),
+                                    message,
+                                    xfpm_battery_get_icon_name (battery),
+                                    XFPM_NOTIFY_CRITICAL);
 
   xfpm_power_add_actions_to_notification (power, n);
   xfpm_notify_critical (power->priv->notify, n);
-
 }
 
 static void
@@ -581,7 +599,7 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 
   g_signal_connect_object (dialog, "destroy",
                            G_CALLBACK (xfpm_power_close_critical_dialog), power, G_CONNECT_SWAPPED);
-  if ( power->priv->dialog )
+  if (power->priv->dialog)
   {
     gtk_widget_destroy (power->priv->dialog);
     power->priv->dialog = NULL;
@@ -591,7 +609,8 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 }
 
 static void
-xfpm_power_show_critical_action (XfpmPower *power, XfpmBattery *battery)
+xfpm_power_show_critical_action (XfpmPower *power,
+                                 XfpmBattery *battery)
 {
   gboolean supports_actions;
 
@@ -599,27 +618,29 @@ xfpm_power_show_critical_action (XfpmPower *power, XfpmBattery *battery)
                 "actions", &supports_actions,
                 NULL);
 
-  if ( supports_actions )
+  if (supports_actions)
     xfpm_power_show_critical_action_notification (power, battery);
   else
     xfpm_power_show_critical_action_gtk (power);
 }
 
 static void
-xfpm_power_process_critical_action (XfpmPower *power, XfpmShutdownRequest req)
+xfpm_power_process_critical_action (XfpmPower *power,
+                                    XfpmShutdownRequest req)
 {
-  if ( req == XFPM_ASK )
-    g_signal_emit (G_OBJECT (power), signals [ASK_SHUTDOWN], 0);
-  else if ( req == XFPM_DO_SUSPEND )
+  if (req == XFPM_ASK)
+    g_signal_emit (G_OBJECT (power), signals[ASK_SHUTDOWN], 0);
+  else if (req == XFPM_DO_SUSPEND)
     xfpm_power_sleep (power, "Suspend", TRUE);
-  else if ( req == XFPM_DO_HIBERNATE )
+  else if (req == XFPM_DO_HIBERNATE)
     xfpm_power_sleep (power, "Hibernate", TRUE);
-  else if ( req == XFPM_DO_SHUTDOWN )
-    g_signal_emit (G_OBJECT (power), signals [SHUTDOWN], 0);
+  else if (req == XFPM_DO_SHUTDOWN)
+    g_signal_emit (G_OBJECT (power), signals[SHUTDOWN], 0);
 }
 
 static void
-xfpm_power_system_on_critical_power (XfpmPower *power, XfpmBattery *battery)
+xfpm_power_system_on_critical_power (XfpmPower *power,
+                                     XfpmBattery *battery)
 {
   XfpmShutdownRequest critical_action;
 
@@ -630,7 +651,7 @@ xfpm_power_system_on_critical_power (XfpmPower *power, XfpmBattery *battery)
   XFPM_DEBUG ("System is running on low power");
   XFPM_DEBUG_ENUM (critical_action, XFPM_TYPE_SHUTDOWN_REQUEST, "Critical battery action");
 
-  if ( critical_action == XFPM_DO_NOTHING )
+  if (critical_action == XFPM_DO_NOTHING)
   {
     xfpm_power_show_critical_action (power, battery);
   }
@@ -649,7 +670,8 @@ xfpm_power_system_on_critical_power (XfpmPower *power, XfpmBattery *battery)
 }
 
 static void
-xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
+xfpm_power_battery_charge_changed_cb (XfpmBattery *battery,
+                                      XfpmPower *power)
 {
   gboolean notify;
   XfpmBatteryCharge battery_charge;
@@ -668,40 +690,38 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 
   power->priv->overall_state = current_charge;
 
-  if ( current_charge == XFPM_BATTERY_CHARGE_CRITICAL && power->priv->on_battery)
+  if (current_charge == XFPM_BATTERY_CHARGE_CRITICAL && power->priv->on_battery)
   {
     xfpm_power_system_on_critical_power (power, battery);
 
     power->priv->on_low_battery = TRUE;
-    g_signal_emit (G_OBJECT (power), signals [LOW_BATTERY_CHANGED], 0, power->priv->on_low_battery);
+    g_signal_emit (G_OBJECT (power), signals[LOW_BATTERY_CHANGED], 0, power->priv->on_low_battery);
     return;
   }
 
-  if ( power->priv->on_low_battery )
+  if (power->priv->on_low_battery)
   {
     power->priv->on_low_battery = FALSE;
-    g_signal_emit (G_OBJECT (power), signals [LOW_BATTERY_CHANGED], 0, power->priv->on_low_battery);
+    g_signal_emit (G_OBJECT (power), signals[LOW_BATTERY_CHANGED], 0, power->priv->on_low_battery);
   }
 
   g_object_get (G_OBJECT (power->priv->conf),
                 GENERAL_NOTIFICATION_CFG, &notify,
                 NULL);
 
-  if ( power->priv->on_battery )
+  if (power->priv->on_battery)
   {
-    if ( current_charge == XFPM_BATTERY_CHARGE_LOW )
+    if (current_charge == XFPM_BATTERY_CHARGE_LOW)
     {
-      if ( notify )
+      if (notify)
         xfpm_notify_show_notification (power->priv->notify,
-                       _("Power Manager"),
-                       _("System is running on low power"),
-                       xfpm_battery_get_icon_name (battery),
-                       XFPM_NOTIFY_NORMAL);
-
-     }
-    else if ( battery_charge == XFPM_BATTERY_CHARGE_LOW )
+                                       _("Power Manager"), _("System is running on low power"),
+                                       xfpm_battery_get_icon_name (battery),
+                                       XFPM_NOTIFY_NORMAL);
+    }
+    else if (battery_charge == XFPM_BATTERY_CHARGE_LOW)
     {
-      if ( notify )
+      if (notify)
       {
         gchar *msg;
         gchar *time_str;
@@ -714,18 +734,18 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 
 
         xfpm_notify_show_notification (power->priv->notify,
-                       _("Power Manager"),
-                       msg,
-                       xfpm_battery_get_icon_name (battery),
-                       XFPM_NOTIFY_NORMAL);
+                                       _("Power Manager"),
+                                       msg,
+                                       xfpm_battery_get_icon_name (battery),
+                                       XFPM_NOTIFY_NORMAL);
         g_free (msg);
         g_free (time_str);
       }
     }
   }
 
-    /*Current charge is okay now, then close the dialog*/
-  if ( power->priv->dialog )
+  /*Current charge is okay now, then close the dialog*/
+  if (power->priv->dialog)
   {
     gtk_widget_destroy (power->priv->dialog);
     power->priv->dialog = NULL;
@@ -733,27 +753,28 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery, XfpmPower *power)
 }
 
 static void
-xfpm_power_add_device (UpDevice *device, XfpmPower *power)
+xfpm_power_add_device (UpDevice *device,
+                       XfpmPower *power)
 {
   guint device_type = UP_DEVICE_KIND_UNKNOWN;
-  const gchar *object_path = up_device_get_object_path(device);
+  const gchar *object_path = up_device_get_object_path (device);
 
-    /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
+  /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
   g_object_get (device,
                 "kind", &device_type,
                 NULL);
 
-  XFPM_DEBUG ("'%s' device added", up_device_kind_to_string(device_type));
+  XFPM_DEBUG ("'%s' device added", up_device_kind_to_string (device_type));
 
-  if ( device_type == UP_DEVICE_KIND_BATTERY  ||
-       device_type == UP_DEVICE_KIND_UPS  ||
-       device_type == UP_DEVICE_KIND_MOUSE  ||
-       device_type == UP_DEVICE_KIND_KEYBOARD ||
-       device_type == UP_DEVICE_KIND_PHONE)
+  if (device_type == UP_DEVICE_KIND_BATTERY
+      || device_type == UP_DEVICE_KIND_UPS
+      || device_type == UP_DEVICE_KIND_MOUSE
+      || device_type == UP_DEVICE_KIND_KEYBOARD
+      || device_type == UP_DEVICE_KIND_PHONE)
   {
     GtkWidget *battery;
-    XFPM_DEBUG( "Battery device type '%s' detected at: %s",
-                up_device_kind_to_string(device_type), object_path);
+    XFPM_DEBUG ("Battery device type '%s' detected at: %s",
+                up_device_kind_to_string (device_type), object_path);
     battery = g_object_ref_sink (xfpm_battery_new ());
 
     xfpm_battery_monitor_device (XFPM_BATTERY (battery),
@@ -772,27 +793,30 @@ xfpm_power_get_power_devices (XfpmPower *power)
   GPtrArray *array = up_client_get_devices2 (power->priv->upower);
   guint i;
 
-  if ( array )
+  if (array)
   {
-    for ( i = 0; i < array->len; i++)
+    for (i = 0; i < array->len; i++)
     {
       UpDevice *device = g_ptr_array_index (array, i);
-      const gchar *object_path = up_device_get_object_path(device);
+      const gchar *object_path = up_device_get_object_path (device);
       XFPM_DEBUG ("Power device detected at : %s", object_path);
       xfpm_power_add_device (device, power);
     }
-  g_ptr_array_free (array, TRUE);
+    g_ptr_array_free (array, TRUE);
   }
 }
 
 static void
-xfpm_power_remove_device (XfpmPower *power, const gchar *object_path)
+xfpm_power_remove_device (XfpmPower *power,
+                          const gchar *object_path)
 {
   g_hash_table_remove (power->priv->hash, object_path);
 }
 
 static void
-xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean is_inhibit, XfpmPower *power)
+xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit,
+                               gboolean is_inhibit,
+                               XfpmPower *power)
 {
   /* no change, exit */
   if (power->priv->inhibited == is_inhibit)
@@ -823,13 +847,17 @@ xfpm_power_changed_cb (UpClient *upower,
 }
 
 static void
-xfpm_power_device_added_cb (UpClient *upower, UpDevice *device, XfpmPower *power)
+xfpm_power_device_added_cb (UpClient *upower,
+                            UpDevice *device,
+                            XfpmPower *power)
 {
   xfpm_power_add_device (device, power);
 }
 
 static void
-xfpm_power_device_removed_cb (UpClient *upower, const gchar *object_path, XfpmPower *power)
+xfpm_power_device_removed_cb (UpClient *upower,
+                              const gchar *object_path,
+                              XfpmPower *power)
 {
   xfpm_power_remove_device (power, object_path);
 }
@@ -844,74 +872,67 @@ xfpm_power_class_init (XfpmPowerClass *klass)
   object_class->get_property = xfpm_power_get_property;
   object_class->set_property = xfpm_power_set_property;
 
-  signals [ON_BATTERY_CHANGED] =
-        g_signal_new ("on-battery-changed",
-                      XFPM_TYPE_POWER,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmPowerClass, on_battery_changed),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__BOOLEAN,
-                      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+  signals[ON_BATTERY_CHANGED] = g_signal_new ("on-battery-changed",
+                                              XFPM_TYPE_POWER,
+                                              G_SIGNAL_RUN_LAST,
+                                              G_STRUCT_OFFSET (XfpmPowerClass, on_battery_changed),
+                                              NULL, NULL,
+                                              g_cclosure_marshal_VOID__BOOLEAN,
+                                              G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
-  signals [LOW_BATTERY_CHANGED] =
-        g_signal_new ("low-battery-changed",
-                      XFPM_TYPE_POWER,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmPowerClass, low_battery_changed),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__BOOLEAN,
-                      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+  signals[LOW_BATTERY_CHANGED] = g_signal_new ("low-battery-changed",
+                                               XFPM_TYPE_POWER,
+                                               G_SIGNAL_RUN_LAST,
+                                               G_STRUCT_OFFSET (XfpmPowerClass, low_battery_changed),
+                                               NULL, NULL,
+                                               g_cclosure_marshal_VOID__BOOLEAN,
+                                               G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
-  signals [LID_CHANGED] =
-        g_signal_new ("lid-changed",
-                      XFPM_TYPE_POWER,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmPowerClass, lid_changed),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__BOOLEAN,
-                      G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
+  signals[LID_CHANGED] = g_signal_new ("lid-changed",
+                                       XFPM_TYPE_POWER,
+                                       G_SIGNAL_RUN_LAST,
+                                       G_STRUCT_OFFSET (XfpmPowerClass, lid_changed),
+                                       NULL, NULL,
+                                       g_cclosure_marshal_VOID__BOOLEAN,
+                                       G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
-  signals [WAKING_UP] =
-        g_signal_new ("waking-up",
-                      XFPM_TYPE_POWER,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmPowerClass, waking_up),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0, G_TYPE_NONE);
+  signals[WAKING_UP] = g_signal_new ("waking-up",
+                                     XFPM_TYPE_POWER,
+                                     G_SIGNAL_RUN_LAST,
+                                     G_STRUCT_OFFSET (XfpmPowerClass, waking_up),
+                                     NULL, NULL,
+                                     g_cclosure_marshal_VOID__VOID,
+                                     G_TYPE_NONE, 0, G_TYPE_NONE);
 
-  signals [SLEEPING] =
-        g_signal_new ("sleeping",
-                      XFPM_TYPE_POWER,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmPowerClass, sleeping),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0, G_TYPE_NONE);
+  signals[SLEEPING] = g_signal_new ("sleeping",
+                                    XFPM_TYPE_POWER,
+                                    G_SIGNAL_RUN_LAST,
+                                    G_STRUCT_OFFSET (XfpmPowerClass, sleeping),
+                                    NULL, NULL,
+                                    g_cclosure_marshal_VOID__VOID,
+                                    G_TYPE_NONE, 0, G_TYPE_NONE);
 
-  signals [ASK_SHUTDOWN] =
-        g_signal_new ("ask-shutdown",
-                      XFPM_TYPE_POWER,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmPowerClass, ask_shutdown),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0, G_TYPE_NONE);
+  signals[ASK_SHUTDOWN] = g_signal_new ("ask-shutdown",
+                                        XFPM_TYPE_POWER,
+                                        G_SIGNAL_RUN_LAST,
+                                        G_STRUCT_OFFSET (XfpmPowerClass, ask_shutdown),
+                                        NULL, NULL,
+                                        g_cclosure_marshal_VOID__VOID,
+                                        G_TYPE_NONE, 0, G_TYPE_NONE);
 
-  signals [SHUTDOWN] =
-        g_signal_new ("shutdown",
-                      XFPM_TYPE_POWER,
-                      G_SIGNAL_RUN_LAST,
-                      G_STRUCT_OFFSET(XfpmPowerClass, shutdown),
-                      NULL, NULL,
-                      g_cclosure_marshal_VOID__VOID,
-                      G_TYPE_NONE, 0, G_TYPE_NONE);
+  signals[SHUTDOWN] = g_signal_new ("shutdown",
+                                    XFPM_TYPE_POWER,
+                                    G_SIGNAL_RUN_LAST,
+                                    G_STRUCT_OFFSET (XfpmPowerClass, shutdown),
+                                    NULL, NULL,
+                                    g_cclosure_marshal_VOID__VOID,
+                                    G_TYPE_NONE, 0, G_TYPE_NONE);
 
-#define XFPM_PARAM_FLAGS  (  G_PARAM_READWRITE \
-                           | G_PARAM_CONSTRUCT \
-                           | G_PARAM_STATIC_NAME \
-                           | G_PARAM_STATIC_NICK \
-                           | G_PARAM_STATIC_BLURB)
+#define XFPM_PARAM_FLAGS (G_PARAM_READWRITE \
+                          | G_PARAM_CONSTRUCT \
+                          | G_PARAM_STATIC_NAME \
+                          | G_PARAM_STATIC_NICK \
+                          | G_PARAM_STATIC_BLURB)
 
   g_object_class_install_property (object_class,
                                    PROP_ON_BATTERY,
@@ -981,34 +1002,34 @@ xfpm_power_init (XfpmPower *power)
   power->priv = xfpm_power_get_instance_private (power);
 
   power->priv->hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
-  power->priv->lid_is_present  = FALSE;
-  power->priv->lid_is_closed   = FALSE;
-  power->priv->on_battery      = FALSE;
-  power->priv->on_low_battery  = FALSE;
-  power->priv->daemon_version  = NULL;
-  power->priv->dialog          = NULL;
-  power->priv->overall_state   = XFPM_BATTERY_CHARGE_OK;
+  power->priv->lid_is_present = FALSE;
+  power->priv->lid_is_closed = FALSE;
+  power->priv->on_battery = FALSE;
+  power->priv->on_low_battery = FALSE;
+  power->priv->daemon_version = NULL;
+  power->priv->dialog = NULL;
+  power->priv->overall_state = XFPM_BATTERY_CHARGE_OK;
   power->priv->critical_action_done = FALSE;
 
-  power->priv->dpms                 = xfpm_dpms_new ();
+  power->priv->dpms = xfpm_dpms_new ();
 
-  power->priv->presentation_mode    = FALSE;
+  power->priv->presentation_mode = FALSE;
 
   power->priv->inhibit = xfpm_inhibit_new ();
-  power->priv->notify  = xfpm_notify_new ();
-  power->priv->conf    = xfpm_xfconf_new ();
-  power->priv->upower  = up_client_new ();
+  power->priv->notify = xfpm_notify_new ();
+  power->priv->conf = xfpm_xfconf_new ();
+  power->priv->upower = up_client_new ();
   power->priv->screensaver = xfce_screensaver_new ();
 
   power->priv->systemd = NULL;
   power->priv->console = NULL;
-  if ( LOGIND_RUNNING () )
+  if (LOGIND_RUNNING ())
     power->priv->systemd = xfce_systemd_get ();
   else
     power->priv->console = xfce_consolekit_get ();
 
 #ifdef HAVE_POLKIT
-  power->priv->polkit  = xfpm_polkit_get ();
+  power->priv->polkit = xfpm_polkit_get ();
 #endif
 
   g_signal_connect_object (power->priv->inhibit, "has-inhibit-changed",
@@ -1016,7 +1037,7 @@ xfpm_power_init (XfpmPower *power)
 
   power->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
-  if ( error )
+  if (error)
   {
     g_critical ("Unable to connect to the system bus : %s", error->message);
     g_error_free (error);
@@ -1039,7 +1060,7 @@ out:
   /*
    * Emit org.freedesktop.PowerManagement session signals on startup
    */
-  g_signal_emit (G_OBJECT (power), signals [ON_BATTERY_CHANGED], 0, power->priv->on_battery);
+  g_signal_emit (G_OBJECT (power), signals[ON_BATTERY_CHANGED], 0, power->priv->on_battery);
 }
 
 static void
@@ -1119,9 +1140,9 @@ xfpm_power_finalize (GObject *object)
   if (power->priv->upower != NULL)
     g_object_unref (power->priv->upower);
 
-  if ( power->priv->systemd != NULL )
+  if (power->priv->systemd != NULL)
     g_object_unref (power->priv->systemd);
-  if ( power->priv->console != NULL )
+  if (power->priv->console != NULL)
     g_object_unref (power->priv->console);
 
   g_object_unref (power->priv->bus);
@@ -1133,19 +1154,19 @@ xfpm_power_finalize (GObject *object)
 #endif
 
   if (power->priv->dpms != NULL)
-    g_object_unref(power->priv->dpms);
+    g_object_unref (power->priv->dpms);
 
   G_OBJECT_CLASS (xfpm_power_parent_class)->finalize (object);
 }
 
-static XfpmPower*
+static XfpmPower *
 xfpm_power_new (void)
 {
-  XfpmPower *power = XFPM_POWER(g_object_new (XFPM_TYPE_POWER, NULL));
+  XfpmPower *power = XFPM_POWER (g_object_new (XFPM_TYPE_POWER, NULL));
 
-  xfconf_g_property_bind (xfpm_xfconf_get_channel(power->priv->conf),
+  xfconf_g_property_bind (xfpm_xfconf_get_channel (power->priv->conf),
                           XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
-                          G_OBJECT(power), PRESENTATION_MODE);
+                          G_OBJECT (power), PRESENTATION_MODE);
 
   return power;
 }
@@ -1155,7 +1176,7 @@ xfpm_power_get (void)
 {
   static gpointer xfpm_power_object = NULL;
 
-  if ( G_LIKELY (xfpm_power_object != NULL ) )
+  if (G_LIKELY (xfpm_power_object != NULL))
   {
     g_object_ref (xfpm_power_object);
   }
@@ -1168,17 +1189,22 @@ xfpm_power_get (void)
   return XFPM_POWER (xfpm_power_object);
 }
 
-void xfpm_power_suspend (XfpmPower *power, gboolean force)
+void
+xfpm_power_suspend (XfpmPower *power,
+                    gboolean force)
 {
   xfpm_power_sleep (power, "Suspend", force);
 }
 
-void xfpm_power_hibernate (XfpmPower *power, gboolean force)
+void
+xfpm_power_hibernate (XfpmPower *power,
+                      gboolean force)
 {
   xfpm_power_sleep (power, "Hibernate", force);
 }
 
-gboolean xfpm_power_has_battery (XfpmPower *power)
+gboolean
+xfpm_power_has_battery (XfpmPower *power)
 {
   GList *list;
   gboolean ret = FALSE;
@@ -1188,8 +1214,7 @@ gboolean xfpm_power_has_battery (XfpmPower *power)
   {
     UpDeviceKind type;
     type = xfpm_battery_get_device_type (XFPM_BATTERY (lp->data));
-    if ( type == UP_DEVICE_KIND_BATTERY ||
-         type == UP_DEVICE_KIND_UPS )
+    if (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS)
     {
       ret = TRUE;
       break;
@@ -1204,7 +1229,7 @@ static void
 xfpm_power_toggle_screensaver (XfpmPower *power)
 {
 #ifdef ENABLE_X11
-  Display* display;
+  Display *display;
   static int timeout = -2, interval, prefer_blanking, allow_exposures;
 
   if (!GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
@@ -1216,16 +1241,16 @@ xfpm_power_toggle_screensaver (XfpmPower *power)
   if (power->priv->presentation_mode || power->priv->inhibited)
   {
     if (timeout == -2)
-      XGetScreenSaver(display, &timeout, &interval, &prefer_blanking, &allow_exposures);
+      XGetScreenSaver (display, &timeout, &interval, &prefer_blanking, &allow_exposures);
 
     XFPM_DEBUG ("Disabling screensaver, timeout stored: %d", timeout);
-    XSetScreenSaver(display, 0, interval, prefer_blanking, allow_exposures);
+    XSetScreenSaver (display, 0, interval, prefer_blanking, allow_exposures);
     XSync (display, FALSE);
   }
   else if (timeout != -2)
   {
     XFPM_DEBUG ("Enabling screensaver, timeout restored: %d", timeout);
-    XSetScreenSaver(display, timeout, interval, prefer_blanking, allow_exposures);
+    XSetScreenSaver (display, timeout, interval, prefer_blanking, allow_exposures);
     XSync (display, FALSE);
     timeout = -2;
   }
@@ -1233,7 +1258,8 @@ xfpm_power_toggle_screensaver (XfpmPower *power)
 }
 
 static void
-xfpm_power_change_presentation_mode (XfpmPower *power, gboolean presentation_mode)
+xfpm_power_change_presentation_mode (XfpmPower *power,
+                                     gboolean presentation_mode)
 {
   /* no change, exit */
   if (power->priv->presentation_mode == presentation_mode)
@@ -1269,50 +1295,60 @@ xfpm_power_is_in_presentation_mode (XfpmPower *power)
  * DBus server implementation for org.freedesktop.PowerManagement
  *
  */
-static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
-                                          GDBusMethodInvocation *invocation,
-                                          gpointer user_data);
+static gboolean
+xfpm_power_dbus_shutdown (XfpmPower *power,
+                          GDBusMethodInvocation *invocation,
+                          gpointer user_data);
 
-static gboolean xfpm_power_dbus_reboot   (XfpmPower *power,
-                                          GDBusMethodInvocation *invocation,
-                                          gpointer user_data);
+static gboolean
+xfpm_power_dbus_reboot (XfpmPower *power,
+                        GDBusMethodInvocation *invocation,
+                        gpointer user_data);
 
-static gboolean xfpm_power_dbus_hibernate (XfpmPower * power,
-                                           GDBusMethodInvocation *invocation,
-                                           gpointer user_data);
+static gboolean
+xfpm_power_dbus_hibernate (XfpmPower *power,
+                           GDBusMethodInvocation *invocation,
+                           gpointer user_data);
 
-static gboolean xfpm_power_dbus_suspend (XfpmPower * power,
-                                         GDBusMethodInvocation *invocation,
-                                         gpointer user_data);
+static gboolean
+xfpm_power_dbus_suspend (XfpmPower *power,
+                         GDBusMethodInvocation *invocation,
+                         gpointer user_data);
 
-static gboolean xfpm_power_dbus_can_reboot (XfpmPower * power,
-                                            GDBusMethodInvocation *invocation,
-                                            gpointer user_data);
+static gboolean
+xfpm_power_dbus_can_reboot (XfpmPower *power,
+                            GDBusMethodInvocation *invocation,
+                            gpointer user_data);
 
-static gboolean xfpm_power_dbus_can_shutdown (XfpmPower * power,
-                                              GDBusMethodInvocation *invocation,
-                                              gpointer user_data);
+static gboolean
+xfpm_power_dbus_can_shutdown (XfpmPower *power,
+                              GDBusMethodInvocation *invocation,
+                              gpointer user_data);
 
-static gboolean xfpm_power_dbus_can_hibernate (XfpmPower * power,
-                                               GDBusMethodInvocation *invocation,
-                                               gpointer user_data);
+static gboolean
+xfpm_power_dbus_can_hibernate (XfpmPower *power,
+                               GDBusMethodInvocation *invocation,
+                               gpointer user_data);
 
-static gboolean xfpm_power_dbus_can_suspend (XfpmPower * power,
-                                             GDBusMethodInvocation *invocation,
-                                             gpointer user_data);
+static gboolean
+xfpm_power_dbus_can_suspend (XfpmPower *power,
+                             GDBusMethodInvocation *invocation,
+                             gpointer user_data);
 
-static gboolean xfpm_power_dbus_get_on_battery (XfpmPower * power,
-                                                GDBusMethodInvocation *invocation,
-                                                gpointer user_data);
+static gboolean
+xfpm_power_dbus_get_on_battery (XfpmPower *power,
+                                GDBusMethodInvocation *invocation,
+                                gpointer user_data);
 
-static gboolean xfpm_power_dbus_get_low_battery (XfpmPower * power,
-                                                 GDBusMethodInvocation *invocation,
-                                                 gpointer user_data);
+static gboolean
+xfpm_power_dbus_get_low_battery (XfpmPower *power,
+                                 GDBusMethodInvocation *invocation,
+                                 gpointer user_data);
 
 #include "org.freedesktop.PowerManagement.h"
 
 static void
-xfpm_power_dbus_class_init (XfpmPowerClass * klass)
+xfpm_power_dbus_class_init (XfpmPowerClass *klass)
 {
 }
 
@@ -1370,9 +1406,10 @@ xfpm_power_dbus_init (XfpmPower *power)
                            power, G_CONNECT_SWAPPED);
 }
 
-static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
-            GDBusMethodInvocation *invocation,
-            gpointer user_data)
+static gboolean
+xfpm_power_dbus_shutdown (XfpmPower *power,
+                          GDBusMethodInvocation *invocation,
+                          gpointer user_data)
 {
   GError *error = NULL;
   gboolean can_shutdown, auth_shutdown;
@@ -1414,9 +1451,9 @@ static gboolean xfpm_power_dbus_shutdown (XfpmPower *power,
 }
 
 static gboolean
-xfpm_power_dbus_reboot   (XfpmPower *power,
-                          GDBusMethodInvocation *invocation,
-                          gpointer user_data)
+xfpm_power_dbus_reboot (XfpmPower *power,
+                        GDBusMethodInvocation *invocation,
+                        gpointer user_data)
 {
   GError *error = NULL;
   gboolean can_reboot, auth_reboot;
@@ -1458,7 +1495,7 @@ xfpm_power_dbus_reboot   (XfpmPower *power,
 }
 
 static gboolean
-xfpm_power_dbus_hibernate (XfpmPower * power,
+xfpm_power_dbus_hibernate (XfpmPower *power,
                            GDBusMethodInvocation *invocation,
                            gpointer user_data)
 {
@@ -1492,7 +1529,7 @@ xfpm_power_dbus_hibernate (XfpmPower * power,
 }
 
 static gboolean
-xfpm_power_dbus_suspend (XfpmPower * power,
+xfpm_power_dbus_suspend (XfpmPower *power,
                          GDBusMethodInvocation *invocation,
                          gpointer user_data)
 {
@@ -1526,7 +1563,7 @@ xfpm_power_dbus_suspend (XfpmPower * power,
 }
 
 static gboolean
-xfpm_power_dbus_can_reboot (XfpmPower * power,
+xfpm_power_dbus_can_reboot (XfpmPower *power,
                             GDBusMethodInvocation *invocation,
                             gpointer user_data)
 {
@@ -1549,7 +1586,7 @@ xfpm_power_dbus_can_reboot (XfpmPower * power,
 }
 
 static gboolean
-xfpm_power_dbus_can_shutdown (XfpmPower * power,
+xfpm_power_dbus_can_shutdown (XfpmPower *power,
                               GDBusMethodInvocation *invocation,
                               gpointer user_data)
 {
@@ -1572,7 +1609,7 @@ xfpm_power_dbus_can_shutdown (XfpmPower * power,
 }
 
 static gboolean
-xfpm_power_dbus_can_hibernate (XfpmPower * power,
+xfpm_power_dbus_can_hibernate (XfpmPower *power,
                                GDBusMethodInvocation *invocation,
                                gpointer user_data)
 {
@@ -1585,7 +1622,7 @@ xfpm_power_dbus_can_hibernate (XfpmPower * power,
 }
 
 static gboolean
-xfpm_power_dbus_can_suspend (XfpmPower * power,
+xfpm_power_dbus_can_suspend (XfpmPower *power,
                              GDBusMethodInvocation *invocation,
                              gpointer user_data)
 {
@@ -1599,7 +1636,7 @@ xfpm_power_dbus_can_suspend (XfpmPower * power,
 }
 
 static gboolean
-xfpm_power_dbus_get_on_battery (XfpmPower * power,
+xfpm_power_dbus_get_on_battery (XfpmPower *power,
                                 GDBusMethodInvocation *invocation,
                                 gpointer user_data)
 {
@@ -1611,7 +1648,7 @@ xfpm_power_dbus_get_on_battery (XfpmPower * power,
 }
 
 static gboolean
-xfpm_power_dbus_get_low_battery (XfpmPower * power,
+xfpm_power_dbus_get_low_battery (XfpmPower *power,
                                  GDBusMethodInvocation *invocation,
                                  gpointer user_data)
 {

@@ -28,7 +28,8 @@ G_BEGIN_DECLS
 #define XFPM_TYPE_DPMS_X11 (xfpm_dpms_x11_get_type ())
 G_DECLARE_FINAL_TYPE (XfpmDpmsX11, xfpm_dpms_x11, XFPM, DPMS_X11, XfpmDpms)
 
-XfpmDpms *xfpm_dpms_x11_new (void);
+XfpmDpms *
+xfpm_dpms_x11_new (void);
 
 G_END_DECLS
 

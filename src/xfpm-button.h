@@ -27,31 +27,35 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_BUTTON   (xfpm_button_get_type () )
-#define XFPM_BUTTON(o)     (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_BUTTON, XfpmButton))
-#define XFPM_IS_BUTTON(o)  (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_BUTTON))
+#define XFPM_TYPE_BUTTON (xfpm_button_get_type ())
+#define XFPM_BUTTON(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_BUTTON, XfpmButton))
+#define XFPM_IS_BUTTON(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_BUTTON))
 
 typedef struct XfpmButtonPrivate XfpmButtonPrivate;
 
 typedef struct
 {
-  GObject             parent;
-  XfpmButtonPrivate  *priv;
+  GObject parent;
+  XfpmButtonPrivate *priv;
 } XfpmButton;
 
 typedef struct
 {
-    GObjectClass     parent_class;
-    void            (*button_pressed)        (XfpmButton *button,
-                                              XfpmButtonKey type);
+  GObjectClass parent_class;
+  void (*button_pressed) (XfpmButton *button,
+                          XfpmButtonKey type);
 } XfpmButtonClass;
 
-GType                     xfpm_button_get_type             (void) G_GNUC_CONST;
-XfpmButton               *xfpm_button_new                  (void);
-guint16                   xfpm_button_get_mapped           (XfpmButton *button) G_GNUC_PURE;
+GType
+xfpm_button_get_type (void) G_GNUC_CONST;
+XfpmButton *
+xfpm_button_new (void);
+guint16
+xfpm_button_get_mapped (XfpmButton *button) G_GNUC_PURE;
 
-void                      xfpm_button_set_handle_brightness_keys (XfpmButton *button,
-                                                                  gboolean handle_brightness_keys);
+void
+xfpm_button_set_handle_brightness_keys (XfpmButton *button,
+                                        gboolean handle_brightness_keys);
 
 G_END_DECLS
 

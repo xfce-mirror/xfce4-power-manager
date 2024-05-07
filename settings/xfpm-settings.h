@@ -27,24 +27,26 @@
 
 #include <xfconf/xfconf.h>
 
-GtkWidget *xfpm_settings_dialog_new   (XfconfChannel *channel,
-                                       gboolean auth_suspend,
-                                       gboolean auth_hibernate,
-                                       gboolean can_suspend,
-                                       gboolean can_hibernate,
-                                       gboolean can_shutdown,
-                                       gboolean has_battery,
-                                       gboolean has_lcd_brightness,
-                                       gboolean has_lid,
-                                       gboolean has_sleep_button,
-                                       gboolean has_hibernate_button,
-                                       gboolean has_power_button,
-                                       gboolean has_battery_button,
+GtkWidget *
+xfpm_settings_dialog_new (XfconfChannel *channel,
+                          gboolean auth_suspend,
+                          gboolean auth_hibernate,
+                          gboolean can_suspend,
+                          gboolean can_hibernate,
+                          gboolean can_shutdown,
+                          gboolean has_battery,
+                          gboolean has_lcd_brightness,
+                          gboolean has_lid,
+                          gboolean has_sleep_button,
+                          gboolean has_hibernate_button,
+                          gboolean has_power_button,
+                          gboolean has_battery_button,
 #ifdef ENABLE_X11
-                                       Window id,
+                          Window id,
 #endif
-                                       gchar *device_id,
-                                       GtkApplication *gtk_app);
-void     xfpm_settings_show_device_id (gchar *device_id);
+                          gchar *device_id,
+                          GtkApplication *gtk_app);
+void
+xfpm_settings_show_device_id (gchar *device_id);
 
 #endif /* __XFPM_SETTINGS_H */
