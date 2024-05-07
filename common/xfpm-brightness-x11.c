@@ -20,16 +20,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
-
-#include <gdk/gdkx.h>
-#include <X11/Xatom.h>
-#include <X11/Xlib.h>
-#include <X11/extensions/Xrandr.h>
 
 #include "xfpm-brightness-x11.h"
 #include "xfpm-debug.h"
+
+#include <X11/Xatom.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/Xrandr.h>
+#include <gdk/gdkx.h>
 
 static gboolean       xfpm_brightness_x11_setup           (XfpmBrightness       *brightness,
                                                            gint32               *min_level,

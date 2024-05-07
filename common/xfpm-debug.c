@@ -19,18 +19,12 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <glib.h>
-#include <glib-object.h>
-#include <glib/gprintf.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
-#include <unistd.h>
-
 #include "xfpm-debug.h"
+
+#include <glib/gprintf.h>
 
 static gboolean enable_debug = FALSE;
 

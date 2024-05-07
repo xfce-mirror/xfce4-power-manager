@@ -18,14 +18,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <gio/gio.h>
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
-#include "xfpm-config.h"
-#include "xfpm-xfconf.h"
 #include "xfpm-power.h"
-#include "xfpm-ppd-common.h"
 #include "xfpm-ppd.h"
-#include "xfpm-debug.h"
+#include "xfpm-xfconf.h"
+
+#include "common/xfpm-config.h"
+#include "common/xfpm-debug.h"
+#include "common/xfpm-ppd-common.h"
+
+#include <gio/gio.h>
 
 static void xfpm_ppd_finalize (GObject *object);
 

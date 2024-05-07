@@ -20,32 +20,28 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <glib.h>
-#include <libxfce4util/libxfce4util.h>
-#include <libxfce4ui/libxfce4ui.h>
-#include <upower.h>
-#include <xfconf/xfconf.h>
-
-#include "common/xfpm-common.h"
-#include "common/xfpm-config.h"
-#include "common/xfpm-icons.h"
-#include "common/xfpm-power-common.h"
-#include "common/xfpm-brightness.h"
-#include "common/xfpm-debug.h"
-#include "common/xfpm-enum-glib.h"
-#ifdef XFPM_SYSTRAY
-#include "src/xfpm-inhibit.h"
+#include "config.h"
 #endif
 
 #include "power-manager-button.h"
 #include "scalemenuitem.h"
+
+#include "common/xfpm-brightness.h"
+#include "common/xfpm-common.h"
+#include "common/xfpm-config.h"
+#include "common/xfpm-debug.h"
+#include "common/xfpm-enum-glib.h"
+#include "common/xfpm-icons.h"
+#include "common/xfpm-power-common.h"
+
+#ifdef XFPM_SYSTRAY
+#include "src/xfpm-inhibit.h"
+#endif
+
+#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
+#include <upower.h>
+#include <xfconf/xfconf.h>
 
 
 #define SET_LEVEL_TIMEOUT (50)

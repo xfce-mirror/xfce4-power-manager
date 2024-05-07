@@ -21,8 +21,8 @@
 #ifndef __XFPM_DEBUG_H
 #define __XFPM_DEBUG_H
 
+#include <glib-object.h>
 #include <stdarg.h>
-#include <glib.h>
 
 G_BEGIN_DECLS
 

@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 #include <gtk/gtk.h>
+
 #ifdef XFCE_PLUGIN
 #include <libxfce4panel/libxfce4panel.h>
 #endif

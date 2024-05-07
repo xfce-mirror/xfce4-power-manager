@@ -21,9 +21,9 @@
 #ifndef __XFPM_BUTTON_H
 #define __XFPM_BUTTON_H
 
-#include <glib-object.h>
+#include "common/xfpm-enum-glib.h"
 
-#include "xfpm-enum-glib.h"
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 

@@ -19,32 +19,15 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
+#include "xfpm-notify.h"
 
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
-#ifdef HAVE_ERRNO_H
-#include <errno.h>
-#endif
-
-#include <gtk/gtk.h>
+#include "common/xfpm-common.h"
+#include "libdbus/xfpm-dbus-monitor.h"
 
 #include <libxfce4util/libxfce4util.h>
-
-#include <libnotify/notify.h>
-
-#include "xfpm-common.h"
-#include "xfpm-notify.h"
-#include "xfpm-dbus-monitor.h"
 
 static void xfpm_notify_finalize   (GObject *object);
 

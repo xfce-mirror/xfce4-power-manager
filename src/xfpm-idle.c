@@ -20,19 +20,21 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #include "xfpm-idle.h"
-#include "xfpm-debug.h"
+
+#include "common/xfpm-debug.h"
 
 #ifdef ENABLE_X11
-#include <gdk/gdkx.h>
 #include "xfpm-idle-x11.h"
+#include <gdk/gdkx.h>
 #endif
+
 #ifdef ENABLE_WAYLAND
-#include <gdk/gdkwayland.h>
 #include "xfpm-idle-wayland.h"
+#include <gdk/gdkwayland.h>
 #endif
 
 #define get_instance_private(instance) ((XfpmIdlePrivate *) \

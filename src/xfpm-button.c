@@ -26,30 +26,23 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
+#include "xfpm-button.h"
+
+#include "common/xfpm-debug.h"
+#include "common/xfpm-enum-types.h"
+#include "common/xfpm-enum.h"
+
+#include <gtk/gtk.h>
+#include <libxfce4util/libxfce4util.h>
 
 #ifdef ENABLE_X11
 #include <X11/X.h>
 #include <X11/XF86keysym.h>
 #include <gdk/gdkx.h>
 #endif
-#include <gtk/gtk.h>
-
-#include <libxfce4util/libxfce4util.h>
-
-#include "xfpm-button.h"
-#include "xfpm-enum.h"
-#include "xfpm-enum-types.h"
-#include "xfpm-debug.h"
 
 static void xfpm_button_finalize   (GObject *object);
 

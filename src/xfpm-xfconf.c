@@ -20,26 +20,18 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
-
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
-#include <glib.h>
-#include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-xfconf.h"
-#include "xfpm-config.h"
-#include "xfpm-enum-glib.h"
-#include "xfpm-enum.h"
-#include "xfpm-enum-types.h"
-#include "xfpm-debug.h"
+
+#include "common/xfpm-config.h"
+#include "common/xfpm-debug.h"
+#include "common/xfpm-enum-glib.h"
+#include "common/xfpm-enum-types.h"
+#include "common/xfpm-enum.h"
+
+#include <libxfce4util/libxfce4util.h>
 
 static void xfpm_xfconf_finalize   (GObject *object);
 

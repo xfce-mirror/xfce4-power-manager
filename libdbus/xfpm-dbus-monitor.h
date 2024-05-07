@@ -21,8 +21,8 @@
 #ifndef __XFPM_DBUS_MONITOR_H
 #define __XFPM_DBUS_MONITOR_H
 
-#include <glib-object.h>
 #include <gio/gio.h>
+#include <glib-object.h>
 
 G_BEGIN_DECLS
 

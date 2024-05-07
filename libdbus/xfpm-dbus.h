@@ -21,7 +21,6 @@
 #ifndef __XFPM_DBUS_H
 #define __XFPM_DBUS_H
 
-#include <glib.h>
 #include <gio/gio.h>
 
 gboolean    xfpm_dbus_name_has_owner  (GDBusConnection *bus,

@@ -19,23 +19,23 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
+
+#include "xfpm-settings-app.h"
+#include "xfpm-settings.h"
+
+#include "common/xfpm-common.h"
+#include "common/xfpm-config.h"
+#include "common/xfpm-debug.h"
+
+#include <libxfce4ui/libxfce4ui.h>
+#include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 
 #ifdef ENABLE_X11
 #include <gtk/gtkx.h>
 #endif
-#include <gtk/gtk.h>
-
-#include <xfconf/xfconf.h>
-#include <libxfce4util/libxfce4util.h>
-#include <libxfce4ui/libxfce4ui.h>
-
-#include "xfpm-settings-app.h"
-#include "xfpm-settings.h"
-#include "xfpm-debug.h"
-#include "xfpm-config.h"
-#include "xfpm-common.h"
 
 
 struct _XfpmSettingsAppPrivate

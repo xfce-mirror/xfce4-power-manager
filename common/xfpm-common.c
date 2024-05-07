@@ -19,15 +19,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
-
-#include <glib.h>
-
-#include <libxfce4util/libxfce4util.h>
 
 #include "xfpm-common.h"
 #include "xfpm-debug.h"
+
+#include <libxfce4util/libxfce4util.h>
 
 const gchar
 *xfpm_bool_to_string (gboolean value)

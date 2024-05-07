@@ -19,24 +19,17 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
-#include <libxfce4util/libxfce4util.h>
-
-#include "xfpm-kbd-backlight.h"
 #include "xfpm-button.h"
+#include "xfpm-kbd-backlight.h"
 #include "xfpm-notify.h"
 #include "xfpm-power.h"
-#include "xfpm-debug.h"
+
+#include "common/xfpm-debug.h"
+
+#include <libxfce4util/libxfce4util.h>
 
 static void xfpm_kbd_backlight_finalize     (GObject *object);
 

@@ -24,6 +24,7 @@
 #ifdef ENABLE_X11
 #include <gtk/gtkx.h>
 #endif
+
 #include <xfconf/xfconf.h>
 
 GtkWidget *xfpm_settings_dialog_new   (XfconfChannel *channel,

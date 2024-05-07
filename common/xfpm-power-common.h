@@ -21,6 +21,8 @@
 #ifndef XFPM_UPOWER_COMMON
 #define XFPM_UPOWER_COMMON
 
+#include <upower.h>
+
 #define UPOWER_NAME 	      "org.freedesktop.UPower"
 #define UPOWER_PATH 	      "/org/freedesktop/UPower"
 

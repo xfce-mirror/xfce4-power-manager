@@ -19,17 +19,15 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <libxfce4util/libxfce4util.h>
-#include <upower.h>
-
-#include "xfpm-power-common.h"
-#include "xfpm-enum-glib.h"
-
-#include "xfpm-icons.h"
 #include "xfpm-debug.h"
+#include "xfpm-enum-glib.h"
+#include "xfpm-icons.h"
+#include "xfpm-power-common.h"
+
+#include <libxfce4util/libxfce4util.h>
 
 
 /**

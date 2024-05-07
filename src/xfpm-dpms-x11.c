@@ -20,14 +20,16 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <gdk/gdkx.h>
-#include <X11/extensions/dpms.h>
-
 #include "xfpm-dpms-x11.h"
+
 #include "common/xfpm-debug.h"
+
+#include <X11/Xlib.h>
+#include <X11/extensions/dpms.h>
+#include <gdk/gdkx.h>
 
 static void       xfpm_dpms_x11_set_mode            (XfpmDpms         *dpms,
                                                      XfpmDpmsMode      mode);
