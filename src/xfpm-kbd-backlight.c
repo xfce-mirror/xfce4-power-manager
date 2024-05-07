@@ -82,23 +82,17 @@ static void
 xfpm_kbd_backlight_init_max_level (XfpmKbdBacklight *backlight)
 {
   GError *error = NULL;
-  GVariant *var;
-
-  var = g_dbus_proxy_call_sync (backlight->priv->proxy, "GetMaxBrightness",
-                                NULL,
-                                G_DBUS_CALL_FLAGS_NONE,
-                                -1, NULL,
-                                &error);
-
-  if (var)
+  GVariant *var = g_dbus_proxy_call_sync (backlight->priv->proxy, "GetMaxBrightness",
+                                          NULL,
+                                          G_DBUS_CALL_FLAGS_NONE,
+                                          -1, NULL,
+                                          &error);
+  if (var != NULL)
   {
-    g_variant_get (var,
-                   "(i)",
-                   &backlight->priv->max_level);
+    g_variant_get (var, "(i)", &backlight->priv->max_level);
     g_variant_unref (var);
   }
-
-  if ( error )
+  else
   {
     XFPM_DEBUG ("Failed to get keyboard max brightness level : %s", error->message);
     g_error_free (error);
@@ -109,12 +103,10 @@ xfpm_kbd_backlight_init_max_level (XfpmKbdBacklight *backlight)
 static void
 xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self, gfloat value)
 {
-  gchar *summary;
-
   if ( self->priv->n == NULL )
   {
     /* generate a human-readable summary for the notification */
-    summary = g_strdup_printf (_("Keyboard Brightness: %.0f percent"), value);
+    gchar *summary = g_strdup_printf (_("Keyboard Brightness: %.0f percent"), value);
     self->priv->n = xfpm_notify_new_notification (self->priv->notify,
                                                   _("Power Manager"),
                                                   summary,
@@ -136,26 +128,22 @@ xfpm_kbd_backlight_get_level (XfpmKbdBacklight *backlight)
 {
   GError *error = NULL;
   gint32 level = -1;
-  GVariant *var;
-
-  var = g_dbus_proxy_call_sync (backlight->priv->proxy, "GetBrightness",
-                                NULL,
-                                G_DBUS_CALL_FLAGS_NONE,
-                                -1, NULL,
-                                &error);
-  if (var)
+  GVariant *var = g_dbus_proxy_call_sync (backlight->priv->proxy, "GetBrightness",
+                                          NULL,
+                                          G_DBUS_CALL_FLAGS_NONE,
+                                          -1, NULL,
+                                          &error);
+  if (var != NULL)
   {
-    g_variant_get (var,
-                   "(i)",
-                   &level);
+    g_variant_get (var, "(i)", &level);
     g_variant_unref (var);
   }
-
-  if ( error )
+  else
   {
     g_warning ("Failed to get keyboard brightness level : %s", error->message);
     g_error_free (error);
   }
+
   return level;
 }
 
@@ -164,36 +152,28 @@ static void
 xfpm_kbd_backlight_set_level (XfpmKbdBacklight *backlight, gint32 level)
 {
   GError *error = NULL;
-  gfloat percent;
-  GVariant *var;
-
-  var = g_dbus_proxy_call_sync (backlight->priv->proxy, "SetBrightness",
-                                g_variant_new("(i)", level),
-                                G_DBUS_CALL_FLAGS_NONE,
-                                -1, NULL,
-                                &error);
-
-  if (var)
-    g_variant_unref (var);
-
-  if ( error )
+  GVariant *var = g_dbus_proxy_call_sync (backlight->priv->proxy, "SetBrightness",
+                                          g_variant_new ("(i)", level),
+                                          G_DBUS_CALL_FLAGS_NONE,
+                                          -1, NULL,
+                                          &error);
+  if (var != NULL)
   {
-    g_warning ("Failed to set keyboard brightness level : %s", error->message);
-    g_error_free (error);
+    gfloat percent = 100.0 * ((gfloat) level / (gfloat) backlight->priv->max_level);
+    xfpm_kbd_backlight_show_notification (backlight, percent);
+    g_variant_unref (var);
   }
   else
   {
-    percent = 100.0 * ((gfloat)level / (gfloat)backlight->priv->max_level);
-    xfpm_kbd_backlight_show_notification (backlight, percent);
+    g_warning ("Failed to set keyboard brightness level : %s", error->message);
+    g_error_free (error);
   }
 }
 
 static void
 xfpm_kbd_backlight_up (XfpmKbdBacklight *backlight)
 {
-  gint level;
-
-  level = xfpm_kbd_backlight_get_level (backlight);
+  gint level = xfpm_kbd_backlight_get_level (backlight);
 
   if ( level == -1)
     return;
@@ -213,9 +193,7 @@ xfpm_kbd_backlight_up (XfpmKbdBacklight *backlight)
 static void
 xfpm_kbd_backlight_down (XfpmKbdBacklight *backlight)
 {
-  gint level;
-
-  level = xfpm_kbd_backlight_get_level (backlight);
+  gint level = xfpm_kbd_backlight_get_level (backlight);
 
   if ( level == -1)
     return;
@@ -234,9 +212,7 @@ xfpm_kbd_backlight_down (XfpmKbdBacklight *backlight)
 static void
 xfpm_kbd_backlight_cycle (XfpmKbdBacklight *backlight)
 {
-  gint level;
-
-  level = xfpm_kbd_backlight_get_level (backlight);
+  gint level = xfpm_kbd_backlight_get_level (backlight);
 
   if ( level == -1)
     return;
@@ -349,9 +325,7 @@ out:
 static void
 xfpm_kbd_backlight_finalize (GObject *object)
 {
-  XfpmKbdBacklight *backlight = NULL;
-
-  backlight = XFPM_KBD_BACKLIGHT (object);
+  XfpmKbdBacklight *backlight = XFPM_KBD_BACKLIGHT (object);
 
   if ( backlight->priv->power )
     g_object_unref (backlight->priv->power );
@@ -378,9 +352,7 @@ xfpm_kbd_backlight_finalize (GObject *object)
 XfpmKbdBacklight *
 xfpm_kbd_backlight_new (void)
 {
-  XfpmKbdBacklight *backlight = NULL;
-  backlight = g_object_new (XFPM_TYPE_KBD_BACKLIGHT, NULL);
-  return backlight;
+  return g_object_new (XFPM_TYPE_KBD_BACKLIGHT, NULL);
 }
 
 
