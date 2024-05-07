@@ -164,7 +164,7 @@ xfpm_settings_app_launch (GApplication *app)
 
   if (error != NULL)
   {
-    g_critical("xfpm_power_manager_proxy_new_sync failed: %s\n", error->message);
+    g_critical("xfpm_power_manager_proxy_new_sync failed: %s", error->message);
     xfce_dialog_show_warning (NULL,
                              _("Xfce Power Manager"),
                              "%s",
@@ -211,7 +211,7 @@ xfpm_settings_app_launch (GApplication *app)
 
   if ( !xfconf_init(&error) )
   {
-    g_critical("xfconf init failed: %s using default settings\n", error->message);
+    g_critical("xfconf init failed: %s using default settings", error->message);
     xfce_dialog_show_warning (NULL,
                               _("Xfce Power Manager"),
                               "%s",

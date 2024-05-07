@@ -150,7 +150,7 @@ static void
 xfpm_xfconf_load (XfpmXfconf *conf)
 {
   GParamSpec **specs;
-  GValue value = { 0, };
+  GValue value = G_VALUE_INIT;
   guint nspecs;
   guint i;
 
@@ -662,7 +662,7 @@ xfpm_xfconf_init (XfpmXfconf *conf)
   {
     if (error)
     {
-      g_critical ("xfconf_init failed: %s\n", error->message);
+      g_critical ("xfconf_init failed: %s", error->message);
       g_error_free (error);
     }
   }

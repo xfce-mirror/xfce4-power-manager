@@ -104,7 +104,7 @@ xfpm_notify_check_server (XfpmDBusMonitor *monitor,
                           gboolean on_session,
                           XfpmNotify *notify)
 {
-  if ( !g_strcmp0 (service_name, "org.freedesktop.Notifications") && on_session && connected )
+  if (g_strcmp0 (service_name, "org.freedesktop.Notifications") == 0 && on_session && connected)
     xfpm_notify_get_server_caps (notify);
 }
 
@@ -255,7 +255,7 @@ xfpm_notify_close_notification (XfpmNotify *notify)
   if ( notify->priv->notification )
   {
     if (!notify_notification_close (notify->priv->notification, NULL))
-      g_warning ("Failed to close notification\n");
+      g_warning ("Failed to close notification");
 
     g_object_unref (G_OBJECT(notify->priv->notification) );
     notify->priv->notification  = NULL;

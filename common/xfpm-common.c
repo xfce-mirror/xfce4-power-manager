@@ -32,7 +32,7 @@
 const gchar
 *xfpm_bool_to_string (gboolean value)
 {
-  if ( value == TRUE )
+  if (value)
     return "TRUE";
   else
     return "FALSE";
@@ -41,9 +41,9 @@ const gchar
 gboolean
 xfpm_string_to_bool (const gchar *string)
 {
-  if ( !g_strcmp0 (string, "TRUE") )
+  if (g_strcmp0 (string, "TRUE") == 0)
     return TRUE;
-  else if ( !g_strcmp0 (string, "FALSE") )
+  else if (g_strcmp0 (string, "FALSE") == 0)
     return FALSE;
 
   return FALSE;
@@ -95,6 +95,10 @@ xfpm_about (gpointer data)
   const gchar* authors[] =
   {
     "Ali Abdallah <aliov@xfce.org>",
+    "Nick Schermer <nick@xfce.org>",
+    "Eric Koegel <eric.koegel@gmail.com>",
+    "Harald Judt <h.judt@gmx.at>",
+    "Simon Steinbeiß <simon@xfce.org>",
      NULL,
   };
 
@@ -111,7 +115,7 @@ xfpm_about (gpointer data)
   };
 
   gtk_show_about_dialog (NULL,
-       "copyright", "Copyright \302\251 2008-2011 Ali Abdallah\nCopyright \302\251 2011-2012 Nick Schermer\nCopyright \302\251 2013-2015 Eric Koegel, Harald Judt, Simon Steinbeiß\nCopyright \302\251 2016-2023 The Xfce development team",
+       "copyright", "Copyright \302\251 2008-2023 The Xfce development team",
        "destroy-with-parent", TRUE,
        "authors", authors,
        "artists", artists,

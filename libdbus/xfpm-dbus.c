@@ -90,7 +90,7 @@ gboolean xfpm_dbus_register_name(GDBusConnection *connection, const gchar *name)
 
   if ( error )
   {
-    g_warning("Error: %s\n",error->message);
+    g_warning("Error: %s",error->message);
     g_error_free(error);
     return FALSE;
   }
@@ -124,7 +124,7 @@ gboolean xfpm_dbus_release_name(GDBusConnection *connection, const gchar *name)
 
   if ( error )
   {
-    g_warning("Error: %s\n",error->message);
+    g_warning("Error: %s",error->message);
     g_error_free(error);
     return FALSE;
   }

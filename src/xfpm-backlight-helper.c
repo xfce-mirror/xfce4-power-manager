@@ -59,7 +59,7 @@
 gboolean
 acpi_video_is_enabled (gchar *device)
 {
-  return (backlight_helper_get_switch (device) == 1) ? TRUE : FALSE;
+  return backlight_helper_get_switch (device) == 1;
 }
 
 gint

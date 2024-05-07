@@ -83,13 +83,13 @@ xfpm_inhibit_free_inhibitor (XfpmInhibit *inhibit, Inhibitor *inhibitor)
 static gboolean
 xfpm_inhibit_has_inhibit_changed (XfpmInhibit *inhibit)
 {
-  if ( inhibit->priv->array->len == 0 && inhibit->priv->inhibited == TRUE )
+  if (inhibit->priv->array->len == 0 && inhibit->priv->inhibited)
   {
     XFPM_DEBUG("Inhibit removed");
     inhibit->priv->inhibited = FALSE;
     g_signal_emit (G_OBJECT(inhibit), signals[HAS_INHIBIT_CHANGED], 0, inhibit->priv->inhibited);
   }
-  else if ( inhibit->priv->array->len != 0 && inhibit->priv->inhibited == FALSE )
+  else if (inhibit->priv->array->len != 0 && !inhibit->priv->inhibited)
   {
     XFPM_DEBUG("Inhibit added");
     inhibit->priv->inhibited = TRUE;

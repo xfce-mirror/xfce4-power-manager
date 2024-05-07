@@ -76,7 +76,7 @@ xfpm_quit_signal (gint sig, gpointer data)
 static const gchar *
 xfpm_bool_to_local_string (gboolean value)
 {
-  return value == TRUE ? _("True") : _("False");
+  return value ? _("True") : _("False");
 }
 
 static void
@@ -310,7 +310,7 @@ int main (int argc, char **argv)
     show_version ();
 
   /* Fork if needed */
-  if ( dump == FALSE && debug == FALSE && daemonize == TRUE && daemon(0,0) )
+  if (!dump && !debug && daemonize && daemon (0, 0))
   {
     g_critical ("Could not daemonize");
   }
@@ -378,7 +378,7 @@ int main (int argc, char **argv)
 
       if ( error)
       {
-        g_critical ("Failed to send quit message %s:\n", error->message);
+        g_critical ("Failed to send quit message: %s", error->message);
         g_error_free (error);
       }
     }

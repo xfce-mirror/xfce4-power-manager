@@ -125,7 +125,7 @@ enum {
   SIG_N_SIGNALS,
 };
 
-static guint __signals[SIG_N_SIGNALS] = { 0, };
+static guint __signals[SIG_N_SIGNALS] = { 0 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (PowerManagerButton, power_manager_button, GTK_TYPE_TOGGLE_BUTTON)
 
@@ -942,7 +942,7 @@ power_manager_button_init (PowerManagerButton *button)
   {
     if (error)
     {
-      g_critical ("xfconf_init failed: %s\n", error->message);
+      g_critical ("xfconf_init failed: %s", error->message);
       g_error_free (error);
     }
   }

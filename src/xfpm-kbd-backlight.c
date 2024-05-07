@@ -386,5 +386,5 @@ xfpm_kbd_backlight_new (void)
 
 gboolean xfpm_kbd_backlight_has_hw (XfpmKbdBacklight *backlight)
 {
-  return ( backlight->priv->proxy == NULL ) ? FALSE : TRUE;
+  return backlight->priv->proxy != NULL;
 }

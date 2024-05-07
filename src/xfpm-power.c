@@ -248,7 +248,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
   XfpmBrightness *brightness;
   gint32 brightness_level = 0;
 
-  if ( power->priv->inhibited && force == FALSE)
+  if (power->priv->inhibited && !force)
   {
     GtkWidget *dialog;
     gboolean ret;
@@ -311,7 +311,7 @@ xfpm_power_sleep (XfpmPower *power, const gchar *sleep_time, gboolean force)
    * - if ConsoleKit2 is running then use it
    * - if everything else fails use our built-in fallback
    */
-  if (!g_strcmp0 (sleep_time, "Hibernate"))
+  if (g_strcmp0 (sleep_time, "Hibernate") == 0)
   {
     if (power->priv->systemd != NULL)
     {
@@ -431,7 +431,7 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
 static void
 xfpm_power_notify_action_callback (NotifyNotification *n, gchar *action, XfpmPower *power)
 {
-  if ( !g_strcmp0 (action, "Shutdown") )
+  if (g_strcmp0 (action, "Shutdown") == 0)
     g_signal_emit (G_OBJECT (power), signals [SHUTDOWN], 0);
   else
     xfpm_power_sleep (power, action, TRUE);
@@ -645,7 +645,7 @@ xfpm_power_system_on_critical_power (XfpmPower *power, XfpmBattery *battery)
   }
   else
   {
-    if (power->priv->critical_action_done == FALSE)
+    if (!power->priv->critical_action_done)
     {
       power->priv->critical_action_done = TRUE;
       xfpm_power_process_critical_action (power, critical_action);

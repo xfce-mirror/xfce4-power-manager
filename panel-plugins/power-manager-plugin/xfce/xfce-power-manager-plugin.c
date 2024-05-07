@@ -75,7 +75,7 @@ power_manager_plugin_configure_response (GtkWidget    *dialog,
   {
     result = g_spawn_command_line_async ("exo-open --launch WebBrowser " "https://docs.xfce.org/xfce/xfce4-power-manager/start", NULL);
 
-    if (G_UNLIKELY (result == FALSE))
+    if (G_UNLIKELY (!result))
       g_warning ("Unable to open the following url: %s", "https://docs.xfce.org/xfce/xfce4-power-manager/start");
   }
   else

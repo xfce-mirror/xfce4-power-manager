@@ -87,7 +87,7 @@ xfpm_dbus_monitor_get_watch_data (GPtrArray *array, const gchar *name, GBusType 
   for ( i = 0; i < array->len; i++)
   {
     data = g_ptr_array_index (array, i);
-    if ( !g_strcmp0 (data->name, name) && data->bus_type == bus_type )
+    if (g_strcmp0 (data->name, name) == 0 && data->bus_type == bus_type)
       return data;
   }
   return NULL;
@@ -103,10 +103,10 @@ xfpm_dbus_monitor_unique_connection_name_lost (XfpmDBusMonitor *monitor, GBusTyp
   {
     watch = g_ptr_array_index (monitor->priv->names_array, i);
 
-    if ( !g_strcmp0 (watch->name, name) && bus_type == watch->bus_type )
+    if (g_strcmp0 (watch->name, name) == 0 && bus_type == watch->bus_type)
     {
       g_signal_emit (G_OBJECT(monitor), signals [UNIQUE_NAME_LOST], 0,
-         watch->name, bus_type == G_BUS_TYPE_SESSION ? TRUE : FALSE);
+         watch->name, bus_type == G_BUS_TYPE_SESSION);
       g_ptr_array_remove (monitor->priv->names_array, watch);
     }
   }
@@ -123,10 +123,10 @@ xfpm_dbus_monitor_service_connection_changed (XfpmDBusMonitor *monitor, GBusType
   {
     watch = g_ptr_array_index (monitor->priv->services_array, i);
 
-    if ( !g_strcmp0 (watch->name, name) && watch->bus_type == bus_type)
+    if (g_strcmp0 (watch->name, name) == 0 && watch->bus_type == bus_type)
     {
       g_signal_emit (G_OBJECT (monitor), signals [SERVICE_CONNECTION_CHANGED], 0,
-                     name, connected, bus_type == G_BUS_TYPE_SESSION ? TRUE : FALSE);
+                     name, connected, bus_type == G_BUS_TYPE_SESSION);
     }
   }
 }

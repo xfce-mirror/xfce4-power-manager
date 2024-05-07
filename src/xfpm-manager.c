@@ -288,7 +288,7 @@ xfpm_manager_quit (XfpmManager *manager)
 static void
 xfpm_manager_system_bus_connection_changed_cb (XfpmDBusMonitor *monitor, gboolean connected, XfpmManager *manager)
 {
-  if ( connected == TRUE )
+  if (connected)
   {
     XFPM_DEBUG ("System bus connection changed to TRUE, restarting the power manager");
     xfpm_manager_quit (manager);
@@ -304,7 +304,7 @@ xfpm_manager_reserve_names (XfpmManager *manager)
        !xfpm_dbus_register_name (manager->priv->session_bus,
                                  "org.freedesktop.PowerManagement") )
   {
-    g_warning ("Unable to reserve bus name: Maybe any already running instance?\n");
+    g_warning ("Unable to reserve bus name: Maybe any already running instance?");
 
     g_object_unref (G_OBJECT (manager));
     gtk_main_quit ();
@@ -506,7 +506,7 @@ xfpm_manager_inhibit_changed_cb (XfpmInhibit *inhibit, gboolean inhibited, XfpmM
 static void
 xfpm_manager_alarm_timeout_cb (XfpmIdle *idle, XfpmAlarmId id, XfpmManager *manager)
 {
-  if (xfpm_power_is_in_presentation_mode (manager->priv->power) == TRUE)
+  if (xfpm_power_is_in_presentation_mode (manager->priv->power))
     return;
 
   XFPM_DEBUG ("Alarm inactivity timeout id %d", id);

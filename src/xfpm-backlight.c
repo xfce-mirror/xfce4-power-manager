@@ -106,7 +106,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 {
   gboolean ret;
 
-  if (xfpm_power_is_in_presentation_mode (backlight->priv->power) == FALSE )
+  if (!xfpm_power_is_in_presentation_mode (backlight->priv->power))
   {
     gint32 dim_level;
 
@@ -425,7 +425,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
       if (!xfconf_channel_set_int (xfpm_xfconf_get_channel(backlight->priv->conf),
                      XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
                      backlight->priv->brightness_switch))
-      g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH_SAVE);
+      g_critical ("Cannot set value for property %s", BRIGHTNESS_SWITCH_SAVE);
 
       backlight->priv->brightness_switch_save = backlight->priv->brightness_switch;
     }
@@ -563,7 +563,7 @@ xfpm_backlight_finalize (GObject *object)
     /* unset the xfconf saved value after the restore */
     if (!xfconf_channel_set_int (xfpm_xfconf_get_channel(backlight->priv->conf),
                                  XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE, -1))
-    g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH_SAVE);
+    g_critical ("Cannot set value for property %s", BRIGHTNESS_SWITCH_SAVE);
 
     if (ret)
     {

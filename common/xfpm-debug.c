@@ -78,7 +78,7 @@ xfpm_debug_enum (const gchar *func, const gchar *file, gint line,
   gchar *buffer;
 
   gchar *content = NULL;
-  GValue __value__ = { 0, };
+  GValue __value__ = G_VALUE_INIT;
 
   if ( !enable_debug )
     return;

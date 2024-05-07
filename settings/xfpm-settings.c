@@ -212,7 +212,7 @@ void brightness_level_on_ac (GtkWidget *w,  XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, val) )
   {
-    g_critical ("Unable to set value %u for property %s\n", val, BRIGHTNESS_LEVEL_ON_AC);
+    g_critical ("Unable to set value %u for property %s", val, BRIGHTNESS_LEVEL_ON_AC);
   }
 
   update_label (label_brightness_level_on_ac, w, format_brightness_percentage_cb);
@@ -224,7 +224,7 @@ void brightness_level_on_battery (GtkWidget *w,  XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, val) )
   {
-    g_critical ("Unable to set value %u for property %s\n", val, BRIGHTNESS_LEVEL_ON_BATTERY);
+    g_critical ("Unable to set value %u for property %s", val, BRIGHTNESS_LEVEL_ON_BATTERY);
   }
 
   update_label (label_brightness_level_on_battery, w, format_brightness_percentage_cb);
@@ -250,7 +250,7 @@ battery_critical_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_BATT_ACTION_CFG, value) )
   {
-    g_critical ("Cannot set value for property %s\n", CRITICAL_BATT_ACTION_CFG);
+    g_critical ("Cannot set value for property %s", CRITICAL_BATT_ACTION_CFG);
   }
 }
 
@@ -261,7 +261,7 @@ inactivity_on_ac_value_changed_cb (GtkWidget *widget, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_INACTIVITY_TIMEOUT, value))
   {
-    g_critical ("Cannot set value for property %s\n", ON_AC_INACTIVITY_TIMEOUT);
+    g_critical ("Cannot set value for property %s", ON_AC_INACTIVITY_TIMEOUT);
   }
 
   update_label (label_inactivity_on_ac, widget, format_inactivity_value_cb);
@@ -274,7 +274,7 @@ inactivity_on_battery_value_changed_cb (GtkWidget *widget, XfconfChannel *channe
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATTERY_INACTIVITY_TIMEOUT, value))
   {
-    g_critical ("Cannot set value for property %s\n", ON_BATTERY_INACTIVITY_TIMEOUT);
+    g_critical ("Cannot set value for property %s", ON_BATTERY_INACTIVITY_TIMEOUT);
   }
 
   update_label (label_inactivity_on_battery, widget, format_inactivity_value_cb);
@@ -300,7 +300,7 @@ button_sleep_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX SLEEP_SWITCH_CFG, value ) )
   {
-    g_critical ("Cannot set value for property %s\n", SLEEP_SWITCH_CFG);
+    g_critical ("Cannot set value for property %s", SLEEP_SWITCH_CFG);
   }
 }
 
@@ -324,7 +324,7 @@ button_power_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX POWER_SWITCH_CFG, value) )
   {
-    g_critical ("Cannot set value for property %s\n", POWER_SWITCH_CFG);
+    g_critical ("Cannot set value for property %s", POWER_SWITCH_CFG);
   }
 }
 
@@ -348,7 +348,7 @@ button_hibernate_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX HIBERNATE_SWITCH_CFG, value ) )
   {
-    g_critical ("Cannot set value for property %s\n", HIBERNATE_SWITCH_CFG);
+    g_critical ("Cannot set value for property %s", HIBERNATE_SWITCH_CFG);
   }
 }
 
@@ -372,7 +372,7 @@ button_battery_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BATTERY_SWITCH_CFG, value ) )
   {
-    g_critical ("Cannot set value for property %s\n", BATTERY_SWITCH_CFG);
+    g_critical ("Cannot set value for property %s", BATTERY_SWITCH_CFG);
   }
 }
 
@@ -429,7 +429,7 @@ on_ac_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC, value) )
   {
-    g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_AC);
+    g_critical ("Cannot set value for property %s", INACTIVITY_SLEEP_MODE_ON_AC);
   }
 }
 
@@ -453,7 +453,7 @@ on_battery_sleep_mode_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY, value) )
   {
-    g_critical ("Cannot set value for property %s\n", INACTIVITY_SLEEP_MODE_ON_BATTERY);
+    g_critical ("Cannot set value for property %s", INACTIVITY_SLEEP_MODE_ON_BATTERY);
   }
 }
 
@@ -477,7 +477,7 @@ on_ac_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, profile))
   {
-    g_critical ("Cannot set value for property %s\n", PROFILE_ON_AC);
+    g_critical ("Cannot set value for property %s", PROFILE_ON_AC);
   }
 
   g_free (profile);
@@ -503,7 +503,7 @@ on_battery_power_profile_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_string (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY, profile))
   {
-    g_critical ("Cannot set value for property %s\n", PROFILE_ON_BATTERY);
+    g_critical ("Cannot set value for property %s", PROFILE_ON_BATTERY);
   }
 
   g_free (profile);
@@ -558,7 +558,7 @@ sleep_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATT_DPMS_SLEEP, sleep_value))
   {
-    g_critical ("Cannot set value for property %s\n", ON_BATT_DPMS_SLEEP);
+    g_critical ("Cannot set value for property %s", ON_BATT_DPMS_SLEEP);
   }
 
   update_label (label_dpms_sleep_on_battery, w, format_dpms_value_cb);
@@ -580,7 +580,7 @@ off_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_BATT_DPMS_OFF, off_value))
   {
-    g_critical ("Cannot set value for property %s\n", ON_BATT_DPMS_OFF);
+    g_critical ("Cannot set value for property %s", ON_BATT_DPMS_OFF);
   }
 
   update_label (label_dpms_off_on_battery, w, format_dpms_value_cb);
@@ -620,7 +620,7 @@ sleep_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_DPMS_SLEEP, sleep_value))
   {
-    g_critical ("Cannot set value for property %s\n", ON_AC_DPMS_SLEEP);
+    g_critical ("Cannot set value for property %s", ON_AC_DPMS_SLEEP);
   }
 
   update_label (label_dpms_sleep_on_ac, w, format_dpms_value_cb);
@@ -645,7 +645,7 @@ off_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX ON_AC_DPMS_OFF, off_value))
   {
-    g_critical ("Cannot set value for property %s\n", ON_AC_DPMS_OFF);
+    g_critical ("Cannot set value for property %s", ON_AC_DPMS_OFF);
   }
 
   update_label (label_dpms_off_on_ac, w, format_dpms_value_cb);
@@ -740,7 +740,7 @@ brightness_on_battery_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, value))
   {
-    g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_BATTERY);
+    g_critical ("Cannot set value for property %s", BRIGHTNESS_ON_BATTERY);
   }
 
   update_label (label_brightness_inactivity_on_battery, w, format_brightness_value_cb);
@@ -762,7 +762,7 @@ brightness_on_ac_value_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_AC, value))
   {
-    g_critical ("Cannot set value for property %s\n", BRIGHTNESS_ON_AC);
+    g_critical ("Cannot set value for property %s", BRIGHTNESS_ON_AC);
   }
 
   update_label (label_brightness_inactivity_on_ac, w, format_brightness_value_cb);
@@ -788,7 +788,7 @@ on_battery_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_BATTERY_CFG, value) )
   {
-    g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_BATTERY_CFG);
+    g_critical ("Cannot set value for property %s", LID_SWITCH_ON_BATTERY_CFG);
   }
 
   /* Light Locker Integration */
@@ -819,7 +819,7 @@ on_ac_lid_changed_cb (GtkWidget *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX LID_SWITCH_ON_AC_CFG, value) )
   {
-    g_critical ("Cannot set value for property %s\n", LID_SWITCH_ON_AC_CFG);
+    g_critical ("Cannot set value for property %s", LID_SWITCH_ON_AC_CFG);
   }
 
   /* Light Locker Integration */
@@ -837,7 +837,7 @@ critical_level_value_changed_cb (GtkSpinButton *w, XfconfChannel *channel)
 
   if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, val) )
   {
-    g_critical ("Unable to set value %d for property %s\n", val, CRITICAL_POWER_LEVEL);
+    g_critical ("Unable to set value %d for property %s", val, CRITICAL_POWER_LEVEL);
   }
 }
 
@@ -858,7 +858,7 @@ lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
 
   if ( !xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_ON_SLEEP, val) )
   {
-    g_critical ("Unable to set value for property %s\n", LOCK_SCREEN_ON_SLEEP);
+    g_critical ("Unable to set value for property %s", LOCK_SCREEN_ON_SLEEP);
   }
 
   /* Light Locker Integration */
@@ -867,7 +867,7 @@ lock_screen_toggled_cb (GtkWidget *w, XfconfChannel *channel)
     GVariant *variant;
     variant = g_variant_new_boolean (val);
     if (!g_settings_set_value (light_locker_settings, "lock-on-suspend", variant))
-      g_critical ("Cannot set value for property lock-on-suspend\n");
+      g_critical ("Cannot set value for property lock-on-suspend");
 
   xfpm_update_logind_handle_lid_switch (channel);
   }
@@ -1676,7 +1676,7 @@ xfpm_settings_advanced (XfconfChannel *channel, gboolean auth_suspend,
 
     if ( val > 20 || val < 1)
     {
-      g_critical ("Value %d if out of range for property %s\n", val, CRITICAL_POWER_LEVEL);
+      g_critical ("Value %d if out of range for property %s", val, CRITICAL_POWER_LEVEL);
       gtk_spin_button_set_value (GTK_SPIN_BUTTON(critical_level), 10);
     }
     else
@@ -1761,7 +1761,7 @@ light_locker_late_locking_value_changed_cb (GtkWidget *widget, XfconfChannel *ch
 
   if (!g_settings_set_value (light_locker_settings, "lock-after-screensaver", variant))
   {
-    g_critical ("Cannot set value for property lock-after-screensaver\n");
+    g_critical ("Cannot set value for property lock-after-screensaver");
   }
 
   update_label (label_light_locker_late_locking_scale, widget, format_light_locker_value_cb);
@@ -1792,11 +1792,11 @@ light_locker_automatic_locking_changed_cb (GtkWidget *widget, XfconfChannel *cha
 
   variant = g_variant_new_uint32 (lock_after_screensaver);
   if (!g_settings_set_value (light_locker_settings, "lock-after-screensaver", variant))
-    g_critical ("Cannot set value for property lock-after-screensaver\n");
+    g_critical ("Cannot set value for property lock-after-screensaver");
 
   variant = g_variant_new_boolean (late_locking);
   if (!g_settings_set_value (light_locker_settings, "late-locking", variant))
-    g_critical ("Cannot set value for property late-locking\n");
+    g_critical ("Cannot set value for property late-locking");
 }
 
 static void xfpm_settings_light_locker (XfconfChannel *channel,
@@ -1848,7 +1848,7 @@ static void xfpm_settings_light_locker (XfconfChannel *channel,
       variant = g_variant_new_boolean (xfpm_lock_on_suspend);
       if (!g_settings_set_value (light_locker_settings, "lock-on-suspend", variant))
       {
-        g_critical ("Cannot set value for property lock-on-suspend\n");
+        g_critical ("Cannot set value for property lock-on-suspend");
       }
       lock_on_suspend = xfpm_lock_on_suspend;
     }
@@ -2136,7 +2136,7 @@ update_device_details (UpDevice *device)
   update_device_info_value_for_name (view,
                                      list_store,
                                      _("PowerSupply"),
-                                     p_supply == TRUE ? _("True") : _("False"));
+                                     p_supply ? _("True") : _("False"));
 
   if ( type != UP_DEVICE_KIND_LINE_POWER )
   {
@@ -2308,7 +2308,7 @@ add_device (UpDevice *device)
    * the starting_device_id must be unset and the this is the first
    * time add_device is called (i.e. select the first device) or
    * our current device matches starting_device_id. */
-  if ((starting_device_id == NULL && first_run == TRUE) ||
+  if ((starting_device_id == NULL && first_run) ||
       (g_strcmp0 (object_path, starting_device_id) == 0))
   {
     GtkTreeSelection *selection;
