@@ -62,18 +62,18 @@ m4_define([glib_minimum_version], [2.70.0])
 m4_define([xfconf_minimum_version], [4.12.0])
 m4_define([libxfce4ui_minimum_version],[4.18.4])
 m4_define([libxfce4util_minimum_version],[4.19.2])
-m4_define([libnotify_minimum_version], [0.4.1])
-m4_define([upower_minimum_version], [0.99.0])
+m4_define([libnotify_minimum_version], [0.7.8])
+m4_define([upower_minimum_version], [0.99.10])
 
 m4_define([x11_minimum_version], [1.6.7])
-m4_define([xrandr_minimum_version], [1.2.0])
+m4_define([xrandr_minimum_version], [1.5.0])
 m4_define([xext_minimum_version], [1.0.0])
 
 m4_define([wayland_minimum_version], [1.15])
 m4_define([wayland_protocols_minimum_version], [1.20])
 
 m4_define([polkit_minimum_version], [0.102])
-m4_define([libxfce4panel_minimum_version],[4.12.0])
+m4_define([libxfce4panel_minimum_version],[4.14.0])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])

@@ -192,17 +192,7 @@ xfpm_notify_new_notification_internal (const gchar       *title,
                                        const gchar       *icon_name,
                                        XfpmNotifyUrgency  urgency)
 {
-  NotifyNotification *n;
-
-#ifdef NOTIFY_CHECK_VERSION
-#if NOTIFY_CHECK_VERSION (0, 7, 0)
-  n = notify_notification_new (title, message, icon_name);
-#else
-  n = notify_notification_new (title, message, icon_name, NULL);
-#endif
-#else
-  n = notify_notification_new (title, message, icon_name, NULL);
-#endif
+  NotifyNotification *n = notify_notification_new (title, message, icon_name);
 
   /* Only set transient hint on non-critical notifications, so that the critical
      ones also end up in the notification server's log */

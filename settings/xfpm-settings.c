@@ -2370,14 +2370,8 @@ device_removed_cb (UpClient *upclient, const gchar *object_path, gpointer user_d
 static void
 add_all_devices (void)
 {
-  GPtrArray *array = NULL;
+  GPtrArray *array = up_client_get_devices2 (upower);
   guint i;
-
-#if UP_CHECK_VERSION(0, 99, 8)
-  array = up_client_get_devices2 (upower);
-#else
-  array = up_client_get_devices (upower);
-#endif
 
   if ( array )
   {

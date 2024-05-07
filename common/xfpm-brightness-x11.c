@@ -132,12 +132,6 @@ xfpm_brightness_x11_setup (XfpmBrightness *_brightness,
   }
   gdk_x11_display_error_trap_pop_ignored (gdisplay);
 
-  if (major == 1 && minor < 2)
-  {
-    g_warning ("XRANDR version < 1.2");
-    return FALSE;
-  }
-
 #ifdef RR_PROPERTY_BACKLIGHT
   brightness->backlight = XInternAtom (display, RR_PROPERTY_BACKLIGHT, True);
   if (brightness->backlight == None) /* fall back to deprecated name */
@@ -152,12 +146,7 @@ xfpm_brightness_x11_setup (XfpmBrightness *_brightness,
   gdk_x11_display_error_trap_push (gdisplay);
 
   window = gdk_x11_get_default_root_xwindow ();
-#if (RANDR_MAJOR == 1 && RANDR_MINOR >=3)
-  if (major > 1 || minor >= 3)
-    resource = XRRGetScreenResourcesCurrent (display, window);
-  else
-#endif
-    resource = XRRGetScreenResources (display, window);
+  resource = XRRGetScreenResourcesCurrent (display, window);
 
   for (gint i = 0; i < resource->noutput; i++)
   {

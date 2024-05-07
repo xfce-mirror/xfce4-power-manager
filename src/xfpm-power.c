@@ -778,14 +778,8 @@ xfpm_power_add_device (UpDevice *device, XfpmPower *power)
 static void
 xfpm_power_get_power_devices (XfpmPower *power)
 {
-  GPtrArray *array = NULL;
+  GPtrArray *array = up_client_get_devices2 (power->priv->upower);
   guint i;
-
-#if UP_CHECK_VERSION(0, 99, 8)
-  array = up_client_get_devices2 (power->priv->upower);
-#else
-  array = up_client_get_devices (power->priv->upower);
-#endif
 
   if ( array )
   {
