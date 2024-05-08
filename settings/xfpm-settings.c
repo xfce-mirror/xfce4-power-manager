@@ -2490,6 +2490,18 @@ dialog_response_cb (GtkDialog *dialog,
     case GTK_RESPONSE_HELP:
       xfce_dialog_show_help_with_version (NULL, "xfce4-power-manager", "start", NULL, XFPM_VERSION_SHORT);
       break;
+
+    case GTK_RESPONSE_REJECT:
+    {
+      GError *error = NULL;
+      if (!g_spawn_command_line_async ("xfce4-screensaver-preferences", &error))
+      {
+        g_warning ("Unable to start screensaver preferences: %s", error->message);
+        g_error_free (error);
+      }
+      break;
+    }
+
     default:
       settings_quit (GTK_WIDGET (dialog), channel);
       break;
@@ -2538,6 +2550,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
   GError *error = NULL;
   GtkCssProvider *css_provider;
   GDBusProxy *profiles_proxy = xfpm_ppd_g_dbus_proxy_new ();
+  gchar *path;
 
   XFPM_DEBUG ("auth_hibernate=%s auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s "
               "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s "
@@ -2555,6 +2568,13 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
   {
     xfce_dialog_show_error (NULL, error, "%s", _("Check your power manager installation"));
     g_error ("%s", error->message);
+  }
+
+  path = g_find_program_in_path ("xfce4-screensaver-preferences");
+  if (path != NULL)
+  {
+    gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (xml, "screensaver-button")));
+    g_free (path);
   }
 
   lcd_brightness = has_lcd_brightness;
