@@ -1327,7 +1327,7 @@
                           <object class="GtkSwitch" id="handle-dpms">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="tooltip_text" translatable="yes">Let the power manager handle display power management (DPMS) instead of X11.</property>
+                            <property name="tooltip_text" translatable="yes">Let the power manager handle display power management (DPMS) instead of the display server</property>
                             <signal name="state-set" handler="dpms_toggled_cb" swapped="no"/>
                           </object>
                           <packing>
