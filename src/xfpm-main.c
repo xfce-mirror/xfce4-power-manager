@@ -82,31 +82,18 @@ xfpm_bool_to_local_string (gboolean value)
 static void
 xfpm_dump (GHashTable *hash)
 {
-  gboolean has_battery;
-  gboolean auth_suspend;
-  gboolean auth_hibernate;
-  gboolean can_suspend;
-  gboolean can_hibernate;
-  gboolean can_shutdown;
-  gboolean has_lcd_brightness;
-  gboolean has_sleep_button;
-  gboolean has_hibernate_button;
-  gboolean has_power_button;
-  gboolean has_battery_button;
-  gboolean has_lid;
-
-  has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
-  has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
-  can_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-suspend"));
-  can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hibernate"));
-  auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-suspend"));
-  auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hibernate"));
-  has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-brightness"));
-  has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "sleep-button"));
-  has_power_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "power-button"));
-  has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "hibernate-button"));
-  has_battery_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "battery-button"));
-  can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
+  gboolean has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
+  gboolean auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-suspend"));
+  gboolean auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hibernate"));
+  gboolean can_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-suspend"));
+  gboolean can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hibernate"));
+  gboolean can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
+  gboolean has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-brightness"));
+  gboolean has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "sleep-button"));
+  gboolean has_hibernate_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "hibernate-button"));
+  gboolean has_power_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "power-button"));
+  gboolean has_battery_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "battery-button"));
+  gboolean has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
 
   g_print ("---------------------------------------------------\n");
   g_print ("       Xfce power manager version %s\n", VERSION);
@@ -128,61 +115,51 @@ xfpm_dump (GHashTable *hash)
             "%s: %s\n"
             "%s: %s\n"
             "%s: %s\n",
-           _("Can suspend"),
-           xfpm_bool_to_local_string (can_suspend),
-           _("Can hibernate"),
-           xfpm_bool_to_local_string (can_hibernate),
-           _("Authorized to suspend"),
-           xfpm_bool_to_local_string (auth_suspend),
-           _("Authorized to hibernate"),
-           xfpm_bool_to_local_string (auth_hibernate),
-           _("Authorized to shutdown"),
-           xfpm_bool_to_local_string (can_shutdown),
-           _("Has battery"),
-           xfpm_bool_to_local_string (has_battery),
-           _("Has brightness panel"),
-           xfpm_bool_to_local_string (has_lcd_brightness),
-           _("Has power button"),
-           xfpm_bool_to_local_string (has_power_button),
-           _("Has hibernate button"),
-           xfpm_bool_to_local_string (has_hibernate_button),
-           _("Has sleep button"),
-            xfpm_bool_to_local_string (has_sleep_button),
-                 _("Has battery button"),
-                  xfpm_bool_to_local_string (has_battery_button),
-           _("Has LID"),
-            xfpm_bool_to_local_string (has_lid));
+           _("Can suspend"), xfpm_bool_to_local_string (can_suspend),
+           _("Can hibernate"), xfpm_bool_to_local_string (can_hibernate),
+           _("Authorized to suspend"), xfpm_bool_to_local_string (auth_suspend),
+           _("Authorized to hibernate"), xfpm_bool_to_local_string (auth_hibernate),
+           _("Authorized to shutdown"), xfpm_bool_to_local_string (can_shutdown),
+           _("Has battery"), xfpm_bool_to_local_string (has_battery),
+           _("Has brightness panel"), xfpm_bool_to_local_string (has_lcd_brightness),
+           _("Has power button"), xfpm_bool_to_local_string (has_power_button),
+           _("Has hibernate button"), xfpm_bool_to_local_string (has_hibernate_button),
+           _("Has sleep button"), xfpm_bool_to_local_string (has_sleep_button),
+           _("Has battery button"), xfpm_bool_to_local_string (has_battery_button),
+           _("Has LID"), xfpm_bool_to_local_string (has_lid));
 }
 
 static void
 xfpm_dump_remote (GDBusConnection *bus)
 {
-  XfpmPowerManager *proxy;
-  GError *error = NULL;
   GVariant *config;
   GVariantIter *iter;
   GHashTable *hash;
   gchar *key, *value;
-
-  proxy = xfpm_power_manager_proxy_new_sync (bus,
-                                             G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES |
-                                             G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
-                                             "org.xfce.PowerManager",
-                                             "/org/xfce/PowerManager",
-                                             NULL,
-                                             NULL);
-
-  xfpm_power_manager_call_get_config_sync (proxy,
-                                           &config,
-                                           NULL,
-                                           &error);
-
-  g_object_unref (proxy);
-
-  if ( error )
+  GError *error = NULL;
+  XfpmPowerManager *proxy = xfpm_power_manager_proxy_new_sync (bus,
+                                                               G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES
+                                                                 | G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS,
+                                                               "org.xfce.PowerManager",
+                                                               "/org/xfce/PowerManager",
+                                                               NULL,
+                                                               &error);
+  if (proxy == NULL)
   {
-    g_error ("%s", error->message);
+    g_critical ("%s", error->message);
+    g_error_free (error);
     exit (EXIT_FAILURE);
+  }
+  else
+  {
+    xfpm_power_manager_call_get_config_sync (proxy, &config, NULL, &error);
+    g_object_unref (proxy);
+    if (error != NULL)
+    {
+      g_critical ("%s", error->message);
+      g_error_free (error);
+      exit (EXIT_FAILURE);
+    }
   }
 
   hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
@@ -222,13 +199,10 @@ xfpm_start (GDBusConnection *bus, const gchar *client_id, gboolean dump)
                                            xfpm_quit_signal,
                                            manager, NULL);
   }
-  else
+  else if (error)
   {
-    if (error)
-    {
-      g_warning ("Unable to set up POSIX signal handlers: %s", error->message);
-      g_error_free (error);
-    }
+    g_warning ("Unable to set up POSIX signal handlers: %s", error->message);
+    g_error_free (error);
   }
 
   xfpm_manager_start (manager);
@@ -294,11 +268,8 @@ int main (int argc, char **argv)
 
   if (!g_option_context_parse(octx, &argc, &argv, &error))
   {
-    if (error)
-    {
-      g_printerr(_("Failed to parse arguments: %s\n"), error->message);
-      g_error_free(error);
-    }
+    g_printerr(_("Failed to parse arguments: %s\n"), error->message);
+    g_error_free(error);
     g_option_context_free(octx);
 
     return EXIT_FAILURE;
@@ -322,32 +293,18 @@ int main (int argc, char **argv)
 
   if (!gtk_init_check (&argc, &argv))
   {
-    if (G_LIKELY (error))
-    {
-      g_printerr ("%s: %s.\n", G_LOG_DOMAIN, error->message);
-      g_printerr (_("Type '%s --help' for usage."), G_LOG_DOMAIN);
-      g_printerr ("\n");
-      g_error_free (error);
-    }
-    else
-    {
-      g_error ("Unable to open display.");
-    }
-
+    g_critical ("Unable to open display.");
     return EXIT_FAILURE;
   }
 
   xfpm_debug_init (debug);
 
   bus = g_bus_get_sync (G_BUS_TYPE_SESSION, NULL, &error);
-
-  if ( error )
+  if (bus == NULL)
   {
-    xfce_dialog_show_error (NULL,
-                            error,
-                            "%s",
-                            _("Unable to get connection to the message bus session"));
-    g_error ("%s: \n", error->message);
+    xfce_dialog_show_error (NULL, error, "%s", _("Unable to get connection to the message bus session"));
+    g_critical ("%s", error->message);
+    return EXIT_FAILURE;
   }
 
   if ( quit )
@@ -373,15 +330,17 @@ int main (int argc, char **argv)
         g_object_unref(bus);
         return EXIT_FAILURE;
       }
+
       xfpm_power_manager_call_quit_sync (proxy, NULL, &error);
       g_object_unref (proxy);
-
       if ( error)
       {
         g_critical ("Failed to send quit message: %s", error->message);
         g_error_free (error);
+        return EXIT_FAILURE;
       }
     }
+
     return EXIT_SUCCESS;
   }
 
@@ -395,6 +354,7 @@ int main (int argc, char **argv)
         g_error_free (error);
         return EXIT_FAILURE;
     }
+
     return EXIT_SUCCESS;
   }
 
@@ -414,10 +374,11 @@ int main (int argc, char **argv)
                                                "org.xfce.PowerManager",
                                                "/org/xfce/PowerManager",
                                                NULL,
-                                               NULL);
-    if ( !proxy )
+                                               &error);
+    if (proxy == NULL)
     {
-      g_critical ("Failed to get proxy");
+      g_critical ("Failed to get proxy: %s", error->message);
+      g_error_free (error);
       g_object_unref (bus);
       return EXIT_FAILURE;
     }
@@ -427,31 +388,26 @@ int main (int argc, char **argv)
       g_critical ("Unable to send reload message");
       g_object_unref (proxy);
       g_object_unref (bus);
-      return EXIT_SUCCESS;
+      return EXIT_FAILURE;
     }
+
     return EXIT_SUCCESS;
   }
 
-  if (dump)
+  if (dump && xfpm_dbus_name_has_owner (bus, "org.xfce.PowerManager"))
   {
-    if (xfpm_dbus_name_has_owner (bus, "org.xfce.PowerManager"))
-    {
-      xfpm_dump_remote (bus);
-      return EXIT_SUCCESS;
-    }
+    xfpm_dump_remote (bus);
+    return EXIT_SUCCESS;
   }
 
   if (xfpm_dbus_name_has_owner (bus, "org.freedesktop.PowerManagement") )
   {
-    g_print ("%s: %s\n",
-             _("Xfce Power Manager"),
-             _("Another power manager is already running"));
+    g_print ("%s: %s\n", _("Xfce Power Manager"), _("Another power manager is already running"));
   }
   else if (xfpm_dbus_name_has_owner (bus, "org.xfce.PowerManager"))
   {
     g_print (_("Xfce power manager is already running"));
     g_print ("\n");
-    return EXIT_SUCCESS;
   }
   else
   {
