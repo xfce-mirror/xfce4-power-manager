@@ -26,26 +26,29 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_XFCONF        (xfpm_xfconf_get_type () )
-#define XFPM_XFCONF(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_XFCONF, XfpmXfconf))
-#define XFPM_IS_XFCONF(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_XFCONF))
+#define XFPM_TYPE_XFCONF (xfpm_xfconf_get_type ())
+#define XFPM_XFCONF(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_XFCONF, XfpmXfconf))
+#define XFPM_IS_XFCONF(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_XFCONF))
 
-typedef struct  XfpmXfconfPrivate XfpmXfconfPrivate;
+typedef struct XfpmXfconfPrivate XfpmXfconfPrivate;
 
 typedef struct
 {
-  GObject               parent;
-  XfpmXfconfPrivate    *priv;
+  GObject parent;
+  XfpmXfconfPrivate *priv;
 } XfpmXfconf;
 
 typedef struct
 {
-  GObjectClass          parent_class;
+  GObjectClass parent_class;
 } XfpmXfconfClass;
 
-GType              xfpm_xfconf_get_type             (void) G_GNUC_CONST;
-XfpmXfconf        *xfpm_xfconf_new                  (void);
-XfconfChannel     *xfpm_xfconf_get_channel          (XfpmXfconf *conf);
+GType
+xfpm_xfconf_get_type (void) G_GNUC_CONST;
+XfpmXfconf *
+xfpm_xfconf_new (void);
+XfconfChannel *
+xfpm_xfconf_get_channel (XfpmXfconf *conf);
 
 G_END_DECLS
 

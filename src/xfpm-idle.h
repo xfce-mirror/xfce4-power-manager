@@ -31,35 +31,39 @@ G_DECLARE_DERIVABLE_TYPE (XfpmIdle, xfpm_idle, XFPM, IDLE, GObject)
 
 typedef enum _XfpmAlarmId
 {
-  XFPM_ALARM_ID_USER_INPUT            = 0,
-  XFPM_ALARM_ID_BRIGHTNESS_ON_AC      = 1 << 0,
+  XFPM_ALARM_ID_USER_INPUT = 0,
+  XFPM_ALARM_ID_BRIGHTNESS_ON_AC = 1 << 0,
   XFPM_ALARM_ID_BRIGHTNESS_ON_BATTERY = 1 << 1,
-  XFPM_ALARM_ID_INACTIVITY_ON_AC      = 1 << 2,
+  XFPM_ALARM_ID_INACTIVITY_ON_AC = 1 << 2,
   XFPM_ALARM_ID_INACTIVITY_ON_BATTERY = 1 << 3,
-  XFPM_ALARM_ID_DPMS                  = 1 << 4,
+  XFPM_ALARM_ID_DPMS = 1 << 4,
 } XfpmAlarmId;
 
 struct _XfpmIdleClass
 {
   GObjectClass parent_class;
 
-  void       (*alarm_reset_all)      (XfpmIdle       *idle);
-  void       (*alarm_add)            (XfpmIdle       *idle,
-                                      XfpmAlarmId     id,
-                                      guint           timeout);
-  void       (*alarm_remove)         (XfpmIdle       *idle,
-                                      XfpmAlarmId     id);
+  void (*alarm_reset_all) (XfpmIdle *idle);
+  void (*alarm_add) (XfpmIdle *idle,
+                     XfpmAlarmId id,
+                     guint timeout);
+  void (*alarm_remove) (XfpmIdle *idle,
+                        XfpmAlarmId id);
 };
 
-XfpmIdle      *xfpm_idle_new                (void);
+XfpmIdle *
+xfpm_idle_new (void);
 
-void           xfpm_idle_alarm_reset_all    (XfpmIdle       *idle);
-void           xfpm_idle_alarm_add          (XfpmIdle       *idle,
-                                             XfpmAlarmId     id,
-                                             guint           timeout);
-void           xfpm_idle_alarm_remove       (XfpmIdle       *idle,
-                                             XfpmAlarmId     id);
+void
+xfpm_idle_alarm_reset_all (XfpmIdle *idle);
+void
+xfpm_idle_alarm_add (XfpmIdle *idle,
+                     XfpmAlarmId id,
+                     guint timeout);
+void
+xfpm_idle_alarm_remove (XfpmIdle *idle,
+                        XfpmAlarmId id);
 
 G_END_DECLS
 
-#endif  /* __XFPM_IDLE_H__ */
+#endif /* __XFPM_IDLE_H__ */

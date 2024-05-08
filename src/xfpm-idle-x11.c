@@ -20,27 +20,31 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
+
+#include "xfpm-idle-x11.h"
 
 #include <X11/Xlib.h>
 #include <X11/extensions/sync.h>
 #include <gdk/gdkx.h>
-
-#include "xfpm-idle-x11.h"
 
 /* undef and use the function instead of the macro as the macro is buggy */
 #ifdef XSyncValueAdd
 #undef XSyncValueAdd
 #endif
 
-static void     xfpm_idle_x11_finalize           (GObject        *object);
-static void     xfpm_idle_x11_alarm_reset_all    (XfpmIdle       *idle);
-static void     xfpm_idle_x11_alarm_add          (XfpmIdle       *idle,
-                                                  XfpmAlarmId     id,
-                                                  guint           timeout);
-static void     xfpm_idle_x11_alarm_remove       (XfpmIdle       *idle,
-                                                  XfpmAlarmId     id);
+static void
+xfpm_idle_x11_finalize (GObject *object);
+static void
+xfpm_idle_x11_alarm_reset_all (XfpmIdle *idle);
+static void
+xfpm_idle_x11_alarm_add (XfpmIdle *idle,
+                         XfpmAlarmId id,
+                         guint timeout);
+static void
+xfpm_idle_x11_alarm_remove (XfpmIdle *idle,
+                            XfpmAlarmId id);
 
 struct _XfpmIdleX11
 {

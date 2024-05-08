@@ -20,28 +20,33 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
-
-#include <gdk/gdkx.h>
-#include <X11/Xatom.h>
-#include <X11/Xlib.h>
-#include <X11/extensions/Xrandr.h>
 
 #include "xfpm-brightness-x11.h"
 #include "xfpm-debug.h"
 
-static gboolean       xfpm_brightness_x11_setup           (XfpmBrightness       *brightness,
-                                                           gint32               *min_level,
-                                                           gint32               *max_level);
-static gboolean       xfpm_brightness_x11_get_level       (XfpmBrightness       *brightness,
-                                                           gint32               *level);
-static gboolean       xfpm_brightness_x11_set_level       (XfpmBrightness       *brightness,
-                                                           gint32                level);
-static gboolean       xfpm_brightness_x11_get_switch      (XfpmBrightness       *brightness,
-                                                           gint                 *_switch);
-static gboolean       xfpm_brightness_x11_set_switch      (XfpmBrightness       *brightness,
-                                                           gint                  _switch);
+#include <X11/Xatom.h>
+#include <X11/Xlib.h>
+#include <X11/extensions/Xrandr.h>
+#include <gdk/gdkx.h>
+
+static gboolean
+xfpm_brightness_x11_setup (XfpmBrightness *brightness,
+                           gint32 *min_level,
+                           gint32 *max_level);
+static gboolean
+xfpm_brightness_x11_get_level (XfpmBrightness *brightness,
+                               gint32 *level);
+static gboolean
+xfpm_brightness_x11_set_level (XfpmBrightness *brightness,
+                               gint32 level);
+static gboolean
+xfpm_brightness_x11_get_switch (XfpmBrightness *brightness,
+                                gint *_switch);
+static gboolean
+xfpm_brightness_x11_set_switch (XfpmBrightness *brightness,
+                                gint _switch);
 
 struct _XfpmBrightnessX11
 {
@@ -123,8 +128,8 @@ xfpm_brightness_x11_setup (XfpmBrightness *_brightness,
   gboolean success = FALSE;
 
   gdk_x11_display_error_trap_push (gdisplay);
-  if (!XRRQueryExtension (gdk_x11_get_default_xdisplay (), &event_base, &error_base) ||
-      !XRRQueryVersion (gdk_x11_get_default_xdisplay (), &major, &minor))
+  if (!XRRQueryExtension (gdk_x11_get_default_xdisplay (), &event_base, &error_base)
+      || !XRRQueryVersion (gdk_x11_get_default_xdisplay (), &major, &minor))
   {
     gdk_x11_display_error_trap_pop_ignored (gdisplay);
     g_warning ("No XRANDR extension found");
@@ -132,17 +137,12 @@ xfpm_brightness_x11_setup (XfpmBrightness *_brightness,
   }
   gdk_x11_display_error_trap_pop_ignored (gdisplay);
 
-  if (major == 1 && minor < 2)
-  {
-    g_warning ("XRANDR version < 1.2");
-    return FALSE;
-  }
-
 #ifdef RR_PROPERTY_BACKLIGHT
   brightness->backlight = XInternAtom (display, RR_PROPERTY_BACKLIGHT, True);
   if (brightness->backlight == None) /* fall back to deprecated name */
 #endif
-  brightness->backlight = XInternAtom (display, "BACKLIGHT", True);
+    brightness->backlight = XInternAtom (display, "BACKLIGHT", True);
+
   if (brightness->backlight == None)
   {
     XFPM_DEBUG ("No outputs have backlight property");
@@ -152,12 +152,7 @@ xfpm_brightness_x11_setup (XfpmBrightness *_brightness,
   gdk_x11_display_error_trap_push (gdisplay);
 
   window = gdk_x11_get_default_root_xwindow ();
-#if (RANDR_MAJOR == 1 && RANDR_MINOR >=3)
-  if (major > 1 || minor >= 3)
-    resource = XRRGetScreenResourcesCurrent (display, window);
-  else
-#endif
-    resource = XRRGetScreenResources (display, window);
+  resource = XRRGetScreenResourcesCurrent (display, window);
 
   for (gint i = 0; i < resource->noutput; i++)
   {
@@ -208,8 +203,9 @@ xfpm_brightness_x11_get_level (XfpmBrightness *_brightness,
   if (XRRGetOutputProperty (gdk_x11_get_default_xdisplay (), brightness->output, brightness->backlight,
                             0, 4, False, False, None,
                             &actual_type, &actual_format,
-                            &nitems, &bytes_after, ((unsigned char **) &prop)) != Success
-                            || gdk_x11_display_error_trap_pop (display) != 0)
+                            &nitems, &bytes_after, ((unsigned char **) &prop))
+        != Success
+      || gdk_x11_display_error_trap_pop (display) != 0)
   {
     g_warning ("Failed to XRRGetOutputProperty");
     return FALSE;

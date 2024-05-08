@@ -20,74 +20,67 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#ifdef HAVE_MATH_H
-#include <math.h>
-#endif
+#include "xfpm-backlight.h"
+#include "xfpm-button.h"
+#include "xfpm-idle.h"
+#include "xfpm-notify.h"
+#include "xfpm-power.h"
+#include "xfpm-xfconf.h"
+
+#include "common/xfpm-brightness.h"
+#include "common/xfpm-config.h"
+#include "common/xfpm-debug.h"
+#include "common/xfpm-enum-types.h"
+#include "common/xfpm-icons.h"
 
 #include <gtk/gtk.h>
 #include <libxfce4util/libxfce4util.h>
 
-#include "xfpm-backlight.h"
-#include "xfpm-idle.h"
-#include "xfpm-notify.h"
-#include "xfpm-xfconf.h"
-#include "xfpm-power.h"
-#include "xfpm-config.h"
-#include "xfpm-button.h"
-#include "xfpm-brightness.h"
-#include "xfpm-debug.h"
-#include "xfpm-icons.h"
-#include "xfpm-enum-types.h"
+static void
+xfpm_backlight_finalize (GObject *object);
 
-static void xfpm_backlight_finalize     (GObject *object);
+static void
+xfpm_backlight_get_property (GObject *object,
+                             guint prop_id,
+                             GValue *value,
+                             GParamSpec *pspec);
 
-static void xfpm_backlight_get_property (GObject *object,
-                                         guint prop_id,
-                                         GValue *value,
-                                         GParamSpec *pspec);
-
-static void xfpm_backlight_set_property (GObject *object,
-                                         guint prop_id,
-                                         const GValue *value,
-                                         GParamSpec *pspec);
+static void
+xfpm_backlight_set_property (GObject *object,
+                             guint prop_id,
+                             const GValue *value,
+                             GParamSpec *pspec);
 
 #define ALARM_DISABLED 9
 
 struct XfpmBacklightPrivate
 {
   XfpmBrightness *brightness;
-  XfpmPower      *power;
-  XfpmIdle       *idle;
-  XfpmXfconf     *conf;
-  XfpmButton     *button;
-  XfpmNotify     *notify;
+  XfpmPower *power;
+  XfpmIdle *idle;
+  XfpmXfconf *conf;
+  XfpmButton *button;
+  XfpmNotify *notify;
 
   NotifyNotification *n;
 
-  gboolean      on_battery;
+  gboolean on_battery;
 
-  gint32          last_level;
-  gint32      max_level;
+  gint32 last_level;
+  gint32 max_level;
 
-  guint           brightness_step_count;
-  gboolean        brightness_exponential;
+  guint brightness_step_count;
+  gboolean brightness_exponential;
 
-  gint            brightness_switch;
-  gint            brightness_switch_save;
-  gboolean        brightness_switch_initialized;
+  gint brightness_switch;
+  gint brightness_switch_save;
+  gboolean brightness_switch_initialized;
 
-  gboolean        dimmed;
-  gboolean      block;
+  gboolean dimmed;
+  gboolean block;
 };
 
 enum
@@ -106,7 +99,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 {
   gboolean ret;
 
-  if (xfpm_power_is_in_presentation_mode (backlight->priv->power) == FALSE )
+  if (!xfpm_power_is_in_presentation_mode (backlight->priv->power))
   {
     gint32 dim_level;
 
@@ -116,7 +109,7 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 
     ret = xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
 
-    if ( !ret )
+    if (!ret)
     {
       XFPM_DEBUG ("Unable to get current brightness level");
       return;
@@ -143,7 +136,7 @@ xfpm_backlight_destroy_popup (gpointer data)
 
   backlight = XFPM_BACKLIGHT (data);
 
-  if ( backlight->priv->n )
+  if (backlight->priv->n)
   {
     g_object_unref (backlight->priv->n);
     backlight->priv->n = NULL;
@@ -153,14 +146,15 @@ xfpm_backlight_destroy_popup (gpointer data)
 }
 
 static void
-xfpm_backlight_show_notification (XfpmBacklight *backlight, gfloat value)
+xfpm_backlight_show_notification (XfpmBacklight *backlight,
+                                  gfloat value)
 {
   gchar *summary;
   /* generate a human-readable summary for the notification */
   summary = g_strdup_printf (_("Brightness: %.0f percent"), value);
 
   /* create the notification on demand */
-  if ( backlight->priv->n == NULL )
+  if (backlight->priv->n == NULL)
   {
     backlight->priv->n = xfpm_notify_new_notification (backlight->priv->notify,
                                                        _("Power Manager"),
@@ -197,7 +191,9 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 
 
 static void
-xfpm_backlight_alarm_timeout_cb (XfpmIdle *idle, XfpmAlarmId id, XfpmBacklight *backlight)
+xfpm_backlight_alarm_timeout_cb (XfpmIdle *idle,
+                                 XfpmAlarmId id,
+                                 XfpmBacklight *backlight)
 {
   backlight->priv->block = FALSE;
 
@@ -208,11 +204,12 @@ xfpm_backlight_alarm_timeout_cb (XfpmIdle *idle, XfpmAlarmId id, XfpmBacklight *
 }
 
 static void
-xfpm_backlight_reset_cb (XfpmIdle *idle, XfpmBacklight *backlight)
+xfpm_backlight_reset_cb (XfpmIdle *idle,
+                         XfpmBacklight *backlight)
 {
-  if ( backlight->priv->dimmed)
+  if (backlight->priv->dimmed)
   {
-    if ( !backlight->priv->block)
+    if (!backlight->priv->block)
     {
       XFPM_DEBUG ("Alarm reset, setting level to %d", backlight->priv->last_level);
       xfpm_brightness_set_level (backlight->priv->brightness, backlight->priv->last_level);
@@ -233,19 +230,21 @@ xfpm_backlight_reset_cb (XfpmIdle *idle, XfpmBacklight *backlight)
  * the backlight brightness which does not provide any visual feedback.
  */
 static void
-xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBacklight *backlight)
+xfpm_backlight_button_pressed_cb (XfpmButton *button,
+                                  XfpmButtonKey type,
+                                  XfpmBacklight *backlight)
 {
-  gint32   level;
+  gint32 level;
   gboolean ret = TRUE;
   gboolean handle_brightness_keys, show_popup;
-  guint    brightness_step_count;
+  guint brightness_step_count;
   gboolean brightness_exponential;
 
   XFPM_DEBUG_ENUM (type, XFPM_TYPE_BUTTON_KEY, "Received button press event");
 
   /* this check is required; we are notified about keys used by other functions
    * e.g. keyboard brightness, sleep key. */
-  if ( type != BUTTON_MON_BRIGHTNESS_UP && type != BUTTON_MON_BRIGHTNESS_DOWN )
+  if (type != BUTTON_MON_BRIGHTNESS_UP && type != BUTTON_MON_BRIGHTNESS_DOWN)
     return;
 
   g_object_get (G_OBJECT (backlight->priv->conf),
@@ -258,12 +257,12 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
   backlight->priv->block = TRUE;
 
   /* optionally, handle updating the level and setting the screen brightness */
-  if ( handle_brightness_keys )
+  if (handle_brightness_keys)
   {
     xfpm_brightness_set_step_count (backlight->priv->brightness,
                                     brightness_step_count,
                                     brightness_exponential);
-    if ( type == BUTTON_MON_BRIGHTNESS_UP )
+    if (type == BUTTON_MON_BRIGHTNESS_UP)
     {
       xfpm_brightness_increase (backlight->priv->brightness);
     }
@@ -277,7 +276,7 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button, XfpmButtonKey type, XfpmBa
   ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
 
   /* optionally, show the result in a popup (even if it did not change) */
-  if ( ret && show_popup )
+  if (ret && show_popup)
     xfpm_backlight_show (backlight, level);
 }
 
@@ -306,7 +305,7 @@ xfpm_backlight_brightness_on_ac_settings_changed (XfpmBacklight *backlight)
 
   XFPM_DEBUG ("Alarm on ac timeout changed %u", timeout_on_ac);
 
-  if ( timeout_on_ac == ALARM_DISABLED )
+  if (timeout_on_ac == ALARM_DISABLED)
   {
     xfpm_idle_alarm_remove (backlight->priv->idle, XFPM_ALARM_ID_BRIGHTNESS_ON_AC);
   }
@@ -319,7 +318,7 @@ xfpm_backlight_brightness_on_ac_settings_changed (XfpmBacklight *backlight)
 static void
 xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
 {
-  guint timeout_on_battery ;
+  guint timeout_on_battery;
 
   g_object_get (G_OBJECT (backlight->priv->conf),
                 BRIGHTNESS_ON_BATTERY, &timeout_on_battery,
@@ -327,7 +326,7 @@ xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
 
   XFPM_DEBUG ("Alarm on battery timeout changed %u", timeout_on_battery);
 
-  if ( timeout_on_battery == ALARM_DISABLED )
+  if (timeout_on_battery == ALARM_DISABLED)
   {
     xfpm_idle_alarm_remove (backlight->priv->idle, XFPM_ALARM_ID_BRIGHTNESS_ON_BATTERY);
   }
@@ -339,7 +338,9 @@ xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
 
 
 static void
-xfpm_backlight_on_battery_changed_cb (XfpmPower *power, gboolean on_battery, XfpmBacklight *backlight)
+xfpm_backlight_on_battery_changed_cb (XfpmPower *power,
+                                      gboolean on_battery,
+                                      XfpmBacklight *backlight)
 {
   backlight->priv->on_battery = on_battery;
 }
@@ -357,18 +358,14 @@ xfpm_backlight_class_init (XfpmBacklightClass *klass)
                                    PROP_BRIGHTNESS_SWITCH,
                                    g_param_spec_int (BRIGHTNESS_SWITCH,
                                                      NULL, NULL,
-                                                     -1,
-                                                     1,
-                                                     -1,
+                                                     -1, 1, -1,
                                                      G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    PROP_BRIGHTNESS_SWITCH_SAVE,
                                    g_param_spec_int (BRIGHTNESS_SWITCH_SAVE,
                                                      NULL, NULL,
-                                                     -1,
-                                                     1,
-                                                     -1,
+                                                     -1, 1, -1,
                                                      G_PARAM_READWRITE));
 }
 
@@ -380,10 +377,10 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv->brightness = xfpm_brightness_new ();
 
   backlight->priv->notify = NULL;
-  backlight->priv->idle   = NULL;
-  backlight->priv->conf   = NULL;
+  backlight->priv->idle = NULL;
+  backlight->priv->conf = NULL;
   backlight->priv->button = NULL;
-  backlight->priv->power    = NULL;
+  backlight->priv->power = NULL;
   backlight->priv->dimmed = FALSE;
   backlight->priv->block = FALSE;
   backlight->priv->brightness_step_count = 10;
@@ -394,10 +391,10 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   {
     gboolean handle_keys;
 
-    backlight->priv->idle   = xfpm_idle_new ();
-    backlight->priv->conf   = xfpm_xfconf_new ();
+    backlight->priv->idle = xfpm_idle_new ();
+    backlight->priv->conf = xfpm_xfconf_new ();
     backlight->priv->button = xfpm_button_new ();
-    backlight->priv->power    = xfpm_power_get ();
+    backlight->priv->power = xfpm_power_get ();
     backlight->priv->notify = xfpm_notify_new ();
     backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
     backlight->priv->brightness_switch = -1;
@@ -415,17 +412,17 @@ xfpm_backlight_init (XfpmBacklight *backlight)
      * will use this saved value instead of the one found at the
      * current startup so the setting is restored properly.
      */
-    backlight->priv->brightness_switch_save =
-      xfconf_channel_get_int (xfpm_xfconf_get_channel(backlight->priv->conf),
-                  XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
-                  -1);
+    backlight->priv->brightness_switch_save
+      = xfconf_channel_get_int (xfpm_xfconf_get_channel (backlight->priv->conf),
+                                XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
+                                -1);
 
     if (backlight->priv->brightness_switch_save == -1)
     {
-      if (!xfconf_channel_set_int (xfpm_xfconf_get_channel(backlight->priv->conf),
-                     XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
-                     backlight->priv->brightness_switch))
-      g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH_SAVE);
+      if (!xfconf_channel_set_int (xfpm_xfconf_get_channel (backlight->priv->conf),
+                                   XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
+                                   backlight->priv->brightness_switch))
+        g_critical ("Cannot set value for property %s", BRIGHTNESS_SWITCH_SAVE);
 
       backlight->priv->brightness_switch_save = backlight->priv->brightness_switch;
     }
@@ -436,29 +433,32 @@ xfpm_backlight_init (XfpmBacklight *backlight)
                   "will try to restore it this time.");
     }
 
-      /* check whether to change the brightness switch */
-    handle_keys = xfconf_channel_get_bool (xfpm_xfconf_get_channel(backlight->priv->conf),
-                         XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
-                         TRUE);
+    /* check whether to change the brightness switch */
+    handle_keys = xfconf_channel_get_bool (xfpm_xfconf_get_channel (backlight->priv->conf),
+                                           XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
+                                           TRUE);
     backlight->priv->brightness_switch = handle_keys ? 0 : 1;
     g_object_set (G_OBJECT (backlight),
-            BRIGHTNESS_SWITCH,
-            backlight->priv->brightness_switch,
-            NULL);
+                  BRIGHTNESS_SWITCH,
+                  backlight->priv->brightness_switch,
+                  NULL);
     xfpm_button_set_handle_brightness_keys (backlight->priv->button, handle_keys);
     g_signal_connect_object (backlight->priv->conf, "notify::" HANDLE_BRIGHTNESS_KEYS,
-                             G_CALLBACK (xfpm_backlight_handle_brightness_keys_changed), backlight, G_CONNECT_SWAPPED);
+                             G_CALLBACK (xfpm_backlight_handle_brightness_keys_changed),
+                             backlight, G_CONNECT_SWAPPED);
 
     if (backlight->priv->idle != NULL)
     {
       g_signal_connect_object (backlight->priv->idle, "alarm-expired",
                                G_CALLBACK (xfpm_backlight_alarm_timeout_cb), backlight, 0);
       g_signal_connect_object (backlight->priv->idle, "reset",
-                               G_CALLBACK(xfpm_backlight_reset_cb), backlight, 0);
+                               G_CALLBACK (xfpm_backlight_reset_cb), backlight, 0);
       g_signal_connect_object (backlight->priv->conf, "notify::" BRIGHTNESS_ON_AC,
-                               G_CALLBACK (xfpm_backlight_brightness_on_ac_settings_changed), backlight, G_CONNECT_SWAPPED);
+                               G_CALLBACK (xfpm_backlight_brightness_on_ac_settings_changed),
+                               backlight, G_CONNECT_SWAPPED);
       g_signal_connect_object (backlight->priv->conf, "notify::" BRIGHTNESS_ON_BATTERY,
-                               G_CALLBACK (xfpm_backlight_brightness_on_battery_settings_changed), backlight, G_CONNECT_SWAPPED);
+                               G_CALLBACK (xfpm_backlight_brightness_on_battery_settings_changed),
+                               backlight, G_CONNECT_SWAPPED);
       xfpm_backlight_brightness_on_ac_settings_changed (backlight);
       xfpm_backlight_brightness_on_battery_settings_changed (backlight);
     }
@@ -473,12 +473,12 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
 
     /* setup step count */
-    backlight->priv->brightness_step_count =
-        xfconf_channel_get_int (xfpm_xfconf_get_channel(backlight->priv->conf),
+    backlight->priv->brightness_step_count
+      = xfconf_channel_get_int (xfpm_xfconf_get_channel (backlight->priv->conf),
                                 XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
                                 10);
-    backlight->priv->brightness_exponential =
-        xfconf_channel_get_bool (xfpm_xfconf_get_channel(backlight->priv->conf),
+    backlight->priv->brightness_exponential
+      = xfconf_channel_get_bool (xfpm_xfconf_get_channel (backlight->priv->conf),
                                  XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
                                  FALSE);
   }
@@ -520,15 +520,15 @@ xfpm_backlight_set_property (GObject *object,
     case PROP_BRIGHTNESS_SWITCH:
       backlight->priv->brightness_switch = g_value_get_int (value);
       if (!backlight->priv->brightness_switch_initialized)
-          break;
+        break;
       ret = xfpm_brightness_set_switch (backlight->priv->brightness,
                                         backlight->priv->brightness_switch);
       if (!ret)
-          XFPM_DEBUG ("Unable to set the kernel brightness switch parameter to %d.",
-                      backlight->priv->brightness_switch);
+        XFPM_DEBUG ("Unable to set the kernel brightness switch parameter to %d.",
+                    backlight->priv->brightness_switch);
       else
-          XFPM_DEBUG ("Set kernel brightness switch to %d",
-                      backlight->priv->brightness_switch);
+        XFPM_DEBUG ("Set kernel brightness switch to %d",
+                    backlight->priv->brightness_switch);
 
       break;
     case PROP_BRIGHTNESS_SWITCH_SAVE:
@@ -549,44 +549,43 @@ xfpm_backlight_finalize (GObject *object)
 
   xfpm_backlight_destroy_popup (backlight);
 
-  if ( backlight->priv->idle )
+  if (backlight->priv->idle)
     g_object_unref (backlight->priv->idle);
 
-  if ( backlight->priv->conf )
+  if (backlight->priv->conf)
   {
-  /* restore video module brightness switch setting */
-  if ( backlight->priv->brightness_switch_save != -1 )
-  {
-    gboolean ret =
-        xfpm_brightness_set_switch (backlight->priv->brightness,
-                                    backlight->priv->brightness_switch_save);
-    /* unset the xfconf saved value after the restore */
-    if (!xfconf_channel_set_int (xfpm_xfconf_get_channel(backlight->priv->conf),
-                                 XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE, -1))
-    g_critical ("Cannot set value for property %s\n", BRIGHTNESS_SWITCH_SAVE);
-
-    if (ret)
+    /* restore video module brightness switch setting */
+    if (backlight->priv->brightness_switch_save != -1)
     {
-      backlight->priv->brightness_switch = backlight->priv->brightness_switch_save;
-      XFPM_DEBUG ("Restored brightness switch value to: %d", backlight->priv->brightness_switch);
-    }
-    else
-      XFPM_DEBUG ("Unable to restore the kernel brightness switch parameter to its original value, "
-                  "still resetting the saved value.");
+      gboolean ret = xfpm_brightness_set_switch (backlight->priv->brightness,
+                                                 backlight->priv->brightness_switch_save);
+      /* unset the xfconf saved value after the restore */
+      if (!xfconf_channel_set_int (xfpm_xfconf_get_channel (backlight->priv->conf),
+                                   XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE, -1))
+        g_critical ("Cannot set value for property %s", BRIGHTNESS_SWITCH_SAVE);
+
+      if (ret)
+      {
+        backlight->priv->brightness_switch = backlight->priv->brightness_switch_save;
+        XFPM_DEBUG ("Restored brightness switch value to: %d", backlight->priv->brightness_switch);
+      }
+      else
+        XFPM_DEBUG ("Unable to restore the kernel brightness switch parameter to its original value, "
+                    "still resetting the saved value.");
     }
     g_object_unref (backlight->priv->conf);
   }
 
-  if ( backlight->priv->brightness )
+  if (backlight->priv->brightness)
     g_object_unref (backlight->priv->brightness);
 
-  if ( backlight->priv->button )
+  if (backlight->priv->button)
     g_object_unref (backlight->priv->button);
 
-  if ( backlight->priv->power )
+  if (backlight->priv->power)
     g_object_unref (backlight->priv->power);
 
-  if ( backlight->priv->notify)
+  if (backlight->priv->notify)
     g_object_unref (backlight->priv->notify);
 
   G_OBJECT_CLASS (xfpm_backlight_parent_class)->finalize (object);

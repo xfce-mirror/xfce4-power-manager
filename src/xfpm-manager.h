@@ -21,34 +21,40 @@
 #ifndef __XFPM_MANAGER_H
 #define __XFPM_MANAGER_H
 
+#include <gio/gio.h>
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_MANAGER          (xfpm_manager_get_type () )
-#define XFPM_MANAGER(o)            (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_MANAGER, XfpmManager))
-#define XFPM_IS_MANAGER(o)         (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_MANAGER))
-#define XFPM_MANAGER_GET_CLASS(k)  (G_TYPE_INSTANCE_GET_CLASS((k), XFPM_TYPE_MANAGER, XfpmManagerClass))
+#define XFPM_TYPE_MANAGER (xfpm_manager_get_type ())
+#define XFPM_MANAGER(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_MANAGER, XfpmManager))
+#define XFPM_IS_MANAGER(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_MANAGER))
+#define XFPM_MANAGER_GET_CLASS(k) (G_TYPE_INSTANCE_GET_CLASS ((k), XFPM_TYPE_MANAGER, XfpmManagerClass))
 
 typedef struct XfpmManagerPrivate XfpmManagerPrivate;
 
 typedef struct
 {
-  GObject      parent;
-  XfpmManagerPrivate   *priv;
+  GObject parent;
+  XfpmManagerPrivate *priv;
 } XfpmManager;
 
 typedef struct
 {
-  GObjectClass     parent_class;
+  GObjectClass parent_class;
 } XfpmManagerClass;
 
-GType              xfpm_manager_get_type        (void) G_GNUC_CONST;
-XfpmManager       *xfpm_manager_new             (GDBusConnection *bus,
-                                                 const gchar *client_id);
-void               xfpm_manager_start           (XfpmManager *manager);
-void               xfpm_manager_stop            (XfpmManager *manager);
-GHashTable        *xfpm_manager_get_config      (XfpmManager *manager);
+GType
+xfpm_manager_get_type (void) G_GNUC_CONST;
+XfpmManager *
+xfpm_manager_new (GDBusConnection *bus,
+                  const gchar *client_id);
+void
+xfpm_manager_start (XfpmManager *manager);
+void
+xfpm_manager_stop (XfpmManager *manager);
+GHashTable *
+xfpm_manager_get_config (XfpmManager *manager);
 
 G_END_DECLS
 

@@ -28,7 +28,8 @@ G_BEGIN_DECLS
 #define XFPM_TYPE_PPD (xfpm_ppd_get_type ())
 G_DECLARE_FINAL_TYPE (XfpmPPD, xfpm_ppd, XFPM, PPD, GObject)
 
-XfpmPPD               *xfpm_ppd_new                (void);
+XfpmPPD *
+xfpm_ppd_new (void);
 
 G_END_DECLS
 

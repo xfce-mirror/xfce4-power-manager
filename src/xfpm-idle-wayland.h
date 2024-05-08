@@ -28,7 +28,8 @@ G_BEGIN_DECLS
 #define XFPM_TYPE_IDLE_WAYLAND (xfpm_idle_wayland_get_type ())
 G_DECLARE_FINAL_TYPE (XfpmIdleWayland, xfpm_idle_wayland, XFPM, IDLE_WAYLAND, XfpmIdle)
 
-XfpmIdle *xfpm_idle_wayland_new (void);
+XfpmIdle *
+xfpm_idle_wayland_new (void);
 
 G_END_DECLS
 

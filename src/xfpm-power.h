@@ -21,49 +21,56 @@
 #ifndef __XFPM_POWER_H
 #define __XFPM_POWER_H
 
+#include "common/xfpm-enum-glib.h"
+
 #include <glib-object.h>
-#include "xfpm-enum-glib.h"
 
 G_BEGIN_DECLS
 
 #define LOGIND_RUNNING() (access ("/run/systemd/seats/", F_OK) >= 0)
 
-#define XFPM_TYPE_POWER        (xfpm_power_get_type () )
-#define XFPM_POWER(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_POWER, XfpmPower))
-#define XFPM_IS_POWER(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_POWER))
+#define XFPM_TYPE_POWER (xfpm_power_get_type ())
+#define XFPM_POWER(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_POWER, XfpmPower))
+#define XFPM_IS_POWER(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_POWER))
 
 typedef struct XfpmPowerPrivate XfpmPowerPrivate;
 
 typedef struct
 {
-    GObject               parent;
-    XfpmPowerPrivate     *priv;
+  GObject parent;
+  XfpmPowerPrivate *priv;
 } XfpmPower;
 
 typedef struct
 {
-    GObjectClass   parent_class;
-    void         (*on_battery_changed)           (XfpmPower *power,
-                                                  gboolean on_battery);
-    void         (*low_battery_changed)          (XfpmPower *power,
-                                                  gboolean low_battery);
-    void         (*lid_changed)                  (XfpmPower *power,
-                                                  gboolean lid_is_closed);
-    void         (*waking_up)                    (XfpmPower *power);
-    void         (*sleeping)                     (XfpmPower *power);
-    void         (*ask_shutdown)                 (XfpmPower *power);
-    void         (*shutdown)                     (XfpmPower *power);
+  GObjectClass parent_class;
+  void (*on_battery_changed) (XfpmPower *power,
+                              gboolean on_battery);
+  void (*low_battery_changed) (XfpmPower *power,
+                               gboolean low_battery);
+  void (*lid_changed) (XfpmPower *power,
+                       gboolean lid_is_closed);
+  void (*waking_up) (XfpmPower *power);
+  void (*sleeping) (XfpmPower *power);
+  void (*ask_shutdown) (XfpmPower *power);
+  void (*shutdown) (XfpmPower *power);
 
 } XfpmPowerClass;
 
-GType       xfpm_power_get_type                 (void) G_GNUC_CONST;
-XfpmPower  *xfpm_power_get                      (void);
-void        xfpm_power_suspend                  (XfpmPower *power,
-                                                 gboolean force);
-void        xfpm_power_hibernate                (XfpmPower *power,
-                                                 gboolean force);
-gboolean    xfpm_power_has_battery              (XfpmPower *power);
-gboolean    xfpm_power_is_in_presentation_mode  (XfpmPower *power);
+GType
+xfpm_power_get_type (void) G_GNUC_CONST;
+XfpmPower *
+xfpm_power_get (void);
+void
+xfpm_power_suspend (XfpmPower *power,
+                    gboolean force);
+void
+xfpm_power_hibernate (XfpmPower *power,
+                      gboolean force);
+gboolean
+xfpm_power_has_battery (XfpmPower *power);
+gboolean
+xfpm_power_is_in_presentation_mode (XfpmPower *power);
 
 G_END_DECLS
 

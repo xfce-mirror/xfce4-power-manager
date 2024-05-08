@@ -25,28 +25,31 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_KBD_BACKLIGHT        (xfpm_kbd_backlight_get_type () )
-#define XFPM_KBD_BACKLIGHT(o)          (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_KBD_BACKLIGHT, XfpmKbdBacklight))
-#define XFPM_IS_KBD_BACKLIGHT(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_KBD_BACKLIGHT))
+#define XFPM_TYPE_KBD_BACKLIGHT (xfpm_kbd_backlight_get_type ())
+#define XFPM_KBD_BACKLIGHT(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_KBD_BACKLIGHT, XfpmKbdBacklight))
+#define XFPM_IS_KBD_BACKLIGHT(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_KBD_BACKLIGHT))
 
 typedef struct XfpmKbdBacklightPrivate XfpmKbdBacklightPrivate;
 
 typedef struct
 {
-  GObject                     parent;
-  XfpmKbdBacklightPrivate    *priv;
+  GObject parent;
+  XfpmKbdBacklightPrivate *priv;
 
 } XfpmKbdBacklight;
 
 typedef struct
 {
-  GObjectClass                parent_class;
+  GObjectClass parent_class;
 
 } XfpmKbdBacklightClass;
 
-GType                           xfpm_kbd_backlight_get_type         (void) G_GNUC_CONST;
-XfpmKbdBacklight               *xfpm_kbd_backlight_new              (void);
-gboolean                        xfpm_kbd_backlight_has_hw           (XfpmKbdBacklight *backlight);
+GType
+xfpm_kbd_backlight_get_type (void) G_GNUC_CONST;
+XfpmKbdBacklight *
+xfpm_kbd_backlight_new (void);
+gboolean
+xfpm_kbd_backlight_has_hw (XfpmKbdBacklight *backlight);
 
 G_END_DECLS
 
