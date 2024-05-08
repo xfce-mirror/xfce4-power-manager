@@ -20,24 +20,25 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
-
-#include <math.h>
 
 #include "xfpm-brightness.h"
 #include "xfpm-debug.h"
 
 #ifdef ENABLE_X11
-#include <gdk/gdkx.h>
 #include "xfpm-brightness-x11.h"
+#include <gdk/gdkx.h>
 #endif
+
 #ifdef HAVE_POLKIT
 #include "xfpm-brightness-polkit.h"
 #endif
 
-#define get_instance_private(instance) ((XfpmBrightnessPrivate *) \
-  xfpm_brightness_get_instance_private (XFPM_BRIGHTNESS (instance)))
+#include <math.h>
+
+#define get_instance_private(instance) \
+  ((XfpmBrightnessPrivate *) xfpm_brightness_get_instance_private (XFPM_BRIGHTNESS (instance)))
 
 typedef struct _XfpmBrightnessPrivate
 {

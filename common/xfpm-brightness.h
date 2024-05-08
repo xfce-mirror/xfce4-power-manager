@@ -33,38 +33,49 @@ struct _XfpmBrightnessClass
 {
   GObjectClass parent_class;
 
-  gboolean        (*setup)              (XfpmBrightness       *brightness,
-                                         gint32               *min_level,
-                                         gint32               *max_level);
-  gboolean        (*get_level)          (XfpmBrightness       *brightness,
-                                         gint32               *level);
-  gboolean        (*set_level)          (XfpmBrightness       *brightness,
-                                         gint32                level);
-  gboolean        (*get_switch)         (XfpmBrightness       *brightness,
-                                         gint                 *_switch);
-  gboolean        (*set_switch)         (XfpmBrightness       *brightness,
-                                         gint                  _switch);
+  gboolean (*setup) (XfpmBrightness *brightness,
+                     gint32 *min_level,
+                     gint32 *max_level);
+  gboolean (*get_level) (XfpmBrightness *brightness,
+                         gint32 *level);
+  gboolean (*set_level) (XfpmBrightness *brightness,
+                         gint32 level);
+  gboolean (*get_switch) (XfpmBrightness *brightness,
+                          gint *_switch);
+  gboolean (*set_switch) (XfpmBrightness *brightness,
+                          gint _switch);
 };
 
-XfpmBrightness      *xfpm_brightness_new                 (void);
-gint32               xfpm_brightness_get_min_level       (XfpmBrightness       *brightness);
-void                 xfpm_brightness_set_min_level       (XfpmBrightness       *brightness,
-                                                          gint32                level);
-gint32               xfpm_brightness_get_max_level       (XfpmBrightness       *brightness);
-void                 xfpm_brightness_set_step_count      (XfpmBrightness       *brightness,
-                                                          guint32               count,
-                                                          gboolean              exponential);
-gboolean             xfpm_brightness_decrease            (XfpmBrightness       *brightness);
-gboolean             xfpm_brightness_increase            (XfpmBrightness       *brightness);
+XfpmBrightness *
+xfpm_brightness_new (void);
+gint32
+xfpm_brightness_get_min_level (XfpmBrightness *brightness);
+void
+xfpm_brightness_set_min_level (XfpmBrightness *brightness,
+                               gint32 level);
+gint32
+xfpm_brightness_get_max_level (XfpmBrightness *brightness);
+void
+xfpm_brightness_set_step_count (XfpmBrightness *brightness,
+                                guint32 count,
+                                gboolean exponential);
+gboolean
+xfpm_brightness_decrease (XfpmBrightness *brightness);
+gboolean
+xfpm_brightness_increase (XfpmBrightness *brightness);
 
-gboolean             xfpm_brightness_get_level           (XfpmBrightness       *brightness,
-                                                          gint32               *level);
-gboolean             xfpm_brightness_set_level           (XfpmBrightness       *brightness,
-                                                          gint32                level);
-gboolean             xfpm_brightness_get_switch          (XfpmBrightness       *brightness,
-                                                          gint                 *_switch);
-gboolean             xfpm_brightness_set_switch          (XfpmBrightness       *brightness,
-                                                          gint                  _switch);
+gboolean
+xfpm_brightness_get_level (XfpmBrightness *brightness,
+                           gint32 *level);
+gboolean
+xfpm_brightness_set_level (XfpmBrightness *brightness,
+                           gint32 level);
+gboolean
+xfpm_brightness_get_switch (XfpmBrightness *brightness,
+                            gint *_switch);
+gboolean
+xfpm_brightness_set_switch (XfpmBrightness *brightness,
+                            gint _switch);
 
 G_END_DECLS
 

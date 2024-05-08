@@ -25,7 +25,7 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_ERROR      (xfpm_get_error_quark ())
+#define XFPM_ERROR (xfpm_get_error_quark ())
 
 
 typedef enum
@@ -39,7 +39,8 @@ typedef enum
 
 } XfpmError;
 
-GQuark  xfpm_get_error_quark (void);
+GQuark
+xfpm_get_error_quark (void);
 
 
 G_END_DECLS

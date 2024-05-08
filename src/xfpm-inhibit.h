@@ -25,34 +25,39 @@
 
 G_BEGIN_DECLS
 
-#define XFPM_TYPE_INHIBIT        (xfpm_inhibit_get_type () )
-#define XFPM_INHIBIT(o)          (G_TYPE_CHECK_INSTANCE_CAST((o), XFPM_TYPE_INHIBIT, XfpmInhibit))
-#define XFPM_IS_INHIBIT(o)       (G_TYPE_CHECK_INSTANCE_TYPE((o), XFPM_TYPE_INHIBIT))
+#define XFPM_TYPE_INHIBIT (xfpm_inhibit_get_type ())
+#define XFPM_INHIBIT(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), XFPM_TYPE_INHIBIT, XfpmInhibit))
+#define XFPM_IS_INHIBIT(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), XFPM_TYPE_INHIBIT))
 
 typedef struct XfpmInhibitPrivate XfpmInhibitPrivate;
 
 typedef struct
 {
-    GObject               parent;
-    XfpmInhibitPrivate   *priv;
+  GObject parent;
+  XfpmInhibitPrivate *priv;
 } XfpmInhibit;
 
 typedef struct
 {
-    GObjectClass     parent_class;
+  GObjectClass parent_class;
 
-    /* signals */
-    void            (*has_inhibit_changed)       (XfpmInhibit *inhibit,
-                                                  gboolean is_inhibit);
-    void            (*inhibitors_list_changed)   (XfpmInhibit *inhibit,
-                                                  gboolean is_inhibit);
+  /* signals */
+  void (*has_inhibit_changed) (XfpmInhibit *inhibit,
+                               gboolean is_inhibit);
+  void (*inhibitors_list_changed) (XfpmInhibit *inhibit,
+                                   gboolean is_inhibit);
 } XfpmInhibitClass;
 
-GType              xfpm_inhibit_get_type         (void) G_GNUC_CONST;
-GType              xfpm_inhibit_error_get_type   (void) G_GNUC_CONST;
-GQuark             xfpm_inhibit_get_error_quark  ();
-XfpmInhibit       *xfpm_inhibit_new              (void);
-const gchar      **xfpm_inhibit_get_inhibit_list (XfpmInhibit *inhibit);
+GType
+xfpm_inhibit_get_type (void) G_GNUC_CONST;
+GType
+xfpm_inhibit_error_get_type (void) G_GNUC_CONST;
+GQuark
+xfpm_inhibit_get_error_quark ();
+XfpmInhibit *
+xfpm_inhibit_new (void);
+const gchar **
+xfpm_inhibit_get_inhibit_list (XfpmInhibit *inhibit);
 
 G_END_DECLS
 

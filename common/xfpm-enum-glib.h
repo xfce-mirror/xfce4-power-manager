@@ -21,6 +21,8 @@
 #ifndef __XFPM_ENUM_GLIB_H
 #define __XFPM_ENUM_GLIB_H
 
+#include <glib.h>
+
 G_BEGIN_DECLS
 
 /*

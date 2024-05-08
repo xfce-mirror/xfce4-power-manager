@@ -20,23 +20,28 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+#include "config.h"
 #endif
 
 #include "xfpm-brightness-polkit.h"
 #include "xfpm-debug.h"
 
-static gboolean       xfpm_brightness_polkit_setup           (XfpmBrightness       *brightness,
-                                                              gint32               *min_level,
-                                                              gint32               *max_level);
-static gboolean       xfpm_brightness_polkit_get_level       (XfpmBrightness       *brightness,
-                                                              gint32               *current);
-static gboolean       xfpm_brightness_polkit_set_level       (XfpmBrightness       *brightness,
-                                                              gint32                level);
-static gboolean       xfpm_brightness_polkit_get_switch      (XfpmBrightness       *brightness,
-                                                              gint                 *_switch);
-static gboolean       xfpm_brightness_polkit_set_switch      (XfpmBrightness       *brightness,
-                                                              gint                  _switch);
+static gboolean
+xfpm_brightness_polkit_setup (XfpmBrightness *brightness,
+                              gint32 *min_level,
+                              gint32 *max_level);
+static gboolean
+xfpm_brightness_polkit_get_level (XfpmBrightness *brightness,
+                                  gint32 *current);
+static gboolean
+xfpm_brightness_polkit_set_level (XfpmBrightness *brightness,
+                                  gint32 level);
+static gboolean
+xfpm_brightness_polkit_get_switch (XfpmBrightness *brightness,
+                                   gint *_switch);
+static gboolean
+xfpm_brightness_polkit_set_switch (XfpmBrightness *brightness,
+                                   gint _switch);
 
 struct _XfpmBrightnessPolkit
 {
@@ -112,7 +117,7 @@ xfpm_brightness_polkit_setup (XfpmBrightness *brightness,
   *max_level = helper_get_value ("get-max-brightness");
   XFPM_DEBUG ("get-max-brightness returned %i", *max_level);
 
-  if (*max_level >=0)
+  if (*max_level >= 0)
   {
 #ifdef BACKEND_TYPE_FREEBSD
     const gchar *controller = "sysctl";

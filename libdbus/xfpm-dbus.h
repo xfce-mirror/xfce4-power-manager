@@ -21,13 +21,15 @@
 #ifndef __XFPM_DBUS_H
 #define __XFPM_DBUS_H
 
-#include <glib.h>
 #include <gio/gio.h>
 
-gboolean    xfpm_dbus_name_has_owner  (GDBusConnection *bus,
-                                       const gchar *name);
-gboolean    xfpm_dbus_register_name   (GDBusConnection *bus,
-                                       const gchar *name);
-gboolean    xfpm_dbus_release_name    (GDBusConnection *bus,
-                                       const gchar *name);
+gboolean
+xfpm_dbus_name_has_owner (GDBusConnection *bus,
+                          const gchar *name);
+gboolean
+xfpm_dbus_register_name (GDBusConnection *bus,
+                         const gchar *name);
+gboolean
+xfpm_dbus_release_name (GDBusConnection *bus,
+                        const gchar *name);
 #endif /* __XFPM_DBUS_H */

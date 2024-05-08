@@ -21,37 +21,45 @@
 #ifndef XFPM_UPOWER_COMMON
 #define XFPM_UPOWER_COMMON
 
-#define UPOWER_NAME 	      "org.freedesktop.UPower"
-#define UPOWER_PATH 	      "/org/freedesktop/UPower"
+#include <upower.h>
 
-#define UPOWER_IFACE 	      "org.freedesktop.UPower"
-#define UPOWER_IFACE_DEVICE   "org.freedesktop.UPower.Device"
-#define UPOWER_PATH_DEVICE    "/org/freedesktop/UPower/devices/"
+#define UPOWER_NAME "org.freedesktop.UPower"
+#define UPOWER_PATH "/org/freedesktop/UPower"
 
-#define UPOWER_PATH_WAKEUPS   "/org/freedesktop/UPower/Wakeups"
-#define UPOWER_IFACE_WAKEUPS  "org.freedesktop.UPower.Wakeups"
+#define UPOWER_IFACE "org.freedesktop.UPower"
+#define UPOWER_IFACE_DEVICE "org.freedesktop.UPower.Device"
+#define UPOWER_PATH_DEVICE "/org/freedesktop/UPower/devices/"
 
-#define POLKIT_AUTH_SUSPEND_UPOWER	"org.freedesktop.upower.suspend"
-#define POLKIT_AUTH_HIBERNATE_UPOWER	"org.freedesktop.upower.hibernate"
+#define UPOWER_PATH_WAKEUPS "/org/freedesktop/UPower/Wakeups"
+#define UPOWER_IFACE_WAKEUPS "org.freedesktop.UPower.Wakeups"
 
-#define POLKIT_AUTH_SUSPEND_LOGIND	"org.freedesktop.login1.suspend"
-#define POLKIT_AUTH_HIBERNATE_LOGIND	"org.freedesktop.login1.hibernate"
+#define POLKIT_AUTH_SUSPEND_UPOWER "org.freedesktop.upower.suspend"
+#define POLKIT_AUTH_HIBERNATE_UPOWER "org.freedesktop.upower.hibernate"
 
-#define POLKIT_AUTH_SUSPEND_XFPM	"org.xfce.power.xfce4-pm-helper"
-#define POLKIT_AUTH_HIBERNATE_XFPM	"org.xfce.power.xfce4-pm-helper"
+#define POLKIT_AUTH_SUSPEND_LOGIND "org.freedesktop.login1.suspend"
+#define POLKIT_AUTH_HIBERNATE_LOGIND "org.freedesktop.login1.hibernate"
 
-#define POLKIT_AUTH_SUSPEND_CONSOLEKIT2   "org.freedesktop.consolekit.system.suspend"
+#define POLKIT_AUTH_SUSPEND_XFPM "org.xfce.power.xfce4-pm-helper"
+#define POLKIT_AUTH_HIBERNATE_XFPM "org.xfce.power.xfce4-pm-helper"
+
+#define POLKIT_AUTH_SUSPEND_CONSOLEKIT2 "org.freedesktop.consolekit.system.suspend"
 #define POLKIT_AUTH_HIBERNATE_CONSOLEKIT2 "org.freedesktop.consolekit.system.hibernate"
 
-const gchar *xfpm_power_translate_device_type         (guint         type);
-const gchar *xfpm_power_translate_technology          (guint         value);
-gchar       *xfpm_battery_get_time_string             (guint         seconds);
-gchar       *get_device_panel_icon_name               (UpClient     *upower,
-                                                       UpDevice     *device);
-gchar       *get_device_icon_name                     (UpClient     *upower,
-                                                       UpDevice     *device,
-                                                       gboolean      is_panel);
-gchar       *get_device_description                   (UpClient     *upower,
-                                                       UpDevice     *device);
+const gchar *
+xfpm_power_translate_device_type (guint type);
+const gchar *
+xfpm_power_translate_technology (guint value);
+gchar *
+xfpm_battery_get_time_string (guint seconds);
+gchar *
+get_device_panel_icon_name (UpClient *upower,
+                            UpDevice *device);
+gchar *
+get_device_icon_name (UpClient *upower,
+                      UpDevice *device,
+                      gboolean is_panel);
+gchar *
+get_device_description (UpClient *upower,
+                        UpDevice *device);
 
 #endif /* XFPM_UPOWER_COMMON */
