@@ -412,10 +412,10 @@ xfpm_backlight_init (XfpmBacklight *backlight)
      * will use this saved value instead of the one found at the
      * current startup so the setting is restored properly.
      */
-    backlight->priv->brightness_switch_save
-      = xfconf_channel_get_int (xfpm_xfconf_get_channel (backlight->priv->conf),
-                                XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
-                                -1);
+    backlight->priv->brightness_switch_save =
+      xfconf_channel_get_int (xfpm_xfconf_get_channel (backlight->priv->conf),
+                              XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
+                              -1);
 
     if (backlight->priv->brightness_switch_save == -1)
     {
@@ -473,14 +473,14 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
 
     /* setup step count */
-    backlight->priv->brightness_step_count
-      = xfconf_channel_get_int (xfpm_xfconf_get_channel (backlight->priv->conf),
-                                XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
-                                10);
-    backlight->priv->brightness_exponential
-      = xfconf_channel_get_bool (xfpm_xfconf_get_channel (backlight->priv->conf),
-                                 XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
-                                 FALSE);
+    backlight->priv->brightness_step_count =
+      xfconf_channel_get_int (xfpm_xfconf_get_channel (backlight->priv->conf),
+                              XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
+                              10);
+    backlight->priv->brightness_exponential =
+      xfconf_channel_get_bool (xfpm_xfconf_get_channel (backlight->priv->conf),
+                               XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
+                               FALSE);
   }
 }
 
