@@ -146,9 +146,9 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
                           | G_PARAM_STATIC_BLURB)
 
   g_object_class_install_property (object_class, PROP_SHOW_TRAY_ICON,
-                                   g_param_spec_int (SHOW_TRAY_ICON_CFG,
-                                                     SHOW_TRAY_ICON_CFG,
-                                                     SHOW_TRAY_ICON_CFG,
+                                   g_param_spec_int (SHOW_TRAY_ICON,
+                                                     SHOW_TRAY_ICON,
+                                                     SHOW_TRAY_ICON,
                                                      0, 5, 0,
                                                      XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
@@ -392,25 +392,25 @@ xfpm_manager_button_pressed_cb (XfpmButton *bt,
   if (type == BUTTON_POWER_OFF)
   {
     g_object_get (G_OBJECT (manager->priv->conf),
-                  POWER_SWITCH_CFG, &req,
+                  POWER_BUTTON_ACTION, &req,
                   NULL);
   }
   else if (type == BUTTON_SLEEP)
   {
     g_object_get (G_OBJECT (manager->priv->conf),
-                  SLEEP_SWITCH_CFG, &req,
+                  SLEEP_BUTTON_ACTION, &req,
                   NULL);
   }
   else if (type == BUTTON_HIBERNATE)
   {
     g_object_get (G_OBJECT (manager->priv->conf),
-                  HIBERNATE_SWITCH_CFG, &req,
+                  HIBERNATE_BUTTON_ACTION, &req,
                   NULL);
   }
   else if (type == BUTTON_BATTERY)
   {
     g_object_get (G_OBJECT (manager->priv->conf),
-                  BATTERY_SWITCH_CFG, &req,
+                  BATTERY_BUTTON_ACTION, &req,
                   NULL);
   }
   else
@@ -455,7 +455,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
                 NULL);
 
   g_object_get (G_OBJECT (manager->priv->conf),
-                on_battery ? LID_SWITCH_ON_BATTERY_CFG : LID_SWITCH_ON_AC_CFG, &action,
+                on_battery ? LID_ACTION_ON_BATTERY : LID_ACTION_ON_AC, &action,
                 NULL);
 
   if (lid_is_closed)
@@ -553,7 +553,7 @@ xfpm_manager_set_idle_alarm_on_ac (XfpmManager *manager)
   guint on_ac;
 
   g_object_get (G_OBJECT (manager->priv->conf),
-                ON_AC_INACTIVITY_TIMEOUT, &on_ac,
+                INACTIVITY_ON_AC, &on_ac,
                 NULL);
 
   if (on_ac == 0)
@@ -574,7 +574,7 @@ xfpm_manager_set_idle_alarm_on_battery (XfpmManager *manager)
   guint on_battery;
 
   g_object_get (G_OBJECT (manager->priv->conf),
-                ON_BATTERY_INACTIVITY_TIMEOUT, &on_battery,
+                INACTIVITY_ON_BATTERY, &on_battery,
                 NULL);
 
   if (on_battery == 0)
@@ -906,9 +906,9 @@ xfpm_manager_start (XfpmManager *manager)
   {
     g_signal_connect_object (manager->priv->idle, "alarm-expired",
                              G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager, 0);
-    g_signal_connect_object (manager->priv->conf, "notify::" ON_AC_INACTIVITY_TIMEOUT,
+    g_signal_connect_object (manager->priv->conf, "notify::" INACTIVITY_ON_AC,
                              G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager, G_CONNECT_SWAPPED);
-    g_signal_connect_object (manager->priv->conf, "notify::" ON_BATTERY_INACTIVITY_TIMEOUT,
+    g_signal_connect_object (manager->priv->conf, "notify::" INACTIVITY_ON_BATTERY,
                              G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager, G_CONNECT_SWAPPED);
     xfpm_manager_set_idle_alarm_on_ac (manager);
     xfpm_manager_set_idle_alarm_on_battery (manager);
@@ -948,10 +948,10 @@ xfpm_manager_start (XfpmManager *manager)
                            G_CALLBACK (xfpm_manager_shutdown), manager, G_CONNECT_SWAPPED);
 
   xfconf_g_property_bind (xfpm_xfconf_get_channel (manager->priv->conf),
-                          XFPM_PROPERTIES_PREFIX SHOW_TRAY_ICON_CFG,
+                          XFPM_PROPERTIES_PREFIX SHOW_TRAY_ICON,
                           G_TYPE_INT,
                           G_OBJECT (manager),
-                          SHOW_TRAY_ICON_CFG);
+                          SHOW_TRAY_ICON);
 out:;
 }
 

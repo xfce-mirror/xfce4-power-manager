@@ -185,7 +185,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel,
 
   /* We handle brightness switch in xfpm-backlight directly */
   if (g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH) == 0
-      || g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE) == 0)
+      || g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_RESTORE_ON_EXIT) == 0)
     return;
 
   XFPM_DEBUG ("Property modified: %s\n", property);
@@ -207,7 +207,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_GENERAL_NOTIFICATION,
-                                   g_param_spec_boolean (GENERAL_NOTIFICATION_CFG,
+                                   g_param_spec_boolean (GENERAL_NOTIFICATION,
                                                          NULL, NULL,
                                                          TRUE,
                                                          G_PARAM_READWRITE));
@@ -216,7 +216,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_LOCK_SCREEN_ON_SLEEP,
-                                   g_param_spec_boolean (LOCK_SCREEN_ON_SLEEP,
+                                   g_param_spec_boolean (LOCK_SCREEN_SUSPEND_HIBERNATE,
                                                          NULL, NULL,
                                                          TRUE,
                                                          G_PARAM_READWRITE));
@@ -280,7 +280,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_TRAY_ICON,
-                                   g_param_spec_uint (SHOW_TRAY_ICON_CFG,
+                                   g_param_spec_uint (SHOW_TRAY_ICON,
                                                       NULL, NULL,
                                                       SHOW_ICON_ALWAYS,
                                                       NEVER_SHOW_ICON,
@@ -292,7 +292,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_CRITICAL_BATTERY_ACTION,
-                                   g_param_spec_uint (CRITICAL_BATT_ACTION_CFG,
+                                   g_param_spec_uint (CRITICAL_POWER_ACTION,
                                                       NULL, NULL,
                                                       XFPM_DO_NOTHING,
                                                       XFPM_DO_SHUTDOWN,
@@ -303,7 +303,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_POWER_BUTTON,
-                                   g_param_spec_uint (POWER_SWITCH_CFG,
+                                   g_param_spec_uint (POWER_BUTTON_ACTION,
                                                       NULL, NULL,
                                                       XFPM_DO_NOTHING,
                                                       XFPM_DO_SHUTDOWN,
@@ -315,7 +315,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_SLEEP_BUTTON,
-                                   g_param_spec_uint (SLEEP_SWITCH_CFG,
+                                   g_param_spec_uint (SLEEP_BUTTON_ACTION,
                                                       NULL, NULL,
                                                       XFPM_DO_NOTHING,
                                                       XFPM_DO_SHUTDOWN,
@@ -327,7 +327,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_HIBERNATE_BUTTON,
-                                   g_param_spec_uint (HIBERNATE_SWITCH_CFG,
+                                   g_param_spec_uint (HIBERNATE_BUTTON_ACTION,
                                                       NULL, NULL,
                                                       XFPM_DO_NOTHING,
                                                       XFPM_DO_SHUTDOWN,
@@ -339,7 +339,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_BATTERY_BUTTON,
-                                   g_param_spec_uint (BATTERY_SWITCH_CFG,
+                                   g_param_spec_uint (BATTERY_BUTTON_ACTION,
                                                       NULL, NULL,
                                                       XFPM_DO_NOTHING,
                                                       XFPM_DO_SHUTDOWN,
@@ -351,7 +351,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_LID_ACTION_ON_AC,
-                                   g_param_spec_uint (LID_SWITCH_ON_AC_CFG,
+                                   g_param_spec_uint (LID_ACTION_ON_AC,
                                                       NULL, NULL,
                                                       LID_TRIGGER_DPMS,
                                                       LID_TRIGGER_NOTHING,
@@ -387,7 +387,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_LID_ACTION_ON_BATTERY,
-                                   g_param_spec_uint (LID_SWITCH_ON_BATTERY_CFG,
+                                   g_param_spec_uint (LID_ACTION_ON_BATTERY,
                                                       NULL, NULL,
                                                       LID_TRIGGER_DPMS,
                                                       LID_TRIGGER_NOTHING,
@@ -399,7 +399,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_ENABLE_DPMS,
-                                   g_param_spec_boolean (DPMS_ENABLED_CFG,
+                                   g_param_spec_boolean (DPMS_ENABLED,
                                                          NULL, NULL,
                                                          TRUE,
                                                          G_PARAM_READWRITE));
@@ -408,7 +408,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_DPMS_SLEEP_ON_AC,
-                                   g_param_spec_uint (ON_AC_DPMS_SLEEP,
+                                   g_param_spec_uint (DPMS_ON_AC_SLEEP,
                                                       NULL, NULL,
                                                       0,
                                                       G_MAXUINT16,
@@ -419,7 +419,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_DPMS_OFF_ON_AC,
-                                   g_param_spec_uint (ON_AC_DPMS_OFF,
+                                   g_param_spec_uint (DPMS_ON_AC_OFF,
                                                       NULL, NULL,
                                                       0,
                                                       G_MAXUINT16,
@@ -430,7 +430,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_DPMS_SLEEP_ON_BATTERY,
-                                   g_param_spec_uint (ON_BATT_DPMS_SLEEP,
+                                   g_param_spec_uint (DPMS_ON_BATTERY_SLEEP,
                                                       NULL, NULL,
                                                       0,
                                                       G_MAXUINT16,
@@ -441,7 +441,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_DPMS_OFF_ON_BATTERY,
-                                   g_param_spec_uint (ON_BATT_DPMS_OFF,
+                                   g_param_spec_uint (DPMS_ON_BATTERY_OFF,
                                                       NULL, NULL,
                                                       0,
                                                       G_MAXUINT16,
@@ -462,7 +462,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_IDLE_ON_AC,
-                                   g_param_spec_uint (ON_AC_INACTIVITY_TIMEOUT,
+                                   g_param_spec_uint (INACTIVITY_ON_AC,
                                                       NULL, NULL,
                                                       0,
                                                       G_MAXUINT,
@@ -474,7 +474,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_IDLE_ON_BATTERY,
-                                   g_param_spec_uint (ON_BATTERY_INACTIVITY_TIMEOUT,
+                                   g_param_spec_uint (INACTIVITY_ON_BATTERY,
                                                       NULL, NULL,
                                                       0,
                                                       G_MAXUINT,

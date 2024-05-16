@@ -212,7 +212,7 @@ xfpm_battery_notify_state (XfpmBattery *battery)
     }
 
     g_object_get (G_OBJECT (battery->priv->conf),
-                  GENERAL_NOTIFICATION_CFG, &notify,
+                  GENERAL_NOTIFICATION, &notify,
                   NULL);
 
     if (notify)

@@ -99,7 +99,7 @@ refresh (XfpmDpms *dpms)
     return;
   }
 
-  g_object_get (priv->conf, DPMS_ENABLED_CFG, &enabled, NULL);
+  g_object_get (priv->conf, DPMS_ENABLED, &enabled, NULL);
   if (!enabled)
   {
     XFPM_DPMS_GET_CLASS (dpms)->set_enabled (dpms, FALSE);
@@ -107,8 +107,8 @@ refresh (XfpmDpms *dpms)
   }
 
   g_object_get (priv->conf,
-                priv->on_battery ? ON_BATT_DPMS_SLEEP : ON_AC_DPMS_SLEEP, &sleep_timeout,
-                priv->on_battery ? ON_BATT_DPMS_OFF : ON_AC_DPMS_OFF, &off_timeout,
+                priv->on_battery ? DPMS_ON_BATTERY_SLEEP : DPMS_ON_AC_SLEEP, &sleep_timeout,
+                priv->on_battery ? DPMS_ON_BATTERY_OFF : DPMS_ON_AC_OFF, &off_timeout,
                 NULL);
   g_object_get (G_OBJECT (priv->conf), DPMS_SLEEP_MODE, &sleep_mode, NULL);
 
