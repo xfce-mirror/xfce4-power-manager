@@ -851,9 +851,9 @@ power_manager_button_get_property (GObject *object,
 static void
 set_brightness_properties (PowerManagerButton *button)
 {
-  gint32 level = xfconf_channel_get_int (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL, -1);
-  guint step_count = xfconf_channel_get_uint (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT, 10);
-  gboolean exponential = xfconf_channel_get_bool (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL, FALSE);
+  gint32 level = xfconf_channel_get_int (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL, DEFAULT_BRIGHTNESS_SLIDER_MIN_LEVEL);
+  guint step_count = xfconf_channel_get_uint (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT, DEFAULT_BRIGHTNESS_STEP_COUNT);
+  gboolean exponential = xfconf_channel_get_bool (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL, DEFAULT_BRIGHTNESS_EXPONENTIAL);
 
   /* order accounts: default min level depends on step count */
   xfpm_brightness_set_step_count (button->priv->brightness, step_count, exponential);
@@ -902,19 +902,19 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
   g_object_class_install_property (object_class, PROP_SHOW_PANEL_LABEL,
                                    g_param_spec_int (SHOW_PANEL_LABEL,
                                                      NULL, NULL,
-                                                     PANEL_LABEL_NONE, PANEL_LABEL_PERCENTAGE_AND_TIME, PANEL_LABEL_PERCENTAGE,
+                                                     0, N_PANEL_LABELS - 1, DEFAULT_SHOW_PANEL_LABEL,
                                                      XFPM_PARAM_FLAGS));
 
   g_object_class_install_property (object_class, PROP_PRESENTATION_MODE,
                                    g_param_spec_boolean (PRESENTATION_MODE,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_PRESENTATION_MODE,
                                                          XFPM_PARAM_FLAGS));
 
   g_object_class_install_property (object_class, PROP_SHOW_PRESENTATION_INDICATOR,
                                    g_param_spec_boolean (SHOW_PRESENTATION_INDICATOR,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_SHOW_PRESENTATION_INDICATOR,
                                                          XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 }
@@ -1101,7 +1101,7 @@ power_manager_button_press_event (GtkWidget *widget,
   {
     gboolean state;
 
-    state = xfconf_channel_get_bool (button->priv->channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, FALSE);
+    state = xfconf_channel_get_bool (button->priv->channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, DEFAULT_PRESENTATION_MODE);
     xfconf_channel_set_bool (button->priv->channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, !state);
     return TRUE;
   }

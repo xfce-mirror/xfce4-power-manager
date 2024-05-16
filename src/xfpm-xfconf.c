@@ -209,7 +209,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_GENERAL_NOTIFICATION,
                                    g_param_spec_boolean (GENERAL_NOTIFICATION,
                                                          NULL, NULL,
-                                                         TRUE,
+                                                         DEFAULT_GENERAL_NOTIFICATION,
                                                          G_PARAM_READWRITE));
   /**
    * XfpmXfconf::lock-screen-suspend-hibernate
@@ -218,7 +218,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_LOCK_SCREEN_ON_SLEEP,
                                    g_param_spec_boolean (LOCK_SCREEN_SUSPEND_HIBERNATE,
                                                          NULL, NULL,
-                                                         TRUE,
+                                                         DEFAULT_LOCK_SCREEN_SUSPEND_HIBERNATE,
                                                          G_PARAM_READWRITE));
 
   /**
@@ -228,9 +228,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_CRITICAL_LEVEL,
                                    g_param_spec_uint (CRITICAL_POWER_LEVEL,
                                                       NULL, NULL,
-                                                      1,
-                                                      20,
-                                                      5,
+                                                      MIN_CRITICAL_POWER_LEVEL,
+                                                      MAX_CRITICAL_POWER_LEVEL,
+                                                      DEFAULT_CRITICAL_POWER_LEVEL,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -240,7 +240,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_SHOW_BRIGHTNESS_POPUP,
                                    g_param_spec_boolean (SHOW_BRIGHTNESS_POPUP,
                                                          NULL, NULL,
-                                                         TRUE,
+                                                         DEFAULT_SHOW_BRIGHTNESS_POPUP,
                                                          G_PARAM_READWRITE));
 
   /**
@@ -250,7 +250,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_HANDLE_BRIGHTNESS_KEYS,
                                    g_param_spec_boolean (HANDLE_BRIGHTNESS_KEYS,
                                                          NULL, NULL,
-                                                         TRUE,
+                                                         DEFAULT_HANDLE_BRIGHTNESS_KEYS,
                                                          G_PARAM_READWRITE));
 
   /**
@@ -260,9 +260,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_BRIGHTNESS_STEP_COUNT,
                                    g_param_spec_uint (BRIGHTNESS_STEP_COUNT,
                                                       NULL, NULL,
-                                                      2,
-                                                      100,
-                                                      10,
+                                                      MIN_BRIGHTNESS_STEP_COUNT,
+                                                      MAX_BRIGHTNESS_STEP_COUNT,
+                                                      DEFAULT_BRIGHTNESS_STEP_COUNT,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -272,7 +272,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_BRIGHTNESS_EXPONENTIAL,
                                    g_param_spec_boolean (BRIGHTNESS_EXPONENTIAL,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_BRIGHTNESS_EXPONENTIAL,
                                                          G_PARAM_READWRITE));
 
   /**
@@ -282,9 +282,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_TRAY_ICON,
                                    g_param_spec_uint (SHOW_TRAY_ICON,
                                                       NULL, NULL,
-                                                      SHOW_ICON_ALWAYS,
-                                                      NEVER_SHOW_ICON,
-                                                      SHOW_ICON_WHEN_BATTERY_PRESENT,
+                                                      0,
+                                                      N_SHOW_ICONS - 1,
+                                                      DEFAULT_SHOW_TRAY_ICON,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -294,8 +294,8 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_CRITICAL_BATTERY_ACTION,
                                    g_param_spec_uint (CRITICAL_POWER_ACTION,
                                                       NULL, NULL,
-                                                      XFPM_DO_NOTHING,
-                                                      XFPM_DO_SHUTDOWN,
+                                                      0,
+                                                      N_XFPM_SHUTDOWN_REQUESTS - 1,
                                                       XFPM_DO_NOTHING,
                                                       G_PARAM_READWRITE));
   /**
@@ -305,9 +305,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_POWER_BUTTON,
                                    g_param_spec_uint (POWER_BUTTON_ACTION,
                                                       NULL, NULL,
-                                                      XFPM_DO_NOTHING,
-                                                      XFPM_DO_SHUTDOWN,
-                                                      XFPM_DO_NOTHING,
+                                                      0,
+                                                      N_XFPM_SHUTDOWN_REQUESTS - 1,
+                                                      DEFAULT_POWER_BUTTON_ACTION,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -317,9 +317,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_SLEEP_BUTTON,
                                    g_param_spec_uint (SLEEP_BUTTON_ACTION,
                                                       NULL, NULL,
-                                                      XFPM_DO_NOTHING,
-                                                      XFPM_DO_SHUTDOWN,
-                                                      XFPM_DO_NOTHING,
+                                                      0,
+                                                      N_XFPM_SHUTDOWN_REQUESTS - 1,
+                                                      DEFAULT_SLEEP_BUTTON_ACTION,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -329,9 +329,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_HIBERNATE_BUTTON,
                                    g_param_spec_uint (HIBERNATE_BUTTON_ACTION,
                                                       NULL, NULL,
-                                                      XFPM_DO_NOTHING,
-                                                      XFPM_DO_SHUTDOWN,
-                                                      XFPM_DO_NOTHING,
+                                                      0,
+                                                      N_XFPM_SHUTDOWN_REQUESTS - 1,
+                                                      DEFAULT_HIBERNATE_BUTTON_ACTION,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -341,9 +341,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_BATTERY_BUTTON,
                                    g_param_spec_uint (BATTERY_BUTTON_ACTION,
                                                       NULL, NULL,
-                                                      XFPM_DO_NOTHING,
-                                                      XFPM_DO_SHUTDOWN,
-                                                      XFPM_DO_NOTHING,
+                                                      0,
+                                                      N_XFPM_SHUTDOWN_REQUESTS - 1,
+                                                      DEFAULT_BATTERY_BUTTON_ACTION,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -353,9 +353,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_LID_ACTION_ON_AC,
                                    g_param_spec_uint (LID_ACTION_ON_AC,
                                                       NULL, NULL,
-                                                      LID_TRIGGER_DPMS,
-                                                      LID_TRIGGER_NOTHING,
-                                                      LID_TRIGGER_LOCK_SCREEN,
+                                                      0,
+                                                      N_LID_TRIGGERS - 1,
+                                                      DEFAULT_LID_ACTION_ON_AC,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -367,7 +367,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                       NULL, NULL,
                                                       1,
                                                       100,
-                                                      80,
+                                                      DEFAULT_BRIGHTNESS_LEVEL_ON_AC,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -379,7 +379,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                       NULL, NULL,
                                                       1,
                                                       100,
-                                                      20,
+                                                      DEFAULT_BRIGHTNESS_LEVEL_ON_BATTERY,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -389,9 +389,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_LID_ACTION_ON_BATTERY,
                                    g_param_spec_uint (LID_ACTION_ON_BATTERY,
                                                       NULL, NULL,
-                                                      LID_TRIGGER_DPMS,
-                                                      LID_TRIGGER_NOTHING,
-                                                      LID_TRIGGER_LOCK_SCREEN,
+                                                      0,
+                                                      N_LID_TRIGGERS - 1,
+                                                      DEFAULT_LID_ACTION_ON_BATTERY,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -401,7 +401,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_ENABLE_DPMS,
                                    g_param_spec_boolean (DPMS_ENABLED,
                                                          NULL, NULL,
-                                                         TRUE,
+                                                         DEFAULT_DPMS_ENABLED,
                                                          G_PARAM_READWRITE));
   /**
    * XfpmXfconf::dpms-on-ac-sleep
@@ -411,8 +411,8 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_uint (DPMS_ON_AC_SLEEP,
                                                       NULL, NULL,
                                                       0,
-                                                      G_MAXUINT16,
-                                                      10,
+                                                      G_MAXUINT,
+                                                      DEFAULT_DPMS_ON_AC_SLEEP,
                                                       G_PARAM_READWRITE));
   /**
    * XfpmXfconf::dpms-on-ac-off
@@ -422,8 +422,8 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_uint (DPMS_ON_AC_OFF,
                                                       NULL, NULL,
                                                       0,
-                                                      G_MAXUINT16,
-                                                      15,
+                                                      G_MAXUINT,
+                                                      DEFAULT_DPMS_ON_AC_OFF,
                                                       G_PARAM_READWRITE));
   /**
    * XfpmXfconf::dpms-on-battery-sleep
@@ -433,8 +433,8 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_uint (DPMS_ON_BATTERY_SLEEP,
                                                       NULL, NULL,
                                                       0,
-                                                      G_MAXUINT16,
-                                                      5,
+                                                      G_MAXUINT,
+                                                      DEFAULT_DPMS_ON_BATTERY_SLEEP,
                                                       G_PARAM_READWRITE));
   /**
    * XfpmXfconf::dpms-on-battery-off
@@ -444,8 +444,8 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_uint (DPMS_ON_BATTERY_OFF,
                                                       NULL, NULL,
                                                       0,
-                                                      G_MAXUINT16,
-                                                      10,
+                                                      G_MAXUINT,
+                                                      DEFAULT_DPMS_ON_BATTERY_OFF,
                                                       G_PARAM_READWRITE));
   /**
    * XfpmXfconf::dpms-sleep-mode
@@ -454,7 +454,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_DPMS_SLEEP_MODE,
                                    g_param_spec_string (DPMS_SLEEP_MODE,
                                                         NULL, NULL,
-                                                        "Standby",
+                                                        DEFAULT_DPMS_SLEEP_MODE,
                                                         G_PARAM_READWRITE));
 
   /**
@@ -466,7 +466,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                       NULL, NULL,
                                                       0,
                                                       G_MAXUINT,
-                                                      0,
+                                                      DEFAULT_INACTIVITY_ON_AC,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -478,7 +478,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                       NULL, NULL,
                                                       0,
                                                       G_MAXUINT,
-                                                      0,
+                                                      DEFAULT_INACTIVITY_ON_BATTERY,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -490,7 +490,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                       NULL, NULL,
                                                       XFPM_DO_SUSPEND,
                                                       XFPM_DO_HIBERNATE,
-                                                      XFPM_DO_HIBERNATE,
+                                                      DEFAULT_INACTIVITY_SLEEP_MODE_ON_BATTERY,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -502,7 +502,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                       NULL, NULL,
                                                       XFPM_DO_SUSPEND,
                                                       XFPM_DO_HIBERNATE,
-                                                      XFPM_DO_SUSPEND,
+                                                      DEFAULT_INACTIVITY_SLEEP_MODE_ON_AC,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -512,9 +512,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_DIM_ON_AC_TIMEOUT,
                                    g_param_spec_uint (BRIGHTNESS_ON_AC,
                                                       NULL, NULL,
-                                                      9,
+                                                      MIN_BRIGHTNESS_ON_AC,
                                                       G_MAXUINT,
-                                                      9,
+                                                      DEFAULT_BRIGHTNESS_ON_AC,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -524,9 +524,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_DIM_ON_BATTERY_TIMEOUT,
                                    g_param_spec_uint (BRIGHTNESS_ON_BATTERY,
                                                       NULL, NULL,
-                                                      9,
+                                                      MIN_BRIGHTNESS_ON_BATTERY,
                                                       G_MAXUINT,
-                                                      300,
+                                                      DEFAULT_BRIGHTNESS_ON_BATTERY,
                                                       G_PARAM_READWRITE));
 
   /**
@@ -536,7 +536,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_PROFILE_ON_AC,
                                    g_param_spec_string (PROFILE_ON_AC,
                                                         NULL, NULL,
-                                                        NULL,
+                                                        DEFAULT_PROFILE_ON_AC,
                                                         G_PARAM_READWRITE));
   /**
    * XfpmXfconf::profile-on-ac
@@ -545,7 +545,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_PROFILE_ON_BATTERY,
                                    g_param_spec_string (PROFILE_ON_BATTERY,
                                                         NULL, NULL,
-                                                        NULL,
+                                                        DEFAULT_PROFILE_ON_BATTERY,
                                                         G_PARAM_READWRITE));
 
 
@@ -556,9 +556,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_BRIGHTNESS_SLIDER_MIN_LEVEL,
                                    g_param_spec_int (BRIGHTNESS_SLIDER_MIN_LEVEL,
                                                      NULL, NULL,
-                                                     -1,
-                                                     G_MAXINT32,
-                                                     -1,
+                                                     MIN_BRIGHTNESS_SLIDER_MIN_LEVEL,
+                                                     G_MAXINT,
+                                                     DEFAULT_BRIGHTNESS_SLIDER_MIN_LEVEL,
                                                      G_PARAM_READWRITE));
 
   /**
@@ -568,7 +568,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_LOGIND_HANDLE_POWER_KEY,
                                    g_param_spec_boolean (LOGIND_HANDLE_POWER_KEY,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_LOGIND_HANDLE_POWER_KEY,
                                                          G_PARAM_READWRITE));
 
   /**
@@ -578,7 +578,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_LOGIND_HANDLE_SUSPEND_KEY,
                                    g_param_spec_boolean (LOGIND_HANDLE_SUSPEND_KEY,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_LOGIND_HANDLE_SUSPEND_KEY,
                                                          G_PARAM_READWRITE));
 
   /**
@@ -588,7 +588,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_LOGIND_HANDLE_HIBERNATE_KEY,
                                    g_param_spec_boolean (LOGIND_HANDLE_HIBERNATE_KEY,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_LOGIND_HANDLE_HIBERNATE_KEY,
                                                          G_PARAM_READWRITE));
 
   /**
@@ -598,7 +598,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_LOGIND_HANDLE_LID_SWITCH,
                                    g_param_spec_boolean (LOGIND_HANDLE_LID_SWITCH,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_LOGIND_HANDLE_LID_SWITCH,
                                                          G_PARAM_READWRITE));
 
   /**
@@ -608,7 +608,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_HEARTBEAT_COMMAND,
                                    g_param_spec_string (HEARTBEAT_COMMAND,
                                                         NULL, NULL,
-                                                        NULL,
+                                                        DEFAULT_HEARTBEAT_COMMAND,
                                                         G_PARAM_READWRITE));
 
   /**
@@ -618,9 +618,9 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_SHOW_PANEL_LABEL,
                                    g_param_spec_int (SHOW_PANEL_LABEL,
                                                      NULL, NULL,
-                                                     PANEL_LABEL_NONE,
-                                                     PANEL_LABEL_PERCENTAGE_AND_TIME,
-                                                     PANEL_LABEL_PERCENTAGE,
+                                                     0,
+                                                     N_PANEL_LABELS - 1,
+                                                     DEFAULT_SHOW_PANEL_LABEL,
                                                      G_PARAM_READWRITE));
 
   /**
@@ -630,7 +630,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    PROP_SHOW_PRESENTATION_INDICATOR,
                                    g_param_spec_boolean (SHOW_PRESENTATION_INDICATOR,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_SHOW_PRESENTATION_INDICATOR,
                                                          G_PARAM_READWRITE));
 }
 

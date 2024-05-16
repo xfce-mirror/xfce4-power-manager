@@ -149,7 +149,7 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
                                    g_param_spec_int (SHOW_TRAY_ICON,
                                                      SHOW_TRAY_ICON,
                                                      SHOW_TRAY_ICON,
-                                                     0, 5, 0,
+                                                     0, N_SHOW_ICONS - 1, DEFAULT_SHOW_TRAY_ICON,
                                                      XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 }

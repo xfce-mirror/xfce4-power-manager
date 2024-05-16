@@ -987,7 +987,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                    PROP_PRESENTATION_MODE,
                                    g_param_spec_boolean (PRESENTATION_MODE,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_PRESENTATION_MODE,
                                                          XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 

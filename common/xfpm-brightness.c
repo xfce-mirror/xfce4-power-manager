@@ -24,6 +24,7 @@
 #endif
 
 #include "xfpm-brightness.h"
+#include "xfpm-config.h"
 #include "xfpm-debug.h"
 
 #ifdef ENABLE_X11
@@ -106,7 +107,7 @@ xfpm_brightness_new (void)
   }
 
   priv->hw_min_level = priv->min_level;
-  xfpm_brightness_set_step_count (brightness, 10, FALSE);
+  xfpm_brightness_set_step_count (brightness, DEFAULT_BRIGHTNESS_STEP_COUNT, DEFAULT_BRIGHTNESS_EXPONENTIAL);
 
   return brightness;
 }
@@ -135,8 +136,8 @@ xfpm_brightness_set_min_level (XfpmBrightness *brightness,
 
   g_return_if_fail (XFPM_BRIGHTNESS (brightness));
 
-  /* -1 = auto, we set the minimum as 10% of delta */
-  if (level == -1)
+  /* MIN_BRIGHTNESS_SLIDER_MIN_LEVEL = auto, we set the minimum as 10% of delta */
+  if (level == MIN_BRIGHTNESS_SLIDER_MIN_LEVEL)
   {
     priv->min_level = priv->hw_min_level + MAX (priv->step, (priv->max_level - priv->hw_min_level) / 10);
     XFPM_DEBUG ("Setting default min brightness (%d) above hardware min (%d)", priv->min_level, priv->hw_min_level);
@@ -172,9 +173,7 @@ xfpm_brightness_set_step_count (XfpmBrightness *brightness,
 
   g_return_if_fail (XFPM_BRIGHTNESS (brightness));
 
-  if (count < 2)
-    count = 2;
-
+  count = CLAMP (count, MIN_BRIGHTNESS_STEP_COUNT, MAX_BRIGHTNESS_STEP_COUNT);
   delta = priv->max_level - priv->hw_min_level;
   priv->use_exp_step = exponential;
   priv->step = (delta < (count * 2)) ? 1 : (delta / count);
