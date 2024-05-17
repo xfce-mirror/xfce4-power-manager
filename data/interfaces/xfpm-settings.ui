@@ -927,7 +927,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_ac_lid_changed_cb" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer10"/>
                                   <attributes>
@@ -981,7 +980,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="inactivity_on_ac_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1016,7 +1014,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_ac_sleep_mode_changed_cb" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer2"/>
                                   <attributes>
@@ -1075,7 +1072,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_ac_power_profile_changed_cb" swapped="no"/>
+                                <property name="id-column">0</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer6"/>
                                   <attributes>
@@ -1710,7 +1707,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="sleep_on_ac_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1754,7 +1750,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="off_on_ac_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1799,7 +1794,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="brightness_level_on_ac" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1843,7 +1837,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="brightness_on_ac_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
