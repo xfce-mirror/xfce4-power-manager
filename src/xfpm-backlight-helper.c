@@ -23,6 +23,10 @@
 #include "config.h"
 #endif
 
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <fcntl.h>
 #include <glib-object.h>
 #include <stdio.h>
