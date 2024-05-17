@@ -396,7 +396,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="hexpand">True</property>
-                                    <signal name="changed" handler="button_power_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer1"/>
                                       <attributes>
@@ -414,7 +413,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="hexpand">True</property>
-                                    <signal name="changed" handler="button_sleep_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer4"/>
                                       <attributes>
@@ -432,7 +430,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="hexpand">True</property>
-                                    <signal name="changed" handler="button_hibernate_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer3"/>
                                       <attributes>
@@ -450,7 +447,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="hexpand">True</property>
-                                    <signal name="changed" handler="button_battery_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer5"/>
                                       <attributes>

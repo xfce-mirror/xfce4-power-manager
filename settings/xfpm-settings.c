@@ -128,18 +128,6 @@ inactivity_on_ac_value_changed_cb (GtkWidget *widget,
 void
 inactivity_on_battery_value_changed_cb (GtkWidget *widget,
                                         XfconfChannel *channel);
-void
-button_sleep_changed_cb (GtkWidget *w,
-                         XfconfChannel *channel);
-void
-button_power_changed_cb (GtkWidget *w,
-                         XfconfChannel *channel);
-void
-button_hibernate_changed_cb (GtkWidget *w,
-                             XfconfChannel *channel);
-void
-button_battery_changed_cb (GtkWidget *w,
-                           XfconfChannel *channel);
 gboolean
 dpms_toggled_cb (GtkWidget *w,
                  gboolean is_active,
@@ -313,84 +301,20 @@ inactivity_on_battery_value_changed_cb (GtkWidget *widget,
   update_label (label_inactivity_on_battery, widget, format_inactivity_value_cb);
 }
 
-void
-button_sleep_changed_cb (GtkWidget *w,
-                         XfconfChannel *channel)
+static void
+combo_box_changed_cb (GtkWidget *combo_box,
+                      XfconfChannel *channel)
 {
   GtkTreeModel *model;
   GtkTreeIter selected_row;
   gint value = 0;
 
-  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
+  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &selected_row))
     return;
 
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (w));
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
   gtk_tree_model_get (model, &selected_row, 1, &value, -1);
-
-  if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX SLEEP_BUTTON_ACTION, value))
-  {
-    g_critical ("Cannot set value for property %s", SLEEP_BUTTON_ACTION);
-  }
-}
-
-void
-button_power_changed_cb (GtkWidget *w,
-                         XfconfChannel *channel)
-{
-  GtkTreeModel *model;
-  GtkTreeIter selected_row;
-  gint value = 0;
-
-  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
-    return;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (w));
-  gtk_tree_model_get (model, &selected_row, 1, &value, -1);
-
-  if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX POWER_BUTTON_ACTION, value))
-  {
-    g_critical ("Cannot set value for property %s", POWER_BUTTON_ACTION);
-  }
-}
-
-void
-button_hibernate_changed_cb (GtkWidget *w,
-                             XfconfChannel *channel)
-{
-  GtkTreeModel *model;
-  GtkTreeIter selected_row;
-  gint value = 0;
-
-  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
-    return;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (w));
-  gtk_tree_model_get (model, &selected_row, 1, &value, -1);
-
-  if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX HIBERNATE_BUTTON_ACTION, value))
-  {
-    g_critical ("Cannot set value for property %s", HIBERNATE_BUTTON_ACTION);
-  }
-}
-
-void
-button_battery_changed_cb (GtkWidget *w,
-                           XfconfChannel *channel)
-{
-  GtkTreeModel *model;
-  GtkTreeIter selected_row;
-  gint value = 0;
-
-  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
-    return;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (w));
-  gtk_tree_model_get (model, &selected_row, 1, &value, -1);
-
-  if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX BATTERY_BUTTON_ACTION, value))
-  {
-    g_critical ("Cannot set value for property %s", BATTERY_BUTTON_ACTION);
-  }
+  xfconf_channel_set_uint (channel, g_object_get_data (G_OBJECT (combo_box), "xfconf-property"), value);
 }
 
 static void
@@ -1456,6 +1380,8 @@ xfpm_settings_general (XfconfChannel *channel,
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX POWER_BUTTON_ACTION,
                       G_CALLBACK (combo_box_xfconf_property_changed_cb), power);
+    g_object_set_data (G_OBJECT (power), "xfconf-property", XFPM_PROPERTIES_PREFIX POWER_BUTTON_ACTION);
+    g_signal_connect (power, "changed", G_CALLBACK (combo_box_changed_cb), channel);
   }
   else
   {
@@ -1500,6 +1426,8 @@ xfpm_settings_general (XfconfChannel *channel,
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX HIBERNATE_BUTTON_ACTION,
                       G_CALLBACK (combo_box_xfconf_property_changed_cb), hibernate);
+    g_object_set_data (G_OBJECT (hibernate), "xfconf-property", XFPM_PROPERTIES_PREFIX HIBERNATE_BUTTON_ACTION);
+    g_signal_connect (hibernate, "changed", G_CALLBACK (combo_box_changed_cb), channel);
   }
   else
   {
@@ -1544,6 +1472,8 @@ xfpm_settings_general (XfconfChannel *channel,
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX SLEEP_BUTTON_ACTION,
                       G_CALLBACK (combo_box_xfconf_property_changed_cb), sleep_w);
+    g_object_set_data (G_OBJECT (sleep_w), "xfconf-property", XFPM_PROPERTIES_PREFIX SLEEP_BUTTON_ACTION);
+    g_signal_connect (sleep_w, "changed", G_CALLBACK (combo_box_changed_cb), channel);
   }
   else
   {
@@ -1588,6 +1518,8 @@ xfpm_settings_general (XfconfChannel *channel,
     g_signal_connect (channel,
                       "property-changed::" XFPM_PROPERTIES_PREFIX BATTERY_BUTTON_ACTION,
                       G_CALLBACK (combo_box_xfconf_property_changed_cb), battery_w);
+    g_object_set_data (G_OBJECT (battery_w), "xfconf-property", XFPM_PROPERTIES_PREFIX BATTERY_BUTTON_ACTION);
+    g_signal_connect (battery_w, "changed", G_CALLBACK (combo_box_changed_cb), channel);
   }
   else
   {
