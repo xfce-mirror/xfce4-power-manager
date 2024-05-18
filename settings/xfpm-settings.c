@@ -64,16 +64,6 @@ static GtkWidget *device_details_notebook = NULL; /* Displays the details of a d
 static GtkWidget *brightness_step_count = NULL;
 static GtkWidget *brightness_exponential = NULL;
 
-static GtkWidget *label_inactivity_on_ac = NULL;
-static GtkWidget *label_inactivity_on_battery = NULL;
-static GtkWidget *label_dpms_sleep_on_battery = NULL;
-static GtkWidget *label_dpms_sleep_on_ac = NULL;
-static GtkWidget *label_dpms_off_on_battery = NULL;
-static GtkWidget *label_dpms_off_on_ac = NULL;
-static GtkWidget *label_brightness_level_on_battery = NULL;
-static GtkWidget *label_brightness_level_on_ac = NULL;
-static GtkWidget *label_brightness_inactivity_on_battery = NULL;
-static GtkWidget *label_brightness_inactivity_on_ac = NULL;
 static GtkWidget *label_light_locker_late_locking_scale = NULL;
 
 /* Light Locker Integration */
@@ -512,32 +502,34 @@ xfpm_update_logind_handle_lid_switch (XfconfChannel *channel)
 /* END Light Locker Integration */
 
 static void
-xfpm_settings_on_battery (XfconfChannel *channel,
-                          GDBusProxy *profiles_proxy,
-                          gboolean auth_suspend,
-                          gboolean auth_hibernate,
-                          gboolean can_suspend,
-                          gboolean can_hibernate,
-                          gboolean can_shutdown,
-                          gboolean has_lcd_brightness,
-                          gboolean has_lid)
+xfpm_settings_power_supply (XfconfChannel *channel,
+                            gboolean on_ac,
+                            GDBusProxy *profiles_proxy,
+                            gboolean auth_suspend,
+                            gboolean auth_hibernate,
+                            gboolean can_suspend,
+                            gboolean can_hibernate,
+                            gboolean has_lcd_brightness,
+                            gboolean has_lid)
 {
   gboolean handle_dpms;
-  gint val;
-  GtkListStore *list_store;
-  GtkTreeIter iter;
-  GtkWidget *inact_timeout, *inact_action;
+  GtkWidget *inact_timeout, *inact_action, *label, *dpms;
   GtkWidget *lid;
   GtkWidget *brg;
   GtkWidget *brg_level;
   GtkWidget *power_profile;
+  GtkListStore *list_store;
+  GtkTreeIter iter;
+  guint val, default_val;
   GSList *profiles;
+  const gchar *widget_id, *property;
 
   /*
-   * Inactivity sleep mode on battery
+   * Inactivity sleep mode
    */
   list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-  inact_action = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-mode-on-battery"));
+  widget_id = on_ac ? "system-sleep-mode-on-ac" : "system-sleep-mode-on-battery";
+  inact_action = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
   gtk_combo_box_set_model (GTK_COMBO_BOX (inact_action), GTK_TREE_MODEL (list_store));
 
   if (can_suspend)
@@ -568,22 +560,24 @@ xfpm_settings_on_battery (XfconfChannel *channel,
     gtk_widget_set_tooltip_text (inact_action, _("Hibernate operation not supported"));
   }
 
+  property = on_ac ? XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC : XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY;
+  default_val = on_ac ? DEFAULT_INACTIVITY_SLEEP_MODE_ON_AC : DEFAULT_INACTIVITY_SLEEP_MODE_ON_BATTERY;
   gtk_combo_box_set_active (GTK_COMBO_BOX (inact_action), 0);
-  val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY,
-                                 DEFAULT_INACTIVITY_SLEEP_MODE_ON_BATTERY);
+  val = xfconf_channel_get_uint (channel, property, default_val);
   set_combo_box_active_by_value (val, GTK_COMBO_BOX (inact_action));
 
-  g_object_set_data (G_OBJECT (inact_action), "default-value", GUINT_TO_POINTER (DEFAULT_INACTIVITY_SLEEP_MODE_ON_BATTERY));
-  g_signal_connect (channel, "property-changed::" XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY,
-                    G_CALLBACK (combo_box_xfconf_property_changed_cb), inact_action);
-  g_object_set_data (G_OBJECT (inact_action), "xfconf-property", XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY);
+  g_object_set_data (G_OBJECT (inact_action), "xfconf-property", (gpointer) property);
   g_signal_connect (inact_action, "changed", G_CALLBACK (combo_box_changed_cb), channel);
+  property = on_ac ? "property-changed::" XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC
+                   : "property-changed::" XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY;
+  g_object_set_data (G_OBJECT (inact_action), "default-value", GUINT_TO_POINTER (default_val));
+  g_signal_connect (channel, property, G_CALLBACK (combo_box_xfconf_property_changed_cb), inact_action);
 
   /*
-   * Inactivity timeout on battery
+   * Inactivity timeout
    */
-  inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-inactivity-on-battery"));
-  label_inactivity_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-inactivity-on-battery-label"));
+  widget_id = on_ac ? "system-sleep-inactivity-on-ac" : "system-sleep-inactivity-on-battery";
+  inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
 
   if (!can_suspend && !can_hibernate)
   {
@@ -596,36 +590,47 @@ xfpm_settings_on_battery (XfconfChannel *channel,
     gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not permitted"));
   }
 
-  gtk_range_set_value (GTK_RANGE (inact_timeout), DEFAULT_INACTIVITY_ON_BATTERY);
-  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX INACTIVITY_ON_BATTERY, G_TYPE_UINT,
-                          gtk_range_get_adjustment (GTK_RANGE (inact_timeout)), "value");
+  property = on_ac ? XFPM_PROPERTIES_PREFIX INACTIVITY_ON_AC : XFPM_PROPERTIES_PREFIX INACTIVITY_ON_BATTERY;
+  default_val = on_ac ? DEFAULT_INACTIVITY_ON_AC : DEFAULT_INACTIVITY_ON_BATTERY;
+  gtk_range_set_value (GTK_RANGE (inact_timeout), default_val);
+  xfconf_g_property_bind (channel, property, G_TYPE_UINT, gtk_range_get_adjustment (GTK_RANGE (inact_timeout)), "value");
   g_object_set_data (G_OBJECT (inact_timeout), "format-callback", format_inactivity_value_cb);
-  g_signal_connect (inact_timeout, "value-changed", G_CALLBACK (update_label_cb), label_inactivity_on_battery);
-  update_label (label_inactivity_on_battery, inact_timeout, format_inactivity_value_cb);
+
+  widget_id = on_ac ? "system-sleep-inactivity-on-ac-label" : "system-sleep-inactivity-on-battery-label";
+  label = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
+  g_signal_connect (inact_timeout, "value-changed", G_CALLBACK (update_label_cb), label);
+  update_label (label, inact_timeout, format_inactivity_value_cb);
 
   /*
-   * DPMS settings when running on battery power
+   * DPMS settings
    */
   handle_dpms = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED, DEFAULT_DPMS_ENABLED);
-  label_dpms_sleep_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-on-battery-label"));
-  label_dpms_off_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-on-battery-label"));
 
-  gtk_widget_set_sensitive (on_battery_dpms_sleep, handle_dpms);
-  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX DPMS_ON_BATTERY_SLEEP, G_TYPE_UINT,
-                          gtk_range_get_adjustment (GTK_RANGE (on_battery_dpms_sleep)), "value");
-  g_signal_connect (on_battery_dpms_sleep, "value-changed", G_CALLBACK (sleep_value_changed_cb), label_dpms_sleep_on_battery);
-  update_label (label_dpms_sleep_on_battery, on_battery_dpms_sleep, format_dpms_value_cb);
+  property = on_ac ? XFPM_PROPERTIES_PREFIX DPMS_ON_AC_SLEEP : XFPM_PROPERTIES_PREFIX DPMS_ON_BATTERY_SLEEP;
+  dpms = on_ac ? on_ac_dpms_sleep : on_battery_dpms_sleep;
+  gtk_widget_set_sensitive (dpms, handle_dpms);
+  xfconf_g_property_bind (channel, property, G_TYPE_UINT, gtk_range_get_adjustment (GTK_RANGE (dpms)), "value");
 
-  gtk_widget_set_sensitive (on_battery_dpms_off, handle_dpms);
-  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX DPMS_ON_BATTERY_OFF, G_TYPE_UINT,
-                          gtk_range_get_adjustment (GTK_RANGE (on_battery_dpms_off)), "value");
-  g_signal_connect (on_battery_dpms_off, "value-changed", G_CALLBACK (off_value_changed_cb), label_dpms_off_on_battery);
-  update_label (label_dpms_off_on_battery, on_battery_dpms_off, format_dpms_value_cb);
+  widget_id = on_ac ? "dpms-sleep-on-ac-label" : "dpms-sleep-on-battery-label";
+  label = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
+  g_signal_connect (dpms, "value-changed", G_CALLBACK (sleep_value_changed_cb), label);
+  update_label (label, dpms, format_dpms_value_cb);
+
+  property = on_ac ? XFPM_PROPERTIES_PREFIX DPMS_ON_AC_OFF : XFPM_PROPERTIES_PREFIX DPMS_ON_BATTERY_OFF;
+  dpms = on_ac ? on_ac_dpms_off : on_battery_dpms_off;
+  gtk_widget_set_sensitive (dpms, handle_dpms);
+  xfconf_g_property_bind (channel, property, G_TYPE_UINT, gtk_range_get_adjustment (GTK_RANGE (dpms)), "value");
+
+  widget_id = on_ac ? "dpms-off-on-ac-label" : "dpms-off-on-battery-label";
+  label = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
+  g_signal_connect (dpms, "value-changed", G_CALLBACK (off_value_changed_cb), label);
+  update_label (label, dpms, format_dpms_value_cb);
 
   /*
-   * Lid switch settings on battery
+   * Lid switch settings
    */
-  lid = GTK_WIDGET (gtk_builder_get_object (xml, "lid-on-battery-combo"));
+  widget_id = on_ac ? "lid-on-ac-combo" : "lid-on-battery-combo";
+  lid = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
   if (has_lid)
   {
     list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
@@ -653,27 +658,33 @@ xfpm_settings_on_battery (XfconfChannel *channel,
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, LID_TRIGGER_NOTHING, -1);
 
+    property = on_ac ? XFPM_PROPERTIES_PREFIX LID_ACTION_ON_AC : XFPM_PROPERTIES_PREFIX LID_ACTION_ON_BATTERY;
+    default_val = on_ac ? DEFAULT_LID_ACTION_ON_AC : DEFAULT_LID_ACTION_ON_BATTERY;
     gtk_combo_box_set_active (GTK_COMBO_BOX (lid), 0);
-    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_ACTION_ON_BATTERY, DEFAULT_LID_ACTION_ON_BATTERY);
+    val = xfconf_channel_get_uint (channel, property, default_val);
     set_combo_box_active_by_value (val, GTK_COMBO_BOX (lid));
 
-    g_object_set_data (G_OBJECT (lid), "default-value", GUINT_TO_POINTER (DEFAULT_LID_ACTION_ON_BATTERY));
-    g_signal_connect (channel, "property-changed::" XFPM_PROPERTIES_PREFIX LID_ACTION_ON_BATTERY,
-                      G_CALLBACK (combo_box_xfconf_property_changed_cb), lid);
-    g_object_set_data (G_OBJECT (lid), "xfconf-property", XFPM_PROPERTIES_PREFIX LID_ACTION_ON_BATTERY);
+    g_object_set_data (G_OBJECT (lid), "xfconf-property", (gpointer) property);
     g_signal_connect (lid, "changed", G_CALLBACK (combo_box_changed_cb), channel);
+    property = on_ac ? "property-changed::" XFPM_PROPERTIES_PREFIX LID_ACTION_ON_AC
+                     : "property-changed::" XFPM_PROPERTIES_PREFIX LID_ACTION_ON_BATTERY;
+    g_object_set_data (G_OBJECT (lid), "default-value", GUINT_TO_POINTER (default_val));
+    g_signal_connect (channel, property, G_CALLBACK (combo_box_xfconf_property_changed_cb), lid);
   }
   else
   {
-    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label")));
-    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-on-battery-header")));
+    widget_id = on_ac ? "lid-action-label1" : "lid-action-label";
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, widget_id)));
     gtk_widget_hide (lid);
+    widget_id = on_ac ? "lid-plugged-in-header" : "lid-on-battery-header";
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, widget_id)));
   }
 
   /*
-   * Power profile on battery
+   * Power profile
    */
-  power_profile = GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-on-battery"));
+  widget_id = on_ac ? "power-profile-on-ac" : "power-profile-on-battery";
+  power_profile = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
   if (profiles_proxy != NULL && (profiles = xfpm_ppd_get_profiles (profiles_proxy)) != NULL)
   {
     list_store = gtk_list_store_new (1, G_TYPE_STRING);
@@ -685,258 +696,53 @@ xfpm_settings_on_battery (XfconfChannel *channel,
 
       gtk_list_store_append (list_store, &iter);
       gtk_list_store_set (list_store, &iter, 0, profile, -1);
-      if (g_strcmp0 (profile, DEFAULT_PROFILE_ON_BATTERY) == 0)
+      if (g_strcmp0 (profile, on_ac ? DEFAULT_PROFILE_ON_AC : DEFAULT_PROFILE_ON_BATTERY) == 0)
         gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power_profile), &iter);
     }
 
-    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY, G_TYPE_STRING, power_profile, "active-id");
+    property = on_ac ? XFPM_PROPERTIES_PREFIX PROFILE_ON_AC : XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY;
+    xfconf_g_property_bind (channel, property, G_TYPE_STRING, power_profile, "active-id");
     g_slist_free_full (profiles, g_free);
   }
   else
   {
-    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-label-on-battery")));
+    widget_id = on_ac ? "power-profile-label-on-ac" : "power-profile-label-on-battery";
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, widget_id)));
     gtk_widget_hide (power_profile);
   }
 
   /*
-   * Brightness on battery
+   * Brightness
    */
-  brg = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-battery"));
-  brg_level = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-on-battery"));
-  label_brightness_level_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-on-battery-label"));
-  label_brightness_inactivity_on_battery = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-battery-label"));
+  widget_id = on_ac ? "brightness-inactivity-on-ac" : "brightness-inactivity-on-battery";
+  brg = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
+  widget_id = on_ac ? "brightness-level-on-ac" : "brightness-level-on-battery";
+  brg_level = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
 
   if (has_lcd_brightness)
   {
-    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY, DEFAULT_BRIGHTNESS_ON_BATTERY);
+    property = on_ac ? XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_AC : XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY;
+    default_val = on_ac ? DEFAULT_BRIGHTNESS_ON_AC : DEFAULT_BRIGHTNESS_ON_BATTERY;
+    val = xfconf_channel_get_uint (channel, property, default_val);
     gtk_range_set_value (GTK_RANGE (brg), val / 10);
-    g_object_set_data (G_OBJECT (brg), "default-value", GUINT_TO_POINTER (DEFAULT_BRIGHTNESS_ON_BATTERY));
-    g_signal_connect (channel, "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY,
-                      G_CALLBACK (brg_scale_xfconf_property_changed_cb), brg);
+    g_object_set_data (G_OBJECT (brg), "default-value", GUINT_TO_POINTER (default_val));
+    property = on_ac ? "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_AC
+                     : "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_BATTERY;
+    g_signal_connect (channel, property, G_CALLBACK (brg_scale_xfconf_property_changed_cb), brg);
+
+    widget_id = on_ac ? "brightness-inactivity-on-ac-label" : "brightness-inactivity-on-battery-label";
+    label = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
     g_signal_connect (brg, "value-changed", G_CALLBACK (brightness_value_changed_cb), channel);
-    update_label (label_brightness_inactivity_on_battery, brg, format_brightness_value_cb);
+    update_label (label, brg, format_brightness_value_cb);
 
-    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY, G_TYPE_UINT,
-                            gtk_range_get_adjustment (GTK_RANGE (brg_level)), "value");
+    property = on_ac ? XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC : XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_BATTERY;
+    xfconf_g_property_bind (channel, property, G_TYPE_UINT, gtk_range_get_adjustment (GTK_RANGE (brg_level)), "value");
     g_object_set_data (G_OBJECT (brg_level), "format-callback", format_brightness_percentage_cb);
-    g_signal_connect (brg_level, "value-changed", G_CALLBACK (update_label_cb), label_brightness_level_on_battery);
-    update_label (label_brightness_level_on_battery, brg_level, format_brightness_percentage_cb);
-  }
-  else
-  {
-    gtk_widget_hide (brg);
-    gtk_widget_hide (brg_level);
-  }
-}
 
-static void
-xfpm_settings_on_ac (XfconfChannel *channel,
-                     GDBusProxy *profiles_proxy,
-                     gboolean auth_suspend,
-                     gboolean auth_hibernate,
-                     gboolean can_suspend,
-                     gboolean can_hibernate,
-                     gboolean has_lcd_brightness,
-                     gboolean has_lid)
-{
-  gboolean handle_dpms;
-  GtkWidget *inact_timeout, *inact_action;
-  GtkWidget *lid;
-  GtkWidget *brg;
-  GtkWidget *brg_level;
-  GtkWidget *power_profile;
-  GtkListStore *list_store;
-  GtkTreeIter iter;
-  guint val;
-  GSList *profiles;
-
-  /*
-   * Inactivity sleep mode on AC
-   */
-  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-  inact_action = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-mode-on-ac"));
-  gtk_combo_box_set_model (GTK_COMBO_BOX (inact_action), GTK_TREE_MODEL (list_store));
-
-  if (can_suspend)
-  {
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
-  }
-  else if (!auth_suspend)
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not permitted"));
-  }
-  else
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not supported"));
-  }
-
-  if (can_hibernate)
-  {
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
-  }
-  else if (!auth_hibernate)
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Hibernate operation not permitted"));
-  }
-  else
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Hibernate operation not supported"));
-  }
-
-  gtk_combo_box_set_active (GTK_COMBO_BOX (inact_action), 0);
-  val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC, DEFAULT_INACTIVITY_SLEEP_MODE_ON_AC);
-  set_combo_box_active_by_value (val, GTK_COMBO_BOX (inact_action));
-
-  g_object_set_data (G_OBJECT (inact_action), "default-value", GUINT_TO_POINTER (DEFAULT_INACTIVITY_SLEEP_MODE_ON_AC));
-  g_signal_connect (channel, "property-changed::" XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC,
-                    G_CALLBACK (combo_box_xfconf_property_changed_cb), inact_action);
-  g_object_set_data (G_OBJECT (inact_action), "xfconf-property", XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC);
-  g_signal_connect (inact_action, "changed", G_CALLBACK (combo_box_changed_cb), channel);
-
-  /*
-   * Inactivity timeout on AC
-   */
-  inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-inactivity-on-ac"));
-  label_inactivity_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "system-sleep-inactivity-on-ac-label"));
-
-  if (!can_suspend && !can_hibernate)
-  {
-    gtk_widget_set_sensitive (inact_timeout, FALSE);
-    gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not supported"));
-  }
-  else if (!auth_suspend && !auth_hibernate)
-  {
-    gtk_widget_set_sensitive (inact_timeout, FALSE);
-    gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not permitted"));
-  }
-
-  gtk_range_set_value (GTK_RANGE (inact_timeout), DEFAULT_INACTIVITY_ON_AC);
-  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX INACTIVITY_ON_AC, G_TYPE_UINT,
-                          gtk_range_get_adjustment (GTK_RANGE (inact_timeout)), "value");
-  g_object_set_data (G_OBJECT (inact_timeout), "format-callback", format_inactivity_value_cb);
-  g_signal_connect (inact_timeout, "value-changed", G_CALLBACK (update_label_cb), label_inactivity_on_ac);
-  update_label (label_inactivity_on_ac, inact_timeout, format_inactivity_value_cb);
-
-  /*
-   * DPMS settings when running on AC power
-   */
-  handle_dpms = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED, DEFAULT_DPMS_ENABLED);
-  label_dpms_sleep_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-on-ac-label"));
-  label_dpms_off_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-on-ac-label"));
-
-  gtk_widget_set_sensitive (on_ac_dpms_sleep, handle_dpms);
-  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX DPMS_ON_AC_SLEEP, G_TYPE_UINT,
-                          gtk_range_get_adjustment (GTK_RANGE (on_ac_dpms_sleep)), "value");
-  g_signal_connect (on_ac_dpms_sleep, "value-changed", G_CALLBACK (sleep_value_changed_cb), label_dpms_sleep_on_ac);
-  update_label (label_dpms_sleep_on_ac, on_ac_dpms_sleep, format_dpms_value_cb);
-
-  gtk_widget_set_sensitive (on_ac_dpms_off, handle_dpms);
-  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX DPMS_ON_AC_OFF, G_TYPE_UINT,
-                          gtk_range_get_adjustment (GTK_RANGE (on_ac_dpms_off)), "value");
-  g_signal_connect (on_ac_dpms_off, "value-changed", G_CALLBACK (off_value_changed_cb), label_dpms_off_on_ac);
-  update_label (label_dpms_off_on_ac, on_ac_dpms_off, format_dpms_value_cb);
-
-  /*
-   * Lid switch settings on AC power
-   */
-  lid = GTK_WIDGET (gtk_builder_get_object (xml, "lid-on-ac-combo"));
-  if (has_lid)
-  {
-    list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-
-    gtk_combo_box_set_model (GTK_COMBO_BOX (lid), GTK_TREE_MODEL (list_store));
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Switch off display"), 1, LID_TRIGGER_DPMS, -1);
-
-    if (can_suspend && auth_suspend)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, LID_TRIGGER_SUSPEND, -1);
-    }
-
-    if (can_hibernate && auth_hibernate)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, LID_TRIGGER_HIBERNATE, -1);
-    }
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Lock screen"), 1, LID_TRIGGER_LOCK_SCREEN, -1);
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, LID_TRIGGER_NOTHING, -1);
-
-    gtk_combo_box_set_active (GTK_COMBO_BOX (lid), 0);
-    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_ACTION_ON_AC, DEFAULT_LID_ACTION_ON_AC);
-    set_combo_box_active_by_value (val, GTK_COMBO_BOX (lid));
-
-    g_object_set_data (G_OBJECT (lid), "default-value", GUINT_TO_POINTER (DEFAULT_LID_ACTION_ON_AC));
-    g_signal_connect (channel, "property-changed::" XFPM_PROPERTIES_PREFIX LID_ACTION_ON_AC,
-                      G_CALLBACK (combo_box_xfconf_property_changed_cb), lid);
-    g_object_set_data (G_OBJECT (lid), "xfconf-property", XFPM_PROPERTIES_PREFIX LID_ACTION_ON_AC);
-    g_signal_connect (lid, "changed", G_CALLBACK (combo_box_changed_cb), channel);
-  }
-  else
-  {
-    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-action-label1")));
-    gtk_widget_hide (lid);
-    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "lid-plugged-in-header")));
-  }
-
-  /*
-   * Power profile on AC power
-   */
-  power_profile = GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-on-ac"));
-  if (profiles_proxy != NULL && (profiles = xfpm_ppd_get_profiles (profiles_proxy)) != NULL)
-  {
-    list_store = gtk_list_store_new (1, G_TYPE_STRING);
-    gtk_combo_box_set_model (GTK_COMBO_BOX (power_profile), GTK_TREE_MODEL (list_store));
-
-    for (GSList *l = profiles; l != NULL; l = l->next)
-    {
-      gchar *profile = l->data;
-
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, profile, -1);
-      if (g_strcmp0 (profile, DEFAULT_PROFILE_ON_AC) == 0)
-        gtk_combo_box_set_active_iter (GTK_COMBO_BOX (power_profile), &iter);
-    }
-
-    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, G_TYPE_STRING, power_profile, "active-id");
-    g_slist_free_full (profiles, g_free);
-  }
-  else
-  {
-    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "power-profile-label-on-ac")));
-    gtk_widget_hide (power_profile);
-  }
-
-  /*
-   * Brightness on AC power
-   */
-  brg = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-ac"));
-  brg_level = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-on-ac"));
-  label_brightness_level_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-level-on-ac-label"));
-  label_brightness_inactivity_on_ac = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-inactivity-on-ac-label"));
-
-  if (has_lcd_brightness)
-  {
-    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_AC, DEFAULT_BRIGHTNESS_ON_AC);
-    gtk_range_set_value (GTK_RANGE (brg), val / 10);
-    g_object_set_data (G_OBJECT (brg), "default-value", GUINT_TO_POINTER (DEFAULT_BRIGHTNESS_ON_AC));
-    g_signal_connect (channel, "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_ON_AC,
-                      G_CALLBACK (brg_scale_xfconf_property_changed_cb), brg);
-    g_signal_connect (brg, "value-changed", G_CALLBACK (brightness_value_changed_cb), channel);
-    update_label (label_brightness_inactivity_on_ac, brg, format_brightness_value_cb);
-
-    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_LEVEL_ON_AC, G_TYPE_UINT,
-                            gtk_range_get_adjustment (GTK_RANGE (brg_level)), "value");
-    g_object_set_data (G_OBJECT (brg_level), "format-callback", format_brightness_percentage_cb);
-    g_signal_connect (brg_level, "value-changed", G_CALLBACK (update_label_cb), label_brightness_level_on_ac);
-    update_label (label_brightness_level_on_ac, brg_level, format_brightness_percentage_cb);
+    widget_id = on_ac ? "brightness-level-on-ac-label" : "brightness-level-on-battery-label";
+    label = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
+    g_signal_connect (brg_level, "value-changed", G_CALLBACK (update_label_cb), label);
+    update_label (label, brg_level, format_brightness_percentage_cb);
   }
   else
   {
@@ -2230,25 +2036,12 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
 
   settings_create_devices_list ();
 
-  xfpm_settings_on_ac (channel,
-                       profiles_proxy,
-                       auth_suspend,
-                       auth_hibernate,
-                       can_suspend,
-                       can_hibernate,
-                       has_lcd_brightness,
-                       has_lid);
+  xfpm_settings_power_supply (channel, TRUE, profiles_proxy, auth_suspend, auth_hibernate,
+                              can_suspend, can_hibernate, has_lcd_brightness, has_lid);
 
   if (has_battery)
-    xfpm_settings_on_battery (channel,
-                              profiles_proxy,
-                              auth_suspend,
-                              auth_hibernate,
-                              can_suspend,
-                              can_hibernate,
-                              can_shutdown,
-                              has_lcd_brightness,
-                              has_lid);
+    xfpm_settings_power_supply (channel, FALSE, profiles_proxy, auth_suspend, auth_hibernate,
+                                can_suspend, can_hibernate, has_lcd_brightness, has_lid);
   else
   {
     gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-frame")));
