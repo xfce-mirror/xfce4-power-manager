@@ -282,7 +282,7 @@ xfpm_power_sleep (XfpmPower *power,
     xfpm_brightness_get_level (brightness, &brightness_level);
 
   g_object_get (G_OBJECT (power->priv->conf),
-                LOCK_SCREEN_ON_SLEEP, &lock_screen,
+                LOCK_SCREEN_SUSPEND_HIBERNATE, &lock_screen,
                 NULL);
 
   if (lock_screen)
@@ -645,7 +645,7 @@ xfpm_power_system_on_critical_power (XfpmPower *power,
   XfpmShutdownRequest critical_action;
 
   g_object_get (G_OBJECT (power->priv->conf),
-                CRITICAL_BATT_ACTION_CFG, &critical_action,
+                CRITICAL_POWER_ACTION, &critical_action,
                 NULL);
 
   XFPM_DEBUG ("System is running on low power");
@@ -706,7 +706,7 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery,
   }
 
   g_object_get (G_OBJECT (power->priv->conf),
-                GENERAL_NOTIFICATION_CFG, &notify,
+                GENERAL_NOTIFICATION, &notify,
                 NULL);
 
   if (power->priv->on_battery)
@@ -987,7 +987,7 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                    PROP_PRESENTATION_MODE,
                                    g_param_spec_boolean (PRESENTATION_MODE,
                                                          NULL, NULL,
-                                                         FALSE,
+                                                         DEFAULT_PRESENTATION_MODE,
                                                          XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 

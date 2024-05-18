@@ -52,7 +52,7 @@ static struct
 {
   XfpmButtonKey key;
   guint key_code;
-} xfpm_key_map[NUMBER_OF_BUTTONS] = { 0 };
+} xfpm_key_map[N_XFPM_BUTTON_KEYS] = { 0 };
 #endif
 
 struct XfpmButtonPrivate

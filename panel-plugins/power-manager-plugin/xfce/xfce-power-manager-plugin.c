@@ -170,7 +170,7 @@ power_manager_plugin_configure (XfcePanelPlugin *plugin,
   label = gtk_label_new (_("Show label:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);
   gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET (label), 0, 0, 1, 1);
-  show_panel_label = xfconf_channel_get_int (channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, PANEL_LABEL_PERCENTAGE);
+  show_panel_label = xfconf_channel_get_int (channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, DEFAULT_SHOW_PANEL_LABEL);
 
   list_store = gtk_list_store_new (N_COLUMNS,
                                    G_TYPE_INT,

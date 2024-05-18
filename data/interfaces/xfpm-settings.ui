@@ -40,31 +40,31 @@
   <object class="GtkAdjustment" id="critical-power-level-spin-adjustment">
     <property name="lower">1</property>
     <property name="upper">70</property>
-    <property name="value">5</property>
+    <property name="value">10</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="dpms-off-on-ac-adjustment">
     <property name="upper">60</property>
-    <property name="value">20</property>
+    <property name="value">15</property>
     <property name="step_increment">1</property>
     <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="dpms-off-on-battery-adjustment">
     <property name="upper">60</property>
-    <property name="value">5</property>
+    <property name="value">10</property>
     <property name="step_increment">1</property>
     <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="dpms-sleep-on-ac-adjustment">
     <property name="upper">60</property>
-    <property name="value">15</property>
+    <property name="value">10</property>
     <property name="step_increment">1</property>
     <property name="page_increment">5</property>
   </object>
   <object class="GtkAdjustment" id="dpms-sleep-on-battery-adjustment">
     <property name="upper">60</property>
-    <property name="value">3</property>
+    <property name="value">5</property>
     <property name="step_increment">1</property>
     <property name="page_increment">5</property>
   </object>
@@ -396,7 +396,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="hexpand">True</property>
-                                    <signal name="changed" handler="button_power_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer1"/>
                                       <attributes>
@@ -414,7 +413,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="hexpand">True</property>
-                                    <signal name="changed" handler="button_sleep_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer4"/>
                                       <attributes>
@@ -432,7 +430,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="hexpand">True</property>
-                                    <signal name="changed" handler="button_hibernate_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer3"/>
                                       <attributes>
@@ -450,7 +447,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="hexpand">True</property>
-                                    <signal name="changed" handler="button_battery_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer5"/>
                                       <attributes>
@@ -468,8 +464,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="halign">end</property>
-                                    <property name="active">True</property>
-                                    <signal name="state-set" handler="handle_brightness_keys_toggled_cb" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="left_attach">1</property>
@@ -748,7 +742,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="inactivity_on_battery_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -783,7 +776,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_battery_sleep_mode_changed_cb" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer8"/>
                                   <attributes>
@@ -856,7 +848,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_battery_lid_changed_cb" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer9"/>
                                   <attributes>
@@ -888,7 +879,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_battery_power_profile_changed_cb" swapped="no"/>
+                                <property name="id-column">0</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer12"/>
                                   <attributes>
@@ -932,7 +923,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_ac_lid_changed_cb" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer10"/>
                                   <attributes>
@@ -986,7 +976,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="inactivity_on_ac_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1021,7 +1010,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_ac_sleep_mode_changed_cb" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer2"/>
                                   <attributes>
@@ -1080,7 +1068,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_ac_power_profile_changed_cb" swapped="no"/>
+                                <property name="id-column">0</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer6"/>
                                   <attributes>
@@ -1152,7 +1140,6 @@
                                     <property name="primary_icon_activatable">False</property>
                                     <property name="secondary_icon_activatable">False</property>
                                     <property name="adjustment">critical-power-level-spin-adjustment</property>
-                                    <signal name="value-changed" handler="critical_level_value_changed_cb" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1201,7 +1188,6 @@
                                   <object class="GtkComboBox" id="critical-power-action-combo">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <signal name="changed" handler="battery_critical_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer7"/>
                                       <attributes>
@@ -1263,7 +1249,6 @@
                                 <property name="receives_default">False</property>
                                 <property name="margin_left">6</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="lock_screen_toggled_cb" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1350,7 +1335,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="tooltip_text" translatable="yes">Let the power manager handle display power management (DPMS) instead of the display server</property>
-                            <signal name="state-set" handler="dpms_toggled_cb" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -1391,7 +1375,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="sleep_on_battery_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1462,7 +1445,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="off_on_battery_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1532,7 +1514,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="brightness_level_on_battery" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1576,7 +1557,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="brightness_on_battery_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1715,7 +1695,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="sleep_on_ac_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1759,7 +1738,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="off_on_ac_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1804,7 +1782,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="brightness_level_on_ac" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1848,7 +1825,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="brightness_on_ac_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>

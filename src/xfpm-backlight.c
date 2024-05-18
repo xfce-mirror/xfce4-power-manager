@@ -54,8 +54,6 @@ xfpm_backlight_set_property (GObject *object,
                              const GValue *value,
                              GParamSpec *pspec);
 
-#define ALARM_DISABLED 9
-
 struct XfpmBacklightPrivate
 {
   XfpmBrightness *brightness;
@@ -283,7 +281,7 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
 static void
 xfpm_backlight_handle_brightness_keys_changed (XfpmBacklight *backlight)
 {
-  gboolean handle_keys = FALSE;
+  gboolean handle_keys;
 
   g_object_get (G_OBJECT (backlight->priv->conf),
                 HANDLE_BRIGHTNESS_KEYS, &handle_keys,
@@ -305,7 +303,7 @@ xfpm_backlight_brightness_on_ac_settings_changed (XfpmBacklight *backlight)
 
   XFPM_DEBUG ("Alarm on ac timeout changed %u", timeout_on_ac);
 
-  if (timeout_on_ac == ALARM_DISABLED)
+  if (timeout_on_ac == MIN_BRIGHTNESS_ON_AC)
   {
     xfpm_idle_alarm_remove (backlight->priv->idle, XFPM_ALARM_ID_BRIGHTNESS_ON_AC);
   }
@@ -326,7 +324,7 @@ xfpm_backlight_brightness_on_battery_settings_changed (XfpmBacklight *backlight)
 
   XFPM_DEBUG ("Alarm on battery timeout changed %u", timeout_on_battery);
 
-  if (timeout_on_battery == ALARM_DISABLED)
+  if (timeout_on_battery == MIN_BRIGHTNESS_ON_BATTERY)
   {
     xfpm_idle_alarm_remove (backlight->priv->idle, XFPM_ALARM_ID_BRIGHTNESS_ON_BATTERY);
   }
@@ -358,14 +356,14 @@ xfpm_backlight_class_init (XfpmBacklightClass *klass)
                                    PROP_BRIGHTNESS_SWITCH,
                                    g_param_spec_int (BRIGHTNESS_SWITCH,
                                                      NULL, NULL,
-                                                     -1, 1, -1,
+                                                     MIN_BRIGHTNESS_SWITCH, MAX_BRIGHTNESS_SWITCH, DEFAULT_BRIGHTNESS_SWITCH,
                                                      G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    PROP_BRIGHTNESS_SWITCH_SAVE,
-                                   g_param_spec_int (BRIGHTNESS_SWITCH_SAVE,
+                                   g_param_spec_int (BRIGHTNESS_SWITCH_RESTORE_ON_EXIT,
                                                      NULL, NULL,
-                                                     -1, 1, -1,
+                                                     MIN_BRIGHTNESS_SWITCH, MAX_BRIGHTNESS_SWITCH, DEFAULT_BRIGHTNESS_SWITCH_RESTORE_ON_EXIT,
                                                      G_PARAM_READWRITE));
 }
 
@@ -397,7 +395,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->power = xfpm_power_get ();
     backlight->priv->notify = xfpm_notify_new ();
     backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
-    backlight->priv->brightness_switch = -1;
+    backlight->priv->brightness_switch = DEFAULT_BRIGHTNESS_SWITCH;
 
     xfconf_g_property_bind (xfpm_xfconf_get_channel (backlight->priv->conf),
                             XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH, G_TYPE_INT,
@@ -414,15 +412,15 @@ xfpm_backlight_init (XfpmBacklight *backlight)
      */
     backlight->priv->brightness_switch_save =
       xfconf_channel_get_int (xfpm_xfconf_get_channel (backlight->priv->conf),
-                              XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
-                              -1);
+                              XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_RESTORE_ON_EXIT,
+                              DEFAULT_BRIGHTNESS_SWITCH_RESTORE_ON_EXIT);
 
-    if (backlight->priv->brightness_switch_save == -1)
+    if (backlight->priv->brightness_switch_save == MIN_BRIGHTNESS_SWITCH)
     {
       if (!xfconf_channel_set_int (xfpm_xfconf_get_channel (backlight->priv->conf),
-                                   XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE,
+                                   XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_RESTORE_ON_EXIT,
                                    backlight->priv->brightness_switch))
-        g_critical ("Cannot set value for property %s", BRIGHTNESS_SWITCH_SAVE);
+        g_critical ("Cannot set value for property %s", BRIGHTNESS_SWITCH_RESTORE_ON_EXIT);
 
       backlight->priv->brightness_switch_save = backlight->priv->brightness_switch;
     }
@@ -436,7 +434,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     /* check whether to change the brightness switch */
     handle_keys = xfconf_channel_get_bool (xfpm_xfconf_get_channel (backlight->priv->conf),
                                            XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
-                                           TRUE);
+                                           DEFAULT_HANDLE_BRIGHTNESS_KEYS);
     backlight->priv->brightness_switch = handle_keys ? 0 : 1;
     g_object_set (G_OBJECT (backlight),
                   BRIGHTNESS_SWITCH,
@@ -476,11 +474,11 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->brightness_step_count =
       xfconf_channel_get_int (xfpm_xfconf_get_channel (backlight->priv->conf),
                               XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
-                              10);
+                              DEFAULT_BRIGHTNESS_STEP_COUNT);
     backlight->priv->brightness_exponential =
       xfconf_channel_get_bool (xfpm_xfconf_get_channel (backlight->priv->conf),
                                XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
-                               FALSE);
+                               DEFAULT_BRIGHTNESS_EXPONENTIAL);
   }
 }
 
@@ -555,14 +553,14 @@ xfpm_backlight_finalize (GObject *object)
   if (backlight->priv->conf)
   {
     /* restore video module brightness switch setting */
-    if (backlight->priv->brightness_switch_save != -1)
+    if (backlight->priv->brightness_switch_save != MIN_BRIGHTNESS_SWITCH)
     {
       gboolean ret = xfpm_brightness_set_switch (backlight->priv->brightness,
                                                  backlight->priv->brightness_switch_save);
       /* unset the xfconf saved value after the restore */
       if (!xfconf_channel_set_int (xfpm_xfconf_get_channel (backlight->priv->conf),
-                                   XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_SAVE, -1))
-        g_critical ("Cannot set value for property %s", BRIGHTNESS_SWITCH_SAVE);
+                                   XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_RESTORE_ON_EXIT, MIN_BRIGHTNESS_SWITCH))
+        g_critical ("Cannot set value for property %s", BRIGHTNESS_SWITCH_RESTORE_ON_EXIT);
 
       if (ret)
       {

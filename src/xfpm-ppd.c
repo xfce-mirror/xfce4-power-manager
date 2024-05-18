@@ -116,16 +116,16 @@ xfpm_ppd_class_init (XfpmPPDClass *klass)
 
   g_object_class_install_property (object_class,
                                    PROP_PROFILE_ON_AC,
-                                   g_param_spec_string ("profile-on-ac",
+                                   g_param_spec_string (PROFILE_ON_AC,
                                                         NULL, NULL,
-                                                        NULL,
+                                                        DEFAULT_PROFILE_ON_AC,
                                                         G_PARAM_READWRITE));
 
   g_object_class_install_property (object_class,
                                    PROP_PROFILE_ON_BATTERY,
-                                   g_param_spec_string ("profile-on-battery",
+                                   g_param_spec_string (PROFILE_ON_BATTERY,
                                                         NULL, NULL,
-                                                        NULL,
+                                                        DEFAULT_PROFILE_ON_BATTERY,
                                                         G_PARAM_READWRITE));
 }
 
