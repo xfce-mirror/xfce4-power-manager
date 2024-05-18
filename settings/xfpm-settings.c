@@ -479,7 +479,7 @@ xfpm_settings_power_supply (XfconfChannel *channel,
   val = xfconf_channel_get_uint (channel, property, default_val);
   set_combo_box_active_by_value (val, GTK_COMBO_BOX (inact_action));
 
-  g_object_set_data (G_OBJECT (inact_action), "xfconf-property", (gpointer) property);
+  g_object_set_data_full (G_OBJECT (inact_action), "xfconf-property", g_strdup (property), g_free);
   g_signal_connect (inact_action, "changed", G_CALLBACK (combo_box_changed_cb), channel);
   property = on_ac ? "property-changed::" XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC
                    : "property-changed::" XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY;
@@ -577,7 +577,7 @@ xfpm_settings_power_supply (XfconfChannel *channel,
     val = xfconf_channel_get_uint (channel, property, default_val);
     set_combo_box_active_by_value (val, GTK_COMBO_BOX (lid));
 
-    g_object_set_data (G_OBJECT (lid), "xfconf-property", (gpointer) property);
+    g_object_set_data_full (G_OBJECT (lid), "xfconf-property", g_strdup (property), g_free);
     g_signal_connect (lid, "changed", G_CALLBACK (combo_box_changed_cb), channel);
     property = on_ac ? "property-changed::" XFPM_PROPERTIES_PREFIX LID_ACTION_ON_AC
                      : "property-changed::" XFPM_PROPERTIES_PREFIX LID_ACTION_ON_BATTERY;
