@@ -1141,7 +1141,6 @@
                                     <property name="primary_icon_activatable">False</property>
                                     <property name="secondary_icon_activatable">False</property>
                                     <property name="adjustment">critical-power-level-spin-adjustment</property>
-                                    <signal name="value-changed" handler="critical_level_value_changed_cb" swapped="no"/>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1190,7 +1189,6 @@
                                   <object class="GtkComboBox" id="critical-power-action-combo">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <signal name="changed" handler="battery_critical_changed_cb" swapped="no"/>
                                     <child>
                                       <object class="GtkCellRendererText" id="renderer7"/>
                                       <attributes>
@@ -1252,7 +1250,6 @@
                                 <property name="receives_default">False</property>
                                 <property name="margin_left">6</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="lock_screen_toggled_cb" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -1339,7 +1336,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="tooltip_text" translatable="yes">Let the power manager handle display power management (DPMS) instead of the display server</property>
-                            <signal name="state-set" handler="dpms_toggled_cb" swapped="no"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>

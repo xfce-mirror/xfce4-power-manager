@@ -104,16 +104,6 @@ enum
  * GtkBuilder callbacks (can't be set static)
  */
 void
-battery_critical_changed_cb (GtkWidget *w,
-                             XfconfChannel *channel);
-gboolean
-dpms_toggled_cb (GtkWidget *w,
-                 gboolean is_active,
-                 XfconfChannel *channel);
-void
-critical_level_value_changed_cb (GtkSpinButton *w,
-                                 XfconfChannel *channel);
-void
 lock_screen_toggled_cb (GtkWidget *w,
                         XfconfChannel *channel);
 gboolean
@@ -165,26 +155,6 @@ update_label (GtkWidget *label,
   gchar *formatted_value = format (value);
   gtk_label_set_text (GTK_LABEL (label), formatted_value);
   g_free (formatted_value);
-}
-
-void
-battery_critical_changed_cb (GtkWidget *w,
-                             XfconfChannel *channel)
-{
-  GtkTreeModel *model;
-  GtkTreeIter selected_row;
-  gint value = 0;
-
-  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (w), &selected_row))
-    return;
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (w));
-  gtk_tree_model_get (model, &selected_row, 1, &value, -1);
-
-  if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION, value))
-  {
-    g_critical ("Cannot set value for property %s", CRITICAL_POWER_ACTION);
-  }
 }
 
 static void
@@ -269,13 +239,11 @@ set_combo_box_active_by_value (guint new_value,
   }
 }
 
-gboolean
+static gboolean
 dpms_toggled_cb (GtkWidget *w,
                  gboolean is_active,
                  XfconfChannel *channel)
 {
-  xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED, is_active);
-
   gtk_widget_set_sensitive (on_ac_dpms_off, is_active);
   gtk_widget_set_sensitive (on_ac_dpms_sleep, is_active);
   gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-label")), is_active);
@@ -438,18 +406,6 @@ brightness_value_changed_cb (GtkWidget *scale,
 
   xfconf_channel_set_uint (channel, property, value);
   update_label (label, scale, format_brightness_value_cb);
-}
-
-void
-critical_level_value_changed_cb (GtkSpinButton *w,
-                                 XfconfChannel *channel)
-{
-  guint val = (guint) gtk_spin_button_get_value (w);
-
-  if (!xfconf_channel_set_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, val))
-  {
-    g_critical ("Unable to set value %d for property %s", val, CRITICAL_POWER_LEVEL);
-  }
 }
 
 gboolean
@@ -1032,18 +988,8 @@ xfpm_settings_others (XfconfChannel *channel,
   critical_level = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-level-spin"));
   if (has_battery)
   {
-    gtk_widget_set_tooltip_text (critical_level,
-                                 _("When all the power sources of the computer reach this charge level"));
-
-    val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, DEFAULT_CRITICAL_POWER_LEVEL);
-
-    if (val > MAX_CRITICAL_POWER_LEVEL || val < MIN_CRITICAL_POWER_LEVEL)
-    {
-      g_critical ("Value %d if out of range for property %s", val, CRITICAL_POWER_LEVEL);
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON (critical_level), DEFAULT_CRITICAL_POWER_LEVEL);
-    }
-    else
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON (critical_level), val);
+    gtk_widget_set_tooltip_text (critical_level, _("When all the power sources of the computer reach this charge level"));
+    xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, G_TYPE_UINT, critical_level, "value");
   }
   else
   {
@@ -1080,20 +1026,15 @@ xfpm_settings_others (XfconfChannel *channel,
   gtk_list_store_append (list_store, &iter);
   gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
 
+  gtk_combo_box_set_active (GTK_COMBO_BOX (battery_critical), 0);
   val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION, DEFAULT_CRITICAL_POWER_ACTION);
+  set_combo_box_active_by_value (val, GTK_COMBO_BOX (battery_critical));
 
-  for (gboolean valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (list_store), &iter);
-       valid;
-       valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (list_store), &iter))
-  {
-    guint list_value;
-    gtk_tree_model_get (GTK_TREE_MODEL (list_store), &iter, 1, &list_value, -1);
-    if (val == list_value)
-    {
-      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (battery_critical), &iter);
-      break;
-    }
-  }
+  g_object_set_data (G_OBJECT (battery_critical), "default-value", GUINT_TO_POINTER (DEFAULT_CRITICAL_POWER_ACTION));
+  g_signal_connect (channel, "property-changed::" XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION,
+                    G_CALLBACK (combo_box_xfconf_property_changed_cb), battery_critical);
+  g_object_set_data (G_OBJECT (battery_critical), "xfconf-property", XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION);
+  g_signal_connect (battery_critical, "changed", G_CALLBACK (combo_box_changed_cb), channel);
 
   /*
    * Lock screen for suspend/hibernate
@@ -1111,15 +1052,16 @@ xfpm_settings_others (XfconfChannel *channel,
     gtk_widget_set_tooltip_text (lock, _("Hibernate and suspend operations not permitted"));
   }
 
-  val = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_SUSPEND_HIBERNATE, DEFAULT_LOCK_SCREEN_SUSPEND_HIBERNATE);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lock), val);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (lock), DEFAULT_LOCK_SCREEN_SUSPEND_HIBERNATE);
+  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_SUSPEND_HIBERNATE, G_TYPE_BOOLEAN, lock, "active");
 
   /*
    * Global dpms settings (enable/disable)
    */
   dpms = GTK_WIDGET (gtk_builder_get_object (xml, "handle-dpms"));
-  val = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED, DEFAULT_DPMS_ENABLED);
-  gtk_switch_set_state (GTK_SWITCH (dpms), val);
+  gtk_switch_set_state (GTK_SWITCH (dpms), DEFAULT_DPMS_ENABLED);
+  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX DPMS_ENABLED, G_TYPE_BOOLEAN, dpms, "active");
+  g_signal_connect (dpms, "state-set", G_CALLBACK (dpms_toggled_cb), channel);
 }
 
 /* Light Locker Integration */
