@@ -106,10 +106,6 @@ enum
 void
 lock_screen_toggled_cb (GtkWidget *w,
                         XfconfChannel *channel);
-gboolean
-handle_brightness_keys_toggled_cb (GtkWidget *w,
-                                   gboolean is_active,
-                                   XfconfChannel *channel);
 /* Light Locker Integration */
 void
 light_locker_late_locking_value_changed_cb (GtkWidget *w,
@@ -408,7 +404,7 @@ brightness_value_changed_cb (GtkWidget *scale,
   update_label (label, scale, format_brightness_value_cb);
 }
 
-gboolean
+static gboolean
 handle_brightness_keys_toggled_cb (GtkWidget *w,
                                    gboolean is_active,
                                    XfconfChannel *channel)
@@ -932,6 +928,7 @@ xfpm_settings_general (XfconfChannel *channel,
   gtk_switch_set_active (GTK_SWITCH (switch_widget), DEFAULT_HANDLE_BRIGHTNESS_KEYS);
   xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX HANDLE_BRIGHTNESS_KEYS,
                           G_TYPE_BOOLEAN, switch_widget, "active");
+  g_signal_connect (switch_widget, "state-set", G_CALLBACK (handle_brightness_keys_toggled_cb), channel);
 
   brightness_step_count = GTK_WIDGET (gtk_builder_get_object (xml, "brightness-step-count-spin"));
   gtk_widget_set_tooltip_text (brightness_step_count,
