@@ -665,6 +665,60 @@ xfpm_settings_power_supply (XfconfChannel *channel,
 }
 
 static void
+add_button_combo (XfconfChannel *channel,
+                  const gchar *widget_id,
+                  const gchar *property,
+                  guint default_value,
+                  gboolean auth_suspend,
+                  gboolean auth_hibernate,
+                  gboolean can_suspend,
+                  gboolean can_hibernate,
+                  gboolean can_shutdown)
+{
+  GtkListStore *list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
+  GtkWidget *combo = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
+  gchar *property_changed = g_strconcat ("property-changed::", property, NULL);
+  GtkTreeIter iter;
+  guint value;
+
+  gtk_combo_box_set_model (GTK_COMBO_BOX (combo), GTK_TREE_MODEL (list_store));
+  gtk_list_store_append (list_store, &iter);
+  gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
+
+  if (can_suspend && auth_suspend)
+  {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
+  }
+
+  if (can_hibernate && auth_hibernate)
+  {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
+  }
+
+  if (can_shutdown)
+  {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, XFPM_DO_SHUTDOWN, -1);
+  }
+
+  gtk_list_store_append (list_store, &iter);
+  gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
+
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
+  value = xfconf_channel_get_uint (channel, property, default_value);
+  set_combo_box_active_by_value (value, GTK_COMBO_BOX (combo));
+
+  g_object_set_data (G_OBJECT (combo), "default-value", GUINT_TO_POINTER (default_value));
+  g_signal_connect (channel, property_changed, G_CALLBACK (combo_box_xfconf_property_changed_cb), combo);
+  g_object_set_data_full (G_OBJECT (combo), "xfconf-property", g_strdup (property), g_free);
+  g_signal_connect (combo, "changed", G_CALLBACK (combo_box_changed_cb), channel);
+
+  g_free (property_changed);
+}
+
+static void
 xfpm_settings_general (XfconfChannel *channel,
                        gboolean auth_suspend,
                        gboolean auth_hibernate,
@@ -676,210 +730,55 @@ xfpm_settings_general (XfconfChannel *channel,
                        gboolean has_power_button,
                        gboolean has_battery_button)
 {
-  GtkWidget *power;
-  GtkWidget *power_label;
-  GtkWidget *hibernate;
-  GtkWidget *hibernate_label;
-  GtkWidget *sleep_w;
-  GtkWidget *sleep_label;
-  GtkWidget *battery_w;
-  GtkWidget *battery_label;
   GtkWidget *switch_widget;
-
-  guint value;
   gboolean valid;
-
-  GtkListStore *list_store;
-  GtkTreeIter iter;
-
-  /*
-   * Power button
-   */
-  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-  power = GTK_WIDGET (gtk_builder_get_object (xml, "button-power-combo"));
-  power_label = GTK_WIDGET (gtk_builder_get_object (xml, "button-power-label"));
 
   if (has_power_button)
   {
-    gtk_combo_box_set_model (GTK_COMBO_BOX (power), GTK_TREE_MODEL (list_store));
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
-
-    if (can_suspend && auth_suspend)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
-    }
-
-    if (can_hibernate && auth_hibernate)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
-    }
-
-    if (can_shutdown)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, XFPM_DO_SHUTDOWN, -1);
-    }
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
-
-    gtk_combo_box_set_active (GTK_COMBO_BOX (power), 0);
-    value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX POWER_BUTTON_ACTION, DEFAULT_POWER_BUTTON_ACTION);
-    set_combo_box_active_by_value (value, GTK_COMBO_BOX (power));
-
-    g_object_set_data (G_OBJECT (power), "default-value", GUINT_TO_POINTER (DEFAULT_POWER_BUTTON_ACTION));
-    g_signal_connect (channel,
-                      "property-changed::" XFPM_PROPERTIES_PREFIX POWER_BUTTON_ACTION,
-                      G_CALLBACK (combo_box_xfconf_property_changed_cb), power);
-    g_object_set_data (G_OBJECT (power), "xfconf-property", XFPM_PROPERTIES_PREFIX POWER_BUTTON_ACTION);
-    g_signal_connect (power, "changed", G_CALLBACK (combo_box_changed_cb), channel);
+    add_button_combo (channel, "button-power-combo", XFPM_PROPERTIES_PREFIX POWER_BUTTON_ACTION,
+                      DEFAULT_POWER_BUTTON_ACTION, auth_suspend, auth_hibernate, can_suspend,
+                      can_hibernate, can_shutdown);
   }
   else
   {
-    gtk_widget_hide (power);
-    gtk_widget_hide (power_label);
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "button-power-combo")));
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "button-power-label")));
   }
-
-  /*
-   * Hibernate button
-   */
-  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-  hibernate = GTK_WIDGET (gtk_builder_get_object (xml, "button-hibernate-combo"));
-  hibernate_label = GTK_WIDGET (gtk_builder_get_object (xml, "button-hibernate-label"));
-
-  if (has_hibernate_button)
-  {
-    gtk_combo_box_set_model (GTK_COMBO_BOX (hibernate), GTK_TREE_MODEL (list_store));
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
-
-    if (can_suspend && auth_suspend)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
-    }
-
-    if (can_hibernate && auth_hibernate)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
-    }
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
-
-    gtk_combo_box_set_active (GTK_COMBO_BOX (hibernate), 0);
-    value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX HIBERNATE_BUTTON_ACTION, DEFAULT_HIBERNATE_BUTTON_ACTION);
-    set_combo_box_active_by_value (value, GTK_COMBO_BOX (hibernate));
-
-    g_object_set_data (G_OBJECT (hibernate), "default-value", GUINT_TO_POINTER (DEFAULT_HIBERNATE_BUTTON_ACTION));
-    g_signal_connect (channel,
-                      "property-changed::" XFPM_PROPERTIES_PREFIX HIBERNATE_BUTTON_ACTION,
-                      G_CALLBACK (combo_box_xfconf_property_changed_cb), hibernate);
-    g_object_set_data (G_OBJECT (hibernate), "xfconf-property", XFPM_PROPERTIES_PREFIX HIBERNATE_BUTTON_ACTION);
-    g_signal_connect (hibernate, "changed", G_CALLBACK (combo_box_changed_cb), channel);
-  }
-  else
-  {
-    gtk_widget_hide (hibernate);
-    gtk_widget_hide (hibernate_label);
-  }
-
-  /*
-   * Sleep button
-   */
-  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-  sleep_w = GTK_WIDGET (gtk_builder_get_object (xml, "button-sleep-combo"));
-  sleep_label = GTK_WIDGET (gtk_builder_get_object (xml, "button-sleep-label"));
 
   if (has_sleep_button)
   {
-    gtk_combo_box_set_model (GTK_COMBO_BOX (sleep_w), GTK_TREE_MODEL (list_store));
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
-
-    if (can_suspend && auth_suspend)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
-    }
-
-    if (can_hibernate && auth_hibernate)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
-    }
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
-
-    gtk_combo_box_set_active (GTK_COMBO_BOX (sleep_w), 0);
-    value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX SLEEP_BUTTON_ACTION, DEFAULT_SLEEP_BUTTON_ACTION);
-    set_combo_box_active_by_value (value, GTK_COMBO_BOX (sleep_w));
-
-    g_object_set_data (G_OBJECT (sleep_w), "default-value", GUINT_TO_POINTER (DEFAULT_SLEEP_BUTTON_ACTION));
-    g_signal_connect (channel,
-                      "property-changed::" XFPM_PROPERTIES_PREFIX SLEEP_BUTTON_ACTION,
-                      G_CALLBACK (combo_box_xfconf_property_changed_cb), sleep_w);
-    g_object_set_data (G_OBJECT (sleep_w), "xfconf-property", XFPM_PROPERTIES_PREFIX SLEEP_BUTTON_ACTION);
-    g_signal_connect (sleep_w, "changed", G_CALLBACK (combo_box_changed_cb), channel);
+    add_button_combo (channel, "button-sleep-combo", XFPM_PROPERTIES_PREFIX SLEEP_BUTTON_ACTION,
+                      DEFAULT_SLEEP_BUTTON_ACTION, auth_suspend, auth_hibernate, can_suspend,
+                      can_hibernate, FALSE);
   }
   else
   {
-    gtk_widget_hide (sleep_w);
-    gtk_widget_hide (sleep_label);
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "button-sleep-combo")));
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "button-sleep-label")));
   }
 
-  /*
-   * Battery button
-   */
-  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-  battery_w = GTK_WIDGET (gtk_builder_get_object (xml, "button-battery-combo"));
-  battery_label = GTK_WIDGET (gtk_builder_get_object (xml, "button-battery-label"));
+  if (has_hibernate_button)
+  {
+    add_button_combo (channel, "button-hibernate-combo", XFPM_PROPERTIES_PREFIX HIBERNATE_BUTTON_ACTION,
+                      DEFAULT_HIBERNATE_BUTTON_ACTION, auth_suspend, auth_hibernate, can_suspend,
+                      can_hibernate, FALSE);
+  }
+  else
+  {
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "button-hibernate-combo")));
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "button-hibernate-label")));
+  }
 
   if (has_battery_button)
   {
-    gtk_combo_box_set_model (GTK_COMBO_BOX (battery_w), GTK_TREE_MODEL (list_store));
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
-
-    if (can_suspend && auth_suspend)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
-    }
-
-    if (can_hibernate && auth_hibernate)
-    {
-      gtk_list_store_append (list_store, &iter);
-      gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
-    }
-
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
-
-    gtk_combo_box_set_active (GTK_COMBO_BOX (battery_w), 0);
-    value = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX BATTERY_BUTTON_ACTION, DEFAULT_BATTERY_BUTTON_ACTION);
-    set_combo_box_active_by_value (value, GTK_COMBO_BOX (battery_w));
-
-    g_object_set_data (G_OBJECT (battery_w), "default-value", GUINT_TO_POINTER (DEFAULT_BATTERY_BUTTON_ACTION));
-    g_signal_connect (channel,
-                      "property-changed::" XFPM_PROPERTIES_PREFIX BATTERY_BUTTON_ACTION,
-                      G_CALLBACK (combo_box_xfconf_property_changed_cb), battery_w);
-    g_object_set_data (G_OBJECT (battery_w), "xfconf-property", XFPM_PROPERTIES_PREFIX BATTERY_BUTTON_ACTION);
-    g_signal_connect (battery_w, "changed", G_CALLBACK (combo_box_changed_cb), channel);
+    add_button_combo (channel, "button-battery-combo", XFPM_PROPERTIES_PREFIX BATTERY_BUTTON_ACTION,
+                      DEFAULT_BATTERY_BUTTON_ACTION, auth_suspend, auth_hibernate, can_suspend,
+                      can_hibernate, FALSE);
   }
   else
   {
-    gtk_widget_hide (battery_w);
-    gtk_widget_hide (battery_label);
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "button-battery-combo")));
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "button-battery-label")));
   }
 
   /*
