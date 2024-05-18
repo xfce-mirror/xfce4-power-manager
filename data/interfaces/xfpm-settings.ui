@@ -743,7 +743,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="inactivity_on_battery_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -778,7 +777,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_battery_sleep_mode_changed_cb" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer8"/>
                                   <attributes>
@@ -851,7 +849,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_battery_lid_changed_cb" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer9"/>
                                   <attributes>
@@ -883,7 +880,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <signal name="changed" handler="on_battery_power_profile_changed_cb" swapped="no"/>
+                                <property name="id-column">0</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer12"/>
                                   <attributes>
@@ -1383,7 +1380,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="sleep_on_battery_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1454,7 +1450,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="off_on_battery_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1524,7 +1519,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="brightness_level_on_battery" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
@@ -1568,7 +1562,6 @@
                                     <property name="round_digits">0</property>
                                     <property name="digits">0</property>
                                     <property name="draw_value">False</property>
-                                    <signal name="value-changed" handler="brightness_on_battery_value_changed_cb" swapped="no"/>
                                     <style>
                                       <class name="xfce4-scale-label"/>
                                     </style>
