@@ -100,46 +100,23 @@ enum
   XFPM_DEVICE_INFO_LAST
 };
 
+/* Light Locker Integration */
 /*
  * GtkBuilder callbacks (can't be set static)
  */
 void
 lock_screen_toggled_cb (GtkWidget *w,
                         XfconfChannel *channel);
-/* Light Locker Integration */
 void
 light_locker_late_locking_value_changed_cb (GtkWidget *w,
                                             XfconfChannel *channel);
 void
 light_locker_automatic_locking_changed_cb (GtkWidget *w,
                                            XfconfChannel *channel);
-static gchar *
-format_light_locker_value_cb (gint value);
+
 static void
 xfpm_update_logind_handle_lid_switch (XfconfChannel *channel);
 /* END Light Locker Integration */
-
-
-static void
-combo_box_xfconf_property_changed_cb (XfconfChannel *channel,
-                                      char *property,
-                                      GValue *value,
-                                      GtkWidget *combo_box);
-static void
-set_combo_box_active_by_value (guint new_value,
-                               GtkComboBox *combo_box);
-static gchar *
-format_dpms_value_cb (gint value);
-static gchar *
-format_inactivity_value_cb (gint value);
-static gchar *
-format_brightness_value_cb (gint value);
-static gchar *
-format_brightness_percentage_cb (gint value);
-static void
-view_cursor_changed_cb (GtkTreeView *view,
-                        gpointer *user_data);
-
 
 static void
 update_label (GtkWidget *label,
@@ -184,34 +161,6 @@ combo_box_changed_cb (GtkWidget *combo_box,
 }
 
 static void
-brg_scale_xfconf_property_changed_cb (XfconfChannel *channel,
-                                      char *property,
-                                      GValue *value,
-                                      GtkWidget *scale)
-{
-  guint val;
-  if (G_VALUE_TYPE (value) == G_TYPE_INVALID)
-    val = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (scale), "default-value"));
-  else
-    val = g_value_get_uint (value);
-
-  gtk_range_set_value (GTK_RANGE (scale), val / 10);
-}
-
-static void
-combo_box_xfconf_property_changed_cb (XfconfChannel *channel,
-                                      char *property,
-                                      GValue *value,
-                                      GtkWidget *combo_box)
-{
-  if (G_VALUE_TYPE (value) == G_TYPE_INVALID)
-    set_combo_box_active_by_value (GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (combo_box), "default-value")),
-                                   GTK_COMBO_BOX (combo_box));
-  else
-    set_combo_box_active_by_value (g_value_get_uint (value), GTK_COMBO_BOX (combo_box));
-}
-
-static void
 set_combo_box_active_by_value (guint new_value,
                                GtkComboBox *combo_box)
 {
@@ -235,70 +184,38 @@ set_combo_box_active_by_value (guint new_value,
   }
 }
 
-static gboolean
-dpms_toggled_cb (GtkWidget *w,
-                 gboolean is_active,
-                 XfconfChannel *channel)
+static void
+combo_box_xfconf_property_changed_cb (XfconfChannel *channel,
+                                      char *property,
+                                      GValue *value,
+                                      GtkWidget *combo_box)
 {
-  gtk_widget_set_sensitive (on_ac_dpms_off, is_active);
-  gtk_widget_set_sensitive (on_ac_dpms_sleep, is_active);
-  gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-label")), is_active);
-  gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-label")), is_active);
-
-  if (GTK_IS_WIDGET (on_battery_dpms_off))
-  {
-    gtk_widget_set_sensitive (on_battery_dpms_off, is_active);
-    gtk_widget_set_sensitive (on_battery_dpms_sleep, is_active);
-  }
-
-  return FALSE;
+  if (G_VALUE_TYPE (value) == G_TYPE_INVALID)
+    set_combo_box_active_by_value (GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (combo_box), "default-value")),
+                                   GTK_COMBO_BOX (combo_box));
+  else
+    set_combo_box_active_by_value (g_value_get_uint (value), GTK_COMBO_BOX (combo_box));
 }
 
 static void
-sleep_value_changed_cb (GtkWidget *scale,
-                        GtkWidget *label)
+view_cursor_changed_cb (GtkTreeView *view,
+                        gpointer *user_data)
 {
-  gboolean on_ac = scale == on_ac_dpms_sleep;
-  GtkWidget *off_scale = on_ac ? on_ac_dpms_off : on_battery_dpms_off;
-  gint sleep_value = gtk_range_get_value (GTK_RANGE (scale));
-  gint off_value = gtk_range_get_value (GTK_RANGE (off_scale));
+  GtkTreeSelection *sel;
+  GtkTreeModel *model;
+  GtkTreeIter selected_row;
+  gint int_data = 0;
 
-  if (off_value != 0 && sleep_value >= off_value)
-  {
-    gtk_range_set_value (GTK_RANGE (off_scale), sleep_value + 1);
-  }
+  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 
-  if (lcd_brightness)
-  {
-    GtkWidget *brg = GTK_WIDGET (gtk_builder_get_object (
-      xml, on_ac ? "brightness-inactivity-on-ac" : "brightness-inactivity-on-battery"));
-    gint min_value = on_ac ? MIN_BRIGHTNESS_ON_AC : MIN_BRIGHTNESS_ON_BATTERY;
-    gint brightness_value = MAX (min_value, 10 * (gint) gtk_range_get_value (GTK_RANGE (brg)));
+  if (!gtk_tree_selection_get_selected (sel, &model, &selected_row))
+    return;
 
-    if (sleep_value * 60 <= brightness_value && brightness_value != min_value)
-    {
-      gtk_range_set_value (GTK_RANGE (brg), 0);
-    }
-  }
+  gtk_tree_model_get (model, &selected_row,
+                      COL_SIDEBAR_INT, &int_data,
+                      -1);
 
-  update_label (label, scale, format_dpms_value_cb);
-}
-
-static void
-off_value_changed_cb (GtkWidget *scale,
-                      GtkWidget *label)
-{
-  gboolean on_ac = scale == on_ac_dpms_off;
-  GtkWidget *sleep_scale = on_ac ? on_ac_dpms_sleep : on_battery_dpms_sleep;
-  gint off_value = gtk_range_get_value (GTK_RANGE (scale));
-  gint sleep_value = gtk_range_get_value (GTK_RANGE (sleep_scale));
-
-  if (sleep_value != 0 && off_value <= sleep_value)
-  {
-    gtk_range_set_value (GTK_RANGE (sleep_scale), off_value - 1);
-  }
-
-  update_label (label, scale, format_dpms_value_cb);
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (device_details_notebook), int_data);
 }
 
 /*
@@ -383,6 +300,87 @@ format_brightness_percentage_cb (gint value)
 }
 
 static void
+brg_scale_xfconf_property_changed_cb (XfconfChannel *channel,
+                                      char *property,
+                                      GValue *value,
+                                      GtkWidget *scale)
+{
+  guint val;
+  if (G_VALUE_TYPE (value) == G_TYPE_INVALID)
+    val = GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (scale), "default-value"));
+  else
+    val = g_value_get_uint (value);
+
+  gtk_range_set_value (GTK_RANGE (scale), val / 10);
+}
+
+static gboolean
+dpms_toggled_cb (GtkWidget *w,
+                 gboolean is_active,
+                 XfconfChannel *channel)
+{
+  gtk_widget_set_sensitive (on_ac_dpms_off, is_active);
+  gtk_widget_set_sensitive (on_ac_dpms_sleep, is_active);
+  gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-sleep-label")), is_active);
+  gtk_widget_set_sensitive (GTK_WIDGET (gtk_builder_get_object (xml, "dpms-off-label")), is_active);
+
+  if (GTK_IS_WIDGET (on_battery_dpms_off))
+  {
+    gtk_widget_set_sensitive (on_battery_dpms_off, is_active);
+    gtk_widget_set_sensitive (on_battery_dpms_sleep, is_active);
+  }
+
+  return FALSE;
+}
+
+static void
+sleep_value_changed_cb (GtkWidget *scale,
+                        GtkWidget *label)
+{
+  gboolean on_ac = scale == on_ac_dpms_sleep;
+  GtkWidget *off_scale = on_ac ? on_ac_dpms_off : on_battery_dpms_off;
+  gint sleep_value = gtk_range_get_value (GTK_RANGE (scale));
+  gint off_value = gtk_range_get_value (GTK_RANGE (off_scale));
+
+  if (off_value != 0 && sleep_value >= off_value)
+  {
+    gtk_range_set_value (GTK_RANGE (off_scale), sleep_value + 1);
+  }
+
+  if (lcd_brightness)
+  {
+    GtkWidget *brg = GTK_WIDGET (gtk_builder_get_object (
+      xml, on_ac ? "brightness-inactivity-on-ac" : "brightness-inactivity-on-battery"));
+    gint min_value = on_ac ? MIN_BRIGHTNESS_ON_AC : MIN_BRIGHTNESS_ON_BATTERY;
+    gint brightness_value = MAX (min_value, 10 * (gint) gtk_range_get_value (GTK_RANGE (brg)));
+
+    if (sleep_value * 60 <= brightness_value && brightness_value != min_value)
+    {
+      gtk_range_set_value (GTK_RANGE (brg), 0);
+    }
+  }
+
+  update_label (label, scale, format_dpms_value_cb);
+}
+
+static void
+off_value_changed_cb (GtkWidget *scale,
+                      GtkWidget *label)
+{
+  gboolean on_ac = scale == on_ac_dpms_off;
+  GtkWidget *sleep_scale = on_ac ? on_ac_dpms_sleep : on_battery_dpms_sleep;
+  gint off_value = gtk_range_get_value (GTK_RANGE (scale));
+  gint sleep_value = gtk_range_get_value (GTK_RANGE (sleep_scale));
+
+  if (sleep_value != 0 && off_value <= sleep_value)
+  {
+    gtk_range_set_value (GTK_RANGE (sleep_scale), off_value - 1);
+  }
+
+  update_label (label, scale, format_dpms_value_cb);
+}
+
+static void
 brightness_value_changed_cb (GtkWidget *scale,
                              XfconfChannel *channel)
 {
@@ -415,43 +413,6 @@ handle_brightness_keys_toggled_cb (GtkWidget *w,
 
   return FALSE;
 }
-
-void
-lock_screen_toggled_cb (GtkWidget *w,
-                        XfconfChannel *channel)
-{
-  gboolean val = (gint) gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
-
-  if (!xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_SUSPEND_HIBERNATE, val))
-  {
-    g_critical ("Unable to set value for property %s", LOCK_SCREEN_SUSPEND_HIBERNATE);
-  }
-
-  /* Light Locker Integration */
-  if (light_locker_settings)
-  {
-    GVariant *variant;
-    variant = g_variant_new_boolean (val);
-    if (!g_settings_set_value (light_locker_settings, "lock-on-suspend", variant))
-      g_critical ("Cannot set value for property lock-on-suspend");
-
-    xfpm_update_logind_handle_lid_switch (channel);
-  }
-  /* END Light Locker Integration */
-}
-
-/* Light Locker Integration */
-static void
-xfpm_update_logind_handle_lid_switch (XfconfChannel *channel)
-{
-  gboolean lock_on_suspend = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_SUSPEND_HIBERNATE, DEFAULT_LOCK_SCREEN_SUSPEND_HIBERNATE);
-  guint lid_switch_on_ac = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_ACTION_ON_AC, DEFAULT_LID_ACTION_ON_AC);
-  guint lid_switch_on_battery = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_ACTION_ON_BATTERY, DEFAULT_LID_ACTION_ON_BATTERY);
-
-  // logind-handle-lid-switch = true when: lock_on_suspend == true and (lid_switch_on_ac == suspend and lid_switch_on_battery == suspend)
-  xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX LOGIND_HANDLE_LID_SWITCH, lock_on_suspend && (lid_switch_on_ac == 1 && lid_switch_on_battery == 1));
-}
-/* END Light Locker Integration */
 
 static void
 xfpm_settings_power_supply (XfconfChannel *channel,
@@ -1101,6 +1062,24 @@ format_light_locker_value_cb (gint value)
 }
 
 void
+lock_screen_toggled_cb (GtkWidget *w,
+                        XfconfChannel *channel)
+{
+  gboolean val = (gint) gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (w));
+  GVariant *variant = g_variant_new_boolean (val);
+
+  if (!xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_SUSPEND_HIBERNATE, val))
+  {
+    g_critical ("Unable to set value for property %s", LOCK_SCREEN_SUSPEND_HIBERNATE);
+  }
+
+  if (!g_settings_set_value (light_locker_settings, "lock-on-suspend", variant))
+    g_critical ("Cannot set value for property lock-on-suspend");
+
+  xfpm_update_logind_handle_lid_switch (channel);
+}
+
+void
 light_locker_late_locking_value_changed_cb (GtkWidget *widget,
                                             XfconfChannel *channel)
 {
@@ -1155,6 +1134,17 @@ light_locker_automatic_locking_changed_cb (GtkWidget *widget,
   variant = g_variant_new_boolean (late_locking);
   if (!g_settings_set_value (light_locker_settings, "late-locking", variant))
     g_critical ("Cannot set value for property late-locking");
+}
+
+static void
+xfpm_update_logind_handle_lid_switch (XfconfChannel *channel)
+{
+  gboolean lock_on_suspend = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX LOCK_SCREEN_SUSPEND_HIBERNATE, DEFAULT_LOCK_SCREEN_SUSPEND_HIBERNATE);
+  guint lid_switch_on_ac = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_ACTION_ON_AC, DEFAULT_LID_ACTION_ON_AC);
+  guint lid_switch_on_battery = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX LID_ACTION_ON_BATTERY, DEFAULT_LID_ACTION_ON_BATTERY);
+
+  // logind-handle-lid-switch = true when: lock_on_suspend == true and (lid_switch_on_ac == suspend and lid_switch_on_battery == suspend)
+  xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX LOGIND_HANDLE_LID_SWITCH, lock_on_suspend && (lid_switch_on_ac == 1 && lid_switch_on_battery == 1));
 }
 
 static void
@@ -1768,27 +1758,6 @@ settings_create_devices_list (void)
     g_signal_connect_object (upower, "device-removed", G_CALLBACK (device_removed_cb), sideview, 0);
     add_all_devices ();
   }
-}
-
-static void
-view_cursor_changed_cb (GtkTreeView *view,
-                        gpointer *user_data)
-{
-  GtkTreeSelection *sel;
-  GtkTreeModel *model;
-  GtkTreeIter selected_row;
-  gint int_data = 0;
-
-  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
-
-  if (!gtk_tree_selection_get_selected (sel, &model, &selected_row))
-    return;
-
-  gtk_tree_model_get (model, &selected_row,
-                      COL_SIDEBAR_INT, &int_data,
-                      -1);
-
-  gtk_notebook_set_current_page (GTK_NOTEBOOK (device_details_notebook), int_data);
 }
 
 static void
