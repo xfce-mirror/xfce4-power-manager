@@ -133,8 +133,10 @@ xfpm_settings_app_launch (GApplication *app)
   gboolean has_battery;
   gboolean auth_suspend;
   gboolean auth_hibernate;
+  gboolean auth_hybrid_sleep;
   gboolean can_suspend;
   gboolean can_hibernate;
+  gboolean can_hybrid_sleep;
   gboolean can_shutdown;
   gboolean has_lcd_brightness;
   gboolean has_sleep_button;
@@ -242,8 +244,10 @@ xfpm_settings_app_launch (GApplication *app)
   has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
   can_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-suspend"));
   can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hibernate"));
+  can_hybrid_sleep = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hybrid-sleep"));
   auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-suspend"));
   auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hibernate"));
+  auth_hybrid_sleep = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hybrid-sleep"));
   has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-brightness"));
   has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "sleep-button"));
   has_power_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "power-button"));
@@ -256,8 +260,8 @@ xfpm_settings_app_launch (GApplication *app)
 #endif
   XFPM_DEBUG ("device id %s", priv->device_id);
 
-  dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate,
-                                     can_suspend, can_hibernate, can_shutdown, has_battery, has_lcd_brightness,
+  dialog = xfpm_settings_dialog_new (channel, auth_suspend, auth_hibernate, auth_hybrid_sleep,
+                                     can_suspend, can_hibernate, can_hybrid_sleep, can_shutdown, has_battery, has_lcd_brightness,
                                      has_lid, has_sleep_button, has_hibernate_button, has_power_button, has_battery_button,
 #ifdef ENABLE_X11
                                      priv->socket_id,

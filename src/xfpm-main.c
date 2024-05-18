@@ -74,8 +74,10 @@ xfpm_dump (GHashTable *hash)
   gboolean has_battery = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-battery"));
   gboolean auth_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-suspend"));
   gboolean auth_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hibernate"));
+  gboolean auth_hybrid_sleep = xfpm_string_to_bool (g_hash_table_lookup (hash, "auth-hybrid-sleep"));
   gboolean can_suspend = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-suspend"));
   gboolean can_hibernate = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hibernate"));
+  gboolean can_hybrid_sleep = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-hybrid-sleep"));
   gboolean can_shutdown = xfpm_string_to_bool (g_hash_table_lookup (hash, "can-shutdown"));
   gboolean has_lcd_brightness = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-brightness"));
   gboolean has_sleep_button = xfpm_string_to_bool (g_hash_table_lookup (hash, "sleep-button"));
@@ -105,11 +107,15 @@ xfpm_dump (GHashTable *hash)
            "%s: %s\n"
            "%s: %s\n"
            "%s: %s\n"
+           "%s: %s\n"
+           "%s: %s\n"
            "%s: %s\n",
            _("Can suspend"), xfpm_bool_to_local_string (can_suspend),
            _("Can hibernate"), xfpm_bool_to_local_string (can_hibernate),
+           _("Can hybrid sleep"), xfpm_bool_to_local_string (can_hybrid_sleep),
            _("Authorized to suspend"), xfpm_bool_to_local_string (auth_suspend),
            _("Authorized to hibernate"), xfpm_bool_to_local_string (auth_hibernate),
+           _("Authorized to hybrid sleep"), xfpm_bool_to_local_string (auth_hybrid_sleep),
            _("Authorized to shutdown"), xfpm_bool_to_local_string (can_shutdown),
            _("Has battery"), xfpm_bool_to_local_string (has_battery),
            _("Has brightness panel"), xfpm_bool_to_local_string (has_lcd_brightness),

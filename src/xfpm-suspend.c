@@ -166,6 +166,22 @@ xfpm_suspend_can_hibernate (void)
 }
 
 gboolean
+xfpm_suspend_can_hybrid_sleep (void)
+{
+#ifdef BACKEND_TYPE_FREEBSD
+  return TRUE;
+#endif
+#ifdef BACKEND_TYPE_LINUX
+  return linux_supports_sleep_state ("suspend-hybrid");
+#endif
+#ifdef BACKEND_TYPE_OPENBSD
+  return TRUE;
+#endif
+
+  return FALSE;
+}
+
+gboolean
 xfpm_suspend_try_action (XfpmActionType type)
 {
   const gchar *action;
@@ -177,6 +193,8 @@ xfpm_suspend_try_action (XfpmActionType type)
     action = "suspend";
   else if (type == XFPM_HIBERNATE)
     action = "hibernate";
+  else if (type == XFPM_HYBRID_SLEEP)
+    action = "hybrid-sleep";
   else
     return FALSE;
 
