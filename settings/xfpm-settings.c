@@ -830,68 +830,27 @@ xfpm_settings_others (XfconfChannel *channel,
                       gboolean can_shutdown,
                       gboolean has_battery)
 {
-  guint val;
   GtkWidget *critical_level;
   GtkWidget *lock;
-  GtkWidget *label;
   GtkWidget *dpms;
-  GtkWidget *battery_critical;
-  GtkListStore *list_store;
-  GtkTreeIter iter;
 
   /*
    * Battery critical
    */
-  critical_level = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-level-spin"));
   if (has_battery)
   {
+    critical_level = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-level-spin"));
     gtk_widget_set_tooltip_text (critical_level, _("When all the power sources of the computer reach this charge level"));
     xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, G_TYPE_UINT, critical_level, "value");
+
+    add_button_combo (channel, "critical-power-action-combo", XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION,
+                      DEFAULT_CRITICAL_POWER_ACTION, auth_suspend, auth_hibernate, can_suspend,
+                      can_hibernate, can_shutdown);
   }
   else
   {
-    label = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-level-label"));
-    gtk_widget_hide (critical_level);
-    gtk_widget_hide (label);
+    gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-frame")));
   }
-
-  battery_critical = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-action-combo"));
-  list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
-  gtk_combo_box_set_model (GTK_COMBO_BOX (battery_critical), GTK_TREE_MODEL (list_store));
-
-  gtk_list_store_append (list_store, &iter);
-  gtk_list_store_set (list_store, &iter, 0, _("Do nothing"), 1, XFPM_DO_NOTHING, -1);
-
-  if (can_suspend && auth_suspend)
-  {
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
-  }
-
-  if (can_hibernate && auth_hibernate)
-  {
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
-  }
-
-  if (can_shutdown)
-  {
-    gtk_list_store_append (list_store, &iter);
-    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, XFPM_DO_SHUTDOWN, -1);
-  }
-
-  gtk_list_store_append (list_store, &iter);
-  gtk_list_store_set (list_store, &iter, 0, _("Ask"), 1, XFPM_ASK, -1);
-
-  gtk_combo_box_set_active (GTK_COMBO_BOX (battery_critical), 0);
-  val = xfconf_channel_get_uint (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION, DEFAULT_CRITICAL_POWER_ACTION);
-  set_combo_box_active_by_value (val, GTK_COMBO_BOX (battery_critical));
-
-  g_object_set_data (G_OBJECT (battery_critical), "default-value", GUINT_TO_POINTER (DEFAULT_CRITICAL_POWER_ACTION));
-  g_signal_connect (channel, "property-changed::" XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION,
-                    G_CALLBACK (combo_box_xfconf_property_changed_cb), battery_critical);
-  g_object_set_data (G_OBJECT (battery_critical), "xfconf-property", XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION);
-  g_signal_connect (battery_critical, "changed", G_CALLBACK (combo_box_changed_cb), channel);
 
   /*
    * Lock screen for suspend/hibernate
