@@ -1845,12 +1845,12 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
   GDBusProxy *profiles_proxy = xfpm_ppd_g_dbus_proxy_new ();
   gchar *path;
 
-  XFPM_DEBUG ("auth_hibernate=%s auth_suspend=%s can_shutdown=%s can_suspend=%s can_hibernate=%s "
+  XFPM_DEBUG ("auth_suspend=%s auth_hibernate=%s can_suspend=%s can_hibernate=%s can_shutdown=%s "
               "has_battery=%s has_lcd_brightness=%s has_lid=%s has_sleep_button=%s "
               "has_hibernate_button=%s has_power_button=%s has_battery_button=%s",
-              xfpm_bool_to_string (has_battery), xfpm_bool_to_string (auth_hibernate),
-              xfpm_bool_to_string (can_shutdown), xfpm_bool_to_string (auth_suspend),
+              xfpm_bool_to_string (auth_suspend), xfpm_bool_to_string (auth_hibernate),
               xfpm_bool_to_string (can_suspend), xfpm_bool_to_string (can_hibernate),
+              xfpm_bool_to_string (can_shutdown), xfpm_bool_to_string (has_battery),
               xfpm_bool_to_string (has_lcd_brightness), xfpm_bool_to_string (has_lid),
               xfpm_bool_to_string (has_sleep_button), xfpm_bool_to_string (has_hibernate_button),
               xfpm_bool_to_string (has_power_button), xfpm_bool_to_string (has_battery_button));
