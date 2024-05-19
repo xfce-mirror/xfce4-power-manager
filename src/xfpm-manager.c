@@ -970,9 +970,11 @@ xfpm_manager_get_config (XfpmManager *manager)
 
   guint16 mapped_buttons;
   gboolean auth_hibernate = FALSE;
+  gboolean auth_hybrid_sleep = FALSE;
   gboolean auth_suspend = FALSE;
   gboolean can_suspend = FALSE;
   gboolean can_hibernate = FALSE;
+  gboolean can_hybrid_sleep = FALSE;
   gboolean has_sleep_button = FALSE;
   gboolean has_hibernate_button = FALSE;
   gboolean has_power_button = FALSE;
@@ -997,8 +999,10 @@ xfpm_manager_get_config (XfpmManager *manager)
   g_object_get (G_OBJECT (manager->priv->power),
                 "auth-suspend", &auth_suspend,
                 "auth-hibernate", &auth_hibernate,
+                "auth-hybrid-sleep", &auth_hybrid_sleep,
                 "can-suspend", &can_suspend,
                 "can-hibernate", &can_hibernate,
+                "can-hybrid-sleep", &can_hybrid_sleep,
                 "has-lid", &has_lid,
                 NULL);
 
@@ -1020,8 +1024,10 @@ xfpm_manager_get_config (XfpmManager *manager)
   g_hash_table_insert (hash, g_strdup ("battery-button"), g_strdup (xfpm_bool_to_string (has_battery_button)));
   g_hash_table_insert (hash, g_strdup ("auth-suspend"), g_strdup (xfpm_bool_to_string (auth_suspend)));
   g_hash_table_insert (hash, g_strdup ("auth-hibernate"), g_strdup (xfpm_bool_to_string (auth_hibernate)));
+  g_hash_table_insert (hash, g_strdup ("auth-hybrid-sleep"), g_strdup (xfpm_bool_to_string (auth_hybrid_sleep)));
   g_hash_table_insert (hash, g_strdup ("can-suspend"), g_strdup (xfpm_bool_to_string (can_suspend)));
   g_hash_table_insert (hash, g_strdup ("can-hibernate"), g_strdup (xfpm_bool_to_string (can_hibernate)));
+  g_hash_table_insert (hash, g_strdup ("can-hybrid-sleep"), g_strdup (xfpm_bool_to_string (can_hybrid_sleep)));
   g_hash_table_insert (hash, g_strdup ("can-shutdown"), g_strdup (xfpm_bool_to_string (can_shutdown && auth_shutdown)));
   g_hash_table_insert (hash, g_strdup ("has-battery"), g_strdup (xfpm_bool_to_string (has_battery)));
   g_hash_table_insert (hash, g_strdup ("has-lid"), g_strdup (xfpm_bool_to_string (has_lid)));

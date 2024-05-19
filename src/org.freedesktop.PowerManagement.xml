@@ -15,6 +15,9 @@
     <method name="Suspend">
     </method>
 
+    <method name="HybridSleep">
+    </method>
+
     <method name="CanShutdown">
       <arg type="b" name="can_shutdown" direction="out"/>
     </method>
@@ -29,6 +32,10 @@
     
     <method name="CanHibernate">
       <arg type="b" name="can_hibernate" direction="out"/>
+    </method>
+    
+    <method name="CanHybridSleep">
+      <arg type="b" name="can_hybrid_sleep" direction="out"/>
     </method>
     
     <method name="GetOnBattery">

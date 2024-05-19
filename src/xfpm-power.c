@@ -85,6 +85,10 @@ static void
 xfpm_power_can_hibernate (XfpmPower *power,
                           gboolean *can_hibernate,
                           gboolean *auth_hibernate);
+static void
+xfpm_power_can_hybrid_sleep (XfpmPower *power,
+                             gboolean *can_hybrid_sleep,
+                             gboolean *auth_hybrid_sleep);
 
 struct XfpmPowerPrivate
 {
@@ -134,8 +138,10 @@ enum
   PROP_ON_BATTERY,
   PROP_AUTH_SUSPEND,
   PROP_AUTH_HIBERNATE,
+  PROP_AUTH_HYBRID_SLEEP,
   PROP_CAN_SUSPEND,
   PROP_CAN_HIBERNATE,
+  PROP_CAN_HYBRID_SLEEP,
   PROP_HAS_LID,
   PROP_PRESENTATION_MODE,
   N_PROPERTIES
@@ -313,12 +319,6 @@ xfpm_power_sleep (XfpmPower *power,
     }
   }
 
-  /* This is fun, here's the order of operations:
-   * - if the Logind is running then use it
-   * - if UPower < 0.99.0 then use it (don't make changes on the user unless forced)
-   * - if ConsoleKit2 is running then use it
-   * - if everything else fails use our built-in fallback
-   */
   if (g_strcmp0 (sleep_time, "Hibernate") == 0)
   {
     if (power->priv->systemd != NULL)
@@ -338,7 +338,7 @@ xfpm_power_sleep (XfpmPower *power,
     if (error != NULL && xfpm_suspend_try_action (XFPM_HIBERNATE))
       g_clear_error (&error);
   }
-  else
+  else if (g_strcmp0 (sleep_time, "Suspend") == 0)
   {
     if (power->priv->systemd != NULL)
     {
@@ -356,6 +356,29 @@ xfpm_power_sleep (XfpmPower *power,
 
     if (error != NULL && xfpm_suspend_try_action (XFPM_SUSPEND))
       g_clear_error (&error);
+  }
+  else if (g_strcmp0 (sleep_time, "HybridSleep") == 0)
+  {
+    if (power->priv->systemd != NULL)
+    {
+      if (xfce_systemd_can_hybrid_sleep (power->priv->systemd, NULL, NULL, NULL)
+          && !xfce_systemd_hybrid_sleep (power->priv->systemd, TRUE, &error))
+      {
+        g_warning ("Failed to hybrid sleep via systemd: %s", error->message);
+      }
+    }
+    else if (xfce_consolekit_can_hybrid_sleep (power->priv->console, NULL, NULL, NULL)
+             && !xfce_consolekit_hybrid_sleep (power->priv->console, TRUE, &error))
+    {
+      g_warning ("Failed to hybrid sleep via ConsoleKit: %s", error->message);
+    }
+
+    if (error != NULL && xfpm_suspend_try_action (XFPM_HYBRID_SLEEP))
+      g_clear_error (&error);
+  }
+  else
+  {
+    g_warn_if_reached ();
   }
 
   if (error)
@@ -398,6 +421,14 @@ xfpm_power_suspend_clicked (XfpmPower *power)
   gtk_widget_destroy (power->priv->dialog);
   power->priv->dialog = NULL;
   xfpm_power_sleep (power, "Suspend", TRUE);
+}
+
+static void
+xfpm_power_hybrid_sleep_clicked (XfpmPower *power)
+{
+  gtk_widget_destroy (power->priv->dialog);
+  power->priv->dialog = NULL;
+  xfpm_power_sleep (power, "HybridSleep", TRUE);
 }
 
 static void
@@ -473,6 +504,18 @@ xfpm_power_add_actions_to_notification (XfpmPower *power,
       n,
       "Suspend",
       _("Suspend the system"),
+      (NotifyActionCallback) xfpm_power_notify_action_callback,
+      power);
+  }
+
+  xfpm_power_can_hybrid_sleep (power, &can_method, &auth_method);
+  if (can_method && auth_method)
+  {
+    xfpm_notify_add_action_to_notification (
+      power->priv->notify,
+      n,
+      "HybridSleep",
+      _("Hybrid sleep the system"),
       (NotifyActionCallback) xfpm_power_notify_action_callback,
       power);
   }
@@ -571,6 +614,18 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
                              G_CALLBACK (xfpm_power_suspend_clicked), power, G_CONNECT_SWAPPED);
   }
 
+  xfpm_power_can_hybrid_sleep (power, &can_method, &auth_method);
+  if (can_method && auth_method)
+  {
+    GtkWidget *hybrid_sleep;
+
+    hybrid_sleep = gtk_button_new_with_label (_("Hybrid Sleep"));
+    gtk_dialog_add_action_widget (GTK_DIALOG (dialog), hybrid_sleep, GTK_RESPONSE_NONE);
+
+    g_signal_connect_object (hybrid_sleep, "clicked",
+                             G_CALLBACK (xfpm_power_hybrid_sleep_clicked), power, G_CONNECT_SWAPPED);
+  }
+
   if (power->priv->systemd != NULL)
   {
     xfce_systemd_can_power_off (power->priv->systemd, &can_method, &auth_method, NULL);
@@ -634,6 +689,8 @@ xfpm_power_process_critical_action (XfpmPower *power,
     xfpm_power_sleep (power, "Suspend", TRUE);
   else if (req == XFPM_DO_HIBERNATE)
     xfpm_power_sleep (power, "Hibernate", TRUE);
+  else if (req == XFPM_DO_HYBRID_SLEEP)
+    xfpm_power_sleep (power, "HybridSleep", TRUE);
   else if (req == XFPM_DO_SHUTDOWN)
     g_signal_emit (G_OBJECT (power), signals[SHUTDOWN], 0);
 }
@@ -963,8 +1020,22 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                          G_PARAM_READABLE));
 
   g_object_class_install_property (object_class,
+                                   PROP_AUTH_HYBRID_SLEEP,
+                                   g_param_spec_boolean ("auth-hybrid-sleep",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class,
                                    PROP_CAN_HIBERNATE,
                                    g_param_spec_boolean ("can-hibernate",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
+
+  g_object_class_install_property (object_class,
+                                   PROP_CAN_HYBRID_SLEEP,
+                                   g_param_spec_boolean ("can-hybrid-sleep",
                                                          NULL, NULL,
                                                          FALSE,
                                                          G_PARAM_READABLE));
@@ -1081,6 +1152,10 @@ xfpm_power_get_property (GObject *object,
       xfpm_power_can_hibernate (power, NULL, &bool_value);
       g_value_set_boolean (value, bool_value);
       break;
+    case PROP_AUTH_HYBRID_SLEEP:
+      xfpm_power_can_hybrid_sleep (power, NULL, &bool_value);
+      g_value_set_boolean (value, bool_value);
+      break;
     case PROP_AUTH_SUSPEND:
       xfpm_power_can_suspend (power, NULL, &bool_value);
       g_value_set_boolean (value, bool_value);
@@ -1091,6 +1166,10 @@ xfpm_power_get_property (GObject *object,
       break;
     case PROP_CAN_HIBERNATE:
       xfpm_power_can_hibernate (power, &bool_value, NULL);
+      g_value_set_boolean (value, bool_value);
+      break;
+    case PROP_CAN_HYBRID_SLEEP:
+      xfpm_power_can_hybrid_sleep (power, &bool_value, NULL);
       g_value_set_boolean (value, bool_value);
       break;
     case PROP_HAS_LID:
@@ -1201,6 +1280,13 @@ xfpm_power_hibernate (XfpmPower *power,
                       gboolean force)
 {
   xfpm_power_sleep (power, "Hibernate", force);
+}
+
+void
+xfpm_power_hybrid_sleep (XfpmPower *power,
+                         gboolean force)
+{
+  xfpm_power_sleep (power, "HybridSleep", force);
 }
 
 gboolean
@@ -1316,6 +1402,11 @@ xfpm_power_dbus_suspend (XfpmPower *power,
                          gpointer user_data);
 
 static gboolean
+xfpm_power_dbus_hybrid_sleep (XfpmPower *power,
+                              GDBusMethodInvocation *invocation,
+                              gpointer user_data);
+
+static gboolean
 xfpm_power_dbus_can_reboot (XfpmPower *power,
                             GDBusMethodInvocation *invocation,
                             gpointer user_data);
@@ -1334,6 +1425,11 @@ static gboolean
 xfpm_power_dbus_can_suspend (XfpmPower *power,
                              GDBusMethodInvocation *invocation,
                              gpointer user_data);
+
+static gboolean
+xfpm_power_dbus_can_hybrid_sleep (XfpmPower *power,
+                                  GDBusMethodInvocation *invocation,
+                                  gpointer user_data);
 
 static gboolean
 xfpm_power_dbus_get_on_battery (XfpmPower *power,
@@ -1381,6 +1477,10 @@ xfpm_power_dbus_init (XfpmPower *power)
                            G_CALLBACK (xfpm_power_dbus_suspend),
                            power, G_CONNECT_SWAPPED);
   g_signal_connect_object (power_dbus,
+                           "handle-hybrid-sleep",
+                           G_CALLBACK (xfpm_power_dbus_hybrid_sleep),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
                            "handle-can-reboot",
                            G_CALLBACK (xfpm_power_dbus_can_reboot),
                            power, G_CONNECT_SWAPPED);
@@ -1395,6 +1495,10 @@ xfpm_power_dbus_init (XfpmPower *power)
   g_signal_connect_object (power_dbus,
                            "handle-can-suspend",
                            G_CALLBACK (xfpm_power_dbus_can_suspend),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-can-hybrid-sleep",
+                           G_CALLBACK (xfpm_power_dbus_can_hybrid_sleep),
                            power, G_CONNECT_SWAPPED);
   g_signal_connect_object (power_dbus,
                            "handle-get-on-battery",
@@ -1563,6 +1667,40 @@ xfpm_power_dbus_suspend (XfpmPower *power,
 }
 
 static gboolean
+xfpm_power_dbus_hybrid_sleep (XfpmPower *power,
+                              GDBusMethodInvocation *invocation,
+                              gpointer user_data)
+{
+  gboolean can_hybrid_sleep, auth_hybrid_sleep;
+
+  xfpm_power_can_hybrid_sleep (power, &can_hybrid_sleep, &auth_hybrid_sleep);
+
+  if (!auth_hybrid_sleep)
+  {
+    g_dbus_method_invocation_return_error (invocation,
+                                           XFPM_ERROR,
+                                           XFPM_ERROR_PERMISSION_DENIED,
+                                           _("Permission denied"));
+    return TRUE;
+  }
+
+  if (!can_hybrid_sleep)
+  {
+    g_dbus_method_invocation_return_error (invocation,
+                                           XFPM_ERROR,
+                                           XFPM_ERROR_NO_HARDWARE_SUPPORT,
+                                           _("Hybrid sleep not supported"));
+    return TRUE;
+  }
+
+  xfpm_power_sleep (power, "HybridSleep", FALSE);
+
+  xfpm_power_management_complete_hybrid_sleep (user_data, invocation);
+
+  return TRUE;
+}
+
+static gboolean
 xfpm_power_dbus_can_reboot (XfpmPower *power,
                             GDBusMethodInvocation *invocation,
                             gpointer user_data)
@@ -1631,6 +1769,20 @@ xfpm_power_dbus_can_suspend (XfpmPower *power,
   xfpm_power_management_complete_can_suspend (user_data,
                                               invocation,
                                               can_suspend);
+
+  return TRUE;
+}
+
+static gboolean
+xfpm_power_dbus_can_hybrid_sleep (XfpmPower *power,
+                                  GDBusMethodInvocation *invocation,
+                                  gpointer user_data)
+{
+  gboolean can_hybrid_sleep;
+  xfpm_power_can_hybrid_sleep (power, &can_hybrid_sleep, NULL);
+  xfpm_power_management_complete_can_hybrid_sleep (user_data,
+                                                   invocation,
+                                                   can_hybrid_sleep);
 
   return TRUE;
 }
@@ -1706,5 +1858,30 @@ xfpm_power_can_hibernate (XfpmPower *power,
     *auth_hibernate = xfpm_polkit_check_auth (power->priv->polkit, POLKIT_AUTH_HIBERNATE_XFPM);
 #else
     *auth_hibernate = TRUE;
+#endif
+}
+
+static void
+xfpm_power_can_hybrid_sleep (XfpmPower *power,
+                             gboolean *can_hybrid_sleep,
+                             gboolean *auth_hybrid_sleep)
+{
+  if (power->priv->systemd != NULL)
+  {
+    if (xfce_systemd_can_hybrid_sleep (power->priv->systemd, can_hybrid_sleep, auth_hybrid_sleep, NULL))
+      return;
+  }
+  else if (xfce_consolekit_can_hybrid_sleep (power->priv->console, can_hybrid_sleep, auth_hybrid_sleep, NULL))
+  {
+    return;
+  }
+
+  if (can_hybrid_sleep != NULL)
+    *can_hybrid_sleep = xfpm_suspend_can_hybrid_sleep ();
+  if (auth_hybrid_sleep != NULL)
+#ifdef ENABLE_POLKIT
+    *auth_hybrid_sleep = xfpm_polkit_check_auth (power->priv->polkit, POLKIT_AUTH_HYBRID_SLEEP_XFPM);
+#else
+    *auth_hybrid_sleep = TRUE;
 #endif
 }
