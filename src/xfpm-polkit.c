@@ -27,6 +27,33 @@
 #include "common/xfpm-common.h"
 #include "common/xfpm-debug.h"
 
+#include <stdio.h>
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#ifdef HAVE_SYS_TYPES_H
+#include <sys/types.h>
+#endif
+#ifdef HAVE_SYS_PARAM_H
+#include <sys/param.h>
+#endif
+#ifdef HAVE_SYS_SYSCTL_H
+#include <sys/sysctl.h>
+#endif
+#ifdef HAVE_SYS_USER_H
+#include <sys/user.h>
+#endif
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
+
 #if defined(__FreeBSD__)
 #include <sys/stat.h>
 #elif defined(__SVR4) && defined(__sun)

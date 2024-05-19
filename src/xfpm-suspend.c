@@ -28,6 +28,26 @@
 
 #include <libxfce4util/libxfce4util.h>
 
+#include <stdio.h>
+
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+#ifdef HAVE_STRING_H
+#include <string.h>
+#endif
+#ifdef HAVE_SYS_WAIT_H
+#include <sys/wait.h>
+#endif
+#ifdef HAVE_SYS_RESOURCE_H
+#include <sys/resource.h>
+#endif
+#ifdef HAVE_SYS_SYSCTL_H
+#include <sys/sysctl.h>
+#endif
+#ifdef HAVE_ERRNO_H
+#include <errno.h>
+#endif
 
 
 #ifdef BACKEND_TYPE_FREEBSD
