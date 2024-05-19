@@ -63,19 +63,25 @@
 #ifdef UP_BACKEND_HIBERNATE_COMMAND
 #undef UP_BACKEND_HIBERNATE_COMMAND
 #endif
+#ifdef UP_BACKEND_HYBRID_SLEEP_COMMAND
+#undef UP_BACKEND_HYBRID_SLEEP_COMMAND
+#endif
 
 
 #ifdef BACKEND_TYPE_FREEBSD
 #define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/acpiconf -s 3"
 #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/acpiconf -s 4"
+#define UP_BACKEND_HYBRID_SLEEP_COMMAND "/usr/bin/false"
 #endif
 #ifdef BACKEND_TYPE_LINUX
 #define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/pm-suspend"
 #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/pm-hibernate"
+#define UP_BACKEND_HYBRID_SLEEP_COMMAND "/usr/sbin/pm-suspend-hybrid"
 #endif
 #ifdef BACKEND_TYPE_OPENBSD
 #define UP_BACKEND_SUSPEND_COMMAND "/usr/sbin/zzz"
 #define UP_BACKEND_HIBERNATE_COMMAND "/usr/sbin/ZZZ"
+#define UP_BACKEND_HYBRID_SLEEP_COMMAND "/usr/bin/false"
 #endif
 
 
@@ -138,10 +144,12 @@ main (int argc,
   const gchar *pkexec_uid_str;
   gboolean suspend = FALSE;
   gboolean hibernate = FALSE;
+  gboolean hybrid_sleep = FALSE;
 
   const GOptionEntry options[] = {
     { "suspend", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &suspend, "Suspend the system", NULL },
     { "hibernate", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hibernate, "Hibernate the system", NULL },
+    { "hybrid-sleep", '\0', G_OPTION_FLAG_IN_MAIN, G_OPTION_ARG_NONE, &hybrid_sleep, "Hybrid sleep the system", NULL },
     { NULL }
   };
 
@@ -152,7 +160,7 @@ main (int argc,
   g_option_context_free (context);
 
   /* no input */
-  if (!suspend && !hibernate)
+  if (!suspend && !hibernate && !hybrid_sleep)
   {
     puts ("No valid option was specified");
     return EXIT_CODE_ARGUMENTS_INVALID;
@@ -190,6 +198,17 @@ main (int argc,
   else if (hibernate)
   {
     if (run (UP_BACKEND_HIBERNATE_COMMAND))
+    {
+      return EXIT_CODE_SUCCESS;
+    }
+    else
+    {
+      return EXIT_CODE_FAILED;
+    }
+  }
+  else if (hybrid_sleep)
+  {
+    if (run (UP_BACKEND_HYBRID_SLEEP_COMMAND))
     {
       return EXIT_CODE_SUCCESS;
     }
