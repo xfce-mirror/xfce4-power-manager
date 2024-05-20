@@ -137,6 +137,8 @@ xfpm_ppd_init (XfpmPPD *ppd)
 
   ppd->conf = xfpm_xfconf_new ();
   ppd->power = xfpm_power_get ();
+  ppd->profile_on_ac = g_strdup (DEFAULT_PROFILE_ON_AC);
+  ppd->profile_on_battery = g_strdup (DEFAULT_PROFILE_ON_BATTERY);
 
   xfconf_g_property_bind (xfpm_xfconf_get_channel (ppd->conf),
                           XFPM_PROPERTIES_PREFIX PROFILE_ON_AC, G_TYPE_STRING,
