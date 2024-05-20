@@ -93,10 +93,11 @@ xfpm_dpms_x11_set_mode (XfpmDpms *dpms,
                         XfpmDpmsMode mode)
 {
   Display *display = gdk_x11_get_default_xdisplay ();
-  CARD16 x_mode;
+  CARD16 x_mode = mode_to_x_mode (mode);
+  CARD16 current_x_mode;
   BOOL x_enabled;
 
-  if (!DPMSInfo (display, &x_mode, &x_enabled))
+  if (!DPMSInfo (display, &current_x_mode, &x_enabled))
   {
     g_warning ("Cannot get DPMSInfo");
     return;
@@ -108,11 +109,11 @@ xfpm_dpms_x11_set_mode (XfpmDpms *dpms,
     return;
   }
 
-  if (mode != x_mode)
+  if (x_mode != current_x_mode)
   {
     XFPM_DEBUG ("Setting DPMS mode %d", mode);
 
-    if (!DPMSForceLevel (display, mode_to_x_mode (mode)))
+    if (!DPMSForceLevel (display, x_mode))
     {
       g_warning ("Cannot set DPMS mode");
       return;
