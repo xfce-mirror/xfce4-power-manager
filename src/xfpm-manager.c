@@ -482,12 +482,21 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
     }
     else if (action != LID_TRIGGER_NOTHING)
     {
+      XfpmShutdownRequest request = XFPM_DO_NOTHING;
+      switch (action)
+      {
+        case LID_TRIGGER_SUSPEND: request = XFPM_DO_SUSPEND; break;
+        case LID_TRIGGER_HIBERNATE: request = XFPM_DO_HIBERNATE; break;
+        case LID_TRIGGER_HYBRID_SLEEP: request = XFPM_DO_HYBRID_SLEEP; break;
+        default: g_warn_if_reached (); break;
+      }
+
       /*
        * Force sleep here as lid is closed and no point of asking the
        * user for confirmation in case of an application is inhibiting
        * the power manager.
        */
-      xfpm_manager_sleep_request (manager, (XfpmShutdownRequest) action, TRUE);
+      xfpm_manager_sleep_request (manager, request, TRUE);
     }
   }
   else
