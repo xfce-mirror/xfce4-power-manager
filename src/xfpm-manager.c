@@ -356,6 +356,9 @@ xfpm_manager_sleep_request (XfpmManager *manager,
     case XFPM_DO_HIBERNATE:
       xfpm_power_hibernate (manager->priv->power, force);
       break;
+    case XFPM_DO_HYBRID_SLEEP:
+      xfpm_power_hybrid_sleep (manager->priv->power, force);
+      break;
     case XFPM_DO_SHUTDOWN:
       xfpm_manager_shutdown (manager);
       break;
