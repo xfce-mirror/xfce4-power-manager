@@ -1368,7 +1368,7 @@ xfpm_power_change_presentation_mode (XfpmPower *power,
 }
 
 gboolean
-xfpm_power_is_in_presentation_mode (XfpmPower *power)
+xfpm_power_is_inhibited (XfpmPower *power)
 {
   g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
 

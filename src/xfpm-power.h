@@ -73,7 +73,7 @@ xfpm_power_hybrid_sleep (XfpmPower *power,
 gboolean
 xfpm_power_has_battery (XfpmPower *power);
 gboolean
-xfpm_power_is_in_presentation_mode (XfpmPower *power);
+xfpm_power_is_inhibited (XfpmPower *power);
 
 G_END_DECLS
 

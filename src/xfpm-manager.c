@@ -515,7 +515,7 @@ xfpm_manager_alarm_timeout_cb (XfpmIdle *idle,
     XfpmShutdownRequest sleep_mode = XFPM_DO_NOTHING;
     gboolean on_battery;
 
-    if (xfpm_power_is_in_presentation_mode (manager->priv->power))
+    if (xfpm_power_is_inhibited (manager->priv->power))
     {
       XFPM_DEBUG ("Idle sleep alarm timeout, but power manager is currently inhibited, action ignored");
       return;
