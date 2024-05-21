@@ -121,7 +121,8 @@ idle_alarm_expired (XfpmIdle *idle,
                     XfpmAlarmId id,
                     XfpmDpmsWayland *dpms)
 {
-  xfpm_dpms_wayland_set_mode (XFPM_DPMS (dpms), XFPM_DPMS_MODE_OFF);
+  if (id == XFPM_ALARM_ID_DPMS)
+    xfpm_dpms_wayland_set_mode (XFPM_DPMS (dpms), XFPM_DPMS_MODE_OFF);
 }
 
 static void
