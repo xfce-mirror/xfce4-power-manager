@@ -261,7 +261,7 @@ xfpm_power_sleep (XfpmPower *power,
   XfpmBrightness *brightness;
   gint32 brightness_level = 0;
 
-  if (power->priv->inhibited && !force)
+  if ((power->priv->presentation_mode || power->priv->inhibited) && !force)
   {
     GtkWidget *dialog;
     gboolean ret;
