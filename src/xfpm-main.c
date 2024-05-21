@@ -51,12 +51,7 @@
 static void G_GNUC_NORETURN
 show_version (void)
 {
-  g_print (_("\n"
-           "Xfce Power Manager %s\n\n"
-           "Part of the Xfce Goodies Project\n"
-           "http://goodies.xfce.org\n\n"
-           "Licensed under the GNU GPL.\n\n"), VERSION);
-
+  g_print ("Xfce Power Manager %s", VERSION);
   exit (EXIT_SUCCESS);
 }
 
