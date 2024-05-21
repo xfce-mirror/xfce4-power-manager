@@ -28,7 +28,6 @@
 #include "xfpm-dpms.h"
 #include "xfpm-errors.h"
 #include "xfpm-idle.h"
-#include "xfpm-inhibit.h"
 #include "xfpm-kbd-backlight.h"
 #include "xfpm-manager.h"
 #include "xfpm-power.h"
@@ -105,20 +104,14 @@ struct XfpmManagerPrivate
   XfceConsolekit *console;
   XfceSystemd *systemd;
   XfpmDBusMonitor *monitor;
-  XfpmInhibit *inhibit;
   XfpmPPD *ppd;
   XfceScreensaver *screensaver;
   XfpmIdle *idle;
   GtkStatusIcon *adapter_icon;
   GtkWidget *power_button;
   gint show_tray_icon;
-
   XfpmDpms *dpms;
-
   GTimer *timer;
-
-  gboolean inhibited;
-
   gint inhibit_fd;
 };
 
@@ -187,7 +180,6 @@ xfpm_manager_finalize (GObject *object)
   if (manager->priv->console != NULL)
     g_object_unref (manager->priv->console);
   g_object_unref (manager->priv->monitor);
-  g_object_unref (manager->priv->inhibit);
   g_object_unref (manager->priv->ppd);
   if (manager->priv->idle != NULL)
     g_object_unref (manager->priv->idle);
@@ -512,21 +504,10 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
 }
 
 static void
-xfpm_manager_inhibit_changed_cb (XfpmInhibit *inhibit,
-                                 gboolean inhibited,
-                                 XfpmManager *manager)
-{
-  manager->priv->inhibited = inhibited;
-}
-
-static void
 xfpm_manager_alarm_timeout_cb (XfpmIdle *idle,
                                XfpmAlarmId id,
                                XfpmManager *manager)
 {
-  if (xfpm_power_is_in_presentation_mode (manager->priv->power))
-    return;
-
   XFPM_DEBUG ("Alarm inactivity timeout id %d", id);
 
   if (id == XFPM_ALARM_ID_INACTIVITY_ON_AC || id == XFPM_ALARM_ID_INACTIVITY_ON_BATTERY)
@@ -534,7 +515,7 @@ xfpm_manager_alarm_timeout_cb (XfpmIdle *idle,
     XfpmShutdownRequest sleep_mode = XFPM_DO_NOTHING;
     gboolean on_battery;
 
-    if (manager->priv->inhibited)
+    if (xfpm_power_is_in_presentation_mode (manager->priv->power))
     {
       XFPM_DEBUG ("Idle sleep alarm timeout, but power manager is currently inhibited, action ignored");
       return;
@@ -899,7 +880,6 @@ xfpm_manager_start (XfpmManager *manager)
     manager->priv->console = xfce_consolekit_get ();
 
   manager->priv->monitor = xfpm_dbus_monitor_new ();
-  manager->priv->inhibit = xfpm_inhibit_new ();
   manager->priv->ppd = xfpm_ppd_new ();
   manager->priv->idle = xfpm_idle_new ();
 
@@ -934,8 +914,6 @@ xfpm_manager_start (XfpmManager *manager)
   g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
 
-  g_signal_connect_object (manager->priv->inhibit, "has-inhibit-changed",
-                           G_CALLBACK (xfpm_manager_inhibit_changed_cb), manager, 0);
   g_signal_connect_object (manager->priv->monitor, "system-bus-connection-changed",
                            G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager, 0);
 
