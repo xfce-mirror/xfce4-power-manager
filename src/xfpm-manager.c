@@ -1142,6 +1142,6 @@ xfpm_manager_dbus_get_info (XfpmManager *manager,
                             GDBusMethodInvocation *invocation,
                             gpointer user_data)
 {
-  xfpm_power_manager_complete_get_info (user_data, invocation, PACKAGE, VERSION, "Xfce-goodies");
+  xfpm_power_manager_complete_get_info (user_data, invocation, PACKAGE, VERSION, "Xfce");
   return TRUE;
 }
