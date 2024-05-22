@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-20 12:47+0200\n"
+"POT-Creation-Date: 2024-05-22 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Ioannis LM, 2022-2024\n"
 "Language-Team: Greek (http://app.transifex.com/xfce/xfce4-power-manager/language/el/)\n"
@@ -359,11 +359,11 @@ msgstr "Τύπος"
 msgid "PowerSupply"
 msgstr "Παροχή ρεύματος"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "True"
 msgstr "Αληθές"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "False"
 msgstr "Ψευδές"
 
@@ -447,7 +447,7 @@ msgstr "Εμφάνιση συγκεκριμένης συσκευής από τη
 msgid "UpDevice object path"
 msgstr "Διαδρομή αντικειμένου UpDevice"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:248
+#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Ενεργοποίηση αποσφαλμάτωσης"
 
@@ -460,7 +460,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Τερματισμός των ρυθμίσεων του διαχειριστή ρεύματος xfce4"
 
 #: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Διαχειριστής ρεύματος Xfce"
 
@@ -806,125 +806,112 @@ msgstr "Η %s σας είναι άδεια"
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Φωτεινότητα πληκτρολογίου: %.0f τοις εκατό"
 
-#: src/xfpm-main.c:43
-#, c-format
-msgid ""
-"\n"
-"Xfce Power Manager %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
-msgstr "\nΔιαχειριστής ρεύματος Xfce %s\n\nΜέρος του έργου Xfce Goodies\nhttp://goodies.xfce.org\n\nΆδεια χρήσης υπό την GNU GPL.\n\n"
-
-#: src/xfpm-main.c:92
+#: src/xfpm-main.c:86
 msgid "With policykit support\n"
 msgstr "Με υποστήριξη policykit\n"
 
-#: src/xfpm-main.c:94
+#: src/xfpm-main.c:88
 msgid "Without policykit support\n"
 msgstr "Χωρίς υποστήριξη policykit\n"
 
-#: src/xfpm-main.c:113
+#: src/xfpm-main.c:107
 msgid "Can suspend"
 msgstr "Δυνατότητα αναστολής"
 
-#: src/xfpm-main.c:114
+#: src/xfpm-main.c:108
 msgid "Can hibernate"
 msgstr "Δυνατότητα αδρανοποίησης"
 
-#: src/xfpm-main.c:115
+#: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:116
+#: src/xfpm-main.c:110
 msgid "Authorized to suspend"
 msgstr "Εξουσιοδότηση για αναστολή"
 
-#: src/xfpm-main.c:117
+#: src/xfpm-main.c:111
 msgid "Authorized to hibernate"
 msgstr "Εξουσιοδότηση για αδρανοποίηση"
 
-#: src/xfpm-main.c:118
+#: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:119
+#: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
 msgstr "Εξουσιοδότηση για τερματισμό"
 
-#: src/xfpm-main.c:120
+#: src/xfpm-main.c:114
 msgid "Has battery"
 msgstr "Έχει μπαταρία"
 
-#: src/xfpm-main.c:121
+#: src/xfpm-main.c:115
 msgid "Has brightness panel"
 msgstr "Έχει ρύθμιση φωτεινότητας οθόνης"
 
-#: src/xfpm-main.c:122
+#: src/xfpm-main.c:116
 msgid "Has power button"
 msgstr "Έχει κουμπί λειτουργίας"
 
-#: src/xfpm-main.c:123
+#: src/xfpm-main.c:117
 msgid "Has hibernate button"
 msgstr "Έχει κουμπί αδρανοποίησης"
 
-#: src/xfpm-main.c:124
+#: src/xfpm-main.c:118
 msgid "Has sleep button"
 msgstr "Έχει κουμπί αναμονής"
 
-#: src/xfpm-main.c:125
+#: src/xfpm-main.c:119
 msgid "Has battery button"
 msgstr "Έχει κουμπί μπαταρίας"
 
-#: src/xfpm-main.c:126
+#: src/xfpm-main.c:120
 msgid "Has LID"
 msgstr "Έχει LID"
 
-#: src/xfpm-main.c:247
+#: src/xfpm-main.c:241
 msgid "Daemonize"
 msgstr ""
 
-#: src/xfpm-main.c:249
+#: src/xfpm-main.c:243
 msgid "Dump all information"
 msgstr "Απόρριψη όλων των πληροφοριών"
 
-#: src/xfpm-main.c:250
+#: src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Επανεκκίνηση του διαχειριστή ρεύματος xfce"
 
-#: src/xfpm-main.c:251
+#: src/xfpm-main.c:245
 msgid "Show the configuration dialog"
 msgstr "Εμφάνιση διαλόγου ρύθμισης"
 
-#: src/xfpm-main.c:252
+#: src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
 msgstr "Τερματισμός κάθε διαχειριστή ρεύματος xfce"
 
-#: src/xfpm-main.c:253
+#: src/xfpm-main.c:247
 msgid "Version information"
 msgstr "Πληροφορίες έκδοσης"
 
-#: src/xfpm-main.c:272
+#: src/xfpm-main.c:266
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Αδύνατη η ανάγνωση των παραμέτρων: %s\n"
 
-#: src/xfpm-main.c:306
+#: src/xfpm-main.c:300
 msgid "Unable to get connection to the message bus session"
 msgstr "Αδύνατη η σύνδεση με τον δίαυλο μηνυμάτων συνεδρίας"
 
-#: src/xfpm-main.c:315 src/xfpm-main.c:367
+#: src/xfpm-main.c:309 src/xfpm-main.c:361
 msgid "Xfce power manager is not running"
 msgstr "Ο διαχειριστής ρεύματος xfce δεν εκτελείται"
 
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Another power manager is already running"
 msgstr "Ένας άλλος διαχειριστής ρεύματος είναι ήδη σε λειτουργία"
 
-#: src/xfpm-main.c:410
+#: src/xfpm-main.c:404
 msgid "Xfce power manager is already running"
 msgstr "Ο διαχειριστής ρεύματος xfce είναι ήδη σε λειτουργία"
 
@@ -936,7 +923,7 @@ msgstr "Άκυρα ορίσματα"
 msgid "Invalid cookie"
 msgstr "Άκυρο cookie"
 
-#: src/xfpm-manager.c:477
+#: src/xfpm-manager.c:472
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
