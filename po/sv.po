@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-20 12:47+0200\n"
+"POT-Creation-Date: 2024-05-22 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Luna Jernberg <droidbittin@gmail.com>, 2024\n"
 "Language-Team: Swedish (http://app.transifex.com/xfce/xfce4-power-manager/language/sv/)\n"
@@ -292,11 +292,11 @@ msgstr "Hybridsömn"
 
 #: settings/xfpm-settings.c:485
 msgid "Hybrid sleep operation not permitted"
-msgstr ""
+msgstr "Hybrid sömnoperation är inte tillåtet"
 
 #: settings/xfpm-settings.c:489
 msgid "Hybrid sleep operation not supported"
-msgstr ""
+msgstr "Hybrid sömnoperation stöds inte"
 
 #: settings/xfpm-settings.c:514 settings/xfpm-settings.c:897
 #: settings/xfpm-settings.c:1067
@@ -354,11 +354,11 @@ msgstr "Typ"
 msgid "PowerSupply"
 msgstr "Strömkälla"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "True"
 msgstr "Sant"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "False"
 msgstr "Falskt"
 
@@ -442,7 +442,7 @@ msgstr "Visa en speciell enhet genom UpDevice objektsökväg"
 msgid "UpDevice object path"
 msgstr "UpDevice sökväg"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:248
+#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Aktivera felsökning"
 
@@ -455,7 +455,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Orsak för xfce-4 strömhantering att sluta"
 
 #: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Strömhanterare för Xfce"
 
@@ -708,7 +708,7 @@ msgstr "Försätt systemet i vänteläge"
 
 #: src/xfpm-power.c:518
 msgid "Hybrid sleep the system"
-msgstr ""
+msgstr "Hybrid sömn systemet"
 
 #: src/xfpm-power.c:538
 msgid "Shutdown the system"
@@ -748,7 +748,7 @@ msgstr "Vänteläge stöds inte"
 
 #: src/xfpm-power.c:1692
 msgid "Hybrid sleep not supported"
-msgstr ""
+msgstr "Hybrid sömn stöds inte"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:152
@@ -801,125 +801,112 @@ msgstr "Ditt %s är tomt"
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Tangentbordsljusstyrka %.0f procent"
 
-#: src/xfpm-main.c:43
-#, c-format
-msgid ""
-"\n"
-"Xfce Power Manager %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
-msgstr "\nStrömhanterare för Xfce %s\n\nEn del av Xfce Goodies-projektet\nhttp://goodies.xfce.org\n\nLicensierad under GNU GPL.\n\n"
-
-#: src/xfpm-main.c:92
+#: src/xfpm-main.c:86
 msgid "With policykit support\n"
 msgstr "Med stöd för policykit\n"
 
-#: src/xfpm-main.c:94
+#: src/xfpm-main.c:88
 msgid "Without policykit support\n"
 msgstr "Utan stöd för policykit\n"
 
-#: src/xfpm-main.c:113
+#: src/xfpm-main.c:107
 msgid "Can suspend"
 msgstr "Kan försättas i vänteläge"
 
-#: src/xfpm-main.c:114
+#: src/xfpm-main.c:108
 msgid "Can hibernate"
 msgstr "Kan försättas i viloläge"
 
-#: src/xfpm-main.c:115
+#: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr ""
+msgstr "Kan hybrid sova"
 
-#: src/xfpm-main.c:116
+#: src/xfpm-main.c:110
 msgid "Authorized to suspend"
 msgstr "Auktoriserad att försätta systemet i vänteläge"
 
-#: src/xfpm-main.c:117
+#: src/xfpm-main.c:111
 msgid "Authorized to hibernate"
 msgstr "Auktoriserad att försätta systemet i viloläge"
 
-#: src/xfpm-main.c:118
+#: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr ""
+msgstr "Auktoriserad för hybridsömn"
 
-#: src/xfpm-main.c:119
+#: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
 msgstr "Auktoriserad att stänga av systemet"
 
-#: src/xfpm-main.c:120
+#: src/xfpm-main.c:114
 msgid "Has battery"
 msgstr "Har ett batteri"
 
-#: src/xfpm-main.c:121
+#: src/xfpm-main.c:115
 msgid "Has brightness panel"
 msgstr "Har panel för ljusstyrka"
 
-#: src/xfpm-main.c:122
+#: src/xfpm-main.c:116
 msgid "Has power button"
 msgstr "Har strömbrytare"
 
-#: src/xfpm-main.c:123
+#: src/xfpm-main.c:117
 msgid "Has hibernate button"
 msgstr "Har vilolägesknapp"
 
-#: src/xfpm-main.c:124
+#: src/xfpm-main.c:118
 msgid "Has sleep button"
 msgstr "Har väntelägesknapp"
 
-#: src/xfpm-main.c:125
+#: src/xfpm-main.c:119
 msgid "Has battery button"
 msgstr "Har batteriknapp"
 
-#: src/xfpm-main.c:126
+#: src/xfpm-main.c:120
 msgid "Has LID"
 msgstr "Har lock"
 
-#: src/xfpm-main.c:247
+#: src/xfpm-main.c:241
 msgid "Daemonize"
 msgstr "Kör i bakgrunden"
 
-#: src/xfpm-main.c:249
+#: src/xfpm-main.c:243
 msgid "Dump all information"
 msgstr "Dumpa all information"
 
-#: src/xfpm-main.c:250
+#: src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Starta om den körande instansen av Xfce-strömhanterare"
 
-#: src/xfpm-main.c:251
+#: src/xfpm-main.c:245
 msgid "Show the configuration dialog"
 msgstr "Visa konfigurationsdialogen"
 
-#: src/xfpm-main.c:252
+#: src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
 msgstr "Avsluta alla körande xfce-strömhanterare"
 
-#: src/xfpm-main.c:253
+#: src/xfpm-main.c:247
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: src/xfpm-main.c:272
+#: src/xfpm-main.c:266
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Misslyckades med att analysera argument: %s\n"
 
-#: src/xfpm-main.c:306
+#: src/xfpm-main.c:300
 msgid "Unable to get connection to the message bus session"
 msgstr "Det gick inte att ansluta till meddelandebussessionen"
 
-#: src/xfpm-main.c:315 src/xfpm-main.c:367
+#: src/xfpm-main.c:309 src/xfpm-main.c:361
 msgid "Xfce power manager is not running"
 msgstr "Strömhanterare för Xfce är inte igång"
 
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Another power manager is already running"
 msgstr "En annan strömhanterare är redan igång"
 
-#: src/xfpm-main.c:410
+#: src/xfpm-main.c:404
 msgid "Xfce power manager is already running"
 msgstr "Strömhanterare för Xfce är redan igång"
 
@@ -931,7 +918,7 @@ msgstr "Ogiltiga argument"
 msgid "Invalid cookie"
 msgstr "Ogiltig kaka"
 
-#: src/xfpm-manager.c:477
+#: src/xfpm-manager.c:472
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
