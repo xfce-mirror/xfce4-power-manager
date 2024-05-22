@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-22 00:47+0200\n"
+"POT-Creation-Date: 2024-05-22 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Chibani, 2021\n"
 "Language-Team: Arabic (http://app.transifex.com/xfce/xfce4-power-manager/language/ar/)\n"
@@ -23,29 +23,28 @@ msgstr ""
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: data/interfaces/xfpm-settings.ui:103 settings/xfpm-settings.c:228
-#: settings/xfpm-settings.c:243 settings/xfpm-settings.c:277
-#: settings/xfpm-settings.c:946
+#: data/interfaces/xfpm-settings.ui:96 settings/xfpm-settings.c:193
+#: settings/xfpm-settings.c:208 settings/xfpm-settings.c:242
 msgid "Never"
 msgstr "أبداً"
 
-#: data/interfaces/xfpm-settings.ui:107
+#: data/interfaces/xfpm-settings.ui:100
 msgid "When the screensaver is activated"
 msgstr "عند تنشيط شاشة التوقف"
 
-#: data/interfaces/xfpm-settings.ui:111
+#: data/interfaces/xfpm-settings.ui:104
 msgid "When the screensaver is deactivated"
 msgstr "عند إلغاء تنشيط شاشة التوقف"
 
-#: data/interfaces/xfpm-settings.ui:122 data/interfaces/xfpm-settings.ui:133
-#: data/interfaces/xfpm-settings.ui:144 data/interfaces/xfpm-settings.ui:155
-#: data/interfaces/xfpm-settings.ui:166 data/interfaces/xfpm-settings.ui:177
-#: data/interfaces/xfpm-settings.ui:188 data/interfaces/xfpm-settings.ui:199
-#: data/interfaces/xfpm-settings.ui:210 data/interfaces/xfpm-settings.ui:221
+#: data/interfaces/xfpm-settings.ui:115 data/interfaces/xfpm-settings.ui:126
+#: data/interfaces/xfpm-settings.ui:137 data/interfaces/xfpm-settings.ui:148
+#: data/interfaces/xfpm-settings.ui:159 data/interfaces/xfpm-settings.ui:170
+#: data/interfaces/xfpm-settings.ui:181 data/interfaces/xfpm-settings.ui:192
+#: data/interfaces/xfpm-settings.ui:203 data/interfaces/xfpm-settings.ui:214
 msgid "Nothing"
 msgstr "لا شيء"
 
-#: data/interfaces/xfpm-settings.ui:241
+#: data/interfaces/xfpm-settings.ui:234
 #: settings/xfce4-power-manager-settings.desktop.in:4
 #: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:248
 #: src/xfpm-power.c:555 src/xfpm-power.c:583 src/xfpm-power.c:775
@@ -55,377 +54,349 @@ msgstr "لا شيء"
 msgid "Power Manager"
 msgstr "مدير طاقة"
 
-#: data/interfaces/xfpm-settings.ui:256
+#: data/interfaces/xfpm-settings.ui:249
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "_Help"
 msgstr "_مساعدة"
 
-#: data/interfaces/xfpm-settings.ui:272
+#: data/interfaces/xfpm-settings.ui:265
 msgid "_Screensaver Management"
 msgstr ""
 
-#: data/interfaces/xfpm-settings.ui:288
+#: data/interfaces/xfpm-settings.ui:281
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
 msgid "_Close"
 msgstr "_إغلاق"
 
-#: data/interfaces/xfpm-settings.ui:350
+#: data/interfaces/xfpm-settings.ui:343
 msgid "When power button is pressed:"
 msgstr "عند الضغط على زر التشغيل:"
 
-#: data/interfaces/xfpm-settings.ui:362
+#: data/interfaces/xfpm-settings.ui:355
 msgid "When sleep button is pressed:"
 msgstr "عند الضغط على زر النوم:"
 
-#: data/interfaces/xfpm-settings.ui:374
+#: data/interfaces/xfpm-settings.ui:367
 msgid "When hibernate button is pressed:"
 msgstr "عند الضغط على زر الإسبات:"
 
-#: data/interfaces/xfpm-settings.ui:386
+#: data/interfaces/xfpm-settings.ui:379
 msgid "When battery button is pressed:"
 msgstr "عند الضغط على زر البطارية:"
 
-#: data/interfaces/xfpm-settings.ui:495
+#: data/interfaces/xfpm-settings.ui:488
 msgid "Exponential"
 msgstr ""
 
-#: data/interfaces/xfpm-settings.ui:517
+#: data/interfaces/xfpm-settings.ui:510
 msgid "Brightness step count:"
 msgstr "عداد درجة سطوع الشاشة"
 
-#: data/interfaces/xfpm-settings.ui:528
+#: data/interfaces/xfpm-settings.ui:521
 msgid "Handle display brightness _keys"
 msgstr "مقبض _مفااتيح سطوع الشاشة"
 
-#: data/interfaces/xfpm-settings.ui:551
+#: data/interfaces/xfpm-settings.ui:544
 msgid "<b>Buttons</b>"
 msgstr "<b>الأزرار</b>"
 
-#: data/interfaces/xfpm-settings.ui:585
+#: data/interfaces/xfpm-settings.ui:578
 msgid "Status notifications"
 msgstr "حالة الإشعارات"
 
-#: data/interfaces/xfpm-settings.ui:623
+#: data/interfaces/xfpm-settings.ui:616
 msgid "System tray icon"
 msgstr "أيقونة صينية النظام"
 
-#: data/interfaces/xfpm-settings.ui:659
+#: data/interfaces/xfpm-settings.ui:652
 msgid "<b>Appearance</b>"
 msgstr "<b>مظهر</b>"
 
-#: data/interfaces/xfpm-settings.ui:679
+#: data/interfaces/xfpm-settings.ui:672
 msgid "General"
 msgstr "عام"
 
-#: data/interfaces/xfpm-settings.ui:724 data/interfaces/xfpm-settings.ui:958
+#: data/interfaces/xfpm-settings.ui:717 data/interfaces/xfpm-settings.ui:951
 msgid "When inactive for"
 msgstr "عند السكون لمدة:"
 
-#: data/interfaces/xfpm-settings.ui:796 data/interfaces/xfpm-settings.ui:1030
+#: data/interfaces/xfpm-settings.ui:789 data/interfaces/xfpm-settings.ui:1023
 msgid "System sleep mode:"
 msgstr "وضع النوم للنظام:"
 
-#: data/interfaces/xfpm-settings.ui:808 data/interfaces/xfpm-settings.ui:1042
+#: data/interfaces/xfpm-settings.ui:801 data/interfaces/xfpm-settings.ui:1035
 msgid "<b>System power saving</b>"
 msgstr "<b>توفير الطاقة للنظام</b>"
 
-#: data/interfaces/xfpm-settings.ui:823 data/interfaces/xfpm-settings.ui:943
+#: data/interfaces/xfpm-settings.ui:816 data/interfaces/xfpm-settings.ui:936
 msgid "<b>Laptop Lid</b>"
 msgstr "<b> غطاء الحاسوب المحمول </b>"
 
-#: data/interfaces/xfpm-settings.ui:838 data/interfaces/xfpm-settings.ui:913
+#: data/interfaces/xfpm-settings.ui:831 data/interfaces/xfpm-settings.ui:906
 msgid "When laptop lid is closed:"
 msgstr "عند إغلاق غطاء الحاسوب المحمول:"
 
-#: data/interfaces/xfpm-settings.ui:867 data/interfaces/xfpm-settings.ui:1056
+#: data/interfaces/xfpm-settings.ui:860 data/interfaces/xfpm-settings.ui:1049
 msgid "<b>Power profile</b>"
 msgstr ""
 
-#: data/interfaces/xfpm-settings.ui:899 data/interfaces/xfpm-settings.ui:1607
+#: data/interfaces/xfpm-settings.ui:892 data/interfaces/xfpm-settings.ui:1600
 msgid "On battery"
 msgstr "على البطارية"
 
-#: data/interfaces/xfpm-settings.ui:1088 data/interfaces/xfpm-settings.ui:1860
+#: data/interfaces/xfpm-settings.ui:1081 data/interfaces/xfpm-settings.ui:1853
 #: common/xfpm-power-common.c:414
 msgid "Plugged in"
 msgstr "موصلة"
 
-#: data/interfaces/xfpm-settings.ui:1124
+#: data/interfaces/xfpm-settings.ui:1117
 msgid "Critical battery power level:"
 msgstr "مستوى طاقة البطارية الحرج:"
 
-#: data/interfaces/xfpm-settings.ui:1154 settings/xfpm-settings.c:299
+#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:264
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1178
+#: data/interfaces/xfpm-settings.ui:1171
 msgid "On critical battery power:"
 msgstr "على طاقة البطارية الحرجة:"
 
-#: data/interfaces/xfpm-settings.ui:1217
+#: data/interfaces/xfpm-settings.ui:1210
 msgid "<b>Critical power</b>"
 msgstr "<b>الطاقة الحرجة</b>"
 
-#: data/interfaces/xfpm-settings.ui:1246 data/interfaces/xfpm-settings.ui:2003
+#: data/interfaces/xfpm-settings.ui:1239
 msgid "Lock screen when system is going to sleep"
 msgstr "قفل الشاشة عند الإسبات"
 
-#: data/interfaces/xfpm-settings.ui:1265
+#: data/interfaces/xfpm-settings.ui:1258
 msgid "<b>Security</b>"
 msgstr "<b>الأمن</b>"
 
-#: data/interfaces/xfpm-settings.ui:1285
+#: data/interfaces/xfpm-settings.ui:1278
 msgid "System"
 msgstr "النّظام"
 
-#: data/interfaces/xfpm-settings.ui:1324
+#: data/interfaces/xfpm-settings.ui:1317
 msgid "<b>Display power management</b>"
 msgstr "<b>إدارة طاقة العرض</b>"
 
-#: data/interfaces/xfpm-settings.ui:1337
+#: data/interfaces/xfpm-settings.ui:1330
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr ""
 
-#: data/interfaces/xfpm-settings.ui:1412 data/interfaces/xfpm-settings.ui:1621
+#: data/interfaces/xfpm-settings.ui:1405 data/interfaces/xfpm-settings.ui:1614
 msgid "Put to sleep after"
 msgstr "انقل للنوم بعد:"
 
-#: data/interfaces/xfpm-settings.ui:1425 data/interfaces/xfpm-settings.ui:1634
+#: data/interfaces/xfpm-settings.ui:1418 data/interfaces/xfpm-settings.ui:1627
 msgid "Switch off after"
 msgstr "إيقاف بعد:"
 
-#: data/interfaces/xfpm-settings.ui:1482 data/interfaces/xfpm-settings.ui:1663
+#: data/interfaces/xfpm-settings.ui:1475 data/interfaces/xfpm-settings.ui:1656
 msgid "On inactivity reduce to"
 msgstr "أخفض عند السكون إلى:"
 
-#: data/interfaces/xfpm-settings.ui:1495 data/interfaces/xfpm-settings.ui:1676
+#: data/interfaces/xfpm-settings.ui:1488 data/interfaces/xfpm-settings.ui:1669
 msgid "Reduce after"
 msgstr "أخفض بعد:"
 
-#: data/interfaces/xfpm-settings.ui:1594 data/interfaces/xfpm-settings.ui:1647
+#: data/interfaces/xfpm-settings.ui:1587 data/interfaces/xfpm-settings.ui:1640
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>تخفيض السطوع</b>"
 
-#: data/interfaces/xfpm-settings.ui:1880
+#: data/interfaces/xfpm-settings.ui:1873
 msgid "Display"
 msgstr "عرض"
 
-#: data/interfaces/xfpm-settings.ui:1919
-msgid "Automatically lock the session:"
-msgstr "أقفل الجلسة تلقائياً:"
-
-#: data/interfaces/xfpm-settings.ui:1950
-msgid "Delay locking after screensaver for"
-msgstr "أخر الإقفال بعد شاشة التوقف لمدة:"
-
-#: data/interfaces/xfpm-settings.ui:2031
-msgid "<b>Light Locker</b>"
-msgstr "<b>القفل الخفيف</b>"
-
-#: data/interfaces/xfpm-settings.ui:2051
-msgid "Security"
-msgstr "الأمن"
-
-#: settings/xfpm-settings.c:231 settings/xfpm-settings.c:287
-#: settings/xfpm-settings.c:289
+#: settings/xfpm-settings.c:196 settings/xfpm-settings.c:252
+#: settings/xfpm-settings.c:254
 msgid "One minute"
 msgstr "دقيقة واحدة"
 
-#: settings/xfpm-settings.c:233 settings/xfpm-settings.c:245
-#: settings/xfpm-settings.c:259 settings/xfpm-settings.c:265
-#: settings/xfpm-settings.c:291 settings/xfpm-settings.c:293
+#: settings/xfpm-settings.c:198 settings/xfpm-settings.c:210
+#: settings/xfpm-settings.c:224 settings/xfpm-settings.c:230
+#: settings/xfpm-settings.c:256 settings/xfpm-settings.c:258
 msgid "minutes"
 msgstr "دقائق"
 
-#: settings/xfpm-settings.c:247 settings/xfpm-settings.c:255
-#: settings/xfpm-settings.c:257 settings/xfpm-settings.c:259
+#: settings/xfpm-settings.c:212 settings/xfpm-settings.c:220
+#: settings/xfpm-settings.c:222 settings/xfpm-settings.c:224
 msgid "One hour"
 msgstr "ساعة واحدة"
 
-#: settings/xfpm-settings.c:257 settings/xfpm-settings.c:263
+#: settings/xfpm-settings.c:222 settings/xfpm-settings.c:228
 msgid "one minute"
 msgstr "دقيقة واحدة"
 
-#: settings/xfpm-settings.c:261 settings/xfpm-settings.c:263
-#: settings/xfpm-settings.c:265
+#: settings/xfpm-settings.c:226 settings/xfpm-settings.c:228
+#: settings/xfpm-settings.c:230
 msgid "hours"
 msgstr "ساعات"
 
-#: settings/xfpm-settings.c:284 settings/xfpm-settings.c:289
-#: settings/xfpm-settings.c:293 settings/xfpm-settings.c:948
+#: settings/xfpm-settings.c:249 settings/xfpm-settings.c:254
+#: settings/xfpm-settings.c:258
 msgid "seconds"
 msgstr "ثوان"
 
-#: settings/xfpm-settings.c:453 settings/xfpm-settings.c:575
-#: settings/xfpm-settings.c:715 src/xfpm-power.c:610
+#: settings/xfpm-settings.c:418 settings/xfpm-settings.c:540
+#: settings/xfpm-settings.c:680 src/xfpm-power.c:610
 msgid "Suspend"
 msgstr "علق"
 
-#: settings/xfpm-settings.c:457
+#: settings/xfpm-settings.c:422
 msgid "Suspend operation not permitted"
 msgstr "إجراء التعليق غير مسموح به"
 
-#: settings/xfpm-settings.c:461
+#: settings/xfpm-settings.c:426
 msgid "Suspend operation not supported"
 msgstr "إجراء التعليق غير مدعوم"
 
-#: settings/xfpm-settings.c:467 settings/xfpm-settings.c:581
-#: settings/xfpm-settings.c:721 src/xfpm-power.c:598
+#: settings/xfpm-settings.c:432 settings/xfpm-settings.c:546
+#: settings/xfpm-settings.c:686 src/xfpm-power.c:598
 msgid "Hibernate"
 msgstr "إسبات"
 
-#: settings/xfpm-settings.c:471
+#: settings/xfpm-settings.c:436
 msgid "Hibernate operation not permitted"
 msgstr "إجراء الإسبات غير مسموح به"
 
-#: settings/xfpm-settings.c:475
+#: settings/xfpm-settings.c:440
 msgid "Hibernate operation not supported"
 msgstr "إجراء الإسبات غير مدعوم"
 
-#: settings/xfpm-settings.c:481 settings/xfpm-settings.c:587
-#: settings/xfpm-settings.c:727 src/xfpm-power.c:622
+#: settings/xfpm-settings.c:446 settings/xfpm-settings.c:552
+#: settings/xfpm-settings.c:692 src/xfpm-power.c:622
 msgid "Hybrid Sleep"
 msgstr ""
 
-#: settings/xfpm-settings.c:485
+#: settings/xfpm-settings.c:450
 msgid "Hybrid sleep operation not permitted"
 msgstr ""
 
-#: settings/xfpm-settings.c:489
+#: settings/xfpm-settings.c:454
 msgid "Hybrid sleep operation not supported"
 msgstr ""
 
-#: settings/xfpm-settings.c:514 settings/xfpm-settings.c:897
-#: settings/xfpm-settings.c:1067
+#: settings/xfpm-settings.c:479 settings/xfpm-settings.c:862
 msgid "Hibernate and suspend operations not supported"
 msgstr "إجراءات الإسبات و التعليق غير مدعومة"
 
-#: settings/xfpm-settings.c:519 settings/xfpm-settings.c:902
-#: settings/xfpm-settings.c:1072
+#: settings/xfpm-settings.c:484 settings/xfpm-settings.c:867
 msgid "Hibernate and suspend operations not permitted"
 msgstr "إجراءات الإسبات و التعليق غير مسموح بها"
 
-#: settings/xfpm-settings.c:570
+#: settings/xfpm-settings.c:535
 msgid "Switch off display"
 msgstr "إيقاف العرض"
 
-#: settings/xfpm-settings.c:591
+#: settings/xfpm-settings.c:556
 msgid "Lock screen"
 msgstr "قفل الشاشة"
 
-#: settings/xfpm-settings.c:594 settings/xfpm-settings.c:710
+#: settings/xfpm-settings.c:559 settings/xfpm-settings.c:675
 msgid "Do nothing"
 msgstr "لا تفعل شيء"
 
-#: settings/xfpm-settings.c:733 src/xfpm-power.c:642
+#: settings/xfpm-settings.c:698 src/xfpm-power.c:642
 msgid "Shutdown"
 msgstr "إطفاء الجهاز"
 
-#: settings/xfpm-settings.c:737
+#: settings/xfpm-settings.c:702
 msgid "Ask"
 msgstr "إسأل"
 
-#: settings/xfpm-settings.c:827
+#: settings/xfpm-settings.c:792
 msgid "Number of brightness steps available using keys"
 msgstr ""
 
-#: settings/xfpm-settings.c:877
+#: settings/xfpm-settings.c:842
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "عندما تصل كل مصادر طاقة الحاسوب مستوى الشحن هذا"
 
-#: settings/xfpm-settings.c:952 common/xfpm-power-common.c:159
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "دقيقة"
-msgstr[1] "دقيقة"
-msgstr[2] "دقائق"
-msgstr[3] "دقائق"
-msgstr[4] "دقائق"
-msgstr[5] "دقائق"
-
-#: settings/xfpm-settings.c:1361
+#: settings/xfpm-settings.c:1099
 msgid "Device"
 msgstr "جهاز"
 
-#: settings/xfpm-settings.c:1384
+#: settings/xfpm-settings.c:1122
 msgid "Type"
 msgstr "نوع"
 
-#: settings/xfpm-settings.c:1389
+#: settings/xfpm-settings.c:1127
 msgid "PowerSupply"
 msgstr "إمدادات الطاقة"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1128 src/xfpm-main.c:62
 msgid "True"
 msgstr "صحيح"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1128 src/xfpm-main.c:62
 msgid "False"
 msgstr "خطأ"
 
-#: settings/xfpm-settings.c:1397
+#: settings/xfpm-settings.c:1135
 msgid "Model"
 msgstr "نموذج"
 
-#: settings/xfpm-settings.c:1400
+#: settings/xfpm-settings.c:1138
 msgid "Technology"
 msgstr "تكنولوجيا"
 
-#: settings/xfpm-settings.c:1407
+#: settings/xfpm-settings.c:1145
 msgid "Current charge"
 msgstr "الشحن الحالي"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1415 settings/xfpm-settings.c:1427
-#: settings/xfpm-settings.c:1439
+#: settings/xfpm-settings.c:1153 settings/xfpm-settings.c:1165
+#: settings/xfpm-settings.c:1177
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1417
+#: settings/xfpm-settings.c:1155
 msgid "Fully charged (design)"
 msgstr "مشحون بالكامل (التصميم)"
 
-#: settings/xfpm-settings.c:1430
+#: settings/xfpm-settings.c:1168
 msgid "Fully charged"
 msgstr "مشحون بالكامل"
 
-#: settings/xfpm-settings.c:1441
+#: settings/xfpm-settings.c:1179
 msgid "Energy empty"
 msgstr "الطاقة فارغة"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1449
+#: settings/xfpm-settings.c:1187
 msgid "W"
 msgstr ""
 
-#: settings/xfpm-settings.c:1451
+#: settings/xfpm-settings.c:1189
 msgid "Energy rate"
 msgstr ""
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1459
+#: settings/xfpm-settings.c:1197
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1461
+#: settings/xfpm-settings.c:1199
 msgid "Voltage"
 msgstr "الجهد"
 
-#: settings/xfpm-settings.c:1468
+#: settings/xfpm-settings.c:1206
 msgid "Vendor"
 msgstr "بائع"
 
-#: settings/xfpm-settings.c:1473
+#: settings/xfpm-settings.c:1211
 msgid "Serial"
 msgstr "تسلسلي"
 
-#: settings/xfpm-settings.c:1760
+#: settings/xfpm-settings.c:1498
 msgid "Check your power manager installation"
 msgstr "تحقق من تثبيت مدير الطاقة"
 
-#: settings/xfpm-settings.c:1836
+#: settings/xfpm-settings.c:1574
 msgid "Devices"
 msgstr "أجهزة"
 
@@ -609,6 +580,16 @@ msgstr[2] "ساعات"
 msgstr[3] "ساعات"
 msgstr[4] "ساعات"
 msgstr[5] "ساعات"
+
+#: common/xfpm-power-common.c:159
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "دقيقة"
+msgstr[1] "دقيقة"
+msgstr[2] "دقائق"
+msgstr[3] "دقائق"
+msgstr[4] "دقائق"
+msgstr[5] "دقائق"
 
 #: common/xfpm-power-common.c:337
 #, c-format
