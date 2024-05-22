@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-20 12:47+0200\n"
+"POT-Creation-Date: 2024-05-22 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Gordon Freeman, 2023-2024\n"
 "Language-Team: Ukrainian (http://app.transifex.com/xfce/xfce4-power-manager/language/uk/)\n"
@@ -355,11 +355,11 @@ msgstr "Тип"
 msgid "PowerSupply"
 msgstr "Живлення"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "True"
 msgstr "True"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "False"
 msgstr "False"
 
@@ -443,7 +443,7 @@ msgstr "Показати специфічний пристрій за допом
 msgid "UpDevice object path"
 msgstr "UpDevice object path"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:248
+#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Включити режим відладки"
 
@@ -456,7 +456,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Спричинити вихід з xfce4-power-manager-settings"
 
 #: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Менеджер живлення Xfce"
 
@@ -808,125 +808,112 @@ msgstr "Ваша %s вичерпана"
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Яскравість клавіатури: %.0f процентів"
 
-#: src/xfpm-main.c:43
-#, c-format
-msgid ""
-"\n"
-"Xfce Power Manager %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
-msgstr "\nМенеджер живлення %s\n\nЧастина проекту Додатки Xfce\nhttp://goodies.xfce.org\n\nЛіцензовано під GNU GPL.\n\n"
-
-#: src/xfpm-main.c:92
+#: src/xfpm-main.c:86
 msgid "With policykit support\n"
 msgstr "З підтримкою policykit\n"
 
-#: src/xfpm-main.c:94
+#: src/xfpm-main.c:88
 msgid "Without policykit support\n"
 msgstr "Без підтримки policykit\n"
 
-#: src/xfpm-main.c:113
+#: src/xfpm-main.c:107
 msgid "Can suspend"
 msgstr "Можна призупинити"
 
-#: src/xfpm-main.c:114
+#: src/xfpm-main.c:108
 msgid "Can hibernate"
 msgstr "Може западати в сплячку"
 
-#: src/xfpm-main.c:115
+#: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:116
+#: src/xfpm-main.c:110
 msgid "Authorized to suspend"
 msgstr "Дозволено переводити в режим очікування"
 
-#: src/xfpm-main.c:117
+#: src/xfpm-main.c:111
 msgid "Authorized to hibernate"
 msgstr "Дозволено переводити в режим сну"
 
-#: src/xfpm-main.c:118
+#: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:119
+#: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
 msgstr "Дозволено виключати"
 
-#: src/xfpm-main.c:120
+#: src/xfpm-main.c:114
 msgid "Has battery"
 msgstr "Має батарею"
 
-#: src/xfpm-main.c:121
+#: src/xfpm-main.c:115
 msgid "Has brightness panel"
 msgstr "Має панель управління яскравості"
 
-#: src/xfpm-main.c:122
+#: src/xfpm-main.c:116
 msgid "Has power button"
 msgstr "Має кнопку вимкнення живлення"
 
-#: src/xfpm-main.c:123
+#: src/xfpm-main.c:117
 msgid "Has hibernate button"
 msgstr "Має кнопку переводу системи в режим сплячки"
 
-#: src/xfpm-main.c:124
+#: src/xfpm-main.c:118
 msgid "Has sleep button"
 msgstr "Має кнопку засинання"
 
-#: src/xfpm-main.c:125
+#: src/xfpm-main.c:119
 msgid "Has battery button"
 msgstr "Має кнопку акумулятора"
 
-#: src/xfpm-main.c:126
+#: src/xfpm-main.c:120
 msgid "Has LID"
 msgstr "Має кришку"
 
-#: src/xfpm-main.c:247
+#: src/xfpm-main.c:241
 msgid "Daemonize"
 msgstr "Перевести у фоновий режим"
 
-#: src/xfpm-main.c:249
+#: src/xfpm-main.c:243
 msgid "Dump all information"
 msgstr "Скинути всю інформацію"
 
-#: src/xfpm-main.c:250
+#: src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Перезапустити будь-який запущений менеджер живлення xfce"
 
-#: src/xfpm-main.c:251
+#: src/xfpm-main.c:245
 msgid "Show the configuration dialog"
 msgstr "Показати діалог налаштування"
 
-#: src/xfpm-main.c:252
+#: src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
 msgstr "Завершити будь-який запущений менеджер живлення xfce"
 
-#: src/xfpm-main.c:253
+#: src/xfpm-main.c:247
 msgid "Version information"
 msgstr "Інформація про версію"
 
-#: src/xfpm-main.c:272
+#: src/xfpm-main.c:266
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Не в стані обробити аргументи: %s\n"
 
-#: src/xfpm-main.c:306
+#: src/xfpm-main.c:300
 msgid "Unable to get connection to the message bus session"
 msgstr "Не можливо з'єднатись з сесією DBus"
 
-#: src/xfpm-main.c:315 src/xfpm-main.c:367
+#: src/xfpm-main.c:309 src/xfpm-main.c:361
 msgid "Xfce power manager is not running"
 msgstr "Менеджер живлення Xfce не працює"
 
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Another power manager is already running"
 msgstr "Інший менеджер живлення вже працює"
 
-#: src/xfpm-main.c:410
+#: src/xfpm-main.c:404
 msgid "Xfce power manager is already running"
 msgstr "Менеджер живлення Xfce вже працює"
 
@@ -938,7 +925,7 @@ msgstr "Неправильні параметри"
 msgid "Invalid cookie"
 msgstr "Неправильні коржики"
 
-#: src/xfpm-manager.c:477
+#: src/xfpm-manager.c:472
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
