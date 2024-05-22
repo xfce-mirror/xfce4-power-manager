@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-20 12:47+0200\n"
+"POT-Creation-Date: 2024-05-22 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Theppitak Karoonboonyanan <theppitak@gmail.com>, 2014-2015,2017\n"
 "Language-Team: Thai (http://app.transifex.com/xfce/xfce4-power-manager/language/th/)\n"
@@ -348,11 +348,11 @@ msgstr "ชนิด"
 msgid "PowerSupply"
 msgstr "แหล่งจ่ายพลังงาน"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "True"
 msgstr "ใช่"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "False"
 msgstr "ไม่ใช่"
 
@@ -436,7 +436,7 @@ msgstr "แสดงอุปกรณ์ที่ระบุด้วยพา
 msgid "UpDevice object path"
 msgstr "พาธของออบเจกต์ UpDevice"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:248
+#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "เปิดใช้การดีบั๊ก"
 
@@ -449,7 +449,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "ให้ xfce4-power-manager-settings จบการทำงาน"
 
 #: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "ระบบจัดการพลังงานของ Xfce"
 
@@ -792,125 +792,112 @@ msgstr "%s ไม่มีประจุไฟเหลือ"
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "ความสว่างของแป้นพิมพ์: %.0f เปอร์เซ็นต์"
 
-#: src/xfpm-main.c:43
-#, c-format
-msgid ""
-"\n"
-"Xfce Power Manager %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
-msgstr "\nระบบจัดการพลังงานของ Xfce %s\n\nส่วนหนึ่งของโครงการ Xfce Goodies\nhttp://goodies.xfce.org\n\nเผยแพร่ภายใต้สัญญาอนุญาต GNU GPL\n\n"
-
-#: src/xfpm-main.c:92
+#: src/xfpm-main.c:86
 msgid "With policykit support\n"
 msgstr "รองรับ policykit\n"
 
-#: src/xfpm-main.c:94
+#: src/xfpm-main.c:88
 msgid "Without policykit support\n"
 msgstr "ไม่รองรับ policykit\n"
 
-#: src/xfpm-main.c:113
+#: src/xfpm-main.c:107
 msgid "Can suspend"
 msgstr "รองรับการพักเครื่อง"
 
-#: src/xfpm-main.c:114
+#: src/xfpm-main.c:108
 msgid "Can hibernate"
 msgstr "รองรับการจำศีลเครื่อง"
 
-#: src/xfpm-main.c:115
+#: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:116
+#: src/xfpm-main.c:110
 msgid "Authorized to suspend"
 msgstr "มีสิทธิ์พักเครื่อง"
 
-#: src/xfpm-main.c:117
+#: src/xfpm-main.c:111
 msgid "Authorized to hibernate"
 msgstr "มีสิทธิ์จำศีลเครื่อง"
 
-#: src/xfpm-main.c:118
+#: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:119
+#: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
 msgstr "มีสิทธิ์ปิดเครื่อง"
 
-#: src/xfpm-main.c:120
+#: src/xfpm-main.c:114
 msgid "Has battery"
 msgstr "มีแบตเตอรี่"
 
-#: src/xfpm-main.c:121
+#: src/xfpm-main.c:115
 msgid "Has brightness panel"
 msgstr "มีแผงควบคุมความสว่าง"
 
-#: src/xfpm-main.c:122
+#: src/xfpm-main.c:116
 msgid "Has power button"
 msgstr "มีปุ่มเปิด-ปิดเครื่อง"
 
-#: src/xfpm-main.c:123
+#: src/xfpm-main.c:117
 msgid "Has hibernate button"
 msgstr "มีปุ่มจำศีลเครื่อง"
 
-#: src/xfpm-main.c:124
+#: src/xfpm-main.c:118
 msgid "Has sleep button"
 msgstr "มีปุ่มหลับ"
 
-#: src/xfpm-main.c:125
+#: src/xfpm-main.c:119
 msgid "Has battery button"
 msgstr "มีปุ่มแบตเตอรี่"
 
-#: src/xfpm-main.c:126
+#: src/xfpm-main.c:120
 msgid "Has LID"
 msgstr "มีฝาแล็ปท็อป"
 
-#: src/xfpm-main.c:247
+#: src/xfpm-main.c:241
 msgid "Daemonize"
 msgstr "ทำงานแบบดีมอน"
 
-#: src/xfpm-main.c:249
+#: src/xfpm-main.c:243
 msgid "Dump all information"
 msgstr "แสดงข้อมูลทั้งหมด"
 
-#: src/xfpm-main.c:250
+#: src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
 msgstr "เริ่มการทำงานของระบบจัดการพลังงานของ Xfce ที่กำลังทำงานอยู่ใหม่"
 
-#: src/xfpm-main.c:251
+#: src/xfpm-main.c:245
 msgid "Show the configuration dialog"
 msgstr "แสดงกล่องโต้ตอบตั้งค่า"
 
-#: src/xfpm-main.c:252
+#: src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
 msgstr "จบการทำงานของระบบจัดการพลังงานของ Xfce ใดๆ ที่กำลังทำงานอยู่"
 
-#: src/xfpm-main.c:253
+#: src/xfpm-main.c:247
 msgid "Version information"
 msgstr "แสดงข้อมูลรุ่น"
 
-#: src/xfpm-main.c:272
+#: src/xfpm-main.c:266
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "แจงอาร์กิวเมนต์ไม่สำเร็จ: %s\n"
 
-#: src/xfpm-main.c:306
+#: src/xfpm-main.c:300
 msgid "Unable to get connection to the message bus session"
 msgstr "ไม่สามารถเชื่อมต่อไปยังวาระของบัสข้อความได้"
 
-#: src/xfpm-main.c:315 src/xfpm-main.c:367
+#: src/xfpm-main.c:309 src/xfpm-main.c:361
 msgid "Xfce power manager is not running"
 msgstr "ระบบจัดการพลังงานของ Xfce ไม่ได้ทำงานอยู่"
 
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Another power manager is already running"
 msgstr "มีระบบจัดการพลังงานอีกระบบหนึ่งทำงานอยู่ก่อนแล้ว"
 
-#: src/xfpm-main.c:410
+#: src/xfpm-main.c:404
 msgid "Xfce power manager is already running"
 msgstr "ระบบจัดการพลังงานของ Xfce ทำงานอยู่ก่อนแล้ว"
 
@@ -922,7 +909,7 @@ msgstr "อาร์กิวเมนต์ไม่ถูกต้อง"
 msgid "Invalid cookie"
 msgstr "คุกกี้ไม่ถูกต้อง"
 
-#: src/xfpm-manager.c:477
+#: src/xfpm-manager.c:472
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
