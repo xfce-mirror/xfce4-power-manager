@@ -40,7 +40,7 @@
 static void G_GNUC_NORETURN
 show_version (void)
 {
-  g_print ("Xfce Power Manager %s", VERSION);
+  g_print ("Xfce Power Manager %s\n", VERSION);
   exit (EXIT_SUCCESS);
 }
 
