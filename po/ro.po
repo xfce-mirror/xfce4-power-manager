@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-30 00:48+0200\n"
+"POT-Creation-Date: 2024-05-22 12:48+0200\n"
 "PO-Revision-Date: 2023-02-20 11:54+0000\n"
 "Last-Translator: Dumitru Moldovan <dumol@gnome.org>, 2023\n"
 "Language-Team: Romanian (https://app.transifex.com/xfce/teams/16840/ro/)\n"
@@ -27,7 +27,7 @@ msgstr ""
 
 #: ../data/interfaces/xfpm-settings.ui.h:1 ../settings/xfpm-settings.c:649
 #: ../settings/xfpm-settings.c:664 ../settings/xfpm-settings.c:691
-#: ../settings/xfpm-settings.c:1659
+#: ../settings/xfpm-settings.c:1671
 msgid "Never"
 msgstr "Niciodată"
 
@@ -45,20 +45,20 @@ msgstr "Niciuna"
 
 #: ../data/interfaces/xfpm-settings.ui.h:5
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:1
-#: ../src/xfpm-power.c:357 ../src/xfpm-power.c:633 ../src/xfpm-power.c:675
-#: ../src/xfpm-power.c:838 ../src/xfpm-power.c:859 ../src/xfpm-backlight.c:166
+#: ../src/xfpm-power.c:338 ../src/xfpm-power.c:620 ../src/xfpm-power.c:662
+#: ../src/xfpm-power.c:825 ../src/xfpm-power.c:846 ../src/xfpm-backlight.c:166
 #: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
-#: ../src/xfpm-kbd-backlight.c:118 ../src/xfce4-power-manager.desktop.in.h:1
+#: ../src/xfpm-kbd-backlight.c:119 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
 msgstr "Manager de consum"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:160
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
 msgid "_Help"
 msgstr "_Ajutor"
 
 #: ../data/interfaces/xfpm-settings.ui.h:7
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:161
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:158
 msgid "_Close"
 msgstr "_Închide"
 
@@ -226,7 +226,7 @@ msgstr "Un minut"
 
 #: ../settings/xfpm-settings.c:654 ../settings/xfpm-settings.c:666
 #: ../settings/xfpm-settings.c:677 ../settings/xfpm-settings.c:681
-#: ../settings/xfpm-settings.c:1668
+#: ../settings/xfpm-settings.c:1680
 msgid "minutes"
 msgstr "minute"
 
@@ -244,165 +244,174 @@ msgstr "un minut"
 msgid "hours"
 msgstr "ore"
 
-#: ../settings/xfpm-settings.c:693 ../settings/xfpm-settings.c:1661
+#: ../settings/xfpm-settings.c:693 ../settings/xfpm-settings.c:1673
 msgid "seconds"
 msgstr "secunde"
 
-#: ../settings/xfpm-settings.c:902 ../settings/xfpm-settings.c:981
-#: ../settings/xfpm-settings.c:1043 ../settings/xfpm-settings.c:1139
-#: ../settings/xfpm-settings.c:1231 ../settings/xfpm-settings.c:1350
-#: ../settings/xfpm-settings.c:1408 ../settings/xfpm-settings.c:1460
-#: ../settings/xfpm-settings.c:1511 ../src/xfpm-power.c:700
+#: ../settings/xfpm-settings.c:914 ../settings/xfpm-settings.c:993
+#: ../settings/xfpm-settings.c:1055 ../settings/xfpm-settings.c:1151
+#: ../settings/xfpm-settings.c:1243 ../settings/xfpm-settings.c:1362
+#: ../settings/xfpm-settings.c:1420 ../settings/xfpm-settings.c:1472
+#: ../settings/xfpm-settings.c:1523 ../src/xfpm-power.c:687
 msgid "Suspend"
 msgstr "Suspendare"
 
-#: ../settings/xfpm-settings.c:906 ../settings/xfpm-settings.c:1143
+#: ../settings/xfpm-settings.c:918 ../settings/xfpm-settings.c:1155
 msgid "Suspend operation not permitted"
 msgstr "Drepturi insuficiente pentru suspendare"
 
-#: ../settings/xfpm-settings.c:910 ../settings/xfpm-settings.c:1147
+#: ../settings/xfpm-settings.c:922 ../settings/xfpm-settings.c:1159
 msgid "Suspend operation not supported"
 msgstr "Nu există suport pentru suspendare"
 
-#: ../settings/xfpm-settings.c:916 ../settings/xfpm-settings.c:987
-#: ../settings/xfpm-settings.c:1049 ../settings/xfpm-settings.c:1153
-#: ../settings/xfpm-settings.c:1237 ../settings/xfpm-settings.c:1356
-#: ../settings/xfpm-settings.c:1414 ../settings/xfpm-settings.c:1466
-#: ../settings/xfpm-settings.c:1517 ../src/xfpm-power.c:689
+#: ../settings/xfpm-settings.c:928 ../settings/xfpm-settings.c:999
+#: ../settings/xfpm-settings.c:1061 ../settings/xfpm-settings.c:1165
+#: ../settings/xfpm-settings.c:1249 ../settings/xfpm-settings.c:1368
+#: ../settings/xfpm-settings.c:1426 ../settings/xfpm-settings.c:1478
+#: ../settings/xfpm-settings.c:1529 ../src/xfpm-power.c:676
 msgid "Hibernate"
 msgstr "Hibernare"
 
-#: ../settings/xfpm-settings.c:920 ../settings/xfpm-settings.c:1157
+#: ../settings/xfpm-settings.c:932 ../settings/xfpm-settings.c:1169
 msgid "Hibernate operation not permitted"
 msgstr "Drepturi insuficiente pentru hibernare"
 
-#: ../settings/xfpm-settings.c:924 ../settings/xfpm-settings.c:1161
+#: ../settings/xfpm-settings.c:936 ../settings/xfpm-settings.c:1173
 msgid "Hibernate operation not supported"
 msgstr "Nu există suport pentru hibernare"
 
-#: ../settings/xfpm-settings.c:954 ../settings/xfpm-settings.c:1191
-#: ../settings/xfpm-settings.c:1617 ../settings/xfpm-settings.c:1744
+#: ../settings/xfpm-settings.c:966 ../settings/xfpm-settings.c:1203
+#: ../settings/xfpm-settings.c:1629 ../settings/xfpm-settings.c:1756
 msgid "Hibernate and suspend operations not supported"
 msgstr "Nu există suport pentru hibernare și suspendare"
 
-#: ../settings/xfpm-settings.c:959 ../settings/xfpm-settings.c:1196
-#: ../settings/xfpm-settings.c:1622 ../settings/xfpm-settings.c:1749
+#: ../settings/xfpm-settings.c:971 ../settings/xfpm-settings.c:1208
+#: ../settings/xfpm-settings.c:1634 ../settings/xfpm-settings.c:1761
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Nu sunt permise hibernarea și suspendarea"
 
-#: ../settings/xfpm-settings.c:976 ../settings/xfpm-settings.c:1345
-#: ../settings/xfpm-settings.c:1403 ../settings/xfpm-settings.c:1455
-#: ../settings/xfpm-settings.c:1506
+#: ../settings/xfpm-settings.c:988 ../settings/xfpm-settings.c:1357
+#: ../settings/xfpm-settings.c:1415 ../settings/xfpm-settings.c:1467
+#: ../settings/xfpm-settings.c:1518
 msgid "Do nothing"
 msgstr "Nu face nimic"
 
-#: ../settings/xfpm-settings.c:993 ../settings/xfpm-settings.c:1362
-#: ../src/xfpm-power.c:711
+#: ../settings/xfpm-settings.c:1005 ../settings/xfpm-settings.c:1374
+#: ../src/xfpm-power.c:698
 msgid "Shutdown"
 msgstr "Oprire"
 
-#: ../settings/xfpm-settings.c:997 ../settings/xfpm-settings.c:1366
-#: ../settings/xfpm-settings.c:1418 ../settings/xfpm-settings.c:1470
-#: ../settings/xfpm-settings.c:1521
+#: ../settings/xfpm-settings.c:1009 ../settings/xfpm-settings.c:1378
+#: ../settings/xfpm-settings.c:1430 ../settings/xfpm-settings.c:1482
+#: ../settings/xfpm-settings.c:1533
 msgid "Ask"
 msgstr "Întreabă"
 
-#: ../settings/xfpm-settings.c:1038 ../settings/xfpm-settings.c:1226
+#: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1238
 msgid "Switch off display"
 msgstr "Stingere display"
 
-#: ../settings/xfpm-settings.c:1053 ../settings/xfpm-settings.c:1241
+#: ../settings/xfpm-settings.c:1065 ../settings/xfpm-settings.c:1253
 msgid "Lock screen"
 msgstr "Blocare ecran"
 
-#: ../settings/xfpm-settings.c:1550
+#: ../settings/xfpm-settings.c:1562
 msgid "Number of brightness steps available using keys"
 msgstr ""
 
-#: ../settings/xfpm-settings.c:1590
+#: ../settings/xfpm-settings.c:1602
 msgid "When all the power sources of the computer reach this charge level"
 msgstr ""
 "Când toate sursele de curent ale sistemului ating acest nivel de încărcare"
 
-#: ../settings/xfpm-settings.c:1666 ../common/xfpm-power-common.c:166
+#: ../settings/xfpm-settings.c:1678 ../common/xfpm-power-common.c:166
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minut"
 msgstr[1] "minute"
 msgstr[2] "de minute"
 
-#: ../settings/xfpm-settings.c:2033
+#: ../settings/xfpm-settings.c:2044
 msgid "Device"
 msgstr "Dispozitiv"
 
-#: ../settings/xfpm-settings.c:2055
+#: ../settings/xfpm-settings.c:2067
 msgid "Type"
 msgstr "Tip"
 
-#: ../settings/xfpm-settings.c:2060
+#: ../settings/xfpm-settings.c:2072
 msgid "PowerSupply"
 msgstr "Sursă de curent"
 
-#: ../settings/xfpm-settings.c:2061 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2073 ../src/xfpm-main.c:72
 msgid "True"
 msgstr "Da"
 
-#: ../settings/xfpm-settings.c:2061 ../src/xfpm-main.c:77
+#: ../settings/xfpm-settings.c:2073 ../src/xfpm-main.c:72
 msgid "False"
 msgstr "Nu"
 
-#: ../settings/xfpm-settings.c:2068
+#: ../settings/xfpm-settings.c:2080
 msgid "Model"
 msgstr "Model"
 
-#: ../settings/xfpm-settings.c:2071
+#: ../settings/xfpm-settings.c:2083
 msgid "Technology"
 msgstr "Tehnologie"
 
-#: ../settings/xfpm-settings.c:2078
+#: ../settings/xfpm-settings.c:2090
 msgid "Current charge"
 msgstr "Încărcare actuală"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: ../settings/xfpm-settings.c:2086 ../settings/xfpm-settings.c:2098
-#: ../settings/xfpm-settings.c:2110
+#: ../settings/xfpm-settings.c:2098 ../settings/xfpm-settings.c:2110
+#: ../settings/xfpm-settings.c:2122
 msgid "Wh"
 msgstr "Wh"
 
-#: ../settings/xfpm-settings.c:2088
+#: ../settings/xfpm-settings.c:2100
 msgid "Fully charged (design)"
 msgstr "Încărcare completă (din fabrică)"
 
-#: ../settings/xfpm-settings.c:2101
+#: ../settings/xfpm-settings.c:2113
 msgid "Fully charged"
 msgstr "Încărcare completă"
 
-#: ../settings/xfpm-settings.c:2112
+#: ../settings/xfpm-settings.c:2124
 msgid "Energy empty"
 msgstr "Capacitate epuizată"
 
+#. TRANSLATORS: Unit here is Watt
+#: ../settings/xfpm-settings.c:2132
+msgid "W"
+msgstr ""
+
+#: ../settings/xfpm-settings.c:2134
+msgid "Energy rate"
+msgstr ""
+
 #. TRANSLATORS: Unit here is Volt
-#: ../settings/xfpm-settings.c:2120
+#: ../settings/xfpm-settings.c:2142
 msgid "V"
 msgstr "V"
 
-#: ../settings/xfpm-settings.c:2122
+#: ../settings/xfpm-settings.c:2144
 msgid "Voltage"
 msgstr "Voltaj"
 
-#: ../settings/xfpm-settings.c:2129
+#: ../settings/xfpm-settings.c:2151
 msgid "Vendor"
 msgstr "Comerciant"
 
-#: ../settings/xfpm-settings.c:2134
+#: ../settings/xfpm-settings.c:2156
 msgid "Serial"
 msgstr "Serie"
 
-#: ../settings/xfpm-settings.c:2413
+#: ../settings/xfpm-settings.c:2435
 msgid "Check your power manager installation"
 msgstr "Verificați instalarea managerului de consum"
 
-#: ../settings/xfpm-settings.c:2506
+#: ../settings/xfpm-settings.c:2528
 msgid "Devices"
 msgstr "Dispozitive"
 
@@ -422,7 +431,7 @@ msgstr "Afișează un anumit dispozitiv după calea obiectului UpDevice"
 msgid "UpDevice object path"
 msgstr "Calea obiectului UpDevice"
 
-#: ../settings/xfpm-settings-app.c:76 ../src/xfpm-main.c:276
+#: ../settings/xfpm-settings-app.c:76 ../src/xfpm-main.c:271
 msgid "Enable debugging"
 msgstr "Activează depanarea"
 
@@ -434,31 +443,31 @@ msgstr "Arată detalii de versiune"
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr ""
 
-#: ../settings/xfpm-settings-app.c:174 ../settings/xfpm-settings-app.c:221
-#: ../src/xfpm-main.c:448
+#: ../settings/xfpm-settings-app.c:167 ../settings/xfpm-settings-app.c:214
+#: ../src/xfpm-main.c:443
 msgid "Xfce Power Manager"
 msgstr "Managerul de consum Xfce"
 
-#: ../settings/xfpm-settings-app.c:176
+#: ../settings/xfpm-settings-app.c:169
 msgid "Failed to connect to power manager"
 msgstr ""
 
-#: ../settings/xfpm-settings-app.c:190
+#: ../settings/xfpm-settings-app.c:183
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Managerul de consum Xfce nu este pornit, doriți să-l porniți acum?"
 
-#: ../settings/xfpm-settings-app.c:223
+#: ../settings/xfpm-settings-app.c:216
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
 "Nu s-a putut încărca configurația managerului de consum, se vor folosi "
 "valorile implicite"
 
-#: ../settings/xfpm-settings-app.c:356
+#: ../settings/xfpm-settings-app.c:336
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "Acesta este %s versiunea %s, pornit în Xfce %s.\n"
 
-#: ../settings/xfpm-settings-app.c:358
+#: ../settings/xfpm-settings-app.c:338
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Compilat cu GTK+ %d.%d.%d, pornit cu GTK+ %d.%d.%d."
@@ -473,7 +482,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr ""
 
-#: ../common/xfpm-common.c:120
+#: ../common/xfpm-common.c:121
 msgid "translator-credits"
 msgstr "Mișu Moldovan <dumol@xfce.org>"
 
@@ -619,19 +628,19 @@ msgstr ""
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Waiting to discharge (%0.0f%%)"
+"Waiting to charge (%0.0f%%)"
 msgstr ""
 "<b>%s %s</b>\n"
-"În așteptare pentru descărcare (%0.0f%%)"
+"În așteptare pentru încărcare (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
-"Waiting to charge (%0.0f%%)"
+"Waiting to discharge (%0.0f%%)"
 msgstr ""
 "<b>%s %s</b>\n"
-"În așteptare pentru încărcare (%0.0f%%)"
+"În așteptare pentru descărcare (%0.0f%%)"
 
 #: ../common/xfpm-power-common.c:400
 #, c-format
@@ -681,45 +690,45 @@ msgstr ""
 "<b>%s %s</b>\n"
 "Stare necunoscută"
 
-#: ../src/xfpm-power.c:383
+#: ../src/xfpm-power.c:364
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr ""
 
-#: ../src/xfpm-power.c:432
+#: ../src/xfpm-power.c:413
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr ""
 
-#: ../src/xfpm-power.c:597
+#: ../src/xfpm-power.c:584
 msgid "Hibernate the system"
 msgstr "Hibernează sistemul"
 
-#: ../src/xfpm-power.c:608
+#: ../src/xfpm-power.c:595
 msgid "Suspend the system"
 msgstr "Suspendă sistemul"
 
-#: ../src/xfpm-power.c:617
+#: ../src/xfpm-power.c:604
 msgid "Shutdown the system"
 msgstr "Oprește sistemul"
 
-#: ../src/xfpm-power.c:628 ../src/xfpm-power.c:672
+#: ../src/xfpm-power.c:615 ../src/xfpm-power.c:659
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
 "Sistemul are bateria pe terminate. Salvați ce ați lucrat pentru a evita "
 "pierderea de date."
 
-#: ../src/xfpm-power.c:718
+#: ../src/xfpm-power.c:705
 msgid "_Cancel"
 msgstr "_Renunță"
 
-#: ../src/xfpm-power.c:839
+#: ../src/xfpm-power.c:826
 msgid "System is running on low power"
 msgstr "Sistemul are bateria pe terminate"
 
-#: ../src/xfpm-power.c:855
+#: ../src/xfpm-power.c:842
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
@@ -728,12 +737,12 @@ msgstr ""
 "Nivelul de încărcare %s este redus\n"
 "Timpul estimat rămas este de %s"
 
-#: ../src/xfpm-power.c:1648 ../src/xfpm-power.c:1696 ../src/xfpm-power.c:1728
-#: ../src/xfpm-power.c:1758
+#: ../src/xfpm-power.c:1583 ../src/xfpm-power.c:1631 ../src/xfpm-power.c:1663
+#: ../src/xfpm-power.c:1693
 msgid "Permission denied"
 msgstr "Cerere refuzată"
 
-#: ../src/xfpm-power.c:1737 ../src/xfpm-power.c:1767
+#: ../src/xfpm-power.c:1672 ../src/xfpm-power.c:1702
 msgid "Suspend not supported"
 msgstr "Nu există suport pentru suspendare"
 
@@ -783,161 +792,140 @@ msgid "Your %s is empty"
 msgstr "%s este epuizată"
 
 #. generate a human-readable summary for the notification
-#: ../src/xfpm-kbd-backlight.c:116
+#: ../src/xfpm-kbd-backlight.c:117
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Luminozitate pentru tastatură: %.0f la sută"
 
-#: ../src/xfpm-main.c:54
-#, c-format
-msgid ""
-"\n"
-"Xfce Power Manager %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
-msgstr ""
-"\n"
-"Managerul de consum Xfce %s\n"
-"\n"
-"Parte a proiectului Xfce Goodies\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licențiat în termenii licenței GNU GPL.\n"
-"\n"
-
-#: ../src/xfpm-main.c:112
+#: ../src/xfpm-main.c:107
 #, c-format
 msgid "With policykit support\n"
 msgstr "Cu suport PolicyKit\n"
 
-#: ../src/xfpm-main.c:114
+#: ../src/xfpm-main.c:109
 #, c-format
 msgid "Without policykit support\n"
 msgstr "Fără suport PolicyKit\n"
 
-#: ../src/xfpm-main.c:117
+#: ../src/xfpm-main.c:112
 #, c-format
 msgid "With network manager support\n"
 msgstr "Cu suport pentru NetworkManager\n"
 
-#: ../src/xfpm-main.c:119
+#: ../src/xfpm-main.c:114
 #, c-format
 msgid "Without network manager support\n"
 msgstr "Fără suport pentru NetworkManager\n"
 
-#: ../src/xfpm-main.c:134
+#: ../src/xfpm-main.c:129
 msgid "Can suspend"
 msgstr "Suspendarea e posibilă"
 
-#: ../src/xfpm-main.c:136
+#: ../src/xfpm-main.c:131
 msgid "Can hibernate"
 msgstr "Hibernarea e posibilă"
 
-#: ../src/xfpm-main.c:138
+#: ../src/xfpm-main.c:133
 msgid "Authorized to suspend"
 msgstr "Autorizat pentru suspendare"
 
-#: ../src/xfpm-main.c:140
+#: ../src/xfpm-main.c:135
 msgid "Authorized to hibernate"
 msgstr "Autorizat pentru hibernare"
 
-#: ../src/xfpm-main.c:142
+#: ../src/xfpm-main.c:137
 msgid "Authorized to shutdown"
 msgstr "Autorizat pentru oprire"
 
-#: ../src/xfpm-main.c:144
+#: ../src/xfpm-main.c:139
 msgid "Has battery"
 msgstr "Baterie detectată"
 
-#: ../src/xfpm-main.c:146
+#: ../src/xfpm-main.c:141
 msgid "Has brightness panel"
 msgstr "Panou de luminozitate detectat"
 
-#: ../src/xfpm-main.c:148
+#: ../src/xfpm-main.c:143
 msgid "Has power button"
 msgstr "Buton de oprire detectat"
 
-#: ../src/xfpm-main.c:150
+#: ../src/xfpm-main.c:145
 msgid "Has hibernate button"
 msgstr "Buton de hibernare detectat"
 
-#: ../src/xfpm-main.c:152
+#: ../src/xfpm-main.c:147
 msgid "Has sleep button"
 msgstr "Buton de repaus detectat"
 
-#: ../src/xfpm-main.c:154
+#: ../src/xfpm-main.c:149
 msgid "Has battery button"
 msgstr "Are buton baterie"
 
-#: ../src/xfpm-main.c:156
+#: ../src/xfpm-main.c:151
 msgid "Has LID"
 msgstr "Capac detectat"
 
-#: ../src/xfpm-main.c:275
+#: ../src/xfpm-main.c:270
 msgid "Daemonize"
 msgstr ""
 
-#: ../src/xfpm-main.c:277
+#: ../src/xfpm-main.c:272
 msgid "Dump all information"
 msgstr "Salvează toate detaliile"
 
-#: ../src/xfpm-main.c:278
+#: ../src/xfpm-main.c:273
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Reinițializează managerul de consum Xfce pornit"
 
-#: ../src/xfpm-main.c:279
+#: ../src/xfpm-main.c:274
 msgid "Show the configuration dialog"
 msgstr "Arată un dialog de configurare"
 
-#: ../src/xfpm-main.c:280
+#: ../src/xfpm-main.c:275
 msgid "Quit any running xfce power manager"
 msgstr "Închide orice manager de consum Xfce pornit"
 
-#: ../src/xfpm-main.c:281
+#: ../src/xfpm-main.c:276
 msgid "Version information"
 msgstr "Detalii despre versiune"
 
-#: ../src/xfpm-main.c:300
+#: ../src/xfpm-main.c:295
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Nu s-au putut prelucra argumentele: %s\n"
 
-#: ../src/xfpm-main.c:329
+#: ../src/xfpm-main.c:324
 #, c-format
 msgid "Type '%s --help' for usage."
 msgstr "Încercați „%s --help” pentru detalii de utilizare."
 
-#: ../src/xfpm-main.c:350
+#: ../src/xfpm-main.c:345
 msgid "Unable to get connection to the message bus session"
 msgstr "Nu s-a putut face o conexiune la sesiunea D-BUS"
 
-#: ../src/xfpm-main.c:358 ../src/xfpm-main.c:407
+#: ../src/xfpm-main.c:353 ../src/xfpm-main.c:402
 #, c-format
 msgid "Xfce power manager is not running"
 msgstr "Managerul de consum Xfce nu este pornit"
 
-#: ../src/xfpm-main.c:449
+#: ../src/xfpm-main.c:444
 msgid "Another power manager is already running"
 msgstr "Un alt manager de consum este deja pornit"
 
-#: ../src/xfpm-main.c:453
+#: ../src/xfpm-main.c:448
 #, c-format
 msgid "Xfce power manager is already running"
 msgstr "Managerul de consum Xfce este deja pornit"
 
-#: ../src/xfpm-inhibit.c:396
+#: ../src/xfpm-inhibit.c:394
 msgid "Invalid arguments"
 msgstr "Opțiuni nevalide"
 
-#: ../src/xfpm-inhibit.c:430
+#: ../src/xfpm-inhibit.c:428
 msgid "Invalid cookie"
 msgstr "Cookie nevalid"
 
-#: ../src/xfpm-manager.c:455
+#: ../src/xfpm-manager.c:456
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
@@ -950,64 +938,59 @@ msgid "Power management for the Xfce desktop"
 msgstr "Management de consum pentru desktopul Xfce"
 
 #. Odds are this is a desktop without any batteries attached
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:294
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:276
 msgid "Display battery levels for attached devices"
 msgstr "Arată nivelul bateriei pentru dispozitivele conectate"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1455
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1398
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr ""
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1750
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1614
 msgid "<b>Display brightness</b>"
 msgstr "<b>Luminozitatea displayului</b>"
 
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1777
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1788
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1641
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1652
 msgid "Presentation _mode"
 msgstr "_Mod de prezentare"
 
 #. Power manager settings
-#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1801
+#: ../panel-plugins/power-manager-plugin/power-manager-button.c:1665
 msgid "_Settings..."
 msgstr "_Setări..."
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:78
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr ""
-
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:146
 msgid "None"
 msgstr "Niciuna"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:146
 msgid "Percentage"
 msgstr "Procentaj"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:146
 msgid "Remaining time"
 msgstr "Timp rămas"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:146
 msgid "Percentage and remaining time"
 msgstr "Procentaj și timp rămas"
 
 #. create the dialog
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:154
 msgid "Power Manager Plugin Settings"
 msgstr ""
 
 #. show-panel-label setting
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:180
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:177
 msgid "Show label:"
 msgstr "Arată etichetă:"
 
-#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:213
+#: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:210
 msgid "Show 'Presentation mode' indicator:"
 msgstr "Arată indicator 'Mod prezentare':"
 
