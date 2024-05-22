@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-20 12:47+0200\n"
+"POT-Creation-Date: 2024-05-22 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@mailbox.org>, 2018,2024\n"
 "Language-Team: Hungarian (http://app.transifex.com/xfce/xfce4-power-manager/language/hu/)\n"
@@ -360,11 +360,11 @@ msgstr "Típus"
 msgid "PowerSupply"
 msgstr "Tápellátás"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "True"
 msgstr "Igaz"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "False"
 msgstr "Hamis"
 
@@ -448,7 +448,7 @@ msgstr "Konkrét eszköz megjelenítése az UpDevice objektumútvonal alapján"
 msgid "UpDevice object path"
 msgstr "UpDevice objektumútvonal"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:248
+#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Hibakeresés engedélyezése"
 
@@ -461,7 +461,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Az xfce4-power-manager-settings kiléptetése"
 
 #: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Xfce energiakezelő"
 
@@ -807,125 +807,112 @@ msgstr "A(z) %s üres"
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Billentyűzet fényereje: %.0f százalék"
 
-#: src/xfpm-main.c:43
-#, c-format
-msgid ""
-"\n"
-"Xfce Power Manager %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
-msgstr "\nXfce energiakezelő %s\n\nAz Xfce Goodies projekt része\nhttp://goodies.xfce.org\n\nGNU GPL licenc alatt.\n\n"
-
-#: src/xfpm-main.c:92
+#: src/xfpm-main.c:86
 msgid "With policykit support\n"
 msgstr "Policykit támogatással\n"
 
-#: src/xfpm-main.c:94
+#: src/xfpm-main.c:88
 msgid "Without policykit support\n"
 msgstr "Policykit támogatás nélkül\n"
 
-#: src/xfpm-main.c:113
+#: src/xfpm-main.c:107
 msgid "Can suspend"
 msgstr "Képes felfüggesztésre"
 
-#: src/xfpm-main.c:114
+#: src/xfpm-main.c:108
 msgid "Can hibernate"
 msgstr "Képes hibernálásra"
 
-#: src/xfpm-main.c:115
+#: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:116
+#: src/xfpm-main.c:110
 msgid "Authorized to suspend"
 msgstr "Felfüggesztésre feljogosítva"
 
-#: src/xfpm-main.c:117
+#: src/xfpm-main.c:111
 msgid "Authorized to hibernate"
 msgstr "Hibernálásra feljogosítva"
 
-#: src/xfpm-main.c:118
+#: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:119
+#: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
 msgstr "Leállításra feljogosítva"
 
-#: src/xfpm-main.c:120
+#: src/xfpm-main.c:114
 msgid "Has battery"
 msgstr "Van akkumulátora"
 
-#: src/xfpm-main.c:121
+#: src/xfpm-main.c:115
 msgid "Has brightness panel"
 msgstr "Van fényerősség-panelje"
 
-#: src/xfpm-main.c:122
+#: src/xfpm-main.c:116
 msgid "Has power button"
 msgstr "Van bekapcsológombja"
 
-#: src/xfpm-main.c:123
+#: src/xfpm-main.c:117
 msgid "Has hibernate button"
 msgstr "Van hibernálás gombja"
 
-#: src/xfpm-main.c:124
+#: src/xfpm-main.c:118
 msgid "Has sleep button"
 msgstr "Van alvás gombja"
 
-#: src/xfpm-main.c:125
+#: src/xfpm-main.c:119
 msgid "Has battery button"
 msgstr "Van akkumulátor gombja"
 
-#: src/xfpm-main.c:126
+#: src/xfpm-main.c:120
 msgid "Has LID"
 msgstr "Van fedele"
 
-#: src/xfpm-main.c:247
+#: src/xfpm-main.c:241
 msgid "Daemonize"
 msgstr "Indítás démonként"
 
-#: src/xfpm-main.c:249
+#: src/xfpm-main.c:243
 msgid "Dump all information"
 msgstr "Összes információ kiírása"
 
-#: src/xfpm-main.c:250
+#: src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Az Xfce energiakezelő futó példányának újraindítása"
 
-#: src/xfpm-main.c:251
+#: src/xfpm-main.c:245
 msgid "Show the configuration dialog"
 msgstr "Beállítóablak megjelenítése"
 
-#: src/xfpm-main.c:252
+#: src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
 msgstr "Kilépés a futó Xfce energiakezelőből"
 
-#: src/xfpm-main.c:253
+#: src/xfpm-main.c:247
 msgid "Version information"
 msgstr "Verzióinformációk"
 
-#: src/xfpm-main.c:272
+#: src/xfpm-main.c:266
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Az argumentumok feldolgozása sikertelen: %s\n"
 
-#: src/xfpm-main.c:306
+#: src/xfpm-main.c:300
 msgid "Unable to get connection to the message bus session"
 msgstr "Nem kérhető kapcsolat az üzenetbusz-munkamenethez"
 
-#: src/xfpm-main.c:315 src/xfpm-main.c:367
+#: src/xfpm-main.c:309 src/xfpm-main.c:361
 msgid "Xfce power manager is not running"
 msgstr "Az Xfce energiakezelő nem fut"
 
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Another power manager is already running"
 msgstr "Már fut egy másik energiakezelő"
 
-#: src/xfpm-main.c:410
+#: src/xfpm-main.c:404
 msgid "Xfce power manager is already running"
 msgstr "Az Xfce energiakezelő már fut"
 
@@ -937,7 +924,7 @@ msgstr "Érvénytelen argumentumok"
 msgid "Invalid cookie"
 msgstr "Érvénytelen süti"
 
-#: src/xfpm-manager.c:477
+#: src/xfpm-manager.c:472
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
