@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-20 12:47+0200\n"
+"POT-Creation-Date: 2024-05-22 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Triyan W. Nugroho <triyan.wn@gmail.com>, 2020\n"
 "Language-Team: Indonesian (http://app.transifex.com/xfce/xfce4-power-manager/language/id/)\n"
@@ -353,11 +353,11 @@ msgstr "Tipe"
 msgid "PowerSupply"
 msgstr "SuplaiDaya"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "True"
 msgstr "Benar"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "False"
 msgstr "Salah"
 
@@ -441,7 +441,7 @@ msgstr "Menampilkan perangkat tertentu berdasarkan lokasi obyek UpDevice"
 msgid "UpDevice object path"
 msgstr "Lokasi obyek UpDevice"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:248
+#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Aktifkan pengawakutuan"
 
@@ -454,7 +454,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Menyebabkan xfce4-power-manager-settings berhenti"
 
 #: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Manajer Daya Xfce"
 
@@ -797,125 +797,112 @@ msgstr "%s Anda telah kosong"
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Kecerahan Papan Ketik: %.0f persen"
 
-#: src/xfpm-main.c:43
-#, c-format
-msgid ""
-"\n"
-"Xfce Power Manager %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
-msgstr "\nManajer Daya Xfce %s\n\nBagian dari Proyek Goodies Xfce\nhttp://goodies.xfce.org\n\nDilisensikan di bawah GNU GPL.\n\n"
-
-#: src/xfpm-main.c:92
+#: src/xfpm-main.c:86
 msgid "With policykit support\n"
 msgstr "Dengan dukungan policykit\n"
 
-#: src/xfpm-main.c:94
+#: src/xfpm-main.c:88
 msgid "Without policykit support\n"
 msgstr "Tanpa dukungan policykit\n"
 
-#: src/xfpm-main.c:113
+#: src/xfpm-main.c:107
 msgid "Can suspend"
 msgstr "Dapat suspensi"
 
-#: src/xfpm-main.c:114
+#: src/xfpm-main.c:108
 msgid "Can hibernate"
 msgstr "Dapat hibernasi"
 
-#: src/xfpm-main.c:115
+#: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:116
+#: src/xfpm-main.c:110
 msgid "Authorized to suspend"
 msgstr "Diizinkan untuk suspensi"
 
-#: src/xfpm-main.c:117
+#: src/xfpm-main.c:111
 msgid "Authorized to hibernate"
 msgstr "Diizinkan untuk hibernasi"
 
-#: src/xfpm-main.c:118
+#: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:119
+#: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
 msgstr "Diizinkan untuk dimatikan"
 
-#: src/xfpm-main.c:120
+#: src/xfpm-main.c:114
 msgid "Has battery"
 msgstr "Punya baterai"
 
-#: src/xfpm-main.c:121
+#: src/xfpm-main.c:115
 msgid "Has brightness panel"
 msgstr "Punya panel kecerahan"
 
-#: src/xfpm-main.c:122
+#: src/xfpm-main.c:116
 msgid "Has power button"
 msgstr "Punya tombol daya"
 
-#: src/xfpm-main.c:123
+#: src/xfpm-main.c:117
 msgid "Has hibernate button"
 msgstr "Punya tombol hibernasi"
 
-#: src/xfpm-main.c:124
+#: src/xfpm-main.c:118
 msgid "Has sleep button"
 msgstr "Punya tombol tidur"
 
-#: src/xfpm-main.c:125
+#: src/xfpm-main.c:119
 msgid "Has battery button"
 msgstr "Punya tombol baterai"
 
-#: src/xfpm-main.c:126
+#: src/xfpm-main.c:120
 msgid "Has LID"
 msgstr "Punya LID"
 
-#: src/xfpm-main.c:247
+#: src/xfpm-main.c:241
 msgid "Daemonize"
 msgstr "Jurikkan"
 
-#: src/xfpm-main.c:249
+#: src/xfpm-main.c:243
 msgid "Dump all information"
 msgstr "Buang semua informasi"
 
-#: src/xfpm-main.c:250
+#: src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Mulai ulang instansi manajer daya Xfce yang berjalan"
 
-#: src/xfpm-main.c:251
+#: src/xfpm-main.c:245
 msgid "Show the configuration dialog"
 msgstr "Tampilkan dialog konfigurasi"
 
-#: src/xfpm-main.c:252
+#: src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
 msgstr "Keluar manajer daya xfce yang berjalan"
 
-#: src/xfpm-main.c:253
+#: src/xfpm-main.c:247
 msgid "Version information"
 msgstr "Informasi versi"
 
-#: src/xfpm-main.c:272
+#: src/xfpm-main.c:266
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Gagal membaca argumen: %s\n"
 
-#: src/xfpm-main.c:306
+#: src/xfpm-main.c:300
 msgid "Unable to get connection to the message bus session"
 msgstr "Tak bisa mendapatkan koneksi ke sesi bus pesan"
 
-#: src/xfpm-main.c:315 src/xfpm-main.c:367
+#: src/xfpm-main.c:309 src/xfpm-main.c:361
 msgid "Xfce power manager is not running"
 msgstr "Manajer daya Xfce tak berjalan"
 
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Another power manager is already running"
 msgstr "Manajer daya lainnya telah berjalan"
 
-#: src/xfpm-main.c:410
+#: src/xfpm-main.c:404
 msgid "Xfce power manager is already running"
 msgstr "Manajer daya Xfce telah berjalan"
 
@@ -927,7 +914,7 @@ msgstr "Argumen tidak sah"
 msgid "Invalid cookie"
 msgstr "Cookie tidak sah"
 
-#: src/xfpm-manager.c:477
+#: src/xfpm-manager.c:472
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
