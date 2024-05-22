@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-20 12:47+0200\n"
+"POT-Creation-Date: 2024-05-22 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: scootergrisen, 2016-2017,2019-2023\n"
 "Language-Team: Danish (http://app.transifex.com/xfce/xfce4-power-manager/language/da/)\n"
@@ -351,11 +351,11 @@ msgstr "Type"
 msgid "PowerSupply"
 msgstr "Strømforsyning"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "True"
 msgstr "Sand"
 
-#: settings/xfpm-settings.c:1390 src/xfpm-main.c:68
+#: settings/xfpm-settings.c:1390 src/xfpm-main.c:62
 msgid "False"
 msgstr "Falsk"
 
@@ -439,7 +439,7 @@ msgstr "Vis en specifik enhed efter UpDevice-objektsti"
 msgid "UpDevice object path"
 msgstr "UpDevice-objektsti"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:248
+#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Aktivér fejlsøgning"
 
@@ -452,7 +452,7 @@ msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Få xfce4-power-manager-settings til at afslutte"
 
 #: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Xfce Strømstyring"
 
@@ -798,125 +798,112 @@ msgstr "Dit %s er tomt"
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Lysstyrke for tastatur: %.0f procent"
 
-#: src/xfpm-main.c:43
-#, c-format
-msgid ""
-"\n"
-"Xfce Power Manager %s\n"
-"\n"
-"Part of the Xfce Goodies Project\n"
-"http://goodies.xfce.org\n"
-"\n"
-"Licensed under the GNU GPL.\n"
-"\n"
-msgstr "\nStrømstyring til Xfce %s\n\nEn del af Xfce Goodies-projektet\nhttp://goodies.xfce.org\n\nLicenseret under GNU GPL.\n\n"
-
-#: src/xfpm-main.c:92
+#: src/xfpm-main.c:86
 msgid "With policykit support\n"
 msgstr "Med understøttelse af policykit\n"
 
-#: src/xfpm-main.c:94
+#: src/xfpm-main.c:88
 msgid "Without policykit support\n"
 msgstr "Uden understøttelse af policykit\n"
 
-#: src/xfpm-main.c:113
+#: src/xfpm-main.c:107
 msgid "Can suspend"
 msgstr "Kan sættes i hvile"
 
-#: src/xfpm-main.c:114
+#: src/xfpm-main.c:108
 msgid "Can hibernate"
 msgstr "Kan sættes i dvale"
 
-#: src/xfpm-main.c:115
+#: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:116
+#: src/xfpm-main.c:110
 msgid "Authorized to suspend"
 msgstr "Godkendt til hvile"
 
-#: src/xfpm-main.c:117
+#: src/xfpm-main.c:111
 msgid "Authorized to hibernate"
 msgstr "Godkendt til dvale"
 
-#: src/xfpm-main.c:118
+#: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:119
+#: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
 msgstr "Godkendt til at lukke ned"
 
-#: src/xfpm-main.c:120
+#: src/xfpm-main.c:114
 msgid "Has battery"
 msgstr "Har batteri"
 
-#: src/xfpm-main.c:121
+#: src/xfpm-main.c:115
 msgid "Has brightness panel"
 msgstr "Har lysstyrkepanel"
 
-#: src/xfpm-main.c:122
+#: src/xfpm-main.c:116
 msgid "Has power button"
 msgstr "Har tænd-/slukknap"
 
-#: src/xfpm-main.c:123
+#: src/xfpm-main.c:117
 msgid "Has hibernate button"
 msgstr "Har dvaleknap"
 
-#: src/xfpm-main.c:124
+#: src/xfpm-main.c:118
 msgid "Has sleep button"
 msgstr "Har hvileknap"
 
-#: src/xfpm-main.c:125
+#: src/xfpm-main.c:119
 msgid "Has battery button"
 msgstr "Har batteriknap"
 
-#: src/xfpm-main.c:126
+#: src/xfpm-main.c:120
 msgid "Has LID"
 msgstr "Har låg"
 
-#: src/xfpm-main.c:247
+#: src/xfpm-main.c:241
 msgid "Daemonize"
 msgstr "Dæmoniser"
 
-#: src/xfpm-main.c:249
+#: src/xfpm-main.c:243
 msgid "Dump all information"
 msgstr "Udskriv alle informationer"
 
-#: src/xfpm-main.c:250
+#: src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Genstart den kørende instans af Xfce Strømstyring"
 
-#: src/xfpm-main.c:251
+#: src/xfpm-main.c:245
 msgid "Show the configuration dialog"
 msgstr "Vis indstillingsvindue"
 
-#: src/xfpm-main.c:252
+#: src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
 msgstr "Afslut enhver kørende Xfce Strømstyring"
 
-#: src/xfpm-main.c:253
+#: src/xfpm-main.c:247
 msgid "Version information"
 msgstr "Versionsinformation"
 
-#: src/xfpm-main.c:272
+#: src/xfpm-main.c:266
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Kunne ikke fortolke argumenter: %s\n"
 
-#: src/xfpm-main.c:306
+#: src/xfpm-main.c:300
 msgid "Unable to get connection to the message bus session"
 msgstr "Kunne ikke forbinde til meddelelsesbussessionen"
 
-#: src/xfpm-main.c:315 src/xfpm-main.c:367
+#: src/xfpm-main.c:309 src/xfpm-main.c:361
 msgid "Xfce power manager is not running"
 msgstr "Xfce Strømstyring kører ikke"
 
-#: src/xfpm-main.c:406
+#: src/xfpm-main.c:400
 msgid "Another power manager is already running"
 msgstr "En anden strømstyring kører allerede"
 
-#: src/xfpm-main.c:410
+#: src/xfpm-main.c:404
 msgid "Xfce power manager is already running"
 msgstr "Xfce Strømstyring kører allerede"
 
@@ -928,7 +915,7 @@ msgstr "Ugyldige argumenter"
 msgid "Invalid cookie"
 msgstr "Ugyldig cookie"
 
-#: src/xfpm-manager.c:477
+#: src/xfpm-manager.c:472
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
