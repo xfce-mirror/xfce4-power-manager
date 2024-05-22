@@ -66,6 +66,9 @@ void
 power_manager_button_show (PowerManagerButton *button);
 void
 power_manager_button_show_menu (PowerManagerButton *button);
+gboolean
+power_manager_button_scroll_event (GtkWidget *widget,
+                                   GdkEventScroll *ev);
 const gchar *
 power_manager_button_get_icon_name (PowerManagerButton *button);
 const gchar *

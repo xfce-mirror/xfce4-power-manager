@@ -750,7 +750,7 @@ power_manager_button_remove_all_devices (PowerManagerButton *button)
   }
 }
 
-static gboolean
+gboolean
 power_manager_button_scroll_event (GtkWidget *widget,
                                    GdkEventScroll *ev)
 {

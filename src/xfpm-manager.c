@@ -756,6 +756,14 @@ xfpm_manager_show_tray_menu (GtkStatusIcon *icon,
   power_manager_button_show_menu (POWER_MANAGER_BUTTON (manager->priv->power_button));
 }
 
+static gboolean
+xfpm_manager_tray_scroll_event (GtkStatusIcon *status_icon,
+                                GdkEvent *event,
+                                XfpmManager *manager)
+{
+  return power_manager_button_scroll_event (manager->priv->power_button, (GdkEventScroll *) event);
+}
+
 static void
 xfpm_manager_show_tray_icon (XfpmManager *manager)
 {
@@ -791,6 +799,8 @@ xfpm_manager_show_tray_icon (XfpmManager *manager)
 
   g_signal_connect (manager->priv->adapter_icon, "popup-menu",
                     G_CALLBACK (xfpm_manager_show_tray_menu), manager);
+  g_signal_connect (manager->priv->adapter_icon, "scroll-event",
+                    G_CALLBACK (xfpm_manager_tray_scroll_event), manager);
 }
 
 static void
@@ -807,6 +817,7 @@ xfpm_manager_hide_tray_icon (XfpmManager *manager)
   g_signal_handlers_disconnect_by_func (manager->priv->power_button, xfpm_manager_tray_update_tooltip, manager);
   g_signal_handlers_disconnect_by_func (manager->priv->power_button, xfpm_manager_tray_update_icon, manager);
   g_signal_handlers_disconnect_by_func (manager->priv->adapter_icon, xfpm_manager_show_tray_menu, manager);
+  g_signal_handlers_disconnect_by_func (manager->priv->adapter_icon, xfpm_manager_tray_scroll_event, manager);
 
   g_object_unref (manager->priv->power_button);
   g_object_unref (manager->priv->adapter_icon);
