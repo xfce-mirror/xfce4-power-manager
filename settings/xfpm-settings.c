@@ -1555,8 +1555,20 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
                               can_suspend, can_hibernate, can_hybrid_sleep, has_lcd_brightness, has_lid);
 
   if (has_battery)
+  {
     xfpm_settings_power_supply (channel, FALSE, profiles_proxy, auth_suspend, auth_hibernate, auth_hybrid_sleep,
                                 can_suspend, can_hibernate, can_hybrid_sleep, has_lcd_brightness, has_lid);
+    if (upower != NULL && !up_client_get_on_battery (upower))
+    {
+      GtkWidget *widget;
+      stack = GTK_WIDGET (gtk_builder_get_object (xml, "system-stack"));
+      widget = gtk_stack_get_child_by_name (GTK_STACK (stack), "page1");
+      gtk_stack_set_visible_child (GTK_STACK (stack), widget);
+      stack = GTK_WIDGET (gtk_builder_get_object (xml, "display-stack"));
+      widget = gtk_stack_get_child_by_name (GTK_STACK (stack), "page1");
+      gtk_stack_set_visible_child (GTK_STACK (stack), widget);
+    }
+  }
   else
   {
     gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-frame")));
