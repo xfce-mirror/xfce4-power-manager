@@ -475,6 +475,10 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
         }
       }
     }
+    else if (action == LID_TRIGGER_SHUTDOWN)
+    {
+      xfpm_manager_shutdown (manager);
+    }
     else if (action != LID_TRIGGER_NOTHING)
     {
       XfpmShutdownRequest request = XFPM_DO_NOTHING;
