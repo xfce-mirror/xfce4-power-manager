@@ -70,9 +70,6 @@ struct XfpmBacklightPrivate
   gint32 last_level;
   gint32 max_level;
 
-  guint brightness_step_count;
-  gboolean brightness_exponential;
-
   gint brightness_switch;
   gint brightness_switch_save;
   gboolean brightness_switch_initialized;
@@ -381,8 +378,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv->power = NULL;
   backlight->priv->dimmed = FALSE;
   backlight->priv->block = FALSE;
-  backlight->priv->brightness_step_count = 10;
-  backlight->priv->brightness_exponential = FALSE;
   backlight->priv->brightness_switch_initialized = FALSE;
 
   if (backlight->priv->brightness != NULL)
@@ -469,16 +464,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
                   "on-battery", &backlight->priv->on_battery,
                   NULL);
     xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
-
-    /* setup step count */
-    backlight->priv->brightness_step_count =
-      xfconf_channel_get_int (xfpm_xfconf_get_channel (backlight->priv->conf),
-                              XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
-                              DEFAULT_BRIGHTNESS_STEP_COUNT);
-    backlight->priv->brightness_exponential =
-      xfconf_channel_get_bool (xfpm_xfconf_get_channel (backlight->priv->conf),
-                               XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
-                               DEFAULT_BRIGHTNESS_EXPONENTIAL);
   }
 }
 
