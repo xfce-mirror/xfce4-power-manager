@@ -442,7 +442,10 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
                   NULL);
 
     if (logind_handle_lid_switch)
+    {
+      XFPM_DEBUG ("Ignoring lid event: logind handles it");
       return;
+    }
   }
 
   g_object_get (G_OBJECT (power),
@@ -453,26 +456,29 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
                 on_battery ? LID_ACTION_ON_BATTERY : LID_ACTION_ON_AC, &action,
                 NULL);
 
-  if (lid_is_closed)
+  XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, lid_is_closed ? "LID closed" : "LID opened");
+
+  if (lid_is_closed && !xfpm_is_multihead_connected (G_OBJECT (manager)))
   {
-    XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID close event");
+    if (xfpm_is_multihead_connected (G_OBJECT (manager)))
+    {
+      XFPM_DEBUG ("Ignoring lid closed event: external monitor connected");
+      return;
+    }
 
     if (action == LID_TRIGGER_DPMS)
     {
-      if (manager->priv->dpms != NULL && !xfpm_is_multihead_connected (G_OBJECT (manager)))
+      if (manager->priv->dpms != NULL)
         xfpm_dpms_set_mode (manager->priv->dpms, XFPM_DPMS_MODE_OFF);
     }
     else if (action == LID_TRIGGER_LOCK_SCREEN)
     {
-      if (!xfpm_is_multihead_connected (G_OBJECT (manager)))
+      if (!xfce_screensaver_lock (manager->priv->screensaver))
       {
-        if (!xfce_screensaver_lock (manager->priv->screensaver))
-        {
-          xfce_dialog_show_error (NULL, NULL,
-                                  _("None of the screen lock tools ran "
-                                    "successfully, the screen will not "
-                                    "be locked."));
-        }
+        xfce_dialog_show_error (NULL, NULL,
+                                _("None of the screen lock tools ran "
+                                  "successfully, the screen will not "
+                                  "be locked."));
       }
     }
     else if (action == LID_TRIGGER_SHUTDOWN)
@@ -500,8 +506,6 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
   }
   else
   {
-    XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, "LID opened");
-
     if (manager->priv->dpms != NULL && action != LID_TRIGGER_NOTHING)
       xfpm_dpms_set_mode (manager->priv->dpms, XFPM_DPMS_MODE_ON);
   }
