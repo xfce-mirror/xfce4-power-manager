@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-22 12:47+0200\n"
+"POT-Creation-Date: 2024-05-23 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: 玉堂白鹤 <yjwork@qq.com>, 2015,2017,2019-2024\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/xfce/xfce4-power-manager/language/zh_CN/)\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: data/interfaces/xfpm-settings.ui:96 settings/xfpm-settings.c:193
-#: settings/xfpm-settings.c:208 settings/xfpm-settings.c:242
+#: settings/xfpm-settings.c:210
 msgid "Never"
 msgstr "从不"
 
@@ -55,7 +55,7 @@ msgstr "无"
 #: settings/xfce4-power-manager-settings.desktop.in:4
 #: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:248
 #: src/xfpm-power.c:555 src/xfpm-power.c:583 src/xfpm-power.c:775
-#: src/xfpm-power.c:794 src/xfpm-backlight.c:158 src/xfpm-backlight.c:166
+#: src/xfpm-power.c:794 src/xfpm-backlight.c:155 src/xfpm-backlight.c:163
 #: src/xfpm-battery.c:181 src/xfpm-kbd-backlight.c:108
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -160,7 +160,7 @@ msgstr "插入电源"
 msgid "Critical battery power level:"
 msgstr "紧急电量级别："
 
-#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:264
+#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:232
 msgid "%"
 msgstr "%"
 
@@ -218,192 +218,178 @@ msgstr "<b>亮度降低</b>"
 msgid "Display"
 msgstr "显示"
 
-#: settings/xfpm-settings.c:196 settings/xfpm-settings.c:252
-#: settings/xfpm-settings.c:254
+#: settings/xfpm-settings.c:196 settings/xfpm-settings.c:220
+#: settings/xfpm-settings.c:222
 msgid "One minute"
 msgstr "一分钟"
 
-#: settings/xfpm-settings.c:198 settings/xfpm-settings.c:210
-#: settings/xfpm-settings.c:224 settings/xfpm-settings.c:230
-#: settings/xfpm-settings.c:256 settings/xfpm-settings.c:258
+#: settings/xfpm-settings.c:198 settings/xfpm-settings.c:224
+#: settings/xfpm-settings.c:226
 msgid "minutes"
 msgstr "分钟"
 
-#: settings/xfpm-settings.c:212 settings/xfpm-settings.c:220
-#: settings/xfpm-settings.c:222 settings/xfpm-settings.c:224
-msgid "One hour"
-msgstr "一小时"
-
-#: settings/xfpm-settings.c:222 settings/xfpm-settings.c:228
-msgid "one minute"
-msgstr "一分钟"
-
-#: settings/xfpm-settings.c:226 settings/xfpm-settings.c:228
-#: settings/xfpm-settings.c:230
-msgid "hours"
-msgstr "小时"
-
-#: settings/xfpm-settings.c:249 settings/xfpm-settings.c:254
-#: settings/xfpm-settings.c:258
+#: settings/xfpm-settings.c:217 settings/xfpm-settings.c:222
+#: settings/xfpm-settings.c:226
 msgid "seconds"
 msgstr "秒"
 
-#: settings/xfpm-settings.c:418 settings/xfpm-settings.c:540
-#: settings/xfpm-settings.c:680 src/xfpm-power.c:610
+#: settings/xfpm-settings.c:386 settings/xfpm-settings.c:514
+#: settings/xfpm-settings.c:651 src/xfpm-power.c:610
 msgid "Suspend"
 msgstr "挂起"
 
-#: settings/xfpm-settings.c:422
+#: settings/xfpm-settings.c:390
 msgid "Suspend operation not permitted"
 msgstr "不允许挂起操作"
 
-#: settings/xfpm-settings.c:426
+#: settings/xfpm-settings.c:394
 msgid "Suspend operation not supported"
 msgstr "不支持挂起操作"
 
-#: settings/xfpm-settings.c:432 settings/xfpm-settings.c:546
-#: settings/xfpm-settings.c:686 src/xfpm-power.c:598
+#: settings/xfpm-settings.c:400 settings/xfpm-settings.c:520
+#: settings/xfpm-settings.c:657 src/xfpm-power.c:598
 msgid "Hibernate"
 msgstr "休眠"
 
-#: settings/xfpm-settings.c:436
+#: settings/xfpm-settings.c:404
 msgid "Hibernate operation not permitted"
 msgstr "不允许休眠操作"
 
-#: settings/xfpm-settings.c:440
+#: settings/xfpm-settings.c:408
 msgid "Hibernate operation not supported"
 msgstr "不支持休眠操作"
 
-#: settings/xfpm-settings.c:446 settings/xfpm-settings.c:552
-#: settings/xfpm-settings.c:692 src/xfpm-power.c:622
+#: settings/xfpm-settings.c:414 settings/xfpm-settings.c:526
+#: settings/xfpm-settings.c:663 src/xfpm-power.c:622
 msgid "Hybrid Sleep"
 msgstr "混合睡眠"
 
-#: settings/xfpm-settings.c:450
+#: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
 msgstr "不允许混合睡眠操作"
 
-#: settings/xfpm-settings.c:454
+#: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
 msgstr "不支持混合睡眠操作"
 
-#: settings/xfpm-settings.c:479 settings/xfpm-settings.c:862
+#: settings/xfpm-settings.c:447 settings/xfpm-settings.c:833
 msgid "Hibernate and suspend operations not supported"
 msgstr "不支持休眠和挂起操作"
 
-#: settings/xfpm-settings.c:484 settings/xfpm-settings.c:867
+#: settings/xfpm-settings.c:452 settings/xfpm-settings.c:838
 msgid "Hibernate and suspend operations not permitted"
 msgstr "不允许休眠和挂起操作"
 
-#: settings/xfpm-settings.c:535
-msgid "Switch off display"
-msgstr "关闭屏幕显示"
-
-#: settings/xfpm-settings.c:556
-msgid "Lock screen"
-msgstr "锁屏"
-
-#: settings/xfpm-settings.c:559 settings/xfpm-settings.c:675
+#: settings/xfpm-settings.c:503 settings/xfpm-settings.c:646
 msgid "Do nothing"
 msgstr "什么都不做"
 
-#: settings/xfpm-settings.c:698 src/xfpm-power.c:642
+#: settings/xfpm-settings.c:506
+msgid "Switch off display"
+msgstr "关闭屏幕显示"
+
+#: settings/xfpm-settings.c:509
+msgid "Lock screen"
+msgstr "锁屏"
+
+#: settings/xfpm-settings.c:530 settings/xfpm-settings.c:669
+#: src/xfpm-power.c:642
 msgid "Shutdown"
 msgstr "关机"
 
-#: settings/xfpm-settings.c:702
+#: settings/xfpm-settings.c:673
 msgid "Ask"
 msgstr "询问"
 
-#: settings/xfpm-settings.c:792
+#: settings/xfpm-settings.c:763
 msgid "Number of brightness steps available using keys"
 msgstr "使用按键可设置的亮度级数"
 
-#: settings/xfpm-settings.c:842
+#: settings/xfpm-settings.c:813
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "当所有计算机电源到达此电量级别"
 
-#: settings/xfpm-settings.c:1099
+#: settings/xfpm-settings.c:1070
 msgid "Device"
 msgstr "设备"
 
-#: settings/xfpm-settings.c:1122
+#: settings/xfpm-settings.c:1093
 msgid "Type"
 msgstr "类型"
 
-#: settings/xfpm-settings.c:1127
+#: settings/xfpm-settings.c:1098
 msgid "PowerSupply"
 msgstr "供电"
 
-#: settings/xfpm-settings.c:1128 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
 msgid "True"
 msgstr "是"
 
-#: settings/xfpm-settings.c:1128 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
 msgid "False"
 msgstr "否"
 
-#: settings/xfpm-settings.c:1135
+#: settings/xfpm-settings.c:1106
 msgid "Model"
 msgstr "型号"
 
-#: settings/xfpm-settings.c:1138
+#: settings/xfpm-settings.c:1109
 msgid "Technology"
 msgstr "技术"
 
-#: settings/xfpm-settings.c:1145
+#: settings/xfpm-settings.c:1116
 msgid "Current charge"
 msgstr "当前电量"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1153 settings/xfpm-settings.c:1165
-#: settings/xfpm-settings.c:1177
+#: settings/xfpm-settings.c:1124 settings/xfpm-settings.c:1136
+#: settings/xfpm-settings.c:1148
 msgid "Wh"
 msgstr "瓦时"
 
-#: settings/xfpm-settings.c:1155
+#: settings/xfpm-settings.c:1126
 msgid "Fully charged (design)"
 msgstr "满充容量 (设计)"
 
-#: settings/xfpm-settings.c:1168
+#: settings/xfpm-settings.c:1139
 msgid "Fully charged"
 msgstr "满充容量"
 
-#: settings/xfpm-settings.c:1179
+#: settings/xfpm-settings.c:1150
 msgid "Energy empty"
 msgstr "无电量"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1187
+#: settings/xfpm-settings.c:1158
 msgid "W"
 msgstr "瓦"
 
-#: settings/xfpm-settings.c:1189
+#: settings/xfpm-settings.c:1160
 msgid "Energy rate"
 msgstr "功率"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1197
+#: settings/xfpm-settings.c:1168
 msgid "V"
 msgstr "伏"
 
-#: settings/xfpm-settings.c:1199
+#: settings/xfpm-settings.c:1170
 msgid "Voltage"
 msgstr "电压"
 
-#: settings/xfpm-settings.c:1206
+#: settings/xfpm-settings.c:1177
 msgid "Vendor"
 msgstr "生产厂商"
 
-#: settings/xfpm-settings.c:1211
+#: settings/xfpm-settings.c:1182
 msgid "Serial"
 msgstr "序列号"
 
-#: settings/xfpm-settings.c:1498
+#: settings/xfpm-settings.c:1469
 msgid "Check your power manager installation"
 msgstr "检查您的电源管理器安装"
 
-#: settings/xfpm-settings.c:1574
+#: settings/xfpm-settings.c:1545
 msgid "Devices"
 msgstr "设备"
 
@@ -734,7 +720,7 @@ msgid "Hybrid sleep not supported"
 msgstr "不支持混合睡眠"
 
 #. generate a human-readable summary for the notification
-#: src/xfpm-backlight.c:152
+#: src/xfpm-backlight.c:149
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "亮度: %.0f 百分比"
