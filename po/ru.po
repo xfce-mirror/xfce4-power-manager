@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-22 12:47+0200\n"
+"POT-Creation-Date: 2024-05-23 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Andrei Stepanov, 2015,2023-2024\n"
 "Language-Team: Russian (http://app.transifex.com/xfce/xfce4-power-manager/language/ru/)\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #: data/interfaces/xfpm-settings.ui:96 settings/xfpm-settings.c:193
-#: settings/xfpm-settings.c:208 settings/xfpm-settings.c:242
+#: settings/xfpm-settings.c:210
 msgid "Never"
 msgstr "Никогда"
 
@@ -55,7 +55,7 @@ msgstr "Ничего не делать"
 #: settings/xfce4-power-manager-settings.desktop.in:4
 #: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:248
 #: src/xfpm-power.c:555 src/xfpm-power.c:583 src/xfpm-power.c:775
-#: src/xfpm-power.c:794 src/xfpm-backlight.c:158 src/xfpm-backlight.c:166
+#: src/xfpm-power.c:794 src/xfpm-backlight.c:155 src/xfpm-backlight.c:163
 #: src/xfpm-battery.c:181 src/xfpm-kbd-backlight.c:108
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -160,7 +160,7 @@ msgstr "Подключён к сети"
 msgid "Critical battery power level:"
 msgstr "Критический уровень заряда батареи:"
 
-#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:264
+#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:232
 msgid "%"
 msgstr "%"
 
@@ -218,192 +218,178 @@ msgstr "<b>Уменьшение яркости</b>"
 msgid "Display"
 msgstr "Экран"
 
-#: settings/xfpm-settings.c:196 settings/xfpm-settings.c:252
-#: settings/xfpm-settings.c:254
+#: settings/xfpm-settings.c:196 settings/xfpm-settings.c:220
+#: settings/xfpm-settings.c:222
 msgid "One minute"
 msgstr "1 мин."
 
-#: settings/xfpm-settings.c:198 settings/xfpm-settings.c:210
-#: settings/xfpm-settings.c:224 settings/xfpm-settings.c:230
-#: settings/xfpm-settings.c:256 settings/xfpm-settings.c:258
+#: settings/xfpm-settings.c:198 settings/xfpm-settings.c:224
+#: settings/xfpm-settings.c:226
 msgid "minutes"
 msgstr "мин."
 
-#: settings/xfpm-settings.c:212 settings/xfpm-settings.c:220
-#: settings/xfpm-settings.c:222 settings/xfpm-settings.c:224
-msgid "One hour"
-msgstr "1 ч."
-
-#: settings/xfpm-settings.c:222 settings/xfpm-settings.c:228
-msgid "one minute"
-msgstr "1 мин."
-
-#: settings/xfpm-settings.c:226 settings/xfpm-settings.c:228
-#: settings/xfpm-settings.c:230
-msgid "hours"
-msgstr "ч."
-
-#: settings/xfpm-settings.c:249 settings/xfpm-settings.c:254
-#: settings/xfpm-settings.c:258
+#: settings/xfpm-settings.c:217 settings/xfpm-settings.c:222
+#: settings/xfpm-settings.c:226
 msgid "seconds"
 msgstr "с"
 
-#: settings/xfpm-settings.c:418 settings/xfpm-settings.c:540
-#: settings/xfpm-settings.c:680 src/xfpm-power.c:610
+#: settings/xfpm-settings.c:386 settings/xfpm-settings.c:514
+#: settings/xfpm-settings.c:651 src/xfpm-power.c:610
 msgid "Suspend"
 msgstr "Ждущий режим"
 
-#: settings/xfpm-settings.c:422
+#: settings/xfpm-settings.c:390
 msgid "Suspend operation not permitted"
 msgstr "Операция перехода в ждущий режим не разрешена"
 
-#: settings/xfpm-settings.c:426
+#: settings/xfpm-settings.c:394
 msgid "Suspend operation not supported"
 msgstr "Операция перехода в ждущий режим не поддерживается"
 
-#: settings/xfpm-settings.c:432 settings/xfpm-settings.c:546
-#: settings/xfpm-settings.c:686 src/xfpm-power.c:598
+#: settings/xfpm-settings.c:400 settings/xfpm-settings.c:520
+#: settings/xfpm-settings.c:657 src/xfpm-power.c:598
 msgid "Hibernate"
 msgstr "Спящий режим"
 
-#: settings/xfpm-settings.c:436
+#: settings/xfpm-settings.c:404
 msgid "Hibernate operation not permitted"
 msgstr "Операция перехода в спящий режим не разрешена"
 
-#: settings/xfpm-settings.c:440
+#: settings/xfpm-settings.c:408
 msgid "Hibernate operation not supported"
 msgstr "Операция перехода в спящий режим не поддерживается"
 
-#: settings/xfpm-settings.c:446 settings/xfpm-settings.c:552
-#: settings/xfpm-settings.c:692 src/xfpm-power.c:622
+#: settings/xfpm-settings.c:414 settings/xfpm-settings.c:526
+#: settings/xfpm-settings.c:663 src/xfpm-power.c:622
 msgid "Hybrid Sleep"
 msgstr "Гибридный спящий режим"
 
-#: settings/xfpm-settings.c:450
+#: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
 msgstr ""
 
-#: settings/xfpm-settings.c:454
+#: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
 msgstr ""
 
-#: settings/xfpm-settings.c:479 settings/xfpm-settings.c:862
+#: settings/xfpm-settings.c:447 settings/xfpm-settings.c:833
 msgid "Hibernate and suspend operations not supported"
 msgstr "Спящий и ждущий режимы не поддерживаются"
 
-#: settings/xfpm-settings.c:484 settings/xfpm-settings.c:867
+#: settings/xfpm-settings.c:452 settings/xfpm-settings.c:838
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Спящий и ждущий режимы не разрешены"
 
-#: settings/xfpm-settings.c:535
-msgid "Switch off display"
-msgstr "Выключить экран"
-
-#: settings/xfpm-settings.c:556
-msgid "Lock screen"
-msgstr "Заблокировать экран"
-
-#: settings/xfpm-settings.c:559 settings/xfpm-settings.c:675
+#: settings/xfpm-settings.c:503 settings/xfpm-settings.c:646
 msgid "Do nothing"
 msgstr "Ничего не делать"
 
-#: settings/xfpm-settings.c:698 src/xfpm-power.c:642
+#: settings/xfpm-settings.c:506
+msgid "Switch off display"
+msgstr "Выключить экран"
+
+#: settings/xfpm-settings.c:509
+msgid "Lock screen"
+msgstr "Заблокировать экран"
+
+#: settings/xfpm-settings.c:530 settings/xfpm-settings.c:669
+#: src/xfpm-power.c:642
 msgid "Shutdown"
 msgstr "Выключить компьютер"
 
-#: settings/xfpm-settings.c:702
+#: settings/xfpm-settings.c:673
 msgid "Ask"
 msgstr "Спрашивать"
 
-#: settings/xfpm-settings.c:792
+#: settings/xfpm-settings.c:763
 msgid "Number of brightness steps available using keys"
 msgstr "Количество шагов яркости, доступное при использовании клавиш"
 
-#: settings/xfpm-settings.c:842
+#: settings/xfpm-settings.c:813
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Считать заряд батареи низким, когда заряд всех источников питания компьютера достигает указанного уровня"
 
-#: settings/xfpm-settings.c:1099
+#: settings/xfpm-settings.c:1070
 msgid "Device"
 msgstr "Устройство"
 
-#: settings/xfpm-settings.c:1122
+#: settings/xfpm-settings.c:1093
 msgid "Type"
 msgstr "Тип"
 
-#: settings/xfpm-settings.c:1127
+#: settings/xfpm-settings.c:1098
 msgid "PowerSupply"
 msgstr "Подача питания"
 
-#: settings/xfpm-settings.c:1128 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
 msgid "True"
 msgstr "Да"
 
-#: settings/xfpm-settings.c:1128 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
 msgid "False"
 msgstr "Нет"
 
-#: settings/xfpm-settings.c:1135
+#: settings/xfpm-settings.c:1106
 msgid "Model"
 msgstr "Модель"
 
-#: settings/xfpm-settings.c:1138
+#: settings/xfpm-settings.c:1109
 msgid "Technology"
 msgstr "Технология"
 
-#: settings/xfpm-settings.c:1145
+#: settings/xfpm-settings.c:1116
 msgid "Current charge"
 msgstr "Текущий уровень заряда"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1153 settings/xfpm-settings.c:1165
-#: settings/xfpm-settings.c:1177
+#: settings/xfpm-settings.c:1124 settings/xfpm-settings.c:1136
+#: settings/xfpm-settings.c:1148
 msgid "Wh"
 msgstr "Вт·ч"
 
-#: settings/xfpm-settings.c:1155
+#: settings/xfpm-settings.c:1126
 msgid "Fully charged (design)"
 msgstr "Полностью заряжен (номинально)"
 
-#: settings/xfpm-settings.c:1168
+#: settings/xfpm-settings.c:1139
 msgid "Fully charged"
 msgstr "Полностью заряжен"
 
-#: settings/xfpm-settings.c:1179
+#: settings/xfpm-settings.c:1150
 msgid "Energy empty"
 msgstr "Нет заряда"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1187
+#: settings/xfpm-settings.c:1158
 msgid "W"
 msgstr "Вт"
 
-#: settings/xfpm-settings.c:1189
+#: settings/xfpm-settings.c:1160
 msgid "Energy rate"
 msgstr "Скорость зарядки"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1197
+#: settings/xfpm-settings.c:1168
 msgid "V"
 msgstr "В"
 
-#: settings/xfpm-settings.c:1199
+#: settings/xfpm-settings.c:1170
 msgid "Voltage"
 msgstr "Напряжение"
 
-#: settings/xfpm-settings.c:1206
+#: settings/xfpm-settings.c:1177
 msgid "Vendor"
 msgstr "Производитель"
 
-#: settings/xfpm-settings.c:1211
+#: settings/xfpm-settings.c:1182
 msgid "Serial"
 msgstr "Номер"
 
-#: settings/xfpm-settings.c:1498
+#: settings/xfpm-settings.c:1469
 msgid "Check your power manager installation"
 msgstr "Проверьте вашу установку менеджера питания"
 
-#: settings/xfpm-settings.c:1574
+#: settings/xfpm-settings.c:1545
 msgid "Devices"
 msgstr "Устройства"
 
@@ -746,7 +732,7 @@ msgid "Hybrid sleep not supported"
 msgstr ""
 
 #. generate a human-readable summary for the notification
-#: src/xfpm-backlight.c:152
+#: src/xfpm-backlight.c:149
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "Яркость: %.0f %%"
