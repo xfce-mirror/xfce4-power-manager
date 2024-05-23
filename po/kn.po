@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-22 12:47+0200\n"
+"POT-Creation-Date: 2024-05-23 12:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Yogesh K S <yogesh@karnatakaeducation.org.in>, 2017\n"
 "Language-Team: Kannada (http://app.transifex.com/xfce/xfce4-power-manager/language/kn/)\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: data/interfaces/xfpm-settings.ui:96 settings/xfpm-settings.c:193
-#: settings/xfpm-settings.c:208 settings/xfpm-settings.c:242
+#: settings/xfpm-settings.c:210
 msgid "Never"
 msgstr "ಎಂದಿಗೂ ಇಲ್ಲ"
 
@@ -44,7 +44,7 @@ msgstr "ಏನೂ ಇಲ್ಲ"
 #: settings/xfce4-power-manager-settings.desktop.in:4
 #: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:248
 #: src/xfpm-power.c:555 src/xfpm-power.c:583 src/xfpm-power.c:775
-#: src/xfpm-power.c:794 src/xfpm-backlight.c:158 src/xfpm-backlight.c:166
+#: src/xfpm-power.c:794 src/xfpm-backlight.c:155 src/xfpm-backlight.c:163
 #: src/xfpm-battery.c:181 src/xfpm-kbd-backlight.c:108
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -149,7 +149,7 @@ msgstr "ಪ್ಲಗ್ ಸಿಲುಕಿಸಿದೆ "
 msgid "Critical battery power level:"
 msgstr "ನಿರ್ಣಾಯಕ ಬ್ಯಾಟರಿ ಮಟ್ಟದ"
 
-#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:264
+#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:232
 msgid "%"
 msgstr "%"
 
@@ -207,192 +207,178 @@ msgstr "<b>ಹೊಳಪು ಕಡಿಮೆ ಮಾಡುವಿಕೆ</b>"
 msgid "Display"
 msgstr "ಪರದೆ"
 
-#: settings/xfpm-settings.c:196 settings/xfpm-settings.c:252
-#: settings/xfpm-settings.c:254
+#: settings/xfpm-settings.c:196 settings/xfpm-settings.c:220
+#: settings/xfpm-settings.c:222
 msgid "One minute"
 msgstr "ಒಂದು ನಿಮಿಷ "
 
-#: settings/xfpm-settings.c:198 settings/xfpm-settings.c:210
-#: settings/xfpm-settings.c:224 settings/xfpm-settings.c:230
-#: settings/xfpm-settings.c:256 settings/xfpm-settings.c:258
+#: settings/xfpm-settings.c:198 settings/xfpm-settings.c:224
+#: settings/xfpm-settings.c:226
 msgid "minutes"
 msgstr " ನಿಮಿಷಗಳು "
 
-#: settings/xfpm-settings.c:212 settings/xfpm-settings.c:220
-#: settings/xfpm-settings.c:222 settings/xfpm-settings.c:224
-msgid "One hour"
-msgstr "ಒಂದು ಗಂಟೆ "
-
-#: settings/xfpm-settings.c:222 settings/xfpm-settings.c:228
-msgid "one minute"
-msgstr "ಒಂದು ನಿಮಿಷ "
-
-#: settings/xfpm-settings.c:226 settings/xfpm-settings.c:228
-#: settings/xfpm-settings.c:230
-msgid "hours"
-msgstr "ಗಂಟೆಗಳು "
-
-#: settings/xfpm-settings.c:249 settings/xfpm-settings.c:254
-#: settings/xfpm-settings.c:258
+#: settings/xfpm-settings.c:217 settings/xfpm-settings.c:222
+#: settings/xfpm-settings.c:226
 msgid "seconds"
 msgstr "ಸೆಕೆಂಡುಗಳು"
 
-#: settings/xfpm-settings.c:418 settings/xfpm-settings.c:540
-#: settings/xfpm-settings.c:680 src/xfpm-power.c:610
+#: settings/xfpm-settings.c:386 settings/xfpm-settings.c:514
+#: settings/xfpm-settings.c:651 src/xfpm-power.c:610
 msgid "Suspend"
 msgstr "ಅಮಾನತು"
 
-#: settings/xfpm-settings.c:422
+#: settings/xfpm-settings.c:390
 msgid "Suspend operation not permitted"
 msgstr "ಅಮಾನತು ಕ್ರಿಯೆಗೆ ಅನುಮತಿ ಇಲ್ಲ "
 
-#: settings/xfpm-settings.c:426
+#: settings/xfpm-settings.c:394
 msgid "Suspend operation not supported"
 msgstr " ಅಮಾನತು ಕ್ರಿಯೆಗೆ ಬೆಂಬಲ  ಇಲ್ಲ "
 
-#: settings/xfpm-settings.c:432 settings/xfpm-settings.c:546
-#: settings/xfpm-settings.c:686 src/xfpm-power.c:598
+#: settings/xfpm-settings.c:400 settings/xfpm-settings.c:520
+#: settings/xfpm-settings.c:657 src/xfpm-power.c:598
 msgid "Hibernate"
 msgstr "ಹೈಬರ್ನೇಟ್ "
 
-#: settings/xfpm-settings.c:436
+#: settings/xfpm-settings.c:404
 msgid "Hibernate operation not permitted"
 msgstr "ಹೈಬರ್ನೇಟ್ ಕ್ರಿಯೆಗೆ ಅನುಮತಿ ಇಲ್ಲ "
 
-#: settings/xfpm-settings.c:440
+#: settings/xfpm-settings.c:408
 msgid "Hibernate operation not supported"
 msgstr "ಹೈಬರ್ನೇಟ್ ಕ್ರಿಯೆಗೆ ಬೆಂಬಲ  ಇಲ್ಲ "
 
-#: settings/xfpm-settings.c:446 settings/xfpm-settings.c:552
-#: settings/xfpm-settings.c:692 src/xfpm-power.c:622
+#: settings/xfpm-settings.c:414 settings/xfpm-settings.c:526
+#: settings/xfpm-settings.c:663 src/xfpm-power.c:622
 msgid "Hybrid Sleep"
 msgstr ""
 
-#: settings/xfpm-settings.c:450
+#: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
 msgstr ""
 
-#: settings/xfpm-settings.c:454
+#: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
 msgstr ""
 
-#: settings/xfpm-settings.c:479 settings/xfpm-settings.c:862
+#: settings/xfpm-settings.c:447 settings/xfpm-settings.c:833
 msgid "Hibernate and suspend operations not supported"
 msgstr "ಹೈಬರ್ನೇಟ್ ಮತ್ತು ಅಮಾನತು ಕ್ರಿಯೆಗಳಿಗೆ ಬೆಂಬಲವಿಲ್ಲ "
 
-#: settings/xfpm-settings.c:484 settings/xfpm-settings.c:867
+#: settings/xfpm-settings.c:452 settings/xfpm-settings.c:838
 msgid "Hibernate and suspend operations not permitted"
 msgstr "ಹೈಬರ್ನೇಟ್ ಮತ್ತು ಅಮಾನತು ಕ್ರಿಯೆಗಳಿಗೆ ಅನುಮತಿಯಿಲ್ಲ "
 
-#: settings/xfpm-settings.c:535
-msgid "Switch off display"
-msgstr "ಪರದೆಯನ್ನು ಮುಚ್ಚಿ ಹಾಕಿ "
-
-#: settings/xfpm-settings.c:556
-msgid "Lock screen"
-msgstr "ಪರದೆಯನ್ನು ಲಾಕ್ ಮಾಡಿ "
-
-#: settings/xfpm-settings.c:559 settings/xfpm-settings.c:675
+#: settings/xfpm-settings.c:503 settings/xfpm-settings.c:646
 msgid "Do nothing"
 msgstr "ಏನೂ ಮಾಡದಿರಿ "
 
-#: settings/xfpm-settings.c:698 src/xfpm-power.c:642
+#: settings/xfpm-settings.c:506
+msgid "Switch off display"
+msgstr "ಪರದೆಯನ್ನು ಮುಚ್ಚಿ ಹಾಕಿ "
+
+#: settings/xfpm-settings.c:509
+msgid "Lock screen"
+msgstr "ಪರದೆಯನ್ನು ಲಾಕ್ ಮಾಡಿ "
+
+#: settings/xfpm-settings.c:530 settings/xfpm-settings.c:669
+#: src/xfpm-power.c:642
 msgid "Shutdown"
 msgstr "ಮುಚ್ಚುವುದು"
 
-#: settings/xfpm-settings.c:702
+#: settings/xfpm-settings.c:673
 msgid "Ask"
 msgstr "ಕೇಳು "
 
-#: settings/xfpm-settings.c:792
+#: settings/xfpm-settings.c:763
 msgid "Number of brightness steps available using keys"
 msgstr ""
 
-#: settings/xfpm-settings.c:842
+#: settings/xfpm-settings.c:813
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "ಕಂಪ್ಯೂಟರ್ನ ಎಲ್ಲ ಪವರ್ ಮೂಲಗಳು ಈ ಚಾರ್ಜ್ ಮಟ್ಟವನ್ನು ತಲುಪಿದಾಗ "
 
-#: settings/xfpm-settings.c:1099
+#: settings/xfpm-settings.c:1070
 msgid "Device"
 msgstr "ಸಾಧನ"
 
-#: settings/xfpm-settings.c:1122
+#: settings/xfpm-settings.c:1093
 msgid "Type"
 msgstr "ವಿಧ"
 
-#: settings/xfpm-settings.c:1127
+#: settings/xfpm-settings.c:1098
 msgid "PowerSupply"
 msgstr "ಪವರ್ ಪೂರೈಕೆ "
 
-#: settings/xfpm-settings.c:1128 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
 msgid "True"
 msgstr "ನಿಜ"
 
-#: settings/xfpm-settings.c:1128 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
 msgid "False"
 msgstr "ಸುಳ್ಳು "
 
-#: settings/xfpm-settings.c:1135
+#: settings/xfpm-settings.c:1106
 msgid "Model"
 msgstr "ಮಾದರಿ"
 
-#: settings/xfpm-settings.c:1138
+#: settings/xfpm-settings.c:1109
 msgid "Technology"
 msgstr "ತಂತ್ರಜ್ಞಾನ"
 
-#: settings/xfpm-settings.c:1145
+#: settings/xfpm-settings.c:1116
 msgid "Current charge"
 msgstr "ಪ್ರಸ್ತುತ ಚಾರ್ಜ್"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1153 settings/xfpm-settings.c:1165
-#: settings/xfpm-settings.c:1177
+#: settings/xfpm-settings.c:1124 settings/xfpm-settings.c:1136
+#: settings/xfpm-settings.c:1148
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1155
+#: settings/xfpm-settings.c:1126
 msgid "Fully charged (design)"
 msgstr "ಸಂಪೂರ್ಣವಾಗಿ ಚಾರ್ಜ್ ಆಗಿದೆ (ವಿನ್ಯಾಸ)"
 
-#: settings/xfpm-settings.c:1168
+#: settings/xfpm-settings.c:1139
 msgid "Fully charged"
 msgstr "ಸಂಪೂರ್ಣವಾಗಿ ಚಾರ್ಜ್ ಆಗಿದೆ "
 
-#: settings/xfpm-settings.c:1179
+#: settings/xfpm-settings.c:1150
 msgid "Energy empty"
 msgstr "ಶಕ್ತಿ ಖಾಲಿಯಾಗಿದೆ "
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1187
+#: settings/xfpm-settings.c:1158
 msgid "W"
 msgstr ""
 
-#: settings/xfpm-settings.c:1189
+#: settings/xfpm-settings.c:1160
 msgid "Energy rate"
 msgstr ""
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1197
+#: settings/xfpm-settings.c:1168
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1199
+#: settings/xfpm-settings.c:1170
 msgid "Voltage"
 msgstr "ವೋಲ್ಟೇಜ್"
 
-#: settings/xfpm-settings.c:1206
+#: settings/xfpm-settings.c:1177
 msgid "Vendor"
 msgstr "ಮಾರಾಟಗಾರರ"
 
-#: settings/xfpm-settings.c:1211
+#: settings/xfpm-settings.c:1182
 msgid "Serial"
 msgstr "ಸರಣಿ "
 
-#: settings/xfpm-settings.c:1498
+#: settings/xfpm-settings.c:1469
 msgid "Check your power manager installation"
 msgstr "ಪವರ್ ನಿರ್ವಹಣೆಯ ಅನುಸ್ಥಾಪವನ್ನು ಪರಿಶೀಲಿಸಿ "
 
-#: settings/xfpm-settings.c:1574
+#: settings/xfpm-settings.c:1545
 msgid "Devices"
 msgstr "ಸಾಧನಗಳು"
 
@@ -727,7 +713,7 @@ msgid "Hybrid sleep not supported"
 msgstr ""
 
 #. generate a human-readable summary for the notification
-#: src/xfpm-backlight.c:152
+#: src/xfpm-backlight.c:149
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr "ಪ್ರಕಾಶಮಾನ: %.0f ಶೇಕಡಾ"
