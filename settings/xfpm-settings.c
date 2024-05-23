@@ -187,7 +187,7 @@ view_cursor_changed_cb (GtkTreeView *view,
  * Format value of GtkRange used with DPMS
  */
 static gchar *
-format_dpms_value_cb (gint value)
+format_minutes_value_cb (gint value)
 {
   if (value == 0)
     return g_strdup (_("Never"));
@@ -196,38 +196,6 @@ format_dpms_value_cb (gint value)
     return g_strdup (_("One minute"));
 
   return g_strdup_printf ("%d %s", value, _("minutes"));
-}
-
-
-static gchar *
-format_inactivity_value_cb (gint value)
-{
-  gint h, min;
-
-  if (value == 0)
-    return g_strdup (_("Never"));
-  else if (value < 60)
-    return g_strdup_printf ("%d %s", value, _("minutes"));
-  else if (value == 60)
-    return g_strdup (_("One hour"));
-
-  /* value > 60 */
-  h = value / 60;
-  min = value % 60;
-
-  if (h <= 1)
-    if (min == 0)
-      return g_strdup_printf ("%s", _("One hour"));
-    else if (min == 1)
-      return g_strdup_printf ("%s %s", _("One hour"), _("one minute"));
-    else
-      return g_strdup_printf ("%s %d %s", _("One hour"), min, _("minutes"));
-  else if (min == 0)
-    return g_strdup_printf ("%d %s", h, _("hours"));
-  else if (min == 1)
-    return g_strdup_printf ("%d %s %s", h, _("hours"), _("one minute"));
-  else
-    return g_strdup_printf ("%d %s %d %s", h, _("hours"), min, _("minutes"));
 }
 
 /*
@@ -325,7 +293,7 @@ sleep_value_changed_cb (GtkWidget *scale,
     }
   }
 
-  update_label (label, scale, format_dpms_value_cb);
+  update_label (label, scale, format_minutes_value_cb);
 }
 
 static void
@@ -342,7 +310,7 @@ off_value_changed_cb (GtkWidget *scale,
     gtk_range_set_value (GTK_RANGE (sleep_scale), off_value - 1);
   }
 
-  update_label (label, scale, format_dpms_value_cb);
+  update_label (label, scale, format_minutes_value_cb);
 }
 
 static void
@@ -488,12 +456,12 @@ xfpm_settings_power_supply (XfconfChannel *channel,
   default_val = on_ac ? DEFAULT_INACTIVITY_ON_AC : DEFAULT_INACTIVITY_ON_BATTERY;
   gtk_range_set_value (GTK_RANGE (inact_timeout), default_val);
   xfconf_g_property_bind (channel, property, G_TYPE_UINT, gtk_range_get_adjustment (GTK_RANGE (inact_timeout)), "value");
-  g_object_set_data (G_OBJECT (inact_timeout), "format-callback", format_inactivity_value_cb);
+  g_object_set_data (G_OBJECT (inact_timeout), "format-callback", format_minutes_value_cb);
 
   widget_id = on_ac ? "system-sleep-inactivity-on-ac-label" : "system-sleep-inactivity-on-battery-label";
   label = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
   g_signal_connect (inact_timeout, "value-changed", G_CALLBACK (update_label_cb), label);
-  update_label (label, inact_timeout, format_inactivity_value_cb);
+  update_label (label, inact_timeout, format_minutes_value_cb);
 
   /*
    * DPMS settings
@@ -508,7 +476,7 @@ xfpm_settings_power_supply (XfconfChannel *channel,
   widget_id = on_ac ? "dpms-sleep-on-ac-label" : "dpms-sleep-on-battery-label";
   label = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
   g_signal_connect (dpms, "value-changed", G_CALLBACK (sleep_value_changed_cb), label);
-  update_label (label, dpms, format_dpms_value_cb);
+  update_label (label, dpms, format_minutes_value_cb);
 
   property = on_ac ? XFPM_PROPERTIES_PREFIX DPMS_ON_AC_OFF : XFPM_PROPERTIES_PREFIX DPMS_ON_BATTERY_OFF;
   dpms = on_ac ? on_ac_dpms_off : on_battery_dpms_off;
@@ -518,7 +486,7 @@ xfpm_settings_power_supply (XfconfChannel *channel,
   widget_id = on_ac ? "dpms-off-on-ac-label" : "dpms-off-on-battery-label";
   label = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
   g_signal_connect (dpms, "value-changed", G_CALLBACK (off_value_changed_cb), label);
-  update_label (label, dpms, format_dpms_value_cb);
+  update_label (label, dpms, format_minutes_value_cb);
 
   /*
    * Lid switch settings
