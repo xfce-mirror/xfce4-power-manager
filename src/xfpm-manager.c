@@ -459,12 +459,12 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
 
     if (action == LID_TRIGGER_DPMS)
     {
-      if (manager->priv->dpms != NULL && !xfpm_is_multihead_connected ())
+      if (manager->priv->dpms != NULL && !xfpm_is_multihead_connected (G_OBJECT (manager)))
         xfpm_dpms_set_mode (manager->priv->dpms, XFPM_DPMS_MODE_OFF);
     }
     else if (action == LID_TRIGGER_LOCK_SCREEN)
     {
-      if (!xfpm_is_multihead_connected ())
+      if (!xfpm_is_multihead_connected (G_OBJECT (manager)))
       {
         if (!xfce_screensaver_lock (manager->priv->screensaver))
         {
