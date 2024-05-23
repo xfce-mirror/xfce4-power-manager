@@ -480,6 +480,8 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
                                   "successfully, the screen will not "
                                   "be locked."));
       }
+      else if (manager->priv->dpms != NULL)
+        xfpm_dpms_set_mode (manager->priv->dpms, XFPM_DPMS_MODE_OFF);
     }
     else if (action == LID_TRIGGER_SHUTDOWN)
     {
