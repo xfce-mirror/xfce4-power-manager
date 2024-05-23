@@ -46,6 +46,15 @@ libxfpmcommon_la_LIBADD += \
 	$(XRANDR_LIBS)
 endif
 
+if ENABLE_WAYLAND
+libxfpmcommon_la_CFLAGS += \
+	$(WAYLAND_CLIENT_CFLAGS)
+
+libxfpmcommon_la_LIBADD += \
+	$(top_builddir)/protocols/libprotocols.la \
+	$(WAYLAND_CLIENT_LIBS)
+endif
+
 if HAVE_POLKIT
 libxfpmcommon_la_SOURCES += \
 	xfpm-brightness-polkit.c \

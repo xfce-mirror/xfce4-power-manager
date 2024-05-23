@@ -45,7 +45,7 @@ xfpm_quit (void);
 void
 xfpm_about (gpointer data);
 gboolean
-xfpm_is_multihead_connected (void);
+xfpm_is_multihead_connected (GObject *lifetime);
 
 G_END_DECLS
 

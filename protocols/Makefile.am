@@ -12,7 +12,10 @@ libprotocols_built_sources = \
 	ext-idle-notify-v1.c \
 	ext-idle-notify-v1-client.h \
 	wlr-output-power-management-unstable-v1.c \
-	wlr-output-power-management-unstable-v1-client.h
+	wlr-output-power-management-unstable-v1-client.h \
+	wlr-output-management-unstable-v1.c \
+	wlr-output-management-unstable-v1-client.h \
+	$(NULL)
 
 nodist_libprotocols_la_SOURCES = \
 	$(libprotocols_built_sources)
@@ -71,4 +74,6 @@ EXTRA_DIST += \
 endif
 
 EXTRA_DIST += \
-	wlr-protocols/unstable/wlr-output-power-management-unstable-v1.xml
+	wlr-protocols/unstable/wlr-output-power-management-unstable-v1.xml \
+	wlr-protocols/unstable/wlr-output-management-unstable-v1.xml \
+	$(NULL)
