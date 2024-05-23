@@ -237,6 +237,11 @@ xfpm_dpms_wayland_set_mode (XfpmDpms *_dpms,
       XFPM_DEBUG ("DPMS mode %d already set for output %s", mode, power->model);
     }
   }
+
+  if (mode == XFPM_DPMS_MODE_ON)
+    xfpm_idle_alarm_remove (dpms->idle, XFPM_ALARM_ID_USER_INPUT_WAYLAND);
+  else
+    xfpm_idle_alarm_add (dpms->idle, XFPM_ALARM_ID_USER_INPUT_WAYLAND, 0);
 }
 
 static void

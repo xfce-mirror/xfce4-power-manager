@@ -159,7 +159,7 @@ set_reset_alarm (XfpmIdleX11 *idle,
 
   /* don't match on the current value because
    * XSyncNegativeComparison means less or equal */
-  alarm = alarm_find_id (idle, 0);
+  alarm = alarm_find_id (idle, XFPM_ALARM_ID_USER_INPUT_X11);
   XSyncIntToValue (&add, -1);
   XSyncValueAdd (&alarm->timeout, alarm_event->counter_value, add, &overflow);
 
@@ -206,7 +206,7 @@ event_filter_cb (GdkXEvent *gdkxevent,
     return GDK_FILTER_CONTINUE;
 
   /* are we the reset alarm? */
-  if (alarm->id == 0)
+  if (alarm->id == XFPM_ALARM_ID_USER_INPUT_X11)
   {
     xfpm_idle_x11_alarm_reset_all (XFPM_IDLE (idle));
     g_signal_emit_by_name (idle, "reset");
@@ -287,7 +287,7 @@ xfpm_idle_x11_init (XfpmIdleX11 *idle)
 
   /* create a reset alarm */
   idle->alarms = g_ptr_array_new_with_free_func (alarm_free);
-  alarm = alarm_new (idle, 0);
+  alarm = alarm_new (idle, XFPM_ALARM_ID_USER_INPUT_X11);
   g_ptr_array_add (idle->alarms, alarm);
 }
 
@@ -317,7 +317,7 @@ xfpm_idle_x11_alarm_reset_all (XfpmIdle *_idle)
   }
 
   /* set the reset alarm to be disabled */
-  alarm = g_ptr_array_index (idle->alarms, 0);
+  alarm = g_ptr_array_index (idle->alarms, XFPM_ALARM_ID_USER_INPUT_X11);
   xsync_alarm_set (idle, alarm, ALARM_TYPE_DISABLED);
 
   /* we need to be reset again on the next event */

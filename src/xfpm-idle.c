@@ -140,8 +140,8 @@ xfpm_idle_alarm_add (XfpmIdle *idle,
   XfpmIdlePrivate *priv = get_instance_private (idle);
 
   g_return_if_fail (XFPM_IS_IDLE (idle));
-  g_return_if_fail (id != XFPM_ALARM_ID_USER_INPUT);
-  g_return_if_fail (timeout != 0);
+  g_return_if_fail (id != XFPM_ALARM_ID_USER_INPUT_X11);
+  g_return_if_fail (timeout != 0 || id == XFPM_ALARM_ID_USER_INPUT_WAYLAND);
 
   if (!(priv->added_alarm_ids & id))
   {
