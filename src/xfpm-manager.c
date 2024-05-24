@@ -599,6 +599,17 @@ xfpm_manager_on_battery_changed_cb (XfpmPower *power,
 {
   if (manager->priv->idle != NULL)
     xfpm_idle_alarm_reset_all (manager->priv->idle);
+
+  if (on_battery)
+  {
+    gboolean lid_is_closed;
+    g_object_get (G_OBJECT (power), "lid-is-closed", &lid_is_closed, NULL);
+    if (lid_is_closed)
+    {
+      /* typical use case: laptop leaves dock */
+      xfpm_manager_lid_changed_cb (power, lid_is_closed, manager);
+    }
+  }
 }
 
 static gchar *
