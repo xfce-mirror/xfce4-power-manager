@@ -570,11 +570,24 @@ xfpm_power_close_critical_dialog (XfpmPower *power)
 }
 
 static void
+critical_dialog_add_button (GtkDialog *dialog,
+                            const gchar *label,
+                            GCallback callback,
+                            XfpmPower *power)
+{
+  GtkWidget *button = gtk_button_new_with_label (label);
+  gtk_dialog_add_action_widget (dialog, button, GTK_RESPONSE_NONE);
+  g_signal_connect_object (button, "clicked", callback, power, G_CONNECT_SWAPPED);
+
+  /* we don't want the user to unintentionally trigger an action when this dialog is shown */
+  gtk_widget_set_can_focus (button, FALSE);
+}
+
+static void
 xfpm_power_show_critical_action_gtk (XfpmPower *power)
 {
   GtkWidget *dialog;
   GtkWidget *content_area;
-  GtkWidget *cancel;
   const gchar *message;
   gboolean can_method, auth_method;
 
@@ -584,9 +597,6 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
   dialog = gtk_dialog_new_with_buttons (_("Power Manager"), NULL, GTK_DIALOG_MODAL,
                                         NULL, NULL);
 
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog),
-                                   GTK_RESPONSE_CANCEL);
-
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
 
   gtk_box_pack_start (GTK_BOX (content_area), gtk_label_new (message),
@@ -594,38 +604,18 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 
   xfpm_power_can_hibernate (power, &can_method, &auth_method);
   if (can_method && auth_method)
-  {
-    GtkWidget *hibernate;
-    hibernate = gtk_button_new_with_label (_("Hibernate"));
-    gtk_dialog_add_action_widget (GTK_DIALOG (dialog), hibernate, GTK_RESPONSE_NONE);
-
-    g_signal_connect_object (hibernate, "clicked",
-                             G_CALLBACK (xfpm_power_hibernate_clicked), power, G_CONNECT_SWAPPED);
-  }
+    critical_dialog_add_button (GTK_DIALOG (dialog), _("Hibernate"),
+                                G_CALLBACK (xfpm_power_hibernate_clicked), power);
 
   xfpm_power_can_suspend (power, &can_method, &auth_method);
   if (can_method && auth_method)
-  {
-    GtkWidget *suspend;
-
-    suspend = gtk_button_new_with_label (_("Suspend"));
-    gtk_dialog_add_action_widget (GTK_DIALOG (dialog), suspend, GTK_RESPONSE_NONE);
-
-    g_signal_connect_object (suspend, "clicked",
-                             G_CALLBACK (xfpm_power_suspend_clicked), power, G_CONNECT_SWAPPED);
-  }
+    critical_dialog_add_button (GTK_DIALOG (dialog), _("Suspend"),
+                                G_CALLBACK (xfpm_power_suspend_clicked), power);
 
   xfpm_power_can_hybrid_sleep (power, &can_method, &auth_method);
   if (can_method && auth_method)
-  {
-    GtkWidget *hybrid_sleep;
-
-    hybrid_sleep = gtk_button_new_with_label (_("Hybrid Sleep"));
-    gtk_dialog_add_action_widget (GTK_DIALOG (dialog), hybrid_sleep, GTK_RESPONSE_NONE);
-
-    g_signal_connect_object (hybrid_sleep, "clicked",
-                             G_CALLBACK (xfpm_power_hybrid_sleep_clicked), power, G_CONNECT_SWAPPED);
-  }
+    critical_dialog_add_button (GTK_DIALOG (dialog), _("Hybrid Sleep"),
+                                G_CALLBACK (xfpm_power_hybrid_sleep_clicked), power);
 
   if (power->priv->systemd != NULL)
   {
@@ -637,21 +627,11 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
   }
 
   if (can_method && auth_method)
-  {
-    GtkWidget *shutdown;
+    critical_dialog_add_button (GTK_DIALOG (dialog), _("Shutdown"),
+                                G_CALLBACK (xfpm_power_shutdown_clicked), power);
 
-    shutdown = gtk_button_new_with_label (_("Shutdown"));
-    gtk_dialog_add_action_widget (GTK_DIALOG (dialog), shutdown, GTK_RESPONSE_NONE);
-
-    g_signal_connect_object (shutdown, "clicked",
-                             G_CALLBACK (xfpm_power_shutdown_clicked), power, G_CONNECT_SWAPPED);
-  }
-
-  cancel = gtk_button_new_with_label (_("_Cancel"));
-  gtk_dialog_add_action_widget (GTK_DIALOG (dialog), cancel, GTK_RESPONSE_NONE);
-
-  g_signal_connect_object (cancel, "clicked",
-                           G_CALLBACK (xfpm_power_close_critical_dialog), power, G_CONNECT_SWAPPED);
+  critical_dialog_add_button (GTK_DIALOG (dialog), _("Cancel"),
+                              G_CALLBACK (xfpm_power_close_critical_dialog), power);
 
   g_signal_connect_object (dialog, "destroy",
                            G_CALLBACK (xfpm_power_close_critical_dialog), power, G_CONNECT_SWAPPED);
