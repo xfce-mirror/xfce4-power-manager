@@ -458,7 +458,7 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
                   "device-type", &type,
                   "ac-online", &power_supply,
                   NULL);
-    if (type != UP_DEVICE_KIND_BATTERY && type != UP_DEVICE_KIND_UPS && power_supply != TRUE)
+    if ((type != UP_DEVICE_KIND_BATTERY && type != UP_DEVICE_KIND_UPS) || power_supply)
       continue;
 
     max_charge_status = MAX (max_charge_status, battery_charge);
