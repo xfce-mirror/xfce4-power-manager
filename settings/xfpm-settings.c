@@ -811,6 +811,9 @@ xfpm_settings_others (XfconfChannel *channel,
   {
     GtkTreeIter iter;
     GtkTreeModel *model;
+    GtkWidget *label;
+    const gchar *action;
+    gchar *text;
 
     critical_level = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-level-spin"));
     gtk_widget_set_tooltip_text (critical_level, _("When all the power sources of the computer reach this charge level"));
@@ -831,6 +834,12 @@ xfpm_settings_others (XfconfChannel *channel,
       if (request == XFPM_ASK && !gtk_list_store_remove (GTK_LIST_STORE (model), &iter))
         break;
     } while (gtk_tree_model_iter_next (model, &iter));
+
+    label = GTK_WIDGET (gtk_builder_get_object (xml, "critical-warning-label"));
+    action = upower != NULL ? up_client_get_critical_action (upower) : "Unknown";
+    text = g_strdup_printf (_("Make sure you set a sufficiently high value here, otherwise the system will trigger its own action before xfce4-power-manager, without being able to prevent it or know exactly when it will do so. The action triggered by the system in this case will be: %s."), action);
+    gtk_label_set_text (GTK_LABEL (label), text);
+    g_free (text);
   }
   else
   {

@@ -83,6 +83,11 @@
     <property name="can_focus">False</property>
     <property name="icon_name">window-close-symbolic</property>
   </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="icon_name">dialog-warning</property>
+  </object>
   <object class="GtkListStore" id="liststore1">
     <columns>
       <!-- column-name value -->
@@ -228,6 +233,20 @@
     <property name="value">0</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
+  </object>
+  <object class="GtkPopover" id="critical-warning-popover">
+    <property name="can-focus">False</property>
+    <property name="position">bottom</property>
+    <property name="border-width">6</property>
+    <child>
+      <object class="GtkLabel" id="critical-warning-label">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="xalign">0</property>
+        <property name="wrap">True</property>
+        <property name="max-width-chars">50</property>
+      </object>
+    </child>
   </object>
   <object class="XfceTitledDialog" id="xfpm-settings-dialog">
     <property name="can_focus">False</property>
@@ -1154,6 +1173,19 @@
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkMenuButton">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="image">image4</property>
+                                    <property name="popover">critical-warning-popover</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">3</property>
                                   </packing>
                                 </child>
                               </object>
