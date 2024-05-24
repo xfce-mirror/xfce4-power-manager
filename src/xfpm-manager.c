@@ -90,10 +90,11 @@ struct XfpmManagerPrivate
 {
   GDBusConnection *session_bus;
   GDBusConnection *system_bus;
+  guint watch_id;
+  GDBusProxy *proxy;
 
 #ifdef ENABLE_X11
   XfceSMClient *client;
-  gboolean session_managed;
 #endif
 
   XfpmPower *power;
@@ -164,9 +165,11 @@ xfpm_manager_finalize (GObject *object)
 
   if (manager->priv->session_bus)
     g_object_unref (manager->priv->session_bus);
-
   if (manager->priv->system_bus)
     g_object_unref (manager->priv->system_bus);
+  if (manager->priv->proxy != NULL)
+    g_object_unref (manager->priv->proxy);
+  g_bus_unwatch_name (manager->priv->watch_id);
 
   g_object_unref (manager->priv->power);
   g_object_unref (manager->priv->button);
@@ -315,22 +318,41 @@ xfpm_manager_shutdown (XfpmManager *manager)
   if (error)
   {
     g_warning ("Failed to shutdown the system : %s", error->message);
-    g_error_free (error);
+    g_clear_error (&error);
     /* Try with the session then */
-#ifdef ENABLE_X11
-    if (manager->priv->session_managed)
-      xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_HALT);
-#endif
+    if (manager->priv->proxy != NULL)
+    {
+      GVariant *retval = g_dbus_proxy_call_sync (manager->priv->proxy, "Shutdown",
+                                                 g_variant_new ("(b)", TRUE),
+                                                 G_DBUS_CALL_FLAGS_NONE, -1, NULL, &error);
+      if (retval != NULL)
+        g_variant_unref (retval);
+      else
+      {
+        g_warning ("Failed to call org.xfce.Session.Manager.Shutdown: %s", error->message);
+        g_error_free (error);
+      }
+    }
   }
 }
 
 static void
 xfpm_manager_ask_shutdown (XfpmManager *manager)
 {
-#ifdef ENABLE_X11
-  if (manager->priv->session_managed)
-    xfce_sm_client_request_shutdown (manager->priv->client, XFCE_SM_CLIENT_SHUTDOWN_HINT_ASK);
-#endif
+  if (manager->priv->proxy != NULL)
+  {
+    GError *error = NULL;
+    GVariant *retval = g_dbus_proxy_call_sync (manager->priv->proxy, "Logout",
+                                               g_variant_new ("(bb)", TRUE, TRUE),
+                                               G_DBUS_CALL_FLAGS_NONE, -1, NULL, &error);
+    if (retval != NULL)
+      g_variant_unref (retval);
+    else
+    {
+      g_warning ("Failed to call org.xfce.Session.Manager.Logout: %s", error->message);
+      g_error_free (error);
+    }
+  }
 }
 
 static void
@@ -846,12 +868,57 @@ xfpm_manager_hide_tray_icon (XfpmManager *manager)
   manager->priv->adapter_icon = NULL;
 }
 
+static void
+name_appeared (GDBusConnection *connection,
+               const gchar *name,
+               const gchar *name_owner,
+               gpointer user_data)
+{
+  XfpmManager *manager = user_data;
+  GError *error = NULL;
+
+  XFPM_DEBUG ("%s started up, owned by %s", name, name_owner);
+
+  manager->priv->proxy = g_dbus_proxy_new_sync (connection,
+                                                G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
+                                                NULL,
+                                                "org.xfce.SessionManager",
+                                                "/org/xfce/SessionManager",
+                                                "org.xfce.Session.Manager",
+                                                NULL,
+                                                &error);
+  if (error != NULL)
+  {
+    g_warning ("Failed to get proxy for %s: %s", name, error->message);
+    g_error_free (error);
+  }
+}
+
+static void
+name_vanished (GDBusConnection *connection,
+               const gchar *name,
+               gpointer user_data)
+{
+  XfpmManager *manager = user_data;
+
+  XFPM_DEBUG ("%s vanished", name);
+
+  g_clear_object (&manager->priv->proxy);
+}
+
 XfpmManager *
 xfpm_manager_new (GDBusConnection *bus,
                   const gchar *client_id)
 {
   XfpmManager *manager = g_object_new (XFPM_TYPE_MANAGER, NULL);
   manager->priv->session_bus = bus;
+  manager->priv->watch_id = g_bus_watch_name (G_BUS_TYPE_SESSION,
+                                              "org.xfce.SessionManager",
+                                              G_BUS_NAME_WATCHER_FLAGS_NONE,
+                                              name_appeared,
+                                              name_vanished,
+                                              manager,
+                                              NULL);
 
 #ifdef ENABLE_X11
   if (WINDOWING_IS_X11 ())
@@ -871,8 +938,7 @@ xfpm_manager_new (GDBusConnection *bus,
                                                      SYSCONFDIR "/xdg/autostart/" PACKAGE_NAME ".desktop");
     g_free (current_dir);
 
-    manager->priv->session_managed = xfce_sm_client_connect (manager->priv->client, &error);
-    if (error != NULL)
+    if (!xfce_sm_client_connect (manager->priv->client, &error))
     {
       g_warning ("Unable to connect to session manager : %s", error->message);
       g_error_free (error);
