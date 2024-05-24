@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-23 12:47+0200\n"
+"POT-Creation-Date: 2024-05-24 00:49+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Moo, 2023-2024\n"
 "Language-Team: Lithuanian (http://app.transifex.com/xfce/xfce4-power-manager/language/lt/)\n"
@@ -113,98 +113,103 @@ msgstr "<b>Išvaizda</b>"
 msgid "General"
 msgstr "Bendra"
 
-#: data/interfaces/xfpm-settings.ui:717 data/interfaces/xfpm-settings.ui:951
+#: data/interfaces/xfpm-settings.ui:717 data/interfaces/xfpm-settings.ui:955
 msgid "When inactive for"
 msgstr "Kai neatliekama jokių veiksmų"
 
-#: data/interfaces/xfpm-settings.ui:789 data/interfaces/xfpm-settings.ui:1023
+#: data/interfaces/xfpm-settings.ui:789 data/interfaces/xfpm-settings.ui:1027
 msgid "System sleep mode:"
 msgstr "Sistemos miego veiksena:"
 
-#: data/interfaces/xfpm-settings.ui:801 data/interfaces/xfpm-settings.ui:1035
+#: data/interfaces/xfpm-settings.ui:801 data/interfaces/xfpm-settings.ui:1039
 msgid "<b>System power saving</b>"
 msgstr "<b>Sistemos energijos taupymas</b>"
 
-#: data/interfaces/xfpm-settings.ui:816 data/interfaces/xfpm-settings.ui:936
+#: data/interfaces/xfpm-settings.ui:816 data/interfaces/xfpm-settings.ui:940
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Nešiojamojo kompiuterio dangtis</b>"
 
-#: data/interfaces/xfpm-settings.ui:831 data/interfaces/xfpm-settings.ui:906
+#: data/interfaces/xfpm-settings.ui:831 data/interfaces/xfpm-settings.ui:908
 msgid "When laptop lid is closed:"
 msgstr "Kai nešiojamojo kompiuterio dangtis uždarytas:"
 
-#: data/interfaces/xfpm-settings.ui:860 data/interfaces/xfpm-settings.ui:1049
+#: data/interfaces/xfpm-settings.ui:832 data/interfaces/xfpm-settings.ui:845
+#: data/interfaces/xfpm-settings.ui:909 data/interfaces/xfpm-settings.ui:922
+msgid "These actions only take place if no external display is connected"
+msgstr "Šie veiksmai bus vykdomi tik tuomet, kai nėra prijungtas išorinis ekranas"
+
+#: data/interfaces/xfpm-settings.ui:862 data/interfaces/xfpm-settings.ui:1053
 msgid "<b>Power profile</b>"
 msgstr "<b>Maitinimo profilis</b>"
 
-#: data/interfaces/xfpm-settings.ui:892 data/interfaces/xfpm-settings.ui:1600
+#: data/interfaces/xfpm-settings.ui:894 data/interfaces/xfpm-settings.ui:1604
 msgid "On battery"
 msgstr "Naudojant akumuliatorių"
 
-#: data/interfaces/xfpm-settings.ui:1081 data/interfaces/xfpm-settings.ui:1853
+#: data/interfaces/xfpm-settings.ui:1085 data/interfaces/xfpm-settings.ui:1857
 #: common/xfpm-power-common.c:414
 msgid "Plugged in"
 msgstr "Įjungtas kištukas"
 
-#: data/interfaces/xfpm-settings.ui:1117
+#: data/interfaces/xfpm-settings.ui:1121
 msgid "Critical battery power level:"
 msgstr "Kritinis akumuliatoriaus energijos lygis:"
 
-#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:232
+#: data/interfaces/xfpm-settings.ui:1151 settings/xfpm-settings.c:232
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1171
+#: data/interfaces/xfpm-settings.ui:1175
 msgid "On critical battery power:"
 msgstr "Esant kritiniam akumuliatoriaus energijos lygiui:"
 
-#: data/interfaces/xfpm-settings.ui:1210
+#: data/interfaces/xfpm-settings.ui:1214
 msgid "<b>Critical power</b>"
 msgstr "<b>Kritinis energijos lygis</b>"
 
-#: data/interfaces/xfpm-settings.ui:1239
+#: data/interfaces/xfpm-settings.ui:1243
 msgid "Lock screen when system is going to sleep"
 msgstr "Užrakinti ekraną, kai sistema užmiega"
 
-#: data/interfaces/xfpm-settings.ui:1258
+#: data/interfaces/xfpm-settings.ui:1262
 msgid "<b>Security</b>"
 msgstr "<b>Saugumas</b>"
 
-#: data/interfaces/xfpm-settings.ui:1278
+#: data/interfaces/xfpm-settings.ui:1282
 msgid "System"
 msgstr "Sistema"
 
-#: data/interfaces/xfpm-settings.ui:1317
+#: data/interfaces/xfpm-settings.ui:1321
 msgid "<b>Display power management</b>"
 msgstr "<b>Ekrano maitinimo valdymas</b>"
 
-#: data/interfaces/xfpm-settings.ui:1330
+#: data/interfaces/xfpm-settings.ui:1334
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr "Leisti maitinimo tvarkytuvei, vietoj ekrano serverio, tvarkyti ekrano maitinimo valdymą (DPMS)"
 
-#: data/interfaces/xfpm-settings.ui:1405 data/interfaces/xfpm-settings.ui:1614
+#: data/interfaces/xfpm-settings.ui:1409 data/interfaces/xfpm-settings.ui:1618
 msgid "Put to sleep after"
 msgstr "Užmigdyti po"
 
-#: data/interfaces/xfpm-settings.ui:1418 data/interfaces/xfpm-settings.ui:1627
+#: data/interfaces/xfpm-settings.ui:1422 data/interfaces/xfpm-settings.ui:1631
 msgid "Switch off after"
 msgstr "Išjungti po"
 
-#: data/interfaces/xfpm-settings.ui:1475 data/interfaces/xfpm-settings.ui:1656
+#: data/interfaces/xfpm-settings.ui:1479 data/interfaces/xfpm-settings.ui:1660
 msgid "On inactivity reduce to"
 msgstr "Esant neveiklumui, sumažinti iki"
 
-#: data/interfaces/xfpm-settings.ui:1488 data/interfaces/xfpm-settings.ui:1669
+#: data/interfaces/xfpm-settings.ui:1492 data/interfaces/xfpm-settings.ui:1673
 msgid "Reduce after"
 msgstr "Sumažinti po"
 
-#: data/interfaces/xfpm-settings.ui:1587 data/interfaces/xfpm-settings.ui:1640
+#: data/interfaces/xfpm-settings.ui:1591 data/interfaces/xfpm-settings.ui:1644
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Ryškumo mažinimas</b>"
 
-#: data/interfaces/xfpm-settings.ui:1873
+#: data/interfaces/xfpm-settings.ui:1877
 msgid "Display"
 msgstr "Ekranas"
 
@@ -448,7 +453,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr "nustatymai;nuostatos;mygtukai;pristabdyti;užmigdyti;uzmigdyti;baterija;akumuliatorius;miegas;išjungti;isjungti;ryškumas;ryskumas;nešiojamojo kompiuterio dangtis;nesiojamojo kompiuterio dangtis;užrakinti ekraną;uzrakinti ekrana;prijungtas;taupymas;kritinis;"
 
-#: common/xfpm-common.c:121
+#: common/xfpm-common.c:131
 msgid "translator-credits"
 msgstr "Algimantas Margevičius <margevicius.algimantas@gmail.com>\nMoo"
 
@@ -889,7 +894,7 @@ msgstr "Netaisyklingi argumentai"
 msgid "Invalid cookie"
 msgstr "Neteisingas slapukas"
 
-#: src/xfpm-manager.c:472
+#: src/xfpm-manager.c:479
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
