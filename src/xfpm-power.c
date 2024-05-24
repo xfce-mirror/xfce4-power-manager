@@ -684,9 +684,7 @@ static void
 xfpm_power_process_critical_action (XfpmPower *power,
                                     XfpmShutdownRequest req)
 {
-  if (req == XFPM_ASK)
-    g_signal_emit (G_OBJECT (power), signals[ASK_SHUTDOWN], 0);
-  else if (req == XFPM_DO_SUSPEND)
+  if (req == XFPM_DO_SUSPEND)
     xfpm_power_sleep (power, "Suspend", TRUE);
   else if (req == XFPM_DO_HIBERNATE)
     xfpm_power_sleep (power, "Hibernate", TRUE);
@@ -694,6 +692,8 @@ xfpm_power_process_critical_action (XfpmPower *power,
     xfpm_power_sleep (power, "HybridSleep", TRUE);
   else if (req == XFPM_DO_SHUTDOWN)
     g_signal_emit (G_OBJECT (power), signals[SHUTDOWN], 0);
+  else
+    g_warn_if_reached ();
 }
 
 static void

@@ -809,6 +809,9 @@ xfpm_settings_others (XfconfChannel *channel,
    */
   if (has_battery)
   {
+    GtkTreeIter iter;
+    GtkTreeModel *model;
+
     critical_level = GTK_WIDGET (gtk_builder_get_object (xml, "critical-power-level-spin"));
     gtk_widget_set_tooltip_text (critical_level, _("When all the power sources of the computer reach this charge level"));
     xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, G_TYPE_UINT, critical_level, "value");
@@ -816,6 +819,18 @@ xfpm_settings_others (XfconfChannel *channel,
     add_button_combo (channel, "critical-power-action-combo", XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION,
                       DEFAULT_CRITICAL_POWER_ACTION, auth_suspend, auth_hibernate, auth_hybrid_sleep,
                       can_suspend, can_hibernate, can_hybrid_sleep, can_shutdown);
+
+    model = gtk_combo_box_get_model (GTK_COMBO_BOX (gtk_builder_get_object (xml, "critical-power-action-combo")));
+    gtk_tree_model_get_iter_first (model, &iter);
+    do
+    {
+      XfpmShutdownRequest request;
+      gtk_tree_model_get (model, &iter, 1, &request, -1);
+      if (request == XFPM_DO_NOTHING)
+        gtk_list_store_set (GTK_LIST_STORE (model), &iter, 0, _("Notify"), -1);
+      if (request == XFPM_ASK && !gtk_list_store_remove (GTK_LIST_STORE (model), &iter))
+        break;
+    } while (gtk_tree_model_iter_next (model, &iter));
   }
   else
   {
