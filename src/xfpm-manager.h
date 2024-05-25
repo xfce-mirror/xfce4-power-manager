@@ -50,9 +50,7 @@ XfpmManager *
 xfpm_manager_new (GDBusConnection *bus,
                   const gchar *client_id);
 void
-xfpm_manager_start (XfpmManager *manager);
-void
-xfpm_manager_stop (XfpmManager *manager);
+xfpm_manager_quit (XfpmManager *manager);
 GHashTable *
 xfpm_manager_get_config (XfpmManager *manager);
 

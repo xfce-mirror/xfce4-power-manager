@@ -53,7 +53,7 @@ xfpm_quit_signal (gint sig,
   XFPM_DEBUG ("sig %d", sig);
 
   if (sig != SIGHUP)
-    xfpm_manager_stop (manager);
+    xfpm_manager_quit (manager);
 }
 
 static const gchar *
@@ -178,6 +178,8 @@ xfpm_start (GDBusConnection *bus,
   XFPM_DEBUG ("Starting the power manager");
 
   manager = xfpm_manager_new (bus, client_id);
+  if (manager == NULL)
+    exit (EXIT_FAILURE);
 
   if (xfce_posix_signal_handler_init (&error))
   {
@@ -198,8 +200,6 @@ xfpm_start (GDBusConnection *bus,
     g_warning ("Unable to set up POSIX signal handlers: %s", error->message);
     g_error_free (error);
   }
-
-  xfpm_manager_start (manager);
 
   if (dump)
   {

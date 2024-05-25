@@ -76,9 +76,6 @@ xfpm_manager_dbus_class_init (XfpmManagerClass *klass);
 static void
 xfpm_manager_dbus_init (XfpmManager *manager);
 
-static gboolean
-xfpm_manager_quit (XfpmManager *manager);
-
 static void
 xfpm_manager_show_tray_icon (XfpmManager *manager);
 static void
@@ -134,7 +131,6 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
   object_class->get_property = xfpm_manager_get_property;
 
 #define XFPM_PARAM_FLAGS (G_PARAM_READWRITE \
-                          | G_PARAM_CONSTRUCT \
                           | G_PARAM_STATIC_NAME \
                           | G_PARAM_STATIC_NICK \
                           | G_PARAM_STATIC_BLURB)
@@ -149,134 +145,6 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
 }
 
 static void
-xfpm_manager_init (XfpmManager *manager)
-{
-  manager->priv = xfpm_manager_get_instance_private (manager);
-
-  manager->priv->timer = g_timer_new ();
-
-  notify_init ("xfce4-power-manager");
-}
-
-static void
-xfpm_manager_finalize (GObject *object)
-{
-  XfpmManager *manager = XFPM_MANAGER (object);
-
-  if (manager->priv->session_bus)
-    g_object_unref (manager->priv->session_bus);
-  if (manager->priv->system_bus)
-    g_object_unref (manager->priv->system_bus);
-  if (manager->priv->proxy != NULL)
-    g_object_unref (manager->priv->proxy);
-  g_bus_unwatch_name (manager->priv->watch_id);
-
-  g_object_unref (manager->priv->power);
-  g_object_unref (manager->priv->button);
-  g_object_unref (manager->priv->conf);
-#ifdef ENABLE_X11
-  if (manager->priv->client != NULL)
-    g_object_unref (manager->priv->client);
-#endif
-  if (manager->priv->systemd != NULL)
-    g_object_unref (manager->priv->systemd);
-  if (manager->priv->console != NULL)
-    g_object_unref (manager->priv->console);
-  g_object_unref (manager->priv->monitor);
-  g_object_unref (manager->priv->ppd);
-  if (manager->priv->idle != NULL)
-    g_object_unref (manager->priv->idle);
-
-  g_timer_destroy (manager->priv->timer);
-
-  if (manager->priv->dpms != NULL)
-    g_object_unref (manager->priv->dpms);
-
-  if (manager->priv->backlight != NULL)
-    g_object_unref (manager->priv->backlight);
-
-  g_object_unref (manager->priv->kbd_backlight);
-
-  G_OBJECT_CLASS (xfpm_manager_parent_class)->finalize (object);
-}
-
-static void
-xfpm_manager_set_property (GObject *object,
-                           guint property_id,
-                           const GValue *value,
-                           GParamSpec *pspec)
-{
-  XfpmManager *manager = XFPM_MANAGER (object);
-  gint new_value;
-
-  switch (property_id)
-  {
-    case PROP_SHOW_TRAY_ICON:
-      new_value = g_value_get_int (value);
-      if (new_value != manager->priv->show_tray_icon)
-      {
-        manager->priv->show_tray_icon = new_value;
-        if (new_value > 0)
-        {
-          if (WINDOWING_IS_X11 ())
-            xfpm_manager_show_tray_icon (manager);
-        }
-        else
-        {
-          if (WINDOWING_IS_X11 ())
-            xfpm_manager_hide_tray_icon (manager);
-        }
-      }
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-  }
-}
-
-static void
-xfpm_manager_get_property (GObject *object,
-                           guint property_id,
-                           GValue *value,
-                           GParamSpec *pspec)
-{
-  XfpmManager *manager = XFPM_MANAGER (object);
-
-  switch (property_id)
-  {
-    case PROP_SHOW_TRAY_ICON:
-      g_value_set_int (value, manager->priv->show_tray_icon);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-  }
-}
-
-static void
-xfpm_manager_release_names (XfpmManager *manager)
-{
-  xfpm_dbus_release_name (manager->priv->session_bus, "org.xfce.PowerManager");
-  xfpm_dbus_release_name (manager->priv->session_bus, "org.freedesktop.PowerManagement");
-}
-
-static gboolean
-xfpm_manager_quit (XfpmManager *manager)
-{
-  XFPM_DEBUG ("Exiting");
-
-  xfpm_manager_release_names (manager);
-
-  if (manager->priv->inhibit_fd >= 0)
-    close (manager->priv->inhibit_fd);
-
-  gtk_main_quit ();
-  return TRUE;
-}
-
-static void
 xfpm_manager_system_bus_connection_changed_cb (XfpmDBusMonitor *monitor,
                                                gboolean connected,
                                                XfpmManager *manager)
@@ -287,22 +155,6 @@ xfpm_manager_system_bus_connection_changed_cb (XfpmDBusMonitor *monitor,
     xfpm_manager_quit (manager);
     g_spawn_command_line_async ("xfce4-power-manager", NULL);
   }
-}
-
-static gboolean
-xfpm_manager_reserve_names (XfpmManager *manager)
-{
-  if (!xfpm_dbus_register_name (manager->priv->session_bus, "org.xfce.PowerManager")
-      || !xfpm_dbus_register_name (manager->priv->session_bus, "org.freedesktop.PowerManagement"))
-  {
-    g_warning ("Unable to reserve bus name: Maybe any already running instance?");
-    g_object_unref (G_OBJECT (manager));
-    gtk_main_quit ();
-
-    return FALSE;
-  }
-
-  return TRUE;
 }
 
 static void
@@ -755,6 +607,249 @@ xfpm_manager_systemd_events_changed (XfpmManager *manager)
 }
 
 static void
+name_appeared (GDBusConnection *connection,
+               const gchar *name,
+               const gchar *name_owner,
+               gpointer user_data)
+{
+  XfpmManager *manager = user_data;
+  GError *error = NULL;
+
+  XFPM_DEBUG ("%s started up, owned by %s", name, name_owner);
+
+  manager->priv->proxy = g_dbus_proxy_new_sync (connection,
+                                                G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
+                                                NULL,
+                                                "org.xfce.SessionManager",
+                                                "/org/xfce/SessionManager",
+                                                "org.xfce.Session.Manager",
+                                                NULL,
+                                                &error);
+  if (error != NULL)
+  {
+    g_warning ("Failed to get proxy for %s: %s", name, error->message);
+    g_error_free (error);
+  }
+}
+
+static void
+name_vanished (GDBusConnection *connection,
+               const gchar *name,
+               gpointer user_data)
+{
+  XfpmManager *manager = user_data;
+
+  XFPM_DEBUG ("%s vanished", name);
+
+  g_clear_object (&manager->priv->proxy);
+}
+
+static void
+xfpm_manager_init (XfpmManager *manager)
+{
+  GError *error = NULL;
+
+  notify_init ("xfce4-power-manager");
+
+  manager->priv = xfpm_manager_get_instance_private (manager);
+  manager->priv->show_tray_icon = DEFAULT_SHOW_TRAY_ICON;
+
+  manager->priv->timer = g_timer_new ();
+  manager->priv->watch_id = g_bus_watch_name (G_BUS_TYPE_SESSION,
+                                              "org.xfce.SessionManager",
+                                              G_BUS_NAME_WATCHER_FLAGS_NONE,
+                                              name_appeared,
+                                              name_vanished,
+                                              manager,
+                                              NULL);
+  manager->priv->power = xfpm_power_get ();
+  manager->priv->button = xfpm_button_new ();
+  manager->priv->conf = xfpm_xfconf_new ();
+  manager->priv->screensaver = xfce_screensaver_new ();
+  manager->priv->monitor = xfpm_dbus_monitor_new ();
+  manager->priv->ppd = xfpm_ppd_new ();
+  manager->priv->idle = xfpm_idle_new ();
+  manager->priv->backlight = xfpm_backlight_new ();
+  manager->priv->kbd_backlight = xfpm_kbd_backlight_new ();
+  manager->priv->dpms = xfpm_dpms_new ();
+  manager->priv->console = NULL;
+  manager->priv->systemd = NULL;
+  if (LOGIND_RUNNING ())
+    manager->priv->systemd = xfce_systemd_get ();
+  else
+    manager->priv->console = xfce_consolekit_get ();
+
+  /* Don't allow systemd to handle power/suspend/hibernate buttons and lid-switch */
+  manager->priv->system_bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
+  if (manager->priv->system_bus)
+    manager->priv->inhibit_fd = xfpm_manager_inhibit_sleep_systemd (manager);
+  else
+  {
+    g_warning ("Unable connect to system bus: %s", error->message);
+    g_clear_error (&error);
+  }
+
+  if (manager->priv->idle != NULL)
+  {
+    g_signal_connect_object (manager->priv->idle, "alarm-expired",
+                             G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager, 0);
+    g_signal_connect_object (manager->priv->conf, "notify::" INACTIVITY_ON_AC,
+                             G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager, G_CONNECT_SWAPPED);
+    g_signal_connect_object (manager->priv->conf, "notify::" INACTIVITY_ON_BATTERY,
+                             G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager, G_CONNECT_SWAPPED);
+    xfpm_manager_set_idle_alarm_on_ac (manager);
+    xfpm_manager_set_idle_alarm_on_battery (manager);
+  }
+  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_POWER_KEY,
+                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_SUSPEND_KEY,
+                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_HIBERNATE_KEY,
+                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
+                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
+  xfconf_g_property_bind (xfpm_xfconf_get_channel (manager->priv->conf),
+                          XFPM_PROPERTIES_PREFIX SHOW_TRAY_ICON, G_TYPE_INT,
+                          G_OBJECT (manager), SHOW_TRAY_ICON);
+
+  g_signal_connect_object (manager->priv->monitor, "system-bus-connection-changed",
+                           G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager, 0);
+
+  g_signal_connect_object (manager->priv->button, "button_pressed",
+                           G_CALLBACK (xfpm_manager_button_pressed_cb), manager, 0);
+
+  g_signal_connect_object (manager->priv->power, "lid-changed",
+                           G_CALLBACK (xfpm_manager_lid_changed_cb), manager, 0);
+  g_signal_connect_object (manager->priv->power, "on-battery-changed",
+                           G_CALLBACK (xfpm_manager_on_battery_changed_cb), manager, 0);
+  g_signal_connect_object (manager->priv->power, "waking-up",
+                           G_CALLBACK (xfpm_manager_reset_sleep_timer), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->power, "sleeping",
+                           G_CALLBACK (xfpm_manager_reset_sleep_timer), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->power, "ask-shutdown",
+                           G_CALLBACK (xfpm_manager_ask_shutdown), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->power, "shutdown",
+                           G_CALLBACK (xfpm_manager_shutdown), manager, G_CONNECT_SWAPPED);
+}
+
+static void
+xfpm_manager_finalize (GObject *object)
+{
+  XfpmManager *manager = XFPM_MANAGER (object);
+
+  if (manager->priv->session_bus)
+    g_object_unref (manager->priv->session_bus);
+  if (manager->priv->system_bus)
+    g_object_unref (manager->priv->system_bus);
+  if (manager->priv->proxy != NULL)
+    g_object_unref (manager->priv->proxy);
+  g_bus_unwatch_name (manager->priv->watch_id);
+
+  g_object_unref (manager->priv->power);
+  g_object_unref (manager->priv->button);
+  g_object_unref (manager->priv->conf);
+#ifdef ENABLE_X11
+  if (manager->priv->client != NULL)
+    g_object_unref (manager->priv->client);
+#endif
+  if (manager->priv->systemd != NULL)
+    g_object_unref (manager->priv->systemd);
+  if (manager->priv->console != NULL)
+    g_object_unref (manager->priv->console);
+  g_object_unref (manager->priv->monitor);
+  g_object_unref (manager->priv->ppd);
+  if (manager->priv->idle != NULL)
+    g_object_unref (manager->priv->idle);
+
+  g_timer_destroy (manager->priv->timer);
+
+  if (manager->priv->dpms != NULL)
+    g_object_unref (manager->priv->dpms);
+
+  if (manager->priv->backlight != NULL)
+    g_object_unref (manager->priv->backlight);
+
+  g_object_unref (manager->priv->kbd_backlight);
+
+  G_OBJECT_CLASS (xfpm_manager_parent_class)->finalize (object);
+}
+
+static void
+xfpm_manager_set_property (GObject *object,
+                           guint property_id,
+                           const GValue *value,
+                           GParamSpec *pspec)
+{
+  XfpmManager *manager = XFPM_MANAGER (object);
+  gint new_value;
+
+  switch (property_id)
+  {
+    case PROP_SHOW_TRAY_ICON:
+      new_value = g_value_get_int (value);
+      if (new_value != manager->priv->show_tray_icon)
+      {
+        manager->priv->show_tray_icon = new_value;
+        if (new_value > 0)
+        {
+          if (WINDOWING_IS_X11 ())
+            xfpm_manager_show_tray_icon (manager);
+        }
+        else
+        {
+          if (WINDOWING_IS_X11 ())
+            xfpm_manager_hide_tray_icon (manager);
+        }
+      }
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+  }
+}
+
+static void
+xfpm_manager_get_property (GObject *object,
+                           guint property_id,
+                           GValue *value,
+                           GParamSpec *pspec)
+{
+  XfpmManager *manager = XFPM_MANAGER (object);
+
+  switch (property_id)
+  {
+    case PROP_SHOW_TRAY_ICON:
+      g_value_set_int (value, manager->priv->show_tray_icon);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+  }
+}
+
+static void
+xfpm_manager_release_names (XfpmManager *manager)
+{
+  xfpm_dbus_release_name (manager->priv->session_bus, "org.xfce.PowerManager");
+  xfpm_dbus_release_name (manager->priv->session_bus, "org.freedesktop.PowerManagement");
+}
+
+static gboolean
+xfpm_manager_reserve_names (XfpmManager *manager)
+{
+  if (!xfpm_dbus_register_name (manager->priv->session_bus, "org.xfce.PowerManager")
+      || !xfpm_dbus_register_name (manager->priv->session_bus, "org.freedesktop.PowerManagement"))
+  {
+    g_warning ("Unable to reserve bus name: Maybe any already running instance?");
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+static void
 xfpm_manager_tray_update_tooltip (PowerManagerButton *button,
                                   XfpmManager *manager)
 {
@@ -868,57 +963,11 @@ xfpm_manager_hide_tray_icon (XfpmManager *manager)
   manager->priv->adapter_icon = NULL;
 }
 
-static void
-name_appeared (GDBusConnection *connection,
-               const gchar *name,
-               const gchar *name_owner,
-               gpointer user_data)
-{
-  XfpmManager *manager = user_data;
-  GError *error = NULL;
-
-  XFPM_DEBUG ("%s started up, owned by %s", name, name_owner);
-
-  manager->priv->proxy = g_dbus_proxy_new_sync (connection,
-                                                G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
-                                                NULL,
-                                                "org.xfce.SessionManager",
-                                                "/org/xfce/SessionManager",
-                                                "org.xfce.Session.Manager",
-                                                NULL,
-                                                &error);
-  if (error != NULL)
-  {
-    g_warning ("Failed to get proxy for %s: %s", name, error->message);
-    g_error_free (error);
-  }
-}
-
-static void
-name_vanished (GDBusConnection *connection,
-               const gchar *name,
-               gpointer user_data)
-{
-  XfpmManager *manager = user_data;
-
-  XFPM_DEBUG ("%s vanished", name);
-
-  g_clear_object (&manager->priv->proxy);
-}
-
 XfpmManager *
 xfpm_manager_new (GDBusConnection *bus,
                   const gchar *client_id)
 {
   XfpmManager *manager = g_object_new (XFPM_TYPE_MANAGER, NULL);
-  manager->priv->session_bus = bus;
-  manager->priv->watch_id = g_bus_watch_name (G_BUS_TYPE_SESSION,
-                                              "org.xfce.SessionManager",
-                                              G_BUS_NAME_WATCHER_FLAGS_NONE,
-                                              name_appeared,
-                                              name_vanished,
-                                              manager,
-                                              NULL);
 
 #ifdef ENABLE_X11
   if (WINDOWING_IS_X11 ())
@@ -951,104 +1000,29 @@ xfpm_manager_new (GDBusConnection *bus,
   }
 #endif
 
+  manager->priv->session_bus = bus;
   xfpm_manager_dbus_class_init (XFPM_MANAGER_GET_CLASS (manager));
   xfpm_manager_dbus_init (manager);
+  if (!xfpm_manager_reserve_names (manager))
+  {
+    g_object_unref (manager);
+    return NULL;
+  }
 
   return manager;
 }
 
 void
-xfpm_manager_start (XfpmManager *manager)
+xfpm_manager_quit (XfpmManager *manager)
 {
-  GError *error = NULL;
+  XFPM_DEBUG ("Exiting");
 
-  if (!xfpm_manager_reserve_names (manager))
-    goto out;
+  xfpm_manager_release_names (manager);
 
-  manager->priv->power = xfpm_power_get ();
-  manager->priv->button = xfpm_button_new ();
-  manager->priv->conf = xfpm_xfconf_new ();
-  manager->priv->screensaver = xfce_screensaver_new ();
-  manager->priv->console = NULL;
-  manager->priv->systemd = NULL;
+  if (manager->priv->inhibit_fd >= 0)
+    close (manager->priv->inhibit_fd);
 
-  if (LOGIND_RUNNING ())
-    manager->priv->systemd = xfce_systemd_get ();
-  else
-    manager->priv->console = xfce_consolekit_get ();
-
-  manager->priv->monitor = xfpm_dbus_monitor_new ();
-  manager->priv->ppd = xfpm_ppd_new ();
-  manager->priv->idle = xfpm_idle_new ();
-
-  /* Don't allow systemd to handle power/suspend/hibernate buttons
-   * and lid-switch */
-  manager->priv->system_bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
-  if (manager->priv->system_bus)
-    manager->priv->inhibit_fd = xfpm_manager_inhibit_sleep_systemd (manager);
-  else
-  {
-    g_warning ("Unable connect to system bus: %s", error->message);
-    g_clear_error (&error);
-  }
-
-  if (manager->priv->idle != NULL)
-  {
-    g_signal_connect_object (manager->priv->idle, "alarm-expired",
-                             G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager, 0);
-    g_signal_connect_object (manager->priv->conf, "notify::" INACTIVITY_ON_AC,
-                             G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager, G_CONNECT_SWAPPED);
-    g_signal_connect_object (manager->priv->conf, "notify::" INACTIVITY_ON_BATTERY,
-                             G_CALLBACK (xfpm_manager_set_idle_alarm_on_battery), manager, G_CONNECT_SWAPPED);
-    xfpm_manager_set_idle_alarm_on_ac (manager);
-    xfpm_manager_set_idle_alarm_on_battery (manager);
-  }
-  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_POWER_KEY,
-                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_SUSPEND_KEY,
-                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_HIBERNATE_KEY,
-                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
-                           G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
-
-  g_signal_connect_object (manager->priv->monitor, "system-bus-connection-changed",
-                           G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager, 0);
-
-  manager->priv->backlight = xfpm_backlight_new ();
-  manager->priv->kbd_backlight = xfpm_kbd_backlight_new ();
-  manager->priv->dpms = xfpm_dpms_new ();
-
-  g_signal_connect_object (manager->priv->button, "button_pressed",
-                           G_CALLBACK (xfpm_manager_button_pressed_cb), manager, 0);
-
-  g_signal_connect_object (manager->priv->power, "lid-changed",
-                           G_CALLBACK (xfpm_manager_lid_changed_cb), manager, 0);
-  g_signal_connect_object (manager->priv->power, "on-battery-changed",
-                           G_CALLBACK (xfpm_manager_on_battery_changed_cb), manager, 0);
-  g_signal_connect_object (manager->priv->power, "waking-up",
-                           G_CALLBACK (xfpm_manager_reset_sleep_timer), manager, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager->priv->power, "sleeping",
-                           G_CALLBACK (xfpm_manager_reset_sleep_timer), manager, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager->priv->power, "ask-shutdown",
-                           G_CALLBACK (xfpm_manager_ask_shutdown), manager, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager->priv->power, "shutdown",
-                           G_CALLBACK (xfpm_manager_shutdown), manager, G_CONNECT_SWAPPED);
-
-  xfconf_g_property_bind (xfpm_xfconf_get_channel (manager->priv->conf),
-                          XFPM_PROPERTIES_PREFIX SHOW_TRAY_ICON,
-                          G_TYPE_INT,
-                          G_OBJECT (manager),
-                          SHOW_TRAY_ICON);
-out:;
-}
-
-void
-xfpm_manager_stop (XfpmManager *manager)
-{
-  XFPM_DEBUG ("Stopping");
-  g_return_if_fail (XFPM_IS_MANAGER (manager));
-  xfpm_manager_quit (manager);
+  gtk_main_quit ();
 }
 
 GHashTable *
