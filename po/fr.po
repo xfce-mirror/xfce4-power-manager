@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-23 12:47+0200\n"
+"POT-Creation-Date: 2024-05-25 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Wallon Wallon, 2023-2024\n"
 "Language-Team: French (http://app.transifex.com/xfce/xfce4-power-manager/language/fr/)\n"
@@ -27,191 +27,196 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: data/interfaces/xfpm-settings.ui:96 settings/xfpm-settings.c:193
+#: data/interfaces/xfpm-settings.ui:101 settings/xfpm-settings.c:193
 #: settings/xfpm-settings.c:210
 msgid "Never"
 msgstr "Jamais"
 
-#: data/interfaces/xfpm-settings.ui:100
+#: data/interfaces/xfpm-settings.ui:105
 msgid "When the screensaver is activated"
 msgstr "Quand l’économiseur d’écran est activé"
 
-#: data/interfaces/xfpm-settings.ui:104
+#: data/interfaces/xfpm-settings.ui:109
 msgid "When the screensaver is deactivated"
 msgstr "Quand l’économiseur d’écran est désactivé"
 
-#: data/interfaces/xfpm-settings.ui:115 data/interfaces/xfpm-settings.ui:126
-#: data/interfaces/xfpm-settings.ui:137 data/interfaces/xfpm-settings.ui:148
-#: data/interfaces/xfpm-settings.ui:159 data/interfaces/xfpm-settings.ui:170
-#: data/interfaces/xfpm-settings.ui:181 data/interfaces/xfpm-settings.ui:192
-#: data/interfaces/xfpm-settings.ui:203 data/interfaces/xfpm-settings.ui:214
+#: data/interfaces/xfpm-settings.ui:120 data/interfaces/xfpm-settings.ui:131
+#: data/interfaces/xfpm-settings.ui:142 data/interfaces/xfpm-settings.ui:153
+#: data/interfaces/xfpm-settings.ui:164 data/interfaces/xfpm-settings.ui:175
+#: data/interfaces/xfpm-settings.ui:186 data/interfaces/xfpm-settings.ui:197
+#: data/interfaces/xfpm-settings.ui:208 data/interfaces/xfpm-settings.ui:219
 msgid "Nothing"
 msgstr "Rien"
 
-#: data/interfaces/xfpm-settings.ui:234
+#: data/interfaces/xfpm-settings.ui:253
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:248
-#: src/xfpm-power.c:555 src/xfpm-power.c:583 src/xfpm-power.c:775
-#: src/xfpm-power.c:794 src/xfpm-backlight.c:155 src/xfpm-backlight.c:163
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:249
+#: src/xfpm-power.c:556 src/xfpm-power.c:597 src/xfpm-power.c:756
+#: src/xfpm-power.c:775 src/xfpm-backlight.c:155 src/xfpm-backlight.c:163
 #: src/xfpm-battery.c:181 src/xfpm-kbd-backlight.c:108
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
 msgstr "Gestionnaire d’alimentation"
 
-#: data/interfaces/xfpm-settings.ui:249
+#: data/interfaces/xfpm-settings.ui:268
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "_Help"
 msgstr "Aid_e"
 
-#: data/interfaces/xfpm-settings.ui:265
+#: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
 msgstr "Ge_stion de l’économiseur d’écran"
 
-#: data/interfaces/xfpm-settings.ui:281
+#: data/interfaces/xfpm-settings.ui:300
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
 msgid "_Close"
 msgstr "_Fermer"
 
-#: data/interfaces/xfpm-settings.ui:343
+#: data/interfaces/xfpm-settings.ui:362
 msgid "When power button is pressed:"
 msgstr "Appui sur le bouton d’alimentation :"
 
-#: data/interfaces/xfpm-settings.ui:355
+#: data/interfaces/xfpm-settings.ui:374
 msgid "When sleep button is pressed:"
 msgstr "Appui sur le bouton de mise en veille :"
 
-#: data/interfaces/xfpm-settings.ui:367
+#: data/interfaces/xfpm-settings.ui:386
 msgid "When hibernate button is pressed:"
 msgstr "Appui sur le bouton de veille prolongée :"
 
-#: data/interfaces/xfpm-settings.ui:379
+#: data/interfaces/xfpm-settings.ui:398
 msgid "When battery button is pressed:"
 msgstr "Appui sur le bouton de batterie :"
 
-#: data/interfaces/xfpm-settings.ui:488
+#: data/interfaces/xfpm-settings.ui:507
 msgid "Exponential"
 msgstr "Exponentiel"
 
-#: data/interfaces/xfpm-settings.ui:510
+#: data/interfaces/xfpm-settings.ui:529
 msgid "Brightness step count:"
 msgstr "Nombre de niveaux de luminosité :"
 
-#: data/interfaces/xfpm-settings.ui:521
+#: data/interfaces/xfpm-settings.ui:540
 msgid "Handle display brightness _keys"
 msgstr "Gérer les _touches de luminosité de l’écran"
 
-#: data/interfaces/xfpm-settings.ui:544
+#: data/interfaces/xfpm-settings.ui:563
 msgid "<b>Buttons</b>"
 msgstr "<b>Boutons</b>"
 
-#: data/interfaces/xfpm-settings.ui:578
+#: data/interfaces/xfpm-settings.ui:597
 msgid "Status notifications"
 msgstr "Notifications d’état"
 
-#: data/interfaces/xfpm-settings.ui:616
+#: data/interfaces/xfpm-settings.ui:635
 msgid "System tray icon"
 msgstr "Icône de notification"
 
-#: data/interfaces/xfpm-settings.ui:652
+#: data/interfaces/xfpm-settings.ui:671
 msgid "<b>Appearance</b>"
 msgstr "<b>Apparence</b>"
 
-#: data/interfaces/xfpm-settings.ui:672
+#: data/interfaces/xfpm-settings.ui:691
 msgid "General"
 msgstr "Général"
 
-#: data/interfaces/xfpm-settings.ui:717 data/interfaces/xfpm-settings.ui:951
+#: data/interfaces/xfpm-settings.ui:736 data/interfaces/xfpm-settings.ui:974
 msgid "When inactive for"
 msgstr "Quand inactif depuis"
 
-#: data/interfaces/xfpm-settings.ui:789 data/interfaces/xfpm-settings.ui:1023
+#: data/interfaces/xfpm-settings.ui:808 data/interfaces/xfpm-settings.ui:1046
 msgid "System sleep mode:"
 msgstr "Mode de mise en veille du système :"
 
-#: data/interfaces/xfpm-settings.ui:801 data/interfaces/xfpm-settings.ui:1035
+#: data/interfaces/xfpm-settings.ui:820 data/interfaces/xfpm-settings.ui:1058
 msgid "<b>System power saving</b>"
 msgstr "<b>Économie d’énergie du système</b>"
 
-#: data/interfaces/xfpm-settings.ui:816 data/interfaces/xfpm-settings.ui:936
+#: data/interfaces/xfpm-settings.ui:835 data/interfaces/xfpm-settings.ui:959
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Couvercle du portable</b>"
 
-#: data/interfaces/xfpm-settings.ui:831 data/interfaces/xfpm-settings.ui:906
+#: data/interfaces/xfpm-settings.ui:850 data/interfaces/xfpm-settings.ui:927
 msgid "When laptop lid is closed:"
 msgstr "Fermeture du couvercle du portable :"
 
-#: data/interfaces/xfpm-settings.ui:860 data/interfaces/xfpm-settings.ui:1049
+#: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
+#: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
+msgid "These actions only take place if no external display is connected"
+msgstr ""
+
+#: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
 msgid "<b>Power profile</b>"
 msgstr "<b>Profil d’alimentation</b>"
 
-#: data/interfaces/xfpm-settings.ui:892 data/interfaces/xfpm-settings.ui:1600
+#: data/interfaces/xfpm-settings.ui:913 data/interfaces/xfpm-settings.ui:1636
 msgid "On battery"
 msgstr "Sur batterie"
 
-#: data/interfaces/xfpm-settings.ui:1081 data/interfaces/xfpm-settings.ui:1853
+#: data/interfaces/xfpm-settings.ui:1104 data/interfaces/xfpm-settings.ui:1889
 #: common/xfpm-power-common.c:414
 msgid "Plugged in"
 msgstr "Branché"
 
-#: data/interfaces/xfpm-settings.ui:1117
+#: data/interfaces/xfpm-settings.ui:1140
 msgid "Critical battery power level:"
 msgstr "Charge batterie critique :"
 
-#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:232
+#: data/interfaces/xfpm-settings.ui:1170 settings/xfpm-settings.c:232
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1171
+#: data/interfaces/xfpm-settings.ui:1207
 msgid "On critical battery power:"
 msgstr "En cas de charge batterie critique :"
 
-#: data/interfaces/xfpm-settings.ui:1210
+#: data/interfaces/xfpm-settings.ui:1246
 msgid "<b>Critical power</b>"
 msgstr "<b>Charge critique</b>"
 
-#: data/interfaces/xfpm-settings.ui:1239
+#: data/interfaces/xfpm-settings.ui:1275
 msgid "Lock screen when system is going to sleep"
 msgstr "Verrouiller l’écran quand le système se met en veille"
 
-#: data/interfaces/xfpm-settings.ui:1258
+#: data/interfaces/xfpm-settings.ui:1294
 msgid "<b>Security</b>"
 msgstr "<b>Sécurité</b>"
 
-#: data/interfaces/xfpm-settings.ui:1278
+#: data/interfaces/xfpm-settings.ui:1314
 msgid "System"
 msgstr "Système"
 
-#: data/interfaces/xfpm-settings.ui:1317
+#: data/interfaces/xfpm-settings.ui:1353
 msgid "<b>Display power management</b>"
 msgstr "<b>Gestion d’alimentation de l’écran</b>"
 
-#: data/interfaces/xfpm-settings.ui:1330
+#: data/interfaces/xfpm-settings.ui:1366
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr "Laisser le gestionnaire d’alimentation gérer la gestion de l’alimentation de l’écran (Display Power Management Signaling ou DPMS) à la place du serveur d’affichage"
 
-#: data/interfaces/xfpm-settings.ui:1405 data/interfaces/xfpm-settings.ui:1614
+#: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
 msgid "Put to sleep after"
 msgstr "Mettre en veille après"
 
-#: data/interfaces/xfpm-settings.ui:1418 data/interfaces/xfpm-settings.ui:1627
+#: data/interfaces/xfpm-settings.ui:1454 data/interfaces/xfpm-settings.ui:1663
 msgid "Switch off after"
 msgstr "Éteindre après"
 
-#: data/interfaces/xfpm-settings.ui:1475 data/interfaces/xfpm-settings.ui:1656
+#: data/interfaces/xfpm-settings.ui:1511 data/interfaces/xfpm-settings.ui:1692
 msgid "On inactivity reduce to"
 msgstr "En cas d’inactivité réduire à"
 
-#: data/interfaces/xfpm-settings.ui:1488 data/interfaces/xfpm-settings.ui:1669
+#: data/interfaces/xfpm-settings.ui:1524 data/interfaces/xfpm-settings.ui:1705
 msgid "Reduce after"
 msgstr "Réduire après"
 
-#: data/interfaces/xfpm-settings.ui:1587 data/interfaces/xfpm-settings.ui:1640
+#: data/interfaces/xfpm-settings.ui:1623 data/interfaces/xfpm-settings.ui:1676
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Réduction de la luminosité</b>"
 
-#: data/interfaces/xfpm-settings.ui:1873
+#: data/interfaces/xfpm-settings.ui:1909
 msgid "Display"
 msgstr "Écran"
 
@@ -231,7 +236,7 @@ msgid "seconds"
 msgstr "secondes"
 
 #: settings/xfpm-settings.c:386 settings/xfpm-settings.c:514
-#: settings/xfpm-settings.c:651 src/xfpm-power.c:610
+#: settings/xfpm-settings.c:651 src/xfpm-power.c:612
 msgid "Suspend"
 msgstr "Mettre en veille"
 
@@ -244,7 +249,7 @@ msgid "Suspend operation not supported"
 msgstr "Opération de mise en veille non prise en charge"
 
 #: settings/xfpm-settings.c:400 settings/xfpm-settings.c:520
-#: settings/xfpm-settings.c:657 src/xfpm-power.c:598
+#: settings/xfpm-settings.c:657 src/xfpm-power.c:607
 msgid "Hibernate"
 msgstr "Mettre en veille prolongée"
 
@@ -257,7 +262,7 @@ msgid "Hibernate operation not supported"
 msgstr "Opération de mise en veille prolongée non prise en charge"
 
 #: settings/xfpm-settings.c:414 settings/xfpm-settings.c:526
-#: settings/xfpm-settings.c:663 src/xfpm-power.c:622
+#: settings/xfpm-settings.c:663 src/xfpm-power.c:617
 msgid "Hybrid Sleep"
 msgstr "Mise en veille hybride"
 
@@ -269,11 +274,11 @@ msgstr "L’opération de mise en veille hybride n’est pas autorisée"
 msgid "Hybrid sleep operation not supported"
 msgstr "L’opération de mise en veille hybride n’est pas prise en charge"
 
-#: settings/xfpm-settings.c:447 settings/xfpm-settings.c:833
+#: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
 msgid "Hibernate and suspend operations not supported"
 msgstr "Opérations de mise en veille / mise en veille prolongée non prises en charge"
 
-#: settings/xfpm-settings.c:452 settings/xfpm-settings.c:838
+#: settings/xfpm-settings.c:452 settings/xfpm-settings.c:862
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Opérations de mise en veille / mise en veille prolongée non autorisées"
 
@@ -290,7 +295,7 @@ msgid "Lock screen"
 msgstr "Verrouiller l’écran"
 
 #: settings/xfpm-settings.c:530 settings/xfpm-settings.c:669
-#: src/xfpm-power.c:642
+#: src/xfpm-power.c:630
 msgid "Shutdown"
 msgstr "Éteindre"
 
@@ -302,91 +307,104 @@ msgstr "Demander"
 msgid "Number of brightness steps available using keys"
 msgstr "Nombre de niveaux de luminosité disponibles à l’aide des touches"
 
-#: settings/xfpm-settings.c:813
+#: settings/xfpm-settings.c:819
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Lorsque toutes les sources d’alimentation de la machine atteignent ce niveau de charge"
 
-#: settings/xfpm-settings.c:1070
+#: settings/xfpm-settings.c:833
+msgid "Notify"
+msgstr ""
+
+#: settings/xfpm-settings.c:840
+#, c-format
+msgid ""
+"Make sure you set a sufficiently high value here, otherwise the system will "
+"trigger its own action before xfce4-power-manager, without being able to "
+"prevent it or know exactly when it will do so. The action triggered by the "
+"system in this case will be: %s."
+msgstr ""
+
+#: settings/xfpm-settings.c:1094
 msgid "Device"
 msgstr "Périphérique"
 
-#: settings/xfpm-settings.c:1093
+#: settings/xfpm-settings.c:1117
 msgid "Type"
 msgstr "Type"
 
-#: settings/xfpm-settings.c:1098
+#: settings/xfpm-settings.c:1122
 msgid "PowerSupply"
 msgstr "Alimentation"
 
-#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1123 src/xfpm-main.c:62
 msgid "True"
 msgstr "Vrai"
 
-#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1123 src/xfpm-main.c:62
 msgid "False"
 msgstr "Faux"
 
-#: settings/xfpm-settings.c:1106
+#: settings/xfpm-settings.c:1130
 msgid "Model"
 msgstr "Modèle"
 
-#: settings/xfpm-settings.c:1109
+#: settings/xfpm-settings.c:1133
 msgid "Technology"
 msgstr "Technologie"
 
-#: settings/xfpm-settings.c:1116
+#: settings/xfpm-settings.c:1140
 msgid "Current charge"
 msgstr "Charge actuelle"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1124 settings/xfpm-settings.c:1136
-#: settings/xfpm-settings.c:1148
+#: settings/xfpm-settings.c:1148 settings/xfpm-settings.c:1160
+#: settings/xfpm-settings.c:1172
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1126
+#: settings/xfpm-settings.c:1150
 msgid "Fully charged (design)"
 msgstr "Complètement chargée (selon conception)"
 
-#: settings/xfpm-settings.c:1139
+#: settings/xfpm-settings.c:1163
 msgid "Fully charged"
 msgstr "Complètement chargée"
 
-#: settings/xfpm-settings.c:1150
+#: settings/xfpm-settings.c:1174
 msgid "Energy empty"
 msgstr "Énergie à vide"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1158
+#: settings/xfpm-settings.c:1182
 msgid "W"
 msgstr "W"
 
-#: settings/xfpm-settings.c:1160
+#: settings/xfpm-settings.c:1184
 msgid "Energy rate"
 msgstr "Taux d’énergie"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1168
+#: settings/xfpm-settings.c:1192
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1170
+#: settings/xfpm-settings.c:1194
 msgid "Voltage"
 msgstr "Tension"
 
-#: settings/xfpm-settings.c:1177
+#: settings/xfpm-settings.c:1201
 msgid "Vendor"
 msgstr "Constructeur"
 
-#: settings/xfpm-settings.c:1182
+#: settings/xfpm-settings.c:1206
 msgid "Serial"
 msgstr "Numéro de série"
 
-#: settings/xfpm-settings.c:1469
+#: settings/xfpm-settings.c:1493
 msgid "Check your power manager installation"
 msgstr "Vérifiez votre installation du gestionnaire d’alimentation"
 
-#: settings/xfpm-settings.c:1545
+#: settings/xfpm-settings.c:1569
 msgid "Devices"
 msgstr "Périphériques"
 
@@ -455,7 +473,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr "paramètres;préférences;boutons;veille;hiberner;batterie;suspendre;arrêt;luminosité;couvercle de portable;verrouillage;branché;économie;critique;"
 
-#: common/xfpm-common.c:121
+#: common/xfpm-common.c:131
 msgid "translator-credits"
 msgstr "L’équipe de traduction francophone de Xfce"
 
@@ -660,67 +678,67 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nÉtat inconnu"
 
-#: src/xfpm-power.c:273
+#: src/xfpm-power.c:274
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Une application inhibe actuellement la mise en veille automatique. Si elle est exécutée maintenant, cette action est susceptible d’endommager l’état de fonctionnement de cette application.\nÊtes-vous sûr de vouloir mettre le système en veille prolongée ?"
 
-#: src/xfpm-power.c:305
+#: src/xfpm-power.c:306
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Aucun des outils de verrouillage d’écran n’a pu être exécuté correctement, l’écran ne sera pas verrouillé.\nVoulez-vous poursuivre la mise en veille du système ?"
 
-#: src/xfpm-power.c:494
+#: src/xfpm-power.c:495
 msgid "Hibernate the system"
 msgstr "Mettre le système en veille prolongée"
 
-#: src/xfpm-power.c:506
+#: src/xfpm-power.c:507
 msgid "Suspend the system"
 msgstr "Mettre en veille le système"
 
-#: src/xfpm-power.c:518
+#: src/xfpm-power.c:519
 msgid "Hybrid sleep the system"
 msgstr "Mettre le système en veille hybride"
 
-#: src/xfpm-power.c:538
+#: src/xfpm-power.c:539
 msgid "Shutdown the system"
 msgstr "Éteindre le système"
 
-#: src/xfpm-power.c:551 src/xfpm-power.c:580
+#: src/xfpm-power.c:552 src/xfpm-power.c:594
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Le niveau de la batterie est critique. Enregistrez votre travail pour éviter des pertes de données"
 
-#: src/xfpm-power.c:649
-msgid "_Cancel"
-msgstr "_Annuler"
+#: src/xfpm-power.c:633
+msgid "Cancel"
+msgstr "Annuler"
 
-#: src/xfpm-power.c:775
+#: src/xfpm-power.c:756
 msgid "System is running on low power"
 msgstr "Le système fonctionne sur faible puissance"
 
-#: src/xfpm-power.c:790
+#: src/xfpm-power.c:771
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Le niveau de charge de votre %s est faible\nTemps restant estimé à %s"
 
-#: src/xfpm-power.c:1535 src/xfpm-power.c:1579 src/xfpm-power.c:1615
-#: src/xfpm-power.c:1649 src/xfpm-power.c:1683
+#: src/xfpm-power.c:1526 src/xfpm-power.c:1570 src/xfpm-power.c:1606
+#: src/xfpm-power.c:1640 src/xfpm-power.c:1674
 msgid "Permission denied"
 msgstr "Permission refusée"
 
-#: src/xfpm-power.c:1624
+#: src/xfpm-power.c:1615
 msgid "Hibernate not supported"
 msgstr "La mise en veille prolongée n’est pas prise en charge"
 
-#: src/xfpm-power.c:1658
+#: src/xfpm-power.c:1649
 msgid "Suspend not supported"
 msgstr "Mise en veille non prise en charge"
 
-#: src/xfpm-power.c:1692
+#: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
 msgstr "La mise en veille hybride n’est pas prise en charge"
 
@@ -892,7 +910,7 @@ msgstr "Paramètres non valides"
 msgid "Invalid cookie"
 msgstr "Cookie invalide"
 
-#: src/xfpm-manager.c:472
+#: src/xfpm-manager.c:501
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
