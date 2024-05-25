@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-23 12:47+0200\n"
+"POT-Creation-Date: 2024-05-25 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Balázs Meskó <meskobalazs@mailbox.org>, 2018,2024\n"
 "Language-Team: Hungarian (http://app.transifex.com/xfce/xfce4-power-manager/language/hu/)\n"
@@ -30,191 +30,196 @@ msgstr ""
 "Language: hu\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/interfaces/xfpm-settings.ui:96 settings/xfpm-settings.c:193
+#: data/interfaces/xfpm-settings.ui:101 settings/xfpm-settings.c:193
 #: settings/xfpm-settings.c:210
 msgid "Never"
 msgstr "Soha"
 
-#: data/interfaces/xfpm-settings.ui:100
+#: data/interfaces/xfpm-settings.ui:105
 msgid "When the screensaver is activated"
 msgstr "Ha a képernyővédő be van kapcsolva"
 
-#: data/interfaces/xfpm-settings.ui:104
+#: data/interfaces/xfpm-settings.ui:109
 msgid "When the screensaver is deactivated"
 msgstr "Ha a képernyővédő ki van kapcsolva"
 
-#: data/interfaces/xfpm-settings.ui:115 data/interfaces/xfpm-settings.ui:126
-#: data/interfaces/xfpm-settings.ui:137 data/interfaces/xfpm-settings.ui:148
-#: data/interfaces/xfpm-settings.ui:159 data/interfaces/xfpm-settings.ui:170
-#: data/interfaces/xfpm-settings.ui:181 data/interfaces/xfpm-settings.ui:192
-#: data/interfaces/xfpm-settings.ui:203 data/interfaces/xfpm-settings.ui:214
+#: data/interfaces/xfpm-settings.ui:120 data/interfaces/xfpm-settings.ui:131
+#: data/interfaces/xfpm-settings.ui:142 data/interfaces/xfpm-settings.ui:153
+#: data/interfaces/xfpm-settings.ui:164 data/interfaces/xfpm-settings.ui:175
+#: data/interfaces/xfpm-settings.ui:186 data/interfaces/xfpm-settings.ui:197
+#: data/interfaces/xfpm-settings.ui:208 data/interfaces/xfpm-settings.ui:219
 msgid "Nothing"
 msgstr "Semmi"
 
-#: data/interfaces/xfpm-settings.ui:234
+#: data/interfaces/xfpm-settings.ui:253
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:248
-#: src/xfpm-power.c:555 src/xfpm-power.c:583 src/xfpm-power.c:775
-#: src/xfpm-power.c:794 src/xfpm-backlight.c:155 src/xfpm-backlight.c:163
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:249
+#: src/xfpm-power.c:556 src/xfpm-power.c:597 src/xfpm-power.c:756
+#: src/xfpm-power.c:775 src/xfpm-backlight.c:155 src/xfpm-backlight.c:163
 #: src/xfpm-battery.c:181 src/xfpm-kbd-backlight.c:108
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
 msgstr "Energiakezelő"
 
-#: data/interfaces/xfpm-settings.ui:249
+#: data/interfaces/xfpm-settings.ui:268
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
 msgid "_Help"
 msgstr "_Súgó"
 
-#: data/interfaces/xfpm-settings.ui:265
+#: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
 msgstr "_Képernyőkímélő-kezelés"
 
-#: data/interfaces/xfpm-settings.ui:281
+#: data/interfaces/xfpm-settings.ui:300
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
 msgid "_Close"
 msgstr "_Bezárás"
 
-#: data/interfaces/xfpm-settings.ui:343
+#: data/interfaces/xfpm-settings.ui:362
 msgid "When power button is pressed:"
 msgstr "A főkapcsológomb megnyomásakor:"
 
-#: data/interfaces/xfpm-settings.ui:355
+#: data/interfaces/xfpm-settings.ui:374
 msgid "When sleep button is pressed:"
 msgstr "Az alvás gomb megnyomásakor:"
 
-#: data/interfaces/xfpm-settings.ui:367
+#: data/interfaces/xfpm-settings.ui:386
 msgid "When hibernate button is pressed:"
 msgstr "A hibernálás gomb megnyomásakor:"
 
-#: data/interfaces/xfpm-settings.ui:379
+#: data/interfaces/xfpm-settings.ui:398
 msgid "When battery button is pressed:"
 msgstr "Az akkumulátorgomb megnyomásakor:"
 
-#: data/interfaces/xfpm-settings.ui:488
+#: data/interfaces/xfpm-settings.ui:507
 msgid "Exponential"
 msgstr "Exponenciális"
 
-#: data/interfaces/xfpm-settings.ui:510
+#: data/interfaces/xfpm-settings.ui:529
 msgid "Brightness step count:"
 msgstr "Fényerősségszintek száma:"
 
-#: data/interfaces/xfpm-settings.ui:521
+#: data/interfaces/xfpm-settings.ui:540
 msgid "Handle display brightness _keys"
 msgstr "Megjelenítési fényerő _gombjainak kezelése"
 
-#: data/interfaces/xfpm-settings.ui:544
+#: data/interfaces/xfpm-settings.ui:563
 msgid "<b>Buttons</b>"
 msgstr "<b>Gombok</b>"
 
-#: data/interfaces/xfpm-settings.ui:578
+#: data/interfaces/xfpm-settings.ui:597
 msgid "Status notifications"
 msgstr "Állapotértesítések"
 
-#: data/interfaces/xfpm-settings.ui:616
+#: data/interfaces/xfpm-settings.ui:635
 msgid "System tray icon"
 msgstr "Rendszertálcaikon"
 
-#: data/interfaces/xfpm-settings.ui:652
+#: data/interfaces/xfpm-settings.ui:671
 msgid "<b>Appearance</b>"
 msgstr "<b>Megjelenés</b>"
 
-#: data/interfaces/xfpm-settings.ui:672
+#: data/interfaces/xfpm-settings.ui:691
 msgid "General"
 msgstr "Általános"
 
-#: data/interfaces/xfpm-settings.ui:717 data/interfaces/xfpm-settings.ui:951
+#: data/interfaces/xfpm-settings.ui:736 data/interfaces/xfpm-settings.ui:974
 msgid "When inactive for"
 msgstr "Ha tétlen eddig:"
 
-#: data/interfaces/xfpm-settings.ui:789 data/interfaces/xfpm-settings.ui:1023
+#: data/interfaces/xfpm-settings.ui:808 data/interfaces/xfpm-settings.ui:1046
 msgid "System sleep mode:"
 msgstr "Rendszer alvó módja:"
 
-#: data/interfaces/xfpm-settings.ui:801 data/interfaces/xfpm-settings.ui:1035
+#: data/interfaces/xfpm-settings.ui:820 data/interfaces/xfpm-settings.ui:1058
 msgid "<b>System power saving</b>"
 msgstr "<b>Rendszer energiatakarékossága</b>"
 
-#: data/interfaces/xfpm-settings.ui:816 data/interfaces/xfpm-settings.ui:936
+#: data/interfaces/xfpm-settings.ui:835 data/interfaces/xfpm-settings.ui:959
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Noteszgép fedele</b>"
 
-#: data/interfaces/xfpm-settings.ui:831 data/interfaces/xfpm-settings.ui:906
+#: data/interfaces/xfpm-settings.ui:850 data/interfaces/xfpm-settings.ui:927
 msgid "When laptop lid is closed:"
 msgstr "A noteszgép fedelének lehajtásakor:"
 
-#: data/interfaces/xfpm-settings.ui:860 data/interfaces/xfpm-settings.ui:1049
+#: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
+#: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
+msgid "These actions only take place if no external display is connected"
+msgstr ""
+
+#: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
 msgid "<b>Power profile</b>"
 msgstr "<b>Energiaprofil</b>"
 
-#: data/interfaces/xfpm-settings.ui:892 data/interfaces/xfpm-settings.ui:1600
+#: data/interfaces/xfpm-settings.ui:913 data/interfaces/xfpm-settings.ui:1636
 msgid "On battery"
 msgstr "Akkumulátoron"
 
-#: data/interfaces/xfpm-settings.ui:1081 data/interfaces/xfpm-settings.ui:1853
+#: data/interfaces/xfpm-settings.ui:1104 data/interfaces/xfpm-settings.ui:1889
 #: common/xfpm-power-common.c:414
 msgid "Plugged in"
 msgstr "Csatlakoztatva"
 
-#: data/interfaces/xfpm-settings.ui:1117
+#: data/interfaces/xfpm-settings.ui:1140
 msgid "Critical battery power level:"
 msgstr "Kritikus akkumulátorszint:"
 
-#: data/interfaces/xfpm-settings.ui:1147 settings/xfpm-settings.c:232
+#: data/interfaces/xfpm-settings.ui:1170 settings/xfpm-settings.c:232
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1171
+#: data/interfaces/xfpm-settings.ui:1207
 msgid "On critical battery power:"
 msgstr "Kritikus akkumulátor szint esetén:"
 
-#: data/interfaces/xfpm-settings.ui:1210
+#: data/interfaces/xfpm-settings.ui:1246
 msgid "<b>Critical power</b>"
 msgstr "<b>Kritikus energiaszint</b>"
 
-#: data/interfaces/xfpm-settings.ui:1239
+#: data/interfaces/xfpm-settings.ui:1275
 msgid "Lock screen when system is going to sleep"
 msgstr "Képernyő zárolása amikor a rendszer alvó módba lép"
 
-#: data/interfaces/xfpm-settings.ui:1258
+#: data/interfaces/xfpm-settings.ui:1294
 msgid "<b>Security</b>"
 msgstr "<b>Biztonság</b>"
 
-#: data/interfaces/xfpm-settings.ui:1278
+#: data/interfaces/xfpm-settings.ui:1314
 msgid "System"
 msgstr "Rendszer"
 
-#: data/interfaces/xfpm-settings.ui:1317
+#: data/interfaces/xfpm-settings.ui:1353
 msgid "<b>Display power management</b>"
 msgstr "<b>Képernyő energiagazdálkodása</b>"
 
-#: data/interfaces/xfpm-settings.ui:1330
+#: data/interfaces/xfpm-settings.ui:1366
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr "Az energiakezelő kezelje a megjelenítési energiakezelést (DPMS) a megjelenítési kiszolgáló helyett."
 
-#: data/interfaces/xfpm-settings.ui:1405 data/interfaces/xfpm-settings.ui:1614
+#: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
 msgid "Put to sleep after"
 msgstr "Alvás ennyi tétlenség után:"
 
-#: data/interfaces/xfpm-settings.ui:1418 data/interfaces/xfpm-settings.ui:1627
+#: data/interfaces/xfpm-settings.ui:1454 data/interfaces/xfpm-settings.ui:1663
 msgid "Switch off after"
 msgstr "Kikapcsolás ennyi tétlenség után:"
 
-#: data/interfaces/xfpm-settings.ui:1475 data/interfaces/xfpm-settings.ui:1656
+#: data/interfaces/xfpm-settings.ui:1511 data/interfaces/xfpm-settings.ui:1692
 msgid "On inactivity reduce to"
 msgstr "Tétlenség esetén csökkentés erre az értékre:"
 
-#: data/interfaces/xfpm-settings.ui:1488 data/interfaces/xfpm-settings.ui:1669
+#: data/interfaces/xfpm-settings.ui:1524 data/interfaces/xfpm-settings.ui:1705
 msgid "Reduce after"
 msgstr "Csökkentés ennyi tétlenség után:"
 
-#: data/interfaces/xfpm-settings.ui:1587 data/interfaces/xfpm-settings.ui:1640
+#: data/interfaces/xfpm-settings.ui:1623 data/interfaces/xfpm-settings.ui:1676
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Fényerő csökkentése</b>"
 
-#: data/interfaces/xfpm-settings.ui:1873
+#: data/interfaces/xfpm-settings.ui:1909
 msgid "Display"
 msgstr "Képernyő"
 
@@ -234,7 +239,7 @@ msgid "seconds"
 msgstr "másodperc"
 
 #: settings/xfpm-settings.c:386 settings/xfpm-settings.c:514
-#: settings/xfpm-settings.c:651 src/xfpm-power.c:610
+#: settings/xfpm-settings.c:651 src/xfpm-power.c:612
 msgid "Suspend"
 msgstr "Felfüggesztés"
 
@@ -247,7 +252,7 @@ msgid "Suspend operation not supported"
 msgstr "A felfüggesztési művelet nem támogatott"
 
 #: settings/xfpm-settings.c:400 settings/xfpm-settings.c:520
-#: settings/xfpm-settings.c:657 src/xfpm-power.c:598
+#: settings/xfpm-settings.c:657 src/xfpm-power.c:607
 msgid "Hibernate"
 msgstr "Hibernálás"
 
@@ -260,7 +265,7 @@ msgid "Hibernate operation not supported"
 msgstr "A hibernálási művelet nem támogatott"
 
 #: settings/xfpm-settings.c:414 settings/xfpm-settings.c:526
-#: settings/xfpm-settings.c:663 src/xfpm-power.c:622
+#: settings/xfpm-settings.c:663 src/xfpm-power.c:617
 msgid "Hybrid Sleep"
 msgstr "Hibrid alvás"
 
@@ -272,11 +277,11 @@ msgstr ""
 msgid "Hybrid sleep operation not supported"
 msgstr ""
 
-#: settings/xfpm-settings.c:447 settings/xfpm-settings.c:833
+#: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
 msgid "Hibernate and suspend operations not supported"
 msgstr "A hibernálási és felfüggesztési műveletek nem támogatottak"
 
-#: settings/xfpm-settings.c:452 settings/xfpm-settings.c:838
+#: settings/xfpm-settings.c:452 settings/xfpm-settings.c:862
 msgid "Hibernate and suspend operations not permitted"
 msgstr "A hibernálási és felfüggesztési műveletek nem engedélyezettek"
 
@@ -293,7 +298,7 @@ msgid "Lock screen"
 msgstr "Képernyő zárolása"
 
 #: settings/xfpm-settings.c:530 settings/xfpm-settings.c:669
-#: src/xfpm-power.c:642
+#: src/xfpm-power.c:630
 msgid "Shutdown"
 msgstr "Leállítás"
 
@@ -305,91 +310,104 @@ msgstr "Kérdezzen"
 msgid "Number of brightness steps available using keys"
 msgstr "Fényerősségszintek száma billentyűvel történő változtatáskor"
 
-#: settings/xfpm-settings.c:813
+#: settings/xfpm-settings.c:819
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Amikor a számítógép minden áramforrása eléri ezt a töltöttségi szintet"
 
-#: settings/xfpm-settings.c:1070
+#: settings/xfpm-settings.c:833
+msgid "Notify"
+msgstr ""
+
+#: settings/xfpm-settings.c:840
+#, c-format
+msgid ""
+"Make sure you set a sufficiently high value here, otherwise the system will "
+"trigger its own action before xfce4-power-manager, without being able to "
+"prevent it or know exactly when it will do so. The action triggered by the "
+"system in this case will be: %s."
+msgstr ""
+
+#: settings/xfpm-settings.c:1094
 msgid "Device"
 msgstr "Eszköz"
 
-#: settings/xfpm-settings.c:1093
+#: settings/xfpm-settings.c:1117
 msgid "Type"
 msgstr "Típus"
 
-#: settings/xfpm-settings.c:1098
+#: settings/xfpm-settings.c:1122
 msgid "PowerSupply"
 msgstr "Tápellátás"
 
-#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1123 src/xfpm-main.c:62
 msgid "True"
 msgstr "Igaz"
 
-#: settings/xfpm-settings.c:1099 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1123 src/xfpm-main.c:62
 msgid "False"
 msgstr "Hamis"
 
-#: settings/xfpm-settings.c:1106
+#: settings/xfpm-settings.c:1130
 msgid "Model"
 msgstr "Modell"
 
-#: settings/xfpm-settings.c:1109
+#: settings/xfpm-settings.c:1133
 msgid "Technology"
 msgstr "Technológia"
 
-#: settings/xfpm-settings.c:1116
+#: settings/xfpm-settings.c:1140
 msgid "Current charge"
 msgstr "Jelenlegi töltés"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1124 settings/xfpm-settings.c:1136
-#: settings/xfpm-settings.c:1148
+#: settings/xfpm-settings.c:1148 settings/xfpm-settings.c:1160
+#: settings/xfpm-settings.c:1172
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1126
+#: settings/xfpm-settings.c:1150
 msgid "Fully charged (design)"
 msgstr "Teljesen feltöltve (tervezett)"
 
-#: settings/xfpm-settings.c:1139
+#: settings/xfpm-settings.c:1163
 msgid "Fully charged"
 msgstr "Teljesen feltöltve"
 
-#: settings/xfpm-settings.c:1150
+#: settings/xfpm-settings.c:1174
 msgid "Energy empty"
 msgstr "Üres energiaszint"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1158
+#: settings/xfpm-settings.c:1182
 msgid "W"
 msgstr "W"
 
-#: settings/xfpm-settings.c:1160
+#: settings/xfpm-settings.c:1184
 msgid "Energy rate"
 msgstr "Teljesítmény"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1168
+#: settings/xfpm-settings.c:1192
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1170
+#: settings/xfpm-settings.c:1194
 msgid "Voltage"
 msgstr "Feszültség"
 
-#: settings/xfpm-settings.c:1177
+#: settings/xfpm-settings.c:1201
 msgid "Vendor"
 msgstr "Gyártó"
 
-#: settings/xfpm-settings.c:1182
+#: settings/xfpm-settings.c:1206
 msgid "Serial"
 msgstr "Soros"
 
-#: settings/xfpm-settings.c:1469
+#: settings/xfpm-settings.c:1493
 msgid "Check your power manager installation"
 msgstr "Ellenőrizze az energiakezelő telepítését"
 
-#: settings/xfpm-settings.c:1545
+#: settings/xfpm-settings.c:1569
 msgid "Devices"
 msgstr "Eszközök"
 
@@ -458,7 +476,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr "beállítás;beállítások;gombok;alvás;hibernálás;akkumulátor;felfüggesztés;leállítás;fényerő;laptopfedél;zárolási képernyő;bedugva;energiatakarékosság;kritikus;"
 
-#: common/xfpm-common.c:121
+#: common/xfpm-common.c:131
 msgid "translator-credits"
 msgstr "Kelemen Gábor <kelemeng at gnome dot hu>\nMeskó Balázs <mesko dot balazs at fsf dot hu>"
 
@@ -659,67 +677,67 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nIsmeretlen állapot"
 
-#: src/xfpm-power.c:273
+#: src/xfpm-power.c:274
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Egy alkalmazás jelenleg megakadályozza az automatikus elalvást; ez azt jelenti, hogy az alvás károsíthatja ezen alkalmazás futási állapotát. \nBiztos, hogy hibernálja a rendszert?"
 
-#: src/xfpm-power.c:305
+#: src/xfpm-power.c:306
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Egyik képernyőzár eszköz sem futott le sikeresen, a képernyő nem lesz lezárva.\nBiztos, hogy folytatja a rendszer felfüggesztését?"
 
-#: src/xfpm-power.c:494
+#: src/xfpm-power.c:495
 msgid "Hibernate the system"
 msgstr "Rendszer hibernálása"
 
-#: src/xfpm-power.c:506
+#: src/xfpm-power.c:507
 msgid "Suspend the system"
 msgstr "Rendszer felfüggesztése"
 
-#: src/xfpm-power.c:518
+#: src/xfpm-power.c:519
 msgid "Hybrid sleep the system"
 msgstr ""
 
-#: src/xfpm-power.c:538
+#: src/xfpm-power.c:539
 msgid "Shutdown the system"
 msgstr "Rendszer leállítása"
 
-#: src/xfpm-power.c:551 src/xfpm-power.c:580
+#: src/xfpm-power.c:552 src/xfpm-power.c:594
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "A rendszer áramellátása gyenge. Az adatvesztés elkerüléséhez mentse a munkáját."
 
-#: src/xfpm-power.c:649
-msgid "_Cancel"
-msgstr "Mé_gse"
+#: src/xfpm-power.c:633
+msgid "Cancel"
+msgstr "Mégse"
 
-#: src/xfpm-power.c:775
+#: src/xfpm-power.c:756
 msgid "System is running on low power"
 msgstr "A rendszer energiaellátása gyenge"
 
-#: src/xfpm-power.c:790
+#: src/xfpm-power.c:771
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "A(z) %s töltési szintje alacsony.\nA becsült hátralévő idő: %s."
 
-#: src/xfpm-power.c:1535 src/xfpm-power.c:1579 src/xfpm-power.c:1615
-#: src/xfpm-power.c:1649 src/xfpm-power.c:1683
+#: src/xfpm-power.c:1526 src/xfpm-power.c:1570 src/xfpm-power.c:1606
+#: src/xfpm-power.c:1640 src/xfpm-power.c:1674
 msgid "Permission denied"
 msgstr "Hozzáférés megtagadva"
 
-#: src/xfpm-power.c:1624
+#: src/xfpm-power.c:1615
 msgid "Hibernate not supported"
 msgstr "A hibernálás nem támogatott"
 
-#: src/xfpm-power.c:1658
+#: src/xfpm-power.c:1649
 msgid "Suspend not supported"
 msgstr "A felfüggesztés nem támogatott"
 
-#: src/xfpm-power.c:1692
+#: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
 msgstr ""
 
@@ -891,7 +909,7 @@ msgstr "Érvénytelen argumentumok"
 msgid "Invalid cookie"
 msgstr "Érvénytelen süti"
 
-#: src/xfpm-manager.c:472
+#: src/xfpm-manager.c:501
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
