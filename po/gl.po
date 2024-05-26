@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-25 00:47+0200\n"
+"POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Daniel Muñiz Fontoira <dani@damufo.eu>, 2021\n"
 "Language-Team: Galician (http://app.transifex.com/xfce/xfce4-power-manager/language/gl/)\n"
@@ -402,57 +402,59 @@ msgstr "Comprobe a instalación do xestor de enerxía"
 msgid "Devices"
 msgstr "Dispositivo"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "Settings manager socket"
 msgstr "Conectador do xestor de configuración"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "SOCKET ID"
 msgstr "ID CONECTADOR"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "Display a specific device by UpDevice object path"
 msgstr "Amosa un dispositivo específico coa ruta do obxecto «UpDevice»"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "UpDevice object path"
 msgstr " Ruta do obxecto «UpDevice»"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
+#: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Activar a depuración"
 
-#: settings/xfpm-settings-app.c:85
+#: settings/xfpm-settings-app.c:87
 msgid "Display version information"
 msgstr "Amosar a información da versión"
 
-#: settings/xfpm-settings-app.c:86
+#: settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Provoca a saída das opcións do Xestor de Enerxía do Xfce4"
 
-#: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:400
+#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
+#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
+#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Xestor de enerxía de Xfce"
 
-#: settings/xfpm-settings-app.c:177
+#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
+#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
 msgid "Failed to connect to power manager"
 msgstr "Produciuse un fallo ao conectar co xestor de enerxía"
 
-#: settings/xfpm-settings-app.c:191
+#: settings/xfpm-settings-app.c:265
+msgid "Failed to load power manager configuration"
+msgstr ""
+
+#: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "O Xestor de Enerxía de Xfce4 non se está executando, desexa inicialo agora?"
 
-#: settings/xfpm-settings-app.c:224
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "Non se puido cargar a configuración do xestor de enerxía, usando a configuración predeterminada"
-
-#: settings/xfpm-settings-app.c:352
+#: settings/xfpm-settings-app.c:394
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "Isto é %s versión %s, executándose en Xfce %s.\n"
 
-#: settings/xfpm-settings-app.c:354
+#: settings/xfpm-settings-app.c:396
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Construído con GTK+ %d.%d.%d, ligado con GTK+ %d.%d.%d."
@@ -900,7 +902,7 @@ msgstr "Argumentos incorrectos"
 msgid "Invalid cookie"
 msgstr "Cookie incorrecta"
 
-#: src/xfpm-manager.c:501
+#: src/xfpm-manager.c:353
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
