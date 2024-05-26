@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-25 00:47+0200\n"
+"POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>, 2013-2021,2024\n"
 "Language-Team: Kazakh (http://app.transifex.com/xfce/xfce4-power-manager/language/kk/)\n"
@@ -399,57 +399,59 @@ msgstr "Өзіңіздің power manager орнатуын тексеріңіз"
 msgid "Devices"
 msgstr "Құрылғылар"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "Settings manager socket"
 msgstr "Баптаулар басқарушысының сокеті"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "SOCKET ID"
 msgstr "СОКЕТ ID"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "Display a specific device by UpDevice object path"
 msgstr "Құрылғыларды UpDevice объект жолы бойынша көрсету"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "UpDevice object path"
 msgstr "UpDevice объект жолы"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
+#: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Жөндеуді іске қосу"
 
-#: settings/xfpm-settings-app.c:85
+#: settings/xfpm-settings-app.c:87
 msgid "Display version information"
 msgstr "Нұсқа ақпаратын көрсету"
 
-#: settings/xfpm-settings-app.c:86
+#: settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "xfce4-power-manager-settings жұмысын аяқтау"
 
-#: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:400
+#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
+#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
+#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Xfce Power Manager"
 
-#: settings/xfpm-settings-app.c:177
+#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
+#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
 msgid "Failed to connect to power manager"
 msgstr "Эл. қорегін басқарушысына байланысты орнату сәтсіз аяқталды"
 
-#: settings/xfpm-settings-app.c:191
+#: settings/xfpm-settings-app.c:265
+msgid "Failed to load power manager configuration"
+msgstr ""
+
+#: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 Power Manager қосулы тұрған жоқ, оны қазір жөнелту керек пе?"
 
-#: settings/xfpm-settings-app.c:224
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "Power manager баптауларын жүктеу сәтсіз, бастапқысын қолданасыз"
-
-#: settings/xfpm-settings-app.c:352
+#: settings/xfpm-settings-app.c:394
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "Бұл %s, нұсқасы %s, Xfce %s нұсқасында орындалуда.\n"
 
-#: settings/xfpm-settings-app.c:354
+#: settings/xfpm-settings-app.c:396
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Жиналған GTK+ %d.%d.%d нұсқасымен, байланысқан GTK+ %d.%d.%d."
@@ -897,7 +899,7 @@ msgstr "Қате аргументтер"
 msgid "Invalid cookie"
 msgstr "Қате cookie"
 
-#: src/xfpm-manager.c:501
+#: src/xfpm-manager.c:353
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
