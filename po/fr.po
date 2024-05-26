@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-25 00:47+0200\n"
+"POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Wallon Wallon, 2023-2024\n"
 "Language-Team: French (http://app.transifex.com/xfce/xfce4-power-manager/language/fr/)\n"
@@ -408,57 +408,59 @@ msgstr "Vérifiez votre installation du gestionnaire d’alimentation"
 msgid "Devices"
 msgstr "Périphériques"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "Settings manager socket"
 msgstr "Socket du gestionnaire de paramètres"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "SOCKET ID"
 msgstr "ID SOCKET"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "Display a specific device by UpDevice object path"
 msgstr "Afficher un périphérique spécifique par chemin d’objet UpDevice"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "UpDevice object path"
 msgstr "Chemin d’objet UpDevice"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
+#: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Activer le débogage"
 
-#: settings/xfpm-settings-app.c:85
+#: settings/xfpm-settings-app.c:87
 msgid "Display version information"
 msgstr "Afficher les informations sur la version"
 
-#: settings/xfpm-settings-app.c:86
+#: settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Fait quitter les paramètres du gestionnaire d’alimentation Xfce"
 
-#: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:400
+#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
+#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
+#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Gestionnaire d’alimentation Xfce"
 
-#: settings/xfpm-settings-app.c:177
+#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
+#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
 msgid "Failed to connect to power manager"
 msgstr "Impossible de se connecter au gestionnaire d’alimentation"
 
-#: settings/xfpm-settings-app.c:191
+#: settings/xfpm-settings-app.c:265
+msgid "Failed to load power manager configuration"
+msgstr "Impossible de charger la configuration du gestionnaire d’alimentation."
+
+#: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Le gestionnaire d’alimentation Xfce n’est pas en cours d’exécution, voulez-vous le lancer maintenant ?"
 
-#: settings/xfpm-settings-app.c:224
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "Impossible de charger la configuration du gestionnaire d’alimentation, utilisation des paramètres par défaut."
-
-#: settings/xfpm-settings-app.c:352
+#: settings/xfpm-settings-app.c:394
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "Ceci est %s version %s, en cours d’exécution sur Xfce %s.\n"
 
-#: settings/xfpm-settings-app.c:354
+#: settings/xfpm-settings-app.c:396
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Compilé avec GTK+ %d.%d.%d, lié avec GTK+ %d.%d.%d."
@@ -910,7 +912,7 @@ msgstr "Paramètres non valides"
 msgid "Invalid cookie"
 msgstr "Cookie invalide"
 
-#: src/xfpm-manager.c:501
+#: src/xfpm-manager.c:353
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
