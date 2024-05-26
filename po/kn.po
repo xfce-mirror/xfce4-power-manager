@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-25 00:47+0200\n"
+"POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Yogesh K S <yogesh@karnatakaeducation.org.in>, 2017\n"
 "Language-Team: Kannada (http://app.transifex.com/xfce/xfce4-power-manager/language/kn/)\n"
@@ -400,57 +400,59 @@ msgstr "ಪವರ್ ನಿರ್ವಹಣೆಯ ಅನುಸ್ಥಾಪವನ�
 msgid "Devices"
 msgstr "ಸಾಧನಗಳು"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "Settings manager socket"
 msgstr "ನಿರ್ವಹಣಾ ಸಾಕೆಟ್ ನ ನಿಲುವುಗಳು "
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "SOCKET ID"
 msgstr "ಸಾಕೆಟ್ ಐಡಿ"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "Display a specific device by UpDevice object path"
 msgstr "UpDevice ಸಾಧನದ ಮೂಲದಿಂದ  ಒಂದು ನಿರ್ದಿಷ್ಟ ಸಾಧನವನ್ನು ಪ್ರದರ್ಶಿಸಿ"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "UpDevice object path"
 msgstr "UpDevice ವಸ್ತುವಿನ ದಾರಿ "
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
+#: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "ಡೀಬಗ್(ಹುಳುಹುಡುಕು ) ಸಕ್ರಿಯಗೊಳಿಸಲು"
 
-#: settings/xfpm-settings-app.c:85
+#: settings/xfpm-settings-app.c:87
 msgid "Display version information"
 msgstr "ಪರದೆ ಅನುವಾದದ ಮಾಹಿತಿ"
 
-#: settings/xfpm-settings-app.c:86
+#: settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "xfce4-ಪವರ್-ಮ್ಯಾನೇಜರ್-ನಿರ್ವಹಣೆ ಯು  ಹೊರಬರಲಿ "
 
-#: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:400
+#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
+#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
+#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Xfce ಪವರ್ ಮ್ಯಾನೇಜರ್"
 
-#: settings/xfpm-settings-app.c:177
+#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
+#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
 msgid "Failed to connect to power manager"
 msgstr "ಪವರ್ ಮ್ಯಾನೇಜರ್ ಅನ್ನು ಸಂಪರ್ಕಿಸಲು ವಿಫಲವಾಗಿದೆ"
 
-#: settings/xfpm-settings-app.c:191
+#: settings/xfpm-settings-app.c:265
+msgid "Failed to load power manager configuration"
+msgstr ""
+
+#: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 ಪವರ್ ನಿರ್ವಹಣೆ  ಚಾಲನೆಯಲ್ಲಿಲ್ಲ, ನೀವು ಈಗ ಅದನ್ನು ಆರಂಭಿಸಲು ಬಯಸುತ್ತೀರಿ?"
 
-#: settings/xfpm-settings-app.c:224
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "ವಿದ್ಯುತ್ ಮ್ಯಾನೇಜರ್ ಸಂರಚನೆಯನ್ನು  ಲೋಡ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ"
-
-#: settings/xfpm-settings-app.c:352
+#: settings/xfpm-settings-app.c:394
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "ಇದು  %s ಅನುವಾದ %s , Xfce %s ಅಲ್ಲಿ ಚಾಲನೆಯಲ್ಲಿದೆ .\\n \n"
 
-#: settings/xfpm-settings-app.c:354
+#: settings/xfpm-settings-app.c:396
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "GTK+ ನಿಂದ ಕಟ್ಟಲ್ಪಟ್ಟಿದೆ %d.%d.%d, GTK+ ನೊಂದಿಗೆ ಅಂಟಿಕೊಂಡಿದೆ %d.%d.%d. "
@@ -898,7 +900,7 @@ msgstr "ಅಮಾನ್ಯವಾದ ವಾದಗಳು"
 msgid "Invalid cookie"
 msgstr "ಅಮಾನ್ಯ ಕುಕೀ"
 
-#: src/xfpm-manager.c:501
+#: src/xfpm-manager.c:353
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
