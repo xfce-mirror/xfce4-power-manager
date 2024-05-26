@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-25 00:47+0200\n"
+"POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Andreas Eitel <github-aneitel@online.de>, 2019-2021,2023-2024\n"
 "Language-Team: German (http://app.transifex.com/xfce/xfce4-power-manager/language/de/)\n"
@@ -316,7 +316,7 @@ msgstr "Wenn alle Stromquellen des Rechners diese Stufe erreichen"
 
 #: settings/xfpm-settings.c:833
 msgid "Notify"
-msgstr ""
+msgstr "Benachrichtigen"
 
 #: settings/xfpm-settings.c:840
 #, c-format
@@ -325,7 +325,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr ""
+msgstr "Stellen Sie sicher, dass Sie hier einen ausreichend hohen Wert einstellen, da das System sonst seine eigene Aktion vor dem xfce4-power-manager auslöst, ohne dies verhindern zu können oder genau zu wissen, wann es dies tun wird. Die vom System ausgelöste Aktion wird in diesem Fall folgende sein: %s."
 
 #: settings/xfpm-settings.c:1094
 msgid "Device"
@@ -411,57 +411,59 @@ msgstr "Die Installation der Energieverwaltung überprüfen"
 msgid "Devices"
 msgstr "Geräte"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "Settings manager socket"
 msgstr "Socket der Sitzungsverwaltung"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "SOCKET ID"
 msgstr "SOCKET-KENNUNG"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "Display a specific device by UpDevice object path"
 msgstr "Ein bestimmtes Gerät vom UpDevice-Objektpfad anzeigen"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "UpDevice object path"
 msgstr "UpDevice-Objektpfad"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
+#: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Fehlerdiagnose aktivieren"
 
-#: settings/xfpm-settings-app.c:85
+#: settings/xfpm-settings-app.c:87
 msgid "Display version information"
 msgstr "Bildschirmversionsinformation"
 
-#: settings/xfpm-settings-app.c:86
+#: settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Xfce-Energieeinstellungseinstellungen beenden"
 
-#: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:400
+#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
+#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
+#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Xfce-Energieverwaltung"
 
-#: settings/xfpm-settings-app.c:177
+#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
+#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
 msgid "Failed to connect to power manager"
 msgstr "Verbindung zur Energieverwaltung fehlgeschlagen"
 
-#: settings/xfpm-settings-app.c:191
+#: settings/xfpm-settings-app.c:265
+msgid "Failed to load power manager configuration"
+msgstr "Laden der Konfiguration der Energieverwaltung fehlgeschlagen"
+
+#: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Die Xfce-Energieverwaltung läuft nicht. Möchten Sie sie jetzt starten?"
 
-#: settings/xfpm-settings-app.c:224
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "Die Konfiguration der Energieverwaltung konnte nicht geladen werden; Vorgaben werden benutzt"
-
-#: settings/xfpm-settings-app.c:352
+#: settings/xfpm-settings-app.c:394
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "Das ist %s Version %s und läuft auf Xfce %s.\n"
 
-#: settings/xfpm-settings-app.c:354
+#: settings/xfpm-settings-app.c:396
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Erstellt mit GTK+ %d.%d.%d, verknüpft mit GTK+ %d.%d.%d."
@@ -909,7 +911,7 @@ msgstr "Ungültige Argumente"
 msgid "Invalid cookie"
 msgstr "Ungültige Profildatei"
 
-#: src/xfpm-manager.c:501
+#: src/xfpm-manager.c:353
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
