@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-25 00:47+0200\n"
+"POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Pjotr <pjotrvertaalt@gmail.com>, 2013-2017,2019-2021,2023-2024\n"
 "Language-Team: Dutch (http://app.transifex.com/xfce/xfce4-power-manager/language/nl/)\n"
@@ -58,7 +58,7 @@ msgstr "_Hulp"
 
 #: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
-msgstr "Beheer van schermbeveiliging"
+msgstr "Beheer van _schermbeveiliging"
 
 #: data/interfaces/xfpm-settings.ui:300
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
@@ -401,57 +401,59 @@ msgstr "Controleer de installatie van uw energiebeheerder"
 msgid "Devices"
 msgstr "Apparaten"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "Settings manager socket"
 msgstr "Contactpunt voor instellingenbeheerder"
 
-#: settings/xfpm-settings-app.c:82
+#: settings/xfpm-settings-app.c:84
 msgid "SOCKET ID"
 msgstr "CONTACTPUNT ID"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "Display a specific device by UpDevice object path"
 msgstr "Toon een specifiek apparaat op UpDevice objectpad"
 
-#: settings/xfpm-settings-app.c:83
+#: settings/xfpm-settings-app.c:85
 msgid "UpDevice object path"
 msgstr "UpDevice objectpad"
 
-#: settings/xfpm-settings-app.c:84 src/xfpm-main.c:242
+#: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "Schakel foutopsporing in"
 
-#: settings/xfpm-settings-app.c:85
+#: settings/xfpm-settings-app.c:87
 msgid "Display version information"
 msgstr "Versie-informatie tonen"
 
-#: settings/xfpm-settings-app.c:86
+#: settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "xfce4-power-manager-settings laten afsluiten"
 
-#: settings/xfpm-settings-app.c:176 settings/xfpm-settings-app.c:223
-#: src/xfpm-main.c:400
+#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
+#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
+#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Xfce-energiebeheerder"
 
-#: settings/xfpm-settings-app.c:177
+#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
+#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
 msgid "Failed to connect to power manager"
 msgstr "Kon niet verbinden met energiebeheerder"
 
-#: settings/xfpm-settings-app.c:191
+#: settings/xfpm-settings-app.c:265
+msgid "Failed to load power manager configuration"
+msgstr "Kon instellingen van energiebeheerder niet laden"
+
+#: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4-energiebeheerder draait niet; wilt u hem nu starten?"
 
-#: settings/xfpm-settings-app.c:224
-msgid "Failed to load power manager configuration, using defaults"
-msgstr "Kon instellingen van energiebeheerder niet laden, gebruikt nu standaardwaarden"
-
-#: settings/xfpm-settings-app.c:352
+#: settings/xfpm-settings-app.c:394
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "Dit is %s versie %s, draaiend op Xfce %s.\n"
 
-#: settings/xfpm-settings-app.c:354
+#: settings/xfpm-settings-app.c:396
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Gebouwd met GTK+ %d.%d.%d, gekoppeld met GTK+ %d.%d.%d."
@@ -725,7 +727,7 @@ msgstr "Slaapstand niet ondersteund"
 
 #: src/xfpm-power.c:1649
 msgid "Suspend not supported"
-msgstr "Pauzestand wordt niet ondersteund"
+msgstr "Pauzestand niet ondersteund"
 
 #: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
@@ -899,7 +901,7 @@ msgstr "Ongeldige argumenten"
 msgid "Invalid cookie"
 msgstr "Ongeldig koekje"
 
-#: src/xfpm-manager.c:501
+#: src/xfpm-manager.c:353
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
