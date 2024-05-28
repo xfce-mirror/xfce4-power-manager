@@ -14,6 +14,21 @@ BreakBeforeBraces: Allman
 ColumnLimit: 0
 ContinuationIndentWidth: 2
 Cpp11BracedListStyle: false
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '"config\.h"'
+    Priority: -1
+    CaseSensitive: true
+  - Regex: '"[^/]*"'
+    Priority: 0
+    SortPriority: 1
+    CaseSensitive: true
+  - Regex: '".*"'
+    Priority: 2
+    CaseSensitive: true
+  - Regex: '<.*>'
+    Priority: 3
+    CaseSensitive: true
 IndentCaseLabels: true
 IndentGotoLabels: false
 InsertNewlineAtEOF: true
