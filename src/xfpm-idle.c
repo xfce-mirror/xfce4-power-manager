@@ -29,11 +29,13 @@
 
 #ifdef ENABLE_X11
 #include "xfpm-idle-x11.h"
+
 #include <gdk/gdkx.h>
 #endif
 
 #ifdef ENABLE_WAYLAND
 #include "xfpm-idle-wayland.h"
+
 #include <gdk/gdkwayland.h>
 #endif
 

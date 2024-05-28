@@ -27,7 +27,6 @@
 #include "common/xfpm-debug.h"
 
 #include <libxfce4util/libxfce4util.h>
-
 #include <stdio.h>
 
 #ifdef HAVE_STDLIB_H

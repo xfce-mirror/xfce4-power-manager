@@ -28,7 +28,6 @@
 #endif
 
 #include <glib.h>
-
 #include <stdio.h>
 
 #ifdef HAVE_SYS_WAIT_H

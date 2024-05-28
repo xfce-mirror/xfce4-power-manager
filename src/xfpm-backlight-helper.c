@@ -23,9 +23,8 @@
 #include "config.h"
 #endif
 
-#include <glib-object.h>
-
 #include <fcntl.h>
+#include <glib-object.h>
 #include <stdio.h>
 #include <stdlib.h>
 

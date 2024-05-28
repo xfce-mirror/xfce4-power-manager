@@ -32,6 +32,7 @@
 
 #ifdef ENABLE_WAYLAND
 #include "protocols/wlr-output-management-unstable-v1-client.h"
+
 #include <gdk/gdkwayland.h>
 #endif
 

@@ -31,11 +31,13 @@
 
 #ifdef ENABLE_X11
 #include "xfpm-dpms-x11.h"
+
 #include <gdk/gdkx.h>
 #endif
 
 #ifdef ENABLE_WAYLAND
 #include "xfpm-dpms-wayland.h"
+
 #include <gdk/gdkwayland.h>
 #endif
 

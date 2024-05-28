@@ -29,6 +29,7 @@
 
 #ifdef ENABLE_X11
 #include "xfpm-brightness-x11.h"
+
 #include <gdk/gdkx.h>
 #endif
 
