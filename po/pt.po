@@ -74,7 +74,7 @@ msgstr "Quando o botão de energia é premido:"
 
 #: data/interfaces/xfpm-settings.ui:374
 msgid "When sleep button is pressed:"
-msgstr "Quando o botão suspender é premido:"
+msgstr "Quando o botão hibernar é premido:"
 
 #: data/interfaces/xfpm-settings.ui:386
 msgid "When hibernate button is pressed:"
@@ -122,7 +122,7 @@ msgstr "Quando inativo por"
 
 #: data/interfaces/xfpm-settings.ui:808 data/interfaces/xfpm-settings.ui:1046
 msgid "System sleep mode:"
-msgstr "Modo de suspensão do sistema:"
+msgstr "Modo de hibernação do sistema:"
 
 #: data/interfaces/xfpm-settings.ui:820 data/interfaces/xfpm-settings.ui:1058
 msgid "<b>System power saving</b>"
@@ -139,7 +139,7 @@ msgstr "Quando a tampa do portátil é fechada:"
 #: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
 #: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
 msgid "These actions only take place if no external display is connected"
-msgstr ""
+msgstr "Estas ações só têm lugar se não estiver ligado nenhum ecrã externo"
 
 #: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
 msgid "<b>Power profile</b>"
@@ -172,7 +172,7 @@ msgstr "<b>Estado critico de energia</b>"
 
 #: data/interfaces/xfpm-settings.ui:1275
 msgid "Lock screen when system is going to sleep"
-msgstr "Bloquear ecrã ao suspender o sistema"
+msgstr "Bloquear ecrã ao hibernar o sistema"
 
 #: data/interfaces/xfpm-settings.ui:1294
 msgid "<b>Security</b>"
@@ -194,7 +194,7 @@ msgstr "Deixar o gestor de energia gerir a gestão de energia do ecrã (DPMS) em
 
 #: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
 msgid "Put to sleep after"
-msgstr "Suspender após"
+msgstr "Hibernar após"
 
 #: data/interfaces/xfpm-settings.ui:1454 data/interfaces/xfpm-settings.ui:1663
 msgid "Switch off after"
@@ -260,15 +260,15 @@ msgstr "A operação hibernar não é suportada"
 #: settings/xfpm-settings.c:414 settings/xfpm-settings.c:526
 #: settings/xfpm-settings.c:663 src/xfpm-power.c:617
 msgid "Hybrid Sleep"
-msgstr "Suspensão híbrida"
+msgstr "Hibernação híbrida"
 
 #: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
-msgstr ""
+msgstr "Operação de hibernação híbrida não permitida"
 
 #: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
-msgstr ""
+msgstr "Operação de hibernação híbrida não suportada"
 
 #: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
 msgid "Hibernate and suspend operations not supported"
@@ -309,7 +309,7 @@ msgstr "Se todas as fontes de energia do computador atingirem este nível de ene
 
 #: settings/xfpm-settings.c:833
 msgid "Notify"
-msgstr ""
+msgstr "Notificar"
 
 #: settings/xfpm-settings.c:840
 #, c-format
@@ -318,7 +318,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr ""
+msgstr "Certifique-se de que define um valor suficientemente alto aqui, caso contrário o sistema irá desencadear a sua própria ação antes do xfce4-power-manager, sem poder evitá-lo ou saber exatamente quando o irá fazer. A ação desencadeada pelo sistema neste caso será: %s."
 
 #: settings/xfpm-settings.c:1094
 msgid "Device"
@@ -445,7 +445,7 @@ msgstr "Falha ao ligar ao gestor de energia"
 
 #: settings/xfpm-settings-app.c:265
 msgid "Failed to load power manager configuration"
-msgstr ""
+msgstr "Falha ao carregar a configuração do gestor de energia"
 
 #: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -680,7 +680,7 @@ msgstr "<b>%s %s</b>\nEstado desconhecido"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Há uma aplicação a desativar a suspensão automática. Efetuar esta ação agora, pode danificar o estado de execução desta aplicação.\nHibernar o sistema, ainda assim?"
+msgstr "Há uma aplicação a desativar a hibernação automática. Efetuar esta ação agora, pode danificar o estado de execução desta aplicação.\nHibernar o sistema, ainda assim?"
 
 #: src/xfpm-power.c:306
 msgid ""
@@ -698,7 +698,7 @@ msgstr "Suspender o sistema"
 
 #: src/xfpm-power.c:519
 msgid "Hybrid sleep the system"
-msgstr ""
+msgstr "Colocar o sistema em hibernação híbrida"
 
 #: src/xfpm-power.c:539
 msgid "Shutdown the system"
@@ -738,7 +738,7 @@ msgstr "A suspensão não é suportada"
 
 #: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
-msgstr ""
+msgstr "Hibernação híbrida não suportada"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:149
@@ -809,7 +809,7 @@ msgstr "Pode hibernar"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr ""
+msgstr "Hibernação híbrida é possível"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
@@ -821,7 +821,7 @@ msgstr "Autorizado a hibernar"
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr ""
+msgstr "Hibernação híbrida autorizada"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
@@ -845,7 +845,7 @@ msgstr "Tem botão de hibernar"
 
 #: src/xfpm-main.c:118
 msgid "Has sleep button"
-msgstr "Tem botão de suspender"
+msgstr "Tem botão de hibernar"
 
 #: src/xfpm-main.c:119
 msgid "Has battery button"
@@ -1031,7 +1031,7 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Adicionalmente, o gestor de energia do Xfce providencia um conjunto de interfaces DBus do projecto 'freedesktop' (que transmitem a informação do nivel de energia a outras aplicações para que elas possam ajustar o seu consumo) e a interface de inibição que permite às aplicações impedirem as ações automáticas de suspensão lançadas pelo gestor de energia (por exemplo, o gestor de pacotes do sistema deverá utilizar esta interface enquanto estiver a efectuar operações de atualização)."
+msgstr "Adicionalmente, o gestor de energia do Xfce providencia um conjunto de interfaces DBus do projeto 'freedesktop' (que transmitem a informação do nivel de energia a outras aplicações para que elas possam ajustar o seu consumo) e a interface de inibição que permite às aplicações impedirem as ações automáticas de hibernação via gestor de energia (por exemplo, o gestor de pacotes do sistema deverá utilizar esta interface enquanto estiver a efetuar operações de atualização)."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:23
 msgid ""
