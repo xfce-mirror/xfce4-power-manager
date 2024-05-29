@@ -137,7 +137,7 @@ msgstr "ラップトップの蓋が閉じられたとき:"
 #: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
 #: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
 msgid "These actions only take place if no external display is connected"
-msgstr ""
+msgstr "これらのアクションは外部ディスプレイが接続されていない場合にのみ実行されます"
 
 #: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
 msgid "<b>Power profile</b>"
@@ -262,11 +262,11 @@ msgstr "ハイブリッドスリープ"
 
 #: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
-msgstr ""
+msgstr "ハイブリッドスリープ操作は許可されていません"
 
 #: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
-msgstr ""
+msgstr "ハイブリッドスリープ操作はサポートされていません"
 
 #: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
 msgid "Hibernate and suspend operations not supported"
@@ -307,7 +307,7 @@ msgstr "コンピューターのすべての電源の充電レベルがこの値
 
 #: settings/xfpm-settings.c:833
 msgid "Notify"
-msgstr ""
+msgstr "通知する"
 
 #: settings/xfpm-settings.c:840
 #, c-format
@@ -316,7 +316,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr ""
+msgstr "ここで十分に高い値を設定してください。そうしないと、システムは xfce4-power-manager の前に独自のアクションをトリガーし、それを防ぐことも、いつそれが行われるかを正確に知ることもできなくなります。この場合、システムによってトリガーされるアクションは次の通りです: %s。"
 
 #: settings/xfpm-settings.c:1094
 msgid "Device"
@@ -443,7 +443,7 @@ msgstr "Xfce 電源管理への接続に失敗しました"
 
 #: settings/xfpm-settings-app.c:265
 msgid "Failed to load power manager configuration"
-msgstr ""
+msgstr "電源マネージャの設定を読み込めませんでした"
 
 #: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -688,7 +688,7 @@ msgstr "システムをサスペンドします"
 
 #: src/xfpm-power.c:519
 msgid "Hybrid sleep the system"
-msgstr ""
+msgstr "システムをハイブリッドスリープする"
 
 #: src/xfpm-power.c:539
 msgid "Shutdown the system"
@@ -728,7 +728,7 @@ msgstr "サスペンドはサポートされていません"
 
 #: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
-msgstr ""
+msgstr "ハイブリッドスリープはサポートされていません"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:149
@@ -799,7 +799,7 @@ msgstr "ハイバネートの可否"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr ""
+msgstr "ハイブリッドスリープができる"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
@@ -811,7 +811,7 @@ msgstr "ハイバネート権限"
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr ""
+msgstr "ハイブリッドスリープの許可"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
