@@ -160,6 +160,7 @@ set_reset_alarm (XfpmIdleX11 *idle,
   /* don't match on the current value because
    * XSyncNegativeComparison means less or equal */
   alarm = alarm_find_id (idle, XFPM_ALARM_ID_USER_INPUT_X11);
+  g_return_if_fail (alarm != NULL);
   XSyncIntToValue (&add, -1);
   XSyncValueAdd (&alarm->timeout, alarm_event->counter_value, add, &overflow);
 

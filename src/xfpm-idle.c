@@ -165,6 +165,7 @@ xfpm_idle_alarm_remove (XfpmIdle *idle,
   XfpmIdlePrivate *priv = get_instance_private (idle);
 
   g_return_if_fail (XFPM_IS_IDLE (idle));
+  g_return_if_fail (id != XFPM_ALARM_ID_USER_INPUT_X11);
 
   if (priv->added_alarm_ids & id)
   {
