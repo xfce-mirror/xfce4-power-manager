@@ -1,6 +1,6 @@
 XDT_VERSION_INIT([4.19.2], [git])
 
-AC_COPYRIGHT([Copyright (c) 2008-2023 The Xfce development team. All rights reserved.])
+AC_COPYRIGHT([Copyright (c) 2008-2024 The Xfce development team. All rights reserved.])
 AC_INIT([xfce4-power-manager],[xdt_version],[https://gitlab.xfce.org/xfce/xfce4-power-manager])
 AC_PREREQ([2.69])
 AC_REVISION([xdt_version_build])
