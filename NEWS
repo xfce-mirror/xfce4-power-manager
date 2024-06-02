@@ -1,3 +1,96 @@
+4.19.3 (2024-06-02)
+======
+- Update copyright year
+- x11: idle: Fix -Wanalyzer-null-dereference
+- Revert "Add new CI builds to build without X11 and Wayland"
+- Apply .clang-format file
+- clang-format: Use IncludeBlocks::Regroup
+- settings: Rework starting xfpm if not already running
+- manager: Rework startup
+- manager: Use D-Bus proxy instead of SMClient to call SessionManager
+- settings: Warn about upower acting before xfpm on critical battery
+- power: Fix overall charge state calculation
+- critical-power: Avoid unintentional user action in critical dialog
+- critical-power: Use xfpm own methods to notify user
+- manager: Honor lid settings when the system transition to battery
+- power: Expose lid_is_closed property
+- power: save new battery state *before* emitting signal
+- settings: Add tooltip about actions on lid closed
+- manager: Turn off internal screen when locked on lid closed
+- manager: Be consistent when lid is closed in multi-monitor setup
+- Properly check for multi-monitor setup
+- settings: Switch to correct stack child when opening dialog
+- wayland: dpms: Ensure user activity always turns on outputs
+- settings: Add option to shutdown on lid closed
+- settings: Reduce inactivity times to reasonable values
+- backlight: Remove dead code
+- systray-icon: Handle scroll events
+- Only show desktop files in Xfce
+- main: Add missing newline in version info
+- settings: Drop light-locker integration
+- pm-helper: Add missing GError initialization
+- Remove outdated references to xfce-goodies
+- power: Rename is_in_presentation_mode to is_inhibited
+- manager: Let power handle inhibition
+- power: Inhibit non forced sleep requests in presentation mode too
+- manager: Add missing hybrid sleep case
+- settings: Change default sleep mode on battery to suspend
+- wayland: dpms: Add missing filter on alarm id
+- ppd: Add missing profile initialization
+- x11: dpms: Fix broken DPMSForceLevel
+- manager: Ensure proper conversion between enum types
+- clang-format: AllowShortCaseLabelsOnASingleLine
+- Add hybrid sleep support
+- settings: Properly hide critical power widgets if no battery
+- settings: Avoid duplicate code for adding button combos
+- settings: Fix debug log
+- build: Put standard headers back in where there's non-linux code
+- settings: Fix garbage value in string
+- settings: Fix inconsistent ref values between ui and gobject
+- settings: Group light-locker code and move shared code up
+- settings: Make last non-light-locker callback static
+- settings: Sync other widgets with xfconf
+- settings: Avoid more duplicate code between on_ac and on_battery
+- settings: Sync on-battery widgets with xfconf
+- settings: Sync on-ac widgets with xfconf
+- settings: Use generic callback for GtkComboBox::changed
+- settings: Move code so that splitting into functions makes sense
+- settings: Use defines for default values
+- settings: Be consistent in naming defines
+- settings: Disconnect upower signals when list view is destroyed
+- fix build on OpenBSD
+- fix build on OpenBSD after f7903092
+- clang-format: Break after assignment operator
+- settings: Add a button to open xfce4-screensaver-preferences
+- settings: Make DPMS tooltip text generic
+- Apply .clang-format file
+- Clean up and sort includes
+- Bump required versions and remove dead code
+- Fix xfpm-main.c
+- Simplify some code
+- Preliminary cleanup
+- clang-format: Add file
+- settings: Sync first tab with xfconf
+- Fix xgettext warning about plural form
+- Add missing sanity checks
+- Handle keyboard backlight toggle keys.
+- Fix initial state of "Handle brightness keys" switch in settings UI
+- Ungrab brightness keys when not handling them
+- Add new CI builds to build without X11 and Wayland
+- Fix system-sleep-inactivity min value
+- Always add sm-client option group
+- Translation Updates:
+  Albanian, Arabic, Armenian (Armenia), Asturian, Basque, Belarusian,
+  Bulgarian, Catalan, Chinese (China), Chinese (Hong Kong), Chinese
+  (Taiwan), Croatian, Czech, Danish, Dutch, Eastern Armenian, English
+  (Australia), English (Canada), English (United Kingdom), Estonian,
+  Finnish, French, Galician, German, Greek, Hebrew, Hungarian,
+  Icelandic, Indonesian, Interlingue, Italian, Japanese, Kannada,
+  Kazakh, Korean, Lithuanian, Malay, Norwegian Bokmål, Norwegian
+  Nynorsk, Occitan (post 1500), Polish, Portuguese, Portuguese
+  (Brazil), Romanian, Russian, Serbian, Slovak, Slovenian, Spanish,
+  Swedish, Telugu, Thai, Turkish, Ukrainian, Uyghur, Vietnamese
+
 4.19.2 (2023-11-30)
 ======
 - Change XFCE to Xfce
