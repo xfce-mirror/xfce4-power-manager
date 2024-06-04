@@ -286,7 +286,7 @@ xfpm_is_multihead_connected (GObject *_lifetime)
   if (native_available && GDK_IS_X11_DISPLAY (display))
   {
     XRRScreenResources *resources;
-    gboolean multihead_connected;
+    gboolean n_connected_outputs = 0;
     Display *xdisplay = gdk_x11_get_default_xdisplay ();
 
     if (!native_checked)
@@ -303,10 +303,16 @@ xfpm_is_multihead_connected (GObject *_lifetime)
     }
 
     resources = XRRGetScreenResourcesCurrent (xdisplay, gdk_x11_get_default_root_xwindow ());
-    multihead_connected = resources->noutput > 1;
+    for (gint n = 0; n < resources->noutput; n++)
+    {
+      XRROutputInfo *output_info = XRRGetOutputInfo (xdisplay, resources, resources->outputs[n]);
+      if (output_info->connection == RR_Connected)
+        n_connected_outputs++;
+      XRRFreeOutputInfo (output_info);
+    }
     XRRFreeScreenResources (resources);
 
-    return multihead_connected;
+    return n_connected_outputs > 1;
   }
 #endif
 
