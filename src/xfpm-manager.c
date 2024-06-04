@@ -332,7 +332,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
 
   XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, lid_is_closed ? "LID closed" : "LID opened");
 
-  if (lid_is_closed && !xfpm_is_multihead_connected (G_OBJECT (manager)))
+  if (lid_is_closed)
   {
     if (xfpm_is_multihead_connected (G_OBJECT (manager)))
     {
