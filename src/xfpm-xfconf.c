@@ -280,12 +280,10 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
    **/
   g_object_class_install_property (object_class,
                                    PROP_TRAY_ICON,
-                                   g_param_spec_uint (SHOW_TRAY_ICON,
-                                                      NULL, NULL,
-                                                      0,
-                                                      N_SHOW_ICONS - 1,
-                                                      DEFAULT_SHOW_TRAY_ICON,
-                                                      G_PARAM_READWRITE));
+                                   g_param_spec_boolean (SHOW_TRAY_ICON,
+                                                         NULL, NULL,
+                                                         DEFAULT_SHOW_TRAY_ICON,
+                                                         G_PARAM_READWRITE));
 
   /**
    * XfpmXfconf::critical-battery-action
