@@ -107,7 +107,7 @@ struct XfpmManagerPrivate
   XfpmIdle *idle;
   GtkStatusIcon *adapter_icon;
   GtkWidget *power_button;
-  gint show_tray_icon;
+  gboolean show_tray_icon;
   XfpmDpms *dpms;
   GTimer *timer;
   gint inhibit_fd;
@@ -136,11 +136,11 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
                           | G_PARAM_STATIC_BLURB)
 
   g_object_class_install_property (object_class, PROP_SHOW_TRAY_ICON,
-                                   g_param_spec_int (SHOW_TRAY_ICON,
-                                                     SHOW_TRAY_ICON,
-                                                     SHOW_TRAY_ICON,
-                                                     0, N_SHOW_ICONS - 1, DEFAULT_SHOW_TRAY_ICON,
-                                                     XFPM_PARAM_FLAGS));
+                                   g_param_spec_boolean (SHOW_TRAY_ICON,
+                                                         SHOW_TRAY_ICON,
+                                                         SHOW_TRAY_ICON,
+                                                         DEFAULT_SHOW_TRAY_ICON,
+                                                         XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 }
 
@@ -786,11 +786,11 @@ xfpm_manager_set_property (GObject *object,
   switch (property_id)
   {
     case PROP_SHOW_TRAY_ICON:
-      new_value = g_value_get_int (value);
+      new_value = g_value_get_boolean (value);
       if (new_value != manager->priv->show_tray_icon)
       {
         manager->priv->show_tray_icon = new_value;
-        if (new_value > 0)
+        if (new_value)
         {
           if (WINDOWING_IS_X11 ())
             xfpm_manager_show_tray_icon (manager);
@@ -820,7 +820,7 @@ xfpm_manager_get_property (GObject *object,
   switch (property_id)
   {
     case PROP_SHOW_TRAY_ICON:
-      g_value_set_int (value, manager->priv->show_tray_icon);
+      g_value_set_boolean (value, manager->priv->show_tray_icon);
       break;
 
     default:
