@@ -31,7 +31,14 @@ int
 main (int argc,
       char **argv)
 {
+  XfpmSettingsApp *app;
+  gint status;
+
   xfce_textdomain (GETTEXT_PACKAGE, LOCALEDIR, "UTF-8");
 
-  return g_application_run (G_APPLICATION (xfpm_settings_app_new ()), argc, argv);
+  app = xfpm_settings_app_new ();
+  status = g_application_run (G_APPLICATION (app), argc, argv);
+  g_object_unref (app);
+
+  return status;
 }

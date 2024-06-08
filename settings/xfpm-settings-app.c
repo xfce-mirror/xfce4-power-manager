@@ -401,6 +401,10 @@ xfpm_settings_app_local_options (GApplication *g_application,
     return 0;
   }
 
+  /* embed settings instead of presenting existing window, do this before registering */
+  if (g_variant_dict_contains (options, "socket-id") || g_variant_dict_contains (options, "s"))
+    g_application_set_flags (g_application, G_APPLICATION_REPLACE);
+
   /* This will call xfpm_settings_app_startup if it needs to */
   g_application_register (g_application, NULL, NULL);
 
@@ -462,6 +466,6 @@ xfpm_settings_app_new (void)
 {
   return g_object_new (XFPM_TYPE_SETTINGS_APP,
                        "application-id", "org.xfce.PowerManager.Settings",
-                       "flags", G_APPLICATION_FLAGS_NONE,
+                       "flags", G_APPLICATION_ALLOW_REPLACEMENT,
                        NULL);
 }
