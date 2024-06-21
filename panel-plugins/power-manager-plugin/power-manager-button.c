@@ -973,6 +973,8 @@ power_manager_button_init (PowerManagerButton *button)
                                G_CALLBACK (set_brightness_properties), button, G_CONNECT_SWAPPED);
       g_signal_connect_object (button->priv->channel, "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_STEP_COUNT,
                                G_CALLBACK (set_brightness_properties), button, G_CONNECT_SWAPPED);
+      g_signal_connect_object (button->priv->channel, "property-changed::" XFPM_PROPERTIES_PREFIX BRIGHTNESS_EXPONENTIAL,
+                               G_CALLBACK (set_brightness_properties), button, G_CONNECT_SWAPPED);
     }
   }
 
