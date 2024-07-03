@@ -5,9 +5,10 @@
 # Translators:
 # Allan Nordhøy <epost@anotheragency.no>, 2014-2015
 # Allan Nordhøy <epost@anotheragency.no>, 2015-2017
-# Kaci Heskjestad, 2021,2023
+# heskjestad, 2021,2023
 # Harald H. <haarektrans@gmail.com>, 2014-2015
-# Kaci Heskjestad, 2019-2020
+# heskjestad, 2024
+# heskjestad, 2019-2020
 # Terje Uriansrud <terje@uriansrud.net>, 2009
 msgid ""
 msgstr ""
@@ -15,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Kaci Heskjestad, 2021,2023\n"
+"Last-Translator: heskjestad, 2024\n"
 "Language-Team: Norwegian Bokmål (http://app.transifex.com/xfce/xfce4-power-manager/language/nb/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,7 +62,7 @@ msgstr "_Hjelp"
 
 #: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
-msgstr ""
+msgstr "Behandle _skjermbeskyttere"
 
 #: data/interfaces/xfpm-settings.ui:300
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
@@ -139,7 +140,7 @@ msgstr "Når lokket til den bærbare datamaskinen er lukket:"
 #: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
 #: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
 msgid "These actions only take place if no external display is connected"
-msgstr ""
+msgstr "Disse handlingene vil kun skje hvis ikke ekstern skjerm er tilkoblet"
 
 #: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
 msgid "<b>Power profile</b>"
@@ -190,7 +191,7 @@ msgstr "<b>Strømstyring for skjerm</b>"
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
-msgstr ""
+msgstr "La strømbehandleren håndtere skjermen (DPMS) i steden for visningstjeneren"
 
 #: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
 msgid "Put to sleep after"
@@ -264,11 +265,11 @@ msgstr "Hybriddvalemodus"
 
 #: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
-msgstr ""
+msgstr "Hybridsøvn tillates ikke"
 
 #: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
-msgstr ""
+msgstr "Hybridsøvn støttes ikke"
 
 #: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
 msgid "Hibernate and suspend operations not supported"
@@ -309,7 +310,7 @@ msgstr "Når alle effektressursene på maskinen når dette ladningsnivået"
 
 #: settings/xfpm-settings.c:833
 msgid "Notify"
-msgstr ""
+msgstr "Varsle"
 
 #: settings/xfpm-settings.c:840
 #, c-format
@@ -318,7 +319,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr ""
+msgstr "Sørg for å velge en tilstrekkelig høy verdi her, ellers vil systemet trigge sin egen handling før xfce-power-manager uten å kunne forhindre det eller å vite nøyaktig når det vil skje. Handlingen som vil trigges av systemet er: %s."
 
 #: settings/xfpm-settings.c:1094
 msgid "Device"
@@ -445,7 +446,7 @@ msgstr "Klarte ikke å koble til strømbehandler"
 
 #: settings/xfpm-settings-app.c:265
 msgid "Failed to load power manager configuration"
-msgstr ""
+msgstr "Klarte ikke laste strømstyringsoppsett"
 
 #: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -694,7 +695,7 @@ msgstr "Hvil systemet"
 
 #: src/xfpm-power.c:519
 msgid "Hybrid sleep the system"
-msgstr ""
+msgstr "Sett systemet i hybridsøvn"
 
 #: src/xfpm-power.c:539
 msgid "Shutdown the system"
@@ -734,7 +735,7 @@ msgstr "Hvilemodus ikke støttet"
 
 #: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
-msgstr ""
+msgstr "Hybridsøvn støttes ikke"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:149
@@ -805,7 +806,7 @@ msgstr "Støtter dvalemodus"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr ""
+msgstr "Hybridsøvn er mulig"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
@@ -817,7 +818,7 @@ msgstr "Tilgang til dvalemodus gitt"
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr ""
+msgstr "Hybridsøvn er tillatt"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
