@@ -1260,7 +1260,8 @@ power_manager_button_update_label (PowerManagerButton *button,
                 NULL);
 
   /* Hide the label if the state is unknown (no battery available)
-     or if it's a desktop system */
+   * or if it's a desktop system
+   */
   if (state == UP_DEVICE_STATE_CHARGING)
     power_manager_button_set_label (button, percentage, time_to_full);
   else if (state == UP_DEVICE_STATE_UNKNOWN
