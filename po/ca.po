@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Davidmp <medipas@gmail.com>, 2015-2016
-# Oscar Perez <oscarpc@gmail.com>, 2023
+# Oscar Perez <oscarpc@gmail.com>, 2023-2024
 # Robert Antoni Buj i Gelonch <rbuj@fedoraproject.org>, 2016-2021
 # Robert Antoni Buj i Gelonch <rbuj@fedoraproject.org>, 2016
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Oscar Perez <oscarpc@gmail.com>, 2023\n"
+"Last-Translator: Oscar Perez <oscarpc@gmail.com>, 2023-2024\n"
 "Language-Team: Catalan (http://app.transifex.com/xfce/xfce4-power-manager/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,7 +59,7 @@ msgstr "A_juda"
 
 #: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
-msgstr ""
+msgstr "Configuració del _salvapantalles"
 
 #: data/interfaces/xfpm-settings.ui:300
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
@@ -137,7 +137,7 @@ msgstr "Quan es tanca la tapa del portàtil:"
 #: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
 #: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
 msgid "These actions only take place if no external display is connected"
-msgstr ""
+msgstr "Només es duran a terme aquestes accions si no hi ha cap pantalla externa connectada"
 
 #: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
 msgid "<b>Power profile</b>"
@@ -188,7 +188,7 @@ msgstr "<b>Gestió de l'energia de la pantalla</b>"
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
-msgstr ""
+msgstr "Deixa que sigui el gestor d'energia qui controli la gestió d'energia de la pantalla (DPMS) enlloc de ser el servidor de pantalla."
 
 #: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
 msgid "Put to sleep after"
@@ -262,11 +262,11 @@ msgstr "Somni híbrid"
 
 #: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
-msgstr ""
+msgstr "No es permet l'operació de suspensió híbrida"
 
 #: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
-msgstr ""
+msgstr "No està suportada l'operació de suspensió híbrida "
 
 #: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
 msgid "Hibernate and suspend operations not supported"
@@ -307,7 +307,7 @@ msgstr "Quan totes les fonts d'energia de l'ordinador assoleixin aquest valor de
 
 #: settings/xfpm-settings.c:833
 msgid "Notify"
-msgstr ""
+msgstr "Notifica"
 
 #: settings/xfpm-settings.c:840
 #, c-format
@@ -316,7 +316,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr ""
+msgstr "Assegureu-vos d'establir un valor suficientment elevat, ja que, altrament, el sistema dispararà la seva pròpia acció abans que el xfce4-power-manager, sense ser capaç de prevenir-ho o de saber exactament quan passarà. L'acció disparada pel sistema en aquest cas serà: %s."
 
 #: settings/xfpm-settings.c:1094
 msgid "Device"
@@ -443,7 +443,7 @@ msgstr "Ha fallat la connexió amb el gestor d'energia"
 
 #: settings/xfpm-settings-app.c:265
 msgid "Failed to load power manager configuration"
-msgstr ""
+msgstr "Ha fallat la càrrega de la configuració del gestor d'energia"
 
 #: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -692,7 +692,7 @@ msgstr "Suspèn el sistema"
 
 #: src/xfpm-power.c:519
 msgid "Hybrid sleep the system"
-msgstr ""
+msgstr "Suspèn de manera híbrida el sistema"
 
 #: src/xfpm-power.c:539
 msgid "Shutdown the system"
@@ -732,7 +732,7 @@ msgstr "La suspensió no és compatible"
 
 #: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
-msgstr ""
+msgstr "La suspensió híbrida no suportada"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:149
@@ -803,7 +803,7 @@ msgstr "Es pot hibernar"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr ""
+msgstr "Pot fer suspensió híbrida"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
@@ -815,7 +815,7 @@ msgstr "Autoritzat per hibernar"
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr ""
+msgstr "Autoritzat per a fer suspensió híbrida"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
