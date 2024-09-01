@@ -274,7 +274,7 @@ get_device_description (UpClient *upower,
   gchar *est_time_str = NULL;
   guint type = 0, state = 0;
   gchar *model = NULL, *vendor = NULL;
-  gboolean present, online;
+  gboolean present, online, power_supply;
   gdouble percentage;
   guint64 time_to_empty, time_to_full;
 
@@ -289,6 +289,7 @@ get_device_description (UpClient *upower,
                 "time-to-empty", &time_to_empty,
                 "time-to-full", &time_to_full,
                 "online", &online,
+                "power_supply", &power_supply,
                 NULL);
 
   if (is_display_device (upower, device))
@@ -331,7 +332,12 @@ get_device_description (UpClient *upower,
 
   if (state == UP_DEVICE_STATE_FULLY_CHARGED)
   {
-    if (time_to_empty > 0)
+    if (power_supply)
+    {
+      tip = g_strdup_printf (_("<b>%s %s</b>\nFully charged"),
+                             vendor, model);
+    }
+    else if (time_to_empty > 0)
     {
       est_time_str = xfpm_battery_get_time_string (time_to_empty);
       tip = g_strdup_printf (_("<b>%s %s</b>\nFully charged - %s remaining"),

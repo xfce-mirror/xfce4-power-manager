@@ -324,7 +324,14 @@ power_manager_button_set_label (PowerManagerButton *button,
   {
     hours = minutes / 60;
     minutes = minutes % 60;
-    if (minutes < 10)
+    if (hours > 1000)
+      /*
+       * This is the case where the upower shows that the battery can be empty in days
+       * and showing this is not correct.
+       *
+       */
+      remaining_time = g_strdup_printf ("%d:0%d", 0, 0);
+    else if (minutes < 10)
       remaining_time = g_strdup_printf ("%d:0%d", hours, minutes);
     else
       remaining_time = g_strdup_printf ("%d:%d", hours, minutes);
