@@ -324,14 +324,7 @@ power_manager_button_set_label (PowerManagerButton *button,
   {
     hours = minutes / 60;
     minutes = minutes % 60;
-    if (hours > 1000)
-      /*
-       * This is the case where the upower shows that the battery can be empty in days
-       * and showing this is not correct.
-       *
-       */
-      remaining_time = g_strdup_printf ("%d:0%d", 0, 0);
-    else if (minutes < 10)
+    if (minutes < 10)
       remaining_time = g_strdup_printf ("%d:0%d", hours, minutes);
     else
       remaining_time = g_strdup_printf ("%d:%d", hours, minutes);
@@ -1242,6 +1235,7 @@ power_manager_button_update_label (PowerManagerButton *button,
   gdouble percentage;
   guint64 time_to_empty;
   guint64 time_to_full;
+  gboolean power_supply;
 
   if (!POWER_MANAGER_IS_BUTTON (button) || !UP_IS_DEVICE (device))
     return;
@@ -1264,6 +1258,7 @@ power_manager_button_update_label (PowerManagerButton *button,
                 "percentage", &percentage,
                 "time-to-empty", &time_to_empty,
                 "time-to-full", &time_to_full,
+                "power-supply", &power_supply,
                 NULL);
 
   /* Hide the label if the state is unknown (no battery available)
@@ -1275,6 +1270,8 @@ power_manager_button_update_label (PowerManagerButton *button,
            || g_strcmp0 (button->priv->panel_icon_name, "ac-adapter-symbolic") == 0
            || g_strcmp0 (button->priv->panel_fallback_icon_name, "ac-adapter-symbolic") == 0)
     gtk_widget_hide (GTK_WIDGET (button->priv->panel_label));
+  else if (state == UP_DEVICE_STATE_FULLY_CHARGED && power_supply)
+    power_manager_button_set_label (button, percentage, 0);
   else
     power_manager_button_set_label (button, percentage, time_to_empty);
 }
