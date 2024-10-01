@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the xfce4-power-manager.master package.
 # 
 # Translators:
-# hoek <hoek@tuta.io>, 2014-2015
+# d703b7c9f8279b67f8ff243fa8f12e4a_ead0287 <01cbd6dcada4ad6beac99d868e1751df_141855>, 2014-2015
 # ised, 2014
 # ised, 2014
 # Kamil "elder" P. <elderlinx@riseup.net>, 2016
@@ -81,7 +81,7 @@ msgstr "Działanie przycisku zasilania:"
 
 #: data/interfaces/xfpm-settings.ui:374
 msgid "When sleep button is pressed:"
-msgstr "Działanie przycisku wstrzymania:"
+msgstr "Działanie przycisku uśpienia:"
 
 #: data/interfaces/xfpm-settings.ui:386
 msgid "When hibernate button is pressed:"
@@ -129,7 +129,7 @@ msgstr "Gdy nieaktywny przez"
 
 #: data/interfaces/xfpm-settings.ui:808 data/interfaces/xfpm-settings.ui:1046
 msgid "System sleep mode:"
-msgstr "Tryb usypiania systemu:"
+msgstr "Tryb uśpienia systemu:"
 
 #: data/interfaces/xfpm-settings.ui:820 data/interfaces/xfpm-settings.ui:1058
 msgid "<b>System power saving</b>"
@@ -179,7 +179,7 @@ msgstr "<b>Stan bliski rozładowaniu</b>"
 
 #: data/interfaces/xfpm-settings.ui:1275
 msgid "Lock screen when system is going to sleep"
-msgstr "Zablokowanie ekranu po przejściu w stan wstrzymania"
+msgstr "Zablokowanie ekranu po przejściu w stan uśpienia"
 
 #: data/interfaces/xfpm-settings.ui:1294
 msgid "<b>Security</b>"
@@ -201,7 +201,7 @@ msgstr "Pozwól menedżerowi zasilania obsługiwać zarządzanie energią ekranu
 
 #: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
 msgid "Put to sleep after"
-msgstr "Czas wstrzymania"
+msgstr "Czas uśpienia"
 
 #: data/interfaces/xfpm-settings.ui:1454 data/interfaces/xfpm-settings.ui:1663
 msgid "Switch off after"
@@ -371,7 +371,7 @@ msgstr "Pojemność znamionowa"
 
 #: settings/xfpm-settings.c:1163
 msgid "Fully charged"
-msgstr "Całkowicie naładowany"
+msgstr "Pojemność rzeczywista"
 
 #: settings/xfpm-settings.c:1174
 msgid "Energy empty"
@@ -691,7 +691,7 @@ msgstr "<b>%s %s</b>\nNieznany stan"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Aktualnie uruchomiony program zapobiega automatycznemu wstrzymaniu działania komputera. Kontynuowanie może spowodować jego niewłaściwe działanie.\nCzy chcesz wprowadzić system w stan uśpienia?"
+msgstr "Aktualnie uruchomiony program zapobiega automatycznemu uśpieniu działania komputera. Kontynuowanie może spowodować jego niewłaściwe działanie.\nCzy chcesz wprowadzić system w stan uśpienia?"
 
 #: src/xfpm-power.c:306
 msgid ""
@@ -717,7 +717,7 @@ msgstr "Wyłącz komputer"
 
 #: src/xfpm-power.c:552 src/xfpm-power.c:594
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Źródło zasilania jest bliskie rozładowania. Proszę zapisać bieżący stan pracy, w celu uniknięcia utraty danych."
+msgstr "Źródło zasilania jest bliskie rozładowania. Proszę zapisać bieżący stan pracy, aby uniknąć utraty danych"
 
 #: src/xfpm-power.c:633
 msgid "Cancel"
@@ -840,31 +840,31 @@ msgstr "Uprawniony do wyłączania"
 
 #: src/xfpm-main.c:114
 msgid "Has battery"
-msgstr "Posiada akumulator"
+msgstr "Ma akumulator"
 
 #: src/xfpm-main.c:115
 msgid "Has brightness panel"
-msgstr "Posiada panel jasności"
+msgstr "Ma panel jasności"
 
 #: src/xfpm-main.c:116
 msgid "Has power button"
-msgstr "Posiada przycisk zasilania"
+msgstr "Ma przycisk zasilania"
 
 #: src/xfpm-main.c:117
 msgid "Has hibernate button"
-msgstr "Posiada przycisk zahibernowania"
+msgstr "Ma przycisk zahibernowania"
 
 #: src/xfpm-main.c:118
 msgid "Has sleep button"
-msgstr "Posiada przycisk wstrzymania"
+msgstr "Ma przycisk uśpienia"
 
 #: src/xfpm-main.c:119
 msgid "Has battery button"
-msgstr "Posiada przycisk baterii"
+msgstr "Ma przycisk akumulatora"
 
 #: src/xfpm-main.c:120
 msgid "Has LID"
-msgstr "Posiada pokrywę ekranu"
+msgstr "Ma pokrywę ekranu"
 
 #: src/xfpm-main.c:241
 msgid "Daemonize"
@@ -1007,7 +1007,7 @@ msgstr "Pokaż etykietę:"
 
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:203
 msgid "Show 'Presentation mode' indicator:"
-msgstr "Pokaż wskaźnik 'Trybu prezentacji':"
+msgstr "Pokaż wskaźnik „Trybu prezentacji”:"
 
 #: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:4
 msgid "Power Manager Plugin"
@@ -1032,7 +1032,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Menedżer zasilania Xfce odpowiada za zarządzanie poborem energii przez komputer oraz urządzenia do niego podłączone (np. dopasowując jasność ekranu, wstrzymując działanie monitora, przeskalowując taktowanie CPU)."
+msgstr "Menedżer zasilania Xfce odpowiada za zarządzanie poborem energii przez komputer oraz urządzenia do niego podłączone (np. dopasowując jasność ekranu, usypiając monitor, przeskalowując taktowanie CPU)."
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:16
 msgid ""
