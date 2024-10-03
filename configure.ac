@@ -69,8 +69,8 @@ m4_define([x11_minimum_version], [1.6.7])
 m4_define([xrandr_minimum_version], [1.5.0])
 m4_define([xext_minimum_version], [1.0.0])
 
-m4_define([wayland_minimum_version], [1.15])
-m4_define([wayland_protocols_minimum_version], [1.20])
+m4_define([wayland_minimum_version], [1.20])
+m4_define([wayland_protocols_minimum_version], [1.25])
 
 m4_define([polkit_minimum_version], [0.102])
 m4_define([libxfce4panel_minimum_version],[4.14.0])
