@@ -89,6 +89,7 @@ helper_get_value (const gchar *argument)
     XFPM_DEBUG ("Failed to get value: %s", error->message);
     g_error_free (error);
     g_free (command);
+    g_free (stdout_data);
     return value;
   }
 
