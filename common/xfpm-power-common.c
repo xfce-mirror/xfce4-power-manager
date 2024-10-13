@@ -263,6 +263,7 @@ get_device_icon_name (UpClient *upower,
   else if (g_strcmp0 (upower_icon, "") != 0)
     icon_name = g_strndup (upower_icon, icon_base_length);
 
+  g_free (upower_icon);
   return icon_name;
 }
 
