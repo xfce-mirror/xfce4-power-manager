@@ -1032,6 +1032,8 @@ power_manager_button_finalize (GObject *object)
   g_free (button->priv->panel_icon_name);
   g_free (button->priv->panel_fallback_icon_name);
 
+  g_free (button->priv->tooltip);
+
   if (button->priv->brightness != NULL)
     g_object_unref (button->priv->brightness);
   if (button->priv->set_level_timeout)
