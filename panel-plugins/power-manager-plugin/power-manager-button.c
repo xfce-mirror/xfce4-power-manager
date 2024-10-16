@@ -523,6 +523,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     XFPM_DEBUG ("this is the display device, updating");
     /* update the icon */
     g_free (button->priv->panel_icon_name);
+    g_free (button->priv->panel_fallback_icon_name);
 #ifdef XFCE_PLUGIN
     button->priv->panel_icon_name = g_strdup (icon_name);
     button->priv->panel_fallback_icon_name = g_strdup_printf ("%s-%s", menu_icon_name, "symbolic");
