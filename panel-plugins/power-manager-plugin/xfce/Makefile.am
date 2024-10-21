@@ -24,8 +24,6 @@ libxfce4powermanager_la_CFLAGS =         \
 	-I$(top_srcdir)	                \
 	-I$(top_srcdir)/src             \
 	-DLOCALEDIR=\"$(localedir)\"    \
-	-DXFCE_PLUGIN                   \
-	-UXFPM_SYSTRAY                  \
 	$(LIBXFCE4PANEL_CFLAGS)         \
 	$(LIBXFCE4UTIL_CFLAGS)          \
 	$(LIBXFCE4UI_CFLAGS)            \

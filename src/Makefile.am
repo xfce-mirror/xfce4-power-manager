@@ -32,11 +32,7 @@ xfce4_power_manager_SOURCES =                   \
 	xfpm-suspend.c				\
 	xfpm-suspend.h				\
 	xfpm-ppd.h				\
-	xfpm-ppd.c				\
-	../panel-plugins/power-manager-plugin/power-manager-button.c	\
-	../panel-plugins/power-manager-plugin/power-manager-button.h	\
-	../panel-plugins/power-manager-plugin/scalemenuitem.c			\
-	../panel-plugins/power-manager-plugin/scalemenuitem.h
+	xfpm-ppd.c
 
 xfce4_power_manager_CFLAGS =                    \
 	-I$(top_srcdir)                         \
@@ -48,8 +44,6 @@ xfce4_power_manager_CFLAGS =                    \
 	-DSBINDIR=\"$(sbindir)\"                \
 	-DUPOWER_ENABLE_DEPRECATED              \
 	-DXFPM_SUSPEND_HELPER_CMD=\"$(prefix)/bin/xfce4-pm-helper\" \
-	-UXFCE_PLUGIN                           \
-	-DXFPM_SYSTRAY							\
 	$(GIO_CFLAGS)                           \
 	$(GIO_UNIX_CFLAGS)                      \
 	$(GOBJECT_CFLAGS)                       \

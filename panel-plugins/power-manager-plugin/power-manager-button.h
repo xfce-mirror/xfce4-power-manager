@@ -24,9 +24,7 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 
-#ifdef XFCE_PLUGIN
 #include <libxfce4panel/libxfce4panel.h>
-#endif
 
 G_BEGIN_DECLS
 
@@ -54,14 +52,8 @@ typedef struct
 
 GType
 power_manager_button_get_type (void) G_GNUC_CONST;
-#ifdef XFCE_PLUGIN
 GtkWidget *
 power_manager_button_new (XfcePanelPlugin *plugin);
-#endif
-#ifdef XFPM_SYSTRAY
-GtkWidget *
-power_manager_button_new (void);
-#endif
 void
 power_manager_button_show (PowerManagerButton *button);
 void
