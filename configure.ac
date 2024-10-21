@@ -235,7 +235,6 @@ src/Makefile
 settings/Makefile
 panel-plugins/Makefile
 panel-plugins/power-manager-plugin/Makefile
-panel-plugins/power-manager-plugin/xfce/Makefile
 data/Makefile
 data/icons/Makefile
 data/icons/16x16/Makefile
