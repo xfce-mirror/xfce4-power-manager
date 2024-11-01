@@ -1,3 +1,29 @@
+4.19.4 (2024-11-01)
+======
+- button: Fix tooltip leak
+- button: Fix string leak
+- settings: Hide critical action warning if upower action == Ignore
+- Fix string leak in get_device_icon_name
+- Fix string leak in helper_get_value
+- build: Adjust Wayland requirements for Xfce 4.20
+- build: Bump requirements for Xfce 4.20
+- Don't show time to empty calculation for large hours
+- Remove redundant condition check for fully charged state in battery 
+label visibility logic. Now the label only hides if the state is 
+unknown or if it is a desktop system.
+- button: Also listen to brightness-exponential change
+- settings: Replace app if dialog should be embedded
+- settings: Unref app before exiting
+- systray-icon: Make setting a boolean
+- scan-build: Add false positive file
+- manager: Remove extra check for multi-monitor setup
+- x11: common: Fix multi-monitor setup detection
+- Translation Updates:
+  Asturian, Catalan, English (United Kingdom), Greek, Hebrew, Italian,
+  Kazakh, Korean, Norwegian Bokmål, Occitan (post 1500), Polish,
+  Portuguese, Portuguese (Brazil), Serbian, Slovenian, Spanish,
+  Swedish, Ukrainian
+
 4.19.3 (2024-06-02)
 ======
 - Update copyright year
