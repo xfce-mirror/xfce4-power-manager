@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Daniel Muñiz Fontoira <dani@damufo.eu>, 2018-2021
-# Daniel Muñiz Fontoira <dani@damufo.eu>, 2021
+# Daniel Muñiz Fontoira <dani@damufo.eu>, 2021,2024
 # Leandro Regueiro <leandro.regueiro@gmail.com>, 2006,2008-2009
 # Xosé, 2015
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Daniel Muñiz Fontoira <dani@damufo.eu>, 2021\n"
+"Last-Translator: Daniel Muñiz Fontoira <dani@damufo.eu>, 2021,2024\n"
 "Language-Team: Galician (http://app.transifex.com/xfce/xfce4-power-manager/language/gl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,7 +59,7 @@ msgstr "_Axuda"
 
 #: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
-msgstr ""
+msgstr "Xestión do _protector de pantalla"
 
 #: data/interfaces/xfpm-settings.ui:300
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
@@ -137,11 +137,11 @@ msgstr "Ao pechar a tapa do portátil:"
 #: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
 #: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
 msgid "These actions only take place if no external display is connected"
-msgstr ""
+msgstr "Estas accións só teñen lugar se non hai unha pantalla externa conectada"
 
 #: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
 msgid "<b>Power profile</b>"
-msgstr ""
+msgstr "<b>Perfil de enerxía</b>"
 
 #: data/interfaces/xfpm-settings.ui:913 data/interfaces/xfpm-settings.ui:1636
 msgid "On battery"
@@ -188,7 +188,7 @@ msgstr "<b>Administración de enerxía da pantalla</b>"
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
-msgstr ""
+msgstr "Deixar que o xestor de enerxía se encargue da xestión de enerxía da pantalla (Display Power Management Signaling ou DPMS) en lugar do servidor de pantalla"
 
 #: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
 msgid "Put to sleep after"
@@ -262,11 +262,11 @@ msgstr "Suspensión híbrida"
 
 #: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
-msgstr ""
+msgstr "Non se permite a suspensión hibrida"
 
 #: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
-msgstr ""
+msgstr "Non se admite a suspensión hibrida"
 
 #: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
 msgid "Hibernate and suspend operations not supported"
@@ -307,7 +307,7 @@ msgstr "Cando todas as fontes de enerxía do computador cheguen a este nivel de 
 
 #: settings/xfpm-settings.c:833
 msgid "Notify"
-msgstr ""
+msgstr "Notificar"
 
 #: settings/xfpm-settings.c:840
 #, c-format
@@ -316,7 +316,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr ""
+msgstr "Asegúrese de establecer aquí un valor suficientemente alto, se non, o sistema activará a súa propia acción antes do xfce4-power-manager, sen poder evitalo nin saber exactamente cando o fará. A acción desencadeada polo sistema neste caso será: %s."
 
 #: settings/xfpm-settings.c:1094
 msgid "Device"
@@ -371,11 +371,11 @@ msgstr "Sen enerxía"
 #. TRANSLATORS: Unit here is Watt
 #: settings/xfpm-settings.c:1182
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: settings/xfpm-settings.c:1184
 msgid "Energy rate"
-msgstr ""
+msgstr "Taxa de enerxía"
 
 #. TRANSLATORS: Unit here is Volt
 #: settings/xfpm-settings.c:1192
@@ -443,7 +443,7 @@ msgstr "Produciuse un fallo ao conectar co xestor de enerxía"
 
 #: settings/xfpm-settings-app.c:265
 msgid "Failed to load power manager configuration"
-msgstr ""
+msgstr "Produciuse un fallo ao cargar a configuración do xestor de enerxía"
 
 #: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -692,7 +692,7 @@ msgstr "Suspender o sistema"
 
 #: src/xfpm-power.c:519
 msgid "Hybrid sleep the system"
-msgstr ""
+msgstr "Suspensión híbrida do sistema"
 
 #: src/xfpm-power.c:539
 msgid "Shutdown the system"
@@ -724,7 +724,7 @@ msgstr "Permiso denegado"
 
 #: src/xfpm-power.c:1615
 msgid "Hibernate not supported"
-msgstr ""
+msgstr "Non se admite a hibernación"
 
 #: src/xfpm-power.c:1649
 msgid "Suspend not supported"
@@ -732,7 +732,7 @@ msgstr "A suspensión non está admitida"
 
 #: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
-msgstr ""
+msgstr "Non se admite a suspensión híbrida"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:149
@@ -803,23 +803,23 @@ msgstr "Pode hibernar"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr ""
+msgstr "Admítese a suspensión híbrida"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
-msgstr "Autorizado para suspender"
+msgstr "Con autorización para suspender"
 
 #: src/xfpm-main.c:111
 msgid "Authorized to hibernate"
-msgstr "Autorizado para hibernar"
+msgstr "Con autorización para hibernar"
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr ""
+msgstr "Con autorización para a suspensión híbrida"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
-msgstr "Autorizado para apagar"
+msgstr "Con autorización para apagar"
 
 #: src/xfpm-main.c:114
 msgid "Has battery"
@@ -917,23 +917,23 @@ msgstr "Xestión de enerxía para o escritorio Xfce"
 #. to change the backlight brightness.
 #: src/org.xfce.power.policy.in.in:21
 msgid "Modify the laptop display brightness"
-msgstr ""
+msgstr "Modificar o brillo da pantalla do portátil"
 
 #: src/org.xfce.power.policy.in.in:22
 msgid "Authentication is required to modify the laptop display brightness"
-msgstr ""
+msgstr "Requírese autenticación para modificar o brillo da pantalla do portátil"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
 #. to suspend or hibernate their system.
 #: src/org.xfce.power.policy.in.in:36
 msgid "Suspend or hibernate the system"
-msgstr ""
+msgstr "Suspender ou hibernar o sistema"
 
 #: src/org.xfce.power.policy.in.in:37
 msgid ""
 "Authentication is required to place the system in suspend or hibernate mode"
-msgstr ""
+msgstr "Requírese autenticación para pór o sistema en modo de suspensión ou hibernación"
 
 #. Odds are this is a desktop without any batteries attached
 #: panel-plugins/power-manager-plugin/power-manager-button.c:286
@@ -1004,11 +1004,11 @@ msgstr "Amosar os niveis de carga dos dispositivos e controlar o brillo da panta
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:7
 msgid "Xfce power manager"
-msgstr ""
+msgstr "Xestor de enerxía de Xfce"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
-msgstr ""
+msgstr "Xestionar e reducir o consumo de enerxía do computador e dos dispositivos"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:11
 msgid ""
@@ -1036,4 +1036,4 @@ msgstr "O xestor de enerxía do Xfce tamén fornece un engadido para os paneis X
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
-msgstr ""
+msgstr "Captura de pantalla da interface de usuario de Xfce Power Manager"
