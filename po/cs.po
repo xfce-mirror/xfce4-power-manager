@@ -8,7 +8,7 @@
 # Alois Nešpor <info@aloisnespor.info>, 2014
 # b537cbea55af75c3f49fe8b21c4cf8ea_f0ce149, 2023
 # Martin Šiška <martin-siska@email.cz>, 2024
-# Michal Várady <miko.vaji@gmail.com>, 2014-2015,2017,2019-2021
+# Michal Várady <miko.vaji@gmail.com>, 2014-2015,2017,2019-2021,2024
 # Pavel Borecki <pavel.borecki@gmail.com>, 2018
 # Petr Šimáček <petr.simacek@gmail.com>, 2016
 # Pavel Pernička <pernicka.pa@gmail.com>, 2019
@@ -18,7 +18,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Martin Šiška <martin-siska@email.cz>, 2024\n"
+"Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2014-2015,2017,2019-2021,2024\n"
 "Language-Team: Czech (http://app.transifex.com/xfce/xfce4-power-manager/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,7 +64,7 @@ msgstr "_Nápověda"
 
 #: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
-msgstr ""
+msgstr "_Správa spořiče obrazovky"
 
 #: data/interfaces/xfpm-settings.ui:300
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
@@ -142,7 +142,7 @@ msgstr "Při zavření víka přenosného počítače:"
 #: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
 #: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
 msgid "These actions only take place if no external display is connected"
-msgstr ""
+msgstr "Tyto akce se vykonají pouze pokud není připojený externí displej"
 
 #: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
 msgid "<b>Power profile</b>"
@@ -193,7 +193,7 @@ msgstr "<b>Správa napájení displeje</b>"
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
-msgstr ""
+msgstr "Přenechat správu napájení displeje (DPMS) správci napájení namísto serveru displeje."
 
 #: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
 msgid "Put to sleep after"
@@ -267,11 +267,11 @@ msgstr "Hybridní spánek"
 
 #: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
-msgstr ""
+msgstr "Operace hybridního spánku není povolena"
 
 #: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
-msgstr ""
+msgstr "Operace hybridního spánku není podporována"
 
 #: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
 msgid "Hibernate and suspend operations not supported"
@@ -312,7 +312,7 @@ msgstr "Když všechny zdroje napájení počítače dosáhnou této úrovně na
 
 #: settings/xfpm-settings.c:833
 msgid "Notify"
-msgstr ""
+msgstr "Oznámit"
 
 #: settings/xfpm-settings.c:840
 #, c-format
@@ -321,7 +321,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr ""
+msgstr "Ujistěte se, že jste zde nastavili dostatečně vysokou hodnotu, jinak bude systém spouštět svoji vlastní akci před službou xfce4-power-manager, a nebude schopen tomu zabránit nebo vědět, kdy se tak stane. Akce spuštěná systémem v tomto případě bude: %s."
 
 #: settings/xfpm-settings.c:1094
 msgid "Device"
@@ -448,7 +448,7 @@ msgstr "Připojení ke správci napájení se nezdařilo"
 
 #: settings/xfpm-settings-app.c:265
 msgid "Failed to load power manager configuration"
-msgstr ""
+msgstr "Načtení konfigurace správce napájení se nezdařilo"
 
 #: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -705,7 +705,7 @@ msgstr "Přejít do režimu spánku"
 
 #: src/xfpm-power.c:519
 msgid "Hybrid sleep the system"
-msgstr ""
+msgstr "Přejít do režimu hybridního spánku"
 
 #: src/xfpm-power.c:539
 msgid "Shutdown the system"
@@ -745,7 +745,7 @@ msgstr "Režim spánku není podporován"
 
 #: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
-msgstr ""
+msgstr "Hybridní spánek není podporován"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:149
@@ -816,7 +816,7 @@ msgstr "Je možné hibernovat systém"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr ""
+msgstr "Je možné systém hybridně uspat"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
@@ -828,7 +828,7 @@ msgstr "Oprávněn k hibernaci"
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr ""
+msgstr "Oprávněn k hybridnímu uspání"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
