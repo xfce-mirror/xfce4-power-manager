@@ -61,7 +61,7 @@ m4_define([gtk_minimum_version], [3.24.0])
 m4_define([glib_minimum_version], [2.72.0])
 m4_define([xfconf_minimum_version], [4.12.0])
 m4_define([libxfce4ui_minimum_version],[4.18.4])
-m4_define([libxfce4util_minimum_version],[4.19.2])
+m4_define([libxfce4util_minimum_version],[4.19.4])
 m4_define([libnotify_minimum_version], [0.7.8])
 m4_define([upower_minimum_version], [0.99.10])
 
