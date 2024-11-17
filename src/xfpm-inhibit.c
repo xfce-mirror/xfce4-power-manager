@@ -153,24 +153,6 @@ xfpm_inhibit_find_application_by_cookie (XfpmInhibit *inhibit,
   return NULL;
 }
 
-static Inhibitor *
-xfpm_inhibit_find_application_by_unique_connection_name (XfpmInhibit *inhibit,
-                                                         const gchar *unique_name)
-{
-  guint i;
-  Inhibitor *inhibitor;
-  for (i = 0; i < inhibit->priv->array->len; i++)
-  {
-    inhibitor = g_ptr_array_index (inhibit->priv->array, i);
-    if (g_strcmp0 (inhibitor->unique_name, unique_name) == 0)
-    {
-      return inhibitor;
-    }
-  }
-
-  return NULL;
-}
-
 static gboolean
 xfpm_inhibit_remove_application_by_cookie (XfpmInhibit *inhibit,
                                            guint cookie)
@@ -199,15 +181,19 @@ xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor,
   if (!on_session)
     return;
 
-  inhibitor = xfpm_inhibit_find_application_by_unique_connection_name (inhibit, unique_name);
-
-  if (inhibitor)
+  guint i;
+  for (i = inhibit->priv->array->len - 1; i != (guint) -1; i--)
   {
-    XFPM_DEBUG ("Application=%s with unique connection name=%s disconnected",
-                inhibitor->app_name, inhibitor->unique_name);
-    xfpm_inhibit_free_inhibitor (inhibit, inhibitor);
-    xfpm_inhibit_has_inhibit_changed (inhibit);
+    inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+    if (g_strcmp0 (inhibitor->unique_name, unique_name ) == 0 )
+    {
+      XFPM_DEBUG ("Application=%s with unique connection name=%s disconnected",
+                  inhibitor->app_name, inhibitor->unique_name);
+      xfpm_inhibit_free_inhibitor (inhibit, inhibitor);
+    }
   }
+
+  xfpm_inhibit_has_inhibit_changed (inhibit);
 }
 
 static void
@@ -413,7 +399,7 @@ xfpm_inhibit_un_inhibit (XfpmInhibit *inhibit,
                          guint IN_cookie,
                          gpointer user_data)
 {
-  XFPM_DEBUG ("UnHibit message received");
+  XFPM_DEBUG ("Uninhibit message received");
 
   if (!xfpm_inhibit_remove_application_by_cookie (inhibit, IN_cookie))
   {
