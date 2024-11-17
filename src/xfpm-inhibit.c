@@ -185,7 +185,7 @@ xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor,
   for (i = inhibit->priv->array->len - 1; i != (guint) -1; i--)
   {
     inhibitor = g_ptr_array_index (inhibit->priv->array, i);
-    if (g_strcmp0 (inhibitor->unique_name, unique_name ) == 0 )
+    if (g_strcmp0 (inhibitor->unique_name, unique_name) == 0)
     {
       XFPM_DEBUG ("Application=%s with unique connection name=%s disconnected",
                   inhibitor->app_name, inhibitor->unique_name);
