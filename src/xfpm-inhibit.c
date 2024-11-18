@@ -181,6 +181,7 @@ xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor,
   if (!on_session)
     return;
 
+  gboolean changed = FALSE;
   guint i;
   for (i = inhibit->priv->array->len - 1; i != (guint) -1; i--)
   {
@@ -190,10 +191,12 @@ xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor,
       XFPM_DEBUG ("Application=%s with unique connection name=%s disconnected",
                   inhibitor->app_name, inhibitor->unique_name);
       xfpm_inhibit_free_inhibitor (inhibit, inhibitor);
+      changed = TRUE;
     }
   }
 
-  xfpm_inhibit_has_inhibit_changed (inhibit);
+  if (changed)
+    xfpm_inhibit_has_inhibit_changed (inhibit);
 }
 
 static void
