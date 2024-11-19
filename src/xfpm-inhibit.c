@@ -177,11 +177,12 @@ xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor,
                                  XfpmInhibit *inhibit)
 {
   Inhibitor *inhibitor;
+  gboolean changed = FALSE;
 
   if (!on_session)
     return;
 
-  gboolean changed = FALSE;
+  // Traverse in reverse to safely delete array elements without shifting issues
   guint i;
   for (i = inhibit->priv->array->len - 1; i != (guint) -1; i--)
   {
