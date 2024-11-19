@@ -42,7 +42,6 @@
 #include "common/xfpm-enum.h"
 #include "libdbus/xfpm-dbus-monitor.h"
 #include "libdbus/xfpm-dbus.h"
-#include "panel-plugins/power-manager-plugin/power-manager-button.h"
 
 #include <gio/gunixfdlist.h>
 #include <gtk/gtk.h>
@@ -75,11 +74,6 @@ static void
 xfpm_manager_dbus_class_init (XfpmManagerClass *klass);
 static void
 xfpm_manager_dbus_init (XfpmManager *manager);
-
-static void
-xfpm_manager_show_tray_icon (XfpmManager *manager);
-static void
-xfpm_manager_hide_tray_icon (XfpmManager *manager);
 
 #define SLEEP_KEY_TIMEOUT 6.0f
 
@@ -780,27 +774,9 @@ xfpm_manager_set_property (GObject *object,
                            const GValue *value,
                            GParamSpec *pspec)
 {
-  XfpmManager *manager = XFPM_MANAGER (object);
-  gint new_value;
-
   switch (property_id)
   {
     case PROP_SHOW_TRAY_ICON:
-      new_value = g_value_get_boolean (value);
-      if (new_value != manager->priv->show_tray_icon)
-      {
-        manager->priv->show_tray_icon = new_value;
-        if (new_value)
-        {
-          if (WINDOWING_IS_X11 ())
-            xfpm_manager_show_tray_icon (manager);
-        }
-        else
-        {
-          if (WINDOWING_IS_X11 ())
-            xfpm_manager_hide_tray_icon (manager);
-        }
-      }
       break;
 
     default:
@@ -847,120 +823,6 @@ xfpm_manager_reserve_names (XfpmManager *manager)
   }
 
   return TRUE;
-}
-
-static void
-xfpm_manager_tray_update_tooltip (PowerManagerButton *button,
-                                  XfpmManager *manager)
-{
-  g_return_if_fail (XFPM_IS_MANAGER (manager));
-  g_return_if_fail (POWER_MANAGER_IS_BUTTON (manager->priv->power_button));
-  g_return_if_fail (GTK_IS_STATUS_ICON (manager->priv->adapter_icon));
-
-  XFPM_DEBUG ("updating tooltip");
-
-  if (power_manager_button_get_tooltip (POWER_MANAGER_BUTTON (manager->priv->power_button)) == NULL)
-    return;
-
-  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-  gtk_status_icon_set_tooltip_markup (
-    manager->priv->adapter_icon,
-    power_manager_button_get_tooltip (POWER_MANAGER_BUTTON (manager->priv->power_button)));
-  G_GNUC_END_IGNORE_DEPRECATIONS
-}
-
-static void
-xfpm_manager_tray_update_icon (PowerManagerButton *button,
-                               XfpmManager *manager)
-{
-  g_return_if_fail (XFPM_IS_MANAGER (manager));
-  g_return_if_fail (POWER_MANAGER_IS_BUTTON (manager->priv->power_button));
-
-  XFPM_DEBUG ("updating icon");
-
-  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-  gtk_status_icon_set_from_icon_name (
-    manager->priv->adapter_icon,
-    power_manager_button_get_icon_name (POWER_MANAGER_BUTTON (manager->priv->power_button)));
-  G_GNUC_END_IGNORE_DEPRECATIONS
-}
-
-static void
-xfpm_manager_show_tray_menu (GtkStatusIcon *icon,
-                             guint button,
-                             guint activate_time,
-                             XfpmManager *manager)
-{
-  power_manager_button_show_menu (POWER_MANAGER_BUTTON (manager->priv->power_button));
-}
-
-static gboolean
-xfpm_manager_tray_scroll_event (GtkStatusIcon *status_icon,
-                                GdkEvent *event,
-                                XfpmManager *manager)
-{
-  return power_manager_button_scroll_event (manager->priv->power_button, (GdkEventScroll *) event);
-}
-
-static void
-xfpm_manager_show_tray_icon (XfpmManager *manager)
-{
-  if (manager->priv->adapter_icon != NULL)
-  {
-    XFPM_DEBUG ("tray icon already being shown");
-    return;
-  }
-
-  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-  manager->priv->adapter_icon = gtk_status_icon_new ();
-  manager->priv->power_button = g_object_ref_sink (power_manager_button_new ());
-  G_GNUC_END_IGNORE_DEPRECATIONS
-
-  XFPM_DEBUG ("Showing tray icon");
-
-  /* send a show event to startup the button */
-  power_manager_button_show (POWER_MANAGER_BUTTON (manager->priv->power_button));
-
-  /* initial update the tray icon + tooltip */
-  xfpm_manager_tray_update_icon (POWER_MANAGER_BUTTON (manager->priv->power_button), manager);
-  xfpm_manager_tray_update_tooltip (POWER_MANAGER_BUTTON (manager->priv->power_button), manager);
-
-  /* Listen to the tooltip and icon changes */
-  g_signal_connect (G_OBJECT (manager->priv->power_button), "tooltip-changed",
-                    G_CALLBACK (xfpm_manager_tray_update_tooltip), manager);
-  g_signal_connect (G_OBJECT (manager->priv->power_button), "icon-name-changed",
-                    G_CALLBACK (xfpm_manager_tray_update_icon), manager);
-
-  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-  gtk_status_icon_set_visible (manager->priv->adapter_icon, TRUE);
-  G_GNUC_END_IGNORE_DEPRECATIONS
-
-  g_signal_connect (manager->priv->adapter_icon, "popup-menu",
-                    G_CALLBACK (xfpm_manager_show_tray_menu), manager);
-  g_signal_connect (manager->priv->adapter_icon, "scroll-event",
-                    G_CALLBACK (xfpm_manager_tray_scroll_event), manager);
-}
-
-static void
-xfpm_manager_hide_tray_icon (XfpmManager *manager)
-{
-  if (manager->priv->adapter_icon == NULL)
-    return;
-
-  G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-  gtk_status_icon_set_visible (manager->priv->adapter_icon, FALSE);
-  G_GNUC_END_IGNORE_DEPRECATIONS
-
-  /* disconnect from all the signals */
-  g_signal_handlers_disconnect_by_func (manager->priv->power_button, xfpm_manager_tray_update_tooltip, manager);
-  g_signal_handlers_disconnect_by_func (manager->priv->power_button, xfpm_manager_tray_update_icon, manager);
-  g_signal_handlers_disconnect_by_func (manager->priv->adapter_icon, xfpm_manager_show_tray_menu, manager);
-  g_signal_handlers_disconnect_by_func (manager->priv->adapter_icon, xfpm_manager_tray_scroll_event, manager);
-
-  g_object_unref (manager->priv->power_button);
-  g_object_unref (manager->priv->adapter_icon);
-  manager->priv->power_button = NULL;
-  manager->priv->adapter_icon = NULL;
 }
 
 XfpmManager *
