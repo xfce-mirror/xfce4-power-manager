@@ -183,7 +183,7 @@ xfpm_inhibit_connection_lost_cb (XfpmDBusMonitor *monitor,
     return;
 
   // Traverse in reverse to safely delete array elements without shifting issues
-  for (guint i = inhibit->priv->array->len - 1; i >= 0; i--)
+  for (guint i = inhibit->priv->array->len - 1; i != -1U; i--)
   {
     inhibitor = g_ptr_array_index (inhibit->priv->array, i);
     if (g_strcmp0 (inhibitor->unique_name, unique_name) == 0)
