@@ -315,7 +315,7 @@ msgstr "Wybranie czynności"
 
 #: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1238
 msgid "Switch off display"
-msgstr "Wyłącz ekran"
+msgstr "Wyłączenie ekranu"
 
 #: ../settings/xfpm-settings.c:1065 ../settings/xfpm-settings.c:1253
 msgid "Lock screen"
@@ -428,7 +428,7 @@ msgstr "Określa gniazdo menedżera ustawień"
 
 #: ../settings/xfpm-settings-app.c:74
 msgid "SOCKET ID"
-msgstr "ID_GNIAZDA"
+msgstr "ID GNIAZDA"
 
 #: ../settings/xfpm-settings-app.c:75
 msgid "Display a specific device by UpDevice object path"
@@ -457,7 +457,7 @@ msgstr "Zasilanie"
 
 #: ../settings/xfpm-settings-app.c:169
 msgid "Failed to connect to power manager"
-msgstr "Nie udało się połączyć z menedżerem zasilania"
+msgstr "Nie udało się połączyć z menedżerem zasilania"
 
 #: ../settings/xfpm-settings-app.c:183
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -613,7 +613,7 @@ msgid ""
 "Fully charged - %s remaining"
 msgstr ""
 "<b>%s %s</b>\n"
-"W pełni naładowany - %s pozostało"
+"W pełni naładowany – pozostało: %s"
 
 #: ../common/xfpm-power-common.c:346
 #, c-format
@@ -631,7 +631,7 @@ msgid ""
 "%0.0f%% - %s until full"
 msgstr ""
 "<b>%s %s</b>\n"
-"%0.0f%% - %s do pełnego"
+"%0.0f%% – do pełnego: %s"
 
 #: ../common/xfpm-power-common.c:363 ../common/xfpm-power-common.c:381
 #, c-format
@@ -649,7 +649,7 @@ msgid ""
 "%0.0f%% - %s remaining"
 msgstr ""
 "<b>%s %s</b>\n"
-"%0.0f%% - %s pozostało"
+"%0.0f%% – pozostało: %s"
 
 #: ../common/xfpm-power-common.c:388
 #, c-format
@@ -732,7 +732,7 @@ msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr ""
-"Nie udało się uruchomić żadnego z narzędzi blokowania ekranu. Ekran nie zostanie zablokowany.\n"
+"Nie udało się uruchomić żadnego z narzędzi blokowania ekranu. Ekran nie zostanie zablokowany.\n"
 "Czy nadal chcesz wstrzymać działanie komputera?"
 
 #: ../src/xfpm-power.c:584
@@ -847,7 +847,7 @@ msgstr "Nie obsługuje narzędzia PolicyKit\n"
 #: ../src/xfpm-main.c:112
 #, c-format
 msgid "With network manager support\n"
-msgstr "Obsługuje menedżera sieci\n"
+msgstr "Obsługuje menedżer sieci\n"
 
 #: ../src/xfpm-main.c:114
 #, c-format
@@ -967,7 +967,7 @@ msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
 msgstr ""
-"Nie udało się uruchomić żadnego z narzędzi blokowania ekranu. Ekran nie "
+"Nie udało się uruchomić żadnego z narzędzi blokowania ekranu. Ekran nie "
 "zostanie zablokowany."
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
@@ -1039,7 +1039,7 @@ msgstr "Zasilanie"
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr "Wyświetla poziom naładowania urządzeń i steruje jasnością ekranu"
+msgstr "Wyświetla poziom naładowania urządzeń i steruje jasnością ekranu"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
@@ -1061,11 +1061,11 @@ msgid ""
 "should make use of this interface while it is performing update operations."
 msgstr ""
 "Ponadto menedżer zasilania Xfce zapewnia zestaw interfejsów DBus zgodnych ze"
-" standardem freedesktop, które informują inne programy o bieżącym poziomie "
+" standardem freedesktop, które informują inne programy o bieżącym poziomie "
 "zasilania, aby mogły dostosować swoje zużycie energii, oraz zapewnia "
-"interfejs wstrzymywania, który umożliwia aplikacjom zapobieganie "
-"automatycznym akcjom uśpienia za pośrednictwem menedżera zasilania; na "
-"przykład menedżer pakietów systemu operacyjnego powinien korzystać z tego "
+"interfejs wstrzymywania, który umożliwia programom zapobieganie "
+"automatycznym czynnościom uśpienia za pośrednictwem menedżera zasilania; na "
+"przykład menedżer pakietów systemu operacyjnego powinien korzystać z tego "
 "interfejsu podczas wykonywania operacji aktualizacji."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
@@ -1074,9 +1074,9 @@ msgid ""
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
 msgstr ""
-"Menedżer zasilania Xfce zapewnia wtyczkę dla paneli Xfce i LXDE, "
-"kontrolującą poziom jasności ekranu LCD i monitorującą stan naładowania "
-"akumulatora oraz innych urządzeń."
+"Menedżer zasilania Xfce zapewnia wtyczkę dla paneli Xfce i LXDE, która "
+"umożliwia sterowanie poziomem jasności wyświetlacza LCD oraz monitorowanie "
+"poziomu naładowania akumulatora i urządzenia."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
