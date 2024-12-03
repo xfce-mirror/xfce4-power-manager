@@ -41,12 +41,12 @@
 #ifdef ENABLE_X11
 #include <X11/X.h>
 #include <X11/XF86keysym.h>
-#include <keybinder.h>
-
 #include <gdk/gdkx.h>
+#include <keybinder.h>
 #endif
 
-static void xfpm_button_finalize   (GObject *object);
+static void 
+xfpm_button_finalize (GObject *object);
 
 struct XfpmButtonPrivate
 {
@@ -72,87 +72,93 @@ G_DEFINE_TYPE_WITH_PRIVATE (XfpmButton, xfpm_button, G_TYPE_OBJECT)
 
 static struct
 {
-  char            *keysymbol;
-  XfpmButtonKey    key;
-} xfpm_symbol_map [NUMBER_OF_BUTTONS] = {
-  {"XF86MonBrightnessUp"  , BUTTON_MON_BRIGHTNESS_UP  },
-  {"XF86MonBrightnessDown", BUTTON_MON_BRIGHTNESS_DOWN},
-  {"XF86KbdBrightnessUp"  , BUTTON_KBD_BRIGHTNESS_UP  },
-  {"XF86KbdBrightnessDown", BUTTON_KBD_BRIGHTNESS_DOWN},
-  {"XF86PowerOff"         , BUTTON_POWER_OFF          },
-  {"XF86Hibernate"        , BUTTON_HIBERNATE          },
-  {"XF86Suspend"          , BUTTON_HIBERNATE          },
-  {"XF86Sleep"            , BUTTON_SLEEP              },
-  {"XF86XK_Battery"       , BUTTON_BATTERY            },
-  {NULL , BUTTON_UNKNOWN},
+  char *keysymbol;
+  XfpmButtonKey key;
+} xfpm_symbol_map[NUMBER_OF_BUTTONS] = {
+  { "XF86MonBrightnessUp", BUTTON_MON_BRIGHTNESS_UP },
+  { "XF86MonBrightnessDown", BUTTON_MON_BRIGHTNESS_DOWN },
+  { "XF86KbdBrightnessUp", BUTTON_KBD_BRIGHTNESS_UP },
+  { "XF86KbdBrightnessDown", BUTTON_KBD_BRIGHTNESS_DOWN },
+  { "XF86PowerOff", BUTTON_POWER_OFF },
+  { "XF86Hibernate", BUTTON_HIBERNATE },
+  { "XF86Suspend", BUTTON_HIBERNATE },
+  { "XF86Sleep", BUTTON_SLEEP },
+  { "XF86XK_Battery", BUTTON_BATTERY },
+  { NULL , BUTTON_UNKNOWN },
 };
 
-static
-void xfpm_key_handler (const char *keystring, void *data)
+static void
+xfpm_key_handler (const char *keystring, void *data)
 {
   XfpmButton *button = (XfpmButton *) data;
 
-  XFPM_DEBUG ("Key symbol received: %s", keystring );
-  for (int idx=0; xfpm_symbol_map[idx].keysymbol; idx++) {
-    if ( strcmp( keystring, xfpm_symbol_map[idx].keysymbol ) == 0) {
-      g_signal_emit (G_OBJECT (button), signals[BUTTON_PRESSED], 0, xfpm_symbol_map[idx].key );
-      XFPM_DEBUG ("Key press signalled" );
+  XFPM_DEBUG ("Key symbol received: %s", keystring);
+  for (int idx=0; xfpm_symbol_map[idx].keysymbol; idx++) 
+  {
+    if (strcmp( keystring, xfpm_symbol_map[idx].keysymbol) == 0) 
+    {
+      g_signal_emit (G_OBJECT (button), signals[BUTTON_PRESSED], 0, xfpm_symbol_map[idx].key);
+      XFPM_DEBUG ("Key press signalled");
       break;
     }
   }
 }
 
 static char *modifiers[] = {
-   "",
-   "<Ctrl>",
-   "<Alt>",
-   "<Super>",
-   "<Shift>",
-   "<Ctrl><Shift>",
-   "<Ctrl><Alt>",
-   "<Ctrl><Super>",
-   "<Alt><Shift>",
-   "<Alt><Super>",
-   "<Shift><Super>",
-   "<Ctrl><Shift><Super>",
-   "<Ctrl><Shift><Alt>",
-   "<Ctrl><Alt><Super>",
-   "<Shift><Alt><Super>",
-   "<Ctrl><Shift><Alt><Super>",
-   NULL
+  "",
+ "<Ctrl>",
+  "<Alt>",
+  "<Super>",
+  "<Shift>",
+  "<Ctrl><Shift>",
+  "<Ctrl><Alt>",
+  "<Ctrl><Super>",
+  "<Alt><Shift>",
+  "<Alt><Super>",
+  "<Shift><Super>",
+  "<Ctrl><Shift><Super>",
+  "<Ctrl><Shift><Alt>",
+  "<Ctrl><Alt><Super>",
+  "<Shift><Alt><Super>",
+  "<Ctrl><Shift><Alt><Super>",
+  NULL
 };
 
 static void
 xfpm_bind_keysym (XfpmButton *button,
                   char *keysym,
-                  XfpmKeys key )
+                  XfpmKeys key)
 {
   char buffer[100];
 
-  if ((button->priv->mapped_buttons & key) == 0) {
-    for (int idx=0; modifiers[idx]; idx++) {
-      sprintf( buffer, "%s%s", modifiers[idx], keysym);
+  if ((button->priv->mapped_buttons & key) == 0) 
+  {
+    for (int idx=0; modifiers[idx]; idx++) 
+    {
+      sprintf ( buffer, "%s%s", modifiers[idx], keysym);
       keybinder_bind (buffer, xfpm_key_handler, button);
     }
     button->priv->mapped_buttons |= key;
-    XFPM_DEBUG ("Button bound: %s", keysym );
+    XFPM_DEBUG ("Button bound: %s", keysym);
   }
 }
 
 static void
 xfpm_unbind_keysym (XfpmButton *button,
                     char *keysym,
-                    XfpmKeys key )
+                    XfpmKeys key)
 {
   char buffer[100];
 
-  if ((button->priv->mapped_buttons & key) != 0) {
-    for (int idx=0; modifiers[idx]; idx++) {
-      sprintf( buffer, "%s%s", modifiers[idx], keysym);
+  if ((button->priv->mapped_buttons & key) != 0) 
+  {
+    for (int idx=0; modifiers[idx]; idx++) 
+    {
+      sprintf ( buffer, "%s%s", modifiers[idx], keysym);
       keybinder_unbind (buffer, xfpm_key_handler);
     }
     button->priv->mapped_buttons &= ~(key);
-    XFPM_DEBUG ("Button unbound: %s", keysym );
+    XFPM_DEBUG ("Button unbound: %s", keysym);
   }
 }
 
@@ -163,7 +169,7 @@ xfpm_button_setup (XfpmButton *button)
   button->priv->screen = gdk_screen_get_default ();
   button->priv->window = gdk_screen_get_root_window (button->priv->screen);
 
-  keybinder_init();
+  keybinder_init ();
 
 #ifdef HAVE_XF86XK_HIBERNATE
   xfpm_bind_keysym (button, "XF86Hibernate", HIBERNATE_KEY);
@@ -274,6 +280,5 @@ xfpm_button_set_handle_brightness_keys (XfpmButton *button,
       }
     }
 #endif
-
   }
 }
