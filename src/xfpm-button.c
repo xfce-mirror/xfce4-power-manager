@@ -45,7 +45,7 @@
 #include <keybinder.h>
 #endif
 
-static void 
+static void
 xfpm_button_finalize (GObject *object);
 
 struct XfpmButtonPrivate
@@ -84,7 +84,7 @@ static struct
   { "XF86Suspend", BUTTON_HIBERNATE },
   { "XF86Sleep", BUTTON_SLEEP },
   { "XF86XK_Battery", BUTTON_BATTERY },
-  { NULL , BUTTON_UNKNOWN },
+  { NULL, BUTTON_UNKNOWN },
 };
 
 static void
@@ -93,9 +93,9 @@ xfpm_key_handler (const char *keystring, void *data)
   XfpmButton *button = (XfpmButton *) data;
 
   XFPM_DEBUG ("Key symbol received: %s", keystring);
-  for (int idx=0; xfpm_symbol_map[idx].keysymbol; idx++) 
+  for (int idx = 0; xfpm_symbol_map[idx].keysymbol; idx++) 
   {
-    if (strcmp( keystring, xfpm_symbol_map[idx].keysymbol) == 0) 
+    if (strcmp (keystring, xfpm_symbol_map[idx].keysymbol) == 0) 
     {
       g_signal_emit (G_OBJECT (button), signals[BUTTON_PRESSED], 0, xfpm_symbol_map[idx].key);
       XFPM_DEBUG ("Key press signalled");
@@ -106,7 +106,7 @@ xfpm_key_handler (const char *keystring, void *data)
 
 static char *modifiers[] = {
   "",
- "<Ctrl>",
+  "<Ctrl>",
   "<Alt>",
   "<Super>",
   "<Shift>",
@@ -133,9 +133,9 @@ xfpm_bind_keysym (XfpmButton *button,
 
   if ((button->priv->mapped_buttons & key) == 0) 
   {
-    for (int idx=0; modifiers[idx]; idx++) 
+    for (int idx = 0; modifiers[idx]; idx++) 
     {
-      sprintf ( buffer, "%s%s", modifiers[idx], keysym);
+      sprintf (buffer, "%s%s", modifiers[idx], keysym);
       keybinder_bind (buffer, xfpm_key_handler, button);
     }
     button->priv->mapped_buttons |= key;
@@ -152,9 +152,9 @@ xfpm_unbind_keysym (XfpmButton *button,
 
   if ((button->priv->mapped_buttons & key) != 0) 
   {
-    for (int idx=0; modifiers[idx]; idx++) 
+    for (int idx = 0; modifiers[idx]; idx++) 
     {
-      sprintf ( buffer, "%s%s", modifiers[idx], keysym);
+      sprintf (buffer, "%s%s", modifiers[idx], keysym);
       keybinder_unbind (buffer, xfpm_key_handler);
     }
     button->priv->mapped_buttons &= ~(key);
