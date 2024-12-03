@@ -93,9 +93,9 @@ xfpm_key_handler (const char *keystring, void *data)
   XfpmButton *button = (XfpmButton *) data;
 
   XFPM_DEBUG ("Key symbol received: %s", keystring);
-  for (int idx = 0; xfpm_symbol_map[idx].keysymbol; idx++) 
+  for (int idx = 0; xfpm_symbol_map[idx].keysymbol; idx++)
   {
-    if (strcmp (keystring, xfpm_symbol_map[idx].keysymbol) == 0) 
+    if (strcmp (keystring, xfpm_symbol_map[idx].keysymbol) == 0)
     {
       g_signal_emit (G_OBJECT (button), signals[BUTTON_PRESSED], 0, xfpm_symbol_map[idx].key);
       XFPM_DEBUG ("Key press signalled");
