@@ -74,7 +74,7 @@ static struct
 {
   char *keysymbol;
   XfpmButtonKey key;
-} xfpm_symbol_map[NUMBER_OF_BUTTONS] = {
+} xfpm_symbol_map[] = {
   { "XF86MonBrightnessUp", BUTTON_MON_BRIGHTNESS_UP },
   { "XF86MonBrightnessDown", BUTTON_MON_BRIGHTNESS_DOWN },
   { "XF86KbdBrightnessUp", BUTTON_KBD_BRIGHTNESS_UP },
@@ -131,9 +131,9 @@ xfpm_bind_keysym (XfpmButton *button,
 {
   char buffer[100];
 
-  if ((button->priv->mapped_buttons & key) == 0) 
+  if ((button->priv->mapped_buttons & key) == 0)
   {
-    for (int idx = 0; modifiers[idx]; idx++) 
+    for (int idx = 0; modifiers[idx]; idx++)
     {
       sprintf (buffer, "%s%s", modifiers[idx], keysym);
       keybinder_bind (buffer, xfpm_key_handler, button);
@@ -150,9 +150,9 @@ xfpm_unbind_keysym (XfpmButton *button,
 {
   char buffer[100];
 
-  if ((button->priv->mapped_buttons & key) != 0) 
+  if ((button->priv->mapped_buttons & key) != 0)
   {
-    for (int idx = 0; modifiers[idx]; idx++) 
+    for (int idx = 0; modifiers[idx]; idx++)
     {
       sprintf (buffer, "%s%s", modifiers[idx], keysym);
       keybinder_unbind (buffer, xfpm_key_handler);
