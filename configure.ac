@@ -64,6 +64,7 @@ m4_define([libxfce4ui_minimum_version],[4.18.4])
 m4_define([libxfce4util_minimum_version],[4.19.4])
 m4_define([libnotify_minimum_version], [0.7.8])
 m4_define([upower_minimum_version], [0.99.10])
+m4_define([libkeybinder_minimum_version], [0.2.0])
 
 m4_define([x11_minimum_version], [1.6.7])
 m4_define([xrandr_minimum_version], [1.5.0])
@@ -87,6 +88,7 @@ XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2],[libxfce4ui_minimum_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_version])
 XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
 XDT_CHECK_PACKAGE([UPOWER],[upower-glib], [upower_minimum_version])
+XDT_CHECK_PACKAGE([LIBKEYBINDER], [keybinder-3.0], [libkeybinder_minimum_version])
 
 XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
 
