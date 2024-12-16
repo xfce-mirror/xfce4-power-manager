@@ -5,6 +5,7 @@
 # Translators:
 # beriain, 2020-2021
 # Dabid Martinez <dabid@laborategia.eus>, 2020
+# Eder Etxebarria Rojo, 2024
 # Piarres Beobide <pi@beobide.net>, 2008-2009,2011
 msgid ""
 msgstr ""
@@ -12,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: beriain, 2020-2021\n"
+"Last-Translator: Eder Etxebarria Rojo, 2024\n"
 "Language-Team: Basque (http://app.transifex.com/xfce/xfce4-power-manager/language/eu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -58,7 +59,7 @@ msgstr "_Laguntza"
 
 #: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
-msgstr ""
+msgstr "_Pantaila babeslearen kudeaketa"
 
 #: data/interfaces/xfpm-settings.ui:300
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
@@ -136,11 +137,11 @@ msgstr "Eramangarri tapa ixtean:"
 #: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
 #: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
 msgid "These actions only take place if no external display is connected"
-msgstr ""
+msgstr "Ekintza hauek kanpoko pantaila konektatuta ez badago bakarrik gauzatzen dira"
 
 #: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
 msgid "<b>Power profile</b>"
-msgstr ""
+msgstr "<b>Energia-profila</b>"
 
 #: data/interfaces/xfpm-settings.ui:913 data/interfaces/xfpm-settings.ui:1636
 msgid "On battery"
@@ -187,7 +188,7 @@ msgstr "<b>Pantailaren energia kudeaketa</b>"
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
-msgstr ""
+msgstr "Utzi energia-kudeatzaileari pantailaren energiaren kudeaketa (DPMS) kudeatzen, pantaila-zerbitzariaren ordez"
 
 #: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
 msgid "Put to sleep after"
@@ -261,11 +262,11 @@ msgstr "Lo hibridoa"
 
 #: settings/xfpm-settings.c:418
 msgid "Hybrid sleep operation not permitted"
-msgstr ""
+msgstr "Ez da lo egiteko eragiketa hibridoa onartzen"
 
 #: settings/xfpm-settings.c:422
 msgid "Hybrid sleep operation not supported"
-msgstr ""
+msgstr "Lo egiteko eragiketa hibridoa ez dago onartuta"
 
 #: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
 msgid "Hibernate and suspend operations not supported"
@@ -306,7 +307,7 @@ msgstr "Ordenagailu honen energia jatorri guztiek maila hau izatean"
 
 #: settings/xfpm-settings.c:833
 msgid "Notify"
-msgstr ""
+msgstr "Jakinarazi"
 
 #: settings/xfpm-settings.c:840
 #, c-format
@@ -315,7 +316,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr ""
+msgstr "Ziurtatu balio aski altua ezartzen duzula hemen, bestela sistemak bere ekintza propioa abiaraziko du xfce4-power-manager-en aurrean, ezin izan duela saihestu edo noiz egingo duen zehatz-mehatz jakin gabe. Kasu honetan sistemak abiarazitako ekintza hau izango da: %s."
 
 #: settings/xfpm-settings.c:1094
 msgid "Device"
@@ -370,11 +371,11 @@ msgstr "Energia hutsik"
 #. TRANSLATORS: Unit here is Watt
 #: settings/xfpm-settings.c:1182
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: settings/xfpm-settings.c:1184
 msgid "Energy rate"
-msgstr ""
+msgstr "Energia-tasa"
 
 #. TRANSLATORS: Unit here is Volt
 #: settings/xfpm-settings.c:1192
@@ -442,7 +443,7 @@ msgstr "Huts energia-administratzailera konektatzen"
 
 #: settings/xfpm-settings-app.c:265
 msgid "Failed to load power manager configuration"
-msgstr ""
+msgstr "Ezin izan da energia-kudeatzailearen konfigurazioa kargatu"
 
 #: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -691,7 +692,7 @@ msgstr "Eseki sistema"
 
 #: src/xfpm-power.c:519
 msgid "Hybrid sleep the system"
-msgstr ""
+msgstr "Sistema lokartu hibrido moduan"
 
 #: src/xfpm-power.c:539
 msgid "Shutdown the system"
@@ -723,7 +724,7 @@ msgstr "Baimena ukatua"
 
 #: src/xfpm-power.c:1615
 msgid "Hibernate not supported"
-msgstr ""
+msgstr "Hibernazioa ez dago onartuta"
 
 #: src/xfpm-power.c:1649
 msgid "Suspend not supported"
@@ -731,7 +732,7 @@ msgstr "Eskegitzea ez da onartze"
 
 #: src/xfpm-power.c:1683
 msgid "Hybrid sleep not supported"
-msgstr ""
+msgstr "Lo hibridoa ez dago onartuta"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:149
@@ -802,7 +803,7 @@ msgstr "Hibernatu daiteke"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr ""
+msgstr "Lo hibridoa onartuta"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
@@ -814,7 +815,7 @@ msgstr "Hibernatzeko baimenarekin."
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr ""
+msgstr "Lo hibridoa baimendua"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
@@ -916,23 +917,23 @@ msgstr "Xfce mahaigain inguruneko energia kudeatzailea"
 #. to change the backlight brightness.
 #: src/org.xfce.power.policy.in.in:21
 msgid "Modify the laptop display brightness"
-msgstr ""
+msgstr "Aldatu ordenagailu eramangarriaren pantailaren distira"
 
 #: src/org.xfce.power.policy.in.in:22
 msgid "Authentication is required to modify the laptop display brightness"
-msgstr ""
+msgstr "Autentifikazioa beharrezkoa da ordenagailu eramangarriaren pantailaren distira aldatzeko"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
 #. to suspend or hibernate their system.
 #: src/org.xfce.power.policy.in.in:36
 msgid "Suspend or hibernate the system"
-msgstr ""
+msgstr "Sistema eseki edo hibernatu"
 
 #: src/org.xfce.power.policy.in.in:37
 msgid ""
 "Authentication is required to place the system in suspend or hibernate mode"
-msgstr ""
+msgstr "Autentifikazioa beharrezkoa da sistema eteteko edo hibernatzeko moduan jartzeko"
 
 #. Odds are this is a desktop without any batteries attached
 #: panel-plugins/power-manager-plugin/power-manager-button.c:286
@@ -1003,11 +1004,11 @@ msgstr "Erakutsi zure gailuen bateria-mailak erakusten ditu eta zure pantailaren
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:7
 msgid "Xfce power manager"
-msgstr ""
+msgstr "Xfce energia-kudeatzailea"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
-msgstr ""
+msgstr "Ordenagailuen eta gailuen energia-kontsumoa kudeatu eta murriztu"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:11
 msgid ""
@@ -1035,4 +1036,4 @@ msgstr "Xfce energia kudeatzaileak Xfce eta LXDE paneletarako, LCD distira-maila
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
-msgstr ""
+msgstr "Xfce Energia-kudeatzailearen erabiltzaile-interfazearen pantaila-argazkia"
