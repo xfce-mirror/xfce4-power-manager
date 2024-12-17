@@ -59,6 +59,7 @@ xfce4_power_manager_CFLAGS =                    \
 	$(XFCONF_CFLAGS)                        \
 	$(LIBNOTIFY_CFLAGS)                     \
 	$(UPOWER_CFLAGS)                        \
+	$(LIBKEYBINDER_CFLAGS)                  \
 	$(PLATFORM_CPPFLAGS)			\
 	$(PLATFORM_CFLAGS)
 
@@ -77,7 +78,8 @@ xfce4_power_manager_LDADD =                     \
 	$(LIBXFCE4UTIL_LIBS)                      \
 	$(XFCONF_LIBS)                          \
 	$(LIBNOTIFY_LIBS)                       \
-	$(UPOWER_LIBS)
+	$(UPOWER_LIBS)                          \
+	$(LIBKEYBINDER_LIBS)
 
 if ENABLE_X11
 xfce4_power_manager_SOURCES += \
