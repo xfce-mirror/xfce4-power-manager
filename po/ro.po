@@ -5,10 +5,11 @@
 # 
 # Translators:
 # Cosmin Humeniuc <cosmin@hume.ro>, 2023
-# Marius Ghita, 2023
 # Nick Schermer <nick@xfce.org>, 2023
+# Marius Ghita, 2023
 # Xfce Bot <transifex@xfce.org>, 2023
 # Dumitru Moldovan <dumol@gnome.org>, 2023
+# Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2024
 # 
 #, fuzzy
 msgid ""
@@ -17,7 +18,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-22 12:48+0200\n"
 "PO-Revision-Date: 2023-02-20 11:54+0000\n"
-"Last-Translator: Dumitru Moldovan <dumol@gnome.org>, 2023\n"
+"Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2024\n"
 "Language-Team: Romanian (https://app.transifex.com/xfce/teams/16840/ro/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -50,7 +51,7 @@ msgstr "Niciuna"
 #: ../src/xfpm-backlight.c:174 ../src/xfpm-battery.c:190
 #: ../src/xfpm-kbd-backlight.c:119 ../src/xfce4-power-manager.desktop.in.h:1
 msgid "Power Manager"
-msgstr "Manager de consum"
+msgstr "Administrator de energie"
 
 #: ../data/interfaces/xfpm-settings.ui.h:6
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:157
@@ -84,7 +85,7 @@ msgstr "Exponențial"
 
 #: ../data/interfaces/xfpm-settings.ui.h:13
 msgid "Brightness step count:"
-msgstr ""
+msgstr "Numărul de trepte de luminozitate:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:14
 msgid "Handle display brightness _keys"
@@ -96,11 +97,11 @@ msgstr "<b>Butoane</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:16
 msgid "Status notifications"
-msgstr ""
+msgstr "Notificări de stare"
 
 #: ../data/interfaces/xfpm-settings.ui.h:17
 msgid "System tray icon"
-msgstr ""
+msgstr "Pictograma din tava de sistem"
 
 #: ../data/interfaces/xfpm-settings.ui.h:18
 msgid "<b>Appearance</b>"
@@ -112,7 +113,7 @@ msgstr "Generale"
 
 #: ../data/interfaces/xfpm-settings.ui.h:20
 msgid "When inactive for"
-msgstr "Inactivitate minimă:"
+msgstr "Când este inactiv pentru:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:21
 msgid "System sleep mode:"
@@ -120,7 +121,7 @@ msgstr "Mod de repaus:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:22
 msgid "<b>System power saving</b>"
-msgstr "<b>Gestionare a consumului sistemului</b>"
+msgstr "<b>Economisirea energiei sistemului</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:23
 msgid "<b>Laptop Lid</b>"
@@ -128,7 +129,7 @@ msgstr "<b>Capacul laptopului</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:24
 msgid "When laptop lid is closed:"
-msgstr "La închiderea laptopului:"
+msgstr "La închiderea capacului laptopului:"
 
 #: ../data/interfaces/xfpm-settings.ui.h:25
 msgid "On battery"
@@ -169,12 +170,14 @@ msgstr "Sistem"
 
 #: ../data/interfaces/xfpm-settings.ui.h:35
 msgid "<b>Display power management</b>"
-msgstr ""
+msgstr "<b>Gestionarea alimentării ecranului</b>"
 
 #: ../data/interfaces/xfpm-settings.ui.h:36
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of X11."
 msgstr ""
+"Lăsați administratorul de energie să se ocupe de gestionarea alimentării "
+"ecranului (DPMS) în locul X11."
 
 #: ../data/interfaces/xfpm-settings.ui.h:37
 msgid "Blank after"
@@ -309,7 +312,7 @@ msgstr "Întreabă"
 
 #: ../settings/xfpm-settings.c:1050 ../settings/xfpm-settings.c:1238
 msgid "Switch off display"
-msgstr "Stingere display"
+msgstr "Stingere ecran"
 
 #: ../settings/xfpm-settings.c:1065 ../settings/xfpm-settings.c:1253
 msgid "Lock screen"
@@ -317,7 +320,7 @@ msgstr "Blocare ecran"
 
 #: ../settings/xfpm-settings.c:1562
 msgid "Number of brightness steps available using keys"
-msgstr ""
+msgstr "Numărul de trepte de luminozitate disponibile cu ajutorul tastelor"
 
 #: ../settings/xfpm-settings.c:1602
 msgid "When all the power sources of the computer reach this charge level"
@@ -384,11 +387,11 @@ msgstr "Capacitate epuizată"
 #. TRANSLATORS: Unit here is Watt
 #: ../settings/xfpm-settings.c:2132
 msgid "W"
-msgstr ""
+msgstr "W"
 
 #: ../settings/xfpm-settings.c:2134
 msgid "Energy rate"
-msgstr ""
+msgstr "Rata de energie"
 
 #. TRANSLATORS: Unit here is Volt
 #: ../settings/xfpm-settings.c:2142
@@ -401,7 +404,7 @@ msgstr "Voltaj"
 
 #: ../settings/xfpm-settings.c:2151
 msgid "Vendor"
-msgstr "Comerciant"
+msgstr "Fabricant"
 
 #: ../settings/xfpm-settings.c:2156
 msgid "Serial"
@@ -409,7 +412,7 @@ msgstr "Serie"
 
 #: ../settings/xfpm-settings.c:2435
 msgid "Check your power manager installation"
-msgstr "Verificați instalarea managerului de consum"
+msgstr "Verificați instalarea administratorului de energie"
 
 #: ../settings/xfpm-settings.c:2528
 msgid "Devices"
@@ -417,19 +420,19 @@ msgstr "Dispozitive"
 
 #: ../settings/xfpm-settings-app.c:74
 msgid "Settings manager socket"
-msgstr "Socket al managerului opțiunilor"
+msgstr "Soclul gestionarului de opțiuni"
 
 #: ../settings/xfpm-settings-app.c:74
 msgid "SOCKET ID"
-msgstr "ID SOCKET"
+msgstr "ID SOCLU"
 
 #: ../settings/xfpm-settings-app.c:75
 msgid "Display a specific device by UpDevice object path"
-msgstr "Afișează un anumit dispozitiv după calea obiectului UpDevice"
+msgstr "Afișează un anumit dispozitiv după ruta obiectului UpDevice"
 
 #: ../settings/xfpm-settings-app.c:75
 msgid "UpDevice object path"
-msgstr "Calea obiectului UpDevice"
+msgstr "Ruta obiectului UpDevice"
 
 #: ../settings/xfpm-settings-app.c:76 ../src/xfpm-main.c:271
 msgid "Enable debugging"
@@ -437,30 +440,31 @@ msgstr "Activează depanarea"
 
 #: ../settings/xfpm-settings-app.c:77
 msgid "Display version information"
-msgstr "Arată detalii de versiune"
+msgstr "Afișează informațiile despre versiune"
 
 #: ../settings/xfpm-settings-app.c:78
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr ""
+msgstr "Face ca xfce4-power-manager-settings să iasă"
 
 #: ../settings/xfpm-settings-app.c:167 ../settings/xfpm-settings-app.c:214
 #: ../src/xfpm-main.c:443
 msgid "Xfce Power Manager"
-msgstr "Managerul de consum Xfce"
+msgstr "Administratorul de energie Xfce"
 
 #: ../settings/xfpm-settings-app.c:169
 msgid "Failed to connect to power manager"
-msgstr ""
+msgstr "Conectarea la administratorul de energie a eșuat"
 
 #: ../settings/xfpm-settings-app.c:183
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Managerul de consum Xfce nu este pornit, doriți să-l porniți acum?"
+msgstr ""
+"Administratorul de energie Xfce nu este pornit, doriți să-l porniți acum?"
 
 #: ../settings/xfpm-settings-app.c:216
 msgid "Failed to load power manager configuration, using defaults"
 msgstr ""
-"Nu s-a putut încărca configurația managerului de consum, se vor folosi "
-"valorile implicite"
+"Nu s-a putut încărca configurația administratorului de energie, se vor "
+"folosi valorile implicite"
 
 #: ../settings/xfpm-settings-app.c:336
 #, c-format
@@ -474,17 +478,21 @@ msgstr "Compilat cu GTK+ %d.%d.%d, pornit cu GTK+ %d.%d.%d."
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:2
 msgid "Settings for the Xfce Power Manager"
-msgstr "Opțiuni pentru managerul de consum Xfce"
+msgstr "Opțiuni pentru administratorul de energie Xfce"
 
 #: ../settings/xfce4-power-manager-settings.desktop.in.h:3
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
 msgstr ""
+"configurare;opțiuni;preferințe;butoane;repaus;hibernare;baterie;suspendare;oprire;luminozitate;capac"
+" laptop;ecran de blocare;conectat;economisire;critic;"
 
 #: ../common/xfpm-common.c:121
 msgid "translator-credits"
-msgstr "Mișu Moldovan <dumol@xfce.org>"
+msgstr ""
+"Mișu Moldovan <dumol@xfce.org>, 2012, 2015, 2023.\n"
+"Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2024."
 
 #: ../common/xfpm-power-common.c:45 ../common/xfpm-power-common.c:68
 msgid "Battery"
@@ -492,7 +500,7 @@ msgstr "Baterie"
 
 #: ../common/xfpm-power-common.c:47
 msgid "Uninterruptible Power Supply"
-msgstr ""
+msgstr "Sursă de alimentare neîntreruptibilă (UPS)"
 
 #: ../common/xfpm-power-common.c:49
 msgid "Line power"
@@ -553,7 +561,7 @@ msgstr "Nichel - Cadmiu"
 
 #: ../common/xfpm-power-common.c:93
 msgid "Nickel metal hydride"
-msgstr ""
+msgstr "Hidrură metalică de nichel"
 
 #: ../common/xfpm-power-common.c:141
 msgid "Unknown time"
@@ -595,6 +603,8 @@ msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
 msgstr ""
+"<b>%s %s</b>\n"
+"Complet încărcată - timpul rămas %s"
 
 #: ../common/xfpm-power-common.c:346
 #, c-format
@@ -602,6 +612,8 @@ msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
 msgstr ""
+"<b>%s %s</b>\n"
+"Complet încărcată"
 
 #: ../common/xfpm-power-common.c:355
 #, c-format
@@ -609,6 +621,8 @@ msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
 msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s până la încărcarea completă"
 
 #: ../common/xfpm-power-common.c:363 ../common/xfpm-power-common.c:381
 #, c-format
@@ -616,6 +630,8 @@ msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
 msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%%"
 
 #: ../common/xfpm-power-common.c:373
 #, c-format
@@ -623,6 +639,8 @@ msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
 msgstr ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s restant"
 
 #: ../common/xfpm-power-common.c:388
 #, c-format
@@ -657,6 +675,8 @@ msgid ""
 "<b>%s %s</b>\n"
 "Current charge: %0.0f%%"
 msgstr ""
+"<b>%s %s</b>\n"
+"Încărcarea curentă: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
@@ -695,12 +715,16 @@ msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr ""
+"O aplicație dezactivează în prezent modul automat de așteptare. Efectuarea acestei acțiuni acum poate deteriora starea de lucru a acestei aplicații.\n"
+"Sunteți sigur că doriți să hibernați sistemul?"
 
 #: ../src/xfpm-power.c:413
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr ""
+"Niciunul dintre instrumentele de blocare a ecranului nu a fost rulat cu succes, ecranul nu va fi blocat.\n"
+"Doriți în continuare să suspendați sistemul?"
 
 #: ../src/xfpm-power.c:584
 msgid "Hibernate the system"
@@ -768,6 +792,8 @@ msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
 msgstr ""
+"%s (%i%%)\n"
+"%s până la încărcarea completă"
 
 #: ../src/xfpm-battery.c:130 ../src/xfpm-battery.c:166
 #, c-format
@@ -785,6 +811,8 @@ msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
 msgstr ""
+"%s (%i%%)\n"
+"Timpul estimat rămas este %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
@@ -867,7 +895,7 @@ msgstr "Capac detectat"
 
 #: ../src/xfpm-main.c:270
 msgid "Daemonize"
-msgstr ""
+msgstr "Se execută ca serviciu"
 
 #: ../src/xfpm-main.c:272
 msgid "Dump all information"
@@ -875,15 +903,15 @@ msgstr "Salvează toate detaliile"
 
 #: ../src/xfpm-main.c:273
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Reinițializează managerul de consum Xfce pornit"
+msgstr "Reinițializează administratorul de energie Xfce pornit"
 
 #: ../src/xfpm-main.c:274
 msgid "Show the configuration dialog"
-msgstr "Arată un dialog de configurare"
+msgstr "Afișează dialogul de configurare"
 
 #: ../src/xfpm-main.c:275
 msgid "Quit any running xfce power manager"
-msgstr "Închide orice manager de consum Xfce pornit"
+msgstr "Închide orice administrator de energie Xfce pornit"
 
 #: ../src/xfpm-main.c:276
 msgid "Version information"
@@ -897,7 +925,7 @@ msgstr "Nu s-au putut prelucra argumentele: %s\n"
 #: ../src/xfpm-main.c:324
 #, c-format
 msgid "Type '%s --help' for usage."
-msgstr "Încercați „%s --help” pentru detalii de utilizare."
+msgstr "Tastați «%s --help» pentru detalii despre utilizare."
 
 #: ../src/xfpm-main.c:345
 msgid "Unable to get connection to the message bus session"
@@ -906,20 +934,20 @@ msgstr "Nu s-a putut face o conexiune la sesiunea D-BUS"
 #: ../src/xfpm-main.c:353 ../src/xfpm-main.c:402
 #, c-format
 msgid "Xfce power manager is not running"
-msgstr "Managerul de consum Xfce nu este pornit"
+msgstr "Administratorul de energie Xfce nu este pornit"
 
 #: ../src/xfpm-main.c:444
 msgid "Another power manager is already running"
-msgstr "Un alt manager de consum este deja pornit"
+msgstr "Un alt administrator de energie este deja pornit"
 
 #: ../src/xfpm-main.c:448
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "Managerul de consum Xfce este deja pornit"
+msgstr "Administratorul de energie Xfce este deja pornit"
 
 #: ../src/xfpm-inhibit.c:394
 msgid "Invalid arguments"
-msgstr "Opțiuni nevalide"
+msgstr "Argumente nevalide"
 
 #: ../src/xfpm-inhibit.c:428
 msgid "Invalid cookie"
@@ -930,17 +958,17 @@ msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
 msgstr ""
-"Niciuna dintre uneltele de blocare a ecranului nu a putut fi pornită cu "
+"Niciunul dintre instrumentele de blocare a ecranului nu a fost rulat cu "
 "succes, ecranul nu va fi blocat."
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
-msgstr "Management de consum pentru desktopul Xfce"
+msgstr "Administrarea de energie pentru mediul grafic de birou Xfce"
 
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:276
 msgid "Display battery levels for attached devices"
-msgstr "Arată nivelul bateriei pentru dispozitivele conectate"
+msgstr "Afișează nivelul bateriei pentru dispozitivele conectate"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
@@ -948,11 +976,11 @@ msgstr "Arată nivelul bateriei pentru dispozitivele conectate"
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1398
 #, c-format
 msgid "%s is currently inhibiting power management"
-msgstr ""
+msgstr "%s inhibă în prezent gestionarea energiei"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1614
 msgid "<b>Display brightness</b>"
-msgstr "<b>Luminozitatea displayului</b>"
+msgstr "<b>Luminozitatea ecranului</b>"
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1641
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1652
@@ -962,7 +990,7 @@ msgstr "_Mod de prezentare"
 #. Power manager settings
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1665
 msgid "_Settings..."
-msgstr "_Setări..."
+msgstr "_Configurări"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:146
 msgid "None"
@@ -983,20 +1011,20 @@ msgstr "Procentaj și timp rămas"
 #. create the dialog
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:154
 msgid "Power Manager Plugin Settings"
-msgstr ""
+msgstr "Opțiuni ale modulului administratorului de energie"
 
 #. show-panel-label setting
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:177
 msgid "Show label:"
-msgstr "Arată etichetă:"
+msgstr "Afișează etichetă:"
 
 #: ../panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:210
 msgid "Show 'Presentation mode' indicator:"
-msgstr "Arată indicator 'Mod prezentare':"
+msgstr "Afișează indicator «Mod prezentare»:"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:1
 msgid "Power Manager Plugin"
-msgstr "Modul al managerului de consum"
+msgstr "Modul al administratorului de energie"
 
 #: ../panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in.h:2
 msgid ""
@@ -1004,7 +1032,7 @@ msgid ""
 "your display"
 msgstr ""
 "Afișează nivelul bateriei pentru dispozitivele conectate și controlează "
-"luminozitatea displayului"
+"luminozitatea ecranului"
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:1
 msgid ""
@@ -1012,10 +1040,10 @@ msgid ""
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
 msgstr ""
-"Managerul de consum Xfce gestionează sursele de curent ale sistemului și "
-"dispozitivele ce pot fi controlate pentru a reduce consumul de curent, de "
-"exemplu prin reducerea luminozității ecranelor LCD, ori trecerea lor în "
-"repaus, scalarea frecvenței procesoarelor etc."
+"Administratorul de energie Xfce gestionează sursele de alimentare ale "
+"sistemului și dispozitivele ce pot fi controlate pentru a reduce consumul de"
+" energie, de exemplu prin reducerea luminozității ecranelor LCD, ori "
+"trecerea lor în repaus, scalarea frecvenței procesoarelor etc."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -1026,12 +1054,12 @@ msgid ""
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
 msgstr ""
-"În plus, managerul de consum Xfce oferă un set de interfețe DBus ce respectă"
-" standardele freedesktop.org pentru a informa alte programe despre nivelul "
-"bateriei, astfel încât acestea să-și ajusteze consumul de curent. Mai mult, "
-"oferă o interfață de prevenire a trecerii automate în repaus pentru "
-"programele ce necesită continuarea funcționării pentru o perioadă de timp, "
-"de exemplu un manager de pachete ce actualizează sistemul."
+"În plus, administratorul de energie Xfce oferă un set de interfețe DBus ce "
+"respectă standardele freedesktop.org pentru a informa alte programe despre "
+"nivelul bateriei, astfel încât acestea să-și ajusteze consumul de energie. "
+"Mai mult, oferă o interfață de prevenire a trecerii automate în repaus "
+"pentru programele ce necesită continuarea funcționării pentru o perioadă de "
+"timp, de exemplu un gestionar de pachete ce actualizează sistemul."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
@@ -1039,9 +1067,9 @@ msgid ""
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
 msgstr ""
-"Managerul de consum Xfce oferă un modul pentru panourile Xfce și LXDE pentru"
-" controlul luminozității LCD-urilor și pentru monitorizarea bateriei și a "
-"altor dispozitive ce necesită reîncărcare."
+"Administratorul de energie Xfce oferă un modul pentru panourile Xfce și LXDE"
+" pentru controlul luminozității LCD-urilor și pentru monitorizarea bateriei "
+"și a altor dispozitive ce necesită reîncărcare."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:4
 msgid ""
