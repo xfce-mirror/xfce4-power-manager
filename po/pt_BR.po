@@ -9,7 +9,7 @@
 # Helder, 2015
 # Henrique P Machado <zehrique@xfce.org>, 2008,2011
 # Michael Martins, 2014
-# Michael Martins, 2018-2020,2023-2024
+# Michael Martins, 2018-2020,2023-2025
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2012-2014
 # Rafael Fontenelle <rffontenelle@gmail.com>, 2019
 # The Cat, 2023-2024
@@ -22,7 +22,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2024-05-26 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Michael Martins, 2018-2020,2023-2024\n"
+"Last-Translator: Michael Martins, 2018-2020,2023-2025\n"
 "Language-Team: Portuguese (Brazil) (http://app.transifex.com/xfce/xfce4-power-manager/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -456,7 +456,7 @@ msgstr "Falha ao carregar a configuração do gerenciador de energia"
 
 #: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "O Gerenciador de Energia Xfce4 não está em execução, você deseja lançá-lo agora?"
+msgstr "O gerenciador de energia do Xfce4 não está em execução, deseja executá-lo agora?"
 
 #: settings/xfpm-settings-app.c:394
 #, c-format
@@ -470,7 +470,7 @@ msgstr "Compilado com GTK+ %d.%d.%d, ligado com GTK+ %d.%d.%d."
 
 #: settings/xfce4-power-manager-settings.desktop.in:6
 msgid "Settings for the Xfce Power Manager"
-msgstr "Configurações para o Gerenciador de Energia do Xfce"
+msgstr "Configurações para o gerenciador de energia do Xfce"
 
 #: settings/xfce4-power-manager-settings.desktop.in:12
 msgid ""
@@ -545,7 +545,7 @@ msgstr "Chumbo-ácido"
 
 #: common/xfpm-power-common.c:89
 msgid "Nickel cadmium"
-msgstr "Níquel-Cádmio"
+msgstr "Níquel cádmio"
 
 #: common/xfpm-power-common.c:91
 msgid "Nickel metal hydride"
@@ -597,14 +597,14 @@ msgstr[2] "minutos"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr "<b>%s %s</b>\nCarga Completa - %s restante"
+msgstr "<b>%s %s</b>\nCarga completa - %s restante"
 
 #: common/xfpm-power-common.c:344
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
-msgstr "<b>%s %s</b>\nCarga Completa"
+msgstr "<b>%s %s</b>\nCarga completa"
 
 #: common/xfpm-power-common.c:353
 #, c-format
@@ -687,13 +687,13 @@ msgstr "<b>%s %s</b>\nEstado desconhecido"
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
-msgstr "Um aplicativo está atualmente desabilitando o modo de suspensão automático. Ao executar esta ação agora, poderá danificar o estado de trabalho atual deste aplicativo.\nVocê tem certeza que deseja hibernar o sistema?"
+msgstr "Um aplicativo está atualmente desabilitando o modo de suspensão automático. Ao executar esta ação agora, poderá danificar o estado de trabalho atual deste aplicativo.\nTem certeza que deseja hibernar o sistema?"
 
 #: src/xfpm-power.c:306
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Nenhuma das ferramentas de bloqueio de tela funcionaram, a mesma não será bloqueada. \nVocê ainda deseja continuar com a suspensão do sistema?"
+msgstr "Nenhuma das ferramentas de bloqueio de tela funcionaram, a mesma não será bloqueada. \nAinda deseja continuar com a suspensão do sistema?"
 
 #: src/xfpm-power.c:495
 msgid "Hibernate the system"
@@ -785,7 +785,7 @@ msgstr "O sistema está executando na energia de %s"
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
-msgstr "%s (%i%%)\nTempo restante estimado é %s"
+msgstr "%s (%i%%)\nO tempo restante estimado é %s"
 
 #: src/xfpm-battery.c:140 src/xfpm-battery.c:160
 #, c-format
@@ -994,7 +994,7 @@ msgstr "Porcentagem e tempo restante"
 #. create the dialog
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:147
 msgid "Power Manager Plugin Settings"
-msgstr "Opções do Plug-in do Gerenciador de Energia"
+msgstr "Opções do plugin do gerenciador de energia"
 
 #. show-panel-label setting
 #: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:170
@@ -1007,7 +1007,7 @@ msgstr "Mostrar indicador 'Modo de apresentação':"
 
 #: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:4
 msgid "Power Manager Plugin"
-msgstr "Plug-in Gerenciador de energia"
+msgstr "Plug-in do gerenciador de energia"
 
 #: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:5
 msgid ""
@@ -1049,4 +1049,4 @@ msgstr "O gerenciador de energia do Xfce também fornece um plug-in para os pain
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
-msgstr "Captura de tela da Interface de Usuário do Gerenciador de Energia do Xfce"
+msgstr "Captura de tela da interface de usuário do gerenciador de energia do Xfce"
