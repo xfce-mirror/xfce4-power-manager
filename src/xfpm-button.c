@@ -291,9 +291,8 @@ xfpm_button_setup (XfpmButton *button)
   button->priv->screen = gdk_screen_get_default ();
   button->priv->window = gdk_screen_get_root_window (button->priv->screen);
   button->priv->gdisplay = gdk_display_get_default ();
-#ifdef ENABLE_X11
-  button->priv->xdisplay = gdk_x11_get_default_xdisplay ();
-#endif
+  if (GDK_IS_X11_DISPLAY (button->priv->gdisplay))
+    button->priv->xdisplay = gdk_x11_get_default_xdisplay ();
 
   if (xfpm_button_xevent_key (button, XF86XK_PowerOff, BUTTON_POWER_OFF))
     button->priv->mapped_buttons |= POWER_KEY;
