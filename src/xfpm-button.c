@@ -90,10 +90,9 @@ xfpm_button_get_key (unsigned int keycode,
 
   for (i = 0; i < G_N_ELEMENTS (xfpm_key_map); i++)
   {
-    /*
-     | Match keycode and modifiers, but ignore CapsLock state
-    */
-    if ((xfpm_key_map[i].key_code == keycode) && (xfpm_key_map[i].key_modifiers == (keymodifiers & ~LockMask)))
+    /* Match keycode and modifiers, but ignore CapsLock state */
+    if (xfpm_key_map[i].key_code == keycode
+        && xfpm_key_map[i].key_modifiers == (keymodifiers & ~LockMask))
       key = xfpm_key_map[i].key;
   }
 
@@ -114,12 +113,10 @@ xfpm_button_keysym_to_code_mask (XfpmButton *button,
   *modmask = 0;
 
   /*
-    | Try to figure out the keysym modifier mask.
-    | If there is more than 1 keycode for the keysym,
-    |   the first keycode is used
-    | Defaults to previously used 'AllModifiers'
-    | Code taken from keybinder library
-  */
+   * Try to figure out the keysym modifier mask.
+   * If there is more than 1 keycode for the keysym, the first keycode is used.
+   * Defaults to previously used 'AllModifiers'. Code taken from keybinder library.
+   */
   /* Force keymap sync */
   gdk_keymap_have_bidi_layouts (keymap);
   if (gdk_keymap_get_entries_for_keyval (keymap, keysym, &keys, &nkeys))
@@ -152,13 +149,13 @@ xfpm_button_keysym_to_code_mask (XfpmButton *button,
     else
     {
       *modmask = AnyModifier;
-    };
+    }
     g_free (keys);
   }
   else
   {
     XFPM_DEBUG ("No keymap entry found for keysym %i", keysym);
-  };
+  }
   return retval;
 }
 
@@ -205,7 +202,7 @@ xfpm_button_grab_keystring (XfpmButton *button,
                   GDK_WINDOW_XID (button->priv->window), True,
                   GrabModeAsync, GrabModeAsync);
 
-  if ((ret == BadAccess) || (ret == BadValue) || (ret == BadWindow))
+  if (ret == BadAccess || ret == BadValue || ret == BadWindow)
   {
     g_warning ("ReturnCode=%u - Failed to grab modmask=%u, keycode=%li", ret, modmask, (long int) keycode);
     retval++;
@@ -215,7 +212,7 @@ xfpm_button_grab_keystring (XfpmButton *button,
                   GDK_WINDOW_XID (button->priv->window), True,
                   GrabModeAsync, GrabModeAsync);
 
-  if ((ret == BadAccess) || (ret == BadValue) || (ret == BadWindow))
+  if (ret == BadAccess || ret == BadValue || ret == BadWindow)
   {
     g_warning ("ReturnCode=%u - Failed to grab modmask=%u, keycode=%li", ret, LockMask | modmask, (long int) keycode);
     retval++;
@@ -224,7 +221,7 @@ xfpm_button_grab_keystring (XfpmButton *button,
   gdk_display_flush (button->priv->gdisplay);
   gdk_x11_display_error_trap_pop_ignored (button->priv->gdisplay);
 
-  return (retval == 0 ? TRUE : FALSE);
+  return retval == 0;
 }
 
 
@@ -252,7 +249,7 @@ xfpm_button_xevent_key (XfpmButton *button,
   }
   else
   {
-    XFPM_DEBUG ("could not map keysym %x to keycode and modifiers\n", keysym);
+    XFPM_DEBUG ("could not map keysym %x to keycode and modifiers", keysym);
     return FALSE;
   }
 }
@@ -282,7 +279,7 @@ xfpm_button_ungrab (XfpmButton *button,
   }
   else
   {
-    XFPM_DEBUG ("could not map keysym %x to keycode and modifiers\n", keysym);
+    XFPM_DEBUG ("could not map keysym %x to keycode and modifiers", keysym);
   }
 }
 
