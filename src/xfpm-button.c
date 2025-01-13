@@ -41,6 +41,7 @@
 #ifdef ENABLE_X11
 #include <X11/X.h>
 #include <X11/XF86keysym.h>
+#include <X11/XKBlib.h>
 #include <gdk/gdkx.h>
 #endif
 
@@ -52,13 +53,16 @@ static struct
 {
   XfpmButtonKey key;
   guint key_code;
-} xfpm_key_map[N_XFPM_BUTTON_KEYS] = { 0 };
+  guint key_modifiers;
+} xfpm_key_map[N_XFPM_BUTTON_KEYS] = { { 0, 0 } };
 #endif
 
 struct XfpmButtonPrivate
 {
   GdkScreen *screen;
   GdkWindow *window;
+  Display *xdisplay;
+  GdkDisplay *gdisplay;
   gboolean handle_brightness_keys;
   guint16 mapped_buttons;
 };
@@ -78,18 +82,81 @@ G_DEFINE_TYPE_WITH_PRIVATE (XfpmButton, xfpm_button, G_TYPE_OBJECT)
 #ifdef ENABLE_X11
 
 static guint
-xfpm_button_get_key (unsigned int keycode)
+xfpm_button_get_key (unsigned int keycode,
+                     unsigned int keymodifiers)
 {
   XfpmButtonKey key = BUTTON_UNKNOWN;
   guint i;
 
   for (i = 0; i < G_N_ELEMENTS (xfpm_key_map); i++)
   {
-    if (xfpm_key_map[i].key_code == keycode)
+    /* Match keycode and modifiers, but ignore CapsLock state */
+    if (xfpm_key_map[i].key_code == keycode
+        && xfpm_key_map[i].key_modifiers == (keymodifiers & ~LockMask))
       key = xfpm_key_map[i].key;
   }
 
   return key;
+}
+
+static gboolean
+xfpm_button_keysym_to_code_mask (XfpmButton *button,
+                                 guint keysym,
+                                 guint *keycode,
+                                 guint *modmask)
+{
+  GdkKeymap *keymap = gdk_keymap_get_for_display (button->priv->gdisplay);
+  GdkKeymapKey *keys;
+  gint nkeys;
+  gboolean retval = FALSE;
+  *keycode = 0;
+  *modmask = 0;
+
+  /*
+   * Try to figure out the keysym modifier mask.
+   * If there is more than 1 keycode for the keysym, the first keycode is used.
+   * Defaults to previously used 'AllModifiers'. Code taken from keybinder library.
+   */
+  /* Force keymap sync */
+  gdk_keymap_have_bidi_layouts (keymap);
+  if (gdk_keymap_get_entries_for_keyval (keymap, keysym, &keys, &nkeys))
+  {
+    XFPM_DEBUG ("%i Keymap entries found", nkeys);
+    XkbDescPtr xkbmap = XkbGetMap (button->priv->xdisplay, XkbAllClientInfoMask, XkbUseCoreKbd);
+    if (xkbmap)
+    {
+      XkbKeyTypeRec *type = XkbKeyKeyType (xkbmap, keys[0].keycode, keys[0].group);
+      if (type)
+      {
+        *keycode = keys[0].keycode;
+        for (int k = 0; k < type->map_count; k++)
+        {
+          if (type->map[k].active && type->map[k].level == keys[0].level)
+          {
+            if (type->preserve)
+            {
+              *modmask = type->map[k].mods.mask & ~type->preserve[k].mask;
+            }
+            else
+            {
+              *modmask = type->map[k].mods.mask;
+            }
+          }
+        }
+        retval = TRUE;
+      }
+    }
+    else
+    {
+      *modmask = AnyModifier;
+    }
+    g_free (keys);
+  }
+  else
+  {
+    XFPM_DEBUG ("No keymap entry found for keysym %i", keysym);
+  }
+  return retval;
 }
 
 static GdkFilterReturn
@@ -105,7 +172,8 @@ xfpm_button_filter_x_events (GdkXEvent *xevent,
   if (xev->type != KeyPress)
     return GDK_FILTER_CONTINUE;
 
-  key = xfpm_button_get_key (xev->xkey.keycode);
+  XFPM_DEBUG ("keycode:%u, state:%u", xev->xkey.keycode, xev->xkey.state);
+  key = xfpm_button_get_key (xev->xkey.keycode, xev->xkey.state);
 
   if (key != BUTTON_UNKNOWN)
   {
@@ -122,42 +190,38 @@ xfpm_button_filter_x_events (GdkXEvent *xevent,
 
 static gboolean
 xfpm_button_grab_keystring (XfpmButton *button,
-                            guint keycode)
+                            guint keycode,
+                            guint modmask)
 {
-  Display *display;
-  GdkDisplay *gdisplay;
   guint ret;
-  guint modmask = AnyModifier;
+  guint retval = 0;
 
-  display = gdk_x11_get_default_xdisplay ();
-  gdisplay = gdk_display_get_default ();
+  gdk_x11_display_error_trap_push (button->priv->gdisplay);
 
-  gdk_x11_display_error_trap_push (gdisplay);
-
-  ret = XGrabKey (display, keycode, modmask,
+  ret = XGrabKey (button->priv->xdisplay, keycode, modmask,
                   GDK_WINDOW_XID (button->priv->window), True,
                   GrabModeAsync, GrabModeAsync);
 
-  if (ret == BadAccess)
+  if (ret == BadAccess || ret == BadValue || ret == BadWindow)
   {
-    g_warning ("Failed to grab modmask=%u, keycode=%li", modmask, (long int) keycode);
-    return FALSE;
+    g_warning ("ReturnCode=%u - Failed to grab modmask=%u, keycode=%li", ret, modmask, (long int) keycode);
+    retval++;
   }
 
-  ret = XGrabKey (display, keycode, LockMask | modmask,
+  ret = XGrabKey (button->priv->xdisplay, keycode, LockMask | modmask,
                   GDK_WINDOW_XID (button->priv->window), True,
                   GrabModeAsync, GrabModeAsync);
 
-  if (ret == BadAccess)
+  if (ret == BadAccess || ret == BadValue || ret == BadWindow)
   {
-    g_warning ("Failed to grab modmask=%u, keycode=%li", LockMask | modmask, (long int) keycode);
-    return FALSE;
+    g_warning ("ReturnCode=%u - Failed to grab modmask=%u, keycode=%li", ret, LockMask | modmask, (long int) keycode);
+    retval++;
   }
 
-  gdk_display_flush (gdisplay);
-  gdk_x11_display_error_trap_pop_ignored (gdisplay);
+  gdk_display_flush (button->priv->gdisplay);
+  gdk_x11_display_error_trap_pop_ignored (button->priv->gdisplay);
 
-  return TRUE;
+  return retval == 0;
 }
 
 
@@ -166,23 +230,28 @@ xfpm_button_xevent_key (XfpmButton *button,
                         guint keysym,
                         XfpmButtonKey key)
 {
-  guint keycode = XKeysymToKeycode (gdk_x11_get_default_xdisplay (), keysym);
-
-  if (keycode == 0)
+  XFPM_DEBUG ("keysym:%x", keysym);
+  guint keycode;
+  guint keymodifiers;
+  if (xfpm_button_keysym_to_code_mask (button, keysym, &keycode, &keymodifiers))
   {
-    XFPM_DEBUG ("could not map keysym %x to keycode\n", keysym);
+    XFPM_DEBUG ("keycode:%u, keymodifiers:%u", keycode, keymodifiers);
+    if (!xfpm_button_grab_keystring (button, keycode, keymodifiers))
+      return FALSE;
+
+    XFPM_DEBUG_ENUM (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key:%li, mod:%u ", (long int) keycode, keymodifiers);
+
+    xfpm_key_map[key].key_code = keycode;
+    xfpm_key_map[key].key_modifiers = keymodifiers;
+    xfpm_key_map[key].key = key;
+
+    return TRUE;
+  }
+  else
+  {
+    XFPM_DEBUG ("could not map keysym %x to keycode and modifiers", keysym);
     return FALSE;
   }
-
-  if (!xfpm_button_grab_keystring (button, keycode))
-    return FALSE;
-
-  XFPM_DEBUG_ENUM (key, XFPM_TYPE_BUTTON_KEY, "Grabbed key %li ", (long int) keycode);
-
-  xfpm_key_map[key].key_code = keycode;
-  xfpm_key_map[key].key = key;
-
-  return TRUE;
 }
 
 static void
@@ -190,34 +259,28 @@ xfpm_button_ungrab (XfpmButton *button,
                     guint keysym,
                     XfpmButtonKey key)
 {
-  Display *display;
-  GdkDisplay *gdisplay;
-  guint modmask = AnyModifier;
-  guint keycode = XKeysymToKeycode (gdk_x11_get_default_xdisplay (), keysym);
+  guint keycode;
+  guint modmask;
 
-  if (keycode == 0)
+  if (xfpm_button_keysym_to_code_mask (button, keysym, &keycode, &modmask))
   {
-    XFPM_DEBUG ("could not map keysym %x to keycode\n", keysym);
-    return;
+    gdk_x11_display_error_trap_push (button->priv->gdisplay);
+    XUngrabKey (button->priv->xdisplay, keycode, modmask,
+                GDK_WINDOW_XID (button->priv->window));
+    XUngrabKey (button->priv->xdisplay, keycode, LockMask | modmask,
+                GDK_WINDOW_XID (button->priv->window));
+    gdk_display_flush (button->priv->gdisplay);
+    gdk_x11_display_error_trap_pop_ignored (button->priv->gdisplay);
+    XFPM_DEBUG_ENUM (key, XFPM_TYPE_BUTTON_KEY, "Ungrabbed key %li ", (long int) keycode);
+
+    xfpm_key_map[key].key_code = 0;
+    xfpm_key_map[key].key_modifiers = 0;
+    xfpm_key_map[key].key = 0;
   }
-
-  display = gdk_x11_get_default_xdisplay ();
-  gdisplay = gdk_display_get_default ();
-
-  gdk_x11_display_error_trap_push (gdisplay);
-
-  XUngrabKey (display, keycode, modmask,
-              GDK_WINDOW_XID (button->priv->window));
-  XUngrabKey (display, keycode, LockMask | modmask,
-              GDK_WINDOW_XID (button->priv->window));
-
-  gdk_display_flush (gdisplay);
-  gdk_x11_display_error_trap_pop_ignored (gdisplay);
-
-  XFPM_DEBUG_ENUM (key, XFPM_TYPE_BUTTON_KEY, "Ungrabbed key %li ", (long int) keycode);
-
-  xfpm_key_map[key].key_code = 0;
-  xfpm_key_map[key].key = 0;
+  else
+  {
+    XFPM_DEBUG ("could not map keysym %x to keycode and modifiers", keysym);
+  }
 }
 
 static void
@@ -225,6 +288,8 @@ xfpm_button_setup (XfpmButton *button)
 {
   button->priv->screen = gdk_screen_get_default ();
   button->priv->window = gdk_screen_get_root_window (button->priv->screen);
+  button->priv->gdisplay = gdk_display_get_default ();
+  button->priv->xdisplay = gdk_x11_get_default_xdisplay ();
 
   if (xfpm_button_xevent_key (button, XF86XK_PowerOff, BUTTON_POWER_OFF))
     button->priv->mapped_buttons |= POWER_KEY;
@@ -293,6 +358,8 @@ xfpm_button_init (XfpmButton *button)
   button->priv->mapped_buttons = 0;
   button->priv->screen = NULL;
   button->priv->window = NULL;
+  button->priv->xdisplay = NULL;
+  button->priv->gdisplay = NULL;
 
 #ifdef ENABLE_X11
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
