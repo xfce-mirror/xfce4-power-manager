@@ -61,7 +61,9 @@ struct XfpmButtonPrivate
 {
   GdkScreen *screen;
   GdkWindow *window;
+#ifdef ENABLE_X11
   Display *xdisplay;
+#endif
   GdkDisplay *gdisplay;
   gboolean handle_brightness_keys;
   guint16 mapped_buttons;
@@ -289,7 +291,9 @@ xfpm_button_setup (XfpmButton *button)
   button->priv->screen = gdk_screen_get_default ();
   button->priv->window = gdk_screen_get_root_window (button->priv->screen);
   button->priv->gdisplay = gdk_display_get_default ();
+#ifdef ENABLE_X11
   button->priv->xdisplay = gdk_x11_get_default_xdisplay ();
+#endif
 
   if (xfpm_button_xevent_key (button, XF86XK_PowerOff, BUTTON_POWER_OFF))
     button->priv->mapped_buttons |= POWER_KEY;
@@ -358,7 +362,9 @@ xfpm_button_init (XfpmButton *button)
   button->priv->mapped_buttons = 0;
   button->priv->screen = NULL;
   button->priv->window = NULL;
+#ifdef ENABLE_X11
   button->priv->xdisplay = NULL;
+#endif
   button->priv->gdisplay = NULL;
 
 #ifdef ENABLE_X11
