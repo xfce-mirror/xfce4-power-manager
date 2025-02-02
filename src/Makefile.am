@@ -169,8 +169,6 @@ BUILT_SOURCES =					\
 	org.freedesktop.PowerManagement.Inhibit.c \
 	org.freedesktop.PowerManagement.Inhibit.h
 
-if MAINTAINER_MODE
-
 xfpm-marshal.c: xfpm-marshal.list
 	echo "#include \"xfpm-marshal.h\"" > $@ && \
 	glib-genmarshal $< --prefix=_xfpm_marshal --body >> $@
@@ -187,8 +185,6 @@ org.freedesktop.PowerManagement.c org.freedesktop.PowerManagement.h: $(srcdir)/o
 org.freedesktop.PowerManagement.Inhibit.c org.freedesktop.PowerManagement.Inhibit.h: $(srcdir)/org.freedesktop.PowerManagement.Inhibit.xml
 	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.freedesktop. --c-namespace=Xfpm --generate-c-code=org.freedesktop.PowerManagement.Inhibit $<
 
-endif
-
 %.desktop: %.desktop.in
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
@@ -200,7 +196,11 @@ EXTRA_DIST =                                    \
 	xfpm-marshal.list			\
 	$(autostart_in_files)                   \
 	org.xfce.power.policy.in.in              \
-	$(manpage_DATA)
+	$(manpage_DATA) \
+	org.xfce.Power.Manager.xml \
+	org.freedesktop.PowerManagement.xml \
+	org.freedesktop.PowerManagement.Inhibit.xml \
+	$(NULL)
 
 DISTCLEANFILES =                                \
 	xfce4-power-manager.desktop             \
