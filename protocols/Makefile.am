@@ -66,14 +66,8 @@ BUILT_SOURCES = \
 
 endif # ENABLE_WAYLAND
 
-EXTRA_DIST =
-
-if !HAVE_IDLE_NOTIFY
-EXTRA_DIST += \
-	ext-idle-notify-v1.xml
-endif
-
-EXTRA_DIST += \
+EXTRA_DIST = \
 	wlr-protocols/unstable/wlr-output-power-management-unstable-v1.xml \
 	wlr-protocols/unstable/wlr-output-management-unstable-v1.xml \
+	ext-idle-notify-v1.xml \
 	$(NULL)
