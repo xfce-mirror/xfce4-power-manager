@@ -53,16 +53,12 @@ manpagedir = $(mandir)/man1
 
 manpage_DATA = xfce4-power-manager-settings.1
 
-if MAINTAINER_MODE
-
 BUILT_SOURCES = 			\
 	xfce-power-manager-dbus.c	\
 	xfce-power-manager-dbus.h
 
 xfce-power-manager-dbus.c xfce-power-manager-dbus.h: $(top_srcdir)/src/org.xfce.Power.Manager.xml
 	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=xfce-power-manager-dbus $<
-
-endif
 
 #
 # .desktop file
@@ -76,7 +72,9 @@ desktop_DATA =	$(desktop_in_files:.desktop.in=.desktop)
 
 EXTRA_DIST = 					\
 	$(desktop_in_files)			\
-	$(manpage_DATA)
+	$(manpage_DATA) \
+	$(top_srcdir)/src/org.xfce.Power.Manager.xml \
+	$(NULL)
 
 DISTCLEANFILES =				\
 	$(BUILT_SOURCES)			\
