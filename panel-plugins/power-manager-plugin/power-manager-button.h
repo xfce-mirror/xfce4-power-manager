@@ -21,12 +21,13 @@
 #ifndef __POWER_MANAGER_BUTTON_H
 #define __POWER_MANAGER_BUTTON_H
 
+#include "power-manager-config.h"
+#include "power-manager-plugin.h"
+
 #include <glib-object.h>
 #include <gtk/gtk.h>
-
-#ifdef XFCE_PLUGIN
 #include <libxfce4panel/libxfce4panel.h>
-#endif
+
 
 G_BEGIN_DECLS
 
@@ -54,18 +55,11 @@ typedef struct
 
 GType
 power_manager_button_get_type (void) G_GNUC_CONST;
-#ifdef XFCE_PLUGIN
-GtkWidget *
-power_manager_button_new (XfcePanelPlugin *plugin);
-#endif
-#ifdef XFPM_SYSTRAY
-GtkWidget *
-power_manager_button_new (void);
-#endif
+PowerManagerButton *
+power_manager_button_new (PowerManagerPlugin *plugin,
+                          PowerManagerConfig *config);
 void
 power_manager_button_show (PowerManagerButton *button);
-void
-power_manager_button_show_menu (PowerManagerButton *button);
 gboolean
 power_manager_button_scroll_event (GtkWidget *widget,
                                    GdkEventScroll *ev);
