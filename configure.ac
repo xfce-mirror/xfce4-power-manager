@@ -150,24 +150,10 @@ AM_CONDITIONAL([HAVE_IDLE_NOTIFY], [test -f "$WAYLAND_PROTOCOLS_PKGDATADIR/stagi
 XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [polkit_minimum_version], [polkit], [Polkit support])
 
 #=======================================================#
-#                 Panel plugins ?                       #
+#                 Panel plugin ?                        #
 #=======================================================#
-AC_ARG_ENABLE([panel_plugins],
-	[AS_HELP_STRING([--disable-panel-plugins],[Do not build panel plugins (default=enabled)])],
-	[ac_cv_enable_panel_plugins=$enableval],
-	[ac_cv_enable_panel_plugins=yes])
-if test "x$ac_cv_enable_panel_plugins" = "xno"; then
-	build_panel_plugins="no"
-else
-	build_panel_plugins="yes"
-fi
-
 XDT_CHECK_OPTIONAL_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [libxfce4panel_minimum_version],
 [xfce4panel], [To build plugin support for Xfce's panel])
-
-
-AM_CONDITIONAL([BUILD_PANEL_PLUGINS], [test "x$build_panel_plugins" = "xyes"])
-AM_CONDITIONAL([BUILD_XFCE_PLUGIN], [test "x$LIBXFCE4PANEL_FOUND" = "xyes" && test "x$build_panel_plugins" = "xyes"])
 
 
 #=======================================================#
@@ -233,9 +219,7 @@ libdbus/Makefile
 common/Makefile
 src/Makefile
 settings/Makefile
-panel-plugins/Makefile
-panel-plugins/power-manager-plugin/Makefile
-panel-plugins/power-manager-plugin/xfce/Makefile
+panel-plugin/Makefile
 data/Makefile
 data/icons/Makefile
 data/icons/16x16/Makefile
@@ -257,10 +241,7 @@ echo "xdg autostart:        ${sysconfdir}/xdg/autostart"
 echo "X11 Support:          ${ENABLE_X11:-no}"
 echo "Wayland Support:      ${ENABLE_WAYLAND:-no}"
 echo "POLKIT:               ${POLKIT_FOUND:-no}"
-echo "Build panel plugins:  ${build_panel_plugins}"
-if test x"$build_panel_plugins" = x"yes"; then
-echo "  Xfce plugins:       ${LIBXFCE4PANEL_FOUND:-no}"
-fi
+echo "Panel plugin:         ${LIBXFCE4PANEL_FOUND:-no}"
 echo "Backend:              ${with_backend}"
 echo "Debug:                ${enable_debug}"
 echo
