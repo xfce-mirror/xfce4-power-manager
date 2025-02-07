@@ -56,14 +56,6 @@ power_manager_plugin_mode_changed (XfcePanelPlugin *panel_plugin,
 static void
 power_manager_plugin_style_updated (GtkWidget *widget);
 static void
-power_manager_plugin_get_preferred_width (GtkWidget *widget,
-                                          gint *minimum_width,
-                                          gint *natural_width);
-static void
-power_manager_plugin_get_preferred_height (GtkWidget *widget,
-                                           gint *minimum_height,
-                                           gint *natural_height);
-static void
 power_manager_plugin_configure (XfcePanelPlugin *panel_plugin);
 static void
 power_manager_plugin_about (XfcePanelPlugin *panel_plugin);
@@ -99,8 +91,6 @@ power_manager_plugin_class_init (PowerManagerPluginClass *klass)
   XfcePanelPluginClass *plugin_class;
 
   gtkwidget_class = GTK_WIDGET_CLASS (klass);
-  gtkwidget_class->get_preferred_width = power_manager_plugin_get_preferred_width;
-  gtkwidget_class->get_preferred_height = power_manager_plugin_get_preferred_height;
   gtkwidget_class->style_updated = power_manager_plugin_style_updated;
 
   plugin_class = XFCE_PANEL_PLUGIN_CLASS (klass);
@@ -153,7 +143,7 @@ power_manager_plugin_free_data (XfcePanelPlugin *panel_plugin)
   PowerManagerPlugin *plugin = POWER_MANAGER_PLUGIN (panel_plugin);
 
   if (plugin->dialog)
-    gtk_widget_destroy (GTK_WIDGET (plugin->dialog));
+    g_object_unref (plugin->dialog);
 
   if (plugin->button)
     gtk_widget_destroy (GTK_WIDGET (plugin->button));
@@ -190,38 +180,6 @@ power_manager_plugin_style_updated (GtkWidget *widget)
 {
   gtk_widget_reset_style (widget);
   gtk_widget_queue_resize (widget);
-}
-
-
-
-static void
-power_manager_plugin_get_preferred_width (GtkWidget *widget,
-                                          gint *minimum_width,
-                                          gint *natural_width)
-{
-  XfcePanelPlugin *panel_plugin = XFCE_PANEL_PLUGIN (widget);
-
-  int width = xfce_panel_plugin_get_size (panel_plugin) / xfce_panel_plugin_get_nrows (panel_plugin);
-  if (minimum_width != NULL)
-    *minimum_width = width;
-
-  if (natural_width != NULL)
-    *natural_width = width;
-}
-
-static void
-power_manager_plugin_get_preferred_height (GtkWidget *widget,
-                                           gint *minimum_height,
-                                           gint *natural_height)
-{
-  XfcePanelPlugin *panel_plugin = XFCE_PANEL_PLUGIN (widget);
-
-  int height = xfce_panel_plugin_get_size (panel_plugin) / xfce_panel_plugin_get_nrows (panel_plugin);
-  if (minimum_height != NULL)
-    *minimum_height = height;
-
-  if (natural_height != NULL)
-    *natural_height = height;
 }
 
 
