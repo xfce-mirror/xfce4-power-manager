@@ -1,4 +1,5 @@
-if BUILD_XFCE_PLUGIN
+if HAVE_LIBXFCE4PANEL
+
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
 	-DG_LOG_DOMAIN=\"xfce4-power-manager-plugin\" \
