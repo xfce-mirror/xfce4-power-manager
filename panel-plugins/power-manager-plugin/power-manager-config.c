@@ -60,18 +60,6 @@ enum
   PROP_SHOW_PRESENTATION_INDICATOR,
 };
 
-enum
-{
-  LABEL_CHANGED,
-  PRESENTATION_CHANGED,
-  LAST_SIGNAL
-};
-
-static guint power_manager_config_signals[LAST_SIGNAL] = {
-  0,
-};
-
-
 struct _PowerManagerConfigClass
 {
   GObjectClass __parent__;
@@ -123,22 +111,6 @@ power_manager_config_class_init (PowerManagerConfigClass *klass)
                                                          NULL, NULL,
                                                          DEFAULT_SHOW_PRESENTATION_INDICATOR,
                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB));
-
-  power_manager_config_signals[LABEL_CHANGED] =
-    g_signal_new (g_intern_static_string ("label-changed"),
-                  G_TYPE_FROM_CLASS (gobject_class),
-                  G_SIGNAL_RUN_LAST,
-                  0, NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
-
-  power_manager_config_signals[PRESENTATION_CHANGED] =
-    g_signal_new (g_intern_static_string ("presentation-changed"),
-                  G_TYPE_FROM_CLASS (gobject_class),
-                  G_SIGNAL_RUN_LAST,
-                  0, NULL, NULL,
-                  g_cclosure_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
 }
 
 
@@ -198,18 +170,14 @@ power_manager_config_set_property (GObject *object,
   {
     case PROP_SHOW_PANEL_LABEL:
       config->show_panel_label = g_value_get_int (value);
-      g_signal_emit (G_OBJECT (config), power_manager_config_signals[LABEL_CHANGED], 0);
-      // power_manager_button_update_label (config->button);
       break;
 
     case PROP_PRESENTATION_MODE:
       config->presentation_mode = g_value_get_boolean (value);
-      g_signal_emit (G_OBJECT (config), power_manager_config_signals[PRESENTATION_CHANGED], 0);
       break;
 
     case PROP_SHOW_PRESENTATION_INDICATOR:
       config->show_presentation_indicator = g_value_get_boolean (value);
-      g_signal_emit (G_OBJECT (config), power_manager_config_signals[PRESENTATION_CHANGED], 0);
       break;
 
     default:
