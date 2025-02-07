@@ -84,9 +84,6 @@ power_manager_dialog_class_init (PowerManagerDialogClass *klass)
 static void
 power_manager_dialog_init (PowerManagerDialog *dialog)
 {
-  dialog->plugin = NULL;
-  dialog->dialog = NULL;
-  dialog->channel = NULL;
 }
 
 
@@ -188,7 +185,6 @@ power_manager_dialog_new (PowerManagerPlugin *plugin,
   gchar *options[] = { _("None"), _("Percentage"), _("Remaining time"), _("Percentage and remaining time") };
 
   dialog = g_object_new (POWER_MANAGER_TYPE_DIALOG, NULL);
-  g_return_val_if_fail (POWER_MANAGER_IS_DIALOG (dialog), NULL);
 
   dialog->plugin = plugin;
   dialog->dialog =

@@ -373,7 +373,6 @@ power_manager_button_device_icon_draw (GtkWidget *img,
 
   width = allocation.width;
   height = allocation.height;
-  printf ("icon_draw, alloc w: %d, h: %d\n", width, height);
 
   if (state != UP_DEVICE_STATE_UNKNOWN)
   {

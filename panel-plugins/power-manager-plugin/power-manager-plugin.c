@@ -99,9 +99,6 @@ power_manager_plugin_class_init (PowerManagerPluginClass *klass)
 static void
 power_manager_plugin_init (PowerManagerPlugin *plugin)
 {
-  plugin->button = NULL;
-  plugin->dialog = NULL;
-  plugin->config = NULL;
 }
 
 
@@ -134,12 +131,10 @@ power_manager_plugin_free_data (XfcePanelPlugin *panel_plugin)
 {
   PowerManagerPlugin *plugin = POWER_MANAGER_PLUGIN (panel_plugin);
 
-  if (plugin->dialog)
+  if (plugin->dialog != NULL)
     g_object_unref (plugin->dialog);
 
-  if (plugin->button)
-    gtk_widget_destroy (GTK_WIDGET (plugin->button));
-
+  gtk_widget_destroy (GTK_WIDGET (plugin->button));
   g_object_unref (plugin->config);
 }
 

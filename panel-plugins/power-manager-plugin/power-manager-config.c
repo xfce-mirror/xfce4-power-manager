@@ -92,19 +92,19 @@ power_manager_config_class_init (PowerManagerConfigClass *klass)
                                    g_param_spec_int (SHOW_PANEL_LABEL,
                                                      NULL, NULL,
                                                      0, N_PANEL_LABELS - 1, DEFAULT_SHOW_PANEL_LABEL,
-                                                     G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB));
+                                                     G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (gobject_class, PROP_PRESENTATION_MODE,
                                    g_param_spec_boolean (PRESENTATION_MODE,
                                                          NULL, NULL,
                                                          DEFAULT_PRESENTATION_MODE,
-                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB));
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (gobject_class, PROP_SHOW_PRESENTATION_INDICATOR,
                                    g_param_spec_boolean (SHOW_PRESENTATION_INDICATOR,
                                                          NULL, NULL,
                                                          DEFAULT_SHOW_PRESENTATION_INDICATOR,
-                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_NAME | G_PARAM_STATIC_NICK | G_PARAM_STATIC_BLURB));
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 }
 
 
@@ -112,12 +112,6 @@ power_manager_config_class_init (PowerManagerConfigClass *klass)
 static void
 power_manager_config_init (PowerManagerConfig *config)
 {
-  config->plugin = NULL;
-  config->channel = NULL;
-
-  config->show_panel_label = 0;
-  config->presentation_mode = FALSE;
-  config->show_presentation_indicator = FALSE;
 }
 
 
