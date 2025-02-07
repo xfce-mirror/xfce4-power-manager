@@ -59,16 +59,6 @@
 
 static void
 xfpm_manager_finalize (GObject *object);
-static void
-xfpm_manager_set_property (GObject *object,
-                           guint property_id,
-                           const GValue *value,
-                           GParamSpec *pspec);
-static void
-xfpm_manager_get_property (GObject *object,
-                           guint property_id,
-                           GValue *value,
-                           GParamSpec *pspec);
 
 static void
 xfpm_manager_dbus_class_init (XfpmManagerClass *klass);
@@ -101,16 +91,9 @@ struct XfpmManagerPrivate
   XfpmIdle *idle;
   GtkStatusIcon *adapter_icon;
   GtkWidget *power_button;
-  gboolean show_tray_icon;
   XfpmDpms *dpms;
   GTimer *timer;
   gint inhibit_fd;
-};
-
-enum
-{
-  PROP_0 = 0,
-  PROP_SHOW_TRAY_ICON
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmManager, xfpm_manager, G_TYPE_OBJECT)
@@ -121,21 +104,6 @@ xfpm_manager_class_init (XfpmManagerClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->finalize = xfpm_manager_finalize;
-  object_class->set_property = xfpm_manager_set_property;
-  object_class->get_property = xfpm_manager_get_property;
-
-#define XFPM_PARAM_FLAGS (G_PARAM_READWRITE \
-                          | G_PARAM_STATIC_NAME \
-                          | G_PARAM_STATIC_NICK \
-                          | G_PARAM_STATIC_BLURB)
-
-  g_object_class_install_property (object_class, PROP_SHOW_TRAY_ICON,
-                                   g_param_spec_boolean (SHOW_TRAY_ICON,
-                                                         SHOW_TRAY_ICON,
-                                                         SHOW_TRAY_ICON,
-                                                         DEFAULT_SHOW_TRAY_ICON,
-                                                         XFPM_PARAM_FLAGS));
-#undef XFPM_PARAM_FLAGS
 }
 
 static void
@@ -646,7 +614,6 @@ xfpm_manager_init (XfpmManager *manager)
   notify_init ("xfce4-power-manager");
 
   manager->priv = xfpm_manager_get_instance_private (manager);
-  manager->priv->show_tray_icon = DEFAULT_SHOW_TRAY_ICON;
 
   manager->priv->timer = g_timer_new ();
   manager->priv->watch_id = g_bus_watch_name (G_BUS_TYPE_SESSION,
@@ -702,9 +669,6 @@ xfpm_manager_init (XfpmManager *manager)
                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
   g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
-  xfconf_g_property_bind (xfpm_xfconf_get_channel (manager->priv->conf),
-                          XFPM_PROPERTIES_PREFIX SHOW_TRAY_ICON, G_TYPE_INT,
-                          G_OBJECT (manager), SHOW_TRAY_ICON);
 
   g_signal_connect_object (manager->priv->monitor, "system-bus-connection-changed",
                            G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager, 0);
@@ -766,43 +730,6 @@ xfpm_manager_finalize (GObject *object)
   g_object_unref (manager->priv->kbd_backlight);
 
   G_OBJECT_CLASS (xfpm_manager_parent_class)->finalize (object);
-}
-
-static void
-xfpm_manager_set_property (GObject *object,
-                           guint property_id,
-                           const GValue *value,
-                           GParamSpec *pspec)
-{
-  switch (property_id)
-  {
-    case PROP_SHOW_TRAY_ICON:
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-  }
-}
-
-static void
-xfpm_manager_get_property (GObject *object,
-                           guint property_id,
-                           GValue *value,
-                           GParamSpec *pspec)
-{
-  XfpmManager *manager = XFPM_MANAGER (object);
-
-  switch (property_id)
-  {
-    case PROP_SHOW_TRAY_ICON:
-      g_value_set_boolean (value, manager->priv->show_tray_icon);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-  }
 }
 
 static void

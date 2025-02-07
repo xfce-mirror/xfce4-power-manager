@@ -52,7 +52,6 @@ enum
   PROP_HANDLE_BRIGHTNESS_KEYS,
   PROP_BRIGHTNESS_STEP_COUNT,
   PROP_BRIGHTNESS_EXPONENTIAL,
-  PROP_TRAY_ICON,
   PROP_CRITICAL_BATTERY_ACTION,
   PROP_POWER_BUTTON,
   PROP_HIBERNATE_BUTTON,
@@ -273,16 +272,6 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_boolean (BRIGHTNESS_EXPONENTIAL,
                                                          NULL, NULL,
                                                          DEFAULT_BRIGHTNESS_EXPONENTIAL,
-                                                         G_PARAM_READWRITE));
-
-  /**
-   * XfpmXfconf::show-tray-icon
-   **/
-  g_object_class_install_property (object_class,
-                                   PROP_TRAY_ICON,
-                                   g_param_spec_boolean (SHOW_TRAY_ICON,
-                                                         NULL, NULL,
-                                                         DEFAULT_SHOW_TRAY_ICON,
                                                          G_PARAM_READWRITE));
 
   /**
