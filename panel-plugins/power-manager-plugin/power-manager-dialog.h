@@ -22,21 +22,12 @@
 #include "power-manager-config.h"
 #include "power-manager-plugin.h"
 
-#include <glib.h>
+#include <glib-object.h>
 
 G_BEGIN_DECLS
-typedef struct _PowerManagerDialogClass PowerManagerDialogClass;
-typedef struct _PowerManagerDialog PowerManagerDialog;
 
 #define POWER_MANAGER_TYPE_DIALOG (power_manager_dialog_get_type ())
-#define POWER_MANAGER_DIALOG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), POWER_MANAGER_TYPE_DIALOG, PowerManagerDialog))
-#define POWER_MANAGER_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), POWER_MANAGER_TYPE_DIALOG, PowerManagerDialogClass))
-#define POWER_MANAGER_IS_DIALOG(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), POWER_MANAGER_TYPE_DIALOG))
-#define POWER_MANAGER_IS_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), POWER_MANAGER_TYPE_DIALOG))
-#define POWER_MANAGER_DIALOG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), POWER_MANAGER_TYPE_DIALOG, PowerManagerDialogClass))
-
-GType
-power_manager_dialog_get_type (void) G_GNUC_CONST;
+G_DECLARE_FINAL_TYPE (PowerManagerDialog, power_manager_dialog, POWER_MANAGER, DIALOG, GObject)
 
 PowerManagerDialog *
 power_manager_dialog_new (PowerManagerPlugin *plugin,

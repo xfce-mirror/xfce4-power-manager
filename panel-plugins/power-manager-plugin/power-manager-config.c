@@ -60,12 +60,6 @@ enum
   PROP_SHOW_PRESENTATION_INDICATOR,
 };
 
-struct _PowerManagerConfigClass
-{
-  GObjectClass __parent__;
-};
-
-
 
 struct _PowerManagerConfig
 {
