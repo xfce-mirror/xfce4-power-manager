@@ -940,6 +940,12 @@ power_manager_button_finalize (GObject *object)
   G_OBJECT_CLASS (power_manager_button_parent_class)->finalize (object);
 }
 
+static void
+config_label_changed (PowerManagerButton *button)
+{
+  power_manager_button_update_label (button, button->priv->display_device);
+}
+
 PowerManagerButton *
 power_manager_button_new (PowerManagerPlugin *plugin,
                           PowerManagerConfig *config)
@@ -955,7 +961,7 @@ power_manager_button_new (PowerManagerPlugin *plugin,
                             button);
 
   g_signal_connect_swapped (G_OBJECT (button->priv->config), "label-changed",
-                            G_CALLBACK (power_manager_button_update_label),
+                            G_CALLBACK (config_label_changed),
                             button);
 
   return button;
