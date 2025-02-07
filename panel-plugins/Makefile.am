@@ -1,3 +1,0 @@
-
-SUBDIRS =            \
-	power-manager-plugin
