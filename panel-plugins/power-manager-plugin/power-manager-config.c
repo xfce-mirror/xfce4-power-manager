@@ -47,6 +47,8 @@ power_manager_config_set_property (GObject *object,
                                    guint prop_id,
                                    const GValue *value,
                                    GParamSpec *pspec);
+static void
+power_manager_config_finalize (GObject *object);
 
 
 
@@ -102,6 +104,7 @@ power_manager_config_class_init (PowerManagerConfigClass *klass)
   gobject_class = G_OBJECT_CLASS (klass);
   gobject_class->set_property = power_manager_config_set_property;
   gobject_class->get_property = power_manager_config_get_property;
+  gobject_class->finalize = power_manager_config_finalize;
 
   g_object_class_install_property (gobject_class, PROP_SHOW_PANEL_LABEL,
                                    g_param_spec_int (SHOW_PANEL_LABEL,
@@ -216,17 +219,31 @@ power_manager_config_set_property (GObject *object,
 }
 
 
+static void
+power_manager_config_finalize (GObject *object)
+{
+  PowerManagerConfig *config = POWER_MANAGER_CONFIG (object);
+
+  if (config->channel != NULL)
+    xfconf_shutdown ();
+
+  G_OBJECT_CLASS (power_manager_config_parent_class)->finalize (object);
+}
+
+
+
 PowerManagerConfig *
 power_manager_config_new (PowerManagerPlugin *plugin)
 {
   PowerManagerConfig *config;
   XfconfChannel *channel;
   gchar *property;
+  GError *error = NULL;
 
   config = g_object_new (POWER_MANAGER_TYPE_CONFIG, NULL);
   config->plugin = plugin;
 
-  if (xfconf_init (NULL))
+  if (xfconf_init (&error))
   {
     channel = xfconf_channel_get (XFPM_CHANNEL);
 
@@ -243,6 +260,11 @@ power_manager_config_new (PowerManagerPlugin *plugin)
     property = g_strconcat (XFPM_PROPERTIES_PREFIX, SHOW_PRESENTATION_INDICATOR, NULL);
     xfconf_g_property_bind (channel, property, G_TYPE_BOOLEAN, config, SHOW_PRESENTATION_INDICATOR);
     g_free (property);
+  }
+  else
+  {
+    g_critical ("xfconf_init failed: %s", error->message);
+    g_error_free (error);
   }
 
   return config;
