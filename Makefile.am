@@ -2,10 +2,6 @@
 
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-if BUILD_PANEL_PLUGINS
-plugins_dir = panel-plugins
-endif
-
 SUBDIRS =        	\
 	protocols		\
 	data		\
@@ -13,7 +9,7 @@ SUBDIRS =        	\
 	common		\
 	src		\
 	settings	\
-	$(plugins_dir) \
+	panel-plugin \
 	po
 
 

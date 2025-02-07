@@ -1,3 +1,5 @@
+if HAVE_LIBXFCE4PANEL
+
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
 	-DG_LOG_DOMAIN=\"xfce4-power-manager-plugin\" \
@@ -14,11 +16,18 @@ plugindir = \
 	$(libdir)/xfce4/panel/plugins
 
 libxfce4powermanager_la_SOURCES = \
-	xfce-power-manager-plugin.c         \
-	../power-manager-button.c      \
-	../power-manager-button.h      \
-	../scalemenuitem.c       \
-	../scalemenuitem.h
+	power-manager-plugin.c      \
+	power-manager-plugin.h      \
+	power-manager-dialog.c      \
+	power-manager-dialog.h      \
+	power-manager-button.c      \
+	power-manager-button.h      \
+	power-manager-config.c      \
+	power-manager-config.h      \
+	scalemenuitem.c       \
+	scalemenuitem.h
+
+#	xfce/xfce-power-manager-plugin.c
 
 libxfce4powermanager_la_CFLAGS =         \
 	-I$(top_srcdir)	                \
@@ -71,3 +80,5 @@ CLEANFILES =                                                            \
 
 %.desktop.in: %.desktop.in.in
 	sed -e "s,\@libdir\@,$(libdir),g" < $< > $@
+
+endif

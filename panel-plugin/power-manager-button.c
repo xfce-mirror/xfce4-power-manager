@@ -1,6 +1,7 @@
 /*
  * * Copyright (C) 2014 Eric Koegel <eric@xfce.org>
  * * Copyright (C) 2019 Kacper Piwiński
+ * * Copyright (C) 2024 Andrzej Radecki <andrzejr@xfce.org>
  *
  * Licensed under the GNU General Public License Version 2
  *
@@ -24,6 +25,7 @@
 #endif
 
 #include "power-manager-button.h"
+#include "power-manager-plugin.h"
 #include "scalemenuitem.h"
 
 #include "common/xfpm-brightness.h"
@@ -34,6 +36,7 @@
 #include "common/xfpm-icons.h"
 #include "common/xfpm-power-common.h"
 
+#include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
 #include <upower.h>
@@ -44,7 +47,8 @@
 
 struct PowerManagerButtonPrivate
 {
-  XfcePanelPlugin *plugin;
+  PowerManagerPlugin *plugin;
+  PowerManagerConfig *config;
   GDBusProxy *inhibit_proxy;
 
   XfconfChannel *channel;
@@ -81,10 +85,6 @@ struct PowerManagerButtonPrivate
 
   /* filter range value changed events for snappier UI feedback */
   guint set_level_timeout;
-
-  gint show_panel_label;
-  gboolean presentation_mode;
-  gboolean show_presentation_indicator;
 };
 
 typedef struct
@@ -98,14 +98,6 @@ typedef struct
   gulong expose_signal_id; /* expose-event callback id */
   GtkWidget *menu_item; /* The device's item on the menu (if shown) */
 } BatteryDevice;
-
-typedef enum
-{
-  PROP_0 = 0,
-  PROP_SHOW_PANEL_LABEL,
-  PROP_PRESENTATION_MODE,
-  PROP_SHOW_PRESENTATION_INDICATOR,
-} POWER_MANAGER_BUTTON_PROPERTIES;
 
 enum
 {
@@ -137,8 +129,6 @@ static void
 power_manager_button_toggle_presentation_mode (GtkMenuItem *mi,
                                                GtkSwitch *sw);
 static void
-power_manager_button_update_presentation_indicator (PowerManagerButton *button);
-static void
 power_manager_button_update_label (PowerManagerButton *button,
                                    UpDevice *device);
 static gboolean
@@ -150,6 +140,11 @@ power_manager_button_menu_add_device (PowerManagerButton *button,
                                       gboolean append);
 static void
 battery_device_remove_surface (BatteryDevice *battery_device);
+static void
+power_manager_button_update_presentation_indicator (PowerManagerButton *button);
+static void
+power_manager_button_show_menu (PowerManagerButton *button,
+                                GdkEvent *event);
 
 
 static BatteryDevice *
@@ -321,11 +316,12 @@ power_manager_button_set_label (PowerManagerButton *button,
   }
 
   /* Set the label accordingly or hide it if the battery is full */
-  if (button->priv->show_panel_label == PANEL_LABEL_PERCENTAGE)
+  gint show_panel_label = power_manager_config_get_show_panel_label (button->priv->config);
+  if (show_panel_label == PANEL_LABEL_PERCENTAGE)
     label_string = g_strdup_printf ("%d%%", (int) percentage);
-  else if (button->priv->show_panel_label == PANEL_LABEL_TIME)
+  else if (show_panel_label == PANEL_LABEL_TIME)
     label_string = g_strdup_printf ("%s", remaining_time);
-  else if (button->priv->show_panel_label == PANEL_LABEL_PERCENTAGE_AND_TIME)
+  else if (show_panel_label == PANEL_LABEL_PERCENTAGE_AND_TIME)
     label_string = g_strdup_printf ("%d%% - %s", (int) percentage, remaining_time);
 
   gtk_label_set_text (GTK_LABEL (button->priv->panel_label), label_string);
@@ -762,61 +758,6 @@ power_manager_button_scroll_event (GtkWidget *widget,
 }
 
 static void
-power_manager_button_set_property (GObject *object,
-                                   guint property_id,
-                                   const GValue *value,
-                                   GParamSpec *pspec)
-{
-  PowerManagerButton *button = POWER_MANAGER_BUTTON (object);
-
-  switch (property_id)
-  {
-    case PROP_SHOW_PANEL_LABEL:
-      button->priv->show_panel_label = g_value_get_int (value);
-      power_manager_button_update_label (button, button->priv->display_device);
-      break;
-    case PROP_PRESENTATION_MODE:
-      button->priv->presentation_mode = g_value_get_boolean (value);
-      if (GTK_IS_WIDGET (button->priv->panel_presentation_mode))
-        power_manager_button_update_presentation_indicator (button);
-      break;
-    case PROP_SHOW_PRESENTATION_INDICATOR:
-      button->priv->show_presentation_indicator = g_value_get_boolean (value);
-      if (GTK_IS_WIDGET (button->priv->panel_presentation_mode))
-        power_manager_button_update_presentation_indicator (button);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-  }
-}
-
-static void
-power_manager_button_get_property (GObject *object,
-                                   guint property_id,
-                                   GValue *value,
-                                   GParamSpec *pspec)
-{
-  PowerManagerButton *button = POWER_MANAGER_BUTTON (object);
-
-  switch (property_id)
-  {
-    case PROP_SHOW_PANEL_LABEL:
-      g_value_set_int (value, button->priv->show_panel_label);
-      break;
-    case PROP_PRESENTATION_MODE:
-      g_value_set_boolean (value, button->priv->presentation_mode);
-      break;
-    case PROP_SHOW_PRESENTATION_INDICATOR:
-      g_value_set_boolean (value, button->priv->show_presentation_indicator);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-  }
-}
-
-static void
 set_brightness_properties (PowerManagerButton *button)
 {
   gint32 level = xfconf_channel_get_int (button->priv->channel, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SLIDER_MIN_LEVEL, DEFAULT_BRIGHTNESS_SLIDER_MIN_LEVEL);
@@ -839,8 +780,6 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->finalize = power_manager_button_finalize;
-  object_class->set_property = power_manager_button_set_property;
-  object_class->get_property = power_manager_button_get_property;
 
   widget_class->button_press_event = power_manager_button_press_event;
   widget_class->scroll_event = power_manager_button_scroll_event;
@@ -867,23 +806,6 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
                           | G_PARAM_STATIC_NICK \
                           | G_PARAM_STATIC_BLURB)
 
-  g_object_class_install_property (object_class, PROP_SHOW_PANEL_LABEL,
-                                   g_param_spec_int (SHOW_PANEL_LABEL,
-                                                     NULL, NULL,
-                                                     0, N_PANEL_LABELS - 1, DEFAULT_SHOW_PANEL_LABEL,
-                                                     XFPM_PARAM_FLAGS));
-
-  g_object_class_install_property (object_class, PROP_PRESENTATION_MODE,
-                                   g_param_spec_boolean (PRESENTATION_MODE,
-                                                         NULL, NULL,
-                                                         DEFAULT_PRESENTATION_MODE,
-                                                         XFPM_PARAM_FLAGS));
-
-  g_object_class_install_property (object_class, PROP_SHOW_PRESENTATION_INDICATOR,
-                                   g_param_spec_boolean (SHOW_PRESENTATION_INDICATOR,
-                                                         NULL, NULL,
-                                                         DEFAULT_SHOW_PRESENTATION_INDICATOR,
-                                                         XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 }
 
@@ -1008,30 +930,43 @@ power_manager_button_finalize (GObject *object)
   g_list_free (button->priv->devices);
 
   g_object_unref (button->priv->plugin);
+  g_object_unref (button->priv->config);
   if (button->priv->inhibit_proxy != NULL)
     g_object_unref (button->priv->inhibit_proxy);
 
   if (button->priv->channel != NULL)
     xfconf_shutdown ();
-
   G_OBJECT_CLASS (power_manager_button_parent_class)->finalize (object);
 }
 
-GtkWidget *
-power_manager_button_new (XfcePanelPlugin *plugin)
+static void
+config_label_changed (PowerManagerButton *button)
+{
+  power_manager_button_update_label (button, button->priv->display_device);
+}
+
+PowerManagerButton *
+power_manager_button_new (PowerManagerPlugin *plugin,
+                          PowerManagerConfig *config)
 {
   PowerManagerButton *button = NULL;
   button = g_object_new (POWER_MANAGER_TYPE_BUTTON, NULL, NULL);
 
-  button->priv->plugin = XFCE_PANEL_PLUGIN (g_object_ref (plugin));
-  xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL, G_TYPE_INT,
-                          G_OBJECT (button), SHOW_PANEL_LABEL);
-  xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
-                          G_OBJECT (button), PRESENTATION_MODE);
-  xfconf_g_property_bind (button->priv->channel, XFPM_PROPERTIES_PREFIX SHOW_PRESENTATION_INDICATOR, G_TYPE_BOOLEAN,
-                          G_OBJECT (button), SHOW_PRESENTATION_INDICATOR);
+  button->priv->plugin = POWER_MANAGER_PLUGIN (g_object_ref (plugin));
+  button->priv->config = POWER_MANAGER_CONFIG (g_object_ref (config));
 
-  return GTK_WIDGET (button);
+  g_signal_connect_swapped (G_OBJECT (button->priv->config), "notify::presentation-mode",
+                            G_CALLBACK (power_manager_button_update_presentation_indicator),
+                            button);
+  g_signal_connect_swapped (G_OBJECT (button->priv->config), "notify::show-presentation-indicator",
+                            G_CALLBACK (power_manager_button_update_presentation_indicator),
+                            button);
+
+  g_signal_connect_swapped (G_OBJECT (button->priv->config), "notify::show-panel-label",
+                            G_CALLBACK (config_label_changed),
+                            button);
+
+  return button;
 }
 
 static gboolean
@@ -1040,10 +975,13 @@ power_manager_button_press_event (GtkWidget *widget,
 {
   PowerManagerButton *button = POWER_MANAGER_BUTTON (widget);
 
+  if ((event->type == GDK_2BUTTON_PRESS) || (event->type == GDK_3BUTTON_PRESS))
+    return TRUE;
+
   if (event->button == 1 && !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
   {
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget), TRUE);
-    power_manager_button_show_menu (button);
+    power_manager_button_show_menu (button, (GdkEvent *) event);
     return TRUE;
   }
 
@@ -1059,48 +997,6 @@ power_manager_button_press_event (GtkWidget *widget,
   return FALSE;
 }
 
-static void
-power_manager_button_size_changed_cb (XfcePanelPlugin *plugin,
-                                      gint size,
-                                      PowerManagerButton *button)
-{
-  g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
-  g_return_if_fail (XFCE_IS_PANEL_PLUGIN (plugin));
-  g_return_if_fail (size > 0);
-
-  size /= xfce_panel_plugin_get_nrows (plugin);
-
-  button->priv->panel_icon_width = xfce_panel_plugin_get_icon_size (plugin);
-
-  /* resize the plugin */
-  gtk_widget_set_size_request (GTK_WIDGET (plugin), size, size);
-  power_manager_button_set_icon (button);
-
-  /* resize the plugin button too */
-  gtk_widget_set_size_request (GTK_WIDGET (button), -1, -1);
-}
-
-static void
-power_manager_button_style_update_cb (XfcePanelPlugin *plugin,
-                                      PowerManagerButton *button)
-{
-  gtk_widget_reset_style (GTK_WIDGET (plugin));
-  power_manager_button_size_changed_cb (plugin, xfce_panel_plugin_get_size (plugin), button);
-}
-
-static void
-power_manager_button_free_data_cb (XfcePanelPlugin *plugin,
-                                   PowerManagerButton *button)
-{
-  gtk_widget_destroy (GTK_WIDGET (button));
-}
-
-static void
-about_cb (GtkMenuItem *menuitem,
-          gpointer user_data)
-{
-  xfpm_about ("org.xfce.powermanager");
-}
 
 void
 power_manager_button_show (PowerManagerButton *button)
@@ -1110,9 +1006,6 @@ power_manager_button_show (PowerManagerButton *button)
   GtkCssProvider *css_provider;
 
   g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
-
-  xfce_panel_plugin_add_action_widget (button->priv->plugin, GTK_WIDGET (button));
-  xfce_panel_plugin_set_small (button->priv->plugin, TRUE);
 
   button->priv->panel_icon_image = gtk_image_new ();
   button->priv->panel_presentation_mode = gtk_image_new_from_icon_name (PRESENTATION_MODE_ICON, GTK_ICON_SIZE_BUTTON);
@@ -1135,22 +1028,10 @@ power_manager_button_show (PowerManagerButton *button)
 
   gtk_container_add (GTK_CONTAINER (button), GTK_WIDGET (hbox));
 
-  xfce_panel_plugin_menu_show_about (button->priv->plugin);
-  g_signal_connect (button->priv->plugin, "about", G_CALLBACK (about_cb), NULL);
-
-  g_signal_connect (button->priv->plugin, "size-changed",
-                    G_CALLBACK (power_manager_button_size_changed_cb), button);
-
-  g_signal_connect (button->priv->plugin, "style-updated",
-                    G_CALLBACK (power_manager_button_style_update_cb), button);
-
-  g_signal_connect (button->priv->plugin, "free-data",
-                    G_CALLBACK (power_manager_button_free_data_cb), button);
-
   gtk_widget_show_all (GTK_WIDGET (button));
 
   gtk_widget_set_visible (button->priv->panel_presentation_mode,
-                          button->priv->presentation_mode && button->priv->show_presentation_indicator);
+                          power_manager_config_get_presentation_mode (button->priv->config) && power_manager_config_get_show_presentation_indicator (button->priv->config));
   power_manager_button_update_label (button, button->priv->display_device);
   power_manager_button_set_tooltip (button);
 
@@ -1164,7 +1045,7 @@ power_manager_button_update_presentation_indicator (PowerManagerButton *button)
   gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_presentation_mode), button->priv->panel_icon_width);
 
   gtk_widget_set_visible (button->priv->panel_presentation_mode,
-                          button->priv->presentation_mode && button->priv->show_presentation_indicator);
+                          power_manager_config_get_presentation_mode (button->priv->config) && power_manager_config_get_show_presentation_indicator (button->priv->config));
 }
 
 static void
@@ -1180,12 +1061,10 @@ power_manager_button_update_label (PowerManagerButton *button,
   if (!POWER_MANAGER_IS_BUTTON (button) || !UP_IS_DEVICE (device))
     return;
 
-  if (button->priv->show_panel_label == PANEL_LABEL_NONE)
+  if (power_manager_config_get_show_panel_label (button->priv->config) == PANEL_LABEL_NONE)
   {
     gtk_widget_hide (GTK_WIDGET (button->priv->panel_label));
-    power_manager_button_size_changed_cb (button->priv->plugin,
-                                          xfce_panel_plugin_get_size (button->priv->plugin),
-                                          button);
+    gtk_widget_queue_resize (GTK_WIDGET (button->priv->plugin));
     return;
   }
   else
@@ -1477,8 +1356,9 @@ power_manager_button_toggle_presentation_mode (GtkMenuItem *mi,
 }
 
 
-void
-power_manager_button_show_menu (PowerManagerButton *button)
+static void
+power_manager_button_show_menu (PowerManagerButton *button,
+                                GdkEvent *event)
 {
   GtkWidget *menu, *mi;
   GtkWidget *box, *label, *sw;
@@ -1563,7 +1443,7 @@ power_manager_button_show_menu (PowerManagerButton *button)
   gtk_box_pack_start (GTK_BOX (box), sw, FALSE, FALSE, 0);
   gtk_container_add (GTK_CONTAINER (mi), box);
   g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (power_manager_button_toggle_presentation_mode), sw);
-  g_object_bind_property (G_OBJECT (button), PRESENTATION_MODE,
+  g_object_bind_property (G_OBJECT (button->priv->config), PRESENTATION_MODE,
                           G_OBJECT (sw), "active",
                           G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
   gtk_widget_show_all (mi);
@@ -1578,6 +1458,10 @@ power_manager_button_show_menu (PowerManagerButton *button)
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
   g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (xfpm_preferences), NULL);
 
+#if LIBXFCE4PANEL_CHECK_VERSION(4, 17, 2)
+  xfce_panel_plugin_popup_menu (XFCE_PANEL_PLUGIN (button->priv->plugin), GTK_MENU (menu),
+                                GTK_WIDGET (button), event);
+#else
   gtk_menu_popup_at_widget (GTK_MENU (menu),
                             GTK_WIDGET (button),
                             xfce_panel_plugin_get_orientation (button->priv->plugin) == GTK_ORIENTATION_VERTICAL
@@ -1586,8 +1470,8 @@ power_manager_button_show_menu (PowerManagerButton *button)
                             xfce_panel_plugin_get_orientation (button->priv->plugin) == GTK_ORIENTATION_VERTICAL
                               ? GDK_GRAVITY_EAST
                               : GDK_GRAVITY_SOUTH,
-                            NULL);
-
-  xfce_panel_plugin_register_menu (button->priv->plugin,
+                            event);
+#endif
+  xfce_panel_plugin_register_menu (XFCE_PANEL_PLUGIN (button->priv->plugin),
                                    GTK_MENU (menu));
 }
