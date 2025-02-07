@@ -956,11 +956,14 @@ power_manager_button_new (PowerManagerPlugin *plugin,
   button->priv->plugin = POWER_MANAGER_PLUGIN (g_object_ref (plugin));
   button->priv->config = POWER_MANAGER_CONFIG (g_object_ref (config));
 
-  g_signal_connect_swapped (G_OBJECT (button->priv->config), "presentation-changed",
+  g_signal_connect_swapped (G_OBJECT (button->priv->config), "notify::presentation-mode",
+                            G_CALLBACK (power_manager_button_update_presentation_indicator),
+                            button);
+  g_signal_connect_swapped (G_OBJECT (button->priv->config), "notify::show-presentation-indicator",
                             G_CALLBACK (power_manager_button_update_presentation_indicator),
                             button);
 
-  g_signal_connect_swapped (G_OBJECT (button->priv->config), "label-changed",
+  g_signal_connect_swapped (G_OBJECT (button->priv->config), "notify::show-panel-label",
                             G_CALLBACK (config_label_changed),
                             button);
 
