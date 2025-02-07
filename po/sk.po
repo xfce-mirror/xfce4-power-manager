@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-26 00:47+0200\n"
+"POT-Creation-Date: 2025-02-07 12:47+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Slavko <linux@slavino.sk>, 2015,2025\n"
 "Language-Team: Slovak (http://app.transifex.com/xfce/xfce4-power-manager/language/sk/)\n"
@@ -54,7 +54,7 @@ msgid "Power Manager"
 msgstr "Správca napájania"
 
 #: data/interfaces/xfpm-settings.ui:268
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
+#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:148
 msgid "_Help"
 msgstr "_Pomocník"
 
@@ -63,7 +63,7 @@ msgid "_Screensaver Management"
 msgstr "_Správy šetriča obrazovky"
 
 #: data/interfaces/xfpm-settings.ui:300
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
+#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
 msgid "_Close"
 msgstr "_Zatvoriť"
 
@@ -103,115 +103,111 @@ msgstr "<b>Tlačidlá</b>"
 msgid "Status notifications"
 msgstr "Oznámenia o stave"
 
-#: data/interfaces/xfpm-settings.ui:635
-msgid "System tray icon"
-msgstr "Ikona v systémovej lište"
-
-#: data/interfaces/xfpm-settings.ui:671
+#: data/interfaces/xfpm-settings.ui:633
 msgid "<b>Appearance</b>"
 msgstr "<b>Vzhľad</b>"
 
-#: data/interfaces/xfpm-settings.ui:691
+#: data/interfaces/xfpm-settings.ui:653
 msgid "General"
 msgstr "Všeobecné"
 
-#: data/interfaces/xfpm-settings.ui:736 data/interfaces/xfpm-settings.ui:974
+#: data/interfaces/xfpm-settings.ui:698 data/interfaces/xfpm-settings.ui:936
 msgid "When inactive for"
 msgstr "Ak je neaktívny"
 
-#: data/interfaces/xfpm-settings.ui:808 data/interfaces/xfpm-settings.ui:1046
+#: data/interfaces/xfpm-settings.ui:770 data/interfaces/xfpm-settings.ui:1008
 msgid "System sleep mode:"
 msgstr "Režim spánku systému:"
 
-#: data/interfaces/xfpm-settings.ui:820 data/interfaces/xfpm-settings.ui:1058
+#: data/interfaces/xfpm-settings.ui:782 data/interfaces/xfpm-settings.ui:1020
 msgid "<b>System power saving</b>"
 msgstr "<b>Šetrenie napájania systému</b>"
 
-#: data/interfaces/xfpm-settings.ui:835 data/interfaces/xfpm-settings.ui:959
+#: data/interfaces/xfpm-settings.ui:797 data/interfaces/xfpm-settings.ui:921
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Kryt notebooku</b>"
 
-#: data/interfaces/xfpm-settings.ui:850 data/interfaces/xfpm-settings.ui:927
+#: data/interfaces/xfpm-settings.ui:812 data/interfaces/xfpm-settings.ui:889
 msgid "When laptop lid is closed:"
 msgstr "Keď je zatvorený kryt notebooku:"
 
-#: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
-#: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
+#: data/interfaces/xfpm-settings.ui:813 data/interfaces/xfpm-settings.ui:826
+#: data/interfaces/xfpm-settings.ui:890 data/interfaces/xfpm-settings.ui:903
 msgid "These actions only take place if no external display is connected"
 msgstr "Tieto akcie sú použité len keď nie je pripojený externý displej"
 
-#: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
+#: data/interfaces/xfpm-settings.ui:843 data/interfaces/xfpm-settings.ui:1034
 msgid "<b>Power profile</b>"
 msgstr "<b>Profil napájania</b>"
 
-#: data/interfaces/xfpm-settings.ui:913 data/interfaces/xfpm-settings.ui:1636
+#: data/interfaces/xfpm-settings.ui:875 data/interfaces/xfpm-settings.ui:1598
 msgid "On battery"
 msgstr "Na batériu"
 
-#: data/interfaces/xfpm-settings.ui:1104 data/interfaces/xfpm-settings.ui:1889
-#: common/xfpm-power-common.c:414
+#: data/interfaces/xfpm-settings.ui:1066 data/interfaces/xfpm-settings.ui:1851
+#: common/xfpm-power-common.c:416
 msgid "Plugged in"
 msgstr "Pripojené napájanie"
 
-#: data/interfaces/xfpm-settings.ui:1140
+#: data/interfaces/xfpm-settings.ui:1102
 msgid "Critical battery power level:"
 msgstr "Kritická úroveň batérie:"
 
-#: data/interfaces/xfpm-settings.ui:1170 settings/xfpm-settings.c:232
+#: data/interfaces/xfpm-settings.ui:1132 settings/xfpm-settings.c:232
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1207
+#: data/interfaces/xfpm-settings.ui:1169
 msgid "On critical battery power:"
 msgstr "Pri kritickej úrovni batérie:"
 
-#: data/interfaces/xfpm-settings.ui:1246
+#: data/interfaces/xfpm-settings.ui:1208
 msgid "<b>Critical power</b>"
 msgstr "<b>Kritické napájanie</b>"
 
-#: data/interfaces/xfpm-settings.ui:1275
+#: data/interfaces/xfpm-settings.ui:1237
 msgid "Lock screen when system is going to sleep"
 msgstr "Uzamknúť obrazovku po uspaní systému"
 
-#: data/interfaces/xfpm-settings.ui:1294
+#: data/interfaces/xfpm-settings.ui:1256
 msgid "<b>Security</b>"
 msgstr "<b>Bezpečnosť</b>"
 
-#: data/interfaces/xfpm-settings.ui:1314
+#: data/interfaces/xfpm-settings.ui:1276
 msgid "System"
 msgstr "Systém"
 
-#: data/interfaces/xfpm-settings.ui:1353
+#: data/interfaces/xfpm-settings.ui:1315
 msgid "<b>Display power management</b>"
 msgstr "<b>Správa napájania displeja</b>"
 
-#: data/interfaces/xfpm-settings.ui:1366
+#: data/interfaces/xfpm-settings.ui:1328
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr "Umožniť správcovi napájania riadiť správu napájania displeja (DPMS) namiesto systému X11."
 
-#: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
+#: data/interfaces/xfpm-settings.ui:1403 data/interfaces/xfpm-settings.ui:1612
 msgid "Put to sleep after"
 msgstr "Uspať po"
 
-#: data/interfaces/xfpm-settings.ui:1454 data/interfaces/xfpm-settings.ui:1663
+#: data/interfaces/xfpm-settings.ui:1416 data/interfaces/xfpm-settings.ui:1625
 msgid "Switch off after"
 msgstr "Vypnúť po"
 
-#: data/interfaces/xfpm-settings.ui:1511 data/interfaces/xfpm-settings.ui:1692
+#: data/interfaces/xfpm-settings.ui:1473 data/interfaces/xfpm-settings.ui:1654
 msgid "On inactivity reduce to"
 msgstr "Pri neaktivite zredukovať na"
 
-#: data/interfaces/xfpm-settings.ui:1524 data/interfaces/xfpm-settings.ui:1705
+#: data/interfaces/xfpm-settings.ui:1486 data/interfaces/xfpm-settings.ui:1667
 msgid "Reduce after"
 msgstr "Zredukovať po"
 
-#: data/interfaces/xfpm-settings.ui:1623 data/interfaces/xfpm-settings.ui:1676
+#: data/interfaces/xfpm-settings.ui:1585 data/interfaces/xfpm-settings.ui:1638
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Redukcia jasu</b>"
 
-#: data/interfaces/xfpm-settings.ui:1909
+#: data/interfaces/xfpm-settings.ui:1871
 msgid "Display"
 msgstr "Displej"
 
@@ -302,15 +298,15 @@ msgstr "Spýtať sa"
 msgid "Number of brightness steps available using keys"
 msgstr "Počet krokov nastavenia jasu dostupných použitým klávesov"
 
-#: settings/xfpm-settings.c:819
+#: settings/xfpm-settings.c:812
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Po dosiahnutí všetkých zdrojov napájania počítača tejto úrovne nabitia"
 
-#: settings/xfpm-settings.c:833
+#: settings/xfpm-settings.c:826
 msgid "Notify"
 msgstr "Upozorniť"
 
-#: settings/xfpm-settings.c:840
+#: settings/xfpm-settings.c:839
 #, c-format
 msgid ""
 "Make sure you set a sufficiently high value here, otherwise the system will "
@@ -470,7 +466,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr "nastavenia;predvoľby;tlačidlá;spánok;uspať;hibernácia;hibernovať;batéria;vypnutie;vypnúť;jas;kryt;prenosného;počítača;zámok obrazovky;pripojené;zapojené;úspora;kritická;"
 
-#: common/xfpm-common.c:131
+#: common/xfpm-common.c:132
 msgid "translator-credits"
 msgstr "Robert Hartl <hartl.robert@gmail.com>\nTomáš Vadina <kyberdev@gmail.com>"
 
@@ -510,7 +506,7 @@ msgstr "Telefón"
 msgid "Tablet"
 msgstr "Tablet"
 
-#: common/xfpm-power-common.c:61 common/xfpm-power-common.c:297
+#: common/xfpm-power-common.c:61 common/xfpm-power-common.c:299
 msgid "Computer"
 msgstr "Počítač"
 
@@ -588,63 +584,63 @@ msgstr[1] "minúty"
 msgstr[2] "minút"
 msgstr[3] "minút"
 
-#: common/xfpm-power-common.c:337
+#: common/xfpm-power-common.c:339
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
 msgstr "<b>%s %s</b>\nPlne nabité - zostáva %s"
 
-#: common/xfpm-power-common.c:344
+#: common/xfpm-power-common.c:346
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
 msgstr "<b>%s %s</b>\nPlne nabité"
 
-#: common/xfpm-power-common.c:353
+#: common/xfpm-power-common.c:355
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
 msgstr "<b>%s %s</b>\n%0.0f%% - %s do plného nabitia"
 
-#: common/xfpm-power-common.c:361 common/xfpm-power-common.c:379
+#: common/xfpm-power-common.c:363 common/xfpm-power-common.c:381
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
 msgstr "<b>%s %s</b>\n%0.0f%%"
 
-#: common/xfpm-power-common.c:371
+#: common/xfpm-power-common.c:373
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
 msgstr "<b>%s %s</b>\n%0.0f%% - zostáva %s"
 
-#: common/xfpm-power-common.c:386
+#: common/xfpm-power-common.c:388
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nČakanie na nabíjanie (%0.0f%%)"
 
-#: common/xfpm-power-common.c:392
+#: common/xfpm-power-common.c:394
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nČakanie na vybíjanie (%0.0f%%)"
 
-#: common/xfpm-power-common.c:398
+#: common/xfpm-power-common.c:400
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
 msgstr "<b>%s %s</b>\nje prázdne"
 
-#: common/xfpm-power-common.c:403
+#: common/xfpm-power-common.c:405
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -653,26 +649,26 @@ msgstr "<b>%s %s</b>\nAktuálne nabitie: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: common/xfpm-power-common.c:413
+#: common/xfpm-power-common.c:415
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: common/xfpm-power-common.c:414
+#: common/xfpm-power-common.c:416
 msgid "Not plugged in"
 msgstr "Odpojené napájanie"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: common/xfpm-power-common.c:420
+#: common/xfpm-power-common.c:422
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: common/xfpm-power-common.c:425
+#: common/xfpm-power-common.c:427
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -903,15 +899,15 @@ msgstr "Už je spustený iný správca napájania"
 msgid "Xfce power manager is already running"
 msgstr "Správca napájania Xfce je už spustený"
 
-#: src/xfpm-inhibit.c:393
+#: src/xfpm-inhibit.c:382
 msgid "Invalid arguments"
 msgstr "Neplatné argumenty"
 
-#: src/xfpm-inhibit.c:423
+#: src/xfpm-inhibit.c:412
 msgid "Invalid cookie"
 msgstr "Neplatná cookie"
 
-#: src/xfpm-manager.c:353
+#: src/xfpm-manager.c:315
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
@@ -945,59 +941,58 @@ msgid ""
 msgstr "Na uspanie a hibernovanie systému je nutná autentifikácia"
 
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugins/power-manager-plugin/power-manager-button.c:286
+#: panel-plugins/power-manager-plugin/power-manager-button.c:276
 msgid "Display battery levels for attached devices"
 msgstr "Zobrazí úroveň batérie pripojených zariadení"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1399
+#: panel-plugins/power-manager-plugin/power-manager-button.c:1342
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "Program %s momentálne bráni správe napájania"
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1624
+#: panel-plugins/power-manager-plugin/power-manager-button.c:1533
 msgid "<b>Display brightness</b>"
 msgstr "<b>Jas displeja</b>"
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1651
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1662
+#: panel-plugins/power-manager-plugin/power-manager-button.c:1559
 msgid "Presentation _mode"
 msgstr "Reži_m prezentácie"
 
 #. Power manager settings
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1675
+#: panel-plugins/power-manager-plugin/power-manager-button.c:1576
 msgid "_Settings..."
 msgstr "_Nastavenia..."
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:139
+#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:137
 msgid "None"
 msgstr "Žiadne"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:139
+#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:137
 msgid "Percentage"
 msgstr "Percento"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:139
+#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:137
 msgid "Remaining time"
 msgstr "Zostávajúci čas"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:139
+#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:137
 msgid "Percentage and remaining time"
 msgstr "Percento a zostávajúci čas"
 
 #. create the dialog
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:147
+#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:145
 msgid "Power Manager Plugin Settings"
 msgstr "Nastavenia zásuvného modulu správcu napájania"
 
 #. show-panel-label setting
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:170
+#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:168
 msgid "Show label:"
 msgstr "Zobraziť menovku:"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:203
+#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:201
 msgid "Show 'Presentation mode' indicator:"
 msgstr "Zobraziť indikátor „Režim prezentácie“"
 
