@@ -21,22 +21,13 @@
 
 #include "power-manager-plugin.h"
 
-#include <glib.h>
+#include <glib-object.h>
 #include <libxfce4panel/libxfce4panel.h>
 
 G_BEGIN_DECLS
-typedef struct _PowerManagerConfigClass PowerManagerConfigClass;
-typedef struct _PowerManagerConfig PowerManagerConfig;
 
 #define POWER_MANAGER_TYPE_CONFIG (power_manager_config_get_type ())
-#define POWER_MANAGER_CONFIG(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), POWER_MANAGER_TYPE_CONFIG, PowerManagerConfig))
-#define POWER_MANAGER_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), POWER_MANAGER_TYPE_CONFIG, PowerManagerConfigClass))
-#define POWER_MANAGER_IS_CONFIG(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), POWER_MANAGER_TYPE_CONFIG))
-#define POWER_MANAGER_IS_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), POWER_MANAGER_TYPE_CONFIG))
-#define POWER_MANAGER_CONFIG_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), POWER_MANAGER_TYPE_CONFIG, PowerManagerConfigClass))
-
-GType
-power_manager_config_get_type (void) G_GNUC_CONST;
+G_DECLARE_FINAL_TYPE (PowerManagerConfig, power_manager_config, POWER_MANAGER, CONFIG, GObject)
 
 PowerManagerConfig *
 power_manager_config_new (PowerManagerPlugin *plugin);
@@ -49,7 +40,6 @@ power_manager_config_get_presentation_mode (PowerManagerConfig *config);
 
 gboolean
 power_manager_config_get_show_presentation_indicator (PowerManagerConfig *config);
-
 
 G_END_DECLS
 

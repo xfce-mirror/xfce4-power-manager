@@ -34,7 +34,6 @@
 #include "common/xfpm-enum-glib.h"
 #include "common/xfpm-icons.h"
 #include "common/xfpm-power-common.h"
-#include "libxfce4panel/libxfce4panel.h"
 
 #include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -59,13 +58,6 @@ static void
 power_manager_plugin_configure (XfcePanelPlugin *panel_plugin);
 static void
 power_manager_plugin_about (XfcePanelPlugin *panel_plugin);
-
-
-
-struct _PowerManagerPluginClass
-{
-  XfcePanelPluginClass __parent__;
-};
 
 
 

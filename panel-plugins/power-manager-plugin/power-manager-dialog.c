@@ -60,14 +60,6 @@ enum
 };
 
 
-
-struct _PowerManagerDialogClass
-{
-  GObjectClass __parent__;
-};
-
-
-
 struct _PowerManagerDialog
 {
   GObject __parent__;

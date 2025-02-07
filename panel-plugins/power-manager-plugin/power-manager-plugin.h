@@ -23,18 +23,9 @@
 #include <libxfce4panel/libxfce4panel.h>
 
 G_BEGIN_DECLS
-typedef struct _PowerManagerPluginClass PowerManagerPluginClass;
-typedef struct _PowerManagerPlugin PowerManagerPlugin;
 
 #define POWER_MANAGER_TYPE_PLUGIN (power_manager_plugin_get_type ())
-#define POWER_MANAGER_PLUGIN(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), POWER_MANAGER_TYPE_PLUGIN, PowerManagerPlugin))
-#define POWER_MANAGER_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), POWER_MANAGER_TYPE_PLUGIN, PowerManagerPluginClass))
-#define POWER_MANAGER_IS_PLUGIN(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), POWER_MANAGER_TYPE_PLUGIN))
-#define POWER_MANAGER_IS_PLUGIN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), POWER_MANAGER_TYPE_PLUGIN))
-#define POWER_MANAGER_PLUGIN_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), POWER_MANAGER_TYPE_PLUGIN, PowerManagerPluginClass))
-
-GType
-power_manager_plugin_get_type (void) G_GNUC_CONST;
+G_DECLARE_FINAL_TYPE (PowerManagerPlugin, power_manager_plugin, POWER_MANAGER, PLUGIN, XfcePanelPlugin)
 
 void
 power_manager_plugin_register_type (XfcePanelTypeModule *type_module);
