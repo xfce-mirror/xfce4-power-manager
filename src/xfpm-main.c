@@ -21,6 +21,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
 
 #include "xfce-power-manager-dbus.h"
 #include "xfpm-manager.h"
@@ -40,7 +43,7 @@
 static void G_GNUC_NORETURN
 show_version (void)
 {
-  g_print ("Xfce Power Manager %s\n", VERSION);
+  g_print ("Xfce Power Manager %s\n", VERSION_FULL);
   exit (EXIT_SUCCESS);
 }
 
@@ -81,7 +84,7 @@ xfpm_dump (GHashTable *hash)
   gboolean has_lid = xfpm_string_to_bool (g_hash_table_lookup (hash, "has-lid"));
 
   g_print ("---------------------------------------------------\n");
-  g_print ("       Xfce power manager version %s\n", VERSION);
+  g_print ("       Xfce power manager version %s\n", VERSION_FULL);
 #ifdef HAVE_POLKIT
   g_print (_("With policykit support\n"));
 #else

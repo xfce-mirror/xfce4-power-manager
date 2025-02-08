@@ -1,8 +1,8 @@
-appicondir = $(datadir)/icons/hicolor/48x48/apps
+appicondir = $(datadir)/icons/hicolor/32x32/apps
 appicon_DATA =								\
     org.xfce.powermanager.png
 
-statusiconsdir = $(datadir)/icons/hicolor/48x48/status
+statusiconsdir = $(datadir)/icons/hicolor/32x32/status
 statusicons_DATA =                             \
     ac-adapter.png                      \
     battery-caution-charging.png        \
@@ -18,8 +18,10 @@ statusicons_DATA =                             \
     battery-low.png                     \
     battery-missing.png                 \
     computer.png                        \
+    display-brightness.png              \
     input-keyboard.png                  \
     input-mouse.png                     \
+    keyboard-brightness.png             \
     multimedia-player.png               \
     pda.png                             \
     phone.png                           \
@@ -29,4 +31,3 @@ statusicons_DATA =                             \
 
 
 EXTRA_DIST = $(appicon_DATA) $(statusicons_DATA)
-

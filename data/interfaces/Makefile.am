@@ -18,4 +18,6 @@ CLEANFILES =					\
 
 EXTRA_DIST =					\
 	$(interfaces)				\
-	$(interfaces_h)
+	$(interfaces_h) \
+	meson.build \
+	$(NULL)

@@ -21,6 +21,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
 
 #include "xfpm-settings-app.h"
 #include "xfpm-settings.h"
@@ -392,7 +395,7 @@ xfpm_settings_app_local_options (GApplication *g_application,
   if (g_variant_dict_contains (options, "version"))
   {
     g_print (_("This is %s version %s, running on Xfce %s.\n"),
-             PACKAGE, VERSION, xfce_version_string ());
+             PACKAGE, VERSION_FULL, xfce_version_string ());
     g_print (_("Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."),
              GTK_MAJOR_VERSION, GTK_MINOR_VERSION, GTK_MICRO_VERSION,
              gtk_major_version, gtk_minor_version, gtk_micro_version);

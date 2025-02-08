@@ -21,6 +21,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
 
 #include "xfpm-common.h"
 #include "xfpm-debug.h"
@@ -130,7 +133,7 @@ xfpm_about (gpointer data)
                          "license", XFCE_LICENSE_GPL,
                          "program-name", package,
                          "translator-credits", _("translator-credits"),
-                         "version", PACKAGE_VERSION,
+                         "version", VERSION_FULL,
                          "website", "https://docs.xfce.org/xfce/xfce4-power-manager/start",
                          "logo-icon-name", "org.xfce.powermanager",
                          NULL);

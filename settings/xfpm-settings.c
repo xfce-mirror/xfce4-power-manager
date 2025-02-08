@@ -1409,7 +1409,7 @@ dialog_response_cb (GtkDialog *dialog,
   switch (response)
   {
     case GTK_RESPONSE_HELP:
-      xfce_dialog_show_help_with_version (NULL, "xfce4-power-manager", "start", NULL, XFPM_VERSION_SHORT);
+      xfce_dialog_show_help_with_version (NULL, "xfce4-power-manager", "start", NULL, VERSION_SHORT);
       break;
 
     case GTK_RESPONSE_REJECT:
