@@ -194,6 +194,7 @@ EXTRA_DIST =                                    \
 	org.xfce.Power.Manager.xml \
 	org.freedesktop.PowerManagement.xml \
 	org.freedesktop.PowerManagement.Inhibit.xml \
+	meson.build \
 	$(NULL)
 
 DISTCLEANFILES =                                \

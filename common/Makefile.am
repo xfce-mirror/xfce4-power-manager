@@ -99,3 +99,7 @@ xfpm-enum-types.c: xfpm-enum-types.h
 	&& rm -f xgen xgen~
 
 endif
+
+EXTRA_DIST = \
+	meson.build \
+	$(NULL)

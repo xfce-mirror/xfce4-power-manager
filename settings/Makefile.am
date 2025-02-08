@@ -74,6 +74,7 @@ EXTRA_DIST = 					\
 	$(desktop_in_files)			\
 	$(manpage_DATA) \
 	$(top_srcdir)/src/org.xfce.Power.Manager.xml \
+	meson.build \
 	$(NULL)
 
 DISTCLEANFILES =				\

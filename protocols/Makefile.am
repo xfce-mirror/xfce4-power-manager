@@ -70,4 +70,5 @@ EXTRA_DIST = \
 	wlr-protocols/unstable/wlr-output-power-management-unstable-v1.xml \
 	wlr-protocols/unstable/wlr-output-management-unstable-v1.xml \
 	ext-idle-notify-v1.xml \
+	meson.build \
 	$(NULL)
