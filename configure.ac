@@ -5,6 +5,7 @@ AC_INIT([xfce4-power-manager],[xdt_version],[https://gitlab.xfce.org/xfce/xfce4-
 AC_PREREQ([2.69])
 AC_REVISION([xdt_version_build])
 AC_CONFIG_MACRO_DIRS([m4])
+AC_DEFINE([VERSION_FULL], [PACKAGE_VERSION], [Alias for VERSION and PACKAGE_VERSION for meson compatibility])
 
 # subdir-objects is currently broken, see
 # http://debbugs.gnu.org/cgi/bugreport.cgi?bug=13928
@@ -192,7 +193,7 @@ m4_append([xfpm_version_short], [xdt_version_minor])
 m4_append([xfpm_version_short], ["])
 
 dnl define xfpm's short version (major.minor)
-AC_DEFINE([XFPM_VERSION_SHORT], [xfpm_version_short], [Short version string of xfce4-power-manager])
+AC_DEFINE([VERSION_SHORT], [xfpm_version_short], [Short version string of xfce4-power-manager])
 
 #=======================================================#
 #              Check for debugging support              #

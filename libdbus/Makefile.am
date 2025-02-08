@@ -33,7 +33,9 @@ xfpm-dbus-marshal.h: xfpm-dbus-marshal.list
 endif
 
 EXTRA_DIST =				\
-	xfpm-dbus-marshal.list
+	xfpm-dbus-marshal.list \
+	meson.build \
+	$(NULL)
 
 DISTCLEANFILES =			\
 	$(BUILT_SOURCES)

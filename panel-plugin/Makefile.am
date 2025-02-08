@@ -71,7 +71,9 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 EXTRA_DIST =                                                            \
-	$(desktop_in_files)
+	$(desktop_in_files) \
+	meson.build \
+	$(NULL)
 
 CLEANFILES =                                                            \
 	$(desktop_DATA)

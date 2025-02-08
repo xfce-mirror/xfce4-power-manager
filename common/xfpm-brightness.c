@@ -37,7 +37,9 @@
 #include "xfpm-brightness-polkit.h"
 #endif
 
+#ifdef HAVE_MATH_H
 #include <math.h>
+#endif
 
 #define get_instance_private(instance) \
   ((XfpmBrightnessPrivate *) xfpm_brightness_get_instance_private (XFPM_BRIGHTNESS (instance)))
