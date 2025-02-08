@@ -64,21 +64,16 @@ libxfce4powermanager_la_LIBADD =                     \
 # Desktop file
 #
 desktopdir = $(datadir)/xfce4/panel/plugins
-desktop_in_in_files = power-manager-plugin.desktop.in.in
-desktop_in_files = $(desktop_in_in_files:.desktop.in.in=.desktop.in)
+desktop_in_files = power-manager-plugin.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
 %.desktop: %.desktop.in
 	$(AM_V_GEN) $(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
 EXTRA_DIST =                                                            \
-	$(desktop_in_in_files)
+	$(desktop_in_files)
 
 CLEANFILES =                                                            \
-	$(desktop_in_files)                                             \
 	$(desktop_DATA)
-
-%.desktop.in: %.desktop.in.in
-	sed -e "s,\@libdir\@,$(libdir),g" < $< > $@
 
 endif
