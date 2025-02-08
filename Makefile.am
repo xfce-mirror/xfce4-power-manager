@@ -27,3 +27,10 @@ dist-hook: ChangeLog
 
 distclean-local:
 	rm -rf *.cache
+
+EXTRA_DIST = \
+	meson.build \
+	meson_options.txt \
+	po/meson.build \
+	xfce-revision.h.in \
+	$(null)

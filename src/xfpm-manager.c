@@ -22,6 +22,9 @@
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
 
 #include "xfpm-backlight.h"
 #include "xfpm-button.h"
@@ -1003,6 +1006,6 @@ xfpm_manager_dbus_get_info (XfpmManager *manager,
                             GDBusMethodInvocation *invocation,
                             gpointer user_data)
 {
-  xfpm_power_manager_complete_get_info (user_data, invocation, PACKAGE, VERSION, "Xfce");
+  xfpm_power_manager_complete_get_info (user_data, invocation, PACKAGE, VERSION_FULL, "Xfce");
   return TRUE;
 }
