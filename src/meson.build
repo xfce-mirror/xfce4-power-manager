@@ -165,7 +165,7 @@ if polkit.found()
 
   policy_in = configure_file(
     configuration: configuration_data({
-      'sbindir': get_option('sbindir'),
+      'sbindir': get_option('prefix') / get_option('sbindir'),
     }),
     input: 'org.xfce.power.policy.in.in',
     output: 'org.xfce.power.policy.in',
