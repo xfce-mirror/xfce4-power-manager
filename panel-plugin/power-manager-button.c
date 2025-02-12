@@ -1406,14 +1406,14 @@ power_manager_button_show_menu (PowerManagerButton *button,
     GtkWidget *img;
     gint32 current_level = 0;
 
-    mi = scale_menu_item_new_with_range (xfpm_brightness_get_min_level (button->priv->brightness),
-                                         xfpm_brightness_get_max_level (button->priv->brightness),
-                                         1);
+    mi = xfpm_scale_menu_item_new_with_range (xfpm_brightness_get_min_level (button->priv->brightness),
+                                              xfpm_brightness_get_max_level (button->priv->brightness),
+                                              1);
 
-    scale_menu_item_set_description_label (SCALE_MENU_ITEM (mi), _("<b>Display brightness</b>"));
+    xfpm_scale_menu_item_set_description_label (XFPM_SCALE_MENU_ITEM (mi), _("<b>Display brightness</b>"));
 
     /* range slider */
-    button->priv->range = scale_menu_item_get_scale (SCALE_MENU_ITEM (mi));
+    button->priv->range = xfpm_scale_menu_item_get_scale (XFPM_SCALE_MENU_ITEM (mi));
 
     /* update the slider to the current brightness level */
     xfpm_brightness_get_level (button->priv->brightness, &current_level);
