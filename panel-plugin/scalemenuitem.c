@@ -50,12 +50,14 @@ static void
 scale_menu_item_parent_set (GtkWidget *item,
                             GtkWidget *previous_parent);
 static void
-update_packing (ScaleMenuItem *self);
+update_packing (XfpmScaleMenuItem *self);
 
 
 
-struct _ScaleMenuItemPrivate
+struct _XfpmScaleMenuItem
 {
+  GtkImageMenuItem __parent__;
+
   GtkWidget *scale;
   GtkWidget *description_label;
   GtkWidget *percentage_label;
@@ -80,7 +82,7 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-G_DEFINE_TYPE_WITH_PRIVATE (ScaleMenuItem, scale_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
+G_DEFINE_TYPE (XfpmScaleMenuItem, xfpm_scale_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
 G_GNUC_END_IGNORE_DEPRECATIONS
 
 
@@ -89,18 +91,17 @@ static void
 scale_menu_item_scale_value_changed (GtkRange *range,
                                      gpointer user_data)
 {
-  ScaleMenuItem *self = user_data;
-  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (self);
+  XfpmScaleMenuItem *self = user_data;
 
   /* The signal is not sent when it was set through
    * scale_menu_item_set_value().  */
 
-  if (!priv->ignore_value_changed)
+  if (!self->ignore_value_changed)
     g_signal_emit (self, signals[VALUE_CHANGED], 0, gtk_range_get_value (range));
 }
 
 static void
-scale_menu_item_class_init (ScaleMenuItemClass *item_class)
+xfpm_scale_menu_item_class_init (XfpmScaleMenuItemClass *item_class)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (item_class);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (item_class);
@@ -113,8 +114,8 @@ scale_menu_item_class_init (ScaleMenuItemClass *item_class)
 
 
   /**
-   * ScaleMenuItem::slider-grabbed:
-   * @menuitem: The #ScaleMenuItem emitting the signal.
+   * XfpmScaleMenuItem::slider-grabbed:
+   * @menuitem: The #XfpmScaleMenuItem emitting the signal.
    *
    * The ::slider-grabbed signal is emitted when the pointer selects the slider.
    */
@@ -127,8 +128,8 @@ scale_menu_item_class_init (ScaleMenuItemClass *item_class)
                                           G_TYPE_NONE, 0);
 
   /**
-   * ScaleMenuItem::slider-released:
-   * @menuitem: The #ScaleMenuItem emitting the signal.
+   * XfpmScaleMenuItem::slider-released:
+   * @menuitem: The #XfpmScaleMenuItem emitting the signal.
    *
    * The ::slider-released signal is emitted when the pointer releases the slider.
    */
@@ -142,15 +143,15 @@ scale_menu_item_class_init (ScaleMenuItemClass *item_class)
 
 
   /**
-   * ScaleMenuItem::value-changed:
-   * @menuitem: the #ScaleMenuItem for which the value changed
+   * XfpmScaleMenuItem::value-changed:
+   * @menuitem: the #XfpmScaleMenuItem for which the value changed
    * @value: the new value
    *
    * Emitted whenever the value of the contained scale changes because
    * of user input.
    */
   signals[VALUE_CHANGED] = g_signal_new ("value-changed",
-                                         TYPE_SCALE_MENU_ITEM,
+                                         XFPM_TYPE_SCALE_MENU_ITEM,
                                          G_SIGNAL_RUN_LAST,
                                          0, NULL, NULL,
                                          g_cclosure_marshal_VOID__DOUBLE,
@@ -169,65 +170,64 @@ remove_children (GtkContainer *container)
 }
 
 static void
-update_packing (ScaleMenuItem *self)
+update_packing (XfpmScaleMenuItem *self)
 {
-  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (self);
   GtkWidget *hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   GtkWidget *vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
-  if (priv->hbox)
-    remove_children (GTK_CONTAINER (priv->hbox));
-  if (priv->vbox)
+  if (self->hbox)
+    remove_children (GTK_CONTAINER (self->hbox));
+  if (self->vbox)
   {
-    remove_children (GTK_CONTAINER (priv->vbox));
-    gtk_container_remove (GTK_CONTAINER (self), priv->vbox);
+    remove_children (GTK_CONTAINER (self->vbox));
+    gtk_container_remove (GTK_CONTAINER (self), self->vbox);
   }
 
-  priv->hbox = GTK_WIDGET (hbox);
-  priv->vbox = GTK_WIDGET (vbox);
+  self->hbox = GTK_WIDGET (hbox);
+  self->vbox = GTK_WIDGET (vbox);
 
   /* add the new layout */
-  if (priv->description_label && priv->percentage_label)
+  if (self->description_label && self->percentage_label)
   {
     /* [IC]  Description
      * [ON]  <----slider----> [percentage]%
      */
-    gtk_box_pack_start (GTK_BOX (vbox), priv->description_label, FALSE, FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), priv->hbox, TRUE, TRUE, 0);
-    gtk_box_pack_start (GTK_BOX (hbox), priv->scale, TRUE, TRUE, 0);
-    gtk_box_pack_start (GTK_BOX (hbox), priv->percentage_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), self->description_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), self->hbox, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), self->scale, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), self->percentage_label, FALSE, FALSE, 0);
   }
-  else if (priv->description_label)
+  else if (self->description_label)
   {
     /* [IC]  Description
      * [ON]  <----slider---->
      */
-    gtk_box_pack_start (GTK_BOX (vbox), priv->description_label, FALSE, FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (vbox), priv->hbox, TRUE, TRUE, 0);
-    gtk_box_pack_start (GTK_BOX (hbox), priv->scale, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), self->description_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), self->hbox, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), self->scale, TRUE, TRUE, 0);
   }
-  else if (priv->percentage_label)
+  else if (self->percentage_label)
   {
     /* [ICON]  <----slider----> [percentage]%  */
-    gtk_box_pack_start (GTK_BOX (vbox), priv->hbox, TRUE, TRUE, 0);
-    gtk_box_pack_start (GTK_BOX (hbox), priv->scale, TRUE, TRUE, 0);
-    gtk_box_pack_start (GTK_BOX (hbox), priv->percentage_label, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), self->hbox, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), self->scale, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), self->percentage_label, FALSE, FALSE, 0);
   }
   else
   {
     /* [ICON]  <----slider---->  */
-    gtk_box_pack_start (GTK_BOX (vbox), priv->hbox, TRUE, TRUE, 0);
-    gtk_box_pack_start (GTK_BOX (hbox), priv->scale, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), self->hbox, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), self->scale, TRUE, TRUE, 0);
   }
 
-  gtk_widget_show_all (priv->vbox);
-  gtk_widget_show_all (priv->hbox);
+  gtk_widget_show_all (self->vbox);
+  gtk_widget_show_all (self->hbox);
 
-  gtk_container_add (GTK_CONTAINER (self), priv->vbox);
+  gtk_container_add (GTK_CONTAINER (self), self->vbox);
 }
 
 static void
-scale_menu_item_init (ScaleMenuItem *self)
+xfpm_scale_menu_item_init (XfpmScaleMenuItem *self)
 {
 }
 
@@ -235,19 +235,19 @@ static gboolean
 scale_menu_item_button_press_event (GtkWidget *menuitem,
                                     GdkEventButton *event)
 {
-  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
+  XfpmScaleMenuItem *self = XFPM_SCALE_MENU_ITEM (menuitem);
   GtkAllocation alloc;
   gint x, y;
 
-  gtk_widget_get_allocation (priv->scale, &alloc);
-  gtk_widget_translate_coordinates (menuitem, priv->scale, event->x, event->y, &x, &y);
+  gtk_widget_get_allocation (self->scale, &alloc);
+  gtk_widget_translate_coordinates (menuitem, self->scale, event->x, event->y, &x, &y);
 
   if (x > 0 && x < alloc.width && y > 0 && y < alloc.height)
-    gtk_widget_event (priv->scale, (GdkEvent *) event);
+    gtk_widget_event (self->scale, (GdkEvent *) event);
 
-  if (!priv->grabbed)
+  if (!self->grabbed)
   {
-    priv->grabbed = TRUE;
+    self->grabbed = TRUE;
     g_signal_emit (menuitem, signals[SLIDER_GRABBED], 0);
   }
 
@@ -258,13 +258,13 @@ static gboolean
 scale_menu_item_button_release_event (GtkWidget *menuitem,
                                       GdkEventButton *event)
 {
-  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
+  XfpmScaleMenuItem *self = XFPM_SCALE_MENU_ITEM (menuitem);
 
-  gtk_widget_event (priv->scale, (GdkEvent *) event);
+  gtk_widget_event (self->scale, (GdkEvent *) event);
 
-  if (priv->grabbed)
+  if (self->grabbed)
   {
-    priv->grabbed = FALSE;
+    self->grabbed = FALSE;
     g_signal_emit (menuitem, signals[SLIDER_RELEASED], 0);
   }
 
@@ -275,24 +275,24 @@ static gboolean
 scale_menu_item_motion_notify_event (GtkWidget *menuitem,
                                      GdkEventMotion *event)
 {
-  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
-  GtkWidget *scale = priv->scale;
+  XfpmScaleMenuItem *self = XFPM_SCALE_MENU_ITEM (menuitem);
+  GtkWidget *scale = self->scale;
   GtkAllocation alloc;
   gint x, y;
 
-  gtk_widget_get_allocation (priv->scale, &alloc);
-  gtk_widget_translate_coordinates (menuitem, priv->scale, event->x, event->y, &x, &y);
+  gtk_widget_get_allocation (self->scale, &alloc);
+  gtk_widget_translate_coordinates (menuitem, self->scale, event->x, event->y, &x, &y);
 
   /* don't translate coordinates when the scale has the "grab" -
    * GtkRange expects coords relative to its event window in that case
    */
-  if (!priv->grabbed)
+  if (!self->grabbed)
   {
     event->x = x;
     event->y = y;
   }
 
-  if (priv->grabbed || (x > 0 && x < alloc.width && y > 0 && y < alloc.height))
+  if (self->grabbed || (x > 0 && x < alloc.width && y > 0 && y < alloc.height))
     gtk_widget_event (scale, (GdkEvent *) event);
 
   return TRUE;
@@ -302,23 +302,21 @@ static gboolean
 scale_menu_item_grab_broken (GtkWidget *menuitem,
                              GdkEventGrabBroken *event)
 {
-  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (SCALE_MENU_ITEM (menuitem));
+  XfpmScaleMenuItem *self = XFPM_SCALE_MENU_ITEM (menuitem);
 
-  GTK_WIDGET_GET_CLASS (priv->scale)->grab_broken_event (priv->scale, event);
+  GTK_WIDGET_GET_CLASS (self->scale)->grab_broken_event (self->scale, event);
 
   return TRUE;
 }
 
 static void
 menu_hidden (GtkWidget *menu,
-             ScaleMenuItem *scale)
+             XfpmScaleMenuItem *self)
 {
-  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (scale);
-
-  if (priv->grabbed)
+  if (self->grabbed)
   {
-    priv->grabbed = FALSE;
-    g_signal_emit (scale, signals[SLIDER_RELEASED], 0);
+    self->grabbed = FALSE;
+    g_signal_emit (self, signals[SLIDER_RELEASED], 0);
   }
 }
 
@@ -345,135 +343,114 @@ scale_menu_item_parent_set (GtkWidget *item,
 
 
 GtkWidget *
-scale_menu_item_new_with_range (gdouble min,
-                                gdouble max,
-                                gdouble step)
+xfpm_scale_menu_item_new_with_range (gdouble min,
+                                     gdouble max,
+                                     gdouble step)
 {
-  ScaleMenuItem *scale_item;
-  ScaleMenuItemPrivate *priv;
+  XfpmScaleMenuItem *menuitem = XFPM_SCALE_MENU_ITEM (g_object_new (XFPM_TYPE_SCALE_MENU_ITEM, NULL));
 
-  scale_item = SCALE_MENU_ITEM (g_object_new (TYPE_SCALE_MENU_ITEM, NULL));
+  menuitem->scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, min, max, step);
+  menuitem->vbox = NULL;
+  menuitem->hbox = NULL;
 
-  priv = scale_menu_item_get_instance_private (scale_item);
+  g_signal_connect (menuitem->scale, "value-changed", G_CALLBACK (scale_menu_item_scale_value_changed), menuitem);
+  g_object_ref (menuitem->scale);
+  gtk_widget_set_size_request (menuitem->scale, 100, -1);
+  gtk_range_set_inverted (GTK_RANGE (menuitem->scale), FALSE);
+  gtk_scale_set_draw_value (GTK_SCALE (menuitem->scale), FALSE);
 
-  priv->scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, min, max, step);
-  priv->vbox = NULL;
-  priv->hbox = NULL;
+  update_packing (menuitem);
 
-  g_signal_connect (priv->scale, "value-changed", G_CALLBACK (scale_menu_item_scale_value_changed), scale_item);
-  g_object_ref (priv->scale);
-  gtk_widget_set_size_request (priv->scale, 100, -1);
-  gtk_range_set_inverted (GTK_RANGE (priv->scale), FALSE);
-  gtk_scale_set_draw_value (GTK_SCALE (priv->scale), FALSE);
-
-  update_packing (scale_item);
-
-  gtk_widget_add_events (GTK_WIDGET (scale_item),
+  gtk_widget_add_events (GTK_WIDGET (menuitem),
                          GDK_SCROLL_MASK
                            | GDK_POINTER_MOTION_MASK
                            | GDK_BUTTON_MOTION_MASK);
 
-  return GTK_WIDGET (scale_item);
+  return GTK_WIDGET (menuitem);
 }
 
 /**
  * scale_menu_item_get_scale:
- * @menuitem: The #ScaleMenuItem
+ * @menuitem: The #XfpmScaleMenuItem
  *
  * Retrieves the scale widget.
  *
  * Return Value: (transfer none)
  **/
 GtkWidget *
-scale_menu_item_get_scale (ScaleMenuItem *menuitem)
+xfpm_scale_menu_item_get_scale (XfpmScaleMenuItem *menuitem)
 {
-  ScaleMenuItemPrivate *priv;
+  g_return_val_if_fail (XFPM_IS_SCALE_MENU_ITEM (menuitem), NULL);
 
-  g_return_val_if_fail (IS_SCALE_MENU_ITEM (menuitem), NULL);
-
-  priv = scale_menu_item_get_instance_private (menuitem);
-
-  return priv->scale;
+  return menuitem->scale;
 }
 
 /**
  * scale_menu_item_get_description_label:
- * @menuitem: The #ScaleMenuItem
+ * @menuitem: The #XfpmScaleMenuItem
  *
  * Retrieves a string of the text for the description label widget.
  *
  * Return Value: The label text.
  **/
 const gchar *
-scale_menu_item_get_description_label (ScaleMenuItem *menuitem)
+xfpm_scale_menu_item_get_description_label (XfpmScaleMenuItem *menuitem)
 {
-  ScaleMenuItemPrivate *priv;
+  g_return_val_if_fail (XFPM_IS_SCALE_MENU_ITEM (menuitem), NULL);
 
-  g_return_val_if_fail (IS_SCALE_MENU_ITEM (menuitem), NULL);
-
-  priv = scale_menu_item_get_instance_private (menuitem);
-
-  return gtk_label_get_text (GTK_LABEL (priv->description_label));
+  return gtk_label_get_text (GTK_LABEL (menuitem->description_label));
 }
 
 /**
  * scale_menu_item_get_percentage_label:
- * @menuitem: The #ScaleMenuItem
+ * @menuitem: The #XfpmScaleMenuItem
  *
  * Retrieves a string of the text for the percentage label widget.
  *
  * Return Value: The label text.
  **/
 const gchar *
-scale_menu_item_get_percentage_label (ScaleMenuItem *menuitem)
+xfpm_scale_menu_item_get_percentage_label (XfpmScaleMenuItem *menuitem)
 {
-  ScaleMenuItemPrivate *priv;
+  g_return_val_if_fail (XFPM_IS_SCALE_MENU_ITEM (menuitem), NULL);
 
-  g_return_val_if_fail (IS_SCALE_MENU_ITEM (menuitem), NULL);
-
-  priv = scale_menu_item_get_instance_private (menuitem);
-
-  return gtk_label_get_text (GTK_LABEL (priv->percentage_label));
+  return gtk_label_get_text (GTK_LABEL (menuitem->percentage_label));
 }
 
 /**
  * scale_menu_item_set_description_label:
- * @menuitem: The #ScaleMenuItem
+ * @menuitem: The #XfpmScaleMenuItem
  * @label: The label text
  *
  * Sets the text for the description label widget. If label is NULL
- * then the description label is removed from the #ScaleMenuItem.
+ * then the description label is removed from the #XfpmScaleMenuItem.
  **/
 void
-scale_menu_item_set_description_label (ScaleMenuItem *menuitem,
-                                       const gchar *label)
+xfpm_scale_menu_item_set_description_label (XfpmScaleMenuItem *menuitem,
+                                            const gchar *label)
 {
-  ScaleMenuItemPrivate *priv;
+  g_return_if_fail (XFPM_IS_SCALE_MENU_ITEM (menuitem));
 
-  g_return_if_fail (IS_SCALE_MENU_ITEM (menuitem));
-
-  priv = scale_menu_item_get_instance_private (menuitem);
-
-  if (label == NULL && priv->description_label)
+  if (label == NULL && menuitem->description_label)
   {
     /* remove label */
-    g_object_unref (priv->description_label);
-    priv->description_label = NULL;
+    g_object_unref (menuitem->description_label);
+    menuitem->description_label = NULL;
     return;
   }
 
-  if (priv->description_label && label)
+  if (menuitem->description_label && label)
   {
-    gtk_label_set_markup (GTK_LABEL (priv->description_label), label);
+    gtk_label_set_markup (GTK_LABEL (menuitem->description_label), label);
   }
   else if (label)
   {
     /* create label */
-    priv->description_label = gtk_label_new (NULL);
-    gtk_label_set_markup (GTK_LABEL (priv->description_label), label);
+    menuitem->description_label = gtk_label_new (NULL);
+    gtk_label_set_markup (GTK_LABEL (menuitem->description_label), label);
 
     /* align left */
-    gtk_widget_set_halign (GTK_WIDGET (priv->description_label), GTK_ALIGN_START);
+    gtk_widget_set_halign (GTK_WIDGET (menuitem->description_label), GTK_ALIGN_START);
   }
 
   update_packing (menuitem);
@@ -482,40 +459,36 @@ scale_menu_item_set_description_label (ScaleMenuItem *menuitem,
 
 /**
  * scale_menu_item_set_percentage_label:
- * @menuitem: The #ScaleMenuItem
+ * @menuitem: The #XfpmScaleMenuItem
  * @label: The label text
  *
  * Sets the text for the percentage label widget. If label is NULL
- * then the percentage label is removed from the #ScaleMenuItem.
+ * then the percentage label is removed from the #XfpmScaleMenuItem.
  **/
 void
-scale_menu_item_set_percentage_label (ScaleMenuItem *menuitem,
-                                      const gchar *label)
+xfpm_scale_menu_item_set_percentage_label (XfpmScaleMenuItem *menuitem,
+                                           const gchar *label)
 {
-  ScaleMenuItemPrivate *priv;
+  g_return_if_fail (XFPM_IS_SCALE_MENU_ITEM (menuitem));
 
-  g_return_if_fail (IS_SCALE_MENU_ITEM (menuitem));
-
-  priv = scale_menu_item_get_instance_private (menuitem);
-
-  if (label == NULL && priv->percentage_label)
+  if (label == NULL && menuitem->percentage_label)
   {
     /* remove label */
-    g_object_unref (priv->percentage_label);
-    priv->percentage_label = NULL;
+    g_object_unref (menuitem->percentage_label);
+    menuitem->percentage_label = NULL;
     return;
   }
 
-  if (priv->percentage_label && label)
+  if (menuitem->percentage_label && label)
   {
-    gtk_label_set_text (GTK_LABEL (priv->percentage_label), label);
+    gtk_label_set_text (GTK_LABEL (menuitem->percentage_label), label);
   }
   else if (label)
   {
     /* create label */
-    priv->percentage_label = gtk_label_new (label);
+    menuitem->percentage_label = gtk_label_new (label);
     /* align left */
-    gtk_widget_set_halign (GTK_WIDGET (priv->percentage_label), GTK_ALIGN_START);
+    gtk_widget_set_halign (GTK_WIDGET (menuitem->percentage_label), GTK_ALIGN_START);
   }
 
   update_packing (menuitem);
@@ -529,16 +502,14 @@ scale_menu_item_set_percentage_label (ScaleMenuItem *menuitem,
  * "value-changed".
  */
 void
-scale_menu_item_set_value (ScaleMenuItem *item,
-                           gdouble value)
+xfpm_scale_menu_item_set_value (XfpmScaleMenuItem *menuitem,
+                                gdouble value)
 {
-  ScaleMenuItemPrivate *priv = scale_menu_item_get_instance_private (item);
-
   /* set ignore_value_changed to signify to the scale menu item that it
    * should not emit its own value-changed signal, as that should only
    * be emitted when the value is changed by the user. */
 
-  priv->ignore_value_changed = TRUE;
-  gtk_range_set_value (GTK_RANGE (priv->scale), value);
-  priv->ignore_value_changed = FALSE;
+  menuitem->ignore_value_changed = TRUE;
+  gtk_range_set_value (GTK_RANGE (menuitem->scale), value);
+  menuitem->ignore_value_changed = FALSE;
 }
