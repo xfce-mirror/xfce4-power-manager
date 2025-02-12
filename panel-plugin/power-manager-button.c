@@ -1330,23 +1330,6 @@ range_value_changed_cb (PowerManagerButton *button,
 }
 
 static void
-range_show_cb (GtkWidget *widget,
-               PowerManagerButton *button)
-{
-  GdkSeat *seat = gdk_display_get_default_seat (gdk_display_get_default ());
-  GdkDevice *pointer = gdk_seat_get_pointer (seat);
-
-  /* Release these grabs as they will cause a lockup if pkexec is called
-   * for the brightness helper */
-  if (pointer)
-  {
-    gdk_seat_ungrab (seat);
-  }
-
-  gtk_grab_remove (widget);
-}
-
-static void
 power_manager_button_toggle_presentation_mode (GtkMenuItem *mi,
                                                GtkSwitch *sw)
 {
@@ -1421,7 +1404,6 @@ power_manager_button_show_menu (PowerManagerButton *button,
 
     g_signal_connect_swapped (mi, "value-changed", G_CALLBACK (range_value_changed_cb), button);
     g_signal_connect_swapped (mi, "scroll-event", G_CALLBACK (power_manager_button_scroll_event), button);
-    g_signal_connect (menu, "show", G_CALLBACK (range_show_cb), button);
 
     /* load and display the brightness icon and force it to 32px size */
     img = gtk_image_new_from_icon_name (XFPM_DISPLAY_BRIGHTNESS_ICON, GTK_ICON_SIZE_DND);
