@@ -929,7 +929,6 @@ power_manager_button_finalize (GObject *object)
   power_manager_button_remove_all_devices (button);
   g_list_free (button->priv->devices);
 
-  g_object_unref (button->priv->plugin);
   g_object_unref (button->priv->config);
   if (button->priv->inhibit_proxy != NULL)
     g_object_unref (button->priv->inhibit_proxy);
@@ -952,7 +951,7 @@ power_manager_button_new (PowerManagerPlugin *plugin,
   PowerManagerButton *button = NULL;
   button = g_object_new (POWER_MANAGER_TYPE_BUTTON, NULL, NULL);
 
-  button->priv->plugin = POWER_MANAGER_PLUGIN (g_object_ref (plugin));
+  button->priv->plugin = plugin;
   button->priv->config = POWER_MANAGER_CONFIG (g_object_ref (config));
 
   g_signal_connect_swapped (G_OBJECT (button->priv->config), "notify::presentation-mode",

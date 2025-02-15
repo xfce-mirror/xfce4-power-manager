@@ -134,7 +134,6 @@ power_manager_plugin_free_data (XfcePanelPlugin *panel_plugin)
   if (plugin->dialog != NULL)
     g_object_unref (plugin->dialog);
 
-  gtk_widget_destroy (GTK_WIDGET (plugin->button));
   g_object_unref (plugin->config);
 }
 
