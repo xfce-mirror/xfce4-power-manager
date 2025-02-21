@@ -272,7 +272,7 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
                              XfpmManager *manager)
 {
   XfpmLidTriggerAction action;
-  gboolean on_battery, logind_handle_lid_switch;
+  gboolean on_battery, logind_handle_lid_switch, lid_docked_active;
 
   if (manager->priv->systemd != NULL)
   {
@@ -293,13 +293,14 @@ xfpm_manager_lid_changed_cb (XfpmPower *power,
 
   g_object_get (G_OBJECT (manager->priv->conf),
                 on_battery ? LID_ACTION_ON_BATTERY : LID_ACTION_ON_AC, &action,
+                on_battery ? LID_DOCKED_ACTIVE_ON_BATTERY : LID_DOCKED_ACTIVE_ON_AC, &lid_docked_active,
                 NULL);
 
   XFPM_DEBUG_ENUM (action, XFPM_TYPE_LID_TRIGGER_ACTION, lid_is_closed ? "LID closed" : "LID opened");
 
   if (lid_is_closed)
   {
-    if (xfpm_is_multihead_connected (G_OBJECT (manager)))
+    if (!lid_docked_active && xfpm_is_multihead_connected (G_OBJECT (manager)))
     {
       XFPM_DEBUG ("Ignoring lid closed event: external monitor connected");
       return;

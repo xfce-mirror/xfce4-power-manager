@@ -810,7 +810,6 @@
                                 <property name="can_focus">False</property>
                                 <property name="margin_left">18</property>
                                 <property name="label" translatable="yes">When laptop lid is closed:</property>
-                                <property name="tooltip-text" translatable="yes">These actions only take place if no external display is connected</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -823,7 +822,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <property name="tooltip-text" translatable="yes">These actions only take place if no external display is connected</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer9"/>
                                   <attributes>
@@ -837,6 +835,21 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkCheckButton" id="lid-on-battery-docked">
+                                <property name="label" translatable="yes">Execute action if an external display is connected</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="margin_left">12</property>
+                                <property name="draw_indicator">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">5</property>
+                                <property name="width">2</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkLabel" id="power-profile-label-on-battery">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -846,7 +859,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">5</property>
+                                <property name="top_attach">6</property>
                                 <property name="width">2</property>
                               </packing>
                             </child>
@@ -865,7 +878,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">6</property>
+                                <property name="top_attach">7</property>
                                 <property name="width">2</property>
                               </packing>
                             </child>
@@ -887,7 +900,6 @@
                                 <property name="can_focus">False</property>
                                 <property name="margin_left">18</property>
                                 <property name="label" translatable="yes">When laptop lid is closed:</property>
-                                <property name="tooltip-text" translatable="yes">These actions only take place if no external display is connected</property>
                                 <property name="xalign">0</property>
                               </object>
                               <packing>
@@ -900,7 +912,6 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="hexpand">True</property>
-                                <property name="tooltip-text" translatable="yes">These actions only take place if no external display is connected</property>
                                 <child>
                                   <object class="GtkCellRendererText" id="renderer10"/>
                                   <attributes>
@@ -911,6 +922,21 @@
                               <packing>
                                 <property name="left_attach">1</property>
                                 <property name="top_attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkCheckButton" id="lid-on-ac-docked">
+                                <property name="label" translatable="yes">Execute action if an external display is connected</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="margin_left">12</property>
+                                <property name="draw_indicator">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">5</property>
+                                <property name="width">2</property>
                               </packing>
                             </child>
                             <child>
@@ -1037,7 +1063,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">5</property>
+                                <property name="top_attach">6</property>
                                 <property name="width">2</property>
                               </packing>
                             </child>
@@ -1056,7 +1082,7 @@
                               </object>
                               <packing>
                                 <property name="left_attach">0</property>
-                                <property name="top_attach">6</property>
+                                <property name="top_attach">7</property>
                                 <property name="width">2</property>
                               </packing>
                             </child>

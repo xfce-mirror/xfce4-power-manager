@@ -348,6 +348,22 @@ handle_brightness_keys_toggled_cb (GtkWidget *w,
 }
 
 static void
+show_lid_docked_cb (GtkWidget *combo_box,
+                    GtkWidget *check)
+{
+  GtkTreeModel *model;
+  GtkTreeIter selected_row;
+  gint value = 0;
+
+  if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &selected_row))
+    return;
+
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
+  gtk_tree_model_get (model, &selected_row, 1, &value, -1);
+  gtk_widget_set_visible (check, value != LID_TRIGGER_NOTHING);
+}
+
+static void
 xfpm_settings_power_supply (XfconfChannel *channel,
                             gboolean on_ac,
                             GDBusProxy *profiles_proxy,
@@ -361,7 +377,7 @@ xfpm_settings_power_supply (XfconfChannel *channel,
                             gboolean has_lid)
 {
   gboolean handle_dpms;
-  GtkWidget *inact_timeout, *inact_action, *label, *dpms;
+  GtkWidget *inact_timeout, *inact_action, *label, *dpms, *check;
   GtkWidget *lid;
   GtkWidget *brg;
   GtkWidget *brg_level;
@@ -541,6 +557,16 @@ xfpm_settings_power_supply (XfconfChannel *channel,
                      : "property-changed::" XFPM_PROPERTIES_PREFIX LID_ACTION_ON_BATTERY;
     g_object_set_data (G_OBJECT (lid), "default-value", GUINT_TO_POINTER (default_val));
     g_signal_connect (channel, property, G_CALLBACK (combo_box_xfconf_property_changed_cb), lid);
+
+    widget_id = on_ac ? "lid-on-ac-docked" : "lid-on-battery-docked";
+    check = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
+    g_signal_connect (lid, "changed", G_CALLBACK (show_lid_docked_cb), check);
+    show_lid_docked_cb (lid, check);
+
+    property = on_ac ? XFPM_PROPERTIES_PREFIX LID_DOCKED_ACTIVE_ON_AC : XFPM_PROPERTIES_PREFIX LID_DOCKED_ACTIVE_ON_BATTERY;
+    default_val = on_ac ? DEFAULT_LID_DOCKED_ACTIVE_ON_AC : DEFAULT_LID_DOCKED_ACTIVE_ON_BATTERY;
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check), default_val);
+    xfconf_g_property_bind (channel, property, G_TYPE_BOOLEAN, check, "active");
   }
   else
   {
