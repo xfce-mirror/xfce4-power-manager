@@ -163,12 +163,68 @@ xfpm_icon_load (const gchar *icon_name,
   return pix;
 }
 
+XfpmMultiheadListener multihead_listener = NULL;
+
+#ifdef ENABLE_X11
+typedef struct _XfpmMultiheadDataX11
+{
+  GObject *lifetime;
+  gboolean multihead_connected;
+  gint event_base;
+} XfpmMultiheadDataX11;
+
+static GdkFilterReturn
+filter (GdkXEvent *gdk_xevent,
+        GdkEvent *event,
+        gpointer _data)
+{
+  XfpmMultiheadDataX11 *data = _data;
+  XRRScreenResources *resources;
+  XEvent *xevent = gdk_xevent;
+  Display *xdisplay;
+  guint n_connected_outputs = 0;
+
+  if (xevent == NULL)
+    return GDK_FILTER_CONTINUE;
+
+  if (xevent->type - data->event_base != RRScreenChangeNotify)
+    return GDK_FILTER_CONTINUE;
+
+  xdisplay = gdk_x11_get_default_xdisplay ();
+  resources = XRRGetScreenResourcesCurrent (xdisplay, gdk_x11_get_default_root_xwindow ());
+  for (gint n = 0; n < resources->noutput; n++)
+  {
+    XRROutputInfo *output_info = XRRGetOutputInfo (xdisplay, resources, resources->outputs[n]);
+    if (output_info->connection == RR_Connected)
+      n_connected_outputs++;
+    XRRFreeOutputInfo (output_info);
+  }
+  XRRFreeScreenResources (resources);
+
+  if (data->multihead_connected != (n_connected_outputs > 1))
+  {
+    data->multihead_connected = !data->multihead_connected;
+    if (multihead_listener != NULL)
+      multihead_listener (data->lifetime, data->multihead_connected);
+  }
+
+  return GDK_FILTER_CONTINUE;
+}
+
+static void
+xfpm_multihead_data_x11_free (XfpmMultiheadDataX11 *data)
+{
+  gdk_window_remove_filter (gdk_get_default_root_window (), filter, data);
+  g_free (data);
+}
+#endif
+
 #ifdef ENABLE_WAYLAND
 /* clang-format off */
 static void registry_global (void *data, struct wl_registry *registry, uint32_t id, const char *interface, uint32_t version);
 static void registry_global_remove (void *data, struct wl_registry *registry, uint32_t id) {}
 static void manager_head (void *data, struct zwlr_output_manager_v1 *wl_manager, struct zwlr_output_head_v1 *head);
-static void manager_done (void *data, struct zwlr_output_manager_v1 *wl_manager, uint32_t serial) {}
+static void manager_done (void *data, struct zwlr_output_manager_v1 *wl_manager, uint32_t serial);
 static void manager_finished (void *data, struct zwlr_output_manager_v1 *wl_manager);
 static void head_name (void *data, struct zwlr_output_head_v1 *head, const char *name) {}
 static void head_description (void *data, struct zwlr_output_head_v1 *head, const char *description) {}
@@ -214,17 +270,18 @@ static const struct zwlr_output_head_v1_listener head_listener = {
   .adaptive_sync = head_adaptive_sync,
 };
 
-typedef struct _XfpmMultiheadData
+typedef struct _XfpmMultiheadDataWayland
 {
+  GObject *lifetime;
+  gboolean multihead_connected;
   struct wl_registry *wl_registry;
   struct zwlr_output_manager_v1 *wl_manager;
   GList *heads;
-} XfpmMultiheadData;
+} XfpmMultiheadDataWayland;
 
 static void
-xfpm_multihead_data_free (gpointer _data)
+xfpm_multihead_data_wayland_free (XfpmMultiheadDataWayland *data)
 {
-  XfpmMultiheadData *data = _data;
   if (data->wl_manager != NULL)
     zwlr_output_manager_v1_destroy (data->wl_manager);
   g_list_free_full (data->heads, (GDestroyNotify) zwlr_output_head_v1_destroy);
@@ -239,7 +296,7 @@ registry_global (void *_data,
                  const char *interface,
                  uint32_t version)
 {
-  XfpmMultiheadData *data = _data;
+  XfpmMultiheadDataWayland *data = _data;
   if (g_strcmp0 (zwlr_output_manager_v1_interface.name, interface) == 0)
     data->wl_manager = wl_registry_bind (data->wl_registry, id, &zwlr_output_manager_v1_interface,
                                          MIN ((uint32_t) zwlr_output_manager_v1_interface.version, version));
@@ -250,16 +307,30 @@ manager_head (void *_data,
               struct zwlr_output_manager_v1 *wl_manager,
               struct zwlr_output_head_v1 *head)
 {
-  XfpmMultiheadData *data = _data;
+  XfpmMultiheadDataWayland *data = _data;
   data->heads = g_list_prepend (data->heads, head);
   zwlr_output_head_v1_add_listener (head, &head_listener, data);
+}
+
+static void
+manager_done (void *_data,
+              struct zwlr_output_manager_v1 *wl_manager,
+              uint32_t serial)
+{
+  XfpmMultiheadDataWayland *data = _data;
+  if (data->multihead_connected != (g_list_length (data->heads) > 1))
+  {
+    data->multihead_connected = !data->multihead_connected;
+    if (multihead_listener != NULL)
+      multihead_listener (data->lifetime, data->multihead_connected);
+  }
 }
 
 static void
 manager_finished (void *_data,
                   struct zwlr_output_manager_v1 *_wl_manager)
 {
-  XfpmMultiheadData *data = _data;
+  XfpmMultiheadDataWayland *data = _data;
   zwlr_output_manager_v1_destroy (data->wl_manager);
   data->wl_manager = NULL;
 }
@@ -268,7 +339,7 @@ static void
 head_finished (void *_data,
                struct zwlr_output_head_v1 *head)
 {
-  XfpmMultiheadData *data = _data;
+  XfpmMultiheadDataWayland *data = _data;
   data->heads = g_list_remove (data->heads, head);
   zwlr_output_head_v1_destroy (head);
 }
@@ -288,47 +359,53 @@ xfpm_is_multihead_connected (GObject *_lifetime)
 #ifdef ENABLE_X11
   if (native_available && GDK_IS_X11_DISPLAY (display))
   {
-    XRRScreenResources *resources;
-    gboolean n_connected_outputs = 0;
-    Display *xdisplay = gdk_x11_get_default_xdisplay ();
+    static XfpmMultiheadDataX11 *data = NULL;
 
     if (!native_checked)
     {
+      Display *xdisplay = gdk_x11_get_default_xdisplay ();
       int event_base, error_base;
       native_available = XRRQueryExtension (xdisplay, &event_base, &error_base);
       native_checked = TRUE;
 
-      if (!native_available)
+      if (native_available)
+      {
+        GdkWindow *window = gdk_get_default_root_window ();
+        XEvent xevent = { 0 };
+
+        lifetime = _lifetime;
+        data = g_new0 (XfpmMultiheadDataX11, 1);
+        data->lifetime = lifetime;
+        data->event_base = event_base;
+        g_object_weak_ref (lifetime, (GWeakNotify) (void (*) (void)) xfpm_multihead_data_x11_free, data);
+
+        XRRSelectInput (xdisplay, GDK_WINDOW_XID (window), RRScreenChangeNotifyMask);
+        gdk_x11_register_standard_event_type (gdk_display_get_default (), event_base, RRNotify + 1);
+        gdk_window_add_filter (window, filter, data);
+        xevent.type = event_base + RRScreenChangeNotify;
+        filter ((GdkXEvent *) &xevent, NULL, data);
+      }
+      else
       {
         g_warning ("No Xrandr extension found, falling back to GDK output detection");
         return gdk_display_get_n_monitors (display) > 1;
       }
     }
 
-    resources = XRRGetScreenResourcesCurrent (xdisplay, gdk_x11_get_default_root_xwindow ());
-    for (gint n = 0; n < resources->noutput; n++)
-    {
-      XRROutputInfo *output_info = XRRGetOutputInfo (xdisplay, resources, resources->outputs[n]);
-      if (output_info->connection == RR_Connected)
-        n_connected_outputs++;
-      XRRFreeOutputInfo (output_info);
-    }
-    XRRFreeScreenResources (resources);
-
-    return n_connected_outputs > 1;
+    return data->multihead_connected;
   }
 #endif
 
 #ifdef ENABLE_WAYLAND
   if (native_available && GDK_IS_WAYLAND_DISPLAY (display))
   {
-    static XfpmMultiheadData *data = NULL;
+    static XfpmMultiheadDataWayland *data = NULL;
 
     if (!native_checked)
     {
       struct wl_display *wl_display = gdk_wayland_display_get_wl_display (display);
 
-      data = g_new0 (XfpmMultiheadData, 1);
+      data = g_new0 (XfpmMultiheadDataWayland, 1);
       data->wl_registry = wl_display_get_registry (wl_display);
       wl_registry_add_listener (data->wl_registry, &registry_listener, data);
       wl_display_roundtrip (wl_display);
@@ -338,23 +415,34 @@ xfpm_is_multihead_connected (GObject *_lifetime)
       if (native_available)
       {
         lifetime = _lifetime;
-        g_object_weak_ref (lifetime, (GWeakNotify) (void (*) (void)) xfpm_multihead_data_free, data);
+        data->lifetime = lifetime;
+        g_object_weak_ref (lifetime, (GWeakNotify) (void (*) (void)) xfpm_multihead_data_wayland_free, data);
         zwlr_output_manager_v1_add_listener (data->wl_manager, &manager_listener, data);
         wl_display_roundtrip (wl_display);
       }
       else
       {
-        xfpm_multihead_data_free (data);
+        xfpm_multihead_data_wayland_free (data);
         g_warning ("Your compositor does not seem to support the wlr-output-management protocol:"
                    "falling back to GDK output detection");
         return gdk_display_get_n_monitors (display) > 1;
       }
     }
 
-    return g_list_length (data->heads) > 1;
+    return data->multihead_connected;
   }
 #endif
 
   /* fallback: wrong if laptop screen is disabled and external screen is enabled */
   return gdk_display_get_n_monitors (display) > 1;
+}
+
+void
+xfpm_set_multihead_listener (GObject *lifetime,
+                             XfpmMultiheadListener listener)
+{
+  /* init if necessary, with NULL listener */
+  xfpm_is_multihead_connected (lifetime);
+
+  multihead_listener = listener;
 }
