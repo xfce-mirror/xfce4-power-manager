@@ -25,6 +25,8 @@
 
 G_BEGIN_DECLS
 
+typedef void (*XfpmMultiheadListener) (GObject *, gboolean);
+
 GdkPixbuf *
 xfpm_icon_load (const gchar *icon_name,
                 gint size,
@@ -46,6 +48,9 @@ void
 xfpm_about (gpointer data);
 gboolean
 xfpm_is_multihead_connected (GObject *lifetime);
+void
+xfpm_set_multihead_listener (GObject *lifetime,
+                             XfpmMultiheadListener listener);
 
 G_END_DECLS
 

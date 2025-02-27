@@ -573,6 +573,45 @@ xfpm_manager_systemd_events_changed (XfpmManager *manager)
 }
 
 static void
+xfpm_manager_multihead_connected_changed (GObject *object,
+                                          gboolean connected)
+{
+  if (!connected)
+  {
+    XfpmManager *manager = XFPM_MANAGER (object);
+    gboolean lid_is_closed, on_battery;
+
+    g_object_get (G_OBJECT (manager->priv->power),
+                  "lid-is-closed", &lid_is_closed,
+                  "on-battery", &on_battery,
+                  NULL);
+    if (lid_is_closed)
+    {
+      gboolean lid_docked_active;
+      g_object_get (G_OBJECT (manager->priv->conf),
+                    on_battery ? LID_DOCKED_ACTIVE_ON_BATTERY : LID_DOCKED_ACTIVE_ON_AC, &lid_docked_active,
+                    NULL);
+      if (!lid_docked_active)
+        xfpm_manager_lid_changed_cb (manager->priv->power, lid_is_closed, manager);
+    }
+  }
+}
+
+static void
+xfpm_manager_lid_docked_active_changed (XfpmManager *manager)
+{
+  gboolean lid_docked_active_on_ac, lid_docked_active_on_battery;
+
+  g_object_get (G_OBJECT (manager->priv->conf),
+                LID_DOCKED_ACTIVE_ON_AC, &lid_docked_active_on_ac,
+                LID_DOCKED_ACTIVE_ON_BATTERY, &lid_docked_active_on_battery,
+                NULL);
+  xfpm_set_multihead_listener (
+    G_OBJECT (manager),
+    !lid_docked_active_on_ac || !lid_docked_active_on_battery ? xfpm_manager_multihead_connected_changed : NULL);
+}
+
+static void
 name_appeared (GDBusConnection *connection,
                const gchar *name,
                const gchar *name_owner,
@@ -673,6 +712,11 @@ xfpm_manager_init (XfpmManager *manager)
                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
   g_signal_connect_object (manager->priv->conf, "notify::" LOGIND_HANDLE_LID_SWITCH,
                            G_CALLBACK (xfpm_manager_systemd_events_changed), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" LID_DOCKED_ACTIVE_ON_AC,
+                           G_CALLBACK (xfpm_manager_lid_docked_active_changed), manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager->priv->conf, "notify::" LID_DOCKED_ACTIVE_ON_BATTERY,
+                           G_CALLBACK (xfpm_manager_lid_docked_active_changed), manager, G_CONNECT_SWAPPED);
+  xfpm_manager_lid_docked_active_changed (manager);
 
   g_signal_connect_object (manager->priv->monitor, "system-bus-connection-changed",
                            G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager, 0);
