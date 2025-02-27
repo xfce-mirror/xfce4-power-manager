@@ -59,6 +59,8 @@ enum
   PROP_BATTERY_BUTTON,
   PROP_LID_ACTION_ON_AC,
   PROP_LID_ACTION_ON_BATTERY,
+  PROP_LID_DOCKED_ACTIVE_ON_AC,
+  PROP_LID_DOCKED_ACTIVE_ON_BATTERY,
   PROP_BRIGHTNESS_LEVEL_ON_AC,
   PROP_BRIGHTNESS_LEVEL_ON_BATTERY,
   PROP_BRIGHTNESS_SLIDER_MIN_LEVEL,
@@ -381,6 +383,24 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                                       DEFAULT_LID_ACTION_ON_BATTERY,
                                                       G_PARAM_READWRITE));
 
+  /**
+   * XfpmXfconf::lid-docked-active-on-ac
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_LID_DOCKED_ACTIVE_ON_AC,
+                                   g_param_spec_boolean (LID_DOCKED_ACTIVE_ON_AC,
+                                                         NULL, NULL,
+                                                         DEFAULT_LID_DOCKED_ACTIVE_ON_AC,
+                                                         G_PARAM_READWRITE));
+  /**
+   * XfpmXfconf::lid-docked-active-on-battery
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_LID_DOCKED_ACTIVE_ON_BATTERY,
+                                   g_param_spec_boolean (LID_DOCKED_ACTIVE_ON_BATTERY,
+                                                         NULL, NULL,
+                                                         DEFAULT_LID_DOCKED_ACTIVE_ON_BATTERY,
+                                                         G_PARAM_READWRITE));
   /**
    * XfpmXfconf::dpms-enabled
    **/
