@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2025-02-07 12:47+0100\n"
+"POT-Creation-Date: 2025-02-28 00:48+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>, 2013,2019,2021,2024\n"
 "Language-Team: Finnish (http://app.transifex.com/xfce/xfce4-power-manager/language/fi/)\n"
@@ -55,7 +55,7 @@ msgid "Power Manager"
 msgstr "Virranhallinta"
 
 #: data/interfaces/xfpm-settings.ui:268
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:148
+#: panel-plugin/power-manager-dialog.c:194
 msgid "_Help"
 msgstr "_Ohje"
 
@@ -64,7 +64,7 @@ msgid "_Screensaver Management"
 msgstr "_Näytönsäästäjän hallinta"
 
 #: data/interfaces/xfpm-settings.ui:300
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:149
+#: panel-plugin/power-manager-dialog.c:195
 msgid "_Close"
 msgstr "_Sulje"
 
@@ -112,103 +112,102 @@ msgstr "<b>Ulkoasu</b>"
 msgid "General"
 msgstr "Yleiset"
 
-#: data/interfaces/xfpm-settings.ui:698 data/interfaces/xfpm-settings.ui:936
+#: data/interfaces/xfpm-settings.ui:698 data/interfaces/xfpm-settings.ui:962
 msgid "When inactive for"
 msgstr "Kun tietokone on ollut toimettomana"
 
-#: data/interfaces/xfpm-settings.ui:770 data/interfaces/xfpm-settings.ui:1008
+#: data/interfaces/xfpm-settings.ui:770 data/interfaces/xfpm-settings.ui:1034
 msgid "System sleep mode:"
 msgstr "Järjestelmän virransäästötila"
 
-#: data/interfaces/xfpm-settings.ui:782 data/interfaces/xfpm-settings.ui:1020
+#: data/interfaces/xfpm-settings.ui:782 data/interfaces/xfpm-settings.ui:1046
 msgid "<b>System power saving</b>"
 msgstr "<b>Järjestelmän virransäästö</b>"
 
-#: data/interfaces/xfpm-settings.ui:797 data/interfaces/xfpm-settings.ui:921
+#: data/interfaces/xfpm-settings.ui:797 data/interfaces/xfpm-settings.ui:947
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Kannettavan tietokoneen kansi</b>"
 
-#: data/interfaces/xfpm-settings.ui:812 data/interfaces/xfpm-settings.ui:889
+#: data/interfaces/xfpm-settings.ui:812 data/interfaces/xfpm-settings.ui:902
 msgid "When laptop lid is closed:"
 msgstr "Kun kannettavan tietokoneen kansi suljetaan:"
 
-#: data/interfaces/xfpm-settings.ui:813 data/interfaces/xfpm-settings.ui:826
-#: data/interfaces/xfpm-settings.ui:890 data/interfaces/xfpm-settings.ui:903
-msgid "These actions only take place if no external display is connected"
-msgstr "Nämä toiminnot pätevät vain, jos ulkoista näyttöä ei ole yhdistetty"
+#: data/interfaces/xfpm-settings.ui:839 data/interfaces/xfpm-settings.ui:929
+msgid "Execute action if an external display is connected"
+msgstr ""
 
-#: data/interfaces/xfpm-settings.ui:843 data/interfaces/xfpm-settings.ui:1034
+#: data/interfaces/xfpm-settings.ui:856 data/interfaces/xfpm-settings.ui:1060
 msgid "<b>Power profile</b>"
 msgstr "<b>Tehoprofiili</b>"
 
-#: data/interfaces/xfpm-settings.ui:875 data/interfaces/xfpm-settings.ui:1598
+#: data/interfaces/xfpm-settings.ui:888 data/interfaces/xfpm-settings.ui:1624
 msgid "On battery"
 msgstr "Akkuvirta"
 
-#: data/interfaces/xfpm-settings.ui:1066 data/interfaces/xfpm-settings.ui:1851
+#: data/interfaces/xfpm-settings.ui:1092 data/interfaces/xfpm-settings.ui:1877
 #: common/xfpm-power-common.c:416
 msgid "Plugged in"
 msgstr "Kytketty"
 
-#: data/interfaces/xfpm-settings.ui:1102
+#: data/interfaces/xfpm-settings.ui:1128
 msgid "Critical battery power level:"
 msgstr "Kriittinen akun taso:"
 
-#: data/interfaces/xfpm-settings.ui:1132 settings/xfpm-settings.c:232
+#: data/interfaces/xfpm-settings.ui:1158 settings/xfpm-settings.c:232
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1169
+#: data/interfaces/xfpm-settings.ui:1195
 msgid "On critical battery power:"
 msgstr "Kun akku on kriittisellä tasolla:"
 
-#: data/interfaces/xfpm-settings.ui:1208
+#: data/interfaces/xfpm-settings.ui:1234
 msgid "<b>Critical power</b>"
 msgstr "<b>Kriittinen akun taso</b>"
 
-#: data/interfaces/xfpm-settings.ui:1237
+#: data/interfaces/xfpm-settings.ui:1263
 msgid "Lock screen when system is going to sleep"
 msgstr "Lukitse näyttö kun järjestelmä on siirtymässä keskeytys- ja lepotilaan"
 
-#: data/interfaces/xfpm-settings.ui:1256
+#: data/interfaces/xfpm-settings.ui:1282
 msgid "<b>Security</b>"
 msgstr "<b>Turvallisuus</b>"
 
-#: data/interfaces/xfpm-settings.ui:1276
+#: data/interfaces/xfpm-settings.ui:1302
 msgid "System"
 msgstr "Järjestelmä"
 
-#: data/interfaces/xfpm-settings.ui:1315
+#: data/interfaces/xfpm-settings.ui:1341
 msgid "<b>Display power management</b>"
 msgstr "<b>Näytön virransäästö</b>"
 
-#: data/interfaces/xfpm-settings.ui:1328
+#: data/interfaces/xfpm-settings.ui:1354
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr ""
 
-#: data/interfaces/xfpm-settings.ui:1403 data/interfaces/xfpm-settings.ui:1612
+#: data/interfaces/xfpm-settings.ui:1429 data/interfaces/xfpm-settings.ui:1638
 msgid "Put to sleep after"
 msgstr "Siirry virransäästötilaan"
 
-#: data/interfaces/xfpm-settings.ui:1416 data/interfaces/xfpm-settings.ui:1625
+#: data/interfaces/xfpm-settings.ui:1442 data/interfaces/xfpm-settings.ui:1651
 msgid "Switch off after"
 msgstr "Kytke pois päältä"
 
-#: data/interfaces/xfpm-settings.ui:1473 data/interfaces/xfpm-settings.ui:1654
+#: data/interfaces/xfpm-settings.ui:1499 data/interfaces/xfpm-settings.ui:1680
 msgid "On inactivity reduce to"
 msgstr "Kun näyttö ei ole käytössä, vähennä"
 
-#: data/interfaces/xfpm-settings.ui:1486 data/interfaces/xfpm-settings.ui:1667
+#: data/interfaces/xfpm-settings.ui:1512 data/interfaces/xfpm-settings.ui:1693
 msgid "Reduce after"
 msgstr "Vähennä..."
 
-#: data/interfaces/xfpm-settings.ui:1585 data/interfaces/xfpm-settings.ui:1638
+#: data/interfaces/xfpm-settings.ui:1611 data/interfaces/xfpm-settings.ui:1664
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Kirkkauden vähentäminen</b>"
 
-#: data/interfaces/xfpm-settings.ui:1871
+#: data/interfaces/xfpm-settings.ui:1897
 msgid "Display"
 msgstr "Näyttö"
 
@@ -227,87 +226,87 @@ msgstr "minuuttia"
 msgid "seconds"
 msgstr "sekuntia"
 
-#: settings/xfpm-settings.c:386 settings/xfpm-settings.c:514
-#: settings/xfpm-settings.c:651 src/xfpm-power.c:612
+#: settings/xfpm-settings.c:402 settings/xfpm-settings.c:530
+#: settings/xfpm-settings.c:677 src/xfpm-power.c:612
 msgid "Suspend"
 msgstr "Keskeytystila"
 
-#: settings/xfpm-settings.c:390
+#: settings/xfpm-settings.c:406
 msgid "Suspend operation not permitted"
 msgstr "Keskeytystilaan ei oikeutta"
 
-#: settings/xfpm-settings.c:394
+#: settings/xfpm-settings.c:410
 msgid "Suspend operation not supported"
 msgstr "Keskeytystilaa ei tueta"
 
-#: settings/xfpm-settings.c:400 settings/xfpm-settings.c:520
-#: settings/xfpm-settings.c:657 src/xfpm-power.c:607
+#: settings/xfpm-settings.c:416 settings/xfpm-settings.c:536
+#: settings/xfpm-settings.c:683 src/xfpm-power.c:607
 msgid "Hibernate"
 msgstr "Lepotila"
 
-#: settings/xfpm-settings.c:404
+#: settings/xfpm-settings.c:420
 msgid "Hibernate operation not permitted"
 msgstr "Lepotilaan ei oikeutta"
 
-#: settings/xfpm-settings.c:408
+#: settings/xfpm-settings.c:424
 msgid "Hibernate operation not supported"
 msgstr "Lepotilaa ei tueta"
 
-#: settings/xfpm-settings.c:414 settings/xfpm-settings.c:526
-#: settings/xfpm-settings.c:663 src/xfpm-power.c:617
+#: settings/xfpm-settings.c:430 settings/xfpm-settings.c:542
+#: settings/xfpm-settings.c:689 src/xfpm-power.c:617
 msgid "Hybrid Sleep"
 msgstr "Hybridi unitila"
 
-#: settings/xfpm-settings.c:418
+#: settings/xfpm-settings.c:434
 msgid "Hybrid sleep operation not permitted"
 msgstr ""
 
-#: settings/xfpm-settings.c:422
+#: settings/xfpm-settings.c:438
 msgid "Hybrid sleep operation not supported"
 msgstr ""
 
-#: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
+#: settings/xfpm-settings.c:463 settings/xfpm-settings.c:883
 msgid "Hibernate and suspend operations not supported"
 msgstr "Lepo- ja keskeytystoimintoja ei tueta"
 
-#: settings/xfpm-settings.c:452 settings/xfpm-settings.c:862
+#: settings/xfpm-settings.c:468 settings/xfpm-settings.c:888
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Lepo- ja keskeytystoimintoihin ei ole oikeutta"
 
-#: settings/xfpm-settings.c:503 settings/xfpm-settings.c:646
+#: settings/xfpm-settings.c:519 settings/xfpm-settings.c:672
 msgid "Do nothing"
 msgstr "Älä tee mitään"
 
-#: settings/xfpm-settings.c:506
+#: settings/xfpm-settings.c:522
 msgid "Switch off display"
 msgstr "Kytke näyttö pois päältä"
 
-#: settings/xfpm-settings.c:509
+#: settings/xfpm-settings.c:525
 msgid "Lock screen"
 msgstr "Lukitse näyttö"
 
-#: settings/xfpm-settings.c:530 settings/xfpm-settings.c:669
+#: settings/xfpm-settings.c:546 settings/xfpm-settings.c:695
 #: src/xfpm-power.c:630
 msgid "Shutdown"
 msgstr "Sammuta"
 
-#: settings/xfpm-settings.c:673
+#: settings/xfpm-settings.c:699
 msgid "Ask"
 msgstr "Kysy"
 
-#: settings/xfpm-settings.c:763
+#: settings/xfpm-settings.c:789
 msgid "Number of brightness steps available using keys"
 msgstr "Painikkeilla käytettävissä olevien kirkkausaskelmien lukumäärä"
 
-#: settings/xfpm-settings.c:812
+#: settings/xfpm-settings.c:838
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Kun kaikki koneen virtalähteet saavuttavat tämän lataustason"
 
-#: settings/xfpm-settings.c:826
+#: settings/xfpm-settings.c:852
 msgid "Notify"
 msgstr ""
 
-#: settings/xfpm-settings.c:839
+#: settings/xfpm-settings.c:865
 #, c-format
 msgid ""
 "Make sure you set a sufficiently high value here, otherwise the system will "
@@ -316,143 +315,143 @@ msgid ""
 "system in this case will be: %s."
 msgstr ""
 
-#: settings/xfpm-settings.c:1094
+#: settings/xfpm-settings.c:1120
 msgid "Device"
 msgstr "Laite"
 
-#: settings/xfpm-settings.c:1117
+#: settings/xfpm-settings.c:1143
 msgid "Type"
 msgstr "Tyyppi"
 
-#: settings/xfpm-settings.c:1122
+#: settings/xfpm-settings.c:1148
 msgid "PowerSupply"
 msgstr "Virtalähde"
 
-#: settings/xfpm-settings.c:1123 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1149 src/xfpm-main.c:65
 msgid "True"
 msgstr "Kyllä"
 
-#: settings/xfpm-settings.c:1123 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1149 src/xfpm-main.c:65
 msgid "False"
 msgstr "Ei"
 
-#: settings/xfpm-settings.c:1130
+#: settings/xfpm-settings.c:1156
 msgid "Model"
 msgstr "Malli"
 
-#: settings/xfpm-settings.c:1133
+#: settings/xfpm-settings.c:1159
 msgid "Technology"
 msgstr "Teknologia"
 
-#: settings/xfpm-settings.c:1140
+#: settings/xfpm-settings.c:1166
 msgid "Current charge"
 msgstr "Nykyinen lataus"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1148 settings/xfpm-settings.c:1160
-#: settings/xfpm-settings.c:1172
+#: settings/xfpm-settings.c:1174 settings/xfpm-settings.c:1186
+#: settings/xfpm-settings.c:1198
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1150
+#: settings/xfpm-settings.c:1176
 msgid "Fully charged (design)"
 msgstr "Täysin ladattu (suunniteltu)"
 
-#: settings/xfpm-settings.c:1163
+#: settings/xfpm-settings.c:1189
 msgid "Fully charged"
 msgstr "Täysin ladattu"
 
-#: settings/xfpm-settings.c:1174
+#: settings/xfpm-settings.c:1200
 msgid "Energy empty"
 msgstr "Virta loppu"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1182
+#: settings/xfpm-settings.c:1208
 msgid "W"
 msgstr ""
 
-#: settings/xfpm-settings.c:1184
+#: settings/xfpm-settings.c:1210
 msgid "Energy rate"
 msgstr ""
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1192
+#: settings/xfpm-settings.c:1218
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1194
+#: settings/xfpm-settings.c:1220
 msgid "Voltage"
 msgstr "Jännite"
 
-#: settings/xfpm-settings.c:1201
+#: settings/xfpm-settings.c:1227
 msgid "Vendor"
 msgstr "Valmistaja"
 
-#: settings/xfpm-settings.c:1206
+#: settings/xfpm-settings.c:1232
 msgid "Serial"
 msgstr "Sarjanro"
 
-#: settings/xfpm-settings.c:1493
+#: settings/xfpm-settings.c:1519
 msgid "Check your power manager installation"
 msgstr "Tarkista virranhallinnan asennus"
 
-#: settings/xfpm-settings.c:1569
+#: settings/xfpm-settings.c:1595
 msgid "Devices"
 msgstr "Laitteet"
 
-#: settings/xfpm-settings-app.c:84
+#: settings/xfpm-settings-app.c:87
 msgid "Settings manager socket"
 msgstr "Asetustenhallinnan pistoke"
 
-#: settings/xfpm-settings-app.c:84
+#: settings/xfpm-settings-app.c:87
 msgid "SOCKET ID"
 msgstr "PISTOKE"
 
-#: settings/xfpm-settings-app.c:85
+#: settings/xfpm-settings-app.c:88
 msgid "Display a specific device by UpDevice object path"
 msgstr "Näytä tietty laite UpDevice-polun perusteella"
 
-#: settings/xfpm-settings-app.c:85
+#: settings/xfpm-settings-app.c:88
 msgid "UpDevice object path"
 msgstr "UpDevice-polku"
 
-#: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
+#: settings/xfpm-settings-app.c:89 src/xfpm-main.c:245
 msgid "Enable debugging"
 msgstr "Salli vianetsintä"
 
-#: settings/xfpm-settings-app.c:87
+#: settings/xfpm-settings-app.c:90
 msgid "Display version information"
 msgstr "Näytä versiotiedot"
 
-#: settings/xfpm-settings-app.c:88
+#: settings/xfpm-settings-app.c:91
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Aiheuta xfce4-power-manager-settings -sovelluksen sulkeminen"
 
-#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
-#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
-#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
+#: settings/xfpm-settings-app.c:143 settings/xfpm-settings-app.c:190
+#: settings/xfpm-settings-app.c:267 settings/xfpm-settings-app.c:282
+#: settings/xfpm-settings-app.c:310 src/xfpm-main.c:403
 msgid "Xfce Power Manager"
 msgstr "Xfce:n virranhallinta"
 
-#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
-#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
+#: settings/xfpm-settings-app.c:144 settings/xfpm-settings-app.c:191
+#: settings/xfpm-settings-app.c:283 settings/xfpm-settings-app.c:311
 msgid "Failed to connect to power manager"
 msgstr "Virranhallintaan yhdistäminen epäonnistui"
 
-#: settings/xfpm-settings-app.c:265
+#: settings/xfpm-settings-app.c:268
 msgid "Failed to load power manager configuration"
 msgstr "Virranhallinnan asetusten lataaminen epäonnistui"
 
-#: settings/xfpm-settings-app.c:296
+#: settings/xfpm-settings-app.c:299
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4-virranhallinta ei ole käynnissä. Haluatko käynnistää sen?"
 
-#: settings/xfpm-settings-app.c:394
+#: settings/xfpm-settings-app.c:397
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "Tämä on %s versio %s, suoritusympäristönä Xfce %s.\n"
 
-#: settings/xfpm-settings-app.c:396
+#: settings/xfpm-settings-app.c:399
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Kääntäessä käytössä GTK+ %d.%d.%d, nyt GTK+ %d.%d.%d."
@@ -467,7 +466,7 @@ msgid ""
 " lid;lock screen;plugged in;saving;critical;"
 msgstr ""
 
-#: common/xfpm-common.c:132
+#: common/xfpm-common.c:135
 msgid "translator-credits"
 msgstr "Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\nPasi Lallinaho <pasi@shimmerproject.org>"
 
@@ -783,112 +782,112 @@ msgstr "%s on tyhjä."
 msgid "Keyboard Brightness: %.0f percent"
 msgstr "Näppäimistön kirkkaus: %.0f prosentti(a)"
 
-#: src/xfpm-main.c:86
+#: src/xfpm-main.c:89
 msgid "With policykit support\n"
 msgstr "Policykit-tuella\n"
 
-#: src/xfpm-main.c:88
+#: src/xfpm-main.c:91
 msgid "Without policykit support\n"
 msgstr "Ilman policykit-tukea\n"
 
-#: src/xfpm-main.c:107
+#: src/xfpm-main.c:110
 msgid "Can suspend"
 msgstr "Keskeytystila käytettävissä"
 
-#: src/xfpm-main.c:108
+#: src/xfpm-main.c:111
 msgid "Can hibernate"
 msgstr "Lepotila käytettävissä"
 
-#: src/xfpm-main.c:109
+#: src/xfpm-main.c:112
 msgid "Can hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:110
+#: src/xfpm-main.c:113
 msgid "Authorized to suspend"
 msgstr "Keskeytystila sallittu"
 
-#: src/xfpm-main.c:111
+#: src/xfpm-main.c:114
 msgid "Authorized to hibernate"
 msgstr "Lepotila sallittu"
 
-#: src/xfpm-main.c:112
+#: src/xfpm-main.c:115
 msgid "Authorized to hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:113
+#: src/xfpm-main.c:116
 msgid "Authorized to shutdown"
 msgstr "Sammutus sallittu"
 
-#: src/xfpm-main.c:114
+#: src/xfpm-main.c:117
 msgid "Has battery"
 msgstr "Akku"
 
-#: src/xfpm-main.c:115
+#: src/xfpm-main.c:118
 msgid "Has brightness panel"
 msgstr "Kirkkaussäätö"
 
-#: src/xfpm-main.c:116
+#: src/xfpm-main.c:119
 msgid "Has power button"
 msgstr "Virtapainike"
 
-#: src/xfpm-main.c:117
+#: src/xfpm-main.c:120
 msgid "Has hibernate button"
 msgstr "Keskeytystilapainike"
 
-#: src/xfpm-main.c:118
+#: src/xfpm-main.c:121
 msgid "Has sleep button"
 msgstr "Virransäästötilapainike"
 
-#: src/xfpm-main.c:119
+#: src/xfpm-main.c:122
 msgid "Has battery button"
 msgstr "Akkupainike"
 
-#: src/xfpm-main.c:120
+#: src/xfpm-main.c:123
 msgid "Has LID"
 msgstr "Suljettava kansi"
 
-#: src/xfpm-main.c:241
+#: src/xfpm-main.c:244
 msgid "Daemonize"
 msgstr ""
 
-#: src/xfpm-main.c:243
+#: src/xfpm-main.c:246
 msgid "Dump all information"
 msgstr "Tulosta kaikki tiedot"
 
-#: src/xfpm-main.c:244
+#: src/xfpm-main.c:247
 msgid "Restart the running instance of Xfce power manager"
 msgstr "Käynnistä Xfce:n virrankäytön hallinta uudelleen"
 
-#: src/xfpm-main.c:245
+#: src/xfpm-main.c:248
 msgid "Show the configuration dialog"
 msgstr "Näytä asetusikkuna"
 
-#: src/xfpm-main.c:246
+#: src/xfpm-main.c:249
 msgid "Quit any running xfce power manager"
 msgstr "Sammuta käynnissä oleva Xfce:n virranhallinta"
 
-#: src/xfpm-main.c:247
+#: src/xfpm-main.c:250
 msgid "Version information"
 msgstr "Versiotiedot"
 
-#: src/xfpm-main.c:266
+#: src/xfpm-main.c:269
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr "Argumentteja ei voitu erotella: %s\n"
 
-#: src/xfpm-main.c:300
+#: src/xfpm-main.c:303
 msgid "Unable to get connection to the message bus session"
 msgstr "Viestiväyläistuntoon ei voi yhdistää"
 
-#: src/xfpm-main.c:309 src/xfpm-main.c:361
+#: src/xfpm-main.c:312 src/xfpm-main.c:364
 msgid "Xfce power manager is not running"
 msgstr "Xfce:n virranhallinta ei ole käynnissä"
 
-#: src/xfpm-main.c:400
+#: src/xfpm-main.c:403
 msgid "Another power manager is already running"
 msgstr "Toinen virranhallintasovellus on jo käynnissä"
 
-#: src/xfpm-main.c:404
+#: src/xfpm-main.c:407
 msgid "Xfce power manager is already running"
 msgstr "Xfce:n virranhallinta on jo käynnissä"
 
@@ -900,7 +899,7 @@ msgstr "Valitsimet eivät kelpaa"
 msgid "Invalid cookie"
 msgstr "Eväste ei kelpaa"
 
-#: src/xfpm-manager.c:315
+#: src/xfpm-manager.c:319
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
@@ -934,66 +933,65 @@ msgid ""
 msgstr ""
 
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugins/power-manager-plugin/power-manager-button.c:276
+#: panel-plugin/power-manager-button.c:271
 msgid "Display battery levels for attached devices"
 msgstr "Näytä liitettyjen laitteiden akun tasot"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1342
+#: panel-plugin/power-manager-button.c:1220
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s rajoittaa tällä hetkellä virransäästöä"
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1533
+#: panel-plugin/power-manager-button.c:1395
 msgid "<b>Display brightness</b>"
 msgstr "<b>Näytön kirkkaus</b>"
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1559
+#: panel-plugin/power-manager-button.c:1420
 msgid "Presentation _mode"
 msgstr "_Esitystila"
 
 #. Power manager settings
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1576
+#: panel-plugin/power-manager-button.c:1437
 msgid "_Settings..."
 msgstr "_Asetukset..."
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:137
+#: panel-plugin/power-manager-dialog.c:185
 msgid "None"
 msgstr "Ei mitään"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:137
+#: panel-plugin/power-manager-dialog.c:185
 msgid "Percentage"
 msgstr "Prosenttimäärä"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:137
+#: panel-plugin/power-manager-dialog.c:185
 msgid "Remaining time"
 msgstr "Jäljellä oleva aika"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:137
+#: panel-plugin/power-manager-dialog.c:185
 msgid "Percentage and remaining time"
 msgstr "Prosenttimäärä ja jäljellä oleva aika"
 
-#. create the dialog
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:145
+#: panel-plugin/power-manager-dialog.c:191
 msgid "Power Manager Plugin Settings"
 msgstr "Virranhallintalisäosan asetukset"
 
 #. show-panel-label setting
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:168
+#: panel-plugin/power-manager-dialog.c:215
 msgid "Show label:"
 msgstr "Näytä otsikko:"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:201
+#: panel-plugin/power-manager-dialog.c:248
 msgid "Show 'Presentation mode' indicator:"
 msgstr "Näytä 'Esitystila' -ilmaisin:"
 
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:4
+#: panel-plugin/power-manager-plugin.desktop.in:4
 msgid "Power Manager Plugin"
 msgstr "Virransäästöliitännäinen"
 
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:5
+#: panel-plugin/power-manager-plugin.desktop.in:5
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
