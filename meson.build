@@ -136,6 +136,16 @@ elif host_os == 'openbsd'
   feature_cflags += '-DBACKEND_TYPE_OPENBSD=1'
 endif
 
+functions = [
+  'setsid',
+  'sigprocmask',
+]
+foreach function : functions
+  if cc.has_function(function)
+    feature_cflags += '-DHAVE_@0@=1'.format(function.to_upper())
+  endif
+endforeach
+
 headers = [
   'sys/param.h',
   'sys/resource.h',

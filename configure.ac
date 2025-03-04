@@ -38,7 +38,7 @@ AC_CHECK_HEADERS([errno.h signal.h stddef.h sys/types.h memory.h stdlib.h   \
                   unistd.h sys/resource.h sys/socket.h sys/sysctl.h fcntl.h \
                   sys/param.h procfs.h ])
 
-AC_CHECK_FUNCS([getpwuid setsid sigaction])
+AC_CHECK_FUNCS([setsid sigprocmask])
 
 # ===================================================== #
 # 		Check for libm	 			#
