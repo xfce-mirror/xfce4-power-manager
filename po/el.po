@@ -5,14 +5,14 @@
 # 
 # Translators:
 # Μιχάλης <mikem132@protonmail.com>, 2023
-# Πέτρος Σαμαράς <psamaras1@gmail.com>, 2023
 # Nick Schermer <nick@xfce.org>, 2023
+# Πέτρος Σαμαράς <psamaras1@gmail.com>, 2023
 # Xfce Bot <transifex@xfce.org>, 2023
 # Στέργιος Γέμελας <sgemelas@protonmail.com>, 2023
 # Efstathios Iosifidis <iefstathios@gmail.com>, 2023
 # Ápo. <apostolos.papadimitriu@gmail.com>, 2023
-# Ioannis LM, 2024
 # Michales Michaloudes, 2025
+# Ioannis LM, 2025
 # 
 #, fuzzy
 msgid ""
@@ -21,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-05-22 12:48+0200\n"
 "PO-Revision-Date: 2023-02-20 11:54+0000\n"
-"Last-Translator: Michales Michaloudes, 2025\n"
+"Last-Translator: Ioannis LM, 2025\n"
 "Language-Team: Greek (https://app.transifex.com/xfce/teams/16840/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -447,7 +447,7 @@ msgstr "Εμφάνιση πληροφοριών έκδοσης"
 
 #: ../settings/xfpm-settings-app.c:78
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr "Τερματισμός των ρυθμίσεων του διαχειριστή ρεύματος xfce4"
+msgstr "Οδηγεί σε έξοδο των ρυθμίσεων του διαχειριστή ρεύματος xfce"
 
 #: ../settings/xfpm-settings-app.c:167 ../settings/xfpm-settings-app.c:214
 #: ../src/xfpm-main.c:443
@@ -461,7 +461,8 @@ msgstr "Απέτυχε η σύνδεση με το διαχειριστή ρεύ
 #: ../settings/xfpm-settings-app.c:183
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr ""
-"Ο διαχειριστής ρεύματος xfce δεν εκτελείται, θέλετε να τον εκκινήσετε τώρα;"
+"Ο διαχειριστής ρεύματος του xfce δεν εκτελείται, θέλετε να τον εκκινήσετε "
+"τώρα;"
 
 #: ../settings/xfpm-settings-app.c:216
 msgid "Failed to load power manager configuration, using defaults"
@@ -710,8 +711,8 @@ msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr ""
-"Μία εφαρμογή κρατά απενεργοποιημένη την αυτόματη αναμονή. Με αυτή την ενέργεια ενδέχεται να πάψει να λειτουργεί αυτή η εφαρμογή.\n"
-"Είστε σίγουροι πως θέλετε να μεταβείτε σε κατάσταση αδρανοποίησης;"
+"Μια εφαρμογή κρατά απενεργοποιημένη την αυτόματη αναμονή. Ενδέχεται με αυτή την ενέργεια, να πάψει να λειτουργεί αυτή η εφαρμογή.\n"
+"Θέλετε σίγουρα να μεταβείτε σε κατάσταση αδρανοποίησης;"
 
 #: ../src/xfpm-power.c:413
 msgid ""
@@ -736,8 +737,8 @@ msgstr "Τερματισμός συστήματος"
 #: ../src/xfpm-power.c:615 ../src/xfpm-power.c:659
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr ""
-"Το σύστημα λειτουργεί με χαμηλή ενέργεια. Αποθηκεύστε την δουλειά σας για να"
-" αποφύγετε την απώλεια δεδομένων."
+"Το σύστημα λειτουργεί με χαμηλή ενέργεια. Αποθηκεύστε τις εργασίες σας για "
+"να αποφύγετε την απώλεια δεδομένων."
 
 #: ../src/xfpm-power.c:705
 msgid "_Cancel"
@@ -754,7 +755,7 @@ msgid ""
 "Estimated time left %s"
 msgstr ""
 "Το επίπεδο φόρτισης %s είναι χαμηλό.\n"
-"Εκτιμώμενος χρόνος που απομένει %s"
+"Εκτιμώμενος χρόνος λειτουργίας %s"
 
 #: ../src/xfpm-power.c:1583 ../src/xfpm-power.c:1631 ../src/xfpm-power.c:1663
 #: ../src/xfpm-power.c:1693
@@ -807,7 +808,7 @@ msgid ""
 "Estimated time left is %s"
 msgstr ""
 "%s (%i%%)\n"
-"Ο χρόνος που απομένει εκτιμάται σε %s"
+"Εκτιμώμενος χρόνος λειτουργίας %s"
 
 #: ../src/xfpm-battery.c:148 ../src/xfpm-battery.c:169
 #, c-format
@@ -935,12 +936,12 @@ msgstr "Ο διαχειριστής ρεύματος xfce δεν εκτελεί�
 
 #: ../src/xfpm-main.c:444
 msgid "Another power manager is already running"
-msgstr "Ένας άλλος διαχειριστής ρεύματος είναι ήδη σε λειτουργία"
+msgstr "Ένας άλλος διαχειριστής ρεύματος βρίσκεται σε λειτουργία"
 
 #: ../src/xfpm-main.c:448
 #, c-format
 msgid "Xfce power manager is already running"
-msgstr "Ο διαχειριστής ρεύματος xfce είναι ήδη σε λειτουργία"
+msgstr "Ο διαχειριστής ρεύματος του xfce βρίσκεται σε λειτουργία"
 
 #: ../src/xfpm-inhibit.c:394
 msgid "Invalid arguments"
@@ -960,7 +961,7 @@ msgstr ""
 
 #: ../src/xfce4-power-manager.desktop.in.h:2
 msgid "Power management for the Xfce desktop"
-msgstr "Διαχείριση ρεύματος για την επιφάνεια εργασίας του xfce"
+msgstr "Διαχείριση ρεύματος για το περιβάλλον εργασίας του xfce"
 
 #. Odds are this is a desktop without any batteries attached
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:276
@@ -973,7 +974,7 @@ msgstr "Εμφάνιση επιπέδων μπαταρίας συνδεδεμέ�
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1398
 #, c-format
 msgid "%s is currently inhibiting power management"
-msgstr "To %s αυτή τη στιγμή αναστέλλει τη διαχείριση ενέργειας."
+msgstr "Το %s αναστέλλει αυτή τη στιγμή τη διαχείριση ενέργειας."
 
 #: ../panel-plugins/power-manager-plugin/power-manager-button.c:1614
 msgid "<b>Display brightness</b>"
@@ -1037,10 +1038,10 @@ msgid ""
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
 msgstr ""
-"Ο διαχειριστής ρεύματος Xfce διαχειρίζεται την ενέργεια στον υπολογιστή και "
-"στις συσκευές που μπορούν να ελεγχθούν για να μειωθεί η κατανάλωση ενέργειας"
-" (όπως το επίπεδο φωτεινότητας σε οθόνες LCD, την αναμονή και τη ρύθμιση "
-"συχνότητας του επεξεργαστή)."
+"Ο διαχειριστής ρεύματος του Xfce διαχειρίζεται την ενέργεια στον υπολογιστή "
+"και στις συσκευές που μπορούν να ελεγχθούν, για να μειωθεί η κατανάλωση "
+"ενέργειας (όπως το επίπεδο φωτεινότητας σε οθόνες LCD, την αναμονή και τη "
+"ρύθμιση συχνότητας του επεξεργαστή)."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:2
 msgid ""
@@ -1053,12 +1054,12 @@ msgid ""
 msgstr ""
 "Επιπροσθέτως, ο διαχειριστής ρεύματος του Xfce παρέχει ένα σύνολο διεπαφών "
 "dbus, συμβατών με τα πρότυπα του freedesktop, για να ενημερώνει άλλες "
-"εφαρμογές για το τρέχον επίπεδο ενέργειας ώστε να μπορούν να ρυθμίζουν την "
+"εφαρμογές για το τρέχον επίπεδο ενέργειας, ώστε να μπορούν να ρυθμίζουν την "
 "κατανάλωση ενέργειας και παρέχει επίσης διεπαφή παρεμπόδισης που επιτρέπει "
-"στις εφαρμογές να αποτρέπουν τις αυτόματες ενέργειες αναστολής του "
+"στις εφαρμογές να εμποδίζουν τις αυτόματες ενέργειες αναστολής του "
 "διαχειριστή ρεύματος. Για παράδειγμα, ο διαχειριστής πακέτων του "
 "λειτουργικού συστήματος πρέπει να κάνει χρήση αυτής της διεπαφής κατά την "
-"διάρκεια των λειτουργιών αναβάθμισης."
+"διάρκεια της λειτουργίας αναβάθμισης."
 
 #: ../data/appdata/xfce4-power-manager.appdata.xml.in.h:3
 msgid ""
