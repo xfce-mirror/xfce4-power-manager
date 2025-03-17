@@ -94,7 +94,7 @@ power_manager_dialog_configure_response (PowerManagerDialog *dialog,
 {
   if (response == GTK_RESPONSE_HELP)
   {
-    if (!g_spawn_command_line_async ("exo-open --launch WebBrowser https://docs.xfce.org/xfce/xfce4-power-manager/start",
+    if (!g_spawn_command_line_async ("xfce-open --launch WebBrowser https://docs.xfce.org/xfce/xfce4-power-manager/start",
                                      NULL))
       g_warning ("Unable to open the following url: %s",
                  "https://docs.xfce.org/xfce/xfce4-power-manager/start");
