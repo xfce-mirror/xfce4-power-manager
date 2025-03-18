@@ -60,7 +60,7 @@ AM_GNU_GETTEXT_VERSION([0.19.8])
 #=====================================================#
 m4_define([gtk_minimum_version], [3.24.0])
 m4_define([glib_minimum_version], [2.72.0])
-m4_define([xfconf_minimum_version], [4.12.0])
+m4_define([xfce4_minimum_version], [4.18.0])
 m4_define([libxfce4ui_minimum_version],[4.21.0])
 m4_define([libxfce4util_minimum_version],[4.19.4])
 m4_define([libnotify_minimum_version], [0.7.8])
@@ -74,7 +74,6 @@ m4_define([wayland_minimum_version], [1.20])
 m4_define([wayland_protocols_minimum_version], [1.25])
 
 m4_define([polkit_minimum_version], [0.102])
-m4_define([libxfce4panel_minimum_version],[4.14.0])
 
 XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [gtk_minimum_version])
 XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [glib_minimum_version])
@@ -83,7 +82,7 @@ XDT_CHECK_PACKAGE([GTHREAD], [gthread-2.0], [glib_minimum_version])
 XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [glib_minimum_version])
 XDT_CHECK_PACKAGE([GIO], [gio-2.0], [glib_minimum_version])
 XDT_CHECK_PACKAGE([GIO_UNIX], [gio-unix-2.0], [glib_minimum_version])
-XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0],[xfconf_minimum_version])
+XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0],[xfce4_minimum_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2],[libxfce4ui_minimum_version])
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0],[libxfce4util_minimum_version])
 XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
@@ -153,7 +152,7 @@ XDT_CHECK_OPTIONAL_PACKAGE([POLKIT], [polkit-gobject-1], [polkit_minimum_version
 #=======================================================#
 #                 Panel plugin ?                        #
 #=======================================================#
-XDT_CHECK_OPTIONAL_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [libxfce4panel_minimum_version],
+XDT_CHECK_OPTIONAL_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [xfce4_minimum_version],
 [xfce4panel], [To build plugin support for Xfce's panel])
 
 

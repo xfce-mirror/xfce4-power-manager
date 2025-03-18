@@ -20,10 +20,10 @@ dependency_versions = {
   'glib': '>= 2.72.0',
   'gtk': '>= 3.24.0',
   'libnotify': '>= 0.7.8',
+  'xfce4': '>= 4.18.0',
   'libxfce4ui': '>= 4.21.0',
   'libxfce4util': '>= 4.19.4',
   'upower-glib': '>= 0.99.10',
-  'xfconf': '>= 4.12.0',
 
   'libx11': '>= 1.6.7',
   'libxext': '>= 1.0.0',
@@ -32,7 +32,6 @@ dependency_versions = {
   'wayland': '>= 1.20',
   'wayland-protocols': '>= 1.25',
 
-  'libxfce4panel': '>= 4.14.0',
   'polkit': '>= 0.102',
 }
 
@@ -47,7 +46,7 @@ libnotify = dependency('libnotify', version: dependency_versions['libnotify'])
 upower_glib = dependency('upower-glib', version: dependency_versions['upower-glib'])
 libxfce4ui = dependency('libxfce4ui-2', version: dependency_versions['libxfce4ui'])
 libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['libxfce4util'])
-xfconf = dependency('libxfconf-0', version: dependency_versions['xfconf'])
+xfconf = dependency('libxfconf-0', version: dependency_versions['xfce4'])
 
 xdt_csource = find_program('xdt-csource', required: true)
 
@@ -118,7 +117,7 @@ if not enable_x11 and not enable_wayland
   error('At least one of the X11 and Wayland backends must be enabled')
 endif
 
-libxfce4panel = dependency('libxfce4panel-2.0', version: dependency_versions['libxfce4panel'], required: get_option('panel-plugin'))
+libxfce4panel = dependency('libxfce4panel-2.0', version: dependency_versions['xfce4'], required: get_option('panel-plugin'))
 polkit = dependency('polkit-gobject-1', version: dependency_versions['polkit'], required: get_option('polkit'))
 if polkit.found()
   feature_cflags += '-DHAVE_POLKIT=1'
