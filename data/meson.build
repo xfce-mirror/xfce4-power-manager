@@ -65,11 +65,25 @@ foreach name : app_names
 endforeach
 
 svgs = run_command('sh', '-c', 'echo ' +  'icons' / 'scalable' / '*.svg', check: true).stdout().strip().split(' ')
-foreach svg : svgs
-  if fs.stem(svg) not in app_names
-    install_data(
-      svg,
-      install_dir: get_option('prefix') / get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'status',
-    )
-  endif
-endforeach
+
+# see https://gitlab.xfce.org/xfce/xfce4-power-manager/-/issues/268
+if meson.version().version_compare('>= 1.3.0')
+  foreach svg : svgs
+    if fs.stem(svg) not in app_names
+      install_data(
+        svg,
+        install_dir: get_option('prefix') / get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'status',
+        follow_symlinks: true,
+      )
+    endif
+  endforeach
+else
+  foreach svg : svgs
+    if fs.stem(svg) not in app_names
+      install_data(
+        svg,
+        install_dir: get_option('prefix') / get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'status',
+      )
+    endif
+  endforeach
+endif
