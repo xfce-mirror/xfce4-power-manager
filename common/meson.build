@@ -55,7 +55,10 @@ common_sources += gnome.mkenums(
 libxfpmcommon = static_library(
   'xfpmcommon',
   common_sources,
-  sources: xfce_revision_h,
+  sources: [
+    xfpm_resources_c,
+    xfce_revision_h,
+  ],
   c_args: [
     '-DG_LOG_DOMAIN="@0@"'.format('libxfpmcommon'),
   ],

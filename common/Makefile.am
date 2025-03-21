@@ -3,6 +3,7 @@ noinst_LTLIBRARIES =        \
 
 libxfpmcommon_la_SOURCES =  \
 	$(BUILT_SOURCES)        \
+	$(top_srcdir)/data/interfaces/xfpm-resources.c \
 	xfpm-common.c           \
 	xfpm-common.h           \
 	xfpm-brightness.c       \
@@ -74,8 +75,6 @@ BUILT_SOURCES =       \
 	xfpm-enum-types.c \
 	xfpm-enum-types.h
 
-if MAINTAINER_MODE
-
 xfpm-enum-types.h: $(xfpm_glib_headers)
 	( cd $(srcdir) && glib-mkenums \
 		--fhead "#ifndef _XFPM_ENUM_TYPES_H\n#define _XFPM_ENUM_TYPES_H\n#include <glib-object.h>\nG_BEGIN_DECLS\n" \
@@ -97,8 +96,6 @@ xfpm-enum-types.c: xfpm-enum-types.h
 		$(xfpm_glib_headers) ) > xgen \
 	&& cp xgen xfpm-enum-types.c  \
 	&& rm -f xgen xgen~
-
-endif
 
 EXTRA_DIST = \
 	meson.build \

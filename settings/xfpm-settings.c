@@ -33,7 +33,6 @@
 #include "common/xfpm-icons.h"
 #include "common/xfpm-power-common.h"
 #include "common/xfpm-ppd-common.h"
-#include "data/interfaces/xfpm-settings_ui.h"
 #include "src/xfpm-backlight.h"
 #include "src/xfpm-power.h"
 
@@ -1512,7 +1511,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
               xfpm_bool_to_string (has_sleep_button), xfpm_bool_to_string (has_hibernate_button),
               xfpm_bool_to_string (has_power_button), xfpm_bool_to_string (has_battery_button));
 
-  xml = xfpm_builder_new_from_string (xfpm_settings_ui, &error);
+  xml = xfpm_builder_new_from_resource ("/opt/xfce/power-manager/xfpm-settings.ui", &error);
 
   if (G_UNLIKELY (error))
   {

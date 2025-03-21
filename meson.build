@@ -48,8 +48,6 @@ libxfce4ui = dependency('libxfce4ui-2', version: dependency_versions['libxfce4ui
 libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['libxfce4util'])
 xfconf = dependency('libxfconf-0', version: dependency_versions['xfce4'])
 
-xdt_csource = find_program('xdt-csource', required: true)
-
 # Feature: 'x11'
 x11_deps = []
 x11_deps += dependency('gdk-x11-3.0', version: dependency_versions['gtk'], required: get_option('x11'))
@@ -261,9 +259,9 @@ xfce_revision_h = vcs_tag(
 if enable_wayland
   subdir('protocols')
 endif
-subdir('common')
 subdir('data')
 subdir('data' / 'interfaces')
+subdir('common')
 subdir('libdbus')
 if libxfce4panel.found()
   subdir('panel-plugin')
