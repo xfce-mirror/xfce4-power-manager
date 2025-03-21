@@ -1,23 +1,17 @@
-interfaces =					\
-	xfpm-settings.ui
+xfpm_resources_deps = $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir $(srcdir) $(srcdir)/xfpm.gresource.xml)
 
-interfaces_h =					\
-	$(interfaces:.ui=_ui.h)
+xfpm-resources.c: $(srcdir)/xfpm.gresource.xml $(xfpm_resources_deps) Makefile
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source $<
 
-if MAINTAINER_MODE
-
-BUILT_SOURCES = $(interfaces_h)
-
-xfpm-settings_ui.h: xfpm-settings.ui
-	xdt-csource --static --strip-comments --strip-content --name=xfpm_settings_ui $< > $@
-
-endif
+BUILT_SOURCES = \
+	xfpm-resources.c \
+	$(NULL)
 
 CLEANFILES =					\
 	$(BUILT_SOURCES)
 
 EXTRA_DIST =					\
-	$(interfaces)				\
-	$(interfaces_h) \
+	xfpm-settings.ui \
+	xfpm.gresource.xml \
 	meson.build \
 	$(NULL)

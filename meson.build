@@ -9,6 +9,7 @@ version : '4.20.0-dev',
 
 project_namespace = 'xfce'
 pkgdatadir = get_option('prefix') / get_option('datadir') / meson.project_name()
+copyright_year = '2025'
 
 cc = meson.get_compiler('c')
 pkgconfig = import('pkgconfig')
@@ -47,8 +48,6 @@ upower_glib = dependency('upower-glib', version: dependency_versions['upower-gli
 libxfce4ui = dependency('libxfce4ui-2', version: dependency_versions['libxfce4ui'])
 libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['libxfce4util'])
 xfconf = dependency('libxfconf-0', version: dependency_versions['xfce4'])
-
-xdt_csource = find_program('xdt-csource', required: true)
 
 # Feature: 'x11'
 x11_deps = []
@@ -230,6 +229,7 @@ extra_cflags += [
   '-DVERSION_SHORT="@0@"'.format(version_short),
   '-DPACKAGE_STRING="@0@ @1@"'.format(meson.project_name(), meson.project_version()),
   '-DPACKAGE_DATADIR="@0@"'.format(pkgdatadir),
+  '-DCOPYRIGHT_YEAR="@0@"'.format(copyright_year),
   '-DPACKAGE_LOCALE_DIR="@0@"'.format(get_option('prefix') / get_option('localedir')),
   '-DPACKAGE_BUGREPORT="https://gitlab.xfce.org/@0@/@1@/-/issues"'.format(project_namespace, meson.project_name()),
   '-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()),
