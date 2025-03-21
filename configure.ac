@@ -11,7 +11,6 @@ AC_DEFINE([VERSION_FULL], [PACKAGE_VERSION], [Alias for VERSION and PACKAGE_VERS
 # http://debbugs.gnu.org/cgi/bugreport.cgi?bug=13928
 AM_INIT_AUTOMAKE([1.8 dist-bzip2 tar-ustar no-dist-gzip foreign subdir-objects])
 AC_CONFIG_HEADERS([config.h])
-AM_MAINTAINER_MODE()
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 AC_USE_SYSTEM_EXTENSIONS()
@@ -89,6 +88,7 @@ XDT_CHECK_PACKAGE([LIBNOTIFY],[libnotify], [libnotify_minimum_version])
 XDT_CHECK_PACKAGE([UPOWER],[upower-glib], [upower_minimum_version])
 
 XDT_CHECK_PACKAGE_BINARY([GDBUS_CODEGEN], [gio-2.0], [gdbus_codegen], [gdbus-codegen])
+XDT_CHECK_PACKAGE_BINARY([GLIB_COMPILE_RESOURCES], [gio-2.0], [glib_compile_resources], [glib-compile-resources])
 
 #==================================================== #
 #          Check for optional packages 		      #

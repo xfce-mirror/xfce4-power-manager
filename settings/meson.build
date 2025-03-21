@@ -22,7 +22,7 @@ executable(
   settings_sources,
   sources: [
     xfce_revision_h,
-    xfpm_settings_ui_h,
+    xfpm_resources_c,
   ],
   c_args: [
     '-DG_LOG_DOMAIN="@0@"'.format('xfce4-power-manager-settings'),
