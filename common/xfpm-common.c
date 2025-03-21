@@ -62,17 +62,14 @@ xfpm_string_to_bool (const gchar *string)
 }
 
 GtkBuilder *
-xfpm_builder_new_from_string (const gchar *ui,
-                              GError **error)
+xfpm_builder_new_from_resource (const gchar *resource,
+                                GError **error)
 {
   GtkBuilder *builder;
 
   builder = gtk_builder_new ();
 
-  gtk_builder_add_from_string (GTK_BUILDER (builder),
-                               ui,
-                               -1,
-                               error);
+  gtk_builder_add_from_resource (GTK_BUILDER (builder), resource, error);
 
   return builder;
 }
