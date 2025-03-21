@@ -122,7 +122,7 @@ xfpm_about (gpointer data)
   };
 
   gtk_show_about_dialog (NULL,
-                         "copyright", "Copyright \302\251 2008-2024 The Xfce development team",
+                         "copyright", "Copyright \302\251 2008-" COPYRIGHT_YEAR " The Xfce development team",
                          "destroy-with-parent", TRUE,
                          "authors", authors,
                          "artists", artists,
