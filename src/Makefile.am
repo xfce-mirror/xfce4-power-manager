@@ -198,6 +198,7 @@ EXTRA_DIST =                                    \
 	$(NULL)
 
 DISTCLEANFILES =                                \
+	$(BUILT_SOURCES)			\
 	xfce4-power-manager.desktop             \
 	org.xfce.power.policy                  \
 	org.xfce.power.policy.in
