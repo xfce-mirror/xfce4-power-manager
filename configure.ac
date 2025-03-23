@@ -1,4 +1,4 @@
-XDT_VERSION_INIT([4.20.0], [git])
+XDT_VERSION_INIT([4.21.0])
 m4_define([copyright_year], [2025])
 
 AC_COPYRIGHT([Copyright (c) 2008-copyright_year() The Xfce development team. All rights reserved.])

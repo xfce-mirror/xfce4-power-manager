@@ -1,3 +1,39 @@
+4.21.0 (2025-03-23)
+======
+- build: Automate copyright year management
+- build: Replace xdt-csource with glib-compile-resources
+- meson-build: Silence warning about symlink copy
+- build: Define xfce4 min version >= 4.18
+- Replace deprecated exo with libxfce4ui 4.21.0
+- build: Add missing function checks
+- Listen to output disconnection and trigger action if needed
+- Add setting to execute lid action when external display is connected
+- settings: Remove unused widget from list to hide on wayland
+- panel-plugin: Do not keep a ref on plugin from its child widget
+- panel-plugin: Remove ungrab code when menu is shown
+- Avoid ScaleMenuItem conflicts
+- meson-build: Fix missing prefix in polkit file
+- Add meson build
+- icons: Fix missing icons and wrong install dir in 32x32
+- build: Remove unused level of substitution for desktop file
+- Refactored panel plugin code
+- Removed support for systray
+- build: Get rid of maintainer mode where gdbus-codegen is used
+- build: Unconditionally add ext-idle-notify-v1.xml to EXTRA_DIST
+- xfpm-button: Fix XkbGetMap leak in xfpm_button_keysym_to_code_mask
+- xfpm-button.c: Grab keysyms using keycode with matching modmask
+- Translation Updates:
+  Albanian, Arabic, Armenian (Armenia), Asturian, Basque, Belarusian,
+  Bulgarian, Catalan, Chinese (China), Chinese (Taiwan), Croatian,
+  Czech, Danish, Dutch, Eastern Armenian, English (Australia), English
+  (Canada), English (United Kingdom), Estonian, Finnish, French,
+  Galician, German, Greek, Hebrew, Hungarian, Icelandic, Indonesian,
+  Interlingue, Italian, Japanese, Kannada, Kazakh, Korean, Lithuanian,
+  Malay, Norwegian Bokmål, Norwegian Nynorsk, Occitan (post 1500),
+  Polish, Portuguese, Portuguese (Brazil), Romanian, Russian, Serbian,
+  Slovak, Slovenian, Spanish, Swedish, Thai, Turkish, Ukrainian,
+  Vietnamese
+
 4.20.0 (2024-12-15)
 ======
 
