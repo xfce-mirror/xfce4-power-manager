@@ -59,7 +59,7 @@ BUILT_SOURCES = 			\
 	xfce-power-manager-dbus.c	\
 	xfce-power-manager-dbus.h
 
-xfce-power-manager-dbus.c xfce-power-manager-dbus.h: $(top_srcdir)/src/org.xfce.Power.Manager.xml
+xfce-power-manager-dbus.c xfce-power-manager-dbus.h: $(top_srcdir)/src/org.xfce.Power.Manager.xml Makefile
 	$(AM_V_GEN) $(GDBUS_CODEGEN) --interface-prefix=org.xfce. --c-namespace=Xfpm --generate-c-code=xfce-power-manager-dbus $<
 
 #
