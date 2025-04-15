@@ -1,0 +1,1030 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Xfce
+# This file is distributed under the same license as the xfce4-power-manager.master package.
+# 
+# Translators:
+# ზურაბი დავითაშვილი <zurabi@tuta.io>, 2020
+# ზურაბი დავითაშვილი <zurabi@tuta.io>, 2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Xfce4-power-manager\n"
+"Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
+"POT-Creation-Date: 2025-02-28 00:48+0100\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: ზურაბი დავითაშვილი <zurabi@tuta.io>, 2020\n"
+"Language-Team: Georgian (http://app.transifex.com/xfce/xfce4-power-manager/language/ka/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ka\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: data/interfaces/xfpm-settings.ui:101 settings/xfpm-settings.c:193
+#: settings/xfpm-settings.c:210
+msgid "Never"
+msgstr "არასოდეს"
+
+#: data/interfaces/xfpm-settings.ui:105
+msgid "When the screensaver is activated"
+msgstr "როცა ეკრანის დამცველი გააქტიურებული"
+
+#: data/interfaces/xfpm-settings.ui:109
+msgid "When the screensaver is deactivated"
+msgstr "როცა ეკრანის დამცველი გააქტიურებული არაა"
+
+#: data/interfaces/xfpm-settings.ui:120 data/interfaces/xfpm-settings.ui:131
+#: data/interfaces/xfpm-settings.ui:142 data/interfaces/xfpm-settings.ui:153
+#: data/interfaces/xfpm-settings.ui:164 data/interfaces/xfpm-settings.ui:175
+#: data/interfaces/xfpm-settings.ui:186 data/interfaces/xfpm-settings.ui:197
+#: data/interfaces/xfpm-settings.ui:208 data/interfaces/xfpm-settings.ui:219
+msgid "Nothing"
+msgstr "არაფერი"
+
+#: data/interfaces/xfpm-settings.ui:253
+#: settings/xfce4-power-manager-settings.desktop.in:4
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:249
+#: src/xfpm-power.c:556 src/xfpm-power.c:597 src/xfpm-power.c:756
+#: src/xfpm-power.c:775 src/xfpm-backlight.c:155 src/xfpm-backlight.c:163
+#: src/xfpm-battery.c:181 src/xfpm-kbd-backlight.c:108
+#: src/xfce4-power-manager.desktop.in:3
+msgid "Power Manager"
+msgstr "კვების მმართველი"
+
+#: data/interfaces/xfpm-settings.ui:268
+#: panel-plugin/power-manager-dialog.c:194
+msgid "_Help"
+msgstr "დახმარება"
+
+#: data/interfaces/xfpm-settings.ui:284
+msgid "_Screensaver Management"
+msgstr "_ეკრანის დამცველის მართვა"
+
+#: data/interfaces/xfpm-settings.ui:300
+#: panel-plugin/power-manager-dialog.c:195
+msgid "_Close"
+msgstr "დახურვა"
+
+#: data/interfaces/xfpm-settings.ui:362
+msgid "When power button is pressed:"
+msgstr "როცა დააჭერენ ჩართვის ღილაკს:"
+
+#: data/interfaces/xfpm-settings.ui:374
+msgid "When sleep button is pressed:"
+msgstr "როცა დააჭერენ ძილის ღილაკს:"
+
+#: data/interfaces/xfpm-settings.ui:386
+msgid "When hibernate button is pressed:"
+msgstr "როცა დააჭერენ პროგრამული ძილის ღილაკს:"
+
+#: data/interfaces/xfpm-settings.ui:398
+msgid "When battery button is pressed:"
+msgstr "როცა დააჭერენ ელემენტის ღილაკს:"
+
+#: data/interfaces/xfpm-settings.ui:507
+msgid "Exponential"
+msgstr "ექსპონენტური"
+
+#: data/interfaces/xfpm-settings.ui:529
+msgid "Brightness step count:"
+msgstr "სიკაშკაშის ნაბიჯების რაოდენობა:"
+
+#: data/interfaces/xfpm-settings.ui:540
+msgid "Handle display brightness _keys"
+msgstr "ეკრანის სიკაშკაშის _ღილაკები"
+
+#: data/interfaces/xfpm-settings.ui:563
+msgid "<b>Buttons</b>"
+msgstr "<b>ღილაკები</b>"
+
+#: data/interfaces/xfpm-settings.ui:597
+msgid "Status notifications"
+msgstr "სტატუსის გაფრთხილებები"
+
+#: data/interfaces/xfpm-settings.ui:633
+msgid "<b>Appearance</b>"
+msgstr "<b>გარეგნობა</b>"
+
+#: data/interfaces/xfpm-settings.ui:653
+msgid "General"
+msgstr "ზოგადი"
+
+#: data/interfaces/xfpm-settings.ui:698 data/interfaces/xfpm-settings.ui:962
+msgid "When inactive for"
+msgstr "როცა არააქტიურია"
+
+#: data/interfaces/xfpm-settings.ui:770 data/interfaces/xfpm-settings.ui:1034
+msgid "System sleep mode:"
+msgstr "სისტემის ძილის რეჟიმი:"
+
+#: data/interfaces/xfpm-settings.ui:782 data/interfaces/xfpm-settings.ui:1046
+msgid "<b>System power saving</b>"
+msgstr "<b>სისტემის ენერგიის დაზოგვა</b>"
+
+#: data/interfaces/xfpm-settings.ui:797 data/interfaces/xfpm-settings.ui:947
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>ნოუთბუქის სახურავი</b>"
+
+#: data/interfaces/xfpm-settings.ui:812 data/interfaces/xfpm-settings.ui:902
+msgid "When laptop lid is closed:"
+msgstr "როცა ნოუთბუქის სახურავს დახურავთ:"
+
+#: data/interfaces/xfpm-settings.ui:839 data/interfaces/xfpm-settings.ui:929
+msgid "Execute action if an external display is connected"
+msgstr "ქმედების შესრულება, თუ მიერტებულია გარე ეკრანი"
+
+#: data/interfaces/xfpm-settings.ui:856 data/interfaces/xfpm-settings.ui:1060
+msgid "<b>Power profile</b>"
+msgstr "<b>კვების პროფილი</b>"
+
+#: data/interfaces/xfpm-settings.ui:888 data/interfaces/xfpm-settings.ui:1624
+msgid "On battery"
+msgstr "ელემენტზე"
+
+#: data/interfaces/xfpm-settings.ui:1092 data/interfaces/xfpm-settings.ui:1877
+#: common/xfpm-power-common.c:416
+msgid "Plugged in"
+msgstr "მიერთებულია"
+
+#: data/interfaces/xfpm-settings.ui:1128
+msgid "Critical battery power level:"
+msgstr "კრიტიკული ელემენტის მუხტის დონე:"
+
+#: data/interfaces/xfpm-settings.ui:1158 settings/xfpm-settings.c:232
+msgid "%"
+msgstr "%"
+
+#: data/interfaces/xfpm-settings.ui:1195
+msgid "On critical battery power:"
+msgstr "ელემენტის მუხტის კრიტიკული დონისას:"
+
+#: data/interfaces/xfpm-settings.ui:1234
+msgid "<b>Critical power</b>"
+msgstr "<b>კრიტიკული მუხტი</b>"
+
+#: data/interfaces/xfpm-settings.ui:1263
+msgid "Lock screen when system is going to sleep"
+msgstr "ეკრანის ჩაკეტვა სისტემის დაძინებისას"
+
+#: data/interfaces/xfpm-settings.ui:1282
+msgid "<b>Security</b>"
+msgstr "<b>უსაფრთხოება</b>"
+
+#: data/interfaces/xfpm-settings.ui:1302
+msgid "System"
+msgstr "სისტემა"
+
+#: data/interfaces/xfpm-settings.ui:1341
+msgid "<b>Display power management</b>"
+msgstr "<b>ეკრანის კვების მართვა</b>"
+
+#: data/interfaces/xfpm-settings.ui:1354
+msgid ""
+"Let the power manager handle display power management (DPMS) instead of the "
+"display server"
+msgstr "ჩვების სერვერის მაგიერ ეკრანის კვების მართვის (DPMS) გამოყენება"
+
+#: data/interfaces/xfpm-settings.ui:1429 data/interfaces/xfpm-settings.ui:1638
+msgid "Put to sleep after"
+msgstr "დაძინების დრო"
+
+#: data/interfaces/xfpm-settings.ui:1442 data/interfaces/xfpm-settings.ui:1651
+msgid "Switch off after"
+msgstr "გამორთვის დაყოვნება"
+
+#: data/interfaces/xfpm-settings.ui:1499 data/interfaces/xfpm-settings.ui:1680
+msgid "On inactivity reduce to"
+msgstr "არააქტიურობისას შემცირება დონემდე"
+
+#: data/interfaces/xfpm-settings.ui:1512 data/interfaces/xfpm-settings.ui:1693
+msgid "Reduce after"
+msgstr "შემცირების დრო"
+
+#: data/interfaces/xfpm-settings.ui:1611 data/interfaces/xfpm-settings.ui:1664
+msgid "<b>Brightness reduction</b>"
+msgstr "<b>სიკაშკაშის შემცირება</b>"
+
+#: data/interfaces/xfpm-settings.ui:1897
+msgid "Display"
+msgstr "ეკრანი"
+
+#: settings/xfpm-settings.c:196 settings/xfpm-settings.c:220
+#: settings/xfpm-settings.c:222
+msgid "One minute"
+msgstr "ერთი წუთი"
+
+#: settings/xfpm-settings.c:198 settings/xfpm-settings.c:224
+#: settings/xfpm-settings.c:226
+msgid "minutes"
+msgstr "წუთი"
+
+#: settings/xfpm-settings.c:217 settings/xfpm-settings.c:222
+#: settings/xfpm-settings.c:226
+msgid "seconds"
+msgstr "წამი"
+
+#: settings/xfpm-settings.c:402 settings/xfpm-settings.c:530
+#: settings/xfpm-settings.c:677 src/xfpm-power.c:612
+msgid "Suspend"
+msgstr "ძილი"
+
+#: settings/xfpm-settings.c:406
+msgid "Suspend operation not permitted"
+msgstr "დაძინების ოპერაცია დაშვებული არაა"
+
+#: settings/xfpm-settings.c:410
+msgid "Suspend operation not supported"
+msgstr "დაძინების ოპერაცია მხარდაჭერილი არაა"
+
+#: settings/xfpm-settings.c:416 settings/xfpm-settings.c:536
+#: settings/xfpm-settings.c:683 src/xfpm-power.c:607
+msgid "Hibernate"
+msgstr "პროგრამული ძილი"
+
+#: settings/xfpm-settings.c:420
+msgid "Hibernate operation not permitted"
+msgstr "პროგრამული ძილის ოპერაცია დაშვებული არაა"
+
+#: settings/xfpm-settings.c:424
+msgid "Hibernate operation not supported"
+msgstr "პროგრამული ძილის ოპერაცია მხარდაჭერილი არაა"
+
+#: settings/xfpm-settings.c:430 settings/xfpm-settings.c:542
+#: settings/xfpm-settings.c:689 src/xfpm-power.c:617
+msgid "Hybrid Sleep"
+msgstr "ჰიბრიდული ძილი"
+
+#: settings/xfpm-settings.c:434
+msgid "Hybrid sleep operation not permitted"
+msgstr "ჰიბრიდული ძილი დაშვებული არაა"
+
+#: settings/xfpm-settings.c:438
+msgid "Hybrid sleep operation not supported"
+msgstr "ჰიბრიდული ძილი მხარდაჭერილი არაა"
+
+#: settings/xfpm-settings.c:463 settings/xfpm-settings.c:883
+msgid "Hibernate and suspend operations not supported"
+msgstr "პროგრამული და ჩვეულებრივი ძილი მხარდაჭერილი არაა"
+
+#: settings/xfpm-settings.c:468 settings/xfpm-settings.c:888
+msgid "Hibernate and suspend operations not permitted"
+msgstr "პროგრამული და ჩვეულებრივი ძილი დაშვებული არაა"
+
+#: settings/xfpm-settings.c:519 settings/xfpm-settings.c:672
+msgid "Do nothing"
+msgstr "არაფრის გაკეთება"
+
+#: settings/xfpm-settings.c:522
+msgid "Switch off display"
+msgstr "ეკრანის გამორთვა"
+
+#: settings/xfpm-settings.c:525
+msgid "Lock screen"
+msgstr "ეკრანის დაბლოკვა"
+
+#: settings/xfpm-settings.c:546 settings/xfpm-settings.c:695
+#: src/xfpm-power.c:630
+msgid "Shutdown"
+msgstr "გამორთვა"
+
+#: settings/xfpm-settings.c:699
+msgid "Ask"
+msgstr "კითხვა"
+
+#: settings/xfpm-settings.c:789
+msgid "Number of brightness steps available using keys"
+msgstr "ღილაკებით ხელმისაწვდომი სიკაშკაშის ნაბიჯების რაოდენობა"
+
+#: settings/xfpm-settings.c:838
+msgid "When all the power sources of the computer reach this charge level"
+msgstr "როცა კომპიუტერის ყველა კვების წყარო მიაღწევს ამ მუხტის დონეს"
+
+#: settings/xfpm-settings.c:852
+msgid "Notify"
+msgstr "შემატყობინე"
+
+#: settings/xfpm-settings.c:865
+#, c-format
+msgid ""
+"Make sure you set a sufficiently high value here, otherwise the system will "
+"trigger its own action before xfce4-power-manager, without being able to "
+"prevent it or know exactly when it will do so. The action triggered by the "
+"system in this case will be: %s."
+msgstr "დარწმუნდით, რომ დააყენებთ საკმარისად დიდ მნიშვნელობას. სხვა შემთხვევაში სისტემა თავის ქმედებებს შეასრულებს, სანამ xfce4-power-manager რამეს იზამს, მანამდე, სანამ ის გაიგებს, რა უნდა ქნას. ამ შემთხვევაში სისტემის მიერ გაშვებული ქმედება იქნება: %s."
+
+#: settings/xfpm-settings.c:1120
+msgid "Device"
+msgstr "მოწყობილობა"
+
+#: settings/xfpm-settings.c:1143
+msgid "Type"
+msgstr "ტიპი"
+
+#: settings/xfpm-settings.c:1148
+msgid "PowerSupply"
+msgstr "კვების ბლოკი"
+
+#: settings/xfpm-settings.c:1149 src/xfpm-main.c:65
+msgid "True"
+msgstr "ჭეშმარიტი"
+
+#: settings/xfpm-settings.c:1149 src/xfpm-main.c:65
+msgid "False"
+msgstr "მცდარი"
+
+#: settings/xfpm-settings.c:1156
+msgid "Model"
+msgstr "მოდელი"
+
+#: settings/xfpm-settings.c:1159
+msgid "Technology"
+msgstr "ტექნოლოგია"
+
+#: settings/xfpm-settings.c:1166
+msgid "Current charge"
+msgstr "მიმდინარე მუხტი"
+
+#. TRANSLATORS: Unit here is Watt hour
+#: settings/xfpm-settings.c:1174 settings/xfpm-settings.c:1186
+#: settings/xfpm-settings.c:1198
+msgid "Wh"
+msgstr "ვ/ს"
+
+#: settings/xfpm-settings.c:1176
+msgid "Fully charged (design)"
+msgstr "სრულად დატენილი (დიზაინი)"
+
+#: settings/xfpm-settings.c:1189
+msgid "Fully charged"
+msgstr "სრულად დატენილი"
+
+#: settings/xfpm-settings.c:1200
+msgid "Energy empty"
+msgstr "ენერგია ცარიელია"
+
+#. TRANSLATORS: Unit here is Watt
+#: settings/xfpm-settings.c:1208
+msgid "W"
+msgstr "ვტ"
+
+#: settings/xfpm-settings.c:1210
+msgid "Energy rate"
+msgstr "ენერგიის სიჩქარე"
+
+#. TRANSLATORS: Unit here is Volt
+#: settings/xfpm-settings.c:1218
+msgid "V"
+msgstr "V"
+
+#: settings/xfpm-settings.c:1220
+msgid "Voltage"
+msgstr "ვოლტაჟი"
+
+#: settings/xfpm-settings.c:1227
+msgid "Vendor"
+msgstr "მომწოდებელი"
+
+#: settings/xfpm-settings.c:1232
+msgid "Serial"
+msgstr "სერიული"
+
+#: settings/xfpm-settings.c:1519
+msgid "Check your power manager installation"
+msgstr "შეამოწმეთ თქვენი ენერგიის მმართველის დაყენება"
+
+#: settings/xfpm-settings.c:1595
+msgid "Devices"
+msgstr "მოწყობილობები"
+
+#: settings/xfpm-settings-app.c:87
+msgid "Settings manager socket"
+msgstr "პარამეტრების მმართველის სოკეტი"
+
+#: settings/xfpm-settings-app.c:87
+msgid "SOCKET ID"
+msgstr "სოკეტის ID"
+
+#: settings/xfpm-settings-app.c:88
+msgid "Display a specific device by UpDevice object path"
+msgstr "სპეციფიკური მოწყობილობის ჩვენება UpDevice ობიექტის ბილიკით"
+
+#: settings/xfpm-settings-app.c:88
+msgid "UpDevice object path"
+msgstr "UpDevice-ის ობიექტის ბილიკი"
+
+#: settings/xfpm-settings-app.c:89 src/xfpm-main.c:245
+msgid "Enable debugging"
+msgstr "გამართვის კოდის ჩართვა"
+
+#: settings/xfpm-settings-app.c:90
+msgid "Display version information"
+msgstr "ინფორმაცია ვერსიის შესახებ"
+
+#: settings/xfpm-settings-app.c:91
+msgid "Cause xfce4-power-manager-settings to quit"
+msgstr "xfce4-power-manager-settings-ის დახურვა"
+
+#: settings/xfpm-settings-app.c:143 settings/xfpm-settings-app.c:190
+#: settings/xfpm-settings-app.c:267 settings/xfpm-settings-app.c:282
+#: settings/xfpm-settings-app.c:310 src/xfpm-main.c:403
+msgid "Xfce Power Manager"
+msgstr "Xfce-ის ენერგიის მმართველი"
+
+#: settings/xfpm-settings-app.c:144 settings/xfpm-settings-app.c:191
+#: settings/xfpm-settings-app.c:283 settings/xfpm-settings-app.c:311
+msgid "Failed to connect to power manager"
+msgstr "ენერგიის მმართველთან მიერთება ჩავარდა"
+
+#: settings/xfpm-settings-app.c:268
+msgid "Failed to load power manager configuration"
+msgstr "ენერგიის მმართველის კონფიგურაციის ჩატვირთვა ჩავარდა"
+
+#: settings/xfpm-settings-app.c:299
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Xfce4-ის ენერგიის მმართველი გაშვებული არაა. გავუშვა ის ახლა?"
+
+#: settings/xfpm-settings-app.c:397
+#, c-format
+msgid "This is %s version %s, running on Xfce %s.\n"
+msgstr "ეს არის %s, ვერსია %s, გაშვებულია Xfce %s-ზე.\n"
+
+#: settings/xfpm-settings-app.c:399
+#, c-format
+msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
+msgstr "აგებულია GTK+ %d.%d.%d-ით, დაკავშირებულია GTK+ %d.%d.%d-ით."
+
+#: settings/xfce4-power-manager-settings.desktop.in:6
+msgid "Settings for the Xfce Power Manager"
+msgstr "პარამეტრები Xfce-ის ენერგიის მმართველისთვის"
+
+#: settings/xfce4-power-manager-settings.desktop.in:12
+msgid ""
+"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
+" lid;lock screen;plugged in;saving;critical;"
+msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop lid;lock screen;plugged in;saving;critical;გამორთვა;ძილი;დაბლოკვა;ელემენტი;მორგება;კრიტიკულიდონე;"
+
+#: common/xfpm-common.c:135
+msgid "translator-credits"
+msgstr "ინფორმაცია მთარგმნელზე"
+
+#: common/xfpm-power-common.c:43 common/xfpm-power-common.c:66
+msgid "Battery"
+msgstr "კვების ელემენტი"
+
+#: common/xfpm-power-common.c:45
+msgid "Uninterruptible Power Supply"
+msgstr "შეუფერხებელი კვების წყარო"
+
+#: common/xfpm-power-common.c:47
+msgid "Line power"
+msgstr "ხაზის სიმძლავრე"
+
+#: common/xfpm-power-common.c:49
+msgid "Mouse"
+msgstr "თაგუნა"
+
+#: common/xfpm-power-common.c:51
+msgid "Keyboard"
+msgstr "კლავიატურა"
+
+#: common/xfpm-power-common.c:53
+msgid "Monitor"
+msgstr "მონიტორი"
+
+#: common/xfpm-power-common.c:55
+msgid "PDA"
+msgstr "PDA"
+
+#: common/xfpm-power-common.c:57
+msgid "Phone"
+msgstr "ტელეფონი"
+
+#: common/xfpm-power-common.c:59
+msgid "Tablet"
+msgstr "ტაბლეტი"
+
+#: common/xfpm-power-common.c:61 common/xfpm-power-common.c:299
+msgid "Computer"
+msgstr "კომპიუტერი"
+
+#: common/xfpm-power-common.c:63 common/xfpm-power-common.c:79
+#: common/xfpm-power-common.c:94
+msgid "Unknown"
+msgstr "უცნობი"
+
+#: common/xfpm-power-common.c:81
+msgid "Lithium ion"
+msgstr "ლითიუმ იონი"
+
+#: common/xfpm-power-common.c:83
+msgid "Lithium polymer"
+msgstr "ლითიუმ-პოლიმერი"
+
+#: common/xfpm-power-common.c:85
+msgid "Lithium iron phosphate"
+msgstr "ლითიუმ-რკინის ფოსფატი"
+
+#: common/xfpm-power-common.c:87
+msgid "Lead acid"
+msgstr "ტყვია-მჟავა"
+
+#: common/xfpm-power-common.c:89
+msgid "Nickel cadmium"
+msgstr "ნიკელ კადმიუმი"
+
+#: common/xfpm-power-common.c:91
+msgid "Nickel metal hydride"
+msgstr "ნიკელის ლითონის ჰიდრიდი"
+
+#: common/xfpm-power-common.c:139
+msgid "Unknown time"
+msgstr "უცნობი დრო"
+
+#: common/xfpm-power-common.c:145
+#, c-format
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i წუთი"
+msgstr[1] "%i წუთი"
+
+#: common/xfpm-power-common.c:153
+#, c-format
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i საათი"
+msgstr[1] "%i საათი"
+
+#. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
+#. * Swap order with "%2$s %2$i %1$s %1$i if needed
+#: common/xfpm-power-common.c:157
+#, c-format
+msgid "%i %s %i %s"
+msgstr "%i %s %i %s"
+
+#: common/xfpm-power-common.c:158
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "საათი"
+msgstr[1] "საათი"
+
+#: common/xfpm-power-common.c:159
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "წუთი"
+msgstr[1] "წუთი"
+
+#: common/xfpm-power-common.c:339
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Fully charged - %s remaining"
+msgstr "<b>%s %s</b>\nსრულად დატენილი - %s დარჩენილი"
+
+#: common/xfpm-power-common.c:346
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Fully charged"
+msgstr "<b>%s %s</b>\nსრულად დატენილი"
+
+#: common/xfpm-power-common.c:355
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s until full"
+msgstr "<b>%s %s</b>\n%0.0f%% - %s დარჩენილი სრულად დატენვამდე"
+
+#: common/xfpm-power-common.c:363 common/xfpm-power-common.c:381
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%0.0f%%"
+msgstr "<b>%s %s</b>\n%0.0f%%"
+
+#: common/xfpm-power-common.c:373
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s remaining"
+msgstr "<b>%s %s</b>\n%0.0f%% - %s დარჩენილი"
+
+#: common/xfpm-power-common.c:388
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Waiting to charge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nველოდები დამუხტვას (%0.0f%%)"
+
+#: common/xfpm-power-common.c:394
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Waiting to discharge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nველოდები განმუხტვას (%0.0f%%)"
+
+#: common/xfpm-power-common.c:400
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"is empty"
+msgstr "<b>%s %s</b>\nცარიელია"
+
+#: common/xfpm-power-common.c:405
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Current charge: %0.0f%%"
+msgstr "<b>%s %s</b>\nმიმდინარე მუხტი: %0.0f%%"
+
+#. On the 2nd line we want to know if the power cord is plugged
+#. * in or not
+#: common/xfpm-power-common.c:415
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%s"
+msgstr "<b>%s %s</b>\n%s"
+
+#: common/xfpm-power-common.c:416
+msgid "Not plugged in"
+msgstr "მიერთებული არაა"
+
+#. Desktop pc with no battery, just display the vendor and model,
+#. * which will probably just be Computer
+#: common/xfpm-power-common.c:422
+#, c-format
+msgid "<b>%s %s</b>"
+msgstr "<b>%s %s</b>"
+
+#. unknown device state, just display the percentage
+#: common/xfpm-power-common.c:427
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Unknown state"
+msgstr "<b>%s %s</b>\nუცნობი მდგომარეობა"
+
+#: src/xfpm-power.c:274
+msgid ""
+"An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
+"Are you sure you want to hibernate the system?"
+msgstr "ამჟამად აპლიკაცია თიშავს ავტომატურ ძილს. ამ ქმედების ახლა შესრულებამ, შეიძლება, ამ აპლიკაციის მუშა მდგომარეობა დააზიანოს.\nმართლა გნებავთ სისტემის პროგრამულად დაძინება?"
+
+#: src/xfpm-power.c:306
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be locked.\n"
+"Do you still want to continue to suspend the system?"
+msgstr "ეკრანის დაბლოკვის პროგრამები ყველა ჩავარდა. ეკრანი არ დაიბლოკება.\nმაინც გნებავთ სისტემის დაძინების გაგრძელება?"
+
+#: src/xfpm-power.c:495
+msgid "Hibernate the system"
+msgstr "სისტემის ჩაყვინთვა"
+
+#: src/xfpm-power.c:507
+msgid "Suspend the system"
+msgstr "სისტემის შეჩერება"
+
+#: src/xfpm-power.c:519
+msgid "Hybrid sleep the system"
+msgstr "სისტემის ჰიბრიდული ძილი"
+
+#: src/xfpm-power.c:539
+msgid "Shutdown the system"
+msgstr "სისტემის გამორთვა"
+
+#: src/xfpm-power.c:552 src/xfpm-power.c:594
+msgid "System is running on low power. Save your work to avoid losing data"
+msgstr "სისტემის მუხტი ცოტაღაა. შეინახეთ, რასაც აკეთებთ, რომ თავიდან აიცილოთ მონაცემების კარგვა"
+
+#: src/xfpm-power.c:633
+msgid "Cancel"
+msgstr "გაუქმება"
+
+#: src/xfpm-power.c:756
+msgid "System is running on low power"
+msgstr "სისტემის ენერგია ცოტაღაა"
+
+#: src/xfpm-power.c:771
+#, c-format
+msgid ""
+"Your %s charge level is low\n"
+"Estimated time left %s"
+msgstr "თქვენი %s-ის მუხტის დონე ამჟამად დაბალია\nდაახლ დარჩენილი დრო: %s"
+
+#: src/xfpm-power.c:1526 src/xfpm-power.c:1570 src/xfpm-power.c:1606
+#: src/xfpm-power.c:1640 src/xfpm-power.c:1674
+msgid "Permission denied"
+msgstr "წვდომა აკრძალულია"
+
+#: src/xfpm-power.c:1615
+msgid "Hibernate not supported"
+msgstr "პროგრამული ძილი მხარდაჭერილი არაა"
+
+#: src/xfpm-power.c:1649
+msgid "Suspend not supported"
+msgstr "ძილი მხარდაჭერილი არაა"
+
+#: src/xfpm-power.c:1683
+msgid "Hybrid sleep not supported"
+msgstr "ჰიბრიდული ძილი მხარდაჭერილი არაა"
+
+#. generate a human-readable summary for the notification
+#: src/xfpm-backlight.c:149
+#, c-format
+msgid "Brightness: %.0f percent"
+msgstr "სიკაშკაშე: %.0f პროცენტი"
+
+#: src/xfpm-battery.c:99 src/xfpm-battery.c:151
+#, c-format
+msgid "Your %s is fully charged"
+msgstr "თქვენი %s სრულად დატენილია"
+
+#: src/xfpm-battery.c:102 src/xfpm-battery.c:154
+#, c-format
+msgid "Your %s is charging"
+msgstr "თქვენი %s იტენება"
+
+#: src/xfpm-battery.c:112
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"%s until fully charged"
+msgstr "%s (%i%%)\n%s სრულად დამუხტვამდე"
+
+#: src/xfpm-battery.c:121 src/xfpm-battery.c:157
+#, c-format
+msgid "Your %s is discharging"
+msgstr "თქვენი %s იცლება"
+
+#: src/xfpm-battery.c:123
+#, c-format
+msgid "System is running on %s power"
+msgstr "სისტემა მუშაობს %s-ის ენერგიაზე"
+
+#: src/xfpm-battery.c:133
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"Estimated time left is %s"
+msgstr "%s (%i%%)\nდაახლ. დარჩენილი დროა %s"
+
+#: src/xfpm-battery.c:140 src/xfpm-battery.c:160
+#, c-format
+msgid "Your %s is empty"
+msgstr "თქვენი %s ცარიელია"
+
+#. generate a human-readable summary for the notification
+#: src/xfpm-kbd-backlight.c:106
+#, c-format
+msgid "Keyboard Brightness: %.0f percent"
+msgstr "კლავიატურის სიკასკაშე: %.0f პროცენტი"
+
+#: src/xfpm-main.c:89
+msgid "With policykit support\n"
+msgstr "Policykit-ის მხარდაჭერით\n"
+
+#: src/xfpm-main.c:91
+msgid "Without policykit support\n"
+msgstr "Policykit-ის მხარდაჭერის გარეშე\n"
+
+#: src/xfpm-main.c:110
+msgid "Can suspend"
+msgstr "შეუძლია ძილი"
+
+#: src/xfpm-main.c:111
+msgid "Can hibernate"
+msgstr "შეუძლია პროგრამული ძილი"
+
+#: src/xfpm-main.c:112
+msgid "Can hybrid sleep"
+msgstr "შეუძლია ჰიბრიდული ძილი"
+
+#: src/xfpm-main.c:113
+msgid "Authorized to suspend"
+msgstr "ავტორიზებულია ძილისთვის"
+
+#: src/xfpm-main.c:114
+msgid "Authorized to hibernate"
+msgstr "ავტორიზებულია პროგრამული ძილისთვის"
+
+#: src/xfpm-main.c:115
+msgid "Authorized to hybrid sleep"
+msgstr "ავტორიზებულია ჰიბრიდული ძილისთვის"
+
+#: src/xfpm-main.c:116
+msgid "Authorized to shutdown"
+msgstr "ავტორიზებულია გასათიშად"
+
+#: src/xfpm-main.c:117
+msgid "Has battery"
+msgstr "აქვს ელემენტი"
+
+#: src/xfpm-main.c:118
+msgid "Has brightness panel"
+msgstr "აქვს სიკაშკაშის პანელი"
+
+#: src/xfpm-main.c:119
+msgid "Has power button"
+msgstr "აქვს ჩართვის ღილაკი"
+
+#: src/xfpm-main.c:120
+msgid "Has hibernate button"
+msgstr "აქვს პროგრამული ძილის ღილაკი"
+
+#: src/xfpm-main.c:121
+msgid "Has sleep button"
+msgstr "აქვს ძილის ღილაკი"
+
+#: src/xfpm-main.c:122
+msgid "Has battery button"
+msgstr "აქვს ელემენტის ღილაკი"
+
+#: src/xfpm-main.c:123
+msgid "Has LID"
+msgstr "აქვს სახურავი"
+
+#: src/xfpm-main.c:244
+msgid "Daemonize"
+msgstr "ფონზე გაშვება"
+
+#: src/xfpm-main.c:246
+msgid "Dump all information"
+msgstr "ყველა ინფორმაციის გამოტანა"
+
+#: src/xfpm-main.c:247
+msgid "Restart the running instance of Xfce power manager"
+msgstr "Xfce-ის ენერგიის მმართველის გაშვებული ასლის თავიდან გაშვება"
+
+#: src/xfpm-main.c:248
+msgid "Show the configuration dialog"
+msgstr "მორგების ფანჯრის ჩვენება"
+
+#: src/xfpm-main.c:249
+msgid "Quit any running xfce power manager"
+msgstr "გასვლა გაშვებული xfce-ის ენერგიის მმართველიდან"
+
+#: src/xfpm-main.c:250
+msgid "Version information"
+msgstr "ვერსიის შესახებ ინფორმაცია"
+
+#: src/xfpm-main.c:269
+#, c-format
+msgid "Failed to parse arguments: %s\n"
+msgstr "არგუმენტების გაანალიზება ვერ მოხერხდა: %s\n"
+
+#: src/xfpm-main.c:303
+msgid "Unable to get connection to the message bus session"
+msgstr "შეტყობინებების მატარებლის სესიასთან მიერთება შეუძლებელია"
+
+#: src/xfpm-main.c:312 src/xfpm-main.c:364
+msgid "Xfce power manager is not running"
+msgstr "Xfce-ის ენერგიის მმართველი გაშვებული არაა"
+
+#: src/xfpm-main.c:403
+msgid "Another power manager is already running"
+msgstr "უკვე გაშვებულია სხვა ენერგიის მმართველი"
+
+#: src/xfpm-main.c:407
+msgid "Xfce power manager is already running"
+msgstr "Xfce-ის ენერგიის მმართველი უკვე გაშვებულია"
+
+#: src/xfpm-inhibit.c:382
+msgid "Invalid arguments"
+msgstr "არგუმენტები არასწორია"
+
+#: src/xfpm-inhibit.c:412
+msgid "Invalid cookie"
+msgstr "არასწორი ქუქი"
+
+#: src/xfpm-manager.c:319
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be "
+"locked."
+msgstr "ეკრანის დაბლოკვის პროგრამები ყველა ჩავარდა. ეკრანი არ დაიბლოკება."
+
+#: src/xfce4-power-manager.desktop.in:4
+msgid "Power management for the Xfce desktop"
+msgstr "ენერგიის მართვა Xfce სამუშაო მაგიდისთვის"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to change the backlight brightness.
+#: src/org.xfce.power.policy.in.in:21
+msgid "Modify the laptop display brightness"
+msgstr "ნოუთბუქის ეკრანის სიკაშკაშის შეცვლა"
+
+#: src/org.xfce.power.policy.in.in:22
+msgid "Authentication is required to modify the laptop display brightness"
+msgstr "ნოუთბუქის ეკრანის სიკაშკაშის შესაცვლელად საჭიროა ავთენტიკაცია"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: src/org.xfce.power.policy.in.in:36
+msgid "Suspend or hibernate the system"
+msgstr "სისტემის პროგრამული ან ჩვეულებრივი ძილი"
+
+#: src/org.xfce.power.policy.in.in:37
+msgid ""
+"Authentication is required to place the system in suspend or hibernate mode"
+msgstr "სისტემის ჩვეულებრივი ან პროგრამული ძილისთვის აუცილებელია ავთენტიკაცია"
+
+#. Odds are this is a desktop without any batteries attached
+#: panel-plugin/power-manager-button.c:271
+msgid "Display battery levels for attached devices"
+msgstr "ელემენტის დონეების ჩვენება მიერთებული მოწყობიობებისთვის"
+
+#. Translators this is to display which app is inhibiting
+#. * power in the plugin menu. Example:
+#. * VLC is currently inhibiting power management
+#: panel-plugin/power-manager-button.c:1220
+#, c-format
+msgid "%s is currently inhibiting power management"
+msgstr "%s ამჟამად თიშავს ენერგიის მართვას"
+
+#: panel-plugin/power-manager-button.c:1395
+msgid "<b>Display brightness</b>"
+msgstr "<b>ეკრანის სიკაშკაშე</b>"
+
+#: panel-plugin/power-manager-button.c:1420
+msgid "Presentation _mode"
+msgstr "პრეზენტაციის რეჟი_მი"
+
+#. Power manager settings
+#: panel-plugin/power-manager-button.c:1437
+msgid "_Settings..."
+msgstr "_მორგება..."
+
+#: panel-plugin/power-manager-dialog.c:185
+msgid "None"
+msgstr "არცერთი"
+
+#: panel-plugin/power-manager-dialog.c:185
+msgid "Percentage"
+msgstr "პროცენტი"
+
+#: panel-plugin/power-manager-dialog.c:185
+msgid "Remaining time"
+msgstr "დარჩენილი დრო"
+
+#: panel-plugin/power-manager-dialog.c:185
+msgid "Percentage and remaining time"
+msgstr "პროცენტულობა და დარჩენილი დრო"
+
+#: panel-plugin/power-manager-dialog.c:191
+msgid "Power Manager Plugin Settings"
+msgstr "ენერგიის მმართველის დამატების მროგება"
+
+#. show-panel-label setting
+#: panel-plugin/power-manager-dialog.c:215
+msgid "Show label:"
+msgstr "ჭდის ჩვენება:"
+
+#: panel-plugin/power-manager-dialog.c:248
+msgid "Show 'Presentation mode' indicator:"
+msgstr "'პრეზენტაციის რეჟიმის' მაჩვენებლის ჩვენება:"
+
+#: panel-plugin/power-manager-plugin.desktop.in:4
+msgid "Power Manager Plugin"
+msgstr "კვების მმართველის დამატება"
+
+#: panel-plugin/power-manager-plugin.desktop.in:5
+msgid ""
+"Display the battery levels of your devices and control the brightness of "
+"your display"
+msgstr "თქვენი მოწყობილობების ელემენტის მუხტის დონისა და ეკრანის სიკაშკაშის კონტროლის ჩვენება"
+
+#: data/appdata/xfce4-power-manager.appdata.xml.in:7
+msgid "Xfce power manager"
+msgstr "Xfce-ის ენერგიის მმართველი"
+
+#: data/appdata/xfce4-power-manager.appdata.xml.in:8
+msgid "Manage and reduce power consumption of computer and devices"
+msgstr "მართეთ და შეამცირეთ ენერგიის ხარჯვა თქვენი კომპიუტერისთვის და მოწყობილობებისთვის"
+
+#: data/appdata/xfce4-power-manager.appdata.xml.in:11
+msgid ""
+"Xfce power manager manages the power sources on the computer and the devices"
+" that can be controlled to reduce their power consumption (such as LCD "
+"brightness level, monitor sleep, CPU frequency scaling)."
+msgstr "Xfce-ის ენერგიის მმართველი მართავს ენერგიის წყაროებს კომპიუტერისთვის და მოწყობილობებისთვის, რომლებიც შეგიძლიათ მართოთ ისე, რომ მათი ენერგიის ხარჯი შეამციროთ (მაგ: LCD ეკრანის სიკაშკაშე, ძილი, CPU-ის სიხშირის მართვა და ა.შ.)."
+
+#: data/appdata/xfce4-power-manager.appdata.xml.in:16
+msgid ""
+"In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
+" interfaces to inform other applications about current power level so that "
+"they can adjust their power consumption, and it provides the inhibit "
+"interface which allows applications to prevent automatic sleep actions via "
+"the power manager; as an example, the operating system’s package manager "
+"should make use of this interface while it is performing update operations."
+msgstr "დამატებით, Xfce-ის ენერგიის მმართველი მოგაწოდებთ freedesktop-თან თავსებად DBus-ის ინტერფეისს, რომ უთხრათ აპლიკაციებს მიმდინარე ენერგიის დონის შესახებ, რომ მათ თავიანთი ენერგიის ხარჯვა მართონ და ასევე აქვს ინტერფეისი, რომელიც აპლიკაციებს საშუალებას აძლევს გამორთონ ავტომატური ძილი ან გამორთვა. მაგალითად, ეს ინტერფეისი უნდა გამოიყენოს პაკეტების მმართველმა, როცა ის სისტემის განახლებითაა დაკავებული."
+
+#: data/appdata/xfce4-power-manager.appdata.xml.in:23
+msgid ""
+"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
+"control LCD brightness levels and to monitor battery and device charge "
+"levels."
+msgstr "Xfce-ის ენერგიის მმართველი ასევე მოგაწოდებთ დამატებას Xfce და LXDE პანელებისთვის, რომ მართოთ LCD-ის სიკაშკაშე და უყუროთ ელემენტისა და მოწყობილობების მუხტის დონეებს."
+
+#: data/appdata/xfce4-power-manager.appdata.xml.in:34
+msgid "Screenshot of the Xfce Power Manager User Interface"
+msgstr "Xfce-ის ენერგიის მმართველის ინტერფეისის ეკრანის ანაბეჭდი"
