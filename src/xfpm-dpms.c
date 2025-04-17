@@ -97,14 +97,14 @@ refresh (XfpmDpms *dpms)
 
   if (priv->inhibited)
   {
-    XFPM_DPMS_GET_CLASS (dpms)->set_enabled (dpms, FALSE);
+    XFPM_DPMS_GET_CLASS (dpms)->set_state (dpms, XFPM_DPMS_STATE_INHIBITED);
     return;
   }
 
   g_object_get (priv->conf, DPMS_ENABLED, &enabled, NULL);
   if (!enabled)
   {
-    XFPM_DPMS_GET_CLASS (dpms)->set_enabled (dpms, FALSE);
+    XFPM_DPMS_GET_CLASS (dpms)->set_state (dpms, XFPM_DPMS_STATE_DISABLED);
     return;
   }
 
@@ -114,7 +114,7 @@ refresh (XfpmDpms *dpms)
                 NULL);
   g_object_get (G_OBJECT (priv->conf), DPMS_SLEEP_MODE, &sleep_mode, NULL);
 
-  XFPM_DPMS_GET_CLASS (dpms)->set_enabled (dpms, TRUE);
+  XFPM_DPMS_GET_CLASS (dpms)->set_state (dpms, XFPM_DPMS_STATE_ENABLED);
   XFPM_DPMS_GET_CLASS (dpms)->set_timeouts (dpms, g_strcmp0 (sleep_mode, "Standby") == 0,
                                             sleep_timeout * 60, off_timeout * 60);
 

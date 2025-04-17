@@ -37,14 +37,21 @@ typedef enum _XfpmDpmsMode
   XFPM_DPMS_MODE_ON,
 } XfpmDpmsMode;
 
+typedef enum _XfpmDpmsState
+{
+  XFPM_DPMS_STATE_DISABLED,
+  XFPM_DPMS_STATE_INHIBITED,
+  XFPM_DPMS_STATE_ENABLED,
+} XfpmDpmsState;
+
 struct _XfpmDpmsClass
 {
   GObjectClass parent_class;
 
   void (*set_mode) (XfpmDpms *dpms,
                     XfpmDpmsMode mode);
-  void (*set_enabled) (XfpmDpms *dpms,
-                       gboolean enabled);
+  void (*set_state) (XfpmDpms *dpms,
+                     XfpmDpmsState state);
   void (*set_timeouts) (XfpmDpms *dpms,
                         gboolean standby,
                         guint sleep_timeout,
