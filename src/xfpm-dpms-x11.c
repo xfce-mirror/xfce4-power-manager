@@ -35,8 +35,8 @@ static void
 xfpm_dpms_x11_set_mode (XfpmDpms *dpms,
                         XfpmDpmsMode mode);
 static void
-xfpm_dpms_x11_set_enabled (XfpmDpms *dpms,
-                           gboolean enabled);
+xfpm_dpms_x11_set_state (XfpmDpms *dpms,
+                         XfpmDpmsState state);
 static void
 xfpm_dpms_x11_set_timeouts (XfpmDpms *dpms,
                             gboolean standby,
@@ -60,7 +60,7 @@ xfpm_dpms_x11_class_init (XfpmDpmsX11Class *klass)
   XfpmDpmsClass *dpms_class = XFPM_DPMS_CLASS (klass);
 
   dpms_class->set_mode = xfpm_dpms_x11_set_mode;
-  dpms_class->set_enabled = xfpm_dpms_x11_set_enabled;
+  dpms_class->set_state = xfpm_dpms_x11_set_state;
   dpms_class->set_timeouts = xfpm_dpms_x11_set_timeouts;
 }
 
@@ -131,8 +131,8 @@ xfpm_dpms_x11_set_mode (XfpmDpms *dpms,
 }
 
 static void
-xfpm_dpms_x11_set_enabled (XfpmDpms *dpms,
-                           gboolean enabled)
+xfpm_dpms_x11_set_state (XfpmDpms *dpms,
+                         XfpmDpmsState state)
 {
   Display *display = gdk_x11_get_default_xdisplay ();
   BOOL x_enabled;
@@ -144,9 +144,9 @@ xfpm_dpms_x11_set_enabled (XfpmDpms *dpms,
     return;
   }
 
-  if (x_enabled && !enabled)
+  if (x_enabled && state != XFPM_DPMS_STATE_ENABLED)
     DPMSDisable (display);
-  else if (!x_enabled && enabled)
+  else if (!x_enabled && state == XFPM_DPMS_STATE_ENABLED)
     DPMSEnable (display);
 }
 

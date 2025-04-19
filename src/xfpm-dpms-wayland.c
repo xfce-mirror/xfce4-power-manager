@@ -36,8 +36,8 @@ static void
 xfpm_dpms_wayland_set_mode (XfpmDpms *dpms,
                             XfpmDpmsMode mode);
 static void
-xfpm_dpms_wayland_set_enabled (XfpmDpms *dpms,
-                               gboolean enabled);
+xfpm_dpms_wayland_set_state (XfpmDpms *dpms,
+                             XfpmDpmsState state);
 static void
 xfpm_dpms_wayland_set_timeouts (XfpmDpms *dpms,
                                 gboolean standby,
@@ -61,6 +61,7 @@ struct _XfpmDpmsWayland
   struct zwlr_output_power_manager_v1 *wl_manager;
   GList *powers;
   XfpmIdle *idle;
+  XfpmDpmsState state;
 };
 
 typedef struct _Power
@@ -96,24 +97,8 @@ xfpm_dpms_wayland_class_init (XfpmDpmsWaylandClass *klass)
   object_class->finalize = xfpm_dpms_wayland_finalize;
 
   dpms_class->set_mode = xfpm_dpms_wayland_set_mode;
-  dpms_class->set_enabled = xfpm_dpms_wayland_set_enabled;
+  dpms_class->set_state = xfpm_dpms_wayland_set_state;
   dpms_class->set_timeouts = xfpm_dpms_wayland_set_timeouts;
-}
-
-static void
-monitor_added (GdkDisplay *display,
-               GdkMonitor *monitor,
-               XfpmDpmsWayland *dpms)
-{
-  Power *power = g_new0 (Power, 1);
-  struct wl_output *wl_output = gdk_wayland_monitor_get_wl_output (monitor);
-  struct zwlr_output_power_v1 *wl_power = zwlr_output_power_manager_v1_get_output_power (dpms->wl_manager, wl_output);
-  zwlr_output_power_v1_add_listener (wl_power, &power_listener, power);
-  power->dpms = dpms;
-  power->wl_power = wl_power;
-  power->model = g_strdup (gdk_monitor_get_model (monitor));
-  dpms->powers = g_list_prepend (dpms->powers, power);
-  wl_display_roundtrip (gdk_wayland_display_get_wl_display (display));
 }
 
 static void
@@ -135,9 +120,7 @@ idle_reset (XfpmIdle *idle,
 static void
 xfpm_dpms_wayland_init (XfpmDpmsWayland *dpms)
 {
-  GdkDisplay *display = gdk_display_get_default ();
-  struct wl_display *wl_display = gdk_wayland_display_get_wl_display (display);
-  gint n_monitors;
+  struct wl_display *wl_display = gdk_wayland_display_get_wl_display (gdk_display_get_default ());
 
   dpms->wl_registry = wl_display_get_registry (wl_display);
   wl_registry_add_listener (dpms->wl_registry, &registry_listener, dpms);
@@ -147,11 +130,6 @@ xfpm_dpms_wayland_init (XfpmDpmsWayland *dpms)
     g_warning ("wlr-output-power-management protocol unsupported: DPMS features won't work");
     return;
   }
-
-  g_signal_connect_object (display, "monitor-added", G_CALLBACK (monitor_added), dpms, 0);
-  n_monitors = gdk_display_get_n_monitors (display);
-  for (gint n = 0; n < n_monitors; n++)
-    monitor_added (display, gdk_display_get_monitor (display, n), dpms);
 
   dpms->idle = xfpm_idle_new ();
   if (dpms->idle != NULL)
@@ -245,15 +223,50 @@ xfpm_dpms_wayland_set_mode (XfpmDpms *_dpms,
 }
 
 static void
-xfpm_dpms_wayland_set_enabled (XfpmDpms *_dpms,
-                               gboolean enabled)
+monitor_added (GdkDisplay *display,
+               GdkMonitor *monitor,
+               XfpmDpmsWayland *dpms)
+{
+  Power *power = g_new0 (Power, 1);
+  struct wl_output *wl_output = gdk_wayland_monitor_get_wl_output (monitor);
+  struct zwlr_output_power_v1 *wl_power = zwlr_output_power_manager_v1_get_output_power (dpms->wl_manager, wl_output);
+  zwlr_output_power_v1_add_listener (wl_power, &power_listener, power);
+  power->dpms = dpms;
+  power->wl_power = wl_power;
+  power->model = g_strdup (gdk_monitor_get_model (monitor));
+  dpms->powers = g_list_prepend (dpms->powers, power);
+  wl_display_roundtrip (gdk_wayland_display_get_wl_display (display));
+}
+
+static void
+xfpm_dpms_wayland_set_state (XfpmDpms *_dpms,
+                             XfpmDpmsState state)
 {
   XfpmDpmsWayland *dpms = XFPM_DPMS_WAYLAND (_dpms);
   if (dpms->idle == NULL)
     return;
 
-  if (!enabled)
+  if (dpms->state == XFPM_DPMS_STATE_DISABLED && state != XFPM_DPMS_STATE_DISABLED)
+  {
+    GdkDisplay *display = gdk_display_get_default ();
+    gint n_monitors = gdk_display_get_n_monitors (display);
+    g_signal_connect_object (display, "monitor-added", G_CALLBACK (monitor_added), dpms, 0);
+    for (gint n = 0; n < n_monitors; n++)
+      monitor_added (display, gdk_display_get_monitor (display, n), dpms);
+  }
+  else if (dpms->state != XFPM_DPMS_STATE_DISABLED && state != XFPM_DPMS_STATE_ENABLED)
+  {
     xfpm_idle_alarm_remove (dpms->idle, XFPM_ALARM_ID_DPMS);
+    if (state == XFPM_DPMS_STATE_DISABLED)
+    {
+      /* don't prevent other clients from controlling output power if we're disabled */
+      g_list_free_full (dpms->powers, power_free);
+      dpms->powers = NULL;
+      g_signal_handlers_disconnect_by_func (gdk_display_get_default (), monitor_added, dpms);
+    }
+  }
+
+  dpms->state = state;
 }
 
 static void
