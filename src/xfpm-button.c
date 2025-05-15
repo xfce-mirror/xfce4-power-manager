@@ -149,10 +149,6 @@ xfpm_button_keysym_to_code_mask (XfpmButton *button,
       }
       XkbFreeKeyboard (xkbmap, XkbAllClientInfoMask, TRUE);
     }
-    else
-    {
-      *modmask = AnyModifier;
-    }
     g_free (keys);
   }
   else
