@@ -94,7 +94,7 @@ xfpm_button_get_key (unsigned int keycode,
   {
     /* Match keycode and modifiers, but ignore CapsLock state */
     if (xfpm_key_map[i].key_code == keycode
-        && xfpm_key_map[i].key_modifiers == (keymodifiers & ~LockMask))
+        && (xfpm_key_map[i].key_modifiers == (keymodifiers & ~LockMask) || xfpm_key_map[i].key_modifiers == AnyModifier))
       key = xfpm_key_map[i].key;
   }
 
@@ -112,7 +112,7 @@ xfpm_button_keysym_to_code_mask (XfpmButton *button,
   gint nkeys;
   gboolean retval = FALSE;
   *keycode = 0;
-  *modmask = 0;
+  *modmask = AnyModifier;
 
   /*
    * Try to figure out the keysym modifier mask.
