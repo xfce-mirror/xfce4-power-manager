@@ -101,7 +101,6 @@ power_manager_dialog_configure_response (PowerManagerDialog *dialog,
   }
   else
   {
-    xfce_panel_plugin_unblock_menu (XFCE_PANEL_PLUGIN (dialog->plugin));
     gtk_widget_hide (GTK_WIDGET (dialog->dialog));
   }
 }
@@ -162,11 +161,8 @@ power_manager_dialog_show (PowerManagerDialog *dialog,
   g_return_if_fail (POWER_MANAGER_IS_DIALOG (dialog));
   g_return_if_fail (GDK_IS_SCREEN (screen));
 
-  /* block the plugin menu */
-  xfce_panel_plugin_block_menu (XFCE_PANEL_PLUGIN (dialog->plugin));
-
   gtk_window_set_screen (GTK_WINDOW (dialog->dialog), screen);
-  gtk_widget_show (GTK_WIDGET (dialog->dialog));
+  gtk_window_present (GTK_WINDOW (dialog->dialog));
 }
 
 
@@ -257,6 +253,7 @@ power_manager_dialog_new (PowerManagerPlugin *plugin,
                           G_OBJECT (gtkswitch), "active");
   gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET (gtkswitch), 1, 1, 1, 1);
 
+  g_signal_connect (G_OBJECT (dialog->dialog), "delete-event", G_CALLBACK (gtk_widget_hide_on_delete), NULL);
   g_signal_connect_swapped (G_OBJECT (dialog->dialog), "response",
                             G_CALLBACK (power_manager_dialog_configure_response), dialog);
   gtk_widget_show_all (grid);
