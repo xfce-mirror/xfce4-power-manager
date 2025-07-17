@@ -24,10 +24,6 @@
  * http://bazaar.launchpad.net/~indicator-applet-developers/ido/trunk.14.10/view/head:/src/idoscalemenuitem.h
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include "scalemenuitem.h"
 
 #include <gdk/gdkkeysyms.h>

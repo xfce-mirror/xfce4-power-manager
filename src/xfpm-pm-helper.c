@@ -23,10 +23,6 @@
  *       be a good idea to trust glib!!
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <glib.h>
 #include <stdio.h>
 
