@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://gitlab.xfce.org/xfce/xfce4-power-manager/-/blob/master/COPYING)
+o[![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://gitlab.xfce.org/xfce/xfce4-power-manager/-/blob/master/COPYING)
 
 # xfce4-power-manager
 
@@ -35,17 +35,17 @@ See [NEWS](https://gitlab.xfce.org/xfce/xfce4-power-manager/-/blob/master/NEWS) 
 From source: 
 
     % cd xfce4-power-manager
-    % ./autogen.sh
-    % make
-    % make install
+    % meson setup build
+    % meson compile -C build
+    % meson install -C build
 
 From release tarball:
 
-    % tar xf xfce4-power-manager-<version>.tar.bz2
+    % tar xf xfce4-power-manager-<version>.tar.xz
     % cd xfce4-power-manager-<version>
-    % ./configure
-    % make
-    % make install
+    % meson setup build
+    % meson compile -C build
+    % meson install -C build
 
 ### Reporting Bugs
 
