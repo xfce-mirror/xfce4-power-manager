@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Xfce
-# This file is distributed under the same license as the xfce4-power-manager.master package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 # 
 # Translators:
 # ప్రవీణ్ ఇళ్ళ <mail2ipn@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
-"Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-05-26 00:47+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-18 00:47+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: ప్రవీణ్ ఇళ్ళ <mail2ipn@gmail.com>, 2014\n"
 "Language-Team: Telugu (http://app.transifex.com/xfce/xfce4-power-manager/language/te/)\n"
@@ -18,295 +18,110 @@ msgstr ""
 "Language: te\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/interfaces/xfpm-settings.ui:101 settings/xfpm-settings.c:193
-#: settings/xfpm-settings.c:210
+#: ../settings/xfpm-settings.c:188 ../settings/xfpm-settings.c:205
 msgid "Never"
 msgstr "ఎప్పటికీవద్దు"
 
-#: data/interfaces/xfpm-settings.ui:105
-msgid "When the screensaver is activated"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:109
-msgid "When the screensaver is deactivated"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:120 data/interfaces/xfpm-settings.ui:131
-#: data/interfaces/xfpm-settings.ui:142 data/interfaces/xfpm-settings.ui:153
-#: data/interfaces/xfpm-settings.ui:164 data/interfaces/xfpm-settings.ui:175
-#: data/interfaces/xfpm-settings.ui:186 data/interfaces/xfpm-settings.ui:197
-#: data/interfaces/xfpm-settings.ui:208 data/interfaces/xfpm-settings.ui:219
-msgid "Nothing"
-msgstr "ఏమీచేయవద్దు"
-
-#: data/interfaces/xfpm-settings.ui:253
-#: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:249
-#: src/xfpm-power.c:556 src/xfpm-power.c:597 src/xfpm-power.c:756
-#: src/xfpm-power.c:775 src/xfpm-backlight.c:155 src/xfpm-backlight.c:163
-#: src/xfpm-battery.c:181 src/xfpm-kbd-backlight.c:108
-#: src/xfce4-power-manager.desktop.in:3
-msgid "Power Manager"
-msgstr "విద్యుత్ నిర్వాహకం"
-
-#: data/interfaces/xfpm-settings.ui:268
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:150
-msgid "_Help"
-msgstr "సహాయం (_H)"
-
-#: data/interfaces/xfpm-settings.ui:284
-msgid "_Screensaver Management"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:300
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:151
-msgid "_Close"
-msgstr "మూసివేయి (_C)"
-
-#: data/interfaces/xfpm-settings.ui:362
-msgid "When power button is pressed:"
-msgstr "విద్యుచ్ఛక్తి బటన్ నొక్కినపుడు ఇలా చేయి:"
-
-#: data/interfaces/xfpm-settings.ui:374
-msgid "When sleep button is pressed:"
-msgstr "నిద్రావస్థ బటన్ నొక్కినపుడు ఇలా చేయి:"
-
-#: data/interfaces/xfpm-settings.ui:386
-msgid "When hibernate button is pressed:"
-msgstr "సుప్తావస్థ బటన్ నొక్కినపుడు ఈవిధముగా చేయి:"
-
-#: data/interfaces/xfpm-settings.ui:398
-msgid "When battery button is pressed:"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:507
-msgid "Exponential"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:529
-msgid "Brightness step count:"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:540
-msgid "Handle display brightness _keys"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:563
-msgid "<b>Buttons</b>"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:597
-msgid "Status notifications"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:635
-msgid "System tray icon"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:671
-msgid "<b>Appearance</b>"
-msgstr "<b>కనిపించువిధము</b>"
-
-#: data/interfaces/xfpm-settings.ui:691
-msgid "General"
-msgstr "సాధారణం"
-
-#: data/interfaces/xfpm-settings.ui:736 data/interfaces/xfpm-settings.ui:974
-msgid "When inactive for"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:808 data/interfaces/xfpm-settings.ui:1046
-msgid "System sleep mode:"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:820 data/interfaces/xfpm-settings.ui:1058
-msgid "<b>System power saving</b>"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:835 data/interfaces/xfpm-settings.ui:959
-msgid "<b>Laptop Lid</b>"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:850 data/interfaces/xfpm-settings.ui:927
-msgid "When laptop lid is closed:"
-msgstr "లాప్‌టాప్ లిడ్ మూసివేసినపుడు ఇలా చేయి:"
-
-#: data/interfaces/xfpm-settings.ui:851 data/interfaces/xfpm-settings.ui:864
-#: data/interfaces/xfpm-settings.ui:928 data/interfaces/xfpm-settings.ui:941
-msgid "These actions only take place if no external display is connected"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:881 data/interfaces/xfpm-settings.ui:1072
-msgid "<b>Power profile</b>"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:913 data/interfaces/xfpm-settings.ui:1636
-msgid "On battery"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1104 data/interfaces/xfpm-settings.ui:1889
-#: common/xfpm-power-common.c:414
-msgid "Plugged in"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1140
-msgid "Critical battery power level:"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1170 settings/xfpm-settings.c:232
-msgid "%"
-msgstr "%"
-
-#: data/interfaces/xfpm-settings.ui:1207
-msgid "On critical battery power:"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1246
-msgid "<b>Critical power</b>"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1275
-msgid "Lock screen when system is going to sleep"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1294
-msgid "<b>Security</b>"
-msgstr "<b>భద్రత</b>"
-
-#: data/interfaces/xfpm-settings.ui:1314
-msgid "System"
-msgstr "వ్యవస్థ"
-
-#: data/interfaces/xfpm-settings.ui:1353
-msgid "<b>Display power management</b>"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1366
-msgid ""
-"Let the power manager handle display power management (DPMS) instead of the "
-"display server"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1441 data/interfaces/xfpm-settings.ui:1650
-msgid "Put to sleep after"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1454 data/interfaces/xfpm-settings.ui:1663
-msgid "Switch off after"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1511 data/interfaces/xfpm-settings.ui:1692
-msgid "On inactivity reduce to"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1524 data/interfaces/xfpm-settings.ui:1705
-msgid "Reduce after"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1623 data/interfaces/xfpm-settings.ui:1676
-msgid "<b>Brightness reduction</b>"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:1909
-msgid "Display"
-msgstr "ప్రదర్శించు"
-
-#: settings/xfpm-settings.c:196 settings/xfpm-settings.c:220
-#: settings/xfpm-settings.c:222
+#: ../settings/xfpm-settings.c:191 ../settings/xfpm-settings.c:215
+#: ../settings/xfpm-settings.c:217
 msgid "One minute"
 msgstr "ఒక నిమిషం"
 
-#: settings/xfpm-settings.c:198 settings/xfpm-settings.c:224
-#: settings/xfpm-settings.c:226
+#: ../settings/xfpm-settings.c:193 ../settings/xfpm-settings.c:219
+#: ../settings/xfpm-settings.c:221
 msgid "minutes"
 msgstr "నిమిషాలు"
 
-#: settings/xfpm-settings.c:217 settings/xfpm-settings.c:222
-#: settings/xfpm-settings.c:226
+#: ../settings/xfpm-settings.c:212 ../settings/xfpm-settings.c:217
+#: ../settings/xfpm-settings.c:221
 msgid "seconds"
 msgstr ""
 
-#: settings/xfpm-settings.c:386 settings/xfpm-settings.c:514
-#: settings/xfpm-settings.c:651 src/xfpm-power.c:612
+#: ../settings/xfpm-settings.c:227
+msgid "%"
+msgstr "%"
+
+#: ../settings/xfpm-settings.c:397 ../settings/xfpm-settings.c:525
+#: ../settings/xfpm-settings.c:672 ../src/xfpm-power.c:608
 msgid "Suspend"
 msgstr "తాత్కాలికంగా నిలిపివేయి"
 
-#: settings/xfpm-settings.c:390
+#: ../settings/xfpm-settings.c:401
 msgid "Suspend operation not permitted"
 msgstr "తాత్కాలిక నిలుపుదల పరిక్రియను అనుమతించుట లేదు"
 
-#: settings/xfpm-settings.c:394
+#: ../settings/xfpm-settings.c:405
 msgid "Suspend operation not supported"
 msgstr "తాత్కాలిక నిలుపుదల పరిక్రియ సహకరించుట లేదు"
 
-#: settings/xfpm-settings.c:400 settings/xfpm-settings.c:520
-#: settings/xfpm-settings.c:657 src/xfpm-power.c:607
+#: ../settings/xfpm-settings.c:411 ../settings/xfpm-settings.c:531
+#: ../settings/xfpm-settings.c:678 ../src/xfpm-power.c:603
 msgid "Hibernate"
 msgstr "సుప్తావస్థ"
 
-#: settings/xfpm-settings.c:404
+#: ../settings/xfpm-settings.c:415
 msgid "Hibernate operation not permitted"
 msgstr "సుప్తావస్థ పరిక్రియకు అనుమతి లేదు"
 
-#: settings/xfpm-settings.c:408
+#: ../settings/xfpm-settings.c:419
 msgid "Hibernate operation not supported"
 msgstr "సుప్తావస్థ పరిక్రియకు సహకరించుట లేదు"
 
-#: settings/xfpm-settings.c:414 settings/xfpm-settings.c:526
-#: settings/xfpm-settings.c:663 src/xfpm-power.c:617
+#: ../settings/xfpm-settings.c:425 ../settings/xfpm-settings.c:537
+#: ../settings/xfpm-settings.c:684 ../src/xfpm-power.c:613
 msgid "Hybrid Sleep"
 msgstr ""
 
-#: settings/xfpm-settings.c:418
+#: ../settings/xfpm-settings.c:429
 msgid "Hybrid sleep operation not permitted"
 msgstr ""
 
-#: settings/xfpm-settings.c:422
+#: ../settings/xfpm-settings.c:433
 msgid "Hybrid sleep operation not supported"
 msgstr ""
 
-#: settings/xfpm-settings.c:447 settings/xfpm-settings.c:857
+#: ../settings/xfpm-settings.c:458 ../settings/xfpm-settings.c:878
 msgid "Hibernate and suspend operations not supported"
 msgstr "సుప్తావస్థ మరియు తాత్కాలిక నిలుపుదల వంటి పరిక్రియలకు సహకారించుటలేదు"
 
-#: settings/xfpm-settings.c:452 settings/xfpm-settings.c:862
+#: ../settings/xfpm-settings.c:463 ../settings/xfpm-settings.c:883
 msgid "Hibernate and suspend operations not permitted"
 msgstr "సుప్తావస్థ మరియు తాత్కాలిక నిలుపుదల వంటి పరిక్రియలకు అనుమతిలేదు"
 
-#: settings/xfpm-settings.c:503 settings/xfpm-settings.c:646
+#: ../settings/xfpm-settings.c:514 ../settings/xfpm-settings.c:667
 msgid "Do nothing"
 msgstr ""
 
-#: settings/xfpm-settings.c:506
+#: ../settings/xfpm-settings.c:517
 msgid "Switch off display"
 msgstr ""
 
-#: settings/xfpm-settings.c:509
+#: ../settings/xfpm-settings.c:520
 msgid "Lock screen"
 msgstr "తెరకు తాళంవేయి"
 
-#: settings/xfpm-settings.c:530 settings/xfpm-settings.c:669
-#: src/xfpm-power.c:630
+#: ../settings/xfpm-settings.c:541 ../settings/xfpm-settings.c:690
+#: ../src/xfpm-power.c:626
 msgid "Shutdown"
 msgstr "మూసివేయి"
 
-#: settings/xfpm-settings.c:673
+#: ../settings/xfpm-settings.c:694
 msgid "Ask"
 msgstr "అడుగు"
 
-#: settings/xfpm-settings.c:763
+#: ../settings/xfpm-settings.c:784
 msgid "Number of brightness steps available using keys"
 msgstr ""
 
-#: settings/xfpm-settings.c:819
+#: ../settings/xfpm-settings.c:833
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "ఎప్పుడైతే కంప్యూటర్ యొక్క అన్ని విద్యుత్ మూలాలు ఈ చార్జ్ స్థాయి చేరుకున్నపుడు"
 
-#: settings/xfpm-settings.c:833
+#: ../settings/xfpm-settings.c:847
 msgid "Notify"
 msgstr ""
 
-#: settings/xfpm-settings.c:840
+#: ../settings/xfpm-settings.c:860
 #, c-format
 msgid ""
 "Make sure you set a sufficiently high value here, otherwise the system will "
@@ -315,242 +130,232 @@ msgid ""
 "system in this case will be: %s."
 msgstr ""
 
-#: settings/xfpm-settings.c:1094
+#: ../settings/xfpm-settings.c:1115
 msgid "Device"
 msgstr "పరికరం"
 
-#: settings/xfpm-settings.c:1117
+#: ../settings/xfpm-settings.c:1138
 msgid "Type"
 msgstr "రకం"
 
-#: settings/xfpm-settings.c:1122
+#: ../settings/xfpm-settings.c:1143
 msgid "PowerSupply"
 msgstr "విద్యుత్ సరఫరా"
 
-#: settings/xfpm-settings.c:1123 src/xfpm-main.c:62
+#: ../settings/xfpm-settings.c:1144 ../src/xfpm-main.c:62
 msgid "True"
 msgstr "సత్యము"
 
-#: settings/xfpm-settings.c:1123 src/xfpm-main.c:62
+#: ../settings/xfpm-settings.c:1144 ../src/xfpm-main.c:62
 msgid "False"
 msgstr "అసత్యము"
 
-#: settings/xfpm-settings.c:1130
+#: ../settings/xfpm-settings.c:1151
 msgid "Model"
 msgstr "మోడల్"
 
-#: settings/xfpm-settings.c:1133
+#: ../settings/xfpm-settings.c:1154
 msgid "Technology"
 msgstr "సాంకేతికత"
 
-#: settings/xfpm-settings.c:1140
+#: ../settings/xfpm-settings.c:1161
 msgid "Current charge"
 msgstr ""
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1148 settings/xfpm-settings.c:1160
-#: settings/xfpm-settings.c:1172
+#: ../settings/xfpm-settings.c:1169 ../settings/xfpm-settings.c:1181
+#: ../settings/xfpm-settings.c:1193
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1150
+#: ../settings/xfpm-settings.c:1171
 msgid "Fully charged (design)"
 msgstr ""
 
-#: settings/xfpm-settings.c:1163
+#: ../settings/xfpm-settings.c:1184
 msgid "Fully charged"
 msgstr ""
 
-#: settings/xfpm-settings.c:1174
+#: ../settings/xfpm-settings.c:1195
 msgid "Energy empty"
 msgstr "శక్తి అయిపోయింది"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1182
+#: ../settings/xfpm-settings.c:1203
 msgid "W"
 msgstr ""
 
-#: settings/xfpm-settings.c:1184
+#: ../settings/xfpm-settings.c:1205
 msgid "Energy rate"
 msgstr ""
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1192
+#: ../settings/xfpm-settings.c:1213
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1194
+#: ../settings/xfpm-settings.c:1215
 msgid "Voltage"
 msgstr "వోల్టేజి"
 
-#: settings/xfpm-settings.c:1201
+#: ../settings/xfpm-settings.c:1222
 msgid "Vendor"
 msgstr "విక్రేత"
 
-#: settings/xfpm-settings.c:1206
+#: ../settings/xfpm-settings.c:1227
 msgid "Serial"
 msgstr "క్రమసంఖ్య"
 
-#: settings/xfpm-settings.c:1493
+#: ../settings/xfpm-settings.c:1514
 msgid "Check your power manager installation"
 msgstr "మీ విద్యుత్ నిర్వాహకము స్థాపనను సరిచూసుకోండి"
 
-#: settings/xfpm-settings.c:1569
+#: ../settings/xfpm-settings.c:1590
 msgid "Devices"
 msgstr ""
 
-#: settings/xfpm-settings-app.c:84
+#: ../settings/xfpm-settings-app.c:84
 msgid "Settings manager socket"
 msgstr "అమరికల నిర్వాహకము సాకెట్"
 
-#: settings/xfpm-settings-app.c:84
+#: ../settings/xfpm-settings-app.c:84
 msgid "SOCKET ID"
 msgstr "సాకెట్ ఐడి"
 
-#: settings/xfpm-settings-app.c:85
+#: ../settings/xfpm-settings-app.c:85
 msgid "Display a specific device by UpDevice object path"
 msgstr ""
 
-#: settings/xfpm-settings-app.c:85
+#: ../settings/xfpm-settings-app.c:85
 msgid "UpDevice object path"
 msgstr ""
 
-#: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
+#: ../settings/xfpm-settings-app.c:86 ../src/xfpm-main.c:242
 msgid "Enable debugging"
 msgstr "దోషశుద్ధిని చేతనపరుచు"
 
-#: settings/xfpm-settings-app.c:87
+#: ../settings/xfpm-settings-app.c:87
 msgid "Display version information"
 msgstr "రూపాంతర సమాచారాన్ని చూపించు"
 
-#: settings/xfpm-settings-app.c:88
+#: ../settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr ""
 
-#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
-#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
-#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
+#: ../settings/xfpm-settings-app.c:140 ../settings/xfpm-settings-app.c:187
+#: ../settings/xfpm-settings-app.c:264 ../settings/xfpm-settings-app.c:279
+#: ../settings/xfpm-settings-app.c:307 ../src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Xfce విద్యుత్ నిర్వాహకము"
 
-#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
-#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
+#: ../settings/xfpm-settings-app.c:141 ../settings/xfpm-settings-app.c:188
+#: ../settings/xfpm-settings-app.c:280 ../settings/xfpm-settings-app.c:308
 msgid "Failed to connect to power manager"
 msgstr ""
 
-#: settings/xfpm-settings-app.c:265
+#: ../settings/xfpm-settings-app.c:265
 msgid "Failed to load power manager configuration"
 msgstr ""
 
-#: settings/xfpm-settings-app.c:296
+#: ../settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 విద్యుత్ నిర్వాహకము నడుచుటలేదు, మీరు ఇపుడు దానిని ప్రారంభించాలనుకుంటున్నారా?"
 
-#: settings/xfpm-settings-app.c:394
+#: ../settings/xfpm-settings-app.c:394
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr ""
 
-#: settings/xfpm-settings-app.c:396
+#: ../settings/xfpm-settings-app.c:396
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr ""
 
-#: settings/xfce4-power-manager-settings.desktop.in:6
-msgid "Settings for the Xfce Power Manager"
-msgstr "Xfce విద్యుత్ నిర్వాహకము కొరకు అమరికలు"
-
-#: settings/xfce4-power-manager-settings.desktop.in:12
-msgid ""
-"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
-" lid;lock screen;plugged in;saving;critical;"
-msgstr ""
-
-#: common/xfpm-common.c:131
+#: ../common/xfpm-common.c:129
 msgid "translator-credits"
 msgstr "Praveen Illa <mail2ipn@gmail.com>, 2014."
 
-#: common/xfpm-power-common.c:43 common/xfpm-power-common.c:66
+#: ../common/xfpm-power-common.c:39 ../common/xfpm-power-common.c:62
 msgid "Battery"
 msgstr "బ్యాటరీ"
 
-#: common/xfpm-power-common.c:45
+#: ../common/xfpm-power-common.c:41
 msgid "Uninterruptible Power Supply"
 msgstr ""
 
-#: common/xfpm-power-common.c:47
+#: ../common/xfpm-power-common.c:43
 msgid "Line power"
 msgstr "లైన్ విద్యుత్"
 
-#: common/xfpm-power-common.c:49
+#: ../common/xfpm-power-common.c:45
 msgid "Mouse"
 msgstr "మౌస్"
 
-#: common/xfpm-power-common.c:51
+#: ../common/xfpm-power-common.c:47
 msgid "Keyboard"
 msgstr "కీబోర్డు"
 
-#: common/xfpm-power-common.c:53
+#: ../common/xfpm-power-common.c:49
 msgid "Monitor"
 msgstr "మానిటర్"
 
-#: common/xfpm-power-common.c:55
+#: ../common/xfpm-power-common.c:51
 msgid "PDA"
 msgstr "PDA"
 
-#: common/xfpm-power-common.c:57
+#: ../common/xfpm-power-common.c:53
 msgid "Phone"
 msgstr "ఫోను"
 
-#: common/xfpm-power-common.c:59
+#: ../common/xfpm-power-common.c:55
 msgid "Tablet"
 msgstr "టాబ్లెట్"
 
-#: common/xfpm-power-common.c:61 common/xfpm-power-common.c:297
+#: ../common/xfpm-power-common.c:57 ../common/xfpm-power-common.c:295
 msgid "Computer"
 msgstr ""
 
-#: common/xfpm-power-common.c:63 common/xfpm-power-common.c:79
-#: common/xfpm-power-common.c:94
+#: ../common/xfpm-power-common.c:59 ../common/xfpm-power-common.c:75
+#: ../common/xfpm-power-common.c:90
 msgid "Unknown"
 msgstr "తెలియదు"
 
-#: common/xfpm-power-common.c:81
+#: ../common/xfpm-power-common.c:77
 msgid "Lithium ion"
 msgstr "లిథియమ్ అయాన్"
 
-#: common/xfpm-power-common.c:83
+#: ../common/xfpm-power-common.c:79
 msgid "Lithium polymer"
 msgstr "లిథియమ్ పోలిమర్"
 
-#: common/xfpm-power-common.c:85
+#: ../common/xfpm-power-common.c:81
 msgid "Lithium iron phosphate"
 msgstr "లిథియమ్ ఐరన్ ఫాస్పేట్"
 
-#: common/xfpm-power-common.c:87
+#: ../common/xfpm-power-common.c:83
 msgid "Lead acid"
 msgstr "లెడ్ యాసిడ్"
 
-#: common/xfpm-power-common.c:89
+#: ../common/xfpm-power-common.c:85
 msgid "Nickel cadmium"
 msgstr "నికెల్ కాడ్మియమ్"
 
-#: common/xfpm-power-common.c:91
+#: ../common/xfpm-power-common.c:87
 msgid "Nickel metal hydride"
 msgstr ""
 
-#: common/xfpm-power-common.c:139
+#: ../common/xfpm-power-common.c:135
 msgid "Unknown time"
 msgstr "సమయం తెలియదు"
 
-#: common/xfpm-power-common.c:145
+#: ../common/xfpm-power-common.c:141
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i నిమిషం"
 msgstr[1] "%i నిమిషాలు"
 
-#: common/xfpm-power-common.c:153
+#: ../common/xfpm-power-common.c:149
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -559,80 +364,80 @@ msgstr[1] "%i గంటలు"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: common/xfpm-power-common.c:157
+#: ../common/xfpm-power-common.c:153
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: common/xfpm-power-common.c:158
+#: ../common/xfpm-power-common.c:154
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "గంట"
 msgstr[1] "గంటలు"
 
-#: common/xfpm-power-common.c:159
+#: ../common/xfpm-power-common.c:155
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "నిమిషం"
 msgstr[1] "నిమిషాలు"
 
-#: common/xfpm-power-common.c:337
+#: ../common/xfpm-power-common.c:335
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
 msgstr ""
 
-#: common/xfpm-power-common.c:344
+#: ../common/xfpm-power-common.c:342
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
 msgstr ""
 
-#: common/xfpm-power-common.c:353
+#: ../common/xfpm-power-common.c:351
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
 msgstr ""
 
-#: common/xfpm-power-common.c:361 common/xfpm-power-common.c:379
+#: ../common/xfpm-power-common.c:359 ../common/xfpm-power-common.c:377
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
 msgstr ""
 
-#: common/xfpm-power-common.c:371
+#: ../common/xfpm-power-common.c:369
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
 msgstr ""
 
-#: common/xfpm-power-common.c:386
+#: ../common/xfpm-power-common.c:384
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr ""
 
-#: common/xfpm-power-common.c:392
+#: ../common/xfpm-power-common.c:390
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr ""
 
-#: common/xfpm-power-common.c:398
+#: ../common/xfpm-power-common.c:396
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
 msgstr ""
 
-#: common/xfpm-power-common.c:403
+#: ../common/xfpm-power-common.c:401
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -641,396 +446,344 @@ msgstr ""
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: common/xfpm-power-common.c:413
+#: ../common/xfpm-power-common.c:411
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr ""
 
-#: common/xfpm-power-common.c:414
+#: ../common/xfpm-power-common.c:412
+msgid "Plugged in"
+msgstr ""
+
+#: ../common/xfpm-power-common.c:412
 msgid "Not plugged in"
 msgstr ""
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: common/xfpm-power-common.c:420
+#: ../common/xfpm-power-common.c:418
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr ""
 
 #. unknown device state, just display the percentage
-#: common/xfpm-power-common.c:425
+#: ../common/xfpm-power-common.c:423
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Unknown state"
 msgstr ""
 
-#: src/xfpm-power.c:274
+#: ../src/xfpm-power.c:245 ../src/xfpm-power.c:552 ../src/xfpm-power.c:593
+#: ../src/xfpm-power.c:752 ../src/xfpm-power.c:771 ../src/xfpm-backlight.c:151
+#: ../src/xfpm-backlight.c:159 ../src/xfpm-battery.c:177
+#: ../src/xfpm-kbd-backlight.c:104
+msgid "Power Manager"
+msgstr "విద్యుత్ నిర్వాహకం"
+
+#: ../src/xfpm-power.c:270
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr ""
 
-#: src/xfpm-power.c:306
+#: ../src/xfpm-power.c:302
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr ""
 
-#: src/xfpm-power.c:495
+#: ../src/xfpm-power.c:491
 msgid "Hibernate the system"
 msgstr "వ్యవస్థను సుప్తావస్థలోనికి మార్చు"
 
-#: src/xfpm-power.c:507
+#: ../src/xfpm-power.c:503
 msgid "Suspend the system"
 msgstr "వ్యవస్థను తాత్కాలికంగా నిలిపివేయి"
 
-#: src/xfpm-power.c:519
+#: ../src/xfpm-power.c:515
 msgid "Hybrid sleep the system"
 msgstr ""
 
-#: src/xfpm-power.c:539
+#: ../src/xfpm-power.c:535
 msgid "Shutdown the system"
 msgstr "వ్యవస్థను మూసివేయి"
 
-#: src/xfpm-power.c:552 src/xfpm-power.c:594
+#: ../src/xfpm-power.c:548 ../src/xfpm-power.c:590
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "వ్యవస్థ తక్కువ విద్యుచ్ఛక్తి వద్ద నడుస్తున్నది. డేటాను కోల్పోకుండా ఉండటానికి మీ పనిని భద్రపరుచుకోండి"
 
-#: src/xfpm-power.c:633
+#: ../src/xfpm-power.c:629
 msgid "Cancel"
 msgstr "రద్దుచేయి"
 
-#: src/xfpm-power.c:756
+#: ../src/xfpm-power.c:752
 msgid "System is running on low power"
 msgstr "వ్యవస్థ తక్కువ విద్యుచ్ఛక్తి వద్ద నడుస్తున్నది"
 
-#: src/xfpm-power.c:771
+#: ../src/xfpm-power.c:767
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "మీ %s చార్జ్ స్థాయి తక్కువగా ఉంది\nమిగిలివున్న సమయం %s"
 
-#: src/xfpm-power.c:1526 src/xfpm-power.c:1570 src/xfpm-power.c:1606
-#: src/xfpm-power.c:1640 src/xfpm-power.c:1674
+#: ../src/xfpm-power.c:1522 ../src/xfpm-power.c:1566 ../src/xfpm-power.c:1602
+#: ../src/xfpm-power.c:1636 ../src/xfpm-power.c:1670
 msgid "Permission denied"
 msgstr "అనుమతి నిరాకరించబడింది"
 
-#: src/xfpm-power.c:1615
+#: ../src/xfpm-power.c:1611
 msgid "Hibernate not supported"
 msgstr ""
 
-#: src/xfpm-power.c:1649
+#: ../src/xfpm-power.c:1645
 msgid "Suspend not supported"
 msgstr "తాత్కాలిక నిలుపుదలకు సహకరించుటలేదు"
 
-#: src/xfpm-power.c:1683
+#: ../src/xfpm-power.c:1679
 msgid "Hybrid sleep not supported"
 msgstr ""
 
 #. generate a human-readable summary for the notification
-#: src/xfpm-backlight.c:149
+#: ../src/xfpm-backlight.c:145
 #, c-format
 msgid "Brightness: %.0f percent"
 msgstr ""
 
-#: src/xfpm-battery.c:99 src/xfpm-battery.c:151
+#: ../src/xfpm-battery.c:95 ../src/xfpm-battery.c:147
 #, c-format
 msgid "Your %s is fully charged"
 msgstr "మీ %s పూర్తిగా చార్జయింది"
 
-#: src/xfpm-battery.c:102 src/xfpm-battery.c:154
+#: ../src/xfpm-battery.c:98 ../src/xfpm-battery.c:150
 #, c-format
 msgid "Your %s is charging"
 msgstr "మీ %s చార్జింగ్ అవుతున్నది"
 
-#: src/xfpm-battery.c:112
+#: ../src/xfpm-battery.c:108
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "%s until fully charged"
 msgstr ""
 
-#: src/xfpm-battery.c:121 src/xfpm-battery.c:157
+#: ../src/xfpm-battery.c:117 ../src/xfpm-battery.c:153
 #, c-format
 msgid "Your %s is discharging"
 msgstr "మీ %s డిస్చార్జ్ అవుతున్నది"
 
-#: src/xfpm-battery.c:123
+#: ../src/xfpm-battery.c:119
 #, c-format
 msgid "System is running on %s power"
 msgstr "వ్యవస్థ %s విద్యుత్ పై నడుస్తున్నది"
 
-#: src/xfpm-battery.c:133
+#: ../src/xfpm-battery.c:129
 #, c-format
 msgid ""
 "%s (%i%%)\n"
 "Estimated time left is %s"
 msgstr ""
 
-#: src/xfpm-battery.c:140 src/xfpm-battery.c:160
+#: ../src/xfpm-battery.c:136 ../src/xfpm-battery.c:156
 #, c-format
 msgid "Your %s is empty"
 msgstr "మీ %s అయిపోయింది"
 
 #. generate a human-readable summary for the notification
-#: src/xfpm-kbd-backlight.c:106
+#: ../src/xfpm-kbd-backlight.c:102
 #, c-format
 msgid "Keyboard Brightness: %.0f percent"
 msgstr ""
 
-#: src/xfpm-main.c:86
+#: ../src/xfpm-main.c:86
+#, c-format
 msgid "With policykit support\n"
 msgstr "పాలసీకిట్ సహకారముతో\n"
 
-#: src/xfpm-main.c:88
+#: ../src/xfpm-main.c:88
+#, c-format
 msgid "Without policykit support\n"
 msgstr "పాలసీకిట్ సహకారము లేకుండా\n"
 
-#: src/xfpm-main.c:107
+#: ../src/xfpm-main.c:107
 msgid "Can suspend"
 msgstr "తాత్కాలికంగా నిలిపివేయవచ్చు"
 
-#: src/xfpm-main.c:108
+#: ../src/xfpm-main.c:108
 msgid "Can hibernate"
 msgstr "సుప్తావస్థలోనికి మార్చవచ్చు"
 
-#: src/xfpm-main.c:109
+#: ../src/xfpm-main.c:109
 msgid "Can hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:110
+#: ../src/xfpm-main.c:110
 msgid "Authorized to suspend"
 msgstr "తాత్కాలికంగా నిలుపువేయుటకు అధికారమును కలిగిన వారై వుండాలి"
 
-#: src/xfpm-main.c:111
+#: ../src/xfpm-main.c:111
 msgid "Authorized to hibernate"
 msgstr "సుప్తావస్థలో ఉంచుటకు అధికారమును కలిగిన వారై వుండాలి"
 
-#: src/xfpm-main.c:112
+#: ../src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
 msgstr ""
 
-#: src/xfpm-main.c:113
+#: ../src/xfpm-main.c:113
 msgid "Authorized to shutdown"
 msgstr "మూసివేయుటకు అధికారమును కలిగిన వారై వుండాలి"
 
-#: src/xfpm-main.c:114
+#: ../src/xfpm-main.c:114
 msgid "Has battery"
 msgstr "బ్యాటరీ ఉంది"
 
-#: src/xfpm-main.c:115
+#: ../src/xfpm-main.c:115
 msgid "Has brightness panel"
 msgstr "ప్రకాశవంతపు ప్యానల్"
 
-#: src/xfpm-main.c:116
+#: ../src/xfpm-main.c:116
 msgid "Has power button"
 msgstr "విద్యుత్ బటన్"
 
-#: src/xfpm-main.c:117
+#: ../src/xfpm-main.c:117
 msgid "Has hibernate button"
 msgstr "సుప్తావస్థ బటన్"
 
-#: src/xfpm-main.c:118
+#: ../src/xfpm-main.c:118
 msgid "Has sleep button"
 msgstr "నిద్రావస్థ బటన్"
 
-#: src/xfpm-main.c:119
+#: ../src/xfpm-main.c:119
 msgid "Has battery button"
 msgstr ""
 
-#: src/xfpm-main.c:120
+#: ../src/xfpm-main.c:120
 msgid "Has LID"
 msgstr "LID కలిగివుంది"
 
-#: src/xfpm-main.c:241
+#: ../src/xfpm-main.c:241
 msgid "Daemonize"
 msgstr ""
 
-#: src/xfpm-main.c:243
+#: ../src/xfpm-main.c:243
 msgid "Dump all information"
 msgstr "సమాచారాన్నంతటినీ సేకరించు"
 
-#: src/xfpm-main.c:244
+#: ../src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
 msgstr "xfce విద్యుత్ నిర్వాహకము యొక్క నడుస్తున్న ప్రక్రియను పునఃప్రారంభించు"
 
-#: src/xfpm-main.c:245
+#: ../src/xfpm-main.c:245
 msgid "Show the configuration dialog"
 msgstr "స్వరూపణ డైలాగును చూపించు"
 
-#: src/xfpm-main.c:246
+#: ../src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
 msgstr "నడుస్తున్న ఏదైనా xfce విద్యుత్ నిర్వాహకము నుండి నిష్క్రమించు"
 
-#: src/xfpm-main.c:247
+#: ../src/xfpm-main.c:247
 msgid "Version information"
 msgstr "రూపాంతర సమాచారం"
 
-#: src/xfpm-main.c:266
+#: ../src/xfpm-main.c:266
 #, c-format
 msgid "Failed to parse arguments: %s\n"
 msgstr ""
 
-#: src/xfpm-main.c:300
+#: ../src/xfpm-main.c:300
 msgid "Unable to get connection to the message bus session"
 msgstr "బస్ సెషన్ సందేశమునకు అనుసంధానమును పొందలేకపోతున్నది"
 
-#: src/xfpm-main.c:309 src/xfpm-main.c:361
+#: ../src/xfpm-main.c:309 ../src/xfpm-main.c:361
+#, c-format
 msgid "Xfce power manager is not running"
 msgstr "Xfce విద్యుత్ నిర్వాహకము నడుచుటలేదు"
 
-#: src/xfpm-main.c:400
+#: ../src/xfpm-main.c:400
 msgid "Another power manager is already running"
 msgstr "మరొక విద్యుత్ నిర్వాహకము ఇంతకుముందు నుంచే నడుస్తున్నది"
 
-#: src/xfpm-main.c:404
+#: ../src/xfpm-main.c:404
+#, c-format
 msgid "Xfce power manager is already running"
 msgstr "Xfce విద్యుత్ నిర్వాహకము ఇంతకుముందు నుంచే నడుస్తున్నది"
 
-#: src/xfpm-inhibit.c:393
+#: ../src/xfpm-inhibit.c:378
 msgid "Invalid arguments"
 msgstr "చెల్లని తర్కము"
 
-#: src/xfpm-inhibit.c:423
+#: ../src/xfpm-inhibit.c:408
 msgid "Invalid cookie"
 msgstr "సరైన కుకీ కాదు"
 
-#: src/xfpm-manager.c:353
+#: ../src/xfpm-manager.c:316
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
 msgstr ""
 
-#: src/xfce4-power-manager.desktop.in:4
-msgid "Power management for the Xfce desktop"
-msgstr "Xfce డెస్క్‌టాప్ కొరకు విద్యుత్ నిర్వాహణ"
-
-#. SECURITY:
-#. - A normal active user on the local machine does not need permission
-#. to change the backlight brightness.
-#: src/org.xfce.power.policy.in.in:21
-msgid "Modify the laptop display brightness"
-msgstr ""
-
-#: src/org.xfce.power.policy.in.in:22
-msgid "Authentication is required to modify the laptop display brightness"
-msgstr ""
-
-#. SECURITY:
-#. - A normal active user on the local machine does not need permission
-#. to suspend or hibernate their system.
-#: src/org.xfce.power.policy.in.in:36
-msgid "Suspend or hibernate the system"
-msgstr ""
-
-#: src/org.xfce.power.policy.in.in:37
-msgid ""
-"Authentication is required to place the system in suspend or hibernate mode"
-msgstr ""
-
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugins/power-manager-plugin/power-manager-button.c:286
+#: ../panel-plugin/power-manager-button.c:267
 msgid "Display battery levels for attached devices"
 msgstr ""
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1399
+#: ../panel-plugin/power-manager-button.c:1216
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr ""
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1624
+#: ../panel-plugin/power-manager-button.c:1391
 msgid "<b>Display brightness</b>"
 msgstr ""
 
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1651
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1662
+#: ../panel-plugin/power-manager-button.c:1416
 msgid "Presentation _mode"
 msgstr ""
 
 #. Power manager settings
-#: panel-plugins/power-manager-plugin/power-manager-button.c:1675
+#: ../panel-plugin/power-manager-button.c:1433
 msgid "_Settings..."
 msgstr ""
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:139
+#: ../panel-plugin/power-manager-dialog.c:177
 msgid "None"
 msgstr "ఏదీకాదు"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:139
+#: ../panel-plugin/power-manager-dialog.c:177
 msgid "Percentage"
 msgstr "శాతం"
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:139
+#: ../panel-plugin/power-manager-dialog.c:177
 msgid "Remaining time"
 msgstr ""
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:139
+#: ../panel-plugin/power-manager-dialog.c:177
 msgid "Percentage and remaining time"
 msgstr ""
 
-#. create the dialog
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:147
+#: ../panel-plugin/power-manager-dialog.c:183
 msgid "Power Manager Plugin Settings"
 msgstr ""
 
+#: ../panel-plugin/power-manager-dialog.c:186
+msgid "_Help"
+msgstr "సహాయం (_H)"
+
+#: ../panel-plugin/power-manager-dialog.c:187
+msgid "_Close"
+msgstr "మూసివేయి (_C)"
+
 #. show-panel-label setting
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:170
+#: ../panel-plugin/power-manager-dialog.c:207
 msgid "Show label:"
 msgstr ""
 
-#: panel-plugins/power-manager-plugin/xfce/xfce-power-manager-plugin.c:203
+#: ../panel-plugin/power-manager-dialog.c:240
 msgid "Show 'Presentation mode' indicator:"
-msgstr ""
-
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:4
-msgid "Power Manager Plugin"
-msgstr ""
-
-#: panel-plugins/power-manager-plugin/xfce/power-manager-plugin.desktop.in.in:5
-msgid ""
-"Display the battery levels of your devices and control the brightness of "
-"your display"
-msgstr ""
-
-#: data/appdata/xfce4-power-manager.appdata.xml.in:7
-msgid "Xfce power manager"
-msgstr ""
-
-#: data/appdata/xfce4-power-manager.appdata.xml.in:8
-msgid "Manage and reduce power consumption of computer and devices"
-msgstr ""
-
-#: data/appdata/xfce4-power-manager.appdata.xml.in:11
-msgid ""
-"Xfce power manager manages the power sources on the computer and the devices"
-" that can be controlled to reduce their power consumption (such as LCD "
-"brightness level, monitor sleep, CPU frequency scaling)."
-msgstr ""
-
-#: data/appdata/xfce4-power-manager.appdata.xml.in:16
-msgid ""
-"In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
-" interfaces to inform other applications about current power level so that "
-"they can adjust their power consumption, and it provides the inhibit "
-"interface which allows applications to prevent automatic sleep actions via "
-"the power manager; as an example, the operating system’s package manager "
-"should make use of this interface while it is performing update operations."
-msgstr ""
-
-#: data/appdata/xfce4-power-manager.appdata.xml.in:23
-msgid ""
-"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
-"control LCD brightness levels and to monitor battery and device charge "
-"levels."
-msgstr ""
-
-#: data/appdata/xfce4-power-manager.appdata.xml.in:34
-msgid "Screenshot of the Xfce Power Manager User Interface"
 msgstr ""
