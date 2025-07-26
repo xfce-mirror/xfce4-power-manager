@@ -387,8 +387,8 @@ xfpm_power_sleep (XfpmPower *power,
     else
     {
       xfpm_power_report_error (power, error->message, "dialog-error");
-      g_error_free (error);
     }
+    g_error_free (error);
   }
 
   g_signal_emit (G_OBJECT (power), signals[WAKING_UP], 0);
