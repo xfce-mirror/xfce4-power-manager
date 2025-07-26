@@ -92,14 +92,12 @@ struct XfpmPowerPrivate
 
   UpClient *upower;
 
-  GHashTable *hash;
-
-
   XfceSystemd *systemd;
   XfceConsolekit *console;
   XfpmInhibit *inhibit;
   XfpmXfconf *conf;
 
+  GHashTable *batteries;
   XfpmBatteryCharge overall_state;
   gboolean critical_action_done;
 
@@ -168,7 +166,8 @@ xfpm_power_check_power (XfpmPower *power,
 {
   if (on_battery != power->priv->on_battery)
   {
-    GList *list;
+    XfpmBattery *battery;
+    GHashTableIter iter;
 
     power->priv->on_battery = on_battery;
     g_signal_emit (G_OBJECT (power), signals[ON_BATTERY_CHANGED], 0, power->priv->on_battery);
@@ -179,14 +178,13 @@ xfpm_power_check_power (XfpmPower *power,
     /* Dismiss critical notifications on battery state changes */
     xfpm_notify_close_critical (power->priv->notify);
 
-    list = g_hash_table_get_values (power->priv->hash);
-    for (GList *lp = list; lp != NULL; lp = lp->next)
+    g_hash_table_iter_init (&iter, power->priv->batteries);
+    while (g_hash_table_iter_next (&iter, NULL, (gpointer *) &battery))
     {
-      g_object_set (G_OBJECT (lp->data),
+      g_object_set (G_OBJECT (battery),
                     "ac-online", !on_battery,
                     NULL);
     }
-    g_list_free (list);
   }
 }
 
@@ -439,17 +437,18 @@ xfpm_power_shutdown_clicked (XfpmPower *power)
 static XfpmBatteryCharge
 xfpm_power_get_current_charge_state (XfpmPower *power)
 {
-  GList *list;
+  XfpmBattery *battery;
+  GHashTableIter iter;
   XfpmBatteryCharge max_charge_status = XFPM_BATTERY_CHARGE_UNKNOWN;
 
-  list = g_hash_table_get_values (power->priv->hash);
-  for (GList *lp = list; lp != NULL; lp = lp->next)
+  g_hash_table_iter_init (&iter, power->priv->batteries);
+  while (g_hash_table_iter_next (&iter, NULL, (gpointer *) &battery))
   {
     XfpmBatteryCharge battery_charge;
     UpDeviceKind type;
     gboolean power_supply;
 
-    g_object_get (G_OBJECT (lp->data),
+    g_object_get (G_OBJECT (battery),
                   "charge-status", &battery_charge,
                   "device-type", &type,
                   "ac-online", &power_supply,
@@ -459,7 +458,6 @@ xfpm_power_get_current_charge_state (XfpmPower *power)
 
     max_charge_status = MAX (max_charge_status, battery_charge);
   }
-  g_list_free (list);
 
   return max_charge_status;
 }
@@ -814,7 +812,7 @@ xfpm_power_add_device (UpDevice *device,
     xfpm_battery_monitor_device (XFPM_BATTERY (battery),
                                  object_path,
                                  device_type);
-    g_hash_table_insert (power->priv->hash, g_strdup (object_path), battery);
+    g_hash_table_insert (power->priv->batteries, g_strdup (object_path), battery);
 
     g_signal_connect_object (battery, "battery-charge-changed",
                              G_CALLBACK (xfpm_power_battery_charge_changed_cb), power, 0);
@@ -844,7 +842,7 @@ static void
 xfpm_power_remove_device (XfpmPower *power,
                           const gchar *object_path)
 {
-  g_hash_table_remove (power->priv->hash, object_path);
+  g_hash_table_remove (power->priv->batteries, object_path);
 }
 
 static void
@@ -1056,7 +1054,7 @@ xfpm_power_init (XfpmPower *power)
 
   power->priv = xfpm_power_get_instance_private (power);
 
-  power->priv->hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
+  power->priv->batteries = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
   power->priv->lid_is_present = FALSE;
   power->priv->lid_is_closed = FALSE;
   power->priv->on_battery = FALSE;
@@ -1213,7 +1211,7 @@ xfpm_power_finalize (GObject *object)
 
   g_object_unref (power->priv->bus);
 
-  g_hash_table_destroy (power->priv->hash);
+  g_hash_table_destroy (power->priv->batteries);
 
 #ifdef HAVE_POLKIT
   g_object_unref (power->priv->polkit);
@@ -1279,21 +1277,20 @@ xfpm_power_hybrid_sleep (XfpmPower *power,
 gboolean
 xfpm_power_has_battery (XfpmPower *power)
 {
-  GList *list;
+  XfpmBattery *battery;
+  GHashTableIter iter;
   gboolean ret = FALSE;
 
-  list = g_hash_table_get_values (power->priv->hash);
-  for (GList *lp = list; lp != NULL; lp = lp->next)
+  g_hash_table_iter_init (&iter, power->priv->batteries);
+  while (g_hash_table_iter_next (&iter, NULL, (gpointer *) &battery))
   {
-    UpDeviceKind type;
-    type = xfpm_battery_get_device_type (XFPM_BATTERY (lp->data));
+    UpDeviceKind type = xfpm_battery_get_device_type (battery);
     if (type == UP_DEVICE_KIND_BATTERY || type == UP_DEVICE_KIND_UPS)
     {
       ret = TRUE;
       break;
     }
   }
-  g_list_free (list);
 
   return ret;
 }
