@@ -1,6 +1,6 @@
 i18n.merge_file(
-  input: 'appdata' / 'xfce4-power-manager.appdata.xml.in',
-  output: 'xfce4-power-manager.appdata.xml',
+  input: 'appdata' / 'org.xfce.PowerManager.appdata.xml.in',
+  output: 'org.xfce.PowerManager.appdata.xml',
   po_dir: '..' / 'po',
   type: 'xml',
   install: true,
