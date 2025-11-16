@@ -131,11 +131,11 @@ msgstr "เมื่อปิดฝาแล็ปท็อป:"
 
 #: data/interfaces/xfpm-settings.ui:839 data/interfaces/xfpm-settings.ui:929
 msgid "Execute action if an external display is connected"
-msgstr ""
+msgstr "ดำเนินการหากเชื่อมต่อกับจอแสดงผลภายนอก"
 
 #: data/interfaces/xfpm-settings.ui:856 data/interfaces/xfpm-settings.ui:1060
 msgid "<b>Power profile</b>"
-msgstr ""
+msgstr "<b>โปรไฟล์พลังงาน</b>"
 
 #: data/interfaces/xfpm-settings.ui:888 data/interfaces/xfpm-settings.ui:1624
 msgid "On battery"
@@ -182,7 +182,7 @@ msgstr "<b>การจัดการพลังงานของจอแส
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
-msgstr ""
+msgstr "ให้ระบบจัดการพลังงานทำหน้าที่จัดการพลังงานของจอแสดงผล (DPMS) แทนโปรแกรมแสดงผล"
 
 #: data/interfaces/xfpm-settings.ui:1429 data/interfaces/xfpm-settings.ui:1638
 msgid "Put to sleep after"
@@ -256,11 +256,11 @@ msgstr "หลับแบบผสม"
 
 #: settings/xfpm-settings.c:429
 msgid "Hybrid sleep operation not permitted"
-msgstr ""
+msgstr "ไม่ได้รับอนุญาตให้หลับแบบผสม"
 
 #: settings/xfpm-settings.c:433
 msgid "Hybrid sleep operation not supported"
-msgstr ""
+msgstr "ไม่รองรับการหลับแบบผสม"
 
 #: settings/xfpm-settings.c:458 settings/xfpm-settings.c:878
 msgid "Hibernate and suspend operations not supported"
@@ -301,7 +301,7 @@ msgstr "เมื่อแหล่งพลังงานทั้งหมด
 
 #: settings/xfpm-settings.c:847
 msgid "Notify"
-msgstr ""
+msgstr "แจ้งเหตุ"
 
 #: settings/xfpm-settings.c:860
 #, c-format
@@ -310,7 +310,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr ""
+msgstr "ตรวจสอบให้แน่ใจว่าคุณได้ตั้งค่าไว้สูงเพียงพอที่นี่ ไม่เช่นนั้นระบบจะเรียกการกระทำของตัวเองก่อน xfce4-power-manager โดยไม่สามารถป้องกันได้หรือรู้แน่ชัดว่าจะดำเนินการดังกล่าวเมื่อใด การดำเนินการจะถูกเรียกโดยระบบในกรณีนี้คือ: %s"
 
 #: settings/xfpm-settings.c:1115
 msgid "Device"
@@ -365,11 +365,11 @@ msgstr "ประจุไฟขณะว่างเปล่า"
 #. TRANSLATORS: Unit here is Watt
 #: settings/xfpm-settings.c:1203
 msgid "W"
-msgstr ""
+msgstr "วัตต์"
 
 #: settings/xfpm-settings.c:1205
 msgid "Energy rate"
-msgstr ""
+msgstr "อัตราพลังงาน"
 
 #. TRANSLATORS: Unit here is Volt
 #: settings/xfpm-settings.c:1213
@@ -437,7 +437,7 @@ msgstr "เชื่อมต่อกับระบบจัดการพล
 
 #: settings/xfpm-settings-app.c:265
 msgid "Failed to load power manager configuration"
-msgstr ""
+msgstr "โหลดค่าตั้งการจัดการพลังงานไม่สำเร็จ"
 
 #: settings/xfpm-settings-app.c:296
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
@@ -682,7 +682,7 @@ msgstr "พักเครื่อง"
 
 #: src/xfpm-power.c:515
 msgid "Hybrid sleep the system"
-msgstr ""
+msgstr "หลับแบบผสมระบบ"
 
 #: src/xfpm-power.c:535
 msgid "Shutdown the system"
@@ -714,7 +714,7 @@ msgstr "ไม่ได้รับอนุญาต"
 
 #: src/xfpm-power.c:1611
 msgid "Hibernate not supported"
-msgstr ""
+msgstr "ไม่รองรับการจำศีลเครื่อง"
 
 #: src/xfpm-power.c:1645
 msgid "Suspend not supported"
@@ -722,7 +722,7 @@ msgstr "ไม่รองรับการพักเครื่อง"
 
 #: src/xfpm-power.c:1679
 msgid "Hybrid sleep not supported"
-msgstr ""
+msgstr "ไม่รองรับการหลับแบบผสม"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:145
@@ -793,7 +793,7 @@ msgstr "รองรับการจำศีลเครื่อง"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr ""
+msgstr "หลับแบบผสมได้"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
@@ -805,7 +805,7 @@ msgstr "มีสิทธิ์จำศีลเครื่อง"
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr ""
+msgstr "มีสิทธิหลับแบบผสม"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
@@ -907,23 +907,23 @@ msgstr "การจัดการพลังงานสำหรับเด
 #. to change the backlight brightness.
 #: src/org.xfce.power.policy.in.in:21
 msgid "Modify the laptop display brightness"
-msgstr ""
+msgstr "ปรับเปลี่ยนความสว่างของจอภาพคอมพิวเตอร์พกพา "
 
 #: src/org.xfce.power.policy.in.in:22
 msgid "Authentication is required to modify the laptop display brightness"
-msgstr ""
+msgstr "ต้องยืนยันตัวบุคคลก่อนแก้ไขความสว่างของจอภาพคอมพิวเตอร์พกพา"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
 #. to suspend or hibernate their system.
 #: src/org.xfce.power.policy.in.in:36
 msgid "Suspend or hibernate the system"
-msgstr ""
+msgstr "พักเครื่องหรือจำศีลระบบ"
 
 #: src/org.xfce.power.policy.in.in:37
 msgid ""
 "Authentication is required to place the system in suspend or hibernate mode"
-msgstr ""
+msgstr "ต้องยืนยันตัวบุคคลก่อนการพักเครื่องหรือการจำศีลเครื่อง"
 
 #. Odds are this is a desktop without any batteries attached
 #: panel-plugin/power-manager-button.c:267
@@ -992,11 +992,11 @@ msgstr "แสดงระดับแบตเตอรี่ของอุป
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:7
 msgid "Xfce power manager"
-msgstr ""
+msgstr "ระบบจัดการพลังงานของ Xfce"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
-msgstr ""
+msgstr "จัดการและลดการใช้พลังงานของคอมพิวเตอร์และอุปกรณ์ต่าง ๆ"
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:11
 msgid ""
@@ -1024,4 +1024,4 @@ msgstr "ระบบจัดการพลังงานของ Xfce ยั
 
 #: data/appdata/xfce4-power-manager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
-msgstr ""
+msgstr "ภาพหน้าจอส่วนติดต่อผู้ใช้ของระบบจัดการพลังงานของ Xfce"
