@@ -383,7 +383,7 @@ xfpm_inhibit_inhibit (XfpmInhibit *inhibit,
   sender = g_dbus_method_invocation_get_sender (invocation);
   cookie = xfpm_inhibit_add_application (inhibit, IN_appname, sender);
 
-  XFPM_DEBUG ("Inhibit send application name=%s reason=%s sender=%s", IN_appname, IN_reason, sender);
+  XFPM_DEBUG ("Inhibit send application name=%s reason=%s sender=%s cookie=%d", IN_appname, IN_reason, sender, cookie);
 
   xfpm_inhibit_has_inhibit_changed (inhibit);
   xfpm_dbus_monitor_add_unique_name (inhibit->priv->monitor, G_BUS_TYPE_SESSION, sender);
@@ -398,7 +398,7 @@ xfpm_inhibit_un_inhibit (XfpmInhibit *inhibit,
                          guint IN_cookie,
                          gpointer user_data)
 {
-  XFPM_DEBUG ("Uninhibit message received");
+  XFPM_DEBUG ("Uninhibit message received cookie=%d", IN_cookie);
 
   if (!xfpm_inhibit_remove_application_by_cookie (inhibit, IN_cookie))
   {
