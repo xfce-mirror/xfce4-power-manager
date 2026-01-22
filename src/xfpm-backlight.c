@@ -142,7 +142,7 @@ xfpm_backlight_show_notification (XfpmBacklight *backlight,
 {
   gchar *summary;
   /* generate a human-readable summary for the notification */
-  summary = g_strdup_printf (_("Brightness: %.0f percent"), value);
+  summary = g_strdup_printf (_("Brightness: %.0f%%"), value);
 
   /* create the notification on demand */
   if (backlight->priv->n == NULL)

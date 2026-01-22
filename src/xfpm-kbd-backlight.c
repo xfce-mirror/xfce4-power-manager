@@ -99,7 +99,7 @@ xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self,
   if (self->priv->n == NULL)
   {
     /* generate a human-readable summary for the notification */
-    gchar *summary = g_strdup_printf (_("Keyboard Brightness: %.0f percent"), value);
+    gchar *summary = g_strdup_printf (_("Keyboard Brightness: %.0f%%"), value);
     self->priv->n = xfpm_notify_new_notification (self->priv->notify,
                                                   _("Power Manager"),
                                                   summary,
