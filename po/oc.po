@@ -6,14 +6,14 @@
 # Cédric Valmary <cvalmary@yahoo.fr>, 2013,2016
 # Cédric Valmary <cvalmary@yahoo.fr>, 2016
 # Cédric Valmary <cvalmary@yahoo.fr>, 2013
-# Quentin PAGÈS, 2024-2025
+# Quentin PAGÈS, 2024-2026
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2025-07-18 10:57+0200\n"
+"POT-Creation-Date: 2026-01-22 12:54+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Quentin PAGÈS, 2024-2025\n"
+"Last-Translator: Quentin PAGÈS, 2024-2026\n"
 "Language-Team: Occitan (post 1500) (http://app.transifex.com/xfce/xfce4-power-manager/language/oc/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -44,9 +44,9 @@ msgstr "Pas res"
 
 #: data/interfaces/xfpm-settings.ui:253
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:245
-#: src/xfpm-power.c:552 src/xfpm-power.c:593 src/xfpm-power.c:752
-#: src/xfpm-power.c:771 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:243
+#: src/xfpm-power.c:550 src/xfpm-power.c:591 src/xfpm-power.c:750
+#: src/xfpm-power.c:769 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
 #: src/xfpm-battery.c:177 src/xfpm-kbd-backlight.c:104
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -225,7 +225,7 @@ msgid "seconds"
 msgstr "segondas"
 
 #: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:608
+#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "Metre en velha"
 
@@ -238,7 +238,7 @@ msgid "Suspend operation not supported"
 msgstr "Operacion de mesa en velha pas suportada"
 
 #: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:603
+#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "Metre en velha perlongada"
 
@@ -251,7 +251,7 @@ msgid "Hibernate operation not supported"
 msgstr "Operacion de mesa en velha perlongada pas suportada"
 
 #: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:613
+#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr "Velha ibrida"
 
@@ -284,7 +284,7 @@ msgid "Lock screen"
 msgstr "Verrolhar l'ecran"
 
 #: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:626
+#: src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "Atudar"
 
@@ -665,75 +665,75 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nEstat desconegut"
 
-#: src/xfpm-power.c:270
+#: src/xfpm-power.c:268
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Una aplicacion empacha actualament la mesa en velha automatica. Realizar aquesta accion ara poiriá damatjar l’estat de trabalh d’aquesta aplicacion.\nVolètz vertadièrament passar lo sistèma en ivernacion ?"
 
-#: src/xfpm-power.c:302
+#: src/xfpm-power.c:300
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Cap d’aisinas de verrolhatge d’ecran a pas pogut èsser executat corrèctament, l’ecran serà pas verrolhat.\nVolètz totjorn téner de metre en velha lo sistèma ?"
 
-#: src/xfpm-power.c:491
+#: src/xfpm-power.c:489
 msgid "Hibernate the system"
 msgstr "Metre lo sistèma en velha perlongada"
 
-#: src/xfpm-power.c:503
+#: src/xfpm-power.c:501
 msgid "Suspend the system"
 msgstr "Metre en velha lo sistèma"
 
-#: src/xfpm-power.c:515
+#: src/xfpm-power.c:513
 msgid "Hybrid sleep the system"
 msgstr "Metre lo sistèma en velha ibrida"
 
-#: src/xfpm-power.c:535
+#: src/xfpm-power.c:533
 msgid "Shutdown the system"
 msgstr "Atudar lo sistèma"
 
-#: src/xfpm-power.c:548 src/xfpm-power.c:590
+#: src/xfpm-power.c:546 src/xfpm-power.c:588
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Lo nivèl de la batariá es critic. Enregistratz vòstre trabalh per evitar de pèrdas de donadas"
 
-#: src/xfpm-power.c:629
+#: src/xfpm-power.c:627
 msgid "Cancel"
 msgstr "Anullar"
 
-#: src/xfpm-power.c:752
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "Lo sistèma fonciona sus febla poténcia"
 
-#: src/xfpm-power.c:767
+#: src/xfpm-power.c:765
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Lo nivèl de carga de vòstre %s es feble\nTemps restant estimat es de %s"
 
-#: src/xfpm-power.c:1522 src/xfpm-power.c:1566 src/xfpm-power.c:1602
-#: src/xfpm-power.c:1636 src/xfpm-power.c:1670
+#: src/xfpm-power.c:1519 src/xfpm-power.c:1563 src/xfpm-power.c:1599
+#: src/xfpm-power.c:1633 src/xfpm-power.c:1667
 msgid "Permission denied"
 msgstr "Permission refusada"
 
-#: src/xfpm-power.c:1611
+#: src/xfpm-power.c:1608
 msgid "Hibernate not supported"
 msgstr "Ivernacion pas presa en carga"
 
-#: src/xfpm-power.c:1645
+#: src/xfpm-power.c:1642
 msgid "Suspend not supported"
 msgstr "Mesa en velha pas presa en carga"
 
-#: src/xfpm-power.c:1679
+#: src/xfpm-power.c:1676
 msgid "Hybrid sleep not supported"
 msgstr "Velha ibrida pas presa en carga"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:145
 #, c-format
-msgid "Brightness: %.0f percent"
-msgstr "Luminositat : %.0f percent"
+msgid "Brightness: %.0f%%"
+msgstr "Luminositat : %.0f%%"
 
 #: src/xfpm-battery.c:95 src/xfpm-battery.c:147
 #, c-format
@@ -777,8 +777,8 @@ msgstr "Vòstra %s es voida"
 #. generate a human-readable summary for the notification
 #: src/xfpm-kbd-backlight.c:102
 #, c-format
-msgid "Keyboard Brightness: %.0f percent"
-msgstr "Luminositat clavir : %.0f percent"
+msgid "Keyboard Brightness: %.0f%%"
+msgstr "Luminositat clavièr : %.0f%%"
 
 #: src/xfpm-main.c:86
 msgid "With policykit support\n"
@@ -995,22 +995,22 @@ msgid ""
 "your display"
 msgstr "Afichar los nivèls de batariá dels periferics e contrarotlar la luminositat de l’ecran"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:7
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:7
 msgid "Xfce power manager"
 msgstr "Gestionari d'alimentacion Xfce"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:8
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
 msgstr "Gerir e reduire la consomacion energetica de l'ordenador e dels periferics"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:11
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:11
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
 msgstr "Lo gestionari d’alimentacion gerís las sorgas d’energia sus l’ordenador e los periferics que se pòt contrarotlar per reduire lor consomacion energetica (coma lo nivèl de luminositat LCD, la velha del monitor, la mesa a l’escala de la frequéncia CPU)."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:16
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:16
 msgid ""
 "In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
 " interfaces to inform other applications about current power level so that "
@@ -1020,13 +1020,13 @@ msgid ""
 "should make use of this interface while it is performing update operations."
 msgstr "De mai, lo gestionari d’alimentacion provesís un jòc d’interfàcias compatiblas amb DBus per assabentar las autras aplicacions a prepaus lo nivèl actuala d’energia per que pòsca ajustar la consomacion energetica, fornís l’interfàcia d’inibicion que permet a las aplicacions d’evitar las accions de mesa en velha automatica ; per exemple, lo gestionari de paquets del sistèma operatiu deu se servir d’aquesta interfàcia pendent l’execucion de las operacions de mesa a jorn."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:23
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
 msgstr "Lo gestionari d’alimentacion Xfce provesís tanben un plugin pels panèls Xfce e LXDE per contrarotlar los nivèls de luminositat LCD, susvelhar la batariá del monitor e lo nivèl de carga de l’aparelh."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:34
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
 msgstr "Captura d'ecran de l'interfàcia utilizaire del gestionari d'alimentacion Xfce"
