@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2025-07-18 10:57+0200\n"
+"POT-Creation-Date: 2026-01-22 12:54+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Źmicier Turok <nashtlumach@gmail.com>, 2019-2020\n"
 "Language-Team: Belarusian (http://app.transifex.com/xfce/xfce4-power-manager/language/be/)\n"
@@ -42,9 +42,9 @@ msgstr "Нічога"
 
 #: data/interfaces/xfpm-settings.ui:253
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:245
-#: src/xfpm-power.c:552 src/xfpm-power.c:593 src/xfpm-power.c:752
-#: src/xfpm-power.c:771 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:243
+#: src/xfpm-power.c:550 src/xfpm-power.c:591 src/xfpm-power.c:750
+#: src/xfpm-power.c:769 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
 #: src/xfpm-battery.c:177 src/xfpm-kbd-backlight.c:104
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -223,7 +223,7 @@ msgid "seconds"
 msgstr "секунд"
 
 #: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:608
+#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "Прыпыніць"
 
@@ -236,7 +236,7 @@ msgid "Suspend operation not supported"
 msgstr "Аперацыя прыпынення не падтрымліваецца"
 
 #: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:603
+#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "Усыпіць"
 
@@ -249,7 +249,7 @@ msgid "Hibernate operation not supported"
 msgstr "Усыпленне не падтрымліваецца"
 
 #: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:613
+#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr "Гібрыдны рэжым сну"
 
@@ -282,7 +282,7 @@ msgid "Lock screen"
 msgstr "Заблакаваць экран"
 
 #: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:626
+#: src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "Выключыць"
 
@@ -671,75 +671,75 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nНевядомы стан"
 
-#: src/xfpm-power.c:270
+#: src/xfpm-power.c:268
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Адна з праграм замінае пераходу ў рэжым сну. Прымусовае выкананне дзеяння можа замінаць карэктнай працы праграмы.\nСапраўды працягнуць?"
 
-#: src/xfpm-power.c:302
+#: src/xfpm-power.c:300
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Ніводны з інструментаў блакавання не быў запушчаны, экран не будзе заблакаваны.\nУсё адно прыпыніць сістэму?"
 
-#: src/xfpm-power.c:491
+#: src/xfpm-power.c:489
 msgid "Hibernate the system"
 msgstr "Адправіць сістэму ў сон"
 
-#: src/xfpm-power.c:503
+#: src/xfpm-power.c:501
 msgid "Suspend the system"
 msgstr "Прыпыніць сістэму"
 
-#: src/xfpm-power.c:515
+#: src/xfpm-power.c:513
 msgid "Hybrid sleep the system"
 msgstr ""
 
-#: src/xfpm-power.c:535
+#: src/xfpm-power.c:533
 msgid "Shutdown the system"
 msgstr "Выключыць сістэму"
 
-#: src/xfpm-power.c:548 src/xfpm-power.c:590
+#: src/xfpm-power.c:546 src/xfpm-power.c:588
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Сістэма запушчаная на батарэі з нізкім узроўнем зараду. Захавайце даныя, каб пазбегнуць іх страты"
 
-#: src/xfpm-power.c:629
+#: src/xfpm-power.c:627
 msgid "Cancel"
 msgstr "Скасаваць"
 
-#: src/xfpm-power.c:752
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "Сістэма запушчаная на батарэі з нізкім узроўнем зараду"
 
-#: src/xfpm-power.c:767
+#: src/xfpm-power.c:765
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Прылада %s амаль разрадзілася\nЗасталося часу %s"
 
-#: src/xfpm-power.c:1522 src/xfpm-power.c:1566 src/xfpm-power.c:1602
-#: src/xfpm-power.c:1636 src/xfpm-power.c:1670
+#: src/xfpm-power.c:1519 src/xfpm-power.c:1563 src/xfpm-power.c:1599
+#: src/xfpm-power.c:1633 src/xfpm-power.c:1667
 msgid "Permission denied"
 msgstr "Адмоўлена ў дазволе"
 
-#: src/xfpm-power.c:1611
+#: src/xfpm-power.c:1608
 msgid "Hibernate not supported"
 msgstr ""
 
-#: src/xfpm-power.c:1645
+#: src/xfpm-power.c:1642
 msgid "Suspend not supported"
 msgstr "Прыпыненне не падтрымліваецца"
 
-#: src/xfpm-power.c:1679
+#: src/xfpm-power.c:1676
 msgid "Hybrid sleep not supported"
 msgstr ""
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:145
 #, c-format
-msgid "Brightness: %.0f percent"
-msgstr "Яркасць: %.0f адсоткаў"
+msgid "Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-battery.c:95 src/xfpm-battery.c:147
 #, c-format
@@ -783,8 +783,8 @@ msgstr "Ваша прылада %s зараз выключыцца"
 #. generate a human-readable summary for the notification
 #: src/xfpm-kbd-backlight.c:102
 #, c-format
-msgid "Keyboard Brightness: %.0f percent"
-msgstr "Яркасць клавіятуры: %.0f адсоткаў"
+msgid "Keyboard Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-main.c:86
 msgid "With policykit support\n"
@@ -1001,22 +1001,22 @@ msgid ""
 "your display"
 msgstr "Паказвае ўзровень зараду вашых прылад і рэгулюе яркасць экрана"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:7
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:7
 msgid "Xfce power manager"
 msgstr ""
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:8
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
 msgstr ""
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:11
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:11
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
 msgstr "Кіраўнік сілкавання xfce кіруе крыніцамі сілкавання камп’ютара і падлучаных прылад, якімі можна кіраваць для памяншэння выкарыстання энергіі (напрыклад яркасць экрана, рэжым сну манітора, змена чашчыні працэсара)."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:16
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:16
 msgid ""
 "In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
 " interfaces to inform other applications about current power level so that "
@@ -1026,13 +1026,13 @@ msgid ""
 "should make use of this interface while it is performing update operations."
 msgstr "Дадаткова кіраўнік сілкавання Xfce вызначае інтэрфейсы для DBus, сумяшчальныя з freedesktop, для апавяшчэння праграм аб бягучым узроўні зараду батарэі, каб яны змянялі ўзровень спажывання энергіі. Таксама ёсць інтэрфейс, які прадухіляе аўтаматычны пераход у рэжым сну. Напрыклад, кіраўнік пакункаў мусіць выкарыстоўваць гэты інтэрфейс падчас абнаўлення."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:23
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
 msgstr "Кіраўнік сілкавання таксама прапануе ўбудову панэляў Xfce і LXDE для кіравання яркасцю LCD-дысплэяў і ўзроўнем зараду батарэі і прылад."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:34
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
 msgstr ""
