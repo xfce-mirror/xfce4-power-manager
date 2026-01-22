@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the xfce4-power-manager.master package.
 # 
 # Translators:
-# Junghee Lee <daemul72@gmail.com>, 2025
+# JungHee Lee <daemul72@gmail.com>, 2025
 # 1763f4a4329a2376c933c5e919a36cbc_341ca53 <1f851310383599d03339229d772e1290_119292>, 2017
 # lego37yoon <lego37yoon@outlook.com>, 2014
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2015,2019-2020,2022-2024
@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2025-07-18 10:57+0200\n"
+"POT-Creation-Date: 2026-01-22 12:54+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2025\n"
+"Last-Translator: JungHee Lee <daemul72@gmail.com>, 2025\n"
 "Language-Team: Korean (http://app.transifex.com/xfce/xfce4-power-manager/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -45,9 +45,9 @@ msgstr "아무것도 안 함"
 
 #: data/interfaces/xfpm-settings.ui:253
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:245
-#: src/xfpm-power.c:552 src/xfpm-power.c:593 src/xfpm-power.c:752
-#: src/xfpm-power.c:771 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:243
+#: src/xfpm-power.c:550 src/xfpm-power.c:591 src/xfpm-power.c:750
+#: src/xfpm-power.c:769 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
 #: src/xfpm-battery.c:177 src/xfpm-kbd-backlight.c:104
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -226,7 +226,7 @@ msgid "seconds"
 msgstr "초"
 
 #: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:608
+#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "절전"
 
@@ -239,7 +239,7 @@ msgid "Suspend operation not supported"
 msgstr "절전 동작을 지원하지 않습니다"
 
 #: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:603
+#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "최대 절전"
 
@@ -252,7 +252,7 @@ msgid "Hibernate operation not supported"
 msgstr "최대 절전 동작을 지원하지 않습니다"
 
 #: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:613
+#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr "하이브리드 대기"
 
@@ -285,7 +285,7 @@ msgid "Lock screen"
 msgstr "화면 잠금"
 
 #: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:626
+#: src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "시스템 종료"
 
@@ -662,75 +662,75 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\n알 수 없는 상태"
 
-#: src/xfpm-power.c:270
+#: src/xfpm-power.c:268
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "현재 프로그램은 자동 대기 모드 비활성화중에 있습니다. 이 동작을 실행하면 이 프로그램의 동작 상태에 치명적인 영향을 줄 수 있습니다.\n정말로 시스템을 최대 절전 모드로 설정하시겠습니까?"
 
-#: src/xfpm-power.c:302
+#: src/xfpm-power.c:300
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "제대로 실행한 화면 잠금 도구가 없어 화면을 잠그지 않습니다.\n그래도 시스템을 대기 상태로 설정하시겠습니까?"
 
-#: src/xfpm-power.c:491
+#: src/xfpm-power.c:489
 msgid "Hibernate the system"
 msgstr "시스템 최대 절전"
 
-#: src/xfpm-power.c:503
+#: src/xfpm-power.c:501
 msgid "Suspend the system"
 msgstr "시스템 절전"
 
-#: src/xfpm-power.c:515
+#: src/xfpm-power.c:513
 msgid "Hybrid sleep the system"
 msgstr "시스템 하이브리드 절전"
 
-#: src/xfpm-power.c:535
+#: src/xfpm-power.c:533
 msgid "Shutdown the system"
 msgstr "시스템 종료"
 
-#: src/xfpm-power.c:548 src/xfpm-power.c:590
+#: src/xfpm-power.c:546 src/xfpm-power.c:588
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "전원이 부족한 상태에서 시스템이 동작중입니다. 데이터 유실을 방지하려면 작업을 저장합니다"
 
-#: src/xfpm-power.c:629
+#: src/xfpm-power.c:627
 msgid "Cancel"
 msgstr "취소"
 
-#: src/xfpm-power.c:752
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "전원이 부족한 상태에서 시스템이 동작중입니다"
 
-#: src/xfpm-power.c:767
+#: src/xfpm-power.c:765
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "%s 충전 수준이 낮습니다\n예상 시간이 %s 남았습니다"
 
-#: src/xfpm-power.c:1522 src/xfpm-power.c:1566 src/xfpm-power.c:1602
-#: src/xfpm-power.c:1636 src/xfpm-power.c:1670
+#: src/xfpm-power.c:1519 src/xfpm-power.c:1563 src/xfpm-power.c:1599
+#: src/xfpm-power.c:1633 src/xfpm-power.c:1667
 msgid "Permission denied"
 msgstr "권한을 거부함"
 
-#: src/xfpm-power.c:1611
+#: src/xfpm-power.c:1608
 msgid "Hibernate not supported"
 msgstr "최대 절전을 지원하지 않습니다"
 
-#: src/xfpm-power.c:1645
+#: src/xfpm-power.c:1642
 msgid "Suspend not supported"
 msgstr "절전을 지원하지 않음"
 
-#: src/xfpm-power.c:1679
+#: src/xfpm-power.c:1676
 msgid "Hybrid sleep not supported"
 msgstr "하이브리드 절전을 지원하지 않습니다"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:145
 #, c-format
-msgid "Brightness: %.0f percent"
-msgstr "밝기: %.0f 퍼센트"
+msgid "Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-battery.c:95 src/xfpm-battery.c:147
 #, c-format
@@ -774,8 +774,8 @@ msgstr "%s이(가) 비어 있습니다"
 #. generate a human-readable summary for the notification
 #: src/xfpm-kbd-backlight.c:102
 #, c-format
-msgid "Keyboard Brightness: %.0f percent"
-msgstr "키보드 밝기: %.0f 퍼센트"
+msgid "Keyboard Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-main.c:86
 msgid "With policykit support\n"
@@ -992,22 +992,22 @@ msgid ""
 "your display"
 msgstr "장치 배터리 수준을 표시하고 디스플레이 밝기를 조절합니다"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:7
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:7
 msgid "Xfce power manager"
 msgstr "xfce 전원 관리자"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:8
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
 msgstr "컴퓨터와 장치의 전력 소비량을 관리하고 줄입니다"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:11
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:11
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
 msgstr "Xfce 전원 관리자는 컴퓨터와 전력 소모 감소를 제어(LCD 밝기, 모니터 대기 상태, CPU 주파수 조정)할 수 있는 장치에 붙은 전원을 관리합니다."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:16
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:16
 msgid ""
 "In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
 " interfaces to inform other applications about current power level so that "
@@ -1017,13 +1017,13 @@ msgid ""
 "should make use of this interface while it is performing update operations."
 msgstr "게다가, Xfce 전원 관리자에서는 현재 전원 상태를 다른 프로그램에 제공하는 freedesktop 호환 DBus 인터페이스를 제공하여 전력 소모를 줄일 수 있고, 전원 관리자가 자동으로 대기상태로 진입하는 동작을 다른 프로그램이 막을 수 있게 하는 억제 인터페이스를 제공합니다. 예를 들자면 운영체제 꾸러미 관리자에서는 업데이트 동작을 수행하는 동안 이 인터페이스를 활용합니다."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:23
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
 msgstr "Xfce 전원 관리자에서는 LCD 밝기를 조절하고 배터리와 장치 충전 상태를 감시하는 Xfce 및 LXDE용 플러그인도 제공합니다."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:34
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
 msgstr "Xfce 전원 관리자 사용자 인터페이스 스크린샷"
