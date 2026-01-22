@@ -13,16 +13,16 @@
 # Casper, 2024
 # gabrieltandil <gabriel.tandil@gmail.com>, 2014-2015
 # Ignacio Poggi <ignaciop.3@gmail.com>, 2020,2023-2025
-# Pablo Lezaeta Reyes <prflr88@gmail.com>, 2017
-# Pablo Lezaeta Reyes <prflr88@gmail.com>, 2013-2015
-# Pablo Lezaeta Reyes <prflr88@gmail.com>, 2017
+# prflr88 <prflr88@gmail.com>, 2017
+# prflr88 <prflr88@gmail.com>, 2013-2015
+# prflr88 <prflr88@gmail.com>, 2017
 # Sergio García <oigres200@gmail.com>, 2017
 # Toni Estévez <toni.estevez@gmail.com>, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2025-07-18 10:57+0200\n"
+"POT-Creation-Date: 2026-01-22 12:54+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Ignacio Poggi <ignaciop.3@gmail.com>, 2020,2023-2025\n"
 "Language-Team: Spanish (http://app.transifex.com/xfce/xfce4-power-manager/language/es/)\n"
@@ -55,9 +55,9 @@ msgstr "Nada"
 
 #: data/interfaces/xfpm-settings.ui:253
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:245
-#: src/xfpm-power.c:552 src/xfpm-power.c:593 src/xfpm-power.c:752
-#: src/xfpm-power.c:771 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:243
+#: src/xfpm-power.c:550 src/xfpm-power.c:591 src/xfpm-power.c:750
+#: src/xfpm-power.c:769 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
 #: src/xfpm-battery.c:177 src/xfpm-kbd-backlight.c:104
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -236,7 +236,7 @@ msgid "seconds"
 msgstr "segundos"
 
 #: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:608
+#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "Suspender"
 
@@ -249,7 +249,7 @@ msgid "Suspend operation not supported"
 msgstr "No se admite la operación de suspensión"
 
 #: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:603
+#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "Hibernar"
 
@@ -262,7 +262,7 @@ msgid "Hibernate operation not supported"
 msgstr "No se admite la operación de hibernación"
 
 #: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:613
+#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr "Suspensión híbrida"
 
@@ -295,7 +295,7 @@ msgid "Lock screen"
 msgstr "Bloquear la pantalla"
 
 #: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:626
+#: src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "Apagar"
 
@@ -680,75 +680,75 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nEstado desconocido"
 
-#: src/xfpm-power.c:270
+#: src/xfpm-power.c:268
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Una aplicación ha desactivado el ahorro de energía automático. Ejecutar esta acción ahora puede afectar al funcionamiento de esta aplicación.\n¿Seguro que quiere hibernar el sistema?"
 
-#: src/xfpm-power.c:302
+#: src/xfpm-power.c:300
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Ninguna de las aplicaciones de bloqueo de la pantalla se ha ejecutado correctamente. La pantalla no se bloqueará.\n¿Aún quiere suspender el sistema?"
 
-#: src/xfpm-power.c:491
+#: src/xfpm-power.c:489
 msgid "Hibernate the system"
 msgstr "Hibernar el sistema"
 
-#: src/xfpm-power.c:503
+#: src/xfpm-power.c:501
 msgid "Suspend the system"
 msgstr "Suspender el sistema"
 
-#: src/xfpm-power.c:515
+#: src/xfpm-power.c:513
 msgid "Hybrid sleep the system"
 msgstr "Reposo híbrido del sistema"
 
-#: src/xfpm-power.c:535
+#: src/xfpm-power.c:533
 msgid "Shutdown the system"
 msgstr "Apagar el sistema"
 
-#: src/xfpm-power.c:548 src/xfpm-power.c:590
+#: src/xfpm-power.c:546 src/xfpm-power.c:588
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "El sistema funciona con la batería baja. Guarde su trabajo para evitar la pérdida de datos"
 
-#: src/xfpm-power.c:629
+#: src/xfpm-power.c:627
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: src/xfpm-power.c:752
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "El sistema funciona con la batería baja"
 
-#: src/xfpm-power.c:767
+#: src/xfpm-power.c:765
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "%s con nivel de carga bajo\nTiempo restante estimado: %s"
 
-#: src/xfpm-power.c:1522 src/xfpm-power.c:1566 src/xfpm-power.c:1602
-#: src/xfpm-power.c:1636 src/xfpm-power.c:1670
+#: src/xfpm-power.c:1519 src/xfpm-power.c:1563 src/xfpm-power.c:1599
+#: src/xfpm-power.c:1633 src/xfpm-power.c:1667
 msgid "Permission denied"
 msgstr "Permiso denegado"
 
-#: src/xfpm-power.c:1611
+#: src/xfpm-power.c:1608
 msgid "Hibernate not supported"
 msgstr "No se admite la hibernación"
 
-#: src/xfpm-power.c:1645
+#: src/xfpm-power.c:1642
 msgid "Suspend not supported"
 msgstr "No se admite la suspensión"
 
-#: src/xfpm-power.c:1679
+#: src/xfpm-power.c:1676
 msgid "Hybrid sleep not supported"
 msgstr "Reposo híbrido no soportado"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:145
 #, c-format
-msgid "Brightness: %.0f percent"
-msgstr "Brillo: %.0f por ciento"
+msgid "Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-battery.c:95 src/xfpm-battery.c:147
 #, c-format
@@ -792,8 +792,8 @@ msgstr "%s totalmente descargada"
 #. generate a human-readable summary for the notification
 #: src/xfpm-kbd-backlight.c:102
 #, c-format
-msgid "Keyboard Brightness: %.0f percent"
-msgstr "Brillo del teclado: %.0f por ciento"
+msgid "Keyboard Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-main.c:86
 msgid "With policykit support\n"
@@ -1010,22 +1010,22 @@ msgid ""
 "your display"
 msgstr "Muestra los niveles de la batería de los dispositivos y controla el brillo de la pantalla"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:7
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:7
 msgid "Xfce power manager"
 msgstr "Gestor de energía de Xfce"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:8
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
 msgstr "Administra y reduce el consumo de energía del ordenador y dispositivos."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:11
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:11
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
 msgstr "El gestor de energía de Xfce gestiona las fuentes de energía del equipo y los dispositivos que se pueden controlar para reducir su consumo de energía (como el nivel de brillo de la pantalla, el ahorro de energía del monitor o el escalado de la la frecuencia del procesador)."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:16
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:16
 msgid ""
 "In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
 " interfaces to inform other applications about current power level so that "
@@ -1035,13 +1035,13 @@ msgid ""
 "should make use of this interface while it is performing update operations."
 msgstr "Además, el gestor de energía de Xfce proporciona un conjunto de interfaces D-Bus que cumplen las especificaciones de freedesktop.org para informar a otras aplicaciones de los niveles energía, de modo que puedan ajustar su consumo, y proporciona una interfaz de inhibición que permite a las aplicaciones impedir que se ejecuten acciones automáticas de ahorro de energía; ejemplo, el gestor de paquetes del sistema debería usar esta interfaz al ejecutar operaciones de actualización."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:23
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
 msgstr "El gestor de energía de Xfce también proporciona un complemento para los paneles de Xfce y LXDE que permite controlar los niveles de brillo de la pantalla y monitorear los niveles de carga de la batería y de los dispositivos."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:34
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
 msgstr "Captura de pantalla de la interfaz de usuario de Xfce Power Manager"
