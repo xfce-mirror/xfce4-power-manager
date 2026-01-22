@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2025-07-18 10:57+0200\n"
+"POT-Creation-Date: 2026-01-22 12:54+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Luna Jernberg <droidbittin@gmail.com>, 2024-2025\n"
 "Language-Team: Swedish (http://app.transifex.com/xfce/xfce4-power-manager/language/sv/)\n"
@@ -47,9 +47,9 @@ msgstr "Ingenting"
 
 #: data/interfaces/xfpm-settings.ui:253
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:245
-#: src/xfpm-power.c:552 src/xfpm-power.c:593 src/xfpm-power.c:752
-#: src/xfpm-power.c:771 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:243
+#: src/xfpm-power.c:550 src/xfpm-power.c:591 src/xfpm-power.c:750
+#: src/xfpm-power.c:769 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
 #: src/xfpm-battery.c:177 src/xfpm-kbd-backlight.c:104
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -228,7 +228,7 @@ msgid "seconds"
 msgstr "sekunder"
 
 #: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:608
+#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "Vänteläge"
 
@@ -241,7 +241,7 @@ msgid "Suspend operation not supported"
 msgstr "Väntelägesåtgärden stöds inte"
 
 #: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:603
+#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "Viloläge"
 
@@ -254,7 +254,7 @@ msgid "Hibernate operation not supported"
 msgstr "Viloläge stöds inte"
 
 #: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:613
+#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr "Hybridsömn"
 
@@ -287,7 +287,7 @@ msgid "Lock screen"
 msgstr "Lås skärmen"
 
 #: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:626
+#: src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "Stäng av"
 
@@ -668,75 +668,75 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nTillstånd okänt"
 
-#: src/xfpm-power.c:270
+#: src/xfpm-power.c:268
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "Ett program inaktiverar för närvarande automatiskt vänteläge. Att utföra denna åtgärd nu kan skada körningen av detta program.\nÄr du säker på att du vill försätta systemet i viloläge?"
 
-#: src/xfpm-power.c:302
+#: src/xfpm-power.c:300
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "Inget av skärmlåsverktygen kördes framgångsrikt, skärmen kommer inte låsas.\nVill du ändå fortsätta med att avbryta systemet?"
 
-#: src/xfpm-power.c:491
+#: src/xfpm-power.c:489
 msgid "Hibernate the system"
 msgstr "Försätt i viloläge"
 
-#: src/xfpm-power.c:503
+#: src/xfpm-power.c:501
 msgid "Suspend the system"
 msgstr "Försätt systemet i vänteläge"
 
-#: src/xfpm-power.c:515
+#: src/xfpm-power.c:513
 msgid "Hybrid sleep the system"
 msgstr "Hybrid sömn systemet"
 
-#: src/xfpm-power.c:535
+#: src/xfpm-power.c:533
 msgid "Shutdown the system"
 msgstr "Stäng av systemet"
 
-#: src/xfpm-power.c:548 src/xfpm-power.c:590
+#: src/xfpm-power.c:546 src/xfpm-power.c:588
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "Systemet börjar få slut på ström. Spara ditt arbete för att förhindra att data förloras"
 
-#: src/xfpm-power.c:629
+#: src/xfpm-power.c:627
 msgid "Cancel"
 msgstr "Avbryt"
 
-#: src/xfpm-power.c:752
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "Systemet kör på låg strömnivå"
 
-#: src/xfpm-power.c:767
+#: src/xfpm-power.c:765
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "Din %s batterinivå är låg\nUngefärlig tid kvar %s"
 
-#: src/xfpm-power.c:1522 src/xfpm-power.c:1566 src/xfpm-power.c:1602
-#: src/xfpm-power.c:1636 src/xfpm-power.c:1670
+#: src/xfpm-power.c:1519 src/xfpm-power.c:1563 src/xfpm-power.c:1599
+#: src/xfpm-power.c:1633 src/xfpm-power.c:1667
 msgid "Permission denied"
 msgstr "Åtkomst nekas"
 
-#: src/xfpm-power.c:1611
+#: src/xfpm-power.c:1608
 msgid "Hibernate not supported"
 msgstr "Viloläge stöds inte"
 
-#: src/xfpm-power.c:1645
+#: src/xfpm-power.c:1642
 msgid "Suspend not supported"
 msgstr "Vänteläge stöds inte"
 
-#: src/xfpm-power.c:1679
+#: src/xfpm-power.c:1676
 msgid "Hybrid sleep not supported"
 msgstr "Hybrid sömn stöds inte"
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:145
 #, c-format
-msgid "Brightness: %.0f percent"
-msgstr "Ljusstyrka: %.0f procent"
+msgid "Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-battery.c:95 src/xfpm-battery.c:147
 #, c-format
@@ -780,8 +780,8 @@ msgstr "Ditt %s är tomt"
 #. generate a human-readable summary for the notification
 #: src/xfpm-kbd-backlight.c:102
 #, c-format
-msgid "Keyboard Brightness: %.0f percent"
-msgstr "Tangentbordsljusstyrka %.0f procent"
+msgid "Keyboard Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-main.c:86
 msgid "With policykit support\n"
@@ -998,22 +998,22 @@ msgid ""
 "your display"
 msgstr "Visa batterinivåer för dina enheter och kontrollera skärmens ljusstyrka"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:7
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:7
 msgid "Xfce power manager"
 msgstr "XFCE strömhanterare"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:8
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
 msgstr "Hantera och minska strömförbrukningen för datorer och enheter"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:11
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:11
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
 msgstr "Xfce strömhanterare handhar datorns kraftkällor och enheterna som kan kontrolleras för att reducera deras konsumtion av ström (som till exempel LCD-ljusnivå, skärmsömn, CPU-frekvensskalning)."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:16
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:16
 msgid ""
 "In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
 " interfaces to inform other applications about current power level so that "
@@ -1023,13 +1023,13 @@ msgid ""
 "should make use of this interface while it is performing update operations."
 msgstr "Utöver det, tillhandahåller Xfce-strömhanteraren en uppsättning freedesktop-compliant DBus-gränssnitt för att informera andra program om aktuell energinivå så att de kan justera sin energikonsumtion, och den tillhandahåller spärrgränssnitt som tillåter program att förhindra automatiska vilolägesåtgärder via energisparhanteraren; som ett exempel, bör operativsystemets pakethanterare utnyttja detta gränssnitt medan det utför uppdateringsoperationer."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:23
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
 msgstr "Xfce-strömhanteraren tillhandahåller också tillägg för Xfce- och LXDE-paneler för att kontrollera LCD-ljusstyrka och övervaka batteri och enheters laddningsnivåer."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:34
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
 msgstr "Skärmdump av Xfce strömhanterare användargränssnittet"
