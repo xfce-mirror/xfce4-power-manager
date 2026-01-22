@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2025-07-18 10:57+0200\n"
+"POT-Creation-Date: 2026-01-22 12:54+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Yogesh K S <yogesh@karnatakaeducation.org.in>, 2017\n"
 "Language-Team: Kannada (http://app.transifex.com/xfce/xfce4-power-manager/language/kn/)\n"
@@ -42,9 +42,9 @@ msgstr "ಏನೂ ಇಲ್ಲ"
 
 #: data/interfaces/xfpm-settings.ui:253
 #: settings/xfce4-power-manager-settings.desktop.in:4
-#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:245
-#: src/xfpm-power.c:552 src/xfpm-power.c:593 src/xfpm-power.c:752
-#: src/xfpm-power.c:771 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:243
+#: src/xfpm-power.c:550 src/xfpm-power.c:591 src/xfpm-power.c:750
+#: src/xfpm-power.c:769 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
 #: src/xfpm-battery.c:177 src/xfpm-kbd-backlight.c:104
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
@@ -223,7 +223,7 @@ msgid "seconds"
 msgstr "ಸೆಕೆಂಡುಗಳು"
 
 #: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:608
+#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "ಅಮಾನತು"
 
@@ -236,7 +236,7 @@ msgid "Suspend operation not supported"
 msgstr " ಅಮಾನತು ಕ್ರಿಯೆಗೆ ಬೆಂಬಲ  ಇಲ್ಲ "
 
 #: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:603
+#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "ಹೈಬರ್ನೇಟ್ "
 
@@ -249,7 +249,7 @@ msgid "Hibernate operation not supported"
 msgstr "ಹೈಬರ್ನೇಟ್ ಕ್ರಿಯೆಗೆ ಬೆಂಬಲ  ಇಲ್ಲ "
 
 #: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:613
+#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr ""
 
@@ -282,7 +282,7 @@ msgid "Lock screen"
 msgstr "ಪರದೆಯನ್ನು ಲಾಕ್ ಮಾಡಿ "
 
 #: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:626
+#: src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "ಮುಚ್ಚುವುದು"
 
@@ -663,75 +663,75 @@ msgid ""
 "Unknown state"
 msgstr "<b>%s %s</b>\nಅಪರಿಚಿತ ಸ್ಥಿತಿ "
 
-#: src/xfpm-power.c:270
+#: src/xfpm-power.c:268
 msgid ""
 "An application is currently disabling the automatic sleep. Doing this action now may damage the working state of this application.\n"
 "Are you sure you want to hibernate the system?"
 msgstr "ಅಪ್ಲಿಕೇಶನ್ ಸದ್ಯಕ್ಕೆ ಸ್ವಯಂಚಾಲಿತ ನಿದ್ರೆಯನ್ನು  ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಿದೆ. ಈಗ ಈ ಕ್ರಮ ಕೈಗೊಳ್ಳುವುದು ಈ ಅಪ್ಲಿಕೇಶನ್ ನ ಕಾರ್ಯಸ್ಥಿಥಿ ಗೆ ಹಾನಿಯುಂಟುಮಾಡಬಹುದು.\nನೀವು ಈ ಸಿಸ್ಟಮ್ ಅನ್ನು ಹೈಬರ್ನೇಟ್ ಮಾಡ ಬಯಸುವುದು  ಖಚಿತವೇ? "
 
-#: src/xfpm-power.c:302
+#: src/xfpm-power.c:300
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
 msgstr "ಯಾವುದೇ ಸ್ಕ್ರೀನ್ ಲಾಕ್ ಉಪಕರಣಗಳು ಯಶಸ್ವಿಯಾಗಿ  ನಡೆಯಲಿಲ್ಲ, ಸ್ಕ್ರೀನ್ ಲಾಕ್ ಆಗದು.\nನೀವು ಇನ್ನೂ ಸಿಸ್ಟಮ್  ವಜಾಗೊಳಿಸುವಿಕೆಯನ್ನು  ಮುಂದುವರಿಸಲು ಬಯಸುತ್ತೀರಾ?"
 
-#: src/xfpm-power.c:491
+#: src/xfpm-power.c:489
 msgid "Hibernate the system"
 msgstr "ಅಪ್ಲಿಕೇಶನ್ ಸದ್ಯಕ್ಕೆ ಸ್ವಯಂಚಾಲಿತ ನಿದ್ರೆಯನ್ನು  ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಿ"
 
-#: src/xfpm-power.c:503
+#: src/xfpm-power.c:501
 msgid "Suspend the system"
 msgstr "ಸಿಸ್ಟಮ್  ವಜಾಗೊಳಿಸು"
 
-#: src/xfpm-power.c:515
+#: src/xfpm-power.c:513
 msgid "Hybrid sleep the system"
 msgstr ""
 
-#: src/xfpm-power.c:535
+#: src/xfpm-power.c:533
 msgid "Shutdown the system"
 msgstr "ಸಿಸ್ಟಮ್ ಅನ್ನು ಸ್ಥಗಿತಗೊಳಿಸಿ"
 
-#: src/xfpm-power.c:548 src/xfpm-power.c:590
+#: src/xfpm-power.c:546 src/xfpm-power.c:588
 msgid "System is running on low power. Save your work to avoid losing data"
 msgstr "ಕಡಿಮೆ ಶಕ್ತಿಯ ಮೇಲೆ ಸಿಸ್ಟಮ್ ಚಾಲನೆಯಾಗುತ್ತಿದೆ. ಡೇಟಾ ಕಳೆದುಕೊಳ್ಳುವುದನ್ನು ತಪ್ಪಿಸಲು ನಿಮ್ಮ ಕೆಲಸವನ್ನು ಉಳಿಸಿ"
 
-#: src/xfpm-power.c:629
+#: src/xfpm-power.c:627
 msgid "Cancel"
 msgstr ""
 
-#: src/xfpm-power.c:752
+#: src/xfpm-power.c:750
 msgid "System is running on low power"
 msgstr "ಕಡಿಮೆ ಶಕ್ತಿಯ ಮೇಲೆ ಸಿಸ್ಟಮ್ ಚಾಲನೆಯಾಗುತ್ತಿದೆ"
 
-#: src/xfpm-power.c:767
+#: src/xfpm-power.c:765
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
 msgstr "ನಿಮ್ಮ %s ಚಾರ್ಜ್ ಲೆವೆಲ್ ಕಡಿಮೆಯಾಗಿದೆ\nಅಂದಾಜು ಮಾಡಿದ ಸಮಯ %s ಅನ್ನು ಬಿಟ್ಟಿದೆ"
 
-#: src/xfpm-power.c:1522 src/xfpm-power.c:1566 src/xfpm-power.c:1602
-#: src/xfpm-power.c:1636 src/xfpm-power.c:1670
+#: src/xfpm-power.c:1519 src/xfpm-power.c:1563 src/xfpm-power.c:1599
+#: src/xfpm-power.c:1633 src/xfpm-power.c:1667
 msgid "Permission denied"
 msgstr "ಅವಕಾಶ ನೀಡಲಾಗಿಲ್ಲ"
 
-#: src/xfpm-power.c:1611
+#: src/xfpm-power.c:1608
 msgid "Hibernate not supported"
 msgstr ""
 
-#: src/xfpm-power.c:1645
+#: src/xfpm-power.c:1642
 msgid "Suspend not supported"
 msgstr "ಸಸ್ಪೆಂಡ್ ಬೆಂಬಲಿಸುವುದಿಲ್ಲ"
 
-#: src/xfpm-power.c:1679
+#: src/xfpm-power.c:1676
 msgid "Hybrid sleep not supported"
 msgstr ""
 
 #. generate a human-readable summary for the notification
 #: src/xfpm-backlight.c:145
 #, c-format
-msgid "Brightness: %.0f percent"
-msgstr "ಪ್ರಕಾಶಮಾನ: %.0f ಶೇಕಡಾ"
+msgid "Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-battery.c:95 src/xfpm-battery.c:147
 #, c-format
@@ -775,8 +775,8 @@ msgstr "ನಿಮ್ಮ %s ಖಾಲಿಯಾಗಿದೆ"
 #. generate a human-readable summary for the notification
 #: src/xfpm-kbd-backlight.c:102
 #, c-format
-msgid "Keyboard Brightness: %.0f percent"
-msgstr "ಕೀಬೋರ್ಡ್ ಪ್ರಕಾಶಮಾನ: %.0f ಶೇಕಡಾ"
+msgid "Keyboard Brightness: %.0f%%"
+msgstr ""
 
 #: src/xfpm-main.c:86
 msgid "With policykit support\n"
@@ -993,22 +993,22 @@ msgid ""
 "your display"
 msgstr "ನಿಮ್ಮ ಸಾಧನಗಳ ಬ್ಯಾಟರಿ ಮಟ್ಟವನ್ನು ಪ್ರದರ್ಶಿಸಿ ಮತ್ತು ನಿಮ್ಮ ಪ್ರದರ್ಶನದ ಹೊಳಪು ನಿಯಂತ್ರಿಸಿ"
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:7
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:7
 msgid "Xfce power manager"
 msgstr ""
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:8
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
 msgstr ""
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:11
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:11
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
 msgstr "Xfce ಪವರ್ ಮ್ಯಾನೇಜರ್ ಕಂಪ್ಯೂಟರ್ನಲ್ಲಿ ವಿದ್ಯುತ್ ಮೂಲಗಳನ್ನು ನಿರ್ವಹಿಸುತ್ತದೆ ಮತ್ತು ಅವುಗಳ ವಿದ್ಯುತ್ ಬಳಕೆಯನ್ನು ಕಡಿಮೆ ಮಾಡಲು ನಿಯಂತ್ರಿಸಬಹುದಾದ ಸಾಧನಗಳನ್ನು (ಉದಾಹರಣೆಗೆ ಎಲ್ಸಿಡಿ ಪ್ರಕಾಶಮಾನ ಮಟ್ಟ, ಮಾನಿಟರ್ ನಿದ್ರೆ, ಸಿಪಿಯು ಆವರ್ತನ ಸ್ಕೇಲಿಂಗ್)."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:16
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:16
 msgid ""
 "In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
 " interfaces to inform other applications about current power level so that "
@@ -1018,13 +1018,13 @@ msgid ""
 "should make use of this interface while it is performing update operations."
 msgstr "ಇದರ ಜೊತೆಗೆ, Xfce ಪವರ್ ಮ್ಯಾನೇಜರ್ ಪ್ರಸ್ತುತ ವಿದ್ಯುತ್ ಶಕ್ತಿಯ ಮಟ್ಟದಲ್ಲಿ ಇತರ ಅನ್ವಯಿಕೆಗಳನ್ನು ತಿಳಿಸಲು ಡೆಸ್ಕ್ಟಾಪ್-ಕಂಪ್ಲೈಂಟ್ DBus ಇಂಟರ್ಫೇಸ್ಗಳ ಒಂದು ಸೆಟ್ ಅನ್ನು ಒದಗಿಸುತ್ತದೆ, ಇದರಿಂದಾಗಿ ಅವುಗಳು ತಮ್ಮ ವಿದ್ಯುತ್ ಬಳಕೆಯನ್ನು ಸರಿಹೊಂದಿಸಬಹುದು ಮತ್ತು ವಿದ್ಯುತ್ ಮ್ಯಾನೇಜರ್ ಮೂಲಕ ಸ್ವಯಂಚಾಲಿತ ನಿದ್ರೆ ಕಾರ್ಯಗಳನ್ನು ತಡೆಯಲು ಅಪ್ಲಿಕೇಶನ್ಗಳನ್ನು ಅನುಮತಿಸುವ ಪ್ರತಿಬಂಧಕ ಇಂಟರ್ಫೇಸ್ ಅನ್ನು ಒದಗಿಸುತ್ತದೆ ; ಉದಾಹರಣೆಯಾಗಿ, ಆಪರೇಟಿಂಗ್ ಸಿಸ್ಟಮ್ನ ಪ್ಯಾಕೇಜ್ ಮ್ಯಾನೇಜರ್ ಈ ಇಂಟರ್ಫೇಸ್ ಅನ್ನು ನವೀಕರಣ ಕಾರ್ಯಾಚರಣೆಗಳನ್ನು ನಿರ್ವಹಿಸುತ್ತಿರುವಾಗ ಬಳಸಬೇಕು."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:23
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
 msgstr "Xfce ಪವರ್ ಮ್ಯಾನೇಜರ್ LCD ಬ್ರೈಟ್ನೆಸ್ ಮಟ್ಟವನ್ನು ನಿಯಂತ್ರಿಸಲು ಮತ್ತು ಬ್ಯಾಟರಿ ಮತ್ತು ಸಾಧನ ಚಾರ್ಜ್ ಮಟ್ಟವನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಲು Xfce ಮತ್ತು LXDE ಪ್ಯಾನೆಲ್ಗಳಿಗೆ ಸಹ ಒಂದು ಪ್ಲಗ್ಇನ್ ಅನ್ನು ಒದಗಿಸುತ್ತದೆ."
 
-#: data/appdata/xfce4-power-manager.appdata.xml.in:34
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
 msgstr ""
