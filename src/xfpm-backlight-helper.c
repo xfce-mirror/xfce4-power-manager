@@ -459,14 +459,16 @@ backlight_helper_is_enabled_raw (const gchar *sysfs_path)
 
   filename = g_build_filename (sysfs_path, "device", "enabled", NULL);
   if (!g_file_get_contents (filename, &enabled, NULL, &error))
+  {
+    g_warning ("failed to get enabled state: %s", error->message);
+    g_error_free (error);
     goto out;
+  }
 
   g_strstrip (enabled);
   ret = g_strcmp0 (enabled, "enabled") == 0;
 
 out:
-  if (error != NULL)
-    g_error_free (error);
   g_free (enabled);
   g_free (filename);
   return ret;
