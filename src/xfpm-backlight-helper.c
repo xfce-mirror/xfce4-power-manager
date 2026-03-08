@@ -449,6 +449,31 @@ out:
   return type;
 }
 
+static gboolean
+backlight_helper_is_enabled_raw (const gchar *sysfs_path)
+{
+  gboolean ret = FALSE;
+  gchar *filename = NULL;
+  gchar *enabled = NULL;
+  GError *error = NULL;
+
+  filename = g_build_filename (sysfs_path, "device", "enabled", NULL);
+  if (!g_file_get_contents (filename, &enabled, NULL, &error))
+  {
+    g_warning ("failed to get enabled state: %s", error->message);
+    g_error_free (error);
+    goto out;
+  }
+
+  g_strstrip (enabled);
+  ret = g_strcmp0 (enabled, "enabled") == 0;
+
+out:
+  g_free (enabled);
+  g_free (filename);
+  return ret;
+}
+
 /*
  * Find best backlight using the kernel-supplied backlight type
  */
@@ -513,6 +538,18 @@ backlight_helper_get_best_backlight (void)
     {
       best_device = g_strdup (g_ptr_array_index (sysfs_paths, i));
       goto out;
+    }
+  }
+  for (i = 0; i < sysfs_paths->len; i++)
+  {
+    if (backlight_types[i] == BACKLIGHT_TYPE_RAW)
+    {
+      filename_tmp = g_ptr_array_index (sysfs_paths, i);
+      if (backlight_helper_is_enabled_raw (filename_tmp))
+      {
+        best_device = g_strdup (filename_tmp);
+        goto out;
+      }
     }
   }
   for (i = 0; i < sysfs_paths->len; i++)
