@@ -60,13 +60,6 @@ power_manager_button_new (PowerManagerPlugin *plugin,
                           PowerManagerConfig *config);
 void
 power_manager_button_show (PowerManagerButton *button);
-gboolean
-power_manager_button_scroll_event (GtkWidget *widget,
-                                   GdkEventScroll *ev);
-const gchar *
-power_manager_button_get_icon_name (PowerManagerButton *button);
-const gchar *
-power_manager_button_get_tooltip (PowerManagerButton *button);
 void
 power_manager_button_set_icon (PowerManagerButton *button);
 

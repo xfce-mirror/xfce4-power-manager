@@ -95,15 +95,6 @@ typedef struct
   GtkWidget *menu_item; /* The device's item on the menu (if shown) */
 } BatteryDevice;
 
-enum
-{
-  SIG_ICON_NAME_CHANGED = 0,
-  SIG_TOOLTIP_CHANGED,
-  SIG_N_SIGNALS,
-};
-
-static guint __signals[SIG_N_SIGNALS] = { 0 };
-
 G_DEFINE_TYPE_WITH_PRIVATE (PowerManagerButton, power_manager_button, GTK_TYPE_TOGGLE_BUTTON)
 
 static void
@@ -214,25 +205,6 @@ find_device_in_list (PowerManagerButton *button,
   return NULL;
 }
 
-void
-power_manager_button_set_icon (PowerManagerButton *button)
-{
-  g_return_if_fail (GTK_IS_WIDGET (button->priv->panel_presentation_mode));
-
-  button->priv->panel_icon_width = xfce_panel_plugin_get_icon_size (XFCE_PANEL_PLUGIN (button->priv->plugin));
-
-  if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), button->priv->panel_icon_name))
-    gtk_image_set_from_icon_name (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_name, GTK_ICON_SIZE_BUTTON);
-  else
-    gtk_image_set_from_icon_name (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_fallback_icon_name, GTK_ICON_SIZE_BUTTON);
-  gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_width);
-
-  gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_presentation_mode), button->priv->panel_icon_width);
-
-  /* Notify others the icon name changed */
-  g_signal_emit (button, __signals[SIG_ICON_NAME_CHANGED], 0);
-}
-
 static void
 power_manager_button_set_tooltip (PowerManagerButton *button)
 {
@@ -257,8 +229,6 @@ power_manager_button_set_tooltip (PowerManagerButton *button)
     {
       button->priv->tooltip = g_strdup (display_device->details);
       gtk_widget_set_tooltip_markup (GTK_WIDGET (button), display_device->details);
-      /* Tooltip changed! */
-      g_signal_emit (button, __signals[SIG_TOOLTIP_CHANGED], 0);
       return;
     }
   }
@@ -266,20 +236,6 @@ power_manager_button_set_tooltip (PowerManagerButton *button)
   /* Odds are this is a desktop without any batteries attached */
   button->priv->tooltip = g_strdup (_("Display battery levels for attached devices"));
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), button->priv->tooltip);
-  /* Tooltip changed! */
-  g_signal_emit (button, __signals[SIG_TOOLTIP_CHANGED], 0);
-}
-
-const gchar *
-power_manager_button_get_icon_name (PowerManagerButton *button)
-{
-  return button->priv->panel_icon_name;
-}
-
-const gchar *
-power_manager_button_get_tooltip (PowerManagerButton *button)
-{
-  return button->priv->tooltip;
 }
 
 static void
@@ -728,7 +684,7 @@ power_manager_button_remove_all_devices (PowerManagerButton *button)
   }
 }
 
-gboolean
+static gboolean
 power_manager_button_scroll_event (GtkWidget *widget,
                                    GdkEventScroll *ev)
 {
@@ -779,30 +735,6 @@ power_manager_button_class_init (PowerManagerButtonClass *klass)
 
   widget_class->button_press_event = power_manager_button_press_event;
   widget_class->scroll_event = power_manager_button_scroll_event;
-
-  __signals[SIG_TOOLTIP_CHANGED] = g_signal_new ("tooltip-changed",
-                                                 POWER_MANAGER_TYPE_BUTTON,
-                                                 G_SIGNAL_RUN_LAST,
-                                                 G_STRUCT_OFFSET (PowerManagerButtonClass, tooltip_changed),
-                                                 NULL, NULL,
-                                                 g_cclosure_marshal_VOID__VOID,
-                                                 G_TYPE_NONE, 0);
-
-  __signals[SIG_ICON_NAME_CHANGED] = g_signal_new ("icon-name-changed",
-                                                   POWER_MANAGER_TYPE_BUTTON,
-                                                   G_SIGNAL_RUN_LAST,
-                                                   G_STRUCT_OFFSET (PowerManagerButtonClass, icon_name_changed),
-                                                   NULL, NULL,
-                                                   g_cclosure_marshal_VOID__VOID,
-                                                   G_TYPE_NONE, 0);
-
-#define XFPM_PARAM_FLAGS (G_PARAM_READWRITE \
-                          | G_PARAM_CONSTRUCT \
-                          | G_PARAM_STATIC_NAME \
-                          | G_PARAM_STATIC_NICK \
-                          | G_PARAM_STATIC_BLURB)
-
-#undef XFPM_PARAM_FLAGS
 }
 
 static void
@@ -1032,6 +964,22 @@ power_manager_button_show (PowerManagerButton *button)
 
   /* Add all the devcies currently attached to the system */
   power_manager_button_add_all_devices (button);
+}
+
+void
+power_manager_button_set_icon (PowerManagerButton *button)
+{
+  g_return_if_fail (GTK_IS_WIDGET (button->priv->panel_presentation_mode));
+
+  button->priv->panel_icon_width = xfce_panel_plugin_get_icon_size (XFCE_PANEL_PLUGIN (button->priv->plugin));
+
+  if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), button->priv->panel_icon_name))
+    gtk_image_set_from_icon_name (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_name, GTK_ICON_SIZE_BUTTON);
+  else
+    gtk_image_set_from_icon_name (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_fallback_icon_name, GTK_ICON_SIZE_BUTTON);
+
+  gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_width);
+  gtk_image_set_pixel_size (GTK_IMAGE (button->priv->panel_presentation_mode), button->priv->panel_icon_width);
 }
 
 static void
