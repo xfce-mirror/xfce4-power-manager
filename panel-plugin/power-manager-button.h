@@ -67,6 +67,8 @@ const gchar *
 power_manager_button_get_icon_name (PowerManagerButton *button);
 const gchar *
 power_manager_button_get_tooltip (PowerManagerButton *button);
+void
+power_manager_button_set_icon (PowerManagerButton *button);
 
 G_END_DECLS
 

@@ -147,11 +147,13 @@ power_manager_plugin_mode_changed (XfcePanelPlugin *panel_plugin,
 
 
 static gboolean
-power_manager_plugin_size_changed (XfcePanelPlugin *plugin,
+power_manager_plugin_size_changed (XfcePanelPlugin *panel_plugin,
                                    gint size)
 {
+  PowerManagerPlugin *plugin = POWER_MANAGER_PLUGIN (panel_plugin);
   GtkWidget *widget = GTK_WIDGET (plugin);
 
+  power_manager_button_set_icon (plugin->button);
   gtk_widget_queue_resize (widget);
 
   return TRUE;

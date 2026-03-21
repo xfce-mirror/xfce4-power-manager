@@ -116,8 +116,6 @@ power_manager_button_device_icon_draw (GtkWidget *img,
                                        cairo_t *cr,
                                        gpointer userdata);
 static void
-power_manager_button_set_icon (PowerManagerButton *button);
-static void
 power_manager_button_set_label (PowerManagerButton *button,
                                 gdouble percentage,
                                 guint64 time_to_empty_or_full);
@@ -216,10 +214,12 @@ find_device_in_list (PowerManagerButton *button,
   return NULL;
 }
 
-static void
+void
 power_manager_button_set_icon (PowerManagerButton *button)
 {
   g_return_if_fail (GTK_IS_WIDGET (button->priv->panel_presentation_mode));
+
+  button->priv->panel_icon_width = xfce_panel_plugin_get_icon_size (XFCE_PANEL_PLUGIN (button->priv->plugin));
 
   if (gtk_icon_theme_has_icon (gtk_icon_theme_get_default (), button->priv->panel_icon_name))
     gtk_image_set_from_icon_name (GTK_IMAGE (button->priv->panel_icon_image), button->priv->panel_icon_name, GTK_ICON_SIZE_BUTTON);
