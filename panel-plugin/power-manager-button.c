@@ -754,6 +754,17 @@ inhibit_proxy_ready_cb (GObject *source_object,
 }
 
 static void
+icon_theme_changed (GtkIconTheme *icon_theme,
+                    PowerManagerButton *button)
+{
+  for (GList *lp = button->priv->devices; lp != NULL; lp = lp->next)
+  {
+    BatteryDevice *battery_device = lp->data;
+    power_manager_button_update_device_icon_and_details (button, battery_device->device);
+  }
+}
+
+static void
 power_manager_button_init (PowerManagerButton *button)
 {
   GError *error = NULL;
@@ -808,6 +819,7 @@ power_manager_button_init (PowerManagerButton *button)
   button->priv->panel_icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
   button->priv->panel_fallback_icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
   button->priv->panel_icon_width = 24;
+  g_signal_connect_object (gtk_icon_theme_get_default (), "changed", G_CALLBACK (icon_theme_changed), button, 0);
 
   /* Sane default Gtk style */
   css_provider = gtk_css_provider_new ();
