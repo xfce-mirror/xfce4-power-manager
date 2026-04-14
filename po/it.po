@@ -11,6 +11,7 @@
 # Emanuele Petriglia <inbox@emanuelepetriglia.com>, 2018-2019
 # Emanuele Petriglia <inbox@emanuelepetriglia.com>, 2019-2021,2023-2024
 # Mark <marco_pace@msn.com>, 2019
+# underpass <underpass_bugzilla@outlook.it>, 2026
 # Vincenzo Reale <vinx.reale@gmail.com>, 2020
 msgid ""
 msgstr ""
@@ -18,7 +19,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
 "POT-Creation-Date: 2026-01-22 12:54+0100\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: Emanuele Petriglia <inbox@emanuelepetriglia.com>, 2025-2026\n"
+"Last-Translator: underpass <underpass_bugzilla@outlook.it>, 2026\n"
 "Language-Team: Italian (http://app.transifex.com/xfce/xfce4-power-manager/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,7 +65,7 @@ msgstr "A_iuto"
 
 #: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
-msgstr "Gestione del _Salvaschermo"
+msgstr "Gestione del _salvaschermo"
 
 #: data/interfaces/xfpm-settings.ui:300
 #: panel-plugin/power-manager-dialog.c:187
@@ -129,15 +130,15 @@ msgstr "<b>Risparmio energetico del sistema</b>"
 
 #: data/interfaces/xfpm-settings.ui:797 data/interfaces/xfpm-settings.ui:947
 msgid "<b>Laptop Lid</b>"
-msgstr "<b>Sportello portatile</b>"
+msgstr "<b>Coperchio del portatile</b>"
 
 #: data/interfaces/xfpm-settings.ui:812 data/interfaces/xfpm-settings.ui:902
 msgid "When laptop lid is closed:"
-msgstr "Quando lo sportello del portatile viene chiuso:"
+msgstr "Quando il coperchio del portatile viene chiuso:"
 
 #: data/interfaces/xfpm-settings.ui:839 data/interfaces/xfpm-settings.ui:929
 msgid "Execute action if an external display is connected"
-msgstr "Esegui un'azione se uno schermo esterno viene collegato"
+msgstr "Esegui un'azione se viene collegato uno schermo esterno"
 
 #: data/interfaces/xfpm-settings.ui:856 data/interfaces/xfpm-settings.ui:1060
 msgid "<b>Power profile</b>"
@@ -316,7 +317,7 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr "Assicurarsi di impostare un valore alto, altrimenti il sistema eseguirà le proprie azioni prima di xfce4-power-manager, senza la possibilità di prevenire l'azione o conoscere esattamente quando verrà svolta. L'azione eseguita in questo caso dal sistema è: %s."
+msgstr "Assicurarsi di impostare un valore sufficientemente alto, altrimenti il sistema eseguirà le proprie azioni prima di xfce4-power-manager, senza possibilità di impedirlo o sapere esattamente quando verrà svolta. L'azione eseguita in questo caso dal sistema è: %s."
 
 #: settings/xfpm-settings.c:1115
 msgid "Device"
@@ -348,7 +349,7 @@ msgstr "Tecnologia"
 
 #: settings/xfpm-settings.c:1161
 msgid "Current charge"
-msgstr "Carica corrente"
+msgstr "Carica attuale"
 
 #. TRANSLATORS: Unit here is Watt hour
 #: settings/xfpm-settings.c:1169 settings/xfpm-settings.c:1181
@@ -420,7 +421,7 @@ msgstr "Percorso oggetto UpDevice"
 
 #: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
 msgid "Enable debugging"
-msgstr "Abilita il debug"
+msgstr "Attiva il debug"
 
 #: settings/xfpm-settings-app.c:87
 msgid "Display version information"
@@ -428,7 +429,7 @@ msgstr "Mostra le informazioni di versione"
 
 #: settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr "Fa uscire xfce4-power-manager-settings"
+msgstr "Termina l'esecuzione di xfce4-power-manager-settings"
 
 #: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
 #: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
@@ -479,7 +480,7 @@ msgstr "Batteria"
 
 #: common/xfpm-power-common.c:41
 msgid "Uninterruptible Power Supply"
-msgstr "Gruppo statico di continuità"
+msgstr "Gruppo di continuità"
 
 #: common/xfpm-power-common.c:43
 msgid "Line power"
@@ -588,7 +589,7 @@ msgstr[2] "minuti"
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
-msgstr "<b>%s %s</b>\nCompletamente carica - %s rimasto"
+msgstr "<b>%s %s</b>\nCompletamente carica - %s rimanente"
 
 #: common/xfpm-power-common.c:342
 #, c-format
@@ -704,7 +705,7 @@ msgstr "Spegni il sistema"
 
 #: src/xfpm-power.c:546 src/xfpm-power.c:588
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "La carica del sistema è bassa. Salvare il proprio lavoro per evitare la perdita di dati"
+msgstr "La carica del sistema è bassa. Salvare il lavoro per evitare la perdita di dati"
 
 #: src/xfpm-power.c:627
 msgid "Cancel"
@@ -791,11 +792,11 @@ msgstr "Luminosità tastiera: %.0f%%"
 
 #: src/xfpm-main.c:86
 msgid "With policykit support\n"
-msgstr "Con supporto al policykit\n"
+msgstr "Con supporto a policykit\n"
 
 #: src/xfpm-main.c:88
 msgid "Without policykit support\n"
-msgstr "Senza supporto al policykit\n"
+msgstr "Senza supporto a policykit\n"
 
 #: src/xfpm-main.c:107
 msgid "Can suspend"
@@ -807,7 +808,7 @@ msgstr "Può ibernare"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr "Permette di addormentare in modo ibrido"
+msgstr "Può addormentare in modo ibrido"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
@@ -1017,7 +1018,7 @@ msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Il gestore dell'energia di Xfce controlla le fonti di energia del \ncomputer e dei dispositivi che possono essere controllati per ridurre il loro consumo (come la luminosità dello schermo, lo spegnimento del monitor o la frequenza della CPU)."
+msgstr "Il gestore dell'energia di Xfce serve a controllare le fonti di energia del computer e dei dispositivi che possono essere regolate per ridurre il loro consumo (come la luminosità dello schermo, lo spegnimento del monitor o la frequenza della CPU)."
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:16
 msgid ""
@@ -1027,7 +1028,7 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "In più, il gestore dell'energia di Xfce fornisce una serie di interfacce DBus compatibili con freedesktop, allo scopo di informare le altre applicazioni riguardo il livello energetico del sistema così da permettere loro di regolarsi in base ad esso. Fornisce inoltre un'interfaccia che consente di selezionare quali applicazioni possono impedire l'addormentamento automatico del sistema attraverso il gestore dell'energia; ad esempio il gestore dei pacchetti del sistema può utilizzare questa interfaccia mentre sta effettuando gli aggiornamenti."
+msgstr "Inoltre, il gestore dell'energia di Xfce fornisce una serie di interfacce DBus compatibili con freedesktop, utili a passare alle altre applicazioni informazioni sul livello energetico del sistema così da permettere loro di regolarsi in base ad esso. Fornisce anche un'interfaccia che consente alle applicazioni di impedire l'addormentamento automatico del sistema attraverso il gestore dell'energia; ad esempio, il gestore dei pacchetti del sistema dovrebbe utilizzare questa interfaccia durante gli aggiornamenti."
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
 msgid ""
