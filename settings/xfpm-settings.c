@@ -397,41 +397,17 @@ xfpm_settings_power_supply (XfconfChannel *channel,
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Suspend"), 1, XFPM_DO_SUSPEND, -1);
   }
-  else if (!auth_suspend)
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not permitted"));
-  }
-  else
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Suspend operation not supported"));
-  }
 
   if (can_hibernate)
   {
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
   }
-  else if (!auth_hibernate)
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Hibernate operation not permitted"));
-  }
-  else
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Hibernate operation not supported"));
-  }
 
   if (can_hybrid_sleep)
   {
     gtk_list_store_append (list_store, &iter);
     gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, XFPM_DO_HYBRID_SLEEP, -1);
-  }
-  else if (!auth_hybrid_sleep)
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Hybrid sleep operation not permitted"));
-  }
-  else
-  {
-    gtk_widget_set_tooltip_text (inact_action, _("Hybrid sleep operation not supported"));
   }
 
   if (can_shutdown)
