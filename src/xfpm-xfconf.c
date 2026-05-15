@@ -487,7 +487,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_uint (INACTIVITY_SLEEP_MODE_ON_BATTERY,
                                                       NULL, NULL,
                                                       XFPM_DO_SUSPEND,
-                                                      XFPM_DO_HIBERNATE,
+                                                      N_XFPM_SHUTDOWN_REQUESTS - 1,
                                                       DEFAULT_INACTIVITY_SLEEP_MODE_ON_BATTERY,
                                                       G_PARAM_READWRITE));
 
@@ -499,7 +499,7 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_uint (INACTIVITY_SLEEP_MODE_ON_AC,
                                                       NULL, NULL,
                                                       XFPM_DO_SUSPEND,
-                                                      XFPM_DO_HIBERNATE,
+                                                      N_XFPM_SHUTDOWN_REQUESTS - 1,
                                                       DEFAULT_INACTIVITY_SLEEP_MODE_ON_AC,
                                                       G_PARAM_READWRITE));
 
