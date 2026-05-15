@@ -357,6 +357,7 @@ xfpm_settings_power_supply (XfconfChannel *channel,
                             gboolean can_suspend,
                             gboolean can_hibernate,
                             gboolean can_hybrid_sleep,
+                            gboolean can_shutdown,
                             gboolean has_lcd_brightness,
                             gboolean has_lid)
 {
@@ -422,6 +423,12 @@ xfpm_settings_power_supply (XfconfChannel *channel,
     gtk_widget_set_tooltip_text (inact_action, _("Hybrid sleep operation not supported"));
   }
 
+  if (can_shutdown)
+  {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Shutdown"), 1, XFPM_DO_SHUTDOWN, -1);
+  }
+
   property = on_ac ? XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_AC : XFPM_PROPERTIES_PREFIX INACTIVITY_SLEEP_MODE_ON_BATTERY;
   default_val = on_ac ? DEFAULT_INACTIVITY_SLEEP_MODE_ON_AC : DEFAULT_INACTIVITY_SLEEP_MODE_ON_BATTERY;
   gtk_combo_box_set_active (GTK_COMBO_BOX (inact_action), 0);
@@ -441,15 +448,15 @@ xfpm_settings_power_supply (XfconfChannel *channel,
   widget_id = on_ac ? "system-sleep-inactivity-on-ac" : "system-sleep-inactivity-on-battery";
   inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
 
-  if (!can_suspend && !can_hibernate && !can_hybrid_sleep)
+  if (!can_suspend && !can_hibernate && !can_hybrid_sleep && !can_shutdown)
   {
     gtk_widget_set_sensitive (inact_timeout, FALSE);
-    gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not supported"));
+    gtk_widget_set_tooltip_text (inact_timeout, _("No sleep mode supported"));
   }
-  else if (!auth_suspend && !auth_hibernate && !auth_hybrid_sleep)
+  else if (!auth_suspend && !auth_hibernate && !auth_hybrid_sleep && !can_shutdown)
   {
     gtk_widget_set_sensitive (inact_timeout, FALSE);
-    gtk_widget_set_tooltip_text (inact_timeout, _("Hibernate and suspend operations not permitted"));
+    gtk_widget_set_tooltip_text (inact_timeout, _("No sleep mode permitted"));
   }
 
   property = on_ac ? XFPM_PROPERTIES_PREFIX INACTIVITY_ON_AC : XFPM_PROPERTIES_PREFIX INACTIVITY_ON_BATTERY;
@@ -1581,12 +1588,12 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
   settings_create_devices_list ();
 
   xfpm_settings_power_supply (channel, TRUE, profiles_proxy, auth_suspend, auth_hibernate, auth_hybrid_sleep,
-                              can_suspend, can_hibernate, can_hybrid_sleep, has_lcd_brightness, has_lid);
+                              can_suspend, can_hibernate, can_hybrid_sleep, can_shutdown, has_lcd_brightness, has_lid);
 
   if (has_battery)
   {
     xfpm_settings_power_supply (channel, FALSE, profiles_proxy, auth_suspend, auth_hibernate, auth_hybrid_sleep,
-                                can_suspend, can_hibernate, can_hybrid_sleep, has_lcd_brightness, has_lid);
+                                can_suspend, can_hibernate, can_hybrid_sleep, can_shutdown, has_lcd_brightness, has_lid);
     if (upower != NULL && !up_client_get_on_battery (upower))
     {
       GtkWidget *widget;
