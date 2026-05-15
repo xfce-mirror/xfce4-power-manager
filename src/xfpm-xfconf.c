@@ -185,7 +185,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel,
       || g_strcmp0 (property, XFPM_PROPERTIES_PREFIX BRIGHTNESS_SWITCH_RESTORE_ON_EXIT) == 0)
     return;
 
-  XFPM_DEBUG ("Property modified: %s\n", property);
+  XFPM_DEBUG ("Property modified: %s", property);
 
   g_object_set_property (G_OBJECT (conf), property + strlen (XFPM_PROPERTIES_PREFIX), value);
 }

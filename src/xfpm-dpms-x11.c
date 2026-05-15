@@ -160,7 +160,7 @@ xfpm_dpms_x11_set_timeouts (XfpmDpms *dpms,
   {
     x_standby = standby ? sleep_timeout : 0;
     x_suspend = standby ? 0 : sleep_timeout;
-    XFPM_DEBUG ("Setting DPMS timeouts: standby=%d suspend=%d off=%d\n", x_standby, x_suspend, off_timeout);
+    XFPM_DEBUG ("Setting DPMS timeouts: standby=%d suspend=%d off=%d", x_standby, x_suspend, off_timeout);
     DPMSSetTimeouts (display, x_standby, x_suspend, off_timeout);
   }
 }

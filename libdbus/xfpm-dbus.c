@@ -45,7 +45,7 @@ xfpm_dbus_name_has_owner (GDBusConnection *connection,
   else
   {
     if (!g_error_matches (error, G_DBUS_ERROR, G_DBUS_ERROR_NAME_HAS_NO_OWNER))
-      g_warning ("Failed to get name owner: %s\n", error->message);
+      g_warning ("Failed to get name owner: %s", error->message);
 
     g_error_free (error);
   }
