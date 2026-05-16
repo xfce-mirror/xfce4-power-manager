@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-01-22 12:54+0100\n"
+"POT-Creation-Date: 2026-05-16 00:53+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Gheyret Kenji <gheyret@yahoo.com>, 2013\n"
 "Language-Team: Uyghur (http://app.transifex.com/xfce/xfce4-power-manager/language/ug/)\n"
@@ -223,87 +223,63 @@ msgstr "مىنۇت"
 msgid "seconds"
 msgstr "سېكۇنت"
 
-#: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
+#: settings/xfpm-settings.c:398 settings/xfpm-settings.c:508
+#: settings/xfpm-settings.c:655 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "توڭلات"
 
-#: settings/xfpm-settings.c:401
-msgid "Suspend operation not permitted"
-msgstr "توڭلات مەشغۇلاتىنى ئىشلىتىشكە رۇخسەت قىلىنمىغان"
-
-#: settings/xfpm-settings.c:405
-msgid "Suspend operation not supported"
-msgstr "توڭلات مەشغۇلاتىنى ئىشلەتكىلى بولمايدۇ"
-
-#: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
+#: settings/xfpm-settings.c:404 settings/xfpm-settings.c:514
+#: settings/xfpm-settings.c:661 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "ئۈچەككە"
 
-#: settings/xfpm-settings.c:415
-msgid "Hibernate operation not permitted"
-msgstr "ئۈچەك مەشغۇلاتىنى ئىشلىتىشكە رۇخسەت قىلىنمىغان"
-
-#: settings/xfpm-settings.c:419
-msgid "Hibernate operation not supported"
-msgstr "ئۈچەك مەشغۇلاتىنى ئىشلەتكىلى بولمايدۇ"
-
-#: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
+#: settings/xfpm-settings.c:410 settings/xfpm-settings.c:520
+#: settings/xfpm-settings.c:667 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr "ئۈچەك ئۇيقۇ"
 
-#: settings/xfpm-settings.c:429
-msgid "Hybrid sleep operation not permitted"
-msgstr "ئۈچەك ئۇيقۇ مەشغۇلاتىغا يول قويۇلمىغان"
-
-#: settings/xfpm-settings.c:433
-msgid "Hybrid sleep operation not supported"
-msgstr "ئۈچەك ئۇيقۇ مەشغۇلاتىنى قوللىمايدۇ"
-
-#: settings/xfpm-settings.c:458 settings/xfpm-settings.c:878
-msgid "Hibernate and suspend operations not supported"
-msgstr "ئۈچەك ۋە توڭلات مەشغۇلاتىنى قوللىمايدۇ"
-
-#: settings/xfpm-settings.c:463 settings/xfpm-settings.c:883
-msgid "Hibernate and suspend operations not permitted"
-msgstr "ئۈچەك ۋە توڭلات مەشغۇلاتىغا ئىجازەت بېرىلمىگەن"
-
-#: settings/xfpm-settings.c:514 settings/xfpm-settings.c:667
-msgid "Do nothing"
-msgstr "ھېچقانداق قىلما"
-
-#: settings/xfpm-settings.c:517
-msgid "Switch off display"
-msgstr "كۆزەتكۈچنى تاقا"
-
-#: settings/xfpm-settings.c:520
-msgid "Lock screen"
-msgstr "ئېكراننى قۇلۇپلا"
-
-#: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:624
+#: settings/xfpm-settings.c:416 settings/xfpm-settings.c:524
+#: settings/xfpm-settings.c:673 src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "تاقا"
 
-#: settings/xfpm-settings.c:694
+#: settings/xfpm-settings.c:441
+msgid "No sleep mode supported"
+msgstr ""
+
+#: settings/xfpm-settings.c:446
+msgid "No sleep mode permitted"
+msgstr ""
+
+#: settings/xfpm-settings.c:497 settings/xfpm-settings.c:650
+msgid "Do nothing"
+msgstr "ھېچقانداق قىلما"
+
+#: settings/xfpm-settings.c:500
+msgid "Switch off display"
+msgstr "كۆزەتكۈچنى تاقا"
+
+#: settings/xfpm-settings.c:503
+msgid "Lock screen"
+msgstr "ئېكراننى قۇلۇپلا"
+
+#: settings/xfpm-settings.c:677
 msgid "Ask"
 msgstr "سورا"
 
-#: settings/xfpm-settings.c:784
+#: settings/xfpm-settings.c:767
 msgid "Number of brightness steps available using keys"
 msgstr "كۇنۇپكا ئارقىلىق يورۇقلۇق باسقۇچ سانىنى تەڭشىگىلى بولىدۇ"
 
-#: settings/xfpm-settings.c:833
+#: settings/xfpm-settings.c:816
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "كومپيۇتېر توك مەنبەسىنىڭ توكلىنىش دەرىجىسى بۇ دەرىجىگە يەتكەندە"
 
-#: settings/xfpm-settings.c:847
+#: settings/xfpm-settings.c:830
 msgid "Notify"
 msgstr "ئۇقتۇرۇش"
 
-#: settings/xfpm-settings.c:860
+#: settings/xfpm-settings.c:843
 #, c-format
 msgid ""
 "Make sure you set a sufficiently high value here, otherwise the system will "
@@ -312,87 +288,95 @@ msgid ""
 "system in this case will be: %s."
 msgstr "بۇ جايدا يېتەرلىك يۇقىرى قىممەتنى تەڭشىگەنلىكىڭىزگە كاپالەتلىك قىلىڭ ئۇنداق بولمىسا سىستېما xfce4 توك مەنبە باشقۇرغۇچتىن ئىلگىرى ئۆزىنىڭ مەشغۇلاتىنى قوزغىتىدۇ، ھەمدە ئۇنى توسالمايدۇ ياكى ئۇنىڭ قاچان بۇنداق قىلىدىغانلىقىنى بىلەلمەيدۇ. بۇ خىل ئەھۋالدا سىستېمىنىڭ قوزغىتىدىغان مەشغۇلاتى: %s."
 
-#: settings/xfpm-settings.c:1115
+#: settings/xfpm-settings.c:861
+msgid "Hibernate and suspend operations not supported"
+msgstr "ئۈچەك ۋە توڭلات مەشغۇلاتىنى قوللىمايدۇ"
+
+#: settings/xfpm-settings.c:866
+msgid "Hibernate and suspend operations not permitted"
+msgstr "ئۈچەك ۋە توڭلات مەشغۇلاتىغا ئىجازەت بېرىلمىگەن"
+
+#: settings/xfpm-settings.c:1098
 msgid "Device"
 msgstr "ئۈسكۈنە"
 
-#: settings/xfpm-settings.c:1138
+#: settings/xfpm-settings.c:1121
 msgid "Type"
 msgstr "تۈرى"
 
-#: settings/xfpm-settings.c:1143
+#: settings/xfpm-settings.c:1126
 msgid "PowerSupply"
 msgstr "مەنبە"
 
-#: settings/xfpm-settings.c:1144 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1127 src/xfpm-main.c:62
 msgid "True"
 msgstr "راست"
 
-#: settings/xfpm-settings.c:1144 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1127 src/xfpm-main.c:62
 msgid "False"
 msgstr "يالغان"
 
-#: settings/xfpm-settings.c:1151
+#: settings/xfpm-settings.c:1134
 msgid "Model"
 msgstr "مودېلى"
 
-#: settings/xfpm-settings.c:1154
+#: settings/xfpm-settings.c:1137
 msgid "Technology"
 msgstr "تېخنىكا"
 
-#: settings/xfpm-settings.c:1161
+#: settings/xfpm-settings.c:1144
 msgid "Current charge"
 msgstr "نۆۋەتتىكى توكلاش"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1169 settings/xfpm-settings.c:1181
-#: settings/xfpm-settings.c:1193
+#: settings/xfpm-settings.c:1152 settings/xfpm-settings.c:1164
+#: settings/xfpm-settings.c:1176
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1171
+#: settings/xfpm-settings.c:1154
 msgid "Fully charged (design)"
 msgstr "تولۇق توكلاندى (لايىھە)"
 
-#: settings/xfpm-settings.c:1184
+#: settings/xfpm-settings.c:1167
 msgid "Fully charged"
 msgstr "تولۇق توكلاندى"
 
-#: settings/xfpm-settings.c:1195
+#: settings/xfpm-settings.c:1178
 msgid "Energy empty"
 msgstr "قۇۋۋەت بوش"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1203
+#: settings/xfpm-settings.c:1186
 msgid "W"
 msgstr "W"
 
-#: settings/xfpm-settings.c:1205
+#: settings/xfpm-settings.c:1188
 msgid "Energy rate"
 msgstr "قۇۋۋەت نىسبىتى"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1213
+#: settings/xfpm-settings.c:1196
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1215
+#: settings/xfpm-settings.c:1198
 msgid "Voltage"
 msgstr "توك بېسىمى"
 
-#: settings/xfpm-settings.c:1222
+#: settings/xfpm-settings.c:1205
 msgid "Vendor"
 msgstr "تەمىنلىگۈچى"
 
-#: settings/xfpm-settings.c:1227
+#: settings/xfpm-settings.c:1210
 msgid "Serial"
 msgstr "ئارقىمۇئارقا"
 
-#: settings/xfpm-settings.c:1514
+#: settings/xfpm-settings.c:1497
 msgid "Check your power manager installation"
 msgstr "مەنبە باشقۇرغۇچ ئورنىتىلغانمۇ تەكشۈرۈڭ"
 
-#: settings/xfpm-settings.c:1590
+#: settings/xfpm-settings.c:1573
 msgid "Devices"
 msgstr "ئۈسكۈنە"
 
@@ -930,28 +914,28 @@ msgid ""
 msgstr "سىستېمىنى توڭلىتىش ياكى ئۈچەك ھالىتىگە كىرگۈزۈش ئۈچۈن كىملىك دەلىللەش زۆرۈر"
 
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugin/power-manager-button.c:267
+#: panel-plugin/power-manager-button.c:237
 msgid "Display battery levels for attached devices"
 msgstr "چېتىلغان ئۈسكۈنىنىڭ توكدان دەرىجىسىنى كۆرسىتىدۇ"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugin/power-manager-button.c:1216
+#: panel-plugin/power-manager-button.c:1176
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s توك مەنبە باشقۇرۇشنى چەكلەۋاتىدۇ"
 
-#: panel-plugin/power-manager-button.c:1391
+#: panel-plugin/power-manager-button.c:1351
 msgid "<b>Display brightness</b>"
 msgstr "<b>كۆرسەتكۈچ يورۇقلۇقى</b>"
 
-#: panel-plugin/power-manager-button.c:1416
+#: panel-plugin/power-manager-button.c:1376
 msgid "Presentation _mode"
 msgstr "كۆرسەتمە ھالىتى(_M)"
 
 #. Power manager settings
-#: panel-plugin/power-manager-button.c:1433
+#: panel-plugin/power-manager-button.c:1393
 msgid "_Settings..."
 msgstr "تەڭشەك(_S)…"
 
