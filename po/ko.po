@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the xfce4-power-manager.master package.
 # 
 # Translators:
-# JungHee Lee <daemul72@gmail.com>, 2025
+# Junghee Lee <daemul72@gmail.com>, 2025
 # 1763f4a4329a2376c933c5e919a36cbc_341ca53 <1f851310383599d03339229d772e1290_119292>, 2017
 # lego37yoon <lego37yoon@outlook.com>, 2014
 # Seong-ho Cho <darkcircle.0426@gmail.com>, 2011-2015,2019-2020,2022-2024
@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-01-22 12:54+0100\n"
+"POT-Creation-Date: 2026-05-16 00:53+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
-"Last-Translator: JungHee Lee <daemul72@gmail.com>, 2025\n"
+"Last-Translator: Junghee Lee <daemul72@gmail.com>, 2025\n"
 "Language-Team: Korean (http://app.transifex.com/xfce/xfce4-power-manager/language/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -225,87 +225,63 @@ msgstr "분"
 msgid "seconds"
 msgstr "초"
 
-#: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
+#: settings/xfpm-settings.c:398 settings/xfpm-settings.c:508
+#: settings/xfpm-settings.c:655 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "절전"
 
-#: settings/xfpm-settings.c:401
-msgid "Suspend operation not permitted"
-msgstr "절전 동작을 수행하지 않았습니다"
-
-#: settings/xfpm-settings.c:405
-msgid "Suspend operation not supported"
-msgstr "절전 동작을 지원하지 않습니다"
-
-#: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
+#: settings/xfpm-settings.c:404 settings/xfpm-settings.c:514
+#: settings/xfpm-settings.c:661 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "최대 절전"
 
-#: settings/xfpm-settings.c:415
-msgid "Hibernate operation not permitted"
-msgstr "최대 절전 동작을 수행하지 않았습니다"
-
-#: settings/xfpm-settings.c:419
-msgid "Hibernate operation not supported"
-msgstr "최대 절전 동작을 지원하지 않습니다"
-
-#: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
+#: settings/xfpm-settings.c:410 settings/xfpm-settings.c:520
+#: settings/xfpm-settings.c:667 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr "하이브리드 대기"
 
-#: settings/xfpm-settings.c:429
-msgid "Hybrid sleep operation not permitted"
-msgstr "하이브리드 절전 동작을 허용하지 않습니다"
-
-#: settings/xfpm-settings.c:433
-msgid "Hybrid sleep operation not supported"
-msgstr "하이브리드 절전 동작을 지원하지 않습니다"
-
-#: settings/xfpm-settings.c:458 settings/xfpm-settings.c:878
-msgid "Hibernate and suspend operations not supported"
-msgstr "최대 절전과 절전 동작을 지원하지 않습니다"
-
-#: settings/xfpm-settings.c:463 settings/xfpm-settings.c:883
-msgid "Hibernate and suspend operations not permitted"
-msgstr "최대 절전과 절전 동작을 허용하지 않습니다"
-
-#: settings/xfpm-settings.c:514 settings/xfpm-settings.c:667
-msgid "Do nothing"
-msgstr "아무것도 안함"
-
-#: settings/xfpm-settings.c:517
-msgid "Switch off display"
-msgstr "화면 끄기"
-
-#: settings/xfpm-settings.c:520
-msgid "Lock screen"
-msgstr "화면 잠금"
-
-#: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:624
+#: settings/xfpm-settings.c:416 settings/xfpm-settings.c:524
+#: settings/xfpm-settings.c:673 src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "시스템 종료"
 
-#: settings/xfpm-settings.c:694
+#: settings/xfpm-settings.c:441
+msgid "No sleep mode supported"
+msgstr ""
+
+#: settings/xfpm-settings.c:446
+msgid "No sleep mode permitted"
+msgstr ""
+
+#: settings/xfpm-settings.c:497 settings/xfpm-settings.c:650
+msgid "Do nothing"
+msgstr "아무것도 안함"
+
+#: settings/xfpm-settings.c:500
+msgid "Switch off display"
+msgstr "화면 끄기"
+
+#: settings/xfpm-settings.c:503
+msgid "Lock screen"
+msgstr "화면 잠금"
+
+#: settings/xfpm-settings.c:677
 msgid "Ask"
 msgstr "질문"
 
-#: settings/xfpm-settings.c:784
+#: settings/xfpm-settings.c:767
 msgid "Number of brightness steps available using keys"
 msgstr "키로 조절할 수 있는 밝기 조절 단계 수"
 
-#: settings/xfpm-settings.c:833
+#: settings/xfpm-settings.c:816
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "컴퓨터의 모든 전원 자원이 이 충전 수준에 도달하였을 때"
 
-#: settings/xfpm-settings.c:847
+#: settings/xfpm-settings.c:830
 msgid "Notify"
 msgstr "알림"
 
-#: settings/xfpm-settings.c:860
+#: settings/xfpm-settings.c:843
 #, c-format
 msgid ""
 "Make sure you set a sufficiently high value here, otherwise the system will "
@@ -314,87 +290,95 @@ msgid ""
 "system in this case will be: %s."
 msgstr "충분히 높은 값을 설정했는지 확인하십시오. 그렇지 않으면 시스템에서 해당 동작을 막거나 지정 동작을 언제 정확하게 수행할 지 모르는 상황에서 xfce4-power-manager 동작을 수행하기 전 자체 동작을 실행합니다. 이 경우 시스템에서 수행할 동작은 이와 같습니다: %s"
 
-#: settings/xfpm-settings.c:1115
+#: settings/xfpm-settings.c:861
+msgid "Hibernate and suspend operations not supported"
+msgstr "최대 절전과 절전 동작을 지원하지 않습니다"
+
+#: settings/xfpm-settings.c:866
+msgid "Hibernate and suspend operations not permitted"
+msgstr "최대 절전과 절전 동작을 허용하지 않습니다"
+
+#: settings/xfpm-settings.c:1098
 msgid "Device"
 msgstr "장치"
 
-#: settings/xfpm-settings.c:1138
+#: settings/xfpm-settings.c:1121
 msgid "Type"
 msgstr "유형"
 
-#: settings/xfpm-settings.c:1143
+#: settings/xfpm-settings.c:1126
 msgid "PowerSupply"
 msgstr "전원공급장치"
 
-#: settings/xfpm-settings.c:1144 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1127 src/xfpm-main.c:62
 msgid "True"
 msgstr "참"
 
-#: settings/xfpm-settings.c:1144 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1127 src/xfpm-main.c:62
 msgid "False"
 msgstr "거짓"
 
-#: settings/xfpm-settings.c:1151
+#: settings/xfpm-settings.c:1134
 msgid "Model"
 msgstr "모델"
 
-#: settings/xfpm-settings.c:1154
+#: settings/xfpm-settings.c:1137
 msgid "Technology"
 msgstr "기술"
 
-#: settings/xfpm-settings.c:1161
+#: settings/xfpm-settings.c:1144
 msgid "Current charge"
 msgstr "현재 충전 상태"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1169 settings/xfpm-settings.c:1181
-#: settings/xfpm-settings.c:1193
+#: settings/xfpm-settings.c:1152 settings/xfpm-settings.c:1164
+#: settings/xfpm-settings.c:1176
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1171
+#: settings/xfpm-settings.c:1154
 msgid "Fully charged (design)"
 msgstr "완충 (설계)"
 
-#: settings/xfpm-settings.c:1184
+#: settings/xfpm-settings.c:1167
 msgid "Fully charged"
 msgstr "완충함"
 
-#: settings/xfpm-settings.c:1195
+#: settings/xfpm-settings.c:1178
 msgid "Energy empty"
 msgstr "에너지 없음"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1203
+#: settings/xfpm-settings.c:1186
 msgid "W"
 msgstr "W"
 
-#: settings/xfpm-settings.c:1205
+#: settings/xfpm-settings.c:1188
 msgid "Energy rate"
 msgstr "에너지 효율"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1213
+#: settings/xfpm-settings.c:1196
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1215
+#: settings/xfpm-settings.c:1198
 msgid "Voltage"
 msgstr "전압"
 
-#: settings/xfpm-settings.c:1222
+#: settings/xfpm-settings.c:1205
 msgid "Vendor"
 msgstr "제조업체"
 
-#: settings/xfpm-settings.c:1227
+#: settings/xfpm-settings.c:1210
 msgid "Serial"
 msgstr "시리얼"
 
-#: settings/xfpm-settings.c:1514
+#: settings/xfpm-settings.c:1497
 msgid "Check your power manager installation"
 msgstr "전원 관리자 설치를 확인합니다"
 
-#: settings/xfpm-settings.c:1590
+#: settings/xfpm-settings.c:1573
 msgid "Devices"
 msgstr "장치"
 
@@ -928,28 +912,28 @@ msgid ""
 msgstr "시스템을 대기 또는 최대 절전 모드에 두려면 인증이 필요합니다"
 
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugin/power-manager-button.c:267
+#: panel-plugin/power-manager-button.c:237
 msgid "Display battery levels for attached devices"
 msgstr "부착한 장치의 배터리 남은 양 표시"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugin/power-manager-button.c:1216
+#: panel-plugin/power-manager-button.c:1176
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s는 현재 전력 관리 억제중"
 
-#: panel-plugin/power-manager-button.c:1391
+#: panel-plugin/power-manager-button.c:1351
 msgid "<b>Display brightness</b>"
 msgstr "<b>화면 밝기</b>"
 
-#: panel-plugin/power-manager-button.c:1416
+#: panel-plugin/power-manager-button.c:1376
 msgid "Presentation _mode"
 msgstr "프리젠테이션 모드(_M)"
 
 #. Power manager settings
-#: panel-plugin/power-manager-button.c:1433
+#: panel-plugin/power-manager-button.c:1393
 msgid "_Settings..."
 msgstr "설정(_S)..."
 
