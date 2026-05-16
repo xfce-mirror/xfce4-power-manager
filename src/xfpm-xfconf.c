@@ -177,7 +177,9 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel,
     return;
 
   /* We handle presentation mode in xfpm-power directly */
-  if (g_strcmp0 (property, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE) == 0)
+  if (g_strcmp0 (property, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE) == 0
+      || g_strcmp0 (property, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB) == 0
+      || g_strcmp0 (property, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB "-notifyd") == 0)
     return;
 
   /* We handle brightness switch in xfpm-backlight directly */
