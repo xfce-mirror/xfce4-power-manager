@@ -794,6 +794,10 @@ xfpm_settings_general (XfconfChannel *channel,
   gtk_switch_set_active (GTK_SWITCH (switch_widget), DEFAULT_PRESENTATION_MODE);
   xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE,
                           G_TYPE_BOOLEAN, switch_widget, "active");
+  switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "do-not-disturb"));
+  gtk_switch_set_active (GTK_SWITCH (switch_widget), DEFAULT_DO_NOT_DISTURB);
+  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB,
+                          G_TYPE_BOOLEAN, switch_widget, "active");
 }
 
 static void

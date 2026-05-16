@@ -65,6 +65,9 @@ xfpm_power_set_property (GObject *object,
 static void
 xfpm_power_change_presentation_mode (XfpmPower *power,
                                      gboolean presentation_mode);
+static void
+xfpm_power_change_do_not_disturb (XfpmPower *power,
+                                  gboolean do_not_disturb);
 
 static void
 xfpm_power_toggle_screensaver (XfpmPower *power);
@@ -103,6 +106,7 @@ struct XfpmPowerPrivate
   XfceScreensaver *screensaver;
   gboolean presentation_mode;
   gboolean inhibited;
+  gboolean do_not_disturb;
 
   XfpmNotify *notify;
 #ifdef HAVE_POLKIT
@@ -137,6 +141,7 @@ enum
   PROP_HAS_LID,
   PROP_LID_IS_CLOSED,
   PROP_PRESENTATION_MODE,
+  PROP_DO_NOT_DISTURB,
   N_PROPERTIES
 };
 
@@ -1040,6 +1045,13 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                          NULL, NULL,
                                                          DEFAULT_PRESENTATION_MODE,
                                                          XFPM_PARAM_FLAGS));
+
+  g_object_class_install_property (object_class,
+                                   PROP_DO_NOT_DISTURB,
+                                   g_param_spec_boolean (DO_NOT_DISTURB,
+                                                         NULL, NULL,
+                                                         DEFAULT_DO_NOT_DISTURB,
+                                                         XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 
   xfpm_power_dbus_class_init (klass);
@@ -1162,6 +1174,9 @@ xfpm_power_get_property (GObject *object,
     case PROP_PRESENTATION_MODE:
       g_value_set_boolean (value, power->priv->presentation_mode);
       break;
+    case PROP_DO_NOT_DISTURB:
+      g_value_set_boolean (value, power->priv->do_not_disturb);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -1180,6 +1195,9 @@ xfpm_power_set_property (GObject *object,
   {
     case PROP_PRESENTATION_MODE:
       xfpm_power_change_presentation_mode (power, g_value_get_boolean (value));
+      break;
+    case PROP_DO_NOT_DISTURB:
+      xfpm_power_change_do_not_disturb (power, g_value_get_boolean (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1224,10 +1242,14 @@ static XfpmPower *
 xfpm_power_new (void)
 {
   XfpmPower *power = XFPM_POWER (g_object_new (XFPM_TYPE_POWER, NULL));
+  XfconfChannel *channel = xfpm_xfconf_get_channel (power->priv->conf);
 
-  xfconf_g_property_bind (xfpm_xfconf_get_channel (power->priv->conf),
+  xfconf_g_property_bind (channel,
                           XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
                           G_OBJECT (power), PRESENTATION_MODE);
+  xfconf_g_property_bind (channel,
+                          XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB, G_TYPE_BOOLEAN,
+                          G_OBJECT (power), DO_NOT_DISTURB);
 
   return power;
 }
@@ -1325,6 +1347,29 @@ xfpm_power_toggle_screensaver (XfpmPower *power)
 }
 
 static void
+change_do_not_disturb_notifyd (XfpmPower *power,
+                               gboolean do_not_disturb)
+{
+  XfconfChannel *channel = xfpm_xfconf_get_channel (power->priv->conf);
+  XfconfChannel *channel_notifyd = xfconf_channel_get ("xfce4-notifyd");
+  gboolean do_not_disturb_notifyd;
+
+  if (do_not_disturb)
+  {
+    do_not_disturb_notifyd = xfconf_channel_get_bool (channel_notifyd, "/do-not-disturb", FALSE);
+    xfconf_channel_set_bool (channel_notifyd, "/do-not-disturb", TRUE);
+    xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB "-notifyd", do_not_disturb_notifyd);
+  }
+  else
+  {
+    do_not_disturb_notifyd = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB "-notifyd", FALSE);
+    if (!do_not_disturb_notifyd)
+      xfconf_channel_set_bool (channel_notifyd, "/do-not-disturb", FALSE);
+    xfconf_channel_reset_property (channel, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB "-notifyd", TRUE);
+  }
+}
+
+static void
 xfpm_power_change_presentation_mode (XfpmPower *power,
                                      gboolean presentation_mode)
 {
@@ -1338,6 +1383,9 @@ xfpm_power_change_presentation_mode (XfpmPower *power,
               power->priv->inhibited ? "TRUE" : "FALSE",
               power->priv->presentation_mode ? "TRUE" : "FALSE");
 
+  if (power->priv->do_not_disturb)
+    change_do_not_disturb_notifyd (power, presentation_mode);
+
   /* either inhibition already occurred, or we don't want to remove it yet */
   if (power->priv->inhibited)
     return;
@@ -1346,6 +1394,22 @@ xfpm_power_change_presentation_mode (XfpmPower *power,
   xfpm_power_toggle_screensaver (power);
   if (power->priv->dpms != NULL)
     xfpm_dpms_set_inhibited (power->priv->dpms, presentation_mode);
+}
+
+static void
+xfpm_power_change_do_not_disturb (XfpmPower *power,
+                                  gboolean do_not_disturb)
+{
+  if (power->priv->do_not_disturb == do_not_disturb)
+    return;
+
+  power->priv->do_not_disturb = do_not_disturb;
+  XFPM_DEBUG ("do-not-disturb %s", do_not_disturb ? "TRUE" : "FALSE");
+
+  if (!power->priv->presentation_mode)
+    return;
+
+  change_do_not_disturb_notifyd (power, do_not_disturb);
 }
 
 gboolean
