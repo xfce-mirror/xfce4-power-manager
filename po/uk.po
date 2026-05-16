@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-01-22 12:54+0100\n"
+"POT-Creation-Date: 2026-05-16 00:53+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Gordon Freeman, 2023-2025\n"
 "Language-Team: Ukrainian (http://app.transifex.com/xfce/xfce4-power-manager/language/uk/)\n"
@@ -226,87 +226,63 @@ msgstr "хвилин"
 msgid "seconds"
 msgstr "секунд"
 
-#: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
+#: settings/xfpm-settings.c:398 settings/xfpm-settings.c:508
+#: settings/xfpm-settings.c:655 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "Призупинити"
 
-#: settings/xfpm-settings.c:401
-msgid "Suspend operation not permitted"
-msgstr "Операція призупинення недоступна"
-
-#: settings/xfpm-settings.c:405
-msgid "Suspend operation not supported"
-msgstr "Переведення системи в режим очікування не підтримується"
-
-#: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
+#: settings/xfpm-settings.c:404 settings/xfpm-settings.c:514
+#: settings/xfpm-settings.c:661 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "Сплячка"
 
-#: settings/xfpm-settings.c:415
-msgid "Hibernate operation not permitted"
-msgstr "Присипляння системи недоступне"
-
-#: settings/xfpm-settings.c:419
-msgid "Hibernate operation not supported"
-msgstr "Присипляння системи не підтримується"
-
-#: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
+#: settings/xfpm-settings.c:410 settings/xfpm-settings.c:520
+#: settings/xfpm-settings.c:667 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr "Гібридний сон"
 
-#: settings/xfpm-settings.c:429
-msgid "Hybrid sleep operation not permitted"
-msgstr "Гібридний режим сну заборонено"
-
-#: settings/xfpm-settings.c:433
-msgid "Hybrid sleep operation not supported"
-msgstr "Гібридний режим сну не підтримується"
-
-#: settings/xfpm-settings.c:458 settings/xfpm-settings.c:878
-msgid "Hibernate and suspend operations not supported"
-msgstr "Операції сплячки і призупинення не підтримуються"
-
-#: settings/xfpm-settings.c:463 settings/xfpm-settings.c:883
-msgid "Hibernate and suspend operations not permitted"
-msgstr "Операції сплячки і призупинення недоступні"
-
-#: settings/xfpm-settings.c:514 settings/xfpm-settings.c:667
-msgid "Do nothing"
-msgstr "Нічого не робити"
-
-#: settings/xfpm-settings.c:517
-msgid "Switch off display"
-msgstr "Виключити екран"
-
-#: settings/xfpm-settings.c:520
-msgid "Lock screen"
-msgstr "Заблокувати екран"
-
-#: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:624
+#: settings/xfpm-settings.c:416 settings/xfpm-settings.c:524
+#: settings/xfpm-settings.c:673 src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "Вимкнути"
 
-#: settings/xfpm-settings.c:694
+#: settings/xfpm-settings.c:441
+msgid "No sleep mode supported"
+msgstr ""
+
+#: settings/xfpm-settings.c:446
+msgid "No sleep mode permitted"
+msgstr ""
+
+#: settings/xfpm-settings.c:497 settings/xfpm-settings.c:650
+msgid "Do nothing"
+msgstr "Нічого не робити"
+
+#: settings/xfpm-settings.c:500
+msgid "Switch off display"
+msgstr "Виключити екран"
+
+#: settings/xfpm-settings.c:503
+msgid "Lock screen"
+msgstr "Заблокувати екран"
+
+#: settings/xfpm-settings.c:677
 msgid "Ask"
 msgstr "Запитати"
 
-#: settings/xfpm-settings.c:784
+#: settings/xfpm-settings.c:767
 msgid "Number of brightness steps available using keys"
 msgstr "Кількість доступних кроків збільшення яскравості використовуючи клавіші"
 
-#: settings/xfpm-settings.c:833
+#: settings/xfpm-settings.c:816
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Коли всі джерела живлення комп'ютера досягають вказаного заряду"
 
-#: settings/xfpm-settings.c:847
+#: settings/xfpm-settings.c:830
 msgid "Notify"
 msgstr "Сповіщення"
 
-#: settings/xfpm-settings.c:860
+#: settings/xfpm-settings.c:843
 #, c-format
 msgid ""
 "Make sure you set a sufficiently high value here, otherwise the system will "
@@ -315,87 +291,95 @@ msgid ""
 "system in this case will be: %s."
 msgstr "Переконайтеся, що ви встановили тут достатньо високе значення, інакше система запустить власну дію перед xfce4-power-manager, не маючи змоги запобігти цьому або точно знати, коли вона це зробить. Дія, яку запустить система в цьому випадку, буде такою: %s."
 
-#: settings/xfpm-settings.c:1115
+#: settings/xfpm-settings.c:861
+msgid "Hibernate and suspend operations not supported"
+msgstr "Операції сплячки і призупинення не підтримуються"
+
+#: settings/xfpm-settings.c:866
+msgid "Hibernate and suspend operations not permitted"
+msgstr "Операції сплячки і призупинення недоступні"
+
+#: settings/xfpm-settings.c:1098
 msgid "Device"
 msgstr "Пристрій"
 
-#: settings/xfpm-settings.c:1138
+#: settings/xfpm-settings.c:1121
 msgid "Type"
 msgstr "Тип"
 
-#: settings/xfpm-settings.c:1143
+#: settings/xfpm-settings.c:1126
 msgid "PowerSupply"
 msgstr "Живлення"
 
-#: settings/xfpm-settings.c:1144 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1127 src/xfpm-main.c:62
 msgid "True"
 msgstr "True"
 
-#: settings/xfpm-settings.c:1144 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1127 src/xfpm-main.c:62
 msgid "False"
 msgstr "False"
 
-#: settings/xfpm-settings.c:1151
+#: settings/xfpm-settings.c:1134
 msgid "Model"
 msgstr "Модель"
 
-#: settings/xfpm-settings.c:1154
+#: settings/xfpm-settings.c:1137
 msgid "Technology"
 msgstr "Технологія"
 
-#: settings/xfpm-settings.c:1161
+#: settings/xfpm-settings.c:1144
 msgid "Current charge"
 msgstr "Поточний заряд"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1169 settings/xfpm-settings.c:1181
-#: settings/xfpm-settings.c:1193
+#: settings/xfpm-settings.c:1152 settings/xfpm-settings.c:1164
+#: settings/xfpm-settings.c:1176
 msgid "Wh"
 msgstr "Вт*г"
 
-#: settings/xfpm-settings.c:1171
+#: settings/xfpm-settings.c:1154
 msgid "Fully charged (design)"
 msgstr "Повністю заряджено (дизайн)"
 
-#: settings/xfpm-settings.c:1184
+#: settings/xfpm-settings.c:1167
 msgid "Fully charged"
 msgstr "Повністю заряджено"
 
-#: settings/xfpm-settings.c:1195
+#: settings/xfpm-settings.c:1178
 msgid "Energy empty"
 msgstr "Вичерпано заряду"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1203
+#: settings/xfpm-settings.c:1186
 msgid "W"
 msgstr "Вт"
 
-#: settings/xfpm-settings.c:1205
+#: settings/xfpm-settings.c:1188
 msgid "Energy rate"
 msgstr "Рівень енергії"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1213
+#: settings/xfpm-settings.c:1196
 msgid "V"
 msgstr "В"
 
-#: settings/xfpm-settings.c:1215
+#: settings/xfpm-settings.c:1198
 msgid "Voltage"
 msgstr "Напруга"
 
-#: settings/xfpm-settings.c:1222
+#: settings/xfpm-settings.c:1205
 msgid "Vendor"
 msgstr "Виробник"
 
-#: settings/xfpm-settings.c:1227
+#: settings/xfpm-settings.c:1210
 msgid "Serial"
 msgstr "Серійний номер"
 
-#: settings/xfpm-settings.c:1514
+#: settings/xfpm-settings.c:1497
 msgid "Check your power manager installation"
 msgstr "Перевірте правильність встановлення менеджера живлення"
 
-#: settings/xfpm-settings.c:1590
+#: settings/xfpm-settings.c:1573
 msgid "Devices"
 msgstr "Пристрої"
 
@@ -941,28 +925,28 @@ msgid ""
 msgstr "Для переведення системи в режим очікування або сплячий режим необхідна автентифікація"
 
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugin/power-manager-button.c:267
+#: panel-plugin/power-manager-button.c:237
 msgid "Display battery levels for attached devices"
 msgstr "Показати рівні заряду для під’єднаних пристроїв"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugin/power-manager-button.c:1216
+#: panel-plugin/power-manager-button.c:1176
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s зараз забороняє керування живленням"
 
-#: panel-plugin/power-manager-button.c:1391
+#: panel-plugin/power-manager-button.c:1351
 msgid "<b>Display brightness</b>"
 msgstr "<b>Яскравість екрана</b>"
 
-#: panel-plugin/power-manager-button.c:1416
+#: panel-plugin/power-manager-button.c:1376
 msgid "Presentation _mode"
 msgstr "_Режим презентації"
 
 #. Power manager settings
-#: panel-plugin/power-manager-button.c:1433
+#: panel-plugin/power-manager-button.c:1393
 msgid "_Settings..."
 msgstr "_Налаштування..."
 
