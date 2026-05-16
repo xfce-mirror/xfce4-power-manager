@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-01-22 12:54+0100\n"
+"POT-Creation-Date: 2026-05-16 00:53+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Quentin PAGÈS, 2024-2026\n"
 "Language-Team: Occitan (post 1500) (http://app.transifex.com/xfce/xfce4-power-manager/language/oc/)\n"
@@ -224,87 +224,63 @@ msgstr "minutas"
 msgid "seconds"
 msgstr "segondas"
 
-#: settings/xfpm-settings.c:397 settings/xfpm-settings.c:525
-#: settings/xfpm-settings.c:672 src/xfpm-power.c:606
+#: settings/xfpm-settings.c:398 settings/xfpm-settings.c:508
+#: settings/xfpm-settings.c:655 src/xfpm-power.c:606
 msgid "Suspend"
 msgstr "Metre en velha"
 
-#: settings/xfpm-settings.c:401
-msgid "Suspend operation not permitted"
-msgstr "Operacion de mesa en velha pas autorizada"
-
-#: settings/xfpm-settings.c:405
-msgid "Suspend operation not supported"
-msgstr "Operacion de mesa en velha pas suportada"
-
-#: settings/xfpm-settings.c:411 settings/xfpm-settings.c:531
-#: settings/xfpm-settings.c:678 src/xfpm-power.c:601
+#: settings/xfpm-settings.c:404 settings/xfpm-settings.c:514
+#: settings/xfpm-settings.c:661 src/xfpm-power.c:601
 msgid "Hibernate"
 msgstr "Metre en velha perlongada"
 
-#: settings/xfpm-settings.c:415
-msgid "Hibernate operation not permitted"
-msgstr "Operacion de mesa en velha perlongada pas autorizada"
-
-#: settings/xfpm-settings.c:419
-msgid "Hibernate operation not supported"
-msgstr "Operacion de mesa en velha perlongada pas suportada"
-
-#: settings/xfpm-settings.c:425 settings/xfpm-settings.c:537
-#: settings/xfpm-settings.c:684 src/xfpm-power.c:611
+#: settings/xfpm-settings.c:410 settings/xfpm-settings.c:520
+#: settings/xfpm-settings.c:667 src/xfpm-power.c:611
 msgid "Hybrid Sleep"
 msgstr "Velha ibrida"
 
-#: settings/xfpm-settings.c:429
-msgid "Hybrid sleep operation not permitted"
-msgstr "L’operacion de velha ibrida es pas permesa"
-
-#: settings/xfpm-settings.c:433
-msgid "Hybrid sleep operation not supported"
-msgstr "Operacion de velha ibrida pas presa en carga"
-
-#: settings/xfpm-settings.c:458 settings/xfpm-settings.c:878
-msgid "Hibernate and suspend operations not supported"
-msgstr "Operacions de mesa en velha perlongada e de mesa en velha pas suportadas"
-
-#: settings/xfpm-settings.c:463 settings/xfpm-settings.c:883
-msgid "Hibernate and suspend operations not permitted"
-msgstr "Operacions de mesa en velha perlongada e de mesa en velha pas autorizadas"
-
-#: settings/xfpm-settings.c:514 settings/xfpm-settings.c:667
-msgid "Do nothing"
-msgstr "Far pas res"
-
-#: settings/xfpm-settings.c:517
-msgid "Switch off display"
-msgstr "Atudar l'ecran"
-
-#: settings/xfpm-settings.c:520
-msgid "Lock screen"
-msgstr "Verrolhar l'ecran"
-
-#: settings/xfpm-settings.c:541 settings/xfpm-settings.c:690
-#: src/xfpm-power.c:624
+#: settings/xfpm-settings.c:416 settings/xfpm-settings.c:524
+#: settings/xfpm-settings.c:673 src/xfpm-power.c:624
 msgid "Shutdown"
 msgstr "Atudar"
 
-#: settings/xfpm-settings.c:694
+#: settings/xfpm-settings.c:441
+msgid "No sleep mode supported"
+msgstr ""
+
+#: settings/xfpm-settings.c:446
+msgid "No sleep mode permitted"
+msgstr ""
+
+#: settings/xfpm-settings.c:497 settings/xfpm-settings.c:650
+msgid "Do nothing"
+msgstr "Far pas res"
+
+#: settings/xfpm-settings.c:500
+msgid "Switch off display"
+msgstr "Atudar l'ecran"
+
+#: settings/xfpm-settings.c:503
+msgid "Lock screen"
+msgstr "Verrolhar l'ecran"
+
+#: settings/xfpm-settings.c:677
 msgid "Ask"
 msgstr "Demandar"
 
-#: settings/xfpm-settings.c:784
+#: settings/xfpm-settings.c:767
 msgid "Number of brightness steps available using keys"
 msgstr "Lo nombre d’intervals de luminositat disponibles en utilizant las tòcas"
 
-#: settings/xfpm-settings.c:833
+#: settings/xfpm-settings.c:816
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Quand totas las fonts d'alimentacion de la maquina atenhon aqueste nivèl de carga"
 
-#: settings/xfpm-settings.c:847
+#: settings/xfpm-settings.c:830
 msgid "Notify"
 msgstr "Notificar"
 
-#: settings/xfpm-settings.c:860
+#: settings/xfpm-settings.c:843
 #, c-format
 msgid ""
 "Make sure you set a sufficiently high value here, otherwise the system will "
@@ -313,87 +289,95 @@ msgid ""
 "system in this case will be: %s."
 msgstr "Asseguratz-vos de definir una valor pro nauta aicí, autrament lo sistèma desencadenarà sa pròpria accion abans xfce4-power-manager, sens poder l'empachar o saber exactament quand o farà. L'accion desencadenada pel sistèma dins aqueste cas serà : %s."
 
-#: settings/xfpm-settings.c:1115
+#: settings/xfpm-settings.c:861
+msgid "Hibernate and suspend operations not supported"
+msgstr "Operacions de mesa en velha perlongada e de mesa en velha pas suportadas"
+
+#: settings/xfpm-settings.c:866
+msgid "Hibernate and suspend operations not permitted"
+msgstr "Operacions de mesa en velha perlongada e de mesa en velha pas autorizadas"
+
+#: settings/xfpm-settings.c:1098
 msgid "Device"
 msgstr "Periferic"
 
-#: settings/xfpm-settings.c:1138
+#: settings/xfpm-settings.c:1121
 msgid "Type"
 msgstr "Tipe"
 
-#: settings/xfpm-settings.c:1143
+#: settings/xfpm-settings.c:1126
 msgid "PowerSupply"
 msgstr "Alimentacion"
 
-#: settings/xfpm-settings.c:1144 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1127 src/xfpm-main.c:62
 msgid "True"
 msgstr "Verai"
 
-#: settings/xfpm-settings.c:1144 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1127 src/xfpm-main.c:62
 msgid "False"
 msgstr "Fals"
 
-#: settings/xfpm-settings.c:1151
+#: settings/xfpm-settings.c:1134
 msgid "Model"
 msgstr "Modèl"
 
-#: settings/xfpm-settings.c:1154
+#: settings/xfpm-settings.c:1137
 msgid "Technology"
 msgstr "Tecnologia"
 
-#: settings/xfpm-settings.c:1161
+#: settings/xfpm-settings.c:1144
 msgid "Current charge"
 msgstr "Carga actuala"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1169 settings/xfpm-settings.c:1181
-#: settings/xfpm-settings.c:1193
+#: settings/xfpm-settings.c:1152 settings/xfpm-settings.c:1164
+#: settings/xfpm-settings.c:1176
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1171
+#: settings/xfpm-settings.c:1154
 msgid "Fully charged (design)"
 msgstr "Complètament cargada (concepcion)"
 
-#: settings/xfpm-settings.c:1184
+#: settings/xfpm-settings.c:1167
 msgid "Fully charged"
 msgstr "Complètament cargada"
 
-#: settings/xfpm-settings.c:1195
+#: settings/xfpm-settings.c:1178
 msgid "Energy empty"
 msgstr "Energia a void"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1203
+#: settings/xfpm-settings.c:1186
 msgid "W"
 msgstr "W"
 
-#: settings/xfpm-settings.c:1205
+#: settings/xfpm-settings.c:1188
 msgid "Energy rate"
 msgstr "Marca energetica"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1213
+#: settings/xfpm-settings.c:1196
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1215
+#: settings/xfpm-settings.c:1198
 msgid "Voltage"
 msgstr "Tension"
 
-#: settings/xfpm-settings.c:1222
+#: settings/xfpm-settings.c:1205
 msgid "Vendor"
 msgstr "Constructor"
 
-#: settings/xfpm-settings.c:1227
+#: settings/xfpm-settings.c:1210
 msgid "Serial"
 msgstr "Numèro de seria"
 
-#: settings/xfpm-settings.c:1514
+#: settings/xfpm-settings.c:1497
 msgid "Check your power manager installation"
 msgstr "Verificatz vòstra installacion del gestionari d'alimentacion"
 
-#: settings/xfpm-settings.c:1590
+#: settings/xfpm-settings.c:1573
 msgid "Devices"
 msgstr "Periferics"
 
@@ -931,28 +915,28 @@ msgid ""
 msgstr "Una autorizacion es requerida per botar lo sistèma en mòde velha o velha perlongada"
 
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugin/power-manager-button.c:267
+#: panel-plugin/power-manager-button.c:237
 msgid "Display battery levels for attached devices"
 msgstr "Afichar los nivèls dels periferics connectats"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugin/power-manager-button.c:1216
+#: panel-plugin/power-manager-button.c:1176
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s inibís actualament la gestion de l’alimentacion"
 
-#: panel-plugin/power-manager-button.c:1391
+#: panel-plugin/power-manager-button.c:1351
 msgid "<b>Display brightness</b>"
 msgstr "<b>Luminositat de l’ecran</b>"
 
-#: panel-plugin/power-manager-button.c:1416
+#: panel-plugin/power-manager-button.c:1376
 msgid "Presentation _mode"
 msgstr "_Mòde presentacion"
 
 #. Power manager settings
-#: panel-plugin/power-manager-button.c:1433
+#: panel-plugin/power-manager-button.c:1393
 msgid "_Settings..."
 msgstr "_Paramètres..."
 
