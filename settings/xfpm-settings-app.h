@@ -29,15 +29,16 @@
 G_BEGIN_DECLS
 
 
+typedef struct _XfpmSettingsApp XfpmSettingsApp;
+typedef struct _XfpmSettingsAppClass XfpmSettingsAppClass;
+typedef struct _XfpmSettingsAppPrivate XfpmSettingsAppPrivate;
+
 #define XFPM_TYPE_SETTINGS_APP (xfpm_settings_app_get_type ())
 #define XFPM_SETTINGS_APP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), XFPM_TYPE_SETTINGS_APP, XfpmSettingsApp))
 #define XFPM_SETTINGS_APP_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), XFPM_TYPE_SETTINGS_APP, XfpmSettingsAppClass))
 #define XFPM_IS_SETTINGS_APP(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), XFPM_TYPE_SETTINGS_APP))
 #define XFPM_SETTINGS_APP_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), XFPM_TYPE_SETTINGS_APP, XfpmSettingsAppClass))
-
-typedef struct _XfpmSettingsApp XfpmSettingsApp;
-typedef struct _XfpmSettingsAppClass XfpmSettingsAppClass;
-typedef struct _XfpmSettingsAppPrivate XfpmSettingsAppPrivate;
+G_DEFINE_AUTOPTR_CLEANUP_FUNC (XfpmSettingsApp, g_object_unref)
 
 struct _XfpmSettingsApp
 {

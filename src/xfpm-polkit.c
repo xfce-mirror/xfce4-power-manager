@@ -274,10 +274,10 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
 
     subject_kind = "unix-process";
 
-    var = g_variant_new ("u", (guint32) pid);
+    var = g_variant_new_uint32 ((guint32) pid);
     g_variant_builder_add (&builder, "{sv}", "pid", var);
 
-    var = g_variant_new ("t", start_time);
+    var = g_variant_new_uint64 (start_time);
     g_variant_builder_add (&builder, "{sv}", "start-time", var);
 
     XFPM_DEBUG ("Using unix session polkit subject");

@@ -78,7 +78,7 @@ enum
 static guint signals[LAST_SIGNAL] = { 0 };
 
 G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-G_DEFINE_TYPE (XfpmScaleMenuItem, xfpm_scale_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
+G_DEFINE_FINAL_TYPE (XfpmScaleMenuItem, xfpm_scale_menu_item, GTK_TYPE_IMAGE_MENU_ITEM)
 G_GNUC_END_IGNORE_DEPRECATIONS
 
 

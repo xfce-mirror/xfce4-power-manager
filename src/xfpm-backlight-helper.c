@@ -209,7 +209,7 @@ backlight_helper_get_device (void)
   gchar *device = NULL;
   gint i;
 
-  device = (gchar *) g_malloc (sizeof (gchar));
+  device = g_new (gchar, 1);
 
   for (i = 0; types[i] != NULL; i++)
   {

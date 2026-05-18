@@ -50,8 +50,6 @@ typedef struct
 
 GType
 xfpm_inhibit_get_type (void) G_GNUC_CONST;
-GType
-xfpm_inhibit_error_get_type (void) G_GNUC_CONST;
 GQuark
 xfpm_inhibit_get_error_quark ();
 XfpmInhibit *

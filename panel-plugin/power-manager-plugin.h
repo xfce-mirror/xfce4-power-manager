@@ -27,9 +27,6 @@ G_BEGIN_DECLS
 #define POWER_MANAGER_TYPE_PLUGIN (power_manager_plugin_get_type ())
 G_DECLARE_FINAL_TYPE (PowerManagerPlugin, power_manager_plugin, POWER_MANAGER, PLUGIN, XfcePanelPlugin)
 
-void
-power_manager_plugin_register_type (XfcePanelTypeModule *type_module);
-
 G_END_DECLS
 
 #endif /* !__POWER_MANAGER_PLUGIN_H__ */

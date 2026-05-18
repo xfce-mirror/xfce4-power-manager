@@ -70,7 +70,7 @@ struct _PowerManagerConfig
 };
 
 
-G_DEFINE_TYPE (PowerManagerConfig, power_manager_config, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (PowerManagerConfig, power_manager_config, G_TYPE_OBJECT)
 
 
 

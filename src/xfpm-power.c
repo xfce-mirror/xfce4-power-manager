@@ -1130,6 +1130,9 @@ xfpm_power_get_property (GObject *object,
     case PROP_ON_BATTERY:
       g_value_set_boolean (value, power->priv->on_battery);
       break;
+    case PROP_ON_LOW_BATTERY:
+      g_value_set_boolean (value, power->priv->on_low_battery);
+      break;
     case PROP_AUTH_HIBERNATE:
       xfpm_power_can_hibernate (power, NULL, &bool_value);
       g_value_set_boolean (value, bool_value);

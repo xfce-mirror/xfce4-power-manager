@@ -718,7 +718,7 @@ xfpm_manager_init (XfpmManager *manager)
   g_signal_connect_object (manager->priv->monitor, "system-bus-connection-changed",
                            G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager, 0);
 
-  g_signal_connect_object (manager->priv->button, "button_pressed",
+  g_signal_connect_object (manager->priv->button, "button-pressed",
                            G_CALLBACK (xfpm_manager_button_pressed_cb), manager, 0);
 
   g_signal_connect_object (manager->priv->power, "lid-changed",

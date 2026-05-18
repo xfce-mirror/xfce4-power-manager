@@ -66,7 +66,7 @@ struct _PowerManagerDialog
 };
 
 
-G_DEFINE_TYPE (PowerManagerDialog, power_manager_dialog, G_TYPE_OBJECT)
+G_DEFINE_FINAL_TYPE (PowerManagerDialog, power_manager_dialog, G_TYPE_OBJECT)
 
 
 
