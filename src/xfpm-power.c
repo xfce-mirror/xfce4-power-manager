@@ -41,6 +41,7 @@
 
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
+#include <libxfce4windowing/libxfce4windowing.h>
 #include <upower.h>
 
 #ifdef ENABLE_X11
@@ -65,6 +66,9 @@ xfpm_power_set_property (GObject *object,
 static void
 xfpm_power_change_inhibition_dbus (XfpmPower *power,
                                    gboolean inhibition_dbus);
+static void
+xfpm_power_change_inhibition_fullscreen (XfpmPower *power,
+                                         gboolean inhibition_fullscreen);
 static void
 xfpm_power_change_presentation_mode (XfpmPower *power,
                                      gboolean presentation_mode);
@@ -107,8 +111,11 @@ struct XfpmPowerPrivate
 
   XfpmDpms *dpms;
   XfceScreensaver *screensaver;
+  XfwScreen *screen;
   gboolean inhibition_dbus;
   gboolean inhibited;
+  gboolean inhibition_fullscreen;
+  gboolean inhibited_fullscreen;
   gboolean presentation_mode;
   gboolean do_not_disturb;
 
@@ -145,6 +152,7 @@ enum
   PROP_HAS_LID,
   PROP_LID_IS_CLOSED,
   PROP_INHIBITION_DBUS,
+  PROP_INHIBITION_FULLSCREEN,
   PROP_PRESENTATION_MODE,
   PROP_DO_NOT_DISTURB,
   N_PROPERTIES
@@ -857,8 +865,9 @@ static void
 inhibited_by_some_means_changed (XfpmPower *power,
                                  gboolean inhibited)
 {
-  XFPM_DEBUG ("inhibited %s, presentation_mode %s",
+  XFPM_DEBUG ("inhibited %s, inhibited_fullscreen %s, presentation_mode %s",
               power->priv->inhibited ? "TRUE" : "FALSE",
+              power->priv->inhibited_fullscreen ? "TRUE" : "FALSE",
               power->priv->presentation_mode ? "TRUE" : "FALSE");
 
   /* either inhibition already occurred, or we don't want to remove it yet */
@@ -1057,6 +1066,12 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                          DEFAULT_INHIBITION_DBUS,
                                                          XFPM_PARAM_FLAGS));
   g_object_class_install_property (object_class,
+                                   PROP_INHIBITION_FULLSCREEN,
+                                   g_param_spec_boolean (INHIBITION_FULLSCREEN,
+                                                         NULL, NULL,
+                                                         DEFAULT_INHIBITION_FULLSCREEN,
+                                                         XFPM_PARAM_FLAGS));
+  g_object_class_install_property (object_class,
                                    PROP_PRESENTATION_MODE,
                                    g_param_spec_boolean (PRESENTATION_MODE,
                                                          NULL, NULL,
@@ -1187,6 +1202,9 @@ xfpm_power_get_property (GObject *object,
     case PROP_INHIBITION_DBUS:
       g_value_set_boolean (value, power->priv->inhibition_dbus);
       break;
+    case PROP_INHIBITION_FULLSCREEN:
+      g_value_set_boolean (value, power->priv->inhibition_fullscreen);
+      break;
     case PROP_PRESENTATION_MODE:
       g_value_set_boolean (value, power->priv->presentation_mode);
       break;
@@ -1212,6 +1230,9 @@ xfpm_power_set_property (GObject *object,
     case PROP_INHIBITION_DBUS:
       xfpm_power_change_inhibition_dbus (power, g_value_get_boolean (value));
       break;
+    case PROP_INHIBITION_FULLSCREEN:
+      xfpm_power_change_inhibition_fullscreen (power, g_value_get_boolean (value));
+      break;
     case PROP_PRESENTATION_MODE:
       xfpm_power_change_presentation_mode (power, g_value_get_boolean (value));
       break;
@@ -1235,6 +1256,8 @@ xfpm_power_finalize (GObject *object)
 
   if (power->priv->inhibit != NULL)
     g_object_unref (power->priv->inhibit);
+  if (power->priv->screen != NULL)
+    g_object_unref (power->priv->screen);
   g_object_unref (power->priv->notify);
   g_object_unref (power->priv->conf);
   g_object_unref (power->priv->screensaver);
@@ -1267,6 +1290,9 @@ xfpm_power_new (void)
   xfconf_g_property_bind (channel,
                           XFPM_PROPERTIES_PREFIX INHIBITION_DBUS, G_TYPE_BOOLEAN,
                           G_OBJECT (power), INHIBITION_DBUS);
+  xfconf_g_property_bind (channel,
+                          XFPM_PROPERTIES_PREFIX INHIBITION_FULLSCREEN, G_TYPE_BOOLEAN,
+                          G_OBJECT (power), INHIBITION_FULLSCREEN);
   xfconf_g_property_bind (channel,
                           XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
                           G_OBJECT (power), PRESENTATION_MODE);
@@ -1416,6 +1442,71 @@ xfpm_power_change_inhibition_dbus (XfpmPower *power,
 }
 
 static void
+window_state_changed_changed_cb (XfwWindow *window,
+                                 XfwWindowState changed_mask,
+                                 XfwWindowState new_state,
+                                 XfpmPower *power)
+{
+  gboolean inhibited_fullscreen = xfw_window_is_fullscreen (window);
+  if (power->priv->inhibited_fullscreen == inhibited_fullscreen)
+    return;
+
+  power->priv->inhibited_fullscreen = inhibited_fullscreen;
+  inhibited_by_some_means_changed (power, inhibited_fullscreen);
+}
+
+static void
+active_window_changed_cb (XfwScreen *screen,
+                          XfwWindow *previous_window,
+                          XfpmPower *power)
+{
+  gboolean inhibited_fullscreen = FALSE;
+  if (screen != NULL)
+  {
+    XfwWindow *window = xfw_screen_get_active_window (screen);
+    if (window != NULL)
+    {
+      inhibited_fullscreen = xfw_window_is_fullscreen (window);
+      g_signal_connect_object (window, "state-changed",
+                               G_CALLBACK (window_state_changed_changed_cb), power, 0);
+    }
+    if (previous_window != NULL)
+    {
+      g_signal_handlers_disconnect_by_func (previous_window, window_state_changed_changed_cb, power);
+    }
+  }
+
+  if (power->priv->inhibited_fullscreen == inhibited_fullscreen)
+    return;
+
+  power->priv->inhibited_fullscreen = inhibited_fullscreen;
+  inhibited_by_some_means_changed (power, inhibited_fullscreen);
+}
+
+static void
+xfpm_power_change_inhibition_fullscreen (XfpmPower *power,
+                                         gboolean inhibition_fullscreen)
+{
+  if (power->priv->inhibition_fullscreen == inhibition_fullscreen)
+    return;
+
+  power->priv->inhibition_fullscreen = inhibition_fullscreen;
+  XFPM_DEBUG ("inhibition-fullscreen %s", inhibition_fullscreen ? "TRUE" : "FALSE");
+
+  if (inhibition_fullscreen)
+  {
+    power->priv->screen = xfw_screen_get_default ();
+    g_signal_connect_object (power->priv->screen, "active-window-changed",
+                             G_CALLBACK (active_window_changed_cb), power, 0);
+  }
+  else
+  {
+    active_window_changed_cb (NULL, NULL, power);
+    g_clear_object (&power->priv->screen);
+  }
+}
+
+static void
 xfpm_power_change_presentation_mode (XfpmPower *power,
                                      gboolean presentation_mode)
 {
@@ -1452,7 +1543,7 @@ xfpm_power_is_inhibited (XfpmPower *power)
 {
   g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
 
-  return power->priv->presentation_mode || power->priv->inhibited;
+  return power->priv->presentation_mode || power->priv->inhibited || power->priv->inhibited_fullscreen;
 }
 
 
