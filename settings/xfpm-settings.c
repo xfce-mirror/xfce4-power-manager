@@ -794,6 +794,10 @@ xfpm_settings_general (XfconfChannel *channel,
   gtk_switch_set_active (GTK_SWITCH (switch_widget), DEFAULT_INHIBITION_DBUS);
   xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX INHIBITION_DBUS,
                           G_TYPE_BOOLEAN, switch_widget, "active");
+  switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "inhibition-fullscreen"));
+  gtk_switch_set_active (GTK_SWITCH (switch_widget), DEFAULT_INHIBITION_FULLSCREEN);
+  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX INHIBITION_FULLSCREEN,
+                          G_TYPE_BOOLEAN, switch_widget, "active");
   switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "presentation-mode"));
   gtk_switch_set_active (GTK_SWITCH (switch_widget), DEFAULT_PRESENTATION_MODE);
   xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE,

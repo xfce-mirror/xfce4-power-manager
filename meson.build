@@ -21,9 +21,8 @@ dependency_versions = {
   'glib': '>= 2.72.0',
   'gtk': '>= 3.24.0',
   'libnotify': '>= 0.7.8',
-  'xfce4': '>= 4.18.0',
+  'xfce4': '>= 4.20.0',
   'libxfce4ui': '>= 4.21.0',
-  'libxfce4util': '>= 4.19.4',
   'upower-glib': '>= 0.99.10',
 
   'libx11': '>= 1.6.7',
@@ -46,7 +45,8 @@ gtk = dependency('gtk+-3.0', version: dependency_versions['gtk'])
 libnotify = dependency('libnotify', version: dependency_versions['libnotify'])
 upower_glib = dependency('upower-glib', version: dependency_versions['upower-glib'])
 libxfce4ui = dependency('libxfce4ui-2', version: dependency_versions['libxfce4ui'])
-libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['libxfce4util'])
+libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['xfce4'])
+libxfce4windowing = dependency('libxfce4windowing-0', version: dependency_versions['xfce4'])
 xfconf = dependency('libxfconf-0', version: dependency_versions['xfce4'])
 
 # Feature: 'x11'

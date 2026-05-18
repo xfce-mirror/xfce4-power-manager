@@ -178,6 +178,7 @@ xfpm_xfconf_property_changed_cb (XfconfChannel *channel,
 
   /* We handle inhibition and presentation mode in xfpm-power directly */
   if (g_strcmp0 (property, XFPM_PROPERTIES_PREFIX INHIBITION_DBUS) == 0
+      || g_strcmp0 (property, XFPM_PROPERTIES_PREFIX INHIBITION_FULLSCREEN) == 0
       || g_strcmp0 (property, XFPM_PROPERTIES_PREFIX PRESENTATION_MODE) == 0
       || g_strcmp0 (property, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB) == 0
       || g_strcmp0 (property, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB "-notifyd") == 0)
