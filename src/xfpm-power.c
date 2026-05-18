@@ -63,6 +63,9 @@ xfpm_power_set_property (GObject *object,
                          GParamSpec *pspec);
 
 static void
+xfpm_power_change_inhibition_dbus (XfpmPower *power,
+                                   gboolean inhibition_dbus);
+static void
 xfpm_power_change_presentation_mode (XfpmPower *power,
                                      gboolean presentation_mode);
 static void
@@ -104,8 +107,9 @@ struct XfpmPowerPrivate
 
   XfpmDpms *dpms;
   XfceScreensaver *screensaver;
-  gboolean presentation_mode;
+  gboolean inhibition_dbus;
   gboolean inhibited;
+  gboolean presentation_mode;
   gboolean do_not_disturb;
 
   XfpmNotify *notify;
@@ -140,6 +144,7 @@ enum
   PROP_CAN_HYBRID_SLEEP,
   PROP_HAS_LID,
   PROP_LID_IS_CLOSED,
+  PROP_INHIBITION_DBUS,
   PROP_PRESENTATION_MODE,
   PROP_DO_NOT_DISTURB,
   N_PROPERTIES
@@ -1040,6 +1045,12 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                          G_PARAM_READABLE));
 
   g_object_class_install_property (object_class,
+                                   PROP_INHIBITION_DBUS,
+                                   g_param_spec_boolean (INHIBITION_DBUS,
+                                                         NULL, NULL,
+                                                         DEFAULT_INHIBITION_DBUS,
+                                                         XFPM_PARAM_FLAGS));
+  g_object_class_install_property (object_class,
                                    PROP_PRESENTATION_MODE,
                                    g_param_spec_boolean (PRESENTATION_MODE,
                                                          NULL, NULL,
@@ -1078,7 +1089,6 @@ xfpm_power_init (XfpmPower *power)
 
   power->priv->presentation_mode = FALSE;
 
-  power->priv->inhibit = xfpm_inhibit_new ();
   power->priv->notify = xfpm_notify_new ();
   power->priv->conf = xfpm_xfconf_new ();
   power->priv->upower = up_client_new ();
@@ -1094,9 +1104,6 @@ xfpm_power_init (XfpmPower *power)
 #ifdef HAVE_POLKIT
   power->priv->polkit = xfpm_polkit_get ();
 #endif
-
-  g_signal_connect_object (power->priv->inhibit, "has-inhibit-changed",
-                           G_CALLBACK (xfpm_power_inhibit_changed_cb), power, 0);
 
   if (error)
   {
@@ -1171,6 +1178,9 @@ xfpm_power_get_property (GObject *object,
     case PROP_LID_IS_CLOSED:
       g_value_set_boolean (value, power->priv->lid_is_closed);
       break;
+    case PROP_INHIBITION_DBUS:
+      g_value_set_boolean (value, power->priv->inhibition_dbus);
+      break;
     case PROP_PRESENTATION_MODE:
       g_value_set_boolean (value, power->priv->presentation_mode);
       break;
@@ -1193,6 +1203,9 @@ xfpm_power_set_property (GObject *object,
 
   switch (prop_id)
   {
+    case PROP_INHIBITION_DBUS:
+      xfpm_power_change_inhibition_dbus (power, g_value_get_boolean (value));
+      break;
     case PROP_PRESENTATION_MODE:
       xfpm_power_change_presentation_mode (power, g_value_get_boolean (value));
       break;
@@ -1214,7 +1227,8 @@ xfpm_power_finalize (GObject *object)
 
   g_free (power->priv->daemon_version);
 
-  g_object_unref (power->priv->inhibit);
+  if (power->priv->inhibit != NULL)
+    g_object_unref (power->priv->inhibit);
   g_object_unref (power->priv->notify);
   g_object_unref (power->priv->conf);
   g_object_unref (power->priv->screensaver);
@@ -1244,6 +1258,9 @@ xfpm_power_new (void)
   XfpmPower *power = XFPM_POWER (g_object_new (XFPM_TYPE_POWER, NULL));
   XfconfChannel *channel = xfpm_xfconf_get_channel (power->priv->conf);
 
+  xfconf_g_property_bind (channel,
+                          XFPM_PROPERTIES_PREFIX INHIBITION_DBUS, G_TYPE_BOOLEAN,
+                          G_OBJECT (power), INHIBITION_DBUS);
   xfconf_g_property_bind (channel,
                           XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
                           G_OBJECT (power), PRESENTATION_MODE);
@@ -1366,6 +1383,29 @@ change_do_not_disturb_notifyd (XfpmPower *power,
     if (!do_not_disturb_notifyd)
       xfconf_channel_set_bool (channel_notifyd, "/do-not-disturb", FALSE);
     xfconf_channel_reset_property (channel, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB "-notifyd", TRUE);
+  }
+}
+
+static void
+xfpm_power_change_inhibition_dbus (XfpmPower *power,
+                                   gboolean inhibition_dbus)
+{
+  if (power->priv->inhibition_dbus == inhibition_dbus)
+    return;
+
+  power->priv->inhibition_dbus = inhibition_dbus;
+  XFPM_DEBUG ("inhibition-dbus %s", inhibition_dbus ? "TRUE" : "FALSE");
+
+  if (inhibition_dbus)
+  {
+    power->priv->inhibit = xfpm_inhibit_new ();
+    g_signal_connect_object (power->priv->inhibit, "has-inhibit-changed",
+                             G_CALLBACK (xfpm_power_inhibit_changed_cb), power, 0);
+  }
+  else
+  {
+    xfpm_power_inhibit_changed_cb (power->priv->inhibit, FALSE, power);
+    g_clear_object (&power->priv->inhibit);
   }
 }
 
