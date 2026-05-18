@@ -748,7 +748,7 @@ inhibit_proxy_ready_cb (GObject *source_object,
   button->priv->inhibit_proxy = g_dbus_proxy_new_finish (res, &error);
   if (error != NULL)
   {
-    g_warning ("error getting inhibit proxy: %s", error->message);
+    XFPM_DEBUG ("error getting inhibit proxy: %s", error->message);
     g_clear_error (&error);
   }
 }
