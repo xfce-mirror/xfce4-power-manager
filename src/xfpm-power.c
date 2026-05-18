@@ -264,7 +264,7 @@ xfpm_power_sleep (XfpmPower *power,
   XfpmBrightness *brightness;
   gint32 brightness_level = 0;
 
-  if ((power->priv->presentation_mode || power->priv->inhibited) && !force)
+  if (xfpm_power_is_inhibited (power) && !force)
   {
     GtkWidget *dialog;
     gboolean ret;
@@ -854,28 +854,36 @@ xfpm_power_remove_device (XfpmPower *power,
 }
 
 static void
-xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit,
-                               gboolean is_inhibit,
-                               XfpmPower *power)
+inhibited_by_some_means_changed (XfpmPower *power,
+                                 gboolean inhibited,
+                                 gboolean global_inhibit_changed)
 {
-  /* no change, exit */
-  if (power->priv->inhibited == is_inhibit)
-    return;
-
-  power->priv->inhibited = is_inhibit;
-
   XFPM_DEBUG ("inhibited %s, presentation_mode %s",
               power->priv->inhibited ? "TRUE" : "FALSE",
               power->priv->presentation_mode ? "TRUE" : "FALSE");
 
   /* either inhibition already occurred, or we don't want to remove it yet */
-  if (power->priv->presentation_mode)
+  if (!global_inhibit_changed)
     return;
 
-  xfce_screensaver_inhibit (power->priv->screensaver, is_inhibit);
+  xfce_screensaver_inhibit (power->priv->screensaver, inhibited);
   xfpm_power_toggle_screensaver (power);
   if (power->priv->dpms != NULL)
-    xfpm_dpms_set_inhibited (power->priv->dpms, is_inhibit);
+    xfpm_dpms_set_inhibited (power->priv->dpms, inhibited);
+}
+
+static void
+xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit,
+                               gboolean is_inhibit,
+                               XfpmPower *power)
+{
+  if (power->priv->inhibited == is_inhibit)
+    return;
+
+  gboolean was_inhibited = xfpm_power_is_inhibited (power);
+  power->priv->inhibited = is_inhibit;
+  gboolean is_inhibited = xfpm_power_is_inhibited (power);
+  inhibited_by_some_means_changed (power, is_inhibit, was_inhibited != is_inhibited);
 }
 
 static void
@@ -1343,8 +1351,8 @@ xfpm_power_toggle_screensaver (XfpmPower *power)
 
   display = gdk_x11_get_default_xdisplay ();
 
-  /* Presentation mode or inhibited disables blanking */
-  if (power->priv->presentation_mode || power->priv->inhibited)
+  /* inhibition disables blanking */
+  if (xfpm_power_is_inhibited (power))
   {
     if (timeout == -2)
       XGetScreenSaver (display, &timeout, &interval, &prefer_blanking, &allow_exposures);
@@ -1417,23 +1425,14 @@ xfpm_power_change_presentation_mode (XfpmPower *power,
   if (power->priv->presentation_mode == presentation_mode)
     return;
 
+  gboolean was_inhibited = xfpm_power_is_inhibited (power);
   power->priv->presentation_mode = presentation_mode;
-
-  XFPM_DEBUG ("inhibited %s, presentation_mode %s",
-              power->priv->inhibited ? "TRUE" : "FALSE",
-              power->priv->presentation_mode ? "TRUE" : "FALSE");
+  gboolean is_inhibited = xfpm_power_is_inhibited (power);
 
   if (power->priv->do_not_disturb)
     change_do_not_disturb_notifyd (power, presentation_mode);
 
-  /* either inhibition already occurred, or we don't want to remove it yet */
-  if (power->priv->inhibited)
-    return;
-
-  xfce_screensaver_inhibit (power->priv->screensaver, presentation_mode);
-  xfpm_power_toggle_screensaver (power);
-  if (power->priv->dpms != NULL)
-    xfpm_dpms_set_inhibited (power->priv->dpms, presentation_mode);
+  inhibited_by_some_means_changed (power, presentation_mode, was_inhibited != is_inhibited);
 }
 
 static void
