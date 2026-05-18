@@ -88,8 +88,6 @@ xfpm_power_can_hybrid_sleep (XfpmPower *power,
 
 struct XfpmPowerPrivate
 {
-  GDBusConnection *bus;
-
   UpClient *upower;
 
   XfceSystemd *systemd;
@@ -1088,8 +1086,6 @@ xfpm_power_init (XfpmPower *power)
   g_signal_connect_object (power->priv->inhibit, "has-inhibit-changed",
                            G_CALLBACK (xfpm_power_inhibit_changed_cb), power, 0);
 
-  power->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
-
   if (error)
   {
     g_critical ("Unable to connect to the system bus : %s", error->message);
@@ -1211,8 +1207,6 @@ xfpm_power_finalize (GObject *object)
     g_object_unref (power->priv->systemd);
   if (power->priv->console != NULL)
     g_object_unref (power->priv->console);
-
-  g_object_unref (power->priv->bus);
 
   g_hash_table_destroy (power->priv->batteries);
 
