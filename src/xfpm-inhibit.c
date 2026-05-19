@@ -328,6 +328,10 @@ static gboolean
 xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
                              GDBusMethodInvocation *invocation,
                              gpointer user_data);
+static gboolean
+xfpm_inhibit_clear_inhibitors (XfpmInhibit *inhibit,
+                               GDBusMethodInvocation *invocation,
+                               gpointer user_data);
 
 #include "org.freedesktop.PowerManagement.Inhibit.h"
 
@@ -359,6 +363,9 @@ xfpm_inhibit_dbus_init (XfpmInhibit *inhibit)
                            inhibit, G_CONNECT_SWAPPED);
   g_signal_connect_object (inhibit_dbus, "handle-get-inhibitors",
                            G_CALLBACK (xfpm_inhibit_get_inhibitors),
+                           inhibit, G_CONNECT_SWAPPED);
+  g_signal_connect_object (inhibit_dbus, "handle-clear-inhibitors",
+                           G_CALLBACK (xfpm_inhibit_clear_inhibitors),
                            inhibit, G_CONNECT_SWAPPED);
 }
 
@@ -439,6 +446,24 @@ xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
   OUT_inhibitors = xfpm_inhibit_get_inhibit_list (inhibit);
   xfpm_power_management_inhibit_complete_get_inhibitors (user_data, invocation, OUT_inhibitors);
   g_free (OUT_inhibitors);
+
+  return TRUE;
+}
+
+static gboolean
+xfpm_inhibit_clear_inhibitors (XfpmInhibit *inhibit,
+                               GDBusMethodInvocation *invocation,
+                               gpointer user_data)
+{
+  XFPM_DEBUG ("Clear Inhibitors message received");
+
+  for (guint i = 0; i < inhibit->priv->array->len; i++)
+  {
+    Inhibitor *inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+    xfpm_inhibit_remove_application_by_cookie (inhibit, inhibitor->cookie);
+  }
+
+  xfpm_power_management_inhibit_complete_clear_inhibitors (user_data, invocation);
 
   return TRUE;
 }
