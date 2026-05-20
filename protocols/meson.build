@@ -1,7 +1,7 @@
 wayland_protocols_generated_sources = []
 
 protocols = {
-  'ext-idle-notify-v1': ext_idle_notify_xml,
+  'ext-idle-notify-v1': wayland_protocols_pkgdatadir / 'staging' / 'ext-idle-notify' / 'ext-idle-notify-v1.xml',
   'wlr-output-power-management-unstable-v1': wlr_protocols_pkgdatadir / 'unstable' / 'wlr-output-power-management-unstable-v1.xml',
   'wlr-output-management-unstable-v1': wlr_protocols_pkgdatadir / 'unstable' / 'wlr-output-management-unstable-v1.xml',
 }
