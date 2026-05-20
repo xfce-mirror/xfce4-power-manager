@@ -31,7 +31,7 @@ dependency_versions = {
   'xrandr': '>= 1.5.0',
 
   'wayland': '>= 1.20',
-  'wayland-protocols': '>= 1.25',
+  'wayland-protocols': '>= 1.27',
 
   'polkit': '>= 0.102',
 }
@@ -101,14 +101,6 @@ if enable_wayland
     if not fs.is_dir(wlr_protocols_pkgdatadir / 'unstable')
       error(wlr_protocols_pkgdatadir + ' seems empty, did you clone the wlr-protocols submodule?')
     endif
-  endif
-
-  # FIXME: Bump wayland-protocols to 1.27 when it is an acceptable requirement,
-  # and remove this and protocols/ext-idle-notify-v1.xml
-  if fs.is_file(wayland_protocols_pkgdatadir / 'staging' / 'ext-idle-notify' / 'ext-idle-notify-v1.xml')
-    ext_idle_notify_xml = wayland_protocols_pkgdatadir / 'staging' / 'ext-idle-notify' / 'ext-idle-notify-v1.xml'
-  else
-    ext_idle_notify_xml = 'ext-idle-notify-v1.xml'
   endif
 endif
 
