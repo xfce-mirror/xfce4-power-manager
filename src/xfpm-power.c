@@ -283,19 +283,36 @@ xfpm_power_sleep (XfpmPower *power,
 
   if (xfpm_power_is_inhibited (power) && !force)
   {
-    GtkWidget *dialog;
-    gboolean ret;
-
-    dialog = gtk_message_dialog_new (NULL,
-                                     GTK_DIALOG_MODAL,
-                                     GTK_MESSAGE_QUESTION,
-                                     GTK_BUTTONS_YES_NO,
-                                     _("An application is currently disabling the automatic sleep. "
-                                       "Doing this action now may damage the working state of this application.\n"
-                                       "Are you sure you want to hibernate the system?"));
-    ret = gtk_dialog_run (GTK_DIALOG (dialog));
+    const gchar *question = _("Do you want to put it to sleep anyway?");
+    gchar *message;
+    if (power->priv->inhibited)
+    {
+      gchar *app_list = g_strjoinv (", ", (gchar **) xfpm_inhibit_get_inhibit_list (power->priv->inhibit));
+      message = g_strdup_printf (_("These apps are currently preventing the system from going to sleep automatically:\n%s\n%s"),
+                                 app_list,
+                                 question);
+      g_free (app_list);
+    }
+    else if (power->priv->presentation_mode)
+    {
+      message = g_strdup_printf (_("Presentation mode is currently preventing the system from going to sleep automatically.\n%s"),
+                                 question);
+    }
+    else if (power->priv->inhibited_fullscreen)
+    {
+      message = g_strdup_printf (_("This fullscreened window is currently preventing the system from going to sleep automatically:\n%s\n%s"),
+                                 xfw_window_get_name (xfw_screen_get_active_window (power->priv->screen)),
+                                 question);
+    }
+    else
+    {
+      message = g_strdup_printf (_("An unknown reason is currently preventing the system from going to sleep automatically.\n%s"),
+                                 question);
+    }
+    GtkWidget *dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s", message);
+    gboolean ret = gtk_dialog_run (GTK_DIALOG (dialog));
     gtk_widget_destroy (dialog);
-
+    g_free (message);
     if (!ret || ret == GTK_RESPONSE_NO)
       return;
   }
