@@ -33,6 +33,7 @@
 #include "common/xfpm-power-common.h"
 
 #include <gtk/gtk.h>
+#include <libnotify/notify.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
 #include <upower.h>
@@ -87,6 +88,8 @@ struct PowerManagerButtonPrivate
   /* display brightness slider widget */
   GtkWidget *range;
 
+  NotifyNotification *brightness_notification;
+
   /* filter range value changed events for snappier UI feedback */
   guint set_level_timeout;
 };
@@ -124,6 +127,9 @@ power_manager_button_toggle_presentation_mode (GtkMenuItem *mi,
 static void
 power_manager_button_update_label (PowerManagerButton *button,
                                    UpDevice *device);
+static void
+power_manager_button_show_brightness_notification (PowerManagerButton *button,
+                                                   gint32 level);
 static gboolean
 power_manager_button_press_event (GtkWidget *widget,
                                   GdkEventButton *event);
@@ -729,16 +735,75 @@ power_manager_button_scroll_event (GtkWidget *widget,
   {
     gboolean (*scroll_brightness) (XfpmBrightness *) = ev->direction == GDK_SCROLL_UP ? xfpm_brightness_increase
                                                                                       : xfpm_brightness_decrease;
-    if (scroll_brightness (button->priv->brightness) && button->priv->range != NULL)
+    if (scroll_brightness (button->priv->brightness))
     {
       gint32 level;
       if (xfpm_brightness_get_level (button->priv->brightness, &level))
-        gtk_range_set_value (GTK_RANGE (button->priv->range), level);
+      {
+        if (button->priv->range != NULL)
+          gtk_range_set_value (GTK_RANGE (button->priv->range), level);
+        power_manager_button_show_brightness_notification (button, level);
+      }
     }
     return TRUE;
   }
 
   return FALSE;
+}
+
+static void
+power_manager_button_show_brightness_notification (PowerManagerButton *button,
+                                                   gint32 level)
+{
+  gfloat value;
+  gint32 percentage;
+  gchar *summary;
+
+  g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
+
+  if (button->priv->channel != NULL
+      && !xfconf_channel_get_bool (button->priv->channel,
+                                   XFPM_PROPERTIES_PREFIX SHOW_BRIGHTNESS_POPUP,
+                                   DEFAULT_SHOW_BRIGHTNESS_POPUP))
+    return;
+
+  if (!notify_is_initted ())
+    notify_init ("xfce4-power-manager");
+
+  value = (gfloat) 100 * level / xfpm_brightness_get_max_level (button->priv->brightness);
+  percentage = (gint32) (value + 0.5);
+  summary = g_strdup_printf (_("Brightness: %.0f%%"), value);
+
+  if (button->priv->brightness_notification == NULL)
+  {
+    button->priv->brightness_notification = notify_notification_new (_("Power Manager"),
+                                                                     summary,
+                                                                     XFPM_DISPLAY_BRIGHTNESS_ICON);
+    notify_notification_set_hint (button->priv->brightness_notification,
+                                  "transient",
+                                  g_variant_new_boolean (FALSE));
+    notify_notification_set_hint (button->priv->brightness_notification,
+                                  "image-path",
+                                  g_variant_new_string (XFPM_DISPLAY_BRIGHTNESS_ICON));
+    notify_notification_set_urgency (button->priv->brightness_notification, NOTIFY_URGENCY_NORMAL);
+  }
+  else
+  {
+    notify_notification_update (button->priv->brightness_notification,
+                                _("Power Manager"),
+                                summary,
+                                XFPM_DISPLAY_BRIGHTNESS_ICON);
+  }
+
+  g_free (summary);
+
+  notify_notification_set_hint (button->priv->brightness_notification,
+                                "x-canonical-private-synchronous",
+                                g_variant_new_string ("brightness"));
+  notify_notification_set_hint (button->priv->brightness_notification,
+                                "value",
+                                g_variant_new_int32 (percentage));
+  notify_notification_show (button->priv->brightness_notification, NULL);
 }
 
 static void
@@ -811,6 +876,7 @@ power_manager_button_init (PowerManagerButton *button)
   gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
   button->priv->brightness = xfpm_brightness_new ();
+  button->priv->brightness_notification = NULL;
   button->priv->set_level_timeout = 0;
 
   button->priv->upower = up_client_new ();
@@ -902,6 +968,8 @@ power_manager_button_finalize (GObject *object)
 
   if (button->priv->brightness != NULL)
     g_object_unref (button->priv->brightness);
+  if (button->priv->brightness_notification != NULL)
+    g_object_unref (button->priv->brightness_notification);
   if (button->priv->set_level_timeout)
   {
     g_source_remove (button->priv->set_level_timeout);

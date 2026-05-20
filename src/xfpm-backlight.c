@@ -163,6 +163,9 @@ xfpm_backlight_show_notification (XfpmBacklight *backlight,
   g_free (summary);
 
   /* add the brightness value to the notification */
+  notify_notification_set_hint (backlight->priv->n,
+                                "x-canonical-private-synchronous",
+                                g_variant_new_string ("brightness"));
   notify_notification_set_hint (backlight->priv->n, "value", g_variant_new_int32 (value));
 
   /* show the notification */
