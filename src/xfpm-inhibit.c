@@ -284,20 +284,17 @@ xfpm_inhibit_new (void)
 const gchar **
 xfpm_inhibit_get_inhibit_list (XfpmInhibit *inhibit)
 {
-  guint i;
-  Inhibitor *inhibitor;
-  const gchar **OUT_inhibitors;
+  const gchar **OUT_inhibitors = g_new0 (const gchar *, inhibit->priv->array->len + 1);
+  GHashTable *unique = g_hash_table_new (g_str_hash, g_str_equal);
 
-  OUT_inhibitors = g_new (const gchar *, inhibit->priv->array->len + 1);
-
-  for (i = 0; i < inhibit->priv->array->len; i++)
+  for (guint i = 0, j = 0; i < inhibit->priv->array->len; i++)
   {
-    inhibitor = g_ptr_array_index (inhibit->priv->array, i);
-    OUT_inhibitors[i] = inhibitor->app_name;
+    Inhibitor *inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+    if (g_hash_table_add (unique, inhibitor->app_name))
+      OUT_inhibitors[j++] = inhibitor->app_name;
   }
 
-  OUT_inhibitors[inhibit->priv->array->len] = NULL;
-
+  g_hash_table_destroy (unique);
   return OUT_inhibitors;
 }
 
