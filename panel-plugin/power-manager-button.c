@@ -38,6 +38,11 @@
 #include <upower.h>
 #include <xfconf/xfconf.h>
 
+#ifdef ENABLE_WAYLAND
+#include "protocols/idle-inhibit-unstable-v1-client.h"
+
+#include <gdk/gdkwayland.h>
+#endif
 
 #define SET_LEVEL_TIMEOUT (50)
 
@@ -46,10 +51,13 @@ struct PowerManagerButtonPrivate
   PowerManagerPlugin *plugin;
   PowerManagerConfig *config;
   GDBusProxy *inhibit_proxy;
-
   XfconfChannel *channel;
-
   UpClient *upower;
+#ifdef ENABLE_WAYLAND
+  struct wl_registry *wl_registry;
+  struct zwp_idle_inhibit_manager_v1 *wl_manager;
+  struct zwp_idle_inhibitor_v1 *wl_inhibitor;
+#endif
 
   /* A list of BatteryDevices  */
   GList *devices;
@@ -131,6 +139,30 @@ static void
 power_manager_button_show_menu (PowerManagerButton *button,
                                 GdkEvent *event);
 
+
+#ifdef ENABLE_WAYLAND
+/* clang-format off */
+static void registry_global_remove (void *data, struct wl_registry *registry, uint32_t id) {}
+/* clang-format on */
+
+static void
+registry_global (void *data,
+                 struct wl_registry *registry,
+                 uint32_t id,
+                 const char *interface,
+                 uint32_t version)
+{
+  PowerManagerButton *button = data;
+  if (g_strcmp0 (zwp_idle_inhibit_manager_v1_interface.name, interface) == 0)
+    button->priv->wl_manager = wl_registry_bind (button->priv->wl_registry, id, &zwp_idle_inhibit_manager_v1_interface,
+                                                 MIN ((uint32_t) zwp_idle_inhibit_manager_v1_interface.version, version));
+}
+
+static const struct wl_registry_listener registry_listener = {
+  .global = registry_global,
+  .global_remove = registry_global_remove,
+};
+#endif
 
 static BatteryDevice *
 get_display_device (PowerManagerButton *button)
@@ -838,6 +870,17 @@ power_manager_button_init (PowerManagerButton *button)
     g_signal_connect (button->priv->upower, "device-added", G_CALLBACK (device_added_cb), button);
     g_signal_connect (button->priv->upower, "device-removed", G_CALLBACK (device_removed_cb), button);
   }
+
+#ifdef ENABLE_WAYLAND
+  GdkDisplay *display = gdk_display_get_default ();
+  if (GDK_IS_WAYLAND_DISPLAY (display))
+  {
+    struct wl_display *wl_display = gdk_wayland_display_get_wl_display (display);
+    button->priv->wl_registry = wl_display_get_registry (wl_display);
+    wl_registry_add_listener (button->priv->wl_registry, &registry_listener, button);
+    wl_display_roundtrip (wl_display);
+  }
+#endif
 }
 
 static void
@@ -875,6 +918,18 @@ power_manager_button_finalize (GObject *object)
 
   if (button->priv->channel != NULL)
     xfconf_shutdown ();
+
+#ifdef ENABLE_WAYLAND
+  if (button->priv->wl_registry != NULL)
+  {
+    if (button->priv->wl_inhibitor != NULL)
+      zwp_idle_inhibitor_v1_destroy (button->priv->wl_inhibitor);
+    if (button->priv->wl_manager != NULL)
+      zwp_idle_inhibit_manager_v1_destroy (button->priv->wl_manager);
+    wl_registry_destroy (button->priv->wl_registry);
+  }
+#endif
+
   G_OBJECT_CLASS (power_manager_button_parent_class)->finalize (object);
 }
 
@@ -1001,6 +1056,22 @@ power_manager_button_update_presentation_indicator (PowerManagerButton *button)
 
   gtk_widget_set_visible (button->priv->panel_presentation_mode,
                           power_manager_config_get_presentation_mode (button->priv->config) && power_manager_config_get_show_presentation_indicator (button->priv->config));
+#ifdef ENABLE_WAYLAND
+  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+  {
+    if (power_manager_config_get_presentation_mode (button->priv->config))
+    {
+      struct wl_surface *wl_surface = gdk_wayland_window_get_wl_surface (gtk_widget_get_window (GTK_WIDGET (button)));
+      if (wl_surface != NULL)
+        button->priv->wl_inhibitor = zwp_idle_inhibit_manager_v1_create_inhibitor (button->priv->wl_manager, wl_surface);
+    }
+    else if (button->priv->wl_inhibitor != NULL)
+    {
+      zwp_idle_inhibitor_v1_destroy (button->priv->wl_inhibitor);
+      button->priv->wl_inhibitor = NULL;
+    }
+  }
+#endif
 }
 
 static void
