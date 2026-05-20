@@ -284,20 +284,17 @@ xfpm_inhibit_new (void)
 const gchar **
 xfpm_inhibit_get_inhibit_list (XfpmInhibit *inhibit)
 {
-  guint i;
-  Inhibitor *inhibitor;
-  const gchar **OUT_inhibitors;
+  const gchar **OUT_inhibitors = g_new0 (const gchar *, inhibit->priv->array->len + 1);
+  GHashTable *unique = g_hash_table_new (g_str_hash, g_str_equal);
 
-  OUT_inhibitors = g_new (const gchar *, inhibit->priv->array->len + 1);
-
-  for (i = 0; i < inhibit->priv->array->len; i++)
+  for (guint i = 0, j = 0; i < inhibit->priv->array->len; i++)
   {
-    inhibitor = g_ptr_array_index (inhibit->priv->array, i);
-    OUT_inhibitors[i] = inhibitor->app_name;
+    Inhibitor *inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+    if (g_hash_table_add (unique, inhibitor->app_name))
+      OUT_inhibitors[j++] = inhibitor->app_name;
   }
 
-  OUT_inhibitors[inhibit->priv->array->len] = NULL;
-
+  g_hash_table_destroy (unique);
   return OUT_inhibitors;
 }
 
@@ -328,6 +325,10 @@ static gboolean
 xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
                              GDBusMethodInvocation *invocation,
                              gpointer user_data);
+static gboolean
+xfpm_inhibit_clear_inhibitors (XfpmInhibit *inhibit,
+                               GDBusMethodInvocation *invocation,
+                               gpointer user_data);
 
 #include "org.freedesktop.PowerManagement.Inhibit.h"
 
@@ -359,6 +360,9 @@ xfpm_inhibit_dbus_init (XfpmInhibit *inhibit)
                            inhibit, G_CONNECT_SWAPPED);
   g_signal_connect_object (inhibit_dbus, "handle-get-inhibitors",
                            G_CALLBACK (xfpm_inhibit_get_inhibitors),
+                           inhibit, G_CONNECT_SWAPPED);
+  g_signal_connect_object (inhibit_dbus, "handle-clear-inhibitors",
+                           G_CALLBACK (xfpm_inhibit_clear_inhibitors),
                            inhibit, G_CONNECT_SWAPPED);
 }
 
@@ -439,6 +443,24 @@ xfpm_inhibit_get_inhibitors (XfpmInhibit *inhibit,
   OUT_inhibitors = xfpm_inhibit_get_inhibit_list (inhibit);
   xfpm_power_management_inhibit_complete_get_inhibitors (user_data, invocation, OUT_inhibitors);
   g_free (OUT_inhibitors);
+
+  return TRUE;
+}
+
+static gboolean
+xfpm_inhibit_clear_inhibitors (XfpmInhibit *inhibit,
+                               GDBusMethodInvocation *invocation,
+                               gpointer user_data)
+{
+  XFPM_DEBUG ("Clear Inhibitors message received");
+
+  for (guint i = 0; i < inhibit->priv->array->len; i++)
+  {
+    Inhibitor *inhibitor = g_ptr_array_index (inhibit->priv->array, i);
+    xfpm_inhibit_remove_application_by_cookie (inhibit, inhibitor->cookie);
+  }
+
+  xfpm_power_management_inhibit_complete_clear_inhibitors (user_data, invocation);
 
   return TRUE;
 }

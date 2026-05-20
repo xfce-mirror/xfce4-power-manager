@@ -64,14 +64,20 @@ G_BEGIN_DECLS
 #define PROFILE_ON_BATTERY "profile-on-battery"
 #define DEFAULT_PROFILE_ON_BATTERY "balanced"
 
+#define HEARTBEAT_COMMAND "heartbeat-command"
+#define DEFAULT_HEARTBEAT_COMMAND NULL
 #define LOCK_SCREEN_SUSPEND_HIBERNATE "lock-screen-suspend-hibernate"
 #define DEFAULT_LOCK_SCREEN_SUSPEND_HIBERNATE TRUE
 #define GENERAL_NOTIFICATION "general-notification"
 #define DEFAULT_GENERAL_NOTIFICATION TRUE
+#define INHIBITION_DBUS "inhibition-dbus"
+#define DEFAULT_INHIBITION_DBUS TRUE
+#define INHIBITION_FULLSCREEN "inhibition-fullscreen"
+#define DEFAULT_INHIBITION_FULLSCREEN FALSE
 #define PRESENTATION_MODE "presentation-mode"
 #define DEFAULT_PRESENTATION_MODE FALSE
-#define HEARTBEAT_COMMAND "heartbeat-command"
-#define DEFAULT_HEARTBEAT_COMMAND NULL
+#define DO_NOT_DISTURB "do-not-disturb"
+#define DEFAULT_DO_NOT_DISTURB FALSE
 
 #define POWER_BUTTON_ACTION "power-button-action"
 #define DEFAULT_POWER_BUTTON_ACTION XFPM_DO_NOTHING

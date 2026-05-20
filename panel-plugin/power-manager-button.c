@@ -38,6 +38,11 @@
 #include <upower.h>
 #include <xfconf/xfconf.h>
 
+#ifdef ENABLE_WAYLAND
+#include "protocols/idle-inhibit-unstable-v1-client.h"
+
+#include <gdk/gdkwayland.h>
+#endif
 
 #define SET_LEVEL_TIMEOUT (50)
 
@@ -46,10 +51,13 @@ struct PowerManagerButtonPrivate
   PowerManagerPlugin *plugin;
   PowerManagerConfig *config;
   GDBusProxy *inhibit_proxy;
-
   XfconfChannel *channel;
-
   UpClient *upower;
+#ifdef ENABLE_WAYLAND
+  struct wl_registry *wl_registry;
+  struct zwp_idle_inhibit_manager_v1 *wl_manager;
+  struct zwp_idle_inhibitor_v1 *wl_inhibitor;
+#endif
 
   /* A list of BatteryDevices  */
   GList *devices;
@@ -131,6 +139,30 @@ static void
 power_manager_button_show_menu (PowerManagerButton *button,
                                 GdkEvent *event);
 
+
+#ifdef ENABLE_WAYLAND
+/* clang-format off */
+static void registry_global_remove (void *data, struct wl_registry *registry, uint32_t id) {}
+/* clang-format on */
+
+static void
+registry_global (void *data,
+                 struct wl_registry *registry,
+                 uint32_t id,
+                 const char *interface,
+                 uint32_t version)
+{
+  PowerManagerButton *button = data;
+  if (g_strcmp0 (zwp_idle_inhibit_manager_v1_interface.name, interface) == 0)
+    button->priv->wl_manager = wl_registry_bind (button->priv->wl_registry, id, &zwp_idle_inhibit_manager_v1_interface,
+                                                 MIN ((uint32_t) zwp_idle_inhibit_manager_v1_interface.version, version));
+}
+
+static const struct wl_registry_listener registry_listener = {
+  .global = registry_global,
+  .global_remove = registry_global_remove,
+};
+#endif
 
 static BatteryDevice *
 get_display_device (PowerManagerButton *button)
@@ -748,7 +780,7 @@ inhibit_proxy_ready_cb (GObject *source_object,
   button->priv->inhibit_proxy = g_dbus_proxy_new_finish (res, &error);
   if (error != NULL)
   {
-    g_warning ("error getting inhibit proxy: %s", error->message);
+    XFPM_DEBUG ("error getting inhibit proxy: %s", error->message);
     g_clear_error (&error);
   }
 }
@@ -838,6 +870,22 @@ power_manager_button_init (PowerManagerButton *button)
     g_signal_connect (button->priv->upower, "device-added", G_CALLBACK (device_added_cb), button);
     g_signal_connect (button->priv->upower, "device-removed", G_CALLBACK (device_removed_cb), button);
   }
+
+#ifdef ENABLE_WAYLAND
+  GdkDisplay *display = gdk_display_get_default ();
+  if (GDK_IS_WAYLAND_DISPLAY (display))
+  {
+    struct wl_display *wl_display = gdk_wayland_display_get_wl_display (display);
+    button->priv->wl_registry = wl_display_get_registry (wl_display);
+    wl_registry_add_listener (button->priv->wl_registry, &registry_listener, button);
+    wl_display_roundtrip (wl_display);
+    if (button->priv->wl_manager == NULL)
+    {
+      g_warning ("Your compositor does not seem to support the idle-inhibit protocol");
+      g_clear_pointer (&button->priv->wl_registry, wl_registry_destroy);
+    }
+  }
+#endif
 }
 
 static void
@@ -875,6 +923,18 @@ power_manager_button_finalize (GObject *object)
 
   if (button->priv->channel != NULL)
     xfconf_shutdown ();
+
+#ifdef ENABLE_WAYLAND
+  if (button->priv->wl_registry != NULL)
+  {
+    if (button->priv->wl_inhibitor != NULL)
+      zwp_idle_inhibitor_v1_destroy (button->priv->wl_inhibitor);
+    if (button->priv->wl_manager != NULL)
+      zwp_idle_inhibit_manager_v1_destroy (button->priv->wl_manager);
+    wl_registry_destroy (button->priv->wl_registry);
+  }
+#endif
+
   G_OBJECT_CLASS (power_manager_button_parent_class)->finalize (object);
 }
 
@@ -1001,6 +1061,21 @@ power_manager_button_update_presentation_indicator (PowerManagerButton *button)
 
   gtk_widget_set_visible (button->priv->panel_presentation_mode,
                           power_manager_config_get_presentation_mode (button->priv->config) && power_manager_config_get_show_presentation_indicator (button->priv->config));
+#ifdef ENABLE_WAYLAND
+  if (button->priv->wl_manager != NULL)
+  {
+    if (power_manager_config_get_presentation_mode (button->priv->config))
+    {
+      struct wl_surface *wl_surface = gdk_wayland_window_get_wl_surface (gtk_widget_get_window (GTK_WIDGET (button)));
+      if (wl_surface != NULL)
+        button->priv->wl_inhibitor = zwp_idle_inhibit_manager_v1_create_inhibitor (button->priv->wl_manager, wl_surface);
+    }
+    else if (button->priv->wl_inhibitor != NULL)
+    {
+      g_clear_pointer (&button->priv->wl_inhibitor, zwp_idle_inhibitor_v1_destroy);
+    }
+  }
+#endif
 }
 
 static void
@@ -1191,12 +1266,32 @@ add_inhibitor_to_menu (PowerManagerButton *button,
 }
 
 static void
+clear_inhibitors (GtkMenuItem *item,
+                  PowerManagerButton *button)
+{
+  GError *error = NULL;
+  GVariant *unused = g_dbus_proxy_call_sync (button->priv->inhibit_proxy,
+                                             "ClearInhibitors",
+                                             NULL,
+                                             G_DBUS_CALL_FLAGS_NONE,
+                                             1000,
+                                             NULL,
+                                             &error);
+  if (unused != NULL)
+  {
+    g_variant_unref (unused);
+  }
+  else
+  {
+    g_warning ("Failed calling ClearInhibitors: %s", error->message);
+    g_error_free (error);
+  }
+}
+
+static void
 display_inhibitors (PowerManagerButton *button,
                     GtkWidget *menu)
 {
-  GtkWidget *separator_mi;
-  gboolean needs_seperator = FALSE;
-
   g_return_if_fail (POWER_MANAGER_IS_BUTTON (button));
   g_return_if_fail (GTK_IS_MENU (menu));
 
@@ -1222,13 +1317,18 @@ display_inhibitors (PowerManagerButton *button,
 
       if (g_variant_iter_n_children (iter) > 0)
       {
-        needs_seperator = TRUE;
-      }
+        while (g_variant_iter_next (iter, "s", &value))
+          add_inhibitor_to_menu (button, value);
 
-      /* Add the list of programs to the menu */
-      while (g_variant_iter_next (iter, "s", &value))
-      {
-        add_inhibitor_to_menu (button, value);
+        G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+        GtkWidget *item = gtk_image_menu_item_new_with_mnemonic (_("_Clear inhibitors"));
+        GtkWidget *image = gtk_image_new_from_icon_name ("edit-clear", GTK_ICON_SIZE_MENU);
+        gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
+        G_GNUC_END_IGNORE_DEPRECATIONS
+        gtk_widget_set_tooltip_text (item, _("You can use this if applications fail to remove their inhibitors"));
+        gtk_widget_show (item);
+        gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+        g_signal_connect (G_OBJECT (item), "activate", G_CALLBACK (clear_inhibitors), button);
       }
       g_variant_iter_free (iter);
       g_variant_unref (reply);
@@ -1237,14 +1337,6 @@ display_inhibitors (PowerManagerButton *button,
     {
       g_warning ("failed calling GetInhibitors: %s", error->message);
       g_clear_error (&error);
-    }
-
-    if (needs_seperator)
-    {
-      /* add a separator */
-      separator_mi = gtk_separator_menu_item_new ();
-      gtk_widget_show (separator_mi);
-      gtk_menu_shell_append (GTK_MENU_SHELL (menu), separator_mi);
     }
   }
 }
@@ -1390,6 +1482,9 @@ power_manager_button_show_menu (PowerManagerButton *button,
   display_inhibitors (button, menu);
 
   /* Power manager settings */
+  mi = gtk_separator_menu_item_new ();
+  gtk_widget_show (mi);
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
   mi = gtk_menu_item_new_with_mnemonic (_("_Settings..."));
   gtk_widget_show (mi);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);

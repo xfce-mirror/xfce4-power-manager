@@ -41,6 +41,7 @@
 
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
+#include <libxfce4windowing/libxfce4windowing.h>
 #include <upower.h>
 
 #ifdef ENABLE_X11
@@ -63,8 +64,17 @@ xfpm_power_set_property (GObject *object,
                          GParamSpec *pspec);
 
 static void
+xfpm_power_change_inhibition_dbus (XfpmPower *power,
+                                   gboolean inhibition_dbus);
+static void
+xfpm_power_change_inhibition_fullscreen (XfpmPower *power,
+                                         gboolean inhibition_fullscreen);
+static void
 xfpm_power_change_presentation_mode (XfpmPower *power,
                                      gboolean presentation_mode);
+static void
+xfpm_power_change_do_not_disturb (XfpmPower *power,
+                                  gboolean do_not_disturb);
 
 static void
 xfpm_power_toggle_screensaver (XfpmPower *power);
@@ -88,8 +98,6 @@ xfpm_power_can_hybrid_sleep (XfpmPower *power,
 
 struct XfpmPowerPrivate
 {
-  GDBusConnection *bus;
-
   UpClient *upower;
 
   XfceSystemd *systemd;
@@ -103,8 +111,13 @@ struct XfpmPowerPrivate
 
   XfpmDpms *dpms;
   XfceScreensaver *screensaver;
-  gboolean presentation_mode;
+  XfwScreen *screen;
+  gboolean inhibition_dbus;
   gboolean inhibited;
+  gboolean inhibition_fullscreen;
+  gboolean inhibited_fullscreen;
+  gboolean presentation_mode;
+  gboolean do_not_disturb;
 
   XfpmNotify *notify;
 #ifdef HAVE_POLKIT
@@ -138,7 +151,10 @@ enum
   PROP_CAN_HYBRID_SLEEP,
   PROP_HAS_LID,
   PROP_LID_IS_CLOSED,
+  PROP_INHIBITION_DBUS,
+  PROP_INHIBITION_FULLSCREEN,
   PROP_PRESENTATION_MODE,
+  PROP_DO_NOT_DISTURB,
   N_PROPERTIES
 };
 
@@ -246,6 +262,15 @@ xfpm_power_report_error (XfpmPower *power,
                                  XFPM_NOTIFY_CRITICAL);
 }
 
+#if LIBXFCE4UTIL_CHECK_VERSION(4, 20, 2)
+#define XFCE_SYSTEMD_METHOD(method, systemd, force, error) \
+  (force ? xfce_systemd_##method##_with_flags (systemd, XFCE_SYSTEMD_SKIP_INHIBITORS, error) \
+         : xfce_systemd_##method (systemd, TRUE, error))
+#else
+#define XFCE_SYSTEMD_METHOD(method, systemd, force, error) \
+  xfce_systemd_##method (systemd, TRUE, error)
+#endif
+
 static void
 xfpm_power_sleep (XfpmPower *power,
                   const gchar *sleep_time,
@@ -256,21 +281,38 @@ xfpm_power_sleep (XfpmPower *power,
   XfpmBrightness *brightness;
   gint32 brightness_level = 0;
 
-  if ((power->priv->presentation_mode || power->priv->inhibited) && !force)
+  if (xfpm_power_is_inhibited (power) && !force)
   {
-    GtkWidget *dialog;
-    gboolean ret;
-
-    dialog = gtk_message_dialog_new (NULL,
-                                     GTK_DIALOG_MODAL,
-                                     GTK_MESSAGE_QUESTION,
-                                     GTK_BUTTONS_YES_NO,
-                                     _("An application is currently disabling the automatic sleep. "
-                                       "Doing this action now may damage the working state of this application.\n"
-                                       "Are you sure you want to hibernate the system?"));
-    ret = gtk_dialog_run (GTK_DIALOG (dialog));
+    const gchar *question = _("Do you want to put it to sleep anyway?");
+    gchar *message;
+    if (power->priv->inhibited)
+    {
+      gchar *app_list = g_strjoinv (", ", (gchar **) xfpm_inhibit_get_inhibit_list (power->priv->inhibit));
+      message = g_strdup_printf (_("These apps are currently preventing the system from going to sleep automatically:\n%s\n%s"),
+                                 app_list,
+                                 question);
+      g_free (app_list);
+    }
+    else if (power->priv->presentation_mode)
+    {
+      message = g_strdup_printf (_("Presentation mode is currently preventing the system from going to sleep automatically.\n%s"),
+                                 question);
+    }
+    else if (power->priv->inhibited_fullscreen)
+    {
+      message = g_strdup_printf (_("This fullscreened window is currently preventing the system from going to sleep automatically:\n%s\n%s"),
+                                 xfw_window_get_name (xfw_screen_get_active_window (power->priv->screen)),
+                                 question);
+    }
+    else
+    {
+      message = g_strdup_printf (_("An unknown reason is currently preventing the system from going to sleep automatically.\n%s"),
+                                 question);
+    }
+    GtkWidget *dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s", message);
+    gboolean ret = gtk_dialog_run (GTK_DIALOG (dialog));
     gtk_widget_destroy (dialog);
-
+    g_free (message);
     if (!ret || ret == GTK_RESPONSE_NO)
       return;
   }
@@ -319,7 +361,7 @@ xfpm_power_sleep (XfpmPower *power,
     if (power->priv->systemd != NULL)
     {
       if (xfce_systemd_can_hibernate (power->priv->systemd, NULL, NULL, NULL)
-          && !xfce_systemd_hibernate (power->priv->systemd, TRUE, &error))
+          && !XFCE_SYSTEMD_METHOD (hibernate, power->priv->systemd, force, &error))
       {
         g_warning ("Failed to hibernate via systemd: %s", error->message);
       }
@@ -338,7 +380,7 @@ xfpm_power_sleep (XfpmPower *power,
     if (power->priv->systemd != NULL)
     {
       if (xfce_systemd_can_suspend (power->priv->systemd, NULL, NULL, NULL)
-          && !xfce_systemd_suspend (power->priv->systemd, TRUE, &error))
+          && !XFCE_SYSTEMD_METHOD (suspend, power->priv->systemd, force, &error))
       {
         g_warning ("Failed to suspend via systemd: %s", error->message);
       }
@@ -357,7 +399,7 @@ xfpm_power_sleep (XfpmPower *power,
     if (power->priv->systemd != NULL)
     {
       if (xfce_systemd_can_hybrid_sleep (power->priv->systemd, NULL, NULL, NULL)
-          && !xfce_systemd_hybrid_sleep (power->priv->systemd, TRUE, &error))
+          && !XFCE_SYSTEMD_METHOD (hybrid_sleep, power->priv->systemd, force, &error))
       {
         g_warning ("Failed to hybrid sleep via systemd: %s", error->message);
       }
@@ -846,28 +888,37 @@ xfpm_power_remove_device (XfpmPower *power,
 }
 
 static void
+inhibited_by_some_means_changed (XfpmPower *power,
+                                 gboolean inhibited,
+                                 gboolean global_inhibit_changed)
+{
+  XFPM_DEBUG ("inhibited %s, inhibited_fullscreen %s, presentation_mode %s",
+              power->priv->inhibited ? "TRUE" : "FALSE",
+              power->priv->inhibited_fullscreen ? "TRUE" : "FALSE",
+              power->priv->presentation_mode ? "TRUE" : "FALSE");
+
+  /* either inhibition already occurred, or we don't want to remove it yet */
+  if (!global_inhibit_changed)
+    return;
+
+  xfce_screensaver_inhibit (power->priv->screensaver, inhibited);
+  xfpm_power_toggle_screensaver (power);
+  if (power->priv->dpms != NULL)
+    xfpm_dpms_set_inhibited (power->priv->dpms, inhibited);
+}
+
+static void
 xfpm_power_inhibit_changed_cb (XfpmInhibit *inhibit,
                                gboolean is_inhibit,
                                XfpmPower *power)
 {
-  /* no change, exit */
   if (power->priv->inhibited == is_inhibit)
     return;
 
+  gboolean was_inhibited = xfpm_power_is_inhibited (power);
   power->priv->inhibited = is_inhibit;
-
-  XFPM_DEBUG ("inhibited %s, presentation_mode %s",
-              power->priv->inhibited ? "TRUE" : "FALSE",
-              power->priv->presentation_mode ? "TRUE" : "FALSE");
-
-  /* either inhibition already occurred, or we don't want to remove it yet */
-  if (power->priv->presentation_mode)
-    return;
-
-  xfce_screensaver_inhibit (power->priv->screensaver, is_inhibit);
-  xfpm_power_toggle_screensaver (power);
-  if (power->priv->dpms != NULL)
-    xfpm_dpms_set_inhibited (power->priv->dpms, is_inhibit);
+  gboolean is_inhibited = xfpm_power_is_inhibited (power);
+  inhibited_by_some_means_changed (power, is_inhibit, was_inhibited != is_inhibited);
 }
 
 static void
@@ -1037,10 +1088,29 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                          G_PARAM_READABLE));
 
   g_object_class_install_property (object_class,
+                                   PROP_INHIBITION_DBUS,
+                                   g_param_spec_boolean (INHIBITION_DBUS,
+                                                         NULL, NULL,
+                                                         DEFAULT_INHIBITION_DBUS,
+                                                         XFPM_PARAM_FLAGS));
+  g_object_class_install_property (object_class,
+                                   PROP_INHIBITION_FULLSCREEN,
+                                   g_param_spec_boolean (INHIBITION_FULLSCREEN,
+                                                         NULL, NULL,
+                                                         DEFAULT_INHIBITION_FULLSCREEN,
+                                                         XFPM_PARAM_FLAGS));
+  g_object_class_install_property (object_class,
                                    PROP_PRESENTATION_MODE,
                                    g_param_spec_boolean (PRESENTATION_MODE,
                                                          NULL, NULL,
                                                          DEFAULT_PRESENTATION_MODE,
+                                                         XFPM_PARAM_FLAGS));
+
+  g_object_class_install_property (object_class,
+                                   PROP_DO_NOT_DISTURB,
+                                   g_param_spec_boolean (DO_NOT_DISTURB,
+                                                         NULL, NULL,
+                                                         DEFAULT_DO_NOT_DISTURB,
                                                          XFPM_PARAM_FLAGS));
 #undef XFPM_PARAM_FLAGS
 
@@ -1068,7 +1138,6 @@ xfpm_power_init (XfpmPower *power)
 
   power->priv->presentation_mode = FALSE;
 
-  power->priv->inhibit = xfpm_inhibit_new ();
   power->priv->notify = xfpm_notify_new ();
   power->priv->conf = xfpm_xfconf_new ();
   power->priv->upower = up_client_new ();
@@ -1084,11 +1153,6 @@ xfpm_power_init (XfpmPower *power)
 #ifdef HAVE_POLKIT
   power->priv->polkit = xfpm_polkit_get ();
 #endif
-
-  g_signal_connect_object (power->priv->inhibit, "has-inhibit-changed",
-                           G_CALLBACK (xfpm_power_inhibit_changed_cb), power, 0);
-
-  power->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
   if (error)
   {
@@ -1163,8 +1227,17 @@ xfpm_power_get_property (GObject *object,
     case PROP_LID_IS_CLOSED:
       g_value_set_boolean (value, power->priv->lid_is_closed);
       break;
+    case PROP_INHIBITION_DBUS:
+      g_value_set_boolean (value, power->priv->inhibition_dbus);
+      break;
+    case PROP_INHIBITION_FULLSCREEN:
+      g_value_set_boolean (value, power->priv->inhibition_fullscreen);
+      break;
     case PROP_PRESENTATION_MODE:
       g_value_set_boolean (value, power->priv->presentation_mode);
+      break;
+    case PROP_DO_NOT_DISTURB:
+      g_value_set_boolean (value, power->priv->do_not_disturb);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1182,8 +1255,17 @@ xfpm_power_set_property (GObject *object,
 
   switch (prop_id)
   {
+    case PROP_INHIBITION_DBUS:
+      xfpm_power_change_inhibition_dbus (power, g_value_get_boolean (value));
+      break;
+    case PROP_INHIBITION_FULLSCREEN:
+      xfpm_power_change_inhibition_fullscreen (power, g_value_get_boolean (value));
+      break;
     case PROP_PRESENTATION_MODE:
       xfpm_power_change_presentation_mode (power, g_value_get_boolean (value));
+      break;
+    case PROP_DO_NOT_DISTURB:
+      xfpm_power_change_do_not_disturb (power, g_value_get_boolean (value));
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -1200,7 +1282,10 @@ xfpm_power_finalize (GObject *object)
 
   g_free (power->priv->daemon_version);
 
-  g_object_unref (power->priv->inhibit);
+  if (power->priv->inhibit != NULL)
+    g_object_unref (power->priv->inhibit);
+  if (power->priv->screen != NULL)
+    g_object_unref (power->priv->screen);
   g_object_unref (power->priv->notify);
   g_object_unref (power->priv->conf);
   g_object_unref (power->priv->screensaver);
@@ -1211,8 +1296,6 @@ xfpm_power_finalize (GObject *object)
     g_object_unref (power->priv->systemd);
   if (power->priv->console != NULL)
     g_object_unref (power->priv->console);
-
-  g_object_unref (power->priv->bus);
 
   g_hash_table_destroy (power->priv->batteries);
 
@@ -1230,10 +1313,20 @@ static XfpmPower *
 xfpm_power_new (void)
 {
   XfpmPower *power = XFPM_POWER (g_object_new (XFPM_TYPE_POWER, NULL));
+  XfconfChannel *channel = xfpm_xfconf_get_channel (power->priv->conf);
 
-  xfconf_g_property_bind (xfpm_xfconf_get_channel (power->priv->conf),
+  xfconf_g_property_bind (channel,
+                          XFPM_PROPERTIES_PREFIX INHIBITION_DBUS, G_TYPE_BOOLEAN,
+                          G_OBJECT (power), INHIBITION_DBUS);
+  xfconf_g_property_bind (channel,
+                          XFPM_PROPERTIES_PREFIX INHIBITION_FULLSCREEN, G_TYPE_BOOLEAN,
+                          G_OBJECT (power), INHIBITION_FULLSCREEN);
+  xfconf_g_property_bind (channel,
                           XFPM_PROPERTIES_PREFIX PRESENTATION_MODE, G_TYPE_BOOLEAN,
                           G_OBJECT (power), PRESENTATION_MODE);
+  xfconf_g_property_bind (channel,
+                          XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB, G_TYPE_BOOLEAN,
+                          G_OBJECT (power), DO_NOT_DISTURB);
 
   return power;
 }
@@ -1310,8 +1403,8 @@ xfpm_power_toggle_screensaver (XfpmPower *power)
 
   display = gdk_x11_get_default_xdisplay ();
 
-  /* Presentation mode or inhibited disables blanking */
-  if (power->priv->presentation_mode || power->priv->inhibited)
+  /* inhibition disables blanking */
+  if (xfpm_power_is_inhibited (power))
   {
     if (timeout == -2)
       XGetScreenSaver (display, &timeout, &interval, &prefer_blanking, &allow_exposures);
@@ -1331,6 +1424,121 @@ xfpm_power_toggle_screensaver (XfpmPower *power)
 }
 
 static void
+change_do_not_disturb_notifyd (XfpmPower *power,
+                               gboolean do_not_disturb)
+{
+  XfconfChannel *channel = xfpm_xfconf_get_channel (power->priv->conf);
+  XfconfChannel *channel_notifyd = xfconf_channel_get ("xfce4-notifyd");
+  gboolean do_not_disturb_notifyd;
+
+  if (do_not_disturb)
+  {
+    do_not_disturb_notifyd = xfconf_channel_get_bool (channel_notifyd, "/do-not-disturb", FALSE);
+    xfconf_channel_set_bool (channel_notifyd, "/do-not-disturb", TRUE);
+    xfconf_channel_set_bool (channel, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB "-notifyd", do_not_disturb_notifyd);
+  }
+  else
+  {
+    do_not_disturb_notifyd = xfconf_channel_get_bool (channel, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB "-notifyd", FALSE);
+    if (!do_not_disturb_notifyd)
+      xfconf_channel_set_bool (channel_notifyd, "/do-not-disturb", FALSE);
+    xfconf_channel_reset_property (channel, XFPM_PROPERTIES_PREFIX DO_NOT_DISTURB "-notifyd", TRUE);
+  }
+}
+
+static void
+xfpm_power_change_inhibition_dbus (XfpmPower *power,
+                                   gboolean inhibition_dbus)
+{
+  if (power->priv->inhibition_dbus == inhibition_dbus)
+    return;
+
+  power->priv->inhibition_dbus = inhibition_dbus;
+  XFPM_DEBUG ("inhibition-dbus %s", inhibition_dbus ? "TRUE" : "FALSE");
+
+  if (inhibition_dbus)
+  {
+    power->priv->inhibit = xfpm_inhibit_new ();
+    g_signal_connect_object (power->priv->inhibit, "has-inhibit-changed",
+                             G_CALLBACK (xfpm_power_inhibit_changed_cb), power, 0);
+  }
+  else
+  {
+    xfpm_power_inhibit_changed_cb (power->priv->inhibit, FALSE, power);
+    g_clear_object (&power->priv->inhibit);
+  }
+}
+
+static void
+window_state_changed_changed_cb (XfwWindow *window,
+                                 XfwWindowState changed_mask,
+                                 XfwWindowState new_state,
+                                 XfpmPower *power)
+{
+  gboolean inhibited_fullscreen = xfw_window_is_fullscreen (window);
+  if (power->priv->inhibited_fullscreen == inhibited_fullscreen)
+    return;
+
+  gboolean was_inhibited = xfpm_power_is_inhibited (power);
+  power->priv->inhibited_fullscreen = inhibited_fullscreen;
+  gboolean is_inhibited = xfpm_power_is_inhibited (power);
+  inhibited_by_some_means_changed (power, inhibited_fullscreen, was_inhibited != is_inhibited);
+}
+
+static void
+active_window_changed_cb (XfwScreen *screen,
+                          XfwWindow *previous_window,
+                          XfpmPower *power)
+{
+  gboolean inhibited_fullscreen = FALSE;
+  if (screen != NULL)
+  {
+    XfwWindow *window = xfw_screen_get_active_window (screen);
+    if (window != NULL)
+    {
+      inhibited_fullscreen = xfw_window_is_fullscreen (window);
+      g_signal_connect_object (window, "state-changed",
+                               G_CALLBACK (window_state_changed_changed_cb), power, 0);
+    }
+    if (previous_window != NULL)
+    {
+      g_signal_handlers_disconnect_by_func (previous_window, window_state_changed_changed_cb, power);
+    }
+  }
+
+  if (power->priv->inhibited_fullscreen == inhibited_fullscreen)
+    return;
+
+  gboolean was_inhibited = xfpm_power_is_inhibited (power);
+  power->priv->inhibited_fullscreen = inhibited_fullscreen;
+  gboolean is_inhibited = xfpm_power_is_inhibited (power);
+  inhibited_by_some_means_changed (power, inhibited_fullscreen, was_inhibited != is_inhibited);
+}
+
+static void
+xfpm_power_change_inhibition_fullscreen (XfpmPower *power,
+                                         gboolean inhibition_fullscreen)
+{
+  if (power->priv->inhibition_fullscreen == inhibition_fullscreen)
+    return;
+
+  power->priv->inhibition_fullscreen = inhibition_fullscreen;
+  XFPM_DEBUG ("inhibition-fullscreen %s", inhibition_fullscreen ? "TRUE" : "FALSE");
+
+  if (inhibition_fullscreen)
+  {
+    power->priv->screen = xfw_screen_get_default ();
+    g_signal_connect_object (power->priv->screen, "active-window-changed",
+                             G_CALLBACK (active_window_changed_cb), power, 0);
+  }
+  else
+  {
+    active_window_changed_cb (NULL, NULL, power);
+    g_clear_object (&power->priv->screen);
+  }
+}
+
+static void
 xfpm_power_change_presentation_mode (XfpmPower *power,
                                      gboolean presentation_mode)
 {
@@ -1338,20 +1546,30 @@ xfpm_power_change_presentation_mode (XfpmPower *power,
   if (power->priv->presentation_mode == presentation_mode)
     return;
 
+  gboolean was_inhibited = xfpm_power_is_inhibited (power);
   power->priv->presentation_mode = presentation_mode;
+  gboolean is_inhibited = xfpm_power_is_inhibited (power);
 
-  XFPM_DEBUG ("inhibited %s, presentation_mode %s",
-              power->priv->inhibited ? "TRUE" : "FALSE",
-              power->priv->presentation_mode ? "TRUE" : "FALSE");
+  if (power->priv->do_not_disturb)
+    change_do_not_disturb_notifyd (power, presentation_mode);
 
-  /* either inhibition already occurred, or we don't want to remove it yet */
-  if (power->priv->inhibited)
+  inhibited_by_some_means_changed (power, presentation_mode, was_inhibited != is_inhibited);
+}
+
+static void
+xfpm_power_change_do_not_disturb (XfpmPower *power,
+                                  gboolean do_not_disturb)
+{
+  if (power->priv->do_not_disturb == do_not_disturb)
     return;
 
-  xfce_screensaver_inhibit (power->priv->screensaver, presentation_mode);
-  xfpm_power_toggle_screensaver (power);
-  if (power->priv->dpms != NULL)
-    xfpm_dpms_set_inhibited (power->priv->dpms, presentation_mode);
+  power->priv->do_not_disturb = do_not_disturb;
+  XFPM_DEBUG ("do-not-disturb %s", do_not_disturb ? "TRUE" : "FALSE");
+
+  if (!power->priv->presentation_mode)
+    return;
+
+  change_do_not_disturb_notifyd (power, do_not_disturb);
 }
 
 gboolean
@@ -1359,7 +1577,7 @@ xfpm_power_is_inhibited (XfpmPower *power)
 {
   g_return_val_if_fail (XFPM_IS_POWER (power), FALSE);
 
-  return power->priv->presentation_mode || power->priv->inhibited;
+  return power->priv->presentation_mode || power->priv->inhibited || power->priv->inhibited_fullscreen;
 }
 
 

@@ -1,19 +1,25 @@
 plugin_install_subdir = 'xfce4' / 'panel' / 'plugins'
 
+plugin_sources = [
+  'power-manager-button.c',
+  'power-manager-button.h',
+  'power-manager-config.c',
+  'power-manager-config.h',
+  'power-manager-dialog.c',
+  'power-manager-dialog.h',
+  'power-manager-plugin.c',
+  'power-manager-plugin.h',
+  'scalemenuitem.c',
+  'scalemenuitem.h',
+]
+
+if enable_wayland
+  plugin_sources += wayland_protocols_generated_sources
+endif
+
 shared_module(
   'xfce4powermanager',
-  [
-    'power-manager-button.c',
-    'power-manager-button.h',
-    'power-manager-config.c',
-    'power-manager-config.h',
-    'power-manager-dialog.c',
-    'power-manager-dialog.h',
-    'power-manager-plugin.c',
-    'power-manager-plugin.h',
-    'scalemenuitem.c',
-    'scalemenuitem.h',
-  ],
+  plugin_sources,
   gnu_symbol_visibility: 'hidden',
   c_args: [
     '-DG_LOG_DOMAIN="@0@"'.format('xfce4-power-manager-plugin'),
