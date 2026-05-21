@@ -69,6 +69,8 @@ xfpm_warn (const char *func,
 
 void
 xfpm_debug_init (gboolean debug);
+gboolean
+xfpm_debug_is_enabled (void);
 
 G_END_DECLS
 

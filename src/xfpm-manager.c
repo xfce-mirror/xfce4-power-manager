@@ -928,6 +928,7 @@ xfpm_manager_get_config (XfpmManager *manager)
   g_hash_table_insert (hash, g_strdup ("has-battery"), g_strdup (xfpm_bool_to_string (has_battery)));
   g_hash_table_insert (hash, g_strdup ("has-lid"), g_strdup (xfpm_bool_to_string (has_lid)));
   g_hash_table_insert (hash, g_strdup ("has-brightness"), g_strdup (xfpm_bool_to_string (has_lcd_brightness)));
+  g_hash_table_insert (hash, g_strdup ("debug-enabled"), g_strdup (xfpm_bool_to_string (xfpm_debug_is_enabled ())));
 
   return hash;
 }
