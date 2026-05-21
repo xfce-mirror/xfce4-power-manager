@@ -135,10 +135,10 @@ xfpm_brightness_set_min_level (XfpmBrightness *brightness,
 
   g_return_if_fail (XFPM_BRIGHTNESS (brightness));
 
-  /* MIN_BRIGHTNESS_SLIDER_MIN_LEVEL = auto, we set the minimum as 10% of delta */
+  /* MIN_BRIGHTNESS_SLIDER_MIN_LEVEL = auto, we set the minimum as 1% of delta */
   if (level == MIN_BRIGHTNESS_SLIDER_MIN_LEVEL)
   {
-    priv->min_level = priv->hw_min_level + MAX (priv->step, (priv->max_level - priv->hw_min_level) / 10);
+    priv->min_level = priv->hw_min_level + MAX (priv->step, (priv->max_level - priv->hw_min_level) / 100);
     XFPM_DEBUG ("Setting default min brightness (%d) above hardware min (%d)", priv->min_level, priv->hw_min_level);
     return;
   }

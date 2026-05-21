@@ -230,6 +230,7 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
   gboolean handle_brightness_keys, show_popup;
   guint brightness_step_count;
   gboolean brightness_exponential;
+  gint brightness_min_level;
 
   XFPM_DEBUG_ENUM (type, XFPM_TYPE_BUTTON_KEY, "Received button press event");
 
@@ -243,6 +244,7 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
                 SHOW_BRIGHTNESS_POPUP, &show_popup,
                 BRIGHTNESS_STEP_COUNT, &brightness_step_count,
                 BRIGHTNESS_EXPONENTIAL, &brightness_exponential,
+                BRIGHTNESS_SLIDER_MIN_LEVEL, &brightness_min_level,
                 NULL);
 
   backlight->priv->block = TRUE;
@@ -250,9 +252,11 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
   /* optionally, handle updating the level and setting the screen brightness */
   if (handle_brightness_keys)
   {
+    /* order accounts: default min level depends on step count */
     xfpm_brightness_set_step_count (backlight->priv->brightness,
                                     brightness_step_count,
                                     brightness_exponential);
+    xfpm_brightness_set_min_level (backlight->priv->brightness, brightness_min_level);
     if (type == BUTTON_MON_BRIGHTNESS_UP)
     {
       xfpm_brightness_increase (backlight->priv->brightness);
