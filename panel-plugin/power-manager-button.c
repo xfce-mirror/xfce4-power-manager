@@ -1302,7 +1302,7 @@ display_inhibitors (PowerManagerButton *button,
 
     reply = g_dbus_proxy_call_sync (button->priv->inhibit_proxy,
                                     "GetInhibitors",
-                                    g_variant_new ("()"),
+                                    NULL,
                                     G_DBUS_CALL_FLAGS_NONE,
                                     1000,
                                     NULL,
@@ -1311,13 +1311,12 @@ display_inhibitors (PowerManagerButton *button,
     if (reply != NULL)
     {
       GVariantIter *iter;
-      gchar *value;
+      const gchar *value;
 
       g_variant_get (reply, "(as)", &iter);
-
       if (g_variant_iter_n_children (iter) > 0)
       {
-        while (g_variant_iter_next (iter, "s", &value))
+        while (g_variant_iter_next (iter, "&s", &value))
           add_inhibitor_to_menu (button, value);
 
         G_GNUC_BEGIN_IGNORE_DEPRECATIONS
