@@ -64,6 +64,7 @@ struct _PowerManagerPlugin
   PowerManagerButton *button;
   PowerManagerDialog *dialog;
   PowerManagerConfig *config;
+  GDBusProxy *proxy;
 };
 
 
@@ -100,6 +101,68 @@ power_manager_plugin_init (PowerManagerPlugin *plugin)
 
 
 static void
+get_config_call_ready (GObject *source_object,
+                       GAsyncResult *res,
+                       gpointer data)
+{
+  GError *error = NULL;
+  GVariant *value = g_dbus_proxy_call_finish (G_DBUS_PROXY (source_object), res, &error);
+  if (value != NULL)
+  {
+    GVariantIter *iter;
+    const gchar *key, *val;
+    g_variant_get (value, "(a{ss})", &iter);
+    while (g_variant_iter_next (iter, "{&s&s}", &key, &val))
+    {
+      if (g_strcmp0 (key, "debug-enabled") == 0)
+      {
+        xfpm_debug_init (xfpm_string_to_bool (val));
+        break;
+      }
+    }
+    g_variant_iter_free (iter);
+    g_variant_unref (value);
+  }
+  else
+  {
+    g_warning ("Error calling org.xfce.Power.Manager.GetConfig: %s", error->message);
+    g_error_free (error);
+  }
+}
+
+static void
+g_name_owner_changed (GDBusProxy *proxy)
+{
+  gchar *name = g_dbus_proxy_get_name_owner (proxy);
+  if (name != NULL)
+  {
+    g_dbus_proxy_call (proxy, "GetConfig", NULL, G_DBUS_CALL_FLAGS_NONE, -1, NULL, get_config_call_ready, NULL);
+    g_free (name);
+  }
+}
+
+static void
+xfpm_proxy_ready (GObject *source_object,
+                  GAsyncResult *res,
+                  gpointer data)
+{
+  PowerManagerPlugin *plugin = data;
+  GError *error = NULL;
+
+  plugin->proxy = g_dbus_proxy_new_for_bus_finish (res, &error);
+  if (plugin->proxy != NULL)
+  {
+    g_signal_connect (plugin->proxy, "notify::g-name-owner", G_CALLBACK (g_name_owner_changed), NULL);
+    g_name_owner_changed (plugin->proxy);
+  }
+  else
+  {
+    g_warning ("Error getting org.xfce.Power.Manager proxy: %s", error->message);
+    g_error_free (error);
+  }
+}
+
+static void
 power_manager_plugin_construct (XfcePanelPlugin *panel_plugin)
 {
   PowerManagerPlugin *plugin = POWER_MANAGER_PLUGIN (panel_plugin);
@@ -118,6 +181,17 @@ power_manager_plugin_construct (XfcePanelPlugin *panel_plugin)
   plugin->button = power_manager_button_new (plugin, plugin->config);
   gtk_container_add (GTK_CONTAINER (plugin), GTK_WIDGET (plugin->button));
   power_manager_button_show (plugin->button);
+
+  /* enable/disable debug logs following --debug xfpm option */
+  g_dbus_proxy_new_for_bus (G_BUS_TYPE_SESSION,
+                            G_DBUS_PROXY_FLAGS_NONE,
+                            NULL,
+                            "org.xfce.PowerManager",
+                            "/org/xfce/PowerManager",
+                            "org.xfce.Power.Manager",
+                            NULL,
+                            xfpm_proxy_ready,
+                            plugin);
 }
 
 
@@ -131,6 +205,8 @@ power_manager_plugin_free_data (XfcePanelPlugin *panel_plugin)
     g_object_unref (plugin->dialog);
 
   g_object_unref (plugin->config);
+  if (plugin->proxy != NULL)
+    g_object_unref (plugin->proxy);
 }
 
 

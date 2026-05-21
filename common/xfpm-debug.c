@@ -111,3 +111,9 @@ xfpm_debug_init (gboolean debug)
 {
   enable_debug = debug;
 }
+
+gboolean
+xfpm_debug_is_enabled (void)
+{
+  return enable_debug;
+}
