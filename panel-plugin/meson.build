@@ -30,6 +30,7 @@ shared_module(
   dependencies: [
     glib,
     gtk,
+    libnotify,
     libxfce4panel,
     libxfce4ui,
     libxfce4util,
