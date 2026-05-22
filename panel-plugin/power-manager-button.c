@@ -87,6 +87,8 @@ struct PowerManagerButtonPrivate
   /* display brightness slider widget */
   GtkWidget *range;
 
+  NotifyNotification *brightness_notification;
+
   /* filter range value changed events for snappier UI feedback */
   guint set_level_timeout;
 };
@@ -729,11 +731,20 @@ power_manager_button_scroll_event (GtkWidget *widget,
   {
     gboolean (*scroll_brightness) (XfpmBrightness *) = ev->direction == GDK_SCROLL_UP ? xfpm_brightness_increase
                                                                                       : xfpm_brightness_decrease;
-    if (scroll_brightness (button->priv->brightness) && button->priv->range != NULL)
+    if (scroll_brightness (button->priv->brightness))
     {
       gint32 level;
       if (xfpm_brightness_get_level (button->priv->brightness, &level))
-        gtk_range_set_value (GTK_RANGE (button->priv->range), level);
+      {
+        if (button->priv->range != NULL)
+          gtk_range_set_value (GTK_RANGE (button->priv->range), level);
+
+        xfpm_show_brightness_notification (&button->priv->brightness_notification,
+                                           _("Brightness: %.0f%%"),
+                                           XFPM_DISPLAY_BRIGHTNESS_ICON,
+                                           "brightness",
+                                           (gfloat) 100 * level / xfpm_brightness_get_max_level (button->priv->brightness));
+      }
     }
     return TRUE;
   }
@@ -811,6 +822,7 @@ power_manager_button_init (PowerManagerButton *button)
   gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
   button->priv->brightness = xfpm_brightness_new ();
+  button->priv->brightness_notification = NULL;
   button->priv->set_level_timeout = 0;
 
   button->priv->upower = up_client_new ();
@@ -902,6 +914,8 @@ power_manager_button_finalize (GObject *object)
 
   if (button->priv->brightness != NULL)
     g_object_unref (button->priv->brightness);
+  if (button->priv->brightness_notification != NULL)
+    g_object_unref (button->priv->brightness_notification);
   if (button->priv->set_level_timeout)
   {
     g_source_remove (button->priv->set_level_timeout);

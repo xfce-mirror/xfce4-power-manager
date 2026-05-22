@@ -22,11 +22,11 @@
 #include "xfpm-backlight.h"
 #include "xfpm-button.h"
 #include "xfpm-idle.h"
-#include "xfpm-notify.h"
 #include "xfpm-power.h"
 #include "xfpm-xfconf.h"
 
 #include "common/xfpm-brightness.h"
+#include "common/xfpm-common.h"
 #include "common/xfpm-config.h"
 #include "common/xfpm-debug.h"
 #include "common/xfpm-enum-types.h"
@@ -57,7 +57,6 @@ struct XfpmBacklightPrivate
   XfpmIdle *idle;
   XfpmXfconf *conf;
   XfpmButton *button;
-  XfpmNotify *notify;
 
   NotifyNotification *n;
 
@@ -137,39 +136,6 @@ xfpm_backlight_destroy_popup (gpointer data)
 }
 
 static void
-xfpm_backlight_show_notification (XfpmBacklight *backlight,
-                                  gfloat value)
-{
-  gchar *summary;
-  /* generate a human-readable summary for the notification */
-  summary = g_strdup_printf (_("Brightness: %.0f%%"), value);
-
-  /* create the notification on demand */
-  if (backlight->priv->n == NULL)
-  {
-    backlight->priv->n = xfpm_notify_new_notification (backlight->priv->notify,
-                                                       _("Power Manager"),
-                                                       summary,
-                                                       XFPM_DISPLAY_BRIGHTNESS_ICON,
-                                                       XFPM_NOTIFY_NORMAL);
-  }
-  else
-  {
-    notify_notification_update (backlight->priv->n,
-                                _("Power Manager"),
-                                summary,
-                                XFPM_DISPLAY_BRIGHTNESS_ICON);
-  }
-  g_free (summary);
-
-  /* add the brightness value to the notification */
-  notify_notification_set_hint (backlight->priv->n, "value", g_variant_new_int32 (value));
-
-  /* show the notification */
-  notify_notification_show (backlight->priv->n, NULL);
-}
-
-static void
 xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 {
   gfloat value;
@@ -177,7 +143,11 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
   XFPM_DEBUG ("Level %u", level);
 
   value = (gfloat) 100 * level / backlight->priv->max_level;
-  xfpm_backlight_show_notification (backlight, value);
+  xfpm_show_brightness_notification (&backlight->priv->n,
+                                     _("Brightness: %.0f%%"),
+                                     XFPM_DISPLAY_BRIGHTNESS_ICON,
+                                     "brightness",
+                                     value);
 }
 
 
@@ -227,7 +197,7 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
 {
   gint32 level;
   gboolean ret = TRUE;
-  gboolean handle_brightness_keys, show_popup;
+  gboolean handle_brightness_keys;
   guint brightness_step_count;
   gboolean brightness_exponential;
   gint brightness_min_level;
@@ -241,7 +211,6 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
 
   g_object_get (G_OBJECT (backlight->priv->conf),
                 HANDLE_BRIGHTNESS_KEYS, &handle_brightness_keys,
-                SHOW_BRIGHTNESS_POPUP, &show_popup,
                 BRIGHTNESS_STEP_COUNT, &brightness_step_count,
                 BRIGHTNESS_EXPONENTIAL, &brightness_exponential,
                 BRIGHTNESS_SLIDER_MIN_LEVEL, &brightness_min_level,
@@ -270,8 +239,8 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
   /* get the current brightness level */
   ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
 
-  /* optionally, show the result in a popup (even if it did not change) */
-  if (ret && show_popup)
+  /* show the result in a popup (even if it did not change) */
+  if (ret)
     xfpm_backlight_show (backlight, level);
 }
 
@@ -371,7 +340,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
 
   backlight->priv->brightness = xfpm_brightness_new ();
 
-  backlight->priv->notify = NULL;
   backlight->priv->idle = NULL;
   backlight->priv->conf = NULL;
   backlight->priv->button = NULL;
@@ -388,7 +356,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->conf = xfpm_xfconf_new ();
     backlight->priv->button = xfpm_button_new ();
     backlight->priv->power = xfpm_power_get ();
-    backlight->priv->notify = xfpm_notify_new ();
     backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
     backlight->priv->brightness_switch = DEFAULT_BRIGHTNESS_SWITCH;
 
@@ -567,9 +534,6 @@ xfpm_backlight_finalize (GObject *object)
 
   if (backlight->priv->power)
     g_object_unref (backlight->priv->power);
-
-  if (backlight->priv->notify)
-    g_object_unref (backlight->priv->notify);
 
   G_OBJECT_CLASS (xfpm_backlight_parent_class)->finalize (object);
 }
