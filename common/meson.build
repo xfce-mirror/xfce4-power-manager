@@ -65,8 +65,10 @@ libxfpmcommon = static_library(
   dependencies: [
     glib,
     gtk,
+    libnotify,
     libxfce4util,
     upower_glib,
+    xfconf,
     x11_deps,
     wayland_deps,
     polkit,
