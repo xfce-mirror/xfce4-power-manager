@@ -61,6 +61,12 @@ xfpm_notify_show_notification (XfpmNotify *notify,
                                const gchar *text,
                                const gchar *icon_name,
                                XfpmNotifyUrgency urgency);
+void
+xfpm_notify_show_brightness_notification (XfpmNotify *notify,
+                             const gchar *summary_format,
+                             const gchar *icon_name,
+                             const gchar *synchronous_hint,
+                             gfloat value);
 NotifyNotification *
 xfpm_notify_new_notification (XfpmNotify *notify,
                               const gchar *title,

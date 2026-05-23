@@ -26,7 +26,6 @@
 G_BEGIN_DECLS
 
 typedef void (*XfpmMultiheadListener) (GObject *, gboolean);
-typedef struct _NotifyNotification NotifyNotification;
 
 GdkPixbuf *
 xfpm_icon_load (const gchar *icon_name,
@@ -52,12 +51,6 @@ xfpm_is_multihead_connected (GObject *lifetime);
 void
 xfpm_set_multihead_listener (GObject *lifetime,
                              XfpmMultiheadListener listener);
-void
-xfpm_show_brightness_notification (NotifyNotification **notification,
-                                   const gchar *summary_format,
-                                   const gchar *icon_name,
-                                   const gchar *synchronous_hint,
-                                   gfloat value);
 
 G_END_DECLS
 

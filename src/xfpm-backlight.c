@@ -31,6 +31,7 @@
 #include "common/xfpm-debug.h"
 #include "common/xfpm-enum-types.h"
 #include "common/xfpm-icons.h"
+#include "common/xfpm-notify.h"
 
 #include <gtk/gtk.h>
 #include <libxfce4util/libxfce4util.h>
@@ -57,8 +58,7 @@ struct XfpmBacklightPrivate
   XfpmIdle *idle;
   XfpmXfconf *conf;
   XfpmButton *button;
-
-  NotifyNotification *n;
+  XfpmNotify *notify;
 
   gboolean on_battery;
 
@@ -119,22 +119,6 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
   }
 }
 
-static gboolean
-xfpm_backlight_destroy_popup (gpointer data)
-{
-  XfpmBacklight *backlight;
-
-  backlight = XFPM_BACKLIGHT (data);
-
-  if (backlight->priv->n)
-  {
-    g_object_unref (backlight->priv->n);
-    backlight->priv->n = NULL;
-  }
-
-  return FALSE;
-}
-
 static void
 xfpm_backlight_show (XfpmBacklight *backlight, gint level)
 {
@@ -143,11 +127,11 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
   XFPM_DEBUG ("Level %u", level);
 
   value = (gfloat) 100 * level / backlight->priv->max_level;
-  xfpm_show_brightness_notification (&backlight->priv->n,
-                                     _("Brightness: %.0f%%"),
-                                     XFPM_DISPLAY_BRIGHTNESS_ICON,
-                                     "brightness",
-                                     value);
+  xfpm_notify_show_brightness_notification (backlight->priv->notify,
+                                            _("Brightness: %.0f%%"),
+                                            XFPM_DISPLAY_BRIGHTNESS_ICON,
+                                            "brightness",
+                                            value);
 }
 
 
@@ -344,6 +328,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv->conf = NULL;
   backlight->priv->button = NULL;
   backlight->priv->power = NULL;
+  backlight->priv->notify = NULL;
   backlight->priv->dimmed = FALSE;
   backlight->priv->block = FALSE;
   backlight->priv->brightness_switch_initialized = FALSE;
@@ -356,6 +341,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->conf = xfpm_xfconf_new ();
     backlight->priv->button = xfpm_button_new ();
     backlight->priv->power = xfpm_power_get ();
+    backlight->priv->notify = xfpm_notify_new ();
     backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
     backlight->priv->brightness_switch = DEFAULT_BRIGHTNESS_SWITCH;
 
@@ -497,8 +483,6 @@ xfpm_backlight_finalize (GObject *object)
 
   backlight = XFPM_BACKLIGHT (object);
 
-  xfpm_backlight_destroy_popup (backlight);
-
   if (backlight->priv->idle)
     g_object_unref (backlight->priv->idle);
 
@@ -534,6 +518,9 @@ xfpm_backlight_finalize (GObject *object)
 
   if (backlight->priv->power)
     g_object_unref (backlight->priv->power);
+
+  if (backlight->priv->notify)
+    g_object_unref (backlight->priv->notify);
 
   G_OBJECT_CLASS (xfpm_backlight_parent_class)->finalize (object);
 }

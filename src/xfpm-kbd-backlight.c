@@ -24,6 +24,7 @@
 
 #include "common/xfpm-common.h"
 #include "common/xfpm-debug.h"
+#include "common/xfpm-notify.h"
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -44,7 +45,7 @@ struct XfpmKbdBacklightPrivate
   gint min_level;
   gint step;
 
-  NotifyNotification *n;
+  XfpmNotify *notify;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmKbdBacklight, xfpm_kbd_backlight, G_TYPE_OBJECT)
@@ -129,11 +130,11 @@ xfpm_kbd_backlight_set_level (XfpmKbdBacklight *backlight,
   if (var != NULL)
   {
     gfloat percent = 100.0 * ((gfloat) level / (gfloat) backlight->priv->max_level);
-    xfpm_show_brightness_notification (&backlight->priv->n,
-                                       _("Keyboard Brightness: %.0f%%"),
-                                       "keyboard-brightness",
-                                       "keyboard-brightness",
-                                       percent);
+    xfpm_notify_show_brightness_notification (backlight->priv->notify,
+                                              _("Keyboard Brightness: %.0f%%"),
+                                              "keyboard-brightness",
+                                              "keyboard-brightness",
+                                              percent);
     g_variant_unref (var);
   }
   else
@@ -245,7 +246,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
   backlight->priv->on_battery = FALSE;
   backlight->priv->max_level = 0;
   backlight->priv->min_level = 0;
-  backlight->priv->n = NULL;
+  backlight->priv->notify = NULL;
 
   backlight->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
@@ -279,6 +280,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
   backlight->priv->step = calculate_step (backlight->priv->max_level);
   backlight->priv->power = xfpm_power_get ();
   backlight->priv->button = xfpm_button_new ();
+  backlight->priv->notify = xfpm_notify_new ();
 
   g_signal_connect_object (backlight->priv->button, "button-pressed",
                            G_CALLBACK (xfpm_kbd_backlight_button_pressed_cb), backlight, 0);
@@ -305,8 +307,8 @@ xfpm_kbd_backlight_finalize (GObject *object)
   if (backlight->priv->button)
     g_object_unref (backlight->priv->button);
 
-  if (backlight->priv->n)
-    g_object_unref (backlight->priv->n);
+  if (backlight->priv->notify)
+    g_object_unref (backlight->priv->notify);
 
   if (backlight->priv->proxy)
     g_object_unref (backlight->priv->proxy);
