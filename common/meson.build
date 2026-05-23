@@ -8,6 +8,8 @@ common_sources = [
   'xfpm-enum-glib.h',
   'xfpm-enum.h',
   'xfpm-icons.h',
+  'xfpm-notify.c',
+  'xfpm-notify.h',
   'xfpm-power-common.c',
   'xfpm-power-common.h',
   'xfpm-ppd-common.c',

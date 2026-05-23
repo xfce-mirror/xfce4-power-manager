@@ -20,7 +20,7 @@
 
 #include "xfpm-battery.h"
 #include "xfpm-button.h"
-#include "xfpm-notify.h"
+#include "common/xfpm-notify.h"
 #include "xfpm-xfconf.h"
 
 #include "common/xfpm-common.h"

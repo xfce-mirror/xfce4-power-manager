@@ -30,6 +30,7 @@
 #include "common/xfpm-debug.h"
 #include "common/xfpm-enum-glib.h"
 #include "common/xfpm-icons.h"
+#include "common/xfpm-notify.h"
 #include "common/xfpm-power-common.h"
 
 #include <gtk/gtk.h>
@@ -87,7 +88,7 @@ struct PowerManagerButtonPrivate
   /* display brightness slider widget */
   GtkWidget *range;
 
-  NotifyNotification *brightness_notification;
+  XfpmNotify *notify;
 
   /* filter range value changed events for snappier UI feedback */
   guint set_level_timeout;
@@ -739,11 +740,11 @@ power_manager_button_scroll_event (GtkWidget *widget,
         if (button->priv->range != NULL)
           gtk_range_set_value (GTK_RANGE (button->priv->range), level);
 
-        xfpm_show_brightness_notification (&button->priv->brightness_notification,
-                                           _("Brightness: %.0f%%"),
-                                           XFPM_DISPLAY_BRIGHTNESS_ICON,
-                                           "brightness",
-                                           (gfloat) 100 * level / xfpm_brightness_get_max_level (button->priv->brightness));
+        xfpm_notify_show_brightness_notification (button->priv->notify,
+                                                  _("Brightness: %.0f%%"),
+                                                  XFPM_DISPLAY_BRIGHTNESS_ICON,
+                                                  "brightness",
+                                                  (gfloat) 100 * level / xfpm_brightness_get_max_level (button->priv->brightness));
       }
     }
     return TRUE;
@@ -822,7 +823,7 @@ power_manager_button_init (PowerManagerButton *button)
   gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
   button->priv->brightness = xfpm_brightness_new ();
-  button->priv->brightness_notification = NULL;
+  button->priv->notify = xfpm_notify_new ();
   button->priv->set_level_timeout = 0;
 
   button->priv->upower = up_client_new ();
@@ -914,8 +915,8 @@ power_manager_button_finalize (GObject *object)
 
   if (button->priv->brightness != NULL)
     g_object_unref (button->priv->brightness);
-  if (button->priv->brightness_notification != NULL)
-    g_object_unref (button->priv->brightness_notification);
+  if (button->priv->notify != NULL)
+    g_object_unref (button->priv->notify);
   if (button->priv->set_level_timeout)
   {
     g_source_remove (button->priv->set_level_timeout);
