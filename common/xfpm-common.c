@@ -23,7 +23,6 @@
 #endif
 
 #include "xfpm-common.h"
-#include "xfpm-config.h"
 #include "xfpm-debug.h"
 
 #ifdef ENABLE_X11
@@ -37,9 +36,7 @@
 #include <gdk/gdkwayland.h>
 #endif
 
-#include <libnotify/notify.h>
 #include <libxfce4util/libxfce4util.h>
-#include <xfconf/xfconf.h>
 
 const gchar *
 xfpm_bool_to_string (gboolean value)
@@ -134,62 +131,6 @@ xfpm_about (gpointer data)
                          "website", "https://docs.xfce.org/xfce/xfce4-power-manager/start",
                          "logo-icon-name", "org.xfce.powermanager",
                          NULL);
-}
-
-void
-xfpm_show_brightness_notification (NotifyNotification **notification,
-                                   const gchar *summary_format,
-                                   const gchar *icon_name,
-                                   const gchar *synchronous_hint,
-                                   gfloat value)
-{
-  gchar *summary;
-
-  g_return_if_fail (notification != NULL);
-  g_return_if_fail (summary_format != NULL);
-  g_return_if_fail (icon_name != NULL);
-
-  if (!xfconf_channel_get_bool (xfconf_channel_get (XFPM_CHANNEL),
-                                XFPM_PROPERTIES_PREFIX SHOW_BRIGHTNESS_POPUP,
-                                DEFAULT_SHOW_BRIGHTNESS_POPUP))
-    return;
-
-  if (!notify_is_initted ())
-    notify_init ("xfce4-power-manager");
-
-  summary = g_strdup_printf (summary_format, value);
-
-  if (*notification == NULL)
-  {
-    *notification = notify_notification_new (_("Power Manager"),
-                                             summary,
-                                             icon_name);
-    notify_notification_set_hint (*notification,
-                                  "transient",
-                                  g_variant_new_boolean (FALSE));
-    notify_notification_set_hint (*notification,
-                                  "image-path",
-                                  g_variant_new_string (icon_name));
-    notify_notification_set_urgency (*notification, NOTIFY_URGENCY_NORMAL);
-  }
-  else
-  {
-    notify_notification_update (*notification,
-                                _("Power Manager"),
-                                summary,
-                                icon_name);
-  }
-
-  g_free (summary);
-
-  if (synchronous_hint != NULL)
-    notify_notification_set_hint (*notification,
-                                  "x-canonical-private-synchronous",
-                                  g_variant_new_string (synchronous_hint));
-  notify_notification_set_hint (*notification,
-                                "value",
-                                g_variant_new_int32 ((gint32) (value + 0.5)));
-  notify_notification_show (*notification, NULL);
 }
 
 GdkPixbuf *

@@ -21,9 +21,10 @@
 #include "xfpm-notify.h"
 
 #include "common/xfpm-common.h"
-#include "libdbus/xfpm-dbus-monitor.h"
+#include "common/xfpm-config.h"
 
 #include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 
 static void
 xfpm_notify_finalize (GObject *object);
@@ -36,13 +37,14 @@ xfpm_notify_new_notification_internal (const gchar *title,
 
 struct XfpmNotifyPrivate
 {
-  XfpmDBusMonitor *monitor;
-
   NotifyNotification *notification;
   NotifyNotification *critical;
+  NotifyNotification *brightness;
+  NotifyNotification *kbd_brightness;
 
   gulong critical_id;
   gulong notify_id;
+  guint watch_id;
 
   gboolean supports_actions;
   gboolean supports_sync; /* For x-canonical-private-synchronous */
@@ -77,14 +79,12 @@ xfpm_notify_get_server_caps (XfpmNotify *notify)
 }
 
 static void
-xfpm_notify_check_server (XfpmDBusMonitor *monitor,
-                          gchar *service_name,
-                          gboolean connected,
-                          gboolean on_session,
-                          XfpmNotify *notify)
+xfpm_notify_name_appeared (GDBusConnection *connection,
+                           const gchar *name,
+                           const gchar *name_owner,
+                           gpointer user_data)
 {
-  if (g_strcmp0 (service_name, "org.freedesktop.Notifications") == 0 && on_session && connected)
-    xfpm_notify_get_server_caps (notify);
+  xfpm_notify_get_server_caps (XFPM_NOTIFY (user_data));
 }
 
 static void
@@ -139,15 +139,23 @@ xfpm_notify_init (XfpmNotify *notify)
 {
   notify->priv = xfpm_notify_get_instance_private (notify);
 
+  if (!notify_is_initted ())
+    notify_init ("xfce4-power-manager");
+
   notify->priv->notification = NULL;
   notify->priv->critical = NULL;
+  notify->priv->brightness = NULL;
+  notify->priv->kbd_brightness = NULL;
   notify->priv->critical_id = 0;
   notify->priv->notify_id = 0;
 
-  notify->priv->monitor = xfpm_dbus_monitor_new ();
-  xfpm_dbus_monitor_add_service (notify->priv->monitor, G_BUS_TYPE_SESSION, "org.freedesktop.Notifications");
-  g_signal_connect_object (notify->priv->monitor, "service-connection-changed",
-                           G_CALLBACK (xfpm_notify_check_server), notify, 0);
+  notify->priv->watch_id = g_bus_watch_name (G_BUS_TYPE_SESSION,
+                                             "org.freedesktop.Notifications",
+                                             G_BUS_NAME_WATCHER_FLAGS_NONE,
+                                             xfpm_notify_name_appeared,
+                                             NULL,
+                                             notify,
+                                             NULL);
 
   xfpm_notify_get_server_caps (notify);
 }
@@ -159,6 +167,11 @@ xfpm_notify_finalize (GObject *object)
 
   xfpm_notify_close_normal (notify);
   xfpm_notify_close_critical (notify);
+  g_clear_object (&notify->priv->brightness);
+  g_clear_object (&notify->priv->kbd_brightness);
+
+  if (notify->priv->watch_id != 0)
+    g_bus_unwatch_name (notify->priv->watch_id);
 
   G_OBJECT_CLASS (xfpm_notify_parent_class)->finalize (object);
 }
@@ -259,6 +272,58 @@ xfpm_notify_show_notification (XfpmNotify *notify,
   xfpm_notify_close_notification (notify);
   n = xfpm_notify_new_notification_internal (title, text, icon_name, urgency);
   xfpm_notify_present_notification (notify, n);
+}
+
+void
+xfpm_notify_show_brightness_notification (XfpmNotify *notify,
+                             const gchar *summary_format,
+                             const gchar *icon_name,
+                             const gchar *synchronous_hint,
+                             gfloat value)
+{
+  NotifyNotification **notification;
+  gchar *summary;
+
+  g_return_if_fail (XFPM_IS_NOTIFY (notify));
+  g_return_if_fail (summary_format != NULL);
+  g_return_if_fail (icon_name != NULL);
+
+  if (!xfconf_channel_get_bool (xfconf_channel_get (XFPM_CHANNEL),
+                                XFPM_PROPERTIES_PREFIX SHOW_BRIGHTNESS_POPUP,
+                                DEFAULT_SHOW_BRIGHTNESS_POPUP))
+    return;
+
+  notification = g_strcmp0 (synchronous_hint, "keyboard-brightness") == 0
+                   ? &notify->priv->kbd_brightness
+                   : &notify->priv->brightness;
+
+  summary = g_strdup_printf (summary_format, value);
+
+  if (*notification == NULL)
+  {
+    *notification = xfpm_notify_new_notification_internal (_("Power Manager"),
+                                                           summary,
+                                                           icon_name,
+                                                           XFPM_NOTIFY_NORMAL);
+  }
+  else
+  {
+    notify_notification_update (*notification,
+                                _("Power Manager"),
+                                summary,
+                                icon_name);
+  }
+
+  g_free (summary);
+
+  if (synchronous_hint != NULL)
+    notify_notification_set_hint (*notification,
+                                  "x-canonical-private-synchronous",
+                                  g_variant_new_string (synchronous_hint));
+  notify_notification_set_hint (*notification,
+                                "value",
+                                g_variant_new_int32 ((gint32) (value + 0.5)));
+  notify_notification_show (*notification, NULL);
 }
 
 NotifyNotification *

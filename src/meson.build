@@ -18,8 +18,6 @@ xfpm_sources = [
   'xfpm-main.c',
   'xfpm-manager.c',
   'xfpm-manager.h',
-  'xfpm-notify.c',
-  'xfpm-notify.h',
   'xfpm-polkit.c',
   'xfpm-polkit.h',
   'xfpm-power.c',
