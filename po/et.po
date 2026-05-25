@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-05-21 00:54+0200\n"
+"POT-Creation-Date: 2026-05-22 00:54+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Priit Jõerüüt <transifex@joeruut.com>, 2020-2021,2023-2026\n"
 "Language-Team: Estonian (http://app.transifex.com/xfce/xfce4-power-manager/language/et/)\n"
@@ -83,158 +83,162 @@ msgstr "Kui vajutad talveunenuppu:"
 msgid "When battery button is pressed:"
 msgstr "Kui vajutad aku nuppu:"
 
-#: data/interfaces/xfpm-settings.ui:507
-msgid "Exponential"
-msgstr "Eksponentsiaalne"
-
-#: data/interfaces/xfpm-settings.ui:529
-msgid "Brightness step count:"
-msgstr "Ereduse sammude arv:"
-
-#: data/interfaces/xfpm-settings.ui:540
-msgid "Handle display brightness _keys"
-msgstr "Juhi kuvari heleduse _klahve"
-
-#: data/interfaces/xfpm-settings.ui:563
+#: data/interfaces/xfpm-settings.ui:487
 msgid "<b>Buttons</b>"
 msgstr "<b>Nupud</b>"
 
-#: data/interfaces/xfpm-settings.ui:597
+#: data/interfaces/xfpm-settings.ui:521
 msgid "Status notifications"
 msgstr "Olekuteatised"
 
-#: data/interfaces/xfpm-settings.ui:633
+#: data/interfaces/xfpm-settings.ui:557
 msgid "<b>Appearance</b>"
 msgstr "<b>Välimus</b>"
 
-#: data/interfaces/xfpm-settings.ui:663
+#: data/interfaces/xfpm-settings.ui:587
 msgid ""
 "This is the mechanism by which applications send inhibit requests to "
 "xfce4-power-manager, such as when you're watching a video in a web browser. "
 "These applications may fail to send an un-inhibit request afterward, so you "
 "may want to disable this if you encounter recurring issues."
-msgstr ""
+msgstr "See on viis, kuidas rakendused saavad vooluhalduse keelust vabastamise päringuid teenusele xfce4-power-manager. Näiteks teeb video vaatamise ajal seda sinu veebibrauser. Need rakendused võivad hiljem jääda hätta selle päringu tühistamisel ja siin saad probleemide ilmnemisel seda teha käsitsi."
 
-#: data/interfaces/xfpm-settings.ui:668
+#: data/interfaces/xfpm-settings.ui:592
 msgid "Inhibition via D-Bus"
-msgstr ""
+msgstr "Keelamine D-Busi kaudu"
 
-#: data/interfaces/xfpm-settings.ui:705
+#: data/interfaces/xfpm-settings.ui:629
 msgid "Inhibit when a window is fullscreened"
-msgstr ""
+msgstr "Keela, kui aken on täisvaates"
 
-#: data/interfaces/xfpm-settings.ui:742
+#: data/interfaces/xfpm-settings.ui:666
 msgid "Presentation mode"
 msgstr ""
 
-#: data/interfaces/xfpm-settings.ui:780
+#: data/interfaces/xfpm-settings.ui:704
 msgid "Disable desktop notifications"
 msgstr ""
 
-#: data/interfaces/xfpm-settings.ui:815
+#: data/interfaces/xfpm-settings.ui:739
 msgid "<b>Inhibition</b>"
-msgstr ""
+msgstr "<b>Vooluhalduse kasutuse keelamine</b>"
 
-#: data/interfaces/xfpm-settings.ui:835
+#: data/interfaces/xfpm-settings.ui:759
 msgid "General"
 msgstr "Üldine"
 
-#: data/interfaces/xfpm-settings.ui:880 data/interfaces/xfpm-settings.ui:1144
+#: data/interfaces/xfpm-settings.ui:804 data/interfaces/xfpm-settings.ui:1068
 msgid "When inactive for"
 msgstr "Kui nii kaua tegevusetu"
 
-#: data/interfaces/xfpm-settings.ui:952 data/interfaces/xfpm-settings.ui:1216
+#: data/interfaces/xfpm-settings.ui:876 data/interfaces/xfpm-settings.ui:1140
 msgid "System sleep mode:"
 msgstr "Süsteemi unerežiim:"
 
-#: data/interfaces/xfpm-settings.ui:964 data/interfaces/xfpm-settings.ui:1228
+#: data/interfaces/xfpm-settings.ui:888 data/interfaces/xfpm-settings.ui:1152
 msgid "<b>System power saving</b>"
 msgstr "<b>Süsteemi voolusääst</b>"
 
-#: data/interfaces/xfpm-settings.ui:979 data/interfaces/xfpm-settings.ui:1129
+#: data/interfaces/xfpm-settings.ui:903 data/interfaces/xfpm-settings.ui:1053
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Sülearvuti kaas</b>"
 
-#: data/interfaces/xfpm-settings.ui:994 data/interfaces/xfpm-settings.ui:1084
+#: data/interfaces/xfpm-settings.ui:918 data/interfaces/xfpm-settings.ui:1008
 msgid "When laptop lid is closed:"
 msgstr "Kui sülearvuti kaas suletakse:"
 
-#: data/interfaces/xfpm-settings.ui:1021 data/interfaces/xfpm-settings.ui:1111
+#: data/interfaces/xfpm-settings.ui:945 data/interfaces/xfpm-settings.ui:1035
 msgid "Execute action if an external display is connected"
 msgstr "Käivita tegevus, vaid välise monitori ühendamisel"
 
-#: data/interfaces/xfpm-settings.ui:1038 data/interfaces/xfpm-settings.ui:1242
+#: data/interfaces/xfpm-settings.ui:962 data/interfaces/xfpm-settings.ui:1166
 msgid "<b>Power profile</b>"
 msgstr "<b>Toiteprofiil</b>"
 
-#: data/interfaces/xfpm-settings.ui:1070 data/interfaces/xfpm-settings.ui:1806
+#: data/interfaces/xfpm-settings.ui:994 data/interfaces/xfpm-settings.ui:1730
 msgid "On battery"
 msgstr "Akutoitel"
 
-#: data/interfaces/xfpm-settings.ui:1274 data/interfaces/xfpm-settings.ui:2059
+#: data/interfaces/xfpm-settings.ui:1198 data/interfaces/xfpm-settings.ui:1983
 #: common/xfpm-power-common.c:412
 msgid "Plugged in"
 msgstr "Ühendatud"
 
-#: data/interfaces/xfpm-settings.ui:1310
+#: data/interfaces/xfpm-settings.ui:1234
 msgid "Critical battery power level:"
 msgstr "Aku kriitiline täitumus:"
 
-#: data/interfaces/xfpm-settings.ui:1340 settings/xfpm-settings.c:227
+#: data/interfaces/xfpm-settings.ui:1264 settings/xfpm-settings.c:227
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1377
+#: data/interfaces/xfpm-settings.ui:1301
 msgid "On critical battery power:"
 msgstr "Aku kriitilise täitumuse korral:"
 
-#: data/interfaces/xfpm-settings.ui:1416
+#: data/interfaces/xfpm-settings.ui:1340
 msgid "<b>Critical power</b>"
 msgstr "<b>Kriitiline täitumus</b>"
 
-#: data/interfaces/xfpm-settings.ui:1445
+#: data/interfaces/xfpm-settings.ui:1369
 msgid "Lock screen when system is going to sleep"
 msgstr "Lukusta ekraan, kui arvuti uinub"
 
-#: data/interfaces/xfpm-settings.ui:1464
+#: data/interfaces/xfpm-settings.ui:1388
 msgid "<b>Security</b>"
 msgstr "<b>Turvalisus</b>"
 
-#: data/interfaces/xfpm-settings.ui:1484
+#: data/interfaces/xfpm-settings.ui:1408
 msgid "System"
 msgstr "Süsteem"
 
-#: data/interfaces/xfpm-settings.ui:1523
+#: data/interfaces/xfpm-settings.ui:1447
 msgid "<b>Display power management</b>"
 msgstr "<b>Ekraani toitehaldus</b>"
 
-#: data/interfaces/xfpm-settings.ui:1536
+#: data/interfaces/xfpm-settings.ui:1460
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr "Lase graafikaserveri asemel vooluhalduril hallata monitori toitehaldust (DPMS)"
 
-#: data/interfaces/xfpm-settings.ui:1611 data/interfaces/xfpm-settings.ui:1820
+#: data/interfaces/xfpm-settings.ui:1535 data/interfaces/xfpm-settings.ui:1744
 msgid "Put to sleep after"
 msgstr "Pane kuvar uinuma pärast"
 
-#: data/interfaces/xfpm-settings.ui:1624 data/interfaces/xfpm-settings.ui:1833
+#: data/interfaces/xfpm-settings.ui:1548 data/interfaces/xfpm-settings.ui:1757
 msgid "Switch off after"
 msgstr "Lülita välja pärast"
 
-#: data/interfaces/xfpm-settings.ui:1681 data/interfaces/xfpm-settings.ui:1862
+#: data/interfaces/xfpm-settings.ui:1605 data/interfaces/xfpm-settings.ui:1786
 msgid "On inactivity reduce to"
 msgstr "Tegevusetuse korral vähenda tasemeni"
 
-#: data/interfaces/xfpm-settings.ui:1694 data/interfaces/xfpm-settings.ui:1875
+#: data/interfaces/xfpm-settings.ui:1618 data/interfaces/xfpm-settings.ui:1799
 msgid "Reduce after"
 msgstr "Vähenda pärast"
 
-#: data/interfaces/xfpm-settings.ui:1793 data/interfaces/xfpm-settings.ui:1846
+#: data/interfaces/xfpm-settings.ui:1717 data/interfaces/xfpm-settings.ui:1770
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Heleduse vähendamine</b>"
 
+#: data/interfaces/xfpm-settings.ui:2005
+msgid "<b>Manual brightness control</b>"
+msgstr ""
+
+#: data/interfaces/xfpm-settings.ui:2019
+msgid "Handle display brightness _keys"
+msgstr "Juhi kuvari heleduse _klahve"
+
+#: data/interfaces/xfpm-settings.ui:2048
+msgid "Brightness step count:"
+msgstr "Ereduse sammude arv:"
+
 #: data/interfaces/xfpm-settings.ui:2079
+msgid "Exponential"
+msgstr "Eksponentsiaalne"
+
+#: data/interfaces/xfpm-settings.ui:2112
 msgid "Display"
 msgstr "Monitor"
 
@@ -479,7 +483,7 @@ msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;br
 
 #: common/xfpm-common.c:129
 msgid "translator-credits"
-msgstr "Kristjan Siimson <kristjan.siimson@gmail.com>\nPriit Jõerüüt 2020-2025"
+msgstr "Kristjan Siimson <kristjan.siimson@gmail.com>\nPriit Jõerüüt 2020-2026"
 
 #: common/xfpm-power-common.c:39 common/xfpm-power-common.c:62
 msgid "Battery"
@@ -984,23 +988,23 @@ msgstr "Kuva lisatud seadmete akutaset"
 msgid "%s is currently inhibiting power management"
 msgstr "Hetkel keelab vooluhalduse kasutuse %s"
 
-#: panel-plugin/power-manager-button.c:1324
+#: panel-plugin/power-manager-button.c:1323
 msgid "_Clear inhibitors"
-msgstr ""
+msgstr "_Eemalda vooluhalduse kasutuse keelud"
 
-#: panel-plugin/power-manager-button.c:1328
+#: panel-plugin/power-manager-button.c:1327
 msgid "You can use this if applications fail to remove their inhibitors"
-msgstr ""
+msgstr "Sa võid kasutada seda funktsionaalust, kui rakendused ise ei suuda keelde eemaldada"
 
-#: panel-plugin/power-manager-button.c:1443
+#: panel-plugin/power-manager-button.c:1442
 msgid "<b>Display brightness</b>"
 msgstr "<b>Monitori heledus</b>"
 
-#: panel-plugin/power-manager-button.c:1468
+#: panel-plugin/power-manager-button.c:1467
 msgid "Presentation _mode"
 msgstr "Esitlus_režiim"
 
-#: panel-plugin/power-manager-button.c:1488
+#: panel-plugin/power-manager-button.c:1487
 msgid "_Settings..."
 msgstr "_Seadistused..."
 
