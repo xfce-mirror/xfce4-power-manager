@@ -39,8 +39,6 @@ struct XfpmNotifyPrivate
 {
   NotifyNotification *notification;
   NotifyNotification *critical;
-  NotifyNotification *brightness;
-  NotifyNotification *kbd_brightness;
 
   gulong critical_id;
   gulong notify_id;
@@ -144,8 +142,6 @@ xfpm_notify_init (XfpmNotify *notify)
 
   notify->priv->notification = NULL;
   notify->priv->critical = NULL;
-  notify->priv->brightness = NULL;
-  notify->priv->kbd_brightness = NULL;
   notify->priv->critical_id = 0;
   notify->priv->notify_id = 0;
 
@@ -167,8 +163,6 @@ xfpm_notify_finalize (GObject *object)
 
   xfpm_notify_close_normal (notify);
   xfpm_notify_close_critical (notify);
-  g_clear_object (&notify->priv->brightness);
-  g_clear_object (&notify->priv->kbd_brightness);
 
   if (notify->priv->watch_id != 0)
     g_bus_unwatch_name (notify->priv->watch_id);
@@ -276,15 +270,15 @@ xfpm_notify_show_notification (XfpmNotify *notify,
 
 void
 xfpm_notify_show_brightness_notification (XfpmNotify *notify,
-                             const gchar *summary_format,
-                             const gchar *icon_name,
-                             const gchar *synchronous_hint,
-                             gfloat value)
+                                          NotifyNotification **notification,
+                                          const gchar *summary_format,
+                                          const gchar *icon_name,
+                                          gfloat value)
 {
-  NotifyNotification **notification;
   gchar *summary;
 
   g_return_if_fail (XFPM_IS_NOTIFY (notify));
+  g_return_if_fail (notification != NULL);
   g_return_if_fail (summary_format != NULL);
   g_return_if_fail (icon_name != NULL);
 
@@ -292,10 +286,6 @@ xfpm_notify_show_brightness_notification (XfpmNotify *notify,
                                 XFPM_PROPERTIES_PREFIX SHOW_BRIGHTNESS_POPUP,
                                 DEFAULT_SHOW_BRIGHTNESS_POPUP))
     return;
-
-  notification = g_strcmp0 (synchronous_hint, "keyboard-brightness") == 0
-                   ? &notify->priv->kbd_brightness
-                   : &notify->priv->brightness;
 
   summary = g_strdup_printf (summary_format, value);
 
@@ -316,10 +306,6 @@ xfpm_notify_show_brightness_notification (XfpmNotify *notify,
 
   g_free (summary);
 
-  if (synchronous_hint != NULL)
-    notify_notification_set_hint (*notification,
-                                  "x-canonical-private-synchronous",
-                                  g_variant_new_string (synchronous_hint));
   notify_notification_set_hint (*notification,
                                 "value",
                                 g_variant_new_int32 ((gint32) (value + 0.5)));
