@@ -18,6 +18,10 @@
         <arg direction="out" name="version" type="s"/>
         <arg direction="out" name="vendor" type="s"/>
     </method>
+
+    <method name="ShowBrightnessNotification">
+        <arg direction="in" name="value" type="d"/>
+    </method>
 	
     </interface>
 </node>

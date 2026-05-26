@@ -59,6 +59,7 @@ struct XfpmBacklightPrivate
   XfpmXfconf *conf;
   XfpmButton *button;
   XfpmNotify *notify;
+  NotifyNotification *brightness_notification;
 
   gboolean on_battery;
 
@@ -127,13 +128,21 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
   XFPM_DEBUG ("Level %u", level);
 
   value = (gfloat) 100 * level / backlight->priv->max_level;
-  xfpm_notify_show_brightness_notification (backlight->priv->notify,
-                                            _("Brightness: %.0f%%"),
-                                            XFPM_DISPLAY_BRIGHTNESS_ICON,
-                                            "brightness",
-                                            value);
+  xfpm_backlight_show_brightness_notification (backlight, value);
 }
 
+void
+xfpm_backlight_show_brightness_notification (XfpmBacklight *backlight,
+                                             gdouble value)
+{
+  g_return_if_fail (XFPM_IS_BACKLIGHT (backlight));
+
+  xfpm_notify_show_brightness_notification (backlight->priv->notify,
+                                            &backlight->priv->brightness_notification,
+                                            _("Brightness: %.0f%%"),
+                                            XFPM_DISPLAY_BRIGHTNESS_ICON,
+                                            value);
+}
 
 static void
 xfpm_backlight_alarm_timeout_cb (XfpmIdle *idle,
@@ -329,6 +338,7 @@ xfpm_backlight_init (XfpmBacklight *backlight)
   backlight->priv->button = NULL;
   backlight->priv->power = NULL;
   backlight->priv->notify = NULL;
+  backlight->priv->brightness_notification = NULL;
   backlight->priv->dimmed = FALSE;
   backlight->priv->block = FALSE;
   backlight->priv->brightness_switch_initialized = FALSE;
@@ -521,6 +531,9 @@ xfpm_backlight_finalize (GObject *object)
 
   if (backlight->priv->notify)
     g_object_unref (backlight->priv->notify);
+
+  if (backlight->priv->brightness_notification)
+    g_object_unref (backlight->priv->brightness_notification);
 
   G_OBJECT_CLASS (xfpm_backlight_parent_class)->finalize (object);
 }

@@ -46,6 +46,7 @@ struct XfpmKbdBacklightPrivate
   gint step;
 
   XfpmNotify *notify;
+  NotifyNotification *brightness_notification;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmKbdBacklight, xfpm_kbd_backlight, G_TYPE_OBJECT)
@@ -131,8 +132,8 @@ xfpm_kbd_backlight_set_level (XfpmKbdBacklight *backlight,
   {
     gfloat percent = 100.0 * ((gfloat) level / (gfloat) backlight->priv->max_level);
     xfpm_notify_show_brightness_notification (backlight->priv->notify,
+                                              &backlight->priv->brightness_notification,
                                               _("Keyboard Brightness: %.0f%%"),
-                                              "keyboard-brightness",
                                               "keyboard-brightness",
                                               percent);
     g_variant_unref (var);
@@ -247,6 +248,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
   backlight->priv->max_level = 0;
   backlight->priv->min_level = 0;
   backlight->priv->notify = NULL;
+  backlight->priv->brightness_notification = NULL;
 
   backlight->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
@@ -309,6 +311,9 @@ xfpm_kbd_backlight_finalize (GObject *object)
 
   if (backlight->priv->notify)
     g_object_unref (backlight->priv->notify);
+
+  if (backlight->priv->brightness_notification)
+    g_object_unref (backlight->priv->brightness_notification);
 
   if (backlight->priv->proxy)
     g_object_unref (backlight->priv->proxy);
