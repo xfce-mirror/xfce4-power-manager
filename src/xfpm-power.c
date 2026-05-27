@@ -24,7 +24,7 @@
 #include "xfpm-errors.h"
 #include "xfpm-idle.h"
 #include "xfpm-inhibit.h"
-#include "xfpm-notify.h"
+#include "common/xfpm-notify.h"
 #include "xfpm-polkit.h"
 #include "xfpm-power.h"
 #include "xfpm-suspend.h"
