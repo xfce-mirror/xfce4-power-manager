@@ -20,7 +20,6 @@
 
 #include "xfpm-battery.h"
 #include "xfpm-button.h"
-#include "common/xfpm-notify.h"
 #include "xfpm-xfconf.h"
 
 #include "common/xfpm-common.h"
@@ -28,6 +27,7 @@
 #include "common/xfpm-debug.h"
 #include "common/xfpm-enum-types.h"
 #include "common/xfpm-icons.h"
+#include "common/xfpm-notify.h"
 #include "common/xfpm-power-common.h"
 #include "libdbus/xfpm-dbus.h"
 
