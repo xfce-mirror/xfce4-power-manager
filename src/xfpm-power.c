@@ -24,7 +24,6 @@
 #include "xfpm-errors.h"
 #include "xfpm-idle.h"
 #include "xfpm-inhibit.h"
-#include "common/xfpm-notify.h"
 #include "xfpm-polkit.h"
 #include "xfpm-power.h"
 #include "xfpm-suspend.h"
@@ -36,6 +35,7 @@
 #include "common/xfpm-debug.h"
 #include "common/xfpm-enum-types.h"
 #include "common/xfpm-icons.h"
+#include "common/xfpm-notify.h"
 #include "common/xfpm-power-common.h"
 #include "libdbus/xfpm-dbus.h"
 
