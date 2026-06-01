@@ -20,10 +20,11 @@
 
 #include "xfpm-button.h"
 #include "xfpm-kbd-backlight.h"
-#include "xfpm-notify.h"
 #include "xfpm-power.h"
 
+#include "common/xfpm-common.h"
 #include "common/xfpm-debug.h"
+#include "common/xfpm-notify.h"
 
 #include <libxfce4util/libxfce4util.h>
 
@@ -45,7 +46,7 @@ struct XfpmKbdBacklightPrivate
   gint step;
 
   XfpmNotify *notify;
-  NotifyNotification *n;
+  NotifyNotification *brightness_notification;
 };
 
 G_DEFINE_TYPE_WITH_PRIVATE (XfpmKbdBacklight, xfpm_kbd_backlight, G_TYPE_OBJECT)
@@ -92,30 +93,6 @@ xfpm_kbd_backlight_init_max_level (XfpmKbdBacklight *backlight)
 }
 
 
-static void
-xfpm_kbd_backlight_show_notification (XfpmKbdBacklight *self,
-                                      gfloat value)
-{
-  if (self->priv->n == NULL)
-  {
-    /* generate a human-readable summary for the notification */
-    gchar *summary = g_strdup_printf (_("Keyboard Brightness: %.0f%%"), value);
-    self->priv->n = xfpm_notify_new_notification (self->priv->notify,
-                                                  _("Power Manager"),
-                                                  summary,
-                                                  "keyboard-brightness",
-                                                  XFPM_NOTIFY_NORMAL);
-    g_free (summary);
-  }
-
-  /* add the brightness value to the notification */
-  notify_notification_set_hint (self->priv->n, "value", g_variant_new_int32 (value));
-
-  /* show the notification */
-  notify_notification_show (self->priv->n, NULL);
-}
-
-
 static gint
 xfpm_kbd_backlight_get_level (XfpmKbdBacklight *backlight)
 {
@@ -154,7 +131,11 @@ xfpm_kbd_backlight_set_level (XfpmKbdBacklight *backlight,
   if (var != NULL)
   {
     gfloat percent = 100.0 * ((gfloat) level / (gfloat) backlight->priv->max_level);
-    xfpm_kbd_backlight_show_notification (backlight, percent);
+    xfpm_notify_show_brightness_notification (backlight->priv->notify,
+                                              &backlight->priv->brightness_notification,
+                                              _("Keyboard Brightness: %.0f%%"),
+                                              "keyboard-brightness",
+                                              percent);
     g_variant_unref (var);
   }
   else
@@ -267,7 +248,7 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
   backlight->priv->max_level = 0;
   backlight->priv->min_level = 0;
   backlight->priv->notify = NULL;
-  backlight->priv->n = NULL;
+  backlight->priv->brightness_notification = NULL;
 
   backlight->priv->bus = g_bus_get_sync (G_BUS_TYPE_SYSTEM, NULL, &error);
 
@@ -331,8 +312,8 @@ xfpm_kbd_backlight_finalize (GObject *object)
   if (backlight->priv->notify)
     g_object_unref (backlight->priv->notify);
 
-  if (backlight->priv->n)
-    g_object_unref (backlight->priv->n);
+  if (backlight->priv->brightness_notification)
+    g_object_unref (backlight->priv->brightness_notification);
 
   if (backlight->priv->proxy)
     g_object_unref (backlight->priv->proxy);
