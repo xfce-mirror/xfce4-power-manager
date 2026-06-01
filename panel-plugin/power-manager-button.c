@@ -30,6 +30,7 @@
 #include "common/xfpm-debug.h"
 #include "common/xfpm-enum-glib.h"
 #include "common/xfpm-icons.h"
+#include "common/xfpm-notify.h"
 #include "common/xfpm-power-common.h"
 
 #include <gtk/gtk.h>
@@ -53,6 +54,8 @@ struct PowerManagerButtonPrivate
   GDBusProxy *inhibit_proxy;
   XfconfChannel *channel;
   UpClient *upower;
+  XfpmNotify *notify;
+  NotifyNotification *brightness_notification;
 #ifdef ENABLE_WAYLAND
   struct wl_registry *wl_registry;
   struct zwp_idle_inhibit_manager_v1 *wl_manager;
@@ -744,9 +747,11 @@ power_manager_button_scroll_brightness (PowerManagerButton *button,
           gtk_range_set_value (GTK_RANGE (button->priv->range), level);
 
         if (show_notification)
-          power_manager_plugin_show_brightness_notification (
-            button->priv->plugin,
-            (gfloat) 100 * level / xfpm_brightness_get_max_level (button->priv->brightness));
+          xfpm_notify_show_brightness_notification (button->priv->notify,
+                                                    &button->priv->brightness_notification,
+                                                    _("Brightness: %.0f%%"),
+                                                    XFPM_DISPLAY_BRIGHTNESS_ICON,
+                                                    (gfloat) 100 * level / xfpm_brightness_get_max_level (button->priv->brightness));
       }
     }
     return TRUE;
@@ -839,6 +844,8 @@ power_manager_button_init (PowerManagerButton *button)
   gtk_widget_set_focus_on_click (GTK_WIDGET (button), FALSE);
   gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
+  button->priv->notify = xfpm_notify_new ();
+  button->priv->brightness_notification = NULL;
   button->priv->brightness = xfpm_brightness_new ();
   button->priv->set_level_timeout = 0;
 
@@ -928,6 +935,10 @@ power_manager_button_finalize (GObject *object)
   g_free (button->priv->panel_fallback_icon_name);
 
   g_free (button->priv->tooltip);
+
+  g_object_unref (button->priv->notify);
+  if (button->priv->brightness_notification != NULL)
+    g_object_unref (button->priv->brightness_notification);
 
   if (button->priv->brightness != NULL)
     g_object_unref (button->priv->brightness);

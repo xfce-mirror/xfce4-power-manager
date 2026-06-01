@@ -958,12 +958,6 @@ xfpm_manager_dbus_get_info (XfpmManager *manager,
                             GDBusMethodInvocation *invocation,
                             gpointer user_data);
 
-static gboolean
-xfpm_manager_dbus_show_brightness_notification (XfpmManager *manager,
-                                                GDBusMethodInvocation *invocation,
-                                                gdouble value,
-                                                gpointer user_data);
-
 #include "xfce-power-manager-dbus.h"
 
 static void
@@ -991,9 +985,6 @@ xfpm_manager_dbus_init (XfpmManager *manager)
                            manager, G_CONNECT_SWAPPED);
   g_signal_connect_object (manager_dbus, "handle-get-info",
                            G_CALLBACK (xfpm_manager_dbus_get_info),
-                           manager, G_CONNECT_SWAPPED);
-  g_signal_connect_object (manager_dbus, "handle-show-brightness-notification",
-                           G_CALLBACK (xfpm_manager_dbus_show_brightness_notification),
                            manager, G_CONNECT_SWAPPED);
 }
 
@@ -1059,19 +1050,5 @@ xfpm_manager_dbus_get_info (XfpmManager *manager,
                             gpointer user_data)
 {
   xfpm_power_manager_complete_get_info (user_data, invocation, PACKAGE, VERSION_FULL, "Xfce");
-  return TRUE;
-}
-
-static gboolean
-xfpm_manager_dbus_show_brightness_notification (XfpmManager *manager,
-                                                GDBusMethodInvocation *invocation,
-                                                gdouble value,
-                                                gpointer user_data)
-{
-  if (manager->priv->backlight != NULL)
-    xfpm_backlight_show_brightness_notification (manager->priv->backlight, value);
-
-  xfpm_power_manager_complete_show_brightness_notification (user_data, invocation);
-
   return TRUE;
 }

@@ -141,25 +141,6 @@ g_name_owner_changed (GDBusProxy *proxy)
   }
 }
 
-void
-power_manager_plugin_show_brightness_notification (PowerManagerPlugin *plugin,
-                                                   gdouble value)
-{
-  g_return_if_fail (POWER_MANAGER_IS_PLUGIN (plugin));
-
-  if (plugin->proxy == NULL)
-    return;
-
-  g_dbus_proxy_call (plugin->proxy,
-                     "ShowBrightnessNotification",
-                     g_variant_new ("(d)", value),
-                     G_DBUS_CALL_FLAGS_NONE,
-                     -1,
-                     NULL,
-                     NULL,
-                     NULL);
-}
-
 static void
 xfpm_proxy_ready (GObject *source_object,
                   GAsyncResult *res,

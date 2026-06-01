@@ -29,9 +29,6 @@ G_DECLARE_FINAL_TYPE (PowerManagerPlugin, power_manager_plugin, POWER_MANAGER, P
 
 void
 power_manager_plugin_register_type (XfcePanelTypeModule *type_module);
-void
-power_manager_plugin_show_brightness_notification (PowerManagerPlugin *plugin,
-                                                   gdouble value);
 
 G_END_DECLS
 
