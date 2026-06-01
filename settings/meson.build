@@ -37,7 +37,6 @@ executable(
     gmodule,
     gthread,
     gtk,
-    libnotify,
     libxfce4ui,
     libxfce4util,
     upower_glib,
