@@ -46,9 +46,6 @@ GType
 xfpm_backlight_get_type (void) G_GNUC_CONST;
 XfpmBacklight *
 xfpm_backlight_new (void);
-void
-xfpm_backlight_show_brightness_notification (XfpmBacklight *backlight,
-                                             gdouble value);
 
 G_END_DECLS
 

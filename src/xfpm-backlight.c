@@ -50,6 +50,9 @@ xfpm_backlight_set_property (GObject *object,
                              guint prop_id,
                              const GValue *value,
                              GParamSpec *pspec);
+static void
+xfpm_backlight_show_brightness_notification (XfpmBacklight *backlight,
+                                             gdouble value);
 
 struct XfpmBacklightPrivate
 {
@@ -131,7 +134,7 @@ xfpm_backlight_show (XfpmBacklight *backlight, gint level)
   xfpm_backlight_show_brightness_notification (backlight, value);
 }
 
-void
+static void
 xfpm_backlight_show_brightness_notification (XfpmBacklight *backlight,
                                              gdouble value)
 {
