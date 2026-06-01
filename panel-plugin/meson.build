@@ -38,6 +38,7 @@ shared_module(
     xfconf,
   ],
   link_with: [
+    libxfpmdbus,
     libxfpmcommon,
   ],
   install: true,

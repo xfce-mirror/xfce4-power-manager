@@ -22,6 +22,7 @@
 
 #include "common/xfpm-common.h"
 #include "common/xfpm-config.h"
+#include "libdbus/xfpm-dbus-monitor.h"
 
 #include <libxfce4util/libxfce4util.h>
 #include <xfconf/xfconf.h>
@@ -37,12 +38,13 @@ xfpm_notify_new_notification_internal (const gchar *title,
 
 struct XfpmNotifyPrivate
 {
+  XfpmDBusMonitor *monitor;
+
   NotifyNotification *notification;
   NotifyNotification *critical;
 
   gulong critical_id;
   gulong notify_id;
-  guint watch_id;
 
   gboolean supports_actions;
   gboolean supports_sync; /* For x-canonical-private-synchronous */
@@ -77,12 +79,14 @@ xfpm_notify_get_server_caps (XfpmNotify *notify)
 }
 
 static void
-xfpm_notify_name_appeared (GDBusConnection *connection,
-                           const gchar *name,
-                           const gchar *name_owner,
-                           gpointer user_data)
+xfpm_notify_check_server (XfpmDBusMonitor *monitor,
+                          gchar *service_name,
+                          gboolean connected,
+                          gboolean on_session,
+                          XfpmNotify *notify)
 {
-  xfpm_notify_get_server_caps (XFPM_NOTIFY (user_data));
+  if (g_strcmp0 (service_name, "org.freedesktop.Notifications") == 0 && on_session && connected)
+    xfpm_notify_get_server_caps (notify);
 }
 
 static void
@@ -145,13 +149,10 @@ xfpm_notify_init (XfpmNotify *notify)
   notify->priv->critical_id = 0;
   notify->priv->notify_id = 0;
 
-  notify->priv->watch_id = g_bus_watch_name (G_BUS_TYPE_SESSION,
-                                             "org.freedesktop.Notifications",
-                                             G_BUS_NAME_WATCHER_FLAGS_NONE,
-                                             xfpm_notify_name_appeared,
-                                             NULL,
-                                             notify,
-                                             NULL);
+  notify->priv->monitor = xfpm_dbus_monitor_new ();
+  xfpm_dbus_monitor_add_service (notify->priv->monitor, G_BUS_TYPE_SESSION, "org.freedesktop.Notifications");
+  g_signal_connect_object (notify->priv->monitor, "service-connection-changed",
+                           G_CALLBACK (xfpm_notify_check_server), notify, 0);
 
   xfpm_notify_get_server_caps (notify);
 }
@@ -163,9 +164,6 @@ xfpm_notify_finalize (GObject *object)
 
   xfpm_notify_close_normal (notify);
   xfpm_notify_close_critical (notify);
-
-  if (notify->priv->watch_id != 0)
-    g_bus_unwatch_name (notify->priv->watch_id);
 
   G_OBJECT_CLASS (xfpm_notify_parent_class)->finalize (object);
 }
