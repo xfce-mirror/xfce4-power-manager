@@ -4,7 +4,7 @@
 # 
 # Translators:
 # Anders Jonsson <transifex@norsjovallen.se>, 2021,2025
-# Arve Eriksson <031299870@telia.com>, 2017
+# Arve Eriksson <arve.eriksson@startmail.com>, 2017
 # Daniel Nylander <po@danielnylander.se>, 2008-2009
 # Fredrik Nyqvist <fredrik@nyqvist.biz>, 2015
 # Luna Jernberg <droidbittin@gmail.com>, 2020-2021,2023
@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-05-21 00:54+0200\n"
+"POT-Creation-Date: 2026-05-22 00:54+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Luna Jernberg <droidbittin@gmail.com>, 2024-2026\n"
 "Language-Team: Swedish (http://app.transifex.com/xfce/xfce4-power-manager/language/sv/)\n"
@@ -85,158 +85,162 @@ msgstr "Då vilolägesknappen trycks ner:"
 msgid "When battery button is pressed:"
 msgstr "Då batteriknappen trycks in"
 
-#: data/interfaces/xfpm-settings.ui:507
-msgid "Exponential"
-msgstr "Exponentiell"
-
-#: data/interfaces/xfpm-settings.ui:529
-msgid "Brightness step count:"
-msgstr "Ljusstyrka steg:"
-
-#: data/interfaces/xfpm-settings.ui:540
-msgid "Handle display brightness _keys"
-msgstr "Hantera tangenter för skärmljusstyr_ka"
-
-#: data/interfaces/xfpm-settings.ui:563
+#: data/interfaces/xfpm-settings.ui:487
 msgid "<b>Buttons</b>"
 msgstr "<b>Knappar</b>"
 
-#: data/interfaces/xfpm-settings.ui:597
+#: data/interfaces/xfpm-settings.ui:521
 msgid "Status notifications"
 msgstr "Statusmeddelanden"
 
-#: data/interfaces/xfpm-settings.ui:633
+#: data/interfaces/xfpm-settings.ui:557
 msgid "<b>Appearance</b>"
 msgstr "<b>Utseende</b>"
 
-#: data/interfaces/xfpm-settings.ui:663
+#: data/interfaces/xfpm-settings.ui:587
 msgid ""
 "This is the mechanism by which applications send inhibit requests to "
 "xfce4-power-manager, such as when you're watching a video in a web browser. "
 "These applications may fail to send an un-inhibit request afterward, so you "
 "may want to disable this if you encounter recurring issues."
-msgstr ""
+msgstr "Det här är mekanismen genom vilken program skickar inhiberingsförfrågningar till xfce4-power-manager, till exempel när du tittar på en video i en webbläsare. Dessa program kan misslyckas med att skicka en begäran om att återaktivera inhiberingen efteråt, så du kanske vill inaktivera detta om du stöter på återkommande problem."
 
-#: data/interfaces/xfpm-settings.ui:668
+#: data/interfaces/xfpm-settings.ui:592
 msgid "Inhibition via D-Bus"
-msgstr ""
+msgstr "Inhibering via D-Bus"
 
-#: data/interfaces/xfpm-settings.ui:705
+#: data/interfaces/xfpm-settings.ui:629
 msgid "Inhibit when a window is fullscreened"
-msgstr ""
+msgstr "Inhibera när ett fönster är i helskärmsläge"
 
-#: data/interfaces/xfpm-settings.ui:742
+#: data/interfaces/xfpm-settings.ui:666
 msgid "Presentation mode"
-msgstr ""
+msgstr "Presentations läge"
 
-#: data/interfaces/xfpm-settings.ui:780
+#: data/interfaces/xfpm-settings.ui:704
 msgid "Disable desktop notifications"
-msgstr ""
+msgstr "Inaktivera skrivbordsaviseringar"
 
-#: data/interfaces/xfpm-settings.ui:815
+#: data/interfaces/xfpm-settings.ui:739
 msgid "<b>Inhibition</b>"
-msgstr ""
+msgstr "<b>Inhibering</b>"
 
-#: data/interfaces/xfpm-settings.ui:835
+#: data/interfaces/xfpm-settings.ui:759
 msgid "General"
 msgstr "Allmänt"
 
-#: data/interfaces/xfpm-settings.ui:880 data/interfaces/xfpm-settings.ui:1144
+#: data/interfaces/xfpm-settings.ui:804 data/interfaces/xfpm-settings.ui:1068
 msgid "When inactive for"
 msgstr "När inaktiv i"
 
-#: data/interfaces/xfpm-settings.ui:952 data/interfaces/xfpm-settings.ui:1216
+#: data/interfaces/xfpm-settings.ui:876 data/interfaces/xfpm-settings.ui:1140
 msgid "System sleep mode:"
 msgstr "Systemvänteläge:"
 
-#: data/interfaces/xfpm-settings.ui:964 data/interfaces/xfpm-settings.ui:1228
+#: data/interfaces/xfpm-settings.ui:888 data/interfaces/xfpm-settings.ui:1152
 msgid "<b>System power saving</b>"
 msgstr "<b>Systemströmspar</b>"
 
-#: data/interfaces/xfpm-settings.ui:979 data/interfaces/xfpm-settings.ui:1129
+#: data/interfaces/xfpm-settings.ui:903 data/interfaces/xfpm-settings.ui:1053
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Datorlock</b>"
 
-#: data/interfaces/xfpm-settings.ui:994 data/interfaces/xfpm-settings.ui:1084
+#: data/interfaces/xfpm-settings.ui:918 data/interfaces/xfpm-settings.ui:1008
 msgid "When laptop lid is closed:"
 msgstr "Då datorns lock stängs:"
 
-#: data/interfaces/xfpm-settings.ui:1021 data/interfaces/xfpm-settings.ui:1111
+#: data/interfaces/xfpm-settings.ui:945 data/interfaces/xfpm-settings.ui:1035
 msgid "Execute action if an external display is connected"
 msgstr "Utför åtgärd om en extern skärm är ansluten"
 
-#: data/interfaces/xfpm-settings.ui:1038 data/interfaces/xfpm-settings.ui:1242
+#: data/interfaces/xfpm-settings.ui:962 data/interfaces/xfpm-settings.ui:1166
 msgid "<b>Power profile</b>"
 msgstr "<b>Strömprofil</b>"
 
-#: data/interfaces/xfpm-settings.ui:1070 data/interfaces/xfpm-settings.ui:1806
+#: data/interfaces/xfpm-settings.ui:994 data/interfaces/xfpm-settings.ui:1730
 msgid "On battery"
 msgstr "På batteri"
 
-#: data/interfaces/xfpm-settings.ui:1274 data/interfaces/xfpm-settings.ui:2059
+#: data/interfaces/xfpm-settings.ui:1198 data/interfaces/xfpm-settings.ui:1983
 #: common/xfpm-power-common.c:412
 msgid "Plugged in"
 msgstr "Inkopplad"
 
-#: data/interfaces/xfpm-settings.ui:1310
+#: data/interfaces/xfpm-settings.ui:1234
 msgid "Critical battery power level:"
 msgstr "Kritisk batterinivå:"
 
-#: data/interfaces/xfpm-settings.ui:1340 settings/xfpm-settings.c:227
+#: data/interfaces/xfpm-settings.ui:1264 settings/xfpm-settings.c:227
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1377
+#: data/interfaces/xfpm-settings.ui:1301
 msgid "On critical battery power:"
 msgstr "På kritisk batterikraft:"
 
-#: data/interfaces/xfpm-settings.ui:1416
+#: data/interfaces/xfpm-settings.ui:1340
 msgid "<b>Critical power</b>"
 msgstr "<b>Kritisk kraft</b>"
 
-#: data/interfaces/xfpm-settings.ui:1445
+#: data/interfaces/xfpm-settings.ui:1369
 msgid "Lock screen when system is going to sleep"
 msgstr "Lås skärmen då systemet försätts i vänteläge"
 
-#: data/interfaces/xfpm-settings.ui:1464
+#: data/interfaces/xfpm-settings.ui:1388
 msgid "<b>Security</b>"
 msgstr "<b>Säkerhet</b>"
 
-#: data/interfaces/xfpm-settings.ui:1484
+#: data/interfaces/xfpm-settings.ui:1408
 msgid "System"
 msgstr "System"
 
-#: data/interfaces/xfpm-settings.ui:1523
+#: data/interfaces/xfpm-settings.ui:1447
 msgid "<b>Display power management</b>"
 msgstr "<b>Skärmenergihantering</b>"
 
-#: data/interfaces/xfpm-settings.ui:1536
+#: data/interfaces/xfpm-settings.ui:1460
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr "Låt strömhanteraren hantera skärmenergihantering (DPMS) istället för visningsservern"
 
-#: data/interfaces/xfpm-settings.ui:1611 data/interfaces/xfpm-settings.ui:1820
+#: data/interfaces/xfpm-settings.ui:1535 data/interfaces/xfpm-settings.ui:1744
 msgid "Put to sleep after"
 msgstr "Vänteläge efter"
 
-#: data/interfaces/xfpm-settings.ui:1624 data/interfaces/xfpm-settings.ui:1833
+#: data/interfaces/xfpm-settings.ui:1548 data/interfaces/xfpm-settings.ui:1757
 msgid "Switch off after"
 msgstr "Stäng av efter"
 
-#: data/interfaces/xfpm-settings.ui:1681 data/interfaces/xfpm-settings.ui:1862
+#: data/interfaces/xfpm-settings.ui:1605 data/interfaces/xfpm-settings.ui:1786
 msgid "On inactivity reduce to"
 msgstr "Vid inaktivitet reducera till"
 
-#: data/interfaces/xfpm-settings.ui:1694 data/interfaces/xfpm-settings.ui:1875
+#: data/interfaces/xfpm-settings.ui:1618 data/interfaces/xfpm-settings.ui:1799
 msgid "Reduce after"
 msgstr "Reducera efter"
 
-#: data/interfaces/xfpm-settings.ui:1793 data/interfaces/xfpm-settings.ui:1846
+#: data/interfaces/xfpm-settings.ui:1717 data/interfaces/xfpm-settings.ui:1770
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Reduktion av ljusstyrka</b>"
 
+#: data/interfaces/xfpm-settings.ui:2005
+msgid "<b>Manual brightness control</b>"
+msgstr "<b>Manuell ljusstyrkekontroll</b>"
+
+#: data/interfaces/xfpm-settings.ui:2019
+msgid "Handle display brightness _keys"
+msgstr "Hantera tangenter för skärmljusstyr_ka"
+
+#: data/interfaces/xfpm-settings.ui:2048
+msgid "Brightness step count:"
+msgstr "Ljusstyrka steg:"
+
 #: data/interfaces/xfpm-settings.ui:2079
+msgid "Exponential"
+msgstr "Exponentiell"
+
+#: data/interfaces/xfpm-settings.ui:2112
 msgid "Display"
 msgstr "Skärm"
 
@@ -277,11 +281,11 @@ msgstr "Stäng av"
 
 #: settings/xfpm-settings.c:441
 msgid "No sleep mode supported"
-msgstr ""
+msgstr "Inget viloläge stöds"
 
 #: settings/xfpm-settings.c:446
 msgid "No sleep mode permitted"
-msgstr ""
+msgstr "Inget viloläge tillåtet"
 
 #: settings/xfpm-settings.c:497 settings/xfpm-settings.c:650
 msgid "Do nothing"
@@ -682,7 +686,7 @@ msgstr "<b>%s %s</b>\nTillstånd okänt"
 
 #: src/xfpm-power.c:286
 msgid "Do you want to put it to sleep anyway?"
-msgstr ""
+msgstr "Vill du sätta den i viloläge ändå?"
 
 #: src/xfpm-power.c:291
 #, c-format
@@ -690,14 +694,14 @@ msgid ""
 "These apps are currently preventing the system from going to sleep automatically:\n"
 "%s\n"
 "%s"
-msgstr ""
+msgstr "Dessa program förhindrar för närvarande att systemet går in i viloläge automatiskt:\n%s\n%s"
 
 #: src/xfpm-power.c:298
 #, c-format
 msgid ""
 "Presentation mode is currently preventing the system from going to sleep automatically.\n"
 "%s"
-msgstr ""
+msgstr "Presentations läge förhindrar för närvarande att systemet går in i viloläge automatiskt.\n%s"
 
 #: src/xfpm-power.c:303
 #, c-format
@@ -705,14 +709,14 @@ msgid ""
 "This fullscreened window is currently preventing the system from going to sleep automatically:\n"
 "%s\n"
 "%s"
-msgstr ""
+msgstr "Det här helskärmsfönstret förhindrar för närvarande att systemet går in i viloläge automatiskt:\n%s\n%s"
 
 #: src/xfpm-power.c:309
 #, c-format
 msgid ""
 "An unknown reason is currently preventing the system from going to sleep automatically.\n"
 "%s"
-msgstr ""
+msgstr "En okänd orsak hindrar för närvarande systemet från att försättas i viloläge automatiskt.\n%s"
 
 #: src/xfpm-power.c:342
 msgid ""
@@ -986,23 +990,23 @@ msgstr "Visa batterinivåer för anslutna enheter"
 msgid "%s is currently inhibiting power management"
 msgstr "%s förhindrar för närvarande strömhantering"
 
-#: panel-plugin/power-manager-button.c:1324
+#: panel-plugin/power-manager-button.c:1323
 msgid "_Clear inhibitors"
-msgstr ""
+msgstr "_Rensa inhibitorer"
 
-#: panel-plugin/power-manager-button.c:1328
+#: panel-plugin/power-manager-button.c:1327
 msgid "You can use this if applications fail to remove their inhibitors"
-msgstr ""
+msgstr "Du kan använda detta om program misslyckas med att ta bort sina inhibitorer"
 
-#: panel-plugin/power-manager-button.c:1443
+#: panel-plugin/power-manager-button.c:1442
 msgid "<b>Display brightness</b>"
 msgstr "<b>Ljusstyrka för skärm</b>"
 
-#: panel-plugin/power-manager-button.c:1468
+#: panel-plugin/power-manager-button.c:1467
 msgid "Presentation _mode"
 msgstr "Presentations_läge"
 
-#: panel-plugin/power-manager-button.c:1488
+#: panel-plugin/power-manager-button.c:1487
 msgid "_Settings..."
 msgstr "_Inställningar..."
 
