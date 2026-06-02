@@ -21,9 +21,11 @@
 #include "xfpm-notify.h"
 
 #include "common/xfpm-common.h"
+#include "common/xfpm-config.h"
 #include "libdbus/xfpm-dbus-monitor.h"
 
 #include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 
 static void
 xfpm_notify_finalize (GObject *object);
@@ -138,6 +140,9 @@ static void
 xfpm_notify_init (XfpmNotify *notify)
 {
   notify->priv = xfpm_notify_get_instance_private (notify);
+
+  if (!notify_is_initted ())
+    notify_init ("xfce4-power-manager");
 
   notify->priv->notification = NULL;
   notify->priv->critical = NULL;
@@ -259,6 +264,48 @@ xfpm_notify_show_notification (XfpmNotify *notify,
   xfpm_notify_close_notification (notify);
   n = xfpm_notify_new_notification_internal (title, text, icon_name, urgency);
   xfpm_notify_present_notification (notify, n);
+}
+
+void
+xfpm_notify_show_brightness_notification (XfpmNotify *notify,
+                                          NotifyNotification **notification,
+                                          const gchar *summary_format,
+                                          const gchar *icon_name,
+                                          gfloat value)
+{
+  g_return_if_fail (XFPM_IS_NOTIFY (notify));
+  g_return_if_fail (notification != NULL);
+  g_return_if_fail (summary_format != NULL);
+  g_return_if_fail (icon_name != NULL);
+
+  if (!xfconf_channel_get_bool (xfconf_channel_get (XFPM_CHANNEL),
+                                XFPM_PROPERTIES_PREFIX SHOW_BRIGHTNESS_POPUP,
+                                DEFAULT_SHOW_BRIGHTNESS_POPUP))
+    return;
+
+  gchar *summary = g_strdup_printf (summary_format, value);
+
+  if (*notification == NULL)
+  {
+    *notification = xfpm_notify_new_notification_internal (_("Power Manager"),
+                                                           summary,
+                                                           icon_name,
+                                                           XFPM_NOTIFY_NORMAL);
+  }
+  else
+  {
+    notify_notification_update (*notification,
+                                _("Power Manager"),
+                                summary,
+                                icon_name);
+  }
+
+  g_free (summary);
+
+  notify_notification_set_hint (*notification,
+                                "value",
+                                g_variant_new_int32 ((gint32) (value)));
+  notify_notification_show (*notification, NULL);
 }
 
 NotifyNotification *

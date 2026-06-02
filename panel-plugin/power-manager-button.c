@@ -30,6 +30,7 @@
 #include "common/xfpm-debug.h"
 #include "common/xfpm-enum-glib.h"
 #include "common/xfpm-icons.h"
+#include "common/xfpm-notify.h"
 #include "common/xfpm-power-common.h"
 
 #include <gtk/gtk.h>
@@ -53,6 +54,8 @@ struct PowerManagerButtonPrivate
   GDBusProxy *inhibit_proxy;
   XfconfChannel *channel;
   UpClient *upower;
+  XfpmNotify *notify;
+  NotifyNotification *brightness_notification;
 #ifdef ENABLE_WAYLAND
   struct wl_registry *wl_registry;
   struct zwp_idle_inhibit_manager_v1 *wl_manager;
@@ -127,6 +130,13 @@ power_manager_button_update_label (PowerManagerButton *button,
 static gboolean
 power_manager_button_press_event (GtkWidget *widget,
                                   GdkEventButton *event);
+static gboolean
+power_manager_button_scroll_event (GtkWidget *widget,
+                                   GdkEventScroll *ev);
+static gboolean
+power_manager_button_menu_scroll_event (GtkWidget *widget,
+                                        GdkEventScroll *ev,
+                                        PowerManagerButton *button);
 static gboolean
 power_manager_button_menu_add_device (PowerManagerButton *button,
                                       BatteryDevice *battery_device,
@@ -717,11 +727,10 @@ power_manager_button_remove_all_devices (PowerManagerButton *button)
 }
 
 static gboolean
-power_manager_button_scroll_event (GtkWidget *widget,
-                                   GdkEventScroll *ev)
+power_manager_button_scroll_brightness (PowerManagerButton *button,
+                                        GdkEventScroll *ev,
+                                        gboolean show_notification)
 {
-  PowerManagerButton *button = POWER_MANAGER_BUTTON (widget);
-
   if (button->priv->brightness == NULL)
     return FALSE;
 
@@ -729,16 +738,41 @@ power_manager_button_scroll_event (GtkWidget *widget,
   {
     gboolean (*scroll_brightness) (XfpmBrightness *) = ev->direction == GDK_SCROLL_UP ? xfpm_brightness_increase
                                                                                       : xfpm_brightness_decrease;
-    if (scroll_brightness (button->priv->brightness) && button->priv->range != NULL)
+    if (scroll_brightness (button->priv->brightness))
     {
       gint32 level;
       if (xfpm_brightness_get_level (button->priv->brightness, &level))
-        gtk_range_set_value (GTK_RANGE (button->priv->range), level);
+      {
+        if (button->priv->range != NULL)
+          gtk_range_set_value (GTK_RANGE (button->priv->range), level);
+
+        if (show_notification)
+          xfpm_notify_show_brightness_notification (button->priv->notify,
+                                                    &button->priv->brightness_notification,
+                                                    _("Brightness: %.0f%%"),
+                                                    XFPM_DISPLAY_BRIGHTNESS_ICON,
+                                                    (gfloat) 100 * level / xfpm_brightness_get_max_level (button->priv->brightness));
+      }
     }
     return TRUE;
   }
 
   return FALSE;
+}
+
+static gboolean
+power_manager_button_scroll_event (GtkWidget *widget,
+                                   GdkEventScroll *ev)
+{
+  return power_manager_button_scroll_brightness (POWER_MANAGER_BUTTON (widget), ev, TRUE);
+}
+
+static gboolean
+power_manager_button_menu_scroll_event (GtkWidget *widget,
+                                        GdkEventScroll *ev,
+                                        PowerManagerButton *button)
+{
+  return power_manager_button_scroll_brightness (button, ev, FALSE);
 }
 
 static void
@@ -810,6 +844,8 @@ power_manager_button_init (PowerManagerButton *button)
   gtk_widget_set_focus_on_click (GTK_WIDGET (button), FALSE);
   gtk_widget_set_name (GTK_WIDGET (button), "xfce4-power-manager-plugin");
 
+  button->priv->notify = xfpm_notify_new ();
+  button->priv->brightness_notification = NULL;
   button->priv->brightness = xfpm_brightness_new ();
   button->priv->set_level_timeout = 0;
 
@@ -899,6 +935,10 @@ power_manager_button_finalize (GObject *object)
   g_free (button->priv->panel_fallback_icon_name);
 
   g_free (button->priv->tooltip);
+
+  g_object_unref (button->priv->notify);
+  if (button->priv->brightness_notification != NULL)
+    g_object_unref (button->priv->brightness_notification);
 
   if (button->priv->brightness != NULL)
     g_object_unref (button->priv->brightness);
@@ -1449,7 +1489,7 @@ power_manager_button_show_menu (PowerManagerButton *button,
     gtk_range_set_value (GTK_RANGE (button->priv->range), current_level);
 
     g_signal_connect_swapped (mi, "value-changed", G_CALLBACK (range_value_changed_cb), button);
-    g_signal_connect_swapped (mi, "scroll-event", G_CALLBACK (power_manager_button_scroll_event), button);
+    g_signal_connect (mi, "scroll-event", G_CALLBACK (power_manager_button_menu_scroll_event), button);
 
     /* load and display the brightness icon and force it to 32px size */
     img = gtk_image_new_from_icon_name (XFPM_DISPLAY_BRIGHTNESS_ICON, GTK_ICON_SIZE_DND);
