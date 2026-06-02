@@ -175,11 +175,7 @@ get_config (XfpmPowerManager *manager,
 
   g_signal_handlers_disconnect_by_func (manager, get_config, app);
   g_application_release (G_APPLICATION (app));
-  if (priv->abort_id != 0)
-  {
-    g_source_remove (priv->abort_id);
-    priv->abort_id = 0;
-  }
+  g_clear_handle_id (&priv->abort_id, g_source_remove);
 
   if (!xfpm_power_manager_call_get_config_sync (manager, &config, NULL, &error))
   {

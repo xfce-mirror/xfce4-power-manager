@@ -43,8 +43,8 @@ struct XfpmNotifyPrivate
   NotifyNotification *notification;
   NotifyNotification *critical;
 
-  gulong critical_id;
-  gulong notify_id;
+  guint critical_id;
+  guint notify_id;
 
   gboolean supports_actions;
   gboolean supports_sync; /* For x-canonical-private-synchronous */
@@ -218,19 +218,14 @@ xfpm_notify_show_critical (gpointer user_data)
 static void
 xfpm_notify_close_notification (XfpmNotify *notify)
 {
-  if (notify->priv->notify_id != 0)
-  {
-    g_source_remove (notify->priv->notify_id);
-    notify->priv->notify_id = 0;
-  }
+  g_clear_handle_id (&notify->priv->notify_id, g_source_remove);
 
   if (notify->priv->notification)
   {
     if (!notify_notification_close (notify->priv->notification, NULL))
       g_warning ("Failed to close notification");
 
-    g_object_unref (G_OBJECT (notify->priv->notification));
-    notify->priv->notification = NULL;
+    g_clear_object (&notify->priv->notification);
   }
 }
 
@@ -380,11 +375,7 @@ xfpm_notify_close_critical (XfpmNotify *notify)
 
   g_return_if_fail (XFPM_IS_NOTIFY (notify));
 
-  if (notify->priv->critical_id != 0)
-  {
-    g_source_remove (notify->priv->critical_id);
-    notify->priv->critical_id = 0;
-  }
+  g_clear_handle_id (&notify->priv->critical_id, g_source_remove);
 
   if (notify->priv->critical)
   {
@@ -397,8 +388,7 @@ xfpm_notify_close_critical (XfpmNotify *notify)
       }
     }
 
-    g_object_unref (G_OBJECT (notify->priv->critical));
-    notify->priv->critical = NULL;
+    g_clear_object (&notify->priv->critical);
   }
 }
 

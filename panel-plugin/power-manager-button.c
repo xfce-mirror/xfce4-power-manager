@@ -258,11 +258,7 @@ power_manager_button_set_tooltip (PowerManagerButton *button)
     return;
   }
 
-  if (button->priv->tooltip != NULL)
-  {
-    g_free (button->priv->tooltip);
-    button->priv->tooltip = NULL;
-  }
+  g_clear_pointer (&button->priv->tooltip, g_free);
 
   if (display_device)
   {
@@ -463,8 +459,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
   if (g_strcmp0 (menu_icon_name, "") == 0)
   {
     /* ignore empty icon names */
-    g_free (menu_icon_name);
-    menu_icon_name = NULL;
+    g_clear_pointer (&menu_icon_name, g_free);
   }
 
   if (menu_icon_name == NULL)
@@ -598,16 +593,10 @@ battery_device_remove_surface (BatteryDevice *battery_device)
   {
     if (GTK_IS_WIDGET (battery_device->img))
     {
-      if (battery_device->expose_signal_id != 0)
-      {
-        g_signal_handler_disconnect (battery_device->img, battery_device->expose_signal_id);
-        battery_device->expose_signal_id = 0;
-      }
-      g_object_unref (battery_device->img);
-      battery_device->img = NULL;
+      g_clear_signal_handler (&battery_device->expose_signal_id, battery_device->img);
+      g_clear_object (&battery_device->img);
     }
-    cairo_surface_destroy (battery_device->surface);
-    battery_device->surface = NULL;
+    g_clear_pointer (&battery_device->surface, cairo_surface_destroy);
   }
 }
 
@@ -630,12 +619,8 @@ remove_battery_device (PowerManagerButton *button,
   if (battery_device->device != NULL && UP_IS_DEVICE (battery_device->device))
   {
     /* disconnect the signal handler if we were using it */
-    if (battery_device->changed_signal_id != 0)
-      g_signal_handler_disconnect (battery_device->device, battery_device->changed_signal_id);
-    battery_device->changed_signal_id = 0;
-
-    g_object_unref (battery_device->device);
-    battery_device->device = NULL;
+    g_clear_signal_handler (&battery_device->changed_signal_id, battery_device->device);
+    g_clear_object (&battery_device->device);
   }
 
   g_free (battery_device);
@@ -942,11 +927,8 @@ power_manager_button_finalize (GObject *object)
 
   if (button->priv->brightness != NULL)
     g_object_unref (button->priv->brightness);
-  if (button->priv->set_level_timeout)
-  {
-    g_source_remove (button->priv->set_level_timeout);
-    button->priv->set_level_timeout = 0;
-  }
+
+  g_clear_handle_id (&button->priv->set_level_timeout, g_source_remove);
 
   if (button->priv->upower != NULL)
   {
@@ -1394,11 +1376,7 @@ brightness_set_level_with_timeout (PowerManagerButton *button)
     xfpm_brightness_set_level (button->priv->brightness, range_level);
   }
 
-  if (button->priv->set_level_timeout)
-  {
-    g_source_remove (button->priv->set_level_timeout);
-    button->priv->set_level_timeout = 0;
-  }
+  g_clear_handle_id (&button->priv->set_level_timeout, g_source_remove);
 
   return FALSE;
 }

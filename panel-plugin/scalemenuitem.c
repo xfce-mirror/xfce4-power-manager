@@ -430,8 +430,7 @@ xfpm_scale_menu_item_set_description_label (XfpmScaleMenuItem *menuitem,
   if (label == NULL && menuitem->description_label)
   {
     /* remove label */
-    g_object_unref (menuitem->description_label);
-    menuitem->description_label = NULL;
+    g_clear_object (&menuitem->description_label);
     return;
   }
 
@@ -470,8 +469,7 @@ xfpm_scale_menu_item_set_percentage_label (XfpmScaleMenuItem *menuitem,
   if (label == NULL && menuitem->percentage_label)
   {
     /* remove label */
-    g_object_unref (menuitem->percentage_label);
-    menuitem->percentage_label = NULL;
+    g_clear_object (&menuitem->percentage_label);
     return;
   }
 

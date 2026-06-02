@@ -69,10 +69,7 @@ get_string_sysctl (GError **err,
     if (sysctlbyname (name, str, &value_len, NULL, 0) == 0)
       str[value_len] = 0;
     else
-    {
-      g_free (str);
-      str = NULL;
-    }
+      g_clear_pointer (&str, g_free);
   }
 
   if (!str)

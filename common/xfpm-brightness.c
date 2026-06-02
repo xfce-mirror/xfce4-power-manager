@@ -81,8 +81,7 @@ xfpm_brightness_new (void)
     priv = get_instance_private (brightness);
     if (!XFPM_BRIGHTNESS_GET_CLASS (brightness)->setup (brightness, &priv->min_level, &priv->max_level))
     {
-      g_object_unref (brightness);
-      brightness = NULL;
+      g_clear_object (&brightness);
     }
   }
 #endif
@@ -93,8 +92,7 @@ xfpm_brightness_new (void)
     priv = get_instance_private (brightness);
     if (!XFPM_BRIGHTNESS_GET_CLASS (brightness)->setup (brightness, &priv->min_level, &priv->max_level))
     {
-      g_object_unref (brightness);
-      brightness = NULL;
+      g_clear_object (&brightness);
     }
   }
 #endif

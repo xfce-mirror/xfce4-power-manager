@@ -256,8 +256,7 @@ xfpm_dpms_wayland_set_state (XfpmDpms *_dpms,
     if (state == XFPM_DPMS_STATE_DISABLED)
     {
       /* don't prevent other clients from controlling output power if we're disabled */
-      g_list_free_full (dpms->powers, power_free);
-      dpms->powers = NULL;
+      g_clear_list (&dpms->powers, power_free);
       g_signal_handlers_disconnect_by_func (gdk_display_get_default (), monitor_added, dpms);
     }
   }
