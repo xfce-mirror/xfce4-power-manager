@@ -273,7 +273,6 @@ xfpm_notify_show_brightness_notification (XfpmNotify *notify,
                                           const gchar *icon_name,
                                           gfloat value)
 {
-  gchar *summary;
 
   g_return_if_fail (XFPM_IS_NOTIFY (notify));
   g_return_if_fail (notification != NULL);
