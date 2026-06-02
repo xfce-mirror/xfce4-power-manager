@@ -365,7 +365,7 @@ xfpm_battery_class_init (XfpmBatteryClass *klass)
                                    g_param_spec_boolean ("ac-online",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READWRITE));
+                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_DEVICE_TYPE,
@@ -374,7 +374,7 @@ xfpm_battery_class_init (XfpmBatteryClass *klass)
                                                       UP_DEVICE_KIND_UNKNOWN,
                                                       UP_DEVICE_KIND_LAST,
                                                       UP_DEVICE_KIND_UNKNOWN,
-                                                      G_PARAM_READABLE));
+                                                      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_CHARGE_STATUS,
@@ -382,7 +382,7 @@ xfpm_battery_class_init (XfpmBatteryClass *klass)
                                                       NULL, NULL,
                                                       XFPM_TYPE_BATTERY_CHARGE,
                                                       XFPM_BATTERY_CHARGE_UNKNOWN,
-                                                      G_PARAM_READABLE));
+                                                      G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 }
 
 static void

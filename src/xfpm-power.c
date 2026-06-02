@@ -1011,108 +1011,101 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                     g_cclosure_marshal_VOID__VOID,
                                     G_TYPE_NONE, 0, G_TYPE_NONE);
 
-#define XFPM_PARAM_FLAGS (G_PARAM_READWRITE \
-                          | G_PARAM_CONSTRUCT \
-                          | G_PARAM_STATIC_NAME \
-                          | G_PARAM_STATIC_NICK \
-                          | G_PARAM_STATIC_BLURB)
-
   g_object_class_install_property (object_class,
                                    PROP_ON_BATTERY,
                                    g_param_spec_boolean ("on-battery",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_ON_LOW_BATTERY,
                                    g_param_spec_boolean ("on-low-battery",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_AUTH_SUSPEND,
                                    g_param_spec_boolean ("auth-suspend",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_AUTH_HIBERNATE,
                                    g_param_spec_boolean ("auth-hibernate",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_AUTH_HYBRID_SLEEP,
                                    g_param_spec_boolean ("auth-hybrid-sleep",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_CAN_HIBERNATE,
                                    g_param_spec_boolean ("can-hibernate",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_CAN_HYBRID_SLEEP,
                                    g_param_spec_boolean ("can-hybrid-sleep",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_CAN_SUSPEND,
                                    g_param_spec_boolean ("can-suspend",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_HAS_LID,
                                    g_param_spec_boolean ("has-lid",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_LID_IS_CLOSED,
                                    g_param_spec_boolean ("lid-is-closed",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_INHIBITION_DBUS,
                                    g_param_spec_boolean (INHIBITION_DBUS,
                                                          NULL, NULL,
                                                          DEFAULT_INHIBITION_DBUS,
-                                                         XFPM_PARAM_FLAGS));
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
   g_object_class_install_property (object_class,
                                    PROP_INHIBITION_FULLSCREEN,
                                    g_param_spec_boolean (INHIBITION_FULLSCREEN,
                                                          NULL, NULL,
                                                          DEFAULT_INHIBITION_FULLSCREEN,
-                                                         XFPM_PARAM_FLAGS));
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
   g_object_class_install_property (object_class,
                                    PROP_PRESENTATION_MODE,
                                    g_param_spec_boolean (PRESENTATION_MODE,
                                                          NULL, NULL,
                                                          DEFAULT_PRESENTATION_MODE,
-                                                         XFPM_PARAM_FLAGS));
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_DO_NOT_DISTURB,
                                    g_param_spec_boolean (DO_NOT_DISTURB,
                                                          NULL, NULL,
                                                          DEFAULT_DO_NOT_DISTURB,
-                                                         XFPM_PARAM_FLAGS));
-#undef XFPM_PARAM_FLAGS
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 
   xfpm_power_dbus_class_init (klass);
 }

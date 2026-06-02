@@ -126,14 +126,14 @@ xfpm_notify_class_init (XfpmNotifyClass *klass)
                                    g_param_spec_boolean ("actions",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_SYNC,
                                    g_param_spec_boolean ("sync",
                                                          NULL, NULL,
                                                          FALSE,
-                                                         G_PARAM_READABLE));
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 }
 
 static void

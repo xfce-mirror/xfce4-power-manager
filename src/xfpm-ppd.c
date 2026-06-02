@@ -115,14 +115,14 @@ xfpm_ppd_class_init (XfpmPPDClass *klass)
                                    g_param_spec_string (PROFILE_ON_AC,
                                                         NULL, NULL,
                                                         DEFAULT_PROFILE_ON_AC,
-                                                        G_PARAM_READWRITE));
+                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_PROFILE_ON_BATTERY,
                                    g_param_spec_string (PROFILE_ON_BATTERY,
                                                         NULL, NULL,
                                                         DEFAULT_PROFILE_ON_BATTERY,
-                                                        G_PARAM_READWRITE));
+                                                        G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
 
 static void

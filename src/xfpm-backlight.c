@@ -308,14 +308,14 @@ xfpm_backlight_class_init (XfpmBacklightClass *klass)
                                    g_param_spec_int (BRIGHTNESS_SWITCH,
                                                      NULL, NULL,
                                                      MIN_BRIGHTNESS_SWITCH, MAX_BRIGHTNESS_SWITCH, DEFAULT_BRIGHTNESS_SWITCH,
-                                                     G_PARAM_READWRITE));
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
                                    PROP_BRIGHTNESS_SWITCH_SAVE,
                                    g_param_spec_int (BRIGHTNESS_SWITCH_RESTORE_ON_EXIT,
                                                      NULL, NULL,
                                                      MIN_BRIGHTNESS_SWITCH, MAX_BRIGHTNESS_SWITCH, DEFAULT_BRIGHTNESS_SWITCH_RESTORE_ON_EXIT,
-                                                     G_PARAM_READWRITE));
+                                                     G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
 
 static void
