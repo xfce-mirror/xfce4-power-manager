@@ -285,7 +285,7 @@ xfpm_notify_show_brightness_notification (XfpmNotify *notify,
                                 DEFAULT_SHOW_BRIGHTNESS_POPUP))
     return;
 
-  summary = g_strdup_printf (summary_format, value);
+  gchar *summary = g_strdup_printf (summary_format, value);
 
   if (*notification == NULL)
   {
@@ -306,7 +306,7 @@ xfpm_notify_show_brightness_notification (XfpmNotify *notify,
 
   notify_notification_set_hint (*notification,
                                 "value",
-                                g_variant_new_int32 ((gint32) (value + 0.5)));
+                                g_variant_new_int32 ((gint32) (value)));
   notify_notification_show (*notification, NULL);
 }
 
