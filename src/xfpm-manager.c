@@ -45,7 +45,6 @@
 
 #include <gio/gunixfdlist.h>
 #include <gtk/gtk.h>
-#include <libnotify/notify.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
 #include <xfconf/xfconf.h>
@@ -650,8 +649,6 @@ static void
 xfpm_manager_init (XfpmManager *manager)
 {
   GError *error = NULL;
-
-  notify_init ("xfce4-power-manager");
 
   manager->priv = xfpm_manager_get_instance_private (manager);
 
