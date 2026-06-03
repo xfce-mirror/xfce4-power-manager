@@ -253,10 +253,10 @@ xfce_revision_h = vcs_tag(
 if enable_wayland
   subdir('protocols')
 endif
+subdir('libdbus')
 subdir('common')
 subdir('data')
 subdir('data' / 'interfaces')
-subdir('libdbus')
 if libxfce4panel.found()
   subdir('panel-plugin')
 endif

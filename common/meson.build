@@ -76,5 +76,8 @@ libxfpmcommon = static_library(
     polkit,
     libm,
   ],
+  link_with: [
+    libxfpmdbus,
+  ],
   install: false,
 )
