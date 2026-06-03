@@ -164,6 +164,7 @@ xfpm_notify_finalize (GObject *object)
 
   xfpm_notify_close_normal (notify);
   xfpm_notify_close_critical (notify);
+  g_object_unref (notify->priv->monitor);
 
   G_OBJECT_CLASS (xfpm_notify_parent_class)->finalize (object);
 }
