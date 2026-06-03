@@ -786,6 +786,10 @@ xfpm_settings_general (XfconfChannel *channel,
   gtk_switch_set_active (GTK_SWITCH (switch_widget), DEFAULT_GENERAL_NOTIFICATION);
   xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX GENERAL_NOTIFICATION,
                           G_TYPE_BOOLEAN, switch_widget, "active");
+  switch_widget = GTK_WIDGET (gtk_builder_get_object (xml, "show-brightness-popup"));
+  gtk_switch_set_active (GTK_SWITCH (switch_widget), DEFAULT_SHOW_BRIGHTNESS_POPUP);
+  xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX SHOW_BRIGHTNESS_POPUP,
+                          G_TYPE_BOOLEAN, switch_widget, "active");
 
   /*
    * Inhibition
