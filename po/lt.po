@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-05-22 00:54+0200\n"
+"POT-Creation-Date: 2026-06-03 12:53+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Moo, 2023-2026\n"
 "Language-Team: Lithuanian (http://app.transifex.com/xfce/xfce4-power-manager/language/lt/)\n"
@@ -45,8 +45,7 @@ msgstr "Jokio"
 #: settings/xfce4-power-manager-settings.desktop.in:4
 #: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
 #: src/xfpm-power.c:592 src/xfpm-power.c:633 src/xfpm-power.c:792
-#: src/xfpm-power.c:811 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
-#: src/xfpm-battery.c:177 src/xfpm-kbd-backlight.c:104
+#: src/xfpm-power.c:811 src/xfpm-battery.c:177
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
 msgstr "Maitinimo tvarkytuvė"
@@ -89,11 +88,15 @@ msgstr "<b>Mygtukai</b>"
 msgid "Status notifications"
 msgstr "Būsenos pranešimai"
 
-#: data/interfaces/xfpm-settings.ui:557
+#: data/interfaces/xfpm-settings.ui:559
+msgid "Brightness notifications"
+msgstr "Pranešimai apie ryškumą"
+
+#: data/interfaces/xfpm-settings.ui:595
 msgid "<b>Appearance</b>"
 msgstr "<b>Išvaizda</b>"
 
-#: data/interfaces/xfpm-settings.ui:587
+#: data/interfaces/xfpm-settings.ui:625
 msgid ""
 "This is the mechanism by which applications send inhibit requests to "
 "xfce4-power-manager, such as when you're watching a video in a web browser. "
@@ -101,142 +104,142 @@ msgid ""
 "may want to disable this if you encounter recurring issues."
 msgstr "Tai yra įranga, kurią naudodamos, programos siunčia slopinimo užklausas į xfce4-power-manager, pavyzdžiui, kai žiūrite saityno naršyklėje vaizdo įrašą. Po to, šioms programoms gali nepavykti išsiųsti slopinimo panaikinimo užklausą, todėl galite pageidauti išjungti šią parinktį tuo atveju, jei susiduriate su pasikartojančiomis problemomis. "
 
-#: data/interfaces/xfpm-settings.ui:592
+#: data/interfaces/xfpm-settings.ui:630
 msgid "Inhibition via D-Bus"
 msgstr "Slopinimas per D-Bus"
 
-#: data/interfaces/xfpm-settings.ui:629
+#: data/interfaces/xfpm-settings.ui:667
 msgid "Inhibit when a window is fullscreened"
 msgstr "Slopinti, kai langas atvaizduojamas visame ekrane"
 
-#: data/interfaces/xfpm-settings.ui:666
+#: data/interfaces/xfpm-settings.ui:704
 msgid "Presentation mode"
 msgstr "Pristatymo veiksena"
 
-#: data/interfaces/xfpm-settings.ui:704
+#: data/interfaces/xfpm-settings.ui:742
 msgid "Disable desktop notifications"
 msgstr "Išjungti darbalaukio pranešimus"
 
-#: data/interfaces/xfpm-settings.ui:739
+#: data/interfaces/xfpm-settings.ui:777
 msgid "<b>Inhibition</b>"
 msgstr "<b>Slopinimas</b>"
 
-#: data/interfaces/xfpm-settings.ui:759
+#: data/interfaces/xfpm-settings.ui:797
 msgid "General"
 msgstr "Bendra"
 
-#: data/interfaces/xfpm-settings.ui:804 data/interfaces/xfpm-settings.ui:1068
+#: data/interfaces/xfpm-settings.ui:842 data/interfaces/xfpm-settings.ui:1106
 msgid "When inactive for"
 msgstr "Kai neatliekama jokių veiksmų"
 
-#: data/interfaces/xfpm-settings.ui:876 data/interfaces/xfpm-settings.ui:1140
+#: data/interfaces/xfpm-settings.ui:914 data/interfaces/xfpm-settings.ui:1178
 msgid "System sleep mode:"
 msgstr "Sistemos miego veiksena:"
 
-#: data/interfaces/xfpm-settings.ui:888 data/interfaces/xfpm-settings.ui:1152
+#: data/interfaces/xfpm-settings.ui:926 data/interfaces/xfpm-settings.ui:1190
 msgid "<b>System power saving</b>"
 msgstr "<b>Sistemos energijos taupymas</b>"
 
-#: data/interfaces/xfpm-settings.ui:903 data/interfaces/xfpm-settings.ui:1053
+#: data/interfaces/xfpm-settings.ui:941 data/interfaces/xfpm-settings.ui:1091
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Nešiojamojo kompiuterio dangtis</b>"
 
-#: data/interfaces/xfpm-settings.ui:918 data/interfaces/xfpm-settings.ui:1008
+#: data/interfaces/xfpm-settings.ui:956 data/interfaces/xfpm-settings.ui:1046
 msgid "When laptop lid is closed:"
 msgstr "Kai nešiojamojo kompiuterio dangtis uždarytas:"
 
-#: data/interfaces/xfpm-settings.ui:945 data/interfaces/xfpm-settings.ui:1035
+#: data/interfaces/xfpm-settings.ui:983 data/interfaces/xfpm-settings.ui:1073
 msgid "Execute action if an external display is connected"
 msgstr "Įvykdyti veiksmą, jei yra prijungiamas išorinis ekranas"
 
-#: data/interfaces/xfpm-settings.ui:962 data/interfaces/xfpm-settings.ui:1166
+#: data/interfaces/xfpm-settings.ui:1000 data/interfaces/xfpm-settings.ui:1204
 msgid "<b>Power profile</b>"
 msgstr "<b>Maitinimo profilis</b>"
 
-#: data/interfaces/xfpm-settings.ui:994 data/interfaces/xfpm-settings.ui:1730
+#: data/interfaces/xfpm-settings.ui:1032 data/interfaces/xfpm-settings.ui:1768
 msgid "On battery"
 msgstr "Naudojant akumuliatorių"
 
-#: data/interfaces/xfpm-settings.ui:1198 data/interfaces/xfpm-settings.ui:1983
+#: data/interfaces/xfpm-settings.ui:1236 data/interfaces/xfpm-settings.ui:2021
 #: common/xfpm-power-common.c:412
 msgid "Plugged in"
 msgstr "Įjungtas kištukas"
 
-#: data/interfaces/xfpm-settings.ui:1234
+#: data/interfaces/xfpm-settings.ui:1272
 msgid "Critical battery power level:"
 msgstr "Kritinis akumuliatoriaus energijos lygis:"
 
-#: data/interfaces/xfpm-settings.ui:1264 settings/xfpm-settings.c:227
+#: data/interfaces/xfpm-settings.ui:1302 settings/xfpm-settings.c:227
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1301
+#: data/interfaces/xfpm-settings.ui:1339
 msgid "On critical battery power:"
 msgstr "Esant kritiniam akumuliatoriaus energijos lygiui:"
 
-#: data/interfaces/xfpm-settings.ui:1340
+#: data/interfaces/xfpm-settings.ui:1378
 msgid "<b>Critical power</b>"
 msgstr "<b>Kritinis energijos lygis</b>"
 
-#: data/interfaces/xfpm-settings.ui:1369
+#: data/interfaces/xfpm-settings.ui:1407
 msgid "Lock screen when system is going to sleep"
 msgstr "Užrakinti ekraną, kai sistema užmiega"
 
-#: data/interfaces/xfpm-settings.ui:1388
+#: data/interfaces/xfpm-settings.ui:1426
 msgid "<b>Security</b>"
 msgstr "<b>Saugumas</b>"
 
-#: data/interfaces/xfpm-settings.ui:1408
+#: data/interfaces/xfpm-settings.ui:1446
 msgid "System"
 msgstr "Sistema"
 
-#: data/interfaces/xfpm-settings.ui:1447
+#: data/interfaces/xfpm-settings.ui:1485
 msgid "<b>Display power management</b>"
 msgstr "<b>Ekrano maitinimo valdymas</b>"
 
-#: data/interfaces/xfpm-settings.ui:1460
+#: data/interfaces/xfpm-settings.ui:1498
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr "Leisti maitinimo tvarkytuvei, vietoj ekrano serverio, tvarkyti ekrano maitinimo valdymą (DPMS)"
 
-#: data/interfaces/xfpm-settings.ui:1535 data/interfaces/xfpm-settings.ui:1744
+#: data/interfaces/xfpm-settings.ui:1573 data/interfaces/xfpm-settings.ui:1782
 msgid "Put to sleep after"
 msgstr "Užmigdyti po"
 
-#: data/interfaces/xfpm-settings.ui:1548 data/interfaces/xfpm-settings.ui:1757
+#: data/interfaces/xfpm-settings.ui:1586 data/interfaces/xfpm-settings.ui:1795
 msgid "Switch off after"
 msgstr "Išjungti po"
 
-#: data/interfaces/xfpm-settings.ui:1605 data/interfaces/xfpm-settings.ui:1786
+#: data/interfaces/xfpm-settings.ui:1643 data/interfaces/xfpm-settings.ui:1824
 msgid "On inactivity reduce to"
 msgstr "Esant neveiklumui, sumažinti iki"
 
-#: data/interfaces/xfpm-settings.ui:1618 data/interfaces/xfpm-settings.ui:1799
+#: data/interfaces/xfpm-settings.ui:1656 data/interfaces/xfpm-settings.ui:1837
 msgid "Reduce after"
 msgstr "Sumažinti po"
 
-#: data/interfaces/xfpm-settings.ui:1717 data/interfaces/xfpm-settings.ui:1770
+#: data/interfaces/xfpm-settings.ui:1755 data/interfaces/xfpm-settings.ui:1808
 msgid "<b>Brightness reduction</b>"
 msgstr "<b>Ryškumo mažinimas</b>"
 
-#: data/interfaces/xfpm-settings.ui:2005
+#: data/interfaces/xfpm-settings.ui:2043
 msgid "<b>Manual brightness control</b>"
 msgstr "<b>Rankinis ryškumo valdymas</b>"
 
-#: data/interfaces/xfpm-settings.ui:2019
+#: data/interfaces/xfpm-settings.ui:2057
 msgid "Handle display brightness _keys"
 msgstr "Vykdyti ekrano ryškumo _klavišus"
 
-#: data/interfaces/xfpm-settings.ui:2048
+#: data/interfaces/xfpm-settings.ui:2086
 msgid "Brightness step count:"
 msgstr "Ryškumo žingsnių skaičius:"
 
-#: data/interfaces/xfpm-settings.ui:2079
+#: data/interfaces/xfpm-settings.ui:2117
 msgid "Exponential"
 msgstr "Eksponentinis"
 
-#: data/interfaces/xfpm-settings.ui:2112
+#: data/interfaces/xfpm-settings.ui:2150
 msgid "Display"
 msgstr "Ekranas"
 
@@ -303,15 +306,15 @@ msgstr "Klausti"
 msgid "Number of brightness steps available using keys"
 msgstr "Prieinamų ryškumo žingsnių skaičius, naudojantis klavišais"
 
-#: settings/xfpm-settings.c:836
+#: settings/xfpm-settings.c:840
 msgid "When all the power sources of the computer reach this charge level"
 msgstr "Kai visi kompiuterio maitinimo šaltiniai pasiekia šį įkrovos lygį"
 
-#: settings/xfpm-settings.c:850
+#: settings/xfpm-settings.c:854
 msgid "Notify"
 msgstr "Pranešti"
 
-#: settings/xfpm-settings.c:863
+#: settings/xfpm-settings.c:867
 #, c-format
 msgid ""
 "Make sure you set a sufficiently high value here, otherwise the system will "
@@ -320,95 +323,95 @@ msgid ""
 "system in this case will be: %s."
 msgstr "Įsitikinkite, kad nustatėte pakankamai didelę reikšmę, nes priešingu atveju sistema paleis savo veiksmą anksčiau nei xfce4-power-manager, be galimybės jo neleisti ar žinojimo, kada tiksliai jis bus paleistas. Šiuo atveju veiksmas, kurį paleis sistema, bus: %s."
 
-#: settings/xfpm-settings.c:881
+#: settings/xfpm-settings.c:885
 msgid "Hibernate and suspend operations not supported"
 msgstr "Užmigdymo ir pristabdymo operacijos nepalaikomos"
 
-#: settings/xfpm-settings.c:886
+#: settings/xfpm-settings.c:890
 msgid "Hibernate and suspend operations not permitted"
 msgstr "Užmigdymo ir pristabdymo operacijos neleidžiamos"
 
-#: settings/xfpm-settings.c:1118
+#: settings/xfpm-settings.c:1122
 msgid "Device"
 msgstr "Įrenginys"
 
-#: settings/xfpm-settings.c:1141
+#: settings/xfpm-settings.c:1145
 msgid "Type"
 msgstr "Tipas"
 
-#: settings/xfpm-settings.c:1146
+#: settings/xfpm-settings.c:1150
 msgid "PowerSupply"
 msgstr "Maitinimo tiekimas"
 
-#: settings/xfpm-settings.c:1147 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1151 src/xfpm-main.c:62
 msgid "True"
 msgstr "Taip"
 
-#: settings/xfpm-settings.c:1147 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1151 src/xfpm-main.c:62
 msgid "False"
 msgstr "Ne"
 
-#: settings/xfpm-settings.c:1154
+#: settings/xfpm-settings.c:1158
 msgid "Model"
 msgstr "Modelis"
 
-#: settings/xfpm-settings.c:1157
+#: settings/xfpm-settings.c:1161
 msgid "Technology"
 msgstr "Technologija"
 
-#: settings/xfpm-settings.c:1164
+#: settings/xfpm-settings.c:1168
 msgid "Current charge"
 msgstr "Dabartinė įkrova"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1172 settings/xfpm-settings.c:1184
-#: settings/xfpm-settings.c:1196
+#: settings/xfpm-settings.c:1176 settings/xfpm-settings.c:1188
+#: settings/xfpm-settings.c:1200
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1174
+#: settings/xfpm-settings.c:1178
 msgid "Fully charged (design)"
 msgstr "Pilnai įkrautas (suprojektuota)"
 
-#: settings/xfpm-settings.c:1187
+#: settings/xfpm-settings.c:1191
 msgid "Fully charged"
 msgstr "Pilnai įkrautas"
 
-#: settings/xfpm-settings.c:1198
+#: settings/xfpm-settings.c:1202
 msgid "Energy empty"
 msgstr "Maitinimas, kai tuščia"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1206
+#: settings/xfpm-settings.c:1210
 msgid "W"
 msgstr "W"
 
-#: settings/xfpm-settings.c:1208
+#: settings/xfpm-settings.c:1212
 msgid "Energy rate"
 msgstr "Maitinimo galia"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1216
+#: settings/xfpm-settings.c:1220
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1218
+#: settings/xfpm-settings.c:1222
 msgid "Voltage"
 msgstr "Įtampa"
 
-#: settings/xfpm-settings.c:1225
+#: settings/xfpm-settings.c:1229
 msgid "Vendor"
 msgstr "Gamintojas"
 
-#: settings/xfpm-settings.c:1230
+#: settings/xfpm-settings.c:1234
 msgid "Serial"
 msgstr "Serijinis"
 
-#: settings/xfpm-settings.c:1517
+#: settings/xfpm-settings.c:1521
 msgid "Check your power manager installation"
 msgstr "Patikrinkite savo maitinimo tvarkytuvės įdiegimą"
 
-#: settings/xfpm-settings.c:1593
+#: settings/xfpm-settings.c:1597
 msgid "Devices"
 msgstr "Įrenginiai"
 
@@ -440,31 +443,31 @@ msgstr "Rodyti versijos informaciją"
 msgid "Cause xfce4-power-manager-settings to quit"
 msgstr "Priversti xfce4-power-manager-settings baigti darbą"
 
-#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
-#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
-#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
+#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:183
+#: settings/xfpm-settings-app.c:260 settings/xfpm-settings-app.c:275
+#: settings/xfpm-settings-app.c:303 src/xfpm-main.c:400
 msgid "Xfce Power Manager"
 msgstr "Xfce maitinimo tvarkytuvė"
 
-#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
-#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
+#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:184
+#: settings/xfpm-settings-app.c:276 settings/xfpm-settings-app.c:304
 msgid "Failed to connect to power manager"
 msgstr "Nepavyko prisijungti prie maitinimo tvarkytuvės"
 
-#: settings/xfpm-settings-app.c:265
+#: settings/xfpm-settings-app.c:261
 msgid "Failed to load power manager configuration"
 msgstr "Nepavyko įkelti maitinimo tvarkytuvės konfigūracijos"
 
-#: settings/xfpm-settings-app.c:296
+#: settings/xfpm-settings-app.c:292
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
 msgstr "Xfce4 maitinimo tvarkytuvė neveikia, ar norite ją paleisti dabar?"
 
-#: settings/xfpm-settings-app.c:394
+#: settings/xfpm-settings-app.c:390
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
 msgstr "Tai yra %s versija %s, veikia Xfce %s.\n"
 
-#: settings/xfpm-settings-app.c:396
+#: settings/xfpm-settings-app.c:392
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
 msgstr "Sukurta su GTK+ %d.%d.%d, susieta su GTK+ %d.%d.%d."
@@ -763,25 +766,24 @@ msgid ""
 "Estimated time left %s"
 msgstr "Žemas jūsų %s įkrovos lygis\nLiko laiko %s"
 
-#: src/xfpm-power.c:1740 src/xfpm-power.c:1784 src/xfpm-power.c:1820
-#: src/xfpm-power.c:1854 src/xfpm-power.c:1888
+#: src/xfpm-power.c:1733 src/xfpm-power.c:1777 src/xfpm-power.c:1813
+#: src/xfpm-power.c:1847 src/xfpm-power.c:1881
 msgid "Permission denied"
 msgstr "Neturite teisės"
 
-#: src/xfpm-power.c:1829
+#: src/xfpm-power.c:1822
 msgid "Hibernate not supported"
 msgstr "Užmigdymas nepalaikomas"
 
-#: src/xfpm-power.c:1863
+#: src/xfpm-power.c:1856
 msgid "Suspend not supported"
 msgstr "Pristabdymas nepalaikomas"
 
-#: src/xfpm-power.c:1897
+#: src/xfpm-power.c:1890
 msgid "Hybrid sleep not supported"
 msgstr "Mišraus miego būsena nepalaikoma"
 
-#. generate a human-readable summary for the notification
-#: src/xfpm-backlight.c:145
+#: src/xfpm-backlight.c:134 panel-plugin/power-manager-button.c:737
 #, c-format
 msgid "Brightness: %.0f%%"
 msgstr "Ryškumas: %.0f%%"
@@ -825,8 +827,7 @@ msgstr "%s (%i%%)\nLiko laiko %s"
 msgid "Your %s is empty"
 msgstr "Jūsų %s tuščias"
 
-#. generate a human-readable summary for the notification
-#: src/xfpm-kbd-backlight.c:102
+#: src/xfpm-kbd-backlight.c:136
 #, c-format
 msgid "Keyboard Brightness: %.0f%%"
 msgstr "Klaviatūros ryškumas: %.0f%%"
@@ -948,7 +949,7 @@ msgstr "Netaisyklingi argumentai"
 msgid "Invalid cookie"
 msgstr "Neteisingas slapukas"
 
-#: src/xfpm-manager.c:316
+#: src/xfpm-manager.c:315
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
@@ -982,35 +983,35 @@ msgid ""
 msgstr "Norint pristabdyti ar užmigdyti sistemą, reikia nustatyti tapatybę"
 
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugin/power-manager-button.c:269
+#: panel-plugin/power-manager-button.c:275
 msgid "Display battery levels for attached devices"
 msgstr "Rodyti prijungtų įrenginių akumuliatorių lygius"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugin/power-manager-button.c:1251
+#: panel-plugin/power-manager-button.c:1273
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s šiuo metu slopina maitinimo valdymą"
 
-#: panel-plugin/power-manager-button.c:1323
+#: panel-plugin/power-manager-button.c:1345
 msgid "_Clear inhibitors"
 msgstr "_Išvalyti slopintuvus"
 
-#: panel-plugin/power-manager-button.c:1327
+#: panel-plugin/power-manager-button.c:1349
 msgid "You can use this if applications fail to remove their inhibitors"
 msgstr "Galite tai naudoti tuo atveju, jei programoms nepavyksta pašalinti slopintuvus"
 
-#: panel-plugin/power-manager-button.c:1442
+#: panel-plugin/power-manager-button.c:1460
 msgid "<b>Display brightness</b>"
 msgstr "<b>Ekrano ryškumas</b>"
 
-#: panel-plugin/power-manager-button.c:1467
+#: panel-plugin/power-manager-button.c:1485
 msgid "Presentation _mode"
 msgstr "Pristatymo _veiksena"
 
-#: panel-plugin/power-manager-button.c:1487
+#: panel-plugin/power-manager-button.c:1505
 msgid "_Settings..."
 msgstr "_Nustatymai..."
 
