@@ -205,7 +205,7 @@ static gchar *
 backlight_helper_get_device (void)
 {
   /* devices in priority order */
-  gchar *types[] = { "lcd", "crt", "out", "ext", "tv", NULL };
+  const gchar *types[] = { "lcd", "crt", "out", "ext", "tv", NULL };
   gchar *device = NULL;
   gint i;
 
