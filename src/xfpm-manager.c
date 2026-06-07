@@ -870,7 +870,7 @@ xfpm_manager_get_config (XfpmManager *manager)
   gboolean has_hibernate_button = FALSE;
   gboolean has_power_button = FALSE;
   gboolean has_battery_button = FALSE;
-  gboolean has_battery = TRUE;
+  gboolean has_battery;
   gboolean has_lcd_brightness = manager->priv->backlight != NULL;
   gboolean can_shutdown = TRUE;
   gboolean auth_shutdown = TRUE;
