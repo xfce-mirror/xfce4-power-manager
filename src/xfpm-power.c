@@ -1113,8 +1113,6 @@ xfpm_power_class_init (XfpmPowerClass *klass)
 static void
 xfpm_power_init (XfpmPower *power)
 {
-  GError *error = NULL;
-
   power->priv = xfpm_power_get_instance_private (power);
 
   power->priv->batteries = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_object_unref);
@@ -1147,13 +1145,6 @@ xfpm_power_init (XfpmPower *power)
   power->priv->polkit = xfpm_polkit_get ();
 #endif
 
-  if (error)
-  {
-    g_critical ("Unable to connect to the system bus : %s", error->message);
-    g_error_free (error);
-    goto out;
-  }
-
   if (power->priv->upower != NULL)
   {
     g_signal_connect_object (power->priv->upower, "device-added", G_CALLBACK (xfpm_power_device_added_cb), power, 0);
@@ -1163,8 +1154,6 @@ xfpm_power_init (XfpmPower *power)
   }
 
   xfpm_power_get_properties (power);
-
-out:
   xfpm_power_dbus_init (power);
 
   /*
