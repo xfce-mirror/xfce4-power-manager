@@ -88,8 +88,6 @@ struct XfpmManagerPrivate
   XfpmPPD *ppd;
   XfceScreensaver *screensaver;
   XfpmIdle *idle;
-  GtkStatusIcon *adapter_icon;
-  GtkWidget *power_button;
   XfpmDpms *dpms;
   GTimer *timer;
   gint inhibit_fd;

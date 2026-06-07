@@ -72,7 +72,6 @@ struct PowerManagerButtonPrivate
   GtkWidget *panel_icon_image;
   GtkWidget *panel_presentation_mode;
   GtkWidget *panel_label;
-  GtkWidget *hbox;
   /* Keep track of icon name to redisplay during size changes */
   gchar *panel_icon_name;
   gchar *panel_fallback_icon_name;
