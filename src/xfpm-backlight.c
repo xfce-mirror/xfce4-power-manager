@@ -181,7 +181,6 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
                                   XfpmBacklight *backlight)
 {
   gint32 level;
-  gboolean ret = TRUE;
   gboolean handle_brightness_keys;
   guint brightness_step_count;
   gboolean brightness_exponential;
@@ -221,11 +220,8 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
     }
   }
 
-  /* get the current brightness level */
-  ret = xfpm_brightness_get_level (backlight->priv->brightness, &level);
-
   /* show the result in a popup (even if it did not change) */
-  if (ret)
+  if (xfpm_brightness_get_level (backlight->priv->brightness, &level))
     xfpm_backlight_show (backlight, level);
 }
 
