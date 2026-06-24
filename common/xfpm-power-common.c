@@ -41,6 +41,10 @@ xfpm_power_translate_device_type (guint type)
       return _("Uninterruptible Power Supply");
     case UP_DEVICE_KIND_LINE_POWER:
       return _("Line power");
+    case UP_DEVICE_KIND_HEADPHONES:
+        return _("Headphones");
+    case UP_DEVICE_KIND_HEADSET:
+      return _("Headset");
     case UP_DEVICE_KIND_MOUSE:
       return _("Mouse");
     case UP_DEVICE_KIND_KEYBOARD:
@@ -232,6 +236,10 @@ get_device_icon_name (UpClient *upower,
   }
   else if (type == UP_DEVICE_KIND_UPS)
     icon_name = g_strdup (XFPM_UPS_ICON);
+  else if (type == UP_DEVICE_KIND_HEADPHONES)
+    icon_name = g_strdup (XFPM_HEADPHONES_ICON);
+  else if (type == UP_DEVICE_KIND_HEADSET)
+    icon_name = g_strdup (XFPM_HEADSET_ICON);
   else if (type == UP_DEVICE_KIND_MOUSE)
     icon_name = g_strdup (XFPM_MOUSE_ICON);
   else if (type == UP_DEVICE_KIND_KEYBOARD)
