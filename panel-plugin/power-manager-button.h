@@ -54,7 +54,7 @@ typedef struct
 } PowerManagerButtonClass;
 
 GType
-power_manager_button_get_type (void) G_GNUC_CONST;
+power_manager_button_get_type (void);
 PowerManagerButton *
 power_manager_button_new (PowerManagerPlugin *plugin,
                           PowerManagerConfig *config);

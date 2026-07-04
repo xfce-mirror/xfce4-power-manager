@@ -47,7 +47,7 @@ typedef struct
 } XfpmButtonClass;
 
 GType
-xfpm_button_get_type (void) G_GNUC_CONST;
+xfpm_button_get_type (void);
 XfpmButton *
 xfpm_button_new (void);
 guint16

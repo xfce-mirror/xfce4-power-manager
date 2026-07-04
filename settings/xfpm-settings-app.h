@@ -53,7 +53,7 @@ struct _XfpmSettingsAppClass
 
 
 GType
-xfpm_settings_app_get_type (void) G_GNUC_CONST;
+xfpm_settings_app_get_type (void);
 XfpmSettingsApp *
 xfpm_settings_app_new (void);
 

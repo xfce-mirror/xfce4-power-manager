@@ -49,7 +49,7 @@ typedef struct
 } XfpmInhibitClass;
 
 GType
-xfpm_inhibit_get_type (void) G_GNUC_CONST;
+xfpm_inhibit_get_type (void);
 GQuark
 xfpm_inhibit_get_error_quark ();
 XfpmInhibit *

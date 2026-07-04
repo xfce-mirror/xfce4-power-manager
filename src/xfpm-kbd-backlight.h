@@ -45,7 +45,7 @@ typedef struct
 } XfpmKbdBacklightClass;
 
 GType
-xfpm_kbd_backlight_get_type (void) G_GNUC_CONST;
+xfpm_kbd_backlight_get_type (void);
 XfpmKbdBacklight *
 xfpm_kbd_backlight_new (void);
 gboolean

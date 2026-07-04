@@ -58,7 +58,7 @@ typedef struct
 } XfpmPowerClass;
 
 GType
-xfpm_power_get_type (void) G_GNUC_CONST;
+xfpm_power_get_type (void);
 XfpmPower *
 xfpm_power_get (void);
 void

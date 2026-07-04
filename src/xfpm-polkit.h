@@ -45,7 +45,7 @@ typedef struct
 } XfpmPolkitClass;
 
 GType
-xfpm_polkit_get_type (void) G_GNUC_CONST;
+xfpm_polkit_get_type (void);
 XfpmPolkit *
 xfpm_polkit_get (void);
 gboolean

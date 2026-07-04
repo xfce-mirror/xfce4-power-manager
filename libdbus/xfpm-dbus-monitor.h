@@ -64,7 +64,7 @@ typedef struct
 } XfpmDBusMonitorClass;
 
 GType
-xfpm_dbus_monitor_get_type (void) G_GNUC_CONST;
+xfpm_dbus_monitor_get_type (void);
 XfpmDBusMonitor *
 xfpm_dbus_monitor_new (void);
 gboolean

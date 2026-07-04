@@ -48,7 +48,7 @@ typedef struct
 } XfpmBatteryClass;
 
 GType
-xfpm_battery_get_type (void) G_GNUC_CONST;
+xfpm_battery_get_type (void);
 GtkWidget *
 xfpm_battery_new (void);
 void

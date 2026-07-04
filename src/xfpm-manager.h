@@ -45,7 +45,7 @@ typedef struct
 } XfpmManagerClass;
 
 GType
-xfpm_manager_get_type (void) G_GNUC_CONST;
+xfpm_manager_get_type (void);
 XfpmManager *
 xfpm_manager_new (GDBusConnection *bus,
                   const gchar *client_id);

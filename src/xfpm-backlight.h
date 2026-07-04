@@ -43,7 +43,7 @@ typedef struct
 } XfpmBacklightClass;
 
 GType
-xfpm_backlight_get_type (void) G_GNUC_CONST;
+xfpm_backlight_get_type (void);
 XfpmBacklight *
 xfpm_backlight_new (void);
 

@@ -44,7 +44,7 @@ typedef struct
 } XfpmXfconfClass;
 
 GType
-xfpm_xfconf_get_type (void) G_GNUC_CONST;
+xfpm_xfconf_get_type (void);
 XfpmXfconf *
 xfpm_xfconf_new (void);
 XfconfChannel *

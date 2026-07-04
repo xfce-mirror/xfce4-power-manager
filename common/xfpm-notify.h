@@ -52,7 +52,7 @@ typedef struct
 } XfpmNotifyClass;
 
 GType
-xfpm_notify_get_type (void) G_GNUC_CONST;
+xfpm_notify_get_type (void);
 XfpmNotify *
 xfpm_notify_new (void);
 void
