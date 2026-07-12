@@ -257,9 +257,10 @@ subdir('libdbus')
 subdir('common')
 subdir('data')
 subdir('data' / 'interfaces')
-if libxfce4panel.found()
-  subdir('panel-plugin')
-endif
 subdir('po')
 subdir('settings')
 subdir('src')
+if libxfce4panel.found()
+  subdir('panel-plugin')
+endif
+

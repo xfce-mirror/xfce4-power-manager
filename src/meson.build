@@ -71,13 +71,15 @@ xfpm_sources += gnome.gdbus_codegen(
   namespace: 'Xfpm',
   install_header: false,
 )
-xfpm_sources += gnome.gdbus_codegen(
+
+xfpm_dbus_inhibit = gnome.gdbus_codegen(
   'org.freedesktop.PowerManagement.Inhibit',
   sources: 'org.freedesktop.PowerManagement.Inhibit.xml',
   interface_prefix: 'org.freedesktop',
   namespace: 'Xfpm',
   install_header: false,
 )
+xfpm_sources += xfpm_dbus_inhibit
 
 executable(
   'xfce4-power-manager',

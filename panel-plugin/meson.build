@@ -40,6 +40,9 @@ shared_module(
   link_with: [
     libxfpmcommon,
   ],
+  link_depends: [
+    xfpm_dbus_inhibit,
+  ],
   install: true,
   install_dir: get_option('prefix') / get_option('libdir') / plugin_install_subdir,
 )
