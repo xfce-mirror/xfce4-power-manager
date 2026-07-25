@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-06-03 12:53+0200\n"
+"POT-Creation-Date: 2026-07-25 01:01+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Quentin PAGÈS, 2024-2026\n"
 "Language-Team: Occitan (post 1500) (http://app.transifex.com/xfce/xfce4-power-manager/language/oc/)\n"
@@ -162,7 +162,7 @@ msgid "On battery"
 msgstr "Sus batariá"
 
 #: data/interfaces/xfpm-settings.ui:1236 data/interfaces/xfpm-settings.ui:2021
-#: common/xfpm-power-common.c:412
+#: common/xfpm-power-common.c:420
 msgid "Plugged in"
 msgstr "Brancat"
 
@@ -487,7 +487,7 @@ msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;br
 msgid "translator-credits"
 msgstr "Cédric Valmary (totenoc.eu)\nQuentin PAGÈS"
 
-#: common/xfpm-power-common.c:39 common/xfpm-power-common.c:62
+#: common/xfpm-power-common.c:39 common/xfpm-power-common.c:66
 msgid "Battery"
 msgstr "Batariá"
 
@@ -500,74 +500,82 @@ msgid "Line power"
 msgstr "Gestion de l'energia"
 
 #: common/xfpm-power-common.c:45
+msgid "Headphones"
+msgstr "Escotadors"
+
+#: common/xfpm-power-common.c:47
+msgid "Headset"
+msgstr "Casc àudio"
+
+#: common/xfpm-power-common.c:49
 msgid "Mouse"
 msgstr "Mirga"
 
-#: common/xfpm-power-common.c:47
+#: common/xfpm-power-common.c:51
 msgid "Keyboard"
 msgstr "Clavièr"
 
-#: common/xfpm-power-common.c:49
+#: common/xfpm-power-common.c:53
 msgid "Monitor"
 msgstr "Ecran"
 
-#: common/xfpm-power-common.c:51
+#: common/xfpm-power-common.c:55
 msgid "PDA"
 msgstr "Assistent personal"
 
-#: common/xfpm-power-common.c:53
+#: common/xfpm-power-common.c:57
 msgid "Phone"
 msgstr "Telefòn"
 
-#: common/xfpm-power-common.c:55
+#: common/xfpm-power-common.c:59
 msgid "Tablet"
 msgstr "Tauleta"
 
-#: common/xfpm-power-common.c:57 common/xfpm-power-common.c:295
+#: common/xfpm-power-common.c:61 common/xfpm-power-common.c:303
 msgid "Computer"
 msgstr "Ordenador"
 
-#: common/xfpm-power-common.c:59 common/xfpm-power-common.c:75
-#: common/xfpm-power-common.c:90
+#: common/xfpm-power-common.c:63 common/xfpm-power-common.c:79
+#: common/xfpm-power-common.c:94
 msgid "Unknown"
 msgstr "Desconegut"
 
-#: common/xfpm-power-common.c:77
+#: common/xfpm-power-common.c:81
 msgid "Lithium ion"
 msgstr "Liti ion"
 
-#: common/xfpm-power-common.c:79
+#: common/xfpm-power-common.c:83
 msgid "Lithium polymer"
 msgstr "Liti polimèr"
 
-#: common/xfpm-power-common.c:81
+#: common/xfpm-power-common.c:85
 msgid "Lithium iron phosphate"
 msgstr "Liti fosfat de fèrre"
 
-#: common/xfpm-power-common.c:83
+#: common/xfpm-power-common.c:87
 msgid "Lead acid"
 msgstr "Acumulador al plomb-acid"
 
-#: common/xfpm-power-common.c:85
+#: common/xfpm-power-common.c:89
 msgid "Nickel cadmium"
 msgstr "Niquèl cadmi"
 
-#: common/xfpm-power-common.c:87
+#: common/xfpm-power-common.c:91
 msgid "Nickel metal hydride"
 msgstr "Niquèl metal idrur"
 
-#: common/xfpm-power-common.c:135
+#: common/xfpm-power-common.c:139
 msgid "Unknown time"
 msgstr "Temps desconegut"
 
-#: common/xfpm-power-common.c:141
+#: common/xfpm-power-common.c:145
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "%i minuta"
 msgstr[1] "%i minutas"
 
-#: common/xfpm-power-common.c:149
+#: common/xfpm-power-common.c:153
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -576,80 +584,80 @@ msgstr[1] "%i oras"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: common/xfpm-power-common.c:153
+#: common/xfpm-power-common.c:157
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: common/xfpm-power-common.c:154
+#: common/xfpm-power-common.c:158
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "ora"
 msgstr[1] "oras"
 
-#: common/xfpm-power-common.c:155
+#: common/xfpm-power-common.c:159
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minuta"
 msgstr[1] "minutas"
 
-#: common/xfpm-power-common.c:335
+#: common/xfpm-power-common.c:343
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
 msgstr "<b>%s %s</b>\nComplèt cargada - Restant %s"
 
-#: common/xfpm-power-common.c:342
+#: common/xfpm-power-common.c:350
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
 msgstr "<b>%s %s</b>\nComplètament cargada"
 
-#: common/xfpm-power-common.c:351
+#: common/xfpm-power-common.c:359
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
 msgstr "<b>%s %s</b>\n%0.0f%% - %s abans fin de carga"
 
-#: common/xfpm-power-common.c:359 common/xfpm-power-common.c:377
+#: common/xfpm-power-common.c:367 common/xfpm-power-common.c:385
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
 msgstr "<b>%s %s</b>\n%0.0f%%"
 
-#: common/xfpm-power-common.c:369
+#: common/xfpm-power-common.c:377
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
 msgstr "<b>%s %s</b>\n%0.0f%% - Restant %s"
 
-#: common/xfpm-power-common.c:384
+#: common/xfpm-power-common.c:392
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nEn espèra de cargament (%0.0f%%)"
 
-#: common/xfpm-power-common.c:390
+#: common/xfpm-power-common.c:398
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nEn espèra de descargament (%0.0f%%)"
 
-#: common/xfpm-power-common.c:396
+#: common/xfpm-power-common.c:404
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
 msgstr "<b>%s %s</b>\nes void"
 
-#: common/xfpm-power-common.c:401
+#: common/xfpm-power-common.c:409
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -658,26 +666,26 @@ msgstr "<b>%s %s</b>\nCarga actuala : %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: common/xfpm-power-common.c:411
+#: common/xfpm-power-common.c:419
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: common/xfpm-power-common.c:412
+#: common/xfpm-power-common.c:420
 msgid "Not plugged in"
 msgstr "Non brancat"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: common/xfpm-power-common.c:418
+#: common/xfpm-power-common.c:426
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: common/xfpm-power-common.c:423
+#: common/xfpm-power-common.c:431
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -759,24 +767,24 @@ msgid ""
 "Estimated time left %s"
 msgstr "Lo nivèl de carga de vòstre %s es feble\nTemps restant estimat es de %s"
 
-#: src/xfpm-power.c:1733 src/xfpm-power.c:1777 src/xfpm-power.c:1813
-#: src/xfpm-power.c:1847 src/xfpm-power.c:1881
+#: src/xfpm-power.c:1722 src/xfpm-power.c:1766 src/xfpm-power.c:1802
+#: src/xfpm-power.c:1836 src/xfpm-power.c:1870
 msgid "Permission denied"
 msgstr "Permission refusada"
 
-#: src/xfpm-power.c:1822
+#: src/xfpm-power.c:1811
 msgid "Hibernate not supported"
 msgstr "Ivernacion pas presa en carga"
 
-#: src/xfpm-power.c:1856
+#: src/xfpm-power.c:1845
 msgid "Suspend not supported"
 msgstr "Mesa en velha pas presa en carga"
 
-#: src/xfpm-power.c:1890
+#: src/xfpm-power.c:1879
 msgid "Hybrid sleep not supported"
 msgstr "Velha ibrida pas presa en carga"
 
-#: src/xfpm-backlight.c:134 panel-plugin/power-manager-button.c:737
+#: src/xfpm-backlight.c:134 panel-plugin/power-manager-button.c:736
 #, c-format
 msgid "Brightness: %.0f%%"
 msgstr "Luminositat : %.0f%%"
@@ -942,7 +950,7 @@ msgstr "Paramètres invalids"
 msgid "Invalid cookie"
 msgstr "Cookie invalid"
 
-#: src/xfpm-manager.c:315
+#: src/xfpm-manager.c:313
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
@@ -976,35 +984,35 @@ msgid ""
 msgstr "Una autorizacion es requerida per botar lo sistèma en mòde velha o velha perlongada"
 
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugin/power-manager-button.c:275
+#: panel-plugin/power-manager-button.c:274
 msgid "Display battery levels for attached devices"
 msgstr "Afichar los nivèls dels periferics connectats"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugin/power-manager-button.c:1273
+#: panel-plugin/power-manager-button.c:1272
 #, c-format
 msgid "%s is currently inhibiting power management"
 msgstr "%s inibís actualament la gestion de l’alimentacion"
 
-#: panel-plugin/power-manager-button.c:1345
+#: panel-plugin/power-manager-button.c:1344
 msgid "_Clear inhibitors"
 msgstr "_Escafar los inibitors"
 
-#: panel-plugin/power-manager-button.c:1349
+#: panel-plugin/power-manager-button.c:1348
 msgid "You can use this if applications fail to remove their inhibitors"
 msgstr "Podètz utilizar aquò se las aplicacions capitan pas de tirar los inibitors"
 
-#: panel-plugin/power-manager-button.c:1460
+#: panel-plugin/power-manager-button.c:1459
 msgid "<b>Display brightness</b>"
 msgstr "<b>Luminositat de l’ecran</b>"
 
-#: panel-plugin/power-manager-button.c:1485
+#: panel-plugin/power-manager-button.c:1484
 msgid "Presentation _mode"
 msgstr "_Mòde presentacion"
 
-#: panel-plugin/power-manager-button.c:1505
+#: panel-plugin/power-manager-button.c:1504
 msgid "_Settings..."
 msgstr "_Paramètres..."
 
