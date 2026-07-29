@@ -1,4 +1,4 @@
-XDT_VERSION_INIT([4.20.1])
+XDT_VERSION_INIT([4.20.1], [git])
 
 AC_COPYRIGHT([Copyright (c) 2008-2026 The Xfce development team. All rights reserved.])
 AC_INIT([xfce4-power-manager],[xdt_version],[https://gitlab.xfce.org/xfce/xfce4-power-manager])
