@@ -1025,65 +1025,26 @@ update_device_info_value_for_name (GtkTreeView *view,
 }
 
 static void
-update_sideview_icon (UpDevice *device,
-                      gint scale_factor)
+update_sideview_icon (UpDevice *device)
 {
-  GtkListStore *list_store;
-  GtkTreeIter *iter;
-  GdkPixbuf *pix;
-  cairo_surface_t *surface = NULL;
-  guint type = 0;
-  gchar *name = NULL, *icon_name = NULL, *model = NULL, *vendor = NULL;
-  const gchar *object_path = up_device_get_object_path (device);
-
-  list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
-
-  iter = find_device_in_tree (object_path);
-
-  /* quit if device doesn't exist in the sidebar */
-  if (!iter)
+  if (upower == NULL)
     return;
 
-  /* hack, this depends on XFPM_DEVICE_TYPE_* being in sync with UP_DEVICE_KIND_* */
-  g_object_get (device,
-                "kind", &type,
-                "vendor", &vendor,
-                "model", &model,
-                NULL);
+  const gchar *object_path = up_device_get_object_path (device);
+  GtkTreeIter *iter = find_device_in_tree (object_path);
 
+  /* quit if device doesn't exist in the sidebar */
+  if (iter == NULL)
+    return;
 
-  if (upower != NULL)
-  {
-    name = get_device_description (upower, device);
-    icon_name = get_device_icon_name (upower, device, FALSE);
-  }
-
-  pix = gtk_icon_theme_load_icon_for_scale (gtk_icon_theme_get_default (),
-                                            icon_name,
-                                            48,
-                                            scale_factor,
-                                            GTK_ICON_LOOKUP_USE_BUILTIN
-                                              | GTK_ICON_LOOKUP_FORCE_SIZE,
-                                            NULL);
-  if (G_LIKELY (pix != NULL))
-  {
-    surface = gdk_cairo_surface_create_from_pixbuf (pix, scale_factor, NULL);
-    g_object_unref (pix);
-  }
-
-  gtk_list_store_set (list_store, iter,
-                      COL_SIDEBAR_ICON, surface,
-                      COL_SIDEBAR_NAME, name,
-                      -1);
-
-  if (G_LIKELY (surface != NULL))
-  {
-    cairo_surface_destroy (surface);
-  }
-
-  g_free (name);
+  GtkListStore *list_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
+  gchar *name = get_device_description (upower, device);
+  gchar *icon_name = get_device_icon_name (upower, device, FALSE);
+  GIcon *icon = g_themed_icon_new (icon_name);
+  gtk_list_store_set (list_store, iter, COL_SIDEBAR_ICON, icon, COL_SIDEBAR_NAME, name, -1);
+  g_object_unref (icon);
   g_free (icon_name);
-
+  g_free (name);
   gtk_tree_iter_free (iter);
 }
 
@@ -1235,7 +1196,7 @@ update_device_details (UpDevice *device)
     }
   }
 
-  update_sideview_icon (device, gtk_widget_get_scale_factor (GTK_WIDGET (view)));
+  update_sideview_icon (device);
   gtk_widget_show_all (GTK_WIDGET (view));
 }
 
@@ -1553,7 +1514,7 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
   /* Devices listview */
   sideview = gtk_tree_view_new ();
   list_store = gtk_list_store_new (NCOLS_SIDEBAR,
-                                   CAIRO_GOBJECT_TYPE_SURFACE, /* COL_SIDEBAR_ICON */
+                                   G_TYPE_ICON, /* COL_SIDEBAR_ICON */
                                    G_TYPE_STRING, /* COL_SIDEBAR_NAME */
                                    G_TYPE_INT, /* COL_SIDEBAR_INT */
                                    G_TYPE_OBJECT, /* COL_SIDEBAR_BATTERY_DEVICE */
@@ -1569,7 +1530,8 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
   renderer = gtk_cell_renderer_pixbuf_new ();
 
   gtk_tree_view_column_pack_start (col, renderer, FALSE);
-  gtk_tree_view_column_set_attributes (col, renderer, "surface", 0, NULL);
+  gtk_tree_view_column_set_attributes (col, renderer, "gicon", 0, NULL);
+  g_object_set (renderer, "stock-size", GTK_ICON_SIZE_DIALOG, NULL);
 
   /* The device label */
   renderer = gtk_cell_renderer_text_new ();
