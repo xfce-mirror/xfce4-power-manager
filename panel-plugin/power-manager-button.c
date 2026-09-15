@@ -480,8 +480,7 @@ power_manager_button_update_device_icon_and_details (PowerManagerButton *button,
     g_object_unref (pix);
   }
 
-  if (battery_device->details)
-    g_free (battery_device->details);
+  g_free (battery_device->details);
 
   battery_device->details = details;
 
@@ -1091,7 +1090,7 @@ power_manager_button_update_presentation_indicator (PowerManagerButton *button)
       if (wl_surface != NULL)
         button->priv->wl_inhibitor = zwp_idle_inhibit_manager_v1_create_inhibitor (button->priv->wl_manager, wl_surface);
     }
-    else if (button->priv->wl_inhibitor != NULL)
+    else
     {
       g_clear_pointer (&button->priv->wl_inhibitor, zwp_idle_inhibitor_v1_destroy);
     }
