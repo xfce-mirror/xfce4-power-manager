@@ -447,32 +447,28 @@ xfpm_power_sleep (XfpmPower *power,
 static void
 xfpm_power_hibernate_clicked (XfpmPower *power)
 {
-  gtk_widget_destroy (power->priv->dialog);
-  power->priv->dialog = NULL;
+  g_clear_pointer (&power->priv->dialog, gtk_widget_destroy);
   xfpm_power_sleep (power, "Hibernate", TRUE);
 }
 
 static void
 xfpm_power_suspend_clicked (XfpmPower *power)
 {
-  gtk_widget_destroy (power->priv->dialog);
-  power->priv->dialog = NULL;
+  g_clear_pointer (&power->priv->dialog, gtk_widget_destroy);
   xfpm_power_sleep (power, "Suspend", TRUE);
 }
 
 static void
 xfpm_power_hybrid_sleep_clicked (XfpmPower *power)
 {
-  gtk_widget_destroy (power->priv->dialog);
-  power->priv->dialog = NULL;
+  g_clear_pointer (&power->priv->dialog, gtk_widget_destroy);
   xfpm_power_sleep (power, "HybridSleep", TRUE);
 }
 
 static void
 xfpm_power_shutdown_clicked (XfpmPower *power)
 {
-  gtk_widget_destroy (power->priv->dialog);
-  power->priv->dialog = NULL;
+  g_clear_pointer (&power->priv->dialog, gtk_widget_destroy);
   g_signal_emit (G_OBJECT (power), signals[SHUTDOWN], 0);
 }
 
@@ -601,8 +597,7 @@ xfpm_power_show_critical_action_notification (XfpmPower *power,
 static void
 xfpm_power_close_critical_dialog (XfpmPower *power)
 {
-  gtk_widget_destroy (power->priv->dialog);
-  power->priv->dialog = NULL;
+  g_clear_pointer (&power->priv->dialog, gtk_widget_destroy);
 }
 
 static void
@@ -671,11 +666,7 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
 
   g_signal_connect_object (dialog, "destroy",
                            G_CALLBACK (xfpm_power_close_critical_dialog), power, G_CONNECT_SWAPPED);
-  if (power->priv->dialog)
-  {
-    gtk_widget_destroy (power->priv->dialog);
-    power->priv->dialog = NULL;
-  }
+  g_clear_pointer (&power->priv->dialog, gtk_widget_destroy);
   power->priv->dialog = dialog;
   gtk_widget_show_all (dialog);
 }
@@ -819,11 +810,7 @@ xfpm_power_battery_charge_changed_cb (XfpmBattery *battery,
   }
 
   /*Current charge is okay now, then close the dialog*/
-  if (power->priv->dialog)
-  {
-    gtk_widget_destroy (power->priv->dialog);
-    power->priv->dialog = NULL;
-  }
+  g_clear_pointer (&power->priv->dialog, gtk_widget_destroy);
 }
 
 static void

@@ -325,8 +325,7 @@ manager_finished (void *_data,
                   struct zwlr_output_manager_v1 *_wl_manager)
 {
   XfpmMultiheadDataWayland *data = _data;
-  zwlr_output_manager_v1_destroy (data->wl_manager);
-  data->wl_manager = NULL;
+  g_clear_pointer (&data->wl_manager, zwlr_output_manager_v1_destroy);
 }
 
 static void
