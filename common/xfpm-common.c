@@ -95,10 +95,8 @@ xfpm_quit (void)
 }
 
 void
-xfpm_about (gpointer data)
+xfpm_about (void)
 {
-  gchar *package = (gchar *) data;
-
   const gchar *authors[] = {
     "Ali Abdallah <aliov@xfce.org>",
     "Nick Schermer <nick@xfce.org>",
@@ -125,7 +123,7 @@ xfpm_about (gpointer data)
                          "artists", artists,
                          "documenters", documenters,
                          "license", XFCE_LICENSE_GPL,
-                         "program-name", package,
+                         "program-name", PACKAGE_NAME,
                          "translator-credits", _("translator-credits"),
                          "version", VERSION_FULL,
                          "website", "https://docs.xfce.org/xfce/xfce4-power-manager/start",

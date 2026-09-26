@@ -261,5 +261,5 @@ power_manager_plugin_configure (XfcePanelPlugin *panel_plugin)
 static void
 power_manager_plugin_about (XfcePanelPlugin *panel_plugin)
 {
-  xfpm_about ("org.xfce.powermanager");
+  xfpm_about ();
 }
