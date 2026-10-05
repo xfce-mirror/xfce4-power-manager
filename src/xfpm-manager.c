@@ -45,15 +45,13 @@
 
 #include <gio/gunixfdlist.h>
 #include <gtk/gtk.h>
+#include <libxfce4session-client/libxfce4session-client.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
 #include <xfconf/xfconf.h>
 
 #ifdef ENABLE_X11
 #include <gdk/gdkx.h>
-#define WINDOWING_IS_X11() GDK_IS_X11_DISPLAY (gdk_display_get_default ())
-#else
-#define WINDOWING_IS_X11() FALSE
 #endif
 
 static void
@@ -73,9 +71,7 @@ struct XfpmManagerPrivate
   guint watch_id;
   GDBusProxy *proxy;
 
-#ifdef ENABLE_X11
-  XfceSMClient *client;
-#endif
+  XfceSessionClient *client;
 
   XfpmPower *power;
   XfpmButton *button;
@@ -746,10 +742,8 @@ xfpm_manager_finalize (GObject *object)
   g_object_unref (manager->priv->power);
   g_object_unref (manager->priv->button);
   g_object_unref (manager->priv->conf);
-#ifdef ENABLE_X11
   if (manager->priv->client != NULL)
     g_object_unref (manager->priv->client);
-#endif
   if (manager->priv->systemd != NULL)
     g_object_unref (manager->priv->systemd);
   if (manager->priv->console != NULL)
@@ -792,42 +786,47 @@ xfpm_manager_reserve_names (XfpmManager *manager)
   return TRUE;
 }
 
+static gboolean
+xfpm_manager_session_replaced (XfpmManager *manager)
+{
+  XFPM_DEBUG ("session replaced");
+  xfpm_manager_quit (manager);
+  return FALSE;
+}
+
 XfpmManager *
 xfpm_manager_new (GDBusConnection *bus,
                   const gchar *client_id)
 {
   XfpmManager *manager = g_object_new (XFPM_TYPE_MANAGER, NULL);
+  GError *error = NULL;
+  gchar *current_dir = g_get_current_dir ();
+  const gchar *restart_command[] = {
+    "xfce4-power-manager",
+    "--restart",
+    NULL
+  };
 
-#ifdef ENABLE_X11
-  if (WINDOWING_IS_X11 ())
+  manager->priv->client = xfce_session_client_new_full (XFCE_SESSION_CLIENT_RESTART_NORMAL,
+                                                        XFCE_SESSION_CLIENT_PRIORITY_DEFAULT,
+                                                        client_id,
+                                                        current_dir,
+                                                        restart_command,
+                                                        SYSCONFDIR "/xdg/autostart/" PACKAGE_NAME ".desktop");
+  g_free (current_dir);
+
+  if (!xfce_session_client_connect (manager->priv->client, &error))
   {
-    GError *error = NULL;
-    gchar *current_dir = g_get_current_dir ();
-    const gchar *restart_command[] = {
-      "xfce4-power-manager",
-      "--restart",
-      NULL
-    };
-    manager->priv->client = xfce_sm_client_get_full (XFCE_SM_CLIENT_RESTART_NORMAL,
-                                                     XFCE_SM_CLIENT_PRIORITY_DEFAULT,
-                                                     client_id,
-                                                     current_dir,
-                                                     restart_command,
-                                                     SYSCONFDIR "/xdg/autostart/" PACKAGE_NAME ".desktop");
-    g_free (current_dir);
-
-    if (!xfce_sm_client_connect (manager->priv->client, &error))
-    {
-      g_warning ("Unable to connect to session manager : %s", error->message);
-      g_error_free (error);
-    }
-    else
-    {
-      g_signal_connect_object (manager->priv->client, "quit",
-                               G_CALLBACK (xfpm_manager_quit), manager, G_CONNECT_SWAPPED);
-    }
+    g_warning ("Unable to connect to session manager : %s", error->message);
+    g_error_free (error);
   }
-#endif
+  else
+  {
+    g_signal_connect_object (manager->priv->client, "replaced",
+                             G_CALLBACK (xfpm_manager_session_replaced), manager, G_CONNECT_SWAPPED);
+    g_signal_connect_object (manager->priv->client, "quit",
+                             G_CALLBACK (xfpm_manager_quit), manager, G_CONNECT_SWAPPED);
+  }
 
   manager->priv->session_bus = bus;
   xfpm_manager_dbus_class_init (XFPM_MANAGER_GET_CLASS (manager));
