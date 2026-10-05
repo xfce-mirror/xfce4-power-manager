@@ -99,6 +99,7 @@ executable(
     libxfce4ui,
     libxfce4util,
     libxfce4windowing,
+    libxfce4session_client,
     upower_glib,
     xfconf,
     x11_deps,

@@ -23,6 +23,7 @@ dependency_versions = {
   'libnotify': '>= 0.7.8',
   'xfce4': '>= 4.20.0',
   'libxfce4ui': '>= 4.21.0',
+  'libxfce4session-client': '>= 4.21.1-dev',
   'upower-glib': '>= 0.99.10',
 
   'libx11': '>= 1.6.7',
@@ -47,6 +48,7 @@ upower_glib = dependency('upower-glib', version: dependency_versions['upower-gli
 libxfce4ui = dependency('libxfce4ui-2', version: dependency_versions['libxfce4ui'])
 libxfce4util = dependency('libxfce4util-1.0', version: dependency_versions['xfce4'])
 libxfce4windowing = dependency('libxfce4windowing-0', version: dependency_versions['xfce4'])
+libxfce4session_client = dependency('libxfce4session-client-1', version: dependency_versions['libxfce4session-client'])
 xfconf = dependency('libxfconf-0', version: dependency_versions['xfce4'])
 
 # Feature: 'x11'
