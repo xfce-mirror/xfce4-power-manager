@@ -30,6 +30,7 @@
 #include "libdbus/xfpm-dbus.h"
 
 #include <gtk/gtk.h>
+#include <libxfce4session-client/libxfce4session-client.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <libxfce4util/libxfce4util.h>
 
@@ -253,9 +254,7 @@ main (int argc,
   octx = g_option_context_new ("");
   g_option_context_set_ignore_unknown_options (octx, TRUE);
   g_option_context_add_main_entries (octx, option_entries, NULL);
-#ifdef ENABLE_X11
-  g_option_context_add_group (octx, xfce_sm_client_get_option_group (argc, argv));
-#endif
+  g_option_context_add_group (octx, xfce_session_client_get_option_group (argc, argv));
   /* We can't add the following command because it will invoke gtk_init
      before we have a chance to fork.
      g_option_context_add_group(octx, gtk_get_option_group(TRUE));
