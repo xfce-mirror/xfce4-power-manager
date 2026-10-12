@@ -1504,21 +1504,6 @@ power_manager_button_show_menu (PowerManagerButton *button,
   gtk_widget_show (mi);
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
   g_signal_connect (G_OBJECT (mi), "activate", G_CALLBACK (xfpm_preferences), NULL);
-
-#if LIBXFCE4PANEL_CHECK_VERSION(4, 17, 2)
   xfce_panel_plugin_popup_menu (XFCE_PANEL_PLUGIN (button->priv->plugin), GTK_MENU (menu),
                                 GTK_WIDGET (button), event);
-#else
-  gtk_menu_popup_at_widget (GTK_MENU (menu),
-                            GTK_WIDGET (button),
-                            xfce_panel_plugin_get_orientation (button->priv->plugin) == GTK_ORIENTATION_VERTICAL
-                              ? GDK_GRAVITY_WEST
-                              : GDK_GRAVITY_NORTH,
-                            xfce_panel_plugin_get_orientation (button->priv->plugin) == GTK_ORIENTATION_VERTICAL
-                              ? GDK_GRAVITY_EAST
-                              : GDK_GRAVITY_SOUTH,
-                            event);
-#endif
-  xfce_panel_plugin_register_menu (XFCE_PANEL_PLUGIN (button->priv->plugin),
-                                   GTK_MENU (menu));
 }

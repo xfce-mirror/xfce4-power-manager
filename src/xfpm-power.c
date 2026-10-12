@@ -262,14 +262,9 @@ xfpm_power_report_error (XfpmPower *power,
                                  XFPM_NOTIFY_CRITICAL);
 }
 
-#if LIBXFCE4UTIL_CHECK_VERSION(4, 20, 2)
 #define XFCE_SYSTEMD_METHOD(method, systemd, force, error) \
   (force ? xfce_systemd_##method##_with_flags (systemd, XFCE_SYSTEMD_SKIP_INHIBITORS, error) \
          : xfce_systemd_##method (systemd, TRUE, error))
-#else
-#define XFCE_SYSTEMD_METHOD(method, systemd, force, error) \
-  xfce_systemd_##method (systemd, TRUE, error)
-#endif
 
 static void
 xfpm_power_sleep (XfpmPower *power,
