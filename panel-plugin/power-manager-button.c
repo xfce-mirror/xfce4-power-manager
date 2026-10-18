@@ -32,6 +32,7 @@
 #include "common/xfpm-icons.h"
 #include "common/xfpm-notify.h"
 #include "common/xfpm-power-common.h"
+#include "common/xfpm-ppd-common.h"
 
 #include <gtk/gtk.h>
 #include <libxfce4ui/libxfce4ui.h>
@@ -52,6 +53,7 @@ struct PowerManagerButtonPrivate
   PowerManagerPlugin *plugin;
   PowerManagerConfig *config;
   GDBusProxy *inhibit_proxy;
+  GDBusProxy *profiles_proxy;
   XfconfChannel *channel;
   UpClient *upower;
   XfpmNotify *notify;
@@ -88,6 +90,11 @@ struct PowerManagerButtonPrivate
 
   /* display brightness slider widget */
   GtkWidget *range;
+
+  /* power profile slider widget*/
+  GtkWidget *power_profile_slider;
+  gulong power_profile_slider_handler_id;
+  GSList *power_profiles;
 
   /* filter range value changed events for snappier UI feedback */
   guint set_level_timeout;
@@ -795,6 +802,8 @@ inhibit_proxy_ready_cb (GObject *source_object,
   PowerManagerButton *button = POWER_MANAGER_BUTTON (user_data);
 
   button->priv->inhibit_proxy = g_dbus_proxy_new_finish (res, &error);
+  button->priv->profiles_proxy = xfpm_ppd_g_dbus_proxy_new ();
+
   if (error != NULL)
   {
     XFPM_DEBUG ("error getting inhibit proxy: %s", error->message);
@@ -940,6 +949,9 @@ power_manager_button_finalize (GObject *object)
   g_object_unref (button->priv->config);
   if (button->priv->inhibit_proxy != NULL)
     g_object_unref (button->priv->inhibit_proxy);
+
+  if (button->priv->profiles_proxy != NULL)
+    g_object_unref (button->priv->profiles_proxy);
 
   if (button->priv->channel != NULL)
     xfconf_shutdown ();
@@ -1151,6 +1163,10 @@ menu_destroyed_cb (GtkMenuShell *menu,
 
   /* menu destroyed, range slider is gone */
   button->priv->range = NULL;
+  button->priv->power_profile_slider = NULL;
+
+  g_slist_free_full (button->priv->power_profiles, g_free);
+  button->priv->power_profiles = NULL;
 
   /* untoggle panel icon */
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
@@ -1380,6 +1396,56 @@ brightness_set_level_with_timeout (PowerManagerButton *button)
 }
 
 static void
+on_battery_changed_cb (GObject *obj, GParamSpec *pspec, gpointer user_data)
+{
+  PowerManagerButton *button = POWER_MANAGER_BUTTON (user_data);
+  if (button->priv->power_profile_slider == NULL || button->priv->power_profiles == NULL)
+    return;
+
+  gchar *property;
+  property = up_client_get_on_battery (button->priv->upower) ? XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY : XFPM_PROPERTIES_PREFIX PROFILE_ON_AC;
+
+  gchar *active = xfconf_channel_get_string (
+    button->priv->channel,
+    property,
+    "");
+
+  GSList *match = g_slist_find_custom (
+    button->priv->power_profiles,
+    (gconstpointer) active,
+    (GCompareFunc) g_strcmp0);
+
+  gint index = match ? g_slist_position (button->priv->power_profiles, match) : -1;
+
+  g_signal_handler_block (button->priv->power_profile_slider, button->priv->power_profile_slider_handler_id);
+  gtk_range_set_value (GTK_RANGE (button->priv->power_profile_slider), index);
+  g_signal_handler_unblock (button->priv->power_profile_slider, button->priv->power_profile_slider_handler_id);
+}
+
+static void
+power_profile_slider_value_changed_cb (GtkRange *self, gpointer user_data)
+{
+  PowerManagerButton *button = POWER_MANAGER_BUTTON (user_data);
+  gint index;
+  gchar *profile, *property;
+
+  if (button->priv->power_profile_slider == NULL || button->priv->power_profiles == NULL || button->priv->upower == NULL)
+    return;
+
+  index = (gint) gtk_range_get_value (GTK_RANGE (button->priv->power_profile_slider));
+  profile = g_slist_nth_data (button->priv->power_profiles, index);
+  property = up_client_get_on_battery (button->priv->upower) ? XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY : XFPM_PROPERTIES_PREFIX PROFILE_ON_AC;
+
+  if (profile == NULL)
+    return;
+
+  xfconf_channel_set_string (
+    button->priv->channel,
+    property,
+    profile);
+}
+
+static void
 range_value_changed_cb (PowerManagerButton *button,
                         GtkWidget *widget)
 {
@@ -1444,6 +1510,48 @@ power_manager_button_show_menu (PowerManagerButton *button,
     gtk_widget_show (mi);
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
   }
+
+  if (button->priv->profiles_proxy != NULL
+      && (button->priv->power_profiles = xfpm_ppd_get_profiles (button->priv->profiles_proxy)) != NULL
+      && g_slist_length (button->priv->power_profiles) > 1)
+  {
+    mi = xfpm_scale_menu_item_new_with_range (0, g_slist_length (button->priv->power_profiles) - 1, 1);
+    xfpm_scale_menu_item_set_description_label (XFPM_SCALE_MENU_ITEM (mi), "<b>Power Profile</b>");
+    button->priv->power_profile_slider = xfpm_scale_menu_item_get_scale (XFPM_SCALE_MENU_ITEM (mi));
+    gchar *active = xfconf_channel_get_string (
+      button->priv->channel,
+      up_client_get_on_battery (button->priv->upower) ? XFPM_PROPERTIES_PREFIX PROFILE_ON_BATTERY : XFPM_PROPERTIES_PREFIX PROFILE_ON_AC,
+      "");
+    gint count = 0;
+    for (GSList *l = button->priv->power_profiles; l != NULL; l = l->next)
+    {
+      gchar *profile = l->data;
+      gtk_scale_add_mark (GTK_SCALE (button->priv->power_profile_slider), count, GTK_POS_BOTTOM, profile);
+      if (g_strcmp0 (active, profile) == 0)
+      {
+        gtk_range_set_value (GTK_RANGE (button->priv->power_profile_slider), count);
+      }
+      count++;
+    }
+    g_free (active);
+    gtk_range_set_increments (GTK_RANGE (button->priv->power_profile_slider), 1, 1);
+    gtk_range_set_round_digits (GTK_RANGE (button->priv->power_profile_slider), 0);
+    gtk_widget_show_all (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+
+    button->priv->power_profile_slider_handler_id = g_signal_connect (button->priv->power_profile_slider, "value-changed", G_CALLBACK (power_profile_slider_value_changed_cb), button);
+
+    g_signal_connect (G_OBJECT (button->priv->upower),
+                      "notify::on-battery",
+                      G_CALLBACK (on_battery_changed_cb),
+                      button);
+
+    /* separator */
+    mi = gtk_separator_menu_item_new ();
+    gtk_widget_show (mi);
+    gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
+  }
+
 
   /* Display brightness slider - show if there's hardware support for it */
   if (button->priv->brightness != NULL)
