@@ -41,6 +41,9 @@ power_manager_config_get_presentation_mode (PowerManagerConfig *config);
 gboolean
 power_manager_config_get_show_presentation_indicator (PowerManagerConfig *config);
 
+gboolean
+power_manager_config_get_show_power_profile_slider (PowerManagerConfig *config);
+
 G_END_DECLS
 
 #endif /* !__POWER_MANAGER_CONFIG_H__ */

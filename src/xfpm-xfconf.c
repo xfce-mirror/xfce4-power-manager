@@ -85,6 +85,7 @@ enum
 
   PROP_SHOW_PANEL_LABEL,
   PROP_SHOW_PRESENTATION_INDICATOR,
+  PROP_SHOW_POWER_PROFILE_SLIDER,
 
   N_PROPERTIES
 };
@@ -638,6 +639,16 @@ xfpm_xfconf_class_init (XfpmXfconfClass *klass)
                                    g_param_spec_boolean (SHOW_PRESENTATION_INDICATOR,
                                                          NULL, NULL,
                                                          DEFAULT_SHOW_PRESENTATION_INDICATOR,
+                                                         G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+
+  /**
+   * XfpmXfconf::show-power-profile-slider
+   **/
+  g_object_class_install_property (object_class,
+                                   PROP_SHOW_POWER_PROFILE_SLIDER,
+                                   g_param_spec_boolean (SHOW_POWER_PROFILE_SLIDER,
+                                                         NULL, NULL,
+                                                         DEFAULT_SHOW_POWER_PROFILE_SLIDER,
                                                          G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
 

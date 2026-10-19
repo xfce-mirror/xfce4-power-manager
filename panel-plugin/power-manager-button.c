@@ -1511,12 +1511,13 @@ power_manager_button_show_menu (PowerManagerButton *button,
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), mi);
   }
 
-  if (button->priv->profiles_proxy != NULL
+  if (power_manager_config_get_show_power_profile_slider (button->priv->config)
+      && button->priv->profiles_proxy != NULL
       && (button->priv->power_profiles = xfpm_ppd_get_profiles (button->priv->profiles_proxy)) != NULL
       && g_slist_length (button->priv->power_profiles) > 1)
   {
     mi = xfpm_scale_menu_item_new_with_range (0, g_slist_length (button->priv->power_profiles) - 1, 1);
-    xfpm_scale_menu_item_set_description_label (XFPM_SCALE_MENU_ITEM (mi), "<b>Power Profile</b>");
+    xfpm_scale_menu_item_set_description_label (XFPM_SCALE_MENU_ITEM (mi), _("<b>Power Profile</b>"));
     button->priv->power_profile_slider = xfpm_scale_menu_item_get_scale (XFPM_SCALE_MENU_ITEM (mi));
     gchar *active = xfconf_channel_get_string (
       button->priv->channel,
