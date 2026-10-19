@@ -141,7 +141,7 @@ if polkit.found()
       libxfce4util,
     ],
     install: true,
-    install_dir: get_option('prefix') / get_option('sbindir'),
+    install_dir: get_option('prefix') / get_option('libexecdir'),
   )
 
   executable(
@@ -160,12 +160,12 @@ if polkit.found()
       libxfce4util,
     ],
     install: true,
-    install_dir: get_option('prefix') / get_option('sbindir'),
+    install_dir: get_option('prefix') / get_option('libexecdir'),
   )
 
   policy_in = configure_file(
     configuration: configuration_data({
-      'sbindir': get_option('prefix') / get_option('sbindir'),
+      'libexecdir': get_option('prefix') / get_option('libexecdir'),
     }),
     input: 'org.xfce.power.policy.in.in',
     output: 'org.xfce.power.policy.in',
