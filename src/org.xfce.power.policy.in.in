@@ -25,7 +25,7 @@
       <allow_inactive>no</allow_inactive>
       <allow_active>yes</allow_active>
     </defaults>
-    <annotate key="org.freedesktop.policykit.exec.path">@sbindir@/xfpm-power-backlight-helper</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">@libexecdir@/xfpm-power-backlight-helper</annotate>
   </action>
 
   <action id="org.xfce.power.xfce4-pm-helper">
@@ -40,7 +40,7 @@
       <allow_inactive>auth_admin</allow_inactive>
       <allow_active>yes</allow_active>
     </defaults>
-    <annotate key="org.freedesktop.policykit.exec.path">@sbindir@/xfce4-pm-helper</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">@libexecdir@/xfce4-pm-helper</annotate>
   </action>
 
 </policyconfig>

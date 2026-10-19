@@ -190,7 +190,7 @@ xfpm_suspend_try_action (XfpmActionType type)
   else
     return FALSE;
 
-  command = g_strdup_printf ("pkexec " SBINDIR "/xfce4-pm-helper --%s", action);
+  command = g_strdup_printf ("pkexec " LIBEXECDIR "/xfce4-pm-helper --%s", action);
   XFPM_DEBUG ("Executing command: %s", command);
 
   if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)

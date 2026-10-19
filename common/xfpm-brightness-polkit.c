@@ -76,7 +76,7 @@ helper_get_value (const gchar *argument)
   gchar *stdout_data = NULL;
   gint status;
   gint value = -1;
-  gchar *command = g_strdup_printf (SBINDIR "/xfpm-power-backlight-helper --%s", argument);
+  gchar *command = g_strdup_printf (LIBEXECDIR "/xfpm-power-backlight-helper --%s", argument);
 
   XFPM_DEBUG ("Executing command: %s", command);
   if (!g_spawn_command_line_sync (command, &stdout_data, NULL, &status, &error)
@@ -151,7 +151,7 @@ xfpm_brightness_polkit_set_level (XfpmBrightness *brightness,
 {
   GError *error = NULL;
   gint status;
-  gchar *command = g_strdup_printf ("pkexec " SBINDIR "/xfpm-power-backlight-helper --set-brightness %i", level);
+  gchar *command = g_strdup_printf ("pkexec " LIBEXECDIR "/xfpm-power-backlight-helper --set-brightness %i", level);
 
   XFPM_DEBUG ("Executing command: %s", command);
   if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
@@ -189,7 +189,7 @@ xfpm_brightness_polkit_set_switch (XfpmBrightness *brightness,
 {
   GError *error = NULL;
   gint status;
-  gchar *command = g_strdup_printf ("pkexec " SBINDIR "/xfpm-power-backlight-helper --set-brightness-switch %i", _switch);
+  gchar *command = g_strdup_printf ("pkexec " LIBEXECDIR "/xfpm-power-backlight-helper --set-brightness-switch %i", _switch);
 
   if (!g_spawn_command_line_sync (command, NULL, NULL, &status, &error)
       || !g_spawn_check_wait_status (status, &error))
