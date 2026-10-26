@@ -6,12 +6,13 @@
 # beriain, 2020-2021
 # Dabid Martinez <dabid@laborategia.eus>, 2020
 # Eder Etxebarria Rojo, 2024
+# Eder Etxebarria Rojo, 2024
 # Piarres Beobide <pi@beobide.net>, 2008-2009,2011
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce4-power-manager\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2026-05-21 00:54+0200\n"
+"POT-Creation-Date: 2026-07-25 01:01+0200\n"
 "PO-Revision-Date: 2013-07-02 20:42+0000\n"
 "Last-Translator: Eder Etxebarria Rojo, 2024\n"
 "Language-Team: Basque (http://app.transifex.com/xfce/xfce4-power-manager/language/eu/)\n"
@@ -46,11 +47,10 @@ msgstr "Ezer ez"
 #: settings/xfce4-power-manager-settings.desktop.in:4
 #: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
 #: src/xfpm-power.c:592 src/xfpm-power.c:633 src/xfpm-power.c:792
-#: src/xfpm-power.c:811 src/xfpm-backlight.c:151 src/xfpm-backlight.c:159
-#: src/xfpm-battery.c:177 src/xfpm-kbd-backlight.c:104
+#: src/xfpm-power.c:811 src/xfpm-battery.c:177
 #: src/xfce4-power-manager.desktop.in:3
 msgid "Power Manager"
-msgstr "Energia kudeatzailea"
+msgstr "Energia-kudeatzailea"
 
 #: data/interfaces/xfpm-settings.ui:268
 #: panel-plugin/power-manager-dialog.c:186
@@ -59,7 +59,7 @@ msgstr "_Laguntza"
 
 #: data/interfaces/xfpm-settings.ui:284
 msgid "_Screensaver Management"
-msgstr "_Pantaila babeslearen kudeaketa"
+msgstr "_Pantaila-babeslearen kudeaketa"
 
 #: data/interfaces/xfpm-settings.ui:300
 #: panel-plugin/power-manager-dialog.c:187
@@ -68,172 +68,180 @@ msgstr "_Itxi"
 
 #: data/interfaces/xfpm-settings.ui:362
 msgid "When power button is pressed:"
-msgstr "Indar botoia sakatzean:"
+msgstr "Pizte-botoia sakatzean:"
 
 #: data/interfaces/xfpm-settings.ui:374
 msgid "When sleep button is pressed:"
-msgstr "Sleep botoia sakatzean:"
+msgstr "Lo-botoia sakatzean:"
 
 #: data/interfaces/xfpm-settings.ui:386
 msgid "When hibernate button is pressed:"
-msgstr "Hibernatu botoia sakatzean:"
+msgstr "Hibernatze-botoia sakatzean:"
 
 #: data/interfaces/xfpm-settings.ui:398
 msgid "When battery button is pressed:"
 msgstr "Bateriaren botoia sakatzean:"
 
-#: data/interfaces/xfpm-settings.ui:507
-msgid "Exponential"
-msgstr "Esponentziala"
-
-#: data/interfaces/xfpm-settings.ui:529
-msgid "Brightness step count:"
-msgstr "Distira pasatzeko kontua:"
-
-#: data/interfaces/xfpm-settings.ui:540
-msgid "Handle display brightness _keys"
-msgstr "Distira teklak kudeatu"
-
-#: data/interfaces/xfpm-settings.ui:563
+#: data/interfaces/xfpm-settings.ui:487
 msgid "<b>Buttons</b>"
 msgstr "<b>Botoiak</b>"
 
-#: data/interfaces/xfpm-settings.ui:597
+#: data/interfaces/xfpm-settings.ui:521
 msgid "Status notifications"
-msgstr "Egoera berri-emateak"
+msgstr "Egoera-jakinarazpenak"
 
-#: data/interfaces/xfpm-settings.ui:633
+#: data/interfaces/xfpm-settings.ui:559
+msgid "Brightness notifications"
+msgstr "Distiraren jakinarazpenak"
+
+#: data/interfaces/xfpm-settings.ui:595
 msgid "<b>Appearance</b>"
 msgstr "<b>Itxura</b>"
 
-#: data/interfaces/xfpm-settings.ui:663
+#: data/interfaces/xfpm-settings.ui:625
 msgid ""
 "This is the mechanism by which applications send inhibit requests to "
 "xfce4-power-manager, such as when you're watching a video in a web browser. "
 "These applications may fail to send an un-inhibit request afterward, so you "
 "may want to disable this if you encounter recurring issues."
-msgstr ""
+msgstr "Aplikazioek xfce4-power-manager-i inhibizio-eskaerak bidaltzeko erabiltzen duten mekanismoa da, adibidez web-nabigatzaile batean bideo bat ikusten ari zarenean. Baliteke aplikazio horiek ondoren inhibizioa kentzeko eskaerarik ez bidaltzea; beraz, arazoak behin eta berriz gertatzen badira, agian desgaitu nahiko duzu."
 
-#: data/interfaces/xfpm-settings.ui:668
+#: data/interfaces/xfpm-settings.ui:630
 msgid "Inhibition via D-Bus"
-msgstr ""
+msgstr "D-Bus bidezko inhibizioa"
 
-#: data/interfaces/xfpm-settings.ui:705
+#: data/interfaces/xfpm-settings.ui:667
 msgid "Inhibit when a window is fullscreened"
-msgstr ""
+msgstr "Inhibitu leiho bat pantaila osoan dagoenean"
+
+#: data/interfaces/xfpm-settings.ui:704
+msgid "Presentation mode"
+msgstr "Aurkezpen modua"
 
 #: data/interfaces/xfpm-settings.ui:742
-msgid "Presentation mode"
-msgstr ""
-
-#: data/interfaces/xfpm-settings.ui:780
 msgid "Disable desktop notifications"
-msgstr ""
+msgstr "Desgaitu mahaigaineko jakinarazpenak"
 
-#: data/interfaces/xfpm-settings.ui:815
+#: data/interfaces/xfpm-settings.ui:777
 msgid "<b>Inhibition</b>"
-msgstr ""
+msgstr "<b>Inhibizioa</b>"
 
-#: data/interfaces/xfpm-settings.ui:835
+#: data/interfaces/xfpm-settings.ui:797
 msgid "General"
 msgstr "Orokorra"
 
-#: data/interfaces/xfpm-settings.ui:880 data/interfaces/xfpm-settings.ui:1144
+#: data/interfaces/xfpm-settings.ui:842 data/interfaces/xfpm-settings.ui:1106
 msgid "When inactive for"
 msgstr "Inaktibo dagoenean"
 
-#: data/interfaces/xfpm-settings.ui:952 data/interfaces/xfpm-settings.ui:1216
+#: data/interfaces/xfpm-settings.ui:914 data/interfaces/xfpm-settings.ui:1178
 msgid "System sleep mode:"
 msgstr "Sistemaren lo-modua:"
 
-#: data/interfaces/xfpm-settings.ui:964 data/interfaces/xfpm-settings.ui:1228
+#: data/interfaces/xfpm-settings.ui:926 data/interfaces/xfpm-settings.ui:1190
 msgid "<b>System power saving</b>"
 msgstr "<b>Sistemaren energia aurreztea</b>"
 
-#: data/interfaces/xfpm-settings.ui:979 data/interfaces/xfpm-settings.ui:1129
+#: data/interfaces/xfpm-settings.ui:941 data/interfaces/xfpm-settings.ui:1091
 msgid "<b>Laptop Lid</b>"
 msgstr "<b>Ordenagailu eramangarriaren tapa</b>"
 
-#: data/interfaces/xfpm-settings.ui:994 data/interfaces/xfpm-settings.ui:1084
+#: data/interfaces/xfpm-settings.ui:956 data/interfaces/xfpm-settings.ui:1046
 msgid "When laptop lid is closed:"
-msgstr "Eramangarri tapa ixtean:"
+msgstr "Ordenagailu eramangarriaren tapa ixtean:"
 
-#: data/interfaces/xfpm-settings.ui:1021 data/interfaces/xfpm-settings.ui:1111
+#: data/interfaces/xfpm-settings.ui:983 data/interfaces/xfpm-settings.ui:1073
 msgid "Execute action if an external display is connected"
-msgstr ""
+msgstr "Exekutatu ekintza kanpoko pantaila bat konektatuta badago"
 
-#: data/interfaces/xfpm-settings.ui:1038 data/interfaces/xfpm-settings.ui:1242
+#: data/interfaces/xfpm-settings.ui:1000 data/interfaces/xfpm-settings.ui:1204
 msgid "<b>Power profile</b>"
 msgstr "<b>Energia-profila</b>"
 
-#: data/interfaces/xfpm-settings.ui:1070 data/interfaces/xfpm-settings.ui:1806
+#: data/interfaces/xfpm-settings.ui:1032 data/interfaces/xfpm-settings.ui:1768
 msgid "On battery"
 msgstr "Bateriaz"
 
-#: data/interfaces/xfpm-settings.ui:1274 data/interfaces/xfpm-settings.ui:2059
-#: common/xfpm-power-common.c:412
+#: data/interfaces/xfpm-settings.ui:1236 data/interfaces/xfpm-settings.ui:2021
+#: common/xfpm-power-common.c:420
 msgid "Plugged in"
 msgstr "Entxufatuta"
 
-#: data/interfaces/xfpm-settings.ui:1310
+#: data/interfaces/xfpm-settings.ui:1272
 msgid "Critical battery power level:"
 msgstr "Bateriaren energia-maila kritikoa:"
 
-#: data/interfaces/xfpm-settings.ui:1340 settings/xfpm-settings.c:227
+#: data/interfaces/xfpm-settings.ui:1302 settings/xfpm-settings.c:227
 msgid "%"
 msgstr "%"
 
-#: data/interfaces/xfpm-settings.ui:1377
+#: data/interfaces/xfpm-settings.ui:1339
 msgid "On critical battery power:"
 msgstr "Bateriaren energia-maila kritikoan:"
 
-#: data/interfaces/xfpm-settings.ui:1416
+#: data/interfaces/xfpm-settings.ui:1378
 msgid "<b>Critical power</b>"
-msgstr "Energia-maila kritikoa"
+msgstr "<b>Energia-maila kritikoa</b>"
 
-#: data/interfaces/xfpm-settings.ui:1445
+#: data/interfaces/xfpm-settings.ui:1407
 msgid "Lock screen when system is going to sleep"
 msgstr "Blokeatu pantaila sistemak lo hartzen duenean"
 
-#: data/interfaces/xfpm-settings.ui:1464
+#: data/interfaces/xfpm-settings.ui:1426
 msgid "<b>Security</b>"
 msgstr "<b>Segurtasuna</b>"
 
-#: data/interfaces/xfpm-settings.ui:1484
+#: data/interfaces/xfpm-settings.ui:1446
 msgid "System"
 msgstr "Sistema"
 
-#: data/interfaces/xfpm-settings.ui:1523
+#: data/interfaces/xfpm-settings.ui:1485
 msgid "<b>Display power management</b>"
-msgstr "<b>Pantailaren energia kudeaketa</b>"
+msgstr "<b>Pantailaren energia-kudeaketa</b>"
 
-#: data/interfaces/xfpm-settings.ui:1536
+#: data/interfaces/xfpm-settings.ui:1498
 msgid ""
 "Let the power manager handle display power management (DPMS) instead of the "
 "display server"
 msgstr "Utzi energia-kudeatzaileari pantailaren energiaren kudeaketa (DPMS) kudeatzen, pantaila-zerbitzariaren ordez"
 
-#: data/interfaces/xfpm-settings.ui:1611 data/interfaces/xfpm-settings.ui:1820
+#: data/interfaces/xfpm-settings.ui:1573 data/interfaces/xfpm-settings.ui:1782
 msgid "Put to sleep after"
-msgstr "Lotan jarri honen ondoren"
+msgstr "Jarri lotan denbora honen ondoren:"
 
-#: data/interfaces/xfpm-settings.ui:1624 data/interfaces/xfpm-settings.ui:1833
+#: data/interfaces/xfpm-settings.ui:1586 data/interfaces/xfpm-settings.ui:1795
 msgid "Switch off after"
-msgstr "Itzali honen ondoren"
+msgstr "Itzali denbora honen ondoren:"
 
-#: data/interfaces/xfpm-settings.ui:1681 data/interfaces/xfpm-settings.ui:1862
+#: data/interfaces/xfpm-settings.ui:1643 data/interfaces/xfpm-settings.ui:1824
 msgid "On inactivity reduce to"
-msgstr "Inaktibo dagoenean murriztu honetara"
+msgstr "Jarduerarik ez dagoenean, murriztu honaino:"
 
-#: data/interfaces/xfpm-settings.ui:1694 data/interfaces/xfpm-settings.ui:1875
+#: data/interfaces/xfpm-settings.ui:1656 data/interfaces/xfpm-settings.ui:1837
 msgid "Reduce after"
-msgstr "Murriztu honen ondoren"
+msgstr "Murriztu denbora honen ondoren:"
 
-#: data/interfaces/xfpm-settings.ui:1793 data/interfaces/xfpm-settings.ui:1846
+#: data/interfaces/xfpm-settings.ui:1755 data/interfaces/xfpm-settings.ui:1808
 msgid "<b>Brightness reduction</b>"
-msgstr "<b>Distira murrizketa</b>"
+msgstr "<b>Distiraren murrizketa</b>"
 
-#: data/interfaces/xfpm-settings.ui:2079
+#: data/interfaces/xfpm-settings.ui:2043
+msgid "<b>Manual brightness control</b>"
+msgstr "<b>Distiraren eskuzko kontrola</b>"
+
+#: data/interfaces/xfpm-settings.ui:2057
+msgid "Handle display brightness _keys"
+msgstr "Kudeatu pantailaren distira-_teklak"
+
+#: data/interfaces/xfpm-settings.ui:2086
+msgid "Brightness step count:"
+msgstr "Distira-urratsen kopurua:"
+
+#: data/interfaces/xfpm-settings.ui:2117
+msgid "Exponential"
+msgstr "Esponentziala"
+
+#: data/interfaces/xfpm-settings.ui:2150
 msgid "Display"
 msgstr "Bistaratzea"
 
@@ -255,7 +263,7 @@ msgstr "segundo"
 #: settings/xfpm-settings.c:398 settings/xfpm-settings.c:508
 #: settings/xfpm-settings.c:655 src/xfpm-power.c:648
 msgid "Suspend"
-msgstr "Eseki"
+msgstr "Eten"
 
 #: settings/xfpm-settings.c:404 settings/xfpm-settings.c:514
 #: settings/xfpm-settings.c:661 src/xfpm-power.c:643
@@ -274,11 +282,11 @@ msgstr "Itzali"
 
 #: settings/xfpm-settings.c:441
 msgid "No sleep mode supported"
-msgstr ""
+msgstr "Ez da lo-modurik onartzen"
 
 #: settings/xfpm-settings.c:446
 msgid "No sleep mode permitted"
-msgstr ""
+msgstr "Ez da lo-modurik baimentzen"
 
 #: settings/xfpm-settings.c:497 settings/xfpm-settings.c:650
 msgid "Do nothing"
@@ -298,120 +306,120 @@ msgstr "Galdetu"
 
 #: settings/xfpm-settings.c:767
 msgid "Number of brightness steps available using keys"
-msgstr "Distira pausu erabilgarriak teklak erabiliz"
+msgstr "Teklekin erabil daitezkeen distira-urratsen kopurua"
 
-#: settings/xfpm-settings.c:836
+#: settings/xfpm-settings.c:840
 msgid "When all the power sources of the computer reach this charge level"
-msgstr "Ordenagailu honen energia jatorri guztiek maila hau izatean"
+msgstr "Ordenagailuaren energia-iturri guztiak karga-maila honetara iristen direnean"
 
-#: settings/xfpm-settings.c:850
+#: settings/xfpm-settings.c:854
 msgid "Notify"
 msgstr "Jakinarazi"
 
-#: settings/xfpm-settings.c:863
+#: settings/xfpm-settings.c:867
 #, c-format
 msgid ""
 "Make sure you set a sufficiently high value here, otherwise the system will "
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr "Ziurtatu balio aski altua ezartzen duzula hemen, bestela sistemak bere ekintza propioa abiaraziko du xfce4-power-manager-en aurrean, ezin izan duela saihestu edo noiz egingo duen zehatz-mehatz jakin gabe. Kasu honetan sistemak abiarazitako ekintza hau izango da: %s."
+msgstr "Ziurtatu hemen balio nahikoa altua ezartzen duzula; bestela, sistemak bere ekintza abiaraziko du xfce4-power-manager-ek baino lehen, hori eragotzi ezin izanda eta noiz egingo duen zehazki jakin gabe. Kasu horretan sistemak abiaraziko duen ekintza hau izango da: %s."
 
-#: settings/xfpm-settings.c:881
+#: settings/xfpm-settings.c:885
 msgid "Hibernate and suspend operations not supported"
-msgstr "Hibernatu eta eseki ekintzak ez daude baimendurik"
+msgstr "Hibernatze- eta eteteko eragiketak ez dira onartzen"
 
-#: settings/xfpm-settings.c:886
+#: settings/xfpm-settings.c:890
 msgid "Hibernate and suspend operations not permitted"
-msgstr "Hibernatu eta eseki ekintzak ez daude baimendurik"
+msgstr "Hibernatze- eta eteteko eragiketak ez daude baimenduta"
 
-#: settings/xfpm-settings.c:1118
+#: settings/xfpm-settings.c:1122
 msgid "Device"
 msgstr "Gailua"
 
-#: settings/xfpm-settings.c:1141
+#: settings/xfpm-settings.c:1145
 msgid "Type"
 msgstr "Mota"
 
-#: settings/xfpm-settings.c:1146
+#: settings/xfpm-settings.c:1150
 msgid "PowerSupply"
-msgstr "EnergiHornitzea"
+msgstr "Energia-hornidura"
 
-#: settings/xfpm-settings.c:1147 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1151 src/xfpm-main.c:62
 msgid "True"
-msgstr "Zuzena"
+msgstr "Bai"
 
-#: settings/xfpm-settings.c:1147 src/xfpm-main.c:62
+#: settings/xfpm-settings.c:1151 src/xfpm-main.c:62
 msgid "False"
-msgstr "Okerra"
+msgstr "Ez"
 
-#: settings/xfpm-settings.c:1154
+#: settings/xfpm-settings.c:1158
 msgid "Model"
 msgstr "Modeloa"
 
-#: settings/xfpm-settings.c:1157
+#: settings/xfpm-settings.c:1161
 msgid "Technology"
 msgstr "Teknologia"
 
-#: settings/xfpm-settings.c:1164
+#: settings/xfpm-settings.c:1168
 msgid "Current charge"
 msgstr "Uneko karga"
 
 #. TRANSLATORS: Unit here is Watt hour
-#: settings/xfpm-settings.c:1172 settings/xfpm-settings.c:1184
-#: settings/xfpm-settings.c:1196
+#: settings/xfpm-settings.c:1176 settings/xfpm-settings.c:1188
+#: settings/xfpm-settings.c:1200
 msgid "Wh"
 msgstr "Wh"
 
-#: settings/xfpm-settings.c:1174
+#: settings/xfpm-settings.c:1178
 msgid "Fully charged (design)"
-msgstr "Gustiz kargatuta (diseinua)"
+msgstr "Guztiz kargatuta (diseinua)"
 
-#: settings/xfpm-settings.c:1187
+#: settings/xfpm-settings.c:1191
 msgid "Fully charged"
-msgstr "Guztiz kargaturik"
+msgstr "Guztiz kargatuta"
 
-#: settings/xfpm-settings.c:1198
+#: settings/xfpm-settings.c:1202
 msgid "Energy empty"
 msgstr "Energia hutsik"
 
 #. TRANSLATORS: Unit here is Watt
-#: settings/xfpm-settings.c:1206
+#: settings/xfpm-settings.c:1210
 msgid "W"
 msgstr "W"
 
-#: settings/xfpm-settings.c:1208
+#: settings/xfpm-settings.c:1212
 msgid "Energy rate"
 msgstr "Energia-tasa"
 
 #. TRANSLATORS: Unit here is Volt
-#: settings/xfpm-settings.c:1216
+#: settings/xfpm-settings.c:1220
 msgid "V"
 msgstr "V"
 
-#: settings/xfpm-settings.c:1218
+#: settings/xfpm-settings.c:1222
 msgid "Voltage"
-msgstr "Tensioa"
+msgstr "Tentsioa"
 
-#: settings/xfpm-settings.c:1225
+#: settings/xfpm-settings.c:1229
 msgid "Vendor"
-msgstr "Saltzailea"
+msgstr "Fabrikatzailea"
 
-#: settings/xfpm-settings.c:1230
+#: settings/xfpm-settings.c:1234
 msgid "Serial"
-msgstr "Seriekoa"
+msgstr "Serie-zenbakia"
 
-#: settings/xfpm-settings.c:1517
+#: settings/xfpm-settings.c:1521
 msgid "Check your power manager installation"
-msgstr "Arakatu zure energia kudeaketa instalazioa"
+msgstr "Egiaztatu energia-kudeatzailearen instalazioa"
 
-#: settings/xfpm-settings.c:1593
+#: settings/xfpm-settings.c:1597
 msgid "Devices"
 msgstr "Gailuak"
 
 #: settings/xfpm-settings-app.c:84
 msgid "Settings manager socket"
-msgstr "Ezarpen kudeatzaile socketa"
+msgstr "Ezarpen-kudeatzailearen socketa"
 
 #: settings/xfpm-settings-app.c:84
 msgid "SOCKET ID"
@@ -419,11 +427,11 @@ msgstr "SOCKET IDa"
 
 #: settings/xfpm-settings-app.c:85
 msgid "Display a specific device by UpDevice object path"
-msgstr "Gailu espezifiko bat erakutsi UpDevice objektuen bidetik"
+msgstr "Bistaratu gailu jakin bat UpDevice objektuaren bidearen arabera"
 
 #: settings/xfpm-settings-app.c:85
 msgid "UpDevice object path"
-msgstr "UpDevice objetuaren bidea"
+msgstr "UpDevice objektuaren bidea"
 
 #: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
 msgid "Enable debugging"
@@ -431,136 +439,144 @@ msgstr "Gaitu arazpena"
 
 #: settings/xfpm-settings-app.c:87
 msgid "Display version information"
-msgstr "Bistarazi bertsio argibideak"
+msgstr "Bistaratu bertsioaren informazioa"
 
 #: settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr "xfce4-power-manager-settings ixtea eragiten du"
+msgstr "Itxarazi xfce4-power-manager-settings"
 
-#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:187
-#: settings/xfpm-settings-app.c:264 settings/xfpm-settings-app.c:279
-#: settings/xfpm-settings-app.c:307 src/xfpm-main.c:400
+#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:183
+#: settings/xfpm-settings-app.c:260 settings/xfpm-settings-app.c:275
+#: settings/xfpm-settings-app.c:303 src/xfpm-main.c:400
 msgid "Xfce Power Manager"
-msgstr "Xfce energia kudeatzailea"
+msgstr "Xfce energia-kudeatzailea"
 
-#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:188
-#: settings/xfpm-settings-app.c:280 settings/xfpm-settings-app.c:308
+#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:184
+#: settings/xfpm-settings-app.c:276 settings/xfpm-settings-app.c:304
 msgid "Failed to connect to power manager"
-msgstr "Huts energia-administratzailera konektatzen"
+msgstr "Huts egin du energia-kudeatzailera konektatzean"
 
-#: settings/xfpm-settings-app.c:265
+#: settings/xfpm-settings-app.c:261
 msgid "Failed to load power manager configuration"
 msgstr "Ezin izan da energia-kudeatzailearen konfigurazioa kargatu"
 
-#: settings/xfpm-settings-app.c:296
+#: settings/xfpm-settings-app.c:292
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Xfce4 Energia kudeatzailea ez dago abiarazirik, abiarazi nahi al duzu?"
+msgstr "Xfce4 energia-kudeatzailea ez dago exekutatzen. Orain abiarazi nahi duzu?"
 
-#: settings/xfpm-settings-app.c:394
+#: settings/xfpm-settings-app.c:390
 #, c-format
 msgid "This is %s version %s, running on Xfce %s.\n"
-msgstr "Hau %s %s bertsioa da, Xfce %s -en abiarazia.\n"
+msgstr "Hau %s da, %s bertsioa, Xfce %s-en exekutatzen.\n"
 
-#: settings/xfpm-settings-app.c:396
+#: settings/xfpm-settings-app.c:392
 #, c-format
 msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
-msgstr "GTK+ %d.%d.%d erabiliaz eraikia, GTK+ %d.%d.%d-rekin lotua."
+msgstr "GTK+ %d.%d.%d-rekin konpilatua, GTK+ %d.%d.%d-rekin estekatua."
 
 #: settings/xfce4-power-manager-settings.desktop.in:6
 msgid "Settings for the Xfce Power Manager"
-msgstr "Xfce Energia kudeatzailearen ezarpenak"
+msgstr "Xfce energia-kudeatzailearen ezarpenak"
 
 #: settings/xfce4-power-manager-settings.desktop.in:12
 msgid ""
 "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
 " lid;lock screen;plugged in;saving;critical;"
-msgstr "doikuntzak;hobespenak;botoiak;lo hartu;hibernatu;bateria;eseki;itzali;distira;ordenagailu eramangarriaren tapa; blokeo pantaila; konektatuta; gordetzen;kritikoa;"
+msgstr "settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop lid;lock screen;plugged in;saving;critical;ezarpenak;hobespenak;botoiak;loa;hibernatu;bateria;eten;itzali;distira;eramangarriaren tapa;blokeatu pantaila;entxufatuta;aurreztea;kritikoa;"
 
 #: common/xfpm-common.c:129
 msgid "translator-credits"
 msgstr "Piarres Beobide <pi@beobide.net>"
 
-#: common/xfpm-power-common.c:39 common/xfpm-power-common.c:62
+#: common/xfpm-power-common.c:39 common/xfpm-power-common.c:66
 msgid "Battery"
 msgstr "Bateria"
 
 #: common/xfpm-power-common.c:41
 msgid "Uninterruptible Power Supply"
-msgstr "Etenik gabeko elikatzea"
+msgstr "Etenik gabeko elikadura-iturria (SAI)"
 
 #: common/xfpm-power-common.c:43
 msgid "Line power"
-msgstr "Sare indarra"
+msgstr "Sare elektrikoa"
 
 #: common/xfpm-power-common.c:45
+msgid "Headphones"
+msgstr "Entzungailuak"
+
+#: common/xfpm-power-common.c:47
+msgid "Headset"
+msgstr "Entzungailu-mikrofonoa"
+
+#: common/xfpm-power-common.c:49
 msgid "Mouse"
 msgstr "Sagua"
 
-#: common/xfpm-power-common.c:47
+#: common/xfpm-power-common.c:51
 msgid "Keyboard"
 msgstr "Teklatua"
 
-#: common/xfpm-power-common.c:49
+#: common/xfpm-power-common.c:53
 msgid "Monitor"
-msgstr "Monitoreak"
+msgstr "Monitorea"
 
-#: common/xfpm-power-common.c:51
+#: common/xfpm-power-common.c:55
 msgid "PDA"
 msgstr "PDA"
 
-#: common/xfpm-power-common.c:53
+#: common/xfpm-power-common.c:57
 msgid "Phone"
 msgstr "Telefonoa"
 
-#: common/xfpm-power-common.c:55
+#: common/xfpm-power-common.c:59
 msgid "Tablet"
 msgstr "Tableta"
 
-#: common/xfpm-power-common.c:57 common/xfpm-power-common.c:295
+#: common/xfpm-power-common.c:61 common/xfpm-power-common.c:303
 msgid "Computer"
-msgstr "Ordenagailu"
+msgstr "Ordenagailua"
 
-#: common/xfpm-power-common.c:59 common/xfpm-power-common.c:75
-#: common/xfpm-power-common.c:90
+#: common/xfpm-power-common.c:63 common/xfpm-power-common.c:79
+#: common/xfpm-power-common.c:94
 msgid "Unknown"
 msgstr "Ezezaguna"
 
-#: common/xfpm-power-common.c:77
-msgid "Lithium ion"
-msgstr "Litiozko ion"
-
-#: common/xfpm-power-common.c:79
-msgid "Lithium polymer"
-msgstr "Litiozko polimeroa"
-
 #: common/xfpm-power-common.c:81
-msgid "Lithium iron phosphate"
-msgstr "Litiozko ion fosfatoa"
+msgid "Lithium ion"
+msgstr "Litio-ioia"
 
 #: common/xfpm-power-common.c:83
-msgid "Lead acid"
-msgstr "Berun azidoa"
+msgid "Lithium polymer"
+msgstr "Litio-polimeroa"
 
 #: common/xfpm-power-common.c:85
-msgid "Nickel cadmium"
-msgstr "Nikel-cadmio"
+msgid "Lithium iron phosphate"
+msgstr "Litio-burdin fosfatoa"
 
 #: common/xfpm-power-common.c:87
-msgid "Nickel metal hydride"
-msgstr "Nikel metal hibridoa"
+msgid "Lead acid"
+msgstr "Berun-azidoa"
 
-#: common/xfpm-power-common.c:135
+#: common/xfpm-power-common.c:89
+msgid "Nickel cadmium"
+msgstr "Nikel-kadmioa"
+
+#: common/xfpm-power-common.c:91
+msgid "Nickel metal hydride"
+msgstr "Nikel-metal hidruroa"
+
+#: common/xfpm-power-common.c:139
 msgid "Unknown time"
 msgstr "Denbora ezezaguna"
 
-#: common/xfpm-power-common.c:141
+#: common/xfpm-power-common.c:145
 #, c-format
 msgid "%i minute"
 msgid_plural "%i minutes"
 msgstr[0] "minutu %i"
 msgstr[1] "%i minutu"
 
-#: common/xfpm-power-common.c:149
+#: common/xfpm-power-common.c:153
 #, c-format
 msgid "%i hour"
 msgid_plural "%i hours"
@@ -569,80 +585,80 @@ msgstr[1] "%i ordu"
 
 #. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
 #. * Swap order with "%2$s %2$i %1$s %1$i if needed
-#: common/xfpm-power-common.c:153
+#: common/xfpm-power-common.c:157
 #, c-format
 msgid "%i %s %i %s"
 msgstr "%i %s %i %s"
 
-#: common/xfpm-power-common.c:154
+#: common/xfpm-power-common.c:158
 msgid "hour"
 msgid_plural "hours"
 msgstr[0] "ordu"
 msgstr[1] "ordu"
 
-#: common/xfpm-power-common.c:155
+#: common/xfpm-power-common.c:159
 msgid "minute"
 msgid_plural "minutes"
 msgstr[0] "minutu"
 msgstr[1] "minutu"
 
-#: common/xfpm-power-common.c:335
+#: common/xfpm-power-common.c:343
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged - %s remaining"
 msgstr "<b>%s %s</b>\nGuztiz kargatuta - %s geratzen da"
 
-#: common/xfpm-power-common.c:342
+#: common/xfpm-power-common.c:350
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Fully charged"
 msgstr "<b>%s %s</b>\nGuztiz kargatuta"
 
-#: common/xfpm-power-common.c:351
+#: common/xfpm-power-common.c:359
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s until full"
 msgstr "<b>%s %s</b>\n%0.0f%% - %s bete arte"
 
-#: common/xfpm-power-common.c:359 common/xfpm-power-common.c:377
+#: common/xfpm-power-common.c:367 common/xfpm-power-common.c:385
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%%"
 msgstr "<b>%s %s</b>\n%0.0f%%"
 
-#: common/xfpm-power-common.c:369
+#: common/xfpm-power-common.c:377
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%0.0f%% - %s remaining"
 msgstr "<b>%s %s</b>\n%0.0f%% - %s geratzen da"
 
-#: common/xfpm-power-common.c:384
+#: common/xfpm-power-common.c:392
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to charge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nKargatzeko itxaroten (%0.0f%%)"
 
-#: common/xfpm-power-common.c:390
+#: common/xfpm-power-common.c:398
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "Waiting to discharge (%0.0f%%)"
 msgstr "<b>%s %s</b>\nDeskargatzeko itxaroten (%0.0f%%)"
 
-#: common/xfpm-power-common.c:396
+#: common/xfpm-power-common.c:404
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "is empty"
 msgstr "<b>%s %s</b>\nhutsik dago"
 
-#: common/xfpm-power-common.c:401
+#: common/xfpm-power-common.c:409
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -651,26 +667,26 @@ msgstr "<b>%s %s</b>\nUneko karga: %0.0f%%"
 
 #. On the 2nd line we want to know if the power cord is plugged
 #. * in or not
-#: common/xfpm-power-common.c:411
+#: common/xfpm-power-common.c:419
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
 "%s"
 msgstr "<b>%s %s</b>\n%s"
 
-#: common/xfpm-power-common.c:412
+#: common/xfpm-power-common.c:420
 msgid "Not plugged in"
 msgstr "Ez dago entxufatuta"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
-#: common/xfpm-power-common.c:418
+#: common/xfpm-power-common.c:426
 #, c-format
 msgid "<b>%s %s</b>"
 msgstr "<b>%s %s</b>"
 
 #. unknown device state, just display the percentage
-#: common/xfpm-power-common.c:423
+#: common/xfpm-power-common.c:431
 #, c-format
 msgid ""
 "<b>%s %s</b>\n"
@@ -679,7 +695,7 @@ msgstr "<b>%s %s</b>\nEgoera ezezaguna"
 
 #: src/xfpm-power.c:286
 msgid "Do you want to put it to sleep anyway?"
-msgstr ""
+msgstr "Hala ere lotan jarri nahi duzu?"
 
 #: src/xfpm-power.c:291
 #, c-format
@@ -687,14 +703,14 @@ msgid ""
 "These apps are currently preventing the system from going to sleep automatically:\n"
 "%s\n"
 "%s"
-msgstr ""
+msgstr "Aplikazio hauek sistema automatikoki lotan jartzea eragozten ari dira une honetan:\n%s\n%s"
 
 #: src/xfpm-power.c:298
 #, c-format
 msgid ""
 "Presentation mode is currently preventing the system from going to sleep automatically.\n"
 "%s"
-msgstr ""
+msgstr "Aurkezpen moduak sistema automatikoki lotan jartzea eragozten du une honetan.\n%s"
 
 #: src/xfpm-power.c:303
 #, c-format
@@ -702,20 +718,20 @@ msgid ""
 "This fullscreened window is currently preventing the system from going to sleep automatically:\n"
 "%s\n"
 "%s"
-msgstr ""
+msgstr "Pantaila osoko leiho honek sistema automatikoki lotan jartzea eragozten du une honetan:\n%s\n%s"
 
 #: src/xfpm-power.c:309
 #, c-format
 msgid ""
 "An unknown reason is currently preventing the system from going to sleep automatically.\n"
 "%s"
-msgstr ""
+msgstr "Arrazoi ezezagun batek sistema automatikoki lotan jartzea eragozten du une honetan.\n%s"
 
 #: src/xfpm-power.c:342
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be locked.\n"
 "Do you still want to continue to suspend the system?"
-msgstr "Pantaila blokeatzeko tresnek ez dute behar bezala funtzionatu, pantaila ez da blokeatuko.\nSistema esekitzen jarraitu nahi duzu?"
+msgstr "Pantaila blokeatzeko tresnetako bat ere ez da behar bezala exekutatu; pantaila ez da blokeatuko.\nHala ere sistema eteten jarraitu nahi duzu?"
 
 #: src/xfpm-power.c:531
 msgid "Hibernate the system"
@@ -723,11 +739,11 @@ msgstr "Hibernatu sistema"
 
 #: src/xfpm-power.c:543
 msgid "Suspend the system"
-msgstr "Eseki sistema"
+msgstr "Eten sistema"
 
 #: src/xfpm-power.c:555
 msgid "Hybrid sleep the system"
-msgstr "Sistema lokartu hibrido moduan"
+msgstr "Jarri sistema lo hibridoan"
 
 #: src/xfpm-power.c:575
 msgid "Shutdown the system"
@@ -735,7 +751,7 @@ msgstr "Itzali sistema"
 
 #: src/xfpm-power.c:588 src/xfpm-power.c:630
 msgid "System is running on low power. Save your work to avoid losing data"
-msgstr "Zure bateria nahiko hutsik dago. Gorde zure lana datu galerak saihesteko"
+msgstr "Sistemak energia gutxi du. Gorde zure lana daturik ez galtzeko"
 
 #: src/xfpm-power.c:669
 msgid "Cancel"
@@ -743,37 +759,36 @@ msgstr "Utzi"
 
 #: src/xfpm-power.c:792
 msgid "System is running on low power"
-msgstr "Sistema karga baxuan funtzionatzen ari da"
+msgstr "Sistemak energia gutxi du"
 
 #: src/xfpm-power.c:807
 #, c-format
 msgid ""
 "Your %s charge level is low\n"
 "Estimated time left %s"
-msgstr "Zure %s maila baxua da\n%s denbora geratzen dela estimatu da"
+msgstr "Zure %s gailuaren karga-maila baxua da\nGeratzen den denbora, gutxi gorabehera: %s"
 
-#: src/xfpm-power.c:1740 src/xfpm-power.c:1784 src/xfpm-power.c:1820
-#: src/xfpm-power.c:1854 src/xfpm-power.c:1888
+#: src/xfpm-power.c:1722 src/xfpm-power.c:1766 src/xfpm-power.c:1802
+#: src/xfpm-power.c:1836 src/xfpm-power.c:1870
 msgid "Permission denied"
-msgstr "Baimena ukatua"
+msgstr "Baimena ukatuta"
 
-#: src/xfpm-power.c:1829
+#: src/xfpm-power.c:1811
 msgid "Hibernate not supported"
-msgstr "Hibernazioa ez dago onartuta"
+msgstr "Hibernatzea ez da onartzen"
 
-#: src/xfpm-power.c:1863
+#: src/xfpm-power.c:1845
 msgid "Suspend not supported"
-msgstr "Eskegitzea ez da onartze"
+msgstr "Etetea ez da onartzen"
 
-#: src/xfpm-power.c:1897
+#: src/xfpm-power.c:1879
 msgid "Hybrid sleep not supported"
-msgstr "Lo hibridoa ez dago onartuta"
+msgstr "Lo hibridoa ez da onartzen"
 
-#. generate a human-readable summary for the notification
-#: src/xfpm-backlight.c:145
+#: src/xfpm-backlight.c:134 panel-plugin/power-manager-button.c:736
 #, c-format
 msgid "Brightness: %.0f%%"
-msgstr ""
+msgstr "Distira: %% %.0f"
 
 #: src/xfpm-battery.c:95 src/xfpm-battery.c:147
 #, c-format
@@ -814,11 +829,10 @@ msgstr "%s (%i%%)\nGeratzen zaion denbora: %s"
 msgid "Your %s is empty"
 msgstr "Zure %s hutsik dago"
 
-#. generate a human-readable summary for the notification
-#: src/xfpm-kbd-backlight.c:102
+#: src/xfpm-kbd-backlight.c:136
 #, c-format
 msgid "Keyboard Brightness: %.0f%%"
-msgstr ""
+msgstr "Teklatuaren distira: %% %.0f"
 
 #: src/xfpm-main.c:86
 msgid "With policykit support\n"
@@ -830,7 +844,7 @@ msgstr "Policykit euskarririk gabe\n"
 
 #: src/xfpm-main.c:107
 msgid "Can suspend"
-msgstr "Eseki daiteke"
+msgstr "Eten daiteke"
 
 #: src/xfpm-main.c:108
 msgid "Can hibernate"
@@ -838,43 +852,43 @@ msgstr "Hibernatu daiteke"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr "Lo hibridoa onartuta"
+msgstr "Lo hibridoan jar daiteke"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
-msgstr "Esekitzeko baimenarekin."
+msgstr "Eteteko baimena du"
 
 #: src/xfpm-main.c:111
 msgid "Authorized to hibernate"
-msgstr "Hibernatzeko baimenarekin."
+msgstr "Hibernatzeko baimena du"
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr "Lo hibridoa baimendua"
+msgstr "Lo hibridorako baimena du"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
-msgstr "Itzaltzeko baimenarekin."
+msgstr "Itzaltzeko baimena du"
 
 #: src/xfpm-main.c:114
 msgid "Has battery"
-msgstr "Bateriaz"
+msgstr "Bateria du"
 
 #: src/xfpm-main.c:115
 msgid "Has brightness panel"
-msgstr "Distira panela du"
+msgstr "Distira-panela du"
 
 #: src/xfpm-main.c:116
 msgid "Has power button"
-msgstr "Energia botoia du"
+msgstr "Pizte-botoia du"
 
 #: src/xfpm-main.c:117
 msgid "Has hibernate button"
-msgstr "Hibernatu botoia du"
+msgstr "Hibernatze-botoia du"
 
 #: src/xfpm-main.c:118
 msgid "Has sleep button"
-msgstr "Lokartze botoia du"
+msgstr "Lo-botoia du"
 
 #: src/xfpm-main.c:119
 msgid "Has battery button"
@@ -882,52 +896,52 @@ msgstr "Bateria-botoia du"
 
 #: src/xfpm-main.c:120
 msgid "Has LID"
-msgstr "LID du"
+msgstr "Tapa du"
 
 #: src/xfpm-main.c:241
 msgid "Daemonize"
-msgstr "Deabru egin"
+msgstr "Exekutatu daemon gisa"
 
 #: src/xfpm-main.c:243
 msgid "Dump all information"
-msgstr "Irauli informazio guztia"
+msgstr "Bistaratu informazio guztia"
 
 #: src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Berrabiarazi abiarazitako xfce energia kudeatzailea"
+msgstr "Berrabiarazi exekutatzen ari den Xfce energia-kudeatzailea"
 
 #: src/xfpm-main.c:245
 msgid "Show the configuration dialog"
-msgstr "Ikusi konfigurazio leihoa"
+msgstr "Erakutsi konfigurazio-elkarrizketa"
 
 #: src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
-msgstr "Itxi abiarazitako edozein xfce energia kudeatzaile"
+msgstr "Itxi exekutatzen ari den edozein Xfce energia-kudeatzaile"
 
 #: src/xfpm-main.c:247
 msgid "Version information"
-msgstr "Bertsio argibideak"
+msgstr "Bertsioaren informazioa"
 
 #: src/xfpm-main.c:266
 #, c-format
 msgid "Failed to parse arguments: %s\n"
-msgstr "Huts argumentuak analizatzean: %s\n"
+msgstr "Huts egin du argumentuak analizatzean: %s\n"
 
 #: src/xfpm-main.c:300
 msgid "Unable to get connection to the message bus session"
-msgstr "Ezin da mezu bus saioarekin konexioa eskuratu"
+msgstr "Ezin da saioko mezu-busarekin konektatu"
 
 #: src/xfpm-main.c:309 src/xfpm-main.c:361
 msgid "Xfce power manager is not running"
-msgstr "Xfce energia kudeatzaile ez dago abiarazirik"
+msgstr "Xfce energia-kudeatzailea ez dago exekutatzen"
 
 #: src/xfpm-main.c:400
 msgid "Another power manager is already running"
-msgstr "Beste energia kudeatzaile bat dago abiarazirik"
+msgstr "Beste energia-kudeatzaile bat exekutatzen ari da dagoeneko"
 
 #: src/xfpm-main.c:404
 msgid "Xfce power manager is already running"
-msgstr "Xfce energia kudeatzailea abiarazirik dago"
+msgstr "Xfce energia-kudeatzailea exekutatzen ari da dagoeneko"
 
 #: src/xfpm-inhibit.c:382
 msgid "Invalid arguments"
@@ -937,15 +951,15 @@ msgstr "Argumentu baliogabeak"
 msgid "Invalid cookie"
 msgstr "Cookie baliogabea"
 
-#: src/xfpm-manager.c:316
+#: src/xfpm-manager.c:313
 msgid ""
 "None of the screen lock tools ran successfully, the screen will not be "
 "locked."
-msgstr "Pantaila blokeatzeko tresnek ez dute behar bezala funtzionatu, pantaila ez da blokeatuko."
+msgstr "Pantaila blokeatzeko tresnetako bat ere ez da behar bezala exekutatu; pantaila ez da blokeatuko."
 
 #: src/xfce4-power-manager.desktop.in:4
 msgid "Power management for the Xfce desktop"
-msgstr "Xfce mahaigain inguruneko energia kudeatzailea"
+msgstr "Xfce mahaigainerako energia-kudeaketa"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
@@ -956,50 +970,50 @@ msgstr "Aldatu ordenagailu eramangarriaren pantailaren distira"
 
 #: src/org.xfce.power.policy.in.in:22
 msgid "Authentication is required to modify the laptop display brightness"
-msgstr "Autentifikazioa beharrezkoa da ordenagailu eramangarriaren pantailaren distira aldatzeko"
+msgstr "Autentifikazioa behar da ordenagailu eramangarriaren pantailaren distira aldatzeko"
 
 #. SECURITY:
 #. - A normal active user on the local machine does not need permission
 #. to suspend or hibernate their system.
 #: src/org.xfce.power.policy.in.in:36
 msgid "Suspend or hibernate the system"
-msgstr "Sistema eseki edo hibernatu"
+msgstr "Eten edo hibernatu sistema"
 
 #: src/org.xfce.power.policy.in.in:37
 msgid ""
 "Authentication is required to place the system in suspend or hibernate mode"
-msgstr "Autentifikazioa beharrezkoa da sistema eteteko edo hibernatzeko moduan jartzeko"
+msgstr "Autentifikazioa behar da sistema eteteko edo hibernatzeko"
 
 #. Odds are this is a desktop without any batteries attached
-#: panel-plugin/power-manager-button.c:269
+#: panel-plugin/power-manager-button.c:274
 msgid "Display battery levels for attached devices"
-msgstr "Konektatutako gailuen bateria-mailak erakutsi"
+msgstr "Erakutsi konektatutako gailuen bateria-mailak"
 
 #. Translators this is to display which app is inhibiting
 #. * power in the plugin menu. Example:
 #. * VLC is currently inhibiting power management
-#: panel-plugin/power-manager-button.c:1251
+#: panel-plugin/power-manager-button.c:1272
 #, c-format
 msgid "%s is currently inhibiting power management"
-msgstr "%s une honetan energiaren kudeaketa inhibitzen du"
+msgstr "%s energia-kudeaketa inhibitzen ari da une honetan"
 
-#: panel-plugin/power-manager-button.c:1324
+#: panel-plugin/power-manager-button.c:1344
 msgid "_Clear inhibitors"
-msgstr ""
+msgstr "_Garbitu inhibitzaileak"
 
-#: panel-plugin/power-manager-button.c:1328
+#: panel-plugin/power-manager-button.c:1348
 msgid "You can use this if applications fail to remove their inhibitors"
-msgstr ""
+msgstr "Aplikazioek beren inhibitzaileak kentzen ez badituzte erabil dezakezu hau"
 
-#: panel-plugin/power-manager-button.c:1443
+#: panel-plugin/power-manager-button.c:1459
 msgid "<b>Display brightness</b>"
 msgstr "<b>Pantailaren distira</b>"
 
-#: panel-plugin/power-manager-button.c:1468
+#: panel-plugin/power-manager-button.c:1484
 msgid "Presentation _mode"
 msgstr "Aurkezpen _modua"
 
-#: panel-plugin/power-manager-button.c:1488
+#: panel-plugin/power-manager-button.c:1504
 msgid "_Settings..."
 msgstr "_Ezarpenak..."
 
@@ -1021,7 +1035,7 @@ msgstr "Ehunekoa eta falta den denbora"
 
 #: panel-plugin/power-manager-dialog.c:183
 msgid "Power Manager Plugin Settings"
-msgstr "Energia kudeatzaile pluginaren ezarpenak"
+msgstr "Energia-kudeatzailearen pluginaren ezarpenak"
 
 #. show-panel-label setting
 #: panel-plugin/power-manager-dialog.c:207
@@ -1034,13 +1048,13 @@ msgstr "Erakutsi 'Aurkezpen modua' adierazlea:"
 
 #: panel-plugin/power-manager-plugin.desktop.in:4
 msgid "Power Manager Plugin"
-msgstr "Energia kudeaketa plugina"
+msgstr "Energia-kudeatzailearen plugina"
 
 #: panel-plugin/power-manager-plugin.desktop.in:5
 msgid ""
 "Display the battery levels of your devices and control the brightness of "
 "your display"
-msgstr "Erakutsi zure gailuen bateria-mailak erakusten ditu eta zure pantailaren distira kontrolatzen du"
+msgstr "Erakutsi zure gailuen bateria-mailak eta kontrolatu pantailaren distira"
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:7
 msgid "Xfce power manager"
@@ -1048,14 +1062,14 @@ msgstr "Xfce energia-kudeatzailea"
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
-msgstr "Ordenagailuen eta gailuen energia-kontsumoa kudeatu eta murriztu"
+msgstr "Kudeatu eta murriztu ordenagailuaren eta gailuen energia-kontsumoa"
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:11
 msgid ""
 "Xfce power manager manages the power sources on the computer and the devices"
 " that can be controlled to reduce their power consumption (such as LCD "
 "brightness level, monitor sleep, CPU frequency scaling)."
-msgstr "Xfce energia kudeatzaileak ordenagailuko elikatze-iturriak eta energia-kontsumoa murrizteko kontrola daitezkeen gailuak (adibidez, LCD distira-maila, loa kontrolatzea, PUZ maiztasun-eskalatzea) kudeatzen ditu."
+msgstr "Xfce energia-kudeatzaileak ordenagailuko energia-iturriak kudeatzen ditu, baita energia-kontsumoa murrizteko kontrola daitezkeen gailuak ere (adibidez, LCDaren distira-maila, monitorea lotan jartzea, PUZaren maiztasun-eskalatzea)."
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:16
 msgid ""
@@ -1065,15 +1079,15 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Gainera, Xfce energia kudeatzaileak freedesktop-ekin bateragarriak diren DBus interfaze-multzo bat eskaintzen du, beste aplikazio batzuei egungo potentzia-mailaren berri emateko, haien energia-kontsumoa doitu ahal izan dezaten, eta aplikazioei energia kudeatzailearen bidez lo-ekintza automatikoak saihesteko aukera ematen dien inhibizio-interfazea ematen die; adibidez, sistema eragileko pakete-kudeatzaileak interfaze hori erabili behar du eguneratze-eragiketak egiten ari den bitartean."
+msgstr "Gainera, Xfce energia-kudeatzaileak freedesktop-ekin bateragarriak diren DBus interfaze batzuk eskaintzen ditu beste aplikazioei uneko energia-mailaren berri emateko, haien energia-kontsumoa doitu dezaten. Inhibizio-interfazea ere eskaintzen du, aplikazioek energia-kudeatzailearen bidez lo-ekintza automatikoak eragotz ditzaten; adibidez, sistema eragilearen pakete-kudeatzaileak interfaze hori erabili beharko luke eguneratze-eragiketak egiten ari den bitartean."
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
 msgid ""
 "Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
 "control LCD brightness levels and to monitor battery and device charge "
 "levels."
-msgstr "Xfce energia kudeatzaileak Xfce eta LXDE paneletarako, LCD distira-mailak kontrolatzeko eta bateriaren eta gailuaren karga-mailak kontrolatzeko plugin bat ere eskaintzen du."
+msgstr "Xfce energia-kudeatzaileak Xfce eta LXDE paneletarako plugin bat ere eskaintzen du, LCDaren distira-mailak kontrolatzeko eta bateriaren eta gailuen karga-mailak monitorizatzeko."
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
-msgstr "Xfce Energia-kudeatzailearen erabiltzaile-interfazearen pantaila-argazkia"
+msgstr "Xfce energia-kudeatzailearen erabiltzaile-interfazearen pantaila-argazkia"
