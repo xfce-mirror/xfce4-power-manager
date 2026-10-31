@@ -305,10 +305,10 @@ xfpm_power_sleep (XfpmPower *power,
                                  question);
     }
     GtkWidget *dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO, "%s", message);
-    gboolean ret = gtk_dialog_run (GTK_DIALOG (dialog));
+    gint ret = gtk_dialog_run (GTK_DIALOG (dialog));
     gtk_widget_destroy (dialog);
     g_free (message);
-    if (!ret || ret == GTK_RESPONSE_NO)
+    if (ret != GTK_RESPONSE_YES)
       return;
   }
 
