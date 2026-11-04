@@ -18,23 +18,23 @@ i18n = import('i18n')
 fs = import('fs')
 
 dependency_versions = {
-  'glib': '>= 2.72.0',
-  'gtk': '>= 3.24.0',
-  'libnotify': '>= 0.7.8',
+  'glib': '>= 2.80.0',
+  'gtk': '>= 3.24.41',
+  'libnotify': '>= 0.8.3',
   'xfce4': '>= 4.20.0',
   'libxfce4ui': '>= 4.21.0',
   'libxfce4util': '>= 4.21.0',
   'libxfce4session-client': '>= 4.21.2',
-  'upower-glib': '>= 0.99.10',
+  'upower-glib': '>= 1.90.3',
 
-  'libx11': '>= 1.6.7',
-  'libxext': '>= 1.0.0',
-  'xrandr': '>= 1.5.0',
+  'libx11': '>= 1.8.7',
+  'libxext': '>= 1.3.4',
+  'xrandr': '>= 1.5.2',
 
-  'wayland': '>= 1.20',
-  'wayland-protocols': '>= 1.27',
+  'wayland': '>= 1.22',
+  'wayland-protocols': '>= 1.45',
 
-  'polkit': '>= 0.102',
+  'polkit': '>= 124',
 }
 
 glib = dependency('glib-2.0', version: dependency_versions['glib'])

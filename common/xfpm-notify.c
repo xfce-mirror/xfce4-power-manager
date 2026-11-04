@@ -152,7 +152,7 @@ xfpm_notify_init (XfpmNotify *notify)
   notify->priv->monitor = xfpm_dbus_monitor_new ();
   xfpm_dbus_monitor_add_service (notify->priv->monitor, G_BUS_TYPE_SESSION, "org.freedesktop.Notifications");
   g_signal_connect_object (notify->priv->monitor, "service-connection-changed",
-                           G_CALLBACK (xfpm_notify_check_server), notify, 0);
+                           G_CALLBACK (xfpm_notify_check_server), notify, G_CONNECT_DEFAULT);
 
   xfpm_notify_get_server_caps (notify);
 }
@@ -196,24 +196,20 @@ xfpm_notify_close_critical_cb (NotifyNotification *n,
   g_object_unref (G_OBJECT (n));
 }
 
-static gboolean
+static void
 xfpm_notify_show_notify (gpointer user_data)
 {
   XfpmNotify *notify = user_data;
   notify_notification_show (notify->priv->notification, NULL);
   notify->priv->notify_id = 0;
-
-  return FALSE;
 }
 
-static gboolean
+static void
 xfpm_notify_show_critical (gpointer user_data)
 {
   XfpmNotify *notify = user_data;
   notify_notification_show (notify->priv->critical, NULL);
   notify->priv->critical_id = 0;
-
-  return FALSE;
 }
 
 static void
@@ -347,10 +343,10 @@ xfpm_notify_present_notification (XfpmNotify *notify,
   xfpm_notify_close_notification (notify);
 
   g_signal_connect_object (G_OBJECT (n), "closed",
-                           G_CALLBACK (xfpm_notify_closed_cb), notify, 0);
+                           G_CALLBACK (xfpm_notify_closed_cb), notify, G_CONNECT_DEFAULT);
   notify->priv->notification = n;
 
-  notify->priv->notify_id = g_idle_add (xfpm_notify_show_notify, notify);
+  notify->priv->notify_id = g_idle_add_once (xfpm_notify_show_notify, notify);
 }
 
 void
@@ -364,9 +360,9 @@ xfpm_notify_critical (XfpmNotify *notify,
   notify->priv->critical = n;
 
   g_signal_connect_object (G_OBJECT (n), "closed",
-                           G_CALLBACK (xfpm_notify_close_critical_cb), notify, 0);
+                           G_CALLBACK (xfpm_notify_close_critical_cb), notify, G_CONNECT_DEFAULT);
 
-  notify->priv->critical_id = g_idle_add (xfpm_notify_show_critical, notify);
+  notify->priv->critical_id = g_idle_add_once (xfpm_notify_show_critical, notify);
 }
 
 void

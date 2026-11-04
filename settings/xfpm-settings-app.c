@@ -130,7 +130,7 @@ xfpm_settings_app_shutdown (GApplication *app)
   G_APPLICATION_CLASS (xfpm_settings_app_parent_class)->shutdown (app);
 }
 
-static gboolean
+static void
 abort_xfpm_startup (gpointer data)
 {
   XfpmSettingsApp *app = data;
@@ -141,8 +141,6 @@ abort_xfpm_startup (gpointer data)
                             "%s", _("Failed to connect to power manager"));
   g_application_release (G_APPLICATION (app));
   priv->abort_id = 0;
-
-  return FALSE;
 }
 
 static void
@@ -307,7 +305,7 @@ xfpm_settings_app_launch (GApplication *app)
       }
       else
       {
-        priv->abort_id = g_timeout_add_seconds (5, abort_xfpm_startup, app);
+        priv->abort_id = g_timeout_add_seconds_once (5, abort_xfpm_startup, app);
       }
     }
   }

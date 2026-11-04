@@ -242,13 +242,11 @@ xfpm_polkit_free_data (XfpmPolkit *polkit)
   polkit->priv->subject_valid = FALSE;
 }
 
-static gboolean
+static void
 xfpm_polkit_free_data_cb (gpointer user_data)
 {
   XfpmPolkit *polkit = XFPM_POLKIT (user_data);
   xfpm_polkit_free_data (polkit);
-
-  return FALSE;
 }
 
 static void
@@ -296,7 +294,7 @@ xfpm_polkit_init_data (XfpmPolkit *polkit)
   polkit->priv->details = g_variant_ref_sink (g_variant_new ("a{ss}", &builder));
 
   /*Clean these data after 1 minute*/
-  polkit->priv->destroy_id = g_timeout_add_seconds (60, xfpm_polkit_free_data_cb, polkit);
+  polkit->priv->destroy_id = g_timeout_add_seconds_once (60, xfpm_polkit_free_data_cb, polkit);
 
   polkit->priv->subject_valid = TRUE;
 }

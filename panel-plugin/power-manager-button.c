@@ -309,7 +309,7 @@ power_manager_button_set_label (PowerManagerButton *button,
   if (show_panel_label == PANEL_LABEL_PERCENTAGE)
     label_string = g_strdup_printf ("%d%%", (int) percentage);
   else if (show_panel_label == PANEL_LABEL_TIME)
-    label_string = g_strdup_printf ("%s", remaining_time);
+    label_string = g_strdup (remaining_time);
   else if (show_panel_label == PANEL_LABEL_PERCENTAGE_AND_TIME)
     label_string = g_strdup_printf ("%d%% - %s", (int) percentage, remaining_time);
 
@@ -870,7 +870,7 @@ power_manager_button_init (PowerManagerButton *button)
   button->priv->panel_icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
   button->priv->panel_fallback_icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
   button->priv->panel_icon_width = 24;
-  g_signal_connect_object (gtk_icon_theme_get_default (), "changed", G_CALLBACK (icon_theme_changed), button, 0);
+  g_signal_connect_object (gtk_icon_theme_get_default (), "changed", G_CALLBACK (icon_theme_changed), button, G_CONNECT_DEFAULT);
 
   /* Sane default Gtk style */
   css_provider = gtk_css_provider_new ();
@@ -1360,9 +1360,10 @@ display_inhibitors (PowerManagerButton *button,
   }
 }
 
-static gboolean
-brightness_set_level_with_timeout (PowerManagerButton *button)
+static void
+brightness_set_level_with_timeout (gpointer data)
 {
+  PowerManagerButton *button = data;
   gint32 range_level, hw_level;
 
   range_level = (gint32) gtk_range_get_value (GTK_RANGE (button->priv->range));
@@ -1375,8 +1376,6 @@ brightness_set_level_with_timeout (PowerManagerButton *button)
   }
 
   g_clear_handle_id (&button->priv->set_level_timeout, g_source_remove);
-
-  return FALSE;
 }
 
 static void
@@ -1386,9 +1385,9 @@ range_value_changed_cb (PowerManagerButton *button,
   if (button->priv->set_level_timeout)
     return;
 
-  button->priv->set_level_timeout = g_timeout_add (SET_LEVEL_TIMEOUT,
-                                                   (GSourceFunc) brightness_set_level_with_timeout,
-                                                   button);
+  button->priv->set_level_timeout = g_timeout_add_once (SET_LEVEL_TIMEOUT,
+                                                        brightness_set_level_with_timeout,
+                                                        button);
 }
 
 static void

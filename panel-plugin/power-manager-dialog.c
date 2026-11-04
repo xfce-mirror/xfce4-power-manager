@@ -235,7 +235,7 @@ power_manager_dialog_new (PowerManagerPlugin *plugin,
                             dialog);
   g_signal_connect_object (G_OBJECT (dialog->channel), "property-changed::" XFPM_PROPERTIES_PREFIX SHOW_PANEL_LABEL,
                            G_CALLBACK (power_manager_dialog_panel_label_changed),
-                           combo, 0);
+                           combo, G_CONNECT_DEFAULT);
 
   label = gtk_label_new (_("Show 'Presentation mode' indicator:"));
   gtk_label_set_xalign (GTK_LABEL (label), 0.0);

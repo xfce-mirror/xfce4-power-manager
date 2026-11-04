@@ -684,7 +684,7 @@ xfpm_manager_init (XfpmManager *manager)
   if (manager->priv->idle != NULL)
   {
     g_signal_connect_object (manager->priv->idle, "alarm-expired",
-                             G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager, 0);
+                             G_CALLBACK (xfpm_manager_alarm_timeout_cb), manager, G_CONNECT_DEFAULT);
     g_signal_connect_object (manager->priv->conf, "notify::" INACTIVITY_ON_AC,
                              G_CALLBACK (xfpm_manager_set_idle_alarm_on_ac), manager, G_CONNECT_SWAPPED);
     g_signal_connect_object (manager->priv->conf, "notify::" INACTIVITY_ON_BATTERY,
@@ -707,15 +707,15 @@ xfpm_manager_init (XfpmManager *manager)
   xfpm_manager_lid_docked_active_changed (manager);
 
   g_signal_connect_object (manager->priv->monitor, "system-bus-connection-changed",
-                           G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager, 0);
+                           G_CALLBACK (xfpm_manager_system_bus_connection_changed_cb), manager, G_CONNECT_DEFAULT);
 
   g_signal_connect_object (manager->priv->button, "button-pressed",
-                           G_CALLBACK (xfpm_manager_button_pressed_cb), manager, 0);
+                           G_CALLBACK (xfpm_manager_button_pressed_cb), manager, G_CONNECT_DEFAULT);
 
   g_signal_connect_object (manager->priv->power, "lid-changed",
-                           G_CALLBACK (xfpm_manager_lid_changed_cb), manager, 0);
+                           G_CALLBACK (xfpm_manager_lid_changed_cb), manager, G_CONNECT_DEFAULT);
   g_signal_connect_object (manager->priv->power, "on-battery-changed",
-                           G_CALLBACK (xfpm_manager_on_battery_changed_cb), manager, 0);
+                           G_CALLBACK (xfpm_manager_on_battery_changed_cb), manager, G_CONNECT_DEFAULT);
   g_signal_connect_object (manager->priv->power, "waking-up",
                            G_CALLBACK (xfpm_manager_reset_sleep_timer), manager, G_CONNECT_SWAPPED);
   g_signal_connect_object (manager->priv->power, "sleeping",

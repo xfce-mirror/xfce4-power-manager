@@ -839,7 +839,7 @@ xfpm_power_add_device (UpDevice *device,
     g_hash_table_insert (power->priv->batteries, g_strdup (object_path), battery);
 
     g_signal_connect_object (battery, "battery-charge-changed",
-                             G_CALLBACK (xfpm_power_battery_charge_changed_cb), power, 0);
+                             G_CALLBACK (xfpm_power_battery_charge_changed_cb), power, G_CONNECT_DEFAULT);
   }
 }
 
@@ -1129,9 +1129,9 @@ xfpm_power_init (XfpmPower *power)
 
   if (power->priv->upower != NULL)
   {
-    g_signal_connect_object (power->priv->upower, "device-added", G_CALLBACK (xfpm_power_device_added_cb), power, 0);
-    g_signal_connect_object (power->priv->upower, "device-removed", G_CALLBACK (xfpm_power_device_removed_cb), power, 0);
-    g_signal_connect_object (power->priv->upower, "notify", G_CALLBACK (xfpm_power_changed_cb), power, 0);
+    g_signal_connect_object (power->priv->upower, "device-added", G_CALLBACK (xfpm_power_device_added_cb), power, G_CONNECT_DEFAULT);
+    g_signal_connect_object (power->priv->upower, "device-removed", G_CALLBACK (xfpm_power_device_removed_cb), power, G_CONNECT_DEFAULT);
+    g_signal_connect_object (power->priv->upower, "notify", G_CALLBACK (xfpm_power_changed_cb), power, G_CONNECT_DEFAULT);
     xfpm_power_get_power_devices (power);
   }
 
@@ -1424,7 +1424,7 @@ xfpm_power_change_inhibition_dbus (XfpmPower *power,
   {
     power->priv->inhibit = xfpm_inhibit_new ();
     g_signal_connect_object (power->priv->inhibit, "has-inhibit-changed",
-                             G_CALLBACK (xfpm_power_inhibit_changed_cb), power, 0);
+                             G_CALLBACK (xfpm_power_inhibit_changed_cb), power, G_CONNECT_DEFAULT);
   }
   else
   {
@@ -1462,7 +1462,7 @@ active_window_changed_cb (XfwScreen *screen,
     {
       inhibited_fullscreen = xfw_window_is_fullscreen (window);
       g_signal_connect_object (window, "state-changed",
-                               G_CALLBACK (window_state_changed_changed_cb), power, 0);
+                               G_CALLBACK (window_state_changed_changed_cb), power, G_CONNECT_DEFAULT);
     }
     if (previous_window != NULL)
     {
@@ -1493,7 +1493,7 @@ xfpm_power_change_inhibition_fullscreen (XfpmPower *power,
   {
     power->priv->screen = xfw_screen_get_default ();
     g_signal_connect_object (power->priv->screen, "active-window-changed",
-                             G_CALLBACK (active_window_changed_cb), power, 0);
+                             G_CALLBACK (active_window_changed_cb), power, G_CONNECT_DEFAULT);
   }
   else
   {
