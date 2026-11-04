@@ -1360,9 +1360,10 @@ display_inhibitors (PowerManagerButton *button,
   }
 }
 
-static gboolean
-brightness_set_level_with_timeout (PowerManagerButton *button)
+static void
+brightness_set_level_with_timeout (gpointer data)
 {
+  PowerManagerButton *button = data;
   gint32 range_level, hw_level;
 
   range_level = (gint32) gtk_range_get_value (GTK_RANGE (button->priv->range));
@@ -1375,8 +1376,6 @@ brightness_set_level_with_timeout (PowerManagerButton *button)
   }
 
   g_clear_handle_id (&button->priv->set_level_timeout, g_source_remove);
-
-  return FALSE;
 }
 
 static void
@@ -1386,9 +1385,9 @@ range_value_changed_cb (PowerManagerButton *button,
   if (button->priv->set_level_timeout)
     return;
 
-  button->priv->set_level_timeout = g_timeout_add (SET_LEVEL_TIMEOUT,
-                                                   (GSourceFunc) brightness_set_level_with_timeout,
-                                                   button);
+  button->priv->set_level_timeout = g_timeout_add_once (SET_LEVEL_TIMEOUT,
+                                                        brightness_set_level_with_timeout,
+                                                        button);
 }
 
 static void
