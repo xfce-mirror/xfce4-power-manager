@@ -182,15 +182,13 @@ xfpm_battery_notify (XfpmBattery *battery)
   g_free (message);
 }
 
-static gboolean
+static void
 xfpm_battery_notify_idle (gpointer data)
 {
   XfpmBattery *battery = XFPM_BATTERY (data);
 
   xfpm_battery_notify (battery);
   battery->priv->notify_idle = 0;
-
-  return FALSE;
 }
 
 static void
@@ -214,7 +212,7 @@ xfpm_battery_notify_state (XfpmBattery *battery)
     if (notify)
     {
       if (battery->priv->notify_idle == 0)
-        battery->priv->notify_idle = g_idle_add (xfpm_battery_notify_idle, battery);
+        battery->priv->notify_idle = g_idle_add_once (xfpm_battery_notify_idle, battery);
     }
   }
 }
