@@ -309,7 +309,7 @@ power_manager_button_set_label (PowerManagerButton *button,
   if (show_panel_label == PANEL_LABEL_PERCENTAGE)
     label_string = g_strdup_printf ("%d%%", (int) percentage);
   else if (show_panel_label == PANEL_LABEL_TIME)
-    label_string = g_strdup_printf ("%s", remaining_time);
+    label_string = g_strdup (remaining_time);
   else if (show_panel_label == PANEL_LABEL_PERCENTAGE_AND_TIME)
     label_string = g_strdup_printf ("%d%% - %s", (int) percentage, remaining_time);
 

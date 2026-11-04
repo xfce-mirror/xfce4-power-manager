@@ -212,7 +212,7 @@ format_brightness_value_cb (gint value)
     return g_strdup_printf ("%d %s", sec, _("seconds"));
   else if (min == 1)
     if (sec == 0)
-      return g_strdup_printf ("%s", _("One minute"));
+      return g_strdup (_("One minute"));
     else
       return g_strdup_printf ("%s %d %s", _("One minute"), sec, _("seconds"));
   else if (sec == 0)
