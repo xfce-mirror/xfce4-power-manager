@@ -299,11 +299,9 @@ get_device_description (UpClient *upower,
 
   if (is_display_device (upower, device))
   {
-    g_free (vendor);
-    vendor = g_strdup (_("Computer"));
+    g_set_str (&vendor, _("Computer"));
 
-    g_free (model);
-    model = g_strdup ("");
+    g_set_str (&model, "");
   }
 
   if (vendor == NULL)
