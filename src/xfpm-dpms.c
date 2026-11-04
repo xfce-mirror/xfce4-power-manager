@@ -159,7 +159,7 @@ xfpm_dpms_new (void)
     {
       XfpmDpmsPrivate *priv = get_instance_private (singleton);
       priv->conf = xfpm_xfconf_new ();
-      g_signal_connect_object (priv->conf, "notify", G_CALLBACK (settings_changed), singleton, 0);
+      g_signal_connect_object (priv->conf, "notify", G_CALLBACK (settings_changed), singleton, G_CONNECT_DEFAULT);
       refresh (singleton);
       g_object_add_weak_pointer (singleton, &singleton);
     }

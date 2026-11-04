@@ -230,7 +230,7 @@ xfpm_inhibit_init (XfpmInhibit *inhibit)
   inhibit->priv->monitor = xfpm_dbus_monitor_new ();
 
   g_signal_connect_object (inhibit->priv->monitor, "unique-name-lost",
-                           G_CALLBACK (xfpm_inhibit_connection_lost_cb), inhibit, 0);
+                           G_CALLBACK (xfpm_inhibit_connection_lost_cb), inhibit, G_CONNECT_DEFAULT);
 
   xfpm_inhibit_dbus_init (inhibit);
 }

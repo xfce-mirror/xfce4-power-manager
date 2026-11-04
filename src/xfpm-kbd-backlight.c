@@ -285,10 +285,10 @@ xfpm_kbd_backlight_init (XfpmKbdBacklight *backlight)
   backlight->priv->notify = xfpm_notify_new ();
 
   g_signal_connect_object (backlight->priv->button, "button-pressed",
-                           G_CALLBACK (xfpm_kbd_backlight_button_pressed_cb), backlight, 0);
+                           G_CALLBACK (xfpm_kbd_backlight_button_pressed_cb), backlight, G_CONNECT_DEFAULT);
 
   g_signal_connect_object (backlight->priv->power, "on-battery-changed",
-                           G_CALLBACK (xfpm_kbd_backlight_on_battery_changed_cb), backlight, 0);
+                           G_CALLBACK (xfpm_kbd_backlight_on_battery_changed_cb), backlight, G_CONNECT_DEFAULT);
 
   g_object_get (G_OBJECT (backlight->priv->power),
                 "on-battery", &backlight->priv->on_battery,

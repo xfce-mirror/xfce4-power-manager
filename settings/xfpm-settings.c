@@ -1232,7 +1232,7 @@ add_device (UpDevice *device)
   /* Make sure the devices tab is shown */
   gtk_widget_show (gtk_notebook_get_nth_page (GTK_NOTEBOOK (nt), devices_page_num));
 
-  signal_id = g_signal_connect_object (device, "notify", G_CALLBACK (device_changed_cb), sideview, 0);
+  signal_id = g_signal_connect_object (device, "notify", G_CALLBACK (device_changed_cb), sideview, G_CONNECT_DEFAULT);
 
   sideview_store = GTK_LIST_STORE (gtk_tree_view_get_model (GTK_TREE_VIEW (sideview)));
 
@@ -1370,8 +1370,8 @@ settings_create_devices_list (void)
 
   if (upower != NULL)
   {
-    g_signal_connect_object (upower, "device-added", G_CALLBACK (device_added_cb), sideview, 0);
-    g_signal_connect_object (upower, "device-removed", G_CALLBACK (device_removed_cb), sideview, 0);
+    g_signal_connect_object (upower, "device-added", G_CALLBACK (device_added_cb), sideview, G_CONNECT_DEFAULT);
+    g_signal_connect_object (upower, "device-removed", G_CALLBACK (device_removed_cb), sideview, G_CONNECT_DEFAULT);
     add_all_devices ();
   }
 }

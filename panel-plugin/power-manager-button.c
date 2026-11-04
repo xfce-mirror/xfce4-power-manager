@@ -870,7 +870,7 @@ power_manager_button_init (PowerManagerButton *button)
   button->priv->panel_icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
   button->priv->panel_fallback_icon_name = g_strdup (PANEL_DEFAULT_ICON_SYMBOLIC);
   button->priv->panel_icon_width = 24;
-  g_signal_connect_object (gtk_icon_theme_get_default (), "changed", G_CALLBACK (icon_theme_changed), button, 0);
+  g_signal_connect_object (gtk_icon_theme_get_default (), "changed", G_CALLBACK (icon_theme_changed), button, G_CONNECT_DEFAULT);
 
   /* Sane default Gtk style */
   css_provider = gtk_css_provider_new ();

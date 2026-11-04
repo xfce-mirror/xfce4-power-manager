@@ -394,9 +394,9 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     if (backlight->priv->idle != NULL)
     {
       g_signal_connect_object (backlight->priv->idle, "alarm-expired",
-                               G_CALLBACK (xfpm_backlight_alarm_timeout_cb), backlight, 0);
+                               G_CALLBACK (xfpm_backlight_alarm_timeout_cb), backlight, G_CONNECT_DEFAULT);
       g_signal_connect_object (backlight->priv->idle, "reset",
-                               G_CALLBACK (xfpm_backlight_reset_cb), backlight, 0);
+                               G_CALLBACK (xfpm_backlight_reset_cb), backlight, G_CONNECT_DEFAULT);
       g_signal_connect_object (backlight->priv->conf, "notify::" BRIGHTNESS_ON_AC,
                                G_CALLBACK (xfpm_backlight_brightness_on_ac_settings_changed),
                                backlight, G_CONNECT_SWAPPED);
@@ -407,9 +407,9 @@ xfpm_backlight_init (XfpmBacklight *backlight)
       xfpm_backlight_brightness_on_battery_settings_changed (backlight);
     }
     g_signal_connect_object (backlight->priv->button, "button-pressed",
-                             G_CALLBACK (xfpm_backlight_button_pressed_cb), backlight, 0);
+                             G_CALLBACK (xfpm_backlight_button_pressed_cb), backlight, G_CONNECT_DEFAULT);
     g_signal_connect_object (backlight->priv->power, "on-battery-changed",
-                             G_CALLBACK (xfpm_backlight_on_battery_changed_cb), backlight, 0);
+                             G_CALLBACK (xfpm_backlight_on_battery_changed_cb), backlight, G_CONNECT_DEFAULT);
 
     g_object_get (G_OBJECT (backlight->priv->power),
                   "on-battery", &backlight->priv->on_battery,

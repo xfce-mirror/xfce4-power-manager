@@ -130,8 +130,8 @@ xfpm_dpms_wayland_init (XfpmDpmsWayland *dpms)
   dpms->idle = xfpm_idle_new ();
   if (dpms->idle != NULL)
   {
-    g_signal_connect_object (dpms->idle, "alarm-expired", G_CALLBACK (idle_alarm_expired), dpms, 0);
-    g_signal_connect_object (dpms->idle, "reset", G_CALLBACK (idle_reset), dpms, 0);
+    g_signal_connect_object (dpms->idle, "alarm-expired", G_CALLBACK (idle_alarm_expired), dpms, G_CONNECT_DEFAULT);
+    g_signal_connect_object (dpms->idle, "reset", G_CALLBACK (idle_reset), dpms, G_CONNECT_DEFAULT);
   }
 }
 
@@ -246,7 +246,7 @@ xfpm_dpms_wayland_set_state (XfpmDpms *_dpms,
   {
     GdkDisplay *display = gdk_display_get_default ();
     gint n_monitors = gdk_display_get_n_monitors (display);
-    g_signal_connect_object (display, "monitor-added", G_CALLBACK (monitor_added), dpms, 0);
+    g_signal_connect_object (display, "monitor-added", G_CALLBACK (monitor_added), dpms, G_CONNECT_DEFAULT);
     for (gint n = 0; n < n_monitors; n++)
       monitor_added (display, gdk_display_get_monitor (display, n), dpms);
   }
