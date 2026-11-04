@@ -299,11 +299,8 @@ get_device_description (UpClient *upower,
 
   if (is_display_device (upower, device))
   {
-    g_free (vendor);
-    vendor = g_strdup (_("Computer"));
-
-    g_free (model);
-    model = g_strdup ("");
+    g_set_str (&vendor, _("Computer"));
+    g_set_str (&model, "");
   }
 
   if (vendor == NULL)
@@ -319,7 +316,7 @@ get_device_description (UpClient *upower,
    * device type into something readable (works for things like ac_power)
    */
   if (g_strcmp0 (vendor, "") == 0 && g_strcmp0 (model, "") == 0)
-    vendor = g_strdup_printf ("%s", xfpm_power_translate_device_type (type));
+    g_set_str (&vendor, xfpm_power_translate_device_type (type));
 
   /* If the device is unknown to the kernel (maybe no-name stuff or
    * whatever), then vendor and model will have a hex ID of 31
@@ -329,10 +326,8 @@ get_device_description (UpClient *upower,
    */
   else if (strlen (vendor) == 31 && strlen (model) == 31)
   {
-    g_free (vendor);
-    g_free (model);
-    vendor = g_strdup_printf ("%s", xfpm_power_translate_device_type (type));
-    model = g_strdup ("");
+    g_set_str (&vendor, xfpm_power_translate_device_type (type));
+    g_set_str (&model, "");
   }
 
   if (state == UP_DEVICE_STATE_FULLY_CHARGED)
