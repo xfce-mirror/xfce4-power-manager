@@ -156,7 +156,10 @@ headers = [
   'unistd.h',
 ]
 foreach header : headers
-  if cc.check_header(header)
+  if cc.check_header(header) or (
+    host_os == 'freebsd'
+    and header == 'sys/user.h'
+    and cc.check_header('sys/user.h', prefix: '#include <sys/types.h>'))
     feature_cflags += '-DHAVE_@0@=1'.format(header.underscorify().to_upper())
   endif
 endforeach
