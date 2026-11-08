@@ -54,12 +54,6 @@
 
 
 #ifdef BACKEND_TYPE_FREEBSD
-gboolean
-acpi_video_is_enabled (gchar *device)
-{
-  return backlight_helper_get_switch (device) == 1;
-}
-
 gint
 backlight_helper_get_switch (gchar *device)
 {
@@ -75,6 +69,12 @@ backlight_helper_get_switch (gchar *device)
 
   g_free (name);
   return res;
+}
+
+gboolean
+acpi_video_is_enabled (gchar *device)
+{
+  return backlight_helper_get_switch (device) == 1;
 }
 
 gint
