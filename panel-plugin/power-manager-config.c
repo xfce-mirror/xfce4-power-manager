@@ -54,6 +54,7 @@ enum
   PROP_SHOW_PANEL_LABEL,
   PROP_PRESENTATION_MODE,
   PROP_SHOW_PRESENTATION_INDICATOR,
+  PROP_SHOW_POWER_PROFILE_SLIDER,
 };
 
 
@@ -67,6 +68,7 @@ struct _PowerManagerConfig
   gint show_panel_label;
   gboolean presentation_mode;
   gboolean show_presentation_indicator;
+  gboolean show_power_profile_slider;
 };
 
 
@@ -101,6 +103,12 @@ power_manager_config_class_init (PowerManagerConfigClass *klass)
                                                          NULL, NULL,
                                                          DEFAULT_SHOW_PRESENTATION_INDICATOR,
                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (gobject_class, PROP_SHOW_POWER_PROFILE_SLIDER,
+                                   g_param_spec_boolean (SHOW_POWER_PROFILE_SLIDER,
+                                                         NULL, NULL,
+                                                         DEFAULT_SHOW_POWER_PROFILE_SLIDER,
+                                                         G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS));
 }
 
 
@@ -134,6 +142,10 @@ power_manager_config_get_property (GObject *object,
       g_value_set_boolean (value, config->show_presentation_indicator);
       break;
 
+    case PROP_SHOW_POWER_PROFILE_SLIDER:
+      g_value_set_boolean (value, config->show_power_profile_slider);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -162,6 +174,10 @@ power_manager_config_set_property (GObject *object,
 
     case PROP_SHOW_PRESENTATION_INDICATOR:
       config->show_presentation_indicator = g_value_get_boolean (value);
+      break;
+
+    case PROP_SHOW_POWER_PROFILE_SLIDER:
+      config->show_power_profile_slider = g_value_get_boolean (value);
       break;
 
     default:
@@ -212,6 +228,10 @@ power_manager_config_new (PowerManagerPlugin *plugin)
     property = g_strconcat (XFPM_PROPERTIES_PREFIX, SHOW_PRESENTATION_INDICATOR, NULL);
     xfconf_g_property_bind (channel, property, G_TYPE_BOOLEAN, config, SHOW_PRESENTATION_INDICATOR);
     g_free (property);
+
+    property = g_strconcat (XFPM_PROPERTIES_PREFIX, SHOW_POWER_PROFILE_SLIDER, NULL);
+    xfconf_g_property_bind (channel, property, G_TYPE_BOOLEAN, config, SHOW_POWER_PROFILE_SLIDER);
+    g_free (property);
   }
   else
   {
@@ -245,4 +265,12 @@ power_manager_config_get_show_presentation_indicator (PowerManagerConfig *config
   g_return_val_if_fail (POWER_MANAGER_IS_CONFIG (config), FALSE);
 
   return config->show_presentation_indicator;
+}
+
+gboolean
+power_manager_config_get_show_power_profile_slider (PowerManagerConfig *config)
+{
+  g_return_val_if_fail (POWER_MANAGER_IS_CONFIG (config), FALSE);
+
+  return config->show_power_profile_slider;
 }
