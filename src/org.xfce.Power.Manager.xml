@@ -18,6 +18,16 @@
         <arg direction="out" name="version" type="s"/>
         <arg direction="out" name="vendor" type="s"/>
     </method>
+
+    <!-- Screen brightness in percent of the maximum level (0-100).
+         Both fail with NoHardwareSupport when there is no backlight. -->
+    <method name="GetBrightness">
+        <arg direction="out" name="percent" type="i"/>
+    </method>
+
+    <method name="SetBrightness">
+        <arg direction="in" name="percent" type="i"/>
+    </method>
 	
     </interface>
 </node>
