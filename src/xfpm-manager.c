@@ -952,6 +952,17 @@ xfpm_manager_dbus_get_info (XfpmManager *manager,
                             GDBusMethodInvocation *invocation,
                             gpointer user_data);
 
+static gboolean
+xfpm_manager_dbus_get_brightness (XfpmManager *manager,
+                                  GDBusMethodInvocation *invocation,
+                                  gpointer user_data);
+
+static gboolean
+xfpm_manager_dbus_set_brightness (XfpmManager *manager,
+                                  GDBusMethodInvocation *invocation,
+                                  gint percent,
+                                  gpointer user_data);
+
 #include "xfce-power-manager-dbus.h"
 
 static void
@@ -979,6 +990,12 @@ xfpm_manager_dbus_init (XfpmManager *manager)
                            manager, G_CONNECT_SWAPPED);
   g_signal_connect_object (manager_dbus, "handle-get-info",
                            G_CALLBACK (xfpm_manager_dbus_get_info),
+                           manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager_dbus, "handle-get-brightness",
+                           G_CALLBACK (xfpm_manager_dbus_get_brightness),
+                           manager, G_CONNECT_SWAPPED);
+  g_signal_connect_object (manager_dbus, "handle-set-brightness",
+                           G_CALLBACK (xfpm_manager_dbus_set_brightness),
                            manager, G_CONNECT_SWAPPED);
 }
 
@@ -1044,5 +1061,47 @@ xfpm_manager_dbus_get_info (XfpmManager *manager,
                             gpointer user_data)
 {
   xfpm_power_manager_complete_get_info (user_data, invocation, PACKAGE, VERSION_FULL, "Xfce");
+  return TRUE;
+}
+
+static gboolean
+xfpm_manager_dbus_get_brightness (XfpmManager *manager,
+                                  GDBusMethodInvocation *invocation,
+                                  gpointer user_data)
+{
+  gint percent;
+
+  if (manager->priv->backlight == NULL)
+    g_dbus_method_invocation_return_error (invocation, XFPM_ERROR, XFPM_ERROR_NO_HARDWARE_SUPPORT,
+                                           _("No backlight device found"));
+  else if (!xfpm_backlight_get_percent (manager->priv->backlight, &percent))
+    g_dbus_method_invocation_return_error (invocation, XFPM_ERROR, XFPM_ERROR_UNKNOWN,
+                                           _("Cannot read the brightness level"));
+  else
+    xfpm_power_manager_complete_get_brightness (user_data, invocation, percent);
+
+  return TRUE;
+}
+
+static gboolean
+xfpm_manager_dbus_set_brightness (XfpmManager *manager,
+                                  GDBusMethodInvocation *invocation,
+                                  gint percent,
+                                  gpointer user_data)
+{
+  XFPM_DEBUG ("Set brightness message received: %d%%", percent);
+
+  if (manager->priv->backlight == NULL)
+    g_dbus_method_invocation_return_error (invocation, XFPM_ERROR, XFPM_ERROR_NO_HARDWARE_SUPPORT,
+                                           _("No backlight device found"));
+  else if (percent < 0 || percent > 100)
+    g_dbus_method_invocation_return_error (invocation, XFPM_ERROR, XFPM_ERROR_INVALID_ARGUMENTS,
+                                           _("The brightness must be between 0 and 100 percent"));
+  else if (!xfpm_backlight_set_percent (manager->priv->backlight, percent))
+    g_dbus_method_invocation_return_error (invocation, XFPM_ERROR, XFPM_ERROR_UNKNOWN,
+                                           _("Cannot set the brightness level"));
+  else
+    xfpm_power_manager_complete_set_brightness (user_data, invocation);
+
   return TRUE;
 }
