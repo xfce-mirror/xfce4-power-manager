@@ -538,3 +538,68 @@ xfpm_backlight_new (void)
 
   return backlight;
 }
+
+/**
+ * xfpm_backlight_get_percent:
+ * @backlight: a #XfpmBacklight
+ * @percent: (out): the brightness in percent of the maximum level
+ *
+ * Returns: %TRUE on success
+ **/
+gboolean
+xfpm_backlight_get_percent (XfpmBacklight *backlight,
+                            gint *percent)
+{
+  gint32 level;
+
+  g_return_val_if_fail (XFPM_IS_BACKLIGHT (backlight), FALSE);
+  g_return_val_if_fail (percent != NULL, FALSE);
+
+  if (backlight->priv->max_level <= 0 || !xfpm_brightness_get_level (backlight->priv->brightness, &level))
+    return FALSE;
+
+  *percent = (100 * level + backlight->priv->max_level / 2) / backlight->priv->max_level;
+  return TRUE;
+}
+
+/**
+ * xfpm_backlight_set_percent:
+ * @backlight: a #XfpmBacklight
+ * @percent: the brightness in percent of the maximum level, 0-100
+ *
+ * Sets the brightness without a notification, for other programs such as a
+ * schedule. The level is kept above the minimum the brightness keys and the
+ * panel slider use. While the screen is dimmed because the user is idle, the
+ * level is only remembered and set when the user comes back.
+ *
+ * Returns: %TRUE on success
+ **/
+gboolean
+xfpm_backlight_set_percent (XfpmBacklight *backlight,
+                            gint percent)
+{
+  gint brightness_min_level;
+  gint32 level;
+
+  g_return_val_if_fail (XFPM_IS_BACKLIGHT (backlight), FALSE);
+  g_return_val_if_fail (percent >= 0 && percent <= 100, FALSE);
+
+  g_object_get (G_OBJECT (backlight->priv->conf),
+                BRIGHTNESS_SLIDER_MIN_LEVEL, &brightness_min_level,
+                NULL);
+  xfpm_brightness_set_min_level (backlight->priv->brightness, brightness_min_level);
+
+  level = (percent * backlight->priv->max_level + 50) / 100;
+  level = CLAMP (level, xfpm_brightness_get_min_level (backlight->priv->brightness), backlight->priv->max_level);
+
+  XFPM_DEBUG ("Brightness %d%% requested, level %d%s", percent, level,
+              backlight->priv->dimmed ? " (dimmed, set on activity)" : "");
+
+  if (backlight->priv->dimmed)
+  {
+    backlight->priv->last_level = level;
+    return TRUE;
+  }
+
+  return xfpm_brightness_set_level (backlight->priv->brightness, level);
+}
