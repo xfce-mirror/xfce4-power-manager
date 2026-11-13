@@ -158,6 +158,27 @@ xfpm_backlight_reset_cb (XfpmIdle *idle,
   }
 }
 
+/* applies the step count and the minimum level of the brightness keys and the
+ * panel slider; the step count goes first, the default minimum depends on it */
+static void
+xfpm_backlight_update_levels (XfpmBacklight *backlight)
+{
+  guint brightness_step_count;
+  gboolean brightness_exponential;
+  gint brightness_min_level;
+
+  g_object_get (G_OBJECT (backlight->priv->conf),
+                BRIGHTNESS_STEP_COUNT, &brightness_step_count,
+                BRIGHTNESS_EXPONENTIAL, &brightness_exponential,
+                BRIGHTNESS_SLIDER_MIN_LEVEL, &brightness_min_level,
+                NULL);
+
+  xfpm_brightness_set_step_count (backlight->priv->brightness,
+                                  brightness_step_count,
+                                  brightness_exponential);
+  xfpm_brightness_set_min_level (backlight->priv->brightness, brightness_min_level);
+}
+
 /**
  * This callback is responsible for two functionalities in response to a user
  * pressing the brightness key:
@@ -176,9 +197,6 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
 {
   gint32 level;
   gboolean handle_brightness_keys;
-  guint brightness_step_count;
-  gboolean brightness_exponential;
-  gint brightness_min_level;
 
   XFPM_DEBUG_ENUM (type, XFPM_TYPE_BUTTON_KEY, "Received button press event");
 
@@ -189,9 +207,6 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
 
   g_object_get (G_OBJECT (backlight->priv->conf),
                 HANDLE_BRIGHTNESS_KEYS, &handle_brightness_keys,
-                BRIGHTNESS_STEP_COUNT, &brightness_step_count,
-                BRIGHTNESS_EXPONENTIAL, &brightness_exponential,
-                BRIGHTNESS_SLIDER_MIN_LEVEL, &brightness_min_level,
                 NULL);
 
   backlight->priv->block = TRUE;
@@ -199,11 +214,7 @@ xfpm_backlight_button_pressed_cb (XfpmButton *button,
   /* optionally, handle updating the level and setting the screen brightness */
   if (handle_brightness_keys)
   {
-    /* order accounts: default min level depends on step count */
-    xfpm_brightness_set_step_count (backlight->priv->brightness,
-                                    brightness_step_count,
-                                    brightness_exponential);
-    xfpm_brightness_set_min_level (backlight->priv->brightness, brightness_min_level);
+    xfpm_backlight_update_levels (backlight);
     if (type == BUTTON_MON_BRIGHTNESS_UP)
     {
       xfpm_brightness_increase (backlight->priv->brightness);
@@ -530,4 +541,86 @@ xfpm_backlight_new (void)
   }
 
   return backlight;
+}
+
+/**
+ * xfpm_backlight_get_percent:
+ * @backlight: a #XfpmBacklight
+ * @percent: (out): the brightness in percent of the range from the minimum
+ *   to the maximum level
+ *
+ * While the screen is dimmed because the user is idle, gives the level that is
+ * set when the user comes back.
+ *
+ * Returns: %TRUE on success
+ **/
+gboolean
+xfpm_backlight_get_percent (XfpmBacklight *backlight,
+                            gint *percent)
+{
+  gint32 level;
+  gint32 min_level;
+  gint32 max_level;
+
+  g_return_val_if_fail (XFPM_IS_BACKLIGHT (backlight), FALSE);
+  g_return_val_if_fail (percent != NULL, FALSE);
+
+  xfpm_backlight_update_levels (backlight);
+  min_level = xfpm_brightness_get_min_level (backlight->priv->brightness);
+  max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
+  if (max_level <= min_level)
+    return FALSE;
+
+  /* while dimmed, the level the user comes back to */
+  if (backlight->priv->dimmed)
+    level = backlight->priv->last_level;
+  else if (!xfpm_brightness_get_level (backlight->priv->brightness, &level))
+    return FALSE;
+
+  /* the level can be below the minimum when set by another program */
+  level = MAX (level, min_level);
+  *percent = (100 * (level - min_level) + (max_level - min_level) / 2) / (max_level - min_level);
+  return TRUE;
+}
+
+/**
+ * xfpm_backlight_set_percent:
+ * @backlight: a #XfpmBacklight
+ * @percent: the brightness in percent of the range from the minimum to the
+ *   maximum level, 0-100
+ *
+ * Sets the brightness without a notification, for other programs such as a
+ * schedule. 0 is the minimum level the brightness keys and the panel slider
+ * use. While the screen is dimmed because the user is idle, the level is only
+ * remembered and set when the user comes back.
+ *
+ * Returns: %TRUE on success
+ **/
+gboolean
+xfpm_backlight_set_percent (XfpmBacklight *backlight,
+                            gint percent)
+{
+  gint32 min_level;
+  gint32 max_level;
+  gint32 level;
+
+  g_return_val_if_fail (XFPM_IS_BACKLIGHT (backlight), FALSE);
+  g_return_val_if_fail (percent >= 0 && percent <= 100, FALSE);
+
+  xfpm_backlight_update_levels (backlight);
+
+  min_level = xfpm_brightness_get_min_level (backlight->priv->brightness);
+  max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
+  level = min_level + (percent * (max_level - min_level) + 50) / 100;
+
+  XFPM_DEBUG ("Brightness %d%% requested, level %d%s", percent, level,
+              backlight->priv->dimmed ? " (dimmed, set on activity)" : "");
+
+  if (backlight->priv->dimmed)
+  {
+    backlight->priv->last_level = level;
+    return TRUE;
+  }
+
+  return xfpm_brightness_set_level (backlight->priv->brightness, level);
 }
