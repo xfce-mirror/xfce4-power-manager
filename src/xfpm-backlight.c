@@ -63,13 +63,11 @@ struct XfpmBacklightPrivate
 
   gboolean on_battery;
 
-  gint32 last_level;
-  gint32 max_level;
-
   gint brightness_switch;
   gint brightness_switch_save;
   gboolean brightness_switch_initialized;
 
+  gint32 last_level;
   gboolean dimmed;
   gboolean block;
 };
@@ -88,25 +86,21 @@ G_DEFINE_TYPE_WITH_PRIVATE (XfpmBacklight, xfpm_backlight, G_TYPE_OBJECT)
 static void
 xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 {
-  gboolean ret;
-
   if (!xfpm_power_is_inhibited (backlight->priv->power))
   {
-    gint32 dim_level;
-
-    g_object_get (G_OBJECT (backlight->priv->conf),
-                  backlight->priv->on_battery ? BRIGHTNESS_LEVEL_ON_BATTERY : BRIGHTNESS_LEVEL_ON_AC, &dim_level,
-                  NULL);
-
-    ret = xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level);
-
-    if (!ret)
+    if (!xfpm_brightness_get_level (backlight->priv->brightness, &backlight->priv->last_level))
     {
       XFPM_DEBUG ("Unable to get current brightness level");
       return;
     }
 
-    dim_level = dim_level * backlight->priv->max_level / 100;
+    guint dim_percent;
+    g_object_get (G_OBJECT (backlight->priv->conf),
+                  backlight->priv->on_battery ? BRIGHTNESS_LEVEL_ON_BATTERY : BRIGHTNESS_LEVEL_ON_AC, &dim_percent,
+                  NULL);
+    gint32 min_level = xfpm_brightness_get_min_level (backlight->priv->brightness);
+    gint32 max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
+    gint32 dim_level = min_level + dim_percent * (max_level - min_level) / 100;
 
     /**
      * Only reduce if the current level is brighter than
@@ -121,13 +115,13 @@ xfpm_backlight_dim_brightness (XfpmBacklight *backlight)
 }
 
 static void
-xfpm_backlight_show (XfpmBacklight *backlight, gint level)
+xfpm_backlight_show (XfpmBacklight *backlight, gint32 level)
 {
-  gfloat value;
+  XFPM_DEBUG ("Level %d", level);
 
-  XFPM_DEBUG ("Level %u", level);
-
-  value = (gfloat) 100 * level / backlight->priv->max_level;
+  gint32 min_level = xfpm_brightness_get_min_level (backlight->priv->brightness);
+  gint32 max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
+  gfloat value = 100 * (level - min_level) / (max_level - min_level);
 
   xfpm_notify_show_brightness_notification (backlight->priv->notify,
                                             &backlight->priv->brightness_notification,
@@ -340,7 +334,6 @@ xfpm_backlight_init (XfpmBacklight *backlight)
     backlight->priv->button = xfpm_button_new ();
     backlight->priv->power = xfpm_power_get ();
     backlight->priv->notify = xfpm_notify_new ();
-    backlight->priv->max_level = xfpm_brightness_get_max_level (backlight->priv->brightness);
     backlight->priv->brightness_switch = DEFAULT_BRIGHTNESS_SWITCH;
 
     xfconf_g_property_bind (xfpm_xfconf_get_channel (backlight->priv->conf),
