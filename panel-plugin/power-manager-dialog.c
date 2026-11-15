@@ -249,6 +249,19 @@ power_manager_dialog_new (PowerManagerPlugin *plugin,
                           G_OBJECT (gtkswitch), "active");
   gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET (gtkswitch), 1, 1, 1, 1);
 
+  /* Show Power Profile Slider setting */
+  label = gtk_label_new (_("Show Power Profile selector in popup:"));
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET (label), 0, 2, 1, 1);
+
+  gtkswitch = gtk_switch_new ();
+  gtk_widget_set_halign (gtkswitch, GTK_ALIGN_END);
+  gtk_widget_set_valign (gtkswitch, GTK_ALIGN_CENTER);
+
+  xfconf_g_property_bind (dialog->channel, XFPM_PROPERTIES_PREFIX SHOW_POWER_PROFILE_SLIDER, G_TYPE_BOOLEAN,
+                          G_OBJECT (gtkswitch), "active");
+  gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET (gtkswitch), 1, 2, 1, 1);
+
   g_signal_connect (G_OBJECT (dialog->dialog), "delete-event", G_CALLBACK (gtk_widget_hide_on_delete), NULL);
   g_signal_connect_swapped (G_OBJECT (dialog->dialog), "response",
                             G_CALLBACK (power_manager_dialog_configure_response), dialog);
