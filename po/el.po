@@ -99,7 +99,7 @@ msgstr "Ειδοποιήσεις κατάστασης"
 
 #: data/interfaces/xfpm-settings.ui:559
 msgid "Brightness notifications"
-msgstr ""
+msgstr "Ειδοποιήσεις φωτεινότητας"
 
 #: data/interfaces/xfpm-settings.ui:595
 msgid "<b>Appearance</b>"
@@ -111,15 +111,15 @@ msgid ""
 "xfce4-power-manager, such as when you're watching a video in a web browser. "
 "These applications may fail to send an un-inhibit request afterward, so you "
 "may want to disable this if you encounter recurring issues."
-msgstr "Είναι ο μηχανισμός μέσω του οποίου οι εφαρμογές στέλνουν αιτήματα αναστολής στο xfce4-power-manager, όπως όταν παρακολουθείτε ένα βίντεο σε έναν περιηγητή ιστού. Ενδέχεται αυτές οι εφαρμογές να μην καταφέρουν να στείλουν αίτημα άρσης της αναστολής, οπότε ίσως θελήσετε να απενεργοποιήσετε αυτή τη λειτουργία αν αντιμετωπίζετε επαναλαμβανόμενα προβλήματα."
+msgstr "Είναι ο μηχανισμός μέσω του οποίου οι εφαρμογές στέλνουν αιτήματα αποτροπής στο διαχειριστή ρεύματος του xfce4, όπως όταν παρακολουθείτε ένα βίντεο σε έναν περιηγητή ιστού. Ενδέχεται αυτές οι εφαρμογές να μην καταφέρουν να στείλουν αίτημα άρσης της αποτροπής οπότε, ίσως θελήσετε να απενεργοποιήσετε αυτή τη λειτουργία αν αντιμετωπίζετε επαναλαμβανόμενα προβλήματα."
 
 #: data/interfaces/xfpm-settings.ui:630
 msgid "Inhibition via D-Bus"
-msgstr ""
+msgstr "Αποτροπή μέσω d-bus"
 
 #: data/interfaces/xfpm-settings.ui:667
 msgid "Inhibit when a window is fullscreened"
-msgstr ""
+msgstr "Αποτροπή όταν ένα παράθυρο βρίσκεται σε πλήρη οθόνη"
 
 #: data/interfaces/xfpm-settings.ui:704
 msgid "Presentation mode"
@@ -127,11 +127,11 @@ msgstr "Λειτουργία παρουσίασης"
 
 #: data/interfaces/xfpm-settings.ui:742
 msgid "Disable desktop notifications"
-msgstr ""
+msgstr "Απενεργοποίηση ειδοποιήσεων στην επιφάνεια εργασίας"
 
 #: data/interfaces/xfpm-settings.ui:777
 msgid "<b>Inhibition</b>"
-msgstr ""
+msgstr "<b>Αποτροπή</b>"
 
 #: data/interfaces/xfpm-settings.ui:797
 msgid "General"
@@ -234,7 +234,7 @@ msgstr "<b>Μείωση φωτεινότητας</b>"
 
 #: data/interfaces/xfpm-settings.ui:2043
 msgid "<b>Manual brightness control</b>"
-msgstr ""
+msgstr "<b>Χειροκίνητος έλεγχος φωτεινότητας</b>"
 
 #: data/interfaces/xfpm-settings.ui:2057
 msgid "Handle display brightness _keys"
@@ -289,11 +289,11 @@ msgstr "Τερματισμός"
 
 #: settings/xfpm-settings.c:441
 msgid "No sleep mode supported"
-msgstr ""
+msgstr "Δεν υποστηρίζεται η λειτουργία αναμονής"
 
 #: settings/xfpm-settings.c:446
 msgid "No sleep mode permitted"
-msgstr ""
+msgstr "Δεν επιτρέπεται η λειτουργία αναμονής"
 
 #: settings/xfpm-settings.c:497 settings/xfpm-settings.c:650
 msgid "Do nothing"
@@ -330,11 +330,11 @@ msgid ""
 "trigger its own action before xfce4-power-manager, without being able to "
 "prevent it or know exactly when it will do so. The action triggered by the "
 "system in this case will be: %s."
-msgstr "Βεβαιωθείτε ότι έχετε ορίσει εδώ μια αρκετά υψηλή τιμή, διαφορετικά το σύστημα θα ενεργοποιήσει δική του ενέργεια πριν από το διαχειριστή ρεύματος του xfce, χωρίς να μπορείτε να το αποτρέψετε ή να γνωρίζετε ακριβώς πότε θα το κάνει. Η ενέργεια που προκαλείται σε αυτή την περίπτωση από το σύστημα θα είναι: %s."
+msgstr "Βεβαιωθείτε ότι έχετε ορίσει εδώ μια αρκετά υψηλή τιμή, διαφορετικά το σύστημα θα ενεργοποιήσει δική του ενέργεια πριν από το διαχειριστή ρεύματος του xfce4, χωρίς να μπορείτε να το αποτρέψετε ή να γνωρίζετε ακριβώς πότε θα το κάνει. Η ενέργεια που προκαλείται σε αυτή την περίπτωση από το σύστημα θα είναι: %s."
 
 #: settings/xfpm-settings.c:885
 msgid "Hibernate and suspend operations not supported"
-msgstr "Οι λειτουργίες αδρανοποίηση και αναστολή δεν υποστηρίζονται"
+msgstr " Δεν υποστηρίζονται οι λειτουργίες αδρανοποίηση και αναστολή"
 
 #: settings/xfpm-settings.c:890
 msgid "Hibernate and suspend operations not permitted"
@@ -450,7 +450,7 @@ msgstr "Εμφάνιση πληροφοριών έκδοσης"
 
 #: settings/xfpm-settings-app.c:88
 msgid "Cause xfce4-power-manager-settings to quit"
-msgstr "Οδηγεί σε έξοδο των ρυθμίσεων του διαχειριστή ρεύματος xfce"
+msgstr "Οδηγεί σε έξοδο των ρυθμίσεων του διαχειριστή ρεύματος του xfce4"
 
 #: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:183
 #: settings/xfpm-settings-app.c:260 settings/xfpm-settings-app.c:275
@@ -469,7 +469,7 @@ msgstr "Απέτυχε η φόρτωση ρυθμίσεων του διαχει�
 
 #: settings/xfpm-settings-app.c:292
 msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
-msgstr "Ο διαχειριστής ρεύματος του xfce δεν εκτελείται, θέλετε να τον εκκινήσετε τώρα;"
+msgstr "Ο διαχειριστής ρεύματος του xfce4 δεν εκτελείται, θέλετε να τον εκκινήσετε τώρα;"
 
 #: settings/xfpm-settings-app.c:390
 #, c-format
@@ -509,11 +509,11 @@ msgstr "Ρεύμα δικτύου"
 
 #: common/xfpm-power-common.c:45
 msgid "Headphones"
-msgstr ""
+msgstr "Ακουστικά"
 
 #: common/xfpm-power-common.c:47
 msgid "Headset"
-msgstr ""
+msgstr "Ακουστικά με μικρόφωνο"
 
 #: common/xfpm-power-common.c:49
 msgid "Mouse"
@@ -683,7 +683,7 @@ msgstr "<b>%s %s</b>\n%s"
 
 #: common/xfpm-power-common.c:420
 msgid "Not plugged in"
-msgstr "Δεν βρίσκεται στο ρεύμα"
+msgstr "Δεν είναι συνδεδεμένο στο ρεύμα"
 
 #. Desktop pc with no battery, just display the vendor and model,
 #. * which will probably just be Computer
@@ -702,7 +702,7 @@ msgstr "<b>%s %s</b>\nΆγνωστη κατάσταση"
 
 #: src/xfpm-power.c:286
 msgid "Do you want to put it to sleep anyway?"
-msgstr ""
+msgstr "Θέλετε ωστόσο να μεταβείτε σε αναμονή;"
 
 #: src/xfpm-power.c:291
 #, c-format
@@ -710,14 +710,14 @@ msgid ""
 "These apps are currently preventing the system from going to sleep automatically:\n"
 "%s\n"
 "%s"
-msgstr ""
+msgstr "Αυτές οι εφαρμογές εμποδίζουν προς το παρόν το σύστημα να μεταβεί αυτόματα σε κατάσταση αναμονής:\n%s\n%s"
 
 #: src/xfpm-power.c:298
 #, c-format
 msgid ""
 "Presentation mode is currently preventing the system from going to sleep automatically.\n"
 "%s"
-msgstr ""
+msgstr "Η λειτουργία παρουσίασης εμποδίζει προς το παρόν το σύστημα να μεταβεί αυτόματα σε κατάσταση αναμονής:\n%s"
 
 #: src/xfpm-power.c:303
 #, c-format
@@ -725,14 +725,14 @@ msgid ""
 "This fullscreened window is currently preventing the system from going to sleep automatically:\n"
 "%s\n"
 "%s"
-msgstr ""
+msgstr "Αυτό το παράθυρο πλήρους οθόνης εμποδίζει προς το παρόν το σύστημα να μεταβεί αυτόματα σε κατάσταση αναμονής:\n%s\n%s"
 
 #: src/xfpm-power.c:309
 #, c-format
 msgid ""
 "An unknown reason is currently preventing the system from going to sleep automatically.\n"
 "%s"
-msgstr ""
+msgstr "Μια άγνωστη αιτία εμποδίζει προς το παρόν το σύστημα να μεταβεί αυτόματα σε κατάσταση αναμονής:\n%s"
 
 #: src/xfpm-power.c:342
 msgid ""
@@ -1006,11 +1006,11 @@ msgstr "To %s αυτή τη στιγμή αναστέλλει τη διαχεί�
 
 #: panel-plugin/power-manager-button.c:1344
 msgid "_Clear inhibitors"
-msgstr ""
+msgstr "Αφα_ίρεση αποτροπής"
 
 #: panel-plugin/power-manager-button.c:1348
 msgid "You can use this if applications fail to remove their inhibitors"
-msgstr ""
+msgstr "Μπορείτε να το χρησιμοποιήσετε σε περίπτωση που οι εφαρμογές δεν καταφέρουν να αφαιρέσουν την αποτροπή τους"
 
 #: panel-plugin/power-manager-button.c:1459
 msgid "<b>Display brightness</b>"
@@ -1086,7 +1086,7 @@ msgid ""
 "interface which allows applications to prevent automatic sleep actions via "
 "the power manager; as an example, the operating system’s package manager "
 "should make use of this interface while it is performing update operations."
-msgstr "Επιπροσθέτως, ο διαχειριστής ρεύματος του Xfce παρέχει ένα σύνολο διεπαφών dbus, συμβατών με τα πρότυπα του freedesktop, για να ενημερώνει άλλες εφαρμογές για το τρέχον επίπεδο ενέργειας, ώστε να μπορούν να ρυθμίζουν την κατανάλωση ενέργειας και παρέχει επίσης διεπαφή παρεμπόδισης που επιτρέπει στις εφαρμογές να εμποδίζουν τις αυτόματες ενέργειες αναστολής του διαχειριστή ρεύματος. Για παράδειγμα, ο διαχειριστής πακέτων του λειτουργικού συστήματος πρέπει να κάνει χρήση αυτής της διεπαφής κατά την διάρκεια της λειτουργίας αναβάθμισης."
+msgstr "Επιπροσθέτως, ο διαχειριστής ρεύματος του Xfce παρέχει ένα σύνολο διεπαφών dbus, συμβατών με τα πρότυπα του freedesktop, για να ενημερώνει άλλες εφαρμογές για το τρέχον επίπεδο ενέργειας, ώστε να μπορούν να ρυθμίζουν την κατανάλωση ενέργειας και παρέχει επίσης τη διεπαφή αποτροπής, που επιτρέπει στις εφαρμογές να εμποδίζουν τις αυτόματες ενέργειες αναστολής του διαχειριστή ρεύματος. Για παράδειγμα, ο διαχειριστής πακέτων του λειτουργικού συστήματος πρέπει να κάνει χρήση αυτής της διεπαφής κατά την διάρκεια της λειτουργίας αναβάθμισης."
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
 msgid ""
