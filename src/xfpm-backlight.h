@@ -46,6 +46,12 @@ GType
 xfpm_backlight_get_type (void);
 XfpmBacklight *
 xfpm_backlight_new (void);
+gboolean
+xfpm_backlight_get_percent (XfpmBacklight *backlight,
+                            gint *percent);
+gboolean
+xfpm_backlight_set_percent (XfpmBacklight *backlight,
+                            gint percent);
 
 G_END_DECLS
 
