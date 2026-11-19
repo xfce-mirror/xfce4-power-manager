@@ -1,0 +1,1093 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Xfce
+# This file is distributed under the same license as the xfce4-power-manager.master package.
+# 
+# Translators:
+# Rihards Priedītis <rprieditis@gmail.com>, 2026
+msgid ""
+msgstr ""
+"Project-Id-Version: Xfce4-power-manager\n"
+"Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
+"POT-Creation-Date: 2026-07-25 01:01+0200\n"
+"PO-Revision-Date: 2013-07-02 20:42+0000\n"
+"Last-Translator: Rihards Priedītis <rprieditis@gmail.com>, 2026\n"
+"Language-Team: Latvian (http://app.transifex.com/xfce/xfce4-power-manager/language/lv/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: lv\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+
+#: data/interfaces/xfpm-settings.ui:101 settings/xfpm-settings.c:188
+#: settings/xfpm-settings.c:205
+msgid "Never"
+msgstr "Nekad"
+
+#: data/interfaces/xfpm-settings.ui:105
+msgid "When the screensaver is activated"
+msgstr "Kad aktivizēts ekrānsaudzētājs"
+
+#: data/interfaces/xfpm-settings.ui:109
+msgid "When the screensaver is deactivated"
+msgstr "Kad deaktivizēts ekrānsaudzētājs"
+
+#: data/interfaces/xfpm-settings.ui:120 data/interfaces/xfpm-settings.ui:131
+#: data/interfaces/xfpm-settings.ui:142 data/interfaces/xfpm-settings.ui:153
+#: data/interfaces/xfpm-settings.ui:164 data/interfaces/xfpm-settings.ui:175
+#: data/interfaces/xfpm-settings.ui:186 data/interfaces/xfpm-settings.ui:197
+#: data/interfaces/xfpm-settings.ui:208 data/interfaces/xfpm-settings.ui:219
+msgid "Nothing"
+msgstr "Nekas"
+
+#: data/interfaces/xfpm-settings.ui:253
+#: settings/xfce4-power-manager-settings.desktop.in:4
+#: settings/xfce4-power-manager-settings.desktop.in:5 src/xfpm-power.c:259
+#: src/xfpm-power.c:592 src/xfpm-power.c:633 src/xfpm-power.c:792
+#: src/xfpm-power.c:811 src/xfpm-battery.c:177
+#: src/xfce4-power-manager.desktop.in:3
+msgid "Power Manager"
+msgstr "Barošanas pārvaldnieks"
+
+#: data/interfaces/xfpm-settings.ui:268
+#: panel-plugin/power-manager-dialog.c:186
+msgid "_Help"
+msgstr "_Palīdzība"
+
+#: data/interfaces/xfpm-settings.ui:284
+msgid "_Screensaver Management"
+msgstr "_Ekrānsaudzētāja pārvaldība"
+
+#: data/interfaces/xfpm-settings.ui:300
+#: panel-plugin/power-manager-dialog.c:187
+msgid "_Close"
+msgstr "_Aizvērt"
+
+#: data/interfaces/xfpm-settings.ui:362
+msgid "When power button is pressed:"
+msgstr "Kad nospiesta barošanas poga:"
+
+#: data/interfaces/xfpm-settings.ui:374
+msgid "When sleep button is pressed:"
+msgstr "Kad nospiesta iesnaudināšanas poga:"
+
+#: data/interfaces/xfpm-settings.ui:386
+msgid "When hibernate button is pressed:"
+msgstr "Kad nospiesta hibernēšanas poga:"
+
+#: data/interfaces/xfpm-settings.ui:398
+msgid "When battery button is pressed:"
+msgstr "Kad nospiesta baterijas poga:"
+
+#: data/interfaces/xfpm-settings.ui:487
+msgid "<b>Buttons</b>"
+msgstr "<b>Pogas</b>"
+
+#: data/interfaces/xfpm-settings.ui:521
+msgid "Status notifications"
+msgstr "Statusa paziņojumi"
+
+#: data/interfaces/xfpm-settings.ui:559
+msgid "Brightness notifications"
+msgstr "Spilgtuma paziņojumi"
+
+#: data/interfaces/xfpm-settings.ui:595
+msgid "<b>Appearance</b>"
+msgstr "<b>Izskats</b>"
+
+#: data/interfaces/xfpm-settings.ui:625
+msgid ""
+"This is the mechanism by which applications send inhibit requests to "
+"xfce4-power-manager, such as when you're watching a video in a web browser. "
+"These applications may fail to send an un-inhibit request afterward, so you "
+"may want to disable this if you encounter recurring issues."
+msgstr "Ar šo mehānismu lietotnes sūta xfce4-power-manager pieprasījumus neļaut iemigt, piemēram, kad tīmekļa pārlūkā skatāties video. Šīs lietotnes pēc tam var nenosūtīt pieprasījumu šo aizliegumu atcelt, tāpēc, ja problēmas atkārtojas, šo iespēju var atspējot."
+
+#: data/interfaces/xfpm-settings.ui:630
+msgid "Inhibition via D-Bus"
+msgstr "Iemigšanas novēršana caur D-Bus"
+
+#: data/interfaces/xfpm-settings.ui:667
+msgid "Inhibit when a window is fullscreened"
+msgstr "Neļaut iemigt, kad logs ir pilnekrāna režīmā"
+
+#: data/interfaces/xfpm-settings.ui:704
+msgid "Presentation mode"
+msgstr "Prezentācijas režīms"
+
+#: data/interfaces/xfpm-settings.ui:742
+msgid "Disable desktop notifications"
+msgstr "Atspējot darbvirsmas paziņojumus"
+
+#: data/interfaces/xfpm-settings.ui:777
+msgid "<b>Inhibition</b>"
+msgstr "<b>Iemigšanas novēršana</b>"
+
+#: data/interfaces/xfpm-settings.ui:797
+msgid "General"
+msgstr "Vispārīgi"
+
+#: data/interfaces/xfpm-settings.ui:842 data/interfaces/xfpm-settings.ui:1106
+msgid "When inactive for"
+msgstr "Ja neaktīvs ilgāk par"
+
+#: data/interfaces/xfpm-settings.ui:914 data/interfaces/xfpm-settings.ui:1178
+msgid "System sleep mode:"
+msgstr "Sistēmas miega režīms:"
+
+#: data/interfaces/xfpm-settings.ui:926 data/interfaces/xfpm-settings.ui:1190
+msgid "<b>System power saving</b>"
+msgstr "<b>Sistēmas enerģijas taupīšana</b>"
+
+#: data/interfaces/xfpm-settings.ui:941 data/interfaces/xfpm-settings.ui:1091
+msgid "<b>Laptop Lid</b>"
+msgstr "<b>Klēpjdatora vāks</b>"
+
+#: data/interfaces/xfpm-settings.ui:956 data/interfaces/xfpm-settings.ui:1046
+msgid "When laptop lid is closed:"
+msgstr "Kad aizvērts klēpjdatora vāks:"
+
+#: data/interfaces/xfpm-settings.ui:983 data/interfaces/xfpm-settings.ui:1073
+msgid "Execute action if an external display is connected"
+msgstr "Izpildīt darbību, ja pievienots ārējs displejs"
+
+#: data/interfaces/xfpm-settings.ui:1000 data/interfaces/xfpm-settings.ui:1204
+msgid "<b>Power profile</b>"
+msgstr "<b>Barošanas profils</b>"
+
+#: data/interfaces/xfpm-settings.ui:1032 data/interfaces/xfpm-settings.ui:1768
+msgid "On battery"
+msgstr "No baterijas"
+
+#: data/interfaces/xfpm-settings.ui:1236 data/interfaces/xfpm-settings.ui:2021
+#: common/xfpm-power-common.c:420
+msgid "Plugged in"
+msgstr "Pievienots elektrotīklam"
+
+#: data/interfaces/xfpm-settings.ui:1272
+msgid "Critical battery power level:"
+msgstr "Kritisks baterijas uzlādes līmenis:"
+
+#: data/interfaces/xfpm-settings.ui:1302 settings/xfpm-settings.c:227
+msgid "%"
+msgstr "%"
+
+#: data/interfaces/xfpm-settings.ui:1339
+msgid "On critical battery power:"
+msgstr "Kad baterijas uzlāde kritiska:"
+
+#: data/interfaces/xfpm-settings.ui:1378
+msgid "<b>Critical power</b>"
+msgstr "<b>Kritisks uzlādes līmenis</b>"
+
+#: data/interfaces/xfpm-settings.ui:1407
+msgid "Lock screen when system is going to sleep"
+msgstr "Bloķēt ekrānu, kad sistēma pāriet miega režīmā"
+
+#: data/interfaces/xfpm-settings.ui:1426
+msgid "<b>Security</b>"
+msgstr "<b>Drošība</b>"
+
+#: data/interfaces/xfpm-settings.ui:1446
+msgid "System"
+msgstr "Sistēma"
+
+#: data/interfaces/xfpm-settings.ui:1485
+msgid "<b>Display power management</b>"
+msgstr "<b>Displeja barošanas pārvaldība</b>"
+
+#: data/interfaces/xfpm-settings.ui:1498
+msgid ""
+"Let the power manager handle display power management (DPMS) instead of the "
+"display server"
+msgstr "Ļaut displeja barošanu (DPMS) pārvaldīt barošanas pārvaldniekam, nevis displeja serverim"
+
+#: data/interfaces/xfpm-settings.ui:1573 data/interfaces/xfpm-settings.ui:1782
+msgid "Put to sleep after"
+msgstr "Iemidzināt pēc"
+
+#: data/interfaces/xfpm-settings.ui:1586 data/interfaces/xfpm-settings.ui:1795
+msgid "Switch off after"
+msgstr "Izslēgt pēc"
+
+#: data/interfaces/xfpm-settings.ui:1643 data/interfaces/xfpm-settings.ui:1824
+msgid "On inactivity reduce to"
+msgstr "Neaktivitātes laikā samazināt līdz"
+
+#: data/interfaces/xfpm-settings.ui:1656 data/interfaces/xfpm-settings.ui:1837
+msgid "Reduce after"
+msgstr "Samazināt pēc"
+
+#: data/interfaces/xfpm-settings.ui:1755 data/interfaces/xfpm-settings.ui:1808
+msgid "<b>Brightness reduction</b>"
+msgstr "<b>Spilgtuma samazināšana</b>"
+
+#: data/interfaces/xfpm-settings.ui:2043
+msgid "<b>Manual brightness control</b>"
+msgstr "<b>Spilgtuma vadība ar roku</b>"
+
+#: data/interfaces/xfpm-settings.ui:2057
+msgid "Handle display brightness _keys"
+msgstr "Apstrādāt displeja spilgtuma _taustiņus"
+
+#: data/interfaces/xfpm-settings.ui:2086
+msgid "Brightness step count:"
+msgstr "Spilgtuma soļu skaits:"
+
+#: data/interfaces/xfpm-settings.ui:2117
+msgid "Exponential"
+msgstr "Eksponenciāli"
+
+#: data/interfaces/xfpm-settings.ui:2150
+msgid "Display"
+msgstr "Displejs"
+
+#: settings/xfpm-settings.c:191 settings/xfpm-settings.c:215
+#: settings/xfpm-settings.c:217
+msgid "One minute"
+msgstr "Viena minūte"
+
+#: settings/xfpm-settings.c:193 settings/xfpm-settings.c:219
+#: settings/xfpm-settings.c:221
+msgid "minutes"
+msgstr "minūtes"
+
+#: settings/xfpm-settings.c:212 settings/xfpm-settings.c:217
+#: settings/xfpm-settings.c:221
+msgid "seconds"
+msgstr "sekundes"
+
+#: settings/xfpm-settings.c:398 settings/xfpm-settings.c:508
+#: settings/xfpm-settings.c:655 src/xfpm-power.c:648
+msgid "Suspend"
+msgstr "Iesnaudināt"
+
+#: settings/xfpm-settings.c:404 settings/xfpm-settings.c:514
+#: settings/xfpm-settings.c:661 src/xfpm-power.c:643
+msgid "Hibernate"
+msgstr "Hibernēt"
+
+#: settings/xfpm-settings.c:410 settings/xfpm-settings.c:520
+#: settings/xfpm-settings.c:667 src/xfpm-power.c:653
+msgid "Hybrid Sleep"
+msgstr "Hibrīdā iesnaudināšana"
+
+#: settings/xfpm-settings.c:416 settings/xfpm-settings.c:524
+#: settings/xfpm-settings.c:673 src/xfpm-power.c:666
+msgid "Shutdown"
+msgstr "Izslēgt"
+
+#: settings/xfpm-settings.c:441
+msgid "No sleep mode supported"
+msgstr "Neviens miega režīms netiek atbalstīts"
+
+#: settings/xfpm-settings.c:446
+msgid "No sleep mode permitted"
+msgstr "Neviens miega režīms nav atļauts"
+
+#: settings/xfpm-settings.c:497 settings/xfpm-settings.c:650
+msgid "Do nothing"
+msgstr "Neko nedarīt"
+
+#: settings/xfpm-settings.c:500
+msgid "Switch off display"
+msgstr "Izslēgt displeju"
+
+#: settings/xfpm-settings.c:503
+msgid "Lock screen"
+msgstr "Bloķēt ekrānu"
+
+#: settings/xfpm-settings.c:677
+msgid "Ask"
+msgstr "Vaicāt"
+
+#: settings/xfpm-settings.c:767
+msgid "Number of brightness steps available using keys"
+msgstr "Ar taustiņiem pieejamo spilgtuma soļu skaits"
+
+#: settings/xfpm-settings.c:840
+msgid "When all the power sources of the computer reach this charge level"
+msgstr "Kad visi datora barošanas avoti sasniedz šo uzlādes līmeni"
+
+#: settings/xfpm-settings.c:854
+msgid "Notify"
+msgstr "Paziņot"
+
+#: settings/xfpm-settings.c:867
+#, c-format
+msgid ""
+"Make sure you set a sufficiently high value here, otherwise the system will "
+"trigger its own action before xfce4-power-manager, without being able to "
+"prevent it or know exactly when it will do so. The action triggered by the "
+"system in this case will be: %s."
+msgstr "Iestatiet pietiekami augstu vērtību, citādi sistēma veiks savu darbību pirms xfce4-power-manager, un to nevarēs nedz novērst, nedz precīzi zināt, kad tas notiks. Šādā gadījumā sistēmas veiktā darbība būs: %s."
+
+#: settings/xfpm-settings.c:885
+msgid "Hibernate and suspend operations not supported"
+msgstr "Hibernēšana un iesnaudināšana netiek atbalstīta"
+
+#: settings/xfpm-settings.c:890
+msgid "Hibernate and suspend operations not permitted"
+msgstr "Hibernēšana un iesnaudināšana nav atļauta"
+
+#: settings/xfpm-settings.c:1122
+msgid "Device"
+msgstr "Ierīce"
+
+#: settings/xfpm-settings.c:1145
+msgid "Type"
+msgstr "Tips"
+
+#: settings/xfpm-settings.c:1150
+msgid "PowerSupply"
+msgstr "Barošanas avots"
+
+#: settings/xfpm-settings.c:1151 src/xfpm-main.c:62
+msgid "True"
+msgstr "Jā"
+
+#: settings/xfpm-settings.c:1151 src/xfpm-main.c:62
+msgid "False"
+msgstr "Nē"
+
+#: settings/xfpm-settings.c:1158
+msgid "Model"
+msgstr "Modelis"
+
+#: settings/xfpm-settings.c:1161
+msgid "Technology"
+msgstr "Tehnoloģija"
+
+#: settings/xfpm-settings.c:1168
+msgid "Current charge"
+msgstr "Pašreizējā uzlāde"
+
+#. TRANSLATORS: Unit here is Watt hour
+#: settings/xfpm-settings.c:1176 settings/xfpm-settings.c:1188
+#: settings/xfpm-settings.c:1200
+msgid "Wh"
+msgstr "Wh"
+
+#: settings/xfpm-settings.c:1178
+msgid "Fully charged (design)"
+msgstr "Pilna uzlāde (projektētā)"
+
+#: settings/xfpm-settings.c:1191
+msgid "Fully charged"
+msgstr "Pilna uzlāde"
+
+#: settings/xfpm-settings.c:1202
+msgid "Energy empty"
+msgstr "Enerģija, kad tukša"
+
+#. TRANSLATORS: Unit here is Watt
+#: settings/xfpm-settings.c:1210
+msgid "W"
+msgstr "W"
+
+#: settings/xfpm-settings.c:1212
+msgid "Energy rate"
+msgstr "Enerģijas patēriņš"
+
+#. TRANSLATORS: Unit here is Volt
+#: settings/xfpm-settings.c:1220
+msgid "V"
+msgstr "V"
+
+#: settings/xfpm-settings.c:1222
+msgid "Voltage"
+msgstr "Spriegums"
+
+#: settings/xfpm-settings.c:1229
+msgid "Vendor"
+msgstr "Ražotājs"
+
+#: settings/xfpm-settings.c:1234
+msgid "Serial"
+msgstr "Sērijas numurs"
+
+#: settings/xfpm-settings.c:1521
+msgid "Check your power manager installation"
+msgstr "Pārbaudiet barošanas pārvaldnieka instalāciju"
+
+#: settings/xfpm-settings.c:1597
+msgid "Devices"
+msgstr "Ierīces"
+
+#: settings/xfpm-settings-app.c:84
+msgid "Settings manager socket"
+msgstr "Iestatījumu pārvaldnieka ligzda"
+
+#: settings/xfpm-settings-app.c:84
+msgid "SOCKET ID"
+msgstr "LIGZDAS ID"
+
+#: settings/xfpm-settings-app.c:85
+msgid "Display a specific device by UpDevice object path"
+msgstr "Rādīt konkrētu ierīci pēc UpDevice objekta ceļa"
+
+#: settings/xfpm-settings-app.c:85
+msgid "UpDevice object path"
+msgstr "UpDevice objekta ceļš"
+
+#: settings/xfpm-settings-app.c:86 src/xfpm-main.c:242
+msgid "Enable debugging"
+msgstr "Iespējot atkļūdošanu"
+
+#: settings/xfpm-settings-app.c:87
+msgid "Display version information"
+msgstr "Rādīt versijas informāciju"
+
+#: settings/xfpm-settings-app.c:88
+msgid "Cause xfce4-power-manager-settings to quit"
+msgstr "Likt xfce4-power-manager-settings beigt darbu"
+
+#: settings/xfpm-settings-app.c:140 settings/xfpm-settings-app.c:183
+#: settings/xfpm-settings-app.c:260 settings/xfpm-settings-app.c:275
+#: settings/xfpm-settings-app.c:303 src/xfpm-main.c:400
+msgid "Xfce Power Manager"
+msgstr "Xfce barošanas pārvaldnieks"
+
+#: settings/xfpm-settings-app.c:141 settings/xfpm-settings-app.c:184
+#: settings/xfpm-settings-app.c:276 settings/xfpm-settings-app.c:304
+msgid "Failed to connect to power manager"
+msgstr "Neizdevās savienoties ar barošanas pārvaldnieku"
+
+#: settings/xfpm-settings-app.c:261
+msgid "Failed to load power manager configuration"
+msgstr "Neizdevās ielādēt barošanas pārvaldnieka konfigurāciju"
+
+#: settings/xfpm-settings-app.c:292
+msgid "Xfce4 Power Manager is not running, do you want to launch it now?"
+msgstr "Xfce4 barošanas pārvaldnieks nedarbojas. Vai vēlaties to palaist tagad?"
+
+#: settings/xfpm-settings-app.c:390
+#, c-format
+msgid "This is %s version %s, running on Xfce %s.\n"
+msgstr "Šī ir %s versija %s, kas darbojas Xfce %s vidē.\n"
+
+#: settings/xfpm-settings-app.c:392
+#, c-format
+msgid "Built with GTK+ %d.%d.%d, linked with GTK+ %d.%d.%d."
+msgstr "Būvēts ar GTK+ %d.%d.%d, saistīts ar GTK+ %d.%d.%d."
+
+#: settings/xfce4-power-manager-settings.desktop.in:6
+msgid "Settings for the Xfce Power Manager"
+msgstr "Xfce barošanas pārvaldnieka iestatījumi"
+
+#: settings/xfce4-power-manager-settings.desktop.in:12
+msgid ""
+"settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop"
+" lid;lock screen;plugged in;saving;critical;"
+msgstr "iestatījumi;pogas;miegs;hibernēt;baterija;iesnaudināt;izslēgt;spilgtums;klēpjdatora vāks;bloķēt ekrānu;pievienots elektrotīklam;taupīšana;kritisks;settings;preferences;buttons;sleep;hibernate;battery;suspend;shutdown;brightness;laptop lid;lock screen;plugged in;saving;critical;"
+
+#: common/xfpm-common.c:129
+msgid "translator-credits"
+msgstr "Rihards Priedītis <rprieditis@gmail.com>"
+
+#: common/xfpm-power-common.c:39 common/xfpm-power-common.c:66
+msgid "Battery"
+msgstr "Baterija"
+
+#: common/xfpm-power-common.c:41
+msgid "Uninterruptible Power Supply"
+msgstr "Nepārtrauktās barošanas avots"
+
+#: common/xfpm-power-common.c:43
+msgid "Line power"
+msgstr "Elektrotīkls"
+
+#: common/xfpm-power-common.c:45
+msgid "Headphones"
+msgstr "Austiņas"
+
+#: common/xfpm-power-common.c:47
+msgid "Headset"
+msgstr "Austiņas ar mikrofonu"
+
+#: common/xfpm-power-common.c:49
+msgid "Mouse"
+msgstr "Pele"
+
+#: common/xfpm-power-common.c:51
+msgid "Keyboard"
+msgstr "Tastatūra"
+
+#: common/xfpm-power-common.c:53
+msgid "Monitor"
+msgstr "Monitors"
+
+#: common/xfpm-power-common.c:55
+msgid "PDA"
+msgstr "PDA"
+
+#: common/xfpm-power-common.c:57
+msgid "Phone"
+msgstr "Tālrunis"
+
+#: common/xfpm-power-common.c:59
+msgid "Tablet"
+msgstr "Planšete"
+
+#: common/xfpm-power-common.c:61 common/xfpm-power-common.c:303
+msgid "Computer"
+msgstr "Dators"
+
+#: common/xfpm-power-common.c:63 common/xfpm-power-common.c:79
+#: common/xfpm-power-common.c:94
+msgid "Unknown"
+msgstr "Nezināms"
+
+#: common/xfpm-power-common.c:81
+msgid "Lithium ion"
+msgstr "Litija jonu"
+
+#: common/xfpm-power-common.c:83
+msgid "Lithium polymer"
+msgstr "Litija polimēru"
+
+#: common/xfpm-power-common.c:85
+msgid "Lithium iron phosphate"
+msgstr "Litija dzelzs fosfāta"
+
+#: common/xfpm-power-common.c:87
+msgid "Lead acid"
+msgstr "Svina skābes"
+
+#: common/xfpm-power-common.c:89
+msgid "Nickel cadmium"
+msgstr "Niķeļa kadmija"
+
+#: common/xfpm-power-common.c:91
+msgid "Nickel metal hydride"
+msgstr "Niķeļa metālhidrīda"
+
+#: common/xfpm-power-common.c:139
+msgid "Unknown time"
+msgstr "Nezināms laiks"
+
+#: common/xfpm-power-common.c:145
+#, c-format
+msgid "%i minute"
+msgid_plural "%i minutes"
+msgstr[0] "%i minūte"
+msgstr[1] "%i minūtes"
+msgstr[2] "%i minūšu"
+
+#: common/xfpm-power-common.c:153
+#, c-format
+msgid "%i hour"
+msgid_plural "%i hours"
+msgstr[0] "%i stunda"
+msgstr[1] "%i stundas"
+msgstr[2] "%i stundu"
+
+#. TRANSLATOR: "%i %s %i %s" are "%i hours %i minutes"
+#. * Swap order with "%2$s %2$i %1$s %1$i if needed
+#: common/xfpm-power-common.c:157
+#, c-format
+msgid "%i %s %i %s"
+msgstr "%i %s %i %s"
+
+#: common/xfpm-power-common.c:158
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "stunda"
+msgstr[1] "stundas"
+msgstr[2] "stundu"
+
+#: common/xfpm-power-common.c:159
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "minūte"
+msgstr[1] "minūtes"
+msgstr[2] "minūšu"
+
+#: common/xfpm-power-common.c:343
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Fully charged - %s remaining"
+msgstr "<b>%s %s</b>\nPilnībā uzlādēts — atlikušais laiks: %s"
+
+#: common/xfpm-power-common.c:350
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Fully charged"
+msgstr "<b>%s %s</b>\nPilnībā uzlādēts"
+
+#: common/xfpm-power-common.c:359
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s until full"
+msgstr "<b>%s %s</b>\n%0.0f%% — līdz pilnai uzlādei: %s"
+
+#: common/xfpm-power-common.c:367 common/xfpm-power-common.c:385
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%0.0f%%"
+msgstr "<b>%s %s</b>\n%0.0f%%"
+
+#: common/xfpm-power-common.c:377
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%0.0f%% - %s remaining"
+msgstr "<b>%s %s</b>\n%0.0f%% — atlikušais laiks: %s"
+
+#: common/xfpm-power-common.c:392
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Waiting to charge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nGaida uzlādi (%0.0f%%)"
+
+#: common/xfpm-power-common.c:398
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Waiting to discharge (%0.0f%%)"
+msgstr "<b>%s %s</b>\nGaida izlādi (%0.0f%%)"
+
+#: common/xfpm-power-common.c:404
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"is empty"
+msgstr "<b>%s %s</b>\nir tukšs"
+
+#: common/xfpm-power-common.c:409
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Current charge: %0.0f%%"
+msgstr "<b>%s %s</b>\nPašreizējā uzlāde: %0.0f%%"
+
+#. On the 2nd line we want to know if the power cord is plugged
+#. * in or not
+#: common/xfpm-power-common.c:419
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"%s"
+msgstr "<b>%s %s</b>\n%s"
+
+#: common/xfpm-power-common.c:420
+msgid "Not plugged in"
+msgstr "Nav pievienots elektrotīklam"
+
+#. Desktop pc with no battery, just display the vendor and model,
+#. * which will probably just be Computer
+#: common/xfpm-power-common.c:426
+#, c-format
+msgid "<b>%s %s</b>"
+msgstr "<b>%s %s</b>"
+
+#. unknown device state, just display the percentage
+#: common/xfpm-power-common.c:431
+#, c-format
+msgid ""
+"<b>%s %s</b>\n"
+"Unknown state"
+msgstr "<b>%s %s</b>\nNezināms stāvoklis"
+
+#: src/xfpm-power.c:286
+msgid "Do you want to put it to sleep anyway?"
+msgstr "Vai tomēr vēlaties iemidzināt?"
+
+#: src/xfpm-power.c:291
+#, c-format
+msgid ""
+"These apps are currently preventing the system from going to sleep automatically:\n"
+"%s\n"
+"%s"
+msgstr "Šīs lietotnes pašlaik neļauj sistēmai automātiski pāriet miega režīmā:\n%s\n%s"
+
+#: src/xfpm-power.c:298
+#, c-format
+msgid ""
+"Presentation mode is currently preventing the system from going to sleep automatically.\n"
+"%s"
+msgstr "Prezentācijas režīms pašlaik neļauj sistēmai automātiski pāriet miega režīmā.\n%s"
+
+#: src/xfpm-power.c:303
+#, c-format
+msgid ""
+"This fullscreened window is currently preventing the system from going to sleep automatically:\n"
+"%s\n"
+"%s"
+msgstr "Šis pilnekrāna logs pašlaik neļauj sistēmai automātiski pāriet miega režīmā:\n%s\n%s"
+
+#: src/xfpm-power.c:309
+#, c-format
+msgid ""
+"An unknown reason is currently preventing the system from going to sleep automatically.\n"
+"%s"
+msgstr "Nezināms iemesls pašlaik neļauj sistēmai automātiski pāriet miega režīmā.\n%s"
+
+#: src/xfpm-power.c:342
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be locked.\n"
+"Do you still want to continue to suspend the system?"
+msgstr "Neviens ekrāna bloķēšanas rīks nedarbojās sekmīgi, ekrāns netiks bloķēts.\nVai tomēr vēlaties turpināt sistēmas iesnaudināšanu?"
+
+#: src/xfpm-power.c:531
+msgid "Hibernate the system"
+msgstr "Hibernēt sistēmu"
+
+#: src/xfpm-power.c:543
+msgid "Suspend the system"
+msgstr "Iesnaudināt sistēmu"
+
+#: src/xfpm-power.c:555
+msgid "Hybrid sleep the system"
+msgstr "Hibrīdi iesnaudināt sistēmu"
+
+#: src/xfpm-power.c:575
+msgid "Shutdown the system"
+msgstr "Izslēgt sistēmu"
+
+#: src/xfpm-power.c:588 src/xfpm-power.c:630
+msgid "System is running on low power. Save your work to avoid losing data"
+msgstr "Sistēmai ir maz enerģijas. Saglabājiet darbu, lai nezaudētu datus"
+
+#: src/xfpm-power.c:669
+msgid "Cancel"
+msgstr "Atcelt"
+
+#: src/xfpm-power.c:792
+msgid "System is running on low power"
+msgstr "Sistēmai ir maz enerģijas"
+
+#: src/xfpm-power.c:807
+#, c-format
+msgid ""
+"Your %s charge level is low\n"
+"Estimated time left %s"
+msgstr "%s: zems uzlādes līmenis\nAptuvenais atlikušais laiks: %s"
+
+#: src/xfpm-power.c:1722 src/xfpm-power.c:1766 src/xfpm-power.c:1802
+#: src/xfpm-power.c:1836 src/xfpm-power.c:1870
+msgid "Permission denied"
+msgstr "Atļauja liegta"
+
+#: src/xfpm-power.c:1811
+msgid "Hibernate not supported"
+msgstr "Hibernēšana netiek atbalstīta"
+
+#: src/xfpm-power.c:1845
+msgid "Suspend not supported"
+msgstr "Iesnaudināšana netiek atbalstīta"
+
+#: src/xfpm-power.c:1879
+msgid "Hybrid sleep not supported"
+msgstr "Hibrīdā iesnaudināšana netiek atbalstīta"
+
+#: src/xfpm-backlight.c:134 panel-plugin/power-manager-button.c:736
+#, c-format
+msgid "Brightness: %.0f%%"
+msgstr "Spilgtums: %.0f%%"
+
+#: src/xfpm-battery.c:95 src/xfpm-battery.c:147
+#, c-format
+msgid "Your %s is fully charged"
+msgstr "%s: pilnībā uzlādēts"
+
+#: src/xfpm-battery.c:98 src/xfpm-battery.c:150
+#, c-format
+msgid "Your %s is charging"
+msgstr "%s: notiek uzlāde"
+
+#: src/xfpm-battery.c:108
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"%s until fully charged"
+msgstr "%s (%i%%)\nLīdz pilnai uzlādei: %s"
+
+#: src/xfpm-battery.c:117 src/xfpm-battery.c:153
+#, c-format
+msgid "Your %s is discharging"
+msgstr "%s: notiek izlāde"
+
+#: src/xfpm-battery.c:119
+#, c-format
+msgid "System is running on %s power"
+msgstr "Sistēmas barošanas avots: %s"
+
+#: src/xfpm-battery.c:129
+#, c-format
+msgid ""
+"%s (%i%%)\n"
+"Estimated time left is %s"
+msgstr "%s (%i%%)\nAptuvenais atlikušais laiks: %s"
+
+#: src/xfpm-battery.c:136 src/xfpm-battery.c:156
+#, c-format
+msgid "Your %s is empty"
+msgstr "%s: tukšs"
+
+#: src/xfpm-kbd-backlight.c:136
+#, c-format
+msgid "Keyboard Brightness: %.0f%%"
+msgstr "Tastatūras spilgtums: %.0f%%"
+
+#: src/xfpm-main.c:86
+msgid "With policykit support\n"
+msgstr "Ar policykit atbalstu\n"
+
+#: src/xfpm-main.c:88
+msgid "Without policykit support\n"
+msgstr "Bez policykit atbalsta\n"
+
+#: src/xfpm-main.c:107
+msgid "Can suspend"
+msgstr "Var iesnaudināt"
+
+#: src/xfpm-main.c:108
+msgid "Can hibernate"
+msgstr "Var hibernēt"
+
+#: src/xfpm-main.c:109
+msgid "Can hybrid sleep"
+msgstr "Var hibrīdi iesnaudināt"
+
+#: src/xfpm-main.c:110
+msgid "Authorized to suspend"
+msgstr "Atļauts iesnaudināt"
+
+#: src/xfpm-main.c:111
+msgid "Authorized to hibernate"
+msgstr "Atļauts hibernēt"
+
+#: src/xfpm-main.c:112
+msgid "Authorized to hybrid sleep"
+msgstr "Atļauts hibrīdi iesnaudināt"
+
+#: src/xfpm-main.c:113
+msgid "Authorized to shutdown"
+msgstr "Atļauts izslēgt"
+
+#: src/xfpm-main.c:114
+msgid "Has battery"
+msgstr "Ir baterija"
+
+#: src/xfpm-main.c:115
+msgid "Has brightness panel"
+msgstr "Ir spilgtuma panelis"
+
+#: src/xfpm-main.c:116
+msgid "Has power button"
+msgstr "Ir barošanas poga"
+
+#: src/xfpm-main.c:117
+msgid "Has hibernate button"
+msgstr "Ir hibernēšanas poga"
+
+#: src/xfpm-main.c:118
+msgid "Has sleep button"
+msgstr "Ir iesnaudināšanas poga"
+
+#: src/xfpm-main.c:119
+msgid "Has battery button"
+msgstr "Ir baterijas poga"
+
+#: src/xfpm-main.c:120
+msgid "Has LID"
+msgstr "Ir vāks"
+
+#: src/xfpm-main.c:241
+msgid "Daemonize"
+msgstr "Darboties kā dēmonam"
+
+#: src/xfpm-main.c:243
+msgid "Dump all information"
+msgstr "Izmest visu informāciju"
+
+#: src/xfpm-main.c:244
+msgid "Restart the running instance of Xfce power manager"
+msgstr "Pārstartēt darbojošos Xfce barošanas pārvaldnieka instanci"
+
+#: src/xfpm-main.c:245
+msgid "Show the configuration dialog"
+msgstr "Rādīt konfigurācijas dialoglodziņu"
+
+#: src/xfpm-main.c:246
+msgid "Quit any running xfce power manager"
+msgstr "Beigt visu darbojošos Xfce barošanas pārvaldnieku darbu"
+
+#: src/xfpm-main.c:247
+msgid "Version information"
+msgstr "Versijas informācija"
+
+#: src/xfpm-main.c:266
+#, c-format
+msgid "Failed to parse arguments: %s\n"
+msgstr "Neizdevās parsēt argumentus: %s\n"
+
+#: src/xfpm-main.c:300
+msgid "Unable to get connection to the message bus session"
+msgstr "Neizdevās savienoties ar ziņojumu kopnes sesiju"
+
+#: src/xfpm-main.c:309 src/xfpm-main.c:361
+msgid "Xfce power manager is not running"
+msgstr "Xfce barošanas pārvaldnieks nedarbojas"
+
+#: src/xfpm-main.c:400
+msgid "Another power manager is already running"
+msgstr "Jau darbojas cits barošanas pārvaldnieks"
+
+#: src/xfpm-main.c:404
+msgid "Xfce power manager is already running"
+msgstr "Xfce barošanas pārvaldnieks jau darbojas"
+
+#: src/xfpm-inhibit.c:382
+msgid "Invalid arguments"
+msgstr "Nederīgi argumenti"
+
+#: src/xfpm-inhibit.c:412
+msgid "Invalid cookie"
+msgstr "Nederīga sīkdatne"
+
+#: src/xfpm-manager.c:313
+msgid ""
+"None of the screen lock tools ran successfully, the screen will not be "
+"locked."
+msgstr "Neviens ekrāna bloķēšanas rīks nedarbojās sekmīgi, ekrāns netiks bloķēts."
+
+#: src/xfce4-power-manager.desktop.in:4
+msgid "Power management for the Xfce desktop"
+msgstr "Xfce darbvirsmas barošanas pārvaldība"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to change the backlight brightness.
+#: src/org.xfce.power.policy.in.in:21
+msgid "Modify the laptop display brightness"
+msgstr "Mainīt klēpjdatora displeja spilgtumu"
+
+#: src/org.xfce.power.policy.in.in:22
+msgid "Authentication is required to modify the laptop display brightness"
+msgstr "Lai mainītu klēpjdatora displeja spilgtumu, jāautentificējas"
+
+#. SECURITY:
+#. - A normal active user on the local machine does not need permission
+#. to suspend or hibernate their system.
+#: src/org.xfce.power.policy.in.in:36
+msgid "Suspend or hibernate the system"
+msgstr "Iesnaudināt vai hibernēt sistēmu"
+
+#: src/org.xfce.power.policy.in.in:37
+msgid ""
+"Authentication is required to place the system in suspend or hibernate mode"
+msgstr "Lai sistēmu iesnaudinātu vai hibernētu, jāautentificējas"
+
+#. Odds are this is a desktop without any batteries attached
+#: panel-plugin/power-manager-button.c:274
+msgid "Display battery levels for attached devices"
+msgstr "Rādīt pievienoto ierīču bateriju līmeņus"
+
+#. Translators this is to display which app is inhibiting
+#. * power in the plugin menu. Example:
+#. * VLC is currently inhibiting power management
+#: panel-plugin/power-manager-button.c:1272
+#, c-format
+msgid "%s is currently inhibiting power management"
+msgstr "%s pašlaik neļauj veikt barošanas pārvaldības darbības"
+
+#: panel-plugin/power-manager-button.c:1344
+msgid "_Clear inhibitors"
+msgstr "_Notīrīt iemigšanas aizliegumus"
+
+#: panel-plugin/power-manager-button.c:1348
+msgid "You can use this if applications fail to remove their inhibitors"
+msgstr "To var izmantot, ja lietotnēm neizdodas noņemt savus iemigšanas aizliegumus"
+
+#: panel-plugin/power-manager-button.c:1459
+msgid "<b>Display brightness</b>"
+msgstr "<b>Displeja spilgtums</b>"
+
+#: panel-plugin/power-manager-button.c:1484
+msgid "Presentation _mode"
+msgstr "Prezentācijas _režīms"
+
+#: panel-plugin/power-manager-button.c:1504
+msgid "_Settings..."
+msgstr "_Iestatījumi..."
+
+#: panel-plugin/power-manager-dialog.c:177
+msgid "None"
+msgstr "Nav"
+
+#: panel-plugin/power-manager-dialog.c:177
+msgid "Percentage"
+msgstr "Procenti"
+
+#: panel-plugin/power-manager-dialog.c:177
+msgid "Remaining time"
+msgstr "Atlikušais laiks"
+
+#: panel-plugin/power-manager-dialog.c:177
+msgid "Percentage and remaining time"
+msgstr "Procenti un atlikušais laiks"
+
+#: panel-plugin/power-manager-dialog.c:183
+msgid "Power Manager Plugin Settings"
+msgstr "Barošanas pārvaldnieka spraudņa iestatījumi"
+
+#. show-panel-label setting
+#: panel-plugin/power-manager-dialog.c:207
+msgid "Show label:"
+msgstr "Rādīt etiķeti:"
+
+#: panel-plugin/power-manager-dialog.c:240
+msgid "Show 'Presentation mode' indicator:"
+msgstr "Rādīt „Prezentācijas režīma” indikatoru:"
+
+#: panel-plugin/power-manager-plugin.desktop.in:4
+msgid "Power Manager Plugin"
+msgstr "Barošanas pārvaldnieka spraudnis"
+
+#: panel-plugin/power-manager-plugin.desktop.in:5
+msgid ""
+"Display the battery levels of your devices and control the brightness of "
+"your display"
+msgstr "Rāda jūsu ierīču bateriju līmeņus un vada displeja spilgtumu"
+
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:7
+msgid "Xfce power manager"
+msgstr "Xfce barošanas pārvaldnieks"
+
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:8
+msgid "Manage and reduce power consumption of computer and devices"
+msgstr "Pārvaldīt un samazināt datora un ierīču enerģijas patēriņu"
+
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:11
+msgid ""
+"Xfce power manager manages the power sources on the computer and the devices"
+" that can be controlled to reduce their power consumption (such as LCD "
+"brightness level, monitor sleep, CPU frequency scaling)."
+msgstr "Xfce barošanas pārvaldnieks pārvalda datora barošanas avotus un ierīces, kuras var vadīt, lai samazinātu to enerģijas patēriņu (piemēram, LCD spilgtuma līmenis, monitora iemidzināšana, CPU frekvences mērogošana)."
+
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:16
+msgid ""
+"In addition, Xfce power manager provides a set of freedesktop-compliant DBus"
+" interfaces to inform other applications about current power level so that "
+"they can adjust their power consumption, and it provides the inhibit "
+"interface which allows applications to prevent automatic sleep actions via "
+"the power manager; as an example, the operating system’s package manager "
+"should make use of this interface while it is performing update operations."
+msgstr "Turklāt Xfce barošanas pārvaldnieks nodrošina freedesktop prasībām atbilstošu DBus saskarņu kopu, lai informētu citas lietotnes par pašreizējo enerģijas līmeni un tās varētu pielāgot savu patēriņu, kā arī nodrošina saskarni, ar ko lietotnes caur barošanas pārvaldnieku var neļaut veikt automātiskas miega darbības; piemēram, operētājsistēmas pakotņu pārvaldniekam šī saskarne būtu jāizmanto, kamēr tas veic atjaunināšanu."
+
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:23
+msgid ""
+"Xfce power manager also provides a plugin for the Xfce and LXDE panels to "
+"control LCD brightness levels and to monitor battery and device charge "
+"levels."
+msgstr "Xfce barošanas pārvaldnieks nodrošina arī Xfce un LXDE paneļu spraudni, ar ko vadīt LCD spilgtuma līmeni un uzraudzīt bateriju un ierīču uzlādes līmeni."
+
+#: data/appdata/org.xfce.PowerManager.appdata.xml.in:34
+msgid "Screenshot of the Xfce Power Manager User Interface"
+msgstr "Xfce barošanas pārvaldnieka lietotāja saskarnes ekrānuzņēmums"
