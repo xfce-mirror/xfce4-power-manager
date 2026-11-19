@@ -365,9 +365,11 @@ xfpm_settings_power_supply (XfconfChannel *channel,
                             gboolean auth_suspend,
                             gboolean auth_hibernate,
                             gboolean auth_hybrid_sleep,
+                            gboolean auth_suspend_then_hibernate,
                             gboolean can_suspend,
                             gboolean can_hibernate,
                             gboolean can_hybrid_sleep,
+                            gboolean can_suspend_then_hibernate,
                             gboolean can_shutdown,
                             gboolean has_lcd_brightness,
                             gboolean has_lid)
@@ -404,6 +406,12 @@ xfpm_settings_power_supply (XfconfChannel *channel,
     gtk_list_store_set (list_store, &iter, 0, _("Hibernate"), 1, XFPM_DO_HIBERNATE, -1);
   }
 
+  if (can_suspend_then_hibernate)
+  {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend then Hibernate"), 1, XFPM_DO_SUSPEND_THEN_HIBERNATE, -1);
+  }
+
   if (can_hybrid_sleep)
   {
     gtk_list_store_append (list_store, &iter);
@@ -435,12 +443,12 @@ xfpm_settings_power_supply (XfconfChannel *channel,
   widget_id = on_ac ? "system-sleep-inactivity-on-ac" : "system-sleep-inactivity-on-battery";
   inact_timeout = GTK_WIDGET (gtk_builder_get_object (xml, widget_id));
 
-  if (!can_suspend && !can_hibernate && !can_hybrid_sleep && !can_shutdown)
+  if (!can_suspend && !can_hibernate && !can_hybrid_sleep && !can_suspend_then_hibernate && !can_shutdown)
   {
     gtk_widget_set_sensitive (inact_timeout, FALSE);
     gtk_widget_set_tooltip_text (inact_timeout, _("No sleep mode supported"));
   }
-  else if (!auth_suspend && !auth_hibernate && !auth_hybrid_sleep && !can_shutdown)
+  else if (!auth_suspend && !auth_hibernate && !auth_hybrid_sleep && !auth_suspend_then_hibernate && !can_shutdown)
   {
     gtk_widget_set_sensitive (inact_timeout, FALSE);
     gtk_widget_set_tooltip_text (inact_timeout, _("No sleep mode permitted"));
@@ -518,6 +526,12 @@ xfpm_settings_power_supply (XfconfChannel *channel,
     {
       gtk_list_store_append (list_store, &iter);
       gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, LID_TRIGGER_HYBRID_SLEEP, -1);
+    }
+
+    if (can_suspend_then_hibernate && auth_suspend_then_hibernate)
+    {
+      gtk_list_store_append (list_store, &iter);
+      gtk_list_store_set (list_store, &iter, 0, _("Suspend then Hibernate"), 1, LID_TRIGGER_SUSPEND_THEN_HIBERNATE, -1);
     }
 
     gtk_list_store_append (list_store, &iter);
@@ -634,9 +648,11 @@ add_button_combo (XfconfChannel *channel,
                   gboolean auth_suspend,
                   gboolean auth_hibernate,
                   gboolean auth_hybrid_sleep,
+                  gboolean auth_suspend_then_hibernate,
                   gboolean can_suspend,
                   gboolean can_hibernate,
                   gboolean can_hybrid_sleep,
+                  gboolean can_suspend_then_hibernate,
                   gboolean can_shutdown)
 {
   GtkListStore *list_store = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
@@ -667,6 +683,12 @@ add_button_combo (XfconfChannel *channel,
     gtk_list_store_set (list_store, &iter, 0, _("Hybrid Sleep"), 1, XFPM_DO_HYBRID_SLEEP, -1);
   }
 
+  if (can_suspend_then_hibernate && auth_suspend_then_hibernate)
+  {
+    gtk_list_store_append (list_store, &iter);
+    gtk_list_store_set (list_store, &iter, 0, _("Suspend then Hibernate"), 1, XFPM_DO_SUSPEND_THEN_HIBERNATE, -1);
+  }
+
   if (can_shutdown)
   {
     gtk_list_store_append (list_store, &iter);
@@ -693,9 +715,11 @@ xfpm_settings_general (XfconfChannel *channel,
                        gboolean auth_suspend,
                        gboolean auth_hibernate,
                        gboolean auth_hybrid_sleep,
+                       gboolean auth_suspend_then_hibernate,
                        gboolean can_suspend,
                        gboolean can_hibernate,
                        gboolean can_hybrid_sleep,
+                       gboolean can_suspend_then_hibernate,
                        gboolean can_shutdown,
                        gboolean has_sleep_button,
                        gboolean has_hibernate_button,
@@ -707,9 +731,9 @@ xfpm_settings_general (XfconfChannel *channel,
 
   if (has_power_button)
   {
-    add_button_combo (channel, "button-power-combo", XFPM_PROPERTIES_PREFIX POWER_BUTTON_ACTION,
-                      DEFAULT_POWER_BUTTON_ACTION, auth_suspend, auth_hibernate, auth_hybrid_sleep,
-                      can_suspend, can_hibernate, can_hybrid_sleep, can_shutdown);
+    add_button_combo (channel, "button-power-combo", XFPM_PROPERTIES_PREFIX POWER_BUTTON_ACTION, DEFAULT_POWER_BUTTON_ACTION,
+                      auth_suspend, auth_hibernate, auth_hybrid_sleep, auth_suspend_then_hibernate,
+                      can_suspend, can_hibernate, can_hybrid_sleep, can_suspend_then_hibernate, can_shutdown);
   }
   else
   {
@@ -719,9 +743,9 @@ xfpm_settings_general (XfconfChannel *channel,
 
   if (has_sleep_button)
   {
-    add_button_combo (channel, "button-sleep-combo", XFPM_PROPERTIES_PREFIX SLEEP_BUTTON_ACTION,
-                      DEFAULT_SLEEP_BUTTON_ACTION, auth_suspend, auth_hibernate, auth_hybrid_sleep,
-                      can_suspend, can_hibernate, can_hybrid_sleep, FALSE);
+    add_button_combo (channel, "button-sleep-combo", XFPM_PROPERTIES_PREFIX SLEEP_BUTTON_ACTION, DEFAULT_SLEEP_BUTTON_ACTION,
+                      auth_suspend, auth_hibernate, auth_hybrid_sleep, auth_suspend_then_hibernate,
+                      can_suspend, can_hibernate, can_hybrid_sleep, can_suspend_then_hibernate, FALSE);
   }
   else
   {
@@ -731,9 +755,9 @@ xfpm_settings_general (XfconfChannel *channel,
 
   if (has_hibernate_button)
   {
-    add_button_combo (channel, "button-hibernate-combo", XFPM_PROPERTIES_PREFIX HIBERNATE_BUTTON_ACTION,
-                      DEFAULT_HIBERNATE_BUTTON_ACTION, auth_suspend, auth_hibernate, auth_hybrid_sleep,
-                      can_suspend, can_hibernate, can_hybrid_sleep, FALSE);
+    add_button_combo (channel, "button-hibernate-combo", XFPM_PROPERTIES_PREFIX HIBERNATE_BUTTON_ACTION, DEFAULT_HIBERNATE_BUTTON_ACTION,
+                      auth_suspend, auth_hibernate, auth_hybrid_sleep, auth_suspend_then_hibernate,
+                      can_suspend, can_hibernate, can_hybrid_sleep, can_suspend_then_hibernate, FALSE);
   }
   else
   {
@@ -743,9 +767,9 @@ xfpm_settings_general (XfconfChannel *channel,
 
   if (has_battery_button)
   {
-    add_button_combo (channel, "button-battery-combo", XFPM_PROPERTIES_PREFIX BATTERY_BUTTON_ACTION,
-                      DEFAULT_BATTERY_BUTTON_ACTION, auth_suspend, auth_hibernate, auth_hybrid_sleep,
-                      can_suspend, can_hibernate, can_hybrid_sleep, FALSE);
+    add_button_combo (channel, "button-battery-combo", XFPM_PROPERTIES_PREFIX BATTERY_BUTTON_ACTION, DEFAULT_BATTERY_BUTTON_ACTION,
+                      auth_suspend, auth_hibernate, auth_hybrid_sleep, auth_suspend_then_hibernate,
+                      can_suspend, can_hibernate, can_hybrid_sleep, can_suspend_then_hibernate, FALSE);
   }
   else
   {
@@ -817,9 +841,11 @@ xfpm_settings_others (XfconfChannel *channel,
                       gboolean auth_suspend,
                       gboolean auth_hibernate,
                       gboolean auth_hybrid_sleep,
+                      gboolean auth_suspend_then_hibernate,
                       gboolean can_suspend,
                       gboolean can_hibernate,
                       gboolean can_hybrid_sleep,
+                      gboolean can_suspend_then_hibernate,
                       gboolean can_shutdown,
                       gboolean has_battery)
 {
@@ -840,9 +866,9 @@ xfpm_settings_others (XfconfChannel *channel,
     gtk_widget_set_tooltip_text (critical_level, _("When all the power sources of the computer reach this charge level"));
     xfconf_g_property_bind (channel, XFPM_PROPERTIES_PREFIX CRITICAL_POWER_LEVEL, G_TYPE_UINT, critical_level, "value");
 
-    add_button_combo (channel, "critical-power-action-combo", XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION,
-                      DEFAULT_CRITICAL_POWER_ACTION, auth_suspend, auth_hibernate, auth_hybrid_sleep,
-                      can_suspend, can_hibernate, can_hybrid_sleep, can_shutdown);
+    add_button_combo (channel, "critical-power-action-combo", XFPM_PROPERTIES_PREFIX CRITICAL_POWER_ACTION, DEFAULT_CRITICAL_POWER_ACTION,
+                      auth_suspend, auth_hibernate, auth_hybrid_sleep, auth_suspend_then_hibernate,
+                      can_suspend, can_hibernate, can_hybrid_sleep, can_suspend_then_hibernate, can_shutdown);
 
     model = gtk_combo_box_get_model (GTK_COMBO_BOX (gtk_builder_get_object (xml, "critical-power-action-combo")));
     gtk_tree_model_get_iter_first (model, &iter);
@@ -879,12 +905,12 @@ xfpm_settings_others (XfconfChannel *channel,
    */
   lock = GTK_WIDGET (gtk_builder_get_object (xml, "lock-screen"));
 
-  if (!can_suspend && !can_hibernate && !can_hybrid_sleep)
+  if (!can_suspend && !can_hibernate && !can_hybrid_sleep && !can_suspend_then_hibernate)
   {
     gtk_widget_set_sensitive (lock, FALSE);
     gtk_widget_set_tooltip_text (lock, _("Hibernate and suspend operations not supported"));
   }
-  else if (!auth_suspend && !auth_hibernate && !auth_hybrid_sleep)
+  else if (!auth_suspend && !auth_hibernate && !auth_hybrid_sleep && !auth_suspend_then_hibernate)
   {
     gtk_widget_set_sensitive (lock, FALSE);
     gtk_widget_set_tooltip_text (lock, _("Hibernate and suspend operations not permitted"));
@@ -1433,9 +1459,11 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
                           gboolean auth_suspend,
                           gboolean auth_hibernate,
                           gboolean auth_hybrid_sleep,
+                          gboolean auth_suspend_then_hibernate,
                           gboolean can_suspend,
                           gboolean can_hibernate,
                           gboolean can_hybrid_sleep,
+                          gboolean can_suspend_then_hibernate,
                           gboolean can_shutdown,
                           gboolean has_battery,
                           gboolean has_lcd_brightness,
@@ -1565,13 +1593,17 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
 
   settings_create_devices_list ();
 
-  xfpm_settings_power_supply (channel, TRUE, profiles_proxy, auth_suspend, auth_hibernate, auth_hybrid_sleep,
-                              can_suspend, can_hibernate, can_hybrid_sleep, can_shutdown, has_lcd_brightness, has_lid);
+  xfpm_settings_power_supply (channel, TRUE, profiles_proxy,
+                              auth_suspend, auth_hibernate, auth_hybrid_sleep, auth_suspend_then_hibernate,
+                              can_suspend, can_hibernate, can_hybrid_sleep, can_suspend_then_hibernate, can_shutdown,
+                              has_lcd_brightness, has_lid);
 
   if (has_battery)
   {
-    xfpm_settings_power_supply (channel, FALSE, profiles_proxy, auth_suspend, auth_hibernate, auth_hybrid_sleep,
-                                can_suspend, can_hibernate, can_hybrid_sleep, can_shutdown, has_lcd_brightness, has_lid);
+    xfpm_settings_power_supply (channel, FALSE, profiles_proxy,
+                                auth_suspend, auth_hibernate, auth_hybrid_sleep, auth_suspend_then_hibernate,
+                                can_suspend, can_hibernate, can_hybrid_sleep, can_suspend_then_hibernate, can_shutdown,
+                                has_lcd_brightness, has_lid);
     if (upower != NULL && !up_client_get_on_battery (upower))
     {
       GtkWidget *widget;
@@ -1594,12 +1626,15 @@ xfpm_settings_dialog_new (XfconfChannel *channel,
     gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (xml, "display-stack-switcher")));
   }
 
-  xfpm_settings_general (channel, auth_suspend, auth_hibernate, auth_hybrid_sleep, can_suspend, can_hibernate,
-                         can_hybrid_sleep, can_shutdown, has_sleep_button, has_hibernate_button,
-                         has_power_button, has_battery_button);
+  xfpm_settings_general (channel,
+                         auth_suspend, auth_hibernate, auth_hybrid_sleep, auth_suspend_then_hibernate,
+                         can_suspend, can_hibernate, can_hybrid_sleep, can_suspend_then_hibernate, can_shutdown,
+                         has_sleep_button, has_hibernate_button, has_power_button, has_battery_button);
 
-  xfpm_settings_others (channel, auth_suspend, auth_hibernate, auth_hybrid_sleep, can_suspend, can_hibernate,
-                        can_hybrid_sleep, can_shutdown, has_battery);
+  xfpm_settings_others (channel,
+                        auth_suspend, auth_hibernate, auth_hybrid_sleep, auth_suspend_then_hibernate,
+                        can_suspend, can_hibernate, can_hybrid_sleep, can_suspend_then_hibernate, can_shutdown,
+                        has_battery);
 
   if (!has_lcd_brightness)
   {
