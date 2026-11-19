@@ -95,6 +95,10 @@ static void
 xfpm_power_can_hybrid_sleep (XfpmPower *power,
                              gboolean *can_hybrid_sleep,
                              gboolean *auth_hybrid_sleep);
+static void
+xfpm_power_can_suspend_then_hibernate (XfpmPower *power,
+                                       gboolean *can_suspend_then_hibernate,
+                                       gboolean *auth_suspend_then_hibernate);
 
 struct XfpmPowerPrivate
 {
@@ -146,9 +150,11 @@ enum
   PROP_AUTH_SUSPEND,
   PROP_AUTH_HIBERNATE,
   PROP_AUTH_HYBRID_SLEEP,
+  PROP_AUTH_SUSPEND_THEN_HIBERNATE,
   PROP_CAN_SUSPEND,
   PROP_CAN_HIBERNATE,
   PROP_CAN_HYBRID_SLEEP,
+  PROP_CAN_SUSPEND_THEN_HIBERNATE,
   PROP_HAS_LID,
   PROP_LID_IS_CLOSED,
   PROP_INHIBITION_DBUS,
@@ -408,6 +414,15 @@ xfpm_power_sleep (XfpmPower *power,
     if (error != NULL && xfpm_suspend_try_action (XFPM_HYBRID_SLEEP))
       g_clear_error (&error);
   }
+  else if (g_strcmp0 (sleep_time, "SuspendThenHibernate") == 0)
+  {
+    if (power->priv->systemd != NULL
+        && xfce_systemd_can_suspend_then_hibernate (power->priv->systemd, NULL, NULL, NULL)
+        && !XFCE_SYSTEMD_METHOD (suspend_then_hibernate, power->priv->systemd, force, &error))
+    {
+      g_warning ("Failed to suspend then hibernate via systemd: %s", error->message);
+    }
+  }
   else
   {
     g_warn_if_reached ();
@@ -458,6 +473,13 @@ xfpm_power_hybrid_sleep_clicked (XfpmPower *power)
 {
   g_clear_pointer (&power->priv->dialog, gtk_widget_destroy);
   xfpm_power_sleep (power, "HybridSleep", TRUE);
+}
+
+static void
+xfpm_power_suspend_then_hibernate_clicked (XfpmPower *power)
+{
+  g_clear_pointer (&power->priv->dialog, gtk_widget_destroy);
+  xfpm_power_sleep (power, "SuspendThenHibernate", TRUE);
 }
 
 static void
@@ -544,6 +566,18 @@ xfpm_power_add_actions_to_notification (XfpmPower *power,
       n,
       "HybridSleep",
       _("Hybrid sleep the system"),
+      (NotifyActionCallback) xfpm_power_notify_action_callback,
+      power);
+  }
+
+  xfpm_power_can_suspend_then_hibernate (power, &can_method, &auth_method);
+  if (can_method && auth_method)
+  {
+    xfpm_notify_add_action_to_notification (
+      power->priv->notify,
+      n,
+      "SuspendThenHibernate",
+      _("Suspend then hibernate the system"),
       (NotifyActionCallback) xfpm_power_notify_action_callback,
       power);
   }
@@ -643,6 +677,11 @@ xfpm_power_show_critical_action_gtk (XfpmPower *power)
     critical_dialog_add_button (GTK_DIALOG (dialog), _("Hybrid Sleep"),
                                 G_CALLBACK (xfpm_power_hybrid_sleep_clicked), power);
 
+  xfpm_power_can_suspend_then_hibernate (power, &can_method, &auth_method);
+  if (can_method && auth_method)
+    critical_dialog_add_button (GTK_DIALOG (dialog), _("Suspend Then Hibernate"),
+                                G_CALLBACK (xfpm_power_suspend_then_hibernate_clicked), power);
+
   if (power->priv->systemd != NULL)
   {
     xfce_systemd_can_power_off (power->priv->systemd, &can_method, &auth_method, NULL);
@@ -692,6 +731,8 @@ xfpm_power_process_critical_action (XfpmPower *power,
     xfpm_power_sleep (power, "Hibernate", TRUE);
   else if (req == XFPM_DO_HYBRID_SLEEP)
     xfpm_power_sleep (power, "HybridSleep", TRUE);
+  else if (req == XFPM_DO_SUSPEND_THEN_HIBERNATE)
+    xfpm_power_sleep (power, "SuspendThenHibernate", TRUE);
   else if (req == XFPM_DO_SHUTDOWN)
     g_signal_emit (G_OBJECT (power), signals[SHUTDOWN], 0);
   else
@@ -1029,6 +1070,13 @@ xfpm_power_class_init (XfpmPowerClass *klass)
                                                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
 
   g_object_class_install_property (object_class,
+                                   PROP_AUTH_SUSPEND_THEN_HIBERNATE,
+                                   g_param_spec_boolean ("auth-suspend-then-hibernate",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (object_class,
                                    PROP_CAN_HIBERNATE,
                                    g_param_spec_boolean ("can-hibernate",
                                                          NULL, NULL,
@@ -1038,6 +1086,13 @@ xfpm_power_class_init (XfpmPowerClass *klass)
   g_object_class_install_property (object_class,
                                    PROP_CAN_HYBRID_SLEEP,
                                    g_param_spec_boolean ("can-hybrid-sleep",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
+
+  g_object_class_install_property (object_class,
+                                   PROP_CAN_SUSPEND_THEN_HIBERNATE,
+                                   g_param_spec_boolean ("can-suspend-then-hibernate",
                                                          NULL, NULL,
                                                          FALSE,
                                                          G_PARAM_READABLE | G_PARAM_STATIC_STRINGS));
@@ -1169,6 +1224,10 @@ xfpm_power_get_property (GObject *object,
       xfpm_power_can_hybrid_sleep (power, NULL, &bool_value);
       g_value_set_boolean (value, bool_value);
       break;
+    case PROP_AUTH_SUSPEND_THEN_HIBERNATE:
+      xfpm_power_can_suspend_then_hibernate (power, NULL, &bool_value);
+      g_value_set_boolean (value, bool_value);
+      break;
     case PROP_AUTH_SUSPEND:
       xfpm_power_can_suspend (power, NULL, &bool_value);
       g_value_set_boolean (value, bool_value);
@@ -1183,6 +1242,10 @@ xfpm_power_get_property (GObject *object,
       break;
     case PROP_CAN_HYBRID_SLEEP:
       xfpm_power_can_hybrid_sleep (power, &bool_value, NULL);
+      g_value_set_boolean (value, bool_value);
+      break;
+    case PROP_CAN_SUSPEND_THEN_HIBERNATE:
+      xfpm_power_can_suspend_then_hibernate (power, &bool_value, NULL);
       g_value_set_boolean (value, bool_value);
       break;
     case PROP_HAS_LID:
@@ -1332,6 +1395,13 @@ xfpm_power_hybrid_sleep (XfpmPower *power,
                          gboolean force)
 {
   xfpm_power_sleep (power, "HybridSleep", force);
+}
+
+void
+xfpm_power_suspend_then_hibernate (XfpmPower *power,
+                                   gboolean force)
+{
+  xfpm_power_sleep (power, "SuspendThenHibernate", force);
 }
 
 gboolean
@@ -1576,6 +1646,11 @@ xfpm_power_dbus_hybrid_sleep (XfpmPower *power,
                               gpointer user_data);
 
 static gboolean
+xfpm_power_dbus_suspend_then_hibernate (XfpmPower *power,
+                                        GDBusMethodInvocation *invocation,
+                                        gpointer user_data);
+
+static gboolean
 xfpm_power_dbus_can_reboot (XfpmPower *power,
                             GDBusMethodInvocation *invocation,
                             gpointer user_data);
@@ -1599,6 +1674,11 @@ static gboolean
 xfpm_power_dbus_can_hybrid_sleep (XfpmPower *power,
                                   GDBusMethodInvocation *invocation,
                                   gpointer user_data);
+
+static gboolean
+xfpm_power_dbus_can_suspend_then_hibernate (XfpmPower *power,
+                                            GDBusMethodInvocation *invocation,
+                                            gpointer user_data);
 
 static gboolean
 xfpm_power_dbus_get_on_battery (XfpmPower *power,
@@ -1650,6 +1730,10 @@ xfpm_power_dbus_init (XfpmPower *power)
                            G_CALLBACK (xfpm_power_dbus_hybrid_sleep),
                            power, G_CONNECT_SWAPPED);
   g_signal_connect_object (power_dbus,
+                           "handle-suspend-then-hibernate",
+                           G_CALLBACK (xfpm_power_dbus_suspend_then_hibernate),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
                            "handle-can-reboot",
                            G_CALLBACK (xfpm_power_dbus_can_reboot),
                            power, G_CONNECT_SWAPPED);
@@ -1668,6 +1752,10 @@ xfpm_power_dbus_init (XfpmPower *power)
   g_signal_connect_object (power_dbus,
                            "handle-can-hybrid-sleep",
                            G_CALLBACK (xfpm_power_dbus_can_hybrid_sleep),
+                           power, G_CONNECT_SWAPPED);
+  g_signal_connect_object (power_dbus,
+                           "handle-can-suspend-then-hibernate",
+                           G_CALLBACK (xfpm_power_dbus_can_suspend_then_hibernate),
                            power, G_CONNECT_SWAPPED);
   g_signal_connect_object (power_dbus,
                            "handle-get-on-battery",
@@ -1870,6 +1958,38 @@ xfpm_power_dbus_hybrid_sleep (XfpmPower *power,
 }
 
 static gboolean
+xfpm_power_dbus_suspend_then_hibernate (XfpmPower *power,
+                                        GDBusMethodInvocation *invocation,
+                                        gpointer user_data)
+{
+  gboolean can_suspend_then_hibernate, auth_suspend_then_hibernate;
+
+  xfpm_power_can_suspend_then_hibernate (power, &can_suspend_then_hibernate, &auth_suspend_then_hibernate);
+
+  if (!auth_suspend_then_hibernate)
+  {
+    g_dbus_method_invocation_return_error (invocation, XFPM_ERROR,
+                                           XFPM_ERROR_PERMISSION_DENIED,
+                                           _("Permission denied"));
+    return TRUE;
+  }
+
+  if (!can_suspend_then_hibernate)
+  {
+    g_dbus_method_invocation_return_error (invocation, XFPM_ERROR,
+                                           XFPM_ERROR_NO_HARDWARE_SUPPORT,
+                                           _("Suspend then hibernate not supported"));
+    return TRUE;
+  }
+
+  xfpm_power_sleep (power, "SuspendThenHibernate", FALSE);
+
+  xfpm_power_management_complete_suspend_then_hibernate (user_data, invocation);
+
+  return TRUE;
+}
+
+static gboolean
 xfpm_power_dbus_can_reboot (XfpmPower *power,
                             GDBusMethodInvocation *invocation,
                             gpointer user_data)
@@ -1953,6 +2073,19 @@ xfpm_power_dbus_can_hybrid_sleep (XfpmPower *power,
                                                    invocation,
                                                    can_hybrid_sleep);
 
+  return TRUE;
+}
+
+static gboolean
+xfpm_power_dbus_can_suspend_then_hibernate (XfpmPower *power,
+                                            GDBusMethodInvocation *invocation,
+                                            gpointer user_data)
+{
+  gboolean can_suspend_then_hibernate;
+  xfpm_power_can_suspend_then_hibernate (power, &can_suspend_then_hibernate, NULL);
+  xfpm_power_management_complete_can_suspend_then_hibernate (user_data,
+                                                             invocation,
+                                                             can_suspend_then_hibernate);
   return TRUE;
 }
 
@@ -2052,5 +2185,27 @@ xfpm_power_can_hybrid_sleep (XfpmPower *power,
     *auth_hybrid_sleep = xfpm_polkit_check_auth (power->priv->polkit, POLKIT_AUTH_HYBRID_SLEEP_XFPM);
 #else
     *auth_hybrid_sleep = TRUE;
+#endif
+}
+
+static void
+xfpm_power_can_suspend_then_hibernate (XfpmPower *power,
+                                       gboolean *can_suspend_then_hibernate,
+                                       gboolean *auth_suspend_then_hibernate)
+{
+  if (power->priv->systemd != NULL)
+  {
+    if (xfce_systemd_can_suspend_then_hibernate (power->priv->systemd, can_suspend_then_hibernate, auth_suspend_then_hibernate, NULL))
+      return;
+  }
+  // no consolekit support (xfce_consolekit_can_suspend_then_hibernate)
+
+  if (can_suspend_then_hibernate != NULL)
+    *can_suspend_then_hibernate = FALSE;
+  if (auth_suspend_then_hibernate != NULL)
+#ifdef ENABLE_POLKIT
+    *auth_suspend_then_hibernate = xfpm_polkit_check_auth (power->priv->polkit, POLKIT_AUTH_SUSPEND_THEN_HIBERNATE_XFPM);
+#else
+    *auth_suspend_then_hibernate = TRUE;
 #endif
 }
