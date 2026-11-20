@@ -42,6 +42,7 @@
 #define POLKIT_AUTH_SUSPEND_XFPM "org.xfce.power.xfce4-pm-helper"
 #define POLKIT_AUTH_HIBERNATE_XFPM "org.xfce.power.xfce4-pm-helper"
 #define POLKIT_AUTH_HYBRID_SLEEP_XFPM "org.xfce.power.xfce4-pm-helper"
+#define POLKIT_AUTH_SUSPEND_THEN_HIBERNATE_XFPM "org.xfce.power.xfce4-pm-helper"
 
 #define POLKIT_AUTH_SUSPEND_CONSOLEKIT2 "org.freedesktop.consolekit.system.suspend"
 #define POLKIT_AUTH_HIBERNATE_CONSOLEKIT2 "org.freedesktop.consolekit.system.hibernate"
