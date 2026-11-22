@@ -70,7 +70,7 @@ msgstr "Wanneer de aan/uit-knop wordt ingedrukt:"
 
 #: data/interfaces/xfpm-settings.ui:374
 msgid "When sleep button is pressed:"
-msgstr "Wanneer slaapknop wordt ingedrukt:"
+msgstr "Wanneer de slaapknop wordt ingedrukt:"
 
 #: data/interfaces/xfpm-settings.ui:386
 msgid "When hibernate button is pressed:"
@@ -102,15 +102,15 @@ msgid ""
 "xfce4-power-manager, such as when you're watching a video in a web browser. "
 "These applications may fail to send an un-inhibit request afterward, so you "
 "may want to disable this if you encounter recurring issues."
-msgstr "Dit is het mechanisme waardoor toepassingen belemmeringsverzoeken sturen naar xfce4-power-manager, zoals wanneer u een video aan het bekijken bent in een webverkenner. Het zou kunnen dat deze toepassingen nadien geen verzoek tot opheffing van de belemmering versturen, zodat u dit wellicht wilt uitschakelen indien u regelmatig problemen tegenkomt."
+msgstr "Dit is het mechanisme waardoor toepassingen verhinderingsverzoeken sturen naar xfce4-power-manager, zoals wanneer u een video aan het bekijken bent in een webverkenner. Het zou kunnen dat deze toepassingen nadien geen verzoek tot opheffing van de verhindering versturen, zodat u dit wellicht wilt uitschakelen indien u regelmatig problemen tegenkomt."
 
 #: data/interfaces/xfpm-settings.ui:630
 msgid "Inhibition via D-Bus"
-msgstr "Belemmering via D-Bus"
+msgstr "Verhindering via D-Bus"
 
 #: data/interfaces/xfpm-settings.ui:667
 msgid "Inhibit when a window is fullscreened"
-msgstr "Belemmeren wanneer een venster schermvullend is"
+msgstr "Verhinderen wanneer een venster schermvullend is"
 
 #: data/interfaces/xfpm-settings.ui:704
 msgid "Presentation mode"
@@ -122,7 +122,7 @@ msgstr "Bureaubladmeldingen uitschakelen"
 
 #: data/interfaces/xfpm-settings.ui:777
 msgid "<b>Inhibition</b>"
-msgstr "<b>Belemmering</b>"
+msgstr "<b>Verhindering</b>"
 
 #: data/interfaces/xfpm-settings.ui:797
 msgid "General"
@@ -850,7 +850,7 @@ msgstr "Kan slaapstand toepassen"
 
 #: src/xfpm-main.c:109
 msgid "Can hybrid sleep"
-msgstr "Kan hybride slaapstand teweeg brengen"
+msgstr "Kan hybride slaapstand toepassen"
 
 #: src/xfpm-main.c:110
 msgid "Authorized to suspend"
@@ -862,7 +862,7 @@ msgstr "Is gemachtigd tot toepassen van slaapstand"
 
 #: src/xfpm-main.c:112
 msgid "Authorized to hybrid sleep"
-msgstr "Gemachtigd om hybride slaapstand teweeg te brengen"
+msgstr "Is gemachtigd tot toepassen van hybride slaapstand"
 
 #: src/xfpm-main.c:113
 msgid "Authorized to shutdown"
@@ -906,7 +906,7 @@ msgstr "Produceer alle informatie"
 
 #: src/xfpm-main.c:244
 msgid "Restart the running instance of Xfce power manager"
-msgstr "Herstart de draaiende instantie van Xfce-energiebeheerder"
+msgstr "Herstart het draaiende exemplaar van Xfce-energiebeheerder"
 
 #: src/xfpm-main.c:245
 msgid "Show the configuration dialog"
@@ -914,7 +914,7 @@ msgstr "Toon de instellingendialoog"
 
 #: src/xfpm-main.c:246
 msgid "Quit any running xfce power manager"
-msgstr "Sluit elke draaiende instantie van Xfce-energiebeheerder"
+msgstr "Sluit elk draaiend exemplaar van Xfce-energiebeheerder"
 
 #: src/xfpm-main.c:247
 msgid "Version information"
@@ -993,15 +993,15 @@ msgstr "Toon acculadingniveaus voor aangesloten apparaten"
 #: panel-plugin/power-manager-button.c:1272
 #, c-format
 msgid "%s is currently inhibiting power management"
-msgstr "%s belemmert thans het energiebeheer"
+msgstr "%s verhindert thans het energiebeheer"
 
 #: panel-plugin/power-manager-button.c:1344
 msgid "_Clear inhibitors"
-msgstr "Belemmeringen _wissen"
+msgstr "Verhinderingen _verwijderen"
 
 #: panel-plugin/power-manager-button.c:1348
 msgid "You can use this if applications fail to remove their inhibitors"
-msgstr "U kunt dit gebruiken wanneer toepassingen er niet in slagen om hun belemmeringen te verwijderen"
+msgstr "U kunt dit gebruiken wanneer toepassingen er niet in slagen om hun verhinderingen te verwijderen"
 
 #: panel-plugin/power-manager-button.c:1459
 msgid "<b>Display brightness</b>"
@@ -1060,7 +1060,7 @@ msgstr "Xfce-energiebeheer"
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:8
 msgid "Manage and reduce power consumption of computer and devices"
-msgstr "Beheer en verminder stroomverbruik van computer en andere apparaten"
+msgstr "Beheer en verminder het stroomverbruik van de computer en andere apparaten"
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:11
 msgid ""
@@ -1088,4 +1088,4 @@ msgstr "Xfce-energiebeheerder levert ook een invoegsel voor de werkbalken van Xf
 
 #: data/appdata/org.xfce.PowerManager.appdata.xml.in:34
 msgid "Screenshot of the Xfce Power Manager User Interface"
-msgstr "Schermafdruk van de gebruikersomgeving van Xfce Energiebeheerder"
+msgstr "Schermafdruk van de gebruikersschil van Xfce Energiebeheerder"
