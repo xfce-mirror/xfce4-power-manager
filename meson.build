@@ -23,7 +23,7 @@ dependency_versions = {
   'libnotify': '>= 0.8.3',
   'xfce4': '>= 4.20.0',
   'libxfce4ui': '>= 4.21.0',
-  'libxfce4util': '>= 4.21.0',
+  'libxfce4util': '>= 4.21.1',
   'libxfce4session-client': '>= 4.21.2',
   'upower-glib': '>= 1.90.3',
 
