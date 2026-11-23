@@ -36,6 +36,10 @@
 #include <gtk/gtk.h>
 #include <libxfce4util/libxfce4util.h>
 
+#ifdef HAVE_MATH_H
+#include <math.h>
+#endif
+
 static void
 xfpm_backlight_finalize (GObject *object);
 
@@ -575,7 +579,7 @@ xfpm_backlight_get_percent (XfpmBacklight *backlight,
   else if (!xfpm_brightness_get_level (backlight->priv->brightness, &level))
     return FALSE;
 
-  *percent = 100 * (level - min_level) / (max_level - min_level);
+  *percent = round (100.0 * (level - min_level) / (max_level - min_level));
   return TRUE;
 }
 
