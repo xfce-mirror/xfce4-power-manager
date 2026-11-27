@@ -46,6 +46,8 @@ if enable_wayland
     'xfpm-dpms-wayland.h',
     'xfpm-idle-wayland.c',
     'xfpm-idle-wayland.h',
+    'xfce-shortcuts-portal.c',
+    'xfce-shortcuts-portal.h',
   ]
 endif
 
@@ -179,5 +181,12 @@ if polkit.found()
     type: 'xml',
     install: true,
     install_dir: get_option('prefix') / get_option('datadir') / 'polkit-1' / 'actions',
+  )
+endif
+
+if enable_wayland
+  install_data(
+    'org.xfce.power-manager.desktop',
+    install_dir: get_option('prefix') / get_option('datadir') / 'applications',
   )
 endif

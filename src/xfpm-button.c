@@ -41,6 +41,14 @@
 #include <gdk/gdkx.h>
 #endif
 
+#ifdef ENABLE_WAYLAND
+#include "xfce-shortcuts-portal.h"
+
+#include <gdk/gdkwayland.h>
+
+#define XFPM_PORTAL_APP_ID "org.xfce.power-manager"
+#endif
+
 static void
 xfpm_button_finalize (GObject *object);
 
@@ -53,12 +61,36 @@ static struct
 } xfpm_key_map[N_XFPM_BUTTON_KEYS] = { { 0, 0 } };
 #endif
 
+#ifdef ENABLE_WAYLAND
+static const struct
+{
+  const gchar *name;
+  XfpmButtonKey key;
+  guint16 mask;
+  gboolean brightness;
+} xfpm_portal_keys[] = {
+  { "XF86PowerOff", BUTTON_POWER_OFF, POWER_KEY, FALSE },
+  { "XF86Hibernate", BUTTON_HIBERNATE, HIBERNATE_KEY, FALSE },
+  { "XF86Suspend", BUTTON_HIBERNATE, HIBERNATE_KEY, FALSE },
+  { "XF86Sleep", BUTTON_SLEEP, SLEEP_KEY, FALSE },
+  { "XF86MonBrightnessUp", BUTTON_MON_BRIGHTNESS_UP, BRIGHTNESS_KEY_UP, TRUE },
+  { "XF86MonBrightnessDown", BUTTON_MON_BRIGHTNESS_DOWN, BRIGHTNESS_KEY_DOWN, TRUE },
+  { "XF86Battery", BUTTON_BATTERY, BATTERY_KEY, FALSE },
+  { "XF86KbdBrightnessUp", BUTTON_KBD_BRIGHTNESS_UP, KBD_BRIGHTNESS_KEY_UP, FALSE },
+  { "XF86KbdBrightnessDown", BUTTON_KBD_BRIGHTNESS_DOWN, KBD_BRIGHTNESS_KEY_DOWN, FALSE },
+  { "XF86KbdLightOnOff", BUTTON_KBD_BRIGHTNESS_CYCLE, KBD_BRIGHTNESS_CYCLE, FALSE },
+};
+#endif
+
 struct XfpmButtonPrivate
 {
   GdkScreen *screen;
   GdkWindow *window;
 #ifdef ENABLE_X11
   Display *xdisplay;
+#endif
+#ifdef ENABLE_WAYLAND
+  XfceShortcutsPortal *portal;
 #endif
   GdkDisplay *gdisplay;
   gboolean handle_brightness_keys;
@@ -357,6 +389,43 @@ xfpm_button_setup (XfpmButton *button)
 
 #endif /* ENABLE_X11 */
 
+#ifdef ENABLE_WAYLAND
+static void
+xfpm_button_portal_key_pressed (const gchar *name,
+                                gpointer data)
+{
+  XfpmButton *button = XFPM_BUTTON (data);
+
+  for (guint i = 0; i < G_N_ELEMENTS (xfpm_portal_keys); i++)
+  {
+    if (g_strcmp0 (xfpm_portal_keys[i].name, name) == 0)
+    {
+      XFPM_DEBUG_ENUM (xfpm_portal_keys[i].key, XFPM_TYPE_BUTTON_KEY, "Key press");
+      g_signal_emit (G_OBJECT (button), signals[BUTTON_PRESSED], 0, xfpm_portal_keys[i].key);
+      return;
+    }
+  }
+}
+
+static void
+xfpm_button_update_portal (XfpmButton *button)
+{
+  const gchar *names[G_N_ELEMENTS (xfpm_portal_keys) + 1];
+  guint count = 0;
+
+  button->priv->mapped_buttons = 0;
+  for (guint i = 0; i < G_N_ELEMENTS (xfpm_portal_keys); i++)
+  {
+    if (xfpm_portal_keys[i].brightness && !button->priv->handle_brightness_keys)
+      continue;
+    names[count++] = xfpm_portal_keys[i].name;
+    button->priv->mapped_buttons |= xfpm_portal_keys[i].mask;
+  }
+  names[count] = NULL;
+  xfce_shortcuts_portal_set_keys (button->priv->portal, names);
+}
+#endif
+
 static void
 xfpm_button_class_init (XfpmButtonClass *klass)
 {
@@ -391,11 +460,25 @@ xfpm_button_init (XfpmButton *button)
   if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
     xfpm_button_setup (button);
 #endif
+#ifdef ENABLE_WAYLAND
+  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+  {
+    button->priv->portal = xfce_shortcuts_portal_new (XFPM_PORTAL_APP_ID,
+                                                      xfpm_button_portal_key_pressed,
+                                                      button);
+    xfpm_button_update_portal (button);
+  }
+#endif
 }
 
 static void
 xfpm_button_finalize (GObject *object)
 {
+#ifdef ENABLE_WAYLAND
+  XfpmButton *button = XFPM_BUTTON (object);
+
+  xfce_shortcuts_portal_free (button->priv->portal);
+#endif
   G_OBJECT_CLASS (xfpm_button_parent_class)->finalize (object);
 }
 
@@ -461,6 +544,10 @@ xfpm_button_set_handle_brightness_keys (XfpmButton *button,
         }
       }
     }
+#endif
+#ifdef ENABLE_WAYLAND
+    if (button->priv->portal != NULL)
+      xfpm_button_update_portal (button);
 #endif
   }
 }
